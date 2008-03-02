@@ -169,8 +169,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 226176385;
-			PBXWorkspaceStateSaveDate = 226176385;
+			PBXPerProjectTemplateStateSaveDate = 226179462;
+			PBXWorkspaceStateSaveDate = 226179462;
 		};
 		perUserProjectItems = {
 			5000BBD40C3BD6EF0012BAFC = 5000BBD40C3BD6EF0012BAFC /* PBXTextBookmark */;
@@ -349,7 +349,7 @@
 			50F3909C0C48FA8900129330 = 50F3909C0C48FA8900129330 /* PBXTextBookmark */;
 			50F390A00C48FA8900129330 = 50F390A00C48FA8900129330 /* PBXBookmark */;
 			50F4D1BE0C46177C00ED4E4E = 50F4D1BE0C46177C00ED4E4E /* PBXTextBookmark */;
-			50F8CC340D7B2D9900546B91 /* PBXTextBookmark */ = 50F8CC340D7B2D9900546B91 /* PBXTextBookmark */;
+			50F8CC340D7B2D9900546B91 = 50F8CC340D7B2D9900546B91 /* PBXTextBookmark */;
 			50FFA95A0C44D3A2006FC8E8 = 50FFA95A0C44D3A2006FC8E8 /* PBXTextBookmark */;
 			50FFA9F10C44E1C9006FC8E8 = 50FFA9F10C44E1C9006FC8E8 /* PBXTextBookmark */;
 			50FFA9F20C44E1C9006FC8E8 = 50FFA9F20C44E1C9006FC8E8 /* PBXTextBookmark */;
@@ -1131,8 +1131,9 @@
 	};
 	50176C730A6F7357009E80BD /* HexFormatter.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {793, 1120}}";
+			sepNavIntBoundsRect = "{{0, 0}, {773, 1280}}";
 			sepNavSelRange = "{618, 0}";
+			sepNavVisRange = "{0, 1088}";
 			sepNavVisRect = "{{0, 0}, {793, 651}}";
 			sepNavWindowFrame = "{{334, -64}, {994, 784}}";
 		};
@@ -1150,7 +1151,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1639, 40016}}";
 			sepNavSelRange = "{77740, 0}";
-			sepNavVisRange = "{76855, 994}";
+			sepNavVisRange = "{77060, 1056}";
 			sepNavVisRect = "{{0, 9886}, {793, 446}}";
 			sepNavWindowFrame = "{{639, 176}, {908, 751}}";
 		};
@@ -2831,8 +2832,9 @@
 	};
 	50D5FDB20C2E9CF50022CA3A /* MountDialog.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {793, 651}}";
+			sepNavIntBoundsRect = "{{0, 0}, {785, 656}}";
 			sepNavSelRange = "{774, 0}";
+			sepNavVisRange = "{0, 1317}";
 			sepNavVisRect = "{{0, 0}, {793, 651}}";
 			sepNavWindowFrame = "{{113, 148}, {985, 880}}";
 		};
@@ -3038,6 +3040,7 @@
 		fallbackIsa = XCSourceControlManager;
 		isSCMEnabled = 0;
 		scmConfiguration = {
+			repositoryName = GoogleCode;
 		};
 		scmType = "";
 	};

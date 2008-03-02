@@ -80,7 +80,6 @@
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
 		50CA0D520A9076FD00A5A08D /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* SID.cpp */; };
-		50CDE0DB0A70286400F8965C /* Documentation in Resources */ = {isa = PBXBuildFile; fileRef = 50CDE0B10A70286400F8965C /* Documentation */; };
 		50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */; };
 		50D5FDB40C2E9CF50022CA3A /* MountDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */; };
 		50D861790A7DEEAE00782345 /* DocIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D861780A7DEEAE00782345 /* DocIcon.icns */; };
@@ -223,7 +222,6 @@
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50CA0D500A9076FD00A5A08D /* SID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SID.h; sourceTree = "<group>"; };
 		50CA0D510A9076FD00A5A08D /* SID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SID.cpp; sourceTree = "<group>"; };
-		50CDE0B10A70286400F8965C /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		50D5004B0C2ED1200022CA3A /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archive.h; sourceTree = "<group>"; };
 		50D500500C2ED13F0022CA3A /* T64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64Archive.h; sourceTree = "<group>"; };
 		50D500510C2ED13F0022CA3A /* T64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = T64Archive.cpp; sourceTree = "<group>"; };
@@ -333,7 +331,6 @@
 				50F4D28F0C4625E200ED4E4E /* Snapshots */,
 				500FE1A40A4985CC00645DE0 /* Roms */,
 				50732BCA0A70D560008D8FF0 /* Images */,
-				50CDE0B10A70286400F8965C /* Documentation */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
@@ -596,7 +593,6 @@
 				500FE1C30A49867400645DE0 /* C1541.rom in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				50DA154A0A642EA20022B4A7 /* window_fullscreen.png in Resources */,
-				50CDE0DB0A70286400F8965C /* Documentation in Resources */,
 				506910C80A74EAE100F48A7F /* VirtualC64Icon.icns in Resources */,
 				50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */,
 				50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */,
