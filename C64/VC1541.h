@@ -23,7 +23,6 @@
 
 // = 26; // due to my own calculations, a new byte should arrive after 26 CPU cycles
 #define VC1541_CYCLES_PER_BYTE 30
-//26
 
 // Forward declarations
 class IEC;
