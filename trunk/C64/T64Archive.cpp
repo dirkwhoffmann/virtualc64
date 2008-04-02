@@ -172,7 +172,7 @@ int T64Archive::getSizeOfItem(int n)
 	int j = 0x44 + (n * 0x20);
 	uint16_t endAddrInMemory = data[j] + (data[j+1] << 8);
 
-	if (endAddrInMemory = 0xC3C6) {
+	if (endAddrInMemory == 0xC3C6) {
 		debug("WARNING: Corrupted archive. Mostly likely created with CONV64!\n");
 		// WHAT DO WE DO ABOUT IT?
 	}
