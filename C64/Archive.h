@@ -25,6 +25,14 @@ public:
 			The function supports the wildcard characters '?' and '*' */
 	int getItemWithName(char *filename);
 
+	//! Is archive mountable?
+	/*! Returns true, iff the archive can be mounted as a disk drive */
+	virtual bool isMountable(void) { return false; }
+
+	//! Is archive flashable?
+	/*! Returns true, iff the archive can be flashed into memory */
+	virtual bool isFlashable(void) { return true; }
+	
 	//! Select item to read from
 	/*! You need to select an item before you read data */
 	// void selectItem(String *pattern);
