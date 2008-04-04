@@ -34,8 +34,8 @@
 		[mountButton setEnabled:false];
 		[flashButton setEnabled:false];
 	} else {
-		[mountButton setEnabled:true];
-		[flashButton setEnabled:true];
+		[mountButton setEnabled:archive->isMountable()];
+		[flashButton setEnabled:archive->isFlashable()];
 	}
 	[directory reloadData];
 }
