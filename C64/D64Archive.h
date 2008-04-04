@@ -61,7 +61,8 @@ public:
 	static bool fileIsValid(const char *filename);
 
 	// Inherited from Archive class...
-
+	bool isMountable() { return true; }
+	bool isFlashable() { return true; }	
 	char *getTypeOfArchive() { return "D64 container"; }
 	bool loadFile(const char *filename);
 	void eject();
