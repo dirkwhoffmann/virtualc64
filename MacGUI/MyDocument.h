@@ -30,7 +30,28 @@
 #import "ConsoleController.h"
 #import "C64Proxy.h"
 
-@interface MyDocument : NSDocument
+@protocol ListenerProtocol
+
+- (void) runAction;
+- (void) haltAction;
+- (void) okAction;
+- (void) breakpointAction;
+- (void) watchpointAction;
+- (void) illegalInstructionAction;
+- (void) missingRomAction;
+- (void) connectDriveAction;
+- (void) insertDiskAction;
+- (void) ejectDiskAction;
+- (void) disconnectDriveAction;
+- (void) startDiskAction;
+- (void) stopDiskAction;
+- (void) startWarpAction;
+- (void) stopWarpAction;	
+- (void) logAction:(char *)message;	
+
+@end
+
+@interface MyDocument : NSDocument 
 {
 	IBOutlet id theWindow;
 	
@@ -305,25 +326,6 @@
 // Helper functions for action methods
 // - (void)toggleBreakpointAtAddr:(uint16_t)addr;
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(Memory::MemoryType)t;
-
-// Listener functions (called by the CPU to inform the GUI about important changes)
-//- (void) drawAction;
-- (void) runAction;
-- (void) haltAction;
-- (void) okAction;
-- (void) breakpointAction;
-- (void) watchpointAction;
-- (void) illegalInstructionAction;
-- (void) missingRomAction;
-- (void) connectDriveAction;
-- (void) insertDiskAction;
-- (void) ejectDiskAction;
-- (void) disconnectDriveAction;
-- (void) startDiskAction;
-- (void) stopDiskAction;
-- (void) startWarpAction;
-- (void) stopWarpAction;	
-- (void) logAction:(char *)message;	
 
 // Table views handling
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView;

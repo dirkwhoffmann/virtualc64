@@ -17,6 +17,7 @@
  */
 
 #import "MyDocument.h"
+#import "Listener.h"
 
 // --------------------------------------------------------------------------
 // Listener Proxy
