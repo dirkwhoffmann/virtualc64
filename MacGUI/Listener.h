@@ -9,7 +9,4 @@
 
 @interface MyDocument (Listener) <ListenerProtocol>
 
-- (void) runAction;
-- (void) haltAction;
-
 @end
