@@ -54,6 +54,7 @@
 		50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C760A6F7357009E80BD /* MyDocument.mm */; };
 		50176C800A6F7357009E80BD /* VICScreen.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C780A6F7357009E80BD /* VICScreen.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
+		501AE5030DAA1449003C6960 /* Listener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 501AE5020DAA1449003C6960 /* Listener.mm */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		502562AF0C4AA0C7008AAB85 /* c64.png in Resources */ = {isa = PBXBuildFile; fileRef = 502562AE0C4AA0C7008AAB85 /* c64.png */; };
 		502663150C4398460094233B /* nebula.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 502663140C4398460094233B /* nebula.jpg */; };
@@ -190,6 +191,8 @@
 		50176C780A6F7357009E80BD /* VICScreen.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = VICScreen.mm; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
+		501AE5010DAA1449003C6960 /* Listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Listener.h; sourceTree = "<group>"; };
+		501AE5020DAA1449003C6960 /* Listener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Listener.mm; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		502562AE0C4AA0C7008AAB85 /* c64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c64.png; path = images/c64.png; sourceTree = "<group>"; };
@@ -440,6 +443,8 @@
 				50176C730A6F7357009E80BD /* HexFormatter.mm */,
 				50176C750A6F7357009E80BD /* MyDocument.h */,
 				50176C760A6F7357009E80BD /* MyDocument.mm */,
+				501AE5010DAA1449003C6960 /* Listener.h */,
+				501AE5020DAA1449003C6960 /* Listener.mm */,
 				50176C770A6F7357009E80BD /* VICScreen.h */,
 				50176C780A6F7357009E80BD /* VICScreen.mm */,
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
@@ -700,6 +705,7 @@
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
+				501AE5030DAA1449003C6960 /* Listener.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
