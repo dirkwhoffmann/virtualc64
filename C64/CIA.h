@@ -21,15 +21,14 @@
 #ifndef _CIA_INC
 #define _CIA_INC
 
-#include "basic.h"
 #include "TOD.h"
-#include "Joystick.h"
 
 // Forward declarations
 class CPU;
 class VIC;
 class IEC;
 class Keyboard;
+class Joystick;
 
 //! Virtual complex interface adapter (CIA)
 /*! The original C64 consists of two CIA chips (CIA 1 and CIA 2). Each CIA chip features two programmable

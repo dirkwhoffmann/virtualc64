@@ -105,8 +105,8 @@ public:
 
 	void moveHead(int distance);
 
-	void activateRedLED() { getListener()->startDiskAction(); }
-	void deactivateRedLED() { getListener()->stopDiskAction(); }
+	void activateRedLED() { getListener()->driveLEDAction(true); }
+	void deactivateRedLED() { getListener()->driveLEDAction(false); }
 	void startRotating();
 	void stopRotating();
 	void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }

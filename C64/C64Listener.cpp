@@ -17,7 +17,7 @@
  */
 
 #include "C64Listener.h"
-
+#include "basic.h"
 
 C64Listener::C64Listener()
 {
@@ -27,6 +27,11 @@ void
 C64Listener::drawAction(int *screenBuffer) 
 {
 	// debug("C64 dummy listener: Frame is complete.\n");
+}
+
+void
+C64Listener::cpuAction(int state)
+{
 }
 
 void 
@@ -42,96 +47,40 @@ C64Listener::haltAction()
 }
 
 void 
-C64Listener::okAction() 
-{
-	// debug("C64 dummy listener: Error state cleared.\n");
-}
-
-void 
-C64Listener::breakpointAction() 
-{
-	// debug("C64 dummy listener: Breakpoint reached.\n");
-}
-
-void 
-C64Listener::watchpointAction() 
-{
-	// debug("C64 dummy listener: Watchpoint reached.\n");
-}
-
-void 
-C64Listener::illegalInstructionAction() 
-{
-	// debug("C64 dummy listener: Halted due to an illegal instruction.\n");
-}
-
-void 
 C64Listener::missingRomAction() 
 {
 	debug("C64 dummy listener: At least one ROM image is missing. Emulator can't run.\n");
 }
 
-void 
-C64Listener::connectDriveAction(void)
+void
+C64Listener::driveAttachedAction(bool connected)
 {
-	debug("C64 dummy listener: Drive connected.\n");
-}
-
-void 
-C64Listener::insertDiskAction(void)
-{
-	debug("C64 dummy listener: Disk inserted.\n");
+	debug("C64 dummy listener: Drive %s\n", connected ? "connected" : "disconnected");
 }
 
 void
-C64Listener::ejectDiskAction(void)
+C64Listener::driveDiscAction(bool inserted)
 {
-	debug("C64 dummy listener: Disk ejected.\n");
-}
+	debug("C64 dummy listener: Floppy disc %s\n", inserted ? "inserted" : "ejected");
+}	
 
-void 
-C64Listener::disconnectDriveAction(void)
+void
+C64Listener::driveLEDAction(bool on)
 {
-	debug("C64 dummy listener: Drive disconnected.\n");
+	debug("C64 dummy listener: Red LED %s\n", on ? "on" : "off");
 }
 
 void
-C64Listener::startDiskAction(void)
+C64Listener::driveDataAction(bool transfering)
 {
-	debug("C64 dummy listener: Data transfer started.\n");
-}
-	
-void 
-C64Listener::stopDiskAction(void)	
-{
-	debug("C64 dummy listener: Data transfer stopped.\n");
+	debug("C64 dummy listener: Data transfer to/from drive: %s\n", transfering ? "started" : "stopped");
 }
 
 void
-C64Listener::startWarpAction(void)
+C64Listener::warpAction(bool warping)
 {
-	debug("C64 dummy listener: Entered warp mode.\n");
+	debug("C64 dummy listener: Warping %s\n", warping ? "enabled" : "disabled");
 }
-
-void 
-C64Listener::stopWarpAction(void)	
-{
-	debug("C64 dummy listener: Exited warp mode.\n");
-}
-
-#if 0
-void
-C64Listener::startTraceAction(void)
-{
-	debug("C64 dummy listener: Start tracing.\n");
-}
-
-void 
-C64Listener::stopTraceAction(void)	
-{
-	debug("C64 dummy listener: Stop tracing.\n");
-}
-#endif
 
 void
 C64Listener::logAction(char *message)

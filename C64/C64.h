@@ -42,6 +42,10 @@
 // Clone functionality (Step-Undo using the clone mechanism?!)
 
 
+// TODO
+// Use variable "frameDelay" instead of constant (change setPAL, setNTSC etc.)
+// change runThread method to a cycle based design
+
 #ifndef _C64_INC
 #define _C64_INC
 
@@ -130,6 +134,20 @@
 	The C64Listener serves as a proxy object to the outer world (i.e., the GUI). When the C64 enters
 	the "running" or "halt" state, it invokes run() or halt(), respectively. Similarily, the draw() method
 	is invoked when a frame has been completed by the VIC chip.
+
+	Initialization sequence:
+	
+	1. Create C64 object 
+	   c64 = new C64()
+	   
+	2. Register listener
+	   c64->setListener(...)
+	   
+	3. Reset emulator
+	   c64->reset()
+	   
+	4. Run emulator
+	   c64->run()
 */
 
 #define NUM_INPUT_DEVICES 4
@@ -150,6 +168,13 @@ private:
 	//! The execution thread
 	pthread_t p;
 
+	//! Target time
+	/*! Used to synchronize emulation speed */
+	uint64_t targetTime; 
+		
+	//! Indicates whether the emulator has been running before 
+	bool wasRunningBefore;
+	
 	//! Indicates if files should be transferred in warp mode
 	bool enableWarpLoad;
 	
@@ -160,8 +185,21 @@ private:
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
 	int port[2];
 	
-	//! Scans for new joysticks and reval the old ones
-	//	void scanJoysticks();
+public:
+	//! Number of frames per second
+	/*! Number varies between PAL and NTSC machines */	
+	int fps;
+
+	//! Number of rasterlines
+	/*! Number varies between PAL and NTSC machines */	
+	int noOfRasterlines;
+
+	//! Number of rasterlines
+	/*! Number varies between PAL and NTSC machines */	
+	int cpuCyclesPerRasterline;
+
+	//! Time between two frames
+	int frameDelay;
 	
 public:	
 	//! Scans for new joysticks and reval the old ones
@@ -244,10 +282,28 @@ public:
 
 	// Returns true iff the virtual C64 is in the "halted" state */
 	bool isHalted();
+
+
+	//! Set interval timer delay
+	void setDelay(int d);
+	
+	//! Synchronize timing
+	void synchronizeTiming();
 	
 	bool load(FILE *file);
 	bool save(FILE *file);
 
+	//! Set PAL mode
+	void setPAL();
+	
+	//! Set NTSC mode
+	void setNTSC();
+	
+	//! Set emulation speed
+	void setHz(int h);
+	
+	int getCpuCyclesPerRasterline() { return cpuCyclesPerRasterline; }
+		
 	//! Assign an archive to the virtual C64
 	void setArchive (Archive *a) { archive = a; }
 

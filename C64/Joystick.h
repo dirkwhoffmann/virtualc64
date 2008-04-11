@@ -27,7 +27,7 @@
 #define JOYSTICK_H
 
 #include "SDL_joystick.h"
-#include "basic.h"
+// #include "basic.h"
 
 //! JoystickState
 /*! Datatype for the axis and button state of a joystick */

@@ -140,15 +140,9 @@ private:
 	//! Carry flag
 	/*! The carry flag is set iff an arithmetic operation causes an \a unsigned overflow. */	
 	uint8_t  C;
-		
-	//! Clock frequency of the simulated CPU
-	/*! \todo Currently, no other than the orignal NTSC clock frequency is supported
-		\see warpMode
-	*/
-	float mHz;
-	
+			
 	//! True iff warp mode is enabled
-	/*! In warp mode, we run as fast as possible, completely ignoring the mHz value. */
+	/*! In warp mode, we run as fast as possible */
 	bool warpMode;
 		
 	//! Number of elapsed clock cycles since power up
@@ -390,10 +384,6 @@ public:
 	uint64_t getCycles();
 	//! Set the cycle count to the specified value
 	void setCycles(uint64_t c);
-	//! Returns the current clock frequency (in mega herz)
-	float getMHz() { return mHz; }
-	//! Set the clock frequency (in mega herz)
-	void setMHz(float m) { mHz = m; }
 	//! Returns true iff warp mode is enabled
 	bool getWarpMode();
 	//! Enable or disable warp mode

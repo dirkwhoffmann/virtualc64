@@ -45,7 +45,6 @@ CPU::reset()
 	// Initialize internal state
 	errorState       = OK;
 	cycles           = 0LL;
-	mHz              = (float)CLOCK_FREQUENCY_NTSC / (float)1000000;
 	nmiLine          = 0;	
 	irqLine          = 0;	
 	callStackPointer = 0;
@@ -95,10 +94,10 @@ CPU::setWarpMode(bool b)
 { 
 	if (b && !warpMode) {
 		warpMode = true;
-		getListener()->startWarpAction();
+		getListener()->warpAction(warpMode);
 	} else if (!b && warpMode) {
 		warpMode = false;
-		getListener()->stopWarpAction();
+		getListener()->warpAction(warpMode);
 	}
 }
 
@@ -423,6 +422,7 @@ CPU::executeOneCycle(int deadCycles)
 	uint64_t startCycles = cycles;
 	int executedCycles; // number of cycles consumed by the executed command
 
+	cycles += deadCycles;
 	delay += deadCycles;
 	
 	if (delay > 0) {
@@ -453,7 +453,7 @@ CPU::executeOneCycle(int deadCycles)
 		(void)step();
 	}
 		
-	// Check the breakpoint tag
+	// Check breakpoint tag
 	if (breakpoint[PC] != NO_BREAKPOINT) {
 		// Soft breakpoints get deleted when reached
 		breakpoint[PC] &= (255 - SOFT_BREAKPOINT);
@@ -483,21 +483,7 @@ CPU::setErrorState(ErrorState state)
 		errorState = state;
 		
 		// Inform listener
-		switch(state) {
-			case OK: 
-				getListener()->okAction();
-				break;
-			case BREAKPOINT_REACHED:
-				getListener()->breakpointAction();
-				break;
-			case WATCHPOINT_REACHED:
-				debug("Watchpoint triggered at address %d (%4X)\n", PC, PC);
-				getListener()->watchpointAction();
-				break;
-			case ILLEGAL_INSTRUCTION:
-				getListener()->illegalInstructionAction();
-				break;
-		}
+		getListener()->cpuAction(state);		
 	}
 }
 

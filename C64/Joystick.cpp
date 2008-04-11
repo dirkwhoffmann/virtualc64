@@ -22,6 +22,7 @@
 */
                
 #include "Joystick.h"
+#include "basic.h"
 
 int Joystick::joystickOpenCount = 0;
 bool Joystick::initialized = false;

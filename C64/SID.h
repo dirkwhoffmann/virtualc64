@@ -19,7 +19,6 @@
 #ifndef _SID_INC
 #define _SID_INC
 
-#include "basic.h"
 #include "VirtualComponent.h"
 #include "SIDVoice.h"
 

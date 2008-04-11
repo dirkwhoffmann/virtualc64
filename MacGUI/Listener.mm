@@ -1,64 +1,25 @@
-//
-//  Listener.mm
-//  V64
-//
-//  Created by Dirk Hoffmann on 07.04.08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
-//
+/*
+ * (C) 2008 Dirk W. Hoffmann. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #import "Listener.h"
 
 @implementation MyDocument (Listener)
 
-- (void) runAction
-{
-	NSLog(@"%@ runAction", self);
-	
-	// Update info message
-	infoString = @""; // @"Emulation in progress...";
-	
-	// Disable editing of all text fields
-	[self enableUserEditing:NO];
-
-	// Disable debug buttons
-	
-	// Refresh display
-	needsRefresh = true;
-}
-
-- (void) haltAction
-{
-	infoString = @"Emulation halted.";
-	[self enableUserEditing:YES];	
-	needsRefresh = true;
-}
-
-- (void) okAction
-{
-	infoString = @"";
-	needsRefresh = true;
-}
-
-- (void) breakpointAction
-{
-	infoString = @"Breakpoint reached. Virtual CPU halted.";
-	[self enableUserEditing:YES];	
-	needsRefresh = true;
-}
-
-- (void) watchpointAction
-{
-	infoString = @"Watchpoint reached. Virtual CPU halted.";
-	[self enableUserEditing:YES];	
-	needsRefresh = true;
-}
-
-- (void) illegalInstructionAction
-{
-	infoString = @"CPU halted due to an illegal instruction.";
-	[self enableUserEditing:YES];	
-	needsRefresh = true;
-}
 
 - (void) missingRomAction
 {
@@ -74,78 +35,129 @@
 					  @"Before you run the emulator, a Character, Basic, and Kernel ROM image needs to be added. If you are a legal owner of C64 ROM image files, you can add them by dragging and dropping them into the main window.");
 }
 
-- (void) connectDriveAction
+- (void) runAction
 {
-	NSLog(@"connectDriveAction");
-	[greenLED setImage:[NSImage imageNamed:@"LEDgreen"]];
-	// greenLight = true; updateLight = true;
-}
-
-- (void) disconnectDriveAction
-{
-	NSLog(@"disconnectDriveAction");
-	[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];
-	// greenLight = redLight = false; updateLight = true;
-}
-
-- (void) insertDiskAction
-{
-	NSLog(@"insertDiskAction");
-	[drive setHidden:false];
-	[eject setHidden:false];
-}
-
-- (void) ejectDiskAction
-{
-	NSLog(@"ejectDiskAction");
-	[drive setHidden:true];
-	[eject setHidden:true];
-}
-
-- (void) startDiskAction
-{
-	// NSLog(@"startDiskAction");
-	if ([c64 isDriveConnected]) {
-		redLight = true; updateLight = true;
-		// [redLED setImage:[NSImage imageNamed:@"LEDred"]];
-	}
-	// [c64 cpuSetNativeSpeedFlag:!warpLoad];
-	[c64 cpuSetNativeSpeedFlag:false];
-}
-
-- (void) stopDiskAction
-{
-	// NSLog(@"stopDiskAction");
-	//[redLED setImage:[NSImage imageNamed:@"LEDgray"]];
-	redLight = false; updateLight = true;
-	// [c64 cpuSetNativeSpeedFlag:warpLoad];
-	infoString = @"";
-	needsRefresh = true;	
-	[c64 cpuSetNativeSpeedFlag:true];
-}
-
-- (void) startWarpAction
-{
-	NSLog(@"startWarpAction");
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
-	[warpMode setImage:[NSImage imageNamed:@"warpOff"]];
-	[warpMode setNeedsDisplay:YES];
+
+	NSLog(@"runAction");
+	[info setStringValue:@""];
+	[self enableUserEditing:NO];
+	needsRefresh = true;
+	
 	[arp release];
 }
 
-- (void) stopWarpAction
+- (void) haltAction
 {
-	NSLog(@"stopWarpAction");
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
-	[warpMode setImage:[NSImage imageNamed:@"warpOn"]];
-	[warpMode setNeedsDisplay:YES];
+	
+	NSLog(@"haltAction");
+	[info setStringValue:@"Emulation halted."];
+	[self enableUserEditing:YES];	
+	needsRefresh = true;
+
+	[arp release];
+}
+
+- (void) cpuAction:(CPU::ErrorState)state;
+{
+	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
+
+	NSLog(@"cpuAction");
+	switch(state) {
+		case CPU::OK: 
+			[info setStringValue:@""];
+			break;
+		case CPU::BREAKPOINT_REACHED:
+			[info setStringValue:@"Breakpoint reached."];
+			[self enableUserEditing:YES];	
+			break;
+		case CPU::WATCHPOINT_REACHED:
+			[info setStringValue:@"Watchpoint reached."];
+			[self enableUserEditing:YES];	
+			break;
+		case CPU::ILLEGAL_INSTRUCTION:
+			[info setStringValue:@"CPU halted due to an illegal instruction."];
+			[self enableUserEditing:YES];	
+			break;
+		default:
+			assert(0);
+	}
+	needsRefresh = true;
+
+	[arp release];
+}
+
+- (void) driveAttachedAction:(BOOL)connected
+{
+	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
+
+	NSLog(@"driveAttachedAction");
+	if (connected)
+		[greenLED setImage:[NSImage imageNamed:@"LEDgreen"]];
+	else
+		[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];
+
+	[arp release];
+}
+
+- (void) driveDiscAction:(BOOL)inserted
+{
+	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
+	
+	NSLog(@"driveDiscAction");
+	[drive setHidden:!inserted];
+	[eject setHidden:!inserted];
+
+	[arp release];
+}
+
+- (void) driveLEDAction:(BOOL)on
+{
+	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
+	
+	NSLog(@"driveLEDAction");
+	if (on)
+		[redLED setImage:[NSImage imageNamed:@"LEDred"]];
+	else
+		[redLED setImage:[NSImage imageNamed:@"LEDgray"]];
+	
+	[arp release];	
+}
+
+- (void) driveDataAction:(BOOL)transfering
+{
+	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
+
+	NSLog(@"haltAction");
+	// MESSAGE IS NOT SEND YET 
+	// don't now how to determine reliably if data is transferred
+
+	[arp release];
+}
+
+
+- (void) warpmodeAction:(BOOL)warping
+{
+	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
+	
+	NSLog(@"warpmodeAction");
+	if (warping)
+		[warpMode setImage:[NSImage imageNamed:@"warpOff"]];
+	else
+		[warpMode setImage:[NSImage imageNamed:@"warpOn"]];
+	
 	[arp release];
 }
 
 - (void) logAction:(char *)message
 {
+	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
+
 	if (consoleController)
 		[consoleController insertText:message];
+
+	[arp release];
 }
 
 @end

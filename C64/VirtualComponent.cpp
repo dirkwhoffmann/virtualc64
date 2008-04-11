@@ -24,46 +24,39 @@ VirtualComponent::VirtualComponent()
 	suspendCounter = 0;	
 	traceMode = false;
 	listener = NULL;
-	resetTimer();
 }
 
-void VirtualComponent::reset()
+void 
+VirtualComponent::reset()
 {
 }
 
-#if 0
-bool
-VirtualComponent::load(FILE *file)
-{
-}
-
-bool
-VirtualComponent::save(FILE *file)
-{
-}
-#endif
-
-void VirtualComponent::run()
+void 
+VirtualComponent::run()
 {
 	running = true;
 }
 
-bool VirtualComponent::isRunning()
+bool 
+VirtualComponent::isRunning()
 {
 	return running;
 }
 
-void VirtualComponent::halt()
+void 
+VirtualComponent::halt()
 {
 	running = false;
 }
 
-bool VirtualComponent::isHalted()
+bool 
+VirtualComponent::isHalted()
 {
 	return !running;
 }
 
-void VirtualComponent::suspend()
+void 
+VirtualComponent::suspend()
 {
 	debug("Suspending...\n");
 	if (suspendCounter == 0) {
@@ -75,7 +68,8 @@ void VirtualComponent::suspend()
 	assert(suspendCounter > 0);
 }
 
-void VirtualComponent::resume()
+void 
+VirtualComponent::resume()
 {
 	debug("Resuming...\n");
 	suspendCounter--;
@@ -83,10 +77,11 @@ void VirtualComponent::resume()
 		run();
 	
 	assert(suspendCounter >= 0);
-};
+}
 
-
-
-void VirtualComponent::dumpState()
+void 
+VirtualComponent::dumpState()
 {
 }
+
+
