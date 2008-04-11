@@ -7,15 +7,7 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
-				<key>ApplyAction</key>
-				<string>id</string>
-				<key>CancelAction</key>
-				<string>id</string>
-				<key>OKAction</key>
-				<string>id</string>
 				<key>SIDFilterAction</key>
-				<string>id</string>
-				<key>SIDVolumeAction</key>
 				<string>id</string>
 				<key>changeColorScheme</key>
 				<string>id</string>
@@ -26,6 +18,8 @@
 				<key>setPalAction</key>
 				<string>id</string>
 				<key>togglePalNtscAction</key>
+				<string>id</string>
+				<key>warpLoadAction</key>
 				<string>id</string>
 			</dict>
 			<key>CLASS</key>

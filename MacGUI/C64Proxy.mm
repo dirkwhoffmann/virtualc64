@@ -75,6 +75,11 @@ void ListenerProxy::driveDataAction(bool transfering)
 	[doc driveDataAction:transfering];
 }
 
+void ListenerProxy::driveMotorAction(bool rotating)
+{
+	[doc driveMotorAction:rotating];
+}
+
 void ListenerProxy::warpAction(bool warping)
 {
 	[doc warpmodeAction:warping];

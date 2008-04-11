@@ -144,6 +144,23 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[colorWell13 setEnabled:enabled];
 	[colorWell14 setEnabled:enabled];
 	[colorWell15 setEnabled:enabled];
+	
+	[c64 vicSetColor:0 rgba:[colorWell0 color]];
+	[c64 vicSetColor:1 rgba:[colorWell1 color]];
+	[c64 vicSetColor:2 rgba:[colorWell2 color]];
+	[c64 vicSetColor:3 rgba:[colorWell3 color]];
+	[c64 vicSetColor:4 rgba:[colorWell4 color]];
+	[c64 vicSetColor:5 rgba:[colorWell5 color]];
+	[c64 vicSetColor:6 rgba:[colorWell6 color]];
+	[c64 vicSetColor:7 rgba:[colorWell7 color]];
+	[c64 vicSetColor:8 rgba:[colorWell8 color]];
+	[c64 vicSetColor:9 rgba:[colorWell9 color]];
+	[c64 vicSetColor:10 rgba:[colorWell10 color]];
+	[c64 vicSetColor:11 rgba:[colorWell11 color]];
+	[c64 vicSetColor:12 rgba:[colorWell12 color]];
+	[c64 vicSetColor:13 rgba:[colorWell13 color]];
+	[c64 vicSetColor:14 rgba:[colorWell14 color]];
+	[c64 vicSetColor:15 rgba:[colorWell15 color]];
 }
 
 - (IBAction)changeColorScheme:(id)sender
@@ -152,6 +169,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[self updateColorWells:scheme];
 }
 
+#if 0
 - (IBAction)OKAction:(id)sender
 {
 	// Write selections into user database
@@ -178,6 +196,8 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	// Close preference pane
 	[[self window] close];
 }
+#endif
+
 
 #if 0
 - (NSColor *)readColor:(NSString *)key
@@ -316,6 +336,16 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	}
 }
 
+- (IBAction)warpLoadAction:(id)sender
+{
+	if ([sender state]) {
+		[c64 setWarpLoad:true];
+	} else {
+		[c64 setWarpLoad:false];
+	}
+	debug("Warpload %d\n", [sender state]);
+}
+
 - (IBAction)SIDVolumeAction:(id)sender
 {
 	float volume = [sender floatValue];
@@ -355,6 +385,8 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(g * 0xff);
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(b * 0xff);
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(a * 0xff);	
+	debug("change color");
+	[c64 vicSetColor:col rgba:[sender color]];
 }
 
 @end

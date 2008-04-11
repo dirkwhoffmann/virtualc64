@@ -43,7 +43,7 @@
 
 
 // TODO
-// Use variable "frameDelay" instead of constant (change setPAL, setNTSC etc.)
+// move warpLoad from GUI to C64
 // change runThread method to a cycle based design
 
 #ifndef _C64_INC
@@ -177,7 +177,7 @@ private:
 	
 	//! Indicates if files should be transferred in warp mode
 	bool enableWarpLoad;
-	
+
 	//! Indicates if a reset should be performed by quickly loading a plain image
 	bool enableFastReset;
 	
@@ -253,9 +253,8 @@ public:
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A reset is performed by loading a presaved image from disk. */
 	void fastReset();           
-
+	
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
-	/*! Variable "fastReset" determines, how the reset is performed. */
 	void reset();           
 	
 	//! Returns the currently set resource path
@@ -282,7 +281,6 @@ public:
 
 	// Returns true iff the virtual C64 is in the "halted" state */
 	bool isHalted();
-
 
 	//! Set interval timer delay
 	void setDelay(int d);

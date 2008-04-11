@@ -76,6 +76,12 @@ C64Listener::driveDataAction(bool transfering)
 	debug("C64 dummy listener: Data transfer to/from drive: %s\n", transfering ? "started" : "stopped");
 }
 
+void 
+C64Listener::driveMotorAction(bool rotating)
+{
+	debug("C64 dummy listener: Drive motor powered %s\n", rotating ? "on" : "off");
+}
+
 void
 C64Listener::warpAction(bool warping)
 {

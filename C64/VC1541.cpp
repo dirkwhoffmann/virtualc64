@@ -23,6 +23,7 @@ VC1541::VC1541()
 {
 	// Initialize references
 	iec = NULL;
+	c64 = NULL;
 	
 	// Create sub components
 	mem = new VC1541Memory();
@@ -179,7 +180,11 @@ VC1541::save(FILE *file)
 void 
 VC1541::startRotating() 
 { 
-	debug("Starting drive engine (%2X)\n", cpu->getPC()); 
+	debug("Starting drive engine (%2X)\n", cpu->getPC());
+	getListener()->driveMotorAction(true);
+	if (c64->getWarpLoad())
+		c64->cpu->setWarpMode(true);
+		
 	byteReadyTimer = 100; // ??? which value is appropriate?
 }
 
@@ -187,7 +192,9 @@ void
 VC1541::stopRotating() 
 { 
 	debug("Stopping drive engine (%2X)\n", cpu->getPC()); 
-//	byteReadyTimer = 0;
+	getListener()->driveMotorAction(false);
+	if (c64->getWarpLoad())
+		c64->cpu->setWarpMode(false);
 }
 
 void 

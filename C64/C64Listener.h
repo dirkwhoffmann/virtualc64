@@ -48,6 +48,8 @@ public:
 	virtual void driveLEDAction(bool on);
 	//! Notifies the listener about transferred disc data
 	virtual void driveDataAction(bool transfering);
+	//! Notifies the listener about the drive motor status
+	virtual void driveMotorAction(bool rotating);	
 	//! Notifies the listener about warp mode
 	virtual void warpAction(bool warping);	
 	//! Send log information to the listener

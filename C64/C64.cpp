@@ -167,6 +167,7 @@ C64::C64()
 	cia2->setCPU(cpu);
 	cia1->setKeyboard(keyboard);
 	floppy->setIEC(iec);
+	floppy->setC64(this);
 	
 	// scanJoysticks();
 	
