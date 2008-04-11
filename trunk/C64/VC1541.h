@@ -26,6 +26,7 @@
 
 // Forward declarations
 class IEC;
+class C64;
 
 //! Virtual VC 1541 drive
 class VC1541 : public VirtualComponent { 
@@ -34,6 +35,9 @@ public:
 	//! The 1541 drive contains two via chips for disk and peripheral I/O
 	VIA1 *via1;
 	VIA2 *via2;
+
+	//! Reference to the virtual IEC bus
+	C64 *c64;
 		
 	//! Reference to the virtual IEC bus
 	IEC *iec;
@@ -87,6 +91,9 @@ public:
 
 	//! Bind disc drive to a virtual IEC bus
 	void setIEC(IEC *bus) { assert(iec == NULL); iec = bus; mem->setIEC(bus); }
+
+	//! Bind disc drive to a virtual C64
+	void setC64(C64 *c) { assert(c64 == NULL); c64 = c; }
 	
 	//! Pass control to the virtual drive
 	/*! The drive will be executed for the specified number of clock cycles. */
