@@ -21,7 +21,7 @@
 #ifndef _KEYBOARD_INC
 #define _KEYBOARD_INC
 
-#include "basic.h"
+#include "VirtualComponent.h"
 
 //! The virtual keyboard of a C64
 /*! This class manages the keyboard matrix of the virtual C64. 

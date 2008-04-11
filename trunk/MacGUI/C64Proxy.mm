@@ -34,6 +34,12 @@ void ListenerProxy::drawAction(int *screenBuffer)
 	[screen updateTexture:screenBuffer];
 }	
 
+void ListenerProxy::cpuAction(int state)
+{
+	NSLog(@"cpuAction Proxy");
+	[doc cpuAction:(CPU::ErrorState)state];
+}
+
 void ListenerProxy::runAction() 
 { 
 	[doc runAction]; 
@@ -44,70 +50,35 @@ void ListenerProxy::haltAction()
 	[doc haltAction]; 
 }
 
-void ListenerProxy::okAction() 
-{
-	[doc okAction];
-}
-
-void ListenerProxy::breakpointAction() 
-{
-	[doc breakpointAction];
-}
-
-void ListenerProxy::watchpointAction() 
-{
-	[doc watchpointAction];
-}
-
-void ListenerProxy::illegalInstructionAction() 
-{
-	[doc illegalInstructionAction];
-}
-
 void ListenerProxy::missingRomAction() 
 {
 	[doc missingRomAction];
 }
 
-void ListenerProxy::connectDriveAction()
+void ListenerProxy::driveAttachedAction(bool connected)
 {
-	[doc connectDriveAction];
+	[doc driveAttachedAction:connected];
 }
 
-void ListenerProxy::insertDiskAction()
+void ListenerProxy::driveDiscAction(bool inserted)
 {
-	[doc insertDiskAction];
+	[doc driveDiscAction:inserted];
 }
 
-void ListenerProxy::ejectDiskAction()
+void ListenerProxy::driveLEDAction(bool on)
 {
-	[doc ejectDiskAction];
+	[doc driveLEDAction:on];
 }
 
-void ListenerProxy::disconnectDriveAction()
+void ListenerProxy::driveDataAction(bool transfering)
 {
-	[doc disconnectDriveAction];
+	[doc driveDataAction:transfering];
 }
 
-void ListenerProxy::startDiskAction()
+void ListenerProxy::warpAction(bool warping)
 {
-	[doc startDiskAction];
+	[doc warpmodeAction:warping];
 }
-
-void ListenerProxy::stopDiskAction()
-{
-	[doc stopDiskAction];
-}
-
-void ListenerProxy::startWarpAction()
-{
-	[doc startWarpAction];
-}
-
-void ListenerProxy::stopWarpAction()
-{
-	[doc stopWarpAction];
-}	
 
 void ListenerProxy::logAction(char *message)
 {
@@ -196,7 +167,7 @@ void ListenerProxy::logAction(char *message)
 
 	/* Register listener, if registration is complete */	
 	if (listener->getDocument() != nil && listener->getScreen() != nil)
-			c64->setListener(listener);	
+		c64->setListener(listener);	
 }
 
 // --------------------------------------------------------------------------
@@ -213,6 +184,10 @@ void ListenerProxy::logAction(char *message)
 - (void) run { c64->run(); }
 - (bool) isHalted { return c64->isHalted(); }
 - (bool) isRunning { return c64->isRunning(); }
+- (void) setPAL { c64->setPAL(); }
+- (void) setNTSC { c64->setNTSC(); }
+- (int) getFrameDelay { return c64->frameDelay; }
+- (void) setFrameDelay:(int)delay { c64->frameDelay = delay; }
 - (int) buildNr { debug("buildNrtrtr\n"); return c64->build(); }
 
 - (bool) loadSnapshot:(NSString *)filename { return c64->loadSnapshot([filename UTF8String]); }
@@ -234,13 +209,9 @@ void ListenerProxy::logAction(char *message)
 // --------------------------------------------------------------------------
 
 - (void) cpuEnableIllegalInstructions:(bool)illegalInstructions { cpu->enableIllegalInstructions(illegalInstructions); }
-- (NSNumber *) cpuGetMHz { return [NSNumber numberWithFloat:cpu->getMHz()]; }
-- (void) cpuSetMHz:(id)mhz { cpu->setMHz([mhz floatValue]); }
-- (NSNumber *) cpuGetKHz { return [NSNumber numberWithFloat:(cpu->getMHz() * 1000.0)]; }
-- (void) cpuSetKHz:(id)mhz { cpu->setMHz([mhz floatValue] / 1000.0); }
-- (bool) cpuRunsAtNativeSpeed { return !cpu->getWarpMode(); }
-- (void) cpuSetNativeSpeedFlag:(bool)b { cpu->setWarpMode(!b); }
-- (void) cpuToggleNativeSpeedFlag { cpu->setWarpMode(!cpu->getWarpMode()); }
+- (bool) cpuGetWarpMode { return cpu->getWarpMode(); }
+- (void) cpuSetWarpMode:(bool)b { cpu->setWarpMode(b); }
+- (void) cpuToggleWarpMode { cpu->setWarpMode(!cpu->getWarpMode()); }
 - (long) cpuGetCycles { return cpu->getCycles(); }
 - (bool) cpuTracingEnabled { return cpu->tracingEnabled(); }
 - (void) cpuSetTraceMode:(bool)b { cpu->setTraceMode(b); }
@@ -503,7 +474,7 @@ void ListenerProxy::logAction(char *message)
 - (void) connectDrive { c64->iec->connectDrive(); }
 - (void) disconnectDrive { c64->iec->disconnectDrive(); }
 - (bool) isDriveConnected { return c64->iec->driveIsConnected(); }
-
 @end
+
 
 	

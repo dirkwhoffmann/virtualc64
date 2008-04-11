@@ -38,24 +38,18 @@ public:
 	MyDocument *getDocument() { return doc; }
 	void setScreen(VICScreen *s) { screen = s; }
 	VICScreen *getScreen() { return screen; }
-	
-	void drawAction(int *screenBuffer);
+		
+	void missingRomAction();
 	void runAction();
 	void haltAction();
-	void okAction();
-	void breakpointAction();
-	void watchpointAction();
-	void illegalInstructionAction();
-	void missingRomAction();
-	void connectDriveAction();
-	void insertDiskAction();
-	void ejectDiskAction();
-	void disconnectDriveAction();
-	void startDiskAction();
-	void stopDiskAction();	
-	void startWarpAction();
-	void stopWarpAction();	
-	void ListenerProxy::logAction(char *message);
+	void drawAction(int *screenBuffer);
+	void cpuAction(int state);
+	void driveAttachedAction(bool connected);
+	void driveDiscAction(bool inserted);
+	void driveLEDAction(bool on);
+	void driveDataAction(bool transfering);
+	void warpAction(bool warping);
+	void logAction(char *message);
 };
 
 @interface C64Proxy : NSObject {	
@@ -84,6 +78,10 @@ public:
 - (void) run;
 - (bool) isHalted;
 - (bool) isRunning;
+- (void) setPAL;
+- (void) setNTSC;
+- (int) getFrameDelay;
+- (void) setFrameDelay:(int)delay;
 - (int) buildNr;
 
 - (bool) loadSnapshot:(NSString *)filename;
@@ -100,13 +98,9 @@ public:
 
 // CPU
 - (void) cpuEnableIllegalInstructions:(bool)illegalInstructions;
-- (NSNumber *) cpuGetMHz;
-- (void) cpuSetMHz:(id)mhz;
-- (NSNumber *) cpuGetKHz;
-- (void) cpuSetKHz:(id)khz;
-- (bool) cpuRunsAtNativeSpeed;
-- (void) cpuSetNativeSpeedFlag:(bool)b;
-- (void) cpuToggleNativeSpeedFlag;
+- (bool) cpuGetWarpMode;
+- (void) cpuSetWarpMode:(bool)b;
+- (void) cpuToggleWarpMode;
 - (long) cpuGetCycles;
 - (bool) cpuTracingEnabled;
 - (void) cpuSetTraceMode:(bool)b;

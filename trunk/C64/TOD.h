@@ -19,8 +19,7 @@
 #ifndef _TOD_INC
 #define _TOD_INC
 
-// #include "basic.h"
-
+#include "VirtualComponent.h"
 
 // TODO: Probably a bug...
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

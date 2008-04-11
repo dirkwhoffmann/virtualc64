@@ -420,7 +420,7 @@ VC1541::insertDisc(D64Archive *a)
 		assert(length[i-1] <= 7928);
 	}
 
-	getListener()->insertDiskAction();
+	getListener()->driveDiscAction(true);
 }
 
 void 
@@ -432,7 +432,7 @@ VC1541::ejectDisc()
 	// zero out data
 	clearDisk();
 	
-	getListener()->ejectDiskAction();
+	getListener()->driveDiscAction(false);
 }
 
 #if 0

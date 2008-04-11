@@ -16,7 +16,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "C64.h"
+#include "basic.h"
+#include "CIA.h"
+#include "CPU.h"
+#include "IEC.h"
+#include "VIC.h"
+#include "TOD.h"
+#include "Keyboard.h"
+#include "Joystick.h"
 
 // Memory layout
 //

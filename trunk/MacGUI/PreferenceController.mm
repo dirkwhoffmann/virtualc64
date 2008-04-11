@@ -293,6 +293,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[systemText3 setStringValue:@"63 cycles per rasterline"];
 	//[flag setImage:[NSImage imageNamed:@"flag_eu"]];
 	[flag setState:false];
+	[c64 setPAL];
 }
 
 - (IBAction)setNtscAction:(id)sender
@@ -303,6 +304,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[systemText3 setStringValue:@"65 cycles per rasterline"];
 	//[flag setImage:[NSImage imageNamed:@"flag_usa"]];
 	[flag setState:true];
+	[c64 setNTSC];
 }
 
 - (IBAction)togglePalNtscAction:(id)sender

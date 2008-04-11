@@ -53,12 +53,7 @@ private:
 	/*! The value is equal to the number of suspend calls minus the number of resume calls 
 	*/
 	int suspendCounter;
-
-	//! Start value of the real-time timer
-	/*! Each virtual component features a real-time timer counting in milliseconds.
-		Whenever the timer is reset, the current time (in milliseconds) is stored in this variable. */
-	uint64_t timerStartValue;
-	
+			
 	//! Reference to the connected C64 listener.
 	C64Listener *listener;
 	
@@ -137,14 +132,6 @@ public:
 
 	//! Enable or disable trace mode
 	inline void setTraceMode(bool b) { traceMode = b; }
-
-	//! Reset timer
-	//* Set the timer value back to 0. */
-	void resetTimer() { timerStartValue = msec(); }
-	
-	//! Get timer
-	/*! Return the current timer value. The value is the number of elapsed milliseconds since the last reset. */
-	inline uint64_t getTimer() { return msec() - timerStartValue; }
 	
 	//! Print info about the internal state
 	/*! This functions is intended for debugging purposes only. Any derived component should override

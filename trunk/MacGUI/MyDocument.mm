@@ -58,6 +58,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 // --------------------------------------------------------------------------------
 
 + (void)initialize {
+	NSLog(@"%@ initialize", self);
 
     self = [super init];
 
@@ -142,29 +143,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 		NSString *path = [mainBundle resourcePath];
 		if (chdir([path UTF8String]) != 0)
 			warn("Could not change working directory.\n");
-		
-		// Create virtual machine
-		c64 = [[C64Proxy alloc] init];
-						
-		// Initialize variables
-		enableOpenGL = false;
-		infoString = @"";
-		memsource = Memory::MEM_RAM;
-		currentCIA = 1;
-		selectedSprite = 0;
-		disassembleStartAddr = [c64 cpuGetPC];
-		redLight = greenLight = updateLight = false;
-		
-		// Create timer
-		cycleCount = 0;
-		timeStamp  = msec();
-		if (!timer)
-			timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/60.0f) 
-				    target:self 
-					selector:@selector(timerFunc) 
-				    userInfo:nil repeats:YES];
-
-		NSLog(@"GUI has been initialized, timer is running");    
     }
     return self;
 }
@@ -197,14 +175,28 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (void)awakeFromNib
 {	
 	NSLog(@"%@ awakeFromNib", self);
+
+	// Initialize variables
+	enableOpenGL = false;
+	memsource = Memory::MEM_RAM;
+	currentCIA = 1;
+	selectedSprite = 0;
 			
+	// Create virtual machine
+	c64 = [[C64Proxy alloc] init];						
+
 	// Register GUI. From now on, we'll receive notifications from the virtual C64
 	[c64 setDocument:self];
 	[c64 setScreen:screen];
 
+	// Reset emulator
+	[c64 reset];
+	
 	// Initialize GUI components
-	[eject setHidden:true];
+	[eject setHidden:true]; // should be done via callback
 	[c64 connectDrive];
+
+	disassembleStartAddr = [c64 cpuGetPC];
 	
 	// get images for port A and B, depends on the available input devices
 	int portA = [c64 getPortAssignment:0];
@@ -281,7 +273,18 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	[memTableView setDoubleAction:@selector(doubleClickInMemTable:)];
 	
 	// Set clock frequency
-	[c64 cpuSetKHz:clockSpeedStepper];		
+	// [c64 cpuSetKHz:clockSpeedStepper];		
+	
+	// Create timer
+	cycleCount = 0;
+	timeStamp  = msec();
+	if (!timer)
+		timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/60.0f) 
+			    target:self 
+				selector:@selector(timerFunc) 
+			    userInfo:nil repeats:YES];
+
+	NSLog(@"GUI has been initialized, timer is running");    
 }
 
 - (NSString *)windowNibName
@@ -303,9 +306,9 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 	/* System */
 	if ([defaults integerForKey:VC64PALorNTSCKey]) {
-		// [c64 setPalMode];
+		[c64 setPAL];
 	} else {
-		// [c64 setNtscMode];
+		[c64 setNTSC];
 	}
 	[c64 cpuEnableIllegalInstructions:[defaults boolForKey:VC64IllegalInstrKey]];
 	[c64 setFastReset:[defaults boolForKey:VC64FastResetKey]];
@@ -507,12 +510,11 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 	// Check CPU status 
 	if (needsRefresh) {
-		[info setStringValue:infoString];
 		[self refresh];
 		needsRefresh = NO;
 	}
 	// Measure clock frequency and frame rate
-	float mhz, fps;
+	float fps;
 	long currentTime   = msec();
 	long currentCycles = [c64 cpuGetCycles];
 	long currentFrames = [screen getFrames];
@@ -523,12 +525,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	// print out how fast we're flying
 	mhz = (float)elapsedCycles / (float)elapsedTime;
 	fps = round(((float)(elapsedFrames * 1000000) / (float)elapsedTime));
-
-	if (updateLight) {
-		[redLED setImage:[NSImage imageNamed:(redLight ? @"LEDred" : @"LEDgray")]];
-		[greenLED setImage:[NSImage imageNamed:(greenLight ? @"LEDgreen" : @"LEDgray")]];
-		updateLight = false;
-	}
 	
 	[clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %02d fps", mhz, (int)fps]];
 	[clockSpeedBar setFloatValue:10.0 * (float)elapsedCycles / (float)elapsedTime];
@@ -726,21 +722,28 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)stepperAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] stepperAction:[c64 cpuGetKHz]];
+	[[undo prepareWithInvocationTarget:self] stepperAction:[NSNumber numberWithInt:-[sender intValue]]];
 	if (![undo isUndoing]) [undo setActionName:@"Clock frequency"];
 
-	[c64 cpuSetKHz:sender];
+	int newFrameDelay = [c64 getFrameDelay] - 1000*[sender intValue];
+	
+	if (newFrameDelay < 0)
+		newFrameDelay = 0;
+		
+	[c64 setFrameDelay:newFrameDelay];
+
+	debug("New frame delay:%d\n", [c64 getFrameDelay]);
 }
 
 - (IBAction)warpAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] warpAction:[NSNumber numberWithInt:[c64 cpuRunsAtNativeSpeed]]];
+	[[undo prepareWithInvocationTarget:self] warpAction:[NSNumber numberWithInt:![c64 cpuGetWarpMode]]];
 	if (![undo isUndoing]) [undo setActionName:@"Native speed"];
-	
+		
 	NSLog(@"Warping");
 	
-	[c64 cpuToggleNativeSpeedFlag];
+	[c64 cpuToggleWarpMode];
 	[self refresh];
 }
 
@@ -1141,6 +1144,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)mhzAction:(id)sender
 {
+#if 0
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] mhzAction:[c64 cpuGetMHz]];
 	if (![undo isUndoing]) [undo setActionName:@"Clock frequency"];
@@ -1148,6 +1152,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	// float value = clip([sender floatValue], 0.1f, 10.0f);
 	[c64 cpuSetMHz:sender];
 	[self refresh];
+#endif
 }
 
 - (void)doubleClickInMemTable:(id)sender
@@ -1888,7 +1893,8 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	[y setIntValue:[c64 cpuGetY]];
 	[pc setIntValue:[c64 cpuGetPC]];
 	[sp setIntValue:[c64 cpuGetSP]];
-	[mhzField setObjectValue:[c64 cpuGetMHz]];
+	// [mhzField setObjectValue:[c64 cpuGetMHz]];
+	[mhzField setFloatValue:mhz];
 	
 	[N setIntValue:[c64 cpuGetN]];
 	[V setIntValue:[c64 cpuGetV]];

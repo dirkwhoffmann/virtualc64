@@ -32,21 +32,29 @@
 
 @protocol ListenerProtocol
 
+// New API:
+// cpuAction(ErrorState)   (running, halted, etc.)
+// runAction, haltAction
+// missingRomAction()
+// driveConnectedAction(bool)
+// driveTransferingDataAction(bool)
+// driveRedLedAction(bool)
+// warpAction(bool)
+// logAction(char *)
+// joystick1Action(int)
+// joystick2Action(int)
+// drawAction()
+
+- (void) missingRomAction;
 - (void) runAction;
 - (void) haltAction;
-- (void) okAction;
-- (void) breakpointAction;
-- (void) watchpointAction;
-- (void) illegalInstructionAction;
-- (void) missingRomAction;
-- (void) connectDriveAction;
-- (void) insertDiskAction;
-- (void) ejectDiskAction;
-- (void) disconnectDriveAction;
-- (void) startDiskAction;
-- (void) stopDiskAction;
-- (void) startWarpAction;
-- (void) stopWarpAction;	
+- (void) cpuAction:(CPU::ErrorState)state;
+
+- (void) driveAttachedAction:(BOOL)connected;
+- (void) driveDiscAction:(BOOL)inserted;
+- (void) driveLEDAction:(BOOL)transfering;
+- (void) driveDataAction:(BOOL)transfering;
+- (void) warpmodeAction:(BOOL)warping;
 - (void) logAction:(char *)message;	
 
 @end
@@ -70,8 +78,6 @@
 	IBOutlet NSButton *drive;
 	IBOutlet NSButton *greenLED;
 	IBOutlet NSButton *redLED;
-	// IBOutlet NSProgressIndicator *driveBusy;
-	// IBOutlet NSTextField *driveProgress;
 	IBOutlet NSTextField *info;
 	IBOutlet NSTextField *clockSpeed;
 	IBOutlet NSLevelIndicator *clockSpeedBar;
@@ -171,9 +177,16 @@
 	long cycleCount, frameCount, timeStamp, animationCounter; // Used in timerFunc
 	uint16_t disassembleStartAddr; // Address of the first disassembled instruction in the CPU Debug window
 	bool enableOpenGL;
-	bool warpLoad;
-	bool redLight, greenLight, updateLight;
-	NSString *infoString;
+
+	// Measured clock frequency
+	float mhz;
+
+	// True, iff disk transfers should be done in warp mode
+	BOOL warpLoad;
+	
+	// True, iff emulator should always run in warp mode
+	// BOOL alwaysWarp; 
+	
 	BOOL needsRefresh; // If set to true, the GUI will refresh
 	
 	// Peek and poke callbacks

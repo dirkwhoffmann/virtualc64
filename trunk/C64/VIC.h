@@ -21,8 +21,7 @@
 #ifndef _VIC_INC
 #define _VIC_INC
 
-#include "basic.h"
-#include "CPU.h"
+#include "VirtualComponent.h"
 
 // Forward declarations
 class C64Memory;

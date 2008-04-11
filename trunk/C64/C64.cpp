@@ -32,15 +32,12 @@ threadCleanup(void* thisC64)
 void 
 *runThread(void *thisC64) {
 
-	C64 *c64 = (C64 *)thisC64;
-	bool needsRedraw = false;   // Set to true by the video controller when a frame is finished
-	uint64_t startTime;
-	uint64_t startCycles;	
-	int cyclePenalty;
-	
 	assert(thisC64 != NULL);
 	
-	debug("CPU execution thread started\n");	
+	C64 *c64 = (C64 *)thisC64;
+	bool needsRedraw = false;   // Set to true by the video controller when a frame is finished
+	int cyclePenalty;
+	
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 	pthread_cleanup_push(threadCleanup, thisC64);
@@ -48,14 +45,14 @@ void
 	// Prepare to run...
 	c64->cpu->clearErrorState();
 	c64->floppy->cpu->clearErrorState();
-	startTime   = msec();
-	startCycles = c64->cpu->getCycles();
-	
-	while (1) {
+	c64->setDelay((uint64_t)(1000000 / c64->fps));
 
+	debug("CPU execution thread started\n");	
+	while (1) {
+		
 		int executedCycles, i;
 	
-		executedCycles = VIC::NTSC_CYCLES_PER_RASTERLINE;
+		executedCycles = c64->getCpuCyclesPerRasterline(); //VIC::NTSC_CYCLES_PER_RASTERLINE;
 		for (i = 0; i < executedCycles; i++) {
 			c64->cpu->executeOneCycle(cyclePenalty); 
 			cyclePenalty = 0;
@@ -92,21 +89,9 @@ void
 			}
 						   
 			// Synchronize time
-			uint64_t elapsedCycles = c64->cpu->getCycles() - startCycles;
-			uint64_t elapsedTime   = (uint64_t)((float)elapsedCycles / c64->cpu->getMHz());
-			uint64_t timeToSleep   = elapsedTime - (msec() - startTime);
-			if (timeToSleep > 0 && !c64->cpu->getWarpMode()) {
-				sleepMicrosec(timeToSleep);	
-			} else {
-				// debug("NOT SLEEPING\n");
-			}
-
-			// After each second, we reset the startTime and startCycles.
-			if (elapsedTime > 1000000) {
-				startTime = msec();
-				startCycles = c64->cpu->getCycles();
-			}
-				
+			if (!c64->cpu->getWarpMode()) 
+				c64->synchronizeTiming();
+					
 			// We have reached a safe point to terminate the thread (if requested)
 			pthread_testcancel();
 		}
@@ -118,14 +103,15 @@ void
 	pthread_exit(NULL);	
 }
 
-
 C64::C64()
 {
-	enableWarpLoad  = true;
-	enableFastReset = true;
-
+	wasRunningBefore = false; 
+	enableWarpLoad   = true;
+	enableFastReset  = true;
+	setNTSC();
+	
 	// Create virtual memory
-	mem = new C64Memory(); //C64Memory();
+	mem = new C64Memory();
 				
 	// Create virtual CPU
 	cpu = new CPU();		
@@ -210,7 +196,7 @@ C64::C64()
 	iec->setDrive(floppy);
 	
 	p = NULL;
-	reset();
+	// reset();
 	debug("Created virtual C64 at address %p\n", this);
 }
 
@@ -343,6 +329,11 @@ C64::threadCleanup()
 
 void 
 C64::run() {
+
+	if (!wasRunningBefore) {
+		// The emulator is started for the first time
+	}
+
 	if (isHalted()) {
 
 		// Check for ROM images
@@ -425,6 +416,28 @@ C64::load(FILE *file)
 	return true;
 }
 
+void 
+C64::setDelay(int delay) 
+{ 
+	frameDelay = delay;
+	targetTime = msec() + frameDelay;
+}
+
+void 
+C64::synchronizeTiming()
+{
+	// determine how long we should wait
+	uint64_t timeToSleep = targetTime - msec();
+	
+	// update target time
+	targetTime += (uint64_t)frameDelay;
+	
+	// sleep
+	if (timeToSleep > 0) {
+		sleepMicrosec(timeToSleep);
+	}
+}
+
 bool 
 C64::save(FILE *file)
 {	
@@ -455,6 +468,30 @@ C64::save(FILE *file)
 	
 	resume();
 	return true;
+}
+
+void
+C64::setPAL()
+{
+	fps = 50;
+	noOfRasterlines = 312; 
+	cpuCyclesPerRasterline = 63;
+	// TODO
+	// vic->setNumberOfRasterlines(noOfRasterlines);
+	// sid->setPAL()
+	frameDelay = (1000000 / fps);
+}
+
+void 
+C64::setNTSC()
+{
+	fps = 60;
+	noOfRasterlines = 263; 
+	cpuCyclesPerRasterline = 65;	
+	// TODO
+	// vic->setNumberOfRasterlines(noOfRasterlines);
+	// sid->setNTSC()
+	frameDelay = (1000000 / fps);
 }
 
 bool 

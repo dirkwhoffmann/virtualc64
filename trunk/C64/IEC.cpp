@@ -21,7 +21,9 @@
 IEC::IEC()
 {
 	drive = NULL;
-	reset();
+//	driveConnected = true;
+//	setDeviceClockPin(1);
+//	setDeviceDataPin(1);
 }
 
 IEC::~IEC()
@@ -31,7 +33,7 @@ IEC::~IEC()
 void 
 IEC::reset()
 {
-	driveConnected = true;
+	connectDrive();
 	setDeviceClockPin(1);
 	setDeviceDataPin(1);
 }
@@ -82,14 +84,14 @@ void
 IEC::connectDrive() 
 { 
 	driveConnected = true; 
-	getListener()->connectDriveAction();
+	getListener()->driveAttachedAction(driveConnected);
 }
 	
 void 
 IEC::disconnectDrive()
 { 
 	driveConnected = false; 
-	getListener()->disconnectDriveAction();
+	getListener()->driveAttachedAction(driveConnected);
 }
 
 bool IEC::_updateIecLines(bool *atnedge)
