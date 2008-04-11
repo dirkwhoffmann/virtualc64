@@ -52,8 +52,9 @@
 
 - (void) driveAttachedAction:(BOOL)connected;
 - (void) driveDiscAction:(BOOL)inserted;
-- (void) driveLEDAction:(BOOL)transfering;
+- (void) driveLEDAction:(BOOL)on;
 - (void) driveDataAction:(BOOL)transfering;
+- (void) driveMotorAction:(BOOL)rotating;
 - (void) warpmodeAction:(BOOL)warping;
 - (void) logAction:(char *)message;	
 
@@ -78,6 +79,7 @@
 	IBOutlet NSButton *drive;
 	IBOutlet NSButton *greenLED;
 	IBOutlet NSButton *redLED;
+	IBOutlet NSProgressIndicator *driveBusy;
 	IBOutlet NSTextField *info;
 	IBOutlet NSTextField *clockSpeed;
 	IBOutlet NSLevelIndicator *clockSpeedBar;
@@ -183,10 +185,7 @@
 
 	// True, iff disk transfers should be done in warp mode
 	BOOL warpLoad;
-	
-	// True, iff emulator should always run in warp mode
-	// BOOL alwaysWarp; 
-	
+		
 	BOOL needsRefresh; // If set to true, the GUI will refresh
 	
 	// Peek and poke callbacks

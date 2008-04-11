@@ -48,6 +48,7 @@ public:
 	void driveDiscAction(bool inserted);
 	void driveLEDAction(bool on);
 	void driveDataAction(bool transfering);
+	void driveMotorAction(bool rotating);
 	void warpAction(bool warping);
 	void logAction(char *message);
 };

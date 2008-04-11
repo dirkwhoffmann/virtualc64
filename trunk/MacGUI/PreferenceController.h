@@ -102,14 +102,15 @@ extern NSString *VC64CustomCol15Key;
 - (IBAction)setNtscAction:(id)sender;
 - (IBAction)togglePalNtscAction:(id)sender;
 
+- (IBAction)warpLoadAction:(id)sender;
+
 - (IBAction)changeColorScheme:(id)sender;
 - (IBAction)setColorAction:(id)sender;
 
-- (IBAction)SIDVolumeAction:(id)sender;
-
-- (IBAction)OKAction:(id)sender;
-- (IBAction)ApplyAction:(id)sender;
-- (IBAction)CancelAction:(id)sender;
+//- (IBAction)SIDVolumeAction:(id)sender;
+//- (IBAction)OKAction:(id)sender;
+//- (IBAction)ApplyAction:(id)sender;
+//- (IBAction)CancelAction:(id)sender;
 
 - (void)setC64:(C64Proxy *)proxy;
 - (void)setDoc:(MyDocument *)doc;

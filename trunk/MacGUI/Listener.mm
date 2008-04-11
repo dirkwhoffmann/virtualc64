@@ -136,6 +136,25 @@
 	[arp release];
 }
 
+- (void) driveMotorAction:(BOOL)rotating
+{
+	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
+
+	NSLog(@"driveMotorAction");
+	debug("Warpload = %d\n", warpLoad);
+
+	if (rotating) {
+		[driveBusy setHidden:false];
+		[driveBusy startAnimation:self];
+	} else {
+		[driveBusy stopAnimation:self];
+		[driveBusy setHidden:true];
+	}
+	
+	//if (warpLoad)
+	//	[c64 cpuSetWarpMode:rotating];
+	[arp release];
+}
 
 - (void) warpmodeAction:(BOOL)warping
 {
