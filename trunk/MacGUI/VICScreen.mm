@@ -573,10 +573,12 @@ int  myargc = 1;
 
 - (NSImage *)screenshot
 {
-	// int height=(int)NSHeight([self visibleRect]);
-	// int width=(int)NSWidth([self visibleRect]);
-	int height=(int)NSHeight([self frame]);
-	int width=(int)NSWidth([self frame]);
+	int height=(int)NSHeight([self visibleRect]);
+	int width=(int)NSWidth([self visibleRect]);
+	//int height=(int)NSHeight([self frame]);
+	//int width=(int)NSWidth([self frame]);
+	
+	//width = 512;
 	
 	NSBitmapImageRep *imageRep;
 	NSImage *image;
@@ -589,7 +591,7 @@ int  myargc = 1;
 														hasAlpha:YES
 														isPlanar:NO
 												  colorSpaceName:NSCalibratedRGBColorSpace
-													 bytesPerRow:0
+													 bytesPerRow:width*4
 													bitsPerPixel:0] autorelease];
 	[[self openGLContext] makeCurrentContext];
 	glReadPixels(0,0,width,height,GL_RGBA,GL_UNSIGNED_BYTE,[imageRep bitmapData]);
