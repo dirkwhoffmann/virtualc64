@@ -610,8 +610,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (void) printDocument:(id) sender
 {
-	NSLog(@"Requested to print document...\n");
-
 	// Set printing properties
 	NSPrintInfo *myPrintInfo = [self printInfo];
 	[myPrintInfo setHorizontalPagination:NSFitPagination];
@@ -619,20 +617,19 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	[myPrintInfo setVerticalPagination:NSFitPagination];
 	[myPrintInfo setVerticallyCentered:YES];
 	[myPrintInfo setOrientation:NSLandscapeOrientation];
-	[myPrintInfo setLeftMargin:32.0];
-	[myPrintInfo setRightMargin:32.0];
-	[myPrintInfo setTopMargin:32.0];
-	[myPrintInfo setBottomMargin:32.0];
+	[myPrintInfo setLeftMargin:0.0]; // 32.0
+	[myPrintInfo setRightMargin:0.0]; // 32.0
+	[myPrintInfo setTopMargin:0.0]; // 32.0
+	[myPrintInfo setBottomMargin:0.0]; // 32.0
 	
+	// Capture image and create image view
 	NSImage *image = [screen screenshot];
 	NSRect printRect = NSMakeRect(0.0, 0.0, [image size].width, [image size].height);
-//	NSRect printRect = NSMakeRect(0.0, 0.0, 320, 200); //[image size].width, [image size].height);
-//	NSRect printRect = NSMakeRect(0.0, 0.0, 470, 300); //[image size].width, [image size].height);
-	debug("Width = %d, Height = %d\n", (int)[image size].width, (int)[image size].height);
 	NSImageView *imageView = [[NSImageView alloc] initWithFrame:printRect];
 	[imageView setImage:image];
 	[imageView setImageScaling:NSScaleToFit];
-	
+
+	// Print image
     NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:imageView  printInfo:myPrintInfo];
     [printOperation runOperationModalForWindow:theWindow delegate: nil didRunSelector: NULL contextInfo:NULL];
 
