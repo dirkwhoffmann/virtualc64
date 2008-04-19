@@ -420,37 +420,44 @@ CIA::incrementTOD()
 		triggerInterrupt(0x04);
 }
 			
-bool 
-CIA::execute(int elapsedCycles)
+void 
+CIA::executeOneCycle()
 {
 	int underflowA; 
-	
-	if (elapsedCycles == 0)
-		return true;
-	
+		
 	if (isStartedA()) { 
-		if (timerA <= elapsedCycles) {
+		if (timerA <= 1) {
 			underflowA = 1;
 			reloadTimerA(); 
 			timerActionA();
 		} else {
 			underflowA = 0;
-			timerA -= elapsedCycles;
+			timerA --;
 		}
 	}
 
 	if (isStartedB()) { 
-		if (timerB <= elapsedCycles) {
+		if (timerB <= 1) {
 			reloadTimerB();
 			timerActionB();
 		} else {
-			timerB -= (getCountUnderflowFlagB() ? underflowA : elapsedCycles);
+			timerB -= (getCountUnderflowFlagB() ? underflowA : 1);
 		}
 	}
 	
-	return true;
+	// return true;
 }
 
+void 
+CIA::execute(int cycles)
+{
+	while (cycles > 0) {
+		(void)executeOneCycle();
+		cycles--;
+	}
+	//return true;
+}
+		
 void CIA::dumpState()
 {
 	debug("Timer A: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
