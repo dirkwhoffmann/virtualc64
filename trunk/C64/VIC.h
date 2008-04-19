@@ -779,12 +779,19 @@ public:
 	//! Increment rasterline by one
 	/*! When a frame is finished, the rasterlines is reset to 0. The function also triggers a rasterline interrupt,
 		if the current line matches the interrupt target. */
-	void VIC::moveRasterline(bool *needsRedraw);
+	void moveRasterline(bool *needsRedraw);
+
+	//! Set rasterline
+	/*! Called within the execute method. Updates internal values. The function also triggers a rasterline interrupt,
+		if the current line matches the interrupt target. */
+	void setRasterline(int line);
 	
 	//! Copy data from the screen memory and color memory into VIC-chips internal memory
 	/*! The function is invoked whenever a DMA line is reached (each 8th rasterline) */
-	void VIC::fetchData(uint16_t line);
+	void fetchData(uint16_t line);
 	
+	bool executeOneLine(int line, int *deadCycles);
+
 	//! Draw next scan line
 	/*! This method brings the VIC chip to life. It is called whenever the next scan line needs to be drawn.
 		\param needsRedraw Is set to true, iff a frame is completed. If the VIC-chip is in the middle
@@ -793,7 +800,7 @@ public:
 		the data to display. In this case, cyclePenalty will contain the lost cycles for the CPU, otherwise 0.
 		\return True, iff no error has occurred.
 	*/
-	bool execute(bool *needsRedraw, int *cyclePenalty);
+	// bool execute(bool *needsRedraw, int *cyclePenalty);
 
 	void VIC::dumpState();	
 };
