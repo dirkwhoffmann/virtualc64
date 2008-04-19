@@ -69,9 +69,7 @@ SID::SID()
 	
 	// by default SID treats buffer as interleaved buffer
 	mono = false;
-	
-	executedCycles = 0;
-	
+		
 	// init ringbuffer
 	bufferSize = 12288;
 	ringBuffer = new float[bufferSize];
@@ -348,13 +346,11 @@ SID::execute(int elapsedCycles)
 	// them in the middle of our calculations
 	float cf_ampl = f_ampl;
 	float cd1 = d1, cd2 = d2, cg1 = g1, cg2 = g2;
-
+	
 	// calculate how many samples we have to generate for this video frame
 	// (at samplerate of 44,1kHz and NTSC video mode (60Hz) it should be about 735 samples) 
-	int samples = lroundf( this->executedCycles * this->samplerateCpuFrequencyRp );
-	
-	this->executedCycles = 0; //reset counter of executed CPU cycles
-	
+	int samples = lroundf( elapsedCycles * this->samplerateCpuFrequencyRp );
+		
 	// store here how many samples we've generated in advance of callback
 	this->preCalcSamples += samples;
 	

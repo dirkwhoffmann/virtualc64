@@ -302,6 +302,8 @@ public:
 	
 	int getCpuCyclesPerRasterline() { return cpuCyclesPerRasterline; }
 		
+	int getCpuCyclesPerFrame() { return cpuCyclesPerRasterline * noOfRasterlines; }
+	
 	//! Assign an archive to the virtual C64
 	void setArchive (Archive *a) { archive = a; }
 
