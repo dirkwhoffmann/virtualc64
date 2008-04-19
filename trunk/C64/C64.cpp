@@ -35,10 +35,12 @@ void
 	assert(thisC64 != NULL);
 	
 	C64 *c64 = (C64 *)thisC64;
-	bool needsRedraw = false;   // Set to true by the video controller when a frame is finished
-	int cyclePenalty;
+	int cyclePenalty; // Cleanup: Should be handles elsewhere...
+
+	int cyclesPerRasterline, noOfRasterlines, rasterline, cycle;
 	
 	// Configure thread properties...
+	debug("CPU execution thread started\n");
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 	pthread_cleanup_push(threadCleanup, thisC64);
@@ -48,56 +50,52 @@ void
 	c64->floppy->cpu->clearErrorState();
 	c64->setDelay((uint64_t)(1000000 / c64->fps));
 
-	debug("CPU execution thread started\n");	
 	while (1) {
-		
-		int executedCycles, i;
-	
-		executedCycles = c64->getCpuCyclesPerRasterline();
-		for (i = 0; i < executedCycles; i++) {
+		// Compute frame...
+		cyclesPerRasterline = c64->getCpuCyclesPerRasterline();
+		noOfRasterlines     = c64->noOfRasterlines;
+		for (rasterline = 0; rasterline < noOfRasterlines; rasterline++) {		
 
-			// Pass control to the virtual CPUs
-			c64->cpu->executeOneCycle(cyclePenalty); 
-			cyclePenalty = 0;
-			if (c64->cpu->getErrorState() != CPU::OK) break;
-			c64->floppy->executeOneCycle();
-			if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
+			// For each rasterline...
+			for (cycle = 0; cycle < cyclesPerRasterline; cycle++) {
 
-			// Pass constrol to the virtual CIA chips
-			c64->cia1->executeOneCycle();
-			c64->cia2->executeOneCycle();
-		}
-		if (c64->cpu->getErrorState() != CPU::OK) break;
-		if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
-			
-		// Pass control to the virtual display (draw next raster line)
-		c64->vic->execute(&needsRedraw, &cyclePenalty);
+				// Pass control to the virtual CPUs
+				c64->cpu->executeOneCycle(cyclePenalty); 
+				cyclePenalty = 0;
+				if (c64->cpu->getErrorState() != CPU::OK) break;
+				c64->floppy->executeOneCycle();
+				if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
 
-		// tell SID how many cycles the cpu computed
-		c64->sid->setExecutedCycles(executedCycles);
-		
-		if (needsRedraw) {
-
-			// Pass control to the virtual sound chip
-			// if VIC has drawn one entire frame, the SID chip generates sound samples
-			c64->sid->execute(executedCycles);
-
-			// Inform listener that a frame is complete
-			needsRedraw = false;			
-
-			// Increment the "time of day clocks" every tenth of a second
-			if (c64->vic->getFrame() % 6 == 0) {
-				c64->cia1->incrementTOD();
-				c64->cia2->incrementTOD();
+				// Pass constrol to the virtual CIA chips
+				c64->cia1->executeOneCycle();
+				c64->cia2->executeOneCycle();
 			}
-						   
-			// Synchronize time
-			if (!c64->cpu->getWarpMode()) 
-				c64->synchronizeTiming();
-					
-			// We have reached a safe point to terminate the thread (if requested)
-			pthread_testcancel();
+			if (c64->cpu->getErrorState() != CPU::OK) break;
+			if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
+			
+			// Pass control to the virtual display (draw raster line)
+			c64->vic->executeOneLine(rasterline, &cyclePenalty);
 		}
+
+		// Frame completed...
+
+		// Pass control to the virtual sound chip
+		// if VIC has drawn one entire frame, the SID chip generates sound samples
+		c64->sid->execute(c64->getCpuCyclesPerFrame());
+
+		// Increment the "time of day clocks" every tenth of a second
+		// TODO: Contant "6" needs to be 5 or 6, depending on PAL or NTSC mode
+		if (c64->vic->getFrame() % 6 == 0) {
+			c64->cia1->incrementTOD();
+			c64->cia2->incrementTOD();
+		}
+						   
+		// Sleep... 
+		if (!c64->cpu->getWarpMode()) 
+			c64->synchronizeTiming();
+				
+		// Notify that we've reached a safe point to terminate the thread 
+		pthread_testcancel();
 	}
 	
 	debug("Execution thread terminated\n");	

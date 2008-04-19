@@ -797,17 +797,16 @@ VIC::triggerIRQ(uint8_t source)
 }
 
 inline void 
-VIC::moveRasterline(bool *needsRedraw)
+VIC::setRasterline(int line)
 {
-	// Reset rasterline, if a frame is completed
-	if (scanline == lastScanline) {
+	scanline = line;
+	
+	// New frame?
+	if (scanline == 0) {
 		frame++;
-		scanline = 0;
-		*needsRedraw = true;
+		// *needsRedraw = true;
 		getListener()->drawAction(currentScreenBuffer);
 		currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
-	} else {
-		scanline++;
 	}
 	
 	// Check, if scanline matches the preset raster value for interrupts
@@ -837,19 +836,12 @@ VIC::fetchData(uint16_t line)
 }
 
 bool 
-VIC::execute(bool *needsRedraw, int *deadCycles)
+VIC::executeOneLine(int line, int *deadCycles)
 {
 	bool validDisplayMode = true;
 	
-	// Move rasterline to the next row
-	moveRasterline(needsRedraw);
-
-#if 0
-	// If the current rasterline is out of the visible range, we bail out immediately
-	if (scanline < 0x10 || scanline > 0x11F) 
-		return true;
-#endif
-	
+	setRasterline(line);
+		
 	// Draw directly into screenBuffer
 	// pixelBuffer = currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH);
 	
@@ -905,22 +897,6 @@ VIC::execute(bool *needsRedraw, int *deadCycles)
 			uint8_t spriteLine = spriteLineToDraw[i][scanline];
 			if (spriteLine != 0xff)
 				drawSprite(spriteLine, i);
-/*
-			if (spriteIsEnabled(i)) {
-				uint16_t spriteYStart = 1 + getSpriteY(i);
-				uint16_t spriteYEnd;
-				uint8_t  spriteLine;
-				if (spriteHeightIsDoubled(i)) {
-					spriteYEnd = spriteYStart + 41;
-					spriteLine = (scanline-spriteYStart) / 2;
-				} else {
-					spriteYEnd = spriteYStart + 19;
-					spriteLine = scanline-spriteYStart;
-				}
-				if (scanline >= spriteYStart && scanline <= spriteYEnd)
-					drawSprite(spriteLine, i);
-			}
- */
 		}
 	}
 	

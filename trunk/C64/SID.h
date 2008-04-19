@@ -77,10 +77,7 @@ private:
 	
 	//! True if output buffer filled in mix() with samples is not a interleaved buffer.
 	bool mono;
-	
-	//! Stores how many cycles CPU has executed since last frame.
-	uint32_t executedCycles;
-	
+		
 	//! Stores number of precalculated samples in \a ringBuffer.
 	uint32_t preCalcSamples;
 	
@@ -251,10 +248,7 @@ public:
 		\param cycles Number of cycles to execute (ignored).
 	*/
 	bool execute(int cycles);
-	
-	//! Tells SID how many CPU cycles have been executed since last call of this method.
-	void setExecutedCycles(uint32_t cycles) {executedCycles += cycles;}
-	
+		
 	//! Tells SID to handle output buffer in mix() as a noninterleaved buffer.
 	void setMono() {this->mono = true;}
 	
