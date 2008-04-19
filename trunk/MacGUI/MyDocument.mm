@@ -68,7 +68,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	// Put default values into dictionary
 
 	/* System */
-	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:VC64PALorNTSCKey];
+	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64PALorNTSCKey];
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64IllegalInstrKey];
 	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:VC64FastResetKey];
 		
@@ -306,9 +306,9 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 	/* System */
 	if ([defaults integerForKey:VC64PALorNTSCKey]) {
-		[c64 setPAL];
-	} else {
 		[c64 setNTSC];
+	} else {
+		[c64 setPAL];
 	}
 	[c64 cpuEnableIllegalInstructions:[defaults boolForKey:VC64IllegalInstrKey]];
 	[c64 setFastReset:[defaults boolForKey:VC64FastResetKey]];

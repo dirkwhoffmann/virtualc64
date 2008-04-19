@@ -377,11 +377,16 @@ public:
 	// -----------------------------------------------------------------------------------------------
 	
 	//! Pass control to the CIA chip
-	/*! The CIA will be executed for the specified number of clock cycles.
+	/*! The CIA will be executed for one clock cycle
 		The functions decreases all running counters and triggers an CPU interrput if necessary.
+	*/
+	void executeOneCycle(); 
+
+	//! Pass control to the CIA chip
+	/*! The CIA will be executed for the specified number of clock cycles.
 		\param cycles Number of cycles to execute
 	*/
-	bool execute(int cycles); 
+	void execute(int cycles); 
 	
 	//! Increment the TOD clock by one tenth of a second
 	/*! Issues an interrupt if the alarm time is reached.

@@ -38,6 +38,7 @@ void
 	bool needsRedraw = false;   // Set to true by the video controller when a frame is finished
 	int cyclePenalty;
 	
+	// Configure thread properties...
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 	pthread_cleanup_push(threadCleanup, thisC64);
@@ -52,21 +53,23 @@ void
 		
 		int executedCycles, i;
 	
-		executedCycles = c64->getCpuCyclesPerRasterline(); //VIC::NTSC_CYCLES_PER_RASTERLINE;
+		executedCycles = c64->getCpuCyclesPerRasterline();
 		for (i = 0; i < executedCycles; i++) {
+
+			// Pass control to the virtual CPUs
 			c64->cpu->executeOneCycle(cyclePenalty); 
 			cyclePenalty = 0;
 			if (c64->cpu->getErrorState() != CPU::OK) break;
 			c64->floppy->executeOneCycle();
 			if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
+
+			// Pass constrol to the virtual CIA chips
+			c64->cia1->executeOneCycle();
+			c64->cia2->executeOneCycle();
 		}
 		if (c64->cpu->getErrorState() != CPU::OK) break;
 		if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
-		
-		// Pass constrol to the virtual CIA chips
-		c64->cia1->execute(executedCycles);
-		c64->cia2->execute(executedCycles);
-	
+			
 		// Pass control to the virtual display (draw next raster line)
 		c64->vic->execute(&needsRedraw, &cyclePenalty);
 
