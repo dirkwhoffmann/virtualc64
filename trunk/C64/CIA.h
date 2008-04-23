@@ -477,6 +477,8 @@ public:
 	void joystickAction(int nr, uint8_t value);
 	void setJoystickBits(int nr, uint8_t mask);
 	void clearJoystickBits(int nr, uint8_t mask);
+
+	void dumpState();
 };
 	
 //! The second virtual complex interface adapter (CIA 2)

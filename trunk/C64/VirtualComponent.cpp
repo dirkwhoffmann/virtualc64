@@ -91,11 +91,16 @@ VirtualComponent::debug(char *fmt, ...)
 
 	va_list ap;
 	va_start(ap, fmt);
-	vfprintf(stderr, fmt, ap); fflush(stderr);
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
 	va_end(ap);
-	if (listener)
+
+	// Pass message to listener...
+	if (listener) {
 		listener->logAction(strdup(buf));	
+	} 
+
+	// Dump message to stderr...
+	fprintf(stderr, "%s", buf);
 }
 
 

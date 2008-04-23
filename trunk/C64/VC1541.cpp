@@ -306,7 +306,7 @@ VC1541::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest)
 	dest[3] = (shift_reg >> 8) & 0xFF;
 	dest[4] = shift_reg & 0xFF;
 
-//#if 0
+#if 0
 	// compare to FRODO (for debugging)
 	{
 		uint8_t source[4];
@@ -319,7 +319,7 @@ VC1541::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest)
 		}
 	}
 	return;
-//#endif
+#endif
 }
 
 int 

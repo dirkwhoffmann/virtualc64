@@ -27,7 +27,7 @@ protected:
 	//! VIA I/O Memory
 	/*! Whenever a value is poked to the VIA address space, it is stored here. */
 	uint8_t io[16];
-
+	
 public:
 	//! Reference to the connected disk drive. 
 	VC1541 *floppy;
@@ -79,10 +79,6 @@ private:
 	*/
 	uint8_t t2_latch_lo, t2_counter_lo, t2_counter_hi;
 	
-	//! Timer on/off status 
-	//bool timer_1_running;
-	//bool timer_2_running;
-
 public:	
 	//! Constructor
 	VIA6522();

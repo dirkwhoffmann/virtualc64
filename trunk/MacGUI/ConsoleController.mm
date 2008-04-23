@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006-2008 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,19 +23,17 @@
 
 
 - (id)init
-{
-//	int i;
+{	
+	int i;
 	
 	self = [super initWithWindowNibName:@"Console"];
 
-#if 0	
-	pthread_mutex_init(&ringbuffer_lock, NULL); 
+	pthread_mutex_init(&ringbuffer_lock, NULL);
 	writePtr = 0;
-		
-	for (i = 0; i < MAX_CONSOLE_ENTRIES; i++) 
+	
+	for (i = 0; i < MAX_CONSOLE_ENTRIES; i++)
 		ringbuffer[i] = NULL;
-#endif
-
+		
 	return self;
 }
 	
@@ -51,14 +49,16 @@
 
 - (void)awakeFromNib 
 {
-	[log setString:@"Welcome to Virtual C64\n"];
-	[log insertText:[NSString stringWithFormat:@"Build %d\n", [c64 buildNr]]];
+	// [log setString:@"Welcome to Virtual C64\n"];
+	// [log insertText:[NSString stringWithFormat:@"Build %d\n", [c64 buildNr]]];
 }
 
 - (IBAction)traceCPUAction:(id)sender
 {	
 	if ([c64 cpuTracingEnabled]) {
 		[c64 cpuSetTraceMode:NO];
+		[console reloadData];
+		[console setNeedsDisplay:YES];
 	} else {
 		[c64 cpuSetTraceMode:YES];
 	}
@@ -68,6 +68,8 @@
 {	
 	if ([c64 iecTracingEnabled]) {
 		[c64 iecSetTraceMode:NO];
+		[console reloadData];
+		[console setNeedsDisplay:YES];
 	} else {
 		[c64 iecSetTraceMode:YES];
 		NSLog(@"IEC tracing enabled");
@@ -78,42 +80,70 @@
 {
 	NSLog(@"Dump CPU");
 	[c64 dumpCPU];
+	[console reloadData];
+	[console setNeedsDisplay:YES];
 }
 
 - (IBAction)dumpCIAAction:(id)sender
 {
 	NSLog(@"Dump CIA");
 	[c64 dumpCIA];
+	[console reloadData];
+	[console setNeedsDisplay:YES];
 }
 
 - (IBAction)dumpVICAction:(id)sender
 {
 	NSLog(@"Dump VIC");
 	[c64 dumpVIC];
+	[console reloadData];
+	[console setNeedsDisplay:YES];
 }
 
 - (IBAction)dumpIECAction:(id)sender
 {
 	NSLog(@"Dump IEC");
 	[c64 dumpIEC];
+	[console reloadData];
+	[console setNeedsDisplay:YES];
 }
 
 - (IBAction)dumpMemoryAction:(id)sender
 {
 	NSLog(@"Dump Memory");
 	[c64 dumpMemory];
+	[console reloadData];
+	[console setNeedsDisplay:YES];
 }
 
 - (IBAction)dumpDriveAction:(id)sender
 {
 	NSLog(@"Dump Drive");
 	[c64 dumpDrive];
+	[console reloadData];
+	[console setNeedsDisplay:YES];
 }
 
+- (IBAction)refreshAction:(id)sender		
+{		
+	[console reloadData];		
+	[console setNeedsDisplay:YES];
+	// debug("Last entry: %s\n", ringbuffer[writePtr-1]);		
+}
 	
 - (IBAction)clearAction:(id)sender
 {
-	[log setString:@""];
+	// [log setString:@""];
+	int i;		
+		
+	pthread_mutex_lock(&ringbuffer_lock);		
+	writePtr = 0;		
+	for (i = 0; i < MAX_CONSOLE_ENTRIES; i++)		
+		ringbuffer[i] = NULL;		
+	pthread_mutex_unlock(&ringbuffer_lock);		
+		
+	[console reloadData];		
+	[bgImage setNeedsDisplay:YES];
 }
 
 - (IBAction)rasterlineAction:(id)sender
@@ -126,9 +156,76 @@
 	[c64 vicToggleDrawSprites];
 }
 
+- (int)numberOfRowsInTableView:(NSTableView *)aTableView		
+{		
+	int result;		
+		
+	pthread_mutex_lock(&ringbuffer_lock);		
+	if (ringbuffer[writePtr] != NULL)		
+		result = MAX_CONSOLE_ENTRIES; // buffer already filled		
+	else		
+		result = writePtr;		
+	pthread_mutex_unlock(&ringbuffer_lock);		
+		
+	return result;		
+}		
+	
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row		
+{		
+	int index;		
+	NSString *result;		
+		
+	pthread_mutex_lock(&ringbuffer_lock);		
+	if (ringbuffer[writePtr] == NULL)		
+		index = row;		
+	else		
+		index = (writePtr + row) % MAX_CONSOLE_ENTRIES;		
+	result = [NSString stringWithFormat:@"%s", ringbuffer[index]];		
+		
+	if (row == 999)		
+		NSLog(result);		
+		
+	pthread_mutex_unlock(&ringbuffer_lock);		
+		
+	return result;		
+}		
+		
+- (void)tableView: (NSTableView *)aTableView willDisplayCell: (id)aCell forTableColumn: (NSTableColumn *)aTableColumn row: (int)row		
+{		
+	[aCell setTextColor:[NSColor blackColor]];		
+}		
+		
+- (void)_insertText:(char *)message		
+{		
+	if (ringbuffer[writePtr]) {		
+		free(ringbuffer[writePtr]);		
+	}		
+	ringbuffer[writePtr] = message;		
+	writePtr++;		
+	if (writePtr == MAX_CONSOLE_ENTRIES)		
+		writePtr = 0;		
+}
+
 - (void)insertText:(char *)message
 {
-	[log insertText:[NSString stringWithUTF8String:message]];
+	pthread_mutex_lock(&ringbuffer_lock);		
+	[self _insertText:message];		
+	pthread_mutex_unlock(&ringbuffer_lock);		
+		
+	[console reloadData];
+	[console setNeedsDisplay:YES];
 }
+
+#if 0
+- (void)_insertText:(NSString *)message
+{
+	[log insertText:message];	
+}
+
+- (void)insertText:(char *)message
+{
+	[self performSelectorOnMainThread:@selector(_insertText:) withObject:[NSString stringWithUTF8String:message] waitUntilDone:NO];
+}
+#endif
 
 @end
