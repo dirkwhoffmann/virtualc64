@@ -256,24 +256,23 @@ int  myargc = 1;
 	float r, g, b, a;
 	float xoffset, yoffset, offset;
 			
-	debug("Create texture data from image... %p\n", texture_data);
 	NSImage *image = [NSImage imageNamed:@"c64"];
 	// NSImage *image = [NSImage imageNamed:@"schaltplan"];
 	NSColor *theColor;
 	if (image == NULL) {
-		debug("Image not found!");
+		printf("Image not found!");
 		return;
 	}
 	height  = [image size].height;
 	width   = [image size].width;
-	debug("Image size: %d x %d\n", height, width);	
+	printf("Image size: %d x %d\n", height, width);	
 
 	xoffset = (float)width / (float)BG_TEXTURE_WIDTH;
 	yoffset = (float)height / (float)BG_TEXTURE_HEIGHT;
 	offset  = (xoffset < yoffset) ? xoffset : yoffset;
 	ymax    = (int)((float)(BG_TEXTURE_HEIGHT-1) * yoffset);
 	
-	debug("xoffset = %f yoffset = %f", xoffset, yoffset);
+	printf("xoffset = %f yoffset = %f", xoffset, yoffset);
 		
 	// Copy bitmap data to texture buffer
 	[image lockFocus];

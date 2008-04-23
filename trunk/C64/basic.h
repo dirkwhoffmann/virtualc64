@@ -169,7 +169,7 @@ void sleepMicrosec(uint64_t millisec);
 
 //! Write debugging message
 /*! Syntax is similar to the printf function. The function only takes effect in debug mode.  */
-void debug(char *fmt, ...);
+//void debug(char *fmt, ...);
 //! Write debugging message (warning style)
 /*! Syntax is similar to the standard printf function. The function only takes effect in debug mode. */
 void warn(char *fmt, ...);

@@ -49,48 +49,48 @@ C64Listener::haltAction()
 void 
 C64Listener::missingRomAction() 
 {
-	debug("C64 dummy listener: At least one ROM image is missing. Emulator can't run.\n");
+	printf("C64 dummy listener: At least one ROM image is missing. Emulator can't run.\n");
 }
 
 void
 C64Listener::driveAttachedAction(bool connected)
 {
-	debug("C64 dummy listener: Drive %s\n", connected ? "connected" : "disconnected");
+	printf("C64 dummy listener: Drive %s\n", connected ? "connected" : "disconnected");
 }
 
 void
 C64Listener::driveDiscAction(bool inserted)
 {
-	debug("C64 dummy listener: Floppy disc %s\n", inserted ? "inserted" : "ejected");
+	printf("C64 dummy listener: Floppy disc %s\n", inserted ? "inserted" : "ejected");
 }	
 
 void
 C64Listener::driveLEDAction(bool on)
 {
-	debug("C64 dummy listener: Red LED %s\n", on ? "on" : "off");
+	printf("C64 dummy listener: Red LED %s\n", on ? "on" : "off");
 }
 
 void
 C64Listener::driveDataAction(bool transfering)
 {
-	debug("C64 dummy listener: Data transfer to/from drive: %s\n", transfering ? "started" : "stopped");
+	printf("C64 dummy listener: Data transfer to/from drive: %s\n", transfering ? "started" : "stopped");
 }
 
 void 
 C64Listener::driveMotorAction(bool rotating)
 {
-	debug("C64 dummy listener: Drive motor powered %s\n", rotating ? "on" : "off");
+	printf("C64 dummy listener: Drive motor powered %s\n", rotating ? "on" : "off");
 }
 
 void
 C64Listener::warpAction(bool warping)
 {
-	debug("C64 dummy listener: Warping %s\n", warping ? "enabled" : "disabled");
+	printf("C64 dummy listener: Warping %s\n", warping ? "enabled" : "disabled");
 }
 
 void
 C64Listener::logAction(char *message)
 {
-	debug("C64 dummy listener: %s\n", message);
+	printf("C64 dummy listener: %s\n", message);
 }
 

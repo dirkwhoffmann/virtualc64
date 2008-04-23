@@ -326,7 +326,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	// [c64 vicSetVideoFilter:[defaults integerForKey:VC64VideoFilterKey];
 	colorScheme = [defaults integerForKey:VC64ColorSchemeKey];
 	if (colorScheme == VIC::CUSTOM_PALETTE) {
-		debug("Applying custom colors...\n");
+		NSLog(@"Applying custom colors...");
 		[c64 vicSetColorInt:0 rgba:[defaults integerForKey:VC64CustomCol0Key]];
 		[c64 vicSetColorInt:1 rgba:[defaults integerForKey:VC64CustomCol1Key]];
 		[c64 vicSetColorInt:2 rgba:[defaults integerForKey:VC64CustomCol2Key]];
@@ -728,8 +728,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 		newFrameDelay = 0;
 		
 	[c64 setFrameDelay:newFrameDelay];
-
-	debug("New frame delay:%d\n", [c64 getFrameDelay]);
 }
 
 - (IBAction)warpAction:(id)sender
@@ -839,7 +837,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 	// Set soft breakpoint at next command and run
 	[c64 cpuSetSoftBreakpoint:(addr+3)];	
-	debug("Setting soft breakpoint at %x\n", addr+3);
 	[c64 run];
 }
 
@@ -852,7 +849,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	if (opcode == 0x20) {
 		// set soft breakpoint at next command
 		[c64 cpuSetSoftBreakpoint:[c64 cpuGetAddressOfNextInstruction]];	
-		debug("Setting soft breakpoint at %x\n", [c64 cpuGetAddressOfNextInstruction]); 
 		[c64 run];
 	} else {
 		// same as step
@@ -894,6 +890,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)runstopRestoreAction:(id)sender
 {
 	[self updateChangeCount:NSChangeDone];
+	
 	[c64 keyboardPressRunstopRestore];
 	
 	[self refresh];
@@ -963,27 +960,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	[c64 vicToggleMarkIRQLines];
 }
 
-#if 0
-- (IBAction)loggingAction:(id)sender
-{
-	//char *filename = "/tmp/c64.log";
-	//FILE *logfile = NULL; //[c64 getLogFile];
-	
-	NSLog(@"logFileAction");
-	
-	if ([c64 getLogging]) {
-		[c64 setLogging:NO];
-		//fclose(logfile);
-	} else {
-		//if ((logfile = fopen(filename,"w+")) != NULL) {
-			[c64 setLogging:YES];
-		//} else {
-		//	warn("Cannot open logfile %s.\n", filename);			 
-		//}
-	}
-}
-#endif
-
 - (IBAction)showPreferencesAction:(id)sender
 {
 	NSLog(@"Showing preferences window...");
@@ -997,18 +973,11 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)showConsoleAction:(id)sender
 {
-	char buf[64];
-	
-	NSLog(@"Showing console window...");
 	if (!consoleController) {
-		sprintf(buf, "Build %d", [c64 buildNr]);
+
 		ConsoleController *controller = [[ConsoleController alloc] init];
 		[controller setC64:c64];
 		[controller setDoc:self];
-		[controller insertText:strdup("Welcome to Virtual C64")];
-		[controller insertText:strdup(buf)];		
-		[controller insertText:strdup("")];
-
 		consoleController = controller;
 	}
 	[consoleController showWindow:self];

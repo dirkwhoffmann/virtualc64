@@ -84,4 +84,18 @@ VirtualComponent::dumpState()
 {
 }
 
+void
+VirtualComponent::debug(char *fmt, ...)
+{
+	char buf[128];
+
+	va_list ap;
+	va_start(ap, fmt);
+	vfprintf(stderr, fmt, ap); fflush(stderr);
+	vsnprintf(buf, sizeof(buf), fmt, ap); 
+	va_end(ap);
+	if (listener)
+		listener->logAction(strdup(buf));	
+}
+
 

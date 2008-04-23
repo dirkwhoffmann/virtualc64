@@ -138,6 +138,9 @@ public:
 	    this method and print out some useful debugging information. 
 	*/ 
 	virtual void dumpState();
+	
+	//! Print debug message
+	void debug(char *fmt, ...);
 };
 
 #endif

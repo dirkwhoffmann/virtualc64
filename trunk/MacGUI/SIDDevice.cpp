@@ -120,7 +120,7 @@ int SIDDevice::SetupDevice(SID* sid)
 			if (mySoundBasicDescription.mSampleRate != sid->getSamplerate())
 			{
 				sid->setSamplerate(mySoundBasicDescription.mSampleRate); // adjust SID's samplerate to native frequency of hardware
-				debug("Samplerate of SID was changed to native frequency of used audio hardware.\n");
+				printf("Samplerate of SID was changed to native frequency of used audio hardware.");
 			}
 		}
 		

@@ -16,13 +16,10 @@ public:
 	
 	//! Destructor
 	~Archive();
-	
-	//! Get directory
-	char *getDirectory(int *number_of_bytes);
 
-		//! Search directory for filename and return item number
-		/*! Returns -1, if the file is not found.
-			The function supports the wildcard characters '?' and '*' */
+	//! Search directory for filename and return item number
+	/*! Returns -1, if the file is not found.
+		The function supports the wildcard characters '?' and '*' */
 	int getItemWithName(char *filename);
 
 	//! Is archive mountable?
@@ -32,11 +29,7 @@ public:
 	//! Is archive flashable?
 	/*! Returns true, iff the archive can be flashed into memory */
 	virtual bool isFlashable(void) { return true; }
-	
-	//! Select item to read from
-	/*! You need to select an item before you read data */
-	// void selectItem(String *pattern);
-	
+		
 	//! Type of archive (T64, D64, PRG, ...)
 	virtual char *getTypeOfArchive() = 0;
 

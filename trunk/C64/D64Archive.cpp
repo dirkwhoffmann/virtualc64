@@ -74,7 +74,7 @@ bool D64Archive::loadFile(const char *filename)
 
 	path = strdup(filename);
 			
-	debug("D64 container imported successfully (%d items)\n", getNumberOfItems());
+	printf("D64 container imported successfully (%d items)\n", getNumberOfItems());
 	
 	return true;
 }
@@ -86,7 +86,6 @@ D64Archive::jumpToNextSector(int pos)
 	
 	nTrack = nextTrack(pos);
 	nSector = nextSector(pos);
-	// debug("Jumping to (%d,%d)\n", nTrack, nSector); 
 	nOffset = offset(nTrack, nSector);
 		
 	return nOffset;
@@ -295,7 +294,7 @@ uint16_t D64Archive::getDestinationAddrOfItem(int n)
 	pos = offset(track, sector);
 
 	result = data[pos+2] + (data[pos+3] << 8); 
-	debug("Destination address of item %d is %X\n", n, result);
+	printf("Destination address of item %d is %X\n", n, result);
 	return result;
 }
 
@@ -322,7 +321,7 @@ void D64Archive::selectItem(int item)
 	fp += 2;
 
 	// We now reached the first real data byte :)
-	debug("Item selected (%d,%d)\n", data[fp+0x03], data[fp+0x04]);
+	printf("Item selected (%d,%d)\n", data[fp+0x03], data[fp+0x04]);
 }
 
 int D64Archive::getByte()

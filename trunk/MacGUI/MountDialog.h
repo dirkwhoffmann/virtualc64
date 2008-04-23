@@ -34,7 +34,6 @@
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
-- (void)flashSelectedFile;
 - (int)getSelectedFile;
 
 @end

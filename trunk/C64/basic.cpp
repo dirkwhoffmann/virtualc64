@@ -245,6 +245,8 @@ ascii2pet(char c)
 
 #endif
 
+
+#if 0
 void 
 debug(char *fmt, ...) {
 #ifdef DEBUG
@@ -254,6 +256,8 @@ debug(char *fmt, ...) {
 	va_end(ap);
 #endif
 }
+#endif
+
 
 void
 warn(char *fmt, ...) {

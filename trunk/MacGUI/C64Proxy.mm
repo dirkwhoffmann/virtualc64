@@ -117,10 +117,10 @@ void ListenerProxy::logAction(char *message)
 	if (0 != result ) // failure
 	{
 		if (result == -2)
-			debug("Connected audio hardware doesn't support mono or stereo playback\n");
-		debug("Failure: Couldn't enable sound.\n");
+			NSLog(@"Connected audio hardware doesn't support mono or stereo playback");
+		NSLog(@"Failure: Couldn't enable sound.");
 	}
-	debug("Sound enabled!\n");
+	NSLog(@"Sound enabled!");
 	
 	// Create listener object
 	listener = new ListenerProxy();
@@ -131,13 +131,13 @@ void ListenerProxy::logAction(char *message)
 - (void) release
 {
 	assert(c64 != NULL);
-	debug("Deleting C64...\n");
+	NSLog(@"Deleting C64...");
 
 	// Delete sound device
-	debug("  Deleting sound device\n");
+	NSLog(@"  Deleting sound device");
 	delete sidDevice;
 
-	debug("  Deleting virtual machine\n");
+	NSLog(@"  Deleting virtual machine");
 	delete c64;
 	c64 = NULL;
 }
@@ -193,7 +193,7 @@ void ListenerProxy::logAction(char *message)
 - (void) setNTSC { c64->setNTSC(); }
 - (int) getFrameDelay { return c64->frameDelay; }
 - (void) setFrameDelay:(int)delay { c64->frameDelay = delay; }
-- (int) buildNr { debug("buildNrtrtr\n"); return c64->build(); }
+- (int) buildNr { return c64->build(); }
 
 - (bool) loadSnapshot:(NSString *)filename { return c64->loadSnapshot([filename UTF8String]); }
 - (bool) saveSnapshot:(NSString *)filename { return c64->saveSnapshot([filename UTF8String]); }
