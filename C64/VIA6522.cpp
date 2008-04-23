@@ -515,19 +515,7 @@ uint8_t VIA2::peek(uint16_t addr)
 			return orb;
 
 		case 0x01:
-			// ora = floppy->readHead();
-			// floppy->rotateDisk();
-			//debug("%02X[%04X,%ld] ", ora, floppy->cpu->getPC(), (long)floppy->cpu->getCycles());
-			debug("%02X ", ora);
-			
-#if 0
-			h[0] = h[1]; h[1] = h[2]; h[2] = h[3];
-			h[3] = ora;
-			if (h[0] == 0xF9 && h[1] == 0xF7 && h[2] == 0xB3 && h[3] == 0x6D) {
-				floppy->cpu->setTraceMode(true);
-				floppy->setTraceMode(true);
-			}
-#endif
+			debug("%02X ", ora);			
 			floppy->readFlag = true;
 			return ora;
 		

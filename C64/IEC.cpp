@@ -179,27 +179,6 @@ void IEC::updateDevicePins(uint8_t device_data, uint8_t device_direction)
 
 void IEC::dumpState()
 {
-	// char buf[128];
-
-#if 0
-	sprintf(buf, "ATN: %s[%s%s%s%s] CLK: %s[%s%s%s%s] DATA: %s[%s%s%s%s]\n", 
-		atnLine ? "1 F" : "0 T", 
-		deviceAtnPin ? "1" : "0",
-		deviceAtnIsOutput ? "<-" : "->", 
-		ciaAtnPin ? "1" : "0",
-		ciaAtnIsOutput ? "<-" : "->",
-		clockLine ? "1 F" : "0 T", 
-		deviceClockPin ? "1" : "0",
-		deviceClockIsOutput ? "<-" : "->", 
-		ciaClockPin ? "1" : "0",
-		ciaClockIsOutput ? "<-" : "->",
-		dataLine ? "1 F" : "0 T",
-		deviceDataPin ? "1" : "0",
-		deviceDataIsOutput ? "<-" : "->",
-		ciaDataPin ? "1" : "0",
-		ciaDataIsOutput ? "<-" : "->"); 
-	getListener()->logAction(strdup(buf));
-#endif
 	debug("ATN: %s[%s%s%s%s] CLK: %s[%s%s%s%s] DATA: %s[%s%s%s%s]\n", 
 		atnLine ? "1 F" : "0 T", 
 		deviceAtnPin ? "1" : "0",

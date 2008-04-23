@@ -973,11 +973,17 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)showConsoleAction:(id)sender
 {
+	char buf[64];		
+			
 	if (!consoleController) {
-
+		sprintf(buf, "Build %d", [c64 buildNr]);
 		ConsoleController *controller = [[ConsoleController alloc] init];
 		[controller setC64:c64];
 		[controller setDoc:self];
+		[controller insertText:strdup("Welcome to Virtual C64")];		
+		[controller insertText:strdup(buf)];		
+		[controller insertText:strdup("")];		
+		
 		consoleController = controller;
 	}
 	[consoleController showWindow:self];

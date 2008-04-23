@@ -639,6 +639,12 @@ void CIA1::clearJoystickBits(int nr, uint8_t mask)
 	else if (nr == 2) joystick[1] &= (0xff-mask);
 }
 
+void CIA1::dumpState()
+{
+	debug("CIA 1:\n");
+	CIA::dumpState();
+}
+
 
 // -----------------------------------------------------------------------------------------
 // Complex Interface Adapter 2
@@ -724,10 +730,10 @@ void CIA2::poke(uint16_t addr, uint8_t value)
 		
 void CIA2::dumpState()
 {
-	char buf[128];
-
-	sprintf(buf, "Data port A: %x Direction A: %x, Data port B: %x Direction B: %x\n", 
-			iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A], iomem[CIA_DATA_PORT_B], iomem[CIA_DATA_DIRECTION_B]);
-	getListener()->logAction(strdup(buf));
+	debug("CIA 2:\n");
+	CIA::dumpState();
+	debug("Data port A: %x Direction A: %x, Data port B: %x Direction B: %x\n", 
+		iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A], 
+		iomem[CIA_DATA_PORT_B], iomem[CIA_DATA_DIRECTION_B]);
 }
 	

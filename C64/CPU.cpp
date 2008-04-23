@@ -318,16 +318,9 @@ CPU::save(FILE *file)
 void 
 CPU::dumpState() 
 {
-	char buf[128];
-
-	sprintf(buf, "PC:%05X SP:%03X A:%03X X:%03X Y:%03X", getPC(), getSP(), getA(), getX(), getY());
-	getListener()->logAction(strdup(buf));	
-
-	sprintf(buf, "N:%d V:%d B:%d D:%d I:%d Z:%d C:%d", getN(), getV(), getB(), getD(), getI(), getZ(), getC());
-	getListener()->logAction(strdup(buf));	
-
-	sprintf(buf, "IRQ:%d NMI:%d", irqLine, nmiLine);
-	getListener()->logAction(strdup(buf));	
+	debug("PC:%05X SP:%03X A:%03X X:%03X Y:%03X\n", getPC(), getSP(), getA(), getX(), getY());
+	debug("N:%d V:%d B:%d D:%d I:%d Z:%d C:%d\n", getN(), getV(), getB(), getD(), getI(), getZ(), getC());
+	debug("IRQ:%d NMI:%d\n", irqLine, nmiLine);
 }
 
 // Execute a single command
@@ -389,10 +382,9 @@ CPU::execute(int numberOfCycles, int deadCycles)
 		else {						
 			// Execute next command
 			(void)step();
-			// cycles += (*this.*actionFunc[peekPC()])();
 		}
 		
-		// Check the breakpoint tag
+		// Check breakpoint tag
 		if (breakpoint[PC] != NO_BREAKPOINT) {
 			// Soft breakpoints get deleted when reached
 			breakpoint[PC] &= (255 - SOFT_BREAKPOINT);
@@ -403,14 +395,7 @@ CPU::execute(int numberOfCycles, int deadCycles)
 		// Interrupt execution, if we reach a break- or watchpoint
 		if (errorState != OK) {
 			return 0;
-		}
-
-		// For exact timing, we activate the virtual disc drive within this loop
-		#if 0
-		if (iec)
-			iec->execute(cycles - currentCycles);
-		#endif
-		
+		}		
 	} while (cycles < targetCycles);
 
 	return cycles - startCycles;

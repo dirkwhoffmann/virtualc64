@@ -934,45 +934,30 @@ VIC::executeOneLine(int line, int *deadCycles)
 
 void VIC::dumpState()
 {
-	char buf[128];
-
-	sprintf(buf, "Rasterline: %d (%x)", scanline, scanline);
-	getListener()->logAction(strdup(buf));	
-
-	sprintf(buf, "Text resolution: %d x %d", numberOfRows(), numberOfColumns());
-	getListener()->logAction(strdup(buf));	
-
-	sprintf(buf, "Vertical raster scroll: %d Horizontal raster scroll: %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
-	getListener()->logAction(strdup(buf));	
-
-	sprintf(buf, "Display mode: ");
+	debug("Rasterline: %d (%x)\n", scanline, scanline);
+	debug("Text resolution: %d x %d\n", numberOfRows(), numberOfColumns());
+	debug("Vertical raster scroll: %d Horizontal raster scroll: %d\n\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
+	debug("Display mode: ");
 	switch (getDisplayMode()) {
 		case STANDARD_CHARACTER_MODE: 
-			strcat(buf, "Standard character mode\n");
+			debug("Standard character mode\n");
 			break;
 		case MULTICOLOR_CHARACTER_MODE:
-			strcat(buf, "Multicolor character mode\n");
+			debug("Multicolor character mode\n");
 			break;
 		case STANDARD_BITMAP_MODE:
-			strcat(buf, "Standard bitmap mode\n");
+			debug("Standard bitmap mode\n");
 			break;
 		case MULTICOLOR_BITMAP_MODE:
-			strcat(buf, "Multicolor bitmap mode\n");
+			debug("Multicolor bitmap mode\n");
 			break;
 		case EXTENDED_BACKGROUND_COLOR_MODE:
-			strcat(buf, "Extended background color mode\n");
+			debug("Extended background color mode\n");
 			break;
 		default:
-			strcat(buf, "Invalid display mode\n");
+			debug("Invalid display mode\n");
 	}
-	getListener()->logAction(strdup(buf));	
-
-	sprintf(buf, "Bank address: %d (%4X)", bankAddr, bankAddr);
-	getListener()->logAction(strdup(buf));		
-
-	sprintf(buf, "Screen memory: %d (%4X)\n", screenMemoryAddr, screenMemoryAddr);
-	getListener()->logAction(strdup(buf));		
-
-	sprintf(buf, "Character memory: %d (%4X) (RAM)\n", characterMemoryAddr, characterMemoryAddr);
-	getListener()->logAction(strdup(buf));				
+	debug("Bank address: %d (%4X)", bankAddr, bankAddr);
+	debug("Screen memory: %d (%4X)\n", screenMemoryAddr, screenMemoryAddr);
+	debug("Character memory: %d (%4X) (RAM)\n", characterMemoryAddr, characterMemoryAddr);
 }

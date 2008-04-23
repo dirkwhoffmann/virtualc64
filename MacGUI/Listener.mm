@@ -129,7 +129,7 @@
 {
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 
-	NSLog(@"haltAction");
+	NSLog(@"driveDataAction");
 	// MESSAGE IS NOT SEND YET 
 	// don't now how to determine reliably if data is transferred
 
@@ -149,8 +149,6 @@
 		[driveBusy setHidden:true];
 	}
 	
-	//if (warpLoad)
-	//	[c64 cpuSetWarpMode:rotating];
 	[arp release];
 }
 
@@ -171,9 +169,10 @@
 {
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 
-	if (consoleController)
+	if (consoleController) {
 		[consoleController insertText:message];
-
+	}
+	
 	[arp release];
 }
 
