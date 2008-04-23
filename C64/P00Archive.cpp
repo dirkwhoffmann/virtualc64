@@ -78,7 +78,7 @@ bool P00Archive::loadFile(const char *filename)
 
 	path = strdup(filename);
 			
-	debug("P00 container imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
+	printf("P00 container imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
 	return true;
 }
 
@@ -127,7 +127,7 @@ char *P00Archive::getTypeOfItem(int n)
 uint16_t P00Archive::getDestinationAddrOfItem(int n)
 {
 	uint16_t result = data[0x1A] + (data[0x1B] << 8);
-	debug("Will load to location %X\n", result);
+	printf("Will load to location %X\n", result);
 	return result;
 }
 

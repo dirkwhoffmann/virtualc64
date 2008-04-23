@@ -40,7 +40,7 @@ void
 	int cyclesPerRasterline, noOfRasterlines, rasterline, cycle;
 	
 	// Configure thread properties...
-	debug("CPU execution thread started\n");
+	c64->debug("CPU execution thread started\n");
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 	pthread_cleanup_push(threadCleanup, thisC64);
@@ -98,7 +98,7 @@ void
 		pthread_testcancel();
 	}
 	
-	debug("Execution thread terminated\n");	
+	c64->debug("Execution thread terminated\n");	
 
 	pthread_cleanup_pop(1);
 	pthread_exit(NULL);	
@@ -317,9 +317,13 @@ void C64::setListener(C64Listener *l)
 void 
 C64::runstopRestore()
 {
-	// Runstop/restore triggers a non maskable interrupt (NMI) (soft reset).
+	// Note: The restore key is directly connected to the NMI line of the CPU
+	// Thus, the runstop/restore key combination triggers an interrupts that causes a soft reset
+	keyboard->pressRunstopKey();
 	cpu->setNMILineReset(); 
-	debug("Soft reset performed.\n");
+	// Hold runstop key down for a while...
+	sleepMicrosec((uint64_t)100000);
+	keyboard->releaseRunstopKey();
 }
 
 void 

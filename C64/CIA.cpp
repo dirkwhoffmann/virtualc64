@@ -726,7 +726,7 @@ void CIA2::dumpState()
 {
 	char buf[128];
 
-	sprintf(buf, "Data port A: %x Direction A: %x, Data port B: %x Direction B: %x", 
+	sprintf(buf, "Data port A: %x Direction A: %x, Data port B: %x Direction B: %x\n", 
 			iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A], iomem[CIA_DATA_PORT_B], iomem[CIA_DATA_DIRECTION_B]);
 	getListener()->logAction(strdup(buf));
 }

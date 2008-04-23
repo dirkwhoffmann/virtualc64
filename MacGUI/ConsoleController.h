@@ -7,12 +7,7 @@
 
 	C64Proxy *c64;
 	MyDocument *mydoc;
-	
-	char *ringbuffer[MAX_CONSOLE_ENTRIES];
-	int writePtr;
-
-	pthread_mutex_t ringbuffer_lock;    
-		
+			
 	IBOutlet NSButton *trace;
 	IBOutlet NSButton *dumpCPU;
 	IBOutlet NSButton *dumpCIA;
@@ -20,11 +15,10 @@
 	IBOutlet NSButton *dumpIEC;
 	IBOutlet NSButton *dumpMemory;
 	IBOutlet NSButton *clear;
-	IBOutlet NSTableView *console;
-	IBOutlet NSScrollView *consoleScroll;
+	IBOutlet NSTextView *log;
 	IBOutlet NSImageView *bgImage;
 
-	NSAutoreleasePool *pool;
+	// NSAutoreleasePool *pool;
 }
 
 - (void)setC64:(C64Proxy *)proxy;
@@ -38,12 +32,12 @@
 - (IBAction)dumpIECAction:(id)sender;
 - (IBAction)dumpMemoryAction:(id)sender;
 - (IBAction)dumpDriveAction:(id)sender;
-- (IBAction)refreshAction:(id)sender;
+// - (IBAction)refreshAction:(id)sender;
 - (IBAction)clearAction:(id)sender;
 - (IBAction)rasterlineAction:(id)sender;
 - (IBAction)hideSpritesAction:(id)sender;
 
-- (void)_insertText:(char *)message;
+// - (void)_insertText:(char *)message;
 - (void)insertText:(char *)message;
 
 @end

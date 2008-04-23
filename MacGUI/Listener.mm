@@ -141,8 +141,6 @@
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 
 	NSLog(@"driveMotorAction");
-	debug("Warpload = %d\n", warpLoad);
-
 	if (rotating) {
 		[driveBusy setHidden:false];
 		[driveBusy startAnimation:self];

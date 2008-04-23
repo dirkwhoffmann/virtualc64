@@ -82,7 +82,7 @@ bool PRGArchive::loadFile(const char *filename)
 
 	path = strdup(filename);
 			
-	debug("PRG container imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
+	printf("PRG container imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
 	return true;
 }
 
@@ -122,7 +122,7 @@ char *PRGArchive::getTypeOfItem(int n)
 uint16_t PRGArchive::getDestinationAddrOfItem(int n)
 {
 	uint16_t result = data[0] + (data[1] << 8);
-	debug("Will load to location %X\n", result);
+	printf("Will load to location %X\n", result);
 	return result;
 }
 

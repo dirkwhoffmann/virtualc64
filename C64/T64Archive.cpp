@@ -91,7 +91,7 @@ bool T64Archive::loadFile(const char *filename)
 
 	path = strdup(filename);
 			
-	debug("T64 container imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
+	printf("T64 container imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
 	return true;
 }
 
@@ -173,7 +173,7 @@ int T64Archive::getSizeOfItem(int n)
 	uint16_t endAddrInMemory = data[j] + (data[j+1] << 8);
 
 	if (endAddrInMemory == 0xC3C6) {
-		debug("WARNING: Corrupted archive. Mostly likely created with CONV64!\n");
+		printf("WARNING: Corrupted archive. Mostly likely created with CONV64!\n");
 		// WHAT DO WE DO ABOUT IT?
 	}
 	return (endAddrInMemory - startAddrInMemory) + 1;
@@ -193,7 +193,7 @@ uint16_t T64Archive::getDestinationAddrOfItem(int n)
 {
 	int i = 0x42 + (n * 0x20);
 	uint16_t result = data[i] + (data[i+1] << 8);
-	debug("Will load to location %X\n", result);
+	printf("Will load to location %X\n", result);
 	return result;
 }
 

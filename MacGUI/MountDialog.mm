@@ -66,13 +66,6 @@
 	return @"???";
 }
 
-- (void)flashSelectedFile
-{
-	int row = [directory selectedRow];
-	
-	debug("Going to flash file number %d\n", row);
-}
-
 - (int)getSelectedFile
 {
 	int row = [directory selectedRow];

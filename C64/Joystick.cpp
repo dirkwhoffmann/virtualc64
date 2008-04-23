@@ -45,20 +45,20 @@ Joystick::Joystick( int devNo ) {
 			joystickNo = devNo;
 			joystickOpenCount++;
 
-			debug("Opened Joystick %d\n", devNo);
-			debug("Joystick %d data:\n", devNo);
-			debug("\tName: %s\n", SDL_JoystickName(devNo));
-			debug("\tNumber of Axes: %d\n", SDL_JoystickNumAxes(joy));
-			debug("\tNumber of Buttons: %d\n", SDL_JoystickNumButtons(joy));
-			debug("\tNumber of Balls: %d\n", SDL_JoystickNumBalls(joy));
+			printf("Opened Joystick %d\n", devNo);
+			printf("Joystick %d data:\n", devNo);
+			printf("\tName: %s\n", SDL_JoystickName(devNo));
+			printf("\tNumber of Axes: %d\n", SDL_JoystickNumAxes(joy));
+			printf("\tNumber of Buttons: %d\n", SDL_JoystickNumButtons(joy));
+			printf("\tNumber of Balls: %d\n", SDL_JoystickNumBalls(joy));
 		} else {
-			debug("Couldn't open joystick %d\n", devNo );  
+			printf("Couldn't open joystick %d\n", devNo );  
 			joy = NULL;
 			throw("Couldn't open joystick %d\n", devNo );
 		}
 
 	} else {
-		debug( "Joystick number to big!!!\n" );
+		printf( "Joystick number to big!!!\n" );
 		joy = NULL;
 		throw("Joystick number to big!\n");
 	}
@@ -72,7 +72,7 @@ Joystick::~Joystick() {
 	if( joystickOpenCount == 0 ) {
 		SDL_JoystickQuit();
 		initialized = false;
-		debug("close joy.coo\n");
+		printf("close joy.coo\n");
 	}
 }
 

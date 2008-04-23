@@ -25,8 +25,6 @@
 				<string>id</string>
 				<key>rasterlineAction</key>
 				<string>id</string>
-				<key>refreshAction</key>
-				<string>id</string>
 				<key>traceAction</key>
 				<string>id</string>
 				<key>traceCPUAction</key>
@@ -44,10 +42,6 @@
 				<string>NSImageView</string>
 				<key>clear</key>
 				<string>NSButton</string>
-				<key>console</key>
-				<string>NSTableView</string>
-				<key>consoleScroll</key>
-				<string>NSScrollView</string>
 				<key>dumpCIA</key>
 				<string>NSButton</string>
 				<key>dumpCPU</key>
@@ -58,6 +52,8 @@
 				<string>NSButton</string>
 				<key>dumpVIC</key>
 				<string>NSButton</string>
+				<key>log</key>
+				<string>NSTextView</string>
 				<key>trace</key>
 				<string>NSButton</string>
 			</dict>

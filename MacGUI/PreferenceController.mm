@@ -343,7 +343,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	} else {
 		[c64 setWarpLoad:false];
 	}
-	debug("Warpload %d\n", [sender state]);
+	NSLog(@"Warpload %d\n", [sender state]);
 }
 
 - (IBAction)SIDVolumeAction:(id)sender
@@ -385,7 +385,6 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(g * 0xff);
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(b * 0xff);
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(a * 0xff);	
-	debug("change color");
 	[c64 vicSetColor:col rgba:[sender color]];
 }
 
