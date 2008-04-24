@@ -21,15 +21,11 @@
 
 /* System */
 extern NSString *VC64PALorNTSCKey;
-extern NSString *VC64IllegalInstrKey;
-extern NSString *VC64FastResetKey;
 
 /* Peripherals */
-extern NSString *VC64Real1541Key;
 extern NSString *VC64WarpLoadKey;
 
 /* Audio */
-extern NSString *VC64SIDVolumeKey;
 extern NSString *VC64SIDFilterKey;
 
 /* Video */

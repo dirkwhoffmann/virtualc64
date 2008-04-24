@@ -299,7 +299,8 @@ uint8_t CIA::peek(uint16_t addr)
 		case CIA_CONTROL_REG_B:
 			return iomem[addr];
 		default:
-			fail("Unknown CIA address %04X\n", addr);
+			debug("PANIC: Unknown CIA address %04X\n", addr);
+			assert(0);
 	}
 	return 0x00;
 }
@@ -382,17 +383,18 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			if (value & 0x10) // Load timer A
 				reloadTimerA();
 			if (value & 0x20)
-				warn("Counting positive edges on CNT pin not yet implemented!\n");
+				debug("WARNING: Counting positive edges on CNT pin not yet implemented!\n");
 			return;
 		case CIA_CONTROL_REG_B:
 			iomem[addr] = value;
 			if (value & 0x10) // Load timer B
 				reloadTimerB();
 			if (value & 0x60)
-				warn("Unsupported counting mode for timer B (%d) !\n", value & 0x60);
+				debug("WARNING: Unsupported counting mode for timer B (%d) !\n", value & 0x60);
 			return;			
 		default:
-			fail("Unknown CIA address (poke) %04X\n", addr);
+			debug("PANIC: Unknown CIA address (poke) %04X\n", addr);
+			assert(0);
 	}	
 }
 

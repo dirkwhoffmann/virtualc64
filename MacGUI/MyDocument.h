@@ -32,19 +32,6 @@
 
 @protocol ListenerProtocol
 
-// New API:
-// cpuAction(ErrorState)   (running, halted, etc.)
-// runAction, haltAction
-// missingRomAction()
-// driveConnectedAction(bool)
-// driveTransferingDataAction(bool)
-// driveRedLedAction(bool)
-// warpAction(bool)
-// logAction(char *)
-// joystick1Action(int)
-// joystick2Action(int)
-// drawAction()
-
 - (void) missingRomAction;
 - (void) runAction;
 - (void) haltAction;
@@ -64,7 +51,12 @@
 {
 	IBOutlet id theWindow;
 	
+	// Proxy object. Used get data from and sent data to the virtual C64
+	// Moreover, the class implements a bridge between C++ (simulator) and Objective-C (GUI)
+	C64Proxy *c64;
+
 	// Toolbar
+	// DEPRECATED. Should be handled inside the NIB file
 	NSMutableDictionary *toolbarItems;
 	
 	// Dialogs
@@ -170,25 +162,30 @@
 	IBOutlet NSButton *VicEnableRasterInterrupt;
 	IBOutlet NSTextField *VicRasterInterrupt;
 	IBOutlet NSButton *VicEnableOpenGL;
-	
-	// Connected components
-	C64Proxy *c64;
-	
+		
 	// The 60 Hz timer
 	NSTimer *timer;
-	long cycleCount, frameCount, timeStamp, animationCounter; // Used in timerFunc
-	uint16_t disassembleStartAddr; // Address of the first disassembled instruction in the CPU Debug window
-	bool enableOpenGL;
-
+	
 	// Measured clock frequency
 	float mhz;
+
+	// The following variables are needed to calculate the clock frequency
+	long cycleCount, frameCount, timeStamp, animationCounter; 
+
+	// Address of the first disassembled instruction in the CPU Debug window
+	uint16_t disassembleStartAddr; 	
+	
+	// Usually set to true. If set to false, OpenGL drawing is disabled
+	// Setting the variable to false only makes sense during performance tests
+	BOOL enableOpenGL;
 
 	// True, iff disk transfers should be done in warp mode
 	BOOL warpLoad;
 		
-	BOOL needsRefresh; // If set to true, the GUI will refresh
+	// If set to true, the GUI will refresh
+	// BOOL needsRefresh; 
 	
-	// Peek and poke callbacks
+	// Indicates the data source for the memory debug panel
 	Memory::MemoryType memsource;
 		
 	// The currently selected CIA chip (1=cia1 or 2=cia2)
@@ -311,7 +308,6 @@
 - (IBAction)vicSpriteBackgroundCollisionAction:(id)sender;
 - (IBAction)vicSpriteXAction:(id)sender;
 - (IBAction)vicSpriteYAction:(id)sender;
-// - (IBAction)vicSpriteDataAction:(id)sender;
 - (IBAction)vicSpriteColorAction:(id)sender;
 - (IBAction)vicRasterlineAction:(id)sender;
 - (IBAction)vicEnableRasterInterruptAction:(id)sender;
@@ -325,18 +321,12 @@
 - (IBAction)vicSelectSprite5:(id)sender;
 - (IBAction)vicSelectSprite6:(id)sender;
 - (IBAction)vicSelectSprite7:(id)sender;
-//- (IBAction)pressPlayOnTapeAction:(id)sender;
-//- (IBAction)rewindTapeAction:(id)sender;
-//- (IBAction)ejectTapeAction:(id)sender;
-//- (IBAction)connectDriveAction:(id)sender;
-//- (IBAction)disconnectDriveAction:(id)sender;
 
 - (IBAction)cancelMountDialog:(id)sender;
 - (IBAction)endMountDialogAndMount:(id)sender;
 - (IBAction)endMountDialogAndFlash:(id)sender;
 
 // Helper functions for action methods
-// - (void)toggleBreakpointAtAddr:(uint16_t)addr;
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(Memory::MemoryType)t;
 
 // Table views handling
@@ -370,8 +360,6 @@
 - (void)enableUserEditing:(BOOL)enabled;
 
 // Misc
-// - (uint16_t)nextInstructionAddr:(int)i from:(uint16_t)addr;
-// - (uint16_t)nextInstructionAddr:(int)i;
 - (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row;
 
 - (BOOL)showMountDialog:(Archive *)archive;

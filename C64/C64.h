@@ -43,8 +43,6 @@
 
 
 // TODO
-// move warpLoad from GUI to C64
-// change runThread method to a cycle based design
 
 #ifndef _C64_INC
 #define _C64_INC
@@ -171,15 +169,13 @@ private:
 	//! Target time
 	/*! Used to synchronize emulation speed */
 	uint64_t targetTime; 
-		
-	//! Indicates whether the emulator has been running before 
-	bool wasRunningBefore;
-	
+
+	//! True iff warp mode is enabled
+	/*! In warp mode, we run as fast as possible */
+	bool warpMode;
+			
 	//! Indicates if files should be transferred in warp mode
 	bool enableWarpLoad;
-
-	//! Indicates if a reset should be performed by quickly loading a plain image
-	bool enableFastReset;
 	
 	//! Holds the configuration for the game port.
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
@@ -248,15 +244,12 @@ public:
 	
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A reset is performed by simulating a hard reset on a real C64. */
-	void hardReset();           
+	void reset();           
 
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
-	/*! A reset is performed by loading a presaved image from disk. */
+	/*! A (faked) reset is performed by loading a presaved image from disk. */
 	void fastReset();           
-	
-	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
-	void reset();           
-	
+		
 	//! Returns the currently set resource path
 	// char *getPath() { return path; }
 	
@@ -319,10 +312,6 @@ public:
 		\param filename Name of the ROM image
 		\return true iff the ROM was loaded successfully. */ 
 	bool loadRom(const char *filename);
-
-	//! Check file type
-	/*! Returns true, iff the specifies file is a C64 snapshot file. */
-	// static bool isSnapshotFile(const char *filename);
 	
 	//! Load snapshot file
 	bool loadSnapshot(const char *filename);
@@ -330,10 +319,17 @@ public:
 	//! Save snapshot file
 	bool saveSnapshot(const char *filename);
 
+	//! Returns true iff warp mode is enabled
+	 bool getWarpMode();
+	
+	//! Enable or disable warp mode
+	void setWarpMode(bool b);
+
+	//! Returns true, iff warp mode is enabled during file transfer
 	bool getWarpLoad() { return enableWarpLoad; }
+
+	//! Enable or disable warp load
 	void setWarpLoad(bool b) { enableWarpLoad = b; }
-	bool getFastReset() { return enableFastReset; }
-	void setFastReset(bool b) { enableFastReset = b; }
 	
 	//! Dump current state into logfile
 	void dumpState();
@@ -342,13 +338,13 @@ public:
 	void setInputDevice(int portNo, int newDevice);
 
 	//! Switch the input device to the next available
-	void switchInputDevice( int port );
+	void switchInputDevice(int port);
 
 	//! Switch input devices between both ports
 	void switchInputDevices();
 	
 	//! Get the device mapped to the port portNo
-	int getDeviceOfPort( int portNo );
+	int getDeviceOfPort(int portNo);
 
 };
 

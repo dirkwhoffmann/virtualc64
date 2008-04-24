@@ -44,13 +44,13 @@ void VIA6522::reset()
 
 bool VIA6522::load(FILE *file)
 {
-	warn("VIA loading not implemented yet!\n");
+	debug("WARNING: VIA loading not implemented yet!\n");
 	return false;
 }
 
 bool VIA6522::save(FILE *file)
 {
-	warn("VIA saving not implemented yet!\n");
+	debug("WARNING: VIA saving not implemented yet!\n");
 	return false;
 }
 
@@ -166,7 +166,8 @@ VIA6522::peek(uint16_t addr)
 		// |                       |                       |ACTIVE TRANSITION          |
 		// +-----------------------+-----------------------+---------------------------+
 		case 0x00:
-			fail("VIA register 0 needs individual handling!\n");
+			debug("PANIC: VIA register 0 needs individual handling!\n");
+			assert(0);
 			break;
 
 		//               REG 1 -- ORA/IRA
@@ -214,7 +215,8 @@ VIA6522::peek(uint16_t addr)
 		// |                       |                       |ACTIVE TRANSITION          |
 		// +-----------------------+-----------------------+---------------------------+
 		case 0x01:
-			fail("VIA register 1 needs individual handling!\n");
+			debug("PANIC: VIA register 1 needs individual handling!\n");
+			assert(0);
 			break;
 						
 		//    REG 2 -- DDRB                          REG 3 -- DDRA
@@ -515,7 +517,9 @@ uint8_t VIA2::peek(uint16_t addr)
 			return orb;
 
 		case 0x01:
-			debug("%02X ", ora);			
+			if (tracingEnabled()) {
+				debug("%02X ", ora);			
+			}
 			floppy->readFlag = true;
 			return ora;
 		
@@ -660,7 +664,7 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 					// Move head downwards...
 					floppy->moveHead(-1);
 				} else {
-					warn("Unexpected stepper motor control sequence in VC1541 detected\n");
+					debug("WARNING: Unexpected stepper motor control sequence in VC1541 detected\n");
 				}
 			}
 
@@ -683,7 +687,9 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 
 		case 0x01: 
 			// Port A: Daten vom/zum Tonkopf
-			debug(" W%2X", value);
+			if (tracingEnabled()) {
+				debug(" W%02X", value);
+			}
 			ora = value;
 			floppy->writeFlag = true;
 			//floppy->writeHead(value);

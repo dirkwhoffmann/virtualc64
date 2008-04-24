@@ -76,6 +76,30 @@
 	}
 }
 
+- (IBAction)traceDriveCPUAction:(id)sender
+{	
+	if ([c64 driveCPUTracingEnabled]) {
+		[c64 driveSetCPUTraceMode:NO];
+		[console reloadData];
+		[console setNeedsDisplay:YES];
+	} else {
+		[c64 driveSetCPUTraceMode:YES];
+		NSLog(@"Floppy CPU tracing enabled");
+	}
+}
+
+- (IBAction)traceDriveDataAction:(id)sender
+{	
+	if ([c64 driveDataTracingEnabled]) {
+		[c64 driveSetDataTraceMode:NO];
+		[console reloadData];
+		[console setNeedsDisplay:YES];
+	} else {
+		[c64 driveSetDataTraceMode:YES];
+		NSLog(@"Floppy data tracing enabled");
+	}
+}
+
 - (IBAction)dumpCPUAction:(id)sender
 {
 	NSLog(@"Dump CPU");
@@ -201,15 +225,48 @@
 		free(ringbuffer[writePtr]);		
 	}		
 	ringbuffer[writePtr] = message;		
+	
 	writePtr++;		
 	if (writePtr == MAX_CONSOLE_ENTRIES)		
 		writePtr = 0;		
+}
+
+- (void)_appendText:(char *)message	maxLength:(int)len
+{		
+	char *str;
+	int ptr;
+	
+	if (writePtr == 0)
+		ptr = MAX_CONSOLE_ENTRIES-1;
+	else 
+		ptr = writePtr - 1;
+
+	if (!ringbuffer[ptr] || (strlen(ringbuffer[ptr]) + strlen(message) > len)) {		
+		[self _insertText:message];
+		return;
+	}
+	
+	str = (char *)malloc(strlen(ringbuffer[ptr]) + strlen(message) + 1);
+	strcpy(str, ringbuffer[ptr]);
+	strcat(str, message);
+	free(ringbuffer[ptr]);
+	ringbuffer[ptr] = str;
 }
 
 - (void)insertText:(char *)message
 {
 	pthread_mutex_lock(&ringbuffer_lock);		
 	[self _insertText:message];		
+	pthread_mutex_unlock(&ringbuffer_lock);		
+		
+	[console reloadData];
+	[console setNeedsDisplay:YES];
+}
+
+- (void)appendText:(char *)message maxLength:(int)len
+{
+	pthread_mutex_lock(&ringbuffer_lock);		
+	[self _appendText:message maxLength:len];		
 	pthread_mutex_unlock(&ringbuffer_lock);		
 		
 	[console reloadData];

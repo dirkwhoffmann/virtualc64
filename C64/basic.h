@@ -102,7 +102,7 @@ checkFileHeader(const char *filename, int *header);
 /*! The functions is used by several debugging functions to produce human readable output.
 	Don't free the strings as they are cached in a static array. 
 */
-const char *getBitPattern(uint8_t value);
+// const char *getBitPattern(uint8_t value);
 
 //! Write up to four bytes to file
 /*! \param file handle of the destination file
@@ -165,17 +165,6 @@ uint8_t ascii2pet(char c);
 */
 void sleepMicrosec(uint64_t millisec);
 
-// Debugging
-
-//! Write debugging message
-/*! Syntax is similar to the printf function. The function only takes effect in debug mode.  */
-//void debug(char *fmt, ...);
-//! Write debugging message (warning style)
-/*! Syntax is similar to the standard printf function. The function only takes effect in debug mode. */
-void warn(char *fmt, ...);
-//! Terminate application with an error message */
-/*! Syntax is similar to the printf function. The function only takes effect in debug mode. */
-void fail(char *fmt, ...);
 
 #endif
 
