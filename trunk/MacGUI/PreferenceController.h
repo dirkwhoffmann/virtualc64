@@ -57,19 +57,15 @@ extern NSString *VC64CustomCol15Key;
 	IBOutlet NSButtonCell *pal;
 	IBOutlet NSButtonCell *ntsc;
 	IBOutlet NSMatrix *palntsc;
-	IBOutlet NSButton *illegalInstr;
-	IBOutlet NSButton *fastReset;
 	IBOutlet NSButton *flag;
 	IBOutlet NSTextField *systemText1;
 	IBOutlet NSTextField *systemText2;
 	IBOutlet NSTextField *systemText3;
 	
 	/* Peripherals */
-	IBOutlet NSButton *real1541;
 	IBOutlet NSButton *warpLoad;
 	
 	/* Audio */
-	IBOutlet NSSlider *SIDVolume;
 	IBOutlet NSButton *SIDFilter;
 	
 	/* Video */
@@ -94,26 +90,25 @@ extern NSString *VC64CustomCol15Key;
 	IBOutlet NSColorWell *colorWell15;	
 }
 
+- (void)setC64:(C64Proxy *)proxy;
+- (void)setDoc:(MyDocument *)doc;
+- (void)updateColorWell:(NSColorWell *)well color:(int)rgba;
+- (void)updateColorWells:(VIC::ColorScheme)scheme;
+
+// System
 - (IBAction)setPalAction:(id)sender;
 - (IBAction)setNtscAction:(id)sender;
 - (IBAction)togglePalNtscAction:(id)sender;
 
+// VC 1541
 - (IBAction)warpLoadAction:(id)sender;
 
+// SID
+- (IBAction)sidFilterAction:(id)sender;
+
+// VIC
 - (IBAction)changeColorScheme:(id)sender;
+- (IBAction)setVideoFilterAction:(id)sender;
 - (IBAction)setColorAction:(id)sender;
-
-//- (IBAction)SIDVolumeAction:(id)sender;
-//- (IBAction)OKAction:(id)sender;
-//- (IBAction)ApplyAction:(id)sender;
-//- (IBAction)CancelAction:(id)sender;
-
-- (void)setC64:(C64Proxy *)proxy;
-- (void)setDoc:(MyDocument *)doc;
-- (void)readUserDefaults;
-- (void)writeUserDefaults;
-- (void)updateColorWell:(NSColorWell *)well color:(int)rgba;
-- (void)updateColorWells:(VIC::ColorScheme)scheme;
-
 
 @end

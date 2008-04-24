@@ -73,8 +73,42 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 
 - (void)windowDidLoad
 {
-	// Load user defaults
-	[self readUserDefaults];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	int colorSchemeTag;
+	
+	/* System */
+	if ([defaults integerForKey:VC64PALorNTSCKey])
+		[self setNtscAction:self];
+	else
+		[self setPalAction:self];
+		
+	/* Peripherals */
+	[warpLoad setState:[defaults boolForKey:VC64WarpLoadKey]];
+	
+	/* Audio */
+	[SIDFilter setState:[defaults boolForKey:VC64SIDFilterKey]];
+	
+	/* Video */
+	colorSchemeTag = [defaults integerForKey:VC64ColorSchemeKey];
+	[colorScheme selectItemWithTag:colorSchemeTag];
+	[videoFilter selectItemWithTag:[defaults boolForKey:VC64VideoFilterKey]];
+	customColor[0] = [defaults integerForKey:VC64CustomCol0Key];
+	customColor[1] = [defaults integerForKey:VC64CustomCol1Key];
+	customColor[2] = [defaults integerForKey:VC64CustomCol2Key];
+	customColor[3] = [defaults integerForKey:VC64CustomCol3Key];
+	customColor[4] = [defaults integerForKey:VC64CustomCol4Key];
+	customColor[5] = [defaults integerForKey:VC64CustomCol5Key];
+	customColor[6] = [defaults integerForKey:VC64CustomCol6Key];
+	customColor[7] = [defaults integerForKey:VC64CustomCol7Key];
+	customColor[8] = [defaults integerForKey:VC64CustomCol8Key];
+	customColor[9] = [defaults integerForKey:VC64CustomCol9Key];
+	customColor[10] = [defaults integerForKey:VC64CustomCol10Key];
+	customColor[11] = [defaults integerForKey:VC64CustomCol11Key];
+	customColor[12] = [defaults integerForKey:VC64CustomCol12Key];
+	customColor[13] = [defaults integerForKey:VC64CustomCol13Key];
+	customColor[14] = [defaults integerForKey:VC64CustomCol14Key];
+	customColor[15] = [defaults integerForKey:VC64CustomCol15Key];	
+	[self updateColorWells:(VIC::ColorScheme)colorSchemeTag];
 }
 
 - (void)updateColorWell:(NSColorWell *)well color:(int)rgba
@@ -163,166 +197,30 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[c64 vicSetColor:15 rgba:[colorWell15 color]];
 }
 
-- (IBAction)changeColorScheme:(id)sender
-{
-	VIC::ColorScheme scheme = (VIC::ColorScheme)[[sender selectedItem] tag];
-	[self updateColorWells:scheme];
-}
-
-#if 0
-- (IBAction)OKAction:(id)sender
-{
-	// Write selections into user database
-	[self writeUserDefaults];
-
-	// Update active document
-	[mydoc loadUserDefaults];
-	
-	// Close preference pane
-	[[self window] close];
-}
-
-- (IBAction)ApplyAction:(id)sender
-{
-	// Write selections into user database
-	[self writeUserDefaults];
-
-	// Update active document
-	[mydoc loadUserDefaults];
-}
-
-- (IBAction)CancelAction:(id)sender
-{
-	// Close preference pane
-	[[self window] close];
-}
-#endif
-
-
-#if 0
-- (NSColor *)readColor:(NSString *)key
-{
-	assert(key != NULL);
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSData *colorAsData = [defaults objectForKey:key];
-	if (colorAsData == NULL)
-		fail("readColor: ColorAsData == NULL\n");
-	return [NSKeyedUnarchiver unarchiveObjectWithData:colorAsData];
-}
-
-- (void)writeColor:(NSColor *)color forKey:(NSString *)key
-{
-	assert(color != NULL);
-	assert(key != NULL);
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSData *colorAsData = [NSKeyedArchiver archivedDataWithRootObject:color];
-	if (colorAsData == NULL)
-		fail("writeColor: ColorAsData == NULL\n");
-	[defaults setObject:colorAsData forKey:key];
-}
-
-#endif
-
-- (void)readUserDefaults
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	int colorSchemeTag;
-	
-	/* System */
-	NSLog(@"Reading user defaults: %d", [defaults integerForKey:VC64PALorNTSCKey]);
-	if ([defaults integerForKey:VC64PALorNTSCKey])
-		[self setNtscAction:self];
-	else
-		[self setPalAction:self];
-	[illegalInstr setState:[defaults boolForKey:VC64IllegalInstrKey]];
-	[fastReset setState:[defaults boolForKey:VC64FastResetKey]];
-		
-	/* Peripherals */
-	[real1541 setState:[defaults boolForKey:VC64Real1541Key]];
-	[warpLoad setState:[defaults boolForKey:VC64WarpLoadKey]];
-	
-	/* Audio */
-	[SIDVolume setFloatValue:[defaults floatForKey:VC64SIDVolumeKey]];
-	[SIDFilter setState:[defaults boolForKey:VC64SIDFilterKey]];
-	
-	/* Video */
-	colorSchemeTag = [defaults integerForKey:VC64ColorSchemeKey];
-	[colorScheme selectItemWithTag:colorSchemeTag];
-	[videoFilter selectItemWithTag:[defaults boolForKey:VC64VideoFilterKey]];
-	customColor[0] = [defaults integerForKey:VC64CustomCol0Key];
-	customColor[1] = [defaults integerForKey:VC64CustomCol1Key];
-	customColor[2] = [defaults integerForKey:VC64CustomCol2Key];
-	customColor[3] = [defaults integerForKey:VC64CustomCol3Key];
-	customColor[4] = [defaults integerForKey:VC64CustomCol4Key];
-	customColor[5] = [defaults integerForKey:VC64CustomCol5Key];
-	customColor[6] = [defaults integerForKey:VC64CustomCol6Key];
-	customColor[7] = [defaults integerForKey:VC64CustomCol7Key];
-	customColor[8] = [defaults integerForKey:VC64CustomCol8Key];
-	customColor[9] = [defaults integerForKey:VC64CustomCol9Key];
-	customColor[10] = [defaults integerForKey:VC64CustomCol10Key];
-	customColor[11] = [defaults integerForKey:VC64CustomCol11Key];
-	customColor[12] = [defaults integerForKey:VC64CustomCol12Key];
-	customColor[13] = [defaults integerForKey:VC64CustomCol13Key];
-	customColor[14] = [defaults integerForKey:VC64CustomCol14Key];
-	customColor[15] = [defaults integerForKey:VC64CustomCol15Key];	
-	[self updateColorWells:(VIC::ColorScheme)colorSchemeTag];
-}
-
-- (void)writeUserDefaults
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	/* System */
-	[defaults setInteger:[[palntsc selectedCell] tag] forKey:VC64PALorNTSCKey];
-	NSLog(@"Writing user defaults: %d", [[palntsc selectedCell] tag]);
-	
-	/* Peripherals */
-	[defaults setBool:[warpLoad state] forKey:VC64WarpLoadKey];
-	
-	/* Audio */
-	[defaults setBool:[SIDFilter state] forKey:VC64SIDFilterKey];
-
-	/* Video */
-	[defaults setInteger:[[colorScheme selectedItem] tag] forKey:VC64ColorSchemeKey];
-	[defaults setInteger:[[videoFilter selectedItem] tag] forKey:VC64VideoFilterKey];
-	[defaults setInteger:customColor[0] forKey:VC64CustomCol0Key];
-	[defaults setInteger:customColor[1] forKey:VC64CustomCol1Key];
-	[defaults setInteger:customColor[2] forKey:VC64CustomCol2Key];
-	[defaults setInteger:customColor[3] forKey:VC64CustomCol3Key];
-	[defaults setInteger:customColor[4] forKey:VC64CustomCol4Key];
-	[defaults setInteger:customColor[5] forKey:VC64CustomCol5Key];
-	[defaults setInteger:customColor[6] forKey:VC64CustomCol6Key];
-	[defaults setInteger:customColor[7] forKey:VC64CustomCol7Key];
-	[defaults setInteger:customColor[8] forKey:VC64CustomCol8Key];
-	[defaults setInteger:customColor[9] forKey:VC64CustomCol9Key];
-	[defaults setInteger:customColor[10] forKey:VC64CustomCol10Key];
-	[defaults setInteger:customColor[11] forKey:VC64CustomCol11Key];
-	[defaults setInteger:customColor[12] forKey:VC64CustomCol12Key];
-	[defaults setInteger:customColor[13] forKey:VC64CustomCol13Key];
-	[defaults setInteger:customColor[14] forKey:VC64CustomCol14Key];
-	[defaults setInteger:customColor[15] forKey:VC64CustomCol15Key];
-}
-
 - (IBAction)setPalAction:(id)sender
 {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
 	[palntsc selectCellWithTag:0];
 	[systemText1 setStringValue:@"PAL machine"];
 	[systemText2 setStringValue:@"0.985 MHz"];
 	[systemText3 setStringValue:@"63 cycles per rasterline"];
-	//[flag setImage:[NSImage imageNamed:@"flag_eu"]];
 	[flag setState:false];
 	[c64 setPAL];
+	[defaults setInteger:[[palntsc selectedCell] tag] forKey:VC64PALorNTSCKey];
 }
 
 - (IBAction)setNtscAction:(id)sender
 {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
 	[palntsc selectCellWithTag:1];
 	[systemText1 setStringValue:@"NTSC machine"];
 	[systemText2 setStringValue:@"1.022 MHz"];
 	[systemText3 setStringValue:@"65 cycles per rasterline"];
-	//[flag setImage:[NSImage imageNamed:@"flag_usa"]];
 	[flag setState:true];
 	[c64 setNTSC];
+	[defaults setInteger:[[palntsc selectedCell] tag] forKey:VC64PALorNTSCKey];
 }
 
 - (IBAction)togglePalNtscAction:(id)sender
@@ -336,22 +234,51 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 
 - (IBAction)warpLoadAction:(id)sender
 {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
 	if ([sender state]) {
 		[c64 setWarpLoad:true];
 	} else {
 		[c64 setWarpLoad:false];
 	}
-	NSLog(@"Warpload %d\n", [sender state]);
+	[defaults setBool:[warpLoad state] forKey:VC64WarpLoadKey];
 }
 
-- (IBAction)SIDVolumeAction:(id)sender
+- (IBAction)sidFilterAction:(id)sender
 {
-	float volume = [sender floatValue];
-	NSLog(@"New volume: %f", volume);
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+	if ([sender state]) {
+		// [c64 setSIDFilter:true];
+	} else {
+		// [c64 setSIDFilter:false];
+	}
+	[defaults setBool:[SIDFilter state] forKey:VC64SIDFilterKey];
+}
+
+- (IBAction)changeColorScheme:(id)sender
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+	VIC::ColorScheme scheme = (VIC::ColorScheme)[[sender selectedItem] tag];
+	[self updateColorWells:scheme];
+
+	[defaults setInteger:[[colorScheme selectedItem] tag] forKey:VC64ColorSchemeKey];
+}
+
+- (IBAction)setVideoFilterAction:(id)sender
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+	// set filter...
+	// not implemented yet
+	
+	[defaults setInteger:[[videoFilter selectedItem] tag] forKey:VC64VideoFilterKey];
 }
 
 - (IBAction)setColorAction:(id)sender
 {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSColor *selectedColor;
 	NSString *key;
 	
@@ -384,6 +311,25 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(b * 0xff);
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(a * 0xff);	
 	[c64 vicSetColor:col rgba:[sender color]];
+	[defaults setInteger:customColor[col] forKey:key];
+
+#if 0
+	[defaults setInteger:customColor[1] forKey:VC64CustomCol1Key];
+	[defaults setInteger:customColor[2] forKey:VC64CustomCol2Key];
+	[defaults setInteger:customColor[3] forKey:VC64CustomCol3Key];
+	[defaults setInteger:customColor[4] forKey:VC64CustomCol4Key];
+	[defaults setInteger:customColor[5] forKey:VC64CustomCol5Key];
+	[defaults setInteger:customColor[6] forKey:VC64CustomCol6Key];
+	[defaults setInteger:customColor[7] forKey:VC64CustomCol7Key];
+	[defaults setInteger:customColor[8] forKey:VC64CustomCol8Key];
+	[defaults setInteger:customColor[9] forKey:VC64CustomCol9Key];
+	[defaults setInteger:customColor[10] forKey:VC64CustomCol10Key];
+	[defaults setInteger:customColor[11] forKey:VC64CustomCol11Key];
+	[defaults setInteger:customColor[12] forKey:VC64CustomCol12Key];
+	[defaults setInteger:customColor[13] forKey:VC64CustomCol13Key];
+	[defaults setInteger:customColor[14] forKey:VC64CustomCol14Key];
+	[defaults setInteger:customColor[15] forKey:VC64CustomCol15Key];
+#endif
 }
 
 @end
