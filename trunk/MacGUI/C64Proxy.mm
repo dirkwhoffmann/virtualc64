@@ -198,8 +198,11 @@ void ListenerProxy::logAction(char *message)
 - (bool) loadSnapshot:(NSString *)filename { return c64->loadSnapshot([filename UTF8String]); }
 - (bool) saveSnapshot:(NSString *)filename { return c64->saveSnapshot([filename UTF8String]); }
 
+- (bool) cpuGetWarpMode { return c64->getWarpMode(); }
+- (void) cpuSetWarpMode:(bool)b { c64->setWarpMode(b); }
+- (void) cpuToggleWarpMode { c64->setWarpMode(!c64->getWarpMode()); }
+
 - (void) setWarpLoad:(bool)b { c64->setWarpLoad(b); }
-- (void) setFastReset:(bool)b { c64->setFastReset(b); }
 
 - (void) dumpCPU { cpu->dumpState(); }
 - (void) dumpCIA { c64->cia1->dumpState(); c64->cia2->dumpState(); }
@@ -213,15 +216,15 @@ void ListenerProxy::logAction(char *message)
 // CPU
 // --------------------------------------------------------------------------
 
-- (void) cpuEnableIllegalInstructions:(bool)illegalInstructions { cpu->enableIllegalInstructions(illegalInstructions); }
-- (bool) cpuGetWarpMode { return cpu->getWarpMode(); }
-- (void) cpuSetWarpMode:(bool)b { cpu->setWarpMode(b); }
-- (void) cpuToggleWarpMode { cpu->setWarpMode(!cpu->getWarpMode()); }
 - (long) cpuGetCycles { return cpu->getCycles(); }
 - (bool) cpuTracingEnabled { return cpu->tracingEnabled(); }
 - (void) cpuSetTraceMode:(bool)b { cpu->setTraceMode(b); }
 - (bool) iecTracingEnabled { return iec->tracingEnabled(); }
 - (void) iecSetTraceMode:(bool)b { iec->setTraceMode(b); }
+- (bool) driveDataTracingEnabled { return c64->floppy->via2->tracingEnabled(); }
+- (void) driveSetDataTraceMode:(bool)b { c64->floppy->via2->setTraceMode(b); }
+- (bool) driveCPUTracingEnabled { return c64->floppy->cpu->tracingEnabled(); }
+- (void) driveSetCPUTraceMode:(bool)b { c64->floppy->cpu->setTraceMode(b); }
 
 - (uint16_t) cpuGetPC { return cpu->getPC(); }
 - (void) cpuSetPC:(uint16_t)pc { cpu->setPC(pc); }

@@ -91,7 +91,7 @@ void
 		}
 						   
 		// Sleep... 
-		if (!c64->cpu->getWarpMode()) 
+		if (!c64->getWarpMode()) 
 			c64->synchronizeTiming();
 				
 		// Notify that we've reached a safe point to terminate the thread 
@@ -106,9 +106,7 @@ void
 
 C64::C64()
 {
-	wasRunningBefore = false; 
-	enableWarpLoad   = true;
-	enableFastReset  = true;
+	enableWarpLoad = true;
 	setNTSC();
 	
 	// Create virtual memory
@@ -253,7 +251,7 @@ C64::build()
 	return ((year - 2000) * 10000) + (mon * 100) + day;
 }
 
-void C64::hardReset()
+void C64::reset()
 {
 	suspend();
 	
@@ -268,7 +266,8 @@ void C64::hardReset()
 	floppy->reset();
 	
 	archive = NULL;
-	
+	setWarpMode(false);
+
 	debug("Hard reset performed. Now going to resume...\n");	
 	resume();
 	debug("Done...\n");
@@ -279,22 +278,9 @@ void C64::fastReset()
 	if (loadSnapshot("ResetImage.VC64")) {
 		debug("Reset image loaded.\n");	
 	} else {
-		warn("Cannot load reset image!\n");
+		debug("Cannot load reset image. Will do a hard reset...\n");
+		reset();
 	}
-}
-
-void C64::reset()
-{	
-	// Remove...
-	if (enableFastReset) {
-		debug("Fast reset disabled in beta...\n");
-		enableFastReset = false;
-	}
-	
-	if (enableFastReset)
-		fastReset();
-	else
-		hardReset();
 }
 
 void C64::setListener(C64Listener *l)
@@ -335,10 +321,6 @@ C64::threadCleanup()
 
 void 
 C64::run() {
-
-	if (!wasRunningBefore) {
-		// The emulator is started for the first time
-	}
 
 	if (isHalted()) {
 
@@ -441,6 +423,8 @@ C64::synchronizeTiming()
 	// sleep
 	if (timeToSleep > 0) {
 		sleepMicrosec(timeToSleep);
+	} else {
+		setDelay(frameDelay);
 	}
 }
 
@@ -552,6 +536,24 @@ C64::loadRom(const char *filename)
 	return result;
 }
 
+bool 
+C64::getWarpMode() 
+{ 
+	return warpMode; 
+}
+
+void 
+C64::setWarpMode(bool b) 
+{ 
+	if (b && !warpMode) {
+		warpMode = true;
+		getListener()->warpAction(warpMode);
+	} else if (!b && warpMode) {
+		warpMode = false;
+		getListener()->warpAction(warpMode);
+	}
+}
+
 void 
 C64::dumpState() {
 	
@@ -610,7 +612,7 @@ C64::loadSnapshot(const char *filename)
 		result = load(file);
 		fclose(file);
 	} else {
-		warn("Cannot read from file %s\n", filename);
+		debug("WARNING: Cannot read from file %s\n", filename);
 	}
 	
 	return result;
@@ -630,7 +632,7 @@ C64::saveSnapshot(const char *filename)
 		result = save(file);
 		fclose(file);
 	} else {
-		warn("Cannot write to file %s\n", filename);
+		debug("WARNING: Cannot write to file %s\n", filename);
 	}
 	return result;
 }

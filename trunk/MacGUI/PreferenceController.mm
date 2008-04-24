@@ -229,6 +229,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	int colorSchemeTag;
 	
 	/* System */
+	NSLog(@"Reading user defaults: %d", [defaults integerForKey:VC64PALorNTSCKey]);
 	if ([defaults integerForKey:VC64PALorNTSCKey])
 		[self setNtscAction:self];
 	else
@@ -273,15 +274,12 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	
 	/* System */
 	[defaults setInteger:[[palntsc selectedCell] tag] forKey:VC64PALorNTSCKey];
-	[defaults setBool:[illegalInstr state] forKey:VC64IllegalInstrKey];
-	[defaults setBool:[fastReset state] forKey:VC64FastResetKey];
+	NSLog(@"Writing user defaults: %d", [[palntsc selectedCell] tag]);
 	
 	/* Peripherals */
-	[defaults setBool:[real1541 state] forKey:VC64Real1541Key];
 	[defaults setBool:[warpLoad state] forKey:VC64WarpLoadKey];
 	
 	/* Audio */
-	[defaults setFloat:[SIDVolume floatValue] forKey:VC64SIDVolumeKey];
 	[defaults setBool:[SIDFilter state] forKey:VC64SIDFilterKey];
 
 	/* Video */

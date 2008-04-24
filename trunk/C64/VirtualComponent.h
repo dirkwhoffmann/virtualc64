@@ -46,10 +46,10 @@ private:
 	*/
 	bool traceMode;
 	
-	//! The original state before the first call to suspend
+	//! The original state before the first call of suspend()
 	bool suspendedState;
 
-	//! Number of times the component is suspends  
+	//! Number of times the component is suspended  
 	/*! The value is equal to the number of suspend calls minus the number of resume calls 
 	*/
 	int suspendCounter;

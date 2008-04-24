@@ -33,6 +33,8 @@
 
 - (IBAction)traceCPUAction:(id)sender;
 - (IBAction)traceIECAction:(id)sender;
+- (IBAction)traceDriveCPUAction:(id)sender;
+- (IBAction)traceDriveDataAction:(id)sender;
 - (IBAction)dumpCPUAction:(id)sender;
 - (IBAction)dumpCIAAction:(id)sender;
 - (IBAction)dumpVICAction:(id)sender;
@@ -44,8 +46,9 @@
 - (IBAction)rasterlineAction:(id)sender;
 - (IBAction)hideSpritesAction:(id)sender;
 
-//- (void)_insertText:(NSString *)message;
 - (void)_insertText:(char *)message;
 - (void)insertText:(char *)message;
+- (void)_appendText:(char *)message maxLength:(int)len;
+- (void)appendText:(char *)message maxLength:(int)len;
 
 @end

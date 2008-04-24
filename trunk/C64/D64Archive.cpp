@@ -355,7 +355,7 @@ uint8_t *D64Archive::findSector(unsigned halftrack, unsigned sector)
 	
 	// Halftrack mapping: 1 -> 1.0, 2 -> 1.5, 3 -> 2.0, 4 -> 2.5, etc.
 	if (halftrack % 2 == 0) {
-		warn("Trying to access half track in D64 image. Ignoring request.\n");
+		fprintf(stderr, "WARNING: Trying to access half track in D64 image. Ignoring request.\n");
 		return NULL;
 	}
 		

@@ -26,7 +26,7 @@
 @class MyDocument;
 @class VICScreen;
 
-class ListenerProxy : public C64Listener {
+class ListenerProxy : public  C64Listener {
 	
 private:
 	MyDocument *doc;
@@ -89,7 +89,6 @@ public:
 - (bool) saveSnapshot:(NSString *)filename;
 
 - (void) setWarpLoad:(bool)b;
-- (void) setFastReset:(bool)b;
 - (void) dumpCPU;
 - (void) dumpCIA;
 - (void) dumpVIC;
@@ -98,7 +97,6 @@ public:
 - (void) dumpDrive;
 
 // CPU
-- (void) cpuEnableIllegalInstructions:(bool)illegalInstructions;
 - (bool) cpuGetWarpMode;
 - (void) cpuSetWarpMode:(bool)b;
 - (void) cpuToggleWarpMode;
@@ -107,6 +105,10 @@ public:
 - (void) cpuSetTraceMode:(bool)b;
 - (bool) iecTracingEnabled;
 - (void) iecSetTraceMode:(bool)b;
+- (bool) driveCPUTracingEnabled;
+- (void) driveSetCPUTraceMode:(bool)b;
+- (bool) driveDataTracingEnabled;
+- (void) driveSetDataTraceMode:(bool)b;
 
 - (uint16_t) cpuGetPC;
 - (void) cpuSetPC:(uint16_t)pc;

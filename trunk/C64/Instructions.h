@@ -27,7 +27,10 @@ void registerCallback(uint8_t opcode, int (CPU::*func)());
 //! Register callback function for a single opcode
 void registerCallback(uint8_t opcode, char *mnemonic, AddressingMode mode, int (CPU::*func)());
 
-//! Register instruction set
+//! Register illegal instructions
+void registerIllegalInstructions();
+
+//! Register complete instruction set
 void registerInstructions();
 
 

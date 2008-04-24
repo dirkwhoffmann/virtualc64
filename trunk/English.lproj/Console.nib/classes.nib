@@ -31,6 +31,12 @@
 				<string>id</string>
 				<key>traceCPUAction</key>
 				<string>id</string>
+				<key>traceDriveAction</key>
+				<string>id</string>
+				<key>traceDriveCPUAction</key>
+				<string>id</string>
+				<key>traceDriveDataAction</key>
+				<string>id</string>
 				<key>traceIECAction</key>
 				<string>id</string>
 			</dict>

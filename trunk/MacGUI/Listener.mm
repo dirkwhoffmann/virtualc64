@@ -41,8 +41,15 @@
 
 	NSLog(@"runAction");
 	[info setStringValue:@""];
+	
+	// disable user editing 
 	[self enableUserEditing:NO];
-	needsRefresh = true;
+	
+	// disable undo because the internal state changes permanently
+	[self updateChangeCount:NSChangeDone];
+	[[self undoManager] removeAllActions];
+
+	[self refresh];
 	
 	[arp release];
 }
@@ -54,7 +61,7 @@
 	NSLog(@"haltAction");
 	[info setStringValue:@"Emulation halted."];
 	[self enableUserEditing:YES];	
-	needsRefresh = true;
+	[self refresh];
 
 	[arp release];
 }
@@ -83,7 +90,7 @@
 		default:
 			assert(0);
 	}
-	needsRefresh = true;
+	[self refresh];
 
 	[arp release];
 }

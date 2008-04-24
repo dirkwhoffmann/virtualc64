@@ -94,31 +94,12 @@ public:
 	static const uint16_t CIA_CONTROL_REG_B = 0x0F;
 	
 protected:
-		
-	//! \todo: Create a class TOD. The class will handle latching, incrementing, etc. itself
-/*
-		typedef	union {
-		struct { 
-			uint8_t tenth;
-			uint8_t seconds;
-			uint8_t minutes;
-			uint8_t hours;
-		} time;
-		uint64_t value;
-	} TOD;
-*/
-		
+				
 	//! CIA I/O Memory
 	/*! Whenever a value is poked to the CIA address space, it is stored here. */
 	uint8_t iomem[NO_OF_REGISTERS];
 		
 	//! Reference to the connected CPU. 
-	/*! Use \a setCPU to set the value during initialization.
-		The CIA chip needs to know about the CPU for sending interrupt requests.
-		For example, an interrupt occurs when a timer reaches zero.
-		
-		\warning The variable is "write once".
-	*/
 	CPU *cpu;
 	
 	//! Current value of timer A
@@ -164,8 +145,7 @@ protected:
 public:	
 	//! Current value of the "time of day" clock (TOD)
 	/*! The value is counted in 1/10th secods */
-	TOD
-		tod;
+	TOD tod;
 	
 	//! Returns true if the \a addr is located in the I/O range of one of the two CIA chips
 	static inline bool isCiaAddr(uint16_t addr) 
@@ -417,12 +397,6 @@ public:
 private:
 
 	//! Reference to the virtual keyboard
-	/*! Use \a setKeyboard to set the value during initialization. 
-		In a real C64, the keyboard is treated as a conventional peripheral device and as such
-		connected to the CIA chip.
-		
-		\warning The variable is "write once".
-	*/		
 	Keyboard *keyboard;
 	Joystick *joystickPortA;
 	Joystick *joystickPortB;
@@ -530,14 +504,6 @@ public:
 	//! Returns true if the \a addr is located in the I/O range of the CIA 2 chip
 	static inline bool isCia2Addr(uint16_t addr) 
 		{ return (CIA2_START_ADDR <= addr && addr <= CIA2_END_ADDR); }
-
-	//! Update the internally stored value of the physical port lines of data port A
-	/*! The value of the port lines is dependent on 
-	    1) the signal level set by the external device,
-		2) the value in the CIA data port register and
-		3) the currently pin configuration (input or output)
-	*/
-	// void updatePhysicalPortLinesA();
 
 	uint8_t peek(uint16_t addr);
 	void poke(uint16_t addr, uint8_t value);

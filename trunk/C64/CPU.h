@@ -140,11 +140,7 @@ private:
 	//! Carry flag
 	/*! The carry flag is set iff an arithmetic operation causes an \a unsigned overflow. */	
 	uint8_t  C;
-			
-	//! True iff warp mode is enabled
-	/*! In warp mode, we run as fast as possible */
-	bool warpMode;
-		
+					
 	//! Number of elapsed clock cycles since power up
 	uint64_t cycles;
 
@@ -232,10 +228,7 @@ public:
 	
 	//! Binds CPU and memory together
 	void setMemory(Memory *m) { assert(mem == NULL); mem = m; }
-	
-	//! Register instruction set
-	void enableIllegalInstructions(bool enable);
-	
+		
 	//! Returns current value of the accumulator register
 	inline uint8_t getA() { return A; };
 	//! Returns current value of the X register
@@ -381,14 +374,11 @@ public:
 	char *disassemble();
 	
 	//! Returns the number of CPU cycles elapsed so far
-	uint64_t getCycles();
+	inline uint64_t getCycles() { return cycles; }
+	
 	//! Set the cycle count to the specified value
-	void setCycles(uint64_t c);
-	//! Returns true iff warp mode is enabled
-	bool getWarpMode();
-	//! Enable or disable warp mode
-	void setWarpMode(bool b);
-
+	inline void setCycles(uint64_t c) { cycles = c; }
+	
 	//! Execute a single command
 	/*! Interrupt requests are ignored. Used inside the \a execute function and by the "step into" feature of the debugger. */
 	int step();

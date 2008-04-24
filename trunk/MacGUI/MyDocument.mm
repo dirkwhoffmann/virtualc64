@@ -69,15 +69,11 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 	/* System */
 	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64PALorNTSCKey];
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64IllegalInstrKey];
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:VC64FastResetKey];
 		
 	/* Peripherals */
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64Real1541Key];
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64WarpLoadKey];
 
 	/* Audio */
-	[defaultValues setObject:[NSNumber numberWithFloat:1.0] forKey:VC64SIDVolumeKey];
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64SIDFilterKey];
 
 
@@ -142,7 +138,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 		NSBundle* mainBundle = [NSBundle mainBundle];
 		NSString *path = [mainBundle resourcePath];
 		if (chdir([path UTF8String]) != 0)
-			warn("Could not change working directory.\n");
+			NSLog(@"WARNING: Could not change working directory.");
     }
     return self;
 }
@@ -301,6 +297,8 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	int colorScheme;
 	NSUserDefaults *defaults;
 	
+	NSLog(@"Loading user defaults");
+	
 	// Set user defaults
 	defaults = [NSUserDefaults standardUserDefaults];
 
@@ -310,8 +308,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	} else {
 		[c64 setPAL];
 	}
-	[c64 cpuEnableIllegalInstructions:[defaults boolForKey:VC64IllegalInstrKey]];
-	[c64 setFastReset:[defaults boolForKey:VC64FastResetKey]];
 		
 	/* Peripherals */
 	// [c64 setReal1541:[defaults boolForKey:VC64Real1541Key]];
@@ -319,7 +315,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	warpLoad = [defaults boolForKey:VC64WarpLoadKey];
 	
 	/* Audio */
-	[c64 sidSetVolumeControl:[defaults floatForKey:VC64SIDVolumeKey]];
 	// [c64 sidEnableFilter:[defaults boolForKey:VC64SIDFilterKey]];
 	
 	/* Video */
@@ -479,7 +474,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (void)timerFunc
 {	
-	// NSString *str1, *str2;
 	animationCounter++;
 
 	// Do 60 times a second...
@@ -488,31 +482,21 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 		[screen setNeedsDisplay:YES];
 	}
 
-	// Do 10 times a second... 
-	if ((animationCounter % 6) != 0) {
+	// Do less times ... 
+	if (animationCounter & 0x07) {
 		return;
 	}
 	
-	if ([c64 isRunning]) {
-		// the internal state is permanently changes, so we'll disable undo...
-		[self updateChangeCount:NSChangeDone];
-		[[self undoManager] removeAllActions];
+	if ([c64 isRunning] && ([debug_panel state] == NSDrawerOpenState || [debug_panel state] == NSDrawerOpeningState)) {
 		// refresh debug panel information...
-		if ([debug_panel state] == NSDrawerOpenState || [debug_panel state] == NSDrawerOpeningState) {
-			[self refresh];
-		}
+		[self refresh];
 	}
 
-	// Do less times...
-	if ((animationCounter % 18) != 0) {
+	// Do even less times...
+	if (animationCounter & 0x17) {
 		return;
 	}
 
-	// Check CPU status 
-	if (needsRefresh) {
-		[self refresh];
-		needsRefresh = NO;
-	}
 	// Measure clock frequency and frame rate
 	float fps;
 	long currentTime   = msec();
@@ -522,7 +506,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	long elapsedCycles = currentCycles - cycleCount;
 	long elapsedFrames = currentFrames - frameCount;
 	
-	// print out how fast we're flying
+	// print how fast we're flying
 	mhz = (float)elapsedCycles / (float)elapsedTime;
 	fps = round(((float)(elapsedFrames * 1000000) / (float)elapsedTime));
 	
@@ -765,11 +749,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 }
 
 - (IBAction)debugAction:(id)sender
-{
-	// NSUndoManager *undo = [self undoManager];
-	// [[undo prepareWithInvocationTarget:debug_panel] toggle:self];
-	// if (![undo isUndoing]) [undo setActionName:@"Debug panel"];
-	
+{	
 	[debug_panel toggle:self];
 	[self refresh];
 }
@@ -812,11 +792,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)pauseAction:(id)sender
 {
-	// [c64 vicSetColorScheme:VIC::GRAYSCALE];
-	// wait until a new frame has been drawn with the new colors...
-	// sleepMicrosec(25000);
 	[c64 halt];
-	// [screen startAnimation];
 }
 
 - (IBAction)stepIntoAction:(id)sender
@@ -899,6 +875,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 // --------------------------------------------------------------------------------
 // Action methods (Joystick action, common area)
 // --------------------------------------------------------------------------------
+
 - (IBAction)joystick1Action:(id)sender
 {
 	[c64 switchInputDevice:0];

@@ -112,7 +112,8 @@ uint8_t VC1541Memory::peekIO(uint16_t addr)
 	} else if ((addr & 0xFC00) == 0x1c00) {
 		return floppy->via2->peek(addr & 0x000F);
 	} else {
-		fail("Wrong VC1541 IO memory address\n");
+		debug("PANIC: Wrong VC1541 IO memory address\n");
+		assert(0);
 		return 0;
 	}
 }
@@ -144,7 +145,8 @@ void VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
 	} else if ((addr & 0xFC00) == 0x1c00) {
 		floppy->via2->poke(addr & 0X000F, value);
 	} else {
-		fail("Wrong VC1541 IO memory address\n");
+		debug("PANIC: Wrong VC1541 IO memory address\n");
+		assert(0);
 	}
 }
 			 			 

@@ -49,7 +49,6 @@ CPU::reset()
 	irqLine          = 0;	
 	callStackPointer = 0;
 	delay = 0;
-	setWarpMode(false);
 	setTraceMode(false);
 	
 	// Initialize registers and flags
@@ -68,37 +67,6 @@ CPU::reset()
 	assert(mem != NULL);
 	setPCL(mem->peek(0xFFFC)); 
 	setPCH(mem->peek(0xFFFD));	
-}
-
-// Getter and setter
-uint64_t
-CPU::getCycles() 
-{ 
-	return cycles;
-}
-
-void
-CPU::setCycles(uint64_t c)
-{ 
-	cycles = c; 
-}
-
-bool 
-CPU::getWarpMode() 
-{ 
-	return warpMode; 
-}
-
-void 
-CPU::setWarpMode(bool b) 
-{ 
-	if (b && !warpMode) {
-		warpMode = true;
-		getListener()->warpAction(warpMode);
-	} else if (!b && warpMode) {
-		warpMode = false;
-		getListener()->warpAction(warpMode);
-	}
 }
 
 // Instruction set
@@ -448,7 +416,7 @@ CPU::executeOneCycle(int deadCycles)
 			
 	executedCycles = (int)(cycles - startCycles);
 	if (executedCycles < 1 || executedCycles > 20) 
-		warn("Something is wrong with the cycle count %d %04X!!!\n", executedCycles, getPC());
+		debug("WARNING: Something is wrong with the cycle count %d %04X!!!\n", executedCycles, getPC());
 	delay = executedCycles - 1;	
 }
 

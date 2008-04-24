@@ -18,14 +18,8 @@
 
 #include "basic.h"
 
-struct 
-timeval t;
-
-static char
-bitPattern[256][9];
-
-long 
-tv_base = (gettimeofday(&t,NULL), t.tv_sec);
+struct timeval t;
+long tv_base = (gettimeofday(&t,NULL), t.tv_sec);
 
 bool
 checkFileSuffix(const char *filename, const char *suffix)
@@ -89,69 +83,6 @@ checkFileHeader(const char *filename, int *header)
 	return result;
 }
 
-#if 0
-// DEPRECATED: Use checkFileHeader(const char *filename, int *header) instead
-bool 
-checkFileHeader(const char *filename, int size, uint8_t magic1, uint8_t magic2, uint8_t magic3)
-{
-	struct stat fileProperties;
-	uint byte1, byte2, byte3;
-	
-	if (filename == NULL) {
-		return false;
-	}
-	
-	// Check file size and existence
-    if (stat(filename, &fileProperties) != 0) {
-		// Could not open file...
-		return false;
-	} else {
-		if (size > 0 && fileProperties.st_size != size) {
-			// File size does not match
-			return false;
-		}
-	}
-	
-	// Check magic numbers
-	bool result = true;
-	FILE *file  = fopen(filename, "r");
-	if (file == NULL)
-		return false; 
-	
-	byte1 = fgetc(file);
-	byte2 = fgetc(file);
-	byte3 = fgetc(file);
-	
-	if (magic1 != byte1 || magic2 != byte2 || magic3 != byte3) {
-		result = false;
-	} else {
-		result = true;
-	}
-	
-	fclose(file);
-	return result;
-}
-#endif
-
-const char *
-getBitPattern(uint8_t value) 
-{
-	static bool uninitialized = true;
-	
-	if (uninitialized) {
-		uninitialized = false;
-		for (int i = 0; i < 256; i++) {
-			for (int j = 0; j < 8; j++) {
-				bitPattern[i][j] = (i & (128 >> j)) ? '1' : '0';
-			}
-		bitPattern[i][8] = 0x00;
-		}
-	}
-	
-	return bitPattern[value];
-}
-
-
 void 
 write(FILE *file, uint64_t value, int count)
 {
@@ -183,10 +114,7 @@ uint64_t
 msec()
 {
 	struct timeval t;
-	
-	gettimeofday(&t,NULL);
-//	printf("(%d) %d seconds, %d microseconds since 1970\n", tv_base, t.tv_sec, t.tv_usec);
-	
+	gettimeofday(&t,NULL);	
 	return (uint64_t)1000000*(uint64_t)(t.tv_sec - tv_base) + (uint64_t)t.tv_usec;
 }
 
@@ -231,55 +159,3 @@ sleepMicrosec(uint64_t microsec)
 		usleep((long)microsec);
 	}
 }
-
-#if 0
-uint8_t 
-ascii2pet(char c)
-{
-	if ((c >= 'A') && (c <= 'Z') || (c >= 'a') && (c <= 'z'))
-		c = c ^ 0x20;
-	else if ((c >= 0xc1) && (c <= 0xda))
-		c = c ^ 0x80;
-	return c;
-}
-
-#endif
-
-
-#if 0
-void 
-debug(char *fmt, ...) {
-#ifdef DEBUG
-	va_list ap;
-	va_start(ap, fmt);
-	vfprintf(stderr, fmt, ap); fflush(stderr);
-	va_end(ap);
-#endif
-}
-#endif
-
-
-void
-warn(char *fmt, ...) {
-#ifdef DEBUG
-	va_list ap;
-	va_start(ap, fmt);
-	printf("WARNING: ");
-	vfprintf(stderr, fmt, ap); fflush(stderr);
-	va_end(ap);
-#endif
-}
-
-void
-fail(char *fmt, ...) {
-#ifdef DEBUG
-	va_list ap;
-	va_start(ap, fmt);
-	printf("FATAL ERROR: ");
-	vfprintf(stderr, fmt, ap); fflush(stderr);
-	va_end(ap);
-	exit(1);
-#endif
-}
-
-

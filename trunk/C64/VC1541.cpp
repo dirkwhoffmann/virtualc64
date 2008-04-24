@@ -111,9 +111,9 @@ VC1541::executeOneCycle()
 	via2->execute(1);
 	cpu->executeOneCycle(0);
 
-	if (tracingEnabled()) {
-		dumpState();
-	}
+	// if (tracingEnabled()) {
+	//	dumpState();
+	//}
 	
 	if (byteReadyTimer == 0)
 		return;
@@ -183,7 +183,7 @@ VC1541::startRotating()
 	debug("Starting drive engine (%2X)\n", cpu->getPC());
 	getListener()->driveMotorAction(true);
 	if (c64->getWarpLoad())
-		c64->cpu->setWarpMode(true);
+		c64->setWarpMode(true);
 		
 	byteReadyTimer = 100; // ??? which value is appropriate?
 }
@@ -194,7 +194,7 @@ VC1541::stopRotating()
 	debug("Stopping drive engine (%2X)\n", cpu->getPC()); 
 	getListener()->driveMotorAction(false);
 	if (c64->getWarpLoad())
-		c64->cpu->setWarpMode(false);
+		c64->setWarpMode(false);
 }
 
 void 
@@ -335,7 +335,7 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 	assert(1 <= track && track <= 42);
 	
 	if ((source = a->findSector(halftrack, sector)) == 0) {
-		warn("Can't encode halftrack. Not supported by the D64 format.\n");
+		debug("WARNING: Can't encode halftrack. Not supported by the D64 format.\n");
 		return 0;
 	}
 	debug("Encoding track %d, sector %d\n", track, sector);
@@ -398,7 +398,7 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 void 
 VC1541::insertDisc(Archive *a)
 {
-	warn("Can only mount D64 images.\n");
+	debug("WARNING: Can only mount D64 images.\n");
 }
 
 void 

@@ -18,46 +18,27 @@
 
 #include "C64.h"
 																						
-void CPU::registerCallback(uint8_t opcode, int (CPU::*func)())
+void 
+CPU::registerCallback(uint8_t opcode, int (CPU::*func)())
 {
 	registerCallback(opcode, "???", ADDR_IMPLIED, func);
 }
 
-void CPU::registerCallback(uint8_t opcode, char *mnc, AddressingMode mode, int (CPU::*func)())
+void 
+CPU::registerCallback(uint8_t opcode, char *mnc, AddressingMode mode, int (CPU::*func)())
 {
 	// table is write once only!
-	//if (func != &CPU::defaultCallback) 
-	//	assert(actionFunc[opcode] == &CPU::defaultCallback);
+	if (func != &CPU::defaultCallback) 
+		assert(actionFunc[opcode] == &CPU::defaultCallback);
 	
 	actionFunc[opcode]     = func;
 	mnemonic[opcode]       = mnc;
 	addressingMode[opcode] = mode;
 }
 
-void CPU::enableIllegalInstructions(bool enable)
+void 
+CPU::registerIllegalInstructions()
 {
-	if (!enable) {
-		int i;
-		uint8_t illegalOpcodes[] = {
-			0x93, 0x9F, 0x4B, 0x0B, 0x2B, 0x6B, 0xCB, 0xC7,
-			0xD7, 0xC3, 0xD3, 0xCF, 0xDF, 0xDB, 0xE7, 0xF7,
-			0xE3, 0xF3, 0xEF, 0xFF, 0xFB, 0xBB, 0xAB, 0xA7,
-			0xB7, 0xA3, 0xB3, 0xAF, 0xBF, 0x80, 0x82, 0x89,
-			0xC2, 0x1A, 0x3A, 0x5A, 0x7A, 0xDA, 0xFA, 0x04,
-			0x44, 0x64, 0x0C, 0x14, 0x34, 0x54, 0x74, 0xD4,
-			0xF4, 0x1C, 0x3C, 0x5C, 0x7C, 0xDC, 0xFC, 0x27,
-			0x37, 0x23, 0x2F, 0x3F, 0x3B, 0x67, 0x77, 0x63,
-			0x73, 0x6F, 0x7F, 0x7B, 0x87, 0x97, 0x83, 0x8F,
-			0xEB, 0x9E, 0x9C, 0x07, 0x17, 0x03, 0x13, 0x0F,
-			0x1F, 0x1B, 0x47, 0x57, 0x43, 0x53, 0x4F, 0x5B,
-			0x9B, 0x8B
-		};
-		
-		for (i = 0; i < sizeof(illegalOpcodes); i++)
-			registerCallback(illegalOpcodes[i], &CPU::defaultCallback);
-		return;
-	}			
-
 	registerCallback(0x93, "AHX*", ADDR_INDIRECT_Y, &CPU::AHX_indirect_y);
 	registerCallback(0x9F, "AHX*", ADDR_ABSOLUTE_Y, &CPU::AHX_absolute_y);
 
@@ -360,7 +341,7 @@ void CPU::registerInstructions()
 	registerCallback(0x98, "TYA", ADDR_IMPLIED, &CPU::TYA);	
 
 	// Register illegal instructions
-	enableIllegalInstructions(true);	
+	registerIllegalInstructions();	
 }
 
 int CPU::defaultCallback()
