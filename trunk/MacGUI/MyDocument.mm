@@ -174,9 +174,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 	// Initialize variables
 	enableOpenGL = false;
-	memsource = Memory::MEM_RAM;
-	currentCIA = 1;
-	selectedSprite = 0;
 			
 	// Create virtual machine
 	c64 = [[C64Proxy alloc] init];						
@@ -310,9 +307,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	}
 		
 	/* Peripherals */
-	// [c64 setReal1541:[defaults boolForKey:VC64Real1541Key]];
-	//[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
-	warpLoad = [defaults boolForKey:VC64WarpLoadKey];
+	[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
 	
 	/* Audio */
 	// [c64 sidEnableFilter:[defaults boolForKey:VC64SIDFilterKey]];
@@ -350,15 +345,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
    	
 	// Load user defaults
 	[self loadUserDefaults];
-	
-	// Synchronize variables with current state of GUI elements
-	if (currentCIA == 1) 
-		[ciaSelector selectItemAtIndex:0];
-	else if (currentCIA == 2)
-		[ciaSelector selectItemAtIndex:1];
-	else 
-		assert(false);
-	
+		
 	// Launch emulator
 	[c64 run];
 	
@@ -1135,7 +1122,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (void)setMemSource:(Memory::MemoryType)source
 {
-	memsource = source;
+	// memsource = source;
 	[self refresh];
 }
 
@@ -1208,17 +1195,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 // Action methods (CIA 1)
 // --------------------------------------------------------------------------------
 
-- (IBAction)ciaSelectCiaAction:(id)sender 
-{
-	NSLog(@"int Val %d selected Item %d\n", [sender intValue], [sender indexOfSelectedItem]);
-	if ([sender indexOfSelectedItem] == 0) {
-		currentCIA = 1;
-	} else if ([sender indexOfSelectedItem] == 1) {
-		currentCIA = 2;
-	}
-	[self refresh];
-} 
-
 - (void)ciaSetDataPortA:(int)nr value:(uint8_t)v
 {
 	[c64 ciaSetDataPortA:nr value:v];
@@ -1228,10 +1204,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaDataPortAAction:(id)sender 
 {	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetDataPortA:currentCIA value:[c64 ciaGetDataPortA:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetDataPortA:[self currentCIA] value:[c64 ciaGetDataPortA:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port A"];
 	
-	[self ciaSetDataPortA:currentCIA value:[sender intValue]];
+	[self ciaSetDataPortA:[self currentCIA] value:[sender intValue]];
 } 
 
 - (void)ciaSetDataPortDirectionA:(int)nr value:(uint8_t)v
@@ -1243,10 +1219,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaDataPortDirectionAAction:(id)sender 
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetDataPortDirectionA:currentCIA value:[c64 ciaGetDataPortDirectionA:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetDataPortDirectionA:[self currentCIA] value:[c64 ciaGetDataPortDirectionA:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port direction A"];
 	
-	[self ciaSetDataPortDirectionA:currentCIA value:[sender intValue]];
+	[self ciaSetDataPortDirectionA:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetTimerA:(int)nr value:(uint16_t)v
@@ -1258,10 +1234,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaTimerAAction:(id)sender 
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetTimerA:currentCIA value:[c64 ciaGetDataPortDirectionA:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetTimerA:[self currentCIA] value:[c64 ciaGetDataPortDirectionA:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer A"];
 	
-	[self ciaSetTimerA:currentCIA value:[sender intValue]];
+	[self ciaSetTimerA:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetTimerLatchA:(int)nr value:(uint16_t)v
@@ -1273,10 +1249,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaLatchedTimerAAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetTimerLatchA:currentCIA value:[c64 ciaGetTimerLatchA:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetTimerLatchA:[self currentCIA] value:[c64 ciaGetTimerLatchA:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer latch A"];
 	
-	[self ciaSetTimerLatchA:currentCIA value:[sender intValue]];
+	[self ciaSetTimerLatchA:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetStartFlagA:(int)nr value:(bool)b
@@ -1288,10 +1264,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaRunningAAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetStartFlagA:currentCIA value:[c64 ciaGetStartFlagA:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetStartFlagA:[self currentCIA] value:[c64 ciaGetStartFlagA:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"Start/Stop CIA timer A"];
 
-	[self ciaSetStartFlagA:currentCIA value:[sender intValue]];
+	[self ciaSetStartFlagA:[self currentCIA] value:[sender intValue]];
 }
 
 
@@ -1304,10 +1280,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaOneShotAAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetOneShotFlagA:currentCIA value:[c64 ciaGetOneShotFlagA:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetOneShotFlagA:[self currentCIA] value:[c64 ciaGetOneShotFlagA:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA one shot flag A"];
 	
-	[self ciaSetOneShotFlagA:currentCIA value:[sender intValue]];
+	[self ciaSetOneShotFlagA:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetUnderflowFlagA:(int)nr value:(bool)b
@@ -1319,10 +1295,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaCountUnterflowsAAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetUnderflowFlagA:currentCIA value:[c64 ciaGetUnderflowFlagA:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetUnderflowFlagA:[self currentCIA] value:[c64 ciaGetUnderflowFlagA:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA underflow flag A"];
 	
-	[self ciaSetUnderflowFlagA:currentCIA value:[sender intValue]];
+	[self ciaSetUnderflowFlagA:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetPendingSignalFlagA:(int)nr value:(bool)b
@@ -1334,10 +1310,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaSignalPendingAAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetPendingSignalFlagA:currentCIA value:[c64 ciaGetPendingSignalFlagA:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetPendingSignalFlagA:[self currentCIA] value:[c64 ciaGetPendingSignalFlagA:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA signal pending A"];
 	
-	[self ciaSetPendingSignalFlagA:currentCIA value:[sender intValue]];
+	[self ciaSetPendingSignalFlagA:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetInterruptEnableFlagA:(int)nr value:(bool)b
@@ -1349,10 +1325,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaInterruptEnableAAction:(id)sender 
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetInterruptEnableFlagA:currentCIA value:[c64 ciaGetInterruptEnableFlagA:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetInterruptEnableFlagA:[self currentCIA] value:[c64 ciaGetInterruptEnableFlagA:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA interrupt enable flag A"];
 	
-	[self ciaSetInterruptEnableFlagA:currentCIA value:[sender intValue]];
+	[self ciaSetInterruptEnableFlagA:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetDataPortB:(int)nr value:(uint8_t)v
@@ -1364,10 +1340,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaDataPortBAction:(id)sender 
 {	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetDataPortB:currentCIA value:[c64 ciaGetDataPortB:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetDataPortB:[self currentCIA] value:[c64 ciaGetDataPortB:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port B"];
 	
-	[self ciaSetDataPortB:currentCIA value:[sender intValue]];
+	[self ciaSetDataPortB:[self currentCIA] value:[sender intValue]];
 } 
 
 - (void)ciaSetDataPortDirectionB:(int)nr value:(uint8_t)v
@@ -1379,10 +1355,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaDataPortDirectionBAction:(id)sender 
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetDataPortDirectionB:currentCIA value:[c64 ciaGetDataPortDirectionB:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetDataPortDirectionB:[self currentCIA] value:[c64 ciaGetDataPortDirectionB:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port direction B"];
 	
-	[self ciaSetDataPortDirectionB:currentCIA value:[sender intValue]];
+	[self ciaSetDataPortDirectionB:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetTimerB:(int)nr value:(uint16_t)v
@@ -1394,10 +1370,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaTimerBAction:(id)sender 
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetTimerB:currentCIA value:[c64 ciaGetTimerB:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetTimerB:[self currentCIA] value:[c64 ciaGetTimerB:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer B"];
 	
-	[self ciaSetTimerB:currentCIA value:[sender intValue]];
+	[self ciaSetTimerB:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetTimerLatchB:(int)nr value:(uint16_t)v
@@ -1409,10 +1385,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaLatchedTimerBAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetTimerLatchB:currentCIA value:[c64 ciaGetTimerLatchB:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetTimerLatchB:[self currentCIA] value:[c64 ciaGetTimerLatchB:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer latch B"];
 	
-	[self ciaSetTimerLatchB:currentCIA value:[sender intValue]];
+	[self ciaSetTimerLatchB:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetStartFlagB:(int)nr value:(bool)b
@@ -1424,10 +1400,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaRunningBAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetStartFlagB:currentCIA value:[c64 ciaGetStartFlagB:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetStartFlagB:[self currentCIA] value:[c64 ciaGetStartFlagB:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"Start/Stop CIA timer B"];
 
-	[self ciaSetStartFlagB:currentCIA value:[sender intValue]];
+	[self ciaSetStartFlagB:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetOneShotFlagB:(int)nr value:(bool)b
@@ -1439,10 +1415,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaOneShotBAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetOneShotFlagB:currentCIA value:[c64 ciaGetOneShotFlagB:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetOneShotFlagB:[self currentCIA] value:[c64 ciaGetOneShotFlagB:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA one shot flag B"];
 	
-	[self ciaSetOneShotFlagB:currentCIA value:[sender intValue]];
+	[self ciaSetOneShotFlagB:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetUnderflowFlagB:(int)nr value:(bool)b
@@ -1454,10 +1430,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaCountUnterflowsBAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetUnderflowFlagB:currentCIA value:[c64 ciaGetUnderflowFlagB:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetUnderflowFlagB:[self currentCIA] value:[c64 ciaGetUnderflowFlagB:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA underflow flag B"];
 	
-	[self ciaSetUnderflowFlagB:currentCIA value:[sender intValue]];
+	[self ciaSetUnderflowFlagB:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetPendingSignalFlagB:(int)nr value:(bool)b
@@ -1469,10 +1445,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaSignalPendingBAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetPendingSignalFlagB:currentCIA value:[c64 ciaGetPendingSignalFlagB:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetPendingSignalFlagB:[self currentCIA] value:[c64 ciaGetPendingSignalFlagB:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA signal pending B"];
 	
-	[self ciaSetPendingSignalFlagB:currentCIA value:[sender intValue]];
+	[self ciaSetPendingSignalFlagB:[self currentCIA] value:[sender intValue]];
 }
 
 - (void)ciaSetInterruptEnableFlagB:(int)nr value:(bool)b
@@ -1484,10 +1460,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (IBAction)ciaInterruptEnableBAction:(id)sender 
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetInterruptEnableFlagB:currentCIA value:[c64 ciaGetInterruptEnableFlagB:currentCIA]];
+	[[undo prepareWithInvocationTarget:self] ciaSetInterruptEnableFlagB:[self currentCIA] value:[c64 ciaGetInterruptEnableFlagB:[self currentCIA]]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA interrupt enable flag B"];
 	
-	[self ciaSetInterruptEnableFlagB:currentCIA value:[sender intValue]];
+	[self ciaSetInterruptEnableFlagB:[self currentCIA] value:[sender intValue]];
 }
 
 // TODO: IMPLEMENTATION
@@ -1639,7 +1615,8 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteActiveAction:(id)sender
 {	
-	[self spriteToggleVisibilityFlag:selectedSprite];
+	// debug("Selected sprinte = %d\n", [
+	[self spriteToggleVisibilityFlag:[self currentSprite]];
 }
 
 - (void)spriteToggleMulticolorFlag:(int)nr
@@ -1654,7 +1631,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteMulticolorAction:(id)sender
 {
-	[self spriteToggleMulticolorFlag:selectedSprite];
+	[self spriteToggleMulticolorFlag:[self currentSprite]];
 }
 
 - (void)spriteToggleStretchXFlag:(int)nr
@@ -1669,7 +1646,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteStretchXAction:(id)sender
 {
-	[self spriteToggleStretchXFlag:selectedSprite];
+	[self spriteToggleStretchXFlag:[self currentSprite]];
 }
 
 - (void)spriteToggleStretchYFlag:(int)nr
@@ -1684,7 +1661,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteStretchYAction:(id)sender
 {
-	[self spriteToggleStretchYFlag:selectedSprite];
+	[self spriteToggleStretchYFlag:[self currentSprite]];
 }
 
 - (void)spriteToggleBackgroundPriorityFlag:(int)nr
@@ -1699,7 +1676,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteInFrontAction:(id)sender
 {	
-	[self spriteToggleBackgroundPriorityFlag:selectedSprite];
+	[self spriteToggleBackgroundPriorityFlag:[self currentSprite]];
 }
 
 - (void)spriteToggleSpriteSpriteCollisionFlag:(int)nr
@@ -1714,7 +1691,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteSpriteCollisionAction:(id)sender
 {
-	[self spriteToggleSpriteSpriteCollisionFlag:selectedSprite];
+	[self spriteToggleSpriteSpriteCollisionFlag:[self currentSprite]];
 }
 
 - (void)spriteToggleSpriteBackgroundCollisionFlag:(int)nr
@@ -1729,7 +1706,9 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteBackgroundCollisionAction:(id)sender
 {
-	[self spriteToggleSpriteBackgroundCollisionFlag:selectedSprite];
+	NSLog(@"%d", [sprite1 intValue]);
+	NSLog(@"%d", [sprite2 intValue]);
+	[self spriteToggleSpriteBackgroundCollisionFlag:[self currentSprite]];
 }
 
 - (void)spriteSetX:(int)nr value:(int)v
@@ -1744,7 +1723,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteXAction:(id)sender
 {
-	[self spriteSetX:selectedSprite value:[sender intValue]];
+	[self spriteSetX:[self currentSprite] value:[sender intValue]];
 }
 
 - (void)spriteSetY:(int)nr value:(int)v
@@ -1759,7 +1738,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteYAction:(id)sender
 {
-	[self spriteSetY:selectedSprite value:[sender intValue]];
+	[self spriteSetY:[self currentSprite] value:[sender intValue]];
 }
 
 - (void)spriteSetColor:(int)nr value:(int)v
@@ -1774,7 +1753,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (IBAction)vicSpriteColorAction:(id)sender
 {
-	[self spriteSetColor:selectedSprite value:[sender intValue]];
+	[self spriteSetColor:[self currentSprite] value:[sender intValue]];
 	[self refresh];
 }
 
@@ -1817,16 +1796,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	enableOpenGL = !enableOpenGL;
 	[self refresh];
 }
-
-- (IBAction)vicSelectSprite0:(id)sender { selectedSprite = 0; }
-- (IBAction)vicSelectSprite1:(id)sender { selectedSprite = 1; }
-- (IBAction)vicSelectSprite2:(id)sender { selectedSprite = 2; }
-- (IBAction)vicSelectSprite3:(id)sender { selectedSprite = 3; }
-- (IBAction)vicSelectSprite4:(id)sender { selectedSprite = 4; }
-- (IBAction)vicSelectSprite5:(id)sender { selectedSprite = 5; }
-- (IBAction)vicSelectSprite6:(id)sender { selectedSprite = 6; }
-- (IBAction)vicSelectSprite7:(id)sender { selectedSprite = 7; }
-
 
 // --------------------------------------------------------------------------------
 // Refresh methods: Force all GUI items to refresh their value
@@ -1873,35 +1842,33 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (void)refreshCIA
 {
-	[ciaSelector setIntValue:(currentCIA == 1 ? 0 : 1)];
-
-	[ciaDataPortA setIntValue:[c64 ciaGetDataPortA:currentCIA]];
-	[ciaDataPortDirectionA setIntValue:[c64 ciaGetDataPortDirectionA:currentCIA]];
-	[ciaTimerA setIntValue:[c64 ciaGetTimerA:currentCIA]];
-	[ciaLatchedTimerA setIntValue:[c64 ciaGetTimerLatchA:currentCIA]];
-	[ciaRunningA setIntValue:[c64 ciaGetStartFlagA:currentCIA]];
-	[ciaOneShotA setIntValue:[c64 ciaGetOneShotFlagA:currentCIA]];
-	[ciaSignalPendingA setIntValue:[c64 ciaGetPendingSignalFlagA:currentCIA]];
-	[ciaInterruptEnableA setIntValue:[c64 ciaGetInterruptEnableFlagA:currentCIA]];
+	[ciaDataPortA setIntValue:[c64 ciaGetDataPortA:[self currentCIA]]];
+	[ciaDataPortDirectionA setIntValue:[c64 ciaGetDataPortDirectionA:[self currentCIA]]];
+	[ciaTimerA setIntValue:[c64 ciaGetTimerA:[self currentCIA]]];
+	[ciaLatchedTimerA setIntValue:[c64 ciaGetTimerLatchA:[self currentCIA]]];
+	[ciaRunningA setIntValue:[c64 ciaGetStartFlagA:[self currentCIA]]];
+	[ciaOneShotA setIntValue:[c64 ciaGetOneShotFlagA:[self currentCIA]]];
+	[ciaSignalPendingA setIntValue:[c64 ciaGetPendingSignalFlagA:[self currentCIA]]];
+	[ciaInterruptEnableA setIntValue:[c64 ciaGetInterruptEnableFlagA:[self currentCIA]]];
 	
-	[ciaDataPortB setIntValue:[c64 ciaGetDataPortB:currentCIA]];
-	[ciaDataPortDirectionB setIntValue:[c64 ciaGetDataPortDirectionB:currentCIA]];
-	[ciaTimerB setIntValue:[c64 ciaGetTimerB:currentCIA]];
-	[ciaLatchedTimerB setIntValue:[c64 ciaGetTimerLatchB:currentCIA]];
-	[ciaRunningB setIntValue:[c64 ciaGetStartFlagB:currentCIA]];
-	[ciaOneShotB setIntValue:[c64 ciaGetOneShotFlagB:currentCIA]];
-	[ciaSignalPendingB setIntValue:[c64 ciaGetPendingSignalFlagB:currentCIA]];
-	[ciaInterruptEnableB setIntValue:[c64 ciaGetInterruptEnableFlagB:currentCIA]];
+	[ciaDataPortB setIntValue:[c64 ciaGetDataPortB:[self currentCIA]]];
+	[ciaDataPortDirectionB setIntValue:[c64 ciaGetDataPortDirectionB:[self currentCIA]]];
+	[ciaTimerB setIntValue:[c64 ciaGetTimerB:[self currentCIA]]];
+	[ciaLatchedTimerB setIntValue:[c64 ciaGetTimerLatchB:[self currentCIA]]];
+	[ciaRunningB setIntValue:[c64 ciaGetStartFlagB:[self currentCIA]]];
+	[ciaOneShotB setIntValue:[c64 ciaGetOneShotFlagB:[self currentCIA]]];
+	[ciaSignalPendingB setIntValue:[c64 ciaGetPendingSignalFlagB:[self currentCIA]]];
+	[ciaInterruptEnableB setIntValue:[c64 ciaGetInterruptEnableFlagB:[self currentCIA]]];
 	
-	[todHours setIntValue:[c64 ciaGetTodHours:currentCIA]];
-	[todMinutes setIntValue:[c64 ciaGetTodMinutes:currentCIA]];
-	[todSeconds setIntValue:[c64 ciaGetTodSeconds:currentCIA]];
-	[todTenth setIntValue:[c64 ciaGetTodTenth:currentCIA]];
+	[todHours setIntValue:[c64 ciaGetTodHours:[self currentCIA]]];
+	[todMinutes setIntValue:[c64 ciaGetTodMinutes:[self currentCIA]]];
+	[todSeconds setIntValue:[c64 ciaGetTodSeconds:[self currentCIA]]];
+	[todTenth setIntValue:[c64 ciaGetTodTenth:[self currentCIA]]];
 	
-	[alarmHours setIntValue:[c64 ciaGetAlarmHours:currentCIA]];
-	[alarmMinutes setIntValue:[c64 ciaGetAlarmMinutes:currentCIA]];
-	[alarmSeconds setIntValue:[c64 ciaGetAlarmSeconds:currentCIA]];
-	[alarmTenth setIntValue:[c64 ciaGetAlarmTenth:currentCIA]];	
+	[alarmHours setIntValue:[c64 ciaGetAlarmHours:[self currentCIA]]];
+	[alarmMinutes setIntValue:[c64 ciaGetAlarmMinutes:[self currentCIA]]];
+	[alarmSeconds setIntValue:[c64 ciaGetAlarmSeconds:[self currentCIA]]];
+	[alarmTenth setIntValue:[c64 ciaGetAlarmTenth:[self currentCIA]]];	
 }
 
 - (void)refreshVIC
@@ -1920,16 +1887,16 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	[VicDXStepper setIntValue:[c64 vicGetHorizontalRasterScroll]];
 	[VicDY setIntValue:[c64 vicGetVerticalRasterScroll]];
 	[VicDYStepper setIntValue:[c64 vicGetVerticalRasterScroll]];
-	[VicSpriteActive setIntValue:[c64 spriteGetVisibilityFlag:selectedSprite]];
-	[VicSpriteMulticolor setIntValue:[c64 spriteGetMulticolorFlag:selectedSprite]];
-	[VicSpriteStretchX setIntValue:[c64 spriteGetStretchXFlag:selectedSprite]];
-	[VicSpriteStretchY setIntValue:[c64 spriteGetStretchYFlag:selectedSprite]];
-	[VicSpriteInFront setIntValue:[c64 spriteGetBackgroundPriorityFlag:selectedSprite]];
-	[VicSpriteSpriteCollision setIntValue:[c64 spriteGetSpriteSpriteCollisionFlag:selectedSprite]];
-	[VicSpriteBackgroundCollision setIntValue:[c64 spriteGetSpriteBackgroundCollisionFlag:selectedSprite]];
-	[VicSpriteX setIntValue:[c64 spriteGetX:selectedSprite]];
-	[VicSpriteY setIntValue:[c64 spriteGetY:selectedSprite]];
-	[VicSpriteColor setIntValue:[c64 spriteGetColor:selectedSprite]];
+	[VicSpriteActive setIntValue:[c64 spriteGetVisibilityFlag:[self currentSprite]]];
+	[VicSpriteMulticolor setIntValue:[c64 spriteGetMulticolorFlag:[self currentSprite]]];
+	[VicSpriteStretchX setIntValue:[c64 spriteGetStretchXFlag:[self currentSprite]]];
+	[VicSpriteStretchY setIntValue:[c64 spriteGetStretchYFlag:[self currentSprite]]];
+	[VicSpriteInFront setIntValue:[c64 spriteGetBackgroundPriorityFlag:[self currentSprite]]];
+	[VicSpriteSpriteCollision setIntValue:[c64 spriteGetSpriteSpriteCollisionFlag:[self currentSprite]]];
+	[VicSpriteBackgroundCollision setIntValue:[c64 spriteGetSpriteBackgroundCollisionFlag:[self currentSprite]]];
+	[VicSpriteX setIntValue:[c64 spriteGetX:[self currentSprite]]];
+	[VicSpriteY setIntValue:[c64 spriteGetY:[self currentSprite]]];
+	[VicSpriteColor setIntValue:[c64 spriteGetColor:[self currentSprite]]];
 	[VicRasterline setIntValue:[c64 vicGetRasterLine]];
 	[VicEnableRasterInterrupt setIntValue:[c64 vicGetRasterInterruptFlag]];
 	[VicRasterInterrupt setIntValue:[c64 vicGetRasterInterruptLine]];
@@ -2098,14 +2065,14 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 	// ASCII column...
 	if ([[aTableColumn identifier] isEqual:@"ascii"]) {
-		if (![c64 memIsValidAddr:addr memtype:memsource])
+		if (![c64 memIsValidAddr:addr memtype:[self currentMemSource]])
 			return nil;
 		else
 			return [NSString stringWithFormat:@"%c%c%c%c", 
-				[c64 memPeekFrom:(addr+0) memtype:memsource],
-				[c64 memPeekFrom:(addr+1) memtype:memsource],
-				[c64 memPeekFrom:(addr+2) memtype:memsource],
-				[c64 memPeekFrom:(addr+3) memtype:memsource]];
+				[c64 memPeekFrom:(addr+0) memtype:[self currentMemSource]],
+				[c64 memPeekFrom:(addr+1) memtype:[self currentMemSource]],
+				[c64 memPeekFrom:(addr+2) memtype:[self currentMemSource]],
+				[c64 memPeekFrom:(addr+3) memtype:[self currentMemSource]]];
 	}
 	
 	// One of the hexadecimal columns...
@@ -2113,10 +2080,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	if ([id isEqual:@"hex2"]) addr += 2;
 	if ([id isEqual:@"hex3"]) addr += 3;
 	
-	if (![c64 memIsValidAddr:addr memtype:memsource])
+	if (![c64 memIsValidAddr:addr memtype:[self currentMemSource]])
 		return nil;
 	
-	return [NSNumber numberWithInt:[c64 memPeekFrom:addr memtype:memsource]];
+	return [NSNumber numberWithInt:[c64 memPeekFrom:addr memtype:[self currentMemSource]]];
 	
 	return nil;
 }
@@ -2152,11 +2119,11 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	if ([id isEqual:@"hex2"]) addr += 2;
 	if ([id isEqual:@"hex3"]) addr += 3;
 
-	uint8_t oldValue = [c64 memPeekFrom:addr memtype:memsource];
+	uint8_t oldValue = [c64 memPeekFrom:addr memtype:[self currentMemSource]];
 	if (oldValue == value)
 		return; 
 
-	[self changeMemValue:addr value:value memtype:memsource];
+	[self changeMemValue:addr value:value memtype:[self currentMemSource]];
 }
 
 - (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)row
@@ -2255,6 +2222,35 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 // --------------------------------------------------------------------------------
 // Helper functions
 // --------------------------------------------------------------------------------
+
+- (int)currentSprite
+{
+	if ([sprite0 intValue]) return 0;
+	if ([sprite1 intValue]) return 1;
+	if ([sprite2 intValue]) return 2;
+	if ([sprite3 intValue]) return 3;
+	if ([sprite4 intValue]) return 4;
+	if ([sprite5 intValue]) return 5;
+	if ([sprite6 intValue]) return 6;
+	if ([sprite7 intValue]) return 7;	
+	assert(false);
+}
+
+- (Memory::MemoryType)currentMemSource
+{
+	if ([ramSource intValue]) return Memory::MEM_RAM;
+	if ([romSource intValue]) return Memory::MEM_ROM;
+	if ([ioSource intValue]) return Memory::MEM_IO;
+	assert(false);
+}
+
+- (int)currentCIA
+{
+	if ([ciaSelector indexOfSelectedItem] == 0)
+		return 1;
+	else
+		return 2;
+}
 
 - (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row
 {

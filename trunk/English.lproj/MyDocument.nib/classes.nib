@@ -47,19 +47,6 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
-			<key>CLASS</key>
-			<string>VICScreen</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>myDoc</key>
-				<string>MyDocument</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSOpenGLView</string>
-		</dict>
-		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>BAction</key>
@@ -234,22 +221,6 @@
 				<string>id</string>
 				<key>vicScreenMemoryAction</key>
 				<string>id</string>
-				<key>vicSelectSprite0</key>
-				<string>id</string>
-				<key>vicSelectSprite1</key>
-				<string>id</string>
-				<key>vicSelectSprite2</key>
-				<string>id</string>
-				<key>vicSelectSprite3</key>
-				<string>id</string>
-				<key>vicSelectSprite4</key>
-				<string>id</string>
-				<key>vicSelectSprite5</key>
-				<string>id</string>
-				<key>vicSelectSprite6</key>
-				<string>id</string>
-				<key>vicSelectSprite7</key>
-				<string>id</string>
 				<key>vicSpriteActiveAction</key>
 				<string>id</string>
 				<key>vicSpriteBackgroundCollisionAction</key>
@@ -421,6 +392,8 @@
 				<string>NSButton</string>
 				<key>info</key>
 				<string>NSTextField</string>
+				<key>ioSource</key>
+				<string>NSButtonCell</string>
 				<key>memTableView</key>
 				<string>NSTableView</string>
 				<key>mhzField</key>
@@ -429,12 +402,32 @@
 				<string>MountDialog</string>
 				<key>pc</key>
 				<string>NSTextField</string>
+				<key>ramSource</key>
+				<string>NSButtonCell</string>
 				<key>redLED</key>
 				<string>NSButton</string>
+				<key>romSource</key>
+				<string>NSButtonCell</string>
 				<key>screen</key>
 				<string>VICScreen</string>
 				<key>sp</key>
 				<string>NSTextField</string>
+				<key>sprite0</key>
+				<string>NSButtonCell</string>
+				<key>sprite1</key>
+				<string>NSButtonCell</string>
+				<key>sprite2</key>
+				<string>NSButtonCell</string>
+				<key>sprite3</key>
+				<string>NSButtonCell</string>
+				<key>sprite4</key>
+				<string>NSButtonCell</string>
+				<key>sprite5</key>
+				<string>NSButtonCell</string>
+				<key>sprite6</key>
+				<string>NSButtonCell</string>
+				<key>sprite7</key>
+				<string>NSButtonCell</string>
 				<key>theWindow</key>
 				<string>id</string>
 				<key>todHours</key>
@@ -460,6 +453,19 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSDocument</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>VICScreen</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>myDoc</key>
+				<string>MyDocument</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSOpenGLView</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>

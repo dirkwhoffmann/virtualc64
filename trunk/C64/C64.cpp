@@ -104,6 +104,7 @@ void
 	pthread_exit(NULL);	
 }
 
+//C64::C64(C64Listener listener)
 C64::C64()
 {
 	enableWarpLoad = true;
