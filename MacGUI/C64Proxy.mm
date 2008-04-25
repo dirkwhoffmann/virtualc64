@@ -99,7 +99,10 @@ void ListenerProxy::logAction(char *message)
 - (id) init
 {
     self = [super init];
-	
+
+	// Create listener object
+	listener = new ListenerProxy();
+		
 	// Create virtual machine and initialize references
 	c64 = new C64();
 	cia[0] = NULL; // unused
@@ -108,23 +111,16 @@ void ListenerProxy::logAction(char *message)
 	iec = c64->iec;
 	cpu = c64->cpu;
 	mem = c64->mem;
-	// cpu = c64->floppy->cpu;
-	// mem = c64->floppy->mem;
 	
 	// Initialize CoreAudio sound interface
 	sidDevice = new SIDDevice();	// create Core Audio sound device		
 	int result = sidDevice->SetupDevice(c64->sid); // setup and start playback
-	if (0 != result ) // failure
-	{
+	if (0 != result ) {
+		NSLog(@"WARNING: Couldn't enable sound.");
 		if (result == -2)
-			NSLog(@"Connected audio hardware doesn't support mono or stereo playback");
-		NSLog(@"Failure: Couldn't enable sound.");
+			NSLog(@"WARNING: Connected audio hardware doesn't support mono or stereo playback");
 	}
-	NSLog(@"Sound enabled!");
-	
-	// Create listener object
-	listener = new ListenerProxy();
-
+		
     return self;
 }
 
@@ -154,6 +150,7 @@ void ListenerProxy::logAction(char *message)
 	return sidDevice;
 }
 
+
 - (void) setDocument:(MyDocument *)d
 {
 	assert (d != nil);
@@ -174,6 +171,7 @@ void ListenerProxy::logAction(char *message)
 	if (listener->getDocument() != nil && listener->getScreen() != nil)
 		c64->setListener(listener);	
 }
+
 
 // --------------------------------------------------------------------------
 // Bridge functions (cross the Objective-C / C++)

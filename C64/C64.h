@@ -228,6 +228,7 @@ public:
 	Archive *archive;
 		
 	//! Constructor
+	C64(C64Listener listener);
 	C64();
 	
 	//! Destructor

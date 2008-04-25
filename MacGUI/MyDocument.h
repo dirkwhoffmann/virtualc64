@@ -103,6 +103,9 @@
 	IBOutlet NSSearchField *addr_search;	
 	IBOutlet NSMatrix *watchMode;
 	IBOutlet NSTextField *watchValField;
+	IBOutlet NSButtonCell *ramSource;
+	IBOutlet NSButtonCell *romSource;
+	IBOutlet NSButtonCell *ioSource;	
 	
 	// Debug pabel (CIA)
 	IBOutlet NSPopUpButton *ciaSelector;
@@ -148,11 +151,19 @@
 	IBOutlet NSStepper *VicDXStepper;
 	IBOutlet NSTextField *VicDY;
 	IBOutlet NSStepper *VicDYStepper;
+	IBOutlet NSButtonCell *sprite0; 	
+	IBOutlet NSButtonCell *sprite1;
+	IBOutlet NSButtonCell *sprite2; 	
+	IBOutlet NSButtonCell *sprite3;
+	IBOutlet NSButtonCell *sprite4; 	
+	IBOutlet NSButtonCell *sprite5;
+	IBOutlet NSButtonCell *sprite6;
+	IBOutlet NSButtonCell *sprite7;
 	IBOutlet NSButton *VicSpriteActive;
 	IBOutlet NSButton *VicSpriteMulticolor;
 	IBOutlet NSButton *VicSpriteStretchX;
 	IBOutlet NSButton *VicSpriteStretchY;
-	IBOutlet NSButton *VicSpriteInFront;
+	IBOutlet NSButton *VicSpriteInFront; 
 	IBOutlet NSButton *VicSpriteSpriteCollision;
 	IBOutlet NSButton *VicSpriteBackgroundCollision;
 	IBOutlet NSTextField *VicSpriteX;
@@ -178,21 +189,6 @@
 	// Usually set to true. If set to false, OpenGL drawing is disabled
 	// Setting the variable to false only makes sense during performance tests
 	BOOL enableOpenGL;
-
-	// True, iff disk transfers should be done in warp mode
-	BOOL warpLoad;
-		
-	// If set to true, the GUI will refresh
-	// BOOL needsRefresh; 
-	
-	// Indicates the data source for the memory debug panel
-	Memory::MemoryType memsource;
-		
-	// The currently selected CIA chip (1=cia1 or 2=cia2)
-	int currentCIA;
-	
-	// The currently selected sprite (0 .. 7)
-	int selectedSprite;
 }
 
 // Toolbar delegate methods
@@ -255,8 +251,6 @@
 - (IBAction)setWatchValue:(id)sender;
 
 // Debug pabel (CIA)
-- (IBAction)ciaSelectCiaAction:(id)sender;
-
 - (IBAction)ciaDataPortAAction:(id)sender;
 - (IBAction)ciaDataPortDirectionAAction:(id)sender;
 - (IBAction)ciaTimerAAction:(id)sender;
@@ -313,14 +307,6 @@
 - (IBAction)vicEnableRasterInterruptAction:(id)sender;
 - (IBAction)vicRasterInterruptAction:(id)sender;
 - (IBAction)vicEnableOpenGL:(id)sender;
-- (IBAction)vicSelectSprite0:(id)sender;
-- (IBAction)vicSelectSprite1:(id)sender;
-- (IBAction)vicSelectSprite2:(id)sender;
-- (IBAction)vicSelectSprite3:(id)sender;
-- (IBAction)vicSelectSprite4:(id)sender;
-- (IBAction)vicSelectSprite5:(id)sender;
-- (IBAction)vicSelectSprite6:(id)sender;
-- (IBAction)vicSelectSprite7:(id)sender;
 
 - (IBAction)cancelMountDialog:(id)sender;
 - (IBAction)endMountDialogAndMount:(id)sender;
@@ -328,6 +314,9 @@
 
 // Helper functions for action methods
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(Memory::MemoryType)t;
+- (Memory::MemoryType)currentMemSource;
+- (int)currentSprite;
+- (int)currentCIA;
 
 // Table views handling
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView;
