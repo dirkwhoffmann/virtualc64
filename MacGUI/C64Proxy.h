@@ -65,7 +65,8 @@ public:
 }
 
 // Initialization
-- (id) init;
+//- (id) init;
+- (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 - (void) release;
 - (C64 *) getC64;
 - (SIDDevice *) getSIDDevice;

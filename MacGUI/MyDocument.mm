@@ -176,11 +176,11 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	enableOpenGL = false;
 			
 	// Create virtual machine
-	c64 = [[C64Proxy alloc] init];						
+	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];						
 
 	// Register GUI. From now on, we'll receive notifications from the virtual C64
-	[c64 setDocument:self];
-	[c64 setScreen:screen];
+	//[c64 setDocument:self];
+	//[c64 setScreen:screen];
 
 	// Reset emulator
 	[c64 reset];

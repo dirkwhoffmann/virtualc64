@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006-2008 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,37 +23,32 @@
 
 //! Proxy object between the virtual C64 and the user interface
 class C64Listener {
-	
-	// bool logging;
-	
+		
 public:	
-	//! Constructor
-	C64Listener();
-	
 	//! Notifies the listener that the emulator won't run due to missing ROM image.
-	virtual void missingRomAction(void);
+	virtual void missingRomAction(void) = 0;
 	//! Notfies the listener that the virtual C64 has entered the "running" state.
-	virtual void runAction(void);
+	virtual void runAction(void) = 0;
 	//! Notfies the listener that the virtual C64 has entered the "halted" state.
-	virtual void haltAction(void);
+	virtual void haltAction(void) = 0;
 	//! Notifies the listener about a completed frame
-	virtual void drawAction(int *screenBuffer);
+	virtual void drawAction(int *screenBuffer) = 0;
 	//! Notifies the listener about the current CPU status
-	virtual void cpuAction(int state);
+	virtual void cpuAction(int state) = 0;
 	//! Notifies the listener about the drive connection status
-	virtual void driveAttachedAction(bool connected);
+	virtual void driveAttachedAction(bool connected) = 0;
 	//! Notifies the listener about inserted or ejected floppy disks
-	virtual void driveDiscAction(bool inserted);
+	virtual void driveDiscAction(bool inserted) = 0;
 	//! Notifies the listener about the red led signal
-	virtual void driveLEDAction(bool on);
+	virtual void driveLEDAction(bool on) = 0;
 	//! Notifies the listener about transferred disc data
-	virtual void driveDataAction(bool transfering);
+	virtual void driveDataAction(bool transfering) = 0;
 	//! Notifies the listener about the drive motor status
-	virtual void driveMotorAction(bool rotating);	
+	virtual void driveMotorAction(bool rotating) = 0;	
 	//! Notifies the listener about warp mode
-	virtual void warpAction(bool warping);	
+	virtual void warpAction(bool warping) = 0;	
 	//! Send log information to the listener
-	virtual void logAction(char *message);	
+	virtual void logAction(char *message) = 0;	
 };
 
 #endif
