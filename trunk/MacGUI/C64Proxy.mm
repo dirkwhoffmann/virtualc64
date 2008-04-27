@@ -96,6 +96,7 @@ void ListenerProxy::logAction(char *message)
 // Initialization
 // --------------------------------------------------------------------------
 
+#if 0
 - (id) init
 {
     self = [super init];
@@ -113,6 +114,43 @@ void ListenerProxy::logAction(char *message)
 	mem = c64->mem;
 	
 	// Initialize CoreAudio sound interface
+	sidDevice = new SIDDevice();	// create Core Audio sound device		
+	int result = sidDevice->SetupDevice(c64->sid); // setup and start playback
+	if (0 != result ) {
+		NSLog(@"WARNING: Couldn't enable sound.");
+		if (result == -2)
+			NSLog(@"WARNING: Connected audio hardware doesn't support mono or stereo playback");
+	}
+		
+    return self;
+}
+#endif
+
+- (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
+{
+    self = [super init];
+
+	// Create listener object
+	listener = new ListenerProxy();
+	listener->setDocument(d);
+	listener->setScreen(s);
+		
+	// Create virtual machine and initialize references
+	c64 = new C64(listener);
+	// c64->setListener(listener);	
+	[s setC64:c64];
+	cia[0] = NULL; // unused
+	cia[1] = c64->cia1;
+	cia[2] = c64->cia2;
+	iec = c64->iec;
+	cpu = c64->cpu;
+	mem = c64->mem;
+	
+	// Initialize CoreAudio sound interface
+	// NEW CODE:
+	// [[sidDevice alloc] init:c64->sid];
+	
+	// OLD CODE:
 	sidDevice = new SIDDevice();	// create Core Audio sound device		
 	int result = sidDevice->SetupDevice(c64->sid); // setup and start playback
 	if (0 != result ) {

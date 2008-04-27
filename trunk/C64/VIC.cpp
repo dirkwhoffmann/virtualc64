@@ -804,8 +804,11 @@ VIC::setRasterline(int line)
 	// New frame?
 	if (scanline == 0) {
 		frame++;
-		// *needsRedraw = true;
+
+		// Frame complete. Notify listener...
 		getListener()->drawAction(currentScreenBuffer);
+
+		// Switch frame buffer
 		currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
 	}
 	

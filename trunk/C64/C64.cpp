@@ -104,8 +104,8 @@ void
 	pthread_exit(NULL);	
 }
 
-//C64::C64(C64Listener listener)
-C64::C64()
+C64::C64(C64Listener *listener)
+//C64::C64()
 {
 	enableWarpLoad = true;
 	setNTSC();
@@ -153,8 +153,11 @@ C64::C64()
 	// Create virtuel IEC-Bus
 	floppy = new VC1541();
 	
+	// Register listener
+	setListener(listener);
+	
 	// Create dummy listener for this virtual computer
-	setListener(new C64Listener());
+	//setListener(new C64Listener());
 
 	// Bind components together
 	cpu->setMemory(mem);

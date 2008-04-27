@@ -47,7 +47,6 @@
 		50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C590A6F72F3009E80BD /* Keyboard.cpp */; };
 		50176C690A6F72F3009E80BD /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5B0A6F72F3009E80BD /* Memory.cpp */; };
 		50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */; };
-		50176C6C0A6F72F3009E80BD /* C64Listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C610A6F72F3009E80BD /* C64Listener.cpp */; };
 		50176C7B0A6F7357009E80BD /* DezFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C6F0A6F7357009E80BD /* DezFormatter.mm */; };
 		50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C710A6F7357009E80BD /* Disassembler.mm */; };
 		50176C7D0A6F7357009E80BD /* HexFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* HexFormatter.mm */; };
@@ -177,7 +176,6 @@
 		50176C5C0A6F72F3009E80BD /* Memory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Memory.h; sourceTree = "<group>"; };
 		50176C5F0A6F72F3009E80BD /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
 		50176C600A6F72F3009E80BD /* VIC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = VIC.h; sourceTree = "<group>"; };
-		50176C610A6F72F3009E80BD /* C64Listener.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = C64Listener.cpp; sourceTree = "<group>"; };
 		50176C620A6F72F3009E80BD /* C64Listener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Listener.h; sourceTree = "<group>"; };
 		50176C6E0A6F7357009E80BD /* DezFormatter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = DezFormatter.h; sourceTree = "<group>"; };
 		50176C6F0A6F7357009E80BD /* DezFormatter.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = DezFormatter.mm; sourceTree = "<group>"; };
@@ -404,7 +402,6 @@
 				50176C520A6F72F3009E80BD /* C64.h */,
 				50176C510A6F72F3009E80BD /* C64.cpp */,
 				50176C620A6F72F3009E80BD /* C64Listener.h */,
-				50176C610A6F72F3009E80BD /* C64Listener.cpp */,
 				50176C540A6F72F3009E80BD /* CIA.h */,
 				50176C530A6F72F3009E80BD /* CIA.cpp */,
 				500B6CA30B905CEC002C36EC /* TOD.h */,
@@ -676,7 +673,6 @@
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
-				50176C6C0A6F72F3009E80BD /* C64Listener.cpp in Sources */,
 				50176C7B0A6F7357009E80BD /* DezFormatter.mm in Sources */,
 				50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */,
 				50176C7D0A6F7357009E80BD /* HexFormatter.mm in Sources */,
