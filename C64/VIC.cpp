@@ -20,6 +20,8 @@
 
 VIC::VIC()
 {
+	debug("  Creating VIC at address %p...\n", this);
+
 	cpu = NULL;
 	mem = NULL;
 	
@@ -33,8 +35,6 @@ VIC::VIC()
 		screenBuffer2[i] = colors[BLUE];
 	}
 	currentScreenBuffer = screenBuffer1;
-	
-	reset();
 }
 
 VIC::~VIC()
@@ -44,6 +44,8 @@ VIC::~VIC()
 void 
 VIC::reset() 
 {
+	debug("  Resetting VIC...\n");
+
 	frame    = 0;
 	bankAddr = 0;
 	scanline = 0;

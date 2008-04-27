@@ -39,7 +39,7 @@ private:
 			uint8_t minutes;
 			uint8_t hours;
 		} time;
-		uint64_t value;
+		uint32_t value;
 	} TimeOfDay;
 	
 	TimeOfDay tod;

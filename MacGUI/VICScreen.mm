@@ -30,6 +30,8 @@ const float BG_TEX_RIGHT  = 1.0;
 const float BG_TEX_TOP    = 0.0; 
 const float BG_TEX_BOTTOM = 1.0; 
 
+// Background data
+uint32_t bg_data[BG_TEXTURE_HEIGHT][BG_TEXTURE_WIDTH][BG_TEXTURE_DEPTH] = { 42 };
 
 @implementation VICScreen
 
@@ -249,13 +251,41 @@ void joystick_callback(unsigned int buttonMask, int x, int y, int z)
 char *myargv[] = { "GLUT", NULL };
 int  myargc = 1;
 
+- (bool)loadBackgroundTexture:(uint8_t *)texture_data
+{
+	FILE *file;
+	int i,j,k;
+	
+	if (!(file = fopen("bgImage.raw", "r")))
+		return NO;
+		
+	NSLog(@"Loading background image from file...");
+	for (i = k = 0; i < BG_TEXTURE_HEIGHT; i++) {
+		for (j = 0; j < BG_TEXTURE_WIDTH; j++) {
+			texture_data[k++] = (uint8_t)fgetc(file);
+			texture_data[k++] = (uint8_t)fgetc(file);
+			texture_data[k++] = (uint8_t)fgetc(file);
+			texture_data[k++] = (uint8_t)fgetc(file);
+			// k += 4;
+		}
+	}
+	fclose(file);
+
+	return YES;
+}
 
 - (void)createTexture:(uint8_t *)texture_data
 {
 	int i, j, k, width, height, ymax;
 	float r, g, b, a;
 	float xoffset, yoffset, offset;
-			
+		
+	// Try to load background texture from image file...
+	//if ([self loadBackgroundTexture:texture_data])
+	//	return;
+		
+	NSLog(@"WARNING: Background image not found. Creating one...");
+	// No image file found... Let's create the texture from scratch...
 	NSImage *image = [NSImage imageNamed:@"c64"];
 	// NSImage *image = [NSImage imageNamed:@"schaltplan"];
 	NSColor *theColor;
@@ -288,6 +318,24 @@ int  myargc = 1;
 		}
 	}
 	[image unlockFocus];
+
+	// Create image file...
+#if 0
+	FILE *file;
+	
+	if (!(file = fopen("/tmp/bgImage.raw", "w")))
+		return;
+		
+	for (i = k = 0; i < BG_TEXTURE_HEIGHT; i++) {
+		for (j = 0; j < BG_TEXTURE_WIDTH; j++) {
+			fputc(texture_data[k++], file);
+			fputc(texture_data[k++], file);
+			fputc(texture_data[k++], file);
+			fputc(texture_data[k++], file);
+		}
+	}	
+	fclose(file);	
+#endif
 }
 
 - (void)prepare
@@ -358,7 +406,12 @@ int  myargc = 1;
 	const GLint VBL = 1;
 	CGLSetParameter(CGLGetCurrentContext(),  kCGLCPSwapInterval, &VBL);
 
-	[self createTexture:(uint8_t *)bg_data];
+	if (bg_data[0][0][0] == 42) { 
+		[self createTexture:(uint8_t *)bg_data];
+	} else {
+		NSLog(@"Reusing previously created background image data");
+	}
+	
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // GL_CLAMP); //GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // GL_CLAMP); //GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

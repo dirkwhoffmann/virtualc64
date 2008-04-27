@@ -26,19 +26,18 @@ VIA6522::VIA6522()
 
 VIA6522::~VIA6522()
 {
-	debug("Releasing VIA at address %p\n", this);
 }
 	
 void VIA6522::reset()
 {
 	int i;
-	
+
 	ddra = ddrb = 0;
 	ora = orb = ira = irb = 0;
 	t1_latch_lo = t1_latch_hi = t1_counter_lo = t1_counter_hi = 0;
 	t2_latch_lo = t2_counter_lo = t2_counter_hi = 0;
 		
-	for (i=0; i < 16; i++)
+	for (i=0; i < sizeof(io); i++)
 		io[i] = 0;
 }
 
@@ -717,4 +716,37 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 		default:
 			VIA6522::poke(addr, value);	
 	}
+}
+
+
+VIA1::VIA1()
+{
+	debug("  Creating VIA1 at address %p...\n", this);
+}
+	
+VIA1::~VIA1()
+{
+	debug("  Releasing VIA1...\n");
+}
+
+void VIA1::reset()
+{
+	debug("  Resetting VIA1...\n");
+	VIA6522::reset();
+}
+
+VIA2::VIA2()
+{
+	debug("  Creating VIA2 at address %p...\n", this);
+}
+	
+VIA2::~VIA2()
+{
+	debug("  Releasing VIA2...\n");
+}
+
+void VIA2::reset()
+{
+	debug("  Resetting VIA2...\n");
+	VIA6522::reset();
 }

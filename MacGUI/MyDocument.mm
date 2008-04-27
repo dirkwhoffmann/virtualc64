@@ -139,6 +139,8 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 		NSString *path = [mainBundle resourcePath];
 		if (chdir([path UTF8String]) != 0)
 			NSLog(@"WARNING: Could not change working directory.");
+		else
+			NSLog(@"Changed working directory.");
     }
     return self;
 }
@@ -175,20 +177,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	// Initialize variables
 	enableOpenGL = false;
 			
-	// Create virtual machine
+	// Create virtual C64
 	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];						
 
-	// Register GUI. From now on, we'll receive notifications from the virtual C64
-	//[c64 setDocument:self];
-	//[c64 setScreen:screen];
-
-	// Reset emulator
-	[c64 reset];
 	
-	// Initialize GUI components
-	[eject setHidden:true]; // should be done via callback
-	[c64 connectDrive];
-
 	disassembleStartAddr = [c64 cpuGetPC];
 	
 	// get images for port A and B, depends on the available input devices
@@ -264,10 +256,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	[cpuTableView setDoubleAction:@selector(doubleClickInCpuTable:)];
 	[memTableView setTarget:self];
 	[memTableView setDoubleAction:@selector(doubleClickInMemTable:)];
-	
-	// Set clock frequency
-	// [c64 cpuSetKHz:clockSpeedStepper];		
-	
+		
 	// Create timer
 	cycleCount = 0;
 	timeStamp  = msec();

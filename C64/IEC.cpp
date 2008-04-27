@@ -20,19 +20,21 @@
 
 IEC::IEC()
 {
+	debug("  Creating IEC bus at address %p...\n", this);
+
 	drive = NULL;
-//	driveConnected = true;
-//	setDeviceClockPin(1);
-//	setDeviceDataPin(1);
 }
 
 IEC::~IEC()
 {
+	debug("  Releasing IEC bus...\n");
 }
 
 void 
 IEC::reset()
 {
+	debug("  Resetting IEC bus...\n");
+
 	connectDrive();
 	setDeviceClockPin(1);
 	setDeviceDataPin(1);

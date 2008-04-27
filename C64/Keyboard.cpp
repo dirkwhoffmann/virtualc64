@@ -20,13 +20,14 @@
 
 Keyboard::Keyboard()
 {
-	reset();
-	debug("Virtual keyboard created.\n");
+	debug("Creating keyboard at address %p...\n", this);
 }
 
 void 
 Keyboard::reset() 
 {
+	debug("  Resetting keyboard...\n");
+
 	// Reset keyboard matrix (0 = pressed, 1 = not pressed)
 	for (int i = 0; i < 8; i++) {
 		kbMatrix[i] = 0xff;

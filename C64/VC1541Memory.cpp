@@ -21,24 +21,25 @@
 
 VC1541Memory::VC1541Memory()
 {
+	debug("  Creating VC1541 memory at %p...\n", this);	
+
 	iec = NULL;
 	floppy = NULL;
 	romFile = NULL;
 	
 	// Try to auto-load virtual ROMs...
 	(void)loadRom("C1541.rom");
-		
-	reset();
-	debug("Virtual VC1541 memory created at %p\n", this);	
 }
 
 VC1541Memory::~VC1541Memory()
 {
-	debug("Virtual VC1541 memory at %p released.\n", this);
+	debug("  Releasing VC1541 memory at %p...\n", this);
 }
 
 void VC1541Memory::reset()
 {
+	debug ("  Resetting VC1541 memory...\n");
+
 	// Zero out RAM...
 	for (int i = 0; i < 0xC000; i++)
 		mem[i] = 0;	

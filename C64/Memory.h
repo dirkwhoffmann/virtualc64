@@ -57,7 +57,6 @@ public:
 	~Memory();
 
 	//! Bind the virtual memory to the specified virtual CPU.
-	/*! The binding is irreversible and the function "call once". */
 	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
 
 

@@ -51,19 +51,19 @@ public:
 	uint8_t colorRam[1024];
 	
 	//! True iff Basic ROM is visible.
-	/*! The variable is updated if a value is written to memory location 0x0001. */
+	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool basicRomIsVisible;
 	
 	//! True iff Character ROM is visible.
-	/*! The variable is updated if a value is written to memory location 0x0001. */
+	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool charRomIsVisible;
 
 	//! True iff Kernel ROM is visible.
-	/*! The variable is updated if a value is written to memory location 0x0001. */
+	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool kernelRomIsVisible;
 
 	//! True iff the I/O space is visible.
-	/*! The variable is updated if a value is written to memory location 0x0001. */
+	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool IOIsVisible;
 	
 	//! Reference to the connected VIC chip. 
@@ -139,19 +139,6 @@ public:
 	void poke0001(uint8_t value);
 	
 public:
-
-	//! Start address of BASIC ROM
-	static const uint16_t BASIC_ROM_START = 0xA000;
-	//! End address of BASIC ROM
-	static const uint16_t BASIC_ROM_END = 0xBFFF;
-	//! Start address of character ROM
-	static const uint16_t CHAR_ROM_START = 0xD000;
-	//! End address of character ROM
-	static const uint16_t CHAR_ROM_END = 0xDFFF;
-	//! Start address of kernel ROM
-	static const uint16_t KERNEL_ROM_START = 0xE000;
-	//! End address of kernel ROM
-	static const uint16_t KERNEL_ROM_END = 0xFFFF;
 	
 	//! Constructor
 	C64Memory();
@@ -206,13 +193,13 @@ public:
 
 	//! Returns true, iff the provided address is in the Basic ROM address range
 	static inline bool isBasicRomAddr(uint16_t addr) 
-		{ return (BASIC_ROM_START <= addr && addr <= BASIC_ROM_END); }
+		{ return (0xA000 <= addr && addr <= 0xBFFF); }
 	//! Returns true, iff the provided address is in the Character ROM address range
 	static inline bool isCharRomAddr(uint16_t addr) 
-		{ return (CHAR_ROM_START <= addr && addr <= CHAR_ROM_END); }
+		{ return (0xD000 <= addr && addr <= 0xDFFF); }
 	//! Returns true, iff the provided address is in the Kernel ROM address range
 	static inline bool isKernelRomAddr(uint16_t addr) 
-		{ return (KERNEL_ROM_START <= addr); }
+		{ return (0xE000 <= addr); }
 	//! Returns true, iff the provided address is in one of the three ROM address ranges
 	static inline bool isRomAddr(uint16_t addr) 
 		{ return isCharRomAddr(addr) || isKernelRomAddr(addr) || isBasicRomAddr(addr); }

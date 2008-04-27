@@ -105,31 +105,26 @@ void
 }
 
 C64::C64(C64Listener *listener)
-//C64::C64()
 {
+	debug("Creating virtual C64 at address %p...\n", this);
+
+	p = NULL;
 	enableWarpLoad = true;
 	setNTSC();
 	
-	// Create virtual memory
+	// Create components
 	mem = new C64Memory();
-				
-	// Create virtual CPU
 	cpu = new CPU();		
-
-	// Create virtual video controller
 	vic = new VIC();
-
-	// Create virtual sound interface device
 	sid = new SID();
-
-	// Create virtual complex interface adapters
 	cia1 = new CIA1();
 	cia2 = new CIA2();
-
-	// Create virtual keyboard
 	keyboard = new Keyboard();
+	iec = new IEC();
+	floppy = new VC1541();
 
 	// Create joysticks
+	// NEEDS CLEANUP
 	debug("try to load joystick\n");
 	try {
 		joystick1 = new Joystick( 0 );
@@ -146,20 +141,8 @@ C64::C64(C64Listener *listener)
 	    joystick2 = NULL;
 		debug("Joystick 2 is NOT present\n");
 	}
-
-	// Create virtuel IEC-Bus
-	iec = new IEC();
-
-	// Create virtuel IEC-Bus
-	floppy = new VC1541();
-	
-	// Register listener
-	setListener(listener);
-	
-	// Create dummy listener for this virtual computer
-	//setListener(new C64Listener());
-
-	// Bind components together
+		
+	// Bind components
 	cpu->setMemory(mem);
 	mem->setVIC(vic);
 	mem->setSID(sid);
@@ -167,14 +150,18 @@ C64::C64(C64Listener *listener)
 	mem->setCIA2(cia2);
 	mem->setCPU(cpu);
 	cia1->setCPU(cpu);
-	cia2->setCPU(cpu);
 	cia1->setKeyboard(keyboard);
+	cia2->setCPU(cpu);
+	cia2->setVIC(vic);	
+	cia2->setIEC(iec);
+	vic->setCPU(cpu);
+	vic->setMemory(mem);
+	iec->setDrive(floppy);
 	floppy->setIEC(iec);
 	floppy->setC64(this);
 	
-	// scanJoysticks();
-	
 	// Setup initial game port mapping
+	// NEEDS CLEANUP, DONT DO THIS HERE!
 	if (joystick1 == NULL && joystick2 == NULL) {
 		// 0 joysticks connected
 		setInputDevice(0, IPD_UNCONNECTED);
@@ -192,16 +179,10 @@ C64::C64(C64Listener *listener)
 	} else {
 		assert(0);
 	}
-				
-	cia2->setVIC(vic);	
-	cia2->setIEC(iec);
-	vic->setCPU(cpu);
-	vic->setMemory(mem);
-	iec->setDrive(floppy);
-	
-	p = NULL;
-	// reset();
-	debug("Created virtual C64 at address %p\n", this);
+					
+	// Register listener and reset
+	setListener(listener);
+	reset();	
 }
 
 // Construction and destruction
@@ -257,6 +238,8 @@ C64::build()
 
 void C64::reset()
 {
+	debug ("Resetting virtual C64\n");
+
 	suspend();
 	
 	mem->reset();
@@ -272,13 +255,13 @@ void C64::reset()
 	archive = NULL;
 	setWarpMode(false);
 
-	debug("Hard reset performed. Now going to resume...\n");	
 	resume();
-	debug("Done...\n");
 }
 
 void C64::fastReset()
 {
+	debug ("Resetting virtual C64 (fast reset via image file)\n");
+
 	if (loadSnapshot("ResetImage.VC64")) {
 		debug("Reset image loaded.\n");	
 	} else {

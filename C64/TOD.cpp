@@ -20,7 +20,7 @@
 
 TOD::TOD()
 {
-	reset();
+	debug("    Creating TOD at address %p...\n", this);
 }
 
 TOD::~TOD()
@@ -30,6 +30,7 @@ TOD::~TOD()
 void
 TOD::reset() 
 {
+	debug("    Resetting TOD...\n");
 	tod.value = 0;
 	alarm.value = 0;
 	frozen = false;
@@ -40,8 +41,8 @@ TOD::reset()
 bool
 TOD::load(FILE *file)
 {
-	tod.value = read64(file);
-	alarm.value = read64(file);
+	tod.value = (uint32_t)read64(file);
+	alarm.value = (uint32_t)read64(file);
 	frozen = read8(file);
 	stopped = read8(file);
 	return true;
@@ -50,8 +51,8 @@ TOD::load(FILE *file)
 bool
 TOD::save(FILE *file)
 {
-	write64(file, tod.value);
-	write64(file, alarm.value);
+	write64(file, (uint64_t)tod.value);
+	write64(file, (uint64_t)alarm.value);
 	write8(file, frozen);
 	write8(file, stopped);
 	return true;

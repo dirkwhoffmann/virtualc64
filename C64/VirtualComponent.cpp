@@ -20,6 +20,7 @@
 
 VirtualComponent::VirtualComponent()
 {
+	// fprintf(stderr,"  Constructor virtual component...\n");
 	running = false;
 	suspendCounter = 0;	
 	traceMode = false;
