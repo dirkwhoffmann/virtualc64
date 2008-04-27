@@ -30,15 +30,12 @@ Memory::Memory()
 	// Clear all watchpoint tags
 	for (int i = 0; i <  65536; i++) {
 		watchpoint[i] = NO_WATCHPOINT;	
+		watchValue[i] = 0;
 	}
-
-	debug("Constructor of virtual class Memory\n");
-
 }
 
 Memory::~Memory()
 {
-	debug("Destructor of virtual class Memory\n");
 }
 
 
@@ -119,7 +116,7 @@ void Memory::flashRom(const char *filename, uint16_t start)
 	assert(start > 0);
 	
 	// Open and read
-	debug("Loading ROM contents from file %s\n", filename);
+	debug("    Loading ROM contents from file %s\n", filename);
 	if (!(file = fopen(filename, "r")))
 		return;
 	c = fgetc(file);
@@ -130,5 +127,5 @@ void Memory::flashRom(const char *filename, uint16_t start)
 	}
 	fclose(file);
 	
-	debug("ROM loaded into memory from %X to %X.\n", (uint16_t)start, (uint16_t)(addr-1));
+	debug("    ROM loaded into memory from %X to %X\n", (uint16_t)start, (uint16_t)(addr-1));
 }

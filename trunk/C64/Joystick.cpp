@@ -30,6 +30,8 @@ bool Joystick::initialized = false;
 
 Joystick::Joystick( int devNo ) {
 	
+	// debug("Creating virtual joystick at address %p...\n", this);
+
 	// initialize the SDL if no other joytick has made this
 	if( initialized == false ) {
 		joystickOpenCount = 0;

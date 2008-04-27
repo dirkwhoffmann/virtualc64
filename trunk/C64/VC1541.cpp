@@ -21,9 +21,12 @@
 
 VC1541::VC1541()
 {
+	debug("Creating virtual VC1541 at address %p\n", this);
+	
 	// Initialize references
-	iec = NULL;
 	c64 = NULL;
+	iec = NULL;
+	cpu = NULL;
 	
 	// Create sub components
 	mem = new VC1541Memory();
@@ -37,72 +40,36 @@ VC1541::VC1541()
 	mem->setDrive(this);
 	via1->setDrive(this);
 	via2->setDrive(this);
-	
-	printf("Created virtual 1541 drive at address %p\n", this);
 }
 
 VC1541::~VC1541()
 {
-	// Release sub components
+	debug("Releasing VC1541...\n");
+	
 	delete cpu;	
 	delete mem;
-
-	printf("Released virtual 1541 drive\n");
 }
 
 void 
 VC1541::reset()
 {
-	ejectDisc();
+	debug ("Resetting VC1541...\n");
+
 	cpu->reset();
 	// cpu->setHardBreakpoint(0xEAA1);
 	mem->reset();
 	via1->reset();
 	via2->reset();
 	
+	stopRotating();
+	ejectDisc();
+	
 	byteReadyTimer = 0;
 	track = 40;
 	offset = 0;
 	noOfFFBytes = 0;
 	readFlag = writeFlag = syncFlag = false;
-	clearDisk();
 }
-
-#if 0
-void 
-VC1541::executeOneCycle()
-{
-	via1->execute(1);
-	via2->execute(1);
-	cpu->executeOneCycle();
-
-	if (byteReadyTimer == 0)
-		return;
-
-	if (byteReadyTimer > 1) {
-		byteReadyTimer--;
-		return;
-	}
-
-	// Reset timer
-	byteReadyTimer = VC1541_CYCLES_PER_BYTE;
-		
-	if (readFlag == false && writeFlag == false && syncFlag == false) {
-	}
-	readFlag = writeFlag = syncFlag = false;
-
-	// Rotate disk
-	rotateDisk();
-	if (readHead() != 0xFF) signalByteReady();
-	
-	// Read or write data
-	if (via2->isReadMode()) {
-		via2->ora = readHead();
-	} else {
-		writeOraToDisk();
-	}	
-}
-#endif
 
 void 
 VC1541::executeOneCycle()

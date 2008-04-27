@@ -183,7 +183,6 @@ wird der Zählerstand mit dem Latch-Wert geladen und der Timer gestartet.
 CIA::CIA()
 {
 	cpu = NULL;
-	reset();
 }
 
 CIA::~CIA()
@@ -475,36 +474,50 @@ void CIA::dumpState()
 
 CIA1::CIA1()
 {
+	debug("  Creating CIA1 at address %p...\n", this);
+
 	keyboard = NULL;
 	joystick[0] = 0xff;
 	joystick[1] = 0xff;	
-	reset();
+	// reset();
 }
 
 CIA1::~CIA1()
 {
-	debug("Releasing CIA1\n");
+	debug("  Releasing CIA1\n");
 }
 
-void CIA1::setJoystickToPort( int portNo, Joystick *j ) {
+void 
+CIA1::reset()
+{
+	debug("  Resetting CIA1...\n");
+	CIA::reset();
+}
+
+void 
+CIA1::setJoystickToPort( int portNo, Joystick *j ) {
 	joy[portNo] = j;
 }
 
-void CIA1::setKeyboardToPort( int portNo, bool b ) {
+void 
+CIA1::setKeyboardToPort( int portNo, bool b ) {
 	bKeyboard[portNo] = b;
 }
 
-void CIA1::raiseInterruptLine()
+void 
+CIA1::raiseInterruptLine()
 {
 	cpu->setIRQLineCIA();
 }
 
-void CIA1::clearInterruptLine()
+void 
+CIA1::clearInterruptLine()
 {
 	cpu->clearIRQLineCIA();
 }
 
-uint8_t CIA1::peek(uint16_t addr)
+uint8_t 
+CIA1::peek(uint16_t addr)
 {
 	uint8_t result;
 	
@@ -558,7 +571,8 @@ uint8_t CIA1::peek(uint16_t addr)
 }
 
 
-void CIA1::pollJoystick( Joystick *joy, int joyDevNo ) {
+void 
+CIA1::pollJoystick( Joystick *joy, int joyDevNo ) {
 	JoystickState leftRightState	= joy->getAxisLeftRightState(); 
 	JoystickState upDownState		= joy->getAxisUpDownState();
 	JoystickState buttonState		= joy->getButtonState();
@@ -597,7 +611,8 @@ void CIA1::pollJoystick( Joystick *joy, int joyDevNo ) {
 	}
 }
 
-void CIA1::poke(uint16_t addr, uint8_t value)
+void 
+CIA1::poke(uint16_t addr, uint8_t value)
 {
 	// uint8_t writeMask;
 	
@@ -617,7 +632,8 @@ void CIA1::poke(uint16_t addr, uint8_t value)
 }
 	
 // still needed!?
-void CIA1::joystickAction(int nr, uint8_t value)
+void 
+CIA1::joystickAction(int nr, uint8_t value)
 {
 	assert(nr == 1 || nr == 2);
 
@@ -625,7 +641,8 @@ void CIA1::joystickAction(int nr, uint8_t value)
 	else if (nr == 2) joystick[1] = value;
 }
 
-void CIA1::setJoystickBits(int nr, uint8_t mask)
+void 
+CIA1::setJoystickBits(int nr, uint8_t mask)
 {
 	assert(nr == 1 || nr == 2);
 	
@@ -633,7 +650,8 @@ void CIA1::setJoystickBits(int nr, uint8_t mask)
 	else if (nr == 2) joystick[1] |= mask;
 }
 
-void CIA1::clearJoystickBits(int nr, uint8_t mask)
+void 
+CIA1::clearJoystickBits(int nr, uint8_t mask)
 {
 	assert(nr == 1 || nr == 2);
 	
@@ -641,7 +659,8 @@ void CIA1::clearJoystickBits(int nr, uint8_t mask)
 	else if (nr == 2) joystick[1] &= (0xff-mask);
 }
 
-void CIA1::dumpState()
+void 
+CIA1::dumpState()
 {
 	debug("CIA 1:\n");
 	CIA::dumpState();
@@ -654,27 +673,37 @@ void CIA1::dumpState()
 
 CIA2::CIA2()
 {
+	debug("  Creating CIA2 at address %p...\n", this);
+
     vic = NULL;
 	iec = NULL;
-	reset();
 }
 
 CIA2::~CIA2()
 {
-	debug("Releasing CIA2\n");
+	debug("  Releasing CIA2...\n");
 }
 
-void CIA2::raiseInterruptLine()
+void CIA2::reset()
+{
+	debug("  Resetting CIA2...\n");
+	CIA::reset();
+}
+
+void 
+CIA2::raiseInterruptLine()
 {
 	cpu->setNMILineCIA();
 }
 
-void CIA2::clearInterruptLine()
+void 
+CIA2::clearInterruptLine()
 {
 	cpu->clearNMILineCIA();
 }
 
-uint8_t CIA2::peek(uint16_t addr)
+uint8_t 
+CIA2::peek(uint16_t addr)
 {
 	static uint8_t old_clock_line;
 	
@@ -691,7 +720,8 @@ uint8_t CIA2::peek(uint16_t addr)
 	}
 }
 
-void CIA2::poke(uint16_t addr, uint8_t value)
+void 
+CIA2::poke(uint16_t addr, uint8_t value)
 {
 	uint8_t writeMask;
 	
@@ -730,7 +760,8 @@ void CIA2::poke(uint16_t addr, uint8_t value)
 	}
 }
 		
-void CIA2::dumpState()
+void 
+CIA2::dumpState()
 {
 	debug("CIA 2:\n");
 	CIA::dumpState();

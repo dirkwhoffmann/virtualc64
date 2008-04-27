@@ -125,7 +125,7 @@ const int BG_TEXTURE_DEPTH = 4;
 	uint8_t data[TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXTURE_DEPTH];
 
 	/* Background image texture data */
-	uint32_t bg_data[BG_TEXTURE_HEIGHT][BG_TEXTURE_WIDTH][BG_TEXTURE_DEPTH];
+	//uint32_t bg_data[BG_TEXTURE_HEIGHT][BG_TEXTURE_WIDTH][BG_TEXTURE_DEPTH];
 
 	int *screenBuffer;
 	bool highlighted;
@@ -162,6 +162,7 @@ const int BG_TEXTURE_DEPTH = 4;
 - (int) isReadyToDraw;
 - (void) setReadyToDraw:(int)b;
 - (void) updateTexture:(int *)screenBuffer;
+- (bool)loadBackgroundTexture:(uint8_t *)texture_data;
 - (NSImage *)screenshot;
 
 @end

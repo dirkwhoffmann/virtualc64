@@ -50,6 +50,8 @@ const float SID::volumeLevelTable[16] = { 0.0f, 0.07f, 0.13f, 0.20f, 0.27f, 0.33
 
 SID::SID()
 {
+	debug("  Creating SID at address %p...\n", this);
+
 	// link voices together
 	voice[0].mod_by = &voice[2];
 	voice[1].mod_by = &voice[0];
@@ -76,8 +78,6 @@ SID::SID()
 	endBuffer = &ringBuffer[(bufferSize - 1)];
 
 	volumeControl = 0.1;
-	
-	reset();
 }
 
 SID::~SID()
@@ -89,6 +89,8 @@ SID::~SID()
 void
 SID::reset() 
 {
+	debug("  Resetting SID...\n");
+
 	// set mastervolume to half amplitude
 	masterVolume = 0.5f;
 	

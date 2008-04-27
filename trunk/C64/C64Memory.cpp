@@ -30,32 +30,34 @@ C64Memory::C64Memory()
 	charRomFile = NULL;
 	kernelRomFile = NULL;
 	basicRomFile = NULL;
+
+	debug ("  Creating main memory at address %p...\n", this);
 	
 	vic = NULL;
+	sid = NULL;
 	cia1 = NULL;
 	cia2 = NULL;
 		
-	// Try to auto-load virtual ROMs...
+	// Try to auto-load ROMs...
 	(void)loadRom("Char.rom");
 	(void)loadRom("Kernel.rom");
 	(void)loadRom("Basic.rom");
-		
-	reset();
-	debug("Virtual memory created at %p (RAM at %p, ROM at %p)\n", this, ram, rom);	
 }
 
 C64Memory::~C64Memory()
 {
-	debug("Virtual memory at %p released.\n", this);
+	debug("  Releasing main memory at address %p...\n", this);
 }
 
 void C64Memory::reset()
 {
+	debug ("  Resetting main memory...\n");
+	
 	// Zero out RAM...
-	for (int i = 0; i < 65536; i++)
+	for (int i = 0; i < sizeof(ram); i++)
 		ram[i] = 0;
 	
-	for (int i = 0; i < 1024; i++)
+	for (int i = 0; i < sizeof(colorRam); i++)
 		colorRam[i] = 0;
 	
 	// Initialize processor port data direction register and processor port

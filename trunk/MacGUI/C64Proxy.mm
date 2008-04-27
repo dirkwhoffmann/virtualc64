@@ -188,29 +188,6 @@ void ListenerProxy::logAction(char *message)
 	return sidDevice;
 }
 
-
-- (void) setDocument:(MyDocument *)d
-{
-	assert (d != nil);
-	listener->setDocument(d);
-
-	/* Register listener, if registration is complete */	
-	if (listener->getDocument() != nil && listener->getScreen() != nil)
-		c64->setListener(listener);	
-}
-
-- (void) setScreen:(VICScreen *)s
-{
-	assert (s != nil);
-	listener->setScreen(s);
-	[s setC64:c64];
-
-	/* Register listener, if registration is complete */	
-	if (listener->getDocument() != nil && listener->getScreen() != nil)
-		c64->setListener(listener);	
-}
-
-
 // --------------------------------------------------------------------------
 // Bridge functions (cross the Objective-C / C++)
 // --------------------------------------------------------------------------

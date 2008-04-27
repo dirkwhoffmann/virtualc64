@@ -70,8 +70,6 @@ public:
 - (void) release;
 - (C64 *) getC64;
 - (SIDDevice *) getSIDDevice;
-- (void) setDocument:(MyDocument *)m;
-- (void) setScreen:(VICScreen *)s;
 
 // C64
 - (void) reset;

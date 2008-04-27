@@ -413,8 +413,12 @@ public:
 
 	//! Constructor
 	CIA1();
+
 	//! Destructor
 	~CIA1();
+	
+	//! Bring the CIA back to its initial state
+	void reset();
 	
 	//! Bind the VIC chip to the specified keyboard.
 	/*! The binding is irreversible. */
@@ -490,9 +494,13 @@ public:
 
 	//! Constructor
 	CIA2();
+	
 	//! Destructor
 	~CIA2();
 	
+	//! Bring the CIA back to its initial state
+	void reset();
+
 	//! Bind the CIA chip to the specified VIC chip.
 	/*! The binding is irreversible. */
 	void setVIC(VIC *v) { assert(vic == NULL); vic = v; }

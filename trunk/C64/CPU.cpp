@@ -20,6 +20,8 @@
 
 CPU::CPU()
 {	
+	debug("  Creating CPU at address %p...\n", this);
+
 	// Initialize connected components
 	mem = NULL;
 	
@@ -29,19 +31,19 @@ CPU::CPU()
 	// Clear all breakpoint tags
 	for (int i = 0; i <  65536; i++) {
 		breakpoint[i] = NO_BREAKPOINT;	
-	}
-		
-	printf("Created virtual CPU at address %p\n", this);
+	}		
 }
 
 CPU::~CPU()
 {
-	printf("Cleaned up virtual CPU at address %p\n", this);
+	debug("  Releasing CPU...\n");
 }
 
 void 
 CPU::reset()
 {
+	debug("  Resetting CPU...\n");
+
 	// Initialize internal state
 	errorState       = OK;
 	cycles           = 0LL;

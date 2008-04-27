@@ -143,6 +143,16 @@ public:
 class VIA1 : public VIA6522 {
 	
 public:
+
+	//! Constructor
+	VIA1();
+	
+	//! Destructor
+	~VIA1();
+
+	//! Bring the VIA back to its initial state
+	void reset();
+
 	uint8_t peek(uint16_t addr);
 	void poke(uint16_t addr, uint8_t value);
 	
@@ -155,6 +165,16 @@ public:
 class VIA2 : public VIA6522 {
 	
 public:
+
+	//! Constructor
+	VIA2();
+	
+	//! Destructor
+	~VIA2();
+
+	//! Bring the VIA back to its initial state
+	void reset();
+
 	uint8_t peek(uint16_t addr);
 	void poke(uint16_t addr, uint8_t value);
 
