@@ -212,10 +212,12 @@ void ListenerProxy::logAction(char *message)
 - (bool) saveSnapshot:(NSString *)filename { return c64->saveSnapshot([filename UTF8String]); }
 
 - (bool) cpuGetWarpMode { return c64->getWarpMode(); }
-- (void) cpuSetWarpMode:(bool)b { c64->setWarpMode(b); }
-- (void) cpuToggleWarpMode { c64->setWarpMode(!c64->getWarpMode()); }
+// - (void) cpuSetWarpMode:(bool)b { c64->setWarpMode(b); }
+//- (void) cpuToggleWarpMode { c64->setWarpMode(!c64->getWarpMode()); }
+- (void) cpuToggleAlwaysWarp { c64->setAlwaysWarp(!c64->getAlwaysWarp()); }
 
 - (void) setWarpLoad:(bool)b { c64->setWarpLoad(b); }
+- (void) setAlwaysWarp:(bool)b { c64->setAlwaysWarp(b); }
 
 - (void) dumpCPU { cpu->dumpState(); }
 - (void) dumpCIA { c64->cia1->dumpState(); c64->cia2->dumpState(); }

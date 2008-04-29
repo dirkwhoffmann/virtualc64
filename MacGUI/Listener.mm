@@ -164,10 +164,11 @@
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 	
 	NSLog(@"warpmodeAction");
-	if (warping)
-		[warpMode setImage:[NSImage imageNamed:@"warpOff"]];
-	else
-		[warpMode setImage:[NSImage imageNamed:@"warpOn"]];
+
+//	if (warping)
+//		[warpMode setImage:[NSImage imageNamed:@"warpOff"]];
+//	else
+//		[warpMode setImage:[NSImage imageNamed:@"warpOn"]];
 	
 	[arp release];
 }

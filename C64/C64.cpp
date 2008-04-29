@@ -110,6 +110,7 @@ C64::C64(C64Listener *listener)
 
 	p = NULL;
 	enableWarpLoad = true;
+	alwaysWarp = false;
 	setNTSC();
 	
 	// Create components
@@ -253,7 +254,7 @@ void C64::reset()
 	floppy->reset();
 	
 	archive = NULL;
-	setWarpMode(false);
+	// setAlwaysWarp(false);
 
 	resume();
 }
@@ -529,6 +530,7 @@ C64::getWarpMode()
 	return warpMode; 
 }
 
+#if 0
 void 
 C64::setWarpMode(bool b) 
 { 
@@ -540,6 +542,15 @@ C64::setWarpMode(bool b)
 		getListener()->warpAction(warpMode);
 	}
 }
+#endif
+
+void 
+C64::updateWarpMode()
+{
+	warpMode = alwaysWarp || (enableWarpLoad && floppy->isRotating());
+	getListener()->warpAction(warpMode);
+}
+
 
 void 
 C64::dumpState() {

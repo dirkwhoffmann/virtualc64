@@ -40,6 +40,9 @@ VC1541::VC1541()
 	mem->setDrive(this);
 	via1->setDrive(this);
 	via2->setDrive(this);
+	
+	// Initialize variables
+	rotating = false;
 }
 
 VC1541::~VC1541()
@@ -62,6 +65,7 @@ VC1541::reset()
 	via2->reset();
 	
 	stopRotating();
+	deactivateRedLED();
 	ejectDisc();
 	
 	byteReadyTimer = 0;
@@ -148,20 +152,20 @@ void
 VC1541::startRotating() 
 { 
 	debug("Starting drive engine (%2X)\n", cpu->getPC());
-	getListener()->driveMotorAction(true);
-	if (c64->getWarpLoad())
-		c64->setWarpMode(true);
-		
+	rotating = true;
 	byteReadyTimer = 100; // ??? which value is appropriate?
+	c64->updateWarpMode(); 
+	getListener()->driveMotorAction(true);
 }
 
 void 
 VC1541::stopRotating() 
 { 
 	debug("Stopping drive engine (%2X)\n", cpu->getPC()); 
+	rotating = false;
+	c64->updateWarpMode(); 
+
 	getListener()->driveMotorAction(false);
-	if (c64->getWarpLoad())
-		c64->setWarpMode(false);
 }
 
 void 
