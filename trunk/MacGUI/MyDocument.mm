@@ -698,7 +698,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 		
 	NSLog(@"Warping");
 	
-	[c64 cpuToggleWarpMode];
+	[c64 cpuToggleAlwaysWarp];
 	[self refresh];
 }
 
@@ -1982,6 +1982,10 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 - (void)enableUserEditing:(BOOL)enabled
 {
 	NSControl *controls[] = { 
+		// Debug buttons
+
+		// TODO
+		
 		// CPU panel
 		pc, sp, a, x, y, 
 		// N, Z, C, I, B, D, V,

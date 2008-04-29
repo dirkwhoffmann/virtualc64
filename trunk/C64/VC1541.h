@@ -73,6 +73,11 @@ public:
 	/*! Indicates that a byte has been passed to the RW head */
 	bool writeFlag;
 	bool syncFlag;
+
+private:
+
+	//! Indicates whether disk is rotating or not
+	bool rotating;
 	
 public:
 	//! Constructor
@@ -116,6 +121,7 @@ public:
 	void deactivateRedLED() { getListener()->driveLEDAction(false); }
 	void startRotating();
 	void stopRotating();
+	bool isRotating() { return rotating; };
 	void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
 	void writeOraToDisk() { setData(track, offset, via2->ora); debug(" (%02X)", via2->ora); }
 	// void writeByteToDisk() { assert(writeBuf != -1); setData(track, offset, (uint8_t)writeBuf); debug(" (%02X)", via2->ora); }

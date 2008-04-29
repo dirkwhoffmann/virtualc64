@@ -78,7 +78,7 @@ private:
 		02 rate.
 	*/
 	uint8_t t2_latch_lo, t2_counter_lo, t2_counter_hi;
-	
+		
 public:	
 	//! Constructor
 	VIA6522();

@@ -174,8 +174,11 @@ private:
 	/*! In warp mode, we run as fast as possible */
 	bool warpMode;
 			
-	//! Indicates if files should be transferred in warp mode
+	//! Indicates that files should be transferred in warp mode
 	bool enableWarpLoad;
+	
+	//! Indicates that we should always run as fast as possible
+	bool alwaysWarp;
 	
 	//! Holds the configuration for the game port.
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
@@ -320,16 +323,26 @@ public:
 	bool saveSnapshot(const char *filename);
 
 	//! Returns true iff warp mode is enabled
-	 bool getWarpMode();
+	bool getWarpMode();
 	
 	//! Enable or disable warp mode
-	void setWarpMode(bool b);
+	// void setWarpMode(bool b);
 
 	//! Returns true, iff warp mode is enabled during file transfer
 	bool getWarpLoad() { return enableWarpLoad; }
 
+	//! Update value of variable warpMode
+	/*! The value depends on three variables: disk->rotating, warpLoad and alwaysWarp */
+	void updateWarpMode();
+	
 	//! Enable or disable warp load
-	void setWarpLoad(bool b) { enableWarpLoad = b; }
+	void setWarpLoad(bool b) { enableWarpLoad = b; updateWarpMode(); }
+
+	//! Returns true, iff warp mode is enabled all the time
+	bool getAlwaysWarp() { return alwaysWarp; }
+
+	//! Enable or disable "always warp mode"
+	void setAlwaysWarp(bool b) { alwaysWarp = b; updateWarpMode(); }
 	
 	//! Dump current state into logfile
 	void dumpState();
