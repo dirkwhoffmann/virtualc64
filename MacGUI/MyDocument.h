@@ -54,10 +54,6 @@
 	// Proxy object. Used get data from and sent data to the virtual C64
 	// Moreover, the class implements a bridge between C++ (simulator) and Objective-C (GUI)
 	C64Proxy *c64;
-
-	// Toolbar
-	// DEPRECATED. Should be handled inside the NIB file
-	NSMutableDictionary *toolbarItems;
 	
 	// Dialogs
 	IBOutlet MountDialog *mountDialog;
@@ -191,11 +187,6 @@
 	BOOL enableOpenGL;
 }
 
-// Toolbar delegate methods
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag;    
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar;
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar;
-
 // Main screen
 - (IBAction)debugAction:(id)sender;
 - (IBAction)stepperAction:(id)sender;
@@ -208,6 +199,7 @@
 - (IBAction)setHexadecimal:(id)sender;
 - (IBAction)pauseAction:(id)sender;
 - (IBAction)stepIntoAction:(id)sender;
+- (IBAction)stepOutAction:(id)sender;
 - (IBAction)stepOverAction:(id)sender;
 - (IBAction)stopAndGoAction:(id)sender;
 - (IBAction)continueAction:(id)sender;
