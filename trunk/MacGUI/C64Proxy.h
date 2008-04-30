@@ -98,7 +98,7 @@ public:
 
 // CPU
 - (bool) cpuGetWarpMode;
-- (void) cpuSetWarpMode:(bool)b;
+// - (void) cpuSetWarpMode:(bool)b;
 - (void) cpuToggleAlwaysWarp;
 - (long) cpuGetCycles;
 - (bool) cpuTracingEnabled;

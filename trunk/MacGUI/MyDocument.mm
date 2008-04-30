@@ -19,38 +19,6 @@
 #include "C64.h"
 #import "MyDocument.h"
 
-static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSString *label,NSString *paletteLabel,NSString *toolTip,id target,SEL settingSelector, id itemContent,SEL action, NSMenu * menu)
-{
-    NSMenuItem *mItem;
-    // here we create the NSToolbarItem and setup its attributes in line with the parameters
-    NSToolbarItem *item = [[[NSToolbarItem alloc] initWithItemIdentifier:identifier] autorelease];
-    [item setLabel:label];
-    [item setPaletteLabel:paletteLabel];
-    [item setToolTip:toolTip];
-    [item setTarget:target];
-    // the settingSelector parameter can either be @selector(setView:) or @selector(setImage:).  Pass in the right
-    // one depending upon whether your NSToolbarItem will have a custom view or an image, respectively
-    // (in the itemContent parameter).  Then this next line will do the right thing automatically.
-    [item performSelector:settingSelector withObject:itemContent];
-    [item setAction:action];
-    // If this NSToolbarItem is supposed to have a menu "form representation" associated with it (for text-only mode),
-    // we set it up here.  Actually, you have to hand an NSMenuItem (not a complete NSMenu) to the toolbar item,
-    // so we create a dummy NSMenuItem that has our real menu as a submenu.
-    if (menu!=NULL)
-    {
-		// we actually need an NSMenuItem here, so we construct one
-		mItem=[[[NSMenuItem alloc] init] autorelease];
-		[mItem setSubmenu: menu];
-		[mItem setTitle: [menu title]];
-		[item setMenuFormRepresentation:mItem];
-    }
-    // Now that we've setup all the settings for this new toolbar item, we add it to the dictionary.
-    // The dictionary retains the toolbar item for us, which is why we could autorelease it when we created
-    // it (above).
-    [theDict setObject:item forKey:identifier];
-}
-
-
 @implementation MyDocument
 
 // --------------------------------------------------------------------------------
@@ -153,8 +121,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	NSLog(@"Preference controller released");
 	[consoleController release];
 	NSLog(@"Console controller released");
-	[toolbarItems release];
-	NSLog(@"Toolbar released");
 	[super dealloc];
 	NSLog(@"super released");
 }
@@ -213,40 +179,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	} else {
 		assert(0);
 	}
-
-	
-	// Create toolbar
-	NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:@"VirtualC64Toolbar"] autorelease];
-	toolbarItems = [[NSMutableDictionary dictionary] retain];
-    addToolbarItem(toolbarItems,@"Reset",@"Reset",@"Reset",@"Hard reset",
-				   self,@selector(setImage:),[NSImage imageNamed:@"restart32"],@selector(resetAction:),NULL);
-    addToolbarItem(toolbarItems,@"Pause",@"Pause",@"Pause",@"Pause",
-				   self,@selector(setImage:),[NSImage imageNamed:@"pause32"],@selector(pauseAction:),NULL);
-    addToolbarItem(toolbarItems,@"Step into",@"Step into",@"Step into",@"Step into",
-				   self,@selector(setImage:),[NSImage imageNamed:@"stepInto32"],@selector(stepIntoAction:),NULL);
-    addToolbarItem(toolbarItems,@"Step out",@"Step out",@"Step out",@"Step out",
-				   self,@selector(setImage:),[NSImage imageNamed:@"stepOut32"],@selector(stepOutAction:),NULL);
-    addToolbarItem(toolbarItems,@"Step over",@"Step over",@"Step over",@"Step over",
-				   self,@selector(setImage:),[NSImage imageNamed:@"stepOver32"],@selector(stepOverAction:),NULL);
-    addToolbarItem(toolbarItems,@"Continue",@"Continue",@"Continue",@"Continue",
-				   self,@selector(setImage:),[NSImage imageNamed:@"play32"],@selector(stopAndGoAction:),NULL);
-    addToolbarItem(toolbarItems,@"Inspect",@"Inspect",@"Inspect",@"Open / Close inspector panel",
-				   self,@selector(setImage:),[NSImage imageNamed:@"debugger32"],@selector(debugAction:),NULL);
-	addToolbarItem(toolbarItems,@"Joystick1",@"Port A",@"Joystick1",@"Game port 1 device",
-					self,@selector(setImage:),imagePortA,@selector(joystick1Action:),NULL);
-	// addToolbarItem(toolbarItems,@"Switch",@"Switch",@"Switch",@"switch joysticks",
-	// 				self,@selector(setImage:),[NSImage imageNamed:@"switch_32"],@selector(switchJoysticksAction:),NULL);
-	addToolbarItem(toolbarItems,@"Joystick2",@"Port B",@"Joystick2",@"Game port 2 device",
-					self,@selector(setImage:),imagePortB,@selector(joystick2Action:),NULL);
-    addToolbarItem(toolbarItems,@"Sound",@"Sound",@"Sound",@"Sound",
-				   self,@selector(setImage:),[NSImage imageNamed:@"soundOn"],@selector(resetAction:),NULL);
-    addToolbarItem(toolbarItems,@"Fullscreen",@"Fullscreen",@"Fullscreen",@"Fullscreen",
-				   self,@selector(setImage:),[NSImage imageNamed:@"fullscreen"],@selector(fullscreenAction:),NULL);
-    [toolbar setDelegate:self];
-    [toolbar setAllowsUserCustomization:YES];
-    [toolbar setAutosavesConfiguration: NO]; 
-    [toolbar setDisplayMode: NSToolbarDisplayModeIconAndLabel]; // NSToolbarDisplayModeIconOnly
-    [theWindow setToolbar:toolbar];	
 
 	// Create and bind number formatters
 	[self setHexadecimal:self];
@@ -499,7 +431,8 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
 {
-	if ([theItem itemIdentifier] == @"Continue") {
+	/* Pause/Continue */
+	if ([theItem tag] == 1) { 
 		if ([c64 isRunning]) {
 			[theItem setImage:[NSImage imageNamed:@"pause32"]];
 			[theItem setLabel:@"Pause"];
@@ -507,18 +440,16 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 			[theItem setImage:[NSImage imageNamed:@"play32"]];
 			[theItem setLabel:@"Run"];
 		}
+		return YES;
 	}
 
-	if ([theItem itemIdentifier] == @"Step into") {
+	/* Step into, Step out, Step over */
+	if ([theItem tag] >= 2 && [theItem tag] <= 4) {
+		return ![c64 isRunning];
 	}
 
-	if ([theItem itemIdentifier] == @"Step out") {
-	}
-
-	if ([theItem itemIdentifier] == @"Step over") {
-	}
-
-	if ([theItem itemIdentifier] == @"Joystick1") {
+	/* Jostick port A */
+	if ([theItem tag] == 10) { 
 		int portA = [c64 getPortAssignment:0];
 
 		if( portA == IPD_KEYBOARD )
@@ -531,8 +462,11 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 			[theItem setImage:[NSImage imageNamed:@"none_32"]];
 		else 
 			assert(0);
+		return YES;
 	}
-	if ([theItem itemIdentifier] == @"Joystick2") {
+	
+	/* Jostick port B */	
+	if ([theItem tag] == 11) {
 		int portB = [c64 getPortAssignment:1];
 
 		if( portB == IPD_KEYBOARD )
@@ -545,28 +479,12 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 			[theItem setImage:[NSImage imageNamed:@"none_32"]];
 		else 
 			assert(0);
+		return YES;
 	}
 	
+	/* All other items */
     return YES;
 }
-
-// This is an optional delegate method, called when a new item is about to be added to the toolbar.
-// This is a good spot to set up initial state information for toolbar items, particularly ones
-// that you don't directly control yourself (like with NSToolbarPrintItemIdentifier here).
-// The notification's object is the toolbar, and the @"item" key in the userInfo is the toolbar item
-// being added.
-- (void) toolbarWillAddItem: (NSNotification *) notif
-{
-    NSToolbarItem *addedItem = [[notif userInfo] objectForKey: @"item"];
-    // Is this the printing toolbar item?  If so, then we want to redirect it's action to ourselves
-    // so we can handle the printing properly; hence, we give it a new target.
-    if ([[addedItem itemIdentifier] isEqual: NSToolbarPrintItemIdentifier])
-    {
-		[addedItem setLabel: @"Print"];
-        [addedItem setToolTip: @"Print your document"];
-        [addedItem setTarget: self];
-    }
-}  
 
 - (void) printDocument:(id) sender
 {
@@ -595,82 +513,6 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 
 	[imageView release];
 }
-
-// This method is required of NSToolbar delegates.  It takes an identifier, and returns the matching NSToolbarItem.
-// It also takes a parameter telling whether this toolbar item is going into an actual toolbar, or whether it's
-// going to be displayed in a customization palette.
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
-{
-    // We create and autorelease a new NSToolbarItem, and then go through the process of setting up its
-    // attributes from the master toolbar item matching that identifier in our dictionary of items.
-    NSToolbarItem *newItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
-    NSToolbarItem *item=[toolbarItems objectForKey:itemIdentifier];
-    
-    [newItem setLabel:[item label]];
-    [newItem setPaletteLabel:[item paletteLabel]];
-    if ([item view]!=NULL)
-    {
-		[newItem setView:[item view]];
-    }
-    else
-    {
-		[newItem setImage:[item image]];
-    }
-    [newItem setToolTip:[item toolTip]];
-    [newItem setTarget:[item target]];
-    [newItem setAction:[item action]];
-    [newItem setMenuFormRepresentation:[item menuFormRepresentation]];
-    // If we have a custom view, we *have* to set the min/max size - otherwise, it'll default to 0,0 and the custom
-    // view won't show up at all!  This doesn't affect toolbar items with images, however.
-    if ([newItem view]!=NULL)
-    {
-		[newItem setMinSize:[[item view] bounds].size];
-		[newItem setMaxSize:[[item view] bounds].size];
-    }
-	
-    return newItem;
-}
-
-// This method is required of NSToolbar delegates.  It returns an array holding identifiers for the default
-// set of toolbar items.  It can also be called by the customization palette to display the default toolbar.    
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
-{
-    return [NSArray arrayWithObjects:
-		@"Continue",
-		// NSToolbarSeparatorItemIdentifier,
-		@"Step into", @"Step out", @"Step over", 
-		//NSToolbarSeparatorItemIdentifier,
-		//NSToolbarSpaceItemIdentifier,
-		NSToolbarFlexibleSpaceItemIdentifier,
-        @"Joystick1", @"Joystick2", 
-		//@"Sound", 
-		@"Fullscreen",
-		// NSToolbarPrintItemIdentifier,
-		// NSToolbarSeparatorItemIdentifier,
-		//NSToolbarFlexibleSpaceItemIdentifier,
-        //NSToolbarSpaceItemIdentifier,
-		// @"Sound", 
-		//NSToolbarSpaceItemIdentifier,
-		// NSToolbarSeparatorItemIdentifier,
-		NSToolbarFlexibleSpaceItemIdentifier,
-		@"Reset", 
-		@"Inspect", nil];
-}
-
-// This method is required of NSToolbar delegates.  It returns an array holding identifiers for all allowed
-// toolbar items in this toolbar.  Any not listed here will not be available in the customization palette.
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar
-{
-	return [NSArray arrayWithObjects: 
-		@"Reset", @"Continue", @"Pause", @"Step into", @"Step out", @"Step over", 
-		@"Joystick1", @"Joystick2", @"Sound", @"Fullscreen", @"Inspect",
-        NSToolbarPrintItemIdentifier,
-        // NSToolbarCustomizeToolbarItemIdentifier,
-        NSToolbarFlexibleSpaceItemIdentifier,
-        NSToolbarSpaceItemIdentifier,
-        NSToolbarSeparatorItemIdentifier, nil];
-}
-
 
 // --------------------------------------------------------------------------------
 // Action methods (Main screen)
@@ -812,6 +654,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 {	
 	[self updateChangeCount:NSChangeDone];
 
+	NSLog(@"Stop and go action");
 	if ([c64 isHalted]) {
 		[c64 run];
 	} else {
