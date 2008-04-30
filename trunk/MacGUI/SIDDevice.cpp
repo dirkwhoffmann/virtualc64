@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Jérôme Lang. All rights reserved.
+ * (C) 2006-2008 Jérôme Lang. All rights reserved.
  * Modifications by Dirk Hoffmann
  *
  * This program is free software; you can redistribute it and/or modify
@@ -29,6 +29,7 @@
 		lastError = ERRNO; \
 		return -1; \
 	}
+
 	
 #define SET_PROPS() \
 	if (AudioDeviceSetProperty (SoundDeviceID, NULL, 0, 0, \
@@ -75,6 +76,8 @@ OSStatus SIDDevice::OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 }
 
 
+
+
 SIDDevice::SIDDevice() : lastError(0), InBufferSize(0), IOProcIsInstalled(0), BufferMono(0)
 {
 }
@@ -85,7 +88,9 @@ int SIDDevice::SetupDevice(SID* sid)
 		AudioStreamBasicDescription mySoundBasicDescription;
 		UInt32						myPropertySize, myBufferByteCount;
 		
-		
+		if (IOProcIsInstalled == 1)
+			return 0;
+			
 		// get the device...
 		myPropertySize = sizeof (SoundDeviceID);
 		CHECK_ERROR
@@ -177,23 +182,39 @@ int SIDDevice::SetupDevice(SID* sid)
 
 
 		// add our audio IO procedure....
+		//AudioDeviceAddIOProc (SoundDeviceID, OSX_AudioIOProc16Bit, sid)// over the optional void pointer we submit the SID to the callback
 		CHECK_ERROR
 			(
 			 MPERR_OSX_ADD_IO_PROC,
-			 AudioDeviceAddIOProc (SoundDeviceID, OSX_AudioIOProc16Bit, sid)// over the optional void pointer we submit the SID to the callback
+			 AudioDeviceCreateIOProcID(SoundDeviceID, OSX_AudioIOProc16Bit, sid, &mySoundProcID)
 			 );
 		
-		// start the audio IO Proc... => start playing
-		if (AudioDeviceStart (SoundDeviceID, OSX_AudioIOProc16Bit))
-		{
-			lastError = MPERR_OSX_DEVICE_START;
-			return lastError;
-		}
 		// callback successfully started
 		IOProcIsInstalled = 1;
 		
 		return 0;
 	}
+	
+	int SIDDevice::StartPlaying()
+	{
+		// start the audio IO Proc... => start playing
+		if (AudioDeviceStart (SoundDeviceID, /*OSX_AudioIOProc16Bit*/mySoundProcID))
+		{
+			lastError = MPERR_OSX_DEVICE_START;
+			return lastError;
+		}
+		
+		return 0;
+	}
+	
+	int SIDDevice::StopPlaying()
+	{
+		// stop playing
+		AudioDeviceStop (SoundDeviceID, mySoundProcID);
+		return 0;
+	}
+	
+	
 	
 	int SIDDevice::FreeDevice(void)
 	{
@@ -201,9 +222,11 @@ int SIDDevice::SetupDevice(SID* sid)
 		if (IOProcIsInstalled)
 		{
 			// stop playing first
-			AudioDeviceStop (SoundDeviceID, OSX_AudioIOProc16Bit);
+			AudioDeviceStop (SoundDeviceID, mySoundProcID);
 			// remove callback
-			AudioDeviceRemoveIOProc (SoundDeviceID, OSX_AudioIOProc16Bit);
+			//AudioDeviceRemoveIOProc (SoundDeviceID, OSX_AudioIOProc16Bit);
+			AudioDeviceDestroyIOProcID( SoundDeviceID, mySoundProcID );
+			IOProcIsInstalled = 0;
 		}
 		
 		return 0;

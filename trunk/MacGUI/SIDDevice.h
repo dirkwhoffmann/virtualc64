@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Jérôme Lang. All rights reserved.
+ * (C) 2006-2008 Jérôme Lang. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,9 @@ private:
 	//! the AudioDevice
 	AudioDeviceID	SoundDeviceID;
 	
+	//! the identifier passed back when creating/registering the IOProc. 
+	AudioDeviceIOProcID mySoundProcID;
+	
 	//! buffersize - size of transmitted audio data 
 	UInt32			InBufferSize;
 	
@@ -42,6 +45,8 @@ private:
 	//! true if audio hardware only supports mono playback
 	bool BufferMono;
 	
+	
+	
 public:
 	//! constructor
 	SIDDevice();
@@ -49,7 +54,7 @@ public:
 	//! destructor
 	~SIDDevice();
 	
-	//! initialized the audiohardware and starts callback mechanism (playback)
+	//! initialized the audiohardware
 	/*!
 		Supported are stereo und mono audio devices.
 		If the selected samplerate of SID isn't supported by hardware 
@@ -57,6 +62,12 @@ public:
 		\param sid pointer to SID instance generating the audio data for us
 	*/
 	int SetupDevice(SID* sid);
+	
+	//! starts playback (callback mechanism) of generated sound 
+	int StartPlaying();
+	
+	//! stops playback of generated sound
+	int StopPlaying();
 	
 	//! stops playback and closes audio device if it was opened before
 	int FreeDevice();
