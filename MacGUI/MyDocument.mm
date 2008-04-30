@@ -359,10 +359,9 @@
 	
 	// Initialize sound device
 	SIDDevice *sid = [c64 getSIDDevice];
-	C64 *c = [c64 getC64];
 	assert(sid != NULL);
-	
-	sid->SetupDevice(c->sid);	
+		
+	sid->StartPlaying();
 }
 
 - (void) windowDidResignMain: (NSNotification *) notification
@@ -373,7 +372,7 @@
 	SIDDevice *sid = [c64 getSIDDevice];
 	assert(sid != NULL);
 	
-	sid->FreeDevice();
+	sid->StopPlaying();
 }
 
 // --------------------------------------------------------------------------------
