@@ -730,12 +730,11 @@
 }
 
 
-#if 0
 - (IBAction)fullscreenAction:(id)sender
 {
-	[self refresh];
+	NSLog(@"fullscreenAction");
+	[screen toggleFullscreenMode];
 }
-#endif
 
 - (IBAction)drawSpritesAction:(id)sender
 {

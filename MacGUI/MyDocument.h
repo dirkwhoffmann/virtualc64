@@ -188,6 +188,7 @@
 }
 
 // Main screen
+- (IBAction)fullscreenAction:(id)sender;
 - (IBAction)debugAction:(id)sender;
 - (IBAction)stepperAction:(id)sender;
 - (IBAction)warpAction:(id)sender;
