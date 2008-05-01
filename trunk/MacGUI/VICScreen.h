@@ -157,6 +157,8 @@ const int BG_TEXTURE_DEPTH = 4;
 - (void) rotateBack;
 // - (void) tiltOn;
 // - (void) tiltOff;
+- (void) setFullscreenMode:(bool)b;
+- (void) toggleFullscreenMode;
 - (int) getFrames;
 - (void) updateAngles;
 - (int) isReadyToDraw;

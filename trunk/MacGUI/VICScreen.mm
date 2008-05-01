@@ -366,8 +366,8 @@ int  myargc = 1;
 	kb[MAC_7]   = 0x0300; kb[MAC_Y]   = 0x0301; kb[MAC_G]   = 0x0302; kb[MAC_8]   = 0x0303;  kb[MAC_B]   = 0x0304;   kb[MAC_H]   = 0x0305;  kb[MAC_U]   = 0x0306; kb[MAC_V]   = 0x0307;	
 	kb[MAC_9]   = 0x0400; kb[MAC_I]   = 0x0401; kb[MAC_J]   = 0x0402; kb[MAC_0]   = 0x0403;  kb[MAC_M]   = 0x0404;   kb[MAC_K]   = 0x0405;  kb[MAC_O]   = 0x0406; kb[MAC_N]   = 0x0407;	
 	kb[MAC_PLS] = 0x0500; kb[MAC_P]   = 0x0501; kb[MAC_L]   = 0x0502; kb[MAC_MNS] = 0x0503;  kb[MAC_DOT] = 0x0504;                                                kb[MAC_COM] = 0x0507;	
-	kb[MAC_APO] = 0x0604;                                                                                                                                     kb[MAC_HAT] = 0x0606; 	
-	kb[MAC_1]   = 0x0700; kb[MAC_HAT] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706; kb[MAC_ESC] = 0x0707;	
+	kb[MAC_APO] = 0x0604;                                                                                                                                         kb[MAC_HAT] = 0x0606; 	
+	kb[MAC_1]   = 0x0700; kb[MAC_HAT] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706; //kb[MAC_ESC] = 0x0707;	
 
 	// Graphics
 	frames = 0;
@@ -622,7 +622,6 @@ int  myargc = 1;
 		[glcontext flushBuffer];
 }
 
-
 - (NSImage *)screenshot
 {
 	int height=(int)NSHeight([self visibleRect]);
@@ -653,6 +652,21 @@ int  myargc = 1;
 	return image;
 }
 
+- (void) setFullscreenMode:(bool)b
+{
+	if (b) {
+		NSLog(@"Entering fullscreen mode");
+		[self enterFullScreenMode:[NSScreen mainScreen] withOptions:nil];
+	} else {
+		NSLog(@"Exiting fullscreen mode");
+		[self exitFullScreenModeWithOptions:nil];
+	}
+}
+
+- (void) toggleFullscreenMode
+{
+	[self setFullscreenMode:![self isInFullScreenMode]];
+}
 
 // --------------------------------------------------------------------------------
 //                                  Keyboard events 
@@ -802,6 +816,11 @@ int  myargc = 1;
 		case MAC_F8: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,3); return;
 		case MAC_CU: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,7); return;
 		case MAC_CL: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,2); return;
+	}
+	
+	if (keycode == MAC_ESC) {
+		// The escape key will exit fullscreen mode
+		[self setFullscreenMode:false];
 	}
 	
 	// For all other characters, we use a direct key mapping
