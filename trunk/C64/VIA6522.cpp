@@ -501,7 +501,7 @@ uint8_t VIA2::peek(uint16_t addr)
 	switch(addr) {
 		case 0x00:
 			// Bit 4: 0 = Diskette schreibgeschützt
-			if (floppy->writeProtection)
+			if (floppy->isWriteProtected())
 				orb &= 0xEF;
 			else
 				orb |= 0x10;

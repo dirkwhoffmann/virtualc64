@@ -76,6 +76,12 @@ VC1541::reset()
 }
 
 void 
+VC1541::setWriteProtection(bool b)
+{
+	writeProtection = b;
+}
+
+void 
 VC1541::executeOneCycle()
 {
 	via1->execute(1);
@@ -380,8 +386,7 @@ VC1541::insertDisc(D64Archive *a)
 	
 	assert(a != NULL);
 
-	clearDisk();
-	writeProtection = false;
+	ejectDisc();
 	
 	// For each full track...
 	for (i = 1; i <= 2*a->numberOfTracks(); i += 2) {
@@ -404,12 +409,19 @@ VC1541::insertDisc(D64Archive *a)
 void 
 VC1541::ejectDisc()
 {
-	// release write protection
-	writeProtection = false;
+	// Open lid (write protection light barrier will be blocked)
+	setWriteProtection(true);
+
+	// Drive will notice the change in its interrupt routine...
+	sleepMicrosec((uint64_t)200000);
 	
-	// zero out data
+	// Remove disk (write protection light barrier is no longer blocked)
+	setWriteProtection(false);
+		
+	// Zero out disk data
 	clearDisk();
 	
+	// Inform listener
 	getListener()->driveDiscAction(false);
 }
 

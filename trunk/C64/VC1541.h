@@ -48,10 +48,14 @@ public:
 	//! Reference to the virtual drive memory
 	VC1541Memory *mem;
 
+private:
 	//! Disk data
-	uint8_t data[84][7928];  // 42 halftracks with max. 7928 bytes
-	uint16_t length[84];     // real length of each track
+	/*! Each disk consists of 42 halftracks with a maximum of 7928 bytes */
+	uint8_t data[84][7928];
 	
+	//! Real length of each track
+	uint16_t length[84];
+
 	//! Timer
 	int byteReadyTimer;
 	
@@ -61,7 +65,7 @@ public:
 	//! Counts the number of consecutively found 0xFF mark 
 	int noOfFFBytes;
 			
-	//! Write protection
+	//! Write protection mark
 	bool writeProtection;
 	
 public:
@@ -122,6 +126,8 @@ public:
 	void startRotating();
 	void stopRotating();
 	bool isRotating() { return rotating; };
+	bool isWriteProtected() { return writeProtection; };
+	void setWriteProtection(bool b);
 	void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
 	void writeOraToDisk() { setData(track, offset, via2->ora); debug(" (%02X)", via2->ora); }
 	// void writeByteToDisk() { assert(writeBuf != -1); setData(track, offset, (uint8_t)writeBuf); debug(" (%02X)", via2->ora); }
