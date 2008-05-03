@@ -367,7 +367,7 @@ int  myargc = 1;
 	kb[MAC_9]   = 0x0400; kb[MAC_I]   = 0x0401; kb[MAC_J]   = 0x0402; kb[MAC_0]   = 0x0403;  kb[MAC_M]   = 0x0404;   kb[MAC_K]   = 0x0405;  kb[MAC_O]   = 0x0406; kb[MAC_N]   = 0x0407;	
 	kb[MAC_PLS] = 0x0500; kb[MAC_P]   = 0x0501; kb[MAC_L]   = 0x0502; kb[MAC_MNS] = 0x0503;  kb[MAC_DOT] = 0x0504;                                                kb[MAC_COM] = 0x0507;	
 	kb[MAC_APO] = 0x0604;                                                                                                                                         kb[MAC_HAT] = 0x0606; 	
-	kb[MAC_1]   = 0x0700; kb[MAC_HAT] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706; //kb[MAC_ESC] = 0x0707;	
+	kb[MAC_1]   = 0x0700; kb[MAC_HAT] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706;	
 
 	// Graphics
 	frames = 0;
@@ -548,7 +548,6 @@ int  myargc = 1;
 	glBindTexture(GL_TEXTURE_2D, texture[0]);		
 	glBegin(GL_QUADS);			
 		// FRONT
-		//		glColor3f((float)0x40/0xff,(float)0x40/0xff, (float)0xe0/0xff);
 		glTexCoord2f(TEX_RIGHT, TEX_TOP);
 		glVertex3f( 0.64f, 0.4f, 0.64f);		// Top Right Of The Quad (Front)
 		glTexCoord2f(TEX_LEFT, TEX_TOP);
@@ -582,7 +581,6 @@ int  myargc = 1;
 		glVertex3f( 0.64f,-0.4f,-0.64f);	    // Bottom right (BOTTOM)
 
 		// BACK
-		//glColor3f(1.0f,1.0f,0.0f);				// Set The Color To Yellow
 		glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
 		glVertex3f( 0.64f,-0.4f,-0.64f);		// Bottom Left Of The Quad (Back)
 		glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
@@ -593,7 +591,6 @@ int  myargc = 1;
 		glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Left Of The Quad (Back)
 							  
 		// LEFT
-		//glColor3f(0.0f,0.0f,1.0f);				// Set The Color To Blue
 		glTexCoord2f(TEX_RIGHT, TEX_TOP);
 		glVertex3f(-0.64f, 0.4f, 0.64f);		// Top Right Of The Quad (Left)
 		glTexCoord2f(TEX_LEFT, TEX_TOP);
@@ -604,7 +601,6 @@ int  myargc = 1;
 		glVertex3f(-0.64f,-0.4f, 0.64f);		// Bottom Right Of The Quad (Left)
 
 		// RIGHT
-		//glColor3f(1.0f,0.0f,1.0f);				// Set The Color To Violet
 		glTexCoord2f(TEX_RIGHT, TEX_TOP);
 		glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Right Of The Quad (Right)
 		glTexCoord2f(TEX_LEFT, TEX_TOP);
@@ -626,10 +622,6 @@ int  myargc = 1;
 {
 	int height=(int)NSHeight([self visibleRect]);
 	int width=(int)NSWidth([self visibleRect]);
-	//int height=(int)NSHeight([self frame]);
-	//int width=(int)NSWidth([self frame]);
-	
-	//width = 512;
 	
 	NSBitmapImageRep *imageRep;
 	NSImage *image;
