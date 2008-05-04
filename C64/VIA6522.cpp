@@ -512,14 +512,12 @@ uint8_t VIA2::peek(uint16_t addr)
 			else
 				orb |= 0x80;
 	
-			floppy->syncFlag = true;
 			return orb;
 
 		case 0x01:
 			if (tracingEnabled()) {
 				debug("%02X ", ora);			
 			}
-			floppy->readFlag = true;
 			return ora;
 		
 		default:
@@ -534,12 +532,12 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
 		
 	switch(addr) {
 		case 0x00:
-			// should not be here. Register is handled individually by each via chip
+			// Not reached
 			assert(false);
 			break;
 		
 		case 0x01:
-			// should not be here. Register is handled individually by each via chip
+			// Not reached
 			assert(false);
 			break;
 					
@@ -690,9 +688,6 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 				debug(" W%02X", value);
 			}
 			ora = value;
-			floppy->writeFlag = true;
-			//floppy->writeHead(value);
-			// floppy->rotateDisk();
 			return;
 
 		case 0x03:
@@ -708,9 +703,13 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 				// debug("%s V-flag to drive head\n", value & 0x02 ? "Attach" : "Detach");
 			}
 			if ((value & 0x20) != (io[addr] & 0x20)) {
-				debug("Switching to %s mode (%04X)\n", value & 0x20 ? "READ" : "WRITE", floppy->cpu->getPC());
+				debug("Switching to %s mode (%04X) ByteReadyTimer = %d\n", value & 0x20 ? "READ" : "WRITE", floppy->cpu->getPC(),floppy->byteReadyTimer);
 			}
 			io[addr] = value;
+			return;
+
+		case 0x15:
+			debug("WARNING: ACCESS TO VIA 2 0x015 detected!\n");
 			return;
 			
 		default:
