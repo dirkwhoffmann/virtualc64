@@ -72,7 +72,6 @@ VC1541::reset()
 	track = 40;
 	offset = 0;
 	noOfFFBytes = 0;
-	readFlag = writeFlag = syncFlag = false;
 }
 
 void 
@@ -87,11 +86,7 @@ VC1541::executeOneCycle()
 	via1->execute(1);
 	via2->execute(1);
 	cpu->executeOneCycle(0);
-
-	// if (tracingEnabled()) {
-	//	dumpState();
-	//}
-	
+		
 	if (byteReadyTimer == 0)
 		return;
 
@@ -102,31 +97,21 @@ VC1541::executeOneCycle()
 
 	// Reset timer
 	byteReadyTimer = VC1541_CYCLES_PER_BYTE;
-				
-	if (readFlag == false && writeFlag == false && syncFlag == false) {
-		// don't rotate
-		// return;
-		// debug("[%04X]", cpu->getPC());
-		// debug("*");
-	}
-	
-	// printf("r : %d w : %d s : %d\n", readFlag, writeFlag, syncFlag);
-	readFlag = writeFlag = syncFlag = false;
-
+						
 	// Rotate disk
 	rotateDisk();
 	if (readHead() == 0xFF)
 		noOfFFBytes++;
 	else
 		noOfFFBytes = 0;
-	//if (readHead() != 0xFF) signalByteReady();
 	if (noOfFFBytes <= 1) signalByteReady();
-		
+			
 	// Read or write data
 	if (via2->isReadMode()) {
 		via2->ora = readHead();
 	} else {
-		writeOraToDisk();
+		writeByteToDisk(via2->ora);
+		signalByteReady();
 	}	
 }
 
@@ -425,28 +410,51 @@ VC1541::ejectDisc()
 	getListener()->driveDiscAction(false);
 }
 
-#if 0
-void 
-VC1541::dumpState()
+void
+VC1541::dumpDisk(FILE *file)
 {
-	char buf[128];
+	int track, offset;
+	
+	assert(file != NULL);
 
-	sprintf(buf, "VC 1541 drive: VIA 1 at %p VIA 2 at %p\n", via1, via2);
-	getListener()->logAction(strdup(buf));
-	via1->dumpState();
-	via2->dumpState();
-	sprintf(buf, "Engine: %s red LED: %s\n",
-		via2->engineRunning() ? "on" : "off",
-		via2->redLEDshining() ? "on" : "off");
-	getListener()->logAction(strdup(buf));
-
+	for (track = 0; track < 84; track++) {
+		for (offset = 0; offset+16 < 7928; offset += 16) {
+			fprintf(file,"(%d,%d): %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", 
+			track, offset,
+			getData(track,offset+0), getData(track,offset+1), getData(track,offset+2), getData(track,offset+3),
+			getData(track,offset+4), getData(track,offset+5), getData(track,offset+6), getData(track,offset+7),
+			getData(track,offset+8), getData(track,offset+9), getData(track,offset+10), getData(track,offset+11),
+			getData(track,offset+12), getData(track,offset+13), getData(track,offset+14), getData(track,offset+15));
+		}
+	}
 }
-#endif
+			
 void 
 VC1541::dumpState()
 {
-	debug("head timer: %d %d %d %d V-enable: %d track: %d, offset: %d (%d -> %d) ff_bytes: %d\n", 
-	byteReadyTimer, readFlag, writeFlag, syncFlag, via2->overflowEnabled(),
+	FILE *file = fopen("/Users/hoff/tmp/d64image.txt","w");
+	
+	if (file != NULL) {
+		dumpDisk(file);
+		fclose(file);
+	}
+	
+#if 0	
+	int t, i;
+	/* Directory track... */
+	t = 18;
+	for (i = 0; i < 4096; i+= 16) {
+		debug("(%d,%d): %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", 
+			t, i,
+			getData(t,i+0), getData(t,i+1), getData(t,i+2), getData(t,i+3),
+			getData(t,i+4), getData(t,i+5), getData(t,i+6), getData(t,i+7),
+			getData(t,i+8), getData(t,i+9), getData(t,i+10), getData(t,i+11),
+			getData(t,i+12), getData(t,i+13), getData(t,i+14), getData(t,i+15));
+	}
+#endif
+
+	debug("head timer: %d V-enable: %d track: %d, offset: %d (%d -> %d) ff_bytes: %d\n", 
+	byteReadyTimer, via2->overflowEnabled(),
 	track, offset, readHead(), readHeadLookAhead(), noOfFFBytes);
 }
 

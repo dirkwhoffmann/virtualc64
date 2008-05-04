@@ -22,7 +22,7 @@
 #include "VIA6522.h"
 
 // = 26; // due to my own calculations, a new byte should arrive after 26 CPU cycles
-#define VC1541_CYCLES_PER_BYTE 30
+#define VC1541_CYCLES_PER_BYTE 26 //40 // 30
 
 // Forward declarations
 class IEC;
@@ -55,7 +55,8 @@ private:
 	
 	//! Real length of each track
 	uint16_t length[84];
-
+	
+public:
 	//! Timer
 	int byteReadyTimer;
 	
@@ -68,16 +69,6 @@ private:
 	//! Write protection mark
 	bool writeProtection;
 	
-public:
-	//! Read flag
-	/*! Indicates that a byte has been read from the RW head */
-	bool readFlag;
-
-	//! Write flag
-	/*! Indicates that a byte has been passed to the RW head */
-	bool writeFlag;
-	bool syncFlag;
-
 private:
 
 	//! Indicates whether disk is rotating or not
@@ -129,7 +120,20 @@ public:
 	bool isWriteProtected() { return writeProtection; };
 	void setWriteProtection(bool b);
 	void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
-	void writeOraToDisk() { setData(track, offset, via2->ora); debug(" (%02X)", via2->ora); }
+#if 0
+	inline void writeByteToDisk(uint8_t val) { debug(" (%d,%d)(%02X %02X %02X %02X)->(%02X)", 
+		track, offset,
+		getData(track,offset), getData(track, (offset+1)%7928), 
+		getData(track,(offset+2)%7928), getData(track, (offset+3)%7928), val); 
+		setData(track, offset, val); }
+#endif
+	inline void writeByteToDisk(uint8_t val) { setData(track, offset, val); }
+
+	// inline void writeByteToDisk(uint8_t val, int delta) { setData(track, (offset + delta) % 7928, val); }
+
+		
+	inline void writeOraToDisk() { writeByteToDisk(via2->ora); }
+	
 	// void writeByteToDisk() { assert(writeBuf != -1); setData(track, offset, (uint8_t)writeBuf); debug(" (%02X)", via2->ora); }
 
 
@@ -152,7 +156,8 @@ public:
 	
 	//! Dump state to debug console
 	void dumpState();
-
+	void dumpDisk(FILE *file);
+	
 	//! Clear half track
 	/*! All bytes of the specified half tracked are zeroes out. */
 	void clearHalftrack(int nr);

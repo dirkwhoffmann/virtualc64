@@ -36,7 +36,8 @@ VC1541Memory::~VC1541Memory()
 	debug("  Releasing VC1541 memory at %p...\n", this);
 }
 
-void VC1541Memory::reset()
+void 
+VC1541Memory::reset()
 {
 	debug ("  Resetting VC1541 memory...\n");
 
@@ -45,7 +46,8 @@ void VC1541Memory::reset()
 		mem[i] = 0;	
 }	
 
-bool VC1541Memory::is1541Rom(const char *filename)
+bool 
+VC1541Memory::is1541Rom(const char *filename)
 {
 	int magic_bytes[] = { 0x97, 0xAA, 0xAA, EOF };
 
@@ -60,7 +62,8 @@ bool VC1541Memory::is1541Rom(const char *filename)
 	return true;
 }
 
-bool VC1541Memory::loadRom(const char *filename)
+bool 
+VC1541Memory::loadRom(const char *filename)
 {
 	if (is1541Rom(filename)) {
 		romFile = strdup(filename);
@@ -70,17 +73,20 @@ bool VC1541Memory::loadRom(const char *filename)
 	return false;
 }
 
-bool VC1541Memory::load(FILE *file)
+bool 
+VC1541Memory::load(FILE *file)
 {
 	return true;
 }
 
-bool VC1541Memory::save(FILE *file)
+bool 
+VC1541Memory::save(FILE *file)
 {
 	return true;
 }
 
-bool VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
+bool 
+VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
 {
 	switch (type) {
 		case MEM_RAM: 
@@ -96,17 +102,20 @@ bool VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
 	}
 }
 
-uint8_t VC1541Memory::peekRam(uint16_t addr)
+uint8_t 
+VC1541Memory::peekRam(uint16_t addr)
 {
 	return mem[addr];
 }
 
-uint8_t VC1541Memory::peekRom(uint16_t addr)
+uint8_t 
+VC1541Memory::peekRom(uint16_t addr)
 {
 	return mem[addr];
 }
 
-uint8_t VC1541Memory::peekIO(uint16_t addr)
+uint8_t 
+VC1541Memory::peekIO(uint16_t addr)
 {	
 	if ((addr & 0xFC00) == 0x1800) {
 		return floppy->via1->peek(addr & 0x000F);
@@ -119,7 +128,8 @@ uint8_t VC1541Memory::peekIO(uint16_t addr)
 	}
 }
 
-uint8_t VC1541Memory::peekAuto(uint16_t addr)
+uint8_t 
+VC1541Memory::peekAuto(uint16_t addr)
 {
 	if (addr >= 0xc000)
 		return mem[addr];
@@ -129,17 +139,20 @@ uint8_t VC1541Memory::peekAuto(uint16_t addr)
 		return peekIO(addr);
 }
 	                  																
-void VC1541Memory::pokeRam(uint16_t addr, uint8_t value)
+void 
+VC1541Memory::pokeRam(uint16_t addr, uint8_t value)
 {
 	mem[addr] = value;
 }
 
-void VC1541Memory::pokeRom(uint16_t addr, uint8_t value)
+void 
+VC1541Memory::pokeRom(uint16_t addr, uint8_t value)
 {
 	mem[addr] = value;
 }
              
-void VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
+void 
+VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
 {	
 	if ((addr & 0xFC00) == 0x1800) {
 		floppy->via1->poke(addr & 0x000F, value);
@@ -151,7 +164,8 @@ void VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
 	}
 }
 			 			 
-void VC1541Memory::pokeAuto(uint16_t addr, uint8_t value)
+void 
+VC1541Memory::pokeAuto(uint16_t addr, uint8_t value)
 {
 	if (addr < 0x1000)
 		mem[addr & 0x7ff] = value;
