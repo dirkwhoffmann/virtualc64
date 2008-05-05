@@ -18,6 +18,10 @@
 
 #include "C64.h"
 
+// --------------------------------------------------------------------------------
+// Execution thread
+// --------------------------------------------------------------------------------
+
 // Exit function of the main execution loop
 void 
 threadCleanup(void* thisC64)
@@ -49,7 +53,7 @@ void
 	c64->cpu->clearErrorState();
 	c64->floppy->cpu->clearErrorState();
 	c64->setDelay((uint64_t)(1000000 / c64->fps));
-
+	
 	while (1) {
 		// Compute frame...
 		cyclesPerRasterline = c64->getCpuCyclesPerRasterline();
@@ -103,6 +107,10 @@ void
 	pthread_cleanup_pop(1);
 	pthread_exit(NULL);	
 }
+
+// --------------------------------------------------------------------------------
+// C64 class
+// --------------------------------------------------------------------------------
 
 C64::C64(C64Listener *listener)
 {
@@ -254,7 +262,6 @@ void C64::reset()
 	floppy->reset();
 	
 	archive = NULL;
-	// setAlwaysWarp(false);
 
 	resume();
 }
@@ -396,6 +403,12 @@ void
 C64::setDelay(int delay) 
 { 
 	frameDelay = delay;
+	restartTimer();
+}
+
+void 
+C64::restartTimer() 
+{ 
 	targetTime = msec() + frameDelay;
 }
 
@@ -412,7 +425,7 @@ C64::synchronizeTiming()
 	if (timeToSleep > 0) {
 		sleepMicrosec(timeToSleep);
 	} else {
-		setDelay(frameDelay);
+		restartTimer();
 	}
 }
 
@@ -527,30 +540,23 @@ C64::loadRom(const char *filename)
 bool 
 C64::getWarpMode() 
 { 
-	return warpMode; 
+	return alwaysWarp || (enableWarpLoad && floppy->isRotating());
 }
 
-#if 0
 void 
-C64::setWarpMode(bool b) 
+C64::setWarpLoad(bool b) 
 { 
-	if (b && !warpMode) {
-		warpMode = true;
-		getListener()->warpAction(warpMode);
-	} else if (!b && warpMode) {
-		warpMode = false;
-		getListener()->warpAction(warpMode);
-	}
+	enableWarpLoad = b; 
+	restartTimer();
+	getListener()->warpAction(getWarpMode());	
 }
-#endif
 
 void 
-C64::updateWarpMode()
-{
-	warpMode = alwaysWarp || (enableWarpLoad && floppy->isRotating());
-	getListener()->warpAction(warpMode);
+C64::setAlwaysWarp(bool b) { 
+	alwaysWarp = b; 
+	restartTimer();
+	getListener()->warpAction(getWarpMode());	
 }
-
 
 void 
 C64::dumpState() {

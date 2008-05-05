@@ -169,10 +169,6 @@ private:
 	//! Target time
 	/*! Used to synchronize emulation speed */
 	uint64_t targetTime; 
-
-	//! True iff warp mode is enabled
-	/*! In warp mode, we run as fast as possible */
-	bool warpMode;
 			
 	//! Indicates that files should be transferred in warp mode
 	bool enableWarpLoad;
@@ -281,6 +277,9 @@ public:
 	//! Set interval timer delay
 	void setDelay(int d);
 	
+	//! Restart timer
+	void restartTimer();
+	
 	//! Synchronize timing
 	void synchronizeTiming();
 	
@@ -325,24 +324,17 @@ public:
 	//! Returns true iff warp mode is enabled
 	bool getWarpMode();
 	
-	//! Enable or disable warp mode
-	// void setWarpMode(bool b);
-
 	//! Returns true, iff warp mode is enabled during file transfer
 	bool getWarpLoad() { return enableWarpLoad; }
-
-	//! Update value of variable warpMode
-	/*! The value depends on three variables: disk->rotating, warpLoad and alwaysWarp */
-	void updateWarpMode();
 	
 	//! Enable or disable warp load
-	void setWarpLoad(bool b) { enableWarpLoad = b; updateWarpMode(); }
+	void setWarpLoad(bool b);
 
 	//! Returns true, iff warp mode is enabled all the time
 	bool getAlwaysWarp() { return alwaysWarp; }
 
 	//! Enable or disable "always warp mode"
-	void setAlwaysWarp(bool b) { alwaysWarp = b; updateWarpMode(); }
+	void setAlwaysWarp(bool b);
 	
 	//! Dump current state into logfile
 	void dumpState();

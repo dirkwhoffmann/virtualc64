@@ -144,8 +144,7 @@ VC1541::startRotating()
 { 
 	debug("Starting drive engine (%2X)\n", cpu->getPC());
 	rotating = true;
-	byteReadyTimer = 100; // ??? which value is appropriate?
-	c64->updateWarpMode(); 
+	byteReadyTimer = VC1541_CYCLES_PER_BYTE;
 	getListener()->driveMotorAction(true);
 }
 
@@ -154,7 +153,6 @@ VC1541::stopRotating()
 { 
 	debug("Stopping drive engine (%2X)\n", cpu->getPC()); 
 	rotating = false;
-	c64->updateWarpMode(); 
 
 	getListener()->driveMotorAction(false);
 }
