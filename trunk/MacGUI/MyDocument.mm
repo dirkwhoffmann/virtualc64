@@ -357,22 +357,14 @@
 {
 	// NSLog(@"%@ did become main...", self);
 	
-	// Initialize sound device
-	SIDDevice *sid = [c64 getSIDDevice];
-	assert(sid != NULL);
-		
-	sid->StartPlaying();
+	[c64 enableAudio];	
 }
 
 - (void) windowDidResignMain: (NSNotification *) notification
 {
 	// NSLog(@"%@ did resign main...", self);
 	
-	// Release sound device
-	SIDDevice *sid = [c64 getSIDDevice];
-	assert(sid != NULL);
-	
-	sid->StopPlaying();
+	[c64 disableAudio];
 }
 
 // --------------------------------------------------------------------------------

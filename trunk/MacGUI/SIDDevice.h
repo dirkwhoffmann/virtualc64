@@ -45,6 +45,8 @@ private:
 	//! true if audio hardware only supports mono playback
 	bool BufferMono;
 	
+	//! stops playback and closes audio device if it was opened before
+	int FreeDevice();
 	
 	
 public:
@@ -68,9 +70,6 @@ public:
 	
 	//! stops playback of generated sound
 	int StopPlaying();
-	
-	//! stops playback and closes audio device if it was opened before
-	int FreeDevice();
 	
 	//! the actual callback
 	/*!

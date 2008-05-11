@@ -147,16 +147,10 @@ void ListenerProxy::logAction(char *message)
 	mem = c64->mem;
 	
 	// Initialize CoreAudio sound interface
-	// NEW CODE:
-	// [[sidDevice alloc] init:c64->sid];
-	
-	// OLD CODE:
-	sidDevice = new SIDDevice();	// create Core Audio sound device		
-	int result = sidDevice->SetupDevice(c64->sid); // setup and start playback
-	if (0 != result ) {
-		NSLog(@"WARNING: Couldn't enable sound.");
-		if (result == -2)
-			NSLog(@"WARNING: Connected audio hardware doesn't support mono or stereo playback");
+	audioDevice = [[AudioDevice alloc] initWithSID:c64->sid];
+	if (!audioDevice)
+	{
+		NSLog(@"WARNING: Couldn't initialize AudioDevice. Sound disabled.");
 	}
 		
     return self;
@@ -169,8 +163,9 @@ void ListenerProxy::logAction(char *message)
 
 	// Delete sound device
 	NSLog(@"  Deleting sound device");
-	delete sidDevice;
-
+	[audioDevice release];
+	audioDevice = nil;
+	
 	NSLog(@"  Deleting virtual machine");
 	delete c64;
 	c64 = NULL;
@@ -183,10 +178,6 @@ void ListenerProxy::logAction(char *message)
 	return c64;
 }
 
-- (SIDDevice *) getSIDDevice
-{
-	return sidDevice;
-}
 
 // --------------------------------------------------------------------------
 // Bridge functions (cross the Objective-C / C++)
@@ -468,6 +459,22 @@ void ListenerProxy::logAction(char *message)
 
 - (void) vicToggleDrawSprites { c64->vic->toggleDrawSprites(); }
 - (void) vicToggleMarkIRQLines { c64->vic->toggleMarkIRQLines(); }
+
+
+// --------------------------------------------------------------------------
+// audio hardware
+// --------------------------------------------------------------------------
+
+- (void) enableAudio
+{
+	/* if the audio hardware couldn't be initialized, nothing wil happen here (message to nil) */
+	[audioDevice startPlayback];
+}
+- (void) disableAudio
+{
+	/* if the audio hardware couldn't be initialized, nothing wil happen here (message to nil) */
+	[audioDevice stopPlayback];
+}
 
 
 // --------------------------------------------------------------------------

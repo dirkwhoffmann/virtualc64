@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		020214270AF8E599008AB4EB /* SIDVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020214260AF8E599008AB4EB /* SIDVoice.cpp */; };
-		025227E20AF261F40024DAB3 /* SIDDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 025227E10AF261F40024DAB3 /* SIDDevice.cpp */; };
+		023024000DC902A700F8818A /* AudioDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 023023FF0DC902A700F8818A /* AudioDevice.mm */; };
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
 		389E776F0C7A3B2200BEAFA6 /* SDL_joystick.c in Sources */ = {isa = PBXBuildFile; fileRef = 389E776B0C7A3B2200BEAFA6 /* SDL_joystick.c */; };
 		389E77700C7A3B2200BEAFA6 /* SDL_sysjoystick.c in Sources */ = {isa = PBXBuildFile; fileRef = 389E776D0C7A3B2200BEAFA6 /* SDL_sysjoystick.c */; };
@@ -109,8 +109,8 @@
 /* Begin PBXFileReference section */
 		020214250AF8E599008AB4EB /* SIDVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDVoice.h; sourceTree = "<group>"; };
 		020214260AF8E599008AB4EB /* SIDVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDVoice.cpp; sourceTree = "<group>"; };
-		025227E10AF261F40024DAB3 /* SIDDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDDevice.cpp; sourceTree = "<group>"; };
-		025227E30AF2631E0024DAB3 /* SIDDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDDevice.h; sourceTree = "<group>"; };
+		023023FE0DC902A700F8818A /* AudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDevice.h; sourceTree = "<group>"; };
+		023023FF0DC902A700F8818A /* AudioDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioDevice.mm; sourceTree = "<group>"; };
 		025229EE0AF27E740024DAB3 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -446,8 +446,8 @@
 				50176C780A6F7357009E80BD /* VICScreen.mm */,
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
 				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
-				025227E30AF2631E0024DAB3 /* SIDDevice.h */,
-				025227E10AF261F40024DAB3 /* SIDDevice.cpp */,
+				023023FE0DC902A700F8818A /* AudioDevice.h */,
+				023023FF0DC902A700F8818A /* AudioDevice.mm */,
 				50D5FDB20C2E9CF50022CA3A /* MountDialog.h */,
 				50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */,
 				5007A4860C3F9D6A0069B0CE /* PreferenceController.h */,
@@ -681,7 +681,6 @@
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
 				50CA0D520A9076FD00A5A08D /* SID.cpp in Sources */,
-				025227E20AF261F40024DAB3 /* SIDDevice.cpp in Sources */,
 				020214270AF8E599008AB4EB /* SIDVoice.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
 				5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */,
@@ -702,6 +701,7 @@
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				501AE5030DAA1449003C6960 /* Listener.mm in Sources */,
+				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

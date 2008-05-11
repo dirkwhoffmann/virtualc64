@@ -20,7 +20,7 @@
 #define _C64_PROXY
 
 #include "C64.h"
-#import "SIDDevice.h"
+#import "AudioDevice.h"
 
 // Forward declarations
 @class MyDocument;
@@ -61,7 +61,7 @@ public:
 	IEC *iec;
 	CPU *cpu;    // CPU to observe (can be switched between C64 and VC1541)
 	Memory *mem; // Memory to observe (can be switched between C64 and VC1541)
-	SIDDevice *sidDevice;
+	AudioDevice *audioDevice;
 }
 
 // Initialization
@@ -69,7 +69,6 @@ public:
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 - (void) release;
 - (C64 *) getC64;
-- (SIDDevice *) getSIDDevice;
 
 // C64
 - (void) reset;
@@ -306,11 +305,13 @@ public:
 - (void) vicToggleDrawSprites;
 - (void) vicToggleMarkIRQLines;
 
+// audio hardware
+- (void) enableAudio;
+- (void) disableAudio;
 
 // SID
 - (float) sidGetVolumeControl;
 - (void) sidSetVolumeControl:(float)value;
-
 
 // Keyboard
 - (void) keyboardPressRunstopRestore;
