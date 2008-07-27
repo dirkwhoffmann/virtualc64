@@ -252,7 +252,8 @@ void C64::reset()
 	suspend();
 	
 	mem->reset();
-	cpu->reset();
+	// cpu->reset(0xE2, 0xFC);
+	cpu->setPC(0xFCE2);
 	vic->reset();
 	sid->reset();
 	cia1->reset();
@@ -314,14 +315,37 @@ C64::threadCleanup()
 	debug("Execution thread terminated\n");
 }
 
+int
+C64::numberOfMissingRoms() {
+
+	int result = 0;
+
+	if (!mem->basicRomIsLoaded()) result++;
+	if (!mem->charRomIsLoaded()) result++;
+	if (!mem->kernelRomIsLoaded()) result++;
+	if (!floppy->mem->romIsLoaded()) result++;
+	return result;
+}
+
+bool
+C64::isRunnable() {
+	return (numberOfMissingRoms() == 0);
+}
+
 void 
 C64::run() {
 
 	if (isHalted()) {
 
 		// Check for ROM images
-		if (!mem->basicRomIsLoaded() || !mem->charRomIsLoaded() || !mem->kernelRomIsLoaded()) {
-			getListener()->missingRomAction();
+		int missingRoms = 0;
+		if (!mem->basicRomIsLoaded()) missingRoms |= BASIC_ROM;
+		if (!mem->charRomIsLoaded()) missingRoms |= CHAR_ROM;
+		if (!mem->kernelRomIsLoaded()) missingRoms |= KERNEL_ROM;
+		if (!floppy->mem->romIsLoaded()) missingRoms |= VC1541_ROM;
+		if (missingRoms) {
+			printf("Roms are missing!!!!!\n\n");
+			getListener()->missingRomAction(missingRoms);
 			return;
 		}
 		
@@ -525,15 +549,31 @@ C64::mountArchive()
 bool 
 C64::loadRom(const char *filename)
 {
-	bool result; 
-	
-	if (!C64Memory::isRom(filename))
-		return false;
+	bool result = false; 
 
-	suspend();
-	result = mem->loadRom(filename);
-	resume();
+	suspend(); 
 	
+	if (C64Memory::isBasicRom(filename)) {
+		result = mem->loadBasicRom(filename);
+		if (result) getListener()->loadRomAction(BASIC_ROM);
+	}
+
+	if (C64Memory::isCharRom(filename)) {
+		result = mem->loadCharRom(filename);
+		if (result) getListener()->loadRomAction(CHAR_ROM);
+	}
+
+	if (C64Memory::isKernelRom(filename)) {
+		result = mem->loadKernelRom(filename);
+		if (result) getListener()->loadRomAction(KERNEL_ROM);
+	}
+	
+	if (VC1541Memory::is1541Rom(filename)) {
+		result = floppy->mem->loadRom(filename);
+		if (result) getListener()->loadRomAction(VC1541_ROM);
+	}
+
+	resume();
 	return result;
 }
 
@@ -610,7 +650,6 @@ C64::loadSnapshot(const char *filename)
 	
 	assert(filename != NULL);
 
-	debug("Retrieving virtual machine state from file %s\n", filename);
 	file = fopen(filename, "r");
 	if (file != NULL) {
 		result = load(file);

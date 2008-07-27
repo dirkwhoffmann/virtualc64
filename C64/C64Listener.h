@@ -21,12 +21,19 @@
 #ifndef _C64_LISTENER_INC
 #define _C64_LISTENER_INC
 
+#define BASIC_ROM 1
+#define CHAR_ROM 2
+#define KERNEL_ROM 4
+#define VC1541_ROM 8
+
 //! Proxy object between the virtual C64 and the user interface
 class C64Listener {
 		
 public:	
+	//! Notifies the listener that a ROM image has been installed.
+	virtual void loadRomAction(int rom) = 0;
 	//! Notifies the listener that the emulator won't run due to missing ROM image.
-	virtual void missingRomAction(void) = 0;
+	virtual void missingRomAction(int missingRoms) = 0;
 	//! Notfies the listener that the virtual C64 has entered the "running" state.
 	virtual void runAction(void) = 0;
 	//! Notfies the listener that the virtual C64 has entered the "halted" state.

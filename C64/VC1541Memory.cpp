@@ -28,7 +28,7 @@ VC1541Memory::VC1541Memory()
 	romFile = NULL;
 	
 	// Try to auto-load virtual ROMs...
-	(void)loadRom("C1541.rom");
+	// (void)loadRom("C1541.rom");
 }
 
 VC1541Memory::~VC1541Memory()

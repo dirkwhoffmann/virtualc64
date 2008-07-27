@@ -32,7 +32,8 @@
 
 @protocol ListenerProtocol
 
-- (void) missingRomAction;
+- (void) loadRomAction:(int)rom;
+- (void) missingRomAction:(int)missingRoms;
 - (void) runAction;
 - (void) haltAction;
 - (void) cpuAction:(CPU::ErrorState)state;
@@ -341,9 +342,11 @@
 // Enable / disable editing
 - (void)enableUserEditing:(BOOL)enabled;
 
+// Loading and saving
+- (BOOL)loadRom:(NSString *)filename;
+
 // Misc
 - (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row;
-
 - (BOOL)showMountDialog:(Archive *)archive;
 
 @end

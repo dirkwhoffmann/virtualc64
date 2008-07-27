@@ -259,7 +259,14 @@ public:
 	//! The tread exit function.
 	/*! Automatically invoked by the execution thread on termination */
 	void threadCleanup(); 
-	
+
+	//! Returns the number of missing ROM images */
+	int numberOfMissingRoms();
+		
+	//! Returns true iff the virtual C64 is able to run */
+	/*! The function checks for missing ROM images etc. */
+	bool isRunnable();
+
 	//! Power on the virtual C64
 	/*! The execution thread is launched and the virtual computer enters the "running" state */
 	void run();

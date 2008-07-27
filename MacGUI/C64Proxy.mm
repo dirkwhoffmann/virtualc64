@@ -50,9 +50,14 @@ void ListenerProxy::haltAction()
 	[doc haltAction]; 
 }
 
-void ListenerProxy::missingRomAction() 
+void ListenerProxy::loadRomAction(int rom) 
 {
-	[doc missingRomAction];
+	[doc loadRomAction:rom];
+}
+
+void ListenerProxy::missingRomAction(int missingRoms) 
+{
+	[doc missingRomAction:missingRoms];
 }
 
 void ListenerProxy::driveAttachedAction(bool connected)
@@ -192,6 +197,7 @@ void ListenerProxy::logAction(char *message)
 - (void) step { cpu->step(); }
 - (void) run { c64->run(); }
 - (bool) isHalted { return c64->isHalted(); }
+- (bool) isRunnable { return c64->isRunnable(); }
 - (bool) isRunning { return c64->isRunning(); }
 - (void) setPAL { c64->setPAL(); }
 - (void) setNTSC { c64->setNTSC(); }
@@ -199,6 +205,16 @@ void ListenerProxy::logAction(char *message)
 - (void) setFrameDelay:(int)delay { c64->frameDelay = delay; }
 - (int) buildNr { return c64->build(); }
 
+//- (bool) isBasicRom:(NSString *)filename { return c64->mem->isBasicRom([filename UTF8String]); }
+//- (bool) isCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]); }
+//- (bool) isKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]); }
+//- (bool) isVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]); }
+- (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
+- (bool) loadBasicRom:(NSString *)filename { return c64->mem->isBasicRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
+- (bool) loadCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
+- (bool) loadKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
+- (bool) loadVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
+//- (bool) loadRom:(NSString *)filename { return c64->loadRom([filename UTF8String]); }
 - (bool) loadSnapshot:(NSString *)filename { return c64->loadSnapshot([filename UTF8String]); }
 - (bool) saveSnapshot:(NSString *)filename { return c64->saveSnapshot([filename UTF8String]); }
 

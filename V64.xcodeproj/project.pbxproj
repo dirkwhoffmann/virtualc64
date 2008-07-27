@@ -35,10 +35,6 @@
 		500B9D3F0C40F037008237C6 /* pref_pal.png in Resources */ = {isa = PBXBuildFile; fileRef = 500B9D3E0C40F037008237C6 /* pref_pal.png */; };
 		500B9D410C40F03C008237C6 /* pref_ntsc.png in Resources */ = {isa = PBXBuildFile; fileRef = 500B9D400C40F03C008237C6 /* pref_ntsc.png */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
-		500FE1BD0A49865600645DE0 /* Basic.rom in Resources */ = {isa = PBXBuildFile; fileRef = 500FE1B50A49863600645DE0 /* Basic.rom */; };
-		500FE1BF0A49866600645DE0 /* Char.rom in Resources */ = {isa = PBXBuildFile; fileRef = 500FE1BE0A49866600645DE0 /* Char.rom */; };
-		500FE1C10A49866F00645DE0 /* Kernel.rom in Resources */ = {isa = PBXBuildFile; fileRef = 500FE1C00A49866F00645DE0 /* Kernel.rom */; };
-		500FE1C30A49867400645DE0 /* C1541.rom in Resources */ = {isa = PBXBuildFile; fileRef = 500FE1C20A49867400645DE0 /* C1541.rom */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
 		50176C650A6F72F3009E80BD /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C530A6F72F3009E80BD /* CIA.cpp */; };
@@ -156,10 +152,6 @@
 		500B9D400C40F03C008237C6 /* pref_ntsc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pref_ntsc.png; path = images/pref_ntsc.png; sourceTree = "<group>"; };
 		500FC6770D17D2190044131D /* VIA6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA6522.h; sourceTree = "<group>"; };
 		500FC6780D17D2190044131D /* VIA6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA6522.cpp; sourceTree = "<group>"; };
-		500FE1B50A49863600645DE0 /* Basic.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Basic.rom; sourceTree = "<group>"; };
-		500FE1BE0A49866600645DE0 /* Char.rom */ = {isa = PBXFileReference; explicitFileType = file; path = Char.rom; sourceTree = SOURCE_ROOT; };
-		500FE1C00A49866F00645DE0 /* Kernel.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kernel.rom; sourceTree = "<group>"; };
-		500FE1C20A49867400645DE0 /* C1541.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = C1541.rom; sourceTree = "<group>"; };
 		50176C4F0A6F72F3009E80BD /* basic.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = basic.cpp; sourceTree = "<group>"; };
 		50176C500A6F72F3009E80BD /* basic.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = basic.h; sourceTree = "<group>"; };
 		50176C510A6F72F3009E80BD /* C64.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = C64.cpp; sourceTree = "<group>"; };
@@ -330,7 +322,6 @@
 				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
 				5007A48B0C3F9E700069B0CE /* Preferences.nib */,
 				50F4D28F0C4625E200ED4E4E /* Snapshots */,
-				500FE1A40A4985CC00645DE0 /* Roms */,
 				50732BCA0A70D560008D8FF0 /* Images */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
@@ -377,17 +368,6 @@
 				5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */,
 			);
 			name = Memory;
-			sourceTree = "<group>";
-		};
-		500FE1A40A4985CC00645DE0 /* Roms */ = {
-			isa = PBXGroup;
-			children = (
-				500FE1B50A49863600645DE0 /* Basic.rom */,
-				500FE1BE0A49866600645DE0 /* Char.rom */,
-				500FE1C00A49866F00645DE0 /* Kernel.rom */,
-				500FE1C20A49867400645DE0 /* C1541.rom */,
-			);
-			name = Roms;
 			sourceTree = "<group>";
 		};
 		50176C4E0A6F72F3009E80BD /* C64 */ = {
@@ -589,10 +569,6 @@
 				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
 				8D15AC2E0486D014006FF6A4 /* MyDocument.nib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
-				500FE1BD0A49865600645DE0 /* Basic.rom in Resources */,
-				500FE1BF0A49866600645DE0 /* Char.rom in Resources */,
-				500FE1C10A49866F00645DE0 /* Kernel.rom in Resources */,
-				500FE1C30A49867400645DE0 /* C1541.rom in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				50DA154A0A642EA20022B4A7 /* window_fullscreen.png in Resources */,
 				506910C80A74EAE100F48A7F /* VirtualC64Icon.icns in Resources */,

@@ -67,8 +67,8 @@ CPU::reset()
 	setC(0);
 
 	assert(mem != NULL);
-	setPCL(mem->peek(0xFFFC)); 
-	setPCH(mem->peek(0xFFFD));	
+	// setPCL(mem->peek(0xFFFC)); 
+	// setPCH(mem->peek(0xFFFD));	
 }
 
 // Instruction set

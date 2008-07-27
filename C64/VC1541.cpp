@@ -59,6 +59,7 @@ VC1541::reset()
 	debug ("Resetting VC1541...\n");
 
 	cpu->reset();
+	cpu->setPC(0xEAA0);
 	// cpu->setHardBreakpoint(0xEAA1);
 	mem->reset();
 	via1->reset();
