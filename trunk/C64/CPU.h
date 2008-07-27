@@ -222,9 +222,12 @@ public:
 	
 	// Destructor
 	~CPU();
-	
+
 	// Brings CPU back to its initial state
 	void reset();
+
+	// Brings CPU back to its initial state
+	// void reset(uint8_t PClo, uint8_t PChi);
 	
 	//! Binds CPU and memory together
 	void setMemory(Memory *m) { assert(mem == NULL); mem = m; }
@@ -314,8 +317,6 @@ public:
 	//! Load value into memory. The Z- and N-flag may change. */ 
 	inline void loadM(uint16_t addr, uint8_t s) { mem->poke(addr, s); N = s & 128; Z = (s == 0); }
 	
-
-
 	//! Set CIA bit of IRQ line
 	inline void setIRQLineCIA() { setIRQLine(0x01); }
 	//! Set VIC bit of IRQ line

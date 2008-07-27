@@ -37,6 +37,10 @@
 
 	/* System */
 	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64PALorNTSCKey];
+	[defaultValues setObject:@"" forKey:VC64BasicRomFileKey];
+	[defaultValues setObject:@"" forKey:VC64CharRomFileKey];
+	[defaultValues setObject:@"" forKey:VC64KernelRomFileKey];
+	[defaultValues setObject:@"" forKey:VC64VC1541RomFileKey];
 		
 	/* Peripherals */
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64WarpLoadKey];
@@ -65,24 +69,6 @@
 	[defaultValues setObject:[NSNumber numberWithInt:0xa0ffa0ff] forKey:VC64CustomCol13Key];
 	[defaultValues setObject:[NSNumber numberWithInt:0xa0a0ffff] forKey:VC64CustomCol14Key];
 	[defaultValues setObject:[NSNumber numberWithInt:0xc0c0c0ff] forKey:VC64CustomCol15Key];
-
-#if 0
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol1Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol2Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol3Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol4Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol5Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol6Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol7Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol8Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol9Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol10Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol11Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol12Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol13Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol14Key];
-	[defaultValues setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSColor yellowColor]] forKey:VC64CustomCol15Key];
-#endif
 	
 	// Register the dictionary of defaults
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
@@ -226,7 +212,11 @@
 	} else {
 		[c64 setPAL];
 	}
-		
+	[self loadRom:[defaults stringForKey:VC64BasicRomFileKey]];
+	[self loadRom:[defaults stringForKey:VC64CharRomFileKey]];
+	[self loadRom:[defaults stringForKey:VC64KernelRomFileKey]];
+	[self loadRom:[defaults stringForKey:VC64VC1541RomFileKey]];
+	
 	/* Peripherals */
 	[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
 	
@@ -348,6 +338,30 @@
 	return [c64 loadSnapshot:filename];
 }
 
+- (BOOL)loadRom:(NSString *)filename
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	bool success = NO;
+	
+	if ([c64 loadBasicRom:filename]) {
+		[defaults setObject:filename forKey:VC64BasicRomFileKey];
+		success = YES;
+	}
+	else if ([c64 loadCharRom:filename]) {
+		[defaults setObject:filename forKey:VC64CharRomFileKey];
+		success = YES;
+	}
+	else if ([c64 loadKernelRom:filename]) {
+		[defaults setObject:filename forKey:VC64KernelRomFileKey];
+		success = YES;
+	}
+	else if ([c64 loadVC1541Rom:filename]) {
+		[defaults setObject:filename forKey:VC64VC1541RomFileKey];
+		success = YES;
+	}
+		
+	return success;
+}
 
 // --------------------------------------------------------------------------------
 //                The screen refresh loop (called via the 60 Hz timer)
@@ -436,7 +450,7 @@
 
 	/* Step into, Step out, Step over */
 	if ([theItem tag] >= 2 && [theItem tag] <= 4) {
-		return ![c64 isRunning];
+		return ![c64 isRunning] && [c64 isRunnable];
 	}
 
 	/* Jostick port A */

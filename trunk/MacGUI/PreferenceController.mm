@@ -24,6 +24,10 @@
 NSString *VC64PALorNTSCKey    = @"VC64PALorNTSCKey";
 NSString *VC64IllegalInstrKey = @"VC64IllegalInstrKey";
 NSString *VC64FastResetKey    = @"VC64FastResetKey";
+NSString *VC64BasicRomFileKey = @"VC64BasicRomFileKey";
+NSString *VC64CharRomFileKey  = @"VC64CharRomFileKey";
+NSString *VC64KernelRomFileKey= @"VC64KernelRomFileKey";
+NSString *VC64VC1541RomFileKey= @"VC64VC1541RomFileKey";
 
 /* Peripherals */
 NSString *VC64Real1541Key     = @"VC64Real1541Key";

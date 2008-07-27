@@ -128,7 +128,7 @@ public:
 	//! Check integrity of ROM image 
 	/*! Returns true, iff the specified file is one of the three possible ROM images.
 		@param filename Name of the file being loaded
-		*/
+	*/
 	static bool isRom(const char *filename);
 	
 	//! Writes value into the Processor port register.
@@ -176,14 +176,13 @@ public:
 	//! Return physical start address of ROM
 	uint8_t *getRom() { return rom; }
 
-	//! Load a ROM image into memory.
-	/*! The function automatically determines the type of the specified file. In case of a valid ROM image, it
-		is loaded into the ROM space at the proper location. 
-		\param filename Filename of the ROM Image
-		\return Returns true, if the file could be loaded successfully. In case of an error (file not found, 
-		the file is no proper ROM image, ...) the function returns false.
-	*/
-	bool loadRom(const char *filename);
+	//! Load basic ROM image into memory 
+	bool loadBasicRom(const char *filename);
+	//! Load character ROM image into memory 
+	bool loadCharRom(const char *filename);
+	//! Load kernel ROM image into memory 
+	bool loadKernelRom(const char *filename);
+	
 	//! Returns true, iff the Basic ROM is alrady loaded
 	bool basicRomIsLoaded() { return basicRomFile != NULL; }
 	//! Returns true, iff the Kernel ROM is alrady loaded

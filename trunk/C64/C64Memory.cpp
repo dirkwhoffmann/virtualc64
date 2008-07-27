@@ -39,9 +39,9 @@ C64Memory::C64Memory()
 	cia2 = NULL;
 		
 	// Try to auto-load ROMs...
-	(void)loadRom("Char.rom");
-	(void)loadRom("Kernel.rom");
-	(void)loadRom("Basic.rom");
+	//(void)loadRom("Char.rom");
+	//(void)loadRom("Kernel.rom");
+	//(void)loadRom("Basic.rom");
 }
 
 C64Memory::~C64Memory()
@@ -161,18 +161,31 @@ bool C64Memory::isRom(const char *filename)
 	return isBasicRom(filename) || isCharRom(filename) || isKernelRom(filename);
 }
 
-bool C64Memory::loadRom(const char *filename)
+bool 
+C64Memory::loadBasicRom(const char *filename)
 {
 	if (isBasicRom(filename)) {
 		basicRomFile = strdup(filename);
 		flashRom(filename, 0xA000);
 		return true;
 	}
+	return false;
+}
+
+bool 
+C64Memory::loadCharRom(const char *filename)
+{
 	if (isCharRom(filename)) {
 		charRomFile = strdup(filename);
 		flashRom(filename, 0xD000);
 		return true;
 	}
+	return false;
+}
+
+bool 
+C64Memory::loadKernelRom(const char *filename)
+{
 	if (isKernelRom(filename)) {
 		kernelRomFile = strdup(filename);
 		flashRom(filename, 0xE000);
@@ -180,6 +193,7 @@ bool C64Memory::loadRom(const char *filename)
 	}
 	return false;
 }
+
 
 // --------------------------------------------------------------------------------
 //                              Memory access methods

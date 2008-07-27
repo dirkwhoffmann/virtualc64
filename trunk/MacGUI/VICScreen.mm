@@ -423,7 +423,8 @@ int  myargc = 1;
 		[NSArray arrayWithObject:NSFilenamesPboardType]];
 
 	// Start animation
-	[self zoom];	
+	// [self zoom];	
+	currentDistance= 6;
 }
 
 - (void) reshape
@@ -895,8 +896,7 @@ int  myargc = 1;
 		}
 					  
 		// Is it a ROM file?
-		if (c64->loadRom([path UTF8String])) {
-			[self rotate]; 
+		if ([myDoc loadRom:path]) {
 			NSLog(@"ROM loaded");
 			return YES;
 		}

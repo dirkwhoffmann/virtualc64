@@ -21,6 +21,10 @@
 
 /* System */
 extern NSString *VC64PALorNTSCKey;
+extern NSString *VC64BasicRomFileKey;
+extern NSString *VC64CharRomFileKey;
+extern NSString *VC64KernelRomFileKey;
+extern NSString *VC64VC1541RomFileKey;
 
 /* Peripherals */
 extern NSString *VC64WarpLoadKey;

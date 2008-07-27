@@ -38,8 +38,9 @@ public:
 	MyDocument *getDocument() { return doc; }
 	void setScreen(VICScreen *s) { screen = s; }
 	VICScreen *getScreen() { return screen; }
-		
-	void missingRomAction();
+	
+	void loadRomAction(int rom);
+	void missingRomAction(int missingRoms);
 	void runAction();
 	void haltAction();
 	void drawAction(int *screenBuffer);
@@ -74,6 +75,7 @@ public:
 - (void) reset;
 - (void) halt;
 - (void) step;
+- (bool) isRunnable;
 - (void) run;
 - (bool) isHalted;
 - (bool) isRunning;
@@ -83,6 +85,16 @@ public:
 - (void) setFrameDelay:(int)delay;
 - (int) buildNr;
 
+//- (bool) isBasicRom:(NSString *)filename;
+//- (bool) isCharRom:(NSString *)filename;
+//- (bool) isKernelRom:(NSString *)filename;
+//- (bool) isVC1541Rom:(NSString *)filename;
+//- (bool) loadRom:(NSString *)filename;
+- (int) numberOfMissingRoms;
+- (bool) loadBasicRom:(NSString *)filename;
+- (bool) loadCharRom:(NSString *)filename;
+- (bool) loadKernelRom:(NSString *)filename;
+- (bool) loadVC1541Rom:(NSString *)filename;
 - (bool) loadSnapshot:(NSString *)filename;
 - (bool) saveSnapshot:(NSString *)filename;
 

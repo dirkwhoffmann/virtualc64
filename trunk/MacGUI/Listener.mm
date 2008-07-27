@@ -21,9 +21,44 @@
 @implementation MyDocument (Listener)
 
 
-- (void) missingRomAction
+- (void) loadRomAction:(int)rom
 {
-	NSBeginAlertSheet(@"Warning:\nROMs are not part of this distribution", // Title
+	switch (rom) {
+		case BASIC_ROM:
+			[info setStringValue:@"Basic Rom loaded"];
+			break;
+		case CHAR_ROM:
+			[info setStringValue:@"Character Rom loaded"];
+			break;
+		case KERNEL_ROM:
+			[info setStringValue:@"Kernel Rom loaded"];
+			break;
+		case VC1541_ROM:
+			[info setStringValue:@"VC1541 Rom loaded"];
+			break;
+	}
+
+	// Launch emulator when all Roms are loaded...
+	if ([c64 numberOfMissingRoms] == 0 && [c64 isHalted]) {
+		[screen zoom];
+		[c64 run];
+	}
+}
+	
+- (void) missingRomAction:(int)missingRoms
+{
+	NSString *s;
+	
+	assert(missingRoms != 0);
+	
+	s = [NSString stringWithFormat:@"%@ %s%s%s%s",
+		 @"If you are a legal owner, please drag and drop the following ROM images into the main screen:\n",
+		 missingRoms & BASIC_ROM ? "\n- Basic ROM" : "",
+		 missingRoms & CHAR_ROM ? "\n- Character ROM" : "",
+		 missingRoms & KERNEL_ROM ? "\n- Kernel ROM" : "",
+		 missingRoms & VC1541_ROM ? "\n- VC1541 ROM" : ""];
+	
+	NSBeginAlertSheet(@"Copyright notice:\nROMs are not part of this distribution", // Title
 					  @"OK", // Default button
 					  nil, // Alternate button
 					  nil, // Other button
@@ -32,7 +67,7 @@
 					  nil, // willEndSelector
 					  nil, // didEndSelector
 					  nil, // contextInfo
-					  @"Before you run the emulator, a Character, Basic, and Kernel ROM image needs to be added. If you are a legal owner of C64 ROM image files, you can add them by dragging and dropping them into the main window.");
+					  s);
 }
 
 - (void) runAction
