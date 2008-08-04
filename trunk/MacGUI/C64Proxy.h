@@ -91,6 +91,7 @@ public:
 //- (bool) isVC1541Rom:(NSString *)filename;
 //- (bool) loadRom:(NSString *)filename;
 - (int) numberOfMissingRoms;
+- (int) missingRoms;
 - (bool) loadBasicRom:(NSString *)filename;
 - (bool) loadCharRom:(NSString *)filename;
 - (bool) loadKernelRom:(NSString *)filename;

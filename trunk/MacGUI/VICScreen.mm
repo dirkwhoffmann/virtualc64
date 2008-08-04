@@ -898,6 +898,8 @@ int  myargc = 1;
 		// Is it a ROM file?
 		if ([myDoc loadRom:path]) {
 			NSLog(@"ROM loaded");
+			// Try to run...
+			// Update romDialog...
 			return YES;
 		}
 		

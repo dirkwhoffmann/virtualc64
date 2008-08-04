@@ -38,6 +38,10 @@
 			break;
 	}
 
+	// Update ROM dialog
+	if (romDialog != NULL)
+		[romDialog update:[c64 missingRoms]];
+	
 	// Launch emulator when all Roms are loaded...
 	if ([c64 numberOfMissingRoms] == 0 && [c64 isHalted]) {
 		[screen zoom];
@@ -47,10 +51,11 @@
 	
 - (void) missingRomAction:(int)missingRoms
 {
-	NSString *s;
+	// NSString *s;
 	
 	assert(missingRoms != 0);
-	
+
+#if 0
 	s = [NSString stringWithFormat:@"%@ %s%s%s%s",
 		 @"If you are a legal owner, please drag and drop the following ROM images into the main screen:\n",
 		 missingRoms & BASIC_ROM ? "\n- Basic ROM" : "",
@@ -68,6 +73,15 @@
 					  nil, // didEndSelector
 					  nil, // contextInfo
 					  s);
+#endif
+	
+	[romDialog initialize:missingRoms];
+	
+	[NSApp beginSheet:romDialog
+	   modalForWindow:theWindow
+		modalDelegate:self
+	   didEndSelector:NULL
+		  contextInfo:NULL];	
 }
 
 - (void) runAction

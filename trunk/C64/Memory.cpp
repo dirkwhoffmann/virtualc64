@@ -56,6 +56,7 @@ uint8_t Memory::peekFrom(uint16_t addr, MemoryType source)
 			return watchValue[addr];
 		default: 
 			assert(false);
+			return 0;
 	}
 }
 

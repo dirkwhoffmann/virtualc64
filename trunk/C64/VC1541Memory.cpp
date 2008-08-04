@@ -99,6 +99,7 @@ VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
 			return getWatchpointType(addr) != NO_WATCHPOINT;
 		default:
 			assert(false);
+			return false;
 	}
 }
 

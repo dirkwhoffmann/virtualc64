@@ -210,6 +210,7 @@ void ListenerProxy::logAction(char *message)
 //- (bool) isKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]); }
 //- (bool) isVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]); }
 - (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
+- (int) missingRoms { return c64->getMissingRoms(); }
 - (bool) loadBasicRom:(NSString *)filename { return c64->mem->isBasicRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }

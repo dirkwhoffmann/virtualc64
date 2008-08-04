@@ -26,6 +26,7 @@
 #import "Disassembler.h"
 #import "VICScreen.h"
 #import "MountDialog.h"
+#import "RomDialog.h"
 #import "PreferenceController.h"
 #import "ConsoleController.h"
 #import "C64Proxy.h"
@@ -58,6 +59,7 @@
 	
 	// Dialogs
 	IBOutlet MountDialog *mountDialog;
+	IBOutlet RomDialog *romDialog;
 	PreferenceController *preferenceController;
 	ConsoleController *consoleController;
 	
@@ -302,6 +304,7 @@
 - (IBAction)vicRasterInterruptAction:(id)sender;
 - (IBAction)vicEnableOpenGL:(id)sender;
 
+- (IBAction)cancelRomDialog:(id)sender;
 - (IBAction)cancelMountDialog:(id)sender;
 - (IBAction)endMountDialogAndMount:(id)sender;
 - (IBAction)endMountDialogAndFlash:(id)sender;
