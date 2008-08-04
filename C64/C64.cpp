@@ -327,6 +327,18 @@ C64::numberOfMissingRoms() {
 	return result;
 }
 
+int
+C64::getMissingRoms() {
+	
+	int missingRoms = 0;
+
+	if (!mem->basicRomIsLoaded()) missingRoms |= BASIC_ROM;
+	if (!mem->charRomIsLoaded()) missingRoms |= CHAR_ROM;
+	if (!mem->kernelRomIsLoaded()) missingRoms |= KERNEL_ROM;
+	if (!floppy->mem->romIsLoaded()) missingRoms |= VC1541_ROM;
+	return missingRoms;
+}
+
 bool
 C64::isRunnable() {
 	return (numberOfMissingRoms() == 0);
@@ -338,14 +350,9 @@ C64::run() {
 	if (isHalted()) {
 
 		// Check for ROM images
-		int missingRoms = 0;
-		if (!mem->basicRomIsLoaded()) missingRoms |= BASIC_ROM;
-		if (!mem->charRomIsLoaded()) missingRoms |= CHAR_ROM;
-		if (!mem->kernelRomIsLoaded()) missingRoms |= KERNEL_ROM;
-		if (!floppy->mem->romIsLoaded()) missingRoms |= VC1541_ROM;
-		if (missingRoms) {
+		if (getMissingRoms()) {
 			printf("Roms are missing!!!!!\n\n");
-			getListener()->missingRomAction(missingRoms);
+			getListener()->missingRomAction(getMissingRoms());
 			return;
 		}
 		
@@ -706,15 +713,12 @@ C64::scanJoysticks() {
 
 
 void
-C64::switchInputDevice( int portNo ) {
-
-	int otherPortNo = (portNo == 0) ? 1 : 0;
+C64::switchInputDevice( int portNo ) 
+{
 	int newDevice = port[portNo];
-	// int newOtherDevice = port[otherPortNo];
 	bool invalid;
 			
 	assert(portNo == 0 || portNo == 1);
-	assert(otherPortNo == 0 || otherPortNo == 1);	
 
 	do {
 		newDevice = (newDevice + 1) % NUM_INPUT_DEVICES;

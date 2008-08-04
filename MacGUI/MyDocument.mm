@@ -26,8 +26,9 @@
 // --------------------------------------------------------------------------------
 
 + (void)initialize {
-	NSLog(@"%@ initialize", self);
 
+	NSLog(@"%@ initialize", self);
+	
     self = [super init];
 
 	// Create a dictionary
@@ -128,7 +129,14 @@
 
 	// Initialize variables
 	enableOpenGL = false;
-			
+
+	// Remove Debug when compiled as deployment target
+	#ifdef NDEBUG
+	NSMenu* rootMenu = [NSApp mainMenu];
+	[rootMenu removeItemAtIndex:3];
+	assert(false); // Should have no effect in deployment mode...
+	#endif
+	
 	// Create virtual C64
 	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];						
 
@@ -1996,8 +2004,17 @@
 }
 
 // --------------------------------------------------------------------------------
-// Mount dialog
+// Dialogs
 // --------------------------------------------------------------------------------
+
+- (IBAction)cancelRomDialog:(id)sender
+{
+	// Hide sheet
+	[romDialog orderOut:sender];
+	
+	// Return to normal event handling
+	[NSApp endSheet:romDialog returnCode:1];
+}
 
 - (BOOL)showMountDialog:(Archive *)archive
 {
@@ -2073,7 +2090,9 @@
 	if ([sprite5 intValue]) return 5;
 	if ([sprite6 intValue]) return 6;
 	if ([sprite7 intValue]) return 7;	
+
 	assert(false);
+	return 0;
 }
 
 - (Memory::MemoryType)currentMemSource
@@ -2081,7 +2100,9 @@
 	if ([ramSource intValue]) return Memory::MEM_RAM;
 	if ([romSource intValue]) return Memory::MEM_ROM;
 	if ([ioSource intValue]) return Memory::MEM_IO;
+
 	assert(false);
+	return Memory::MEM_RAM;
 }
 
 - (int)currentCIA

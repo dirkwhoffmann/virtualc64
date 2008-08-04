@@ -212,6 +212,7 @@ bool C64Memory::isValidAddr(uint16_t addr, MemoryType type)
 			return getWatchpointType(addr) != NO_WATCHPOINT;
 		default:
 			assert(false);
+			return false;
 	}
 }
 
@@ -268,7 +269,8 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 		return (uint16_t)(rand() & 0xFF);
 	}
 
-	assert(0);
+	assert(false);
+	return 0;
 }
 
 uint8_t C64Memory::peekAuto(uint16_t addr)

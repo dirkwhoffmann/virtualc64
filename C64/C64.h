@@ -262,7 +262,10 @@ public:
 
 	//! Returns the number of missing ROM images */
 	int numberOfMissingRoms();
-		
+
+	//! Missing ROMs are indicated by a 1 in the returned bitmap */
+	int getMissingRoms();
+
 	//! Returns true iff the virtual C64 is able to run */
 	/*! The function checks for missing ROM images etc. */
 	bool isRunnable();

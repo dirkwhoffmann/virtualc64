@@ -66,6 +66,7 @@
 		504CEEA30C467C4E001F4E51 /* BigIconTransparent.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */; };
 		506910C80A74EAE100F48A7F /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */; };
 		5093A1AC0C7EE85500428FA0 /* switch_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 5093A1AB0C7EE85500428FA0 /* switch_32.png */; };
+		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
 		509DF2480A9F681900AE0859 /* keyboard32.png in Resources */ = {isa = PBXBuildFile; fileRef = 509DF2470A9F681900AE0859 /* keyboard32.png */; };
@@ -73,6 +74,8 @@
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
 		50A0E0250A8F332A0067714C /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0240A8F332A0067714C /* System.framework */; };
 		50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */; };
+		50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50A8F8F20E47171300ACE17D /* RomDialog.mm */; };
+		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
 		50CA0D520A9076FD00A5A08D /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* SID.cpp */; };
@@ -201,6 +204,7 @@
 		504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = BigIconTransparent.tiff; path = images/BigIconTransparent.tiff; sourceTree = "<group>"; };
 		506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
 		5093A1AB0C7EE85500428FA0 /* switch_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switch_32.png; path = images/switch_32.png; sourceTree = "<group>"; };
+		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rom.png; path = images/rom.png; sourceTree = "<group>"; };
 		509AEA0A0C324AB0001FC9FD /* PRGArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGArchive.h; sourceTree = "<group>"; };
 		509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGArchive.cpp; sourceTree = "<group>"; };
 		509AEAFD0C325EFB001FC9FD /* P00Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P00Archive.h; sourceTree = "<group>"; };
@@ -211,6 +215,9 @@
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
 		50A52A170C2FD43700A1377F /* D64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D64Archive.h; sourceTree = "<group>"; };
 		50A52A180C2FD43700A1377F /* D64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = D64Archive.cpp; sourceTree = "<group>"; };
+		50A8F8F10E47171300ACE17D /* RomDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomDialog.h; sourceTree = "<group>"; };
+		50A8F8F20E47171300ACE17D /* RomDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RomDialog.mm; sourceTree = "<group>"; };
+		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = romMissing.png; path = images/romMissing.png; sourceTree = "<group>"; };
 		50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Archive.cpp; sourceTree = "<group>"; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50CA0D500A9076FD00A5A08D /* SID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SID.h; sourceTree = "<group>"; };
@@ -434,6 +441,8 @@
 				5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */,
 				504CEE360C4672BA001F4E51 /* ConsoleController.h */,
 				504CEE370C4672BA001F4E51 /* ConsoleController.mm */,
+				50A8F8F10E47171300ACE17D /* RomDialog.h */,
+				50A8F8F20E47171300ACE17D /* RomDialog.mm */,
 			);
 			path = MacGUI;
 			sourceTree = "<group>";
@@ -492,6 +501,8 @@
 				504CEE7C0C46774F001F4E51 /* BigIcon.png */,
 				504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */,
 				502562AE0C4AA0C7008AAB85 /* c64.png */,
+				5094197C0E426C13008D6F71 /* rom.png */,
+				50A8F9E90E472BA800ACE17D /* romMissing.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -614,6 +625,8 @@
 				5005966A0D23F9E800FD44B3 /* LEDgray.png in Resources */,
 				5005966C0D23FA1800FD44B3 /* LEDyellow.png in Resources */,
 				5005966E0D23FA1C00FD44B3 /* LEDblue.png in Resources */,
+				5094197D0E426C13008D6F71 /* rom.png in Resources */,
+				50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +691,7 @@
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				501AE5030DAA1449003C6960 /* Listener.mm in Sources */,
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
+				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +763,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = V64_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -770,6 +785,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = V64_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
