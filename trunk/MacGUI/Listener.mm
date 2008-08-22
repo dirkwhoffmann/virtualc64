@@ -39,8 +39,11 @@
 	}
 
 	// Update ROM dialog
-	if (romDialog != NULL)
+	if (romDialog != NULL) {
+		// NSSound *mySound = [NSSound soundNamed:@"Purr"];
 		[romDialog update:[c64 missingRoms]];
+		// [mySound play];		
+	}
 	
 	// Launch emulator when all Roms are loaded...
 	if ([c64 numberOfMissingRoms] == 0 && [c64 isHalted]) {
@@ -51,29 +54,7 @@
 	
 - (void) missingRomAction:(int)missingRoms
 {
-	// NSString *s;
-	
 	assert(missingRoms != 0);
-
-#if 0
-	s = [NSString stringWithFormat:@"%@ %s%s%s%s",
-		 @"If you are a legal owner, please drag and drop the following ROM images into the main screen:\n",
-		 missingRoms & BASIC_ROM ? "\n- Basic ROM" : "",
-		 missingRoms & CHAR_ROM ? "\n- Character ROM" : "",
-		 missingRoms & KERNEL_ROM ? "\n- Kernel ROM" : "",
-		 missingRoms & VC1541_ROM ? "\n- VC1541 ROM" : ""];
-	
-	NSBeginAlertSheet(@"Copyright notice:\nROMs are not part of this distribution", // Title
-					  @"OK", // Default button
-					  nil, // Alternate button
-					  nil, // Other button
-					  theWindow, // parent window of the sheet
-					  self, // Modal delegate
-					  nil, // willEndSelector
-					  nil, // didEndSelector
-					  nil, // contextInfo
-					  s);
-#endif
 	
 	[romDialog initialize:missingRoms];
 	
