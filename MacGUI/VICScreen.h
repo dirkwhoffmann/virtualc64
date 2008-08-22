@@ -124,9 +124,6 @@ const int BG_TEXTURE_DEPTH = 4;
 	/* C64 screen texture data */
 	uint8_t data[TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXTURE_DEPTH];
 
-	/* Background image texture data */
-	//uint32_t bg_data[BG_TEXTURE_HEIGHT][BG_TEXTURE_WIDTH][BG_TEXTURE_DEPTH];
-
 	int *screenBuffer;
 	bool highlighted;
 	bool emulateJoystick1;
@@ -139,8 +136,11 @@ const int BG_TEXTURE_DEPTH = 4;
 	int frames;
 	int readyToDraw;
 	
-	// Texture storage
-	GLuint texture[2];
+	// C64 texture
+	GLuint texture;
+	
+	// Background texture
+	GLuint bgTexture;
 	
 	// Mapping from Mac keycode to the C64 row/column format
 	uint16_t kb[256];
@@ -162,8 +162,12 @@ const int BG_TEXTURE_DEPTH = 4;
 - (int) isReadyToDraw;
 - (void) setReadyToDraw:(int)b;
 - (void) updateTexture:(int *)screenBuffer;
-- (bool)loadBackgroundTexture:(uint8_t *)texture_data;
 - (NSImage *)screenshot;
+
+// Graphics conversion methods
+- (NSImage *) expandImage: (NSImage *)image toSize:(NSSize) size;
+- (NSImage *) extendImage: (NSImage *)image toSize:(NSSize) size;
+- (int) makeTexture:(NSImage *)img;
 
 @end
 

@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2008 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,9 @@ const float TEX_TOP    = 37.0 / ((float)TEXTURE_HEIGHT);
 const float TEX_BOTTOM = 263.0 / ((float)TEXTURE_HEIGHT);
 
 const float BG_TEX_LEFT   = 0.0; 
-const float BG_TEX_RIGHT  = 1.0; 
+const float BG_TEX_RIGHT  = 642.0 / BG_TEXTURE_WIDTH;
 const float BG_TEX_TOP    = 0.0; 
-const float BG_TEX_BOTTOM = 1.0; 
-
-// Background data
-uint32_t bg_data[BG_TEXTURE_HEIGHT][BG_TEXTURE_WIDTH][BG_TEXTURE_DEPTH] = { 42 };
+const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 
 @implementation VICScreen
 
@@ -248,94 +245,71 @@ void joystick_callback(unsigned int buttonMask, int x, int y, int z)
 	printf("x = %d y = %d z = %d\n", x, y, z);
 }
 
+// What's that???? GLUT should be used!!! Please remove!!!
 char *myargv[] = { "GLUT", NULL };
 int  myargc = 1;
 
-- (bool)loadBackgroundTexture:(uint8_t *)texture_data
+- (NSImage *) expandImage: (NSImage *)image toSize:(NSSize) size
 {
-	FILE *file;
-	int i,j,k;
-	
-	if (!(file = fopen("bgImage.raw", "r")))
-		return NO;
-		
-	NSLog(@"Loading background image from file...");
-	for (i = k = 0; i < BG_TEXTURE_HEIGHT; i++) {
-		for (j = 0; j < BG_TEXTURE_WIDTH; j++) {
-			texture_data[k++] = (uint8_t)fgetc(file);
-			texture_data[k++] = (uint8_t)fgetc(file);
-			texture_data[k++] = (uint8_t)fgetc(file);
-			texture_data[k++] = (uint8_t)fgetc(file);
-			// k += 4;
-		}
-	}
-	fclose(file);
+	assert(image != nil);
 
-	return YES;
+	NSImage *newImage = [[NSImage alloc] initWithSize:size];
+	[newImage setFlipped:YES];
+	[newImage lockFocus];
+	[image drawInRect:NSMakeRect(0,0,size.width,size.height) 
+			fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
+			operation:NSCompositeSourceOver fraction:1.0];
+	[newImage unlockFocus];
+	return newImage;
 }
 
-- (void)createTexture:(uint8_t *)texture_data
+- (NSImage *) extendImage: (NSImage *)image toSize:(NSSize) size
 {
-	int i, j, k, width, height, ymax;
-	float r, g, b, a;
-	float xoffset, yoffset, offset;
-		
-	// Try to load background texture from image file...
-	//if ([self loadBackgroundTexture:texture_data])
-	//	return;
-		
-	NSLog(@"WARNING: Background image not found. Creating one...");
-	// No image file found... Let's create the texture from scratch...
-	NSImage *image = [NSImage imageNamed:@"c64"];
-	// NSImage *image = [NSImage imageNamed:@"schaltplan"];
-	NSColor *theColor;
-	if (image == NULL) {
-		printf("Image not found!");
-		return;
-	}
-	height  = [image size].height;
-	width   = [image size].width;
-	printf("Image size: %d x %d\n", height, width);	
-
-	xoffset = (float)width / (float)BG_TEXTURE_WIDTH;
-	yoffset = (float)height / (float)BG_TEXTURE_HEIGHT;
-	offset  = (xoffset < yoffset) ? xoffset : yoffset;
-	ymax    = (int)((float)(BG_TEXTURE_HEIGHT-1) * yoffset);
+	assert(image != nil);
 	
-	printf("xoffset = %f yoffset = %f", xoffset, yoffset);
-		
-	// Copy bitmap data to texture buffer
-	[image lockFocus];
-	for (i = k = 0; i < BG_TEXTURE_HEIGHT; i++) {
-		for (j = 0; j < BG_TEXTURE_WIDTH; j++) {
-			theColor = NSReadPixel(NSMakePoint((int)((float)j * xoffset), ymax - (int)((float)i * yoffset)));
-			[theColor getRed:&r green:&g blue:&b alpha:&a];
-			texture_data[k] = r * 255;
-			texture_data[k+1] = g * 255;
-			texture_data[k+2] = b * 255;
-			texture_data[k+3] = a * 255;
-			k += 4;
-		}
-	}
-	[image unlockFocus];
+	NSImage *newImage = [[NSImage alloc] initWithSize:size];
+	[newImage setFlipped:YES];
+	[newImage lockFocus];
+	[image drawInRect:NSMakeRect(0,0,[image size].width, [image size].height) 
+			 fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
+			operation:NSCompositeSourceOver fraction:1.0];
+	[newImage unlockFocus];
+	return newImage;
+}
 
-	// Create image file...
-#if 0
-	FILE *file;
+- (int) makeTexture:(NSImage *)image
+{
+	assert(image != nil);
+
+	unsigned int tid = 0;
+	int texformat = GL_RGB;
 	
-	if (!(file = fopen("/tmp/bgImage.raw", "w")))
-		return;
-		
-	for (i = k = 0; i < BG_TEXTURE_HEIGHT; i++) {
-		for (j = 0; j < BG_TEXTURE_WIDTH; j++) {
-			fputc(texture_data[k++], file);
-			fputc(texture_data[k++], file);
-			fputc(texture_data[k++], file);
-			fputc(texture_data[k++], file);
-		}
-	}	
-	fclose(file);	
-#endif
+	NSBitmapImageRep *imgBitmap = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
+	[imgBitmap retain];
+	
+	if ([imgBitmap samplesPerPixel] == 4)
+		texformat = GL_RGBA;
+	else if ([imgBitmap samplesPerPixel] == 3)
+		texformat = GL_RGB;
+	else if ([imgBitmap samplesPerPixel] == 2)
+		texformat = GL_LUMINANCE_ALPHA;
+	else if ([imgBitmap samplesPerPixel] == 1)
+		texformat = GL_LUMINANCE;
+	
+	glGenTextures(1, (GLuint *)&tid);
+	glBindTexture(GL_TEXTURE_2D, tid);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); 
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, 
+					  [imgBitmap pixelsWide], 
+					  [imgBitmap pixelsHigh], 
+					  texformat, 
+					  GL_UNSIGNED_BYTE, 
+					  [imgBitmap bitmapData]);
+	[imgBitmap release];
+	return tid;
 }
 
 - (void)prepare
@@ -391,39 +365,29 @@ int  myargc = 1;
 
 	glEnable(GL_TEXTURE_2D);
 	
-	// Create textures
-	glGenTextures(2 /* no of textures */, texture);
-
-	glBindTexture(GL_TEXTURE_2D, texture[0]);	
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP); //GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP); //GL_REPEAT);
+	// Create screen texture
+	glGenTextures(1, (GLuint *)&texture);
+	glBindTexture(GL_TEXTURE_2D, texture);	
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-	glBindTexture(GL_TEXTURE_2D, texture[1]);	
+	
+	// Create background texture
+	NSImage *bgImage = [NSImage imageNamed:@"c64"];
+	NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
+	bgTexture = [self makeTexture:bgImageResized];
+	
 	// Sync screen refresh to the monitor refresh rate
 	const GLint VBL = 1;
 	CGLSetParameter(CGLGetCurrentContext(),  kCGLCPSwapInterval, &VBL);
-
-	if (bg_data[0][0][0] == 42) { 
-		[self createTexture:(uint8_t *)bg_data];
-	} else {
-		NSLog(@"Reusing previously created background image data");
-	}
-	
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // GL_CLAMP); //GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // GL_CLAMP); //GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, 4, BG_TEXTURE_WIDTH, BG_TEXTURE_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, bg_data);	
 	
 	// Drag and Drop
 	[self registerForDraggedTypes:
 		[NSArray arrayWithObject:NSFilenamesPboardType]];
 
 	// Start animation
-	// [self zoom];	
 	currentDistance= 6;
 }
 
@@ -480,7 +444,7 @@ int  myargc = 1;
 	//glLoadIdentity();
 
 	// Select screen texture
-	glBindTexture(GL_TEXTURE_2D, texture[0]);			
+	glBindTexture(GL_TEXTURE_2D, texture);			
 
 	// Set location
 	glMatrixMode(GL_MODELVIEW);
@@ -497,19 +461,20 @@ int  myargc = 1;
 	gluLookAt(eyeX, eyeY, eyeZ, 0, 0, 0, 0, 1, 0);
 	
 	if (animation) {
+		NSLog(@"%f %f %f %f", BG_TEX_RIGHT, BG_TEX_TOP, BG_TEX_LEFT, BG_TEX_BOTTOM);
 		// Draw background image if visible
 		float depth = -5.0f;
 		float scale = 9.2f;
-		glBindTexture(GL_TEXTURE_2D, texture[1]);			
+		glBindTexture(GL_TEXTURE_2D, bgTexture); 
 		glBegin(GL_QUADS);		
 		glTexCoord2f(BG_TEX_RIGHT, BG_TEX_TOP);
-		glVertex3f(scale*0.64f, scale*0.4f, depth);		// Top Right Of The Quad (Front)
+		glVertex3f(scale*0.64f, scale*-0.4f, depth); // Top right
 		glTexCoord2f(BG_TEX_LEFT, BG_TEX_TOP);
-		glVertex3f(scale*-0.64f, scale*0.4f, depth);		// Top Left Of The Quad (Front)
+		glVertex3f(scale*-0.64f, scale*-0.4f, depth); // Top left
 		glTexCoord2f(BG_TEX_LEFT, BG_TEX_BOTTOM);
-		glVertex3f(scale*-0.64f, scale*-0.4f, depth);		// Bottom Left Of The Quad (Front)
+		glVertex3f(scale*-0.64f, scale*0.4f, depth); // Bottom left
 		glTexCoord2f(BG_TEX_RIGHT, BG_TEX_BOTTOM);
-		glVertex3f(scale*0.64f, scale*-0.4f, depth);
+		glVertex3f(scale*0.64f, scale*0.4f, depth); // Bottom right
 		glEnd();		
 	}
 
@@ -528,7 +493,7 @@ int  myargc = 1;
 	// Zoom in or zoom out
 	glTranslatef(0, 0, -currentDistance);
 	
-	glBindTexture(GL_TEXTURE_2D, texture[0]);			
+	glBindTexture(GL_TEXTURE_2D, texture);			
 	if (screenBuffer != NULL) {
 		if (c64->isHalted()) {
 			// If emulation is halted, we brighten up the display by adding some fog...
@@ -546,7 +511,7 @@ int  myargc = 1;
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIC::TOTAL_SCREEN_WIDTH, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer);
 	}
 
-	glBindTexture(GL_TEXTURE_2D, texture[0]);		
+	glBindTexture(GL_TEXTURE_2D, texture);		
 	glBegin(GL_QUADS);			
 		// FRONT
 		glTexCoord2f(TEX_RIGHT, TEX_TOP);
