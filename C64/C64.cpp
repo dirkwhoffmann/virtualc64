@@ -84,9 +84,11 @@ void
 		// Frame completed...
 
 		// Pass control to the virtual sound chip
-		// if VIC has drawn one entire frame, the SID chip generates sound samples
 		c64->sid->execute(c64->getCpuCyclesPerFrame());
 
+		// Pass control to the virtual IEC bus
+		c64->iec->execute();
+		
 		// Increment the "time of day clocks" every tenth of a second
 		// TODO: Contant "6" needs to be 5 or 6, depending on PAL or NTSC mode
 		if (c64->vic->getFrame() % 6 == 0) {
@@ -117,8 +119,7 @@ C64::C64(C64Listener *listener)
 	debug("Creating virtual C64 at address %p...\n", this);
 
 	p = NULL;
-	enableWarpLoad = true;
-	alwaysWarp = false;
+	warpMode = false;
 	setNTSC();
 	
 	// Create components
@@ -587,9 +588,18 @@ C64::loadRom(const char *filename)
 bool 
 C64::getWarpMode() 
 { 
-	return alwaysWarp || (enableWarpLoad && floppy->isRotating());
+	return warpMode; // || (enableWarpLoad && floppy->isRotating());
 }
 
+void
+C64::setWarpMode(bool b)
+{
+	warpMode = b;
+	restartTimer();
+	getListener()->warpAction(getWarpMode());	
+}
+
+#if 0
 void 
 C64::setWarpLoad(bool b) 
 { 
@@ -604,6 +614,7 @@ C64::setAlwaysWarp(bool b) {
 	restartTimer();
 	getListener()->warpAction(getWarpMode());	
 }
+#endif
 
 void 
 C64::dumpState() {

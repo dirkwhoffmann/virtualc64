@@ -21,6 +21,9 @@
 
 @implementation MyDocument
 
+@synthesize warpLoad;
+@synthesize alwaysWarp;
+
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
 // --------------------------------------------------------------------------------
@@ -128,8 +131,10 @@
 	NSLog(@"%@ awakeFromNib", self);
 
 	// Initialize variables
+	alwaysWarp = false;
 	enableOpenGL = false;
-
+	NSLog(@"Always warp: %d WarpLoad: %d", alwaysWarp, warpLoad);
+	
 	// Remove Debug when compiled as deployment target
 	#ifdef NDEBUG
 	NSMenu* rootMenu = [NSApp mainMenu];
@@ -226,7 +231,8 @@
 	[self loadRom:[defaults stringForKey:VC64VC1541RomFileKey]];
 	
 	/* Peripherals */
-	[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
+	//[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
+	[self setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
 	
 	/* Audio */
 	// [c64 sidEnableFilter:[defaults boolForKey:VC64SIDFilterKey]];
@@ -533,6 +539,8 @@
 
 - (IBAction)stepperAction:(id)sender
 {
+	NSLog(@"stepperAction");
+	
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] stepperAction:[NSNumber numberWithInt:-[sender intValue]]];
 	if (![undo isUndoing]) [undo setActionName:@"Clock frequency"];
@@ -547,13 +555,14 @@
 
 - (IBAction)warpAction:(id)sender
 {
+	NSLog(@"warpAction");	
+
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] warpAction:[NSNumber numberWithInt:![c64 cpuGetWarpMode]]];
 	if (![undo isUndoing]) [undo setActionName:@"Native speed"];
 		
-	NSLog(@"Warping");
-	
-	[c64 cpuToggleAlwaysWarp];
+	[self setAlwaysWarp:![self alwaysWarp]];
+	[c64 cpuSetWarpMode:alwaysWarp];
 	[self refresh];
 }
 

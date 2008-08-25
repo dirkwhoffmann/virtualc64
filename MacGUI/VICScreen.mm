@@ -461,7 +461,6 @@ int  myargc = 1;
 	gluLookAt(eyeX, eyeY, eyeZ, 0, 0, 0, 0, 1, 0);
 	
 	if (animation) {
-		NSLog(@"%f %f %f %f", BG_TEX_RIGHT, BG_TEX_TOP, BG_TEX_LEFT, BG_TEX_BOTTOM);
 		// Draw background image if visible
 		float depth = -5.0f;
 		float scale = 9.2f;
@@ -711,7 +710,7 @@ int  myargc = 1;
 		c64->keyboard->pressShiftKey();
 	if (flags & NSAlternateKeyMask)
 		c64->keyboard->pressCommodoreKey();
-	c64->keyboard->pressKey(kb[keycode]);
+	c64->keyboard->pressKey(kb[keycode] >> 8, kb[keycode] & 0xFF);
 }
 
 - (void)keyUp:(NSEvent *)event
@@ -782,7 +781,7 @@ int  myargc = 1;
 	}
 	
 	// For all other characters, we use a direct key mapping
-	c64->keyboard->releaseKey(kb[keycode]);
+	c64->keyboard->releaseKey(kb[keycode] >> 8, kb[keycode] & 0xFF);
 
 }
 
