@@ -169,12 +169,9 @@ private:
 	//! Target time
 	/*! Used to synchronize emulation speed */
 	uint64_t targetTime; 
-			
-	//! Indicates that files should be transferred in warp mode
-	bool enableWarpLoad;
-	
+				
 	//! Indicates that we should always run as fast as possible
-	bool alwaysWarp;
+	bool warpMode;
 	
 	//! Holds the configuration for the game port.
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
@@ -333,19 +330,10 @@ public:
 
 	//! Returns true iff warp mode is enabled
 	bool getWarpMode();
-	
-	//! Returns true, iff warp mode is enabled during file transfer
-	bool getWarpLoad() { return enableWarpLoad; }
-	
-	//! Enable or disable warp load
-	void setWarpLoad(bool b);
 
-	//! Returns true, iff warp mode is enabled all the time
-	bool getAlwaysWarp() { return alwaysWarp; }
-
-	//! Enable or disable "always warp mode"
-	void setAlwaysWarp(bool b);
-	
+	//! Enable or disable warp mode
+	void setWarpMode(bool b);
+		
 	//! Dump current state into logfile
 	void dumpState();
 	

@@ -20,7 +20,6 @@
 
 @implementation MyDocument (Listener)
 
-
 - (void) loadRomAction:(int)rom
 {
 	switch (rom) {
@@ -153,7 +152,6 @@
 {
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 	
-	NSLog(@"driveLEDAction");
 	if (on)
 		[redLED setImage:[NSImage imageNamed:@"LEDred"]];
 	else
@@ -166,10 +164,14 @@
 {
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 
-	NSLog(@"driveDataAction");
-	// MESSAGE IS NOT SEND YET 
-	// don't now how to determine reliably if data is transferred
-
+	NSLog(@"driveDataAction (%s)", transfering ? "on" : "off");
+	if (transfering && warpLoad) {
+		[c64 cpuSetWarpMode:YES];
+	}
+	if (!transfering && !alwaysWarp) {
+		[c64 cpuSetWarpMode:NO];
+	}
+	
 	[arp release];
 }
 

@@ -99,8 +99,6 @@ public:
 - (bool) loadSnapshot:(NSString *)filename;
 - (bool) saveSnapshot:(NSString *)filename;
 
-- (void) setWarpLoad:(bool)b;
-- (void) setAlwaysWarp:(bool)b;
 - (void) dumpCPU;
 - (void) dumpCIA;
 - (void) dumpVIC;
@@ -110,8 +108,7 @@ public:
 
 // CPU
 - (bool) cpuGetWarpMode;
-// - (void) cpuSetWarpMode:(bool)b;
-- (void) cpuToggleAlwaysWarp;
+- (void) cpuSetWarpMode:(bool)b;
 - (long) cpuGetCycles;
 - (bool) cpuTracingEnabled;
 - (void) cpuSetTraceMode:(bool)b;

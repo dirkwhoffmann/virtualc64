@@ -71,6 +71,12 @@ void Keyboard::pressKey(uint8_t row, uint8_t col)
 	// debug("Key %d %d pressed\n", row, col);
 }
 
+void Keyboard::pressKey(char c)
+{
+	debug("Not implemented yet");
+	assert(0);
+}
+
 void Keyboard::releaseKey(uint8_t row, uint8_t col)
 {
 	if (row < 8 && col < 8) {
@@ -78,14 +84,10 @@ void Keyboard::releaseKey(uint8_t row, uint8_t col)
 	}
 }
 
-void Keyboard::pressKey(uint16_t rowcol)
+void Keyboard::releaseKey(char c)
 {
-	pressKey((uint8_t)(rowcol >> 8), (uint8_t)(rowcol & 255));
-}
-
-void Keyboard::releaseKey(uint16_t rowcol)
-{
-	releaseKey((uint8_t)(rowcol >> 8), (uint8_t)(rowcol & 255));
+	debug("Not implemented yet");
+	assert(0);
 }
 
 void Keyboard::typeRun()

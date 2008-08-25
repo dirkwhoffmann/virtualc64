@@ -71,10 +71,10 @@ public:
 	 7     1       <-       CTRL       2       SPACE       C=        Q        STOP		
 	\endverbatim
 	*/
+	//! Inform keyboard about a pressed key (by keycode)
 	void pressKey(uint8_t row, uint8_t col);
-	//! Inform keyboard about a pressed key
-	/*! The high byte is the row and the low byte the column value of the C64 keycode */
-	void pressKey(uint16_t rowcol);
+	//! Inform keyboard about a pressed key (by character)
+	void pressKey(char c);
 	//! Inform keyboard that the Shift key has been pressen
 	void pressShiftKey() { pressKey(1,7); }
 	//! Inform keyboard that the Commodore key has been pressen
@@ -84,12 +84,10 @@ public:
 	//! Type "RUN<RETURN>"
 	void typeRun();
 	
-	//! Inform keyboard about a released key
-	/*! The key is specified in the C64 row/column format */
+	//! Inform keyboard about a released key (by keycode)
 	void releaseKey(uint8_t row, uint8_t col);	
-	//! Inform keyboard about a released key
-	/*! The high byte is the row and the low byte the column value of the C64 keycode */
-	void releaseKey(uint16_t rowcol);
+	//! Inform keyboard about a pressed key (by character)
+	void releaseKey(char c);
 	//! Inform keyboard that the Shift key has been released
 	void releaseShiftKey() { releaseKey(1,7); }
 	//! Inform keyboard that the Commodore key has been released

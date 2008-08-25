@@ -240,11 +240,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-	if ([sender state]) {
-		[c64 setWarpLoad:true];
-	} else {
-		[c64 setWarpLoad:false];
-	}
+	[mydoc setWarpLoad:[sender state]]; 
 	[defaults setBool:[warpLoad state] forKey:VC64WarpLoadKey];
 }
 

@@ -109,6 +109,9 @@ private:
 	//! True, iff the CIA ATN pin is configured as output
 	bool ciaAtnIsOutput;
 
+	//! Used to determine if the bus is idle or if data is transferred 
+	int busActivity;
+	
 	//! Update IEC bus lines depending on the CIA and device pins
 	bool _updateIecLines(bool *atnedge = NULL);
 
@@ -164,6 +167,9 @@ public:
 	bool dataPositiveEdge() { return oldDataLine == 0 && dataLine == 1; }
 	bool dataNegativeEdge() { return oldDataLine == 1 && dataLine == 0; }
 			
+	//! Is invoked periodically by the run thread
+	void execute();
+	
 	//! Load snapshot from file
 	bool load(FILE *file);
 

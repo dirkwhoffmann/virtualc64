@@ -173,6 +173,12 @@
 	IBOutlet NSTextField *VicRasterInterrupt;
 	IBOutlet NSButton *VicEnableOpenGL;
 		
+	// True iff file transfer should be performed in warp mode
+	bool warpLoad;
+	
+	// True iff the emulator should always run in warp mode
+	bool alwaysWarp;
+	
 	// The 60 Hz timer
 	NSTimer *timer;
 	
@@ -187,8 +193,11 @@
 	
 	// Usually set to true. If set to false, OpenGL drawing is disabled
 	// Setting the variable to false only makes sense during performance tests
-	BOOL enableOpenGL;
+	bool enableOpenGL;	
 }
+
+@property bool warpLoad;
+@property bool alwaysWarp;
 
 // Main screen
 - (IBAction)fullscreenAction:(id)sender;
