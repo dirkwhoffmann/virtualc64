@@ -38,6 +38,7 @@ IEC::reset()
 	connectDrive();
 	setDeviceClockPin(1);
 	setDeviceDataPin(1);
+	busActivity = 0;
 }
  
 bool
@@ -143,8 +144,13 @@ void IEC::updateIecLines()
 		drive->simulateAtnInterrupt();
 	}
 
-	
-if (tracingEnabled() && signals_changed) {
+	if (signals_changed) {
+		if (busActivity == 0)
+			getListener()->driveDataAction(true);
+		busActivity = 10;
+	}
+
+	if (signals_changed && tracingEnabled()) {
 		dumpState();
 	}
 }
@@ -177,6 +183,18 @@ void IEC::updateDevicePins(uint8_t device_data, uint8_t device_direction)
 	deviceDataPin = (device_data & 0x02) ? 0 : 1; // Pin and line are connected via an inverter
 				
 	updateIecLines(); 
+}
+
+void IEC::execute()
+{
+	if (busActivity > 0) {
+
+		busActivity--;
+		// printf("bus: %d\n", busActivity);
+		// dumpState();
+		if (busActivity == 0)
+			getListener()->driveDataAction(false);
+	}
 }
 
 void IEC::dumpState()
