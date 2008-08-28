@@ -152,11 +152,13 @@ public:
 	uint8_t readHeadLookBehind() { return data[track][(offset + length[track] - 1) % length[track]]; }
 	bool isSyncByte() { return (readHead() == 0xFF && (readHeadLookAhead() == 0xFF || readHeadLookBehind() == 0xFF)); }	
 
+	// uint8_t readHead() { return readHeadLookBehind(); }
 	void writeHead(uint8_t value) { data[track][offset] = value; }
 	
 	//! Dump state to debug console
 	void dumpState();
-	void dumpDisk(FILE *file);
+	void dumpTrack(int track = -1);
+	void dumpFullTrack(int track = -1);
 	
 	//! Clear half track
 	/*! All bytes of the specified half tracked are zeroes out. */
@@ -175,7 +177,7 @@ public:
 	/*! source points to the input data, dest to the target location od the encoded data. 
 		This function converts the input data to a native VCR1541 byte stream including sync 
 		marks, GCR encodings, etc. Returns the number of  bytes written */
-	int encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest);
+	int encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
 
 	//! Check file type
 	/*! Returns true, iff the specifies file is a valid G64 image file. */
