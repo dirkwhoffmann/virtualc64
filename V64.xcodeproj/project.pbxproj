@@ -72,6 +72,8 @@
 		509DF24A0A9F682300AE0859 /* joystick32.png in Resources */ = {isa = PBXBuildFile; fileRef = 509DF2490A9F682300AE0859 /* joystick32.png */; };
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
 		50A0E0250A8F332A0067714C /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0240A8F332A0067714C /* System.framework */; };
+		50A3E08A0E66F7BC00D3564D /* play32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A3E0890E66F7BC00D3564D /* play32.png */; };
+		50A3E08C0E66F7C400D3564D /* pause32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A3E08B0E66F7C400D3564D /* pause32.png */; };
 		50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */; };
 		50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50A8F8F20E47171300ACE17D /* RomDialog.mm */; };
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
@@ -209,6 +211,8 @@
 		509DF2490A9F682300AE0859 /* joystick32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = joystick32.png; path = images/joystick32.png; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
+		50A3E0890E66F7BC00D3564D /* play32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play32.png; path = images/play32.png; sourceTree = "<group>"; };
+		50A3E08B0E66F7C400D3564D /* pause32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause32.png; path = images/pause32.png; sourceTree = "<group>"; };
 		50A52A170C2FD43700A1377F /* D64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D64Archive.h; sourceTree = "<group>"; };
 		50A52A180C2FD43700A1377F /* D64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = D64Archive.cpp; sourceTree = "<group>"; };
 		50A8F8F10E47171300ACE17D /* RomDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomDialog.h; sourceTree = "<group>"; };
@@ -455,45 +459,47 @@
 		50732BCA0A70D560008D8FF0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				38AF83890C7BA24A00F6DBCE /* joystick1_32.png */,
-				38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */,
-				38AF838B0C7BA24A00F6DBCE /* none_32.png */,
-				50D861780A7DEEAE00782345 /* DocIcon.icns */,
-				506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */,
-				50DA14A20A6418470022B4A7 /* bottom.png */,
-				50DA15490A642EA20022B4A7 /* window_fullscreen.png */,
-				50471FE50A7B679A00A8DB94 /* stepInto32.png */,
-				50471FE70A7B67A100A8DB94 /* stepOver32.png */,
-				500596650D23F9E800FD44B3 /* LEDred.png */,
-				5005966D0D23FA1C00FD44B3 /* LEDblue.png */,
-				500596660D23F9E800FD44B3 /* LEDgreen.png */,
-				500596670D23F9E800FD44B3 /* LEDgray.png */,
-				50471FEB0A7B67AE00A8DB94 /* restart32.png */,
-				5005966B0D23FA1800FD44B3 /* LEDyellow.png */,
-				50471FED0A7B67B800A8DB94 /* debugger32.png */,
-				50287EEA0A7CA86900292533 /* stepOut32.png */,
-				509DF2470A9F681900AE0859 /* keyboard32.png */,
-				509DF2490A9F682300AE0859 /* joystick32.png */,
-				50E4BFA60C3CE95400CB6B43 /* floppy.png */,
-				50E4BFA90C3CEAB700CB6B43 /* warpOff.png */,
-				50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */,
-				50E4C0230C3CFBC300CB6B43 /* soundOff.png */,
-				50E4C0250C3CFBC700CB6B43 /* soundOn.png */,
-				50E4C0270C3CFBE400CB6B43 /* fullscreen.png */,
-				500B9D360C40E554008237C6 /* pref_disk.png */,
-				500B9D380C40E55A008237C6 /* pref_system.png */,
-				500B9D3A0C40E55F008237C6 /* pref_sound.png */,
-				500B9D3C0C40E563008237C6 /* pref_grafik.png */,
-				500B9D3E0C40F037008237C6 /* pref_pal.png */,
-				500B9D400C40F03C008237C6 /* pref_ntsc.png */,
-				50E555FC0C42698E00AFB05F /* flag_usa.png */,
-				50E555FE0C42699300AFB05F /* flag_eu.png */,
-				502663140C4398460094233B /* nebula.jpg */,
 				504CEE7C0C46774F001F4E51 /* BigIcon.png */,
 				504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */,
+				50DA14A20A6418470022B4A7 /* bottom.png */,
 				502562AE0C4AA0C7008AAB85 /* c64.png */,
+				50471FED0A7B67B800A8DB94 /* debugger32.png */,
+				50D861780A7DEEAE00782345 /* DocIcon.icns */,
+				50E555FE0C42699300AFB05F /* flag_eu.png */,
+				50E555FC0C42698E00AFB05F /* flag_usa.png */,
+				50E4BFA60C3CE95400CB6B43 /* floppy.png */,
+				50E4C0270C3CFBE400CB6B43 /* fullscreen.png */,
+				38AF83890C7BA24A00F6DBCE /* joystick1_32.png */,
+				38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */,
+				509DF2490A9F682300AE0859 /* joystick32.png */,
+				509DF2470A9F681900AE0859 /* keyboard32.png */,
+				5005966D0D23FA1C00FD44B3 /* LEDblue.png */,
+				500596670D23F9E800FD44B3 /* LEDgray.png */,
+				500596660D23F9E800FD44B3 /* LEDgreen.png */,
+				500596650D23F9E800FD44B3 /* LEDred.png */,
+				5005966B0D23FA1800FD44B3 /* LEDyellow.png */,
+				502663140C4398460094233B /* nebula.jpg */,
+				38AF838B0C7BA24A00F6DBCE /* none_32.png */,
+				50A3E08B0E66F7C400D3564D /* pause32.png */,
+				50A3E0890E66F7BC00D3564D /* play32.png */,
+				500B9D360C40E554008237C6 /* pref_disk.png */,
+				500B9D3C0C40E563008237C6 /* pref_grafik.png */,
+				500B9D400C40F03C008237C6 /* pref_ntsc.png */,
+				500B9D3E0C40F037008237C6 /* pref_pal.png */,
+				500B9D3A0C40E55F008237C6 /* pref_sound.png */,
+				500B9D380C40E55A008237C6 /* pref_system.png */,
+				50471FEB0A7B67AE00A8DB94 /* restart32.png */,
 				5094197C0E426C13008D6F71 /* rom.png */,
 				50A8F9E90E472BA800ACE17D /* romMissing.png */,
+				50E4C0230C3CFBC300CB6B43 /* soundOff.png */,
+				50E4C0250C3CFBC700CB6B43 /* soundOn.png */,
+				50471FE50A7B679A00A8DB94 /* stepInto32.png */,
+				50287EEA0A7CA86900292533 /* stepOut32.png */,
+				50471FE70A7B67A100A8DB94 /* stepOver32.png */,
+				506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */,
+				50E4BFA90C3CEAB700CB6B43 /* warpOff.png */,
+				50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */,
+				50DA15490A642EA20022B4A7 /* window_fullscreen.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -615,6 +621,8 @@
 				5005966E0D23FA1C00FD44B3 /* LEDblue.png in Resources */,
 				5094197D0E426C13008D6F71 /* rom.png in Resources */,
 				50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */,
+				50A3E08A0E66F7BC00D3564D /* play32.png in Resources */,
+				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

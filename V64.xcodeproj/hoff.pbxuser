@@ -4222,7 +4222,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {773, 1712}}";
 			sepNavSelRange = "{1613, 6}";
-			sepNavVisRange = "{1248, 584}";
+			sepNavVisRange = "{1248, 643}";
 		};
 	};
 	50A3E06C0E66F52900D3564D /* PBXTextBookmark */ = {
