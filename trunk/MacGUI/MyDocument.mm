@@ -752,6 +752,13 @@
 	[self refresh];
 }
 
+- (IBAction)FormatDiskAction:(id)sender
+{
+	NSLog(@"Format disk");
+	[self updateChangeCount:NSChangeDone];
+	[c64 keyboardTypeFormat];	
+	[self refresh];
+}
 
 - (IBAction)fullscreenAction:(id)sender
 {

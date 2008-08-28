@@ -240,15 +240,6 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 //                                    Graphics
 // --------------------------------------------------------------------------------
 
-void joystick_callback(unsigned int buttonMask, int x, int y, int z)
-{
-	printf("x = %d y = %d z = %d\n", x, y, z);
-}
-
-// What's that???? GLUT should be used!!! Please remove!!!
-char *myargv[] = { "GLUT", NULL };
-int  myargc = 1;
-
 - (NSImage *) expandImage: (NSImage *)image toSize:(NSSize) size
 {
 	assert(image != nil);
@@ -715,10 +706,18 @@ int  myargc = 1;
 
 - (void)keyUp:(NSEvent *)event
 {
-	// char c                 = [[event characters] UTF8String][0];
 	unsigned short keycode = [event keyCode];
-	//unsigned int   flags   = [event modifierFlags];
-	// int i;
+
+#if 0
+	// TO BE REMOVED: FOR DEBUGGING ONLY
+	if (keycode == MAC_F7) {
+		c64->floppy->dumpTrack();
+	}
+	if (keycode == MAC_F8) {
+		c64->floppy->dumpFullTrack();
+	}
+#endif	
+
     if (c64->getDeviceOfPort(0) == IPD_KEYBOARD || c64->getDeviceOfPort(1) == IPD_KEYBOARD) {
 		switch (keycode) {
 			case MAC_CU: 
@@ -782,7 +781,6 @@ int  myargc = 1;
 	
 	// For all other characters, we use a direct key mapping
 	c64->keyboard->releaseKey(kb[keycode] >> 8, kb[keycode] & 0xFF);
-
 }
 
 // --------------------------------------------------------------------------------

@@ -330,6 +330,7 @@ public:
 - (void) keyboardReleaseRunstopKey;
 - (void) keyboardPressCommodoreKey;
 - (void) keyboardReleaseCommodoreKey;
+- (void) keyboardTypeFormat;
 
 // Drive
 - (void) ejectDisk;

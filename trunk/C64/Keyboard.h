@@ -83,6 +83,8 @@ public:
 	void pressRunstopKey() { pressKey(7,7); }
 	//! Type "RUN<RETURN>"
 	void typeRun();
+	//! Type format command
+	void typeFormat();
 	
 	//! Inform keyboard about a released key (by keycode)
 	void releaseKey(uint8_t row, uint8_t col);	

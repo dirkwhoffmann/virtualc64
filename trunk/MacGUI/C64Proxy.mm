@@ -115,8 +115,8 @@ void ListenerProxy::logAction(char *message)
 	cia[1] = c64->cia1;
 	cia[2] = c64->cia2;
 	iec = c64->iec;
-	cpu = c64->cpu;
-	mem = c64->mem;
+	cpu = c64->floppy->cpu; // c64->cpu;
+	mem = c64->floppy->mem; // c64->mem;
 	
 	// Initialize CoreAudio sound interface
 	sidDevice = new SIDDevice();	// create Core Audio sound device		
@@ -148,8 +148,8 @@ void ListenerProxy::logAction(char *message)
 	cia[1] = c64->cia1;
 	cia[2] = c64->cia2;
 	iec = c64->iec;
-	cpu = c64->cpu;
-	mem = c64->mem;
+	cpu = c64->floppy->cpu; // c64->cpu;
+	mem = c64->floppy->mem; // c64->mem;
 	
 	// Initialize CoreAudio sound interface
 	audioDevice = [[AudioDevice alloc] initWithSID:c64->sid];
@@ -513,6 +513,7 @@ void ListenerProxy::logAction(char *message)
 - (void) keyboardReleaseRunstopKey { c64->keyboard->releaseRunstopKey(); }
 - (void) keyboardPressCommodoreKey { c64->keyboard->pressCommodoreKey(); }
 - (void) keyboardReleaseCommodoreKey { c64->keyboard->releaseCommodoreKey(); }
+- (void) keyboardTypeFormat { c64->keyboard->typeFormat(); }
 
 
 // --------------------------------------------------------------------------

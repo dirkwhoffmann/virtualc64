@@ -188,7 +188,8 @@ VC1541::clearHalftrack(int nr)
 	assert(nr >= 1 && nr <= 84);
 	
 	length[nr-1] = sizeof(data[nr-1]);
-	memset(data[nr-1], 0, length[nr-1]);
+	// memset(data[nr-1], 0, length[nr-1]);
+	memset(data[nr-1], 0x55, length[nr-1]);
 }
 
 void
@@ -199,7 +200,6 @@ VC1541::clearDisk()
 		clearHalftrack(i);
 }
 
-//#if 0
 void gcr_conv4(uint8_t *from, uint8_t *to)
 {
 const uint16_t gcr_table[16] = {
@@ -228,7 +228,6 @@ const uint16_t gcr_table[16] = {
 	*to++ |= (g >> 8) & 0x03;
 	*to = g;
 }
-//#endif
 
 void
 VC1541::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest)
@@ -266,31 +265,16 @@ VC1541::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest)
 	shift_reg |= gcr[b4 & 0x0F];
 	dest[3] = (shift_reg >> 8) & 0xFF;
 	dest[4] = shift_reg & 0xFF;
-
-#if 0
-	// compare to FRODO (for debugging)
-	{
-		uint8_t source[4];
-		source[0] = b1; source[1] = b2; source[2] = b3; source[3] = b4;
-		uint8_t frodo[5];
-		gcr_conv4(source, frodo);
-		if (dest[0] != frodo[0] || dest[1] != frodo[1] || dest[2] != frodo[2] || dest[3] != frodo[3] || dest[4] != frodo[4]) {
-			debug("%2X %2X %2X %2X: %2X %2X mismatch\n", b1,b2,b3,b4, dest[0], frodo[0]);
-			exit(1);
-		}
-	}
-	return;
-#endif
 }
 
 int 
-VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *dest)
+VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *dest, int gap)
 {
 	int i;
 	uint8_t *source, *ptr = dest;
 	uint8_t id_lo, id_hi, checksum;
 	uint8_t track = (halftrack + 1) / 2;
-	
+		
 	assert(a != NULL);
 	assert(ptr != NULL);
 	assert(1 <= track && track <= 42);
@@ -306,10 +290,8 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 	id_hi = a->diskIdHi();
 	checksum = id_lo ^ id_hi ^ track ^ sector;
 	
-	// printf("Disk ID: %2X%2X\n", id_hi, id_lo);
-
 	// Write SYNC mark
-	for (i = 0; i < 5; i++, ptr++)
+	for (i = 0; i < 6; i++, ptr++)
 		*ptr = 0xFF;
 		
 	// Write magic byte (header mark), checksum, sector and track
@@ -325,7 +307,7 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 		*ptr = 0x55;
 
 	// Write SYNC mark
-	for (i = 0; i < 5; i++, ptr++)
+	for (i = 0; i < 6; i++, ptr++)
 		*ptr = 0xFF;
 
 	// Compute data checksum 
@@ -348,8 +330,14 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 	encodeGcr(source[255], checksum, 0, 0, ptr);
 	ptr += 5;
 
+#if 0
 	// Write gap (8 x 0x55)
 	for (i = 0; i < 8; i++, ptr++)
+		*ptr = 0x55;
+#endif
+	
+	// Write gap
+	for (i = 0; i < gap; i++, ptr++)
 		*ptr = 0x55;
 	
 	// returns number of encoded bytes
@@ -375,12 +363,13 @@ VC1541::insertDisc(D64Archive *a)
 	// For each full track...
 	for (i = 1; i <= 2*a->numberOfTracks(); i += 2) {
 		// For each sector...
+		int gap =  (7928 - (a->numberOfSectors(i) * 356)) / a->numberOfSectors(i);
 		for (j = 0, dest = data[i-1]; j < a->numberOfSectors(i); j++) {
- 			dest += encodeSector(a, i, j, dest);
+			dest += encodeSector(a, i, j, dest, gap);
 		}
 
 		length[i-1] = dest - data[i-1];
-		debug("Length of track %d: %d bytes\n", i, length[i-1]); 
+		debug("Length of track %d: %d bytes\n", i, dest - data[i-1]); 
 	}
 
 	for (i = 1; i <= 84; i++) {
@@ -408,29 +397,11 @@ VC1541::ejectDisc()
 	// Inform listener
 	getListener()->driveDiscAction(false);
 }
-
-void
-VC1541::dumpDisk(FILE *file)
-{
-	int track, offset;
-	
-	assert(file != NULL);
-
-	for (track = 0; track < 84; track++) {
-		for (offset = 0; offset+16 < 7928; offset += 16) {
-			fprintf(file,"(%d,%d): %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", 
-			track, offset,
-			getData(track,offset+0), getData(track,offset+1), getData(track,offset+2), getData(track,offset+3),
-			getData(track,offset+4), getData(track,offset+5), getData(track,offset+6), getData(track,offset+7),
-			getData(track,offset+8), getData(track,offset+9), getData(track,offset+10), getData(track,offset+11),
-			getData(track,offset+12), getData(track,offset+13), getData(track,offset+14), getData(track,offset+15));
-		}
-	}
-}
 			
 void 
 VC1541::dumpState()
 {
+#if 0	
 	FILE *file = fopen("/Users/hoff/tmp/d64image.txt","w");
 	
 	if (file != NULL) {
@@ -438,7 +409,6 @@ VC1541::dumpState()
 		fclose(file);
 	}
 	
-#if 0	
 	int t, i;
 	/* Directory track... */
 	t = 18;
@@ -455,6 +425,38 @@ VC1541::dumpState()
 	debug("head timer: %d V-enable: %d track: %d, offset: %d (%d -> %d) ff_bytes: %d\n", 
 	byteReadyTimer, via2->overflowEnabled(),
 	track, offset, readHead(), readHeadLookAhead(), noOfFFBytes);
+}
+
+void 
+VC1541::dumpTrack(int t)
+{	
+	if (t < 0) t = track;
+
+	int min = offset - 40, max = offset + 20;
+	if (min < 0) min = 0;
+	if (max > length[t]) max = length[t];
+	
+	debug("Dumping track %d (length = %d)\n", t, length[t]);
+	for (int i = min; i < offset; i++)
+		debug("%02X ", data[t][i]);
+	debug("(%02X) ", data[t][offset]);
+	for (int i = offset+1; i < max; i++)
+		debug("%02X ", data[t][i]);
+	debug("\n");
+}
+
+void 
+VC1541::dumpFullTrack(int t)
+{		
+	if (t < 0) t = track;
+	
+	debug("Dumping track %d (length = %d)\n", t, length[t]);
+	for (int i = 0; i < offset; i++)
+		debug("%02X ", data[t][i]);
+	debug("(%02X) ", data[t][offset]);
+	for (int i = offset+1; i < length[t]; i++)
+		debug("%02X ", data[t][i]);
+	debug("\n");
 }
 
 bool 

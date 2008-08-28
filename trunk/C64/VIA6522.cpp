@@ -96,26 +96,18 @@ bool VIA6522::execute(int cycles)
 void 
 VIA6522::dumpState()
 {
-	char buf[128];
-
-	sprintf(buf, "VIA(%p): %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X", this,
+	debug("VIA(%p): %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X", this,
 		io[0], io[1],  io[2],  io[3],  io[4],  io[5],  io[6],  io[7], 
 		io[8], io[9], io[10], io[11], io[12], io[13], io[14], io[15]);
-	getListener()->logAction(strdup(buf));
-	sprintf(buf, "         orb = %2X ddrb = %2X ora = %2X ddra = %2X\n", orb, ddrb, ora, ddra);
-	getListener()->logAction(strdup(buf));	
-	sprintf(buf, "         Timer 1: %d interrupts %s, interrupt flag: %d \n", 
+	debug("         orb = %2X ddrb = %2X ora = %2X ddra = %2X\n", orb, ddrb, ora, ddra);
+	debug("         Timer 1: %d interrupts %s, interrupt flag: %d \n", 
 		getTimer1(), timerInterruptEnabled1() ? "enabled" : "disabled", (io[0x0D] & 0x40) != 0);
-	getListener()->logAction(strdup(buf));
-	sprintf(buf, "         Timer 2: %d interrupts %s, interrupt flag: %d \n", 
+	debug("         Timer 2: %d interrupts %s, interrupt flag: %d \n", 
 		getTimer2(), timerInterruptEnabled2() ? "enabled" : "disabled", (io[0x0D] & 0x20) != 0);
-	getListener()->logAction(strdup(buf));
-	sprintf(buf, "                  Input latching A %s\n", 
+	debug("                  Input latching A %s\n", 
 		inputLatchingEnabledA() ? "enabled" : "disabled");
-	getListener()->logAction(strdup(buf));
-	sprintf(buf, "                  Input latching B %s\n", 
+	debug("                  Input latching B %s\n", 
 		inputLatchingEnabledB() ? "enabled" : "disabled");
-	getListener()->logAction(strdup(buf));
 }
 
 uint8_t 

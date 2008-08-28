@@ -226,6 +226,7 @@
 - (IBAction)runstopRestoreAction:(id)sender;
 - (IBAction)runstopAction:(id)sender;
 - (IBAction)commodoreKeyAction:(id)sender;
+- (IBAction)FormatDiskAction:(id)sender;
 
 // Debug panel (CPU)
 - (IBAction)mhzAction:(id)sender;

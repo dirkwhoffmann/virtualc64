@@ -81,6 +81,9 @@ void
 			c64->vic->executeOneLine(rasterline, &cyclePenalty);
 		}
 
+		if (c64->cpu->getErrorState() != CPU::OK) break;
+		if (c64->floppy->cpu->getErrorState() != CPU::OK) break;		
+		
 		// Frame completed...
 
 		// Pass control to the virtual sound chip
@@ -218,7 +221,7 @@ C64::~C64()
 	if( joystick2 != NULL )
 		delete joystick2;
 	
-	printf("Cleaned up virtual C64 at address %p\n", this);
+	debug("Cleaned up virtual C64 at address %p\n", this);
 }
 
 int 
@@ -352,7 +355,6 @@ C64::run() {
 
 		// Check for ROM images
 		if (getMissingRoms()) {
-			printf("Roms are missing!!!!!\n\n");
 			getListener()->missingRomAction(getMissingRoms());
 			return;
 		}
