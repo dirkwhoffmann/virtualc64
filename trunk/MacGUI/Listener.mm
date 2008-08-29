@@ -58,7 +58,7 @@
 	[romDialog initialize:missingRoms];
 	
 	[NSApp beginSheet:romDialog
-	   modalForWindow:theWindow
+	   modalForWindow:[self windowForSheet]
 		modalDelegate:self
 	   didEndSelector:NULL
 		  contextInfo:NULL];	

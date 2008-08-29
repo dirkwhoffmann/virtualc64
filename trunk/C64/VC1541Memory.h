@@ -20,7 +20,6 @@
 #define _VC1541MEMORY_INC
 
 #include "Memory.h"
-//#include "VC1541.h"
 
 class VC1541;
 
@@ -82,10 +81,6 @@ public:
 
 	//! Returns true, iff the ROM image is alrady loaded
 	bool romIsLoaded() { return romFile != NULL; }
-
-	//! Returns true, iff the provided address is in the Basic ROM address range
-	//static inline bool isRomAddr(uint16_t addr) 
-	//	{ debug("TODO !!!!!!"); return false; }
 			
 	//! Load internal state from a file
 	/*! The function is used for loading a snapshot of the virtual computer

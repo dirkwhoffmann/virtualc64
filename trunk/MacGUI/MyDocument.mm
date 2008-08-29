@@ -127,9 +127,6 @@
 	// Initialize variables
 	alwaysWarp = false;
 	enableOpenGL = false;  
-
-	// Fix window aspect ratio
-	[theWindow setContentAspectRatio:NSMakeSize(653,432)];
 	
 	// Remove Debug when compiled as deployment target
 	#ifdef NDEBUG
@@ -265,6 +262,9 @@
 
 	[super windowControllerDidLoadNib:aController];
    	
+	// Fix window aspect ratio
+	[[self windowForSheet] setContentAspectRatio:NSMakeSize(653,432)];
+
 	// Load user defaults
 	[self loadUserDefaults];
 		
@@ -485,7 +485,7 @@
 
 	// Print image
     NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:imageView  printInfo:myPrintInfo];
-    [printOperation runOperationModalForWindow:theWindow delegate: nil didRunSelector: NULL contextInfo:NULL];
+    [printOperation runOperationModalForWindow:[self windowForSheet] delegate: nil didRunSelector: NULL contextInfo:NULL];
 
 	[imageView release];
 }
@@ -1976,7 +1976,7 @@
 	[mountDialog initialize:archive];
 	
 	[NSApp beginSheet:mountDialog
-		modalForWindow:theWindow
+		modalForWindow:[self windowForSheet]
 		modalDelegate:self
 		didEndSelector:NULL
 		contextInfo:NULL];

@@ -63,12 +63,9 @@ bool VIA6522::execute(int cycles)
 			// Timer 1 time out
 			signalTimeOut1();
 			if (timerInterruptEnabled1()) {
-				floppy->cpu->setIRQLineVIA1();
-				// debug("(1)");			
+				floppy->cpu->setIRQLineVIA1();	
 			}
-
 			// Reload timer
-			//reloadTimer1();
 			setTimer1(0);
 		} else {
 			setTimer1(timer1 - cycles);
@@ -81,10 +78,8 @@ bool VIA6522::execute(int cycles)
 			signalTimeOut2();
 			if (timerInterruptEnabled2()) {
 				floppy->cpu->setIRQLineVIA2();
-				// debug("(2)");			
 			}
-
-			// reloadTimer2();
+			// Reload timer
 			setTimer2(0);
 		} else {
 			setTimer2(timer2 - cycles);
