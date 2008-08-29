@@ -18,7 +18,6 @@
 
 #import "VICScreen.h"
 #import "MyDocument.h"
-#import <GLUT/glut.h>
 
 const float TEX_LEFT   = 0.0 / ((float)TEXTURE_WIDTH);
 const float TEX_RIGHT  = (VIC::SCREEN_WIDTH+2*VIC::BORDER_WIDTH) / ((float)TEXTURE_WIDTH);
@@ -394,6 +393,7 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	gluPerspective(60.0, rect.size.width/rect.size.height, 0.2, 7);
 }
 
+
 - (void) awakeFromNib
 {
 }
@@ -427,12 +427,6 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	uint32_t col = 0xffffffff;
 	glClearColor((float)RED(col)/0xff, (float)GREEN(col)/0xff, (float)BLUE(col)/0xff, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-
-	// Draw background image
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
 
 	// Select screen texture
 	glBindTexture(GL_TEXTURE_2D, texture);			

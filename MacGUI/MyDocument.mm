@@ -30,7 +30,7 @@
 
 + (void)initialize {
 
-	NSLog(@"%@ initialize", self);
+	NSLog(@"initialize");
 	
     self = [super init];
 
@@ -51,7 +51,6 @@
 
 	/* Audio */
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64SIDFilterKey];
-
 
 	/* Video */
 	[defaultValues setObject:[NSNumber numberWithInt:VIC::CUSTOM_PALETTE] forKey:VC64ColorSchemeKey];
@@ -78,14 +77,11 @@
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 	
 	NSLog(@"Registered user defaults: %@", defaultValues);	
-
-	// Initialize SDL joystick part
-	// SDL_JoystickInit();
 }
 
 - (id)init  
 {	
-	NSLog(@"%@ init", self);
+	NSLog(@"init");
 	
     self = [super init];
     if (self) {
@@ -105,7 +101,7 @@
 
 - (void)dealloc
 {	
-	NSLog(@"%@ dealloc", self);
+	NSLog(@"dealloc");
 
 	[preferenceController release];
 	NSLog(@"Preference controller released");
@@ -117,7 +113,7 @@
 
 - (void)windowWillClose:(NSNotification *)aNotification
 {
-	NSLog(@"%@ windowWillClose", self);
+	NSLog(@"windowWillClose");
 
 	[timer invalidate];
 	timer = nil;
@@ -128,17 +124,19 @@
 
 - (void)awakeFromNib
 {	
-	NSLog(@"%@ awakeFromNib", self);
+	NSLog(@"awakeFromNib");
 
 	// Initialize variables
 	alwaysWarp = false;
-	enableOpenGL = false;
-	NSLog(@"Always warp: %d WarpLoad: %d", alwaysWarp, warpLoad);
+	enableOpenGL = false;  
+
+	// Fix window aspect ratio
+	[theWindow setContentAspectRatio:NSMakeSize(653,432)];
 	
 	// Remove Debug when compiled as deployment target
 	#ifdef NDEBUG
-	NSMenu* rootMenu = [NSApp mainMenu];
-	[rootMenu removeItemAtIndex:3];
+	// NSMenu* rootMenu = [NSApp mainMenu];
+	// [rootMenu removeItemAtIndex:3];
 	assert(false); // Should have no effect in deployment mode...
 	#endif
 	
@@ -211,10 +209,10 @@
 
 - (void)loadUserDefaults
 {
+	NSLog(@"loadUserDefaults");
+	
 	int colorScheme;
 	NSUserDefaults *defaults;
-	
-	NSLog(@"Loading user defaults");
 	
 	// Set user defaults
 	defaults = [NSUserDefaults standardUserDefaults];
@@ -265,7 +263,8 @@
 
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {	
-	NSLog(@"%@ windowControllerDidLoadNib", self);
+	NSLog(@"windowControllerDidLoadNib");
+
 	[super windowControllerDidLoadNib:aController];
    	
 	// Load user defaults
@@ -278,43 +277,6 @@
 	enableOpenGL = true;
 }
 
--(NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize 
-{
-	const float c64_display_width    = 652.0;
-	const float c64_display_height   = 412.0;
-	const float bottom_border_height = 20.0; 
-	
-	NSView *contentView = [sender contentView];
-	NSRect size = [contentView frame];
-
-	// Adjust aspect ratio. The window should keep the aspect ratio of the c64 display constant
-	float yoffset = bottom_border_height * (c64_display_height / size.size.height);
-	[sender setContentAspectRatio:NSMakeSize(c64_display_width / 100.0, (c64_display_height + yoffset) / 100.0)];
-	
-	return proposedFrameSize;
-}
-
--(NSRect)windowWillUseStandardFrame:(NSWindow *)sender defaultFrame:(NSRect)defaultFrame
-{
-	float border_height;
-	float orig_screen_height, orig_screen_width;
-	float new_screen_height, new_screen_width;
-
-	NSView *contentView = [sender contentView];
-	NSRect contentFrame = [contentView frame];
-	NSRect windowFrame = [sender frame];
-	
-	border_height = windowFrame.size.height - contentFrame.size.height;
-	orig_screen_height = contentFrame.size.height - 20;
-	orig_screen_width  = contentFrame.size.width;
-	
-	new_screen_height  = defaultFrame.size.height - 20 - border_height;
-	new_screen_width   = new_screen_height * (orig_screen_width / orig_screen_height);
-	
-	defaultFrame.size.width = (int)new_screen_width;
-	
-	return defaultFrame;
-}
 
 // --------------------------------------------------------------------------------
 // Loading and saving
@@ -333,9 +295,6 @@
 
 -(bool)readFromFile:(NSString *)filename ofType:(NSString *)type
 {
-	// C64 *myc64 = [c64 getC64]; 
-	// Archive *archive;
-
 	NSLog(@"readFromFile %@ (type %@)", filename, type);
 
 	if ([type isEqualToString:@"D64"]) {
