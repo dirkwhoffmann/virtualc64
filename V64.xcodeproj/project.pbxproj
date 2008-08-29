@@ -58,8 +58,6 @@
 		50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE70A7B67A100A8DB94 /* stepOver32.png */; };
 		50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FEB0A7B67AE00A8DB94 /* restart32.png */; };
 		50471FEE0A7B67B800A8DB94 /* debugger32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FED0A7B67B800A8DB94 /* debugger32.png */; };
-		504CEE380C4672BA001F4E51 /* ConsoleController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 504CEE370C4672BA001F4E51 /* ConsoleController.mm */; };
-		504CEE7B0C4674C9001F4E51 /* Console.nib in Resources */ = {isa = PBXBuildFile; fileRef = 504CEE790C4674C9001F4E51 /* Console.nib */; };
 		504CEE7D0C46774F001F4E51 /* BigIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CEE7C0C46774F001F4E51 /* BigIcon.png */; };
 		504CEEA30C467C4E001F4E51 /* BigIconTransparent.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */; };
 		506910C80A74EAE100F48A7F /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */; };
@@ -192,9 +190,6 @@
 		50471FE70A7B67A100A8DB94 /* stepOver32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepOver32.png; path = images/stepOver32.png; sourceTree = "<group>"; };
 		50471FEB0A7B67AE00A8DB94 /* restart32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = restart32.png; path = images/restart32.png; sourceTree = "<group>"; };
 		50471FED0A7B67B800A8DB94 /* debugger32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = debugger32.png; path = images/debugger32.png; sourceTree = "<group>"; };
-		504CEE360C4672BA001F4E51 /* ConsoleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleController.h; sourceTree = "<group>"; };
-		504CEE370C4672BA001F4E51 /* ConsoleController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ConsoleController.mm; sourceTree = "<group>"; };
-		504CEE7A0C4674C9001F4E51 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Console.nib; sourceTree = "<group>"; };
 		504CEE7C0C46774F001F4E51 /* BigIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BigIcon.png; path = images/BigIcon.png; sourceTree = "<group>"; };
 		504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = BigIconTransparent.tiff; path = images/BigIconTransparent.tiff; sourceTree = "<group>"; };
 		506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
@@ -318,7 +313,6 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				504CEE790C4674C9001F4E51 /* Console.nib */,
 				2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */,
 				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
 				5007A48B0C3F9E700069B0CE /* Preferences.nib */,
@@ -431,8 +425,6 @@
 				50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */,
 				5007A4860C3F9D6A0069B0CE /* PreferenceController.h */,
 				5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */,
-				504CEE360C4672BA001F4E51 /* ConsoleController.h */,
-				504CEE370C4672BA001F4E51 /* ConsoleController.mm */,
 				50A8F8F10E47171300ACE17D /* RomDialog.h */,
 				50A8F8F20E47171300ACE17D /* RomDialog.mm */,
 			);
@@ -599,7 +591,6 @@
 				50E555FF0C42699300AFB05F /* flag_eu.png in Resources */,
 				502663150C4398460094233B /* nebula.jpg in Resources */,
 				50F4D2940C46262700ED4E4E /* ResetImage.VC64 in Resources */,
-				504CEE7B0C4674C9001F4E51 /* Console.nib in Resources */,
 				504CEE7D0C46774F001F4E51 /* BigIcon.png in Resources */,
 				504CEEA30C467C4E001F4E51 /* BigIconTransparent.tiff in Resources */,
 				502562AF0C4AA0C7008AAB85 /* c64.png in Resources */,
@@ -669,7 +660,6 @@
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
 				5007A4880C3F9D6A0069B0CE /* PreferenceController.mm in Sources */,
 				5007A5EC0C3FC99F0069B0CE /* VIC_colors.cpp in Sources */,
-				504CEE380C4672BA001F4E51 /* ConsoleController.mm in Sources */,
 				389E776F0C7A3B2200BEAFA6 /* SDL_joystick.c in Sources */,
 				389E77700C7A3B2200BEAFA6 /* SDL_sysjoystick.c in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */,
@@ -724,14 +714,6 @@
 				5007A48C0C3F9E700069B0CE /* English */,
 			);
 			name = Preferences.nib;
-			sourceTree = "<group>";
-		};
-		504CEE790C4674C9001F4E51 /* Console.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				504CEE7A0C4674C9001F4E51 /* English */,
-			);
-			name = Console.nib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
