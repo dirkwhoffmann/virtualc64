@@ -16,11 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-
-#include "SIDVoice.h"
 #include "C64.h"
-#include <math.h>
 
 const float SIDVoice::decayReleaseTimeRpTable[16] = 
 { (1.0/0.006), (1.0/0.024), (1.0/0.048), (1.0/0.072),

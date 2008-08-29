@@ -19,20 +19,7 @@
 #ifndef VICSCREEN_INC
 #define VICSCREEN_INC
 
-#include "C64.h"
-
 #import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>
-#import <OpenGL/OpenGL.h>
-#import <OpenGL/gl.h>
-#import <OpenGL/glext.h>
-#import <OpenGL/glu.h>
-
-#include <IOKit/IOKitLib.h>
-#include <IOKit/IOCFPlugIn.h>
-#include <IOKit/hid/IOHIDLib.h>
-#include <IOKit/hid/IOHIDKeys.h>
-#include <CoreFoundation/CoreFoundation.h>
 
 #define LIGHT_X_TAG 0
 #define THETA_TAG   1

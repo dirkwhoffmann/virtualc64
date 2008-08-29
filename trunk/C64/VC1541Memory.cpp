@@ -17,7 +17,6 @@
  */
 
 #include "C64.h"
-#include "Memory.h"
 
 VC1541Memory::VC1541Memory()
 {

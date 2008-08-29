@@ -20,9 +20,8 @@
  * @autor Andreas Fertig
  * @date 04.05.07
 */
-               
-#include "Joystick.h"
-#include "basic.h"
+          
+#include "C64.h"
 
 int Joystick::joystickOpenCount = 0;
 bool Joystick::initialized = false;

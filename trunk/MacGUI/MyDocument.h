@@ -20,6 +20,9 @@
 #define INC_MYDOCUMENT
 
 #import <Cocoa/Cocoa.h>
+#import <Cocoa/Cocoa.h>
+#import <OpenGL/OpenGL.h>
+#import <OpenGL/glu.h>
 #import "C64.h"
 #import "HexFormatter.h"
 #import "DezFormatter.h"
@@ -28,6 +31,7 @@
 #import "MountDialog.h"
 #import "RomDialog.h"
 #import "PreferenceController.h"
+#import "AudioDevice.h"
 #import "C64Proxy.h"
 
 @protocol ListenerProtocol

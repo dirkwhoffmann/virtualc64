@@ -29,20 +29,14 @@
 
 // Cleanup:
       	  
-// 2) Runstop restore (Note: Runstop/Restore is directly connected to the NMI line, needs special handling, I guess)
-
 // Optional:
 // 1) Use menus with real on/off/mixed state
-// 2) Implement progress indicator when loading data (as image??)
 
 // Projects:
 // Datasette support (.TAP format)
 // VIC enhancements
 // CoreImage filters
 // Clone functionality (Step-Undo using the clone mechanism?!)
-
-
-// TODO
 
 #ifndef _C64_INC
 #define _C64_INC
@@ -290,7 +284,10 @@ public:
 	//! Synchronize timing
 	void synchronizeTiming();
 	
+	//! Load snapshot from file
 	bool load(FILE *file);
+
+	//! Save snapshot to file
 	bool save(FILE *file);
 
 	//! Set PAL mode
@@ -302,8 +299,12 @@ public:
 	//! Set emulation speed
 	void setHz(int h);
 	
+	//! Returns the number of CPU cycles performed per rasterline
+	/*! Number varies between PAL and NTSC machines */	
 	int getCpuCyclesPerRasterline() { return cpuCyclesPerRasterline; }
-		
+
+	//! Returns the number of CPU cycles performed per frame
+	/*! Number varies between PAL and NTSC machines */	
 	int getCpuCyclesPerFrame() { return cpuCyclesPerRasterline * noOfRasterlines; }
 	
 	//! Assign an archive to the virtual C64

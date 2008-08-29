@@ -18,14 +18,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface HexFormatter : NSFormatter {	 
 
 	int min, max;
 	NSString *format;
-
 }
-
 
 - (id)init:(NSString *)format_str min:(int)x max:(int)y;
 

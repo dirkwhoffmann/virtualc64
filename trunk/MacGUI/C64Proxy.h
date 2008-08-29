@@ -19,12 +19,12 @@
 #ifndef _C64_PROXY
 #define _C64_PROXY
 
-#include "C64.h"
-#import "AudioDevice.h"
+#import <Cocoa/Cocoa.h>
 
 // Forward declarations
 @class MyDocument;
 @class VICScreen;
+@class AudioDevice;
 
 class ListenerProxy : public  C64Listener {
 	

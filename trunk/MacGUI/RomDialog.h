@@ -17,7 +17,6 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#include "C64.h"
 
 @interface RomDialog : NSWindow
 {
