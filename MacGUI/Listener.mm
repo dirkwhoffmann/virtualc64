@@ -209,9 +209,11 @@
 {
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 
+#if 0
 	if (consoleController) {
 		[consoleController insertText:message];
 	}
+#endif
 	
 	[arp release];
 }

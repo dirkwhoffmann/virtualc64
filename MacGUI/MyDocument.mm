@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2009 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published byc64
@@ -105,8 +105,6 @@
 
 	[preferenceController release];
 	NSLog(@"Preference controller released");
-	[consoleController release];
-	NSLog(@"Console controller released");
 	[super dealloc];
 	NSLog(@"super released");
 }
@@ -752,24 +750,6 @@
 		[preferenceController setDoc:self];
 	}
 	[preferenceController showWindow:self];
-}
-
-- (IBAction)showConsoleAction:(id)sender
-{
-	char buf[64];		
-			
-	if (!consoleController) {
-		sprintf(buf, "Build %d", [c64 buildNr]);
-		ConsoleController *controller = [[ConsoleController alloc] init];
-		[controller setC64:c64];
-		[controller setDoc:self];
-		[controller insertText:strdup("Welcome to Virtual C64")];		
-		[controller insertText:strdup(buf)];		
-		[controller insertText:strdup("")];		
-		
-		consoleController = controller;
-	}
-	[consoleController showWindow:self];
 }
 
 

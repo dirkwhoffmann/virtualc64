@@ -28,7 +28,6 @@
 #import "MountDialog.h"
 #import "RomDialog.h"
 #import "PreferenceController.h"
-#import "ConsoleController.h"
 #import "C64Proxy.h"
 
 @protocol ListenerProtocol
@@ -61,7 +60,6 @@
 	IBOutlet MountDialog *mountDialog;
 	IBOutlet RomDialog *romDialog;
 	PreferenceController *preferenceController;
-	ConsoleController *consoleController;
 	
 	// Main screen
 	IBOutlet VICScreen *screen;
