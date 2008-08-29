@@ -18,6 +18,7 @@
 
 #import "MyDocument.h"
 #import "Listener.h"
+#import "AudioDevice.h"
 
 // --------------------------------------------------------------------------
 // Listener Proxy

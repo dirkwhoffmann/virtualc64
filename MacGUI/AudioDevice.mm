@@ -16,11 +16,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "AudioDevice.h"
-
+#import "MyDocument.h"
 
 #define BUFFERSIZE 2048
-
 
 #define CHECK_ERROR(ERRNO, RESULT) \
 	if (RESULT != kAudioHardwareNoError) \

@@ -19,7 +19,6 @@
 #ifndef _SIDVOICE_INC
 #define _SIDVOICE_INC
 
-#include <math.h>
 #include "basic.h"
 
 //! The SID's waveforms.

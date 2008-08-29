@@ -19,6 +19,8 @@
 #ifndef _VIA6522_INC
 #define _VIA6522_INC
 
+#include "VirtualComponent.h"
+
 class VC1541;
 
 class VIA6522 : public VirtualComponent {

@@ -21,11 +21,6 @@
 #ifndef _BASIC_INC
 #define _BASIC_INC
 
-//! Indicate that we run in debug mode
-#define DEBUG
-
-
-
 // General Includes
 #include <stdint.h>
 #include <stdio.h>
@@ -41,8 +36,7 @@
 #include <errno.h>
 #include <sched.h>
 #include <assert.h>
-
-// #include "VirtualComponent.h"
+#include <math.h>
 
 // Macros
 
@@ -98,12 +92,6 @@ bool checkFileSize(const char *filename, int min, int max);
 bool 
 checkFileHeader(const char *filename, int *header);
 
-//! Returns the bit pattern of a 8-Bit value as string
-/*! The functions is used by several debugging functions to produce human readable output.
-	Don't free the strings as they are cached in a static array. 
-*/
-// const char *getBitPattern(uint8_t value);
-
 //! Write up to four bytes to file
 /*! \param file handle of the destination file
 	\param value 64 Bit value containing the data to written. The lower bytes are written first.
@@ -153,9 +141,6 @@ uint8_t localTimeSec();
 uint8_t localTimeMin();
 //! Read real-time clock (hours)
 uint8_t localTimeHour();
-
-//! Convert an ASCII character to a PET character
-uint8_t ascii2pet(char c);
 
 //! Let the process sleep for msec microseconds
 /*! \todo The functions is right now called inside the execution thread of the CPU. The value is slightly too high, because

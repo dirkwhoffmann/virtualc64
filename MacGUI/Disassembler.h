@@ -17,7 +17,8 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "C64Proxy.h"
+
+@class C64Proxy;
 
 @interface Disassembler : NSFormatter {
 

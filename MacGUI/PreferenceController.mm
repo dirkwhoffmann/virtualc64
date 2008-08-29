@@ -16,9 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "C64.h"
 #import "MyDocument.h"
-#import "PreferenceController.h"
 
 /* System */
 NSString *VC64PALorNTSCKey    = @"VC64PALorNTSCKey";

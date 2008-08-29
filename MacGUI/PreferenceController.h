@@ -17,7 +17,6 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "C64Proxy.h"
 
 /* System */
 extern NSString *VC64PALorNTSCKey;

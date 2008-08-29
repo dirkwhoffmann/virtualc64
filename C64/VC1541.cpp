@@ -18,7 +18,6 @@
 
 #include "C64.h"
 
-
 VC1541::VC1541()
 {
 	debug("Creating virtual VC1541 at address %p\n", this);

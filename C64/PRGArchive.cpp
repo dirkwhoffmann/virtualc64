@@ -1,4 +1,4 @@
-#include "PRGArchive.h"
+#include "C64.h"
 
 PRGArchive::PRGArchive()
 {

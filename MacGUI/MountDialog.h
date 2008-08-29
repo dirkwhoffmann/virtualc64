@@ -17,7 +17,8 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#include "C64.h"
+
+class Archive;
 
 @interface MountDialog : NSWindow
 {

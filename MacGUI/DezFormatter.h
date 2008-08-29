@@ -18,7 +18,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface DezFormatter : NSFormatter {	
 	int min, max;
 	NSString *format;	

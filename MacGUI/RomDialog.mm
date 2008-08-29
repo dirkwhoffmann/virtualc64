@@ -6,8 +6,7 @@
 //  Copyright 2008 __MyCompanyName__. All rights reserved.
 //
 
-#import "RomDialog.h"
-
+#import "MyDocument.h"
 
 @implementation RomDialog
 

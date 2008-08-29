@@ -1,4 +1,4 @@
-#include "D64Archive.h"
+#include "C64.h"
 
 D64Archive::D64Archive()
 {

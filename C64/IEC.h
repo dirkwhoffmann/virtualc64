@@ -21,7 +21,6 @@
 #ifndef _IEC_INC
 #define _IEC_INC
 
-#include "basic.h"
 #include "VirtualComponent.h"
 
 #define IEC_READY 0
