@@ -165,11 +165,17 @@
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 
 	NSLog(@"driveDataAction (%s)", transfering ? "on" : "off");
-	if (transfering && warpLoad) {
-		[c64 cpuSetWarpMode:YES];
-	}
-	if (!transfering && !alwaysWarp) {
-		[c64 cpuSetWarpMode:NO];
+
+	if (transfering) {
+		[driveBusy setHidden:false];
+		[driveBusy startAnimation:self];
+		if (warpLoad)
+			[c64 cpuSetWarpMode:YES];			
+	} else {
+		[driveBusy stopAnimation:self];
+		[driveBusy setHidden:true];		
+		if (!alwaysWarp)
+			[c64 cpuSetWarpMode:NO];
 	}
 	
 	[arp release];
@@ -180,6 +186,7 @@
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 
 	NSLog(@"driveMotorAction");
+#if 0
 	if (rotating) {
 		[driveBusy setHidden:false];
 		[driveBusy startAnimation:self];
@@ -187,6 +194,7 @@
 		[driveBusy stopAnimation:self];
 		[driveBusy setHidden:true];
 	}
+#endif
 	
 	[arp release];
 }
@@ -196,11 +204,6 @@
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 	
 	NSLog(@"warpmodeAction");
-
-//	if (warping)
-//		[warpMode setImage:[NSImage imageNamed:@"warpOff"]];
-//	else
-//		[warpMode setImage:[NSImage imageNamed:@"warpOn"]];
 	
 	[arp release];
 }

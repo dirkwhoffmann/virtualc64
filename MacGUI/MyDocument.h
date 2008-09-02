@@ -115,7 +115,7 @@
 	IBOutlet NSTextField *ciaLatchedTimerA;
 	IBOutlet NSButton *ciaRunningA;
 	IBOutlet NSButton *ciaOneShotA;
-	IBOutlet NSButton *ciaCountUnterflowsA;
+	IBOutlet NSButton *ciaCountUnderflowsA;
 	IBOutlet NSButton *ciaSignalPendingA;
 	IBOutlet NSButton *ciaInterruptEnableA;
 
@@ -125,7 +125,7 @@
 	IBOutlet NSTextField *ciaLatchedTimerB;
 	IBOutlet NSButton *ciaRunningB;
 	IBOutlet NSButton *ciaOneShotB;
-	IBOutlet NSButton *ciaCountUnterflowsB;
+	IBOutlet NSButton *ciaCountUnderflowsB;
 	IBOutlet NSButton *ciaSignalPendingB;
 	IBOutlet NSButton *ciaInterruptEnableB;
 	
