@@ -153,7 +153,7 @@ public:
 - (CPU::AddressingMode) cpuGetAddressingMode:(uint8_t)opcode;
 
 // - (CPU::ErrorState) cpuGetErrorState;
-- (int) cpuGetTopOfCallStack;
+ - (int) cpuGetTopOfCallStack;
 - (int) cpuGetBreakpoint:(int)addr;
 - (void) cpuSetBreakpoint:(int)addr tag:(uint8_t)t;
 - (void) cpuSetHardBreakpoint:(int)addr;

@@ -383,12 +383,6 @@ public:
 	//! Execute a single command
 	/*! Interrupt requests are ignored. Used inside the \a execute function and by the "step into" feature of the debugger. */
 	int step();
-	//! Run the CPU for the specified number of cycles 
-	/*! This is the normal operation mode. Interrupt requests are handled.
-		\param numberOfCycles Number of cycles to execute
-		\param deadCycles An optional argument. Specified the number of cycles that elapse without any CPU operation
-	*/
-	int  execute(int numberOfCycles, int deadCycles = 0);
 
 	//! Execute CPU for one cycle
 	/*! This is the normal operation mode. Interrupt requests are handled.

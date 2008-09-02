@@ -279,6 +279,7 @@
 // Loading and saving
 // --------------------------------------------------------------------------------
 
+#if 0
 + (bool)isNativeType:(NSString *)aType
 {
 	return [aType isEqual:@"VC64"];
@@ -307,6 +308,7 @@
 	NSLog(@"revertFromFile %@ (type %@)", filename, type);
 	return [c64 loadSnapshot:filename];
 }
+#endif
 
 - (BOOL)loadRom:(NSString *)filename
 {
@@ -430,9 +432,9 @@
 		if( portA == IPD_KEYBOARD )
 			[theItem setImage:[NSImage imageNamed:@"keyboard32"]];
 		else if( portA == IPD_JOYSTICK_1 )
-			[theItem setImage:[NSImage imageNamed:@"joystick1_32"]];
-		else if( portA == IPD_JOYSTICK_2 )
 			[theItem setImage:[NSImage imageNamed:@"joystick2_32"]];
+		else if( portA == IPD_JOYSTICK_2 )
+			[theItem setImage:[NSImage imageNamed:@"joystick1_32"]];
 		else if( portA == IPD_UNCONNECTED )
 			[theItem setImage:[NSImage imageNamed:@"none_32"]];
 		else 
