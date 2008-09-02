@@ -301,6 +301,7 @@ CPU::step()
 
 	// Execute next CPU instruction
 	elapsedCycles = (*this.*actionFunc[peekPC()])();
+	// assert(elapsedCycles >= 0);
 	cycles += elapsedCycles;
 
 	// Disassemble next instruction, if requested
@@ -312,69 +313,13 @@ CPU::step()
 	return elapsedCycles;
 }
 
-int 
-CPU::execute(int numberOfCycles, int deadCycles)
-{	
-	assert(deadCycles <= numberOfCycles);
-	
-	uint64_t startCycles  = cycles;
-	uint64_t targetCycles = cycles + numberOfCycles;
-	uint64_t currentCycles;
-	
-	cycles += deadCycles;
-	
-	do {
-		currentCycles = cycles;
-		
-		// Check for interrupt request
-		if (nmiLine) {
-			// The NMI line is cleared. Otherwise, the NMI would be recursively interrupted by itself
-			clearNMILine(0xff);
-			mem->poke(0x100+(SP--), HI_BYTE(PC));
-			mem->poke(0x100+(SP--), LO_BYTE(PC));
-			mem->poke(0x100+(SP--), getPWithClearedB());	
-			setI(1);
-			setPCL(mem->peek(0xFFFA));
-			setPCH(mem->peek(0xFFFB));
-			cycles += 7;
-		}
-
-		else if (irqLine && !getI()) {
-			mem->poke(0x100+(SP--), HI_BYTE(PC));
-			mem->poke(0x100+(SP--), LO_BYTE(PC));
-			mem->poke(0x100+(SP--), getPWithClearedB());	
-			setI(1);
-			setPCL(mem->peek(0xFFFE));
-			setPCH(mem->peek(0xFFFF));
-			cycles += 7;
-		} 
-		
-		else {						
-			// Execute next command
-			(void)step();
-		}
-		
-		// Check breakpoint tag
-		if (breakpoint[PC] != NO_BREAKPOINT) {
-			// Soft breakpoints get deleted when reached
-			breakpoint[PC] &= (255 - SOFT_BREAKPOINT);
-			setErrorState(BREAKPOINT_REACHED);
-			debug("Breakpoint reached\n");
-		}
-
-		// Interrupt execution, if we reach a break- or watchpoint
-		if (errorState != OK) {
-			return 0;
-		}		
-	} while (cycles < targetCycles);
-
-	return cycles - startCycles;
-} 
-
 void 
 CPU::executeOneCycle(int deadCycles)
 {
+	assert(deadCycles >= 0);
+
 	uint64_t startCycles = cycles;
+	
 	int executedCycles; // number of cycles consumed by the executed command
 
 	cycles += deadCycles;
@@ -407,7 +352,7 @@ CPU::executeOneCycle(int deadCycles)
 	} else {						
 		(void)step();
 	}
-		
+	
 	// Check breakpoint tag
 	if (breakpoint[PC] != NO_BREAKPOINT) {
 		// Soft breakpoints get deleted when reached
@@ -417,8 +362,10 @@ CPU::executeOneCycle(int deadCycles)
 	}
 			
 	executedCycles = (int)(cycles - startCycles);
-	if (executedCycles < 1 || executedCycles > 20) 
+	if (executedCycles < 1 || executedCycles > 20)  {
 		debug("WARNING: Something is wrong with the cycle count %d %04X!!!\n", executedCycles, getPC());
+		debug("cycles = %d startCycles = %d\n", (int)cycles, (int)startCycles);
+	}
 	delay = executedCycles - 1;	
 }
 

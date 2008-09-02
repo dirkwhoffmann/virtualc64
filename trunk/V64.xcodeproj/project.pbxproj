@@ -65,7 +65,6 @@
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
 		509DF2480A9F681900AE0859 /* keyboard32.png in Resources */ = {isa = PBXBuildFile; fileRef = 509DF2470A9F681900AE0859 /* keyboard32.png */; };
-		509DF24A0A9F682300AE0859 /* joystick32.png in Resources */ = {isa = PBXBuildFile; fileRef = 509DF2490A9F682300AE0859 /* joystick32.png */; };
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
 		50A0E0250A8F332A0067714C /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0240A8F332A0067714C /* System.framework */; };
 		50A3E08A0E66F7BC00D3564D /* play32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A3E0890E66F7BC00D3564D /* play32.png */; };
@@ -198,7 +197,6 @@
 		509AEAFD0C325EFB001FC9FD /* P00Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P00Archive.h; sourceTree = "<group>"; };
 		509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = P00Archive.cpp; sourceTree = "<group>"; };
 		509DF2470A9F681900AE0859 /* keyboard32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard32.png; path = images/keyboard32.png; sourceTree = "<group>"; };
-		509DF2490A9F682300AE0859 /* joystick32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = joystick32.png; path = images/joystick32.png; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
 		50A3E0890E66F7BC00D3564D /* play32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play32.png; path = images/play32.png; sourceTree = "<group>"; };
@@ -453,7 +451,6 @@
 				50E4C0270C3CFBE400CB6B43 /* fullscreen.png */,
 				38AF83890C7BA24A00F6DBCE /* joystick1_32.png */,
 				38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */,
-				509DF2490A9F682300AE0859 /* joystick32.png */,
 				509DF2470A9F681900AE0859 /* keyboard32.png */,
 				5005966D0D23FA1C00FD44B3 /* LEDblue.png */,
 				500596670D23F9E800FD44B3 /* LEDgray.png */,
@@ -569,7 +566,6 @@
 				50287EEB0A7CA86900292533 /* stepOut32.png in Resources */,
 				50D861790A7DEEAE00782345 /* DocIcon.icns in Resources */,
 				509DF2480A9F681900AE0859 /* keyboard32.png in Resources */,
-				509DF24A0A9F682300AE0859 /* joystick32.png in Resources */,
 				50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
 				50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */,

@@ -44,7 +44,7 @@ void
 	int cyclesPerRasterline, noOfRasterlines, rasterline, cycle;
 	
 	// Configure thread properties...
-	c64->debug("CPU execution thread started\n");
+	c64->debug("Execution thread started\n");
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 	pthread_cleanup_push(threadCleanup, thisC64);
@@ -65,6 +65,7 @@ void
 
 				// Pass control to the virtual CPUs
 				c64->cpu->executeOneCycle(cyclePenalty); 
+
 				cyclePenalty = 0;
 				if (c64->cpu->getErrorState() != CPU::OK) break;
 				c64->floppy->executeOneCycle();

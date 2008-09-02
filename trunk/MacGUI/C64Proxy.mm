@@ -102,36 +102,6 @@ void ListenerProxy::logAction(char *message)
 // Initialization
 // --------------------------------------------------------------------------
 
-#if 0
-- (id) init
-{
-    self = [super init];
-
-	// Create listener object
-	listener = new ListenerProxy();
-		
-	// Create virtual machine and initialize references
-	c64 = new C64();
-	cia[0] = NULL; // unused
-	cia[1] = c64->cia1;
-	cia[2] = c64->cia2;
-	iec = c64->iec;
-	cpu = c64->floppy->cpu; // c64->cpu;
-	mem = c64->floppy->mem; // c64->mem;
-	
-	// Initialize CoreAudio sound interface
-	sidDevice = new SIDDevice();	// create Core Audio sound device		
-	int result = sidDevice->SetupDevice(c64->sid); // setup and start playback
-	if (0 != result ) {
-		NSLog(@"WARNING: Couldn't enable sound.");
-		if (result == -2)
-			NSLog(@"WARNING: Connected audio hardware doesn't support mono or stereo playback");
-	}
-		
-    return self;
-}
-#endif
-
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 {
     self = [super init];
@@ -149,8 +119,10 @@ void ListenerProxy::logAction(char *message)
 	cia[1] = c64->cia1;
 	cia[2] = c64->cia2;
 	iec = c64->iec;
-	cpu = c64->floppy->cpu; // c64->cpu;
-	mem = c64->floppy->mem; // c64->mem;
+	cpu = c64->cpu;
+	mem = c64->mem;
+	// cpu = c64->floppy->cpu;
+	// mem = c64->floppy->mem;
 	
 	// Initialize CoreAudio sound interface
 	audioDevice = [[AudioDevice alloc] initWithSID:c64->sid];
@@ -285,17 +257,16 @@ void ListenerProxy::logAction(char *message)
 - (char *) cpuGetMnemonic:(uint8_t)opcode { return cpu->getMnemonic(opcode); }
 - (CPU::AddressingMode) cpuGetAddressingMode:(uint8_t)opcode { return cpu->getAddressingMode(opcode); }
 
-// - (CPU::ErrorState) cpuGetErrorState { return cpu->getErrorState(); }
 - (int) cpuGetTopOfCallStack { return cpu->getTopOfCallStack(); }
 
-- (int)   cpuGetBreakpoint:(int)addr { return cpu->getBreakpoint(addr); }
-- (void)  cpuSetBreakpoint:(int)addr tag:(uint8_t)t { cpu->setBreakpoint(addr, t); }
-- (void)  cpuSetHardBreakpoint:(int)addr { cpu->setHardBreakpoint(addr); };
-- (void)  cpuDeleteHardBreakpoint:(int)addr { cpu->deleteHardBreakpoint(addr); }
-- (void)  cpuToggleHardBreakpoint:(int)addr { cpu->toggleHardBreakpoint(addr); }
-- (void)  cpuSetSoftBreakpoint:(int)addr { cpu->setSoftBreakpoint(addr); };
-- (void)  cpuDeleteSoftBreakpoint:(int)addr { cpu->deleteSoftBreakpoint(addr); }
-- (void)  cpuToggleSoftBreakpoint:(int)addr { cpu->toggleSoftBreakpoint(addr); }
+- (int) cpuGetBreakpoint:(int)addr { return cpu->getBreakpoint(addr); }
+- (void) cpuSetBreakpoint:(int)addr tag:(uint8_t)t { cpu->setBreakpoint(addr, t); }
+- (void) cpuSetHardBreakpoint:(int)addr { cpu->setHardBreakpoint(addr); };
+- (void) cpuDeleteHardBreakpoint:(int)addr { cpu->deleteHardBreakpoint(addr); }
+- (void) cpuToggleHardBreakpoint:(int)addr { cpu->toggleHardBreakpoint(addr); }
+- (void) cpuSetSoftBreakpoint:(int)addr { cpu->setSoftBreakpoint(addr); };
+- (void) cpuDeleteSoftBreakpoint:(int)addr { cpu->deleteSoftBreakpoint(addr); }
+- (void) cpuToggleSoftBreakpoint:(int)addr { cpu->toggleSoftBreakpoint(addr); }
 
 
 // --------------------------------------------------------------------------
