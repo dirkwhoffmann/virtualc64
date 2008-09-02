@@ -1793,20 +1793,17 @@
 - (void)enableUserEditing:(BOOL)enabled
 {
 	NSControl *controls[] = { 
-		// Debug buttons
-
-		// TODO
-		
 		// CPU panel
 		pc, sp, a, x, y, 
-		// N, Z, C, I, B, D, V,
+		N, Z, C, I, B, D, V,
+		// mhzField,
 		// Memory panel
 		watchValField,
 		// CIA panel
 		ciaDataPortA, ciaDataPortDirectionA, ciaTimerA, ciaLatchedTimerA, 
-		// ciaRunningA, ciaOneShotA, ciaCountUnderflowsA, ciaSignalPendingA, ciaInterruptEnableA,
+		ciaRunningA, ciaOneShotA, ciaCountUnderflowsA, ciaSignalPendingA, ciaInterruptEnableA,
 		ciaDataPortB, ciaDataPortDirectionB, ciaTimerB, ciaLatchedTimerB, 
-		// ciaRunningB, ciaOneShotB, ciaCountUnderflowsB, ciaSignalPendingB, ciaInterruptEnableB,
+		ciaRunningB, ciaOneShotB, ciaCountUnderflowsB, ciaSignalPendingB, ciaInterruptEnableB,
 		todHours, todMinutes, todSeconds, todTenth,
 		alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
 		// VIC panel
@@ -1816,7 +1813,6 @@
 	// Enable / disable controls
 	for (int i = 0;; i++) {
 		if (controls[i] == NULL) break;
-		// NSLog(@"Editing for control %@ %@", controls[i], enabled ? @"enabled" : @"disabled");
 		[controls[i] setEnabled:enabled];
 	}
 
@@ -1825,6 +1821,9 @@
 	[[memTableView tableColumnWithIdentifier:@"hex1"] setEditable:enabled];
 	[[memTableView tableColumnWithIdentifier:@"hex2"] setEditable:enabled];
 	[[memTableView tableColumnWithIdentifier:@"hex3"] setEditable:enabled];
+	
+	// The following components are always disabled
+	[mhzField setEnabled:NO];
 }
 
 // --------------------------------------------------------------------------------
