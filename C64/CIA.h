@@ -452,7 +452,6 @@ public:
 	//! Simulates a joystick movement
 	/*! \param nr r number (1 or 2)
 		\param value bit pattern of joystick movement */
-	void joystickAction(int nr, uint8_t value);
 	void setJoystickBits(int nr, uint8_t mask);
 	void clearJoystickBits(int nr, uint8_t mask);
 

@@ -528,13 +528,7 @@ CIA1::peek(uint16_t addr)
 			result &= portLinesA; 
 			result &= joystick[0];
 			return result;
-#if 0			
-			portLinesA; // External port lines, = 0xff if nothing is connected
-			result &= (iomem[CIA_DATA_PORT_A] & 
-			result = (iomem[CIA_DATA_PORT_A] & iomem[CIA_DATA_DIRECTION_A]) | (portLinesA & ~iomem[CIA_DATA_DIRECTION_A]);
-			test   = (iomem[CIA_DATA_PORT_B] & iomem[CIA_DATA_DIRECTION_A]) | (portLinesB & ~iomem[CIA_DATA_DIRECTION_B]);
-			result &= keyboard->getRowValues(iomem[CIA_DATA_PORT_A] & joystick[0]); 
-#endif				
+
 		case CIA_DATA_PORT_B:
 			uint8_t bitmask = CIA1::peek(CIA_DATA_PORT_A);
 			// We change only those bits that are configured as outputs, all input bits are 1
@@ -549,15 +543,6 @@ CIA1::peek(uint16_t addr)
 			result &= keyboard->getRowValues(bitmask); 
 			return result;
 		
-#if 0
-			// We change only those bits that are configured as outputs, all input bits are 1
-			result = iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B];
-			// // The external port lines can pull down any bit, even if it configured as output
-			result &= portLines; 
-			result &= joystick[1];
-
-			return result;
-#endif
 		default:
 			return CIA::peek(addr);	
 	}
@@ -607,8 +592,6 @@ CIA1::pollJoystick( Joystick *joy, int joyDevNo ) {
 void 
 CIA1::poke(uint16_t addr, uint8_t value)
 {
-	// uint8_t writeMask;
-	
 	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
 	
 	// The following registers need special handling	
@@ -624,16 +607,6 @@ CIA1::poke(uint16_t addr, uint8_t value)
 	}
 }
 	
-// still needed!?
-void 
-CIA1::joystickAction(int nr, uint8_t value)
-{
-	assert(nr == 1 || nr == 2);
-
-	if (nr == 1) joystick[0] = value;
-	else if (nr == 2) joystick[1] = value;
-}
-
 void 
 CIA1::setJoystickBits(int nr, uint8_t mask)
 {
