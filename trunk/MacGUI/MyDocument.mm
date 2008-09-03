@@ -1266,32 +1266,140 @@
 	[self ciaSetInterruptEnableFlagB:[self currentCIA] value:[sender intValue]];
 }
 
-// TODO: IMPLEMENTATION
-- (IBAction)todHoursAction:(id)sender { [self refresh];}
+- (IBAction)todSetHours:(int)nr value:(uint8_t)value
+{
+	[c64 ciaSetTodHours:nr value:value];
+	[self refresh];
+}
 
-// TODO: IMPLEMENTATION
-- (IBAction)todMinutesAction:(id)sender { [self refresh];}
+- (IBAction)todHoursAction:(id)sender 
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] todSetHours:[self currentCIA] value:[c64 ciaGetTodHours:[self currentCIA]]];
+	if (![undo isUndoing]) [undo setActionName:@"TOD hours"];
+	
+	[self todSetHours:[self currentCIA] value:[sender intValue]];
+}	
 
-// TODO: IMPLEMENTATION
-- (IBAction)todSecondsAction:(id)sender { [self refresh];}
+- (IBAction)todSetMinutes:(int)nr value:(uint8_t)value
+{
+	[c64 ciaSetTodMinutes:nr value:value];
+	[self refresh];
+}
 
-// TODO: IMPLEMENTATION
-- (IBAction)todTenthAction:(id)sender { [self refresh];}
+- (IBAction)todMinutesAction:(id)sender 
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] todSetMinutes:[self currentCIA] value:[c64 ciaGetTodMinutes:[self currentCIA]]];
+	if (![undo isUndoing]) [undo setActionName:@"TOD minutes"];
+	
+	[self todSetMinutes:[self currentCIA] value:[sender intValue]];
+}
 
-// TODO: IMPLEMENTATION
-- (IBAction)alarmHoursAction:(id)sender { [self refresh];}
+- (IBAction)todSetSeconds:(int)nr value:(uint8_t)value
+{
+	[c64 ciaSetTodSeconds:nr value:value];
+	[self refresh];
+}
 
-// TODO: IMPLEMENTATION
-- (IBAction)alarmMinutesAction:(id)sender { [self refresh];}
+- (IBAction)todSecondsAction:(id)sender 
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] todSetSeconds:[self currentCIA] value:[c64 ciaGetTodSeconds:[self currentCIA]]];
+	if (![undo isUndoing]) [undo setActionName:@"TOD seconds"];
+	
+	[self todSetSeconds:[self currentCIA] value:[sender intValue]];
+}
 
-// TODO: IMPLEMENTATION
-- (IBAction)alarmSecondsAction:(id)sender { [self refresh];}
+- (IBAction)todSetTenth:(int)nr value:(uint8_t)value
+{
+	[c64 ciaSetTodTenth:nr value:value];
+	[self refresh];
+}
 
-// TODO: IMPLEMENTATION
-- (IBAction)alarmTenthAction:(id)sender { [self refresh];}
+- (IBAction)todTenthAction:(id)sender 
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] todSetTenth:[self currentCIA] value:[c64 ciaGetTodTenth:[self currentCIA]]];
+	if (![undo isUndoing]) [undo setActionName:@"TOD hours"];
 
-// TODO: IMPLEMENTATION
-- (IBAction)todInterruptEnabledAction:(id)sender { [self refresh];}
+	[self todSetTenth:[self currentCIA] value:[sender intValue]];
+}
+
+- (IBAction)alarmSetHours:(int)nr value:(uint8_t)value
+{
+	[c64 ciaSetAlarmHours:nr value:value];
+	[self refresh];
+}
+
+- (IBAction)alarmHoursAction:(id)sender 
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] alarmSetHours:[self currentCIA] value:[c64 ciaGetAlarmHours:[self currentCIA]]];
+	if (![undo isUndoing]) [undo setActionName:@"Alarm hours"];
+	
+	[self alarmSetHours:[self currentCIA] value:[sender intValue]];
+}
+
+- (IBAction)alarmSetMinutes:(int)nr value:(uint8_t)value
+{
+	[c64 ciaSetAlarmMinutes:nr value:value];
+	[self refresh];
+}
+
+- (IBAction)alarmMinutesAction:(id)sender 
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] alarmSetMinutes:[self currentCIA] value:[c64 ciaGetAlarmMinutes:[self currentCIA]]];
+	if (![undo isUndoing]) [undo setActionName:@"Alarm minutes"];
+	
+	[self alarmSetMinutes:[self currentCIA] value:[sender intValue]];
+}
+
+- (IBAction)alarmSetSeconds:(int)nr value:(uint8_t)value
+{
+	[c64 ciaSetAlarmSeconds:nr value:value];
+	[self refresh];
+}
+
+- (IBAction)alarmSecondsAction:(id)sender 
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] alarmSetSeconds:[self currentCIA] value:[c64 ciaGetAlarmSeconds:[self currentCIA]]];
+	if (![undo isUndoing]) [undo setActionName:@"Alarm seconds"];
+	
+	[self alarmSetSeconds:[self currentCIA] value:[sender intValue]];
+}
+
+- (IBAction)alarmSetTenth:(int)nr value:(uint8_t)value
+{
+	[c64 ciaSetAlarmTenth:nr value:value];
+	[self refresh];
+}
+
+- (IBAction)alarmTenthAction:(id)sender 
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] alarmSetTenth:[self currentCIA] value:[c64 ciaGetAlarmTenth:[self currentCIA]]];
+	if (![undo isUndoing]) [undo setActionName:@"Alarm hours"];
+	
+	[self alarmSetTenth:[self currentCIA] value:[sender intValue]];
+}
+
+- (IBAction)setTodInterruptEnable:(int)nr value:(bool)b
+{
+	[c64 todSetInterruptEnabled:nr value:b];
+	[self refresh];
+}
+
+- (IBAction)todInterruptEnabledAction:(id)sender 
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] setTodInterruptEnable:[self currentCIA] value:[c64 todIsInterruptEnabled:[self currentCIA]]];
+	if (![undo isUndoing]) [undo setActionName:@"Alarm enable"];
+	
+	[self setTodInterruptEnable:[self currentCIA] value:[sender intValue]];
+}
 
 
 // --------------------------------------------------------------------------------
@@ -1642,33 +1750,36 @@
 
 - (void)refreshCIA
 {
-	[ciaDataPortA setIntValue:[c64 ciaGetDataPortA:[self currentCIA]]];
-	[ciaDataPortDirectionA setIntValue:[c64 ciaGetDataPortDirectionA:[self currentCIA]]];
-	[ciaTimerA setIntValue:[c64 ciaGetTimerA:[self currentCIA]]];
-	[ciaLatchedTimerA setIntValue:[c64 ciaGetTimerLatchA:[self currentCIA]]];
-	[ciaRunningA setIntValue:[c64 ciaGetStartFlagA:[self currentCIA]]];
-	[ciaOneShotA setIntValue:[c64 ciaGetOneShotFlagA:[self currentCIA]]];
-	[ciaSignalPendingA setIntValue:[c64 ciaGetPendingSignalFlagA:[self currentCIA]]];
-	[ciaInterruptEnableA setIntValue:[c64 ciaGetInterruptEnableFlagA:[self currentCIA]]];
+	int cia = [self currentCIA];
 	
-	[ciaDataPortB setIntValue:[c64 ciaGetDataPortB:[self currentCIA]]];
-	[ciaDataPortDirectionB setIntValue:[c64 ciaGetDataPortDirectionB:[self currentCIA]]];
-	[ciaTimerB setIntValue:[c64 ciaGetTimerB:[self currentCIA]]];
-	[ciaLatchedTimerB setIntValue:[c64 ciaGetTimerLatchB:[self currentCIA]]];
-	[ciaRunningB setIntValue:[c64 ciaGetStartFlagB:[self currentCIA]]];
-	[ciaOneShotB setIntValue:[c64 ciaGetOneShotFlagB:[self currentCIA]]];
-	[ciaSignalPendingB setIntValue:[c64 ciaGetPendingSignalFlagB:[self currentCIA]]];
-	[ciaInterruptEnableB setIntValue:[c64 ciaGetInterruptEnableFlagB:[self currentCIA]]];
+	[ciaDataPortA setIntValue:[c64 ciaGetDataPortA:cia]];
+	[ciaDataPortDirectionA setIntValue:[c64 ciaGetDataPortDirectionA:cia]];
+	[ciaTimerA setIntValue:[c64 ciaGetTimerA:cia]];
+	[ciaLatchedTimerA setIntValue:[c64 ciaGetTimerLatchA:cia]];
+	[ciaRunningA setIntValue:[c64 ciaGetStartFlagA:cia]];
+	[ciaOneShotA setIntValue:[c64 ciaGetOneShotFlagA:cia]];
+	[ciaSignalPendingA setIntValue:[c64 ciaGetPendingSignalFlagA:cia]];
+	[ciaInterruptEnableA setIntValue:[c64 ciaGetInterruptEnableFlagA:cia]];
 	
-	[todHours setIntValue:[c64 ciaGetTodHours:[self currentCIA]]];
-	[todMinutes setIntValue:[c64 ciaGetTodMinutes:[self currentCIA]]];
-	[todSeconds setIntValue:[c64 ciaGetTodSeconds:[self currentCIA]]];
-	[todTenth setIntValue:[c64 ciaGetTodTenth:[self currentCIA]]];
+	[ciaDataPortB setIntValue:[c64 ciaGetDataPortB:cia]];
+	[ciaDataPortDirectionB setIntValue:[c64 ciaGetDataPortDirectionB:cia]];
+	[ciaTimerB setIntValue:[c64 ciaGetTimerB:cia]];
+	[ciaLatchedTimerB setIntValue:[c64 ciaGetTimerLatchB:cia]];
+	[ciaRunningB setIntValue:[c64 ciaGetStartFlagB:cia]];
+	[ciaOneShotB setIntValue:[c64 ciaGetOneShotFlagB:cia]];
+	[ciaSignalPendingB setIntValue:[c64 ciaGetPendingSignalFlagB:cia]];
+	[ciaInterruptEnableB setIntValue:[c64 ciaGetInterruptEnableFlagB:cia]];
 	
-	[alarmHours setIntValue:[c64 ciaGetAlarmHours:[self currentCIA]]];
-	[alarmMinutes setIntValue:[c64 ciaGetAlarmMinutes:[self currentCIA]]];
-	[alarmSeconds setIntValue:[c64 ciaGetAlarmSeconds:[self currentCIA]]];
-	[alarmTenth setIntValue:[c64 ciaGetAlarmTenth:[self currentCIA]]];	
+	[todHours setIntValue:[c64 ciaGetTodHours:cia]];
+	[todMinutes setIntValue:[c64 ciaGetTodMinutes:cia]];
+	[todSeconds setIntValue:[c64 ciaGetTodSeconds:cia]];
+	[todTenth setIntValue:[c64 ciaGetTodTenth:cia]];
+	
+	[alarmHours setIntValue:[c64 ciaGetAlarmHours:cia]];
+	[alarmMinutes setIntValue:[c64 ciaGetAlarmMinutes:cia]];
+	[alarmSeconds setIntValue:[c64 ciaGetAlarmSeconds:cia]];
+	[alarmTenth setIntValue:[c64 ciaGetAlarmTenth:cia]];	
+	[todInterruptEnabled setIntValue:[c64 todIsInterruptEnabled:cia]];
 }
 
 - (void)refreshVIC
@@ -1805,7 +1916,7 @@
 		ciaDataPortB, ciaDataPortDirectionB, ciaTimerB, ciaLatchedTimerB, 
 		ciaRunningB, ciaOneShotB, ciaCountUnderflowsB, ciaSignalPendingB, ciaInterruptEnableB,
 		todHours, todMinutes, todSeconds, todTenth,
-		alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
+		alarmHours, alarmMinutes, alarmSeconds, alarmTenth, todInterruptEnabled,
 		// VIC panel
 		VicSpriteX, VicSpriteY, VicSpriteColor, VicRasterline, VicRasterInterrupt, VicDX, VicDY,
 		NULL };

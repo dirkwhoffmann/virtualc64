@@ -21,10 +21,6 @@
 
 #include "VirtualComponent.h"
 
-// TODO: Probably a bug...
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// Values need to be returned in BCD, not in binary
-
 //! Time of day clock (TOD)
 /*! Each CIA chip contains a time of day clock, counting hours, minutes, seconds and tenth of a second.
 Every TOD clock features an alarm mechanism. When the alarm time is reached, an interrupt is initiated.

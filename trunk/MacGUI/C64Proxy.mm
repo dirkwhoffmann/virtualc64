@@ -351,14 +351,25 @@ void ListenerProxy::logAction(char *message)
 - (void) ciaToggleInterruptEnableFlagB:(int)nr {cia[nr]->toggleInterruptEnableFlagB(); }
 
 - (uint8_t) ciaGetTodHours:(int)nr { return cia[nr]->tod.getTodHours(); }
+- (void) ciaSetTodHours:(int)nr value:(uint8_t)value { cia[nr]->tod.setTodHours(value); }
 - (uint8_t) ciaGetTodMinutes:(int)nr { return cia[nr]->tod.getTodMinutes(); }
+- (void) ciaSetTodMinutes:(int)nr value:(uint8_t)value { cia[nr]->tod.setTodMinutes(value); }
 - (uint8_t) ciaGetTodSeconds:(int)nr { return cia[nr]->tod.getTodSeconds(); }
+- (void) ciaSetTodSeconds:(int)nr value:(uint8_t)value { cia[nr]->tod.setTodSeconds(value); }
 - (uint8_t) ciaGetTodTenth:(int)nr { return cia[nr]->tod.getTodTenth(); }
+- (void) ciaSetTodTenth:(int)nr value:(uint8_t)value { cia[nr]->tod.setTodTenth(value); }
 
 - (uint8_t) ciaGetAlarmHours:(int)nr { return cia[nr]->tod.getAlarmHours(); }
+- (void) ciaSetAlarmHours:(int)nr value:(uint8_t)value { cia[nr]->tod.setAlarmHours(value); }
 - (uint8_t) ciaGetAlarmMinutes:(int)nr { return cia[nr]->tod.getAlarmMinutes(); }
+- (void) ciaSetAlarmMinutes:(int)nr value:(uint8_t)value { cia[nr]->tod.setAlarmMinutes(value); }
 - (uint8_t) ciaGetAlarmSeconds:(int)nr { return cia[nr]->tod.getAlarmSeconds(); }
+- (void) ciaSetAlarmSeconds:(int)nr value:(uint8_t)value { cia[nr]->tod.setAlarmSeconds(value); }
 - (uint8_t) ciaGetAlarmTenth:(int)nr { return cia[nr]->tod.getAlarmTenth(); }
+- (void) ciaSetAlarmTenth:(int)nr value:(uint8_t)value { cia[nr]->tod.setAlarmTenth(value); }
+- (bool) todIsInterruptEnabled:(int)nr { return cia[nr]->isInterruptEnabledTOD(); }
+- (void) todSetInterruptEnabled:(int)nr value:(bool)b { cia[nr]->setInterruptEnabledTOD(b); }
+
 
 // --------------------------------------------------------------------------
 // VIC

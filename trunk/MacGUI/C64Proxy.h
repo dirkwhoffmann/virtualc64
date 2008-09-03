@@ -237,15 +237,24 @@ public:
 - (void) ciaToggleInterruptEnableFlagB:(int)nr;
 
 - (uint8_t) ciaGetTodHours:(int)nr;
+- (void) ciaSetTodHours:(int)nr value:(uint8_t)value;
 - (uint8_t) ciaGetTodMinutes:(int)nr;
+- (void) ciaSetTodMinutes:(int)nr value:(uint8_t)value;
 - (uint8_t) ciaGetTodSeconds:(int)nr;
+- (void) ciaSetTodSeconds:(int)nr value:(uint8_t)value;
 - (uint8_t) ciaGetTodTenth:(int)nr;
+- (void) ciaSetTodTenth:(int)nr value:(uint8_t)value;
 
 - (uint8_t) ciaGetAlarmHours:(int)nr;
+- (void) ciaSetAlarmHours:(int)nr value:(uint8_t)value;
 - (uint8_t) ciaGetAlarmMinutes:(int)nr;
+- (void) ciaSetAlarmMinutes:(int)nr value:(uint8_t)value;
 - (uint8_t) ciaGetAlarmSeconds:(int)nr;
+- (void) ciaSetAlarmSeconds:(int)nr value:(uint8_t)value;
 - (uint8_t) ciaGetAlarmTenth:(int)nr;
-
+- (void) ciaSetAlarmTenth:(int)nr value:(uint8_t)value;
+- (bool) todIsInterruptEnabled:(int)nr;
+- (void) todSetInterruptEnabled:(int)nr value:(bool)b;
 
 // VIC
 - (NSColor *) vicGetColor:(VIC::ColorScheme)scheme nr:(int)nr;
