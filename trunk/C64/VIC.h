@@ -76,7 +76,7 @@ public:
 		COL_40_ROW_24 = 0x03,
 		COL_38_ROW_24 = 0x04,
 	};
-	
+
 	//! Integer value for standard character mode as returned by \a getDisplayMode
 	static const int STANDARD_CHARACTER_MODE = 0x00;
 	//! Integer value for multi-color character mode as returned by \a getDisplayMode
@@ -114,11 +114,11 @@ public:
 	//static const uint16_t VIC_RASTER_READ_WRITE = 0x12;
 	
 	//! Number of drawn rasterlines on an NTSC screen
-	static const uint16_t NTSC_RASTERLINES = 263; //312; // 263;
+	static const uint16_t NTSC_RASTERLINES = 263;
 
 	//! Number of drawn rasterlines on a PAL format
 	static const uint16_t PAL_RASTERLINES = 312;
-
+	
 	//! Refresh rate of the NTSC screen format in Hz
 	static const uint16_t NTSC_REFRESH_RATE = 60;
 
@@ -150,9 +150,11 @@ public:
 	static const uint16_t LAST_VIEABLE_LINE = 287;
 
 	//! Total number of pixels in one screen buffer line
+	// TODO this should be 403 for PAL and 418 for NTSC currently this is 368
 	static const uint16_t TOTAL_SCREEN_WIDTH = BORDER_WIDTH + SCREEN_WIDTH + BORDER_WIDTH;
 
 	//! Total number of lines in the screen buffer
+	// TODO this should be 284 for PAL and 235 for NTSC, note that these are visible rasterlines
 	static const uint16_t TOTAL_SCREEN_HEIGHT = NTSC_RASTERLINES;
 
 	//! Width of the border that surrounds the drawable screen area
@@ -226,6 +228,12 @@ private:
 		debugging purposes as it visualizes how the screen is divided into multiple parts. 
 	*/
 	bool markIRQLines;
+
+	//! Determines whether DMA lines will be made visible.
+	/*! Each rasterline in which the vic will read additional data from the memory and stun the CPU is made visible.
+		Note that partial DMA lines may not appear.
+	 */	
+	bool markDMALines;
 	
 	//! Determines, if DMA lines (bad lines) can occurr within the current frame
 	/*! The value of this flag is determined in rasterline 30, by checking Bit 4 of the VIC control register */
@@ -381,35 +389,33 @@ private:
 		(either by moving the Y-coordinate or by stretching the sprite along the Y axis)
 	*/
 	uint8_t spriteLineToDraw[8][512];
-		
+	
 	//! Draw a single character line (8 pixels) in single-color mode
 	/*! \param offset X coordinate of the first pixel to draw
 		\param pattern Bitmap of the character row to draw
 		\param fgcolor Foreground color in RGBA format
 		\param bgcolor Background color in RGBA format
-	*/
-	inline void VIC::drawSingleColorCharacter(int offset, uint8_t pattern, int fgcolor, int bgcolor);
-
-	inline void VIC::drawSingleColorBitmap(int offset, uint8_t pattern, int fgcolor, int bgcolor);
+	*/		
+	void drawSingleColorCharacter(int offset, uint8_t pattern, int fgcolor, int bgcolor);
 		
 	//! Draw a single character line (8 pixels) in multi-color mode
 	/*! \param offset X coordiate of the first pixel to draw
 		\param pattern Bitmap of the character row to draw
 		\param colorLookup Four element array containing the different colors in RGBA format
 	*/
-	inline void VIC::drawMultiColorCharacter(int offset, uint8_t pattern, int *colorLookup);
+	void drawMultiColorCharacter(int offset, uint8_t pattern, int *colorLookup);
 	
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
 		\param color Pixel color in RGBA format
 	*/
-	inline void VIC::setForegroundPixel(int offset, int color);
+	void setForegroundPixel(int offset, int color);
 
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
 		\param color Pixel color in RGBA format
 	*/
-	inline void VIC::setBackgroundPixel(int offset, int color);
+	void setBackgroundPixel(int offset, int color);
 
 	//! Clear a pixel
 	/*! \param offset X coordinate of the pixel to clear
@@ -423,23 +429,104 @@ private:
 		\param nr Number of sprite (0 to 7)
 		\note The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected
 	*/
-	inline void VIC::setSpritePixel(int offset, int color, int nr);
+	void setSpritePixel(int offset, int color, int nr);
 	
-	//! Helper function for the execute method
-	/*! Will draw a the current scanline into the screen buffer. The function is only applicable
-		for scanlines within the main drawing area. 
-		Returns false, if the currently set display mode is invalid.
-	*/		
-	bool drawInnerScanLine();
-
 	//! Helper function for the execute method
 	/*! Will draw the bitmap of the specified sprite into the screen buffer. */
 	void drawSprite(uint8_t line, uint8_t nr);
 	
+	//! Return true if the screen contents is visible, aslo known as DEN bit
+	/*! If the screen is off, the whole area will be covered by the border color.
+	 The technical documentation calls this the DEN (display enable?) bit. */
+	inline bool isVisible() { return iomem[0x11] & 0x10; }
+		
+	//! BA (Bus Access?) signal
+	/*! This signal is set to low (false) 3 cycles before the VIC wants to take over the bus.
+	   The CPU will only read this signal on a read operation. 
+	   There can only be 3 succsessive read operations, hence the 3 cycle wait.
+	   This is essential vor cycle exact emulation. 
+	*/
+	bool signalBA;
+	
+	//! Number of cycles the ba signal will be low.
+	int signalBACycles;
+	
+	//! internal VIC register, 10 bit video counter
+	uint16_t registerVC;
+	//! internal VIC-II register, 10 bit video counter base
+	uint16_t registerVCBASE; 
+	//! internal VIC-II register, 3 bit row counter
+	uint8_t registerRC;
+	//! internal VIC-II register, 6 bit video matrix line index
+	uint8_t registerVMLI; 
+	
+	//! the current cycle of the current raster line.
+	/*! To stay consistent with the documentation the cycles start with 1 and go up to 63(PAL) or 65(NTSC). */
+	uint8_t cycle;
+	
+	//! This dertermines if a dma (bad line)  condidion is present
+	bool dmaLine;
+	
+	//! Display State
+	/*! The VIC is either in idle or display state */
+	bool displayState;
+	
+	//! main frame Flipflop
+	bool mainFrameFF;
+	
+	//! vertiacl frame Flipflop
+	bool verticalFrameFF;
+	
+	//! 
+	bool drawVerticalFrame;
+	
+	//!
+	bool drawHorizontalFrame;
+	
+	//! the internal x counter of the sequencer
+	uint16_t xCounter;
+	
+	//! Returns the state of the CSEL register
+	inline bool isCSEL() { return iomem[0x16] & 8; }
+	
+	//! Returns the state of the RSEL register
+	inline bool isRSEL() { return iomem[0x11] & 8; }
+	
+	//! cycles per rasterline
+	uint16_t cyclesPerRasterline;
+	
+	//! rasterlines per frame
+	uint16_t rasterlinesPerFrame;
+	
+	//! implementation of the VIC register behaviour
+	void updateRegisters0();
+	
+	//! implementation of the VIC register behaviour
+	void updateRegisters1();
+	
+	//! the g-access of the VIC, this is the cycle based counterpart to drawInnerScanline
+	void gAccess();
+	
+	//! if enabled, marks the current scanline on certain conditions, like interrupts or something else
+	void markLine(int start, int end, int color);
+	
+	//! draws the frame to the pixelbuffer of the current scanline
+	void drawFrame();
+	
+	//! draws the sprites to the pixelbuffer of the current scanline
+	/*! returns the number of addidional dead cycles required by the vic */
+	int drawSpritesM();
+
 public:
+	
+	//! Sets the VIC-II emulation to PAL
+	void setPAL();
+	
+	//! Sets the VIC-II emulation to PAL
+	void setNTSC();	
+	
 	//! Returns true if the specified address lies in the VIC I/O range
-	static inline bool isVicAddr(uint16_t addr)
-		{ return (VIC_START_ADDR <= addr && addr <= VIC_END_ADDR); }
+	static inline bool isVicAddr(uint16_t addr)	{ return (VIC_START_ADDR <= addr && addr <= VIC_END_ADDR); }
 	
 	//! Constructor
 	VIC();
@@ -496,7 +583,13 @@ public:
 	
 	//! Toggles the values of variable \a drawSprites 
 	/*! \see drawSprites */
-	void toggleDrawSprites() { drawSprites = drawSprites ? false : true; }
+	void toggleDrawSprites() { drawSprites = !drawSprites; }
+	
+	//! Returns the BA signal of the VIC chip.
+	/*! The VIC is the bus controller of the C64. This signal is set to low (false) 3 cycles before the VIC wants to
+	take over the bus. The CPU will only read this signal when performing a read operation.	There can only be 3 
+	succsessive CPU write operations, hence the 3 cycles the VIC has to wait. This is essential vor cycle exact emulation. */
+	inline bool getSignalBA() { return signalBA; }
 
 	//! Enable or disable sprite-sprite collision detection
 	inline bool getSpriteSpriteCollision(uint8_t nr) { return spriteSpriteCollisionEnabled[nr]; }
@@ -510,10 +603,11 @@ public:
 
 	//! Toggles the values of variable \a markIRQLines 
 	/*! \see markIRQLines */
-	void toggleMarkIRQLines() { markIRQLines = markIRQLines ? false : true; }
+	void toggleMarkIRQLines() { markIRQLines = !markIRQLines; }
 	
-	//! Returns the start address of the virtual screen buffer 
-	// int *getScreenBuffer() { return currentScreenBuffer; }
+	//! Toggles the value of variable \a markDMALines 
+	/*! \see markDMALines */
+	void toggleMarkDMALines() { markDMALines = !markDMALines; }
 
 	//! Get memory bank start address
 	uint16_t getMemoryBankAddr();
@@ -532,27 +626,12 @@ public:
 
 	//! Set character memory start address
 	void setCharacterMemoryAddr(uint16_t addr);
-	
-	//! Set start address of the memory that is currently seen by the VIC chip 
-	/*! The value of variable "screenMemory" and variable "characterMemory" is also changed. 
-	    DEPRECATED. */
-	//void setBankAddr(uint8_t value);
-	//uint8_t getMemoryBankNr();
-
-	//! Set start address of the screen memory. 
-	/* DEPRECATED. */
-	// void setScreenMemory(uint8_t value);
-	// uint8_t getScreenMemory();
-	
-	//! Set start address of the character memory. DEPRECATED
-	/* DEPRECATED. */
-	// void setCharacterMemory(uint8_t value);
-	// uint8_t getCharacterMemory();
 
 	//! Returns true, if the specified rasterline is a DMA line
 	/*! Every eigths row, the VIC chip performs a DMA access and fetches data from screen memory and color memory
 		The first DMA access occurrs within lines 0x30 to 0xf7 and  */
-	inline bool isDMALine(uint16_t scanline) { return (scanline >= 0x30 && scanline <= 0xf7) ? (scanline % 8) == getVerticalRasterScroll() : false; }
+	inline bool isDMALine() { return scanline >= 0x30 && scanline <= 0xf7 && (scanline & 7) == getVerticalRasterScroll(); }	
+	//  inline bool isDMALine(uint16_t scanline) { return (scanline >= 0x30 && scanline <= 0xf7) ? (scanline % 8) == getVerticalRasterScroll() : false; }
 		
 	//! Returns the vertical raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
@@ -575,17 +654,20 @@ public:
 	inline void setNumberOfRows(int rows) 
 	{ assert(rows == 24 || rows == 25); if (rows == 25) iomem[0x11] |= 0x8; else iomem[0x11] &= (0xff - 0x8); }
 	
+	
 	//! Get the current screen geometry
 	ScreenGeometry VIC::getScreenGeometry(void);
-
+	
 	//! Set the screen geometry 
 	void setScreenGeometry(ScreenGeometry mode);
 	
 	//! Returns the row number for a given rasterline
 	inline uint8_t getRowNumberForRasterline(uint16_t line) { return (line - BORDER_HEIGHT + 3 - getVerticalRasterScroll()) / 8; }
-
+	// >> 3?
+	
 	//! Returns the character row number for a given rasterline
 	inline uint8_t getRowOffsetForRasterline(uint16_t line) { return (line - BORDER_HEIGHT + 3 - getVerticalRasterScroll()) % 8; }
+	// & 7? 
 	
 	//! Return the number of columns to be drawn (38 or 40)
 	inline int numberOfColumns() { return (iomem[0x16] & 8) ? 40 : 38; }
@@ -594,10 +676,6 @@ public:
 	inline void setNumberOfColumns(int columns) 
 	{ assert(columns == 38 || columns == 40); if (columns == 40) iomem[0x16] |= 0x8; else iomem[0x16] &= (0xff - 0x8); }
 	
-	//! Return true iff the screen contents is visible
-	/*! If the screen is off, the whole area will be covered by the border color */
-	inline bool isVisible() { return iomem[0x11] & 16; }
-
 	//! Return true in text mode, false in bitmap mode
 	//inline bool isBitmapMode() { return iomem[0x11] & 32; }
 
@@ -635,7 +713,7 @@ public:
 	inline uint8_t getSpriteY(uint8_t nr) { return iomem[1+2*nr]; }
 	inline void setSpriteY(uint8_t nr, int y) { poke(1+2*nr, y); }
 	
-	//! Returns true, iff sprite is enabled
+	//! Returns true, if sprite is enabled
 	/*! Only enabled sprites will be drawn to the screen
 		\param nr Number of sprite (0 to 7) */
 	// TODO: CHANGE NAME TO sprite_X_VisibilityFlag
@@ -671,8 +749,7 @@ public:
 	//! Returns true, iff sprite is drawn behind the scenary. 
 	/*! Otherwise, it will be drawn in front. 
 		\param nr Number of sprite (0 to 7) */
-	inline bool spriteIsDrawnInBackground(uint8_t nr) 
-		{ return iomem[0x1B] & (1 << nr); }
+	inline bool spriteIsDrawnInBackground(uint8_t nr) { return iomem[0x1B] & (1 << nr); }
 	inline void setSpriteInBackground(uint8_t nr, bool b) 
 		{ if (b) poke(0x1B, peek(0x1B) | (1 << nr)); else poke(0x1B, peek(0x1B) & ~(1 << nr)); }
 	inline void spriteToggleBackgroundPriorityFlag(uint8_t nr)
@@ -685,16 +762,15 @@ public:
 	inline void toggleMulticolorFlag(uint8_t nr)
 		{ setSpriteMulticolor(nr, !spriteIsMulticolor(nr)); }
 		
-	//! Returns true, iff the sprite's height is doubled
+	//! Returns true, if the sprite's height is doubled
 	/* \param nr Number of sprite (0 to 7) */
-	inline bool spriteHeightIsDoubled(uint8_t nr) 
-		{ return iomem[0x17] & (1 << nr); }	
+	inline bool spriteHeightIsDoubled(uint8_t nr) { return iomem[0x17] & (1 << nr); }	
 	inline void setSpriteStretchY(uint8_t nr, bool b) 
 		{ if (b) poke(0x17, peek(0x17) | (1 << nr)); else poke(0x17, peek(0x17) & ~(1 << nr)); }
 	inline void spriteToggleStretchYFlag(uint8_t nr) 
 		{ setSpriteStretchY(nr, !spriteHeightIsDoubled(nr)); }
 
-	//! Returns true, iff the sprite's width is doubled
+	//! Returns true, if the sprite's width is doubled
 	/* \param nr Number of sprite (0 to 7) */
 	inline bool spriteWidthIsDoubled(uint8_t nr) 
 		{ return iomem[0x1D] & (1 << nr); }
@@ -723,6 +799,22 @@ public:
 		return iomem[0x21 + offset] & 0x0F; 
 	}
 
+	//! returns the character pattern for the current cycle
+	inline uint8_t getCharacterPattern() 
+		{ return characterMemory[(characterSpace[registerVMLI] << 3) | registerRC]; }
+	
+	//! returns the extended character pattern for the current cycle
+	inline uint8_t getExtendedCharacterPattern()
+		{ return characterMemory[((characterSpace[registerVMLI] & 0x3f) << 3 )  | registerRC]; }
+	
+	//! returns the bitmap pattern for the current cycle
+	inline uint8_t getBitmapPattern() 
+		{ return characterMemory[(registerVC << 3) | registerRC];	}
+	
+	//! This method returns the pattern for a idle access. 
+	/*! This is iportant for the Hyperscreen and FLD effects (maybe others as well). */
+	uint8_t getIdleAccessPattern();
+	
 	//! Returns color code of the extra background color 2
 	//inline uint8_t getExtraBackgroundColor2() { return iomem[0x23] & 0x0F; }
 
@@ -751,12 +843,6 @@ public:
 	//! Updates the \a spriteLineToDraw array for all sprites
 	void updateSpriteLinesToDraw();
 	
-	//! Sets a pixel in the screen buffer
-//	void VIC::setPixel(int *buffer, uint16_t xCoord, uint8_t depth, int color, uint8_t spriteSource = 0);
-					   
-	//! Updates the \a spriteLineToDraw array for all specific sprite
-	//void updateSpriteLinesToDraw();
-	
 	//! Peek fallthrough
 	/*! The fallthrough mechanism works as follows:
 		If the memory is asked to peek a value, it first checks whether the RAM, ROM, or I/O space is visible.
@@ -776,33 +862,20 @@ public:
 	/*! \param source Interrupt source */
 	void triggerIRQ(uint8_t source);
 
-	//! Increment rasterline by one
-	/*! When a frame is finished, the rasterlines is reset to 0. The function also triggers a rasterline interrupt,
-		if the current line matches the interrupt target. */
-	void moveRasterline(bool *needsRedraw);
-
 	//! Set rasterline
 	/*! Called within the execute method. Updates internal values. The function also triggers a rasterline interrupt,
 		if the current line matches the interrupt target. */
 	void setRasterline(int line);
 	
-	//! Copy data from the screen memory and color memory into VIC-chips internal memory
-	/*! The function is invoked whenever a DMA line is reached (each 8th rasterline) */
-	void fetchData(uint16_t line);
-	
-	bool executeOneLine(int line, int *deadCycles);
-
-	//! Draw next scan line
-	/*! This method brings the VIC chip to life. It is called whenever the next scan line needs to be drawn.
-		\param needsRedraw Is set to true, iff a frame is completed. If the VIC-chip is in the middle
-		of a frame, the value remains untouched.
-		\param cyclePenalty When a "bad line" occurs, the VIC temporarily halts the CPU for loading
-		the data to display. In this case, cyclePenalty will contain the lost cycles for the CPU, otherwise 0.
-		\return True, iff no error has occurred.
+	//! Execute one VIC cycle
+	/*! Cycle based emulation routine, for better emulation. Additionally, all things executeOneLine did are
+		done as well. 
+		\param line Scanline (starting with 0)
+		\param cycle Cycle to perform (starting with 1)
 	*/
-	// bool execute(bool *needsRedraw, int *cyclePenalty);
+	void executeOneCycle(uint16_t line);
 
-	void VIC::dumpState();	
+	void dumpState();	
 };
 
 #endif

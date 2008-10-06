@@ -383,12 +383,27 @@ public:
 	//! Execute a single command
 	/*! Interrupt requests are ignored. Used inside the \a execute function and by the "step into" feature of the debugger. */
 	int step();
+	
 
 	//! Execute CPU for one cycle
 	/*! This is the normal operation mode. Interrupt requests are handled.
 		\param deadCycles An optional argument. Specified the number of cycles that elapse without any CPU operation
 	*/
 	void executeOneCycle(int deadCycles = 0);
+	
+	
+	//! Execute one CPU cycle
+	/*! Currently this just calls (0).
+	 \param signalBA This is the BA signal comming from the VIC. If true, the cycle is always exedcutet. If false,
+	 the CPU can execute at most 3 consecutive write operations. The first read opertion will stun the CPU as long as 
+	 signalBA is false.
+	 */
+	// TODO implement correct behaviour
+	// at this point the cpu can make 3 succsessive write operations
+	// after 3 write cycle the cpu must perform make a read operadion
+	// the first read access will stun the cpu until BA becomes hi
+	
+	void inline executeOneCycle(bool signalBA) { if (signalBA) executeOneCycle(); }	
 
 	//! Returns the current error state
 	ErrorState getErrorState();

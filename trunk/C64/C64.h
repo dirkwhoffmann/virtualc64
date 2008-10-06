@@ -188,6 +188,7 @@ public:
 	int frameDelay;
 	
 public:	
+	
 	//! Scans for new joysticks and reval the old ones
 	void scanJoysticks();
 

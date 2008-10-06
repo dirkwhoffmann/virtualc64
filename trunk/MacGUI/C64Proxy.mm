@@ -208,7 +208,7 @@ void ListenerProxy::logAction(char *message)
 - (void) dumpIEC { c64->iec->dumpState(); }
 - (void) dumpMemory { mem->dumpState(); }
 - (void) dumpDrive { c64->floppy->dumpState(); }
-
+	
 
 // --------------------------------------------------------------------------
 // CPU
@@ -461,6 +461,7 @@ void ListenerProxy::logAction(char *message)
 
 - (void) vicToggleDrawSprites { c64->vic->toggleDrawSprites(); }
 - (void) vicToggleMarkIRQLines { c64->vic->toggleMarkIRQLines(); }
+- (void) vicToggleMarkDMALines { c64->vic->toggleMarkDMALines(); }
 
 
 // --------------------------------------------------------------------------
