@@ -742,6 +742,16 @@
 	[c64 vicToggleMarkIRQLines];
 }
 
+- (IBAction)markDMALinesAction:(id)sender
+{
+	NSUndoManager *undo = [self undoManager];
+	[[undo prepareWithInvocationTarget:self] markDMALinesAction:sender];
+	if (![undo isUndoing]) [undo setActionName:@"Mark DMA lines"];
+	
+	[c64 vicToggleMarkDMALines];
+}
+
+
 - (IBAction)showPreferencesAction:(id)sender
 {
 	NSLog(@"Showing preferences window...");

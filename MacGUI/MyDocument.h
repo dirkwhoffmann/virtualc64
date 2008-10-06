@@ -219,6 +219,7 @@
 - (IBAction)resetAction:(id)sender;
 - (IBAction)drawSpritesAction:(id)sender;
 - (IBAction)markIRQLinesAction:(id)sender;
+- (IBAction)markDMALinesAction:(id)sender;
 // - (IBAction)loggingAction:(id)sender;
 - (IBAction)showPreferencesAction:(id)sender;
 

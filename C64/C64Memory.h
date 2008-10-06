@@ -50,19 +50,19 @@ public:
 	Only the lower four bits are accessible, the upper four bits are open and can show any value */
 	uint8_t colorRam[1024];
 	
-	//! True iff Basic ROM is visible.
+	//! True if Basic ROM is visible.
 	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool basicRomIsVisible;
 	
-	//! True iff Character ROM is visible.
+	//! True if Character ROM is visible.
 	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool charRomIsVisible;
 
-	//! True iff Kernel ROM is visible.
+	//! True if Kernel ROM is visible.
 	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool kernelRomIsVisible;
 
-	//! True iff the I/O space is visible.
+	//! True if the I/O space is visible.
 	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool IOIsVisible;
 	

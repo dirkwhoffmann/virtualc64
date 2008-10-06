@@ -323,6 +323,7 @@ public:
 
 - (void) vicToggleDrawSprites;
 - (void) vicToggleMarkIRQLines;
+- (void) vicToggleMarkDMALines;
 
 // audio hardware
 - (void) enableAudio;

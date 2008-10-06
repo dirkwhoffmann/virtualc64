@@ -45,27 +45,30 @@ void
 VIC::reset() 
 {
 	debug("  Resetting VIC...\n");
-
 	frame    = 0;
 	bankAddr = 0;
 	scanline = 0;
-	drawSprites  = true;
-	markIRQLines = false;
-	lastScanline = NTSC_RASTERLINES-1;
-	screenMemory = mem->getRam();
+	cycle	 = 1;
+	drawSprites		= true;
+	markIRQLines	= false;
+	markDMALines	= false;
+	signalBA		= true;
+	signalBACycles	= 0;
+	displayState	= false;
+	drawVerticalFrame = true;
+	drawHorizontalFrame = true;
+	// lastScanline	= NTSC_RASTERLINES-1; // this is now set by setPAL() / setNTSC()
+	screenMemory	= mem->getRam();
 	screenMemoryAddr = 0x0000;
-	spriteMemory = screenMemory;
+	spriteMemory	= screenMemory;
 	characterMemory = mem->getRam();
 	characterMemoryAddr = 0x0000;
-	
 	memset(spriteLineToDraw, 0xff, sizeof(spriteLineToDraw));
 	memset(iomem, 0x00, sizeof(iomem));
-	
 	for (int i = 0; i < 8; i++) {
 		spriteSpriteCollisionEnabled[i] = true;
 		spriteBackgroundCollisionEnabled[i] = true;
 	}
-	
 	// Let the color look correct right from the beginning
 	iomem[0x20] = 14; // Light blue
 	iomem[0x21] = 6;  // Blue
@@ -122,6 +125,29 @@ VIC::save(FILE *file)
 		write8(file, ((char *)spriteLineToDraw)[i]);
 	}	
 	return true;
+}
+
+void 
+VIC::setScreenGeometry(ScreenGeometry mode)
+{
+	setNumberOfRows((mode == COL_40_ROW_25 || mode == COL_38_ROW_25) ? 25 : 24);
+	setNumberOfColumns((mode == COL_40_ROW_25 || mode == COL_40_ROW_24) ? 40 : 38);
+}
+
+VIC::ScreenGeometry 
+VIC::getScreenGeometry()
+{
+	if (numberOfColumns() == 40) {
+		if (numberOfRows() == 25)
+			return COL_40_ROW_25;
+		else
+			return COL_40_ROW_24;
+	} else {
+		if (numberOfRows() == 25)
+			return COL_38_ROW_25;
+		else
+			return COL_38_ROW_24;
+	}
 }
 
 uint8_t 
@@ -307,7 +333,6 @@ VIC::setScreenMemoryAddr(uint16_t addr)
 {
 	assert(addr <= 0x3C00);
 	assert(addr % 0x400 == 0);
-	
 	screenMemoryAddr = addr;
 	screenMemory = &mem->ram[bankAddr + addr];	
 	spriteMemory = screenMemory + 0x03F8;
@@ -336,32 +361,7 @@ VIC::setCharacterMemoryAddr(uint16_t addr)
 			return;
 		}
 	}
-
 	characterMemory = &mem->ram[bankAddr + addr];
-}
-
-VIC::ScreenGeometry 
-VIC::getScreenGeometry()
-{
-	if (numberOfColumns() == 40) {
-		if (numberOfRows() == 25)
-			return COL_40_ROW_25;
-		else
-			return COL_40_ROW_24;
-	} else {
-		if (numberOfRows() == 25)
-			return COL_38_ROW_25;
-		else
-			return COL_38_ROW_24;
-	}
-	assert(false);
-}
-
-void 
-VIC::setScreenGeometry(ScreenGeometry mode)
-{
-	setNumberOfRows((mode == COL_40_ROW_25 || mode == COL_38_ROW_25) ? 25 : 24);
-	setNumberOfColumns((mode == COL_40_ROW_25 || mode == COL_40_ROW_24) ? 40 : 38);
 }
 
 void 
@@ -399,34 +399,20 @@ inline void
 VIC::setForegroundPixel(int offset, int color) 
 {
 	pixelBuffer[offset] = color;
-	zBuffer[offset]     = 0x10;
-	pixelSource[offset] = 0x80;
+	zBuffer[offset]     = 0x10; //TODO: deprecated
+	pixelSource[offset] = 0x80; //
 }
 
 inline void 
 VIC::setBackgroundPixel(int offset, int color) 
 {
 	pixelBuffer[offset] = color;
-	// zBuffer[offset]     = 0x00;
-	// pixelSource[offset] = 0x00;
 }
-
-#if 0
-inline void 
-VIC::clearPixel(int offset, int color) 
-{
-	pixelBuffer[offset] = color;
-	// zBuffer[offset]     = 0x00;
-	// pixelSource[offset] = 0x00;
-}
-#endif
 
 inline void 
 VIC::setSpritePixel(int offset, int color, int nr) 
-{
-	
-	assert(nr < 8);
-	
+{	
+	assert(nr < 8);	
 	if (offset >= 0 && offset < TOTAL_SCREEN_WIDTH) {
 		int depth = spriteDepth(nr);
 		if (depth < zBuffer[offset]) {
@@ -454,13 +440,11 @@ VIC::setSpritePixel(int offset, int color, int nr)
 void
 VIC::drawSprite(uint8_t line, uint8_t nr)
 {
+	assert(nr < 8);
+	assert(line < 21);
 	uint8_t  pattern;
 	uint16_t spriteData;
 	int spriteX, offset; // = getSpriteX(nr) + getHorizontalRasterScroll();
-
-	assert(nr < 8);
-	assert(line < 21);
-
 	spriteData = getSpriteData(nr) + 3 * line;
 	spriteX    = getSpriteX(nr);
 
@@ -608,21 +592,6 @@ VIC::drawSprite(uint8_t line, uint8_t nr)
 
 inline void 
 VIC::drawSingleColorCharacter(int offset, uint8_t pattern, int fgcolor, int bgcolor)
-//VIC::drawSingleColorCharacter(int *buffer, uint8_t pattern, int fgcolor, int bgcolor)
-{
-	assert(offset >= 0 && offset+7 < TOTAL_SCREEN_WIDTH);
-	if (pattern & 128) setForegroundPixel(offset+0, fgcolor); else setBackgroundPixel(offset+0, bgcolor);
-	if (pattern & 64)  setForegroundPixel(offset+1, fgcolor); else setBackgroundPixel(offset+1, bgcolor);
-	if (pattern & 32)  setForegroundPixel(offset+2, fgcolor); else setBackgroundPixel(offset+2, bgcolor);
-	if (pattern & 16)  setForegroundPixel(offset+3, fgcolor); else setBackgroundPixel(offset+3, bgcolor);
-	if (pattern & 8)   setForegroundPixel(offset+4, fgcolor); else setBackgroundPixel(offset+4, bgcolor);
-	if (pattern & 4)   setForegroundPixel(offset+5, fgcolor); else setBackgroundPixel(offset+5, bgcolor);
-	if (pattern & 2)   setForegroundPixel(offset+6, fgcolor); else setBackgroundPixel(offset+6, bgcolor);
-	if (pattern & 1)   setForegroundPixel(offset+7, fgcolor); else setBackgroundPixel(offset+7, bgcolor);
-}
-
-inline void 
-VIC::drawSingleColorBitmap(int offset, uint8_t pattern, int fgcolor, int bgcolor)
 {
 	assert(offset >= 0 && offset+7 < TOTAL_SCREEN_WIDTH);
 	if (pattern & 128) setForegroundPixel(offset+0, fgcolor); else setBackgroundPixel(offset+0, bgcolor);
@@ -640,9 +609,7 @@ VIC::drawMultiColorCharacter(int offset, uint8_t pattern, int *colorLookup)
 {
 	int col;
 	uint8_t colBits;
-	
 	assert(offset >= 0 && offset+7 < TOTAL_SCREEN_WIDTH);
-
 	colBits = (pattern >> 6) & 0x03;
 	col = colorLookup[colBits];
 	if (colBits & 0x02) {
@@ -687,105 +654,6 @@ VIC::drawMultiColorCharacter(int offset, uint8_t pattern, int *colorLookup)
 	}	
 }
 
-
-bool
-VIC::drawInnerScanLine()
-{
-	uint16_t xCoord    = BORDER_WIDTH + getHorizontalRasterScroll();
-	int colorLookup[4];
-	uint16_t offset;
-	DisplayMode displayMode = getDisplayMode();
-	
-#if 0
-	static int oldDisplayMode = displayMode;
-	if (oldDisplayMode != displayMode) {
-		oldDisplayMode = displayMode;
-	}
-#endif
-	
-	switch(displayMode) {
-		
-		case STANDARD_BITMAP_MODE:
-			offset = getRowNumberForRasterline(scanline) * 320 + getRowOffsetForRasterline(scanline);
-			for (int column = 0; column < 40; column++, xCoord += 8) {
-				uint8_t pattern = characterMemory[offset + 8 * column];
-				uint8_t fgcolor = characterSpace[column] >> 4;
-				uint8_t bgcolor = characterSpace[column] & 0x0F;
-				drawSingleColorBitmap(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
-			}
-			break;
-
-		case MULTICOLOR_BITMAP_MODE:
-			offset = getRowNumberForRasterline(scanline) * 320 + getRowOffsetForRasterline(scanline);
-			for (int column = 0; column < 40; column++, xCoord += 8) {
-				uint8_t pattern = characterMemory[offset + 8 * column];
-				colorLookup[0]  = colors[getBackgroundColor()];
-				colorLookup[1]  = colors[characterSpace[column] >> 4];
-				colorLookup[2]  = colors[characterSpace[column] & 0x0F];
-				colorLookup[3]  = colors[colorSpace[column]];
-				drawMultiColorCharacter(xCoord, pattern, colorLookup);
-			}
-			break;
-			
-		case STANDARD_CHARACTER_MODE:
-			offset = getRowOffsetForRasterline(scanline); 
-			for (int column = 0; column < 40; column++, xCoord += 8) {
-				uint8_t character = characterSpace[column];
-				uint8_t pattern   = characterMemory[offset +  8 * character];
-				uint8_t fgcolor   = colorSpace[column]; 
-				uint8_t bgcolor   = getBackgroundColor();
-				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
-			}
-			break;
-			
-		case MULTICOLOR_CHARACTER_MODE:
-			offset = getRowOffsetForRasterline(scanline); 
-			for (int column = 0; column < 40; column++, xCoord += 8) {
-				uint8_t character = characterSpace[column];
-				uint8_t pattern   = characterMemory[offset +  8 * character];
-				uint8_t fgcolor   = colorSpace[column];
-				if (fgcolor & 0x08) {
-					colorLookup[0] = colors[getBackgroundColor()];
-					colorLookup[1] = colors[getExtraBackgroundColor(1)];
-					colorLookup[2] = colors[getExtraBackgroundColor(2)];
-					colorLookup[3] = colors[fgcolor & 0x07];
-					drawMultiColorCharacter(xCoord, pattern, colorLookup);
-				} else {
-					drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
-				}
-			}
-			break;
-			
-					
-		case EXTENDED_BACKGROUND_COLOR_MODE:
-			offset = getRowOffsetForRasterline(scanline); 
-			for (int column = 0; column < 40; column++, xCoord += 8) {
-				uint8_t character = characterSpace[column];
-				uint8_t pattern = characterMemory[offset +  8 * character];
-				uint8_t fgcolor = colorSpace[column]; 
-				// In extended background color mode, the two upper bits of the character code determine
-				// the background color. Therefore, only 64 characters can be displayed
-				uint8_t bgColor = getExtraBackgroundColor(character >> 6);
-				character &= 0x3F;
-				if (fgcolor & 0x08) {
-					colorLookup[0] = colors[bgColor];
-					colorLookup[1] = colors[getExtraBackgroundColor(1)];
-					colorLookup[2] = colors[getExtraBackgroundColor(2)];
-					colorLookup[3] = colors[fgcolor & 0x07];
-					drawMultiColorCharacter(xCoord, pattern, colorLookup);
-				} else {
-					drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
-				}
-			}
-			break;
-			
-		default:
-			// Invalid display mode
-			return false;
-	}
-	return true;
-}
-
 void 
 VIC::triggerIRQ(uint8_t source)
 {
@@ -801,145 +669,302 @@ VIC::triggerIRQ(uint8_t source)
 inline void 
 VIC::setRasterline(int line)
 {
+	// Copy pixel buffer of old line to screen buffer
+	memcpy(currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH), pixelBuffer, sizeof(pixelBuffer));
+	// set internal status to new line after old pixelbuffer is copied to screenbuffe 
 	scanline = line;
-	
 	// New frame?
 	if (scanline == 0) {
 		frame++;
-
 		// Frame complete. Notify listener...
 		getListener()->drawAction(currentScreenBuffer);
-
 		// Switch frame buffer
 		currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
 	}
-	
 	// Check, if scanline matches the preset raster value for interrupts
 	if (scanline == rasterInterruptLine()) {
-		//debug("Triggering rasterline IRQ at scanline %d (%2X)\n", scanline, scanline);
 		triggerIRQ(1);
 	}
-
-	// Check, if DMA lines are enabled or disabled (in line 30 only)
-	if (scanline == 30) {
-		dmaLinesEnabled = iomem[0x11] & 0x10;
-	}
-}	
-
-inline void
-VIC::fetchData(uint16_t line)
-{
-	uint8_t row     = getRowNumberForRasterline(line);	
-	uint16_t offset = 40 * row;
-	
-	assert(row < 25);
-	for (int column = 0; column < 40; column++) {
-		characterSpace[column] = screenMemory[offset];
-		colorSpace[column]     = mem->peekColorRam(offset) & 15;
-		offset++;
-	}
-}
-
-bool 
-VIC::executeOneLine(int line, int *deadCycles)
-{
-	bool validDisplayMode = true;
-	
-	setRasterline(line);
-		
-	// Draw directly into screenBuffer
-	// pixelBuffer = currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH);
-	
 	// Clear z buffer
 	// The z buffer is initialized with a high, positive value (meaning the pixel is far away)
 	memset(zBuffer, 0x7f, sizeof(zBuffer));
-
 	// Clear pixel source
-	memset(pixelSource, 0x00, sizeof(pixelSource));
-	
-	// Determine start address of the current line in the screenbuffer
-	// int *buffer = screenBuffer + (scanline * TOTAL_SCREEN_WIDTH);
+	memset(pixelSource, 0x00, sizeof(pixelSource));	
+}	
 
-	// Fetch data, if the current line is a DMA line
+/* 3.7.1. Idle-Zustand/Display-Zustand
+ the idle access always reads at $3fff or $39ff when the ECM bit is set.
+ here the doc conflicts: the ECM bit is either at $d016 (chap 3.7.1) or $d011 (3.2)
+ for now i'm ging with $d011
+ wow... this actually seems to work! noticable in the "rbi 2 baseball" intro (return 0 to see difference)
+ TODO: check if one of the addresses is mapped into the rom? */
+inline uint8_t VIC::getIdleAccessPattern() { return mem->ram[bankAddr + (iomem[0x11] & 0x40) ? 0x39ff : 0x3fff]; }
 
-	// TODO:
-	// I think the real C64 has a counter that is incremented in each fetch.
-	// When multiple bad lines are induced (not supported now), consecutive cells are loaded
-	// In this implementation, always the same data is fetched 
-	// (this is because the fetched data is determined by the rasterline and not by a steadily increasing counter).
-	// This might be the reason why "shadow"'s screen scrolling does not work as expected
-	if (isDMALine(scanline) && dmaLinesEnabled) {
-		fetchData(scanline);
-		*deadCycles = 40;
-	} else {
-		*deadCycles = 0;
+// takes care of some special line markings for debugging use 
+void inline
+VIC::markLine(int start, int end, int color)
+{
+	for (int i = start; i <= end; i++) {
+		pixelBuffer[i] = color;
+	}	
+}
+
+// draws the frame for the current line
+void inline 
+VIC::drawFrame()
+{
+	int bcolor = colors[getBorderColor()];
+	if (drawVerticalFrame && (scanline < yStart() || scanline > yEnd())) {
+		for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++) {
+			pixelBuffer[i] = bcolor;
+		}			
 	}
-
-	// Fill screen buffer with background color
-	int bgcolor = colors[getBorderColor()];
-
-	if (scanline < yStart() || scanline > yEnd()) {
-
-		//
-		// Upper and lower border
-		//
-		for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++)
-			pixelBuffer[i] = bgcolor;
-
-	} else {	
-
-		//
-		// Drawable area
-		//		
-		validDisplayMode = drawInnerScanLine();
+	if (drawHorizontalFrame) {
+		for (int i = 0; i < xStart(); i++) {
+			pixelBuffer[i] = bcolor;
+		}
+		for (int i = xEnd()+1; i < TOTAL_SCREEN_WIDTH; i++) {
+			pixelBuffer[i] = bcolor;
+		}
 	}
-	
-	// Draw sprites
-	// iomem[0x1E] = 0x00; // Clear sprite-to-sprite collision register
-	// iomem[0x1F] = 0x00; // Clear sprite-to-background collision register
+}
+
+// draws the sprites on the current line
+int inline
+VIC::drawSpritesM()
+{	
+	int deadCycles = 0;
 	if (drawSprites) {
 		for (int i = 0; i < 8; i++) {
 			uint8_t spriteLine = spriteLineToDraw[i][scanline];
-			if (spriteLine != 0xff)
+			if (spriteLine != 0xff) { // i guess 0xff means sprite is disabled
+				// deadCycles += 3; // this is a test, the actual required dead cycles are 2 but there are additional delays
 				drawSprite(spriteLine, i);
+			}
 		}
 	}
-	
-	// Fill left border
-	for (int i = 0; i < xStart(); i++) {
-		pixelBuffer[i] = bgcolor;
-		// zBuffer[i] = 0xff;
-	}
-	// Fill right border
-	for (int i = xEnd()+1; i < TOTAL_SCREEN_WIDTH; i++) {
-		pixelBuffer[i] = bgcolor;
-		// zBuffer[i] = 0xff;
-	}
-	
-	// Clear line if the invalid display mode is invalid
-	// Fill left border
-	if (!validDisplayMode) {
-		for (int i = xStart(); i <= xEnd(); i++) {
-			pixelBuffer[i] = colors[WHITE]; // bgcolor;
-		}	
-	}
-	
-	// Mark raster interrupt lines if requested (for debugging purposes only)
-	if (markIRQLines && scanline == rasterInterruptLine()) {
-		for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++) {
-			pixelBuffer[i] = colors[WHITE];
-		}
-	}
-	
-	// Copy pixel buffer to screen buffer
-	memcpy(currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH), pixelBuffer, sizeof(pixelBuffer));
-	
-	return true;
+	return deadCycles;
 }
 
-void VIC::dumpState()
+/* This method updates all the internal registers & states of the cycle based emulation */
+void inline
+VIC::updateRegisters0()
+{			
+	switch (scanline) {
+		case 0:
+			/* Irgendwo einmal au§erhalb des Bereiches der Rasterzeilen $30-$f7 (also
+			 au§erhalb des Bad-Line-Bereiches) wird VCBASE auf Null gesetzt.
+			 Vermutlich geschieht dies in Rasterzeile 0, der genaue Zeitpunkt ist
+			 nicht zu bestimmen, er spielt aber auch keine Rolle. */
+			if (cycle == 1) registerVCBASE = 0;
+			break;
+		case 48:
+			/* Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
+			 negativen Flanke von ¿0 zu Beginn des Zyklus RASTER >= $30 und RASTER <=
+			 $f7 und die unteren drei Bits von RASTER mit YSCROLL Ÿbereinstimmen und in
+			 einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war. */
+			if (cycle == 1) dmaLinesEnabled = false;
+			if (!dmaLinesEnabled && isVisible()) dmaLinesEnabled = true;
+			break;	
+		case 51:
+			if (cycle == 63 && isRSEL() &&	isVisible()) verticalFrameFF = false;
+			break;
+		case 55:
+			if (cycle == 63 && !isRSEL() && isVisible()) verticalFrameFF = false;
+			break;
+		case 247:
+			if (cycle == 63 && !isRSEL()) verticalFrameFF = true;
+			break;
+		case 251:
+			if (cycle == 63 && isRSEL()) verticalFrameFF = true;
+			drawVerticalFrame = verticalFrameFF;
+			break;
+	}
+	dmaLine = dmaLinesEnabled && isDMALine();
+	/* Der †bergang vom Idle- in den Display-Zustand erfolgt, sobald ein Bad-Line-Zustand auftritt */
+	if (!displayState && dmaLine) displayState = true;
+	// chip model independent cycle events
+	switch (cycle) {
+		case 12:
+			if (dmaLine) signalBACycles = 43;
+			break;
+		case 14:
+			/* In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
+			(VCBASE->VC) und VMLI gelšscht. Wenn zu diesem Zeitpunkt ein
+			Bad-Line-Zustand vorliegt, wird zusŠtzlich RC auf Null gesetzt. */
+			registerVC = registerVCBASE;
+			registerVMLI = 0;
+			if (dmaLine) registerRC = 0;
+			break;
+		case 16:
+			if (isCSEL()) mainFrameFF = false;		
+			break;
+		case 18:	
+			if (!isCSEL()) mainFrameFF = false;
+			break;
+		case 55:
+			if (!isCSEL()) mainFrameFF = true;
+			break;
+		case 57:
+			if (isCSEL()) mainFrameFF = true;
+			drawHorizontalFrame = mainFrameFF;
+			break;
+		case 58:
+			/* Der †bergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile, 
+			wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt.
+			In der ersten Phase von Zyklus 58 wird geprŸft, ob RC=7 ist. Wenn ja,
+			geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
+			(VC->VCBASE). Ist die Videologik danach im Display-Zustand (liegt ein
+			Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhšht. */
+			if (displayState && registerRC == 7 && !dmaLine) {
+				displayState = false;	
+				registerVCBASE = registerVC;	
+			}
+			if (displayState) {
+				registerRC++;
+				registerRC &= 7;  // 3 bit overflow
+			}
+			break;
+	}
+	if (signalBACycles) signalBACycles--;
+	//signalBA = !signalBACycles;
+}
+
+void inline
+VIC::updateRegisters1()
+{
+	/* Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhšht. */
+	if (displayState) {
+		registerVC++;
+		registerVC &= 0x3ff; // 10 bit overflow
+		registerVMLI++;
+		registerVMLI &= 0x3f; // 6 bit overflow; 	
+	}
+}
+
+/* this method executes the "g-access" of a cycle.
+the g access also occours inside the vertical (upper & lower) frame area, but usually is covered the frame */
+void inline
+VIC::gAccess()
+{
+	DisplayMode displayMode = getDisplayMode();
+	uint8_t pattern;
+	uint8_t fgcolor;
+	uint8_t bgcolor;
+	int colorLookup[4];
+	uint16_t xCoord = xCounter + getHorizontalRasterScroll();
+	switch (displayMode) {
+		case STANDARD_CHARACTER_MODE:
+			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
+			fgcolor   = colorSpace[registerVMLI];
+			bgcolor   = getBackgroundColor();
+			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
+			break;
+		case MULTICOLOR_CHARACTER_MODE:
+			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
+			fgcolor   = colorSpace[registerVMLI];
+			if (fgcolor & 0x8) {
+				colorLookup[0] = colors[getBackgroundColor()];
+				colorLookup[1] = colors[getExtraBackgroundColor(1)];
+				colorLookup[2] = colors[getExtraBackgroundColor(2)];
+				colorLookup[3] = colors[fgcolor & 0x07];
+				drawMultiColorCharacter(xCoord, pattern, colorLookup);
+			} else {
+				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
+			}
+			break;
+		case STANDARD_BITMAP_MODE:
+			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
+			fgcolor = characterSpace[registerVMLI] >> 4;
+			bgcolor = characterSpace[registerVMLI] & 0xf;
+			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
+			break;
+		case MULTICOLOR_BITMAP_MODE:
+			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
+			colorLookup[0]  = colors[getBackgroundColor()];
+			colorLookup[1]  = colors[characterSpace[registerVMLI] >> 4];
+			colorLookup[2]  = colors[characterSpace[registerVMLI] & 0x0F];
+			colorLookup[3]  = colors[colorSpace[registerVMLI]];			
+			drawMultiColorCharacter(xCoord, pattern, colorLookup);
+			break;
+		case EXTENDED_BACKGROUND_COLOR_MODE:
+			pattern = displayState ? getExtendedCharacterPattern() : getIdleAccessPattern();
+			fgcolor = colorSpace[registerVMLI]; 
+			bgcolor = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);
+			if (fgcolor & 0x8) {
+				colorLookup[0] = colors[bgcolor];
+				colorLookup[1] = colors[getExtraBackgroundColor(1)];
+				colorLookup[2] = colors[getExtraBackgroundColor(2)];
+				colorLookup[3] = colors[fgcolor & 0x07];
+				drawMultiColorCharacter(xCoord, pattern, colorLookup);
+			} else {
+				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
+			}
+			break;			
+	}
+}
+
+uint8_t debug0 = 0;
+int debug1 = 0;
+
+/* this method attempts to implement a cycle exact model of the VIC behaviour.
+a complete documentation would be too long. For Information, 
+please have look at the exellent VIC-II documentation of Christian Bauer. */
+void 
+VIC::executeOneCycle(uint16_t line)
+{
+	// prepare new rasterline
+	if (cycle == 1) setRasterline(line);
+	updateRegisters0();
+	// this is the "g-access" 
+	if (cycle >= 16 && cycle <= 55) {
+		gAccess(); //TODO could be optimized here, only perform when the frame flipflop is off
+		updateRegisters1();
+	}
+	// make partial dma lines visible
+	if (markDMALines && dmaLine) markLine(xCounter, xCounter + 8, colors[LTRED]);
+	/* According to Doc, each Cycle the x counter is increased two times by 4, first after the raising flank,
+	 then after the falling flank. The x counter is reset in the 2nd half of cycle 13. */
+	xCounter = (cycle == 12) ? 0 : xCounter + 8;
+	// "C-access"
+	/* Liegt in den Zyklen 12-54 ein Bad-Line-Zustand vor, wird BA auf Low
+	gelegt und die c-Zugriffe gestartet. Einmal gestartet, findet in der
+	zweiten Phase jedes Taktzyklus im Bereich 15-54 ein c-Zugriff statt. Die
+	gelesenen Daten werden in der Videomatrix-/Farbzeile an der durch VMLI
+	angegebenen Position abgelegt. Bei jedem g-Zugriff im Display-Zustand
+	werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
+	wieder intern gelesen. */
+	if (dmaLine &&  cycle >= 15 && cycle <= 54) {
+		characterSpace[registerVMLI] = screenMemory[registerVC]; 
+		colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
+	}
+	if (cycle == cyclesPerRasterline)  { // last cycle
+		drawSpritesM();
+		drawFrame();
+		if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[WHITE]);
+		if (markIRQLines && scanline == rasterInterruptLine()) markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
+ 		cycle = 1;
+	} else {
+		cycle++;
+	}
+/*	if (scanline == rasterInterruptLine()) {
+		debug1= scanline;
+	}
+/*	if (getSpriteY(0) != debug0) {
+		markLine(0, xCounter, colors[BLUE]);
+		debug("i %3d l %3d c %2d %d -> %d\n", debug1, scanline, cycle, debug0, getSpriteY(0));
+		debug0 = getSpriteY(0);
+	}
+	if (scanline == getSpriteY(0)) 	markLine(0, TOTAL_SCREEN_WIDTH, colors[GREEN]);
+*/
+}
+
+void 
+VIC::dumpState()
 {
 	debug("Rasterline: %d (%x)\n", scanline, scanline);
+	debug("Cycle: %d\n", cycle);
+	debug("Mode: %s\n", cyclesPerRasterline == PAL_CYCLES_PER_RASTERLINE ? "PAL" : "NTSC");
 	debug("Text resolution: %d x %d\n", numberOfRows(), numberOfColumns());
 	debug("Vertical raster scroll: %d Horizontal raster scroll: %d\n\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
 	debug("Display mode: ");
@@ -965,4 +990,22 @@ void VIC::dumpState()
 	debug("Bank address: %d (%4X)", bankAddr, bankAddr);
 	debug("Screen memory: %d (%4X)\n", screenMemoryAddr, screenMemoryAddr);
 	debug("Character memory: %d (%4X) (RAM)\n", characterMemoryAddr, characterMemoryAddr);
+	debug("State: %s\n", displayState ? "display" : "idle");
+	debug("Registers: \n  VC: %d\n  VCBASE:%d\n  RC: %d\n  VMLI: %d\n", registerVC, registerVCBASE, registerRC, registerVMLI);
+}
+
+void 
+VIC::setPAL()
+{ 
+	cyclesPerRasterline = PAL_CYCLES_PER_RASTERLINE;
+	rasterlinesPerFrame = PAL_RASTERLINES;
+	lastScanline	= PAL_RASTERLINES - 1;
+}
+
+void
+VIC::setNTSC()
+{
+	cyclesPerRasterline = NTSC_CYCLES_PER_RASTERLINE;
+	rasterlinesPerFrame = NTSC_RASTERLINES;
+	lastScanline	= NTSC_RASTERLINES - 1;
 }

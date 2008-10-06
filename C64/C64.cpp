@@ -39,7 +39,6 @@ void
 	assert(thisC64 != NULL);
 	
 	C64 *c64 = (C64 *)thisC64;
-	int cyclePenalty; // Cleanup: Should be handles elsewhere...
 
 	int cyclesPerRasterline, noOfRasterlines, rasterline, cycle;
 	
@@ -56,17 +55,14 @@ void
 	
 	while (1) {
 		// Compute frame...
-		cyclesPerRasterline = c64->getCpuCyclesPerRasterline();
-		noOfRasterlines     = c64->noOfRasterlines;
+		cyclesPerRasterline = c64->getCpuCyclesPerRasterline(); // are these nessesary?
+		noOfRasterlines     = c64->noOfRasterlines; 
+		// For each rasterline...
 		for (rasterline = 0; rasterline < noOfRasterlines; rasterline++) {		
-
-			// For each rasterline...
 			for (cycle = 0; cycle < cyclesPerRasterline; cycle++) {
-
 				// Pass control to the virtual CPUs
-				c64->cpu->executeOneCycle(cyclePenalty); 
-
-				cyclePenalty = 0;
+				c64->vic->executeOneCycle(rasterline);  // comment out for ols vic emulation
+				c64->cpu->executeOneCycle(c64->vic->getSignalBA());
 				if (c64->cpu->getErrorState() != CPU::OK) break;
 				c64->floppy->executeOneCycle();
 				if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
@@ -78,8 +74,9 @@ void
 			if (c64->cpu->getErrorState() != CPU::OK) break;
 			if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
 			
-			// Pass control to the virtual display (draw raster line)
-			c64->vic->executeOneLine(rasterline, &cyclePenalty);
+			// OLD VIC EMULATION, to enable, swap vic_old.cpp with 
+			// vic.cpp and vic_old.h with vic.h, and uncomment next line
+			// c64->vic->executeOneLine(rasterline, &cyclePenalty);
 		}
 
 		if (c64->cpu->getErrorState() != CPU::OK) break;
@@ -253,9 +250,7 @@ C64::build()
 void C64::reset()
 {
 	debug ("Resetting virtual C64\n");
-
 	suspend();
-	
 	mem->reset();
 	// cpu->reset(0xE2, 0xFC);
 	cpu->setPC(0xFCE2);
@@ -266,9 +261,7 @@ void C64::reset()
 	keyboard->reset();
 	iec->reset();
 	floppy->reset();
-	
 	archive = NULL;
-
 	resume();
 }
 
@@ -499,11 +492,11 @@ C64::save(FILE *file)
 void
 C64::setPAL()
 {
-	fps = 50;
-	noOfRasterlines = 312; 
-	cpuCyclesPerRasterline = 63;
+	fps = VIC::PAL_REFRESH_RATE;
+	noOfRasterlines = VIC::PAL_RASTERLINES; 
+	cpuCyclesPerRasterline = VIC::PAL_CYCLES_PER_RASTERLINE;
+	vic->setPAL();
 	// TODO
-	// vic->setNumberOfRasterlines(noOfRasterlines);
 	// sid->setPAL()
 	frameDelay = (1000000 / fps);
 }
@@ -511,11 +504,11 @@ C64::setPAL()
 void 
 C64::setNTSC()
 {
-	fps = 60;
-	noOfRasterlines = 263; 
-	cpuCyclesPerRasterline = 65;	
+	fps = VIC::NTSC_REFRESH_RATE;
+	noOfRasterlines = VIC::NTSC_RASTERLINES; 
+	cpuCyclesPerRasterline = VIC::NTSC_CYCLES_PER_RASTERLINE;
+	vic->setNTSC();
 	// TODO
-	// vic->setNumberOfRasterlines(noOfRasterlines);
 	// sid->setNTSC()
 	frameDelay = (1000000 / fps);
 }
