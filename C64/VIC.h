@@ -439,18 +439,7 @@ private:
 	/*! If the screen is off, the whole area will be covered by the border color.
 	 The technical documentation calls this the DEN (display enable?) bit. */
 	inline bool isVisible() { return iomem[0x11] & 0x10; }
-		
-	//! BA (Bus Access?) signal
-	/*! This signal is set to low (false) 3 cycles before the VIC wants to take over the bus.
-	   The CPU will only read this signal on a read operation. 
-	   There can only be 3 succsessive read operations, hence the 3 cycle wait.
-	   This is essential vor cycle exact emulation. 
-	*/
-	bool signalBA;
-	
-	//! Number of cycles the ba signal will be low.
-	int signalBACycles;
-	
+			
 	//! internal VIC register, 10 bit video counter
 	uint16_t registerVC;
 	//! internal VIC-II register, 10 bit video counter base
@@ -585,12 +574,6 @@ public:
 	/*! \see drawSprites */
 	void toggleDrawSprites() { drawSprites = !drawSprites; }
 	
-	//! Returns the BA signal of the VIC chip.
-	/*! The VIC is the bus controller of the C64. This signal is set to low (false) 3 cycles before the VIC wants to
-	take over the bus. The CPU will only read this signal when performing a read operation.	There can only be 3 
-	succsessive CPU write operations, hence the 3 cycles the VIC has to wait. This is essential vor cycle exact emulation. */
-	inline bool getSignalBA() { return signalBA; }
-
 	//! Enable or disable sprite-sprite collision detection
 	inline bool getSpriteSpriteCollision(uint8_t nr) { return spriteSpriteCollisionEnabled[nr]; }
 	inline void setSpriteSpriteCollision(uint8_t nr, bool b) { assert(nr < 8); spriteSpriteCollisionEnabled[nr] = b; }

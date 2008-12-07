@@ -54,15 +54,20 @@ void
 	c64->setDelay((uint64_t)(1000000 / c64->fps));
 	
 	while (1) {
-		// Compute frame...
+		
+		// For each frame...
 		cyclesPerRasterline = c64->getCpuCyclesPerRasterline(); // are these nessesary?
 		noOfRasterlines     = c64->noOfRasterlines; 
-		// For each rasterline...
-		for (rasterline = 0; rasterline < noOfRasterlines; rasterline++) {		
+		for (rasterline = 0; rasterline < noOfRasterlines; rasterline++) {	
+		
+			// For each rasterline...
 			for (cycle = 0; cycle < cyclesPerRasterline; cycle++) {
+				
+				// Pass control to the virtual VIC II chip
+				c64->vic->executeOneCycle(rasterline);
+
 				// Pass control to the virtual CPUs
-				c64->vic->executeOneCycle(rasterline);  // comment out for ols vic emulation
-				c64->cpu->executeOneCycle(c64->vic->getSignalBA());
+				c64->cpu->executeOneCycle();
 				if (c64->cpu->getErrorState() != CPU::OK) break;
 				c64->floppy->executeOneCycle();
 				if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
@@ -72,11 +77,7 @@ void
 				c64->cia2->executeOneCycle();
 			}
 			if (c64->cpu->getErrorState() != CPU::OK) break;
-			if (c64->floppy->cpu->getErrorState() != CPU::OK) break;			
-			
-			// OLD VIC EMULATION, to enable, swap vic_old.cpp with 
-			// vic.cpp and vic_old.h with vic.h, and uncomment next line
-			// c64->vic->executeOneLine(rasterline, &cyclePenalty);
+			if (c64->floppy->cpu->getErrorState() != CPU::OK) break;						
 		}
 
 		if (c64->cpu->getErrorState() != CPU::OK) break;

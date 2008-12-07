@@ -85,7 +85,7 @@ VC1541::executeOneCycle()
 {
 	via1->execute(1);
 	via2->execute(1);
-	cpu->executeOneCycle(0);
+	cpu->executeOneCycle();
 		
 	if (byteReadyTimer == 0)
 		return;
