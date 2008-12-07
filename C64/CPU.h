@@ -144,6 +144,10 @@ private:
 	//! Number of elapsed clock cycles since power up
 	uint64_t cycles;
 
+	//! RDY line (ready line)
+	/*! If set to 0, the CPU freezes. The signal is used by the VIC chip to freeze the CPU during memory access */
+	uint8_t rdyLine;
+	
 	//! IRQ line (maskable interrupts)
 	/*! The CPU checks the IRQ line before the next instruction is executed.
 		If the Interrupt flag is cleared and at least one bit is set, the CPU performs an interrupt. 
@@ -345,6 +349,8 @@ public:
 	inline void setNMILineReset() { setNMILine(0x08); }	
 	//! Clear Reset bit of NMI line
 	inline void clearNMILineReset() { clearNMILine(0x08); }
+	//! Set RDY line 
+	inline void setRDY(uint8_t value) { rdyLine = value; }
 	
 	//! Load internal state from a file
 	bool load(FILE *file);
