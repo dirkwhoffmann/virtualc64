@@ -252,7 +252,7 @@ void C64::reset()
 	debug ("Resetting virtual C64\n");
 	suspend();
 	mem->reset();
-	// cpu->reset(0xE2, 0xFC);
+	cpu->reset();
 	cpu->setPC(0xFCE2);
 	vic->reset();
 	sid->reset();

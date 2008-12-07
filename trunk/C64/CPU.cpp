@@ -45,10 +45,11 @@ CPU::reset()
 	debug("  Resetting CPU...\n");
 
 	// Initialize internal state
-	errorState       = OK;
-	cycles           = 0LL;
-	nmiLine          = 0;	
-	irqLine          = 0;	
+	errorState = OK;
+	cycles = 0LL;
+	rdyLine = 1;
+	nmiLine = 0;	
+	irqLine = 0;	
 	callStackPointer = 0;
 	delay = 0;
 	setTraceMode(false);
@@ -316,6 +317,9 @@ CPU::step()
 void 
 CPU::executeOneCycle(int deadCycles)
 {
+	if (!rdyLine)
+		return;
+	
 	assert(deadCycles >= 0);
 
 	uint64_t startCycles = cycles;
