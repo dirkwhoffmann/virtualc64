@@ -52,8 +52,6 @@ VIC::reset()
 	drawSprites		= true;
 	markIRQLines	= false;
 	markDMALines	= false;
-	signalBA		= true;
-	signalBACycles	= 0;
 	displayState	= false;
 	drawVerticalFrame = true;
 	drawHorizontalFrame = true;
@@ -785,8 +783,17 @@ VIC::updateRegisters0()
 	if (!displayState && dmaLine) displayState = true;
 	// chip model independent cycle events
 	switch (cycle) {
+#if 0
 		case 12:
-			if (dmaLine) signalBACycles = 43;
+			// BA signal is pulled low
+			// Right now, we simulate this behavior by freezing the CPU three cycles later (in cycle 15)
+			break;
+#endif
+		case 15:
+			if (dmaLine) {
+				// Freeze CPU
+				cpu->setRDY(0);
+			}
 			break;
 		case 14:
 			/* In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
@@ -810,6 +817,9 @@ VIC::updateRegisters0()
 			drawHorizontalFrame = mainFrameFF;
 			break;
 		case 58:
+			// Release RDY line
+			cpu->setRDY(1);
+			
 			/* Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile, 
 			wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt.
 			In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
@@ -826,8 +836,6 @@ VIC::updateRegisters0()
 			}
 			break;
 	}
-	if (signalBACycles) signalBACycles--;
-	//signalBA = !signalBACycles;
 }
 
 void inline

@@ -315,24 +315,19 @@ CPU::step()
 }
 
 void 
-CPU::executeOneCycle(int deadCycles)
+CPU::executeOneCycle()
 {
 	if (!rdyLine)
 		return;
-	
-	assert(deadCycles >= 0);
 
-	uint64_t startCycles = cycles;
-	
-	int executedCycles; // number of cycles consumed by the executed command
-
-	cycles += deadCycles;
-	delay += deadCycles;
-	
-	if (delay > 0) {
+	if (delay) {
 		delay --;
 		return;
 	}
+	
+	uint64_t startCycles = cycles;
+	int executedCycles; // number of cycles consumed by the executed command
+	
 
 	// Check for interrupt request
 	if (nmiLine) {
