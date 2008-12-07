@@ -122,7 +122,6 @@ C64::C64(C64Listener *listener)
 
 	p = NULL;
 	warpMode = false;
-	setNTSC();
 	
 	// Create components
 	mem = new C64Memory();
@@ -191,7 +190,10 @@ C64::C64(C64Listener *listener)
 	} else {
 		assert(0);
 	}
-					
+
+	// Configure
+	setNTSC();
+
 	// Register listener and reset
 	setListener(listener);
 	reset();	

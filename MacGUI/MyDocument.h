@@ -319,6 +319,7 @@
 - (IBAction)cancelMountDialog:(id)sender;
 - (IBAction)endMountDialogAndMount:(id)sender;
 - (IBAction)endMountDialogAndFlash:(id)sender;
+- (IBAction)saveScreenshotDialog:(id)sender;
 
 // Helper functions for action methods
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(Memory::MemoryType)t;

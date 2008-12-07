@@ -335,6 +335,33 @@
 	return success;
 }
 
+- (IBAction)saveScreenshotDialog:(id)sender
+{
+	NSArray *fileTypes = [NSArray arrayWithObjects:@"tif", @"jpg", @"gif", @"png", @"psd", @"tga", nil];
+
+	// Create the file save panel
+	NSSavePanel* sPanel = [NSSavePanel savePanel];
+	
+	// [sPanel setCanChooseDirectories:NO];
+	// [sPanel setCanChooseFiles:YES];
+	// [sPanel setCanCreateDirectories:YES];
+	// [sPanel setAllowsMultipleSelection:NO];
+	// [sPanel setAlphaValue:0.95];
+	// [sPanel setTitle:@"Select a file to open"];
+	[sPanel setCanSelectHiddenExtension:YES];
+	[sPanel setAllowedFileTypes:fileTypes];	
+	if ([sPanel runModalForDirectory:nil file:nil] == NSOKButton) {
+		
+		NSString *selectedFile = [sPanel filename];
+		NSLog(@"Writing to file %@", selectedFile);
+
+		NSImage *image = [screen screenshot];
+		// [image setFlipped:NO];
+		NSData *data = [image TIFFRepresentation];
+		[data writeToFile:selectedFile atomically:YES];
+	}
+}
+
 // --------------------------------------------------------------------------------
 //                The screen refresh loop (called via the 60 Hz timer)
 // --------------------------------------------------------------------------------
