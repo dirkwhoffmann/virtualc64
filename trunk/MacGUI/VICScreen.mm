@@ -238,6 +238,24 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 //                                    Graphics
 // --------------------------------------------------------------------------------
 
+- (NSImage *) flipImage: (NSImage *)image
+{
+	assert(image != nil);
+	
+	NSSize size = [image size];
+	NSImage *newImage = [[NSImage alloc] initWithSize:size];
+	bool flipped = [image isFlipped];
+	[image setFlipped:!flipped];
+	// [newImage setFlipped:YES];
+	[newImage lockFocus];
+	[image drawInRect:NSMakeRect(0,0,size.width,size.height) 
+			 fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
+			operation:NSCompositeSourceOver fraction:1.0];
+	[newImage unlockFocus];
+	[image setFlipped:!flipped];	
+	return newImage;
+}
+
 - (NSImage *) expandImage: (NSImage *)image toSize:(NSSize) size
 {
 	assert(image != nil);
@@ -589,8 +607,9 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	glReadPixels(0,0,width,height,GL_RGBA,GL_UNSIGNED_BYTE,[imageRep bitmapData]);
 	image=[[[NSImage alloc] initWithSize:NSMakeSize(width,height)] autorelease];
 	[image addRepresentation:imageRep];
-	[image setFlipped:YES];
-	return image;
+
+	NSImage *screenshot = [self flipImage:image];
+	return screenshot;
 }
 
 - (void) setFullscreenMode:(bool)b
