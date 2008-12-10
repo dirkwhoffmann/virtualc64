@@ -156,12 +156,6 @@ public:
 	//! Total number of lines in the screen buffer
 	// TODO this should be 284 for PAL and 235 for NTSC, note that these are visible rasterlines
 	static const uint16_t TOTAL_SCREEN_HEIGHT = NTSC_RASTERLINES;
-
-	//! Width of the border that surrounds the drawable screen area
-	//static const uint16_t BORDER_WIDTH = (TOTAL_SCREEN_WIDTH - SCREEN_WIDTH) / 2;
-
-	//! Height of the border that surrounds the drawable screen area
-	//static const uint16_t BORDER_HEIGHT = (TOTAL_SCREEN_HEIGHT - SCREEN_HEIGHT) / 2;
 		
 private:
 	//! VIC I/O Memory
@@ -352,6 +346,42 @@ private:
 		The sprite pointers are needed to compute the start address of the sprite bitmaps in memory. */
 	uint8_t *spriteMemory;
 	
+	//! MC register
+	/*! MOB data counter (6 bit counter). One register for each sprite */
+	uint8_t mc[8];
+	
+	//! MCBASE register
+	/*! MOB data counter (6 bit counter). One register for each sprite */
+	uint8_t mcbase[8];
+	
+	//! Sprite data shift registers
+	/*! The VIC chip has a 24 bit (3 byte) shift register for each sprite. It stores the sprite data for each rasterline */
+	uint8_t spriteShiftReg[8][3];
+
+	//! Sprite pointer
+	/*! Determines where the sprite data comes from */
+	uint16_t spritePtr[8];
+	
+	//! Read sprite pointer
+	//inline void readSpritePtr(int nr) 
+	//	{ read_byte(matrix_base | 0x03f8 | num) << 6; }
+
+	//! Read sprite pointer
+	/*! Determines the start adress of sprite data and stores the value into spritePtr */
+	inline void readSpritePtr(int sprite)
+		{ spritePtr[sprite] = bankAddr + ((uint16_t)spriteMemory[sprite] << 6); }
+	
+	//! Read sprite data into shift register
+	//inline void readSpriteData(int sprite, int byte) 
+	//	{ if (spriteDmaOnOff & (1 << sprite)) { spriteShiftReg[sprite][byte] = mem->ram[getSpriteData(sprite)+mc[sprite]; }}
+	
+	inline void readSpriteData(int sprite) 
+		{ if (spriteDmaOnOff & (1 << sprite)) { spriteShiftReg[sprite][mc[sprite]%3] = mem->ram[spritePtr[sprite]+mc[sprite]]; mc[sprite]++; }}
+
+	//! Expansion flipflop
+	/*! Used to handle Y sprite stretching. One bit for each sprite */
+	uint8_t expansionFF;
+	
 	//! Start address of character memory
 	/*! The character memory stores the bitmaps for each character.
 		The location of character memory is determined by VIC register 0xD018
@@ -379,17 +409,7 @@ private:
 	/*! The variable can point into the RAM or ROM of the virtual machine.
 	    The physical memory address is stored only to improve efficiency. */
 	uint8_t *characterMemory;
-	
-	//! Mapping from rasterline to sprite line number 
-	/*! \a spriteLineToDraw[n][m] contains the line number of sprite n (0 to 20) that needs to be 
-		drawn in rasterline m. The array allows for a quick check, if a sprite needs to be drawn
-		in a specific rasterline. For all rasterlines outside the sprite area, the array contains the
-		(default) value 0xff.
-	    The values in the array are updated whenever the vertical position of a sprite changes
-		(either by moving the Y-coordinate or by stretching the sprite along the Y axis)
-	*/
-	uint8_t spriteLineToDraw[8][512];
-	
+		
 	//! Draw a single character line (8 pixels) in single-color mode
 	/*! \param offset X coordinate of the first pixel to draw
 		\param pattern Bitmap of the character row to draw
@@ -433,7 +453,7 @@ private:
 	
 	//! Helper function for the execute method
 	/*! Will draw the bitmap of the specified sprite into the screen buffer. */
-	void drawSprite(uint8_t line, uint8_t nr);
+	void drawSprite(uint8_t nr);
 	
 	//! Return true if the screen contents is visible, aslo known as DEN bit
 	/*! If the screen is off, the whole area will be covered by the border color.
@@ -480,6 +500,15 @@ private:
 	
 	//! Returns the state of the RSEL register
 	inline bool isRSEL() { return iomem[0x11] & 8; }
+	
+	//! Sprite on off
+	/*! Determines if a sprite needs to be drawn in the current rasterline. Each bit represents a single sprite. */
+	 uint8_t spriteOnOff, oldSpriteOnOff; 
+	
+	//! Sprite DMA on off
+	/*! Determines  if sprite dma access is enabled or disabled. Each bit represents a single sprite. */
+	uint8_t spriteDmaOnOff;
+	
 	
 	//! cycles per rasterline
 	uint16_t cyclesPerRasterline;
@@ -684,7 +713,7 @@ public:
 	
 	 //! Returns the start address of the bitmap data of a sprite
 	/*! \param nr Number of sprite (0 to 7) */
-	inline uint16_t getSpriteData(uint8_t nr) { assert(nr < 8); return bankAddr + ((uint16_t)spriteMemory[nr] << 6); }
+	//inline uint16_t getSpriteData(uint8_t nr) { assert(nr < 8); return bankAddr + ((uint16_t)spriteMemory[nr] << 6); }
 
 	//! Returns the X position of a sprite
 	/* \param nr Number of sprite (0 to 7) */
@@ -798,12 +827,6 @@ public:
 	/*! This is iportant for the Hyperscreen and FLD effects (maybe others as well). */
 	uint8_t getIdleAccessPattern();
 	
-	//! Returns color code of the extra background color 2
-	//inline uint8_t getExtraBackgroundColor2() { return iomem[0x23] & 0x0F; }
-
-	//! Returns color code of the extra background color 3
-	//inline uint8_t getExtraBackgroundColor3() { return iomem[0x24] & 0x0F; }
-
 	//! Returns color code of multicolor sprites (extra color 1)
 	inline uint8_t spriteExtraColor1() { return iomem[0x25] & 0x0F; }
 
@@ -818,14 +841,7 @@ public:
 	//! Return depth of sprite
 	/*! The value is written to the z buffer to resolve overlapping pixels */
 	inline uint8_t spriteDepth(uint8_t nr) { return spriteIsDrawnInBackground(nr) ? 0xf0 + nr : nr; }
-	
-	//! Updates the \a spriteLineToDraw array for a specific sprite
-	/* \param nr Number of sprite (0 to 7) */	
-	void updateSpriteLineToDraw(uint8_t nr);
-
-	//! Updates the \a spriteLineToDraw array for all sprites
-	void updateSpriteLinesToDraw();
-	
+		
 	//! Peek fallthrough
 	/*! The fallthrough mechanism works as follows:
 		If the memory is asked to peek a value, it first checks whether the RAM, ROM, or I/O space is visible.
@@ -850,13 +866,21 @@ public:
 		if the current line matches the interrupt target. */
 	void setRasterline(int line);
 	
+	//! Prepare for new frame
+	/*! This function is called prior to cycle 1 of rasterline 0 */
+	void beginFrame();
+	
+	//! Prepare for new rasterline
+	/*! This function is called prior to cycle 1 at the beginning of each rasterline */
+	void beginRasterline(uint16_t rasterline);
+	
 	//! Execute one VIC cycle
 	/*! Cycle based emulation routine, for better emulation. Additionally, all things executeOneLine did are
 		done as well. 
 		\param line Scanline (starting with 0)
 		\param cycle Cycle to perform (starting with 1)
 	*/
-	void executeOneCycle(uint16_t line);
+	void executeOneCycle(uint16_t cycle);
 
 	void dumpState();	
 };

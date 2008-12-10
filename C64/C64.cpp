@@ -56,15 +56,17 @@ void
 	while (1) {
 		
 		// For each frame...
-		cyclesPerRasterline = c64->getCpuCyclesPerRasterline(); // are these nessesary?
-		noOfRasterlines     = c64->noOfRasterlines; 
+		cyclesPerRasterline = c64->getCpuCyclesPerRasterline(); // should be moved to VIC class
+		noOfRasterlines = c64->noOfRasterlines; 
+		c64->vic->beginFrame();
 		for (rasterline = 0; rasterline < noOfRasterlines; rasterline++) {	
 		
 			// For each rasterline...
-			for (cycle = 0; cycle < cyclesPerRasterline; cycle++) {
+			c64->vic->beginRasterline(rasterline);
+			for (cycle = 1; cycle <= cyclesPerRasterline; cycle++) {
 				
 				// Pass control to the virtual VIC II chip
-				c64->vic->executeOneCycle(rasterline);
+				c64->vic->executeOneCycle(cycle);
 
 				// Pass control to the virtual CPUs
 				c64->cpu->executeOneCycle();

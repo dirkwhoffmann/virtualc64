@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* Cycle accurate VIC II emulation based on the VIC II documentation by Christian Bauer */
+
 #include "C64.h"
 
 VIC::VIC()
@@ -49,24 +51,29 @@ VIC::reset()
 	bankAddr = 0;
 	scanline = 0;
 	cycle	 = 1;
-	drawSprites		= true;
-	markIRQLines	= false;
-	markDMALines	= false;
-	displayState	= false;
+	drawSprites	= true;
+	markIRQLines = false;
+	markDMALines = false;
+	displayState = false;
 	drawVerticalFrame = true;
 	drawHorizontalFrame = true;
-	// lastScanline	= NTSC_RASTERLINES-1; // this is now set by setPAL() / setNTSC()
+	spriteOnOff = 0;
+	spriteDmaOnOff = 0;
 	screenMemory	= mem->getRam();
 	screenMemoryAddr = 0x0000;
 	spriteMemory	= screenMemory;
 	characterMemory = mem->getRam();
 	characterMemoryAddr = 0x0000;
-	memset(spriteLineToDraw, 0xff, sizeof(spriteLineToDraw));
 	memset(iomem, 0x00, sizeof(iomem));
 	for (int i = 0; i < 8; i++) {
 		spriteSpriteCollisionEnabled[i] = true;
 		spriteBackgroundCollisionEnabled[i] = true;
+		mc[i] = 0;
+		mcbase[i] = 0;
+		spriteShiftReg[i][0] = spriteShiftReg[i][1] = spriteShiftReg[i][3] = 0; 
 	}
+	expansionFF = 0xff;
+	
 	// Let the color look correct right from the beginning
 	iomem[0x20] = 14; // Light blue
 	iomem[0x21] = 6;  // Blue
@@ -93,8 +100,9 @@ VIC::load(FILE *file)
 	for (int i = 0; i < sizeof(colorSpace); i++) {
 		colorSpace[i] = read8(file);
 	}
-	for (int i = 0; i < sizeof(spriteLineToDraw); i++) {
-		((char *)spriteLineToDraw)[i] = read8(file);
+	// To be removed
+	for (int i = 0; i < 8*512; i++) {
+		(void)read8(file);
 	}		
 	return true;
 }
@@ -119,8 +127,9 @@ VIC::save(FILE *file)
 	for (int i = 0; i < sizeof(colorSpace); i++) {
 		write8(file, colorSpace[i]);
 	}
-	for (int i = 0; i < sizeof(spriteLineToDraw); i++) {
-		write8(file, ((char *)spriteLineToDraw)[i]);
+	// To be removed
+	for (int i = 0; i < 8*512; i++) {
+		write8(file, 0);
 	}	
 	return true;
 }
@@ -197,41 +206,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 {
 	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
 
-	switch(addr) {
-		uint8_t oldValue;
-		
-		case 0x01:
-			iomem[addr] = value;
-			updateSpriteLineToDraw(0);
-			return;
-		case 0x03:
-			iomem[addr] = value;
-			updateSpriteLineToDraw(1);
-			return;
-		case 0x05:
-			iomem[addr] = value;
-			updateSpriteLineToDraw(2);
-			return;
-		case 0x07:
-			iomem[addr] = value;
-			updateSpriteLineToDraw(3);
-			return;
-		case 0x09:
-			iomem[addr] = value;
-			updateSpriteLineToDraw(4);
-			return;
-		case 0x0B:
-			iomem[addr] = value;
-			updateSpriteLineToDraw(5);
-			return;
-		case 0x0D:
-			iomem[addr] = value;
-			updateSpriteLineToDraw(6);
-			return;
-		case 0x0F:
-			iomem[addr] = value;
-			updateSpriteLineToDraw(7);
-			return;
+	switch(addr) {		
 		case 0x11: // CONTROL_REGISTER_1
 			if ((iomem[addr] & 0x80) != (value & 0x80)) {
 				// Value changed: Check if we need to trigger an interrupt immediately
@@ -252,23 +227,12 @@ VIC::poke(uint16_t addr, uint8_t value)
 				iomem[addr] = value;
 			}
 			return;
-		case 0x15: // SPRITE ENABLED
-			oldValue = iomem[addr]; 
-			iomem[addr] = value;
-			for (int i = 0; i < 8; i++) {
-				if ((value & (1 << i)) != (oldValue & (1 << i)))
-					updateSpriteLineToDraw(i);
-			}
-			return;
 		case 0x16:
 			iomem[addr] = value | (128 + 64); // The upper two bits are unused and always return 1 when read
 			return;
-		case 0x17: // VERTICAL STRETCH
-			oldValue = iomem[addr]; 
+		case 0x17:
 			iomem[addr] = value;
-			for (int i = 0; i < 8; i++)
-				if ((value & (1 << i)) != (oldValue & (1 << i)))
-					updateSpriteLineToDraw(i);
+			expansionFF |= ~value;
 			return;
 		case 0x18: // MEMORY_SETUP_REGISTER
 			iomem[addr] = value | 0x01; // Bit 0 is unused and always 1 when read
@@ -362,37 +326,6 @@ VIC::setCharacterMemoryAddr(uint16_t addr)
 	characterMemory = &mem->ram[bankAddr + addr];
 }
 
-void 
-VIC::updateSpriteLineToDraw(uint8_t nr) 
-{
-	assert (nr < 8);
-
-	// TODO: Optimize, so that only the non-zero values get zeroes out
-	memset(spriteLineToDraw[nr], 0xff, sizeof(spriteLineToDraw[nr]));
-	
-	if (spriteIsEnabled(nr)) {
-		int offset = 1 + getSpriteY(nr); 		
-		if (spriteHeightIsDoubled(nr)) {
-			for (int i = 0; i < 21; i++) {
-				spriteLineToDraw[nr][offset++] = i;
-				spriteLineToDraw[nr][offset++] = i;
-			}
-		} else {
-			for (int i = 0; i < 21; i++) {
-				spriteLineToDraw[nr][offset++] = i;
-			}
-		}
-	}
-}
-
-//! Updates the \a spriteLineToDraw array for all sprites
-void 
-VIC::updateSpriteLinesToDraw()
-{
-	for (int i = 0; i < 8; i++)
-		updateSpriteLineToDraw(i);
-}
-
 inline void 
 VIC::setForegroundPixel(int offset, int color) 
 {
@@ -436,15 +369,13 @@ VIC::setSpritePixel(int offset, int color, int nr)
 }
 
 void
-VIC::drawSprite(uint8_t line, uint8_t nr)
+VIC::drawSprite(uint8_t nr)
 {
 	assert(nr < 8);
 	assert(line < 21);
-	uint8_t  pattern;
-	uint16_t spriteData;
-	int spriteX, offset; // = getSpriteX(nr) + getHorizontalRasterScroll();
-	spriteData = getSpriteData(nr) + 3 * line;
-	spriteX    = getSpriteX(nr);
+	
+	int spriteX, offset;
+	spriteX = getSpriteX(nr);
 
 	if (spriteX < 488) 
 		offset = spriteX;
@@ -461,7 +392,7 @@ VIC::drawSprite(uint8_t line, uint8_t nr)
 		};
 
 		for (int i = 0; i < 3; i++) {
-			pattern = mem->peekRam(spriteData + i);
+			uint8_t pattern = spriteShiftReg[nr][i]; 
 			
 			uint8_t col;
 			if (spriteWidthIsDoubled(nr)) {
@@ -521,8 +452,8 @@ VIC::drawSprite(uint8_t line, uint8_t nr)
 	} else {
 		int fgcolor = colors[spriteColor(nr)]; 
 		for (int i = 0; i < 3; i++) {
-			pattern = mem->peekRam(spriteData + i);
-			
+			uint8_t pattern = spriteShiftReg[nr][i]; 
+
 			if (spriteWidthIsDoubled(nr)) {
 				if (pattern & 128) {
 					setSpritePixel(offset, fgcolor, nr);
@@ -664,32 +595,6 @@ VIC::triggerIRQ(uint8_t source)
 	}
 }
 
-inline void 
-VIC::setRasterline(int line)
-{
-	// Copy pixel buffer of old line to screen buffer
-	memcpy(currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH), pixelBuffer, sizeof(pixelBuffer));
-	// set internal status to new line after old pixelbuffer is copied to screenbuffe 
-	scanline = line;
-	// New frame?
-	if (scanline == 0) {
-		frame++;
-		// Frame complete. Notify listener...
-		getListener()->drawAction(currentScreenBuffer);
-		// Switch frame buffer
-		currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
-	}
-	// Check, if scanline matches the preset raster value for interrupts
-	if (scanline == rasterInterruptLine()) {
-		triggerIRQ(1);
-	}
-	// Clear z buffer
-	// The z buffer is initialized with a high, positive value (meaning the pixel is far away)
-	memset(zBuffer, 0x7f, sizeof(zBuffer));
-	// Clear pixel source
-	memset(pixelSource, 0x00, sizeof(pixelSource));	
-}	
-
 /* 3.7.1. Idle-Zustand/Display-Zustand
  the idle access always reads at $3fff or $39ff when the ECM bit is set.
  here the doc conflicts: the ECM bit is either at $d016 (chap 3.7.1) or $d011 (3.2)
@@ -734,11 +639,9 @@ VIC::drawSpritesM()
 	int deadCycles = 0;
 	if (drawSprites) {
 		for (int i = 0; i < 8; i++) {
-			uint8_t spriteLine = spriteLineToDraw[i][scanline];
-			if (spriteLine != 0xff) { // i guess 0xff means sprite is disabled
-				// deadCycles += 3; // this is a test, the actual required dead cycles are 2 but there are additional delays
-				drawSprite(spriteLine, i);
-			}
+			if (oldSpriteOnOff & (1 << i)) {
+				drawSprite(i);
+			}				
 		}
 	}
 	return deadCycles;
@@ -783,39 +686,129 @@ VIC::updateRegisters0()
 	if (!displayState && dmaLine) displayState = true;
 	// chip model independent cycle events
 	switch (cycle) {
-#if 0
-		case 12:
-			// BA signal is pulled low
-			// Right now, we simulate this behavior by freezing the CPU three cycles later (in cycle 15)
+		case 1:
+			// Check for raster IRQ
+			if (scanline == rasterInterruptLine())
+				triggerIRQ(1);
+
+			readSpritePtr(3);
+			readSpriteData(3);
 			break;
-#endif
+		case 2:
+			readSpriteData(3);
+			readSpriteData(3);
+			break;
+		case 3:
+			readSpritePtr(4);
+			readSpriteData(4);
+			break;
+		case 4:
+			readSpriteData(4);
+			readSpriteData(4);
+			break;
+		case 5:
+			readSpritePtr(5);
+			readSpriteData(5);
+			break;
+		case 6:
+			readSpriteData(5);
+			readSpriteData(5);
+			break;
+		case 7:
+			readSpritePtr(6);
+			readSpriteData(6);
+			break;
+		case 8:
+			readSpriteData(6);
+			readSpriteData(6);
+			break;
+		case 9:
+			readSpritePtr(7);
+			readSpriteData(7);
+			break;
+		case 10:
+			readSpriteData(7);
+			readSpriteData(7);
+			break;
+			
+		case 14:
+			/* In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
+			 (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
+			 Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt. */
+			registerVC = registerVCBASE;
+			registerVMLI = 0;
+			if (dmaLine) registerRC = 0;
+			break;
+			
 		case 15:
 			if (dmaLine) {
 				// Freeze CPU
 				cpu->setRDY(0);
 			}
+			
+			/* In der ersten Phase von Zyklus 15 wird geprüft, ob das
+			Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 2 erhöht. */
+			// Note: Done in cycle 16
 			break;
-		case 14:
-			/* In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
-			(VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
-			Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt. */
-			registerVC = registerVCBASE;
-			registerVMLI = 0;
-			if (dmaLine) registerRC = 0;
-			break;
+			
 		case 16:
 			if (isCSEL()) mainFrameFF = false;		
+
+			/* 8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
+			 Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 1 erhöht.
+			 Dann wird geprüft, ob MCBASE auf 63 steht und bei positivem Vergleich
+			 der DMA und die Darstellung für das jeweilige Sprite abgeschaltet. */
+
+			for (int i = 0; i < 8; i++) {
+				uint8_t mask = (1 << i);
+				if (expansionFF & mask) {
+					mcbase[i] += 3;
+					mcbase[i] &= 0x3F; // 6 bit counter
+				}
+				if (mcbase[i] == 63) {			
+					spriteOnOff &= ~mask;
+					spriteDmaOnOff &= ~mask;
+				}
+			}			
 			break;
+			
 		case 18:	
 			if (!isCSEL()) mainFrameFF = false;
 			break;
+			
 		case 55:
 			if (!isCSEL()) mainFrameFF = true;
+
+			/* In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
+			invertiert, wenn das MxYE-Bit gesetzt ist. */
+			expansionFF ^= iomem[0x17];
+
+			/* In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
+			ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
+			Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
+			unteren 8 Bits von RASTER ist. Ist dies der Fall und der DMA für das
+			Sprite noch ausgeschaltet, wird der DMA angeschaltet, MCBASE gelöscht
+			und, wenn das MxYE-Bit gesetzt ist, das Expansions-Flipflop gelˆscht.
+			 */
+			// determine which sprites are displayes in the next rasterline
+			for (int i = 0; i < 8; i++) {
+				if (spriteIsEnabled(i)) {
+					uint8_t y = getSpriteY(i);
+					if (y == (scanline & 0xff)) {
+						spriteDmaOnOff |= (1 << i);
+						mcbase[i] = 0;
+						if (spriteHeightIsDoubled(i))
+							expansionFF &= ~(1 << i);
+					}
+				}
+			}
 			break;
+
 		case 57:
 			if (isCSEL()) mainFrameFF = true;
 			drawHorizontalFrame = mainFrameFF;
 			break;
+			
 		case 58:
 			// Release RDY line
 			cpu->setRDY(1);
@@ -834,7 +827,53 @@ VIC::updateRegisters0()
 				registerRC++;
 				registerRC &= 7;  // 3 bit overflow
 			}
+			
+			/* In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE
+			geladen (MCBASE->MC) und geprüft, ob der DMA für das Sprite angeschaltet
+			und die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
+			ist. Ist dies der Fall, wird die Darstellung des Sprites angeschaltet. */
+			oldSpriteOnOff = spriteOnOff; // remember last value
+			for (int i = 0; i < 8; i++) {
+				mc[i] = mcbase[i];
+				uint8_t mask = (1 << i);
+				if (spriteDmaOnOff & mask) {
+					uint8_t y = getSpriteY(i);
+					if (y == (scanline & 0xff)) 
+						spriteOnOff |= mask;
+				}
+			}
+			
+			/* Draw rasterline into pixel buffer */
+			drawSpritesM();
+			drawFrame();
+			if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[WHITE]);
+			if (markIRQLines && scanline == rasterInterruptLine()) markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
+
+			readSpritePtr(0);
+			readSpriteData(0);
 			break;
+
+		case 59:
+			readSpriteData(0);
+			readSpriteData(0);
+			break;
+		case 60:
+			readSpritePtr(1);
+			readSpriteData(1);
+			break;
+		case 61:
+			readSpriteData(1);
+			readSpriteData(1);
+			break;
+		case 62:
+			readSpritePtr(2);
+			readSpriteData(2);
+			break;
+		case 63:
+			readSpriteData(2);
+			readSpriteData(2);
+			break;
+			
 	}
 }
 
@@ -915,14 +954,44 @@ VIC::gAccess()
 uint8_t debug0 = 0;
 int debug1 = 0;
 
+void 
+VIC::beginFrame()
+{
+}
+
+void 
+VIC::beginRasterline(uint16_t line)
+{
+	// Copy pixel buffer of old line to screen buffer
+	memcpy(currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH), pixelBuffer, sizeof(pixelBuffer));
+	// set internal status to new line after old pixelbuffer is copied to screenbuffe 
+	scanline = line;
+	// New frame?
+	
+	if (scanline == 0) {
+		frame++;
+		// Frame complete. Notify listener...
+		getListener()->drawAction(currentScreenBuffer);
+		// Switch frame buffer
+		currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
+	}
+	
+	// Clear z buffer
+	// The z buffer is initialized with a high, positive value (meaning the pixel is far away)
+	memset(zBuffer, 0x7f, sizeof(zBuffer));
+	// Clear pixel source
+	memset(pixelSource, 0x00, sizeof(pixelSource));	
+}
+
+
 /* this method attempts to implement a cycle exact model of the VIC behaviour.
 a complete documentation would be too long. For Information, 
 please have look at the exellent VIC-II documentation of Christian Bauer. */
 void 
-VIC::executeOneCycle(uint16_t line)
+VIC::executeOneCycle(uint16_t c)
 {
-	// prepare new rasterline
-	if (cycle == 1) setRasterline(line);
+	cycle = c;
+	
 	updateRegisters0();
 	// this is the "g-access" 
 	if (cycle >= 16 && cycle <= 55) {
@@ -946,25 +1015,13 @@ VIC::executeOneCycle(uint16_t line)
 		characterSpace[registerVMLI] = screenMemory[registerVC]; 
 		colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
 	}
-	if (cycle == cyclesPerRasterline)  { // last cycle
-		drawSpritesM();
-		drawFrame();
-		if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[WHITE]);
-		if (markIRQLines && scanline == rasterInterruptLine()) markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
+#if 0	
+	if (cycle == cyclesPerRasterline)  { 
  		cycle = 1;
 	} else {
 		cycle++;
 	}
-/*	if (scanline == rasterInterruptLine()) {
-		debug1= scanline;
-	}
-/*	if (getSpriteY(0) != debug0) {
-		markLine(0, xCounter, colors[BLUE]);
-		debug("i %3d l %3d c %2d %d -> %d\n", debug1, scanline, cycle, debug0, getSpriteY(0));
-		debug0 = getSpriteY(0);
-	}
-	if (scanline == getSpriteY(0)) 	markLine(0, TOTAL_SCREEN_WIDTH, colors[GREEN]);
-*/
+#endif
 }
 
 void 
