@@ -40,7 +40,8 @@ void
 	
 	C64 *c64 = (C64 *)thisC64;
 
-	int cyclesPerRasterline, noOfRasterlines, rasterline, cycle;
+	int framesPerTenthSecond, rasterlinesPerFrame, cyclesPerRasterline;
+	int frame, rasterline, cycle;
 	
 	// Configure thread properties...
 	c64->debug("Execution thread started\n");
@@ -52,14 +53,14 @@ void
 	c64->cpu->clearErrorState();
 	c64->floppy->cpu->clearErrorState();
 	c64->setDelay((uint64_t)(1000000 / c64->fps));
-	
+	frame = 0;
 	while (1) {
-		
 		// For each frame...
-		cyclesPerRasterline = c64->getCpuCyclesPerRasterline(); // should be moved to VIC class
-		noOfRasterlines = c64->noOfRasterlines; 
+		rasterlinesPerFrame = c64->getRasterlinesPerFrame();
+		cyclesPerRasterline = c64->getCyclesPerRasterline();
+		framesPerTenthSecond = c64->getFramesPerSecond() / 10;
 		c64->vic->beginFrame();
-		for (rasterline = 0; rasterline < noOfRasterlines; rasterline++) {	
+		for (rasterline = 0; rasterline < rasterlinesPerFrame; rasterline++) {	
 		
 			// For each rasterline...
 			c64->vic->beginRasterline(rasterline);
@@ -80,26 +81,28 @@ void
 			}
 			if (c64->cpu->getErrorState() != CPU::OK) break;
 			if (c64->floppy->cpu->getErrorState() != CPU::OK) break;						
+			c64->vic->endRasterline();
 		}
 
 		if (c64->cpu->getErrorState() != CPU::OK) break;
 		if (c64->floppy->cpu->getErrorState() != CPU::OK) break;		
 		
 		// Frame completed...
-
-		// Pass control to the virtual sound chip
-		c64->sid->execute(c64->getCpuCyclesPerFrame());
-
-		// Pass control to the virtual IEC bus
-		c64->iec->execute();
-		
-		// Increment the "time of day clocks" every tenth of a second
-		// TODO: Contant "6" needs to be 5 or 6, depending on PAL or NTSC mode
-		if (c64->vic->getFrame() % 6 == 0) {
+		c64->vic->endFrame();
+		frame++;
+		if (frame >= framesPerTenthSecond) {
+			// Increment the "time of day clocks" every tenth of a second
+			frame = 0;
 			c64->cia1->incrementTOD();
 			c64->cia2->incrementTOD();
 		}
-						   
+		
+		// Pass control to the virtual sound chip
+		c64->sid->execute(rasterlinesPerFrame * cyclesPerRasterline);
+
+		// Pass control to the virtual IEC bus
+		c64->iec->execute();
+								   
 		// Sleep... 
 		if (!c64->getWarpMode()) 
 			c64->synchronizeTiming();

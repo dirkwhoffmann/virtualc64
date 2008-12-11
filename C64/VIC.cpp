@@ -47,7 +47,6 @@ void
 VIC::reset() 
 {
 	debug("  Resetting VIC...\n");
-	frame    = 0;
 	bankAddr = 0;
 	scanline = 0;
 	cycle	 = 1;
@@ -73,6 +72,9 @@ VIC::reset()
 		spriteShiftReg[i][0] = spriteShiftReg[i][1] = spriteShiftReg[i][3] = 0; 
 	}
 	expansionFF = 0xff;
+	for (int i = 0; i < PAL_RASTERLINES; i++) {
+		rasterlineDebug[i] = -1;
+	}
 	
 	// Let the color look correct right from the beginning
 	iomem[0x20] = 14; // Light blue
@@ -84,9 +86,11 @@ bool
 VIC::load(FILE *file)
 {
 	debug("  Loading VIC state...\n");
-	frame            = read64(file);
+	//frame            = read64(file);
+	(void)read64(file);
 	scanline         = read32(file);
-	lastScanline     = read32(file);
+	// lastScanline     = read32(file);
+	(void)read32(file);
 	setMemoryBankAddr(read16(file));
 	setScreenMemoryAddr(read16(file));
 	setCharacterMemoryAddr(read16(file));
@@ -111,9 +115,11 @@ bool
 VIC::save(FILE *file)
 {
 	debug("  Saving VIC state...\n");
-	write64(file, frame);
+	//write64(file, frame);
+	write64(file, 0);
 	write32(file, scanline);
-	write32(file, lastScanline);
+	//write32(file, lastScanline);
+	write32(file, 0);
 	write16(file, getMemoryBankAddr());
 	write16(file, getScreenMemoryAddr());
 	write16(file, getCharacterMemoryAddr());
@@ -261,7 +267,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 			// Writing has no effect
 			return;
 	}
-	
+
 	// Default action
 	iomem[addr] = value;
 }
@@ -613,15 +619,11 @@ VIC::markLine(int start, int end, int color)
 }
 
 // draws the frame for the current line
-void inline 
-VIC::drawFrame()
+void inline
+VIC::drawHorizontalBorder()
 {
 	int bcolor = colors[getBorderColor()];
-	if (drawVerticalFrame && (scanline < yStart() || scanline > yEnd())) {
-		for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++) {
-			pixelBuffer[i] = bcolor;
-		}			
-	}
+	
 	if (drawHorizontalFrame) {
 		for (int i = 0; i < xStart(); i++) {
 			pixelBuffer[i] = bcolor;
@@ -629,6 +631,31 @@ VIC::drawFrame()
 		for (int i = xEnd()+1; i < TOTAL_SCREEN_WIDTH; i++) {
 			pixelBuffer[i] = bcolor;
 		}
+	}	
+}
+
+void inline
+VIC::drawVerticalBorder()
+{
+	int bcolor = colors[getBorderColor()];
+
+	if (drawVerticalFrame) {
+		for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++) {
+			pixelBuffer[i] = bcolor;
+		}			
+	} else {
+		// fprintf(stderr,"verticalBorderOFF\n");
+	}
+}
+
+
+void inline 
+VIC::drawBorder()
+{
+	if (scanline >= yStart() && scanline <= yEnd()) {
+		drawHorizontalBorder();
+	} else {
+		drawVerticalBorder();
 	}
 }
 
@@ -691,6 +718,8 @@ VIC::updateRegisters0()
 			if (scanline == rasterInterruptLine())
 				triggerIRQ(1);
 
+			if (spriteDmaOnOff & (1 << 3))
+				cpu->setRDY(2);
 			readSpritePtr(3);
 			readSpriteData(3);
 			break;
@@ -699,6 +728,8 @@ VIC::updateRegisters0()
 			readSpriteData(3);
 			break;
 		case 3:
+			if (spriteDmaOnOff & (1 << 4))
+				cpu->setRDY(2);
 			readSpritePtr(4);
 			readSpriteData(4);
 			break;
@@ -707,6 +738,8 @@ VIC::updateRegisters0()
 			readSpriteData(4);
 			break;
 		case 5:
+			if (spriteDmaOnOff & (1 << 5))
+				cpu->setRDY(2);
 			readSpritePtr(5);
 			readSpriteData(5);
 			break;
@@ -715,6 +748,8 @@ VIC::updateRegisters0()
 			readSpriteData(5);
 			break;
 		case 7:
+			if (spriteDmaOnOff & (1 << 6))
+				cpu->setRDY(2);
 			readSpritePtr(6);
 			readSpriteData(6);
 			break;
@@ -723,6 +758,8 @@ VIC::updateRegisters0()
 			readSpriteData(6);
 			break;
 		case 9:
+			if (spriteDmaOnOff & (1 << 7))
+				cpu->setRDY(2);
 			readSpritePtr(7);
 			readSpriteData(7);
 			break;
@@ -742,8 +779,8 @@ VIC::updateRegisters0()
 			
 		case 15:
 			if (dmaLine) {
-				// Freeze CPU
-				cpu->setRDY(0);
+				// Freeze CPU for 43 cycles
+				cpu->setRDY(43);
 			}
 			
 			/* In der ersten Phase von Zyklus 15 wird geprŸft, ob das
@@ -766,7 +803,7 @@ VIC::updateRegisters0()
 					mcbase[i] &= 0x3F; // 6 bit counter
 				}
 				if (mcbase[i] == 63) {			
-					spriteOnOff &= ~mask;
+					// spriteOnOff &= ~mask;
 					spriteDmaOnOff &= ~mask;
 				}
 			}			
@@ -809,10 +846,7 @@ VIC::updateRegisters0()
 			drawHorizontalFrame = mainFrameFF;
 			break;
 			
-		case 58:
-			// Release RDY line
-			cpu->setRDY(1);
-			
+		case 58:			
 			/* Der †bergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile, 
 			wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt.
 			In der ersten Phase von Zyklus 58 wird geprŸft, ob RC=7 ist. Wenn ja,
@@ -845,10 +879,17 @@ VIC::updateRegisters0()
 			
 			/* Draw rasterline into pixel buffer */
 			drawSpritesM();
-			drawFrame();
-			if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[WHITE]);
-			if (markIRQLines && scanline == rasterInterruptLine()) markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
-
+			
+			// switch off sprites if dma is off
+			for (int i = 0; i < 8; i++) {
+				uint8_t mask = (1 << i);
+				if ((spriteOnOff & mask) && !(spriteDmaOnOff & mask))
+					spriteOnOff &= ~mask;
+			}
+			
+			
+			if (spriteDmaOnOff & (1 << 0))
+				cpu->setRDY(2);
 			readSpritePtr(0);
 			readSpriteData(0);
 			break;
@@ -858,6 +899,8 @@ VIC::updateRegisters0()
 			readSpriteData(0);
 			break;
 		case 60:
+			if (spriteDmaOnOff & (1 << 1))
+				cpu->setRDY(2);
 			readSpritePtr(1);
 			readSpriteData(1);
 			break;
@@ -866,12 +909,22 @@ VIC::updateRegisters0()
 			readSpriteData(1);
 			break;
 		case 62:
+			if (spriteDmaOnOff & (1 << 2))
+				cpu->setRDY(2);
 			readSpritePtr(2);
 			readSpriteData(2);
 			break;
 		case 63:
 			readSpriteData(2);
 			readSpriteData(2);
+			
+			drawBorder();
+			if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[WHITE]);
+			if (markIRQLines && scanline == rasterInterruptLine()) markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
+			if (rasterlineDebug[scanline] >= 0) {
+				markLine(0, TOTAL_SCREEN_WIDTH, colors[rasterlineDebug[scanline] % 16]);
+				rasterlineDebug[scanline] = -1;
+			}			
 			break;
 			
 	}
@@ -960,33 +1013,41 @@ VIC::beginFrame()
 }
 
 void 
+VIC::endFrame()
+{
+	// frame++;
+	// Frame complete. Notify listener...
+	getListener()->drawAction(currentScreenBuffer);
+	
+	// Switch frame buffer
+	currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;	
+}
+
+void 
 VIC::beginRasterline(uint16_t line)
+{
+	scanline = line;
+//	if (scanline == 250)
+//		rasterlineDebug[scanline] = YELLOW;
+		
+	// Clear z buffer. The buffer is initialized with a high, positive value (meaning the pixel is far away)
+	memset(zBuffer, 0x7f, sizeof(zBuffer));
+
+	// Clear pixel source
+	memset(pixelSource, 0x00, sizeof(pixelSource));	
+}
+
+void 
+VIC::endRasterline()
 {
 	// Copy pixel buffer of old line to screen buffer
 	memcpy(currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH), pixelBuffer, sizeof(pixelBuffer));
-	// set internal status to new line after old pixelbuffer is copied to screenbuffe 
-	scanline = line;
-	// New frame?
-	
-	if (scanline == 0) {
-		frame++;
-		// Frame complete. Notify listener...
-		getListener()->drawAction(currentScreenBuffer);
-		// Switch frame buffer
-		currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
-	}
-	
-	// Clear z buffer
-	// The z buffer is initialized with a high, positive value (meaning the pixel is far away)
-	memset(zBuffer, 0x7f, sizeof(zBuffer));
-	// Clear pixel source
-	memset(pixelSource, 0x00, sizeof(pixelSource));	
 }
 
 
 /* this method attempts to implement a cycle exact model of the VIC behaviour.
 a complete documentation would be too long. For Information, 
-please have look at the exellent VIC-II documentation of Christian Bauer. */
+please have look at the exellent VIC-II documentation by Christian Bauer. */
 void 
 VIC::executeOneCycle(uint16_t c)
 {
@@ -1015,13 +1076,6 @@ VIC::executeOneCycle(uint16_t c)
 		characterSpace[registerVMLI] = screenMemory[registerVC]; 
 		colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
 	}
-#if 0	
-	if (cycle == cyclesPerRasterline)  { 
- 		cycle = 1;
-	} else {
-		cycle++;
-	}
-#endif
 }
 
 void 
@@ -1029,7 +1083,7 @@ VIC::dumpState()
 {
 	debug("Rasterline: %d (%x)\n", scanline, scanline);
 	debug("Cycle: %d\n", cycle);
-	debug("Mode: %s\n", cyclesPerRasterline == PAL_CYCLES_PER_RASTERLINE ? "PAL" : "NTSC");
+	// debug("Mode: %s\n", cyclesPerRasterline == PAL_CYCLES_PER_RASTERLINE ? "PAL" : "NTSC");
 	debug("Text resolution: %d x %d\n", numberOfRows(), numberOfColumns());
 	debug("Vertical raster scroll: %d Horizontal raster scroll: %d\n\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
 	debug("Display mode: ");
@@ -1062,15 +1116,11 @@ VIC::dumpState()
 void 
 VIC::setPAL()
 { 
-	cyclesPerRasterline = PAL_CYCLES_PER_RASTERLINE;
-	rasterlinesPerFrame = PAL_RASTERLINES;
-	lastScanline	= PAL_RASTERLINES - 1;
+	// Nothing to do so far
 }
 
 void
 VIC::setNTSC()
 {
-	cyclesPerRasterline = NTSC_CYCLES_PER_RASTERLINE;
-	rasterlinesPerFrame = NTSC_RASTERLINES;
-	lastScanline	= NTSC_RASTERLINES - 1;
+	// Nothing to do so far
 }

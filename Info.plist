@@ -66,7 +66,7 @@
 	<key>CFBundleSignature</key>
 	<string>vc64</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0 Beta 1</string>
+	<string>1.0 Beta 2</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

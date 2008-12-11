@@ -511,9 +511,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D15AC270486D014006FF6A4 /* V64 */ = {
+		8D15AC270486D014006FF6A4 /* VirtualC64 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 504F83690A89E0D2009FA225 /* Build configuration list for PBXNativeTarget "V64" */;
+			buildConfigurationList = 504F83690A89E0D2009FA225 /* Build configuration list for PBXNativeTarget "VirtualC64" */;
 			buildPhases = (
 				020E6BF30B0E754F0015C3A6 /* ShellScript */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
@@ -524,7 +524,7 @@
 			);
 			dependencies = (
 			);
-			name = V64;
+			name = VirtualC64;
 			productInstallPath = "$(HOME)/Applications";
 			productName = V64;
 			productReference = 8D15AC370486D014006FF6A4 /* V64.app */;
@@ -542,7 +542,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D15AC270486D014006FF6A4 /* V64 */,
+				8D15AC270486D014006FF6A4 /* VirtualC64 */,
 			);
 		};
 /* End PBXProject section */
@@ -793,6 +793,8 @@
 		504F836F0A89E0D2009FA225 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				DEPLOYMENT_LOCATION = NO;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
@@ -812,7 +814,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		504F83690A89E0D2009FA225 /* Build configuration list for PBXNativeTarget "V64" */ = {
+		504F83690A89E0D2009FA225 /* Build configuration list for PBXNativeTarget "VirtualC64" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				504F836A0A89E0D2009FA225 /* Development */,

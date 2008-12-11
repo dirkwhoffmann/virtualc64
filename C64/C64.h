@@ -300,13 +300,21 @@ public:
 	//! Set emulation speed
 	void setHz(int h);
 	
+	// Returns the number of frames per second
+	/*! Number varies between PAL and NTSC machines */	
+	inline int getFramesPerSecond() { return fps; }
+	
+	//! Returns the number of rasterlines per frame
+	/*! Number varies between PAL and NTSC machines */	
+	inline int getRasterlinesPerFrame() { return noOfRasterlines; }
+
 	//! Returns the number of CPU cycles performed per rasterline
 	/*! Number varies between PAL and NTSC machines */	
-	int getCpuCyclesPerRasterline() { return cpuCyclesPerRasterline; }
+	inline int getCyclesPerRasterline() { return cpuCyclesPerRasterline; }
 
 	//! Returns the number of CPU cycles performed per frame
 	/*! Number varies between PAL and NTSC machines */	
-	int getCpuCyclesPerFrame() { return cpuCyclesPerRasterline * noOfRasterlines; }
+	inline int getCyclesPerFrame() { return getRasterlinesPerFrame() * getCyclesPerRasterline(); }
 	
 	//! Assign an archive to the virtual C64
 	void setArchive (Archive *a) { archive = a; }
