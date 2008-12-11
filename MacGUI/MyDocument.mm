@@ -261,8 +261,11 @@
 
 	[super windowControllerDidLoadNib:aController];
    	
+	// Set minimum window size
+	[[self windowForSheet] setMinSize:NSMakeSize(652,432)];
+	
 	// Fix window aspect ratio
-	[[self windowForSheet] setContentAspectRatio:NSMakeSize(653,432)];
+	[[self windowForSheet] setContentAspectRatio:NSMakeSize(652,432)];
 
 	// Load user defaults
 	[self loadUserDefaults];
