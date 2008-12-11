@@ -31,7 +31,7 @@
 	};
 	089C1660FE840EACC02AAC07 /* English */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1048, 455}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1048, 478}}";
 			sepNavSelRange = "{125, 0}";
 			sepNavVisRange = "{0, 125}";
 			sepNavVisRect = "{{0, 0}, {793, 651}}";
@@ -46,17 +46,17 @@
 			8D15AC270486D014006FF6A4 /* VirtualC64 */,
 		);
 		breakpoints = (
-			508BD4FB0A73C9AF00BCC764 /* MyDocument.mm:2164 */,
+			508BD4FB0A73C9AF00BCC764 /* MyDocument.mm:2167 */,
 			509C67CB0A751AD0008D34E5 /* C64Listener.h:18 */,
 			50AE1A8D0A8736C100073959 /* VIC.h:677 */,
 			5022BF3E0A8BBAE500C71B6C /* CIA.h:271 */,
 			50CA0E170A90A48800A5A08D /* Memory.cpp:133 */,
-			50B527000AB0890A00280F81 /* MyDocument.mm:531 */,
-			50F52EB40B8C7AD9006A7C48 /* MyDocument.mm:1114 */,
+			50B527000AB0890A00280F81 /* MyDocument.mm:534 */,
+			50F52EB40B8C7AD9006A7C48 /* MyDocument.mm:1117 */,
 			5001D1C30B8F081E001B5B4A /* VIC.h:421 */,
 			500B6C620B904F96002C36EC /* C64Proxy.mm:355 */,
 			50B289620C2D0B6B002AC21A /* IEC.cpp:218 */,
-			50D5FFDC0C2EB9810022CA3A /* MyDocument.mm:2141 */,
+			50D5FFDC0C2EB9810022CA3A /* MyDocument.mm:2144 */,
 			50D5007F0C2ED5950022CA3A /* Archive.h:44 */,
 			50298FE60C3111C300422DED /* D64Archive.cpp:291 */,
 			509AEB1F0C32641D001FC9FD /* VICScreen.mm:920 */,
@@ -334,6 +334,10 @@
 			5088ACDF0E66AF290053B115 = 5088ACDF0E66AF290053B115 /* PBXBookmark */;
 			509611CB0EF166D80005EB01 /* PBXTextBookmark */ = 509611CB0EF166D80005EB01 /* PBXTextBookmark */;
 			509611CE0EF166D80005EB01 /* PBXTextBookmark */ = 509611CE0EF166D80005EB01 /* PBXTextBookmark */;
+			509611DF0EF168980005EB01 /* PBXTextBookmark */ = 509611DF0EF168980005EB01 /* PBXTextBookmark */;
+			509611E00EF168980005EB01 /* PBXTextBookmark */ = 509611E00EF168980005EB01 /* PBXTextBookmark */;
+			509611E10EF168980005EB01 /* PBXTextBookmark */ = 509611E10EF168980005EB01 /* PBXTextBookmark */;
+			509611E20EF168980005EB01 /* PBXTextBookmark */ = 509611E20EF168980005EB01 /* PBXTextBookmark */;
 			5097C5A70EF15ECB00EEA5FB = 5097C5A70EF15ECB00EEA5FB /* PBXTextBookmark */;
 			5097C5A80EF15ECB00EEA5FB = 5097C5A80EF15ECB00EEA5FB /* PBXTextBookmark */;
 			5097C5A90EF15ECB00EEA5FB = 5097C5A90EF15ECB00EEA5FB /* PBXTextBookmark */;
@@ -1031,7 +1035,7 @@
 	};
 	50176C600A6F72F3009E80BD /* VIC.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {926, 13648}}";
+			sepNavIntBoundsRect = "{{0, 0}, {926, 13680}}";
 			sepNavSelRange = "{4613, 0}";
 			sepNavVisRange = "{3428, 1533}";
 			sepNavVisRect = "{{0, 0}, {793, 651}}";
@@ -1112,9 +1116,9 @@
 	};
 	50176C760A6F7357009E80BD /* MyDocument.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1048, 36144}}";
-			sepNavSelRange = "{66839, 0}";
-			sepNavVisRange = "{66571, 758}";
+			sepNavIntBoundsRect = "{{0, 0}, {1048, 35712}}";
+			sepNavSelRange = "{9607, 0}";
+			sepNavVisRange = "{8588, 1100}";
 			sepNavVisRect = "{{0, 9886}, {793, 446}}";
 			sepNavWindowFrame = "{{324, -55}, {985, 880}}";
 		};
@@ -1372,7 +1376,7 @@
 		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
 		name = "MyDocument.mm: 2174";
 		rLen = 0;
-		rLoc = 66839;
+		rLoc = 66926;
 		rType = 0;
 		vrLen = 758;
 		vrLoc = 66571;
@@ -2588,7 +2592,7 @@
 		isa = PBXBookmark;
 		fRef = 502562AE0C4AA0C7008AAB85 /* c64.png */;
 	};
-	508BD4FB0A73C9AF00BCC764 /* MyDocument.mm:2164 */ = {
+	508BD4FB0A73C9AF00BCC764 /* MyDocument.mm:2167 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -2600,7 +2604,7 @@
 		functionName = "-keyDown:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 2164;
+		lineNumber = 2167;
 		location = V64;
 		modificationTime = 250336456.979485;
 		state = 0;
@@ -2616,6 +2620,46 @@
 		vrLoc = 0;
 	};
 	509611CE0EF166D80005EB01 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C600A6F72F3009E80BD /* VIC.h */;
+		name = "VIC.h: 139";
+		rLen = 0;
+		rLoc = 4613;
+		rType = 0;
+		vrLen = 1533;
+		vrLoc = 3428;
+	};
+	509611DF0EF168980005EB01 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C1660FE840EACC02AAC07 /* English */;
+		name = "InfoPlist.strings: 5";
+		rLen = 0;
+		rLoc = 125;
+		rType = 0;
+		vrLen = 125;
+		vrLoc = 0;
+	};
+	509611E00EF168980005EB01 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C1660FE840EACC02AAC07 /* English */;
+		name = "InfoPlist.strings: 5";
+		rLen = 0;
+		rLoc = 125;
+		rType = 0;
+		vrLen = 125;
+		vrLoc = 0;
+	};
+	509611E10EF168980005EB01 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
+		name = "MyDocument.mm: 268";
+		rLen = 0;
+		rLoc = 9607;
+		rType = 0;
+		vrLen = 1100;
+		vrLoc = 8588;
+	};
+	509611E20EF168980005EB01 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 50176C600A6F72F3009E80BD /* VIC.h */;
 		name = "VIC.h: 139";
@@ -3212,7 +3256,7 @@
 		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
 		name = "MyDocument.mm: 2011";
 		rLen = 0;
-		rLoc = 65800;
+		rLoc = 65887;
 		rType = 0;
 		vrLen = 0;
 		vrLoc = 63890;
@@ -3441,7 +3485,7 @@
 		modificationTime = 250336457.176453;
 		state = 0;
 	};
-	50B527000AB0890A00280F81 /* MyDocument.mm:531 */ = {
+	50B527000AB0890A00280F81 /* MyDocument.mm:534 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -3453,7 +3497,7 @@
 		functionName = "-setBreakpoint:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 531;
+		lineNumber = 534;
 		location = V64;
 		modificationTime = 250336457.062265;
 		state = 0;
@@ -3785,7 +3829,7 @@
 			sepNavWindowFrame = "{{524, 148}, {985, 880}}";
 		};
 	};
-	50D5FFDC0C2EB9810022CA3A /* MyDocument.mm:2141 */ = {
+	50D5FFDC0C2EB9810022CA3A /* MyDocument.mm:2144 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -3797,7 +3841,7 @@
 		functionName = "-endMountDialogAndFlash:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 2141;
+		lineNumber = 2144;
 		location = V64;
 		modificationTime = 250336457.21351;
 		state = 0;
@@ -4009,7 +4053,7 @@
 		modificationTime = 250336457.599014;
 		state = 0;
 	};
-	50F52EB40B8C7AD9006A7C48 /* MyDocument.mm:1114 */ = {
+	50F52EB40B8C7AD9006A7C48 /* MyDocument.mm:1117 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -4021,7 +4065,7 @@
 		functionName = "-ciaCountUnterflowsAAction:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 1114;
+		lineNumber = 1117;
 		location = V64;
 		modificationTime = 250336457.09369;
 		state = 0;
