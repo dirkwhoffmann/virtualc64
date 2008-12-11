@@ -317,9 +317,11 @@ CPU::step()
 void 
 CPU::executeOneCycle()
 {
-	if (!rdyLine)
+	if (rdyLine) {
+		rdyLine--;
 		return;
-
+	}
+	
 	if (delay) {
 		delay --;
 		return;

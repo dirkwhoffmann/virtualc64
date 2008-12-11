@@ -181,20 +181,9 @@ private:
 	
 		
 	//! Reference to the connected CPU. 
-	/*! Use \a setCPU to set the value during initialization. \a cpu is "write once".
-		The VIC chip needs to know about the CPU for sending interrupt requests.
-		
-		\warning The variable is "write once".
-		\todo The interrupt mechanism needs to be implemented.
-	*/
 	CPU *cpu;
 
 	//! Reference to the connected virtual memory
-	/*! Use \a setMemory to set the value during initialization. 
-		The VIC chip needs to know about the virtual memory for getting the characters to display.
-
-		\warning The variable is "write once".
-		*/	
 	C64Memory *mem;
 	
 	//! Determines whether sprites are drawn or not
@@ -203,6 +192,10 @@ private:
 	*/
 	bool drawSprites;
 
+	//! mark rasterline for debugging
+	/*! If set to a positive value, the specific rasterline is highlighted. The feature is intended for debugging purposes, only */
+	int rasterlineDebug[PAL_RASTERLINES];
+	
 	//! Enable sprite-sprite collision
 	/*! If set to true, the virtual VIC chips checks for sprite-sprite collision as the original C64 does.
 		For debugging purposes and cheating, collision detection can be disabled by setting the variabel to false.
@@ -251,11 +244,6 @@ private:
 		are first written in the pixel buffer. When the whole line is drawn, it is copied into the screen buffer.
 	*/
 	int pixelBuffer[TOTAL_SCREEN_WIDTH];
-	// int *pixelBuffer;
-	
-	//! Pointer into the screen buffer
-	/*! The variable points to the first pixel of the current rasterline in the screen buffer. */
-	// int *pixelBuffer;
 	
 	//! Z buffer
 	/*! The z Buffer is used for drawing a single line on the screen. A pixel is only written to the screen buffer,
@@ -263,30 +251,18 @@ private:
 		of the z buffer, the closer it is to the viewer.
 		The z buffer is cleared before a new rasterline is drawn.
 	*/
-	// uint8_t zBuffer[TOTAL_SCREEN_WIDTH];
 	int zBuffer[TOTAL_SCREEN_WIDTH];
 
 	//! Indicates the source of a drawn pixel
 	/*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
 		The information is utilized to detect sprite-sprite and sprite-background collisions. 
 	*/
-	// uint8_t pixelSource[TOTAL_SCREEN_WIDTH];
 	int pixelSource[TOTAL_SCREEN_WIDTH];
-	
-	//! Number of the frame currently drawn
-	/*! After a frame is completet, the frame number is incremented by one */
-	uint64_t frame;
-	
+		
 	//! Number of the next screen line to be drawn
 	/*! Right now, drawing to the border is not supported. Therefore, the value is always in the range
 		from 0 to SCREEN_HEIGHT-1. */
 	uint32_t scanline;
-	
-	//! Number of the last scanline to draw
-	/*! When the rasterline reaches this value, it is reset to 0. 
-		The value varies depending on the emulated C64 model. The American NTSC version draws 263 rasterlines whereas the
-		European PAL version draws 312 rasterlines per frame. */
-	uint32_t lastScanline;
 	
 	//! Start address of the currently selected memory bank
 	/*! There are four banks in total since the VIC chip can only "see" 16 KB of memory at one time
@@ -363,18 +339,12 @@ private:
 	uint16_t spritePtr[8];
 	
 	//! Read sprite pointer
-	//inline void readSpritePtr(int nr) 
-	//	{ read_byte(matrix_base | 0x03f8 | num) << 6; }
-
-	//! Read sprite pointer
 	/*! Determines the start adress of sprite data and stores the value into spritePtr */
 	inline void readSpritePtr(int sprite)
 		{ spritePtr[sprite] = bankAddr + ((uint16_t)spriteMemory[sprite] << 6); }
 	
-	//! Read sprite data into shift register
-	//inline void readSpriteData(int sprite, int byte) 
-	//	{ if (spriteDmaOnOff & (1 << sprite)) { spriteShiftReg[sprite][byte] = mem->ram[getSpriteData(sprite)+mc[sprite]; }}
-	
+	//! Read sprite data 
+	/*! Read next byte of sprite data into shift register. */
 	inline void readSpriteData(int sprite) 
 		{ if (spriteDmaOnOff & (1 << sprite)) { spriteShiftReg[sprite][mc[sprite]%3] = mem->ram[spritePtr[sprite]+mc[sprite]]; mc[sprite]++; }}
 
@@ -436,12 +406,6 @@ private:
 		\param color Pixel color in RGBA format
 	*/
 	void setBackgroundPixel(int offset, int color);
-
-	//! Clear a pixel
-	/*! \param offset X coordinate of the pixel to clear
-		\param color Pixel color in RGBA format
-		*/
-	// inline void VIC::clearPixel(int offset, int color);
 	
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
@@ -508,14 +472,7 @@ private:
 	//! Sprite DMA on off
 	/*! Determines  if sprite dma access is enabled or disabled. Each bit represents a single sprite. */
 	uint8_t spriteDmaOnOff;
-	
-	
-	//! cycles per rasterline
-	uint16_t cyclesPerRasterline;
-	
-	//! rasterlines per frame
-	uint16_t rasterlinesPerFrame;
-	
+		
 	//! implementation of the VIC register behaviour
 	void updateRegisters0();
 	
@@ -528,8 +485,10 @@ private:
 	//! if enabled, marks the current scanline on certain conditions, like interrupts or something else
 	void markLine(int start, int end, int color);
 	
-	//! draws the frame to the pixelbuffer of the current scanline
-	void drawFrame();
+	//! draws the border into the pixelbuffer of the current scanline
+	void drawBorder();
+	void drawHorizontalBorder();
+	void drawVerticalBorder();
 	
 	//! draws the sprites to the pixelbuffer of the current scanline
 	/*! returns the number of addidional dead cycles required by the vic */
@@ -561,13 +520,6 @@ public:
 	//! Set scanline
 	/*! Should only be invoked for debugging purposes */
 	void setScanline(uint16_t line) { scanline = line; }
-
-	//! Get current frame
-	inline uint64_t getFrame() { return frame; }
-	
-	//! Set frame
-	/*! Should only be invoked for debugging purposes */
-	void setFrame(uint64_t f) { frame = f; }
 	
 	//! Load internal state from a file
 	/*! The function is only used for loading a snapshot file. 
@@ -643,7 +595,6 @@ public:
 	/*! Every eigths row, the VIC chip performs a DMA access and fetches data from screen memory and color memory
 		The first DMA access occurrs within lines 0x30 to 0xf7 and  */
 	inline bool isDMALine() { return scanline >= 0x30 && scanline <= 0xf7 && (scanline & 7) == getVerticalRasterScroll(); }	
-	//  inline bool isDMALine(uint16_t scanline) { return (scanline >= 0x30 && scanline <= 0xf7) ? (scanline % 8) == getVerticalRasterScroll() : false; }
 		
 	//! Returns the vertical raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
@@ -666,7 +617,6 @@ public:
 	inline void setNumberOfRows(int rows) 
 	{ assert(rows == 24 || rows == 25); if (rows == 25) iomem[0x11] |= 0x8; else iomem[0x11] &= (0xff - 0x8); }
 	
-	
 	//! Get the current screen geometry
 	ScreenGeometry VIC::getScreenGeometry(void);
 	
@@ -688,15 +638,6 @@ public:
 	inline void setNumberOfColumns(int columns) 
 	{ assert(columns == 38 || columns == 40); if (columns == 40) iomem[0x16] |= 0x8; else iomem[0x16] &= (0xff - 0x8); }
 	
-	//! Return true in text mode, false in bitmap mode
-	//inline bool isBitmapMode() { return iomem[0x11] & 32; }
-
-	//! Return true in multicolor mode, false otherwise
-	//inline bool isMulticolorMode() { return iomem[0x16] & 16; }
-
-	//! Return true in extended background mode
-	//inline bool isExtendedBackgroundColorMode() { return iomem[0x11] & 64; }
-
 	//! Returns the currently set display mode
 	/*! The display mode is determined by Bit 5 and Bit 6 of control register 1 and Bit 4 of control register 2.
 		To enable a fast handling, we put the bits together into a single integer value. */
@@ -706,15 +647,7 @@ public:
 	//! Set display mode
 	inline void setDisplayMode(DisplayMode m) 
 	{ iomem[0x11] = (iomem[0x11] & (0xff - 0x60)) | (m & 0x60); iomem[0x16] = (iomem[0x16] & (0xff-0x10)) | (m & 0x10); }
-
-	//! Return true, if the provided bit pattern represents a valid display mode
-//	inline bool isValidDisplayMode(DisplayMode m) 
-//	{ return (m == STANDARD_TEXT) || (m == MULTICOLOR_TEXT) || (m == STANDARD_BITMAP) || (m == MULTICOLOR_BITMAP) || (m == EXTENDED_BACKGROUND_COLOR); }
 	
-	 //! Returns the start address of the bitmap data of a sprite
-	/*! \param nr Number of sprite (0 to 7) */
-	//inline uint16_t getSpriteData(uint8_t nr) { assert(nr < 8); return bankAddr + ((uint16_t)spriteMemory[nr] << 6); }
-
 	//! Returns the X position of a sprite
 	/* \param nr Number of sprite (0 to 7) */
 	inline uint16_t getSpriteX(uint8_t nr) { return iomem[2*nr] + (iomem[0x10] & (1 << nr) ? 256 : 0); }
@@ -882,7 +815,18 @@ public:
 	*/
 	void executeOneCycle(uint16_t cycle);
 
+	//! Finish rasterline
+	/*! This function is called after the last cycle of each rasterline. */
+	void endRasterline();
+	
+	//! Finish frame
+	/*! This function is called after the last cycle of the last rasterline */
+	void endFrame();
+	
 	void dumpState();	
+	
+	//! debugging variable (temporary)
+	int markerX, markerY, markerX2, markerY2;
 };
 
 #endif

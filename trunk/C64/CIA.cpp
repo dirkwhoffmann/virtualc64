@@ -600,7 +600,13 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			iomem[addr] = value;
 			return;
 		case CIA_DATA_PORT_B:
-			iomem[addr] = value;
+			// check for software generated lightpen interrupt
+			if ((iomem[addr] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10 != (value | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10) {
+				// edge detected
+				//vic->simulateLightPenInterrupt();
+				// printf("Software light pen interrupts not yet supported!!\n");
+			}
+			iomem[addr] = value;				
 			return;
 		default:
 			CIA::poke(addr, value);
