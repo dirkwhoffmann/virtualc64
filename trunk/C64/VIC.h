@@ -800,6 +800,9 @@ public:
 	/*! \param source Interrupt source */
 	void triggerIRQ(uint8_t source);
 
+	//! Simulate light pen intterupt
+	void simulateLightPenInterrupt();
+	
 	//! Set rasterline
 	/*! Called within the execute method. Updates internal values. The function also triggers a rasterline interrupt,
 		if the current line matches the interrupt target. */

@@ -603,8 +603,7 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			// check for software generated lightpen interrupt
 			if ((iomem[addr] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10 != (value | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10) {
 				// edge detected
-				//vic->simulateLightPenInterrupt();
-				// printf("Software light pen interrupts not yet supported!!\n");
+				vic->simulateLightPenInterrupt();
 			}
 			iomem[addr] = value;				
 			return;
@@ -703,7 +702,7 @@ CIA2::poke(uint16_t addr, uint8_t value)
 		case CIA_DATA_PORT_A:
 			iomem[addr] = value;					
 			// Bits 0 and 1 determine the memory bank seen the VIC
-			vic->setMemoryBankAddr((~value & 0x03) << 14);	
+			vic->setMemoryBankAddr((~(value | ~iomem[CIA_DATA_DIRECTION_A]) & 0x03) << 14);	
 			// Bits 3 to 5 are connected to the IEC bus
 			iec->updateCiaPins(iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A]);			
 			return;
