@@ -450,7 +450,13 @@ private:
 	//! vertiacl frame Flipflop
 	bool verticalFrameFF;
 	
-	//! 
+	//! Vertical border on/off switch
+	// bool verticalBorderOn;
+	
+	//! Horizontal border on/off switch
+	// bool horizontalBorderOn;
+	
+	//!
 	bool drawVerticalFrame;
 	
 	//!

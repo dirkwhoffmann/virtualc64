@@ -49,7 +49,7 @@ VIC::reset()
 	debug("  Resetting VIC...\n");
 	bankAddr = 0;
 	scanline = 0;
-	cycle	 = 1;
+	cycle = 1;
 	drawSprites	= true;
 	markIRQLines = false;
 	markDMALines = false;
@@ -58,9 +58,9 @@ VIC::reset()
 	drawHorizontalFrame = true;
 	spriteOnOff = 0;
 	spriteDmaOnOff = 0;
-	screenMemory	= mem->getRam();
+	screenMemory = mem->getRam();
 	screenMemoryAddr = 0x0000;
-	spriteMemory	= screenMemory;
+	spriteMemory = screenMemory;
 	characterMemory = mem->getRam();
 	characterMemoryAddr = 0x0000;
 	memset(iomem, 0x00, sizeof(iomem));
@@ -79,6 +79,9 @@ VIC::reset()
 	// Let the color look correct right from the beginning
 	iomem[0x20] = 14; // Light blue
 	iomem[0x21] = 6;  // Blue
+
+	// make screen visible from the beginning
+	iomem[0x11] |= 0x10;
 }
 			
 // Loading and saving snapshots
@@ -86,10 +89,10 @@ bool
 VIC::load(FILE *file)
 {
 	debug("  Loading VIC state...\n");
-	//frame            = read64(file);
+	//frame = read64(file);
 	(void)read64(file);
-	scanline         = read32(file);
-	// lastScanline     = read32(file);
+	scanline = read32(file);
+	// lastScanline = read32(file);
 	(void)read32(file);
 	setMemoryBankAddr(read16(file));
 	setScreenMemoryAddr(read16(file));
@@ -618,33 +621,28 @@ VIC::markLine(int start, int end, int color)
 	}	
 }
 
-// draws the frame for the current line
+// Border drawing
+
 void inline
 VIC::drawHorizontalBorder()
 {
 	int bcolor = colors[getBorderColor()];
 	
-	if (drawHorizontalFrame) {
-		for (int i = 0; i < xStart(); i++) {
-			pixelBuffer[i] = bcolor;
-		}
-		for (int i = xEnd()+1; i < TOTAL_SCREEN_WIDTH; i++) {
-			pixelBuffer[i] = bcolor;
-		}
-	}	
+	for (int i = 0; i < xStart(); i++) {
+		pixelBuffer[i] = bcolor;
+	}
+	for (int i = xEnd()+1; i < TOTAL_SCREEN_WIDTH; i++) {
+		pixelBuffer[i] = bcolor;
+	}
 }
 
 void inline
 VIC::drawVerticalBorder()
 {
 	int bcolor = colors[getBorderColor()];
-
-	if (drawVerticalFrame) {
-		for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++) {
-			pixelBuffer[i] = bcolor;
-		}			
-	} else {
-		// fprintf(stderr,"verticalBorderOFF\n");
+						
+	for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++) {
+		pixelBuffer[i] = bcolor;
 	}
 }
 
@@ -652,14 +650,14 @@ VIC::drawVerticalBorder()
 void inline 
 VIC::drawBorder()
 {
-	if (scanline >= yStart() && scanline <= yEnd()) {
-		drawHorizontalBorder();
-	} else {
+	if (drawVerticalFrame) {
 		drawVerticalBorder();
+	} else if (drawHorizontalFrame) {
+		drawHorizontalBorder();
 	}
 }
 
-// draws the sprites on the current line
+// Sprite drawing
 int inline
 VIC::drawSpritesM()
 {	
@@ -694,19 +692,24 @@ VIC::updateRegisters0()
 			if (cycle == 1) dmaLinesEnabled = false;
 			if (!dmaLinesEnabled && isVisible()) dmaLinesEnabled = true;
 			break;	
+#if 0			
 		case 51:
-			if (cycle == 63 && isRSEL() &&	isVisible()) verticalFrameFF = false;
+			if (cycle == 63 && isRSEL() && isVisible()) verticalFrameFF = false;
+			drawVerticalFrame = verticalFrameFF;
 			break;
 		case 55:
 			if (cycle == 63 && !isRSEL() && isVisible()) verticalFrameFF = false;
+			drawVerticalFrame = verticalFrameFF;
 			break;
 		case 247:
 			if (cycle == 63 && !isRSEL()) verticalFrameFF = true;
+			drawVerticalFrame = verticalFrameFF;
 			break;
 		case 251:
 			if (cycle == 63 && isRSEL()) verticalFrameFF = true;
 			drawVerticalFrame = verticalFrameFF;
 			break;
+#endif			
 	}
 	dmaLine = dmaLinesEnabled && isDMALine();
 	/* Der †bergang vom Idle- in den Display-Zustand erfolgt, sobald ein Bad-Line-Zustand auftritt */
@@ -918,7 +921,20 @@ VIC::updateRegisters0()
 			readSpriteData(2);
 			readSpriteData(2);
 			
+			// update border flipflops
+			if (scanline == 51 && isRSEL() && isVisible()) 
+				drawVerticalFrame = verticalFrameFF = false;
+			else if (scanline == 55 && !isRSEL() && isVisible()) 
+				drawVerticalFrame = verticalFrameFF = false;
+			else if (scanline == 247 && !isRSEL()) 
+				drawVerticalFrame = verticalFrameFF = true;
+			else if (scanline == 251 && isRSEL()) 
+				drawVerticalFrame = verticalFrameFF = true;
+			
+			// draw border
 			drawBorder();
+
+			// draw debug markers
 			if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[WHITE]);
 			if (markIRQLines && scanline == rasterInterruptLine()) markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
 			if (rasterlineDebug[scanline] >= 0) {
