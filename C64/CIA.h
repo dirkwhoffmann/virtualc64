@@ -94,14 +94,20 @@ public:
 	static const uint16_t CIA_CONTROL_REG_B = 0x0F;
 	
 protected:
-				
+	//! Reference to the connected video interface controller (VIC). 
+	/*! The CIA chip needs to know about the VIC chip, because 
+	 1. the video memory bank selection is handled by the CIA chip (register 0xDD00).
+	 2. lightpen interrupts can be simulated by writing into a CIA register
+	 */
+	VIC *vic;
+	
+	//! Reference to the connected CPU. 
+	CPU *cpu;
+
 	//! CIA I/O Memory
 	/*! Whenever a value is poked to the CIA address space, it is stored here. */
 	uint8_t iomem[NO_OF_REGISTERS];
-		
-	//! Reference to the connected CPU. 
-	CPU *cpu;
-	
+			
 	//! Current value of timer A
 	uint16_t timerA;
 
@@ -167,8 +173,10 @@ public:
 	bool save(FILE *file);
 	
 	//! Bind the CIA chip to the specified virtual CPU.
-	/*! The binding is irreversible. */
 	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
+
+	//! Bind the CIA chip to the specified VIC chip.
+	void setVIC(VIC *v) { assert(vic == NULL); vic = v; }
 
 	//! Returns the value of data port A
 	inline uint8_t getDataPortA() { return peek(CIA_DATA_PORT_A); }
@@ -420,8 +428,7 @@ public:
 	//! Bring the CIA back to its initial state
 	void reset();
 	
-	//! Bind the VIC chip to the specified keyboard.
-	/*! The binding is irreversible. */
+	//! Bind the CIA chip to the specified keyboard.
 	void setKeyboard(Keyboard *k) { assert(keyboard == NULL); keyboard = k; }
 	
 	//! Bind the joystick port on the VIC chip to the specified joystick
@@ -473,16 +480,7 @@ public:
 	static const uint16_t CIA2_END_ADDR = 0xDDFF;
 
 private:
-		
-	//! Reference to the connected video interface controller (VIC). 
-	/*! Use \a setVIC to set the value during initialization.
-		The CIA chip needs to know about the VIC chip, because the video memory bank selection 
-		is handled by the CIA chip (register 0xDD00).
-		
-		\warning The variable is "write once".
-	*/
-	VIC *vic;
-
+	
 	//! Reference to the connected IEC bus
 	IEC *iec;
 		
@@ -500,12 +498,7 @@ public:
 	//! Bring the CIA back to its initial state
 	void reset();
 
-	//! Bind the CIA chip to the specified VIC chip.
-	/*! The binding is irreversible. */
-	void setVIC(VIC *v) { assert(vic == NULL); vic = v; }
-
 	//! Bind the CIA chip to the specified IEC bus.
-	/*! The binding is irreversible. */
 	void setIEC(IEC *i) { assert(iec == NULL); iec = i; }
 	
 	//! Returns true if the \a addr is located in the I/O range of the CIA 2 chip

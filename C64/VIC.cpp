@@ -604,6 +604,14 @@ VIC::triggerIRQ(uint8_t source)
 	}
 }
 
+void
+VIC::simulateLightPenInterrupt()
+{
+	// write current X position into register XXX
+	fprintf(stderr,"WARNING: Lightpen not yet supported\n");
+}
+
+
 /* 3.7.1. Idle-Zustand/Display-Zustand
  the idle access always reads at $3fff or $39ff when the ECM bit is set.
  here the doc conflicts: the ECM bit is either at $d016 (chap 3.7.1) or $d011 (3.2)

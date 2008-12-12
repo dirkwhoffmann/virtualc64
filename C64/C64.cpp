@@ -166,6 +166,7 @@ C64::C64(C64Listener *listener)
 	mem->setCIA2(cia2);
 	mem->setCPU(cpu);
 	cia1->setCPU(cpu);
+	cia1->setVIC(vic);	
 	cia1->setKeyboard(keyboard);
 	cia2->setCPU(cpu);
 	cia2->setVIC(vic);	
