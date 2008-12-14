@@ -89,11 +89,7 @@ bool
 VIC::load(FILE *file)
 {
 	debug("  Loading VIC state...\n");
-	//frame = read64(file);
-	(void)read64(file);
 	scanline = read32(file);
-	// lastScanline = read32(file);
-	(void)read32(file);
 	setMemoryBankAddr(read16(file));
 	setScreenMemoryAddr(read16(file));
 	setCharacterMemoryAddr(read16(file));
@@ -118,11 +114,7 @@ bool
 VIC::save(FILE *file)
 {
 	debug("  Saving VIC state...\n");
-	//write64(file, frame);
-	write64(file, 0);
 	write32(file, scanline);
-	//write32(file, lastScanline);
-	write32(file, 0);
 	write16(file, getMemoryBankAddr());
 	write16(file, getScreenMemoryAddr());
 	write16(file, getCharacterMemoryAddr());
