@@ -381,7 +381,6 @@ void
 VIC::drawSprite(uint8_t nr)
 {
 	assert(nr < 8);
-	assert(line < 21);
 	
 	int spriteX, offset;
 	spriteX = getSpriteX(nr);

@@ -182,10 +182,16 @@ D64Archive::offset(int track, int sector)
 		0x19E00, 0x1B100, 0x1C400, 0x1D700, 0x1EA00, 0x1FC00, 0x20E00, 0x22000, 0x23200, 0x24400, 
 		0x25600, 0x26700, 0x27800, 0x28900, 0x29A00, 0x2AB00, 0x2BC00, 0x2CD00, 0x2DE00, 0x2EF00
 	};
-	
-	assert(1 <= track && track <= 35);
-	assert(0 <= sector && sector <= 20);
-	
+
+	if (track < 1 || track > 35) {
+		fprintf(stderr, "D64Container: Requested track %d does not exists\n", track);
+		return -1;
+	}
+	if (sector < 0 || sector > 20) {
+		fprintf(stderr, "D64Container: Requested sector %d does not exists\n", track);
+		return -1;
+	}
+		
 	return trackOffset[track-1] + (256 * sector); 
 }
 	
@@ -264,16 +270,20 @@ int D64Archive::getSizeOfItem(int n)
 	int size = 0;
 	int pos;
 
+	fprintf(stderr, "getSizeOfItem:%d\n", n);
+
 	// jump to beginning of the n-th directory entry
 	pos = findDirectoryEntry(n);
 	if (pos < 0) return 0;
 	
 	// jump to the first data sector
-	pos = offset(data[pos+0x03], data[pos+0x04]);
+	if ((pos = offset(data[pos+0x03], data[pos+0x04])) < 0)
+		return -1;
 	
 	while (data[pos] != 0x00) {
 		size += 254;
-		pos = jumpToNextSector(pos);
+		if ((pos = jumpToNextSector(pos)) < 0)
+			return -1;
 	}
 	
 	size += data[pos+1]-1;
@@ -287,11 +297,14 @@ uint16_t D64Archive::getDestinationAddrOfItem(int n)
 	int sector;
 	uint16_t result;
 	
+	fprintf(stderr, "getDestinationAddrOfItem:%d\n", n);
+
 	// Search for beginning of file data
 	pos = findDirectoryEntry(n);
 	track = data[pos+0x03];
 	sector = data[pos+0x04];
-	pos = offset(track, sector);
+	if ((pos = offset(track, sector)) < 0)
+		return 0;
 
 	result = data[pos+2] + (data[pos+3] << 8); 
 	printf("Destination address of item %d is %X\n", n, result);
@@ -302,6 +315,8 @@ void D64Archive::selectItem(int item)
 {
 	fp = -1;
 	
+	fprintf(stderr, "selectItem:%d\n", item);
+
 	// check, if item exists
 	if (item >= getNumberOfItems())
 		return;
@@ -353,11 +368,17 @@ uint8_t *D64Archive::findSector(unsigned halftrack, unsigned sector)
 	assert(1 <= halftrack && halftrack <= 84);
 	assert(sector < numberOfSectors(halftrack));
 	
+	fprintf(stderr,"findSector:%d %d\n", halftrack, sector);
+
 	// Halftrack mapping: 1 -> 1.0, 2 -> 1.5, 3 -> 2.0, 4 -> 2.5, etc.
 	if (halftrack % 2 == 0) {
 		fprintf(stderr, "WARNING: Trying to access half track in D64 image. Ignoring request.\n");
 		return NULL;
 	}
-		
-	return &data[offset((halftrack+1) / 2, sector)]; 
+	
+	int pos;
+	if ((pos = offset((halftrack+1) / 2, sector)) < 0)
+		return NULL;
+	
+	return &data[pos]; 
 }
