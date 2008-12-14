@@ -781,6 +781,10 @@
 	[c64 vicToggleMarkDMALines];
 }
 
+- (IBAction)fastResetAction:(id)sender
+{
+	[c64 fastReset];
+}
 
 - (IBAction)showPreferencesAction:(id)sender
 {

@@ -186,6 +186,8 @@
 				<string>id</string>
 				<key>endMountDialogAndMount</key>
 				<string>id</string>
+				<key>fastResetAction</key>
+				<string>id</string>
 				<key>fullscreenAction</key>
 				<string>id</string>
 				<key>markDMALinesAction</key>
