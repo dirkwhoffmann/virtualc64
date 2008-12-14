@@ -190,8 +190,8 @@ CIA::reset()
 	iomem[CIA_DATA_PORT_B] = 0xff;	
 	timerA = 0;
 	timerB = 0;
-	dataPortA = 0xff;
-	dataPortB = 0xff;
+	// dataPortA = 0xff;
+	// dataPortB = 0xff;
 	portLinesA = 0xff;
 	portLinesB = 0xff;
 	interruptControl = 0;
@@ -205,8 +205,10 @@ bool CIA::load(FILE *file)
 	tod.load(file);
 	timerA = read16(file);
 	timerB = read16(file);
-	dataPortA = read8(file);
-	dataPortB = read8(file);
+	// dataPortA = read8(file);
+	// dataPortB = read8(file);
+	(void)read8(file);
+	(void)read8(file);
 	portLinesA = read8(file);
 	portLinesB = read8(file);
 	interruptControl = read8(file);
@@ -225,8 +227,10 @@ CIA::save(FILE *file)
 	tod.save(file);
 	write16(file, timerA);
 	write16(file, timerB);
-	write8(file, dataPortA);
-	write8(file, dataPortB);
+	// write8(file, dataPortA);
+	// write8(file, dataPortB);
+	write8(file, 0);
+	write8(file, 0);
 	write8(file, portLinesA);
 	write8(file, portLinesB);	
 	write8(file, interruptControl);
@@ -304,22 +308,6 @@ uint8_t CIA::peek(uint16_t addr)
 void CIA::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
-#if 0			
-		case CIA_DATA_PORT_A:
-			iomem[addr] = value;
-		case CIA_DATA_PORT_B:
-			iomem[addr] = value;
-		case CIA_DATA_DIRECTION_A:
-			iomem[addr] = value;
-			// Let the latched values show up...
-			//iomem[CIA_DATA_PORT_A] = ((iomem[CIA_DATA_PORT_A] & ~value) | (dataPortA & value));
-			return;
-		case CIA_DATA_DIRECTION_B:
-			iomem[addr] = value;
-			// Let the latched values show up...
-			//iomem[CIA_DATA_PORT_B] = ((iomem[CIA_DATA_PORT_B] & ~value) | (dataPortB & value));
-			return;
-#endif
 		case CIA_TIMER_A_LOW:
 		case CIA_TIMER_A_HIGH:
 			iomem[addr] = value; 
@@ -541,13 +529,13 @@ CIA1::peek(uint16_t addr)
 
 		case CIA_DATA_PORT_B:
 			uint8_t bitmask = CIA1::peek(CIA_DATA_PORT_A);
-			// We change only those bits that are configured as outputs, all input bits are 1
 
 			if ( joy[1] != NULL )
 					pollJoystick( joy[1], 2 );
 
+			// We change only those bits that are configured as outputs, all input bits are 1
 			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_B];
-			// // The external port lines can pull down any bit, even if it configured as output
+			// The external port lines can pull down any bit, even if it configured as output
 			result &= portLinesB; 
 			result &= joystick[1];
 			result &= keyboard->getRowValues(bitmask); 
@@ -691,14 +679,25 @@ CIA2::clearInterruptLine()
 uint8_t 
 CIA2::peek(uint16_t addr)
 {
-	static uint8_t old_clock_line;
+	uint8_t result;
 	
 	assert(addr <= CIA_END_ADDR - CIA_START_ADDR);
 	
 	switch(addr) {
 		case CIA_DATA_PORT_A:
-			old_clock_line = (iec->getClockLine() ? 1 : 0);
-			return (iomem[addr] & 0x3F) | (iec->getClockLine() ? 0x40 : 0x00) | (iec->getDataLine() ? 0x80 : 0x00);
+			// We change only those bits that are configured as outputs, all input bits are 1
+			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_A];
+
+			// The two upper bits are connected to the clock line and the data line
+			result &= 0x3F;
+			result |= (iec->getClockLine() ? 0x40 : 0x00);
+			result |= (iec->getDataLine() ? 0x80 : 0x00);
+
+			// The external port lines can pull down any bit, even if it configured as output.
+			// Note that bits 0 and 1 are not connected to the bus and determine the memory bank seen by the VIC chip
+			result &= (portLinesB | 0x03);
+			return result;
+
 		case CIA_DATA_PORT_B:
 			return 0xff;
 		default:
@@ -709,7 +708,7 @@ CIA2::peek(uint16_t addr)
 void 
 CIA2::poke(uint16_t addr, uint8_t value)
 {
-	uint8_t writeMask;
+	// uint8_t writeMask;
 	
 	assert(addr <= CIA2_END_ADDR - CIA2_START_ADDR);
 
@@ -722,24 +721,15 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			iec->updateCiaPins(iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A]);			
 			return;
 		case CIA_DATA_PORT_B:
-			writeMask = iomem[CIA_DATA_DIRECTION_B];
-			// The value is latched. If an input-bit becomes an output-bit, the value will show up on the bus
-			dataPortB = value;
-			// We change only those bits that are configured as outputs.
-			iomem[addr] = ((iomem[addr] & ~writeMask) | (value & writeMask));
-			// The external port lines can pull down any bit, even if it configured as output.
-			// Note that bits 0 and 1 are not connected to the bus and determine the memory bank seen by the VIC chip
-			iomem[addr] &= (portLinesB | 0x03);
+			iomem[addr] = value;
 			return;
 
 		case CIA_DATA_DIRECTION_A:
-			// CIA::poke(addr, value);
 			iomem[addr] = value;
 			iec->updateCiaPins(iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A]);
 			return;
 
 		case CIA_DATA_DIRECTION_B:
-			// CIA::poke(addr, value);
 			iomem[addr] = value;
 			return;
 						
