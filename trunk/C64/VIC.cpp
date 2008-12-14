@@ -179,7 +179,13 @@ VIC::peek(uint16_t addr)
 			return result;		
 		case 0x12: // VIC_RASTER_READ_WRITE
 			result = scanline & 0xff;
-			return result;			
+			return result;
+		case 0x13:
+			debug("Reading lightpen X position: %d\n", iomem[addr]);
+			return iomem[addr];			
+		case 0x14:
+			debug("Reading lightpen Y position: %d\n", iomem[addr]);
+			return iomem[addr];			
 		case 0x19:
 			result = iomem[addr] | 0x70; // Bits 4 to 6 are not used and always contain "1"
 			return result;
@@ -606,10 +612,25 @@ VIC::triggerIRQ(uint8_t source)
 void
 VIC::simulateLightPenInterrupt()
 {
-	// write current X position into register XXX
-	fprintf(stderr,"WARNING: Lightpen not yet supported\n");
-}
+	// fprintf(stderr,"WARNING: Lightpen not yet supported\n");
+	
+	if (!lightpenIRQhasOccured) {
 
+		// lightpen interrupts can only occur once per frame
+		lightpenIRQhasOccured = true;
+
+		// determine current coordinates
+		int x = (cycle >= 13) ? (cycle-13) * 8 : (0x19c + cycle*8);
+		int y = scanline; // based on sprite coordinate system
+		
+		// latch coordinates 
+		iomem[0x13] = x / 2;
+		iomem[0x14] = y + 1;
+
+		// Simulate interrupt
+		triggerIRQ(0x08);
+	}
+}
 
 /* 3.7.1. Idle-Zustand/Display-Zustand
  the idle access always reads at $3fff or $39ff when the ECM bit is set.
@@ -1033,6 +1054,7 @@ int debug1 = 0;
 void 
 VIC::beginFrame()
 {
+	lightpenIRQhasOccured = false;
 }
 
 void 

@@ -350,7 +350,7 @@ CPU::executeOneCycle()
 		setPCL(mem->peek(0xFFFE));
 		setPCH(mem->peek(0xFFFF));
 		cycles += 7;
-	} else {						
+	} else {					
 		(void)step();
 	}
 	

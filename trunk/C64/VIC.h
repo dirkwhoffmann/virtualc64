@@ -352,6 +352,13 @@ private:
 	/*! Used to handle Y sprite stretching. One bit for each sprite */
 	uint8_t expansionFF;
 	
+	//! Lightpen triggered?
+	/*! This variable ndicates whether a lightpen interrupt has occurred within the current frame.
+		The variable is needed, because a lightpen interrupt can only occur once in a frame. It is set to false
+		at the beginning of each frame.
+	 */
+	bool lightpenIRQhasOccured;
+	
 	//! Start address of character memory
 	/*! The character memory stores the bitmaps for each character.
 		The location of character memory is determined by VIC register 0xD018

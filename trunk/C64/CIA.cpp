@@ -257,6 +257,10 @@ uint8_t CIA::peek(uint16_t addr)
 	uint8_t result;
 	
 	switch(addr) {		
+		case CIA_DATA_PORT_A:
+			return iomem[CIA_DATA_PORT_A] | ~iomem[CIA_DATA_DIRECTION_A];
+		case CIA_DATA_PORT_B:
+			return iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B];			
 		case CIA_DATA_DIRECTION_A:	
 		case CIA_DATA_DIRECTION_B:
 			return iomem[addr];
@@ -300,16 +304,22 @@ uint8_t CIA::peek(uint16_t addr)
 void CIA::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
+#if 0			
+		case CIA_DATA_PORT_A:
+			iomem[addr] = value;
+		case CIA_DATA_PORT_B:
+			iomem[addr] = value;
 		case CIA_DATA_DIRECTION_A:
 			iomem[addr] = value;
-			// Make the latches values show up...
-			iomem[CIA_DATA_PORT_A] = ((iomem[CIA_DATA_PORT_A] & ~value) | (dataPortA & value));
+			// Let the latched values show up...
+			//iomem[CIA_DATA_PORT_A] = ((iomem[CIA_DATA_PORT_A] & ~value) | (dataPortA & value));
 			return;
 		case CIA_DATA_DIRECTION_B:
 			iomem[addr] = value;
-			// Make the latches values show up...
-			iomem[CIA_DATA_PORT_B] = ((iomem[CIA_DATA_PORT_B] & ~value) | (dataPortB & value));
+			// Let the latched values show up...
+			//iomem[CIA_DATA_PORT_B] = ((iomem[CIA_DATA_PORT_B] & ~value) | (dataPortB & value));
 			return;
+#endif
 		case CIA_TIMER_A_LOW:
 		case CIA_TIMER_A_HIGH:
 			iomem[addr] = value; 
@@ -596,17 +606,22 @@ CIA1::poke(uint16_t addr, uint8_t value)
 	
 	// The following registers need special handling	
 	switch(addr) {
-		case CIA_DATA_PORT_A:
+		case CIA_DATA_PORT_A: 
+		case CIA_DATA_DIRECTION_A:
 			iomem[addr] = value;
 			return;
 		case CIA_DATA_PORT_B:
-			// check for software generated lightpen interrupt
-			if ((iomem[addr] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10 != (value | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10) {
+		case CIA_DATA_DIRECTION_B:
+			uint8_t lp_bit_old = (iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10;
+			iomem[addr] = value;
+			uint8_t lp_bit_new = (iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10;
+			if (lp_bit_old != lp_bit_new) {
 				// edge detected
+				debug("Lightpen edge detected\n");
 				vic->simulateLightPenInterrupt();
 			}
-			iomem[addr] = value;				
 			return;
+			
 		default:
 			CIA::poke(addr, value);
 	}
@@ -718,11 +733,13 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			return;
 
 		case CIA_DATA_DIRECTION_A:
+			// CIA::poke(addr, value);
 			iomem[addr] = value;
 			iec->updateCiaPins(iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A]);
 			return;
 
 		case CIA_DATA_DIRECTION_B:
+			// CIA::poke(addr, value);
 			iomem[addr] = value;
 			return;
 						
