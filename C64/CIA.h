@@ -115,10 +115,10 @@ protected:
 	uint16_t timerB;
 
 	//! Latched value for data port A
-	uint8_t dataPortA;
+	// uint8_t dataPortA;
 	
 	//! Latched value for data port B
-	uint8_t dataPortB;
+	// uint8_t dataPortB;
 	
 	//! External bus signals on data port A
 	/*! \todo Create a separate interface (DeviceInterface or something)
