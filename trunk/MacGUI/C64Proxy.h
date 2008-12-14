@@ -324,6 +324,7 @@ public:
 - (void) vicToggleDrawSprites;
 - (void) vicToggleMarkIRQLines;
 - (void) vicToggleMarkDMALines;
+- (void) fastReset;
 
 // audio hardware
 - (void) enableAudio;

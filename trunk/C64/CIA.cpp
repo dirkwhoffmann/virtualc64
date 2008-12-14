@@ -194,13 +194,16 @@ CIA::reset()
 	// dataPortB = 0xff;
 	portLinesA = 0xff;
 	portLinesB = 0xff;
-	interruptControl = 0;
+	// interruptControl = 0;
+	interruptDataRegister = 0;
 	tod.reset();
 }
 
 // Loading and saving snapshots
 bool CIA::load(FILE *file)
 {
+	uint8_t interruptControl; // TEMPORARY
+	
 	debug("  Loading CIA state...\n");
 	tod.load(file);
 	timerA = read16(file);
@@ -212,11 +215,13 @@ bool CIA::load(FILE *file)
 	portLinesA = read8(file);
 	portLinesB = read8(file);
 	interruptControl = read8(file);
+	interruptDataRegister = 0;
 //	joystick[0] = read8(file);
 //	joystick[1] = read8(file);
 	for (int i = 0; i < NO_OF_REGISTERS; i++) {
 		iomem[i] = read8(file);
 	}		
+	iomem[CIA_INTERRUPT_CONTROL] = interruptControl;
 	return true;
 }
 
@@ -233,8 +238,9 @@ CIA::save(FILE *file)
 	write8(file, 0);
 	write8(file, portLinesA);
 	write8(file, portLinesB);	
-	write8(file, interruptControl);
-//	write8(file, joystick[0]);
+	//write8(file, interruptControl);
+	write8(file, 0);
+	//	write8(file, joystick[0]);
 //	write8(file, joystick[1]);	
 	for (int i = 0; i < NO_OF_REGISTERS; i++) {
 		write8(file, iomem[i]);
@@ -245,15 +251,15 @@ CIA::save(FILE *file)
 void 
 CIA::triggerInterrupt(uint8_t source)
 {
-		// Set interrupt source
-		iomem[CIA_INTERRUPT_CONTROL] |= source;
-		
-		// Trigger interrupt, if enabled
-		if (interruptControl & source) {
-			// The uppermost indicates that an interrupt occurred, so we set that one as well
-			iomem[CIA_INTERRUPT_CONTROL] |= 0x80;
-			raiseInterruptLine();
-		}
+	// Set interrupt source
+	interruptDataRegister |= source; 
+	
+	// Trigger interrupt, if enabled
+	if (iomem[CIA_INTERRUPT_CONTROL] & source) {
+		// The uppermost indicates that an interrupt occurred, so we set that one as well
+		interruptDataRegister |= 0x80;
+		raiseInterruptLine();
+	}
 }
 
 uint8_t CIA::peek(uint16_t addr)
@@ -261,10 +267,12 @@ uint8_t CIA::peek(uint16_t addr)
 	uint8_t result;
 	
 	switch(addr) {		
+#if 0			
 		case CIA_DATA_PORT_A:
 			return iomem[CIA_DATA_PORT_A] | ~iomem[CIA_DATA_DIRECTION_A];
 		case CIA_DATA_PORT_B:
 			return iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B];			
+#endif
 		case CIA_DATA_DIRECTION_A:	
 		case CIA_DATA_DIRECTION_B:
 			return iomem[addr];
@@ -285,14 +293,13 @@ uint8_t CIA::peek(uint16_t addr)
 			return BinaryToBCD(tod.getTodMinutes());
 		case CIA_TIME_OF_DAY_HOURS:
 			tod.freeze();
-			return BinaryToBCD(tod.getTodHours() & 0x7F) | (tod.getTodHours() & 0x80); // Bypass upper bit
+			return (tod.getTodHours() & 0x80) /* AM/PM */ | BinaryToBCD(tod.getTodHours() & 0x1F);
 		case CIA_SERIAL_IO_BUFFER:
 			return 0xff;
 		case CIA_INTERRUPT_CONTROL:
-			result = iomem[addr];
-			// The register is cleared when read
-			iomem[addr] = 0;
-			// Clear interrupt request as well
+			result = interruptDataRegister;
+			interruptDataRegister = 0;
+			// Clear interrupt request
 			clearInterruptLine();			
 			return result;
 		case CIA_CONTROL_REG_A:
@@ -309,17 +316,25 @@ void CIA::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
 		case CIA_TIMER_A_LOW:
+			iomem[addr] = value; 
+			return;
+			
 		case CIA_TIMER_A_HIGH:
 			iomem[addr] = value; 
 			if (!isStartedA()) 
 				reloadTimerA();
 			return;
+			
 		case CIA_TIMER_B_LOW:  
+			iomem[addr] = value; 
+			return;
+			
 		case CIA_TIMER_B_HIGH: 
 			iomem[addr] = value; 
 			if (!isStartedB()) 
 				reloadTimerB();
 			return;
+			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
 			if (value & 0x80) {
 				tod.setAlarmTenth(BCDToBinary(value & 0x0F));
@@ -328,46 +343,49 @@ void CIA::poke(uint16_t addr, uint8_t value)
 				tod.cont();
 			}
 			return;
+			
 		case CIA_TIME_OF_DAY_SECONDS:
 			if (value & 0x80)
 				tod.setAlarmSeconds(BCDToBinary(value & 0x7F));
 			else 
 				tod.setTodSeconds(BCDToBinary(value & 0x7F));
 			return;
+			
 		case CIA_TIME_OF_DAY_MINUTES:
 			if (value & 0x80)
 				tod.setAlarmMinutes(BCDToBinary(value & 0x7F));
 			else 
 				tod.setTodMinutes(BCDToBinary(value & 0x7F));
 			return;
+			
 		case CIA_TIME_OF_DAY_HOURS:
 			if (value & 0x80) {
-				tod.setAlarmHours((value & 0x80) | BCDToBinary(value & 0x1F)); // Bypass upper bit
+				tod.setAlarmHours((value & 0x80) /* AM/PM */ | BCDToBinary(value & 0x1F));
 			} else {
-				tod.setTodHours((value & 0x80) | BCDToBinary(value & 0x1F)); // Bypass upper bit
+				tod.setTodHours((value & 0x80) /* AM/PM */ | BCDToBinary(value & 0x1F));
 				tod.stop();
 			}
 			return;
+			
 		case CIA_SERIAL_IO_BUFFER:
 			// Serial I/O communication is not (yet) implemented
 			// We simply acknowledge the operation (interrupt) and discard the value
-			// The CIA2 will trigger an NMI??
-			// triggerInterrupt(0x08);
+			triggerInterrupt(0x08);
 			return;
+			
 		case CIA_INTERRUPT_CONTROL:
 			// Problem: Some adressing modes implicitely read the contents of a register, even if it's a write operation
 			//          In that case, all bits would be cleared. To simulate the behavior, we immediate a "peek" before 
 			//          *each* write operation. TODO: Think about a clean solution.
 			(void)peek(CIA_INTERRUPT_CONTROL);
 			
-			if (value & 128) {
-				interruptControl |= (value & 0x7F); // set bits
-				// if (iomem[addr] & interruptControl & 0x1f)
-				// 	triggerIRQ();
+			if (value & 0x80) {
+				iomem[addr] |= (value & 0x7F);
 			} else { 
-				interruptControl &= (0xFF-value); // clear bits
+				iomem[addr] &= ~value;
 			}
 			return;
+			
 		case CIA_CONTROL_REG_A:
 			iomem[addr] = value & 0xef;
 			if (value & 0x10) // Load timer A
@@ -522,9 +540,13 @@ CIA1::peek(uint16_t addr)
 
 			// We change only those bits that are configured as outputs, all input bits are 1
 			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_A];
-			// // The external port lines can pull down any bit, even if it configured as output
+			
+			// The external port lines can pull down any bit, even if it configured as output
 			result &= portLinesA; 
+
+			// Check joystick movement
 			result &= joystick[0];
+			
 			return result;
 
 		case CIA_DATA_PORT_B:
@@ -537,8 +559,13 @@ CIA1::peek(uint16_t addr)
 			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_B];
 			// The external port lines can pull down any bit, even if it configured as output
 			result &= portLinesB; 
+
+			// Check joystick movement
 			result &= joystick[1];
+			
+			// Check for pressed keys
 			result &= keyboard->getRowValues(bitmask); 
+			
 			return result;
 		
 		default:
@@ -699,7 +726,9 @@ CIA2::peek(uint16_t addr)
 			return result;
 
 		case CIA_DATA_PORT_B:
-			return 0xff;
+			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_B];
+			return result;
+			
 		default:
 			return CIA::peek(addr);
 	}
@@ -708,8 +737,6 @@ CIA2::peek(uint16_t addr)
 void 
 CIA2::poke(uint16_t addr, uint8_t value)
 {
-	// uint8_t writeMask;
-	
 	assert(addr <= CIA2_END_ADDR - CIA2_START_ADDR);
 
 	switch(addr) {

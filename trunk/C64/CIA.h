@@ -113,12 +113,6 @@ protected:
 
 	//! Current value of timer B
 	uint16_t timerB;
-
-	//! Latched value for data port A
-	// uint8_t dataPortA;
-	
-	//! Latched value for data port B
-	// uint8_t dataPortB;
 	
 	//! External bus signals on data port A
 	/*! \todo Create a separate interface (DeviceInterface or something)
@@ -129,9 +123,20 @@ protected:
 	//! External bus signals on data port B
 	uint8_t portLinesB;
 	
-	//! Interrupt control bits for timer A and timer B
-	uint8_t interruptControl;
-				
+	//! Interrupt data register
+	/*! From [Mapping128]: 
+	    "The CIA chip has five internal interrupt sources: timer A underflow, timer B underflow, time-of-day clock alarm, serial 
+	     data buffer full or empty, and FLAG signal. The CIA can also generate an interrupt request output signal as a result of any 
+	     of these conditions. The location actually has two different functions, depending on whether it is being read from or written to. 
+	     When you read from this register, you see the contents of an internal interrupt data register that indicates which interrupts, 
+	     if any, have occurred. When you write to this register, the value goes to an internal interrupt mask register that specifies which 
+	     interrupts—if any—are to result in an external interrupt request being generated. The data register is read-only 
+	     (it can't be written to), and the mask register is write-only (it can't be read from)."
+	 
+		Note: The interrupt mask ist stored in iomem[CIA_INTERRUPT_CONTROL].
+	*/
+	uint8_t interruptDataRegister;
+	
 	//! Trigger interrupt
 	/*! Annotates the interrupt source in the interrupt control register and triggers a CPU interrupt. */
 	void triggerInterrupt(uint8_t source);	
@@ -243,46 +248,46 @@ public:
 	// Interrupt control
 	
 	//! Returns true, if timer can trigger interrupts
-	inline bool isInterruptEnabledA() { return interruptControl & 0x01; }
+	inline bool isInterruptEnabledA() { return iomem[CIA_INTERRUPT_CONTROL] & 0x01; }
 
 	//! Set or delete interrupt enable flag
-	inline void setInterruptEnabledA(bool b) { if (b) interruptControl |= 0x01; else interruptControl &= (0xff-0x01); }
+	inline void setInterruptEnabledA(bool b) { if (b) iomem[CIA_INTERRUPT_CONTROL] |= 0x01; else iomem[CIA_INTERRUPT_CONTROL] &= (0xff-0x01); }
 
 	//! Toggle interrupt enable flag of timer A
 	inline void toggleInterruptEnableFlagA() { setInterruptEnabledA(!isInterruptEnabledA()); }
 
 	//! Returns true, if timer A has reached zero
-	inline bool isSignalPendingA() { return iomem[CIA_INTERRUPT_CONTROL] & 0x01; }
+	inline bool isSignalPendingA() { return interruptDataRegister & 0x01; }
 
 	//! Set or delete signal pending flag
-	inline void setSignalPendingA(bool b) { if (b) iomem[CIA_INTERRUPT_CONTROL] |= 0x01; else iomem[CIA_INTERRUPT_CONTROL] &= (0xff-0x01); }
+	inline void setSignalPendingA(bool b) { if (b) interruptDataRegister |= 0x01; else interruptDataRegister &= (0xff-0x01); }
 
 	//! Toggle signal pending flag of timer A
 	inline void togglePendingSignalFlagA() { setSignalPendingA(!isSignalPendingA()); }
 	
 	//! Returns true, if timer B can trigger interrupts
-	inline bool isInterruptEnabledB() { return interruptControl & 0x02; }
+	inline bool isInterruptEnabledB() { return iomem[CIA_INTERRUPT_CONTROL] & 0x02; }
 
 	//! Set or delete interrupt enable flag
-	inline void setInterruptEnabledB(bool b) { if (b) interruptControl |= 0x02; else interruptControl &= (0xff-0x02); }
+	inline void setInterruptEnabledB(bool b) { if (b) iomem[CIA_INTERRUPT_CONTROL] |= 0x02; else iomem[CIA_INTERRUPT_CONTROL] &= (0xff-0x02); }
 
 	//! Toggle interrupt enable flag of timer B
 	inline void toggleInterruptEnableFlagB() { setInterruptEnabledB(!isInterruptEnabledB()); }
 
 	//! Returns true, if timer B has reached zero
-	inline bool isSignalPendingB() { return iomem[CIA_INTERRUPT_CONTROL] & 0x02; }
+	inline bool isSignalPendingB() { return interruptDataRegister & 0x02; }
 
 	//! Set or delete signal pending flag
-	inline void setSignalPendingB(bool b) { if (b) iomem[CIA_INTERRUPT_CONTROL] |= 0x02; else iomem[CIA_INTERRUPT_CONTROL] &= (0xff-0x02); }
+	inline void setSignalPendingB(bool b) { if (b) interruptDataRegister |= 0x02; else interruptDataRegister &= (0xff-0x02); }
 
 	//! Toggle signal pending flag of timer B
 	inline void togglePendingSignalFlagB() { setSignalPendingB(!isSignalPendingB()); }
 
 	//! Returns true, if the "time of day" interrupt alarm is enabled
-	inline bool isInterruptEnabledTOD() { return interruptControl & 0x04; }
+	inline bool isInterruptEnabledTOD() { return iomem[CIA_INTERRUPT_CONTROL] & 0x04; }
 
 	//! Enable or disable "time of day" interrupts 
-	inline void setInterruptEnabledTOD(bool b) { if (b) interruptControl |= 0x04; else interruptControl &= (0xff-0x04); }
+	inline void setInterruptEnabledTOD(bool b) { if (b) iomem[CIA_INTERRUPT_CONTROL] |= 0x04; else iomem[CIA_INTERRUPT_CONTROL] &= (0xff-0x04); }
 
 	
 	// Timer A control
