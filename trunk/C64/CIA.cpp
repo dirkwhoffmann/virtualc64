@@ -202,26 +202,15 @@ CIA::reset()
 // Loading and saving snapshots
 bool CIA::load(FILE *file)
 {
-	uint8_t interruptControl; // TEMPORARY
-	
 	debug("  Loading CIA state...\n");
 	tod.load(file);
 	timerA = read16(file);
 	timerB = read16(file);
-	// dataPortA = read8(file);
-	// dataPortB = read8(file);
-	(void)read8(file);
-	(void)read8(file);
 	portLinesA = read8(file);
 	portLinesB = read8(file);
-	interruptControl = read8(file);
-	interruptDataRegister = 0;
-//	joystick[0] = read8(file);
-//	joystick[1] = read8(file);
 	for (int i = 0; i < NO_OF_REGISTERS; i++) {
 		iomem[i] = read8(file);
 	}		
-	iomem[CIA_INTERRUPT_CONTROL] = interruptControl;
 	return true;
 }
 
@@ -232,16 +221,8 @@ CIA::save(FILE *file)
 	tod.save(file);
 	write16(file, timerA);
 	write16(file, timerB);
-	// write8(file, dataPortA);
-	// write8(file, dataPortB);
-	write8(file, 0);
-	write8(file, 0);
 	write8(file, portLinesA);
 	write8(file, portLinesB);	
-	//write8(file, interruptControl);
-	write8(file, 0);
-	//	write8(file, joystick[0]);
-//	write8(file, joystick[1]);	
 	for (int i = 0; i < NO_OF_REGISTERS; i++) {
 		write8(file, iomem[i]);
 	}		
@@ -256,7 +237,7 @@ CIA::triggerInterrupt(uint8_t source)
 	
 	// Trigger interrupt, if enabled
 	if (iomem[CIA_INTERRUPT_CONTROL] & source) {
-		// The uppermost indicates that an interrupt occurred, so we set that one as well
+		// The uppermost bit indicates that an interrupt occured
 		interruptDataRegister |= 0x80;
 		raiseInterruptLine();
 	}
@@ -267,12 +248,6 @@ uint8_t CIA::peek(uint16_t addr)
 	uint8_t result;
 	
 	switch(addr) {		
-#if 0			
-		case CIA_DATA_PORT_A:
-			return iomem[CIA_DATA_PORT_A] | ~iomem[CIA_DATA_DIRECTION_A];
-		case CIA_DATA_PORT_B:
-			return iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B];			
-#endif
 		case CIA_DATA_DIRECTION_A:	
 		case CIA_DATA_DIRECTION_B:
 			return iomem[addr];
@@ -380,7 +355,10 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			(void)peek(CIA_INTERRUPT_CONTROL);
 			
 			if (value & 0x80) {
+				uint8_t mask = (iomem[addr] ^ value) & value & 0x7F; // get bits 0..6 with a raising edge
 				iomem[addr] |= (value & 0x7F);
+				// trigger pending interrupts
+				triggerInterrupt(interruptDataRegister & mask);
 			} else { 
 				iomem[addr] &= ~value;
 			}
@@ -409,7 +387,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 void CIA::timerActionA()
 {
 	if (isOneShotA()) {
-		iomem[CIA_CONTROL_REG_A] &= 254; // Clear bit 0
+		iomem[CIA_CONTROL_REG_A] &= 0xFE; // Clear bit 0
 	}
 	triggerInterrupt(0x01);
 }
@@ -418,7 +396,7 @@ void
 CIA::timerActionB()
 {
 	if (isOneShotB()) {
-		iomem[CIA_CONTROL_REG_B] &= 254; // Clear bit 0
+		iomem[CIA_CONTROL_REG_B] &= 0xFE; // Clear bit 0
 	}
 	triggerInterrupt(0x02);
 }
