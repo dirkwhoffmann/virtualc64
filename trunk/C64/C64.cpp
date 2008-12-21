@@ -53,7 +53,7 @@ void
 	c64->cpu->clearErrorState();
 	c64->floppy->cpu->clearErrorState();
 	c64->setDelay((uint64_t)(1000000 / c64->fps));
-	frame = 0;
+	frame = 0; 
 	while (1) {
 		// For each frame...
 		rasterlinesPerFrame = c64->getRasterlinesPerFrame();
@@ -276,6 +276,8 @@ void C64::reset()
 
 void C64::fastReset()
 {
+	debug("NOTE: FAST RESET IS DISABLED, BECAUSE THE CURRENT IMAGE FORMAT IS NOT YET COMPATIBLE WITH THE INTERNAL MODEL\n");
+#if 0
 	debug ("Resetting virtual C64 (fast reset via image file)\n");
 
 	if (loadSnapshot("ResetImage.VC64")) {
@@ -284,6 +286,7 @@ void C64::fastReset()
 		debug("Cannot load reset image. Will do a hard reset...\n");
 		reset();
 	}
+#endif
 }
 
 void C64::setListener(C64Listener *l)

@@ -17,22 +17,69 @@
  */
 
 #include "C64.h"
-																						
+		
+#define FETCH_OPCODE opcode = mem->peek(PC);
+
+// Cycle 0
 void 
-CPU::registerCallback(uint8_t opcode, int (CPU::*func)())
+CPU::fetch() {
+	
+	// Used for debugging...
+	//history[historyPtr++] = packState(); 
+	//oldPC = PC;
+	
+	// Check interrupt line
+	/* "Ist dieser Eingang auf Low-Pegel, wird eine Interruptbearbeitung ausgelšst, sofern der Interrupt
+	 Ÿber ein Bit im Statusregister freigegeben wurde. Die Unterbrechung erfolgt frŸhestens nach zwei 
+	 Taktzyklen beim Erreichen des nŠchsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im 
+	 Prozessor auslšsen. Interrupts werden nur erkannt, wenn RDY high ist. */
+
+	// TODO: Not cycle accurate yet!!!!!
+	if (nmiLine) {
+		if (nmiHistory)
+			printf("WARNING: STILL IN NMI INTERRUPT ROUTINE\n");
+		nmiHistory = nmiLine;
+		next = &CPU::nmi_2;
+		return;
+	} else if (irqLine && !getI()) {
+		if (irqHistory)
+			printf("WARNING: STILL IN IRQ INTERRUPT ROUTINE\n");
+		irqHistory = irqLine;
+		next = &CPU::irq_2;
+		return;
+	} 
+
+	// Check breakpoint tag
+	if (breakpoint[PC] != NO_BREAKPOINT) {
+		// Soft breakpoints get deleted when reached
+		breakpoint[PC] &= (255 - SOFT_BREAKPOINT);
+		setErrorState(BREAKPOINT_REACHED);
+		debug("Breakpoint reached\n");
+	}
+
+	FETCH_OPCODE;
+	PC++;
+	next = actionFunc[opcode];
+}
+	
+	
+
+
+void 
+CPU::registerCallback(uint8_t opcode, void (CPU::*func)())
 {
 	registerCallback(opcode, "???", ADDR_IMPLIED, func);
 }
 
 void 
-CPU::registerCallback(uint8_t opcode, char *mnc, AddressingMode mode, int (CPU::*func)())
+CPU::registerCallback(uint8_t opcode, char *mnc, AddressingMode mode, void (CPU::*func)())
 {
-	// table is write once only!
+	// table is write once!
 	if (func != &CPU::defaultCallback) 
 		assert(actionFunc[opcode] == &CPU::defaultCallback);
 	
-	actionFunc[opcode]     = func;
-	mnemonic[opcode]       = mnc;
+	actionFunc[opcode] = func;
+	mnemonic[opcode] = mnc;
 	addressingMode[opcode] = mode;
 }
 
@@ -46,6 +93,8 @@ CPU::registerIllegalInstructions()
 
 	registerCallback(0x0B, "ANC*", ADDR_IMMEDIATE, &CPU::ANC_immediate);
 	registerCallback(0x2B, "ANC*", ADDR_IMMEDIATE, &CPU::ANC_immediate);
+	
+	registerCallback(0x8B, "ANE*", ADDR_IMMEDIATE, &CPU::ANE_immediate);
 
 	registerCallback(0x6B, "ARR*", ADDR_IMMEDIATE, &CPU::ARR_immediate);
 	registerCallback(0xCB, "AXS*", ADDR_IMMEDIATE, &CPU::AXS_immediate);
@@ -68,13 +117,14 @@ CPU::registerIllegalInstructions()
 
 	registerCallback(0xBB, "LAS*", ADDR_ABSOLUTE_Y, &CPU::LAS_absolute_y);
 
-	registerCallback(0xAB, "LAX*", ADDR_IMMEDIATE, &CPU::LAX_immediate);
 	registerCallback(0xA7, "LAX*", ADDR_ZERO_PAGE, &CPU::LAX_zero_page);
 	registerCallback(0xB7, "LAX*", ADDR_ZERO_PAGE_Y, &CPU::LAX_zero_page_y);
 	registerCallback(0xA3, "LAX*", ADDR_INDIRECT_X, &CPU::LAX_indirect_x);
 	registerCallback(0xB3, "LAX*", ADDR_INDIRECT_Y, &CPU::LAX_indirect_y);
 	registerCallback(0xAF, "LAX*", ADDR_ABSOLUTE, &CPU::LAX_absolute);
 	registerCallback(0xBF, "LAX*", ADDR_ABSOLUTE_Y, &CPU::LAX_absolute_y);
+
+	registerCallback(0xAB, "LXA*", ADDR_IMMEDIATE, &CPU::LXA_immediate);
 
 	registerCallback(0x80, "NOP*", ADDR_IMMEDIATE, &CPU::NOP_immediate);
 	registerCallback(0x82, "NOP*", ADDR_IMMEDIATE, &CPU::NOP_immediate);
@@ -147,7 +197,6 @@ CPU::registerIllegalInstructions()
 	registerCallback(0x5B, "SRE*", ADDR_ABSOLUTE_Y, &CPU::SRE_absolute_y);
 	
 	registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, &CPU::TAS_absolute_y);
-	registerCallback(0x8B, "XAA*", ADDR_IMMEDIATE, &CPU::XAA_immediate);
 }
 
 	
@@ -344,228 +393,96 @@ void CPU::registerInstructions()
 	registerIllegalInstructions();	
 }
 
-int CPU::defaultCallback()
+void CPU::defaultCallback()
 {
-	// printf("Illegal Opcode at Address %04x (Opcode = %02x)\n", getPC(), mem->peek(getPC()));
 	setErrorState(ILLEGAL_INSTRUCTION);
-	return 1;
-}
-
-// Fetch Operands
-
-
-inline void CPU::fetchOperandImplied()
-{
-	//  #  address R/W description
-	// --- ------- --- -----------------------------------------------
-	//  1    PC     R  fetch opcode, increment PC
-	PC++;
-	//  2    PC     R  read next instruction byte (and throw it away)
-}
-
-inline void CPU::fetchOperandAccumulator()
-{
-	//  #  address R/W description
-	// --- ------- --- -----------------------------------------------
-	//  1    PC     R  fetch opcode, increment PC
-	PC++;
-	//  2    PC     R  read next instruction byte (and throw it away)
-}
-
-inline uint8_t CPU::fetchOperandImmediate()
-{
-	//  #  address R/W description
-	// --- ------- --- ------------------------------------------
-	//  1    PC     R  fetch opcode, increment PC
-	PC++;
-	//  2    PC     R  fetch value, increment PC
-	return mem->peek(PC++);
-}
-
-inline uint16_t CPU::fetchAddressZeroPage()
-{
-	//  #  address R/W description
-	// --- ------- --- ------------------------------------------
-	//  1    PC     R  fetch opcode, increment PC
-	PC++;
-	//  2    PC     R  fetch address, increment PC	
-	uint8_t lo = mem->peek(PC++);
-	return (uint16_t)lo;
-}
-inline uint8_t CPU::fetchOperandZeroPage()
-{
-	return mem->peek(fetchAddressZeroPage());
-}
-
-inline uint16_t CPU::fetchAddressZeroPageX()
-{
-	//  #   address  R/W description
-	// --- --------- --- ------------------------------------------
-	//  1     PC      R  fetch opcode, increment PC
-	PC++;
-	//  2     PC      R  fetch address, increment PC
-	uint8_t lo = mem->peek(PC++);
-	//  3   address   R  read from address, add index register to it
-	lo += X;
-	//      Note: The high byte of the effective address is always zero,
-	//            i.e. page boundary crossings are not handled.
-	return (uint16_t)lo; 
-}
-inline uint8_t CPU::fetchOperandZeroPageX()
-{
-	return mem->peek(fetchAddressZeroPageX());
 }
 
 
-inline uint16_t CPU::fetchAddressZeroPageY()
+// -------------------------------------------------------------------------------
+// IRQ handling
+// -------------------------------------------------------------------------------
+inline void CPU::irq()
 {
-	//  #   address  R/W description
-	// --- --------- --- ------------------------------------------
-	//  1     PC      R  fetch opcode, increment PC
-	PC++;
-	//  2     PC      R  fetch address, increment PC
-	uint8_t lo = mem->peek(PC++);
-	//  3   address   R  read from address, add index register to it
-	lo += Y;
-	//      Note: The high byte of the effective address is always zero,
-	//            i.e. page boundary crossings are not handled.
-	return (uint16_t)lo;
+	IDLE_READ_IMPLIED;
+	next = &CPU::irq_2;
 }
-inline uint8_t CPU::fetchOperandZeroPageY()
+inline void CPU::irq_2()
 {
-	return mem->peek(fetchAddressZeroPageY());
+	IDLE_READ_IMPLIED;
+	next = &CPU::irq_3;
 }
-
-
-inline uint16_t CPU::fetchAddressAbsolute()
+inline void CPU::irq_3()
 {
-	//  #  address R/W description
-	// --- ------- --- ------------------------------------------
-	//	1    PC     R  fetch opcode, increment PC
-	PC++;
-	//	2    PC     R  fetch low byte of address, increment PC
-	//	3    PC     R  fetch high byte of address, increment PC
-	uint16_t addr = mem->peekWord(PC); PC += 2;
-	return addr;
+	mem->poke(0x100+(SP--), HI_BYTE(PC));
+	next = &CPU::irq_4;
 }
-inline uint8_t CPU::fetchOperandAbsolute()
+inline void CPU::irq_4()
 {
-	return mem->peek(fetchAddressAbsolute());
+	mem->poke(0x100+(SP--), LO_BYTE(PC));
+	next = &CPU::irq_5;
 }
-
-inline uint16_t CPU::fetchAddressAbsoluteX()
+inline void CPU::irq_5()
 {
-	//  #  address R/W description
-	// --- ------- --- ------------------------------------------
-	// 1     PC      R  fetch opcode, increment PC
-	PC++;
-	// 2     PC      R  fetch low byte of address, increment PC
-	// 3     PC      R  fetch high byte of address, add index register to low address byte, increment PC
-	uint16_t addr = mem->peekWord(PC) + X; PC += 2;
-	return addr;
+	mem->poke(0x100+(SP--), getPWithClearedB());	
+	setI(1);
+	next = &CPU::irq_6;
 }
-inline uint8_t CPU::fetchOperandAbsoluteX()
+inline void CPU::irq_6()
 {
-	//  #  address R/W description
-	// --- ------- --- ------------------------------------------
-	uint16_t addr = fetchAddressAbsoluteX();
-	// 4  address+X* R  read from effective address, fix the high byte of effective address	
-	// 5+ address+X  R  re-read from effective address
-	//
-	// * The high byte of the effective address may be invalid at this time, 
-	//   i.e. it may be smaller by $100.
-	//
-	// + This cycle will be executed only if the effective address was invalid 
-	//   during cycle #4, i.e. page boundary was crossed.
-	if (HI_BYTE(PC) != HI_BYTE(addr)) // Page boundary crossed
-		cycles++; 
-	return mem->peek(addr);
+	setPCL(mem->peek(0xFFFE));
+	next = &CPU::irq_7;
+}
+inline void CPU::irq_7()
+{
+	setPCH(mem->peek(0xFFFF));
+	DONE;
 }
 
-inline uint16_t CPU::fetchAddressAbsoluteY()
-{
-	//  #  address R/W description
-	// --- ------- --- ------------------------------------------
-	// 1     PC      R  fetch opcode, increment PC
-	PC++;
-	// 2     PC      R  fetch low byte of address, increment PC
-	// 3     PC      R  fetch high byte of address, add index register to low address byte, increment PC
-	uint16_t addr = mem->peekWord(PC) + Y; PC += 2;
-	return addr;
-}
-inline uint8_t CPU::fetchOperandAbsoluteY()
-{
-	//  #  address R/W description
-	// --- ------- --- ------------------------------------------
-	// 4  address+X* R  read from effective address, fix the high byte of effective address	
-	// 5+ address+X  R  re-read from effective address
-	uint16_t addr = fetchAddressAbsoluteY();
-	//
-	// * The high byte of the effective address may be invalid at this time, 
-	//   i.e. it may be smaller by $100.
-	//
-	// + This cycle will be executed only if the effective address was invalid 
-	//   during cycle #4, i.e. page boundary was crossed.
-	if (HI_BYTE(PC) != HI_BYTE(addr)) // Page boundary crossed
-		cycles++; 
-	return mem->peek(addr);
-}
 
-inline uint16_t CPU::fetchAddressIndirectX()
+// -------------------------------------------------------------------------------
+// NMI handling
+// -------------------------------------------------------------------------------
+inline void CPU::nmi()
 {
-	//  #  address R/W description
-	// --- ------- --- ------------------------------------------
-	//	1      PC       R  fetch opcode, increment PC
-	PC++;
-	//	2      PC       R  fetch pointer address, increment PC
-	uint8_t ptr = mem->peek(PC++);
-	//	3    pointer    R  read from the address, add X to it
-	ptr += X;
-	//	4   pointer+X   R  fetch effective address low
-	uint8_t lo = mem->peek(ptr, 0);
-	//	5  pointer+X+1  R  fetch effective address high
-	ptr++;
-	uint8_t hi = mem->peek(ptr, 0);
-	//  Note: The effective address is always fetched from zero page,
-	//	i.e. the zero page boundary crossing is not handled.	
-	return (hi << 8) + lo;
+	IDLE_READ_IMPLIED;
+	next = &CPU::nmi_2;
 }
-inline uint8_t CPU::fetchOperandIndirectX()
+inline void CPU::nmi_2()
 {
-	return mem->peek(fetchAddressIndirectX());
-}
+	// We clear the NMI line. (otherwise, the NMI would be recursively interrupted by itself)
+	// This does not happen in a real C64(?). Perhaps, the NMI line is edge triggered (???)
+	clearNMILine(0xff);
 
-inline uint16_t CPU::fetchAddressIndirectY()
-{
-	//  #  address R/W description
-	// --- ------- --- ------------------------------------------
-	//  1      PC       R  fetch opcode, increment PC
-	PC++;
-	//  2      PC       R  fetch pointer address, increment PC
-	uint8_t ptr = mem->peek(PC++);
-	//  3    pointer    R  fetch effective address low
-	uint8_t lo = mem->peek(ptr, 0);
-	//  4   pointer+1   R  fetch effective address high, add Y to low byte of effective address
-	ptr++;
-	uint8_t hi = mem->peek(ptr, 0);
-	// Notes: The effective address is always fetched from zero page,
-	//        i.e. the zero page boundary crossing is not handled.
-	return (hi << 8) + lo + Y;
+	IDLE_READ_IMPLIED;
+	next = &CPU::nmi_3;
 }
-
-inline uint8_t CPU::fetchOperandIndirectY()
+inline void CPU::nmi_3()
 {
-	return mem->peek(fetchAddressIndirectY());
+	mem->poke(0x100+(SP--), HI_BYTE(PC));
+	next = &CPU::nmi_4;
 }
-
-inline uint8_t CPU::fetchOperandRelative()
+inline void CPU::nmi_4()
 {
-	// 1     PC      R  fetch opcode, increment PC
-	PC++;
-	// 2     PC      R  fetch operand, increment PC
-	return mem->peek(PC++);
+	mem->poke(0x100+(SP--), LO_BYTE(PC));
+	next = &CPU::nmi_5;
 }
-
+inline void CPU::nmi_5()
+{
+	mem->poke(0x100+(SP--), getPWithClearedB());	
+	setI(1);
+	next = &CPU::nmi_6;
+}
+inline void CPU::nmi_6()
+{
+	setPCL(mem->peek(0xFFFA));
+	next = &CPU::nmi_7;
+}
+inline void CPU::nmi_7()
+{
+	setPCH(mem->peek(0xFFFB));
+	DONE;
+}
 
 
 // -------------------------------------------------------------------------------
@@ -625,63 +542,190 @@ inline void CPU::adc_bcd(uint8_t op)
 	lowDigit &= 0x0F;
 	A = (uint8_t)((highDigit << 4) | lowDigit);
 }
-		
-int CPU::ADC_immediate()
+
+// -------------------------------------------------------------------------------
+void CPU::ADC_immediate() 
 {
-	uint8_t op = fetchOperandImmediate();
-	adc(op);
-	return 2;
+	READ_IMMEDIATE;
+	adc(data);
+	DONE;
 }
 
-int CPU::ADC_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::ADC_zero_page() 
 {
-	uint8_t op = fetchOperandZeroPage();
-	adc(op);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::ADC_zero_page_2;
 }
 
-int CPU::ADC_zero_page_x()
+void CPU::ADC_zero_page_2() 
 {
-	uint8_t op = fetchOperandZeroPageX();
-	adc(op);
-	return 4;
+	READ_FROM_ZERO_PAGE;
+	adc(data);
+	DONE;
 }
 
-int CPU::ADC_absolute()
+// -------------------------------------------------------------------------------
+void CPU::ADC_zero_page_x() 
 {
-	uint8_t op = fetchOperandAbsolute();
-	adc(op);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::ADC_zero_page_x_2;
+}
+void CPU::ADC_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::ADC_zero_page_x_3;
+}
+void CPU::ADC_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	adc(data);
+	DONE;
 }
 
-int CPU::ADC_absolute_x()
-{
-	uint8_t op = fetchOperandAbsoluteX();
-	adc(op);
-	return 5;
+// -------------------------------------------------------------------------------
+void CPU::ADC_absolute() 
+{ 
+	FETCH_ADDR_LO; 
+	next = &CPU::ADC_absolute_2; 
+}
+void CPU::ADC_absolute_2() 
+{ 
+	FETCH_ADDR_HI; 
+	next = &CPU::ADC_absolute_3; 
+}
+void CPU::ADC_absolute_3() 
+{ 
+	READ_FROM_ADDRESS; 
+	adc(data); 
+	DONE; 
 }
 
-int CPU::ADC_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::ADC_absolute_x()
 {
-	uint8_t op = fetchOperandAbsoluteY();
-	adc(op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::ADC_absolute_x_2;
+}
+void CPU::ADC_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::ADC_absolute_x_3;
+}
+void CPU::ADC_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::ADC_absolute_x_4;
+	} else {
+		adc(data);
+		DONE;
+	}
+}
+void CPU::ADC_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	adc(data);
+	DONE;
 }
 
-int CPU::ADC_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::ADC_absolute_y()
 {
-	uint8_t op = fetchOperandIndirectX();
-	adc(op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::ADC_absolute_y_2;
+}
+void CPU::ADC_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::ADC_absolute_y_3;
+}
+void CPU::ADC_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::ADC_absolute_y_4;
+	} else {
+		adc(data);
+		DONE;
+	}
+}
+void CPU::ADC_absolute_y_4() 
+{
+	READ_FROM_ADDRESS;
+	adc(data);
+	DONE;
 }
 
-
-int CPU::ADC_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::ADC_indirect_x()
 {
-	uint8_t op = fetchOperandIndirectY();
-	adc(op);
-	return 5;
+	FETCH_POINTER_ADDR;
+	next = &CPU::ADC_indirect_x_2;
 }
+void CPU::ADC_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::ADC_indirect_x_3;
+}
+void CPU::ADC_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::ADC_indirect_x_4;
+}
+void CPU::ADC_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::ADC_indirect_x_5;
+}
+void CPU::ADC_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	adc(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::ADC_indirect_y()
+{
+	FETCH_POINTER_ADDR;
+	next = &CPU::ADC_indirect_y_2;
+}
+void CPU::ADC_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::ADC_indirect_y_3;
+}
+void CPU::ADC_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::ADC_indirect_y_4;
+}
+void CPU::ADC_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::ADC_indirect_y_5;
+	} else {
+		adc(data);
+		DONE;
+	}
+}
+void CPU::ADC_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	adc(data);
+	DONE;
+}
+
 
 // -------------------------------------------------------------------------------
 // Instruction: AND
@@ -692,61 +736,182 @@ int CPU::ADC_indirect_y()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::AND_immediate()
+void CPU::AND_immediate()
 {
-	uint8_t op = fetchOperandImmediate();
-	loadA(A & op);
-	return 2;
+	READ_IMMEDIATE;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::AND_absolute()
-{
-	uint8_t op = fetchOperandAbsolute();
-	loadA(A & op);
-	
-	return 4;
+// -------------------------------------------------------------------------------
+void CPU::AND_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::AND_absolute_2;
+}
+void CPU::AND_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::AND_absolute_3;
+}
+void CPU::AND_absolute_3() {
+	READ_FROM_ADDRESS;
+	loadA(A & data);	
+	DONE;
 }
 
-int CPU::AND_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::AND_zero_page()
 {
-	uint8_t op = fetchOperandZeroPage();
-	loadA(A & op);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::AND_zero_page_2;
+}
+void CPU::AND_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::AND_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::AND_zero_page_x()
 {
-	uint8_t op = fetchOperandZeroPageX();
-	loadA(A & op);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::AND_zero_page_x_2;
+}
+void CPU::AND_zero_page_x_2()
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::AND_zero_page_x_3;
+}
+void CPU::AND_zero_page_x_3()
+{
+	READ_FROM_ZERO_PAGE;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::AND_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::AND_absolute_x()
 {
-	uint8_t op = fetchOperandAbsoluteX();
-	loadA(A & op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::AND_absolute_x_2;
+}
+void CPU::AND_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::AND_absolute_x_3;
+}
+void CPU::AND_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::AND_absolute_x_4;
+	} else {
+		loadA(A & data);
+		DONE;
+	}
+}
+void CPU::AND_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::AND_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::AND_absolute_y()
 {
-	uint8_t op = fetchOperandAbsoluteY();
-	loadA(A & op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::AND_absolute_y_2;
+}
+void CPU::AND_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::AND_absolute_y_3;
+}
+void CPU::AND_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::AND_absolute_y_4;
+	} else {
+		loadA(A & data);
+		DONE;
+	}
+}
+void CPU::AND_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::AND_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::AND_indirect_x()
 {
-	uint8_t op = fetchOperandIndirectX();
-	loadA(A & op);
-	return 6;
+	FETCH_POINTER_ADDR;
+	next = &CPU::AND_indirect_x_2;
+}
+void CPU::AND_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::AND_indirect_x_3;
+}
+void CPU::AND_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::AND_indirect_x_4;
+}
+void CPU::AND_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::AND_indirect_x_5;
+}
+void CPU::AND_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::AND_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::AND_indirect_y()
 {
-	uint8_t op = fetchOperandIndirectY();
-	loadA(A & op);
-	return 5;
+	FETCH_POINTER_ADDR;
+	next = &CPU::AND_indirect_y_2;
+}
+void CPU::AND_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::AND_indirect_y_3;
+}
+void CPU::AND_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::AND_indirect_y_4;
+}
+void CPU::AND_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::AND_indirect_y_5;
+	} else {
+		loadA(A & data);
+		DONE;
+	}
+}
+void CPU::AND_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(A & data);
+	DONE;
 }
 
 
@@ -759,72 +924,170 @@ int CPU::AND_indirect_y()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::ASL_accumulator()
+#define DO_ASL setC(data & 128); data = data << 1;
+
+// -------------------------------------------------------------------------------
+void CPU::ASL_accumulator()
 {
-	fetchOperandAccumulator();
-	setC(A & 128);
-	loadA(A << 1);
-	return 2;
+	IDLE_READ_IMPLIED;
+	setC(A & 128); loadA(A << 1);
+	DONE;
 }
 
-int CPU::ASL_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::ASL_zero_page() 
 {
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	loadM(addr, op << 1);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::ASL_zero_page_2;
+}
+void CPU::ASL_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::ASL_zero_page_3;
+}
+void CPU::ASL_zero_page_3()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_ASL;
+	next = &CPU::ASL_zero_page_4;
+}
+void CPU::ASL_zero_page_4()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::ASL_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::ASL_zero_page_x() 
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	loadM(addr, op << 1);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::ASL_zero_page_x_2;
+}
+void CPU::ASL_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::ASL_zero_page_x_3;
+}
+void CPU::ASL_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::ASL_zero_page_x_4;
+}
+void CPU::ASL_zero_page_x_4()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_ASL;
+	next = &CPU::ASL_zero_page_x_5;
+}
+void CPU::ASL_zero_page_x_5()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::ASL_absolute()
+// -------------------------------------------------------------------------------
+void CPU::ASL_absolute()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	loadM(addr, op << 1);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::ASL_absolute_2;
+}
+void CPU::ASL_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::ASL_absolute_3;
+}
+void CPU::ASL_absolute_3()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ASL_absolute_4;
+}
+void CPU::ASL_absolute_4()
+{
+	WRITE_TO_ADDRESS;
+	DO_ASL;
+	next = &CPU::ASL_absolute_5;
+}
+void CPU::ASL_absolute_5()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::ASL_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::ASL_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	loadM(addr, op << 1);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::ASL_absolute_x_2;
+}
+void CPU::ASL_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::ASL_absolute_x_3;
+}
+void CPU::ASL_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::ASL_absolute_x_4;
+}
+void CPU::ASL_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ASL_absolute_x_5;
+}
+void CPU::ASL_absolute_x_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_ASL;
+	next = &CPU::ASL_absolute_x_6;
+}
+void CPU::ASL_absolute_x_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-void CPU::ASL_absolute_y()
-{
-	uint16_t addr = fetchAddressAbsoluteY();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	loadM(addr, op << 1);
-}
-
+// -------------------------------------------------------------------------------
 void CPU::ASL_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	loadM(addr, op << 1);
+	FETCH_POINTER_ADDR;
+	next = &CPU::ASL_indirect_x_2;
 }
-
-void CPU::ASL_indirect_y()
+void CPU::ASL_indirect_x_2()
 {
-	uint16_t addr = fetchAddressIndirectY();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	loadM(addr, op << 1);
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::ASL_indirect_x_3;
+}
+void CPU::ASL_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::ASL_indirect_x_4;
+}
+void CPU::ASL_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::ASL_indirect_x_5;
+}
+void CPU::ASL_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ASL_indirect_x_6;
+}
+void CPU::ASL_indirect_x_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_ASL;
+	next = &CPU::ASL_indirect_x_7;
+}
+void CPU::ASL_indirect_x_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
 
@@ -837,27 +1100,35 @@ void CPU::ASL_indirect_y()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-inline int CPU::branch(int8_t offset)
+inline void CPU::branch(int8_t offset)
 {
-	int cycles = 1;
-	
-	uint8_t hi = HI_BYTE(PC);
 	PC += offset;
-	if(HI_BYTE(PC) != hi) {
-		// page boundary crossed, we add one penalty cycle
-		cycles++; 
-	}
-
-	return cycles;
 }
 
-int CPU::BCC_relative()
+// ------------------------------------------------------------------------------
+void CPU::BCC_relative()
+{	
+	READ_IMMEDIATE;
+	if (!getC()) { 
+		next = &CPU::BCC_relative_2;
+	} else {
+		DONE;
+	}
+}
+void CPU::BCC_relative_2()
 {
-	int cycles = 2;
+	uint8_t pc_hi = HI_BYTE(PC);
+	PC += (int8_t)data;
 	
-	uint8_t op = fetchOperandRelative();
-	if (!getC()) cycles += branch(op);
-	return cycles;
+	if (pc_hi != HI_BYTE(PC)) {
+		next = &CPU::BCC_relative_3;
+	} else {
+		DONE;
+	}
+}
+void CPU::BCC_relative_3()
+{
+	DONE;
 }
 
 
@@ -870,13 +1141,29 @@ int CPU::BCC_relative()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::BCS_relative()
+void CPU::BCS_relative()
+{	
+	READ_IMMEDIATE;
+	if (getC()) { 
+		next = &CPU::BCS_relative_2;
+	} else {
+		DONE;
+	}
+}
+void CPU::BCS_relative_2()
 {
-	int cycles = 2;
+	uint8_t pc_hi = HI_BYTE(PC);
+	PC += (int8_t)data;
 	
-	uint8_t op = fetchOperandRelative();
-	if (getC()) cycles += branch(op);
-	return cycles;
+	if (pc_hi != HI_BYTE(PC)) {
+		next = &CPU::BCS_relative_3;
+	} else {
+		DONE;
+	}
+}
+void CPU::BCS_relative_3()
+{
+	DONE;
 }
 
 
@@ -889,13 +1176,29 @@ int CPU::BCS_relative()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::BEQ_relative()
+void CPU::BEQ_relative()
+{	
+	READ_IMMEDIATE;
+	if (getZ()) { 
+		next = &CPU::BEQ_relative_2;
+	} else {
+		DONE;
+	}
+}
+void CPU::BEQ_relative_2()
 {
-	int cycles = 2;
+	uint8_t pc_hi = HI_BYTE(PC);
+	PC += (int8_t)data;
 	
-	uint8_t op = fetchOperandRelative();
-	if (getZ()) cycles += branch(op);
-	return cycles;
+	if (pc_hi != HI_BYTE(PC)) {
+		next = &CPU::BEQ_relative_3;
+	} else {
+		DONE;
+	}
+}
+void CPU::BEQ_relative_3()
+{
+	DONE;
 }
 
 
@@ -908,22 +1211,38 @@ int CPU::BEQ_relative()
 //              / / - - - /
 // -------------------------------------------------------------------------------
 
-int CPU::BIT_zero_page()
+void CPU::BIT_zero_page()
 {
-	uint8_t op = fetchOperandZeroPage();
-	setN(op & 128);
-	setV(op & 64);
-	setZ((op & A) == 0);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::BIT_zero_page_2;
+}
+void CPU::BIT_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	setN(data & 128);
+	setV(data & 64);
+	setZ((data & A) == 0);
+	DONE;
 }
 
-int CPU::BIT_absolute()
+// -------------------------------------------------------------------------------
+void CPU::BIT_absolute()
 {
-	uint8_t op = fetchOperandAbsolute();
-	setN(op & 128);
-	setV(op & 64);
-	setZ((op & A) == 0);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::BIT_absolute_2;
+}
+void CPU::BIT_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::BIT_absolute_3;
+}
+void CPU::BIT_absolute_3()
+{
+	READ_FROM_ADDRESS;
+	setN(data & 128);
+	setV(data & 64);
+	setZ((data & A) == 0);
+	DONE;	
 }
 
 
@@ -936,13 +1255,29 @@ int CPU::BIT_absolute()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::BMI_relative()
+void CPU::BMI_relative()
+{	
+	READ_IMMEDIATE;
+	if (getN()) { 
+		next = &CPU::BMI_relative_2;
+	} else {
+		DONE;
+	}
+}
+void CPU::BMI_relative_2()
 {
-	int cycles = 2;
+	uint8_t pc_hi = HI_BYTE(PC);
+	PC += (int8_t)data;
 	
-	uint8_t op = fetchOperandRelative();
-	if (getN()) cycles += branch(op);
-	return cycles;
+	if (pc_hi != HI_BYTE(PC)) {
+		next = &CPU::BMI_relative_3;
+	} else {
+		DONE;
+	}
+}
+void CPU::BMI_relative_3()
+{
+	DONE;
 }
 
 
@@ -955,13 +1290,29 @@ int CPU::BMI_relative()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::BNE_relative()
+void CPU::BNE_relative()
+{	
+	READ_IMMEDIATE;
+	if (!getZ()) { 
+		next = &CPU::BNE_relative_2;
+	} else {
+		DONE;
+	}
+}
+void CPU::BNE_relative_2()
 {
-	int cycles = 2;
+	uint8_t pc_hi = HI_BYTE(PC);
+	PC += (int8_t)data;
 	
-	uint8_t op = fetchOperandRelative();
-	if (!getZ()) cycles += branch(op);
-	return cycles;
+	if (pc_hi != HI_BYTE(PC)) {
+		next = &CPU::BNE_relative_3;
+	} else {
+		DONE;
+	}
+}
+void CPU::BNE_relative_3()
+{
+	DONE;
 }
 
 
@@ -974,13 +1325,29 @@ int CPU::BNE_relative()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::BPL_relative()
+void CPU::BPL_relative()
+{	
+	READ_IMMEDIATE;
+	if (!getN()) { 
+		next = &CPU::BPL_relative_2;
+	} else {
+		DONE;
+	}
+}
+void CPU::BPL_relative_2()
 {
-	int cycles = 2;
+	uint8_t pc_hi = HI_BYTE(PC);
+	PC += (int8_t)data;
 	
-	uint8_t op = fetchOperandRelative();
-	if (!getN()) cycles += branch(op);
-	return cycles;
+	if (pc_hi != HI_BYTE(PC)) {
+		next = &CPU::BPL_relative_3;
+	} else {
+		DONE;
+	}
+}
+void CPU::BPL_relative_3()
+{
+	DONE;
 }
 
 
@@ -993,28 +1360,38 @@ int CPU::BPL_relative()
 //              - - - 1 - -    1
 // -------------------------------------------------------------------------------
 
-int CPU::BRK()
+void CPU::BRK()
 {
-	uint16_t pc_addr;
-
-	fetchOperandImplied();
-	// 3  $0100,S  W  push PCH on stack (with B flag set), decrement S
+	IDLE_READ_IMMEDIATE;
+	next = &CPU::BRK_2;
+}
+void CPU::BRK_2()
+{
 	setB(1); 
-	pc_addr = PC+1;
-	mem->poke(0x100+(SP--), HI_BYTE(pc_addr));
-	// 4  $0100,S  W  push PCL on stack, decrement S
-	mem->poke(0x100+(SP--), LO_BYTE(pc_addr));
-	// 5  $0100,S  W  push P on stack, decrement S
-	mem->poke(0x100+(SP--), getP());
-	// 6   $FFFE   R  fetch PCL	
-	// 7   $FFFF   R  fetch PCH
+	PUSH_PCH;
+	next = &CPU::BRK_3;
+}
+void CPU::BRK_3()
+{
+	PUSH_PCL;
+	next = &CPU::BRK_4;
+}
+void CPU::BRK_4()
+{
+	PUSH_P;
+	next = &CPU::BRK_5;
+}
+void CPU::BRK_5()
+{
 	setPCL(mem->peek(0xFFFE));
+	next = &CPU::BRK_6;
+}
+void CPU::BRK_6()
+{
 	setPCH(mem->peek(0xFFFF));	
 	setI(1);
-
-	return 7;
+	DONE;
 }
-
 
 // -------------------------------------------------------------------------------
 // Instruction: BVC
@@ -1025,13 +1402,29 @@ int CPU::BRK()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::BVC_relative()
+void CPU::BVC_relative()
+{	
+	READ_IMMEDIATE;
+	if (!getV()) { 
+		next = &CPU::BVC_relative_2;
+	} else {
+		DONE;
+	}
+}
+void CPU::BVC_relative_2()
 {
-	int cycles = 2;
+	uint8_t pc_hi = HI_BYTE(PC);
+	PC += (int8_t)data;
 	
-	uint8_t op = fetchOperandRelative();
-	if (!getV()) cycles += branch(op);
-	return cycles;
+	if (pc_hi != HI_BYTE(PC)) {
+		next = &CPU::BVC_relative_3;
+	} else {
+		DONE;
+	}
+}
+void CPU::BVC_relative_3()
+{
+	DONE;
 }
 
 
@@ -1044,13 +1437,29 @@ int CPU::BVC_relative()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::BVS_relative()
+void CPU::BVS_relative()
+{	
+	READ_IMMEDIATE;
+	if (getV()) { 
+		next = &CPU::BVS_relative_2;
+	} else {
+		DONE;
+	}
+}
+void CPU::BVS_relative_2()
 {
-	int cycles = 2;
+	uint8_t pc_hi = HI_BYTE(PC);
+	PC += (int8_t)data;
 	
-	uint8_t op = fetchOperandRelative();
-	if (getV()) cycles += branch(op);
-	return cycles;
+	if (pc_hi != HI_BYTE(PC)) {
+		next = &CPU::BVS_relative_3;
+	} else {
+		DONE;
+	}
+}
+void CPU::BVS_relative_3()
+{
+	DONE;
 }
 
 
@@ -1063,11 +1472,11 @@ int CPU::BVS_relative()
 //              - - 0 - - -
 // -------------------------------------------------------------------------------
 
-int CPU::CLC()
+void CPU::CLC()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	setC(0);
-	return 2;
+	DONE;
 }
 
 
@@ -1080,11 +1489,11 @@ int CPU::CLC()
 //              - - - - 0 -
 // -------------------------------------------------------------------------------
 
-int CPU::CLD()
+void CPU::CLD()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	setD(0);
-	return 2;
+	DONE;
 }
 
 
@@ -1097,11 +1506,11 @@ int CPU::CLD()
 //              - - - 0 - -
 // -------------------------------------------------------------------------------
 
-int CPU::CLI()
+void CPU::CLI()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	setI(0);
-	return 2;
+	DONE;
 }
 
 
@@ -1114,11 +1523,11 @@ int CPU::CLI()
 //              - - - - - 0
 // -------------------------------------------------------------------------------
 
-int CPU::CLV()
+void CPU::CLV()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	setV(0);
-	return 2;
+	DONE;
 }
 
 
@@ -1140,60 +1549,183 @@ inline void CPU::cmp(uint8_t op1, uint8_t op2)
 	setZ(tmp == 0);
 }
 
-int CPU::CMP_immediate()
+// -------------------------------------------------------------------------------
+void CPU::CMP_immediate()
 {
-	uint8_t op = fetchOperandImmediate();
-	cmp(A, op);
-	return 2;
+	READ_IMMEDIATE;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::CMP_zero_page()
-{
-	uint8_t op = fetchOperandZeroPage();
-	cmp(A, op);
-	return 3;
+// -------------------------------------------------------------------------------
+void CPU::CMP_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::CMP_absolute_2;
+}
+void CPU::CMP_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::CMP_absolute_3;
+}
+void CPU::CMP_absolute_3() {
+	READ_FROM_ADDRESS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::CMP_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::CMP_zero_page()
 {
-	uint8_t op = fetchOperandZeroPageX();
-	cmp(A, op);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::CMP_zero_page_2;
+}
+void CPU::CMP_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::CMP_absolute()
-{ 
-	uint8_t op = fetchOperandAbsolute();
-	cmp(A, op);
-	return 4;
+// -------------------------------------------------------------------------------
+void CPU::CMP_zero_page_x()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::CMP_zero_page_x_2;
+}
+void CPU::CMP_zero_page_x_2()
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::CMP_zero_page_x_3;
+}
+void CPU::CMP_zero_page_x_3()
+{
+	READ_FROM_ZERO_PAGE;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::CMP_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::CMP_absolute_x()
 {
-	uint8_t op = fetchOperandAbsoluteX();
-	cmp(A, op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::CMP_absolute_x_2;
+}
+void CPU::CMP_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::CMP_absolute_x_3;
+}
+void CPU::CMP_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::CMP_absolute_x_4;
+	} else {
+		cmp(A, data);
+		DONE;
+	}
+}
+void CPU::CMP_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::CMP_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::CMP_absolute_y()
 {
-	uint8_t op = fetchOperandAbsoluteY();
-	cmp(A, op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::CMP_absolute_y_2;
+}
+void CPU::CMP_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::CMP_absolute_y_3;
+}
+void CPU::CMP_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::CMP_absolute_y_4;
+	} else {
+		cmp(A, data);
+		DONE;
+	}
+}
+void CPU::CMP_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::CMP_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::CMP_indirect_x()
 {
-	uint8_t op = fetchOperandIndirectX();
-	cmp(A, op);
-	return 6;
+	FETCH_POINTER_ADDR;
+	next = &CPU::CMP_indirect_x_2;
+}
+void CPU::CMP_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::CMP_indirect_x_3;
+}
+void CPU::CMP_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::CMP_indirect_x_4;
+}
+void CPU::CMP_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::CMP_indirect_x_5;
+}
+void CPU::CMP_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::CMP_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::CMP_indirect_y()
 {
-	uint8_t op = fetchOperandIndirectY();
-	cmp(A, op);
-	return 5;
+	FETCH_POINTER_ADDR;
+	next = &CPU::CMP_indirect_y_2;
+}
+void CPU::CMP_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::CMP_indirect_y_3;
+}
+void CPU::CMP_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::CMP_indirect_y_4;
+}
+void CPU::CMP_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::CMP_indirect_y_5;
+	} else {
+		cmp(A, data);
+		DONE;
+	}
+}
+void CPU::CMP_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	cmp(A, data);
+	DONE;
 }
 
 
@@ -1206,25 +1738,39 @@ int CPU::CMP_indirect_y()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::CPX_immediate()
+void CPU::CPX_immediate()
 {
-	uint8_t op = fetchOperandImmediate();
-	cmp(X, op);
-	return 2;
+	READ_IMMEDIATE;
+	cmp(X, data);
+	DONE;
 }
 
-int CPU::CPX_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::CPX_zero_page()
 {
-	uint8_t op = fetchOperandZeroPage();
-	cmp(X, op);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::CPX_zero_page_2;
+}
+void CPU::CPX_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	cmp(X, data);
+	DONE;
 }
 
-int CPU::CPX_absolute()
-{
-	uint8_t op = fetchOperandAbsolute();
-	cmp(X, op);
-	return 4;
+// -------------------------------------------------------------------------------
+void CPU::CPX_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::CPX_absolute_2;
+}
+void CPU::CPX_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::CPX_absolute_3;
+}
+void CPU::CPX_absolute_3() {
+	READ_FROM_ADDRESS;
+	cmp(X, data);
+	DONE;
 }
 
 
@@ -1237,26 +1783,41 @@ int CPU::CPX_absolute()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::CPY_immediate()
+void CPU::CPY_immediate()
 {
-	uint8_t op = fetchOperandImmediate();
-	cmp(Y, op);
-	return 2;
+	READ_IMMEDIATE;
+	cmp(Y, data);
+	DONE;
 }
 
-int CPU::CPY_absolute()
+// -------------------------------------------------------------------------------
+void CPU::CPY_zero_page()
 {
-	uint8_t op = fetchOperandAbsolute();
-	cmp(Y, op);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::CPY_zero_page_2;
+}
+void CPU::CPY_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	cmp(Y, data);
+	DONE;
 }
 
-int CPU::CPY_zero_page()
-{
-	uint8_t op = fetchOperandZeroPage();
-	cmp(Y, op);
-	return 3;
+// -------------------------------------------------------------------------------
+void CPU::CPY_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::CPY_absolute_2;
 }
+void CPU::CPY_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::CPY_absolute_3;
+}
+void CPU::CPY_absolute_3() {
+	READ_FROM_ADDRESS;
+	cmp(Y, data);
+	DONE;
+}
+
 
 // -------------------------------------------------------------------------------
 // Instruction: DEC
@@ -1267,59 +1828,208 @@ int CPU::CPY_zero_page()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::DEC_zero_page()
+#define DO_DEC data--;
+
+// -------------------------------------------------------------------------------
+void CPU::DEC_zero_page() 
 {
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::DEC_zero_page_2;
+}
+void CPU::DEC_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::DEC_zero_page_3;
+}
+void CPU::DEC_zero_page_3()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_DEC;
+	next = &CPU::DEC_zero_page_4;
+}
+void CPU::DEC_zero_page_4()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::DEC_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::DEC_zero_page_x() 
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::DEC_zero_page_x_2;
+}
+void CPU::DEC_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::DEC_zero_page_x_3;
+}
+void CPU::DEC_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::DEC_zero_page_x_4;
+}
+void CPU::DEC_zero_page_x_4()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_DEC;
+	next = &CPU::DEC_zero_page_x_5;
+}
+void CPU::DEC_zero_page_x_5()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::DEC_absolute()
+// -------------------------------------------------------------------------------
+void CPU::DEC_absolute()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::DEC_absolute_2;
+}
+void CPU::DEC_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::DEC_absolute_3;
+}
+void CPU::DEC_absolute_3()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::DEC_absolute_4;
+}
+void CPU::DEC_absolute_4()
+{
+	WRITE_TO_ADDRESS;
+	DO_DEC;
+	next = &CPU::DEC_absolute_5;
+}
+void CPU::DEC_absolute_5()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::DEC_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::DEC_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::DEC_absolute_x_2;
+}
+void CPU::DEC_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::DEC_absolute_x_3;
+}
+void CPU::DEC_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::DEC_absolute_x_4;
+}
+void CPU::DEC_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::DEC_absolute_x_5;
+}
+void CPU::DEC_absolute_x_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_DEC;
+	next = &CPU::DEC_absolute_x_6;
+}
+void CPU::DEC_absolute_x_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-void CPU::DEC_absolute_y()
-{
-	uint16_t addr = fetchAddressAbsoluteY();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-}
-	
+// -------------------------------------------------------------------------------
 void CPU::DEC_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
+	FETCH_POINTER_ADDR;
+	next = &CPU::DEC_indirect_x_2;
+}
+void CPU::DEC_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::DEC_indirect_x_3;
+}
+void CPU::DEC_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::DEC_indirect_x_4;
+}
+void CPU::DEC_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::DEC_indirect_x_5;
+}
+void CPU::DEC_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::DEC_indirect_x_6;
+}
+void CPU::DEC_indirect_x_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_DEC;
+	next = &CPU::DEC_indirect_x_7;
+}
+void CPU::DEC_indirect_x_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
+#if 0
+// -------------------------------------------------------------------------------
 void CPU::DEC_indirect_y()
 {
-	uint16_t addr = fetchAddressIndirectY();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
+	FETCH_POINTER_ADDR;
+	next = &CPU::DEC_indirect_y_2;
+}
+void CPU::DEC_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::DEC_indirect_y_3;
+}
+void CPU::DEC_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::DEC_indirect_y_4;
+}
+void CPU::DEC_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::DEC_indirect_y_5;
+}
+void CPU::DEC_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::DEC_indirect_y_6;
+}
+void CPU::DEC_indirect_y_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_DEC;
+	next = &CPU::DEC_indirect_y_7;
 }
 
+void CPU::DEC_indirect_y_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
+}
+#endif
 
 // -------------------------------------------------------------------------------
 // Instruction: DEX
@@ -1330,12 +2040,11 @@ void CPU::DEC_indirect_y()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::DEX()
+void CPU::DEX()
 {
-	fetchOperandImplied();
-	uint8_t op = getX()-1;
-	loadX(op);
-	return 2;
+	IDLE_READ_IMPLIED;
+	loadX(getX()-1);
+	DONE;
 }
 
 
@@ -1348,12 +2057,11 @@ int CPU::DEX()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::DEY()
+void CPU::DEY()
 {
-	fetchOperandImplied();
-	uint8_t op = getY()-1;
-	loadY(op);
-	return 2;
+	IDLE_READ_IMPLIED;
+	loadY(getY()-1);
+	DONE;
 }
 
 
@@ -1366,60 +2074,182 @@ int CPU::DEY()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::EOR_immediate()
+void CPU::EOR_immediate()
 {
-	uint8_t op = fetchOperandImmediate();
-	loadA(A ^ op);
-	return 2;
+	READ_IMMEDIATE;
+	loadA(A ^ data);
+	DONE;
 }
 
-int CPU::EOR_zero_page()
-{
-	uint8_t op = fetchOperandZeroPage();
-	loadA(A ^ op);
-	return 3;
+// -------------------------------------------------------------------------------
+void CPU::EOR_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::EOR_absolute_2;
+}
+void CPU::EOR_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::EOR_absolute_3;
+}
+void CPU::EOR_absolute_3() {
+	READ_FROM_ADDRESS;
+	loadA(A ^ data);	
+	DONE;
 }
 
-int CPU::EOR_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::EOR_zero_page()
 {
-	uint8_t op = fetchOperandZeroPageX();
-	loadA(A ^ op);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::EOR_zero_page_2;
+}
+void CPU::EOR_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	loadA(A ^ data);
+	DONE;
 }
 
-int CPU::EOR_absolute()
+// -------------------------------------------------------------------------------
+void CPU::EOR_zero_page_x()
 {
-	uint8_t op = fetchOperandAbsolute();
-	loadA(A ^ op);	
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::EOR_zero_page_x_2;
+}
+void CPU::EOR_zero_page_x_2()
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::EOR_zero_page_x_3;
+}
+void CPU::EOR_zero_page_x_3()
+{
+	READ_FROM_ZERO_PAGE;
+	loadA(A ^ data);
+	DONE;
 }
 
-int CPU::EOR_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::EOR_absolute_x()
 {
-	uint8_t op = fetchOperandAbsoluteX();
-	loadA(A ^ op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::EOR_absolute_x_2;
+}
+void CPU::EOR_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::EOR_absolute_x_3;
+}
+void CPU::EOR_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::EOR_absolute_x_4;
+	} else {
+		loadA(A ^ data);
+		DONE;
+	}
+}
+void CPU::EOR_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	loadA(A ^ data);
+	DONE;
 }
 
-int CPU::EOR_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::EOR_absolute_y()
 {
-	uint8_t op = fetchOperandAbsoluteY();
-	loadA(A ^ op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::EOR_absolute_y_2;
+}
+void CPU::EOR_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::EOR_absolute_y_3;
+}
+void CPU::EOR_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::EOR_absolute_y_4;
+	} else {
+		loadA(A ^ data);
+		DONE;
+	}
+}
+void CPU::EOR_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	loadA(A ^ data);
+	DONE;
 }
 
-int CPU::EOR_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::EOR_indirect_x()
 {
-	uint8_t op = fetchOperandIndirectX();
-	loadA(A ^ op);
-	return 6;
+	FETCH_POINTER_ADDR;
+	next = &CPU::EOR_indirect_x_2;
+}
+void CPU::EOR_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::EOR_indirect_x_3;
+}
+void CPU::EOR_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::EOR_indirect_x_4;
+}
+void CPU::EOR_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::EOR_indirect_x_5;
+}
+void CPU::EOR_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(A ^ data);
+	DONE;
 }
 
-int CPU::EOR_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::EOR_indirect_y()
 {
-	uint8_t op = fetchOperandIndirectY();
-	loadA(A ^ op);
-	return 5;
+	FETCH_POINTER_ADDR;
+	next = &CPU::EOR_indirect_y_2;
+}
+void CPU::EOR_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::EOR_indirect_y_3;
+}
+void CPU::EOR_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::EOR_indirect_y_4;
+}
+void CPU::EOR_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::EOR_indirect_y_5;
+	} else {
+		loadA(A ^ data);
+		DONE;
+	}
+}
+void CPU::EOR_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(A ^ data);
+	DONE;
 }
 
 
@@ -1432,57 +2262,162 @@ int CPU::EOR_indirect_y()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::INC_zero_page()
+#define DO_INC data++;
+
+// -------------------------------------------------------------------------------
+void CPU::INC_zero_page() 
 {
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::INC_zero_page_2;
+}
+void CPU::INC_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::INC_zero_page_3;
+}
+void CPU::INC_zero_page_3()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_INC;
+	next = &CPU::INC_zero_page_4;
+}
+void CPU::INC_zero_page_4()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::INC_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::INC_zero_page_x() 
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::INC_zero_page_x_2;
+}
+void CPU::INC_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::INC_zero_page_x_3;
+}
+void CPU::INC_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::INC_zero_page_x_4;
+}
+void CPU::INC_zero_page_x_4()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_INC;
+	next = &CPU::INC_zero_page_x_5;
+}
+void CPU::INC_zero_page_x_5()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::INC_absolute()
+// -------------------------------------------------------------------------------
+void CPU::INC_absolute()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::INC_absolute_2;
+}
+void CPU::INC_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::INC_absolute_3;
+}
+void CPU::INC_absolute_3()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::INC_absolute_4;
+}
+void CPU::INC_absolute_4()
+{
+	WRITE_TO_ADDRESS;
+	DO_INC;
+	next = &CPU::INC_absolute_5;
+}
+void CPU::INC_absolute_5()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::INC_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::INC_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::INC_absolute_x_2;
+}
+void CPU::INC_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::INC_absolute_x_3;
+}
+void CPU::INC_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::INC_absolute_x_4;
+}
+void CPU::INC_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::INC_absolute_x_5;
+}
+void CPU::INC_absolute_x_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_INC;
+	next = &CPU::INC_absolute_x_6;
+}
+void CPU::INC_absolute_x_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-void CPU::INC_absolute_y()
-{
-	uint16_t addr = fetchAddressAbsoluteY();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-}
-
+// -------------------------------------------------------------------------------
 void CPU::INC_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
+	FETCH_POINTER_ADDR;
+	next = &CPU::INC_indirect_x_2;
 }
-
-void CPU::INC_indirect_y()
+void CPU::INC_indirect_x_2()
 {
-	uint16_t addr = fetchAddressIndirectY();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::INC_indirect_x_3;
+}
+void CPU::INC_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::INC_indirect_x_4;
+}
+void CPU::INC_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::INC_indirect_x_5;
+}
+void CPU::INC_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::INC_indirect_x_6;
+}
+void CPU::INC_indirect_x_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_INC;
+	next = &CPU::INC_indirect_x_7;
+}
+void CPU::INC_indirect_x_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
 
@@ -1495,12 +2430,11 @@ void CPU::INC_indirect_y()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::INX()
+void CPU::INX()
 {
-	fetchOperandImplied();
-	uint8_t op = X+1;
-	loadX(op);
-	return 2;
+	IDLE_READ_IMPLIED;
+	loadX(getX()+1);
+	DONE;
 }
 
 
@@ -1513,12 +2447,11 @@ int CPU::INX()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::INY()
+void CPU::INY()
 {
-	fetchOperandImplied();
-	uint8_t op = Y+1;
-	loadY(op);
-	return 2;
+	IDLE_READ_IMPLIED;
+	loadY(getY()+1);
+	DONE;
 }
 
 
@@ -1531,36 +2464,40 @@ int CPU::INY()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-
-int CPU::JMP_absolute()
+void CPU::JMP_absolute()
 {
-	//	1    PC     R  fetch opcode, increment PC
-	PC++;
-	//	2    PC     R  fetch low address byte, increment PC
-	uint8_t lo = mem->peek(PC++);
-	//	3    PC     R  copy low address byte to PCL, fetch high address byte to PCH
-	setPCH(mem->peek(PC)); setPCL(lo);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::JMP_absolute_2;
+}
+void CPU::JMP_absolute_2()
+{
+	FETCH_ADDR_HI;
+	setPC(LO_HI(addr_lo, addr_hi));
+	DONE;
 }
 
-int CPU::JMP_absolute_indirect()
+// -------------------------------------------------------------------------------
+void CPU::JMP_absolute_indirect()
 {
-	//  1     PC      R  fetch opcode, increment PC
-	PC++;
-	//  2     PC      R  fetch pointer address low, increment PC
-	uint8_t pc_lo = mem->peek(PC++);
-	//  3     PC      R  fetch pointer address high, increment PC
-	uint8_t pc_hi = mem->peek(PC++);
-	//  4   pointer   R  fetch low address to latch
-	uint8_t latch = mem->peek(pc_lo, pc_hi);
-	//  5  pointer+1* R  fetch PCH, copy latch to PCL
-	// Note: * The PCH will always be fetched from the same page
-	// than PCL, i.e. page boundary crossing is not handled.
-	setPCH(mem->peek(pc_lo+1, pc_hi)); setPCL(latch);	
-	
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::JMP_absolute_indirect_2;
 }
-
+void CPU::JMP_absolute_indirect_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::JMP_absolute_indirect_3;
+}
+void CPU::JMP_absolute_indirect_3()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::JMP_absolute_indirect_4;
+}
+void CPU::JMP_absolute_indirect_4()
+{
+	setPCL(data);	
+	setPCH(mem->peek(addr_lo+1, addr_hi)); 
+	DONE;
+}
 
 // -------------------------------------------------------------------------------
 // Instruction: JSR
@@ -1571,23 +2508,31 @@ int CPU::JMP_absolute_indirect()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::JSR()
+void CPU::JSR()
 {
+	FETCH_ADDR_LO;
 	callStack[callStackPointer++] = PC;
-	
-	//  1    PC     R  fetch opcode, increment PC
-	PC++;
-	//  2    PC     R  fetch low address byte, increment PC
-	uint8_t lo = mem->peek(PC++);
-	//  3  $0100,S  R  internal operation (predecrement S?)
-	//  4  $0100,S  W  push PCH on stack, decrement S
-	mem->poke(0x100+SP--, HI_BYTE(PC));
-	//  5  $0100,S  W  push PCL on stack, decrement S
-	mem->poke(0x100+SP--, LO_BYTE(PC));
-	//  6    PC     R  copy low address byte to PCL, fetch high address byte to PCH
-	setPCH(mem->peek(PC)); setPCL(lo);
-
-	return 6;
+	next = &CPU::JSR_2;
+}
+void CPU::JSR_2()
+{
+	next = &CPU::JSR_3;
+}
+void CPU::JSR_3()
+{
+	PUSH_PCH;
+	next = &CPU::JSR_4;
+}
+void CPU::JSR_4()
+{
+	PUSH_PCL;
+	next = &CPU::JSR_5;
+}
+void CPU::JSR_5()
+{
+	FETCH_ADDR_HI;	
+	setPC(LO_HI(addr_lo, addr_hi));
+	DONE;
 }
 
 
@@ -1600,67 +2545,187 @@ int CPU::JSR()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::LDA_immediate()
+// -------------------------------------------------------------------------------
+void CPU::LDA_immediate() 
 {
-	uint8_t op = fetchOperandImmediate();
-	loadA(op);
-	return 2;
+	READ_IMMEDIATE;
+	loadA(data);
+	DONE;
 }
 
-int CPU::LDA_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::LDA_zero_page() 
 {
-	uint8_t op = fetchOperandZeroPage();
-	loadA(op);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::LDA_zero_page_2;
 }
 
-int CPU::LDA_zero_page_x()
+void CPU::LDA_zero_page_2() 
 {
-	uint8_t op = fetchOperandZeroPageX();
-	loadA(op);
-	return 4;
+	READ_FROM_ZERO_PAGE;
+	loadA(data);
+	DONE;
 }
 
-void CPU::LDA_zero_page_y()
+// -------------------------------------------------------------------------------
+void CPU::LDA_zero_page_x() 
 {
-	uint8_t op = fetchOperandZeroPageY();
-	loadA(op);
+	FETCH_ADDR_LO;
+	next = &CPU::LDA_zero_page_x_2;
+}
+void CPU::LDA_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::LDA_zero_page_x_3;
+}
+void CPU::LDA_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	loadA(data);
+	DONE;
 }
 
-int CPU::LDA_absolute()
-{
-	uint8_t op = fetchOperandAbsolute();
-	loadA(op);
-	
-	return 4;
+// -------------------------------------------------------------------------------
+void CPU::LDA_absolute() 
+{ 
+	FETCH_ADDR_LO; 
+	next = &CPU::LDA_absolute_2; 
+}
+void CPU::LDA_absolute_2() 
+{ 
+	FETCH_ADDR_HI; 
+	next = &CPU::LDA_absolute_3; 
+}
+void CPU::LDA_absolute_3() 
+{ 
+	READ_FROM_ADDRESS; 
+	loadA(data); 
+	DONE; 
 }
 
-int CPU::LDA_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::LDA_absolute_x()
 {
-	uint8_t op = fetchOperandAbsoluteX();
-	loadA(op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::LDA_absolute_x_2;
+}
+void CPU::LDA_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::LDA_absolute_x_3;
+}
+void CPU::LDA_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::LDA_absolute_x_4;
+	} else {
+		loadA(data);
+		DONE;
+	}
+}
+void CPU::LDA_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	loadA(data);
+	DONE;
 }
 
-int CPU::LDA_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::LDA_absolute_y()
 {
-	uint8_t op = fetchOperandAbsoluteY();
-	loadA(op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::LDA_absolute_y_2;
+}
+void CPU::LDA_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::LDA_absolute_y_3;
+}
+void CPU::LDA_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::LDA_absolute_y_4;
+	} else {
+		loadA(data);
+		DONE;
+	}
+}
+void CPU::LDA_absolute_y_4() 
+{
+	READ_FROM_ADDRESS;
+	loadA(data);
+	DONE;
 }
 
-int CPU::LDA_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::LDA_indirect_x()
 {
-	uint8_t op = fetchOperandIndirectX();
-	loadA(op);
-	return 6;
+	FETCH_POINTER_ADDR;
+	next = &CPU::LDA_indirect_x_2;
+}
+void CPU::LDA_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::LDA_indirect_x_3;
+}
+void CPU::LDA_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LDA_indirect_x_4;
+}
+void CPU::LDA_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::LDA_indirect_x_5;
+}
+void CPU::LDA_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(data);
+	DONE;
 }
 
-int CPU::LDA_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::LDA_indirect_y()
 {
-	uint8_t op = fetchOperandIndirectY();
-	loadA(op);
-	return 5;
+	FETCH_POINTER_ADDR;
+	next = &CPU::LDA_indirect_y_2;
+}
+void CPU::LDA_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LDA_indirect_y_3;
+}
+void CPU::LDA_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::LDA_indirect_y_4;
+}
+void CPU::LDA_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::LDA_indirect_y_5;
+	} else {
+		loadA(data);
+		DONE;
+	}
+}
+void CPU::LDA_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(data);
+	DONE;
 }
 
 
@@ -1673,52 +2738,157 @@ int CPU::LDA_indirect_y()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::LDX_immediate()
+// -------------------------------------------------------------------------------
+void CPU::LDX_immediate() 
 {
-	uint8_t op = fetchOperandImmediate();
-	loadX(op);
-	return 2;
+	READ_IMMEDIATE;
+	loadX(data);
+	DONE;
 }
 
-int CPU::LDX_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::LDX_zero_page() 
 {
-	uint8_t op = fetchOperandZeroPage();
-	loadX(op);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::LDX_zero_page_2;
 }
 
-int CPU::LDX_zero_page_y()
+void CPU::LDX_zero_page_2() 
 {
-	uint8_t op = fetchOperandZeroPageY();
-	loadX(op);
-	return 4;
+	READ_FROM_ZERO_PAGE;
+	loadX(data);
+	DONE;
 }
 
-int CPU::LDX_absolute()
+// -------------------------------------------------------------------------------
+void CPU::LDX_zero_page_y() 
 {
-	uint8_t op = fetchOperandAbsolute();
-	loadX(op);
-	
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::LDX_zero_page_y_2;
+}
+void CPU::LDX_zero_page_y_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_Y;
+	next = &CPU::LDX_zero_page_y_3;
+}
+void CPU::LDX_zero_page_y_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	loadX(data);
+	DONE;
 }
 
-int CPU::LDX_absolute_y()
-{
-	uint8_t op = fetchOperandAbsoluteY();
-	loadX(op);
-	return 5;
+// -------------------------------------------------------------------------------
+void CPU::LDX_absolute() 
+{ 
+	FETCH_ADDR_LO; 
+	next = &CPU::LDX_absolute_2; 
+}
+void CPU::LDX_absolute_2() 
+{ 
+	FETCH_ADDR_HI; 
+	next = &CPU::LDX_absolute_3; 
+}
+void CPU::LDX_absolute_3() 
+{ 
+	READ_FROM_ADDRESS; 
+	loadX(data); 
+	DONE; 
 }
 
+// -------------------------------------------------------------------------------
+void CPU::LDX_absolute_y()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::LDX_absolute_y_2;
+}
+void CPU::LDX_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::LDX_absolute_y_3;
+}
+void CPU::LDX_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::LDX_absolute_y_4;
+	} else {
+		loadX(data);
+		DONE;
+	}
+}
+void CPU::LDX_absolute_y_4() 
+{
+	READ_FROM_ADDRESS;
+	loadX(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
 void CPU::LDX_indirect_x()
 {
-	uint8_t op = fetchOperandIndirectX();
-	loadX(op);
+	FETCH_POINTER_ADDR;
+	next = &CPU::LDX_indirect_x_2;
+}
+void CPU::LDX_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::LDX_indirect_x_3;
+}
+void CPU::LDX_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LDX_indirect_x_4;
+}
+void CPU::LDX_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::LDX_indirect_x_5;
+}
+void CPU::LDX_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	loadX(data);
+	DONE;
 }
 
+// -------------------------------------------------------------------------------
 void CPU::LDX_indirect_y()
 {
-	uint8_t op = fetchOperandIndirectY();
-	loadX(op);
+	FETCH_POINTER_ADDR;
+	next = &CPU::LDX_indirect_y_2;
+}
+void CPU::LDX_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LDX_indirect_y_3;
+}
+void CPU::LDX_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::LDX_indirect_y_4;
+}
+void CPU::LDX_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::LDX_indirect_y_5;
+	} else {
+		loadX(data);
+		DONE;
+	}
+}
+void CPU::LDX_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	loadX(data);
+	DONE;
 }
 
 
@@ -1731,40 +2901,157 @@ void CPU::LDX_indirect_y()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::LDY_immediate()
+// -------------------------------------------------------------------------------
+void CPU::LDY_immediate() 
 {
-	uint8_t op = fetchOperandImmediate();
-	loadY(op);
-	return 2;
+	READ_IMMEDIATE;
+	loadY(data);
+	DONE;
 }
 
-int CPU::LDY_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::LDY_zero_page() 
 {
-	uint8_t op = fetchOperandZeroPage();
-	loadY(op);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::LDY_zero_page_2;
 }
 
-int CPU::LDY_zero_page_x()
+void CPU::LDY_zero_page_2() 
 {
-	uint8_t op = fetchOperandZeroPageX();
-	loadY(op);
-	return 4;
+	READ_FROM_ZERO_PAGE;
+	loadY(data);
+	DONE;
 }
 
-int CPU::LDY_absolute()
+// -------------------------------------------------------------------------------
+void CPU::LDY_zero_page_x() 
 {
-	uint8_t op = fetchOperandAbsolute();
-	loadY(op);
-	
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::LDY_zero_page_x_2;
+}
+void CPU::LDY_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::LDY_zero_page_x_3;
+}
+void CPU::LDY_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	loadY(data);
+	DONE;
 }
 
-int CPU::LDY_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::LDY_absolute() 
+{ 
+	FETCH_ADDR_LO; 
+	next = &CPU::LDY_absolute_2; 
+}
+void CPU::LDY_absolute_2() 
+{ 
+	FETCH_ADDR_HI; 
+	next = &CPU::LDY_absolute_3; 
+}
+void CPU::LDY_absolute_3() 
+{ 
+	READ_FROM_ADDRESS; 
+	loadY(data); 
+	DONE; 
+}
+
+// -------------------------------------------------------------------------------
+void CPU::LDY_absolute_x()
 {
-	uint8_t op = fetchOperandAbsoluteX();
-	loadY(op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::LDY_absolute_x_2;
+}
+void CPU::LDY_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::LDY_absolute_x_3;
+}
+void CPU::LDY_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::LDY_absolute_x_4;
+	} else {
+		loadY(data);
+		DONE;
+	}
+}
+void CPU::LDY_absolute_x_4() 
+{
+	READ_FROM_ADDRESS;
+	loadY(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::LDY_indirect_x()
+{
+	FETCH_POINTER_ADDR;
+	next = &CPU::LDY_indirect_x_2;
+}
+void CPU::LDY_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::LDY_indirect_x_3;
+}
+void CPU::LDY_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LDY_indirect_x_4;
+}
+void CPU::LDY_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::LDY_indirect_x_5;
+}
+void CPU::LDY_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	loadY(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::LDY_indirect_y()
+{
+	FETCH_POINTER_ADDR;
+	next = &CPU::LDY_indirect_y_2;
+}
+void CPU::LDY_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LDY_indirect_y_3;
+}
+void CPU::LDY_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::LDY_indirect_y_4;
+}
+void CPU::LDY_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::LDY_indirect_y_5;
+	} else {
+		loadY(data);
+		DONE;
+	}
+}
+void CPU::LDY_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	loadY(data);
+	DONE;
 }
 
 
@@ -1777,72 +3064,250 @@ int CPU::LDY_absolute_x()
 //              0 / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::LSR_accumulator()
+#define DO_LSR setC(data & 1); data = data >> 1;
+
+// -------------------------------------------------------------------------------
+void CPU::LSR_accumulator()
 {
-	fetchOperandAccumulator();
-	setC(A & 1);
-	loadA(A >> 1);
-	return 2;
+	IDLE_READ_IMPLIED;
+	setC(A & 1); loadA(A >> 1);
+	DONE;
 }
 
-int CPU::LSR_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::LSR_zero_page() 
 {
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t op   = mem->peek(addr);
-	setC(op & 1);
-	loadM(addr, op >> 1);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::LSR_zero_page_2;
+}
+void CPU::LSR_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::LSR_zero_page_3;
+}
+void CPU::LSR_zero_page_3()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_LSR;
+	next = &CPU::LSR_zero_page_4;
+}
+void CPU::LSR_zero_page_4()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::LSR_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::LSR_zero_page_x() 
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t op   = mem->peek(addr);
-	setC(op & 1);
-	loadM(addr, op >> 1);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::LSR_zero_page_x_2;
+}
+void CPU::LSR_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::LSR_zero_page_x_3;
+}
+void CPU::LSR_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::LSR_zero_page_x_4;
+}
+void CPU::LSR_zero_page_x_4()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_LSR;
+	next = &CPU::LSR_zero_page_x_5;
+}
+void CPU::LSR_zero_page_x_5()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::LSR_absolute()
+// -------------------------------------------------------------------------------
+void CPU::LSR_absolute()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t op   = mem->peek(addr);
-	setC(op & 1);
-	loadM(addr, op >> 1);	
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::LSR_absolute_2;
+}
+void CPU::LSR_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::LSR_absolute_3;
+}
+void CPU::LSR_absolute_3()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::LSR_absolute_4;
+}
+void CPU::LSR_absolute_4()
+{
+	WRITE_TO_ADDRESS;
+	DO_LSR;
+	next = &CPU::LSR_absolute_5;
+}
+void CPU::LSR_absolute_5()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::LSR_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::LSR_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t op   = mem->peek(addr);
-	setC(op & 1);
-	loadM(addr, op >> 1);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::LSR_absolute_x_2;
+}
+void CPU::LSR_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::LSR_absolute_x_3;
+}
+void CPU::LSR_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::LSR_absolute_x_4;
+}
+void CPU::LSR_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::LSR_absolute_x_5;
+}
+void CPU::LSR_absolute_x_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_LSR;
+	next = &CPU::LSR_absolute_x_6;
+}
+void CPU::LSR_absolute_x_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
+// -------------------------------------------------------------------------------
 void CPU::LSR_absolute_y()
 {
-	uint16_t addr = fetchAddressAbsoluteY();
-	uint8_t op   = mem->peek(addr);
-	setC(op & 1);
-	loadM(addr, op >> 1);
+	FETCH_ADDR_LO;
+	next = &CPU::LSR_absolute_y_2;
+}
+void CPU::LSR_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::LSR_absolute_y_3;
+}
+void CPU::LSR_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::LSR_absolute_y_4;
+}
+void CPU::LSR_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::LSR_absolute_y_5;
+}
+void CPU::LSR_absolute_y_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_LSR;
+	next = &CPU::LSR_absolute_y_6;
+}
+void CPU::LSR_absolute_y_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
+// -------------------------------------------------------------------------------
 void CPU::LSR_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	uint8_t op   = mem->peek(addr);
-	setC(op & 1);
-	loadM(addr, op >> 1);
+	FETCH_POINTER_ADDR;
+	next = &CPU::LSR_indirect_x_2;
+}
+void CPU::LSR_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::LSR_indirect_x_3;
+}
+void CPU::LSR_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LSR_indirect_x_4;
+}
+void CPU::LSR_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::LSR_indirect_x_5;
+}
+void CPU::LSR_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::LSR_indirect_x_6;
+}
+void CPU::LSR_indirect_x_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_LSR;
+	next = &CPU::LSR_indirect_x_7;
+}
+void CPU::LSR_indirect_x_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
+// -------------------------------------------------------------------------------
 void CPU::LSR_indirect_y()
 {
-	uint16_t addr = fetchAddressIndirectY();
-	uint8_t op   = mem->peek(addr);
-	setC(op & 1);
-	loadM(addr, op >> 1);
+	FETCH_POINTER_ADDR;
+	next = &CPU::LSR_indirect_y_2;
+}
+void CPU::LSR_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LSR_indirect_y_3;
+}
+void CPU::LSR_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::LSR_indirect_y_4;
+}
+void CPU::LSR_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::LSR_indirect_y_5;
+}
+void CPU::LSR_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::LSR_indirect_y_6;
+}
+void CPU::LSR_indirect_y_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_LSR;
+	next = &CPU::LSR_indirect_y_7;
+}
+
+void CPU::LSR_indirect_y_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
 
@@ -1855,10 +3320,93 @@ void CPU::LSR_indirect_y()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::NOP()
+void CPU::NOP()
 {
-	fetchOperandImplied();
-	return 2;
+	IDLE_READ_IMPLIED;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::NOP_immediate()
+{
+	IDLE_READ_IMMEDIATE;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::NOP_zero_page() 
+{
+	FETCH_ADDR_LO;
+	next = &CPU::NOP_zero_page_2;
+}
+
+void CPU::NOP_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::NOP_zero_page_x() 
+{
+	FETCH_ADDR_LO;
+	next = &CPU::NOP_zero_page_x_2;
+}
+void CPU::NOP_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::NOP_zero_page_x_3;
+}
+void CPU::NOP_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::NOP_absolute() 
+{ 
+	FETCH_ADDR_LO; 
+	next = &CPU::NOP_absolute_2; 
+}
+void CPU::NOP_absolute_2() 
+{ 
+	FETCH_ADDR_HI; 
+	next = &CPU::NOP_absolute_3; 
+}
+void CPU::NOP_absolute_3() 
+{ 
+	READ_FROM_ADDRESS; 
+	DONE; 
+}
+
+// -------------------------------------------------------------------------------
+void CPU::NOP_absolute_x()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::NOP_absolute_x_2;
+}
+void CPU::NOP_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::NOP_absolute_x_3;
+}
+void CPU::NOP_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::NOP_absolute_x_4;
+	} else {
+		DONE;
+	}
+}
+void CPU::NOP_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	DONE;
 }
 
 
@@ -1871,61 +3419,184 @@ int CPU::NOP()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::ORA_immediate()
+void CPU::ORA_immediate()
 {
-	uint8_t op = fetchOperandImmediate();
-	loadA(A | op);
-	return 2;
+	READ_IMMEDIATE;
+	loadA(A | data);
+	DONE;
 }
 
-int CPU::ORA_zero_page()
-{
-	uint8_t op = fetchOperandZeroPage();
-	loadA(A | op);
-	return 3;
+// -------------------------------------------------------------------------------
+void CPU::ORA_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::ORA_absolute_2;
+}
+void CPU::ORA_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::ORA_absolute_3;
+}
+void CPU::ORA_absolute_3() {
+	READ_FROM_ADDRESS;
+	loadA(A | data);	
+	DONE;
 }
 
-int CPU::ORA_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::ORA_zero_page()
 {
-	uint8_t op = fetchOperandZeroPageX();
-	loadA(A | op);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::ORA_zero_page_2;
+}
+void CPU::ORA_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	loadA(A | data);
+	DONE;
 }
 
-int CPU::ORA_absolute()
+// -------------------------------------------------------------------------------
+void CPU::ORA_zero_page_x()
 {
-	uint8_t op = fetchOperandAbsolute();
-	loadA(A | op);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::ORA_zero_page_x_2;
+}
+void CPU::ORA_zero_page_x_2()
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::ORA_zero_page_x_3;
+}
+void CPU::ORA_zero_page_x_3()
+{
+	READ_FROM_ZERO_PAGE;
+	loadA(A | data);
+	DONE;
 }
 
-int CPU::ORA_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::ORA_absolute_x()
 {
-	uint8_t op = fetchOperandAbsoluteX();
-	loadA(A | op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::ORA_absolute_x_2;
+}
+void CPU::ORA_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::ORA_absolute_x_3;
+}
+void CPU::ORA_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::ORA_absolute_x_4;
+	} else {
+		loadA(A | data);
+		DONE;
+	}
+}
+void CPU::ORA_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	loadA(A | data);
+	DONE;
 }
 
-int CPU::ORA_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::ORA_absolute_y()
 {
-	uint8_t op = fetchOperandAbsoluteY();
-	loadA(A | op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::ORA_absolute_y_2;
+}
+void CPU::ORA_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::ORA_absolute_y_3;
+}
+void CPU::ORA_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::ORA_absolute_y_4;
+	} else {
+		loadA(A | data);
+		DONE;
+	}
+}
+void CPU::ORA_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	loadA(A | data);
+	DONE;
 }
 
-int CPU::ORA_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::ORA_indirect_x()
 {
-	uint8_t op = fetchOperandIndirectX();
-	loadA(A | op);
-	return 6;
+	FETCH_POINTER_ADDR;
+	next = &CPU::ORA_indirect_x_2;
+}
+void CPU::ORA_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::ORA_indirect_x_3;
+}
+void CPU::ORA_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::ORA_indirect_x_4;
+}
+void CPU::ORA_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::ORA_indirect_x_5;
+}
+void CPU::ORA_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(A | data);
+	DONE;
 }
 
-int CPU::ORA_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::ORA_indirect_y()
 {
-	uint8_t op = fetchOperandIndirectY();
-	loadA(A | op);
-	return 5;
+	FETCH_POINTER_ADDR;
+	next = &CPU::ORA_indirect_y_2;
 }
+void CPU::ORA_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::ORA_indirect_y_3;
+}
+void CPU::ORA_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::ORA_indirect_y_4;
+}
+void CPU::ORA_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::ORA_indirect_y_5;
+	} else {
+		loadA(A | data);
+		DONE;
+	}
+}
+void CPU::ORA_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(A | data);
+	DONE;
+}
+
 
 // -------------------------------------------------------------------------------
 // Instruction: PHA
@@ -1936,13 +3607,15 @@ int CPU::ORA_indirect_y()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::PHA()
+void CPU::PHA()
 {
-	fetchOperandImplied();
-	//  3  $0100,S  W  push register on stack, decrement S
-	mem->poke(0x100+SP, A); 	
-	SP--;
-	return 3;
+	IDLE_READ_IMPLIED;
+	next = &CPU::PHA_2;
+}
+void CPU::PHA_2()
+{
+	PUSH_A;
+	DONE;
 }
 
 
@@ -1955,13 +3628,15 @@ int CPU::PHA()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::PHP()
+void CPU::PHP()
 {
-	fetchOperandImplied();	
-	//  3  $0100,S  W  push register on stack, decrement S
-	mem->poke(0x100+SP, getP());
-	SP--;
-	return 3;
+	IDLE_READ_IMPLIED;
+	next = &CPU::PHP_2;
+}
+void CPU::PHP_2()
+{
+	PUSH_P;
+	DONE;
 }
 
 
@@ -1974,15 +3649,22 @@ int CPU::PHP()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::PLA()
+void CPU::PLA()
 {
-	fetchOperandImplied();
-	//  4  $0100,S  R  pull register from stack
-	SP++;
-	//A = mem->peek(0x100+SP);
-	loadA(mem->peek(0x100+SP));
-	return 4;
+	IDLE_READ_IMPLIED;
+	next = &CPU::PLA_2;
 }
+void CPU::PLA_2()
+{
+	SP++;
+	next = &CPU::PLA_3;
+}
+void CPU::PLA_3()
+{
+	PULL_A;
+	DONE;
+}
+
 
 // -------------------------------------------------------------------------------
 // Instruction: PLP
@@ -1993,13 +3675,20 @@ int CPU::PLA()
 //              / / / / / /
 // -------------------------------------------------------------------------------
 
-int CPU::PLP()
+void CPU::PLP()
 {
-	fetchOperandImplied();
-	//  4  $0100,S  R  pull register from stack
+	IDLE_READ_IMPLIED;
+	next = &CPU::PLP_2;
+}
+void CPU::PLP_2()
+{
 	SP++;
-	setPWithoutB(mem->peek(0x100+SP));
-	return 4;
+	next = &CPU::PLP_3;
+}
+void CPU::PLP_3()
+{
+	PULL_P;
+	DONE;
 }
 
 
@@ -2022,67 +3711,178 @@ inline uint8_t CPU::rol(uint8_t op)
 	return shifted;
 }	
 
-int CPU::ROL_accumulator()
+#define DO_ROL if (getC()) { setC(data & 128); data = (data << 1) + 1; } else { setC(data & 128); data = (data << 1); }
+
+// -------------------------------------------------------------------------------
+void CPU::ROL_accumulator()
 {
-	fetchOperandAccumulator();
-	loadA(rol(A));
-	return 2;
+	IDLE_READ_IMPLIED;
+	if (getC()) { 
+		setC(A & 128); 
+		loadA((A << 1) + 1);
+	} else { 
+		setC(A & 128); 
+		loadA(A << 1); 
+	}
+	DONE;
 }
 
-int CPU::ROL_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::ROL_zero_page() 
 {
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::ROL_zero_page_2;
+}
+void CPU::ROL_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::ROL_zero_page_3;
+}
+void CPU::ROL_zero_page_3()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_ROL;
+	next = &CPU::ROL_zero_page_4;
+}
+void CPU::ROL_zero_page_4()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::ROL_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::ROL_zero_page_x() 
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::ROL_zero_page_x_2;
+}
+void CPU::ROL_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::ROL_zero_page_x_3;
+}
+void CPU::ROL_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::ROL_zero_page_x_4;
+}
+void CPU::ROL_zero_page_x_4()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_ROL;
+	next = &CPU::ROL_zero_page_x_5;
+}
+void CPU::ROL_zero_page_x_5()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::ROL_absolute()
+// -------------------------------------------------------------------------------
+void CPU::ROL_absolute()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::ROL_absolute_2;
+}
+void CPU::ROL_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::ROL_absolute_3;
+}
+void CPU::ROL_absolute_3()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ROL_absolute_4;
+}
+void CPU::ROL_absolute_4()
+{
+	WRITE_TO_ADDRESS;
+	DO_ROL;
+	next = &CPU::ROL_absolute_5;
+}
+void CPU::ROL_absolute_5()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::ROL_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::ROL_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::ROL_absolute_x_2;
+}
+void CPU::ROL_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::ROL_absolute_x_3;
+}
+void CPU::ROL_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::ROL_absolute_x_4;
+}
+void CPU::ROL_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ROL_absolute_x_5;
+}
+void CPU::ROL_absolute_x_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_ROL;
+	next = &CPU::ROL_absolute_x_6;
+}
+void CPU::ROL_absolute_x_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-#if 0
-void CPU::ROL_absolute_y()
-{
-	uint16_t addr = fetchAddressAbsoluteY();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-}
-
+// -------------------------------------------------------------------------------
 void CPU::ROL_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
+	FETCH_POINTER_ADDR;
+	next = &CPU::ROL_indirect_x_2;
+}
+void CPU::ROL_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::ROL_indirect_x_3;
+}
+void CPU::ROL_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::ROL_indirect_x_4;
+}
+void CPU::ROL_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::ROL_indirect_x_5;
+}
+void CPU::ROL_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ROL_indirect_x_6;
+}
+void CPU::ROL_indirect_x_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_ROL;
+	next = &CPU::ROL_indirect_x_7;
+}
+void CPU::ROL_indirect_x_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-void CPU::ROL_indirect_y()
-{
-	uint16_t addr = fetchAddressIndirectY();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-}
-#endif
 
 // -------------------------------------------------------------------------------
 // Instruction: ROR
@@ -2103,73 +3903,178 @@ inline uint8_t CPU::ror(uint8_t op)
 	return shifted;
 }	
 
-int CPU::ROR_accumulator()
+#define DO_ROR if (getC()) { setC(data & 1); data = (data >> 1) + 128; } else { setC(data & 1); data = (data >> 1); }
+
+// -------------------------------------------------------------------------------
+void CPU::ROR_accumulator()
 {
-	fetchOperandAccumulator();
-	loadA(ror(A));
-	return 2;
+	IDLE_READ_IMPLIED;
+	if (getC()) { 
+		setC(A & 1); 
+		loadA((A >> 1) + 128);
+	} else { 
+		setC(A & 1); 
+		loadA(A >> 1); 
+	}
+	DONE;
 }
 
-int CPU::ROR_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::ROR_zero_page() 
 {
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t value = ror(mem->peek(addr));
-	loadM(addr, value);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::ROR_zero_page_2;
+}
+void CPU::ROR_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::ROR_zero_page_3;
+}
+void CPU::ROR_zero_page_3()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_ROR;
+	next = &CPU::ROR_zero_page_4;
+}
+void CPU::ROR_zero_page_4()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::ROR_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::ROR_zero_page_x() 
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t value = ror(mem->peek(addr));
-	loadM(addr, value);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::ROR_zero_page_x_2;
+}
+void CPU::ROR_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::ROR_zero_page_x_3;
+}
+void CPU::ROR_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::ROR_zero_page_x_4;
+}
+void CPU::ROR_zero_page_x_4()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_ROR;
+	next = &CPU::ROR_zero_page_x_5;
+}
+void CPU::ROR_zero_page_x_5()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::ROR_absolute()
+// -------------------------------------------------------------------------------
+void CPU::ROR_absolute()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t value = ror(mem->peek(addr));
-	loadM(addr, value);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::ROR_absolute_2;
+}
+void CPU::ROR_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::ROR_absolute_3;
+}
+void CPU::ROR_absolute_3()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ROR_absolute_4;
+}
+void CPU::ROR_absolute_4()
+{
+	WRITE_TO_ADDRESS;
+	DO_ROR;
+	next = &CPU::ROR_absolute_5;
+}
+void CPU::ROR_absolute_5()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-int CPU::ROR_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::ROR_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t value = ror(mem->peek(addr));
-	loadM(addr, value);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::ROR_absolute_x_2;
+}
+void CPU::ROR_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::ROR_absolute_x_3;
+}
+void CPU::ROR_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::ROR_absolute_x_4;
+}
+void CPU::ROR_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ROR_absolute_x_5;
+}
+void CPU::ROR_absolute_x_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_ROR;
+	next = &CPU::ROR_absolute_x_6;
+}
+void CPU::ROR_absolute_x_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-#if 0
-void CPU::ROR_absolute_y()
-{
-	uint16_t addr   = fetchAddressAbsoluteY();
-	uint8_t value = ror(mem->peek(addr));
-	loadM(addr, value);
-}
-
+// -------------------------------------------------------------------------------
 void CPU::ROR_indirect_x()
 {
-	uint16_t addr   = fetchAddressIndirectX();
-	uint8_t op      = mem->peek(addr);
-	uint8_t bit1    = (op & 1);
-	uint8_t shifted = (op >> 1) + (getC() ? 128 : 0); 
-	setC(bit1);
-	loadM(addr, shifted);
+	FETCH_POINTER_ADDR;
+	next = &CPU::ROR_indirect_x_2;
+}
+void CPU::ROR_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::ROR_indirect_x_3;
+}
+void CPU::ROR_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::ROR_indirect_x_4;
+}
+void CPU::ROR_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::ROR_indirect_x_5;
+}
+void CPU::ROR_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ROR_indirect_x_6;
+}
+void CPU::ROR_indirect_x_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_ROR;
+	next = &CPU::ROR_indirect_x_7;
+}
+void CPU::ROR_indirect_x_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	DONE;
 }
 
-void CPU::ROR_indirect_y()
-{
-	uint16_t addr   = fetchAddressIndirectY();
-	uint8_t op      = mem->peek(addr);
-	uint8_t bit1    = (op & 1);
-	uint8_t shifted = (op >> 1) + (getC() ? 128 : 0); 
-	setC(bit1);
-	loadM(addr, shifted);
-}
-#endif
 
 // -------------------------------------------------------------------------------
 // Instruction: RTI
@@ -2180,21 +4085,34 @@ void CPU::ROR_indirect_y()
 //              / / / / / /
 // -------------------------------------------------------------------------------
 
-int CPU::RTI() {
-	
-	fetchOperandImplied();
-	//	3  $0100,SP  R  increment SP
-	SP++;
-	//	4  $0100,SP  R  pull P from stack, increment SP
-	setPWithoutB(mem->peek(0x100+SP++));
-	//	5  $0100,SP  R  pull PCL from stack, increment SP
-	setPCL(mem->peek(0x100+SP++));
-	//	6    PC      R  pull PCH from stack
-	setPCH(mem->peek(0x100+SP));
-		
-	return 6;
+void CPU::RTI()
+{
+	IDLE_READ_IMMEDIATE;
+	next = &CPU::RTI_2;
 }
-
+void CPU::RTI_2()
+{
+	nmiHistory = irqHistory = 0;
+	SP++;
+	next = &CPU::RTI_3;
+}
+void CPU::RTI_3()
+{
+	PULL_P;
+	SP++;
+	next = &CPU::RTI_4;
+}
+void CPU::RTI_4()
+{
+	PULL_PCL;
+	SP++;
+	next = &CPU::RTI_5;
+}
+void CPU::RTI_5()
+{
+	PULL_PCH;
+	DONE;
+}
 
 // -------------------------------------------------------------------------------
 // Instruction: RTS
@@ -2205,20 +4123,32 @@ int CPU::RTI() {
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::RTS() {
-	
-	fetchOperandImplied();
-	//	3  $0100,S  R  increment S
+void CPU::RTS()
+{
+	IDLE_READ_IMMEDIATE;
+	next = &CPU::RTS_2;
+}
+void CPU::RTS_2()
+{
 	SP++;
-	//	4  $0100,S  R  pull PCL from stack, increment S
-	setPCL(mem->peek(0x100+SP++));
-	//	5  $0100,S  R  pull PCH from stack
-	setPCH(mem->peek(0x100+SP));
-	//	6    PC     R  increment PC
+	next = &CPU::RTS_3;
+}
+void CPU::RTS_3()
+{
+	PULL_PCL;
+	SP++;
+	next = &CPU::RTS_4;
+}
+void CPU::RTS_4()
+{
+	PULL_PCH;
+	next = &CPU::RTS_5;
+}
+void CPU::RTS_5()
+{
 	PC++;
-
 	callStackPointer--;
-	return 6;
+	DONE;
 }
 
 
@@ -2272,60 +4202,187 @@ inline void CPU::sbc_bcd(uint8_t op)
 	A = (uint8_t)((highDigit << 4) | (lowDigit & 0x0f));
 }
 
-int CPU::SBC_immediate()
+// -------------------------------------------------------------------------------
+void CPU::SBC_immediate() 
 {
-	uint8_t op = fetchOperandImmediate();
-	sbc(op);
-	return 2;
+	READ_IMMEDIATE;
+	sbc(data);
+	DONE;
 }
 
-int CPU::SBC_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::SBC_zero_page() 
 {
-	uint8_t op = fetchOperandZeroPage();
-	sbc(op);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::SBC_zero_page_2;
 }
 
-int CPU::SBC_zero_page_x()
+void CPU::SBC_zero_page_2() 
 {
-	uint8_t op = fetchOperandZeroPageX();
-	sbc(op);
-	return 4;
+	READ_FROM_ZERO_PAGE;
+	sbc(data);
+	DONE;
 }
 
-int CPU::SBC_absolute()
+// -------------------------------------------------------------------------------
+void CPU::SBC_zero_page_x() 
 {
-	uint8_t op = fetchOperandAbsolute();
-	sbc(op);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::SBC_zero_page_x_2;
+}
+void CPU::SBC_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::SBC_zero_page_x_3;
+}
+void CPU::SBC_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	sbc(data);
+	DONE;
 }
 
-int CPU::SBC_absolute_x()
-{
-	uint8_t op = fetchOperandAbsoluteX();
-	sbc(op);
-	return 5;
+// -------------------------------------------------------------------------------
+void CPU::SBC_absolute() 
+{ 
+	FETCH_ADDR_LO; 
+	next = &CPU::SBC_absolute_2; 
+}
+void CPU::SBC_absolute_2() 
+{ 
+	FETCH_ADDR_HI; 
+	next = &CPU::SBC_absolute_3; 
+}
+void CPU::SBC_absolute_3() 
+{ 
+	READ_FROM_ADDRESS; 
+	sbc(data); 
+	DONE; 
 }
 
-int CPU::SBC_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::SBC_absolute_x()
 {
-	uint8_t op = fetchOperandAbsoluteY();
-	sbc(op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::SBC_absolute_x_2;
+}
+void CPU::SBC_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::SBC_absolute_x_3;
+}
+void CPU::SBC_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SBC_absolute_x_4;
+	} else {
+		sbc(data);
+		DONE;
+	}
+}
+void CPU::SBC_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	sbc(data);
+	DONE;
 }
 
-int CPU::SBC_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::SBC_absolute_y()
 {
-	uint8_t op = fetchOperandIndirectX();
-	sbc(op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::SBC_absolute_y_2;
+}
+void CPU::SBC_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::SBC_absolute_y_3;
+}
+void CPU::SBC_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SBC_absolute_y_4;
+	} else {
+		sbc(data);
+		DONE;
+	}
+}
+void CPU::SBC_absolute_y_4() 
+{
+	READ_FROM_ADDRESS;
+	sbc(data);
+	DONE;
 }
 
-int CPU::SBC_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::SBC_indirect_x()
 {
-	uint8_t op = fetchOperandIndirectY();
-	sbc(op);
-	return 5;
+	FETCH_POINTER_ADDR;
+	next = &CPU::SBC_indirect_x_2;
+}
+void CPU::SBC_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::SBC_indirect_x_3;
+}
+void CPU::SBC_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::SBC_indirect_x_4;
+}
+void CPU::SBC_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::SBC_indirect_x_5;
+}
+void CPU::SBC_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	sbc(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::SBC_indirect_y()
+{
+	FETCH_POINTER_ADDR;
+	next = &CPU::SBC_indirect_y_2;
+}
+void CPU::SBC_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::SBC_indirect_y_3;
+}
+void CPU::SBC_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::SBC_indirect_y_4;
+}
+void CPU::SBC_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SBC_indirect_y_5;
+	} else {
+		sbc(data);
+		DONE;
+	}
+}
+void CPU::SBC_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	sbc(data);
+	DONE;
 }
 
 
@@ -2338,11 +4395,11 @@ int CPU::SBC_indirect_y()
 //              - - 1 - - -
 // -------------------------------------------------------------------------------
 
-int CPU::SEC()
+void CPU::SEC()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	setC(1);
-	return 2;
+	DONE;
 }
 
 
@@ -2355,11 +4412,11 @@ int CPU::SEC()
 //              - - - - 1 -
 // -------------------------------------------------------------------------------
 
-int CPU::SED()
+void CPU::SED()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	setD(1);
-	return 2;
+	DONE;
 }
 
 
@@ -2372,11 +4429,11 @@ int CPU::SED()
 //              - - - 1 - -
 // -------------------------------------------------------------------------------
 
-int CPU::SEI()
+void CPU::SEI()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	setI(1);
-	return 2;
+	DONE;
 }
 
 
@@ -2389,53 +4446,180 @@ int CPU::SEI()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::STA_absolute()
+void CPU::STA_zero_page()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	mem->poke(addr, A);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::STA_zero_page_2;
+}
+void CPU::STA_zero_page_2()
+{
+	data = A;
+	WRITE_TO_ZERO_PAGE;
+	DONE;
 }
 
-int CPU::STA_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::STA_zero_page_x()
 {
-	uint16_t addr = fetchAddressZeroPage();
-	mem->poke(addr, A);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::STA_zero_page_x_2;
+}
+void CPU::STA_zero_page_x_2()
+{
+	IDLE_READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::STA_zero_page_x_3;
+}	
+void CPU::STA_zero_page_x_3()
+{
+	data = A;
+	WRITE_TO_ZERO_PAGE;
+	DONE;
 }
 
-int CPU::STA_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::STA_absolute()
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	mem->poke(addr, A);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::STA_absolute_2;
+}
+void CPU::STA_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::STA_absolute_3;
+}
+void CPU::STA_absolute_3()
+{
+	data = A;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
-int CPU::STA_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::STA_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	mem->poke(addr, A);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::STA_absolute_x_2;
+}
+void CPU::STA_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::STA_absolute_x_3;
+}
+void CPU::STA_absolute_x_3()
+{
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::STA_absolute_x_4;
+	} else {
+		data = A;
+		WRITE_TO_ADDRESS;
+		DONE;
+	}
+}
+void CPU::STA_absolute_x_4()
+{
+	data = A;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
-int CPU::STA_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::STA_absolute_y()
 {
-	uint16_t addr = fetchAddressAbsoluteY();
-	mem->poke(addr, A);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::STA_absolute_y_2;
+}
+void CPU::STA_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::STA_absolute_y_3;
+}
+void CPU::STA_absolute_y_3()
+{
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::STA_absolute_y_4;
+	} else {
+		data = A;
+		WRITE_TO_ADDRESS;
+		DONE;
+	}
+}
+void CPU::STA_absolute_y_4()
+{
+	data = A;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
-int CPU::STA_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::STA_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	mem->poke(addr, A);
-	return 6;
+	FETCH_POINTER_ADDR;
+	next = &CPU::STA_indirect_x_2;
+}
+void CPU::STA_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::STA_indirect_x_3;
+}
+void CPU::STA_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::STA_indirect_x_4;
+}
+void CPU::STA_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::STA_indirect_x_5;
+}
+void CPU::STA_indirect_x_5()
+{
+	data = A;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
-int CPU::STA_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::STA_indirect_y()
 {
-	uint16_t addr = fetchAddressIndirectY();
-	mem->poke(addr, A);
-	return 6;
+	FETCH_POINTER_ADDR;
+	next = &CPU::STA_indirect_y_2;
+}
+void CPU::STA_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::STA_indirect_y_3;
+}
+void CPU::STA_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::STA_indirect_y_4;
+}
+void CPU::STA_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::STA_indirect_y_5;
+	} else {
+		data = A;
+		WRITE_TO_ADDRESS;
+		DONE;
+	}
+}
+void CPU::STA_indirect_y_5()
+{
+	data = A;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
 
@@ -2448,25 +4632,53 @@ int CPU::STA_indirect_y()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::STX_absolute()
+void CPU::STX_zero_page()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	mem->poke(addr, X);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::STX_zero_page_2;
+}
+void CPU::STX_zero_page_2()
+{
+	data = X;
+	WRITE_TO_ZERO_PAGE;
+	DONE;
 }
 
-int CPU::STX_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::STX_zero_page_y()
 {
-	uint16_t addr = fetchAddressZeroPage();
-	mem->poke(addr, X);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::STX_zero_page_y_2;
+}
+void CPU::STX_zero_page_y_2()
+{
+	IDLE_READ_FROM_ZERO_PAGE;
+	ADD_INDEX_Y;
+	next = &CPU::STX_zero_page_y_3;
+}	
+void CPU::STX_zero_page_y_3()
+{
+	data = X;
+	WRITE_TO_ZERO_PAGE;
+	DONE;
 }
 
-int CPU::STX_zero_page_y()
+// -------------------------------------------------------------------------------
+void CPU::STX_absolute()
 {
-	uint16_t addr = fetchAddressZeroPageY();
-	mem->poke(addr, X);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::STX_absolute_2;
+}
+void CPU::STX_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::STX_absolute_3;
+}
+void CPU::STX_absolute_3()
+{
+	data = X;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
 
@@ -2479,25 +4691,53 @@ int CPU::STX_zero_page_y()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::STY_absolute()
+void CPU::STY_zero_page()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	mem->poke(addr, Y);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::STY_zero_page_2;
+}
+void CPU::STY_zero_page_2()
+{
+	data = Y;
+	WRITE_TO_ZERO_PAGE;
+	DONE;
 }
 
-int CPU::STY_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::STY_zero_page_x()
 {
-	uint16_t addr = fetchAddressZeroPage();
-	mem->poke(addr, Y);
-	return 3;
+	FETCH_ADDR_LO;
+	next = &CPU::STY_zero_page_x_2;
+}
+void CPU::STY_zero_page_x_2()
+{
+	IDLE_READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::STY_zero_page_x_3;
+}	
+void CPU::STY_zero_page_x_3()
+{
+	data = Y;
+	WRITE_TO_ZERO_PAGE;
+	DONE;
 }
 
-int CPU::STY_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::STY_absolute()
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	mem->poke(addr, Y);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::STY_absolute_2;
+}
+void CPU::STY_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::STY_absolute_3;
+}
+void CPU::STY_absolute_3()
+{
+	data = Y;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
 
@@ -2510,11 +4750,11 @@ int CPU::STY_zero_page_x()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::TAX()
+void CPU::TAX()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	loadX(A);
-	return 2;
+	DONE;
 }
 
 
@@ -2527,11 +4767,11 @@ int CPU::TAX()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::TAY()
+void CPU::TAY()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	loadY(A);
-	return 2;
+	DONE;
 }
 
 
@@ -2544,11 +4784,11 @@ int CPU::TAY()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::TSX()
+void CPU::TSX()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	loadX(SP);
-	return 2;
+	DONE;
 }
 
 
@@ -2561,11 +4801,11 @@ int CPU::TSX()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::TXA()
+void CPU::TXA()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	loadA(X);
-	return 2;
+	DONE;
 }
 
 
@@ -2578,11 +4818,11 @@ int CPU::TXA()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::TXS()
+void CPU::TXS()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	SP = X;
-	return 2;
+	DONE;
 }
 
 
@@ -2595,11 +4835,11 @@ int CPU::TXS()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::TYA()
+void CPU::TYA()
 {
-	fetchOperandImplied();
+	IDLE_READ_IMPLIED;
 	loadA(Y);
-	return 2;
+	DONE;
 }
 
 
@@ -2608,7 +4848,7 @@ int CPU::TYA()
 // -------------------------------------------------------------------------------
 
 // -------------------------------------------------------------------------------
-// Instruction: AHX
+// Instruction: AHX (SHA)
 //
 // Operation:   Mem := A & X & (M + 1)
 //
@@ -2616,20 +4856,82 @@ int CPU::TYA()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::AHX_indirect_y()
+void CPU::AHX_absolute_y()
 {
-	uint8_t  value = mem->peek(mem->peek(PC+1) + 1);
-	uint16_t addr  = fetchAddressIndirectY();
-	mem->poke(addr, A & X & (value + 1));
-	return 6;
+	data = mem->peek(PC+1);
+	FETCH_ADDR_LO;
+	next = &CPU::AHX_absolute_y_2;
+}
+void CPU::AHX_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::AHX_absolute_y_3;
+}
+void CPU::AHX_absolute_y_3()
+{
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::AHX_absolute_y_4;
+	} else {
+		data = A & X & (data + 1);
+		WRITE_TO_ADDRESS;
+		DONE;
+	}
+}
+void CPU::AHX_absolute_y_4()
+{
+	data = A & X & (data + 1);
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
-int CPU::AHX_absolute_y()
+#if 0
+void CPU::AHX_absolute_y()
 {
-	uint8_t  value = mem->peek(PC+2);
+	uint8_t  value = mem->peek(PC+1);
 	uint16_t addr  = fetchAddressAbsoluteY();
 	mem->poke(addr, A & X & (value + 1));
-	return 5;
+	DONE;
+}
+#endif
+
+// -------------------------------------------------------------------------------
+void CPU::AHX_indirect_y()
+{
+	data = mem->peek(mem->peek(PC) + 1);
+	FETCH_POINTER_ADDR;
+	next = &CPU::AHX_indirect_y_2;
+}
+void CPU::AHX_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::AHX_indirect_y_3;
+}
+void CPU::AHX_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::AHX_indirect_y_4;
+}
+void CPU::AHX_indirect_y_4()
+{
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::AHX_indirect_y_5;
+	} else {
+		data = A & X & (data + 1);
+		WRITE_TO_ADDRESS;
+		DONE;
+	}
+}
+void CPU::AHX_indirect_y_5()
+{
+	data = A & X & (data + 1);
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
 
@@ -2642,13 +4944,13 @@ int CPU::AHX_absolute_y()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::ALR_immediate()
+void CPU::ALR_immediate()
 {
-	uint8_t op = fetchOperandImmediate();
-	A = A & op;
+	READ_IMMEDIATE;
+	A = A & data;
 	setC(A & 1);
 	loadA(A >> 1);
-	return 2;
+	DONE;
 }
 
 
@@ -2661,11 +4963,12 @@ int CPU::ALR_immediate()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::ANC_immediate()
+void CPU::ANC_immediate()
 {
-	AND_immediate();
+	READ_IMMEDIATE;
+	loadA(A & data);
 	setC(getN());
-	return 2;
+	DONE;
 }
 
 
@@ -2678,18 +4981,13 @@ int CPU::ANC_immediate()
 //              / / / - - /
 // -------------------------------------------------------------------------------
 
-int CPU::ARR_immediate()
+void CPU::ARR_immediate()
 {
-	uint8_t op = fetchOperandImmediate();
-	uint8_t tmp2 = A & op;
+	READ_IMMEDIATE;
 
-#if 0
-	uint8_t result = ror(anded);
-	loadA(result);
-#endif
-	
-	
-	// Adapted from Frodo
+	uint8_t tmp2 = A & data;
+
+	// Taken from Frodo...
 	A = (getC() ? (tmp2 >> 1) | 0x80 : tmp2 >> 1);
 	if (!getD()) {
 		setN(A & 0x80);
@@ -2712,7 +5010,7 @@ int CPU::ARR_immediate()
 			setC(0);
 		}
 	}
-	return 2;
+	DONE;
 }
 
 
@@ -2725,15 +5023,16 @@ int CPU::ARR_immediate()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::AXS_immediate()
+void CPU::AXS_immediate()
 {
-	uint8_t op1  = A & X;
-	uint8_t op2  = fetchOperandImmediate();
-	uint8_t tmp = op1 - op2; 
+	READ_IMMEDIATE;
+	
+	uint8_t op2  = A & X;
+	uint8_t tmp = op2 - data; 
 
-	setC(op1 >= op2);
+	setC(op2 >= data);
 	loadX(tmp);
-	return 2;
+	DONE;
 }
 
 // -------------------------------------------------------------------------------
@@ -2745,67 +5044,246 @@ int CPU::AXS_immediate()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::DCP_zero_page()
+void CPU::DCP_zero_page() 
 {
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	cmp(A, op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::DCP_zero_page_2;
+}
+void CPU::DCP_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::DCP_zero_page_3;
+}
+void CPU::DCP_zero_page_3()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_DEC;
+	next = &CPU::DCP_zero_page_4;
+}
+void CPU::DCP_zero_page_4()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::DCP_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::DCP_zero_page_x() 
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	cmp(A, op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::DCP_zero_page_x_2;
+}
+void CPU::DCP_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::DCP_zero_page_x_3;
+}
+void CPU::DCP_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::DCP_zero_page_x_4;
+}
+void CPU::DCP_zero_page_x_4()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_DEC;
+	next = &CPU::DCP_zero_page_x_5;
+}
+void CPU::DCP_zero_page_x_5()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::DCP_absolute()
+// -------------------------------------------------------------------------------
+void CPU::DCP_absolute()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	cmp(A, op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::DCP_absolute_2;
+}
+void CPU::DCP_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::DCP_absolute_3;
+}
+void CPU::DCP_absolute_3()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::DCP_absolute_4;
+}
+void CPU::DCP_absolute_4()
+{
+	WRITE_TO_ADDRESS;
+	DO_DEC;
+	next = &CPU::DCP_absolute_5;
+}
+void CPU::DCP_absolute_5()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::DCP_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::DCP_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	cmp(A, op);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::DCP_absolute_x_2;
+}
+void CPU::DCP_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::DCP_absolute_x_3;
+}
+void CPU::DCP_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::DCP_absolute_x_4;
+}
+void CPU::DCP_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::DCP_absolute_x_5;
+}
+void CPU::DCP_absolute_x_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_DEC;
+	next = &CPU::DCP_absolute_x_6;
+}
+void CPU::DCP_absolute_x_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::DCP_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::DCP_absolute_y()
 {
-	uint16_t addr = fetchAddressAbsoluteY();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	cmp(A, op);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::DCP_absolute_y_2;
+}
+void CPU::DCP_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::DCP_absolute_y_3;
+}
+void CPU::DCP_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::DCP_absolute_y_4;
+}
+void CPU::DCP_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::DCP_absolute_y_5;
+}
+void CPU::DCP_absolute_y_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_DEC;
+	next = &CPU::DCP_absolute_y_6;
+}
+void CPU::DCP_absolute_y_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::DCP_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::DCP_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	cmp(A, op);
-	return 8;
+	FETCH_POINTER_ADDR;
+	next = &CPU::DCP_indirect_x_2;
+}
+void CPU::DCP_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::DCP_indirect_x_3;
+}
+void CPU::DCP_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::DCP_indirect_x_4;
+}
+void CPU::DCP_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::DCP_indirect_x_5;
+}
+void CPU::DCP_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::DCP_indirect_x_6;
+}
+void CPU::DCP_indirect_x_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_DEC;
+	next = &CPU::DCP_indirect_x_7;
+}
+void CPU::DCP_indirect_x_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	cmp(A, data);
+	DONE;
 }
 
-int CPU::DCP_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::DCP_indirect_y()
 {
-	uint16_t addr = fetchAddressIndirectY();
-	uint8_t op = mem->peek(addr) - 1;
-	loadM(addr, op);
-	cmp(A, op);
-	return 8;
+	FETCH_POINTER_ADDR;
+	next = &CPU::DCP_indirect_y_2;
+}
+void CPU::DCP_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::DCP_indirect_y_3;
+}
+void CPU::DCP_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::DCP_indirect_y_4;
+}
+void CPU::DCP_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::DCP_indirect_y_5;
+}
+void CPU::DCP_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::DCP_indirect_y_6;
+}
+void CPU::DCP_indirect_y_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_DEC;
+	next = &CPU::DCP_indirect_y_7;
+}
+
+void CPU::DCP_indirect_y_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	cmp(A, data);
+	DONE;
 }
 
 
@@ -2818,68 +5296,248 @@ int CPU::DCP_indirect_y()
 //              / / / - - /
 // -------------------------------------------------------------------------------
 
-int CPU::ISC_zero_page()
+void CPU::ISC_zero_page() 
 {
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	sbc(op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::ISC_zero_page_2;
+}
+void CPU::ISC_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::ISC_zero_page_3;
+}
+void CPU::ISC_zero_page_3()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_INC;
+	next = &CPU::ISC_zero_page_4;
+}
+void CPU::ISC_zero_page_4()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	sbc(data);
+	DONE;
 }
 
-int CPU::ISC_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::ISC_zero_page_x() 
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	sbc(op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::ISC_zero_page_x_2;
+}
+void CPU::ISC_zero_page_x_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::ISC_zero_page_x_3;
+}
+void CPU::ISC_zero_page_x_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	next = &CPU::ISC_zero_page_x_4;
+}
+void CPU::ISC_zero_page_x_4()
+{
+	WRITE_TO_ZERO_PAGE;
+	DO_INC;
+	next = &CPU::ISC_zero_page_x_5;
+}
+void CPU::ISC_zero_page_x_5()
+{
+	WRITE_TO_ZERO_PAGE_AND_SET_FLAGS;
+	sbc(data);
+	DONE;
 }
 
-int CPU::ISC_absolute()
+// -------------------------------------------------------------------------------
+void CPU::ISC_absolute()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	sbc(op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::ISC_absolute_2;
+}
+void CPU::ISC_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::ISC_absolute_3;
+}
+void CPU::ISC_absolute_3()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ISC_absolute_4;
+}
+void CPU::ISC_absolute_4()
+{
+	WRITE_TO_ADDRESS;
+	DO_INC;
+	next = &CPU::ISC_absolute_5;
+}
+void CPU::ISC_absolute_5()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	sbc(data);
+	DONE;
 }
 
-int CPU::ISC_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::ISC_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	sbc(op);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::ISC_absolute_x_2;
+}
+void CPU::ISC_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::ISC_absolute_x_3;
+}
+void CPU::ISC_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::ISC_absolute_x_4;
+}
+void CPU::ISC_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ISC_absolute_x_5;
+}
+void CPU::ISC_absolute_x_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_INC;
+	next = &CPU::ISC_absolute_x_6;
+}
+void CPU::ISC_absolute_x_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	sbc(data);
+	DONE;
 }
 
-int CPU::ISC_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::ISC_absolute_y()
 {
-	uint16_t addr = fetchAddressAbsoluteY();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	sbc(op);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::ISC_absolute_y_2;
+}
+void CPU::ISC_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::ISC_absolute_y_3;
+}
+void CPU::ISC_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::ISC_absolute_y_4;
+}
+void CPU::ISC_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ISC_absolute_y_5;
+}
+void CPU::ISC_absolute_y_5()
+{
+	WRITE_TO_ADDRESS;
+	DO_INC;
+	next = &CPU::ISC_absolute_y_6;
+}
+void CPU::ISC_absolute_y_6()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	sbc(data);
+	DONE;
 }
 
-int CPU::ISC_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::ISC_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	sbc(op);
-	return 8;
+	FETCH_POINTER_ADDR;
+	next = &CPU::ISC_indirect_x_2;
+}
+void CPU::ISC_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::ISC_indirect_x_3;
+}
+void CPU::ISC_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::ISC_indirect_x_4;
+}
+void CPU::ISC_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::ISC_indirect_x_5;
+}
+void CPU::ISC_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ISC_indirect_x_6;
+}
+void CPU::ISC_indirect_x_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_INC;
+	next = &CPU::ISC_indirect_x_7;
+}
+void CPU::ISC_indirect_x_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	sbc(data);
+	DONE;
 }
 
-int CPU::ISC_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::ISC_indirect_y()
 {
-	uint16_t addr = fetchAddressIndirectY();
-	uint8_t op = mem->peek(addr) + 1;
-	loadM(addr, op);
-	sbc(op);
-	return 8;
+	FETCH_POINTER_ADDR;
+	next = &CPU::ISC_indirect_y_2;
 }
+void CPU::ISC_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::ISC_indirect_y_3;
+}
+void CPU::ISC_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::ISC_indirect_y_4;
+}
+void CPU::ISC_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::ISC_indirect_y_5;
+}
+void CPU::ISC_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::ISC_indirect_y_6;
+}
+void CPU::ISC_indirect_y_6()
+{
+	WRITE_TO_ADDRESS;
+	DO_INC;
+	next = &CPU::ISC_indirect_y_7;
+}
+
+void CPU::ISC_indirect_y_7()
+{
+	WRITE_TO_ADDRESS_AND_SET_FLAGS;
+	sbc(data);
+	DONE;
+}
+
 
 // -------------------------------------------------------------------------------
 // Instruction: LAS
@@ -2890,13 +5548,42 @@ int CPU::ISC_indirect_y()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::LAS_absolute_y()
+void CPU::LAS_absolute_y()
 {
-	uint8_t value = fetchOperandAbsoluteY() & SP;
-	SP = value;
-	X  = value;
-	loadA(value);
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::LAS_absolute_y_2;
+}
+void CPU::LAS_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::LAS_absolute_y_3;
+}
+void CPU::LAS_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+	}
+	next = &CPU::LAS_absolute_y_4;
+}
+void CPU::LAS_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	next = &CPU::LAS_absolute_y_5;
+}
+void CPU::LAS_absolute_y_5()
+{
+	WRITE_TO_ADDRESS;
+	data &= SP;
+	next = &CPU::LAS_absolute_y_6;
+}
+void CPU::LAS_absolute_y_6()
+{
+	SP = data;
+	X = data;
+	loadA(data);
+	DONE;
 }
 
 
@@ -2909,100 +5596,168 @@ int CPU::LAS_absolute_y()
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::LAX_immediate()
+#if 0
+// -------------------------------------------------------------------------------
+void CPU::LAX_immediate() 
 {
-	uint8_t op = (A | 0xEE) & fetchOperandImmediate();
-	loadA(op);
-	loadX(op);
-	return 2;	
+	READ_IMMEDIATE;
+	loadA(data);
+	loadX(data);
+	DONE;
 }
-
-int CPU::LAX_zero_page()
-{
-	uint8_t op = fetchOperandZeroPage();
-	loadA(op);
-	loadX(op);
-	return 3;
-}
-
-int CPU::LAX_zero_page_y()
-{
-	uint8_t op = fetchOperandZeroPageY();
-	loadA(op);
-	loadX(op);
-	return 4;
-}
-
-int CPU::LAX_absolute()
-{
-	uint8_t op = fetchOperandAbsolute();
-	loadA(op);
-	loadX(op);
-	return 4;
-}
-
-int CPU::LAX_absolute_y()
-{
-	uint8_t op = fetchOperandAbsoluteY();
-	loadA(op);
-	loadX(op);
-	return 4;
-}
-
-int CPU::LAX_indirect_x()
-{
-	uint8_t op = fetchOperandIndirectX();
-	loadA(op);
-	loadX(op);
-	return 6;
-}
-
-int CPU::LAX_indirect_y()
-{
-	uint8_t op = fetchOperandIndirectY();
-	loadA(op);
-	loadX(op);
-	return 5;
-}
-
+#endif
 
 // -------------------------------------------------------------------------------
-// Instruction: NOP
-//
-// Operation:   Consume CPU cycles by fetching and discarding an operand
-//
-// Flags:       N Z C I D V
-//              - - - - - -
+void CPU::LAX_zero_page() 
+{
+	FETCH_ADDR_LO;
+	next = &CPU::LAX_zero_page_2;
+}
+
+void CPU::LAX_zero_page_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	loadA(data);
+	loadX(data);
+	DONE;
+}
+
 // -------------------------------------------------------------------------------
-
-int CPU::NOP_immediate()
+void CPU::LAX_zero_page_y() 
 {
-	(void)fetchOperandImmediate();
-	return 2;
+	FETCH_ADDR_LO;
+	next = &CPU::LAX_zero_page_y_2;
+}
+void CPU::LAX_zero_page_y_2() 
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_Y;
+	next = &CPU::LAX_zero_page_y_3;
+}
+void CPU::LAX_zero_page_y_3() 
+{
+	READ_FROM_ZERO_PAGE;
+	loadA(data);
+	loadX(data);
+	DONE;
 }
 
-int CPU::NOP_zero_page()
-{
-	(void)fetchOperandZeroPage();
-	return 3;
+// -------------------------------------------------------------------------------
+void CPU::LAX_absolute() 
+{ 
+	FETCH_ADDR_LO; 
+	next = &CPU::LAX_absolute_2; 
+}
+void CPU::LAX_absolute_2() 
+{ 
+	FETCH_ADDR_HI; 
+	next = &CPU::LAX_absolute_3; 
+}
+void CPU::LAX_absolute_3() 
+{ 
+	READ_FROM_ADDRESS; 
+	loadA(data);
+	loadX(data); 
+	DONE; 
 }
 
-int CPU::NOP_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::LAX_absolute_y()
 {
-	(void)fetchOperandZeroPageX();
-	return 4;
+	FETCH_ADDR_LO;
+	next = &CPU::LAX_absolute_y_2;
+}
+void CPU::LAX_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::LAX_absolute_y_3;
+}
+void CPU::LAX_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::LAX_absolute_y_4;
+	} else {
+		loadA(data);
+		loadX(data);
+		DONE;
+	}
+}
+void CPU::LAX_absolute_y_4() 
+{
+	READ_FROM_ADDRESS;
+	loadA(data);
+	loadX(data);
+	DONE;
 }
 
-int CPU::NOP_absolute()
+// -------------------------------------------------------------------------------
+void CPU::LAX_indirect_x()
 {
-	(void)fetchOperandAbsolute();
-	return 4;
+	FETCH_POINTER_ADDR;
+	next = &CPU::LAX_indirect_x_2;
+}
+void CPU::LAX_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::LAX_indirect_x_3;
+}
+void CPU::LAX_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LAX_indirect_x_4;
+}
+void CPU::LAX_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::LAX_indirect_x_5;
+}
+void CPU::LAX_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(data);
+	loadX(data);
+	DONE;
 }
 
-int CPU::NOP_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::LAX_indirect_y()
 {
-	(void)fetchOperandAbsoluteX();
-	return 4;
+	FETCH_POINTER_ADDR;
+	next = &CPU::LAX_indirect_y_2;
+}
+void CPU::LAX_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::LAX_indirect_y_3;
+}
+void CPU::LAX_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::LAX_indirect_y_4;
+}
+void CPU::LAX_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::LAX_indirect_y_5;
+	} else {
+		loadA(data);
+		loadX(data);
+		DONE;
+	}
+}
+void CPU::LAX_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	loadA(data);
+	loadX(data);
+	DONE;
 }
 
 
@@ -3015,67 +5770,194 @@ int CPU::NOP_absolute_x()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::RLA_zero_page()
-{
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	loadA(A & value);
-	return 5;
+void CPU::RLA_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::RLA_absolute_2;
+}
+void CPU::RLA_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::RLA_absolute_3;
+}
+void CPU::RLA_absolute_3() {
+	READ_FROM_ADDRESS;
+	DO_ROL;
+	WRITE_TO_ADDRESS;
+	loadA(A & data);	
+	DONE;
 }
 
-int CPU::RLA_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::RLA_zero_page()
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	loadA(A & value);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::RLA_zero_page_2;
+}
+void CPU::RLA_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	DO_ROL;
+	WRITE_TO_ZERO_PAGE;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::RLA_absolute()
+// -------------------------------------------------------------------------------
+void CPU::RLA_zero_page_x()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	loadA(A & value);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::RLA_zero_page_x_2;
+}
+void CPU::RLA_zero_page_x_2()
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::RLA_zero_page_x_3;
+}
+void CPU::RLA_zero_page_x_3()
+{
+	READ_FROM_ZERO_PAGE;
+	DO_ROL;
+	WRITE_TO_ZERO_PAGE;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::RLA_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::RLA_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	loadA(A & value);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::RLA_absolute_x_2;
+}
+void CPU::RLA_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::RLA_absolute_x_3;
+}
+void CPU::RLA_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::RLA_absolute_x_4;
+	} else {
+		DO_ROL;
+		WRITE_TO_ADDRESS;
+		loadA(A & data);
+		DONE;
+	}
+}
+void CPU::RLA_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	DO_ROL;
+	WRITE_TO_ADDRESS;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::RLA_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::RLA_absolute_y()
 {
-	uint16_t addr = fetchAddressAbsoluteY();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	loadA(A & value);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::RLA_absolute_y_2;
+}
+void CPU::RLA_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::RLA_absolute_y_3;
+}
+void CPU::RLA_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::RLA_absolute_y_4;
+	} else {
+		DO_ROL;
+		WRITE_TO_ADDRESS;
+		loadA(A & data);
+		DONE;
+	}
+}
+void CPU::RLA_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	DO_ROL;
+	WRITE_TO_ADDRESS;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::RLA_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::RLA_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	loadA(A & value);
-	return 8;
+	FETCH_POINTER_ADDR;
+	next = &CPU::RLA_indirect_x_2;
+}
+void CPU::RLA_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::RLA_indirect_x_3;
+}
+void CPU::RLA_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::RLA_indirect_x_4;
+}
+void CPU::RLA_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::RLA_indirect_x_5;
+}
+void CPU::RLA_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	DO_ROL;
+	WRITE_TO_ADDRESS;
+	loadA(A & data);
+	DONE;
 }
 
-int CPU::RLA_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::RLA_indirect_y()
 {
-	uint16_t addr = fetchAddressIndirectY();
-	uint8_t value = rol(mem->peek(addr));
-	loadM(addr, value);
-	loadA(A & value);
-	return 8;
+	FETCH_POINTER_ADDR;
+	next = &CPU::RLA_indirect_y_2;
+}
+void CPU::RLA_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::RLA_indirect_y_3;
+}
+void CPU::RLA_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::RLA_indirect_y_4;
+}
+void CPU::RLA_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::RLA_indirect_y_5;
+	} else {
+		DO_ROL;
+		WRITE_TO_ADDRESS;
+		loadA(A & data);
+		DONE;
+	}
+}
+void CPU::RLA_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	DO_ROL;
+	WRITE_TO_ADDRESS;
+	loadA(A & data);
+	DONE;
 }
 
 
@@ -3088,69 +5970,272 @@ int CPU::RLA_indirect_y()
 //              / / / - - /
 // -------------------------------------------------------------------------------
 
-int CPU::RRA_absolute()
+void CPU::RRA_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::RRA_absolute_2;
+}
+void CPU::RRA_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::RRA_absolute_3;
+}
+void CPU::RRA_absolute_3() {
+	READ_FROM_ADDRESS;
+	DO_ROR;
+	WRITE_TO_ADDRESS;
+	adc(data);	
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::RRA_zero_page()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::RRA_zero_page_2;
+}
+void CPU::RRA_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	DO_ROR;
+	WRITE_TO_ZERO_PAGE;
+	adc(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::RRA_zero_page_x()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::RRA_zero_page_x_2;
+}
+void CPU::RRA_zero_page_x_2()
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::RRA_zero_page_x_3;
+}
+void CPU::RRA_zero_page_x_3()
+{
+	READ_FROM_ZERO_PAGE;
+	DO_ROR;
+	WRITE_TO_ZERO_PAGE;
+	adc(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::RRA_absolute_x()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::RRA_absolute_x_2;
+}
+void CPU::RRA_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::RRA_absolute_x_3;
+}
+void CPU::RRA_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::RRA_absolute_x_4;
+	} else {
+		DO_ROR;
+		WRITE_TO_ADDRESS;
+		adc(data);
+		DONE;
+	}
+}
+void CPU::RRA_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	DO_ROR;
+	WRITE_TO_ADDRESS;
+	adc(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::RRA_absolute_y()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::RRA_absolute_y_2;
+}
+void CPU::RRA_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::RRA_absolute_y_3;
+}
+void CPU::RRA_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::RRA_absolute_y_4;
+	} else {
+		DO_ROR;
+		WRITE_TO_ADDRESS;
+		adc(data);
+		DONE;
+	}
+}
+void CPU::RRA_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	DO_ROR;
+	WRITE_TO_ADDRESS;
+	adc(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::RRA_indirect_x()
+{
+	FETCH_POINTER_ADDR;
+	next = &CPU::RRA_indirect_x_2;
+}
+void CPU::RRA_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::RRA_indirect_x_3;
+}
+void CPU::RRA_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::RRA_indirect_x_4;
+}
+void CPU::RRA_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::RRA_indirect_x_5;
+}
+void CPU::RRA_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	DO_ROR;
+	WRITE_TO_ADDRESS;
+	adc(data);
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::RRA_indirect_y()
+{
+	FETCH_POINTER_ADDR;
+	next = &CPU::RRA_indirect_y_2;
+}
+void CPU::RRA_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::RRA_indirect_y_3;
+}
+void CPU::RRA_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::RRA_indirect_y_4;
+}
+void CPU::RRA_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::RRA_indirect_y_5;
+	} else {
+		DO_ROR;
+		WRITE_TO_ADDRESS;
+		adc(data);
+		DONE;
+	}
+}
+void CPU::RRA_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	DO_ROR;
+	WRITE_TO_ADDRESS;
+	adc(data);
+	DONE;
+}
+
+#if 0
+void CPU::RRA_absolute()
 {
 	uint16_t addr = fetchAddressAbsolute();
 	uint8_t value = ror(mem->peek(addr));
 	loadM(addr, value);
 	adc(value);
-	return 6;
+	DONE;
+}
+void CPU::RRA_absolute_2()
+{
+}
+void CPU::RRA_absolute_3()
+{
 }
 
-int CPU::RRA_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::RRA_absolute_x()
 {
 	uint16_t addr = fetchAddressAbsoluteX();
 	uint8_t value = ror(mem->peek(addr));
 	loadM(addr, value);
 	adc(value);
-	return 7;
+	DONE;
 }
 
-int CPU::RRA_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::RRA_absolute_y()
 {
 	uint16_t addr = fetchAddressAbsoluteY();
 	uint8_t value = ror(mem->peek(addr));
 	loadM(addr, value);
 	adc(value);
-	return 7;
+	DONE;
 }
 
-int CPU::RRA_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::RRA_zero_page()
 {
 	uint16_t addr = fetchAddressZeroPage();
 	uint8_t value = ror(mem->peek(addr));
 	loadM(addr, value);
 	adc(value);
-	return 5;
+	DONE;
 }
 
-int CPU::RRA_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::RRA_zero_page_x()
 {
 	uint16_t addr = fetchAddressZeroPageX();
 	uint8_t value = ror(mem->peek(addr));
 	loadM(addr, value);
 	adc(value);
-	return 6;
+	DONE;
 }
 
-int CPU::RRA_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::RRA_indirect_x()
 {
 	uint16_t addr = fetchAddressIndirectX();
 	uint8_t value = ror(mem->peek(addr));
 	loadM(addr, value);
 	adc(value);
-	return 8;
+	DONE;
 }
 
-int CPU::RRA_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::RRA_indirect_y()
 {
 	uint16_t addr = fetchAddressIndirectY();
 	uint8_t value = ror(mem->peek(addr));
 	loadM(addr, value);
 	adc(value);
-	return 8;
+	DONE;
 }
-
+#endif
 
 // -------------------------------------------------------------------------------
 // Instruction: SAX
@@ -3161,32 +6246,82 @@ int CPU::RRA_indirect_y()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::SAX_zero_page()
+void CPU::SAX_zero_page()
 {
-	uint16_t addr = fetchAddressZeroPage();
-	mem->poke(addr, A & X);
-	return 3;	
+	FETCH_ADDR_LO;
+	next = &CPU::SAX_zero_page_2;
+}
+void CPU::SAX_zero_page_2()
+{
+	data = A & X;
+	WRITE_TO_ZERO_PAGE;
+	DONE;
 }
 
-int CPU::SAX_zero_page_y()
+// -------------------------------------------------------------------------------
+void CPU::SAX_zero_page_y()
 {
-	uint16_t addr = fetchAddressZeroPageY();
-	mem->poke(addr, A & X);
-	return 4;	
+	FETCH_ADDR_LO;
+	next = &CPU::SAX_zero_page_y_2;
+}
+void CPU::SAX_zero_page_y_2()
+{
+	IDLE_READ_FROM_ZERO_PAGE;
+	ADD_INDEX_Y;
+	next = &CPU::SAX_zero_page_y_3;
+}	
+void CPU::SAX_zero_page_y_3()
+{
+	data = A & X;
+	WRITE_TO_ZERO_PAGE;
+	DONE;
 }
 
-int CPU::SAX_absolute()
+// -------------------------------------------------------------------------------
+void CPU::SAX_absolute()
 {
-	uint16_t addr = fetchAddressAbsolute();
-	mem->poke(addr, A & X);
-	return 4;	
+	FETCH_ADDR_LO;
+	next = &CPU::SAX_absolute_2;
+}
+void CPU::SAX_absolute_2()
+{
+	FETCH_ADDR_HI;
+	next = &CPU::SAX_absolute_3;
+}
+void CPU::SAX_absolute_3()
+{
+	data = A & X;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
-int CPU::SAX_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::SAX_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	mem->poke(addr, A & X);
-	return 6;	
+	FETCH_POINTER_ADDR;
+	next = &CPU::SAX_indirect_x_2;
+}
+void CPU::SAX_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::SAX_indirect_x_3;
+}
+void CPU::SAX_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::SAX_indirect_x_4;
+}
+void CPU::SAX_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::SAX_indirect_x_5;
+}
+void CPU::SAX_indirect_x_5()
+{
+	data = A & X;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
 
@@ -3199,12 +6334,35 @@ int CPU::SAX_indirect_x()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::SHX_absolute_y()
+void CPU::SHX_absolute_y()
 {
-	uint8_t  value = mem->peek(PC+2) + 1;
-	uint16_t addr  = fetchAddressAbsoluteY();
-	mem->poke(addr, X & value);
-	return 5;
+	data = mem->peek(PC+1) + 1;
+	FETCH_ADDR_LO;
+	next = &CPU::SHX_absolute_y_2;
+}
+void CPU::SHX_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::SHX_absolute_y_3;
+}
+void CPU::SHX_absolute_y_3()
+{
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SHX_absolute_y_4;
+	} else {
+		data &= X;
+		WRITE_TO_ADDRESS;
+		DONE;
+	}
+}
+void CPU::SHX_absolute_y_4()
+{
+	data &= X;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
 
@@ -3217,12 +6375,35 @@ int CPU::SHX_absolute_y()
 //              - - - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::SHY_absolute_x()
+void CPU::SHY_absolute_x()
 {
-	uint8_t  value = mem->peek(PC+2) + 1;
-	uint16_t addr  = fetchAddressAbsoluteX();
-	mem->poke(addr, Y & value);
-	return 5;
+	data = mem->peek(PC+1) + 1;
+	FETCH_ADDR_LO;
+	next = &CPU::SHY_absolute_x_2;
+}
+void CPU::SHY_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::SHY_absolute_x_3;
+}
+void CPU::SHY_absolute_x_3()
+{
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SHY_absolute_x_4;
+	} else {
+		data &= Y;
+		WRITE_TO_ADDRESS;
+		DONE;
+	}
+}
+void CPU::SHY_absolute_x_4()
+{
+	data &= Y;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
 
@@ -3235,81 +6416,177 @@ int CPU::SHY_absolute_x()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::SLO_absolute()
-{
-	uint16_t addr = fetchAddressAbsolute();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	op <<= 1;
-	loadM(addr, op);
-	loadA(A | op);
-	return 6;
+#define DO_SLO_ZERO_PAGE setC(data & 128); data <<= 1; loadM(addr_lo, data); loadA(A | data);
+#define DO_SLO setC(data & 128); data <<= 1; loadM((addr_hi << 8) | addr_lo, data); loadA(A | data);
+
+void CPU::SLO_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::SLO_absolute_2;
+}
+void CPU::SLO_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::SLO_absolute_3;
+}
+void CPU::SLO_absolute_3() {
+	READ_FROM_ADDRESS;
+	DO_SLO;
+	DONE;
 }
 
-int CPU::SLO_zero_page()
+// -------------------------------------------------------------------------------
+void CPU::SLO_zero_page()
 {
-	uint16_t addr = fetchAddressZeroPage();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	op <<= 1;
-	loadM(addr, op);
-	loadA(A | op);
-	return 5;
+	FETCH_ADDR_LO;
+	next = &CPU::SLO_zero_page_2;
+}
+void CPU::SLO_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	DO_SLO_ZERO_PAGE;	
+	DONE;
 }
 
-int CPU::SLO_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::SLO_zero_page_x()
 {
-	uint16_t addr = fetchAddressZeroPageX();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	op <<= 1;
-	loadM(addr, op);
-	loadA(A | op);
-	return 6;
+	FETCH_ADDR_LO;
+	next = &CPU::SLO_zero_page_x_2;
+}
+void CPU::SLO_zero_page_x_2()
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::SLO_zero_page_x_3;
+}
+void CPU::SLO_zero_page_x_3()
+{
+	READ_FROM_ZERO_PAGE;
+	DO_SLO_ZERO_PAGE;
+	DONE;
 }
 
-int CPU::SLO_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::SLO_absolute_x()
 {
-	uint16_t addr = fetchAddressAbsoluteX();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	op <<= 1;
-	loadM(addr, op);
-	loadA(A | op);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::SLO_absolute_x_2;
+}
+void CPU::SLO_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::SLO_absolute_x_3;
+}
+void CPU::SLO_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SLO_absolute_x_4;
+	} else {
+		DO_SLO;
+		DONE;
+	}
+}
+void CPU::SLO_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	DO_SLO;
+	DONE;
 }
 
-int CPU::SLO_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::SLO_absolute_y()
 {
-	uint16_t addr = fetchAddressAbsoluteY();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	op <<= 1;
-	loadM(addr, op);
-	loadA(A | op);
-	return 7;
+	FETCH_ADDR_LO;
+	next = &CPU::SLO_absolute_y_2;
+}
+void CPU::SLO_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::SLO_absolute_y_3;
+}
+void CPU::SLO_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SLO_absolute_y_4;
+	} else {
+		DO_SLO;
+		DONE;
+	}
+}
+void CPU::SLO_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	DO_SLO;
+	DONE;
 }
 
-int CPU::SLO_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::SLO_indirect_x()
 {
-	uint16_t addr = fetchAddressIndirectX();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	op <<= 1;
-	loadM(addr, op);
-	loadA(A | op);
-	return 8;
+	FETCH_POINTER_ADDR;
+	next = &CPU::SLO_indirect_x_2;
+}
+void CPU::SLO_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::SLO_indirect_x_3;
+}
+void CPU::SLO_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::SLO_indirect_x_4;
+}
+void CPU::SLO_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::SLO_indirect_x_5;
+}
+void CPU::SLO_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	DO_SLO;
+	DONE;
 }
 
-int CPU::SLO_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::SLO_indirect_y()
 {
-	uint16_t addr = fetchAddressIndirectY();
-	uint8_t op = mem->peek(addr);
-	setC(op & 128);
-	op <<= 1;
-	loadM(addr, op);
-	loadA(A | op);
-	return 8;
+	FETCH_POINTER_ADDR;
+	next = &CPU::SLO_indirect_y_2;
+}
+void CPU::SLO_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::SLO_indirect_y_3;
+}
+void CPU::SLO_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::SLO_indirect_y_4;
+}
+void CPU::SLO_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SLO_indirect_y_5;
+	} else {
+		DO_SLO;
+		DONE;
+	}
+}
+void CPU::SLO_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	DO_SLO;
+	DONE;
 }
 
 
@@ -3322,7 +6599,183 @@ int CPU::SLO_indirect_y()
 //              / / / - - -
 // -------------------------------------------------------------------------------
 
-int CPU::SRE_zero_page()
+#define DO_SRE_ZERO_PAGE setC(data & 1); data >>= 1; loadM(addr_lo, data); loadA(A ^ data);
+#define DO_SRE setC(data & 1); data >>= 1; loadM((addr_hi << 8) | addr_lo, data); loadA(A ^ data);
+
+void CPU::SRE_absolute() {
+	FETCH_ADDR_LO;
+	next = &CPU::SRE_absolute_2;
+}
+void CPU::SRE_absolute_2() {
+	FETCH_ADDR_HI;
+	next = &CPU::SRE_absolute_3;
+}
+void CPU::SRE_absolute_3() {
+	READ_FROM_ADDRESS;
+	DO_SRE;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::SRE_zero_page()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::SRE_zero_page_2;
+}
+void CPU::SRE_zero_page_2()
+{
+	READ_FROM_ZERO_PAGE;
+	DO_SRE_ZERO_PAGE;	
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::SRE_zero_page_x()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::SRE_zero_page_x_2;
+}
+void CPU::SRE_zero_page_x_2()
+{
+	READ_FROM_ZERO_PAGE;
+	ADD_INDEX_X;
+	next = &CPU::SRE_zero_page_x_3;
+}
+void CPU::SRE_zero_page_x_3()
+{
+	READ_FROM_ZERO_PAGE;
+	DO_SRE_ZERO_PAGE;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::SRE_absolute_x()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::SRE_absolute_x_2;
+}
+void CPU::SRE_absolute_x_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_X;
+	next = &CPU::SRE_absolute_x_3;
+}
+void CPU::SRE_absolute_x_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SRE_absolute_x_4;
+	} else {
+		DO_SRE;
+		DONE;
+	}
+}
+void CPU::SRE_absolute_x_4()
+{
+	READ_FROM_ADDRESS;
+	DO_SRE;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::SRE_absolute_y()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::SRE_absolute_y_2;
+}
+void CPU::SRE_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::SRE_absolute_y_3;
+}
+void CPU::SRE_absolute_y_3()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SRE_absolute_y_4;
+	} else {
+		DO_SRE;
+		DONE;
+	}
+}
+void CPU::SRE_absolute_y_4()
+{
+	READ_FROM_ADDRESS;
+	DO_SRE;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::SRE_indirect_x()
+{
+	FETCH_POINTER_ADDR;
+	next = &CPU::SRE_indirect_x_2;
+}
+void CPU::SRE_indirect_x_2()
+{
+	IDLE_READ_FROM_ADDRESS_INDIRECT;
+	ADD_INDEX_X_INDIRECT;
+	next = &CPU::SRE_indirect_x_3;
+}
+void CPU::SRE_indirect_x_3()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::SRE_indirect_x_4;
+}
+void CPU::SRE_indirect_x_4()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	next = &CPU::SRE_indirect_x_5;
+}
+void CPU::SRE_indirect_x_5()
+{
+	READ_FROM_ADDRESS;
+	DO_SRE;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::SRE_indirect_y()
+{
+	FETCH_POINTER_ADDR;
+	next = &CPU::SRE_indirect_y_2;
+}
+void CPU::SRE_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::SRE_indirect_y_3;
+}
+void CPU::SRE_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::SRE_indirect_y_4;
+}
+void CPU::SRE_indirect_y_4()
+{
+	READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::SRE_indirect_y_5;
+	} else {
+		DO_SRE;
+		DONE;
+	}
+}
+void CPU::SRE_indirect_y_5()
+{
+	READ_FROM_ADDRESS;
+	DO_SRE;
+	DONE;
+}
+
+
+
+#if 0
+void CPU::SRE_zero_page()
 {
 	uint16_t addr = fetchAddressZeroPage();
 	uint8_t op = mem->peek(addr);
@@ -3330,10 +6783,11 @@ int CPU::SRE_zero_page()
 	op >>= 1;
 	loadM(addr, op);
 	loadA(A ^ op);
-	return 5;
+	DONE;
 }
 
-int CPU::SRE_zero_page_x()
+// -------------------------------------------------------------------------------
+void CPU::SRE_zero_page_x()
 {
 	uint16_t addr = fetchAddressZeroPageX();
 	uint8_t op = mem->peek(addr);
@@ -3341,10 +6795,11 @@ int CPU::SRE_zero_page_x()
 	op >>= 1;
 	loadM(addr, op);
 	loadA(A ^ op);
-	return 6;
+	DONE;
 }
 
-int CPU::SRE_absolute()
+// -------------------------------------------------------------------------------
+void CPU::SRE_absolute()
 {
 	uint16_t addr = fetchAddressAbsolute();
 	uint8_t op = mem->peek(addr);
@@ -3352,10 +6807,17 @@ int CPU::SRE_absolute()
 	op >>= 1;
 	loadM(addr, op);
 	loadA(A ^ op);
-	return 6;
+	DONE;
+}
+void CPU::SRE_absolute_2()
+{
+}
+void CPU::SRE_absolute_3()
+{
 }
 
-int CPU::SRE_absolute_x()
+// -------------------------------------------------------------------------------
+void CPU::SRE_absolute_x()
 {
 	uint16_t addr = fetchAddressAbsoluteX();
 	uint8_t op = mem->peek(addr);
@@ -3363,10 +6825,11 @@ int CPU::SRE_absolute_x()
 	op >>= 1;
 	loadM(addr, op);
 	loadA(A ^ op);
-	return 7;
+	DONE;
 }
 
-int CPU::SRE_absolute_y()
+// -------------------------------------------------------------------------------
+void CPU::SRE_absolute_y()
 {
 	uint16_t addr = fetchAddressAbsoluteY();
 	uint8_t op = mem->peek(addr);
@@ -3374,10 +6837,11 @@ int CPU::SRE_absolute_y()
 	op >>= 1;
 	loadM(addr, op);
 	loadA(A ^ op);
-	return 7;
+	DONE;
 }
 
-int CPU::SRE_indirect_x()
+// -------------------------------------------------------------------------------
+void CPU::SRE_indirect_x()
 {
 	uint16_t addr = fetchAddressIndirectX();
 	uint8_t op = mem->peek(addr);
@@ -3385,10 +6849,11 @@ int CPU::SRE_indirect_x()
 	op >>= 1;
 	loadM(addr, op);
 	loadA(A ^ op);
-	return 8;
+	DONE;
 }
 
-int CPU::SRE_indirect_y()
+// -------------------------------------------------------------------------------
+void CPU::SRE_indirect_y()
 {
 	uint16_t addr = fetchAddressIndirectY();
 	uint8_t op = mem->peek(addr);
@@ -3396,9 +6861,9 @@ int CPU::SRE_indirect_y()
 	op >>= 1;
 	loadM(addr, op);
 	loadA(A ^ op);
-	return 8;
+	DONE;
 }
-
+#endif
 
 // -------------------------------------------------------------------------------
 // Instruction: TAS
@@ -3410,29 +6875,70 @@ int CPU::SRE_indirect_y()
 //
 // -------------------------------------------------------------------------------
 
-int CPU::TAS_absolute_y()
+void CPU::TAS_absolute_y()
 {
-	uint8_t  value = mem->peek(PC + 2) + 1;
-	uint16_t addr  = fetchAddressAbsoluteY();
+	data = mem->peek(PC + 1) + 1;
+	FETCH_ADDR_LO;
+	next = &CPU::TAS_absolute_y_2;
+}
+void CPU::TAS_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::TAS_absolute_y_3;
+}
+void CPU::TAS_absolute_y_3()
+{
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED) {
+		FIX_ADDR_HI;
+		next = &CPU::TAS_absolute_y_4;
+	} else {
+		SP = A & X;
+		data &= SP;
+		WRITE_TO_ADDRESS;
+		DONE;
+	}
+}
+void CPU::TAS_absolute_y_4()
+{
 	SP = A & X;
-	mem->poke(addr, SP & value);
-	return 5;
-
+	data &= SP;
+	WRITE_TO_ADDRESS;
+	DONE;
 }
 
 
 // -------------------------------------------------------------------------------
-// Instruction: XAA
+// Instruction: ANE
 //
-// Operation:   A = X & op
+// Operation:   A = X & op & (A | 0xEE) (taken from Frodo)
 //
 // Flags:       N Z C I D V
 //              / / - - - -
 // -------------------------------------------------------------------------------
 
-int CPU::XAA_immediate()
+void CPU::ANE_immediate()
 {
-	uint8_t op = fetchOperandImmediate();
-	loadA(X & op & (A | 0xEE));
-	return 2;
+	READ_IMMEDIATE;
+	loadA(X & data & (A | 0xEE));
+	DONE;
+}
+
+
+// -------------------------------------------------------------------------------
+// Instruction: LXA
+//
+// Operation:   A = X = op & (A | 0xEE) (taken from Frodo)
+//
+// Flags:       N Z C I D V
+//              / / - - - -
+// -------------------------------------------------------------------------------
+
+void CPU::LXA_immediate()
+{
+	READ_IMMEDIATE;
+	X = data & (A | 0xEE);
+	loadA(X); 
+	DONE;
 }

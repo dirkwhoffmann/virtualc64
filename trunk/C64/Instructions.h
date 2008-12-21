@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006-2009 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,78 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Instruction set
+// Atomic CPU tasks
+#define FETCH_ADDR_LO if (rdyLine) addr_lo = mem->peek(PC++); else return;
+#define FETCH_ADDR_HI if (rdyLine) addr_hi = mem->peek(PC++); else return;
+#define FETCH_POINTER_ADDR if (rdyLine) ptr = mem->peek(PC++); else return;
+#define FETCH_ADDR_LO_INDIRECT if (rdyLine) addr_lo = mem->peek((uint16_t)ptr++); else return;
+#define FETCH_ADDR_HI_INDIRECT if (rdyLine) addr_hi = mem->peek((uint16_t)ptr++); else return;
+
+#define READ_RELATIVE if (rdyLine) data = mem->peek(PC); else return;
+#define READ_IMMEDIATE if (rdyLine) data = mem->peek(PC++); else return;
+#define READ_FROM_ADDRESS if (rdyLine) data = mem->peek((addr_hi << 8) | addr_lo); else return;
+#define READ_FROM_ZERO_PAGE if (rdyLine) data = mem->peek((uint16_t)addr_lo); else return;
+#define READ_FROM_ADDRESS_INDIRECT if (rdyLine) data = mem->peek((uint16_t)ptr); else return;
+#define IDLE_READ_IMPLIED if (rdyLine) (void)mem->peek(PC); else return;
+#define IDLE_READ_IMMEDIATE if (rdyLine) (void)mem->peek(PC++); else return;
+#define IDLE_READ_FROM_ADDRESS if (rdyLine) (void)(mem->peek((addr_hi << 8) | addr_lo)); else return;
+#define IDLE_READ_FROM_ZERO_PAGE if (rdyLine) (void)mem->peek((uint16_t)addr_lo); else return;
+#define IDLE_READ_FROM_ADDRESS_INDIRECT if (rdyLine) (void)mem->peek((uint16_t)ptr); else return;
+
+/*
+#define FETCH_ADDR_LO addr_lo = mem->peek(PC++);
+#define FETCH_ADDR_HI addr_hi = mem->peek(PC++);
+#define FETCH_POINTER_ADDR ptr = mem->peek(PC++);
+#define FETCH_ADDR_LO_INDIRECT addr_lo = mem->peek((uint16_t)ptr++);
+#define FETCH_ADDR_HI_INDIRECT addr_hi = mem->peek((uint16_t)ptr++);
+
+#define READ_RELATIVE data = mem->peek(PC);
+#define READ_IMMEDIATE data = mem->peek(PC++);
+#define READ_FROM_ADDRESS data = mem->peek((addr_hi << 8) | addr_lo); 
+#define READ_FROM_ZERO_PAGE data = mem->peek((uint16_t)addr_lo);
+#define READ_FROM_ADDRESS_INDIRECT data = mem->peek((uint16_t)ptr);
+#define IDLE_READ_IMPLIED (void)mem->peek(PC); 
+#define IDLE_READ_IMMEDIATE (void)mem->peek(PC++);
+#define IDLE_READ_FROM_ADDRESS (void)(mem->peek((addr_hi << 8) | addr_lo));
+#define IDLE_READ_FROM_ZERO_PAGE (void)mem->peek((uint16_t)addr_lo);
+#define IDLE_READ_FROM_ADDRESS_INDIRECT (void)mem->peek((uint16_t)ptr);
+*/
+
+#define WRITE_TO_ADDRESS mem->poke((addr_hi << 8) | addr_lo, data);
+#define WRITE_TO_ADDRESS_AND_SET_FLAGS loadM((addr_hi << 8) | addr_lo, data);
+#define WRITE_TO_ZERO_PAGE mem->poke((uint16_t)addr_lo, data);
+#define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS loadM((uint16_t)addr_lo, data);
+
+#define ADD_INDEX_X addr_lo += X; overflow = (addr_lo < X);
+#define ADD_INDEX_Y addr_lo += Y; overflow = (addr_lo < Y);
+#define ADD_INDEX_X_INDIRECT ptr += X;
+#define ADD_INDEX_Y_INDIRECT ptr += Y;
+
+#define PUSH_PCL mem->poke(0x100+(SP--), LO_BYTE(PC));
+#define PUSH_PCH mem->poke(0x100+(SP--), HI_BYTE(PC));
+#define PUSH_P mem->poke(0x100+(SP--), getP());
+#define PUSH_A mem->poke(0x100+(SP--), A); 
+#define PULL_PCL setPCL(mem->peek(0x100+SP));
+#define PULL_PCH setPCH(mem->peek(0x100+SP));
+#define PULL_P setPWithoutB(mem->peek(0x100+SP));
+#define PULL_A loadA(mem->peek(0x100+SP));
+
+#define PAGE_BOUNDARY_CROSSED overflow
+#define FIX_ADDR_HI addr_hi++;
+
+#define DONE next = &CPU::fetch;
+
+// Mnemonic strings (used by the source level debugger only)
 char *mnemonic[256];
+
+// Adressing mode (used by the source level debugger only)
 AddressingMode addressingMode[256];
 
+//! Register callback function for a single opcode
+void registerCallback(uint8_t opcode, void (CPU::*func)(void));
 
 //! Register callback function for a single opcode
-void registerCallback(uint8_t opcode, int (CPU::*func)());
-
-//! Register callback function for a single opcode
-void registerCallback(uint8_t opcode, char *mnemonic, AddressingMode mode, int (CPU::*func)());
+void registerCallback(uint8_t opcode, char *mnemonic, AddressingMode mode, void (CPU::*func)(void));
 
 //! Register illegal instructions
 void registerIllegalInstructions();
@@ -33,337 +95,309 @@ void registerIllegalInstructions();
 //! Register complete instruction set
 void registerInstructions();
 
-
-int  defaultCallback();
-
-// Operand handling
-void fetchOperandImplied();
-void fetchOperandAccumulator();
-uint8_t fetchOperandImmediate();
-uint16_t fetchAddressZeroPage();
-uint8_t fetchOperandZeroPage();
-uint16_t fetchAddressZeroPageX();
-uint8_t fetchOperandZeroPageX();
-uint16_t fetchAddressZeroPageY();
-uint8_t fetchOperandZeroPageY();
-uint16_t fetchAddressAbsolute();
-uint8_t fetchOperandAbsolute();
-uint16_t fetchAddressAbsoluteX();
-uint8_t fetchOperandAbsoluteX();
-uint16_t fetchAddressAbsoluteY();
-uint8_t fetchOperandAbsoluteY();
-uint16_t fetchAddressIndirectX();
-uint8_t fetchOperandIndirectX();
-uint16_t fetchAddressIndirectY();
-uint8_t fetchOperandIndirectY();
-uint8_t fetchOperandRelative();
+//! Function pointer table will be initializes with this default function
+void  defaultCallback();
 
 // Helper functions
-void CPU::adc(uint8_t op);
-void CPU::adc_binary(uint8_t op);
-void CPU::adc_bcd(uint8_t op);
-void CPU::sbc(uint8_t op);
-void CPU::sbc_binary(uint8_t op);
-void CPU::sbc_bcd(uint8_t op);
-int  CPU::branch(int8_t offset); // returns number of penalty cycles
-void CPU::cmp(uint8_t op1, uint8_t op2);
-uint8_t CPU::ror(uint8_t op);
-uint8_t CPU::rol(uint8_t op);
+void adc(uint8_t op);
+void adc_binary(uint8_t op);
+void adc_bcd(uint8_t op);
+void sbc(uint8_t op);
+void sbc_binary(uint8_t op);
+void sbc_bcd(uint8_t op);
+void branch(int8_t offset); // returns number of penalty cycles
+void cmp(uint8_t op1, uint8_t op2);
+uint8_t ror(uint8_t op);
+uint8_t rol(uint8_t op);
 
-// Callback functions
-int ADC_immediate();
-int ADC_zero_page();
-int ADC_zero_page_x();
-int ADC_absolute();
-int ADC_absolute_x();
-int ADC_absolute_y();
-int ADC_indirect_x();
-int ADC_indirect_y();
+// Execution functions
+void fetch();
 
-int AND_immediate();
-int AND_zero_page();
-int AND_zero_page_x();
-int AND_absolute();
-int AND_absolute_x();
-int AND_absolute_y();
-int AND_indirect_x();
-int AND_indirect_y();
+void irq(); void irq_2(); void irq_3(); void irq_4(); void irq_5(); void irq_6(); void irq_7();
+void nmi(); void nmi_2(); void nmi_3(); void nmi_4(); void nmi_5(); void nmi_6(); void nmi_7();
 
-int ASL_accumulator();
-int ASL_zero_page();
-int ASL_zero_page_x();
-int ASL_absolute();
-int ASL_absolute_x();
-void ASL_absolute_y(); // Used by illegal instructions, only
-void ASL_indirect_x(); // Used by illegal instructions, only
-void ASL_indirect_y(); // Used by illegal instructions, only
+void ADC_immediate();
+void ADC_zero_page(); void ADC_zero_page_2();
+void ADC_zero_page_x(); void ADC_zero_page_x_2(); void ADC_zero_page_x_3();
+void ADC_absolute(); void ADC_absolute_2(); void ADC_absolute_3();
+void ADC_absolute_x(); void ADC_absolute_x_2(); void ADC_absolute_x_3(); void ADC_absolute_x_4();
+void ADC_absolute_y(); void ADC_absolute_y_2(); void ADC_absolute_y_3(); void ADC_absolute_y_4();
+void ADC_indirect_x(); void ADC_indirect_x_2(); void ADC_indirect_x_3(); void ADC_indirect_x_4(); void ADC_indirect_x_5();
+void ADC_indirect_y(); void ADC_indirect_y_2(); void ADC_indirect_y_3(); void ADC_indirect_y_4(); void ADC_indirect_y_5();
 
-int BCC_relative();
-int BCS_relative();
-int BEQ_relative();
+void AND_immediate();
+void AND_zero_page(); void AND_zero_page_2();
+void AND_zero_page_x(); void AND_zero_page_x_2(); void AND_zero_page_x_3();
+void AND_absolute(); void AND_absolute_2(); void AND_absolute_3();
+void AND_absolute_x(); void AND_absolute_x_2(); void AND_absolute_x_3(); void AND_absolute_x_4();
+void AND_absolute_y(); void AND_absolute_y_2(); void AND_absolute_y_3(); void AND_absolute_y_4();
+void AND_indirect_x(); void AND_indirect_x_2(); void AND_indirect_x_3(); void AND_indirect_x_4(); void AND_indirect_x_5();
+void AND_indirect_y(); void AND_indirect_y_2(); void AND_indirect_y_3(); void AND_indirect_y_4(); void AND_indirect_y_5();
 
-int BIT_zero_page();
-int BIT_absolute();
+void ASL_accumulator();
+void ASL_zero_page(); void ASL_zero_page_2(); void ASL_zero_page_3(); void ASL_zero_page_4(); void ASL_zero_page_5();
+void ASL_zero_page_x(); void ASL_zero_page_x_2(); void ASL_zero_page_x_3(); void ASL_zero_page_x_4(); void ASL_zero_page_x_5();
+void ASL_absolute(); void ASL_absolute_2(); void ASL_absolute_3(); void ASL_absolute_4(); void ASL_absolute_5();
+void ASL_absolute_x(); void ASL_absolute_x_2(); void ASL_absolute_x_3(); void ASL_absolute_x_4(); void ASL_absolute_x_5(); void ASL_absolute_x_6();
+void ASL_indirect_x(); void ASL_indirect_x_2(); void ASL_indirect_x_3(); void ASL_indirect_x_4(); void ASL_indirect_x_5(); void ASL_indirect_x_6(); void ASL_indirect_x_7();     
 
-int BMI_relative();
-int BNE_relative();
-int BPL_relative();
+void BCC_relative(); void BCC_relative_2(); void BCC_relative_3();
+void BCS_relative(); void BCS_relative_2(); void BCS_relative_3();
+void BEQ_relative(); void BEQ_relative_2(); void BEQ_relative_3();
 
-int BRK();
+void BIT_zero_page(); void BIT_zero_page_2();
+void BIT_absolute(); void BIT_absolute_2(); void BIT_absolute_3();
 
-int BVC_relative();
-int BVS_relative();
-int CLC();
-int CLD();
-int CLI();
-int CLV();
+void BMI_relative(); void BMI_relative_2(); void BMI_relative_3();
+void BNE_relative(); void BNE_relative_2(); void BNE_relative_3();
+void BPL_relative(); void BPL_relative_2(); void BPL_relative_3();
 
-int CMP_immediate();
-int CMP_zero_page();
-int CMP_zero_page_x();
-int CMP_absolute();
-int CMP_absolute_x();
-int CMP_absolute_y();
-int CMP_indirect_x();
-int CMP_indirect_y();
+void BRK(); void BRK_2(); void BRK_3(); void BRK_4(); void BRK_5(); void BRK_6();
 
-int CPX_immediate();
-int CPX_zero_page();
-int CPX_absolute();
+void BVC_relative(); void BVC_relative_2(); void BVC_relative_3();
+void BVS_relative(); void BVS_relative_2(); void BVS_relative_3();
+void CLC();
+void CLD();
+void CLI();
+void CLV();
 
-int CPY_immediate();
-int CPY_zero_page();
-int CPY_absolute();
+void CMP_immediate();
+void CMP_zero_page(); void CMP_zero_page_2();
+void CMP_zero_page_x(); void CMP_zero_page_x_2(); void CMP_zero_page_x_3();
+void CMP_absolute(); void CMP_absolute_2(); void CMP_absolute_3();
+void CMP_absolute_x(); void CMP_absolute_x_2(); void CMP_absolute_x_3(); void CMP_absolute_x_4();
+void CMP_absolute_y(); void CMP_absolute_y_2(); void CMP_absolute_y_3(); void CMP_absolute_y_4();
+void CMP_indirect_x(); void CMP_indirect_x_2(); void CMP_indirect_x_3(); void CMP_indirect_x_4(); void CMP_indirect_x_5();
+void CMP_indirect_y(); void CMP_indirect_y_2(); void CMP_indirect_y_3(); void CMP_indirect_y_4(); void CMP_indirect_y_5();
 
-int DEC_zero_page();
-int DEC_zero_page_x();
-int DEC_absolute();
-int DEC_absolute_x();
-void DEC_absolute_y(); // Used by illegal instructions, only
-void DEC_indirect_x(); // Used by illegal instructions, only
-void DEC_indirect_y(); // Used by illegal instructions, only
+void CPX_immediate();
+void CPX_zero_page(); void CPX_zero_page_2(); 
+void CPX_absolute(); void CPX_absolute_2(); void CPX_absolute_3();
 
-int DEX();
-int DEY();
+void CPY_immediate();
+void CPY_zero_page(); void CPY_zero_page_2();
+void CPY_absolute(); void CPY_absolute_2(); void CPY_absolute_3();
 
-int EOR_immediate();
-int EOR_zero_page();
-int EOR_zero_page_x();
-int EOR_absolute();
-int EOR_absolute_x();
-int EOR_absolute_y();
-int EOR_indirect_x();
-int EOR_indirect_y();
+void DEC_zero_page(); void DEC_zero_page_2(); void DEC_zero_page_3(); void DEC_zero_page_4(); void DEC_zero_page_5();
+void DEC_zero_page_x(); void DEC_zero_page_x_2(); void DEC_zero_page_x_3(); void DEC_zero_page_x_4(); void DEC_zero_page_x_5();
+void DEC_absolute(); void DEC_absolute_2(); void DEC_absolute_3(); void DEC_absolute_4(); void DEC_absolute_5();
+void DEC_absolute_x(); void DEC_absolute_x_2(); void DEC_absolute_x_3(); void DEC_absolute_x_4(); void DEC_absolute_x_5(); void DEC_absolute_x_6();
+void DEC_indirect_x(); void DEC_indirect_x_2(); void DEC_indirect_x_3(); void DEC_indirect_x_4(); void DEC_indirect_x_5(); void DEC_indirect_x_6(); void DEC_indirect_x_7();     
 
-int INC_zero_page();
-int INC_zero_page_x();
-int INC_absolute();
-int INC_absolute_x();
-void INC_absolute_y(); // Used by illegal instructions, only
-void INC_indirect_x(); // Used by illegal instructions, only
-void INC_indirect_y(); // Used by illegal instructions, only
+void DEX();
+void DEY();
 
+void EOR_immediate();
+void EOR_zero_page(); void EOR_zero_page_2();
+void EOR_zero_page_x(); void EOR_zero_page_x_2(); void EOR_zero_page_x_3();
+void EOR_absolute(); void EOR_absolute_2(); void EOR_absolute_3();
+void EOR_absolute_x(); void EOR_absolute_x_2(); void EOR_absolute_x_3(); void EOR_absolute_x_4();
+void EOR_absolute_y(); void EOR_absolute_y_2(); void EOR_absolute_y_3(); void EOR_absolute_y_4();
+void EOR_indirect_x(); void EOR_indirect_x_2(); void EOR_indirect_x_3(); void EOR_indirect_x_4(); void EOR_indirect_x_5();
+void EOR_indirect_y(); void EOR_indirect_y_2(); void EOR_indirect_y_3(); void EOR_indirect_y_4(); void EOR_indirect_y_5();
 
-int INX();
-int INY();
+void INC_zero_page(); void INC_zero_page_2(); void INC_zero_page_3(); void INC_zero_page_4(); void INC_zero_page_5();
+void INC_zero_page_x(); void INC_zero_page_x_2(); void INC_zero_page_x_3(); void INC_zero_page_x_4(); void INC_zero_page_x_5();
+void INC_absolute(); void INC_absolute_2(); void INC_absolute_3(); void INC_absolute_4(); void INC_absolute_5();
+void INC_absolute_x(); void INC_absolute_x_2(); void INC_absolute_x_3(); void INC_absolute_x_4(); void INC_absolute_x_5(); void INC_absolute_x_6();
+void INC_indirect_x(); void INC_indirect_x_2(); void INC_indirect_x_3(); void INC_indirect_x_4(); void INC_indirect_x_5(); void INC_indirect_x_6(); void INC_indirect_x_7();     
 
-int JMP_absolute();
-int JMP_absolute_indirect();
+void INX();
+void INY();
 
-int JSR();
+void JMP_absolute(); void JMP_absolute_2();
+void JMP_absolute_indirect(); void JMP_absolute_indirect_2(); void JMP_absolute_indirect_3(); void JMP_absolute_indirect_4();
 
-int LDA_immediate();
-int LDA_zero_page();
-int LDA_zero_page_x();
-void LDA_zero_page_y(); // Used by illegal instructions, only
-int LDA_absolute();
-int LDA_absolute_x();
-int LDA_absolute_y();
-int LDA_indirect_x();
-int LDA_indirect_y();
+void JSR(); void JSR_2(); void JSR_3(); void JSR_4(); void JSR_5();
 
-int LDX_immediate(); 
-int LDX_zero_page();
-int LDX_zero_page_y();
-int LDX_absolute();
-int LDX_absolute_y();
-void LDX_indirect_x(); // Used by illegal instructions, only
-void LDX_indirect_y(); // Used by illegal instructions, only
+void LDA_immediate();
+void LDA_zero_page(); void LDA_zero_page_2();
+void LDA_zero_page_x(); void LDA_zero_page_x_2(); void LDA_zero_page_x_3();
+void LDA_absolute(); void LDA_absolute_2(); void LDA_absolute_3();
+void LDA_absolute_x(); void LDA_absolute_x_2(); void LDA_absolute_x_3(); void LDA_absolute_x_4();
+void LDA_absolute_y(); void LDA_absolute_y_2(); void LDA_absolute_y_3(); void LDA_absolute_y_4();
+void LDA_indirect_x(); void LDA_indirect_x_2(); void LDA_indirect_x_3(); void LDA_indirect_x_4(); void LDA_indirect_x_5();
+void LDA_indirect_y(); void LDA_indirect_y_2(); void LDA_indirect_y_3(); void LDA_indirect_y_4(); void LDA_indirect_y_5();
 
-int LDY_immediate(); 
-int LDY_zero_page(); 
-int LDY_zero_page_x();
-int LDY_absolute();
-int LDY_absolute_x();
+void LDX_immediate();
+void LDX_zero_page(); void LDX_zero_page_2();
+void LDX_zero_page_y(); void LDX_zero_page_y_2(); void LDX_zero_page_y_3();
+void LDX_absolute(); void LDX_absolute_2(); void LDX_absolute_3();
+void LDX_absolute_y(); void LDX_absolute_y_2(); void LDX_absolute_y_3(); void LDX_absolute_y_4();
+void LDX_indirect_x(); void LDX_indirect_x_2(); void LDX_indirect_x_3(); void LDX_indirect_x_4(); void LDX_indirect_x_5();
+void LDX_indirect_y(); void LDX_indirect_y_2(); void LDX_indirect_y_3(); void LDX_indirect_y_4(); void LDX_indirect_y_5();
 
-int LSR_accumulator();
-int LSR_zero_page();
-int LSR_zero_page_x();
-int LSR_absolute();
-int LSR_absolute_x();
-void LSR_absolute_y(); // Used by illegal instructions, only
-void LSR_indirect_x(); // Used by illegal instructions, only
-void LSR_indirect_y(); // Used by illegal instructions, only
+void LDY_immediate();
+void LDY_zero_page(); void LDY_zero_page_2();
+void LDY_zero_page_x(); void LDY_zero_page_x_2(); void LDY_zero_page_x_3();
+void LDY_absolute(); void LDY_absolute_2(); void LDY_absolute_3();
+void LDY_absolute_x(); void LDY_absolute_x_2(); void LDY_absolute_x_3(); void LDY_absolute_x_4();
+void LDY_indirect_x(); void LDY_indirect_x_2(); void LDY_indirect_x_3(); void LDY_indirect_x_4(); void LDY_indirect_x_5();
+void LDY_indirect_y(); void LDY_indirect_y_2(); void LDY_indirect_y_3(); void LDY_indirect_y_4(); void LDY_indirect_y_5();
 
-int NOP();
+void LSR_accumulator();
+void LSR_zero_page(); void LSR_zero_page_2(); void LSR_zero_page_3(); void LSR_zero_page_4(); void LSR_zero_page_5();
+void LSR_zero_page_x(); void LSR_zero_page_x_2(); void LSR_zero_page_x_3(); void LSR_zero_page_x_4(); void LSR_zero_page_x_5();
+void LSR_absolute(); void LSR_absolute_2(); void LSR_absolute_3(); void LSR_absolute_4(); void LSR_absolute_5();
+void LSR_absolute_x(); void LSR_absolute_x_2(); void LSR_absolute_x_3(); void LSR_absolute_x_4(); void LSR_absolute_x_5(); void LSR_absolute_x_6();
+void LSR_absolute_y(); void LSR_absolute_y_2(); void LSR_absolute_y_3(); void LSR_absolute_y_4(); void LSR_absolute_y_5(); void LSR_absolute_y_6(); 
+void LSR_indirect_x(); void LSR_indirect_x_2(); void LSR_indirect_x_3(); void LSR_indirect_x_4(); void LSR_indirect_x_5(); void LSR_indirect_x_6(); void LSR_indirect_x_7();     
+void LSR_indirect_y(); void LSR_indirect_y_2(); void LSR_indirect_y_3(); void LSR_indirect_y_4(); void LSR_indirect_y_5(); void LSR_indirect_y_6(); void LSR_indirect_y_7();
 
-int ORA_immediate();
-int ORA_zero_page();
-int ORA_zero_page_x();
-int ORA_absolute();
-int ORA_absolute_x();
-int ORA_absolute_y();
-int ORA_indirect_x();
-int ORA_indirect_y();
+void NOP();
+void NOP_immediate();
+void NOP_zero_page(); void NOP_zero_page_2();
+void NOP_zero_page_x(); void NOP_zero_page_x_2(); void NOP_zero_page_x_3();
+void NOP_absolute(); void NOP_absolute_2(); void NOP_absolute_3();
+void NOP_absolute_x(); void NOP_absolute_x_2(); void NOP_absolute_x_3(); void NOP_absolute_x_4();
 
-int PHA();
-int PHP();
-int PLA();
-int PLP();
+void ORA_immediate();
+void ORA_zero_page(); void ORA_zero_page_2();
+void ORA_zero_page_x(); void ORA_zero_page_x_2(); void ORA_zero_page_x_3();
+void ORA_absolute(); void ORA_absolute_2(); void ORA_absolute_3();
+void ORA_absolute_x(); void ORA_absolute_x_2(); void ORA_absolute_x_3(); void ORA_absolute_x_4();
+void ORA_absolute_y(); void ORA_absolute_y_2(); void ORA_absolute_y_3(); void ORA_absolute_y_4();
+void ORA_indirect_x(); void ORA_indirect_x_2(); void ORA_indirect_x_3(); void ORA_indirect_x_4(); void ORA_indirect_x_5();
+void ORA_indirect_y(); void ORA_indirect_y_2(); void ORA_indirect_y_3(); void ORA_indirect_y_4(); void ORA_indirect_y_5();
 
-int ROL_accumulator(); 
-int ROL_zero_page(); 
-int ROL_zero_page_x();
-int ROL_absolute();
-int ROL_absolute_x();
-void ROL_absolute_y(); // Used by illegal instructions, only
-void ROL_indirect_x(); // Used by illegal instructions, only
-void ROL_indirect_y(); // Used by illegal instructions, only
+void PHA(); void PHA_2();
+void PHP(); void PHP_2();
+void PLA(); void PLA_2(); void PLA_3();
+void PLP(); void PLP_2(); void PLP_3();
 
-int ROR_accumulator(); 
-int ROR_zero_page(); 
-int ROR_zero_page_x();
-int ROR_absolute();
-int ROR_absolute_x();
-void ROR_absolute_y(); // Used by illegal instructions, only
-void ROR_indirect_x(); // Used by illegal instructions, only
-void ROR_indirect_y(); // Used by illegal instructions, only
+void ROL_accumulator();
+void ROL_zero_page(); void ROL_zero_page_2(); void ROL_zero_page_3(); void ROL_zero_page_4(); void ROL_zero_page_5();
+void ROL_zero_page_x(); void ROL_zero_page_x_2(); void ROL_zero_page_x_3(); void ROL_zero_page_x_4(); void ROL_zero_page_x_5();
+void ROL_absolute(); void ROL_absolute_2(); void ROL_absolute_3(); void ROL_absolute_4(); void ROL_absolute_5();
+void ROL_absolute_x(); void ROL_absolute_x_2(); void ROL_absolute_x_3(); void ROL_absolute_x_4(); void ROL_absolute_x_5(); void ROL_absolute_x_6();
+void ROL_indirect_x(); void ROL_indirect_x_2(); void ROL_indirect_x_3(); void ROL_indirect_x_4(); void ROL_indirect_x_5(); void ROL_indirect_x_6(); void ROL_indirect_x_7();     
 
-int RTI();
-int RTS();
+void ROR_accumulator();
+void ROR_zero_page(); void ROR_zero_page_2(); void ROR_zero_page_3(); void ROR_zero_page_4(); void ROR_zero_page_5();
+void ROR_zero_page_x(); void ROR_zero_page_x_2(); void ROR_zero_page_x_3(); void ROR_zero_page_x_4(); void ROR_zero_page_x_5();
+void ROR_absolute(); void ROR_absolute_2(); void ROR_absolute_3(); void ROR_absolute_4(); void ROR_absolute_5();
+void ROR_absolute_x(); void ROR_absolute_x_2(); void ROR_absolute_x_3(); void ROR_absolute_x_4(); void ROR_absolute_x_5(); void ROR_absolute_x_6();
+void ROR_indirect_x(); void ROR_indirect_x_2(); void ROR_indirect_x_3(); void ROR_indirect_x_4(); void ROR_indirect_x_5(); void ROR_indirect_x_6(); void ROR_indirect_x_7();     
 
-int SBC_immediate();
-int SBC_zero_page();
-int SBC_zero_page_x();
-int SBC_absolute();
-int SBC_absolute_x();
-int SBC_absolute_y();
-int SBC_indirect_x();
-int SBC_indirect_y();
+void RTI(); void RTI_2(); void RTI_3(); void RTI_4(); void RTI_5();
+void RTS(); void RTS_2(); void RTS_3(); void RTS_4(); void RTS_5();
 
-int SEC();
-int SED();
+void SBC_immediate();
+void SBC_zero_page(); void SBC_zero_page_2();
+void SBC_zero_page_x(); void SBC_zero_page_x_2(); void SBC_zero_page_x_3();
+void SBC_absolute(); void SBC_absolute_2(); void SBC_absolute_3();
+void SBC_absolute_x(); void SBC_absolute_x_2(); void SBC_absolute_x_3(); void SBC_absolute_x_4();
+void SBC_absolute_y(); void SBC_absolute_y_2(); void SBC_absolute_y_3(); void SBC_absolute_y_4();
+void SBC_indirect_x(); void SBC_indirect_x_2(); void SBC_indirect_x_3(); void SBC_indirect_x_4(); void SBC_indirect_x_5();
+void SBC_indirect_y(); void SBC_indirect_y_2(); void SBC_indirect_y_3(); void SBC_indirect_y_4(); void SBC_indirect_y_5();
 
-int SEI();
+void SEC();
+void SED();
+void SEI();
 
-int STA_zero_page();
-int STA_zero_page_x();
-int STA_absolute();
-int STA_absolute_x();
-int STA_absolute_y();
-int STA_indirect_x();
-int STA_indirect_y();
+void STA_zero_page(); void STA_zero_page_2();
+void STA_zero_page_x(); void STA_zero_page_x_2(); void STA_zero_page_x_3();
+void STA_absolute(); void STA_absolute_2(); void STA_absolute_3();
+void STA_absolute_x(); void STA_absolute_x_2(); void STA_absolute_x_3(); void STA_absolute_x_4();
+void STA_absolute_y(); void STA_absolute_y_2(); void STA_absolute_y_3(); void STA_absolute_y_4();
+void STA_indirect_x(); void STA_indirect_x_2(); void STA_indirect_x_3(); void STA_indirect_x_4(); void STA_indirect_x_5();
+void STA_indirect_y(); void STA_indirect_y_2(); void STA_indirect_y_3(); void STA_indirect_y_4(); void STA_indirect_y_5();
 
-int STX_zero_page();
-int STX_zero_page_y();
-int STX_absolute();
+void STX_zero_page(); void STX_zero_page_2();
+void STX_zero_page_y(); void STX_zero_page_y_2(); void STX_zero_page_y_3();
+void STX_absolute(); void STX_absolute_2(); void STX_absolute_3();
 
-int STY_zero_page();
-int STY_zero_page_x();
-int STY_absolute();
+void STY_zero_page(); void STY_zero_page_2();
+void STY_zero_page_x(); void STY_zero_page_x_2(); void STY_zero_page_x_3();
+void STY_absolute(); void STY_absolute_2(); void STY_absolute_3();
 
-int TAX();
-int TAY();
-int TSX();
-int TXA();
-int TXS();
-int TYA();
+void TAX();
+void TAY();
+void TSX();
+void TXA();
+void TXS();
+void TYA();
 
 // Illegal instructions
 
-int AHX_indirect_y();  // OK
-int AHX_absolute_y();
+void AHX_indirect_y(); void AHX_indirect_y_2(); void AHX_indirect_y_3(); void AHX_indirect_y_4(); void AHX_indirect_y_5();
+void AHX_absolute_y(); void AHX_absolute_y_2(); void AHX_absolute_y_3(); void AHX_absolute_y_4();
 
-int ALR_immediate();   // OK
-int ANC_immediate();   // OK // Note: Has two opcodes (0x0B and 0x2B)
-int ARR_immediate();   // OK
-int AXS_immediate();   // OK
+void ALR_immediate();   
+void ANC_immediate();   
+void ANE_immediate();
+void ARR_immediate();   
+void AXS_immediate();   
 
-int DCP_zero_page();   // OK
-int DCP_zero_page_x();
-int DCP_absolute();
-int DCP_absolute_x();
-int DCP_absolute_y();
-int DCP_indirect_x();
-int DCP_indirect_y();
+void DCP_zero_page(); void DCP_zero_page_2(); void DCP_zero_page_3(); void DCP_zero_page_4(); void DCP_zero_page_5();
+void DCP_zero_page_x(); void DCP_zero_page_x_2(); void DCP_zero_page_x_3(); void DCP_zero_page_x_4(); void DCP_zero_page_x_5();
+void DCP_absolute(); void DCP_absolute_2(); void DCP_absolute_3(); void DCP_absolute_4(); void DCP_absolute_5();
+void DCP_absolute_x(); void DCP_absolute_x_2(); void DCP_absolute_x_3(); void DCP_absolute_x_4(); void DCP_absolute_x_5(); void DCP_absolute_x_6();
+void DCP_absolute_y(); void DCP_absolute_y_2(); void DCP_absolute_y_3(); void DCP_absolute_y_4(); void DCP_absolute_y_5(); void DCP_absolute_y_6(); 
+void DCP_indirect_x(); void DCP_indirect_x_2(); void DCP_indirect_x_3(); void DCP_indirect_x_4(); void DCP_indirect_x_5(); void DCP_indirect_x_6(); void DCP_indirect_x_7();     
+void DCP_indirect_y(); void DCP_indirect_y_2(); void DCP_indirect_y_3(); void DCP_indirect_y_4(); void DCP_indirect_y_5(); void DCP_indirect_y_6(); void DCP_indirect_y_7();
 
-int ISC_zero_page();   // OK
-int ISC_zero_page_x();
-int ISC_absolute();
-int ISC_absolute_x();
-int ISC_absolute_y();
-int ISC_indirect_x();
-int ISC_indirect_y();
+void ISC_zero_page(); void ISC_zero_page_2(); void ISC_zero_page_3(); void ISC_zero_page_4(); void ISC_zero_page_5();
+void ISC_zero_page_x(); void ISC_zero_page_x_2(); void ISC_zero_page_x_3(); void ISC_zero_page_x_4(); void ISC_zero_page_x_5();
+void ISC_absolute(); void ISC_absolute_2(); void ISC_absolute_3(); void ISC_absolute_4(); void ISC_absolute_5();
+void ISC_absolute_x(); void ISC_absolute_x_2(); void ISC_absolute_x_3(); void ISC_absolute_x_4(); void ISC_absolute_x_5(); void ISC_absolute_x_6();
+void ISC_absolute_y(); void ISC_absolute_y_2(); void ISC_absolute_y_3(); void ISC_absolute_y_4(); void ISC_absolute_y_5(); void ISC_absolute_y_6(); 
+void ISC_indirect_x(); void ISC_indirect_x_2(); void ISC_indirect_x_3(); void ISC_indirect_x_4(); void ISC_indirect_x_5(); void ISC_indirect_x_6(); void ISC_indirect_x_7();     
+void ISC_indirect_y(); void ISC_indirect_y_2(); void ISC_indirect_y_3(); void ISC_indirect_y_4(); void ISC_indirect_y_5(); void ISC_indirect_y_6(); void ISC_indirect_y_7();
 
-int LAS_absolute_y();
+void LAS_absolute_y(); void LAS_absolute_y_2(); void LAS_absolute_y_3(); void LAS_absolute_y_4(); void LAS_absolute_y_5(); void LAS_absolute_y_6(); 
 
-int LAX_immediate();   // OK // Highly unstable instruction
-int LAX_zero_page();
-int LAX_zero_page_y();
-int LAX_absolute();
-int LAX_absolute_y();
-int LAX_indirect_x();
-int LAX_indirect_y();
+void LAX_zero_page(); void LAX_zero_page_2();
+void LAX_zero_page_y(); void LAX_zero_page_y_2(); void LAX_zero_page_y_3();
+void LAX_absolute(); void LAX_absolute_2(); void LAX_absolute_3();
+void LAX_absolute_y(); void LAX_absolute_y_2(); void LAX_absolute_y_3(); void LAX_absolute_y_4();
+void LAX_indirect_x(); void LAX_indirect_x_2(); void LAX_indirect_x_3(); void LAX_indirect_x_4(); void LAX_indirect_x_5();
+void LAX_indirect_y(); void LAX_indirect_y_2(); void LAX_indirect_y_3(); void LAX_indirect_y_4(); void LAX_indirect_y_5();
 
-int NOP_immediate();
-int NOP_zero_page();
-int NOP_zero_page_x();
-int NOP_absolute();
-int NOP_absolute_x();
+void LXA_immediate();
 
-int RLA_zero_page();    // OK
-int RLA_zero_page_x();
-int RLA_absolute();
-int RLA_absolute_x();
-int RLA_absolute_y();
-int RLA_indirect_x();
-int RLA_indirect_y();
+void RLA_zero_page(); void RLA_zero_page_2();
+void RLA_zero_page_x(); void RLA_zero_page_x_2(); void RLA_zero_page_x_3();
+void RLA_absolute(); void RLA_absolute_2(); void RLA_absolute_3();
+void RLA_absolute_x(); void RLA_absolute_x_2(); void RLA_absolute_x_3(); void RLA_absolute_x_4();
+void RLA_absolute_y(); void RLA_absolute_y_2(); void RLA_absolute_y_3(); void RLA_absolute_y_4();
+void RLA_indirect_x(); void RLA_indirect_x_2(); void RLA_indirect_x_3(); void RLA_indirect_x_4(); void RLA_indirect_x_5();
+void RLA_indirect_y(); void RLA_indirect_y_2(); void RLA_indirect_y_3(); void RLA_indirect_y_4(); void RLA_indirect_y_5();
 
-int RRA_zero_page();   // OK
-int RRA_zero_page_x();
-int RRA_absolute();
-int RRA_absolute_x();
-int RRA_absolute_y();
-int RRA_indirect_x();
-int RRA_indirect_y();
+void RRA_zero_page(); void RRA_zero_page_2();
+void RRA_zero_page_x(); void RRA_zero_page_x_2(); void RRA_zero_page_x_3();
+void RRA_absolute(); void RRA_absolute_2(); void RRA_absolute_3();
+void RRA_absolute_x(); void RRA_absolute_x_2(); void RRA_absolute_x_3(); void RRA_absolute_x_4();
+void RRA_absolute_y(); void RRA_absolute_y_2(); void RRA_absolute_y_3(); void RRA_absolute_y_4();
+void RRA_indirect_x(); void RRA_indirect_x_2(); void RRA_indirect_x_3(); void RRA_indirect_x_4(); void RRA_indirect_x_5();
+void RRA_indirect_y(); void RRA_indirect_y_2(); void RRA_indirect_y_3(); void RRA_indirect_y_4(); void RRA_indirect_y_5();
 
-int SAX_zero_page();  // OK
-int SAX_zero_page_y();
-int SAX_absolute();
-int SAX_indirect_x();
+void SAX_zero_page(); void SAX_zero_page_2();
+void SAX_zero_page_y(); void SAX_zero_page_y_2(); void SAX_zero_page_y_3();
+void SAX_absolute(); void SAX_absolute_2(); void SAX_absolute_3();
+void SAX_indirect_x(); void SAX_indirect_x_2(); void SAX_indirect_x_3(); void SAX_indirect_x_4(); void SAX_indirect_x_5();
 
-int SHX_absolute_y(); // OK
-int SHY_absolute_x(); // OK
+void SHX_absolute_y(); void SHX_absolute_y_2(); void SHX_absolute_y_3(); void SHX_absolute_y_4();
+void SHY_absolute_x(); void SHY_absolute_x_2(); void SHY_absolute_x_3(); void SHY_absolute_x_4();
 
-int SLO_zero_page();  // OK
-int SLO_zero_page_x();
-int SLO_absolute();
-int SLO_absolute_x();
-int SLO_absolute_y();
-int SLO_indirect_x();
-int SLO_indirect_y();
+void SLO_zero_page(); void SLO_zero_page_2();
+void SLO_zero_page_x(); void SLO_zero_page_x_2(); void SLO_zero_page_x_3();
+void SLO_absolute(); void SLO_absolute_2(); void SLO_absolute_3();
+void SLO_absolute_x(); void SLO_absolute_x_2(); void SLO_absolute_x_3(); void SLO_absolute_x_4();
+void SLO_absolute_y(); void SLO_absolute_y_2(); void SLO_absolute_y_3(); void SLO_absolute_y_4();
+void SLO_indirect_x(); void SLO_indirect_x_2(); void SLO_indirect_x_3(); void SLO_indirect_x_4(); void SLO_indirect_x_5();
+void SLO_indirect_y(); void SLO_indirect_y_2(); void SLO_indirect_y_3(); void SLO_indirect_y_4(); void SLO_indirect_y_5();
 
-int SRE_zero_page();  // OK
-int SRE_zero_page_x();
-int SRE_absolute();
-int SRE_absolute_x();
-int SRE_absolute_y();
-int SRE_indirect_x();
-int SRE_indirect_y();
+void SRE_zero_page(); void SRE_zero_page_2();
+void SRE_zero_page_x(); void SRE_zero_page_x_2(); void SRE_zero_page_x_3();
+void SRE_absolute(); void SRE_absolute_2(); void SRE_absolute_3();
+void SRE_absolute_x(); void SRE_absolute_x_2(); void SRE_absolute_x_3(); void SRE_absolute_x_4();
+void SRE_absolute_y(); void SRE_absolute_y_2(); void SRE_absolute_y_3(); void SRE_absolute_y_4();
+void SRE_indirect_x(); void SRE_indirect_x_2(); void SRE_indirect_x_3(); void SRE_indirect_x_4(); void SRE_indirect_x_5();
+void SRE_indirect_y(); void SRE_indirect_y_2(); void SRE_indirect_y_3(); void SRE_indirect_y_4(); void SRE_indirect_y_5();
 
-int TAS_absolute_y();
+void TAS_absolute_y(); void TAS_absolute_y_2(); void TAS_absolute_y_3(); void TAS_absolute_y_4();
 
-int XAA_immediate();
 
 
 

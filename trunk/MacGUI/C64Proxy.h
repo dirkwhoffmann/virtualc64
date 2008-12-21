@@ -66,7 +66,6 @@ public:
 }
 
 // Initialization
-//- (id) init;
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 - (void) release;
 - (C64 *) getC64;
@@ -85,11 +84,6 @@ public:
 - (void) setFrameDelay:(int)delay;
 - (int) buildNr;
 
-//- (bool) isBasicRom:(NSString *)filename;
-//- (bool) isCharRom:(NSString *)filename;
-//- (bool) isKernelRom:(NSString *)filename;
-//- (bool) isVC1541Rom:(NSString *)filename;
-//- (bool) loadRom:(NSString *)filename;
 - (int) numberOfMissingRoms;
 - (int) missingRoms;
 - (bool) loadBasicRom:(NSString *)filename;

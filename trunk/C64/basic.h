@@ -44,7 +44,7 @@
 #define HI_BYTE(x) (uint8_t)((x) >> 8)
 
 //! Evaluates to the low byte of x. x is expected to be of type uint16_t.
-#define LO_BYTE(x) (uint8_t)((x) & 255)
+#define LO_BYTE(x) (uint8_t)((x) & 0xff)
 
 //! Evaluates to the 16 bit value specified by x and y in little endian order (low, high).
 #define LO_HI(x,y) (uint16_t)((y) << 8 | (x))
@@ -53,7 +53,7 @@
 #define SET_BIT(x,nr) ((x) |= (1 << (nr)))
 
 //! Evaluates to the value of x with bit "nr" set to 0. All other bits remain untouched.
-#define CLEAR_BIT(x,nr) ((x) &= 255 - (1 << (nr)))
+#define CLEAR_BIT(x,nr) ((x) &= 0xff - (1 << (nr)))
 
 //! Clip the value of x if it is outside the specified limits
 template <class T>
