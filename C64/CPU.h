@@ -33,7 +33,7 @@ private:
 	/*! The CPU will wait this number of cycles until the next command is executed.
 		The variable is used inside the execute function for synchronization purposes. */
 	int delay;
-	
+		
 public:
 	
 	//! Addressing modes of the 6510 processor
@@ -107,6 +107,9 @@ private:
 	*/	
 	Memory *mem;
 	
+	//! Current clock cycle (since power up)
+	uint64_t cycles;
+
 	// The accumulator register
 	uint8_t A;
    // The X register
@@ -114,6 +117,24 @@ private:
 	// The Y register
 	uint8_t Y;
 
+	// Opcode of the currently executed command
+	uint8_t opcode;
+	// Internal address register (low byte)
+	uint8_t addr_lo;
+	// Internal address register (high byte)
+	uint8_t addr_hi;
+	// Pointer for indirect addressing modes
+	uint8_t ptr;
+	// Temporary storage for program counter (low byte)
+	uint8_t pc_lo;
+	// Temporary storage for program counter (high byte)
+	uint8_t pc_hi;
+	// Address overflow indicater
+	/* Used to indicate whether the page boundary has been crossed */
+	bool overflow;
+	// Internal data register
+	uint8_t data;
+	
 	// Program counter
 	uint16_t PC;
 	// Stack pointer
@@ -140,14 +161,10 @@ private:
 	//! Carry flag
 	/*! The carry flag is set iff an arithmetic operation causes an \a unsigned overflow. */	
 	uint8_t  C;
-					
-	//! Number of elapsed clock cycles since power up
-	uint64_t cycles;
-
-	//! RDY line counter (ready line)
-	/*! If set to a value greater zero, the CPU freezes. The signal is used by the VIC chip to freeze the CPU during memory access.
-	    Set this value to n, if you want to freeze the CPU for n cycles. */
-	int rdyLine;
+						
+	//! RDY line (ready line).
+	/*! If pulled low (set to 0), the CPU freezes. The signal is used by the VIC chip to freeze the CPU during memory access. */
+	bool rdyLine;
 	
 	//! IRQ line (maskable interrupts)
 	/*! The CPU checks the IRQ line before the next instruction is executed.
@@ -156,7 +173,7 @@ private:
 		\see CPU::I CPU::I_FLAG
 	*/
 	uint8_t irqLine;
-
+	
 	//! NMI line (non maskable interrupts)
 	/*! The CPU checks the IRQ line before the next instruction is executed.
 		If at least one bit is set, the CPU performs an interrupt, regardless of the value of the I flag. 
@@ -164,60 +181,83 @@ private:
 	*/
 	uint8_t nmiLine;
 	
+	//! In this variable, we remember when the irqLine went down
+	/*! The value is needed to determine the exact time to trigger the interrupt */
+	uint64_t latestNegEdgeOnIrqLine;
+	
+	//! In this variable, we remember when the nmiLine went down
+	/*! The value is needed to determine the exact time to trigger the interrupt */
+	uint64_t latestNegEdgeOnNmiLine;
+		
 	//! Current error state
 	ErrorState errorState;
 
+	//! Next function to be executed
+	/*! Each function performs the actions of a single cycle */
+	void (CPU::*next)(void);
+	 
 	//! Callback function array pointing to the execution function of each instruction.
-	int (CPU::*actionFunc[256])(void);
+	void (CPU::*actionFunc[256])(void);
 	
 	//! Breakpoint tag for each memory cell
 	/*! \see Breakpoint */
 	uint8_t breakpoint[65536];
-
-	//! Log file handle
-	/*! If this variable is not NULL, the CPU dumps the CPU state into this file before
-		a new opcode is executed. This feature is only meant for debugging as it slows
-		down execution considerably.
-	*/
-	// FILE *logfile;
 	
-	//! Records all subroutine calls (DEPRECAtED)
+	//! Records all subroutine calls
 	/*! Whenever a JSR instruction is executed, the address of the instruction is recorded in the callstack.
-		The callstack is only queried by the GUI for debugging purposes. The virtual C64 is not using the information at all. 
 	*/
 	uint16_t callStack[256];
 	
-	//! Location of the next free cell of the callstack (DEPRECATED)
+	//! CPU state history
+	/*! Used for debugging only */
+	uint64_t history[256];
+public:
+	uint16_t oldPC;
+private:
+	
+	//! Read/Write pointer into history buffer 
+	uint8_t historyPtr;
+
+	//!
+	uint8_t irqHistory, nmiHistory;
+	
+	//! Location of the next free cell of the callstack
 	uint8_t callStackPointer;
 
 	//! Set bit of IRQ line
 	inline void setIRQLine(uint8_t bit) { 
-		assert(bit != 0);
-		// debug("Raising bits %2X IRQ line, ");
+		if (irqLine == 0)
+			latestNegEdgeOnIrqLine = cycles;
 		irqLine |= bit; 
-		// debug("new value: %2X\n", irqLine);
 	}
 	
 	//! Clear bit of IRQ line
 	inline void clearIRQLine(uint8_t bit) { 
-		assert(bit != 0);
-		// debug("Clearing bits %2X IRQ line, "); 
 		irqLine &= (0xff - bit);
-		// debug("new value: %2X\n", irqLine);
 	}
 
+	//! Check if IRQ line has been raised for at least 2 cycles
+	inline bool IRQLineRaisedLongEnough() { 
+		return (cycles - latestNegEdgeOnIrqLine) >= 2;
+	}
+	
 	//! Set bit of NMI line
 	inline void setNMILine(uint8_t bit) { 
-		assert(bit != 0);
+		if (irqLine == 0)
+			latestNegEdgeOnNmiLine = cycles;
 		nmiLine |= bit; 
 	}
 
 	//! Clear bit of NMI line
 	inline void clearNMILine(uint8_t bit) { 
-		assert(bit != 0);
 		nmiLine &= (0xff - bit); 
 	}
 	
+	//! Check if NMI line has been raised for at least 2 cycles
+	inline bool NMILineRaisedLongEnough() { 
+			return (cycles - latestNegEdgeOnNmiLine) >= 2;
+	}
+			
 #include "Instructions.h"
 		
 public:
@@ -272,6 +312,8 @@ public:
 	/*! The bit position of the B flag is always 0. This function is needed for proper interrupt handling. When an IRQ
 		or NMI is triggered internally, the status register is pushed on the stack with the B-flag cleared. */
 	inline uint8_t getPWithClearedB() { return getN() | getV() | 32 | getD() | getI() | getZ() | getC(); }
+	//! Pack CPU state
+	inline uint64_t packState() { return (((((((((((uint64_t)PC << 8) | SP) << 8) | getP()) << 8) | A) << 8) | X) << 8) | Y); }
 	
 	//! Write value to the accumulator register. Flags remain untouched.
 	inline void setA(uint8_t a) { A = a; }
@@ -280,14 +322,22 @@ public:
 	//! Write value to the the Y register. Flags remain untouched.
 	inline void setY(uint8_t y) { Y = y; }
 	//! Write value to the the program counter.
-    inline void setPC(uint16_t pc) { PC = pc; }
+	//inline void setPC(uint16_t pc) { if (pc == 0x2022) { dumpPCHistory(); dumpState(); } PC = pc; }
+	inline void setPC(uint16_t pc) { PC = pc; }
 	//! Change low byte of the program counter only
-	inline void setPCL(uint8_t lo) { PC = (PC & (255 << 8)) + lo; }
+	//inline void setPCL(uint8_t lo) { if (((PC & 0xff00) | lo) == 0x2023) dumpState(); PC = (PC & 0xff00) | lo; }
+	inline void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
 	//! Change high byte of the program counter only
-	inline void setPCH(uint8_t hi) { PC = (hi << 8) + (PC & 255); }
+	//inline void setPCH(uint8_t hi) { if ((PC & 0x00ff) | ((uint16_t)hi << 8) == 0x2023) dumpState(); PC = (PC & 0x00ff) | ((uint16_t)hi << 8); }
+	inline void setPCH(uint8_t hi) { PC = (PC & 0x00ff) | ((uint16_t)hi << 8); }
 	//! Increment the program counter by the specified amount. 
 	/*! If no argument is provided, the program counter is incremented by one. */
 	inline void incPC(uint8_t offset = 1) { PC += offset; }
+	//! Increment low byte of program counter (hi byte remains unchanged)
+	inline void incPCL(uint8_t offset = 1) { setPCL(LO_BYTE(PC) + offset); }
+	//! Increment high byte of program counter (lo byte remains unchanged)
+	inline void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(PC) + offset); }
+	
 	//! Write value to the stack pointer
 	inline void setSP(uint8_t sp) { SP = sp; }
 	
@@ -351,7 +401,7 @@ public:
 	//! Clear Reset bit of NMI line
 	inline void clearNMILineReset() { clearNMILine(0x08); }
 	//! Set RDY line 
-	inline void setRDY(int value) { rdyLine = value; }
+	inline void setRDY(bool value) { rdyLine = value; }
 	
 	//! Load internal state from a file
 	bool load(FILE *file);
@@ -380,21 +430,21 @@ public:
 	inline int getAddressOfNextInstruction() { return getAddressOfNextIthInstruction(1, PC); }
 	//! Disassemble current instruction
 	char *disassemble();
+	char *disassemble(uint64_t state);
 	
 	//! Returns the number of CPU cycles elapsed so far
 	inline uint64_t getCycles() { return cycles; }
 	
 	//! Set the cycle count to the specified value
-	inline void setCycles(uint64_t c) { cycles = c; }
+	// inline void setCycles(uint64_t c) { cycles = c; }
 	
 	//! Execute a single command
 	/*! Interrupt requests are ignored. Used inside the \a execute function and by the "step into" feature of the debugger. */
-	int step();
+	void step();
 	
-
 	//! Execute CPU for one cycle
 	/*! This is the normal operation mode. Interrupt requests are handled. */
-	void executeOneCycle();
+	inline void executeOneCycle() { cycles++; (*this.*next)(); }
 
 	//! Returns the current error state
 	ErrorState getErrorState();
@@ -432,9 +482,9 @@ public:
 	void toggleSoftBreakpoint(uint16_t addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
 
 	//! Read entry from callstack
-	// bool getCallStack(uint8_t nr, uint16_t *addr) { return (nr < callStackPointer) ? *addr = callStack[nr], true : false; }
 	int getTopOfCallStack() { return (callStackPointer > 0) ? callStack[callStackPointer-1] : -1; }
 	
 	void dumpState(); 
+	void dumpHistory();
 };
 #endif

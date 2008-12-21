@@ -50,6 +50,7 @@ VIC::reset()
 	bankAddr = 0;
 	scanline = 0;
 	cycle = 1;
+	BAlow = 0;
 	drawSprites	= true;
 	markIRQLines = false;
 	markDMALines = false;
@@ -333,6 +334,20 @@ VIC::setCharacterMemoryAddr(uint16_t addr)
 	characterMemory = &mem->ram[bankAddr + addr];
 }
 
+void 
+VIC::pullDownBA(uint16_t source)
+{ 
+	BAlow |= source;
+	cpu->setRDY(BAlow == 0); 
+}
+
+void 
+VIC::releaseBA(uint16_t source)
+{ 
+	BAlow &= ~source;
+	cpu->setRDY(BAlow == 0); 
+}
+
 inline void 
 VIC::setForegroundPixel(int offset, int color) 
 {
@@ -604,6 +619,7 @@ VIC::triggerIRQ(uint8_t source)
 void
 VIC::simulateLightPenInterrupt()
 {
+#if 0
 	// fprintf(stderr,"WARNING: Lightpen not yet supported\n");
 	
 	if (!lightpenIRQhasOccured) {
@@ -622,6 +638,7 @@ VIC::simulateLightPenInterrupt()
 		// Simulate interrupt
 		triggerIRQ(0x08);
 	}
+#endif
 }
 
 /* 3.7.1. Idle-Zustand/Display-Zustand
@@ -690,280 +707,6 @@ VIC::drawSpritesM()
 		}
 	}
 	return deadCycles;
-}
-
-/* This method updates all the internal registers & states of the cycle based emulation */
-void inline
-VIC::updateRegisters0()
-{			
-	switch (scanline) {
-		case 0:
-			/* Irgendwo einmal außerhalb des Bereiches der Rasterzeilen $30-$f7 (also
-			 außerhalb des Bad-Line-Bereiches) wird VCBASE auf Null gesetzt.
-			 Vermutlich geschieht dies in Rasterzeile 0, der genaue Zeitpunkt ist
-			 nicht zu bestimmen, er spielt aber auch keine Rolle. */
-			if (cycle == 1) registerVCBASE = 0;
-			break;
-		case 48:
-			/* Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
-			 negativen Flanke von ø0 zu Beginn des Zyklus RASTER >= $30 und RASTER <=
-			 $f7 und die unteren drei Bits von RASTER mit YSCROLL übereinstimmen und in
-			 einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war. */
-			if (cycle == 1) dmaLinesEnabled = false;
-			if (!dmaLinesEnabled && isVisible()) dmaLinesEnabled = true;
-			break;	
-#if 0			
-		case 51:
-			if (cycle == 63 && isRSEL() && isVisible()) verticalFrameFF = false;
-			drawVerticalFrame = verticalFrameFF;
-			break;
-		case 55:
-			if (cycle == 63 && !isRSEL() && isVisible()) verticalFrameFF = false;
-			drawVerticalFrame = verticalFrameFF;
-			break;
-		case 247:
-			if (cycle == 63 && !isRSEL()) verticalFrameFF = true;
-			drawVerticalFrame = verticalFrameFF;
-			break;
-		case 251:
-			if (cycle == 63 && isRSEL()) verticalFrameFF = true;
-			drawVerticalFrame = verticalFrameFF;
-			break;
-#endif			
-	}
-	dmaLine = dmaLinesEnabled && isDMALine();
-	/* Der Übergang vom Idle- in den Display-Zustand erfolgt, sobald ein Bad-Line-Zustand auftritt */
-	if (!displayState && dmaLine) displayState = true;
-	// chip model independent cycle events
-	switch (cycle) {
-		case 1:
-			// Check for raster IRQ
-			if (scanline == rasterInterruptLine())
-				triggerIRQ(1);
-
-			if (spriteDmaOnOff & (1 << 3))
-				cpu->setRDY(2);
-			readSpritePtr(3);
-			readSpriteData(3);
-			break;
-		case 2:
-			readSpriteData(3);
-			readSpriteData(3);
-			break;
-		case 3:
-			if (spriteDmaOnOff & (1 << 4))
-				cpu->setRDY(2);
-			readSpritePtr(4);
-			readSpriteData(4);
-			break;
-		case 4:
-			readSpriteData(4);
-			readSpriteData(4);
-			break;
-		case 5:
-			if (spriteDmaOnOff & (1 << 5))
-				cpu->setRDY(2);
-			readSpritePtr(5);
-			readSpriteData(5);
-			break;
-		case 6:
-			readSpriteData(5);
-			readSpriteData(5);
-			break;
-		case 7:
-			if (spriteDmaOnOff & (1 << 6))
-				cpu->setRDY(2);
-			readSpritePtr(6);
-			readSpriteData(6);
-			break;
-		case 8:
-			readSpriteData(6);
-			readSpriteData(6);
-			break;
-		case 9:
-			if (spriteDmaOnOff & (1 << 7))
-				cpu->setRDY(2);
-			readSpritePtr(7);
-			readSpriteData(7);
-			break;
-		case 10:
-			readSpriteData(7);
-			readSpriteData(7);
-			break;
-			
-		case 14:
-			/* In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
-			 (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
-			 Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt. */
-			registerVC = registerVCBASE;
-			registerVMLI = 0;
-			if (dmaLine) registerRC = 0;
-			break;
-			
-		case 15:
-			if (dmaLine) {
-				// Freeze CPU for 43 cycles
-				cpu->setRDY(43);
-			}
-			
-			/* In der ersten Phase von Zyklus 15 wird geprüft, ob das
-			Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 2 erhöht. */
-			// Note: Done in cycle 16
-			break;
-			
-		case 16:
-			if (isCSEL()) mainFrameFF = false;		
-
-			/* 8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
-			 Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 1 erhöht.
-			 Dann wird geprüft, ob MCBASE auf 63 steht und bei positivem Vergleich
-			 der DMA und die Darstellung für das jeweilige Sprite abgeschaltet. */
-
-			for (int i = 0; i < 8; i++) {
-				uint8_t mask = (1 << i);
-				if (expansionFF & mask) {
-					mcbase[i] += 3;
-					mcbase[i] &= 0x3F; // 6 bit counter
-				}
-				if (mcbase[i] == 63) {			
-					// spriteOnOff &= ~mask;
-					spriteDmaOnOff &= ~mask;
-				}
-			}			
-			break;
-			
-		case 18:	
-			if (!isCSEL()) mainFrameFF = false;
-			break;
-			
-		case 55:
-			if (!isCSEL()) mainFrameFF = true;
-
-			/* In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
-			invertiert, wenn das MxYE-Bit gesetzt ist. */
-			expansionFF ^= iomem[0x17];
-
-			/* In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
-			ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
-			Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
-			unteren 8 Bits von RASTER ist. Ist dies der Fall und der DMA für das
-			Sprite noch ausgeschaltet, wird der DMA angeschaltet, MCBASE gelöscht
-			und, wenn das MxYE-Bit gesetzt ist, das Expansions-Flipflop gelˆscht.
-			 */
-			// determine which sprites are displayes in the next rasterline
-			for (int i = 0; i < 8; i++) {
-				if (spriteIsEnabled(i)) {
-					uint8_t y = getSpriteY(i);
-					if (y == (scanline & 0xff)) {
-						spriteDmaOnOff |= (1 << i);
-						mcbase[i] = 0;
-						if (spriteHeightIsDoubled(i))
-							expansionFF &= ~(1 << i);
-					}
-				}
-			}
-			break;
-
-		case 57:
-			if (isCSEL()) mainFrameFF = true;
-			drawHorizontalFrame = mainFrameFF;
-			break;
-			
-		case 58:			
-			/* Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile, 
-			wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt.
-			In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
-			geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
-			(VC->VCBASE). Ist die Videologik danach im Display-Zustand (liegt ein
-			Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhöht. */
-			if (displayState && registerRC == 7 && !dmaLine) {
-				displayState = false;	
-				registerVCBASE = registerVC;	
-			}
-			if (displayState) {
-				registerRC++;
-				registerRC &= 7;  // 3 bit overflow
-			}
-			
-			/* In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE
-			geladen (MCBASE->MC) und geprüft, ob der DMA für das Sprite angeschaltet
-			und die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
-			ist. Ist dies der Fall, wird die Darstellung des Sprites angeschaltet. */
-			oldSpriteOnOff = spriteOnOff; // remember last value
-			for (int i = 0; i < 8; i++) {
-				mc[i] = mcbase[i];
-				uint8_t mask = (1 << i);
-				if (spriteDmaOnOff & mask) {
-					uint8_t y = getSpriteY(i);
-					if (y == (scanline & 0xff)) 
-						spriteOnOff |= mask;
-				}
-			}
-			
-			/* Draw rasterline into pixel buffer */
-			drawSpritesM();
-			
-			// switch off sprites if dma is off
-			for (int i = 0; i < 8; i++) {
-				uint8_t mask = (1 << i);
-				if ((spriteOnOff & mask) && !(spriteDmaOnOff & mask))
-					spriteOnOff &= ~mask;
-			}
-			
-			
-			if (spriteDmaOnOff & (1 << 0))
-				cpu->setRDY(2);
-			readSpritePtr(0);
-			readSpriteData(0);
-			break;
-
-		case 59:
-			readSpriteData(0);
-			readSpriteData(0);
-			break;
-		case 60:
-			if (spriteDmaOnOff & (1 << 1))
-				cpu->setRDY(2);
-			readSpritePtr(1);
-			readSpriteData(1);
-			break;
-		case 61:
-			readSpriteData(1);
-			readSpriteData(1);
-			break;
-		case 62:
-			if (spriteDmaOnOff & (1 << 2))
-				cpu->setRDY(2);
-			readSpritePtr(2);
-			readSpriteData(2);
-			break;
-		case 63:
-			readSpriteData(2);
-			readSpriteData(2);
-			
-			// update border flipflops
-			if (scanline == 51 && isRSEL() && isVisible()) 
-				drawVerticalFrame = verticalFrameFF = false;
-			else if (scanline == 55 && !isRSEL() && isVisible()) 
-				drawVerticalFrame = verticalFrameFF = false;
-			else if (scanline == 247 && !isRSEL()) 
-				drawVerticalFrame = verticalFrameFF = true;
-			else if (scanline == 251 && isRSEL()) 
-				drawVerticalFrame = verticalFrameFF = true;
-			
-			// draw border
-			drawBorder();
-
-			// draw debug markers
-			if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[WHITE]);
-			if (markIRQLines && scanline == rasterInterruptLine()) markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
-			if (rasterlineDebug[scanline] >= 0) {
-				markLine(0, TOTAL_SCREEN_WIDTH, colors[rasterlineDebug[scanline] % 16]);
-				rasterlineDebug[scanline] = -1;
-			}			
-			break;
-			
-	}
 }
 
 void inline
@@ -1046,13 +789,13 @@ int debug1 = 0;
 void 
 VIC::beginFrame()
 {
-	lightpenIRQhasOccured = false;
+	lightpenIRQhasOccured = false; // only one event per frame is permitted
+	registerVCBASE = 0;
 }
 
 void 
 VIC::endFrame()
 {
-	// frame++;
 	// Frame complete. Notify listener...
 	getListener()->drawAction(currentScreenBuffer);
 	
@@ -1064,8 +807,6 @@ void
 VIC::beginRasterline(uint16_t line)
 {
 	scanline = line;
-//	if (scanline == 250)
-//		rasterlineDebug[scanline] = YELLOW;
 		
 	// Clear z buffer. The buffer is initialized with a high, positive value (meaning the pixel is far away)
 	memset(zBuffer, 0x7f, sizeof(zBuffer));
@@ -1083,14 +824,270 @@ VIC::endRasterline()
 
 
 /* this method attempts to implement a cycle exact model of the VIC behaviour.
-a complete documentation would be too long. For Information, 
-please have look at the exellent VIC-II documentation by Christian Bauer. */
+a complete documentation would be too long. It is based on the excellent VIC-II documentation by Christian Bauer. */
 void 
 VIC::executeOneCycle(uint16_t c)
 {
 	cycle = c;
+		
+	dmaLine = dmaLinesEnabled && isDMALine();
+	/* Der Übergang vom Idle- in den Display-Zustand erfolgt, sobald ein Bad-Line-Zustand auftritt */
+	if (dmaLine) displayState = true;
 	
-	updateRegisters0();
+	switch (cycle) {
+		case 1:
+			// (1) Trigger rasterline interrupt if applicable
+			// (2) Determine the value of the DEN bit (in rasterline 0x30 only)
+			// (3) Get sprite data address and sprite data of sprite 3
+
+			// Trigger rasterline interrupt if applicable
+			// Note: In line 0, the interrupt is triggered in cycle 2
+			if (scanline != 0 && scanline == rasterInterruptLine())
+				triggerIRQ(1);
+			
+			// Determine the value of the DEN bit (in rasterline 0x30 only)
+			if (scanline == 0x30)
+				dmaLinesEnabled = isVisible();
+			
+			// Get sprite data address and sprite data of sprite 3
+			readSpritePtr(3);
+			readSpriteData(3);
+			//if (!(spriteDmaOnOff & 0x18)) setBA(0);
+			break;
+		case 2:
+			// Trigger rasterline interrupt if applicable
+			if (0 == rasterInterruptLine())
+				triggerIRQ(1);
+			
+			readSpriteData(3);
+			readSpriteData(3);
+			requestBusForSprite(5);
+			releaseBusForSprite(2);
+			break;
+		case 3:
+			readSpritePtr(4);
+			readSpriteData(4);
+			break;
+		case 4:
+			readSpriteData(4);
+			readSpriteData(4);
+			requestBusForSprite(6);
+			releaseBusForSprite(3);
+			break;
+		case 5:
+			readSpritePtr(5);
+			readSpriteData(5);
+			break;
+		case 6:
+			readSpriteData(5);
+			readSpriteData(5);
+			requestBusForSprite(7);
+			releaseBusForSprite(4);
+			break;
+		case 7:
+			readSpritePtr(6);
+			readSpriteData(6);
+			break;
+		case 8:
+			readSpriteData(6);
+			readSpriteData(6);
+			releaseBusForSprite(5);
+			break;
+		case 9:
+			readSpritePtr(7);
+			readSpriteData(7);
+			break;
+		case 10:
+			readSpriteData(7);
+			readSpriteData(7);
+			releaseBusForSprite(6);
+			break;
+		case 11:
+			// setBA(1);
+			break;
+		case 12:
+			if (dmaLine) {
+				pullDownBA(0x100);
+			}
+			releaseBusForSprite(7);
+			break;
+		case 14:
+			/* In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
+			 (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
+			 Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt. */
+			registerVC = registerVCBASE;
+			registerVMLI = 0;
+			if (dmaLine) registerRC = 0;
+			break;
+			
+		case 15:
+			/* In der ersten Phase von Zyklus 15 wird geprüft, ob das
+			 Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 2 erhöht. */
+			// Note: Done in cycle 16
+			break;
+			
+		case 16:
+			if (isCSEL()) mainFrameFF = false;		
+			
+			/* 8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
+			 Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 1 erhöht.
+			 Dann wird geprüft, ob MCBASE auf 63 steht und bei positivem Vergleich
+			 der DMA und die Darstellung für das jeweilige Sprite abgeschaltet. */
+			
+			for (int i = 0; i < 8; i++) {
+				uint8_t mask = (1 << i);
+				if (expansionFF & mask) {
+					mcbase[i] += 3;
+					mcbase[i] &= 0x3F; // 6 bit counter
+				}
+				if (mcbase[i] == 63) {			
+					// spriteOnOff &= ~mask;
+					spriteDmaOnOff &= ~mask;
+				}
+			}			
+			break;
+			
+		case 18:	
+			if (!isCSEL()) mainFrameFF = false;
+			break;
+			
+		case 55:
+			if (!isCSEL()) mainFrameFF = true;
+			
+			/* In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
+			 invertiert, wenn das MxYE-Bit gesetzt ist. */
+			expansionFF ^= iomem[0x17];
+			
+			/* In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
+			 ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
+			 Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
+			 unteren 8 Bits von RASTER ist. Ist dies der Fall und der DMA für das
+			 Sprite noch ausgeschaltet, wird der DMA angeschaltet, MCBASE gelöscht
+			 und, wenn das MxYE-Bit gesetzt ist, das Expansions-Flipflop gelˆscht.
+			 */
+			// determine which sprites are displayes in the next rasterline
+			for (int i = 0; i < 8; i++) {
+				if (spriteIsEnabled(i)) {
+					uint8_t y = getSpriteY(i);
+					if (y == (scanline & 0xff)) {
+						spriteDmaOnOff |= (1 << i);
+						mcbase[i] = 0;
+						if (spriteHeightIsDoubled(i))
+							expansionFF &= ~(1 << i);
+					}
+				}
+			}
+			releaseBA(0x100);
+			requestBusForSprite(0);
+			break;
+		case 56:
+			break;
+		case 57:
+			if (isCSEL()) mainFrameFF = true;
+			drawHorizontalFrame = mainFrameFF;
+			requestBusForSprite(1);
+			break;			
+		case 58:				
+			/* Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile, 
+			 wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt.
+			 In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
+			 geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
+			 (VC->VCBASE). Ist die Videologik danach im Display-Zustand (liegt ein
+			 Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhöht. */
+			if (displayState && registerRC == 7 && !dmaLine) {
+				displayState = false;	
+				registerVCBASE = registerVC;	
+			}
+			if (displayState) {
+				registerRC++;
+				registerRC &= 7;  // 3 bit overflow
+			}
+			
+			/* In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE
+			 geladen (MCBASE->MC) und geprüft, ob der DMA für das Sprite angeschaltet
+			 und die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
+			 ist. Ist dies der Fall, wird die Darstellung des Sprites angeschaltet. */
+			oldSpriteOnOff = spriteOnOff; // remember last value
+			for (int i = 0; i < 8; i++) {
+				mc[i] = mcbase[i];
+				uint8_t mask = (1 << i);
+				if (spriteDmaOnOff & mask) {
+					uint8_t y = getSpriteY(i);
+					if (y == (scanline & 0xff)) 
+						spriteOnOff |= mask;
+				}
+			}
+			
+			/* Draw rasterline into pixel buffer */
+			drawSpritesM();
+			
+			// switch off sprites if dma is off
+			for (int i = 0; i < 8; i++) {
+				uint8_t mask = (1 << i);
+				if ((spriteOnOff & mask) && !(spriteDmaOnOff & mask))
+					spriteOnOff &= ~mask;
+			}
+			
+			
+			readSpritePtr(0);
+			readSpriteData(0);
+			break;
+			
+		case 59:
+			readSpriteData(0);
+			readSpriteData(0);
+			// prepare bus access for sprite 0
+			if (spriteDmaOnOff & 0x01) pullDownBA(0x01);
+			requestBusForSprite(2);
+			break;
+		case 60:
+			if (spriteDmaOnOff & (1 << 1))
+				cpu->setRDY(2);
+			readSpritePtr(1);
+			readSpriteData(1);
+			break;
+		case 61:
+			readSpriteData(1);
+			readSpriteData(1);
+			requestBusForSprite(3);
+			releaseBusForSprite(0);
+			break;
+		case 62:
+			if (spriteDmaOnOff & (1 << 2))
+				cpu->setRDY(2);
+			readSpritePtr(2);
+			readSpriteData(2);
+			break;
+		case 63:
+			readSpriteData(2);
+			readSpriteData(2);
+			// if (spriteDmaOnOff & 0x10) setBA(0);			
+			
+			// update border flipflops
+			if (scanline == 51 && isRSEL() && isVisible()) 
+				drawVerticalFrame = verticalFrameFF = false;
+			else if (scanline == 55 && !isRSEL() && isVisible()) 
+				drawVerticalFrame = verticalFrameFF = false;
+			else if (scanline == 247 && !isRSEL()) 
+				drawVerticalFrame = verticalFrameFF = true;
+			else if (scanline == 251 && isRSEL()) 
+				drawVerticalFrame = verticalFrameFF = true;
+			
+			// draw border
+			drawBorder();
+			
+			// draw debug markers
+			if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[WHITE]);
+			if (markIRQLines && scanline == rasterInterruptLine()) markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
+			if (rasterlineDebug[scanline] >= 0) {
+				markLine(0, TOTAL_SCREEN_WIDTH, colors[rasterlineDebug[scanline] % 16]);
+				rasterlineDebug[scanline] = -1;
+			}		
+			requestBusForSprite(4);
+			releaseBusForSprite(1);
+			break;
+	}
+		
 	// this is the "g-access" 
 	if (cycle >= 16 && cycle <= 55) {
 		gAccess(); //TODO could be optimized here, only perform when the frame flipflop is off

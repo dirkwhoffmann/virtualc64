@@ -299,7 +299,7 @@ public:
 	
 	//! Set emulation speed
 	void setHz(int h);
-	
+		
 	// Returns the number of frames per second
 	/*! Number varies between PAL and NTSC machines */	
 	inline int getFramesPerSecond() { return fps; }

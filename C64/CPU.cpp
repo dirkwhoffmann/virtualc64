@@ -67,9 +67,10 @@ CPU::reset()
 	setZ(0);
 	setC(0);
 
+	// Set initial execution function
+	next = &CPU::fetch;
+	
 	assert(mem != NULL);
-	// setPCL(mem->peek(0xFFFC)); 
-	// setPCH(mem->peek(0xFFFD));	
 }
 
 // Instruction set
@@ -126,48 +127,51 @@ CPU::getAddressOfNextIthInstruction(int i, uint16_t addr)
 }
 
 char *
-CPU::disassemble()
+CPU::disassemble(uint64_t state)
 {
 	char buf[64], msg[128];
-
 	int i, op;
-	uint8_t opcode = mem->peek(PC);	
-	
+
+	// Unpack state
+	uint8_t y = (uint8_t)(state & 0xff); state >>= 8;
+	uint8_t x = (uint8_t)(state & 0xff); state >>= 8;
+	uint8_t a = (uint8_t)(state & 0xff); state >>= 8;
+	uint8_t p = (uint8_t)(state & 0xff); state >>= 8;
+	uint8_t sp = (uint8_t)(state & 0xff); state >>= 8;		
+	uint16_t pc = (uint16_t)(state & 0xffff);
+	uint8_t opcode = mem->peek(pc);	
+		
 	strcpy(msg, "");
 	
-	// Clock cylce
-	sprintf(buf, "%07d: ", cycles);
-	strcat(msg, buf);
-	
 	// Program counter
-	sprintf(buf, "%04X: ", PC);
+	sprintf(buf, "%04X: ", pc);
 	strcat(msg, buf);
 	
 	// Hex dump
 	for (i = 0; i < 3; i++) {
-		if (i < getLengthOfInstruction(mem->peek(PC))) {
-			sprintf(buf, "%02X ", mem->peek(PC+i));
+		if (i < getLengthOfInstruction(opcode)) {
+			sprintf(buf, "%02X ", mem->peek(pc+i));
 			strcat(msg, buf);
 		} else {
 			sprintf(buf, "   ");
 			strcat(msg, buf);
 		}
 	}
-
+	
 	// Register
-	sprintf(buf, "  %02X %02X %02X %02X ", A, X, Y, SP);
+	sprintf(buf, "  %02X %02X %02X %02X ", a, x, y, sp);
 	strcat(msg, buf);
 	
 	// Flags
 	sprintf(buf, "%c%c%c%c%c%c%c%c ",
-		getN() ? 'N' : 'n',
-		getV() ? 'V' : 'v',
-		'-',
-		getB() ? 'B' : 'b',
-		getD() ? 'D' : 'd',
-		getI() ? 'I' : 'i',
-		getZ() ? 'Z' : 'z',
-		getC() ? 'C' : 'c');
+			(p & N_FLAG) ? 'N' : 'n',
+			(p & V_FLAG) ? 'V' : 'v',
+			'-',
+			(p & B_FLAG) ? 'B' : 'b',
+			(p & D_FLAG) ? 'D' : 'd',
+			(p & I_FLAG) ? 'I' : 'i',
+			(p & Z_FLAG) ? 'Z' : 'z',
+			(p & C_FLAG) ? 'C' : 'c');
 	strcat(msg, buf);
 	
 	// Mnemonic
@@ -182,17 +186,17 @@ CPU::disassemble()
 		case CPU::ADDR_ZERO_PAGE_Y:
 		case CPU::ADDR_INDIRECT_X:
 		case CPU::ADDR_INDIRECT_Y:
-			op = mem->peek(PC+1);
+			op = mem->peek(pc+1);
 			break;
 		case CPU::ADDR_DIRECT:			
 		case CPU::ADDR_INDIRECT:
 		case CPU::ADDR_ABSOLUTE:
 		case CPU::ADDR_ABSOLUTE_X:
 		case CPU::ADDR_ABSOLUTE_Y:
-			op = mem->peekWord(PC+1);
+			op = mem->peekWord(pc+1);
 			break;
 		case CPU::ADDR_RELATIVE:
-			op = PC + 2 + (int8_t)mem->peek(PC+1);
+			op = pc + 2 + (int8_t)mem->peek(pc+1);
 			break;
 		default:
 			op = -1;
@@ -202,6 +206,7 @@ CPU::disassemble()
 	switch (addressingMode[opcode]) {
 		case CPU::ADDR_IMPLIED:
 		case CPU::ADDR_ACCUMULATOR:
+			sprintf(buf, "");
 			break;
 		case CPU::ADDR_IMMEDIATE:					
 			sprintf(buf, "#%02X", op);
@@ -246,6 +251,12 @@ CPU::disassemble()
 	return strdup(msg);
 }
 
+char *
+CPU::disassemble()
+{
+	return disassemble(packState());
+}
+
 bool 
 CPU::load(FILE *file) 
 {
@@ -256,7 +267,8 @@ CPU::load(FILE *file)
 	setSP(read8(file));
 	setP(read8(file));
 	setPC(read16(file));
-	cycles = read64(file);
+	// cycles = read64(file);
+	(void)read64(file);
 	irqLine = read8(file);
 	nmiLine = read8(file);
 	setErrorState((ErrorState)read32(file));
@@ -276,7 +288,8 @@ CPU::save(FILE *file)
 	write8(file, SP);
 	write8(file, getP());
 	write16(file, getPC());
-	write64(file, cycles);
+	//write64(file, cycles);
+	write64(file,0);
 	write8(file, irqLine);
 	write8(file, nmiLine);
 	write32(file, (uint32_t)getErrorState());
@@ -289,87 +302,42 @@ CPU::save(FILE *file)
 void 
 CPU::dumpState() 
 {
+	debug("CPU state:\n");
+	debug("%s", disassemble());
 	debug("PC:%05X SP:%03X A:%03X X:%03X Y:%03X\n", getPC(), getSP(), getA(), getX(), getY());
 	debug("N:%d V:%d B:%d D:%d I:%d Z:%d C:%d\n", getN(), getV(), getB(), getD(), getI(), getZ(), getC());
 	debug("IRQ:%d NMI:%d\n", irqLine, nmiLine);
-}
-
-// Execute a single command
-int
-CPU::step() 
-{	
-	int elapsedCycles; 
-
-	// Execute next CPU instruction
-	elapsedCycles = (*this.*actionFunc[peekPC()])();
-	// assert(elapsedCycles >= 0);
-	cycles += elapsedCycles;
-
-	// Disassemble next instruction, if requested
-	if (tracingEnabled()) {
-		//getListener()->logAction(disassemble());
-		debug("%s", disassemble());
-	}
-
-	return elapsedCycles;
+	debug("opcode:%02X addr_lo:%02X addr_hi: %02X ptr: %02X\n", opcode, addr_lo, addr_hi, ptr);
+	debug("(IRQ): %02X%02X (NMI): %02X%02X\n\n", mem->peek(0xFFFF), mem->peek(0xFFFE), mem->peek(0xFFFB), mem->peek(0xFFFA));
 }
 
 void 
-CPU::executeOneCycle()
+CPU::dumpHistory()
 {
-	if (rdyLine) {
-		rdyLine--;
-		return;
+	printf("irqHistory: %02X nmiHistory: %02X\n", irqHistory, nmiHistory);
+	uint8_t i = historyPtr;
+	for (int j = 0; j < 256; j++) {
+		debug("%s", disassemble(history[i]));
+		i++;
 	}
-	
-	if (delay) {
-		delay --;
-		return;
-	}
-	
-	uint64_t startCycles = cycles;
-	int executedCycles; // number of cycles consumed by the executed command
-	
-
-	// Check for interrupt request
-	if (nmiLine) {
-		// The NMI line is cleared. Otherwise, the NMI would be recursively interrupted by itself
-		clearNMILine(0xff);
-		mem->poke(0x100+(SP--), HI_BYTE(PC));
-		mem->poke(0x100+(SP--), LO_BYTE(PC));
-		mem->poke(0x100+(SP--), getPWithClearedB());	
-		setI(1);
-		setPCL(mem->peek(0xFFFA));
-		setPCH(mem->peek(0xFFFB));
-		cycles += 7;
-	} else if (irqLine && !getI()) {
-		mem->poke(0x100+(SP--), HI_BYTE(PC));
-		mem->poke(0x100+(SP--), LO_BYTE(PC));
-		mem->poke(0x100+(SP--), getPWithClearedB());	
-		setI(1);
-		setPCL(mem->peek(0xFFFE));
-		setPCH(mem->peek(0xFFFF));
-		cycles += 7;
-	} else {					
-		(void)step();
-	}
-	
-	// Check breakpoint tag
-	if (breakpoint[PC] != NO_BREAKPOINT) {
-		// Soft breakpoints get deleted when reached
-		breakpoint[PC] &= (255 - SOFT_BREAKPOINT);
-		setErrorState(BREAKPOINT_REACHED);
-		debug("Breakpoint reached\n");
-	}
-			
-	executedCycles = (int)(cycles - startCycles);
-	if (executedCycles < 1 || executedCycles > 20)  {
-		debug("WARNING: Something is wrong with the cycle count %d %04X!!!\n", executedCycles, getPC());
-		debug("cycles = %d startCycles = %d\n", (int)cycles, (int)startCycles);
-	}
-	delay = executedCycles - 1;	
+	debug("End of history trace\n");
 }
 
+
+// Execute a single command
+void
+CPU::step() 
+{	
+	// Execute cycles until we reach the beginning of the next command
+	do {
+		executeOneCycle();
+		if (tracingEnabled()) {
+			// Disassemble instruction
+			debug("%s", disassemble());
+		}		
+	} while (next != &CPU::fetch);
+	
+}
 	
 CPU::ErrorState 
 CPU::getErrorState() 

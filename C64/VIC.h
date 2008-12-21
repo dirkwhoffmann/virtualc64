@@ -162,6 +162,11 @@ private:
 	/*! If a value is poked to the VIC address space, it is stored here. */
 	uint8_t iomem[1 + VIC_END_ADDR - VIC_START_ADDR];
 
+	//! BA line
+	/*! The BA line can be pulled down by multiple sources. Each source is represented by a single bit.
+		Hence, the BA is low, if at least one bit is 1, BA is high, if all bits are zero. */
+	uint16_t BAlow;
+	
 	//! All 16 color codes in an array
 	uint32_t colors[16];
 
@@ -604,6 +609,20 @@ public:
 	//! Set character memory start address
 	void setCharacterMemoryAddr(uint16_t addr);
 
+	//! Set BA line to low
+	/*! Note: The BA pin is directly connected to the RDY line of the CPU */
+	 void pullDownBA(uint16_t source);
+
+	//! Set BA line to high
+	/*! Note: The BA pin is directly connected to the RDY line of the CPU */
+	 void releaseBA(uint16_t source);
+	
+	//! Request memory bus for a specific sprite
+	inline void requestBusForSprite(uint8_t spriteNr) { if (spriteDmaOnOff & (1 << spriteNr)) pullDownBA(1 << spriteNr); }
+
+	//! Release memory bus for a specific sprite
+	inline void releaseBusForSprite(uint8_t spriteNr) { releaseBA(1 << spriteNr); }
+	 
 	//! Returns true, if the specified rasterline is a DMA line
 	/*! Every eigths row, the VIC chip performs a DMA access and fetches data from screen memory and color memory
 		The first DMA access occurrs within lines 0x30 to 0xf7 and  */

@@ -178,29 +178,17 @@ void ListenerProxy::logAction(char *message)
 - (void) setFrameDelay:(int)delay { c64->frameDelay = delay; }
 - (int) buildNr { return c64->build(); }
 
-//- (bool) isBasicRom:(NSString *)filename { return c64->mem->isBasicRom([filename UTF8String]); }
-//- (bool) isCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]); }
-//- (bool) isKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]); }
-//- (bool) isVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]); }
 - (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
 - (int) missingRoms { return c64->getMissingRoms(); }
 - (bool) loadBasicRom:(NSString *)filename { return c64->mem->isBasicRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
-//- (bool) loadRom:(NSString *)filename { return c64->loadRom([filename UTF8String]); }
 - (bool) loadSnapshot:(NSString *)filename { return c64->loadSnapshot([filename UTF8String]); }
 - (bool) saveSnapshot:(NSString *)filename { return c64->saveSnapshot([filename UTF8String]); }
 
 - (bool) cpuGetWarpMode { return c64->getWarpMode(); }
 - (void) cpuSetWarpMode:(bool)b {  c64->setWarpMode(b); }
-
-// - (void) cpuSetWarpMode:(bool)b { c64->setWarpMode(b); }
-//- (void) cpuToggleWarpMode { c64->setWarpMode(!c64->getWarpMode()); }
-// - (void) cpuToggleAlwaysWarp { c64->setAlwaysWarp(!c64->getAlwaysWarp()); }
-
-// - (void) setWarpLoad:(bool)b { c64->setWarpLoad(b); }
-//- (void) setAlwaysWarp:(bool)b { c64->setAlwaysWarp(b); }
 
 - (void) dumpCPU { cpu->dumpState(); }
 - (void) dumpCIA { c64->cia1->dumpState(); c64->cia2->dumpState(); }
@@ -214,7 +202,7 @@ void ListenerProxy::logAction(char *message)
 // CPU
 // --------------------------------------------------------------------------
 
-- (long) cpuGetCycles { return cpu->getCycles(); }
+- (long) cpuGetCycles { return (long)cpu->getCycles(); }
 - (bool) cpuTracingEnabled { return cpu->tracingEnabled(); }
 - (void) cpuSetTraceMode:(bool)b { cpu->setTraceMode(b); }
 - (bool) iecTracingEnabled { return iec->tracingEnabled(); }
