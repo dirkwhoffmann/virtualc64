@@ -25,9 +25,8 @@ void
 CPU::fetch() {
 	
 	// Used for debugging...
-	history[historyPtr++] = packState(); 
-	//oldPC = PC;
-	
+	// history[historyPtr++] = packState(); 
+
 	// Check interrupt line
 	/* "Ist dieser Eingang auf Low-Pegel, wird eine Interruptbearbeitung ausgelšst, sofern der Interrupt
 	 Ÿber ein Bit im Statusregister freigegeben wurde. Die Unterbrechung erfolgt frŸhestens nach zwei 
@@ -430,11 +429,12 @@ inline void CPU::irq_5()
 }
 inline void CPU::irq_6()
 {
-	setPCL(mem->peek(0xFFFE));
+	data = mem->peek(0xFFFE);
 	next = &CPU::irq_7;
 }
 inline void CPU::irq_7()
 {
+	setPCL(data);
 	setPCH(mem->peek(0xFFFF));
 	DONE;
 }
@@ -475,11 +475,12 @@ inline void CPU::nmi_5()
 }
 inline void CPU::nmi_6()
 {
-	setPCL(mem->peek(0xFFFA));
+	data = mem->peek(0xFFFA);
 	next = &CPU::nmi_7;
 }
 inline void CPU::nmi_7()
 {
+	setPCL(data);
 	setPCH(mem->peek(0xFFFB));
 	DONE;
 }
@@ -1383,11 +1384,12 @@ void CPU::BRK_4()
 }
 void CPU::BRK_5()
 {
-	setPCL(mem->peek(0xFFFE));
+	data = mem->peek(0xFFFE);
 	next = &CPU::BRK_6;
 }
 void CPU::BRK_6()
 {
+	setPCL(data);
 	setPCH(mem->peek(0xFFFF));	
 	setI(1);
 	DONE;
