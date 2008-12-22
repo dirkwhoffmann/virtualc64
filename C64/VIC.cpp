@@ -856,7 +856,7 @@ VIC::executeOneCycle(uint16_t c)
 			break;
 		case 2:
 			// Trigger rasterline interrupt if applicable
-			if (0 == rasterInterruptLine())
+			if (scanline == 0 && scanline == rasterInterruptLine())
 				triggerIRQ(1);
 			
 			readSpriteData(3);

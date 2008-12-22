@@ -101,6 +101,7 @@ void Memory::poke(uint16_t addr, uint8_t value)
 	// Check for a watchpoint
 	if (checkWatchpoint(addr, value)) {
 		debug("Poke: Watchpoint reached, access to address %04X\n", addr);
+		cpu->dumpHistory();
 		cpu->setErrorState(CPU::WATCHPOINT_REACHED);
 	}
 	

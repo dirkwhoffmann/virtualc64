@@ -238,6 +238,7 @@ CIA::triggerInterrupt(uint8_t source)
 	// Trigger interrupt, if enabled
 	if (iomem[CIA_INTERRUPT_CONTROL] & source) {
 		// The uppermost bit indicates that an interrupt occured
+		// printf("Triggering CIA interrupt at cycle %d\n", (int)cpu->getCycles());
 		interruptDataRegister |= 0x80;
 		raiseInterruptLine();
 	}
@@ -355,10 +356,10 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			(void)peek(CIA_INTERRUPT_CONTROL);
 			
 			if (value & 0x80) {
-				uint8_t mask = (iomem[addr] ^ value) & value & 0x7F; // get bits 0..6 with a raising edge
+				//uint8_t mask = (iomem[addr] ^ value) & value & 0x7F; // get bits 0..6 with a raising edge
 				iomem[addr] |= (value & 0x7F);
 				// trigger pending interrupts
-				triggerInterrupt(interruptDataRegister & mask);
+				// triggerInterrupt(interruptDataRegister & mask);
 			} else { 
 				iomem[addr] &= ~value;
 			}
@@ -436,16 +437,6 @@ CIA::executeOneCycle()
 	// return true;
 }
 
-void 
-CIA::execute(int cycles)
-{
-	while (cycles > 0) {
-		(void)executeOneCycle();
-		cycles--;
-	}
-	//return true;
-}
-		
 void CIA::dumpState()
 {
 	debug("Timer A: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
