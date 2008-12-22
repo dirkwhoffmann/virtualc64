@@ -356,10 +356,10 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			(void)peek(CIA_INTERRUPT_CONTROL);
 			
 			if (value & 0x80) {
-				//uint8_t mask = (iomem[addr] ^ value) & value & 0x7F; // get bits 0..6 with a raising edge
+				uint8_t mask = (iomem[addr] ^ value) & value & 0x7F; // get bits 0..6 with a raising edge
 				iomem[addr] |= (value & 0x7F);
 				// trigger pending interrupts
-				// triggerInterrupt(interruptDataRegister & mask);
+				triggerInterrupt(interruptDataRegister & mask);
 			} else { 
 				iomem[addr] &= ~value;
 			}

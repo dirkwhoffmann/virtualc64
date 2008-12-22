@@ -135,8 +135,9 @@ private:
 	// Internal data register
 	uint8_t data;
 	
-	// Program counter
+	//! Program counter
 	uint16_t PC;
+	
 	// Stack pointer
 	uint8_t SP;
 		
@@ -211,9 +212,6 @@ private:
 	//! CPU state history
 	/*! Used for debugging only */
 	uint64_t history[256];
-public:
-	uint16_t oldPC;
-private:
 	
 	//! Read/Write pointer into history buffer 
 	uint8_t historyPtr;
