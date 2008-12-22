@@ -25,7 +25,7 @@ void
 CPU::fetch() {
 	
 	// Used for debugging...
-	//history[historyPtr++] = packState(); 
+	history[historyPtr++] = packState(); 
 	//oldPC = PC;
 	
 	// Check interrupt line
