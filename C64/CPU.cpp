@@ -44,11 +44,15 @@ CPU::reset()
 {
 	debug("  Resetting CPU...\n");
 
+	// Delete this...
+	rtiExecuted = true;
+	
 	// Initialize internal state
 	errorState = OK;
 	cycles = 0LL;
 	rdyLine = 1;
-	nmiLine = 0;	
+	nmiLine = 0;
+	nmiNegEdge = false;
 	irqLine = 0;	
 	callStackPointer = 0;
 	delay = 0;

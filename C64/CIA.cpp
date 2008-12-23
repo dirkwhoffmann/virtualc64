@@ -190,11 +190,8 @@ CIA::reset()
 	iomem[CIA_DATA_PORT_B] = 0xff;	
 	timerA = 0;
 	timerB = 0;
-	// dataPortA = 0xff;
-	// dataPortB = 0xff;
 	portLinesA = 0xff;
 	portLinesB = 0xff;
-	// interruptControl = 0;
 	interruptDataRegister = 0;
 	tod.reset();
 }
@@ -238,7 +235,7 @@ CIA::triggerInterrupt(uint8_t source)
 	// Trigger interrupt, if enabled
 	if (iomem[CIA_INTERRUPT_CONTROL] & source) {
 		// The uppermost bit indicates that an interrupt occured
-		// printf("Triggering CIA interrupt at cycle %d\n", (int)cpu->getCycles());
+		// printf("Triggering CIA interrupt (source = %02X) at cycle %d\n", source, (int)cpu->getCycles());
 		interruptDataRegister |= 0x80;
 		raiseInterruptLine();
 	}
@@ -350,11 +347,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_INTERRUPT_CONTROL:
-			// Problem: Some adressing modes implicitely read the contents of a register, even if it's a write operation
-			//          In that case, all bits would be cleared. To simulate the behavior, we immediate a "peek" before 
-			//          *each* write operation. TODO: Think about a clean solution.
-			(void)peek(CIA_INTERRUPT_CONTROL);
-			
 			if (value & 0x80) {
 				uint8_t mask = (iomem[addr] ^ value) & value & 0x7F; // get bits 0..6 with a raising edge
 				iomem[addr] |= (value & 0x7F);
@@ -441,9 +433,15 @@ void CIA::dumpState()
 {
 	debug("Timer A: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
 		  timerA, 
-		  isInterruptEnabledA() ? "yes" : "no",
 		  isStartedA()          ? "yes" : "no",
+		  isInterruptEnabledA() ? "yes" : "no",
 		  isOneShotA()          ? "yes" : "no");
+	debug("Timer B: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
+		  timerB, 
+		  isStartedB()          ? "yes" : "no",
+		  isInterruptEnabledB() ? "yes" : "no",
+		  isOneShotB()          ? "yes" : "no");
+	
 }
 
 // -----------------------------------------------------------------------------------------
@@ -605,7 +603,7 @@ CIA1::poke(uint16_t addr, uint8_t value)
 				vic->simulateLightPenInterrupt();
 			}
 			return;
-			
+		
 		default:
 			CIA::poke(addr, value);
 	}
@@ -728,7 +726,7 @@ CIA2::poke(uint16_t addr, uint8_t value)
 		case CIA_DATA_DIRECTION_B:
 			iomem[addr] = value;
 			return;
-						
+			
 		default:
 			CIA::poke(addr, value);
 	}

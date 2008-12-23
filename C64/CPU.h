@@ -180,7 +180,12 @@ private:
 		If at least one bit is set, the CPU performs an interrupt, regardless of the value of the I flag. 
 		The IRQ line of the real CPU is driven by multiple sources (CIA, VIC). Each source is represented by a separate bit.
 	*/
-	uint8_t nmiLine;
+	uint8_t nmiLine; 
+	
+	//! Indicates the occurance of a negative edge on the NMI line
+	/*! The variable is set to 1, when the value of variable nmiLine is changed from 0 to another value. The variable is
+	    used to determine when an NMI interrupt needs to be triggered. */
+	bool nmiNegEdge;
 	
 	//! In this variable, we remember when the irqLine went down
 	/*! The value is needed to determine the exact time to trigger the interrupt */
@@ -218,12 +223,14 @@ private:
 
 	//!
 	uint8_t irqHistory, nmiHistory;
+	bool rtiExecuted;
 	
 	//! Location of the next free cell of the callstack
 	uint8_t callStackPointer;
 
 	//! Set bit of IRQ line
 	inline void setIRQLine(uint8_t bit) { 
+		assert(bit != 0);
 		if (irqLine == 0)
 			latestNegEdgeOnIrqLine = cycles;
 		irqLine |= bit; 
@@ -234,15 +241,18 @@ private:
 		irqLine &= (0xff - bit);
 	}
 
-	//! Check if IRQ line has been raised for at least 2 cycles
+	//! Check if IRQ line has been activated for at least 2 cycles
 	inline bool IRQLineRaisedLongEnough() { 
 		return (cycles - latestNegEdgeOnIrqLine) >= 2;
 	}
 	
 	//! Set bit of NMI line
 	inline void setNMILine(uint8_t bit) { 
-		if (irqLine == 0)
+		assert(bit != 0);
+		if (nmiLine == 0) {
+			nmiNegEdge = true;
 			latestNegEdgeOnNmiLine = cycles;
+		}
 		nmiLine |= bit; 
 	}
 
@@ -251,7 +261,7 @@ private:
 		nmiLine &= (0xff - bit); 
 	}
 	
-	//! Check if NMI line has been raised for at least 2 cycles
+	//! Check if NMI line has been activated for at least 2 cycles
 	inline bool NMILineRaisedLongEnough() { 
 			return (cycles - latestNegEdgeOnNmiLine) >= 2;
 	}

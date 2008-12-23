@@ -32,18 +32,27 @@ CPU::fetch() {
 	 über ein Bit im Statusregister freigegeben wurde. Die Unterbrechung erfolgt frühestens nach zwei 
 	 Taktzyklen beim Erreichen des nächsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im 
 	 Prozessor auslösen. Interrupts werden nur erkannt, wenn RDY high ist. */
-
-	// TODO: Not cycle accurate yet!!!!!
-	if (nmiLine) {
+	if (nmiNegEdge && NMILineRaisedLongEnough()) {
+		/*
 		if (nmiHistory)
-			printf("WARNING: STILL IN NMI INTERRUPT ROUTINE\n");
+			printf("NMI WARNING: STILL IN NMI INTERRUPT ROUTINE (%d)\n", nmiLine);
+		if (!rtiExecuted) 
+			printf("NMI WARNING: New Interrupt before previous RTI (%d)\n", nmiLine);
+		rtiExecuted = false;
 		nmiHistory = nmiLine;
+		*/
+		nmiNegEdge = false;
 		next = &CPU::nmi_2;
 		return;
-	} else if (irqLine && !getI()) {
+	} else if (irqLine && !getI() && IRQLineRaisedLongEnough()) {
+		/*
 		if (irqHistory)
-			printf("WARNING: STILL IN IRQ INTERRUPT ROUTINE\n");
+			printf("IRQ WARNING: STILL IN IRQ INTERRUPT ROUTINE (%d)\n", irqLine);
+		if (!rtiExecuted) 
+			printf("IRQ WARNING: New Interrupt before previous RTI (%d)\n", irqLine);
+		rtiExecuted = false;
 		irqHistory = irqLine;
+		*/
 		next = &CPU::irq_2;
 		return;
 	} 
@@ -450,10 +459,6 @@ inline void CPU::nmi()
 }
 inline void CPU::nmi_2()
 {
-	// We clear the NMI line. (otherwise, the NMI would be recursively interrupted by itself)
-	// This does not happen in a real C64(?). Perhaps, the NMI line is edge triggered (???)
-	clearNMILine(0xff);
-
 	IDLE_READ_IMPLIED;
 	next = &CPU::nmi_3;
 }
@@ -4089,6 +4094,7 @@ void CPU::ROR_indirect_x_7()
 
 void CPU::RTI()
 {
+	rtiExecuted = true;
 	IDLE_READ_IMMEDIATE;
 	next = &CPU::RTI_2;
 }
