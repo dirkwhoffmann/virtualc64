@@ -259,6 +259,8 @@
 - (IBAction)setWatchValue:(id)sender;
 
 // Debug pabel (CIA)
+- (IBAction)ciaSelectCiaAction:(id)sender;
+
 - (IBAction)ciaDataPortAAction:(id)sender;
 - (IBAction)ciaDataPortDirectionAAction:(id)sender;
 - (IBAction)ciaTimerAAction:(id)sender;
