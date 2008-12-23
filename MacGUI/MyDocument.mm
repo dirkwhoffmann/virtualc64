@@ -127,13 +127,6 @@
 	alwaysWarp = false;
 	enableOpenGL = false;  
 	
-	// Remove Debug when compiled as deployment target
-	#ifdef NDEBUG
-	// NSMenu* rootMenu = [NSApp mainMenu];
-	// [rootMenu removeItemAtIndex:3];
-	assert(false); // Should have no effect in deployment mode...
-	#endif
-	
 	// Create virtual C64
 	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];						
 
@@ -260,10 +253,7 @@
 	NSLog(@"windowControllerDidLoadNib");
 
 	[super windowControllerDidLoadNib:aController];
-   	
-	// Set minimum window size
-	[[self windowForSheet] setMinSize:NSMakeSize(652,432)];
-	
+   		
 	// Fix window aspect ratio
 	[[self windowForSheet] setContentAspectRatio:NSMakeSize(652,432)];
 
@@ -1036,8 +1026,13 @@
 
 
 // --------------------------------------------------------------------------------
-// Action methods (CIA 1)
+// Action methods (CIA)
 // --------------------------------------------------------------------------------
+
+- (IBAction)ciaSelectCiaAction:(id)sender
+{
+	[self refresh];
+}
 
 - (void)ciaSetDataPortA:(int)nr value:(uint8_t)v
 {
