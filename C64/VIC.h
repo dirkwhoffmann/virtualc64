@@ -190,7 +190,7 @@ private:
 
 	//! Reference to the connected virtual memory
 	C64Memory *mem;
-	
+		
 	//! Determines whether sprites are drawn or not
 	/*! During normal emulation, the value is always true. For debugging purposes, the value can be set to false.
 		In this case, sprites are no longer drawn.
@@ -445,9 +445,6 @@ private:
 	//! internal VIC-II register, 6 bit video matrix line index
 	uint8_t registerVMLI; 
 	
-	//! the current cycle of the current raster line.
-	/*! To stay consistent with the documentation the cycles start with 1 and go up to 63(PAL) or 65(NTSC). */
-	uint8_t cycle;
 	
 	//! This dertermines if a dma (bad line)  condidion is present
 	bool dmaLine;
@@ -490,15 +487,15 @@ private:
 	//! Sprite DMA on off
 	/*! Determines  if sprite dma access is enabled or disabled. Each bit represents a single sprite. */
 	uint8_t spriteDmaOnOff;
-		
-	//! implementation of the VIC register behaviour
-	void updateRegisters0();
-	
-	//! implementation of the VIC register behaviour
-	void updateRegisters1();
-	
-	//! the g-access of the VIC, this is the cycle based counterpart to drawInnerScanline
+			
+	//! Performs the g-access of the VIC
 	void gAccess();
+
+	//! Performs the c-access of the VIC
+	inline void cAccess();
+
+	//! Increase the x coordinate by 8
+	inline void countX() { xCounter += 8; }
 	
 	//! if enabled, marks the current scanline on certain conditions, like interrupts or something else
 	void markLine(int start, int end, int color);
@@ -627,7 +624,10 @@ public:
 	/*! Every eigths row, the VIC chip performs a DMA access and fetches data from screen memory and color memory
 		The first DMA access occurrs within lines 0x30 to 0xf7 and  */
 	inline bool isDMALine() { return scanline >= 0x30 && scanline <= 0xf7 && (scanline & 7) == getVerticalRasterScroll(); }	
-		
+
+	//! checkDmaLineCondition
+	inline void checkDmaLineCondition() { if (dmaLine = dmaLinesEnabled && isDMALine()) displayState = true; }
+	
 	//! Returns the vertical raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
 	inline int getVerticalRasterScroll() { return iomem[0x11] & 7; }
@@ -841,15 +841,16 @@ public:
 	//! Prepare for new rasterline
 	/*! This function is called prior to cycle 1 at the beginning of each rasterline */
 	void beginRasterline(uint16_t rasterline);
-	
-	//! Execute one VIC cycle
-	/*! Cycle based emulation routine, for better emulation. Additionally, all things executeOneLine did are
-		done as well. 
-		\param line Scanline (starting with 0)
-		\param cycle Cycle to perform (starting with 1)
-	*/
-	void executeOneCycle(uint16_t cycle);
 
+	//! VIC execution functions
+	void cycle1();  void cycle2();  void cycle3();  void cycle4();  void cycle5();  void cycle6();  void cycle7();  void cycle8();  void cycle9();  void cycle10();
+	void cycle11(); void cycle12(); void cycle13(); void cycle14(); void cycle15(); void cycle16(); void cycle17(); void cycle18(); void cycle19(); void cycle20();
+	void cycle21(); void cycle22(); void cycle23(); void cycle24(); void cycle25(); void cycle26(); void cycle27(); void cycle28(); void cycle29(); void cycle30();
+	void cycle31(); void cycle32(); void cycle33(); void cycle34(); void cycle35(); void cycle36(); void cycle37(); void cycle38(); void cycle39(); void cycle40();
+	void cycle41(); void cycle42(); void cycle43(); void cycle44(); void cycle45(); void cycle46(); void cycle47(); void cycle48(); void cycle49(); void cycle50();
+	void cycle51(); void cycle52(); void cycle53(); void cycle54(); void cycle55(); void cycle56(); void cycle57(); void cycle58(); void cycle59(); void cycle60();
+	void cycle61(); void cycle62(); void cycle63(); void cycle64(); void cycle65();
+	
 	//! Finish rasterline
 	/*! This function is called after the last cycle of each rasterline. */
 	void endRasterline();
