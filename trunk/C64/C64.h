@@ -156,7 +156,7 @@ enum INPUT_DEVICES {
 class C64 : public VirtualComponent {
 
 private:
-		
+			
 	//! The execution thread
 	pthread_t p;
 
@@ -172,6 +172,9 @@ private:
 	int port[2];
 	
 public:
+	//! Current frame, rasterline and cycle
+	int frame, rasterline, cycle;
+
 	//! Number of frames per second
 	/*! Number varies between PAL and NTSC machines */	
 	int fps;
@@ -275,7 +278,15 @@ public:
 
 	// Returns true iff the virtual C64 is in the "halted" state */
 	bool isHalted();
-
+	
+	//! Execute virtual C64 for one cycle
+	inline bool executeOneCycle();
+	// void executeForever(); // DEPRECATED
+	bool executeOneLine();
+	// bool executeFromCycle();
+	void beginOfRasterline();
+	void endOfRasterline();
+		
 	//! Set interval timer delay
 	void setDelay(int d);
 	
