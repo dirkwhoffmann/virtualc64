@@ -214,7 +214,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>50D5F35D0F05627E000F49E8</string>
+						<string>50D5F37E0F0566F1000F49E8</string>
 						<key>history</key>
 						<array>
 							<string>500165FF0F029EC4004351F4</string>
@@ -331,7 +331,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>53</integer>
+									<integer>39</integer>
 									<integer>25</integer>
 									<integer>1</integer>
 									<integer>0</integer>
@@ -375,7 +375,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>CPU.cpp</string>
+								<string>C64.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -383,11 +383,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>CPU.cpp</string>
+										<string>C64.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>50D5F35C0F05627E000F49E8</string>
+										<string>50D5F37D0F0566F1000F49E8</string>
 										<key>history</key>
 										<array>
 											<string>50AFEE850C3A8D9B007749E7</string>
@@ -506,11 +506,11 @@
 											<string>50FCE8870F0260540048D008</string>
 											<string>50D5F1C00F0505EA000F49E8</string>
 											<string>50D5F30B0F0556B0000F49E8</string>
-											<string>50D5F30C0F0556B0000F49E8</string>
 											<string>50D5F3360F055FE2000F49E8</string>
-											<string>50D5F3520F056273000F49E8</string>
 											<string>50D5F3530F056273000F49E8</string>
-											<string>50D5F3540F056273000F49E8</string>
+											<string>50D5F3650F0565D3000F49E8</string>
+											<string>50D5F36F0F056661000F49E8</string>
+											<string>50D5F3700F056661000F49E8</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -726,6 +726,11 @@
 											<string>50D5F3390F055FE2000F49E8</string>
 											<string>50D5F3550F056273000F49E8</string>
 											<string>50D5F3560F056273000F49E8</string>
+											<string>50D5F3670F0565D3000F49E8</string>
+											<string>50D5F3680F0565D3000F49E8</string>
+											<string>50D5F3690F0565D3000F49E8</string>
+											<string>50D5F3710F056661000F49E8</string>
+											<string>50D5F3720F056661000F49E8</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -919,12 +924,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>50D5F37F0F0566F1000F49E8</string>
 		<string>50D5F1E30F0505F6000F49E8</string>
 		<string>50D5F1E40F0505F6000F49E8</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>50FCE8840F02603F0048D008</string>
 		<string>50BEB1590CDF2AAE00C7DB33</string>
+		<string>50FCE8840F02603F0048D008</string>
 		<string>/Users/hoff/work/Software/VirtualC64/virtualc64/V64.xcodeproj</string>
 	</array>
 	<key>WindowString</key>

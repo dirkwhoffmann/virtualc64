@@ -595,7 +595,7 @@ C64::executeOneLine()
 			vic->cycle63();
 			EXECUTE(63);
 			
-			if (cycle >= getCyclesPerRasterline()) {
+			if (getCyclesPerRasterline() == 63) {
 				// last cycle for PAL machines
 				endOfRasterline();
 				return true;
