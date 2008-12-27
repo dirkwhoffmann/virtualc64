@@ -827,7 +827,8 @@ VIC::endRasterline()
 void 
 VIC::cycle1()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
+
 	// Trigger rasterline interrupt if applicable
 	// Note: In line 0, the interrupt is triggered in cycle 2
 	if (scanline != 0 && scanline == rasterInterruptLine())
@@ -846,7 +847,8 @@ VIC::cycle1()
 void
 VIC::cycle2()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
+
 	// Trigger rasterline interrupt if applicable
 	if (scanline == 0 && scanline == rasterInterruptLine())
 		triggerIRQ(1);
@@ -861,7 +863,7 @@ VIC::cycle2()
 void 
 VIC::cycle3()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpritePtr(4);
 	readSpriteData(4);
 	countX();
@@ -870,7 +872,7 @@ VIC::cycle3()
 void 
 VIC::cycle4()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpriteData(4);
 	readSpriteData(4);
 	requestBusForSprite(6);
@@ -881,7 +883,7 @@ VIC::cycle4()
 void
 VIC::cycle5()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpritePtr(5);
 	readSpriteData(5);
 	countX();
@@ -890,7 +892,7 @@ VIC::cycle5()
 void 
 VIC::cycle6()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpriteData(5);
 	readSpriteData(5);
 	requestBusForSprite(7);
@@ -901,7 +903,7 @@ VIC::cycle6()
 void 
 VIC::cycle7()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpritePtr(6);
 	readSpriteData(6);
 	countX();
@@ -910,7 +912,7 @@ VIC::cycle7()
 void 
 VIC::cycle8()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpriteData(6);
 	readSpriteData(6);
 	releaseBusForSprite(5);
@@ -920,7 +922,7 @@ VIC::cycle8()
 void 
 VIC::cycle9()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpritePtr(7);
 	readSpriteData(7);
 	countX();
@@ -929,7 +931,7 @@ VIC::cycle9()
 void 
 VIC::cycle10()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpriteData(7);
 	readSpriteData(7);
 	releaseBusForSprite(6);
@@ -939,7 +941,7 @@ VIC::cycle10()
 void
 VIC::cycle11()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	countX();
 }
 
@@ -959,7 +961,7 @@ VIC::cycle12()
 void
 VIC::cycle13()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	countX();
 }
 
@@ -1396,7 +1398,7 @@ VIC::cycle55()
 void
 VIC::cycle56()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	countX();
 }
 
@@ -1454,7 +1456,6 @@ VIC::cycle58()
 			spriteOnOff &= ~mask;
 	}
 			
-			
 	readSpritePtr(0);
 	readSpriteData(0);
 	countX();
@@ -1463,11 +1464,9 @@ VIC::cycle58()
 void
 VIC::cycle59()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpriteData(0);
 	readSpriteData(0);
-	// prepare bus access for sprite 0
-	if (spriteDmaOnOff & 0x01) pullDownBA(0x01);
 	requestBusForSprite(2);
 	countX();
 }
@@ -1475,9 +1474,7 @@ VIC::cycle59()
 void
 VIC::cycle60()
 {
-	checkDmaLineCondition();
-	if (spriteDmaOnOff & (1 << 1))
-		cpu->setRDY(2);
+	// checkDmaLineCondition();
 	readSpritePtr(1);
 	readSpriteData(1);
 	countX();
@@ -1486,7 +1483,7 @@ VIC::cycle60()
 void
 VIC::cycle61()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	readSpriteData(1);
 	readSpriteData(1);
 	requestBusForSprite(3);
@@ -1497,9 +1494,7 @@ VIC::cycle61()
 void
 VIC::cycle62()
 {
-	checkDmaLineCondition();
-	if (spriteDmaOnOff & (1 << 2))
-		cpu->setRDY(2);
+	// checkDmaLineCondition();
 	readSpritePtr(2);
 	readSpriteData(2);
 	countX();
@@ -1511,7 +1506,6 @@ VIC::cycle63()
 	checkDmaLineCondition();
 	readSpriteData(2);
 	readSpriteData(2);
-	// if (spriteDmaOnOff & 0x10) setBA(0);			
 			
 	// update border flipflops
 	if (scanline == 51 && isRSEL() && isVisible()) 
@@ -1544,7 +1538,7 @@ VIC::cycle63()
 void
 VIC::cycle64()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	// NTSC only
 	countX();
 }
@@ -1552,7 +1546,7 @@ VIC::cycle64()
 void
 VIC::cycle65()
 {
-	checkDmaLineCondition();
+	// checkDmaLineCondition();
 	// NTSC only
 	countX();
 }

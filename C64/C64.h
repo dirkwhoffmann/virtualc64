@@ -163,7 +163,10 @@ private:
 	//! Target time
 	/*! Used to synchronize emulation speed */
 	uint64_t targetTime; 
-				
+
+	//! Current clock cycle (since power up)
+	uint64_t cycles;
+
 	//! Indicates that we should always run as fast as possible
 	bool warpMode;
 	
@@ -172,8 +175,11 @@ private:
 	int port[2];
 	
 public:
-	//! Current frame, rasterline and cycle
-	int frame, rasterline, cycle;
+	//! Current frame number
+	int frame;
+
+	//! Current rasterline number
+	int rasterline;
 
 	//! Number of frames per second
 	/*! Number varies between PAL and NTSC machines */	
@@ -244,8 +250,8 @@ public:
 	/*! A (faked) reset is performed by loading a presaved image from disk. */
 	void fastReset();           
 		
-	//! Returns the currently set resource path
-	// char *getPath() { return path; }
+	//! Returns the number of CPU cycles elapsed so far
+	inline uint64_t getCycles() { return cycles; }
 	
 	//! Perform a soft reset
 	/*! On a real C64, a soft reset is triggered by hitting Runstop and Restore */
@@ -280,10 +286,10 @@ public:
 	bool isHalted();
 	
 	//! Execute virtual C64 for one cycle
-	inline bool executeOneCycle();
-	// void executeForever(); // DEPRECATED
-	bool executeOneLine();
-	// bool executeFromCycle();
+	inline bool executeOneCycle(int cycle = 0);
+			
+	//! Execute until the end of the rasterline
+	bool executeOneLine(int cycle = 1);
 	void beginOfRasterline();
 	void endOfRasterline();
 		

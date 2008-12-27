@@ -93,11 +93,10 @@ public:
 	void setIEC(IEC *bus) { assert(iec == NULL); iec = bus; mem->setIEC(bus); }
 
 	//! Bind disc drive to a virtual C64
-	void setC64(C64 *c) { assert(c64 == NULL); c64 = c; }
+	void setC64(C64 *c) { assert(c64 == NULL); c64 = c; cpu->setC64(c); }
 	
 	//! Pass control to the virtual drive
 	/*! The drive will be executed for the specified number of clock cycles. */
-	// bool execute(int cycles); 
 	void executeOneCycle();	
 
 	//! ATN interrupt
