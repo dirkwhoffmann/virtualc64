@@ -202,7 +202,7 @@ void ListenerProxy::logAction(char *message)
 // CPU
 // --------------------------------------------------------------------------
 
-- (long) cpuGetCycles { return (long)cpu->getCycles(); }
+- (long) cpuGetCycles { return (long)c64->getCycles(); }
 - (bool) cpuTracingEnabled { return cpu->tracingEnabled(); }
 - (void) cpuSetTraceMode:(bool)b { cpu->setTraceMode(b); }
 - (bool) iecTracingEnabled { return iec->tracingEnabled(); }

@@ -23,19 +23,13 @@
 
 #include "Memory.h"
 
+class C64;
 class IEC;
 
 //! The virtual 6510 processor
 class CPU : public VirtualComponent {
-
-private:
-	//! Waiting cycles
-	/*! The CPU will wait this number of cycles until the next command is executed.
-		The variable is used inside the execute function for synchronization purposes. */
-	int delay;
 		
-public:
-	
+public:	
 	//! Addressing modes of the 6510 processor
 	enum AddressingMode { 
 		ADDR_IMPLIED,
@@ -101,14 +95,14 @@ public:
 	
 
 private:
+	//! Reference to the connected virtual C64
+	C64 *c64;
+
 	//! Reference to the connected virtual memory
-	/*! Use \a setMemory to set the value during initialization. 
-		\warning The variable is "write once".
-	*/	
 	Memory *mem;
 	
 	//! Current clock cycle (since power up)
-	uint64_t cycles;
+	// uint64_t cycles;
 
 	// The accumulator register
 	uint8_t A;
@@ -228,43 +222,6 @@ private:
 	//! Location of the next free cell of the callstack
 	uint8_t callStackPointer;
 
-	//! Set bit of IRQ line
-	inline void setIRQLine(uint8_t bit) { 
-		assert(bit != 0);
-		if (irqLine == 0)
-			latestNegEdgeOnIrqLine = cycles;
-		irqLine |= bit; 
-	}
-	
-	//! Clear bit of IRQ line
-	inline void clearIRQLine(uint8_t bit) { 
-		irqLine &= (0xff - bit);
-	}
-
-	//! Check if IRQ line has been activated for at least 2 cycles
-	inline bool IRQLineRaisedLongEnough() { 
-		return (cycles - latestNegEdgeOnIrqLine) >= 2;
-	}
-	
-	//! Set bit of NMI line
-	inline void setNMILine(uint8_t bit) { 
-		assert(bit != 0);
-		if (nmiLine == 0) {
-			nmiNegEdge = true;
-			latestNegEdgeOnNmiLine = cycles;
-		}
-		nmiLine |= bit; 
-	}
-
-	//! Clear bit of NMI line
-	inline void clearNMILine(uint8_t bit) { 
-		nmiLine &= (0xff - bit); 
-	}
-	
-	//! Check if NMI line has been activated for at least 2 cycles
-	inline bool NMILineRaisedLongEnough() { 
-			return (cycles - latestNegEdgeOnNmiLine) >= 2;
-	}
 			
 #include "Instructions.h"
 		
@@ -281,7 +238,10 @@ public:
 
 	// Brings CPU back to its initial state
 	// void reset(uint8_t PClo, uint8_t PChi);
-	
+
+	//! Binds CPU and C64 together
+	void setC64(C64 *c) { assert(c64 == NULL); c64 = c; }
+
 	//! Binds CPU and memory together
 	void setMemory(Memory *m) { assert(mem == NULL); mem = m; }
 		
@@ -379,6 +339,24 @@ public:
 	inline void loadSP(uint8_t s) { SP = s; N = s & 128; Z = (s == 0); }
 	//! Load value into memory. The Z- and N-flag may change. */ 
 	inline void loadM(uint16_t addr, uint8_t s) { mem->poke(addr, s); N = s & 128; Z = (s == 0); }
+
+	//! Set bit of IRQ line
+	void setIRQLine(uint8_t bit);
+	
+	//! Clear bit of IRQ line
+	inline void clearIRQLine(uint8_t bit) { irqLine &= (0xff - bit); }
+		
+	//! Check if IRQ line has been activated for at least 2 cycles
+	bool IRQLineRaisedLongEnough();
+	
+	//! Set bit of NMI line
+	void setNMILine(uint8_t bit);
+	
+	//! Clear bit of NMI line
+	inline void clearNMILine(uint8_t bit) { nmiLine &= (0xff - bit); }
+	
+	//! Check if NMI line has been activated for at least 2 cycles
+	bool NMILineRaisedLongEnough();
 	
 	//! Set CIA bit of IRQ line
 	inline void setIRQLineCIA() { setIRQLine(0x01); }
@@ -441,18 +419,15 @@ public:
 	char *disassemble(uint64_t state);
 	
 	//! Returns the number of CPU cycles elapsed so far
-	inline uint64_t getCycles() { return cycles; }
-	
-	//! Set the cycle count to the specified value
-	// inline void setCycles(uint64_t c) { cycles = c; }
-	
+	// inline uint64_t getCycles() { return cycles; }
+		
 	//! Execute a single command
 	/*! Interrupt requests are ignored. Used inside the \a execute function and by the "step into" feature of the debugger. */
 	void step();
 	
 	//! Execute CPU for one cycle
 	/*! This is the normal operation mode. Interrupt requests are handled. */
-	inline void executeOneCycle() { cycles++; (*this.*next)(); }
+	inline void executeOneCycle() { (*this.*next)(); }
 
 	//! Returns the current error state
 	ErrorState getErrorState();

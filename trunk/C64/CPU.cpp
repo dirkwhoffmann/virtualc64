@@ -49,13 +49,11 @@ CPU::reset()
 	
 	// Initialize internal state
 	errorState = OK;
-	cycles = 0LL;
 	rdyLine = 1;
 	nmiLine = 0;
 	nmiNegEdge = false;
 	irqLine = 0;	
 	callStackPointer = 0;
-	delay = 0;
 	setTraceMode(false);
 	
 	// Initialize registers and flags
@@ -76,6 +74,39 @@ CPU::reset()
 	
 	assert(mem != NULL);
 }
+
+void 
+CPU::setIRQLine(uint8_t bit) 
+{ 
+	assert(bit != 0);
+	if (irqLine == 0)
+		latestNegEdgeOnIrqLine = c64->getCycles();
+	irqLine |= bit; 
+}
+
+bool 
+CPU::IRQLineRaisedLongEnough() 
+{ 
+	return (c64->getCycles() - latestNegEdgeOnIrqLine) >= 2;
+}
+
+void 
+CPU::setNMILine(uint8_t bit) 
+{ 
+	assert(bit != 0);
+	if (nmiLine == 0) {
+		nmiNegEdge = true;
+		latestNegEdgeOnNmiLine = c64->getCycles();
+	}
+	nmiLine |= bit; 
+}
+
+bool 
+CPU::NMILineRaisedLongEnough() 
+{ 
+	return (c64->getCycles() - latestNegEdgeOnNmiLine) >= 2;
+}
+
 
 // Instruction set
 char 
@@ -332,15 +363,19 @@ CPU::dumpHistory()
 void
 CPU::step() 
 {	
-	// Execute cycles until we reach the beginning of the next command
+	// Finish currect command
+	while (next != &CPU::fetch) {
+		executeOneCycle();
+	}
+
+	// Disassemble command if requested
+	if (tracingEnabled()) 
+		debug("%s", disassemble());
+	
+	// Execute next command 
 	do {
 		executeOneCycle();
-		if (tracingEnabled()) {
-			// Disassemble instruction
-			debug("%s", disassemble());
-		}		
 	} while (next != &CPU::fetch);
-	
 }
 	
 CPU::ErrorState 

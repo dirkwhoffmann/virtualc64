@@ -53,11 +53,12 @@ void
 	c64->setDelay((uint64_t)(1000000 / c64->fps));
 
 	// determine cycle relative to the current rasterline
-	c64->cycle = (c64->cpu->getCycles() % c64->getCyclesPerRasterline()) + 1;
-	
+	int cycle = (c64->getCycles() % c64->getCyclesPerRasterline()) + 1;
+
 	while (1) {		
-		if (!c64->executeOneLine())
+		if (!c64->executeOneLine(cycle))
 			break;		
+		cycle = 1;
 		if (c64->frame == 0 && c64->rasterline == 0)
 			pthread_testcancel();
 	}
@@ -68,13 +69,14 @@ void
 	pthread_exit(NULL);	
 }
 
-
-#define EXEC_CPU(x) cpu->executeOneCycle(); if (cpu->getErrorState() != CPU::OK) { return false; }
-#define EXEC_FLOPPY(x) floppy->executeOneCycle(); if (floppy->cpu->getErrorState() != CPU::OK) { return false; }
-#define EXEC_CIA cia1->executeOneCycle(); cia2->executeOneCycle();
-#define EXECUTE(x) EXEC_CPU(x) EXEC_FLOPPY(x) EXEC_CIA; 
-#define EXECUTE_ONE cpu->executeOneCycle(); floppy->executeOneCycle(); cia1->executeOneCycle(); cia2->executeOneCycle();
-
+#define EXECUTE(x) \
+		cpu->executeOneCycle(); \
+		if (cpu->getErrorState() != CPU::OK) { return false; } \
+		floppy->executeOneCycle(); \
+		if (floppy->cpu->getErrorState() != CPU::OK) { return false; } \
+		cia1->executeOneCycle(); \
+		cia2->executeOneCycle(); \
+		cycles++;
 
 void 
 C64::beginOfRasterline()
@@ -90,7 +92,7 @@ void
 C64::endOfRasterline()
 {
 	vic->endRasterline();
-	cycle = 1;
+	// cycle = 1;
 	rasterline++;
 	if (rasterline >= getRasterlinesPerFrame()) {
 		// Last rasterline of frame
@@ -117,291 +119,304 @@ C64::endOfRasterline()
 
 // Execute a single cycle
 inline bool
-C64::executeOneCycle()
+C64::executeOneCycle(int cycle)
 {
 	// determine cycle relative to the current rasterline
-	cycle = (cpu->getCycles() % getCyclesPerRasterline()) + 1;
+	//cycle = (cpu->getCycles() % getCyclesPerRasterline()) + 1;
+	if (cycle == 0) {
+		// determine cycle relative to the current rasterline
+		cycle = (cycles % getCyclesPerRasterline()) + 1;
+	}
 	
 	switch(cycle) {
 		case 1:
 			beginOfRasterline();			
 			vic->cycle1();
-			EXECUTE_ONE;
+			EXECUTE(1);
 			break;
 		case 2: 
 			vic->cycle2();
-			EXECUTE_ONE;
+			EXECUTE(2);
 			break;
 		case 3: 
 			vic->cycle3();
-			EXECUTE_ONE;
+			EXECUTE(3);
 			break;
 		case 4: 
 			vic->cycle4();
-			EXECUTE_ONE;
+			EXECUTE(4);
 			break;
 		case 5: 
 			vic->cycle5();
-			EXECUTE_ONE;
+			EXECUTE(5);
 			break;
 		case 6: 
 			vic->cycle6();
-			EXECUTE_ONE;
+			EXECUTE(6);
 			break;
 		case 7: 
 			vic->cycle7();
-			EXECUTE_ONE;
+			EXECUTE(7);
 			break;
 		case 8: 
 			vic->cycle8();
-			EXECUTE_ONE;
+			EXECUTE(8);
 			break;
 		case 9: 
 			vic->cycle9();
-			EXECUTE_ONE;
+			EXECUTE(9);
 			break;
 		case 10: 
 			vic->cycle10();
-			EXECUTE_ONE;
+			EXECUTE(10);
 			break;
 		case 11: 
 			vic->cycle11();
-			EXECUTE_ONE;
+			EXECUTE(11);
 			break;
 		case 12: 
 			vic->cycle12();
-			EXECUTE_ONE;
+			EXECUTE(12);
 			break;
 		case 13: 
 			vic->cycle13();
-			EXECUTE_ONE;
+			EXECUTE(13);
 			break;
 		case 14: 
 			vic->cycle14();
-			EXECUTE_ONE;
+			EXECUTE(14);
 			break;
 		case 15: 
 			vic->cycle15();
-			EXECUTE_ONE;
+			EXECUTE(15);
 			break;
 		case 16: 
 			vic->cycle16();
-			EXECUTE_ONE;
+			EXECUTE(16);
 			break;
 		case 17: 
 			vic->cycle17();
-			EXECUTE_ONE;
+			EXECUTE(17);
 			break;
 		case 18: 
 			vic->cycle18();
-			EXECUTE_ONE;
+			EXECUTE(18);
 			break;
 		case 19: 
 			vic->cycle19();
-			EXECUTE_ONE;
+			EXECUTE(19);
 			break;
 		case 20: 
 			vic->cycle20();
-			EXECUTE_ONE;
+			EXECUTE(20);
 			break;
 		case 21: 
 			vic->cycle21();
-			EXECUTE_ONE;
+			EXECUTE(21);
 			break;
 		case 22: 
 			vic->cycle22();
-			EXECUTE_ONE;
+			EXECUTE(22);
 			break;
 		case 23: 
 			vic->cycle23();
-			EXECUTE_ONE;
+			EXECUTE(23);
 			break;
 		case 24: 
 			vic->cycle24();
-			EXECUTE_ONE;
+			EXECUTE(24);
 			break;
 		case 25: 
 			vic->cycle25();
-			EXECUTE_ONE;
+			EXECUTE(25);
 			break;
 		case 26: 
 			vic->cycle26();
-			EXECUTE_ONE;
+			EXECUTE(26);
 			break;
 		case 27: 
 			vic->cycle27();
-			EXECUTE_ONE;
+			EXECUTE(27);
 			break;
 		case 28: 
 			vic->cycle28();
-			EXECUTE_ONE;
+			EXECUTE(28);
 			break;
 		case 29: 
 			vic->cycle29();
-			EXECUTE_ONE;
+			EXECUTE(29);
 			break;
 		case 30: 
 			vic->cycle30();
-			EXECUTE_ONE;
+			EXECUTE(30);
 			break;
 		case 31: 
 			vic->cycle31();
-			EXECUTE_ONE;
+			EXECUTE(31);
 			break;
 		case 32: 
 			vic->cycle32();
-			EXECUTE_ONE;
+			EXECUTE(32);
 			break;
 		case 33: 
 			vic->cycle33();
-			EXECUTE_ONE;
+			EXECUTE(33);
 			break;
 		case 34: 
 			vic->cycle34();
-			EXECUTE_ONE;
+			EXECUTE(34);
 			break;
 		case 35: 
 			vic->cycle35();
-			EXECUTE_ONE;
+			EXECUTE(35);
 			break;
 		case 36: 
 			vic->cycle36();
-			EXECUTE_ONE;
+			EXECUTE(36);
 			break;
 		case 37: 
 			vic->cycle37();
-			EXECUTE_ONE;
+			EXECUTE(37);
 			break;
 		case 38: 
 			vic->cycle38();
-			EXECUTE_ONE;
+			EXECUTE(38);
 			break;
 		case 39: 
 			vic->cycle39();
-			EXECUTE_ONE;
+			EXECUTE(39);
 			break;
 		case 40: 
 			vic->cycle40();
-			EXECUTE_ONE;
+			EXECUTE(40);
 			break;
 		case 41: 
 			vic->cycle41();
-			EXECUTE_ONE;
+			EXECUTE(41);
 			break;
 		case 42: 
 			vic->cycle42();
-			EXECUTE_ONE;
+			EXECUTE(42);
 			break;
 		case 43: 
 			vic->cycle43();
-			EXECUTE_ONE;
+			EXECUTE(43);
 			break;
 		case 44: 
 			vic->cycle44();
-			EXECUTE_ONE;
+			EXECUTE(44);
 			break;
 		case 45: 
 			vic->cycle45();
-			EXECUTE_ONE;
+			EXECUTE(45);
 			break;
 		case 46: 
 			vic->cycle46();
-			EXECUTE_ONE;
+			EXECUTE(46);
 			break;
 		case 47: 
 			vic->cycle47();
-			EXECUTE_ONE;
+			EXECUTE(47);
 			break;
 		case 48: 
 			vic->cycle48();
-			EXECUTE_ONE;
+			EXECUTE(48);
 			break;
 		case 49: 
 			vic->cycle49();
-			EXECUTE_ONE;
+			EXECUTE(49);
 			break;
 		case 50: 
 			vic->cycle50();
-			EXECUTE_ONE;
+			EXECUTE(50);
 			break;
 		case 51: 
 			vic->cycle51();
-			EXECUTE_ONE;
+			EXECUTE(51);
 			break;
 		case 52: 
 			vic->cycle52();
-			EXECUTE_ONE;
+			EXECUTE(52);
 			break;
 		case 53: 
 			vic->cycle53();
-			EXECUTE_ONE;
+			EXECUTE(53);
 			break;
 		case 54: 
 			vic->cycle54();
-			EXECUTE_ONE;
+			EXECUTE(54);
 			break;
 		case 55: 
 			vic->cycle55();
-			EXECUTE_ONE;
+			EXECUTE(55);
 			break;
 		case 56: 
 			vic->cycle56();
-			EXECUTE_ONE;
+			EXECUTE(56);
 			break;
 		case 57: 
 			vic->cycle57();
-			EXECUTE_ONE;
+			EXECUTE(57);
 			break;
 		case 58: 
 			vic->cycle58();
-			EXECUTE_ONE;
+			EXECUTE(58);
 			break;
 		case 59: 
 			vic->cycle59();
-			EXECUTE_ONE;
+			EXECUTE(59);
 			break;
 		case 60: 
 			vic->cycle60();
-			EXECUTE_ONE;
+			EXECUTE(60);
 			break;
 		case 61: 
 			vic->cycle61();
-			EXECUTE_ONE;
+			EXECUTE(61);
 			break;
 		case 62: 
 			vic->cycle62();
-			EXECUTE_ONE;
+			EXECUTE(62);
 			break;
 		case 63: 
 			vic->cycle63();
-			EXECUTE_ONE;
-			
-			if (cycle >= getCyclesPerRasterline()) {
-				// last cycle for PAL machines
-				endOfRasterline();
-				return true;
-			}			
+			EXECUTE(63);
+			break;
 		case 64: 
 			vic->cycle64();
-			EXECUTE_ONE;			
+			EXECUTE(64);			
 			break;
 		case 65: 
 			vic->cycle65();
-			EXECUTE_ONE;
-			endOfRasterline();
-			return true;
+			EXECUTE(65);
+			break;
 			
 		default:
 			// can't reach
 			assert(false);
 			return false;
-	}	
-	cycle++;
+	}
+	return true;
 }
+
+#if 0
+// Execute until the end of the rasterline
+inline bool
+C64::executeOneLine(int cycle)
+{
+	uint8_t lastCycle = getCyclesPerRasterline();
+	for (int i = cycle; i <= lastCycle; i++) {
+		if (!executeOneCycle(i))
+			return false;
+	}
+	endOfRasterline();
+	return true;
+}
+#endif
 
 // Execute until the end of the rasterline
 inline bool
-C64::executeOneLine()
+C64::executeOneLine(int cycle)
 {
 	switch(cycle) {
 		case 1:
@@ -617,6 +632,7 @@ C64::executeOneLine()
 }
 
 
+
 // --------------------------------------------------------------------------------
 // C64 class
 // --------------------------------------------------------------------------------
@@ -659,6 +675,7 @@ C64::C64(C64Listener *listener)
 	}
 		
 	// Bind components
+	cpu->setC64(this);
 	cpu->setMemory(mem);
 	mem->setVIC(vic);
 	mem->setSID(sid);
@@ -773,7 +790,7 @@ void C64::reset()
 	archive = NULL;
 	frame = 0;
 	rasterline = 0;
-	cycle = 1;
+	cycles = 0LL;
 	resume();
 }
 
