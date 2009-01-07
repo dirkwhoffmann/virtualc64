@@ -38,6 +38,7 @@ VIC::VIC()
 		screenBuffer2[i] = colors[BLUE];
 	}
 	currentScreenBuffer = screenBuffer1;
+	pixelBuffer = currentScreenBuffer;
 }
 
 VIC::~VIC()
@@ -803,6 +804,7 @@ VIC::endFrame()
 	
 	// Switch frame buffer
 	currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;	
+	pixelBuffer = currentScreenBuffer;
 }
 
 void 
@@ -821,7 +823,8 @@ void
 VIC::endRasterline()
 {
 	// Copy pixel buffer of old line to screen buffer
-	memcpy(currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH), pixelBuffer, sizeof(pixelBuffer));
+	// memcpy(currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH), pixelBuffer, sizeof(pixelBuffer));
+	pixelBuffer += TOTAL_SCREEN_WIDTH;
 }
 
 void 

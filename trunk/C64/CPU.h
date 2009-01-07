@@ -427,7 +427,7 @@ public:
 	
 	//! Execute CPU for one cycle
 	/*! This is the normal operation mode. Interrupt requests are handled. */
-	inline void executeOneCycle() { (*this.*next)(); }
+	inline bool executeOneCycle() { (*this.*next)(); return errorState == CPU::OK; }
 
 	//! Returns the current error state
 	ErrorState getErrorState();

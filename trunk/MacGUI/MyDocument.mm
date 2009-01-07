@@ -2172,7 +2172,10 @@
 	// Return to normal event handling
 	[NSApp endSheet:mountDialog returnCode:1];
 
-	// Load clean image and flash file into memory
+	// Try to mount archive
+	myc64->mountArchive();
+	
+	// Load clean image and flash selected file into memory
 	myc64->fastReset();
 	myc64->flushArchive([mountDialog getSelectedFile]);
 

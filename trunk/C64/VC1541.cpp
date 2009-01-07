@@ -80,19 +80,21 @@ VC1541::setWriteProtection(bool b)
 	writeProtection = b;
 }
 
-void 
+bool 
 VC1541::executeOneCycle()
 {
+	bool result;
+	
 	via1->execute(1);
 	via2->execute(1);
-	cpu->executeOneCycle();
+	result = cpu->executeOneCycle();
 		
 	if (byteReadyTimer == 0)
-		return;
+		return result;
 
 	if (byteReadyTimer > 1) {
 		byteReadyTimer--;
-		return;
+		return result;
 	}
 
 	// Reset timer
@@ -113,6 +115,8 @@ VC1541::executeOneCycle()
 		writeByteToDisk(via2->ora);
 		signalByteReady();
 	}	
+
+	return result;
 }
 
 void 
