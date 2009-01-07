@@ -97,7 +97,7 @@ public:
 	
 	//! Pass control to the virtual drive
 	/*! The drive will be executed for the specified number of clock cycles. */
-	void executeOneCycle();	
+	bool executeOneCycle();	
 
 	//! ATN interrupt
 	/*! Simulates an interrupt. Will be called when the ATN signal is going high */

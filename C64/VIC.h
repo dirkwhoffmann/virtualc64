@@ -248,7 +248,8 @@ private:
 	/*! The pixel buffer is used for drawing a single line on the screen. When a sreen line is drawn, the pixels
 		are first written in the pixel buffer. When the whole line is drawn, it is copied into the screen buffer.
 	*/
-	int pixelBuffer[TOTAL_SCREEN_WIDTH];
+	// int pixelBuffer[TOTAL_SCREEN_WIDTH];
+	int *pixelBuffer;
 	
 	//! Z buffer
 	/*! The z Buffer is used for drawing a single line on the screen. A pixel is only written to the screen buffer,

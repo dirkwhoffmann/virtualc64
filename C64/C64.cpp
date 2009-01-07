@@ -70,10 +70,8 @@ void
 }
 
 #define EXECUTE(x) \
-		cpu->executeOneCycle(); \
-		if (cpu->getErrorState() != CPU::OK) { return false; } \
-		floppy->executeOneCycle(); \
-		if (floppy->cpu->getErrorState() != CPU::OK) { return false; } \
+		if (!cpu->executeOneCycle()) return false; \
+		if (!floppy->executeOneCycle()) return false; \
 		cia1->executeOneCycle(); \
 		cia2->executeOneCycle(); \
 		cycles++;
@@ -1072,8 +1070,8 @@ C64::flushArchive(int item)
 bool 
 C64::mountArchive()
 {	
-	// Archive loaded?
-	if (archive == NULL)
+	// Archive loaded and mountable?
+	if (archive == NULL || !archive->isMountable())
 		return false;
 
 	// Insert disc
