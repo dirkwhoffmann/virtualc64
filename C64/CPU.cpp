@@ -358,26 +358,6 @@ CPU::dumpHistory()
 	debug("End of history trace\n");
 }
 
-
-// Execute a single command
-void
-CPU::step() 
-{	
-	// Finish currect command
-	while (next != &CPU::fetch) {
-		executeOneCycle();
-	}
-
-	// Disassemble command if requested
-	if (tracingEnabled()) 
-		debug("%s", disassemble());
-	
-	// Execute next command 
-	do {
-		executeOneCycle();
-	} while (next != &CPU::fetch);
-}
-	
 CPU::ErrorState 
 CPU::getErrorState() 
 { 

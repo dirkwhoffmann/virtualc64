@@ -34,32 +34,15 @@
 #define IDLE_READ_FROM_ZERO_PAGE if (rdyLine) (void)mem->peek((uint16_t)addr_lo); else return;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT if (rdyLine) (void)mem->peek((uint16_t)ptr); else return;
 
-/*
-#define FETCH_ADDR_LO addr_lo = mem->peek(PC++);
-#define FETCH_ADDR_HI addr_hi = mem->peek(PC++);
-#define FETCH_POINTER_ADDR ptr = mem->peek(PC++);
-#define FETCH_ADDR_LO_INDIRECT addr_lo = mem->peek((uint16_t)ptr++);
-#define FETCH_ADDR_HI_INDIRECT addr_hi = mem->peek((uint16_t)ptr++);
-
-#define READ_RELATIVE data = mem->peek(PC);
-#define READ_IMMEDIATE data = mem->peek(PC++);
-#define READ_FROM_ADDRESS data = mem->peek((addr_hi << 8) | addr_lo); 
-#define READ_FROM_ZERO_PAGE data = mem->peek((uint16_t)addr_lo);
-#define READ_FROM_ADDRESS_INDIRECT data = mem->peek((uint16_t)ptr);
-#define IDLE_READ_IMPLIED (void)mem->peek(PC); 
-#define IDLE_READ_IMMEDIATE (void)mem->peek(PC++);
-#define IDLE_READ_FROM_ADDRESS (void)(mem->peek((addr_hi << 8) | addr_lo));
-#define IDLE_READ_FROM_ZERO_PAGE (void)mem->peek((uint16_t)addr_lo);
-#define IDLE_READ_FROM_ADDRESS_INDIRECT (void)mem->peek((uint16_t)ptr);
-*/
-
 #define WRITE_TO_ADDRESS mem->poke((addr_hi << 8) | addr_lo, data);
 #define WRITE_TO_ADDRESS_AND_SET_FLAGS loadM((addr_hi << 8) | addr_lo, data);
 #define WRITE_TO_ZERO_PAGE mem->poke((uint16_t)addr_lo, data);
 #define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS loadM((uint16_t)addr_lo, data);
 
-#define ADD_INDEX_X addr_lo += X; overflow = (addr_lo < X);
-#define ADD_INDEX_Y addr_lo += Y; overflow = (addr_lo < Y);
+//#define ADD_INDEX_X addr_lo += X; overflow = (addr_lo < X);
+//#define ADD_INDEX_Y addr_lo += Y; overflow = (addr_lo < Y);
+#define ADD_INDEX_X overflow = ((int)addr_lo + (int)X >= 0x100); addr_lo += X; 
+#define ADD_INDEX_Y overflow = ((int)addr_lo + (int)Y >= 0x100); addr_lo += Y; 
 #define ADD_INDEX_X_INDIRECT ptr += X;
 #define ADD_INDEX_Y_INDIRECT ptr += Y;
 
@@ -329,7 +312,7 @@ void ANE_immediate();
 void ARR_immediate();   
 void AXS_immediate();   
 
-void DCP_zero_page(); void DCP_zero_page_2(); void DCP_zero_page_3(); void DCP_zero_page_4(); void DCP_zero_page_5();
+void DCP_zero_page(); void DCP_zero_page_2(); void DCP_zero_page_3(); void DCP_zero_page_4();
 void DCP_zero_page_x(); void DCP_zero_page_x_2(); void DCP_zero_page_x_3(); void DCP_zero_page_x_4(); void DCP_zero_page_x_5();
 void DCP_absolute(); void DCP_absolute_2(); void DCP_absolute_3(); void DCP_absolute_4(); void DCP_absolute_5();
 void DCP_absolute_x(); void DCP_absolute_x_2(); void DCP_absolute_x_3(); void DCP_absolute_x_4(); void DCP_absolute_x_5(); void DCP_absolute_x_6();
@@ -345,7 +328,7 @@ void ISC_absolute_y(); void ISC_absolute_y_2(); void ISC_absolute_y_3(); void IS
 void ISC_indirect_x(); void ISC_indirect_x_2(); void ISC_indirect_x_3(); void ISC_indirect_x_4(); void ISC_indirect_x_5(); void ISC_indirect_x_6(); void ISC_indirect_x_7();     
 void ISC_indirect_y(); void ISC_indirect_y_2(); void ISC_indirect_y_3(); void ISC_indirect_y_4(); void ISC_indirect_y_5(); void ISC_indirect_y_6(); void ISC_indirect_y_7();
 
-void LAS_absolute_y(); void LAS_absolute_y_2(); void LAS_absolute_y_3(); void LAS_absolute_y_4(); void LAS_absolute_y_5(); void LAS_absolute_y_6(); 
+void LAS_absolute_y(); void LAS_absolute_y_2(); void LAS_absolute_y_3(); void LAS_absolute_y_4(); void LAS_absolute_y_5();
 
 void LAX_zero_page(); void LAX_zero_page_2();
 void LAX_zero_page_y(); void LAX_zero_page_y_2(); void LAX_zero_page_y_3();
@@ -356,21 +339,21 @@ void LAX_indirect_y(); void LAX_indirect_y_2(); void LAX_indirect_y_3(); void LA
 
 void LXA_immediate();
 
-void RLA_zero_page(); void RLA_zero_page_2();
-void RLA_zero_page_x(); void RLA_zero_page_x_2(); void RLA_zero_page_x_3();
-void RLA_absolute(); void RLA_absolute_2(); void RLA_absolute_3();
-void RLA_absolute_x(); void RLA_absolute_x_2(); void RLA_absolute_x_3(); void RLA_absolute_x_4();
-void RLA_absolute_y(); void RLA_absolute_y_2(); void RLA_absolute_y_3(); void RLA_absolute_y_4();
-void RLA_indirect_x(); void RLA_indirect_x_2(); void RLA_indirect_x_3(); void RLA_indirect_x_4(); void RLA_indirect_x_5();
-void RLA_indirect_y(); void RLA_indirect_y_2(); void RLA_indirect_y_3(); void RLA_indirect_y_4(); void RLA_indirect_y_5();
+void RLA_zero_page(); void RLA_zero_page_2(); void RLA_zero_page_3(); void RLA_zero_page_4();
+void RLA_zero_page_x(); void RLA_zero_page_x_2(); void RLA_zero_page_x_3(); void RLA_zero_page_x_4(); void RLA_zero_page_x_5();
+void RLA_absolute(); void RLA_absolute_2(); void RLA_absolute_3(); void RLA_absolute_4(); void RLA_absolute_5();
+void RLA_absolute_x(); void RLA_absolute_x_2(); void RLA_absolute_x_3(); void RLA_absolute_x_4(); void RLA_absolute_x_5(); void RLA_absolute_x_6();
+void RLA_absolute_y(); void RLA_absolute_y_2(); void RLA_absolute_y_3(); void RLA_absolute_y_4(); void RLA_absolute_y_5(); void RLA_absolute_y_6();
+void RLA_indirect_x(); void RLA_indirect_x_2(); void RLA_indirect_x_3(); void RLA_indirect_x_4(); void RLA_indirect_x_5(); void RLA_indirect_x_6(); void RLA_indirect_x_7();
+void RLA_indirect_y(); void RLA_indirect_y_2(); void RLA_indirect_y_3(); void RLA_indirect_y_4(); void RLA_indirect_y_5(); void RLA_indirect_y_6(); void RLA_indirect_y_7();
 
-void RRA_zero_page(); void RRA_zero_page_2();
-void RRA_zero_page_x(); void RRA_zero_page_x_2(); void RRA_zero_page_x_3();
-void RRA_absolute(); void RRA_absolute_2(); void RRA_absolute_3();
-void RRA_absolute_x(); void RRA_absolute_x_2(); void RRA_absolute_x_3(); void RRA_absolute_x_4();
-void RRA_absolute_y(); void RRA_absolute_y_2(); void RRA_absolute_y_3(); void RRA_absolute_y_4();
-void RRA_indirect_x(); void RRA_indirect_x_2(); void RRA_indirect_x_3(); void RRA_indirect_x_4(); void RRA_indirect_x_5();
-void RRA_indirect_y(); void RRA_indirect_y_2(); void RRA_indirect_y_3(); void RRA_indirect_y_4(); void RRA_indirect_y_5();
+void RRA_zero_page(); void RRA_zero_page_2(); void RRA_zero_page_3(); void RRA_zero_page_4();
+void RRA_zero_page_x(); void RRA_zero_page_x_2(); void RRA_zero_page_x_3(); void RRA_zero_page_x_4(); void RRA_zero_page_x_5();
+void RRA_absolute(); void RRA_absolute_2(); void RRA_absolute_3(); void RRA_absolute_4(); void RRA_absolute_5();
+void RRA_absolute_x(); void RRA_absolute_x_2(); void RRA_absolute_x_3(); void RRA_absolute_x_4(); void RRA_absolute_x_5(); void RRA_absolute_x_6();
+void RRA_absolute_y(); void RRA_absolute_y_2(); void RRA_absolute_y_3(); void RRA_absolute_y_4(); void RRA_absolute_y_5(); void RRA_absolute_y_6();
+void RRA_indirect_x(); void RRA_indirect_x_2(); void RRA_indirect_x_3(); void RRA_indirect_x_4(); void RRA_indirect_x_5(); void RRA_indirect_x_6(); void RRA_indirect_x_7();
+void RRA_indirect_y(); void RRA_indirect_y_2(); void RRA_indirect_y_3(); void RRA_indirect_y_4(); void RRA_indirect_y_5(); void RRA_indirect_y_6(); void RRA_indirect_y_7();
 
 void SAX_zero_page(); void SAX_zero_page_2();
 void SAX_zero_page_y(); void SAX_zero_page_y_2(); void SAX_zero_page_y_3();
@@ -380,23 +363,23 @@ void SAX_indirect_x(); void SAX_indirect_x_2(); void SAX_indirect_x_3(); void SA
 void SHX_absolute_y(); void SHX_absolute_y_2(); void SHX_absolute_y_3(); void SHX_absolute_y_4();
 void SHY_absolute_x(); void SHY_absolute_x_2(); void SHY_absolute_x_3(); void SHY_absolute_x_4();
 
-void SLO_zero_page(); void SLO_zero_page_2();
-void SLO_zero_page_x(); void SLO_zero_page_x_2(); void SLO_zero_page_x_3();
-void SLO_absolute(); void SLO_absolute_2(); void SLO_absolute_3();
-void SLO_absolute_x(); void SLO_absolute_x_2(); void SLO_absolute_x_3(); void SLO_absolute_x_4();
-void SLO_absolute_y(); void SLO_absolute_y_2(); void SLO_absolute_y_3(); void SLO_absolute_y_4();
-void SLO_indirect_x(); void SLO_indirect_x_2(); void SLO_indirect_x_3(); void SLO_indirect_x_4(); void SLO_indirect_x_5();
-void SLO_indirect_y(); void SLO_indirect_y_2(); void SLO_indirect_y_3(); void SLO_indirect_y_4(); void SLO_indirect_y_5();
+void SLO_zero_page(); void SLO_zero_page_2(); void SLO_zero_page_3(); void SLO_zero_page_4();
+void SLO_zero_page_x(); void SLO_zero_page_x_2(); void SLO_zero_page_x_3(); void SLO_zero_page_x_4(); void SLO_zero_page_x_5();
+void SLO_absolute(); void SLO_absolute_2(); void SLO_absolute_3(); void SLO_absolute_4(); void SLO_absolute_5();
+void SLO_absolute_x(); void SLO_absolute_x_2(); void SLO_absolute_x_3(); void SLO_absolute_x_4(); void SLO_absolute_x_5(); void SLO_absolute_x_6();
+void SLO_absolute_y(); void SLO_absolute_y_2(); void SLO_absolute_y_3(); void SLO_absolute_y_4(); void SLO_absolute_y_5(); void SLO_absolute_y_6();
+void SLO_indirect_x(); void SLO_indirect_x_2(); void SLO_indirect_x_3(); void SLO_indirect_x_4(); void SLO_indirect_x_5(); void SLO_indirect_x_6(); void SLO_indirect_x_7();
+void SLO_indirect_y(); void SLO_indirect_y_2(); void SLO_indirect_y_3(); void SLO_indirect_y_4(); void SLO_indirect_y_5(); void SLO_indirect_y_6(); void SLO_indirect_y_7();
 
-void SRE_zero_page(); void SRE_zero_page_2();
-void SRE_zero_page_x(); void SRE_zero_page_x_2(); void SRE_zero_page_x_3();
-void SRE_absolute(); void SRE_absolute_2(); void SRE_absolute_3();
-void SRE_absolute_x(); void SRE_absolute_x_2(); void SRE_absolute_x_3(); void SRE_absolute_x_4();
-void SRE_absolute_y(); void SRE_absolute_y_2(); void SRE_absolute_y_3(); void SRE_absolute_y_4();
-void SRE_indirect_x(); void SRE_indirect_x_2(); void SRE_indirect_x_3(); void SRE_indirect_x_4(); void SRE_indirect_x_5();
-void SRE_indirect_y(); void SRE_indirect_y_2(); void SRE_indirect_y_3(); void SRE_indirect_y_4(); void SRE_indirect_y_5();
+void SRE_zero_page(); void SRE_zero_page_2(); void SRE_zero_page_3(); void SRE_zero_page_4();
+void SRE_zero_page_x(); void SRE_zero_page_x_2(); void SRE_zero_page_x_3(); void SRE_zero_page_x_4(); void SRE_zero_page_x_5();
+void SRE_absolute(); void SRE_absolute_2(); void SRE_absolute_3(); void SRE_absolute_4(); void SRE_absolute_5();
+void SRE_absolute_x(); void SRE_absolute_x_2(); void SRE_absolute_x_3(); void SRE_absolute_x_4(); void SRE_absolute_x_5(); void SRE_absolute_x_6();
+void SRE_absolute_y(); void SRE_absolute_y_2(); void SRE_absolute_y_3(); void SRE_absolute_y_4(); void SRE_absolute_y_5(); void SRE_absolute_y_6();
+void SRE_indirect_x(); void SRE_indirect_x_2(); void SRE_indirect_x_3(); void SRE_indirect_x_4(); void SRE_indirect_x_5(); void SRE_indirect_x_6(); void SRE_indirect_x_7();
+void SRE_indirect_y(); void SRE_indirect_y_2(); void SRE_indirect_y_3(); void SRE_indirect_y_4(); void SRE_indirect_y_5(); void SRE_indirect_y_6(); void SRE_indirect_y_7();
 
-void TAS_absolute_y(); void TAS_absolute_y_2(); void TAS_absolute_y_3(); void TAS_absolute_y_4();
+void TAS_absolute_y(); void TAS_absolute_y_2(); void TAS_absolute_y_3(); void TAS_absolute_y_4(); 
 
 
 
