@@ -294,19 +294,19 @@ void ListenerProxy::logAction(char *message)
 - (void) ciaSetDataPortA:(int)nr value:(uint8_t)v { cia[nr]->setDataPortA(v); }
 - (uint8_t) ciaGetDataPortDirectionA:(int)nr { return cia[nr]->getDataPortDirectionA(); }
 - (void) ciaSetDataPortDirectionA:(int)nr value:(uint8_t)v { cia[nr]->setDataPortDirectionA(v); }
-- (uint16_t) ciaGetTimerA:(int)nr { return cia[nr]->getTimerA(); }
-- (void) ciaSetTimerA:(int)nr value:(uint16_t)v { cia[nr]->setTimerA(v); }
-- (uint16_t) ciaGetTimerLatchA:(int)nr { return cia[nr]->getTimerLatchA(); }
-- (void) ciaSetTimerLatchA:(int)nr value:(uint16_t)v { cia[nr]->setTimerLatchA(v); }
-- (bool) ciaGetStartFlagA:(int)nr { return cia[nr]->isStartedA(); }
-- (void) ciaSetStartFlagA:(int)nr value:(bool)b { cia[nr]->setStartedA(b); }
-- (void) ciaToggleStartFlagA:(int)nr {cia[nr]->toggleStartFlagA(); }
-- (bool) ciaGetOneShotFlagA:(int)nr { return cia[nr]->isOneShotA(); }
-- (void) ciaSetOneShotFlagA:(int)nr value:(bool)b { cia[nr]->setOneShotA(b); }
-- (void) ciaToggleOneShotFlagA:(int)nr { cia[nr]->toggleOneShotFlagA(); }
-- (bool) ciaGetUnderflowFlagA:(int)nr { return cia[nr]->willIndicateUnderflowA(); }
-- (void) ciaSetUnderflowFlagA:(int)nr value:(bool)b { return cia[nr]->setIndicateUnderflowA(b); }
-- (void) ciaToggleUnderflowFlagA:(int)nr { cia[nr]->toggleUnderflowFlagA(); }
+- (uint16_t) ciaGetTimerA:(int)nr { return cia[nr]->timerA.getTimer(); }
+- (void) ciaSetTimerA:(int)nr value:(uint16_t)v { cia[nr]->timerA.setTimer(v); }
+- (uint16_t) ciaGetTimerLatchA:(int)nr { return cia[nr]->timerA.getTimerLatch(); }
+- (void) ciaSetTimerLatchA:(int)nr value:(uint16_t)v { cia[nr]->timerA.setTimerLatch(v); }
+- (bool) ciaGetStartFlagA:(int)nr { return cia[nr]->timerA.isStarted(); }
+- (void) ciaSetStartFlagA:(int)nr value:(bool)b { cia[nr]->timerA.setStarted(b); }
+- (void) ciaToggleStartFlagA:(int)nr {cia[nr]->timerA.toggleStartFlag(); }
+- (bool) ciaGetOneShotFlagA:(int)nr { return cia[nr]->timerA.isOneShot(); }
+- (void) ciaSetOneShotFlagA:(int)nr value:(bool)b { cia[nr]->timerA.setOneShot(b); }
+- (void) ciaToggleOneShotFlagA:(int)nr { cia[nr]->timerA.toggleOneShotFlag(); }
+- (bool) ciaGetUnderflowFlagA:(int)nr { return cia[nr]->timerA.willIndicateUnderflow(); }
+- (void) ciaSetUnderflowFlagA:(int)nr value:(bool)b { return cia[nr]->timerA.setIndicateUnderflow(b); }
+- (void) ciaToggleUnderflowFlagA:(int)nr { cia[nr]->timerA.toggleUnderflowFlag(); }
 - (bool) ciaGetPendingSignalFlagA:(int)nr {return cia[nr]->isSignalPendingA(); }
 - (void) ciaSetPendingSignalFlagA:(int)nr value:(bool)b { cia[nr]->setSignalPendingA(b); }
 - (void) ciaTogglePendingSignalFlagA:(int)nr { cia[nr]->togglePendingSignalFlagA(); }
@@ -318,19 +318,19 @@ void ListenerProxy::logAction(char *message)
 - (void) ciaSetDataPortB:(int)nr value:(uint8_t)v { cia[nr]->setDataPortB(v); }
 - (uint8_t) ciaGetDataPortDirectionB:(int)nr { return cia[nr]->getDataPortDirectionB(); }
 - (void) ciaSetDataPortDirectionB:(int)nr value:(uint8_t)v { cia[nr]->setDataPortDirectionB(v); }
-- (uint16_t) ciaGetTimerB:(int)nr { return cia[nr]->getTimerB(); }
-- (void) ciaSetTimerB:(int)nr value:(uint16_t)v { cia[nr]->setTimerB(v); }
-- (uint16_t) ciaGetTimerLatchB:(int)nr { return cia[nr]->getTimerLatchB(); }
-- (void) ciaSetTimerLatchB:(int)nr value:(uint16_t)v { cia[nr]->setTimerLatchB(v); }
-- (bool) ciaGetStartFlagB:(int)nr { return cia[nr]->isStartedB(); }
-- (void) ciaSetStartFlagB:(int)nr value:(bool)b { cia[nr]->setStartedB(b); }
-- (void) ciaToggleStartFlagB:(int)nr {cia[nr]->toggleStartFlagB(); }
-- (bool) ciaGetOneShotFlagB:(int)nr { return cia[nr]->isOneShotB(); }
-- (void) ciaSetOneShotFlagB:(int)nr value:(bool)b { cia[nr]->setOneShotB(b); }
-- (void) ciaToggleOneShotFlagB:(int)nr { cia[nr]->toggleOneShotFlagB(); }
-- (bool) ciaGetUnderflowFlagB:(int)nr { return cia[nr]->willIndicateUnderflowB(); }
-- (void) ciaSetUnderflowFlagB:(int)nr value:(bool)b { return cia[nr]->setIndicateUnderflowB(b); }
-- (void) ciaToggleUnderflowFlagB:(int)nr { cia[nr]->toggleUnderflowFlagB(); }
+- (uint16_t) ciaGetTimerB:(int)nr { return cia[nr]->timerB.getTimer(); }
+- (void) ciaSetTimerB:(int)nr value:(uint16_t)v { cia[nr]->timerB.setTimer(v); }
+- (uint16_t) ciaGetTimerLatchB:(int)nr { return cia[nr]->timerB.getTimerLatch(); }
+- (void) ciaSetTimerLatchB:(int)nr value:(uint16_t)v { cia[nr]->timerB.setTimerLatch(v); }
+- (bool) ciaGetStartFlagB:(int)nr { return cia[nr]->timerB.isStarted(); }
+- (void) ciaSetStartFlagB:(int)nr value:(bool)b { cia[nr]->timerB.setStarted(b); }
+- (void) ciaToggleStartFlagB:(int)nr {cia[nr]->timerB.toggleStartFlag(); }
+- (bool) ciaGetOneShotFlagB:(int)nr { return cia[nr]->timerB.isOneShot(); }
+- (void) ciaSetOneShotFlagB:(int)nr value:(bool)b { cia[nr]->timerB.setOneShot(b); }
+- (void) ciaToggleOneShotFlagB:(int)nr { cia[nr]->timerB.toggleOneShotFlag(); }
+- (bool) ciaGetUnderflowFlagB:(int)nr { return cia[nr]->timerB.willIndicateUnderflow(); }
+- (void) ciaSetUnderflowFlagB:(int)nr value:(bool)b { return cia[nr]->timerB.setIndicateUnderflow(b); }
+- (void) ciaToggleUnderflowFlagB:(int)nr { cia[nr]->timerB.toggleUnderflowFlag(); }
 - (bool) ciaGetPendingSignalFlagB:(int)nr {return cia[nr]->isSignalPendingB(); }
 - (void) ciaSetPendingSignalFlagB:(int)nr value:(bool)b { cia[nr]->setSignalPendingB(b); }
 - (void) ciaTogglePendingSignalFlagB:(int)nr { cia[nr]->togglePendingSignalFlagB(); }
