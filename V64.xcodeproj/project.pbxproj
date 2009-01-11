@@ -54,6 +54,7 @@
 		502562AF0C4AA0C7008AAB85 /* c64.png in Resources */ = {isa = PBXBuildFile; fileRef = 502562AE0C4AA0C7008AAB85 /* c64.png */; };
 		502663150C4398460094233B /* nebula.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 502663140C4398460094233B /* nebula.jpg */; };
 		50287EEB0A7CA86900292533 /* stepOut32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50287EEA0A7CA86900292533 /* stepOut32.png */; };
+		503DF0DA0F18BFDE00DC5C11 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503DF0D90F18BFDE00DC5C11 /* Timer.cpp */; };
 		50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE50A7B679A00A8DB94 /* stepInto32.png */; };
 		50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE70A7B67A100A8DB94 /* stepOver32.png */; };
 		50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FEB0A7B67AE00A8DB94 /* restart32.png */; };
@@ -184,6 +185,8 @@
 		502562AE0C4AA0C7008AAB85 /* c64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c64.png; path = images/c64.png; sourceTree = "<group>"; };
 		502663140C4398460094233B /* nebula.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = nebula.jpg; path = images/nebula.jpg; sourceTree = "<group>"; };
 		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepOut32.png; path = images/stepOut32.png; sourceTree = "<group>"; };
+		503DF0D80F18BFDE00DC5C11 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
+		503DF0D90F18BFDE00DC5C11 /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
 		50471FE50A7B679A00A8DB94 /* stepInto32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepInto32.png; path = images/stepInto32.png; sourceTree = "<group>"; };
 		50471FE70A7B67A100A8DB94 /* stepOver32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepOver32.png; path = images/stepOver32.png; sourceTree = "<group>"; };
 		50471FEB0A7B67AE00A8DB94 /* restart32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = restart32.png; path = images/restart32.png; sourceTree = "<group>"; };
@@ -371,6 +374,8 @@
 				50176C620A6F72F3009E80BD /* C64Listener.h */,
 				50176C540A6F72F3009E80BD /* CIA.h */,
 				50176C530A6F72F3009E80BD /* CIA.cpp */,
+				503DF0D80F18BFDE00DC5C11 /* Timer.h */,
+				503DF0D90F18BFDE00DC5C11 /* Timer.cpp */,
 				500B6CA30B905CEC002C36EC /* TOD.h */,
 				500B6CA40B905CEC002C36EC /* TOD.cpp */,
 				50176C600A6F72F3009E80BD /* VIC.h */,
@@ -662,6 +667,7 @@
 				501AE5030DAA1449003C6960 /* Listener.mm in Sources */,
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
+				503DF0DA0F18BFDE00DC5C11 /* Timer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

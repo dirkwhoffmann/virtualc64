@@ -4518,14 +4518,9 @@ void CPU::STA_absolute_x_2()
 void CPU::STA_absolute_x_3()
 {
 	IDLE_READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED) {
+	if (PAGE_BOUNDARY_CROSSED)
 		FIX_ADDR_HI;
-		next = &CPU::STA_absolute_x_4;
-	} else {
-		data = A;
-		WRITE_TO_ADDRESS;
-		DONE;
-	}
+	next = &CPU::STA_absolute_x_4;
 }
 void CPU::STA_absolute_x_4()
 {
@@ -4549,14 +4544,9 @@ void CPU::STA_absolute_y_2()
 void CPU::STA_absolute_y_3()
 {
 	IDLE_READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED) {
+	if (PAGE_BOUNDARY_CROSSED)
 		FIX_ADDR_HI;
-		next = &CPU::STA_absolute_y_4;
-	} else {
-		data = A;
-		WRITE_TO_ADDRESS;
-		DONE;
-	}
+	next = &CPU::STA_absolute_y_4;
 }
 void CPU::STA_absolute_y_4()
 {
@@ -4613,15 +4603,10 @@ void CPU::STA_indirect_y_3()
 }
 void CPU::STA_indirect_y_4()
 {
-	READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED) {
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED)
 		FIX_ADDR_HI;
-		next = &CPU::STA_indirect_y_5;
-	} else {
-		data = A;
-		WRITE_TO_ADDRESS;
-		DONE;
-	}
+	next = &CPU::STA_indirect_y_5;
 }
 void CPU::STA_indirect_y_5()
 {
@@ -4879,14 +4864,9 @@ void CPU::AHX_absolute_y_2()
 void CPU::AHX_absolute_y_3()
 {
 	IDLE_READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED) {
+	if (PAGE_BOUNDARY_CROSSED)
 		FIX_ADDR_HI;
-		next = &CPU::AHX_absolute_y_4;
-	} else {
-		data = A & X & (data + 1);
-		WRITE_TO_ADDRESS;
-		DONE;
-	}
+	next = &CPU::AHX_absolute_y_4;
 }
 void CPU::AHX_absolute_y_4()
 {
@@ -4894,16 +4874,6 @@ void CPU::AHX_absolute_y_4()
 	WRITE_TO_ADDRESS;
 	DONE;
 }
-
-#if 0
-void CPU::AHX_absolute_y()
-{
-	uint8_t  value = mem->peek(PC+1);
-	uint16_t addr  = fetchAddressAbsoluteY();
-	mem->poke(addr, A & X & (value + 1));
-	DONE;
-}
-#endif
 
 // -------------------------------------------------------------------------------
 void CPU::AHX_indirect_y()
@@ -4926,14 +4896,9 @@ void CPU::AHX_indirect_y_3()
 void CPU::AHX_indirect_y_4()
 {
 	IDLE_READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED) {
+	if (PAGE_BOUNDARY_CROSSED)
 		FIX_ADDR_HI;
-		next = &CPU::AHX_indirect_y_5;
-	} else {
-		data = A & X & (data + 1);
-		WRITE_TO_ADDRESS;
-		DONE;
-	}
+	next = &CPU::AHX_indirect_y_5;
 }
 void CPU::AHX_indirect_y_5()
 {
@@ -6357,14 +6322,9 @@ void CPU::SHX_absolute_y_2()
 void CPU::SHX_absolute_y_3()
 {
 	IDLE_READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED) {
+	if (PAGE_BOUNDARY_CROSSED)
 		FIX_ADDR_HI;
-		next = &CPU::SHX_absolute_y_4;
-	} else {
-		data &= X;
-		WRITE_TO_ADDRESS;
-		DONE;
-	}
+	next = &CPU::SHX_absolute_y_4;
 }
 void CPU::SHX_absolute_y_4()
 {
@@ -6398,14 +6358,9 @@ void CPU::SHY_absolute_x_2()
 void CPU::SHY_absolute_x_3()
 {
 	IDLE_READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED) {
+	if (PAGE_BOUNDARY_CROSSED)
 		FIX_ADDR_HI;
-		next = &CPU::SHY_absolute_x_4;
-	} else {
-		data &= Y;
-		WRITE_TO_ADDRESS;
-		DONE;
-	}
+	next = &CPU::SHY_absolute_x_4;
 }
 void CPU::SHY_absolute_x_4()
 {

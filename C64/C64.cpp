@@ -70,10 +70,12 @@ void
 }
 
 #define EXECUTE(x) \
-		if (!cpu->executeOneCycle()) return false; \
-		if (!floppy->executeOneCycle()) return false; \
+		cia1->triggerInterrupts(); \
+		cia2->triggerInterrupts(); \
 		cia1->executeOneCycle(); \
 		cia2->executeOneCycle(); \
+		if (!cpu->executeOneCycle()) return false; \
+		if (!floppy->executeOneCycle()) return false; \
 		cycles++;
 
 void 
