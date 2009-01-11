@@ -103,16 +103,12 @@ protected:
 	
 	//! Reference to the connected CPU. 
 	CPU *cpu;
-
+	
 	//! CIA I/O Memory
 	/*! Whenever a value is poked to the CIA address space, it is stored here. */
 	uint8_t iomem[NO_OF_REGISTERS];
-			
-	//! Current value of timer A
-	uint16_t timerA;
-
-	//! Current value of timer B
-	uint16_t timerB;
+				
+protected:
 	
 	//! External bus signals on data port A
 	/*! \todo Create a separate interface (DeviceInterface or something)
@@ -124,20 +120,19 @@ protected:
 	uint8_t portLinesB;
 	
 	//! Interrupt data register
-	/*! From [Mapping128]: 
-	    "The CIA chip has five internal interrupt sources: timer A underflow, timer B underflow, time-of-day clock alarm, serial 
+	/*! "The CIA chip has five internal interrupt sources: timer A underflow, timer B underflow, time-of-day clock alarm, serial 
 	     data buffer full or empty, and FLAG signal. The CIA can also generate an interrupt request output signal as a result of any 
 	     of these conditions. The location actually has two different functions, depending on whether it is being read from or written to. 
 	     When you read from this register, you see the contents of an internal interrupt data register that indicates which interrupts, 
 	     if any, have occurred. When you write to this register, the value goes to an internal interrupt mask register that specifies which 
 	     interrupts—if any—are to result in an external interrupt request being generated. The data register is read-only 
-	     (it can't be written to), and the mask register is write-only (it can't be read from)."
+	     (it can't be written to), and the mask register is write-only (it can't be read from)." [Mapping128]
 	 
 		Note: The interrupt mask ist stored in iomem[CIA_INTERRUPT_CONTROL].
 	*/
 	uint8_t interruptDataRegister;
-	
-	//! Trigger interrupt
+		 
+	 //! Trigger interrupt
 	/*! Annotates the interrupt source in the interrupt control register and triggers a CPU interrupt. */
 	void triggerInterrupt(uint8_t source);	
 
@@ -152,12 +147,17 @@ protected:
 		Whereas the CIA 1 clears the IRQ line, the CIA 2 chip clears the NMI line.
 	*/
 	virtual void clearInterruptLine() = 0;	
-	
+			
 public:	
-	//! Current value of the "time of day" clock (TOD)
-	/*! The value is counted in 1/10th secods */
-	TOD tod;
+	//! First timer
+	TimerA tA;
 	
+	//! Second timer
+	TimerB tB;
+
+	//! Time of day clock
+	TOD tod;
+
 	//! Returns true if the \a addr is located in the I/O range of one of the two CIA chips
 	static inline bool isCiaAddr(uint16_t addr) 
 		{ return (CIA_START_ADDR <= addr && addr <= CIA_END_ADDR); }
@@ -208,10 +208,10 @@ public:
 	inline void setDataPortDirectionB(uint8_t value) { iomem[CIA_DATA_DIRECTION_B] = value; }
 
 	//! Returns the current value of timer A
-	inline uint16_t getTimerA() { return timerA; }
+	inline uint16_t getTimerA() { return tA.count; }
 
 	//! Sets the current value of timer A
-	inline void setTimerA(uint16_t value) { timerA = value; }
+	inline void setTimerA(uint16_t value) { tA.count = value; }
 
 	//! Returns the start value of timer A
 	inline uint16_t getTimerLatchA() { return LO_HI(iomem[CIA_TIMER_A_LOW], iomem[CIA_TIMER_A_HIGH]); }
@@ -220,10 +220,10 @@ public:
 	inline void setTimerLatchA(uint16_t value) { iomem[CIA_TIMER_A_LOW] = LO_BYTE(value); iomem[CIA_TIMER_A_HIGH] = HI_BYTE(value); }
 	
 	//! Returns the current value of timer B
-	inline uint16_t getTimerB() { return timerB; }
+	inline uint16_t getTimerB() { return tB.count; }
 	
 	//! Sets the current value of timer B
-	inline void setTimerB(uint16_t value) { timerB = value; }
+	inline void setTimerB(uint16_t value) { tB.count = value; }
 
 	//! Returns the start value of timer B
 	inline uint16_t getTimerLatchB() { return LO_HI(iomem[CIA_TIMER_B_LOW], iomem[CIA_TIMER_B_HIGH]); }
@@ -231,11 +231,6 @@ public:
 	//! Sets the start value of timer B
 	inline void setTimerLatchB(uint16_t value) { iomem[CIA_TIMER_B_LOW] = LO_BYTE(value); iomem[CIA_TIMER_B_HIGH] = HI_BYTE(value); }
 
-	//! Triggered when timer A reaches zero
-	void timerActionA();
-
-	//! Triggered when timer B reaches zero
-	void timerActionB();
 	
 	//! Special peek function for the I/O memory range
 	/*! The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip */
@@ -264,7 +259,7 @@ public:
 
 	//! Toggle signal pending flag of timer A
 	inline void togglePendingSignalFlagA() { setSignalPendingA(!isSignalPendingA()); }
-	
+		
 	//! Returns true, if timer B can trigger interrupts
 	inline bool isInterruptEnabledB() { return iomem[CIA_INTERRUPT_CONTROL] & 0x02; }
 
@@ -291,79 +286,117 @@ public:
 
 	
 	// Timer A control
+
+	//!
+	inline bool getControlRegA() { return iomem[CIA_CONTROL_REG_A]; }
+
+	//!
+	inline void setControlRegA(uint8_t value) { iomem[CIA_CONTROL_REG_A] = value; }
 	
 	//! Returns true, if timer A is running, 0 if stopped
-	inline bool isStartedA() { return iomem[CIA_CONTROL_REG_A] & 0x01; }
+	inline bool isStartedA() { return tA.controlReg & 0x01; }
 
 	//! Start or stop timer A
-	inline void setStartedA(bool b) { if (b) iomem[CIA_CONTROL_REG_A] |= 0x01; else iomem[CIA_CONTROL_REG_A] &= (0xff-0x01); }
+	inline void setStartedA(bool b) { if (b) tA.controlReg |= 0x01; else tA.controlReg &= 0xFE; }
 
+	//! Returns true, if the force load strobe of timer A is 1
+	inline bool forceLoadStrobeA() { return tA.controlReg & 0x10; }
+		
 	//! Toggle start flag of timer A
 	inline void toggleStartFlagA() { setStartedA(!isStartedA()); }
 		
 	//! Returns true, if an underflow of timer A will be indicated in bit #6 in Port B register
-	inline bool willIndicateUnderflowA() { return iomem[CIA_CONTROL_REG_A] & 0x02; }
+	inline bool willIndicateUnderflowA() { return tA.controlReg & 0x02; }
 
 	//! Enable or disable underflow indication
-	inline void setIndicateUnderflowA(bool b) { if (b) iomem[CIA_CONTROL_REG_A] |= 0x02; else iomem[CIA_CONTROL_REG_A] &= (0xFF-0x02); }
+	inline void setIndicateUnderflowA(bool b) { if (b) tA.controlReg |= 0x02; else tA.controlReg &= (0xFF-0x02); }
 
 	//! Toggle underflow indication flag of timer A
 	inline void toggleUnderflowFlagA() { setIndicateUnderflowA(!willIndicateUnderflowA()); }
 	
 	//! Returns true, if A is in "one shot" mode
-	inline bool isOneShotA() { return iomem[CIA_CONTROL_REG_A] & 0x08; }
+	inline bool isOneShotA() { return tA.isOneShot(); }
 
 	//! Enable or disable one-shot-mode 
-	inline void setOneShotA(bool b) { if (b) iomem[CIA_CONTROL_REG_A] |= 0x08; else iomem[CIA_CONTROL_REG_A] &= (0xff-0x08); }
+	inline void setOneShotA(bool b) { tA.setOneShot(b); }
 
 	//! Toggle one shot flag of timer A
 	inline void toggleOneShotFlagA() { setOneShotA(!isOneShotA()); }
 		
-	//! Load latched value into timer 
-	inline void reloadTimerA() { timerA = (iomem[CIA_TIMER_A_HIGH] << 8) | iomem[CIA_TIMER_A_LOW]; }
+	//! Returns true, if B counts clock ticks
+	inline bool isCountingClockTicksA() { return tA.count_clockticks; }
 	
 	
+
 	// Timer B control
+	
+	//!
+	inline bool getControlRegB() { return iomem[CIA_CONTROL_REG_B]; }
+
+	//!
+	inline void setControlRegB(uint8_t value) { iomem[CIA_CONTROL_REG_B] = value; }
 
 	//! Returns true, if timer B is started, 0 if stopped
-	inline bool isStartedB() { return iomem[CIA_CONTROL_REG_B] & 0x01; }
+	inline bool isStartedB() { return tB.controlReg & 0x01; }
 
 	//! Start or stop timer B
-	inline void setStartedB(bool b) { if (b) iomem[CIA_CONTROL_REG_B] |= 0x01; else iomem[CIA_CONTROL_REG_B] &= (0xff-0x01); }
+	inline void setStartedB(bool b) { if (b) tB.controlReg |= 0x01; else tB.controlReg &= (0xff-0x01); }
+
+	//! Returns true, if the force load strobe of timer B is 1
+	inline bool forceLoadStrobeB() { return tB.controlReg & 0x10; }
 
 	//! Toggle start flag of timer B
 	inline void toggleStartFlagB() { setStartedB(!isStartedB()); }
 
 	//! Returns true, if an underflow of timer B will be indicated in bit #7 in Port B register
-	inline bool willIndicateUnderflowB() { return iomem[CIA_CONTROL_REG_B] & 0x02; }
+	inline bool willIndicateUnderflowB() { return tB.controlReg & 0x02; }
 
 	//! Enable or disable underflow indication
-	inline void setIndicateUnderflowB(bool b) { if (b) iomem[CIA_CONTROL_REG_B] |= 0x02; else iomem[CIA_CONTROL_REG_B] &= (0xFF-0x02); }
+	inline void setIndicateUnderflowB(bool b) { if (b) tB.controlReg |= 0x02; else tB.controlReg &= (0xFF-0x02); }
 
 	//! Toggle underflow indication flag of timer B
 	inline void toggleUnderflowFlagB() { setIndicateUnderflowB(!willIndicateUnderflowB()); }
 
 	//! Returns true, if B is in "one shot" mode
-	inline bool isOneShotB() { return iomem[CIA_CONTROL_REG_B] & 0x08; }
+	inline bool isOneShotB() { return tB.isOneShot(); }
 
 	//! Enable or disable one-shot-mode of timer B
-	inline void setOneShotB(bool b) { if (b) iomem[CIA_CONTROL_REG_B] |= 0x08; else iomem[CIA_CONTROL_REG_B] &= (0xff-0x08); }	
+	inline void setOneShotB(bool b) { tB.setOneShot(b); }
 
 	//! Toggle one shot flag of timer B
 	inline void toggleOneShotFlagB() { setOneShotB(!isOneShotB()); }
 
+	//! Returns true, if B counts clock ticks
+	inline bool isCountingClockTicksB() { return tB.count_clockticks; }
+
 	//! Returns true, if B couts underflows
-	inline bool getCountUnderflowFlagB() { return iomem[CIA_CONTROL_REG_B] & 0x40; }
-	
+	inline bool getCountUnderflowFlagB() { return tB.count_underflows; }
+		
 	//! Set count-underflow-flag of timer B
-	inline void setCountUnderflowFlagB(bool b) { if (b) iomem[CIA_CONTROL_REG_B] |= 0x40; else iomem[CIA_CONTROL_REG_B] &= (0xff-0x40); }	
+	inline void setCountUnderflowFlagB(bool b) { tB.count_underflows = b; }
 	
 	//! Toggle count-underflow-flag of timer B
 	inline void toggleCountUnderflowFlagB() { setCountUnderflowFlagB(!getCountUnderflowFlagB()); }
 	
 	//! Load latched value into timer 
-	inline void reloadTimerB() { timerB = (iomem[CIA_TIMER_B_HIGH] << 8) | iomem[CIA_TIMER_B_LOW]; }
+	inline void reloadTimerB() { tB.reloadTimer(); }
+	
 
+	bool controlRegHasChangedA;
+	bool controlRegHasChangedB;
+	
+	//! Trigger pending interrupts
+	inline void triggerInterrupts() {
+
+		if (tA.triggerInterrupt) {
+			tA.triggerInterrupt = false;
+			triggerInterrupt(0x01);
+		}
+		if (tB.triggerInterrupt) {
+			tB.triggerInterrupt = false;
+			triggerInterrupt(0x02);
+		}
+	}
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                             General
@@ -373,7 +406,20 @@ public:
 	/*! The CIA will be executed for one clock cycle
 		The functions decreases all running counters and triggers an CPU interrput if necessary.
 	*/
-	void executeOneCycle(); 
+	inline void executeOneCycle() { 
+		if (tA.state != TIMER_STOP)
+			tA.executeOneCycle();	
+		if (controlRegHasChangedA) {
+			controlRegHasChangedA = false;
+			tA.setControlReg(iomem[CIA_CONTROL_REG_A]);
+		}
+		if (tB.state != TIMER_STOP)
+			tB.executeOneCycle();
+		if (controlRegHasChangedB) {
+			controlRegHasChangedB = false;
+			tB.setControlReg(iomem[CIA_CONTROL_REG_B]);		
+		} 
+	}
 	
 	//! Increment the TOD clock by one tenth of a second
 	/*! Issues an interrupt if the alarm time is reached.

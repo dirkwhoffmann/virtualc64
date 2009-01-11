@@ -176,6 +176,10 @@ wird der Zählerstand mit dem Latch-Wert geladen und der Timer gestartet.
 CIA::CIA()
 {
 	cpu = NULL;
+	tA.setCIA(this);
+	tB.setCIA(this);
+	tA.setOtherTimer(&tB);
+	tB.setOtherTimer(&tA);
 }
 
 CIA::~CIA()
@@ -188,12 +192,14 @@ CIA::reset()
 	memset(iomem, 0, sizeof(iomem));	
 	iomem[CIA_DATA_PORT_A] = 0xff;
 	iomem[CIA_DATA_PORT_B] = 0xff;	
-	timerA = 0;
-	timerB = 0;
 	portLinesA = 0xff;
 	portLinesB = 0xff;
 	interruptDataRegister = 0;
+	controlRegHasChangedA = false;
+	controlRegHasChangedB = false;
 	tod.reset();
+	tA.reset();
+	tB.reset();
 }
 
 // Loading and saving snapshots
@@ -201,8 +207,8 @@ bool CIA::load(FILE *file)
 {
 	debug("  Loading CIA state...\n");
 	tod.load(file);
-	timerA = read16(file);
-	timerB = read16(file);
+	(void)read16(file);
+	(void)read16(file);
 	portLinesA = read8(file);
 	portLinesB = read8(file);
 	for (int i = 0; i < NO_OF_REGISTERS; i++) {
@@ -214,16 +220,16 @@ bool CIA::load(FILE *file)
 bool 
 CIA::save(FILE *file)
 {
-	debug("  Saving CIA state...\n");
-	tod.save(file);
-	write16(file, timerA);
-	write16(file, timerB);
-	write8(file, portLinesA);
-	write8(file, portLinesB);	
-	for (int i = 0; i < NO_OF_REGISTERS; i++) {
+	 debug("  Saving CIA state...\n");
+	 tod.save(file);
+	 write16(file, 0);
+	 write16(file, 0);
+	 write8(file, portLinesA);
+	 write8(file, portLinesB);	
+	 for (int i = 0; i < NO_OF_REGISTERS; i++) {
 		write8(file, iomem[i]);
-	}		
-	return true;	
+	 }		
+	 return true;	
 }
 
 void 
@@ -250,13 +256,13 @@ uint8_t CIA::peek(uint16_t addr)
 		case CIA_DATA_DIRECTION_B:
 			return iomem[addr];
 		case CIA_TIMER_A_LOW:  
-			return LO_BYTE(timerA);			
+			return LO_BYTE(tA.count);			
 		case CIA_TIMER_A_HIGH: 
-			return HI_BYTE(timerA);			
+			return HI_BYTE(tA.count);			
 		case CIA_TIMER_B_LOW:  
-			return LO_BYTE(timerB);
+			return LO_BYTE(tB.count);
 		case CIA_TIMER_B_HIGH: 
-			return HI_BYTE(timerB);
+			return HI_BYTE(tB.count);
 		case CIA_TIME_OF_DAY_SEC_FRAC:
 			tod.defreeze();
 			return BinaryToBCD(tod.getTodTenth());
@@ -276,8 +282,9 @@ uint8_t CIA::peek(uint16_t addr)
 			clearInterruptLine();			
 			return result;
 		case CIA_CONTROL_REG_A:
+			return tA.controlReg & 0xEF; // Bit 4 is always 0 when read
 		case CIA_CONTROL_REG_B:
-			return iomem[addr];
+			return tB.controlReg & 0xEF; // Bit 4 is always 0 when read
 		default:
 			debug("PANIC: Unknown CIA address %04X\n", addr);
 			assert(0);
@@ -289,23 +296,23 @@ void CIA::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
 		case CIA_TIMER_A_LOW:
+			tA.setTimerLatchLo(value);
 			iomem[addr] = value; 
 			return;
 			
 		case CIA_TIMER_A_HIGH:
+			tA.setTimerLatchHi(value);
 			iomem[addr] = value; 
-			if (!isStartedA()) 
-				reloadTimerA();
 			return;
 			
 		case CIA_TIMER_B_LOW:  
+			tB.setTimerLatchLo(value);		
 			iomem[addr] = value; 
 			return;
 			
 		case CIA_TIMER_B_HIGH: 
+			tB.setTimerLatchHi(value);
 			iomem[addr] = value; 
-			if (!isStartedB()) 
-				reloadTimerB();
 			return;
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
@@ -358,40 +365,25 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_CONTROL_REG_A:
-			iomem[addr] = value & 0xef;
-			if (value & 0x10) // Load timer A
-				reloadTimerA();
-			if (value & 0x20)
-				debug("WARNING: Counting positive edges on CNT pin not yet implemented!\n");
+			if (iomem[addr] != value) {
+				iomem[addr] = value; 
+				tA.setCountingModes(value);
+				controlRegHasChangedA = true; // Note: The value will be pushed to the timer in the next cycle
+			}
 			return;
+			
 		case CIA_CONTROL_REG_B:
-			iomem[addr] = value;
-			if (value & 0x10) // Load timer B
-				reloadTimerB();
-			if (value & 0x60)
-				debug("WARNING: Unsupported counting mode for timer B (%d) !\n", value & 0x60);
+			if (iomem[addr] != value) {
+				iomem[addr] = value; 
+				tB.setCountingModes(value);
+				controlRegHasChangedB = true; // Note: The value will be pushed to the timer in the next cycle
+			}
 			return;			
+
 		default:
 			debug("PANIC: Unknown CIA address (poke) %04X\n", addr);
 			assert(0);
 	}	
-}
-
-void CIA::timerActionA()
-{
-	if (isOneShotA()) {
-		iomem[CIA_CONTROL_REG_A] &= 0xFE; // Clear bit 0
-	}
-	triggerInterrupt(0x01);
-}
-
-void 
-CIA::timerActionB()
-{
-	if (isOneShotB()) {
-		iomem[CIA_CONTROL_REG_B] &= 0xFE; // Clear bit 0
-	}
-	triggerInterrupt(0x02);
 }
 
 void 
@@ -400,48 +392,19 @@ CIA::incrementTOD()
 	if (tod.increment())
 		triggerInterrupt(0x04);
 }
-			
-void 
-CIA::executeOneCycle()
-{
-	int underflowA; 
 		
-	if (isStartedA()) { 
-		if (timerA <= 1) {
-			underflowA = 1;
-			reloadTimerA(); 
-			timerActionA();
-		} else {
-			underflowA = 0;
-			timerA --;
-		}
-	}
-
-	if (isStartedB()) { 
-		if (timerB <= 1) {
-			reloadTimerB();
-			timerActionB();
-		} else {
-			timerB -= (getCountUnderflowFlagB() ? underflowA : 1);
-		}
-	}
-	
-	// return true;
-}
-
 void CIA::dumpState()
 {
 	debug("Timer A: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
-		  timerA, 
+		  tA.count,
 		  isStartedA()          ? "yes" : "no",
 		  isInterruptEnabledA() ? "yes" : "no",
 		  isOneShotA()          ? "yes" : "no");
 	debug("Timer B: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
-		  timerB, 
+		  tB.count, 
 		  isStartedB()          ? "yes" : "no",
 		  isInterruptEnabledB() ? "yes" : "no",
 		  isOneShotB()          ? "yes" : "no");
-	
 }
 
 // -----------------------------------------------------------------------------------------
@@ -455,7 +418,6 @@ CIA1::CIA1()
 	keyboard = NULL;
 	joystick[0] = 0xff;
 	joystick[1] = 0xff;	
-	// reset();
 }
 
 CIA1::~CIA1()

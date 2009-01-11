@@ -58,6 +58,7 @@
 #include "VIC.h"
 #include "SID.h"
 #include "TOD.h"
+#include "Timer.h"
 #include "CIA.h"
 #include "CPU.h"
 #include "VC1541.h"
