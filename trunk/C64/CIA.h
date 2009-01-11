@@ -150,10 +150,10 @@ protected:
 			
 public:	
 	//! First timer
-	TimerA tA;
+	TimerA timerA;
 	
 	//! Second timer
-	TimerB tB;
+	TimerB timerB;
 
 	//! Time of day clock
 	TOD tod;
@@ -206,32 +206,7 @@ public:
 	
 	//! Sets the current value of the data port B direction register
 	inline void setDataPortDirectionB(uint8_t value) { iomem[CIA_DATA_DIRECTION_B] = value; }
-
-	//! Returns the current value of timer A
-	inline uint16_t getTimerA() { return tA.count; }
-
-	//! Sets the current value of timer A
-	inline void setTimerA(uint16_t value) { tA.count = value; }
-
-	//! Returns the start value of timer A
-	inline uint16_t getTimerLatchA() { return LO_HI(iomem[CIA_TIMER_A_LOW], iomem[CIA_TIMER_A_HIGH]); }
-	
-	//! Sets the start value of timer A
-	inline void setTimerLatchA(uint16_t value) { iomem[CIA_TIMER_A_LOW] = LO_BYTE(value); iomem[CIA_TIMER_A_HIGH] = HI_BYTE(value); }
-	
-	//! Returns the current value of timer B
-	inline uint16_t getTimerB() { return tB.count; }
-	
-	//! Sets the current value of timer B
-	inline void setTimerB(uint16_t value) { tB.count = value; }
-
-	//! Returns the start value of timer B
-	inline uint16_t getTimerLatchB() { return LO_HI(iomem[CIA_TIMER_B_LOW], iomem[CIA_TIMER_B_HIGH]); }
-
-	//! Sets the start value of timer B
-	inline void setTimerLatchB(uint16_t value) { iomem[CIA_TIMER_B_LOW] = LO_BYTE(value); iomem[CIA_TIMER_B_HIGH] = HI_BYTE(value); }
-
-	
+		
 	//! Special peek function for the I/O memory range
 	/*! The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip */
 	virtual uint8_t peek(uint16_t addr);
@@ -284,7 +259,6 @@ public:
 	//! Enable or disable "time of day" interrupts 
 	inline void setInterruptEnabledTOD(bool b) { if (b) iomem[CIA_INTERRUPT_CONTROL] |= 0x04; else iomem[CIA_INTERRUPT_CONTROL] &= (0xff-0x04); }
 
-	
 	// Timer A control
 
 	//!
@@ -293,41 +267,6 @@ public:
 	//!
 	inline void setControlRegA(uint8_t value) { iomem[CIA_CONTROL_REG_A] = value; }
 	
-	//! Returns true, if timer A is running, 0 if stopped
-	inline bool isStartedA() { return tA.controlReg & 0x01; }
-
-	//! Start or stop timer A
-	inline void setStartedA(bool b) { if (b) tA.controlReg |= 0x01; else tA.controlReg &= 0xFE; }
-
-	//! Returns true, if the force load strobe of timer A is 1
-	inline bool forceLoadStrobeA() { return tA.controlReg & 0x10; }
-		
-	//! Toggle start flag of timer A
-	inline void toggleStartFlagA() { setStartedA(!isStartedA()); }
-		
-	//! Returns true, if an underflow of timer A will be indicated in bit #6 in Port B register
-	inline bool willIndicateUnderflowA() { return tA.controlReg & 0x02; }
-
-	//! Enable or disable underflow indication
-	inline void setIndicateUnderflowA(bool b) { if (b) tA.controlReg |= 0x02; else tA.controlReg &= (0xFF-0x02); }
-
-	//! Toggle underflow indication flag of timer A
-	inline void toggleUnderflowFlagA() { setIndicateUnderflowA(!willIndicateUnderflowA()); }
-	
-	//! Returns true, if A is in "one shot" mode
-	inline bool isOneShotA() { return tA.isOneShot(); }
-
-	//! Enable or disable one-shot-mode 
-	inline void setOneShotA(bool b) { tA.setOneShot(b); }
-
-	//! Toggle one shot flag of timer A
-	inline void toggleOneShotFlagA() { setOneShotA(!isOneShotA()); }
-		
-	//! Returns true, if B counts clock ticks
-	inline bool isCountingClockTicksA() { return tA.count_clockticks; }
-	
-	
-
 	// Timer B control
 	
 	//!
@@ -335,65 +274,20 @@ public:
 
 	//!
 	inline void setControlRegB(uint8_t value) { iomem[CIA_CONTROL_REG_B] = value; }
-
-	//! Returns true, if timer B is started, 0 if stopped
-	inline bool isStartedB() { return tB.controlReg & 0x01; }
-
-	//! Start or stop timer B
-	inline void setStartedB(bool b) { if (b) tB.controlReg |= 0x01; else tB.controlReg &= (0xff-0x01); }
-
-	//! Returns true, if the force load strobe of timer B is 1
-	inline bool forceLoadStrobeB() { return tB.controlReg & 0x10; }
-
-	//! Toggle start flag of timer B
-	inline void toggleStartFlagB() { setStartedB(!isStartedB()); }
-
-	//! Returns true, if an underflow of timer B will be indicated in bit #7 in Port B register
-	inline bool willIndicateUnderflowB() { return tB.controlReg & 0x02; }
-
-	//! Enable or disable underflow indication
-	inline void setIndicateUnderflowB(bool b) { if (b) tB.controlReg |= 0x02; else tB.controlReg &= (0xFF-0x02); }
-
-	//! Toggle underflow indication flag of timer B
-	inline void toggleUnderflowFlagB() { setIndicateUnderflowB(!willIndicateUnderflowB()); }
-
-	//! Returns true, if B is in "one shot" mode
-	inline bool isOneShotB() { return tB.isOneShot(); }
-
-	//! Enable or disable one-shot-mode of timer B
-	inline void setOneShotB(bool b) { tB.setOneShot(b); }
-
-	//! Toggle one shot flag of timer B
-	inline void toggleOneShotFlagB() { setOneShotB(!isOneShotB()); }
-
-	//! Returns true, if B counts clock ticks
-	inline bool isCountingClockTicksB() { return tB.count_clockticks; }
-
-	//! Returns true, if B couts underflows
-	inline bool getCountUnderflowFlagB() { return tB.count_underflows; }
-		
-	//! Set count-underflow-flag of timer B
-	inline void setCountUnderflowFlagB(bool b) { tB.count_underflows = b; }
 	
-	//! Toggle count-underflow-flag of timer B
-	inline void toggleCountUnderflowFlagB() { setCountUnderflowFlagB(!getCountUnderflowFlagB()); }
 	
-	//! Load latched value into timer 
-	inline void reloadTimerB() { tB.reloadTimer(); }
-	
-
 	bool controlRegHasChangedA;
 	bool controlRegHasChangedB;
 	
 	//! Trigger pending interrupts
 	inline void triggerInterrupts() {
 
-		if (tA.triggerInterrupt) {
-			tA.triggerInterrupt = false;
+		if (timerA.triggerInterrupt) {
+			timerA.triggerInterrupt = false;
 			triggerInterrupt(0x01);
 		}
-		if (tB.triggerInterrupt) {
-			tB.triggerInterrupt = false;
+		if (timerB.triggerInterrupt) {
+			timerB.triggerInterrupt = false;
 			triggerInterrupt(0x02);
 		}
 	}
@@ -407,17 +301,17 @@ public:
 		The functions decreases all running counters and triggers an CPU interrput if necessary.
 	*/
 	inline void executeOneCycle() { 
-		if (tA.state != TIMER_STOP)
-			tA.executeOneCycle();	
+		if (timerA.state != TIMER_STOP)
+			timerA.executeOneCycle();	
 		if (controlRegHasChangedA) {
 			controlRegHasChangedA = false;
-			tA.setControlReg(iomem[CIA_CONTROL_REG_A]);
+			timerA.setControlReg(iomem[CIA_CONTROL_REG_A]);
 		}
-		if (tB.state != TIMER_STOP)
-			tB.executeOneCycle();
+		if (timerB.state != TIMER_STOP)
+			timerB.executeOneCycle();
 		if (controlRegHasChangedB) {
 			controlRegHasChangedB = false;
-			tB.setControlReg(iomem[CIA_CONTROL_REG_B]);		
+			timerB.setControlReg(iomem[CIA_CONTROL_REG_B]);		
 		} 
 	}
 	

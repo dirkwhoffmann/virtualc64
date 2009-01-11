@@ -202,7 +202,7 @@
 				<key>PBXProjectModuleGUID</key>
 				<string>50FCE8840F02603F0048D008</string>
 				<key>PBXProjectModuleLabel</key>
-				<string>CIA.cpp</string>
+				<string>C64Proxy.mm</string>
 				<key>PBXSplitModuleInNavigatorKey</key>
 				<dict>
 					<key>Split0</key>
@@ -210,11 +210,11 @@
 						<key>PBXProjectModuleGUID</key>
 						<string>50FCE8970F0260540048D008</string>
 						<key>PBXProjectModuleLabel</key>
-						<string>CIA.cpp</string>
+						<string>C64Proxy.mm</string>
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>507553E70F1A0B2300109767</string>
+						<string>5075541C0F1A13E700109767</string>
 						<key>history</key>
 						<array>
 							<string>500165FF0F029EC4004351F4</string>
@@ -229,7 +229,8 @@
 							<string>5075535A0F19FC1600109767</string>
 							<string>507553AE0F1A07D200109767</string>
 							<string>507553AF0F1A07D200109767</string>
-							<string>507553B00F1A07D200109767</string>
+							<string>507553F70F1A115E00109767</string>
+							<string>507553EC0F1A10DA00109767</string>
 						</array>
 						<key>prevStack</key>
 						<array>
@@ -255,6 +256,7 @@
 							<string>507553B20F1A07D200109767</string>
 							<string>507553B30F1A07D200109767</string>
 							<string>507553B40F1A07D200109767</string>
+							<string>507553F80F1A115E00109767</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -270,7 +272,7 @@
 				<key>PBXModuleWindowStatusBarHidden2</key>
 				<false/>
 				<key>RubberWindowFrame</key>
-				<string>890 204 985 824 0 0 1680 1028 </string>
+				<string>581 204 985 824 0 0 1680 1028 </string>
 			</dict>
 		</dict>
 	</array>
@@ -361,7 +363,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>47</integer>
+									<integer>45</integer>
 									<integer>25</integer>
 									<integer>1</integer>
 									<integer>0</integer>
@@ -405,7 +407,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Timer.h</string>
+								<string>CIA.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -413,11 +415,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Timer.h</string>
+										<string>CIA.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>507553E60F1A0B2300109767</string>
+										<string>5075541B0F1A13E700109767</string>
 										<key>history</key>
 										<array>
 											<string>50AFEE850C3A8D9B007749E7</string>
@@ -540,10 +542,10 @@
 											<string>503DF0F10F18CE7700DC5C11</string>
 											<string>503DF16D0F18D1F300DC5C11</string>
 											<string>503DF1C50F18D5C700DC5C11</string>
-											<string>507553D30F1A0A7700109767</string>
-											<string>507553D40F1A0A7700109767</string>
-											<string>507553D50F1A0A7700109767</string>
-											<string>507553D60F1A0A7700109767</string>
+											<string>5075540D0F1A13CC00109767</string>
+											<string>5075540E0F1A13CC00109767</string>
+											<string>5075540F0F1A13CC00109767</string>
+											<string>507554100F1A13CC00109767</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -694,6 +696,17 @@
 											<string>507553DE0F1A0A7700109767</string>
 											<string>507553DF0F1A0A7700109767</string>
 											<string>507553E00F1A0A7700109767</string>
+											<string>507553F10F1A115E00109767</string>
+											<string>507553F20F1A115E00109767</string>
+											<string>507553F30F1A115E00109767</string>
+											<string>507553F40F1A115E00109767</string>
+											<string>507553F50F1A115E00109767</string>
+											<string>507554010F1A127400109767</string>
+											<string>507554110F1A13CC00109767</string>
+											<string>507554120F1A13CC00109767</string>
+											<string>507554130F1A13CC00109767</string>
+											<string>507554140F1A13CC00109767</string>
+											<string>507554150F1A13CC00109767</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -891,8 +904,8 @@
 		<string>5075530D0F19F10900109767</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>50BEB1590CDF2AAE00C7DB33</string>
 		<string>50FCE8840F02603F0048D008</string>
+		<string>50BEB1590CDF2AAE00C7DB33</string>
 		<string>/Users/hoff/work/Software/VirtualC64/virtualc64/V64.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -919,7 +932,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Timer.h</string>
+								<string>C64Proxy.mm</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>

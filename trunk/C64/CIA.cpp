@@ -176,10 +176,10 @@ wird der Zählerstand mit dem Latch-Wert geladen und der Timer gestartet.
 CIA::CIA()
 {
 	cpu = NULL;
-	tA.setCIA(this);
-	tB.setCIA(this);
-	tA.setOtherTimer(&tB);
-	tB.setOtherTimer(&tA);
+	timerA.setCIA(this);
+	timerB.setCIA(this);
+	timerA.setOtherTimer(&timerB);
+	timerB.setOtherTimer(&timerA);
 }
 
 CIA::~CIA()
@@ -198,8 +198,8 @@ CIA::reset()
 	controlRegHasChangedA = false;
 	controlRegHasChangedB = false;
 	tod.reset();
-	tA.reset();
-	tB.reset();
+	timerA.reset();
+	timerB.reset();
 }
 
 // Loading and saving snapshots
@@ -256,13 +256,13 @@ uint8_t CIA::peek(uint16_t addr)
 		case CIA_DATA_DIRECTION_B:
 			return iomem[addr];
 		case CIA_TIMER_A_LOW:  
-			return LO_BYTE(tA.count);			
+			return LO_BYTE(timerA.count);			
 		case CIA_TIMER_A_HIGH: 
-			return HI_BYTE(tA.count);			
+			return HI_BYTE(timerA.count);			
 		case CIA_TIMER_B_LOW:  
-			return LO_BYTE(tB.count);
+			return LO_BYTE(timerB.count);
 		case CIA_TIMER_B_HIGH: 
-			return HI_BYTE(tB.count);
+			return HI_BYTE(timerB.count);
 		case CIA_TIME_OF_DAY_SEC_FRAC:
 			tod.defreeze();
 			return BinaryToBCD(tod.getTodTenth());
@@ -282,9 +282,9 @@ uint8_t CIA::peek(uint16_t addr)
 			clearInterruptLine();			
 			return result;
 		case CIA_CONTROL_REG_A:
-			return tA.controlReg & 0xEF; // Bit 4 is always 0 when read
+			return timerA.controlReg & 0xEF; // Bit 4 is always 0 when read
 		case CIA_CONTROL_REG_B:
-			return tB.controlReg & 0xEF; // Bit 4 is always 0 when read
+			return timerB.controlReg & 0xEF; // Bit 4 is always 0 when read
 		default:
 			debug("PANIC: Unknown CIA address %04X\n", addr);
 			assert(0);
@@ -296,22 +296,22 @@ void CIA::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
 		case CIA_TIMER_A_LOW:
-			tA.setTimerLatchLo(value);
+			timerA.setTimerLatchLo(value);
 			iomem[addr] = value; 
 			return;
 			
 		case CIA_TIMER_A_HIGH:
-			tA.setTimerLatchHi(value);
+			timerA.setTimerLatchHi(value);
 			iomem[addr] = value; 
 			return;
 			
 		case CIA_TIMER_B_LOW:  
-			tB.setTimerLatchLo(value);		
+			timerB.setTimerLatchLo(value);		
 			iomem[addr] = value; 
 			return;
 			
 		case CIA_TIMER_B_HIGH: 
-			tB.setTimerLatchHi(value);
+			timerB.setTimerLatchHi(value);
 			iomem[addr] = value; 
 			return;
 			
@@ -367,7 +367,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 		case CIA_CONTROL_REG_A:
 			if (iomem[addr] != value) {
 				iomem[addr] = value; 
-				tA.setCountingModes(value);
+				timerA.setCountingModes(value);
 				controlRegHasChangedA = true; // Note: The value will be pushed to the timer in the next cycle
 			}
 			return;
@@ -375,7 +375,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 		case CIA_CONTROL_REG_B:
 			if (iomem[addr] != value) {
 				iomem[addr] = value; 
-				tB.setCountingModes(value);
+				timerB.setCountingModes(value);
 				controlRegHasChangedB = true; // Note: The value will be pushed to the timer in the next cycle
 			}
 			return;			
@@ -396,15 +396,15 @@ CIA::incrementTOD()
 void CIA::dumpState()
 {
 	debug("Timer A: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
-		  tA.count,
-		  isStartedA()          ? "yes" : "no",
+		  timerA.count,
+		  timerA.isStarted()        ? "yes" : "no",
 		  isInterruptEnabledA() ? "yes" : "no",
-		  isOneShotA()          ? "yes" : "no");
+		  timerA.isOneShot()        ? "yes" : "no");
 	debug("Timer B: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
-		  tB.count, 
-		  isStartedB()          ? "yes" : "no",
+		  timerB.count, 
+		  timerB.isStarted()        ? "yes" : "no",
 		  isInterruptEnabledB() ? "yes" : "no",
-		  isOneShotB()          ? "yes" : "no");
+		  timerB.isOneShot()        ? "yes" : "no");
 }
 
 // -----------------------------------------------------------------------------------------
