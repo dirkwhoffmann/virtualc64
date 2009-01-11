@@ -186,15 +186,6 @@
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 
 	NSLog(@"driveMotorAction");
-#if 0
-	if (rotating) {
-		[driveBusy setHidden:false];
-		[driveBusy startAnimation:self];
-	} else {
-		[driveBusy stopAnimation:self];
-		[driveBusy setHidden:true];
-	}
-#endif
 	
 	[arp release];
 }

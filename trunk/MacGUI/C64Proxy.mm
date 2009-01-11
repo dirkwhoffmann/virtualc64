@@ -167,7 +167,7 @@ void ListenerProxy::logAction(char *message)
 
 - (void) reset { c64->reset(); }
 - (void) halt { c64->halt(); }
-- (void) step { cpu->step(); }
+- (void) step { c64->step(); }
 - (void) run { c64->run(); }
 - (bool) isHalted { return c64->isHalted(); }
 - (bool) isRunnable { return c64->isRunnable(); }
@@ -212,7 +212,7 @@ void ListenerProxy::logAction(char *message)
 - (bool) driveCPUTracingEnabled { return c64->floppy->cpu->tracingEnabled(); }
 - (void) driveSetCPUTraceMode:(bool)b { c64->floppy->cpu->setTraceMode(b); }
 
-- (uint16_t) cpuGetPC { return cpu->getPC(); }
+- (uint16_t) cpuGetPC { return cpu->getPC_at_cycle_0(); }
 - (void) cpuSetPC:(uint16_t)pc { cpu->setPC(pc); }
 - (uint8_t) cpuGetSP { return cpu->getSP(); }
 - (void) cpuSetSP:(uint8_t)sp { cpu->setSP(sp); }
@@ -237,7 +237,7 @@ void ListenerProxy::logAction(char *message)
 - (bool) cpuGetV { return cpu->getV(); }
 - (void) cpuSetV:(bool)b { cpu->setV(b); }
 
-- (uint16_t) cpuPeekPC { return cpu->peekPC(); }
+- (uint16_t) cpuPeekPC { return mem->peek(cpu->getPC_at_cycle_0()); }
 - (uint8_t) cpuGetLengthOfInstruction:(uint8_t)opcode { return cpu->getLengthOfInstruction(opcode); }
 - (uint8_t) cpuGetLengthOfCurrentInstruction { return cpu->getLengthOfCurrentInstruction(); }
 - (uint16_t) cpuGetAddressOfNextIthInstruction:(int)i from:(uint16_t)addr { return cpu->getAddressOfNextIthInstruction(i, addr); }

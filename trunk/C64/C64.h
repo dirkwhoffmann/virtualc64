@@ -283,9 +283,12 @@ public:
 	/*! The execution thread is terminated and the virtual computers enters the "halted" state */
 	void halt();
 
-	// Returns true iff the virtual C64 is in the "halted" state */
+	//! Returns true iff the virtual C64 is in the "halted" state */
 	bool isHalted();
-	
+
+	//! Execute one command
+	void step(); 
+
 	//! Execute virtual C64 for one cycle
 	inline bool executeOneCycle(int cycle = 0);
 			

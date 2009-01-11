@@ -41,8 +41,10 @@ void
 	
 	C64 *c64 = (C64 *)thisC64;
 		
-	// Configure thread properties...
 	c64->debug("Execution thread started\n");
+	c64->getListener()->runAction();
+
+	// Configure thread properties...
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 	pthread_cleanup_push(threadCleanup, thisC64);
@@ -64,7 +66,11 @@ void
 	}
 	
 	c64->debug("Execution thread terminated\n");	
+	c64->getListener()->haltAction();
 	
+	// Problem: We might stop in the middle of a command and get bogus data in the debugger display
+	//          Should be proceed to the next command if the thread was interrupted by the user?
+
 	pthread_cleanup_pop(1);
 	pthread_exit(NULL);	
 }
@@ -631,6 +637,19 @@ C64::executeOneLine(int cycle)
 	}	
 }
 
+// Execute a single command
+void
+C64::step() 
+{	
+	// Disassemble command if requested
+	if (cpu->tracingEnabled()) 
+		debug("%s", cpu->disassemble());
+	
+	// Execute next command 
+	do {
+		executeOneCycle();
+	} while (!cpu->atBeginningOfNewCommand()); 
+}
 
 
 // --------------------------------------------------------------------------------
@@ -884,15 +903,13 @@ C64::run() {
 			getListener()->missingRomAction(getMissingRoms());
 			return;
 		}
-		
+
 		// Start execution thread
 		pthread_create(&p, NULL, runThread, (void *)this);	
 
 		// Power on sub components
 		sid->run();
 		
-		// Notify listener
-		getListener()->runAction();
 	}
 }
 
@@ -912,9 +929,6 @@ C64::halt()
 		pthread_cancel(p);
 		// Wait until thread terminates
 		pthread_join(p, NULL);
-		// Notify listener
-		getListener()->haltAction();
-		
 	}
 }
 

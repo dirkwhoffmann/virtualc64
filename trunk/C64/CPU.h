@@ -62,9 +62,10 @@ public:
 
 	//! Breakpoint type
 	/*! Each memory call is marked with a breakpoint tag. Originally, each cell is tagged with NO_BREAKPOINT
-		which has no effect. CPU execution will stop if the memory cell is tagged with SOFT_BREAKPOINT or HARD_BREAKPOINT.
-		A SOFT_BREAKPOINT is breakpoint is deleted when reached and utilized by the "step over" feature of the debugger.
-		A HARD_BREAKPOINT remains until explicitly deleteted and is usally set the user manually.
+		which has no effect. CPU execution will stop if the memory cell is tagged with one of the following breakpoint types:
+
+	    HARD_BREAKPOINT: execution is halted 
+	    SOFT_BREAKPOINT: execution is halted and the tag is deleted
 	*/	
 	enum Breakpoint {
 		NO_BREAKPOINT   = 0x00,
@@ -131,6 +132,9 @@ private:
 	
 	//! Program counter
 	uint16_t PC;
+	
+	//! Memory location of the currently executed command
+	uint16_t PC_at_cycle_0;
 	
 	// Stack pointer
 	uint8_t SP;
@@ -253,6 +257,8 @@ public:
 	inline uint8_t getY() { return Y; };
 	//! Returns current value of the program counter
 	inline uint16_t getPC() { return PC; };
+	//! Returns "freezed" program counter
+	inline uint16_t getPC_at_cycle_0() { return PC_at_cycle_0; };
 	//! Returns current value of the program counter	
 	inline uint8_t getSP() { return SP; };
 	
@@ -413,17 +419,13 @@ public:
 	int getAddressOfNextIthInstruction(int i, uint16_t addr);
 	//! Returns the address of the instruction following the current instruction
 	/*! Possible values: 1 to 3 */
-	inline int getAddressOfNextInstruction() { return getAddressOfNextIthInstruction(1, PC); }
+	inline int getAddressOfNextInstruction() { return getAddressOfNextIthInstruction(1, PC_at_cycle_0); }
 	//! Disassemble current instruction
 	char *disassemble();
 	char *disassemble(uint64_t state);
-	
-	//! Returns the number of CPU cycles elapsed so far
-	// inline uint64_t getCycles() { return cycles; }
-		
-	//! Execute a single command
-	/*! Interrupt requests are ignored. Used inside the \a execute function and by the "step into" feature of the debugger. */
-	void step();
+				
+	//! Returns true, iff the next cycle is the first cycle of a command
+	inline bool atBeginningOfNewCommand() { return next == &CPU::fetch; }
 	
 	//! Execute CPU for one cycle
 	/*! This is the normal operation mode. Interrupt requests are handled. */
@@ -456,7 +458,6 @@ public:
 	
 	//! Sets or deletes a hard breakpoint at the specified address 
 	void toggleHardBreakpoint(uint16_t addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
-
 	//! Sets a soft breakpoint at the specified address
 	void setSoftBreakpoint(uint16_t addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
 	//! Deletes a soft breakpoint at the specified address
