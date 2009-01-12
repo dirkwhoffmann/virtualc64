@@ -630,7 +630,7 @@
 		return;
 
 	// Set soft breakpoint at next command and run
-	[c64 cpuSetSoftBreakpoint:(addr+3)];	
+	[c64 cpuSetSoftBreakpoint:(addr+1)];	
 	[c64 run];
 }
 

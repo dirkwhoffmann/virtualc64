@@ -1109,6 +1109,17 @@ inline void CPU::branch(int8_t offset)
 	PC += offset;
 }
 
+void CPU::branch_3_underflow()
+{
+	IDLE_READ_FROM(PC + 0x100); 
+	DONE;
+}
+void CPU::branch_3_overflow()
+{
+	IDLE_READ_FROM(PC - 0x100); 
+	DONE;
+}
+	
 // ------------------------------------------------------------------------------
 void CPU::BCC_relative()
 {	
@@ -1121,18 +1132,16 @@ void CPU::BCC_relative()
 }
 void CPU::BCC_relative_2()
 {
+	IDLE_READ_IMPLIED;
 	uint8_t pc_hi = HI_BYTE(PC);
 	PC += (int8_t)data;
 	
 	if (pc_hi != HI_BYTE(PC)) {
-		next = &CPU::BCC_relative_3;
+		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
+		// TODO: Delay IRQs
 		DONE;
 	}
-}
-void CPU::BCC_relative_3()
-{
-	DONE;
 }
 
 
@@ -1156,18 +1165,16 @@ void CPU::BCS_relative()
 }
 void CPU::BCS_relative_2()
 {
+	IDLE_READ_IMPLIED;
 	uint8_t pc_hi = HI_BYTE(PC);
 	PC += (int8_t)data;
 	
 	if (pc_hi != HI_BYTE(PC)) {
-		next = &CPU::BCS_relative_3;
+		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
+		// TODO: Delay IRQs
 		DONE;
 	}
-}
-void CPU::BCS_relative_3()
-{
-	DONE;
 }
 
 
@@ -1191,18 +1198,16 @@ void CPU::BEQ_relative()
 }
 void CPU::BEQ_relative_2()
 {
+	IDLE_READ_IMPLIED;
 	uint8_t pc_hi = HI_BYTE(PC);
 	PC += (int8_t)data;
 	
 	if (pc_hi != HI_BYTE(PC)) {
-		next = &CPU::BEQ_relative_3;
+		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
+		// TODO: Delay IRQs
 		DONE;
 	}
-}
-void CPU::BEQ_relative_3()
-{
-	DONE;
 }
 
 
@@ -1270,18 +1275,16 @@ void CPU::BMI_relative()
 }
 void CPU::BMI_relative_2()
 {
+	IDLE_READ_IMPLIED;
 	uint8_t pc_hi = HI_BYTE(PC);
 	PC += (int8_t)data;
 	
 	if (pc_hi != HI_BYTE(PC)) {
-		next = &CPU::BMI_relative_3;
+		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
+		// TODO: Delay IRQs
 		DONE;
 	}
-}
-void CPU::BMI_relative_3()
-{
-	DONE;
 }
 
 
@@ -1305,18 +1308,16 @@ void CPU::BNE_relative()
 }
 void CPU::BNE_relative_2()
 {
+	IDLE_READ_IMPLIED;
 	uint8_t pc_hi = HI_BYTE(PC);
 	PC += (int8_t)data;
 	
 	if (pc_hi != HI_BYTE(PC)) {
-		next = &CPU::BNE_relative_3;
+		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
+		// TODO: Delay IRQs
 		DONE;
 	}
-}
-void CPU::BNE_relative_3()
-{
-	DONE;
 }
 
 
@@ -1340,18 +1341,16 @@ void CPU::BPL_relative()
 }
 void CPU::BPL_relative_2()
 {
+	IDLE_READ_IMPLIED;
 	uint8_t pc_hi = HI_BYTE(PC);
 	PC += (int8_t)data;
 	
 	if (pc_hi != HI_BYTE(PC)) {
-		next = &CPU::BPL_relative_3;
+		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
+		// TODO: Delay IRQs
 		DONE;
 	}
-}
-void CPU::BPL_relative_3()
-{
-	DONE;
 }
 
 
@@ -1418,18 +1417,16 @@ void CPU::BVC_relative()
 }
 void CPU::BVC_relative_2()
 {
+	IDLE_READ_IMPLIED;
 	uint8_t pc_hi = HI_BYTE(PC);
 	PC += (int8_t)data;
 	
 	if (pc_hi != HI_BYTE(PC)) {
-		next = &CPU::BVC_relative_3;
+		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
+		// TODO: Delay IRQs
 		DONE;
 	}
-}
-void CPU::BVC_relative_3()
-{
-	DONE;
 }
 
 
@@ -1453,18 +1450,16 @@ void CPU::BVS_relative()
 }
 void CPU::BVS_relative_2()
 {
+	IDLE_READ_IMPLIED;
 	uint8_t pc_hi = HI_BYTE(PC);
 	PC += (int8_t)data;
 	
 	if (pc_hi != HI_BYTE(PC)) {
-		next = &CPU::BVS_relative_3;
+		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
+		// TODO: Delay IRQs
 		DONE;
 	}
-}
-void CPU::BVS_relative_3()
-{
-	DONE;
 }
 
 
@@ -5527,11 +5522,7 @@ void CPU::LAS_absolute_y()
 void CPU::LAS_absolute_y_2()
 {
 	FETCH_ADDR_HI;
-	debug("Y = %d addr_lo = %02X addr_hi = %02X overflow = %d\n", Y, addr_lo, addr_hi, overflow);
-	debug("PC = %4X\n", PC_at_cycle_0);
 	ADD_INDEX_Y;
-	debug("Y = %d addr_lo = %02X addr_hi = %02X overflow = %d\n", Y, addr_lo, addr_hi, overflow);
-	debug("PC = %4X\n", PC_at_cycle_0);
 	next = &CPU::LAS_absolute_y_3;
 }
 void CPU::LAS_absolute_y_3()
@@ -5541,6 +5532,7 @@ void CPU::LAS_absolute_y_3()
 		FIX_ADDR_HI;
 		next = &CPU::LAS_absolute_y_4;		
 	} else {
+		data &= SP;
 		SP = data;
 		X = data;
 		loadA(data);
@@ -5551,6 +5543,7 @@ void CPU::LAS_absolute_y_3()
 void CPU::LAS_absolute_y_4()
 {
 	READ_FROM_ADDRESS;
+	data &= SP;
 	SP = data;
 	X = data;
 	loadA(data);

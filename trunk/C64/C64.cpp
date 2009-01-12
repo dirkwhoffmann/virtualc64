@@ -637,7 +637,6 @@ C64::executeOneLine(int cycle)
 	}	
 }
 
-// Execute a single command
 void
 C64::step() 
 {	
@@ -649,9 +648,13 @@ C64::step()
 	do {
 		executeOneCycle();
 	} while (!cpu->atBeginningOfNewCommand()); 
+	
+	// We are now at cycle 0 of the next command
+	// Execute one more cycle (and stop in cycle 1)
+	executeOneCycle();
 }
 
-
+		   
 // --------------------------------------------------------------------------------
 // C64 class
 // --------------------------------------------------------------------------------
@@ -929,6 +932,8 @@ C64::halt()
 		pthread_cancel(p);
 		// Wait until thread terminates
 		pthread_join(p, NULL);
+		// Finish the current command (to reach a clean state)
+		step();
 	}
 }
 
