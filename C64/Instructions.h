@@ -28,6 +28,7 @@
 #define READ_FROM_ADDRESS if (rdyLine) data = mem->peek((addr_hi << 8) | addr_lo); else return;
 #define READ_FROM_ZERO_PAGE if (rdyLine) data = mem->peek((uint16_t)addr_lo); else return;
 #define READ_FROM_ADDRESS_INDIRECT if (rdyLine) data = mem->peek((uint16_t)ptr); else return;
+#define IDLE_READ_FROM(x) if (rdyLine) (void)mem->peek(x); else return;
 #define IDLE_READ_IMPLIED if (rdyLine) (void)mem->peek(PC); else return;
 #define IDLE_READ_IMMEDIATE if (rdyLine) (void)mem->peek(PC++); else return;
 #define IDLE_READ_FROM_ADDRESS if (rdyLine) (void)(mem->peek((addr_hi << 8) | addr_lo)); else return;
@@ -124,21 +125,22 @@ void ASL_absolute(); void ASL_absolute_2(); void ASL_absolute_3(); void ASL_abso
 void ASL_absolute_x(); void ASL_absolute_x_2(); void ASL_absolute_x_3(); void ASL_absolute_x_4(); void ASL_absolute_x_5(); void ASL_absolute_x_6();
 void ASL_indirect_x(); void ASL_indirect_x_2(); void ASL_indirect_x_3(); void ASL_indirect_x_4(); void ASL_indirect_x_5(); void ASL_indirect_x_6(); void ASL_indirect_x_7();     
 
-void BCC_relative(); void BCC_relative_2(); void BCC_relative_3();
-void BCS_relative(); void BCS_relative_2(); void BCS_relative_3();
-void BEQ_relative(); void BEQ_relative_2(); void BEQ_relative_3();
+void branch_3_underflow(); void branch_3_overflow();
+void BCC_relative(); void BCC_relative_2(); 
+void BCS_relative(); void BCS_relative_2(); 
+void BEQ_relative(); void BEQ_relative_2(); 
 
 void BIT_zero_page(); void BIT_zero_page_2();
 void BIT_absolute(); void BIT_absolute_2(); void BIT_absolute_3();
 
-void BMI_relative(); void BMI_relative_2(); void BMI_relative_3();
-void BNE_relative(); void BNE_relative_2(); void BNE_relative_3();
-void BPL_relative(); void BPL_relative_2(); void BPL_relative_3();
+void BMI_relative(); void BMI_relative_2(); 
+void BNE_relative(); void BNE_relative_2(); 
+void BPL_relative(); void BPL_relative_2(); 
 
 void BRK(); void BRK_2(); void BRK_3(); void BRK_4(); void BRK_5(); void BRK_6();
 
-void BVC_relative(); void BVC_relative_2(); void BVC_relative_3();
-void BVS_relative(); void BVS_relative_2(); void BVS_relative_3();
+void BVC_relative(); void BVC_relative_2(); 
+void BVS_relative(); void BVS_relative_2(); 
 void CLC();
 void CLD();
 void CLI();

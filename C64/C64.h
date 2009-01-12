@@ -288,7 +288,7 @@ public:
 
 	//! Execute one command
 	void step(); 
-
+	
 	//! Execute virtual C64 for one cycle
 	inline bool executeOneCycle(int cycle = 0);
 			
