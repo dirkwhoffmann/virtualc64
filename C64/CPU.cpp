@@ -79,15 +79,29 @@ void
 CPU::setIRQLine(uint8_t bit) 
 { 
 	assert(bit != 0);
-	if (irqLine == 0)
-		latestNegEdgeOnIrqLine = c64->getCycles();
+	if (irqLine == 0) {
+		// positive edge on IRQ line
+		nextPossibleIrqCycle = c64->getCycles() + 2;
+	}
 	irqLine |= bit; 
 }
 
 bool 
 CPU::IRQLineRaisedLongEnough() 
 { 
-	return (c64->getCycles() - latestNegEdgeOnIrqLine) >= 2;
+	return c64->getCycles() >= nextPossibleIrqCycle;
+}
+
+bool
+CPU::IRQsAreBlocked() { 
+	bool result;
+	if (opcode == 0x78 /* SEI */ || opcode == 0x58 /* CLI */)
+		result = oldI;
+	else
+		result = I;
+
+	oldI = I;
+	return result;
 }
 
 void 
@@ -95,8 +109,9 @@ CPU::setNMILine(uint8_t bit)
 { 
 	assert(bit != 0);
 	if (nmiLine == 0) {
+		// positive edge on NMI line
 		nmiNegEdge = true;
-		latestNegEdgeOnNmiLine = c64->getCycles();
+		nextPossibleIrqCycle = c64->getCycles() + 2;
 	}
 	nmiLine |= bit; 
 }
@@ -104,7 +119,7 @@ CPU::setNMILine(uint8_t bit)
 bool 
 CPU::NMILineRaisedLongEnough() 
 { 
-	return (c64->getCycles() - latestNegEdgeOnNmiLine) >= 2;
+	return c64->getCycles() >= nextPossibleNmiCycle;
 }
 
 
