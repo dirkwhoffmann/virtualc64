@@ -185,13 +185,13 @@ private:
 	    used to determine when an NMI interrupt needs to be triggered. */
 	bool nmiNegEdge;
 	
-	//! In this variable, we remember when the irqLine went down
+	//! This variable is set when a negative edge occurs on the irq line and stores the next cycle in which an IRQ can occur.
 	/*! The value is needed to determine the exact time to trigger the interrupt */
-	uint64_t latestNegEdgeOnIrqLine;
+	uint64_t nextPossibleIrqCycle;
 	
-	//! In this variable, we remember when the nmiLine went down
+	//! This variable is set when a negative edge occurs on the nmi line and stores the next cycle in which an NMI can occur.
 	/*! The value is needed to determine the exact time to trigger the interrupt */
-	uint64_t latestNegEdgeOnNmiLine;
+	uint64_t nextPossibleNmiCycle;
 		
 	//! Current error state
 	ErrorState errorState;
@@ -226,7 +226,16 @@ private:
 	//! Location of the next free cell of the callstack
 	uint8_t callStackPointer;
 
+	//! Value of the I flag before it got changed with the SEI command
+	uint8_t oldI;
 			
+	//! Returns true iff IRQs are blocked
+	/*! IRQs are blocked by setting the I flag to 1. The I flag is set with the SEI command and cleared with the CLI command.
+		Note that the timing is important here! When an interrupt occures while SEI or CLI is executed, the previous value of I 
+	    determines whether an interrupt is triggered or not. To handle timing correctly, the previous value of I is stored in 
+		variable oldI whenever SEI or CLI is executed. */
+	bool IRQsAreBlocked();
+	
 #include "Instructions.h"
 		
 public:

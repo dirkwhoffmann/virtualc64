@@ -23,7 +23,7 @@ void
 CPU::fetch() {
 	
 	PC_at_cycle_0 = PC;
-
+	
 	// Used for debugging...
 	// history[historyPtr++] = packState(); 
 
@@ -33,26 +33,11 @@ CPU::fetch() {
 	 Taktzyklen beim Erreichen des nŠchsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im 
 	 Prozessor auslšsen. Interrupts werden nur erkannt, wenn RDY high ist. */
 	if (nmiNegEdge && NMILineRaisedLongEnough()) {
-		/*
-		if (nmiHistory)
-			printf("NMI WARNING: STILL IN NMI INTERRUPT ROUTINE (%d)\n", nmiLine);
-		if (!rtiExecuted) 
-			printf("NMI WARNING: New Interrupt before previous RTI (%d)\n", nmiLine);
-		rtiExecuted = false;
-		nmiHistory = nmiLine;
-		*/
 		nmiNegEdge = false;
 		next = &CPU::nmi_2;
 		return;
-	} else if (irqLine && !getI() && IRQLineRaisedLongEnough()) {
-		/*
-		if (irqHistory)
-			printf("IRQ WARNING: STILL IN IRQ INTERRUPT ROUTINE (%d)\n", irqLine);
-		if (!rtiExecuted) 
-			printf("IRQ WARNING: New Interrupt before previous RTI (%d)\n", irqLine);
-		rtiExecuted = false;
-		irqHistory = irqLine;
-		*/
+
+	} else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
 		next = &CPU::irq_2;
 		return;
 	} 
@@ -431,7 +416,8 @@ inline void CPU::irq_4()
 }
 inline void CPU::irq_5()
 {
-	mem->poke(0x100+(SP--), getPWithClearedB());	
+	uint8_t p = getPWithClearedB();
+	mem->poke(0x100+(SP--), p);	
 	setI(1);
 	next = &CPU::irq_6;
 }
@@ -1139,7 +1125,8 @@ void CPU::BCC_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		// TODO: Delay IRQs
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
 		DONE;
 	}
 }
@@ -1172,7 +1159,8 @@ void CPU::BCS_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		// TODO: Delay IRQs
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
 		DONE;
 	}
 }
@@ -1205,7 +1193,8 @@ void CPU::BEQ_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		// TODO: Delay IRQs
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
 		DONE;
 	}
 }
@@ -1282,7 +1271,8 @@ void CPU::BMI_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		// TODO: Delay IRQs
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
 		DONE;
 	}
 }
@@ -1315,7 +1305,8 @@ void CPU::BNE_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		// TODO: Delay IRQs
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
 		DONE;
 	}
 }
@@ -1348,7 +1339,8 @@ void CPU::BPL_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		// TODO: Delay IRQs
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
 		DONE;
 	}
 }
@@ -1424,7 +1416,8 @@ void CPU::BVC_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		// TODO: Delay IRQs
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
 		DONE;
 	}
 }
@@ -1457,7 +1450,8 @@ void CPU::BVS_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		// TODO: Delay IRQs
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
 		DONE;
 	}
 }
@@ -1509,7 +1503,9 @@ void CPU::CLD()
 void CPU::CLI()
 {
 	IDLE_READ_IMPLIED;
+	oldI = I;
 	setI(0);
+	
 	DONE;
 }
 
@@ -1986,50 +1982,6 @@ void CPU::DEC_indirect_x_7()
 	DONE;
 }
 
-#if 0
-// -------------------------------------------------------------------------------
-void CPU::DEC_indirect_y()
-{
-	FETCH_POINTER_ADDR;
-	next = &CPU::DEC_indirect_y_2;
-}
-void CPU::DEC_indirect_y_2()
-{
-	FETCH_ADDR_LO_INDIRECT;
-	next = &CPU::DEC_indirect_y_3;
-}
-void CPU::DEC_indirect_y_3()
-{
-	FETCH_ADDR_HI_INDIRECT;
-	ADD_INDEX_Y;
-	next = &CPU::DEC_indirect_y_4;
-}
-void CPU::DEC_indirect_y_4()
-{
-	READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED) {
-		FIX_ADDR_HI;
-	}
-	next = &CPU::DEC_indirect_y_5;
-}
-void CPU::DEC_indirect_y_5()
-{
-	READ_FROM_ADDRESS;
-	next = &CPU::DEC_indirect_y_6;
-}
-void CPU::DEC_indirect_y_6()
-{
-	WRITE_TO_ADDRESS;
-	DO_DEC;
-	next = &CPU::DEC_indirect_y_7;
-}
-
-void CPU::DEC_indirect_y_7()
-{
-	WRITE_TO_ADDRESS_AND_SET_FLAGS;
-	DONE;
-}
-#endif
 
 // -------------------------------------------------------------------------------
 // Instruction: DEX
@@ -4431,9 +4383,11 @@ void CPU::SED()
 // -------------------------------------------------------------------------------
 
 void CPU::SEI()
-{
+{		
 	IDLE_READ_IMPLIED;
+	oldI = I;
 	setI(1);
+	
 	DONE;
 }
 
@@ -6908,6 +6862,8 @@ void CPU::TAS_absolute_y_3()
 		FIX_ADDR_HI;
 		next = &CPU::TAS_absolute_y_4;
 	} else {
+		// Note: We always perform an extra cycle here, even if page boundary is not crossed. 
+		// Otherwise, the CPUTIMING test fails.
 		next = &CPU::TAS_absolute_y_4;
 #if 0
 		SP = A & X;
