@@ -50,6 +50,7 @@
 #define PUSH_PCL mem->poke(0x100+(SP--), LO_BYTE(PC));
 #define PUSH_PCH mem->poke(0x100+(SP--), HI_BYTE(PC));
 #define PUSH_P mem->poke(0x100+(SP--), getP());
+#define PUSH_P_WITH_B_SET mem->poke(0x100+(SP--), getP() | B_FLAG);
 #define PUSH_A mem->poke(0x100+(SP--), A); 
 #define PULL_PCL setPCL(mem->peek(0x100+SP));
 #define PULL_PCH setPCH(mem->peek(0x100+SP));
@@ -138,6 +139,7 @@ void BNE_relative(); void BNE_relative_2();
 void BPL_relative(); void BPL_relative_2(); 
 
 void BRK(); void BRK_2(); void BRK_3(); void BRK_4(); void BRK_5(); void BRK_6();
+void BRK_nmi_4(); void BRK_nmi_5(); void BRK_nmi_6(); 
 
 void BVC_relative(); void BVC_relative_2(); 
 void BVS_relative(); void BVS_relative_2(); 
