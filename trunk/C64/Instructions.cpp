@@ -18,6 +18,8 @@
 
 #include "C64.h"
 		
+// TODO: What happens, if an NMI occurs right after BRK or IRQ (one additional delay cycle???)
+
 // Cycle 0
 void 
 CPU::fetch() {
@@ -33,6 +35,7 @@ CPU::fetch() {
 	 Taktzyklen beim Erreichen des nächsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im 
 	 Prozessor auslösen. Interrupts werden nur erkannt, wenn RDY high ist. */
 	if (nmiNegEdge && NMILineRaisedLongEnough()) {
+		debug("NMI occured while executing opcode %02X. (%d,%d)\n", opcode, PC_at_cycle_0, PC);
 		nmiNegEdge = false;
 		next = &CPU::nmi_2;
 		return;
@@ -1369,7 +1372,16 @@ void CPU::BRK_2()
 void CPU::BRK_3()
 {
 	PUSH_PCL;
-	next = &CPU::BRK_4;
+
+	// "The official NMOS 65xx documentation claims that the BRK instruction could only cause a jump to the IRQ
+	//  vector ($FFFE). However, if an NMI interrupt occurs while executing a BRK instruction, the processor will
+	//  jump to the NMI vector ($FFFA), and the P register will be pushed on the stack with the B flag set."
+	if (nmiNegEdge) {
+		nmiNegEdge = false;
+		next = &CPU::BRK_nmi_4;
+	} else {
+		next = &CPU::BRK_4;
+	}
 }
 void CPU::BRK_4()
 {
@@ -1386,6 +1398,30 @@ void CPU::BRK_6()
 	setPCL(data);
 	setPCH(mem->peek(0xFFFF));	
 	setI(1);
+
+	// "Ein NMI darf nicht sofort nach einem BRK oder IRQ ausgeführt werden, sondern erst mit 1 Cycle Delay." 
+	// [http://www.c64-wiki.de/index.php/Micro64]
+	if (nextPossibleNmiCycle < c64->getCycles() + 2)
+		nextPossibleNmiCycle = c64->getCycles() + 2;
+	DONE;
+}
+
+void CPU::BRK_nmi_4()
+{
+	PUSH_P;
+	next = &CPU::BRK_nmi_5;
+}
+
+void CPU::BRK_nmi_5()
+{
+	data = mem->peek(0xFFFA);
+	next = &CPU::BRK_nmi_6;
+}
+void CPU::BRK_nmi_6()
+{
+	setPCL(data);
+	setPCH(mem->peek(0xFFFB));	
+	setI(1);	
 	DONE;
 }
 

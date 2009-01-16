@@ -111,7 +111,7 @@ CPU::setNMILine(uint8_t bit)
 	if (nmiLine == 0) {
 		// positive edge on NMI line
 		nmiNegEdge = true;
-		nextPossibleIrqCycle = c64->getCycles() + 2;
+		nextPossibleNmiCycle = c64->getCycles() + 2;
 	}
 	nmiLine |= bit; 
 }
