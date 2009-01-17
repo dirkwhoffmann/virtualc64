@@ -34,6 +34,7 @@ Timer::reset()
 	count = timerLatch = 0;
 	controlReg = 0x00;
 	underflow = false;
+	underflow_toggle = true; 
 	count_clockticks = false;
 	count_underflows = false;
 	triggerInterrupt = false;
@@ -59,28 +60,32 @@ Timer::executeOneCycle(void)
 {
 	switch (state) {
 		case TIMER_COUNT:
-			if (count_clockticks || (count_underflows && underflow))
+			if (count_clockticks || (count_underflows && otherTimer->underflow)) 
 				if (!count || !--count) {
 					timerAction();
-					otherTimer->indicateUnderflow();
+					underflow = true;
+					underflow_toggle = !underflow_toggle;
 				}
 			break;
 			
 		case TIMER_COUNT_STOP:
 			state = TIMER_STOP;
-			if (count_clockticks || (count_underflows && underflow))
+			if (count_clockticks || (count_underflows && otherTimer->underflow)) 
 				if (!count || !--count) {
-					otherTimer->indicateUnderflow();
+					underflow = true;
+					underflow_toggle = !underflow_toggle;
 				}
 			break;
 
 		case TIMER_LOAD_STOP:
 			reloadTimer();
+			underflow = false;
 			state = TIMER_STOP;
 			break;
 
 		case TIMER_LOAD_COUNT:
 			reloadTimer();
+			underflow = false;
 			state = TIMER_COUNT;
 			break;
 
@@ -92,14 +97,13 @@ Timer::executeOneCycle(void)
 			state = TIMER_WAIT_COUNT;
 			if (count == 1) {
 				timerAction();
-				otherTimer->indicateUnderflow();
+				underflow = true;
+				underflow_toggle = !underflow_toggle;
 			} else {
 				reloadTimer();
 			}
 			break;
 	}
-
-	underflow = false;
 }
 
 void 

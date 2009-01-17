@@ -312,7 +312,7 @@ public:
 		if (controlRegHasChangedB) {
 			controlRegHasChangedB = false;
 			timerB.setControlReg(iomem[CIA_CONTROL_REG_B]);		
-		} 
+		} 		
 	}
 	
 	//! Increment the TOD clock by one tenth of a second

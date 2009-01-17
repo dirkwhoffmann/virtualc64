@@ -120,6 +120,9 @@ public:
 	//! Returns true, if an underflow will be indicated in bit #6 in Port B register
 	inline bool willIndicateUnderflow() { return controlReg & 0x02; }
 	
+	//! Returns true, if an underflow will be indicated as a single pulse
+	inline bool willIndicateUnderflowAsPulse() { return !(controlReg & 0x04); }
+	
 	//! Enable or disable underflow indication
 	inline void setIndicateUnderflow(bool b) { if (b) controlReg |= 0x02; else controlReg &= (0xFF-0x02); }
 	
@@ -146,11 +149,11 @@ public:
 	//! Indicates that an interrupt needs to be triggered in the next cycle
 	bool triggerInterrupt;
 	
-	//! Indicates that an underflow condition occured in the "otherTimer"
+	//! Is set to true when an underflow condition occurs
 	bool underflow;
 	
-	//! Indicate an underflow condition
-	inline void indicateUnderflow() { if (state != TIMER_STOP) underflow = true; }
+	//! Is inverted when an underflow condition occurs
+	bool underflow_toggle;
 	
 	//! Execute one cycle
 	void executeOneCycle(void);
