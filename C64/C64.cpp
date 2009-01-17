@@ -710,6 +710,7 @@ C64::C64(C64Listener *listener)
 	cia2->setCPU(cpu);
 	cia2->setVIC(vic);	
 	cia2->setIEC(iec);
+	vic->setC64(this);
 	vic->setCPU(cpu);
 	vic->setMemory(mem);
 	iec->setDrive(floppy);

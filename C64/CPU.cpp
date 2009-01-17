@@ -53,8 +53,6 @@ CPU::reset()
 	nmiLine = 0;
 	nmiNegEdge = false;
 	irqLine = 0;	
-	port = 0;
-	port_direction = 0;
 	callStackPointer = 0;
 	setTraceMode(false);
 	

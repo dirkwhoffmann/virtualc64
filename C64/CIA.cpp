@@ -579,7 +579,7 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			iomem[addr] = value;
 			uint8_t lp_bit_new = (iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10;
 			if (lp_bit_old != lp_bit_new) {
-				// edge detected
+				// edge on lightpen bit
 				debug("Lightpen edge detected\n");
 				vic->simulateLightPenInterrupt();
 			}
