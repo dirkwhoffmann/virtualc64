@@ -253,6 +253,7 @@ uint8_t CIA::peek(uint16_t addr)
 	
 	switch(addr) {		
 		case CIA_DATA_DIRECTION_A:	
+			return iomem[addr];
 		case CIA_DATA_DIRECTION_B:
 			return iomem[addr];
 		case CIA_TIMER_A_LOW:  
@@ -366,6 +367,9 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 		case CIA_CONTROL_REG_A:
 			if (iomem[addr] != value) {
+				if (!(iomem[addr] & 0x01) && (value & 0x01)) {
+					timerA.underflow_toggle = true; // Rising edge on start bit
+				}
 				iomem[addr] = value; 
 				timerA.setCountingModes(value);
 				controlRegHasChangedA = true; // Note: The value will be pushed to the timer in the next cycle
@@ -373,6 +377,9 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_CONTROL_REG_B:
+			if (!(iomem[addr] & 0x01) && (value & 0x01)) // Rising edge on start bit
+				timerB.underflow_toggle = true;
+			
 			if (iomem[addr] != value) {
 				iomem[addr] = value; 
 				timerB.setCountingModes(value);
@@ -475,7 +482,7 @@ CIA1::peek(uint16_t addr)
 
 			// Check joystick movement
 			result &= joystick[0];
-			
+						
 			return result;
 
 		case CIA_DATA_PORT_B:
@@ -494,6 +501,18 @@ CIA1::peek(uint16_t addr)
 			
 			// Check for pressed keys
 			result &= keyboard->getRowValues(bitmask); 
+			
+			// Bit 6 and 7 can have special timer output functions
+			if (timerA.willIndicateUnderflow()) {
+				result &= 0xBF; // Clear bit 6
+				if (timerA.willIndicateUnderflowAsPulse() ? timerA.underflow : timerA.underflow_toggle)
+					result |= 0x40; // Set bit 6
+			}
+			if (timerB.willIndicateUnderflow()) {
+				result &= 0x7F; // Clear bit 7
+				if (timerB.willIndicateUnderflowAsPulse() ? timerB.underflow : timerB.underflow_toggle)
+					result |= 0x80; // Set bit 7
+			}
 			
 			return result;
 		
@@ -653,9 +672,22 @@ CIA2::peek(uint16_t addr)
 			// Note that bits 0 and 1 are not connected to the bus and determine the memory bank seen by the VIC chip
 			result &= (portLinesB | 0x03);
 			return result;
-
+						
 		case CIA_DATA_PORT_B:
 			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_B];
+					
+			// Bit 6 and 7 can have special timer output functions
+			if (timerA.willIndicateUnderflow()) {
+				result &= 0xBF; // Clear bit 6
+				if (timerA.willIndicateUnderflowAsPulse() ? timerA.underflow : timerA.underflow_toggle)
+					result |= 0x40; // Set bit 6
+			}
+			if (timerB.willIndicateUnderflow()) {
+				result &= 0x7F; // Clear bit 7
+				if (timerB.willIndicateUnderflowAsPulse() ? timerB.underflow : timerB.underflow_toggle)
+					result |= 0x80; // Set bit 7
+			}
+						
 			return result;
 			
 		default:
