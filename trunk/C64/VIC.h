@@ -24,6 +24,7 @@
 #include "VirtualComponent.h"
 
 // Forward declarations
+class C64;
 class C64Memory;
 
 #define RED(x)   ((x & 0xff000000) >> 24)
@@ -185,12 +186,15 @@ private:
 	inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 	
 		
+	//! Reference to the connected virtual C64
+	C64 *c64;
+
 	//! Reference to the connected CPU. 
 	CPU *cpu;
 
 	//! Reference to the connected virtual memory
 	C64Memory *mem;
-		
+	
 	//! Determines whether sprites are drawn or not
 	/*! During normal emulation, the value is always true. For debugging purposes, the value can be set to false.
 		In this case, sprites are no longer drawn.
@@ -546,13 +550,14 @@ public:
 	/*! The function is only used for saving a snapshot file. 
 		\param file File handle of the snaphshot file. */
 	bool save(FILE *file);
-	
+
+	//! Bind the VIC chip to the virtual C64.
+	void setC64(C64 *c) { assert(c64 == NULL); c64 = c; }
+
 	//! Bind the VIC chip to the specified CPU.
-	/*! The binding is irreversible and the function "call once". */
 	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
 
 	//! Bind the VIC chip to the specified virtual memory.
-	/*! The binding is irreversible and the function "call once". */
 	void setMemory(C64Memory *m) { assert(mem == NULL); mem = m; }
 
 	//! Get color

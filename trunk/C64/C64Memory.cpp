@@ -55,11 +55,11 @@ void C64Memory::reset()
 		ram[i] = 0;
 	
 	for (int i = 0; i < sizeof(colorRam); i++)
-		colorRam[i] = 0;
+		colorRam[i] = 0;	
 	
 	// Initialize processor port data direction register and processor port
 	poke(0x0000, 0x2F);
-	poke(0x0001, 0x1F);
+	poke(0x0001, 0x1F);	
 }	
 
 // --------------------------------------------------------------------------------

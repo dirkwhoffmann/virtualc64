@@ -25,6 +25,7 @@ VIC::VIC()
 {
 	debug("  Creating VIC at address %p...\n", this);
 
+	c64 = NULL;
 	cpu = NULL;
 	mem = NULL;
 	
@@ -620,15 +621,21 @@ VIC::triggerIRQ(uint8_t source)
 void
 VIC::simulateLightPenInterrupt()
 {
+	int x, x_max, y;
+	
 	if (!lightpenIRQhasOccured) {
 
 		// lightpen interrupts can only occur once per frame
 		lightpenIRQhasOccured = true;
 
 		// determine current coordinates
-		int x = xCounter; // (cycle >= 13) ? (cycle-13) * 8 : (0x19c + cycle*8);
-		int y = scanline;
-		
+		x_max = 8 * c64->getCyclesPerRasterline() - 4;
+		if (xCounter >= 16)
+			x = xCounter - 12;
+		else 
+			x = x_max - xCounter;
+		y = scanline;
+				
 		// latch coordinates 
 		iomem[0x13] = x / 2; // value equals the current x coordinate divided by 2
 		iomem[0x14] = y + 1; // value is based on sprite coordinate system (hence, + 1)
@@ -834,7 +841,7 @@ VIC::cycle1()
 
 	// Trigger rasterline interrupt if applicable
 	// Note: In line 0, the interrupt is triggered in cycle 2
-	if (scanline != 0 && scanline == rasterInterruptLine())
+	if (scanline == rasterInterruptLine() && scanline != 0)
 		triggerIRQ(1);
 			
 	// Determine the value of the DEN bit (in rasterline 0x30 only)
