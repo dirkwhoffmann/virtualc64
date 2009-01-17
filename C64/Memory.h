@@ -200,7 +200,7 @@ protected:
 	virtual void pokeAuto(uint16_t addr, uint8_t value) = 0;
 	
 public:
-
+	
 	//! Write a BYTE to the specified memory.
 	/*! Depending in the specified memory type, either \a pokeRam, \a pokeRom, or \a pokeIO is called. */
 	void pokeTo(uint16_t addr, uint8_t value, MemoryType dest);

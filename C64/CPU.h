@@ -102,9 +102,12 @@ private:
 	//! Reference to the connected virtual memory
 	Memory *mem;
 	
-	//! Current clock cycle (since power up)
-	// uint64_t cycles;
-
+	//! Processor port register
+	uint8_t port;
+	
+	//! Processor port data direction register
+	uint8_t port_direction;
+	
 	// The accumulator register
 	uint8_t A;
    // The X register
@@ -258,6 +261,17 @@ public:
 	//! Binds CPU and memory together
 	void setMemory(Memory *m) { assert(mem == NULL); mem = m; }
 		
+	//! Get value of processor port
+	inline uint8_t getPort() { return port; }
+	//! Set value of processor port register
+	void setPort(uint8_t value);
+	//! Get value of processor port
+	inline uint8_t getPortDirection() { return port_direction; }
+	//! Set value of processor port data direction register
+	void setPortDirection(uint8_t value);
+	//! Get physical values of port lines 
+	uint8_t getPortLines() { return (port | ~port_direction); }
+	
 	//! Returns current value of the accumulator register
 	inline uint8_t getA() { return A; };
 	//! Returns current value of the X register

@@ -53,6 +53,8 @@ CPU::reset()
 	nmiLine = 0;
 	nmiNegEdge = false;
 	irqLine = 0;	
+	port = 0;
+	port_direction = 0;
 	callStackPointer = 0;
 	setTraceMode(false);
 	
@@ -73,6 +75,25 @@ CPU::reset()
 	next = &CPU::fetch;
 	
 	assert(mem != NULL);
+}
+
+void 
+CPU::setPortDirection(uint8_t value)
+{
+	
+	port_direction = value;
+	
+	// TODO: A VIC byte will show up in ram[0x0000];
+	// "ram[0] = TheVIC->LastVICByte;" [Frodo]
+}
+
+void 
+CPU::setPort(uint8_t value)
+{
+	port = value;
+	
+	// TODO: A VIC byte will show up in ram[0x0001];
+	// "ram[1] = TheVIC->LastVICByte;" [Frodo]
 }
 
 void 

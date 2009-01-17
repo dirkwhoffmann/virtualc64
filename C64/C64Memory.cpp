@@ -271,32 +271,38 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 }
 
 uint8_t C64Memory::peekAuto(uint16_t addr)
-{
-	uint8_t result;
-		
+{		
 	if (addr < 0xA000) {
-		// All addresses below 0xA000 belong to the RAM space
-		result = ram[addr];
-	} else if (isCharRomAddr(addr)) {
-		// CHARACTER ROM range		
-		if (IOIsVisible) {			
-			result = peekIO(addr);
-		} else {		
-			result = charRomIsVisible ? rom[addr] : ram[addr];
+		if (addr <= 0x0001) {
+			// Processor port
+			uint8_t dir = cpu->getPortDirection();
+			return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & 0x17);
+		} else {
+			// RAM
+			return ram[addr];
 		}
-	} else if (isBasicRomAddr(addr)) {
-		// BASIC ROM range
-		result = basicRomIsVisible ? rom[addr] : ram[addr];
-	} else if (isKernelRomAddr(addr)) {
-		// KERNEL ROM range
-		result = kernelRomIsVisible ? rom[addr] : ram[addr];
+	} else if (addr < 0xD000) {
+		if (addr < 0xC000) {
+			// Basic ROM
+			return basicRomIsVisible ? rom[addr] : ram[addr];
+		} else {
+			// RAM
+			return ram[addr];
+		}
 	} else {
-		// Default
-		result = ram[addr];
+		if (addr < 0xE000) {
+			// Character ROM
+			if (IOIsVisible) {			
+				return peekIO(addr);
+			} else {		
+				return charRomIsVisible ? rom[addr] : ram[addr];
+			}
+		} else {
+			// Kernel ROM
+			return kernelRomIsVisible ? rom[addr] : ram[addr];
+		}
 	}
-	return result;
 }
-
 
 // --------------------------------------------------------------------------------
 //                                    Poke
@@ -312,13 +318,10 @@ void C64Memory::pokeRom(uint16_t addr, uint8_t value)
 	rom[addr] = value; 
 }
 
-void C64Memory::poke0001(uint8_t value)
+void 
+C64Memory::processorPortHasChanged(uint8_t newPortLines)
 {
-	value = (ram[0x0001] & ~ram[0x0000]) | (value & ram[0x0000]);
-	ram[0x0001] = (value & 0x7F);
-	
-	// Processor port. Bits:
-	//	
+	// Processor port.
 	// Bits #0-#2: Configuration for memory areas $A000-$BFFF, $D000-$DFFF and $E000-$FFFF. Values:
 	//	           x00:  RAM visible in all three areas.
 	//  		   x01:  RAM visible at $A000-$BFFF and $E000-$FFFF.
@@ -330,7 +333,7 @@ void C64Memory::poke0001(uint8_t value)
 	// Bit #3:     Datasette output signal level.
 	// Bit #4:     Datasette button status; 0 = One or more of PLAY, RECORD, F.FWD or REW pressed; 1 = No button is pressed.
 	// Bit #5:     Datasette motor control; 0 = On; 1 = Off.
-
+	
 	//          $01   $a000-$bfff  $d000-$dfff  $e000-$ffff
 	//	*     -----------------------------------------------
 	//	*      0 000      RAM          RAM          RAM
@@ -341,13 +344,11 @@ void C64Memory::poke0001(uint8_t value)
 	//	*      5 101      RAM          I/O          RAM
 	//	*      6 110      RAM          I/O      Kernal ROM
 	//	*      7 111   Basic ROM       I/O      Kernal ROM
-	{
-		uint8_t port_bits = ram[0x0001];
-		kernelRomIsVisible = ((port_bits & 2) == 2); // x1x
-		basicRomIsVisible  = ((port_bits & 3) == 3); // x11
-		charRomIsVisible   = ((port_bits & 4) == 0) && ((port_bits & 3) != 0); // 0xx, but not x00
-		IOIsVisible        = ((port_bits & 4) == 4) && ((port_bits & 3) != 0); // 1xx, but not x00 	
-	}
+	
+	kernelRomIsVisible = ((newPortLines & 2) == 2); // x1x
+	basicRomIsVisible  = ((newPortLines & 3) == 3); // x11
+	charRomIsVisible   = ((newPortLines & 4) == 0) && ((newPortLines & 3) != 0); // 0xx, but not x00
+	IOIsVisible        = ((newPortLines & 4) == 4) && ((newPortLines & 3) != 0); // 1xx, but not x00 		
 }
 
 void C64Memory::pokeIO(uint16_t addr, uint8_t value)
@@ -395,18 +396,23 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 
 
 void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
-{		
-	if (addr == 0x0001) {
-		// The processor port register is written (needs special handling)
-		poke0001(value);
+{	
+	if (isCharRomAddr(addr)) {
+		if (IOIsVisible) {		
+			pokeIO(addr, value);
+			return;
+		}
+	} else if (addr <= 0x0001) {
+		if (addr == 0x0000) {
+			cpu->setPortDirection(value);
+			processorPortHasChanged(cpu->getPortLines());
+		} else {
+			cpu->setPort(value);
+			processorPortHasChanged(cpu->getPortLines());
+		}
 		return;
 	}
-	
-	if (isCharRomAddr(addr) && IOIsVisible) {		
-		pokeIO(addr, value);
-		return;
-	}
-		
+				
 	// Default: Write to RAM
 	ram[addr] = value;
 }

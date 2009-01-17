@@ -131,13 +131,12 @@ public:
 	*/
 	static bool isRom(const char *filename);
 	
-	//! Writes value into the Processor port register.
-    /*! Besides others, the processor port register determines whether the RAM, ROM, or the IO space is visible. 
-		Note: If a bit is set or not is determined by the Data Direction Register (0x0000)
-		@param value to be written
-	*/
-	void poke0001(uint8_t value);
-	
+	//! Callback function
+	/*! This function is called by the CPU when the port lines change.
+	 Besides others, the processor port register determines whether the RAM, ROM, or the IO space is visible. 
+	 */ 
+	 void processorPortHasChanged(uint8_t newPortLines);
+		
 public:
 	
 	//! Constructor
