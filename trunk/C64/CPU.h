@@ -224,10 +224,6 @@ private:
 	
 	//! Read/Write pointer into history buffer 
 	uint8_t historyPtr;
-
-	//!
-	// uint8_t irqHistory, nmiHistory;
-	// bool rtiExecuted;
 	
 	//! Location of the next free cell of the callstack
 	uint8_t callStackPointer;
