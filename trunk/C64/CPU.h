@@ -108,6 +108,9 @@ private:
 	//! Processor port data direction register
 	uint8_t port_direction;
 	
+	//! Experimental
+	uint8_t external_port_bits;
+	
 	// The accumulator register
 	uint8_t A;
    // The X register
@@ -223,8 +226,8 @@ private:
 	uint8_t historyPtr;
 
 	//!
-	uint8_t irqHistory, nmiHistory;
-	bool rtiExecuted;
+	// uint8_t irqHistory, nmiHistory;
+	// bool rtiExecuted;
 	
 	//! Location of the next free cell of the callstack
 	uint8_t callStackPointer;
@@ -267,6 +270,8 @@ public:
 	void setPort(uint8_t value);
 	//! Get value of processor port
 	inline uint8_t getPortDirection() { return port_direction; }
+	//! Experimental
+	inline uint8_t getExternalPortBits() { return external_port_bits; }
 	//! Set value of processor port data direction register
 	void setPortDirection(uint8_t value);
 	//! Get physical values of port lines 

@@ -4075,13 +4075,11 @@ void CPU::ROR_indirect_x_7()
 
 void CPU::RTI()
 {
-	rtiExecuted = true;
 	IDLE_READ_IMMEDIATE;
 	next = &CPU::RTI_2;
 }
 void CPU::RTI_2()
 {
-	nmiHistory = irqHistory = 0;
 	SP++;
 	next = &CPU::RTI_3;
 }
