@@ -1534,8 +1534,10 @@ VIC::cycle63()
 	if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[BLACK]);
 
 	// draw debug markers
-	if (markIRQLines && scanline == rasterInterruptLine()) markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
-	if (markDMALines && dmaLine) markLine(xCounter, 0, TOTAL_SCREEN_WIDTH);
+	if (markIRQLines && scanline == rasterInterruptLine()) 
+		markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
+	if (markDMALines && dmaLine)	
+		markLine(0, TOTAL_SCREEN_WIDTH, colors[RED]);
 	if (rasterlineDebug[scanline] >= 0) {
 		markLine(0, TOTAL_SCREEN_WIDTH, colors[rasterlineDebug[scanline] % 16]);
 		rasterlineDebug[scanline] = -1;

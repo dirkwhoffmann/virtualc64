@@ -158,6 +158,8 @@
 				<string>id</string>
 				<key>ciaRunningBAction</key>
 				<string>id</string>
+				<key>ciaSelectCiaAction</key>
+				<string>id</string>
 				<key>ciaSignalPendingAAction</key>
 				<string>id</string>
 				<key>ciaSignalPendingBAction</key>
