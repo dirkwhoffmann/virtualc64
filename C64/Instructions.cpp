@@ -81,8 +81,8 @@ CPU::registerCallback(uint8_t opcode, char *mnc, AddressingMode mode, void (CPU:
 void 
 CPU::registerIllegalInstructions()
 {
-	registerCallback(0x93, "AHX*", ADDR_INDIRECT_Y, &CPU::AHX_indirect_y);
-	registerCallback(0x9F, "AHX*", ADDR_ABSOLUTE_Y, &CPU::AHX_absolute_y);
+	registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, &CPU::SHA_indirect_y);
+	registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, &CPU::SHA_absolute_y);
 
 	registerCallback(0x4B, "ALR*", ADDR_IMMEDIATE, &CPU::ALR_immediate);
 
@@ -4821,73 +4821,6 @@ void CPU::TYA()
 // Illegal instructions
 // -------------------------------------------------------------------------------
 
-// -------------------------------------------------------------------------------
-// Instruction: AHX (SHA)
-//
-// Operation:   Mem := A & X & (M + 1)
-//
-// Flags:       N Z C I D V
-//              - - - - - -
-// -------------------------------------------------------------------------------
-
-void CPU::AHX_absolute_y()
-{
-	data = mem->peek(PC+1);
-	FETCH_ADDR_LO;
-	next = &CPU::AHX_absolute_y_2;
-}
-void CPU::AHX_absolute_y_2()
-{
-	FETCH_ADDR_HI;
-	ADD_INDEX_Y;
-	next = &CPU::AHX_absolute_y_3;
-}
-void CPU::AHX_absolute_y_3()
-{
-	IDLE_READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED)
-		FIX_ADDR_HI;
-	next = &CPU::AHX_absolute_y_4;
-}
-void CPU::AHX_absolute_y_4()
-{
-	data = A & X & (data + 1);
-	WRITE_TO_ADDRESS;
-	DONE;
-}
-
-// -------------------------------------------------------------------------------
-void CPU::AHX_indirect_y()
-{
-	data = mem->peek(mem->peek(PC) + 1);
-	FETCH_POINTER_ADDR;
-	next = &CPU::AHX_indirect_y_2;
-}
-void CPU::AHX_indirect_y_2()
-{
-	FETCH_ADDR_LO_INDIRECT;
-	next = &CPU::AHX_indirect_y_3;
-}
-void CPU::AHX_indirect_y_3()
-{
-	FETCH_ADDR_HI_INDIRECT;
-	ADD_INDEX_Y;
-	next = &CPU::AHX_indirect_y_4;
-}
-void CPU::AHX_indirect_y_4()
-{
-	IDLE_READ_FROM_ADDRESS;
-	if (PAGE_BOUNDARY_CROSSED)
-		FIX_ADDR_HI;
-	next = &CPU::AHX_indirect_y_5;
-}
-void CPU::AHX_indirect_y_5()
-{
-	data = A & X & (data + 1);
-	WRITE_TO_ADDRESS;
-	DONE;
-}
-
 
 // -------------------------------------------------------------------------------
 // Instruction: ALR
@@ -6291,6 +6224,72 @@ void CPU::SAX_indirect_x_5()
 
 
 // -------------------------------------------------------------------------------
+// Instruction: SHA
+//
+// Operation:   Mem := A & X & (M + 1)
+//
+// Flags:       N Z C I D V
+//              - - - - - -
+// -------------------------------------------------------------------------------
+
+void CPU::SHA_absolute_y()
+{
+	FETCH_ADDR_LO;
+	next = &CPU::SHA_absolute_y_2;
+}
+void CPU::SHA_absolute_y_2()
+{
+	FETCH_ADDR_HI;
+	ADD_INDEX_Y;
+	next = &CPU::SHA_absolute_y_3;
+}
+void CPU::SHA_absolute_y_3()
+{
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED)
+		FIX_ADDR_HI;
+	next = &CPU::SHA_absolute_y_4;
+}
+void CPU::SHA_absolute_y_4()
+{
+	data = A & X & (addr_hi + 1);
+	WRITE_TO_ADDRESS;
+	DONE;
+}
+
+// -------------------------------------------------------------------------------
+void CPU::SHA_indirect_y()
+{
+	FETCH_POINTER_ADDR;
+	next = &CPU::SHA_indirect_y_2;
+}
+void CPU::SHA_indirect_y_2()
+{
+	FETCH_ADDR_LO_INDIRECT;
+	next = &CPU::SHA_indirect_y_3;
+}
+void CPU::SHA_indirect_y_3()
+{
+	FETCH_ADDR_HI_INDIRECT;
+	ADD_INDEX_Y;
+	next = &CPU::SHA_indirect_y_4;
+}
+void CPU::SHA_indirect_y_4()
+{
+	IDLE_READ_FROM_ADDRESS;
+	if (PAGE_BOUNDARY_CROSSED)
+		FIX_ADDR_HI;
+	next = &CPU::SHA_indirect_y_5;
+}
+void CPU::SHA_indirect_y_5()
+{
+	data = A & X & (addr_hi + 1);
+	WRITE_TO_ADDRESS;
+	DONE;
+}
+
+
+// -------------------------------------------------------------------------------
 // Instruction: SHX
 //
 // Operation:   Mem := X & (HI_BYTE(op) + 1)
@@ -6301,7 +6300,6 @@ void CPU::SAX_indirect_x_5()
 
 void CPU::SHX_absolute_y()
 {
-	data = mem->peek(PC+1) + 1;
 	FETCH_ADDR_LO;
 	next = &CPU::SHX_absolute_y_2;
 }
@@ -6320,7 +6318,7 @@ void CPU::SHX_absolute_y_3()
 }
 void CPU::SHX_absolute_y_4()
 {
-	data &= X;
+	data = X & (addr_hi + 1);
 	WRITE_TO_ADDRESS;
 	DONE;
 }
@@ -6337,7 +6335,6 @@ void CPU::SHX_absolute_y_4()
 
 void CPU::SHY_absolute_x()
 {
-	data = mem->peek(PC+1) + 1;
 	FETCH_ADDR_LO;
 	next = &CPU::SHY_absolute_x_2;
 }
@@ -6356,7 +6353,7 @@ void CPU::SHY_absolute_x_3()
 }
 void CPU::SHY_absolute_x_4()
 {
-	data &= Y;
+	data = 	data = Y & (addr_hi + 1);
 	WRITE_TO_ADDRESS;
 	DONE;
 }

@@ -307,9 +307,6 @@ void TYA();
 
 // Illegal instructions
 
-void AHX_indirect_y(); void AHX_indirect_y_2(); void AHX_indirect_y_3(); void AHX_indirect_y_4(); void AHX_indirect_y_5();
-void AHX_absolute_y(); void AHX_absolute_y_2(); void AHX_absolute_y_3(); void AHX_absolute_y_4();
-
 void ALR_immediate();   
 void ANC_immediate();   
 void ANE_immediate();
@@ -363,6 +360,9 @@ void SAX_zero_page(); void SAX_zero_page_2();
 void SAX_zero_page_y(); void SAX_zero_page_y_2(); void SAX_zero_page_y_3();
 void SAX_absolute(); void SAX_absolute_2(); void SAX_absolute_3();
 void SAX_indirect_x(); void SAX_indirect_x_2(); void SAX_indirect_x_3(); void SAX_indirect_x_4(); void SAX_indirect_x_5();
+
+void SHA_indirect_y(); void SHA_indirect_y_2(); void SHA_indirect_y_3(); void SHA_indirect_y_4(); void SHA_indirect_y_5();
+void SHA_absolute_y(); void SHA_absolute_y_2(); void SHA_absolute_y_3(); void SHA_absolute_y_4();
 
 void SHX_absolute_y(); void SHX_absolute_y_2(); void SHX_absolute_y_3(); void SHX_absolute_y_4();
 void SHY_absolute_x(); void SHY_absolute_x_2(); void SHY_absolute_x_3(); void SHY_absolute_x_4();
