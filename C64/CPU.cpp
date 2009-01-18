@@ -44,9 +44,6 @@ CPU::reset()
 {
 	debug("  Resetting CPU...\n");
 
-	// Delete this...
-	rtiExecuted = true;
-	
 	// Initialize internal state
 	errorState = OK;
 	rdyLine = 1;
@@ -55,6 +52,8 @@ CPU::reset()
 	irqLine = 0;	
 	callStackPointer = 0;
 	setTraceMode(false);
+	
+	external_port_bits = 0x1F;
 	
 	// Initialize registers and flags
 	setA(0);
@@ -83,6 +82,11 @@ CPU::setPortDirection(uint8_t value)
 	
 	// TODO: A VIC byte will show up in ram[0x0000];
 	// "ram[0] = TheVIC->LastVICByte;" [Frodo]
+
+	// Store value of Bit 7, Bit 6 and Bit 3 if the corresponding bit lines are configured as outputs
+	uint8_t mask = 0xC8 & port_direction;	
+	external_port_bits &= ~mask;
+	external_port_bits |= mask & port;	
 }
 
 void 
@@ -92,6 +96,11 @@ CPU::setPort(uint8_t value)
 	
 	// TODO: A VIC byte will show up in ram[0x0001];
 	// "ram[1] = TheVIC->LastVICByte;" [Frodo]
+
+	// Store value of Bit 7, Bit 6 and Bit 3 if the corresponding bit lines are configured as outputs
+	uint8_t mask = 0xC8 & port_direction;	
+	external_port_bits &= ~mask;
+	external_port_bits |= mask & port;	
 }
 
 void 
@@ -383,7 +392,6 @@ CPU::dumpState()
 void 
 CPU::dumpHistory()
 {
-	printf("irqHistory: %02X nmiHistory: %02X\n", irqHistory, nmiHistory);
 	uint8_t i = historyPtr;
 	for (int j = 0; j < 256; j++) {
 		debug("%s", disassemble(history[i]));

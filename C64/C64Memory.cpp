@@ -34,11 +34,6 @@ C64Memory::C64Memory()
 	sid = NULL;
 	cia1 = NULL;
 	cia2 = NULL;
-		
-	// Try to auto-load ROMs...
-	//(void)loadRom("Char.rom");
-	//(void)loadRom("Kernel.rom");
-	//(void)loadRom("Basic.rom");
 }
 
 C64Memory::~C64Memory()
@@ -271,12 +266,13 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 }
 
 uint8_t C64Memory::peekAuto(uint16_t addr)
-{		
+{			
 	if (addr < 0xA000) {
 		if (addr <= 0x0001) {
 			// Processor port
 			uint8_t dir = cpu->getPortDirection();
-			return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & 0x17);
+			uint8_t ext = cpu->getExternalPortBits();
+			return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext); // (~dir & 0x5F); // (~dir & 0x7F); //   (~dir & 0x17);
 		} else {
 			// RAM
 			return ram[addr];
