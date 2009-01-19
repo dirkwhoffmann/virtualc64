@@ -49,9 +49,12 @@ void C64Memory::reset()
 	for (int i = 0; i < sizeof(ram); i++)
 		ram[i] = 0;
 	
+	// Initialize color memory...
+	// It's important here to write in random values as some games peek the color RAM 
+	// to generate random numbers. E.g., Paradroid is doing it that way.
 	for (int i = 0; i < sizeof(colorRam); i++)
-		colorRam[i] = 0;	
-	
+		colorRam[i] = rand(); 
+		
 	// Initialize processor port data direction register and processor port
 	poke(0x0000, 0x2F);
 	poke(0x0001, 0x1F);	
@@ -236,7 +239,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	
 	// 0xD800 - 0xDBFF (Color RAM)
 	if (addr >= 0xD800 && addr <= 0xDBFF) {
-		return colorRam[addr - 0xD800];
+		return (colorRam[addr - 0xD800] & 0x0F) | (rand() << 4);
 	}
 	
 	// 0xDC00 - 0xDCFF (CIA 1)
@@ -258,7 +261,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	if (addr >= 0xDE00 && addr <= 0xDFFF) {
 		// Note: Reserved for further I/O expansion
 		// When read, a random value is returned
-		return (uint16_t)(rand() & 0xFF);
+		return (uint8_t)(rand());
 	}
 
 	assert(false);
