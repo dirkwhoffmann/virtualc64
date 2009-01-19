@@ -404,14 +404,14 @@ void CIA::dumpState()
 {
 	debug("Timer A: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
 		  timerA.count,
-		  timerA.isStarted()        ? "yes" : "no",
+		  timerA.isStarted() ? "yes" : "no",
 		  isInterruptEnabledA() ? "yes" : "no",
-		  timerA.isOneShot()        ? "yes" : "no");
+		  timerA.isOneShot() ? "yes" : "no");
 	debug("Timer B: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
 		  timerB.count, 
-		  timerB.isStarted()        ? "yes" : "no",
+		  timerB.isStarted() ? "yes" : "no",
 		  isInterruptEnabledB() ? "yes" : "no",
-		  timerB.isOneShot()        ? "yes" : "no");
+		  timerB.isOneShot() ? "yes" : "no");
 }
 
 // -----------------------------------------------------------------------------------------
@@ -708,6 +708,7 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			// Bits 3 to 5 are connected to the IEC bus
 			iec->updateCiaPins(iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A]);			
 			return;
+			
 		case CIA_DATA_PORT_B:
 			iomem[addr] = value;
 			return;
