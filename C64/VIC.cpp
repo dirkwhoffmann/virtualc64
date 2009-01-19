@@ -21,6 +21,14 @@
 
 #include "C64.h"
 
+
+// Update value of the display variable according to the dma line condition 
+#define update_display if (dmaLine) { displayState = true; }
+
+// Update value of the display variable and the BA line according to the dma line condition 
+#define update_display_and_ba if (dmaLine) { displayState = true; pullDownBA(0x100); }
+
+
 VIC::VIC()
 {
 	debug("  Creating VIC at address %p...\n", this);
@@ -226,7 +234,17 @@ VIC::poke(uint16_t addr, uint8_t value)
 			} else {
 				iomem[addr] = value;
 			}
+			
+			// Bit 4 is the DEN bit and controls whether DMA lines are enabled or disabled. 
+			// Note that it is only inspected in rasterline 0x30
+			if (scanline == 0x30 && (value & 0x10))
+				dmaLinesEnabled = true;
+
+			// Bit 0 - 3 determine the vertical scroll offset. By changing these bits, the DMA line condition 
+			// can appear or disappear in the middle of a rasterline.
+			checkDmaLineCondition();
 			return;
+			
 		case 0x12: // RASTER_COUNTER
 			if (iomem[addr] != value) {
 				// Value changed: Check if we need to trigger an interrupt immediately
@@ -237,18 +255,22 @@ VIC::poke(uint16_t addr, uint8_t value)
 				iomem[addr] = value;
 			}
 			return;
+			
 		case 0x16:
 			iomem[addr] = value | (128 + 64); // The upper two bits are unused and always return 1 when read
 			return;
+			
 		case 0x17:
 			iomem[addr] = value;
 			expansionFF |= ~value;
 			return;
+			
 		case 0x18: // MEMORY_SETUP_REGISTER
 			iomem[addr] = value | 0x01; // Bit 0 is unused and always 1 when read
 			setScreenMemoryAddr((value & 0xF0) << 6);
 			setCharacterMemoryAddr((value & 0x0E) << 10);
 			return;
+			
 		case 0x19: // IRQ flags
 			// A bit is cleared when a "1" is written
 			iomem[addr] &= (~value & 0x0f);
@@ -256,6 +278,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 			if (iomem[addr] & iomem[0x1a])
 				iomem[addr] |= 0x80;
 			return;
+			
 		case 0x1a: // IRQ mask
 			iomem[addr] = value & 0x0f;
 			if (iomem[addr] & iomem[0x19]) {
@@ -265,7 +288,8 @@ VIC::poke(uint16_t addr, uint8_t value)
 				iomem[0x19] &= 0x7f; // clear uppermost bit
 				cpu->clearIRQLineVIC(); 
 			}
-			return;			
+			return;		
+			
 		case 0x1E:
 		case 0x1F:
 			// Writing has no effect
@@ -713,6 +737,22 @@ VIC::drawSpritesM()
 	return deadCycles;
 }
 
+void 
+VIC::updateSpriteDmaOnOff()
+{
+	// determine which sprites are displayes in the next rasterline
+	for (int i = 0; i < 8; i++) {
+		if (spriteIsEnabled(i)) {
+			uint8_t y = getSpriteY(i);
+			if (y == (scanline & 0xff)) {
+				spriteDmaOnOff |= (1 << i);
+				mcbase[i] = 0;
+				if (spriteHeightIsDoubled(i))
+					expansionFF &= ~(1 << i);
+			}
+		}
+	}
+}
 
 /* this method executes the "g-access" of a cycle.
 the g access also occours inside the vertical (upper & lower) frame area, but usually is covered the frame */
@@ -837,7 +877,10 @@ VIC::endRasterline()
 void 
 VIC::cycle1()
 {
-	// checkDmaLineCondition();
+	// Check, if we are currently processing a DMA line. The result is stored in variable dmaLine.
+	// Be aware that the value of variable dmaLine can change in the middle of a rasterline as a side effect 
+	// of modifying the y scroll offset.
+	checkDmaLineCondition();
 
 	// Trigger rasterline interrupt if applicable
 	// Note: In line 0, the interrupt is triggered in cycle 2
@@ -849,16 +892,16 @@ VIC::cycle1()
 		dmaLinesEnabled = isVisible();
 			
 	// Get sprite data address and sprite data of sprite 3
+	releaseBusForSprite(2);
 	readSpritePtr(3);
 	readSpriteData(3);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle2()
 {
-	// checkDmaLineCondition();
-
 	// Trigger rasterline interrupt if applicable
 	if (scanline == 0 && scanline == rasterInterruptLine())
 		triggerIRQ(1);
@@ -866,99 +909,99 @@ VIC::cycle2()
 	readSpriteData(3);
 	readSpriteData(3);
 	requestBusForSprite(5);
-	releaseBusForSprite(2);
 	countX();
+	update_display;
 }
 
 void 
 VIC::cycle3()
 {
-	// checkDmaLineCondition();
+	releaseBusForSprite(3);
 	readSpritePtr(4);
 	readSpriteData(4);
 	countX();
+	update_display;
 }
 
 void 
 VIC::cycle4()
 {
-	// checkDmaLineCondition();
 	readSpriteData(4);
 	readSpriteData(4);
 	requestBusForSprite(6);
-	releaseBusForSprite(3);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle5()
 {
-	// checkDmaLineCondition();
+	releaseBusForSprite(4);
 	readSpritePtr(5);
 	readSpriteData(5);
 	countX();
+	update_display;
 }
 
 void 
 VIC::cycle6()
 {
-	// checkDmaLineCondition();
 	readSpriteData(5);
 	readSpriteData(5);
 	requestBusForSprite(7);
-	releaseBusForSprite(4);
 	countX();
+	update_display;
 }
 
 void 
 VIC::cycle7()
 {
-	// checkDmaLineCondition();
+	releaseBusForSprite(5);
 	readSpritePtr(6);
 	readSpriteData(6);
 	countX();
+	update_display;
 }
 
 void 
 VIC::cycle8()
 {
-	// checkDmaLineCondition();
 	readSpriteData(6);
 	readSpriteData(6);
-	releaseBusForSprite(5);
 	countX();
+	update_display;
 }
 
 void 
 VIC::cycle9()
 {
-	// checkDmaLineCondition();
+	releaseBusForSprite(6);
 	readSpritePtr(7);
 	readSpriteData(7);
 	countX();
+	update_display;
 }
 
 void 
 VIC::cycle10()
 {
-	// checkDmaLineCondition();
 	readSpriteData(7);
 	readSpriteData(7);
-	releaseBusForSprite(6);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle11()
 {
-	// checkDmaLineCondition();
+	releaseBusForSprite(7);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle12()
 {
-	checkDmaLineCondition();
 	if (dmaLine) {
 		pullDownBA(0x100);
 	}
@@ -966,44 +1009,45 @@ VIC::cycle12()
 
 	// Reset the X coordinate to 0
 	xCounter = 0;
+	update_display_and_ba;
 }
 
 void
 VIC::cycle13()
 {
-	// checkDmaLineCondition();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle14()
 {
-	checkDmaLineCondition();
 	/* In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
 	 (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
 	 Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt. */
 	registerVC = registerVCBASE;
 	registerVMLI = 0;
-	if (dmaLine) registerRC = 0;
+	if (dmaLine) 
+		registerRC = 0;
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle15()
 {
-	checkDmaLineCondition();
 	/* In der ersten Phase von Zyklus 15 wird geprüft, ob das
 	 Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 2 erhöht. */
 	// Note: Done in cycle 16
 
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle16()
 {
-	checkDmaLineCondition();
 	if (isCSEL()) mainFrameFF = false;		
 			
 	/* 8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
@@ -1025,407 +1069,400 @@ VIC::cycle16()
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle17()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle18()
 {
-	checkDmaLineCondition();
 	if (!isCSEL()) mainFrameFF = false;
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle19()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle20()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle21()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle22()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle23()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle24()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle25()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle26()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle27()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle28()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle29()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle30()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle31()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle32()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle33()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle34()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle35()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle36()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle37()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle38()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle39()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle40()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle41()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle42()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle43()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle44()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle45()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle46()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle47()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle48()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle49()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle50()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle51()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle52()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle53()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle54()
 {
-	checkDmaLineCondition();
 	gAccess();
 	cAccess();
 	countX();
+	update_display_and_ba;
 }
 
 void
 VIC::cycle55()
 {
-	checkDmaLineCondition();
 	if (!isCSEL()) mainFrameFF = true;
+	
+	gAccess();
 	
 	/* In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
 	 invertiert, wenn das MxYE-Bit gesetzt ist. */
 	expansionFF ^= iomem[0x17];
 			
+	releaseBA(0x100);
+
 	/* In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
 	 ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
 	 Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
 	 unteren 8 Bits von RASTER ist. Ist dies der Fall und der DMA für das
 	 Sprite noch ausgeschaltet, wird der DMA angeschaltet, MCBASE gelöscht
-	 und, wenn das MxYE-Bit gesetzt ist, das Expansions-Flipflop gelˆscht.
+	 und, wenn das MxYE-Bit gesetzt ist, das Expansions-Flipflop gelöscht.
 	 */
-	// determine which sprites are displayes in the next rasterline
-	for (int i = 0; i < 8; i++) {
-		if (spriteIsEnabled(i)) {
-			uint8_t y = getSpriteY(i);
-			if (y == (scanline & 0xff)) {
-				spriteDmaOnOff |= (1 << i);
-				mcbase[i] = 0;
-				if (spriteHeightIsDoubled(i))
-					expansionFF &= ~(1 << i);
-			}
-		}
-	}
-	releaseBA(0x100);
+	updateSpriteDmaOnOff();
 	requestBusForSprite(0);
-	gAccess();
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle56()
 {
-	// checkDmaLineCondition();
+	updateSpriteDmaOnOff();
+	requestBusForSprite(0);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle57()
 {
-	checkDmaLineCondition();
 	if (isCSEL()) mainFrameFF = true;
 	drawHorizontalFrame = mainFrameFF;
 	requestBusForSprite(1);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle58()
 {
-	checkDmaLineCondition();
 	/* Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile, 
 	 wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt.
 	 In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
@@ -1474,49 +1511,46 @@ VIC::cycle58()
 void
 VIC::cycle59()
 {
-	// checkDmaLineCondition();
 	readSpriteData(0);
 	readSpriteData(0);
 	requestBusForSprite(2);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle60()
 {
-	// checkDmaLineCondition();
+	releaseBusForSprite(0);
 	readSpritePtr(1);
 	readSpriteData(1);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle61()
 {
-	// checkDmaLineCondition();
 	readSpriteData(1);
 	readSpriteData(1);
 	requestBusForSprite(3);
-	releaseBusForSprite(0);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle62()
 {
-	// checkDmaLineCondition();
+	releaseBusForSprite(1);
 	readSpritePtr(2);
 	readSpriteData(2);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle63()
-{
-	checkDmaLineCondition();
-	readSpriteData(2);
-	readSpriteData(2);
-			
+{			
 	// update border flipflops
 	if (scanline == 51 && isRSEL() && isVisible()) 
 		drawVerticalFrame = verticalFrameFF = false;
@@ -1542,15 +1576,17 @@ VIC::cycle63()
 		markLine(0, TOTAL_SCREEN_WIDTH, colors[rasterlineDebug[scanline] % 16]);
 		rasterlineDebug[scanline] = -1;
 	}		
+
+	readSpriteData(2);
+	readSpriteData(2);
 	requestBusForSprite(4);
-	releaseBusForSprite(1);
 	countX();
+	update_display;
 }
 
 void
 VIC::cycle64()
 {
-	// checkDmaLineCondition();
 	// NTSC only
 	countX();
 }
@@ -1558,7 +1594,6 @@ VIC::cycle64()
 void
 VIC::cycle65()
 {
-	// checkDmaLineCondition();
 	// NTSC only
 	countX();
 }

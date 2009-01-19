@@ -451,7 +451,7 @@ private:
 	uint8_t registerVMLI; 
 	
 	
-	//! This dertermines if a dma (bad line)  condidion is present
+	//! Indicates that we are curretly processing a DMA line (bad line)
 	bool dmaLine;
 	
 	//! Display State
@@ -493,6 +493,9 @@ private:
 	/*! Determines  if sprite dma access is enabled or disabled. Each bit represents a single sprite. */
 	uint8_t spriteDmaOnOff;
 			
+	//! Update sprite DMA bits
+	void updateSpriteDmaOnOff();
+
 	//! Performs the g-access of the VIC
 	void gAccess();
 
@@ -631,8 +634,14 @@ public:
 		The first DMA access occurrs within lines 0x30 to 0xf7 and  */
 	inline bool isDMALine() { return scanline >= 0x30 && scanline <= 0xf7 && (scanline & 7) == getVerticalRasterScroll(); }	
 
+	
 	//! checkDmaLineCondition
-	inline void checkDmaLineCondition() { if (dmaLine = dmaLinesEnabled && isDMALine()) displayState = true; }
+	// DEPRECATED
+	inline void checkDmaLineCondition() { if (dmaLine = (dmaLinesEnabled && isDMALine())) displayState = true; }
+	
+	//! checkDmaLineCondition
+	// inline bool checkDMALine() { return (scanline & 7) == getVerticalRasterScroll() && scanline >= 0x30 && scanline <= 0xf7 && dmaLinesEnabled; }
+
 	
 	//! Returns the vertical raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
