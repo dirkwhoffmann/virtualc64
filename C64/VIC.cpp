@@ -37,8 +37,6 @@ VIC::VIC()
 	cpu = NULL;
 	mem = NULL;
 	
-	setColorScheme(CCS64);
-
 	// Delete screen buffers
 	for (int i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
 		screenBuffer1[i] = colors[BLUE];
@@ -48,6 +46,13 @@ VIC::VIC()
 	}
 	currentScreenBuffer = screenBuffer1;
 	pixelBuffer = currentScreenBuffer;
+	
+	// Initialize colors
+	setColorScheme(CCS64);
+
+	// Start with all debug options disabled
+	markIRQLines = false;
+	markDMALines = false;
 }
 
 VIC::~VIC()
@@ -58,41 +63,55 @@ void
 VIC::reset() 
 {
 	debug("  Resetting VIC...\n");
-	bankAddr = 0;
+		
+	// Internal registers
 	scanline = 0;
-	BAlow = 0;
-	drawSprites	= true;
-	markIRQLines = false;
-	markDMALines = false;
+	xCounter = 0;
+	registerVC = 0;
+	registerVCBASE = 0;
+	registerRC = 0;
+	registerVMLI = 0;
+	dmaLine = false;
+	dmaLinesEnabled = false;
 	displayState = false;
-	drawVerticalFrame = true;
-	drawHorizontalFrame = true;
-	spriteOnOff = 0;
-	spriteDmaOnOff = 0;
-	screenMemory = mem->getRam();
-	screenMemoryAddr = 0x0000;
-	spriteMemory = screenMemory;
-	characterMemory = mem->getRam();
-	characterMemoryAddr = 0x0000;
+	BAlow = 0;
+	mainFrameFF = false;
+	verticalFrameFF = false;
+	drawVerticalFrame = false;
+	drawHorizontalFrame = false;
+	
+	// Memory
 	memset(iomem, 0x00, sizeof(iomem));
+	iomem[0x20] = LTBLUE; // Let the border color look correct right from the beginning
+	iomem[0x21] =BLUE;    // Let the background color look correct right from the beginning
+	iomem[0x11] = 0x10;   // Make screen visible from the beginning	
+	bankAddr = 0;
+	screenMemoryAddr = 0x0000;
+	screenMemory = mem->getRam();
+	spriteMemory = screenMemory;
+	characterMemoryAddr = 0x0000;
+	characterMemory = mem->getRam();
+	
+	// Sprites
 	for (int i = 0; i < 8; i++) {
-		spriteSpriteCollisionEnabled[i] = true;
-		spriteBackgroundCollisionEnabled[i] = true;
 		mc[i] = 0;
 		mcbase[i] = 0;
 		spriteShiftReg[i][0] = spriteShiftReg[i][1] = spriteShiftReg[i][3] = 0; 
 	}
+	spriteOnOff = 0;
+	spriteDmaOnOff = 0;
 	expansionFF = 0xff;
+	
+	// Lightpen
+	lightpenIRQhasOccured = false;
+	
+	// Debugging	
+	drawSprites = true;
 	for (int i = 0; i < PAL_RASTERLINES; i++) {
 		rasterlineDebug[i] = -1;
 	}
-	
-	// Let the color look correct right from the beginning
-	iomem[0x20] = 14; // Light blue
-	iomem[0x21] = 6;  // Blue
-
-	// make screen visible from the beginning
-	iomem[0x11] |= 0x10;
+	spriteSpriteCollisionEnabled = 0xFF;
+	spriteBackgroundCollisionEnabled = 0xFF;
 }
 			
 // Loading and saving snapshots
@@ -145,6 +164,66 @@ VIC::save(FILE *file)
 	}	
 	return true;
 }
+
+void 
+VIC::dumpState()
+{
+	debug("VIC\n");
+	debug("---\n");
+	debug("Bank address:      %04X\n", bankAddr, bankAddr);
+	debug("Screen memory:     %04X\n", screenMemoryAddr);
+	debug("Character memory:  %04X\n", characterMemoryAddr);
+	debug("Text resolution:   %d x %d\n", numberOfRows(), numberOfColumns());
+	debug("X/Y raster scroll: %d / %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
+	debug("Display mode:      ");
+	switch (getDisplayMode()) {
+		case STANDARD_TEXT: 
+			debug("Standard character mode\n");
+			break;
+		case MULTICOLOR_TEXT:
+			debug("Multicolor character mode\n");
+			break;
+		case STANDARD_BITMAP:
+			debug("Standard bitmap mode\n");
+			break;
+		case MULTICOLOR_BITMAP:
+			debug("Multicolor bitmap mode\n");
+			break;
+		case EXTENDED_BACKGROUND_COLOR:
+			debug("Extended background color mode\n");
+			break;
+		default:
+			debug("Invalid\n");
+	}
+	debug("(X,Y):             (%d,%d) %s %s\n", xCounter, scanline,  dmaLine ? "(DMA line)" : "", dmaLinesEnabled ? "" : "(DMA lines disabled)");
+	debug("VC:                %02X\n", registerVC);
+	debug("VCBASE:            %02X\n", registerVCBASE);
+	debug("RC:                %02X\n", registerRC);
+	debug("VMLI:              %02X\n", registerVMLI);
+	debug("BA line:           %s\n", BAlow ? "low" : "high");
+	debug("mainFrameFF:       %d\n", mainFrameFF);
+	debug("verticalFrameFF:   %d\n", verticalFrameFF);
+	debug("draw Vframe:       %s\n", drawVerticalFrame ? "yes" : "no");
+	debug("draw Hframe:       %s\n", drawHorizontalFrame ? "yes" : "no");	
+	debug("displayState:      %s\n", displayState ? "on" : "off");
+	debug("spriteOn:          ");
+	for (int i = 0; i < 8; i++) debug("%d ", spriteOnOff & (1 << i) != 0);
+	debug("\nspriteDma:         ");
+	for (int i = 0; i < 8; i++) debug("%d ", spriteDmaOnOff & (1 << i) != 0 );
+	debug("\nY expansion:       ");
+	for (int i = 0; i < 8; i++) debug("%d ", expansionFF & (1 << i) != 0);
+	
+	debug("\n\nIO memory:\n");
+	for (int i = 0; i < 32; i += 8) {
+		for (int j = 0; j < 16; j ++) {
+			debug("%02X ", iomem[i + j]);
+		}
+		debug("\n");
+	}
+}
+
+
+
 
 void 
 VIC::setScreenGeometry(ScreenGeometry mode)
@@ -391,7 +470,8 @@ VIC::setBackgroundPixel(int offset, int color)
 inline void 
 VIC::setSpritePixel(int offset, int color, int nr) 
 {	
-	assert(nr < 8);	
+	uint8_t mask = (1 << nr);
+	
 	if (offset >= 0 && offset < TOTAL_SCREEN_WIDTH) {
 		int depth = spriteDepth(nr);
 		if (depth < zBuffer[offset]) {
@@ -400,19 +480,19 @@ VIC::setSpritePixel(int offset, int color, int nr)
 		}
 	
 		// Check sprite/sprite collision
-		if (spriteSpriteCollisionEnabled[nr] && (pixelSource[offset] & 0x7F)) {
-			iomem[0x1E] |= ((pixelSource[offset] & 0x7F) | (1 << nr));
+		if ((spriteSpriteCollisionEnabled & mask) && (pixelSource[offset] & 0x7F)) {
+			iomem[0x1E] |= ((pixelSource[offset] & 0x7F) | mask);
 			triggerIRQ(4);
 		}
 		
 		// Check sprite/background collision
-		if (spriteBackgroundCollisionEnabled[nr] && (pixelSource[offset] & 0x80)) {
-			iomem[0x1F] |= (1 << nr);
+		if ((spriteBackgroundCollisionEnabled & mask) && (pixelSource[offset] & 0x80)) {
+			iomem[0x1F] |= mask;
 			triggerIRQ(2);
 		}
 		
 		if (nr < 7)
-			pixelSource[offset] |= (1 << nr);
+			pixelSource[offset] |= mask;
 	}
 }
 
@@ -723,10 +803,9 @@ VIC::drawBorder()
 }
 
 // Sprite drawing
-int inline
-VIC::drawSpritesM()
+void inline
+VIC::drawAllSprites()
 {	
-	int deadCycles = 0;
 	if (drawSprites) {
 		for (int i = 0; i < 8; i++) {
 			if (oldSpriteOnOff & (1 << i)) {
@@ -734,7 +813,6 @@ VIC::drawSpritesM()
 			}				
 		}
 	}
-	return deadCycles;
 }
 
 void 
@@ -766,13 +844,13 @@ VIC::gAccess()
 	int colorLookup[4];
 	uint16_t xCoord = xCounter + getHorizontalRasterScroll();
 	switch (displayMode) {
-		case STANDARD_CHARACTER_MODE:
+		case STANDARD_TEXT:
 			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
 			fgcolor   = colorSpace[registerVMLI];
 			bgcolor   = getBackgroundColor();
 			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
 			break;
-		case MULTICOLOR_CHARACTER_MODE:
+		case MULTICOLOR_TEXT:
 			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
 			fgcolor   = colorSpace[registerVMLI];
 			if (fgcolor & 0x8) {
@@ -785,13 +863,13 @@ VIC::gAccess()
 				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
 			}
 			break;
-		case STANDARD_BITMAP_MODE:
+		case STANDARD_BITMAP:
 			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
 			fgcolor = characterSpace[registerVMLI] >> 4;
 			bgcolor = characterSpace[registerVMLI] & 0xf;
 			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
 			break;
-		case MULTICOLOR_BITMAP_MODE:
+		case MULTICOLOR_BITMAP:
 			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
 			colorLookup[0]  = colors[getBackgroundColor()];
 			colorLookup[1]  = colors[characterSpace[registerVMLI] >> 4];
@@ -799,7 +877,7 @@ VIC::gAccess()
 			colorLookup[3]  = colors[colorSpace[registerVMLI]];			
 			drawMultiColorCharacter(xCoord, pattern, colorLookup);
 			break;
-		case EXTENDED_BACKGROUND_COLOR_MODE:
+		case EXTENDED_BACKGROUND_COLOR:
 			pattern = displayState ? getExtendedCharacterPattern() : getIdleAccessPattern();
 			fgcolor = colorSpace[registerVMLI]; 
 			bgcolor = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);
@@ -1494,7 +1572,7 @@ VIC::cycle58()
 	}
 		
 	/* Draw rasterline into pixel buffer */
-	drawSpritesM();
+	drawAllSprites();
 			
 	// switch off sprites if dma is off
 	for (int i = 0; i < 8; i++) {
@@ -1565,7 +1643,7 @@ VIC::cycle63()
 	drawBorder();
 			
 	// illegal display modes cause a black line to appear
-	if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR_MODE) markLine(xStart(), xEnd(), colors[BLACK]);
+	if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR) markLine(xStart(), xEnd(), colors[BLACK]);
 
 	// draw debug markers
 	if (markIRQLines && scanline == rasterInterruptLine()) 
@@ -1596,40 +1674,6 @@ VIC::cycle65()
 {
 	// NTSC only
 	countX();
-}
-
-void 
-VIC::dumpState()
-{
-	debug("Rasterline: %d (%x)\n", scanline, scanline);
-	// debug("Mode: %s\n", cyclesPerRasterline == PAL_CYCLES_PER_RASTERLINE ? "PAL" : "NTSC");
-	debug("Text resolution: %d x %d\n", numberOfRows(), numberOfColumns());
-	debug("Vertical raster scroll: %d Horizontal raster scroll: %d\n\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
-	debug("Display mode: ");
-	switch (getDisplayMode()) {
-		case STANDARD_CHARACTER_MODE: 
-			debug("Standard character mode\n");
-			break;
-		case MULTICOLOR_CHARACTER_MODE:
-			debug("Multicolor character mode\n");
-			break;
-		case STANDARD_BITMAP_MODE:
-			debug("Standard bitmap mode\n");
-			break;
-		case MULTICOLOR_BITMAP_MODE:
-			debug("Multicolor bitmap mode\n");
-			break;
-		case EXTENDED_BACKGROUND_COLOR_MODE:
-			debug("Extended background color mode\n");
-			break;
-		default:
-			debug("Invalid display mode\n");
-	}
-	debug("Bank address: %d (%4X)", bankAddr, bankAddr);
-	debug("Screen memory: %d (%4X)\n", screenMemoryAddr, screenMemoryAddr);
-	debug("Character memory: %d (%4X) (RAM)\n", characterMemoryAddr, characterMemoryAddr);
-	debug("State: %s\n", displayState ? "display" : "idle");
-	debug("Registers: \n  VC: %d\n  VCBASE:%d\n  RC: %d\n  VMLI: %d\n", registerVC, registerVCBASE, registerRC, registerVMLI);
 }
 
 void 

@@ -93,26 +93,32 @@ public:
 - (bool) loadSnapshot:(NSString *)filename;
 - (bool) saveSnapshot:(NSString *)filename;
 
-- (void) dumpCPU;
-- (void) dumpCIA;
-- (void) dumpVIC;
+- (bool) cpuTracingEnabled;
+- (void) cpuSetTraceMode:(bool)b;
+- (bool) iecTracingEnabled;
+- (void) iecSetTraceMode:(bool)b;
+- (bool) vc1541CpuTracingEnabled;
+- (void) vc1541CpuSetTraceMode:(bool)b;
+- (bool) viaTracingEnabled;
+- (void) viaSetTraceMode:(bool)b;
+
+- (void) dumpC64;
+- (void) dumpC64CPU;
+- (void) dumpC64CIA;
+- (void) dumpC64VIC;
+- (void) dumpC64SID;
+- (void) dumpC64Memory;
+- (void) dumpVC1541;
+- (void) dumpVC1541CPU;
+- (void) dumpVC1541VIA;
+- (void) dumpVC1541Memory;
+- (void) dumpKeyboard;
 - (void) dumpIEC;
-- (void) dumpMemory;
-- (void) dumpDrive;
 
 // CPU
 - (bool) cpuGetWarpMode;
 - (void) cpuSetWarpMode:(bool)b;
 - (long) cpuGetCycles;
-- (bool) cpuTracingEnabled;
-- (void) cpuSetTraceMode:(bool)b;
-- (bool) iecTracingEnabled;
-- (void) iecSetTraceMode:(bool)b;
-- (bool) driveCPUTracingEnabled;
-- (void) driveSetCPUTraceMode:(bool)b;
-- (bool) driveDataTracingEnabled;
-- (void) driveSetDataTraceMode:(bool)b;
-
 - (uint16_t) cpuGetPC;
 - (void) cpuSetPC:(uint16_t)pc;
 - (uint8_t) cpuGetSP;
@@ -146,8 +152,7 @@ public:
 - (char *) cpuGetMnemonic:(uint8_t)opcode;
 - (CPU::AddressingMode) cpuGetAddressingMode:(uint8_t)opcode;
 
-// - (CPU::ErrorState) cpuGetErrorState;
- - (int) cpuGetTopOfCallStack;
+- (int) cpuGetTopOfCallStack;
 - (int) cpuGetBreakpoint:(int)addr;
 - (void) cpuSetBreakpoint:(int)addr tag:(uint8_t)t;
 - (void) cpuSetHardBreakpoint:(int)addr;

@@ -31,36 +31,51 @@
 #define TIMER_LOAD_WAIT_COUNT 6
 
 class CIA;
+class CIA1;
+class CIA2;
 
 //! CIA Timer
 /*! Each CIA chip contains two timers (A and B). */
 class Timer : public VirtualComponent {
 	
-//protected:
-public:
+	friend class CIA;
+	friend class CIA1;
+	friend class CIA2;
+	
+protected:
+
 	//! Reference to the connected CIA chip
 	CIA *cia;
 	
 	//! Reference to the other timer of the same CIA chip
 	Timer *otherTimer;
-	
+
 	//! Timer value
 	uint16_t count;
-	
+
 	//! Timer latch
 	uint16_t timerLatch;
 
 	//! Current execution state
 	int state;
 	
+	//! The timer control register
+	uint8_t controlReg;
+
 	//! True, if the timer is decremented in each clock cycle
 	bool count_clockticks;
 	
 	//! True, if the timer is decremented if the "otherTimer" experiences a timer underflow.
 	bool count_underflows;
+		
+	//! Is set to true when an underflow condition occurs
+	bool underflow;
 	
-	//! The timer control register
-	uint8_t controlReg;
+	//! Is inverted when an underflow condition occurs
+	bool underflow_toggle;
+	
+	//! Indicates that an interrupt needs to be triggered in the next cycle
+	bool triggerInterrupt;
 
 public:
 	//! Constructor
@@ -90,6 +105,9 @@ public:
 	//! Set high byte of timer latch
 	void setTimerLatchHi(uint8_t value) { timerLatch = (value << 8) | (timerLatch & 0xFF); if (!(controlReg & 1)) count = timerLatch; }
 
+	//! Return current timer state
+	inline uint16_t getState() { return state; }
+		
 	//! Return the current timer value
 	inline uint16_t getTimer() { return count; }
 	
@@ -141,20 +159,14 @@ public:
 	//! Returns true, if timer counts clock ticks
 	inline bool isCountingClockTicks() { return count_clockticks; }
 	
+	//! Return contents of the timer control register
+	inline uint16_t getControlReg() { return controlReg; }
+
 	//! Update value of the control register 
 	/*! This method is executed whenever the value of the control register changes. It updates the internal state
 	    of the timer and performs the necessary actions. */ 
 	void setControlReg(uint8_t value);
-	
-	//! Indicates that an interrupt needs to be triggered in the next cycle
-	bool triggerInterrupt;
-	
-	//! Is set to true when an underflow condition occurs
-	bool underflow;
-	
-	//! Is inverted when an underflow condition occurs
-	bool underflow_toggle;
-	
+		
 	//! Execute one cycle
 	void executeOneCycle(void);
 

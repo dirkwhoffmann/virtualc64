@@ -66,7 +66,6 @@ VC1541::reset()
 	
 	stopRotating();
 	deactivateRedLED();
-	ejectDisc();
 	
 	byteReadyTimer = 0;
 	track = 40;
@@ -332,12 +331,6 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 	// Write last byte, checksum, 0x00, 0x00
 	encodeGcr(source[255], checksum, 0, 0, ptr);
 	ptr += 5;
-
-#if 0
-	// Write gap (8 x 0x55)
-	for (i = 0; i < 8; i++, ptr++)
-		*ptr = 0x55;
-#endif
 	
 	// Write gap
 	for (i = 0; i < gap; i++, ptr++)

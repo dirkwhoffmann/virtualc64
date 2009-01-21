@@ -93,7 +93,17 @@ public:
 	//! Address offset of the CIA Control Register B
 	static const uint16_t CIA_CONTROL_REG_B = 0x0F;
 	
+	//! First timer
+	TimerA timerA;
+	
+	//! Second timer
+	TimerB timerB;
+	
+	//! Time of day clock
+	TOD tod;
+	
 protected:
+	
 	//! Reference to the connected video interface controller (VIC). 
 	/*! The CIA chip needs to know about the VIC chip, because 
 	 1. the video memory bank selection is handled by the CIA chip (register 0xDD00).
@@ -107,9 +117,7 @@ protected:
 	//! CIA I/O Memory
 	/*! Whenever a value is poked to the CIA address space, it is stored here. */
 	uint8_t iomem[NO_OF_REGISTERS];
-				
-protected:
-	
+					
 	//! External bus signals on data port A
 	/*! \todo Create a separate interface (DeviceInterface or something)
 		The keyboard could implement the interface and connect to the CIA (Note: Multiple connections would be needed)
@@ -132,6 +140,12 @@ protected:
 	*/
 	uint8_t interruptDataRegister;
 		 
+	//! Indicates a change in the control register of timer A
+	bool controlRegHasChangedA;
+
+	//! Indicates a change in the control register of timer B
+	bool controlRegHasChangedB;
+
 	 //! Trigger interrupt
 	/*! Annotates the interrupt source in the interrupt control register and triggers a CPU interrupt. */
 	void triggerInterrupt(uint8_t source);	
@@ -149,15 +163,7 @@ protected:
 	virtual void clearInterruptLine() = 0;	
 			
 public:	
-	//! First timer
-	TimerA timerA;
 	
-	//! Second timer
-	TimerB timerB;
-
-	//! Time of day clock
-	TOD tod;
-
 	//! Returns true if the \a addr is located in the I/O range of one of the two CIA chips
 	static inline bool isCiaAddr(uint16_t addr) 
 		{ return (CIA_START_ADDR <= addr && addr <= CIA_END_ADDR); }
@@ -275,10 +281,6 @@ public:
 	//!
 	inline void setControlRegB(uint8_t value) { iomem[CIA_CONTROL_REG_B] = value; }
 	
-	
-	bool controlRegHasChangedA;
-	bool controlRegHasChangedB;
-	
 	//! Trigger pending interrupts
 	inline void triggerInterrupts() {
 
@@ -301,13 +303,13 @@ public:
 		The functions decreases all running counters and triggers an CPU interrput if necessary.
 	*/
 	inline void executeOneCycle() { 
-		if (timerA.state != TIMER_STOP)
+		if (timerA.getState() != TIMER_STOP)
 			timerA.executeOneCycle();	
 		if (controlRegHasChangedA) {
 			controlRegHasChangedA = false;
 			timerA.setControlReg(iomem[CIA_CONTROL_REG_A]);
 		}
-		if (timerB.state != TIMER_STOP)
+		if (timerB.getState() != TIMER_STOP)
 			timerB.executeOneCycle();
 		if (controlRegHasChangedB) {
 			controlRegHasChangedB = false;

@@ -85,19 +85,6 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
-			<key>CLASS</key>
-			<string>VICScreen</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>myDoc</key>
-				<string>MyDocument</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSOpenGLView</string>
-		</dict>
-		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>BAction</key>
@@ -182,6 +169,30 @@
 				<string>id</string>
 				<key>driveAction</key>
 				<string>id</string>
+				<key>dumpC64</key>
+				<string>id</string>
+				<key>dumpC64CIA</key>
+				<string>id</string>
+				<key>dumpC64CPU</key>
+				<string>id</string>
+				<key>dumpC64Memory</key>
+				<string>id</string>
+				<key>dumpC64SID</key>
+				<string>id</string>
+				<key>dumpC64VIC</key>
+				<string>id</string>
+				<key>dumpIEC</key>
+				<string>id</string>
+				<key>dumpKeyboard</key>
+				<string>id</string>
+				<key>dumpVC1541</key>
+				<string>id</string>
+				<key>dumpVC1541CPU</key>
+				<string>id</string>
+				<key>dumpVC1541Memory</key>
+				<string>id</string>
+				<key>dumpVC1541VIA</key>
+				<string>id</string>
 				<key>ejectAction</key>
 				<string>id</string>
 				<key>endMountDialogAndFlash</key>
@@ -255,6 +266,14 @@
 				<key>todSecondsAction</key>
 				<string>id</string>
 				<key>todTenthAction</key>
+				<string>id</string>
+				<key>traceC64CpuAction</key>
+				<string>id</string>
+				<key>traceIecAction</key>
+				<string>id</string>
+				<key>traceVC1541CpuAction</key>
+				<string>id</string>
+				<key>traceViaAction</key>
 				<string>id</string>
 				<key>vicCharacterMemoryAction</key>
 				<string>id</string>
@@ -510,6 +529,19 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSDocument</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>VICScreen</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>myDoc</key>
+				<string>MyDocument</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSOpenGLView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

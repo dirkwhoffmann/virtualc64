@@ -70,16 +70,13 @@
 
 	NSLog(@"runAction");
 	[info setStringValue:@""];
-	
-	// disable user editing 
 	[self enableUserEditing:NO];
+	[self refresh];
 	
 	// disable undo because the internal state changes permanently
 	[self updateChangeCount:NSChangeDone];
 	[[self undoManager] removeAllActions];
 
-	[self refresh];
-	
 	[arp release];
 }
 

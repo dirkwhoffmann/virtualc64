@@ -21,6 +21,8 @@
 Timer::Timer()
 {
 	debug("    Creating CIA Timer at address %p...\n", this);
+	cia = NULL;
+	otherTimer = NULL;
 }
 
 Timer::~Timer()
@@ -31,14 +33,15 @@ void
 Timer::reset() 
 {
 	debug("    Resetting CIA Timer...\n");
-	count = timerLatch = 0;
+	count = 0;
+	timerLatch = 0;
+	state = TIMER_STOP;
 	controlReg = 0x00;
-	underflow = false;
-	underflow_toggle = true; 
 	count_clockticks = false;
 	count_underflows = false;
+	underflow = false;
+	underflow_toggle = true; 
 	triggerInterrupt = false;
-	state = TIMER_STOP;
 }
 
 bool

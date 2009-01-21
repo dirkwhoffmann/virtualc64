@@ -176,6 +176,7 @@ wird der Zählerstand mit dem Latch-Wert geladen und der Timer gestartet.
 CIA::CIA()
 {
 	cpu = NULL;
+    vic = NULL;
 	timerA.setCIA(this);
 	timerB.setCIA(this);
 	timerA.setOtherTimer(&timerB);
@@ -192,6 +193,7 @@ CIA::reset()
 	memset(iomem, 0, sizeof(iomem));	
 	iomem[CIA_DATA_PORT_A] = 0xff;
 	iomem[CIA_DATA_PORT_B] = 0xff;	
+
 	portLinesA = 0xff;
 	portLinesB = 0xff;
 	interruptDataRegister = 0;
@@ -257,13 +259,13 @@ uint8_t CIA::peek(uint16_t addr)
 		case CIA_DATA_DIRECTION_B:
 			return iomem[addr];
 		case CIA_TIMER_A_LOW:  
-			return LO_BYTE(timerA.count);			
+			return LO_BYTE(timerA.getTimer());			
 		case CIA_TIMER_A_HIGH: 
-			return HI_BYTE(timerA.count);			
+			return HI_BYTE(timerA.getTimer());			
 		case CIA_TIMER_B_LOW:  
-			return LO_BYTE(timerB.count);
+			return LO_BYTE(timerB.getTimer());
 		case CIA_TIMER_B_HIGH: 
-			return HI_BYTE(timerB.count);
+			return HI_BYTE(timerB.getTimer());
 		case CIA_TIME_OF_DAY_SEC_FRAC:
 			tod.defreeze();
 			return BinaryToBCD(tod.getTodTenth());
@@ -283,9 +285,9 @@ uint8_t CIA::peek(uint16_t addr)
 			clearInterruptLine();			
 			return result;
 		case CIA_CONTROL_REG_A:
-			return timerA.controlReg & 0xEF; // Bit 4 is always 0 when read
+			return timerA.getControlReg() & 0xEF; // Bit 4 is always 0 when read
 		case CIA_CONTROL_REG_B:
-			return timerB.controlReg & 0xEF; // Bit 4 is always 0 when read
+			return timerB.getControlReg() & 0xEF; // Bit 4 is always 0 when read
 		default:
 			debug("PANIC: Unknown CIA address %04X\n", addr);
 			assert(0);
@@ -403,12 +405,12 @@ CIA::incrementTOD()
 void CIA::dumpState()
 {
 	debug("Timer A: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
-		  timerA.count,
+		  timerA.getTimer(),
 		  timerA.isStarted() ? "yes" : "no",
 		  isInterruptEnabledA() ? "yes" : "no",
 		  timerA.isOneShot() ? "yes" : "no");
 	debug("Timer B: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
-		  timerB.count, 
+		  timerB.getTimer(), 
 		  timerB.isStarted() ? "yes" : "no",
 		  isInterruptEnabledB() ? "yes" : "no",
 		  timerB.isOneShot() ? "yes" : "no");
@@ -624,7 +626,6 @@ CIA2::CIA2()
 {
 	debug("  Creating CIA2 at address %p...\n", this);
 
-    vic = NULL;
 	iec = NULL;
 }
 
