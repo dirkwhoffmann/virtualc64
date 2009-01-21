@@ -43,9 +43,8 @@
 		50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C590A6F72F3009E80BD /* Keyboard.cpp */; };
 		50176C690A6F72F3009E80BD /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5B0A6F72F3009E80BD /* Memory.cpp */; };
 		50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */; };
-		50176C7B0A6F7357009E80BD /* DezFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C6F0A6F7357009E80BD /* DezFormatter.mm */; };
 		50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C710A6F7357009E80BD /* Disassembler.mm */; };
-		50176C7D0A6F7357009E80BD /* HexFormatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* HexFormatter.mm */; };
+		50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* Formatter.mm */; };
 		50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C760A6F7357009E80BD /* MyDocument.mm */; };
 		50176C800A6F7357009E80BD /* VICScreen.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C780A6F7357009E80BD /* VICScreen.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
@@ -166,12 +165,10 @@
 		50176C5F0A6F72F3009E80BD /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
 		50176C600A6F72F3009E80BD /* VIC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = VIC.h; sourceTree = "<group>"; };
 		50176C620A6F72F3009E80BD /* C64Listener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Listener.h; sourceTree = "<group>"; };
-		50176C6E0A6F7357009E80BD /* DezFormatter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = DezFormatter.h; sourceTree = "<group>"; };
-		50176C6F0A6F7357009E80BD /* DezFormatter.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = DezFormatter.mm; sourceTree = "<group>"; };
 		50176C700A6F7357009E80BD /* Disassembler.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Disassembler.h; sourceTree = "<group>"; };
 		50176C710A6F7357009E80BD /* Disassembler.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Disassembler.mm; sourceTree = "<group>"; };
-		50176C720A6F7357009E80BD /* HexFormatter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = HexFormatter.h; sourceTree = "<group>"; };
-		50176C730A6F7357009E80BD /* HexFormatter.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = HexFormatter.mm; sourceTree = "<group>"; };
+		50176C720A6F7357009E80BD /* Formatter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Formatter.h; sourceTree = "<group>"; };
+		50176C730A6F7357009E80BD /* Formatter.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Formatter.mm; sourceTree = "<group>"; };
 		50176C750A6F7357009E80BD /* MyDocument.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = MyDocument.h; sourceTree = "<group>"; };
 		50176C760A6F7357009E80BD /* MyDocument.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = MyDocument.mm; sourceTree = "<group>"; };
 		50176C770A6F7357009E80BD /* VICScreen.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = VICScreen.h; sourceTree = "<group>"; };
@@ -404,12 +401,10 @@
 		50176C6D0A6F7357009E80BD /* MacGUI */ = {
 			isa = PBXGroup;
 			children = (
-				50176C6E0A6F7357009E80BD /* DezFormatter.h */,
-				50176C6F0A6F7357009E80BD /* DezFormatter.mm */,
+				50176C720A6F7357009E80BD /* Formatter.h */,
+				50176C730A6F7357009E80BD /* Formatter.mm */,
 				50176C700A6F7357009E80BD /* Disassembler.h */,
 				50176C710A6F7357009E80BD /* Disassembler.mm */,
-				50176C720A6F7357009E80BD /* HexFormatter.h */,
-				50176C730A6F7357009E80BD /* HexFormatter.mm */,
 				50176C750A6F7357009E80BD /* MyDocument.h */,
 				50176C760A6F7357009E80BD /* MyDocument.mm */,
 				501AE5010DAA1449003C6960 /* Listener.h */,
@@ -638,9 +633,8 @@
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
-				50176C7B0A6F7357009E80BD /* DezFormatter.mm in Sources */,
 				50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */,
-				50176C7D0A6F7357009E80BD /* HexFormatter.mm in Sources */,
+				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */,
 				50176C800A6F7357009E80BD /* VICScreen.mm in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,

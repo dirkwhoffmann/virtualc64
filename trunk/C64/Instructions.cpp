@@ -64,8 +64,6 @@ CPU::fetch() {
 	next = actionFunc[opcode];
 }
 	
-	
-
 
 void 
 CPU::registerCallback(uint8_t opcode, void (CPU::*func)())
