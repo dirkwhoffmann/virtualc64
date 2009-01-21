@@ -741,38 +741,58 @@
 	[screen toggleFullscreenMode];
 }
 
-- (IBAction)drawSpritesAction:(id)sender
+- (IBAction)hideSpritesAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] drawSpritesAction:sender];
-	if (![undo isUndoing]) [undo setActionName:@"Draw sprites"];
+	[[undo prepareWithInvocationTarget:self] hideSpritesAction:sender];
+	if (![undo isUndoing]) [undo setActionName:@"Hide sprites"];
 	
-	[c64 vicToggleDrawSprites];
+	if ([c64 vicHideSprites]) {
+		[sender setState:NSOffState];
+		[c64 vicSetHideSprites:NO];
+	} else {
+		[sender setState:NSOnState];
+		[c64 vicSetHideSprites:YES];
+	}
 }
 
 - (IBAction)markIRQLinesAction:(id)sender
 {
-	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] markIRQLinesAction:sender];
-	if (![undo isUndoing]) [undo setActionName:@"Mark IRQ lines"];
+	// NSUndoManager *undo = [self undoManager];
+	// [[undo prepareWithInvocationTarget:self] markIRQLinesAction:sender];
+	// if (![undo isUndoing]) [undo setActionName:@"Mark IRQ lines"];
 
-	[c64 vicToggleMarkIRQLines];
+	if ([c64 vicShowIrqLines]) {
+		[sender setState:NSOffState];
+		[c64 vicSetShowIrqLines:NO];
+	} else {
+		[sender setState:NSOnState];
+		[c64 vicSetShowIrqLines:YES];
+	}
 }
 
 - (IBAction)markDMALinesAction:(id)sender
 {
-	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] markDMALinesAction:sender];
-	if (![undo isUndoing]) [undo setActionName:@"Mark DMA lines"];
+	// NSUndoManager *undo = [self undoManager];
+	// [[undo prepareWithInvocationTarget:self] markDMALinesAction:sender];
+	// if (![undo isUndoing]) [undo setActionName:@"Mark DMA lines"];
 	
-	[c64 vicToggleMarkDMALines];
+	if ([c64 vicShowDmaLines]) {
+		[sender setState:NSOffState];
+		[c64 vicSetShowDmaLines:NO];
+	} else {
+		[sender setState:NSOnState];
+		[c64 vicSetShowDmaLines:YES];
+	}	
 }
 
 - (IBAction)traceC64CpuAction:(id)sender 
 { 
 	if ([c64 cpuTracingEnabled]) {
+		[sender setState:NSOffState];
 		[c64 cpuSetTraceMode:NO];
 	} else {
+		[sender setState:NSOnState];
 		[c64 cpuSetTraceMode:YES];
 	}
 }
@@ -780,8 +800,10 @@
 - (IBAction)traceIecAction:(id)sender
 {
 	if ([c64 iecTracingEnabled]) {
+		[sender setState:NSOffState];
 		[c64 iecSetTraceMode:NO];
 	} else {
+		[sender setState:NSOnState];
 		[c64 iecSetTraceMode:YES];
 	}	
 }
@@ -789,8 +811,10 @@
 - (IBAction)traceVC1541CpuAction:(id)sender
 {
 	if ([c64 vc1541CpuTracingEnabled]) {
+		[sender setState:NSOffState];
 		[c64 vc1541CpuSetTraceMode:NO];
 	} else {
+		[sender setState:NSOnState];
 		[c64 vc1541CpuSetTraceMode:YES];
 	}	
 }
@@ -798,8 +822,10 @@
 - (IBAction)traceViaAction:(id)sender 
 {
 	if ([c64 viaTracingEnabled]) {
+		[sender setState:NSOffState];
 		[c64 viaSetTraceMode:NO];
 	} else {
+		[sender setState:NSOnState];
 		[c64 viaSetTraceMode:YES];
 	}	
 }

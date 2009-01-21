@@ -453,9 +453,13 @@ void ListenerProxy::logAction(char *message)
 - (void) vicSetRasterInterruptFlag:(bool)b { c64->vic->setRasterInterruptEnable(b); }
 - (void) vicToggleRasterInterruptFlag { c64->vic->toggleRasterInterruptFlag(); }
 
-- (void) vicToggleDrawSprites { c64->vic->toggleDrawSprites(); }
-- (void) vicToggleMarkIRQLines { c64->vic->toggleMarkIRQLines(); }
-- (void) vicToggleMarkDMALines { c64->vic->toggleMarkDMALines(); }
+- (bool) vicHideSprites { return c64->vic->hideSprites(); }
+- (void) vicSetHideSprites:(bool)b { c64->vic->setHideSprites(b); }
+- (bool) vicShowIrqLines { return c64->vic->showIrqLines(); }
+- (void) vicSetShowIrqLines:(bool)b { c64->vic->setShowIrqLines(b); }
+- (bool) vicShowDmaLines { return c64->vic->showDmaLines(); }
+- (void) vicSetShowDmaLines:(bool)b { c64->vic->setShowDmaLines(b); }
+
 - (void) fastReset { c64->fastReset(); }
 
 

@@ -320,9 +320,12 @@ public:
 - (void) vicSetRasterInterruptFlag:(bool)b;
 - (void) vicToggleRasterInterruptFlag;
 
-- (void) vicToggleDrawSprites;
-- (void) vicToggleMarkIRQLines;
-- (void) vicToggleMarkDMALines;
+- (bool) vicHideSprites;
+- (void) vicSetHideSprites:(bool)b;
+- (bool) vicShowIrqLines;
+- (void) vicSetShowIrqLines:(bool)b;
+- (bool) vicShowDmaLines;
+- (void) vicSetShowDmaLines:(bool)b;
 - (void) fastReset;
 
 // audio hardware

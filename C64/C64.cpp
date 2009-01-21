@@ -639,11 +639,7 @@ C64::executeOneLine(int cycle)
 
 void
 C64::step() 
-{	
-	// Disassemble command if requested
-	if (cpu->tracingEnabled()) 
-		debug("%s", cpu->disassemble());
-	
+{		
 	// Execute next command 
 	do {
 		executeOneCycle();

@@ -223,234 +223,166 @@ VIC::dumpState()
 }
 
 
-
+// -----------------------------------------------------------------------------------------------
+//                                         Configuring
+// -----------------------------------------------------------------------------------------------
 
 void 
-VIC::setScreenGeometry(ScreenGeometry mode)
-{
-	setNumberOfRows((mode == COL_40_ROW_25 || mode == COL_38_ROW_25) ? 25 : 24);
-	setNumberOfColumns((mode == COL_40_ROW_25 || mode == COL_40_ROW_24) ? 40 : 38);
+VIC::setPAL()
+{ 
+	// Nothing to do so far
 }
 
-VIC::ScreenGeometry 
-VIC::getScreenGeometry()
+void
+VIC::setNTSC()
 {
-	if (numberOfColumns() == 40) {
-		if (numberOfRows() == 25)
-			return COL_40_ROW_25;
-		else
-			return COL_40_ROW_24;
+	// Nothing to do so far
+}
+
+
+// -----------------------------------------------------------------------------------------------
+//                                         Drawing
+// -----------------------------------------------------------------------------------------------
+
+void 
+VIC::gAccess()
+{
+	uint8_t pattern;
+	uint8_t fgcolor;
+	uint8_t bgcolor;
+	int colorLookup[4];
+	uint16_t xCoord = xCounter + getHorizontalRasterScroll();
+	
+	switch (getDisplayMode()) {
+		case STANDARD_TEXT:
+			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
+			fgcolor   = colorSpace[registerVMLI];
+			bgcolor   = getBackgroundColor();
+			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
+			break;
+		case MULTICOLOR_TEXT:
+			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
+			fgcolor   = colorSpace[registerVMLI];
+			if (fgcolor & 0x8) {
+				colorLookup[0] = colors[getBackgroundColor()];
+				colorLookup[1] = colors[getExtraBackgroundColor(1)];
+				colorLookup[2] = colors[getExtraBackgroundColor(2)];
+				colorLookup[3] = colors[fgcolor & 0x07];
+				drawMultiColorCharacter(xCoord, pattern, colorLookup);
+			} else {
+				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
+			}
+			break;
+		case STANDARD_BITMAP:
+			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
+			fgcolor = characterSpace[registerVMLI] >> 4;
+			bgcolor = characterSpace[registerVMLI] & 0xf;
+			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
+			break;
+		case MULTICOLOR_BITMAP:
+			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
+			colorLookup[0]  = colors[getBackgroundColor()];
+			colorLookup[1]  = colors[characterSpace[registerVMLI] >> 4];
+			colorLookup[2]  = colors[characterSpace[registerVMLI] & 0x0F];
+			colorLookup[3]  = colors[colorSpace[registerVMLI]];			
+			drawMultiColorCharacter(xCoord, pattern, colorLookup);
+			break;
+		case EXTENDED_BACKGROUND_COLOR:
+			pattern = displayState ? getExtendedCharacterPattern() : getIdleAccessPattern();
+			fgcolor = colorSpace[registerVMLI]; 
+			bgcolor = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);
+			if (fgcolor & 0x8) {
+				colorLookup[0] = colors[bgcolor];
+				colorLookup[1] = colors[getExtraBackgroundColor(1)];
+				colorLookup[2] = colors[getExtraBackgroundColor(2)];
+				colorLookup[3] = colors[fgcolor & 0x07];
+				drawMultiColorCharacter(xCoord, pattern, colorLookup);
+			} else {
+				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
+			}
+			break;			
+	}
+	
+	// VC and VMLI are increased after each g access 
+	if (displayState) {
+		registerVC++;
+		registerVC &= 0x3ff; // 10 bit overflow
+		registerVMLI++;
+		registerVMLI &= 0x3f; // 6 bit overflow; 	
+	}
+}
+
+inline void 
+VIC::cAccess()
+{
+	if (dmaLine) {
+		characterSpace[registerVMLI] = screenMemory[registerVC]; 
+		colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
+	}
+}
+
+inline void 
+VIC::drawSingleColorCharacter(int offset, uint8_t pattern, int fgcolor, int bgcolor)
+{
+	assert(offset >= 0 && offset+7 < TOTAL_SCREEN_WIDTH);
+	if (pattern & 128) setForegroundPixel(offset+0, fgcolor); else setBackgroundPixel(offset+0, bgcolor);
+	if (pattern & 64)  setForegroundPixel(offset+1, fgcolor); else setBackgroundPixel(offset+1, bgcolor);
+	if (pattern & 32)  setForegroundPixel(offset+2, fgcolor); else setBackgroundPixel(offset+2, bgcolor);
+	if (pattern & 16)  setForegroundPixel(offset+3, fgcolor); else setBackgroundPixel(offset+3, bgcolor);
+	if (pattern & 8)   setForegroundPixel(offset+4, fgcolor); else setBackgroundPixel(offset+4, bgcolor);
+	if (pattern & 4)   setForegroundPixel(offset+5, fgcolor); else setBackgroundPixel(offset+5, bgcolor);
+	if (pattern & 2)   setForegroundPixel(offset+6, fgcolor); else setBackgroundPixel(offset+6, bgcolor);
+	if (pattern & 1)   setForegroundPixel(offset+7, fgcolor); else setBackgroundPixel(offset+7, bgcolor);
+}
+
+inline void 
+VIC::drawMultiColorCharacter(int offset, uint8_t pattern, int *colorLookup)
+{
+	int col;
+	uint8_t colBits;
+	assert(offset >= 0 && offset+7 < TOTAL_SCREEN_WIDTH);
+	colBits = (pattern >> 6) & 0x03;
+	col = colorLookup[colBits];
+	if (colBits & 0x02) {
+		setForegroundPixel(offset, col);
+		setForegroundPixel(offset + 1, col);
 	} else {
-		if (numberOfRows() == 25)
-			return COL_38_ROW_25;
-		else
-			return COL_38_ROW_24;
+		setBackgroundPixel(offset, col);
+		setBackgroundPixel(offset + 1, col);
 	}
-}
-
-uint8_t 
-VIC::peek(uint16_t addr)
-{
-	uint8_t result;
+	offset += 2;
 	
-	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
-		
-	switch(addr) {
-		case 0x11: // SCREEN CONTROL REGISTER #1
-			result = (iomem[addr] & 0x7f) + (scanline > 0xff ? 128 : 0);
-			return result;		
-		case 0x12: // VIC_RASTER_READ_WRITE
-			result = scanline & 0xff;
-			return result;
-		case 0x13:
-			debug("Reading lightpen X position: %d\n", iomem[addr]);
-			return iomem[addr];			
-		case 0x14:
-			debug("Reading lightpen Y position: %d\n", iomem[addr]);
-			return iomem[addr];			
-		case 0x19:
-			result = iomem[addr] | 0x70; // Bits 4 to 6 are not used and always contain "1"
-			return result;
-		case 0x1A:
-			result = iomem[addr] | 0xF0; // Bits 4 to 7 are not used and always contain "1"
-			return result;
-		case 0x1E: // Sprite-to-sprite collision
-			result = iomem[addr];
-			iomem[addr] = 0x00;  // Clear on read
-			return result;
-		case 0x1F: // Sprite-to-background collision
-			result = iomem[addr];
-			iomem[addr] = 0x00;  // Clear on read
-			return result;
+	colBits = (pattern >> 4) & 0x03;
+	col = colorLookup[colBits];
+	if (colBits & 0x02) {
+		setForegroundPixel(offset, col);
+		setForegroundPixel(offset + 1, col);
+	} else {
+		setBackgroundPixel(offset, col);
+		setBackgroundPixel(offset + 1, col);
 	}
+	offset += 2;
 	
-	if (addr >= 0x20 && addr <= 0x2E) {
-		// Color registers: Bits 4 to 7 are not used and always contain "1"
-		return iomem[addr] | 0xF0;
+	colBits = (pattern >> 2) & 0x03;
+	col = colorLookup[colBits];
+	if (colBits & 0x02) {
+		setForegroundPixel(offset, col);
+		setForegroundPixel(offset + 1, col);
+	} else {
+		setBackgroundPixel(offset, col);
+		setBackgroundPixel(offset + 1, col);
 	}
+	offset += 2;
 	
-	if (addr >= 0x2F && addr <= 0x3F) {
-		// Unusable register area
-		return 0xFF; 
-	}
-	
-	// Default action
-	return iomem[addr];
-}
-
-void
-VIC::poke(uint16_t addr, uint8_t value)
-{
-	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
-
-	switch(addr) {		
-		case 0x11: // CONTROL_REGISTER_1
-			if ((iomem[addr] & 0x80) != (value & 0x80)) {
-				// Value changed: Check if we need to trigger an interrupt immediately
-				iomem[addr] = value;
-				if (scanline == rasterInterruptLine())
-					triggerIRQ(1);
-			} else {
-				iomem[addr] = value;
-			}
-			
-			// Bit 4 is the DEN bit and controls whether DMA lines are enabled or disabled. 
-			// Note that it is only inspected in rasterline 0x30
-			if (scanline == 0x30 && (value & 0x10))
-				dmaLinesEnabled = true;
-
-			// Bit 0 - 3 determine the vertical scroll offset. By changing these bits, the DMA line condition 
-			// can appear or disappear in the middle of a rasterline.
-			checkDmaLineCondition();
-			return;
-			
-		case 0x12: // RASTER_COUNTER
-			if (iomem[addr] != value) {
-				// Value changed: Check if we need to trigger an interrupt immediately
-				iomem[addr] = value;
-				if (scanline == rasterInterruptLine())
-					triggerIRQ(1);
-			} else {
-				iomem[addr] = value;
-			}
-			return;
-			
-		case 0x16:
-			iomem[addr] = value | (128 + 64); // The upper two bits are unused and always return 1 when read
-			return;
-			
-		case 0x17:
-			iomem[addr] = value;
-			expansionFF |= ~value;
-			return;
-			
-		case 0x18: // MEMORY_SETUP_REGISTER
-			iomem[addr] = value | 0x01; // Bit 0 is unused and always 1 when read
-			setScreenMemoryAddr((value & 0xF0) << 6);
-			setCharacterMemoryAddr((value & 0x0E) << 10);
-			return;
-			
-		case 0x19: // IRQ flags
-			// A bit is cleared when a "1" is written
-			iomem[addr] &= (~value & 0x0f);
-			cpu->clearIRQLineVIC();
-			if (iomem[addr] & iomem[0x1a])
-				iomem[addr] |= 0x80;
-			return;
-			
-		case 0x1a: // IRQ mask
-			iomem[addr] = value & 0x0f;
-			if (iomem[addr] & iomem[0x19]) {
-				iomem[0x19] |= 0x80; // set uppermost bit (is directly connected to the IRQ line)
-				cpu->setIRQLineVIC(); 
-			} else {
-				iomem[0x19] &= 0x7f; // clear uppermost bit
-				cpu->clearIRQLineVIC(); 
-			}
-			return;		
-			
-		case 0x1E:
-		case 0x1F:
-			// Writing has no effect
-			return;
-	}
-
-	// Default action
-	iomem[addr] = value;
-}
-
-uint16_t 
-VIC::getMemoryBankAddr()
-{
-	return bankAddr;
-}
-
-void 
-VIC::setMemoryBankAddr(uint16_t addr)
-{
-	assert(addr % 0x4000 == 0);
-	
-	bankAddr = addr;
-	
-	// changing the memory bank also affects the start address of the screen and character memory
-	setScreenMemoryAddr((iomem[0x18] & 0xF0) << 6);
-	setCharacterMemoryAddr((iomem[0x18] & 0x0E) << 10);
-}
-
-uint16_t
-VIC::getScreenMemoryAddr()
-{
-	return screenMemoryAddr;
-}
-
-void
-VIC::setScreenMemoryAddr(uint16_t addr)
-{
-	assert(addr <= 0x3C00);
-	assert(addr % 0x400 == 0);
-	screenMemoryAddr = addr;
-	screenMemory = &mem->ram[bankAddr + addr];	
-	spriteMemory = screenMemory + 0x03F8;
-}
-
-uint16_t 
-VIC::getCharacterMemoryAddr()
-{
-	return characterMemoryAddr;
-}
-
-void 
-VIC::setCharacterMemoryAddr(uint16_t addr)
-{
-	assert(addr <= 0x3800);
-	assert(addr % 0x800 == 0);
-
-	characterMemoryAddr = addr;
-	if (bankAddr == 0x0000 || bankAddr == 0x8000) {
-		if (addr == 0x1000) {
-			characterMemory = &mem->rom[0xD000];
-			return;
-		}
-		if (addr == 0x1800) {
-			characterMemory = &mem->rom[0xD800];
-			return;
-		}
-	}
-	characterMemory = &mem->ram[bankAddr + addr];
-}
-
-void 
-VIC::pullDownBA(uint16_t source)
-{ 
-	BAlow |= source;
-	cpu->setRDY(BAlow == 0); 
-}
-
-void 
-VIC::releaseBA(uint16_t source)
-{ 
-	BAlow &= ~source;
-	cpu->setRDY(BAlow == 0); 
+	colBits = (pattern >> 0) & 0x03;
+	col = colorLookup[colBits];
+	if (colBits & 0x02) {
+		setForegroundPixel(offset, col);
+		setForegroundPixel(offset + 1, col);
+	} else {
+		setBackgroundPixel(offset, col);
+		setBackgroundPixel(offset + 1, col);
+	}	
 }
 
 inline void 
@@ -478,7 +410,7 @@ VIC::setSpritePixel(int offset, int color, int nr)
 			pixelBuffer[offset] = color;
 			zBuffer[offset] = depth;
 		}
-	
+		
 		// Check sprite/sprite collision
 		if ((spriteSpriteCollisionEnabled & mask) && (pixelSource[offset] & 0x7F)) {
 			iomem[0x1E] |= ((pixelSource[offset] & 0x7F) | mask);
@@ -496,6 +428,18 @@ VIC::setSpritePixel(int offset, int color, int nr)
 	}
 }
 
+void inline
+VIC::drawAllSprites()
+{	
+	if (drawSprites) {
+		for (int i = 0; i < 8; i++) {
+			if (oldSpriteOnOff & (1 << i)) {
+				drawSprite(i);
+			}				
+		}
+	}
+}
+
 void
 VIC::drawSprite(uint8_t nr)
 {
@@ -503,21 +447,21 @@ VIC::drawSprite(uint8_t nr)
 	
 	int spriteX, offset;
 	spriteX = getSpriteX(nr);
-
+	
 	if (spriteX < 488) 
 		offset = spriteX;
 	else
 		offset = spriteX - 488; 
-			
+	
 	if (spriteIsMulticolor(nr)) {
-
+		
 		int colorLookup[4] = { 
 			0x00, 
 			colors[spriteExtraColor1()], 
 			colors[spriteColor(nr)],
 			colors[spriteExtraColor2()]
 		};
-
+		
 		for (int i = 0; i < 3; i++) {
 			uint8_t pattern = spriteShiftReg[nr][i]; 
 			
@@ -580,7 +524,7 @@ VIC::drawSprite(uint8_t nr)
 		int fgcolor = colors[spriteColor(nr)]; 
 		for (int i = 0; i < 3; i++) {
 			uint8_t pattern = spriteShiftReg[nr][i]; 
-
+			
 			if (spriteWidthIsDoubled(nr)) {
 				if (pattern & 128) {
 					setSpritePixel(offset, fgcolor, nr);
@@ -646,68 +590,269 @@ VIC::drawSprite(uint8_t nr)
 	}
 }
 
-inline void 
-VIC::drawSingleColorCharacter(int offset, uint8_t pattern, int fgcolor, int bgcolor)
+void inline
+VIC::drawHorizontalBorder()
 {
-	assert(offset >= 0 && offset+7 < TOTAL_SCREEN_WIDTH);
-	if (pattern & 128) setForegroundPixel(offset+0, fgcolor); else setBackgroundPixel(offset+0, bgcolor);
-	if (pattern & 64)  setForegroundPixel(offset+1, fgcolor); else setBackgroundPixel(offset+1, bgcolor);
-	if (pattern & 32)  setForegroundPixel(offset+2, fgcolor); else setBackgroundPixel(offset+2, bgcolor);
-	if (pattern & 16)  setForegroundPixel(offset+3, fgcolor); else setBackgroundPixel(offset+3, bgcolor);
-	if (pattern & 8)   setForegroundPixel(offset+4, fgcolor); else setBackgroundPixel(offset+4, bgcolor);
-	if (pattern & 4)   setForegroundPixel(offset+5, fgcolor); else setBackgroundPixel(offset+5, bgcolor);
-	if (pattern & 2)   setForegroundPixel(offset+6, fgcolor); else setBackgroundPixel(offset+6, bgcolor);
-	if (pattern & 1)   setForegroundPixel(offset+7, fgcolor); else setBackgroundPixel(offset+7, bgcolor);
+	int bcolor = colors[getBorderColor()];
+	
+	for (int i = 0; i < xStart(); i++) {
+		pixelBuffer[i] = bcolor;
+	}
+	for (int i = xEnd()+1; i < TOTAL_SCREEN_WIDTH; i++) {
+		pixelBuffer[i] = bcolor;
+	}
 }
 
-inline void 
-VIC::drawMultiColorCharacter(int offset, uint8_t pattern, int *colorLookup)
+void inline
+VIC::drawVerticalBorder()
 {
-	int col;
-	uint8_t colBits;
-	assert(offset >= 0 && offset+7 < TOTAL_SCREEN_WIDTH);
-	colBits = (pattern >> 6) & 0x03;
-	col = colorLookup[colBits];
-	if (colBits & 0x02) {
-		setForegroundPixel(offset, col);
-		setForegroundPixel(offset + 1, col);
-	} else {
-		setBackgroundPixel(offset, col);
-		setBackgroundPixel(offset + 1, col);
-	}
-	offset += 2;
+	int bcolor = colors[getBorderColor()];
 	
-	colBits = (pattern >> 4) & 0x03;
-	col = colorLookup[colBits];
-	if (colBits & 0x02) {
-		setForegroundPixel(offset, col);
-		setForegroundPixel(offset + 1, col);
-	} else {
-		setBackgroundPixel(offset, col);
-		setBackgroundPixel(offset + 1, col);
+	for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++) {
+		pixelBuffer[i] = bcolor;
 	}
-	offset += 2;
+}
 
-	colBits = (pattern >> 2) & 0x03;
-	col = colorLookup[colBits];
-   if (colBits & 0x02) {
-		setForegroundPixel(offset, col);
-		setForegroundPixel(offset + 1, col);
-	} else {
-		setBackgroundPixel(offset, col);
-		setBackgroundPixel(offset + 1, col);
+// -----------------------------------------------------------------------------------------------
+//                                       Getter and setter
+// -----------------------------------------------------------------------------------------------
+
+uint16_t 
+VIC::getMemoryBankAddr()
+{
+	return bankAddr;
+}
+
+void 
+VIC::setMemoryBankAddr(uint16_t addr)
+{
+	assert(addr % 0x4000 == 0);
+	
+	bankAddr = addr;
+	
+	// changing the memory bank also affects the start address of the screen and character memory
+	setScreenMemoryAddr((iomem[0x18] & 0xF0) << 6);
+	setCharacterMemoryAddr((iomem[0x18] & 0x0E) << 10);
+}
+
+uint16_t
+VIC::getScreenMemoryAddr()
+{
+	return screenMemoryAddr;
+}
+
+void
+VIC::setScreenMemoryAddr(uint16_t addr)
+{
+	assert(addr <= 0x3C00);
+	assert(addr % 0x400 == 0);
+	screenMemoryAddr = addr;
+	screenMemory = &mem->ram[bankAddr + addr];	
+	spriteMemory = screenMemory + 0x03F8;
+}
+
+uint16_t 
+VIC::getCharacterMemoryAddr()
+{
+	return characterMemoryAddr;
+}
+
+void 
+VIC::setCharacterMemoryAddr(uint16_t addr)
+{
+	assert(addr <= 0x3800);
+	assert(addr % 0x800 == 0);
+	
+	characterMemoryAddr = addr;
+	if (bankAddr == 0x0000 || bankAddr == 0x8000) {
+		if (addr == 0x1000) {
+			characterMemory = &mem->rom[0xD000];
+			return;
+		}
+		if (addr == 0x1800) {
+			characterMemory = &mem->rom[0xD800];
+			return;
+		}
 	}
-	offset += 2;
+	characterMemory = &mem->ram[bankAddr + addr];
+}
 
-	colBits = (pattern >> 0) & 0x03;
-	col = colorLookup[colBits];
-	if (colBits & 0x02) {
-		setForegroundPixel(offset, col);
-		setForegroundPixel(offset + 1, col);
+uint8_t 
+VIC::peek(uint16_t addr)
+{
+	uint8_t result;
+	
+	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
+	
+	switch(addr) {
+		case 0x11: // SCREEN CONTROL REGISTER #1
+			result = (iomem[addr] & 0x7f) + (scanline > 0xff ? 128 : 0);
+			return result;		
+		case 0x12: // VIC_RASTER_READ_WRITE
+			result = scanline & 0xff;
+			return result;
+		case 0x13:
+			debug("Reading lightpen X position: %d\n", iomem[addr]);
+			return iomem[addr];			
+		case 0x14:
+			debug("Reading lightpen Y position: %d\n", iomem[addr]);
+			return iomem[addr];			
+		case 0x19:
+			result = iomem[addr] | 0x70; // Bits 4 to 6 are not used and always contain "1"
+			return result;
+		case 0x1A:
+			result = iomem[addr] | 0xF0; // Bits 4 to 7 are not used and always contain "1"
+			return result;
+		case 0x1E: // Sprite-to-sprite collision
+			result = iomem[addr];
+			iomem[addr] = 0x00;  // Clear on read
+			return result;
+		case 0x1F: // Sprite-to-background collision
+			result = iomem[addr];
+			iomem[addr] = 0x00;  // Clear on read
+			return result;
+	}
+	
+	if (addr >= 0x20 && addr <= 0x2E) {
+		// Color registers: Bits 4 to 7 are not used and always contain "1"
+		return iomem[addr] | 0xF0;
+	}
+	
+	if (addr >= 0x2F && addr <= 0x3F) {
+		// Unusable register area
+		return 0xFF; 
+	}
+	
+	// Default action
+	return iomem[addr];
+}
+
+void
+VIC::poke(uint16_t addr, uint8_t value)
+{
+	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
+	
+	switch(addr) {		
+		case 0x11: // CONTROL_REGISTER_1
+			if ((iomem[addr] & 0x80) != (value & 0x80)) {
+				// Value changed: Check if we need to trigger an interrupt immediately
+				iomem[addr] = value;
+				if (scanline == rasterInterruptLine())
+					triggerIRQ(1);
+			} else {
+				iomem[addr] = value;
+			}
+			
+			// Bit 4 is the DEN bit and controls whether DMA lines are enabled or disabled. 
+			// Note that it is only inspected in rasterline 0x30
+			if (scanline == 0x30 && (value & 0x10))
+				dmaLinesEnabled = true;
+			
+			// Bit 0 - 3 determine the vertical scroll offset. By changing these bits, the DMA line condition 
+			// can appear or disappear in the middle of a rasterline.
+			checkDmaLineCondition();
+			return;
+			
+		case 0x12: // RASTER_COUNTER
+			if (iomem[addr] != value) {
+				// Value changed: Check if we need to trigger an interrupt immediately
+				iomem[addr] = value;
+				if (scanline == rasterInterruptLine())
+					triggerIRQ(1);
+			} else {
+				iomem[addr] = value;
+			}
+			return;
+			
+		case 0x16:
+			iomem[addr] = value | (128 + 64); // The upper two bits are unused and always return 1 when read
+			return;
+			
+		case 0x17:
+			iomem[addr] = value;
+			expansionFF |= ~value;
+			return;
+			
+		case 0x18: // MEMORY_SETUP_REGISTER
+			iomem[addr] = value | 0x01; // Bit 0 is unused and always 1 when read
+			setScreenMemoryAddr((value & 0xF0) << 6);
+			setCharacterMemoryAddr((value & 0x0E) << 10);
+			return;
+			
+		case 0x19: // IRQ flags
+			// A bit is cleared when a "1" is written
+			iomem[addr] &= (~value & 0x0f);
+			cpu->clearIRQLineVIC();
+			if (iomem[addr] & iomem[0x1a])
+				iomem[addr] |= 0x80;
+			return;
+			
+		case 0x1a: // IRQ mask
+			iomem[addr] = value & 0x0f;
+			if (iomem[addr] & iomem[0x19]) {
+				iomem[0x19] |= 0x80; // set uppermost bit (is directly connected to the IRQ line)
+				cpu->setIRQLineVIC(); 
+			} else {
+				iomem[0x19] &= 0x7f; // clear uppermost bit
+				cpu->clearIRQLineVIC(); 
+			}
+			return;		
+			
+		case 0x1E:
+		case 0x1F:
+			// Writing has no effect
+			return;
+	}
+	
+	// Default action
+	iomem[addr] = value;
+}
+
+
+// -----------------------------------------------------------------------------------------------
+//                                         Properties
+// -----------------------------------------------------------------------------------------------
+
+void 
+VIC::setScreenGeometry(ScreenGeometry mode)
+{
+	setNumberOfRows((mode == COL_40_ROW_25 || mode == COL_38_ROW_25) ? 25 : 24);
+	setNumberOfColumns((mode == COL_40_ROW_25 || mode == COL_40_ROW_24) ? 40 : 38);
+}
+
+VIC::ScreenGeometry 
+VIC::getScreenGeometry()
+{
+	if (numberOfColumns() == 40) {
+		if (numberOfRows() == 25)
+			return COL_40_ROW_25;
+		else
+			return COL_40_ROW_24;
 	} else {
-		setBackgroundPixel(offset, col);
-		setBackgroundPixel(offset + 1, col);
-	}	
+		if (numberOfRows() == 25)
+			return COL_38_ROW_25;
+		else
+			return COL_38_ROW_24;
+	}
+}
+
+
+// -----------------------------------------------------------------------------------------------
+//                                DMA lines, BA signal and IRQs
+// -----------------------------------------------------------------------------------------------
+
+void 
+VIC::pullDownBA(uint16_t source)
+{ 
+	BAlow |= source;
+	cpu->setRDY(BAlow == 0); 
+}
+
+void 
+VIC::releaseBA(uint16_t source)
+{ 
+	BAlow &= ~source;
+	cpu->setRDY(BAlow == 0); 
 }
 
 void 
@@ -749,71 +894,9 @@ VIC::simulateLightPenInterrupt()
 	}
 }
 
-/* 3.7.1. Idle-Zustand/Display-Zustand
- the idle access always reads at $3fff or $39ff when the ECM bit is set.
- here the doc conflicts: the ECM bit is either at $d016 (chap 3.7.1) or $d011 (3.2)
- for now i'm ging with $d011
- wow... this actually seems to work! noticable in the "rbi 2 baseball" intro (return 0 to see difference)
- TODO: check if one of the addresses is mapped into the rom? */
-inline uint8_t VIC::getIdleAccessPattern() { return mem->ram[bankAddr + (iomem[0x11] & 0x40) ? 0x39ff : 0x3fff]; }
-
-// takes care of some special line markings for debugging use 
-void inline
-VIC::markLine(int start, int end, int color)
-{
-	for (int i = start; i <= end; i++) {
-		pixelBuffer[i] = color;
-	}	
-}
-
-// Border drawing
-
-void inline
-VIC::drawHorizontalBorder()
-{
-	int bcolor = colors[getBorderColor()];
-	
-	for (int i = 0; i < xStart(); i++) {
-		pixelBuffer[i] = bcolor;
-	}
-	for (int i = xEnd()+1; i < TOTAL_SCREEN_WIDTH; i++) {
-		pixelBuffer[i] = bcolor;
-	}
-}
-
-void inline
-VIC::drawVerticalBorder()
-{
-	int bcolor = colors[getBorderColor()];
-						
-	for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++) {
-		pixelBuffer[i] = bcolor;
-	}
-}
-
-
-void inline 
-VIC::drawBorder()
-{
-	if (drawVerticalFrame) {
-		drawVerticalBorder();
-	} else if (drawHorizontalFrame) {
-		drawHorizontalBorder();
-	}
-}
-
-// Sprite drawing
-void inline
-VIC::drawAllSprites()
-{	
-	if (drawSprites) {
-		for (int i = 0; i < 8; i++) {
-			if (oldSpriteOnOff & (1 << i)) {
-				drawSprite(i);
-			}				
-		}
-	}
-}
+// -----------------------------------------------------------------------------------------------
+//                                              Sprites
+// -----------------------------------------------------------------------------------------------
 
 void 
 VIC::updateSpriteDmaOnOff()
@@ -832,87 +915,10 @@ VIC::updateSpriteDmaOnOff()
 	}
 }
 
-/* this method executes the "g-access" of a cycle.
-the g access also occours inside the vertical (upper & lower) frame area, but usually is covered the frame */
-void 
-VIC::gAccess()
-{
-	DisplayMode displayMode = getDisplayMode();
-	uint8_t pattern;
-	uint8_t fgcolor;
-	uint8_t bgcolor;
-	int colorLookup[4];
-	uint16_t xCoord = xCounter + getHorizontalRasterScroll();
-	switch (displayMode) {
-		case STANDARD_TEXT:
-			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
-			fgcolor   = colorSpace[registerVMLI];
-			bgcolor   = getBackgroundColor();
-			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
-			break;
-		case MULTICOLOR_TEXT:
-			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
-			fgcolor   = colorSpace[registerVMLI];
-			if (fgcolor & 0x8) {
-				colorLookup[0] = colors[getBackgroundColor()];
-				colorLookup[1] = colors[getExtraBackgroundColor(1)];
-				colorLookup[2] = colors[getExtraBackgroundColor(2)];
-				colorLookup[3] = colors[fgcolor & 0x07];
-				drawMultiColorCharacter(xCoord, pattern, colorLookup);
-			} else {
-				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
-			}
-			break;
-		case STANDARD_BITMAP:
-			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
-			fgcolor = characterSpace[registerVMLI] >> 4;
-			bgcolor = characterSpace[registerVMLI] & 0xf;
-			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
-			break;
-		case MULTICOLOR_BITMAP:
-			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
-			colorLookup[0]  = colors[getBackgroundColor()];
-			colorLookup[1]  = colors[characterSpace[registerVMLI] >> 4];
-			colorLookup[2]  = colors[characterSpace[registerVMLI] & 0x0F];
-			colorLookup[3]  = colors[colorSpace[registerVMLI]];			
-			drawMultiColorCharacter(xCoord, pattern, colorLookup);
-			break;
-		case EXTENDED_BACKGROUND_COLOR:
-			pattern = displayState ? getExtendedCharacterPattern() : getIdleAccessPattern();
-			fgcolor = colorSpace[registerVMLI]; 
-			bgcolor = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);
-			if (fgcolor & 0x8) {
-				colorLookup[0] = colors[bgcolor];
-				colorLookup[1] = colors[getExtraBackgroundColor(1)];
-				colorLookup[2] = colors[getExtraBackgroundColor(2)];
-				colorLookup[3] = colors[fgcolor & 0x07];
-				drawMultiColorCharacter(xCoord, pattern, colorLookup);
-			} else {
-				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
-			}
-			break;			
-	}
-	
-	/* Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhšht. */
-	if (displayState) {
-		registerVC++;
-		registerVC &= 0x3ff; // 10 bit overflow
-		registerVMLI++;
-		registerVMLI &= 0x3f; // 6 bit overflow; 	
-	}
-}
 
-inline void 
-VIC::cAccess()
-{
-	if (dmaLine) {
-		characterSpace[registerVMLI] = screenMemory[registerVC]; 
-		colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
-	}
-}
-
-//uint8_t debug0 = 0;
-//int debug1 = 0;
+// -----------------------------------------------------------------------------------------------
+//                                    Execution functions
+// -----------------------------------------------------------------------------------------------
 
 void 
 VIC::beginFrame()
@@ -1676,14 +1682,16 @@ VIC::cycle65()
 	countX();
 }
 
-void 
-VIC::setPAL()
-{ 
-	// Nothing to do so far
+
+// -----------------------------------------------------------------------------------------------
+//                                              Debugging
+// -----------------------------------------------------------------------------------------------
+
+void inline
+VIC::markLine(int start, int end, int color)
+{
+	for (int i = start; i <= end; i++) {
+		pixelBuffer[i] = color;
+	}	
 }
 
-void
-VIC::setNTSC()
-{
-	// Nothing to do so far
-}

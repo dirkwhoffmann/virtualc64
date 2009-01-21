@@ -208,7 +208,7 @@
 - (IBAction)driveAction:(id)sender;
 
 // Debug menu
-- (IBAction)drawSpritesAction:(id)sender;
+- (IBAction)hideSpritesAction:(id)sender;
 - (IBAction)markIRQLinesAction:(id)sender;
 - (IBAction)markDMALinesAction:(id)sender;
 
