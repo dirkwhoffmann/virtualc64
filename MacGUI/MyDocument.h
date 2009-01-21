@@ -24,8 +24,7 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glu.h>
 #import "C64.h"
-#import "HexFormatter.h"
-#import "DezFormatter.h"
+#import "Formatter.h"
 #import "Disassembler.h"
 #import "VICScreen.h"
 #import "MountDialog.h"

@@ -584,8 +584,8 @@
 
 - (IBAction)setDecimal:(id)sender
 {
-	DezFormatter *bF = [[DezFormatter alloc] init];
-	DezFormatter *wF = [[DezFormatter alloc] init:@"%05d" min:0 max:65535];
+	Formatter *bF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,2}" outFormat:@"%02d"];
+	Formatter *wF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,4}" outFormat:@"%02d"];
 	Disassembler *dis = [[Disassembler alloc] init:c64 byteFormatter:bF wordFormatter:wF ];
 	
 	[self refresh:bF word:wF disassembler:dis];
@@ -597,8 +597,8 @@
 
 - (IBAction)setHexadecimal:(id)sender
 {
-	HexFormatter *bF  = [[HexFormatter alloc] init];
-	HexFormatter *wF  = [[HexFormatter alloc] init:@"%04X" min:0 max:65535];
+	Formatter *bF  = [[Formatter alloc] init:HEXADECIMAL_FORMATTER inFormat:@"[0-9,a-f,A-F]{0,2}" outFormat:@"%02X"];
+	Formatter *wF  = [[Formatter alloc] init:HEXADECIMAL_FORMATTER inFormat:@"[0-9,a-f,A-F]{0,4}" outFormat:@"%04X"];
 	Disassembler *dis = [[Disassembler alloc] init:c64 byteFormatter:bF wordFormatter:wF ];
 	
 	[self refresh:bF word:wF disassembler:dis];

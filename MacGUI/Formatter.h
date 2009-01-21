@@ -18,12 +18,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface HexFormatter : NSFormatter {	 
+#define DECIMAL_FORMATTER 0
+#define HEXADECIMAL_FORMATTER 1
 
-	int min, max;
-	NSString *format;
+@interface Formatter : NSFormatter {	 
+
+	int type;
+	NSString *inFormat;
+	NSString *outFormat;
 }
 
-- (id)init:(NSString *)format_str min:(int)x max:(int)y;
+- (id)init:(int)type inFormat:(NSString *)_inFormat outFormat:(NSString *)_outFormat;
 
 @end
