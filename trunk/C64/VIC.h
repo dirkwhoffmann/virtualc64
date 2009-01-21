@@ -521,8 +521,14 @@ private:
 	{ return characterMemory[(registerVC << 3) | registerRC];	}
 	
 	//! This method returns the pattern for a idle access. 
-	/*! This is iportant for the Hyperscreen and FLD effects (maybe others as well). */
-	uint8_t getIdleAccessPattern();
+	/*! This is iportant for the Hyperscreen and FLD effects (maybe others as well).
+	    3.7.1. Idle-Zustand/Display-Zustand the idle access always reads at $3fff or $39ff when the ECM bit is set.
+		Here the doc conflicts: the ECM bit is either at $d016 (chap 3.7.1) or $d011 (3.2)
+		For now i'm ging with $d011 ... wow... this actually seems to work! noticable in the "rbi 2 baseball" intro 
+		(return 0 to see difference)
+		TODO: check if one of the addresses is mapped into the rom? 
+	 */
+	inline uint8_t VIC::getIdleAccessPattern() { return mem->ram[bankAddr + (iomem[0x11] & 0x40) ? 0x39ff : 0x3fff]; }
 
 	//! Draw a single character line (8 pixels) in single-color mode
 	/*! \param offset X coordinate of the first pixel to draw
@@ -573,7 +579,7 @@ private:
 	inline bool isVisible() { return iomem[0x11] & 0x10; }
 	
 	//! Draw horizontal and vertical border
-	void drawBorder();
+	inline void drawBorder() { if (drawVerticalFrame) drawVerticalBorder(); else if (drawHorizontalFrame) drawHorizontalBorder(); }
 	
 	//! Draw horizontal border into the pixelbuffer
 	void drawHorizontalBorder();
@@ -604,7 +610,7 @@ public:
 	inline uint16_t getScanline() { return scanline; }
 			
 	//! Set rasterline
-	void setScanline(uint16_t line) { scanline = line; }
+	inline void setScanline(uint16_t line) { scanline = line; }
 
 	//! Get memory bank start address
 	uint16_t getMemoryBankAddr();
@@ -775,7 +781,13 @@ public:
 	//! Enable or disable rasterline interrupts
 	inline void toggleRasterInterruptFlag() { setRasterInterruptEnable(!rasterInterruptEnabled()); }
 	
-		
+	//! Simulate a light pen event
+	/*! Although we do not support hardware lightpens, we need to take care of it because lightpen interrupts 
+	 can be triggered by software. It is used by some games to determine the current X position within 
+	 the current rasterline. */
+	void simulateLightPenInterrupt();
+
+	
 	// -----------------------------------------------------------------------------------------------
 	//                                              Sprites
 	// -----------------------------------------------------------------------------------------------
@@ -815,7 +827,7 @@ public:
 	inline uint8_t spriteColor(uint8_t nr) { return iomem[0x27 + nr] & 0x0F; }
 
 	//! Set sprite color
-	void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); iomem[0x27 + nr] = color; }
+	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); iomem[0x27 + nr] = color; }
 		
 	//! Get X coordinate of sprite 
 	inline uint16_t getSpriteX(uint8_t nr) { return iomem[2*nr] + (iomem[0x10] & (1 << nr) ? 256 : 0); }
@@ -913,6 +925,14 @@ public:
 	/*! This function is called prior to cycle 1 at the beginning of each rasterline */
 	void beginRasterline(uint16_t rasterline);
 
+	//! Finish rasterline
+	/*! This function is called after the last cycle of each rasterline. */
+	void endRasterline();
+	
+	//! Finish frame
+	/*! This function is called after the last cycle of the last rasterline */
+	void endFrame();
+		
 	//! VIC execution functions
 	void cycle1();  void cycle2();  void cycle3();  void cycle4();  void cycle5();  void cycle6();  void cycle7();  void cycle8();  void cycle9();  void cycle10();
 	void cycle11(); void cycle12(); void cycle13(); void cycle14(); void cycle15(); void cycle16(); void cycle17(); void cycle18(); void cycle19(); void cycle20();
@@ -922,20 +942,6 @@ public:
 	void cycle51(); void cycle52(); void cycle53(); void cycle54(); void cycle55(); void cycle56(); void cycle57(); void cycle58(); void cycle59(); void cycle60();
 	void cycle61(); void cycle62(); void cycle63(); void cycle64(); void cycle65();
 	
-	//! Finish rasterline
-	/*! This function is called after the last cycle of each rasterline. */
-	void endRasterline();
-	
-	//! Finish frame
-	/*! This function is called after the last cycle of the last rasterline */
-	void endFrame();
-	
-	//! Simulate a light pen event
-	/*! Although we do not support hardware lightpens, we need to take care of it because lightpen interrupts 
-	 can be triggered by software. It is used by some games to determine the current X position within 
-	 the current rasterline. */
-	void simulateLightPenInterrupt();
-		
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                              Debugging
@@ -944,15 +950,24 @@ public:
 	//! Colorize line
 	void markLine(int start, int end, int color);
 
+	//! Return true iff IRQ lines are colorized
+	bool showIrqLines() { return markIRQLines; }
+
 	//! Show or hide IRQ lines
-	void toggleMarkIRQLines() { markIRQLines = !markIRQLines; }
+	void setShowIrqLines(bool show) { markIRQLines = show; }
+
+	//! Return true iff DMA lines are colorized
+	bool showDmaLines() { return markDMALines; }
 	
 	//! Show or hide DMA lines
-	void toggleMarkDMALines() { markDMALines = !markDMALines; }
+	void setShowDmaLines(bool show) { markDMALines = show; }
 
-	//! Switch sprites on or off
-	void toggleDrawSprites() { drawSprites = !drawSprites; }
+	//! Return true iff sprites are hidden
+	bool hideSprites() { return !drawSprites; }
 
+	//! Hide or show sprites
+	void setHideSprites(bool hide) { drawSprites = !hide; }
+	
 	//! Return true iff sprite-sprite collision detection is enabled
 	bool getSpriteSpriteCollision(uint8_t nr) { return spriteSpriteCollisionEnabled & (1 << nr); }
 

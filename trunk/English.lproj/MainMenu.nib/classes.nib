@@ -85,6 +85,19 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>VICScreen</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>myDoc</key>
+				<string>MyDocument</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSOpenGLView</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>BAction</key>
@@ -202,6 +215,8 @@
 				<key>fastResetAction</key>
 				<string>id</string>
 				<key>fullscreenAction</key>
+				<string>id</string>
+				<key>hideSpritesAction</key>
 				<string>id</string>
 				<key>markDMALinesAction</key>
 				<string>id</string>
@@ -529,19 +544,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSDocument</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>VICScreen</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>myDoc</key>
-				<string>MyDocument</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSOpenGLView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

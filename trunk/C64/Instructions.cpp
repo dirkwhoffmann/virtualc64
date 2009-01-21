@@ -35,16 +35,23 @@ CPU::fetch() {
 	 Taktzyklen beim Erreichen des nächsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im 
 	 Prozessor auslösen. Interrupts werden nur erkannt, wenn RDY high ist. */
 	if (nmiNegEdge && NMILineRaisedLongEnough()) {
-		debug("NMI occured while executing opcode %02X. (%d,%d)\n", opcode, PC_at_cycle_0, PC);
+		if (tracingEnabled())
+			debug("NMI (source = %02X)\n", nmiLine);
 		nmiNegEdge = false;
 		next = &CPU::nmi_2;
 		return;
 
 	} else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
+		if (tracingEnabled())
+			debug("IRQ (source = %02X)\n", irqLine);
 		next = &CPU::irq_2;
 		return;
 	} 
 
+	// Disassemble command if requested
+	if (tracingEnabled()) 
+		debug("%s", disassemble());
+	
 	// Check breakpoint tag
 	if (breakpoint[PC] != NO_BREAKPOINT) {
 		breakpoint[PC] &= (255 - SOFT_BREAKPOINT); // Soft breakpoints get deleted when reached
