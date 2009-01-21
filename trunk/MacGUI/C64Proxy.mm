@@ -190,12 +190,27 @@ void ListenerProxy::logAction(char *message)
 - (bool) cpuGetWarpMode { return c64->getWarpMode(); }
 - (void) cpuSetWarpMode:(bool)b {  c64->setWarpMode(b); }
 
-- (void) dumpCPU { cpu->dumpState(); }
-- (void) dumpCIA { c64->cia1->dumpState(); c64->cia2->dumpState(); }
-- (void) dumpVIC { c64->vic->dumpState(); }
+- (bool) cpuTracingEnabled { return cpu->tracingEnabled(); }
+- (void) cpuSetTraceMode:(bool)b { cpu->setTraceMode(b); }
+- (bool) iecTracingEnabled { return iec->tracingEnabled(); }
+- (void) iecSetTraceMode:(bool)b { iec->setTraceMode(b); }
+- (bool) vc1541CpuTracingEnabled { return c64->floppy->cpu->tracingEnabled(); }
+- (void) vc1541CpuSetTraceMode:(bool)b { c64->floppy->cpu->setTraceMode(b); }
+- (bool) viaTracingEnabled { return c64->floppy->via2->tracingEnabled(); }
+- (void) viaSetTraceMode:(bool)b { c64->floppy->via2->setTraceMode(b); }
+
+- (void) dumpC64 { c64->dumpState(); }
+- (void) dumpC64CPU { cpu->dumpState(); }
+- (void) dumpC64CIA { c64->cia1->dumpState(); c64->cia2->dumpState(); }
+- (void) dumpC64VIC { c64->vic->dumpState(); }
+- (void) dumpC64SID { c64->sid->dumpState(); }
+- (void) dumpC64Memory { c64->mem->dumpState(); }
+- (void) dumpVC1541 { c64->floppy->dumpState(); }
+- (void) dumpVC1541CPU { c64->floppy->cpu->dumpState(); }
+- (void) dumpVC1541VIA { c64->floppy->via1->dumpState(); c64->floppy->via2->dumpState(); }
+- (void) dumpVC1541Memory { c64->floppy->mem->dumpState(); }
+- (void) dumpKeyboard { c64->keyboard->dumpState(); }
 - (void) dumpIEC { c64->iec->dumpState(); }
-- (void) dumpMemory { mem->dumpState(); }
-- (void) dumpDrive { c64->floppy->dumpState(); }
 	
 
 // --------------------------------------------------------------------------
@@ -203,15 +218,6 @@ void ListenerProxy::logAction(char *message)
 // --------------------------------------------------------------------------
 
 - (long) cpuGetCycles { return (long)c64->getCycles(); }
-- (bool) cpuTracingEnabled { return cpu->tracingEnabled(); }
-- (void) cpuSetTraceMode:(bool)b { cpu->setTraceMode(b); }
-- (bool) iecTracingEnabled { return iec->tracingEnabled(); }
-- (void) iecSetTraceMode:(bool)b { iec->setTraceMode(b); }
-- (bool) driveDataTracingEnabled { return c64->floppy->via2->tracingEnabled(); }
-- (void) driveSetDataTraceMode:(bool)b { c64->floppy->via2->setTraceMode(b); }
-- (bool) driveCPUTracingEnabled { return c64->floppy->cpu->tracingEnabled(); }
-- (void) driveSetCPUTraceMode:(bool)b { c64->floppy->cpu->setTraceMode(b); }
-
 - (uint16_t) cpuGetPC { return cpu->getPC_at_cycle_0(); }
 - (void) cpuSetPC:(uint16_t)pc { cpu->setPC(pc); }
 - (uint8_t) cpuGetSP { return cpu->getSP(); }

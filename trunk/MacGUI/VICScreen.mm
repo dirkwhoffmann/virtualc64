@@ -442,7 +442,7 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 
 	// Clear screen and depth buffer
 	uint32_t col = 0xffffffff;
-	glClearColor((float)RED(col)/0xff, (float)GREEN(col)/0xff, (float)BLUE(col)/0xff, 0.0);
+	glClearColor((float)EXTRACT_RED(col)/0xff, (float)EXTRACT_GREEN(col)/0xff, (float)EXTRACT_BLUE(col)/0xff, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Select screen texture

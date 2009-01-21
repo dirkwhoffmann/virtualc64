@@ -207,21 +207,39 @@
 - (IBAction)ejectAction:(id)sender;
 - (IBAction)driveAction:(id)sender;
 
+// Debug menu
+- (IBAction)drawSpritesAction:(id)sender;
+- (IBAction)markIRQLinesAction:(id)sender;
+- (IBAction)markDMALinesAction:(id)sender;
+
+- (IBAction)traceC64CpuAction:(id)sender;
+- (IBAction)traceIecAction:(id)sender;
+- (IBAction)traceVC1541CpuAction:(id)sender;
+- (IBAction)traceViaAction:(id)sender;
+
+- (IBAction)dumpC64:(id)sender;
+- (IBAction)dumpC64CPU:(id)sender;
+- (IBAction)dumpC64CIA:(id)sender;
+- (IBAction)dumpC64VIC:(id)sender;
+- (IBAction)dumpC64SID:(id)sender;
+- (IBAction)dumpC64Memory:(id)sender;
+- (IBAction)dumpVC1541:(id)sender;
+- (IBAction)dumpVC1541CPU:(id)sender;
+- (IBAction)dumpVC1541VIA:(id)sender;
+- (IBAction)dumpVC1541Memory:(id)sender;
+- (IBAction)dumpKeyboard:(id)sender;
+- (IBAction)dumpIEC:(id)sender;
+
 // Debug panel (common)
 - (IBAction)setDecimal:(id)sender;
 - (IBAction)setHexadecimal:(id)sender;
-- (IBAction)pauseAction:(id)sender;
 - (IBAction)stepIntoAction:(id)sender;
 - (IBAction)stepOutAction:(id)sender;
 - (IBAction)stepOverAction:(id)sender;
 - (IBAction)stopAndGoAction:(id)sender;
 - (IBAction)continueAction:(id)sender;
 - (IBAction)resetAction:(id)sender;
-- (IBAction)drawSpritesAction:(id)sender;
-- (IBAction)markIRQLinesAction:(id)sender;
-- (IBAction)markDMALinesAction:(id)sender;
 - (IBAction)fastResetAction:(id)sender;
-// - (IBAction)loggingAction:(id)sender;
 - (IBAction)showPreferencesAction:(id)sender;
 
 // Keyboard actions

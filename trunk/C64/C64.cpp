@@ -738,7 +738,7 @@ C64::C64(C64Listener *listener)
 	}
 
 	// Configure
-	setNTSC();
+	setNTSC(); // Why NTSC??
 
 	// Register listener and reset
 	setListener(listener);
@@ -813,6 +813,7 @@ void C64::reset()
 	archive = NULL;
 	frame = 0;
 	rasterline = 0;
+	targetTime = 0LL;
 	cycles = 0LL;
 	resume();
 }

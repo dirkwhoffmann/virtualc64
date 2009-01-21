@@ -53,7 +53,7 @@
 #define SET_BIT(x,nr) ((x) |= (1 << (nr)))
 
 //! Evaluates to the value of x with bit "nr" set to 0. All other bits remain untouched.
-#define CLEAR_BIT(x,nr) ((x) &= 0xff - (1 << (nr)))
+#define CLR_BIT(x,nr) ((x) &= ~(1 << (nr)))
 
 //! Clip the value of x if it is outside the specified limits
 template <class T>

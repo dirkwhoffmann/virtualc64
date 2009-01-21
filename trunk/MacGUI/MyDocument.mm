@@ -608,11 +608,6 @@
 	[dis release];
 }
 
-- (IBAction)pauseAction:(id)sender
-{
-	[c64 halt];
-}
-
 - (IBAction)stepIntoAction:(id)sender
 {
 	[self updateChangeCount:NSChangeDone];
@@ -657,8 +652,10 @@
 	NSLog(@"Stop and go action");
 	if ([c64 isHalted]) {
 		[c64 run];
+		[debug_panel close];
 	} else {
 		[c64 halt];
+		[debug_panel open];
 	}
 	
 	[self refresh];
@@ -771,9 +768,105 @@
 	[c64 vicToggleMarkDMALines];
 }
 
+- (IBAction)traceC64CpuAction:(id)sender 
+{ 
+	if ([c64 cpuTracingEnabled]) {
+		[c64 cpuSetTraceMode:NO];
+	} else {
+		[c64 cpuSetTraceMode:YES];
+	}
+}
+
+- (IBAction)traceIecAction:(id)sender
+{
+	if ([c64 iecTracingEnabled]) {
+		[c64 iecSetTraceMode:NO];
+	} else {
+		[c64 iecSetTraceMode:YES];
+	}	
+}
+
+- (IBAction)traceVC1541CpuAction:(id)sender
+{
+	if ([c64 vc1541CpuTracingEnabled]) {
+		[c64 vc1541CpuSetTraceMode:NO];
+	} else {
+		[c64 vc1541CpuSetTraceMode:YES];
+	}	
+}
+
+- (IBAction)traceViaAction:(id)sender 
+{
+	if ([c64 viaTracingEnabled]) {
+		[c64 viaSetTraceMode:NO];
+	} else {
+		[c64 viaSetTraceMode:YES];
+	}	
+}
+
 - (IBAction)fastResetAction:(id)sender
 {
 	[c64 fastReset];
+}
+
+- (IBAction)dumpC64:(id)sender
+{
+	[c64 dumpC64];
+}
+
+- (IBAction)dumpC64CPU:(id)sender
+{
+	[c64 dumpC64CPU];
+}
+
+- (IBAction)dumpC64CIA:(id)sender
+{
+	[c64 dumpC64CIA];
+}
+
+- (IBAction)dumpC64VIC:(id)sender
+{
+	[c64 dumpC64VIC];
+}
+
+- (IBAction)dumpC64SID:(id)sender
+{
+	[c64 dumpC64SID];
+}
+
+- (IBAction)dumpC64Memory:(id)sender
+{
+	[c64 dumpC64Memory];
+}
+
+- (IBAction)dumpVC1541:(id)sender
+{
+	[c64 dumpVC1541];
+}
+
+- (IBAction)dumpVC1541CPU:(id)sender
+{
+	[c64 dumpVC1541CPU];
+}
+
+- (IBAction)dumpVC1541VIA:(id)sender
+{
+	[c64 dumpVC1541VIA];
+}
+
+- (IBAction)dumpVC1541Memory:(id)sender
+{
+	[c64 dumpVC1541Memory];
+}
+
+- (IBAction)dumpKeyboard:(id)sender
+{
+	[c64 dumpKeyboard];
+}
+
+- (IBAction)dumpIEC:(id)sender
+{
+	[c64 dumpIEC];
 }
 
 - (IBAction)showPreferencesAction:(id)sender
