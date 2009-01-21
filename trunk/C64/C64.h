@@ -16,28 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// QBert 
-//     Small graphics error in the middle of the first line, most probably scrolling gap error)
-
-// Shadow: 
-//     Scroll error in intro screen (game manages to skip rastercounts?? cool effect)
-
-// Paperboy: 
-//     Graphic error at top and bottom of screen
-
-
-
-// Cleanup:
-      	  
-// Optional:
-// 1) Use menus with real on/off/mixed state
-
-// Projects:
-// Datasette support (.TAP format)
-// VIC enhancements
-// CoreImage filters
-// Clone functionality (Step-Undo using the clone mechanism?!)
-
 #ifndef _C64_INC
 #define _C64_INC
 
@@ -139,9 +117,11 @@
 	3. Reset emulator
 	   c64->reset()
 	   
-	4. Run emulator
-	   c64->run()
-*/
+	4. Load Roms
+	   c64->loadRom(...)
+	
+	   The emulator launches automatically when the last ROM is loaded
+ */
 
 #define NUM_INPUT_DEVICES 4
 
@@ -152,10 +132,43 @@ enum INPUT_DEVICES {
 	IPD_JOYSTICK_2
 };
 	
-
-
 class C64 : public VirtualComponent {
 
+public:	
+	
+	//! Reference to the connected virtual memory. 	
+	C64Memory *mem;
+	
+	//! Reference to the connected virtual CPU. 	
+    CPU *cpu;
+	
+	//! Reference to the connected virtual video controller (VIC). 	
+	VIC *vic;
+	
+	//! Reference to the first connected virtual complex interface adapter (CIA 1). 	
+	CIA1 *cia1;
+	
+	//! Reference to the first connected virtual complex interface adapter (CIA 2). 	
+	CIA2 *cia2;
+	
+	//! Reference to the connected sound interface device (SID).
+	SID *sid;
+	
+	//! Reference to the connected virtual keyboard.
+	Keyboard *keyboard;
+	
+	//! Reference to the connected joysticks
+	Joystick *joystick1, *joystick2;
+	
+	//! Reference to the virtual IEC bus
+	IEC *iec;
+	
+	//! Reference to the virtual VC1541
+	VC1541 *floppy;
+	
+	//! Reference to the attached archive, e.g., a T64 or D64 container
+	Archive *archive;
+	
 private:
 			
 	//! The execution thread
@@ -174,8 +187,7 @@ private:
 	//! Holds the configuration for the game port.
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
 	int port[2];
-	
-public:
+		
 	//! Current frame number
 	int frame;
 
@@ -197,121 +209,47 @@ public:
 	//! Time between two frames
 	int frameDelay;
 	
-public:	
 	
-	//! Scans for new joysticks and reval the old ones
-	void scanJoysticks();
-
-	//! Reference to the connected virtual memory. 	
-	C64Memory *mem;
-	//! Reference to the connected virtual CPU. 	
-    CPU *cpu;
-	//! Reference to the connected virtual video controller (VIC). 	
-	VIC *vic;
-	//! Reference to the first connected virtual complex interface adapter (CIA 1). 	
-	CIA1 *cia1;
-	//! Reference to the first connected virtual complex interface adapter (CIA 2). 	
-	CIA2 *cia2;
-	//! Reference to the connected sound interface device (SID).
-	SID *sid;
-	//! Reference to the connected virtual keyboard.
-	Keyboard *keyboard;
-	//! Reference to the connected joysticks
-	Joystick *joystick1, *joystick2;
+	// -----------------------------------------------------------------------------------------------
+	//                                             Methods
+	// -----------------------------------------------------------------------------------------------
 	
-	//! Reference to the virtual IEC bus
-	IEC *iec;
-
-	//! Reference to the virtual VC1541
-	VC1541 *floppy;
+public:
 	
-	//! Reference to the attached archive, e.g., a T64 or D64 container
-	Archive *archive;
-		
 	//! Constructor
 	C64(C64Listener *listener);
 	
 	//! Destructor
 	~C64();
 	
-	//! Returns the build number
-	/*! The build number is composed out of the build date */
-	int build();
-	
-	//! Set listener
-	/*! The listener will be set on all sub components as well. 
-		The listener can be changed multiple times during program execution */
-	void setListener(C64Listener *l);
-	
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A reset is performed by simulating a hard reset on a real C64. */
 	void reset();           
-
+	
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A (faked) reset is performed by loading a presaved image from disk. */
 	void fastReset();           
-		
-	//! Returns the number of CPU cycles elapsed so far
-	inline uint64_t getCycles() { return cycles; }
-	
-	//! Perform a soft reset
-	/*! On a real C64, a soft reset is triggered by hitting Runstop and Restore */
-	void runstopRestore(); 
 
-	//! The tread exit function.
-	/*! Automatically invoked by the execution thread on termination */
-	void threadCleanup(); 
-
-	//! Returns the number of missing ROM images */
-	int numberOfMissingRoms();
-
-	//! Missing ROMs are indicated by a 1 in the returned bitmap */
-	int getMissingRoms();
-
-	//! Returns true iff the virtual C64 is able to run */
-	/*! The function checks for missing ROM images etc. */
-	bool isRunnable();
-
-	//! Power on the virtual C64
-	/*! The execution thread is launched and the virtual computer enters the "running" state */
-	void run();
-	
-	// Returns true iff the virtual C64 is in the "running" state */
-	bool isRunning();
-		
-	//! Freeze the emulator
-	/*! The execution thread is terminated and the virtual computers enters the "halted" state */
-	void halt();
-
-	//! Returns true iff the virtual C64 is in the "halted" state */
-	bool isHalted();
-
-	//! Execute one command
-	void step(); 
-	
-	//! Execute virtual C64 for one cycle
-	inline bool executeOneCycle(int cycle = 0);
-			
-	//! Execute until the end of the rasterline
-	bool executeOneLine(int cycle = 1);
-	void beginOfRasterline();
-	void endOfRasterline();
-		
-	//! Set interval timer delay
-	void setDelay(int d);
-	
-	//! Restart timer
-	void restartTimer();
-	
-	//! Synchronize timing
-	void synchronizeTiming();
-	
 	//! Load snapshot from file
 	bool load(FILE *file);
-
+	
 	//! Save snapshot to file
 	bool save(FILE *file);
 
+	//! Dump current state into logfile
+	void dumpState();
+
+	//! Register listener
+	/*! To communicate with the virtual computer, the GUI will register itself as listener */
+	void setListener(C64Listener *l);
+	
+	
+	// -----------------------------------------------------------------------------------------------
+	//                                         Configure
+	// -----------------------------------------------------------------------------------------------
+	
+public:
+	
 	//! Set PAL mode
 	void setPAL();
 	
@@ -319,8 +257,130 @@ public:
 	void setNTSC();
 	
 	//! Set emulation speed
-	void setHz(int h);
+	//void setHz(int h);
+
+	//! Returns true iff warp mode is enabled
+	bool getWarpMode();
+	
+	//! Enable or disable warp mode
+	void setWarpMode(bool b);
 		
+
+	// -----------------------------------------------------------------------------------------------
+	//                                           Control
+	// -----------------------------------------------------------------------------------------------
+
+public:
+	
+	//! Perform a soft reset
+	/*! On a real C64, a soft reset is triggered by hitting Runstop and Restore */
+	void runstopRestore(); 
+	
+	//! Returns true iff the virtual C64 is able to run */
+	/*! The function checks for missing ROM images etc. */
+	bool isRunnable();
+	
+	//! Power on the virtual C64
+	/*! The execution thread is launched and the virtual computer enters the "running" state */
+	void run();
+	
+	// Returns true iff the virtual C64 is in the "running" state */
+	bool isRunning();
+	
+	//! Freeze the emulator
+	/*! The execution thread is terminated and the virtual computers enters the "halted" state */
+	void halt();
+	
+	//! Returns true iff the virtual C64 is in the "halted" state */
+	bool isHalted();
+	
+	//! Execute one command
+	void step(); 
+	
+	//! Execute virtual C64 for one cycle
+	inline bool executeOneCycle(int cycle = 0);
+	
+	//! Execute until the end of the rasterline
+	bool executeOneLine(int cycle = 1);
+	
+private:
+	
+	//! Actions to be performed at the beginning of each rasterline
+	void beginOfRasterline();
+	
+	//! Actions to be performed at the end of each rasterline	
+	void endOfRasterline();
+	
+	
+	// -----------------------------------------------------------------------------------------------
+	//                                  ROM and snapshot handling
+	// -----------------------------------------------------------------------------------------------
+	
+public:
+	
+	//! Returns the number of missing ROM images */
+	int numberOfMissingRoms();
+	
+	//! Missing ROMs are indicated by a 1 in the returned bitmap */
+	int getMissingRoms();
+
+	//! Load a ROM image into memory
+	/*! The functions can be safely invoked even if the virtual C64 is in "running" state. Execution is automatically
+	    suspended before loading and resumed afterwards.
+	*/ 
+	bool loadRom(const char *filename);
+	
+	//! Load snapshot file
+	bool loadSnapshot(const char *filename);
+	
+	//! Save snapshot file
+	bool saveSnapshot(const char *filename);
+		
+	
+	// -----------------------------------------------------------------------------------------------
+	//                                           Timing
+	// -----------------------------------------------------------------------------------------------
+	
+	//! Set interval timer delay
+	void setDelay(int d);
+
+	//! Set interval timer delay based on the current value of fps
+	void setDelay() { setDelay((uint64_t)(1000000 / fps)); }
+
+	//! Restart timer
+	void restartTimer();
+	
+	//! Synchronize timing
+	void synchronizeTiming();
+	
+	
+	// ---------------------------------------------------------------------------------------------
+	//                                 Archives (disks, tapes, etc.)
+	// ---------------------------------------------------------------------------------------------
+	
+	//! Assign an archive to the virtual C64
+	void setArchive (Archive *a) { archive = a; }
+	
+	//! Flush specified item from archive into memory and delete archive
+	bool flushArchive(int item);
+	
+	//! Mount specified archive in the virtual disk drive
+	bool mountArchive();
+
+	
+	// ---------------------------------------------------------------------------------------------
+	//                                        Getter and setter 
+	// ---------------------------------------------------------------------------------------------
+			
+	//! Returns the number of CPU cycles elapsed so far
+	inline uint64_t getCycles() { return cycles; }
+
+	//! Returns the number of the currently drawn frame
+	inline uint64_t getFrame() { return frame; }
+
+	//! Returns the number of the currently drawn rasterline
+	inline uint64_t getRasterline() { return rasterline; }
+	
 	// Returns the number of frames per second
 	/*! Number varies between PAL and NTSC machines */	
 	inline int getFramesPerSecond() { return fps; }
@@ -328,45 +388,29 @@ public:
 	//! Returns the number of rasterlines per frame
 	/*! Number varies between PAL and NTSC machines */	
 	inline int getRasterlinesPerFrame() { return noOfRasterlines; }
-
+	
 	//! Returns the number of CPU cycles performed per rasterline
 	/*! Number varies between PAL and NTSC machines */	
 	inline int getCyclesPerRasterline() { return cpuCyclesPerRasterline; }
-
+	
 	//! Returns the number of CPU cycles performed per frame
 	/*! Number varies between PAL and NTSC machines */	
 	inline int getCyclesPerFrame() { return getRasterlinesPerFrame() * getCyclesPerRasterline(); }
+
+	//! Returns the time interval between two frames
+	inline int getFrameDelay() { return frameDelay; }
+
+	//! Returns the time interval between two frames
+	inline void setFrameDelay(int delay) { frameDelay = delay; }
+
 	
-	//! Assign an archive to the virtual C64
-	void setArchive (Archive *a) { archive = a; }
-
-	//! Flush specified item from archive into memory and delete archive
-	bool flushArchive(int item);
-
-	//! Mount specified archive in the virtual disk drive
-	bool mountArchive();
-
-	//! Load a ROM image into memory
-	/*! The functions can be safely invoked even if the virtual C64 is in "running" state. Execution is automatically
-		suspended before loading and resumed afterwards.
-		\param filename Name of the ROM image
-		\return true iff the ROM was loaded successfully. */ 
-	bool loadRom(const char *filename);
+	// ---------------------------------------------------------------------------------------------
+	//                                             Misc
+	// ---------------------------------------------------------------------------------------------
 	
-	//! Load snapshot file
-	bool loadSnapshot(const char *filename);
-
-	//! Save snapshot file
-	bool saveSnapshot(const char *filename);
-
-	//! Returns true iff warp mode is enabled
-	bool getWarpMode();
-
-	//! Enable or disable warp mode
-	void setWarpMode(bool b);
-		
-	//! Dump current state into logfile
-	void dumpState();
+	//! Returns the build number
+	/*! The build number is composed out of the build date */
+	int build();
 	
 	//! Bind input device with game port
 	void setInputDevice(int portNo, int newDevice);
@@ -380,6 +424,13 @@ public:
 	//! Get the device mapped to the port portNo
 	int getDeviceOfPort(int portNo);
 
+	//! Scans for new joysticks and reval the old ones
+	void scanJoysticks();
+	
+	//! The tread exit function.
+	/*! Automatically invoked by the execution thread on termination */
+	void threadCleanup(); 
+	
 };
 
 #endif

@@ -174,8 +174,8 @@ void ListenerProxy::logAction(char *message)
 - (bool) isRunning { return c64->isRunning(); }
 - (void) setPAL { c64->setPAL(); }
 - (void) setNTSC { c64->setNTSC(); }
-- (int) getFrameDelay { return c64->frameDelay; }
-- (void) setFrameDelay:(int)delay { c64->frameDelay = delay; }
+- (int) getFrameDelay { return c64->getFrameDelay(); }
+- (void) setFrameDelay:(int)delay { c64->setFrameDelay(delay); }
 - (int) buildNr { return c64->build(); }
 
 - (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
