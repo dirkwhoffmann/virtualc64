@@ -52,8 +52,9 @@ void
 	// Prepare to run...
 	c64->cpu->clearErrorState();
 	c64->floppy->cpu->clearErrorState();
-	c64->setDelay((uint64_t)(1000000 / c64->fps));
-
+	//c64->setDelay((uint64_t)(1000000 / c64->fps));
+	c64->setDelay();
+	
 	// determine cycle relative to the current rasterline
 	int cycle = (c64->getCycles() % c64->getCyclesPerRasterline()) + 1;
 
@@ -61,7 +62,7 @@ void
 		if (!c64->executeOneLine(cycle))
 			break;		
 		cycle = 1;
-		if (c64->frame == 0 && c64->rasterline == 0)
+		if (c64->getFrame() == 0 && c64->getRasterline() == 0)
 			pthread_testcancel();
 	}
 	
@@ -73,6 +74,412 @@ void
 
 	pthread_cleanup_pop(1);
 	pthread_exit(NULL);	
+}
+
+
+// --------------------------------------------------------------------------------
+// Class methods
+// --------------------------------------------------------------------------------
+
+C64::C64(C64Listener *listener)
+{
+	debug("Creating virtual C64 at address %p...\n", this);
+	
+	p = NULL;
+	warpMode = false;
+	
+	// Create components
+	mem = new C64Memory();
+	cpu = new CPU();		
+	vic = new VIC();
+	sid = new SID();
+	cia1 = new CIA1();
+	cia2 = new CIA2();
+	keyboard = new Keyboard();
+	iec = new IEC();
+	floppy = new VC1541();
+	
+	// Create joysticks
+	// NEEDS CLEANUP
+	debug("try to load joystick\n");
+	try {
+		joystick1 = new Joystick( 0 );
+		debug("joystick 1found \n");
+	} catch( const char *ex ) {
+		joystick1 = NULL;
+		debug("Joystick 1 is NOT present\n");
+	}
+	
+	try {
+		joystick2 = new Joystick( 1 );
+		debug("joystick 2 found\n");
+	} catch( const char *ex ) {
+	    joystick2 = NULL;
+		debug("Joystick 2 is NOT present\n");
+	}
+	
+	// Bind components
+	cpu->setC64(this);
+	cpu->setMemory(mem);
+	mem->setVIC(vic);
+	mem->setSID(sid);
+	mem->setCIA1(cia1);
+	mem->setCIA2(cia2);
+	mem->setCPU(cpu);
+	cia1->setCPU(cpu);
+	cia1->setVIC(vic);	
+	cia1->setKeyboard(keyboard);
+	cia2->setCPU(cpu);
+	cia2->setVIC(vic);	
+	cia2->setIEC(iec);
+	vic->setC64(this);
+	vic->setCPU(cpu);
+	vic->setMemory(mem);
+	iec->setDrive(floppy);
+	floppy->setIEC(iec);
+	floppy->setC64(this);
+	
+	// Setup initial game port mapping
+	// NEEDS CLEANUP, DONT DO THIS HERE!
+	if (joystick1 == NULL && joystick2 == NULL) {
+		// 0 joysticks connected
+		setInputDevice(0, IPD_UNCONNECTED);
+		setInputDevice(1, IPD_UNCONNECTED);
+	}
+	else if (joystick1 != NULL && joystick2 == NULL) {
+		// 1 joysticks connected
+		setInputDevice(0, IPD_JOYSTICK_1);
+		setInputDevice(1, IPD_UNCONNECTED);
+	}
+	else if( joystick1 != NULL && joystick2 != NULL ) {
+		// 2 joysticks connected
+		setInputDevice(0, IPD_JOYSTICK_1);
+		setInputDevice(1, IPD_JOYSTICK_2);
+	} else {
+		assert(0);
+	}
+	
+	// Configure
+	setNTSC(); // Why NTSC??
+	
+	// Register listener and reset
+	setListener(listener);
+	reset();	
+}
+
+// Construction and destruction
+C64::~C64()
+{
+	// Halt emulator
+	halt();	
+	
+	// Release all components
+	delete floppy;
+	delete keyboard;
+	delete iec;
+	delete cia1;
+	delete cia2;
+	delete vic;
+	delete sid;
+	delete cpu;	
+	delete mem;
+	
+	if( joystick1 != NULL )
+		delete joystick1;
+	
+	if( joystick2 != NULL )
+		delete joystick2;
+	
+	debug("Cleaned up virtual C64 at address %p\n", this);
+}
+
+void C64::reset()
+{
+	debug ("Resetting virtual C64\n");
+	suspend();
+	mem->reset();
+	cpu->reset();
+	cpu->setPC(0xFCE2);
+	vic->reset();
+	sid->reset();
+	cia1->reset();
+	cia2->reset();
+	keyboard->reset();
+	iec->reset();
+	floppy->reset();
+	archive = NULL;
+	frame = 0;
+	rasterline = 0;
+	targetTime = 0LL;
+	cycles = 0LL;
+	resume();
+}
+
+void C64::fastReset()
+{
+	debug("NOTE: FAST RESET IS DISABLED, BECAUSE THE CURRENT IMAGE FORMAT IS NOT YET COMPATIBLE WITH THE INTERNAL MODEL\n");
+#if 0
+	debug ("Resetting virtual C64 (fast reset via image file)\n");
+	
+	if (loadSnapshot("ResetImage.VC64")) {
+		debug("Reset image loaded.\n");	
+	} else {
+		debug("Cannot load reset image. Will do a hard reset...\n");
+		reset();
+	}
+#endif
+}
+
+bool 
+C64::load(FILE *file)
+{
+	uint8_t major, minor;
+	
+	debug("Loading...\n");
+	
+	// Read header
+	if ((char)read8(file) != 'V') return false;
+	if ((char)read8(file) != 'I') return false;
+	if ((char)read8(file) != '6') return false;
+	if ((char)read8(file) != '4') return false;
+	
+	// Read version number
+	major = read8(file);
+	minor = read8(file);
+	
+	// Load data
+	suspend();
+	
+	cpu->load(file);
+	vic->load(file);
+	sid->load(file);
+	cia1->load(file);
+	cia2->load(file);	
+	mem->load(file);
+	keyboard->load(file);
+	iec->load(file);
+	floppy->load(file);
+	
+	resume();
+	return true;
+}
+
+bool 
+C64::save(FILE *file)
+{	
+	suspend();
+	
+	debug("Saving...\n");
+	
+	// Write header
+	write8(file, (uint8_t)'V');
+	write8(file, (uint8_t)'I');
+	write8(file, (uint8_t)'6');
+	write8(file, (uint8_t)'4');
+	
+	// Write version number
+	write8(file, 0);
+	write8(file, 1);
+	
+	// Write data
+	cpu->save(file);
+	vic->save(file);
+	sid->save(file);
+	cia1->save(file);
+	cia2->save(file);
+	mem->save(file);
+	keyboard->save(file);
+	iec->save(file);
+	floppy->save(file);
+	
+	resume();
+	return true;
+}
+
+void 
+C64::dumpState() {
+	
+	suspend();
+	
+	debug("CPU:\n");
+	debug("----\n");
+	cpu->dumpState();
+	
+	debug("Memory:\n");
+	debug("-------\n");
+	mem->dumpState();
+	
+	debug("VIC:\n");
+	debug("----\n");
+	vic->dumpState();
+	
+	debug("SID:\n");
+	debug("----\n");
+	sid->dumpState();
+	
+	debug("CIA 1:\n");
+	debug("------\n");
+	cia1->dumpState();
+	
+	debug("CIA 2:\n");
+	debug("------\n");
+	cia2->dumpState();
+	
+	debug("IEC bus:\n");
+	debug("--------\n");
+	iec->dumpState();
+	
+	debug("Keyboard:\n");
+	debug("---------\n");
+	keyboard->dumpState();
+	
+	debug("Disk drive:\n");
+	debug("-----------\n");
+	floppy->dumpState();
+	
+	resume();
+}
+
+void C64::setListener(C64Listener *l)
+{
+	VirtualComponent::setListener(l);
+	mem->setListener(l);
+	cpu->setListener(l);
+	vic->setListener(l);
+	sid->setListener(l);
+	cia1->setListener(l);	
+	cia2->setListener(l);	
+	iec->setListener(l);
+	floppy->setListener(l);
+	floppy->cpu->setListener(l);
+	floppy->mem->setListener(l);
+	floppy->via1->setListener(l);
+	floppy->via2->setListener(l);	
+}
+
+
+// -----------------------------------------------------------------------------------------------
+//                                           Configure
+// -----------------------------------------------------------------------------------------------
+
+void
+C64::setPAL()
+{
+	fps = VIC::PAL_REFRESH_RATE;
+	noOfRasterlines = VIC::PAL_RASTERLINES; 
+	cpuCyclesPerRasterline = VIC::PAL_CYCLES_PER_RASTERLINE;
+	vic->setPAL();
+	// TODO
+	// sid->setPAL()
+	frameDelay = (1000000 / fps);
+}
+
+void 
+C64::setNTSC()
+{
+	fps = VIC::NTSC_REFRESH_RATE;
+	noOfRasterlines = VIC::NTSC_RASTERLINES; 
+	cpuCyclesPerRasterline = VIC::NTSC_CYCLES_PER_RASTERLINE;
+	vic->setNTSC();
+	// TODO
+	// sid->setNTSC()
+	frameDelay = (1000000 / fps);
+}
+
+bool 
+C64::getWarpMode() 
+{ 
+	return warpMode;
+}
+
+void
+C64::setWarpMode(bool b)
+{
+	warpMode = b;
+	restartTimer();
+	getListener()->warpAction(getWarpMode());	
+}
+
+
+// -----------------------------------------------------------------------------------------------
+//                                              Control
+// -----------------------------------------------------------------------------------------------
+
+void 
+C64::runstopRestore()
+{
+	// Note: The restore key is directly connected to the NMI line of the CPU
+	// Thus, the runstop/restore key combination triggers an interrupts that causes a soft reset
+	keyboard->pressRunstopKey();
+	cpu->setNMILineReset(); 
+	// Hold runstop key down for a while...
+	sleepMicrosec((uint64_t)100000);
+	keyboard->releaseRunstopKey();
+}
+
+bool
+C64::isRunnable() {
+	return (numberOfMissingRoms() == 0);
+}
+
+void 
+C64::run() {
+	
+	if (isHalted()) {
+		
+		// Check for ROM images
+		if (getMissingRoms()) {
+			getListener()->missingRomAction(getMissingRoms());
+			return;
+		}
+		
+		// Start execution thread
+		pthread_create(&p, NULL, runThread, (void *)this);	
+		
+		// Power on sub components
+		sid->run();
+		
+	}
+}
+
+bool 
+C64::isRunning() {
+	return p != NULL;
+}
+
+void 
+C64::halt() 
+{
+	if (isRunning()) {
+		
+		// Shut down sub components
+		sid->halt();
+		// Cancel execution thread
+		pthread_cancel(p);
+		// Wait until thread terminates
+		pthread_join(p, NULL);
+		// Finish the current command (to reach a clean state)
+		step();
+	}
+}
+
+bool
+C64::isHalted()
+{
+	return p == NULL;
+}
+
+void
+C64::step() 
+{		
+	// Execute next command 
+	do {
+		executeOneCycle();
+	} while (!cpu->atBeginningOfNewCommand()); 
+	
+	// We are now at cycle 0 of the next command
+	// Execute one more cycle (and stop in cycle 1)
+	executeOneCycle();
 }
 
 #define EXECUTE(x) \
@@ -123,7 +530,6 @@ C64::endOfRasterline()
 	}
 }
 
-// Execute a single cycle
 inline bool
 C64::executeOneCycle(int cycle)
 {
@@ -637,239 +1043,16 @@ C64::executeOneLine(int cycle)
 	}	
 }
 
-void
-C64::step() 
-{		
-	// Execute next command 
-	do {
-		executeOneCycle();
-	} while (!cpu->atBeginningOfNewCommand()); 
-	
-	// We are now at cycle 0 of the next command
-	// Execute one more cycle (and stop in cycle 1)
-	executeOneCycle();
-}
 
-		   
-// --------------------------------------------------------------------------------
-// C64 class
-// --------------------------------------------------------------------------------
-
-C64::C64(C64Listener *listener)
-{
-	debug("Creating virtual C64 at address %p...\n", this);
-
-	p = NULL;
-	warpMode = false;
-	
-	// Create components
-	mem = new C64Memory();
-	cpu = new CPU();		
-	vic = new VIC();
-	sid = new SID();
-	cia1 = new CIA1();
-	cia2 = new CIA2();
-	keyboard = new Keyboard();
-	iec = new IEC();
-	floppy = new VC1541();
-
-	// Create joysticks
-	// NEEDS CLEANUP
-	debug("try to load joystick\n");
-	try {
-		joystick1 = new Joystick( 0 );
-		debug("joystick 1found \n");
-	} catch( const char *ex ) {
-		joystick1 = NULL;
-		debug("Joystick 1 is NOT present\n");
-	}
-	
-	try {
-		joystick2 = new Joystick( 1 );
-		debug("joystick 2 found\n");
-	} catch( const char *ex ) {
-	    joystick2 = NULL;
-		debug("Joystick 2 is NOT present\n");
-	}
-		
-	// Bind components
-	cpu->setC64(this);
-	cpu->setMemory(mem);
-	mem->setVIC(vic);
-	mem->setSID(sid);
-	mem->setCIA1(cia1);
-	mem->setCIA2(cia2);
-	mem->setCPU(cpu);
-	cia1->setCPU(cpu);
-	cia1->setVIC(vic);	
-	cia1->setKeyboard(keyboard);
-	cia2->setCPU(cpu);
-	cia2->setVIC(vic);	
-	cia2->setIEC(iec);
-	vic->setC64(this);
-	vic->setCPU(cpu);
-	vic->setMemory(mem);
-	iec->setDrive(floppy);
-	floppy->setIEC(iec);
-	floppy->setC64(this);
-	
-	// Setup initial game port mapping
-	// NEEDS CLEANUP, DONT DO THIS HERE!
-	if (joystick1 == NULL && joystick2 == NULL) {
-		// 0 joysticks connected
-		setInputDevice(0, IPD_UNCONNECTED);
-		setInputDevice(1, IPD_UNCONNECTED);
-	}
-	else if (joystick1 != NULL && joystick2 == NULL) {
-		// 1 joysticks connected
-		setInputDevice(0, IPD_JOYSTICK_1);
-		setInputDevice(1, IPD_UNCONNECTED);
-	}
-	else if( joystick1 != NULL && joystick2 != NULL ) {
-		// 2 joysticks connected
-		setInputDevice(0, IPD_JOYSTICK_1);
-		setInputDevice(1, IPD_JOYSTICK_2);
-	} else {
-		assert(0);
-	}
-
-	// Configure
-	setNTSC(); // Why NTSC??
-
-	// Register listener and reset
-	setListener(listener);
-	reset();	
-}
-
-// Construction and destruction
-C64::~C64()
-{
-	// Halt emulator
-	halt();	
-		
-	// Release all components
-	delete floppy;
-	delete keyboard;
-	delete iec;
-	delete cia1;
-	delete cia2;
-	delete vic;
-	delete sid;
-	delete cpu;	
-	delete mem;
-	
-	if( joystick1 != NULL )
-		delete joystick1;
-		
-	if( joystick2 != NULL )
-		delete joystick2;
-	
-	debug("Cleaned up virtual C64 at address %p\n", this);
-}
-
-int 
-C64::build()
-{
-	char month[11];
-	int year, mon, day;
-
-	sscanf(__DATE__, "%s %d %d", month, &day, &year);
-	
-	if (!strcmp(month, "Jan")) mon = 1;
-	else if (!strcmp(month, "Feb")) mon = 2;
-	else if (!strcmp(month, "Mar")) mon = 3;
-	else if (!strcmp(month, "Apr")) mon = 4;
-	else if (!strcmp(month, "May")) mon = 5;
-	else if (!strcmp(month, "Jun")) mon = 6;
-	else if (!strcmp(month, "Jul")) mon = 7;
-	else if (!strcmp(month, "Aug")) mon = 8;
-	else if (!strcmp(month, "Sep")) mon = 9;
-	else if (!strcmp(month, "Oct")) mon = 10;
-	else if (!strcmp(month, "Nov")) mon = 11;
-	else if (!strcmp(month, "Dez")) mon = 12;
-	else mon = 0; // Huh?
-
-	return ((year - 2000) * 10000) + (mon * 100) + day;
-}
-
-void C64::reset()
-{
-	debug ("Resetting virtual C64\n");
-	suspend();
-	mem->reset();
-	cpu->reset();
-	cpu->setPC(0xFCE2);
-	vic->reset();
-	sid->reset();
-	cia1->reset();
-	cia2->reset();
-	keyboard->reset();
-	iec->reset();
-	floppy->reset();
-	archive = NULL;
-	frame = 0;
-	rasterline = 0;
-	targetTime = 0LL;
-	cycles = 0LL;
-	resume();
-}
-
-void C64::fastReset()
-{
-	debug("NOTE: FAST RESET IS DISABLED, BECAUSE THE CURRENT IMAGE FORMAT IS NOT YET COMPATIBLE WITH THE INTERNAL MODEL\n");
-#if 0
-	debug ("Resetting virtual C64 (fast reset via image file)\n");
-
-	if (loadSnapshot("ResetImage.VC64")) {
-		debug("Reset image loaded.\n");	
-	} else {
-		debug("Cannot load reset image. Will do a hard reset...\n");
-		reset();
-	}
-#endif
-}
-
-void C64::setListener(C64Listener *l)
-{
-	VirtualComponent::setListener(l);
-	mem->setListener(l);
-	cpu->setListener(l);
-	vic->setListener(l);
-	sid->setListener(l);
-	cia1->setListener(l);	
-	cia2->setListener(l);	
-	iec->setListener(l);
-	floppy->setListener(l);
-	floppy->cpu->setListener(l);
-	floppy->mem->setListener(l);
-	floppy->via1->setListener(l);
-	floppy->via2->setListener(l);	
-}
-
-void 
-C64::runstopRestore()
-{
-	// Note: The restore key is directly connected to the NMI line of the CPU
-	// Thus, the runstop/restore key combination triggers an interrupts that causes a soft reset
-	keyboard->pressRunstopKey();
-	cpu->setNMILineReset(); 
-	// Hold runstop key down for a while...
-	sleepMicrosec((uint64_t)100000);
-	keyboard->releaseRunstopKey();
-}
-
-void 
-C64::threadCleanup()
-{
-	p = NULL;
-	debug("Execution thread terminated\n");
-}
+// -----------------------------------------------------------------------------------------------
+//                                  ROM and snapshot handling
+// -----------------------------------------------------------------------------------------------
 
 int
 C64::numberOfMissingRoms() {
-
+	
 	int result = 0;
-
+	
 	if (!mem->basicRomIsLoaded()) result++;
 	if (!mem->charRomIsLoaded()) result++;
 	if (!mem->kernelRomIsLoaded()) result++;
@@ -881,7 +1064,7 @@ int
 C64::getMissingRoms() {
 	
 	int missingRoms = 0;
-
+	
 	if (!mem->basicRomIsLoaded()) missingRoms |= BASIC_ROM;
 	if (!mem->charRomIsLoaded()) missingRoms |= CHAR_ROM;
 	if (!mem->kernelRomIsLoaded()) missingRoms |= KERNEL_ROM;
@@ -889,233 +1072,23 @@ C64::getMissingRoms() {
 	return missingRoms;
 }
 
-bool
-C64::isRunnable() {
-	return (numberOfMissingRoms() == 0);
-}
-
-void 
-C64::run() {
-
-	if (isHalted()) {
-
-		// Check for ROM images
-		if (getMissingRoms()) {
-			getListener()->missingRomAction(getMissingRoms());
-			return;
-		}
-
-		// Start execution thread
-		pthread_create(&p, NULL, runThread, (void *)this);	
-
-		// Power on sub components
-		sid->run();
-		
-	}
-}
-
-bool 
-C64::isRunning() {
-	return p != NULL;
-}
-
-void 
-C64::halt() 
-{
-	if (isRunning()) {
-		
-		// Shut down sub components
-		sid->halt();
-		// Cancel execution thread
-		pthread_cancel(p);
-		// Wait until thread terminates
-		pthread_join(p, NULL);
-		// Finish the current command (to reach a clean state)
-		step();
-	}
-}
-
-bool
-C64::isHalted()
-{
-	return p == NULL;
-}
-
-// Load/save
-bool 
-C64::load(FILE *file)
-{
-	uint8_t major, minor;
-
-	debug("Loading...\n");
-	
-	// Read header
-	if ((char)read8(file) != 'V') return false;
-	if ((char)read8(file) != 'I') return false;
-	if ((char)read8(file) != '6') return false;
-	if ((char)read8(file) != '4') return false;
-	
-	// Read version number
-	major = read8(file);
-	minor = read8(file);
-
-	// Load data
-	suspend();
-
-	cpu->load(file);
-	vic->load(file);
-	sid->load(file);
-	cia1->load(file);
-	cia2->load(file);	
-	mem->load(file);
-	keyboard->load(file);
-	iec->load(file);
-	floppy->load(file);
-	
-	resume();
-	return true;
-}
-
-void 
-C64::setDelay(int delay) 
-{ 
-	frameDelay = delay;
-	restartTimer();
-}
-
-void 
-C64::restartTimer() 
-{ 
-	targetTime = msec() + frameDelay;
-}
-
-void 
-C64::synchronizeTiming()
-{
-	// determine how long we should wait
-	uint64_t timeToSleep = targetTime - msec();
-	
-	// update target time
-	targetTime += (uint64_t)frameDelay;
-	
-	// sleep
-	if (timeToSleep > 0) {
-		sleepMicrosec(timeToSleep);
-	} else {
-		restartTimer();
-	}
-}
-
-bool 
-C64::save(FILE *file)
-{	
-	suspend();
-
-	debug("Saving...\n");
-
-	// Write header
-	write8(file, (uint8_t)'V');
-	write8(file, (uint8_t)'I');
-	write8(file, (uint8_t)'6');
-	write8(file, (uint8_t)'4');
-	
-	// Write version number
-	write8(file, 0);
-	write8(file, 1);
-	
-	// Write data
-	cpu->save(file);
-	vic->save(file);
-	sid->save(file);
-	cia1->save(file);
-	cia2->save(file);
-	mem->save(file);
-	keyboard->save(file);
-	iec->save(file);
-	floppy->save(file);
-	
-	resume();
-	return true;
-}
-
-void
-C64::setPAL()
-{
-	fps = VIC::PAL_REFRESH_RATE;
-	noOfRasterlines = VIC::PAL_RASTERLINES; 
-	cpuCyclesPerRasterline = VIC::PAL_CYCLES_PER_RASTERLINE;
-	vic->setPAL();
-	// TODO
-	// sid->setPAL()
-	frameDelay = (1000000 / fps);
-}
-
-void 
-C64::setNTSC()
-{
-	fps = VIC::NTSC_REFRESH_RATE;
-	noOfRasterlines = VIC::NTSC_RASTERLINES; 
-	cpuCyclesPerRasterline = VIC::NTSC_CYCLES_PER_RASTERLINE;
-	vic->setNTSC();
-	// TODO
-	// sid->setNTSC()
-	frameDelay = (1000000 / fps);
-}
-
-bool 
-C64::flushArchive(int item)
-{
-	uint16_t addr;
-	int data;
-	
-	// Archive loaded?
-	if (archive == NULL)
-		return false;
-	
-	addr = archive->getDestinationAddrOfItem(item);
-	archive->selectItem(item);
-	while (1) {
-		data = archive->getByte();
-		if (data < 0) break;
-		
-		mem->pokeRam(addr, (uint8_t)data);
-		if (addr == 0xFFFF) break;
-
-		addr++;
-	}
-	return true;
-}
-
-bool 
-C64::mountArchive()
-{	
-	// Archive loaded and mountable?
-	if (archive == NULL || !archive->isMountable())
-		return false;
-
-	// Insert disc
-	floppy->insertDisc((D64Archive *)archive);
-
-	return true;
-}
-
 bool 
 C64::loadRom(const char *filename)
 {
 	bool result = false; 
-
+	
 	suspend(); 
 	
 	if (C64Memory::isBasicRom(filename)) {
 		result = mem->loadBasicRom(filename);
 		if (result) getListener()->loadRomAction(BASIC_ROM);
 	}
-
+	
 	if (C64Memory::isCharRom(filename)) {
 		result = mem->loadCharRom(filename);
 		if (result) getListener()->loadRomAction(CHAR_ROM);
 	}
-
+	
 	if (C64Memory::isKernelRom(filename)) {
 		result = mem->loadKernelRom(filename);
 		if (result) getListener()->loadRomAction(KERNEL_ROM);
@@ -1125,84 +1098,9 @@ C64::loadRom(const char *filename)
 		result = floppy->mem->loadRom(filename);
 		if (result) getListener()->loadRomAction(VC1541_ROM);
 	}
-
+	
 	resume();
 	return result;
-}
-
-bool 
-C64::getWarpMode() 
-{ 
-	return warpMode; // || (enableWarpLoad && floppy->isRotating());
-}
-
-void
-C64::setWarpMode(bool b)
-{
-	warpMode = b;
-	restartTimer();
-	getListener()->warpAction(getWarpMode());	
-}
-
-#if 0
-void 
-C64::setWarpLoad(bool b) 
-{ 
-	enableWarpLoad = b; 
-	restartTimer();
-	getListener()->warpAction(getWarpMode());	
-}
-
-void 
-C64::setAlwaysWarp(bool b) { 
-	alwaysWarp = b; 
-	restartTimer();
-	getListener()->warpAction(getWarpMode());	
-}
-#endif
-
-void 
-C64::dumpState() {
-	
-	suspend();
-	
-	debug("CPU:\n");
-	debug("----\n");
-	cpu->dumpState();
-	
-	debug("Memory:\n");
-	debug("-------\n");
-	mem->dumpState();
-	
-	debug("VIC:\n");
-	debug("----\n");
-	vic->dumpState();
-	
-	debug("SID:\n");
-	debug("----\n");
-	sid->dumpState();
-	
-	debug("CIA 1:\n");
-	debug("------\n");
-	cia1->dumpState();
-	
-	debug("CIA 2:\n");
-	debug("------\n");
-	cia2->dumpState();
-
-	debug("IEC bus:\n");
-	debug("--------\n");
-	iec->dumpState();
-	
-	debug("Keyboard:\n");
-	debug("---------\n");
-	keyboard->dumpState();
-
-	debug("Disk drive:\n");
-	debug("-----------\n");
-	floppy->dumpState();
-	
-	resume();
 }
 
 bool 
@@ -1212,7 +1110,7 @@ C64::loadSnapshot(const char *filename)
 	bool result = false;
 	
 	assert(filename != NULL);
-
+	
 	file = fopen(filename, "r");
 	if (file != NULL) {
 		result = load(file);
@@ -1244,29 +1142,142 @@ C64::saveSnapshot(const char *filename)
 }
 
 
+// -----------------------------------------------------------------------------------------------
+//                                           Timing
+// -----------------------------------------------------------------------------------------------
+
 void 
-C64::scanJoysticks() {
-	// check if a new joystick is present now
-	if( joystick1 == NULL ) {
-		try {
-			joystick1 = new Joystick( 0 );
-		} catch( const char *ex ) {
-			joystick1 = NULL;
-			debug("Joystick 1 is NOT present\n");
-		}
-	}	
+C64::setDelay(int delay) 
+{ 
+	frameDelay = delay;
+	restartTimer();
+}
+
+void 
+C64::restartTimer() 
+{ 
+	targetTime = msec() + frameDelay;
+}
+
+void 
+C64::synchronizeTiming()
+{
+	// determine how long we should wait
+	uint64_t timeToSleep = targetTime - msec();
 	
-	// check if a new joystick is present now
-	if( joystick2 == NULL ) {
-		try {
-			joystick2 = new Joystick( 1 );
-		} catch( const char *ex ) {
-			joystick2 = NULL;
-			debug("Joystick 2 is NOT present\n");
-		}
+	// update target time
+	targetTime += (uint64_t)frameDelay;
+	
+	// sleep
+	if (timeToSleep > 0) {
+		sleepMicrosec(timeToSleep);
+	} else {
+		restartTimer();
 	}
 }
 
+// ---------------------------------------------------------------------------------------------
+//                                 Archives (disks, tapes, etc.)
+// ---------------------------------------------------------------------------------------------
+
+bool 
+C64::flushArchive(int item)
+{
+	uint16_t addr;
+	int data;
+	
+	// Archive loaded?
+	if (archive == NULL)
+		return false;
+	
+	addr = archive->getDestinationAddrOfItem(item);
+	archive->selectItem(item);
+	while (1) {
+		data = archive->getByte();
+		if (data < 0) break;
+		
+		mem->pokeRam(addr, (uint8_t)data);
+		if (addr == 0xFFFF) break;
+		
+		addr++;
+	}
+	return true;
+}
+
+bool 
+C64::mountArchive()
+{	
+	// Archive loaded and mountable?
+	if (archive == NULL || !archive->isMountable())
+		return false;
+	
+	// Insert disc
+	floppy->insertDisc((D64Archive *)archive);
+	
+	return true;
+}
+
+
+// ---------------------------------------------------------------------------------------------
+//                                            Misc
+// ---------------------------------------------------------------------------------------------
+
+int 
+C64::build()
+{
+	char month[11];
+	int year, mon, day;
+
+	sscanf(__DATE__, "%s %d %d", month, &day, &year);
+	
+	if (!strcmp(month, "Jan")) mon = 1;
+	else if (!strcmp(month, "Feb")) mon = 2;
+	else if (!strcmp(month, "Mar")) mon = 3;
+	else if (!strcmp(month, "Apr")) mon = 4;
+	else if (!strcmp(month, "May")) mon = 5;
+	else if (!strcmp(month, "Jun")) mon = 6;
+	else if (!strcmp(month, "Jul")) mon = 7;
+	else if (!strcmp(month, "Aug")) mon = 8;
+	else if (!strcmp(month, "Sep")) mon = 9;
+	else if (!strcmp(month, "Oct")) mon = 10;
+	else if (!strcmp(month, "Nov")) mon = 11;
+	else if (!strcmp(month, "Dez")) mon = 12;
+	else mon = 0; // Huh?
+
+	return ((year - 2000) * 10000) + (mon * 100) + day;
+}
+
+void
+C64::setInputDevice(int portNo, int newDevice) 
+{			
+	port[portNo] = newDevice;
+	
+	// Update CIA structure
+	switch(newDevice) {
+		case IPD_UNCONNECTED:
+			cia1->setJoystickToPort( portNo, NULL );
+			cia1->setKeyboardToPort( portNo, false );
+			break;
+			
+		case IPD_KEYBOARD: 
+			cia1->setJoystickToPort( portNo, NULL );
+			cia1->setKeyboardToPort( portNo, true );
+			break;
+			
+		case IPD_JOYSTICK_1: 
+			cia1->setJoystickToPort( portNo, joystick1 );
+			cia1->setKeyboardToPort( portNo, false );
+			break;
+			
+		case IPD_JOYSTICK_2: 
+			cia1->setJoystickToPort( portNo, joystick2 );
+			cia1->setKeyboardToPort( portNo, false );
+			break;
+			
+		default:
+			assert(false);
+	}
+}
 
 void
 C64::switchInputDevice( int portNo ) 
@@ -1290,38 +1301,6 @@ C64::switchInputDevice( int portNo )
 	setInputDevice(portNo, newDevice);
 }
 
-void
-C64::setInputDevice(int portNo, int newDevice) 
-{			
-	port[portNo] = newDevice;
-	
-	// Update CIA structure
-	switch(newDevice) {
-		case IPD_UNCONNECTED:
-			cia1->setJoystickToPort( portNo, NULL );
-			cia1->setKeyboardToPort( portNo, false );
-			break;
-		
-		case IPD_KEYBOARD: 
-			cia1->setJoystickToPort( portNo, NULL );
-			cia1->setKeyboardToPort( portNo, true );
-			break;
-		
-		case IPD_JOYSTICK_1: 
-			cia1->setJoystickToPort( portNo, joystick1 );
-			cia1->setKeyboardToPort( portNo, false );
-			break;
-		
-		case IPD_JOYSTICK_2: 
-			cia1->setJoystickToPort( portNo, joystick2 );
-			cia1->setKeyboardToPort( portNo, false );
-			break;
-
-		default:
-			assert(false);
-	}
-}
-
 void 
 C64::switchInputDevices()
 {
@@ -1335,3 +1314,34 @@ int
 C64::getDeviceOfPort( int portNo ) {
 	return port[portNo];
 }
+
+void 
+C64::scanJoysticks() {
+	// check if a new joystick is present now
+	if( joystick1 == NULL ) {
+		try {
+			joystick1 = new Joystick( 0 );
+		} catch( const char *ex ) {
+			joystick1 = NULL;
+			debug("Joystick 1 is NOT present\n");
+		}
+	}	
+	
+	// check if a new joystick is present now
+	if( joystick2 == NULL ) {
+		try {
+			joystick2 = new Joystick( 1 );
+		} catch( const char *ex ) {
+			joystick2 = NULL;
+			debug("Joystick 2 is NOT present\n");
+		}
+	}
+}
+
+void 
+C64::threadCleanup()
+{
+	p = NULL;
+	debug("Execution thread terminated\n");
+}
+

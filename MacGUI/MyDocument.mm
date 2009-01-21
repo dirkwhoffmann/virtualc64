@@ -652,7 +652,6 @@
 	NSLog(@"Stop and go action");
 	if ([c64 isHalted]) {
 		[c64 run];
-		[debug_panel close];
 	} else {
 		[c64 halt];
 		[debug_panel open];
