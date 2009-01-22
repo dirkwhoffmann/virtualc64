@@ -126,6 +126,7 @@
 	// Initialize variables
 	alwaysWarp = false;
 	enableOpenGL = false;  
+	selectedSprite = 0;
 	
 	// Create virtual C64
 	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];						
@@ -1688,6 +1689,14 @@
 	[self refresh];
 }
 
+- (IBAction)vicSpriteSelectAction:(id)sender
+{
+	selectedSprite = [sender selectedTag];
+	
+	NSLog(@"selectedSprite = %d", selectedSprite);
+	[self refresh];
+}
+
 - (IBAction)vicSpriteActiveAction:(id)sender
 {	
 	// debug("Selected sprinte = %d\n", [
@@ -2318,6 +2327,9 @@
 
 - (int)currentSprite
 {
+	return selectedSprite; 
+	
+#if 0	
 	if ([sprite0 intValue]) return 0;
 	if ([sprite1 intValue]) return 1;
 	if ([sprite2 intValue]) return 2;
@@ -2329,6 +2341,7 @@
 
 	assert(false);
 	return 0;
+#endif
 }
 
 - (Memory::MemoryType)currentMemSource
