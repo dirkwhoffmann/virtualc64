@@ -102,6 +102,24 @@ C64Memory::save(FILE *file)
 	return true;
 }
 
+void 
+C64Memory::dumpState()
+{
+	debug("C64 Memory:\n");
+	debug("-----------\n");
+	debug("    Basic ROM :%s loaded,%s visible\n", basicRomIsLoaded() ? "" : " not", basicRomIsVisible ? "" : " not");
+	debug("Character ROM :%s loaded,%s visible\n", charRomIsLoaded() ? "" : " not", charRomIsVisible ? "" : " not");
+	debug("   Kernel ROM :%s loaded,%s visible\n", kernelRomIsLoaded() ? "" : " not", kernelRomIsVisible ? "" : " not");
+	for (uint16_t i = 0; i < 0xFFFF; i++) {
+		uint8_t tag = cpu->getBreakpointTag(i);
+		if (tag != CPU::NO_BREAKPOINT) {
+			debug("Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
+		}
+	}
+	debug("\n");
+}
+
+
 // --------------------------------------------------------------------------------
 //                                      Rom Handling
 // --------------------------------------------------------------------------------

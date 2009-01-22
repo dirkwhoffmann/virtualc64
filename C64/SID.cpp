@@ -686,29 +686,23 @@ uint8_t SID::getEGOutput()
 
 void SID::dumpState()
 {
-	debug("\n||||||||||||||||||||||||||||||||||||||||\n");
-	debug("|| SID dump state ||||||||||||||||||||||\n");
-	debug("||||||||||||||||||||||||||||||||||||||||\n");
-	// print out register values
-	for (int i = 0; i < NO_OF_REGISTERS; i++) 
-	{
-		int registername = i + 0xD400;
-		debug("|| Register 0x%X: 0x%X\n", registername, iomem[i]);
-	}	
-	debug("|| Samplerate: %d Hz\n", this->samplerate);
-	debug("|| Emulation clock speed: %d Hz\n", this->cpuFrequency);
+	debug("SID\n");
+	debug("---\n\n");
+	debug("   Sample rate : %d\n", samplerate);
+	debug(" CPU frequency : %d\n", cpuFrequency);
+	debug("        Buffer : %s\n", mono ? "continous" : "interleaved");
+	debug("   Buffer size : %d\n", bufferSize);
+	debug("        Volume : %f\n", masterVolume);
+	debug("  Sound filter : %s\n", filtersEnabled ? "on" : "off");
 	
-	if (this->mono)
-		debug("|| Noninterleaved buffer.\n");
-	else
-		debug("|| Interleaved buffer.\n");
-		
-	if (this->filtersEnabled)
-		debug("|| Filters enabled.\n");
-	else
-		debug("|| Filters disabled.\n");
-		
-	debug("||||||||||||||||||||||||||||||||||||||||\n");
+	debug("\n     IO memory : ");
+	for (int i = 0; i < 32; i += 16) {
+		for (int j = 0; j < 16; j ++) {
+			debug("%02X ", iomem[i + j]);
+		}
+		debug("\n                 ");
+	}
+	debug("\n");
 }
 
 

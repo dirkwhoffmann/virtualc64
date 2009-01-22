@@ -125,8 +125,20 @@ public:
 	//! Bring the component back to its initial state
 	void reset();
 
+	//! Load snapshot from file
+	bool load(FILE *file);
+	
+	//! Save snapshot to file
+	bool save(FILE *file);
+	
+	//! Dump internal state to console
+	void dumpState();
+	
+	//! Write trace output to console
+	void dumpTrace();
+	
 	//! Connect the virtual diesc drive to the IEC bus
-	void setDrive(VC1541 *d) { assert(drive == NULL); drive = d; };
+	void setDrive(VC1541 *d) { assert(drive == NULL); drive = d; }
 	
 	//! Connect drive to the IEC bus
 	void connectDrive();
@@ -168,16 +180,6 @@ public:
 			
 	//! Is invoked periodically by the run thread
 	void execute();
-	
-	//! Load snapshot from file
-	bool load(FILE *file);
-
-	//! Save snapshot to file
-	bool save(FILE *file);
-
-	//! Print debug information
-	void dumpState();
-	
 };
 	
 #endif

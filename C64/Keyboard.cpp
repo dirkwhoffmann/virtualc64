@@ -52,6 +52,20 @@ Keyboard::save(FILE *file)
 	return true;
 }
 
+void 
+Keyboard::dumpState()
+{
+	debug("Keyboard:\n");
+	debug("---------\n\n");
+	debug("Keyboard matrix: ");
+	for (int i = 0; i < 8; i++) {
+		debug("%d %d %d %d %d %d %d %d\n                 ", 
+			  kbMatrix[i] & 0x01 != 0, kbMatrix[i] & 0x02 != 0, kbMatrix[i] & 0x04 != 0, kbMatrix[i] & 0x08 != 0,
+			  kbMatrix[i] & 0x10 != 0, kbMatrix[i] & 0x20 != 0, kbMatrix[i] & 0x40 != 0, kbMatrix[i] & 0x80 != 0);				
+	}
+	debug("\n");
+}
+
 uint8_t Keyboard::getRowValues(uint8_t columnMask)
 {
 	uint8_t result = 0xff;

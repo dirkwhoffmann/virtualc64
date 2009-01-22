@@ -145,13 +145,17 @@ public:
 	//! Destructor
 	~C64Memory();
 	
-	//! Reset the VIC chip to its initial state
-	/*! The function zeros out the 64k RAM space and brings the data direction register and processor port register back to
-		their initial state. 
-		\remark: The functions does not reload any ROM image.
-		\see: loadRom
-	*/
-	void reset(); // Clear RAM and reload ROMs
+	//! Restore initial state
+	void reset();
+
+	//! Load internal state from a file
+	bool load(FILE *file);
+	
+	//! Save internal state to a file
+	bool save(FILE *file);
+	
+	//! Dump current state into logfile
+	void dumpState();
 
 	//! Bind the virtual memory to the specified VIC chip.
 	/*! The binding is irreversible and the function "call once". */
@@ -201,21 +205,7 @@ public:
 	//! Returns true, iff the provided address is in one of the three ROM address ranges
 	static inline bool isRomAddr(uint16_t addr) 
 		{ return isCharRomAddr(addr) || isKernelRomAddr(addr) || isBasicRomAddr(addr); }
-	
-	//! Load internal state from a file
-	/*! The function is used for loading a snapshot of the virtual computer
-		\see C64::load
-		\param file file handle of the snapshot file
-	*/
-	bool load(FILE *file);
-
-	//! Save internal state to a file
-	/*! The function is used for saving a snapshot of the virtual computer
-		\see C64::save
-		\param file file handle of the snapshot file
-	*/
-	bool save(FILE *file);
-			
+				
 	//! Read a BYTE from Color RAM.
 	/*! The BYTE is always read from the color RAM, regardless of the value of the processor port register.
 		\param offset Memory address relative to the beginning of the color Ram

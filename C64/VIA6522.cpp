@@ -91,18 +91,28 @@ bool VIA6522::execute(int cycles)
 void 
 VIA6522::dumpState()
 {
-	debug("VIA(%p): %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X %2X", this,
-		io[0], io[1],  io[2],  io[3],  io[4],  io[5],  io[6],  io[7], 
-		io[8], io[9], io[10], io[11], io[12], io[13], io[14], io[15]);
-	debug("         orb = %2X ddrb = %2X ora = %2X ddra = %2X\n", orb, ddrb, ora, ddra);
-	debug("         Timer 1: %d interrupts %s, interrupt flag: %d \n", 
-		getTimer1(), timerInterruptEnabled1() ? "enabled" : "disabled", (io[0x0D] & 0x40) != 0);
-	debug("         Timer 2: %d interrupts %s, interrupt flag: %d \n", 
-		getTimer2(), timerInterruptEnabled2() ? "enabled" : "disabled", (io[0x0D] & 0x20) != 0);
-	debug("                  Input latching A %s\n", 
-		inputLatchingEnabledA() ? "enabled" : "disabled");
-	debug("                  Input latching B %s\n", 
-		inputLatchingEnabledB() ? "enabled" : "disabled");
+	debug("VIA:\n");
+	debug("----\n\n");
+	
+	debug("          Input register (IRA) : %02X\n", ira);
+	debug("          Input register (IRB) : %02X\n", irb);
+	debug("         Output register (ORA) : %02X\n", ora);
+	debug("         Output register (ORB) : %02X\n", orb);
+	debug("Data direction register (DDRA) : %02X\n", ddra);
+	debug("Data direction register (DDRB) : %02X\n", ddrb);
+	debug("              Input latching A : %s\n", inputLatchingEnabledA() ? "enabled" : "disabled");
+	debug("              Input latching B : %s\n", inputLatchingEnabledB() ? "enabled" : "disabled");
+	debug("                       Timer 1 : %d (latched: %d)\n", LO_HI(t1_counter_lo, t1_counter_hi), LO_HI(t1_latch_lo, t1_latch_hi));
+	debug("                       Timer 2 : %d (latched: %d)\n", LO_HI(t2_counter_lo, t2_counter_hi), LO_HI(t2_latch_lo, 0));
+	debug("            Timer 1 interrupts : %s\n", timerInterruptEnabled1() ? "enabled" : "disabled");
+	debug("            Timer 2 interrupts : %s\n", timerInterruptEnabled2() ? "enabled" : "disabled");
+	debug("        Timer 1 interrupt flag : %d\n", (io[0x0D] & 0x40) != 0);
+	debug("        Timer 2 interrupt flag : %d\n", (io[0x0D] & 0x20) != 0);
+	debug("                     IO memory : ");
+	for (int j = 0; j < 16; j ++) {
+		debug("%02X ", io[j]);
+	}
+	debug("\n");
 }
 
 uint8_t 

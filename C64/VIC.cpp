@@ -169,13 +169,13 @@ void
 VIC::dumpState()
 {
 	debug("VIC\n");
-	debug("---\n");
-	debug("Bank address:      %04X\n", bankAddr, bankAddr);
-	debug("Screen memory:     %04X\n", screenMemoryAddr);
-	debug("Character memory:  %04X\n", characterMemoryAddr);
-	debug("Text resolution:   %d x %d\n", numberOfRows(), numberOfColumns());
-	debug("X/Y raster scroll: %d / %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
-	debug("Display mode:      ");
+	debug("---\n\n");
+	debug("     Bank address : %04X\n", bankAddr, bankAddr);
+	debug("    Screen memory : %04X\n", screenMemoryAddr);
+	debug(" Character memory : %04X\n", characterMemoryAddr);
+	debug("  Text resolution : %d x %d\n", numberOfRows(), numberOfColumns());
+	debug("X/Y raster scroll : %d / %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
+	debug("     Display mode : ");
 	switch (getDisplayMode()) {
 		case STANDARD_TEXT: 
 			debug("Standard character mode\n");
@@ -195,31 +195,32 @@ VIC::dumpState()
 		default:
 			debug("Invalid\n");
 	}
-	debug("(X,Y):             (%d,%d) %s %s\n", xCounter, scanline,  dmaLine ? "(DMA line)" : "", dmaLinesEnabled ? "" : "(DMA lines disabled)");
-	debug("VC:                %02X\n", registerVC);
-	debug("VCBASE:            %02X\n", registerVCBASE);
-	debug("RC:                %02X\n", registerRC);
-	debug("VMLI:              %02X\n", registerVMLI);
-	debug("BA line:           %s\n", BAlow ? "low" : "high");
-	debug("mainFrameFF:       %d\n", mainFrameFF);
-	debug("verticalFrameFF:   %d\n", verticalFrameFF);
-	debug("draw Vframe:       %s\n", drawVerticalFrame ? "yes" : "no");
-	debug("draw Hframe:       %s\n", drawHorizontalFrame ? "yes" : "no");	
-	debug("displayState:      %s\n", displayState ? "on" : "off");
-	debug("spriteOn:          ");
+	debug("            (X,Y) : (%d,%d) %s %s\n", xCounter, scanline,  dmaLine ? "(DMA line)" : "", dmaLinesEnabled ? "" : "(DMA lines disabled)");
+	debug("               VC : %02X\n", registerVC);
+	debug("           VCBASE : %02X\n", registerVCBASE);
+	debug("               RC : %02X\n", registerRC);
+	debug("             VMLI : %02X\n", registerVMLI);
+	debug("          BA line : %s\n", BAlow ? "low" : "high");
+	debug("      MainFrameFF : %d\n", mainFrameFF);
+	debug("  VerticalFrameFF : %d\n", verticalFrameFF);
+	debug("      Draw Vframe : %s\n", drawVerticalFrame ? "yes" : "no");
+	debug("      Draw Hframe : %s\n", drawHorizontalFrame ? "yes" : "no");	
+	debug("     DisplayState : %s\n", displayState ? "on" : "off");
+	debug("         SpriteOn : ");
 	for (int i = 0; i < 8; i++) debug("%d ", spriteOnOff & (1 << i) != 0);
-	debug("\nspriteDma:         ");
+	debug("\n        SpriteDma : ");
 	for (int i = 0; i < 8; i++) debug("%d ", spriteDmaOnOff & (1 << i) != 0 );
-	debug("\nY expansion:       ");
+	debug("\n      Y expansion : ");
 	for (int i = 0; i < 8; i++) debug("%d ", expansionFF & (1 << i) != 0);
 	
-	debug("\n\nIO memory:\n");
-	for (int i = 0; i < 32; i += 8) {
+	debug("\n        IO memory : ");
+	for (int i = 0; i < 32; i += 16) {
 		for (int j = 0; j < 16; j ++) {
 			debug("%02X ", iomem[i + j]);
 		}
-		debug("\n");
+		debug("\n                    ");
 	}
+	debug("\n");
 }
 
 

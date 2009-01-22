@@ -844,9 +844,14 @@
 	[c64 dumpC64CPU];
 }
 
-- (IBAction)dumpC64CIA:(id)sender
+- (IBAction)dumpC64CIA1:(id)sender
 {
-	[c64 dumpC64CIA];
+	[c64 dumpC64CIA1];
+}
+
+- (IBAction)dumpC64CIA2:(id)sender
+{
+	[c64 dumpC64CIA2];
 }
 
 - (IBAction)dumpC64VIC:(id)sender
@@ -874,9 +879,14 @@
 	[c64 dumpVC1541CPU];
 }
 
-- (IBAction)dumpVC1541VIA:(id)sender
+- (IBAction)dumpVC1541VIA1:(id)sender
 {
-	[c64 dumpVC1541VIA];
+	[c64 dumpVC1541VIA1];
+}
+
+- (IBAction)dumpVC1541VIA2:(id)sender
+{
+	[c64 dumpVC1541VIA2];
 }
 
 - (IBAction)dumpVC1541Memory:(id)sender

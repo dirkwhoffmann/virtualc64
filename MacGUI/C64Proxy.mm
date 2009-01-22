@@ -201,13 +201,15 @@ void ListenerProxy::logAction(char *message)
 
 - (void) dumpC64 { c64->dumpState(); }
 - (void) dumpC64CPU { cpu->dumpState(); }
-- (void) dumpC64CIA { c64->cia1->dumpState(); c64->cia2->dumpState(); }
+- (void) dumpC64CIA1 { c64->cia1->dumpState(); }
+- (void) dumpC64CIA2 { c64->cia2->dumpState(); }
 - (void) dumpC64VIC { c64->vic->dumpState(); }
 - (void) dumpC64SID { c64->sid->dumpState(); }
 - (void) dumpC64Memory { c64->mem->dumpState(); }
 - (void) dumpVC1541 { c64->floppy->dumpState(); }
 - (void) dumpVC1541CPU { c64->floppy->cpu->dumpState(); }
-- (void) dumpVC1541VIA { c64->floppy->via1->dumpState(); c64->floppy->via2->dumpState(); }
+- (void) dumpVC1541VIA1 { c64->floppy->via1->dumpState(); }
+- (void) dumpVC1541VIA2 { c64->floppy->via2->dumpState(); }
 - (void) dumpVC1541Memory { c64->floppy->mem->dumpState(); }
 - (void) dumpKeyboard { c64->keyboard->dumpState(); }
 - (void) dumpIEC { c64->iec->dumpState(); }

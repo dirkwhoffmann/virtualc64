@@ -81,13 +81,22 @@ public:
 	//! Destructor
 	~VC1541();
 
+	//! Restore initial state
+	void reset();
+	
+	//! Load internal state from a file
+	bool load(FILE *file);
+	
+	//! Save internal state to a file
+	bool save(FILE *file);
+	
+	//! Dump current state into logfile
+	void dumpState();
+	
 	inline uint8_t getData(unsigned halftrack, unsigned offset) 
 		{ assert(track < 84); assert (offset < 7928); return data[halftrack][offset]; }
 	inline void setData(unsigned halftrack, unsigned offset, uint8_t value) 
 		{ assert(track < 84); assert (offset < 7928); data[halftrack][offset] = value; }
-
-	// Bring component back to its initial state
-	void reset();
 
 	//! Bind disc drive to a virtual IEC bus
 	void setIEC(IEC *bus) { assert(iec == NULL); iec = bus; mem->setIEC(bus); }
@@ -103,12 +112,6 @@ public:
 	/*! Simulates an interrupt. Will be called when the ATN signal is going high */
 	void simulateAtnInterrupt();
 	
-	//! Load internal state from a file
-	bool load(FILE *file);
-
-	//! Save internal state into a file
-	bool save(FILE *file);
-
 	void moveHead(int distance);
 
 	void activateRedLED() { getListener()->driveLEDAction(true); }
@@ -155,7 +158,6 @@ public:
 	void writeHead(uint8_t value) { data[track][offset] = value; }
 	
 	//! Dump state to debug console
-	void dumpState();
 	void dumpTrack(int track = -1);
 	void dumpFullTrack(int track = -1);
 	

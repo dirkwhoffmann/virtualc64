@@ -81,6 +81,29 @@ VC1541Memory::save(FILE *file)
 	return true;
 }
 
+void 
+VC1541Memory::dumpState()
+{
+	debug("VC1541 Memory:\n");
+	debug("--------------\n\n");
+	debug("VC1541 ROM :%s loaded\n", romIsLoaded() ? "" : " not");
+	for (uint16_t i = 0; i < 0xFFFF; i++) {
+		uint8_t tag = cpu->getBreakpointTag(i);
+		if (tag != CPU::NO_BREAKPOINT) {
+			debug("Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
+		}
+	}
+	for (uint16_t i = 0; i < 0xFFFF; i++) {
+		uint8_t tag = getWatchpointType(i);
+		if (tag == WATCH_FOR_VALUE) {
+			debug("Watchpoint at %0x4X (watch for value %02X)\n", i, getWatchValue(i));
+		} else if (tag == WATCH_FOR_ALL) {
+			debug("Watchpoint at %0x4X\n", i);
+		}
+	}
+	debug("\n");
+}
+
 bool 
 VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
 {

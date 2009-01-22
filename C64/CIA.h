@@ -183,6 +183,9 @@ public:
 	//! Save snapshot to file
 	bool save(FILE *file);
 	
+	//! Dump internal state to console
+	void dumpState();	
+	
 	//! Bind the CIA chip to the specified virtual CPU.
 	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
 
@@ -322,8 +325,6 @@ public:
 		The function is supposed to be invoked whenever a frame is finished (during VBlank) 
 	*/
 	void incrementTOD();
-
-	void dumpState();	
 };
 
 

@@ -229,11 +229,8 @@ public:
 	
 	//! Save snapshot to file.
 	bool save(FILE *file);
-	
-	//! Print info about the internal state.
-	/*! 
-		This functions is intended for debugging purposes only. 
-	*/ 
+
+	//! Dump internal state to console
 	void dumpState();
 	
 	//! Special peek function for the I/O memory range.

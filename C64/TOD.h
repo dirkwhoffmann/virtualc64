@@ -72,6 +72,9 @@ public:
 	//! Save snapshot to file
 	bool save(FILE *file);
 	
+	//! Dump internal state to console
+	void dumpState();	
+	
 	inline void freeze() { latch.value = tod.value; frozen = true; }
 	inline void defreeze() { frozen = false; }
 	inline void stop() { stopped = true; }

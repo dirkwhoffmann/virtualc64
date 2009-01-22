@@ -404,16 +404,35 @@ CIA::incrementTOD()
 		
 void CIA::dumpState()
 {
-	debug("Timer A: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
-		  timerA.getTimer(),
-		  timerA.isStarted() ? "yes" : "no",
-		  isInterruptEnabledA() ? "yes" : "no",
-		  timerA.isOneShot() ? "yes" : "no");
-	debug("Timer B: Count: %d, Started: %s canInterrupt: %s OneShot: %s\n", 
-		  timerB.getTimer(), 
-		  timerB.isStarted() ? "yes" : "no",
-		  isInterruptEnabledB() ? "yes" : "no",
-		  timerB.isOneShot() ? "yes" : "no");
+	debug("            Data port A : %02X\n", getDataPortA());
+	debug("            Data port B : %02X\n", getDataPortA());
+	debug("  Data port direction A : %02X\n", getDataPortDirectionA());
+	debug("  Data port direction B : %02X\n", getDataPortDirectionB());
+	debug("  External port lines A : %02X\n", portLinesA);
+	debug("  External port lines B : %02X\n", portLinesB);
+	debug("     Control register A : %02X %s\n", getControlRegA(), controlRegHasChangedA ? "(just changed)" : "(stable)");
+	debug("     Control register B : %02X %s\n", getControlRegB(), controlRegHasChangedB ? "(just changed)" : "(stable)");
+	debug("Interrupt data register : %02X\n", portLinesB);
+	debug("     Timer A interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
+	debug("     Timer B interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
+	debug("         TOD interrupts : %s\n", isInterruptEnabledTOD() ? "enabled" : "disabled");	
+	debug("       Signal pending A : %s\n", isSignalPendingA() ? "yes" : "no");
+	debug("       Signal pending B : %s\n", isSignalPendingB() ? "yes" : "no");
+	
+	debug("              IO memory : ");
+	for (int j = 0; j < 16; j ++) {
+			debug("%02X ", iomem[j]);
+	}
+	debug("\n\n");
+	debug("Timer A:\n");
+	debug("--------\n\n");
+	timerA.dumpState();
+	debug("Timer B:\n");
+	debug("--------\n\n");
+	timerB.dumpState();
+	debug("Time of day clock:\n");
+	debug("------------------\n\n");
+	tod.dumpState();
 }
 
 // -----------------------------------------------------------------------------------------
@@ -439,6 +458,14 @@ CIA1::reset()
 {
 	debug("  Resetting CIA1...\n");
 	CIA::reset();
+}
+
+void 
+CIA1::dumpState()
+{
+	debug("CIA 1:\n");
+	debug("------\n\n");
+	CIA::dumpState();
 }
 
 void 
@@ -610,13 +637,6 @@ CIA1::clearJoystickBits(int nr, uint8_t mask)
 	else if (nr == 2) joystick[1] &= (0xff-mask);
 }
 
-void 
-CIA1::dumpState()
-{
-	debug("CIA 1:\n");
-	CIA::dumpState();
-}
-
 
 // -----------------------------------------------------------------------------------------
 // Complex Interface Adapter 2
@@ -638,6 +658,14 @@ void CIA2::reset()
 {
 	debug("  Resetting CIA2...\n");
 	CIA::reset();
+}
+
+void 
+CIA2::dumpState()
+{
+	debug("CIA 2:\n");
+	debug("------\n\n");
+	CIA::dumpState();
 }
 
 void 
@@ -727,14 +755,4 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			CIA::poke(addr, value);
 	}
 }
-		
-void 
-CIA2::dumpState()
-{
-	debug("CIA 2:\n");
-	CIA::dumpState();
-	debug("Data port A: %x Direction A: %x, Data port B: %x Direction B: %x\n", 
-		iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A], 
-		iomem[CIA_DATA_PORT_B], iomem[CIA_DATA_DIRECTION_B]);
-}
-	
+			

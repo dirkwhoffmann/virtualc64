@@ -58,6 +58,48 @@ Timer::save(FILE *file)
 	return true;
 }
 
+void
+Timer::dumpState()
+{
+	debug("            Timer value : %04X\n", count);
+	debug("            Timer latch : %04X\n", timerLatch);
+	debug("                  State : ");
+	switch(state) {
+		case TIMER_COUNT:
+			debug("COUNT\n");
+			break;			
+		case TIMER_STOP:
+			debug("STOP\n");
+			break;
+		case TIMER_COUNT_STOP:
+			debug("COUNT THEN STOP\n");
+			break;
+		case TIMER_LOAD_STOP:
+			debug("LOAD THEN STOP\n");
+			break;
+		case TIMER_LOAD_COUNT:
+			debug("LOAD THEN COUNT\n");
+			break;
+		case TIMER_WAIT_COUNT:
+			debug("WAIT THEN COUNT\n");
+			break;
+		case TIMER_LOAD_WAIT_COUNT:
+			debug("LOAD THEN WAIT THEN COUNT\n");
+			break;
+		default: 
+			debug("UNKNOWN (internal error)");
+			break;
+	}
+	debug("       Control register : %02X\n", controlReg);
+	debug("       Count clockticks : %s\n", count_clockticks ? "yes" : "no");
+	debug("       Count underflows : %s\n", count_underflows ? "yes" : "no");
+	debug("       Count underflows : %s\n", count_underflows ? "yes" : "no");
+	debug("          Underflow bit : %d\n", underflow);
+	debug("   Underflow toggle bit : %d\n", underflow_toggle);
+	debug(" Will trigger interrupt : %s\n", triggerInterrupt ? "yes" : "no");
+	debug("\n");
+}
+
 void 
 Timer::executeOneCycle(void)
 {
