@@ -256,9 +256,6 @@ public:
 	//! Set NTSC mode
 	void setNTSC();
 	
-	//! Set emulation speed
-	//void setHz(int h);
-
 	//! Returns true iff warp mode is enabled
 	bool getWarpMode();
 	

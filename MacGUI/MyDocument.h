@@ -149,6 +149,7 @@
 	IBOutlet NSStepper *VicDXStepper;
 	IBOutlet NSTextField *VicDY;
 	IBOutlet NSStepper *VicDYStepper;
+	IBOutlet NSMatrix *spriteSelector;
 	IBOutlet NSButtonCell *sprite0; 	
 	IBOutlet NSButtonCell *sprite1;
 	IBOutlet NSButtonCell *sprite2; 	
@@ -193,6 +194,9 @@
 	// Usually set to true. If set to false, OpenGL drawing is disabled
 	// Setting the variable to false only makes sense during performance tests
 	bool enableOpenGL;	
+
+	// Number of selected sprite in VIC debug panel
+	int selectedSprite;
 }
 
 @property bool warpLoad;
@@ -322,6 +326,7 @@
 - (IBAction)vicDYAction:(id)sender;
 - (IBAction)vicDXStepperAction:(id)sender;
 - (IBAction)vicDYStepperAction:(id)sender;
+- (IBAction)vicSpriteSelectAction:(id)sender;
 - (IBAction)vicSpriteActiveAction:(id)sender;
 - (IBAction)vicSpriteMulticolorAction:(id)sender;
 - (IBAction)vicSpriteStretchXAction:(id)sender;

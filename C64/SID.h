@@ -279,11 +279,9 @@ public:
 	//! Returns samplerate of SID.
 	uint32_t getSamplerate() {return this->samplerate;}
 	
-	//! Set video mode of emulation. 
-	/*!
-		\param ntsc True if NTSC, false if PAL.
-	*/
-	void setVideoMode(bool ntsc);
+	//! Set clock frequency
+	/*! Value differs between PAL and NTSC machines */
+	void setVideoMode(uint32_t frequency);	
 };
 
 #endif

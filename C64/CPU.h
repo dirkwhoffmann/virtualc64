@@ -74,10 +74,10 @@ public:
 	};
 
 	//! Clock frequency of the original C64 (NTSC version) in Hz
-	static const uint32_t CLOCK_FREQUENCY_NTSC = 1022700; //1023000;
+	static const uint32_t CLOCK_FREQUENCY_NTSC = 1022700;
 	
 	//! Clock frequency of the original C64 (PAL version) in Hz
-	static const uint32_t CLOCK_FREQUENCY_PAL = 985248; // 985000;
+	static const uint32_t CLOCK_FREQUENCY_PAL = 985248;
 	
 	//! Bit position of the Negative flag
 	static const uint8_t N_FLAG = 0x80;

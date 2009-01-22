@@ -339,8 +339,7 @@ C64::setPAL()
 	noOfRasterlines = VIC::PAL_RASTERLINES; 
 	cpuCyclesPerRasterline = VIC::PAL_CYCLES_PER_RASTERLINE;
 	vic->setPAL();
-	// TODO
-	// sid->setPAL()
+	sid->setVideoMode(CPU::CLOCK_FREQUENCY_PAL);
 	frameDelay = (1000000 / fps);
 }
 
@@ -351,8 +350,7 @@ C64::setNTSC()
 	noOfRasterlines = VIC::NTSC_RASTERLINES; 
 	cpuCyclesPerRasterline = VIC::NTSC_CYCLES_PER_RASTERLINE;
 	vic->setNTSC();
-	// TODO
-	// sid->setNTSC()
+	sid->setVideoMode(CPU::CLOCK_FREQUENCY_NTSC);
 	frameDelay = (1000000 / fps);
 }
 

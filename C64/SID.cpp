@@ -140,24 +140,17 @@ void SID::setSamplerate(uint32_t sr)
 	this->updateConstants();
 }
 
-void SID::setVideoMode(bool ntsc)
+
+void 
+SID::setVideoMode(uint32_t frequency)
 {
-	if (ntsc)
-	{
-		this->cpuFrequency = CPU::CLOCK_FREQUENCY_NTSC;
-	}
-	else // PAL Video mode
-	{
-		this->cpuFrequency = CPU::CLOCK_FREQUENCY_PAL;
-	}
+	cpuFrequency = frequency;
 	
-	// tell SID's voices how to calculate voice frequency from register value
+	// Tell SID's voices how to calculate voice frequency from register values
 	for (int i = 0; i < 3; i++)
-	{
-		this->voice[i].setFrequencyFactor(this->cpuFrequency);
-	}
+		voice[i].setFrequencyFactor(this->cpuFrequency);
 	
-	this->updateConstants();
+	updateConstants();
 }
 
 bool 
