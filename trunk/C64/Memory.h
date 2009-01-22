@@ -36,6 +36,23 @@ class Memory : public VirtualComponent {
 
 public:
 
+	// --------------------------------------------------------------------------------
+	//                                Constant definitions
+	// --------------------------------------------------------------------------------
+	
+	//! Memory type
+	/*! This datatype defines a constant value for the different kinds of memory. */
+	enum MemoryType {
+		MEM_RAM,
+		MEM_ROM,
+		MEM_IO,
+		MEM_WATCHPOINT
+	};
+	
+	//! Returns true, if the specified address is a valid memory address
+	/*! Note, that the ROM and IO memory only partially cover the address space. */
+	virtual bool isValidAddr(uint16_t addr, MemoryType type) = 0;
+	
 protected:
 	//! Reference to the connected virtual CPU. 
 	/*! Use setCPU to set the value during initialization.
@@ -59,23 +76,6 @@ public:
 	//! Bind the virtual memory to the specified virtual CPU.
 	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
 
-
-	// --------------------------------------------------------------------------------
-	//                                Memory types
-	// --------------------------------------------------------------------------------
-
-	//! Memory type
-	/*! This datatype defines a constant value for the different kinds of memory. */
-	enum MemoryType {
-		MEM_RAM,
-		MEM_ROM,
-		MEM_IO,
-		MEM_WATCHPOINT
-	};
-	
-	//! Returns true, if the specified address is a valid memory address
-	/*! Note, that the ROM and IO memory only partially cover the address space. */
-	virtual bool isValidAddr(uint16_t addr, MemoryType type) = 0;
 
 	// --------------------------------------------------------------------------------
 	//                                    Peek

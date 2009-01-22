@@ -84,6 +84,42 @@ IEC::save(FILE *file)
 }
 
 void 
+IEC::dumpState()
+{
+	debug("IEC bus\n");
+	debug("-------\n");
+	debug("\n");
+	dumpTrace();
+	debug("\n");
+	debug("Drive connected : %s\n", driveConnected ? "yes" : "no");
+	debug("        old ATN : %d\n", oldAtnLine);
+	debug("        old CLK : %d\n", oldClockLine);
+	debug("       old DATA : %d\n", oldDataLine);
+	debug("\n");	
+}
+
+void 
+IEC::dumpTrace()
+{
+	debug("ATN: %s[%s%s%s%s] CLK: %s[%s%s%s%s] DATA: %s[%s%s%s%s]\n", 
+		  atnLine ? "1 F" : "0 T", 
+		  deviceAtnPin ? "1" : "0",
+		  deviceAtnIsOutput ? "<-" : "->", 
+		  ciaAtnPin ? "1" : "0",
+		  ciaAtnIsOutput ? "<-" : "->",
+		  clockLine ? "1 F" : "0 T", 
+		  deviceClockPin ? "1" : "0",
+		  deviceClockIsOutput ? "<-" : "->", 
+		  ciaClockPin ? "1" : "0",
+		  ciaClockIsOutput ? "<-" : "->",
+		  dataLine ? "1 F" : "0 T",
+		  deviceDataPin ? "1" : "0",
+		  deviceDataIsOutput ? "<-" : "->",
+		  ciaDataPin ? "1" : "0",
+		  ciaDataIsOutput ? "<-" : "->"); 
+}
+
+void 
 IEC::connectDrive() 
 { 
 	driveConnected = true; 
@@ -151,7 +187,7 @@ void IEC::updateIecLines()
 	}
 
 	if (signals_changed && tracingEnabled()) {
-		dumpState();
+		dumpTrace();
 	}
 }
 	
@@ -190,29 +226,7 @@ void IEC::execute()
 	if (busActivity > 0) {
 
 		busActivity--;
-		// printf("bus: %d\n", busActivity);
-		// dumpState();
 		if (busActivity == 0)
 			getListener()->driveDataAction(false);
 	}
-}
-
-void IEC::dumpState()
-{
-	debug("ATN: %s[%s%s%s%s] CLK: %s[%s%s%s%s] DATA: %s[%s%s%s%s]\n", 
-		atnLine ? "1 F" : "0 T", 
-		deviceAtnPin ? "1" : "0",
-		deviceAtnIsOutput ? "<-" : "->", 
-		ciaAtnPin ? "1" : "0",
-		ciaAtnIsOutput ? "<-" : "->",
-		clockLine ? "1 F" : "0 T", 
-		deviceClockPin ? "1" : "0",
-		deviceClockIsOutput ? "<-" : "->", 
-		ciaClockPin ? "1" : "0",
-		ciaClockIsOutput ? "<-" : "->",
-		dataLine ? "1 F" : "0 T",
-		deviceDataPin ? "1" : "0",
-		deviceDataIsOutput ? "<-" : "->",
-		ciaDataPin ? "1" : "0",
-		ciaDataIsOutput ? "<-" : "->"); 
 }

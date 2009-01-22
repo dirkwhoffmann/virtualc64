@@ -202,7 +202,7 @@ private:
 	/*! Number varies between PAL and NTSC machines */	
 	int noOfRasterlines;
 
-	//! Number of rasterlines
+	//! Number of cycles per rasterline
 	/*! Number varies between PAL and NTSC machines */	
 	int cpuCyclesPerRasterline;
 

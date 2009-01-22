@@ -186,6 +186,10 @@
 				<string>id</string>
 				<key>dumpC64CIA</key>
 				<string>id</string>
+				<key>dumpC64CIA1</key>
+				<string>id</string>
+				<key>dumpC64CIA2</key>
+				<string>id</string>
 				<key>dumpC64CPU</key>
 				<string>id</string>
 				<key>dumpC64Memory</key>
@@ -205,6 +209,10 @@
 				<key>dumpVC1541Memory</key>
 				<string>id</string>
 				<key>dumpVC1541VIA</key>
+				<string>id</string>
+				<key>dumpVC1541VIA1</key>
+				<string>id</string>
+				<key>dumpVC1541VIA2</key>
 				<string>id</string>
 				<key>ejectAction</key>
 				<string>id</string>

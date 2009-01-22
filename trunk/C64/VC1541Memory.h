@@ -57,6 +57,18 @@ public:
 	//! Destructor
 	~VC1541Memory();
 
+	//! Restore initial state
+	void reset();
+	
+	//! Load internal state from a file
+	bool load(FILE *file);
+	
+	//! Save internal state to a file
+	bool save(FILE *file);
+	
+	//! Dump current state into logfile
+	void dumpState();
+	
 	//! Bind the virtual memory to the specified IEC bus.
 	/*! The binding is irreversible and the function "call once". */
 	void setIEC(IEC *i) { assert(iec == NULL); iec = i; }
@@ -65,11 +77,6 @@ public:
 	/*! The binding is irreversible and the function "call once". */
 	void setDrive(VC1541 *d) { assert(floppy == NULL); floppy = d; }
 	
-	//! Reset component to its initial state
-	/*! \see: loadRom
-	*/
-	void reset();
-
 	//! Load a ROM image into memory.
 	/*! The function automatically determines the type of the specified file. In case of a valid ROM image, it
 		is loaded into the ROM space at the proper location. 
@@ -81,21 +88,7 @@ public:
 
 	//! Returns true, iff the ROM image is alrady loaded
 	bool romIsLoaded() { return romFile != NULL; }
-			
-	//! Load internal state from a file
-	/*! The function is used for loading a snapshot of the virtual computer
-		\see C64::load
-		\param file file handle of the snapshot file
-	*/
-	bool load(FILE *file);
-
-	//! Save internal state to a file
-	/*! The function is used for saving a snapshot of the virtual computer
-		\see C64::save
-		\param file file handle of the snapshot file
-	*/
-	bool save(FILE *file);
-			
+				
 	// Virtual fuctions that need to be implemented...
 	bool isValidAddr(uint16_t addr, MemoryType type);
 	uint8_t peekRam(uint16_t addr);

@@ -218,13 +218,15 @@
 
 - (IBAction)dumpC64:(id)sender;
 - (IBAction)dumpC64CPU:(id)sender;
-- (IBAction)dumpC64CIA:(id)sender;
+- (IBAction)dumpC64CIA1:(id)sender;
+- (IBAction)dumpC64CIA2:(id)sender;
 - (IBAction)dumpC64VIC:(id)sender;
 - (IBAction)dumpC64SID:(id)sender;
 - (IBAction)dumpC64Memory:(id)sender;
 - (IBAction)dumpVC1541:(id)sender;
 - (IBAction)dumpVC1541CPU:(id)sender;
-- (IBAction)dumpVC1541VIA:(id)sender;
+- (IBAction)dumpVC1541VIA1:(id)sender;
+- (IBAction)dumpVC1541VIA2:(id)sender;
 - (IBAction)dumpVC1541Memory:(id)sender;
 - (IBAction)dumpKeyboard:(id)sender;
 - (IBAction)dumpIEC:(id)sender;

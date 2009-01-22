@@ -93,6 +93,9 @@ public:
 	//! Save snapshot to file
 	bool save(FILE *file);
 	
+	//! Dump internal state to console
+	void dumpState();
+	
 	//! Set reference to the CIA chip
 	void setCIA(CIA *c) { cia = c; }
 

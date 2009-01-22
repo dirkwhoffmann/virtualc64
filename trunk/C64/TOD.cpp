@@ -58,6 +58,17 @@ TOD::save(FILE *file)
 	return true;
 }
 
+void 
+TOD::dumpState()
+{
+	debug("            Time of day : %02X:%02X:%02X:%02X\n", tod.time.hours, tod.time.minutes, tod.time.seconds, tod.time.tenth);
+	debug("                  Alarm : %02X:%02X:%02X:%02X\n", alarm.time.hours, alarm.time.minutes, alarm.time.seconds, alarm.time.tenth);
+	debug("                  Latch : %02X:%02X:%02X:%02X\n", latch.time.hours, latch.time.minutes, latch.time.seconds, latch.time.tenth);
+	debug("                 Frozen : %s\n", isFrozen() ? "yes" : "no");
+	debug("                Stopped : %s\n", stopped ? "yes" : "no");
+	debug("\n");
+}
+
 bool 
 TOD::increment()
 {

@@ -104,13 +104,15 @@ public:
 
 - (void) dumpC64;
 - (void) dumpC64CPU;
-- (void) dumpC64CIA;
+- (void) dumpC64CIA1;
+- (void) dumpC64CIA2;
 - (void) dumpC64VIC;
 - (void) dumpC64SID;
 - (void) dumpC64Memory;
 - (void) dumpVC1541;
 - (void) dumpVC1541CPU;
-- (void) dumpVC1541VIA;
+- (void) dumpVC1541VIA1;
+- (void) dumpVC1541VIA2;
 - (void) dumpVC1541Memory;
 - (void) dumpKeyboard;
 - (void) dumpIEC;

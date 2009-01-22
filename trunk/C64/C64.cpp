@@ -298,46 +298,16 @@ C64::save(FILE *file)
 
 void 
 C64::dumpState() {
-	
-	suspend();
-	
-	debug("CPU:\n");
-	debug("----\n");
-	cpu->dumpState();
-	
-	debug("Memory:\n");
-	debug("-------\n");
-	mem->dumpState();
-	
-	debug("VIC:\n");
-	debug("----\n");
-	vic->dumpState();
-	
-	debug("SID:\n");
-	debug("----\n");
-	sid->dumpState();
-	
-	debug("CIA 1:\n");
-	debug("------\n");
-	cia1->dumpState();
-	
-	debug("CIA 2:\n");
-	debug("------\n");
-	cia2->dumpState();
-	
-	debug("IEC bus:\n");
-	debug("--------\n");
-	iec->dumpState();
-	
-	debug("Keyboard:\n");
-	debug("---------\n");
-	keyboard->dumpState();
-	
-	debug("Disk drive:\n");
-	debug("-----------\n");
-	floppy->dumpState();
-	
-	resume();
+	debug("C64:\n");
+	debug("----\n\n");
+	debug("         Machine type : %s\n", (noOfRasterlines == VIC::PAL_RASTERLINES) ? "PAL" : "NTSC");
+	debug("    Frames per second : %d\n", fps);
+	debug("Rasterlines per frame : %d\n", noOfRasterlines);
+	debug("Cycles per rasterline : %d\n", cpuCyclesPerRasterline);
+	debug("        Current cycle : %llu\n", cycles);
+	debug("        Current frame : %d\n", frame);
+	debug("   Current rasterline : %d\n", rasterline);
+	debug("\n");
 }
 
 void C64::setListener(C64Listener *l)

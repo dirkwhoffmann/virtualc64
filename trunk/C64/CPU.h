@@ -251,8 +251,14 @@ public:
 	// Brings CPU back to its initial state
 	void reset();
 
-	// Brings CPU back to its initial state
-	// void reset(uint8_t PClo, uint8_t PChi);
+	//! Load internal state from a file
+	bool load(FILE *file);
+
+	//! Save internal state into a file
+	bool save(FILE *file);
+	
+	//! Dump internal state to console
+	void dumpState();	
 
 	//! Binds CPU and C64 together
 	void setC64(C64 *c) { assert(c64 == NULL); c64 = c; }
@@ -418,12 +424,7 @@ public:
 	inline void clearNMILineReset() { clearNMILine(0x08); }
 	//! Set RDY line 
 	inline void setRDY(bool value) { rdyLine = value; }
-	
-	//! Load internal state from a file
-	bool load(FILE *file);
-	//! Save internal state into a file
-	bool save(FILE *file);
-	
+		
 	//! Returns the three letter mnemonic for a given opcode
 	char *getMnemonic(uint8_t opcode);
 	//! Returns the three letter mnemonic of the next instruction to execute
@@ -461,6 +462,8 @@ public:
 	void setErrorState(ErrorState state);
 	//! Reset the error state to "OK"
 	void clearErrorState();
+	//! Return breakpoint tag for the specified address
+	inline uint8_t getBreakpointTag(uint16_t addr) { return breakpoint[addr]; }
 	
 	//! Returns the breakpoint tag for the specified address
 	uint8_t getBreakpoint(uint16_t addr) { return breakpoint[addr]; }
@@ -492,7 +495,6 @@ public:
 	//! Read entry from callstack
 	int getTopOfCallStack() { return (callStackPointer > 0) ? callStack[callStackPointer-1] : -1; }
 	
-	void dumpState(); 
 	void dumpHistory();
 };
 #endif

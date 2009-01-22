@@ -59,18 +59,18 @@ VC1541::reset()
 
 	cpu->reset();
 	cpu->setPC(0xEAA0);
-	// cpu->setHardBreakpoint(0xEAA1);
 	mem->reset();
 	via1->reset();
 	via2->reset();
-	
-	stopRotating();
-	deactivateRedLED();
-	
+		
 	byteReadyTimer = 0;
 	track = 40;
 	offset = 0;
 	noOfFFBytes = 0;
+
+	clearDisk();
+	stopRotating();
+	deactivateRedLED();	
 }
 
 void 
@@ -397,6 +397,9 @@ VC1541::ejectDisc()
 void 
 VC1541::dumpState()
 {
+	debug("VC1541\n");
+	debug("------\n\n");
+	
 #if 0	
 	FILE *file = fopen("/Users/hoff/tmp/d64image.txt","w");
 	
@@ -418,9 +421,13 @@ VC1541::dumpState()
 	}
 #endif
 
-	debug("head timer: %d V-enable: %d track: %d, offset: %d (%d -> %d) ff_bytes: %d\n", 
-	byteReadyTimer, via2->overflowEnabled(),
-	track, offset, readHead(), readHeadLookAhead(), noOfFFBytes);
+	debug("         Head timer : %d\n", byteReadyTimer);
+	debug("              Track : %d\n", track);
+	debug("       Track offset : %d\n", offset);
+	debug("Sync bytes in a row : %d\n", noOfFFBytes);
+	debug("  Symbol under head : %02X\n", readHead());
+	debug("        Next symbol : %02X\n", readHeadLookAhead());
+	debug("\n");
 }
 
 void 

@@ -51,6 +51,9 @@ public:
 	//! Save internal state into a file
 	bool save(FILE *file);
 	
+	//! Dump internal state to console
+	void dumpState();	
+
 	//! Inform keyboard about a pressed key
 	/*! The key is specified in the C64 row/column format:
 
