@@ -25,7 +25,6 @@
 		5005966C0D23FA1800FD44B3 /* LEDyellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5005966B0D23FA1800FD44B3 /* LEDyellow.png */; };
 		5005966E0D23FA1C00FD44B3 /* LEDblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 5005966D0D23FA1C00FD44B3 /* LEDblue.png */; };
 		5007A4880C3F9D6A0069B0CE /* PreferenceController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */; };
-		5007A48D0C3F9E700069B0CE /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 5007A48B0C3F9E700069B0CE /* Preferences.nib */; };
 		5007A5EC0C3FC99F0069B0CE /* VIC_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007A5EB0C3FC99F0069B0CE /* VIC_colors.cpp */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500B9D370C40E554008237C6 /* pref_disk.png in Resources */ = {isa = PBXBuildFile; fileRef = 500B9D360C40E554008237C6 /* pref_disk.png */; };
@@ -90,9 +89,10 @@
 		50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FC0C42698E00AFB05F /* flag_usa.png */; };
 		50E555FF0C42699300AFB05F /* flag_eu.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FE0C42699300AFB05F /* flag_eu.png */; };
 		50F4D2940C46262700ED4E4E /* ResetImage.VC64 in Resources */ = {isa = PBXBuildFile; fileRef = 50F4D2930C46262700ED4E4E /* ResetImage.VC64 */; };
+		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
+		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
+		50F55DD10F28EC2D0040592B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCF0F28EC2D0040592B /* Preferences.xib */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
-		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
-		8D15AC2E0486D014006FF6A4 /* MyDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -108,8 +108,6 @@
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2A37F4B5FDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MyDocument.nib; sourceTree = "<group>"; };
-		2A37F4B7FDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -136,7 +134,6 @@
 		5005966D0D23FA1C00FD44B3 /* LEDblue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDblue.png; path = images/LEDblue.png; sourceTree = "<group>"; };
 		5007A4860C3F9D6A0069B0CE /* PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceController.h; sourceTree = "<group>"; };
 		5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = PreferenceController.mm; sourceTree = "<group>"; };
-		5007A48C0C3F9E700069B0CE /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Preferences.nib; sourceTree = "<group>"; };
 		5007A5EB0C3FC99F0069B0CE /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
@@ -229,6 +226,9 @@
 		50E555FC0C42698E00AFB05F /* flag_usa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag_usa.png; path = images/flag_usa.png; sourceTree = "<group>"; };
 		50E555FE0C42699300AFB05F /* flag_eu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag_eu.png; path = images/flag_eu.png; sourceTree = "<group>"; };
 		50F4D2930C46262700ED4E4E /* ResetImage.VC64 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ResetImage.VC64; sourceTree = "<group>"; };
+		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
+		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		50F55DD00F28EC2D0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* V64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = V64.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -308,9 +308,9 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */,
-				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
-				5007A48B0C3F9E700069B0CE /* Preferences.nib */,
+				50F55DA30F28EADC0040592B /* MyDocument.xib */,
+				50F55DCB0F28EC010040592B /* MainMenu.xib */,
+				50F55DCF0F28EC2D0040592B /* Preferences.xib */,
 				50F4D28F0C4625E200ED4E4E /* Snapshots */,
 				50732BCA0A70D560008D8FF0 /* Images */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -553,8 +553,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
-				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
-				8D15AC2E0486D014006FF6A4 /* MyDocument.nib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				50DA154A0A642EA20022B4A7 /* window_fullscreen.png in Resources */,
@@ -572,7 +570,6 @@
 				50E4C0240C3CFBC300CB6B43 /* soundOff.png in Resources */,
 				50E4C0260C3CFBC700CB6B43 /* soundOn.png in Resources */,
 				50E4C0280C3CFBE400CB6B43 /* fullscreen.png in Resources */,
-				5007A48D0C3F9E700069B0CE /* Preferences.nib in Resources */,
 				500B9D370C40E554008237C6 /* pref_disk.png in Resources */,
 				500B9D390C40E55A008237C6 /* pref_system.png in Resources */,
 				500B9D3B0C40E55F008237C6 /* pref_sound.png in Resources */,
@@ -598,6 +595,9 @@
 				50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */,
 				50A3E08A0E66F7BC00D3564D /* play32.png in Resources */,
 				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
+				50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */,
+				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
+				50F55DD10F28EC2D0040592B /* Preferences.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,22 +676,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2A37F4B5FDCFA73011CA2CEA /* English */,
-			);
-			name = MyDocument.nib;
-			sourceTree = "<group>";
-		};
-		2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2A37F4B7FDCFA73011CA2CEA /* English */,
-			);
-			name = MainMenu.nib;
-			sourceTree = "<group>";
-		};
 		2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -700,12 +684,28 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		5007A48B0C3F9E700069B0CE /* Preferences.nib */ = {
+		50F55DA30F28EADC0040592B /* MyDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5007A48C0C3F9E700069B0CE /* English */,
+				50F55DA40F28EADC0040592B /* English */,
 			);
-			name = Preferences.nib;
+			name = MyDocument.xib;
+			sourceTree = "<group>";
+		};
+		50F55DCB0F28EC010040592B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50F55DCC0F28EC010040592B /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		50F55DCF0F28EC2D0040592B /* Preferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50F55DD00F28EC2D0040592B /* English */,
+			);
+			name = Preferences.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
