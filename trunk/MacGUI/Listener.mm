@@ -85,7 +85,6 @@
 	NSAutoreleasePool* arp = [[NSAutoreleasePool alloc] init];
 	
 	NSLog(@"haltAction");
-	[info setStringValue:@"Emulation halted."];
 	[self enableUserEditing:YES];	
 	[self refresh];
 
@@ -99,19 +98,17 @@
 	NSLog(@"cpuAction");
 	switch(state) {
 		case CPU::OK: 
+		case CPU::SOFT_BREAKPOINT_REACHED:
 			[info setStringValue:@""];
 			break;
-		case CPU::BREAKPOINT_REACHED:
-			[info setStringValue:@"Breakpoint reached."];
-			[self enableUserEditing:YES];	
+		case CPU::HARD_BREAKPOINT_REACHED:
+			[info setStringValue:@"Breakpoint reached"];
 			break;
 		case CPU::WATCHPOINT_REACHED:
-			[info setStringValue:@"Watchpoint reached."];
-			[self enableUserEditing:YES];	
+			[info setStringValue:@"Watchpoint reached"];
 			break;
 		case CPU::ILLEGAL_INSTRUCTION:
-			[info setStringValue:@"CPU halted due to an illegal instruction."];
-			[self enableUserEditing:YES];	
+			[info setStringValue:@"CPU halted due to an illegal instruction"];
 			break;
 		default:
 			assert(0);

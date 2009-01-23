@@ -54,8 +54,12 @@ CPU::fetch() {
 	
 	// Check breakpoint tag
 	if (breakpoint[PC] != NO_BREAKPOINT) {
-		breakpoint[PC] &= (255 - SOFT_BREAKPOINT); // Soft breakpoints get deleted when reached
-		setErrorState(BREAKPOINT_REACHED);
+		if (breakpoint[PC] & SOFT_BREAKPOINT) {
+			breakpoint[PC] &= ~SOFT_BREAKPOINT; // Soft breakpoints get deleted when reached
+			setErrorState(SOFT_BREAKPOINT_REACHED);
+		} else {
+			setErrorState(HARD_BREAKPOINT_REACHED);
+		}
 		debug("Breakpoint reached\n");
 	}
 
@@ -75,8 +79,8 @@ void
 CPU::registerCallback(uint8_t opcode, char *mnc, AddressingMode mode, void (CPU::*func)())
 {
 	// table is write once!
-	if (func != &CPU::defaultCallback) 
-		assert(actionFunc[opcode] == &CPU::defaultCallback);
+	if (func != &CPU::JAM) 
+		assert(actionFunc[opcode] == &CPU::JAM);
 	
 	actionFunc[opcode] = func;
 	mnemonic[opcode] = mnc;
@@ -203,7 +207,7 @@ CPU::registerIllegalInstructions()
 void CPU::registerInstructions()
 {
 	for (int i=0; i<256; i++)
-		registerCallback(i, &CPU::defaultCallback);
+		registerCallback(i, &CPU::JAM);
 
 	registerCallback(0x69, "ADC", ADDR_IMMEDIATE, &CPU::ADC_immediate);
 	registerCallback(0x65, "ADC", ADDR_ZERO_PAGE, &CPU::ADC_zero_page);
@@ -393,48 +397,59 @@ void CPU::registerInstructions()
 	registerIllegalInstructions();	
 }
 
-void CPU::defaultCallback()
+// -------------------------------------------------------------------------------
+// Illegal instructions
+// -------------------------------------------------------------------------------
+
+void CPU::JAM()
 {
 	setErrorState(ILLEGAL_INSTRUCTION);
+	// debug("Illegal instruction\n");
+	next = &CPU::JAM_2;
 }
 
+void CPU::JAM_2()
+{
+	// debug("JAM 2\n");
+	DONE;
+}
 
 // -------------------------------------------------------------------------------
 // IRQ handling
 // -------------------------------------------------------------------------------
-inline void CPU::irq()
+void CPU::irq()
 {
 	IDLE_READ_IMPLIED;
 	next = &CPU::irq_2;
 }
-inline void CPU::irq_2()
+void CPU::irq_2()
 {
 	IDLE_READ_IMPLIED;
 	next = &CPU::irq_3;
 }
-inline void CPU::irq_3()
+void CPU::irq_3()
 {
 	mem->poke(0x100+(SP--), HI_BYTE(PC));
 	next = &CPU::irq_4;
 }
-inline void CPU::irq_4()
+void CPU::irq_4()
 {
 	mem->poke(0x100+(SP--), LO_BYTE(PC));
 	next = &CPU::irq_5;
 }
-inline void CPU::irq_5()
+void CPU::irq_5()
 {
 	uint8_t p = getPWithClearedB();
 	mem->poke(0x100+(SP--), p);	
 	setI(1);
 	next = &CPU::irq_6;
 }
-inline void CPU::irq_6()
+void CPU::irq_6()
 {
 	data = mem->peek(0xFFFE);
 	next = &CPU::irq_7;
 }
-inline void CPU::irq_7()
+void CPU::irq_7()
 {
 	setPCL(data);
 	setPCH(mem->peek(0xFFFF));
@@ -445,38 +460,38 @@ inline void CPU::irq_7()
 // -------------------------------------------------------------------------------
 // NMI handling
 // -------------------------------------------------------------------------------
-inline void CPU::nmi()
+void CPU::nmi()
 {
 	IDLE_READ_IMPLIED;
 	next = &CPU::nmi_2;
 }
-inline void CPU::nmi_2()
+void CPU::nmi_2()
 {
 	IDLE_READ_IMPLIED;
 	next = &CPU::nmi_3;
 }
-inline void CPU::nmi_3()
+void CPU::nmi_3()
 {
 	mem->poke(0x100+(SP--), HI_BYTE(PC));
 	next = &CPU::nmi_4;
 }
-inline void CPU::nmi_4()
+void CPU::nmi_4()
 {
 	mem->poke(0x100+(SP--), LO_BYTE(PC));
 	next = &CPU::nmi_5;
 }
-inline void CPU::nmi_5()
+void CPU::nmi_5()
 {
 	mem->poke(0x100+(SP--), getPWithClearedB());	
 	setI(1);
 	next = &CPU::nmi_6;
 }
-inline void CPU::nmi_6()
+void CPU::nmi_6()
 {
 	data = mem->peek(0xFFFA);
 	next = &CPU::nmi_7;
 }
-inline void CPU::nmi_7()
+void CPU::nmi_7()
 {
 	setPCL(data);
 	setPCH(mem->peek(0xFFFB));
