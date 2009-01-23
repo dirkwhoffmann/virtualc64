@@ -55,7 +55,8 @@ public:
 	*/ 
 	enum ErrorState {
 		OK,
-		BREAKPOINT_REACHED,
+		SOFT_BREAKPOINT_REACHED,
+		HARD_BREAKPOINT_REACHED,
 		WATCHPOINT_REACHED,
 		ILLEGAL_INSTRUCTION,
 	};
@@ -326,13 +327,12 @@ public:
 	//! Write value to the the Y register. Flags remain untouched.
 	inline void setY(uint8_t y) { Y = y; }
 	//! Write value to the the program counter.
-	//inline void setPC(uint16_t pc) { if (pc == 0x2022) { dumpPCHistory(); dumpState(); } PC = pc; }
 	inline void setPC(uint16_t pc) { PC = pc; }
+	//! Write value to the freezend program counter.
+	inline void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = &CPU::fetch;}
 	//! Change low byte of the program counter only
-	//inline void setPCL(uint8_t lo) { if (((PC & 0xff00) | lo) == 0x2023) dumpState(); PC = (PC & 0xff00) | lo; }
 	inline void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
 	//! Change high byte of the program counter only
-	//inline void setPCH(uint8_t hi) { if ((PC & 0x00ff) | ((uint16_t)hi << 8) == 0x2023) dumpState(); PC = (PC & 0x00ff) | ((uint16_t)hi << 8); }
 	inline void setPCH(uint8_t hi) { PC = (PC & 0x00ff) | ((uint16_t)hi << 8); }
 	//! Increment the program counter by the specified amount. 
 	/*! If no argument is provided, the program counter is incremented by one. */

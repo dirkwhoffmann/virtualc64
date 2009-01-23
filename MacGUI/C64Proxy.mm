@@ -221,7 +221,7 @@ void ListenerProxy::logAction(char *message)
 
 - (long) cpuGetCycles { return (long)c64->getCycles(); }
 - (uint16_t) cpuGetPC { return cpu->getPC_at_cycle_0(); }
-- (void) cpuSetPC:(uint16_t)pc { cpu->setPC(pc); }
+- (void) cpuSetPC:(uint16_t)pc { cpu->setPC_at_cycle_0(pc); }
 - (uint8_t) cpuGetSP { return cpu->getSP(); }
 - (void) cpuSetSP:(uint8_t)sp { cpu->setSP(sp); }
 - (uint8_t) cpuGetA { return cpu->getA(); }

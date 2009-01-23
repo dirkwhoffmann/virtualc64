@@ -30,6 +30,9 @@ threadCleanup(void* thisC64)
 	
 	C64 *c64 = (C64 *)thisC64;
 	c64->threadCleanup();
+	
+	c64->debug("Execution thread terminated\n");	
+	c64->getListener()->haltAction();
 }
 
 
@@ -52,7 +55,6 @@ void
 	// Prepare to run...
 	c64->cpu->clearErrorState();
 	c64->floppy->cpu->clearErrorState();
-	//c64->setDelay((uint64_t)(1000000 / c64->fps));
 	c64->setDelay();
 	
 	// determine cycle relative to the current rasterline
@@ -65,10 +67,7 @@ void
 		if (c64->getFrame() == 0 && c64->getRasterline() == 0)
 			pthread_testcancel();
 	}
-	
-	c64->debug("Execution thread terminated\n");	
-	c64->getListener()->haltAction();
-	
+		
 	// Problem: We might stop in the middle of a command and get bogus data in the debugger display
 	//          Should be proceed to the next command if the thread was interrupted by the user?
 
@@ -440,6 +439,10 @@ C64::isHalted()
 void
 C64::step() 
 {		
+	// Clear error states
+	cpu->clearErrorState();
+	floppy->cpu->clearErrorState();
+	
 	// Execute next command 
 	do {
 		executeOneCycle();

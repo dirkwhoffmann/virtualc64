@@ -80,9 +80,6 @@ void registerIllegalInstructions();
 //! Register complete instruction set
 void registerInstructions();
 
-//! Function pointer table will be initializes with this default function
-void  defaultCallback();
-
 // Helper functions
 void adc(uint8_t op);
 void adc_binary(uint8_t op);
@@ -97,6 +94,8 @@ uint8_t rol(uint8_t op);
 
 // Execution functions
 void fetch();
+
+void JAM(); void JAM_2(); // Default action for illegal instructions
 
 void irq(); void irq_2(); void irq_3(); void irq_4(); void irq_5(); void irq_6(); void irq_7();
 void nmi(); void nmi_2(); void nmi_3(); void nmi_4(); void nmi_5(); void nmi_6(); void nmi_7();
