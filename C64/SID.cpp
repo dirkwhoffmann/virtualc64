@@ -158,11 +158,7 @@ SID::load(FILE *file)
 	// reset ringbuffer, buffer pointers, callback synchronisation mechanism, etc. 
 	this->reset();
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
-	{
-		// call poke for every register with value from file
-		// poke will store this value in iomem[] beside other things
-		this->poke(i,read8(file));
-	}
+		poke(i,read8(file)); // poke will store this value in iomem[] beside other things
 	return true;
 }
 
@@ -173,9 +169,7 @@ SID::save(FILE *file)
 
 	// store every single register value in file
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
-	{
 		write8(file, iomem[i]);
-	}	
 	return true;
 }
 

@@ -96,9 +96,12 @@ VIC::reset()
 	for (int i = 0; i < 8; i++) {
 		mc[i] = 0;
 		mcbase[i] = 0;
-		spriteShiftReg[i][0] = spriteShiftReg[i][1] = spriteShiftReg[i][3] = 0; 
+		spriteShiftReg[i][0] = 0;
+		spriteShiftReg[i][1] = 0;
+		spriteShiftReg[i][3] = 0; 
 	}
 	spriteOnOff = 0;
+	oldSpriteOnOff = 0;
 	spriteDmaOnOff = 0;
 	expansionFF = 0xff;
 	
@@ -119,24 +122,50 @@ bool
 VIC::load(FILE *file)
 {
 	debug("  Loading VIC state...\n");
-	scanline = read32(file);
-	setMemoryBankAddr(read16(file));
-	setScreenMemoryAddr(read16(file));
-	setCharacterMemoryAddr(read16(file));
 	
-	for (unsigned i = 0; i < sizeof(iomem); i++) {
+	// Internal registers
+	scanline = read32(file);
+	xCounter = read16(file);
+	registerVC = read16(file);
+	registerVCBASE = read16(file);
+	registerRC = read16(file);
+	registerVMLI = read16(file);
+	dmaLine = (bool)read8(file);
+	dmaLinesEnabled = (bool)read8(file);
+	displayState = (bool)read8(file);
+	BAlow = (bool)read8(file);
+	mainFrameFF = (bool)read8(file);
+	verticalFrameFF = (bool)read8(file);
+	drawVerticalFrame = (bool)read8(file);
+	drawHorizontalFrame = (bool)read8(file);
+	
+	// Memory
+	for (unsigned i = 0; i < sizeof(iomem); i++)
 		iomem[i] = read8(file);
+	bankAddr = read16(file);
+	screenMemoryAddr = read16(file);
+	characterMemoryAddr = read16(file);
+	
+	// Sprites
+	for (int i = 0; i < 8; i++) {
+		mc[i] = read8(file);
+		mcbase[i] = read8(file);
+		spriteShiftReg[i][0] = read8(file);
+		spriteShiftReg[i][1] = read8(file);
+		spriteShiftReg[i][3] = read8(file); 
 	}
-	for (unsigned i = 0; i < sizeof(characterSpace); i++) {
-		characterSpace[i] = read8(file);
-	}
-	for (unsigned i = 0; i < sizeof(colorSpace); i++) {
-		colorSpace[i] = read8(file);
-	}
-	// To be removed
-	for (unsigned i = 0; i < 8*512; i++) {
+	spriteOnOff = read8(file);
+	oldSpriteOnOff = read8(file);
+	spriteDmaOnOff = read8(file);
+	expansionFF = read8(file);
+	
+	// Lightpen
+	lightpenIRQhasOccured = (bool)read8(file);
+	
+	// Screenshot (only needed for previewing and therefore skipped)
+	for (unsigned i = 0; i < sizeof(screenBuffer1); i++) 
 		(void)read8(file);
-	}		
+
 	return true;
 }
 
@@ -144,24 +173,55 @@ bool
 VIC::save(FILE *file)
 {
 	debug("  Saving VIC state...\n");
+
+	// Internal registers
 	write32(file, scanline);
-	write16(file, getMemoryBankAddr());
-	write16(file, getScreenMemoryAddr());
-	write16(file, getCharacterMemoryAddr());
+	write16(file, xCounter);
+	write16(file, registerVC);
+	write16(file, registerVCBASE);
+	write16(file, registerRC);
+	write16(file, registerVMLI);
+	write8(file, (uint8_t)dmaLine);
+	write8(file, (uint8_t)dmaLinesEnabled);
+	write8(file, (uint8_t)displayState);
+	write8(file, (uint8_t)BAlow);
+	write8(file, (uint8_t)mainFrameFF);
+	write8(file, (uint8_t)verticalFrameFF);
+	write8(file, (uint8_t)drawVerticalFrame);
+	write8(file, (uint8_t)drawHorizontalFrame);
 	
-	for (unsigned i = 0; i < sizeof(iomem); i++) {
+	// Memory
+	for (unsigned i = 0; i < sizeof(iomem); i++)
 		write8(file, iomem[i]);
+	write16(file, bankAddr);
+	write16(file, screenMemoryAddr);
+	write16(file, characterMemoryAddr);
+	
+	// Sprites
+	for (int i = 0; i < 8; i++) {
+		write8(file, mc[i]);
+		write8(file, mcbase[i]);
+		write8(file, spriteShiftReg[i][0]);
+		write8(file, spriteShiftReg[i][1]);
+		write8(file, spriteShiftReg[i][3]); 
 	}
-	for (unsigned i = 0; i < sizeof(characterSpace); i++) {
-		write8(file, characterSpace[i]);
+	write8(file, spriteOnOff);
+	write8(file, oldSpriteOnOff);
+	write8(file, spriteDmaOnOff);
+	write8(file, expansionFF);
+	
+	// Lightpen
+	write8(file, lightpenIRQhasOccured);
+	
+	// Screenshot (write currently unused screenbuffer to file)
+	if (currentScreenBuffer == screenBuffer1) {
+		for (unsigned i = 0; i < sizeof(screenBuffer2); i++) 
+			write8(file, screenBuffer2[i]);
+	} else {
+		for (unsigned i = 0; i < sizeof(screenBuffer1); i++) 
+			write8(file, screenBuffer1[i]);
 	}
-	for (unsigned i = 0; i < sizeof(colorSpace); i++) {
-		write8(file, colorSpace[i]);
-	}
-	// To be removed
-	for (unsigned i = 0; i < 8*512; i++) {
-		write8(file, 0);
-	}	
+	
 	return true;
 }
 
