@@ -28,10 +28,7 @@
 */
 class SID : public VirtualComponent {
 	
-public:
-	//! Total number of SID registers.
-	static const uint16_t NO_OF_REGISTERS = 32;
-	
+public:	
 	//! Start address of the SID I/O space.
 	static const uint16_t SID_START_ADDR = 0xD400;
 	//! End address of the SID I/O space.
@@ -42,8 +39,9 @@ public:
 	
 private:
 	//! SID I/O Memory.
-	/*! If a value is poked to the SID address space, it is stored here. */
-	uint8_t iomem[NO_OF_REGISTERS]; // first 25 write-only, following 4 read-only
+	/*! If a value is poked to the SID address space, it is stored here.
+	    The first 25 are write only, the following 4 are read only */
+	uint8_t iomem[32];
 	
 	//! Samplerate of SID.
 	uint32_t samplerate;

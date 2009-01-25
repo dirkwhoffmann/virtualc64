@@ -225,7 +225,7 @@ private:
 	
 	//! I/O Memory
 	/*! If a value is poked to the VIC address space, it is stored here. */
-	uint8_t iomem[1 + VIC_END_ADDR - VIC_START_ADDR];
+	uint8_t iomem[64]; 
 
 	//! Temporary space for display characters
 	/*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the characters to display */

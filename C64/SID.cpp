@@ -117,10 +117,7 @@ SID::reset()
 	startPlaying = false;
 	
 	// reset registers
-	for (int i = 0; i < NO_OF_REGISTERS; i++)
-	{
-		iomem[i] = 0x00;
-	}
+	memset(iomem, 0, sizeof(iomem));	
 	
 	// reset voices
 	for (int i = 0; i < 3; i++)
@@ -160,7 +157,7 @@ SID::load(FILE *file)
 
 	// reset ringbuffer, buffer pointers, callback synchronisation mechanism, etc. 
 	this->reset();
-	for (int i = 0; i < NO_OF_REGISTERS; i++) 
+	for (unsigned i = 0; i < sizeof(iomem); i++) 
 	{
 		// call poke for every register with value from file
 		// poke will store this value in iomem[] beside other things
@@ -175,7 +172,7 @@ SID::save(FILE *file)
 	debug("  Saving SID state...\n");
 
 	// store every single register value in file
-	for (int i = 0; i < NO_OF_REGISTERS; i++) 
+	for (unsigned i = 0; i < sizeof(iomem); i++) 
 	{
 		write8(file, iomem[i]);
 	}	
@@ -689,8 +686,8 @@ void SID::dumpState()
 	debug("  Sound filter : %s\n", filtersEnabled ? "on" : "off");
 	
 	debug("\n     IO memory : ");
-	for (int i = 0; i < 32; i += 16) {
-		for (int j = 0; j < 16; j ++) {
+	for (unsigned i = 0; i < sizeof(iomem); i += 16) {
+		for (unsigned j = 0; j < 16; j ++) {
 			debug("%02X ", iomem[i + j]);
 		}
 		debug("\n                 ");

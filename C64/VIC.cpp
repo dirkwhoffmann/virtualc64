@@ -83,7 +83,7 @@ VIC::reset()
 	// Memory
 	memset(iomem, 0x00, sizeof(iomem));
 	iomem[0x20] = LTBLUE; // Let the border color look correct right from the beginning
-	iomem[0x21] =BLUE;    // Let the background color look correct right from the beginning
+	iomem[0x21] = BLUE;   // Let the background color look correct right from the beginning
 	iomem[0x11] = 0x10;   // Make screen visible from the beginning	
 	bankAddr = 0;
 	screenMemoryAddr = 0x0000;
@@ -214,8 +214,8 @@ VIC::dumpState()
 	for (int i = 0; i < 8; i++) debug("%d ", expansionFF & (1 << i) != 0);
 	
 	debug("\n        IO memory : ");
-	for (int i = 0; i < 32; i += 16) {
-		for (int j = 0; j < 16; j ++) {
+	for (unsigned i = 0; i < sizeof(iomem); i += 16) {
+		for (unsigned j = 0; j < 16; j ++) {
 			debug("%02X ", iomem[i + j]);
 		}
 		debug("\n                    ");

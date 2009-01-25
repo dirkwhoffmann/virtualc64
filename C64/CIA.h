@@ -40,9 +40,6 @@ class Joystick;
 class CIA : public VirtualComponent {
 
 public:
-	//! Total number of CIA registers
-	static const uint16_t NO_OF_REGISTERS = 16;
-	
 	//! Start address of the CIA I/O space (CIA 1 and CIA 2)
 	static const uint16_t CIA_START_ADDR = 0xDC00;
 	//! End address of the CIA I/O space (CIA 1 and CIA 2)
@@ -116,7 +113,7 @@ protected:
 	
 	//! CIA I/O Memory
 	/*! Whenever a value is poked to the CIA address space, it is stored here. */
-	uint8_t iomem[NO_OF_REGISTERS];
+	uint8_t iomem[16];
 					
 	//! External bus signals on data port A
 	/*! \todo Create a separate interface (DeviceInterface or something)
