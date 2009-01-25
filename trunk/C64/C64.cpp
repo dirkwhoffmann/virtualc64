@@ -195,7 +195,9 @@ C64::~C64()
 void C64::reset()
 {
 	debug ("Resetting virtual C64\n");
+
 	suspend();
+
 	mem->reset();
 	cpu->reset();
 	cpu->setPC(0xFCE2);
@@ -206,11 +208,13 @@ void C64::reset()
 	keyboard->reset();
 	iec->reset();
 	floppy->reset();
+
 	archive = NULL;
+	cycles = 0LL;
 	frame = 0;
 	rasterline = 0;
 	targetTime = 0LL;
-	cycles = 0LL;
+
 	resume();
 }
 
@@ -232,22 +236,14 @@ void C64::fastReset()
 bool 
 C64::load(FILE *file)
 {
-	uint8_t major, minor;
-	
 	debug("Loading...\n");
 	
-	// Read header
-	if ((char)read8(file) != 'V') return false;
-	if ((char)read8(file) != 'I') return false;
-	if ((char)read8(file) != '6') return false;
-	if ((char)read8(file) != '4') return false;
-	
-	// Read version number
-	major = read8(file);
-	minor = read8(file);
-	
-	// Load data
 	suspend();
+	
+	cycles = read64(file);
+	frame = (int)read32(file);
+	rasterline = (int)read32(file);
+	targetTime = read64(file);
 	
 	cpu->load(file);
 	vic->load(file);
@@ -269,18 +265,13 @@ C64::save(FILE *file)
 	suspend();
 	
 	debug("Saving...\n");
-	
-	// Write header
-	write8(file, (uint8_t)'V');
-	write8(file, (uint8_t)'I');
-	write8(file, (uint8_t)'6');
-	write8(file, (uint8_t)'4');
-	
-	// Write version number
-	write8(file, 0);
-	write8(file, 1);
-	
+		
 	// Write data
+	write64(file, cycles);
+	write32(file, (uint32_t)frame);
+	write32(file, (uint32_t)rasterline);
+	write32(file, targetTime);
+	
 	cpu->save(file);
 	vic->save(file);
 	sid->save(file);
@@ -1075,41 +1066,82 @@ C64::loadRom(const char *filename)
 }
 
 bool 
+C64::loadSnapshotHeader(FILE *file)
+{
+	uint8_t major = 0, minor = 0;
+	
+	debug("Checking snapshot header...\n");
+	
+	// Read magic bytes
+	if ((char)read8(file) != 'V') return false;
+	if ((char)read8(file) != 'C') return false;
+	if ((char)read8(file) != '6') return false;
+	if ((char)read8(file) != '4') return false;
+	
+	// Read version number
+	major = read8(file);
+	minor = read8(file);
+	
+	// Do we support this snapshot format in this release?
+	if (major != 1 || minor != 0)
+		return false;
+	
+	// Header is OK
+	return true;
+}	
+
+bool 
 C64::loadSnapshot(const char *filename)
 {
 	FILE *file;
-	bool result = false;
 	
 	assert(filename != NULL);
 	
-	file = fopen(filename, "r");
-	if (file != NULL) {
-		result = load(file);
-		fclose(file);
-	} else {
+	if ((file = fopen(filename, "r")) == NULL) {
 		debug("WARNING: Cannot read from file %s\n", filename);
+		return false;
+	}
+	if (!loadSnapshotHeader(file)) {
+		debug("Version number mismatch. Snapshot format is not supported by this release.\n");
+		return false;
 	}
 	
-	return result;
+	(void)load(file);
+	fclose(file);
+	return true;
 }
+
+bool 
+C64::saveSnapshotHeader(FILE *file)
+{
+	// Write magic bytes
+	write8(file, (uint8_t)'V');
+	write8(file, (uint8_t)'I');
+	write8(file, (uint8_t)'6');
+	write8(file, (uint8_t)'4');
+	
+	// Write version number
+	write8(file, 0);
+	write8(file, 1);
+	return true;
+}	
 
 bool 
 C64::saveSnapshot(const char *filename)
 {
 	FILE *file;
-	bool result = false;
 	
 	assert(filename != NULL);
 	
 	debug("Saving virtual machine state to file %s\n", filename);	
-	file = fopen(filename, "w");
-	if (file != NULL) {
-		result = save(file);
-		fclose(file);
-	} else {
+	if ((file = fopen(filename, "w")) == NULL) {
 		debug("WARNING: Cannot write to file %s\n", filename);
+		return false;
 	}
-	return result;
+	(void)saveSnapshotHeader(file);
+	(void)save(file);
+	fclose(file);
+	return true;
 }
 
 

@@ -165,50 +165,53 @@ public:
 	
 	//! Reference to the virtual VC1541
 	VC1541 *floppy;
-	
-	//! Reference to the attached archive, e.g., a T64 or D64 container
-	Archive *archive;
-	
+		
 private:
-			
+
 	//! The execution thread
 	pthread_t p;
 
-	//! Target time
-	/*! Used to synchronize emulation speed */
-	uint64_t targetTime; 
+	//! Reference to the attached archive, e.g., a T64 or D64 container
+	Archive *archive;
 
 	//! Current clock cycle (since power up)
 	uint64_t cycles;
 
+	//! Current frame number
+	int frame;
+	
+	//! Current rasterline number
+	int rasterline;
+	
+	//! Target time
+	/*! Used to synchronize emulation speed */
+	uint64_t targetTime; 
+	
+	//! Number of frames per second
+	/*! Number varies between PAL and NTSC machines. Don't modify this value directly. It is automatically computed 
+		in setPAL or setNTSC. */	
+	int fps;
+	
+	//! Number of rasterlines
+	/*! Number varies between PAL and NTSC machines. Don't modify this value directly. It is automatically computed 
+		in setPAL or setNTSC. */	
+	int noOfRasterlines;
+	
+	//! Number of cycles per rasterline
+	/*! Number varies between PAL and NTSC machines. Don't modify this value directly. It is automatically computed 
+		in setPAL or setNTSC. */	
+	int cpuCyclesPerRasterline;
+	
+	//! Time between two frames
+	int frameDelay;
+	
 	//! Indicates that we should always run as fast as possible
 	bool warpMode;
 	
 	//! Holds the configuration for the game port.
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
 	int port[2];
-		
-	//! Current frame number
-	int frame;
-
-	//! Current rasterline number
-	int rasterline;
-
-	//! Number of frames per second
-	/*! Number varies between PAL and NTSC machines */	
-	int fps;
-
-	//! Number of rasterlines
-	/*! Number varies between PAL and NTSC machines */	
-	int noOfRasterlines;
-
-	//! Number of cycles per rasterline
-	/*! Number varies between PAL and NTSC machines */	
-	int cpuCyclesPerRasterline;
-
-	//! Time between two frames
-	int frameDelay;
-	
+			
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                             Methods
@@ -312,8 +315,22 @@ private:
 	// -----------------------------------------------------------------------------------------------
 	//                                  ROM and snapshot handling
 	// -----------------------------------------------------------------------------------------------
-	
+
+private:
+
+	// Load snapshot header
+	bool loadSnapshotHeader(FILE *file);
+
+	// Save snapshot header
+	bool saveSnapshotHeader(FILE *file);
+
 public:
+	
+	//! Load snapshot file
+	bool loadSnapshot(const char *filename);
+	
+	//! Save snapshot file
+	bool saveSnapshot(const char *filename);
 	
 	//! Returns the number of missing ROM images */
 	int numberOfMissingRoms();
@@ -326,14 +343,7 @@ public:
 	    suspended before loading and resumed afterwards.
 	*/ 
 	bool loadRom(const char *filename);
-	
-	//! Load snapshot file
-	bool loadSnapshot(const char *filename);
-	
-	//! Save snapshot file
-	bool saveSnapshot(const char *filename);
-		
-	
+			
 	// -----------------------------------------------------------------------------------------------
 	//                                           Timing
 	// -----------------------------------------------------------------------------------------------

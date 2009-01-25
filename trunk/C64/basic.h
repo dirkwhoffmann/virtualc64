@@ -92,39 +92,6 @@ bool checkFileSize(const char *filename, int min, int max);
 bool 
 checkFileHeader(const char *filename, int *header);
 
-//! Write up to four bytes to file
-/*! \param file handle of the destination file
-	\param value 64 Bit value containing the data to written. The lower bytes are written first.
-	\param count Number of bytes to be written (range: 1 to 4)
-*/
-void write(FILE *file, uint64_t value, int count);
-
-//! Read up to four bytes from a file
-/*! \param file handle of the source file
-	\param count Number of bytes to be read (range: 1 to 4)
-	\return Data bytes, stored in a single 64 bit value. The lower bytes are written first. 
-*/
-uint64_t read(FILE *file, int count);
-
-//! Write 8 bit value to a file
-static void write8(FILE *file, uint8_t value) { write(file, (uint64_t)value, sizeof(uint8_t)); }
-//! Write 16 bit value to a file
-static void write16(FILE *file, uint16_t value) { write(file, (uint64_t)value, sizeof(uint16_t)); }
-//! Write 32 bit value to a file
-static void write32(FILE *file, uint32_t value) { write(file, (uint64_t)value, sizeof(uint32_t)); }
-//! Write 64 bit value to a file
-static void write64(FILE *file, uint64_t value) { write(file, (uint64_t)value, sizeof(uint64_t)); }
-
-//! Read 8 bit value from a file
-static uint8_t read8(FILE *file) { return (uint8_t)read(file, sizeof(uint8_t)); }
-//! Read 16 bit value from a file
-static uint16_t read16(FILE *file) { return (uint16_t)read(file, sizeof(uint16_t)); }
-//! Read 32 bit value from a file
-static uint32_t read32(FILE *file) { return (uint32_t)read(file, sizeof(uint32_t)); }
-//! Read 64 bit value from a file
-static uint64_t read64(FILE *file) { return (uint64_t)read(file, sizeof(uint64_t)); }
-
-
 // Timing
 
 //! Application launch time in seconds

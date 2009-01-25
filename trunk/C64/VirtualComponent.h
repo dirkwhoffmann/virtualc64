@@ -60,7 +60,10 @@ private:
 public:
 	//! Constructor
 	VirtualComponent();
-	
+
+	//! Destructor
+	virtual ~VirtualComponent() { };
+
 	//! Get listener
 	C64Listener *getListener() { assert(listener != NULL); return listener; }
 	
@@ -87,6 +90,12 @@ public:
 	*/
 	virtual bool save(FILE *file) = 0;
 
+	//! Print info about the internal state
+	/*! This functions is intended for debugging purposes only. Any derived component should override
+	 this method and print out some useful debugging information. 
+	 */ 
+	virtual void dumpState();
+	
 	//! Start component
 	/*! The function is called when the virtual computer is requested to run
 		Some components such as the CPU require asynchronously running threads and will start them here.
@@ -133,11 +142,31 @@ public:
 	//! Enable or disable trace mode
 	inline void setTraceMode(bool b) { traceMode = b; }
 	
-	//! Print info about the internal state
-	/*! This functions is intended for debugging purposes only. Any derived component should override
-	    this method and print out some useful debugging information. 
-	*/ 
-	virtual void dumpState();
+	// Helper functions for reading and writing data
+	
+	//! Write up to four bytes to file
+	void write(FILE *file, uint64_t value, int count);
+
+	//! Read up to four bytes from a file
+	uint64_t read(FILE *file, int count);
+
+	//! Write 8 bit value to a file
+	inline void write8(FILE *file, uint8_t value) { write(file, (uint64_t)value, sizeof(uint8_t)); }
+	//! Write 16 bit value to a file
+	inline void write16(FILE *file, uint16_t value) { write(file, (uint64_t)value, sizeof(uint16_t)); }
+	//! Write 32 bit value to a file
+	inline void write32(FILE *file, uint32_t value) { write(file, (uint64_t)value, sizeof(uint32_t)); }
+	//! Write 64 bit value to a file
+	inline void write64(FILE *file, uint64_t value) { write(file, (uint64_t)value, sizeof(uint64_t)); }
+	
+	//! Read 8 bit value from a file
+	inline uint8_t read8(FILE *file) { return (uint8_t)read(file, sizeof(uint8_t)); }
+	//! Read 16 bit value from a file
+	inline uint16_t read16(FILE *file) { return (uint16_t)read(file, sizeof(uint16_t)); }
+	//! Read 32 bit value from a file
+	inline uint32_t read32(FILE *file) { return (uint32_t)read(file, sizeof(uint32_t)); }
+	//! Read 64 bit value from a file
+	inline uint64_t read64(FILE *file) { return (uint64_t)read(file, sizeof(uint64_t)); }
 	
 	//! Print debug message
 	void debug(char *fmt, ...);

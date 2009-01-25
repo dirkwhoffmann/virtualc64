@@ -82,7 +82,7 @@ bool PRGArchive::loadFile(const char *filename)
 
 	path = strdup(filename);
 			
-	printf("PRG container imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
+	printf("PRG container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
 	return true;
 }
 

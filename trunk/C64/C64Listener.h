@@ -30,6 +30,10 @@
 class C64Listener {
 		
 public:	
+
+	//! Destructor
+	virtual ~C64Listener() { };
+	
 	//! Notifies the listener that a ROM image has been installed.
 	virtual void loadRomAction(int rom) = 0;
 	//! Notifies the listener that the emulator won't run due to missing ROM image.

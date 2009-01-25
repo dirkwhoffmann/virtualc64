@@ -42,7 +42,7 @@
 	uint16_t addr;
 	uint8_t opcode;
 	char *mnemonic;
-	NSString *op;
+	NSString *op = nil;
 	
     if (![anObject isKindOfClass:[NSNumber class]])
         return nil;
@@ -53,6 +53,10 @@
 		
 	// Display instruction
 	switch ([c64 cpuGetAddressingMode:opcode]) {
+		case CPU::ADDR_IMPLIED:
+		case CPU::ADDR_ACCUMULATOR:
+			op = @"";
+			break;
 		case CPU::ADDR_IMMEDIATE:
 		case CPU::ADDR_ZERO_PAGE:
 		case CPU::ADDR_ZERO_PAGE_X:

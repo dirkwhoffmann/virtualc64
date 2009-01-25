@@ -38,10 +38,10 @@ VIC::VIC()
 	mem = NULL;
 	
 	// Delete screen buffers
-	for (int i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
+	for (unsigned i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
 		screenBuffer1[i] = colors[BLUE];
 	}
-	for (int i = 0; i < sizeof(screenBuffer2) / sizeof(int); i++) {
+	for (unsigned i = 0; i < sizeof(screenBuffer2) / sizeof(int); i++) {
 		screenBuffer2[i] = colors[BLUE];
 	}
 	currentScreenBuffer = screenBuffer1;
@@ -124,17 +124,17 @@ VIC::load(FILE *file)
 	setScreenMemoryAddr(read16(file));
 	setCharacterMemoryAddr(read16(file));
 	
-	for (int i = 0; i < sizeof(iomem); i++) {
+	for (unsigned i = 0; i < sizeof(iomem); i++) {
 		iomem[i] = read8(file);
 	}
-	for (int i = 0; i < sizeof(characterSpace); i++) {
+	for (unsigned i = 0; i < sizeof(characterSpace); i++) {
 		characterSpace[i] = read8(file);
 	}
-	for (int i = 0; i < sizeof(colorSpace); i++) {
+	for (unsigned i = 0; i < sizeof(colorSpace); i++) {
 		colorSpace[i] = read8(file);
 	}
 	// To be removed
-	for (int i = 0; i < 8*512; i++) {
+	for (unsigned i = 0; i < 8*512; i++) {
 		(void)read8(file);
 	}		
 	return true;
@@ -149,17 +149,17 @@ VIC::save(FILE *file)
 	write16(file, getScreenMemoryAddr());
 	write16(file, getCharacterMemoryAddr());
 	
-	for (int i = 0; i < sizeof(iomem); i++) {
+	for (unsigned i = 0; i < sizeof(iomem); i++) {
 		write8(file, iomem[i]);
 	}
-	for (int i = 0; i < sizeof(characterSpace); i++) {
+	for (unsigned i = 0; i < sizeof(characterSpace); i++) {
 		write8(file, characterSpace[i]);
 	}
-	for (int i = 0; i < sizeof(colorSpace); i++) {
+	for (unsigned i = 0; i < sizeof(colorSpace); i++) {
 		write8(file, colorSpace[i]);
 	}
 	// To be removed
-	for (int i = 0; i < 8*512; i++) {
+	for (unsigned i = 0; i < 8*512; i++) {
 		write8(file, 0);
 	}	
 	return true;
@@ -301,7 +301,10 @@ VIC::gAccess()
 			} else {
 				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
 			}
-			break;			
+			break;		
+		case INVALID_DISPLAY_MODE:
+			// do nothing (?)
+			break;
 	}
 	
 	// VC and VMLI are increased after each g access 

@@ -83,33 +83,6 @@ checkFileHeader(const char *filename, int *header)
 	return result;
 }
 
-void 
-write(FILE *file, uint64_t value, int count)
-{
-	assert(file != NULL);
-	assert(count > 0 && count <= 8);
-
-	for (int i=0; i < count; i++) {
-		fputc((int)(value & 0xff), file); 
-		value >>= 8;
-	}
-}
-
-uint64_t 
-read(FILE *file, int count)
-{
-	uint64_t result = 0;
-	
-	assert(file != NULL);
-	assert(count > 0 && count <= 8);
-	
-	for (int i=0; i < count; i++) {
-		result += (uint64_t)fgetc(file) << (i*8);		
-	}
-	
-	return result;
-}
-
 uint64_t 
 msec()
 {

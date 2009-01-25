@@ -78,7 +78,7 @@ bool P00Archive::loadFile(const char *filename)
 
 	path = strdup(filename);
 			
-	printf("P00 container imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
+	printf("P00 container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
 	return true;
 }
 

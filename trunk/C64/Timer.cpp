@@ -156,15 +156,15 @@ Timer::setControlReg(uint8_t value)
 {	
 	// Transition table (derived from Frodo SC)
 	static const int table[7][4] = {
-		// yes                 yes                    no                     no                     // running?
+	  	// yes                 yes                    no                     no                     // running?
 		// yes                 no                     yes                    no                     // force load strobe?
-		TIMER_LOAD_WAIT_COUNT, TIMER_WAIT_COUNT,      TIMER_LOAD_STOP,       TIMER_STOP,            // from TIMER_STOP
-		TIMER_LOAD_WAIT_COUNT, TIMER_COUNT,           TIMER_LOAD_STOP,       TIMER_COUNT_STOP,      // from TIMER_COUNT
-		TIMER_COUNT_STOP,      TIMER_COUNT_STOP,      TIMER_COUNT_STOP,      TIMER_COUNT_STOP,      // from TIMER_COUNT_STOP
-		TIMER_LOAD_WAIT_COUNT, TIMER_WAIT_COUNT,      TIMER_LOAD_STOP,       TIMER_LOAD_STOP,       // from TIMER_LOAD_STOP
-		TIMER_STOP,            TIMER_STOP,            TIMER_STOP,            TIMER_STOP,            // from TIMER_LOAD_COUNT
-		TIMER_STOP,            TIMER_STOP,            TIMER_STOP,            TIMER_STOP,            // from TIMER_WAIT_COUNT
-		TIMER_LOAD_WAIT_COUNT, TIMER_LOAD_WAIT_COUNT, TIMER_LOAD_WAIT_COUNT, TIMER_LOAD_WAIT_COUNT, // from TIMER_LOAD_WAIT_COUNT
+		{ TIMER_LOAD_WAIT_COUNT, TIMER_WAIT_COUNT,      TIMER_LOAD_STOP,       TIMER_STOP },        // from TIMER_STOP
+		{ TIMER_LOAD_WAIT_COUNT, TIMER_COUNT,           TIMER_LOAD_STOP,       TIMER_COUNT_STOP },      // from TIMER_COUNT
+		{ TIMER_COUNT_STOP,      TIMER_COUNT_STOP,      TIMER_COUNT_STOP,      TIMER_COUNT_STOP },      // from TIMER_COUNT_STOP
+		{TIMER_LOAD_WAIT_COUNT, TIMER_WAIT_COUNT,      TIMER_LOAD_STOP,       TIMER_LOAD_STOP },       // from TIMER_LOAD_STOP
+		{TIMER_STOP,            TIMER_STOP,            TIMER_STOP,            TIMER_STOP },            // from TIMER_LOAD_COUNT
+		{TIMER_STOP,            TIMER_STOP,            TIMER_STOP,            TIMER_STOP },            // from TIMER_WAIT_COUNT
+		{TIMER_LOAD_WAIT_COUNT, TIMER_LOAD_WAIT_COUNT, TIMER_LOAD_WAIT_COUNT, TIMER_LOAD_WAIT_COUNT }, // from TIMER_LOAD_WAIT_COUNT
 	};
 	
 	controlReg = value;

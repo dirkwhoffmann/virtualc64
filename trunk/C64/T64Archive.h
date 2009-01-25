@@ -23,7 +23,7 @@ private:
 	int fp_eof;
 	
 	//! Size of data array
-	uint32_t size;
+	int size;
 
 	//! Returns true, iff the archive contains the n-th directory item
 	//* Set n to zero to watch for the first item */

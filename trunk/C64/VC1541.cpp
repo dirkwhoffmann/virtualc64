@@ -349,7 +349,7 @@ VC1541::insertDisc(Archive *a)
 void 
 VC1541::insertDisc(D64Archive *a)
 {
-	int i,j;
+	unsigned i,j;
 	uint8_t *dest;
 	
 	assert(a != NULL);

@@ -278,7 +278,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSColor *selectedColor;
-	NSString *key;
+	NSString *key = nil;
 	
 	float r,g,b,a;
 	
