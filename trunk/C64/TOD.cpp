@@ -33,6 +33,7 @@ TOD::reset()
 	debug("    Resetting TOD...\n");
 	tod.value = 0;
 	alarm.value = 0;
+	latch.value = 0;
 	frozen = false;
 	stopped = false;
 }
@@ -43,6 +44,7 @@ TOD::load(FILE *file)
 {
 	tod.value = (uint32_t)read64(file);
 	alarm.value = (uint32_t)read64(file);
+	latch.value = (uint32_t)read64(file);
 	frozen = read8(file);
 	stopped = read8(file);
 	return true;
@@ -51,8 +53,9 @@ TOD::load(FILE *file)
 bool
 TOD::save(FILE *file)
 {
-	write64(file, (uint64_t)tod.value);
-	write64(file, (uint64_t)alarm.value);
+	write32(file, (uint32_t)tod.value);
+	write32(file, (uint32_t)alarm.value);
+	write32(file, (uint32_t)latch.value);
 	write8(file, frozen);
 	write8(file, stopped);
 	return true;

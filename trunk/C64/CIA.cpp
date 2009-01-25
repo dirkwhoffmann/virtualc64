@@ -209,9 +209,8 @@ bool CIA::load(FILE *file)
 {
 	debug("  Loading CIA state...\n");
 	
-	for (unsigned i = 0; i < sizeof(iomem); i++) {
+	for (unsigned i = 0; i < sizeof(iomem); i++)
 		iomem[i] = read8(file);
-	}		
 	portLinesA = read8(file);
 	portLinesB = read8(file);
 	interruptDataRegister = read8(file);
@@ -228,15 +227,19 @@ bool
 CIA::save(FILE *file)
 {
 	 debug("  Saving CIA state...\n");
-	 tod.save(file);
-	 write16(file, 0);
-	 write16(file, 0);
-	 write8(file, portLinesA);
-	 write8(file, portLinesB);	
-	 for (int i = 0; i < NO_OF_REGISTERS; i++) {
+	
+	for (unsigned i = 0; i < sizeof(iomem); i++)
 		write8(file, iomem[i]);
-	 }		
-	 return true;	
+	write8(file, portLinesA);
+	write8(file, portLinesB);
+	write8(file, interruptDataRegister);
+	write8(file, controlRegHasChangedA);
+	write8(file, controlRegHasChangedB);
+	tod.save(file);
+	timerA.save(file);
+	timerB.save(file);
+
+	return true;	
 }
 
 void 
@@ -425,7 +428,7 @@ void CIA::dumpState()
 	debug("       Signal pending B : %s\n", isSignalPendingB() ? "yes" : "no");
 	
 	debug("              IO memory : ");
-	for (int j = 0; j < 16; j ++) {
+	for (unsigned j = 0; j < sizeof(iomem); j++) {
 			debug("%02X ", iomem[j]);
 	}
 	debug("\n\n");

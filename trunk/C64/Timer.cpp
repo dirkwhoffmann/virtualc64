@@ -47,14 +47,32 @@ Timer::reset()
 bool
 Timer::load(FILE *file)
 {
-	// TODO
+	count = read16(file);
+	timerLatch = read16(file);
+	state = (int)read8(file);
+	controlReg = read8(file);
+	count_clockticks = (bool)read8(file);
+	count_underflows = (bool)read8(file);
+	underflow = (bool)read8(file);
+	underflow_toggle = (bool)read8(file);
+	triggerInterrupt = (bool)read8(file);	
+
 	return true;
 }
 
 bool
 Timer::save(FILE *file)
 {
-	// TODO
+	write16(file, count);
+	write16(file, timerLatch);
+	write8(file,(uint8_t)state);
+	write8(file, controlReg);
+	write8(file, (uint8_t)count_clockticks);
+	write8(file, (uint8_t)count_underflows);
+	write8(file, (uint8_t)underflow); 
+	write8(file, (uint8_t)underflow_toggle);
+	write8(file, (uint8_t)triggerInterrupt);
+	
 	return true;
 }
 
