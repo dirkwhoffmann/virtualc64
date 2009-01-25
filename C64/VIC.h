@@ -702,17 +702,17 @@ public:
 		
 	//! Returns the vertical raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
-	inline int getVerticalRasterScroll() { return iomem[0x11] & 7; }
+	inline uint8_t getVerticalRasterScroll() { return iomem[0x11] & 7; }
 	
 	//! Set vertical raster scroll offset (0 to 7)
-	inline void setVerticalRasterScroll(int offset) { iomem[0x11] = (iomem[0x11] & 0xF8) | (offset & 0x07); }
+	inline void setVerticalRasterScroll(uint8_t offset) { iomem[0x11] = (iomem[0x11] & 0xF8) | (offset & 0x07); }
 	
 	//! Returns the horizontal raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
-	inline int getHorizontalRasterScroll() { return iomem[0x16] & 7; }
+	inline uint8_t getHorizontalRasterScroll() { return iomem[0x16] & 7; }
 	
 	//! Set horizontan raster scroll offset (0 to 7)
-	inline void setHorizontalRasterScroll(int offset) { iomem[0x16] = (iomem[0x16] & 0xF8) | (offset & 0x07); }
+	inline void setHorizontalRasterScroll(uint8_t offset) { iomem[0x16] = (iomem[0x16] & 0xF8) | (offset & 0x07); }
 		
 	//! Returns the row number for a given rasterline
 	inline uint8_t getRowNumberForRasterline(uint16_t line) { return (line - BORDER_HEIGHT + 3 - getVerticalRasterScroll()) / 8; }

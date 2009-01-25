@@ -20,7 +20,7 @@ private:
 	int fp;
 		
 	//! Size of data array
-	uint32_t size;
+	int size;
 
 public:
 

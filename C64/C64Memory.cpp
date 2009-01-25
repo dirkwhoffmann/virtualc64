@@ -46,13 +46,13 @@ void C64Memory::reset()
 	debug ("  Resetting main memory...\n");
 	
 	// Zero out RAM...
-	for (int i = 0; i < sizeof(ram); i++)
+	for (unsigned i = 0; i < sizeof(ram); i++)
 		ram[i] = 0;
 	
 	// Initialize color memory...
 	// It's important here to write in random values as some games peek the color RAM 
 	// to generate random numbers. E.g., Paradroid is doing it that way.
-	for (int i = 0; i < sizeof(colorRam); i++)
+	for (unsigned i = 0; i < sizeof(colorRam); i++)
 		colorRam[i] = rand(); 
 		
 	// Initialize processor port data direction register and processor port

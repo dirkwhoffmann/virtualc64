@@ -37,7 +37,7 @@ Keyboard::reset()
 bool
 Keyboard::load(FILE *file)
 {
-	for (int i = 0; i < sizeof(kbMatrix); i++) {
+	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		kbMatrix[i] = read8(file);
 	}
 	return true;
@@ -46,7 +46,7 @@ Keyboard::load(FILE *file)
 bool
 Keyboard::save(FILE *file)
 {
-	for (int i = 0; i < sizeof(kbMatrix); i++) {
+	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		write8(file, kbMatrix[i]);
 	}
 	return true;
@@ -121,7 +121,7 @@ void Keyboard::typeFormat()
 	debug("typeFormat\n");
 	
 	// OPEN 1,8,15,"N:TEST, ID": CLOSE 1<RETURN>
-	int i;
+	unsigned i;
 	uint8_t rowcol1[] = { 4,6, 5,1, 1,6, 4,7, 7,4, 7,0, 5,7, 3,3, 5,7, 7,0, 2,0, 5,7 };
 	uint8_t rowcol2[] = { 4,7, 5,5, 2,6, 1,6, 1,5, 2,6, 5,7, 7,4, 4,1, 2,2 }; 
 	uint8_t rowcol3[] = { 5,5, 7,4, 2,4, 5,2, 4,6, 1,5, 1,6, 7,4, 7,0, 0,1 };

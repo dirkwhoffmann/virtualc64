@@ -30,14 +30,12 @@ VIA6522::~VIA6522()
 	
 void VIA6522::reset()
 {
-	int i;
-
 	ddra = ddrb = 0;
 	ora = orb = ira = irb = 0;
 	t1_latch_lo = t1_latch_hi = t1_counter_lo = t1_counter_hi = 0;
 	t2_latch_lo = t2_counter_lo = t2_counter_hi = 0;
 		
-	for (i=0; i < sizeof(io); i++)
+	for (unsigned i = 0; i < sizeof(io); i++)
 		io[i] = 0;
 }
 

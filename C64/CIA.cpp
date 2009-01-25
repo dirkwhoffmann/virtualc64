@@ -208,14 +208,19 @@ CIA::reset()
 bool CIA::load(FILE *file)
 {
 	debug("  Loading CIA state...\n");
-	tod.load(file);
-	(void)read16(file);
-	(void)read16(file);
-	portLinesA = read8(file);
-	portLinesB = read8(file);
-	for (int i = 0; i < NO_OF_REGISTERS; i++) {
+	
+	for (unsigned i = 0; i < sizeof(iomem); i++) {
 		iomem[i] = read8(file);
 	}		
+	portLinesA = read8(file);
+	portLinesB = read8(file);
+	interruptDataRegister = read8(file);
+	controlRegHasChangedA = (bool)read8(file);
+	controlRegHasChangedB = (bool)read8(file);
+	tod.load(file);
+	timerA.load(file);
+	timerB.load(file);
+
 	return true;
 }
 

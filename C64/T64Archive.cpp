@@ -91,7 +91,7 @@ bool T64Archive::loadFile(const char *filename)
 
 	path = strdup(filename);
 			
-	printf("T64 container imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
+	printf("T64 container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
 	return true;
 }
 

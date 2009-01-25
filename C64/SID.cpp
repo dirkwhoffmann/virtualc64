@@ -94,7 +94,7 @@ SID::reset()
 	masterVolume = 0.5f;
 	
 	// reset ringBuffer
-	for (int i = 0; i < bufferSize; i++)
+	for (unsigned i = 0; i < bufferSize; i++)
 	{
 		ringBuffer[i] = 0.0f;
 	}
@@ -587,7 +587,7 @@ SID::mix(float* myOutBuffer, uint32_t size)
 	{
 		if (mono) // myOutBuffer is noninterleaved
 		{
-			for (register int i = 0; i < size; i++)
+			for (unsigned i = 0; i < size; i++)
 			{
 				// fill buffer
 				myOutBuffer[i] = readData();
@@ -595,7 +595,7 @@ SID::mix(float* myOutBuffer, uint32_t size)
 		}
 		else // myOutBufer is a interleaved buffer
 		{
-			for (register int i = 0; i < size; i++)
+			for (unsigned i = 0; i < size; i++)
 			{
 				// fill buffer
 				float value = readData();
@@ -608,7 +608,7 @@ SID::mix(float* myOutBuffer, uint32_t size)
 	{
 		if (mono) // myOutBuffer is noninterleaved
 		{
-			for (register int i = 0; i < size; i++)
+			for (unsigned i = 0; i < size; i++)
 			{
 				// fill buffer with no sound
 				myOutBuffer[i] = 0.0f;
@@ -616,7 +616,7 @@ SID::mix(float* myOutBuffer, uint32_t size)
 		}
 		else // myOutBufer is a interleaved Buffer
 		{
-			for (register int i = 0; i < size; i++)
+			for (unsigned i = 0; i < size; i++)
 			{
 				// fill buffer with no sound
 				myOutBuffer[i*2] = 0.0f;		// left channel	
