@@ -44,34 +44,95 @@ CPU::reset()
 {
 	debug("  Resetting CPU...\n");
 
-	// Initialize internal state
-	errorState = OK;
-	rdyLine = 1;
+	// Registers and flags
+	A = 0;
+	X = 0;
+	Y = 0;
+	PC = 0;
+	PC_at_cycle_0 = 0;
+	SP = 0;
+	N = 0;
+	V = 0;
+	B = 0;
+	D = 0;
+	I = 0;
+	Z = 0;
+	C = 0;
+
+	// Internal state
+	opcode = 0;
+	addr_lo = 0;
+	addr_hi = 0;
+	ptr = 0;
+	pc_lo = 0;
+	pc_hi = 0;
+
+	// Reset external lines and IRQ stuff 
+	// Note: Variables port and port_direction get their initial value via C64Memory::reset
+	external_port_bits = 0x1F;
+	rdyLine = true;
+	irqLine = 0;
 	nmiLine = 0;
 	nmiNegEdge = false;
-	irqLine = 0;	
+	nextPossibleIrqCycle = 0LL;
+	nextPossibleNmiCycle = 0LL;
+	
+	errorState = OK;
+	
+	// TODO: Save Breakpoints
+	// TODO: Save callstack
+	
 	callStackPointer = 0;
+	oldI = 0;
+	
 	setTraceMode(false);
 	
-	external_port_bits = 0x1F;
-	
-	// Initialize registers and flags
-	setA(0);
-	setX(0);
-	setY(0);
-	
-	setN(0);
-	setV(0);
-	setB(1); 
-	setD(0);
-	setI(0);
-	setZ(0);
-	setC(0);
-
 	// Set initial execution function
 	next = &CPU::fetch;
 	
 	assert(mem != NULL);
+}
+
+bool 
+CPU::load(FILE *file) 
+{
+	debug("  Loading CPU state...\n");
+
+	// TODO
+	
+	return true;
+}
+
+bool
+CPU::save(FILE *file) 
+{
+	debug("  Saving CPU state...\n");
+
+	// Saving is only possible if the emulator has reached a clean state, i.e., it must not be in the middle of a command
+	assert(next == CPU::fetch);
+
+	// TODO
+	
+	return true;
+}
+
+void 
+CPU::dumpState()
+{
+	debug("CPU:\n");
+	debug("----\n\n");
+    debug("%s", disassemble());
+	debug("\n");
+	debug("Processor port : %02X\n", port);
+	debug("Port direction : %02X\n", port_direction);
+	debug("      Rdy line : %s\n", rdyLine ? "high" : "low");
+	debug("      Irq line : %02X\n", irqLine);
+	debug("      Nmi line : %02X %s\n", nmiLine, nmiNegEdge ? "(negative edge)" : "");
+	debug(" no IRQ before : %ull\n", nextPossibleIrqCycle);
+	debug(" no NMI before : %ull\n", nextPossibleNmiCycle);
+	debug("   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
+	debug("   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
+	debug("\n");
 }
 
 void 
@@ -332,67 +393,6 @@ char *
 CPU::disassemble()
 {
 	return disassemble(packState());
-}
-
-bool 
-CPU::load(FILE *file) 
-{
-	debug("  Loading CPU state...\n");
-	setA(read8(file));
-	setX(read8(file));
-	setY(read8(file));
-	setSP(read8(file));
-	setP(read8(file));
-	setPC(read16(file));
-	// cycles = read64(file);
-	(void)read64(file);
-	irqLine = read8(file);
-	nmiLine = read8(file);
-	setErrorState((ErrorState)read32(file));
-	callStackPointer = read8(file);
-	for (int i = 0; i < 256; i++)
-		callStack[i] = read8(file);
-	return true;
-}
-
-bool
-CPU::save(FILE *file) 
-{
-	debug("  Saving CPU state...\n");
-	write8(file, A);
-	write8(file, X);
-	write8(file, Y);
-	write8(file, SP);
-	write8(file, getP());
-	write16(file, getPC());
-	//write64(file, cycles);
-	write64(file,0);
-	write8(file, irqLine);
-	write8(file, nmiLine);
-	write32(file, (uint32_t)getErrorState());
-	write8(file, callStackPointer);
-	for (int i = 0; i < 256; i++)
-		write8(file, callStack[i]);
-	return true;
-}
-
-void 
-CPU::dumpState()
-{
-	debug("CPU:\n");
-	debug("----\n\n");
-    debug("%s", disassemble());
-	debug("\n");
-	debug("Processor port : %02X\n", port);
-	debug("Port direction : %02X\n", port_direction);
-	debug("      Rdy line : %s\n", rdyLine ? "high" : "low");
-	debug("      Irq line : %02X\n", irqLine);
-	debug("      Nmi line : %02X %s\n", nmiLine, nmiNegEdge ? "(negative edge)" : "");
-	debug(" no IRQ before : %ull\n", nextPossibleIrqCycle);
-	debug(" no NMI before : %ull\n", nextPossibleNmiCycle);
-	debug("   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
-	debug("   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
-	debug("\n");
 }
 
 void 

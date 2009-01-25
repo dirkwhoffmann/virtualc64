@@ -96,56 +96,28 @@ public:
 	static const uint8_t C_FLAG = 0x01;
 	
 
-private:
+public:
+
 	//! Reference to the connected virtual C64
 	C64 *c64;
 
 	//! Reference to the connected virtual memory
 	Memory *mem;
 	
-	//! Processor port register
-	uint8_t port;
-	
-	//! Processor port data direction register
-	uint8_t port_direction;
-	
-	//! Experimental
-	uint8_t external_port_bits;
-	
-	// The accumulator register
-	uint8_t A;
-   // The X register
-	uint8_t X;
-	// The Y register
-	uint8_t Y;
+private:
 
-	// Opcode of the currently executed command
-	uint8_t opcode;
-	// Internal address register (low byte)
-	uint8_t addr_lo;
-	// Internal address register (high byte)
-	uint8_t addr_hi;
-	// Pointer for indirect addressing modes
-	uint8_t ptr;
-	// Temporary storage for program counter (low byte)
-	uint8_t pc_lo;
-	// Temporary storage for program counter (high byte)
-	uint8_t pc_hi;
-	// Address overflow indicater
-	/* Used to indicate whether the page boundary has been crossed */
-	bool overflow;
-	// Internal data register
-	uint8_t data;
-	
+	// Accumulator register
+	uint8_t A;
+	// X register
+	uint8_t X;
+	// Y register
+	uint8_t Y;	
 	//! Program counter
 	uint16_t PC;
-	
 	//! Memory location of the currently executed command
 	uint16_t PC_at_cycle_0;
-	
 	// Stack pointer
 	uint8_t SP;
-		
 	//! Negative flag
 	/*! The negative flag is set when the most significant bit (sign bit) equals 1. */
 	uint8_t  N;
@@ -167,7 +139,32 @@ private:
 	//! Carry flag
 	/*! The carry flag is set iff an arithmetic operation causes an \a unsigned overflow. */	
 	uint8_t  C;
-						
+	
+	// Opcode of the currently executed command
+	uint8_t opcode;
+	// Internal address register (low byte)
+	uint8_t addr_lo;
+	// Internal address register (high byte)
+	uint8_t addr_hi;
+	// Pointer for indirect addressing modes
+	uint8_t ptr;
+	// Temporary storage for program counter (low byte)
+	uint8_t pc_lo;
+	// Temporary storage for program counter (high byte)
+	uint8_t pc_hi;
+	// Address overflow indicater
+	/* Used to indicate whether the page boundary has been crossed */
+	bool overflow;
+	// Internal data register
+	uint8_t data;
+			
+	//! Processor port register
+	uint8_t port;	
+	//! Processor port data direction register
+	uint8_t port_direction;
+	//! Experimental
+	uint8_t external_port_bits;
+	
 	//! RDY line (ready line).
 	/*! If pulled low (set to 0), the CPU freezes. The signal is used by the VIC chip to freeze the CPU during memory access. */
 	bool rdyLine;
