@@ -34,6 +34,18 @@ class C64Memory : public Memory {
 
 public:		
 
+	//! Reference to the connected VIC chip 
+	VIC *vic; 
+	
+	//! Reference to the connected SID chip
+	SID *sid; 
+	
+	//! References to CIA 1
+	CIA1 *cia1; 
+	
+	//! References to CIA 2
+	CIA2 *cia2;
+	
 	//! Virtual RAM
 	/*! All memory cells can be read or written. */
 	uint8_t ram[65536];
@@ -65,32 +77,7 @@ public:
 	//! True if the I/O space is visible.
 	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool IOIsVisible;
-	
-	//! Reference to the connected VIC chip. 
-	/*! Use setVIC to set the value during initialization.
-		The virtual memory needs to know about the VIC chip, because it is accessed via memory mapped I/O.
-		For example, if a value is poked to an address in the VIC I/O space, it is handed over directly
-		to the VIC chip ("poke" fallthrough).
-		\warning The variable is write-once. */
-	VIC *vic; 
-
-	//! Reference to the connected SID chip. 
-	/*! Use setSID to set the value during initialization.
-		The virtual memory needs to know about the SID chip, because it is accessed via memory mapped I/O.
-		For example, if a value is poked to an address in the SID I/O space, it is handed over directly
-		to the SID chip ("poke" fallthrough).
-		\warning The variable is write-once. */
-	SID *sid; 
-	
-	//! References to the connected CIA chips. 
-	/*! Use setCIA to set the value during initialization.
-		The virtual memory needs to know about the CIA chip, because it is accessed via memory mapped I/O.
-		For example, if a value is poked to an address in the CIA I/O space, it is handed over directly
-		to the CIA chip ("poke" fallthrough).
-		\warning The variable is write-once. */
-	CIA1 *cia1; 
-	CIA2 *cia2;
-	
+		
 	//! File name of the Character ROM image.
 	/*! The file name is set by the loadRom routine. It is saved for further reference, so the ROM can be reloaded any tim e. */
 	char *charRomFile;
@@ -148,11 +135,11 @@ public:
 	//! Restore initial state
 	void reset();
 
-	//! Load internal state from a file
-	bool load(FILE *file);
+	//! Load snapshot
+	bool load(uint8_t **ptr);
 	
-	//! Save internal state to a file
-	bool save(FILE *file);
+	//! Save snapshot
+	bool save(uint8_t **ptr);
 	
 	//! Dump current state into logfile
 	void dumpState();

@@ -151,25 +151,24 @@ SID::setVideoMode(uint32_t frequency)
 }
 
 bool 
-SID::load(FILE *file)
+SID::load(uint8_t **buffer)
 {
 	debug("  Loading SID state...\n");
 
 	// reset ringbuffer, buffer pointers, callback synchronisation mechanism, etc. 
 	this->reset();
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
-		poke(i,read8(file)); // poke will store this value in iomem[] beside other things
+		poke(i,read8(buffer)); // poke will store this value in iomem[] beside other things
 	return true;
 }
 
 bool
-SID::save(FILE *file)
+SID::save(uint8_t **buffer)
 {
 	debug("  Saving SID state...\n");
 
-	// store every single register value in file
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
-		write8(file, iomem[i]);
+		write8(buffer, iomem[i]);
 	return true;
 }
 

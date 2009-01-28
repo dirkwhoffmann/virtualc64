@@ -35,19 +35,19 @@ Keyboard::reset()
 }
 
 bool
-Keyboard::load(FILE *file)
+Keyboard::load(uint8_t **buffer)
 {
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
-		kbMatrix[i] = read8(file);
+		kbMatrix[i] = read8(buffer);
 	}
 	return true;
 }
 
 bool
-Keyboard::save(FILE *file)
+Keyboard::save(uint8_t **buffer)
 {
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
-		write8(file, kbMatrix[i]);
+		write8(buffer, kbMatrix[i]);
 	}
 	return true;
 }

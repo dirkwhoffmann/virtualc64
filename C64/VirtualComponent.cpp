@@ -84,32 +84,28 @@ VirtualComponent::dumpState()
 {
 }
 
-void 
-VirtualComponent::write(FILE *file, uint64_t value, int count)
+#if 0
+uint8_t * 
+VirtualComponent::write(uint8_t *ptr, uint64_t value, unsigned count)
 {
-	assert(file != NULL);
-	assert(count > 0 && count <= 8);
-	
-	for (int i=0; i < count; i++) {
-		fputc((int)(value & 0xff), file); 
+	for (unsigned i = 0; i < count; i++) {
+		*(ptr++) = (uint8_t)(value & 0xFF);
 		value >>= 8;
 	}
+	return ptr;
 }
 
-uint64_t 
-VirtualComponent::read(FILE *file, int count)
+uint8_t * 
+VirtualComponent::read(uint8_t *ptr, uint64_t *value, unsigned count)
 {
-	uint64_t result = 0;
-	
-	assert(file != NULL);
-	assert(count > 0 && count <= 8);
-	
-	for (int i=0; i < count; i++) {
-		result += (uint64_t)fgetc(file) << (i*8);		
+	// uint64_t value = 0;
+	for (unsigned i = 0; i < count; i++) {
+		(*value) |= (uint64_t)*(ptr++);
+		(*value) <<= 8; 
 	}
-	
-	return result;
+	return ptr;
 }
+#endif
 
 void
 VirtualComponent::debug(char *fmt, ...)

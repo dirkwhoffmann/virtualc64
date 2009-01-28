@@ -30,25 +30,66 @@ VIA6522::~VIA6522()
 	
 void VIA6522::reset()
 {
-	ddra = ddrb = 0;
-	ora = orb = ira = irb = 0;
-	t1_latch_lo = t1_latch_hi = t1_counter_lo = t1_counter_hi = 0;
-	t2_latch_lo = t2_counter_lo = t2_counter_hi = 0;
+	ddra = 0;
+	ddrb = 0;
+	ora = 0;
+	orb = 0;
+	ira = 0;
+	irb = 0;
+	t1_latch_lo = 0;
+	t1_latch_hi = 0;
+	t1_counter_lo = 0;
+	t1_counter_hi = 0;
+	t2_latch_lo = 0;
+	t2_counter_lo = 0;
+	t2_counter_hi = 0;
 		
 	for (unsigned i = 0; i < sizeof(io); i++)
 		io[i] = 0;
 }
 
-bool VIA6522::load(FILE *file)
+bool VIA6522::load(uint8_t **buffer)
 {
-	debug("WARNING: VIA loading not implemented yet!\n");
-	return false;
+	ddra = read8(buffer);
+	ddrb = read8(buffer);
+	ora = read8(buffer);
+	orb = read8(buffer);
+	ira = read8(buffer);
+	irb = read8(buffer);
+	t1_latch_lo = read8(buffer);
+	t1_latch_hi = read8(buffer);
+	t1_counter_lo = read8(buffer);
+	t1_counter_hi = read8(buffer);
+	t2_latch_lo = read8(buffer);
+	t2_counter_lo = read8(buffer);
+	t2_counter_hi = read8(buffer);
+	
+	for (unsigned i = 0; i < sizeof(io); i++)
+		io[i] = read8(buffer);
+	
+	return true;
 }
 
-bool VIA6522::save(FILE *file)
+bool VIA6522::save(uint8_t **buffer)
 {
-	debug("WARNING: VIA saving not implemented yet!\n");
-	return false;
+	write8(buffer, ddra);
+	write8(buffer, ddrb);
+	write8(buffer, ora);
+	write8(buffer, orb);
+	write8(buffer, ira);
+	write8(buffer, irb);
+	write8(buffer, t1_latch_lo);
+	write8(buffer, t1_latch_hi);
+	write8(buffer, t1_counter_lo);
+	write8(buffer, t1_counter_hi);
+	write8(buffer, t2_latch_lo);
+	write8(buffer, t2_counter_lo);
+	write8(buffer, t2_counter_hi);
+	
+	for (unsigned i = 0; i < sizeof(io); i++)
+		write8(buffer, io[i]);
+
+	return true;
 }
 
 bool VIA6522::execute(int cycles)

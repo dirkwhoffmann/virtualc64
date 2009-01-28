@@ -44,10 +44,13 @@ class VC1541;
 
 class IEC : public VirtualComponent {
 
-private:
+public:
+	
 	//! Reference to the virtual disc drive
 	VC1541 *drive;
-	
+
+private:
+
 	//! True, iff drive is connected to the IEC bus
 	bool driveConnected;
 	
@@ -125,11 +128,11 @@ public:
 	//! Bring the component back to its initial state
 	void reset();
 
-	//! Load snapshot from file
-	bool load(FILE *file);
+	//! Load snapshot
+	bool load(uint8_t **ptr);
 	
-	//! Save snapshot to file
-	bool save(FILE *file);
+	//! Save snapshot
+	bool save(uint8_t **ptr);
 	
 	//! Dump internal state to console
 	void dumpState();

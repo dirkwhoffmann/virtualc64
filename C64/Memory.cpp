@@ -18,10 +18,6 @@
 
 #include "C64.h"
 
-// --------------------------------------------------------------------------------
-//                          Construction and Destruction
-// --------------------------------------------------------------------------------
-
 Memory::Memory()
 {	
 	cpu = NULL;
@@ -35,6 +31,30 @@ Memory::Memory()
 
 Memory::~Memory()
 {
+}
+
+bool
+Memory::load(uint8_t **buffer)
+{	
+#if 0
+	for (unsigned i = 0; i < sizeof(watchpoint); i++)
+		watchpoint[i] = read8(buffer);	
+	for (unsigned i = 0; i < sizeof(watchValue); i++) 
+		watchValue[i] = read8(buffer);	
+#endif
+	return true;
+}
+
+bool
+Memory::save(uint8_t **buffer) 
+{
+#if 0
+	for (unsigned i = 0; i < sizeof(watchpoint); i++)
+		write8(buffer, watchpoint[i]);
+	for (unsigned i = 0; i < sizeof(watchValue); i++) 
+		write8(buffer, watchValue[i]);
+#endif
+	return true;
 }
 
 

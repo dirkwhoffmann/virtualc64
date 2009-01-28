@@ -205,39 +205,39 @@ CIA::reset()
 }
 
 // Loading and saving snapshots
-bool CIA::load(FILE *file)
+bool CIA::load(uint8_t **buffer)
 {
 	debug("  Loading CIA state...\n");
 	
 	for (unsigned i = 0; i < sizeof(iomem); i++)
-		iomem[i] = read8(file);
-	portLinesA = read8(file);
-	portLinesB = read8(file);
-	interruptDataRegister = read8(file);
-	controlRegHasChangedA = (bool)read8(file);
-	controlRegHasChangedB = (bool)read8(file);
-	tod.load(file);
-	timerA.load(file);
-	timerB.load(file);
+		iomem[i] = read8(buffer);
+	portLinesA = read8(buffer);
+	portLinesB = read8(buffer);
+	interruptDataRegister = read8(buffer);
+	controlRegHasChangedA = (bool)read8(buffer);
+	controlRegHasChangedB = (bool)read8(buffer);
+	tod.load(buffer);
+	timerA.load(buffer);
+	timerB.load(buffer);
 
 	return true;
 }
 
 bool 
-CIA::save(FILE *file)
+CIA::save(uint8_t **buffer)
 {
 	 debug("  Saving CIA state...\n");
 	
 	for (unsigned i = 0; i < sizeof(iomem); i++)
-		write8(file, iomem[i]);
-	write8(file, portLinesA);
-	write8(file, portLinesB);
-	write8(file, interruptDataRegister);
-	write8(file, controlRegHasChangedA);
-	write8(file, controlRegHasChangedB);
-	tod.save(file);
-	timerA.save(file);
-	timerB.save(file);
+		write8(buffer, iomem[i]);
+	write8(buffer, portLinesA);
+	write8(buffer, portLinesB);
+	write8(buffer, interruptDataRegister);
+	write8(buffer, controlRegHasChangedA);
+	write8(buffer, controlRegHasChangedB);
+	tod.save(buffer);
+	timerA.save(buffer);
+	timerB.save(buffer);
 
 	return true;	
 }

@@ -102,6 +102,11 @@ void ListenerProxy::logAction(char *message)
 // Initialization
 // --------------------------------------------------------------------------
 
+- (id) initWithDocument:(MyDocument *)d;
+{
+	return [self initWithDocument:d withScreen:nil];
+}
+
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 {
     self = [super init];
@@ -113,7 +118,6 @@ void ListenerProxy::logAction(char *message)
 		
 	// Create virtual machine and initialize references
 	c64 = new C64(listener);
-	// c64->setListener(listener);	
 	[s setC64:c64];
 	cia[0] = NULL; // unused
 	cia[1] = c64->cia1;
@@ -147,6 +151,11 @@ void ListenerProxy::logAction(char *message)
 	NSLog(@"  Deleting virtual machine");
 	delete c64;
 	c64 = NULL;
+}
+
+- (void) setScreen:(VICScreen *)s
+{ 
+	listener->setScreen(s);
 }
 
 

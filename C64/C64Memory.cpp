@@ -65,40 +65,42 @@ void C64Memory::reset()
 // --------------------------------------------------------------------------------
 
 bool
-C64Memory::load(FILE *file)
+C64Memory::load(uint8_t **buffer)
 {	
 	debug("  Loading memory snapshot...\n");
-	basicRomIsVisible = (bool)read8(file);
-	charRomIsVisible = (bool)read8(file);
-	kernelRomIsVisible = (bool)read8(file);
-	IOIsVisible = (bool)read8(file);
 	
-	for (int i=0; i <= 0xffff; i++) {
-		ram[i] = read8(file);
-	}
-
-	for (int i=0; i < 1024; i++) {
-		colorRam[i] = read8(file);
-	}
+	Memory::load(buffer);
+	
+	for (unsigned i = 0; i < sizeof(ram); i++)
+		ram[i] = read8(buffer);	
+	for (unsigned i = 0; i < sizeof(colorRam); i++) 
+		colorRam[i] = read8(buffer);
+	
+	basicRomIsVisible = (bool)read8(buffer);
+	charRomIsVisible = (bool)read8(buffer);
+	kernelRomIsVisible = (bool)read8(buffer);
+	IOIsVisible = (bool)read8(buffer);
+	
 	return true;
 }
 
 bool
-C64Memory::save(FILE *file) 
+C64Memory::save(uint8_t **buffer) 
 {
 	debug("  Saving memory snapshot...\n");
-	write8(file, (uint8_t)basicRomIsVisible);
-	write8(file, (uint8_t)charRomIsVisible);
-	write8(file, (uint8_t)kernelRomIsVisible);
-	write8(file, (uint8_t)IOIsVisible);
 	
-	for (int i=0; i<=0xffff; i++) {
-		write8(file, ram[i]);
-	}
+	Memory::save(buffer);
+
+	for (unsigned i = 0; i < sizeof(ram); i++)
+		write8(buffer, ram[i]);
+	for (unsigned i = 0; i < sizeof(colorRam); i++) 
+		write8(buffer, colorRam[i]);
 	
-	for (int i=0; i < 1024; i++) {
-		write8(file, colorRam[i]);
-	}
+	write8(buffer, (uint8_t)basicRomIsVisible);
+	write8(buffer, (uint8_t)charRomIsVisible);
+	write8(buffer, (uint8_t)kernelRomIsVisible);
+	write8(buffer, (uint8_t)IOIsVisible);
+
 	return true;
 }
 

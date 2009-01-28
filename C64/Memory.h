@@ -53,26 +53,31 @@ public:
 	/*! Note, that the ROM and IO memory only partially cover the address space. */
 	virtual bool isValidAddr(uint16_t addr, MemoryType type) = 0;
 	
-protected:
-	//! Reference to the connected virtual CPU. 
-	/*! Use setCPU to set the value during initialization.
-		The virtual memory needs to know about the CPU chip for debugging purposes only.
-		When a watch point is set on a specific memory cell, the memory needs to halt the CPU.		
-		\warning The variable is write-once. */
+	//! Reference to the connected virtual CPU
 	CPU *cpu; 
 
-	// --------------------------------------------------------------------------------
-	//                          Construction and Destruction
-	// --------------------------------------------------------------------------------
+private:
+	
+	//! Watchpoint tags
+	uint8_t watchpoint[65536];
+	
+	//! Watchpoint values (only take effekt for WATCH_VALUE tags)
+	uint8_t watchValue[65536];
 
 public:
-
+	
 	//! Constructor
 	Memory();
 	
 	//! Destructor
 	~Memory();
 
+	//! Load snapshot
+	bool load(uint8_t **ptr);
+	
+	//! Save snapshot
+	bool save(uint8_t **ptr);
+	
 	//! Bind the virtual memory to the specified virtual CPU.
 	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
 
@@ -255,14 +260,6 @@ public:
 	// --------------------------------------------------------------------------------
 	//                               Watchpoint handling
 	// --------------------------------------------------------------------------------
-
-private:
-
-	//! Watchpoint tags
-	uint8_t watchpoint[65536];
-	
-	//! Watchpoint values (only take effekt for WATCH_VALUE tags)
-	uint8_t watchValue[65536];
 
 public:
 

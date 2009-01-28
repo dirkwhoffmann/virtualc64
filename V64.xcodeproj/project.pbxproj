@@ -59,6 +59,7 @@
 		50471FEE0A7B67B800A8DB94 /* debugger32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FED0A7B67B800A8DB94 /* debugger32.png */; };
 		504CEE7D0C46774F001F4E51 /* BigIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CEE7C0C46774F001F4E51 /* BigIcon.png */; };
 		504CEEA30C467C4E001F4E51 /* BigIconTransparent.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */; };
+		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506910C80A74EAE100F48A7F /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */; };
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
@@ -187,6 +188,8 @@
 		50471FED0A7B67B800A8DB94 /* debugger32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = debugger32.png; path = images/debugger32.png; sourceTree = "<group>"; };
 		504CEE7C0C46774F001F4E51 /* BigIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BigIcon.png; path = images/BigIcon.png; sourceTree = "<group>"; };
 		504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = BigIconTransparent.tiff; path = images/BigIconTransparent.tiff; sourceTree = "<group>"; };
+		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
+		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
 		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rom.png; path = images/rom.png; sourceTree = "<group>"; };
 		509AEA0A0C324AB0001FC9FD /* PRGArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGArchive.h; sourceTree = "<group>"; };
@@ -363,7 +366,7 @@
 				5000C8070D13CE490011A2E9 /* Memory */,
 				389E776A0C7A3AF100BEAFA6 /* SDL */,
 				504B39910C45192700286F18 /* Drive */,
-				509AE9FE0C3249D4001FC9FD /* Archive */,
+				509AE9FE0C3249D4001FC9FD /* Loading and saving */,
 				50176C500A6F72F3009E80BD /* basic.h */,
 				50176C4F0A6F72F3009E80BD /* basic.cpp */,
 				50176C520A6F72F3009E80BD /* C64.h */,
@@ -483,9 +486,11 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		509AE9FE0C3249D4001FC9FD /* Archive */ = {
+		509AE9FE0C3249D4001FC9FD /* Loading and saving */ = {
 			isa = PBXGroup;
 			children = (
+				505EB09F0F3047C300960BC0 /* Snapshot.h */,
+				505EB0A00F3047C300960BC0 /* Snapshot.cpp */,
 				50D5004B0C2ED1200022CA3A /* Archive.h */,
 				50AFEDBB0C3A7A78007749E7 /* Archive.cpp */,
 				50D500500C2ED13F0022CA3A /* T64Archive.h */,
@@ -497,7 +502,7 @@
 				509AEAFD0C325EFB001FC9FD /* P00Archive.h */,
 				509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */,
 			);
-			name = Archive;
+			name = "Loading and saving";
 			sourceTree = "<group>";
 		};
 		50F4D28F0C4625E200ED4E4E /* Snapshots */ = {
@@ -662,6 +667,7 @@
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
 				503DF0DA0F18BFDE00DC5C11 /* Timer.cpp in Sources */,
+				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,7 +755,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = V64_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;

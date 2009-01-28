@@ -66,9 +66,11 @@ public:
 }
 
 // Initialization
+- (id) initWithDocument:(MyDocument *)d;
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 - (void) release;
 - (C64 *) getC64;
+- (void) setScreen:(VICScreen *)s;
 
 // C64
 - (void) reset;

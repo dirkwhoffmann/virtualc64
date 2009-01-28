@@ -62,11 +62,14 @@
 
 #define DONE next = &CPU::fetch;
 
-// Mnemonic strings (used by the source level debugger only)
+//! Mnemonic strings (used by the source level debugger only)
 char *mnemonic[256];
 
-// Adressing mode (used by the source level debugger only)
+//! Adressing mode (used by the source level debugger only)
 AddressingMode addressingMode[256];
+
+//! Static array containing all callback function
+static void (CPU::*callbacks[])(void);
 
 //! Register callback function for a single opcode
 void registerCallback(uint8_t opcode, void (CPU::*func)(void));
@@ -93,6 +96,8 @@ uint8_t ror(uint8_t op);
 uint8_t rol(uint8_t op);
 
 // Execution functions
+public: 
+
 void fetch();
 
 void JAM(); void JAM_2(); // Default action for illegal instructions
@@ -119,7 +124,7 @@ void AND_indirect_x(); void AND_indirect_x_2(); void AND_indirect_x_3(); void AN
 void AND_indirect_y(); void AND_indirect_y_2(); void AND_indirect_y_3(); void AND_indirect_y_4(); void AND_indirect_y_5();
 
 void ASL_accumulator();
-void ASL_zero_page(); void ASL_zero_page_2(); void ASL_zero_page_3(); void ASL_zero_page_4(); void ASL_zero_page_5();
+void ASL_zero_page(); void ASL_zero_page_2(); void ASL_zero_page_3(); void ASL_zero_page_4(); 
 void ASL_zero_page_x(); void ASL_zero_page_x_2(); void ASL_zero_page_x_3(); void ASL_zero_page_x_4(); void ASL_zero_page_x_5();
 void ASL_absolute(); void ASL_absolute_2(); void ASL_absolute_3(); void ASL_absolute_4(); void ASL_absolute_5();
 void ASL_absolute_x(); void ASL_absolute_x_2(); void ASL_absolute_x_3(); void ASL_absolute_x_4(); void ASL_absolute_x_5(); void ASL_absolute_x_6();
@@ -164,7 +169,7 @@ void CPY_immediate();
 void CPY_zero_page(); void CPY_zero_page_2();
 void CPY_absolute(); void CPY_absolute_2(); void CPY_absolute_3();
 
-void DEC_zero_page(); void DEC_zero_page_2(); void DEC_zero_page_3(); void DEC_zero_page_4(); void DEC_zero_page_5();
+void DEC_zero_page(); void DEC_zero_page_2(); void DEC_zero_page_3(); void DEC_zero_page_4();
 void DEC_zero_page_x(); void DEC_zero_page_x_2(); void DEC_zero_page_x_3(); void DEC_zero_page_x_4(); void DEC_zero_page_x_5();
 void DEC_absolute(); void DEC_absolute_2(); void DEC_absolute_3(); void DEC_absolute_4(); void DEC_absolute_5();
 void DEC_absolute_x(); void DEC_absolute_x_2(); void DEC_absolute_x_3(); void DEC_absolute_x_4(); void DEC_absolute_x_5(); void DEC_absolute_x_6();
@@ -182,7 +187,7 @@ void EOR_absolute_y(); void EOR_absolute_y_2(); void EOR_absolute_y_3(); void EO
 void EOR_indirect_x(); void EOR_indirect_x_2(); void EOR_indirect_x_3(); void EOR_indirect_x_4(); void EOR_indirect_x_5();
 void EOR_indirect_y(); void EOR_indirect_y_2(); void EOR_indirect_y_3(); void EOR_indirect_y_4(); void EOR_indirect_y_5();
 
-void INC_zero_page(); void INC_zero_page_2(); void INC_zero_page_3(); void INC_zero_page_4(); void INC_zero_page_5();
+void INC_zero_page(); void INC_zero_page_2(); void INC_zero_page_3(); void INC_zero_page_4();
 void INC_zero_page_x(); void INC_zero_page_x_2(); void INC_zero_page_x_3(); void INC_zero_page_x_4(); void INC_zero_page_x_5();
 void INC_absolute(); void INC_absolute_2(); void INC_absolute_3(); void INC_absolute_4(); void INC_absolute_5();
 void INC_absolute_x(); void INC_absolute_x_2(); void INC_absolute_x_3(); void INC_absolute_x_4(); void INC_absolute_x_5(); void INC_absolute_x_6();
@@ -222,7 +227,7 @@ void LDY_indirect_x(); void LDY_indirect_x_2(); void LDY_indirect_x_3(); void LD
 void LDY_indirect_y(); void LDY_indirect_y_2(); void LDY_indirect_y_3(); void LDY_indirect_y_4(); void LDY_indirect_y_5();
 
 void LSR_accumulator();
-void LSR_zero_page(); void LSR_zero_page_2(); void LSR_zero_page_3(); void LSR_zero_page_4(); void LSR_zero_page_5();
+void LSR_zero_page(); void LSR_zero_page_2(); void LSR_zero_page_3(); void LSR_zero_page_4();
 void LSR_zero_page_x(); void LSR_zero_page_x_2(); void LSR_zero_page_x_3(); void LSR_zero_page_x_4(); void LSR_zero_page_x_5();
 void LSR_absolute(); void LSR_absolute_2(); void LSR_absolute_3(); void LSR_absolute_4(); void LSR_absolute_5();
 void LSR_absolute_x(); void LSR_absolute_x_2(); void LSR_absolute_x_3(); void LSR_absolute_x_4(); void LSR_absolute_x_5(); void LSR_absolute_x_6();
@@ -252,14 +257,14 @@ void PLA(); void PLA_2(); void PLA_3();
 void PLP(); void PLP_2(); void PLP_3();
 
 void ROL_accumulator();
-void ROL_zero_page(); void ROL_zero_page_2(); void ROL_zero_page_3(); void ROL_zero_page_4(); void ROL_zero_page_5();
+void ROL_zero_page(); void ROL_zero_page_2(); void ROL_zero_page_3(); void ROL_zero_page_4();
 void ROL_zero_page_x(); void ROL_zero_page_x_2(); void ROL_zero_page_x_3(); void ROL_zero_page_x_4(); void ROL_zero_page_x_5();
 void ROL_absolute(); void ROL_absolute_2(); void ROL_absolute_3(); void ROL_absolute_4(); void ROL_absolute_5();
 void ROL_absolute_x(); void ROL_absolute_x_2(); void ROL_absolute_x_3(); void ROL_absolute_x_4(); void ROL_absolute_x_5(); void ROL_absolute_x_6();
 void ROL_indirect_x(); void ROL_indirect_x_2(); void ROL_indirect_x_3(); void ROL_indirect_x_4(); void ROL_indirect_x_5(); void ROL_indirect_x_6(); void ROL_indirect_x_7();     
 
 void ROR_accumulator();
-void ROR_zero_page(); void ROR_zero_page_2(); void ROR_zero_page_3(); void ROR_zero_page_4(); void ROR_zero_page_5();
+void ROR_zero_page(); void ROR_zero_page_2(); void ROR_zero_page_3(); void ROR_zero_page_4();
 void ROR_zero_page_x(); void ROR_zero_page_x_2(); void ROR_zero_page_x_3(); void ROR_zero_page_x_4(); void ROR_zero_page_x_5();
 void ROR_absolute(); void ROR_absolute_2(); void ROR_absolute_3(); void ROR_absolute_4(); void ROR_absolute_5();
 void ROR_absolute_x(); void ROR_absolute_x_2(); void ROR_absolute_x_3(); void ROR_absolute_x_4(); void ROR_absolute_x_5(); void ROR_absolute_x_6();
@@ -320,7 +325,7 @@ void DCP_absolute_y(); void DCP_absolute_y_2(); void DCP_absolute_y_3(); void DC
 void DCP_indirect_x(); void DCP_indirect_x_2(); void DCP_indirect_x_3(); void DCP_indirect_x_4(); void DCP_indirect_x_5(); void DCP_indirect_x_6(); void DCP_indirect_x_7();     
 void DCP_indirect_y(); void DCP_indirect_y_2(); void DCP_indirect_y_3(); void DCP_indirect_y_4(); void DCP_indirect_y_5(); void DCP_indirect_y_6(); void DCP_indirect_y_7();
 
-void ISC_zero_page(); void ISC_zero_page_2(); void ISC_zero_page_3(); void ISC_zero_page_4(); void ISC_zero_page_5();
+void ISC_zero_page(); void ISC_zero_page_2(); void ISC_zero_page_3(); void ISC_zero_page_4();
 void ISC_zero_page_x(); void ISC_zero_page_x_2(); void ISC_zero_page_x_3(); void ISC_zero_page_x_4(); void ISC_zero_page_x_5();
 void ISC_absolute(); void ISC_absolute_2(); void ISC_absolute_3(); void ISC_absolute_4(); void ISC_absolute_5();
 void ISC_absolute_x(); void ISC_absolute_x_2(); void ISC_absolute_x_3(); void ISC_absolute_x_4(); void ISC_absolute_x_5(); void ISC_absolute_x_6();
@@ -328,7 +333,7 @@ void ISC_absolute_y(); void ISC_absolute_y_2(); void ISC_absolute_y_3(); void IS
 void ISC_indirect_x(); void ISC_indirect_x_2(); void ISC_indirect_x_3(); void ISC_indirect_x_4(); void ISC_indirect_x_5(); void ISC_indirect_x_6(); void ISC_indirect_x_7();     
 void ISC_indirect_y(); void ISC_indirect_y_2(); void ISC_indirect_y_3(); void ISC_indirect_y_4(); void ISC_indirect_y_5(); void ISC_indirect_y_6(); void ISC_indirect_y_7();
 
-void LAS_absolute_y(); void LAS_absolute_y_2(); void LAS_absolute_y_3(); void LAS_absolute_y_4(); void LAS_absolute_y_5();
+void LAS_absolute_y(); void LAS_absolute_y_2(); void LAS_absolute_y_3(); void LAS_absolute_y_4();
 
 void LAX_zero_page(); void LAX_zero_page_2();
 void LAX_zero_page_y(); void LAX_zero_page_y_2(); void LAX_zero_page_y_3();

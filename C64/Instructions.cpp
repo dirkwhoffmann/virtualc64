@@ -6966,3 +6966,299 @@ void CPU::LXA_immediate()
 	loadA(X); 
 	DONE;
 }
+
+void ((CPU::*CPU::callbacks[])(void)) = {
+	
+&CPU::fetch,
+
+&CPU::JAM, &CPU::JAM_2,
+
+&CPU::irq, &CPU::irq_2, &CPU::irq_3, &CPU::irq_4, &CPU::irq_5, &CPU::irq_6, &CPU::irq_7,
+&CPU::nmi, &CPU::nmi_2, &CPU::nmi_3, &CPU::nmi_4, &CPU::nmi_5, &CPU::nmi_6, &CPU::nmi_7,
+
+&CPU::ADC_immediate,
+&CPU::ADC_zero_page, &CPU::ADC_zero_page_2,
+&CPU::ADC_zero_page_x, &CPU::ADC_zero_page_x_2, &CPU::ADC_zero_page_x_3,
+&CPU::ADC_absolute, &CPU::ADC_absolute_2, &CPU::ADC_absolute_3,
+&CPU::ADC_absolute_x, &CPU::ADC_absolute_x_2, &CPU::ADC_absolute_x_3, &CPU::ADC_absolute_x_4,
+&CPU::ADC_absolute_y, &CPU::ADC_absolute_y_2, &CPU::ADC_absolute_y_3, &CPU::ADC_absolute_y_4,
+&CPU::ADC_indirect_x, &CPU::ADC_indirect_x_2, &CPU::ADC_indirect_x_3, &CPU::ADC_indirect_x_4, &CPU::ADC_indirect_x_5,
+&CPU::ADC_indirect_y, &CPU::ADC_indirect_y_2, &CPU::ADC_indirect_y_3, &CPU::ADC_indirect_y_4, &CPU::ADC_indirect_y_5,
+
+&CPU::AND_immediate,
+&CPU::AND_zero_page, &CPU::AND_zero_page_2,
+&CPU::AND_zero_page_x, &CPU::AND_zero_page_x_2, &CPU::AND_zero_page_x_3,
+&CPU::AND_absolute, &CPU::AND_absolute_2, &CPU::AND_absolute_3,
+&CPU::AND_absolute_x, &CPU::AND_absolute_x_2, &CPU::AND_absolute_x_3, &CPU::AND_absolute_x_4,
+&CPU::AND_absolute_y, &CPU::AND_absolute_y_2, &CPU::AND_absolute_y_3, &CPU::AND_absolute_y_4,
+&CPU::AND_indirect_x, &CPU::AND_indirect_x_2, &CPU::AND_indirect_x_3, &CPU::AND_indirect_x_4, &CPU::AND_indirect_x_5,
+&CPU::AND_indirect_y, &CPU::AND_indirect_y_2, &CPU::AND_indirect_y_3, &CPU::AND_indirect_y_4, &CPU::AND_indirect_y_5,
+
+&CPU::ASL_accumulator,
+&CPU::ASL_zero_page, &CPU::ASL_zero_page_2, &CPU::ASL_zero_page_3, &CPU::ASL_zero_page_4,
+&CPU::ASL_zero_page_x, &CPU::ASL_zero_page_x_2, &CPU::ASL_zero_page_x_3, &CPU::ASL_zero_page_x_4, &CPU::ASL_zero_page_x_5,
+&CPU::ASL_absolute, &CPU::ASL_absolute_2, &CPU::ASL_absolute_3, &CPU::ASL_absolute_4, &CPU::ASL_absolute_5,
+&CPU::ASL_absolute_x, &CPU::ASL_absolute_x_2, &CPU::ASL_absolute_x_3, &CPU::ASL_absolute_x_4, &CPU::ASL_absolute_x_5, &CPU::ASL_absolute_x_6,
+&CPU::ASL_indirect_x, &CPU::ASL_indirect_x_2, &CPU::ASL_indirect_x_3, &CPU::ASL_indirect_x_4, &CPU::ASL_indirect_x_5, &CPU::ASL_indirect_x_6, &CPU::ASL_indirect_x_7,     
+
+&CPU::branch_3_underflow, &CPU::branch_3_overflow,
+&CPU::BCC_relative, &CPU::BCC_relative_2, 
+&CPU::BCS_relative, &CPU::BCS_relative_2, 
+&CPU::BEQ_relative, &CPU::BEQ_relative_2, 
+
+&CPU::BIT_zero_page, &CPU::BIT_zero_page_2,
+&CPU::BIT_absolute, &CPU::BIT_absolute_2, &CPU::BIT_absolute_3,
+
+&CPU::BMI_relative, &CPU::BMI_relative_2, 
+&CPU::BNE_relative, &CPU::BNE_relative_2, 
+&CPU::BPL_relative, &CPU::BPL_relative_2, 
+
+&CPU::BRK, &CPU::BRK_2, &CPU::BRK_3, &CPU::BRK_4, &CPU::BRK_5, &CPU::BRK_6,
+&CPU::BRK_nmi_4, &CPU::BRK_nmi_5, &CPU::BRK_nmi_6, 
+
+&CPU::BVC_relative, &CPU::BVC_relative_2, 
+&CPU::BVS_relative, &CPU::BVS_relative_2, 
+&CPU::CLC,
+&CPU::CLD,
+&CPU::CLI,
+&CPU::CLV,
+
+&CPU::CMP_immediate,
+&CPU::CMP_zero_page, &CPU::CMP_zero_page_2,
+&CPU::CMP_zero_page_x, &CPU::CMP_zero_page_x_2, &CPU::CMP_zero_page_x_3,
+&CPU::CMP_absolute, &CPU::CMP_absolute_2, &CPU::CMP_absolute_3,
+&CPU::CMP_absolute_x, &CPU::CMP_absolute_x_2, &CPU::CMP_absolute_x_3, &CPU::CMP_absolute_x_4,
+&CPU::CMP_absolute_y, &CPU::CMP_absolute_y_2, &CPU::CMP_absolute_y_3, &CPU::CMP_absolute_y_4,
+&CPU::CMP_indirect_x, &CPU::CMP_indirect_x_2, &CPU::CMP_indirect_x_3, &CPU::CMP_indirect_x_4, &CPU::CMP_indirect_x_5,
+&CPU::CMP_indirect_y, &CPU::CMP_indirect_y_2, &CPU::CMP_indirect_y_3, &CPU::CMP_indirect_y_4, &CPU::CMP_indirect_y_5,
+
+&CPU::CPX_immediate,
+&CPU::CPX_zero_page, &CPU::CPX_zero_page_2, 
+&CPU::CPX_absolute, &CPU::CPX_absolute_2, &CPU::CPX_absolute_3,
+
+&CPU::CPY_immediate,
+&CPU::CPY_zero_page, &CPU::CPY_zero_page_2,
+&CPU::CPY_absolute, &CPU::CPY_absolute_2, &CPU::CPY_absolute_3,
+
+&CPU::DEC_zero_page, &CPU::DEC_zero_page_2, &CPU::DEC_zero_page_3, &CPU::DEC_zero_page_4,
+&CPU::DEC_zero_page_x, &CPU::DEC_zero_page_x_2, &CPU::DEC_zero_page_x_3, &CPU::DEC_zero_page_x_4, &CPU::DEC_zero_page_x_5,
+&CPU::DEC_absolute, &CPU::DEC_absolute_2, &CPU::DEC_absolute_3, &CPU::DEC_absolute_4, &CPU::DEC_absolute_5,
+&CPU::DEC_absolute_x, &CPU::DEC_absolute_x_2, &CPU::DEC_absolute_x_3, &CPU::DEC_absolute_x_4, &CPU::DEC_absolute_x_5, &CPU::DEC_absolute_x_6,
+&CPU::DEC_indirect_x, &CPU::DEC_indirect_x_2, &CPU::DEC_indirect_x_3, &CPU::DEC_indirect_x_4, &CPU::DEC_indirect_x_5, &CPU::DEC_indirect_x_6, &CPU::DEC_indirect_x_7,     
+
+&CPU::DEX,
+&CPU::DEY,
+
+&CPU::EOR_immediate,
+&CPU::EOR_zero_page, &CPU::EOR_zero_page_2,
+&CPU::EOR_zero_page_x, &CPU::EOR_zero_page_x_2, &CPU::EOR_zero_page_x_3,
+&CPU::EOR_absolute, &CPU::EOR_absolute_2, &CPU::EOR_absolute_3,
+&CPU::EOR_absolute_x, &CPU::EOR_absolute_x_2, &CPU::EOR_absolute_x_3, &CPU::EOR_absolute_x_4,
+&CPU::EOR_absolute_y, &CPU::EOR_absolute_y_2, &CPU::EOR_absolute_y_3, &CPU::EOR_absolute_y_4,
+&CPU::EOR_indirect_x, &CPU::EOR_indirect_x_2, &CPU::EOR_indirect_x_3, &CPU::EOR_indirect_x_4, &CPU::EOR_indirect_x_5,
+&CPU::EOR_indirect_y, &CPU::EOR_indirect_y_2, &CPU::EOR_indirect_y_3, &CPU::EOR_indirect_y_4, &CPU::EOR_indirect_y_5,
+
+&CPU::INC_zero_page, &CPU::INC_zero_page_2, &CPU::INC_zero_page_3, &CPU::INC_zero_page_4,
+&CPU::INC_zero_page_x, &CPU::INC_zero_page_x_2, &CPU::INC_zero_page_x_3, &CPU::INC_zero_page_x_4, &CPU::INC_zero_page_x_5,
+&CPU::INC_absolute, &CPU::INC_absolute_2, &CPU::INC_absolute_3, &CPU::INC_absolute_4, &CPU::INC_absolute_5,
+&CPU::INC_absolute_x, &CPU::INC_absolute_x_2, &CPU::INC_absolute_x_3, &CPU::INC_absolute_x_4, &CPU::INC_absolute_x_5, &CPU::INC_absolute_x_6,
+&CPU::INC_indirect_x, &CPU::INC_indirect_x_2, &CPU::INC_indirect_x_3, &CPU::INC_indirect_x_4, &CPU::INC_indirect_x_5, &CPU::INC_indirect_x_6, &CPU::INC_indirect_x_7,     
+
+&CPU::INX,
+&CPU::INY,
+
+&CPU::JMP_absolute, &CPU::JMP_absolute_2,
+&CPU::JMP_absolute_indirect, &CPU::JMP_absolute_indirect_2, &CPU::JMP_absolute_indirect_3, &CPU::JMP_absolute_indirect_4,
+
+&CPU::JSR, &CPU::JSR_2, &CPU::JSR_3, &CPU::JSR_4, &CPU::JSR_5,
+
+&CPU::LDA_immediate,
+&CPU::LDA_zero_page, &CPU::LDA_zero_page_2,
+&CPU::LDA_zero_page_x, &CPU::LDA_zero_page_x_2, &CPU::LDA_zero_page_x_3,
+&CPU::LDA_absolute, &CPU::LDA_absolute_2, &CPU::LDA_absolute_3,
+&CPU::LDA_absolute_x, &CPU::LDA_absolute_x_2, &CPU::LDA_absolute_x_3, &CPU::LDA_absolute_x_4,
+&CPU::LDA_absolute_y, &CPU::LDA_absolute_y_2, &CPU::LDA_absolute_y_3, &CPU::LDA_absolute_y_4,
+&CPU::LDA_indirect_x, &CPU::LDA_indirect_x_2, &CPU::LDA_indirect_x_3, &CPU::LDA_indirect_x_4, &CPU::LDA_indirect_x_5,
+&CPU::LDA_indirect_y, &CPU::LDA_indirect_y_2, &CPU::LDA_indirect_y_3, &CPU::LDA_indirect_y_4, &CPU::LDA_indirect_y_5,
+
+&CPU::LDX_immediate,
+&CPU::LDX_zero_page, &CPU::LDX_zero_page_2,
+&CPU::LDX_zero_page_y, &CPU::LDX_zero_page_y_2, &CPU::LDX_zero_page_y_3,
+&CPU::LDX_absolute, &CPU::LDX_absolute_2, &CPU::LDX_absolute_3,
+&CPU::LDX_absolute_y, &CPU::LDX_absolute_y_2, &CPU::LDX_absolute_y_3, &CPU::LDX_absolute_y_4,
+&CPU::LDX_indirect_x, &CPU::LDX_indirect_x_2, &CPU::LDX_indirect_x_3, &CPU::LDX_indirect_x_4, &CPU::LDX_indirect_x_5,
+&CPU::LDX_indirect_y, &CPU::LDX_indirect_y_2, &CPU::LDX_indirect_y_3, &CPU::LDX_indirect_y_4, &CPU::LDX_indirect_y_5,
+
+&CPU::LDY_immediate,
+&CPU::LDY_zero_page, &CPU::LDY_zero_page_2,
+&CPU::LDY_zero_page_x, &CPU::LDY_zero_page_x_2, &CPU::LDY_zero_page_x_3,
+&CPU::LDY_absolute, &CPU::LDY_absolute_2, &CPU::LDY_absolute_3,
+&CPU::LDY_absolute_x, &CPU::LDY_absolute_x_2, &CPU::LDY_absolute_x_3, &CPU::LDY_absolute_x_4,
+&CPU::LDY_indirect_x, &CPU::LDY_indirect_x_2, &CPU::LDY_indirect_x_3, &CPU::LDY_indirect_x_4, &CPU::LDY_indirect_x_5,
+&CPU::LDY_indirect_y, &CPU::LDY_indirect_y_2, &CPU::LDY_indirect_y_3, &CPU::LDY_indirect_y_4, &CPU::LDY_indirect_y_5,
+
+&CPU::LSR_accumulator,
+&CPU::LSR_zero_page, &CPU::LSR_zero_page_2, &CPU::LSR_zero_page_3, &CPU::LSR_zero_page_4,
+&CPU::LSR_zero_page_x, &CPU::LSR_zero_page_x_2, &CPU::LSR_zero_page_x_3, &CPU::LSR_zero_page_x_4, &CPU::LSR_zero_page_x_5,
+&CPU::LSR_absolute, &CPU::LSR_absolute_2, &CPU::LSR_absolute_3, &CPU::LSR_absolute_4, &CPU::LSR_absolute_5,
+&CPU::LSR_absolute_x, &CPU::LSR_absolute_x_2, &CPU::LSR_absolute_x_3, &CPU::LSR_absolute_x_4, &CPU::LSR_absolute_x_5, &CPU::LSR_absolute_x_6,
+&CPU::LSR_absolute_y, &CPU::LSR_absolute_y_2, &CPU::LSR_absolute_y_3, &CPU::LSR_absolute_y_4, &CPU::LSR_absolute_y_5, &CPU::LSR_absolute_y_6, 
+&CPU::LSR_indirect_x, &CPU::LSR_indirect_x_2, &CPU::LSR_indirect_x_3, &CPU::LSR_indirect_x_4, &CPU::LSR_indirect_x_5, &CPU::LSR_indirect_x_6, &CPU::LSR_indirect_x_7,     
+&CPU::LSR_indirect_y, &CPU::LSR_indirect_y_2, &CPU::LSR_indirect_y_3, &CPU::LSR_indirect_y_4, &CPU::LSR_indirect_y_5, &CPU::LSR_indirect_y_6, &CPU::LSR_indirect_y_7,
+
+&CPU::NOP,
+&CPU::NOP_immediate,
+&CPU::NOP_zero_page, &CPU::NOP_zero_page_2,
+&CPU::NOP_zero_page_x, &CPU::NOP_zero_page_x_2, &CPU::NOP_zero_page_x_3,
+&CPU::NOP_absolute, &CPU::NOP_absolute_2, &CPU::NOP_absolute_3,
+&CPU::NOP_absolute_x, &CPU::NOP_absolute_x_2, &CPU::NOP_absolute_x_3, &CPU::NOP_absolute_x_4,
+
+&CPU::ORA_immediate,
+&CPU::ORA_zero_page, &CPU::ORA_zero_page_2,
+&CPU::ORA_zero_page_x, &CPU::ORA_zero_page_x_2, &CPU::ORA_zero_page_x_3,
+&CPU::ORA_absolute, &CPU::ORA_absolute_2, &CPU::ORA_absolute_3,
+&CPU::ORA_absolute_x, &CPU::ORA_absolute_x_2, &CPU::ORA_absolute_x_3, &CPU::ORA_absolute_x_4,
+&CPU::ORA_absolute_y, &CPU::ORA_absolute_y_2, &CPU::ORA_absolute_y_3, &CPU::ORA_absolute_y_4,
+&CPU::ORA_indirect_x, &CPU::ORA_indirect_x_2, &CPU::ORA_indirect_x_3, &CPU::ORA_indirect_x_4, &CPU::ORA_indirect_x_5,
+&CPU::ORA_indirect_y, &CPU::ORA_indirect_y_2, &CPU::ORA_indirect_y_3, &CPU::ORA_indirect_y_4, &CPU::ORA_indirect_y_5,
+
+&CPU::PHA, &CPU::PHA_2,
+&CPU::PHP, &CPU::PHP_2,
+&CPU::PLA, &CPU::PLA_2, &CPU::PLA_3,
+&CPU::PLP, &CPU::PLP_2, &CPU::PLP_3,
+
+&CPU::ROL_accumulator,
+&CPU::ROL_zero_page, &CPU::ROL_zero_page_2, &CPU::ROL_zero_page_3, &CPU::ROL_zero_page_4,
+&CPU::ROL_zero_page_x, &CPU::ROL_zero_page_x_2, &CPU::ROL_zero_page_x_3, &CPU::ROL_zero_page_x_4, &CPU::ROL_zero_page_x_5,
+&CPU::ROL_absolute, &CPU::ROL_absolute_2, &CPU::ROL_absolute_3, &CPU::ROL_absolute_4, &CPU::ROL_absolute_5,
+&CPU::ROL_absolute_x, &CPU::ROL_absolute_x_2, &CPU::ROL_absolute_x_3, &CPU::ROL_absolute_x_4, &CPU::ROL_absolute_x_5, &CPU::ROL_absolute_x_6,
+&CPU::ROL_indirect_x, &CPU::ROL_indirect_x_2, &CPU::ROL_indirect_x_3, &CPU::ROL_indirect_x_4, &CPU::ROL_indirect_x_5, &CPU::ROL_indirect_x_6, &CPU::ROL_indirect_x_7,     
+
+&CPU::ROR_accumulator,
+&CPU::ROR_zero_page, &CPU::ROR_zero_page_2, &CPU::ROR_zero_page_3, &CPU::ROR_zero_page_4,
+&CPU::ROR_zero_page_x, &CPU::ROR_zero_page_x_2, &CPU::ROR_zero_page_x_3, &CPU::ROR_zero_page_x_4, &CPU::ROR_zero_page_x_5,
+&CPU::ROR_absolute, &CPU::ROR_absolute_2, &CPU::ROR_absolute_3, &CPU::ROR_absolute_4, &CPU::ROR_absolute_5,
+&CPU::ROR_absolute_x, &CPU::ROR_absolute_x_2, &CPU::ROR_absolute_x_3, &CPU::ROR_absolute_x_4, &CPU::ROR_absolute_x_5, &CPU::ROR_absolute_x_6,
+&CPU::ROR_indirect_x, &CPU::ROR_indirect_x_2, &CPU::ROR_indirect_x_3, &CPU::ROR_indirect_x_4, &CPU::ROR_indirect_x_5, &CPU::ROR_indirect_x_6, &CPU::ROR_indirect_x_7,     
+
+&CPU::RTI, &CPU::RTI_2, &CPU::RTI_3, &CPU::RTI_4, &CPU::RTI_5,
+&CPU::RTS, &CPU::RTS_2, &CPU::RTS_3, &CPU::RTS_4, &CPU::RTS_5,
+
+&CPU::SBC_immediate,
+&CPU::SBC_zero_page, &CPU::SBC_zero_page_2,
+&CPU::SBC_zero_page_x, &CPU::SBC_zero_page_x_2, &CPU::SBC_zero_page_x_3,
+&CPU::SBC_absolute, &CPU::SBC_absolute_2, &CPU::SBC_absolute_3,
+&CPU::SBC_absolute_x, &CPU::SBC_absolute_x_2, &CPU::SBC_absolute_x_3, &CPU::SBC_absolute_x_4,
+&CPU::SBC_absolute_y, &CPU::SBC_absolute_y_2, &CPU::SBC_absolute_y_3, &CPU::SBC_absolute_y_4,
+&CPU::SBC_indirect_x, &CPU::SBC_indirect_x_2, &CPU::SBC_indirect_x_3, &CPU::SBC_indirect_x_4, &CPU::SBC_indirect_x_5,
+&CPU::SBC_indirect_y, &CPU::SBC_indirect_y_2, &CPU::SBC_indirect_y_3, &CPU::SBC_indirect_y_4, &CPU::SBC_indirect_y_5,
+
+&CPU::SEC,
+&CPU::SED,
+&CPU::SEI,
+
+&CPU::STA_zero_page, &CPU::STA_zero_page_2,
+&CPU::STA_zero_page_x, &CPU::STA_zero_page_x_2, &CPU::STA_zero_page_x_3,
+&CPU::STA_absolute, &CPU::STA_absolute_2, &CPU::STA_absolute_3,
+&CPU::STA_absolute_x, &CPU::STA_absolute_x_2, &CPU::STA_absolute_x_3, &CPU::STA_absolute_x_4,
+&CPU::STA_absolute_y, &CPU::STA_absolute_y_2, &CPU::STA_absolute_y_3, &CPU::STA_absolute_y_4,
+&CPU::STA_indirect_x, &CPU::STA_indirect_x_2, &CPU::STA_indirect_x_3, &CPU::STA_indirect_x_4, &CPU::STA_indirect_x_5,
+&CPU::STA_indirect_y, &CPU::STA_indirect_y_2, &CPU::STA_indirect_y_3, &CPU::STA_indirect_y_4, &CPU::STA_indirect_y_5,
+
+&CPU::STX_zero_page, &CPU::STX_zero_page_2,
+&CPU::STX_zero_page_y, &CPU::STX_zero_page_y_2, &CPU::STX_zero_page_y_3,
+&CPU::STX_absolute, &CPU::STX_absolute_2, &CPU::STX_absolute_3,
+
+&CPU::STY_zero_page, &CPU::STY_zero_page_2,
+&CPU::STY_zero_page_x, &CPU::STY_zero_page_x_2, &CPU::STY_zero_page_x_3,
+&CPU::STY_absolute, &CPU::STY_absolute_2, &CPU::STY_absolute_3,
+
+&CPU::TAX,
+&CPU::TAY,
+&CPU::TSX,
+&CPU::TXA,
+&CPU::TXS,
+&CPU::TYA,
+
+// Illegal instructions
+
+&CPU::ALR_immediate,   
+&CPU::ANC_immediate,   
+&CPU::ANE_immediate,
+&CPU::ARR_immediate,   
+&CPU::AXS_immediate,   
+
+&CPU::DCP_zero_page, &CPU::DCP_zero_page_2, &CPU::DCP_zero_page_3, &CPU::DCP_zero_page_4,
+&CPU::DCP_zero_page_x, &CPU::DCP_zero_page_x_2, &CPU::DCP_zero_page_x_3, &CPU::DCP_zero_page_x_4, &CPU::DCP_zero_page_x_5,
+&CPU::DCP_absolute, &CPU::DCP_absolute_2, &CPU::DCP_absolute_3, &CPU::DCP_absolute_4, &CPU::DCP_absolute_5,
+&CPU::DCP_absolute_x, &CPU::DCP_absolute_x_2, &CPU::DCP_absolute_x_3, &CPU::DCP_absolute_x_4, &CPU::DCP_absolute_x_5, &CPU::DCP_absolute_x_6,
+&CPU::DCP_absolute_y, &CPU::DCP_absolute_y_2, &CPU::DCP_absolute_y_3, &CPU::DCP_absolute_y_4, &CPU::DCP_absolute_y_5, &CPU::DCP_absolute_y_6, 
+&CPU::DCP_indirect_x, &CPU::DCP_indirect_x_2, &CPU::DCP_indirect_x_3, &CPU::DCP_indirect_x_4, &CPU::DCP_indirect_x_5, &CPU::DCP_indirect_x_6, &CPU::DCP_indirect_x_7,     
+&CPU::DCP_indirect_y, &CPU::DCP_indirect_y_2, &CPU::DCP_indirect_y_3, &CPU::DCP_indirect_y_4, &CPU::DCP_indirect_y_5, &CPU::DCP_indirect_y_6, &CPU::DCP_indirect_y_7,
+
+&CPU::ISC_zero_page, &CPU::ISC_zero_page_2, &CPU::ISC_zero_page_3, &CPU::ISC_zero_page_4,
+&CPU::ISC_zero_page_x, &CPU::ISC_zero_page_x_2, &CPU::ISC_zero_page_x_3, &CPU::ISC_zero_page_x_4, &CPU::ISC_zero_page_x_5,
+&CPU::ISC_absolute, &CPU::ISC_absolute_2, &CPU::ISC_absolute_3, &CPU::ISC_absolute_4, &CPU::ISC_absolute_5,
+&CPU::ISC_absolute_x, &CPU::ISC_absolute_x_2, &CPU::ISC_absolute_x_3, &CPU::ISC_absolute_x_4, &CPU::ISC_absolute_x_5, &CPU::ISC_absolute_x_6,
+&CPU::ISC_absolute_y, &CPU::ISC_absolute_y_2, &CPU::ISC_absolute_y_3, &CPU::ISC_absolute_y_4, &CPU::ISC_absolute_y_5, &CPU::ISC_absolute_y_6, 
+&CPU::ISC_indirect_x, &CPU::ISC_indirect_x_2, &CPU::ISC_indirect_x_3, &CPU::ISC_indirect_x_4, &CPU::ISC_indirect_x_5, &CPU::ISC_indirect_x_6, &CPU::ISC_indirect_x_7,     
+&CPU::ISC_indirect_y, &CPU::ISC_indirect_y_2, &CPU::ISC_indirect_y_3, &CPU::ISC_indirect_y_4, &CPU::ISC_indirect_y_5, &CPU::ISC_indirect_y_6, &CPU::ISC_indirect_y_7,
+
+&CPU::LAS_absolute_y, &CPU::LAS_absolute_y_2, &CPU::LAS_absolute_y_3, &CPU::LAS_absolute_y_4,
+
+&CPU::LAX_zero_page, &CPU::LAX_zero_page_2,
+&CPU::LAX_zero_page_y, &CPU::LAX_zero_page_y_2, &CPU::LAX_zero_page_y_3,
+&CPU::LAX_absolute, &CPU::LAX_absolute_2, &CPU::LAX_absolute_3,
+&CPU::LAX_absolute_y, &CPU::LAX_absolute_y_2, &CPU::LAX_absolute_y_3, &CPU::LAX_absolute_y_4,
+&CPU::LAX_indirect_x, &CPU::LAX_indirect_x_2, &CPU::LAX_indirect_x_3, &CPU::LAX_indirect_x_4, &CPU::LAX_indirect_x_5,
+&CPU::LAX_indirect_y, &CPU::LAX_indirect_y_2, &CPU::LAX_indirect_y_3, &CPU::LAX_indirect_y_4, &CPU::LAX_indirect_y_5,
+
+&CPU::LXA_immediate,
+
+&CPU::RLA_zero_page, &CPU::RLA_zero_page_2, &CPU::RLA_zero_page_3, &CPU::RLA_zero_page_4,
+&CPU::RLA_zero_page_x, &CPU::RLA_zero_page_x_2, &CPU::RLA_zero_page_x_3, &CPU::RLA_zero_page_x_4, &CPU::RLA_zero_page_x_5,
+&CPU::RLA_absolute, &CPU::RLA_absolute_2, &CPU::RLA_absolute_3, &CPU::RLA_absolute_4, &CPU::RLA_absolute_5,
+&CPU::RLA_absolute_x, &CPU::RLA_absolute_x_2, &CPU::RLA_absolute_x_3, &CPU::RLA_absolute_x_4, &CPU::RLA_absolute_x_5, &CPU::RLA_absolute_x_6,
+&CPU::RLA_absolute_y, &CPU::RLA_absolute_y_2, &CPU::RLA_absolute_y_3, &CPU::RLA_absolute_y_4, &CPU::RLA_absolute_y_5, &CPU::RLA_absolute_y_6,
+&CPU::RLA_indirect_x, &CPU::RLA_indirect_x_2, &CPU::RLA_indirect_x_3, &CPU::RLA_indirect_x_4, &CPU::RLA_indirect_x_5, &CPU::RLA_indirect_x_6, &CPU::RLA_indirect_x_7,
+&CPU::RLA_indirect_y, &CPU::RLA_indirect_y_2, &CPU::RLA_indirect_y_3, &CPU::RLA_indirect_y_4, &CPU::RLA_indirect_y_5, &CPU::RLA_indirect_y_6, &CPU::RLA_indirect_y_7,
+
+&CPU::RRA_zero_page, &CPU::RRA_zero_page_2, &CPU::RRA_zero_page_3, &CPU::RRA_zero_page_4,
+&CPU::RRA_zero_page_x, &CPU::RRA_zero_page_x_2, &CPU::RRA_zero_page_x_3, &CPU::RRA_zero_page_x_4, &CPU::RRA_zero_page_x_5,
+&CPU::RRA_absolute, &CPU::RRA_absolute_2, &CPU::RRA_absolute_3, &CPU::RRA_absolute_4, &CPU::RRA_absolute_5,
+&CPU::RRA_absolute_x, &CPU::RRA_absolute_x_2, &CPU::RRA_absolute_x_3, &CPU::RRA_absolute_x_4, &CPU::RRA_absolute_x_5, &CPU::RRA_absolute_x_6,
+&CPU::RRA_absolute_y, &CPU::RRA_absolute_y_2, &CPU::RRA_absolute_y_3, &CPU::RRA_absolute_y_4, &CPU::RRA_absolute_y_5, &CPU::RRA_absolute_y_6,
+&CPU::RRA_indirect_x, &CPU::RRA_indirect_x_2, &CPU::RRA_indirect_x_3, &CPU::RRA_indirect_x_4, &CPU::RRA_indirect_x_5, &CPU::RRA_indirect_x_6, &CPU::RRA_indirect_x_7,
+&CPU::RRA_indirect_y, &CPU::RRA_indirect_y_2, &CPU::RRA_indirect_y_3, &CPU::RRA_indirect_y_4, &CPU::RRA_indirect_y_5, &CPU::RRA_indirect_y_6, &CPU::RRA_indirect_y_7,
+
+&CPU::SAX_zero_page, &CPU::SAX_zero_page_2,
+&CPU::SAX_zero_page_y, &CPU::SAX_zero_page_y_2, &CPU::SAX_zero_page_y_3,
+&CPU::SAX_absolute, &CPU::SAX_absolute_2, &CPU::SAX_absolute_3,
+&CPU::SAX_indirect_x, &CPU::SAX_indirect_x_2, &CPU::SAX_indirect_x_3, &CPU::SAX_indirect_x_4, &CPU::SAX_indirect_x_5,
+
+&CPU::SHA_indirect_y, &CPU::SHA_indirect_y_2, &CPU::SHA_indirect_y_3, &CPU::SHA_indirect_y_4, &CPU::SHA_indirect_y_5,
+&CPU::SHA_absolute_y, &CPU::SHA_absolute_y_2, &CPU::SHA_absolute_y_3, &CPU::SHA_absolute_y_4,
+
+&CPU::SHX_absolute_y, &CPU::SHX_absolute_y_2, &CPU::SHX_absolute_y_3, &CPU::SHX_absolute_y_4,
+&CPU::SHY_absolute_x, &CPU::SHY_absolute_x_2, &CPU::SHY_absolute_x_3, &CPU::SHY_absolute_x_4,
+
+&CPU::SLO_zero_page, &CPU::SLO_zero_page_2, &CPU::SLO_zero_page_3, &CPU::SLO_zero_page_4,
+&CPU::SLO_zero_page_x, &CPU::SLO_zero_page_x_2, &CPU::SLO_zero_page_x_3, &CPU::SLO_zero_page_x_4, &CPU::SLO_zero_page_x_5,
+&CPU::SLO_absolute, &CPU::SLO_absolute_2, &CPU::SLO_absolute_3, &CPU::SLO_absolute_4, &CPU::SLO_absolute_5,
+&CPU::SLO_absolute_x, &CPU::SLO_absolute_x_2, &CPU::SLO_absolute_x_3, &CPU::SLO_absolute_x_4, &CPU::SLO_absolute_x_5, &CPU::SLO_absolute_x_6,
+&CPU::SLO_absolute_y, &CPU::SLO_absolute_y_2, &CPU::SLO_absolute_y_3, &CPU::SLO_absolute_y_4, &CPU::SLO_absolute_y_5, &CPU::SLO_absolute_y_6,
+&CPU::SLO_indirect_x, &CPU::SLO_indirect_x_2, &CPU::SLO_indirect_x_3, &CPU::SLO_indirect_x_4, &CPU::SLO_indirect_x_5, &CPU::SLO_indirect_x_6, &CPU::SLO_indirect_x_7,
+&CPU::SLO_indirect_y, &CPU::SLO_indirect_y_2, &CPU::SLO_indirect_y_3, &CPU::SLO_indirect_y_4, &CPU::SLO_indirect_y_5, &CPU::SLO_indirect_y_6, &CPU::SLO_indirect_y_7,
+
+&CPU::SRE_zero_page, &CPU::SRE_zero_page_2, &CPU::SRE_zero_page_3, &CPU::SRE_zero_page_4,
+&CPU::SRE_zero_page_x, &CPU::SRE_zero_page_x_2, &CPU::SRE_zero_page_x_3, &CPU::SRE_zero_page_x_4, &CPU::SRE_zero_page_x_5,
+&CPU::SRE_absolute, &CPU::SRE_absolute_2, &CPU::SRE_absolute_3, &CPU::SRE_absolute_4, &CPU::SRE_absolute_5,
+&CPU::SRE_absolute_x, &CPU::SRE_absolute_x_2, &CPU::SRE_absolute_x_3, &CPU::SRE_absolute_x_4, &CPU::SRE_absolute_x_5, &CPU::SRE_absolute_x_6,
+&CPU::SRE_absolute_y, &CPU::SRE_absolute_y_2, &CPU::SRE_absolute_y_3, &CPU::SRE_absolute_y_4, &CPU::SRE_absolute_y_5, &CPU::SRE_absolute_y_6,
+&CPU::SRE_indirect_x, &CPU::SRE_indirect_x_2, &CPU::SRE_indirect_x_3, &CPU::SRE_indirect_x_4, &CPU::SRE_indirect_x_5, &CPU::SRE_indirect_x_6, &CPU::SRE_indirect_x_7,
+&CPU::SRE_indirect_y, &CPU::SRE_indirect_y_2, &CPU::SRE_indirect_y_3, &CPU::SRE_indirect_y_4, &CPU::SRE_indirect_y_5, &CPU::SRE_indirect_y_6, &CPU::SRE_indirect_y_7,
+
+&CPU::TAS_absolute_y, &CPU::TAS_absolute_y_2, &CPU::TAS_absolute_y_3, &CPU::TAS_absolute_y_4,
+
+NULL
+};

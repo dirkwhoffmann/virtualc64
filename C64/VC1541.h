@@ -32,13 +32,9 @@ class C64;
 class VC1541 : public VirtualComponent { 
 
 public:
-	//! The 1541 drive contains two via chips for disk and peripheral I/O
-	VIA1 *via1;
-	VIA2 *via2;
-
 	//! Reference to the virtual IEC bus
 	C64 *c64;
-		
+	
 	//! Reference to the virtual IEC bus
 	IEC *iec;
 
@@ -48,7 +44,12 @@ public:
 	//! Reference to the virtual drive memory
 	VC1541Memory *mem;
 
+	//! The 1541 drive contains two via chips for disk and peripheral I/O
+	VIA1 *via1;
+	VIA2 *via2;
+
 private:
+	
 	//! Disk data
 	/*! Each disk consists of 42 halftracks with a maximum of 7928 bytes */
 	uint8_t data[84][7928];
@@ -56,7 +57,11 @@ private:
 	//! Real length of each track
 	uint16_t length[84];
 	
+	//! Indicates whether disk is rotating or not
+	bool rotating;
+		
 public:
+	
 	//! Timer
 	int byteReadyTimer;
 	
@@ -69,12 +74,8 @@ public:
 	//! Write protection mark
 	bool writeProtection;
 	
-private:
-
-	//! Indicates whether disk is rotating or not
-	bool rotating;
-	
 public:
+	
 	//! Constructor
 	VC1541();
 	
@@ -84,11 +85,11 @@ public:
 	//! Restore initial state
 	void reset();
 	
-	//! Load internal state from a file
-	bool load(FILE *file);
+	//! Load snapshot
+	bool load(uint8_t **buffer);
 	
-	//! Save internal state to a file
-	bool save(FILE *file);
+	//! Save snapshot
+	bool save(uint8_t **buffer);
 	
 	//! Dump current state into logfile
 	void dumpState();

@@ -73,6 +73,84 @@ VC1541::reset()
 	deactivateRedLED();	
 }
 
+bool
+VC1541::load(uint8_t **buffer)
+{
+	for (unsigned i = 0; i < 84; i++)
+		for (unsigned j = 0; j < sizeof(data[i]); j++)
+			data[i][j] = read8(buffer);
+	for (unsigned i = 0; i < 84; i++) 
+		length[i] = read16(buffer);
+	rotating = (bool)read8(buffer);
+	byteReadyTimer = (int)read16(buffer);
+	track = (int)read16(buffer);
+	offset = (int)read16(buffer);
+	noOfFFBytes = (int)read16(buffer);
+	writeProtection = (bool)read8(buffer);
+	cpu->load(buffer);
+	via1->load(buffer);
+	via2->load(buffer);
+	mem->load(buffer);
+	return true;
+}
+
+bool 
+VC1541::save(uint8_t **buffer)
+{
+	for (unsigned i = 0; i < 84; i++)
+		for (unsigned j = 0; j < sizeof(data[i]); j++)
+			write8(buffer, data[i][j]);
+	for (unsigned i = 0; i < 84; i++) 
+		write8(buffer, length[i]);
+	write8(buffer, (uint8_t)rotating);
+	write16(buffer, (uint16_t)byteReadyTimer);
+	write16(buffer, (uint16_t)track);
+	write16(buffer, (uint16_t)offset);
+	write16(buffer, (uint16_t)noOfFFBytes);
+	write8(buffer, (uint8_t)writeProtection);
+	cpu->save(buffer);
+	via1->save(buffer);
+	via2->save(buffer);
+	mem->save(buffer);
+	return true;
+}
+
+void 
+VC1541::dumpState()
+{
+	debug("VC1541\n");
+	debug("------\n\n");
+	
+#if 0	
+	FILE *file = fopen("/Users/hoff/tmp/d64image.txt","w");
+	
+	if (file != NULL) {
+		dumpDisk(file);
+		fclose(file);
+	}
+	
+	int t, i;
+	/* Directory track... */
+	t = 18;
+	for (i = 0; i < 4096; i+= 16) {
+		debug("(%d,%d): %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", 
+			  t, i,
+			  getData(t,i+0), getData(t,i+1), getData(t,i+2), getData(t,i+3),
+			  getData(t,i+4), getData(t,i+5), getData(t,i+6), getData(t,i+7),
+			  getData(t,i+8), getData(t,i+9), getData(t,i+10), getData(t,i+11),
+			  getData(t,i+12), getData(t,i+13), getData(t,i+14), getData(t,i+15));
+	}
+#endif
+	
+	debug("         Head timer : %d\n", byteReadyTimer);
+	debug("              Track : %d\n", track);
+	debug("       Track offset : %d\n", offset);
+	debug("Sync bytes in a row : %d\n", noOfFFBytes);
+	debug("  Symbol under head : %02X\n", readHead());
+	debug("        Next symbol : %02X\n", readHeadLookAhead());
+	debug("\n");
+}
+
 void 
 VC1541::setWriteProtection(bool b)
 {
@@ -128,18 +206,6 @@ VC1541::simulateAtnInterrupt()
 	} else {
 		debug("Sorry, want to interrupt, but CPU does not accept ATN line interrupts\n");
 	}
-}
-
-bool
-VC1541::load(FILE *file)
-{
-	return true;
-}
-
-bool 
-VC1541::save(FILE *file)
-{
-	return true;
 }
 
 void 
@@ -394,42 +460,6 @@ VC1541::ejectDisc()
 	getListener()->driveDiscAction(false);
 }
 			
-void 
-VC1541::dumpState()
-{
-	debug("VC1541\n");
-	debug("------\n\n");
-	
-#if 0	
-	FILE *file = fopen("/Users/hoff/tmp/d64image.txt","w");
-	
-	if (file != NULL) {
-		dumpDisk(file);
-		fclose(file);
-	}
-	
-	int t, i;
-	/* Directory track... */
-	t = 18;
-	for (i = 0; i < 4096; i+= 16) {
-		debug("(%d,%d): %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", 
-			t, i,
-			getData(t,i+0), getData(t,i+1), getData(t,i+2), getData(t,i+3),
-			getData(t,i+4), getData(t,i+5), getData(t,i+6), getData(t,i+7),
-			getData(t,i+8), getData(t,i+9), getData(t,i+10), getData(t,i+11),
-			getData(t,i+12), getData(t,i+13), getData(t,i+14), getData(t,i+15));
-	}
-#endif
-
-	debug("         Head timer : %d\n", byteReadyTimer);
-	debug("              Track : %d\n", track);
-	debug("       Track offset : %d\n", offset);
-	debug("Sync bytes in a row : %d\n", noOfFFBytes);
-	debug("  Symbol under head : %02X\n", readHead());
-	debug("        Next symbol : %02X\n", readHeadLookAhead());
-	debug("\n");
-}
-
 void 
 VC1541::dumpTrack(int t)
 {	

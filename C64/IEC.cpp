@@ -35,6 +35,21 @@ IEC::reset()
 {
 	debug("  Resetting IEC bus...\n");
 
+	atnLine = 1;
+	oldAtnLine = 1;
+	clockLine = 1;
+	oldClockLine = 1;
+	dataLine = 1;
+	oldDataLine = 1;
+	deviceDataPin = 1;
+	deviceClockPin = 1;
+	ciaDataPin = 1;
+	ciaDataIsOutput = 1;
+	ciaClockPin = 1;
+	ciaClockIsOutput = 1;
+	ciaAtnPin = 1;
+	ciaAtnIsOutput = 1;
+	
 	connectDrive();
 	setDeviceClockPin(1);
 	setDeviceDataPin(1);
@@ -42,44 +57,46 @@ IEC::reset()
 }
  
 bool
-IEC::load(FILE *file)
+IEC::load(uint8_t **buffer)
 {
 	debug("  Loading IEC state...\n");
-	atnLine = (bool)read8(file);
-	oldAtnLine = (bool)read8(file);
-	clockLine = (bool)read8(file);
-	oldClockLine = (bool)read8(file);
-	dataLine = (bool)read8(file);
-	oldDataLine = (bool)read8(file);
-	deviceDataPin = (bool)read8(file);
-	deviceClockPin = (bool)read8(file);
-	ciaDataPin = (bool)read8(file);
-	ciaDataIsOutput = (bool)read8(file);
-	ciaClockPin = (bool)read8(file);
-	ciaClockIsOutput = (bool)read8(file);
-	ciaAtnPin = (bool)read8(file);
-	ciaAtnIsOutput = (bool)read8(file);
+	driveConnected = (bool)read8(buffer);
+	atnLine = (bool)read8(buffer);
+	oldAtnLine = (bool)read8(buffer);
+	clockLine = (bool)read8(buffer);
+	oldClockLine = (bool)read8(buffer);
+	dataLine = (bool)read8(buffer);
+	oldDataLine = (bool)read8(buffer);
+	deviceDataPin = (bool)read8(buffer);
+	deviceClockPin = (bool)read8(buffer);
+	ciaDataPin = (bool)read8(buffer);
+	ciaDataIsOutput = (bool)read8(buffer);
+	ciaClockPin = (bool)read8(buffer);
+	ciaClockIsOutput = (bool)read8(buffer);
+	ciaAtnPin = (bool)read8(buffer);
+	ciaAtnIsOutput = (bool)read8(buffer);
 	return true;
 }
 
 bool
-IEC::save(FILE *file)
+IEC::save(uint8_t **buffer)
 {
 	debug("  Saving IEC state...\n");
-	write8(file, (int)atnLine);
-	write8(file, (int)oldAtnLine);
-	write8(file, (int)clockLine);
-	write8(file, (int)oldClockLine);
-	write8(file, (int)dataLine);
-	write8(file, (int)oldDataLine);
-	write8(file, (int)deviceDataPin);
-	write8(file, (int)deviceClockPin);
-	write8(file, (int)ciaDataPin);
-	write8(file, (int)ciaDataIsOutput);
-	write8(file, (int)ciaClockPin);
-	write8(file, (int)ciaClockIsOutput);
-	write8(file, (int)ciaAtnPin);
-	write8(file, (int)ciaAtnIsOutput);
+	write8(buffer, (uint8_t)driveConnected);
+	write8(buffer, (uint8_t)atnLine);
+	write8(buffer, (uint8_t)oldAtnLine);
+	write8(buffer, (uint8_t)clockLine);
+	write8(buffer, (uint8_t)oldClockLine);
+	write8(buffer, (uint8_t)dataLine);
+	write8(buffer, (uint8_t)oldDataLine);
+	write8(buffer, (uint8_t)deviceDataPin);
+	write8(buffer, (uint8_t)deviceClockPin);
+	write8(buffer, (uint8_t)ciaDataPin);
+	write8(buffer, (uint8_t)ciaDataIsOutput);
+	write8(buffer, (uint8_t)ciaClockPin);
+	write8(buffer, (uint8_t)ciaClockIsOutput);
+	write8(buffer, (uint8_t)ciaAtnPin);
+	write8(buffer, (uint8_t)ciaAtnIsOutput);
 	return true;
 }
 

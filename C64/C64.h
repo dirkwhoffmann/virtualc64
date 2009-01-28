@@ -23,6 +23,7 @@
 #include "basic.h"
 #include "VirtualComponent.h"
 #include "C64Listener.h"
+#include "Snapshot.h"
 #include "T64Archive.h"
 #include "D64Archive.h"
 #include "PRGArchive.h"
@@ -166,6 +167,9 @@ public:
 	//! Reference to the virtual VC1541
 	VC1541 *floppy;
 		
+	//! Size of a snapshot file in bytes
+	static const int SNAPSHOT_SIZE = 3000000; 
+
 private:
 
 	//! The execution thread
@@ -233,11 +237,11 @@ public:
 	/*! A (faked) reset is performed by loading a presaved image from disk. */
 	void fastReset();           
 
-	//! Load snapshot from file
-	bool load(FILE *file);
+	//! Load snapshot
+	bool load(uint8_t **buffer);
 	
-	//! Save snapshot to file
-	bool save(FILE *file);
+	//! Save snapshot
+	bool save(uint8_t **buffer);
 
 	//! Dump current state into logfile
 	void dumpState();
