@@ -24,16 +24,14 @@
 class VC1541;
 
 class VIA6522 : public VirtualComponent {
-
-protected:
-	//! VIA I/O Memory
-	/*! Whenever a value is poked to the VIA address space, it is stored here. */
-	uint8_t io[16];
 	
 public:
+	
 	//! Reference to the connected disk drive. 
 	VC1541 *floppy;
 
+public:
+	
 	//! Peripheral ports
 	/*! The  R6522  VIA  has  two  8-bit  bidirectional  I/O ports (Port A and Port B)
 		and each port has two associated control lines. 
@@ -54,6 +52,12 @@ public:
 	uint8_t ddra, ddrb;
 	uint8_t ora, orb;
 	uint8_t ira, irb;
+	
+protected:
+	
+	//! VIA I/O Memory
+	/*! Whenever a value is poked to the VIA address space, it is stored here. */
+	uint8_t io[16];
 	
 private:
 	
@@ -98,11 +102,11 @@ public:
 	/*! The VIA chip will be executed for the specified number of clock cycles. */
 	bool execute(int cycles); 
 
-	//! Load snapshot from file
-	bool load(FILE *file);
+	//! Load snapshot
+	bool load(uint8_t **buffer);
 
-	//! Save snapshot to file
-	bool save(FILE *file);
+	//! Save snapshot
+	bool save(uint8_t **buffer);
 	
 	//! Special peek function for the I/O memory range
 	/*! The peek function only handles those registers that are treated similarily by both VIA chips */

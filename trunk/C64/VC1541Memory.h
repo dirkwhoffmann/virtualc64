@@ -60,11 +60,11 @@ public:
 	//! Restore initial state
 	void reset();
 	
-	//! Load internal state from a file
-	bool load(FILE *file);
+	//! Load snapshot
+	bool load(uint8_t **ptr);
 	
-	//! Save internal state to a file
-	bool save(FILE *file);
+	//! Save snapshot
+	bool save(uint8_t **ptr);
 	
 	//! Dump current state into logfile
 	void dumpState();

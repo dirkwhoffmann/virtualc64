@@ -55,7 +55,7 @@ Joystick::Joystick( int devNo ) {
 		} else {
 			printf("Couldn't open joystick %d\n", devNo );  
 			joy = NULL;
-			throw("Couldn't open joystick %d\n", devNo );
+			throw("Couldn't open joystick %d\n");
 		}
 
 	} else {

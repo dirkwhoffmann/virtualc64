@@ -129,7 +129,8 @@
 	selectedSprite = 0;
 	
 	// Create virtual C64
-	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];						
+	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];
+	// [c64 setScreen:screen];						
 
 	
 	disassembleStartAddr = [c64 cpuGetPC];
@@ -278,10 +279,32 @@
 {
 	return [aType isEqual:@"VC64"];
 }
+#endif
 
+
+-(NSData *)dataRepresentationOfType:(NSString *)type
+{
+	NSLog(@"dataRepresentationOfType:%@", type);
+	NSLog(@"c64 == %p", c64);
+
+	return nil;
+}
+
+-(bool)loadDataRepresentation:(NSData *)docData ofType:(NSString *)type
+{
+	NSLog(@"loadDataRepresentation:%@", type);
+	NSLog(@"c64 == %p", c64);
+	
+	return NO;
+}
+
+#if 0
 -(bool)writeToFile:(NSString *)filename ofType:(NSString *)type
 {
 	NSLog(@"writeToFile %@ (type %@)", filename, type);
+	NSLog(@"c64 == %p", c64);
+	
+	
 	return [c64 saveSnapshot:filename];
 }
 
@@ -289,12 +312,20 @@
 {
 	NSLog(@"readFromFile %@ (type %@)", filename, type);
 
-	if ([type isEqualToString:@"D64"]) {
-		// not yet supported
+	if (![type isEqualToString:@"VC64"]) {
+		NSLog(@"Snapshot is not of type VC64\n");
 		return NO;
-	} else {
-		return [c64 loadSnapshot:filename];
 	}
+	
+	NSLog(@"c64 == %p", c64);
+	if (![c64 loadSnapshot:filename]) {
+		(void)NSRunAlertPanel(@"Version number mismatch",
+							  @"The snapshot file has been created with a different version of VirtualC64 and cannot be opend.",
+							  @"OK",nil,nil);
+		return NO;
+	}
+	
+	return YES;
 }
 
 - (bool)revertToSavedFromFile:(NSString *)filename ofType:(NSString *)type

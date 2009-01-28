@@ -76,19 +76,19 @@ public:
 	*/
 	virtual void reset() = 0; 
 	
-	//! Load internal state from a file
+	//! Load snapshot from a memory buffer
 	/*! The function is used for loading a snapshot of the virtual computer
 	/seealso C64::loadSnapshot
 	/param file file handle of the snapshot file
 	*/
-	virtual bool load(FILE *file) = 0;
+	virtual bool load(uint8_t **ptr) = 0;
 	
-	//! Save internal state to a file
+	//! Save internal state from a memory buffer
 	/*! The function is used for saving a snapshot of the virtual computer
 		/seealso C64::saveSnapshot
 		/param file file handle of the snapshot file
 	*/
-	virtual bool save(FILE *file) = 0;
+	virtual bool save(uint8_t **ptr) = 0;
 
 	//! Print info about the internal state
 	/*! This functions is intended for debugging purposes only. Any derived component should override
@@ -144,29 +144,23 @@ public:
 	
 	// Helper functions for reading and writing data
 	
-	//! Write up to four bytes to file
-	void write(FILE *file, uint64_t value, int count);
-
-	//! Read up to four bytes from a file
-	uint64_t read(FILE *file, int count);
-
-	//! Write 8 bit value to a file
-	inline void write8(FILE *file, uint8_t value) { write(file, (uint64_t)value, sizeof(uint8_t)); }
-	//! Write 16 bit value to a file
-	inline void write16(FILE *file, uint16_t value) { write(file, (uint64_t)value, sizeof(uint16_t)); }
-	//! Write 32 bit value to a file
-	inline void write32(FILE *file, uint32_t value) { write(file, (uint64_t)value, sizeof(uint32_t)); }
-	//! Write 64 bit value to a file
-	inline void write64(FILE *file, uint64_t value) { write(file, (uint64_t)value, sizeof(uint64_t)); }
+	//! Write 8 bit value to memory in big endian format
+	inline void write8(uint8_t **ptr, uint8_t value) { *(*ptr++) = value; }
+	//! Write 16 bit value to memory in big endian format
+	inline void write16(uint8_t **ptr, uint16_t value) { write8(ptr, (uint8_t)(value >> 8)); write8(ptr, (uint8_t)value); }
+	//! Write 32 bit value to memory in big endian format
+	inline void write32(uint8_t **ptr, uint32_t value) { write16(ptr, (uint16_t)(value >> 16)); write8(ptr, (uint16_t)value); }
+	//! Write 64 bit value to memory in big endian format
+	inline void write64(uint8_t **ptr, uint64_t value) { write32(ptr, (uint32_t)(value >> 32)); write8(ptr, (uint32_t)value); }
 	
-	//! Read 8 bit value from a file
-	inline uint8_t read8(FILE *file) { return (uint8_t)read(file, sizeof(uint8_t)); }
-	//! Read 16 bit value from a file
-	inline uint16_t read16(FILE *file) { return (uint16_t)read(file, sizeof(uint16_t)); }
-	//! Read 32 bit value from a file
-	inline uint32_t read32(FILE *file) { return (uint32_t)read(file, sizeof(uint32_t)); }
-	//! Read 64 bit value from a file
-	inline uint64_t read64(FILE *file) { return (uint64_t)read(file, sizeof(uint64_t)); }
+	//! Read 8 bit value from a memory in big endian format
+	inline uint8_t read8(uint8_t **ptr) { return (uint8_t)(*(*ptr++)); }
+	//! Read 16 bit value from a memory in big endian format
+	inline uint16_t read16(uint8_t **ptr) { return ((uint16_t)read8(ptr) << 8) | (uint16_t)read8(ptr); }
+	//! Read 32 bit value from a memory in big endian format
+	inline uint32_t read32(uint8_t **ptr) { return ((uint32_t)read16(ptr) << 8) | (uint32_t)read16(ptr); }
+	//! Read 64 bit value from a memory in big endian format
+	inline uint64_t read64(uint8_t **ptr) { return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
 	
 	//! Print debug message
 	void debug(char *fmt, ...);

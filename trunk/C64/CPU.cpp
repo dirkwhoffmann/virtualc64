@@ -66,9 +66,11 @@ CPU::reset()
 	ptr = 0;
 	pc_lo = 0;
 	pc_hi = 0;
-
-	// Reset external lines and IRQ stuff 
-	// Note: Variables port and port_direction get their initial value via C64Memory::reset
+	overflow = false;
+	data = 0;
+	
+	// Variable 'port' gets its initial value via C64Memory::reset
+	// Variable 'portDirection' gets its initial value via C64Memory::reset
 	external_port_bits = 0x1F;
 	rdyLine = true;
 	irqLine = 0;
@@ -78,40 +80,130 @@ CPU::reset()
 	nextPossibleNmiCycle = 0LL;
 	
 	errorState = OK;
-	
-	// TODO: Save Breakpoints
-	// TODO: Save callstack
-	
+	next = &CPU::fetch;
+	memset(callStack, 0, sizeof(callStack));	
 	callStackPointer = 0;
 	oldI = 0;
 	
-	setTraceMode(false);
-	
-	// Set initial execution function
-	next = &CPU::fetch;
-	
-	assert(mem != NULL);
+	// Debug options
+	setTraceMode(false);	
 }
 
 bool 
-CPU::load(FILE *file) 
+CPU::load(uint8_t **buffer) 
 {
 	debug("  Loading CPU state...\n");
 
-	// TODO
+	// Registers and flags
+	A = read8(buffer);
+	X = read8(buffer);
+	Y = read8(buffer);
+	PC = read16(buffer);
+	PC_at_cycle_0 = read16(buffer);
+	SP = read8(buffer);
+	N = read8(buffer);
+	V = read8(buffer);
+	B = read8(buffer);
+	D = read8(buffer);
+	I = read8(buffer);
+	Z = read8(buffer);
+	C = read8(buffer);
 	
+	// Internal state
+	opcode = read8(buffer);
+	addr_lo = read8(buffer);
+	addr_hi = read8(buffer);
+	ptr = read8(buffer);
+	pc_lo = read8(buffer);
+	pc_hi = read8(buffer);
+	overflow = (bool)read8(buffer);
+	data = read8(buffer);
+	
+	port = read8(buffer);
+	port_direction = read8(buffer);
+	external_port_bits = read8(buffer);
+	rdyLine = (bool)read8(buffer);
+	irqLine = read8(buffer);
+	nmiLine = read8(buffer);
+	nmiNegEdge = (bool)read8(buffer);
+	nextPossibleIrqCycle = read64(buffer);
+	nextPossibleNmiCycle = read64(buffer);
+	
+	errorState = (ErrorState)read8(buffer);
+	next = CPU::callbacks[read16(buffer)];
+	
+#if 0
+	for (unsigned i = 0; i < sizeof(breakpoint); i++) 
+		breakpoint[i] = read8(buffer);
+#endif
+	for (unsigned i = 0; i < 256; i++) 
+		callStack[i] = read16(buffer);	
+	callStackPointer = read8(buffer);
+	oldI = read8(buffer);
+
 	return true;
 }
 
 bool
-CPU::save(FILE *file) 
+CPU::save(uint8_t **buffer) 
 {
 	debug("  Saving CPU state...\n");
 
-	// Saving is only possible if the emulator has reached a clean state, i.e., it must not be in the middle of a command
-	assert(next == CPU::fetch);
+	// Registers and flags
+	write8(buffer, A);
+	write8(buffer, X);
+	write8(buffer, Y);
+	write16(buffer, PC);
+	write16(buffer, PC_at_cycle_0);
+	write8(buffer, SP);
+	write8(buffer, N);
+	write8(buffer, V);
+	write8(buffer, B);
+	write8(buffer, D);
+	write8(buffer, I);
+	write8(buffer, Z);
+	write8(buffer, C);
+	
+	// Internal state
+	write8(buffer, opcode);
+	write8(buffer, addr_lo);
+	write8(buffer, addr_hi);
+	write8(buffer, ptr);
+	write8(buffer, pc_lo);
+	write8(buffer, pc_hi);
+	write8(buffer, (uint8_t)overflow);
+	write8(buffer, data);
+	
+	write8(buffer, port);
+	write8(buffer, port_direction);
+	write8(buffer, external_port_bits);
+	write8(buffer, (uint8_t)rdyLine);
+	write8(buffer, irqLine);
+	write8(buffer, nmiLine);
+	write8(buffer, (uint8_t)nmiNegEdge);
+	write64(buffer, nextPossibleIrqCycle);
+	write64(buffer, nextPossibleNmiCycle);
+	
+	write8(buffer, (uint8_t)errorState);
 
-	// TODO
+	for (uint16_t i = 0;; i++) {
+		if (callbacks[i] == NULL) {
+			debug("ERROR while saving state: Callback pointer not found!\n");
+			return false;
+		}
+		if (callbacks[i] == next) {
+			write16(buffer, i);
+			break;
+		}
+	}
+#if 0		
+	for (unsigned i = 0; i < sizeof(breakpoint); i++) 
+		write8(buffer, breakpoint[i]);
+#endif
+	for (unsigned i = 0; i < 256; i++) 
+		write16(buffer, callStack[i]);
+	write8(buffer, callStackPointer);
+	write8(buffer, oldI);
 	
 	return true;
 }

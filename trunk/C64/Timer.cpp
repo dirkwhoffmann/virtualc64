@@ -45,33 +45,33 @@ Timer::reset()
 }
 
 bool
-Timer::load(FILE *file)
+Timer::load(uint8_t **buffer)
 {
-	count = read16(file);
-	timerLatch = read16(file);
-	state = (int)read8(file);
-	controlReg = read8(file);
-	count_clockticks = (bool)read8(file);
-	count_underflows = (bool)read8(file);
-	underflow = (bool)read8(file);
-	underflow_toggle = (bool)read8(file);
-	triggerInterrupt = (bool)read8(file);	
+	count = read16(buffer);
+	timerLatch = read16(buffer);
+	state = (int)read8(buffer);
+	controlReg = read8(buffer);
+	count_clockticks = (bool)read8(buffer);
+	count_underflows = (bool)read8(buffer);
+	underflow = (bool)read8(buffer);
+	underflow_toggle = (bool)read8(buffer);
+	triggerInterrupt = (bool)read8(buffer);	
 
 	return true;
 }
 
 bool
-Timer::save(FILE *file)
+Timer::save(uint8_t **buffer)
 {
-	write16(file, count);
-	write16(file, timerLatch);
-	write8(file,(uint8_t)state);
-	write8(file, controlReg);
-	write8(file, (uint8_t)count_clockticks);
-	write8(file, (uint8_t)count_underflows);
-	write8(file, (uint8_t)underflow); 
-	write8(file, (uint8_t)underflow_toggle);
-	write8(file, (uint8_t)triggerInterrupt);
+	write16(buffer, count);
+	write16(buffer, timerLatch);
+	write8(buffer,(uint8_t)state);
+	write8(buffer, controlReg);
+	write8(buffer, (uint8_t)count_clockticks);
+	write8(buffer, (uint8_t)count_underflows);
+	write8(buffer, (uint8_t)underflow); 
+	write8(buffer, (uint8_t)underflow_toggle);
+	write8(buffer, (uint8_t)triggerInterrupt);
 	
 	return true;
 }

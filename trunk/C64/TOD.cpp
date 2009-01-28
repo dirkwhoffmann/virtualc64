@@ -40,24 +40,24 @@ TOD::reset()
 
 // Loading and saving snapshots
 bool
-TOD::load(FILE *file)
+TOD::load(uint8_t **buffer)
 {
-	tod.value = (uint32_t)read64(file);
-	alarm.value = (uint32_t)read64(file);
-	latch.value = (uint32_t)read64(file);
-	frozen = read8(file);
-	stopped = read8(file);
+	tod.value = (uint32_t)read64(buffer);
+	alarm.value = (uint32_t)read64(buffer);
+	latch.value = (uint32_t)read64(buffer);
+	frozen = read8(buffer);
+	stopped = read8(buffer);
 	return true;
 }
 
 bool
-TOD::save(FILE *file)
+TOD::save(uint8_t **buffer)
 {
-	write32(file, (uint32_t)tod.value);
-	write32(file, (uint32_t)alarm.value);
-	write32(file, (uint32_t)latch.value);
-	write8(file, frozen);
-	write8(file, stopped);
+	write32(buffer, (uint32_t)tod.value);
+	write32(buffer, (uint32_t)alarm.value);
+	write32(buffer, (uint32_t)latch.value);
+	write8(buffer, frozen);
+	write8(buffer, stopped);
 	return true;
 }
 

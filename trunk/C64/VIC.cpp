@@ -119,107 +119,107 @@ VIC::reset()
 			
 // Loading and saving snapshots
 bool
-VIC::load(FILE *file)
+VIC::load(uint8_t **buffer)
 {
 	debug("  Loading VIC state...\n");
 	
 	// Internal registers
-	scanline = read32(file);
-	xCounter = read16(file);
-	registerVC = read16(file);
-	registerVCBASE = read16(file);
-	registerRC = read16(file);
-	registerVMLI = read16(file);
-	dmaLine = (bool)read8(file);
-	dmaLinesEnabled = (bool)read8(file);
-	displayState = (bool)read8(file);
-	BAlow = (bool)read8(file);
-	mainFrameFF = (bool)read8(file);
-	verticalFrameFF = (bool)read8(file);
-	drawVerticalFrame = (bool)read8(file);
-	drawHorizontalFrame = (bool)read8(file);
+	scanline = read32(buffer);
+	xCounter = read16(buffer);
+	registerVC = read16(buffer);
+	registerVCBASE = read16(buffer);
+	registerRC = read16(buffer);
+	registerVMLI = read16(buffer);
+	dmaLine = (bool)read8(buffer);
+	dmaLinesEnabled = (bool)read8(buffer);
+	displayState = (bool)read8(buffer);
+	BAlow = (bool)read8(buffer);
+	mainFrameFF = (bool)read8(buffer);
+	verticalFrameFF = (bool)read8(buffer);
+	drawVerticalFrame = (bool)read8(buffer);
+	drawHorizontalFrame = (bool)read8(buffer);
 	
 	// Memory
 	for (unsigned i = 0; i < sizeof(iomem); i++)
-		iomem[i] = read8(file);
-	bankAddr = read16(file);
-	screenMemoryAddr = read16(file);
-	characterMemoryAddr = read16(file);
+		iomem[i] = read8(buffer);
+	bankAddr = read16(buffer);
+	screenMemoryAddr = read16(buffer);
+	characterMemoryAddr = read16(buffer);
 	
 	// Sprites
 	for (int i = 0; i < 8; i++) {
-		mc[i] = read8(file);
-		mcbase[i] = read8(file);
-		spriteShiftReg[i][0] = read8(file);
-		spriteShiftReg[i][1] = read8(file);
-		spriteShiftReg[i][3] = read8(file); 
+		mc[i] = read8(buffer);
+		mcbase[i] = read8(buffer);
+		spriteShiftReg[i][0] = read8(buffer);
+		spriteShiftReg[i][1] = read8(buffer);
+		spriteShiftReg[i][3] = read8(buffer); 
 	}
-	spriteOnOff = read8(file);
-	oldSpriteOnOff = read8(file);
-	spriteDmaOnOff = read8(file);
-	expansionFF = read8(file);
+	spriteOnOff = read8(buffer);
+	oldSpriteOnOff = read8(buffer);
+	spriteDmaOnOff = read8(buffer);
+	expansionFF = read8(buffer);
 	
 	// Lightpen
-	lightpenIRQhasOccured = (bool)read8(file);
+	lightpenIRQhasOccured = (bool)read8(buffer);
 	
 	// Screenshot (only needed for previewing and therefore skipped)
 	for (unsigned i = 0; i < sizeof(screenBuffer1); i++) 
-		(void)read8(file);
+		(void)read8(buffer);
 
 	return true;
 }
 
 bool
-VIC::save(FILE *file)
+VIC::save(uint8_t **buffer)
 {
 	debug("  Saving VIC state...\n");
 
 	// Internal registers
-	write32(file, scanline);
-	write16(file, xCounter);
-	write16(file, registerVC);
-	write16(file, registerVCBASE);
-	write16(file, registerRC);
-	write16(file, registerVMLI);
-	write8(file, (uint8_t)dmaLine);
-	write8(file, (uint8_t)dmaLinesEnabled);
-	write8(file, (uint8_t)displayState);
-	write8(file, (uint8_t)BAlow);
-	write8(file, (uint8_t)mainFrameFF);
-	write8(file, (uint8_t)verticalFrameFF);
-	write8(file, (uint8_t)drawVerticalFrame);
-	write8(file, (uint8_t)drawHorizontalFrame);
+	write32(buffer, scanline);
+	write16(buffer, xCounter);
+	write16(buffer, registerVC);
+	write16(buffer, registerVCBASE);
+	write16(buffer, registerRC);
+	write16(buffer, registerVMLI);
+	write8(buffer, (uint8_t)dmaLine);
+	write8(buffer, (uint8_t)dmaLinesEnabled);
+	write8(buffer, (uint8_t)displayState);
+	write8(buffer, (uint8_t)BAlow);
+	write8(buffer, (uint8_t)mainFrameFF);
+	write8(buffer, (uint8_t)verticalFrameFF);
+	write8(buffer, (uint8_t)drawVerticalFrame);
+	write8(buffer, (uint8_t)drawHorizontalFrame);
 	
 	// Memory
 	for (unsigned i = 0; i < sizeof(iomem); i++)
-		write8(file, iomem[i]);
-	write16(file, bankAddr);
-	write16(file, screenMemoryAddr);
-	write16(file, characterMemoryAddr);
+		write8(buffer, iomem[i]);
+	write16(buffer, bankAddr);
+	write16(buffer, screenMemoryAddr);
+	write16(buffer, characterMemoryAddr);
 	
 	// Sprites
 	for (int i = 0; i < 8; i++) {
-		write8(file, mc[i]);
-		write8(file, mcbase[i]);
-		write8(file, spriteShiftReg[i][0]);
-		write8(file, spriteShiftReg[i][1]);
-		write8(file, spriteShiftReg[i][3]); 
+		write8(buffer, mc[i]);
+		write8(buffer, mcbase[i]);
+		write8(buffer, spriteShiftReg[i][0]);
+		write8(buffer, spriteShiftReg[i][1]);
+		write8(buffer, spriteShiftReg[i][3]); 
 	}
-	write8(file, spriteOnOff);
-	write8(file, oldSpriteOnOff);
-	write8(file, spriteDmaOnOff);
-	write8(file, expansionFF);
+	write8(buffer, spriteOnOff);
+	write8(buffer, oldSpriteOnOff);
+	write8(buffer, spriteDmaOnOff);
+	write8(buffer, expansionFF);
 	
 	// Lightpen
-	write8(file, lightpenIRQhasOccured);
+	write8(buffer, lightpenIRQhasOccured);
 	
 	// Screenshot (write currently unused screenbuffer to file)
 	if (currentScreenBuffer == screenBuffer1) {
 		for (unsigned i = 0; i < sizeof(screenBuffer2); i++) 
-			write8(file, screenBuffer2[i]);
+			write8(buffer, screenBuffer2[i]);
 	} else {
 		for (unsigned i = 0; i < sizeof(screenBuffer1); i++) 
-			write8(file, screenBuffer1[i]);
+			write8(buffer, screenBuffer1[i]);
 	}
 	
 	return true;

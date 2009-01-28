@@ -66,11 +66,11 @@ public:
 	//! Bring the CIA back to its initial state
 	void reset();
 	
-	//! Load snapshot from file
-	bool load(FILE *file);
+	//! Load snapshot
+	bool load(uint8_t **buffer);
 	
-	//! Save snapshot to file
-	bool save(FILE *file);
+	//! Save snapshot
+	bool save(uint8_t **buffer);
 	
 	//! Dump internal state to console
 	void dumpState();	

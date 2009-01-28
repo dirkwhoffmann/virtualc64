@@ -38,9 +38,25 @@ VC1541Memory::reset()
 	debug ("  Resetting VC1541 memory...\n");
 
 	// Zero out RAM...
-	for (int i = 0; i < 0xC000; i++)
+	for (unsigned i = 0; i < 0xC000; i++)
 		mem[i] = 0;	
 }	
+
+bool 
+VC1541Memory::load(uint8_t **buffer)
+{
+	for (unsigned i = 0; i < 0xC000; i++)
+		mem[i] = read8(buffer);	
+	return true;
+}
+
+bool 
+VC1541Memory::save(uint8_t **buffer)
+{
+	for (unsigned i = 0; i < 0xC000; i++)
+		write8(buffer, mem[i]);
+	return true;
+}
 
 bool 
 VC1541Memory::is1541Rom(const char *filename)
@@ -67,18 +83,6 @@ VC1541Memory::loadRom(const char *filename)
 		return true;
 	}
 	return false;
-}
-
-bool 
-VC1541Memory::load(FILE *file)
-{
-	return true;
-}
-
-bool 
-VC1541Memory::save(FILE *file)
-{
-	return true;
 }
 
 void 

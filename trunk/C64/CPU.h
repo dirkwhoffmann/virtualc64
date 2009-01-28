@@ -95,7 +95,6 @@ public:
 	//! Bit position of the Carry flag
 	static const uint8_t C_FLAG = 0x01;
 	
-
 public:
 
 	//! Reference to the connected virtual C64
@@ -249,11 +248,11 @@ public:
 	// Brings CPU back to its initial state
 	void reset();
 
-	//! Load internal state from a file
-	bool load(FILE *file);
+	//! Load snapshot
+	bool load(uint8_t **buffer);
 
-	//! Save internal state into a file
-	bool save(FILE *file);
+	//! Save snapshot
+	bool save(uint8_t **buffer);
 	
 	//! Dump internal state to console
 	void dumpState();	
