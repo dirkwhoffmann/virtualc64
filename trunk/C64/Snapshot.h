@@ -29,8 +29,8 @@ class Snapshot {
 private:
 
 	//! Size of a snapshot file in bytes
-	static const int SNAPSHOT_SIZE = 3000000; 
-
+	static const int MAX_SNAPSHOT_SIZE = 2000000; // 1831822; 
+	
 	//! Version number (major)
 	uint8_t major;
 	
@@ -38,27 +38,33 @@ private:
 	uint8_t minor;
 	
 	//! Binary snapshot data
-	uint8_t data[SNAPSHOT_SIZE];
+	uint8_t data[MAX_SNAPSHOT_SIZE];
+		
+	//! Actual snapshot size
+	int size;
 	
 public:
 	
 	//! Verify snapshot
-	static bool isSnapshot(char *filename); 
+	static bool isSnapshot(const char *filename); 
 
 	//! Constructor
 	Snapshot();
 	
 	//! Destructor
 	~Snapshot();
-		
+			
 	//! Load snapshot from file
-	bool intitWithContentsOfFile(char *filename);
+	bool initWithContentsOfFile(const char *filename);
 	
 	//! Take snapshot from a virtual computer
 	bool initWithContentsOfC64(C64 *c64);
 
 	//! Save snapshot to file
-	bool writeToFile(char *filename);
+	bool writeToFile(const char *filename);
+	
+	//! Initialize virtual computer with snapshot data
+	bool writeToC64(C64 *c64);
 
 };
 

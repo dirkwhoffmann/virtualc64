@@ -320,17 +320,7 @@ private:
 	 \endverbatim
 	 */
 	uint16_t screenMemoryAddr;
-	
-	//! Physical start address of the screen memory.
-	/*! The physical memory address is stored only to improve efficiency. */
-	uint8_t *screenMemory;
-	
-	//! Start address of the sprite pointer memory
-	/*! The next 8 bytes starting at this address contain the sprite pointers of all 8 sprites.
-	 The sprite pointers are needed to compute the start address of the sprite bitmaps in memory. */
-	uint8_t *spriteMemory;
-	
-	
+		
 	//! Start address of character memory
 	/*! The character memory stores the bitmaps for each character.
 	 The location of character memory is determined by VIC register 0xD018
@@ -465,9 +455,15 @@ public:
 	//! Load snapshot
 	bool load(uint8_t **buffer);
 	
+	//! Load screen buffer
+	bool loadScreenshot(uint8_t **buffer);
+
 	//! Save snapshot
 	bool save(uint8_t **buffer);
-	
+
+	//! Save screen buffer
+	bool saveScreenshot(uint8_t **buffer);
+
 	//! Dump internal state to console
 	void dumpState();	
 	
@@ -803,7 +799,7 @@ private:
 	//! Read sprite pointer
 	/*! Determines the start adress of sprite data and stores the value into spritePtr */
 	inline void readSpritePtr(int sprite) { 
-		spritePtr[sprite] = bankAddr + ((uint16_t)spriteMemory[sprite] << 6); 
+		spritePtr[sprite] = bankAddr + (mem->ram[bankAddr + screenMemoryAddr + 0x03F8 + sprite] << 6); 
 	}
 	
 	//! Read sprite data 

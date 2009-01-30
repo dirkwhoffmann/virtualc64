@@ -92,9 +92,8 @@
 		NSString *path = [mainBundle resourcePath];
 		if (chdir([path UTF8String]) != 0)
 			NSLog(@"WARNING: Could not change working directory.");
-		else
-			NSLog(@"Changed working directory.");
-    }
+	}
+	snapshot = NULL;
     return self;
 }
 
@@ -130,8 +129,13 @@
 	
 	// Create virtual C64
 	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];
-	// [c64 setScreen:screen];						
 
+	// Load predefined state if applicable
+	if (snapshot != NULL) {
+		snapshot->writeToC64([c64 getC64]);
+		delete snapshot;
+		snapshot = NULL;
+	}
 	
 	disassembleStartAddr = [c64 cpuGetPC];
 	
@@ -281,7 +285,7 @@
 }
 #endif
 
-
+#if 0
 -(NSData *)dataRepresentationOfType:(NSString *)type
 {
 	NSLog(@"dataRepresentationOfType:%@", type);
@@ -297,15 +301,24 @@
 	
 	return NO;
 }
+#endif
 
-#if 0
 -(bool)writeToFile:(NSString *)filename ofType:(NSString *)type
 {
 	NSLog(@"writeToFile %@ (type %@)", filename, type);
-	NSLog(@"c64 == %p", c64);
 	
+	if (![type isEqualToString:@"VC64"]) {
+		NSLog(@"File is not of type VC64\n");
+		return NO;
+	}
 	
-	return [c64 saveSnapshot:filename];
+	snapshot = new Snapshot();
+	snapshot->initWithContentsOfC64([c64 getC64]);
+	snapshot->writeToFile([filename UTF8String]);
+	delete snapshot;
+	snapshot = NULL;
+
+	return YES;
 }
 
 -(bool)readFromFile:(NSString *)filename ofType:(NSString *)type
@@ -313,21 +326,21 @@
 	NSLog(@"readFromFile %@ (type %@)", filename, type);
 
 	if (![type isEqualToString:@"VC64"]) {
-		NSLog(@"Snapshot is not of type VC64\n");
+		NSLog(@"File is not of type VC64\n");
 		return NO;
 	}
 	
-	NSLog(@"c64 == %p", c64);
-	if (![c64 loadSnapshot:filename]) {
-		(void)NSRunAlertPanel(@"Version number mismatch",
-							  @"The snapshot file has been created with a different version of VirtualC64 and cannot be opend.",
-							  @"OK",nil,nil);
-		return NO;
+	snapshot = new Snapshot();
+	if (!snapshot->initWithContentsOfFile([filename UTF8String])) {
+		NSLog(@"Error while taking snapshot\n");
+		delete snapshot;
+		snapshot = NULL;
 	}
 	
 	return YES;
 }
 
+#if 0
 - (bool)revertToSavedFromFile:(NSString *)filename ofType:(NSString *)type
 {
 	NSLog(@"revertFromFile %@ (type %@)", filename, type);

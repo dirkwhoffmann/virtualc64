@@ -145,20 +145,20 @@ public:
 	// Helper functions for reading and writing data
 	
 	//! Write 8 bit value to memory in big endian format
-	inline void write8(uint8_t **ptr, uint8_t value) { *(*ptr++) = value; }
+	inline void write8(uint8_t **ptr, uint8_t value) { *((*ptr)++) = value; }
 	//! Write 16 bit value to memory in big endian format
 	inline void write16(uint8_t **ptr, uint16_t value) { write8(ptr, (uint8_t)(value >> 8)); write8(ptr, (uint8_t)value); }
 	//! Write 32 bit value to memory in big endian format
-	inline void write32(uint8_t **ptr, uint32_t value) { write16(ptr, (uint16_t)(value >> 16)); write8(ptr, (uint16_t)value); }
+	inline void write32(uint8_t **ptr, uint32_t value) { write16(ptr, (uint16_t)(value >> 16)); write16(ptr, (uint16_t)value); }
 	//! Write 64 bit value to memory in big endian format
-	inline void write64(uint8_t **ptr, uint64_t value) { write32(ptr, (uint32_t)(value >> 32)); write8(ptr, (uint32_t)value); }
+	inline void write64(uint8_t **ptr, uint64_t value) { write32(ptr, (uint32_t)(value >> 32)); write32(ptr, (uint32_t)value); }
 	
 	//! Read 8 bit value from a memory in big endian format
-	inline uint8_t read8(uint8_t **ptr) { return (uint8_t)(*(*ptr++)); }
+	inline uint8_t read8(uint8_t **ptr) { return (uint8_t)(*((*ptr)++)); }
 	//! Read 16 bit value from a memory in big endian format
 	inline uint16_t read16(uint8_t **ptr) { return ((uint16_t)read8(ptr) << 8) | (uint16_t)read8(ptr); }
 	//! Read 32 bit value from a memory in big endian format
-	inline uint32_t read32(uint8_t **ptr) { return ((uint32_t)read16(ptr) << 8) | (uint32_t)read16(ptr); }
+	inline uint32_t read32(uint8_t **ptr) { return ((uint32_t)read16(ptr) << 16) | (uint32_t)read16(ptr); }
 	//! Read 64 bit value from a memory in big endian format
 	inline uint64_t read64(uint8_t **ptr) { return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
 	

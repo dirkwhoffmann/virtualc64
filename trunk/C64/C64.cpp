@@ -235,25 +235,42 @@ void C64::fastReset()
 
 bool 
 C64::load(uint8_t **buffer)
-{
-	debug("Loading...\n");
+{	
+	uint8_t *old = *buffer;
 	
 	suspend();
 	
+	debug("Loading...\n");
+
+	// Load screenshot
+	vic->loadScreenshot(buffer);
+	debug("%d\n", *buffer - old);
+
+	// Load internal state
 	cycles = read64(buffer);
 	frame = (int)read32(buffer);
 	rasterline = (int)read32(buffer);
 	targetTime = read64(buffer);
 	
+	// Load internal state of sub components
 	cpu->load(buffer);
+	debug("%d\n", *buffer - old);
 	vic->load(buffer);
+	debug("%d\n", *buffer - old);
 	sid->load(buffer);
+	debug("%d\n", *buffer - old);
 	cia1->load(buffer);
+	debug("%d\n", *buffer - old);
 	cia2->load(buffer);	
+	debug("%d\n", *buffer - old);
 	mem->load(buffer);
+	debug("%d\n", *buffer - old);
 	keyboard->load(buffer);
+	debug("%d\n", *buffer - old);
 	iec->load(buffer);
+	debug("%d\n", *buffer - old);
 	floppy->load(buffer);
+	debug("%d\n", *buffer - old);
 	
 	resume();
 	return true;
@@ -262,25 +279,41 @@ C64::load(uint8_t **buffer)
 bool 
 C64::save(uint8_t **buffer)
 {	
+	uint8_t *old = *buffer;
+	
 	suspend();
 	
 	debug("Saving...\n");
 		
-	// Write data
+	// Save screenshot
+	vic->saveScreenshot(buffer);
+	debug("%d\n", *buffer - old);
+
+	// Save internal state
 	write64(buffer, cycles);
 	write32(buffer, (uint32_t)frame);
 	write32(buffer, (uint32_t)rasterline);
-	write32(buffer, targetTime);
+	write64(buffer, targetTime);
 	
+	// Save internal state of sub components
 	cpu->save(buffer);
+	debug("%d\n", *buffer - old);
 	vic->save(buffer);
+	debug("%d\n", *buffer - old);
 	sid->save(buffer);
+	debug("%d\n", *buffer - old);
 	cia1->save(buffer);
+	debug("%d\n", *buffer - old);
 	cia2->save(buffer);
+	debug("%d\n", *buffer - old);
 	mem->save(buffer);
+	debug("%d\n", *buffer - old);
 	keyboard->save(buffer);
+	debug("%d\n", *buffer - old);
 	iec->save(buffer);
+	debug("%d\n", *buffer - old);
 	floppy->save(buffer);
+	debug("%d\n", *buffer - old);
 	
 	resume();
 	return true;
@@ -1064,137 +1097,6 @@ C64::loadRom(const char *filename)
 	resume();
 	return result;
 }
-
-bool 
-C64::loadSnapshotHeader(FILE *file)
-{
-	uint8_t major = 0, minor = 0;
-	
-	debug("Checking snapshot header...\n");
-	
-	// Read magic bytes
-	if ((char)fgetc(file) != 'V') return false;
-	debug("V\n");
-	if ((char)fgetc(file) != 'C') return false;
-	debug("C\n");
-	if ((char)fgetc(file) != '6') return false;
-	debug("6\n");
-	if ((char)fgetc(file) != '4') return false;
-	debug("4\n");
-
-	// Read version number
-	major = (uint8_t)fgetc(file);
-	minor = (uint8_t)fgetc(file);
-	
-	debug("major minor = %d %d\n", major, minor);
-	
-	// Do we support this snapshot format in this release?
-	if (major != 1 || minor != 0)
-		return false;
-	
-	// Header is OK
-	return true;
-}	
-
-bool 
-C64::loadSnapshot(const char *filename)
-{
-	FILE *file;
-	uint8_t *buffer, *ptr;
-	int i, c;
-	
-	debug("C64::loadSnapshot\n");
-	assert(filename != NULL);
-	
-	// Open file
-	if ((file = fopen(filename, "r")) == NULL) {
-		debug("WARNING: Cannot read from file %s\n", filename);
-		return false;
-	}
-	
-	// Version header
-	if (!loadSnapshotHeader(file)) {
-		debug("Version number mismatch. Snapshot format is not supported by this release.\n");
-		return false;
-	}
-	
-	// Allocate memory
-	buffer = ptr = (uint8_t *)malloc(SNAPSHOT_SIZE);
-	assert(buffer != NULL);
-
-	// Load file
-	for (i = 0; i < SNAPSHOT_SIZE; i++) {
-		if ((c = fgetc(file)) == EOF)
-			break;
-		buffer[i] = c;
-	}
-	debug("loadSnapshot: Loaded %d bytes from file\n", i);
-	
-	// Retrieve snapshot
-	load(&ptr);
-	debug("loadSnapshot: Converted %d bytes into snapshot\n", ptr - buffer);
-	
-	if (i != (ptr - buffer)) {
-		debug("Files size of %d bytes does not match snapshot size of %d bytes\n");
-	}
-
-	free(buffer);
-	fclose(file);
-	return true;
-}
-
-bool 
-C64::saveSnapshotHeader(FILE *file)
-{	
-	// Write magic bytes
-	fputc((int)'V', file);
-	fputc((int)'C', file);
-	fputc((int)'6', file);
-	fputc((int)'4', file);
-	
-	// Write version number
-	fputc(1, file);
-	fputc(0, file);
-	return true;
-}	
-
-bool 
-C64::saveSnapshot(const char *filename)
-{
-	FILE *file;
-	uint8_t *buffer, *ptr;
-	int i;
-		
-	debug("C64::loadSnapshot\n");
-	assert(filename != NULL);
-	
-	// Open file
-	if ((file = fopen(filename, "w")) == NULL) {
-		debug("WARNING: Cannot write to file %s\n", filename);
-		return false;
-	}
-	
-	// Version header
-	(void)saveSnapshotHeader(file);
-	
-	// Allocate memory
-	buffer = ptr = (uint8_t *)malloc(SNAPSHOT_SIZE);
-	assert(buffer != NULL);
-	
-	// Take snapshot
-	save(&ptr);
-	debug("loadSnapshot: Converted %d bytes into snapshot\n", ptr - buffer);
-
-	// Save file
-	for (i = 0; i < (ptr - buffer); i++) {
-		fputc(buffer[i], file);
-	}
-		
-	free(buffer);
-	fclose(file);
-	return true;
-}
-
 
 // -----------------------------------------------------------------------------------------------
 //                                           Timing

@@ -861,6 +861,7 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 		// Try to load file
 
 		// Is it a saved image?
+#if 0
 		if (c64->loadSnapshot([path UTF8String])) {
 			[self rotate];
 			// PROBLEM: The associated file of the document does not change
@@ -868,7 +869,8 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 			NSLog(@"Snapshot loaded");
 			return YES;
 		}
-					  
+#endif
+		
 		// Is it a ROM file?
 		if ([myDoc loadRom:path]) {
 			NSLog(@"ROM loaded");

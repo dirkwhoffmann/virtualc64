@@ -76,6 +76,10 @@ VC1541::reset()
 bool
 VC1541::load(uint8_t **buffer)
 {
+	uint8_t *old = *buffer;
+	
+	debug("  Loading VC1541 state...\n");
+
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
 			data[i][j] = read8(buffer);
@@ -87,31 +91,46 @@ VC1541::load(uint8_t **buffer)
 	offset = (int)read16(buffer);
 	noOfFFBytes = (int)read16(buffer);
 	writeProtection = (bool)read8(buffer);
+	debug("%d\n", *buffer - old);
 	cpu->load(buffer);
-	via1->load(buffer);
+	debug("%d\n", *buffer - old);
+	via1->load(buffer);	
+	debug("%d\n", *buffer - old);
 	via2->load(buffer);
+	debug("%d\n", *buffer - old);
 	mem->load(buffer);
+	debug("%d\n", *buffer - old);
 	return true;
 }
 
 bool 
 VC1541::save(uint8_t **buffer)
 {
+	uint8_t *old = *buffer;
+	
+	debug("  Saving VC1541 state...\n");
+
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
 			write8(buffer, data[i][j]);
 	for (unsigned i = 0; i < 84; i++) 
-		write8(buffer, length[i]);
+		write16(buffer, length[i]);
 	write8(buffer, (uint8_t)rotating);
 	write16(buffer, (uint16_t)byteReadyTimer);
 	write16(buffer, (uint16_t)track);
 	write16(buffer, (uint16_t)offset);
 	write16(buffer, (uint16_t)noOfFFBytes);
 	write8(buffer, (uint8_t)writeProtection);
+	debug("%d\n", *buffer - old);
 	cpu->save(buffer);
-	via1->save(buffer);
-	via2->save(buffer);
-	mem->save(buffer);
+	debug("%d\n", *buffer - old);
+	via1->save(buffer);	
+	debug("%d\n", *buffer - old);
+	via2->save(buffer);	
+	debug("%d\n", *buffer - old);
+	mem->save(buffer);	
+	debug("%d\n", *buffer - old);
+
 	return true;
 }
 

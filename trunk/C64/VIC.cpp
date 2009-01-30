@@ -87,8 +87,6 @@ VIC::reset()
 	iomem[0x11] = 0x10;   // Make screen visible from the beginning	
 	bankAddr = 0;
 	screenMemoryAddr = 0x0000;
-	screenMemory = mem->getRam();
-	spriteMemory = screenMemory;
 	characterMemoryAddr = 0x0000;
 	characterMemory = mem->getRam();
 	
@@ -152,7 +150,7 @@ VIC::load(uint8_t **buffer)
 		mcbase[i] = read8(buffer);
 		spriteShiftReg[i][0] = read8(buffer);
 		spriteShiftReg[i][1] = read8(buffer);
-		spriteShiftReg[i][3] = read8(buffer); 
+		spriteShiftReg[i][3] = read8(buffer);
 	}
 	spriteOnOff = read8(buffer);
 	oldSpriteOnOff = read8(buffer);
@@ -162,10 +160,6 @@ VIC::load(uint8_t **buffer)
 	// Lightpen
 	lightpenIRQhasOccured = (bool)read8(buffer);
 	
-	// Screenshot (only needed for previewing and therefore skipped)
-	for (unsigned i = 0; i < sizeof(screenBuffer1); i++) 
-		(void)read8(buffer);
-
 	return true;
 }
 
@@ -212,13 +206,47 @@ VIC::save(uint8_t **buffer)
 	
 	// Lightpen
 	write8(buffer, lightpenIRQhasOccured);
+
+	return true;
+}
+
+bool
+VIC::loadScreenshot(uint8_t **buffer)
+{
+	uint16_t width;
+	uint16_t height;
 	
-	// Screenshot (write currently unused screenbuffer to file)
+	debug("  Loading VIC screen buffer...\n");
+	
+	// Load width and height
+	width = read16(buffer);
+	height = read16(buffer);
+	
+	// Skip bytes in buffer
+	for (int i = 0; i < 4 * width * height; i++) 
+		(void)read8(buffer);
+	
+	return true;
+}
+
+bool
+VIC::saveScreenshot(uint8_t **buffer)
+{
+	uint16_t width = 512;  // TODO: Only save viewable area of screenbuffer. Value differs between PAL and NTSC machines
+	uint16_t height = 512; // TODO: Only save viewable area of screenbuffer. Value differs between PAL and NTSC machines
+	
+	debug("  Saving VIC screen buffer...\n");
+	
+	// Write width and height
+	write16(buffer, width);
+	write16(buffer, height);
+	
+	// Write currently unused screenbuffer to file
 	if (currentScreenBuffer == screenBuffer1) {
-		for (unsigned i = 0; i < sizeof(screenBuffer2); i++) 
+		for (int i = 0; i < 4 * width * height; i++) 
 			write8(buffer, screenBuffer2[i]);
 	} else {
-		for (unsigned i = 0; i < sizeof(screenBuffer1); i++) 
+		for (int i = 0; i < 4 * width * height; i++) 
 			write8(buffer, screenBuffer1[i]);
 	}
 	
@@ -380,7 +408,7 @@ inline void
 VIC::cAccess()
 {
 	if (dmaLine) {
-		characterSpace[registerVMLI] = screenMemory[registerVC]; 
+		characterSpace[registerVMLI] = mem->ram[bankAddr + screenMemoryAddr + registerVC];
 		colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
 	}
 }
@@ -711,8 +739,6 @@ VIC::setScreenMemoryAddr(uint16_t addr)
 	assert(addr <= 0x3C00);
 	assert(addr % 0x400 == 0);
 	screenMemoryAddr = addr;
-	screenMemory = &mem->ram[bankAddr + addr];	
-	spriteMemory = screenMemory + 0x03F8;
 }
 
 uint16_t 

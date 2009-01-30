@@ -47,6 +47,8 @@ Timer::reset()
 bool
 Timer::load(uint8_t **buffer)
 {
+	debug("    Loading timer state...\n");
+
 	count = read16(buffer);
 	timerLatch = read16(buffer);
 	state = (int)read8(buffer);
@@ -63,6 +65,8 @@ Timer::load(uint8_t **buffer)
 bool
 Timer::save(uint8_t **buffer)
 {
+	debug("    Saving timer state...\n");
+	
 	write16(buffer, count);
 	write16(buffer, timerLatch);
 	write8(buffer,(uint8_t)state);

@@ -193,8 +193,10 @@ void ListenerProxy::logAction(char *message)
 - (bool) loadCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
+#if 0
 - (bool) loadSnapshot:(NSString *)filename { return c64->loadSnapshot([filename UTF8String]); }
 - (bool) saveSnapshot:(NSString *)filename { return c64->saveSnapshot([filename UTF8String]); }
+#endif
 
 - (bool) cpuGetWarpMode { return c64->getWarpMode(); }
 - (void) cpuSetWarpMode:(bool)b {  c64->setWarpMode(b); }
