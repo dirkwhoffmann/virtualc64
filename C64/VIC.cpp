@@ -88,7 +88,7 @@ VIC::reset()
 	bankAddr = 0;
 	screenMemoryAddr = 0x0000;
 	characterMemoryAddr = 0x0000;
-	characterMemory = mem->getRam();
+	characterMemoryMappedToROM = false;
 	
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -143,6 +143,7 @@ VIC::load(uint8_t **buffer)
 	bankAddr = read16(buffer);
 	screenMemoryAddr = read16(buffer);
 	characterMemoryAddr = read16(buffer);
+	characterMemoryMappedToROM = (bool)read8(buffer);
 	
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -190,6 +191,7 @@ VIC::save(uint8_t **buffer)
 	write16(buffer, bankAddr);
 	write16(buffer, screenMemoryAddr);
 	write16(buffer, characterMemoryAddr);
+	write8(buffer, characterMemoryMappedToROM);
 	
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -260,7 +262,7 @@ VIC::dumpState()
 	debug("---\n\n");
 	debug("     Bank address : %04X\n", bankAddr, bankAddr);
 	debug("    Screen memory : %04X\n", screenMemoryAddr);
-	debug(" Character memory : %04X\n", characterMemoryAddr);
+	debug(" Character memory : %04X (%s)\n", characterMemoryAddr, characterMemoryMappedToROM ? "ROM" : "RAM");
 	debug("  Text resolution : %d x %d\n", numberOfRows(), numberOfColumns());
 	debug("X/Y raster scroll : %d / %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
 	debug("     Display mode : ");
@@ -744,7 +746,7 @@ VIC::setScreenMemoryAddr(uint16_t addr)
 uint16_t 
 VIC::getCharacterMemoryAddr()
 {
-	return characterMemoryAddr;
+	return characterMemoryAddr % 0x4000;
 }
 
 void 
@@ -753,18 +755,20 @@ VIC::setCharacterMemoryAddr(uint16_t addr)
 	assert(addr <= 0x3800);
 	assert(addr % 0x800 == 0);
 	
-	characterMemoryAddr = addr;
 	if (bankAddr == 0x0000 || bankAddr == 0x8000) {
 		if (addr == 0x1000) {
-			characterMemory = &mem->rom[0xD000];
+			characterMemoryMappedToROM = true;
+			characterMemoryAddr = 0xD000;
 			return;
 		}
 		if (addr == 0x1800) {
-			characterMemory = &mem->rom[0xD800];
+			characterMemoryMappedToROM = true;
+			characterMemoryAddr = 0xD800;
 			return;
 		}
 	}
-	characterMemory = &mem->ram[bankAddr + addr];
+	characterMemoryMappedToROM = false;
+	characterMemoryAddr = bankAddr + addr;
 }
 
 uint8_t 

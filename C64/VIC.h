@@ -343,11 +343,14 @@ private:
 	 \endverbatim
 	 */
 	uint16_t characterMemoryAddr;
+		
+	//! True, iff character data is read from ROM space
+	bool characterMemoryMappedToROM;
 	
 	//! Physical start address of the character memory.
 	/*! The variable can point into the RAM or ROM of the virtual machine.
 	 The physical memory address is stored only to improve efficiency. */
-	uint8_t *characterMemory;
+	// uint8_t *characterMemory;
 	
 
 	// -----------------------------------------------------------------------------------------------
@@ -509,15 +512,19 @@ private:
 		
 	//! returns the character pattern for the current cycle
 	inline uint8_t getCharacterPattern() 
-	{ return characterMemory[(characterSpace[registerVMLI] << 3) | registerRC]; }
+	//{ return characterMemory[(characterSpace[registerVMLI] << 3) | registerRC]; }
+	{ uint16_t offset = characterMemoryAddr + (characterSpace[registerVMLI] << 3) | registerRC; return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset]; }
 	
 	//! returns the extended character pattern for the current cycle
 	inline uint8_t getExtendedCharacterPattern()
-	{ return characterMemory[((characterSpace[registerVMLI] & 0x3f) << 3 )  | registerRC]; }
+	//return characterMemory[((characterSpace[registerVMLI] & 0x3f) << 3 )  | registerRC]; }
+	{ uint16_t offset = characterMemoryAddr + ((characterSpace[registerVMLI] & 0x3F) << 3) | registerRC; return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset]; }
+
 	
 	//! returns the bitmap pattern for the current cycle
 	inline uint8_t getBitmapPattern() 
-	{ return characterMemory[(registerVC << 3) | registerRC];	}
+	// { return characterMemory[(registerVC << 3) | registerRC];	}
+	{ uint16_t offset = characterMemoryAddr + (registerVC << 3) | registerRC; return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset]; }
 	
 	//! This method returns the pattern for a idle access. 
 	/*! This is iportant for the Hyperscreen and FLD effects (maybe others as well).
