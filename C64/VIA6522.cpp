@@ -50,6 +50,8 @@ void VIA6522::reset()
 
 bool VIA6522::load(uint8_t **buffer)
 {
+	debug("    Loading VIA6522 state...\n");
+
 	ddra = read8(buffer);
 	ddrb = read8(buffer);
 	ora = read8(buffer);
@@ -72,6 +74,8 @@ bool VIA6522::load(uint8_t **buffer)
 
 bool VIA6522::save(uint8_t **buffer)
 {
+	debug("    Saving VIA6522 state...\n");
+
 	write8(buffer, ddra);
 	write8(buffer, ddrb);
 	write8(buffer, ora);

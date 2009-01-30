@@ -197,6 +197,10 @@
 
 	// Number of selected sprite in VIC debug panel
 	int selectedSprite;
+	
+	// Initial snapshot
+	// If unequal NULL, the newly created document will be initialized with the provided snapshot data
+	Snapshot *snapshot;
 }
 
 @property bool warpLoad;

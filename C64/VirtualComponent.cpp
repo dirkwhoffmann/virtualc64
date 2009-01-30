@@ -84,29 +84,6 @@ VirtualComponent::dumpState()
 {
 }
 
-#if 0
-uint8_t * 
-VirtualComponent::write(uint8_t *ptr, uint64_t value, unsigned count)
-{
-	for (unsigned i = 0; i < count; i++) {
-		*(ptr++) = (uint8_t)(value & 0xFF);
-		value >>= 8;
-	}
-	return ptr;
-}
-
-uint8_t * 
-VirtualComponent::read(uint8_t *ptr, uint64_t *value, unsigned count)
-{
-	// uint64_t value = 0;
-	for (unsigned i = 0; i < count; i++) {
-		(*value) |= (uint64_t)*(ptr++);
-		(*value) <<= 8; 
-	}
-	return ptr;
-}
-#endif
-
 void
 VirtualComponent::debug(char *fmt, ...)
 {

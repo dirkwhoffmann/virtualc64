@@ -320,22 +320,8 @@ private:
 	//                                  ROM and snapshot handling
 	// -----------------------------------------------------------------------------------------------
 
-private:
-
-	// Load snapshot header
-	bool loadSnapshotHeader(FILE *file);
-
-	// Save snapshot header
-	bool saveSnapshotHeader(FILE *file);
-
 public:
-	
-	//! Load snapshot file
-	bool loadSnapshot(const char *filename);
-	
-	//! Save snapshot file
-	bool saveSnapshot(const char *filename);
-	
+		
 	//! Returns the number of missing ROM images */
 	int numberOfMissingRoms();
 	

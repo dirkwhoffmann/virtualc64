@@ -35,7 +35,7 @@ VC1541Memory::~VC1541Memory()
 void 
 VC1541Memory::reset()
 {
-	debug ("  Resetting VC1541 memory...\n");
+	debug ("    Resetting VC1541 memory...\n");
 
 	// Zero out RAM...
 	for (unsigned i = 0; i < 0xC000; i++)
@@ -45,6 +45,8 @@ VC1541Memory::reset()
 bool 
 VC1541Memory::load(uint8_t **buffer)
 {
+	debug("    Loading VC1541 memory state...\n");
+
 	for (unsigned i = 0; i < 0xC000; i++)
 		mem[i] = read8(buffer);	
 	return true;
@@ -53,6 +55,8 @@ VC1541Memory::load(uint8_t **buffer)
 bool 
 VC1541Memory::save(uint8_t **buffer)
 {
+	debug("    Saving VC1541 memory state...\n");
+
 	for (unsigned i = 0; i < 0xC000; i++)
 		write8(buffer, mem[i]);
 	return true;

@@ -67,7 +67,7 @@ void C64Memory::reset()
 bool
 C64Memory::load(uint8_t **buffer)
 {	
-	debug("  Loading memory snapshot...\n");
+	debug("  Loading C64 memory state...\n");
 	
 	Memory::load(buffer);
 	
@@ -87,7 +87,7 @@ C64Memory::load(uint8_t **buffer)
 bool
 C64Memory::save(uint8_t **buffer) 
 {
-	debug("  Saving memory snapshot...\n");
+	debug("  Saving C64 memory state...\n");
 	
 	Memory::save(buffer);
 

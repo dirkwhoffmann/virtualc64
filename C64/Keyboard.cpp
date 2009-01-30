@@ -37,6 +37,8 @@ Keyboard::reset()
 bool
 Keyboard::load(uint8_t **buffer)
 {
+	debug("    Loading keyboard state...\n");
+	
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		kbMatrix[i] = read8(buffer);
 	}
@@ -46,6 +48,8 @@ Keyboard::load(uint8_t **buffer)
 bool
 Keyboard::save(uint8_t **buffer)
 {
+	debug("    Saving keyboard state...\n");
+
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		write8(buffer, kbMatrix[i]);
 	}

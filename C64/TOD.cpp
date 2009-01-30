@@ -42,9 +42,11 @@ TOD::reset()
 bool
 TOD::load(uint8_t **buffer)
 {
-	tod.value = (uint32_t)read64(buffer);
-	alarm.value = (uint32_t)read64(buffer);
-	latch.value = (uint32_t)read64(buffer);
+	debug("    Loading TOD state...\n");
+
+	tod.value = read32(buffer);
+	alarm.value = read32(buffer);
+	latch.value = read32(buffer);
 	frozen = read8(buffer);
 	stopped = read8(buffer);
 	return true;
@@ -53,9 +55,11 @@ TOD::load(uint8_t **buffer)
 bool
 TOD::save(uint8_t **buffer)
 {
-	write32(buffer, (uint32_t)tod.value);
-	write32(buffer, (uint32_t)alarm.value);
-	write32(buffer, (uint32_t)latch.value);
+	debug("    Saving TOD state...\n");
+
+	write32(buffer, tod.value);
+	write32(buffer, alarm.value);
+	write32(buffer, latch.value);
 	write8(buffer, frozen);
 	write8(buffer, stopped);
 	return true;
