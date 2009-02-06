@@ -225,8 +225,8 @@ VIC::loadScreenshot(uint8_t **buffer)
 	height = read16(buffer);
 	
 	// Skip bytes in buffer
-	for (int i = 0; i < 4 * width * height; i++) 
-		(void)read8(buffer);
+	for (int i = 0; i < width * height; i++) 
+		(void)read32(buffer);
 	
 	return true;
 }
@@ -245,11 +245,11 @@ VIC::saveScreenshot(uint8_t **buffer)
 	
 	// Write currently unused screenbuffer to file
 	if (currentScreenBuffer == screenBuffer1) {
-		for (int i = 0; i < 4 * width * height; i++) 
-			write8(buffer, screenBuffer2[i]);
+		for (int i = 0; i < width * height; i++) 
+			write32(buffer, screenBuffer2[i]);
 	} else {
-		for (int i = 0; i < 4 * width * height; i++) 
-			write8(buffer, screenBuffer1[i]);
+		for (int i = 0; i < width * height; i++) 
+			write32(buffer, screenBuffer1[i]);
 	}
 	
 	return true;

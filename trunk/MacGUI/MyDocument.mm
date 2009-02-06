@@ -279,11 +279,32 @@
 // --------------------------------------------------------------------------------
 
 #if 0
++ (NSArray *)readableTypes 
+{ 
+	NSLog(@"+ (NSArray *)readableTypes"); 
+	return [NSArray arrayWithObjects:@"VC64", nil]; 
+} 
+
++ (NSArray *)writableTypes 
+{ 
+	NSLog(@"+ (NSArray *)writableTypes"); 
+	return [NSArray arrayWithObjects:@"VC64", nil]; 
+} 
+
 + (bool)isNativeType:(NSString *)aType
 {
+	NSLog(@"+ (bool)isNativeType"); 
 	return [aType isEqual:@"VC64"];
 }
 #endif
+
+- (BOOL)shouldShowFilename:(NSString *)filename { 
+	NSLog(@"shouldShowFilename");
+    NSString *lpc = [filename lastPathComponent]; 
+    if ([lpc characterAtIndex:0] == '_') 
+        return NO; 
+    return YES; 
+} 
 
 #if 0
 -(NSData *)dataRepresentationOfType:(NSString *)type

@@ -220,15 +220,14 @@ void C64::reset()
 
 void C64::fastReset()
 {
-	debug("NOTE: FAST RESET IS DISABLED, BECAUSE THE CURRENT IMAGE FORMAT IS NOT YET COMPATIBLE WITH THE INTERNAL MODEL\n");
 #if 0
 	debug ("Resetting virtual C64 (fast reset via image file)\n");
 	
 	if (loadSnapshot("ResetImage.VC64")) {
 		debug("Reset image loaded.\n");	
 	} else {
-		debug("Cannot load reset image. Will do a hard reset...\n");
-		reset();
+		// debug("Cannot load reset image. Will do a hard reset...\n");
+		// reset();
 	}
 #endif
 }
