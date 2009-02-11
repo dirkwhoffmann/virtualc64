@@ -209,7 +209,7 @@ void C64::reset()
 	iec->reset();
 	floppy->reset();
 
-	archive = NULL;
+	// archive = NULL;
 	cycles = 0LL;
 	frame = 0;
 	rasterline = 0;
@@ -1136,19 +1136,18 @@ C64::synchronizeTiming()
 // ---------------------------------------------------------------------------------------------
 
 bool 
-C64::flushArchive(int item)
+C64::flushArchive(Archive *a, int item)
 {
 	uint16_t addr;
 	int data;
 	
-	// Archive loaded?
-	if (archive == NULL)
+	if (a == NULL)
 		return false;
 	
-	addr = archive->getDestinationAddrOfItem(item);
-	archive->selectItem(item);
+	addr = a->getDestinationAddrOfItem(item);
+	a->selectItem(item);
 	while (1) {
-		data = archive->getByte();
+		data = a->getByte();
 		if (data < 0) break;
 		
 		mem->pokeRam(addr, (uint8_t)data);
@@ -1160,14 +1159,14 @@ C64::flushArchive(int item)
 }
 
 bool 
-C64::mountArchive()
+C64::mountArchive(Archive *a)
 {	
 	// Archive loaded and mountable?
-	if (archive == NULL || !archive->isMountable())
+	if (a == NULL || !a->isMountable())
 		return false;
 	
 	// Insert disc
-	floppy->insertDisc((D64Archive *)archive);
+	floppy->insertDisc((D64Archive *)a);
 	
 	return true;
 }

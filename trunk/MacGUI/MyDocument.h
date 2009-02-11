@@ -198,6 +198,9 @@
 	// Number of selected sprite in VIC debug panel
 	int selectedSprite;
 	
+	//! Reference to the attached archive, e.g., a T64 or D64 container
+	Archive *archive;
+
 	// Initial snapshot
 	// If unequal NULL, the newly created document will be initialized with the provided snapshot data
 	Snapshot *snapshot;
@@ -205,6 +208,7 @@
 
 @property bool warpLoad;
 @property bool alwaysWarp;
+@property (assign) Archive *archive;
 
 // Main screen
 - (IBAction)fullscreenAction:(id)sender;
@@ -393,7 +397,7 @@
 
 // Misc
 - (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row;
-- (BOOL)showMountDialog:(Archive *)archive;
+- (BOOL)showMountDialog;
 
 @end
 

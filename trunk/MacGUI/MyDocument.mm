@@ -22,6 +22,7 @@
 
 @synthesize warpLoad;
 @synthesize alwaysWarp;
+@synthesize archive;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -130,13 +131,13 @@
 	// Create virtual C64
 	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];
 
-	// Load predefined state if applicable
+	// Load snapshot if applicable
 	if (snapshot != NULL) {
 		snapshot->writeToC64([c64 getC64]);
 		delete snapshot;
 		snapshot = NULL;
 	}
-	
+		
 	disassembleStartAddr = [c64 cpuGetPC];
 	
 	// get images for port A and B, depends on the available input devices
@@ -188,7 +189,14 @@
 				selector:@selector(timerFunc) 
 			    userInfo:nil repeats:YES];
 
-	NSLog(@"GUI has been initialized, timer is running");    
+	NSLog(@"GUI has been initialized, timer is running");
+	
+#if 0	
+	// Mount archive if applicable
+	if (archive != NULL) {
+		[self showMountDialog:archive];
+	}	
+#endif
 }
 
 - (NSString *)windowNibName
@@ -296,7 +304,6 @@
 	NSLog(@"+ (bool)isNativeType"); 
 	return [aType isEqual:@"VC64"];
 }
-#endif
 
 - (BOOL)shouldShowFilename:(NSString *)filename { 
 	NSLog(@"shouldShowFilename");
@@ -306,7 +313,6 @@
     return YES; 
 } 
 
-#if 0
 -(NSData *)dataRepresentationOfType:(NSString *)type
 {
 	NSLog(@"dataRepresentationOfType:%@", type);
@@ -351,6 +357,49 @@
 		return NO;
 	}
 	
+#if 0
+	// Is it a ROM file?
+	if ([myDoc loadRom:path]) {
+		NSLog(@"ROM loaded");
+		// Try to run...
+		// Update romDialog...
+		return YES;
+	}
+	
+	// Is it raw VC 1541 data?
+	if (VC1541::isG64Image([path UTF8String])) {
+		c64->floppy->readG64Image([path UTF8String]);
+		// [self rotate];
+		NSLog(@"G64 loaded");
+		return YES;	
+	}
+	
+	// Is it an archive?
+	if (T64Archive::fileIsValid([path UTF8String])) {
+		archive = new T64Archive();
+	} else if (D64Archive::fileIsValid([path UTF8String])) {
+		archive = new D64Archive();
+	} else if (PRGArchive::fileIsValid([path UTF8String])) {
+		archive = new PRGArchive();		
+	} else if (P00Archive::fileIsValid([path UTF8String])) {
+		archive = new P00Archive();		
+	} 
+	
+	// Load archive if applicable
+	if (archive != NULL) {
+		if (!archive->loadFile([path UTF8String])) {
+			return NO;
+		}
+		
+		// Display mount dialog
+		[myDoc setArchive:archive];
+		[myDoc showMountDialog];	
+		return YES;
+	}
+}
+#endif
+
+
 	snapshot = new Snapshot();
 	if (!snapshot->initWithContentsOfFile([filename UTF8String])) {
 		NSLog(@"Error while taking snapshot\n");
@@ -2323,8 +2372,11 @@
 	[NSApp endSheet:romDialog returnCode:1];
 }
 
-- (BOOL)showMountDialog:(Archive *)archive
+- (BOOL)showMountDialog
 {
+	if (archive == NULL)
+		return NO;
+	
 	[mountDialog initialize:archive];
 	
 	[NSApp beginSheet:mountDialog
@@ -2333,7 +2385,7 @@
 		didEndSelector:NULL
 		contextInfo:NULL];
 		
-	return true;
+	return YES;
 }
 
 - (IBAction)cancelMountDialog:(id)sender
@@ -2358,7 +2410,7 @@
 	// Return to normal event handling
 	[NSApp endSheet:mountDialog returnCode:1];
 
-	myc64->mountArchive();
+	myc64->mountArchive(archive);
 }
 
 - (IBAction)endMountDialogAndFlash:(id)sender
@@ -2375,11 +2427,11 @@
 	[NSApp endSheet:mountDialog returnCode:1];
 
 	// Try to mount archive
-	myc64->mountArchive();
+	myc64->mountArchive(archive);
 	
 	// Load clean image and flash selected file into memory
 	myc64->fastReset();
-	myc64->flushArchive([mountDialog getSelectedFile]);
+	myc64->flushArchive(archive, [mountDialog getSelectedFile]);
 
 	// Type "RUN"
 	myc64->keyboard->typeRun();

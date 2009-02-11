@@ -903,10 +903,10 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 			if (!archive->loadFile([path UTF8String])) {
 				return NO;
 			}
-			c64->setArchive(archive);
 		
 			// Display mount dialog
-			[myDoc showMountDialog:archive];	
+			[myDoc setArchive:archive]; 
+			[myDoc showMountDialog];	
 			return YES;
 		}
 	}

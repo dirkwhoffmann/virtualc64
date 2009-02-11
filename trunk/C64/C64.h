@@ -175,9 +175,6 @@ private:
 	//! The execution thread
 	pthread_t p;
 
-	//! Reference to the attached archive, e.g., a T64 or D64 container
-	Archive *archive;
-
 	//! Current clock cycle (since power up)
 	uint64_t cycles;
 
@@ -356,13 +353,13 @@ public:
 	// ---------------------------------------------------------------------------------------------
 	
 	//! Assign an archive to the virtual C64
-	void setArchive (Archive *a) { archive = a; }
+	// void setArchive (Archive *a) { archive = a; }
 	
 	//! Flush specified item from archive into memory and delete archive
-	bool flushArchive(int item);
+	bool flushArchive(Archive *a, int item);
 	
 	//! Mount specified archive in the virtual disk drive
-	bool mountArchive();
+	bool mountArchive(Archive *a);
 
 	
 	// ---------------------------------------------------------------------------------------------
