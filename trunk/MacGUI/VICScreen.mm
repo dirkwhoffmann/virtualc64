@@ -833,35 +833,39 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-    NSPasteboard *paste = [sender draggingPasteboard];
-	//gets the dragging-specific pasteboard from the sender
-    NSArray *types = [NSArray arrayWithObjects:NSFilenamesPboardType, nil];
-	//a list of types that we can accept
-    NSString *desiredType = [paste availableTypeFromArray:types];
-    NSData *carriedData = [paste dataForType:desiredType];
-	Archive *archive = NULL;
+    NSPasteboard *paste;
+    NSArray *types;
+    NSString *desiredType;
+    NSData *carriedData;
+
+	// Get pasteboard
+	paste = [sender draggingPasteboard];
 	
+	// Get the dragging-specific pasteboard from the sender
+	types = [NSArray arrayWithObjects:NSFilenamesPboardType, nil];
+	
+	// Get a list of types that we can accept
+	desiredType = [paste availableTypeFromArray:types];
+	
+	// Get carried data
+	carriedData = [paste dataForType:desiredType];
+
     if (nil == carriedData) {
         //the operation failed for some reason
         NSRunAlertPanel(@"Paste Error", @"Sorry, the paste operation failed", nil, nil, nil);
         return NO;
     }
 
-	//the pasteboard was able to give us some meaningful data
+	// The pasteboard was able to give us some meaningful data
     if ([desiredType isEqualToString:NSFilenamesPboardType]) {
-        //we have a list of file names in an NSData object
         NSArray *fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
-		//be caseful since this method returns id.  
-		//We just happen to know that it will be an array.
-        NSString *path = [fileArray objectAtIndex:0];
-			
-		// Invoke targetselector on drag finish
+        NSString *path = [fileArray objectAtIndex:0];			
 		NSLog(@"Got filename %@", path);
 			
 		// Try to load file
 
-		// Is it a saved image?
 #if 0
+		// Is it a saved image?
 		if (c64->loadSnapshot([path UTF8String])) {
 			[self rotate];
 			// PROBLEM: The associated file of the document does not change
@@ -888,29 +892,10 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 		}
 		
 		// Is it an archive?
-		if (T64Archive::fileIsValid([path UTF8String])) {
-			archive = new T64Archive();
-		} else if (D64Archive::fileIsValid([path UTF8String])) {
-			archive = new D64Archive();
-		} else if (PRGArchive::fileIsValid([path UTF8String])) {
-			archive = new PRGArchive();		
-		} else if (P00Archive::fileIsValid([path UTF8String])) {
-			archive = new P00Archive();		
-		} 
-		
-		// Load archive if applicable
-		if (archive != NULL) {
-			if (!archive->loadFile([path UTF8String])) {
-				return NO;
-			}
-		
-			// Display mount dialog
-			[myDoc setArchive:archive]; 
-			[myDoc showMountDialog];	
-			return YES;
-		}
+		if ([myDoc setArchiveWithName:path]) {
+			[myDoc showMountDialog];			
+		}			
 	}
-	
 	return NO;
 }
 

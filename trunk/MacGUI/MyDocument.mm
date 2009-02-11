@@ -189,14 +189,7 @@
 				selector:@selector(timerFunc) 
 			    userInfo:nil repeats:YES];
 
-	NSLog(@"GUI has been initialized, timer is running");
-	
-#if 0	
-	// Mount archive if applicable
-	if (archive != NULL) {
-		[self showMountDialog:archive];
-	}	
-#endif
+	NSLog(@"GUI has been initialized, timer is running");	
 }
 
 - (NSString *)windowNibName
@@ -279,6 +272,11 @@
 	
 	// Start drawing
 	enableOpenGL = true;
+	
+	// Mount archive if applicable
+	if (archive != NULL) {
+		[self showMountDialog];
+	}		
 }
 
 
@@ -352,61 +350,20 @@
 {
 	NSLog(@"readFromFile %@ (type %@)", filename, type);
 
-	if (![type isEqualToString:@"VC64"]) {
-		NSLog(@"File is not of type VC64\n");
-		return NO;
-	}
-	
-#if 0
-	// Is it a ROM file?
-	if ([myDoc loadRom:path]) {
-		NSLog(@"ROM loaded");
-		// Try to run...
-		// Update romDialog...
-		return YES;
-	}
-	
-	// Is it raw VC 1541 data?
-	if (VC1541::isG64Image([path UTF8String])) {
-		c64->floppy->readG64Image([path UTF8String]);
-		// [self rotate];
-		NSLog(@"G64 loaded");
-		return YES;	
-	}
-	
-	// Is it an archive?
-	if (T64Archive::fileIsValid([path UTF8String])) {
-		archive = new T64Archive();
-	} else if (D64Archive::fileIsValid([path UTF8String])) {
-		archive = new D64Archive();
-	} else if (PRGArchive::fileIsValid([path UTF8String])) {
-		archive = new PRGArchive();		
-	} else if (P00Archive::fileIsValid([path UTF8String])) {
-		archive = new P00Archive();		
-	} 
-	
-	// Load archive if applicable
-	if (archive != NULL) {
-		if (!archive->loadFile([path UTF8String])) {
+	if ([type isEqualToString:@"VC64"]) {
+		snapshot = new Snapshot();
+		if (!snapshot->initWithContentsOfFile([filename UTF8String])) {
+			NSLog(@"Error while reading snapshot\n");
+			delete snapshot;
+			snapshot = NULL;
 			return NO;
 		}
-		
-		// Display mount dialog
-		[myDoc setArchive:archive];
-		[myDoc showMountDialog];	
-		return YES;
-	}
-}
-#endif
-
-
-	snapshot = new Snapshot();
-	if (!snapshot->initWithContentsOfFile([filename UTF8String])) {
-		NSLog(@"Error while taking snapshot\n");
-		delete snapshot;
-		snapshot = NULL;
-	}
-	
+	} else if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
+		if (![self setArchiveWithName:filename]) {
+			NSLog(@"Error while reading archive\n");
+			return NO;
+		}
+	}			
 	return YES;
 }
 
@@ -2362,6 +2319,30 @@
 // --------------------------------------------------------------------------------
 // Dialogs
 // --------------------------------------------------------------------------------
+
+- (BOOL)setArchiveWithName:(NSString *)path
+{
+	// Is it an archive?
+	if (T64Archive::fileIsValid([path UTF8String])) {
+		archive = new T64Archive();
+	} else if (D64Archive::fileIsValid([path UTF8String])) {
+		archive = new D64Archive();
+	} else if (PRGArchive::fileIsValid([path UTF8String])) {
+		archive = new PRGArchive();		
+	} else if (P00Archive::fileIsValid([path UTF8String])) {
+		archive = new P00Archive();		
+	} else {
+		return NO;
+	}
+	
+	// Load archive 
+	if (!archive->loadFile([path UTF8String])) {
+		archive = NULL;
+		return NO;
+	}
+
+	return YES;
+}
 
 - (IBAction)cancelRomDialog:(id)sender
 {
