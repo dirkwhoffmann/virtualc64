@@ -209,6 +209,7 @@
 @property bool warpLoad;
 @property bool alwaysWarp;
 @property (assign) Archive *archive;
+- (BOOL)setArchiveWithName:(NSString *)path;
 
 // Main screen
 - (IBAction)fullscreenAction:(id)sender;
