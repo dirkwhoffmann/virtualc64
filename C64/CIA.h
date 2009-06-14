@@ -345,8 +345,6 @@ private:
 
 	//! Reference to the virtual keyboard
 	Keyboard *keyboard;
-	Joystick *joystickPortA;
-	Joystick *joystickPortB;
 	Joystick *joy[2];
 
 	bool bKeyboard[2];

@@ -167,11 +167,11 @@ public:
 - (void) cpuToggleSoftBreakpoint:(int)addr;
 
 // JOYSTICK
-- (Joystick *) getJoystickOnPortA;
-- (Joystick *) getJoystickOnPortB;
 - (void) switchInputDevice:(int)devNo;
 - (void) switchInputDevices;
 - (uint8_t) getPortAssignment:(int)devNo;
+- (Joystick *) addJoystick;
+- (void) removeJoystick:(Joystick *)joystick;
 
 
 // MEM

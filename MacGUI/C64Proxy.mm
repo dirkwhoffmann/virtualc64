@@ -279,12 +279,11 @@ void ListenerProxy::logAction(char *message)
 // --------------------------------------------------------------------------
 // JOYSTICK
 // --------------------------------------------------------------------------
-- (Joystick *) getJoystickOnPortA { return c64->cia1->getJoystickOnPortA(); }
-- (Joystick *) getJoystickOnPortB { return c64->cia1->getJoystickOnPortB(); }
 - (void) switchInputDevice:(int)devNo { c64->switchInputDevice( devNo ); }
 - (void) switchInputDevices { c64->switchInputDevices(); }
 - (uint8_t) getPortAssignment:(int)devNo { return c64->getDeviceOfPort(devNo); }
-
+- (Joystick *) addJoystick { return c64->addJoystick(); }
+- (void) removeJoystick:(Joystick *)joystick { return c64->removeJoystick( joystick ); }
 
 // --------------------------------------------------------------------------
 // MEM

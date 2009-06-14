@@ -417,14 +417,16 @@ public:
 	
 	//! Get the device mapped to the port portNo
 	int getDeviceOfPort(int portNo);
-
-	//! Scans for new joysticks and reval the old ones
-	void scanJoysticks();
+	
+	//! Sets a new joystick
+	Joystick *addJoystick();
+	
+	//! Removes a joystick
+	void removeJoystick(Joystick *joystick);
 	
 	//! The tread exit function.
 	/*! Automatically invoked by the execution thread on termination */
 	void threadCleanup(); 
-	
 };
 
 #endif

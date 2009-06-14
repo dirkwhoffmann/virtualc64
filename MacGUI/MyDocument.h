@@ -32,6 +32,7 @@
 #import "PreferenceController.h"
 #import "AudioDevice.h"
 #import "C64Proxy.h"
+#import "JoystickManager.h"
 
 @protocol ListenerProtocol
 
@@ -56,6 +57,9 @@
 	// Proxy object. Used get data from and sent data to the virtual C64
 	// Moreover, the class implements a bridge between C++ (simulator) and Objective-C (GUI)
 	C64Proxy *c64;
+	
+	// JoystickManager
+	JoystickManager *joystickManager;
 	
 	// Dialogs
 	IBOutlet MountDialog *mountDialog;
