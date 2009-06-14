@@ -186,6 +186,9 @@
 	// The 60 Hz timer
 	NSTimer *timer;
 	
+	// Timer lock
+	NSLock *timerLock;
+	
 	// Measured clock frequency
 	float mhz;
 

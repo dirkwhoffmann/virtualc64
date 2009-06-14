@@ -111,12 +111,14 @@
 - (void)windowWillClose:(NSNotification *)aNotification
 {
 	NSLog(@"windowWillClose");
-
+	
 	[timer invalidate];
 	timer = nil;
-	
-	// Delete virtual machine
+
+	[timerLock lock];
 	[c64 release];
+	[timerLock unlock];
+	
 	delete joystickManager;
 }
 
@@ -370,13 +372,26 @@
 	return YES;
 }
 
-#if 0
 - (bool)revertToSavedFromFile:(NSString *)filename ofType:(NSString *)type
 {
-	NSLog(@"revertFromFile %@ (type %@)", filename, type);
-	return [c64 loadSnapshot:filename];
+	bool success = NO;
+	
+	if ([type isEqualToString:@"VC64"]) {
+		snapshot = new Snapshot();
+		if (snapshot->initWithContentsOfFile([filename UTF8String])) {
+			snapshot->writeToC64([c64 getC64]);
+			success = YES;
+		}
+		delete snapshot;
+		snapshot = NULL;
+	} else if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
+		if ([self setArchiveWithName:filename]) {
+			[self showMountDialog];
+			success = YES;
+		}
+	}
+	return success;
 }
-#endif
 
 - (BOOL)loadRom:(NSString *)filename
 {
@@ -454,6 +469,8 @@
 
 - (void)timerFunc
 {	
+	[timerLock lock];
+	
 	animationCounter++;
 
 	// Do 60 times a second...
@@ -464,7 +481,7 @@
 
 	// Do less times ... 
 	if (animationCounter & 0x07) {
-		return;
+		goto exit;
 	}
 	
 	if ([c64 isRunning] && ([debug_panel state] == NSDrawerOpenState || [debug_panel state] == NSDrawerOpeningState)) {
@@ -474,7 +491,7 @@
 
 	// Do even less times...
 	if (animationCounter & 0x17) {
-		return;
+		goto exit;
 	}
 
 	// Measure clock frequency and frame rate
@@ -495,6 +512,9 @@
 	timeStamp  = currentTime;
 	cycleCount = currentCycles;
 	frameCount = currentFrames;		
+
+exit:
+	[timerLock unlock];
 }
 
 // --------------------------------------------------------------------------------

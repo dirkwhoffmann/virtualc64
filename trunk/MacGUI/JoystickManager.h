@@ -73,7 +73,7 @@ class JoystickManager
 		map<int, JoystickProxy> _joysticks;
 		
 		static const int UsageToSearch[][ 2 ];
-		static const int MaxJoystickCount;
+		static const unsigned MaxJoystickCount;
 };
 
 class IOHIDDeviceInfo
