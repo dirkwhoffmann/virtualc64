@@ -10,8 +10,6 @@
 		020214270AF8E599008AB4EB /* SIDVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020214260AF8E599008AB4EB /* SIDVoice.cpp */; };
 		023024000DC902A700F8818A /* AudioDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 023023FF0DC902A700F8818A /* AudioDevice.mm */; };
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
-		389E776F0C7A3B2200BEAFA6 /* SDL_joystick.c in Sources */ = {isa = PBXBuildFile; fileRef = 389E776B0C7A3B2200BEAFA6 /* SDL_joystick.c */; };
-		389E77700C7A3B2200BEAFA6 /* SDL_sysjoystick.c in Sources */ = {isa = PBXBuildFile; fileRef = 389E776D0C7A3B2200BEAFA6 /* SDL_sysjoystick.c */; };
 		389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */; };
 		38AF838C0C7BA24A00F6DBCE /* joystick1_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF83890C7BA24A00F6DBCE /* joystick1_32.png */; };
 		38AF838D0C7BA24A00F6DBCE /* joystick2_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */; };
@@ -97,6 +95,7 @@
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC8146870FE54238007ED085 /* JoystickManager.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,10 +112,6 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32DBCF750370BD2300C91783 /* V64_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V64_Prefix.pch; sourceTree = "<group>"; };
-		389E776B0C7A3B2200BEAFA6 /* SDL_joystick.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SDL_joystick.c; path = SDL/SDL_joystick.c; sourceTree = "<group>"; };
-		389E776C0C7A3B2200BEAFA6 /* SDL_joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_joystick.h; path = SDL/SDL_joystick.h; sourceTree = "<group>"; };
-		389E776D0C7A3B2200BEAFA6 /* SDL_sysjoystick.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SDL_sysjoystick.c; path = SDL/SDL_sysjoystick.c; sourceTree = "<group>"; };
-		389E776E0C7A3B2200BEAFA6 /* SDL_sysjoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_sysjoystick.h; path = SDL/SDL_sysjoystick.h; sourceTree = "<group>"; };
 		389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Joystick.cpp; sourceTree = "<group>"; };
 		389E777F0C7A3B6F00BEAFA6 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
 		38AF83890C7BA24A00F6DBCE /* joystick1_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = joystick1_32.png; path = images/joystick1_32.png; sourceTree = "<group>"; };
@@ -234,6 +229,8 @@
 		50F55DD00F28EC2D0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* V64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = V64.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC8146860FE54238007ED085 /* JoystickManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoystickManager.h; sourceTree = "<group>"; };
+		BC8146870FE54238007ED085 /* JoystickManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JoystickManager.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -336,17 +333,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		389E776A0C7A3AF100BEAFA6 /* SDL */ = {
-			isa = PBXGroup;
-			children = (
-				389E776B0C7A3B2200BEAFA6 /* SDL_joystick.c */,
-				389E776C0C7A3B2200BEAFA6 /* SDL_joystick.h */,
-				389E776D0C7A3B2200BEAFA6 /* SDL_sysjoystick.c */,
-				389E776E0C7A3B2200BEAFA6 /* SDL_sysjoystick.h */,
-			);
-			name = SDL;
-			sourceTree = "<group>";
-		};
 		5000C8070D13CE490011A2E9 /* Memory */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,7 +350,6 @@
 			isa = PBXGroup;
 			children = (
 				5000C8070D13CE490011A2E9 /* Memory */,
-				389E776A0C7A3AF100BEAFA6 /* SDL */,
 				504B39910C45192700286F18 /* Drive */,
 				509AE9FE0C3249D4001FC9FD /* Loading and saving */,
 				50176C500A6F72F3009E80BD /* basic.h */,
@@ -404,6 +389,8 @@
 		50176C6D0A6F7357009E80BD /* MacGUI */ = {
 			isa = PBXGroup;
 			children = (
+				BC8146860FE54238007ED085 /* JoystickManager.h */,
+				BC8146870FE54238007ED085 /* JoystickManager.mm */,
 				50176C720A6F7357009E80BD /* Formatter.h */,
 				50176C730A6F7357009E80BD /* Formatter.mm */,
 				50176C700A6F7357009E80BD /* Disassembler.h */,
@@ -656,8 +643,6 @@
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
 				5007A4880C3F9D6A0069B0CE /* PreferenceController.mm in Sources */,
 				5007A5EC0C3FC99F0069B0CE /* VIC_colors.cpp in Sources */,
-				389E776F0C7A3B2200BEAFA6 /* SDL_joystick.c in Sources */,
-				389E77700C7A3B2200BEAFA6 /* SDL_sysjoystick.c in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
@@ -668,6 +653,7 @@
 				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
 				503DF0DA0F18BFDE00DC5C11 /* Timer.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
+				BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

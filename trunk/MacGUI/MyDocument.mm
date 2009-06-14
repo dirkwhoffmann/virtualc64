@@ -117,6 +117,7 @@
 	
 	// Delete virtual machine
 	[c64 release];
+	delete joystickManager;
 }
 
 - (void)awakeFromNib
@@ -130,6 +131,8 @@
 	
 	// Create virtual C64
 	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];
+	joystickManager = new JoystickManager( c64 );
+	joystickManager->Intialize();
 
 	// Load snapshot if applicable
 	if (snapshot != NULL) {
@@ -524,9 +527,9 @@
 		if( portA == IPD_KEYBOARD )
 			[theItem setImage:[NSImage imageNamed:@"keyboard32"]];
 		else if( portA == IPD_JOYSTICK_1 )
-			[theItem setImage:[NSImage imageNamed:@"joystick2_32"]];
-		else if( portA == IPD_JOYSTICK_2 )
 			[theItem setImage:[NSImage imageNamed:@"joystick1_32"]];
+		else if( portA == IPD_JOYSTICK_2 )
+			[theItem setImage:[NSImage imageNamed:@"joystick2_32"]];
 		else if( portA == IPD_UNCONNECTED )
 			[theItem setImage:[NSImage imageNamed:@"none_32"]];
 		else 

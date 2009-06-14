@@ -98,25 +98,6 @@ C64::C64(C64Listener *listener)
 	iec = new IEC();
 	floppy = new VC1541();
 	
-	// Create joysticks
-	// NEEDS CLEANUP
-	debug("try to load joystick\n");
-	try {
-		joystick1 = new Joystick( 0 );
-		debug("joystick 1found \n");
-	} catch( const char *ex ) {
-		joystick1 = NULL;
-		debug("Joystick 1 is NOT present\n");
-	}
-	
-	try {
-		joystick2 = new Joystick( 1 );
-		debug("joystick 2 found\n");
-	} catch( const char *ex ) {
-	    joystick2 = NULL;
-		debug("Joystick 2 is NOT present\n");
-	}
-	
 	// Bind components
 	cpu->setC64(this);
 	cpu->setMemory(mem);
@@ -139,24 +120,11 @@ C64::C64(C64Listener *listener)
 	floppy->setC64(this);
 	
 	// Setup initial game port mapping
-	// NEEDS CLEANUP, DONT DO THIS HERE!
-	if (joystick1 == NULL && joystick2 == NULL) {
-		// 0 joysticks connected
-		setInputDevice(0, IPD_UNCONNECTED);
-		setInputDevice(1, IPD_UNCONNECTED);
-	}
-	else if (joystick1 != NULL && joystick2 == NULL) {
-		// 1 joysticks connected
-		setInputDevice(0, IPD_JOYSTICK_1);
-		setInputDevice(1, IPD_UNCONNECTED);
-	}
-	else if( joystick1 != NULL && joystick2 != NULL ) {
-		// 2 joysticks connected
-		setInputDevice(0, IPD_JOYSTICK_1);
-		setInputDevice(1, IPD_JOYSTICK_2);
-	} else {
-		assert(0);
-	}
+	// 0 joysticks connected
+	setInputDevice(0, IPD_UNCONNECTED);
+	setInputDevice(1, IPD_UNCONNECTED);
+	joystick1 = new Joystick;
+	joystick2 = new Joystick;
 	
 	// Configure
 	setNTSC(); // Why NTSC??
@@ -1245,9 +1213,9 @@ C64::switchInputDevice( int portNo )
 	do {
 		newDevice = (newDevice + 1) % NUM_INPUT_DEVICES;
 	
-		if (newDevice == IPD_JOYSTICK_1 && joystick1 == NULL)
+		if (newDevice == IPD_JOYSTICK_1 && !joystick1->IsActive())
 			invalid = true;
-		else if (newDevice == IPD_JOYSTICK_2 && joystick2 == NULL)
+		else if (newDevice == IPD_JOYSTICK_2 && !joystick2->IsActive())
 			invalid = true;
 		else 
 			invalid = false;
@@ -1270,27 +1238,54 @@ C64::getDeviceOfPort( int portNo ) {
 	return port[portNo];
 }
 
-void 
-C64::scanJoysticks() {
-	// check if a new joystick is present now
-	if( joystick1 == NULL ) {
-		try {
-			joystick1 = new Joystick( 0 );
-		} catch( const char *ex ) {
-			joystick1 = NULL;
-			debug("Joystick 1 is NOT present\n");
-		}
-	}	
-	
-	// check if a new joystick is present now
-	if( joystick2 == NULL ) {
-		try {
-			joystick2 = new Joystick( 1 );
-		} catch( const char *ex ) {
-			joystick2 = NULL;
-			debug("Joystick 2 is NOT present\n");
-		}
+Joystick *C64::addJoystick()
+{
+	if( !joystick1->IsActive())
+	{
+		joystick1->SetActiveState( true );
+		return joystick1;
 	}
+	else if( !joystick2->IsActive() )
+	{
+		joystick2->SetActiveState( true );
+		return joystick2;
+	}
+	else
+		throw( "Joystick 1 and 2 are allready assigned!" );
+}
+
+void C64::removeJoystick( Joystick *joystick )
+{
+	assert( (joystick == joystick1) || (joystick == joystick2) );
+	
+	if( joystick == joystick1 )
+	{
+		if( !joystick1->IsActive() )
+			throw( "Joystick1 is not assigned" );
+		
+		if( getDeviceOfPort( 0 ) == IPD_JOYSTICK_1 )
+			setInputDevice( 0, IPD_UNCONNECTED );
+		
+		if( getDeviceOfPort( 1 ) == IPD_JOYSTICK_1 )
+			setInputDevice( 1, IPD_UNCONNECTED ); 
+		
+		joystick1->SetActiveState( false );
+	}
+	else if( joystick == joystick2 )
+	{
+		if( !joystick2->IsActive() )
+			throw( "Joystick2 is not assigned" );
+		
+		if( getDeviceOfPort( 0 ) == IPD_JOYSTICK_2 )
+			setInputDevice( 0, IPD_UNCONNECTED );
+		
+		if( getDeviceOfPort( 1 ) == IPD_JOYSTICK_2 )
+			setInputDevice( 1, IPD_UNCONNECTED ); 
+		
+		joystick2->SetActiveState( false );
+	}
+	else
+		throw( "Invalid joystick" );
 }
 
 void 
