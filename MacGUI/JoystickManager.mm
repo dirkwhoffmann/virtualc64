@@ -29,7 +29,7 @@ const int JoystickManager::UsageToSearch[][ 2 ] =
 	{	kHIDPage_GenericDesktop,	kHIDUsage_GD_Joystick	},
 	{	kHIDPage_GenericDesktop,	kHIDUsage_GD_GamePad	},
 };
-const int JoystickManager::MaxJoystickCount = 2;
+const unsigned JoystickManager::MaxJoystickCount = 2;
 
 JoystickManager::JoystickManager( C64Proxy *proxy ) : _proxy( proxy ), _initialized ( false ), _manager( NULL ) { }
 JoystickManager::~JoystickManager()
@@ -43,7 +43,7 @@ bool JoystickManager::Intialize()
 		NSLog( @"%s: out of memory\n", __PRETTY_FUNCTION__ );
 		return false;
 	}
-	for( int n = 0; n < sizeof( UsageToSearch ) / sizeof( UsageToSearch[ 0 ] ); n++)
+	for( unsigned n = 0; n < sizeof( UsageToSearch ) / sizeof( UsageToSearch[ 0 ] ); n++)
 	{
 		CFMutableDictionaryRef dict = CFDictionaryCreateMutable( kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks );
 		if( !dict )
