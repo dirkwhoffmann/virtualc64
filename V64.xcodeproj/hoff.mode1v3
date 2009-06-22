@@ -309,7 +309,7 @@
 							<real>241</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>422 165 1436 863 0 0 1680 1028 </string>
+						<string>231 160 1436 863 0 0 1680 1028 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -339,7 +339,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>50005D2A0FE589EE003CC3E6</string>
+										<string>50005D340FE58B3D003CC3E6</string>
 										<key>history</key>
 										<array>
 											<string>50AFEE850C3A8D9B007749E7</string>
@@ -631,7 +631,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1173, 766}}</string>
 								<key>RubberWindowFrame</key>
-								<string>422 165 1436 863 0 0 1680 1028 </string>
+								<string>231 160 1436 863 0 0 1680 1028 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -651,7 +651,7 @@
 								<key>Frame</key>
 								<string>{{0, 771}, {1173, 51}}</string>
 								<key>RubberWindowFrame</key>
-								<string>422 165 1436 863 0 0 1680 1028 </string>
+								<string>231 160 1436 863 0 0 1680 1028 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -819,7 +819,7 @@
 		<string>/Users/hoff/work/Software/VirtualC64/virtualc64/V64.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>422 165 1436 863 0 0 1680 1028 </string>
+	<string>231 160 1436 863 0 0 1680 1028 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
