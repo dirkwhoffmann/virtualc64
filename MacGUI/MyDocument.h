@@ -258,6 +258,7 @@
 - (IBAction)stepOutAction:(id)sender;
 - (IBAction)stepOverAction:(id)sender;
 - (IBAction)stopAndGoAction:(id)sender;
+- (IBAction)pauseAction:(id)sender;
 - (IBAction)continueAction:(id)sender;
 - (IBAction)resetAction:(id)sender;
 - (IBAction)fastResetAction:(id)sender;

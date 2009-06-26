@@ -369,6 +369,7 @@
 			return NO;
 		}
 	}			
+	
 	return YES;
 }
 
@@ -523,6 +524,11 @@ exit:
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
 {
+	/* */
+	if ([c64 isRunning]) {
+		[self updateChangeCount:NSChangeDone];
+	}
+	
 	/* Pause/Continue */
 	if ([theItem tag] == 1) { 
 		if ([c64 isRunning]) {
@@ -748,6 +754,16 @@ exit:
 	if ([c64 isHalted]) {
 		[c64 run];
 	} else {
+		[c64 halt];
+		[debug_panel open];
+	}
+	
+	[self refresh];
+}
+
+- (IBAction)pauseAction:(id)sender
+{	
+	if ([c64 isRunning]) {
 		[c64 halt];
 		[debug_panel open];
 	}
@@ -2433,8 +2449,10 @@ exit:
 	// Try to mount archive
 	myc64->mountArchive(archive);
 	
-	// Load clean image and flash selected file into memory
+	// Load clean image 
 	myc64->fastReset();
+	
+	// Flash selected file into memory
 	myc64->flushArchive(archive, [mountDialog getSelectedFile]);
 
 	// Type "RUN"
