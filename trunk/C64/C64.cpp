@@ -223,8 +223,10 @@ C64::load(uint8_t **buffer)
 	// Load internal state of sub components
 	cpu->load(buffer);
 	debug("%d\n", *buffer - old);
+	// cpu->dumpState();
 	vic->load(buffer);
 	debug("%d\n", *buffer - old);
+	// vic->dumpState();
 	sid->load(buffer);
 	debug("%d\n", *buffer - old);
 	cia1->load(buffer);
@@ -266,8 +268,10 @@ C64::save(uint8_t **buffer)
 	// Save internal state of sub components
 	cpu->save(buffer);
 	debug("%d\n", *buffer - old);
+	// cpu->dumpState();
 	vic->save(buffer);
 	debug("%d\n", *buffer - old);
+	// vic->dumpState();
 	sid->save(buffer);
 	debug("%d\n", *buffer - old);
 	cia1->save(buffer);
