@@ -35,7 +35,7 @@ JoystickManager::JoystickManager( C64Proxy *proxy ) : _proxy( proxy ), _initiali
 JoystickManager::~JoystickManager()
 { Dispose(); }
 
-bool JoystickManager::Intialize()
+bool JoystickManager::Initialize()
 {
 	CFMutableArrayRef matchingArray = CFArrayCreateMutable( kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks );
 	if( !matchingArray )
@@ -126,7 +126,7 @@ void JoystickManager::MatchingCallback( void *inContext, IOReturn inResult, void
 	
 	if( inResult != kIOReturnSuccess )
 	{
-		NSLog( @"%s: device %p (%s) is not in successfull state (%i)\n", __PRETTY_FUNCTION__, inIOHIDDeviceRef, devInfo.GetName(), inResult );
+		NSLog( @"%s: device %p (%s) is not in successful state (%i)\n", __PRETTY_FUNCTION__, inIOHIDDeviceRef, devInfo.GetName(), inResult );
 		return;
 	}
 	
@@ -204,7 +204,7 @@ void JoystickManager::InputValueCallback( void *inContext, IOReturn inResult, vo
 	
 	if( inResult != kIOReturnSuccess )
 	{
-		NSLog( @"%s: device %p (%s) is not in successfull state (%i)\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName(), inResult );
+		NSLog( @"%s: device %p (%s) is not in successful state (%i)\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName(), inResult );
 		return;
 	}
 	
@@ -232,8 +232,6 @@ void JoystickManager::InputValueCallback( void *inContext, IOReturn inResult, vo
 			bool pressed = ( ceil( IOHIDValueGetScaledValue( inIOHIDValueRef, kIOHIDValueScaleTypeCalibrated ) ) == 1 );
 			
 			joystick.ChangeButton( elementUsage, pressed );
-			
-			NSLog( @"%s: device %p (%s) button %i=%i\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName(), elementUsage, pressed );
 		}
 		else
 			NSLog( @"%s: device %p (%s) type and page mismatch (Type=%i, Page=%i)\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName(), elementType, elementPage );
@@ -248,8 +246,6 @@ void JoystickManager::InputValueCallback( void *inContext, IOReturn inResult, vo
 			IOHIDElement_SetDoubleProperty( element, CFSTR( kIOHIDElementCalibrationMaxKey ), 1 );
 			IOHIDElement_SetDoubleProperty( element, CFSTR( kIOHIDElementCalibrationGranularityKey ), 1 );
 			int axis = ceil( IOHIDValueGetScaledValue( inIOHIDValueRef, kIOHIDValueScaleTypeCalibrated ) );
-			
-			//NSLog( @"%s: device %p (%s) axis %i=%i\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName(), elementUsage, axis );
 			
 			switch( elementUsage )
 			{

@@ -134,7 +134,7 @@
 	// Create virtual C64
 	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];
 	joystickManager = new JoystickManager( c64 );
-	joystickManager->Intialize();
+	joystickManager->Initialize();
 
 	// Load snapshot if applicable
 	if (snapshot != NULL) {
