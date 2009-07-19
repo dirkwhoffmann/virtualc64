@@ -51,7 +51,7 @@ class JoystickManager
 		JoystickManager( C64Proxy *proxy );
 		~JoystickManager();
 		
-		bool Intialize();
+		bool Initialize();
 		void Dispose();
 		
 		static void MatchingCallback_static( void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef );
@@ -62,10 +62,10 @@ class JoystickManager
 		
 		static void InputValueCallback_static( void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef );
 		void InputValueCallback( void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef );
-		
-		void IOHIDElement_SetDoubleProperty( IOHIDElementRef element, CFStringRef key, double value );
 
 	private:
+		void IOHIDElement_SetDoubleProperty( IOHIDElementRef element, CFStringRef key, double value );
+		
 		C64Proxy *_proxy;
 		
 		bool _initialized;
