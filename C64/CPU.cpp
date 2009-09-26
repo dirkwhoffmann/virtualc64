@@ -23,6 +23,7 @@ CPU::CPU()
 	debug("  Creating CPU at address %p...\n", this);
 
 	// Initialize connected components
+	c64 = NULL;
 	mem = NULL;
 	
 	// Establish callback for each instruction
