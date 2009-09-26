@@ -18,9 +18,63 @@
 
 #include "C64.h"
 
+#define SHIFT_FLAG 0x1000
+
 Keyboard::Keyboard()
 {
 	debug("Creating keyboard at address %p...\n", this);
+
+	for (int i = 0; i < 128; i++) {
+		ASCII[i] = 0x0000;
+	}
+	
+	ASCII[' '] = 0x0704;
+	ASCII['*'] = 0x0601;
+	ASCII['+'] = 0x0500;
+	ASCII[','] = 0x0507; ASCII['<'] = 0x0507 | SHIFT_FLAG;
+	ASCII['-'] = 0x0503;
+	ASCII['.'] = 0x0504; ASCII['>'] = 0x0504 | SHIFT_FLAG;
+	ASCII['/'] = 0x0607; ASCII['?'] = 0x0607 | SHIFT_FLAG;
+	ASCII['0'] = 0x0403;
+	ASCII['1'] = 0x0700; ASCII['!'] = 0x0700 | SHIFT_FLAG;
+	ASCII['2'] = 0x0703; ASCII['"'] = 0x0703 | SHIFT_FLAG;
+	ASCII['3'] = 0x0100; ASCII['#'] = 0x0100 | SHIFT_FLAG;
+	ASCII['4'] = 0x0103; ASCII['$'] = 0x0103 | SHIFT_FLAG;
+	ASCII['5'] = 0x0200; ASCII['%'] = 0x0200 | SHIFT_FLAG;
+	ASCII['6'] = 0x0203; ASCII['&'] = 0x0203 | SHIFT_FLAG;
+	ASCII['7'] = 0x0300; ASCII['\'']= 0x0300 | SHIFT_FLAG;
+	ASCII['8'] = 0x0303; ASCII['('] = 0x0303 | SHIFT_FLAG;
+	ASCII['9'] = 0x0400; ASCII[')'] = 0x0400 | SHIFT_FLAG;
+	ASCII[':'] = 0x0505; ASCII['['] = 0x0505 | SHIFT_FLAG;
+	ASCII[';'] = 0x0602; ASCII[']'] = 0x0602 | SHIFT_FLAG;
+	ASCII['='] = 0x0605;
+	ASCII['@'] = 0x0506;
+	ASCII['a'] = 0x0102;
+	ASCII['b'] = 0x0304;
+	ASCII['c'] = 0x0204;
+	ASCII['d'] = 0x0202;
+	ASCII['e'] = 0x0106;
+	ASCII['f'] = 0x0205;
+	ASCII['g'] = 0x0302;
+	ASCII['h'] = 0x0305;
+	ASCII['i'] = 0x0401;
+	ASCII['j'] = 0x0402;
+	ASCII['k'] = 0x0405;
+	ASCII['l'] = 0x0502;
+	ASCII['m'] = 0x0404;
+	ASCII['n'] = 0x0407;
+	ASCII['o'] = 0x0406;
+	ASCII['p'] = 0x0501;
+	ASCII['q'] = 0x0706;
+	ASCII['r'] = 0x0201;
+	ASCII['s'] = 0x0105;
+	ASCII['t'] = 0x0206;
+	ASCII['u'] = 0x0306;
+	ASCII['v'] = 0x0307;
+	ASCII['w'] = 0x0101;
+	ASCII['x'] = 0x0207;
+	ASCII['y'] = 0x0301;
+	ASCII['z'] = 0x0104;
 }
 
 void 
@@ -91,8 +145,15 @@ void Keyboard::pressKey(uint8_t row, uint8_t col)
 
 void Keyboard::pressKey(char c)
 {
-	debug("Not implemented yet");
-	assert(0);
+	unsigned i = (unsigned)c;
+	if ((i >= 0 && i <= 127) && ASCII[i] != 0x0000) {
+		uint16_t rowcol = ASCII[i];
+		if ((rowcol & SHIFT_FLAG) == SHIFT_FLAG) {
+			pressShiftKey();
+			rowcol &= 0x0FFF; // clear shift flag
+		}
+		pressKey(rowcol >> 8, rowcol & 0xFF);
+	}
 }
 
 void Keyboard::releaseKey(uint8_t row, uint8_t col)
@@ -104,8 +165,15 @@ void Keyboard::releaseKey(uint8_t row, uint8_t col)
 
 void Keyboard::releaseKey(char c)
 {
-	debug("Not implemented yet");
-	assert(0);
+	unsigned i = (unsigned)c;
+	if ((i >=0 && i <= 127) && ASCII[i] != 0x0000) {
+		uint16_t rowcol = ASCII[i];
+		if ((rowcol & SHIFT_FLAG) == SHIFT_FLAG) {
+			releaseShiftKey();
+			rowcol &= 0x0FFF; // clear shift flag
+		}
+		releaseKey(rowcol >> 8, rowcol & 0xFF);
+	}
 }
 
 void Keyboard::typeRun()
@@ -157,3 +225,6 @@ void Keyboard::typeFormat()
 		releaseKey(rowcol3[i], rowcol3[i+1]);
 	}
 }
+
+#undef SHIFT_FLAG
+

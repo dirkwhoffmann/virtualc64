@@ -28,7 +28,7 @@
 // Forward declaration
 @class MyDocument;
 
-// Keyboard constants
+// Keyboard constants (US MacBook Pro)
 const uint16_t MAC_A = 0;
 const uint16_t MAC_B = 11;
 const uint16_t MAC_C = 8;
@@ -53,8 +53,8 @@ const uint16_t MAC_U = 32;
 const uint16_t MAC_V = 9;
 const uint16_t MAC_W = 13;
 const uint16_t MAC_X = 7;
-const uint16_t MAC_Y = 6;
-const uint16_t MAC_Z = 16;
+const uint16_t MAC_Y = 16;
+const uint16_t MAC_Z = 6;
 const uint16_t MAC_F1 = 122;
 const uint16_t MAC_F2 = 120;
 const uint16_t MAC_F3 = 99;
@@ -73,17 +73,17 @@ const uint16_t MAC_7 = 26;
 const uint16_t MAC_8 = 28;
 const uint16_t MAC_9 = 25;
 const uint16_t MAC_0 = 29;
-const uint16_t MAC_APO = 24;
+const uint16_t MAC_APO = 39;
 const uint16_t MAC_DEL = 51;
 const uint16_t MAC_RET = 36;
 const uint16_t MAC_CL = 123;
 const uint16_t MAC_CR = 124;
 const uint16_t MAC_CU = 126;
 const uint16_t MAC_CD = 125;
-const uint16_t MAC_PLS = 30;
-const uint16_t MAC_MNS = 44;
+const uint16_t MAC_PLS = 24;
+const uint16_t MAC_MNS = 27;
 const uint16_t MAC_MUL = 200; 
-const uint16_t MAC_DIV = 24; 
+const uint16_t MAC_DIV = 44; 
 const uint16_t MAC_DOT = 47;
 const uint16_t MAC_COM = 43;
 const uint16_t MAC_SEM = 41;
@@ -131,7 +131,6 @@ const int BG_TEXTURE_DEPTH = 4;
 	
 	// Mapping from Mac keycode to the C64 row/column format
 	uint16_t kb[256];
-
 }
 
 - (void) prepare;

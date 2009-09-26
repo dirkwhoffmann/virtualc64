@@ -347,9 +347,9 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	kb[MAC_7]   = 0x0300; kb[MAC_Y]   = 0x0301; kb[MAC_G]   = 0x0302; kb[MAC_8]   = 0x0303;  kb[MAC_B]   = 0x0304;   kb[MAC_H]   = 0x0305;  kb[MAC_U]   = 0x0306; kb[MAC_V]   = 0x0307;	
 	kb[MAC_9]   = 0x0400; kb[MAC_I]   = 0x0401; kb[MAC_J]   = 0x0402; kb[MAC_0]   = 0x0403;  kb[MAC_M]   = 0x0404;   kb[MAC_K]   = 0x0405;  kb[MAC_O]   = 0x0406; kb[MAC_N]   = 0x0407;	
 	kb[MAC_PLS] = 0x0500; kb[MAC_P]   = 0x0501; kb[MAC_L]   = 0x0502; kb[MAC_MNS] = 0x0503;  kb[MAC_DOT] = 0x0504;                                                kb[MAC_COM] = 0x0507;	
-	kb[MAC_APO] = 0x0604;                                                                                                                                         kb[MAC_HAT] = 0x0606; 	
-	kb[MAC_1]   = 0x0700; kb[MAC_HAT] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706;	
-
+																																			kb[MAC_HAT] = 0x0606; kb[MAC_DIV] = 0x0607;
+	kb[MAC_1]   = 0x0700; kb[MAC_CMP] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706;
+	
 	// Graphics
 	frames = 0;
 	readyToDraw = NO;
@@ -652,7 +652,7 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 
 - (void)keyDown:(NSEvent *)event
 {
-	char c                 = [[event characters] UTF8String][0];
+	unsigned int   c       = [[event characters] UTF8String][0];
 	unsigned short keycode = [event keyCode];
 	unsigned int   flags   = [event modifierFlags];
 
@@ -685,18 +685,10 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 				return;
 		}
 	}
-	
-	// The following characters need special handling
-	switch (c) {
-		case ';':	c64->keyboard->pressKey(6,2); return;
-		case ':':	c64->keyboard->pressKey(5,5); return;
-		case '=':	c64->keyboard->pressKey(6,5); return;
-		case '*':	c64->keyboard->pressKey(6,1); return;
-		case '@':	c64->keyboard->pressKey(5,6); return;
-		case '<':	c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(5,7); return;
-		case '>':	c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(5,4); return;
-		case '?':	c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(6,7); return;
-		case '#':	c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(1,0); return;		
+
+	if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
+		c64->keyboard->pressKey(c);
+		return;
 	}
 	
 	switch (keycode) {			
@@ -719,7 +711,8 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 - (void)keyUp:(NSEvent *)event
 {
 	unsigned short keycode = [event keyCode];
-
+	unsigned int c         = [[event characters] UTF8String][0];
+	
 #if 0
 	// TO BE REMOVED: FOR DEBUGGING ONLY
 	if (keycode == MAC_F7) {
@@ -762,20 +755,16 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	// release all keys
 	//keyboard->releaseAll();
 		
+	if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
+		c64->keyboard->releaseKey(c);
+		return;
+	}
+	
 	// We always relase the special keys
 	// That's the easiest way to cope with race conditions due to fast typing
 	// (Problems can occur, if a new kit is hit before the previous is released)
 	c64->keyboard->releaseShiftKey();
 	c64->keyboard->releaseCommodoreKey();
-	c64->keyboard->releaseKey(6,2);
-	c64->keyboard->releaseKey(5,5);
-	c64->keyboard->releaseKey(6,5);
-	c64->keyboard->releaseKey(6,1);
-	c64->keyboard->releaseKey(5,6);
-	c64->keyboard->releaseKey(5,7);
-	c64->keyboard->releaseKey(5,4);	
-	c64->keyboard->releaseKey(6,7);
-	c64->keyboard->releaseKey(1,0);
 	
 	switch (keycode) {			
 		case MAC_F2: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,4); return;
