@@ -18,6 +18,60 @@
 
 #include "C64.h"
 
+typedef struct D64TrackInfo {
+	int numberOfSectors;
+	int sectorsIn;
+	int offset;
+} D64TrackInfo;
+
+static const D64TrackInfo D64Map[] =
+{
+	{ 0,  0,   0 }, // Ignore - track starts at 1, sector starts at 0
+	{ 21, 0,   0x00000 },
+	{ 21, 21,  0x01500 },
+	{ 21, 42,  0x02A00 },
+ 	{ 21, 63,  0x03F00 },
+	{ 21, 84,  0x05400 },
+	{ 21, 105, 0x06900 },
+	{ 21, 126, 0x07E00 },
+	{ 21, 147, 0x09300 },
+	{ 21, 168, 0x0A800 },
+	{ 21, 189, 0x0BD00 }, 
+	{ 21, 210, 0x0D200 },
+	{ 21, 231, 0x0E700 },
+	{ 21, 252, 0x0FC00 },
+	{ 21, 273, 0x11100 },
+	{ 21, 294, 0x12600 },
+	{ 21, 315, 0x13B00 },
+	{ 21, 336, 0x15000 },
+	{ 19, 357, 0x16500 }, // Track 18, Directory
+	{ 19, 376, 0x17800 },
+	{ 19, 395, 0x18B00 },
+	{ 19, 414, 0x19E00 },
+	{ 19, 433, 0x1B100 },
+	{ 19, 452, 0x1C400 },
+	{ 19, 471, 0x1D700 },
+	{ 18, 490, 0x1EA00 },
+	{ 18, 508, 0x1FC00 },
+	{ 18, 526, 0x20E00 },
+	{ 18, 544, 0x22000 },
+	{ 18, 562, 0x23200 },
+	{ 18, 580, 0x24400 },
+	{ 17, 598, 0x25600 },
+	{ 17, 615, 0x26700 },
+	{ 17, 632, 0x27800 },
+	{ 17, 649, 0x28900 },
+	{ 17, 666, 0x29A00 },
+	{ 17, 683, 0x2AB00 },
+	{ 17, 700, 0x2BC00 },
+	{ 17, 717, 0x2CD00 },
+	{ 17, 734, 0x2DE00 },
+	{ 17, 751, 0x2EF00 },
+	// Unusual, tracks 41 & 42
+	{ 17, 768, 0x30000 },
+	{ 17, 785, 0x31100 }
+};
+
 D64Archive::D64Archive()
 {
 	path = NULL;
@@ -28,39 +82,42 @@ D64Archive::D64Archive()
 D64Archive::~D64Archive()
 {
 	if (path) free(path);
-	// if (data) free(data);
 }
 
 void D64Archive::eject()
 {
 	if (path) free(path);
-	//if (data) free(data);
 	path = NULL;
-	//data = NULL;
-	//size = 0;
 }
 
 bool D64Archive::fileIsValid(const char *filename)
 {
+	bool fileOK = false;
+	
 	assert (filename != NULL);
 
 	if (!checkFileSuffix(filename, ".D64") && !checkFileSuffix(filename, ".d64"))
 		return false;
 
-	if (!checkFileSize(filename, 174848, 174848))
-		return false;
+	fileOK = checkFileSize(filename, 174848, 174848)
+		|| checkFileSize(filename, 175531, 175531)
+		|| checkFileSize(filename, 196608, 196608)
+		|| checkFileSize(filename, 197376, 197376)
+		|| checkFileSize(filename, 205312, 205312)
+		|| checkFileSize(filename, 206114, 206114);
 
 	// Unfortunaltely, D64 containers do not contain magic bytes,
 	// so we can't check anything further here
 
-	return true;
+	return fileOK;
 }
 
 bool D64Archive::loadFile(const char *filename)
 {
 	struct stat fileProperties;
-	FILE *file;
-	int i;
+	FILE *file = NULL;
+	int track = 0;
+	int numberOfErrors = 0;
 	
 	assert (filename != NULL);
 
@@ -82,12 +139,53 @@ bool D64Archive::loadFile(const char *filename)
 		// Can't open for read (Huh?)
 		return false;
 	}
-		
-	// Read data (only 35 track images are supported yet)
-	numTracks = 35;
-	for (i = 0; i < 174848; i++) {
-		data[i] = (uint8_t)fgetc(file);
+	
+	switch (fileProperties.st_size)
+	{
+		case 174848:
+			// 35 tracks, no errors
+			numTracks = 35;
+			break;
+		case 175531:
+			// 35 tracks, 683 error bytes
+			numTracks = 35;
+			numberOfErrors = 683;
+			break;
+		case 196608:
+			// 40 tracks, no errors
+			numTracks = 40;
+			break;
+		case 197376:
+			// 40 tracks, 768 error bytes
+			numTracks = 40;
+			numberOfErrors = 768;
+			break;
+		case 205312:
+//			numTracks = 42; ???
+			break;
+		case 206114:
+//			numTracks = 42; ???
+//			numberOfErrors = ???
+			break;
 	}
+	
+	// Read each track
+	for(track = 1; track <= numTracks; track++) {
+		
+		void *ptr = &data[D64Map[track].offset];
+		int sectors = D64Map[track].numberOfSectors;
+		int n = 0;
+		n = fread(ptr, 256, sectors, file);
+		assert (n == sectors);
+	}
+
+	// Read errors
+	if (numberOfErrors > 0) {
+		int n = 0;
+		n = fread(errors, 1, numberOfErrors, file);
+		assert(n == numberOfErrors);
+	}
+	
 	fclose(file);
 
 	path = strdup(filename);
@@ -116,15 +214,18 @@ void D64Archive::dumpDir()
 
 int D64Archive::findDirectoryEntry(int itemNr)
 {
+	// The Block Allocation Map (BAM) is stored on track 18 - sector 0; 
+	// the directory starts at track 18 - sector 1.
 	int i = 0;
 	int track = 18;
 	int sector = 1;
 	int pos = offset(track, sector);
 	bool last_sector = (data[pos] == 0x00);
-
+	const char emptyEntry[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+	
 	while (1) {
 		// Are we currently looking at a valid directory entry?
-		if (data[pos+3] == 0x00) {
+		if (memcmp(&data[pos], emptyEntry, 32)==0) {
 			return -1;
 		}
 	
@@ -171,17 +272,7 @@ D64Archive::numberOfSectors(unsigned halftrack)
 	// convert halftrack number to track number 
 	unsigned track = (halftrack + 1) / 2;
 	
-	// Tracks 1..17 contain 21 sectors
-	if (track <= 17) return 21;
-	// Tracks 18..24 contain 19 sectors
-	if (track <= 24) return 19;
-	// Tracks 25..30 contain 18 sectors
-	if (track <= 30) return 18;
-	// Tracks 31..35 contain 17 sectors
-	if (track <= 35) return 17;
-	// Tracks 36..42 contain 17 sectors (not VC1541 standard format)
-	if (track <= 42) return 17;
-	return 0;
+	return D64Map[track].numberOfSectors;
 }
 
 unsigned 
@@ -193,24 +284,8 @@ D64Archive::numberOfTracks()
 
 int 
 D64Archive::offset(int track, int sector)
-{
-	int trackOffset[] = {
-		0x00000, 0x01500, 0x02A00, 0x03F00, 0x05400, 0x06900, 0x07E00, 0x09300, 0x0A800, 0x0BD00, 
-		0x0D200, 0x0E700, 0x0FC00, 0x11100, 0x12600, 0x13B00, 0x15000, 0x16500, 0x17800, 0x18B00,
-		0x19E00, 0x1B100, 0x1C400, 0x1D700, 0x1EA00, 0x1FC00, 0x20E00, 0x22000, 0x23200, 0x24400, 
-		0x25600, 0x26700, 0x27800, 0x28900, 0x29A00, 0x2AB00, 0x2BC00, 0x2CD00, 0x2DE00, 0x2EF00
-	};
-
-	if (track < 1 || track > 35) {
-		fprintf(stderr, "D64Container: Requested track %d does not exists\n", track);
-		return -1;
-	}
-	if (sector < 0 || sector > 20) {
-		fprintf(stderr, "D64Container: Requested sector %d does not exists\n", track);
-		return -1;
-	}
-		
-	return trackOffset[track-1] + (256 * sector); 
+{	
+	return D64Map[track].offset + (sector * 256);
 }
 	
 const char 
@@ -295,18 +370,10 @@ int D64Archive::getSizeOfItem(int n)
 	// jump to beginning of the n-th directory entry
 	pos = findDirectoryEntry(n);
 	if (pos < 0) return 0;
-	
-	// jump to the first data sector
-	if ((pos = offset(data[pos+0x03], data[pos+0x04])) < 0)
-		return -1;
-	
-	while (data[pos] != 0x00) {
-		size += 254;
-		if ((pos = jumpToNextSector(pos)) < 0)
-			return -1;
-	}
-	
-	size += data[pos+1]-1;
+
+	// file size is at 1E,1F ($1E+$1F*256)
+	size = data[pos+30] + data[pos+31] * 256;
+
 	return size;
 }
 
