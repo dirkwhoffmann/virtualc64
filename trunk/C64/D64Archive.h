@@ -33,6 +33,9 @@ private:
 	//! Raw data of D64 container file
 	uint8_t data[206114];
 	
+	//! Errors stored at the end of some D64 files
+	uint8_t errors[768];
+	
 	//! Number of tracks in this image (can be 35, 40, or 42)
 	unsigned numTracks; 
 	
