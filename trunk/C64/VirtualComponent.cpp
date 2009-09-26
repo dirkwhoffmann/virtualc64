@@ -85,7 +85,7 @@ VirtualComponent::dumpState()
 }
 
 void
-VirtualComponent::debug(char *fmt, ...)
+VirtualComponent::debug(const char *fmt, ...)
 {
 	char buf[128];
 

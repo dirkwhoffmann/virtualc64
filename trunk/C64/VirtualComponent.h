@@ -163,7 +163,7 @@ public:
 	inline uint64_t read64(uint8_t **ptr) { return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
 	
 	//! Print debug message
-	void debug(char *fmt, ...);
+	void debug(const char *fmt, ...);
 };
 
 #endif

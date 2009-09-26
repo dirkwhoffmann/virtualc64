@@ -213,13 +213,13 @@ D64Archive::offset(int track, int sector)
 	return trackOffset[track-1] + (256 * sector); 
 }
 	
-char 
+const char 
 *D64Archive::getPath() 
 {
 	return path;
 }
 
-char *D64Archive::getName()
+const char *D64Archive::getName()
 {
 	int i, pos = offset(18, 0) + 0x90;
 	
@@ -235,12 +235,14 @@ char *D64Archive::getName()
 int D64Archive::getNumberOfItems()
 {
 	int i = 0;
-
-	while (findDirectoryEntry(i) != -1) i++;
+	
+	while (findDirectoryEntry(i) != -1) {
+		i++;
+	}
 	return i;
 }
 
-char *D64Archive::getNameOfItem(int n)
+const char *D64Archive::getNameOfItem(int n)
 {
 	int i, pos = findDirectoryEntry(n);
 
@@ -255,7 +257,7 @@ char *D64Archive::getNameOfItem(int n)
 	return name;
 }
 
-char *D64Archive::getTypeOfItem(int n)
+const char *D64Archive::getTypeOfItem(int n)
 {
 	int pos = findDirectoryEntry(n) + 0x02;
 	int type = data[pos] & 0x07;

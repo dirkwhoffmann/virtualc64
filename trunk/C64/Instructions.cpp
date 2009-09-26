@@ -76,7 +76,7 @@ CPU::registerCallback(uint8_t opcode, void (CPU::*func)())
 }
 
 void 
-CPU::registerCallback(uint8_t opcode, char *mnc, AddressingMode mode, void (CPU::*func)())
+CPU::registerCallback(uint8_t opcode, const char *mnc, AddressingMode mode, void (CPU::*func)())
 {
 	// table is write once!
 	if (func != &CPU::JAM) 

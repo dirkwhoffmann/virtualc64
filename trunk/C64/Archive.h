@@ -49,7 +49,7 @@ public:
 	virtual bool isFlashable(void) { return true; }
 		
 	//! Type of archive (T64, D64, PRG, ...)
-	virtual char *getTypeOfArchive() = 0;
+	virtual const char *getTypeOfArchive() = 0;
 
 	//! Load pyhsical archive from disc
 	virtual bool loadFile(const char *filename) = 0;
@@ -58,19 +58,19 @@ public:
 	virtual void eject() = 0;
 
 	//! Physical name of archive on disc
-	virtual char *getPath() = 0;
+	virtual const char *getPath() = 0;
 	
 	//! Logical name of archive
-	virtual char *getName() = 0;
+	virtual const char *getName() = 0;
 	
 	//! Number of stored items
 	virtual int getNumberOfItems() = 0;
 	
 	//! Get name of n-th item
-	virtual char *getNameOfItem(int n) = 0;
+	virtual const char *getNameOfItem(int n) = 0;
 
 	//! Get file type of n-th item
-	virtual char *getTypeOfItem(int n) = 0;
+	virtual const char *getTypeOfItem(int n) = 0;
 	
 	//! Get size of n-th item in bytes
 	virtual int getSizeOfItem(int n) = 0;

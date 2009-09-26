@@ -63,7 +63,7 @@
 #define DONE next = &CPU::fetch;
 
 //! Mnemonic strings (used by the source level debugger only)
-char *mnemonic[256];
+const char *mnemonic[256];
 
 //! Adressing mode (used by the source level debugger only)
 AddressingMode addressingMode[256];
@@ -75,7 +75,7 @@ static void (CPU::*callbacks[])(void);
 void registerCallback(uint8_t opcode, void (CPU::*func)(void));
 
 //! Register callback function for a single opcode
-void registerCallback(uint8_t opcode, char *mnemonic, AddressingMode mode, void (CPU::*func)(void));
+void registerCallback(uint8_t opcode, const char *mnemonic, AddressingMode mode, void (CPU::*func)(void));
 
 //! Register illegal instructions
 void registerIllegalInstructions();

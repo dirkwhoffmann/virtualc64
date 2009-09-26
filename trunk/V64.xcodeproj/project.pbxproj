@@ -778,6 +778,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 3;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 				VERSIONING_SYSTEM = "";
 			};
 			name = Development;
@@ -794,12 +795,14 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_UNROLL_LOOPS = YES;
 				MACOSX_DEPLOYMENT_TARGET = "";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Deployment;
 		};
 		504F83700A89E0D2009FA225 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Default;
 		};

@@ -50,10 +50,10 @@ private:
 public:
 
 	//! Constructor
-	T64Archive::T64Archive();
+	T64Archive();
 	
 	//! Destructor
-	T64Archive::~T64Archive();
+	~T64Archive();
 	
 	//! Check file type
 	/*! Returns true, iff the specifies file is a valid archive file. */
@@ -61,14 +61,14 @@ public:
 
 	// Inherited from Archive class...
 
-	char *getTypeOfArchive() { return "T64 container"; }
+	const char *getTypeOfArchive() { return "T64 container"; }
 	bool loadFile(const char *filename);
 	void eject();
-	char *getPath();
-	char *getName();
+	const char *getPath();
+	const char *getName();
 	int getNumberOfItems();
-	char *getNameOfItem(int n);
-	char *getTypeOfItem(int n);
+	const char *getNameOfItem(int n);
+	const char *getTypeOfItem(int n);
 	int getSizeOfItem(int n);
 	uint16_t getDestinationAddrOfItem(int n);	
 	void selectItem(int n);

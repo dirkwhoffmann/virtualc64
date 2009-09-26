@@ -33,7 +33,7 @@ int
 Archive::getItemWithName(char *pattern)
 {
 	int i, j, length, pattern_length, no_of_items = getNumberOfItems();
-	char *name;
+	const char *name;
 	
 	assert(pattern != NULL);
 	pattern_length = strlen(pattern);

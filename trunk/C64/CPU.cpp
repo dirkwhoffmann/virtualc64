@@ -305,7 +305,7 @@ CPU::NMILineRaisedLongEnough()
 
 
 // Instruction set
-char 
+const char 
 *CPU::getMnemonic(uint8_t opcode)
 {
 	return mnemonic[opcode];

@@ -422,9 +422,9 @@ public:
 	inline void setRDY(bool value) { rdyLine = value; }
 		
 	//! Returns the three letter mnemonic for a given opcode
-	char *getMnemonic(uint8_t opcode);
+	const char *getMnemonic(uint8_t opcode);
 	//! Returns the three letter mnemonic of the next instruction to execute
-	char *getMnemonic() { return getMnemonic(mem->peek(PC)); }
+	const char *getMnemonic() { return getMnemonic(mem->peek(PC)); }
 	//! Returns the adressing mode for a given opcode
 	AddressingMode getAddressingMode(uint8_t opcode);
 	//! Returns the adressing mode of the next instruction to execute

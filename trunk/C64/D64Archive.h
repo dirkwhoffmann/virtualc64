@@ -69,10 +69,10 @@ private:
 public:
 
 	//! Constructor
-	D64Archive::D64Archive();
+	D64Archive();
 	
 	//! Destructor
-	D64Archive::~D64Archive();
+	~D64Archive();
 	
 	//! Check file type
 	/*! Returns true, iff the specifies file is a valid archive file. */
@@ -81,14 +81,14 @@ public:
 	// Inherited from Archive class...
 	bool isMountable() { return true; }
 	bool isFlashable() { return true; }	
-	char *getTypeOfArchive() { return "D64 container"; }
+	const char *getTypeOfArchive() { return "D64 container"; }
 	bool loadFile(const char *filename);
 	void eject();
-	char *getPath();
-	char *getName();
+	const char *getPath();
+	const char *getName();
 	int getNumberOfItems();
-	char *getNameOfItem(int n);
-	char *getTypeOfItem(int n);
+	const char *getNameOfItem(int n);
+	const char *getTypeOfItem(int n);
 	int getSizeOfItem(int n);
 	uint16_t getDestinationAddrOfItem(int n);	
 	void selectItem(int n);
