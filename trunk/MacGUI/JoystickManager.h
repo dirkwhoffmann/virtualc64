@@ -17,7 +17,7 @@
  */
 
 #ifndef __JOYSTICK_MANAGER_H__
-#define __JYOSTICK_MANAGER_H__
+#define __JOYSTICK_MANAGER_H__
 
 #include "C64.h"
 #include "C64Proxy.h"
