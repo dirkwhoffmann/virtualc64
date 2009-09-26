@@ -104,12 +104,12 @@ bool PRGArchive::loadFile(const char *filename)
 	return true;
 }
 
-char *PRGArchive::getPath() 
+const char *PRGArchive::getPath() 
 {
 	return path;
 }
 
-char *PRGArchive::getName()
+const char *PRGArchive::getName()
 {
 	return path;
 }
@@ -119,7 +119,7 @@ int PRGArchive::getNumberOfItems()
 	return 1;
 }
 
-char *PRGArchive::getNameOfItem(int n)
+const char *PRGArchive::getNameOfItem(int n)
 {
 	return "UNKNOWN";
 }
@@ -132,7 +132,7 @@ int PRGArchive::getSizeOfItem(int n)
 		return 0;
 }		
 
-char *PRGArchive::getTypeOfItem(int n)
+const char *PRGArchive::getTypeOfItem(int n)
 {
 	return "PRG";
 }

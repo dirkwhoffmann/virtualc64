@@ -261,7 +261,7 @@ void ListenerProxy::logAction(char *message)
 - (uint8_t) cpuGetLengthOfCurrentInstruction { return cpu->getLengthOfCurrentInstruction(); }
 - (uint16_t) cpuGetAddressOfNextIthInstruction:(int)i from:(uint16_t)addr { return cpu->getAddressOfNextIthInstruction(i, addr); }
 - (uint16_t) cpuGetAddressOfNextInstruction { return cpu->getAddressOfNextInstruction(); }
-- (char *) cpuGetMnemonic:(uint8_t)opcode { return cpu->getMnemonic(opcode); }
+- (const char *) cpuGetMnemonic:(uint8_t)opcode { return cpu->getMnemonic(opcode); }
 - (CPU::AddressingMode) cpuGetAddressingMode:(uint8_t)opcode { return cpu->getAddressingMode(opcode); }
 
 - (int) cpuGetTopOfCallStack { return cpu->getTopOfCallStack(); }

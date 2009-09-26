@@ -100,12 +100,12 @@ bool P00Archive::loadFile(const char *filename)
 	return true;
 }
 
-char *P00Archive::getPath() 
+const char *P00Archive::getPath() 
 {
 	return path;
 }
 
-char *P00Archive::getName()
+const char *P00Archive::getName()
 {
 	return getNameOfItem(0);
 }
@@ -115,7 +115,7 @@ int P00Archive::getNumberOfItems()
 	return 1;
 }
 
-char *P00Archive::getNameOfItem(int n)
+const char *P00Archive::getNameOfItem(int n)
 {
 	int i;
 	
@@ -137,7 +137,7 @@ int P00Archive::getSizeOfItem(int n)
 		return 0;
 }		
 
-char *P00Archive::getTypeOfItem(int n)
+const char *P00Archive::getTypeOfItem(int n)
 {
 	return "PRG";
 }

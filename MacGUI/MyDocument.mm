@@ -333,7 +333,7 @@
 }
 #endif
 
--(bool)writeToFile:(NSString *)filename ofType:(NSString *)type
+-(BOOL)writeToFile:(NSString *)filename ofType:(NSString *)type
 {
 	NSLog(@"writeToFile %@ (type %@)", filename, type);
 	
@@ -351,7 +351,7 @@
 	return YES;
 }
 
--(bool)readFromFile:(NSString *)filename ofType:(NSString *)type
+-(BOOL)readFromFile:(NSString *)filename ofType:(NSString *)type
 {
 	NSLog(@"readFromFile %@ (type %@)", filename, type);
 
@@ -373,7 +373,7 @@
 	return YES;
 }
 
-- (bool)revertToSavedFromFile:(NSString *)filename ofType:(NSString *)type
+- (BOOL)revertToSavedFromFile:(NSString *)filename ofType:(NSString *)type
 {
 	bool success = NO;
 	
@@ -472,6 +472,15 @@
 {	
 	[timerLock lock];
 	
+	// Measure clock frequency and frame rate
+	float fps;
+	long currentTime   = 0;
+	long currentCycles = 0;
+	long currentFrames = 0;
+	long elapsedTime   = 0;
+	long elapsedCycles = 0;
+	long elapsedFrames = 0;
+	
 	animationCounter++;
 
 	// Do 60 times a second...
@@ -496,13 +505,12 @@
 	}
 
 	// Measure clock frequency and frame rate
-	float fps;
-	long currentTime   = msec();
-	long currentCycles = [c64 cpuGetCycles];
-	long currentFrames = [screen getFrames];
-	long elapsedTime   = currentTime - timeStamp;
-	long elapsedCycles = currentCycles - cycleCount;
-	long elapsedFrames = currentFrames - frameCount;
+	currentTime   = msec();
+	currentCycles = [c64 cpuGetCycles];
+	currentFrames = [screen getFrames];
+	elapsedTime   = currentTime - timeStamp;
+	elapsedCycles = currentCycles - cycleCount;
+	elapsedFrames = currentFrames - frameCount;
 	
 	// print how fast we're flying
 	mhz = (float)elapsedCycles / (float)elapsedTime;

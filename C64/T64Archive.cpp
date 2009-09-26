@@ -113,12 +113,12 @@ bool T64Archive::loadFile(const char *filename)
 	return true;
 }
 
-char *T64Archive::getPath() 
+const char *T64Archive::getPath() 
 {
 	return path;
 }
 
-char *T64Archive::getName()
+const char *T64Archive::getName()
 {
 	int i,j;
 	int first = 0x28;
@@ -164,7 +164,7 @@ int T64Archive::getNumberOfItems()
 	return noOfItems;
 }
 
-char *T64Archive::getNameOfItem(int n)
+const char *T64Archive::getNameOfItem(int n)
 {
 	int i,j;
 	int first = 0x50 + (n * 0x20);
@@ -197,7 +197,7 @@ int T64Archive::getSizeOfItem(int n)
 	return (endAddrInMemory - startAddrInMemory) + 1;
 }
 
-char *T64Archive::getTypeOfItem(int n)
+const char *T64Archive::getTypeOfItem(int n)
 {
 	int i = 0x41 + (n * 0x20);
 	if (data[i] != 00)

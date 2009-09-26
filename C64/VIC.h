@@ -534,7 +534,7 @@ private:
 		(return 0 to see difference)
 		TODO: check if one of the addresses is mapped into the rom? 
 	 */
-	inline uint8_t VIC::getIdleAccessPattern() { return mem->ram[bankAddr + (iomem[0x11] & 0x40) ? 0x39ff : 0x3fff]; }
+	inline uint8_t getIdleAccessPattern() { return mem->ram[bankAddr + (iomem[0x11] & 0x40) ? 0x39ff : 0x3fff]; }
 
 	//! Draw a single character line (8 pixels) in single-color mode
 	/*! \param offset X coordinate of the first pixel to draw
@@ -687,7 +687,7 @@ public:
 	{ iomem[0x11] = (iomem[0x11] & (0xff - 0x60)) | (m & 0x60); iomem[0x16] = (iomem[0x16] & (0xff-0x10)) | (m & 0x10); }
 	
 	//! Get the current screen geometry
-	ScreenGeometry VIC::getScreenGeometry(void);
+	ScreenGeometry getScreenGeometry(void);
 	
 	//! Set the screen geometry 
 	void setScreenGeometry(ScreenGeometry mode);

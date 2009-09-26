@@ -43,10 +43,10 @@ private:
 public:
 
 	//! Constructor
-	PRGArchive::PRGArchive();
+	PRGArchive();
 	
 	//! Destructor
-	PRGArchive::~PRGArchive();
+	~PRGArchive();
 	
 	//! Check file type
 	/*! Returns true, iff the specifies file is a valid archive file. */
@@ -54,14 +54,14 @@ public:
 
 	// Inherited from Archive class...
 
-	char *getTypeOfArchive() { return "PRG container"; }
+	const char *getTypeOfArchive() { return "PRG container"; }
 	bool loadFile(const char *filename);
 	void eject();
-	char *getPath();
-	char *getName();
+	const char *getPath();
+	const char *getName();
 	int getNumberOfItems();
-	char *getNameOfItem(int n);
-	char *getTypeOfItem(int n);
+	const char *getNameOfItem(int n);
+	const char *getTypeOfItem(int n);
 	int getSizeOfItem(int n);
 	uint16_t getDestinationAddrOfItem(int n);	
 	void selectItem(int n);

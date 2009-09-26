@@ -523,6 +523,7 @@ CIA1::peek(uint16_t addr)
 			return result;
 
 		case CIA_DATA_PORT_B:
+		{
 			uint8_t bitmask = CIA1::peek(CIA_DATA_PORT_A);
 
 			if ( joy[1] != NULL )
@@ -552,7 +553,7 @@ CIA1::peek(uint16_t addr)
 			}
 			
 			return result;
-		
+		}
 		default:
 			return CIA::peek(addr);	
 	}
@@ -612,6 +613,7 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			return;
 		case CIA_DATA_PORT_B:
 		case CIA_DATA_DIRECTION_B:
+		{
 			uint8_t lp_bit_old = (iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10;
 			iomem[addr] = value;
 			uint8_t lp_bit_new = (iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10;
@@ -621,7 +623,7 @@ CIA1::poke(uint16_t addr, uint8_t value)
 				vic->simulateLightPenInterrupt();
 			}
 			return;
-		
+		}
 		default:
 			CIA::poke(addr, value);
 	}
