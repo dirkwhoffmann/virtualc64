@@ -102,6 +102,11 @@ public:
 	//! Read the keyboard matrix
 	/*! /param columnMask determines the column bits to be read. */
 	uint8_t getRowValues(uint8_t columnMask);
+	
+private:
+	
+	//! Mapping from ASCII to the C64 row/column format
+	uint16_t ASCII[128];
 };
 	
 #endif
