@@ -88,7 +88,7 @@ void
 VirtualComponent::debug(const char *fmt, ...)
 {
 	char buf[128];
-
+	
 	va_list ap;
 	va_start(ap, fmt);
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
@@ -98,7 +98,7 @@ VirtualComponent::debug(const char *fmt, ...)
 	if (listener) {
 		listener->logAction(strdup(buf));	
 	} 
-
+	
 	// Dump message to stderr...
 	fprintf(stderr, "%s", buf);
 }
