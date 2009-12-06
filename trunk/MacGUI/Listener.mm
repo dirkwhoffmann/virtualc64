@@ -202,7 +202,6 @@
 		[consoleController insertText:message];
 	}
 #endif
-	
 	[arp release];
 }
 

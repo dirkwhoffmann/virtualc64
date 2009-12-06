@@ -39,11 +39,10 @@ threadCleanup(void* thisC64)
 // Main execution loop
 void 
 *runThread(void *thisC64) {
-	
+		
 	assert(thisC64 != NULL);
 	
 	C64 *c64 = (C64 *)thisC64;
-		
 	c64->debug("Execution thread started\n");
 	c64->getListener()->runAction();
 
@@ -68,9 +67,6 @@ void
 			pthread_testcancel();
 	}
 		
-	// Problem: We might stop in the middle of a command and get bogus data in the debugger display
-	//          Should be proceed to the next command if the thread was interrupted by the user?
-
 	pthread_cleanup_pop(1);
 	pthread_exit(NULL);	
 }
@@ -396,7 +392,10 @@ C64::run() {
 			return;
 		}
 		
+		debug("Starting thread...");
 		// Start execution thread
+		// setTraceMode(true);
+		printf("this = %p\n", this);
 		pthread_create(&p, NULL, runThread, (void *)this);	
 		
 		// Power on sub components
