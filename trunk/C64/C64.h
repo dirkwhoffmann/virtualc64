@@ -178,14 +178,17 @@ public:
 	//! Size of a snapshot file in bytes
 	static const int SNAPSHOT_SIZE = 3000000; 
 
+	//! Current clock cycle since beginning of rasterline (ranges from 1 .. 63 (PAL) or 65 (NTSC))
+	int rasterlineCycle;
+
 private:
 
 	//! The execution thread
 	pthread_t p;
 
-	//! Current clock cycle (since power up)
+	//! Current clock cycle since power up
 	uint64_t cycles;
-
+	
 	//! Current frame number
 	int frame;
 	
@@ -303,10 +306,10 @@ public:
 	void step(); 
 	
 	//! Execute virtual C64 for one cycle
-	inline bool executeOneCycle(int cycle = 0);
+	inline bool executeOneCycle();
 	
 	//! Execute until the end of the rasterline
-	bool executeOneLine(int cycle = 1);
+	bool executeOneLine();
 	
 	//! Get a notification message from the message queue
 	Message *getMessage();
@@ -384,7 +387,7 @@ public:
 
 	//! Returns the number of the currently drawn rasterline
 	inline uint64_t getRasterline() { return rasterline; }
-	
+
 	// Returns the number of frames per second
 	/*! Number varies between PAL and NTSC machines */	
 	inline int getFramesPerSecond() { return fps; }

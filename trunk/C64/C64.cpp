@@ -32,6 +32,7 @@ threadCleanup(void* thisC64)
 	c64->threadCleanup();
 	
 	c64->debug("Execution thread terminated\n");	
+	printf("end: rasterlineCycle %d\n", c64->rasterlineCycle);
 	c64->putMessage(MSG_HALT);
 }
 
@@ -57,16 +58,19 @@ void
 	c64->setDelay();
 	
 	// determine cycle relative to the current rasterline
-	int cycle = (c64->getCycles() % c64->getCyclesPerRasterline()) + 1;
+	// DON'T DO THIS! SAVE cycle VALUE IN IMAGE FILE
+	// int cycle = (c64->getCycles() % c64->getCyclesPerRasterline()) + 1;
+
+	printf("rasterlineCycle   %d\n", c64->rasterlineCycle);
 
 	while (1) {		
-		if (!c64->executeOneLine(cycle))
+		if (!c64->executeOneLine())
 			break;		
-		cycle = 1;
+		// c64->rasterlineCycle = 1;
 		if (c64->getFrame() == 0 && c64->getRasterline() == 0)
 			pthread_testcancel();
 	}
-		
+
 	pthread_cleanup_pop(1);
 	pthread_exit(NULL);	
 }
@@ -177,6 +181,7 @@ void C64::reset()
 	cycles = 0LL;
 	frame = 0;
 	rasterline = 0;
+	rasterlineCycle = 1;
 	targetTime = 0LL;
 
 	resume();
@@ -214,6 +219,7 @@ C64::load(uint8_t **buffer)
 	cycles = read64(buffer);
 	frame = (int)read32(buffer);
 	rasterline = (int)read32(buffer);
+	rasterlineCycle = (int)read32(buffer);
 	targetTime = read64(buffer);
 	
 	// Load internal state of sub components
@@ -259,6 +265,7 @@ C64::save(uint8_t **buffer)
 	write64(buffer, cycles);
 	write32(buffer, (uint32_t)frame);
 	write32(buffer, (uint32_t)rasterline);
+	write32(buffer, (uint32_t)rasterlineCycle);
 	write64(buffer, targetTime);
 	
 	// Save internal state of sub components
@@ -291,13 +298,14 @@ void
 C64::dumpState() {
 	debug("C64:\n");
 	debug("----\n\n");
-	debug("         Machine type : %s\n", (noOfRasterlines == VIC::PAL_RASTERLINES) ? "PAL" : "NTSC");
-	debug("    Frames per second : %d\n", fps);
-	debug("Rasterlines per frame : %d\n", noOfRasterlines);
-	debug("Cycles per rasterline : %d\n", cpuCyclesPerRasterline);
-	debug("        Current cycle : %llu\n", cycles);
-	debug("        Current frame : %d\n", frame);
-	debug("   Current rasterline : %d\n", rasterline);
+	debug("            Machine type : %s\n", (noOfRasterlines == VIC::PAL_RASTERLINES) ? "PAL" : "NTSC");
+	debug("       Frames per second : %d\n", fps);
+	debug("   Rasterlines per frame : %d\n", noOfRasterlines);
+	debug("   Cycles per rasterline : %d\n", cpuCyclesPerRasterline);
+	debug("           Current cycle : %llu\n", cycles);
+	debug("           Current frame : %d\n", frame);
+	debug("      Current rasterline : %d\n", rasterline);
+	debug("Current rasterline cycle : %d\n", rasterlineCycle);
 	debug("\n");
 }
 
@@ -446,9 +454,10 @@ C64::step()
 		cia2->triggerInterrupts(); \
 		cia1->executeOneCycle(); \
 		cia2->executeOneCycle(); \
-		if (!cpu->executeOneCycle()) return false; \
-		if (!floppy->executeOneCycle()) return false; \
-		cycles++;
+		cycles++; \
+		rasterlineCycle++; \
+		if (!cpu->executeOneCycle()) result = false; \
+		if (!floppy->executeOneCycle()) result = false;
 
 void 
 C64::beginOfRasterline()
@@ -464,7 +473,7 @@ void
 C64::endOfRasterline()
 {
 	vic->endRasterline();
-	// cycle = 1;
+	rasterlineCycle = 1;
 	rasterline++;
 	if (rasterline >= getRasterlinesPerFrame()) {
 		// Last rasterline of frame
@@ -490,16 +499,11 @@ C64::endOfRasterline()
 }
 
 inline bool
-C64::executeOneCycle(int cycle)
+C64::executeOneCycle()
 {
-	// determine cycle relative to the current rasterline
-	//cycle = (cpu->getCycles() % getCyclesPerRasterline()) + 1;
-	if (cycle == 0) {
-		// determine cycle relative to the current rasterline
-		cycle = (cycles % getCyclesPerRasterline()) + 1;
-	}
+	bool result = true; // Don't break execution
 	
-	switch(cycle) {
+	switch(rasterlineCycle) {
 		case 1:
 			beginOfRasterline();			
 			vic->cycle1();
@@ -752,6 +756,10 @@ C64::executeOneCycle(int cycle)
 		case 63: 
 			vic->cycle63();
 			EXECUTE(63);
+			if (getCyclesPerRasterline() == 63) {
+				// last cycle for PAL machines
+				endOfRasterline();
+			}			
 			break;
 		case 64: 
 			vic->cycle64();
@@ -760,6 +768,7 @@ C64::executeOneCycle(int cycle)
 		case 65: 
 			vic->cycle65();
 			EXECUTE(65);
+			endOfRasterline();
 			break;
 			
 		default:
@@ -767,24 +776,22 @@ C64::executeOneCycle(int cycle)
 			assert(false);
 			return false;
 	}
+	return result;
+}
+
+// Execute until the end of the rasterline
+inline bool
+C64::executeOneLine()
+{
+	uint8_t lastCycle = getCyclesPerRasterline();
+	for (int i = rasterlineCycle; i <= lastCycle; i++) {
+		if (!executeOneCycle())
+			return false;
+	}
 	return true;
 }
 
 #if 0
-// Execute until the end of the rasterline
-inline bool
-C64::executeOneLine(int cycle)
-{
-	uint8_t lastCycle = getCyclesPerRasterline();
-	for (int i = cycle; i <= lastCycle; i++) {
-		if (!executeOneCycle(i))
-			return false;
-	}
-	endOfRasterline();
-	return true;
-}
-#endif
-
 // Execute until the end of the rasterline
 inline bool
 C64::executeOneLine(int cycle)
@@ -1001,7 +1008,7 @@ C64::executeOneLine(int cycle)
 			return false;
 	}	
 }
-
+#endif
 
 // -----------------------------------------------------------------------------------------------
 //                                  ROM and snapshot handling
