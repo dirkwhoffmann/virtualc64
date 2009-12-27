@@ -65,7 +65,7 @@ public:
 	virtual ~VirtualComponent() { };
 
 	//! Get listener
-	C64Listener *getListener() { assert(listener != NULL); return listener; }
+	// C64Listener *getListener() { assert(listener != NULL); return listener; }
 	
 	//! Set listener
 	/*! The listener can be changed multiple times during program execution */

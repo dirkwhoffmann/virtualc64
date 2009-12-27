@@ -140,14 +140,16 @@ void
 IEC::connectDrive() 
 { 
 	driveConnected = true; 
-	getListener()->driveAttachedAction(driveConnected);
+	//getListener()->driveAttachedAction(driveConnected);
+	drive->c64->putMessage(MSG_VC1541_ATTACHED, 1);
 }
 	
 void 
 IEC::disconnectDrive()
 { 
 	driveConnected = false; 
-	getListener()->driveAttachedAction(driveConnected);
+	// getListener()->driveAttachedAction(driveConnected);
+	drive->c64->putMessage(MSG_VC1541_ATTACHED, 0);
 }
 
 bool IEC::_updateIecLines(bool *atnedge)
@@ -199,7 +201,8 @@ void IEC::updateIecLines()
 
 	if (signals_changed) {
 		if (busActivity == 0)
-			getListener()->driveDataAction(true);
+			//getListener()->driveDataAction(true);
+			drive->c64->putMessage(MSG_VC1541_DATA, 1);
 		busActivity = 10;
 	}
 
@@ -244,6 +247,7 @@ void IEC::execute()
 
 		busActivity--;
 		if (busActivity == 0)
-			getListener()->driveDataAction(false);
-	}
+			// getListener()->driveDataAction(false);
+			drive->c64->putMessage(MSG_VC1541_DATA, 0);
+		}
 }

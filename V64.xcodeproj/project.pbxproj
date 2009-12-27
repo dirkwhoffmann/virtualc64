@@ -31,6 +31,7 @@
 		500B9D3D0C40E563008237C6 /* pref_grafik.png in Resources */ = {isa = PBXBuildFile; fileRef = 500B9D3C0C40E563008237C6 /* pref_grafik.png */; };
 		500B9D3F0C40F037008237C6 /* pref_pal.png in Resources */ = {isa = PBXBuildFile; fileRef = 500B9D3E0C40F037008237C6 /* pref_pal.png */; };
 		500B9D410C40F03C008237C6 /* pref_ntsc.png in Resources */ = {isa = PBXBuildFile; fileRef = 500B9D400C40F03C008237C6 /* pref_ntsc.png */; };
+		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
@@ -45,7 +46,6 @@
 		50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C760A6F7357009E80BD /* MyDocument.mm */; };
 		50176C800A6F7357009E80BD /* VICScreen.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C780A6F7357009E80BD /* VICScreen.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
-		501AE5030DAA1449003C6960 /* Listener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 501AE5020DAA1449003C6960 /* Listener.mm */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		502562AF0C4AA0C7008AAB85 /* c64.png in Resources */ = {isa = PBXBuildFile; fileRef = 502562AE0C4AA0C7008AAB85 /* c64.png */; };
 		502663150C4398460094233B /* nebula.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 502663140C4398460094233B /* nebula.jpg */; };
@@ -139,6 +139,8 @@
 		500B9D3C0C40E563008237C6 /* pref_grafik.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pref_grafik.png; path = images/pref_grafik.png; sourceTree = "<group>"; };
 		500B9D3E0C40F037008237C6 /* pref_pal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pref_pal.png; path = images/pref_pal.png; sourceTree = "<group>"; };
 		500B9D400C40F03C008237C6 /* pref_ntsc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pref_ntsc.png; path = images/pref_ntsc.png; sourceTree = "<group>"; };
+		500EC04F10E4DCC4005A19A3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		500EC05010E4DCC4005A19A3 /* Message.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
 		500FC6770D17D2190044131D /* VIA6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA6522.h; sourceTree = "<group>"; };
 		500FC6780D17D2190044131D /* VIA6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA6522.cpp; sourceTree = "<group>"; };
 		50176C4F0A6F72F3009E80BD /* basic.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = basic.cpp; sourceTree = "<group>"; };
@@ -168,8 +170,6 @@
 		50176C780A6F7357009E80BD /* VICScreen.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = VICScreen.mm; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
-		501AE5010DAA1449003C6960 /* Listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Listener.h; sourceTree = "<group>"; };
-		501AE5020DAA1449003C6960 /* Listener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Listener.mm; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		502562AE0C4AA0C7008AAB85 /* c64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c64.png; path = images/c64.png; sourceTree = "<group>"; };
@@ -354,6 +354,8 @@
 				509AE9FE0C3249D4001FC9FD /* Loading and saving */,
 				50176C500A6F72F3009E80BD /* basic.h */,
 				50176C4F0A6F72F3009E80BD /* basic.cpp */,
+				500EC04F10E4DCC4005A19A3 /* Message.h */,
+				500EC05010E4DCC4005A19A3 /* Message.cpp */,
 				50176C520A6F72F3009E80BD /* C64.h */,
 				50176C510A6F72F3009E80BD /* C64.cpp */,
 				50176C620A6F72F3009E80BD /* C64Listener.h */,
@@ -397,8 +399,6 @@
 				50176C710A6F7357009E80BD /* Disassembler.mm */,
 				50176C750A6F7357009E80BD /* MyDocument.h */,
 				50176C760A6F7357009E80BD /* MyDocument.mm */,
-				501AE5010DAA1449003C6960 /* Listener.h */,
-				501AE5020DAA1449003C6960 /* Listener.mm */,
 				50176C770A6F7357009E80BD /* VICScreen.h */,
 				50176C780A6F7357009E80BD /* VICScreen.mm */,
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
@@ -648,12 +648,12 @@
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
-				501AE5030DAA1449003C6960 /* Listener.mm in Sources */,
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
 				503DF0DA0F18BFDE00DC5C11 /* Timer.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */,
+				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

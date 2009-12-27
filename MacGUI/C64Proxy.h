@@ -26,37 +26,10 @@
 @class VICScreen;
 @class AudioDevice;
 
-class ListenerProxy : public  C64Listener {
-	
-private:
-	MyDocument *doc;
-	VICScreen *screen;
-	
-public:	
-	ListenerProxy();
-	void setDocument(MyDocument *d) { doc = d; }
-	MyDocument *getDocument() { return doc; }
-	void setScreen(VICScreen *s) { screen = s; }
-	VICScreen *getScreen() { return screen; }
-	
-	void loadRomAction(int rom);
-	void missingRomAction(int missingRoms);
-	void runAction();
-	void haltAction();
-	void drawAction(int *screenBuffer);
-	void cpuAction(int state);
-	void driveAttachedAction(bool connected);
-	void driveDiscAction(bool inserted);
-	void driveLEDAction(bool on);
-	void driveDataAction(bool transfering);
-	void driveMotorAction(bool rotating);
-	void warpAction(bool warping);
-	void logAction(char *message);
-};
 
 @interface C64Proxy : NSObject {	
 	
-	ListenerProxy *listener;	
+	// ListenerProxy *listener;	
 	C64 *c64;
 	CIA *cia[3];
 	IEC *iec;
@@ -70,9 +43,10 @@ public:
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 - (void) release;
 - (C64 *) getC64;
-- (void) setScreen:(VICScreen *)s;
 
 // C64
+- (Message *)getMessage;
+
 - (void) reset;
 - (void) halt;
 - (void) step;

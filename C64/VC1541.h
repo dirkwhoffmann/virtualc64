@@ -115,8 +115,8 @@ public:
 	
 	void moveHead(int distance);
 
-	void activateRedLED() { getListener()->driveLEDAction(true); }
-	void deactivateRedLED() { getListener()->driveLEDAction(false); }
+	void activateRedLED();
+	void deactivateRedLED();
 	void startRotating();
 	void stopRotating();
 	bool isRotating() { return rotating; };
