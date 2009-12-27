@@ -116,7 +116,7 @@ bool D64Archive::loadFile(const char *filename)
 {
 	struct stat fileProperties;
 	FILE *file = NULL;
-	int track = 0;
+	unsigned track = 0;
 	int numberOfErrors = 0;
 	
 	assert (filename != NULL);

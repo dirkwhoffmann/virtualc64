@@ -17,84 +17,7 @@
  */
 
 #import "MyDocument.h"
-#import "Listener.h"
 #import "AudioDevice.h"
-
-// --------------------------------------------------------------------------
-// Listener Proxy
-// --------------------------------------------------------------------------
-
-ListenerProxy::ListenerProxy()
-{
-	doc = nil;
-	screen = nil;
-}
-
-void ListenerProxy::drawAction(int *screenBuffer) 
-{ 
-	[screen updateTexture:screenBuffer];
-}	
-
-void ListenerProxy::cpuAction(int state)
-{
-	NSLog(@"cpuAction Proxy");
-	[doc cpuAction:(CPU::ErrorState)state];
-}
-
-void ListenerProxy::runAction() 
-{ 
-	[doc runAction]; 
-}
-
-void ListenerProxy::haltAction() 
-{
-	[doc haltAction]; 
-}
-
-void ListenerProxy::loadRomAction(int rom) 
-{
-	[doc loadRomAction:rom];
-}
-
-void ListenerProxy::missingRomAction(int missingRoms) 
-{
-	[doc missingRomAction:missingRoms];
-}
-
-void ListenerProxy::driveAttachedAction(bool connected)
-{
-	[doc driveAttachedAction:connected];
-}
-
-void ListenerProxy::driveDiscAction(bool inserted)
-{
-	[doc driveDiscAction:inserted];
-}
-
-void ListenerProxy::driveLEDAction(bool on)
-{
-	[doc driveLEDAction:on];
-}
-
-void ListenerProxy::driveDataAction(bool transfering)
-{
-	[doc driveDataAction:transfering];
-}
-
-void ListenerProxy::driveMotorAction(bool rotating)
-{
-	[doc driveMotorAction:rotating];
-}
-
-void ListenerProxy::warpAction(bool warping)
-{
-	[doc warpmodeAction:warping];
-}
-
-void ListenerProxy::logAction(char *message)
-{
-	[doc logAction:message];
-}	
 
 @implementation C64Proxy
 
@@ -110,14 +33,9 @@ void ListenerProxy::logAction(char *message)
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 {
     self = [super init];
-
-	// Create listener object
-	listener = new ListenerProxy();
-	listener->setDocument(d);
-	listener->setScreen(s);
-		
+	
 	// Create virtual machine and initialize references
-	c64 = new C64(listener);
+	c64 = new C64();
 	[s setC64:c64];
 	cia[0] = NULL; // unused
 	cia[1] = c64->cia1;
@@ -153,12 +71,6 @@ void ListenerProxy::logAction(char *message)
 	c64 = NULL;
 }
 
-- (void) setScreen:(VICScreen *)s
-{ 
-	listener->setScreen(s);
-}
-
-
 // TO BE DEPRECATED...
 - (C64 *) getC64
 {
@@ -174,6 +86,7 @@ void ListenerProxy::logAction(char *message)
 // C64
 // --------------------------------------------------------------------------
 
+- (Message *)getMessage { return c64->getMessage(); }
 - (void) reset { c64->reset(); }
 - (void) halt { c64->halt(); }
 - (void) step { c64->step(); }

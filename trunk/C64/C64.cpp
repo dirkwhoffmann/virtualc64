@@ -32,7 +32,8 @@ threadCleanup(void* thisC64)
 	c64->threadCleanup();
 	
 	c64->debug("Execution thread terminated\n");	
-	c64->getListener()->haltAction();
+	// c64->getListener()->haltAction();
+	c64->putMessage(MSG_HALT);
 }
 
 
@@ -44,8 +45,9 @@ void
 	
 	C64 *c64 = (C64 *)thisC64;
 	c64->debug("Execution thread started\n");
-	c64->getListener()->runAction();
-
+	// c64->getListener()->runAction();
+	c64->putMessage(MSG_RUN);
+	
 	// Configure thread properties...
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
@@ -76,13 +78,13 @@ void
 // Class methods
 // --------------------------------------------------------------------------------
 
-C64::C64(C64Listener *listener)
+C64::C64()
 {
 	debug("Creating virtual C64 at address %p...\n", this);
 	
 	p = NULL;
 	warpMode = false;
-	
+		
 	// Create components
 	mem = new C64Memory();
 	cpu = new CPU();		
@@ -126,7 +128,7 @@ C64::C64(C64Listener *listener)
 	setNTSC(); // Why NTSC??
 	
 	// Register listener and reset
-	setListener(listener);
+	// setListener(listener);
 	reset();	
 }
 
@@ -135,7 +137,7 @@ C64::~C64()
 {
 	// Halt emulator
 	halt();	
-	
+		
 	// Release all components
 	delete floppy;
 	delete keyboard;
@@ -318,6 +320,16 @@ void C64::setListener(C64Listener *l)
 	floppy->via2->setListener(l);	
 }
 
+Message *C64::getMessage()
+{
+	return queue.getMessage();	
+}
+
+void C64::putMessage(int id, int i, void *p, const char *c)
+{	
+	queue.putMessage(id, i, p, c);
+}
+
 
 // -----------------------------------------------------------------------------------------------
 //                                           Configure
@@ -356,7 +368,8 @@ C64::setWarpMode(bool b)
 {
 	warpMode = b;
 	restartTimer();
-	getListener()->warpAction(getWarpMode());	
+	// getListener()->warpAction(getWarpMode());	
+	putMessage(MSG_WARP, b, NULL, NULL);
 }
 
 
@@ -388,7 +401,8 @@ C64::run() {
 		
 		// Check for ROM images
 		if (getMissingRoms()) {
-			getListener()->missingRomAction(getMissingRoms());
+			// getListener()->missingRomAction(getMissingRoms());
+			putMessage(MSG_ROM_MISSING, getMissingRoms());
 			return;
 		}
 		
@@ -1047,22 +1061,26 @@ C64::loadRom(const char *filename)
 	
 	if (C64Memory::isBasicRom(filename)) {
 		result = mem->loadBasicRom(filename);
-		if (result) getListener()->loadRomAction(BASIC_ROM);
+		//if (result) getListener()->loadRomAction(BASIC_ROM);
+		if (result) putMessage(MSG_ROM_LOADED, BASIC_ROM);
 	}
 	
 	if (C64Memory::isCharRom(filename)) {
 		result = mem->loadCharRom(filename);
-		if (result) getListener()->loadRomAction(CHAR_ROM);
+		//if (result) getListener()->loadRomAction(CHAR_ROM);
+		if (result) putMessage(MSG_ROM_LOADED, CHAR_ROM);
 	}
 	
 	if (C64Memory::isKernelRom(filename)) {
 		result = mem->loadKernelRom(filename);
-		if (result) getListener()->loadRomAction(KERNEL_ROM);
+		//if (result) getListener()->loadRomAction(KERNEL_ROM);
+		if (result) putMessage(MSG_ROM_LOADED, KERNEL_ROM);
 	}
 	
 	if (VC1541Memory::is1541Rom(filename)) {
 		result = floppy->mem->loadRom(filename);
-		if (result) getListener()->loadRomAction(VC1541_ROM);
+		// if (result) getListener()->loadRomAction(VC1541_ROM);
+		if (result) putMessage(MSG_ROM_LOADED, VC1541_ROM);
 	}
 	
 	resume();

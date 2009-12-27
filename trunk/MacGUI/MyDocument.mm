@@ -446,10 +446,6 @@
 	}
 }
 
-// --------------------------------------------------------------------------------
-//                The screen refresh loop (called via the 60 Hz timer)
-// --------------------------------------------------------------------------------
-
 - (void) windowDidBecomeMain: (NSNotification *) notification
 {
 	// NSLog(@"%@ did become main...", self);
@@ -462,6 +458,153 @@
 	// NSLog(@"%@ did resign main...", self);
 	
 	[c64 disableAudio];
+}
+
+// --------------------------------------------------------------------------------
+//                               Message processing
+// --------------------------------------------------------------------------------
+
+- (void)processMessage:(Message *)msg
+{
+	switch (msg->id) {
+		case MSG_ROM_LOADED:
+			switch (msg->i) {
+				case BASIC_ROM:
+					[info setStringValue:@"Basic Rom loaded"];
+					NSLog(@"BASIC ROM loaded");
+					break;
+				case CHAR_ROM:
+					[info setStringValue:@"Character Rom loaded"];
+					NSLog(@"CHARACTER ROM loaded");
+					break;
+				case KERNEL_ROM:
+					[info setStringValue:@"Kernel Rom loaded"];
+					NSLog(@"KERNEL ROM loaded");
+					break;
+				case VC1541_ROM:
+					[info setStringValue:@"VC1541 Rom loaded"];
+					NSLog(@"VC1541 ROM loaded");
+					break;
+			}		
+			NSLog(@"%d ROMs are currently missing", [c64 numberOfMissingRoms]);
+		
+			// Update ROM dialog
+			if (romDialog != NULL) {
+				// NSSound *mySound = [NSSound soundNamed:@"Purr"];
+				[romDialog update:[c64 missingRoms]];
+				// [mySound play];		
+			}
+			// Start drawing when all ROMS are loaded...
+			if ([c64 numberOfMissingRoms] == 0) { //	} && [c64 isHalted]) {
+				NSLog(@"LAUNCHING OPENGL VIEW");
+				[screen zoom];
+				[c64 run];
+			}
+			break;
+			
+		case MSG_ROM_MISSING:
+			assert(msg->i != 0);
+			[romDialog initialize:msg->i];
+			[NSApp beginSheet:romDialog
+			   modalForWindow:[self windowForSheet]
+				modalDelegate:self
+			   didEndSelector:NULL
+				  contextInfo:NULL];	
+			break;
+			
+		case MSG_RUN:
+			NSLog(@"runAction");
+			[info setStringValue:@""];
+			[self enableUserEditing:NO];
+			[self refresh];
+			// disable undo because the internal state changes permanently
+			[self updateChangeCount:NSChangeDone];
+			[[self undoManager] removeAllActions];			
+			break;
+			
+		case MSG_HALT:
+			NSLog(@"haltAction");
+			[self enableUserEditing:YES];	
+			[self refresh];			
+			break;
+			
+		case MSG_DRAW:
+			[screen updateTexture:(int *)msg->p];
+			break;
+			
+		case MSG_CPU:
+			NSLog(@"cpuAction");
+			switch(msg->i) {
+				case CPU::OK: 
+				case CPU::SOFT_BREAKPOINT_REACHED:
+					[info setStringValue:@""];
+					break;
+				case CPU::HARD_BREAKPOINT_REACHED:
+					[info setStringValue:@"Breakpoint reached"];
+					break;
+				case CPU::WATCHPOINT_REACHED:
+					[info setStringValue:@"Watchpoint reached"];
+					break;
+				case CPU::ILLEGAL_INSTRUCTION:
+					[info setStringValue:@"CPU halted due to an illegal instruction"];
+					break;
+				default:
+					assert(0);
+			}
+			[self refresh];			
+			break;
+			
+		case MSG_WARP:
+			NSLog(@"warpmodeAction");
+			break;
+			
+		case MSG_LOG:
+			break;
+			
+		case MSG_VC1541_ATTACHED:
+			NSLog(@"driveAttachedAction");
+			if (msg->i)
+				[greenLED setImage:[NSImage imageNamed:@"LEDgreen"]];
+			else
+				[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];			
+			break;
+			
+		case MSG_VC1541_DISC:
+			NSLog(@"driveDiscAction");
+			[drive setHidden:!msg->i];
+			[eject setHidden:!msg->i];			
+			break;
+			
+		case MSG_VC1541_LED:
+			if (msg->i)
+				[redLED setImage:[NSImage imageNamed:@"LEDred"]];
+			else
+				[redLED setImage:[NSImage imageNamed:@"LEDgray"]];			
+			break;
+			
+		case MSG_VC1541_DATA:
+			NSLog(@"driveDataAction (%s)", msg->i ? "on" : "off");
+			
+			if (msg->i) {
+				[driveBusy setHidden:false];
+				[driveBusy startAnimation:self];
+				if (warpLoad)
+					[c64 cpuSetWarpMode:YES];			
+			} else {
+				[driveBusy stopAnimation:self];
+				[driveBusy setHidden:true];		
+				if (!alwaysWarp)
+					[c64 cpuSetWarpMode:NO];
+			}			
+			break;
+			
+		case MSG_VC1541_MOTOR:
+			NSLog(@"driveMotorAction");
+			break;
+			
+		default:
+			assert(0);
+	}
 }
 
 // --------------------------------------------------------------------------------
@@ -480,14 +623,20 @@
 	long elapsedTime   = 0;
 	long elapsedCycles = 0;
 	long elapsedFrames = 0;
-	
 	animationCounter++;
 
 	// Do 60 times a second...
+	
+	Message *message;
+	while ((message = [c64 getMessage]) != NULL) {
+		// Process pending message
+		[self processMessage:message];
+	}
+		
 	if (enableOpenGL) {
 		[screen updateAngles];
 		[screen setNeedsDisplay:YES];
-	}
+	} 
 
 	// Do less times ... 
 	if (animationCounter & 0x07) {
@@ -2463,7 +2612,10 @@ exit:
 	// Flash selected file into memory
 	myc64->flushArchive(archive, [mountDialog getSelectedFile]);
 
-	// Type "RUN"
+	// Wait and type "RUN"
+	fprintf(stderr,"Wating...\n");
+	usleep(1000000);
+	fprintf(stderr,"Typing RUN...\n");
 	myc64->keyboard->typeRun();
 }
 

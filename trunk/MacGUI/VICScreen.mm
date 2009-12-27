@@ -784,11 +784,6 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	c64->keyboard->releaseKey(kb[keycode] >> 8, kb[keycode] & 0xFF);
 }
 
-// --------------------------------------------------------------------------------
-//                           Joystick (via HID Interface)
-// --------------------------------------------------------------------------------
-
-// TODO
 
 // --------------------------------------------------------------------------------
 //                                  Drag and Drop 
@@ -801,7 +796,6 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 		NSString *type = [pb availableTypeFromArray:
 			[NSArray arrayWithObject:NSFilenamesPboardType]];
 		if (type != nil) {
-//			[self tiltOn]; 
 			[self setNeedsDisplay:YES];
 			return NSDragOperationCopy;
 		}
@@ -811,7 +805,6 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
-//	[self tiltOff];
 	[self setNeedsDisplay:YES];
 }
 
@@ -852,17 +845,6 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 		NSLog(@"Got filename %@", path);
 			
 		// Try to load file
-
-#if 0
-		// Is it a saved image?
-		if (c64->loadSnapshot([path UTF8String])) {
-			[self rotate];
-			// PROBLEM: The associated file of the document does not change
-			// We might want to call something like [doc readFromFileWrapper:ofType:error:]
-			NSLog(@"Snapshot loaded");
-			return YES;
-		}
-#endif
 		
 		// Is it a ROM file?
 		if ([myDoc loadRom:path]) {

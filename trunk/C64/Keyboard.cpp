@@ -23,7 +23,7 @@
 Keyboard::Keyboard()
 {
 	debug("Creating keyboard at address %p...\n", this);
-
+	
 	for (int i = 0; i < 128; i++) {
 		ASCII[i] = 0x0000;
 	}
@@ -127,12 +127,13 @@ Keyboard::dumpState()
 uint8_t Keyboard::getRowValues(uint8_t columnMask)
 {
 	uint8_t result = 0xff;
-	
+		
 	for (int i = 0; i < 8; i++) {
 		if ((columnMask & (1 << i)) == 0) {
 			result &= kbMatrix[i];
 		}
 	}
+	
 	return result;
 }
 
@@ -180,7 +181,7 @@ void Keyboard::typeRun()
 {
 	// RUN<RETURN>
 	uint8_t i, rowcol[] = { 2, 1,   3, 6,    4, 7,   0, 1 }; 
-	
+
 	for (i = 0; i < sizeof(rowcol); i+= 2) {
 		pressKey(rowcol[i], rowcol[i+1]);
 		usleep(100000);

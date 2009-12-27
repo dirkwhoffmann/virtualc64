@@ -22,6 +22,7 @@
 // Personal Includes
 #include "basic.h"
 #include "VirtualComponent.h"
+#include "Message.h"
 #include "C64Listener.h"
 #include "Snapshot.h"
 #include "T64Archive.h"
@@ -137,6 +138,9 @@ class C64 : public VirtualComponent {
 
 public:	
 	
+	//! Message queue. Used to communicate with the GUI
+	MessageQueue queue;
+	
 	//! Reference to the connected virtual memory. 	
 	C64Memory *mem;
 	
@@ -221,7 +225,7 @@ private:
 public:
 	
 	//! Constructor
-	C64(C64Listener *listener);
+	C64();
 	
 	//! Destructor
 	~C64();
@@ -303,6 +307,12 @@ public:
 	
 	//! Execute until the end of the rasterline
 	bool executeOneLine(int cycle = 1);
+	
+	//! Get a notification message from the message queue
+	Message *getMessage();
+	
+	//! Put a notification message into the message queue
+	void putMessage(int id, int i = 0, void *p = NULL, const char *c = NULL);
 	
 private:
 	
