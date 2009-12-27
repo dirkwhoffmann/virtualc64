@@ -22,7 +22,6 @@
 #define _VIRTUAL_COMPONENT_INC
 
 #include "basic.h"
-#include "C64Listener.h"
 
 //! Common functionality of all virtual computer components
 /*! This class defines the base functionality of all virtual components.
@@ -53,24 +52,15 @@ private:
 	/*! The value is equal to the number of suspend calls minus the number of resume calls 
 	*/
 	int suspendCounter;
-			
-	//! Reference to the connected C64 listener.
-	C64Listener *listener;
-	
+				
 public:
 	//! Constructor
 	VirtualComponent();
 
 	//! Destructor
 	virtual ~VirtualComponent() { };
-
-	//! Get listener
-	// C64Listener *getListener() { assert(listener != NULL); return listener; }
 	
-	//! Set listener
-	/*! The listener can be changed multiple times during program execution */
-	void setListener(C64Listener *l) { listener = l; } 
-		
+			
 	//! Reset the component to its initial state.
 	/*! The functions is called when a hard reset is performed.
 	*/
