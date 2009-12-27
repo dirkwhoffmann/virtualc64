@@ -245,7 +245,6 @@ VC1541::startRotating()
 	debug("Starting drive engine (%2X)\n", cpu->getPC());
 	rotating = true;
 	byteReadyTimer = VC1541_CYCLES_PER_BYTE;
-	// getListener()->driveMotorAction(true);
 	c64->putMessage(MSG_VC1541_MOTOR, 1);
 }
 
@@ -255,7 +254,6 @@ VC1541::stopRotating()
 	debug("Stopping drive engine (%2X)\n", cpu->getPC()); 
 	rotating = false;
 
-	// getListener()->driveMotorAction(false);
 	c64->putMessage(MSG_VC1541_MOTOR, 0);
 }
 
@@ -471,7 +469,6 @@ VC1541::insertDisc(D64Archive *a)
 		assert(length[i-1] <= 7928);
 	}
 
-	// getListener()->driveDiscAction(true);
 	c64->putMessage(MSG_VC1541_DISC, 1);
 }
 
@@ -491,7 +488,6 @@ VC1541::ejectDisc()
 	clearDisk();
 	
 	// Inform listener
-	//getListener()->driveDiscAction(false);
 	c64->putMessage(MSG_VC1541_DISC, 0);
 }
 			

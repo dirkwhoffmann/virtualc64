@@ -1025,7 +1025,6 @@ void
 VIC::endFrame()
 {
 	// Frame complete. Notify listener...
-	// getListener()->drawAction(currentScreenBuffer);
 	c64->putMessage(MSG_DRAW, 0, currentScreenBuffer);
 	
 	// Switch frame buffer

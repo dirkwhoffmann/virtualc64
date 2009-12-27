@@ -514,7 +514,6 @@ CPU::setErrorState(ErrorState state)
 		errorState = state;
 		
 		// Inform listener
-		// getListener()->cpuAction(state);		
 		c64->putMessage(MSG_CPU, state);
 	}
 }

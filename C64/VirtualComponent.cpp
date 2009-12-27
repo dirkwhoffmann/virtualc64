@@ -23,7 +23,6 @@ VirtualComponent::VirtualComponent()
 	running = false;
 	suspendCounter = 0;	
 	traceMode = false;
-	listener = NULL;
 }
 
 void 
@@ -93,11 +92,6 @@ VirtualComponent::debug(const char *fmt, ...)
 	va_start(ap, fmt);
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
 	va_end(ap);
-
-	// Pass message to listener...
-	if (listener) {
-		listener->logAction(strdup(buf));	
-	} 
 	
 	// Dump message to stderr...
 	fprintf(stderr, "%s", buf);

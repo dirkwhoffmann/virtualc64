@@ -159,7 +159,6 @@
 		50176C5C0A6F72F3009E80BD /* Memory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Memory.h; sourceTree = "<group>"; };
 		50176C5F0A6F72F3009E80BD /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
 		50176C600A6F72F3009E80BD /* VIC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = VIC.h; sourceTree = "<group>"; };
-		50176C620A6F72F3009E80BD /* C64Listener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Listener.h; sourceTree = "<group>"; };
 		50176C700A6F7357009E80BD /* Disassembler.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Disassembler.h; sourceTree = "<group>"; };
 		50176C710A6F7357009E80BD /* Disassembler.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Disassembler.mm; sourceTree = "<group>"; };
 		50176C720A6F7357009E80BD /* Formatter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Formatter.h; sourceTree = "<group>"; };
@@ -358,7 +357,6 @@
 				500EC05010E4DCC4005A19A3 /* Message.cpp */,
 				50176C520A6F72F3009E80BD /* C64.h */,
 				50176C510A6F72F3009E80BD /* C64.cpp */,
-				50176C620A6F72F3009E80BD /* C64Listener.h */,
 				50176C540A6F72F3009E80BD /* CIA.h */,
 				50176C530A6F72F3009E80BD /* CIA.cpp */,
 				503DF0D80F18BFDE00DC5C11 /* Timer.h */,

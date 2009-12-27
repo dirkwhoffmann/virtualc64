@@ -23,7 +23,6 @@
 #include "basic.h"
 #include "VirtualComponent.h"
 #include "Message.h"
-#include "C64Listener.h"
 #include "Snapshot.h"
 #include "T64Archive.h"
 #include "D64Archive.h"
@@ -124,6 +123,11 @@
 	
 	   The emulator launches automatically when the last ROM is loaded
  */
+
+#define BASIC_ROM 1
+#define CHAR_ROM 2
+#define KERNEL_ROM 4
+#define VC1541_ROM 8
 
 #define NUM_INPUT_DEVICES 4
 
@@ -246,10 +250,6 @@ public:
 
 	//! Dump current state into logfile
 	void dumpState();
-
-	//! Register listener
-	/*! To communicate with the virtual computer, the GUI will register itself as listener */
-	void setListener(C64Listener *l);
 	
 	
 	// -----------------------------------------------------------------------------------------------
