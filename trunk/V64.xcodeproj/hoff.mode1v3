@@ -214,7 +214,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>504EDADB10E8B41B000E30F4</string>
+						<string>504EDAEA10E8B671000E30F4</string>
 						<key>history</key>
 						<array>
 							<string>50C9A87710E7712A00B6F16E</string>
@@ -355,7 +355,7 @@
 							<real>241</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>84 167 1554 861 0 0 1680 1028 </string>
+						<string>199 0 1554 861 0 0 1680 1028 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -383,7 +383,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>504EDAD810E8B41B000E30F4</string>
+										<string>504EDAE910E8B671000E30F4</string>
 										<key>history</key>
 										<array>
 											<string>50AFEE850C3A8D9B007749E7</string>
@@ -529,7 +529,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1291, 669}}</string>
 								<key>RubberWindowFrame</key>
-								<string>84 167 1554 861 0 0 1680 1028 </string>
+								<string>199 0 1554 861 0 0 1680 1028 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -549,7 +549,7 @@
 								<key>Frame</key>
 								<string>{{0, 674}, {1291, 146}}</string>
 								<key>RubberWindowFrame</key>
-								<string>84 167 1554 861 0 0 1680 1028 </string>
+								<string>199 0 1554 861 0 0 1680 1028 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -711,7 +711,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>504EDAE410E8B41B000E30F4</string>
 		<string>504EDAE510E8B41B000E30F4</string>
 		<string>504EDAE610E8B41B000E30F4</string>
 		<string>1C78EAAD065D492600B07095</string>
@@ -721,7 +720,7 @@
 		<string>/Users/hoff/work/Software/VirtualC64/virtualc64/V64.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>84 167 1554 861 0 0 1680 1028 </string>
+	<string>199 0 1554 861 0 0 1680 1028 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

@@ -130,7 +130,8 @@ bool C64Memory::isBasicRom(const char *filename)
 {
 	int magic_bytes[] = { 0x94, 0xE3, 0x7B, EOF };
 
-	assert(filename != NULL);
+	if (filename == NULL)
+		return false;
 	
 	if (!checkFileSize(filename, 0x2000, 0x2000))
 		return false;
@@ -145,7 +146,8 @@ bool C64Memory::isCharRom(const char *filename)
 {
 	int magic_bytes[] = { 0x3C, 0x66, 0x6E, EOF };
 
-	assert(filename != NULL);
+	if (filename == NULL)
+		return false;
 	
 	if (!checkFileSize(filename, 0x1000, 0x1000))
 		return false;
@@ -160,7 +162,8 @@ bool C64Memory::isKernelRom(const char *filename)
 {
 	int magic_bytes[] = { 0x85, 0x56, 0x20, EOF };
 
-	assert(filename != NULL);
+	if (filename == NULL)
+		return false;
 	
 	if (!checkFileSize(filename, 0x2000, 0x2000))
 		return false;
