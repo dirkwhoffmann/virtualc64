@@ -61,11 +61,11 @@ void C64Memory::reset()
 	// to generate random numbers. E.g., Paradroid is doing it that way.
 	for (unsigned i = 0; i < sizeof(colorRam); i++)
 		colorRam[i] = rand();
-		
+	
 	// Initialize processor port data direction register and processor port
 	poke(0x0000, 0x2F); // Data direction
-	poke(0x0001, 0x1F);	// IO port, set default memory layout
-}	
+	poke(0x0001, 0x1F); // IO port, set default memory layout
+}
 
 // --------------------------------------------------------------------------------
 //                                      Input / Output
@@ -121,6 +121,7 @@ C64Memory::dumpState()
 	debug("    Basic ROM :%s loaded,%s visible\n", basicRomIsLoaded() ? "" : " not", basicRomIsVisible ? "" : " not");
 	debug("Character ROM :%s loaded,%s visible\n", charRomIsLoaded() ? "" : " not", charRomIsVisible ? "" : " not");
 	debug("   Kernel ROM :%s loaded,%s visible\n", kernelRomIsLoaded() ? "" : " not", kernelRomIsVisible ? "" : " not");
+
 	for (uint16_t i = 0; i < 0xFFFF; i++) {
 		uint8_t tag = cpu->getBreakpointTag(i);
 		if (tag != CPU::NO_BREAKPOINT) {
@@ -308,6 +309,8 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 			uint8_t dir = cpu->getPortDirection();
 			uint8_t ext = cpu->getExternalPortBits();
 			return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext); // (~dir & 0x5F); // (~dir & 0x7F); //   (~dir & 0x17);
+		} else if (addr < 0x8000){
+			return ram[addr];
 		} else {
 			// RAM, or Cartridge ROM from $8000 - $9FFF
 			return cartridgeRomIsVisible ? rom[addr] : ram[addr];
@@ -315,6 +318,7 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 	} else if (addr < 0xD000) {
 		if (addr < 0xC000) {
 			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
+			// Is it ok for the cartridge bank to overwrite the basic ROM data?
 			return basicRomIsVisible || cartridgeRomIsVisible ? rom[addr] : ram[addr];
 		} else {
 			// RAM
@@ -428,27 +432,29 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	// 0xDF00 - 0xDFFF (I/O area 2) 
 	if (addr >= 0xDE00 && addr <= 0xDFFF) {
 		// Expansion port I/O.
+		if (cartridgeRomIsVisible) {
 
-		if (addr == 0xDE00) {
-			// For some cartridges (e.g. Ocean .crt type 5):
-			// Bank switching is done by writing to $DE00. The lower six bits give the
-			// bank number (ranging from 0-63). Bit 8 in this selection word is always
-			// set.
-			// When this occurs, the cartridge will present the selected bank
-			// at the specified ROM locations.
-			unsigned int bankNumber = 63 & value;
-		
-			printf("Switching to bank %d\n", bankNumber);
+			if (addr == 0xDE00) {
+				// For some cartridges (e.g. Ocean .crt type 5):
+				// Bank switching is done by writing to $DE00. The lower six bits give the
+				// bank number (ranging from 0-63). Bit 8 in this selection word is always
+				// set.
+				// When this occurs, the cartridge will present the selected bank
+				// at the specified ROM locations.
+				unsigned int bankNumber = 63 & value;
 			
-			// Bank cartridge chip into rom:
-			// Because the cartridge address ranges $8000 - $9FFF and $A000 - $BFFF
-			// are not used by kernal, basic, or other ROM, it is safe to copy 
-			// the bank from the cartridge chip directly into the rom array.
-			
-			Cartridge::Chip *chip = cartridge->getChip(bankNumber);
-			memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
-			
-			printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
+				printf("Switching to bank %d\n", bankNumber);
+				
+				// Bank cartridge chip into rom:
+				// Because the cartridge address ranges $8000 - $9FFF and $A000 - $BFFF
+				// are not used by kernal, basic, or other ROM, it is safe to copy 
+				// the bank from the cartridge chip directly into the rom array.
+				
+				Cartridge::Chip *chip = cartridge->getChip(bankNumber);
+				memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
+				
+				printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
+			}
 		}
 	}
 }
@@ -486,7 +492,8 @@ bool C64Memory::attachCartridge(Cartridge *c)
 	
 	printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
 	
-	cartridgeRomIsVisible = true;
+	// Cartridge rom is visible when EXROM or GAME lines are pulled low.
+	cartridgeRomIsVisible = c->exromIsHigh()==false || c->gameIsHigh()==false;
 	
 	return true;
 }

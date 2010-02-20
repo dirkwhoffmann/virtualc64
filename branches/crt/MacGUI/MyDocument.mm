@@ -2694,8 +2694,8 @@ exit:
 	// Try to mount archive
 	myc64->attachCartridge(cartridge);
 	
-	// Load clean image 
-	myc64->fastReset();
+	// reset
+	myc64->reset();
 	
 	return YES;
 }

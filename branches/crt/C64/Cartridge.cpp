@@ -168,6 +168,8 @@ bool Cartridge::loadFile(const char *filename)
 	
 	printf("Cartridge: %s\n", &data[0x0020]);
 	printf("Cartridge type: %d\n", getHighLow(data[0x0016], data[0x0017]));
+	printf("EXROM = %d, GAME = %d\n", data[0x0018], data[0x0019]);
+	
 	path = strdup(filename);
 	
 	// Load chip packets
