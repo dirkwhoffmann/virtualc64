@@ -96,6 +96,8 @@
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC8146870FE54238007ED085 /* JoystickManager.mm */; };
+		C327E105112D1F78000E71F9 /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C327E103112D1F78000E71F9 /* Cartridge.cpp */; };
+		C327E1CD112D67C6000E71F9 /* PLA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C327E1CC112D67C6000E71F9 /* PLA.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -230,6 +232,11 @@
 		8D15AC370486D014006FF6A4 /* V64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = V64.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC8146860FE54238007ED085 /* JoystickManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoystickManager.h; sourceTree = "<group>"; };
 		BC8146870FE54238007ED085 /* JoystickManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JoystickManager.mm; sourceTree = "<group>"; };
+		C327E103112D1F78000E71F9 /* Cartridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
+		C327E104112D1F78000E71F9 /* Cartridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
+		C327E10C112D22F2000E71F9 /* C64MemoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64MemoryMap.h; sourceTree = "<group>"; };
+		C327E1CB112D67C6000E71F9 /* PLA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLA.h; sourceTree = "<group>"; };
+		C327E1CC112D67C6000E71F9 /* PLA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PLA.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,10 +342,15 @@
 		5000C8070D13CE490011A2E9 /* Memory */ = {
 			isa = PBXGroup;
 			children = (
+				C327E104112D1F78000E71F9 /* Cartridge.h */,
+				C327E103112D1F78000E71F9 /* Cartridge.cpp */,
 				50176C5C0A6F72F3009E80BD /* Memory.h */,
 				50176C5B0A6F72F3009E80BD /* Memory.cpp */,
 				5000C80E0D13CE680011A2E9 /* C64Memory.h */,
 				5000C80D0D13CE680011A2E9 /* C64Memory.cpp */,
+				C327E10C112D22F2000E71F9 /* C64MemoryMap.h */,
+				C327E1CB112D67C6000E71F9 /* PLA.h */,
+				C327E1CC112D67C6000E71F9 /* PLA.cpp */,
 				5000C9610D13DED40011A2E9 /* VC1541Memory.h */,
 				5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */,
 			);
@@ -652,6 +664,8 @@
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
+				C327E105112D1F78000E71F9 /* Cartridge.cpp in Sources */,
+				C327E1CD112D67C6000E71F9 /* PLA.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

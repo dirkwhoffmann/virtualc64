@@ -865,7 +865,13 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 		// Is it an archive?
 		if ([myDoc setArchiveWithName:path]) {
 			[myDoc showMountDialog];			
-		}			
+		}
+		
+		// Is it a cartridge?
+		if ([myDoc attachCartridge:path]) {
+			NSLog(@"Cartridge attached");
+			return YES;
+		}
 	}
 	return NO;
 }

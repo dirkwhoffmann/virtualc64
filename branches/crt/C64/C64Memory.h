@@ -20,6 +20,7 @@
 #define _C64MEMORY_INC
 
 #include "Memory.h"
+#include "Cartridge.h"
 
 // Forward declarations
 class VIC;
@@ -46,6 +47,9 @@ public:
 	//! References to CIA 2
 	CIA2 *cia2;
 	
+	//! References to cartridge
+	Cartridge *cartridge;
+	
 	//! Virtual RAM
 	/*! All memory cells can be read or written. */
 	uint8_t ram[65536];
@@ -54,9 +58,10 @@ public:
 	/*! Only specific memory cells are valid ROM locations. In total, the C64 has three ROMs that
 		are located at different addresses in the ROM space. Note, that the ROMs do not span over
 		the whole 64k range. Therefore, only some address are valid ROM addresses.
+		Also some ROM addresses may be valid cartridge ROM.
 		\see isRomAddr */
 	uint8_t rom[65536];
-
+	
 	//! Virtual color RAM
 	/*! The color RAM is located in the I/O space, starting at D800 and ending at DBFF
 	Only the lower four bits are accessible, the upper four bits are open and can show any value */
@@ -77,7 +82,11 @@ public:
 	//! True if the I/O space is visible.
 	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool IOIsVisible;
-		
+	
+	//! True if the cartridge ROM is visible
+	/*! The variable is updated whenever a cartridge is attached or detached. */
+	bool cartridgeRomIsVisible;
+	
 	//! File name of the Character ROM image.
 	/*! The file name is set by the loadRom routine. It is saved for further reference, so the ROM can be reloaded any tim e. */
 	char *charRomFile;
@@ -88,8 +97,8 @@ public:
 
 	//! File name of the Basic ROM image.
 	/*! The file name is set by the loadRom routine. It is saved for further reference, so the ROM can be reloaded any tim e. */
-	char *basicRomFile;	
-
+	char *basicRomFile;
+	
 	//! Check integrity of Basic ROM image 
 	/*! Returns true, iff the specified file contains a valid BASIC ROM image.
 	    File integrity is checked via the checkFileHeader function. 
@@ -118,12 +127,14 @@ public:
 	*/
 	static bool isRom(const char *filename);
 	
+	
 	//! Callback function
 	/*! This function is called by the CPU when the port lines change.
 	 Besides others, the processor port register determines whether the RAM, ROM, or the IO space is visible. 
 	 */ 
 	 void processorPortHasChanged(uint8_t newPortLines);
-		
+
+	
 public:
 	
 	//! Constructor
@@ -173,6 +184,11 @@ public:
 	//! Load kernel ROM image into memory 
 	bool loadKernelRom(const char *filename);
 	
+	//! attach cartridge
+	bool attachCartridge(Cartridge *c);
+	//! detach cartridge
+	bool detachCartridge();
+	
 	//! Returns true, iff the Basic ROM is alrady loaded
 	bool basicRomIsLoaded() { return basicRomFile != NULL; }
 	//! Returns true, iff the Kernel ROM is alrady loaded
@@ -189,10 +205,13 @@ public:
 	//! Returns true, iff the provided address is in the Kernel ROM address range
 	static inline bool isKernelRomAddr(uint16_t addr) 
 		{ return (0xE000 <= addr); }
+	//! Returns true, iff the provided address is in the possible cartridge address ranges
+	static inline bool isCartridgeRomAddr(uint16_t addr)
+		{ return (0x8000 <= addr && addr <= 0xBFFF); }
 	//! Returns true, iff the provided address is in one of the three ROM address ranges
 	static inline bool isRomAddr(uint16_t addr) 
-		{ return isCharRomAddr(addr) || isKernelRomAddr(addr) || isBasicRomAddr(addr); }
-				
+		{ return isCharRomAddr(addr) || isKernelRomAddr(addr) || isBasicRomAddr(addr) || isCartridgeRomAddr(addr); }
+	
 	//! Read a BYTE from Color RAM.
 	/*! The BYTE is always read from the color RAM, regardless of the value of the processor port register.
 		\param offset Memory address relative to the beginning of the color Ram

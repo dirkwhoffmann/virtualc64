@@ -41,6 +41,7 @@
 #include "CIA.h"
 #include "CPU.h"
 #include "VC1541.h"
+#include "Cartridge.h"
 
 //! A complete virtual C64
 /*! The class puts all components together to a working virtual computer.
@@ -374,6 +375,16 @@ public:
 	//! Mount specified archive in the virtual disk drive
 	bool mountArchive(Archive *a);
 
+	
+	// ---------------------------------------------------------------------------------------------
+	//                                 Cartridges
+	// ---------------------------------------------------------------------------------------------
+	
+	//! Attach cartridge
+	bool attachCartridge(Cartridge *c);
+	
+	//! Detach cartridge
+	bool detachCartridge();
 	
 	// ---------------------------------------------------------------------------------------------
 	//                                        Getter and setter 

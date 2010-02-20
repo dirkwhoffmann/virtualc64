@@ -23,7 +23,7 @@
 @synthesize warpLoad;
 @synthesize alwaysWarp;
 @synthesize archive;
-
+@synthesize cartridge;
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
 // --------------------------------------------------------------------------------
@@ -2674,6 +2674,39 @@ exit:
 		currentAddr += [c64 cpuGetLengthOfInstruction:[c64 memPeek:currentAddr]];
 	}
 	return NO;
+}
+
+- (BOOL)attachCartridge:(NSString *)path
+{
+	if (Cartridge::fileIsValid([path UTF8String])) {
+		cartridge = new Cartridge();
+	} else {
+		return NO;
+	}
+	
+	if (!cartridge->loadFile([path UTF8String])) {
+		cartridge = NULL;
+		return NO;
+	}
+	
+	C64 *myc64 = [c64 getC64];
+	
+	// Try to mount archive
+	myc64->attachCartridge(cartridge);
+	
+	// Load clean image 
+	myc64->fastReset();
+	
+	return YES;
+}
+
+- (BOOL)detachCartridge
+{
+	C64 *myc64 = [c64 getC64];
+	
+	myc64->detachCartridge();
+	
+	return YES;
 }
 
 @end

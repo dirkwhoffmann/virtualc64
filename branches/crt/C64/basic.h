@@ -116,7 +116,6 @@ uint8_t localTimeHour();
 	\param millisec Time to sleep in milliseconds
 */
 void sleepMicrosec(uint64_t millisec);
-
-
+					
 #endif
 

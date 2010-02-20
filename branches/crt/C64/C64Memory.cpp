@@ -34,6 +34,13 @@ C64Memory::C64Memory()
 	sid = NULL;
 	cia1 = NULL;
 	cia2 = NULL;
+	cartridge = NULL;
+	
+	basicRomIsVisible = false;
+	kernelRomIsVisible = false;
+	charRomIsVisible = false;
+	IOIsVisible = false;
+	cartridgeRomIsVisible = false;
 }
 
 C64Memory::~C64Memory()
@@ -53,11 +60,11 @@ void C64Memory::reset()
 	// It's important here to write in random values as some games peek the color RAM 
 	// to generate random numbers. E.g., Paradroid is doing it that way.
 	for (unsigned i = 0; i < sizeof(colorRam); i++)
-		colorRam[i] = rand(); 
+		colorRam[i] = rand();
 		
 	// Initialize processor port data direction register and processor port
-	poke(0x0000, 0x2F);
-	poke(0x0001, 0x1F);	
+	poke(0x0000, 0x2F); // Data direction
+	poke(0x0001, 0x1F);	// IO port, set default memory layout
 }	
 
 // --------------------------------------------------------------------------------
@@ -80,6 +87,7 @@ C64Memory::load(uint8_t **buffer)
 	charRomIsVisible = (bool)read8(buffer);
 	kernelRomIsVisible = (bool)read8(buffer);
 	IOIsVisible = (bool)read8(buffer);
+	cartridgeRomIsVisible = (bool)read8(buffer);
 	
 	return true;
 }
@@ -100,6 +108,7 @@ C64Memory::save(uint8_t **buffer)
 	write8(buffer, (uint8_t)charRomIsVisible);
 	write8(buffer, (uint8_t)kernelRomIsVisible);
 	write8(buffer, (uint8_t)IOIsVisible);
+	write8(buffer, (uint8_t)cartridgeRomIsVisible);
 
 	return true;
 }
@@ -236,12 +245,12 @@ bool C64Memory::isValidAddr(uint16_t addr, MemoryType type)
 
 uint8_t C64Memory::peekRam(uint16_t addr) 
 { 
-	return ram[addr]; 
+	return ram[addr];
 } 
 
 uint8_t C64Memory::peekRom(uint16_t addr) 
 { 
-	return rom[addr]; 
+	return rom[addr];
 } 
 
 uint8_t C64Memory::peekIO(uint16_t addr)
@@ -300,13 +309,13 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 			uint8_t ext = cpu->getExternalPortBits();
 			return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext); // (~dir & 0x5F); // (~dir & 0x7F); //   (~dir & 0x17);
 		} else {
-			// RAM
-			return ram[addr];
+			// RAM, or Cartridge ROM from $8000 - $9FFF
+			return cartridgeRomIsVisible ? rom[addr] : ram[addr];
 		}
 	} else if (addr < 0xD000) {
 		if (addr < 0xC000) {
-			// Basic ROM
-			return basicRomIsVisible ? rom[addr] : ram[addr];
+			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
+			return basicRomIsVisible || cartridgeRomIsVisible ? rom[addr] : ram[addr];
 		} else {
 			// RAM
 			return ram[addr];
@@ -413,9 +422,36 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 		// Therefore, the VIC I/O memory repeats every 16 bytes
 		cia2->poke(addr & 0x000F, value);
 		return;
-	}	
-}
+	}
+	
+	// 0xDE00 - 0xDEFF (I/O area 1)
+	// 0xDF00 - 0xDFFF (I/O area 2) 
+	if (addr >= 0xDE00 && addr <= 0xDFFF) {
+		// Expansion port I/O.
 
+		if (addr == 0xDE00) {
+			// For some cartridges (e.g. Ocean .crt type 5):
+			// Bank switching is done by writing to $DE00. The lower six bits give the
+			// bank number (ranging from 0-63). Bit 8 in this selection word is always
+			// set.
+			// When this occurs, the cartridge will present the selected bank
+			// at the specified ROM locations.
+			unsigned int bankNumber = 63 & value;
+		
+			printf("Switching to bank %d\n", bankNumber);
+			
+			// Bank cartridge chip into rom:
+			// Because the cartridge address ranges $8000 - $9FFF and $A000 - $BFFF
+			// are not used by kernal, basic, or other ROM, it is safe to copy 
+			// the bank from the cartridge chip directly into the rom array.
+			
+			Cartridge::Chip *chip = cartridge->getChip(bankNumber);
+			memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
+			
+			printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
+		}
+	}
+}
 
 void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
 {	
@@ -439,5 +475,29 @@ void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
 	ram[addr] = value;
 }
 
+bool C64Memory::attachCartridge(Cartridge *c)
+{
+	cartridge = c;
+	
+	// Bank first chip into rom
+	Cartridge::Chip *chip = cartridge->getChip(0);
+	
+	memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
+	
+	printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
+	
+	cartridgeRomIsVisible = true;
+	
+	return true;
+}
+
+bool C64Memory::detachCartridge()
+{
+	cartridge = NULL;
+	
+	cartridgeRomIsVisible = false;
+	
+	return true;
+}
 
 

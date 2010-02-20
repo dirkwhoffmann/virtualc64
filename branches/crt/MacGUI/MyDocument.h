@@ -20,7 +20,6 @@
 #define INC_MYDOCUMENT
 
 #import <Cocoa/Cocoa.h>
-#import <Cocoa/Cocoa.h>
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glu.h>
 #import "C64.h"
@@ -209,6 +208,9 @@
 	//! Reference to the attached archive, e.g., a T64 or D64 container
 	Archive *archive;
 
+	//! Reference to the attached cartridge
+	Cartridge *cartridge;
+	
 	// Initial snapshot
 	// If unequal NULL, the newly created document will be initialized with the provided snapshot data
 	Snapshot *snapshot;
@@ -217,7 +219,9 @@
 @property bool warpLoad;
 @property bool alwaysWarp;
 @property (assign) Archive *archive;
+@property (assign) Cartridge *cartridge;
 - (BOOL)setArchiveWithName:(NSString *)path;
+- (BOOL)attachCartridge:(NSString *)path;
 
 // Main screen
 - (IBAction)fullscreenAction:(id)sender;
