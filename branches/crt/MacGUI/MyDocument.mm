@@ -703,7 +703,7 @@ exit:
 		return ![c64 isRunning] && [c64 isRunnable];
 	}
 
-	/* Jostick port A */
+	/* Joystick port A */
 	if ([theItem tag] == 10) { 
 		int portA = [c64 getPortAssignment:0];
 
@@ -720,7 +720,7 @@ exit:
 		return YES;
 	}
 	
-	/* Jostick port B */	
+	/* Joystick port B */	
 	if ([theItem tag] == 11) {
 		int portB = [c64 getPortAssignment:1];
 
@@ -737,6 +737,10 @@ exit:
 		return YES;
 	}
 	
+	/* Cartridge */
+	if ([theItem tag] == 50) {
+		
+	}
 	
 	/* All other items */
     return YES;
@@ -2686,6 +2690,7 @@ exit:
 	}
 	
 	if (!cartridge->loadFile([path UTF8String])) {
+		delete cartridge;
 		cartridge = NULL;
 		return NO;
 	}
@@ -2707,6 +2712,9 @@ exit:
 	
 	myc64->detachCartridge();
 	
+	delete cartridge;
+	cartridge = NULL;
+	
 	return YES;
 }
 
@@ -2717,6 +2725,9 @@ exit:
 	C64 *myc64 = [c64 getC64];
 	
 	myc64->detachCartridge();
+	
+	delete cartridge;
+	cartridge = NULL;
 }
 
 

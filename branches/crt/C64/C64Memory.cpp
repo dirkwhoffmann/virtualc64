@@ -531,9 +531,7 @@ bool C64Memory::attachCartridge(Cartridge *c)
 
 bool C64Memory::detachCartridge()
 {
-	delete cartridge;
-	cartridge = NULL;
-	
+	cartridge = NULL;	
 	cartridgeRomIsVisible = false;
 	
 	return true;
