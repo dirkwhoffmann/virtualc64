@@ -209,7 +209,7 @@ bool Cartridge::loadFile(const char *filename)
 		i += 0x0010 + romSize;
 	}
 	
-	printf("CRT container imported successfully\n");
+	printf("CRT container imported successfully (%d chips)\n", numberOfChips);
 	
 	return true;
 }

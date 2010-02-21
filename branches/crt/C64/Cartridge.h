@@ -16,6 +16,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*
+ 
+ See: http://www.c64-wiki.com/index.php/Cartridge
+ 
+ "The cartridge system implemented in the C64 provides an easy way to 
+ hook 8 or 16 kilobytes of ROM into the computer's address space: 
+ This allows for applications and games up to 16 K, or BASIC expansions 
+ up to 8 K in size and appearing to the CPU along with the built-in 
+ BASIC ROM. In theory, such a cartridge need only contain the 
+ ROM circuit without any extra support electronics."
+ 
+ Also: http://www.c64-wiki.com/index.php/Bankswitching
+ 
+ As well read the Commodore 64 Programmers Reference Guide pages 260-267.
+ 
+ */
 #ifndef _CARTRIDGE_H
 #define _CARTRIDGE_H
 
