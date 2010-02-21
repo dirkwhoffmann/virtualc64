@@ -99,7 +99,7 @@
 - (int) getFrameDelay { return c64->getFrameDelay(); }
 - (void) setFrameDelay:(int)delay { c64->setFrameDelay(delay); }
 - (int) buildNr { return c64->build(); }
-
+- (bool) isCartridgeAttached { return c64->isCartridgeAttached(); }
 - (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
 - (int) missingRoms { return c64->getMissingRoms(); }
 - (bool) loadBasicRom:(NSString *)filename { return c64->mem->isBasicRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }

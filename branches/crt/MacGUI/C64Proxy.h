@@ -59,6 +59,7 @@
 - (int) getFrameDelay;
 - (void) setFrameDelay:(int)delay;
 - (int) buildNr;
+- (bool) isCartridgeAttached;
 
 - (int) numberOfMissingRoms;
 - (int) missingRoms;

@@ -318,6 +318,9 @@ public:
 	//! Put a notification message into the message queue
 	void putMessage(int id, int i = 0, void *p = NULL, const char *c = NULL);
 	
+	
+	bool isCartridgeAttached();
+	
 private:
 	
 	//! Actions to be performed at the beginning of each rasterline

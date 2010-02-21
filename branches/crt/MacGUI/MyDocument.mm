@@ -739,7 +739,12 @@ exit:
 	
 	/* Cartridge */
 	if ([theItem tag] == 50) {
-		
+		if ([c64 isCartridgeAttached]) {
+			[theItem setLabel:@"Eject Cartridge"];
+		} else {
+			[theItem setLabel:@"Cartridge"];
+			return NO;
+		}
 	}
 	
 	/* All other items */

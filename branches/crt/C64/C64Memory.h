@@ -188,6 +188,8 @@ public:
 	bool attachCartridge(Cartridge *c);
 	//! detach cartridge
 	bool detachCartridge();
+	//! Returns true if a cartridge is present
+	bool isCartridgeAttached() { return cartridge != NULL; }
 	
 	//! Returns true, iff the Basic ROM is alrady loaded
 	bool basicRomIsLoaded() { return basicRomFile != NULL; }
