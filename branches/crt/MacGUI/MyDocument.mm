@@ -2733,6 +2733,8 @@ exit:
 	
 	delete cartridge;
 	cartridge = NULL;
+	
+	[c64 reset];
 }
 
 

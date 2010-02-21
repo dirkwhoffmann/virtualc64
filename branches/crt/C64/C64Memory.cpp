@@ -313,13 +313,18 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 			return ram[addr];
 		} else {
 			// RAM, or Cartridge ROM from $8000 - $9FFF
-			return cartridgeRomIsVisible ? rom[addr] : ram[addr];
+			return cartridgeRomIsVisible ? cart[addr] : ram[addr];
 		}
 	} else if (addr < 0xD000) {
 		if (addr < 0xC000) {
 			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
-			// Is it ok for the cartridge bank to overwrite the basic ROM data?
-			return basicRomIsVisible || cartridgeRomIsVisible ? rom[addr] : ram[addr];
+			if (cartridgeRomIsVisible) {
+				return cart[addr];
+			} else if (basicRomIsVisible) {
+				return rom[addr];
+			} else {
+				return ram[addr];
+			}
 		} else {
 			// RAM
 			return ram[addr];
@@ -447,7 +452,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 						// Simons banks the second chip into $A000-BFFF
 						if (value == 0x01) {
 							Cartridge::Chip *chip = cartridge->getChip(1);
-							memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
+							memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
 							printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
 						} else {
 							// $A000-BFFF is additional RAM
@@ -470,7 +475,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 							
 							if (chip != NULL) {
 								// If both GAME and EXROM are low we have cartridge ROM at $A000
-								memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
+								memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
 								
 								printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
 							}
@@ -519,7 +524,7 @@ bool C64Memory::attachCartridge(Cartridge *c)
 	
 	Cartridge::Chip *chip = cartridge->getChip(0);
 	assert(chip);
-	memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
+	memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
 	
 	printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
 	

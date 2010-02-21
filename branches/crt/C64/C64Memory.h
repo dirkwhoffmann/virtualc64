@@ -58,9 +58,13 @@ public:
 	/*! Only specific memory cells are valid ROM locations. In total, the C64 has three ROMs that
 		are located at different addresses in the ROM space. Note, that the ROMs do not span over
 		the whole 64k range. Therefore, only some address are valid ROM addresses.
-		Also some ROM addresses may be valid cartridge ROM.
 		\see isRomAddr */
 	uint8_t rom[65536];
+	
+	//! Virtual cartridge ROM
+	/*! Only $8000-9FFF and $A000-$BFFF are valid cartridge locations.
+	 */
+	uint8_t cart[65536];
 	
 	//! Virtual color RAM
 	/*! The color RAM is located in the I/O space, starting at D800 and ending at DBFF
