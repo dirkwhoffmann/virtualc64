@@ -486,8 +486,9 @@ bool C64Memory::attachCartridge(Cartridge *c)
 	cartridge = c;
 	
 	// Bank first chip into rom
-	Cartridge::Chip *chip = cartridge->getChip(0);
 	
+	Cartridge::Chip *chip = cartridge->getChip(0);
+	assert(chip);
 	memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
 	
 	printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
@@ -500,6 +501,7 @@ bool C64Memory::attachCartridge(Cartridge *c)
 
 bool C64Memory::detachCartridge()
 {
+	delete cartridge;
 	cartridge = NULL;
 	
 	cartridgeRomIsVisible = false;

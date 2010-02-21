@@ -230,6 +230,7 @@
 - (IBAction)warpAction:(id)sender;
 - (IBAction)ejectAction:(id)sender;
 - (IBAction)driveAction:(id)sender;
+- (IBAction)cartridgeAction:(id)sender;
 
 // Debug menu
 - (IBAction)hideSpritesAction:(id)sender;

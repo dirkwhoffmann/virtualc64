@@ -737,6 +737,7 @@ exit:
 		return YES;
 	}
 	
+	
 	/* All other items */
     return YES;
 }
@@ -2708,5 +2709,15 @@ exit:
 	
 	return YES;
 }
+
+- (IBAction)cartridgeAction:(id)sender
+{
+	NSLog(@"cartridgeAction");
+	
+	C64 *myc64 = [c64 getC64];
+	
+	myc64->detachCartridge();
+}
+
 
 @end
