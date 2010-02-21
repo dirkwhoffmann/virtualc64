@@ -251,6 +251,9 @@ uint8_t C64Memory::peekRam(uint16_t addr)
 
 uint8_t C64Memory::peekRom(uint16_t addr) 
 { 
+	if (cartridgeRomIsVisible) {
+		return cart[addr];
+	}
 	return rom[addr];
 } 
 
@@ -355,7 +358,11 @@ void C64Memory::pokeRam(uint16_t addr, uint8_t value)
 
 void C64Memory::pokeRom(uint16_t addr, uint8_t value)             
 { 
-	rom[addr] = value; 
+	if (cartridgeRomIsVisible) {
+		cart[addr] = value;
+	} else {
+		rom[addr] = value;
+	}
 }
 
 void 
@@ -446,50 +453,36 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 				// set.
 				// When this occurs, the cartridge will present the selected bank
 				// at the specified ROM locations.
-				
-				switch (cartridge->getType()) {
-					case Cartridge::Simons_Basic:
-						// Simons banks the second chip into $A000-BFFF
-						if (value == 0x01) {
-							Cartridge::Chip *chip = cartridge->getChip(1);
-							memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
-							printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
-						} else {
-							// $A000-BFFF is additional RAM
-						}
-						printf("Banking... %02X\n", value);
-						break;
-					default:
-						{
-							uint8_t bankNumber = 0x3F & value;
-							
-							printf("Switching to bank %d (%02X) ... ", bankNumber, value);
-							
-							// Bank cartridge chip into rom:
-							// Because the cartridge address ranges $8000 - $9FFF and $A000 - $BFFF
-							// are not used by kernal, basic, or other ROM, 
-							
-							// it is safe to copy the bank from the cartridge chip directly into the rom array?
-							
-							Cartridge::Chip *chip = cartridge->getChip(bankNumber);
-							
-							if (chip != NULL) {
-								// If both GAME and EXROM are low we have cartridge ROM at $A000
-								memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
-								
-								printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
-							}
-							printf("\n");
-						}
-						break;
+				Cartridge::Type type = cartridge->getType();
+				if (type == Cartridge::Simons_Basic) {
+					// Simons banks the second chip into $A000-BFFF
+					if (value == 0x01) {
+						Cartridge::Chip *chip = cartridge->getChip(1);
+						memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
+						printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
+					} else {
+						// $A000-BFFF is additional RAM
+					}
+					printf("Banking... %02X\n", value);
+				} else {
+					uint8_t bankNumber = 0x3F & value;
+					
+					printf("Switching to bank %d (%02X) ... ", bankNumber, value);
+					
+					Cartridge::Chip *chip = cartridge->getChip(bankNumber);
+					
+					if (chip != NULL) {
+						// If both GAME and EXROM are low we have cartridge ROM at $A000
+						memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
+						
+						printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
+					}
+					printf("\n");
 				}
-				
-
 			}
 			
 			// store for debugging purposes (DE00-DFFF are I/O or RAM addresses)
 			rom[addr] = value;
-			
 		}
 	}
 }
@@ -521,14 +514,13 @@ bool C64Memory::attachCartridge(Cartridge *c)
 	cartridge = c;
 	
 	// Bank first chip into rom
-	
 	Cartridge::Chip *chip = cartridge->getChip(0);
 	assert(chip);
 	memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
 	
 	printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
 	
-	// Cartridge rom is visible when EXROM or GAME lines are pulled low.
+	// Cartridge rom is visible when EXROM or GAME lines are pulled low (grounded).
 	cartridgeRomIsVisible = c->exromIsHigh()==false || c->gameIsHigh()==false;
 	
 	return true;
