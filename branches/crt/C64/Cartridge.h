@@ -133,6 +133,14 @@ private:
 	
 	int numberOfChips;
 	
+	//! Virtual cartridge ROM
+	/*! Only $8000-9FFF and $A000-$BFFF are valid cartridge locations.
+	 */
+	uint8_t rom[65536];
+	
+	//! The banks stored in the cartridge, maximum of 64, banksize is always 8192
+	//uint8_t bank[0x40][0x2000];
+	
 public:
 	
 	//! There can be many chips in a cartridge
@@ -228,6 +236,12 @@ public:
 	
 	//! The EXROM line status
 	bool exromIsHigh();
+	
+	//!
+	void poke(uint16_t addr, uint8_t value);
+	
+	//!
+	uint8_t peek(uint16_t addr);
 	
 	//! Cartridge version
 	int getVersion();

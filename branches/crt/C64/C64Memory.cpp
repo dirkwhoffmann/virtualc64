@@ -251,8 +251,8 @@ uint8_t C64Memory::peekRam(uint16_t addr)
 
 uint8_t C64Memory::peekRom(uint16_t addr) 
 { 
-	if (cartridgeRomIsVisible) {
-		return cart[addr];
+	if (cartridge != NULL && cartridgeRomIsVisible) {
+		return cartridge->peek(addr);
 	}
 	return rom[addr];
 } 
@@ -297,6 +297,9 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	if (addr >= 0xDE00 && addr <= 0xDFFF) {
 		// Note: Reserved for further I/O expansion
 		// When read, a random value is returned
+		if (cartridge != NULL && cartridgeRomIsVisible) {
+			return cartridge->peek(addr);
+		}
 		return (uint8_t)(rand());
 	}
 
@@ -316,13 +319,17 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 			return ram[addr];
 		} else {
 			// RAM, or Cartridge ROM from $8000 - $9FFF
-			return cartridgeRomIsVisible ? cart[addr] : ram[addr];
+			if (addr >= 0x8000 && addr <= 0x9FFF && cartridge != NULL && cartridgeRomIsVisible) {
+				return cartridge->peek(addr);
+			} else {
+				return ram[addr];
+			}
 		}
 	} else if (addr < 0xD000) {
 		if (addr < 0xC000) {
 			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
-			if (cartridgeRomIsVisible) {
-				return cart[addr];
+			if (addr >= 0xA000 && addr <= 0xBFFF && cartridge != NULL && cartridgeRomIsVisible) {
+				return cartridge->peek(addr);
 			} else if (basicRomIsVisible) {
 				return rom[addr];
 			} else {
@@ -353,19 +360,23 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 
 void C64Memory::pokeRam(uint16_t addr, uint8_t value)             
 { 
-	ram[addr] = value; 
+	if (cartridge != NULL && cartridgeRomIsVisible) {
+		cartridge->poke(addr, value);
+	} else {
+		ram[addr] = value;
+	}
 }
 
 void C64Memory::pokeRom(uint16_t addr, uint8_t value)             
 { 
-	if (cartridgeRomIsVisible) {
-		cart[addr] = value;
+	if (cartridge != NULL && cartridgeRomIsVisible) {
+		cartridge->poke(addr, value);
 	} else {
 		rom[addr] = value;
 	}
 }
 
-void 
+void
 C64Memory::processorPortHasChanged(uint8_t newPortLines)
 {
 	// Processor port.
@@ -404,7 +415,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	if (VIC::isVicAddr(addr)) {
 		// Note: Only the lower 6 bits are used for adressing the VIC I/O space
 		// Therefore, the VIC I/O memory repeats every 64 bytes
-		vic->poke(addr & 0x003F, value);	
+		vic->poke(addr & 0x003F, value);
 		return;
 	}
 	
@@ -441,46 +452,11 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	}
 	
 	// 0xDE00 - 0xDEFF (I/O area 1)
-	// 0xDF00 - 0xDFFF (I/O area 2) 
+	// 0xDF00 - 0xDFFF (I/O area 2)
 	if (addr >= 0xDE00 && addr <= 0xDFFF) {
 		// Expansion port I/O.
-		if (cartridgeRomIsVisible) {
-
-			if (addr == 0xDE00) {
-				// For some cartridges (e.g. Ocean .crt type 5):
-				// Bank switching is done by writing to $DE00. The lower six bits give the
-				// bank number (ranging from 0-63). Bit 8 in this selection word is always
-				// set.
-				// When this occurs, the cartridge will present the selected bank
-				// at the specified ROM locations.
-				Cartridge::Type type = cartridge->getType();
-				if (type == Cartridge::Simons_Basic) {
-					// Simons banks the second chip into $A000-BFFF
-					if (value == 0x01) {
-						Cartridge::Chip *chip = cartridge->getChip(1);
-						memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
-						printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
-					} else {
-						// $A000-BFFF is additional RAM
-					}
-					printf("Banking... %02X\n", value);
-				} else {
-					uint8_t bankNumber = 0x3F & value;
-					
-					printf("Switching to bank %d (%02X) ... ", bankNumber, value);
-					
-					Cartridge::Chip *chip = cartridge->getChip(bankNumber);
-					
-					if (chip != NULL) {
-						// If both GAME and EXROM are low we have cartridge ROM at $A000
-						memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
-						
-						printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
-					}
-					printf("\n");
-				}
-			}
-			
+		if (cartridge != NULL && cartridgeRomIsVisible) {
+			cartridge->poke(addr, value);
 			// store for debugging purposes (DE00-DFFF are I/O or RAM addresses)
 			rom[addr] = value;
 		}
@@ -504,7 +480,7 @@ void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
 		}
 		return;
 	}
-				
+
 	// Default: Write to RAM
 	ram[addr] = value;
 }
@@ -513,16 +489,9 @@ bool C64Memory::attachCartridge(Cartridge *c)
 {
 	cartridge = c;
 	
-	// Bank first chip into rom
-	Cartridge::Chip *chip = cartridge->getChip(0);
-	assert(chip);
-	memcpy(&cart[chip->loadAddress], chip->rom, chip->size);
-	
-	printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
-	
 	// Cartridge rom is visible when EXROM or GAME lines are pulled low (grounded).
 	cartridgeRomIsVisible = c->exromIsHigh()==false || c->gameIsHigh()==false;
-	
+	printf ("Cartridge attached %d\n", cartridgeRomIsVisible);
 	return true;
 }
 

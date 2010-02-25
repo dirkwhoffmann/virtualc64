@@ -209,6 +209,12 @@ bool Cartridge::loadFile(const char *filename)
 		i += 0x0010 + romSize;
 	}
 	
+	if(numberOfChips > 0) {
+		Cartridge::Chip * chip = getChip(0);
+		memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
+		printf("Banked %d bytes to 0x%04x\n", chip->size, chip->loadAddress);
+	}
+	
 	printf("CRT container imported successfully (%d chips)\n", numberOfChips);
 	
 	return true;
@@ -231,6 +237,54 @@ bool Cartridge::exromIsHigh()
 	//	1 - active
 	return data[0x18] != 0;
 }
+
+void Cartridge::poke(uint16_t addr, uint8_t value)             
+{
+	// 0xDE00 - 0xDEFF (I/O area 1)
+	// 0xDF00 - 0xDFFF (I/O area 2) 
+	if (addr >= 0xDE00 && addr <= 0xDFFF) {
+		if (addr == 0xDE00) {
+			// For some cartridges (e.g. Ocean .crt type 5):
+			// Bank switching is done by writing to $DE00. The lower six bits give the
+			// bank number (ranging from 0-63). Bit 8 in this selection word is always
+			// set.
+			// When this occurs, the cartridge will present the selected bank
+			// at the specified ROM locations.
+			Cartridge::Type type = getType();
+			Cartridge::Chip *chip = NULL;
+			if (type == Simons_Basic) {
+				// Simon banks the second chip into $A000-BFFF
+				if (value == 0x01) {
+					chip = getChip(1);
+					memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
+					printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
+				} else {
+					// $A000-BFFF is additional RAM
+				}
+			} else {
+				uint8_t bankNumber = 0x3F & rom[addr];
+				
+				printf("Switching to bank %d (%02X) ... ", bankNumber, rom[addr]);
+				
+				chip = getChip(bankNumber);
+				
+				if (chip != NULL) {
+					// If both GAME and EXROM are low we have cartridge ROM at $A000
+					memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
+					
+					printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
+				}
+				printf("\n");
+			}
+		}
+	}
+	rom[addr] = value;
+}
+
+uint8_t Cartridge::peek(uint16_t addr)
+{
+	return rom[addr];
+} 
 
 int Cartridge::getVersion()
 {

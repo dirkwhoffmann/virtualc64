@@ -61,11 +61,6 @@ public:
 		\see isRomAddr */
 	uint8_t rom[65536];
 	
-	//! Virtual cartridge ROM
-	/*! Only $8000-9FFF and $A000-$BFFF are valid cartridge locations.
-	 */
-	uint8_t cart[65536];
-	
 	//! Virtual color RAM
 	/*! The color RAM is located in the I/O space, starting at D800 and ending at DBFF
 	Only the lower four bits are accessible, the upper four bits are open and can show any value */
