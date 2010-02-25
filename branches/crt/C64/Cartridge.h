@@ -38,7 +38,7 @@
 #include "basic.h"
 #include "VirtualComponent.h"
 
-#define MAX_CHIPS 32
+#define MAX_CHIPS 64
 
 class Cartridge : public VirtualComponent {
 

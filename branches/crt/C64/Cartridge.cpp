@@ -240,6 +240,7 @@ bool Cartridge::exromIsHigh()
 
 void Cartridge::poke(uint16_t addr, uint8_t value)             
 {
+	printf("Cartridge poke %04X %02x (%d)\n", addr, value, value);
 	// 0xDE00 - 0xDEFF (I/O area 1)
 	// 0xDF00 - 0xDFFF (I/O area 2) 
 	if (addr >= 0xDE00 && addr <= 0xDFFF) {
@@ -250,9 +251,13 @@ void Cartridge::poke(uint16_t addr, uint8_t value)
 			// set.
 			// When this occurs, the cartridge will present the selected bank
 			// at the specified ROM locations.
+			
+			rom[addr] = value;
+			
 			Cartridge::Type type = getType();
 			Cartridge::Chip *chip = NULL;
 			if (type == Simons_Basic) {
+				printf("Switching to bank %d (%02X) ... ", 1, rom[addr]);
 				// Simon banks the second chip into $A000-BFFF
 				if (value == 0x01) {
 					chip = getChip(1);
@@ -278,7 +283,6 @@ void Cartridge::poke(uint16_t addr, uint8_t value)
 			}
 		}
 	}
-	rom[addr] = value;
 }
 
 uint8_t Cartridge::peek(uint16_t addr)
