@@ -328,7 +328,8 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 	} else if (addr < 0xD000) {
 		if (addr < 0xC000) {
 			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
-			if (addr >= 0xA000 && addr <= 0xBFFF && cartridge != NULL && cartridgeRomIsVisible) {
+			// High cartridge ROM is only visible when both EXROM and GAME are grounded
+			if (cartridge != NULL && !cartridge->exromIsHigh() && !cartridge->gameIsHigh()) {
 				return cartridge->peek(addr);
 			} else if (basicRomIsVisible) {
 				return rom[addr];
