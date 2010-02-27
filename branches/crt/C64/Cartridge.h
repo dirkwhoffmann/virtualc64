@@ -107,6 +107,14 @@ class Cartridge : public VirtualComponent {
 
 	(**Note: Dinamic includes Narco Police and more)
  
+ 
+	 Type     Size   Game   EXRom  Low Bank  High Bank
+	          in K   Line   Line    (ROML)    (ROMH)
+	 -------------------------------------------------
+	 Normal    8k     hi     lo     $8000      ----
+	 Normal    16k    lo     lo     $8000     $A000
+	 Ultimax   8k     lo     hi     $E000      ----
+ 
  */
 public:
 	
@@ -125,28 +133,38 @@ private:
 	/*! Stores an offset into the data array */
 	int fp;
 	
+	//! Raw data of CRT container file
+	uint8_t *data;
+	
 	//! Size of data array
-	int size;
+	unsigned int size;
 	
 	//! Chip packets
 	Chip *chip[MAX_CHIPS];
 	
-	int numberOfChips;
+	//! The number of chips (banks) in this cartridge file
+	unsigned int numberOfChips;
+	
+	//! The type of cartridge (manufacturer/model)
+	unsigned int type;
+	
+	//! The version of the cartridge file
+	unsigned int version;
 	
 	//! Virtual cartridge ROM
-	/*! Only $8000-9FFF and $A000-$BFFF are valid cartridge locations.
-	 */
+	/*! Only $8000-9FFF and $A000-$BFFF are valid cartridge locations. */
 	uint8_t rom[65536];
 	
-	//! The banks stored in the cartridge, maximum of 64, banksize is always 8192
-	//uint8_t bank[0x40][0x2000];
+	void switchBank(int bankNumber);
+	
+	//! Get the chip (bank)
+	Chip *getChip(int index);
 	
 public:
 	
 	//! There can be many chips in a cartridge
 	class Chip 
 	{
-		
 		/*
 		 Bytes: $0000-0003 - Contained ROM signature "CHIP" (note there can be more
 		 than one image in a .CRT file)
@@ -213,9 +231,6 @@ public:
 		Rex_EP256 = 27
 	};
 	
-	//! Raw data of CRT container file
-	uint8_t *data;
-	
 	//! Constructor
 	Cartridge();
 	
@@ -237,14 +252,24 @@ public:
 	//! The EXROM line status
 	bool exromIsHigh();
 	
-	//!
+	//! The cartridge is Ultimax mode, $E000-FFFE
+	bool isUltimax() { return !gameIsHigh() && exromIsHigh(); }
+	
+	//! The cartridge covers $8000-9FFF
+	bool is8k() { return gameIsHigh() && !exromIsHigh(); }
+	
+	//! The cartridge covers $8000-BFFF
+	bool is16k() { return !gameIsHigh() && !exromIsHigh(); }
+	
+	//! True iff the given address is covered by this cartridge
+	bool isRomAddr(uint16_t addr);
+	
 	void poke(uint16_t addr, uint8_t value);
 	
-	//!
 	uint8_t peek(uint16_t addr);
 	
 	//! Cartridge version
-	int getVersion();
+	unsigned int getVersion();
 	
 	//! Cartridge type
 	Type getType();
@@ -256,10 +281,6 @@ public:
 	//! Load physical archive from disc
 	bool loadFile(const char *filename);
 	
-	//!
-	Chip *getChip(int index);
-	
-	int getNumberChips();
 };
 
 #endif

@@ -251,7 +251,7 @@ uint8_t C64Memory::peekRam(uint16_t addr)
 
 uint8_t C64Memory::peekRom(uint16_t addr) 
 { 
-	if (cartridge != NULL && cartridgeRomIsVisible) {
+	if (cartridge != NULL && cartridge->isRomAddr(addr)) {
 		return cartridge->peek(addr);
 	}
 	return rom[addr];
@@ -319,7 +319,7 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 			return ram[addr];
 		} else {
 			// RAM, or Cartridge ROM from $8000 - $9FFF
-			if (addr >= 0x8000 && addr <= 0x9FFF && cartridge != NULL && cartridgeRomIsVisible) {
+			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
 				return cartridge->peek(addr);
 			} else {
 				return ram[addr];
@@ -328,8 +328,7 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 	} else if (addr < 0xD000) {
 		if (addr < 0xC000) {
 			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
-			// High cartridge ROM is only visible when both EXROM and GAME are grounded
-			if (cartridge != NULL && !cartridge->exromIsHigh() && !cartridge->gameIsHigh()) {
+			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
 				return cartridge->peek(addr);
 			} else if (basicRomIsVisible) {
 				return rom[addr];
@@ -349,8 +348,13 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 				return charRomIsVisible ? rom[addr] : ram[addr];
 			}
 		} else {
-			// Kernel ROM
-			return kernelRomIsVisible ? rom[addr] : ram[addr];
+			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+				// ULTIMAX 0xE000 GAME low, EXROM high
+				return cartridge->peek(addr);
+			} else {
+				// Kernel ROM
+				return kernelRomIsVisible ? rom[addr] : ram[addr];	
+			}
 		}
 	}
 }
@@ -361,16 +365,12 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 
 void C64Memory::pokeRam(uint16_t addr, uint8_t value)             
 { 
-	if (cartridge != NULL && cartridgeRomIsVisible) {
-		cartridge->poke(addr, value);
-	} else {
-		ram[addr] = value;
-	}
+	ram[addr] = value;
 }
 
 void C64Memory::pokeRom(uint16_t addr, uint8_t value)             
 { 
-	if (cartridge != NULL && cartridgeRomIsVisible) {
+	if (cartridge != NULL && cartridge->isRomAddr(addr)) {
 		cartridge->poke(addr, value);
 	} else {
 		rom[addr] = value;
@@ -492,6 +492,7 @@ bool C64Memory::attachCartridge(Cartridge *c)
 	
 	// Cartridge rom is visible when EXROM or GAME lines are pulled low (grounded).
 	cartridgeRomIsVisible = c->exromIsHigh()==false || c->gameIsHigh()==false;
+	
 	printf ("Cartridge attached %d\n", cartridgeRomIsVisible);
 	return true;
 }
