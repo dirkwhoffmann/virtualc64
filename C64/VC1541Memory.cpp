@@ -67,7 +67,8 @@ VC1541Memory::is1541Rom(const char *filename)
 {
 	int magic_bytes[] = { 0x97, 0xAA, 0xAA, EOF };
 
-	assert(filename != NULL);
+	if (filename == NULL)
+		return false;
 	
 	if (!checkFileSize(filename, 0x4000, 0x4000))
 		return false;
