@@ -106,7 +106,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0 Beta 10</string>
+	<string>1.0 Beta 11</string>
 	<key>CFBundleSignature</key>
 	<string>vc64</string>
 	<key>NSMainNibFile</key>
