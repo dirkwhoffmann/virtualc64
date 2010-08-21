@@ -35,9 +35,9 @@ void MessageQueue::printMessage(Message *msg)
 		case MSG_HALT:
 			fprintf(stderr, "MSG_HALT");
 			break;
-		case MSG_DRAW:
-			fprintf(stderr, "MSG_DRAW");
-			break;
+		//case MSG_DRAW:
+		//	fprintf(stderr, "MSG_DRAW");
+		//	break;
 		case MSG_CPU:
 			fprintf(stderr, "MSG_CPU");
 			break;
@@ -98,9 +98,9 @@ Message *MessageQueue::getMessage()
 void MessageQueue::putMessage(int id, int i, void *p, const char *c) 
 { 
 	// If queue gets filled up, we don't accept any periodic messages any more...
-	if (queueGetsFilledUp() && id == MSG_DRAW) {
-		return;
-	}
+	//if (queueGetsFilledUp() && id == MSG_DRAW) {
+	//	return;
+	//}
 
 	pthread_mutex_lock(&lock);	
 		

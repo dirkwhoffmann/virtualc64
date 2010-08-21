@@ -20,6 +20,7 @@
 #define VICSCREEN_INC
 
 #import <Cocoa/Cocoa.h>
+#import <QuickTime/QuickTime.h>
 
 #define LIGHT_X_TAG 0
 #define THETA_TAG   1
@@ -107,7 +108,9 @@ const int BG_TEXTURE_DEPTH = 4;
 	C64 *c64;
     NSBitmapImageRep *theImage;
 	NSOpenGLContext *glcontext;
-	
+	CVDisplayLinkRef displayLink;
+	NSRecursiveLock *lock;
+
 	/* C64 screen texture data */
 	uint8_t data[TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXTURE_DEPTH];
 
@@ -134,6 +137,7 @@ const int BG_TEXTURE_DEPTH = 4;
 }
 
 - (void) prepare;
+- (void) cleanUp;
 - (void) setC64:(C64 *)c64;
 - (void) startAnimation;
 - (void) stopAnimation;
@@ -148,6 +152,7 @@ const int BG_TEXTURE_DEPTH = 4;
 - (int) isReadyToDraw;
 - (void) setReadyToDraw:(int)b;
 - (void) updateTexture:(int *)screenBuffer;
+-(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
 - (NSImage *)screenshot;
 
 // Graphics conversion methods

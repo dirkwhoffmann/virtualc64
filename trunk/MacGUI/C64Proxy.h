@@ -234,6 +234,7 @@
 - (void) todSetInterruptEnabled:(int)nr value:(bool)b;
 
 // VIC
+- (void *) vicScreenBuffer;
 - (NSColor *) vicGetColor:(VIC::ColorScheme)scheme nr:(int)nr;
 - (void) vicSetColor:(int)color rgba:(NSColor *)rgba;
 - (void) vicSetColorInt:(int)color rgba:(int)rgba;

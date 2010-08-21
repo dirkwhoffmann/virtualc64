@@ -1025,7 +1025,7 @@ void
 VIC::endFrame()
 {
 	// Frame complete. Notify listener...
-	c64->putMessage(MSG_DRAW, 0, currentScreenBuffer);
+	// c64->putMessage(MSG_DRAW, 0, currentScreenBuffer);
 	
 	// Switch frame buffer
 	currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;	

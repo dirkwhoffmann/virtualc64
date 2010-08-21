@@ -32,8 +32,6 @@
 
 	NSLog(@"initialize");
 	
-    self = [super init];
-
 	// Create a dictionary
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 		
@@ -189,7 +187,7 @@
 	cycleCount = 0;
 	timeStamp  = msec();
 	if (!timer)
-		timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/60.0f) 
+		timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/6.0f) 
 			    target:self 
 				selector:@selector(timerFunc) 
 			    userInfo:nil repeats:YES];
@@ -282,6 +280,9 @@
 	if (archive != NULL) {
 		[self showMountDialog];
 	}		
+
+	// 
+	[myGLView openMovie:[NSString stringWithUTF8String:"/Users/hoff/Movies/ClaudeShannon.mov"]];
 }
 
 
@@ -528,9 +529,9 @@
 			[self refresh];			
 			break;
 			
-		case MSG_DRAW:
-			[screen updateTexture:(int *)msg->p];
-			break;
+		//case MSG_DRAW:
+		//	[screen updateTexture:(int *)msg->p];
+		//	break;
 			
 		case MSG_CPU:
 			NSLog(@"cpuAction");
@@ -608,71 +609,54 @@
 }
 
 // --------------------------------------------------------------------------------
-//                The screen refresh loop (called via the 60 Hz timer)
+//                The screen refresh loop (callback function for NSTimer)
 // --------------------------------------------------------------------------------
 
 - (void)timerFunc
 {	
 	[timerLock lock];
 	
-	// Measure clock frequency and frame rate
-	float fps;
-	long currentTime   = 0;
-	long currentCycles = 0;
-	long currentFrames = 0;
-	long elapsedTime   = 0;
-	long elapsedCycles = 0;
-	long elapsedFrames = 0;
+	// Do 6 times a second...
 	animationCounter++;
 
-	// Do 60 times a second...
-	
+	// Process pending messages
 	Message *message;
 	while ((message = [c64 getMessage]) != NULL) {
-		// Process pending message
 		[self processMessage:message];
 	}
-		
-	if (enableOpenGL) {
-		[screen updateAngles];
-		[screen setNeedsDisplay:YES];
-	} 
-
-	// Do less times ... 
-	if (animationCounter & 0x07) {
-		goto exit;
-	}
 	
+	// Refresh debug panel if open
 	if ([c64 isRunning] && ([debug_panel state] == NSDrawerOpenState || [debug_panel state] == NSDrawerOpeningState)) {
-		// refresh debug panel information...
 		[self refresh];
 	}
-
-	// Do even less times...
-	if (animationCounter & 0x17) {
-		goto exit;
+	
+	// Do less times ... 
+	if ((animationCounter & 0x01) == 0) {	
+		[self measureEmulationSpeed];
 	}
 
+	[timerLock unlock];
+}
+
+- (void)measureEmulationSpeed
+{
 	// Measure clock frequency and frame rate
-	currentTime   = msec();
-	currentCycles = [c64 cpuGetCycles];
-	currentFrames = [screen getFrames];
-	elapsedTime   = currentTime - timeStamp;
-	elapsedCycles = currentCycles - cycleCount;
-	elapsedFrames = currentFrames - frameCount;
+	long currentTime   = msec();
+	long currentCycles = [c64 cpuGetCycles];
+	long currentFrames = [screen getFrames];
+	long elapsedTime   = currentTime - timeStamp;
+	long elapsedCycles = currentCycles - cycleCount;
+	long elapsedFrames = currentFrames - frameCount;
 	
 	// print how fast we're flying
 	mhz = (float)elapsedCycles / (float)elapsedTime;
-	fps = round(((float)(elapsedFrames * 1000000) / (float)elapsedTime));
+	float fps = round(((float)(elapsedFrames * 1000000) / (float)elapsedTime));
 	
 	[clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %02d fps", mhz, (int)fps]];
 	[clockSpeedBar setFloatValue:10.0 * (float)elapsedCycles / (float)elapsedTime];
 	timeStamp  = currentTime;
 	cycleCount = currentCycles;
 	frameCount = currentFrames;		
-
-exit:
-	[timerLock unlock];
 }
 
 // --------------------------------------------------------------------------------

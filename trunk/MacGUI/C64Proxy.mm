@@ -294,6 +294,7 @@
 // VIC
 // --------------------------------------------------------------------------
 
+- (void *) vicScreenBuffer { return c64->vic->screenBuffer(); }
 - (void) vicSetColorScheme:(VIC::ColorScheme)scheme { c64->vic->setColorScheme(scheme); }
 - (NSColor *) vicGetColor:(VIC::ColorScheme)scheme nr:(int)nr
 {
