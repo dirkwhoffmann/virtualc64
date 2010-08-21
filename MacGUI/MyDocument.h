@@ -27,7 +27,6 @@
 #import "Formatter.h"
 #import "Disassembler.h"
 #import "VICScreen.h"
-#import "MyOpenGLView.h"
 #import "MountDialog.h"
 #import "RomDialog.h"
 #import "PreferenceController.h"
@@ -70,7 +69,6 @@
 	
 	// Main screen
 	IBOutlet VICScreen *screen;
-    IBOutlet MyOpenGLView *myGLView;
 	IBOutlet NSDrawer *debug_panel;
 	IBOutlet NSButton *eject;
 	IBOutlet NSButton *drive;

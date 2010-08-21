@@ -280,9 +280,6 @@
 	if (archive != NULL) {
 		[self showMountDialog];
 	}		
-
-	// 
-	[myGLView openMovie:[NSString stringWithUTF8String:"/Users/hoff/Movies/ClaudeShannon.mov"]];
 }
 
 
