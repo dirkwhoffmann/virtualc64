@@ -40,7 +40,7 @@
 
 - (BOOL)isPartialStringValid:(NSString *)partialString newEditingString:(NSString **)newString errorDescription:(NSString **)error
 {
-	NSString *regexTestString = [NSString stringWithFormat:inFormat];
+	NSString *regexTestString = [NSString stringWithString:inFormat];
 	NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexTestString];
 	BOOL isOK = [regextest evaluateWithObject:partialString];
 
