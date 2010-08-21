@@ -28,6 +28,16 @@ const float BG_TEX_RIGHT  = 642.0 / BG_TEXTURE_WIDTH;
 const float BG_TEX_TOP    = 0.0; 
 const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 
+static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink, 
+								 const CVTimeStamp *inNow, 
+								 const CVTimeStamp *inOutputTime, 
+								 CVOptionFlags flagsIn, 
+								 CVOptionFlags *flagsOut, 
+                                 void *displayLinkContext)
+{
+	return [(VICScreen *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
+}
+
 @implementation VICScreen
 
 // --------------------------------------------------------------------------------
@@ -51,6 +61,34 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	return self;
 }
 
+- (void) dealloc {
+	[self cleanUp];
+    [super dealloc];
+}
+
+-(void)cleanUp
+{    
+	NSLog(@"Deallocating OpenGL ressources");
+	
+	// release display link
+    if (displayLink) {
+    	CVDisplayLinkStop(displayLink);
+        CVDisplayLinkRelease(displayLink);
+        displayLink = NULL;
+    }
+    
+	// release current frame
+    //if (currentFrame) {
+    //	CVOpenGLTextureRelease(currentFrame);
+    //    currentFrame = NULL;
+    //}
+	    
+    if (lock) {
+    	[lock release];
+        lock = nil;
+    }
+}
+
 
 // --------------------------------------------------------------------------------
 //                                 Getter and Setter
@@ -72,9 +110,7 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 // --------------------------------------------------------------------------------
 
 - (void)updateAngles
-{
-	// Set target angles
-	
+{	
 	// Update current angles
 	if (currentXAngle != targetXAngle || 
 		currentYAngle != targetYAngle || 
@@ -321,6 +357,10 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 
 - (void)prepare
 {
+	NSLog(@"VICScreen::prepare");
+
+	// Core video
+	displayLink = nil;
 
 	// Keyboard
 	for (int i = 0; i < 256; i++) {
@@ -355,7 +395,19 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	readyToDraw = NO;
 	screenBuffer = NULL;
 	
-	// Open GL initialization
+	// Drag and Drop
+	[self registerForDraggedTypes:
+	 [NSArray arrayWithObject:NSFilenamesPboardType]];
+	
+	// Start animation
+	currentDistance= 6;
+}
+
+- (void)prepareOpenGL
+{
+	NSLog(@"VICScreen::prepareOpenGL");	
+
+	// Set up context
 	glcontext = [self openGLContext];
 	[glcontext makeCurrentContext];
 	
@@ -385,17 +437,23 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	NSImage *bgImage = [NSImage imageNamed:@"c64"];
 	NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
 	bgTexture = [self makeTexture:bgImageResized];
-	
-	// Sync screen refresh to the monitor refresh rate
+		
+	// Turn on synchronization
 	const GLint VBL = 1;
-	CGLSetParameter(CGLGetCurrentContext(),  kCGLCPSwapInterval, &VBL);
+	[[self openGLContext] setValues:&VBL forParameter:NSOpenGLCPSwapInterval];
 	
-	// Drag and Drop
-	[self registerForDraggedTypes:
-		[NSArray arrayWithObject:NSFilenamesPboardType]];
-
-	// Start animation
-	currentDistance= 6;
+    // Create display link for the main display
+    CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
+    if (NULL != displayLink) {
+    	// set the current display of a display link.
+    	CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay);
+        
+        // set the renderer output callback function
+    	CVDisplayLinkSetOutputCallback(displayLink, &MyRenderCallback, self);
+        
+        // activates a display link.
+    	CVDisplayLinkStart(displayLink);
+    }	
 }
 
 - (void) reshape
@@ -427,8 +485,43 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	// Can't we update the texture data here? 	
 }
 
+- (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
+{
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+
+#if 0
+	// Process pending messages from message queue
+	Message *message;
+	while ((message = [c64 getMessage]) != NULL) {
+		// Process pending message
+		[self processMessage:message];
+	}
+#endif
+	
+	// Update angles for screen animation
+	[self updateAngles];
+	
+	// Get texture data from C64
+	[glcontext makeCurrentContext];
+	glBindTexture(GL_TEXTURE_2D, texture);			
+
+	if (c64) {
+		void *buf = c64->vic->screenBuffer(); 
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIC::TOTAL_SCREEN_WIDTH, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+	}
+
+	// Draw scene
+   	[self drawRect:NSZeroRect];
+    
+    [pool release];
+	
+	return kCVReturnSuccess;
+}
+
 - (void)drawRect:(NSRect)r
 {	
+	[lock lock]; 
+
 	bool animation = false;
 	
 	// Check if we need to transform geometry etc.
@@ -494,23 +587,19 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 	// Zoom in or zoom out
 	glTranslatef(0, 0, -currentDistance);
 	
-	glBindTexture(GL_TEXTURE_2D, texture);			
-	if (screenBuffer != NULL) {
-		if (c64->isHalted()) {
-			// If emulation is halted, we brighten up the display by adding some fog...
-			GLfloat fogColor[4]= {1.0f, 1.0f, 1.0f, 1.0f};
-			glFogfv(GL_FOG_COLOR, fogColor);
-			glFogi(GL_FOG_MODE, GL_EXP);
-			glFogf(GL_FOG_DENSITY, 1.0f);				
-			glHint(GL_FOG_HINT, GL_DONT_CARE);	
-			glFogf(GL_FOG_START, 0.0f);	
-			glFogf(GL_FOG_END, 2.0f);
-			glEnable(GL_FOG);	
-		} else {
-			glDisable(GL_FOG);
-		}		
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIC::TOTAL_SCREEN_WIDTH, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer);
-	}
+	// If emulation is halted, we brighten up the display by adding some fog...
+	if (!c64 || c64->isHalted()) {
+		GLfloat fogColor[4]= {1.0f, 1.0f, 1.0f, 1.0f};
+		glFogfv(GL_FOG_COLOR, fogColor);
+		glFogi(GL_FOG_MODE, GL_EXP);
+		glFogf(GL_FOG_DENSITY, 1.0f);				
+		glHint(GL_FOG_HINT, GL_DONT_CARE);	
+		glFogf(GL_FOG_START, 0.0f);	
+		glFogf(GL_FOG_END, 2.0f);
+		glEnable(GL_FOG);	
+	} else {
+		glDisable(GL_FOG);
+	}		
 
 	glBindTexture(GL_TEXTURE_2D, texture);		
 	glBegin(GL_QUADS);			
@@ -583,6 +672,8 @@ const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
 		// Flush screen
 	    glFinish();
 		[glcontext flushBuffer];
+
+    [lock unlock];
 }
 
 - (NSImage *)screenshot
