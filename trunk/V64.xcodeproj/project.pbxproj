@@ -71,7 +71,6 @@
 		50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50A8F8F20E47171300ACE17D /* RomDialog.mm */; };
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
-		50B10318121E7B54003E7729 /* MyOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B10317121E7B54003E7729 /* MyOpenGLView.mm */; };
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
 		50B10333121E7C5C003E7729 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B10332121E7C5C003E7729 /* QuickTime.framework */; };
 		50B10338121E7C70003E7729 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B10337121E7C70003E7729 /* QuartzCore.framework */; };
@@ -206,8 +205,6 @@
 		50A8F8F20E47171300ACE17D /* RomDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RomDialog.mm; sourceTree = "<group>"; };
 		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = romMissing.png; path = images/romMissing.png; sourceTree = "<group>"; };
 		50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Archive.cpp; sourceTree = "<group>"; };
-		50B10316121E7B54003E7729 /* MyOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOpenGLView.h; sourceTree = "<group>"; };
-		50B10317121E7B54003E7729 /* MyOpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyOpenGLView.mm; sourceTree = "<group>"; };
 		50B1032E121E7C4C003E7729 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		50B10332121E7C5C003E7729 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		50B10337121E7C70003E7729 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -408,8 +405,6 @@
 		50176C6D0A6F7357009E80BD /* MacGUI */ = {
 			isa = PBXGroup;
 			children = (
-				50B10316121E7B54003E7729 /* MyOpenGLView.h */,
-				50B10317121E7B54003E7729 /* MyOpenGLView.mm */,
 				BC8146860FE54238007ED085 /* JoystickManager.h */,
 				BC8146870FE54238007ED085 /* JoystickManager.mm */,
 				50176C720A6F7357009E80BD /* Formatter.h */,
@@ -673,7 +668,6 @@
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
-				50B10318121E7B54003E7729 /* MyOpenGLView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
