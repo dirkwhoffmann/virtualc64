@@ -110,11 +110,17 @@
 {
 	NSLog(@"windowWillClose");
 	
+	// stop timer
 	[timer invalidate];
 	timer = nil;
 
+	// stop OpenGL view
+	[screen cleanUp];
+	
+	// release C64
 	[timerLock lock];
 	[c64 release];
+	c64 = nil;
 	[timerLock unlock];
 	
 	delete joystickManager;
