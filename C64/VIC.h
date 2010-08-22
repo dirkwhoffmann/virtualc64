@@ -56,7 +56,7 @@ public:
 		C64SALLY        = 0x09,
 		PEPTO           = 0x0A,
 		GRAYSCALE       = 0x0B,
-		CUSTOM_PALETTE  = 0xFF,
+		CUSTOM_PALETTE  = 0xFF
 	};
 	
 	//! Display mode
@@ -69,7 +69,7 @@ public:
 		STANDARD_BITMAP           = 0x20,
 		MULTICOLOR_BITMAP         = 0x30,
 		EXTENDED_BACKGROUND_COLOR = 0x40,
-		INVALID_DISPLAY_MODE      = 0x01,
+		INVALID_DISPLAY_MODE      = 0x01
 	};
 
 	//! Screen geometry
@@ -78,7 +78,7 @@ public:
 		COL_40_ROW_25 = 0x01,
 		COL_38_ROW_25 = 0x02,
 		COL_40_ROW_24 = 0x03,
-		COL_38_ROW_24 = 0x04,
+		COL_38_ROW_24 = 0x04
 	};
 
 	enum Color {
@@ -97,7 +97,7 @@ public:
 		GREY2   = 0x0C,
 		LTGREEN = 0x0D,
 		LTBLUE  = 0x0E,
-		GREY3   = 0x0F,
+		GREY3   = 0x0F
 	};
 		
 	//! Start address of the VIC I/O space

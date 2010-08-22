@@ -78,8 +78,8 @@ CPU::reset()
 	irqLine = 0;
 	nmiLine = 0;
 	nmiNegEdge = false;
-	nextPossibleIrqCycle = 0LL;
-	nextPossibleNmiCycle = 0LL;
+	nextPossibleIrqCycle = 0UL;
+	nextPossibleNmiCycle = 0UL;
 	
 	errorState = OK;
 	next = &CPU::fetch;

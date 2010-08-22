@@ -22,7 +22,6 @@ const float TEX_LEFT   = 0.0 / ((float)TEXTURE_WIDTH);
 const float TEX_RIGHT  = (VIC::SCREEN_WIDTH+2*VIC::BORDER_WIDTH) / ((float)TEXTURE_WIDTH);
 const float TEX_TOP    = 37.0 / ((float)TEXTURE_HEIGHT);
 const float TEX_BOTTOM = 263.0 / ((float)TEXTURE_HEIGHT);
-
 const float BG_TEX_LEFT   = 0.0; 
 const float BG_TEX_RIGHT  = 642.0 / BG_TEXTURE_WIDTH;
 const float BG_TEX_TOP    = 0.0; 
@@ -46,19 +45,69 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 
 - (id)initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)pixFmt
 {
-	if ((self = [super initWithFrame:frameRect pixelFormat:pixFmt]) != nil) {
-		[self prepare];
-	} else {
-		NSLog(@"Can't initiaize OpenGL view\n");
+	NSLog(@"VICScreen::initWithFrame");
+	
+	if ((self = [super initWithFrame:frameRect pixelFormat:pixFmt]) == nil) {
+		NSLog(@"ERROR: Can't initiaize VICscreen\n");
 	}
 	return self;
 }
 
 - (id)initWithCoder:(NSCoder *)c
 {
-	self = [super initWithCoder:c];
-	[self prepare];
-	return self;
+	NSLog(@"VICScreen::initWithCoder");
+
+	if ((self = [super initWithCoder:c]) == nil) {
+		NSLog(@"ERROR: Can't initiaize VICscreen\n");
+	}
+		return self;
+}
+
+-(void)awakeFromNib
+{
+	NSLog(@"VICScreen::awakeFromNib");
+	
+	// Lock around draw method
+	lock = [NSRecursiveLock new];
+		
+	// Core video
+	displayLink = nil;
+	
+	// Graphics
+	frames = 0;
+
+	// Keyboard
+	for (int i = 0; i < 256; i++) {
+		kb[i] = 0xff;
+	}
+	emulateJoystick1 = emulateJoystick2 = false;
+	
+	//              0                    1                     2                     3                   4                       5                     6                   7
+	// 
+	// 0           DEL                 RETURN                CUR LR                  F7                 F1                      F3                    F5                 CUR UD
+	// 1            3                    W                     A                     4                   Z                       S                     E                 LSHIFT
+	// 2            5                    R                     D                     6                   C                       F                     T                   X
+	// 3            7                    Y                     G                     8                   B                       H                     U                   V
+	// 4            9                    I                     J                     0                   M                       K                     O                   N
+	// 5            +                    P                     L                     -                   .                       :                     @                   ,
+	// 6           LIRA                  *                     ;                   HOME               RSHIFT                     =                     ^                   /
+	// 7            1                   <-                    CTRL                   2                 SPACE                     C=                    Q                  STOP		
+	kb[MAC_DEL] = 0x0000; kb[MAC_RET] = 0x0001; kb[MAC_CR]  = 0x0002; kb[MAC_F7]  = 0x0003;  kb[MAC_F1]  = 0x0004;   kb[MAC_F3]  = 0x0005;  kb[MAC_F5]  = 0x0006; kb[MAC_CD]  = 0x0007;	
+	kb[MAC_3]   = 0x0100; kb[MAC_W]   = 0x0101; kb[MAC_A]   = 0x0102; kb[MAC_4]   = 0x0103;  kb[MAC_Z]   = 0x0104;   kb[MAC_S]   = 0x0105;  kb[MAC_E]   = 0x0106; 
+	kb[MAC_5]   = 0x0200; kb[MAC_R]   = 0x0201; kb[MAC_D]   = 0x0202; kb[MAC_6]   = 0x0203;  kb[MAC_C]   = 0x0204;   kb[MAC_F]   = 0x0205;  kb[MAC_T]   = 0x0206; kb[MAC_X]   = 0x0207;	
+	kb[MAC_7]   = 0x0300; kb[MAC_Y]   = 0x0301; kb[MAC_G]   = 0x0302; kb[MAC_8]   = 0x0303;  kb[MAC_B]   = 0x0304;   kb[MAC_H]   = 0x0305;  kb[MAC_U]   = 0x0306; kb[MAC_V]   = 0x0307;	
+	kb[MAC_9]   = 0x0400; kb[MAC_I]   = 0x0401; kb[MAC_J]   = 0x0402; kb[MAC_0]   = 0x0403;  kb[MAC_M]   = 0x0404;   kb[MAC_K]   = 0x0405;  kb[MAC_O]   = 0x0406; kb[MAC_N]   = 0x0407;	
+	kb[MAC_PLS] = 0x0500; kb[MAC_P]   = 0x0501; kb[MAC_L]   = 0x0502; kb[MAC_MNS] = 0x0503;  kb[MAC_DOT] = 0x0504;                                                kb[MAC_COM] = 0x0507;	
+	kb[MAC_HAT] = 0x0606; kb[MAC_DIV] = 0x0607;
+	kb[MAC_1]   = 0x0700; kb[MAC_CMP] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706;
+	
+	
+	// Drag and Drop
+	[self registerForDraggedTypes:
+	 [NSArray arrayWithObject:NSFilenamesPboardType]];
+	
+	// Initial scene position (for animation)
+	currentDistance= 6;
 }
 
 - (void) dealloc {
@@ -87,6 +136,65 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
     	[lock release];
         lock = nil;
     }
+}
+
+- (void)prepareOpenGL
+{
+	NSLog(@"VICScreen::prepareOpenGL");	
+	
+	// Set up context
+	glcontext = [self openGLContext];
+	assert(glcontext != NULL);
+	[glcontext makeCurrentContext];
+	
+	// Configure the view
+	glShadeModel(GL_SMOOTH);
+	glEnable(GL_DEPTH_TEST); 
+	
+	// Disable everything we don't need
+	glDisable(GL_DITHER);
+	glDisable(GL_ALPHA_TEST);
+	glDisable(GL_BLEND);
+	glDisable(GL_STENCIL_TEST);
+	glDisable(GL_FOG);
+	
+	glEnable(GL_TEXTURE_2D);
+	
+	// Create screen texture
+	glGenTextures(1, (GLuint *)&texture);
+	glBindTexture(GL_TEXTURE_2D, texture);	
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	
+	// Create background texture
+	NSImage *bgImage = [NSImage imageNamed:@"c64"];
+	NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
+	bgTexture = [self makeTexture:bgImageResized];
+	
+	// Turn on synchronization
+	const GLint VBL = 1;
+	[[self openGLContext] setValues:&VBL forParameter:NSOpenGLCPSwapInterval];
+	
+    // Create display link for the main display
+	NSLog(@"CVDisplayLinkCreateWithCGDisplay");
+    CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
+	
+    if (displayLink != NULL) {
+    	// set the current display of a display link.
+		NSLog(@"CVDisplayLinkSetCurrentCGDisplay");
+    	CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay);
+        
+        // set the renderer output callback function
+		NSLog(@"CVDisplayLinkSetOutputCallback");
+    	CVDisplayLinkSetOutputCallback(displayLink, &MyRenderCallback, self);
+        
+        // activates a display link.
+		NSLog(@"CVDisplayLinkStart");
+    	CVDisplayLinkStart(displayLink);
+    }	
 }
 
 
@@ -343,111 +451,6 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 					  [imgBitmap bitmapData]);
 	[imgBitmap release];
 	return tid;
-}
-
-- (void)prepare
-{
-	NSLog(@"VICScreen::prepare");
-
-	// Core video
-	displayLink = nil;
-
-	// Keyboard
-	for (int i = 0; i < 256; i++) {
-		kb[i] = 0xff;
-	}
-	emulateJoystick1 = emulateJoystick2 = false;
-
-	// Lookup table:
-	//       
-	//              0                    1                     2                     3                   4                       5                     6                   7
-	// 
-	// 0           DEL                 RETURN                CUR LR                  F7                 F1                      F3                    F5                 CUR UD
-	// 1            3                    W                     A                     4                   Z                       S                     E                 LSHIFT
-	// 2            5                    R                     D                     6                   C                       F                     T                   X
-	// 3            7                    Y                     G                     8                   B                       H                     U                   V
-	// 4            9                    I                     J                     0                   M                       K                     O                   N
-	// 5            +                    P                     L                     -                   .                       :                     @                   ,
-	// 6           LIRA                  *                     ;                   HOME               RSHIFT                     =                     ^                   /
-	// 7            1                   <-                    CTRL                   2                 SPACE                     C=                    Q                  STOP		
-	
-	kb[MAC_DEL] = 0x0000; kb[MAC_RET] = 0x0001; kb[MAC_CR]  = 0x0002; kb[MAC_F7]  = 0x0003;  kb[MAC_F1]  = 0x0004;   kb[MAC_F3]  = 0x0005;  kb[MAC_F5]  = 0x0006; kb[MAC_CD]  = 0x0007;	
-	kb[MAC_3]   = 0x0100; kb[MAC_W]   = 0x0101; kb[MAC_A]   = 0x0102; kb[MAC_4]   = 0x0103;  kb[MAC_Z]   = 0x0104;   kb[MAC_S]   = 0x0105;  kb[MAC_E]   = 0x0106; 
-	kb[MAC_5]   = 0x0200; kb[MAC_R]   = 0x0201; kb[MAC_D]   = 0x0202; kb[MAC_6]   = 0x0203;  kb[MAC_C]   = 0x0204;   kb[MAC_F]   = 0x0205;  kb[MAC_T]   = 0x0206; kb[MAC_X]   = 0x0207;	
-	kb[MAC_7]   = 0x0300; kb[MAC_Y]   = 0x0301; kb[MAC_G]   = 0x0302; kb[MAC_8]   = 0x0303;  kb[MAC_B]   = 0x0304;   kb[MAC_H]   = 0x0305;  kb[MAC_U]   = 0x0306; kb[MAC_V]   = 0x0307;	
-	kb[MAC_9]   = 0x0400; kb[MAC_I]   = 0x0401; kb[MAC_J]   = 0x0402; kb[MAC_0]   = 0x0403;  kb[MAC_M]   = 0x0404;   kb[MAC_K]   = 0x0405;  kb[MAC_O]   = 0x0406; kb[MAC_N]   = 0x0407;	
-	kb[MAC_PLS] = 0x0500; kb[MAC_P]   = 0x0501; kb[MAC_L]   = 0x0502; kb[MAC_MNS] = 0x0503;  kb[MAC_DOT] = 0x0504;                                                kb[MAC_COM] = 0x0507;	
-																																			kb[MAC_HAT] = 0x0606; kb[MAC_DIV] = 0x0607;
-	kb[MAC_1]   = 0x0700; kb[MAC_CMP] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706;
-	
-	// Graphics
-	frames = 0;
-	
-	// Drag and Drop
-	[self registerForDraggedTypes:
-	 [NSArray arrayWithObject:NSFilenamesPboardType]];
-	
-	// Start animation
-	currentDistance= 6;
-}
-
-- (void)prepareOpenGL
-{
-	NSLog(@"VICScreen::prepareOpenGL");	
-
-	// Set up context
-	glcontext = [self openGLContext];
-	assert(glcontext != NULL);
-	[glcontext makeCurrentContext];
-	
-	// Configure the view
-	glShadeModel(GL_SMOOTH);
-	glEnable(GL_DEPTH_TEST); 
-
-	// Disable everything we don't need
-	glDisable(GL_DITHER);
-	glDisable(GL_ALPHA_TEST);
-	glDisable(GL_BLEND);
-	glDisable(GL_STENCIL_TEST);
-	glDisable(GL_FOG);
-
-	glEnable(GL_TEXTURE_2D);
-	
-	// Create screen texture
-	glGenTextures(1, (GLuint *)&texture);
-	glBindTexture(GL_TEXTURE_2D, texture);	
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	
-	// Create background texture
-	NSImage *bgImage = [NSImage imageNamed:@"c64"];
-	NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
-	bgTexture = [self makeTexture:bgImageResized];
-		
-	// Turn on synchronization
-	const GLint VBL = 1;
-	[[self openGLContext] setValues:&VBL forParameter:NSOpenGLCPSwapInterval];
-	
-    // Create display link for the main display
-	NSLog(@"CVDisplayLinkCreateWithCGDisplay");
-    CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
-
-    if (displayLink != NULL) {
-    	// set the current display of a display link.
-		NSLog(@"CVDisplayLinkSetCurrentCGDisplay");
-    	CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay);
-        
-        // set the renderer output callback function
-		NSLog(@"CVDisplayLinkSetOutputCallback");
-    	CVDisplayLinkSetOutputCallback(displayLink, &MyRenderCallback, self);
-        
-        // activates a display link.
-		NSLog(@"CVDisplayLinkStart");
-    	CVDisplayLinkStart(displayLink);
-    }	
 }
 
 - (void) reshape

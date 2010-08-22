@@ -171,11 +171,11 @@ void C64::reset()
 	floppy->reset();
 
 	// archive = NULL;
-	cycles = 0LL;
+	cycles = 0UL;
 	frame = 0;
 	rasterline = 0;
 	rasterlineCycle = 1;
-	targetTime = 0LL;
+	targetTime = 0UL;
 
 	resume();
 }
