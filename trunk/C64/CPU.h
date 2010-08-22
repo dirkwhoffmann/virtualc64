@@ -58,7 +58,7 @@ public:
 		SOFT_BREAKPOINT_REACHED,
 		HARD_BREAKPOINT_REACHED,
 		WATCHPOINT_REACHED,
-		ILLEGAL_INSTRUCTION,
+		ILLEGAL_INSTRUCTION
 	};
 
 	//! Breakpoint type
@@ -71,7 +71,7 @@ public:
 	enum Breakpoint {
 		NO_BREAKPOINT   = 0x00,
 		HARD_BREAKPOINT = 0x01,
-		SOFT_BREAKPOINT = 0x02,
+		SOFT_BREAKPOINT = 0x02
 	};
 
 	//! Clock frequency of the original C64 (NTSC version) in Hz

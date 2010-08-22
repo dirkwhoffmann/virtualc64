@@ -129,7 +129,6 @@ const int BG_TEXTURE_DEPTH = 4;
 	GLuint bgTexture; // Background	
 }
 
-- (void) prepare;
 - (void) cleanUp;
 - (void) setC64:(C64 *)c64;
 - (void) startAnimation;

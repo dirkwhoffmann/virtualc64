@@ -271,7 +271,7 @@ public:
 	enum WatchpointType {
 		NO_WATCHPOINT   = 0x00,
 		WATCH_FOR_ALL   = 0x01,
-		WATCH_FOR_VALUE = 0x02,
+		WATCH_FOR_VALUE = 0x02
 	};
 	
 	//! Returns the watchpoint tag of the specified address

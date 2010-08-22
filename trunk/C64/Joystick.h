@@ -29,7 +29,7 @@ enum JoystickAxisState
 	
 	JOYSTICK_AXIS_Y_UP = -1,
 	JOYSTICK_AXIS_Y_DOWN = 1,
-	JOYSTICK_AXIS_Y_NONE = 0,
+	JOYSTICK_AXIS_Y_NONE = 0
 };
 
 class Joystick
