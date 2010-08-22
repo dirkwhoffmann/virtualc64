@@ -98,8 +98,8 @@ const int TEXTURE_WIDTH = 512;
 const int TEXTURE_HEIGHT= 512;
 const int TEXTURE_DEPTH = 4;
 
-const int BG_TEXTURE_WIDTH = 1024; // 512;
-const int BG_TEXTURE_HEIGHT= 512; // 512;
+const int BG_TEXTURE_WIDTH = 1024;
+const int BG_TEXTURE_HEIGHT= 512;
 const int BG_TEXTURE_DEPTH = 4;
 
 @interface VICScreen : NSOpenGLView
@@ -111,11 +111,6 @@ const int BG_TEXTURE_DEPTH = 4;
 	CVDisplayLinkRef displayLink;
 	NSRecursiveLock *lock;
 
-	/* C64 screen texture data */
-	uint8_t data[TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXTURE_DEPTH];
-
-	int *screenBuffer;
-	bool highlighted;
 	bool emulateJoystick1;
 	bool emulateJoystick2;
 	float currentXAngle, targetXAngle, deltaX;
@@ -124,16 +119,14 @@ const int BG_TEXTURE_DEPTH = 4;
 	float currentDistance, targetDistance, deltaDistance;
 	float currentZoffset, targetZoffeset, deltaOffset;
 	int frames;
-	int readyToDraw;
-	
-	// C64 texture
-	GLuint texture;
-	
-	// Background texture
-	GLuint bgTexture;
 	
 	// Mapping from Mac keycode to the C64 row/column format
 	uint16_t kb[256];
+
+	// Textures
+	uint8_t data[TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXTURE_DEPTH];
+	GLuint texture;   // C64 screen
+	GLuint bgTexture; // Background	
 }
 
 - (void) prepare;
@@ -149,9 +142,6 @@ const int BG_TEXTURE_DEPTH = 4;
 - (void) toggleFullscreenMode;
 - (int) getFrames;
 - (void) updateAngles;
-- (int) isReadyToDraw;
-- (void) setReadyToDraw:(int)b;
-- (void) updateTexture:(int *)screenBuffer;
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
 - (NSImage *)screenshot;
 

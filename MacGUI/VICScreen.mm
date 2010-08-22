@@ -140,16 +140,6 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	}
 }
 
-- (void)setReadyToDraw:(int)b
-{
-	readyToDraw = b;
-}
-
-- (int)isReadyToDraw
-{
-	return readyToDraw;
-}
-
 - (void)startAnimation
 {	
 	const int ANIM_CYCLES = 60; // 1 sec.
@@ -392,8 +382,6 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	
 	// Graphics
 	frames = 0;
-	readyToDraw = NO;
-	screenBuffer = NULL;
 	
 	// Drag and Drop
 	[self registerForDraggedTypes:
@@ -409,6 +397,7 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 
 	// Set up context
 	glcontext = [self openGLContext];
+	assert(glcontext != NULL);
 	[glcontext makeCurrentContext];
 	
 	// Configure the view
@@ -443,15 +432,20 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	[[self openGLContext] setValues:&VBL forParameter:NSOpenGLCPSwapInterval];
 	
     // Create display link for the main display
+	NSLog(@"CVDisplayLinkCreateWithCGDisplay");
     CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
-    if (NULL != displayLink) {
+
+    if (displayLink != NULL) {
     	// set the current display of a display link.
+		NSLog(@"CVDisplayLinkSetCurrentCGDisplay");
     	CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay);
         
         // set the renderer output callback function
+		NSLog(@"CVDisplayLinkSetOutputCallback");
     	CVDisplayLinkSetOutputCallback(displayLink, &MyRenderCallback, self);
         
         // activates a display link.
+		NSLog(@"CVDisplayLinkStart");
     	CVDisplayLinkStart(displayLink);
     }	
 }
@@ -468,35 +462,9 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	gluPerspective(60.0, rect.size.width/rect.size.height, 0.2, 7);
 }
 
-
-- (void) awakeFromNib
-{
-}
-
-//- (void)windowControllerDidLoadNib:(NSWindowController *) aController
-//{
-//}
-
-- (void) updateTexture:(int *)buffer
-{
-	assert(buffer != NULL);
-	screenBuffer = buffer;
-	
-	// Can't we update the texture data here? 	
-}
-
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
 {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-
-#if 0
-	// Process pending messages from message queue
-	Message *message;
-	while ((message = [c64 getMessage]) != NULL) {
-		// Process pending message
-		[self processMessage:message];
-	}
-#endif
 	
 	// Update angles for screen animation
 	[self updateAngles];
@@ -522,11 +490,13 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 {	
 	[lock lock]; 
 
-	bool animation = false;
+	bool animation;
 	
-	// Check if we need to transform geometry etc.
     if (currentXAngle != targetXAngle || currentYAngle != targetYAngle || currentZAngle != targetZAngle || currentDistance != targetDistance) {
 		animation = true;
+	} else {
+		
+		animation = false;
 	}
 		
 	frames++;
@@ -887,7 +857,7 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 		NSString *type = [pb availableTypeFromArray:
 			[NSArray arrayWithObject:NSFilenamesPboardType]];
 		if (type != nil) {
-			[self setNeedsDisplay:YES];
+			// [self setNeedsDisplay:YES];
 			return NSDragOperationCopy;
 		}
 	}
@@ -896,7 +866,7 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
-	[self setNeedsDisplay:YES];
+	// [self setNeedsDisplay:YES];
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
@@ -963,7 +933,7 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender
 {
-	[self setNeedsDisplay:YES];
+	// [self setNeedsDisplay:YES];
 }
 
 @end

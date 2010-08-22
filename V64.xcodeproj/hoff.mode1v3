@@ -202,7 +202,7 @@
 				<key>PBXProjectModuleGUID</key>
 				<string>5024FD6612213D1C0043E54C</string>
 				<key>PBXProjectModuleLabel</key>
-				<string>VirtualComponent.h</string>
+				<string>VICScreen.mm</string>
 				<key>PBXSplitModuleInNavigatorKey</key>
 				<dict>
 					<key>Split0</key>
@@ -210,17 +210,18 @@
 						<key>PBXProjectModuleGUID</key>
 						<string>5024FDB6122144BE0043E54C</string>
 						<key>PBXProjectModuleLabel</key>
-						<string>VirtualComponent.h</string>
+						<string>VICScreen.mm</string>
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>50B8CE3A122155770055D778</string>
+						<string>50B8CE8D12215A7F0055D778</string>
 						<key>history</key>
 						<array>
 							<string>5024FDB7122144BE0043E54C</string>
 							<string>5024FDB8122144BE0043E54C</string>
 							<string>50B8CDE612214DCC0055D778</string>
-							<string>50B8CDC312214C730055D778</string>
+							<string>50B8CE4A122156690055D778</string>
+							<string>50B8CE401221563C0055D778</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -332,7 +333,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 367}, {241, 812}}</string>
+							<string>{{0, 223}, {241, 812}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -381,7 +382,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>50B8CE39122155770055D778</string>
+										<string>50B8CE8C12215A7F0055D778</string>
 										<key>history</key>
 										<array>
 											<string>50558A680C48CC9400FDF0CA</string>
@@ -456,7 +457,6 @@
 											<string>5047EB44121ED13F007922A2</string>
 											<string>5047EBB2121FC3B2007922A2</string>
 											<string>5061BED5121FE01D008EE816</string>
-											<string>5061BED6121FE01D008EE816</string>
 											<string>5061BED8121FE01D008EE816</string>
 											<string>5024FD3B122133720043E54C</string>
 											<string>5024FDA7122144BE0043E54C</string>
@@ -478,15 +478,16 @@
 											<string>50B8CDFE122150C30055D778</string>
 											<string>50B8CDFF122150C30055D778</string>
 											<string>50B8CE01122150C30055D778</string>
-											<string>50B8CE19122154520055D778</string>
 											<string>50B8CE1A122154520055D778</string>
 											<string>50B8CE1B122154520055D778</string>
 											<string>50B8CE1C122154520055D778</string>
 											<string>50B8CE1D122154520055D778</string>
 											<string>50B8CE1E122154520055D778</string>
-											<string>50B8CE281221550F0055D778</string>
-											<string>50B8CE291221550F0055D778</string>
-											<string>50B8CE2A1221550F0055D778</string>
+											<string>50B8CE46122156690055D778</string>
+											<string>50B8CE5B122158300055D778</string>
+											<string>50B8CE78122159D30055D778</string>
+											<string>50B8CE8A12215A7F0055D778</string>
+											<string>50B8CE8B12215A7F0055D778</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -682,7 +683,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>50B8CE3B122155770055D778</string>
 		<string>50B8CDF012214DCC0055D778</string>
 		<string>50B8CDF112214DCC0055D778</string>
 		<string>1CD10A99069EF8BA00B06720</string>
@@ -708,12 +708,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>SID.cpp</string>
+								<string>VICScreen.mm</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -730,8 +732,6 @@
 							<string>509pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>

@@ -1285,6 +1285,6 @@ void
 C64::threadCleanup()
 {
 	p = NULL;
-	debug(1, "Execution thread terminated\n");
+	debug(1, "Execution thread cleanup\n");
 }
 
