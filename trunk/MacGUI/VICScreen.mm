@@ -158,9 +158,8 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	glDisable(GL_STENCIL_TEST);
 	glDisable(GL_FOG);
 	
+	// Create C64 monitor texture
 	glEnable(GL_TEXTURE_2D);
-	
-	// Create screen texture
 	glGenTextures(1, (GLuint *)&texture);
 	glBindTexture(GL_TEXTURE_2D, texture);	
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -453,16 +452,27 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	return tid;
 }
 
+- (void)update
+{
+    [lock lock];
+	[super update];
+    [lock unlock];
+}
+
 - (void) reshape
 {
 	NSRect rect = [self bounds]; 
 	// NSLog(@"%@ reshape (%d %d)", self, (int)rect.size.width, (int)rect.size.height);
 
 	[glcontext makeCurrentContext];
+	
 	glViewport(0, 0, (int)rect.size.width, (int)rect.size.height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
+	
 	gluPerspective(60.0, rect.size.width/rect.size.height, 0.2, 7);
+    glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
@@ -492,23 +502,14 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 - (void)drawRect:(NSRect)r
 {	
 	[lock lock]; 
-
-	bool animation;
-	
-    if (currentXAngle != targetXAngle || currentYAngle != targetYAngle || currentZAngle != targetZAngle || currentDistance != targetDistance) {
-		animation = true;
-	} else {
-		
-		animation = false;
-	}
 		
 	frames++;
 
 	[glcontext makeCurrentContext];
 
 	// Clear screen and depth buffer
-	uint32_t col = 0xffffffff;
-	glClearColor((float)EXTRACT_RED(col)/0xff, (float)EXTRACT_GREEN(col)/0xff, (float)EXTRACT_BLUE(col)/0xff, 0.0);
+	//uint32_t col = 0xffffffff;
+	//glClearColor((float)EXTRACT_RED(col)/0xff, (float)EXTRACT_GREEN(col)/0xff, (float)EXTRACT_BLUE(col)/0xff, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Select screen texture
@@ -528,6 +529,10 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	//	NSLog(@"eyeX = %f eyeY = %f eyeZ = %f\n", eyeX, eyeY, eyeZ);
 	gluLookAt(eyeX, eyeY, eyeZ, 0, 0, 0, 0, 1, 0);
 	
+	bool animation = (currentXAngle != targetXAngle || 
+					  currentYAngle != targetYAngle ||
+					  currentZAngle != targetZAngle || 
+					  currentDistance != targetDistance);	
 	if (animation) {
 		// Draw background image if visible
 		float depth = -5.0f;
@@ -543,10 +548,7 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 		glTexCoord2f(BG_TEX_RIGHT, BG_TEX_BOTTOM);
 		glVertex3f(scale*0.64f, scale*0.4f, depth); // Bottom right
 		glEnd();		
-	}
 
-	// Rotate (if necessary)
-	if (animation) {
 		// Rotate around Z axis
 		glRotatef(currentZAngle,0.0f,0.0f,1.0f);
 	
