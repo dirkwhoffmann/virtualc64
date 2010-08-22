@@ -22,9 +22,10 @@
 
 Keyboard::Keyboard()
 {
+	name = "Keyboard";
+
 	debug(2, "Creating keyboard at address %p...\n", this);
 	
-	name = "Keyboard";
 	for (int i = 0; i < 128; i++) {
 		ASCII[i] = 0x0000;
 	}

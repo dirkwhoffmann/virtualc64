@@ -379,7 +379,7 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 	assert(1 <= track && track <= 42);
 	
 	if ((source = a->findSector(halftrack, sector)) == 0) {
-		debug(1, "WARNING: Can't encode halftrack. Not supported by the D64 format.\n");
+		warn("Can't encode halftrack. Not supported by the D64 format.\n");
 		return 0;
 	}
 	debug(2, "Encoding track %d, sector %d\n", track, sector);
@@ -440,7 +440,7 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 void 
 VC1541::insertDisc(Archive *a)
 {
-	debug(1, "WARNING: Can only mount D64 images.\n");
+	warn("Can only mount D64 images.\n");
 }
 
 void 
@@ -487,7 +487,6 @@ VC1541::ejectDisc()
 	// Zero out disk data
 	clearDisk();
 	
-	// Inform listener
 	c64->putMessage(MSG_VC1541_DISC, 0);
 }
 			

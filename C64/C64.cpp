@@ -76,10 +76,11 @@ void
 C64::C64()
 {	
 	name = "C64";
+	
+	debug(1, "Creating virtual C64 at address %p...\n", this);
+
 	p = NULL;
 	warpMode = false;
-
-	debug(1, "Creating virtual C64 at address %p...\n", this);
 
 	// Create components
 	mem = new C64Memory();
@@ -1131,6 +1132,35 @@ C64::mountArchive(Archive *a)
 	floppy->insertDisc((D64Archive *)a);
 	
 	return true;
+}
+
+
+// ---------------------------------------------------------------------------------------------
+//                                            Cartridges
+// ---------------------------------------------------------------------------------------------
+
+bool
+C64::attachCartridge(Cartridge *c)
+{
+	mem->attachCartridge(c);
+	
+	putMessage(MSG_CARTRIDGE, 1);
+	return true;
+}
+
+bool
+C64::detachCartridge()
+{
+	mem->detachCartridge();
+
+	putMessage(MSG_CARTRIDGE, 0);
+	return true;
+}
+
+bool
+C64::isCartridgeAttached()
+{
+ 	return mem->isCartridgeAttached();
 }
 
 

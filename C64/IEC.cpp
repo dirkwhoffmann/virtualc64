@@ -20,6 +20,8 @@
 
 IEC::IEC()
 {
+	name = "IEC";
+	
 	debug(2, "  Creating IEC bus at address %p...\n", this);
 
 	drive = NULL;

@@ -176,6 +176,7 @@ wird der Zählerstand mit dem Latch-Wert geladen und der Timer gestartet.
 CIA::CIA()
 {
 	name = "CIA";
+
 	cpu = NULL;
     vic = NULL;
 	timerA.setCIA(this);
@@ -298,8 +299,7 @@ uint8_t CIA::peek(uint16_t addr)
 		case CIA_CONTROL_REG_B:
 			return timerB.getControlReg() & 0xEF; // Bit 4 is always 0 when read
 		default:
-			debug(1, "PANIC: Unknown CIA address %04X\n", addr);
-			assert(0);
+			panic("Unknown CIA address %04X\n", addr);
 	}
 	return 0x00;
 }
@@ -399,8 +399,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;			
 
 		default:
-			debug(1, "PANIC: Unknown CIA address (poke) %04X\n", addr);
-			assert(0);
+			panic("PANIC: Unknown CIA address (poke) %04X\n", addr);
 	}	
 }
 

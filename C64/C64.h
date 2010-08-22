@@ -41,6 +41,7 @@
 #include "CIA.h"
 #include "CPU.h"
 #include "VC1541.h"
+#include "Cartridge.h"
 
 //! A complete virtual C64
 /*! The class puts all components together to a working virtual computer.
@@ -376,6 +377,20 @@ public:
 
 	
 	// ---------------------------------------------------------------------------------------------
+	//                                            Cartridges
+	// ---------------------------------------------------------------------------------------------
+
+	//! Attach cartridge
+	bool attachCartridge(Cartridge *c);
+	
+	// Detach cartridge
+	bool detachCartridge();
+
+	//! Returns true iff a cartridge is attached
+	bool isCartridgeAttached();
+
+	
+	// ---------------------------------------------------------------------------------------------
 	//                                        Getter and setter 
 	// ---------------------------------------------------------------------------------------------
 			
@@ -410,7 +425,7 @@ public:
 	//! Returns the time interval between two frames
 	inline void setFrameDelay(int delay) { frameDelay = delay; }
 
-							  
+
 	// ---------------------------------------------------------------------------------------------
 	//                                             Misc
 	// ---------------------------------------------------------------------------------------------
