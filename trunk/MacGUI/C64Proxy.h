@@ -66,8 +66,7 @@
 - (bool) loadCharRom:(NSString *)filename;
 - (bool) loadKernelRom:(NSString *)filename;
 - (bool) loadVC1541Rom:(NSString *)filename;
-// - (bool) loadSnapshot:(NSString *)filename;
-// - (bool) saveSnapshot:(NSString *)filename;
+- (bool) isCartridgeAttached;
 
 - (bool) cpuTracingEnabled;
 - (void) cpuSetTraceMode:(bool)b;

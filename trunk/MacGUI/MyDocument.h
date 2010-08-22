@@ -20,7 +20,6 @@
 #define INC_MYDOCUMENT
 
 #import <Cocoa/Cocoa.h>
-#import <Cocoa/Cocoa.h>
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glu.h>
 #import "C64.h"
@@ -70,8 +69,10 @@
 	// Main screen
 	IBOutlet VICScreen *screen;
 	IBOutlet NSDrawer *debug_panel;
-	IBOutlet NSButton *eject;
 	IBOutlet NSButton *drive;
+	IBOutlet NSButton *eject;
+	IBOutlet NSButton *cartridgeIcon;
+	IBOutlet NSButton *cartridgeEject;
 	IBOutlet NSButton *greenLED;
 	IBOutlet NSButton *redLED;
 	IBOutlet NSProgressIndicator *driveBusy;
@@ -209,6 +210,9 @@
 	//! Reference to the attached archive, e.g., a T64 or D64 container
 	Archive *archive;
 
+	//! Reference to the attached cartridge
+	Cartridge *cartridge;
+
 	// Initial snapshot
 	// If unequal NULL, the newly created document will be initialized with the provided snapshot data
 	Snapshot *snapshot;
@@ -217,7 +221,9 @@
 @property bool warpLoad;
 @property bool alwaysWarp;
 @property (assign) Archive *archive;
+@property (assign) Cartridge *cartridge;
 - (BOOL)setArchiveWithName:(NSString *)path;
+- (BOOL)attachCartridge:(NSString *)path;
 
 // Main screen
 - (IBAction)fullscreenAction:(id)sender;
@@ -226,6 +232,7 @@
 - (IBAction)warpAction:(id)sender;
 - (IBAction)ejectAction:(id)sender;
 - (IBAction)driveAction:(id)sender;
+- (IBAction)cartridgeEjectAction:(id)sender;
 
 // Debug menu
 - (IBAction)hideSpritesAction:(id)sender;

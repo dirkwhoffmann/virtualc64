@@ -13,8 +13,8 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1005"/>
+			<integer value="6"/>
 			<integer value="1872"/>
-			<integer value="5"/>
 			<integer value="65"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -473,7 +473,7 @@
 						<object class="NSTextField" id="16358680">
 							<reference key="NSNextResponder" ref="870948684"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{97, 3}, {173, 14}}</string>
+							<string key="NSFrame">{{191, 4}, {173, 14}}</string>
 							<reference key="NSSuperview" ref="870948684"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="261188972">
@@ -578,7 +578,7 @@
 						<object class="NSButton" id="57009647">
 							<reference key="NSNextResponder" ref="870948684"/>
 							<int key="NSvFlags">-2147483356</int>
-							<string key="NSFrame">{{56, -1}, {29, 24}}</string>
+							<string key="NSFrame">{{73, -2}, {28, 24}}</string>
 							<reference key="NSSuperview" ref="870948684"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="823240398">
@@ -593,7 +593,7 @@
 								<reference key="NSControlView" ref="57009647"/>
 								<int key="NSButtonFlags">104595711</int>
 								<int key="NSButtonFlags2">2</int>
-								<object class="NSCustomResource" key="NSNormalImage">
+								<object class="NSCustomResource" key="NSNormalImage" id="809968717">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">bottom</string>
 								</object>
@@ -605,10 +605,33 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
+						<object class="NSButton" id="651874792">
+							<reference key="NSNextResponder" ref="870948684"/>
+							<int key="NSvFlags">-2147483356</int>
+							<string key="NSFrame">{{106, -2}, {28, 24}}</string>
+							<reference key="NSSuperview" ref="870948684"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="718760403">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">0</int>
+								<string key="NSContents"/>
+								<reference key="NSSupport" ref="790136419"/>
+								<reference key="NSControlView" ref="651874792"/>
+								<int key="NSButtonFlags">104595711</int>
+								<int key="NSButtonFlags2">2</int>
+								<reference key="NSNormalImage" ref="809968717"/>
+								<string key="NSAlternateContents"/>
+								<object class="NSMutableString" key="NSKeyEquivalent">
+									<characters key="NS.bytes"/>
+								</object>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+						</object>
 						<object class="NSButton" id="115024684">
 							<reference key="NSNextResponder" ref="870948684"/>
 							<int key="NSvFlags">-2147483356</int>
-							<string key="NSFrame">{{37, 0}, {20, 20}}</string>
+							<string key="NSFrame">{{56, 0}, {20, 20}}</string>
 							<reference key="NSSuperview" ref="870948684"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1014554686">
@@ -622,6 +645,32 @@
 								<object class="NSCustomResource" key="NSNormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">floppy</string>
+								</object>
+								<string key="NSAlternateContents"/>
+								<object class="NSMutableString" key="NSKeyEquivalent">
+									<characters key="NS.bytes"/>
+								</object>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+						</object>
+						<object class="NSButton" id="243707988">
+							<reference key="NSNextResponder" ref="870948684"/>
+							<int key="NSvFlags">-2147483356</int>
+							<string key="NSFrame">{{91, 0}, {20, 20}}</string>
+							<reference key="NSSuperview" ref="870948684"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="409922970">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">67108864</int>
+								<string key="NSContents"/>
+								<reference key="NSSupport" ref="790136419"/>
+								<reference key="NSControlView" ref="243707988"/>
+								<int key="NSButtonFlags">107217151</int>
+								<int key="NSButtonFlags2">2</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">cartridge</string>
 								</object>
 								<string key="NSAlternateContents"/>
 								<object class="NSMutableString" key="NSKeyEquivalent">
@@ -730,7 +779,7 @@
 							<reference key="NSNextResponder" ref="870948684"/>
 							<int key="NSvFlags">-2147482332</int>
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
-							<string key="NSFrame">{{76, 2}, {16, 16}}</string>
+							<string key="NSFrame">{{39, 3}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="870948684"/>
 							<int key="NSpiFlags">20746</int>
 							<double key="NSMinValue">16</double>
@@ -6591,6 +6640,46 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					</object>
 					<int key="connectionID">1997</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">driveAction:</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="243707988"/>
+					</object>
+					<int key="connectionID">2005</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">cartridge</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="243707988"/>
+					</object>
+					<int key="connectionID">2006</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cartridgeEjectAction:</string>
+						<reference key="source" ref="136618999"/>
+						<reference key="destination" ref="651874792"/>
+					</object>
+					<int key="connectionID">2008</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">cartridgeIcon</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="243707988"/>
+					</object>
+					<int key="connectionID">2010</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">cartridgeEject</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="651874792"/>
+					</object>
+					<int key="connectionID">2011</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -6635,18 +6724,20 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<reference key="object" ref="870948684"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="16358680"/>
 							<reference ref="45791169"/>
 							<reference ref="277962605"/>
 							<reference ref="861850350"/>
 							<reference ref="644831449"/>
-							<reference ref="57009647"/>
-							<reference ref="115024684"/>
 							<reference ref="253954559"/>
 							<reference ref="1054439841"/>
 							<reference ref="328428070"/>
 							<reference ref="76858149"/>
+							<reference ref="16358680"/>
+							<reference ref="115024684"/>
 							<reference ref="611288439"/>
+							<reference ref="57009647"/>
+							<reference ref="651874792"/>
+							<reference ref="243707988"/>
 						</object>
 						<reference key="parent" ref="811244080"/>
 					</object>
@@ -9647,6 +9738,34 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<reference key="object" ref="480691275"/>
 						<reference key="parent" ref="636824790"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2000</int>
+						<reference key="object" ref="651874792"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="718760403"/>
+						</object>
+						<reference key="parent" ref="870948684"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2001</int>
+						<reference key="object" ref="718760403"/>
+						<reference key="parent" ref="651874792"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2003</int>
+						<reference key="object" ref="243707988"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="409922970"/>
+						</object>
+						<reference key="parent" ref="870948684"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2004</int>
+						<reference key="object" ref="409922970"/>
+						<reference key="parent" ref="243707988"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -10107,6 +10226,16 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>1980.ImportedFromIB2</string>
 					<string>1981.IBPluginDependency</string>
 					<string>1981.ImportedFromIB2</string>
+					<string>2000.IBAttributePlaceholdersKey</string>
+					<string>2000.IBPluginDependency</string>
+					<string>2000.ImportedFromIB2</string>
+					<string>2001.IBPluginDependency</string>
+					<string>2001.ImportedFromIB2</string>
+					<string>2003.IBAttributePlaceholdersKey</string>
+					<string>2003.IBPluginDependency</string>
+					<string>2003.ImportedFromIB2</string>
+					<string>2004.IBPluginDependency</string>
+					<string>2004.ImportedFromIB2</string>
 					<string>212.IBPluginDependency</string>
 					<string>212.ImportedFromIB2</string>
 					<string>214.IBPluginDependency</string>
@@ -10992,6 +11121,30 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
+					<object class="NSMutableDictionary">
+						<string key="NS.key.0">ToolTip</string>
+						<object class="IBToolTipAttribute" key="NS.object.0">
+							<string key="name">ToolTip</string>
+							<reference key="object" ref="651874792"/>
+							<string key="toolTip">Eject disc</string>
+						</object>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<integer value="1"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<integer value="1"/>
+					<object class="NSMutableDictionary">
+						<string key="NS.key.0">ToolTip</string>
+						<object class="IBToolTipAttribute" key="NS.object.0">
+							<string key="name">ToolTip</string>
+							<reference key="object" ref="243707988"/>
+							<string key="toolTip">Eject disc</string>
+						</object>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<integer value="1"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11050,9 +11203,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{456, 349}, {652, 432}}</string>
+					<string>{{695, 249}, {652, 432}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{456, 349}, {652, 432}}</string>
+					<string>{{695, 249}, {652, 432}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<integer value="1"/>
@@ -11409,7 +11562,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1999</int>
+			<int key="maxID">2011</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -11524,6 +11677,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmTenthAction:</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
+							<string>cartridgeEjectAction:</string>
 							<string>ciaCountUnterflowsAAction:</string>
 							<string>ciaCountUnterflowsBAction:</string>
 							<string>ciaDataPortAAction:</string>
@@ -11758,6 +11912,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -11779,6 +11934,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmTenthAction:</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
+							<string>cartridgeEjectAction:</string>
 							<string>ciaCountUnterflowsAAction:</string>
 							<string>ciaCountUnterflowsBAction:</string>
 							<string>ciaDataPortAAction:</string>
@@ -11948,6 +12104,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">cancelRomDialog:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">cartridgeEjectAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12425,6 +12585,8 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmSeconds</string>
 							<string>alarmTenth</string>
 							<string>breakpoint</string>
+							<string>cartridgeEject</string>
+							<string>cartridgeIcon</string>
 							<string>ciaCountUnderflowsA</string>
 							<string>ciaCountUnderflowsB</string>
 							<string>ciaDataPortA</string>
@@ -12525,6 +12687,8 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
@@ -12628,6 +12792,8 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmSeconds</string>
 							<string>alarmTenth</string>
 							<string>breakpoint</string>
+							<string>cartridgeEject</string>
+							<string>cartridgeIcon</string>
 							<string>ciaCountUnderflowsA</string>
 							<string>ciaCountUnderflowsB</string>
 							<string>ciaDataPortA</string>
@@ -12838,6 +13004,14 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">breakpoint</string>
 								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">cartridgeEject</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">cartridgeIcon</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">ciaCountUnderflowsA</string>
@@ -13794,55 +13968,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">QTKit.framework/Headers/QTCaptureDecompressedAudioOutput.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">QTKit.framework/Headers/QTCaptureDecompressedVideoOutput.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">QTKit.framework/Headers/QTCaptureFileOutput.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">QTKit.framework/Headers/QTCaptureVideoPreviewOutput.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">QTKit.framework/Headers/QTCaptureView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">QTKit.framework/Headers/QTMovie.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">QTKit.framework/Headers/QTMovieView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">QuartzCore.framework/Headers/CAAnimation.h</string>
 					</object>
 				</object>
@@ -14093,6 +14218,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				<string>NSToolbarPrint</string>
 				<string>NSToolbarShowColorsItemImage</string>
 				<string>bottom</string>
+				<string>cartridge</string>
 				<string>debugger32</string>
 				<string>floppy</string>
 				<string>none_32</string>
@@ -14115,6 +14241,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				<string>{32, 32}</string>
 				<string>{32, 32}</string>
 				<string>{24, 24}</string>
+				<string>{18, 18}</string>
 				<string>{34, 35}</string>
 				<string>{18, 18}</string>
 				<string>{39, 39}</string>

@@ -23,6 +23,7 @@
 @synthesize warpLoad;
 @synthesize alwaysWarp;
 @synthesize archive;
+@synthesize cartridge;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -595,6 +596,12 @@
 			
 		case MSG_VC1541_MOTOR:
 			NSLog(@"driveMotorAction");
+			break;
+			
+		case MSG_CARTRIDGE:
+			NSLog(@"MSG_CARTRIDGE");
+			[cartridgeIcon setHidden:!msg->i];
+			[cartridgeEject setHidden:!msg->i];			
 			break;
 			
 		default:
@@ -2597,6 +2604,56 @@
 	myc64->keyboard->typeRun();
 }
 
+- (BOOL)attachCartridge:(NSString *)path
+{
+	if (Cartridge::fileIsValid([path UTF8String])) {
+		cartridge = new Cartridge();
+	} else {
+		return NO;
+	}
+	
+	if (!cartridge->loadFile([path UTF8String])) {
+		delete cartridge;
+		cartridge = NULL;
+		return NO;
+	}
+	
+	C64 *myc64 = [c64 getC64];
+	
+	// Try to mount archive
+	myc64->attachCartridge(cartridge);
+	
+	// reset
+	myc64->reset();
+	
+	return YES;
+}
+
+- (BOOL)detachCartridge
+{
+	C64 *myc64 = [c64 getC64];
+	
+	myc64->detachCartridge();
+	
+	delete cartridge;
+	cartridge = NULL;
+	
+	return YES;
+}
+
+- (IBAction)cartridgeEjectAction:(id)sender
+{
+	NSLog(@"cartridgeEjectAction");
+	
+	C64 *myc64 = [c64 getC64];
+	
+	myc64->detachCartridge();
+	
+	delete cartridge;
+	cartridge = NULL;
+	
+	[c64 reset];
+}
 
 // --------------------------------------------------------------------------------
 // Helper functions

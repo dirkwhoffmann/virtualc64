@@ -20,8 +20,10 @@
 
 Timer::Timer()
 {
-	debug(2, "    Creating CIA Timer at address %p...\n", this);
 	name = "Timer";
+
+	debug(2, "    Creating CIA Timer at address %p...\n", this);
+
 	cia = NULL;
 	otherTimer = NULL;
 }

@@ -540,7 +540,7 @@ uint8_t VIA2::peek(uint16_t addr)
 {
 	switch(addr) {
 		case 0x00:
-			// Bit 4: 0 = Diskette schreibgeschützt
+			// Bit 4: 0 = disc is write protected
 			if (floppy->isWriteProtected())
 				orb &= 0xEF;
 			else
@@ -700,7 +700,7 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 					// Move head downwards...
 					floppy->moveHead(-1);
 				} else {
-					debug(1, "WARNING: Unexpected stepper motor control sequence in VC1541 detected\n");
+					warn("Unexpected stepper motor control sequence in VC1541 detected\n");
 				}
 			}
 

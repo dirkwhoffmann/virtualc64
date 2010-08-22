@@ -20,10 +20,11 @@
 
 CPU::CPU()
 {	
+	name = "CPU";
+
 	debug(2, "  Creating CPU at address %p...\n", this);
 
 	// Initialize connected components
-	name = "CPU";
 	c64 = NULL;
 	mem = NULL;
 	

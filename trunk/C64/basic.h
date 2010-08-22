@@ -113,6 +113,5 @@ uint8_t localTimeHour();
 */
 void sleepMicrosec(uint64_t millisec);
 
-
 #endif
 

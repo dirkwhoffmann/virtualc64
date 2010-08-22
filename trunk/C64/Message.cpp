@@ -62,6 +62,9 @@ void MessageQueue::printMessage(Message *msg)
 		case MSG_VC1541_MOTOR:
 			fprintf(stderr, "MSG_VC1541_MOTOR");
 			break;
+		case MSG_CARTRIDGE:
+			fprintf(stderr, "MSG_CARTRIDGE");
+			break;
 		default:
 			assert(0);
 	}

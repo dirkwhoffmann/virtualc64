@@ -928,6 +928,12 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 			return YES;	
 		}
 		
+		// Is it a cartridge?
+		if ([myDoc attachCartridge:path]) {
+			NSLog(@"Cartridge attached");
+			return YES;
+		}
+		
 		// Is it an archive?
 		if ([myDoc setArchiveWithName:path]) {
 			[myDoc showMountDialog];			

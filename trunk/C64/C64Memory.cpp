@@ -25,16 +25,22 @@
 C64Memory::C64Memory()
 {	
 	name ="C64 memory";
-	charRomFile = NULL;
-	kernelRomFile = NULL;
-	basicRomFile = NULL;
-
+	
 	debug (2, "  Creating main memory at address %p...\n", this);
 	
 	vic = NULL;
 	sid = NULL;
 	cia1 = NULL;
 	cia2 = NULL;
+	cartridge = NULL;	
+	charRomFile = NULL;
+	kernelRomFile = NULL;
+	basicRomFile = NULL;
+	basicRomIsVisible = false;
+	kernelRomIsVisible = false;
+	charRomIsVisible = false;
+	IOIsVisible = false;
+	cartridgeRomIsVisible = false;
 }
 
 C64Memory::~C64Memory()
@@ -54,11 +60,11 @@ void C64Memory::reset()
 	// It's important here to write in random values as some games peek the color RAM 
 	// to generate random numbers. E.g., Paradroid is doing it that way.
 	for (unsigned i = 0; i < sizeof(colorRam); i++)
-		colorRam[i] = rand(); 
+		colorRam[i] = rand();
 		
 	// Initialize processor port data direction register and processor port
-	poke(0x0000, 0x2F);
-	poke(0x0001, 0x1F);	
+	poke(0x0000, 0x2F); // Data direction
+	poke(0x0001, 0x1F);	// IO port, set default memory layout
 }	
 
 // --------------------------------------------------------------------------------
@@ -81,6 +87,7 @@ C64Memory::load(uint8_t **buffer)
 	charRomIsVisible = (bool)read8(buffer);
 	kernelRomIsVisible = (bool)read8(buffer);
 	IOIsVisible = (bool)read8(buffer);
+	cartridgeRomIsVisible = (bool)read8(buffer);
 	
 	return true;
 }
@@ -101,6 +108,7 @@ C64Memory::save(uint8_t **buffer)
 	write8(buffer, (uint8_t)charRomIsVisible);
 	write8(buffer, (uint8_t)kernelRomIsVisible);
 	write8(buffer, (uint8_t)IOIsVisible);
+	write8(buffer, (uint8_t)cartridgeRomIsVisible);
 
 	return true;
 }
@@ -237,12 +245,16 @@ bool C64Memory::isValidAddr(uint16_t addr, MemoryType type)
 
 uint8_t C64Memory::peekRam(uint16_t addr) 
 { 
-	return ram[addr]; 
+	return ram[addr];
 } 
 
 uint8_t C64Memory::peekRom(uint16_t addr) 
 { 
-	return rom[addr]; 
+	if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+		return cartridge->peek(addr);
+	}
+
+	return rom[addr];
 } 
 
 uint8_t C64Memory::peekIO(uint16_t addr)
@@ -285,6 +297,9 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	if (addr >= 0xDE00 && addr <= 0xDFFF) {
 		// Note: Reserved for further I/O expansion
 		// When read, a random value is returned
+		if (cartridge != NULL && cartridgeRomIsVisible) {
+			return cartridge->peek(addr);
+		}
 		return (uint8_t)(rand());
 	}
 
@@ -300,14 +315,26 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 			uint8_t dir = cpu->getPortDirection();
 			uint8_t ext = cpu->getExternalPortBits();
 			return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext); // (~dir & 0x5F); // (~dir & 0x7F); //   (~dir & 0x17);
-		} else {
-			// RAM
+		} else if (addr < 0x8000){
 			return ram[addr];
+		} else {
+			// RAM, or Cartridge ROM from $8000 - $9FFF
+			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+				return cartridge->peek(addr);
+			} else {
+				return ram[addr];
+			}
 		}
 	} else if (addr < 0xD000) {
 		if (addr < 0xC000) {
-			// Basic ROM
-			return basicRomIsVisible ? rom[addr] : ram[addr];
+			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
+			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+				return cartridge->peek(addr);
+			} else if (basicRomIsVisible) {
+				return rom[addr];
+			} else {
+				return ram[addr];
+			}
 		} else {
 			// RAM
 			return ram[addr];
@@ -321,11 +348,17 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 				return charRomIsVisible ? rom[addr] : ram[addr];
 			}
 		} else {
-			// Kernel ROM
-			return kernelRomIsVisible ? rom[addr] : ram[addr];
+			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+				// ULTIMAX 0xE000 GAME low, EXROM high
+				return cartridge->peek(addr);
+			} else {
+				// Kernel ROM
+				return kernelRomIsVisible ? rom[addr] : ram[addr];	
+			}
 		}
 	}
 }
+
 
 // --------------------------------------------------------------------------------
 //                                    Poke
@@ -333,15 +366,19 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 
 void C64Memory::pokeRam(uint16_t addr, uint8_t value)             
 { 
-	ram[addr] = value; 
+	ram[addr] = value;
 }
 
 void C64Memory::pokeRom(uint16_t addr, uint8_t value)             
 { 
-	rom[addr] = value; 
+	if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+		cartridge->poke(addr, value);
+	} else {
+		rom[addr] = value;
+	}
 }
 
-void 
+void
 C64Memory::processorPortHasChanged(uint8_t newPortLines)
 {
 	// Processor port.
@@ -380,7 +417,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	if (VIC::isVicAddr(addr)) {
 		// Note: Only the lower 6 bits are used for adressing the VIC I/O space
 		// Therefore, the VIC I/O memory repeats every 64 bytes
-		vic->poke(addr & 0x003F, value);	
+		vic->poke(addr & 0x003F, value);
 		return;
 	}
 	
@@ -414,9 +451,19 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 		// Therefore, the VIC I/O memory repeats every 16 bytes
 		cia2->poke(addr & 0x000F, value);
 		return;
-	}	
+	}
+	
+	// 0xDE00 - 0xDEFF (I/O area 1)
+	// 0xDF00 - 0xDFFF (I/O area 2)
+	if (addr >= 0xDE00 && addr <= 0xDFFF) {
+		// Expansion port I/O.
+		if (cartridge != NULL && cartridgeRomIsVisible) {
+			cartridge->poke(addr, value);
+			// store for debugging purposes (DE00-DFFF are I/O or RAM addresses)
+			rom[addr] = value;
+		}
+	}
 }
-
 
 void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
 {	
@@ -435,9 +482,28 @@ void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
 		}
 		return;
 	}
-				
+
 	// Default: Write to RAM
 	ram[addr] = value;
+}
+
+bool C64Memory::attachCartridge(Cartridge *c)
+{
+	cartridge = c;
+	
+	// Cartridge rom is visible when EXROM or GAME lines are pulled low (grounded).
+	cartridgeRomIsVisible = c->exromIsHigh()==false || c->gameIsHigh()==false;
+	
+	printf ("Cartridge attached %d\n", cartridgeRomIsVisible);
+	return true;
+}
+
+bool C64Memory::detachCartridge()
+{
+	cartridge = NULL;	
+	cartridgeRomIsVisible = false;
+	
+	return true;
 }
 
 

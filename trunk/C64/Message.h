@@ -38,6 +38,7 @@
 #define MSG_VC1541_LED 11
 #define MSG_VC1541_DATA 12
 #define MSG_VC1541_MOTOR 13
+#define MSG_CARTRIDGE 14
 
 typedef struct {
 	int id;			// Message ID

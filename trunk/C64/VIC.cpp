@@ -31,9 +31,10 @@
 
 VIC::VIC()
 {
+	name = "VIC";
+
 	debug(2, "  Creating VIC at address %p...\n", this);
 
-	name = "VIC";
 	c64 = NULL;
 	cpu = NULL;
 	mem = NULL;

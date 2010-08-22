@@ -20,8 +20,9 @@
 
 TOD::TOD()
 {
-	debug(2, "    Creating TOD at address %p...\n", this);
 	name = "TOD";
+
+	debug(2, "    Creating TOD at address %p...\n", this);
 }
 
 TOD::~TOD()
