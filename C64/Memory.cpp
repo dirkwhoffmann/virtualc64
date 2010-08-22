@@ -88,7 +88,7 @@ uint8_t Memory::peek(uint16_t addr)
 	
 	// Check for watchpoint
 	if (checkWatchpoint(addr, result)) {
-		debug("Peek: Watchpoint reached, access to address %04X\n", addr);
+		debug(1, "Peek: Watchpoint reached, access to address %04X\n", addr);
 		cpu->setErrorState(CPU::WATCHPOINT_REACHED);
 	}
 	return result;
@@ -120,7 +120,7 @@ void Memory::poke(uint16_t addr, uint8_t value)
 {		
 	// Check for a watchpoint
 	if (checkWatchpoint(addr, value)) {
-		debug("Poke: Watchpoint reached, access to address %04X\n", addr);
+		debug(1, "Poke: Watchpoint reached, access to address %04X\n", addr);
 		cpu->dumpHistory();
 		cpu->setErrorState(CPU::WATCHPOINT_REACHED);
 	}
@@ -137,7 +137,6 @@ void Memory::flashRom(const char *filename, uint16_t start)
 	assert(start > 0);
 	
 	// Open and read
-	debug("    Loading ROM contents from file %s\n", filename);
 	if (!(file = fopen(filename, "r")))
 		return;
 	c = fgetc(file);
@@ -148,5 +147,5 @@ void Memory::flashRom(const char *filename, uint16_t start)
 	}
 	fclose(file);
 	
-	debug("    ROM loaded into memory from %X to %X\n", (uint16_t)start, (uint16_t)(addr-1));
+	debug(1, "ROM image %s loaded [%X;%X]\n", filename, (uint16_t)start, (uint16_t)(addr-1));
 }

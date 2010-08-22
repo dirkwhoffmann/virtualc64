@@ -24,11 +24,12 @@
 
 C64Memory::C64Memory()
 {	
+	name ="C64 memory";
 	charRomFile = NULL;
 	kernelRomFile = NULL;
 	basicRomFile = NULL;
 
-	debug ("  Creating main memory at address %p...\n", this);
+	debug (2, "  Creating main memory at address %p...\n", this);
 	
 	vic = NULL;
 	sid = NULL;
@@ -38,12 +39,12 @@ C64Memory::C64Memory()
 
 C64Memory::~C64Memory()
 {
-	debug("  Releasing main memory at address %p...\n", this);
+	debug(2, "  Releasing main memory at address %p...\n", this);
 }
 
 void C64Memory::reset()
 {
-	debug ("  Resetting main memory...\n");
+	debug (2, "  Resetting main memory...\n");
 	
 	// Zero out RAM...
 	for (unsigned i = 0; i < sizeof(ram); i++)
@@ -67,7 +68,7 @@ void C64Memory::reset()
 bool
 C64Memory::load(uint8_t **buffer)
 {	
-	debug("  Loading C64 memory state...\n");
+	debug(2, "  Loading C64 memory state...\n");
 	
 	Memory::load(buffer);
 	
@@ -87,7 +88,7 @@ C64Memory::load(uint8_t **buffer)
 bool
 C64Memory::save(uint8_t **buffer) 
 {
-	debug("  Saving C64 memory state...\n");
+	debug(2, "  Saving C64 memory state...\n");
 	
 	Memory::save(buffer);
 
@@ -107,18 +108,18 @@ C64Memory::save(uint8_t **buffer)
 void 
 C64Memory::dumpState()
 {
-	debug("C64 Memory:\n");
-	debug("-----------\n");
-	debug("    Basic ROM :%s loaded,%s visible\n", basicRomIsLoaded() ? "" : " not", basicRomIsVisible ? "" : " not");
-	debug("Character ROM :%s loaded,%s visible\n", charRomIsLoaded() ? "" : " not", charRomIsVisible ? "" : " not");
-	debug("   Kernel ROM :%s loaded,%s visible\n", kernelRomIsLoaded() ? "" : " not", kernelRomIsVisible ? "" : " not");
+	debug(1, "C64 Memory:\n");
+	debug(1, "-----------\n");
+	debug(1, "    Basic ROM :%s loaded,%s visible\n", basicRomIsLoaded() ? "" : " not", basicRomIsVisible ? "" : " not");
+	debug(1, "Character ROM :%s loaded,%s visible\n", charRomIsLoaded() ? "" : " not", charRomIsVisible ? "" : " not");
+	debug(1, "   Kernel ROM :%s loaded,%s visible\n", kernelRomIsLoaded() ? "" : " not", kernelRomIsVisible ? "" : " not");
 	for (uint16_t i = 0; i < 0xFFFF; i++) {
 		uint8_t tag = cpu->getBreakpointTag(i);
 		if (tag != CPU::NO_BREAKPOINT) {
-			debug("Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
+			debug(1, "Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
 		}
 	}
-	debug("\n");
+	debug(1, "\n");
 }
 
 

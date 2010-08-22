@@ -175,6 +175,7 @@ wird der Zählerstand mit dem Latch-Wert geladen und der Timer gestartet.
 
 CIA::CIA()
 {
+	name = "CIA";
 	cpu = NULL;
     vic = NULL;
 	timerA.setCIA(this);
@@ -207,7 +208,7 @@ CIA::reset()
 // Loading and saving snapshots
 bool CIA::load(uint8_t **buffer)
 {
-	debug("  Loading CIA state...\n");
+	debug(2, "  Loading CIA state...\n");
 	
 	for (unsigned i = 0; i < sizeof(iomem); i++)
 		iomem[i] = read8(buffer);
@@ -226,7 +227,7 @@ bool CIA::load(uint8_t **buffer)
 bool 
 CIA::save(uint8_t **buffer)
 {
-	 debug("  Saving CIA state...\n");
+	 debug(2, "  Saving CIA state...\n");
 	
 	for (unsigned i = 0; i < sizeof(iomem); i++)
 		write8(buffer, iomem[i]);
@@ -297,7 +298,7 @@ uint8_t CIA::peek(uint16_t addr)
 		case CIA_CONTROL_REG_B:
 			return timerB.getControlReg() & 0xEF; // Bit 4 is always 0 when read
 		default:
-			debug("PANIC: Unknown CIA address %04X\n", addr);
+			debug(1, "PANIC: Unknown CIA address %04X\n", addr);
 			assert(0);
 	}
 	return 0x00;
@@ -398,7 +399,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;			
 
 		default:
-			debug("PANIC: Unknown CIA address (poke) %04X\n", addr);
+			debug(1, "PANIC: Unknown CIA address (poke) %04X\n", addr);
 			assert(0);
 	}	
 }
@@ -412,34 +413,34 @@ CIA::incrementTOD()
 		
 void CIA::dumpState()
 {
-	debug("            Data port A : %02X\n", getDataPortA());
-	debug("            Data port B : %02X\n", getDataPortA());
-	debug("  Data port direction A : %02X\n", getDataPortDirectionA());
-	debug("  Data port direction B : %02X\n", getDataPortDirectionB());
-	debug("  External port lines A : %02X\n", portLinesA);
-	debug("  External port lines B : %02X\n", portLinesB);
-	debug("     Control register A : %02X %s\n", getControlRegA(), controlRegHasChangedA ? "(just changed)" : "(stable)");
-	debug("     Control register B : %02X %s\n", getControlRegB(), controlRegHasChangedB ? "(just changed)" : "(stable)");
-	debug("Interrupt data register : %02X\n", portLinesB);
-	debug("     Timer A interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
-	debug("     Timer B interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
-	debug("         TOD interrupts : %s\n", isInterruptEnabledTOD() ? "enabled" : "disabled");	
-	debug("       Signal pending A : %s\n", isSignalPendingA() ? "yes" : "no");
-	debug("       Signal pending B : %s\n", isSignalPendingB() ? "yes" : "no");
+	debug(1, "            Data port A : %02X\n", getDataPortA());
+	debug(1, "            Data port B : %02X\n", getDataPortA());
+	debug(1, "  Data port direction A : %02X\n", getDataPortDirectionA());
+	debug(1, "  Data port direction B : %02X\n", getDataPortDirectionB());
+	debug(1, "  External port lines A : %02X\n", portLinesA);
+	debug(1, "  External port lines B : %02X\n", portLinesB);
+	debug(1, "     Control register A : %02X %s\n", getControlRegA(), controlRegHasChangedA ? "(just changed)" : "(stable)");
+	debug(1, "     Control register B : %02X %s\n", getControlRegB(), controlRegHasChangedB ? "(just changed)" : "(stable)");
+	debug(1, "Interrupt data register : %02X\n", portLinesB);
+	debug(1, "     Timer A interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
+	debug(1, "     Timer B interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
+	debug(1, "         TOD interrupts : %s\n", isInterruptEnabledTOD() ? "enabled" : "disabled");	
+	debug(1, "       Signal pending A : %s\n", isSignalPendingA() ? "yes" : "no");
+	debug(1, "       Signal pending B : %s\n", isSignalPendingB() ? "yes" : "no");
 	
-	debug("              IO memory : ");
+	debug(1, "              IO memory : ");
 	for (unsigned j = 0; j < sizeof(iomem); j++) {
-			debug("%02X ", iomem[j]);
+			debug(1, "%02X ", iomem[j]);
 	}
-	debug("\n\n");
-	debug("Timer A:\n");
-	debug("--------\n\n");
+	debug(1, "\n\n");
+	debug(1, "Timer A:\n");
+	debug(1, "--------\n\n");
 	timerA.dumpState();
-	debug("Timer B:\n");
-	debug("--------\n\n");
+	debug(1, "Timer B:\n");
+	debug(1, "--------\n\n");
 	timerB.dumpState();
-	debug("Time of day clock:\n");
-	debug("------------------\n\n");
+	debug(1, "Time of day clock:\n");
+	debug(1, "------------------\n\n");
 	tod.dumpState();
 }
 
@@ -449,7 +450,7 @@ void CIA::dumpState()
 
 CIA1::CIA1()
 {
-	debug("  Creating CIA1 at address %p...\n", this);
+	debug(2, "  Creating CIA1 at address %p...\n", this);
 
 	keyboard = NULL;
 	joystick[0] = 0xff;
@@ -458,21 +459,21 @@ CIA1::CIA1()
 
 CIA1::~CIA1()
 {
-	debug("  Releasing CIA1\n");
+	debug(2, "  Releasing CIA1\n");
 }
 
 void 
 CIA1::reset()
 {
-	debug("  Resetting CIA1...\n");
+	debug(2, "  Resetting CIA1...\n");
 	CIA::reset();
 }
 
 void 
 CIA1::dumpState()
 {
-	debug("CIA 1:\n");
-	debug("------\n\n");
+	debug(1, "CIA 1:\n");
+	debug(1, "------\n\n");
 	CIA::dumpState();
 }
 
@@ -619,7 +620,7 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			uint8_t lp_bit_new = (iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10;
 			if (lp_bit_old != lp_bit_new) {
 				// edge on lightpen bit
-				debug("Lightpen edge detected\n");
+				debug(1, "Lightpen edge detected\n");
 				vic->simulateLightPenInterrupt();
 			}
 			return;
@@ -654,27 +655,27 @@ CIA1::clearJoystickBits(int nr, uint8_t mask)
 
 CIA2::CIA2()
 {
-	debug("  Creating CIA2 at address %p...\n", this);
+	debug(2, "  Creating CIA2 at address %p...\n", this);
 
 	iec = NULL;
 }
 
 CIA2::~CIA2()
 {
-	debug("  Releasing CIA2...\n");
+	debug(2, "  Releasing CIA2...\n");
 }
 
 void CIA2::reset()
 {
-	debug("  Resetting CIA2...\n");
+	debug(2, "  Resetting CIA2...\n");
 	CIA::reset();
 }
 
 void 
 CIA2::dumpState()
 {
-	debug("CIA 2:\n");
-	debug("------\n\n");
+	debug(1, "CIA 2:\n");
+	debug(1, "------\n\n");
 	CIA::dumpState();
 }
 

@@ -332,9 +332,9 @@
 - (int) vicGetScreenGeometry { return (int)c64->vic->getScreenGeometry(); }
 - (void) vicSetScreenGeometry:(int)mode { c64->vic->setScreenGeometry((VIC::ScreenGeometry)mode); }
 - (int) vicGetHorizontalRasterScroll { return c64->vic->getHorizontalRasterScroll(); }
-- (void) vicSetHorizontalRasterScroll:(int)offset { c64->vic->setHorizontalRasterScroll(clip(offset,0,7)); }
+- (void) vicSetHorizontalRasterScroll:(int)offset { c64->vic->setHorizontalRasterScroll(offset & 0x07); }
 - (int) vicGetVerticalRasterScroll { return c64->vic->getVerticalRasterScroll(); }
-- (void) vicSetVerticalRasterScroll:(int)offset { c64->vic->setVerticalRasterScroll(clip(offset,0,7)); }
+- (void) vicSetVerticalRasterScroll:(int)offset { c64->vic->setVerticalRasterScroll(offset & 0x07); }
 
 - (bool) spriteGetVisibilityFlag:(int)nr { return c64->vic->spriteIsEnabled(nr); }
 - (void) spriteSetVisibilityFlag:(int)nr value:(bool)flag { c64->vic->setSpriteEnabled(nr, flag); }

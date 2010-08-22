@@ -30,6 +30,15 @@
 */
 class VirtualComponent {
 
+public: 
+	//! Debug level
+	/*! Determines which debug message are printed */
+	static int debugLevel;	
+
+protected:
+	//! Name of this component
+	const char *name;
+
 private:
 	//! Returns true iff the component is currently active.
 	/*! All virtual components can be in two states. They can either be running or halted.
@@ -44,7 +53,7 @@ private:
 		Only a few components will react to this flag.
 	*/
 	bool traceMode;
-	
+		 
 	//! The original state before the first call of suspend()
 	bool suspendedState;
 
@@ -59,8 +68,10 @@ public:
 
 	//! Destructor
 	virtual ~VirtualComponent() { };
-	
-			
+
+	//! Assign name
+	inline void setName(char *componentName) { name = componentName; }
+		
 	//! Reset the component to its initial state.
 	/*! The functions is called when a hard reset is performed.
 	*/
@@ -153,7 +164,13 @@ public:
 	inline uint64_t read64(uint8_t **ptr) { return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
 	
 	//! Print debug message
-	void debug(const char *fmt, ...);
+	void debug(int level, const char *fmt, ...);
+	//! Print trace message
+	void trace(const char *fmt, ...);
+	//! Print warning message
+	void warn(const char *fmt, ...);
+	//! Print error message and stop
+	void panic(const char *fmt, ...);
 };
 
 #endif

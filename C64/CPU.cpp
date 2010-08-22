@@ -20,9 +20,10 @@
 
 CPU::CPU()
 {	
-	debug("  Creating CPU at address %p...\n", this);
+	debug(2, "  Creating CPU at address %p...\n", this);
 
 	// Initialize connected components
+	name = "CPU";
 	c64 = NULL;
 	mem = NULL;
 	
@@ -37,13 +38,13 @@ CPU::CPU()
 
 CPU::~CPU()
 {
-	debug("  Releasing CPU...\n");
+	debug(2, "  Releasing CPU...\n");
 }
 
 void 
 CPU::reset()
 {
-	debug("  Resetting CPU...\n");
+	debug(2, "  Resetting CPU...\n");
 
 	// Registers and flags
 	A = 0;
@@ -93,7 +94,7 @@ CPU::reset()
 bool 
 CPU::load(uint8_t **buffer) 
 {
-	debug("  Loading CPU state...\n");
+	debug(2, "  Loading CPU state...\n");
 
 	// Registers and flags
 	A = read8(buffer);
@@ -148,7 +149,7 @@ CPU::load(uint8_t **buffer)
 bool
 CPU::save(uint8_t **buffer) 
 {
-	debug("  Saving CPU state...\n");
+	debug(2, "  Saving CPU state...\n");
 
 	// Registers and flags
 	write8(buffer, A);
@@ -189,7 +190,7 @@ CPU::save(uint8_t **buffer)
 
 	for (uint16_t i = 0;; i++) {
 		if (callbacks[i] == NULL) {
-			debug("ERROR while saving state: Callback pointer not found!\n");
+			debug(1, "ERROR while saving state: Callback pointer not found!\n");
 			return false;
 		}
 		if (callbacks[i] == next) {
@@ -212,20 +213,20 @@ CPU::save(uint8_t **buffer)
 void 
 CPU::dumpState()
 {
-	debug("CPU:\n");
-	debug("----\n\n");
-    debug("%s", disassemble());
-	debug("\n");
-	debug("Processor port : %02X\n", port);
-	debug("Port direction : %02X\n", port_direction);
-	debug("      Rdy line : %s\n", rdyLine ? "high" : "low");
-	debug("      Irq line : %02X\n", irqLine);
-	debug("      Nmi line : %02X %s\n", nmiLine, nmiNegEdge ? "(negative edge)" : "");
-	debug(" no IRQ before : %ull\n", nextPossibleIrqCycle);
-	debug(" no NMI before : %ull\n", nextPossibleNmiCycle);
-	debug("   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
-	debug("   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
-	debug("\n");
+	debug(1, "CPU:\n");
+	debug(1, "----\n\n");
+    debug(1, "%s", disassemble());
+	debug(1, "\n");
+	debug(1, "Processor port : %02X\n", port);
+	debug(1, "Port direction : %02X\n", port_direction);
+	debug(1, "      Rdy line : %s\n", rdyLine ? "high" : "low");
+	debug(1, "      Irq line : %02X\n", irqLine);
+	debug(1, "      Nmi line : %02X %s\n", nmiLine, nmiNegEdge ? "(negative edge)" : "");
+	debug(1, " no IRQ before : %ull\n", nextPossibleIrqCycle);
+	debug(1, " no NMI before : %ull\n", nextPossibleNmiCycle);
+	debug(1, "   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
+	debug(1, "   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
+	debug(1, "\n");
 }
 
 void 
@@ -493,10 +494,10 @@ CPU::dumpHistory()
 {
 	uint8_t i = historyPtr;
 	for (int j = 0; j < 256; j++) {
-		debug("%s", disassemble(history[i]));
+		debug(1, "%s", disassemble(history[i]));
 		i++;
 	}
-	debug("End of history trace\n");
+	debug(1, "End of history trace\n");
 }
 
 CPU::ErrorState 

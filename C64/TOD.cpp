@@ -20,7 +20,8 @@
 
 TOD::TOD()
 {
-	debug("    Creating TOD at address %p...\n", this);
+	debug(2, "    Creating TOD at address %p...\n", this);
+	name = "TOD";
 }
 
 TOD::~TOD()
@@ -30,7 +31,7 @@ TOD::~TOD()
 void
 TOD::reset() 
 {
-	debug("    Resetting TOD...\n");
+	debug(2, "    Resetting TOD...\n");
 	tod.value = 0;
 	alarm.value = 0;
 	latch.value = 0;
@@ -42,7 +43,7 @@ TOD::reset()
 bool
 TOD::load(uint8_t **buffer)
 {
-	debug("    Loading TOD state...\n");
+	debug(2, "    Loading TOD state...\n");
 
 	tod.value = read32(buffer);
 	alarm.value = read32(buffer);
@@ -55,7 +56,7 @@ TOD::load(uint8_t **buffer)
 bool
 TOD::save(uint8_t **buffer)
 {
-	debug("    Saving TOD state...\n");
+	debug(2, "    Saving TOD state...\n");
 
 	write32(buffer, tod.value);
 	write32(buffer, alarm.value);
@@ -68,12 +69,12 @@ TOD::save(uint8_t **buffer)
 void 
 TOD::dumpState()
 {
-	debug("            Time of day : %02X:%02X:%02X:%02X\n", tod.time.hours, tod.time.minutes, tod.time.seconds, tod.time.tenth);
-	debug("                  Alarm : %02X:%02X:%02X:%02X\n", alarm.time.hours, alarm.time.minutes, alarm.time.seconds, alarm.time.tenth);
-	debug("                  Latch : %02X:%02X:%02X:%02X\n", latch.time.hours, latch.time.minutes, latch.time.seconds, latch.time.tenth);
-	debug("                 Frozen : %s\n", isFrozen() ? "yes" : "no");
-	debug("                Stopped : %s\n", stopped ? "yes" : "no");
-	debug("\n");
+	debug(1, "            Time of day : %02X:%02X:%02X:%02X\n", tod.time.hours, tod.time.minutes, tod.time.seconds, tod.time.tenth);
+	debug(1, "                  Alarm : %02X:%02X:%02X:%02X\n", alarm.time.hours, alarm.time.minutes, alarm.time.seconds, alarm.time.tenth);
+	debug(1, "                  Latch : %02X:%02X:%02X:%02X\n", latch.time.hours, latch.time.minutes, latch.time.seconds, latch.time.tenth);
+	debug(1, "                 Frozen : %s\n", isFrozen() ? "yes" : "no");
+	debug(1, "                Stopped : %s\n", stopped ? "yes" : "no");
+	debug(1, "\n");
 }
 
 bool 

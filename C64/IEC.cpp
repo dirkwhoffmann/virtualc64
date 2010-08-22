@@ -20,20 +20,20 @@
 
 IEC::IEC()
 {
-	debug("  Creating IEC bus at address %p...\n", this);
+	debug(2, "  Creating IEC bus at address %p...\n", this);
 
 	drive = NULL;
 }
 
 IEC::~IEC()
 {
-	debug("  Releasing IEC bus...\n");
+	debug(2, "  Releasing IEC bus...\n");
 }
 
 void 
 IEC::reset()
 {
-	debug("  Resetting IEC bus...\n");
+	debug(2, "  Resetting IEC bus...\n");
 
 	atnLine = 1;
 	oldAtnLine = 1;
@@ -59,7 +59,7 @@ IEC::reset()
 bool
 IEC::load(uint8_t **buffer)
 {
-	debug("  Loading IEC state...\n");
+	debug(2, "  Loading IEC state...\n");
 	driveConnected = (bool)read8(buffer);
 	atnLine = (bool)read8(buffer);
 	oldAtnLine = (bool)read8(buffer);
@@ -81,7 +81,7 @@ IEC::load(uint8_t **buffer)
 bool
 IEC::save(uint8_t **buffer)
 {
-	debug("  Saving IEC state...\n");
+	debug(2, "  Saving IEC state...\n");
 	write8(buffer, (uint8_t)driveConnected);
 	write8(buffer, (uint8_t)atnLine);
 	write8(buffer, (uint8_t)oldAtnLine);
@@ -103,22 +103,22 @@ IEC::save(uint8_t **buffer)
 void 
 IEC::dumpState()
 {
-	debug("IEC bus\n");
-	debug("-------\n");
-	debug("\n");
+	debug(1, "IEC bus\n");
+	debug(1, "-------\n");
+	debug(1, "\n");
 	dumpTrace();
-	debug("\n");
-	debug("Drive connected : %s\n", driveConnected ? "yes" : "no");
-	debug("        old ATN : %d\n", oldAtnLine);
-	debug("        old CLK : %d\n", oldClockLine);
-	debug("       old DATA : %d\n", oldDataLine);
-	debug("\n");	
+	debug(1, "\n");
+	debug(1, "Drive connected : %s\n", driveConnected ? "yes" : "no");
+	debug(1, "        old ATN : %d\n", oldAtnLine);
+	debug(1, "        old CLK : %d\n", oldClockLine);
+	debug(1, "       old DATA : %d\n", oldDataLine);
+	debug(1, "\n");	
 }
 
 void 
 IEC::dumpTrace()
 {
-	debug("ATN: %s[%s%s%s%s] CLK: %s[%s%s%s%s] DATA: %s[%s%s%s%s]\n", 
+	debug(1, "ATN: %s[%s%s%s%s] CLK: %s[%s%s%s%s] DATA: %s[%s%s%s%s]\n", 
 		  atnLine ? "1 F" : "0 T", 
 		  deviceAtnPin ? "1" : "0",
 		  deviceAtnIsOutput ? "<-" : "->", 

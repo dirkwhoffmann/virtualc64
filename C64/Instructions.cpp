@@ -36,21 +36,21 @@ CPU::fetch() {
 	 Prozessor auslšsen. Interrupts werden nur erkannt, wenn RDY high ist. */
 	if (nmiNegEdge && NMILineRaisedLongEnough()) {
 		if (tracingEnabled())
-			debug("NMI (source = %02X)\n", nmiLine);
+			debug(1, "NMI (source = %02X)\n", nmiLine);
 		nmiNegEdge = false;
 		next = &CPU::nmi_2;
 		return;
 
 	} else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
 		if (tracingEnabled())
-			debug("IRQ (source = %02X)\n", irqLine);
+			debug(1, "IRQ (source = %02X)\n", irqLine);
 		next = &CPU::irq_2;
 		return;
 	} 
 
 	// Disassemble command if requested
 	if (tracingEnabled()) 
-		debug("%s", disassemble());
+		debug(1, "%s", disassemble());
 	
 	// Check breakpoint tag
 	if (breakpoint[PC] != NO_BREAKPOINT) {
@@ -60,7 +60,7 @@ CPU::fetch() {
 		} else {
 			setErrorState(HARD_BREAKPOINT_REACHED);
 		}
-		debug("Breakpoint reached\n");
+		debug(1, "Breakpoint reached\n");
 	}
 
 	opcode = mem->peek(PC);

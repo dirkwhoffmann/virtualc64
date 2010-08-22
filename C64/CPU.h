@@ -469,13 +469,13 @@ public:
 	
 	//! Sets a hard breakpoint at the specified address
 	void setHardBreakpoint(uint16_t addr) { 
-		debug("Setting hard breakpoint at address %d (%4X)\n", addr, addr);
+		debug(1, "Setting hard breakpoint at address %d (%4X)\n", addr, addr);
 		breakpoint[addr] |= HARD_BREAKPOINT; 
 	}
 	
 	//! Deletes a hard breakpoint at the specified address
 	void deleteHardBreakpoint(uint16_t addr) {
-		debug("Deleting hard breakpoint at address %d (%4X)\n", addr, addr);
+		debug(1, "Deleting hard breakpoint at address %d (%4X)\n", addr, addr);
 		breakpoint[addr] &= (255-HARD_BREAKPOINT); 
 	}
 	

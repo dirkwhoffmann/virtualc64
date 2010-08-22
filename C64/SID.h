@@ -258,7 +258,7 @@ public:
 	float getVolumeControl() { return volumeControl; }
 	
 	//! Set volume control value
-	void setVolumeControl(float value) { debug("SID: New volume: %f\n", 1-log10(9*(1-value) + 1)); volumeControl = 1-log10(9*(1-value) + 1); } // value*value; }
+	void setVolumeControl(float value) { debug(1, "New volume: %f\n", 1-log10(9*(1-value) + 1)); volumeControl = 1-log10(9*(1-value) + 1); } // value*value; }
 	
 	//! Fills \a myOutbuffer with generated audio samples.
 	/*!

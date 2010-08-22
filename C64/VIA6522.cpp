@@ -50,7 +50,7 @@ void VIA6522::reset()
 
 bool VIA6522::load(uint8_t **buffer)
 {
-	debug("    Loading VIA6522 state...\n");
+	debug(2, "    Loading VIA6522 state...\n");
 
 	ddra = read8(buffer);
 	ddrb = read8(buffer);
@@ -74,7 +74,7 @@ bool VIA6522::load(uint8_t **buffer)
 
 bool VIA6522::save(uint8_t **buffer)
 {
-	debug("    Saving VIA6522 state...\n");
+	debug(2, "    Saving VIA6522 state...\n");
 
 	write8(buffer, ddra);
 	write8(buffer, ddrb);
@@ -134,28 +134,28 @@ bool VIA6522::execute(int cycles)
 void 
 VIA6522::dumpState()
 {
-	debug("VIA:\n");
-	debug("----\n\n");
+	debug(1, "VIA:\n");
+	debug(1, "----\n\n");
 	
-	debug("          Input register (IRA) : %02X\n", ira);
-	debug("          Input register (IRB) : %02X\n", irb);
-	debug("         Output register (ORA) : %02X\n", ora);
-	debug("         Output register (ORB) : %02X\n", orb);
-	debug("Data direction register (DDRA) : %02X\n", ddra);
-	debug("Data direction register (DDRB) : %02X\n", ddrb);
-	debug("              Input latching A : %s\n", inputLatchingEnabledA() ? "enabled" : "disabled");
-	debug("              Input latching B : %s\n", inputLatchingEnabledB() ? "enabled" : "disabled");
-	debug("                       Timer 1 : %d (latched: %d)\n", LO_HI(t1_counter_lo, t1_counter_hi), LO_HI(t1_latch_lo, t1_latch_hi));
-	debug("                       Timer 2 : %d (latched: %d)\n", LO_HI(t2_counter_lo, t2_counter_hi), LO_HI(t2_latch_lo, 0));
-	debug("            Timer 1 interrupts : %s\n", timerInterruptEnabled1() ? "enabled" : "disabled");
-	debug("            Timer 2 interrupts : %s\n", timerInterruptEnabled2() ? "enabled" : "disabled");
-	debug("        Timer 1 interrupt flag : %d\n", (io[0x0D] & 0x40) != 0);
-	debug("        Timer 2 interrupt flag : %d\n", (io[0x0D] & 0x20) != 0);
-	debug("                     IO memory : ");
+	debug(1, "          Input register (IRA) : %02X\n", ira);
+	debug(1, "          Input register (IRB) : %02X\n", irb);
+	debug(1, "         Output register (ORA) : %02X\n", ora);
+	debug(1, "         Output register (ORB) : %02X\n", orb);
+	debug(1, "Data direction register (DDRA) : %02X\n", ddra);
+	debug(1, "Data direction register (DDRB) : %02X\n", ddrb);
+	debug(1, "              Input latching A : %s\n", inputLatchingEnabledA() ? "enabled" : "disabled");
+	debug(1, "              Input latching B : %s\n", inputLatchingEnabledB() ? "enabled" : "disabled");
+	debug(1, "                       Timer 1 : %d (latched: %d)\n", LO_HI(t1_counter_lo, t1_counter_hi), LO_HI(t1_latch_lo, t1_latch_hi));
+	debug(1, "                       Timer 2 : %d (latched: %d)\n", LO_HI(t2_counter_lo, t2_counter_hi), LO_HI(t2_latch_lo, 0));
+	debug(1, "            Timer 1 interrupts : %s\n", timerInterruptEnabled1() ? "enabled" : "disabled");
+	debug(1, "            Timer 2 interrupts : %s\n", timerInterruptEnabled2() ? "enabled" : "disabled");
+	debug(1, "        Timer 1 interrupt flag : %d\n", (io[0x0D] & 0x40) != 0);
+	debug(1, "        Timer 2 interrupt flag : %d\n", (io[0x0D] & 0x20) != 0);
+	debug(1, "                     IO memory : ");
 	for (int j = 0; j < 16; j ++) {
-		debug("%02X ", io[j]);
+		debug(1, "%02X ", io[j]);
 	}
-	debug("\n");
+	debug(1, "\n");
 }
 
 uint8_t 
@@ -205,7 +205,7 @@ VIA6522::peek(uint16_t addr)
 		// |                       |                       |ACTIVE TRANSITION          |
 		// +-----------------------+-----------------------+---------------------------+
 		case 0x00:
-			debug("PANIC: VIA register 0 needs individual handling!\n");
+			debug(1, "PANIC: VIA register 0 needs individual handling!\n");
 			assert(0);
 			break;
 
@@ -254,7 +254,7 @@ VIA6522::peek(uint16_t addr)
 		// |                       |                       |ACTIVE TRANSITION          |
 		// +-----------------------+-----------------------+---------------------------+
 		case 0x01:
-			debug("PANIC: VIA register 1 needs individual handling!\n");
+			debug(1, "PANIC: VIA register 1 needs individual handling!\n");
 			assert(0);
 			break;
 						
@@ -399,12 +399,12 @@ VIA6522::peek(uint16_t addr)
 		//     TOWARDS BIT 7                    +-+-+-+---------------------------------+
 		case 0x0A:
 			// Shift register
-			debug("Drive is peeking the shift register (from %p)\n", floppy->cpu->getPC());
+			// debug(2, "Drive is peeking the shift register (from %p)\n", floppy->cpu->getPC());
 			break;
 			
 		case 0x0B:
 			// Auxiliary control register
-			debug("Drive is peeking the auxiliary control register (from %p)\n", floppy->cpu->getPC());
+			// debug(2, "Drive is peeking the auxiliary control register (from %p)\n", floppy->cpu->getPC());
 			break;
 		
 		// 		                 REG 12 -- PERIPHERAL CONTROL REGISTER
@@ -556,7 +556,7 @@ uint8_t VIA2::peek(uint16_t addr)
 
 		case 0x01:
 			if (tracingEnabled()) {
-				debug("%02X ", ora);			
+				debug(1, "%02X ", ora);			
 			}
 			return ora;
 		
@@ -656,7 +656,6 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 			orb = value;
 			io[0x0D] &= 0xF7;
 			io[0x0D] &= 0xEF; 
-			// debug("VC1541 is writing onto %X (%X) the IEC bus from %p. Wow!\n", orb, ddrb, floppy->cpu->getPC());
 			floppy->iec->updateDevicePins(orb, ddrb);
 			return;
 
@@ -669,7 +668,7 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 		
 		case 0x02: 
 			ddrb = value;
-			debug("Writing %d into ddrb via 1\n", value);
+			// debug(2, "Writing %d into ddrb via 1\n", value);
 			floppy->iec->updateDevicePins(orb, ddrb);
 			return; 
 						
@@ -701,7 +700,7 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 					// Move head downwards...
 					floppy->moveHead(-1);
 				} else {
-					debug("WARNING: Unexpected stepper motor control sequence in VC1541 detected\n");
+					debug(1, "WARNING: Unexpected stepper motor control sequence in VC1541 detected\n");
 				}
 			}
 
@@ -725,7 +724,7 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 		case 0x01: 
 			// Port A: Daten vom/zum Tonkopf
 			if (tracingEnabled()) {
-				debug(" W%02X", value);
+				debug(1, " W%02X", value);
 			}
 			ora = value;
 			return;
@@ -733,7 +732,7 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 		case 0x03:
 			ddra = value;
 			if (ddra != 0x00 && ddra != 0xFF) {
-				debug("Data direction bits of VC1541 contain suspicious values\n");
+				debug(1, "Data direction bits of VC1541 contain suspicious values\n");
 			}
 			return;
 			
@@ -743,13 +742,13 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 				// debug("%s V-flag to drive head\n", value & 0x02 ? "Attach" : "Detach");
 			}
 			if ((value & 0x20) != (io[addr] & 0x20)) {
-				debug("Switching to %s mode (%04X) ByteReadyTimer = %d\n", value & 0x20 ? "READ" : "WRITE", floppy->cpu->getPC(),floppy->byteReadyTimer);
+				debug(2, "Switching to %s mode (%04X) ByteReadyTimer = %d\n", value & 0x20 ? "READ" : "WRITE", floppy->cpu->getPC(),floppy->byteReadyTimer);
 			}
 			io[addr] = value;
 			return;
 
 		case 0x15:
-			debug("WARNING: ACCESS TO VIA 2 0x015 detected!\n");
+			debug(1, "WARNING: ACCESS TO VIA 2 0x015 detected!\n");
 			return;
 			
 		default:
@@ -760,32 +759,32 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 
 VIA1::VIA1()
 {
-	debug("  Creating VIA1 at address %p...\n", this);
+	debug(2, "  Creating VIA1 at address %p...\n", this);
 }
 	
 VIA1::~VIA1()
 {
-	debug("  Releasing VIA1...\n");
+	debug(2, "  Releasing VIA1...\n");
 }
 
 void VIA1::reset()
 {
-	debug("  Resetting VIA1...\n");
+	debug(2, "  Resetting VIA1...\n");
 	VIA6522::reset();
 }
 
 VIA2::VIA2()
 {
-	debug("  Creating VIA2 at address %p...\n", this);
+	debug(2, "  Creating VIA2 at address %p...\n", this);
 }
 	
 VIA2::~VIA2()
 {
-	debug("  Releasing VIA2...\n");
+	debug(2, "  Releasing VIA2...\n");
 }
 
 void VIA2::reset()
 {
-	debug("  Resetting VIA2...\n");
+	debug(2, "  Resetting VIA2...\n");
 	VIA6522::reset();
 }
