@@ -12,10 +12,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="44"/>
+			<integer value="1005"/>
 			<integer value="1872"/>
 			<integer value="5"/>
-			<integer value="1005"/>
+			<integer value="65"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -772,7 +772,7 @@
 									<characters key="NS.bytes">2</characters>
 								</object>
 								<object class="NSView" key="NSView" id="520471909">
-									<reference key="NSNextResponder" ref="456711377"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1525,7 +1525,6 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 33}, {279, 326}}</string>
-									<reference key="NSSuperview" ref="456711377"/>
 								</object>
 								<string key="NSLabel">CPU</string>
 								<reference key="NSColor" ref="567631968"/>
@@ -1536,7 +1535,7 @@
 									<characters key="NS.bytes">1</characters>
 								</object>
 								<object class="NSView" key="NSView" id="887921535">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="456711377"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1875,7 +1874,7 @@
 										<object class="NSMatrix" id="658679565">
 											<reference key="NSNextResponder" ref="887921535"/>
 											<int key="NSvFlags">292</int>
-											<string key="NSFrame">{{1, -1}, {168, 18}}</string>
+											<string key="NSFrame">{{1, -1}, {180, 18}}</string>
 											<reference key="NSSuperview" ref="887921535"/>
 											<bool key="NSEnabled">YES</bool>
 											<int key="NSNumRows">1</int>
@@ -1883,7 +1882,7 @@
 											<object class="NSMutableArray" key="NSCells">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSButtonCell" id="174472538">
-													<int key="NSCellFlags">-2080244224</int>
+													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">131072</int>
 													<string key="NSContents">RAM</string>
 													<reference key="NSSupport" ref="26"/>
@@ -1901,7 +1900,7 @@
 													<int key="NSPeriodicInterval">25</int>
 												</object>
 												<object class="NSButtonCell" id="171831807">
-													<int key="NSCellFlags">67239424</int>
+													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">131072</int>
 													<string key="NSContents">ROM</string>
 													<reference key="NSSupport" ref="26"/>
@@ -1930,9 +1929,9 @@
 													<int key="NSPeriodicInterval">75</int>
 												</object>
 											</object>
-											<string key="NSCellSize">{56, 18}</string>
+											<string key="NSCellSize">{60, 18}</string>
 											<string key="NSIntercellSpacing">{0, 0}</string>
-											<int key="NSMatrixFlags">1143472128</int>
+											<int key="NSMatrixFlags">1143480320</int>
 											<string key="NSCellClass">NSActionCell</string>
 											<object class="NSButtonCell" key="NSProtoCell" id="129855033">
 												<int key="NSCellFlags">67239424</int>
@@ -1945,7 +1944,8 @@
 												<int key="NSPeriodicDelay">400</int>
 												<int key="NSPeriodicInterval">75</int>
 											</object>
-											<reference key="NSSelectedCell" ref="174472538"/>
+											<int key="NSSelectedCol">1</int>
+											<reference key="NSSelectedCell" ref="171831807"/>
 											<reference key="NSBackgroundColor" ref="567631968"/>
 											<reference key="NSCellBackgroundColor" ref="379252191"/>
 											<reference key="NSFont" ref="237492425"/>
@@ -1953,7 +1953,7 @@
 										<object class="NSMatrix" id="745538399">
 											<reference key="NSNextResponder" ref="887921535"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{214, 261}, {53, 58}}</string>
+											<string key="NSFrame">{{214, 261}, {62, 58}}</string>
 											<reference key="NSSuperview" ref="887921535"/>
 											<bool key="NSEnabled">YES</bool>
 											<int key="NSNumRows">3</int>
@@ -2008,7 +2008,7 @@
 													<int key="NSPeriodicInterval">75</int>
 												</object>
 											</object>
-											<string key="NSCellSize">{53, 18}</string>
+											<string key="NSCellSize">{62, 18}</string>
 											<string key="NSIntercellSpacing">{0, 2}</string>
 											<int key="NSMatrixFlags">1143472128</int>
 											<string key="NSCellClass">NSActionCell</string>
@@ -2063,6 +2063,7 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 33}, {279, 326}}</string>
+									<reference key="NSSuperview" ref="456711377"/>
 								</object>
 								<string key="NSLabel">Memory</string>
 								<reference key="NSColor" ref="567631968"/>
@@ -3972,7 +3973,7 @@
 										<object class="NSMatrix" id="636824790">
 											<reference key="NSNextResponder" ref="678882413"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{52, 168}, {224, 18}}</string>
+											<string key="NSFrame">{{60, 168}, {216, 18}}</string>
 											<reference key="NSSuperview" ref="678882413"/>
 											<bool key="NSEnabled">YES</bool>
 											<int key="NSNumRows">1</int>
@@ -4101,7 +4102,7 @@
 													<int key="NSPeriodicInterval">75</int>
 												</object>
 											</object>
-											<string key="NSCellSize">{28, 18}</string>
+											<string key="NSCellSize">{27, 18}</string>
 											<string key="NSIntercellSpacing">{0, 2}</string>
 											<int key="NSMatrixFlags">1143480320</int>
 											<string key="NSCellClass">NSActionCell</string>
@@ -4196,14 +4197,14 @@
 								<reference key="NSTabView" ref="456711377"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="355621993"/>
+						<reference key="NSSelectedTabViewItem" ref="586278993"/>
 						<reference key="NSFont" ref="237492425"/>
 						<int key="NSTvFlags">0</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="520471909"/>
+							<reference ref="887921535"/>
 						</object>
 					</object>
 					<object class="NSMatrix" id="1035917507">
@@ -9656,6 +9657,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>-3.ImportedFromIB2</string>
 					<string>1004.IBEditorWindowLastContentRect</string>
 					<string>1004.IBPluginDependency</string>
+					<string>1004.IBViewEditorWindowController.showingLayoutRectangles</string>
 					<string>1004.IBWindowTemplateEditedContentRect</string>
 					<string>1004.ImportedFromIB2</string>
 					<string>1004.windowTemplate.hasMinSize</string>
@@ -10503,9 +10505,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{197, 356}, {488, 267}}</string>
+					<string>{{111, 340}, {488, 267}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{197, 356}, {488, 267}}</string>
+					<boolean value="YES"/>
+					<string>{{111, 340}, {488, 267}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<string>{488, 267}</string>
@@ -11010,7 +11013,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{111, 639}, {300, 389}}</string>
+					<string>{{71, 683}, {300, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

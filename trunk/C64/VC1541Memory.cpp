@@ -20,8 +20,9 @@
 
 VC1541Memory::VC1541Memory()
 {
-	debug("  Creating VC1541 memory at %p...\n", this);	
+	debug(2, "  Creating VC1541 memory at %p...\n", this);	
 
+	name = "1541 memory";
 	iec = NULL;
 	floppy = NULL;
 	romFile = NULL;
@@ -29,13 +30,13 @@ VC1541Memory::VC1541Memory()
 
 VC1541Memory::~VC1541Memory()
 {
-	debug("  Releasing VC1541 memory at %p...\n", this);
+	debug(2, "  Releasing VC1541 memory at %p...\n", this);
 }
 
 void 
 VC1541Memory::reset()
 {
-	debug ("    Resetting VC1541 memory...\n");
+	debug (2, "    Resetting VC1541 memory...\n");
 
 	// Zero out RAM...
 	for (unsigned i = 0; i < 0xC000; i++)
@@ -45,7 +46,7 @@ VC1541Memory::reset()
 bool 
 VC1541Memory::load(uint8_t **buffer)
 {
-	debug("    Loading VC1541 memory state...\n");
+	debug(2, "    Loading VC1541 memory state...\n");
 
 	for (unsigned i = 0; i < 0xC000; i++)
 		mem[i] = read8(buffer);	
@@ -55,7 +56,7 @@ VC1541Memory::load(uint8_t **buffer)
 bool 
 VC1541Memory::save(uint8_t **buffer)
 {
-	debug("    Saving VC1541 memory state...\n");
+	debug(2, "    Saving VC1541 memory state...\n");
 
 	for (unsigned i = 0; i < 0xC000; i++)
 		write8(buffer, mem[i]);
@@ -93,24 +94,24 @@ VC1541Memory::loadRom(const char *filename)
 void 
 VC1541Memory::dumpState()
 {
-	debug("VC1541 Memory:\n");
-	debug("--------------\n\n");
-	debug("VC1541 ROM :%s loaded\n", romIsLoaded() ? "" : " not");
+	debug(1, "VC1541 Memory:\n");
+	debug(1, "--------------\n\n");
+	debug(1, "VC1541 ROM :%s loaded\n", romIsLoaded() ? "" : " not");
 	for (uint16_t i = 0; i < 0xFFFF; i++) {
 		uint8_t tag = cpu->getBreakpointTag(i);
 		if (tag != CPU::NO_BREAKPOINT) {
-			debug("Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
+			debug(1, "Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
 		}
 	}
 	for (uint16_t i = 0; i < 0xFFFF; i++) {
 		uint8_t tag = getWatchpointType(i);
 		if (tag == WATCH_FOR_VALUE) {
-			debug("Watchpoint at %0x4X (watch for value %02X)\n", i, getWatchValue(i));
+			debug(1, "Watchpoint at %0x4X (watch for value %02X)\n", i, getWatchValue(i));
 		} else if (tag == WATCH_FOR_ALL) {
-			debug("Watchpoint at %0x4X\n", i);
+			debug(1, "Watchpoint at %0x4X\n", i);
 		}
 	}
-	debug("\n");
+	debug(1, "\n");
 }
 
 bool 
@@ -151,7 +152,7 @@ VC1541Memory::peekIO(uint16_t addr)
 	} else if ((addr & 0xFC00) == 0x1c00) {
 		return floppy->via2->peek(addr & 0x000F);
 	} else {
-		debug("PANIC: Wrong VC1541 IO memory address\n");
+		debug(1, "PANIC: Wrong VC1541 IO memory address\n");
 		assert(0);
 		return 0;
 	}
@@ -188,7 +189,7 @@ VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
 	} else if ((addr & 0xFC00) == 0x1c00) {
 		floppy->via2->poke(addr & 0X000F, value);
 	} else {
-		debug("PANIC: Wrong VC1541 IO memory address\n");
+		debug(1, "PANIC: Wrong VC1541 IO memory address\n");
 		assert(0);
 	}
 }

@@ -20,7 +20,7 @@
 
 VC1541::VC1541()
 {
-	debug("Creating virtual VC1541 at address %p\n", this);
+	debug(2, "Creating virtual VC1541 at address %p\n", this);
 	
 	// Initialize references
 	c64 = NULL;
@@ -46,7 +46,7 @@ VC1541::VC1541()
 
 VC1541::~VC1541()
 {
-	debug("Releasing VC1541...\n");
+	debug(2, "Releasing VC1541...\n");
 	
 	delete cpu;	
 	delete mem;
@@ -55,7 +55,7 @@ VC1541::~VC1541()
 void 
 VC1541::reset()
 {
-	debug ("Resetting VC1541...\n");
+	debug (2, "Resetting VC1541...\n");
 
 	cpu->reset();
 	cpu->setPC(0xEAA0);
@@ -78,7 +78,7 @@ VC1541::load(uint8_t **buffer)
 {
 	uint8_t *old = *buffer;
 	
-	debug("  Loading VC1541 state...\n");
+	debug(2, "  Loading VC1541 state...\n");
 
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
@@ -91,15 +91,15 @@ VC1541::load(uint8_t **buffer)
 	offset = (int)read16(buffer);
 	noOfFFBytes = (int)read16(buffer);
 	writeProtection = (bool)read8(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	cpu->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	via1->load(buffer);	
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	via2->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	mem->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	return true;
 }
 
@@ -108,7 +108,7 @@ VC1541::save(uint8_t **buffer)
 {
 	uint8_t *old = *buffer;
 	
-	debug("  Saving VC1541 state...\n");
+	debug(2, "  Saving VC1541 state...\n");
 
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
@@ -121,15 +121,15 @@ VC1541::save(uint8_t **buffer)
 	write16(buffer, (uint16_t)offset);
 	write16(buffer, (uint16_t)noOfFFBytes);
 	write8(buffer, (uint8_t)writeProtection);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	cpu->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	via1->save(buffer);	
-	debug("%d\n", *buffer - old);
+	debug(2 ,"%d\n", *buffer - old);
 	via2->save(buffer);	
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	mem->save(buffer);	
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 
 	return true;
 }
@@ -137,8 +137,8 @@ VC1541::save(uint8_t **buffer)
 void 
 VC1541::dumpState()
 {
-	debug("VC1541\n");
-	debug("------\n\n");
+	debug(1, "VC1541\n");
+	debug(1, "------\n\n");
 	
 #if 0	
 	FILE *file = fopen("/Users/hoff/tmp/d64image.txt","w");
@@ -152,7 +152,7 @@ VC1541::dumpState()
 	/* Directory track... */
 	t = 18;
 	for (i = 0; i < 4096; i+= 16) {
-		debug("(%d,%d): %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", 
+		debug(1, "(%d,%d): %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", 
 			  t, i,
 			  getData(t,i+0), getData(t,i+1), getData(t,i+2), getData(t,i+3),
 			  getData(t,i+4), getData(t,i+5), getData(t,i+6), getData(t,i+7),
@@ -161,13 +161,13 @@ VC1541::dumpState()
 	}
 #endif
 	
-	debug("         Head timer : %d\n", byteReadyTimer);
-	debug("              Track : %d\n", track);
-	debug("       Track offset : %d\n", offset);
-	debug("Sync bytes in a row : %d\n", noOfFFBytes);
-	debug("  Symbol under head : %02X\n", readHead());
-	debug("        Next symbol : %02X\n", readHeadLookAhead());
-	debug("\n");
+	debug(1, "         Head timer : %d\n", byteReadyTimer);
+	debug(1, "              Track : %d\n", track);
+	debug(1, "       Track offset : %d\n", offset);
+	debug(1, "Sync bytes in a row : %d\n", noOfFFBytes);
+	debug(1, "  Symbol under head : %02X\n", readHead());
+	debug(1, "        Next symbol : %02X\n", readHeadLookAhead());
+	debug(1, "\n");
 }
 
 void 
@@ -221,9 +221,9 @@ VC1541::simulateAtnInterrupt()
 	if (via1->atnInterruptsEnabled()) {
 		via1->indicateAtnInterrupt();
 		cpu->setIRQLineATN();
-		debug("CPU is interrupted by ATN line.\n");
+		// debug("CPU is interrupted by ATN line.\n");
 	} else {
-		debug("Sorry, want to interrupt, but CPU does not accept ATN line interrupts\n");
+		// debug("Sorry, want to interrupt, but CPU does not accept ATN line interrupts\n");
 	}
 }
 
@@ -242,7 +242,7 @@ VC1541::deactivateRedLED()
 void 
 VC1541::startRotating() 
 { 
-	debug("Starting drive engine (%2X)\n", cpu->getPC());
+	debug(2, "Starting drive engine (%2X)\n", cpu->getPC());
 	rotating = true;
 	byteReadyTimer = VC1541_CYCLES_PER_BYTE;
 	c64->putMessage(MSG_VC1541_MOTOR, 1);
@@ -251,7 +251,7 @@ VC1541::startRotating()
 void 
 VC1541::stopRotating() 
 { 
-	debug("Stopping drive engine (%2X)\n", cpu->getPC()); 
+	debug(2, "Stopping drive engine (%2X)\n", cpu->getPC()); 
 	rotating = false;
 
 	c64->putMessage(MSG_VC1541_MOTOR, 0);
@@ -274,11 +274,11 @@ VC1541::moveHead(int distance)
 	offset = offset % length[track];
 
 	if (distance == 1)
-		debug("Head up (to %2.1f) at %4X\n", (track + 2) / 2.0, cpu->getPC());
+		debug(2, "Head up (to %2.1f) at %4X\n", (track + 2) / 2.0, cpu->getPC());
 	else if (distance == -1)
-		debug("Head down (to %2.1f) at %4X\n", (track + 2) / 2.0, cpu->getPC());
+		debug(2, "Head down (to %2.1f) at %4X\n", (track + 2) / 2.0, cpu->getPC());
 	else 
-		debug("Head ???\n");
+		debug(2, "Head ???\n");
 }
 
 void
@@ -379,10 +379,10 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 	assert(1 <= track && track <= 42);
 	
 	if ((source = a->findSector(halftrack, sector)) == 0) {
-		debug("WARNING: Can't encode halftrack. Not supported by the D64 format.\n");
+		debug(1, "WARNING: Can't encode halftrack. Not supported by the D64 format.\n");
 		return 0;
 	}
-	debug("Encoding track %d, sector %d\n", track, sector);
+	debug(2, "Encoding track %d, sector %d\n", track, sector);
 
 	// Get disk id and compute checksum
 	id_lo = a->diskIdLow();
@@ -440,7 +440,7 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 void 
 VC1541::insertDisc(Archive *a)
 {
-	debug("WARNING: Can only mount D64 images.\n");
+	debug(1, "WARNING: Can only mount D64 images.\n");
 }
 
 void 
@@ -462,7 +462,7 @@ VC1541::insertDisc(D64Archive *a)
 		}
 
 		length[i-1] = dest - data[i-1];
-		debug("Length of track %d: %d bytes\n", i, dest - data[i-1]); 
+		debug(2, "Length of track %d: %d bytes\n", i, dest - data[i-1]); 
 	}
 
 	for (i = 1; i <= 84; i++) {
@@ -500,13 +500,13 @@ VC1541::dumpTrack(int t)
 	if (min < 0) min = 0;
 	if (max > length[t]) max = length[t];
 	
-	debug("Dumping track %d (length = %d)\n", t, length[t]);
+	debug(1, "Dumping track %d (length = %d)\n", t, length[t]);
 	for (int i = min; i < offset; i++)
-		debug("%02X ", data[t][i]);
-	debug("(%02X) ", data[t][offset]);
+		debug(1, "%02X ", data[t][i]);
+	debug(1, "(%02X) ", data[t][offset]);
 	for (int i = offset+1; i < max; i++)
-		debug("%02X ", data[t][i]);
-	debug("\n");
+		debug(1, "%02X ", data[t][i]);
+	debug(1, "\n");
 }
 
 void 
@@ -514,13 +514,13 @@ VC1541::dumpFullTrack(int t)
 {		
 	if (t < 0) t = track;
 	
-	debug("Dumping track %d (length = %d)\n", t, length[t]);
+	debug(1, "Dumping track %d (length = %d)\n", t, length[t]);
 	for (int i = 0; i < offset; i++)
-		debug("%02X ", data[t][i]);
-	debug("(%02X) ", data[t][offset]);
+		debug(1, "%02X ", data[t][i]);
+	debug(1, "(%02X) ", data[t][offset]);
 	for (int i = offset+1; i < length[t]; i++)
-		debug("%02X ", data[t][i]);
-	debug("\n");
+		debug(1, "%02X ", data[t][i]);
+	debug(1, "\n");
 }
 
 bool 
@@ -575,12 +575,12 @@ VC1541::readG64Image(const char *filename)
 		c = fgetc(file);
 	}
 	fclose(file);			
-	debug("G64 image imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
+	debug(1, "G64 image imported successfully (%d bytes total, size = %d)\n", fileProperties.st_size, size);
 
 	// Analyze data
-	debug("    Version: %2X\n", (int)filedata[0x08]);
-	debug("    Number of tracks: %d\n", (int)filedata[0x09]);
-	debug("    Size of track: %d\n", (int)((filedata[0x0B] << 8) | filedata[0x0A]));
+	debug(1, "    Version: %2X\n", (int)filedata[0x08]);
+	debug(1, "    Number of tracks: %d\n", (int)filedata[0x09]);
+	debug(1, "    Size of track: %d\n", (int)((filedata[0x0B] << 8) | filedata[0x0A]));
 	for (track = 0; track < 84; track++) {
 		uint32_t offset;
 		uint16_t track_length, i;
@@ -589,7 +589,7 @@ VC1541::readG64Image(const char *filename)
 		track_length = (filedata[offset + 1] << 8) | filedata[offset];
 
 		if (offset != 0) {
-			debug("    Track %2.1f: Offset: %8X Length: %04X\n", (track + 2) / 2.0, offset, track_length);
+			debug(1, "    Track %2.1f: Offset: %8X Length: %04X\n", (track + 2) / 2.0, offset, track_length);
 		}
 		
 		// copy data

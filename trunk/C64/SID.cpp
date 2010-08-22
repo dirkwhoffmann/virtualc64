@@ -49,7 +49,9 @@ const float SID::volumeLevelTable[16] = { 0.0f, 0.07f, 0.13f, 0.20f, 0.27f, 0.33
 
 SID::SID()
 {
-	debug("  Creating SID at address %p...\n", this);
+	debug(2, "  Creating SID at address %p...\n", this);
+
+	name = "SID";
 
 	// link voices together
 	voice[0].mod_by = &voice[2];
@@ -88,7 +90,7 @@ SID::~SID()
 void
 SID::reset() 
 {
-	debug("  Resetting SID...\n");
+	debug(2, "  Resetting SID...\n");
 
 	// set mastervolume to half amplitude
 	masterVolume = 0.5f;
@@ -153,7 +155,7 @@ SID::setVideoMode(uint32_t frequency)
 bool 
 SID::load(uint8_t **buffer)
 {
-	debug("  Loading SID state...\n");
+	debug(2, "  Loading SID state...\n");
 
 	// reset ringbuffer, buffer pointers, callback synchronisation mechanism, etc. 
 	this->reset();
@@ -165,7 +167,7 @@ SID::load(uint8_t **buffer)
 bool
 SID::save(uint8_t **buffer)
 {
-	debug("  Saving SID state...\n");
+	debug(2, "  Saving SID state...\n");
 
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
 		write8(buffer, iomem[i]);
@@ -669,23 +671,23 @@ uint8_t SID::getEGOutput()
 
 void SID::dumpState()
 {
-	debug("SID\n");
-	debug("---\n\n");
-	debug("   Sample rate : %d\n", samplerate);
-	debug(" CPU frequency : %d\n", cpuFrequency);
-	debug("        Buffer : %s\n", mono ? "continous" : "interleaved");
-	debug("   Buffer size : %d\n", bufferSize);
-	debug("        Volume : %f\n", masterVolume);
-	debug("  Sound filter : %s\n", filtersEnabled ? "on" : "off");
+	debug(1, "SID\n");
+	debug(1, "---\n\n");
+	debug(1, "   Sample rate : %d\n", samplerate);
+	debug(1, " CPU frequency : %d\n", cpuFrequency);
+	debug(1, "        Buffer : %s\n", mono ? "continous" : "interleaved");
+	debug(1, "   Buffer size : %d\n", bufferSize);
+	debug(1, "        Volume : %f\n", masterVolume);
+	debug(1, "  Sound filter : %s\n", filtersEnabled ? "on" : "off");
 	
-	debug("\n     IO memory : ");
+	debug(1, "\n     IO memory : ");
 	for (unsigned i = 0; i < sizeof(iomem); i += 16) {
 		for (unsigned j = 0; j < 16; j ++) {
-			debug("%02X ", iomem[i + j]);
+			debug(1, "%02X ", iomem[i + j]);
 		}
-		debug("\n                 ");
+		debug(1, "\n                 ");
 	}
-	debug("\n");
+	debug(1, "\n");
 }
 
 

@@ -31,8 +31,9 @@
 
 VIC::VIC()
 {
-	debug("  Creating VIC at address %p...\n", this);
+	debug(2, "  Creating VIC at address %p...\n", this);
 
+	name = "VIC";
 	c64 = NULL;
 	cpu = NULL;
 	mem = NULL;
@@ -62,7 +63,7 @@ VIC::~VIC()
 void 
 VIC::reset() 
 {
-	debug("  Resetting VIC...\n");
+	debug(2, "  Resetting VIC...\n");
 		
 	// Internal registers
 	scanline = 0;
@@ -119,7 +120,7 @@ VIC::reset()
 bool
 VIC::load(uint8_t **buffer)
 {
-	debug("  Loading VIC state...\n");
+	debug(2, "  Loading VIC state...\n");
 	
 	// Internal registers
 	scanline = read32(buffer);
@@ -167,7 +168,7 @@ VIC::load(uint8_t **buffer)
 bool
 VIC::save(uint8_t **buffer)
 {
-	debug("  Saving VIC state...\n");
+	debug(2, "  Saving VIC state...\n");
 
 	// Internal registers
 	write32(buffer, scanline);
@@ -218,7 +219,7 @@ VIC::loadScreenshot(uint8_t **buffer)
 	uint16_t width;
 	uint16_t height;
 	
-	debug("  Loading VIC screen buffer...\n");
+	debug(2, "  Loading VIC screen buffer...\n");
 	
 	// Load width and height
 	width = read16(buffer);
@@ -237,7 +238,7 @@ VIC::saveScreenshot(uint8_t **buffer)
 	uint16_t width = 512;  // TODO: Only save viewable area of screenbuffer. Value differs between PAL and NTSC machines
 	uint16_t height = 512; // TODO: Only save viewable area of screenbuffer. Value differs between PAL and NTSC machines
 	
-	debug("  Saving VIC screen buffer...\n");
+	debug(2, "  Saving VIC screen buffer...\n");
 	
 	// Write width and height
 	write16(buffer, width);
@@ -258,59 +259,59 @@ VIC::saveScreenshot(uint8_t **buffer)
 void 
 VIC::dumpState()
 {
-	debug("VIC\n");
-	debug("---\n\n");
-	debug("     Bank address : %04X\n", bankAddr, bankAddr);
-	debug("    Screen memory : %04X\n", screenMemoryAddr);
-	debug(" Character memory : %04X (%s)\n", characterMemoryAddr, characterMemoryMappedToROM ? "ROM" : "RAM");
-	debug("  Text resolution : %d x %d\n", numberOfRows(), numberOfColumns());
-	debug("X/Y raster scroll : %d / %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
-	debug("     Display mode : ");
+	debug(1, "VIC\n");
+	debug(1, "---\n\n");
+	debug(1, "     Bank address : %04X\n", bankAddr, bankAddr);
+	debug(1, "    Screen memory : %04X\n", screenMemoryAddr);
+	debug(1, " Character memory : %04X (%s)\n", characterMemoryAddr, characterMemoryMappedToROM ? "ROM" : "RAM");
+	debug(1, "  Text resolution : %d x %d\n", numberOfRows(), numberOfColumns());
+	debug(1, "X/Y raster scroll : %d / %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
+	debug(1, "     Display mode : ");
 	switch (getDisplayMode()) {
 		case STANDARD_TEXT: 
-			debug("Standard character mode\n");
+			debug(1, "Standard character mode\n");
 			break;
 		case MULTICOLOR_TEXT:
-			debug("Multicolor character mode\n");
+			debug(1, "Multicolor character mode\n");
 			break;
 		case STANDARD_BITMAP:
-			debug("Standard bitmap mode\n");
+			debug(1, "Standard bitmap mode\n");
 			break;
 		case MULTICOLOR_BITMAP:
-			debug("Multicolor bitmap mode\n");
+			debug(1, "Multicolor bitmap mode\n");
 			break;
 		case EXTENDED_BACKGROUND_COLOR:
-			debug("Extended background color mode\n");
+			debug(1, "Extended background color mode\n");
 			break;
 		default:
-			debug("Invalid\n");
+			debug(1, "Invalid\n");
 	}
-	debug("            (X,Y) : (%d,%d) %s %s\n", xCounter, scanline,  dmaLine ? "(DMA line)" : "", dmaLinesEnabled ? "" : "(DMA lines disabled)");
-	debug("               VC : %02X\n", registerVC);
-	debug("           VCBASE : %02X\n", registerVCBASE);
-	debug("               RC : %02X\n", registerRC);
-	debug("             VMLI : %02X\n", registerVMLI);
-	debug("          BA line : %s\n", BAlow ? "low" : "high");
-	debug("      MainFrameFF : %d\n", mainFrameFF);
-	debug("  VerticalFrameFF : %d\n", verticalFrameFF);
-	debug("      Draw Vframe : %s\n", drawVerticalFrame ? "yes" : "no");
-	debug("      Draw Hframe : %s\n", drawHorizontalFrame ? "yes" : "no");	
-	debug("     DisplayState : %s\n", displayState ? "on" : "off");
-	debug("         SpriteOn : ");
-	for (int i = 0; i < 8; i++) debug("%d ", spriteOnOff & (1 << i) != 0);
-	debug("\n        SpriteDma : ");
-	for (int i = 0; i < 8; i++) debug("%d ", spriteDmaOnOff & (1 << i) != 0 );
-	debug("\n      Y expansion : ");
-	for (int i = 0; i < 8; i++) debug("%d ", expansionFF & (1 << i) != 0);
+	debug(1, "            (X,Y) : (%d,%d) %s %s\n", xCounter, scanline,  dmaLine ? "(DMA line)" : "", dmaLinesEnabled ? "" : "(DMA lines disabled)");
+	debug(1, "               VC : %02X\n", registerVC);
+	debug(1, "           VCBASE : %02X\n", registerVCBASE);
+	debug(1, "               RC : %02X\n", registerRC);
+	debug(1, "             VMLI : %02X\n", registerVMLI);
+	debug(1, "          BA line : %s\n", BAlow ? "low" : "high");
+	debug(1, "      MainFrameFF : %d\n", mainFrameFF);
+	debug(1, "  VerticalFrameFF : %d\n", verticalFrameFF);
+	debug(1, "      Draw Vframe : %s\n", drawVerticalFrame ? "yes" : "no");
+	debug(1, "      Draw Hframe : %s\n", drawHorizontalFrame ? "yes" : "no");	
+	debug(1, "     DisplayState : %s\n", displayState ? "on" : "off");
+	debug(1, "         SpriteOn : ");
+	for (int i = 0; i < 8; i++) debug(1, "%d ", spriteOnOff & (1 << i) != 0);
+	debug(1, "\n        SpriteDma : ");
+	for (int i = 0; i < 8; i++) debug(1, "%d ", spriteDmaOnOff & (1 << i) != 0 );
+	debug(1, "\n      Y expansion : ");
+	for (int i = 0; i < 8; i++) debug(1, "%d ", expansionFF & (1 << i) != 0);
 	
-	debug("\n        IO memory : ");
+	debug(1, "\n        IO memory : ");
 	for (unsigned i = 0; i < sizeof(iomem); i += 16) {
 		for (unsigned j = 0; j < 16; j ++) {
-			debug("%02X ", iomem[i + j]);
+			debug(1, "%02X ", iomem[i + j]);
 		}
-		debug("\n                    ");
+		debug(1, "\n                    ");
 	}
-	debug("\n");
+	debug(1, "\n");
 }
 
 
@@ -786,10 +787,10 @@ VIC::peek(uint16_t addr)
 			result = scanline & 0xff;
 			return result;
 		case 0x13:
-			debug("Reading lightpen X position: %d\n", iomem[addr]);
+			debug(2, "Reading lightpen X position: %d\n", iomem[addr]);
 			return iomem[addr];			
 		case 0x14:
-			debug("Reading lightpen Y position: %d\n", iomem[addr]);
+			debug(2, "Reading lightpen Y position: %d\n", iomem[addr]);
 			return iomem[addr];			
 		case 0x19:
 			result = iomem[addr] | 0x70; // Bits 4 to 6 are not used and always contain "1"

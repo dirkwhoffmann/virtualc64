@@ -22,8 +22,9 @@
 
 Keyboard::Keyboard()
 {
-	debug("Creating keyboard at address %p...\n", this);
+	debug(2, "Creating keyboard at address %p...\n", this);
 	
+	name = "Keyboard";
 	for (int i = 0; i < 128; i++) {
 		ASCII[i] = 0x0000;
 	}
@@ -80,7 +81,7 @@ Keyboard::Keyboard()
 void 
 Keyboard::reset() 
 {
-	debug("  Resetting keyboard...\n");
+	debug(2, "  Resetting keyboard...\n");
 
 	// Reset keyboard matrix (0 = pressed, 1 = not pressed)
 	for (int i = 0; i < 8; i++) {
@@ -91,7 +92,7 @@ Keyboard::reset()
 bool
 Keyboard::load(uint8_t **buffer)
 {
-	debug("    Loading keyboard state...\n");
+	debug(2, "    Loading keyboard state...\n");
 	
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		kbMatrix[i] = read8(buffer);
@@ -102,7 +103,7 @@ Keyboard::load(uint8_t **buffer)
 bool
 Keyboard::save(uint8_t **buffer)
 {
-	debug("    Saving keyboard state...\n");
+	debug(2, "    Saving keyboard state...\n");
 
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		write8(buffer, kbMatrix[i]);
@@ -113,15 +114,15 @@ Keyboard::save(uint8_t **buffer)
 void 
 Keyboard::dumpState()
 {
-	debug("Keyboard:\n");
-	debug("---------\n\n");
-	debug("Keyboard matrix: ");
+	debug(1, "Keyboard:\n");
+	debug(1, "---------\n\n");
+	debug(1, "Keyboard matrix: ");
 	for (int i = 0; i < 8; i++) {
-		debug("%d %d %d %d %d %d %d %d\n                 ", 
+		debug(1, "%d %d %d %d %d %d %d %d\n                 ", 
 			  kbMatrix[i] & 0x01 != 0, kbMatrix[i] & 0x02 != 0, kbMatrix[i] & 0x04 != 0, kbMatrix[i] & 0x08 != 0,
 			  kbMatrix[i] & 0x10 != 0, kbMatrix[i] & 0x20 != 0, kbMatrix[i] & 0x40 != 0, kbMatrix[i] & 0x80 != 0);				
 	}
-	debug("\n");
+	debug(1, "\n");
 }
 
 uint8_t Keyboard::getRowValues(uint8_t columnMask)
@@ -141,7 +142,6 @@ void Keyboard::pressKey(uint8_t row, uint8_t col)
 {
 	if (row < 8 && col < 8)
 		kbMatrix[row] &= 255 - (1 << col);
-	// debug("Key %d %d pressed\n", row, col);
 }
 
 void Keyboard::pressKey(char c)
@@ -191,7 +191,7 @@ void Keyboard::typeRun()
 
 void Keyboard::typeFormat()
 {
-	debug("typeFormat\n");
+	debug(1, "typeFormat\n");
 	
 	// OPEN 1,8,15,"N:TEST, ID": CLOSE 1<RETURN>
 	unsigned i;

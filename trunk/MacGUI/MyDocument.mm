@@ -32,25 +32,25 @@
 
 	NSLog(@"initialize");
 	
-	// Create a dictionary
+	// Create a dictionary
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 		
 	// Put default values into dictionary
 
-	/* System */
+	// System 
 	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64PALorNTSCKey];
 	[defaultValues setObject:@"" forKey:VC64BasicRomFileKey];
 	[defaultValues setObject:@"" forKey:VC64CharRomFileKey];
 	[defaultValues setObject:@"" forKey:VC64KernelRomFileKey];
 	[defaultValues setObject:@"" forKey:VC64VC1541RomFileKey];
 		
-	/* Peripherals */
+	// Peripherals
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64WarpLoadKey];
 
-	/* Audio */
+	// Audio
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64SIDFilterKey];
-
-	/* Video */
+	
+	// Video
 	[defaultValues setObject:[NSNumber numberWithInt:VIC::CUSTOM_PALETTE] forKey:VC64ColorSchemeKey];
 	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:VC64VideoFilterKey];	
 
@@ -73,8 +73,6 @@
 	
 	// Register the dictionary of defaults
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-	
-	NSLog(@"Registered user defaults: %@", defaultValues);	
 }
 
 - (id)init  
@@ -83,10 +81,7 @@
 	
     self = [super init];
     if (self) {
-		// We change the working directory before creating the virtual machine, because
-		// ROMs are currenty part of the distrubution and will be found immediately.
-		// If we decide not to include ROM files, changing the directory is not 
-		// needed at all and can be deleted.
+		// Change working directory to the main bundle ressource path. We may find some ROMs there...
 		NSBundle* mainBundle = [NSBundle mainBundle];
 		NSString *path = [mainBundle resourcePath];
 		if (chdir([path UTF8String]) != 0)
@@ -475,32 +470,28 @@
 			switch (msg->i) {
 				case BASIC_ROM:
 					[info setStringValue:@"Basic Rom loaded"];
-					NSLog(@"BASIC ROM loaded");
+					// NSLog(@"BASIC ROM loaded");
 					break;
 				case CHAR_ROM:
 					[info setStringValue:@"Character Rom loaded"];
-					NSLog(@"CHARACTER ROM loaded");
+					// NSLog(@"CHARACTER ROM loaded");
 					break;
 				case KERNEL_ROM:
 					[info setStringValue:@"Kernel Rom loaded"];
-					NSLog(@"KERNEL ROM loaded");
+					// NSLog(@"KERNEL ROM loaded");
 					break;
 				case VC1541_ROM:
 					[info setStringValue:@"VC1541 Rom loaded"];
-					NSLog(@"VC1541 ROM loaded");
+					// NSLog(@"VC1541 ROM loaded");
 					break;
 			}		
-			NSLog(@"%d ROMs are currently missing", [c64 numberOfMissingRoms]);
 		
 			// Update ROM dialog
 			if (romDialog != NULL) {
-				// NSSound *mySound = [NSSound soundNamed:@"Purr"];
 				[romDialog update:[c64 missingRoms]];
-				// [mySound play];		
 			}
 			// Start drawing when all ROMS are loaded...
 			if ([c64 numberOfMissingRoms] == 0) { //	} && [c64 isHalted]) {
-				NSLog(@"LAUNCHING OPENGL VIEW");
 				[screen zoom];
 				[c64 run];
 			}

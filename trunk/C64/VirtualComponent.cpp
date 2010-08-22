@@ -18,8 +18,11 @@
 
 #include "C64.h"
 
+int VirtualComponent::debugLevel = 1;
+
 VirtualComponent::VirtualComponent()
 {
+	name = "Unnamed component";
 	running = false;
 	suspendCounter = 0;	
 	traceMode = false;
@@ -57,7 +60,7 @@ VirtualComponent::isHalted()
 void 
 VirtualComponent::suspend()
 {
-	debug("Suspending...\n");
+	debug(1, "Suspending...\n");
 	if (suspendCounter == 0) {
 		suspendedState = isRunning();
 		halt();
@@ -70,7 +73,7 @@ VirtualComponent::suspend()
 void 
 VirtualComponent::resume()
 {
-	debug("Resuming...\n");
+	debug(1, "Resuming...\n");
 	suspendCounter--;
 	if (suspendCounter == 0 && suspendedState == true)
 		run();
@@ -84,17 +87,57 @@ VirtualComponent::dumpState()
 }
 
 void
-VirtualComponent::debug(const char *fmt, ...)
+VirtualComponent::debug(int level, const char *fmt, ...)
 {
+	if (level > debugLevel) 
+		return;
+
 	char buf[128];
-	
 	va_list ap;
 	va_start(ap, fmt);
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
 	va_end(ap);
+	fprintf(stderr, "%s: %s", name, buf);
+}
+
+void format_string(char *fmt,va_list argptr );
+
+void
+VirtualComponent::trace(const char *fmt, ...)
+{
+	if (!tracingEnabled()) 
+		return;
 	
-	// Dump message to stderr...
-	fprintf(stderr, "%s", buf);
+	char buf[128];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(buf, sizeof(buf), fmt, ap); 
+	va_end(ap);
+	fprintf(stderr, "%s %s", name, buf);
+}
+
+void
+VirtualComponent::warn(const char *fmt, ...)
+{
+	char buf[128];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(buf, sizeof(buf), fmt, ap); 
+	va_end(ap);
+	fprintf(stderr, "%s: WARNING: %s", name, buf);
+}
+
+void
+VirtualComponent::panic(const char *fmt, ...)
+{
+	char buf[128];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(buf, sizeof(buf), fmt, ap); 
+	va_end(ap);
+	fprintf(stderr, "%s: PANIC: %s", name, buf);
+	
+	assert(0);
 }
 
 

@@ -31,8 +31,7 @@ threadCleanup(void* thisC64)
 	C64 *c64 = (C64 *)thisC64;
 	c64->threadCleanup();
 	
-	c64->debug("Execution thread terminated\n");	
-	printf("end: rasterlineCycle %d\n", c64->rasterlineCycle);
+	c64->debug(1, "Execution thread terminated\n");	
 	c64->putMessage(MSG_HALT);
 }
 
@@ -44,7 +43,7 @@ void
 	assert(thisC64 != NULL);
 	
 	C64 *c64 = (C64 *)thisC64;
-	c64->debug("Execution thread started\n");
+	c64->debug(1, "Execution thread started\n");
 	c64->putMessage(MSG_RUN);
 	
 	// Configure thread properties...
@@ -57,12 +56,6 @@ void
 	c64->floppy->cpu->clearErrorState();
 	c64->setDelay();
 	
-	// determine cycle relative to the current rasterline
-	// DON'T DO THIS! SAVE cycle VALUE IN IMAGE FILE
-	// int cycle = (c64->getCycles() % c64->getCyclesPerRasterline()) + 1;
-
-	printf("rasterlineCycle   %d\n", c64->rasterlineCycle);
-
 	while (1) {		
 		if (!c64->executeOneLine())
 			break;		
@@ -81,12 +74,13 @@ void
 // --------------------------------------------------------------------------------
 
 C64::C64()
-{
-	debug("Creating virtual C64 at address %p...\n", this);
-	
+{	
+	name = "C64";
 	p = NULL;
 	warpMode = false;
-		
+
+	debug(1, "Creating virtual C64 at address %p...\n", this);
+
 	// Create components
 	mem = new C64Memory();
 	cpu = new CPU();		
@@ -157,15 +151,14 @@ C64::~C64()
 	if( joystick2 != NULL )
 		delete joystick2;
 	
-	debug("Cleaned up virtual C64 at address %p\n", this);
+	debug(1, "Cleaned up virtual C64 at address %p\n", this);
 }
 
 void C64::reset()
 {
-	debug ("Resetting virtual C64\n");
-
 	suspend();
 
+	debug (1, "Resetting virtual C64\n");
 	mem->reset();
 	cpu->reset();
 	cpu->setPC(0xFCE2);
@@ -191,12 +184,12 @@ void C64::fastReset()
 {
 	Snapshot *snapshot = new Snapshot();
 	
-	debug ("Resetting virtual C64 (fast reset via image file)\n");
+	debug (1, "Resetting virtual C64 (fast reset via image file)\n");
 	
 	if (snapshot->initWithContentsOfFile("ResetImage.VC64")) {
 		snapshot->writeToC64(this);
 	} else {
-		debug("Error while reading reset image\n");
+		debug(1, "Error while reading reset image\n");
 	}
 
 	delete snapshot;
@@ -209,11 +202,11 @@ C64::load(uint8_t **buffer)
 	
 	suspend();
 	
-	debug("Loading...\n");
+	debug(1, "Loading...\n");
 
 	// Load screenshot
 	vic->loadScreenshot(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 
 	// Load internal state
 	cycles = read64(buffer);
@@ -224,25 +217,25 @@ C64::load(uint8_t **buffer)
 	
 	// Load internal state of sub components
 	cpu->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	// cpu->dumpState();
 	vic->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	// vic->dumpState();
 	sid->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	cia1->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	cia2->load(buffer);	
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	mem->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	keyboard->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	iec->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	floppy->load(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	
 	resume();
 	return true;
@@ -255,11 +248,11 @@ C64::save(uint8_t **buffer)
 	
 	suspend();
 	
-	debug("Saving...\n");
+	debug(1, "Saving...\n");
 		
 	// Save screenshot
 	vic->saveScreenshot(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 
 	// Save internal state
 	write64(buffer, cycles);
@@ -270,25 +263,25 @@ C64::save(uint8_t **buffer)
 	
 	// Save internal state of sub components
 	cpu->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	// cpu->dumpState();
 	vic->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	// vic->dumpState();
 	sid->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	cia1->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	cia2->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	mem->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	keyboard->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	iec->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	floppy->save(buffer);
-	debug("%d\n", *buffer - old);
+	debug(2, "%d\n", *buffer - old);
 	
 	resume();
 	return true;
@@ -296,17 +289,17 @@ C64::save(uint8_t **buffer)
 
 void 
 C64::dumpState() {
-	debug("C64:\n");
-	debug("----\n\n");
-	debug("            Machine type : %s\n", (noOfRasterlines == VIC::PAL_RASTERLINES) ? "PAL" : "NTSC");
-	debug("       Frames per second : %d\n", fps);
-	debug("   Rasterlines per frame : %d\n", noOfRasterlines);
-	debug("   Cycles per rasterline : %d\n", cpuCyclesPerRasterline);
-	debug("           Current cycle : %llu\n", cycles);
-	debug("           Current frame : %d\n", frame);
-	debug("      Current rasterline : %d\n", rasterline);
-	debug("Current rasterline cycle : %d\n", rasterlineCycle);
-	debug("\n");
+	debug(1, "C64:\n");
+	debug(1, "----\n\n");
+	debug(1, "            Machine type : %s\n", (noOfRasterlines == VIC::PAL_RASTERLINES) ? "PAL" : "NTSC");
+	debug(1, "       Frames per second : %d\n", fps);
+	debug(1, "   Rasterlines per frame : %d\n", noOfRasterlines);
+	debug(1, "   Cycles per rasterline : %d\n", cpuCyclesPerRasterline);
+	debug(1, "           Current cycle : %llu\n", cycles);
+	debug(1, "           Current frame : %d\n", frame);
+	debug(1, "      Current rasterline : %d\n", rasterline);
+	debug(1, "Current rasterline cycle : %d\n", rasterlineCycle);
+	debug(1, "\n");
 }
 
 Message *C64::getMessage()
@@ -393,10 +386,7 @@ C64::run() {
 			return;
 		}
 		
-		debug("Starting thread...");
 		// Start execution thread
-		// setTraceMode(true);
-		printf("this = %p\n", this);
 		pthread_create(&p, NULL, runThread, (void *)this);	
 		
 		// Power on sub components
@@ -1230,7 +1220,7 @@ C64::switchInputDevice( int portNo )
 void 
 C64::switchInputDevices()
 {
-	debug("Switching input devides\n");
+	debug(1, "Switching input devides\n");
 	int tmp_port = port[0];
 	port[0] = port[1];
 	port[1] = tmp_port;
@@ -1295,6 +1285,6 @@ void
 C64::threadCleanup()
 {
 	p = NULL;
-	debug("Execution thread terminated\n");
+	debug(1, "Execution thread terminated\n");
 }
 

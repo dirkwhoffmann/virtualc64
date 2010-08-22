@@ -42,7 +42,7 @@
 typedef struct {
 	int id;			// Message ID
 	char c[128];	// Text message
-	int i;			// Inteher value
+	int i;			// Integer value
 	void *p;		// Pointer value
 } Message;
 
