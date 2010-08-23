@@ -52,7 +52,7 @@
 		50287EEB0A7CA86900292533 /* stepOut32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50287EEA0A7CA86900292533 /* stepOut32.png */; };
 		503DF0DA0F18BFDE00DC5C11 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503DF0D90F18BFDE00DC5C11 /* Timer.cpp */; };
 		50414727122188FC00A80E0C /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* Cartridge.cpp */; };
-		504148291221964C00A80E0C /* cartridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 504148281221964C00A80E0C /* cartridge.png */; };
+		5041486912219F6E00A80E0C /* cartridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5041486812219F6E00A80E0C /* cartridge.png */; };
 		50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE50A7B679A00A8DB94 /* stepInto32.png */; };
 		50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE70A7B67A100A8DB94 /* stepOver32.png */; };
 		50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FEB0A7B67AE00A8DB94 /* restart32.png */; };
@@ -182,7 +182,7 @@
 		503DF0D90F18BFDE00DC5C11 /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* Cartridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* Cartridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
-		504148281221964C00A80E0C /* cartridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cartridge.png; path = images/cartridge.png; sourceTree = "<group>"; };
+		5041486812219F6E00A80E0C /* cartridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cartridge.png; path = images/cartridge.png; sourceTree = "<group>"; };
 		50471FE50A7B679A00A8DB94 /* stepInto32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepInto32.png; path = images/stepInto32.png; sourceTree = "<group>"; };
 		50471FE70A7B67A100A8DB94 /* stepOver32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepOver32.png; path = images/stepOver32.png; sourceTree = "<group>"; };
 		50471FEB0A7B67AE00A8DB94 /* restart32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = restart32.png; path = images/restart32.png; sourceTree = "<group>"; };
@@ -440,7 +440,7 @@
 		50732BCA0A70D560008D8FF0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				504148281221964C00A80E0C /* cartridge.png */,
+				5041486812219F6E00A80E0C /* cartridge.png */,
 				504CEE7C0C46774F001F4E51 /* BigIcon.png */,
 				504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */,
 				50DA14A20A6418470022B4A7 /* bottom.png */,
@@ -604,7 +604,7 @@
 				50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */,
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
 				50F55DD10F28EC2D0040592B /* Preferences.xib in Resources */,
-				504148291221964C00A80E0C /* cartridge.png in Resources */,
+				5041486912219F6E00A80E0C /* cartridge.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
