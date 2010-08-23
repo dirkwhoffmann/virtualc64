@@ -92,7 +92,7 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>V64</string>
+	<string>VirtualC64</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Documentation</string>
 	<key>CFBundleHelpBookName</key>
@@ -113,17 +113,17 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>SUPublicDSAKeyFile</key>
-	<string>dsa_pub.pem</string>
-	<key>SUFeedURL</key>
-	<string>http://dirkwhoffmann.de/virtualc64/VirtualC64Appcast.xml</string>
+	<key>SUAllowsAutomaticUpdates</key>
+	<string>NO</string>
 	<key>SUEnableAutomaticChecks</key>
 	<string>NO</string>
 	<key>SUEnableSystemProfiling</key>
 	<string>NO</string>
+	<key>SUFeedURL</key>
+	<string>http://dirkwhoffmann.de/virtualc64/VirtualC64Appcast.xml</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 	<key>SUShowReleaseNotes</key>
 	<string>YES</string>
-	<key>SUAllowsAutomaticUpdates</key>
-	<string>NO</string>
 </dict>
 </plist>
