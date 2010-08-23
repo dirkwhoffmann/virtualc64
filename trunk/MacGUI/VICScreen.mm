@@ -37,6 +37,15 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	return [(VICScreen *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
 }
 
+void checkForOpenGLErrors()
+{
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR) {
+		NSLog(@"OpenGL PANIC: %s", gluErrorString(error));
+		exit(0);
+	}
+}
+
 @implementation VICScreen
 
 // --------------------------------------------------------------------------------
@@ -148,10 +157,13 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	[glcontext makeCurrentContext];
 	
 	// Configure the view
+	NSLog(@"prepareOpenGL (1)");
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST); 
-	
+	checkForOpenGLErrors();
+
 	// Disable everything we don't need
+	NSLog(@"prepareOpenGL (2)");
 	glDisable(GL_DITHER);
 	glDisable(GL_ALPHA_TEST);
 	glDisable(GL_BLEND);
@@ -159,41 +171,65 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	glDisable(GL_FOG);
 	
 	// Create C64 monitor texture
+	NSLog(@"prepareOpenGL (3)");	
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, (GLuint *)&texture);
+	checkForOpenGLErrors();
+	assert(texture > 0);
+	
+	NSLog(@"prepareOpenGL (4)");
 	glBindTexture(GL_TEXTURE_2D, texture);	
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	checkForOpenGLErrors();
 	
 	// Create background texture
+	NSLog(@"prepareOpenGL (5)");
 	NSImage *bgImage = [NSImage imageNamed:@"c64"];
 	NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
 	bgTexture = [self makeTexture:bgImageResized];
+	checkForOpenGLErrors();
 	
 	// Turn on synchronization
+	NSLog(@"prepareOpenGL (6)");
 	const GLint VBL = 1;
 	[[self openGLContext] setValues:&VBL forParameter:NSOpenGLCPSwapInterval];
+	checkForOpenGLErrors();
 	
     // Create display link for the main display
 	NSLog(@"CVDisplayLinkCreateWithCGDisplay");
     CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
+	checkForOpenGLErrors();
 	
     if (displayLink != NULL) {
+		CVReturn success;
     	// set the current display of a display link.
 		NSLog(@"CVDisplayLinkSetCurrentCGDisplay");
-    	CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay);
+    	if ((success = CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay)) != 0) {
+			NSLog(@"CVDisplayLinkSetCurrentCGDisplay failed with return code %d", success);
+			CVDisplayLinkRelease(displayLink);
+			exit(0);
+		}
         
         // set the renderer output callback function
 		NSLog(@"CVDisplayLinkSetOutputCallback");
-    	CVDisplayLinkSetOutputCallback(displayLink, &MyRenderCallback, self);
+    	if ((success = CVDisplayLinkSetOutputCallback(displayLink, &MyRenderCallback, self)) != 0) {
+			NSLog(@"CVDisplayLinkSetOutputCallback failed with return code %d", success);
+  	        CVDisplayLinkRelease(displayLink);
+			exit(0);
+		}
         
         // activates a display link.
 		NSLog(@"CVDisplayLinkStart");
-    	CVDisplayLinkStart(displayLink);
-    }	
+    	if ((success = CVDisplayLinkStart(displayLink)) != 0) {
+			NSLog(@"CVDisplayLinkStart failed with return code %d", success);
+		        CVDisplayLinkRelease(displayLink);
+			exit(0);				
+		}	
+	}
 }
 
 
@@ -482,15 +518,6 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	// Update angles for screen animation
 	[self updateAngles];
 	
-	// Get texture data from C64
-	[glcontext makeCurrentContext];
-	glBindTexture(GL_TEXTURE_2D, texture);			
-
-	if (c64) {
-		void *buf = c64->vic->screenBuffer(); 
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIC::TOTAL_SCREEN_WIDTH, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
-	}
-
 	// Draw scene
    	[self drawRect:NSZeroRect];
     
@@ -512,9 +539,15 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 	//glClearColor((float)EXTRACT_RED(col)/0xff, (float)EXTRACT_GREEN(col)/0xff, (float)EXTRACT_BLUE(col)/0xff, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Select screen texture
+	// Update screen texture
 	glBindTexture(GL_TEXTURE_2D, texture);			
-
+	if (c64) {
+		void *buf = c64->vic->screenBuffer(); 
+		assert(buf != NULL);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIC::TOTAL_SCREEN_WIDTH, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+		checkForOpenGLErrors();
+	}
+	
 	// Set location
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
