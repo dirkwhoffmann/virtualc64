@@ -26,9 +26,12 @@ class Container {
 	
 private:
 	
-	//! Physical name of archive 
+	//! Physical name of archive
 	char *path;
-
+	
+	//! Logical name of archive
+	char *name;
+	
 	//! Discard previously loaded contents if present
 	virtual void cleanup() = 0;
 
@@ -47,11 +50,11 @@ public:
 	//! Destructor
 	virtual ~Container();
 		
-	//! Return physical name (path on disc)
-	const char *getPath();
-	
-	//! Return logical
-	virtual const char *getName() = 0;
+	//! Return physical name
+	 const char *getPath();
+
+	//! Return logical name (can be overwritten by sub classes)
+	virtual const char *getName();
 	
 	//! Type of container in plain text (T64, D64, PRG, ...)
 	virtual const char *getTypeOfContainer() = 0;

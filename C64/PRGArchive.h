@@ -24,9 +24,6 @@
 class PRGArchive : public Archive {
 
 private:
-	//! Physical name of archive 
-	char *path;
-	
 	//! Name of the PRG container file
 	char name[256];
 
@@ -56,7 +53,6 @@ public:
 	bool loadFromFile(FILE *file, struct stat fileProperties);
 	void cleanup();
 	const char *getTypeOfContainer();
-	const char *getName();
 	
 	// Virtual functions from Archive class
 	int getNumberOfItems();

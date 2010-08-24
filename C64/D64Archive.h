@@ -24,9 +24,6 @@
 class D64Archive : public Archive {
 
 private:
-	//! Physical name of archive 
-	char *path;
-	
 	//! Name of the D64 container file
 	char name[256];
 

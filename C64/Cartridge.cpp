@@ -24,69 +24,46 @@ static void printReadable(const void *data, int length)
 	for(i = 0; i < length; i++) {
 		char ch = ((char*)(data))[i];
 		if (isascii(ch)) {
-			printf("%02x %c ", ch, ch);
+			fprintf(stderr, "%02x %c ", ch, ch);
 		} else {
-			printf("%02x ? ", ch);
+			fprintf(stderr, "%02x ? ", ch);
 		}
 		if (i > 0 && i % 16 == 0) {
-			printf("\n");
+			fprintf(stderr, "\n");
 		}
 	}
 }
 
-//! Constructor
 Cartridge::Cartridge()
 {
 	path = NULL;
 	data = NULL;
-	size = 0;
-	
-	numberOfChips = 0;
-	for(int i = 0; i < MAX_CHIPS; i++) {
-		chip[i] = NULL;
-	}
+	cleanup();
 }
 
-//! Destructor
 Cartridge::~Cartridge()
 {
-	if (path) free(path);
-	if (data) free(data);
+	cleanup();
 }
 
-bool Cartridge::load(uint8_t **buffer)
-{	
-#if 0
-	for (unsigned i = 0; i < sizeof(watchpoint); i++)
-		watchpoint[i] = read8(buffer);	
-	for (unsigned i = 0; i < sizeof(watchValue); i++) 
-		watchValue[i] = read8(buffer);	
-#endif
-	return true;
-}
-
-bool Cartridge::save(uint8_t **buffer) 
+Cartridge *
+Cartridge::cartridgeFromFile(const char *filename)
 {
-#if 0
-	for (unsigned i = 0; i < sizeof(watchpoint); i++)
-		write8(buffer, watchpoint[i]);
-	for (unsigned i = 0; i < sizeof(watchValue); i++) 
-		write8(buffer, watchValue[i]);
-#endif
-	return true;
-}
-
-void Cartridge::reset()
-{
+	Cartridge *cartridge;
+	
+	cartridge = new Cartridge();	
+	if (!cartridge->loadFile(filename)) {
+		delete cartridge;
+		cartridge = NULL;
+	}
+	return cartridge;
 	
 }
 
-//! Check file type
-/*! Returns true, iff the specifies file is a valid cartridge file. */
 bool Cartridge::fileIsValid(const char *filename)
 {
 	int magic_bytes[] = 
-		{'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ',EOF};
+	{'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ',EOF};
 	
 	assert(filename != NULL);
 	
@@ -102,30 +79,11 @@ bool Cartridge::fileIsValid(const char *filename)
 	return true;
 }
 
-bool Cartridge::loadFile(const char *filename)
+bool 
+Cartridge::loadFromFile(FILE *file, struct stat fileProperties)
 {
-	struct stat fileProperties;
-	FILE *file = NULL;
 	int c = 0;
 	unsigned i = 0;
-	
-	assert (filename != NULL);
-	
-	// Check file type
-	if (!fileIsValid(filename)) 
-		return false;
-	
-	// Get file properties
-    if (stat(filename, &fileProperties) != 0) {
-		// Could not open file...
-		return false;
-	}
-	
-	// Open file
-	if (!(file = fopen(filename, "r"))) {
-		// Can't open for read (Huh?)
-		return false;
-	}
 	
 	// Allocate memory
 	if ((data = (uint8_t *)malloc(fileProperties.st_size)) == NULL) {
@@ -140,13 +98,11 @@ bool Cartridge::loadFile(const char *filename)
 	}
 	
 	assert(size == fileProperties.st_size);
-	
-	fclose(file);
-	
+		
 	// C64 CARTRIDGE
 	uint8_t magic_cartridge[] = { 'C', '6', '4', ' ', 'C', 'A', 'R', 'T', 'R', 'I', 'D', 'G', 'E', ' ', ' ', ' ' };
 	if (memcmp(magic_cartridge, &data[0], 16) != 0) {
-		printf("Bad cartridge signature. Expected 'C64  CARTRIDGE  ', got ...\n");
+		fprintf(stderr, "Bad cartridge signature. Expected 'C64  CARTRIDGE  ', got ...\n");
 		printReadable(&data[0], 16);
 		return false;
 	}
@@ -155,22 +111,20 @@ bool Cartridge::loadFile(const char *filename)
 	uint16_t hi = LO_HI(data[0x0011], data[0x0010]);
 	uint16_t lo  = LO_HI(data[0x0013], data[0x0012]);
 	uint32_t headerSize = (uint32_t)((hi << 16) | (lo));
-
+	
 	version = LO_HI(data[0x0015], data[0x0014]);
 	type = LO_HI(data[0x0017], data[0x0016]);
-
-	printf ("Header size is: 0x%08X (normally 0x40)\n", headerSize);
-	printf("Cartridge: %s, type: %d\n", &data[0x0020], type);
-	printf("EXROM = %d, GAME = %d\n", data[0x0019], data[0x0018]);
 	
-	path = strdup(filename);
-	
+	fprintf(stderr, "Header size is: 0x%08X (normally 0x40)\n", headerSize);
+	fprintf(stderr, "Cartridge: %s, type: %d\n", &data[0x0020], type);
+	fprintf(stderr, "EXROM = %d, GAME = %d\n", data[0x0019], data[0x0018]);
+		
 	// Load chip packets
 	for (i = headerSize; i < size; ) {
-
+		
 		uint8_t magic_chip[] = { 'C', 'H', 'I', 'P' };
 		if (memcmp(magic_chip, &data[i], 4) != 0) {
-			printf("Unexpected data in cartridge, expected 'CHIP'\n");
+			fprintf(stderr, "Unexpected data in cartridge, expected 'CHIP'\n");
 			printReadable(&data[i], 4);
 			return false;
 		}
@@ -181,7 +135,7 @@ bool Cartridge::loadFile(const char *filename)
 		unsigned int bank = LO_HI(data[i+0x000B], data[i+0x000A]);
 		unsigned int addr = LO_HI(data[i+0x000D], data[i+0x000C]);
 		
-		printf("Chip ROM size: 0x%04x (%d)  type: %d  Bank: 0x%04x  Address: 0x%04x\n", 
+		fprintf(stderr, "Chip ROM size: 0x%04x (%d)  type: %d  Bank: 0x%04x  Address: 0x%04x\n", 
 			   romSize, romSize, chipType, bank, addr );
 		
 		Cartridge::Chip * chipPacket = new Cartridge::Chip();
@@ -189,7 +143,7 @@ bool Cartridge::loadFile(const char *filename)
 		chipPacket->size = romSize;
 		
 		if (romSize > sizeof(chipPacket->rom)) {
-			printf("Chip Rom too large\n");
+			fprintf(stderr, "Chip Rom too large\n");
 			return false;
 		}
 		memcpy(chipPacket->rom, &data[i+0x0010], romSize);
@@ -203,9 +157,32 @@ bool Cartridge::loadFile(const char *filename)
 		switchBank(0);
 	}
 	
-	printf("CRT container imported successfully (%d chips)\n", numberOfChips);
-	
+	fprintf(stderr, "CRT container imported successfully (%d chips)\n", numberOfChips);
 	return true;
+}
+
+void 
+Cartridge::cleanup()
+{
+	if (path) {
+		free(path);
+		path = NULL;
+	}
+	if (data) {
+		free(data);
+		data = NULL;
+	}
+	size = 0;	
+	numberOfChips = 0;
+	for(int i = 0; i < MAX_CHIPS; i++) {
+		chip[i] = NULL;
+	}
+}
+
+const char *
+Cartridge::getTypeOfContainer()
+{
+	return "CRT";
 }
 
 //! The GAME line status
@@ -228,20 +205,20 @@ bool Cartridge::exromIsHigh()
 
 void Cartridge::switchBank(int bankNumber)
 {
-	printf("Switching to bank %d ... ", bankNumber);
+	fprintf(stderr, "Switching to bank %d ... ", bankNumber);
 	Cartridge::Chip *chip = getChip(bankNumber);
 	if (chip != NULL) {
 		memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
-		printf("Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
+		fprintf(stderr, "Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
 	} else {
-		printf("Bank %d does not exist\n", bankNumber);
+		fprintf(stderr, "Bank %d does not exist\n", bankNumber);
 	}
 	printf("\n");
 }
 
 void Cartridge::poke(uint16_t addr, uint8_t value)             
 {
-	printf("Cartridge poke %04X %02x (%d)\n", addr, value, value);
+	fprintf(stderr, "Cartridge poke %04X %02x (%d)\n", addr, value, value);
 	// 0xDE00 - 0xDEFF (I/O area 1)
 	// 0xDF00 - 0xDFFF (I/O area 2) 
 	if (addr >= 0xDE00 && addr <= 0xDFFF) {
@@ -253,11 +230,11 @@ void Cartridge::poke(uint16_t addr, uint8_t value)
 		// at the specified ROM locations.
 		rom[addr] = value;
 		
-		Cartridge::Type type = getType();
+		Cartridge::CartridgeType type = getCartridgeType();
 		if (type == Normal_Cartridge) {
 			
 		} else if (type == Simons_Basic && addr == 0xDE00) {
-			printf("Switching to bank %d (%02X) ... ", 1, value);
+			fprintf(stderr, "Switching to bank %d (%02X) ... ", 1, value);
 			// Simon banks the second chip into $A000-BFFF
 			if (value == 0x01) {
 				switchBank(1);
@@ -273,7 +250,7 @@ void Cartridge::poke(uint16_t addr, uint8_t value)
 		} else if (type == Fun_Play_Power_Play) {
 				
 		} else {
-			printf("Unsupported cartridge\n");
+			fprintf(stderr, "Unsupported cartridge\n");
 		}
 	}
 }
@@ -300,9 +277,9 @@ unsigned int Cartridge::getVersion()
 	return version;
 }
 
-Cartridge::Type Cartridge::getType()
+Cartridge::CartridgeType Cartridge::getCartridgeType()
 {
-	return (Cartridge::Type)type;
+	return (Cartridge::CartridgeType)type;
 }
 
 // --------------------------------------------------------------------------------

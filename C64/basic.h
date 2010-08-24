@@ -38,6 +38,9 @@
 #include <assert.h>
 #include <math.h>
 
+// C++ includes
+#include <string>
+
 // Macros
 
 //! Evaluates to the high byte of x. x is expected to be of type uint16_t.
@@ -62,6 +65,26 @@ inline uint8_t BCDToBinary(uint8_t value) { return 10 * (value & 0xF0) + (value 
 
 //! Convert a binary value to a BCD number
 inline uint8_t BinaryToBCD(uint8_t value) { return (value / 10) << 4 + (value % 10); }
+
+//! Extract directory from path
+inline std::string ExtractDirectory( const std::string& path )
+{
+	return path.substr(0, path.find_last_of( '/' ) + 1);
+}
+
+//! Extract filename from path
+inline std::string ExtractFilename( const std::string& path )
+{
+	return path.substr( path.find_last_of( '/' ) +1 );
+}
+
+//! Change extension
+inline std::string ChangeExtension( const std::string& path, const std::string& ext )
+{
+	std::string filename = ExtractFilename(path);
+	return ExtractDirectory(path) + filename.substr(0, filename.find_last_of( '.' )) + ext;
+}
+
 
 //! Check file suffix
 /*! The function is used for determining the type of a file.
