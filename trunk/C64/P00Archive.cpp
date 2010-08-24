@@ -20,7 +20,6 @@
 
 P00Archive::P00Archive()
 {
-	path = NULL;
 	data = NULL;
 	cleanup(); 
 }
@@ -49,9 +48,7 @@ const char *P00Archive::getTypeOfContainer()
 
 void P00Archive::cleanup()
 {
-	if (path) free(path);
 	if (data) free(data);
-	path = NULL;
 	data = NULL;
 	size = 0;
 	fp = -1;
@@ -90,11 +87,6 @@ bool P00Archive::loadFromFile(FILE *file, struct stat fileProperties)
 
 	fprintf(stderr, "P00 Container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
 	return true;
-}
-
-const char *P00Archive::getName()
-{
-	return getNameOfItem(0);
 }
 
 int P00Archive::getNumberOfItems()

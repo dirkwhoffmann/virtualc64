@@ -46,13 +46,6 @@ Snapshot::getTypeOfContainer()
 	return "V64";
 }
 
-const char *
-Snapshot::getName()
-{
-	// We could be more intelligent here and return the file name (without path)
-	return "Snapshot";
-}
-
 void 
 Snapshot::cleanup()
 {
@@ -113,7 +106,7 @@ Snapshot::initWithContentsOfC64(C64 *c64)
 	c64->save(&ptr);
 	size = ptr - data;
 	
-	printf("initWithContentsOfC64: Packed state into %d bytes\n", size);
+	fprintf(stderr, "initWithContentsOfC64: Packed state into %d bytes\n", size);
 	return true;
 }
 
@@ -149,6 +142,6 @@ Snapshot::writeToC64(C64 *c64)
 {
 	uint8_t *ptr = data;
 	c64->load(&ptr);
-	printf("writeToC64: Extracted state from %d bytes\n", ptr - data);
+	fprintf(stderr, "writeToC64: Extracted state from %d bytes\n", ptr - data);
 	return true;
 }

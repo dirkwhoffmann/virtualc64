@@ -20,7 +20,6 @@
 
 T64Archive::T64Archive()
 {
-	printf("T64Archive::constructor\n");
 	data = NULL;
 	cleanup();
 }
@@ -169,7 +168,7 @@ int T64Archive::getSizeOfItem(int n)
 	uint16_t endAddrInMemory = data[j] + (data[j+1] << 8);
 
 	if (endAddrInMemory == 0xC3C6) {
-		printf("WARNING: Corrupted archive. Mostly likely created with CONV64!\n");
+		fprintf(stderr, "WARNING: Corrupted archive. Mostly likely created with CONV64!\n");
 		// WHAT DO WE DO ABOUT IT?
 	}
 	return (endAddrInMemory - startAddrInMemory) + 1;
@@ -189,7 +188,7 @@ uint16_t T64Archive::getDestinationAddrOfItem(int n)
 {
 	int i = 0x42 + (n * 0x20);
 	uint16_t result = data[i] + (data[i+1] << 8);
-	printf("Will load to location %X\n", result);
+	fprintf(stderr, "Will load to location %X\n", result);
 	return result;
 }
 

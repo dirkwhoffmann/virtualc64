@@ -20,7 +20,6 @@
 
 PRGArchive::PRGArchive()
 {
-	path = NULL;
 	data = NULL;
 	cleanup();
 }
@@ -49,9 +48,7 @@ const char *PRGArchive::getTypeOfContainer()
 
 void PRGArchive::cleanup()
 {
-	if (path) free(path);
 	if (data) free(data);
-	path = NULL;
 	data = NULL;
 	size = 0;
 	fp = -1;
@@ -90,11 +87,6 @@ bool PRGArchive::loadFromFile(FILE *file, struct stat fileProperties)
 	return true;
 }
 
-const char *PRGArchive::getName()
-{
-	return path;
-}
-
 int PRGArchive::getNumberOfItems()
 {
 	return 1;
@@ -121,7 +113,7 @@ const char *PRGArchive::getTypeOfItem(int n)
 uint16_t PRGArchive::getDestinationAddrOfItem(int n)
 {
 	uint16_t result = data[0] + (data[1] << 8);
-	printf("Will load to location %X\n", result);
+	fprintf(stderr, "Will load to location %X\n", result);
 	return result;
 }
 

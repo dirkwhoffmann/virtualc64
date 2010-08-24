@@ -20,7 +20,6 @@
 
 Container::Container()
 {
-	fprintf(stderr, "Container::Constructor\n");
 	path = NULL;
 }
 
@@ -30,9 +29,16 @@ Container::~Container()
 		free(path);
 }
 
-const char *Container::getPath()
+const char *
+Container::getPath()
 {
 	return path ? path : "";
+}
+
+const char *
+Container::getName()
+{
+ 	return name ? name : "";
 }
 
 bool Container::loadFile(const char *filename)
@@ -74,9 +80,13 @@ bool Container::loadFile(const char *filename)
 	}
 	fclose(file);
 
+	// Set path and default name
 	if (path)
 		free (path);
 	path = strdup(filename);
-
+	if (name)
+		free(name);
+	name = strdup(ChangeExtension(ExtractFilename(getPath()), "").c_str());
+		   
 	return true;
 }

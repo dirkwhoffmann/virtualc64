@@ -54,11 +54,11 @@ public:
 	//! Factory method
 	static Snapshot *snapshotFromFile(const char *filename);
 
+	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
 	bool loadFromFile(FILE *file, struct stat fileProperties);
 	void cleanup();
 	const char *getTypeOfContainer();
-	const char *getName();
 	
 	//! Take snapshot from a virtual computer
 	bool initWithContentsOfC64(C64 *c64);

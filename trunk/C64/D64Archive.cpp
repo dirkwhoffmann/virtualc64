@@ -74,7 +74,6 @@ static const D64TrackInfo D64Map[] =
 
 D64Archive::D64Archive()
 {
-	path = NULL;
 	cleanup();
 }
 
@@ -102,8 +101,6 @@ const char *D64Archive::getTypeOfContainer()
 
 void D64Archive::cleanup()
 {
-	if (path) free(path);
-	path = NULL;
 }
 
 bool D64Archive::fileIsValid(const char *filename)
@@ -376,7 +373,7 @@ uint16_t D64Archive::getDestinationAddrOfItem(int n)
 		return 0;
 
 	result = data[pos+2] + (data[pos+3] << 8); 
-	printf("Destination address of item %d is %X\n", n, result);
+	fprintf(stderr, "Destination address of item %d is %X\n", n, result);
 	return result;
 }
 
@@ -405,7 +402,7 @@ void D64Archive::selectItem(int item)
 	fp += 2;
 
 	// We now reached the first real data byte :)
-	printf("Item selected (%d,%d)\n", data[fp+0x03], data[fp+0x04]);
+	fprintf(stderr, "Item selected (%d,%d)\n", data[fp+0x03], data[fp+0x04]);
 }
 
 int D64Archive::getByte()

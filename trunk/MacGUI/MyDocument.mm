@@ -2597,18 +2597,9 @@
 
 - (BOOL)attachCartridge:(NSString *)path
 {
-	if (Cartridge::fileIsValid([path UTF8String])) {
-		cartridge = new Cartridge();
-	} else {
+	if (!(cartridge = Cartridge::cartridgeFromFile([path UTF8String])))
 		return NO;
-	}
-	
-	if (!cartridge->loadFile([path UTF8String])) {
-		delete cartridge;
-		cartridge = NULL;
-		return NO;
-	}
-	
+		
 	C64 *myc64 = [c64 getC64];
 	
 	// Try to mount archive

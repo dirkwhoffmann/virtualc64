@@ -35,12 +35,11 @@
 #ifndef _CARTRIDGE_H
 #define _CARTRIDGE_H
 
-#include "basic.h"
-#include "VirtualComponent.h"
+#include "Container.h"
 
 #define MAX_CHIPS 64
 
-class Cartridge {
+class Cartridge : public Container {
 	 
 //! crt file format
 /*! 
@@ -183,7 +182,7 @@ public:
 		
 	public:
 		
-		enum Type {
+		enum ChipType {
 			CHIP_ROM = 0,
 			CHIP_RAM = 1,
 			CHIP_FLASH = 2
@@ -200,7 +199,7 @@ public:
 		uint8_t rom[65536];
 	};
 	
-	enum Type {
+	enum CartridgeType {
 		Normal_Cartridge = 0,
 		Action_Replay = 1,
 		KCS_Power_Cartridge = 2,
@@ -237,14 +236,14 @@ public:
 	//! Destructor
 	~Cartridge();
 	
-	//! Load snapshot
-	bool load(uint8_t **ptr);
+	//! Factory method
+	static Cartridge *cartridgeFromFile(const char *filename);
 	
-	//! Save snapshot
-	bool save(uint8_t **ptr);
-	
-	//! Reset
-	void reset();
+	//! Virtual functions from Component class
+	bool fileIsValid(const char *filename);
+	bool loadFromFile(FILE *file, struct stat fileProperties);
+	void cleanup();
+	const char *getTypeOfContainer();
 	
 	//! The GAME line status
 	bool gameIsHigh();
@@ -272,15 +271,7 @@ public:
 	unsigned int getVersion();
 	
 	//! Cartridge type
-	Type getType();
-	
-	//! Check file type
-	/*! Returns true, iff the specifies file is a valid cartridge file. */
-	static bool fileIsValid(const char *filename);
-	
-	//! Load physical archive from disc
-	bool loadFile(const char *filename);
-	
+	CartridgeType getCartridgeType();
 };
 
 #endif
