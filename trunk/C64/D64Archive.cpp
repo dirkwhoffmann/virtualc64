@@ -75,16 +75,32 @@ static const D64TrackInfo D64Map[] =
 D64Archive::D64Archive()
 {
 	path = NULL;
-	numTracks = 0;
-	fp = -1;
+	cleanup();
 }
 
 D64Archive::~D64Archive()
 {
-	if (path) free(path);
+	cleanup();
 }
 
-void D64Archive::eject()
+D64Archive *D64Archive::archiveFromFile(const char *filename)
+{
+	D64Archive *archive;
+	
+	archive = new D64Archive();	
+	if (!archive->loadFile(filename)) {
+		delete archive;
+		archive = NULL;
+	}
+	return archive;
+}
+
+const char *D64Archive::getTypeOfContainer() 
+{
+	return "D64";
+}
+
+void D64Archive::cleanup()
 {
 	if (path) free(path);
 	path = NULL;
@@ -112,34 +128,11 @@ bool D64Archive::fileIsValid(const char *filename)
 	return fileOK;
 }
 
-bool D64Archive::loadFile(const char *filename)
+bool D64Archive::loadFromFile(FILE *file, struct stat fileProperties)
 {
-	struct stat fileProperties;
-	FILE *file = NULL;
 	unsigned track = 0;
 	int numberOfErrors = 0;
-	
-	assert (filename != NULL);
-
-	// Free old data
-	eject();
-	
-	// Check file type
-	if (!fileIsValid(filename)) 
-		return false;
-	
-	// Get file properties
-    if (stat(filename, &fileProperties) != 0) {
-		// Could not open file...
-		return false;
-	}
-	
-	// Open file
-	if (!(file = fopen(filename, "r"))) {
-		// Can't open for read (Huh?)
-		return false;
-	}
-	
+		
 	switch (fileProperties.st_size)
 	{
 		case 174848:
@@ -185,13 +178,8 @@ bool D64Archive::loadFile(const char *filename)
 		n = fread(errors, 1, numberOfErrors, file);
 		assert(n == numberOfErrors);
 	}
-	
-	fclose(file);
-
-	path = strdup(filename);
-			
-	printf("D64 container imported successfully (%d items)\n", getNumberOfItems());
-	
+		
+	fprintf(stderr, "D64 Container imported successfully (%d bytes total, tracks = %d)\n", (int)fileProperties.st_size, numTracks);
 	return true;
 }
 
@@ -288,12 +276,6 @@ D64Archive::offset(int track, int sector)
 	return D64Map[track].offset + (sector * 256);
 }
 	
-const char 
-*D64Archive::getPath() 
-{
-	return path;
-}
-
 const char *D64Archive::getName()
 {
 	int i, pos = offset(18, 0) + 0x90;

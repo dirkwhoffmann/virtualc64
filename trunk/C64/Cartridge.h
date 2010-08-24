@@ -40,8 +40,8 @@
 
 #define MAX_CHIPS 64
 
-class Cartridge : public VirtualComponent {
-
+class Cartridge {
+	 
 //! crt file format
 /*! 
 	This information came from: http://ist.uwaterloo.ca/~schepers/formats/CRT.TXT

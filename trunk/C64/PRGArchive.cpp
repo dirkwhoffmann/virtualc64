@@ -22,16 +22,32 @@ PRGArchive::PRGArchive()
 {
 	path = NULL;
 	data = NULL;
-	size = 0; 
+	cleanup();
 }
 
 PRGArchive::~PRGArchive()
 {
-	if (path) free(path);
-	if (data) free(data);
+	cleanup();
 }
 
-void PRGArchive::eject()
+PRGArchive *PRGArchive::archiveFromFile(const char *filename)
+{
+	PRGArchive *archive;
+	
+	archive = new PRGArchive();	
+	if (!archive->loadFile(filename)) {
+		delete archive;
+		archive = NULL;
+	}
+	return archive;
+}
+
+const char *PRGArchive::getTypeOfContainer() 
+{
+	return "PRG";
+}
+
+void PRGArchive::cleanup()
 {
 	if (path) free(path);
 	if (data) free(data);
@@ -54,37 +70,10 @@ bool PRGArchive::fileIsValid(const char *filename)
 	return true;
 }
 
-bool PRGArchive::loadFile(const char *filename)
+bool PRGArchive::loadFromFile(FILE *file, struct stat fileProperties)
 {
-	struct stat fileProperties;
-	FILE *file;
 	int c = 0;
 	
-	assert (filename != NULL);
-
-	// Free old data
-	eject();
-	
-	// Check file type
-	if (!fileIsValid(filename)) 
-		return false;
-	
-	// Get file properties
-    if (stat(filename, &fileProperties) != 0) {
-		return false;
-	}
-
-	// Check file size, archive must at least contain two bytes
-	// specifying the load address...
-	if (fileProperties.st_size < 2) {
-		return false;
-	}
-	
-	// Open file
-	if (!(file = fopen(filename, "r"))) {
-		return false;
-	}
-
 	// Allocate memory
 	if ((data = (uint8_t *)malloc(fileProperties.st_size)) == NULL) {
 		return false;
@@ -96,17 +85,9 @@ bool PRGArchive::loadFile(const char *filename)
 		data[size++] = c;
 		c = fgetc(file);
 	}
-	fclose(file);
 
-	path = strdup(filename);
-			
-	printf("PRG container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
+	fprintf(stderr, "PRG Container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
 	return true;
-}
-
-const char *PRGArchive::getPath() 
-{
-	return path;
 }
 
 const char *PRGArchive::getName()

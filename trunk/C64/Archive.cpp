@@ -20,13 +20,10 @@
 
 Archive::Archive()
 {
-	dir = NULL;
 }
 
 Archive::~Archive()
 {
-	if (dir)
-		free(dir);
 }
 
 int 

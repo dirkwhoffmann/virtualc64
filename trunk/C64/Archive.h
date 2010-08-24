@@ -19,13 +19,10 @@
 #ifndef _ARCHIVE_INC
 #define _ARCHIVE_INC
 
-#include "basic.h"
+#include "Container.h"
 
-class Archive {
-
-	//! Will store the directory of this archive
-	//* The directory is stored in the same format that would be sent from a floppy drive */
-	char *dir;
+//! Loadable object with multiple files included
+class Archive : public Container {
 	
 public:
 
@@ -47,22 +44,7 @@ public:
 	//! Is archive flashable?
 	/*! Returns true, iff the archive can be flashed into memory */
 	virtual bool isFlashable(void) { return true; }
-		
-	//! Type of archive (T64, D64, PRG, ...)
-	virtual const char *getTypeOfArchive() = 0;
-
-	//! Load pyhsical archive from disc
-	virtual bool loadFile(const char *filename) = 0;
-
-	//! Discard previously loaded contents
-	virtual void eject() = 0;
-
-	//! Physical name of archive on disc
-	virtual const char *getPath() = 0;
-	
-	//! Logical name of archive
-	virtual const char *getName() = 0;
-	
+			
 	//! Number of stored items
 	virtual int getNumberOfItems() = 0;
 	

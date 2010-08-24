@@ -46,6 +46,7 @@
 		50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C760A6F7357009E80BD /* MyDocument.mm */; };
 		50176C800A6F7357009E80BD /* VICScreen.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C780A6F7357009E80BD /* VICScreen.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
+		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		502562AF0C4AA0C7008AAB85 /* c64.png in Resources */ = {isa = PBXBuildFile; fileRef = 502562AE0C4AA0C7008AAB85 /* c64.png */; };
 		502663150C4398460094233B /* nebula.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 502663140C4398460094233B /* nebula.jpg */; };
@@ -189,6 +190,8 @@
 		50176C780A6F7357009E80BD /* VICScreen.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = VICScreen.mm; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
+		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
+		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		502562AE0C4AA0C7008AAB85 /* c64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c64.png; path = images/c64.png; sourceTree = "<group>"; };
@@ -509,12 +512,14 @@
 		509AE9FE0C3249D4001FC9FD /* Loading and saving */ = {
 			isa = PBXGroup;
 			children = (
+				5018E47F12240F7100F0820E /* Container.h */,
+				5018E48012240F7100F0820E /* Container.cpp */,
+				50D5004B0C2ED1200022CA3A /* Archive.h */,
+				50AFEDBB0C3A7A78007749E7 /* Archive.cpp */,
 				50414725122188FC00A80E0C /* Cartridge.cpp */,
 				50414726122188FC00A80E0C /* Cartridge.h */,
 				505EB09F0F3047C300960BC0 /* Snapshot.h */,
 				505EB0A00F3047C300960BC0 /* Snapshot.cpp */,
-				50D5004B0C2ED1200022CA3A /* Archive.h */,
-				50AFEDBB0C3A7A78007749E7 /* Archive.cpp */,
 				50D500500C2ED13F0022CA3A /* T64Archive.h */,
 				50D500510C2ED13F0022CA3A /* T64Archive.cpp */,
 				50A52A170C2FD43700A1377F /* D64Archive.h */,
@@ -693,6 +698,7 @@
 				BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
 				50414727122188FC00A80E0C /* Cartridge.cpp in Sources */,
+				5018E48112240F7100F0820E /* Container.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

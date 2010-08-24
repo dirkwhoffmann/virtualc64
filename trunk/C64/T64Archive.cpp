@@ -3,7 +3,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License, org
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -20,22 +20,36 @@
 
 T64Archive::T64Archive()
 {
-	path = NULL;
+	printf("T64Archive::constructor\n");
 	data = NULL;
-	size = 0; 
+	cleanup();
 }
 
 T64Archive::~T64Archive()
 {
-	if (path) free(path);
-	if (data) free(data);
+	cleanup();
 }
 
-void T64Archive::eject()
+T64Archive *T64Archive::archiveFromFile(const char *filename)
 {
-	if (path) free(path);
+	T64Archive *archive;
+	
+	archive = new T64Archive();	
+	if (!archive->loadFile(filename)) {
+		delete archive;
+		archive = NULL;
+	}
+	return archive;
+}
+
+const char *T64Archive::getTypeOfContainer() 
+{
+	return "T64";
+}
+
+void T64Archive::cleanup()
+{
 	if (data) free(data);
-	path = NULL;
 	data = NULL;
 	size = 0;
 	fp = -1;
@@ -60,39 +74,10 @@ bool T64Archive::fileIsValid(const char *filename)
 	return true;
 }
 
-bool T64Archive::loadFile(const char *filename)
+bool T64Archive::loadFromFile(FILE *file, struct stat fileProperties)
 {
-	struct stat fileProperties;
-	FILE *file;
-	int c = 0;
+	int c;
 	
-	assert (filename != NULL);
-
-	// Free old data
-	eject();
-	
-	// Check file type
-	if (!fileIsValid(filename)) 
-		return false;
-	
-	// Get file properties
-    if (stat(filename, &fileProperties) != 0) {
-		// Could not open file...
-		return false;
-	}
-
-	// Check file size, archive must at least contain a valid header
-	if (fileProperties.st_size < 0x40) {
-		// too small
-		return false;
-	}
-	
-	// Open file
-	if (!(file = fopen(filename, "r"))) {
-		// Can't open for read (Huh?)
-		return false;
-	}
-
 	// Allocate memory
 	if ((data = (uint8_t *)malloc(fileProperties.st_size)) == NULL) {
 		// Didn't get enough memory
@@ -105,17 +90,9 @@ bool T64Archive::loadFile(const char *filename)
 		data[size++] = c;
 		c = fgetc(file);
 	}
-	fclose(file);
-
-	path = strdup(filename);
-			
-	printf("T64 container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
+	
+	fprintf(stderr, "T64 Container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
 	return true;
-}
-
-const char *T64Archive::getPath() 
-{
-	return path;
 }
 
 const char *T64Archive::getName()
@@ -131,6 +108,7 @@ const char *T64Archive::getName()
 	name[j] = 0x00;
 	return name;
 }
+
 bool T64Archive::directoryItemIsPresent(int n)
 {
 	int first = 0x40 + (n * 0x20);
