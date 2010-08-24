@@ -20,11 +20,11 @@
 #ifndef _SNAPSHOT_INC
 #define _SNAPSHOT_INC
 
-#include "basic.h"
+#include "Container.h"
 
 class C64;
 
-class Snapshot {
+class Snapshot : public Container {
 	
 private:
 
@@ -44,9 +44,6 @@ private:
 	int size;
 	
 public:
-	
-	//! Verify snapshot
-	static bool isSnapshot(const char *filename); 
 
 	//! Constructor
 	Snapshot();
@@ -54,8 +51,14 @@ public:
 	//! Destructor
 	~Snapshot();
 			
-	//! Load snapshot from file
-	bool initWithContentsOfFile(const char *filename);
+	//! Factory method
+	static Snapshot *snapshotFromFile(const char *filename);
+
+	bool fileIsValid(const char *filename);
+	bool loadFromFile(FILE *file, struct stat fileProperties);
+	void cleanup();
+	const char *getTypeOfContainer();
+	const char *getName();
 	
 	//! Take snapshot from a virtual computer
 	bool initWithContentsOfC64(C64 *c64);

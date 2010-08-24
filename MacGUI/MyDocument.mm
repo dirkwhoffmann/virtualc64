@@ -356,11 +356,9 @@
 	NSLog(@"readFromFile %@ (type %@)", filename, type);
 
 	if ([type isEqualToString:@"VC64"]) {
-		snapshot = new Snapshot();
-		if (!snapshot->initWithContentsOfFile([filename UTF8String])) {
+		snapshot = Snapshot::snapshotFromFile([filename UTF8String]);
+		if (!snapshot) {
 			NSLog(@"Error while reading snapshot\n");
-			delete snapshot;
-			snapshot = NULL;
 			return NO;
 		}
 	} else if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
@@ -378,13 +376,13 @@
 	bool success = NO;
 	
 	if ([type isEqualToString:@"VC64"]) {
-		snapshot = new Snapshot();
-		if (snapshot->initWithContentsOfFile([filename UTF8String])) {
+		snapshot = Snapshot::snapshotFromFile([filename UTF8String]);
+		if (snapshot) {
 			snapshot->writeToC64([c64 getC64]);
+			delete snapshot;
+			snapshot = NULL;
 			success = YES;
 		}
-		delete snapshot;
-		snapshot = NULL;
 	} else if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
 		if ([self setArchiveWithName:filename]) {
 			[self showMountDialog];
@@ -2503,26 +2501,19 @@
 
 - (BOOL)setArchiveWithName:(NSString *)path
 {
-	// Is it an archive?
-	if (T64Archive::fileIsValid([path UTF8String])) {
-		archive = new T64Archive();
-	} else if (D64Archive::fileIsValid([path UTF8String])) {
-		archive = new D64Archive();
-	} else if (PRGArchive::fileIsValid([path UTF8String])) {
-		archive = new PRGArchive();		
-	} else if (P00Archive::fileIsValid([path UTF8String])) {
-		archive = new P00Archive();		
-	} else {
-		return NO;
-	}
-	
-	// Load archive 
-	if (!archive->loadFile([path UTF8String])) {
-		archive = NULL;
-		return NO;
-	}
+	if ((archive = T64Archive::archiveFromFile([path UTF8String])) != NULL)
+		return YES;
 
-	return YES;
+	if ((archive = D64Archive::archiveFromFile([path UTF8String])) != NULL)
+		return YES;
+
+	if ((archive = PRGArchive::archiveFromFile([path UTF8String])) != NULL)
+		return YES;
+
+	if ((archive = P00Archive::archiveFromFile([path UTF8String])) != NULL)
+		return YES;
+
+	return NO;
 }
 
 - (IBAction)cancelRomDialog:(id)sender

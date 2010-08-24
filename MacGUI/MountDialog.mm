@@ -28,7 +28,7 @@
 	
 	archive = a;
 	[archiveName setStringValue:[NSString stringWithFormat:@"%s", archive->getName()]];
-	[archiveType setStringValue:[NSString stringWithFormat:@"%s (%d %s)", archive->getTypeOfArchive(), 
+	[archiveType setStringValue:[NSString stringWithFormat:@"%s (%d %s)", archive->getTypeOfContainer(), 
 		numberOfFiles, numberOfFiles == 1 ? "file" : "files"]];
 	if (archive->getNumberOfItems() == 0) {
 		[mountButton setEnabled:false];

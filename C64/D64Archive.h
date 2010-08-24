@@ -77,18 +77,17 @@ public:
 	//! Destructor
 	~D64Archive();
 	
-	//! Check file type
-	/*! Returns true, iff the specifies file is a valid archive file. */
-	static bool fileIsValid(const char *filename);
+	//! Factory method
+	static D64Archive *archiveFromFile(const char *filename);
 
-	// Inherited from Archive class...
-	bool isMountable() { return true; }
-	bool isFlashable() { return true; }	
-	const char *getTypeOfArchive() { return "D64 container"; }
-	bool loadFile(const char *filename);
-	void eject();
-	const char *getPath();
+	//! Virtual functions from Container class
+	bool fileIsValid(const char *filename);
+	bool loadFromFile(FILE *file, struct stat fileProperties);
+	void cleanup();
+	const char *getTypeOfContainer();
 	const char *getName();
+	
+	// Virtual functions from Archive class
 	int getNumberOfItems();
 	const char *getNameOfItem(int n);
 	const char *getTypeOfItem(int n);
@@ -96,6 +95,10 @@ public:
 	uint16_t getDestinationAddrOfItem(int n);	
 	void selectItem(int n);
 	int getByte();
+
+	// Inherited from Archive class...
+	bool isMountable() { return true; }
+	bool isFlashable() { return true; }	
 
 	//! Returns the number of sectors in the specified track
 	unsigned numberOfSectors(unsigned trackNr);

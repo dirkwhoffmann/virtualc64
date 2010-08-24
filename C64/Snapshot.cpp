@@ -18,8 +18,51 @@
 
 #include "C64.h"
 
+Snapshot::Snapshot()
+{
+	cleanup();
+}
+
+Snapshot::~Snapshot()
+{
+}
+
+Snapshot *
+Snapshot::snapshotFromFile(const char *filename)
+{
+	Snapshot *snapshot;
+	
+	snapshot = new Snapshot();	
+	if (!snapshot->loadFile(filename)) {
+		delete snapshot;
+		snapshot = NULL;
+	}
+	return snapshot;
+}
+
+const char *
+Snapshot::getTypeOfContainer() 
+{
+	return "V64";
+}
+
+const char *
+Snapshot::getName()
+{
+	// We could be more intelligent here and return the file name (without path)
+	return "Snapshot";
+}
+
+void 
+Snapshot::cleanup()
+{
+	major = 0;
+	minor = 0;
+	size = 0;
+}
+
 bool 
-Snapshot::isSnapshot(const char *filename)
+Snapshot::fileIsValid(const char *filename)
 {
 	int magic_bytes[] = { 'V', 'C', '6', '4', EOF };
 	
@@ -27,32 +70,14 @@ Snapshot::isSnapshot(const char *filename)
 	
 	if (!checkFileHeader(filename, magic_bytes))
 		return false;
-
+	
 	return true;
 }
 
-Snapshot::Snapshot()
-{
-	major = 0;
-	minor = 0;
-	size = 0;
-}
-
-Snapshot::~Snapshot()
-{
- }
-
 bool 
-Snapshot::initWithContentsOfFile(const char *filename)
+Snapshot::loadFromFile(FILE *file, struct stat fileProperties)
 {
-	FILE *file = NULL;
 	int i, c;
-		
-	if (!isSnapshot(filename))
-		return false;
-	
-	if (!(file = fopen(filename, "r")))
-		return false;
 	
 	// Skip header
 	for (i = 0; i < 4; i++)
@@ -67,7 +92,7 @@ Snapshot::initWithContentsOfFile(const char *filename)
 		fclose(file);
 		return false;	
 	}
-		
+	
 	// Read binary snapshot data
 	for (i = 0; i < MAX_SNAPSHOT_SIZE; i++) {
 		if ((c = fgetc(file)) == EOF)
@@ -75,11 +100,9 @@ Snapshot::initWithContentsOfFile(const char *filename)
 		data[i] = (uint8_t)c;
 	}
 	size = i;
-	
-	fclose(file);
-	return true;		
-}
 
+	return true;
+}
 
 bool 
 Snapshot::initWithContentsOfC64(C64 *c64)

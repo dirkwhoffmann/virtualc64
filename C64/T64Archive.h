@@ -23,10 +23,7 @@
 
 class T64Archive : public Archive {
 
-private:
-	//! Physical name of archive 
-	char *path;
-	
+private:	
 	//! Name of the T64 container file
 	char name[256];
 
@@ -55,17 +52,17 @@ public:
 	//! Destructor
 	~T64Archive();
 	
-	//! Check file type
-	/*! Returns true, iff the specifies file is a valid archive file. */
-	static bool fileIsValid(const char *filename);
+	//! Factory method
+	static T64Archive *archiveFromFile(const char *filename);
 
-	// Inherited from Archive class...
-
-	const char *getTypeOfArchive() { return "T64 container"; }
-	bool loadFile(const char *filename);
-	void eject();
-	const char *getPath();
+	//! Virtual functions from Container class
+	bool fileIsValid(const char *filename);
+	bool loadFromFile(FILE *file, struct stat fileProperties);
+	void cleanup();
+	const char *getTypeOfContainer();
 	const char *getName();
+
+	// Virtual functions from Archive class
 	int getNumberOfItems();
 	const char *getNameOfItem(int n);
 	const char *getTypeOfItem(int n);

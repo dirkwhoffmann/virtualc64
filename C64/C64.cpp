@@ -183,11 +183,11 @@ void C64::reset()
 
 void C64::fastReset()
 {
-	Snapshot *snapshot = new Snapshot();
+	Snapshot *snapshot; 
 	
 	debug (1, "Resetting virtual C64 (fast reset via image file)\n");
 	
-	if (snapshot->initWithContentsOfFile("ResetImage.VC64")) {
+	if ((snapshot = Snapshot::snapshotFromFile("ResetImage.VC64")) != NULL) {
 		snapshot->writeToC64(this);
 	} else {
 		debug(1, "Error while reading reset image\n");
