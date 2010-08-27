@@ -33,25 +33,6 @@
 #import "C64Proxy.h"
 #import "JoystickManager.h"
 
-@protocol ListenerProtocol
-
-
-- (void) loadRomAction:(int)rom;
-- (void) missingRomAction:(int)missingRoms;
-- (void) runAction;
-- (void) haltAction;
-- (void) cpuAction:(CPU::ErrorState)state;
-
-- (void) driveAttachedAction:(BOOL)connected;
-- (void) driveDiscAction:(BOOL)inserted;
-- (void) driveLEDAction:(BOOL)on;
-- (void) driveDataAction:(BOOL)transfering;
-- (void) driveMotorAction:(BOOL)rotating;
-- (void) warpmodeAction:(BOOL)warping;
-- (void) logAction:(char *)message;	
-
-@end
-
 @interface MyDocument : NSDocument
 {
 	// Proxy object. Used get data from and sent data to the virtual C64
@@ -260,8 +241,8 @@
 - (IBAction)dumpIEC:(id)sender;
 
 // Debug panel (common)
-- (IBAction)setDecimal:(id)sender;
-- (IBAction)setHexadecimal:(id)sender;
+- (IBAction)setDecimalAction:(id)sender;
+- (IBAction)setHexadecimalAction:(id)sender;
 - (IBAction)stepIntoAction:(id)sender;
 - (IBAction)stepOutAction:(id)sender;
 - (IBAction)stepOverAction:(id)sender;
@@ -292,7 +273,7 @@
 - (IBAction)BAction:(id)sender;
 - (IBAction)DAction:(id)sender;
 - (IBAction)VAction:(id)sender;
-- (IBAction)setHardBreakpoint:(id)sender;
+- (IBAction)setHardBreakpointAction:(id)sender;
 - (void)doubleClickInCpuTable:(id)sender;
 - (void)doubleClickInMemTable:(id)sender;
 

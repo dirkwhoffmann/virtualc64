@@ -143,7 +143,7 @@
 		snapshot = NULL;
 	}
 		
-	disassembleStartAddr = [c64 cpuGetPC];
+	disassembleStartAddr = [[c64 cpu] getPC];
 	
 	// get images for port A and B, depends on the available input devices
 	int portA = [c64 getPortAssignment:0];
@@ -177,7 +177,7 @@
 	}
 
 	// Create and bind number formatters
-	[self setHexadecimal:self];
+	[self setHexadecimalAction:self];
 
 	// Prepare to get double-click messages
 	[cpuTableView setTarget:self];
@@ -583,12 +583,12 @@
 				[driveBusy setHidden:false];
 				[driveBusy startAnimation:self];
 				if (warpLoad)
-					[c64 cpuSetWarpMode:YES];			
+					[c64 c64SetWarpMode:YES];			
 			} else {
 				[driveBusy stopAnimation:self];
 				[driveBusy setHidden:true];		
 				if (!alwaysWarp)
-					[c64 cpuSetWarpMode:NO];
+					[c64 c64SetWarpMode:NO];
 			}			
 			break;
 			
@@ -641,7 +641,7 @@
 {
 	// Measure clock frequency and frame rate
 	long currentTime   = msec();
-	long currentCycles = [c64 cpuGetCycles];
+	long currentCycles = [c64 c64GetCycles];
 	long currentFrames = [screen getFrames];
 	long elapsedTime   = currentTime - timeStamp;
 	long elapsedCycles = currentCycles - cycleCount;
@@ -777,11 +777,11 @@
 	NSLog(@"warpAction");	
 
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] warpAction:[NSNumber numberWithInt:![c64 cpuGetWarpMode]]];
+	[[undo prepareWithInvocationTarget:self] warpAction:[NSNumber numberWithInt:![c64 c64GetWarpMode]]];
 	if (![undo isUndoing]) [undo setActionName:@"Native speed"];
 		
 	[self setAlwaysWarp:![self alwaysWarp]];
-	[c64 cpuSetWarpMode:alwaysWarp];
+	[c64 c64SetWarpMode:alwaysWarp];
 	[self refresh];
 }
 
@@ -813,17 +813,17 @@
 	[self refresh];
 }
 
-- (IBAction)setHardBreakpoint:(id)sender
+- (IBAction)setHardBreakpointAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] setHardBreakpoint:[NSNumber numberWithInt:[sender intValue]]];
+	[[undo prepareWithInvocationTarget:self] setHardBreakpointAction:[NSNumber numberWithInt:[sender intValue]]];
 	if (![undo isUndoing]) [undo setActionName:@"Breakpoint"];
 	
-	[c64 cpuToggleHardBreakpoint:[sender intValue]];
+	[[c64 cpu] toggleHardBreakpoint:[sender intValue]];
 	[self refresh];
 }
 
-- (IBAction)setDecimal:(id)sender
+- (IBAction)setDecimalAction:(id)sender
 {
 	Formatter *bF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,2}" outFormat:@"%02d"];
 	Formatter *wF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,4}" outFormat:@"%02d"];
@@ -836,7 +836,7 @@
 	[dis release];	
 }
 
-- (IBAction)setHexadecimal:(id)sender
+- (IBAction)setHexadecimalAction:(id)sender
 {
 	Formatter *bF  = [[Formatter alloc] init:HEXADECIMAL_FORMATTER inFormat:@"[0-9,a-f,A-F]{0,2}" outFormat:@"%02X"];
 	Formatter *wF  = [[Formatter alloc] init:HEXADECIMAL_FORMATTER inFormat:@"[0-9,a-f,A-F]{0,4}" outFormat:@"%04X"];
@@ -861,12 +861,12 @@
 	[self updateChangeCount:NSChangeDone];
 
 	// Get return address from callstack
-	int addr = [c64 cpuGetTopOfCallStack];
+	int addr = [[c64 cpu] getTopOfCallStack];
 	if (addr < 0)
 		return;
 
 	// Set soft breakpoint at next command and run
-	[c64 cpuSetSoftBreakpoint:(addr+1)];	
+	[[c64 cpu] setSoftBreakpoint:(addr+1)];	
 	[c64 run];
 }
 
@@ -875,10 +875,10 @@
 {	
 	[self updateChangeCount:NSChangeDone];
 	// Is the next instruction a JSR instruction?
-	uint8_t opcode = [c64 cpuPeekPC];
+	uint8_t opcode = [[c64 cpu] peekPC];
 	if (opcode == 0x20) {
 		// set soft breakpoint at next command
-		[c64 cpuSetSoftBreakpoint:[c64 cpuGetAddressOfNextInstruction]];	
+		[[c64 cpu] setSoftBreakpoint:[[c64 cpu] getAddressOfNextInstruction]];	
 		[c64 run];
 	} else {
 		// same as step
@@ -1038,12 +1038,12 @@
 
 - (IBAction)traceC64CpuAction:(id)sender 
 { 
-	if ([c64 cpuTracingEnabled]) {
+	if ([[c64 cpu] tracingEnabled]) {
 		[sender setState:NSOffState];
-		[c64 cpuSetTraceMode:NO];
+		[[c64 cpu] setTraceMode:NO];
 	} else {
 		[sender setState:NSOnState];
-		[c64 cpuSetTraceMode:YES];
+		[[c64 cpu] setTraceMode:YES];
 	}
 }
 
@@ -1092,7 +1092,7 @@
 
 - (IBAction)dumpC64CPU:(id)sender
 {
-	[c64 dumpC64CPU];
+	[[c64 cpu] dump];
 }
 
 - (IBAction)dumpC64CIA1:(id)sender
@@ -1174,120 +1174,120 @@
 - (IBAction)pcAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] pcAction:[NSNumber numberWithInt:[c64 cpuGetPC]]];
+	[[undo prepareWithInvocationTarget:self] pcAction:[NSNumber numberWithInt:[[c64 cpu] getPC]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set program counter"];
 	
-	[c64 cpuSetPC:[sender intValue]];
+	[[c64 cpu] setPC:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)spAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] spAction:[NSNumber numberWithInt:[c64 cpuGetSP]]];
+	[[undo prepareWithInvocationTarget:self] spAction:[NSNumber numberWithInt:[[c64 cpu] getSP]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set stack pointer"];
 
-	[c64 cpuSetSP:[sender intValue]];
+	[[c64 cpu] setSP:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)aAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] aAction:[NSNumber numberWithInt:[c64 cpuGetA]]];
+	[[undo prepareWithInvocationTarget:self] aAction:[NSNumber numberWithInt:[[c64 cpu] getA]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set accumulator"];
 
-	[c64 cpuSetA:[sender intValue]];
+	[[c64 cpu] setA:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)xAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] xAction:[NSNumber numberWithInt:[c64 cpuGetX]]];
+	[[undo prepareWithInvocationTarget:self] xAction:[NSNumber numberWithInt:[[c64 cpu] getX]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set X register"];
 
-	[c64 cpuSetX:[sender intValue]];
+	[[c64 cpu] setX:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)yAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] yAction:[NSNumber numberWithInt:[c64 cpuGetY]]];
+	[[undo prepareWithInvocationTarget:self] yAction:[NSNumber numberWithInt:[[c64 cpu] getY]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set Y register"];
 
-	[c64 cpuSetY:[sender intValue]];
+	[[c64 cpu] setY:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)NAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] NAction:[NSNumber numberWithInt:[c64 cpuGetN]]];
+	[[undo prepareWithInvocationTarget:self] NAction:[NSNumber numberWithInt:[[c64 cpu] getN]]];
 	if (![undo isUndoing]) [undo setActionName:@"Negative Flag"];
 
-	[c64 cpuSetN:[sender intValue]];
+	[[c64 cpu] setN:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)ZAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ZAction:[NSNumber numberWithInt:[c64 cpuGetZ]]];
+	[[undo prepareWithInvocationTarget:self] ZAction:[NSNumber numberWithInt:[[c64 cpu] getZ]]];
 	if (![undo isUndoing]) [undo setActionName:@"Zero Flag"];
 
-	[c64 cpuSetZ:[sender intValue]];
+	[[c64 cpu] setZ:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)CAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] CAction:[NSNumber numberWithInt:[c64 cpuGetC]]];
+	[[undo prepareWithInvocationTarget:self] CAction:[NSNumber numberWithInt:[[c64 cpu] getC]]];
 	if (![undo isUndoing]) [undo setActionName:@"Carry Flag"];
 
-	[c64 cpuSetC:[sender intValue]];
+	[[c64 cpu] setC:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)IAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] IAction:[NSNumber numberWithInt:[c64 cpuGetI]]];
+	[[undo prepareWithInvocationTarget:self] IAction:[NSNumber numberWithInt:[[c64 cpu] getI]]];
 	if (![undo isUndoing]) [undo setActionName:@"Interrupt Flag"];
 
-	[c64 cpuSetI:[sender intValue]];
+	[[c64 cpu] setI:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)BAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] BAction:[NSNumber numberWithInt:[c64 cpuGetB]]];
+	[[undo prepareWithInvocationTarget:self] BAction:[NSNumber numberWithInt:[[c64 cpu] getB]]];
 	if (![undo isUndoing]) [undo setActionName:@"Break Flag"];
 
-	[c64 cpuSetB:[sender intValue]];
+	[[c64 cpu] setB:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)DAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] DAction:[NSNumber numberWithInt:[c64 cpuGetD]]];
+	[[undo prepareWithInvocationTarget:self] DAction:[NSNumber numberWithInt:[[c64 cpu] getD]]];
 	if (![undo isUndoing]) [undo setActionName:@"Decimal Flag"];
 
-	[c64 cpuSetD:[sender intValue]];
+	[[c64 cpu] setD:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)VAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] VAction:[NSNumber numberWithInt:[c64 cpuGetV]]];
+	[[undo prepareWithInvocationTarget:self] VAction:[NSNumber numberWithInt:[[c64 cpu] getV]]];
 	if (![undo isUndoing]) [undo setActionName:@"Overflow Flag"];
 
-	[c64 cpuSetV:[sender intValue]];
+	[[c64 cpu] setV:[sender intValue]];
 	[self refresh];
 }
 
@@ -1317,8 +1317,8 @@
 {
 	uint16_t addr;
 
-	addr = [c64 cpuGetAddressOfNextIthInstruction:[sender selectedRow] from:disassembleStartAddr];
-	[self setHardBreakpoint:[NSNumber numberWithInt:addr]];
+	addr = [[c64 cpu] getAddressOfNextIthInstruction:[sender selectedRow] from:disassembleStartAddr];
+	[self setHardBreakpointAction:[NSNumber numberWithInt:addr]];
 }
 
 
@@ -2140,21 +2140,20 @@
 
 - (void)refreshCPU
 {
-	[a setIntValue:[c64 cpuGetA]];
-	[x setIntValue:[c64 cpuGetX]];
-	[y setIntValue:[c64 cpuGetY]];
-	[pc setIntValue:[c64 cpuGetPC]];
-	[sp setIntValue:[c64 cpuGetSP]];
-	// [mhzField setObjectValue:[c64 cpuGetMHz]];
+	[a setIntValue:[[c64 cpu] getA]];
+	[x setIntValue:[[c64 cpu] getX]];
+	[y setIntValue:[[c64 cpu] getY]];
+	[pc setIntValue:[[c64 cpu] getPC]];
+	[sp setIntValue:[[c64 cpu] getSP]];
 	[mhzField setFloatValue:mhz];
 	
-	[N setIntValue:[c64 cpuGetN]];
-	[V setIntValue:[c64 cpuGetV]];
-	[B setIntValue:[c64 cpuGetB]];
-	[D setIntValue:[c64 cpuGetD]];
-	[I setIntValue:[c64 cpuGetI]];
-	[Z setIntValue:[c64 cpuGetZ]];
-	[C setIntValue:[c64 cpuGetC]];	
+	[N setIntValue:[[c64 cpu] getN]];
+	[V setIntValue:[[c64 cpu] getV]];
+	[B setIntValue:[[c64 cpu] getB]];
+	[D setIntValue:[[c64 cpu] getD]];
+	[I setIntValue:[[c64 cpu] getI]];
+	[Z setIntValue:[[c64 cpu] getZ]];
+	[C setIntValue:[[c64 cpu] getC]];	
 }
 
 - (void)refreshMemory
@@ -2259,7 +2258,7 @@
 	// 2. The PC points to an address that is not yet displayes
 	//    In that case, we display the PC address in row 0
 	uint16_t rowIndex = 0xffff;
-	uint16_t address = [c64 cpuGetPC];
+	uint16_t address = [[c64 cpu] getPC];
 	NSIndexSet *indexSet;
 	if ([self computeRowForAddr:(uint16_t)address maxRows:[self numberOfRowsInTableView:cpuTableView] row:(uint16_t *)&rowIndex]) {
 		indexSet = [NSIndexSet indexSetWithIndex:rowIndex];		
@@ -2377,8 +2376,8 @@
 
 - (id)objectValueForCpuTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
-	uint16_t addr = [c64 cpuGetAddressOfNextIthInstruction:row from:disassembleStartAddr];
-	uint8_t length = [c64 cpuGetLengthOfInstruction:[c64 memPeek:addr]];
+	uint16_t addr = [[c64 cpu] getAddressOfNextIthInstruction:row from:disassembleStartAddr];
+	uint8_t length = [[c64 cpu] getLengthOfInstruction:[c64 memPeek:addr]];
 	
 	if ([[aTableColumn identifier] isEqual:@"addr"]) 
 		return [NSNumber numberWithInt:addr];
@@ -2477,8 +2476,8 @@
 {
 	if (aTableView == cpuTableView && [[aTableColumn identifier] isEqual:@"addr"]) {
 		
-		uint16_t addr = [c64 cpuGetAddressOfNextIthInstruction:row from:disassembleStartAddr];
-		if ([c64 cpuGetBreakpoint:addr] == CPU::HARD_BREAKPOINT) {
+		uint16_t addr = [[c64 cpu] getAddressOfNextIthInstruction:row from:disassembleStartAddr];
+		if ([[c64 cpu] getBreakpoint:addr] == CPU::HARD_BREAKPOINT) {
 			[aCell setTextColor:[NSColor redColor]];
 		} else {
 			[aCell setTextColor:[NSColor blackColor]];
@@ -2688,7 +2687,7 @@
 			return YES;
 		}
 		currentRow++;
-		currentAddr += [c64 cpuGetLengthOfInstruction:[c64 memPeek:currentAddr]];
+		currentAddr += [[c64 cpu] getLengthOfInstruction:[c64 memPeek:currentAddr]];
 	}
 	return NO;
 }
