@@ -27,13 +27,104 @@
 @class AudioDevice;
 
 
+// --------------------------------------------------------------------------
+//                                    CPU
+// --------------------------------------------------------------------------
+
+@interface CPUProxy : NSObject {
+	CPU *cpu;
+}
+
+- (id) initWithCPU:(CPU *)c;
+- (bool) tracingEnabled;
+- (void) setTraceMode:(bool)b;
+- (void) dump;
+- (uint16_t) getPC;
+- (void) setPC:(uint16_t)pc;
+- (uint8_t) getSP;
+- (void) setSP:(uint8_t)sp;
+- (uint8_t) getA;
+- (void) setA:(uint8_t)a;
+- (uint8_t) getX;
+- (void) setX:(uint8_t)x;
+- (uint8_t) getY;
+- (void) setY:(uint8_t)y;
+- (bool) getN;
+- (void) setN:(bool)b;
+- (bool) getZ;
+- (void) setZ:(bool)b;
+- (bool) getC;
+- (void) setC:(bool)b;
+- (bool) getI;
+- (void) setI:(bool)b;
+- (bool) getB;
+- (void) setB:(bool)b;
+- (bool) getD;
+- (void) setD:(bool)b;
+- (bool) getV;
+- (void) setV:(bool)b;
+
+- (uint16_t) peekPC;
+- (uint8_t) getLengthOfInstruction:(uint8_t)opcode;
+- (uint8_t) getLengthOfCurrentInstruction;
+- (uint16_t) getAddressOfNextIthInstruction:(int)i from:(uint16_t)addr;
+- (uint16_t) getAddressOfNextInstruction;
+- (char *) getMnemonic:(uint8_t)opcode;
+- (CPU::AddressingMode) getAddressingMode:(uint8_t)opcode;
+
+- (int) getTopOfCallStack;
+- (int) getBreakpoint:(int)addr;
+- (void) setBreakpoint:(int)addr tag:(uint8_t)t;
+- (void) setHardBreakpoint:(int)addr;
+- (void) deleteHardBreakpoint:(int)addr;
+- (void) toggleHardBreakpoint:(int)addr;
+- (void) setSoftBreakpoint:(int)addr;
+- (void) deleteSoftBreakpoint:(int)addr;
+- (void) toggleSoftBreakpoint:(int)addr;
+
+@end
+
+// --------------------------------------------------------------------------
+//                                    SID
+// --------------------------------------------------------------------------
+
+@interface SIDProxy : NSObject {
+	SID *sid;
+}
+
+- (id) initWithSID:(SID *)s;
+- (float) getVolumeControl;
+- (void) setVolumeControl:(float)value;
+
+@end
+
+// --------------------------------------------------------------------------
+//                                    VC1541
+// -------------------------------------------------------------------------
+
+@interface VC1541Proxy : NSObject {
+	// CPUProxy cpuproxy;
+	VC1541 *vc1541;
+}
+
+- (id) initWithComponent:(VC1541 *)vc1541;
+// - (bool) loadVC1541Rom:(NSString *)filename;
+
+@end
+
+
 @interface C64Proxy : NSObject {	
 	
+	// Sub proxys
+	CPUProxy *cpuproxy;
+	SIDProxy *sidproxy;
+	
+
 	// ListenerProxy *listener;	
 	C64 *c64;
 	CIA *cia[3];
 	IEC *iec;
-	CPU *cpu;    // CPU to observe (can be switched between C64 and VC1541)
+	// CPU *cpu;    // CPU to observe (can be switched between C64 and VC1541)
 	Memory *mem; // Memory to observe (can be switched between C64 and VC1541)
 	AudioDevice *audioDevice;
 }
@@ -43,6 +134,10 @@
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 - (void) release;
 - (C64 *) getC64;
+
+//! Getter
+- (CPUProxy *) cpu;
+- (SIDProxy *) sid;
 
 // C64
 - (Message *)getMessage;
@@ -68,8 +163,8 @@
 - (bool) loadVC1541Rom:(NSString *)filename;
 - (bool) isCartridgeAttached;
 
-- (bool) cpuTracingEnabled;
-- (void) cpuSetTraceMode:(bool)b;
+// - (bool) cpuTracingEnabled;
+//- (void) cpuSetTraceMode:(bool)b;
 - (bool) iecTracingEnabled;
 - (void) iecSetTraceMode:(bool)b;
 - (bool) vc1541CpuTracingEnabled;
@@ -78,7 +173,7 @@
 - (void) viaSetTraceMode:(bool)b;
 
 - (void) dumpC64;
-- (void) dumpC64CPU;
+// - (void) dumpC64CPU;
 - (void) dumpC64CIA1;
 - (void) dumpC64CIA2;
 - (void) dumpC64VIC;
@@ -92,52 +187,11 @@
 - (void) dumpKeyboard;
 - (void) dumpIEC;
 
+- (bool) c64GetWarpMode;
+- (void) c64SetWarpMode:(bool)b;
+- (long) c64GetCycles;
+
 // CPU
-- (bool) cpuGetWarpMode;
-- (void) cpuSetWarpMode:(bool)b;
-- (long) cpuGetCycles;
-- (uint16_t) cpuGetPC;
-- (void) cpuSetPC:(uint16_t)pc;
-- (uint8_t) cpuGetSP;
-- (void) cpuSetSP:(uint8_t)sp;
-- (uint8_t) cpuGetA;
-- (void) cpuSetA:(uint8_t)a;
-- (uint8_t) cpuGetX;
-- (void) cpuSetX:(uint8_t)x;
-- (uint8_t) cpuGetY;
-- (void) cpuSetY:(uint8_t)y;
-- (bool) cpuGetN;
-- (void) cpuSetN:(bool)b;
-- (bool) cpuGetZ;
-- (void) cpuSetZ:(bool)b;
-- (bool) cpuGetC;
-- (void) cpuSetC:(bool)b;
-- (bool) cpuGetI;
-- (void) cpuSetI:(bool)b;
-- (bool) cpuGetB;
-- (void) cpuSetB:(bool)b;
-- (bool) cpuGetD;
-- (void) cpuSetD:(bool)b;
-- (bool) cpuGetV;
-- (void) cpuSetV:(bool)b;
-
-- (uint16_t) cpuPeekPC;
-- (uint8_t) cpuGetLengthOfInstruction:(uint8_t)opcode;
-- (uint8_t) cpuGetLengthOfCurrentInstruction;
-- (uint16_t) cpuGetAddressOfNextIthInstruction:(int)i from:(uint16_t)addr;
-- (uint16_t) cpuGetAddressOfNextInstruction;
-- (char *) cpuGetMnemonic:(uint8_t)opcode;
-- (CPU::AddressingMode) cpuGetAddressingMode:(uint8_t)opcode;
-
-- (int) cpuGetTopOfCallStack;
-- (int) cpuGetBreakpoint:(int)addr;
-- (void) cpuSetBreakpoint:(int)addr tag:(uint8_t)t;
-- (void) cpuSetHardBreakpoint:(int)addr;
-- (void) cpuDeleteHardBreakpoint:(int)addr;
-- (void) cpuToggleHardBreakpoint:(int)addr;
-- (void) cpuSetSoftBreakpoint:(int)addr;
-- (void) cpuDeleteSoftBreakpoint:(int)addr;
-- (void) cpuToggleSoftBreakpoint:(int)addr;
 
 // JOYSTICK
 - (void) switchInputDevice:(int)devNo;
@@ -309,10 +363,6 @@
 // audio hardware
 - (void) enableAudio;
 - (void) disableAudio;
-
-// SID
-- (float) sidGetVolumeControl;
-- (void) sidSetVolumeControl:(float)value;
 
 // Keyboard
 - (void) keyboardPressRunstopRestore;

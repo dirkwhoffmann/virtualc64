@@ -12,10 +12,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="44"/>
+			<integer value="6"/>
 			<integer value="1005"/>
 			<integer value="1872"/>
-			<integer value="6"/>
-			<integer value="65"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -821,7 +821,7 @@
 									<characters key="NS.bytes">2</characters>
 								</object>
 								<object class="NSView" key="NSView" id="520471909">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="456711377"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1574,6 +1574,7 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 33}, {279, 326}}</string>
+									<reference key="NSSuperview" ref="456711377"/>
 								</object>
 								<string key="NSLabel">CPU</string>
 								<reference key="NSColor" ref="567631968"/>
@@ -1584,7 +1585,7 @@
 									<characters key="NS.bytes">1</characters>
 								</object>
 								<object class="NSView" key="NSView" id="887921535">
-									<reference key="NSNextResponder" ref="456711377"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2112,7 +2113,6 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 33}, {279, 326}}</string>
-									<reference key="NSSuperview" ref="456711377"/>
 								</object>
 								<string key="NSLabel">Memory</string>
 								<reference key="NSColor" ref="567631968"/>
@@ -4246,14 +4246,14 @@
 								<reference key="NSTabView" ref="456711377"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="586278993"/>
+						<reference key="NSSelectedTabViewItem" ref="355621993"/>
 						<reference key="NSFont" ref="237492425"/>
 						<int key="NSTvFlags">0</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="887921535"/>
+							<reference ref="520471909"/>
 						</object>
 					</object>
 					<object class="NSMatrix" id="1035917507">
@@ -4267,7 +4267,7 @@
 						<object class="NSMutableArray" key="NSCells">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSButtonCell" id="628938549">
-								<int key="NSCellFlags">-2080244224</int>
+								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">131584</int>
 								<string key="NSContents">Hex</string>
 								<reference key="NSSupport" ref="26"/>
@@ -4283,7 +4283,7 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 							<object class="NSButtonCell" id="999622359">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">131584</int>
 								<string key="NSContents">Dez</string>
 								<reference key="NSSupport" ref="26"/>
@@ -4299,7 +4299,7 @@
 						</object>
 						<string key="NSCellSize">{58, 22}</string>
 						<string key="NSIntercellSpacing">{0, 1}</string>
-						<int key="NSMatrixFlags">1143472128</int>
+						<int key="NSMatrixFlags">1143480320</int>
 						<string key="NSCellClass">NSActionCell</string>
 						<object class="NSButtonCell" key="NSProtoCell" id="658178298">
 							<int key="NSCellFlags">67239424</int>
@@ -4312,7 +4312,8 @@
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
-						<reference key="NSSelectedCell" ref="628938549"/>
+						<int key="NSSelectedCol">1</int>
+						<reference key="NSSelectedCell" ref="999622359"/>
 						<reference key="NSBackgroundColor" ref="567631968"/>
 						<reference key="NSCellBackgroundColor" ref="379252191"/>
 						<reference key="NSFont" ref="237492425"/>
@@ -5337,22 +5338,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<int key="connectionID">469</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">setDecimal:</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="999622359"/>
-					</object>
-					<int key="connectionID">490</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">setHexadecimal:</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="628938549"/>
-					</object>
-					<int key="connectionID">491</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">theWindow</string>
 						<reference key="source" ref="662028313"/>
@@ -5951,14 +5936,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<reference key="destination" ref="586549483"/>
 					</object>
 					<int key="connectionID">930</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">setHardBreakpoint:</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="815082505"/>
-					</object>
-					<int key="connectionID">944</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -6671,6 +6648,38 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<reference key="destination" ref="651874792"/>
 					</object>
 					<int key="connectionID">2011</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setHexadecimalAction:</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="1035917507"/>
+					</object>
+					<int key="connectionID">2013</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setDecimalAction:</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="999622359"/>
+					</object>
+					<int key="connectionID">2014</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setHexadecimalAction:</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="628938549"/>
+					</object>
+					<int key="connectionID">2015</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setHardBreakpointAction:</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="815082505"/>
+					</object>
+					<int key="connectionID">2016</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -11195,9 +11204,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{695, 249}, {652, 432}}</string>
+					<string>{{778, 210}, {652, 432}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{695, 249}, {652, 432}}</string>
+					<string>{{778, 210}, {652, 432}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<integer value="1"/>
@@ -11554,7 +11563,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2011</int>
+			<int key="maxID">2016</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -11725,9 +11734,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>runstopRestoreAction:</string>
 							<string>saveScreenshotDialog:</string>
 							<string>searchAction:</string>
-							<string>setDecimal:</string>
-							<string>setHardBreakpoint:</string>
-							<string>setHexadecimal:</string>
+							<string>setDecimalAction:</string>
+							<string>setHardBreakpointAction:</string>
+							<string>setHexadecimalAction:</string>
 							<string>setMemSourceToIO:</string>
 							<string>setMemSourceToRAM:</string>
 							<string>setMemSourceToROM:</string>
@@ -11982,9 +11991,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>runstopRestoreAction:</string>
 							<string>saveScreenshotDialog:</string>
 							<string>searchAction:</string>
-							<string>setDecimal:</string>
-							<string>setHardBreakpoint:</string>
-							<string>setHexadecimal:</string>
+							<string>setDecimalAction:</string>
+							<string>setHardBreakpointAction:</string>
+							<string>setHexadecimalAction:</string>
 							<string>setMemSourceToIO:</string>
 							<string>setMemSourceToRAM:</string>
 							<string>setMemSourceToROM:</string>
@@ -12323,15 +12332,15 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">setDecimal:</string>
+								<string key="name">setDecimalAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">setHardBreakpoint:</string>
+								<string key="name">setHardBreakpointAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">setHexadecimal:</string>
+								<string key="name">setHexadecimalAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

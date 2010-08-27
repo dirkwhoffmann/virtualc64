@@ -19,6 +19,96 @@
 #import "MyDocument.h"
 #import "AudioDevice.h"
 
+// --------------------------------------------------------------------------
+//                                    CPU
+// --------------------------------------------------------------------------
+
+@implementation CPUProxy
+
+- (id) initWithCPU:(CPU *)c;
+{
+    self = [super init];	
+	cpu = c;	
+	return self;
+}
+
+- (void) dump { cpu->dumpState(); }
+
+- (bool) tracingEnabled { return cpu->tracingEnabled(); }
+- (void) setTraceMode:(bool)b { cpu->setTraceMode(b); }
+
+- (uint16_t) getPC { return cpu->getPC_at_cycle_0(); }
+- (void) setPC:(uint16_t)pc { cpu->setPC_at_cycle_0(pc); }
+- (uint8_t) getSP { return cpu->getSP(); }
+- (void) setSP:(uint8_t)sp { cpu->setSP(sp); }
+- (uint8_t) getA { return cpu->getA(); }
+- (void) setA:(uint8_t)a { cpu->setA(a); }
+- (uint8_t) getX { return cpu->getX(); }
+- (void) setX:(uint8_t)x { cpu->setX(x); }
+- (uint8_t) getY { return cpu->getY(); }
+- (void) setY:(uint8_t)y { cpu->setY(y); }
+- (bool) getN { return cpu->getN(); }
+- (void) setN:(bool)b { cpu->setN(b); }
+- (bool) getZ { return cpu->getZ(); }
+- (void) setZ:(bool)b { cpu->setZ(b); }
+- (bool) getC { return cpu->getC(); }
+- (void) setC:(bool)b { cpu->setC(b); }
+- (bool) getI { return cpu->getI(); }
+- (void) setI:(bool)b { cpu->setI(b); }
+- (bool) getB { return cpu->getB(); }
+- (void) setB:(bool)b { cpu->setB(b); }
+- (bool) getD { return cpu->getD(); }
+- (void) setD:(bool)b { cpu->setD(b); }
+- (bool) getV { return cpu->getV(); }
+- (void) setV:(bool)b { cpu->setV(b); }
+
+- (uint16_t) peekPC { return cpu->mem->peek(cpu->getPC_at_cycle_0()); }
+- (uint8_t) getLengthOfInstruction:(uint8_t)opcode { return cpu->getLengthOfInstruction(opcode); }
+- (uint8_t) getLengthOfCurrentInstruction { return cpu->getLengthOfCurrentInstruction(); }
+- (uint16_t) getAddressOfNextIthInstruction:(int)i from:(uint16_t)addr { return cpu->getAddressOfNextIthInstruction(i, addr); }
+- (uint16_t) getAddressOfNextInstruction { return cpu->getAddressOfNextInstruction(); }
+- (const char *) getMnemonic:(uint8_t)opcode { return cpu->getMnemonic(opcode); }
+- (CPU::AddressingMode) getAddressingMode:(uint8_t)opcode { return cpu->getAddressingMode(opcode); }
+
+- (int) getTopOfCallStack { return cpu->getTopOfCallStack(); }
+
+- (int) getBreakpoint:(int)addr { return cpu->getBreakpoint(addr); }
+- (void) setBreakpoint:(int)addr tag:(uint8_t)t { cpu->setBreakpoint(addr, t); }
+- (void) setHardBreakpoint:(int)addr { cpu->setHardBreakpoint(addr); };
+- (void) deleteHardBreakpoint:(int)addr { cpu->deleteHardBreakpoint(addr); }
+- (void) toggleHardBreakpoint:(int)addr { cpu->toggleHardBreakpoint(addr); }
+- (void) setSoftBreakpoint:(int)addr { cpu->setSoftBreakpoint(addr); };
+- (void) deleteSoftBreakpoint:(int)addr { cpu->deleteSoftBreakpoint(addr); }
+- (void) toggleSoftBreakpoint:(int)addr { cpu->toggleSoftBreakpoint(addr); }
+
+@end
+
+// --------------------------------------------------------------------------
+//                                    SID
+// --------------------------------------------------------------------------
+
+@implementation SIDProxy
+
+- (id) initWithSID:(SID *)s;
+{
+    self = [super init];	
+	sid = s;	
+	return self;
+}
+
+- (float) getVolumeControl 
+{
+	return sid->getVolumeControl(); 
+}
+
+- (void) setVolumeControl:(float)value 
+{ 
+	sid->setVolumeControl(value); 
+} 
+
+@end
+
+
 @implementation C64Proxy
 
 // --------------------------------------------------------------------------
@@ -41,11 +131,15 @@
 	cia[1] = c64->cia1;
 	cia[2] = c64->cia2;
 	iec = c64->iec;
-	cpu = c64->cpu;
+	// cpu = c64->cpu;
 	mem = c64->mem;
 	// cpu = c64->floppy->cpu;
 	// mem = c64->floppy->mem;
 	
+	// Create sub proxys
+	cpuproxy = [[CPUProxy alloc] initWithCPU:c64->cpu];
+	sidproxy = [[SIDProxy alloc] initWithSID:c64->sid];
+		
 	// Initialize CoreAudio sound interface
 	audioDevice = [[AudioDevice alloc] initWithSID:c64->sid];
 	if (!audioDevice)
@@ -71,11 +165,19 @@
 	c64 = NULL;
 }
 
+- (SIDProxy *) sid { return sidproxy; }
+- (CPUProxy *) cpu { return cpuproxy; }
+
+
+
 // TO BE DEPRECATED...
 - (C64 *) getC64
 {
 	return c64;
 }
+
+
+
 
 
 // --------------------------------------------------------------------------
@@ -108,11 +210,11 @@
 - (bool) loadVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) isCartridgeAttached { return c64->isCartridgeAttached(); }
 	
-- (bool) cpuGetWarpMode { return c64->getWarpMode(); }
-- (void) cpuSetWarpMode:(bool)b {  c64->setWarpMode(b); }
+- (bool) c64GetWarpMode { return c64->getWarpMode(); }
+- (void) c64SetWarpMode:(bool)b {  c64->setWarpMode(b); }
 
-- (bool) cpuTracingEnabled { return cpu->tracingEnabled(); }
-- (void) cpuSetTraceMode:(bool)b { cpu->setTraceMode(b); }
+// - (bool) cpuTracingEnabled { return cpu->tracingEnabled(); }
+// - (void) cpuSetTraceMode:(bool)b { cpu->setTraceMode(b); }
 - (bool) iecTracingEnabled { return iec->tracingEnabled(); }
 - (void) iecSetTraceMode:(bool)b { iec->setTraceMode(b); }
 - (bool) vc1541CpuTracingEnabled { return c64->floppy->cpu->tracingEnabled(); }
@@ -121,7 +223,7 @@
 - (void) viaSetTraceMode:(bool)b { c64->floppy->via2->setTraceMode(b); }
 
 - (void) dumpC64 { c64->dumpState(); }
-- (void) dumpC64CPU { cpu->dumpState(); }
+// - (void) dumpC64CPU { cpu->dumpState(); }
 - (void) dumpC64CIA1 { c64->cia1->dumpState(); }
 - (void) dumpC64CIA2 { c64->cia2->dumpState(); }
 - (void) dumpC64VIC { c64->vic->dumpState(); }
@@ -135,56 +237,7 @@
 - (void) dumpKeyboard { c64->keyboard->dumpState(); }
 - (void) dumpIEC { c64->iec->dumpState(); }
 	
-
-// --------------------------------------------------------------------------
-// CPU
-// --------------------------------------------------------------------------
-
-- (long) cpuGetCycles { return (long)c64->getCycles(); }
-- (uint16_t) cpuGetPC { return cpu->getPC_at_cycle_0(); }
-- (void) cpuSetPC:(uint16_t)pc { cpu->setPC_at_cycle_0(pc); }
-- (uint8_t) cpuGetSP { return cpu->getSP(); }
-- (void) cpuSetSP:(uint8_t)sp { cpu->setSP(sp); }
-- (uint8_t) cpuGetA { return cpu->getA(); }
-- (void) cpuSetA:(uint8_t)a { cpu->setA(a); }
-- (uint8_t) cpuGetX { return cpu->getX(); }
-- (void) cpuSetX:(uint8_t)x { cpu->setX(x); }
-- (uint8_t) cpuGetY { return cpu->getY(); }
-- (void) cpuSetY:(uint8_t)y { cpu->setY(y); }
-- (bool) cpuGetN { return cpu->getN(); }
-- (void) cpuSetN:(bool)b { cpu->setN(b); }
-- (bool) cpuGetZ { return cpu->getZ(); }
-- (void) cpuSetZ:(bool)b { cpu->setZ(b); }
-- (bool) cpuGetC { return cpu->getC(); }
-- (void) cpuSetC:(bool)b { cpu->setC(b); }
-- (bool) cpuGetI { return cpu->getI(); }
-- (void) cpuSetI:(bool)b { cpu->setI(b); }
-- (bool) cpuGetB { return cpu->getB(); }
-- (void) cpuSetB:(bool)b { cpu->setB(b); }
-- (bool) cpuGetD { return cpu->getD(); }
-- (void) cpuSetD:(bool)b { cpu->setD(b); }
-- (bool) cpuGetV { return cpu->getV(); }
-- (void) cpuSetV:(bool)b { cpu->setV(b); }
-
-- (uint16_t) cpuPeekPC { return mem->peek(cpu->getPC_at_cycle_0()); }
-- (uint8_t) cpuGetLengthOfInstruction:(uint8_t)opcode { return cpu->getLengthOfInstruction(opcode); }
-- (uint8_t) cpuGetLengthOfCurrentInstruction { return cpu->getLengthOfCurrentInstruction(); }
-- (uint16_t) cpuGetAddressOfNextIthInstruction:(int)i from:(uint16_t)addr { return cpu->getAddressOfNextIthInstruction(i, addr); }
-- (uint16_t) cpuGetAddressOfNextInstruction { return cpu->getAddressOfNextInstruction(); }
-- (const char *) cpuGetMnemonic:(uint8_t)opcode { return cpu->getMnemonic(opcode); }
-- (CPU::AddressingMode) cpuGetAddressingMode:(uint8_t)opcode { return cpu->getAddressingMode(opcode); }
-
-- (int) cpuGetTopOfCallStack { return cpu->getTopOfCallStack(); }
-
-- (int) cpuGetBreakpoint:(int)addr { return cpu->getBreakpoint(addr); }
-- (void) cpuSetBreakpoint:(int)addr tag:(uint8_t)t { cpu->setBreakpoint(addr, t); }
-- (void) cpuSetHardBreakpoint:(int)addr { cpu->setHardBreakpoint(addr); };
-- (void) cpuDeleteHardBreakpoint:(int)addr { cpu->deleteHardBreakpoint(addr); }
-- (void) cpuToggleHardBreakpoint:(int)addr { cpu->toggleHardBreakpoint(addr); }
-- (void) cpuSetSoftBreakpoint:(int)addr { cpu->setSoftBreakpoint(addr); };
-- (void) cpuDeleteSoftBreakpoint:(int)addr { cpu->deleteSoftBreakpoint(addr); }
-- (void) cpuToggleSoftBreakpoint:(int)addr { cpu->toggleSoftBreakpoint(addr); }
-
+- (long) c64GetCycles { return (long)c64->getCycles(); }
 
 // --------------------------------------------------------------------------
 // JOYSTICK
@@ -400,14 +453,6 @@
 	/* if the audio hardware couldn't be initialized, nothing wil happen here (message to nil) */
 	[audioDevice stopPlayback];
 }
-
-
-// --------------------------------------------------------------------------
-// SID
-// --------------------------------------------------------------------------
-
-- (float) sidGetVolumeControl { return c64->sid->getVolumeControl(); }
-- (void) sidSetVolumeControl:(float)value { c64->sid->setVolumeControl(value); } 
 
 
 // --------------------------------------------------------------------------
