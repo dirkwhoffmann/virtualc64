@@ -146,22 +146,22 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 		[self updateColorWell:colorWell15 color:customColor[15]];
 		enabled = YES;	
 	} else {
-		[colorWell0 setColor:[c64 vicGetColor:scheme nr:0]];
-		[colorWell1 setColor:[c64 vicGetColor:scheme nr:1]];
-		[colorWell2 setColor:[c64 vicGetColor:scheme nr:2]];
-		[colorWell3 setColor:[c64 vicGetColor:scheme nr:3]];
-		[colorWell4 setColor:[c64 vicGetColor:scheme nr:4]];
-		[colorWell5 setColor:[c64 vicGetColor:scheme nr:5]];
-		[colorWell6 setColor:[c64 vicGetColor:scheme nr:6]];
-		[colorWell7 setColor:[c64 vicGetColor:scheme nr:7]];
-		[colorWell8 setColor:[c64 vicGetColor:scheme nr:8]];
-		[colorWell9 setColor:[c64 vicGetColor:scheme nr:9]];
-		[colorWell10 setColor:[c64 vicGetColor:scheme nr:10]];
-		[colorWell11 setColor:[c64 vicGetColor:scheme nr:11]];
-		[colorWell12 setColor:[c64 vicGetColor:scheme nr:12]];
-		[colorWell13 setColor:[c64 vicGetColor:scheme nr:13]];
-		[colorWell14 setColor:[c64 vicGetColor:scheme nr:14]];
-		[colorWell15 setColor:[c64 vicGetColor:scheme nr:15]];
+		[colorWell0 setColor:[[c64 vic] getColor:scheme nr:0]];
+		[colorWell1 setColor:[[c64 vic] getColor:scheme nr:1]];
+		[colorWell2 setColor:[[c64 vic] getColor:scheme nr:2]];
+		[colorWell3 setColor:[[c64 vic] getColor:scheme nr:3]];
+		[colorWell4 setColor:[[c64 vic] getColor:scheme nr:4]];
+		[colorWell5 setColor:[[c64 vic] getColor:scheme nr:5]];
+		[colorWell6 setColor:[[c64 vic] getColor:scheme nr:6]];
+		[colorWell7 setColor:[[c64 vic] getColor:scheme nr:7]];
+		[colorWell8 setColor:[[c64 vic] getColor:scheme nr:8]];
+		[colorWell9 setColor:[[c64 vic] getColor:scheme nr:9]];
+		[colorWell10 setColor:[[c64 vic] getColor:scheme nr:10]];
+		[colorWell11 setColor:[[c64 vic] getColor:scheme nr:11]];
+		[colorWell12 setColor:[[c64 vic] getColor:scheme nr:12]];
+		[colorWell13 setColor:[[c64 vic] getColor:scheme nr:13]];
+		[colorWell14 setColor:[[c64 vic] getColor:scheme nr:14]];
+		[colorWell15 setColor:[[c64 vic] getColor:scheme nr:15]];
 		enabled = NO;
 	}
 	[colorWell0 setEnabled:enabled];
@@ -181,22 +181,22 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[colorWell14 setEnabled:enabled];
 	[colorWell15 setEnabled:enabled];
 	
-	[c64 vicSetColor:0 rgba:[colorWell0 color]];
-	[c64 vicSetColor:1 rgba:[colorWell1 color]];
-	[c64 vicSetColor:2 rgba:[colorWell2 color]];
-	[c64 vicSetColor:3 rgba:[colorWell3 color]];
-	[c64 vicSetColor:4 rgba:[colorWell4 color]];
-	[c64 vicSetColor:5 rgba:[colorWell5 color]];
-	[c64 vicSetColor:6 rgba:[colorWell6 color]];
-	[c64 vicSetColor:7 rgba:[colorWell7 color]];
-	[c64 vicSetColor:8 rgba:[colorWell8 color]];
-	[c64 vicSetColor:9 rgba:[colorWell9 color]];
-	[c64 vicSetColor:10 rgba:[colorWell10 color]];
-	[c64 vicSetColor:11 rgba:[colorWell11 color]];
-	[c64 vicSetColor:12 rgba:[colorWell12 color]];
-	[c64 vicSetColor:13 rgba:[colorWell13 color]];
-	[c64 vicSetColor:14 rgba:[colorWell14 color]];
-	[c64 vicSetColor:15 rgba:[colorWell15 color]];
+	[[c64 vic] setColor:0 rgba:[colorWell0 color]];
+	[[c64 vic] setColor:1 rgba:[colorWell1 color]];
+	[[c64 vic] setColor:2 rgba:[colorWell2 color]];
+	[[c64 vic] setColor:3 rgba:[colorWell3 color]];
+	[[c64 vic] setColor:4 rgba:[colorWell4 color]];
+	[[c64 vic] setColor:5 rgba:[colorWell5 color]];
+	[[c64 vic] setColor:6 rgba:[colorWell6 color]];
+	[[c64 vic] setColor:7 rgba:[colorWell7 color]];
+	[[c64 vic] setColor:8 rgba:[colorWell8 color]];
+	[[c64 vic] setColor:9 rgba:[colorWell9 color]];
+	[[c64 vic] setColor:10 rgba:[colorWell10 color]];
+	[[c64 vic] setColor:11 rgba:[colorWell11 color]];
+	[[c64 vic] setColor:12 rgba:[colorWell12 color]];
+	[[c64 vic] setColor:13 rgba:[colorWell13 color]];
+	[[c64 vic] setColor:14 rgba:[colorWell14 color]];
+	[[c64 vic] setColor:15 rgba:[colorWell15 color]];
 }
 
 - (IBAction)setPalAction:(id)sender
@@ -308,7 +308,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(g * 0xff);
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(b * 0xff);
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(a * 0xff);	
-	[c64 vicSetColor:col rgba:[sender color]];
+	[[c64 vic] setColor:col rgba:[sender color]];
 	[defaults setInteger:customColor[col] forKey:key];
 
 #if 0

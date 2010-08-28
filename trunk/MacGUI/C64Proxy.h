@@ -85,6 +85,185 @@
 @end
 
 // --------------------------------------------------------------------------
+//                                    VIC
+// --------------------------------------------------------------------------
+
+@interface VICProxy : NSObject {
+	VIC *vic;
+}
+
+- (id) initWithVIC:(VIC *)v;
+- (void *) screenBuffer;
+- (NSColor *) getColor:(VIC::ColorScheme)scheme nr:(int)nr;
+- (void) setColor:(int)color rgba:(NSColor *)rgba;
+- (void) setColorInt:(int)color rgba:(int)rgba;
+- (void) setColorScheme:(VIC::ColorScheme)scheme;
+
+- (uint16_t) getMemoryBankAddr;
+- (void) setMemoryBankAddr:(uint16_t)addr;
+- (uint16_t) getScreenMemoryAddr;
+- (void) setScreenMemoryAddr:(uint16_t)addr;
+- (uint16_t) getCharacterMemoryAddr;
+- (void) setCharacterMemoryAddr:(uint16_t)addr;
+
+- (int) getDisplayMode;
+- (void) setDisplayMode:(int)mode;
+- (int) getScreenGeometry;
+- (void) setScreenGeometry:(int)mode;
+- (int) getHorizontalRasterScroll;
+- (void) setHorizontalRasterScroll:(int)offset;
+- (int) getVerticalRasterScroll;
+- (void) setVerticalRasterScroll:(int)offset;
+
+- (bool) spriteGetVisibilityFlag:(int)nr;
+- (void) spriteSetVisibilityFlag:(int)nr value:(bool)flag;
+- (void) spriteToggleVisibilityFlag:(int)nr;
+
+- (bool) spriteGetSpriteSpriteCollisionFlag:(int)nr;
+- (void) spriteSetSpriteSpriteCollisionFlag:(int)nr value:(bool)flag;
+- (void) spriteToggleSpriteSpriteCollisionFlag:(int)nr;
+
+- (bool) spriteGetSpriteBackgroundCollisionFlag:(int)nr;
+- (void) spriteSetSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag;
+- (void) spriteToggleSpriteBackgroundCollisionFlag:(int)nr;
+
+- (bool) spriteGetBackgroundPriorityFlag:(int)nr;
+- (void) spriteSetBackgroundPriorityFlag:(int)nr value:(bool)flag;
+- (void) spriteToggleBackgroundPriorityFlag:(int)nr;
+
+- (bool) spriteGetMulticolorFlag:(int)nr;
+- (void) spriteSetMulticolorFlag:(int)nr value:(bool)flag;
+- (void) spriteToggleMulticolorFlag:(int)nr;
+
+- (bool) spriteGetStretchXFlag:(int)nr;
+- (void) spriteSetStretchXFlag:(int)nr value:(bool)flag;
+- (void) spriteToggleStretchXFlag:(int)nr;
+
+- (bool) spriteGetStretchYFlag:(int)nr;
+- (void) spriteSetStretchYFlag:(int)nr value:(bool)flag;
+- (void) spriteToggleStretchYFlag:(int)nr;
+
+- (int) spriteGetX:(int)nr;
+- (void) spriteSetX:(int)nr value:(int)x;
+- (int) spriteGetY:(int)nr;
+- (void) spriteSetY:(int)nr value:(int)y;
+- (int) spriteGetColor:(int)nr;
+- (void) spriteSetColor:(int)nr value:(int)c;
+
+- (uint16_t) getRasterLine;
+- (void) setRasterLine:(uint16_t)line;
+- (uint16_t) getRasterInterruptLine;
+- (void) setRasterInterruptLine:(uint16_t)line;
+- (bool) getRasterInterruptFlag;
+- (void) setRasterInterruptFlag:(bool)b;
+- (void) toggleRasterInterruptFlag;
+
+- (bool) hideSprites;
+- (void) setHideSprites:(bool)b;
+- (bool) showIrqLines;
+- (void) setShowIrqLines:(bool)b;
+- (bool) showDmaLines;
+- (void) setShowDmaLines:(bool)b;
+
+@end
+
+// --------------------------------------------------------------------------
+//                                     CIA
+// --------------------------------------------------------------------------
+
+@interface CIAProxy : NSObject {
+	CIA *cia;
+}
+
+- (id) initWithCIA:(CIA *)c;
+- (uint8_t) getDataPortA;
+- (void) setDataPortA:(uint8_t)v;
+- (uint8_t) getDataPortDirectionA;
+- (void) setDataPortDirectionA:(uint8_t)v;
+- (uint16_t) getTimerA;
+- (void) setTimerA:(uint16_t)v;
+- (uint16_t) getTimerLatchA;
+- (void) setTimerLatchA:(uint16_t)v;
+- (bool) getStartFlagA;
+- (void) setStartFlagA:(bool)b;
+- (void) toggleStartFlagA;
+- (bool) getOneShotFlagA;
+- (void) setOneShotFlagA:(bool)b;
+- (void) toggleOneShotFlagA;
+- (bool) getUnderflowFlagA;
+- (void) setUnderflowFlagA:(bool)b;
+- (void) toggleUnderflowFlagA;
+- (bool) getPendingSignalFlagA;
+- (void) setPendingSignalFlagA:(bool)b;
+- (void) togglePendingSignalFlagA;
+- (bool) getInterruptEnableFlagA;
+- (void) setInterruptEnableFlagA:(bool)b;
+- (void) toggleInterruptEnableFlagA;
+
+- (uint8_t) getDataPortB;
+- (void) setDataPortB:(uint8_t)v;
+- (uint8_t) getDataPortDirectionB;
+- (void) setDataPortDirectionB:(uint8_t)v;
+- (uint16_t) getTimerB;
+- (void) setTimerB:(uint16_t)v;
+- (uint16_t) getTimerLatchB;
+- (void) setTimerLatchB:(uint16_t)v;
+- (bool) getStartFlagB;
+- (void) setStartFlagB:(bool)b;
+- (void) toggleStartFlagB;
+- (bool) getOneShotFlagB;
+- (void) setOneShotFlagB:(bool)b;
+- (void) toggleOneShotFlagB;
+- (bool) getUnderflowFlagB;
+- (void) setUnderflowFlagB:(bool)b;
+- (void) toggleUnderflowFlagB;
+- (bool) getPendingSignalFlagB;
+- (void) setPendingSignalFlagB:(bool)b;
+- (void) togglePendingSignalFlagB;
+- (bool) getInterruptEnableFlagB;
+- (void) setInterruptEnableFlagB:(bool)b;
+- (void) toggleInterruptEnableFlagB;
+
+- (uint8_t) getTodHours;
+- (void) setTodHours:(uint8_t)value;
+- (uint8_t) getTodMinutes;
+- (void) setTodMinutes:(uint8_t)value;
+- (uint8_t) getTodSeconds;
+- (void) setTodSeconds:(uint8_t)value;
+- (uint8_t) getTodTenth;
+- (void) setTodTenth:(uint8_t)value;
+
+- (uint8_t) getAlarmHours;
+- (void) setAlarmHours:(uint8_t)value;
+- (uint8_t) getAlarmMinutes;
+- (void) setAlarmMinutes:(uint8_t)value;
+- (uint8_t) getAlarmSeconds;
+- (void) setAlarmSeconds:(uint8_t)value;
+- (uint8_t) getAlarmTenth;
+- (void) setAlarmTenth:(uint8_t)value;
+- (bool) todIsInterruptEnabled;
+- (void) todSetInterruptEnabled:(bool)b;
+
+@end 
+
+// --------------------------------------------------------------------------
+//                                  Keyboard
+// --------------------------------------------------------------------------
+
+@interface KeyboardProxy : NSObject {
+	Keyboard *keyboard;
+}
+
+- (id) initWithKeyboard:(Keyboard *)kb;
+- (void) pressRunstopKey;
+- (void) releaseRunstopKey;
+- (void) pressCommodoreKey;
+- (void) releaseCommodoreKey;
+- (void) typeFormat;
+
+@end 
+
+// --------------------------------------------------------------------------
 //                                    SID
 // --------------------------------------------------------------------------
 
@@ -113,12 +292,21 @@
 @end
 
 
+
+
+
+
+
+
 @interface C64Proxy : NSObject {	
 	
 	// Sub proxys
 	CPUProxy *cpuproxy;
+	VICProxy *vicproxy;
+	CIAProxy *ciaproxy1;
+	CIAProxy *ciaproxy2;
 	SIDProxy *sidproxy;
-	
+	KeyboardProxy *keyboardproxy;
 
 	// ListenerProxy *listener;	
 	C64 *c64;
@@ -137,7 +325,10 @@
 
 //! Getter
 - (CPUProxy *) cpu;
+- (VICProxy *) vic;
 - (SIDProxy *) sid;
+- (CIAProxy *) cia:(int)num;
+- (KeyboardProxy *) keyboard;
 
 // C64
 - (Message *)getMessage;
@@ -217,161 +408,24 @@
 - (void) memDeleteWatchpoint:(uint16_t)addr;
 - (uint8_t) memGetWatchValue:(uint16_t)addr;
 
-// CIA
-- (uint8_t) ciaGetDataPortA:(int)nr;
-- (void) ciaSetDataPortA:(int)nr value:(uint8_t)v;
-- (uint8_t) ciaGetDataPortDirectionA:(int)nr;
-- (void) ciaSetDataPortDirectionA:(int)nr value:(uint8_t)v;
-- (uint16_t) ciaGetTimerA:(int)nr;
-- (void) ciaSetTimerA:(int)nr value:(uint16_t)v;
-- (uint16_t) ciaGetTimerLatchA:(int)nr;
-- (void) ciaSetTimerLatchA:(int)nr value:(uint16_t)v;
-- (bool) ciaGetStartFlagA:(int)nr;
-- (void) ciaSetStartFlagA:(int)nr value:(bool)b;
-- (void) ciaToggleStartFlagA:(int)nr;
-- (bool) ciaGetOneShotFlagA:(int)nr;
-- (void) ciaSetOneShotFlagA:(int)nr value:(bool)b;
-- (void) ciaToggleOneShotFlagA:(int)nr;
-- (bool) ciaGetUnderflowFlagA:(int)nr;
-- (void) ciaSetUnderflowFlagA:(int)nr value:(bool)b;
-- (void) ciaToggleUnderflowFlagA:(int)nr;
-- (bool) ciaGetPendingSignalFlagA:(int)nr;
-- (void) ciaSetPendingSignalFlagA:(int)nr value:(bool)b;
-- (void) ciaTogglePendingSignalFlagA:(int)nr;
-- (bool) ciaGetInterruptEnableFlagA:(int)nr;
-- (void) ciaSetInterruptEnableFlagA:(int)nr value:(bool)b;
-- (void) ciaToggleInterruptEnableFlagA:(int)nr;
 
-- (uint8_t) ciaGetDataPortB:(int)nr;
-- (void) ciaSetDataPortB:(int)nr value:(uint8_t)v;
-- (uint8_t) ciaGetDataPortDirectionB:(int)nr;
-- (void) ciaSetDataPortDirectionB:(int)nr value:(uint8_t)v;
-- (uint16_t) ciaGetTimerB:(int)nr;
-- (void) ciaSetTimerB:(int)nr value:(uint16_t)v;
-- (uint16_t) ciaGetTimerLatchB:(int)nr;
-- (void) ciaSetTimerLatchB:(int)nr value:(uint16_t)v;
-- (bool) ciaGetStartFlagB:(int)nr;
-- (void) ciaSetStartFlagB:(int)nr value:(bool)b;
-- (void) ciaToggleStartFlagB:(int)nr;
-- (bool) ciaGetOneShotFlagB:(int)nr;
-- (void) ciaSetOneShotFlagB:(int)nr value:(bool)b;
-- (void) ciaToggleOneShotFlagB:(int)nr;
-- (bool) ciaGetUnderflowFlagB:(int)nr;
-- (void) ciaSetUnderflowFlagB:(int)nr value:(bool)b;
-- (void) ciaToggleUnderflowFlagB:(int)nr;
-- (bool) ciaGetPendingSignalFlagB:(int)nr;
-- (void) ciaSetPendingSignalFlagB:(int)nr value:(bool)b;
-- (void) ciaTogglePendingSignalFlagB:(int)nr;
-- (bool) ciaGetInterruptEnableFlagB:(int)nr;
-- (void) ciaSetInterruptEnableFlagB:(int)nr value:(bool)b;
-- (void) ciaToggleInterruptEnableFlagB:(int)nr;
-
-- (uint8_t) ciaGetTodHours:(int)nr;
-- (void) ciaSetTodHours:(int)nr value:(uint8_t)value;
-- (uint8_t) ciaGetTodMinutes:(int)nr;
-- (void) ciaSetTodMinutes:(int)nr value:(uint8_t)value;
-- (uint8_t) ciaGetTodSeconds:(int)nr;
-- (void) ciaSetTodSeconds:(int)nr value:(uint8_t)value;
-- (uint8_t) ciaGetTodTenth:(int)nr;
-- (void) ciaSetTodTenth:(int)nr value:(uint8_t)value;
-
-- (uint8_t) ciaGetAlarmHours:(int)nr;
-- (void) ciaSetAlarmHours:(int)nr value:(uint8_t)value;
-- (uint8_t) ciaGetAlarmMinutes:(int)nr;
-- (void) ciaSetAlarmMinutes:(int)nr value:(uint8_t)value;
-- (uint8_t) ciaGetAlarmSeconds:(int)nr;
-- (void) ciaSetAlarmSeconds:(int)nr value:(uint8_t)value;
-- (uint8_t) ciaGetAlarmTenth:(int)nr;
-- (void) ciaSetAlarmTenth:(int)nr value:(uint8_t)value;
-- (bool) todIsInterruptEnabled:(int)nr;
-- (void) todSetInterruptEnabled:(int)nr value:(bool)b;
-
-// VIC
-- (void *) vicScreenBuffer;
-- (NSColor *) vicGetColor:(VIC::ColorScheme)scheme nr:(int)nr;
-- (void) vicSetColor:(int)color rgba:(NSColor *)rgba;
-- (void) vicSetColorInt:(int)color rgba:(int)rgba;
-- (void) vicSetColorScheme:(VIC::ColorScheme)scheme;
-
-- (uint16_t) vicGetMemoryBankAddr;
-- (void) vicSetMemoryBankAddr:(uint16_t)addr;
-- (uint16_t) vicGetScreenMemoryAddr;
-- (void) vicSetScreenMemoryAddr:(uint16_t)addr;
-- (uint16_t) vicGetCharacterMemoryAddr;
-- (void) vicSetCharacterMemoryAddr:(uint16_t)addr;
-
-- (int) vicGetDisplayMode;
-- (void) vicSetDisplayMode:(int)mode;
-- (int) vicGetScreenGeometry;
-- (void) vicSetScreenGeometry:(int)mode;
-- (int) vicGetHorizontalRasterScroll;
-- (void) vicSetHorizontalRasterScroll:(int)offset;
-- (int) vicGetVerticalRasterScroll;
-- (void) vicSetVerticalRasterScroll:(int)offset;
-
-- (bool) spriteGetVisibilityFlag:(int)nr;
-- (void) spriteSetVisibilityFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleVisibilityFlag:(int)nr;
-
-- (bool) spriteGetSpriteSpriteCollisionFlag:(int)nr;
-- (void) spriteSetSpriteSpriteCollisionFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleSpriteSpriteCollisionFlag:(int)nr;
-
-- (bool) spriteGetSpriteBackgroundCollisionFlag:(int)nr;
-- (void) spriteSetSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleSpriteBackgroundCollisionFlag:(int)nr;
-
-- (bool) spriteGetBackgroundPriorityFlag:(int)nr;
-- (void) spriteSetBackgroundPriorityFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleBackgroundPriorityFlag:(int)nr;
-
-- (bool) spriteGetMulticolorFlag:(int)nr;
-- (void) spriteSetMulticolorFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleMulticolorFlag:(int)nr;
-
-- (bool) spriteGetStretchXFlag:(int)nr;
-- (void) spriteSetStretchXFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleStretchXFlag:(int)nr;
-
-- (bool) spriteGetStretchYFlag:(int)nr;
-- (void) spriteSetStretchYFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleStretchYFlag:(int)nr;
-
-- (int) spriteGetX:(int)nr;
-- (void) spriteSetX:(int)nr value:(int)x;
-- (int) spriteGetY:(int)nr;
-- (void) spriteSetY:(int)nr value:(int)y;
-- (int) spriteGetColor:(int)nr;
-- (void) spriteSetColor:(int)nr value:(int)c;
-
-- (uint16_t) vicGetRasterLine;
-- (void) vicSetRasterLine:(uint16_t)line;
-- (uint16_t) vicGetRasterInterruptLine;
-- (void) vicSetRasterInterruptLine:(uint16_t)line;
-- (bool) vicGetRasterInterruptFlag;
-- (void) vicSetRasterInterruptFlag:(bool)b;
-- (void) vicToggleRasterInterruptFlag;
-
-- (bool) vicHideSprites;
-- (void) vicSetHideSprites:(bool)b;
-- (bool) vicShowIrqLines;
-- (void) vicSetShowIrqLines:(bool)b;
-- (bool) vicShowDmaLines;
-- (void) vicSetShowDmaLines:(bool)b;
 - (void) fastReset;
 
 // audio hardware
 - (void) enableAudio;
 - (void) disableAudio;
 
-// Keyboard
+
 - (void) keyboardPressRunstopRestore;
 
+// Keyboard
+#if 0
 - (void) keyboardPressRunstopKey;
 - (void) keyboardReleaseRunstopKey;
 - (void) keyboardPressCommodoreKey;
 - (void) keyboardReleaseCommodoreKey;
 - (void) keyboardTypeFormat;
+#endif
 
 // Drive
 - (void) ejectDisk;

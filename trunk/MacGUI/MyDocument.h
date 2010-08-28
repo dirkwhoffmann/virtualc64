@@ -185,8 +185,11 @@
 	// Setting the variable to false only makes sense during performance tests
 	bool enableOpenGL;	
 
-	// Number of selected sprite in VIC debug panel
+	// Selected sprite in VIC debug panel
 	int selectedSprite;
+	
+	// Selected CIA in debug panel
+	// CIAProxy *cia; 
 	
 	//! Reference to the attached archive, e.g., a T64 or D64 container
 	Archive *archive;
@@ -323,7 +326,10 @@
 
 
 // Debug panel (VIC)
+
+- (void)_vicVideoModeAction:(int)mode;
 - (IBAction)vicVideoModeAction:(id)sender;
+- (IBAction)_vicScreenGeometryAction:(int)mode;
 - (IBAction)vicScreenGeometryAction:(id)sender;
 - (IBAction)vicMemoryBankAction:(id)sender;
 - (IBAction)vicScreenMemoryAction:(id)sender;
