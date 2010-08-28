@@ -48,7 +48,7 @@
         return nil;
 
 	addr     = (uint16_t)[anObject intValue];
-	opcode   = [c64 memPeek:addr];
+	opcode   = [[c64 mem] peek:addr];
 	mnemonic = [[c64 cpu] getMnemonic:opcode];
 		
 	// Display instruction
@@ -63,17 +63,17 @@
 		case CPU::ADDR_ZERO_PAGE_Y:
 		case CPU::ADDR_INDIRECT_X:
 		case CPU::ADDR_INDIRECT_Y:
-			op = [byteFormatter stringForObjectValue:[NSNumber numberWithInt:[c64 memPeek:(addr+1)]]];
+			op = [byteFormatter stringForObjectValue:[NSNumber numberWithInt:[[c64 mem] peek:(addr+1)]]];
 			break;
 		case CPU::ADDR_DIRECT:			
 		case CPU::ADDR_INDIRECT:
 		case CPU::ADDR_ABSOLUTE:
 		case CPU::ADDR_ABSOLUTE_X:
 		case CPU::ADDR_ABSOLUTE_Y:
-			op = [wordFormatter stringForObjectValue:[NSNumber numberWithInt:[c64 memPeekWord:(addr+1)]]];
+			op = [wordFormatter stringForObjectValue:[NSNumber numberWithInt:[[c64 mem] peekWord:(addr+1)]]];
 			break;
 		case CPU::ADDR_RELATIVE:
-			op = [wordFormatter stringForObjectValue:[NSNumber numberWithInt:addr+2+(int8_t)[c64 memPeek:(addr+1)]]];
+			op = [wordFormatter stringForObjectValue:[NSNumber numberWithInt:addr+2+(int8_t)[[c64 mem] peek:(addr+1)]]];
 			break;
 	}
 			

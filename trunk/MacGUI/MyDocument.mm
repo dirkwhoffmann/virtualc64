@@ -137,7 +137,8 @@
 	
 	// Load snapshot if applicable
 	if (snapshot != NULL) {
-		snapshot->writeToC64([c64 getC64]);
+		[c64 initWithContentsOfSnapshot:snapshot];
+		// snapshot->writeToC64([c64 getC64]);
 		delete snapshot;
 		snapshot = NULL;
 	}
@@ -345,7 +346,8 @@
 	}
 	
 	snapshot = new Snapshot();
-	snapshot->initWithContentsOfC64([c64 getC64]);
+	[c64 dumpContentsToSnapshot:snapshot];
+	// snapshot->initWithContentsOfC64([c64 getC64]);
 	snapshot->writeToFile([filename UTF8String]);
 	delete snapshot;
 	snapshot = NULL;
@@ -380,7 +382,8 @@
 	if ([type isEqualToString:@"VC64"]) {
 		snapshot = Snapshot::snapshotFromFile([filename UTF8String]);
 		if (snapshot) {
-			snapshot->writeToC64([c64 getC64]);
+			// snapshot->writeToC64([c64 getC64]);
+			[c64 initWithContentsOfSnapshot:snapshot];
 			delete snapshot;
 			snapshot = NULL;
 			success = YES;
@@ -448,15 +451,11 @@
 
 - (void) windowDidBecomeMain: (NSNotification *) notification
 {
-	// NSLog(@"%@ did become main...", self);
-	
 	[c64 enableAudio];	
 }
 
 - (void) windowDidResignMain: (NSNotification *) notification
 {
-	// NSLog(@"%@ did resign main...", self);
-	
 	[c64 disableAudio];
 }
 
@@ -585,12 +584,12 @@
 				[driveBusy setHidden:false];
 				[driveBusy startAnimation:self];
 				if (warpLoad)
-					[c64 c64SetWarpMode:YES];			
+					[c64 setWarpMode:YES];			
 			} else {
 				[driveBusy stopAnimation:self];
 				[driveBusy setHidden:true];		
 				if (!alwaysWarp)
-					[c64 c64SetWarpMode:NO];
+					[c64 setWarpMode:NO];
 			}			
 			break;
 			
@@ -643,7 +642,7 @@
 {
 	// Measure clock frequency and frame rate
 	long currentTime   = msec();
-	long currentCycles = [c64 c64GetCycles];
+	long currentCycles = [c64 getCycles];
 	long currentFrames = [screen getFrames];
 	long elapsedTime   = currentTime - timeStamp;
 	long elapsedCycles = currentCycles - cycleCount;
@@ -779,11 +778,11 @@
 	NSLog(@"warpAction");	
 
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] warpAction:[NSNumber numberWithInt:![c64 c64GetWarpMode]]];
+	[[undo prepareWithInvocationTarget:self] warpAction:[NSNumber numberWithInt:![c64 getWarpMode]]];
 	if (![undo isUndoing]) [undo setActionName:@"Native speed"];
 		
 	[self setAlwaysWarp:![self alwaysWarp]];
-	[c64 c64SetWarpMode:alwaysWarp];
+	[c64 setWarpMode:alwaysWarp];
 	[self refresh];
 }
 
@@ -796,16 +795,16 @@
 - (IBAction)ejectAction:(id)sender
 {
 	NSLog(@"Ejecting disk...");
-	[c64 ejectDisk];
+	[[c64 vc1541] ejectDisk];
 }
 
 - (IBAction)driveAction:(id)sender
 {
 	NSLog(@"Drive action...");
-	if ([c64 isDriveConnected]) {
-		[c64 disconnectDrive];
+	if ([[c64 iec] isDriveConnected]) {
+		[[c64 iec] disconnectDrive];
 	} else {
-		[c64 connectDrive];
+		[[c64 iec] connectDrive];
 	}
 }
 
@@ -1051,34 +1050,36 @@
 
 - (IBAction)traceIecAction:(id)sender
 {
-	if ([c64 iecTracingEnabled]) {
+	if ([[c64 iec] tracingEnabled]) {
 		[sender setState:NSOffState];
-		[c64 iecSetTraceMode:NO];
+		[[c64 iec] setTraceMode:NO];
 	} else {
 		[sender setState:NSOnState];
-		[c64 iecSetTraceMode:YES];
+		[[c64 iec] setTraceMode:YES];
 	}	
 }
 
 - (IBAction)traceVC1541CpuAction:(id)sender
 {
-	if ([c64 vc1541CpuTracingEnabled]) {
+	if ([[[c64 vc1541] cpu] tracingEnabled]) {
 		[sender setState:NSOffState];
-		[c64 vc1541CpuSetTraceMode:NO];
+		[[[c64 vc1541] cpu] setTraceMode:NO];
 	} else {
 		[sender setState:NSOnState];
-		[c64 vc1541CpuSetTraceMode:YES];
+		[[[c64 vc1541] cpu] setTraceMode:YES];
 	}	
 }
 
 - (IBAction)traceViaAction:(id)sender 
 {
-	if ([c64 viaTracingEnabled]) {
+	if ([[[c64 vc1541] via:1] tracingEnabled]) {
 		[sender setState:NSOffState];
-		[c64 viaSetTraceMode:NO];
+		[[[c64 vc1541] via:1] setTraceMode:NO];
+		[[[c64 vc1541] via:2] setTraceMode:NO];		
 	} else {
 		[sender setState:NSOnState];
-		[c64 viaSetTraceMode:YES];
+		[[[c64 vc1541] via:1] setTraceMode:YES];
+		[[[c64 vc1541] via:2] setTraceMode:YES];
 	}	
 }
 
@@ -1089,7 +1090,7 @@
 
 - (IBAction)dumpC64:(id)sender
 {
-	[c64 dumpC64];
+	[c64 dump];
 }
 
 - (IBAction)dumpC64CPU:(id)sender
@@ -1099,62 +1100,62 @@
 
 - (IBAction)dumpC64CIA1:(id)sender
 {
-	[c64 dumpC64CIA1];
+	[[c64 cia:1] dump];
 }
 
 - (IBAction)dumpC64CIA2:(id)sender
 {
-	[c64 dumpC64CIA2];
+	[[c64 cia:2] dump];
 }
 
 - (IBAction)dumpC64VIC:(id)sender
 {
-	[c64 dumpC64VIC];
+	[[c64 vic] dump];
 }
 
 - (IBAction)dumpC64SID:(id)sender
 {
-	[c64 dumpC64SID];
+	[[c64 sid] dump];
 }
 
 - (IBAction)dumpC64Memory:(id)sender
 {
-	[c64 dumpC64Memory];
+	[[c64 mem] dump];
 }
 
 - (IBAction)dumpVC1541:(id)sender
 {
-	[c64 dumpVC1541];
+	[[c64 vc1541] dump];
 }
 
 - (IBAction)dumpVC1541CPU:(id)sender
 {
-	[c64 dumpVC1541CPU];
+	[[[c64 vc1541] cpu] dump];
 }
 
 - (IBAction)dumpVC1541VIA1:(id)sender
 {
-	[c64 dumpVC1541VIA1];
+	[[[c64 vc1541] via:1] dump];
 }
 
 - (IBAction)dumpVC1541VIA2:(id)sender
 {
-	[c64 dumpVC1541VIA2];
+	[[[c64 vc1541] via:2] dump];
 }
 
 - (IBAction)dumpVC1541Memory:(id)sender
 {
-	[c64 dumpVC1541Memory];
+	[[[c64 vc1541] mem] dump];
 }
 
 - (IBAction)dumpKeyboard:(id)sender
 {
-	[c64 dumpKeyboard];
+	[[c64 keyboard] dump];
 }
 
 - (IBAction)dumpIEC:(id)sender
 {
-	[c64 dumpIEC];
+	[[c64 iec] dump];
 }
 
 - (IBAction)showPreferencesAction:(id)sender
@@ -1359,7 +1360,7 @@
 - (void)setWatchPoint:(int)addr type:(Memory::WatchpointType)t value:(uint8_t)v
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] setWatchPoint:addr type:[c64 memGetWatchpointType:addr] value:[c64 memGetWatchValue:addr]];
+	[[undo prepareWithInvocationTarget:self] setWatchPoint:addr type:[[c64 mem] getWatchpointType:addr] value:[[c64 mem] getWatchValue:addr]];
 	if (![undo isUndoing]) [undo setActionName:@"Watchpoint"];
 
 	switch(t) {
@@ -1375,7 +1376,7 @@
 		default:
 			assert(false);
 	}
-	[c64 memSetWatchpoint:addr tag:t watchvalue:v];
+	[[c64 mem] setWatchpoint:addr tag:t watchvalue:v];
 	[self refresh];
 }
 
@@ -1383,14 +1384,14 @@
 {
 	uint16_t addr = [addr_search intValue];
 
-	[self setWatchPoint:addr type:Memory::NO_WATCHPOINT value:[c64 memGetWatchValue:addr]];
+	[self setWatchPoint:addr type:Memory::NO_WATCHPOINT value:[[c64 mem] getWatchValue:addr]];
 }
 
 - (IBAction)setWatchForAll:(id)sender;
 {
 
 	uint16_t addr = [addr_search intValue];
-	[self setWatchPoint:addr type:Memory::WATCH_FOR_ALL value:[c64 memGetWatchValue:addr]];
+	[self setWatchPoint:addr type:Memory::WATCH_FOR_ALL value:[[c64 mem] getWatchValue:addr]];
 }
 
 - (IBAction)setWatchForValue:(id)sender;
@@ -1834,7 +1835,7 @@
 
 - (IBAction)_todInterruptEnabledAction:(int)nr value:(bool)b
 {
-	[[c64 cia:nr] setInterruptEnabled:b];
+	[[c64 cia:nr] todSetInterruptEnabled:b];
 	[self refresh];
 }
 
@@ -2188,7 +2189,7 @@
 - (void)refreshMemory
 {
 	uint16_t addr = [addr_search intValue];
-	switch ([c64 memGetWatchpointType:addr]) {
+	switch ([[c64 mem] getWatchpointType:addr]) {
 		case Memory::NO_WATCHPOINT:
 			[watchMode selectCellWithTag:1];
 			break;
@@ -2199,7 +2200,7 @@
 			[watchMode selectCellWithTag:3];
 			break;
 	}	
-	[watchValField setIntValue:[c64 memGetWatchValue:addr]];	
+	[watchValField setIntValue:[[c64 mem] getWatchValue:addr]];	
 }
 
 - (void)refreshCIA
@@ -2406,16 +2407,16 @@
 - (id)objectValueForCpuTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
 	uint16_t addr = [[c64 cpu] getAddressOfNextIthInstruction:row from:disassembleStartAddr];
-	uint8_t length = [[c64 cpu] getLengthOfInstruction:[c64 memPeek:addr]];
+	uint8_t length = [[c64 cpu] getLengthOfInstruction:[[c64 mem] peek:addr]];
 	
 	if ([[aTableColumn identifier] isEqual:@"addr"]) 
 		return [NSNumber numberWithInt:addr];
 	else if ([[aTableColumn identifier] isEqual:@"data01"]) 
-		return (length > 0 ? [NSNumber numberWithInt:[c64 memPeek:addr]] : nil);
+		return (length > 0 ? [NSNumber numberWithInt:[[c64 mem] peek:addr]] : nil);
 	else if ([[aTableColumn identifier] isEqual:@"data02"]) 
-		return (length > 1 ? [NSNumber numberWithInt:[c64 memPeek:(addr+1)]] : nil);
+		return (length > 1 ? [NSNumber numberWithInt:[[c64 mem] peek:(addr+1)]] : nil);
 	else if ([[aTableColumn identifier] isEqual:@"data03"]) 
-		return (length > 2 ? [NSNumber numberWithInt:[c64 memPeek:(addr+2)]] : nil);
+		return (length > 2 ? [NSNumber numberWithInt:[[c64 mem] peek:(addr+2)]] : nil);
 	else if ([[aTableColumn identifier] isEqual:@"ascii"]) 
 		return [NSNumber numberWithInt:addr];
 
@@ -2433,14 +2434,14 @@
 
 	// ASCII column...
 	if ([[aTableColumn identifier] isEqual:@"ascii"]) {
-		if (![c64 memIsValidAddr:addr memtype:[self currentMemSource]])
+		if (![[c64 mem] isValidAddr:addr memtype:[self currentMemSource]])
 			return nil;
 		else
 			return [NSString stringWithFormat:@"%c%c%c%c", 
-				[c64 memPeekFrom:(addr+0) memtype:[self currentMemSource]],
-				[c64 memPeekFrom:(addr+1) memtype:[self currentMemSource]],
-				[c64 memPeekFrom:(addr+2) memtype:[self currentMemSource]],
-				[c64 memPeekFrom:(addr+3) memtype:[self currentMemSource]]];
+				[[c64 mem] peekFrom:(addr+0) memtype:[self currentMemSource]],
+				[[c64 mem] peekFrom:(addr+1) memtype:[self currentMemSource]],
+				[[c64 mem] peekFrom:(addr+2) memtype:[self currentMemSource]],
+				[[c64 mem] peekFrom:(addr+3) memtype:[self currentMemSource]]];
 	}
 	
 	// One of the hexadecimal columns...
@@ -2448,10 +2449,10 @@
 	if ([id isEqual:@"hex2"]) addr += 2;
 	if ([id isEqual:@"hex3"]) addr += 3;
 	
-	if (![c64 memIsValidAddr:addr memtype:[self currentMemSource]])
+	if (![[c64 mem] isValidAddr:addr memtype:[self currentMemSource]])
 		return nil;
 	
-	return [NSNumber numberWithInt:[c64 memPeekFrom:addr memtype:[self currentMemSource]]];
+	return [NSNumber numberWithInt:[[c64 mem] peekFrom:addr memtype:[self currentMemSource]]];
 	
 	return nil;
 }
@@ -2468,10 +2469,10 @@
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(Memory::MemoryType)t
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[c64 memPeekFrom:addr memtype:t] memtype:t];
+	[[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] peekFrom:addr memtype:t] memtype:t];
 	if (![undo isUndoing]) [undo setActionName:@"Memory contents"];
 				
-	[c64 memPokeTo:addr value:v memtype:t];
+	[[c64 mem] pokeTo:addr value:v memtype:t];
 	[self refresh];	
 }
 
@@ -2487,7 +2488,7 @@
 	if ([id isEqual:@"hex2"]) addr += 2;
 	if ([id isEqual:@"hex3"]) addr += 3;
 
-	uint8_t oldValue = [c64 memPeekFrom:addr memtype:[self currentMemSource]];
+	uint8_t oldValue = [[c64 mem] peekFrom:addr memtype:[self currentMemSource]];
 	if (oldValue == value)
 		return; 
 
@@ -2513,13 +2514,13 @@
 		}
 	} else if (aTableView == memTableView) {
 		if ([[aTableColumn identifier] isEqual:@"hex0"])
-			[aCell setTextColor:([c64 memGetWatchpointType:(0+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
+			[aCell setTextColor:([[c64 mem] getWatchpointType:(0+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
 		else if ([[aTableColumn identifier] isEqual:@"hex1"])
-			[aCell setTextColor:([c64 memGetWatchpointType:(1+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
+			[aCell setTextColor:([[c64 mem] getWatchpointType:(1+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
 		else if ([[aTableColumn identifier] isEqual:@"hex2"])
-			[aCell setTextColor:([c64 memGetWatchpointType:(2+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
+			[aCell setTextColor:([[c64 mem] getWatchpointType:(2+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
 		else if ([[aTableColumn identifier] isEqual:@"hex3"])
-			[aCell setTextColor:([c64 memGetWatchpointType:(3+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];		
+			[aCell setTextColor:([[c64 mem] getWatchpointType:(3+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];		
 	}
 }
 
@@ -2580,8 +2581,6 @@
 
 - (IBAction)endMountDialogAndMount:(id)sender
 {
-	C64 *myc64 = [c64 getC64];
-
 	// Rotate C64 screen
 	[screen rotate];
 	
@@ -2590,14 +2589,12 @@
 
 	// Return to normal event handling
 	[NSApp endSheet:mountDialog returnCode:1];
-
-	myc64->mountArchive(archive);
+	
+	[c64 mountArchive:archive];
 }
 
 - (IBAction)endMountDialogAndFlash:(id)sender
 {
-	C64 *myc64 = [c64 getC64];
-
 	// Rotate C64 screen
 	[screen rotate];
 	
@@ -2608,43 +2605,38 @@
 	[NSApp endSheet:mountDialog returnCode:1];
 
 	// Try to mount archive
-	myc64->mountArchive(archive);
+	[c64 mountArchive:archive];
 	
 	// Load clean image 
-	myc64->fastReset();
+	[c64 fastReset];
 	
 	// Flash selected file into memory
-	myc64->flushArchive(archive, [mountDialog getSelectedFile]);
+	[c64 flushArchive:archive item:[mountDialog getSelectedFile]];
 
 	// Wait and type "RUN"
 	fprintf(stderr,"Wating...\n");
 	usleep(1000000);
 	fprintf(stderr,"Typing RUN...\n");
-	myc64->keyboard->typeRun();
+	[[c64 keyboard] typeRun];
 }
 
 - (BOOL)attachCartridge:(NSString *)path
 {
 	if (!(cartridge = Cartridge::cartridgeFromFile([path UTF8String])))
 		return NO;
-		
-	C64 *myc64 = [c64 getC64];
-	
+			
 	// Try to mount archive
-	myc64->attachCartridge(cartridge);
+	[c64 attachCartridge:cartridge];
 	
 	// reset
-	myc64->reset();
+	[c64 reset];
 	
 	return YES;
 }
 
 - (BOOL)detachCartridge
 {
-	C64 *myc64 = [c64 getC64];
-	
-	myc64->detachCartridge();
-	
+	[c64 detachCartridge];	
 	delete cartridge;
 	cartridge = NULL;
 	
@@ -2653,15 +2645,10 @@
 
 - (IBAction)cartridgeEjectAction:(id)sender
 {
-	NSLog(@"cartridgeEjectAction");
-	
-	C64 *myc64 = [c64 getC64];
-	
-	myc64->detachCartridge();
-	
+	NSLog(@"cartridgeEjectAction");	
+	[c64 detachCartridge];
 	delete cartridge;
 	cartridge = NULL;
-	
 	[c64 reset];
 }
 
@@ -2716,7 +2703,7 @@
 			return YES;
 		}
 		currentRow++;
-		currentAddr += [[c64 cpu] getLengthOfInstruction:[c64 memPeek:currentAddr]];
+		currentAddr += [[c64 cpu] getLengthOfInstruction:[[c64 mem] peek:currentAddr]];
 	}
 	return NO;
 }
