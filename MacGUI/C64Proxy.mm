@@ -84,6 +84,217 @@
 @end
 
 // --------------------------------------------------------------------------
+//                                    VIC
+// --------------------------------------------------------------------------
+
+@implementation VICProxy
+
+- (id) initWithVIC:(VIC *)v;
+{
+    self = [super init];	
+	vic = v;	
+	return self;
+}
+
+- (void *) screenBuffer { return vic->screenBuffer(); }
+- (void) setColorScheme:(VIC::ColorScheme)scheme { vic->setColorScheme(scheme); }
+- (NSColor *) getColor:(VIC::ColorScheme)scheme nr:(int)nr
+{
+	uint8_t r, g, b;
+	
+	vic->getColor(scheme, nr, &r, &g, &b);
+	return [NSColor colorWithCalibratedRed:(float)r/255.0 green:(float)g/255.0 blue:(float)b/255.0 alpha:1.0];
+}
+
+- (void) setColor:(int)color rgba:(NSColor *)rgba
+{	
+	float r, g, b, a;
+	[rgba getRed:&r green:&g blue:&b alpha:&a];
+	vic->setColor(color, (uint8_t)(r * 0xff), (uint8_t)(g * 0xff), (uint8_t)(b * 0xff), (uint8_t)(a * 0xff));
+}
+
+- (void) setColorInt:(int)color rgba:(int)rgba
+{
+	uint8_t r = (rgba >> 24) & 0xff;
+	uint8_t g = (rgba >> 16) & 0xff;
+	uint8_t b = (rgba >> 8)  & 0xff;
+	uint8_t a = rgba         & 0xff;
+	vic->setColor(color, r, g, b, a);
+}
+
+- (uint16_t) getMemoryBankAddr { return vic->getMemoryBankAddr(); }
+- (void) setMemoryBankAddr:(uint16_t)addr { vic->setMemoryBankAddr(addr); }
+- (uint16_t) getScreenMemoryAddr { return vic->getScreenMemoryAddr(); }
+- (void) setScreenMemoryAddr:(uint16_t)addr { vic->setScreenMemoryAddr(addr); }
+- (uint16_t) getCharacterMemoryAddr { return vic->getCharacterMemoryAddr(); }
+- (void) setCharacterMemoryAddr:(uint16_t)addr { vic->setCharacterMemoryAddr(addr); }
+
+- (int) getDisplayMode { return vic->getDisplayMode(); }
+- (void) setDisplayMode:(int)mode { vic->setDisplayMode((VIC::DisplayMode)mode); }
+- (int) getScreenGeometry { return (int)vic->getScreenGeometry(); }
+- (void) setScreenGeometry:(int)mode { vic->setScreenGeometry((VIC::ScreenGeometry)mode); }
+- (int) getHorizontalRasterScroll { return vic->getHorizontalRasterScroll(); }
+- (void) setHorizontalRasterScroll:(int)offset { vic->setHorizontalRasterScroll(offset & 0x07); }
+- (int) getVerticalRasterScroll { return vic->getVerticalRasterScroll(); }
+- (void) setVerticalRasterScroll:(int)offset { vic->setVerticalRasterScroll(offset & 0x07); }
+
+- (bool) spriteGetVisibilityFlag:(int)nr { return vic->spriteIsEnabled(nr); }
+- (void) spriteSetVisibilityFlag:(int)nr value:(bool)flag { vic->setSpriteEnabled(nr, flag); }
+- (void) spriteToggleVisibilityFlag:(int)nr { vic->toggleSpriteEnabled(nr); }
+
+- (bool) spriteGetSpriteSpriteCollisionFlag:(int)nr { return vic->getSpriteSpriteCollision(nr); }
+- (void) spriteSetSpriteSpriteCollisionFlag:(int)nr value:(bool)flag { vic->setSpriteSpriteCollision(nr, flag); }
+- (void) spriteToggleSpriteSpriteCollisionFlag:(int)nr { vic->toggleSpriteSpriteCollisionFlag(nr); }
+
+- (bool) spriteGetSpriteBackgroundCollisionFlag:(int)nr { return vic->getSpriteBackgroundCollision(nr); }
+- (void) spriteSetSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag { vic->setSpriteBackgroundCollision(nr, flag); }
+- (void) spriteToggleSpriteBackgroundCollisionFlag:(int)nr { vic->toggleSpriteBackgroundCollisionFlag(nr); }
+
+- (bool) spriteGetBackgroundPriorityFlag:(int)nr { return vic->spriteIsDrawnInBackground(nr); }
+- (void) spriteSetBackgroundPriorityFlag:(int)nr value:(bool)flag { vic->setSpriteInBackground(nr, flag); }
+- (void) spriteToggleBackgroundPriorityFlag:(int)nr { vic->spriteToggleBackgroundPriorityFlag(nr); }
+
+- (bool) spriteGetMulticolorFlag:(int)nr { return vic->spriteIsMulticolor(nr); }
+- (void) spriteSetMulticolorFlag:(int)nr value:(bool)flag { vic->setSpriteMulticolor(nr, flag); }
+- (void) spriteToggleMulticolorFlag:(int)nr { vic->toggleMulticolorFlag(nr); }
+
+- (bool) spriteGetStretchXFlag:(int)nr { return vic->spriteWidthIsDoubled(nr); }
+- (void) spriteSetStretchXFlag:(int)nr value:(bool)flag { vic->setSpriteStretchX(nr, flag); }
+- (void) spriteToggleStretchXFlag:(int)nr { vic->spriteToggleStretchXFlag(nr); }
+
+- (bool) spriteGetStretchYFlag:(int)nr { return vic->spriteHeightIsDoubled(nr); }
+- (void) spriteSetStretchYFlag:(int)nr value:(bool)flag { return vic->setSpriteStretchY(nr, flag); }
+- (void) spriteToggleStretchYFlag:(int)nr { vic->spriteToggleStretchYFlag(nr); }
+
+- (int) spriteGetX:(int)nr { return vic->getSpriteX(nr); }
+- (void) spriteSetX:(int)nr value:(int)x { vic->setSpriteX(nr, x); }
+- (int) spriteGetY:(int)nr { return vic->getSpriteY(nr); }
+- (void) spriteSetY:(int)nr value:(int)y { vic->setSpriteY(nr, y); }
+- (int) spriteGetColor:(int)nr { return vic->spriteColor(nr); }
+- (void) spriteSetColor:(int)nr value:(int)c { vic->setSpriteColor(nr, c); }
+
+- (uint16_t) getRasterLine { return vic->getScanline(); }
+- (void) setRasterLine:(uint16_t)line { vic->setScanline(line); }
+- (uint16_t) getRasterInterruptLine { return vic->rasterInterruptLine(); }
+- (void) setRasterInterruptLine:(uint16_t)line { vic->setRasterInterruptLine(line); }
+- (bool) getRasterInterruptFlag { return vic->rasterInterruptEnabled(); }
+- (void) setRasterInterruptFlag:(bool)b { vic->setRasterInterruptEnable(b); }
+- (void) toggleRasterInterruptFlag { vic->toggleRasterInterruptFlag(); }
+
+- (bool) hideSprites { return vic->hideSprites(); }
+- (void) setHideSprites:(bool)b { vic->setHideSprites(b); }
+- (bool) showIrqLines { return vic->showIrqLines(); }
+- (void) setShowIrqLines:(bool)b { vic->setShowIrqLines(b); }
+- (bool) showDmaLines { return vic->showDmaLines(); }
+- (void) setShowDmaLines:(bool)b { vic->setShowDmaLines(b); }
+
+@end
+
+// --------------------------------------------------------------------------
+//                                     CIA
+// --------------------------------------------------------------------------
+
+@implementation CIAProxy
+
+- (id) initWithCIA:(CIA *)c;
+{
+    self = [super init];	
+	cia = c;	
+	return self;
+}
+
+- (uint8_t) getDataPortA { return cia->getDataPortA(); }
+- (void) setDataPortA:(uint8_t)v { cia->setDataPortA(v); }
+- (uint8_t) getDataPortDirectionA { return cia->getDataPortDirectionA(); }
+- (void) setDataPortDirectionA:(uint8_t)v { cia->setDataPortDirectionA(v); }
+- (uint16_t) getTimerA { return cia->timerA.getTimer(); }
+- (void) setTimerA:(uint16_t)v { cia->timerA.setTimer(v); }
+- (uint16_t) getTimerLatchA { return cia->timerA.getTimerLatch(); }
+- (void) setTimerLatchA:(uint16_t)v { cia->timerA.setTimerLatch(v); }
+- (bool) getStartFlagA { return cia->timerA.isStarted(); }
+- (void) setStartFlagA:(bool)b { cia->timerA.setStarted(b); }
+- (void) toggleStartFlagA {cia->timerA.toggleStartFlag(); }
+- (bool) getOneShotFlagA { return cia->timerA.isOneShot(); }
+- (void) setOneShotFlagA:(bool)b { cia->timerA.setOneShot(b); }
+- (void) toggleOneShotFlagA { cia->timerA.toggleOneShotFlag(); }
+- (bool) getUnderflowFlagA { return cia->timerA.willIndicateUnderflow(); }
+- (void) setUnderflowFlagA:(bool)b { return cia->timerA.setIndicateUnderflow(b); }
+- (void) toggleUnderflowFlagA { cia->timerA.toggleUnderflowFlag(); }
+- (bool) getPendingSignalFlagA {return cia->isSignalPendingA(); }
+- (void) setPendingSignalFlagA:(bool)b { cia->setSignalPendingA(b); }
+- (void) togglePendingSignalFlagA { cia->togglePendingSignalFlagA(); }
+- (bool) getInterruptEnableFlagA { return cia->isInterruptEnabledA(); }
+- (void) setInterruptEnableFlagA:(bool)b { cia->setInterruptEnabledA(b); }
+- (void) toggleInterruptEnableFlagA {cia->toggleInterruptEnableFlagA(); }
+
+- (uint8_t) getDataPortB { return cia->getDataPortB(); }
+- (void) setDataPortB:(uint8_t)v { cia->setDataPortB(v); }
+- (uint8_t) getDataPortDirectionB { return cia->getDataPortDirectionB(); }
+- (void) setDataPortDirectionB:(uint8_t)v { cia->setDataPortDirectionB(v); }
+- (uint16_t) getTimerB { return cia->timerB.getTimer(); }
+- (void) setTimerB:(uint16_t)v { cia->timerB.setTimer(v); }
+- (uint16_t) getTimerLatchB { return cia->timerB.getTimerLatch(); }
+- (void) setTimerLatchB:(uint16_t)v { cia->timerB.setTimerLatch(v); }
+- (bool) getStartFlagB { return cia->timerB.isStarted(); }
+- (void) setStartFlagB:(bool)b { cia->timerB.setStarted(b); }
+- (void) toggleStartFlagB {cia->timerB.toggleStartFlag(); }
+- (bool) getOneShotFlagB { return cia->timerB.isOneShot(); }
+- (void) setOneShotFlagB:(bool)b { cia->timerB.setOneShot(b); }
+- (void) toggleOneShotFlagB { cia->timerB.toggleOneShotFlag(); }
+- (bool) getUnderflowFlagB { return cia->timerB.willIndicateUnderflow(); }
+- (void) setUnderflowFlagB:(bool)b { return cia->timerB.setIndicateUnderflow(b); }
+- (void) toggleUnderflowFlagB { cia->timerB.toggleUnderflowFlag(); }
+- (bool) getPendingSignalFlagB {return cia->isSignalPendingB(); }
+- (void) setPendingSignalFlagB:(bool)b { cia->setSignalPendingB(b); }
+- (void) togglePendingSignalFlagB { cia->togglePendingSignalFlagB(); }
+- (bool) getInterruptEnableFlagB { return cia->isInterruptEnabledB(); }
+- (void) setInterruptEnableFlagB:(bool)b { cia->setInterruptEnabledB(b); }
+- (void) toggleInterruptEnableFlagB {cia->toggleInterruptEnableFlagB(); }
+
+- (uint8_t) getTodHours { return cia->tod.getTodHours(); }
+- (void) setTodHours:(uint8_t)value { cia->tod.setTodHours(value); }
+- (uint8_t) getTodMinutes { return cia->tod.getTodMinutes(); }
+- (void) setTodMinutes:(uint8_t)value { cia->tod.setTodMinutes(value); }
+- (uint8_t) getTodSeconds { return cia->tod.getTodSeconds(); }
+- (void) setTodSeconds:(uint8_t)value { cia->tod.setTodSeconds(value); }
+- (uint8_t) getTodTenth { return cia->tod.getTodTenth(); }
+- (void) setTodTenth:(uint8_t)value { cia->tod.setTodTenth(value); }
+
+- (uint8_t) getAlarmHours { return cia->tod.getAlarmHours(); }
+- (void) setAlarmHours:(uint8_t)value { cia->tod.setAlarmHours(value); }
+- (uint8_t) getAlarmMinutes { return cia->tod.getAlarmMinutes(); }
+- (void) setAlarmMinutes:(uint8_t)value { cia->tod.setAlarmMinutes(value); }
+- (uint8_t) getAlarmSeconds { return cia->tod.getAlarmSeconds(); }
+- (void) setAlarmSeconds:(uint8_t)value { cia->tod.setAlarmSeconds(value); }
+- (uint8_t) getAlarmTenth { return cia->tod.getAlarmTenth(); }
+- (void) setAlarmTenth:(uint8_t)value { cia->tod.setAlarmTenth(value); }
+- (bool) todIsInterruptEnabled { return cia->isInterruptEnabledTOD(); }
+- (void) todSetInterruptEnabled:(bool)b { cia->setInterruptEnabledTOD(b); }
+
+@end 
+
+// --------------------------------------------------------------------------
+//                                    Keyboard
+// --------------------------------------------------------------------------
+
+@implementation KeyboardProxy
+
+- (id) initWithKeyboard:(Keyboard *)kb;
+{
+    self = [super init];	
+	keyboard = kb;	
+	return self;
+}
+
+- (void) pressRunstopKey { keyboard->pressRunstopKey(); }
+- (void) releaseRunstopKey { keyboard->releaseRunstopKey(); }
+- (void) pressCommodoreKey { keyboard->pressCommodoreKey(); }
+- (void) releaseCommodoreKey { keyboard->releaseCommodoreKey(); }
+- (void) typeFormat { keyboard->typeFormat(); }
+
+@end
+
+// --------------------------------------------------------------------------
 //                                    SID
 // --------------------------------------------------------------------------
 
@@ -131,14 +342,15 @@
 	cia[1] = c64->cia1;
 	cia[2] = c64->cia2;
 	iec = c64->iec;
-	// cpu = c64->cpu;
 	mem = c64->mem;
-	// cpu = c64->floppy->cpu;
-	// mem = c64->floppy->mem;
 	
 	// Create sub proxys
 	cpuproxy = [[CPUProxy alloc] initWithCPU:c64->cpu];
+	vicproxy = [[VICProxy alloc] initWithVIC:c64->vic];
+	ciaproxy1 = [[CIAProxy alloc] initWithCIA:c64->cia1];
+	ciaproxy2 = [[CIAProxy alloc] initWithCIA:c64->cia2];
 	sidproxy = [[SIDProxy alloc] initWithSID:c64->sid];
+	keyboardproxy = [[KeyboardProxy alloc] initWithKeyboard:c64->keyboard];
 		
 	// Initialize CoreAudio sound interface
 	audioDevice = [[AudioDevice alloc] initWithSID:c64->sid];
@@ -165,8 +377,11 @@
 	c64 = NULL;
 }
 
-- (SIDProxy *) sid { return sidproxy; }
 - (CPUProxy *) cpu { return cpuproxy; }
+- (VICProxy *) vic { return vicproxy; }
+- (CIAProxy *) cia:(int)num { if (num == 1) return ciaproxy1; else if (num == 2) return ciaproxy2; else assert(0); } 
+- (SIDProxy *) sid { return sidproxy; }
+- (KeyboardProxy *) keyboard { return keyboardproxy; }
 
 
 
@@ -223,7 +438,6 @@
 - (void) viaSetTraceMode:(bool)b { c64->floppy->via2->setTraceMode(b); }
 
 - (void) dumpC64 { c64->dumpState(); }
-// - (void) dumpC64CPU { cpu->dumpState(); }
 - (void) dumpC64CIA1 { c64->cia1->dumpState(); }
 - (void) dumpC64CIA2 { c64->cia2->dumpState(); }
 - (void) dumpC64VIC { c64->vic->dumpState(); }
@@ -267,174 +481,6 @@
 - (uint8_t) memGetWatchValue:(uint16_t)addr { return mem->getWatchValue(addr); }
 
 
-// --------------------------------------------------------------------------
-// CIA
-// --------------------------------------------------------------------------
-
-- (uint8_t) ciaGetDataPortA:(int)nr { return cia[nr]->getDataPortA(); }
-- (void) ciaSetDataPortA:(int)nr value:(uint8_t)v { cia[nr]->setDataPortA(v); }
-- (uint8_t) ciaGetDataPortDirectionA:(int)nr { return cia[nr]->getDataPortDirectionA(); }
-- (void) ciaSetDataPortDirectionA:(int)nr value:(uint8_t)v { cia[nr]->setDataPortDirectionA(v); }
-- (uint16_t) ciaGetTimerA:(int)nr { return cia[nr]->timerA.getTimer(); }
-- (void) ciaSetTimerA:(int)nr value:(uint16_t)v { cia[nr]->timerA.setTimer(v); }
-- (uint16_t) ciaGetTimerLatchA:(int)nr { return cia[nr]->timerA.getTimerLatch(); }
-- (void) ciaSetTimerLatchA:(int)nr value:(uint16_t)v { cia[nr]->timerA.setTimerLatch(v); }
-- (bool) ciaGetStartFlagA:(int)nr { return cia[nr]->timerA.isStarted(); }
-- (void) ciaSetStartFlagA:(int)nr value:(bool)b { cia[nr]->timerA.setStarted(b); }
-- (void) ciaToggleStartFlagA:(int)nr {cia[nr]->timerA.toggleStartFlag(); }
-- (bool) ciaGetOneShotFlagA:(int)nr { return cia[nr]->timerA.isOneShot(); }
-- (void) ciaSetOneShotFlagA:(int)nr value:(bool)b { cia[nr]->timerA.setOneShot(b); }
-- (void) ciaToggleOneShotFlagA:(int)nr { cia[nr]->timerA.toggleOneShotFlag(); }
-- (bool) ciaGetUnderflowFlagA:(int)nr { return cia[nr]->timerA.willIndicateUnderflow(); }
-- (void) ciaSetUnderflowFlagA:(int)nr value:(bool)b { return cia[nr]->timerA.setIndicateUnderflow(b); }
-- (void) ciaToggleUnderflowFlagA:(int)nr { cia[nr]->timerA.toggleUnderflowFlag(); }
-- (bool) ciaGetPendingSignalFlagA:(int)nr {return cia[nr]->isSignalPendingA(); }
-- (void) ciaSetPendingSignalFlagA:(int)nr value:(bool)b { cia[nr]->setSignalPendingA(b); }
-- (void) ciaTogglePendingSignalFlagA:(int)nr { cia[nr]->togglePendingSignalFlagA(); }
-- (bool) ciaGetInterruptEnableFlagA:(int)nr { return cia[nr]->isInterruptEnabledA(); }
-- (void) ciaSetInterruptEnableFlagA:(int)nr value:(bool)b { cia[nr]->setInterruptEnabledA(b); }
-- (void) ciaToggleInterruptEnableFlagA:(int)nr {cia[nr]->toggleInterruptEnableFlagA(); }
-
-- (uint8_t) ciaGetDataPortB:(int)nr { return cia[nr]->getDataPortB(); }
-- (void) ciaSetDataPortB:(int)nr value:(uint8_t)v { cia[nr]->setDataPortB(v); }
-- (uint8_t) ciaGetDataPortDirectionB:(int)nr { return cia[nr]->getDataPortDirectionB(); }
-- (void) ciaSetDataPortDirectionB:(int)nr value:(uint8_t)v { cia[nr]->setDataPortDirectionB(v); }
-- (uint16_t) ciaGetTimerB:(int)nr { return cia[nr]->timerB.getTimer(); }
-- (void) ciaSetTimerB:(int)nr value:(uint16_t)v { cia[nr]->timerB.setTimer(v); }
-- (uint16_t) ciaGetTimerLatchB:(int)nr { return cia[nr]->timerB.getTimerLatch(); }
-- (void) ciaSetTimerLatchB:(int)nr value:(uint16_t)v { cia[nr]->timerB.setTimerLatch(v); }
-- (bool) ciaGetStartFlagB:(int)nr { return cia[nr]->timerB.isStarted(); }
-- (void) ciaSetStartFlagB:(int)nr value:(bool)b { cia[nr]->timerB.setStarted(b); }
-- (void) ciaToggleStartFlagB:(int)nr {cia[nr]->timerB.toggleStartFlag(); }
-- (bool) ciaGetOneShotFlagB:(int)nr { return cia[nr]->timerB.isOneShot(); }
-- (void) ciaSetOneShotFlagB:(int)nr value:(bool)b { cia[nr]->timerB.setOneShot(b); }
-- (void) ciaToggleOneShotFlagB:(int)nr { cia[nr]->timerB.toggleOneShotFlag(); }
-- (bool) ciaGetUnderflowFlagB:(int)nr { return cia[nr]->timerB.willIndicateUnderflow(); }
-- (void) ciaSetUnderflowFlagB:(int)nr value:(bool)b { return cia[nr]->timerB.setIndicateUnderflow(b); }
-- (void) ciaToggleUnderflowFlagB:(int)nr { cia[nr]->timerB.toggleUnderflowFlag(); }
-- (bool) ciaGetPendingSignalFlagB:(int)nr {return cia[nr]->isSignalPendingB(); }
-- (void) ciaSetPendingSignalFlagB:(int)nr value:(bool)b { cia[nr]->setSignalPendingB(b); }
-- (void) ciaTogglePendingSignalFlagB:(int)nr { cia[nr]->togglePendingSignalFlagB(); }
-- (bool) ciaGetInterruptEnableFlagB:(int)nr { return cia[nr]->isInterruptEnabledB(); }
-- (void) ciaSetInterruptEnableFlagB:(int)nr value:(bool)b { cia[nr]->setInterruptEnabledB(b); }
-- (void) ciaToggleInterruptEnableFlagB:(int)nr {cia[nr]->toggleInterruptEnableFlagB(); }
-
-- (uint8_t) ciaGetTodHours:(int)nr { return cia[nr]->tod.getTodHours(); }
-- (void) ciaSetTodHours:(int)nr value:(uint8_t)value { cia[nr]->tod.setTodHours(value); }
-- (uint8_t) ciaGetTodMinutes:(int)nr { return cia[nr]->tod.getTodMinutes(); }
-- (void) ciaSetTodMinutes:(int)nr value:(uint8_t)value { cia[nr]->tod.setTodMinutes(value); }
-- (uint8_t) ciaGetTodSeconds:(int)nr { return cia[nr]->tod.getTodSeconds(); }
-- (void) ciaSetTodSeconds:(int)nr value:(uint8_t)value { cia[nr]->tod.setTodSeconds(value); }
-- (uint8_t) ciaGetTodTenth:(int)nr { return cia[nr]->tod.getTodTenth(); }
-- (void) ciaSetTodTenth:(int)nr value:(uint8_t)value { cia[nr]->tod.setTodTenth(value); }
-
-- (uint8_t) ciaGetAlarmHours:(int)nr { return cia[nr]->tod.getAlarmHours(); }
-- (void) ciaSetAlarmHours:(int)nr value:(uint8_t)value { cia[nr]->tod.setAlarmHours(value); }
-- (uint8_t) ciaGetAlarmMinutes:(int)nr { return cia[nr]->tod.getAlarmMinutes(); }
-- (void) ciaSetAlarmMinutes:(int)nr value:(uint8_t)value { cia[nr]->tod.setAlarmMinutes(value); }
-- (uint8_t) ciaGetAlarmSeconds:(int)nr { return cia[nr]->tod.getAlarmSeconds(); }
-- (void) ciaSetAlarmSeconds:(int)nr value:(uint8_t)value { cia[nr]->tod.setAlarmSeconds(value); }
-- (uint8_t) ciaGetAlarmTenth:(int)nr { return cia[nr]->tod.getAlarmTenth(); }
-- (void) ciaSetAlarmTenth:(int)nr value:(uint8_t)value { cia[nr]->tod.setAlarmTenth(value); }
-- (bool) todIsInterruptEnabled:(int)nr { return cia[nr]->isInterruptEnabledTOD(); }
-- (void) todSetInterruptEnabled:(int)nr value:(bool)b { cia[nr]->setInterruptEnabledTOD(b); }
-
-
-// --------------------------------------------------------------------------
-// VIC
-// --------------------------------------------------------------------------
-
-- (void *) vicScreenBuffer { return c64->vic->screenBuffer(); }
-- (void) vicSetColorScheme:(VIC::ColorScheme)scheme { c64->vic->setColorScheme(scheme); }
-- (NSColor *) vicGetColor:(VIC::ColorScheme)scheme nr:(int)nr
-{
-	uint8_t r, g, b;
-	
-	c64->vic->getColor(scheme, nr, &r, &g, &b);
-	return [NSColor colorWithCalibratedRed:(float)r/255.0 green:(float)g/255.0 blue:(float)b/255.0 alpha:1.0];
-}
-
-- (void) vicSetColor:(int)color rgba:(NSColor *)rgba
-{	
-	float r, g, b, a;
-	[rgba getRed:&r green:&g blue:&b alpha:&a];
-	c64->vic->setColor(color, (uint8_t)(r * 0xff), (uint8_t)(g * 0xff), (uint8_t)(b * 0xff), (uint8_t)(a * 0xff));
-}
-
-- (void) vicSetColorInt:(int)color rgba:(int)rgba
-{
-	uint8_t r = (rgba >> 24) & 0xff;
-	uint8_t g = (rgba >> 16) & 0xff;
-	uint8_t b = (rgba >> 8)  & 0xff;
-	uint8_t a = rgba         & 0xff;
-	c64->vic->setColor(color, r, g, b, a);
-}
-
-- (uint16_t) vicGetMemoryBankAddr { return c64->vic->getMemoryBankAddr(); }
-- (void) vicSetMemoryBankAddr:(uint16_t)addr { c64->vic->setMemoryBankAddr(addr); }
-- (uint16_t) vicGetScreenMemoryAddr { return c64->vic->getScreenMemoryAddr(); }
-- (void) vicSetScreenMemoryAddr:(uint16_t)addr { c64->vic->setScreenMemoryAddr(addr); }
-- (uint16_t) vicGetCharacterMemoryAddr { return c64->vic->getCharacterMemoryAddr(); }
-- (void) vicSetCharacterMemoryAddr:(uint16_t)addr { c64->vic->setCharacterMemoryAddr(addr); }
-
-- (int) vicGetDisplayMode { return c64->vic->getDisplayMode(); }
-- (void) vicSetDisplayMode:(int)mode { c64->vic->setDisplayMode((VIC::DisplayMode)mode); }
-- (int) vicGetScreenGeometry { return (int)c64->vic->getScreenGeometry(); }
-- (void) vicSetScreenGeometry:(int)mode { c64->vic->setScreenGeometry((VIC::ScreenGeometry)mode); }
-- (int) vicGetHorizontalRasterScroll { return c64->vic->getHorizontalRasterScroll(); }
-- (void) vicSetHorizontalRasterScroll:(int)offset { c64->vic->setHorizontalRasterScroll(offset & 0x07); }
-- (int) vicGetVerticalRasterScroll { return c64->vic->getVerticalRasterScroll(); }
-- (void) vicSetVerticalRasterScroll:(int)offset { c64->vic->setVerticalRasterScroll(offset & 0x07); }
-
-- (bool) spriteGetVisibilityFlag:(int)nr { return c64->vic->spriteIsEnabled(nr); }
-- (void) spriteSetVisibilityFlag:(int)nr value:(bool)flag { c64->vic->setSpriteEnabled(nr, flag); }
-- (void) spriteToggleVisibilityFlag:(int)nr { c64->vic->toggleSpriteEnabled(nr); }
-
-- (bool) spriteGetSpriteSpriteCollisionFlag:(int)nr { return c64->vic->getSpriteSpriteCollision(nr); }
-- (void) spriteSetSpriteSpriteCollisionFlag:(int)nr value:(bool)flag { c64->vic->setSpriteSpriteCollision(nr, flag); }
-- (void) spriteToggleSpriteSpriteCollisionFlag:(int)nr { c64->vic->toggleSpriteSpriteCollisionFlag(nr); }
-
-- (bool) spriteGetSpriteBackgroundCollisionFlag:(int)nr { return c64->vic->getSpriteBackgroundCollision(nr); }
-- (void) spriteSetSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag { c64->vic->setSpriteBackgroundCollision(nr, flag); }
-- (void) spriteToggleSpriteBackgroundCollisionFlag:(int)nr { c64->vic->toggleSpriteBackgroundCollisionFlag(nr); }
-
-- (bool) spriteGetBackgroundPriorityFlag:(int)nr { return c64->vic->spriteIsDrawnInBackground(nr); }
-- (void) spriteSetBackgroundPriorityFlag:(int)nr value:(bool)flag { c64->vic->setSpriteInBackground(nr, flag); }
-- (void) spriteToggleBackgroundPriorityFlag:(int)nr {c64->vic->spriteToggleBackgroundPriorityFlag(nr); }
-
-- (bool) spriteGetMulticolorFlag:(int)nr { return c64->vic->spriteIsMulticolor(nr); }
-- (void) spriteSetMulticolorFlag:(int)nr value:(bool)flag { c64->vic->setSpriteMulticolor(nr, flag); }
-- (void) spriteToggleMulticolorFlag:(int)nr { c64->vic->toggleMulticolorFlag(nr); }
-
-- (bool) spriteGetStretchXFlag:(int)nr { return c64->vic->spriteWidthIsDoubled(nr); }
-- (void) spriteSetStretchXFlag:(int)nr value:(bool)flag { c64->vic->setSpriteStretchX(nr, flag); }
-- (void) spriteToggleStretchXFlag:(int)nr { c64->vic->spriteToggleStretchXFlag(nr); }
-
-- (bool) spriteGetStretchYFlag:(int)nr { return c64->vic->spriteHeightIsDoubled(nr); }
-- (void) spriteSetStretchYFlag:(int)nr value:(bool)flag { return c64->vic->setSpriteStretchY(nr, flag); }
-- (void) spriteToggleStretchYFlag:(int)nr { c64->vic->spriteToggleStretchYFlag(nr); }
-
-- (int) spriteGetX:(int)nr { return c64->vic->getSpriteX(nr); }
-- (void) spriteSetX:(int)nr value:(int)x { c64->vic->setSpriteX(nr, x); }
-- (int) spriteGetY:(int)nr { return c64->vic->getSpriteY(nr); }
-- (void) spriteSetY:(int)nr value:(int)y { c64->vic->setSpriteY(nr, y); }
-- (int) spriteGetColor:(int)nr { return c64->vic->spriteColor(nr); }
-- (void) spriteSetColor:(int)nr value:(int)c { c64->vic->setSpriteColor(nr, c); }
-
-- (uint16_t) vicGetRasterLine { return c64->vic->getScanline(); }
-- (void) vicSetRasterLine:(uint16_t)line {c64->vic->setScanline(line); }
-- (uint16_t) vicGetRasterInterruptLine { return c64->vic->rasterInterruptLine(); }
-- (void) vicSetRasterInterruptLine:(uint16_t)line { c64->vic->setRasterInterruptLine(line); }
-- (bool) vicGetRasterInterruptFlag { return c64->vic->rasterInterruptEnabled(); }
-- (void) vicSetRasterInterruptFlag:(bool)b { c64->vic->setRasterInterruptEnable(b); }
-- (void) vicToggleRasterInterruptFlag { c64->vic->toggleRasterInterruptFlag(); }
-
-- (bool) vicHideSprites { return c64->vic->hideSprites(); }
-- (void) vicSetHideSprites:(bool)b { c64->vic->setHideSprites(b); }
-- (bool) vicShowIrqLines { return c64->vic->showIrqLines(); }
-- (void) vicSetShowIrqLines:(bool)b { c64->vic->setShowIrqLines(b); }
-- (bool) vicShowDmaLines { return c64->vic->showDmaLines(); }
-- (void) vicSetShowDmaLines:(bool)b { c64->vic->setShowDmaLines(b); }
 
 - (void) fastReset { c64->fastReset(); }
 
@@ -455,16 +501,7 @@
 }
 
 
-// --------------------------------------------------------------------------
-// Keyboard
-// --------------------------------------------------------------------------
-
 - (void) keyboardPressRunstopRestore { c64->runstopRestore(); }
-- (void) keyboardPressRunstopKey { c64->keyboard->pressRunstopKey(); }
-- (void) keyboardReleaseRunstopKey { c64->keyboard->releaseRunstopKey(); }
-- (void) keyboardPressCommodoreKey { c64->keyboard->pressCommodoreKey(); }
-- (void) keyboardReleaseCommodoreKey { c64->keyboard->releaseCommodoreKey(); }
-- (void) keyboardTypeFormat { c64->keyboard->typeFormat(); }
 
 
 // --------------------------------------------------------------------------

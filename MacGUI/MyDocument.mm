@@ -133,9 +133,8 @@
 	
 	// Create virtual C64
 	c64 = [[C64Proxy alloc] initWithDocument:self withScreen:screen];
-	joystickManager = new JoystickManager( c64 );
-	joystickManager->Initialize();
-
+	// cia = [c64 cia:1];
+	
 	// Load snapshot if applicable
 	if (snapshot != NULL) {
 		snapshot->writeToC64([c64 getC64]);
@@ -145,7 +144,10 @@
 		
 	disassembleStartAddr = [[c64 cpu] getPC];
 	
-	// get images for port A and B, depends on the available input devices
+	// Joystick handling
+	joystickManager = new JoystickManager( c64 );
+	joystickManager->Initialize();
+	
 	int portA = [c64 getPortAssignment:0];
 	int portB = [c64 getPortAssignment:1];
 	NSLog(@"Port A = %d port B = %d", portA, portB);
@@ -239,24 +241,24 @@
 	colorScheme = [defaults integerForKey:VC64ColorSchemeKey];
 	if (colorScheme == VIC::CUSTOM_PALETTE) {
 		NSLog(@"Applying custom colors...");
-		[c64 vicSetColorInt:0 rgba:[defaults integerForKey:VC64CustomCol0Key]];
-		[c64 vicSetColorInt:1 rgba:[defaults integerForKey:VC64CustomCol1Key]];
-		[c64 vicSetColorInt:2 rgba:[defaults integerForKey:VC64CustomCol2Key]];
-		[c64 vicSetColorInt:3 rgba:[defaults integerForKey:VC64CustomCol3Key]];
-		[c64 vicSetColorInt:4 rgba:[defaults integerForKey:VC64CustomCol4Key]];
-		[c64 vicSetColorInt:5 rgba:[defaults integerForKey:VC64CustomCol5Key]];
-		[c64 vicSetColorInt:6 rgba:[defaults integerForKey:VC64CustomCol6Key]];
-		[c64 vicSetColorInt:7 rgba:[defaults integerForKey:VC64CustomCol7Key]];
-		[c64 vicSetColorInt:8 rgba:[defaults integerForKey:VC64CustomCol8Key]];
-		[c64 vicSetColorInt:9 rgba:[defaults integerForKey:VC64CustomCol9Key]];
-		[c64 vicSetColorInt:10 rgba:[defaults integerForKey:VC64CustomCol10Key]];
-		[c64 vicSetColorInt:11 rgba:[defaults integerForKey:VC64CustomCol11Key]];
-		[c64 vicSetColorInt:12 rgba:[defaults integerForKey:VC64CustomCol12Key]];
-		[c64 vicSetColorInt:13 rgba:[defaults integerForKey:VC64CustomCol13Key]];
-		[c64 vicSetColorInt:14 rgba:[defaults integerForKey:VC64CustomCol14Key]];
-		[c64 vicSetColorInt:15 rgba:[defaults integerForKey:VC64CustomCol15Key]];
+		[[c64 vic] setColorInt:0 rgba:[defaults integerForKey:VC64CustomCol0Key]];
+		[[c64 vic] setColorInt:1 rgba:[defaults integerForKey:VC64CustomCol1Key]];
+		[[c64 vic] setColorInt:2 rgba:[defaults integerForKey:VC64CustomCol2Key]];
+		[[c64 vic] setColorInt:3 rgba:[defaults integerForKey:VC64CustomCol3Key]];
+		[[c64 vic] setColorInt:4 rgba:[defaults integerForKey:VC64CustomCol4Key]];
+		[[c64 vic] setColorInt:5 rgba:[defaults integerForKey:VC64CustomCol5Key]];
+		[[c64 vic] setColorInt:6 rgba:[defaults integerForKey:VC64CustomCol6Key]];
+		[[c64 vic] setColorInt:7 rgba:[defaults integerForKey:VC64CustomCol7Key]];
+		[[c64 vic] setColorInt:8 rgba:[defaults integerForKey:VC64CustomCol8Key]];
+		[[c64 vic] setColorInt:9 rgba:[defaults integerForKey:VC64CustomCol9Key]];
+		[[c64 vic] setColorInt:10 rgba:[defaults integerForKey:VC64CustomCol10Key]];
+		[[c64 vic] setColorInt:11 rgba:[defaults integerForKey:VC64CustomCol11Key]];
+		[[c64 vic] setColorInt:12 rgba:[defaults integerForKey:VC64CustomCol12Key]];
+		[[c64 vic] setColorInt:13 rgba:[defaults integerForKey:VC64CustomCol13Key]];
+		[[c64 vic] setColorInt:14 rgba:[defaults integerForKey:VC64CustomCol14Key]];
+		[[c64 vic] setColorInt:15 rgba:[defaults integerForKey:VC64CustomCol15Key]];
 	} else {
-		[c64 vicSetColorScheme:(VIC::ColorScheme)colorScheme];
+		[[c64 vic] setColorScheme:(VIC::ColorScheme)colorScheme];
 	}
 }
 
@@ -961,9 +963,9 @@
 {
 	NSLog(@"Rustop key pressed");
 	[self updateChangeCount:NSChangeDone];
-	[c64 keyboardPressRunstopKey];
+	[[c64 keyboard] pressRunstopKey];
 	sleepMicrosec(100000);
-	[c64 keyboardReleaseRunstopKey];	
+	[[c64 keyboard] releaseRunstopKey];	
 	[self refresh];
 }
 	
@@ -971,9 +973,9 @@
 {
 	NSLog(@"Commodore key pressed");
 	[self updateChangeCount:NSChangeDone];
-	[c64 keyboardPressCommodoreKey];	
+	[[c64 keyboard] pressCommodoreKey];	
 	sleepMicrosec(100000);
-	[c64 keyboardReleaseCommodoreKey];	
+	[[c64 keyboard] releaseCommodoreKey];	
 	[self refresh];
 }
 
@@ -981,7 +983,7 @@
 {
 	NSLog(@"Format disk");
 	[self updateChangeCount:NSChangeDone];
-	[c64 keyboardTypeFormat];	
+	[[c64 keyboard] typeFormat];	
 	[self refresh];
 }
 
@@ -997,12 +999,12 @@
 	[[undo prepareWithInvocationTarget:self] hideSpritesAction:sender];
 	if (![undo isUndoing]) [undo setActionName:@"Hide sprites"];
 	
-	if ([c64 vicHideSprites]) {
+	if ([[c64 vic] hideSprites]) {
 		[sender setState:NSOffState];
-		[c64 vicSetHideSprites:NO];
+		[[c64 vic] setHideSprites:NO];
 	} else {
 		[sender setState:NSOnState];
-		[c64 vicSetHideSprites:YES];
+		[[c64 vic] setHideSprites:YES];
 	}
 }
 
@@ -1012,12 +1014,12 @@
 	// [[undo prepareWithInvocationTarget:self] markIRQLinesAction:sender];
 	// if (![undo isUndoing]) [undo setActionName:@"Mark IRQ lines"];
 
-	if ([c64 vicShowIrqLines]) {
+	if ([[c64 vic] showIrqLines]) {
 		[sender setState:NSOffState];
-		[c64 vicSetShowIrqLines:NO];
+		[[c64 vic] setShowIrqLines:NO];
 	} else {
 		[sender setState:NSOnState];
-		[c64 vicSetShowIrqLines:YES];
+		[[c64 vic] setShowIrqLines:YES];
 	}
 }
 
@@ -1027,12 +1029,12 @@
 	// [[undo prepareWithInvocationTarget:self] markDMALinesAction:sender];
 	// if (![undo isUndoing]) [undo setActionName:@"Mark DMA lines"];
 	
-	if ([c64 vicShowDmaLines]) {
+	if ([[c64 vic] showDmaLines]) {
 		[sender setState:NSOffState];
-		[c64 vicSetShowDmaLines:NO];
+		[[c64 vic] setShowDmaLines:NO];
 	} else {
 		[sender setState:NSOnState];
-		[c64 vicSetShowDmaLines:YES];
+		[[c64 vic] setShowDmaLines:YES];
 	}	
 }
 
@@ -1413,410 +1415,437 @@
 	[self refresh];
 }
 
-- (void)ciaSetDataPortA:(int)nr value:(uint8_t)v
+- (void)_ciaDataPortAAction:(int)nr value:(uint8_t)v
 {
-	[c64 ciaSetDataPortA:nr value:v];
+	[[c64 cia:nr] setDataPortA:v];
 	[self refresh];
 }
 
 - (IBAction)ciaDataPortAAction:(id)sender 
 {	
+	int nr = [self currentCIA];
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetDataPortA:[self currentCIA] value:[c64 ciaGetDataPortA:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaDataPortAAction:nr value:[[c64 cia:nr] getDataPortA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port A"];
 	
-	[self ciaSetDataPortA:[self currentCIA] value:[sender intValue]];
+	[self _ciaDataPortAAction:nr value:[sender intValue]];
 } 
 
-- (void)ciaSetDataPortDirectionA:(int)nr value:(uint8_t)v
+- (void)_ciaDataPortDirectionAAction:(int)nr value:(uint8_t)v
 {
-	[c64 ciaSetDataPortDirectionA:nr value:v];
+	[[c64 cia:nr] setDataPortDirectionA:v];
 	[self refresh];
 }
 
 - (IBAction)ciaDataPortDirectionAAction:(id)sender 
 {
+	int nr = [self currentCIA];
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetDataPortDirectionA:[self currentCIA] value:[c64 ciaGetDataPortDirectionA:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaDataPortDirectionAAction:nr value:[[c64 cia:nr] getDataPortDirectionA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port direction A"];
 	
-	[self ciaSetDataPortDirectionA:[self currentCIA] value:[sender intValue]];
+	[self _ciaDataPortDirectionAAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetTimerA:(int)nr value:(uint16_t)v
+- (void)_ciaTimerAAction:(int)nr value:(uint16_t)v
 {
-	[c64 ciaSetTimerA:nr value:v];
+	[[c64 cia:nr] setTimerA:v];
 	[self refresh];
 }
 
 - (IBAction)ciaTimerAAction:(id)sender 
 {
+	int nr = [self currentCIA];
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetTimerA:[self currentCIA] value:[c64 ciaGetDataPortDirectionA:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaTimerAAction:nr value:[[c64 cia:nr] getDataPortDirectionA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer A"];
 	
-	[self ciaSetTimerA:[self currentCIA] value:[sender intValue]];
+	[self _ciaTimerAAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetTimerLatchA:(int)nr value:(uint16_t)v
+- (void)_ciaLatchedTimerAAction:(int)nr value:(uint16_t)v
 {
-	[c64 ciaSetTimerLatchA:nr value:v];
+	[[c64 cia:nr] setTimerLatchA:v];
 	[self refresh];
 }
 
 - (IBAction)ciaLatchedTimerAAction:(id)sender
 {
+	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetTimerLatchA:[self currentCIA] value:[c64 ciaGetTimerLatchA:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaLatchedTimerAAction:nr value:[[c64 cia:nr] getTimerLatchA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer latch A"];
 	
-	[self ciaSetTimerLatchA:[self currentCIA] value:[sender intValue]];
+	[self _ciaLatchedTimerAAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetStartFlagA:(int)nr value:(bool)b
+- (void)_ciaRunningAAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetStartFlagA:nr value:b];
+	[[c64 cia:nr] setStartFlagA:b];
 	[self refresh];
 }
 
 - (IBAction)ciaRunningAAction:(id)sender
 {
+	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetStartFlagA:[self currentCIA] value:[c64 ciaGetStartFlagA:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaRunningAAction:nr value:[[c64 cia:nr] getStartFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"Start/Stop CIA timer A"];
 
-	[self ciaSetStartFlagA:[self currentCIA] value:[sender intValue]];
+	[self _ciaRunningAAction:nr value:[sender intValue]];
 }
 
 
-- (void)ciaSetOneShotFlagA:(int)nr value:(bool)b
+- (void)_ciaOneShotAAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetOneShotFlagA:nr value:b];
+	[[c64 cia:nr] setOneShotFlagA:b];
 	[self refresh];
 }
 
 - (IBAction)ciaOneShotAAction:(id)sender
 {
+	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetOneShotFlagA:[self currentCIA] value:[c64 ciaGetOneShotFlagA:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaOneShotAAction:nr value:[[c64 cia:nr] getOneShotFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA one shot flag A"];
 	
-	[self ciaSetOneShotFlagA:[self currentCIA] value:[sender intValue]];
+	[self _ciaOneShotAAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetUnderflowFlagA:(int)nr value:(bool)b
+- (void)_ciaCountUnterflowsAAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetUnderflowFlagA:nr value:b];
+	[[c64 cia:nr] setUnderflowFlagA:b];
 	[self refresh];
 }
 
 - (IBAction)ciaCountUnterflowsAAction:(id)sender
 {
+	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetUnderflowFlagA:[self currentCIA] value:[c64 ciaGetUnderflowFlagA:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaCountUnterflowsAAction:nr value:[[c64 cia:nr] getUnderflowFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA underflow flag A"];
 	
-	[self ciaSetUnderflowFlagA:[self currentCIA] value:[sender intValue]];
+	[self _ciaCountUnterflowsAAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetPendingSignalFlagA:(int)nr value:(bool)b
+- (void)_ciaSignalPendingAAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetPendingSignalFlagA:nr value:b];
+	[[c64 cia:nr] setPendingSignalFlagA:b];
 	[self refresh];
 }
 
 - (IBAction)ciaSignalPendingAAction:(id)sender
 {
+	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetPendingSignalFlagA:[self currentCIA] value:[c64 ciaGetPendingSignalFlagA:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaSignalPendingAAction:nr value:[[c64 cia:nr] getPendingSignalFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA signal pending A"];
 	
-	[self ciaSetPendingSignalFlagA:[self currentCIA] value:[sender intValue]];
+	[self _ciaSignalPendingAAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetInterruptEnableFlagA:(int)nr value:(bool)b
+- (void)_ciaInterruptEnableAAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetInterruptEnableFlagA:nr value:b];
+	[[c64 cia:nr] setInterruptEnableFlagA:b];
 	[self refresh];
 }
 
 - (IBAction)ciaInterruptEnableAAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetInterruptEnableFlagA:[self currentCIA] value:[c64 ciaGetInterruptEnableFlagA:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaInterruptEnableAAction:nr value:[[c64 cia:nr] getInterruptEnableFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA interrupt enable flag A"];
 	
-	[self ciaSetInterruptEnableFlagA:[self currentCIA] value:[sender intValue]];
+	[self _ciaInterruptEnableAAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetDataPortB:(int)nr value:(uint8_t)v
+- (void)_ciaDataPortBAction:(int)nr value:(uint8_t)v
 {
-	[c64 ciaSetDataPortB:nr value:v];
+	[[c64 cia:nr] setDataPortB:v];
 	[self refresh];
 }
 
 - (IBAction)ciaDataPortBAction:(id)sender 
 {	
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetDataPortB:[self currentCIA] value:[c64 ciaGetDataPortB:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaDataPortBAction:nr value:[[c64 cia:nr] getDataPortB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port B"];
 	
-	[self ciaSetDataPortB:[self currentCIA] value:[sender intValue]];
+	[self _ciaDataPortBAction:nr value:[sender intValue]];
 } 
 
-- (void)ciaSetDataPortDirectionB:(int)nr value:(uint8_t)v
+- (void)_ciaDataPortDirectionBAction:(int)nr value:(uint8_t)v
 {
-	[c64 ciaSetDataPortDirectionB:nr value:v];
+	[[c64 cia:nr] setDataPortDirectionB:v];
 	[self refresh];
 }
 
 - (IBAction)ciaDataPortDirectionBAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetDataPortDirectionB:[self currentCIA] value:[c64 ciaGetDataPortDirectionB:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaDataPortDirectionBAction:nr value:[[c64 cia:nr] getDataPortDirectionB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port direction B"];
 	
-	[self ciaSetDataPortDirectionB:[self currentCIA] value:[sender intValue]];
+	[self _ciaDataPortDirectionBAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetTimerB:(int)nr value:(uint16_t)v
+- (void)_ciaTimerBAction:(int)nr value:(uint16_t)v
 {
-	[c64 ciaSetTimerB:nr value:v];
+	[[c64 cia:nr] setTimerB:v];
 	[self refresh];
 }
 
 - (IBAction)ciaTimerBAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetTimerB:[self currentCIA] value:[c64 ciaGetTimerB:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaTimerBAction:nr value:[[c64 cia:nr] getTimerB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer B"];
 	
-	[self ciaSetTimerB:[self currentCIA] value:[sender intValue]];
+	[self _ciaTimerBAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetTimerLatchB:(int)nr value:(uint16_t)v
+- (void)_ciaLatchedTimerBAction:(int)nr value:(uint16_t)v
 {
-	[c64 ciaSetTimerLatchB:nr value:v];
+	[[c64 cia:nr] setTimerLatchB:v];
 	[self refresh];
 }
 
 - (IBAction)ciaLatchedTimerBAction:(id)sender
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetTimerLatchB:[self currentCIA] value:[c64 ciaGetTimerLatchB:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaLatchedTimerBAction:nr value:[[c64 cia:nr] getTimerLatchB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer latch B"];
 	
-	[self ciaSetTimerLatchB:[self currentCIA] value:[sender intValue]];
+	[self _ciaLatchedTimerBAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetStartFlagB:(int)nr value:(bool)b
+- (void)_ciaRunningBAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetStartFlagB:nr value:b];
+	[[c64 cia:nr] setStartFlagB:b];
 	[self refresh];
 }
 
 - (IBAction)ciaRunningBAction:(id)sender
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetStartFlagB:[self currentCIA] value:[c64 ciaGetStartFlagB:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaRunningBAction:nr value:[[c64 cia:nr] getStartFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"Start/Stop CIA timer B"];
 
-	[self ciaSetStartFlagB:[self currentCIA] value:[sender intValue]];
+	[self _ciaRunningBAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetOneShotFlagB:(int)nr value:(bool)b
+- (void)_ciaOneShotBAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetOneShotFlagB:nr value:b];
+	[[c64 cia:nr] setOneShotFlagB:b];
 	[self refresh];
 }
 
 - (IBAction)ciaOneShotBAction:(id)sender
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetOneShotFlagB:[self currentCIA] value:[c64 ciaGetOneShotFlagB:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaOneShotBAction:nr value:[[c64 cia:nr] getOneShotFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA one shot flag B"];
 	
-	[self ciaSetOneShotFlagB:[self currentCIA] value:[sender intValue]];
+	[self _ciaOneShotBAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetUnderflowFlagB:(int)nr value:(bool)b
+- (void)_ciaCountUnterflowsBAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetUnderflowFlagB:nr value:b];
+	[[c64 cia:nr] setUnderflowFlagB:b];
 	[self refresh];
 }
 
 - (IBAction)ciaCountUnterflowsBAction:(id)sender
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetUnderflowFlagB:[self currentCIA] value:[c64 ciaGetUnderflowFlagB:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaCountUnterflowsBAction:nr value:[[c64 cia:nr] getUnderflowFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA underflow flag B"];
 	
-	[self ciaSetUnderflowFlagB:[self currentCIA] value:[sender intValue]];
+	[self _ciaCountUnterflowsBAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetPendingSignalFlagB:(int)nr value:(bool)b
+- (void)_ciaSignalPendingBAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetPendingSignalFlagB:nr value:b];
+	[[c64 cia:nr] setPendingSignalFlagB:b];
 	[self refresh];
 }
 
 - (IBAction)ciaSignalPendingBAction:(id)sender
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetPendingSignalFlagB:[self currentCIA] value:[c64 ciaGetPendingSignalFlagB:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaSignalPendingBAction:nr value:[[c64 cia:nr] getPendingSignalFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA signal pending B"];
 	
-	[self ciaSetPendingSignalFlagB:[self currentCIA] value:[sender intValue]];
+	[self _ciaSignalPendingBAction:nr value:[sender intValue]];
 }
 
-- (void)ciaSetInterruptEnableFlagB:(int)nr value:(bool)b
+- (void)_ciaInterruptEnableBAction:(int)nr value:(bool)b
 {
-	[c64 ciaSetInterruptEnableFlagB:nr value:b];
+	[[c64 cia:nr] setInterruptEnableFlagB:b];
 	[self refresh];
 }
 
 - (IBAction)ciaInterruptEnableBAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ciaSetInterruptEnableFlagB:[self currentCIA] value:[c64 ciaGetInterruptEnableFlagB:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _ciaInterruptEnableBAction:nr value:[[c64 cia:nr] getInterruptEnableFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA interrupt enable flag B"];
 	
-	[self ciaSetInterruptEnableFlagB:[self currentCIA] value:[sender intValue]];
+	[self _ciaInterruptEnableBAction:nr value:[sender intValue]];
 }
 
-- (IBAction)todSetHours:(int)nr value:(uint8_t)value
+- (IBAction)_todHoursAction:(int)nr value:(uint8_t)value
 {
-	[c64 ciaSetTodHours:nr value:value];
+	[[c64 cia:nr] setTodHours:value];
 	[self refresh];
 }
 
 - (IBAction)todHoursAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] todSetHours:[self currentCIA] value:[c64 ciaGetTodHours:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _todHoursAction:nr value:[[c64 cia:nr] getTodHours]];
 	if (![undo isUndoing]) [undo setActionName:@"TOD hours"];
 	
-	[self todSetHours:[self currentCIA] value:[sender intValue]];
+	[self _todHoursAction:nr value:[sender intValue]];
 }	
 
-- (IBAction)todSetMinutes:(int)nr value:(uint8_t)value
+- (IBAction)_todMinutesAction:(int)nr value:(uint8_t)value
 {
-	[c64 ciaSetTodMinutes:nr value:value];
+	[[c64 cia:nr] setTodMinutes:value];
 	[self refresh];
 }
 
 - (IBAction)todMinutesAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] todSetMinutes:[self currentCIA] value:[c64 ciaGetTodMinutes:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _todMinutesAction:nr value:[[c64 cia:nr] getTodMinutes]];
 	if (![undo isUndoing]) [undo setActionName:@"TOD minutes"];
 	
-	[self todSetMinutes:[self currentCIA] value:[sender intValue]];
+	[self _todMinutesAction:nr value:[sender intValue]];
 }
 
-- (IBAction)todSetSeconds:(int)nr value:(uint8_t)value
+- (IBAction)_todSecondsAction:(int)nr value:(uint8_t)value
 {
-	[c64 ciaSetTodSeconds:nr value:value];
+	[[c64 cia:nr] setTodSeconds:value];
 	[self refresh];
 }
 
 - (IBAction)todSecondsAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] todSetSeconds:[self currentCIA] value:[c64 ciaGetTodSeconds:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _todSecondsAction:nr value:[[c64 cia:nr] getTodSeconds]];
 	if (![undo isUndoing]) [undo setActionName:@"TOD seconds"];
 	
-	[self todSetSeconds:[self currentCIA] value:[sender intValue]];
+	[self _todSecondsAction:nr value:[sender intValue]];
 }
 
-- (IBAction)todSetTenth:(int)nr value:(uint8_t)value
+- (IBAction)_todTenthAction:(int)nr value:(uint8_t)value
 {
-	[c64 ciaSetTodTenth:nr value:value];
+	[[c64 cia:nr] setTodTenth:value];
 	[self refresh];
 }
 
 - (IBAction)todTenthAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] todSetTenth:[self currentCIA] value:[c64 ciaGetTodTenth:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _todTenthAction:nr value:[[c64 cia:nr] getTodTenth]];
 	if (![undo isUndoing]) [undo setActionName:@"TOD hours"];
 
-	[self todSetTenth:[self currentCIA] value:[sender intValue]];
+	[self _todTenthAction:nr value:[sender intValue]];
 }
 
-- (IBAction)alarmSetHours:(int)nr value:(uint8_t)value
+- (IBAction)_alarmHoursAction:(int)nr value:(uint8_t)value
 {
-	[c64 ciaSetAlarmHours:nr value:value];
+	[[c64 cia:nr] setAlarmHours:value];
 	[self refresh];
 }
 
 - (IBAction)alarmHoursAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] alarmSetHours:[self currentCIA] value:[c64 ciaGetAlarmHours:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _alarmHoursAction:nr value:[[c64 cia:nr] getAlarmHours]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm hours"];
 	
-	[self alarmSetHours:[self currentCIA] value:[sender intValue]];
+	[self _alarmHoursAction:nr value:[sender intValue]];
 }
 
-- (IBAction)alarmSetMinutes:(int)nr value:(uint8_t)value
+- (IBAction)_alarmMinutesAction:(int)nr value:(uint8_t)value
 {
-	[c64 ciaSetAlarmMinutes:nr value:value];
+	[[c64 cia:nr] setAlarmMinutes:value];
 	[self refresh];
 }
 
 - (IBAction)alarmMinutesAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] alarmSetMinutes:[self currentCIA] value:[c64 ciaGetAlarmMinutes:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _alarmMinutesAction:nr value:[[c64 cia:nr] getAlarmMinutes]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm minutes"];
 	
-	[self alarmSetMinutes:[self currentCIA] value:[sender intValue]];
+	[self _alarmMinutesAction:nr value:[sender intValue]];
 }
 
-- (IBAction)alarmSetSeconds:(int)nr value:(uint8_t)value
+- (IBAction)_alarmSecondsAction:(int)nr value:(uint8_t)value
 {
-	[c64 ciaSetAlarmSeconds:nr value:value];
+	[[c64 cia:nr] setAlarmSeconds:value];
 	[self refresh];
 }
 
 - (IBAction)alarmSecondsAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] alarmSetSeconds:[self currentCIA] value:[c64 ciaGetAlarmSeconds:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _alarmSecondsAction:nr value:[[c64 cia:nr] getAlarmSeconds]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm seconds"];
 	
-	[self alarmSetSeconds:[self currentCIA] value:[sender intValue]];
+	[self _alarmSecondsAction:nr value:[sender intValue]];
 }
 
-- (IBAction)alarmSetTenth:(int)nr value:(uint8_t)value
+- (IBAction)_alarmTenthAction:(int)nr value:(uint8_t)value
 {
-	[c64 ciaSetAlarmTenth:nr value:value];
+	[[c64 cia:nr] setAlarmTenth:value];
 	[self refresh];
 }
 
 - (IBAction)alarmTenthAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] alarmSetTenth:[self currentCIA] value:[c64 ciaGetAlarmTenth:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _alarmTenthAction:nr value:[[c64 cia:nr] getAlarmTenth]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm hours"];
 	
-	[self alarmSetTenth:[self currentCIA] value:[sender intValue]];
+	[self _alarmTenthAction:nr value:[sender intValue]];
 }
 
-- (IBAction)setTodInterruptEnable:(int)nr value:(bool)b
+- (IBAction)_todInterruptEnabledAction:(int)nr value:(bool)b
 {
-	[c64 todSetInterruptEnabled:nr value:b];
+	[[c64 cia:nr] setInterruptEnabled:b];
 	[self refresh];
 }
 
 - (IBAction)todInterruptEnabledAction:(id)sender 
 {
+	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] setTodInterruptEnable:[self currentCIA] value:[c64 todIsInterruptEnabled:[self currentCIA]]];
+	[[undo prepareWithInvocationTarget:self] _todInterruptEnabledAction:nr value:[[c64 cia:nr] todIsInterruptEnabled]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm enable"];
 	
-	[self setTodInterruptEnable:[self currentCIA] value:[sender intValue]];
+	[self _todInterruptEnabledAction:nr value:[sender intValue]];
 }
 
 
@@ -1824,43 +1853,43 @@
 // Action methods (VIC debug panel)
 // --------------------------------------------------------------------------------
 
-- (void)vicSetDisplayMode:(int)mode
+- (void)_vicVideoModeAction:(int)mode
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicSetDisplayMode:[c64 vicGetDisplayMode]];
+	[[undo prepareWithInvocationTarget:self] _vicVideoModeAction:[[c64 vic] getDisplayMode]];
 	if (![undo isUndoing]) [undo setActionName:@"Display mode"];
 
-	[c64 vicSetDisplayMode:mode];
+	[[c64 vic] setDisplayMode:mode];
 	[self refresh];
 }
 
 - (IBAction)vicVideoModeAction:(id)sender
 {
-	[self vicSetDisplayMode:[[sender selectedItem] tag]];
+	[self _vicVideoModeAction:[[sender selectedItem] tag]];
 }
 
-- (void)vicSetScreenGeometry:(int)mode
+- (void)_vicScreenGeometryAction:(int)mode
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicSetScreenGeometry:[c64 vicGetScreenGeometry]];
+	[[undo prepareWithInvocationTarget:self] _vicScreenGeometryAction:[[c64 vic] getScreenGeometry]];
 	if (![undo isUndoing]) [undo setActionName:@"Screen geometry"];
 
-	[c64 vicSetScreenGeometry:mode];
+	[[c64 vic] setScreenGeometry:mode];
 	[self refresh];
 }
 
 - (IBAction)vicScreenGeometryAction:(id)sender
 {
-	[self vicSetScreenGeometry:[[sender selectedItem] tag]];
+	[self _vicScreenGeometryAction:[[sender selectedItem] tag]];
 }
 
 - (void)vicSetMemoryBank:(int)addr
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicSetMemoryBank:[c64 vicGetMemoryBankAddr]];
+	[[undo prepareWithInvocationTarget:self] vicSetMemoryBank:[[c64 vic] getMemoryBankAddr]];
 	if (![undo isUndoing]) [undo setActionName:@"Memory bank"];
 
-	[c64 vicSetMemoryBankAddr:addr];
+	[[c64 vic] setMemoryBankAddr:addr];
 	[self refresh];
 }
 
@@ -1872,10 +1901,10 @@
 - (void)vicSetScreenMemory:(int)addr
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicSetScreenMemory:[c64 vicGetScreenMemoryAddr]];
+	[[undo prepareWithInvocationTarget:self] vicSetScreenMemory:[[c64 vic] getScreenMemoryAddr]];
 	if (![undo isUndoing]) [undo setActionName:@"Screen memory"];
 
-	[c64 vicSetScreenMemoryAddr:addr];
+	[[c64 vic] setScreenMemoryAddr:addr];
 	[self refresh];
 }
 
@@ -1887,10 +1916,10 @@
 - (void)vicSetCharacterMemory:(int)addr
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicSetCharacterMemory:[c64 vicGetCharacterMemoryAddr]];
+	[[undo prepareWithInvocationTarget:self] vicSetCharacterMemory:[[c64 vic] getCharacterMemoryAddr]];
 	if (![undo isUndoing]) [undo setActionName:@"Character memory"];
 
-	[c64 vicSetCharacterMemoryAddr:addr];
+	[[c64 vic] setCharacterMemoryAddr:addr];
 	[self refresh];
 }
 
@@ -1902,20 +1931,20 @@
 - (IBAction)vicDXAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicDXAction:[NSNumber numberWithInt:[c64 vicGetHorizontalRasterScroll]]];
+	[[undo prepareWithInvocationTarget:self] vicDXAction:[NSNumber numberWithInt:[[c64 vic] getHorizontalRasterScroll]]];
 	if (![undo isUndoing]) [undo setActionName:@"Horizontal raster scroll"];
 	
-	[c64 vicSetHorizontalRasterScroll:[sender intValue]];
+	[[c64 vic] setHorizontalRasterScroll:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)vicDYAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicDYAction:[NSNumber numberWithInt:[c64 vicGetVerticalRasterScroll]]];
+	[[undo prepareWithInvocationTarget:self] vicDYAction:[NSNumber numberWithInt:[[c64 vic] getVerticalRasterScroll]]];
 	if (![undo isUndoing]) [undo setActionName:@"Vertical raster scroll"];
 	
-	[c64 vicSetVerticalRasterScroll:[sender intValue]];
+	[[c64 vic] setVerticalRasterScroll:[sender intValue]];
 	[self refresh];
 }
 
@@ -1935,7 +1964,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleVisibilityFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite visability"];
 
-	[c64 spriteToggleVisibilityFlag:nr];
+	[[c64 vic] spriteToggleVisibilityFlag:nr];
 	[self refresh];
 }
 
@@ -1959,7 +1988,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleMulticolorFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite multicolor"];
 
-	[c64 spriteToggleMulticolorFlag:nr];
+	[[c64 vic] spriteToggleMulticolorFlag:nr];
 	[self refresh];
 }
 
@@ -1974,7 +2003,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleStretchXFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite stretch X"];
 
-	[c64 spriteToggleStretchXFlag:nr];
+	[[c64 vic] spriteToggleStretchXFlag:nr];
 	[self refresh];
 }
 
@@ -1989,7 +2018,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleStretchYFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite stretch Y"];
 
-	[c64 spriteToggleStretchYFlag:nr];
+	[[c64 vic] spriteToggleStretchYFlag:nr];
 	[self refresh];
 }
 
@@ -2004,7 +2033,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleBackgroundPriorityFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite background priority"];
 
-	[c64 spriteToggleBackgroundPriorityFlag:nr];
+	[[c64 vic] spriteToggleBackgroundPriorityFlag:nr];
 	[self refresh];
 }
 
@@ -2019,7 +2048,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleSpriteSpriteCollisionFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Detect sprite/sprite collisions"];
 
-	[c64 spriteToggleSpriteSpriteCollisionFlag:nr];
+	[[c64 vic] spriteToggleSpriteSpriteCollisionFlag:nr];
 	[self refresh];
 }
 
@@ -2034,7 +2063,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleSpriteBackgroundCollisionFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Detect sprite/background collisions"];
 
-	[c64 spriteToggleSpriteBackgroundCollisionFlag:nr];
+	[[c64 vic] spriteToggleSpriteBackgroundCollisionFlag:nr];
 	[self refresh];
 }
 
@@ -2048,10 +2077,10 @@
 - (void)spriteSetX:(int)nr value:(int)v
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] spriteSetX:nr value:[c64 spriteGetX:nr]];
+	[[undo prepareWithInvocationTarget:self] spriteSetX:nr value:[[c64 vic] spriteGetX:nr]];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite X"];
 
-	[c64 spriteSetX:nr value:v];
+	[[c64 vic] spriteSetX:nr value:v];
 	[self refresh];
 }
 
@@ -2063,10 +2092,10 @@
 - (void)spriteSetY:(int)nr value:(int)v
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] spriteSetY:nr value:[c64 spriteGetY:nr]];
+	[[undo prepareWithInvocationTarget:self] spriteSetY:nr value:[[c64 vic] spriteGetY:nr]];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite Y"];
 
-	[c64 spriteSetY:nr value:v];
+	[[c64 vic] spriteSetY:nr value:v];
 	[self refresh];
 }
 
@@ -2078,10 +2107,10 @@
 - (void)spriteSetColor:(int)nr value:(int)v
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] spriteSetColor:nr value:[c64 spriteGetColor:nr]];
+	[[undo prepareWithInvocationTarget:self] spriteSetColor:nr value:[[c64 vic] spriteGetColor:nr]];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite color"];
 
-	[c64 spriteSetColor:nr value:v];
+	[[c64 vic] spriteSetColor:nr value:v];
 	[self refresh];
 }
 
@@ -2094,10 +2123,10 @@
 - (IBAction)vicRasterlineAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicRasterlineAction:[NSNumber numberWithInt:[c64 vicGetRasterLine]]];
+	[[undo prepareWithInvocationTarget:self] vicRasterlineAction:[NSNumber numberWithInt:[[c64 vic] getRasterLine]]];
 	if (![undo isUndoing]) [undo setActionName:@"Raster line"];
 	
-	[c64 vicSetRasterLine:[sender intValue]];
+	[[c64 vic] setRasterLine:[sender intValue]];
 	[self refresh];
 }
 
@@ -2107,17 +2136,17 @@
 	[[undo prepareWithInvocationTarget:self] vicEnableRasterInterruptAction:sender];
 	if (![undo isUndoing]) [undo setActionName:@"Raster interrupt"];
 	
-	[c64 vicToggleRasterInterruptFlag];
+	[[c64 vic] toggleRasterInterruptFlag];
 	[self refresh];
 }
 
 - (IBAction)vicRasterInterruptAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicRasterInterruptAction:[NSNumber numberWithInt:[c64 vicGetRasterInterruptLine]]];
+	[[undo prepareWithInvocationTarget:self] vicRasterInterruptAction:[NSNumber numberWithInt:[[c64 vic] getRasterInterruptLine]]];
 	if (![undo isUndoing]) [undo setActionName:@"Raster interrupt line"];
 	
-	[c64 vicSetRasterInterruptLine:[sender intValue]];
+	[[c64 vic] setRasterInterruptLine:[sender intValue]];
 	[self refresh];
 }
 
@@ -2175,67 +2204,67 @@
 
 - (void)refreshCIA
 {
-	int cia = [self currentCIA];
+	CIAProxy *cia = [c64 cia:[self currentCIA]];
 	
-	[ciaDataPortA setIntValue:[c64 ciaGetDataPortA:cia]];
-	[ciaDataPortDirectionA setIntValue:[c64 ciaGetDataPortDirectionA:cia]];
-	[ciaTimerA setIntValue:[c64 ciaGetTimerA:cia]];
-	[ciaLatchedTimerA setIntValue:[c64 ciaGetTimerLatchA:cia]];
-	[ciaRunningA setIntValue:[c64 ciaGetStartFlagA:cia]];
-	[ciaOneShotA setIntValue:[c64 ciaGetOneShotFlagA:cia]];
-	[ciaSignalPendingA setIntValue:[c64 ciaGetPendingSignalFlagA:cia]];
-	[ciaInterruptEnableA setIntValue:[c64 ciaGetInterruptEnableFlagA:cia]];
+	[ciaDataPortA setIntValue:[cia getDataPortA]];
+	[ciaDataPortDirectionA setIntValue:[cia getDataPortDirectionA]];
+	[ciaTimerA setIntValue:[cia getTimerA]];
+	[ciaLatchedTimerA setIntValue:[cia getTimerLatchA]];
+	[ciaRunningA setIntValue:[cia getStartFlagA]];
+	[ciaOneShotA setIntValue:[cia getOneShotFlagA]];
+	[ciaSignalPendingA setIntValue:[cia getPendingSignalFlagA]];
+	[ciaInterruptEnableA setIntValue:[cia getInterruptEnableFlagA]];
 	
-	[ciaDataPortB setIntValue:[c64 ciaGetDataPortB:cia]];
-	[ciaDataPortDirectionB setIntValue:[c64 ciaGetDataPortDirectionB:cia]];
-	[ciaTimerB setIntValue:[c64 ciaGetTimerB:cia]];
-	[ciaLatchedTimerB setIntValue:[c64 ciaGetTimerLatchB:cia]];
-	[ciaRunningB setIntValue:[c64 ciaGetStartFlagB:cia]];
-	[ciaOneShotB setIntValue:[c64 ciaGetOneShotFlagB:cia]];
-	[ciaSignalPendingB setIntValue:[c64 ciaGetPendingSignalFlagB:cia]];
-	[ciaInterruptEnableB setIntValue:[c64 ciaGetInterruptEnableFlagB:cia]];
+	[ciaDataPortB setIntValue:[cia getDataPortB]];
+	[ciaDataPortDirectionB setIntValue:[cia getDataPortDirectionB]];
+	[ciaTimerB setIntValue:[cia getTimerB]];
+	[ciaLatchedTimerB setIntValue:[cia getTimerLatchB]];
+	[ciaRunningB setIntValue:[cia getStartFlagB]];
+	[ciaOneShotB setIntValue:[cia getOneShotFlagB]];
+	[ciaSignalPendingB setIntValue:[cia getPendingSignalFlagB]];
+	[ciaInterruptEnableB setIntValue:[cia getInterruptEnableFlagB]];
 	
-	[todHours setIntValue:[c64 ciaGetTodHours:cia]];
-	[todMinutes setIntValue:[c64 ciaGetTodMinutes:cia]];
-	[todSeconds setIntValue:[c64 ciaGetTodSeconds:cia]];
-	[todTenth setIntValue:[c64 ciaGetTodTenth:cia]];
+	[todHours setIntValue:[cia getTodHours]];
+	[todMinutes setIntValue:[cia getTodMinutes]];
+	[todSeconds setIntValue:[cia getTodSeconds]];
+	[todTenth setIntValue:[cia getTodTenth]];
 	
-	[alarmHours setIntValue:[c64 ciaGetAlarmHours:cia]];
-	[alarmMinutes setIntValue:[c64 ciaGetAlarmMinutes:cia]];
-	[alarmSeconds setIntValue:[c64 ciaGetAlarmSeconds:cia]];
-	[alarmTenth setIntValue:[c64 ciaGetAlarmTenth:cia]];	
-	[todInterruptEnabled setIntValue:[c64 todIsInterruptEnabled:cia]];
+	[alarmHours setIntValue:[cia getAlarmHours]];
+	[alarmMinutes setIntValue:[cia getAlarmMinutes]];
+	[alarmSeconds setIntValue:[cia getAlarmSeconds]];
+	[alarmTenth setIntValue:[cia getAlarmTenth]];	
+	[todInterruptEnabled setIntValue:[cia todIsInterruptEnabled]];
 }
 
 - (void)refreshVIC
 {
-	if (![VicVideoMode selectItemWithTag:[c64 vicGetDisplayMode]])
+	if (![VicVideoMode selectItemWithTag:[[c64 vic] getDisplayMode]])
 		[VicVideoMode selectItemWithTag:1];
-	if (![VicScreenGeometry selectItemWithTag:[c64 vicGetScreenGeometry]])
+	if (![VicScreenGeometry selectItemWithTag:[[c64 vic] getScreenGeometry]])
 		NSLog(@"Can't refresh screen geometry field");
-	if (![VicMemoryBank selectItemWithTag:[c64 vicGetMemoryBankAddr]])
+	if (![VicMemoryBank selectItemWithTag:[[c64 vic] getMemoryBankAddr]])
 		NSLog(@"Can't refresh memory bank field");
-	if (![VicScreenMemory selectItemWithTag:[c64 vicGetScreenMemoryAddr]])
+	if (![VicScreenMemory selectItemWithTag:[[c64 vic] getScreenMemoryAddr]])
 		NSLog(@"Can't refresh screen memory field");
-	if (![VicCharacterMemory selectItemWithTag:[c64 vicGetCharacterMemoryAddr]])
+	if (![VicCharacterMemory selectItemWithTag:[[c64 vic] getCharacterMemoryAddr]])
 		NSLog(@"Can't refresh screen memory field");
-	[VicDX setIntValue:[c64 vicGetHorizontalRasterScroll]];
-	[VicDXStepper setIntValue:[c64 vicGetHorizontalRasterScroll]];
-	[VicDY setIntValue:[c64 vicGetVerticalRasterScroll]];
-	[VicDYStepper setIntValue:[c64 vicGetVerticalRasterScroll]];
-	[VicSpriteActive setIntValue:[c64 spriteGetVisibilityFlag:[self currentSprite]]];
-	[VicSpriteMulticolor setIntValue:[c64 spriteGetMulticolorFlag:[self currentSprite]]];
-	[VicSpriteStretchX setIntValue:[c64 spriteGetStretchXFlag:[self currentSprite]]];
-	[VicSpriteStretchY setIntValue:[c64 spriteGetStretchYFlag:[self currentSprite]]];
-	[VicSpriteInFront setIntValue:[c64 spriteGetBackgroundPriorityFlag:[self currentSprite]]];
-	[VicSpriteSpriteCollision setIntValue:[c64 spriteGetSpriteSpriteCollisionFlag:[self currentSprite]]];
-	[VicSpriteBackgroundCollision setIntValue:[c64 spriteGetSpriteBackgroundCollisionFlag:[self currentSprite]]];
-	[VicSpriteX setIntValue:[c64 spriteGetX:[self currentSprite]]];
-	[VicSpriteY setIntValue:[c64 spriteGetY:[self currentSprite]]];
-	[VicSpriteColor setIntValue:[c64 spriteGetColor:[self currentSprite]]];
-	[VicRasterline setIntValue:[c64 vicGetRasterLine]];
-	[VicEnableRasterInterrupt setIntValue:[c64 vicGetRasterInterruptFlag]];
-	[VicRasterInterrupt setIntValue:[c64 vicGetRasterInterruptLine]];
+	[VicDX setIntValue:[[c64 vic] getHorizontalRasterScroll]];
+	[VicDXStepper setIntValue:[[c64 vic] getHorizontalRasterScroll]];
+	[VicDY setIntValue:[[c64 vic] getVerticalRasterScroll]];
+	[VicDYStepper setIntValue:[[c64 vic] getVerticalRasterScroll]];
+	[VicSpriteActive setIntValue:[[c64 vic] spriteGetVisibilityFlag:[self currentSprite]]];
+	[VicSpriteMulticolor setIntValue:[[c64 vic] spriteGetMulticolorFlag:[self currentSprite]]];
+	[VicSpriteStretchX setIntValue:[[c64 vic] spriteGetStretchXFlag:[self currentSprite]]];
+	[VicSpriteStretchY setIntValue:[[c64 vic] spriteGetStretchYFlag:[self currentSprite]]];
+	[VicSpriteInFront setIntValue:[[c64 vic] spriteGetBackgroundPriorityFlag:[self currentSprite]]];
+	[VicSpriteSpriteCollision setIntValue:[[c64 vic] spriteGetSpriteSpriteCollisionFlag:[self currentSprite]]];
+	[VicSpriteBackgroundCollision setIntValue:[[c64 vic] spriteGetSpriteBackgroundCollisionFlag:[self currentSprite]]];
+	[VicSpriteX setIntValue:[[c64 vic] spriteGetX:[self currentSprite]]];
+	[VicSpriteY setIntValue:[[c64 vic] spriteGetY:[self currentSprite]]];
+	[VicSpriteColor setIntValue:[[c64 vic] spriteGetColor:[self currentSprite]]];
+	[VicRasterline setIntValue:[[c64 vic] getRasterLine]];
+	[VicEnableRasterInterrupt setIntValue:[[c64 vic] getRasterInterruptFlag]];
+	[VicRasterInterrupt setIntValue:[[c64 vic] getRasterInterruptLine]];
 }
 
 - (void)refreshSID
