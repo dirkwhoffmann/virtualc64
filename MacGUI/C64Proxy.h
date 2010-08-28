@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2010 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@
 @class VICScreen;
 @class AudioDevice;
 
-
 // --------------------------------------------------------------------------
 //                                    CPU
 // --------------------------------------------------------------------------
@@ -36,9 +35,9 @@
 }
 
 - (id) initWithCPU:(CPU *)c;
+- (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
-- (void) dump;
 - (uint16_t) getPC;
 - (void) setPC:(uint16_t)pc;
 - (uint8_t) getSP;
@@ -85,6 +84,34 @@
 @end
 
 // --------------------------------------------------------------------------
+//                                  Memory
+// --------------------------------------------------------------------------
+
+@interface MemoryProxy : NSObject {
+	Memory *mem;
+}
+
+- (id) initWithMemory:(Memory *)m;
+- (void) dump;
+
+- (uint8_t) peek:(uint16_t)addr;
+- (uint16_t) peekWord:(uint16_t)addr;
+- (uint8_t) peekFrom:(uint16_t)addr memtype:(Memory::MemoryType)source;
+- (void) poke:(uint16_t)addr value:(uint8_t)val;
+- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(Memory::MemoryType)source;
+
+- (bool) isValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)source;
+
+- (Memory::WatchpointType) getWatchpointType:(uint16_t)addr;
+- (void) setWatchpoint:(uint16_t)addr;
+- (void) setWatchpoint:(uint16_t)addr watchvalue:(uint8_t)value;
+- (void) setWatchpoint:(uint16_t)addr tag:(Memory::WatchpointType)type watchvalue:(uint8_t)value;
+- (void) deleteWatchpoint:(uint16_t)addr;
+- (uint8_t) getWatchValue:(uint16_t)addr;
+
+@end
+
+// --------------------------------------------------------------------------
 //                                    VIC
 // --------------------------------------------------------------------------
 
@@ -93,6 +120,8 @@
 }
 
 - (id) initWithVIC:(VIC *)v;
+- (void) dump;
+
 - (void *) screenBuffer;
 - (NSColor *) getColor:(VIC::ColorScheme)scheme nr:(int)nr;
 - (void) setColor:(int)color rgba:(NSColor *)rgba;
@@ -176,6 +205,10 @@
 }
 
 - (id) initWithCIA:(CIA *)c;
+- (void) dump;
+- (bool) tracingEnabled;
+- (void) setTraceMode:(bool)b;
+
 - (uint8_t) getDataPortA;
 - (void) setDataPortA:(uint8_t)v;
 - (uint8_t) getDataPortDirectionA;
@@ -255,11 +288,13 @@
 }
 
 - (id) initWithKeyboard:(Keyboard *)kb;
+- (void) dump;
 - (void) pressRunstopKey;
 - (void) releaseRunstopKey;
 - (void) pressCommodoreKey;
 - (void) releaseCommodoreKey;
 - (void) typeFormat;
+- (void) typeRun;
 
 @end 
 
@@ -272,8 +307,42 @@
 }
 
 - (id) initWithSID:(SID *)s;
+- (void) dump;
 - (float) getVolumeControl;
 - (void) setVolumeControl:(float)value;
+
+@end
+
+// --------------------------------------------------------------------------
+//                                   IEC bus
+// -------------------------------------------------------------------------
+
+@interface IECProxy : NSObject {
+	IEC *iec;
+}
+
+- (id) initWithIEC:(IEC *)bus;
+- (void) dump;
+- (bool) tracingEnabled;
+- (void) setTraceMode:(bool)b;
+- (bool) isDriveConnected;
+- (void) connectDrive;
+- (void) disconnectDrive;
+
+@end
+
+// --------------------------------------------------------------------------
+//                                      VIA
+// -------------------------------------------------------------------------
+
+@interface VIAProxy : NSObject {
+	VIA6522 *via;
+}
+
+- (id) initWithVIA:(VIA6522 *)v;
+- (void) dump;
+- (bool) tracingEnabled;
+- (void) setTraceMode:(bool)b;
 
 @end
 
@@ -282,58 +351,70 @@
 // -------------------------------------------------------------------------
 
 @interface VC1541Proxy : NSObject {
-	// CPUProxy cpuproxy;
 	VC1541 *vc1541;
+	CPUProxy *cpuproxy;
+	MemoryProxy *memproxy;
+	VIAProxy *via1proxy;
+	VIAProxy *via2proxy;
 }
 
-- (id) initWithComponent:(VC1541 *)vc1541;
-// - (bool) loadVC1541Rom:(NSString *)filename;
+- (id) initWithVC1541:(VC1541 *)vc;
+- (CPUProxy *) cpu;
+- (MemoryProxy *)mem;
+- (VIAProxy *) via:(int)num;
+
+- (void) dump;
+- (bool) tracingEnabled;
+- (void) setTraceMode:(bool)b;
+- (void) ejectDisk;
 
 @end
 
-
-
-
-
-
-
+// --------------------------------------------------------------------------
+//                                    C64
+// -------------------------------------------------------------------------
 
 @interface C64Proxy : NSObject {	
 	
+	C64 *c64;
+	AudioDevice *audioDevice;
+
 	// Sub proxys
 	CPUProxy *cpuproxy;
+	MemoryProxy *memproxy;
 	VICProxy *vicproxy;
 	CIAProxy *ciaproxy1;
 	CIAProxy *ciaproxy2;
 	SIDProxy *sidproxy;
 	KeyboardProxy *keyboardproxy;
-
-	// ListenerProxy *listener;	
-	C64 *c64;
-	CIA *cia[3];
-	IEC *iec;
-	// CPU *cpu;    // CPU to observe (can be switched between C64 and VC1541)
-	Memory *mem; // Memory to observe (can be switched between C64 and VC1541)
-	AudioDevice *audioDevice;
+	IECProxy *iecproxy;
+	VC1541Proxy *vc1541proxy;
 }
 
 // Initialization
 - (id) initWithDocument:(MyDocument *)d;
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
 - (void) release;
-- (C64 *) getC64;
+
+- (id) initWithContentsOfSnapshot:(Snapshot *)s;
 
 //! Getter
 - (CPUProxy *) cpu;
+- (MemoryProxy *) mem;
 - (VICProxy *) vic;
 - (SIDProxy *) sid;
 - (CIAProxy *) cia:(int)num;
 - (KeyboardProxy *) keyboard;
+- (IECProxy *) iec;
+- (VC1541Proxy *) vc1541;
 
-// C64
+- (void) dump;
+- (void) dumpContentsToSnapshot:(Snapshot *)s;
+
 - (Message *)getMessage;
 
 - (void) reset;
+- (void) fastReset;
 - (void) halt;
 - (void) step;
 - (bool) isRunnable;
@@ -352,88 +433,31 @@
 - (bool) loadCharRom:(NSString *)filename;
 - (bool) loadKernelRom:(NSString *)filename;
 - (bool) loadVC1541Rom:(NSString *)filename;
+
+- (bool) attachCartridge:(Cartridge *)c;
+- (bool) detachCartridge;
 - (bool) isCartridgeAttached;
 
-// - (bool) cpuTracingEnabled;
-//- (void) cpuSetTraceMode:(bool)b;
-- (bool) iecTracingEnabled;
-- (void) iecSetTraceMode:(bool)b;
-- (bool) vc1541CpuTracingEnabled;
-- (void) vc1541CpuSetTraceMode:(bool)b;
-- (bool) viaTracingEnabled;
-- (void) viaSetTraceMode:(bool)b;
+- (bool) mountArchive:(Archive *)a;
+- (bool) flushArchive:(Archive *)a item:(int)nr;
 
-- (void) dumpC64;
-// - (void) dumpC64CPU;
-- (void) dumpC64CIA1;
-- (void) dumpC64CIA2;
-- (void) dumpC64VIC;
-- (void) dumpC64SID;
-- (void) dumpC64Memory;
-- (void) dumpVC1541;
-- (void) dumpVC1541CPU;
-- (void) dumpVC1541VIA1;
-- (void) dumpVC1541VIA2;
-- (void) dumpVC1541Memory;
-- (void) dumpKeyboard;
-- (void) dumpIEC;
+- (bool) getWarpMode;
+- (void) setWarpMode:(bool)b;
+- (long) getCycles;
 
-- (bool) c64GetWarpMode;
-- (void) c64SetWarpMode:(bool)b;
-- (long) c64GetCycles;
-
-// CPU
-
-// JOYSTICK
+// Joystick
 - (void) switchInputDevice:(int)devNo;
 - (void) switchInputDevices;
 - (uint8_t) getPortAssignment:(int)devNo;
 - (Joystick *) addJoystick;
 - (void) removeJoystick:(Joystick *)joystick;
 
-
-// MEM
-- (uint8_t) memPeek:(uint16_t)addr;
-- (uint16_t) memPeekWord:(uint16_t)addr;
-- (uint8_t) memPeekFrom:(uint16_t)addr memtype:(Memory::MemoryType)source;
-- (void) memPoke:(uint16_t)addr value:(uint8_t)val;
-- (void) memPokeTo:(uint16_t)addr value:(uint8_t)val memtype:(Memory::MemoryType)source;
-
-- (bool) memIsValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)source;
-
-- (Memory::WatchpointType) memGetWatchpointType:(uint16_t)addr;
-- (void) memSetWatchpoint:(uint16_t)addr;
-- (void) memSetWatchpoint:(uint16_t)addr watchvalue:(uint8_t)value;
-- (void) memSetWatchpoint:(uint16_t)addr tag:(Memory::WatchpointType)type watchvalue:(uint8_t)value;
-- (void) memDeleteWatchpoint:(uint16_t)addr;
-- (uint8_t) memGetWatchValue:(uint16_t)addr;
-
-
-- (void) fastReset;
-
-// audio hardware
+// Audio hardware
 - (void) enableAudio;
 - (void) disableAudio;
 
-
+// User triggered interrupts
 - (void) keyboardPressRunstopRestore;
-
-// Keyboard
-#if 0
-- (void) keyboardPressRunstopKey;
-- (void) keyboardReleaseRunstopKey;
-- (void) keyboardPressCommodoreKey;
-- (void) keyboardReleaseCommodoreKey;
-- (void) keyboardTypeFormat;
-#endif
-
-// Drive
-- (void) ejectDisk;
-- (bool) isDriveConnected;
-- (void) connectDrive;
-- (void) disconnectDrive;
-
-//- (void) disconnectDrive;
 
 @end
 

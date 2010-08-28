@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2010 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 @implementation CPUProxy
 
-- (id) initWithCPU:(CPU *)c;
+- (id) initWithCPU:(CPU *)c
 {
     self = [super init];	
 	cpu = c;	
@@ -33,7 +33,6 @@
 }
 
 - (void) dump { cpu->dumpState(); }
-
 - (bool) tracingEnabled { return cpu->tracingEnabled(); }
 - (void) setTraceMode:(bool)b { cpu->setTraceMode(b); }
 
@@ -84,17 +83,50 @@
 @end
 
 // --------------------------------------------------------------------------
+//                                   Memory
+// --------------------------------------------------------------------------
+
+@implementation MemoryProxy
+
+- (id) initWithMemory:(Memory *)m
+{
+    self = [super init];	
+	mem = m;	
+	return self;
+}
+
+- (void) dump { mem->dumpState(); }
+
+- (uint8_t) peek:(uint16_t)addr { return mem->peek(addr); }
+- (uint16_t) peekWord:(uint16_t)addr { return mem->peekWord(addr); }
+- (uint8_t) peekFrom:(uint16_t)addr memtype:(Memory::MemoryType)type { return mem->peekFrom(addr, type); }
+- (void) poke:(uint16_t)addr value:(uint8_t)val { mem->poke(addr, val); }
+- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(Memory::MemoryType)type { mem->pokeTo(addr, val, type); }
+- (bool) isValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)type { return mem->isValidAddr(addr, type); }
+
+- (Memory::WatchpointType) getWatchpointType:(uint16_t)addr { return mem->getWatchpointType(addr); }
+- (void) setWatchpoint:(uint16_t)addr { mem->setWatchpoint(addr); }
+- (void) setWatchpoint:(uint16_t)addr watchvalue:(uint8_t)value {mem->setWatchpoint(addr, value); }
+- (void) setWatchpoint:(uint16_t)addr tag:(Memory::WatchpointType)type watchvalue:(uint8_t)value { mem->setWatchpoint(addr, (uint8_t)type, value); }
+- (void) deleteWatchpoint:(uint16_t)addr { mem->deleteWatchpoint(addr); }
+- (uint8_t) getWatchValue:(uint16_t)addr { return mem->getWatchValue(addr); }
+
+@end
+
+// --------------------------------------------------------------------------
 //                                    VIC
 // --------------------------------------------------------------------------
 
 @implementation VICProxy
 
-- (id) initWithVIC:(VIC *)v;
+- (id) initWithVIC:(VIC *)v
 {
     self = [super init];	
 	vic = v;	
 	return self;
 }
+
+- (void) dump { vic->dumpState(); }
 
 - (void *) screenBuffer { return vic->screenBuffer(); }
 - (void) setColorScheme:(VIC::ColorScheme)scheme { vic->setColorScheme(scheme); }
@@ -196,12 +228,16 @@
 
 @implementation CIAProxy
 
-- (id) initWithCIA:(CIA *)c;
+- (id) initWithCIA:(CIA *)c
 {
     self = [super init];	
 	cia = c;	
 	return self;
 }
+
+- (void) dump { cia->dumpState(); }
+- (bool) tracingEnabled { return cia->tracingEnabled(); }
+- (void) setTraceMode:(bool)b { cia->setTraceMode(b); }
 
 - (uint8_t) getDataPortA { return cia->getDataPortA(); }
 - (void) setDataPortA:(uint8_t)v { cia->setDataPortA(v); }
@@ -279,18 +315,20 @@
 
 @implementation KeyboardProxy
 
-- (id) initWithKeyboard:(Keyboard *)kb;
+- (id) initWithKeyboard:(Keyboard *)kb
 {
     self = [super init];	
 	keyboard = kb;	
 	return self;
 }
 
+- (void) dump { keyboard->dumpState(); }
 - (void) pressRunstopKey { keyboard->pressRunstopKey(); }
 - (void) releaseRunstopKey { keyboard->releaseRunstopKey(); }
 - (void) pressCommodoreKey { keyboard->pressCommodoreKey(); }
 - (void) releaseCommodoreKey { keyboard->releaseCommodoreKey(); }
 - (void) typeFormat { keyboard->typeFormat(); }
+- (void) typeRun { keyboard->typeRun(); }
 
 @end
 
@@ -300,12 +338,14 @@
 
 @implementation SIDProxy
 
-- (id) initWithSID:(SID *)s;
+- (id) initWithSID:(SID *)s
 {
     self = [super init];	
 	sid = s;	
 	return self;
 }
+
+- (void) dump { sid->dumpState(); }
 
 - (float) getVolumeControl 
 {
@@ -319,47 +359,143 @@
 
 @end
 
+// --------------------------------------------------------------------------
+//                                   IEC bus
+// -------------------------------------------------------------------------
+
+@implementation IECProxy
+
+- (id) initWithIEC:(IEC *)bus
+{
+    self = [super init];	
+	iec = bus;	
+	return self;
+}
+
+- (void) dump { iec->dumpState(); }
+- (bool) tracingEnabled { return iec->tracingEnabled(); }
+- (void) setTraceMode:(bool)b { iec->setTraceMode(b); }
+- (void) connectDrive { iec->connectDrive(); }
+- (void) disconnectDrive { iec->disconnectDrive(); }
+- (bool) isDriveConnected { return iec->driveIsConnected(); }
+
+@end
+
+// --------------------------------------------------------------------------
+//                                     VIA
+// -------------------------------------------------------------------------
+
+@implementation VIAProxy
+
+- (id) initWithVIA:(VIA6522 *)v
+{
+    self = [super init];	
+	via = v;
+	return self;
+}
+
+- (void) dump { via->dumpState(); }
+- (bool) tracingEnabled { return via->tracingEnabled(); }
+- (void) setTraceMode:(bool)b { via->setTraceMode(b); }
+
+@end
+
+// --------------------------------------------------------------------------
+//                                    VC1541
+// -------------------------------------------------------------------------
+
+@implementation VC1541Proxy
+
+- (id) initWithVC1541:(VC1541 *)vc
+{
+    self = [super init];	
+	vc1541 = vc;
+	cpuproxy = [[CPUProxy alloc] initWithCPU:vc->cpu];
+	memproxy = [[MemoryProxy alloc] initWithMemory:vc->mem];
+	via1proxy = [[VIAProxy alloc] initWithVIA:vc->via1];
+	via2proxy = [[VIAProxy alloc] initWithVIA:vc->via2];
+	return self;
+}
+
+- (CPUProxy *) cpu
+{
+	return cpuproxy;
+}
+
+- (MemoryProxy *)mem
+{
+	return memproxy;
+}
+
+- (VIAProxy *) via:(int)num {
+	switch (num) {
+		case 1:
+			return via1proxy;
+		case 2:
+			return via2proxy;
+		default:
+			assert(0);
+			return NULL;
+	}
+}
+
+- (void) dump { vc1541->dumpState(); }
+- (bool) tracingEnabled { return vc1541->tracingEnabled(); }
+- (void) setTraceMode:(bool)b { vc1541->setTraceMode(b); }
+- (void) ejectDisk { vc1541->ejectDisc(); }
+
+@end
+
+// --------------------------------------------------------------------------
+//                                     C64
+// -------------------------------------------------------------------------
 
 @implementation C64Proxy
 
-// --------------------------------------------------------------------------
-// Initialization
-// --------------------------------------------------------------------------
-
-- (id) initWithDocument:(MyDocument *)d;
+- (id) initWithDocument:(MyDocument *)d
 {
 	return [self initWithDocument:d withScreen:nil];
 }
 
-- (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
+- (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s
 {
     self = [super init];
 	
 	// Create virtual machine and initialize references
 	c64 = new C64();
 	[s setC64:c64];
-	cia[0] = NULL; // unused
-	cia[1] = c64->cia1;
-	cia[2] = c64->cia2;
-	iec = c64->iec;
-	mem = c64->mem;
+	// cia[0] = NULL; // unused
+	// cia[1] = c64->cia1;
+	// cia[2] = c64->cia2;
+	// iec = c64->iec;
+	// mem = c64->mem;
 	
 	// Create sub proxys
 	cpuproxy = [[CPUProxy alloc] initWithCPU:c64->cpu];
+	memproxy = [[MemoryProxy alloc] initWithMemory:c64->mem];
 	vicproxy = [[VICProxy alloc] initWithVIC:c64->vic];
 	ciaproxy1 = [[CIAProxy alloc] initWithCIA:c64->cia1];
 	ciaproxy2 = [[CIAProxy alloc] initWithCIA:c64->cia2];
 	sidproxy = [[SIDProxy alloc] initWithSID:c64->sid];
 	keyboardproxy = [[KeyboardProxy alloc] initWithKeyboard:c64->keyboard];
-		
+	iecproxy = [[IECProxy alloc] initWithIEC:c64->iec];
+	vc1541proxy = [[VC1541Proxy alloc] initWithVC1541:c64->floppy];
+
 	// Initialize CoreAudio sound interface
-	audioDevice = [[AudioDevice alloc] initWithSID:c64->sid];
-	if (!audioDevice)
-	{
+	if (!(audioDevice = [[AudioDevice alloc] initWithSID:c64->sid])) {
 		NSLog(@"WARNING: Couldn't initialize AudioDevice. Sound disabled.");
 	}
 		
     return self;
+}
+
+- (id) initWithContentsOfSnapshot:(Snapshot *)snapshot
+{
+	if (snapshot != NULL) {
+		snapshot->writeToC64(c64);
+	}
+	
+	return self;
 }
 
 - (void) release
@@ -378,33 +514,20 @@
 }
 
 - (CPUProxy *) cpu { return cpuproxy; }
+- (MemoryProxy *) mem { return memproxy; }
 - (VICProxy *) vic { return vicproxy; }
 - (CIAProxy *) cia:(int)num { if (num == 1) return ciaproxy1; else if (num == 2) return ciaproxy2; else assert(0); } 
 - (SIDProxy *) sid { return sidproxy; }
 - (KeyboardProxy *) keyboard { return keyboardproxy; }
+- (IECProxy *) iec { return iecproxy; }
+- (VC1541Proxy *) vc1541 { return vc1541proxy; }
 
-
-
-// TO BE DEPRECATED...
-- (C64 *) getC64
-{
-	return c64;
-}
-
-
-
-
-
-// --------------------------------------------------------------------------
-// Bridge functions (cross the Objective-C / C++)
-// --------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------
-// C64
-// --------------------------------------------------------------------------
+- (void) dump { c64->dumpState(); }
+- (void) dumpContentsToSnapshot:(Snapshot *)snapshot { snapshot->initWithContentsOfC64(c64); }
 
 - (Message *)getMessage { return c64->getMessage(); }
 - (void) reset { c64->reset(); }
+- (void) fastReset { c64->fastReset(); }
 - (void) halt { c64->halt(); }
 - (void) step { c64->step(); }
 - (void) run { c64->run(); }
@@ -423,95 +546,32 @@
 - (bool) loadCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
+
+- (bool) attachCartridge:(Cartridge *)c { return c64->attachCartridge(c); }
+- (bool) detachCartridge { return c64->detachCartridge(); }
 - (bool) isCartridgeAttached { return c64->isCartridgeAttached(); }
-	
-- (bool) c64GetWarpMode { return c64->getWarpMode(); }
-- (void) c64SetWarpMode:(bool)b {  c64->setWarpMode(b); }
 
-// - (bool) cpuTracingEnabled { return cpu->tracingEnabled(); }
-// - (void) cpuSetTraceMode:(bool)b { cpu->setTraceMode(b); }
-- (bool) iecTracingEnabled { return iec->tracingEnabled(); }
-- (void) iecSetTraceMode:(bool)b { iec->setTraceMode(b); }
-- (bool) vc1541CpuTracingEnabled { return c64->floppy->cpu->tracingEnabled(); }
-- (void) vc1541CpuSetTraceMode:(bool)b { c64->floppy->cpu->setTraceMode(b); }
-- (bool) viaTracingEnabled { return c64->floppy->via2->tracingEnabled(); }
-- (void) viaSetTraceMode:(bool)b { c64->floppy->via2->setTraceMode(b); }
+- (bool) mountArchive:(Archive *)a { return c64->mountArchive(a); }
+- (bool) flushArchive:(Archive *)a item:(int)nr { return c64->flushArchive(a,nr); }
 
-- (void) dumpC64 { c64->dumpState(); }
-- (void) dumpC64CIA1 { c64->cia1->dumpState(); }
-- (void) dumpC64CIA2 { c64->cia2->dumpState(); }
-- (void) dumpC64VIC { c64->vic->dumpState(); }
-- (void) dumpC64SID { c64->sid->dumpState(); }
-- (void) dumpC64Memory { c64->mem->dumpState(); }
-- (void) dumpVC1541 { c64->floppy->dumpState(); }
-- (void) dumpVC1541CPU { c64->floppy->cpu->dumpState(); }
-- (void) dumpVC1541VIA1 { c64->floppy->via1->dumpState(); }
-- (void) dumpVC1541VIA2 { c64->floppy->via2->dumpState(); }
-- (void) dumpVC1541Memory { c64->floppy->mem->dumpState(); }
-- (void) dumpKeyboard { c64->keyboard->dumpState(); }
-- (void) dumpIEC { c64->iec->dumpState(); }
-	
-- (long) c64GetCycles { return (long)c64->getCycles(); }
+- (bool) getWarpMode { return c64->getWarpMode(); }
+- (void) setWarpMode:(bool)b {  c64->setWarpMode(b); }	
+- (long) getCycles { return (long)c64->getCycles(); }
 
-// --------------------------------------------------------------------------
-// JOYSTICK
-// --------------------------------------------------------------------------
+// Joystick
 - (void) switchInputDevice:(int)devNo { c64->switchInputDevice( devNo ); }
 - (void) switchInputDevices { c64->switchInputDevices(); }
 - (uint8_t) getPortAssignment:(int)devNo { return c64->getDeviceOfPort(devNo); }
 - (Joystick *) addJoystick { return c64->addJoystick(); }
 - (void) removeJoystick:(Joystick *)joystick { return c64->removeJoystick( joystick ); }
 
-// --------------------------------------------------------------------------
-// MEM
-// --------------------------------------------------------------------------
+// Audio hardware
+- (void) enableAudio { [audioDevice startPlayback]; }
+- (void) disableAudio {	[audioDevice stopPlayback]; }
 
-- (uint8_t) memPeek:(uint16_t)addr { return mem->peek(addr); }
-- (uint16_t) memPeekWord:(uint16_t)addr { return mem->peekWord(addr); }
-- (uint8_t) memPeekFrom:(uint16_t)addr memtype:(Memory::MemoryType)type { return mem->peekFrom(addr, type); }
-- (void) memPoke:(uint16_t)addr value:(uint8_t)val { mem->poke(addr, val); }
-- (void) memPokeTo:(uint16_t)addr value:(uint8_t)val memtype:(Memory::MemoryType)type { mem->pokeTo(addr, val, type); }
-- (bool) memIsValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)type { return mem->isValidAddr(addr, type); }
-
-- (Memory::WatchpointType) memGetWatchpointType:(uint16_t)addr { return mem->getWatchpointType(addr); }
-- (void) memSetWatchpoint:(uint16_t)addr { mem->setWatchpoint(addr); }
-- (void) memSetWatchpoint:(uint16_t)addr watchvalue:(uint8_t)value {mem->setWatchpoint(addr, value); }
-- (void) memSetWatchpoint:(uint16_t)addr tag:(Memory::WatchpointType)type watchvalue:(uint8_t)value { mem->setWatchpoint(addr, (uint8_t)type, value); }
-- (void) memDeleteWatchpoint:(uint16_t)addr { mem->deleteWatchpoint(addr); }
-- (uint8_t) memGetWatchValue:(uint16_t)addr { return mem->getWatchValue(addr); }
-
-
-
-- (void) fastReset { c64->fastReset(); }
-
-
-// --------------------------------------------------------------------------
-// audio hardware
-// --------------------------------------------------------------------------
-
-- (void) enableAudio
-{
-	/* if the audio hardware couldn't be initialized, nothing wil happen here (message to nil) */
-	[audioDevice startPlayback];
-}
-- (void) disableAudio
-{
-	/* if the audio hardware couldn't be initialized, nothing wil happen here (message to nil) */
-	[audioDevice stopPlayback];
-}
-
-
+// User triggered interrupts
 - (void) keyboardPressRunstopRestore { c64->runstopRestore(); }
 
-
-// --------------------------------------------------------------------------
-// Drive
-// --------------------------------------------------------------------------
-
-- (void) ejectDisk { c64->floppy->ejectDisc(); }
-- (void) connectDrive { c64->iec->connectDrive(); }
-- (void) disconnectDrive { c64->iec->disconnectDrive(); }
-- (bool) isDriveConnected { return c64->iec->driveIsConnected(); }
 @end
 
 
