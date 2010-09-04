@@ -50,7 +50,7 @@ public:
 
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
-	bool loadFromFile(FILE *file, struct stat fileProperties);
+	bool readDataFromFile(FILE *file, struct stat fileProperties);
 	void cleanup();
 	const char *getTypeOfContainer();
 	

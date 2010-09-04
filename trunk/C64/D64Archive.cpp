@@ -87,7 +87,7 @@ D64Archive *D64Archive::archiveFromFile(const char *filename)
 	D64Archive *archive;
 	
 	archive = new D64Archive();	
-	if (!archive->loadFile(filename)) {
+	if (!archive->readFromFile(filename)) {
 		delete archive;
 		archive = NULL;
 	}
@@ -125,7 +125,7 @@ bool D64Archive::fileIsValid(const char *filename)
 	return fileOK;
 }
 
-bool D64Archive::loadFromFile(FILE *file, struct stat fileProperties)
+bool D64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
 {
 	unsigned track = 0;
 	int numberOfErrors = 0;

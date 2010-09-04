@@ -34,7 +34,7 @@ P00Archive *P00Archive::archiveFromFile(const char *filename)
 	P00Archive *archive;
 
 	archive = new P00Archive();	
-	if (!archive->loadFile(filename)) {
+	if (!archive->readFromFile(filename)) {
 		delete archive;
 		archive = NULL;
 	}
@@ -69,7 +69,7 @@ bool P00Archive::fileIsValid(const char *filename)
 	return true;
 }
 
-bool P00Archive::loadFromFile(FILE *file, struct stat fileProperties)
+bool P00Archive::readDataFromFile(FILE *file, struct stat fileProperties)
 {
 	int c = 0;
 	

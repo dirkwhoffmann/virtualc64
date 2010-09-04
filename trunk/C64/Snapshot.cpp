@@ -33,7 +33,7 @@ Snapshot::snapshotFromFile(const char *filename)
 	Snapshot *snapshot;
 	
 	snapshot = new Snapshot();	
-	if (!snapshot->loadFile(filename)) {
+	if (!snapshot->readFromFile(filename)) {
 		delete snapshot;
 		snapshot = NULL;
 	}
@@ -68,7 +68,7 @@ Snapshot::fileIsValid(const char *filename)
 }
 
 bool 
-Snapshot::loadFromFile(FILE *file, struct stat fileProperties)
+Snapshot::readDataFromFile(FILE *file, struct stat fileProperties)
 {
 	int i, c;
 	
@@ -98,27 +98,8 @@ Snapshot::loadFromFile(FILE *file, struct stat fileProperties)
 }
 
 bool 
-Snapshot::initWithContentsOfC64(C64 *c64)
-{
-	uint8_t *ptr = data;
-	major = 1;
-	minor = 0;
-	memcpy(screen, c64->vic->screenBuffer(), sizeof(screen));
-	c64->save(&ptr);
-	size = ptr - data;
-	
-	fprintf(stderr, "initWithContentsOfC64: Packed state into %d bytes\n", size);
-	return true;
-}
-
-bool 
-Snapshot::writeToFile(const char *filename)
-{
-	FILE *file;
-	
-	if (!(file = fopen(filename, "w")))
-		return false;
-	
+Snapshot::writeDataToFile(FILE *file, struct stat fileProperties)
+{	
 	// Write magic bytes
 	fputc((int)'V', file);
 	fputc((int)'C', file);
@@ -134,10 +115,23 @@ Snapshot::writeToFile(const char *filename)
 		fputc((int)data[i], file);
 	}
 
-	fclose(file);
 	return true;	
 }
 
+bool 
+Snapshot::initWithContentsOfC64(C64 *c64)
+{
+	uint8_t *ptr = data;
+	major = 1;
+	minor = 0;
+	memcpy(screen, c64->vic->screenBuffer(), sizeof(screen));
+	c64->save(&ptr);
+	size = ptr - data;
+	
+	fprintf(stderr, "initWithContentsOfC64: Packed state into %d bytes\n", size);
+	return true;
+}
+	
 bool 
 Snapshot::writeToC64(C64 *c64)
 {

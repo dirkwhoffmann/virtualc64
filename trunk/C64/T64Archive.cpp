@@ -34,7 +34,7 @@ T64Archive *T64Archive::archiveFromFile(const char *filename)
 	T64Archive *archive;
 	
 	archive = new T64Archive();	
-	if (!archive->loadFile(filename)) {
+	if (!archive->readFromFile(filename)) {
 		delete archive;
 		archive = NULL;
 	}
@@ -73,7 +73,7 @@ bool T64Archive::fileIsValid(const char *filename)
 	return true;
 }
 
-bool T64Archive::loadFromFile(FILE *file, struct stat fileProperties)
+bool T64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
 {
 	int c;
 	

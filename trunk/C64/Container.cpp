@@ -41,7 +41,20 @@ Container::getName()
  	return name ? name : "";
 }
 
-bool Container::loadFile(const char *filename)
+bool 
+Container::readDataFromFile(FILE *file, struct stat fileProperties)
+{
+	return false;
+}
+
+bool 
+Container::writeDataToFile(FILE *file, struct stat fileProperties)
+{
+	return false;
+}
+
+bool 
+Container::readFromFile(const char *filename)
 {
 	struct stat fileProperties;
 	FILE *file;
@@ -74,7 +87,7 @@ bool Container::loadFile(const char *filename)
 	cleanup();
 
 	// Load data
-	if (!loadFromFile(file, fileProperties)) {
+	if (!readDataFromFile(file, fileProperties)) {
 		fclose(file);
 		return false;
 	}
@@ -88,5 +101,28 @@ bool Container::loadFile(const char *filename)
 		free(name);
 	name = strdup(ChangeExtension(ExtractFilename(getPath()), "").c_str());
 		   
+	return true;
+}
+
+bool 
+Container::writeToFile(const char *filename)
+{
+	struct stat fileProperties;
+	FILE *file;
+	
+	assert (filename != NULL);
+		
+	// Open file
+	if (!(file = fopen(filename, "w"))) {
+		return false;
+	}
+		
+	// Write data
+	if (!writeDataToFile(file, fileProperties)) {
+		fclose(file);
+		return false;
+	}
+	fclose(file);
+		
 	return true;
 }

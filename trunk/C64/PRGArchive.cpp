@@ -34,7 +34,7 @@ PRGArchive *PRGArchive::archiveFromFile(const char *filename)
 	PRGArchive *archive;
 	
 	archive = new PRGArchive();	
-	if (!archive->loadFile(filename)) {
+	if (!archive->readFromFile(filename)) {
 		delete archive;
 		archive = NULL;
 	}
@@ -67,7 +67,7 @@ bool PRGArchive::fileIsValid(const char *filename)
 	return true;
 }
 
-bool PRGArchive::loadFromFile(FILE *file, struct stat fileProperties)
+bool PRGArchive::readDataFromFile(FILE *file, struct stat fileProperties)
 {
 	int c = 0;
 	

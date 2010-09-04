@@ -40,7 +40,10 @@ private:
 	virtual bool fileIsValid(const char *filename) = 0;
 
 	//! Load container data from file
-	virtual bool loadFromFile(FILE *file, struct stat fileProperties) = 0;
+	virtual bool readDataFromFile(FILE *file, struct stat fileProperties);
+
+	//! Save container data to file
+	virtual bool writeDataToFile(FILE *file, struct stat fileProperties);
 
 public:
 	
@@ -59,8 +62,11 @@ public:
 	//! Type of container in plain text (T64, D64, PRG, ...)
 	virtual const char *getTypeOfContainer() = 0;
 	
-	//! Get container data from file
-	bool loadFile(const char *filename);
+	//! Read container data from file
+	bool readFromFile(const char *filename);
+	
+	//! Write container data to file
+	bool writeToFile(const char *filename);
 	
 };
 
