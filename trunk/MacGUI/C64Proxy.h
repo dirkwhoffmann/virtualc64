@@ -26,17 +26,6 @@
 @class VICScreen;
 @class AudioDevice;
 
-// --------------------------------------------------------------------------
-//                                  Snapshot
-// -------------------------------------------------------------------------
-
-#if 0
-@interface V64Snapshot : NSObject {
-	Snapshot *snapshot;
-}
-
-- (id) initWithContentsOfC64:(C64Proxy *)c64;
-#endif
 
 
 // --------------------------------------------------------------------------
@@ -407,6 +396,7 @@
 	VC1541Proxy *vc1541;
 }
 
+@property (readonly) C64 *c64;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
 @property (readonly) VICProxy *vic;
@@ -475,6 +465,25 @@
 
 // User triggered interrupts
 - (void) keyboardPressRunstopRestore;
+
+@end
+
+// --------------------------------------------------------------------------
+//                                  Snapshot
+// -------------------------------------------------------------------------
+
+@interface V64Snapshot : NSObject {
+	Snapshot *snapshot;
+}
+
++ (id) snapshotFromC64:(C64Proxy *)c64;
++ (id) snapshotFromFile:(NSString *)path;
+
+- (bool) readDataFromC64:(C64Proxy *)c64;
+- (bool) readDataFromFile:(NSString *)path;
+- (bool) writeDataToC64:(C64Proxy *)c64;
+- (bool) writeDataToFile:(NSString *)path;
+
 
 @end
 
