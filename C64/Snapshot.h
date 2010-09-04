@@ -54,9 +54,9 @@ public:
 	//! Destructor
 	~Snapshot();
 			
-	//! Factory method
+	//! Factory methods
 	static Snapshot *snapshotFromFile(const char *filename);
-
+	
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
 	bool loadFromFile(FILE *file, struct stat fileProperties);

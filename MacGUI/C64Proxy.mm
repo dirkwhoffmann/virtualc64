@@ -19,6 +19,7 @@
 #import "MyDocument.h"
 #import "AudioDevice.h"
 
+
 // --------------------------------------------------------------------------
 //                                    CPU
 // --------------------------------------------------------------------------
@@ -444,7 +445,7 @@
 
 @implementation C64Proxy
 
-@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, vc1541;
+@synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, iec, vc1541;
 
 - (id) initWithDocument:(MyDocument *)d
 {
@@ -556,5 +557,58 @@
 
 @end
 
+// --------------------------------------------------------------------------
+//                                  Snapshot
+// -------------------------------------------------------------------------
+
+@implementation V64Snapshot
+
+- (id) init
+{
+	if (!(self = [super init]))
+		return nil;
+	
+	snapshot = new Snapshot;
+	return self;
+}
+
+- (void) dealloc
+{	
+	if (snapshot)
+		delete snapshot;
+	
+	[super dealloc];
+}
+
++ (id) snapshotFromC64:(C64Proxy *)c64;
+{
+	V64Snapshot *newSnapshot = [[self alloc] init];
+	
+	if (![newSnapshot readDataFromC64:c64]) {
+		[newSnapshot release];
+		newSnapshot = nil;
+	}
+	
+	return newSnapshot;
+}
+
++ (id) snapshotFromFile:(NSString *)path;
+{
+	V64Snapshot *newSnapshot = [[self alloc] init];
+	
+	if (![newSnapshot readDataFromFile:path]) {
+		[newSnapshot release];
+		newSnapshot = nil;
+	}
+	
+	return newSnapshot;
+}
+
+- (bool) readDataFromFile:(NSString *)path { return snapshot->loadFile([path UTF8String]); }
+- (bool) readDataFromC64:(C64Proxy *)c64 { return snapshot->initWithContentsOfC64([c64 c64]); }
+- (bool) writeDataToC64:(C64Proxy *)c64 { return snapshot->writeToC64([c64 c64]); }
+- (bool) writeDataToFile:(NSString *)path { return snapshot->writeToFile([path UTF8String]); }
+
+@end
 
 	

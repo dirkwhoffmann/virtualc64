@@ -344,14 +344,19 @@
 		NSLog(@"File is not of type VC64\n");
 		return NO;
 	}
-	
+
+#if 0
 	snapshot = new Snapshot();
 	[c64 dumpContentsToSnapshot:snapshot];
 	// snapshot->initWithContentsOfC64([c64 getC64]);
 	snapshot->writeToFile([filename UTF8String]);
 	delete snapshot;
 	snapshot = NULL;
-
+#endif
+	V64Snapshot *s = [V64Snapshot snapshotFromC64:c64];
+	[s writeDataToFile:filename];
+	[s release];
+	
 	return YES;
 }
 
