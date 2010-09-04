@@ -59,15 +59,13 @@ public:
 	
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
-	bool loadFromFile(FILE *file, struct stat fileProperties);
+	bool readDataFromFile(FILE *file, struct stat fileProperties);
+	bool writeDataToFile(FILE *file, struct stat fileProperties);
 	void cleanup();
 	const char *getTypeOfContainer();
 	
 	//! Take snapshot from a virtual computer
 	bool initWithContentsOfC64(C64 *c64);
-
-	//! Save snapshot to file
-	bool writeToFile(const char *filename);
 	
 	//! Initialize virtual computer with snapshot data
 	bool writeToC64(C64 *c64);

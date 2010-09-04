@@ -604,7 +604,7 @@
 	return newSnapshot;
 }
 
-- (bool) readDataFromFile:(NSString *)path { return snapshot->loadFile([path UTF8String]); }
+- (bool) readDataFromFile:(NSString *)path { return snapshot->readFromFile([path UTF8String]); }
 - (bool) readDataFromC64:(C64Proxy *)c64 { return snapshot->initWithContentsOfC64([c64 c64]); }
 - (bool) writeDataToC64:(C64Proxy *)c64 { return snapshot->writeToC64([c64 c64]); }
 - (bool) writeDataToFile:(NSString *)path { return snapshot->writeToFile([path UTF8String]); }

@@ -52,7 +52,7 @@ Cartridge::cartridgeFromFile(const char *filename)
 	Cartridge *cartridge;
 	
 	cartridge = new Cartridge();	
-	if (!cartridge->loadFile(filename)) {
+	if (!cartridge->readFromFile(filename)) {
 		delete cartridge;
 		cartridge = NULL;
 	}
@@ -80,7 +80,7 @@ bool Cartridge::fileIsValid(const char *filename)
 }
 
 bool 
-Cartridge::loadFromFile(FILE *file, struct stat fileProperties)
+Cartridge::readDataFromFile(FILE *file, struct stat fileProperties)
 {
 	int c = 0;
 	unsigned i = 0;
