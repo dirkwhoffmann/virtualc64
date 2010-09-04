@@ -93,8 +93,9 @@ extern NSString *VC64CustomCol15Key;
 	IBOutlet NSColorWell *colorWell15;	
 }
 
-- (void)setC64:(C64Proxy *)proxy;
-- (void)setDoc:(MyDocument *)doc;
+@property C64Proxy *c64;
+@property MyDocument *mydoc;
+
 - (void)updateColorWell:(NSColorWell *)well color:(int)rgba;
 - (void)updateColorWells:(VIC::ColorScheme)scheme;
 

@@ -40,6 +40,9 @@ private:
 	//! Binary snapshot data
 	uint8_t data[MAX_SNAPSHOT_SIZE];
 		
+	//! Copy of the screen buffer
+	int screen[512 * 512];
+	
 	//! Actual snapshot size
 	int size;
 	

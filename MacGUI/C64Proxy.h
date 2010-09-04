@@ -27,6 +27,19 @@
 @class AudioDevice;
 
 // --------------------------------------------------------------------------
+//                                  Snapshot
+// -------------------------------------------------------------------------
+
+#if 0
+@interface V64Snapshot : NSObject {
+	Snapshot *snapshot;
+}
+
+- (id) initWithContentsOfC64:(C64Proxy *)c64;
+#endif
+
+
+// --------------------------------------------------------------------------
 //                                    CPU
 // --------------------------------------------------------------------------
 
@@ -352,15 +365,18 @@
 
 @interface VC1541Proxy : NSObject {
 	VC1541 *vc1541;
-	CPUProxy *cpuproxy;
-	MemoryProxy *memproxy;
-	VIAProxy *via1proxy;
-	VIAProxy *via2proxy;
+	CPUProxy *cpu;
+	MemoryProxy *mem;
+	VIAProxy *via1;
+	VIAProxy *via2;
 }
 
+@property (readonly) CPUProxy *cpu;
+@property (readonly) MemoryProxy *mem;
+@property (readonly) VIAProxy *via1;
+@property (readonly) VIAProxy *via2;
+
 - (id) initWithVC1541:(VC1541 *)vc;
-- (CPUProxy *) cpu;
-- (MemoryProxy *)mem;
 - (VIAProxy *) via:(int)num;
 
 - (void) dump;
@@ -380,16 +396,26 @@
 	AudioDevice *audioDevice;
 
 	// Sub proxys
-	CPUProxy *cpuproxy;
-	MemoryProxy *memproxy;
-	VICProxy *vicproxy;
-	CIAProxy *ciaproxy1;
-	CIAProxy *ciaproxy2;
-	SIDProxy *sidproxy;
-	KeyboardProxy *keyboardproxy;
-	IECProxy *iecproxy;
-	VC1541Proxy *vc1541proxy;
+	CPUProxy *cpu;
+	MemoryProxy *mem;
+	VICProxy *vic;
+	CIAProxy *cia1;
+	CIAProxy *cia2;
+	SIDProxy *sid;
+	KeyboardProxy *keyboard;
+	IECProxy *iec;
+	VC1541Proxy *vc1541;
 }
+
+@property (readonly) CPUProxy *cpu;
+@property (readonly) MemoryProxy *mem;
+@property (readonly) VICProxy *vic;
+@property (readonly) CIAProxy *cia1;
+@property (readonly) CIAProxy *cia2;
+@property (readonly) SIDProxy *sid;
+@property (readonly) KeyboardProxy *keyboard;
+@property (readonly) IECProxy *iec;
+@property (readonly) VC1541Proxy *vc1541;
 
 // Initialization
 - (id) initWithDocument:(MyDocument *)d;
@@ -397,16 +423,7 @@
 - (void) release;
 
 - (id) initWithContentsOfSnapshot:(Snapshot *)s;
-
-//! Getter
-- (CPUProxy *) cpu;
-- (MemoryProxy *) mem;
-- (VICProxy *) vic;
-- (SIDProxy *) sid;
 - (CIAProxy *) cia:(int)num;
-- (KeyboardProxy *) keyboard;
-- (IECProxy *) iec;
-- (VC1541Proxy *) vc1541;
 
 - (void) dump;
 - (void) dumpContentsToSnapshot:(Snapshot *)s;

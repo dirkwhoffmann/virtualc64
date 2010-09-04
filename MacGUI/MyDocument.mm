@@ -643,7 +643,7 @@
 	// Measure clock frequency and frame rate
 	long currentTime   = msec();
 	long currentCycles = [c64 getCycles];
-	long currentFrames = [screen getFrames];
+	long currentFrames = [screen frames];
 	long elapsedTime   = currentTime - timeStamp;
 	long elapsedCycles = currentCycles - cycleCount;
 	long elapsedFrames = currentFrames - frameCount;
@@ -1164,7 +1164,7 @@
 	if (!preferenceController) {
 		preferenceController = [[PreferenceController alloc] init];
 		[preferenceController setC64:c64];
-		[preferenceController setDoc:self];
+		[preferenceController setMydoc:self];
 	}
 	[preferenceController showWindow:self];
 }

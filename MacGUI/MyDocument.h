@@ -204,8 +204,9 @@
 
 @property bool warpLoad;
 @property bool alwaysWarp;
-@property (assign) Archive *archive;
-@property (assign) Cartridge *cartridge;
+@property Archive *archive;
+@property Cartridge *cartridge;
+
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)attachCartridge:(NSString *)path;
 
