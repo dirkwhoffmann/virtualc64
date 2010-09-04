@@ -406,33 +406,25 @@
 
 @implementation VC1541Proxy
 
+@synthesize cpu, mem, via1, via2;
+
 - (id) initWithVC1541:(VC1541 *)vc
 {
     self = [super init];	
 	vc1541 = vc;
-	cpuproxy = [[CPUProxy alloc] initWithCPU:vc->cpu];
-	memproxy = [[MemoryProxy alloc] initWithMemory:vc->mem];
-	via1proxy = [[VIAProxy alloc] initWithVIA:vc->via1];
-	via2proxy = [[VIAProxy alloc] initWithVIA:vc->via2];
+	cpu = [[CPUProxy alloc] initWithCPU:vc->cpu];
+	mem = [[MemoryProxy alloc] initWithMemory:vc->mem];
+	via1 = [[VIAProxy alloc] initWithVIA:vc->via1];
+	via2 = [[VIAProxy alloc] initWithVIA:vc->via2];
 	return self;
-}
-
-- (CPUProxy *) cpu
-{
-	return cpuproxy;
-}
-
-- (MemoryProxy *)mem
-{
-	return memproxy;
 }
 
 - (VIAProxy *) via:(int)num {
 	switch (num) {
 		case 1:
-			return via1proxy;
+			return [self via1];
 		case 2:
-			return via2proxy;
+			return [self via2];
 		default:
 			assert(0);
 			return NULL;
@@ -452,6 +444,8 @@
 
 @implementation C64Proxy
 
+@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, vc1541;
+
 - (id) initWithDocument:(MyDocument *)d
 {
 	return [self initWithDocument:d withScreen:nil];
@@ -464,22 +458,17 @@
 	// Create virtual machine and initialize references
 	c64 = new C64();
 	[s setC64:c64];
-	// cia[0] = NULL; // unused
-	// cia[1] = c64->cia1;
-	// cia[2] = c64->cia2;
-	// iec = c64->iec;
-	// mem = c64->mem;
 	
 	// Create sub proxys
-	cpuproxy = [[CPUProxy alloc] initWithCPU:c64->cpu];
-	memproxy = [[MemoryProxy alloc] initWithMemory:c64->mem];
-	vicproxy = [[VICProxy alloc] initWithVIC:c64->vic];
-	ciaproxy1 = [[CIAProxy alloc] initWithCIA:c64->cia1];
-	ciaproxy2 = [[CIAProxy alloc] initWithCIA:c64->cia2];
-	sidproxy = [[SIDProxy alloc] initWithSID:c64->sid];
-	keyboardproxy = [[KeyboardProxy alloc] initWithKeyboard:c64->keyboard];
-	iecproxy = [[IECProxy alloc] initWithIEC:c64->iec];
-	vc1541proxy = [[VC1541Proxy alloc] initWithVC1541:c64->floppy];
+	cpu = [[CPUProxy alloc] initWithCPU:c64->cpu];
+	mem = [[MemoryProxy alloc] initWithMemory:c64->mem];
+	vic = [[VICProxy alloc] initWithVIC:c64->vic];
+	cia1 = [[CIAProxy alloc] initWithCIA:c64->cia1];
+	cia2 = [[CIAProxy alloc] initWithCIA:c64->cia2];
+	sid = [[SIDProxy alloc] initWithSID:c64->sid];
+	keyboard = [[KeyboardProxy alloc] initWithKeyboard:c64->keyboard];
+	iec = [[IECProxy alloc] initWithIEC:c64->iec];
+	vc1541 = [[VC1541Proxy alloc] initWithVC1541:c64->floppy];
 
 	// Initialize CoreAudio sound interface
 	if (!(audioDevice = [[AudioDevice alloc] initWithSID:c64->sid])) {
@@ -513,14 +502,7 @@
 	c64 = NULL;
 }
 
-- (CPUProxy *) cpu { return cpuproxy; }
-- (MemoryProxy *) mem { return memproxy; }
-- (VICProxy *) vic { return vicproxy; }
-- (CIAProxy *) cia:(int)num { if (num == 1) return ciaproxy1; else if (num == 2) return ciaproxy2; else assert(0); } 
-- (SIDProxy *) sid { return sidproxy; }
-- (KeyboardProxy *) keyboard { return keyboardproxy; }
-- (IECProxy *) iec { return iecproxy; }
-- (VC1541Proxy *) vc1541 { return vc1541proxy; }
+- (CIAProxy *) cia:(int)num { if (num == 1) return [self cia1]; else if (num == 2) return [self cia2]; else assert(0); } 
 
 - (void) dump { c64->dumpState(); }
 - (void) dumpContentsToSnapshot:(Snapshot *)snapshot { snapshot->initWithContentsOfC64(c64); }

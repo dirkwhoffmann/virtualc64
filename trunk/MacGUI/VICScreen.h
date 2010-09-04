@@ -129,8 +129,10 @@ const int BG_TEXTURE_DEPTH = 4;
 	GLuint bgTexture; // Background	
 }
 
+@property C64 *c64;
+@property (readonly) int frames;
+
 - (void) cleanUp;
-- (void) setC64:(C64 *)c64;
 - (void) startAnimation;
 - (void) stopAnimation;
 - (void) toggleAnimation;
@@ -139,7 +141,6 @@ const int BG_TEXTURE_DEPTH = 4;
 - (void) rotateBack;
 - (void) setFullscreenMode:(bool)b;
 - (void) toggleFullscreenMode;
-- (int) getFrames;
 - (void) updateAngles;
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
 - (NSImage *)screenshot;

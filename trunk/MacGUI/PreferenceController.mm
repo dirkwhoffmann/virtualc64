@@ -57,20 +57,12 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 
 @implementation PreferenceController
 
+@synthesize c64, mydoc;
+
 - (id)init
 {
 	self = [super initWithWindowNibName:@"Preferences"];
 	return self;
-}
-
-- (void)setC64:(C64Proxy *)proxy
-{
-	c64 = proxy;
-}
-
-- (void)setDoc:(MyDocument *)doc
-{
-	mydoc = doc;
 }
 
 - (void)windowDidLoad
@@ -310,24 +302,6 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(a * 0xff);	
 	[[c64 vic] setColor:col rgba:[sender color]];
 	[defaults setInteger:customColor[col] forKey:key];
-
-#if 0
-	[defaults setInteger:customColor[1] forKey:VC64CustomCol1Key];
-	[defaults setInteger:customColor[2] forKey:VC64CustomCol2Key];
-	[defaults setInteger:customColor[3] forKey:VC64CustomCol3Key];
-	[defaults setInteger:customColor[4] forKey:VC64CustomCol4Key];
-	[defaults setInteger:customColor[5] forKey:VC64CustomCol5Key];
-	[defaults setInteger:customColor[6] forKey:VC64CustomCol6Key];
-	[defaults setInteger:customColor[7] forKey:VC64CustomCol7Key];
-	[defaults setInteger:customColor[8] forKey:VC64CustomCol8Key];
-	[defaults setInteger:customColor[9] forKey:VC64CustomCol9Key];
-	[defaults setInteger:customColor[10] forKey:VC64CustomCol10Key];
-	[defaults setInteger:customColor[11] forKey:VC64CustomCol11Key];
-	[defaults setInteger:customColor[12] forKey:VC64CustomCol12Key];
-	[defaults setInteger:customColor[13] forKey:VC64CustomCol13Key];
-	[defaults setInteger:customColor[14] forKey:VC64CustomCol14Key];
-	[defaults setInteger:customColor[15] forKey:VC64CustomCol15Key];
-#endif
 }
 
 @end

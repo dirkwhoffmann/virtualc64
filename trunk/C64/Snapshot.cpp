@@ -103,6 +103,7 @@ Snapshot::initWithContentsOfC64(C64 *c64)
 	uint8_t *ptr = data;
 	major = 1;
 	minor = 0;
+	memcpy(screen, c64->vic->screenBuffer(), sizeof(screen));
 	c64->save(&ptr);
 	size = ptr - data;
 	
