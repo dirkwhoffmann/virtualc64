@@ -141,7 +141,7 @@ public:
 	
 	// control
 	uint32_t dwDelay;        // performs delay by shifting left at each clock
-	uint16_t dwFeed;         // new bits to feed into dwDelay
+	uint32_t dwFeed;         // new bits to feed into dwDelay
 	uint8_t bCRA;            // control register A
 	uint8_t bCRB;            // control register B
 	uint8_t bICR;            // interrupt control register
@@ -257,6 +257,7 @@ public:
 	bool save(uint8_t **buffer);
 	
 	//! Dump internal state to console
+	void dump();
 	void dumpState();	
 	
 	//! Bind the CIA chip to the specified virtual CPU.

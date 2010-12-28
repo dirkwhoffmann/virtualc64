@@ -23,6 +23,8 @@
 void 
 CPU::fetch() {
 	
+	bool doNMI = false, doIRQ = false;
+	
 	PC_at_cycle_0 = PC;
 	
 	// Used for debugging...
@@ -38,12 +40,14 @@ CPU::fetch() {
 			debug(1, "NMI (source = %02X)\n", nmiLine);
 		nmiNegEdge = false;
 		next = &CPU::nmi_2;
+		doNMI = true;
 		return;
 
 	} else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
 		if (tracingEnabled())
 			debug(1, "IRQ (source = %02X)\n", irqLine);
 		next = &CPU::irq_2;
+		doIRQ = true;
 		return;
 	} 
 	// 00008308: 0D07: AD 01 DC   03 0D FF F4 nV-bdIzc LDA DC01
@@ -68,7 +72,13 @@ CPU::fetch() {
 		}
 	
 		if (c64->logfile) {
-			fprintf(c64->logfile, "%05d (%05ld): %s", current_trace, (long)c64->getCycles(), disassemble());
+			fprintf(c64->logfile, "%05d (%05ld): IRQ: %02X NMI:%02X %s %s %s", 
+					current_trace, (long)c64->getCycles(), 
+					nmiLine, irqLine,
+					disassemble(),
+					doNMI ? "<NMI>" : "",
+					doIRQ ? "<IRQ>" : "");
+			
 			current_trace++;
 			if (current_trace > max_traces) {
 				fclose(c64->logfile);
