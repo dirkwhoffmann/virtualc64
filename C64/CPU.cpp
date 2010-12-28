@@ -22,6 +22,12 @@ CPU::CPU()
 {	
 	name = "CPU";
 
+	// Remove later...
+	autotracing = 0;
+	current_trace = 0;
+	max_traces = 20000;
+	trace_enable_address = 2073; //0x819;
+	
 	debug(2, "  Creating CPU at address %p...\n", this);
 
 	// Initialize connected components

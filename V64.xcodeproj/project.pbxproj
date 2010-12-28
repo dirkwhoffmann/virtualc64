@@ -54,7 +54,6 @@
 		503A5A9A1222767C00EAA95E /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503A5A991222767C00EAA95E /* Sparkle.framework */; };
 		503A5AC6122278A500EAA95E /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 503A5A991222767C00EAA95E /* Sparkle.framework */; };
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
-		503DF0DA0F18BFDE00DC5C11 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503DF0D90F18BFDE00DC5C11 /* Timer.cpp */; };
 		50414727122188FC00A80E0C /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* Cartridge.cpp */; };
 		5041486912219F6E00A80E0C /* cartridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5041486812219F6E00A80E0C /* cartridge.png */; };
 		50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE50A7B679A00A8DB94 /* stepInto32.png */; };
@@ -80,6 +79,7 @@
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
 		50B10338121E7C70003E7729 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B10337121E7C70003E7729 /* QuartzCore.framework */; };
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
+		50C3695D12C903B900FD4D94 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C3695B12C903B900FD4D94 /* Timer.cpp */; };
 		50CA0D520A9076FD00A5A08D /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* SID.cpp */; };
 		50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */; };
 		50D5FDB40C2E9CF50022CA3A /* MountDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */; };
@@ -199,8 +199,6 @@
 		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepOut32.png; path = images/stepOut32.png; sourceTree = "<group>"; };
 		503A5A991222767C00EAA95E /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		503DF0D80F18BFDE00DC5C11 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
-		503DF0D90F18BFDE00DC5C11 /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* Cartridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* Cartridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
 		5041486812219F6E00A80E0C /* cartridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cartridge.png; path = images/cartridge.png; sourceTree = "<group>"; };
@@ -232,6 +230,8 @@
 		50B1032E121E7C4C003E7729 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		50B10337121E7C70003E7729 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		50C3695B12C903B900FD4D94 /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
+		50C3695C12C903B900FD4D94 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
 		50CA0D500A9076FD00A5A08D /* SID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SID.h; sourceTree = "<group>"; };
 		50CA0D510A9076FD00A5A08D /* SID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SID.cpp; sourceTree = "<group>"; };
 		50D5004B0C2ED1200022CA3A /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archive.h; sourceTree = "<group>"; };
@@ -440,8 +440,8 @@
 				50176C510A6F72F3009E80BD /* C64.cpp */,
 				50176C540A6F72F3009E80BD /* CIA.h */,
 				50176C530A6F72F3009E80BD /* CIA.cpp */,
-				503DF0D80F18BFDE00DC5C11 /* Timer.h */,
-				503DF0D90F18BFDE00DC5C11 /* Timer.cpp */,
+				50C3695B12C903B900FD4D94 /* Timer.cpp */,
+				50C3695C12C903B900FD4D94 /* Timer.h */,
 				500B6CA30B905CEC002C36EC /* TOD.h */,
 				500B6CA40B905CEC002C36EC /* TOD.cpp */,
 				50176C600A6F72F3009E80BD /* VIC.h */,
@@ -701,12 +701,12 @@
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
-				503DF0DA0F18BFDE00DC5C11 /* Timer.cpp in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
 				50414727122188FC00A80E0C /* Cartridge.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
+				50C3695D12C903B900FD4D94 /* Timer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
