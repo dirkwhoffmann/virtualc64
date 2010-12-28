@@ -235,6 +235,20 @@ private:
 		variable oldI whenever SEI or CLI is executed. */
 	bool IRQsAreBlocked();
 	
+public: 
+	// Enable auto trace
+	int autotracing;
+	
+	// Auto enable trace when reaching this address
+	uint16_t trace_enable_address;
+	
+	// Trace counter
+	int current_trace;
+	
+	// How many instructions should be traced?
+	int max_traces;
+
+	
 #include "Instructions.h"
 		
 public:
@@ -378,6 +392,9 @@ public:
 	//! Clear bit of IRQ line
 	inline void clearIRQLine(uint8_t bit) { irqLine &= (0xff - bit); }
 		
+	//! Get bit of IRQ line
+	inline uint8_t getIRQLine(uint8_t bit) { return irqLine & bit; }
+	
 	//! Check if IRQ line has been activated for at least 2 cycles
 	bool IRQLineRaisedLongEnough();
 	
@@ -387,9 +404,14 @@ public:
 	//! Clear bit of NMI line
 	inline void clearNMILine(uint8_t bit) { nmiLine &= (0xff - bit); }
 	
+	//! Get bit of IRQ line
+	inline uint8_t getNMILine(uint8_t bit) { return nmiLine & bit; }
+
 	//! Check if NMI line has been activated for at least 2 cycles
 	bool NMILineRaisedLongEnough();
 	
+	//! Get CIA bit of IRQ line
+	inline uint8_t getIRQLineCIA() { return getIRQLine(0x01); }	
 	//! Set CIA bit of IRQ line
 	inline void setIRQLineCIA() { setIRQLine(0x01); }
 	//! Set VIC bit of IRQ line
@@ -410,6 +432,9 @@ public:
 	inline void clearIRQLineVIA2() { clearIRQLine(0x20); }	
 	//! Clear ATN bit of IRQ line (1541 drive)
 	inline void clearIRQLineATN() { clearIRQLine(0x40); }	
+	
+	//! Get CIA bit of NMI line
+	inline uint8_t getNMILineCIA() { return getNMILine(0x01); }		
 	//! Set CIA bit of NMI line
 	inline void setNMILineCIA() { setNMILine(0x01); }	
 	//! Clear CIA bit of NMI line

@@ -18,7 +18,6 @@
 
 #include "C64.h"
 		
-// TODO: What happens, if an NMI occurs right after BRK or IRQ (one additional delay cycle???)
 
 // Cycle 0
 void 
@@ -47,7 +46,37 @@ CPU::fetch() {
 		next = &CPU::irq_2;
 		return;
 	} 
+	// 00008308: 0D07: AD 01 DC   03 0D FF F4 nV-bdIzc LDA DC01
+	// 00008309: 0D0A: 0A         BF 0D FF F4 NV-bdIzc ASL ASL 
 
+	//09568 .0D07 112 09  2D9FC3F AD 01 DC   LDA $DC01 030DFFF4
+	//09569 .0D0A 112 0D  2D9FC43 0A         ASL A     FF0DFFF4
+
+	// Inhalt von DC01 dumpen!!!!!
+	
+	// Bei 06264, 06079
+
+	// Temporary debugging
+	if (autotracing) {		
+		if (PC == trace_enable_address && current_trace == 0) { 
+			printf("Auto trace enabled\n");
+			c64->logfile = fopen("/tmp/virtualc64.log", "w");
+			current_trace = 1;
+			if (!c64->logfile) {
+				debug(1, "ERROR: Cannot open trace file\n");
+			}
+		}
+	
+		if (c64->logfile) {
+			fprintf(c64->logfile, "%05d (%05ld): %s", current_trace, (long)c64->getCycles(), disassemble());
+			current_trace++;
+			if (current_trace > max_traces) {
+				fclose(c64->logfile);
+				c64->logfile = NULL;
+			}
+		}
+	}
+	
 	// Disassemble command if requested
 	if (tracingEnabled()) 
 		debug(1, "%s", disassemble());

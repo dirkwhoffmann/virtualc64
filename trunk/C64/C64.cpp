@@ -82,9 +82,18 @@ C64::C64()
 	p = NULL;
 	warpMode = false;
 
+	logfile = NULL;
+	//fopen("/tmp/virtualC64.log", "w");
+	//if (logfile == NULL) {
+	//	warn("Cannot open log file\n");
+	//}
+
 	// Create components
 	mem = new C64Memory();
-	cpu = new CPU();		
+	cpu = new CPU();	
+	// Remove after debugging
+	cpu->autotracing = 1;
+	
 	vic = new VIC();
 	sid = new SID();
 	cia1 = new CIA1();
@@ -120,7 +129,7 @@ C64::C64()
 	setInputDevice(1, IPD_UNCONNECTED);
 	joystick1 = new Joystick;
 	joystick2 = new Joystick;
-	
+		
 	// Configure
 	setNTSC(); // Why NTSC??
 	
@@ -151,6 +160,9 @@ C64::~C64()
 	
 	if( joystick2 != NULL )
 		delete joystick2;
+	
+	if (logfile)
+		fclose(logfile);
 	
 	debug(1, "Cleaned up virtual C64 at address %p\n", this);
 }
@@ -183,6 +195,7 @@ void C64::reset()
 
 void C64::fastReset()
 {
+#if 0	
 	Snapshot *snapshot; 
 	
 	debug (1, "Resetting virtual C64 (fast reset via image file)\n");
@@ -194,6 +207,8 @@ void C64::fastReset()
 	}
 
 	delete snapshot;
+#endif
+	warn("fastReset: Not implemented, yet\n");
 }
 
 bool 
@@ -440,15 +455,25 @@ C64::step()
 	executeOneCycle();
 }
 
+#if 0
 #define EXECUTE(x) \
-		cia1->triggerInterrupts(); \
-		cia2->triggerInterrupts(); \
+cia1->triggerInterrupts(); \
+cia2->triggerInterrupts(); \
+cia1->executeOneCycle(); \
+cia2->executeOneCycle(); \
+if (!cpu->executeOneCycle()) result = false; \
+if (!floppy->executeOneCycle()) result = false; \
+cycles++; \
+rasterlineCycle++;
+#endif
+
+#define EXECUTE(x) \
 		cia1->executeOneCycle(); \
 		cia2->executeOneCycle(); \
-		cycles++; \
-		rasterlineCycle++; \
 		if (!cpu->executeOneCycle()) result = false; \
-		if (!floppy->executeOneCycle()) result = false;
+		if (!floppy->executeOneCycle()) result = false; \
+		cycles++; \
+		rasterlineCycle++;
 
 void 
 C64::beginOfRasterline()

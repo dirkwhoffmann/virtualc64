@@ -21,15 +21,6 @@
 
 #include "VirtualComponent.h"
 
-// Timer states (derived from Frodo SC)
-#define TIMER_STOP 0
-#define TIMER_COUNT 1
-#define TIMER_COUNT_STOP 2
-#define TIMER_LOAD_STOP 3
-#define TIMER_LOAD_COUNT 4
-#define TIMER_WAIT_COUNT 5
-#define TIMER_LOAD_WAIT_COUNT 6
-
 class CIA;
 class CIA1;
 class CIA2;
@@ -51,32 +42,14 @@ protected:
 	Timer *otherTimer;
 
 	//! Timer value
-	uint16_t count;
+	uint16_t counter;
 
 	//! Timer latch
-	uint16_t timerLatch;
+	uint16_t latch;
 
-	//! Current execution state
-	int state;
-	
-	//! The timer control register
-	uint8_t controlReg;
-
-	//! True, if the timer is decremented in each clock cycle
-	bool count_clockticks;
-	
-	//! True, if the timer is decremented if the "otherTimer" experiences a timer underflow.
-	bool count_underflows;
-		
-	//! Is set to true when an underflow condition occurs
-	bool underflow;
-	
-	//! Is inverted when an underflow condition occurs
-	bool underflow_toggle;
-	
 	//! Indicates that an interrupt needs to be triggered in the next cycle
 	bool triggerInterrupt;
-
+	
 public:
 	//! Constructor
 	Timer();
@@ -101,89 +74,92 @@ public:
 
 	//! Set reference to the other timer
 	void setOtherTimer(Timer *timer) { otherTimer = timer; }
-	
+
+	//! Get low byte of timer latch
+	uint8_t getLatchLo() { return (uint8_t)(latch & 0xFF); }
+
 	//! Set low byte of timer latch
-	void setTimerLatchLo(uint8_t value) { timerLatch = (timerLatch & 0xFF00) | value; }
+	void setLatchLo(uint8_t value) { latch = (latch & 0xFF00) | value; }
+
+	//! Get high byte of timer latch
+	uint8_t getLatchHi() { return (uint8_t)(latch >> 8); }
 
 	//! Set high byte of timer latch
-	void setTimerLatchHi(uint8_t value) { timerLatch = (value << 8) | (timerLatch & 0xFF); if (!(controlReg & 1)) count = timerLatch; }
-
-	//! Return current timer state
-	inline uint16_t getState() { return state; }
+	void setLatchHi(uint8_t value) { latch = (value << 8) | (latch & 0xFF); }
 		
 	//! Return the current timer value
-	inline uint16_t getTimer() { return count; }
+	inline uint16_t getCounter() { return counter; }
 	
 	//! Set the current timer value
-	inline void setTimer(uint16_t value) { count = value; }
+	inline void setCounter(uint16_t value) { counter = value; }
 	
 	//! Return the value of the timer latch
-	inline uint16_t getTimerLatch() { return timerLatch; }
+	inline uint16_t getLatch() { return latch; }
 	
 	//! Set the value of the timer latch
-	inline void setTimerLatch(uint16_t value) { timerLatch = value; }
+	inline void setLatch(uint16_t value) { latch = value; }
 	
 	//! Load latched value into timer 
-	inline void reloadTimer() { count = timerLatch; }
+	inline void reloadTimer() { counter = latch; }
 	
 	//! Returns true, if timer is running, 0 if stopped
-	inline bool isStarted() { return controlReg & 0x01; }
+	virtual bool isStarted() = 0; 
 	
 	//! Start or stop timer
-	inline void setStarted(bool b) { if (b) controlReg |= 0x01; else controlReg &= 0xFE; }
+	virtual void setStarted(bool b) = 0;
 	
 	//! Toggle start flag
 	inline void toggleStartFlag() { setStarted(!isStarted()); }
 
 	//! Returns true, if the force load strobe is 1
-	inline bool forceLoadStrobe() { return controlReg & 0x10; }
+	virtual bool forceLoadStrobe() = 0;
 	
 	//! Returns true, if an underflow will be indicated in bit #6 in Port B register
-	inline bool willIndicateUnderflow() { return controlReg & 0x02; }
+	virtual bool willIndicateUnderflow() = 0;
 	
 	//! Returns true, if an underflow will be indicated as a single pulse
-	inline bool willIndicateUnderflowAsPulse() { return !(controlReg & 0x04); }
+	virtual bool willIndicateUnderflowAsPulse() = 0;
 	
 	//! Enable or disable underflow indication
-	inline void setIndicateUnderflow(bool b) { if (b) controlReg |= 0x02; else controlReg &= (0xFF-0x02); }
+	virtual void setIndicateUnderflow(bool b) = 0;
 	
 	//! Toggle underflow indication flag
 	inline void toggleUnderflowFlag() { setIndicateUnderflow(!willIndicateUnderflow()); }
 	
 	//! Returns true, if A is in "one shot" mode
-	inline bool isOneShot() { return controlReg & 0x08; }
+	virtual bool isOneShot() = 0;
 	
 	//! Enable or disable one-shot-mode 
-	inline void setOneShot(bool b) { if (b) controlReg |= 0x08; else controlReg &= (0xff-0x08); }
+	virtual void setOneShot(bool b) = 0;
 	
 	//! Toggle one shot flag 
 	inline void toggleOneShotFlag() { setOneShot(!isOneShot()); }
 	
 	//! Returns true, if timer counts clock ticks
-	inline bool isCountingClockTicks() { return count_clockticks; }
+	virtual bool isCountingClockTicks() = 0;
 	
 	//! Return contents of the timer control register
-	inline uint16_t getControlReg() { return controlReg; }
+	virtual uint16_t getControlReg() = 0;
 
 	//! Update value of the control register 
 	/*! This method is executed whenever the value of the control register changes. It updates the internal state
 	    of the timer and performs the necessary actions. */ 
-	void setControlReg(uint8_t value);
+	//void setControlReg(uint8_t value);
 		
 	//! Execute one cycle
-	void executeOneCycle(void);
+	//void executeOneCycle(void);
 
 	//! Action to be taken when an underflow occurs
-	virtual void timerAction() = 0;
+	//virtual void timerAction() = 0;
 	
 	//! Set the "signal pending bit" for this timer
-	virtual void setSignalPending() = 0;
+	//virtual void setSignalPending() = 0;
 
 	//! Get the control register of the corresponding timer in the CIA's IO memory space
-	virtual uint8_t getCIAControlReg() = 0;
+	//virtual uint8_t getCIAControlReg() = 0;
 
 	//! Set the control register of the corresponding timer in the CIA's IO memory space
-	virtual void setCIAControlReg(uint8_t value) = 0;
+	//virtual void setCIAControlReg(uint8_t value) = 0;
 
 };
 
@@ -193,23 +169,39 @@ class TimerA : public Timer {
 		
 public:
 
-	void setCountingModes(uint8_t controlBits);
-	void timerAction();
-	void setSignalPending();
-	uint8_t getCIAControlReg();
-	void setCIAControlReg(uint8_t value);
+	//void setCountingModes(uint8_t controlBits);
+	//void timerAction();
+	//void setSignalPending();
+	//uint8_t getCIAControlReg();
+	//void setCIAControlReg(uint8_t value);
+	
+	bool isStarted();
+	void setStarted(bool b);
+	bool forceLoadStrobe();
+	bool willIndicateUnderflow();
+	bool willIndicateUnderflowAsPulse();
+	void setIndicateUnderflow(bool b);
+	bool isOneShot();
+	void setOneShot(bool b);
+	bool isCountingClockTicks();
+	uint16_t getControlReg();
 };
 
 //! Timer B
 class TimerB : public Timer {
 	
 public:
-	
-	void setCountingModes(uint8_t controlBits);
-	void timerAction();
-	void setSignalPending();
-	uint8_t getCIAControlReg();
-	void setCIAControlReg(uint8_t value);
+		
+	bool isStarted();
+	void setStarted(bool b);
+	bool forceLoadStrobe();
+	bool willIndicateUnderflow();
+	bool willIndicateUnderflowAsPulse();
+	void setIndicateUnderflow(bool b);
+	bool isOneShot();
+	void setOneShot(bool b);
+	bool isCountingClockTicks();
+	uint16_t getControlReg();
 };
 
 #endif

@@ -192,15 +192,33 @@ CIA::~CIA()
 void
 CIA::reset() 
 {
-	memset(iomem, 0, sizeof(iomem));	
-	iomem[CIA_DATA_PORT_A] = 0xff;
-	iomem[CIA_DATA_PORT_B] = 0xff;	
-
+	oldPA = 0xff;
+	oldPB = 0xff;
 	portLinesA = 0xff;
 	portLinesB = 0xff;
-	interruptDataRegister = 0;
-	controlRegHasChangedA = false;
-	controlRegHasChangedB = false;
+	
+	clearInterruptLine();
+
+	// From PC64WIN
+	// reset control
+	dwDelay = 0;
+	dwFeed = 0;
+	bCRA = 0;
+	bCRB = 0;
+	bICR = 0;
+	bIMR = 0;
+	bPB67TimerMode = 0;
+	bPB67TimerOut = 0;
+	bPB67Toggle = 0;
+	// reset ports
+	bPALatch = 0;
+	bPBLatch = 0;
+	bDDRA = 0;
+	bDDRB = 0;
+	PA = 0xff; 
+	PB = 0xff; 
+	
+	
 	tod.reset();
 	timerA.reset();
 	timerB.reset();
@@ -209,15 +227,18 @@ CIA::reset()
 // Loading and saving snapshots
 bool CIA::load(uint8_t **buffer)
 {
+	
+	// TODO
 	debug(2, "  Loading CIA state...\n");
 	
-	for (unsigned i = 0; i < sizeof(iomem); i++)
-		iomem[i] = read8(buffer);
-	portLinesA = read8(buffer);
-	portLinesB = read8(buffer);
-	interruptDataRegister = read8(buffer);
-	controlRegHasChangedA = (bool)read8(buffer);
-	controlRegHasChangedB = (bool)read8(buffer);
+	for (unsigned i = 0; i < sizeof(16); i++)
+		(void)read8(buffer);
+	(void)read8(buffer);
+	(void)read8(buffer);
+	(void)read8(buffer);
+	(void)read8(buffer);
+	(void)read8(buffer);
+	
 	tod.load(buffer);
 	timerA.load(buffer);
 	timerB.load(buffer);
@@ -230,16 +251,7 @@ CIA::save(uint8_t **buffer)
 {
 	 debug(2, "  Saving CIA state...\n");
 	
-	for (unsigned i = 0; i < sizeof(iomem); i++)
-		write8(buffer, iomem[i]);
-	write8(buffer, portLinesA);
-	write8(buffer, portLinesB);
-	write8(buffer, interruptDataRegister);
-	write8(buffer, controlRegHasChangedA);
-	write8(buffer, controlRegHasChangedB);
-	tod.save(buffer);
-	timerA.save(buffer);
-	timerB.save(buffer);
+	// TODO
 
 	return true;	
 }
@@ -248,13 +260,13 @@ void
 CIA::triggerInterrupt(uint8_t source)
 {
 	// Set interrupt source
-	interruptDataRegister |= source; 
+	bICR |= source; 
 	
 	// Trigger interrupt, if enabled
-	if (iomem[CIA_INTERRUPT_CONTROL] & source) {
+	if (bIMR & source) {
 		// The uppermost bit indicates that an interrupt occured
 		// printf("Triggering CIA interrupt (source = %02X) at cycle %d\n", source, (int)cpu->getCycles());
-		interruptDataRegister |= 0x80;
+		bICR |= 0x80;
 		raiseInterruptLine();
 	}
 }
@@ -265,17 +277,17 @@ uint8_t CIA::peek(uint16_t addr)
 	
 	switch(addr) {		
 		case CIA_DATA_DIRECTION_A:	
-			return iomem[addr];
+			return bDDRA;
 		case CIA_DATA_DIRECTION_B:
-			return iomem[addr];
+			return bDDRB;
 		case CIA_TIMER_A_LOW:  
-			return LO_BYTE(timerA.getTimer());			
+			return timerA.getLatchLo();
 		case CIA_TIMER_A_HIGH: 
-			return HI_BYTE(timerA.getTimer());			
+			return timerA.getLatchHi();
 		case CIA_TIMER_B_LOW:  
-			return LO_BYTE(timerB.getTimer());
+			return timerB.getLatchLo();
 		case CIA_TIMER_B_HIGH: 
-			return HI_BYTE(timerB.getTimer());
+			return timerB.getLatchHi();
 		case CIA_TIME_OF_DAY_SEC_FRAC:
 			tod.defreeze();
 			return BinaryToBCD(tod.getTodTenth());
@@ -287,17 +299,33 @@ uint8_t CIA::peek(uint16_t addr)
 			tod.freeze();
 			return (tod.getTodHours() & 0x80) /* AM/PM */ | BinaryToBCD(tod.getTodHours() & 0x1F);
 		case CIA_SERIAL_IO_BUFFER:
-			return 0xff;
+			return 0x00; // 0xff;
 		case CIA_INTERRUPT_CONTROL:
-			result = interruptDataRegister;
-			interruptDataRegister = 0;
-			// Clear interrupt request
-			clearInterruptLine();			
+		
+			result = bICR;
+			
+			// get status of the Int line into bit 7 and draw Int high
+			if (getInterruptLine()) {
+				
+				// I guess this never happens, because the interrupt line is cleared before the CPU executes
+				// The current order is: CIA -> Interrupt handling -> CPU
+				result |= 0x80;
+				clearInterruptLine();			
+			}
+			
+			// discard pending interrupts
+			dwDelay &= ~(Interrupt0 | Interrupt1);
+			
+			// set all events to 0
+			bICR = 0;
 			return result;
+
 		case CIA_CONTROL_REG_A:
-			return timerA.getControlReg() & 0xEF; // Bit 4 is always 0 when read
+			return (uint8_t)(bCRA & ~0x10); // Bit 4 is always 0 when read
+			
 		case CIA_CONTROL_REG_B:
-			return timerB.getControlReg() & 0xEF; // Bit 4 is always 0 when read
+			return (uint8_t)(bCRB & ~0x10); // Bit 4 is always 0 when read
+			
 		default:
 			panic("Unknown CIA address %04X\n", addr);
 	}
@@ -307,24 +335,33 @@ uint8_t CIA::peek(uint16_t addr)
 void CIA::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
+			
 		case CIA_TIMER_A_LOW:
-			timerA.setTimerLatchLo(value);
-			iomem[addr] = value; 
+
+			timerA.setLatchLo(value);
 			return;
 			
 		case CIA_TIMER_A_HIGH:
-			timerA.setTimerLatchHi(value);
-			iomem[addr] = value; 
+			
+			timerA.setLatchHi(value);			
+			// load counter if timer is stopped
+			if ((bCRA & 0x01) == 0) {
+				dwDelay |= LoadA0;
+			}
 			return;
 			
 		case CIA_TIMER_B_LOW:  
-			timerB.setTimerLatchLo(value);		
-			iomem[addr] = value; 
+			
+			timerB.setLatchLo(value);
 			return;
 			
 		case CIA_TIMER_B_HIGH: 
-			timerB.setTimerLatchHi(value);
-			iomem[addr] = value; 
+			
+			timerB.setLatchHi(value);
+			// load counter if timer is stopped
+			if ((bCRB & 0x01) == 0) {
+				dwDelay |= LoadB0;
+			}
 			return;
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
@@ -362,42 +399,162 @@ void CIA::poke(uint16_t addr, uint8_t value)
 		case CIA_SERIAL_IO_BUFFER:
 			// Serial I/O communication is not (yet) implemented
 			// We simply acknowledge the operation (interrupt) and discard the value
-			triggerInterrupt(0x08);
+			// TODO
+			//triggerInterrupt(0x08);
 			return;
 			
 		case CIA_INTERRUPT_CONTROL:
-			if (value & 0x80) {
-				uint8_t mask = (iomem[addr] ^ value) & value & 0x7F; // get bits 0..6 with a raising edge
-				iomem[addr] |= (value & 0x7F);
-				// trigger pending interrupts
-				triggerInterrupt(interruptDataRegister & mask);
-			} else { 
-				iomem[addr] &= ~value;
+			
+			// bit 7 means set (1) or clear (0) the other bits
+			if ((value & 0x80) != 0) {
+				bIMR |= (value & 0x1F);
+			} else {
+				bIMR &= ~(value & 0x1F);
+			}
+			
+			// raise an interrupt in the next cycle if condition matches
+			if ((bIMR & bICR) != 0) {
+				if (!getInterruptLine()) {
+					dwDelay |= Interrupt0;
+				}
 			}
 			return;
 			
 		case CIA_CONTROL_REG_A:
-			if (iomem[addr] != value) {
-				if (!(iomem[addr] & 0x01) && (value & 0x01)) {
-					timerA.underflow_toggle = true; // Rising edge on start bit
-				}
-				iomem[addr] = value; 
-				timerA.setCountingModes(value);
-				controlRegHasChangedA = true; // Note: The value will be pushed to the timer in the next cycle
+		{
+
+			// save old values for recognizing changes
+			// uint16_t dwSavedDelay = dwDelay;
+			// uint16_t dwSavedFeed = dwFeed;
+			
+			// output PB67 changes only once
+			bool fPBChanged = false;
+			
+			// set clock in o2 mode // todo cnt
+			if ((value & 0x21) == 0x01) {
+				dwDelay |= CountA1 | CountA0;
+				dwFeed |= CountA0;
+			} else {
+				dwDelay &= ~(CountA1 | CountA0);
+				dwFeed &= ~CountA0;
 			}
+			
+			// set one shot mode
+			if ((value & 0x08) != 0) {
+				dwFeed |= OneShotA0;
+			} else {
+				dwFeed &= ~OneShotA0;
+			}
+			
+			// set force load
+			if ((value & 0x10) != 0) {
+				dwDelay |= LoadA0;
+			}
+			
+			// set toggle high on rising edge of Start
+			if ((value & 0x01) != 0 && (bCRA & 0x01) == 0) {
+				if ((bCRA & 0x06) == 0x06 && (bPB67Toggle & 0x40) != 0x40) {
+					fPBChanged = true;
+				}
+				bPB67Toggle |= 0x40;
+			}
+			
+			// timer A output to PB6
+			if ((value & 0x06) != (bCRA & 0x06)) {
+				fPBChanged = true;
+			}
+			if ((value & 0x02) == 0) {
+				bPB67TimerMode &= ~0x40;
+			} else {
+				bPB67TimerMode |= 0x40;
+				if ((value & 0x04) == 0) {
+					if ((dwDelay & PB7Low1) == 0) {
+						bPB67TimerOut &= ~0x40;
+					} else {
+						bPB67TimerOut |= 0x40;
+					}
+				} else {
+					bPB67TimerOut = (bPB67TimerOut & ~0x40) | (bPB67Toggle & 0x40);
+				}
+			}
+			
+			// write PB67 if they have changed
+			if (fPBChanged) {
+				PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
+			}
+			
+			// set the register
+			bCRA = value;
 			return;
+		}
 			
 		case CIA_CONTROL_REG_B:
-			if (!(iomem[addr] & 0x01) && (value & 0x01)) // Rising edge on start bit
-				timerB.underflow_toggle = true;
+		{
+			// save old values for recognizing changes
+			//dword dwSavedDelay = dwDelay;
+			//dword dwSavedFeed = dwFeed;
 			
-			if (iomem[addr] != value) {
-				iomem[addr] = value; 
-				timerB.setCountingModes(value);
-				controlRegHasChangedB = true; // Note: The value will be pushed to the timer in the next cycle
+			// output PB67 changes only once
+			bool fPBChanged = false;
+			
+			// set clock in o2 mode // todo cnt
+			if ((value & 0x61) == 0x01) {
+				dwDelay |= CountB1 | CountB0;
+				dwFeed |= CountB0;
+			} else {
+				dwDelay &= ~(CountB1 | CountB0);
+				dwFeed &= ~CountB0;
 			}
+			
+			// set one shot mode
+			if ((value & 0x08) != 0) {
+				dwFeed |= OneShotB0;
+			} else {
+				dwFeed &= ~OneShotB0;
+			}
+			
+			// set force load
+			if ((value & 0x10) != 0) {
+				dwDelay |= LoadB0;
+			}
+			
+			// set toggle high on rising edge of Start
+			if ((value & 0x01) != 0 && (bCRB & 0x01) == 0) {
+				if ((bCRB & 0x06) == 0x06 && (bPB67Toggle & 0x80) != 0x80) {
+					fPBChanged = true;
+				}
+				bPB67Toggle |= 0x80;
+			}
+			
+			// timer B output to PB7
+			if ((value & 0x06) != (bCRB & 0x06)) {
+				fPBChanged = true;
+			}
+			if ((value & 0x02) == 0) {
+				bPB67TimerMode &= ~0x80;
+			} else {
+				bPB67TimerMode |= 0x80;
+				if ((value & 0x04) == 0) {
+					if ((dwDelay & PB7Low1) == 0) {
+						bPB67TimerOut &= ~0x80;
+					} else {
+						bPB67TimerOut |= 0x80;
+					}
+				} else {
+					bPB67TimerOut = (bPB67TimerOut & ~0x80) | (bPB67Toggle & 0x80);
+				}
+			}
+			
+			// write PB67 if they have changed
+			if (fPBChanged) {
+				PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
+			}
+			
+			// set the register
+			bCRB = value;
 			return;			
-
+		}
+			
 		default:
 			panic("PANIC: Unknown CIA address (poke) %04X\n", addr);
 	}	
@@ -406,8 +563,9 @@ void CIA::poke(uint16_t addr, uint8_t value)
 void 
 CIA::incrementTOD()
 {
-	if (tod.increment())
+	if (tod.increment()) {
 		triggerInterrupt(0x04);
+	}
 }
 		
 void CIA::dumpState()
@@ -418,19 +576,14 @@ void CIA::dumpState()
 	debug(1, "  Data port direction B : %02X\n", getDataPortDirectionB());
 	debug(1, "  External port lines A : %02X\n", portLinesA);
 	debug(1, "  External port lines B : %02X\n", portLinesB);
-	debug(1, "     Control register A : %02X %s\n", getControlRegA(), controlRegHasChangedA ? "(just changed)" : "(stable)");
-	debug(1, "     Control register B : %02X %s\n", getControlRegB(), controlRegHasChangedB ? "(just changed)" : "(stable)");
-	debug(1, "Interrupt data register : %02X\n", portLinesB);
+	debug(1, "     Control register A : %02X\n", getControlRegA());
+	debug(1, "     Control register B : %02X\n", getControlRegB());
+//	debug(1, "Interrupt data register : %02X\n", ???);
 	debug(1, "     Timer A interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
 	debug(1, "     Timer B interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
 	debug(1, "         TOD interrupts : %s\n", isInterruptEnabledTOD() ? "enabled" : "disabled");	
 	debug(1, "       Signal pending A : %s\n", isSignalPendingA() ? "yes" : "no");
 	debug(1, "       Signal pending B : %s\n", isSignalPendingB() ? "yes" : "no");
-	
-	debug(1, "              IO memory : ");
-	for (unsigned j = 0; j < sizeof(iomem); j++) {
-			debug(1, "%02X ", iomem[j]);
-	}
 	debug(1, "\n\n");
 	debug(1, "Timer A:\n");
 	debug(1, "--------\n\n");
@@ -442,6 +595,294 @@ void CIA::dumpState()
 	debug(1, "------------------\n\n");
 	tod.dumpState();
 }
+
+void CIA::_executeOneCycle()
+{
+	bool timerAOutput;
+	
+	// Adapted from PC64Win
+	
+	// Pictures taken from "A Software Model of the CIA6526" from Wolfgang Lorenz 
+
+	// Figure 3: Layout of timer (A and B)
+	//
+    //                              Phi2            Phi2                  Phi2
+	//                               |               |                     |
+	// timerA      -----       ------v------   ------v------ (1) ----------v-----------
+	// input  ---->| & |------>| dwDelay & |-X-| dwDelay & |---->| decrement counter  |
+	//         --->|   |       |  CountA2  | | |  CountA3  |     |                    |
+	//         |   -----       ------------- | -------------     |                    |
+	// -----------------             ^ Clr   |                   |                    |
+	// | bCRA & 0x01   |             |       | ------------------| new counter ==  0? |
+	// | timer A start |<----        |       | |                 |                    |
+	// -----------------    |        |       v v                 |                    |
+ 	//                    -----      |      -----                |      timer A       |
+	//                    | & |      |      | & |                |   16 bit counter   |
+	//                    |   |      |      |   |                |     and latch      |
+	//                    -----      |      -----                |                    |
+    //                     ^ ^       |        |(2)               |                    |
+    //                     | |       ---------|-------------     |                    |
+    //                     | |                |            |     |                    |    
+	// timer A             | |                |    -----   |     |                    |
+	// output  <-----------|-X----------------X--->|>=1|---X---->| load from latch    | 
+	//                     |                   --->|   |(8)      |                    |
+	//                    ----- (7)            |   -----         ----------------------
+	//                    |>=1|                |
+	//                    |   |                |       Phi2
+	//                    -----                |        |
+	//                     ^ ^                 |  ------v------      ----------------
+	//                     | |                 ---| dwDelay & |<-----| bcRA & 0x10  |
+	//                     | -----------------    |  LoadA1   |      | force load   |
+	//                     |       Phi2      |    -------------      ----------------
+    //                     |        |        |                              ^ Clr
+	// -----------------   |  ------v------  |                              |
+	// | bCRA & 0x08   |   |  | dwDelay & |  |                             Phi2
+	// | one shot      |---X->| oneShotA0 |---
+	// -----------------      -------------
+
+	// Figure 4: Timer output to PB6 (timer A) and PB7 (timer B)
+    //                            
+	//                                      -----------------
+	//          --------------------------->| 0x00 (pulse)  |
+	//          |                           |               | (6.2) ----------------
+	//          |                           | bCRA & 0x04   |------>| 0x02 (timer) |
+	// timerA   |  Flip ---------------     | timer mode    |       |              |
+	// output  -X------>| bPB67Toggle |---->| 0x04 (toggle) |       | bCRA & 0x02  | (6)
+	//              (5) |  ^ 0x04     |     |               |       | output mode  |----> PB6 output
+	//                  ---------------     -----------------       |              |
+	//                        ^ Set                           (6.1) | 0x00 (port)  |
+	//                        |                                ---->|              |
+	// ----------------- 0->1 |             -----------------  |    ----------------
+	// | bCRA & 0x01   |-------             | port B bit 6  |---  
+	// | timer A start |                    |    output     |
+	// -----------------                    -----------------
+	
+
+	// Figure 5: Interrupt logic
+    //                            
+	//                  ----------
+	//                  | bIMR & |----
+	//                  |  0x01  |   |    -----
+	//                  ----------   ---->| & |----
+	// timerA   (3) Set ----------   ---->|   |   |
+	// output  -------->| bICR & |   |    -----   |
+	//           ------>|  0x01  |----            |  -----
+	//           |  Clr ----------                -->|>=1|---
+	//           |      ----------                -->|   |  |
+	//           |      | bIMR & |----            |  -----  |
+	//           |      |  0x02  |   |    -----   |         |
+	//           |      ----------   ---->| & |----         |
+	// timerB    |  Set ----------   ---->|   |             |
+	// output  --|----->| bICR & |   |    -----             |
+	//           X----->|  0x01  |----                      |
+	//           |  Clr ----------       	                |
+	// read      |                                          |
+	// ICR ------X-------------X----------------            |
+	//                         |               |            |
+	//                         v Clr           v Clr        |
+	//           ------    ----------    ----------------   | (4)
+	// Int    <--| -1 |<---| bICR & |<---|   dwDelay &  |<---
+	// ouptput   |    |    |  0x80  |Set |  Interrupt1  |     
+	//           ------    ----------    -------^--------   	
+	//                                          |
+	//                                         Phi2
+	
+	
+	// don't output PB67 changes more than once
+	bool fPBChanged = false; // ????
+				
+	// ------------------------- TIMER A --------------------------------
+	// (1) : decrement counter A
+	if ((dwDelay & CountA3) != 0) {
+		timerA.counter--;
+	}
+	
+	// (2) : underflow counter A
+	timerAOutput = (timerA.counter == 0 && (dwDelay & CountA2) != 0);
+	
+	if (timerAOutput) {
+		
+		// (3) : signal underflow event
+		bICR |= 0x01;
+		
+		// (4) : underflow interrupt in next clock
+		if ((bIMR & 0x01) != 0) {
+			dwDelay |= Interrupt0;
+		}
+		
+		// (5) toggle underflow counter bit
+		bPB67Toggle ^= 0x40;
+		
+		// (6) timer A output to PB6
+		if ((bCRA & 0x02) != 0) {
+			
+			// (6.1) set PB6 high for one clock
+			if ((bCRA & 0x04) == 0) {
+				bPB67TimerOut |= 0x40;
+				dwDelay |= PB6Low0;
+				dwDelay &= ~PB6Low1;
+				
+			} else {
+				// (6.2) toggle PB6 between high and low
+				// Dirk: bP67TimerOut = bPB67Toggle ? (bP67TimerOut | 0x40) : (bP67TimerOut & 0xBF);
+				bPB67TimerOut ^= 0x40; 
+				assert((bPB67TimerOut & 0x40) == (bPB67Toggle & 0x40));
+			}
+			
+			// output new state
+			fPBChanged = true;
+		}
+		
+		// (7) stop timer in one shot mode
+		if (((dwDelay | dwFeed) & OneShotA0) != 0) {
+			bCRA &= ~0x01;
+			dwDelay &= ~(CountA2 | CountA1 | CountA0);
+			dwFeed &= ~CountA0;
+		}
+		
+		// timer A output to timer B in cascade mode
+		if ((bCRB & 0x61) == 0x41) { // 		} || (bCRB & 0x61) == 0x61 && CNT.IsInputHigh()) {
+			dwDelay |= CountB1;
+		}
+		
+		// (8) : load counter A
+		dwDelay |= LoadA1;
+	}
+	
+	// (8) : load counter A
+	if ((dwDelay & LoadA1) != 0) {
+		timerA.reloadTimer(); // load counter from latch
+		
+		// don't decrement counter in next clock
+		dwDelay &= ~CountA2;
+	}
+	
+	// ------------------------- TIMER B --------------------------------
+	// decrement counter B
+	if ((dwDelay & CountB3) != 0) {
+		timerB.counter--;
+	}
+	
+	// underflow counter B
+	if (timerB.counter == 0 && (dwDelay & CountB2) != 0) {
+		
+		// signal underflow event
+		bICR |= 0x02;
+		
+		// underflow interrupt in next clock
+		if ((bIMR & 0x02) != 0) {
+			dwDelay |= Interrupt0;
+		}
+		
+		// toggle underflow counter bit
+		bPB67Toggle ^= 0x80;
+		
+		// timer B output to PB7
+		if ((bCRB & 0x02) != 0) {
+			
+			// set PB7 high for one clock
+			if ((bCRB & 0x04) == 0) {
+				bPB67TimerOut |= 0x80;
+				dwDelay |= PB7Low0;
+				dwDelay &= ~PB7Low1;
+				
+				// toggle PB7 between high and low
+			} else {
+				bPB67TimerOut ^= 0x80;
+				assert((bPB67TimerOut & 0x80) == (bPB67Toggle & 0x80));
+			}
+			
+			// output new state
+			fPBChanged = true;
+		}
+		
+		// stop timer in one shot mode
+		if (((dwDelay | dwFeed) & OneShotB0) != 0) {
+			bCRB &= ~0x01;
+			dwDelay &= ~(CountB2 | CountB1 | CountB0);
+			dwFeed &= ~CountB0;
+		}
+		
+		// load counter B
+		dwDelay |= LoadB1;
+	}
+	
+	// load counter B
+	if ((dwDelay & LoadB1) != 0) {
+		timerB.reloadTimer();
+		
+		// don't decrement counter in next clock
+		dwDelay &= ~CountB2;
+	}
+	
+	// set PB67 back to low
+	if ((dwDelay & (PB6Low1 | PB7Low1)) != 0) {
+		if ((dwDelay & PB6Low1) != 0) {
+			bPB67TimerOut &= ~0x40;
+		}
+		if ((dwDelay & PB7Low1) != 0) {
+			bPB67TimerOut &= ~0x80;
+		}
+		fPBChanged = true;
+	}
+	
+	// write new PB if it has changed
+	if (fPBChanged) {
+		PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
+	}
+	
+	// set interrupt register and interrupt line
+	if ((dwDelay & Interrupt1) != 0) {
+		//if (Int.IsOutputHigh()) {
+		//	Int.SetOutputLow();
+		//}
+		//bICR |= 0x80; // Dirk
+		raiseInterruptLine();
+	}
+
+
+	// next clock
+	 dwDelay = (dwDelay << 1) & DelayMask | dwFeed;
+	//dword dwNewDelay = (dwDelay << 1) & DelayMask | dwFeed;
+
+#if 0
+	// link out of clock chain if there are no more pending events
+	assert(!TimerIdle.IsCounting());
+	if (gfAllowIdle && dwNewDelay == dwDelay) {
+		switch (dwDelay & (CountA3 | CountB3)) {
+			case CountA3:
+				if (iCounterA >= giIdleThreshold) {
+					TimerIdle.StartCounter(iCounterA - 1);
+					iCounterA = 1;
+					SetIdle();
+				}
+				break;
+			case CountB3:
+				if (iCounterB >= giIdleThreshold) {
+					TimerIdle.StartCounter(iCounterB - 1);
+					iCounterB = 1;
+					SetIdle();
+				}
+				break;
+			case CountA3 | CountB3:
+				if (iCounterA >= giIdleThreshold && iCounterB >= giIdleThreshold) {
+					int iClocks = min(iCounterA, iCounterB) - 1;
+					TimerIdle.StartCounter(iClocks);
+					iCounterA -= iClocks;
+					iCounterB -= iClocks;
+					SetIdle();
+				}
+				break;
+			default:
+				SetIdle();
+		}
+	}
+
+	
+	dwDelay = dwNewDelay;
+#endif	
+}
+
 
 // -----------------------------------------------------------------------------------------
 // Complex Interface Adapter 1
@@ -499,73 +940,17 @@ CIA1::clearInterruptLine()
 }
 
 uint8_t 
-CIA1::peek(uint16_t addr)
+CIA1::getInterruptLine()
 {
-	uint8_t result;
-	
-	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
-	
-	switch(addr) {		
-		case CIA_DATA_PORT_A:
-
-			if ( joy[0] != NULL )
-					pollJoystick( joy[0], 1 );
-
-			// We change only those bits that are configured as outputs, all input bits are 1
-			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_A];
-			
-			// The external port lines can pull down any bit, even if it configured as output
-			result &= portLinesA; 
-
-			// Check joystick movement
-			result &= joystick[0];
-						
-			return result;
-
-		case CIA_DATA_PORT_B:
-		{
-			uint8_t bitmask = CIA1::peek(CIA_DATA_PORT_A);
-
-			if ( joy[1] != NULL )
-					pollJoystick( joy[1], 2 );
-
-			// We change only those bits that are configured as outputs, all input bits are 1
-			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_B];
-			// The external port lines can pull down any bit, even if it configured as output
-			result &= portLinesB; 
-
-			// Check joystick movement
-			result &= joystick[1];
-			
-			// Check for pressed keys
-			result &= keyboard->getRowValues(bitmask); 
-			
-			// Bit 6 and 7 can have special timer output functions
-			if (timerA.willIndicateUnderflow()) {
-				result &= 0xBF; // Clear bit 6
-				if (timerA.willIndicateUnderflowAsPulse() ? timerA.underflow : timerA.underflow_toggle)
-					result |= 0x40; // Set bit 6
-			}
-			if (timerB.willIndicateUnderflow()) {
-				result &= 0x7F; // Clear bit 7
-				if (timerB.willIndicateUnderflowAsPulse() ? timerB.underflow : timerB.underflow_toggle)
-					result |= 0x80; // Set bit 7
-			}
-			
-			return result;
-		}
-		default:
-			return CIA::peek(addr);	
-	}
+	return cpu->getIRQLineCIA();
 }
-
 
 void 
 CIA1::pollJoystick( Joystick *joy, int joyDevNo ) {
 	JoystickAxisState leftRightState	= joy->GetAxisX(); 
 	JoystickAxisState upDownState		= joy->GetAxisY();
 	bool buttonState					= joy->GetButtonPressed();
-		
+	
 	// up/down
 	// set the down bit: 2, 2 and clear up bit: 2, 1		
 	// ATTENTION: clearJoystickBits( x, y ) means pressed and setJoystickBits( x, y ) means released
@@ -591,12 +976,61 @@ CIA1::pollJoystick( Joystick *joy, int joyDevNo ) {
 		setJoystickBits(joyDevNo, 4);			
 		setJoystickBits(joyDevNo, 8);
 	}
-		
+	
 	// fire
 	if( buttonState ) {
 		clearJoystickBits(joyDevNo, 16);
 	} else {
 		setJoystickBits(joyDevNo, 16);
+	}
+}
+
+uint8_t 
+CIA1::peek(uint16_t addr)
+{
+	uint8_t result;
+	
+	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
+	
+	switch(addr) {		
+		case CIA_DATA_PORT_A:
+						
+			if ( joy[0] != NULL )
+				pollJoystick( joy[0], 1 );
+			
+			// We change only those bits that are configured as outputs, all input bits are 1
+			result = PA; // iomem[addr] | ~iomem[CIA_DATA_DIRECTION_A];
+			
+			// The external port lines can pull down any bit, even if it configured as output
+			// result &= portLinesA; 
+			
+			// Check joystick movement
+			result &= joystick[0];
+			
+			return result;
+			
+		case CIA_DATA_PORT_B:
+		{
+			//uint8_t bitmask = oldPA; //CIA1::peek(CIA_DATA_PORT_A);
+			uint8_t bitmask = CIA1::peek(CIA_DATA_PORT_A);
+			uint8_t keyboardBits = keyboard->getRowValues(bitmask); 
+			
+			if ( joy[1] != NULL )
+				pollJoystick( joy[1], 2 );
+			
+			result = PB;
+			
+			// Check joystick movement
+			result &= joystick[1];
+			
+			// Check for pressed keys
+			result &= keyboardBits;
+						
+			return result;
+		}
+			
+		default:
+			return CIA::peek(addr);	
 	}
 }
 
@@ -607,28 +1041,42 @@ CIA1::poke(uint16_t addr, uint8_t value)
 	
 	// The following registers need special handling	
 	switch(addr) {
+			
 		case CIA_DATA_PORT_A: 
+			
+			bPALatch = value;
+			PA = bPALatch | ~bDDRA;
+			oldPA = PA;
+			return;
+			
 		case CIA_DATA_DIRECTION_A:
-			iomem[addr] = value;
+
+			bDDRA = value;
+			PA = bPALatch | ~bDDRA;
+			oldPA = PA;
 			return;
+			
 		case CIA_DATA_PORT_B:
-		case CIA_DATA_DIRECTION_B:
-		{
-			uint8_t lp_bit_old = (iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10;
-			iomem[addr] = value;
-			uint8_t lp_bit_new = (iomem[CIA_DATA_PORT_B] | ~iomem[CIA_DATA_DIRECTION_B]) & 0x10;
-			if (lp_bit_old != lp_bit_new) {
-				// edge on lightpen bit
-				debug(1, "Lightpen edge detected\n");
-				vic->simulateLightPenInterrupt();
-			}
+			
+			bPBLatch = value;
+			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
+			oldPB = PB;
 			return;
-		}
+			
+		case CIA_DATA_DIRECTION_B:
+
+			bDDRB = value;
+			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
+			oldPB = PB;
+			return;
+		
 		default:
 			CIA::poke(addr, value);
 	}
 }
-	
+
+
+
 void 
 CIA1::setJoystickBits(int nr, uint8_t mask)
 {
@@ -691,6 +1139,12 @@ CIA2::clearInterruptLine()
 }
 
 uint8_t 
+CIA2::getInterruptLine()
+{
+	return cpu->getNMILineCIA();
+}
+
+uint8_t 
 CIA2::peek(uint16_t addr)
 {
 	uint8_t result;
@@ -699,9 +1153,9 @@ CIA2::peek(uint16_t addr)
 	
 	switch(addr) {
 		case CIA_DATA_PORT_A:
-			// We change only those bits that are configured as outputs, all input bits are 1
-			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_A];
-
+			
+			result = PA;
+			
 			// The two upper bits are connected to the clock line and the data line
 			result &= 0x3F;
 			result |= (iec->getClockLine() ? 0x40 : 0x00);
@@ -709,24 +1163,13 @@ CIA2::peek(uint16_t addr)
 
 			// The external port lines can pull down any bit, even if it configured as output.
 			// Note that bits 0 and 1 are not connected to the bus and determine the memory bank seen by the VIC chip
-			result &= (portLinesB | 0x03);
+			// result &= (portLinesB | 0x03);
+			
 			return result;
 						
 		case CIA_DATA_PORT_B:
-			result = iomem[addr] | ~iomem[CIA_DATA_DIRECTION_B];
-					
-			// Bit 6 and 7 can have special timer output functions
-			if (timerA.willIndicateUnderflow()) {
-				result &= 0xBF; // Clear bit 6
-				if (timerA.willIndicateUnderflowAsPulse() ? timerA.underflow : timerA.underflow_toggle)
-					result |= 0x40; // Set bit 6
-			}
-			if (timerB.willIndicateUnderflow()) {
-				result &= 0x7F; // Clear bit 7
-				if (timerB.willIndicateUnderflowAsPulse() ? timerB.underflow : timerB.underflow_toggle)
-					result |= 0x80; // Set bit 7
-			}
-						
+			
+			result = PB;								
 			return result;
 			
 		default:
@@ -738,27 +1181,46 @@ void
 CIA2::poke(uint16_t addr, uint8_t value)
 {
 	assert(addr <= CIA2_END_ADDR - CIA2_START_ADDR);
-
+	
 	switch(addr) {
 		case CIA_DATA_PORT_A:
-			iomem[addr] = value;					
+			
+			bPALatch = value;
+			PA = bPALatch | ~bDDRA;
+
 			// Bits 0 and 1 determine the memory bank seen the VIC
-			vic->setMemoryBankAddr((~(value | ~iomem[CIA_DATA_DIRECTION_A]) & 0x03) << 14);	
-			// Bits 3 to 5 are connected to the IEC bus
-			iec->updateCiaPins(iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A]);			
+			vic->setMemoryBankAddr((~PA & 0x03) << 14);	
+
+			// Bits 3 to 5 of PA are connected to the IEC bus
+			iec->updateCiaPins(bPALatch, bDDRA);
+			oldPA = PA;
+			return;
+			
+		case CIA_DATA_DIRECTION_A:
+			
+			bDDRA = value;
+			PA = bPALatch | ~bDDRA;
+			
+			// Bits 0 and 1 determine the memory bank seen the VIC
+			vic->setMemoryBankAddr((~PA & 0x03) << 14);	
+			
+			// Bits 3 to 5 of PA are connected to the IEC bus
+			iec->updateCiaPins(bPALatch, bDDRA);
+			oldPA = PA;
 			return;
 			
 		case CIA_DATA_PORT_B:
-			iomem[addr] = value;
-			return;
-
-		case CIA_DATA_DIRECTION_A:
-			iomem[addr] = value;
-			iec->updateCiaPins(iomem[CIA_DATA_PORT_A], iomem[CIA_DATA_DIRECTION_A]);
+			
+			bPBLatch = value;
+			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
+			oldPB = PB;
 			return;
 
 		case CIA_DATA_DIRECTION_B:
-			iomem[addr] = value;
+			
+			bDDRB = value;
+			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
+			oldPB = PB;
 			return;
 			
 		default:

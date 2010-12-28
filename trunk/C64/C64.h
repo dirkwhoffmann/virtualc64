@@ -37,7 +37,6 @@
 #include "VIC.h"
 #include "SID.h"
 #include "TOD.h"
-#include "Timer.h"
 #include "CIA.h"
 #include "CPU.h"
 #include "VC1541.h"
@@ -182,6 +181,10 @@ public:
 	//! Current clock cycle since beginning of rasterline (ranges from 1 .. 63 (PAL) or 65 (NTSC))
 	int rasterlineCycle;
 
+	//! Logfile
+	//* For debugging only */
+	FILE *logfile;
+	
 private:
 
 	//! The execution thread

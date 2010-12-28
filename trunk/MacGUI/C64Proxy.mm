@@ -244,10 +244,10 @@
 - (void) setDataPortA:(uint8_t)v { cia->setDataPortA(v); }
 - (uint8_t) getDataPortDirectionA { return cia->getDataPortDirectionA(); }
 - (void) setDataPortDirectionA:(uint8_t)v { cia->setDataPortDirectionA(v); }
-- (uint16_t) getTimerA { return cia->timerA.getTimer(); }
-- (void) setTimerA:(uint16_t)v { cia->timerA.setTimer(v); }
-- (uint16_t) getTimerLatchA { return cia->timerA.getTimerLatch(); }
-- (void) setTimerLatchA:(uint16_t)v { cia->timerA.setTimerLatch(v); }
+- (uint16_t) getTimerA { return cia->timerA.getCounter(); }
+- (void) setTimerA:(uint16_t)v { cia->timerA.setCounter(v); }
+- (uint16_t) getTimerLatchA { return cia->timerA.getLatch(); }
+- (void) setTimerLatchA:(uint16_t)v { cia->timerA.setLatch(v); }
 - (bool) getStartFlagA { return cia->timerA.isStarted(); }
 - (void) setStartFlagA:(bool)b { cia->timerA.setStarted(b); }
 - (void) toggleStartFlagA {cia->timerA.toggleStartFlag(); }
@@ -268,10 +268,10 @@
 - (void) setDataPortB:(uint8_t)v { cia->setDataPortB(v); }
 - (uint8_t) getDataPortDirectionB { return cia->getDataPortDirectionB(); }
 - (void) setDataPortDirectionB:(uint8_t)v { cia->setDataPortDirectionB(v); }
-- (uint16_t) getTimerB { return cia->timerB.getTimer(); }
-- (void) setTimerB:(uint16_t)v { cia->timerB.setTimer(v); }
-- (uint16_t) getTimerLatchB { return cia->timerB.getTimerLatch(); }
-- (void) setTimerLatchB:(uint16_t)v { cia->timerB.setTimerLatch(v); }
+- (uint16_t) getTimerB { return cia->timerB.getCounter(); }
+- (void) setTimerB:(uint16_t)v { cia->timerB.setCounter(v); }
+- (uint16_t) getTimerLatchB { return cia->timerB.getLatch(); }
+- (void) setTimerLatchB:(uint16_t)v { cia->timerB.setLatch(v); }
 - (bool) getStartFlagB { return cia->timerB.isStarted(); }
 - (void) setStartFlagB:(bool)b { cia->timerB.setStarted(b); }
 - (void) toggleStartFlagB {cia->timerB.toggleStartFlag(); }
