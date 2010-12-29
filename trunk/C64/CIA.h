@@ -160,11 +160,12 @@ public:
 	// interfaces
 	uint8_t PA;
 	uint8_t PB;
+	bool CNT;   // serial clock or input timer clock or timer gate
+	
 	//bool PC;    // output: low for one clock after reading/writing PB
 	//bool _TOD;   // input: PAL 50 Hz, NTSC 60 Hz
 	// bool Flag;  // input: may generate int on falling edge
 	//bool SP;    // serial data port
-	// bool CNT;   // serial clock or input timer clock or timer gate
 	// bool Int;
 	// bool Reset;
 	

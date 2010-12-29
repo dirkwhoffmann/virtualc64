@@ -26,7 +26,7 @@ CPU::CPU()
 	autotracing = 0;
 	current_trace = 0;
 	max_traces = 20000;
-	trace_enable_address = 2073; //0x819;
+	trace_enable_address = 2070; 
 	
 	debug(2, "  Creating CPU at address %p...\n", this);
 
@@ -62,7 +62,7 @@ CPU::reset()
 	SP = 0;
 	N = 0;
 	V = 0;
-	B = 0;
+	B = 1;
 	D = 0;
 	I = 0;
 	Z = 0;
