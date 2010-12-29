@@ -137,8 +137,11 @@ public:
 	CPU *cpu;
 
 public:	
-	// From PC64WIN
 	
+	// 
+	// Adapted from PC64Win by Wolfgang Lorenz
+	//
+		
 	// control
 	uint32_t dwDelay;        // performs delay by shifting left at each clock
 	uint32_t dwFeed;         // new bits to feed into dwDelay
@@ -149,7 +152,6 @@ public:
 	uint8_t bPB67TimerMode;  // bit mask for PB outputs: 0 = port register, 1 = timer
 	uint8_t bPB67TimerOut;   // PB outputs bits 6 and 7 in timer mode
 	uint8_t bPB67Toggle;     // PB outputs bits 6 and 7 in toggle mode
-	// uint8_t abControlFill[1];	
 	
 	// ports
 	uint8_t bPALatch;        // buffered output values
@@ -161,13 +163,7 @@ public:
 	uint8_t PA;
 	uint8_t PB;
 	bool CNT;   // serial clock or input timer clock or timer gate
-	
-	//bool PC;    // output: low for one clock after reading/writing PB
-	//bool _TOD;   // input: PAL 50 Hz, NTSC 60 Hz
-	// bool Flag;  // input: may generate int on falling edge
-	//bool SP;    // serial data port
-	// bool Int;
-	// bool Reset;
+	bool INT;
 	
 	
 	// DEPRECATED
@@ -177,23 +173,23 @@ public:
 		We need this value to handle reads on PB
 	    DEPRECATED
 	*/
-	uint8_t oldPA;
+	//uint8_t oldPA;
 
 	//! Old value of PB register 
 	/*! Whenever PB is written, the written value is remembered in this variable.
 		We need this value to handle reads on PA
 		DEPRECATED
 	 */
-	uint8_t oldPB;
+	//uint8_t oldPB;
 	
 	 //! External bus signals on data port A
 	/*! \todo Create a separate interface (DeviceInterface or something)
 		The keyboard could implement the interface and connect to the CIA (Note: Multiple connections would be needed)
 	*/
-	uint8_t portLinesA;
+	//uint8_t portLinesA;
 	
 	//! External bus signals on data port B
-	uint8_t portLinesB;
+	//uint8_t portLinesB;
 	
 	//! Interrupt data register
 	/*! "The CIA chip has five internal interrupt sources: timer A underflow, timer B underflow, time-of-day clock alarm, serial 

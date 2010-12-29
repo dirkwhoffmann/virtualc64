@@ -26,6 +26,7 @@ VirtualComponent::VirtualComponent()
 	running = false;
 	suspendCounter = 0;	
 	traceMode = false;
+	logfile = NULL;
 }
 
 void 
@@ -138,6 +139,21 @@ VirtualComponent::panic(const char *fmt, ...)
 	fprintf(stderr, "%s: PANIC: %s", name, buf);
 	
 	assert(0);
+}
+
+void
+VirtualComponent::log(const char *fmt, ...)
+{
+	char buf[128];
+
+	if (!logfile) 
+		return;
+	
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(buf, sizeof(buf), fmt, ap); 
+	va_end(ap);
+	fprintf(logfile, "%s: %s", name, buf);
 }
 
 

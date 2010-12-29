@@ -52,17 +52,16 @@ CPU::fetch() {
 	} 
 
 	// Temporary debugging
+	if (PC == 2073) 
+		c64->cia1->setLogfile(getLogfile());
+	
 	if (autotracing) {		
 		if (PC == trace_enable_address && current_trace == 0) { 
 			printf("Auto trace enabled\n");
-			c64->logfile = fopen("/tmp/virtualc64.log", "w");
 			current_trace = 1;
-			if (!c64->logfile) {
-				debug(1, "ERROR: Cannot open trace file\n");
-			}
 		}
 	
-		if (c64->logfile) {
+		if (current_trace > 0 && current_trace <= max_traces && c64->logfile) {
 			c64->cia1->dump();
 			c64->cia2->dump();
 			fprintf(c64->logfile, "%05d (%05ld): IRQ: %02X NMI:%02X %s %s %s\n", 
@@ -72,10 +71,6 @@ CPU::fetch() {
 					doNMI ? "<NMI>" : "",
 					doIRQ ? "<IRQ>" : "");
 			current_trace++;
-			if (current_trace > max_traces) {
-				fclose(c64->logfile);
-				c64->logfile = NULL;
-			}
 		}
 	}
 	

@@ -82,18 +82,13 @@ C64::C64()
 	p = NULL;
 	warpMode = false;
 
-	logfile = NULL;
-	//fopen("/tmp/virtualC64.log", "w");
-	//if (logfile == NULL) {
-	//	warn("Cannot open log file\n");
-	//}
+	if (!(logfile = fopen("/tmp/virtualc64.log", "w"))) {
+		warn("Cannot open logfile\n");
+	}
 
 	// Create components
 	mem = new C64Memory();
 	cpu = new CPU();	
-	// Remove after debugging
-	cpu->autotracing = 1;
-	
 	vic = new VIC();
 	sid = new SID();
 	cia1 = new CIA1();
@@ -133,9 +128,14 @@ C64::C64()
 	// Configure
 	setNTSC(); // Why NTSC??
 	
-	// Register listener and reset
-	// setListener(listener);
-	reset();	
+	reset();
+	
+	// Remove after debugging
+	//cpu->autotracing = 1;
+	cpu->max_traces = 20000;
+	cpu->trace_enable_address = 2070; 	
+	cpu->setLogfile(logfile);
+	// cia1->setLogfile(logfile);
 }
 
 // Construction and destruction
