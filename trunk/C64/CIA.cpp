@@ -192,10 +192,10 @@ CIA::~CIA()
 void
 CIA::reset() 
 {
-	oldPA = 0xff;
-	oldPB = 0xff;
-	portLinesA = 0xff;
-	portLinesB = 0xff;
+	//oldPA = 0xff;
+	//oldPB = 0xff;
+	//portLinesA = 0xff;
+	//portLinesB = 0xff;
 	
 	clearInterruptLine();
 
@@ -218,6 +218,7 @@ CIA::reset()
 	PA = 0xff; 
 	PB = 0xff; 
 	CNT = true; // CNT line is high by default
+	INT = 1;
 	
 	tod.reset();
 	timerA.reset();
@@ -277,41 +278,75 @@ uint8_t CIA::peek(uint16_t addr)
 	
 	switch(addr) {		
 		case CIA_DATA_DIRECTION_A:	
-			return bDDRA;
+
+			result = bDDRA;
+			break;
+
 		case CIA_DATA_DIRECTION_B:
-			return bDDRB;
+
+			result = bDDRB;
+			break;
+			
 		case CIA_TIMER_A_LOW:  
-			return timerA.getCounterLo();
+			
+			result = timerA.getCounterLo();
+			break;
+			
 		case CIA_TIMER_A_HIGH: 
-			return timerA.getCounterHi();
+			result = timerA.getCounterHi();
+			break;
+			
 		case CIA_TIMER_B_LOW:  
-			return timerB.getCounterLo();
+
+			result = timerB.getCounterLo();
+			break;
+			
 		case CIA_TIMER_B_HIGH: 
-			return timerB.getCounterHi();
+			
+			result = timerB.getCounterHi();
+			break;
+			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
+			
+			log("peek CIA_TIME_OF_DAY_SEC_FRAC\n");
 			tod.defreeze();
-			return BinaryToBCD(tod.getTodTenth());
+			result = BinaryToBCD(tod.getTodTenth());
+			break;
+		
 		case CIA_TIME_OF_DAY_SECONDS:
-			return BinaryToBCD(tod.getTodSeconds());
+			
+			log("peek CIA_TIME_OF_DAY_SECONDS\n");
+			result = BinaryToBCD(tod.getTodSeconds());
+			break;
+			
 		case CIA_TIME_OF_DAY_MINUTES:
-			return BinaryToBCD(tod.getTodMinutes());
+			
+			log("peek CIA_TIME_OF_DAY_MINUTES\n");
+			result = BinaryToBCD(tod.getTodMinutes());
+			break;
+			
 		case CIA_TIME_OF_DAY_HOURS:
+
+			log("peek CIA_TIME_OF_DAY_HOURS\n");
 			tod.freeze();
-			return (tod.getTodHours() & 0x80) /* AM/PM */ | BinaryToBCD(tod.getTodHours() & 0x1F);
+			result = (tod.getTodHours() & 0x80) /* AM/PM */ | BinaryToBCD(tod.getTodHours() & 0x1F);
+			break;
+			
 		case CIA_SERIAL_IO_BUFFER:
-			return 0x00; // 0xff;
+			
+			log("peek CIA_SERIAL_IO_BUFFER\n");			
+			result = 0x00;
+			break;
 			
 		case CIA_INTERRUPT_CONTROL:
 		
 			result = bICR;
 			
 			// get status of the Int line into bit 7 and draw Int high
-			if (getInterruptLine()) {
-				
-				// I guess this never happens, because the interrupt line is cleared before the CPU executes
-				// The current order is: CIA -> Interrupt handling -> CPU
+			if (INT == 0) {
 				result |= 0x80;
-				clearInterruptLine();			
+				INT = 1;
+				clearInterruptLine(); // really?
 			}
 			
 			// discard pending interrupts
@@ -319,19 +354,23 @@ uint8_t CIA::peek(uint16_t addr)
 			
 			// set all events to 0
 			bICR = 0;
-			
-			return result;
+			break;
 
 		case CIA_CONTROL_REG_A:
-			return (uint8_t)(bCRA & ~0x10); // Bit 4 is always 0 when read
+
+			result = (uint8_t)(bCRA & ~0x10); // Bit 4 is always 0 when read
+			break;
 			
 		case CIA_CONTROL_REG_B:
-			return (uint8_t)(bCRB & ~0x10); // Bit 4 is always 0 when read
+			
+			result = (uint8_t)(bCRB & ~0x10); // Bit 4 is always 0 when read
+			break;
 			
 		default:
 			panic("Unknown CIA address %04X\n", addr);
 	}
-	return 0x00;
+	
+	return result;
 }
 
 void CIA::poke(uint16_t addr, uint8_t value)
@@ -344,7 +383,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIMER_A_HIGH:
-			
+						
 			timerA.setLatchHi(value);			
 			// load counter if timer is stopped
 			if ((bCRA & 0x01) == 0) {
@@ -367,6 +406,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
+			log("poke CIA_TIME_OF_DAY_SEC_FRAC: %02X\n", value);
 			if (value & 0x80) {
 				tod.setAlarmTenth(BCDToBinary(value & 0x0F));
 			} else { 
@@ -376,6 +416,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_SECONDS:
+			log("poke CIA_TIME_OF_DAY_SECONDS: %02X\n", value);
 			if (value & 0x80)
 				tod.setAlarmSeconds(BCDToBinary(value & 0x7F));
 			else 
@@ -383,6 +424,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_MINUTES:
+			log("poke CIA_TIME_OF_DAY_MINUTES: %02X\n", value);
 			if (value & 0x80)
 				tod.setAlarmMinutes(BCDToBinary(value & 0x7F));
 			else 
@@ -390,6 +432,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_HOURS:
+			log("poke CIA_TIME_OF_DAY_HOURS: %02X\n", value);
 			if (value & 0x80) {
 				tod.setAlarmHours((value & 0x80) /* AM/PM */ | BCDToBinary(value & 0x1F));
 			} else {
@@ -403,9 +446,13 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			// We simply acknowledge the operation (interrupt) and discard the value
 			// TODO
 			//triggerInterrupt(0x08);
+			log("poke CIA_SERIAL_IO_BUFFER: %0x2X\n", value);
 			return;
 			
 		case CIA_INTERRUPT_CONTROL:
+			
+			if ((value & 0x84) == 0x84)
+				log("SETTING TIME OF DAY ALARM (%02X)\n", value);
 			
 			// bit 7 means set (1) or clear (0) the other bits
 			if ((value & 0x80) != 0) {
@@ -416,7 +463,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 			// raise an interrupt in the next cycle if condition matches
 			if ((bIMR & bICR) != 0) {
-				if (!getInterruptLine()) {
+				if (INT) {
 					dwDelay |= Interrupt0;
 				}
 			}
@@ -424,10 +471,9 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 		case CIA_CONTROL_REG_A:
 		{
-
-			// save old values for recognizing changes
-			// uint16_t dwSavedDelay = dwDelay;
-			// uint16_t dwSavedFeed = dwFeed;
+			// 
+			// Adapted from PC64Win by Wolfgang Lorenz
+			//
 			
 			// output PB67 changes only once
 			bool fPBChanged = false;
@@ -493,9 +539,9 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 		case CIA_CONTROL_REG_B:
 		{
-			// save old values for recognizing changes
-			//dword dwSavedDelay = dwDelay;
-			//dword dwSavedFeed = dwFeed;
+			// 
+			// Adapted from PC64Win by Wolfgang Lorenz
+			//
 			
 			// output PB67 changes only once
 			bool fPBChanged = false;
@@ -612,8 +658,8 @@ void CIA::dumpState()
 	debug(1, "            Data port B : %02X\n", getDataPortA());
 	debug(1, "  Data port direction A : %02X\n", getDataPortDirectionA());
 	debug(1, "  Data port direction B : %02X\n", getDataPortDirectionB());
-	debug(1, "  External port lines A : %02X\n", portLinesA);
-	debug(1, "  External port lines B : %02X\n", portLinesB);
+	//debug(1, "  External port lines A : %02X\n", portLinesA);
+	// debug(1, "  External port lines B : %02X\n", portLinesB);
 	debug(1, "     Control register A : %02X\n", getControlRegA());
 	debug(1, "     Control register B : %02X\n", getControlRegB());
 //	debug(1, "Interrupt data register : %02X\n", ???);
@@ -637,9 +683,7 @@ void CIA::dumpState()
 void CIA::_executeOneCycle()
 {
 	bool timerAOutput;
-	
-	// Adapted from PC64Win
-	
+		
 	// Pictures taken from "A Software Model of the CIA6526" from Wolfgang Lorenz 
 
 	// Figure 3: Layout of timer (A and B)
@@ -725,6 +769,9 @@ void CIA::_executeOneCycle()
 	//                                          |
 	//                                         Phi2
 	
+	// 
+	// Adapted from PC64Win by Wolfgang Lorenz
+	//
 	
 	// don't output PB67 changes more than once
 	bool fPBChanged = false; // ????
@@ -871,53 +918,13 @@ void CIA::_executeOneCycle()
 	
 	// set interrupt register and interrupt line
 	if ((dwDelay & Interrupt1) != 0) {
-		//if (Int.IsOutputHigh()) {
-		//	Int.SetOutputLow();
-		//}
-		//bICR |= 0x80; // Dirk
+		INT = 0;
 		raiseInterruptLine();
 	}
 
 
 	// next clock
 	 dwDelay = (dwDelay << 1) & DelayMask | dwFeed;
-
-#if 0
-	// link out of clock chain if there are no more pending events
-	assert(!TimerIdle.IsCounting());
-	if (gfAllowIdle && dwNewDelay == dwDelay) {
-		switch (dwDelay & (CountA3 | CountB3)) {
-			case CountA3:
-				if (iCounterA >= giIdleThreshold) {
-					TimerIdle.StartCounter(iCounterA - 1);
-					iCounterA = 1;
-					SetIdle();
-				}
-				break;
-			case CountB3:
-				if (iCounterB >= giIdleThreshold) {
-					TimerIdle.StartCounter(iCounterB - 1);
-					iCounterB = 1;
-					SetIdle();
-				}
-				break;
-			case CountA3 | CountB3:
-				if (iCounterA >= giIdleThreshold && iCounterB >= giIdleThreshold) {
-					int iClocks = min(iCounterA, iCounterB) - 1;
-					TimerIdle.StartCounter(iClocks);
-					iCounterA -= iClocks;
-					iCounterB -= iClocks;
-					SetIdle();
-				}
-				break;
-			default:
-				SetIdle();
-		}
-	}
-
-	
-	dwDelay = dwNewDelay;
-#endif	
 }
 
 
@@ -929,6 +936,7 @@ CIA1::CIA1()
 {
 	debug(2, "  Creating CIA1 at address %p...\n", this);
 
+	name = "CIA1";
 	keyboard = NULL;
 	joystick[0] = 0xff;
 	joystick[1] = 0xff;	
@@ -1043,8 +1051,7 @@ CIA1::peek(uint16_t addr)
 			
 			// Check joystick movement
 			result &= joystick[0];
-			
-			return result;
+			break;
 			
 		case CIA_DATA_PORT_B:
 		{
@@ -1062,19 +1069,24 @@ CIA1::peek(uint16_t addr)
 			
 			// Check for pressed keys
 			result &= keyboardBits;
-						
-			return result;
+			break;
 		}
 			
 		default:
-			return CIA::peek(addr);	
+			result = CIA::peek(addr);	
+			break;
 	}
+	
+	// log("PEEKING %04X: %02X\n", 0xDC00 + addr, result);
+	return result;
 }
 
 void 
 CIA1::poke(uint16_t addr, uint8_t value)
 {
 	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
+	
+	// log("Poking %02X to %04X\n", value, 0xDC00 + addr);
 	
 	// The following registers need special handling	
 	switch(addr) {
@@ -1083,28 +1095,28 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			
 			bPALatch = value;
 			PA = bPALatch | ~bDDRA;
-			oldPA = PA;
+			// oldPA = PA;
 			return;
 			
 		case CIA_DATA_DIRECTION_A:
 
 			bDDRA = value;
 			PA = bPALatch | ~bDDRA;
-			oldPA = PA;
+			// oldPA = PA;
 			return;
 			
 		case CIA_DATA_PORT_B:
 			
 			bPBLatch = value;
 			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
-			oldPB = PB;
+			// oldPB = PB;
 			return;
 			
 		case CIA_DATA_DIRECTION_B:
 
 			bDDRB = value;
 			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
-			oldPB = PB;
+			// oldPB = PB;
 			return;
 		
 		default:
@@ -1141,6 +1153,7 @@ CIA2::CIA2()
 {
 	debug(2, "  Creating CIA2 at address %p...\n", this);
 
+	name = "CIA2";
 	iec = NULL;
 }
 
@@ -1230,7 +1243,7 @@ CIA2::poke(uint16_t addr, uint8_t value)
 
 			// Bits 3 to 5 of PA are connected to the IEC bus
 			iec->updateCiaPins(bPALatch, bDDRA);
-			oldPA = PA;
+			// oldPA = PA;
 			return;
 			
 		case CIA_DATA_DIRECTION_A:
@@ -1243,21 +1256,21 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			
 			// Bits 3 to 5 of PA are connected to the IEC bus
 			iec->updateCiaPins(bPALatch, bDDRA);
-			oldPA = PA;
+			// oldPA = PA;
 			return;
 			
 		case CIA_DATA_PORT_B:
 			
 			bPBLatch = value;
 			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
-			oldPB = PB;
+			// oldPB = PB;
 			return;
 
 		case CIA_DATA_DIRECTION_B:
 			
 			bDDRB = value;
 			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
-			oldPB = PB;
+			// oldPB = PB;
 			return;
 			
 		default:

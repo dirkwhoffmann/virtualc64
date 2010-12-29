@@ -53,7 +53,12 @@ private:
 		Only a few components will react to this flag.
 	*/
 	bool traceMode;
-		 
+	
+	//! Log file
+	/*! If not equal to NULL, some debug information is dumped to this file
+	*/
+	FILE *logfile;
+	
 	//! The original state before the first call of suspend()
 	bool suspendedState;
 
@@ -142,7 +147,10 @@ public:
 
 	//! Enable or disable trace mode
 	inline void setTraceMode(bool b) { traceMode = b; }
-	
+
+	inline FILE *getLogfile() { return logfile; }
+	inline void setLogfile(FILE *file) { logfile = file; }
+
 	// Helper functions for reading and writing data
 	
 	//! Write 8 bit value to memory in big endian format
@@ -171,6 +179,9 @@ public:
 	void warn(const char *fmt, ...);
 	//! Print error message and stop
 	void panic(const char *fmt, ...);
+	//! Write message to logfile
+	void log(const char *fmt, ...);
+
 };
 
 #endif
