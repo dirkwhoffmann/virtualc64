@@ -50,15 +50,6 @@ CPU::fetch() {
 		doIRQ = true;
 		return;
 	} 
-	// 00008308: 0D07: AD 01 DC   03 0D FF F4 nV-bdIzc LDA DC01
-	// 00008309: 0D0A: 0A         BF 0D FF F4 NV-bdIzc ASL ASL 
-
-	//09568 .0D07 112 09  2D9FC3F AD 01 DC   LDA $DC01 030DFFF4
-	//09569 .0D0A 112 0D  2D9FC43 0A         ASL A     FF0DFFF4
-
-	// Inhalt von DC01 dumpen!!!!!
-	
-	// Bei 06264, 06079
 
 	// Temporary debugging
 	if (autotracing) {		
@@ -72,13 +63,14 @@ CPU::fetch() {
 		}
 	
 		if (c64->logfile) {
-			fprintf(c64->logfile, "%05d (%05ld): IRQ: %02X NMI:%02X %s %s %s", 
+			c64->cia1->dump();
+			c64->cia2->dump();
+			fprintf(c64->logfile, "%05d (%05ld): IRQ: %02X NMI:%02X %s %s %s\n", 
 					current_trace, (long)c64->getCycles(), 
 					nmiLine, irqLine,
 					disassemble(),
 					doNMI ? "<NMI>" : "",
 					doIRQ ? "<IRQ>" : "");
-			
 			current_trace++;
 			if (current_trace > max_traces) {
 				fclose(c64->logfile);

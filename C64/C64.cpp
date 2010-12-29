@@ -467,6 +467,16 @@ cycles++; \
 rasterlineCycle++;
 #endif
 
+// From Wolfgang Lorenz: Clock.txt
+//
+// o2 high phase |                  o2 low phase
+//     .-----.   |   .----------------.     .------.     .------.
+//     |     |   |   | 1. Next Clock  |     |      |     |      |
+// .-> | CPU | ----> | 2. Fire Timers | --> | CIA1 | --> | CIA2 | -.
+// |   |     |   |   | 3. VIC         |     |      |     |      |  |
+// |   '-----'   |   '----------------'     '------'     '------'  |
+// '---------------------------------------------------------------'
+
 #define EXECUTE(x) \
 		cia1->executeOneCycle(); \
 		cia2->executeOneCycle(); \

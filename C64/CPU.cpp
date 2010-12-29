@@ -485,8 +485,8 @@ CPU::disassemble(uint64_t state)
 			sprintf(buf, "???");
 	}
 	strcat(msg, buf);
-	sprintf(buf, "\n");
-	strcat(msg, buf);
+	//sprintf(buf, "\n");
+	//strcat(msg, buf);
 	return strdup(msg);
 }
 
