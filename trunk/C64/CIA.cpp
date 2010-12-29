@@ -277,39 +277,28 @@ uint8_t CIA::peek(uint16_t addr)
 	
 	switch(addr) {		
 		case CIA_DATA_DIRECTION_A:	
-			dump();
 			return bDDRA;
 		case CIA_DATA_DIRECTION_B:
-			dump();
 			return bDDRB;
 		case CIA_TIMER_A_LOW:  
-			dump();
-			return timerA.getLatchLo();
+			return timerA.getCounterLo();
 		case CIA_TIMER_A_HIGH: 
-			dump();
-			return timerA.getLatchHi();
+			return timerA.getCounterHi();
 		case CIA_TIMER_B_LOW:  
-			dump();
-			return timerB.getLatchLo();
+			return timerB.getCounterLo();
 		case CIA_TIMER_B_HIGH: 
-			dump();
-			return timerB.getLatchHi();
+			return timerB.getCounterHi();
 		case CIA_TIME_OF_DAY_SEC_FRAC:
-			dump();
 			tod.defreeze();
 			return BinaryToBCD(tod.getTodTenth());
 		case CIA_TIME_OF_DAY_SECONDS:
-			dump();
 			return BinaryToBCD(tod.getTodSeconds());
 		case CIA_TIME_OF_DAY_MINUTES:
-			dump();
 			return BinaryToBCD(tod.getTodMinutes());
 		case CIA_TIME_OF_DAY_HOURS:
-			dump();
 			tod.freeze();
 			return (tod.getTodHours() & 0x80) /* AM/PM */ | BinaryToBCD(tod.getTodHours() & 0x1F);
 		case CIA_SERIAL_IO_BUFFER:
-			dump();
 			return 0x00; // 0xff;
 			
 		case CIA_INTERRUPT_CONTROL:
@@ -331,15 +320,12 @@ uint8_t CIA::peek(uint16_t addr)
 			// set all events to 0
 			bICR = 0;
 			
-			dump();
 			return result;
 
 		case CIA_CONTROL_REG_A:
-			dump();
 			return (uint8_t)(bCRA & ~0x10); // Bit 4 is always 0 when read
 			
 		case CIA_CONTROL_REG_B:
-			dump();
 			return (uint8_t)(bCRB & ~0x10); // Bit 4 is always 0 when read
 			
 		default:
@@ -355,7 +341,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
 		case CIA_TIMER_A_LOW:
 
 			timerA.setLatchLo(value);
-			dump();
 			return;
 			
 		case CIA_TIMER_A_HIGH:
@@ -365,13 +350,11 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			if ((bCRA & 0x01) == 0) {
 				dwDelay |= LoadA0;
 			}
-			dump();
 			return;
 			
 		case CIA_TIMER_B_LOW:  
 			
 			timerB.setLatchLo(value);
-			dump();
 			return;
 			
 		case CIA_TIMER_B_HIGH: 
@@ -381,7 +364,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			if ((bCRB & 0x01) == 0) {
 				dwDelay |= LoadB0;
 			}
-			dump();
 			return;
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
@@ -391,7 +373,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
 				tod.setTodTenth(BCDToBinary(value & 0x0F));
 				tod.cont();
 			}
-			dump();
 			return;
 			
 		case CIA_TIME_OF_DAY_SECONDS:
@@ -439,7 +420,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
 					dwDelay |= Interrupt0;
 				}
 			}
-			dump();
 			return;
 			
 		case CIA_CONTROL_REG_A:
@@ -508,7 +488,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			// set the register
 			bCRA = value;
 			
-			dump();
 			return;
 		}
 			
@@ -577,7 +556,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			// set the register
 			bCRB = value;
 			
-			dump();
 			return;			
 		}
 			
@@ -598,32 +576,34 @@ void CIA::dump()
 {
 	if (!cpu->c64->logfile)
 		return;
-	fprintf(cpu->c64->logfile, "\nPA: %02X (%02X) PB: %02X (%02X) DDRA: %02X DDRB: %02X CRA: %02X CRB: %02X ICR: %02X IMR: %02X ",
-			PA, bPALatch, PB, bPBLatch, bDDRA, bDDRB, bCRA, bCRB, bICR, bIMR);
-	fprintf(cpu->c64->logfile, "A: %02X (%02X) B: %02X (%02X)\n",
-			timerA.counter, timerA.latch, timerB.counter, timerB.latch);
-	fprintf(cpu->c64->logfile, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n\n",
-			dwDelay & CountA0 ? "CountA0 " : "",
-			dwDelay & CountA1 ? "CountA1 " : "",
-			dwDelay & CountA2 ? "CountA2 " : "",
-			dwDelay & CountA3 ? "CountA3 " : "",
-			dwDelay & CountB0 ? "CountB0 " : "",
-			dwDelay & CountB1 ? "CountB1 " : "",
-			dwDelay & CountB2 ? "CountB2 " : "",
-			dwDelay & CountB3 ? "CountB3 " : "",
-			dwDelay & LoadA0 ? "LoadA0 " : "",
-			dwDelay & LoadA1 ? "LoadA1 " : "",
-			dwDelay & LoadB0 ? "LoadB0 " : "",
-			dwDelay & LoadB1 ? "LoadB1 " : "",
-			dwDelay & PB6Low0 ? "PB6Low0 " : "",
-			dwDelay & PB6Low1 ? "PB6Low1 " : "",
-			dwDelay & PB7Low0 ? "PB7Low0 " : "",
-			dwDelay & PB7Low1 ? "PB7Low1 " : "",
-			dwDelay & Interrupt0 ? "Interrupt0 " : "",
-			dwDelay & Interrupt1 ? "Interrupt1 " : "",
-			dwDelay & OneShotA0 ? "OneShotA0 " : "",
-			dwDelay & OneShotB0 ? "OneShotB0 " : "");
-	
+
+	fprintf(cpu->c64->logfile, "                                                                                    ICR: %02X IMR: %02X ", bICR, bIMR);
+	fprintf(cpu->c64->logfile, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
+			dwDelay & CountA0 ? "CntA0 " : "",
+			dwDelay & CountA1 ? "CntA1 " : "",
+			dwDelay & CountA2 ? "CntA2 " : "",
+			dwDelay & CountA3 ? "CntA3 " : "",
+			dwDelay & CountB0 ? "CntB0 " : "",
+			dwDelay & CountB1 ? "CntB1 " : "",
+			dwDelay & CountB2 ? "CntB2 " : "",
+			dwDelay & CountB3 ? "CntB3 " : "",
+			dwDelay & LoadA0 ? "LdA0 " : "",
+			dwDelay & LoadA1 ? "LdA1 " : "",
+			dwDelay & LoadB0 ? "LdB0 " : "",
+			dwDelay & LoadB1 ? "LdB1 " : "",
+			dwDelay & PB6Low0 ? "PB6Lo0 " : "",
+			dwDelay & PB6Low1 ? "PB6Lo1 " : "",
+			dwDelay & PB7Low0 ? "PB7Lo0 " : "",
+			dwDelay & PB7Low1 ? "PB7Lo1 " : "",
+			dwDelay & Interrupt0 ? "Int0 " : "",
+			dwDelay & Interrupt1 ? "Int1 " : "",
+			dwDelay & OneShotA0 ? "1ShotA0 " : "",
+			dwDelay & OneShotB0 ? "1ShotB0 " : "");
+
+	fprintf(cpu->c64->logfile, "                                                                                    A: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
+			timerA.counter, timerA.latch, PA, bPALatch, bDDRA, bCRA);
+	fprintf(cpu->c64->logfile, "                                                                                    B: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
+			timerB.counter, timerB.latch, PB, bPBLatch, bDDRB, bCRB);
 }
 
 void CIA::dumpState()
@@ -1064,7 +1044,6 @@ CIA1::peek(uint16_t addr)
 			// Check joystick movement
 			result &= joystick[0];
 			
-			dump();
 			return result;
 			
 		case CIA_DATA_PORT_B:
@@ -1084,7 +1063,6 @@ CIA1::peek(uint16_t addr)
 			// Check for pressed keys
 			result &= keyboardBits;
 						
-			dump();
 			return result;
 		}
 			
@@ -1106,7 +1084,6 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			bPALatch = value;
 			PA = bPALatch | ~bDDRA;
 			oldPA = PA;
-			dump();
 			return;
 			
 		case CIA_DATA_DIRECTION_A:
@@ -1114,7 +1091,6 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			bDDRA = value;
 			PA = bPALatch | ~bDDRA;
 			oldPA = PA;
-			dump();
 			return;
 			
 		case CIA_DATA_PORT_B:
@@ -1122,7 +1098,6 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			bPBLatch = value;
 			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
 			oldPB = PB;
-			dump();
 			return;
 			
 		case CIA_DATA_DIRECTION_B:
@@ -1130,7 +1105,6 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			bDDRB = value;
 			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
 			oldPB = PB;
-			dump();
 			return;
 		
 		default:
@@ -1228,13 +1202,11 @@ CIA2::peek(uint16_t addr)
 			// Note that bits 0 and 1 are not connected to the bus and determine the memory bank seen by the VIC chip
 			// result &= (portLinesB | 0x03);
 			
-			dump();
 			return result;
 						
 		case CIA_DATA_PORT_B:
 			
 			result = PB;		
-			dump();
 			return result;
 			
 		default:
@@ -1259,7 +1231,6 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			// Bits 3 to 5 of PA are connected to the IEC bus
 			iec->updateCiaPins(bPALatch, bDDRA);
 			oldPA = PA;
-			dump();
 			return;
 			
 		case CIA_DATA_DIRECTION_A:
@@ -1273,7 +1244,6 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			// Bits 3 to 5 of PA are connected to the IEC bus
 			iec->updateCiaPins(bPALatch, bDDRA);
 			oldPA = PA;
-			dump();
 			return;
 			
 		case CIA_DATA_PORT_B:
@@ -1281,7 +1251,6 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			bPBLatch = value;
 			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
 			oldPB = PB;
-			dump();
 			return;
 
 		case CIA_DATA_DIRECTION_B:
@@ -1289,7 +1258,6 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			bDDRB = value;
 			PB = ((bPBLatch | ~bDDRB) & ~bPB67TimerMode) | (bPB67TimerOut & bPB67TimerMode);
 			oldPB = PB;
-			dump();
 			return;
 			
 		default:

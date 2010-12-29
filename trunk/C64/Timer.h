@@ -75,30 +75,42 @@ public:
 	//! Set reference to the other timer
 	void setOtherTimer(Timer *timer) { otherTimer = timer; }
 
-	//! Get low byte of timer latch
-	uint8_t getLatchLo() { return (uint8_t)(latch & 0xFF); }
-
-	//! Set low byte of timer latch
-	void setLatchLo(uint8_t value) { latch = (latch & 0xFF00) | value; }
-
-	//! Get high byte of timer latch
-	uint8_t getLatchHi() { return (uint8_t)(latch >> 8); }
-
-	//! Set high byte of timer latch
-	void setLatchHi(uint8_t value) { latch = (value << 8) | (latch & 0xFF); }
-		
-	//! Return the current timer value
-	inline uint16_t getCounter() { return counter; }
-	
-	//! Set the current timer value
-	inline void setCounter(uint16_t value) { counter = value; }
-	
-	//! Return the value of the timer latch
+	//! Return latch value
 	inline uint16_t getLatch() { return latch; }
 	
-	//! Set the value of the timer latch
+	//! Set latch value
 	inline void setLatch(uint16_t value) { latch = value; }
 	
+	//! Get low byte of latch
+	uint8_t getLatchLo() { return (uint8_t)(latch & 0xFF); }
+
+	//! Set low byte of latch
+	void setLatchLo(uint8_t value) { latch = (latch & 0xFF00) | value; }
+
+	//! Get high byte of latch
+	uint8_t getLatchHi() { return (uint8_t)(latch >> 8); }
+
+	//! Set high byte of latch
+	void setLatchHi(uint8_t value) { latch = (value << 8) | (latch & 0xFF); }
+		
+	//! Return current timer value
+	inline uint16_t getCounter() { return counter; }
+	
+	//! Set current timer value
+	inline void setCounter(uint16_t value) { counter = value; }
+		
+	//! Get low byte of current timer value
+	uint8_t getCounterLo() { return (uint8_t)(counter & 0xFF); }
+	
+	//! Set low byte of current timer value
+	void setCounterLo(uint8_t value) { counter = (counter & 0xFF00) | value; }
+	
+	//! Get high byte of current timer value
+	uint8_t getCounterHi() { return (uint8_t)(counter >> 8); }
+	
+	//! Set high byte of current timer value
+	void setCounterHi(uint8_t value) { counter = (value << 8) | (counter & 0xFF); }
+		
 	//! Load latched value into timer 
 	inline void reloadTimer() { counter = latch; }
 	
