@@ -217,7 +217,7 @@ CIA::reset()
 	bDDRB = 0;
 	PA = 0xff; 
 	PB = 0xff; 
-	
+	CNT = true; // CNT line is high by default
 	
 	tod.reset();
 	timerA.reset();
@@ -779,7 +779,7 @@ void CIA::_executeOneCycle()
 		}
 		
 		// timer A output to timer B in cascade mode
-		if ((bCRB & 0x61) == 0x41) { // 		} || (bCRB & 0x61) == 0x61 && CNT.IsInputHigh()) {
+		if ((bCRB & 0x61) == 0x41 || (bCRB & 0x61) == 0x61 && CNT) {
 			dwDelay |= CountB1;
 		}
 		
