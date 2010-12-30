@@ -152,23 +152,31 @@ VC1541Memory::peekIO(uint16_t addr)
 	} else if ((addr & 0xFC00) == 0x1c00) {
 		return floppy->via2->peek(addr & 0x000F);
 	} else {
-		debug(1, "PANIC: Wrong VC1541 IO memory address\n");
-		assert(0);
-		return 0;
+		// Return high byte of addr 
+		// VICE and Frodo are doing it that way
+		return (addr >> 8);
 	}
 }
 
 uint8_t 
 VC1541Memory::peekAuto(uint16_t addr)
 {
-	if (addr >= 0xc000)
-		return mem[addr];
-	else if (addr < 0x1000)
-		return mem[addr & 0x07ff];  // RAM repeats multiple times
-	else
-		return peekIO(addr);
+	uint8_t result;
+	
+	if (addr >= 0xc000) { 
+		// ROM
+		result = mem[addr];
+	} else if (addr < 0x1000) { 
+		// RAM (repeats multiply times, hence we apply a bitmask)
+		result = mem[addr & 0x07ff]; 		
+	} else { 
+		// IO space
+		result = peekIO(addr);
+	}
+	
+	return result;
 }
-	                  																
+	
 void 
 VC1541Memory::pokeRam(uint16_t addr, uint8_t value)
 {
@@ -189,18 +197,21 @@ VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
 	} else if ((addr & 0xFC00) == 0x1c00) {
 		floppy->via2->poke(addr & 0X000F, value);
 	} else {
-		debug(1, "PANIC: Wrong VC1541 IO memory address\n");
-		assert(0);
+		// No memory here, nothing happens
 	}
 }
 			 			 
 void 
 VC1541Memory::pokeAuto(uint16_t addr, uint8_t value)
 {
-	if (addr < 0x1000)
+	if (addr < 0x1000) {
+		// RAM (repeats multiply times, hence we apply a bitmask)
 		mem[addr & 0x7ff] = value;
-	else
+	} else if (addr >= 0xc000) { 
+		// ROM (poking to ROM has no effect)
+	} else {
+		// IO space
 		pokeIO(addr, value);
+	}
 }
-
 

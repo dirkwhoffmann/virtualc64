@@ -16,6 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// New in 0.9.1
+// Reimplemented CIA chips based on PC64Win by Wolfgang Lorenz
+// Now passing all Lorenz tests except CIA1TA, CIA1TB, CIA2TA, CIA2TB
+// Fixed a bug that prevented the virtual shift key from beeing released
+// Fixed a bug in the CPU initialization routine (default value of B flag is now set correctly)
+// Parts of the ObjectiveC GUI code have been refactored and cleaned up
+
+
+
 #ifndef _C64_INC
 #define _C64_INC
 
