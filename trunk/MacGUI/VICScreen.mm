@@ -839,18 +839,18 @@ void checkForOpenGLErrors()
 	}
 	// release all keys
 	//keyboard->releaseAll();
-		
+	
+	// We always relase the special keys
+	// That's the easiest way to cope with race conditions due to fast typing
+	// (Problems can occur, if a new key is hit before the previous is released)
+	c64->keyboard->releaseShiftKey();
+	c64->keyboard->releaseCommodoreKey();
+	
 	if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
 		c64->keyboard->releaseKey(c);
 		return;
 	}
-	
-	// We always relase the special keys
-	// That's the easiest way to cope with race conditions due to fast typing
-	// (Problems can occur, if a new kit is hit before the previous is released)
-	c64->keyboard->releaseShiftKey();
-	c64->keyboard->releaseCommodoreKey();
-	
+		
 	switch (keycode) {			
 		case MAC_F2: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,4); return;
 		case MAC_F4: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,5); return;
