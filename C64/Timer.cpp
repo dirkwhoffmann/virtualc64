@@ -38,7 +38,7 @@ Timer::reset()
 	debug(2, "    Resetting CIA Timer...\n");
 	counter = 0x0000;
 	latch = 0xFFFF;
-	triggerInterrupt = false;
+	// triggerInterrupt = false;
 }
 
 bool
@@ -46,16 +46,8 @@ Timer::load(uint8_t **buffer)
 {
 	debug(2, "    Loading timer state...\n");
 
-	// TODO
-	(void)read16(buffer);
-	(void)read16(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);	
+	counter = read16(buffer);
+	latch = read16(buffer);
 
 	return true;
 }
@@ -65,7 +57,8 @@ Timer::save(uint8_t **buffer)
 {
 	debug(2, "    Saving timer state...\n");
 	
-	// TODO
+	write16(buffer, counter);
+	write16(buffer, latch);
 	
 	return true;
 }
@@ -75,7 +68,6 @@ Timer::dumpState()
 {
 	debug(1, "            Timer value : %04X\n", counter);
 	debug(1, "            Timer latch : %04X\n", latch);
-	debug(1, " Will trigger interrupt : %s\n", triggerInterrupt ? "yes" : "no");
 	debug(1, "\n");
 }
 
