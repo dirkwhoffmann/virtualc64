@@ -173,11 +173,9 @@ public:
 	//! Print debug message
 	void debug(const char *fmt, ...);
 	void debug(int level, const char *fmt, ...); // higher level = less output
-	//! Print trace message
-	// void trace(const char *fmt, ...);
 	//! Print warning message
 	void warn(const char *fmt, ...);
-	//! Print error message and stop
+	//! Print error message and exit
 	void panic(const char *fmt, ...);
 };
 

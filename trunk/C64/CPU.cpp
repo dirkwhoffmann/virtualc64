@@ -444,6 +444,7 @@ CPU::disassemble(uint64_t state)
 	switch (addressingMode[opcode]) {
 		case CPU::ADDR_IMPLIED:
 		case CPU::ADDR_ACCUMULATOR:
+			sprintf(buf, " ");
 			break;
 		case CPU::ADDR_IMMEDIATE:					
 			sprintf(buf, "#%02X", op);
@@ -483,8 +484,6 @@ CPU::disassemble(uint64_t state)
 			sprintf(buf, "???");
 	}
 	strcat(msg, buf);
-	//sprintf(buf, "\n");
-	//strcat(msg, buf);
 	return strdup(msg);
 }
 
