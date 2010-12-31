@@ -165,51 +165,6 @@ public:
 	bool CNT;   // serial clock or input timer clock or timer gate
 	bool INT;
 	
-	
-	// DEPRECATED
-		
-	//! Old value of PA register 
-	/*! Whenever PA is written, the written value is remembered in this variable.
-		We need this value to handle reads on PB
-	    DEPRECATED
-	*/
-	//uint8_t oldPA;
-
-	//! Old value of PB register 
-	/*! Whenever PB is written, the written value is remembered in this variable.
-		We need this value to handle reads on PA
-		DEPRECATED
-	 */
-	//uint8_t oldPB;
-	
-	 //! External bus signals on data port A
-	/*! \todo Create a separate interface (DeviceInterface or something)
-		The keyboard could implement the interface and connect to the CIA (Note: Multiple connections would be needed)
-	*/
-	//uint8_t portLinesA;
-	
-	//! External bus signals on data port B
-	//uint8_t portLinesB;
-	
-	//! Interrupt data register
-	/*! "The CIA chip has five internal interrupt sources: timer A underflow, timer B underflow, time-of-day clock alarm, serial 
-	     data buffer full or empty, and FLAG signal. The CIA can also generate an interrupt request output signal as a result of any 
-	     of these conditions. The location actually has two different functions, depending on whether it is being read from or written to. 
-	     When you read from this register, you see the contents of an internal interrupt data register that indicates which interrupts, 
-	     if any, have occurred. When you write to this register, the value goes to an internal interrupt mask register that specifies which 
-	     interrupts—if any—are to result in an external interrupt request being generated. The data register is read-only 
-	     (it can't be written to), and the mask register is write-only (it can't be read from)." [Mapping128]
-	 
-		Note: The interrupt mask ist stored in iomem[CIA_INTERRUPT_CONTROL].
-	*/
-	//uint8_t interruptDataRegister;
-		 
-	//! Indicates a change in the control register of timer A
-	//bool controlRegHasChangedA;
-
-	//! Indicates a change in the control register of timer B
-	//bool controlRegHasChangedB;
-
 	 //! Trigger interrupt
 	/*! Annotates the interrupt source in the interrupt control register and triggers a CPU interrupt. */
 	void triggerInterrupt(uint8_t source);	
@@ -253,10 +208,12 @@ public:
 	//! Save snapshot
 	bool save(uint8_t **buffer);
 	
-	//! Dump internal state to console
-	void dump();
+	//! Dump internal state
 	void dumpState();	
-	
+
+	//! Dump trace line
+	void dumpTrace();	
+
 	//! Bind the CIA chip to the specified virtual CPU.
 	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
 

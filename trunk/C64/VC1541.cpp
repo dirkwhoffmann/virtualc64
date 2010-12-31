@@ -21,6 +21,7 @@
 VC1541::VC1541()
 {
 	debug(2, "Creating virtual VC1541 at address %p\n", this);
+	name = "1541";
 	
 	// Initialize references
 	c64 = NULL;
@@ -29,7 +30,8 @@ VC1541::VC1541()
 	
 	// Create sub components
 	mem = new VC1541Memory();
-	cpu = new CPU();		
+	cpu = new CPU();	
+	cpu->setName("1541CPU");
 	via1 = new VIA1();
 	via2 = new VIA2();
 		
@@ -50,6 +52,8 @@ VC1541::~VC1541()
 	
 	delete cpu;	
 	delete mem;
+	delete via1;
+	delete via2;
 }
 
 void 

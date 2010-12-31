@@ -29,6 +29,13 @@ VirtualComponent::VirtualComponent()
 	logfile = NULL;
 }
 
+VirtualComponent::~VirtualComponent()
+{
+	// debug(2, "Terminated\n");
+	if (logfile)
+		fclose(logfile);
+}
+
 void 
 VirtualComponent::reset()
 {
@@ -88,72 +95,69 @@ VirtualComponent::dumpState()
 }
 
 void
+VirtualComponent::debug(const char *fmt, ...)
+{
+	char buf[256];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(buf, sizeof(buf), fmt, ap); 
+	va_end(ap);
+	fprintf(logfile ? logfile : stderr, "%s: %s", name, buf);
+}
+
+void
 VirtualComponent::debug(int level, const char *fmt, ...)
 {
 	if (level > debugLevel) 
 		return;
 
-	char buf[128];
+	char buf[256];
 	va_list ap;
 	va_start(ap, fmt);
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
 	va_end(ap);
-	fprintf(stderr, "%s: %s", name, buf);
+	fprintf(logfile ? logfile : stderr, "%s: %s", name, buf);
 }
 
 void format_string(char *fmt,va_list argptr );
 
+#if 0
 void
 VirtualComponent::trace(const char *fmt, ...)
 {
 	if (!tracingEnabled()) 
 		return;
 	
-	char buf[128];
+	char buf[256];
 	va_list ap;
 	va_start(ap, fmt);
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
 	va_end(ap);
-	fprintf(stderr, "%s %s", name, buf);
+	fprintf(logfile ? logfile : stderr, "%s %s", name, buf);
 }
+#endif
 
 void
 VirtualComponent::warn(const char *fmt, ...)
 {
-	char buf[128];
+	char buf[256];
 	va_list ap;
 	va_start(ap, fmt);
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
 	va_end(ap);
-	fprintf(stderr, "%s: WARNING: %s", name, buf);
+	fprintf(logfile ? logfile : stderr, "%s: WARNING: %s", name, buf);
 }
 
 void
 VirtualComponent::panic(const char *fmt, ...)
 {
-	char buf[128];
+	char buf[256];
 	va_list ap;
 	va_start(ap, fmt);
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
 	va_end(ap);
-	fprintf(stderr, "%s: PANIC: %s", name, buf);
+	fprintf(logfile ? logfile : stderr, "%s: PANIC: %s", name, buf);
 	
 	assert(0);
 }
-
-void
-VirtualComponent::log(const char *fmt, ...)
-{
-	char buf[128];
-
-	if (!logfile) 
-		return;
-	
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap); 
-	va_end(ap);
-	fprintf(logfile, "%s: %s", name, buf);
-}
-
 

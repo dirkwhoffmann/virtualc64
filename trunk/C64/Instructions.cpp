@@ -51,32 +51,44 @@ CPU::fetch() {
 		return;
 	} 
 
-	// Temporary debugging
-	if (PC == 2073) 
-		c64->cia1->setLogfile(getLogfile());
-	
-	if (autotracing) {		
-		if (PC == trace_enable_address && current_trace == 0) { 
-			printf("Auto trace enabled\n");
-			current_trace = 1;
-		}
-	
-		if (current_trace > 0 && current_trace <= max_traces && c64->logfile) {
-			c64->cia1->dump();
-			c64->cia2->dump();
-			fprintf(c64->logfile, "%05d (%05ld): IRQ: %02X NMI:%02X %s %s %s\n", 
-					current_trace, (long)c64->getCycles(), 
-					nmiLine, irqLine,
-					disassemble(),
-					doNMI ? "<NMI>" : "",
-					doIRQ ? "<IRQ>" : "");
-			current_trace++;
-		}
+	// REMOVE AFTER DEBUGGING!!!
+	// Automatically switch on tracing when PC reaches a certain address
+	if (current_trace > 0 && current_trace <= max_traces) {		
+		// keep tracing
+		current_trace++; 
 	}
+	if (PC == 2070 && current_trace == 0 && max_traces > 0) {
+		if (!(logfile = fopen("/tmp/virtualc64.log", "w"))) {
+			panic("Cannot open logfile\n");
+		}
+		// start tracing
+		setTraceMode(true); 
+		c64->cia1->logfile = logfile;
+		c64->cia1->setTraceMode(true); 
+		c64->cia2->logfile = logfile;
+		c64->cia2->setTraceMode(true); 
+		current_trace = 1;
+	} 
+
+	if (current_trace > 1 && current_trace == max_traces) {
+		// stop tracing
+		setTraceMode(false); 
+		c64->cia2->setTraceMode(false); 
+		c64->cia1->setTraceMode(false); 
+		c64->cia1->logfile = NULL;
+		c64->cia2->logfile = NULL;		
+		logfile = NULL;
+	}
+	// END DEBUG
 	
 	// Disassemble command if requested
-	if (tracingEnabled()) 
-		debug(1, "%s", disassemble());
+	if (tracingEnabled()) {
+		c64->cia1->dumpTrace();
+		c64->cia2->dumpTrace();
+		if (current_trace)
+			debug(1, "%05d: ", current_trace);
+		debug(1, "%s\n", disassemble());
+	}
 	
 	// Check breakpoint tag
 	if (breakpoint[PC] != NO_BREAKPOINT) {

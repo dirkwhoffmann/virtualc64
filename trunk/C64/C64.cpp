@@ -82,10 +82,6 @@ C64::C64()
 	p = NULL;
 	warpMode = false;
 
-	if (!(logfile = fopen("/tmp/virtualc64.log", "w"))) {
-		warn("Cannot open logfile\n");
-	}
-
 	// Create components
 	mem = new C64Memory();
 	cpu = new CPU();	
@@ -131,10 +127,9 @@ C64::C64()
 	reset();
 	
 	// Remove after debugging
-	//cpu->autotracing = 1;
 	cpu->max_traces = 20000;
 	cpu->trace_enable_address = 2070; 	
-	cpu->setLogfile(logfile);
+	// cpu->setLogfile(logfile);
 	// cia1->setLogfile(logfile);
 }
 
@@ -160,10 +155,7 @@ C64::~C64()
 	
 	if( joystick2 != NULL )
 		delete joystick2;
-	
-	if (logfile)
-		fclose(logfile);
-	
+		
 	debug(1, "Cleaned up virtual C64 at address %p\n", this);
 }
 

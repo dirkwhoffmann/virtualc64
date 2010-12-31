@@ -20,6 +20,7 @@
 
 VIA6522::VIA6522()
 {
+	name = "VIA";
 	floppy = NULL;
 	reset();
 }
@@ -760,6 +761,7 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 VIA1::VIA1()
 {
 	debug(2, "  Creating VIA1 at address %p...\n", this);
+	name = "VIA1";
 }
 	
 VIA1::~VIA1()
@@ -776,6 +778,7 @@ void VIA1::reset()
 VIA2::VIA2()
 {
 	debug(2, "  Creating VIA2 at address %p...\n", this);
+	name = "VIA2";
 }
 	
 VIA2::~VIA2()

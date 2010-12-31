@@ -410,7 +410,8 @@
 // Initialization
 - (id) initWithDocument:(MyDocument *)d;
 - (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
-- (void) release;
+//- (void) release;
+- (void) kill;
 
 - (id) initWithContentsOfSnapshot:(Snapshot *)s;
 - (CIAProxy *) cia:(int)num;
