@@ -79,6 +79,10 @@ Keyboard::Keyboard()
 	ASCII['z'] = 0x0104;
 }
 
+Keyboard::~Keyboard()
+{
+}
+
 void 
 Keyboard::reset() 
 {

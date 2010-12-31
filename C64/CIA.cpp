@@ -308,33 +308,33 @@ uint8_t CIA::peek(uint16_t addr)
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
 			
-			log("peek CIA_TIME_OF_DAY_SEC_FRAC\n");
+			// debug("peek CIA_TIME_OF_DAY_SEC_FRAC\n");
 			tod.defreeze();
 			result = BinaryToBCD(tod.getTodTenth());
 			break;
 		
 		case CIA_TIME_OF_DAY_SECONDS:
 			
-			log("peek CIA_TIME_OF_DAY_SECONDS\n");
+			// debug("peek CIA_TIME_OF_DAY_SECONDS\n");
 			result = BinaryToBCD(tod.getTodSeconds());
 			break;
 			
 		case CIA_TIME_OF_DAY_MINUTES:
 			
-			log("peek CIA_TIME_OF_DAY_MINUTES\n");
+			// debug("peek CIA_TIME_OF_DAY_MINUTES\n");
 			result = BinaryToBCD(tod.getTodMinutes());
 			break;
 			
 		case CIA_TIME_OF_DAY_HOURS:
 
-			log("peek CIA_TIME_OF_DAY_HOURS\n");
+			// debug("peek CIA_TIME_OF_DAY_HOURS\n");
 			tod.freeze();
 			result = (tod.getTodHours() & 0x80) /* AM/PM */ | BinaryToBCD(tod.getTodHours() & 0x1F);
 			break;
 			
 		case CIA_SERIAL_IO_BUFFER:
 			
-			log("peek CIA_SERIAL_IO_BUFFER\n");			
+			// debug("peek CIA_SERIAL_IO_BUFFER\n");			
 			result = 0x00;
 			break;
 			
@@ -367,7 +367,9 @@ uint8_t CIA::peek(uint16_t addr)
 			break;
 			
 		default:
+			result = 0;
 			panic("Unknown CIA address %04X\n", addr);
+			break;
 	}
 	
 	return result;
@@ -406,7 +408,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
-			log("poke CIA_TIME_OF_DAY_SEC_FRAC: %02X\n", value);
+			// debug("poke CIA_TIME_OF_DAY_SEC_FRAC: %02X\n", value);
 			if (value & 0x80) {
 				tod.setAlarmTenth(BCDToBinary(value & 0x0F));
 			} else { 
@@ -416,7 +418,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_SECONDS:
-			log("poke CIA_TIME_OF_DAY_SECONDS: %02X\n", value);
+			// debug("poke CIA_TIME_OF_DAY_SECONDS: %02X\n", value);
 			if (value & 0x80)
 				tod.setAlarmSeconds(BCDToBinary(value & 0x7F));
 			else 
@@ -424,7 +426,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_MINUTES:
-			log("poke CIA_TIME_OF_DAY_MINUTES: %02X\n", value);
+			// debug("poke CIA_TIME_OF_DAY_MINUTES: %02X\n", value);
 			if (value & 0x80)
 				tod.setAlarmMinutes(BCDToBinary(value & 0x7F));
 			else 
@@ -432,7 +434,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_HOURS:
-			log("poke CIA_TIME_OF_DAY_HOURS: %02X\n", value);
+			// debug("poke CIA_TIME_OF_DAY_HOURS: %02X\n", value);
 			if (value & 0x80) {
 				tod.setAlarmHours((value & 0x80) /* AM/PM */ | BCDToBinary(value & 0x1F));
 			} else {
@@ -446,13 +448,13 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			// We simply acknowledge the operation (interrupt) and discard the value
 			// TODO
 			//triggerInterrupt(0x08);
-			log("poke CIA_SERIAL_IO_BUFFER: %0x2X\n", value);
+			// debug("poke CIA_SERIAL_IO_BUFFER: %0x2X\n", value);
 			return;
 			
 		case CIA_INTERRUPT_CONTROL:
 			
-			if ((value & 0x84) == 0x84)
-				log("SETTING TIME OF DAY ALARM (%02X)\n", value);
+			//if ((value & 0x84) == 0x84)
+			//	debug("SETTING TIME OF DAY ALARM (%02X)\n", value);
 			
 			// bit 7 means set (1) or clear (0) the other bits
 			if ((value & 0x80) != 0) {
@@ -618,13 +620,15 @@ CIA::incrementTOD()
 	}
 }
 
-void CIA::dump()
+void CIA::dumpTrace()
 {
-	if (!cpu->c64->logfile)
-		return;
+	const char *indent = "                                                                      ";
 
-	fprintf(cpu->c64->logfile, "                                                                                    ICR: %02X IMR: %02X ", bICR, bIMR);
-	fprintf(cpu->c64->logfile, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
+	if (!tracingEnabled()) 
+		return;
+	
+	debug(1, "%sICR: %02X IMR: %02X ", indent, bICR, bIMR);
+	debug(1, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
 			dwDelay & CountA0 ? "CntA0 " : "",
 			dwDelay & CountA1 ? "CntA1 " : "",
 			dwDelay & CountA2 ? "CntA2 " : "",
@@ -646,10 +650,10 @@ void CIA::dump()
 			dwDelay & OneShotA0 ? "1ShotA0 " : "",
 			dwDelay & OneShotB0 ? "1ShotB0 " : "");
 
-	fprintf(cpu->c64->logfile, "                                                                                    A: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
-			timerA.counter, timerA.latch, PA, bPALatch, bDDRA, bCRA);
-	fprintf(cpu->c64->logfile, "                                                                                    B: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
-			timerB.counter, timerB.latch, PB, bPBLatch, bDDRB, bCRB);
+	debug(1, "%sA: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
+		  indent, timerA.counter, timerA.latch, PA, bPALatch, bDDRA, bCRA);
+	debug(1, "%sB: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
+		  indent, timerB.counter, timerB.latch, PB, bPBLatch, bDDRB, bCRB);
 }
 
 void CIA::dumpState()
@@ -658,11 +662,8 @@ void CIA::dumpState()
 	debug(1, "            Data port B : %02X\n", getDataPortA());
 	debug(1, "  Data port direction A : %02X\n", getDataPortDirectionA());
 	debug(1, "  Data port direction B : %02X\n", getDataPortDirectionB());
-	//debug(1, "  External port lines A : %02X\n", portLinesA);
-	// debug(1, "  External port lines B : %02X\n", portLinesB);
 	debug(1, "     Control register A : %02X\n", getControlRegA());
 	debug(1, "     Control register B : %02X\n", getControlRegB());
-//	debug(1, "Interrupt data register : %02X\n", ???);
 	debug(1, "     Timer A interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
 	debug(1, "     Timer B interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
 	debug(1, "         TOD interrupts : %s\n", isInterruptEnabledTOD() ? "enabled" : "disabled");	

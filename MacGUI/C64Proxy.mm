@@ -488,13 +488,15 @@
 	return self;
 }
 
-- (void) release
+//- (void) release
+- (void) kill
 {
 	assert(c64 != NULL);
 	NSLog(@"Deleting C64...");
 
 	// Delete sound device
 	NSLog(@"  Deleting sound device");
+	[self disableAudio];
 	[audioDevice release];
 	audioDevice = nil;
 	

@@ -22,6 +22,8 @@
 // Fixed a bug that prevented the virtual shift key from beeing released
 // Fixed a bug in the CPU initialization routine (default value of B flag is now set correctly)
 // Parts of the ObjectiveC GUI code have been refactored and cleaned up
+// Fixed a bug that caused the emulator to crash while accessing an illegal I/O drive memory location
+
 
 
 

@@ -53,12 +53,7 @@ private:
 		Only a few components will react to this flag.
 	*/
 	bool traceMode;
-	
-	//! Log file
-	/*! If not equal to NULL, some debug information is dumped to this file
-	*/
-	FILE *logfile;
-	
+		
 	//! The original state before the first call of suspend()
 	bool suspendedState;
 
@@ -68,14 +63,20 @@ private:
 	int suspendCounter;
 				
 public:
+	//! Log file
+	/*! By default, this variable is NULL and all debug and trace messages are sent to
+	 stdout or stderr. Assign a file handle, if you wish to send debug output to a file
+	 */
+	FILE *logfile;
+
 	//! Constructor
 	VirtualComponent();
 
 	//! Destructor
-	virtual ~VirtualComponent() { };
+	~VirtualComponent();
 
 	//! Assign name
-	inline void setName(char *componentName) { name = componentName; }
+	inline void setName(const char *componentName) { name = componentName; }
 		
 	//! Reset the component to its initial state.
 	/*! The functions is called when a hard reset is performed.
@@ -148,9 +149,7 @@ public:
 	//! Enable or disable trace mode
 	inline void setTraceMode(bool b) { traceMode = b; }
 
-	inline FILE *getLogfile() { return logfile; }
-	inline void setLogfile(FILE *file) { logfile = file; }
-
+	
 	// Helper functions for reading and writing data
 	
 	//! Write 8 bit value to memory in big endian format
@@ -172,16 +171,14 @@ public:
 	inline uint64_t read64(uint8_t **ptr) { return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
 	
 	//! Print debug message
-	void debug(int level, const char *fmt, ...);
+	void debug(const char *fmt, ...);
+	void debug(int level, const char *fmt, ...); // higher level = less output
 	//! Print trace message
-	void trace(const char *fmt, ...);
+	// void trace(const char *fmt, ...);
 	//! Print warning message
 	void warn(const char *fmt, ...);
 	//! Print error message and stop
 	void panic(const char *fmt, ...);
-	//! Write message to logfile
-	void log(const char *fmt, ...);
-
 };
 
 #endif

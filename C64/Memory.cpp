@@ -20,6 +20,8 @@
 
 Memory::Memory()
 {	
+	name = "MEM";
+	
 	cpu = NULL;
 	
 	// Clear all watchpoint tags

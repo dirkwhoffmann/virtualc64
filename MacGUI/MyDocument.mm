@@ -114,8 +114,10 @@
 	[screen cleanUp];
 	
 	// release C64
+	NSLog(@"getting Timer lock");
 	[timerLock lock];
-	[c64 release];
+	NSLog(@"Got lock");
+	[c64 kill];
 	c64 = nil;
 	[timerLock unlock];
 	

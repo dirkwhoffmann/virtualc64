@@ -22,7 +22,7 @@ VC1541Memory::VC1541Memory()
 {
 	debug(2, "  Creating VC1541 memory at %p...\n", this);	
 
-	name = "1541 memory";
+	name = "1541MEM";
 	iec = NULL;
 	floppy = NULL;
 	romFile = NULL;

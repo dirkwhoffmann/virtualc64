@@ -42,6 +42,9 @@ public:
 	//! Constructor
 	Keyboard();
 
+	//! Destructor
+	~Keyboard();
+
 	//! Reset 
 	void reset();
 	
