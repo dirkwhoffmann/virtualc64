@@ -232,13 +232,26 @@ bool CIA::load(uint8_t **buffer)
 	// TODO
 	debug(2, "  Loading CIA state...\n");
 	
-	for (unsigned i = 0; i < sizeof(16); i++)
-		(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
+	dwDelay = read32(buffer);
+	dwFeed = read32(buffer);
+	bCRA = read8(buffer);
+	bCRB = read8(buffer);
+	bICR = read8(buffer);
+	bIMR = read8(buffer);
+	bPB67TimerMode = read8(buffer);
+	bPB67TimerOut = read8(buffer);
+	bPB67Toggle = read8(buffer);
+	
+	bPALatch = read8(buffer);
+	bPBLatch = read8(buffer);
+	bDDRA = read8(buffer);
+	bDDRB = read8(buffer);
+	
+	PA = read8(buffer);
+	PB = read8(buffer);
+	
+	CNT = (bool)read8(buffer);
+	INT = (bool)read8(buffer);
 	
 	tod.load(buffer);
 	timerA.load(buffer);
@@ -250,10 +263,33 @@ bool CIA::load(uint8_t **buffer)
 bool 
 CIA::save(uint8_t **buffer)
 {
-	 debug(2, "  Saving CIA state...\n");
+	debug(2, "  Saving CIA state...\n");
 	
-	// TODO
-
+	write32(buffer, dwDelay);
+	write32(buffer, dwFeed);
+	write8(buffer, bCRA);
+	write8(buffer,bCRB);
+	write8(buffer,bICR);
+	write8(buffer,bIMR);
+	write8(buffer,bPB67TimerMode);
+	write8(buffer,bPB67TimerOut);
+	write8(buffer,bPB67Toggle);
+	
+	write8(buffer,bPALatch);
+	write8(buffer,bPBLatch);
+	write8(buffer,bDDRA);
+	write8(buffer,bDDRB);
+	
+	write8(buffer,PA);
+	write8(buffer,PB);
+	
+	write8(buffer, (uint8_t)CNT);
+	write8(buffer, (uint8_t)INT);
+	
+	tod.save(buffer);
+	timerA.save(buffer);
+	timerB.save(buffer);
+	
 	return true;	
 }
 

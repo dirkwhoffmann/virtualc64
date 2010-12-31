@@ -46,9 +46,6 @@ protected:
 
 	//! Timer latch
 	uint16_t latch;
-
-	//! Indicates that an interrupt needs to be triggered in the next cycle
-	bool triggerInterrupt;
 	
 public:
 	//! Constructor

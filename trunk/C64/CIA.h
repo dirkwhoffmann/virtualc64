@@ -316,20 +316,6 @@ public:
 	//!
 	inline void setControlRegB(uint8_t value) { bCRB = value; }
 	
-	//! Trigger pending interrupts
-	// inline void triggerInterrupts() { }
-
-	inline void triggerInterrupts() {
-
-		if (timerA.triggerInterrupt) {
-			timerA.triggerInterrupt = false;
-			triggerInterrupt(0x01);
-		}
-		if (timerB.triggerInterrupt) {
-			timerB.triggerInterrupt = false;
-			triggerInterrupt(0x02);
-		}
-	}
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                             General
