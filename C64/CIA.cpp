@@ -531,10 +531,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			// 
 			// Adapted from PC64Win by Wolfgang Lorenz
 			//
-			
-			// output PB67 changes only once
-			bool PBChanged = false;
-			
+						
 			// set clock in o2 mode // todo cnt
 			if ((value & 0x21) == 0x01) {
 				delay |= CountA1 | CountA0;
@@ -558,16 +555,10 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 			// set toggle high on rising edge of Start
 			if ((value & 0x01) != 0 && (CRA & 0x01) == 0) {
-				if ((CRA & 0x06) == 0x06 && (PB67Toggle & 0x40) != 0x40) {
-					PBChanged = true;
-				}
 				PB67Toggle |= 0x40;
 			}
 			
 			// timer A output to PB6
-			if ((value & 0x06) != (CRA & 0x06)) {
-				PBChanged = true;
-			}
 			if ((value & 0x02) == 0) {
 				PB67TimerMode &= ~0x40;
 			} else {
@@ -583,10 +574,8 @@ void CIA::poke(uint16_t addr, uint8_t value)
 				}
 			}
 			
-			// write PB67 if they have changed
-			if (PBChanged) {
-				PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-			}
+			// write PB67 
+			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 			
 			// set the register
 			CRA = value;
@@ -599,10 +588,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			// 
 			// Adapted from PC64Win by Wolfgang Lorenz
 			//
-			
-			// output PB67 changes only once
-			bool PBChanged = false;
-			
+						
 			// set clock in o2 mode // todo cnt
 			if ((value & 0x61) == 0x01) {
 				delay |= CountB1 | CountB0;
@@ -626,16 +612,10 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 			// set toggle high on rising edge of Start
 			if ((value & 0x01) != 0 && (CRB & 0x01) == 0) {
-				if ((CRB & 0x06) == 0x06 && (PB67Toggle & 0x80) != 0x80) {
-					PBChanged = true;
-				}
 				PB67Toggle |= 0x80;
 			}
 			
 			// timer B output to PB7
-			if ((value & 0x06) != (CRB & 0x06)) {
-				PBChanged = true;
-			}
 			if ((value & 0x02) == 0) {
 				PB67TimerMode &= ~0x80;
 			} else {
@@ -651,10 +631,8 @@ void CIA::poke(uint16_t addr, uint8_t value)
 				}
 			}
 			
-			// write PB67 if they have changed
-			if (PBChanged) {
-				PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-			}
+			// write PB67
+			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 			
 			// set the register
 			CRB = value;
@@ -739,6 +717,7 @@ void CIA::dumpState()
 void CIA::_executeOneCycle()
 {
 	bool timerAOutput;
+	bool timerBOutput;
 		
 #if 0
 	if (cpu->c64->event2 && this == cpu->c64->cia1)
@@ -847,7 +826,6 @@ void CIA::_executeOneCycle()
 	
 	// (2) : underflow counter A
 	timerAOutput = (timerA.counter == 0 && (delay & CountA2) != 0);
-	
 	if (timerAOutput) {
 		
 		// (3) : signal underflow event
@@ -871,10 +849,8 @@ void CIA::_executeOneCycle()
 				delay &= ~PB6Low1;
 				
 			} else {
-				// (6.2) toggle PB6 between high and low
-				// Dirk: bP67TimerOut = bPB67Toggle ? (bP67TimerOut | 0x40) : (bP67TimerOut & 0xBF);
-				PB67TimerOut ^= 0x40; 
-				assert((PB67TimerOut & 0x40) == (PB67Toggle & 0x40));
+				// (6.2) copy bit 6 from PB67Toggle to PB67TimerOut
+				PB67TimerOut = (PB67TimerOut & 0xBF) | (PB67Toggle & 0x40);
 			}
 			
 			// output new state
@@ -911,8 +887,9 @@ void CIA::_executeOneCycle()
 		timerB.counter--;
 	}
 	
-	// underflow counter B
-	if (timerB.counter == 0 && (delay & CountB2) != 0) {
+	// (2) : underflow counter B
+	timerBOutput = (timerB.counter == 0 && (delay & CountB2) != 0);
+	if (timerBOutput) {
 		
 		// signal underflow event
 		ICR |= 0x02;
@@ -936,8 +913,8 @@ void CIA::_executeOneCycle()
 				
 				// toggle PB7 between high and low
 			} else {
-				PB67TimerOut ^= 0x80;
-				assert((PB67TimerOut & 0x80) == (PB67Toggle & 0x80));
+				// (6.2) copy bit 7 from PB67Toggle to PB67TimerOut
+				PB67TimerOut = (PB67TimerOut & 0x7F) | (PB67Toggle & 0x80);
 			}
 			
 			// output new state
