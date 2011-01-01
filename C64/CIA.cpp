@@ -816,7 +816,6 @@ void CIA::_executeOneCycle()
 	//
 	
 	// don't output PB67 changes more than once
-	bool PBChanged = false; // ????
 				
 	// ------------------------- TIMER A --------------------------------
 	// (1) : decrement counter A
@@ -852,9 +851,6 @@ void CIA::_executeOneCycle()
 				// (6.2) copy bit 6 from PB67Toggle to PB67TimerOut
 				PB67TimerOut = (PB67TimerOut & 0xBF) | (PB67Toggle & 0x40);
 			}
-			
-			// output new state
-			PBChanged = true;
 		}
 		
 		// (7) stop timer in one shot mode
@@ -916,9 +912,6 @@ void CIA::_executeOneCycle()
 				// (6.2) copy bit 7 from PB67Toggle to PB67TimerOut
 				PB67TimerOut = (PB67TimerOut & 0x7F) | (PB67Toggle & 0x80);
 			}
-			
-			// output new state
-			PBChanged = true;
 		}
 		
 		// stop timer in one shot mode
@@ -948,13 +941,10 @@ void CIA::_executeOneCycle()
 		if ((delay & PB7Low1) != 0) {
 			PB67TimerOut &= ~0x80;
 		}
-		PBChanged = true;
 	}
 	
-	// write new PB if it has changed
-	if (PBChanged) {
-		PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-	}
+	// write new PB 
+	PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 	
 	// set interrupt register and interrupt line
 	if ((delay & Interrupt1) != 0) {
