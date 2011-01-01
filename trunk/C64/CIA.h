@@ -42,29 +42,6 @@ class Joystick;
 #define CountB3     0x00000080
 #define LoadA0      0x00000100
 #define LoadA1      0x00000200
-#define LoadB0      0x00000400
-#define LoadB1      0x00000800
-#define PB6Low0     0x00001000
-#define PB6Low1     0x00002000
-#define PB7Low0     0x00004000
-#define PB7Low1     0x00008000
-#define Interrupt0  0x00010000
-#define Interrupt1  0x00020000
-#define OneShotA0   0x00040000
-#define OneShotB0   0x00080000
-#define DelayMask ~(0x00100000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0)
-
-#if 0
-#define CountA0     0x00000001
-#define CountA1     0x00000002
-#define CountA2     0x00000004
-#define CountA3     0x00000008
-#define CountB0     0x00000010
-#define CountB1     0x00000020
-#define CountB2     0x00000040
-#define CountB3     0x00000080
-#define LoadA0      0x00000100
-#define LoadA1      0x00000200
 #define LoadA2      0x00000400
 #define LoadB0      0x00000800
 #define LoadB1      0x00001000
@@ -78,7 +55,6 @@ class Joystick;
 #define OneShotA0   0x00100000
 #define OneShotB0   0x00200000
 #define DelayMask ~(0x00400000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0)
-#endif
 
 
 //! Virtual complex interface adapter (CIA)
@@ -169,22 +145,21 @@ public:
 	//
 		
 	// control
-	uint32_t oldDelay;
-	uint32_t dwDelay;        // performs delay by shifting left at each clock
-	uint32_t dwFeed;         // new bits to feed into dwDelay
-	uint8_t bCRA;            // control register A
-	uint8_t bCRB;            // control register B
-	uint8_t bICR;            // interrupt control register
-	uint8_t bIMR;            // interrupt mask register
-	uint8_t bPB67TimerMode;  // bit mask for PB outputs: 0 = port register, 1 = timer
-	uint8_t bPB67TimerOut;   // PB outputs bits 6 and 7 in timer mode
-	uint8_t bPB67Toggle;     // PB outputs bits 6 and 7 in toggle mode
+	uint32_t delay;        // performs delay by shifting left at each clock
+	uint32_t feed;         // new bits to feed into dwDelay
+	uint8_t CRA;            // control register A
+	uint8_t CRB;            // control register B
+	uint8_t ICR;            // interrupt control register
+	uint8_t IMR;            // interrupt mask register
+	uint8_t PB67TimerMode;  // bit mask for PB outputs: 0 = port register, 1 = timer
+	uint8_t PB67TimerOut;   // PB outputs bits 6 and 7 in timer mode
+	uint8_t PB67Toggle;     // PB outputs bits 6 and 7 in toggle mode
 	
 	// ports
-	uint8_t bPALatch;        // buffered output values
-	uint8_t bPBLatch;
-	uint8_t bDDRA;           // directions: 0 = input, 1 = output
-	uint8_t bDDRB;
+	uint8_t PALatch;        // buffered output values
+	uint8_t PBLatch;
+	uint8_t DDRA;           // directions: 0 = input, 1 = output
+	uint8_t DDRB;
 	
 	// interfaces
 	uint8_t PA;
@@ -254,10 +229,10 @@ public:
 	inline void setDataPortA(uint8_t value) { poke(CIA_DATA_PORT_A, value); }
 
 	//! Returns the value of the data port A direction register
-	inline uint8_t getDataPortDirectionA() { return bDDRA; }
+	inline uint8_t getDataPortDirectionA() { return DDRA; }
 	
 	//! Sets the current value of the data port A direction register
-	inline void setDataPortDirectionA(uint8_t value) { bDDRA = value; }
+	inline void setDataPortDirectionA(uint8_t value) { DDRA = value; }
 	
 	//! Returns the value of data port B
 	inline uint8_t getDataPortB() { return PB; }
@@ -266,10 +241,10 @@ public:
 	inline void setDataPortB(uint8_t value) { poke(CIA_DATA_PORT_B,value); }
 	
 	//! Returns the value of the data port B direction register
-	inline uint8_t getDataPortDirectionB() { return bDDRB; }
+	inline uint8_t getDataPortDirectionB() { return DDRB; }
 	
 	//! Sets the current value of the data port B direction register
-	inline void setDataPortDirectionB(uint8_t value) { bDDRB = value; }
+	inline void setDataPortDirectionB(uint8_t value) { DDRB = value; }
 		
 	//! Special peek function for the I/O memory range
 	/*! The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip */
@@ -282,10 +257,10 @@ public:
 	// Interrupt control
 	
 	//! Returns true, if timer can trigger interrupts
-	inline bool isInterruptEnabledA() { return bICR & 0x01; }
+	inline bool isInterruptEnabledA() { return ICR & 0x01; }
 
 	//! Set or delete interrupt enable flag
-	inline void setInterruptEnabledA(bool b) { if (b) bICR |= 0x01; else bICR &= (0xff-0x01); }
+	inline void setInterruptEnabledA(bool b) { if (b) ICR |= 0x01; else ICR &= (0xff-0x01); }
 
 	//! Toggle interrupt enable flag of timer A
 	inline void toggleInterruptEnableFlagA() { setInterruptEnabledA(!isInterruptEnabledA()); }
@@ -302,10 +277,10 @@ public:
 	inline void togglePendingSignalFlagA() { setSignalPendingA(!isSignalPendingA()); }
 		
 	//! Returns true, if timer B can trigger interrupts
-	inline bool isInterruptEnabledB() { return bICR & 0x02; }
+	inline bool isInterruptEnabledB() { return ICR & 0x02; }
 
 	//! Set or delete interrupt enable flag
-	inline void setInterruptEnabledB(bool b) { if (b) bICR |= 0x02; else bICR &= (0xff-0x02); }
+	inline void setInterruptEnabledB(bool b) { if (b) ICR |= 0x02; else ICR &= (0xff-0x02); }
 
 	//! Toggle interrupt enable flag of timer B
 	inline void toggleInterruptEnableFlagB() { setInterruptEnabledB(!isInterruptEnabledB()); }
@@ -322,26 +297,26 @@ public:
 	inline void togglePendingSignalFlagB() { setSignalPendingB(!isSignalPendingB()); }
 
 	//! Returns true, if the "time of day" interrupt alarm is enabled
-	inline bool isInterruptEnabledTOD() { return bICR & 0x04; }
+	inline bool isInterruptEnabledTOD() { return ICR & 0x04; }
 
 	//! Enable or disable "time of day" interrupts 
-	inline void setInterruptEnabledTOD(bool b) { if (b) bICR |= 0x04; else bICR &= (0xff-0x04); }
+	inline void setInterruptEnabledTOD(bool b) { if (b) ICR |= 0x04; else ICR &= (0xff-0x04); }
 
 	// Timer A control
 
 	//!
-	inline bool getControlRegA() { return bCRA; }
+	inline bool getControlRegA() { return CRA; }
 
 	//!
-	inline void setControlRegA(uint8_t value) { bCRA = value; }
+	inline void setControlRegA(uint8_t value) { CRA = value; }
 	
 	// Timer B control
 	
 	//!
-	inline bool getControlRegB() { return bCRB; }
+	inline bool getControlRegB() { return CRB; }
 
 	//!
-	inline void setControlRegB(uint8_t value) { bCRB = value; }
+	inline void setControlRegB(uint8_t value) { CRB = value; }
 	
 	
 	// -----------------------------------------------------------------------------------------------
@@ -353,22 +328,6 @@ public:
 		The functions decreases all running counters and triggers an CPU interrput if necessary.
 	*/
 	
-#if 0	
-	inline void executeOneCycle() { 
-		if (timerA.getState() != TIMER_STOP)
-			timerA.executeOneCycle();	
-		if (controlRegHasChangedA) {
-			controlRegHasChangedA = false;
-			timerA.setControlReg(iomem[CIA_CONTROL_REG_A]);
-		}
-		if (timerB.getState() != TIMER_STOP)
-			timerB.executeOneCycle();
-		if (controlRegHasChangedB) {
-			controlRegHasChangedB = false;
-			timerB.setControlReg(iomem[CIA_CONTROL_REG_B]);		
-		} 		
-	}
-#endif
 inline void executeOneCycle() { 
 	_executeOneCycle();
 }
