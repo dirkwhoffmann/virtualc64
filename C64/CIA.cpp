@@ -416,22 +416,38 @@ void CIA::poke(uint16_t addr, uint8_t value)
 	switch(addr) {
 			
 		case CIA_TIMER_A_LOW:
-
+			
 			timerA.setLatchLo(value);
+
+			// If timer is currently in LOAD state, this value goes directly into the counter
+			if (oldDelay & LoadA1) {
+				timerA.setCounterLo(value);
+			}
 			return;
 			
 		case CIA_TIMER_A_HIGH:
 						
-			timerA.setLatchHi(value);			
+			timerA.setLatchHi(value);		
+			
 			// load counter if timer is stopped
 			if ((bCRA & 0x01) == 0) {
 				dwDelay |= LoadA0;
 			}
+			
+			// If timer is currently in LOAD state, this value goes directly into the counter
+			if (oldDelay & LoadA1) {
+				timerA.setCounterHi(value);
+			}
 			return;
 			
 		case CIA_TIMER_B_LOW:  
-			
+
 			timerB.setLatchLo(value);
+
+			// If timer is currently in LOAD state, this value goes directly into the counter
+			if (oldDelay & LoadB1) {
+				timerB.setCounterLo(value);
+			}			
 			return;
 			
 		case CIA_TIMER_B_HIGH: 
@@ -441,6 +457,11 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			if ((bCRB & 0x01) == 0) {
 				dwDelay |= LoadB0;
 			}
+			
+			// If timer is currently in LOAD state, this value goes directly into the counter
+			if (oldDelay & LoadB1) {
+				timerB.setCounterHi(value);
+			}						
 			return;
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
@@ -688,8 +709,8 @@ void CIA::dumpTrace()
 
 	debug(1, "%sA: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
 		  indent, timerA.counter, timerA.latch, PA, bPALatch, bDDRA, bCRA);
-	debug(1, "%sB: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
-		  indent, timerB.counter, timerB.latch, PB, bPBLatch, bDDRB, bCRB);
+	//debug(1, "%sB: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
+	//	  indent, timerB.counter, timerB.latch, PB, bPBLatch, bDDRB, bCRB);
 }
 
 void CIA::dumpState()
@@ -721,6 +742,13 @@ void CIA::_executeOneCycle()
 {
 	bool timerAOutput;
 		
+#if 0
+	if (cpu->c64->event2 && this == cpu->c64->cia1)
+	{
+		dumpTrace();	
+	}
+#endif
+	
 	// Pictures taken from "A Software Model of the CIA6526" from Wolfgang Lorenz 
 
 	// Figure 3: Layout of timer (A and B)
@@ -959,9 +987,13 @@ void CIA::_executeOneCycle()
 		raiseInterruptLine();
 	}
 
-
+	// oldDelay is needed in poke:CIA_TIMER_A_LOW
+	oldDelay = dwDelay;
+		
 	// next clock
-	 dwDelay = (dwDelay << 1) & DelayMask | dwFeed;
+	// Can we move this to the beginning of the function?
+	// If yes, we wouldn't need oldDelay any more
+	dwDelay = (dwDelay << 1) & DelayMask | dwFeed;
 }
 
 

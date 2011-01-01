@@ -58,7 +58,8 @@ CPU::fetch() {
 		// keep tracing
 		current_trace++; 
 	}
-	if (PC == 2070 && current_trace == 0 && max_traces > 0) {
+	//if (PC == 2070 && current_trace == 0 && max_traces > 0) {
+	if (c64->event2 && current_trace == 0 && max_traces > 0) {
 		if (!(logfile = fopen("/tmp/virtualc64.log", "w"))) {
 			panic("Cannot open logfile\n");
 		}
@@ -85,8 +86,8 @@ CPU::fetch() {
 	
 	// Disassemble command if requested
 	if (tracingEnabled()) {
-		c64->cia1->dumpTrace();
-		c64->cia2->dumpTrace();
+		//c64->cia1->dumpTrace();
+		//c64->cia2->dumpTrace();
 		if (current_trace)
 			debug(1, "%05d: ", current_trace);
 		debug(1, "%s\n", disassemble());

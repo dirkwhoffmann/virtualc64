@@ -16,6 +16,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
+// Release notes
+// 1. First release milestone reached: VirtualC64 passes all Lorenz tests
+
 #ifndef _C64_INC
 #define _C64_INC
 
@@ -184,7 +188,7 @@ public:
 	//! Logfile
 	//* For debugging only */
 	FILE *logfile;
-	
+		
 private:
 
 	//! The execution thread
