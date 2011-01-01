@@ -50,7 +50,7 @@
 			508BD4FB0A73C9AF00BCC764 /* MyDocument.mm:2596 */,
 			509C67CB0A751AD0008D34E5 /* C64Listener.h:18 */,
 			50AE1A8D0A8736C100073959 /* VIC.h:861 */,
-			5022BF3E0A8BBAE500C71B6C /* CIA.h:322 */,
+			5022BF3E0A8BBAE500C71B6C /* CIA.h:297 */,
 			50CA0E170A90A48800A5A08D /* Memory.cpp:155 */,
 			50B527000AB0890A00280F81 /* MyDocument.mm:762 */,
 			50F52EB40B8C7AD9006A7C48 /* MyDocument.mm:1499 */,
@@ -335,6 +335,19 @@
 			503D4FDA12CF89B0006C94E1 /* PBXTextBookmark */ = 503D4FDA12CF89B0006C94E1 /* PBXTextBookmark */;
 			503D4FDB12CF89B0006C94E1 /* PBXTextBookmark */ = 503D4FDB12CF89B0006C94E1 /* PBXTextBookmark */;
 			503D4FDC12CF89B0006C94E1 /* PBXTextBookmark */ = 503D4FDC12CF89B0006C94E1 /* PBXTextBookmark */;
+			503D4FE012CF8CED006C94E1 /* XCBuildMessageTextBookmark */ = 503D4FE012CF8CED006C94E1 /* XCBuildMessageTextBookmark */;
+			503D4FE112CF8CED006C94E1 /* PBXTextBookmark */ = 503D4FE112CF8CED006C94E1 /* PBXTextBookmark */;
+			503D4FE212CF8CEF006C94E1 /* PBXTextBookmark */ = 503D4FE212CF8CEF006C94E1 /* PBXTextBookmark */;
+			503D4FE312CF8CEF006C94E1 /* PBXTextBookmark */ = 503D4FE312CF8CEF006C94E1 /* PBXTextBookmark */;
+			503D4FE412CF8CEF006C94E1 /* PBXTextBookmark */ = 503D4FE412CF8CEF006C94E1 /* PBXTextBookmark */;
+			503D4FE712CF8D31006C94E1 /* PBXTextBookmark */ = 503D4FE712CF8D31006C94E1 /* PBXTextBookmark */;
+			503D4FE812CF8D31006C94E1 /* PBXTextBookmark */ = 503D4FE812CF8D31006C94E1 /* PBXTextBookmark */;
+			503D4FE912CF8D31006C94E1 /* PBXTextBookmark */ = 503D4FE912CF8D31006C94E1 /* PBXTextBookmark */;
+			503D500312CF92B5006C94E1 /* PBXTextBookmark */ = 503D500312CF92B5006C94E1 /* PBXTextBookmark */;
+			503D500412CF92B5006C94E1 /* PBXTextBookmark */ = 503D500412CF92B5006C94E1 /* PBXTextBookmark */;
+			503D500512CF92B5006C94E1 /* PBXTextBookmark */ = 503D500512CF92B5006C94E1 /* PBXTextBookmark */;
+			503D500612CF92B5006C94E1 /* PBXTextBookmark */ = 503D500612CF92B5006C94E1 /* PBXTextBookmark */;
+			503D500712CF92B5006C94E1 /* PBXTextBookmark */ = 503D500712CF92B5006C94E1 /* PBXTextBookmark */;
 			50414759122191CB00A80E0C = 50414759122191CB00A80E0C /* PBXTextBookmark */;
 			50414843122199B500A80E0C = 50414843122199B500A80E0C /* PBXTextBookmark */;
 			50414844122199B500A80E0C = 50414844122199B500A80E0C /* PBXTextBookmark */;
@@ -891,18 +904,18 @@
 	};
 	50176C530A6F72F3009E80BD /* CIA.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 21904}}";
-			sepNavSelRange = "{33498, 0}";
-			sepNavVisRange = "{32998, 34}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 20304}}";
+			sepNavSelRange = "{16295, 0}";
+			sepNavVisRange = "{15232, 944}";
 			sepNavVisRect = "{{0, 7915}, {946, 751}}";
 			sepNavWindowFrame = "{{342, 219}, {1210, 871}}";
 		};
 	};
 	50176C540A6F72F3009E80BD /* CIA.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 8368}}";
-			sepNavSelRange = "{1802, 0}";
-			sepNavVisRange = "{930, 1258}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 7360}}";
+			sepNavSelRange = "{1027, 0}";
+			sepNavVisRange = "{10740, 1565}";
 			sepNavVisRect = "{{0, 1234}, {793, 446}}";
 			sepNavWindowFrame = "{{757, 298}, {985, 880}}";
 		};
@@ -1150,12 +1163,12 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = dataPort;
 		rLen = 0;
-		rLoc = 9320;
+		rLoc = 8497;
 		rType = 0;
 		vrLen = 945;
 		vrLoc = 6669;
 	};
-	5022BF3E0A8BBAE500C71B6C /* CIA.h:322 */ = {
+	5022BF3E0A8BBAE500C71B6C /* CIA.h:297 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -1166,7 +1179,7 @@
 		fileReference = 50176C540A6F72F3009E80BD /* CIA.h */;
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 322;
+		lineNumber = 297;
 		modificationTime = 304687970.438643;
 		originalNumberOfMultipleMatches = 0;
 		state = 2;
@@ -1606,7 +1619,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 319";
 		rLen = 0;
-		rLoc = 12693;
+		rLoc = 11855;
 		rType = 0;
 		vrLen = 1774;
 		vrLoc = 5283;
@@ -1616,7 +1629,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 286";
 		rLen = 0;
-		rLoc = 12766;
+		rLoc = 12697;
 		rType = 0;
 		vrLen = 950;
 		vrLoc = 17674;
@@ -1626,7 +1639,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 861";
 		rLen = 0;
-		rLoc = 31098;
+		rLoc = 30846;
 		rType = 0;
 		vrLen = 1155;
 		vrLoc = 29870;
@@ -1636,7 +1649,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 861";
 		rLen = 0;
-		rLoc = 31098;
+		rLoc = 30846;
 		rType = 0;
 		vrLen = 1137;
 		vrLoc = 29067;
@@ -1646,7 +1659,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 860";
 		rLen = 0;
-		rLoc = 31051;
+		rLoc = 30801;
 		rType = 0;
 		vrLen = 76;
 		vrLoc = 18052;
@@ -1656,7 +1669,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 286";
 		rLen = 0;
-		rLoc = 12766;
+		rLoc = 12697;
 		rType = 0;
 		vrLen = 950;
 		vrLoc = 17674;
@@ -1710,7 +1723,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 864";
 		rLen = 0;
-		rLoc = 31098;
+		rLoc = 30846;
 		rType = 0;
 		vrLen = 206;
 		vrLoc = 29225;
@@ -1740,7 +1753,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 860";
 		rLen = 0;
-		rLoc = 31051;
+		rLoc = 30801;
 		rType = 0;
 		vrLen = 800;
 		vrLoc = 17525;
@@ -1750,7 +1763,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 435";
 		rLen = 0;
-		rLoc = 15992;
+		rLoc = 15907;
 		rType = 0;
 		vrLen = 755;
 		vrLoc = 15211;
@@ -1810,7 +1823,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 864";
 		rLen = 0;
-		rLoc = 31098;
+		rLoc = 30846;
 		rType = 0;
 		vrLen = 267;
 		vrLoc = 29306;
@@ -1831,7 +1844,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 0;
-		rLoc = 443;
+		rLoc = 441;
 		rType = 1;
 	};
 	503D4F8712CF7E98006C94E1 /* PBXTextBookmark */ = {
@@ -1839,7 +1852,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 434";
 		rLen = 0;
-		rLoc = 15992;
+		rLoc = 15907;
 		rType = 0;
 		vrLen = 803;
 		vrLoc = 15227;
@@ -1859,7 +1872,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 867";
 		rLen = 0;
-		rLoc = 31098;
+		rLoc = 30846;
 		rType = 0;
 		vrLen = 186;
 		vrLoc = 29455;
@@ -1869,7 +1882,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 425";
 		rLen = 0;
-		rLoc = 15413;
+		rLoc = 15333;
 		rType = 0;
 		vrLen = 755;
 		vrLoc = 15227;
@@ -1889,7 +1902,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 867";
 		rLen = 0;
-		rLoc = 31098;
+		rLoc = 30846;
 		rType = 0;
 		vrLen = 191;
 		vrLoc = 29489;
@@ -1899,7 +1912,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 425";
 		rLen = 0;
-		rLoc = 15413;
+		rLoc = 15333;
 		rType = 0;
 		vrLen = 795;
 		vrLoc = 15227;
@@ -1939,7 +1952,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 872";
 		rLen = 0;
-		rLoc = 31098;
+		rLoc = 30846;
 		rType = 0;
 		vrLen = 184;
 		vrLoc = 29569;
@@ -1969,7 +1982,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 732";
 		rLen = 0;
-		rLoc = 24270;
+		rLoc = 24046;
 		rType = 0;
 		vrLen = 1405;
 		vrLoc = 22549;
@@ -1979,7 +1992,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 730";
 		rLen = 0;
-		rLoc = 24227;
+		rLoc = 24003;
 		rType = 0;
 		vrLen = 1385;
 		vrLoc = 22551;
@@ -1999,7 +2012,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 872";
 		rLen = 0;
-		rLoc = 31098;
+		rLoc = 30846;
 		rType = 0;
 		vrLen = 160;
 		vrLoc = 29698;
@@ -2009,7 +2022,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 698";
 		rLen = 0;
-		rLoc = 22925;
+		rLoc = 22704;
 		rType = 0;
 		vrLen = 1566;
 		vrLoc = 21355;
@@ -2029,7 +2042,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 859";
 		rLen = 0;
-		rLoc = 30608;
+		rLoc = 30369;
 		rType = 0;
 		vrLen = 496;
 		vrLoc = 30877;
@@ -2039,7 +2052,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 146";
 		rLen = 0;
-		rLoc = 6232;
+		rLoc = 5428;
 		rType = 0;
 		vrLen = 1209;
 		vrLoc = 5202;
@@ -2059,7 +2072,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 973";
 		rLen = 0;
-		rLoc = 33374;
+		rLoc = 32990;
 		rType = 0;
 		vrLen = 868;
 		vrLoc = 32475;
@@ -2069,7 +2082,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 430";
 		rLen = 0;
-		rLoc = 15599;
+		rLoc = 15518;
 		rType = 0;
 		vrLen = 518;
 		vrLoc = 15314;
@@ -2089,7 +2102,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 999";
 		rLen = 0;
-		rLoc = 33498;
+		rLoc = 32990;
 		rType = 0;
 		vrLen = 114;
 		vrLoc = 32968;
@@ -2099,7 +2112,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 469";
 		rLen = 0;
-		rLoc = 16505;
+		rLoc = 16415;
 		rType = 0;
 		vrLen = 1089;
 		vrLoc = 15884;
@@ -2119,7 +2132,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 995";
 		rLen = 0;
-		rLoc = 33498;
+		rLoc = 32990;
 		rType = 0;
 		vrLen = 34;
 		vrLoc = 32998;
@@ -2139,7 +2152,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 146";
 		rLen = 0;
-		rLoc = 6232;
+		rLoc = 5428;
 		rType = 0;
 		vrLen = 1421;
 		vrLoc = 5122;
@@ -2179,7 +2192,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 469";
 		rLen = 0;
-		rLoc = 16505;
+		rLoc = 16415;
 		rType = 0;
 		vrLen = 1085;
 		vrLoc = 15839;
@@ -2189,7 +2202,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 447";
 		rLen = 0;
-		rLoc = 16056;
+		rLoc = 15973;
 		rType = 0;
 		vrLen = 966;
 		vrLoc = 18992;
@@ -2209,7 +2222,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 995";
 		rLen = 0;
-		rLoc = 33498;
+		rLoc = 32990;
 		rType = 0;
 		vrLen = 34;
 		vrLoc = 32998;
@@ -2219,7 +2232,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 447";
 		rLen = 0;
-		rLoc = 16056;
+		rLoc = 15973;
 		rType = 0;
 		vrLen = 966;
 		vrLoc = 18992;
@@ -2259,7 +2272,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 995";
 		rLen = 0;
-		rLoc = 33498;
+		rLoc = 32990;
 		rType = 0;
 		vrLen = 34;
 		vrLoc = 32998;
@@ -2279,7 +2292,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 146";
 		rLen = 0;
-		rLoc = 6232;
+		rLoc = 5428;
 		rType = 0;
 		vrLen = 1289;
 		vrLoc = 5122;
@@ -2289,7 +2302,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 57";
 		rLen = 0;
-		rLoc = 1802;
+		rLoc = 1027;
 		rType = 0;
 		vrLen = 1258;
 		vrLoc = 930;
@@ -2303,6 +2316,135 @@
 		rType = 0;
 		vrLen = 1103;
 		vrLoc = 10150;
+	};
+	503D4FE012CF8CED006C94E1 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "'class C64' has no member named 'event2'";
+		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 743;
+		rType = 1;
+	};
+	503D4FE112CF8CED006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
+		name = "CIA.cpp: 751";
+		rLen = 0;
+		rLoc = 24076;
+		rType = 0;
+		vrLen = 872;
+		vrLoc = 23800;
+	};
+	503D4FE212CF8CEF006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
+		name = "CIA.cpp: 995";
+		rLen = 0;
+		rLoc = 32990;
+		rType = 0;
+		vrLen = 70;
+		vrLoc = 32998;
+	};
+	503D4FE312CF8CEF006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
+		name = "CIA.h: 57";
+		rLen = 0;
+		rLoc = 1027;
+		rType = 0;
+		vrLen = 1442;
+		vrLoc = 1251;
+	};
+	503D4FE412CF8CEF006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5049B5AF12C9E9B700B34F81 /* ciatimer.h */;
+		name = "ciatimer.h: 5";
+		rLen = 0;
+		rLoc = 114;
+		rType = 0;
+		vrLen = 1128;
+		vrLoc = 10150;
+	};
+	503D4FE712CF8D31006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
+		name = "CIA.cpp: 995";
+		rLen = 0;
+		rLoc = 32990;
+		rType = 0;
+		vrLen = 65;
+		vrLoc = 33003;
+	};
+	503D4FE812CF8D31006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
+		name = "CIA.h: 83";
+		rLen = 0;
+		rLoc = 1861;
+		rType = 0;
+		vrLen = 1610;
+		vrLoc = 1482;
+	};
+	503D4FE912CF8D31006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5049B5AF12C9E9B700B34F81 /* ciatimer.h */;
+		name = "ciatimer.h: 5";
+		rLen = 0;
+		rLoc = 114;
+		rType = 0;
+		vrLen = 1106;
+		vrLoc = 10172;
+	};
+	503D500312CF92B5006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
+		name = "CIA.cpp: 988";
+		rLen = 0;
+		rLoc = 32990;
+		rType = 0;
+		vrLen = 50;
+		vrLoc = 32980;
+	};
+	503D500412CF92B5006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
+		name = "CIA.h: 174";
+		rLen = 0;
+		rLoc = 5570;
+		rType = 0;
+		vrLen = 1434;
+		vrLoc = 5833;
+	};
+	503D500512CF92B5006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
+		name = "CIA.cpp: 203";
+		rLen = 0;
+		rLoc = 11212;
+		rType = 0;
+		vrLen = 622;
+		vrLoc = 11054;
+	};
+	503D500612CF92B5006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
+		name = "CIA.cpp: 988";
+		rLen = 0;
+		rLoc = 33027;
+		rType = 0;
+		vrLen = 551;
+		vrLoc = 33346;
+	};
+	503D500712CF92B5006C94E1 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5049B5AF12C9E9B700B34F81 /* ciatimer.h */;
+		name = "ciatimer.h: 5";
+		rLen = 0;
+		rLoc = 114;
+		rType = 0;
+		vrLen = 1091;
+		vrLoc = 10267;
 	};
 	50414725122188FC00A80E0C /* Cartridge.cpp */ = {
 		uiCtxt = {
@@ -2512,9 +2654,9 @@
 		path = "/Users/hoff/work/Software/vice-2.2/src/core/ciatimer.h";
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1151, 7680}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1151, 7664}}";
 			sepNavSelRange = "{114, 0}";
-			sepNavVisRange = "{10150, 1103}";
+			sepNavVisRange = "{10267, 1091}";
 		};
 	};
 	504A88740E68500B0057FA13 /* PBXTextBookmark */ = {
@@ -3266,16 +3408,16 @@
 	};
 	50C3695B12C903B900FD4D94 /* Timer.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1426, 1920}}";
-			sepNavSelRange = "{1213, 0}";
-			sepNavVisRange = "{774, 390}";
+			sepNavIntBoundsRect = "{{0, 0}, {1426, 1952}}";
+			sepNavSelRange = "{3351, 0}";
+			sepNavVisRange = "{1315, 1229}";
 		};
 	};
 	50C3695C12C903B900FD4D94 /* Timer.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 3600}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 3536}}";
 			sepNavSelRange = "{1263, 0}";
-			sepNavVisRange = "{868, 843}";
+			sepNavVisRange = "{1437, 1245}";
 			sepNavWindowFrame = "{{506, 134}, {985, 880}}";
 		};
 	};
@@ -3284,7 +3426,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = dataPortA;
 		rLen = 0;
-		rLoc = 8246;
+		rLoc = 7425;
 		rType = 0;
 		vrLen = 937;
 		vrLoc = 6099;
@@ -3604,7 +3746,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 286";
 		rLen = 0;
-		rLoc = 12766;
+		rLoc = 12697;
 		rType = 0;
 		vrLen = 919;
 		vrLoc = 11966;
@@ -3624,7 +3766,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 319";
 		rLen = 0;
-		rLoc = 12693;
+		rLoc = 11855;
 		rType = 0;
 		vrLen = 1525;
 		vrLoc = 11687;

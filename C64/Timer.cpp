@@ -75,30 +75,30 @@ Timer::dumpState()
 // Timer A
 // -----------------------------------------------------------------------------------------
 
-bool TimerA::isStarted() { return cia->bCRA & 0x01; }
-void TimerA::setStarted(bool b) { if (b) cia->bCRA |= 0x01; else cia->bCRA &= 0xFE; }
-bool TimerA::forceLoadStrobe() { return cia->bCRA & 0x10; }
-bool TimerA::willIndicateUnderflow() { return cia->bCRA & 0x02; }
-bool TimerA::willIndicateUnderflowAsPulse() { return !(cia->bCRA & 0x04); }
-void TimerA::setIndicateUnderflow(bool b) { if (b) cia->bCRA |= 0x02; else cia->bCRA &= (0xFF-0x02); }
-bool TimerA::isOneShot() { return cia->bCRA & 0x08; }
-void TimerA::setOneShot(bool b) { if (b) cia->bCRA |= 0x08; else cia->bCRA &= (0xff-0x08); }
-bool TimerA::isCountingClockTicks() { return (cia->bCRA & 0x20) == 0x00; }
-uint16_t TimerA::getControlReg() { return cia->bCRA; }
+bool TimerA::isStarted() { return cia->CRA & 0x01; }
+void TimerA::setStarted(bool b) { if (b) cia->CRA |= 0x01; else cia->CRA &= 0xFE; }
+bool TimerA::forceLoadStrobe() { return cia->CRA & 0x10; }
+bool TimerA::willIndicateUnderflow() { return cia->CRA & 0x02; }
+bool TimerA::willIndicateUnderflowAsPulse() { return !(cia->CRA & 0x04); }
+void TimerA::setIndicateUnderflow(bool b) { if (b) cia->CRA |= 0x02; else cia->CRA &= (0xFF-0x02); }
+bool TimerA::isOneShot() { return cia->CRA & 0x08; }
+void TimerA::setOneShot(bool b) { if (b) cia->CRA |= 0x08; else cia->CRA &= (0xff-0x08); }
+bool TimerA::isCountingClockTicks() { return (cia->CRA & 0x20) == 0x00; }
+uint16_t TimerA::getControlReg() { return cia->CRA; }
 
 
 // -----------------------------------------------------------------------------------------
 // Timer B
 // -----------------------------------------------------------------------------------------
 
-bool TimerB::isStarted() { return cia->bCRB & 0x01; }
-void TimerB::setStarted(bool b) { if (b) cia->bCRB |= 0x01; else cia->bCRB &= 0xFE; }
-bool TimerB::forceLoadStrobe() { return cia->bCRB & 0x10; }
-bool TimerB::willIndicateUnderflow() { return cia->bCRB & 0x02; }
-bool TimerB::willIndicateUnderflowAsPulse() { return !(cia->bCRB & 0x04); }
-void TimerB::setIndicateUnderflow(bool b) { if (b) cia->bCRB |= 0x02; else cia->bCRB &= (0xFF-0x02); }
-bool TimerB::isOneShot() { return cia->bCRB & 0x08; }
-void TimerB::setOneShot(bool b) { if (b) cia->bCRB |= 0x08; else cia->bCRB &= (0xff-0x08); }
-bool TimerB::isCountingClockTicks() { return (cia->bCRB & 0x20) == 0x00; }
-uint16_t TimerB::getControlReg() { return cia->bCRB; }	
+bool TimerB::isStarted() { return cia->CRB & 0x01; }
+void TimerB::setStarted(bool b) { if (b) cia->CRB |= 0x01; else cia->CRB &= 0xFE; }
+bool TimerB::forceLoadStrobe() { return cia->CRB & 0x10; }
+bool TimerB::willIndicateUnderflow() { return cia->CRB & 0x02; }
+bool TimerB::willIndicateUnderflowAsPulse() { return !(cia->CRB & 0x04); }
+void TimerB::setIndicateUnderflow(bool b) { if (b) cia->CRB |= 0x02; else cia->CRB &= (0xFF-0x02); }
+bool TimerB::isOneShot() { return cia->CRB & 0x08; }
+void TimerB::setOneShot(bool b) { if (b) cia->CRB |= 0x08; else cia->CRB &= (0xff-0x08); }
+bool TimerB::isCountingClockTicks() { return (cia->CRB & 0x20) == 0x00; }
+uint16_t TimerB::getControlReg() { return cia->CRB; }	
 
