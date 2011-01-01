@@ -109,8 +109,8 @@ void checkForOpenGLErrors()
 	kb[MAC_7]   = 0x0300; kb[MAC_Y]   = 0x0301; kb[MAC_G]   = 0x0302; kb[MAC_8]   = 0x0303;  kb[MAC_B]   = 0x0304;   kb[MAC_H]   = 0x0305;  kb[MAC_U]   = 0x0306; kb[MAC_V]   = 0x0307;	
 	kb[MAC_9]   = 0x0400; kb[MAC_I]   = 0x0401; kb[MAC_J]   = 0x0402; kb[MAC_0]   = 0x0403;  kb[MAC_M]   = 0x0404;   kb[MAC_K]   = 0x0405;  kb[MAC_O]   = 0x0406; kb[MAC_N]   = 0x0407;	
 	kb[MAC_PLS] = 0x0500; kb[MAC_P]   = 0x0501; kb[MAC_L]   = 0x0502; kb[MAC_MNS] = 0x0503;  kb[MAC_DOT] = 0x0504;                                                kb[MAC_COM] = 0x0507;	
-	kb[MAC_HAT] = 0x0606; kb[MAC_DIV] = 0x0607;
-	kb[MAC_1]   = 0x0700; kb[MAC_CMP] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706;
+						  kb[MAC_DIV] = 0x0607;
+	kb[MAC_1]   = 0x0700; kb[MAC_HAT] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706;
 	
 	
 	// Drag and Drop
@@ -790,6 +790,7 @@ void checkForOpenGLErrors()
 		c64->keyboard->pressShiftKey();
 	if (flags & NSAlternateKeyMask)
 		c64->keyboard->pressCommodoreKey();
+	
 	c64->keyboard->pressKey(kb[keycode] >> 8, kb[keycode] & 0xFF);
 }
 

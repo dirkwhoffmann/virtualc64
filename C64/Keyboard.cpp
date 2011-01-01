@@ -158,6 +158,7 @@ void Keyboard::pressKey(char c)
 			pressShiftKey();
 			rowcol &= 0x0FFF; // clear shift flag
 		}
+		// debug("Pressing %d %d\n", rowcol >> 8, rowcol & 0xFF);
 		pressKey(rowcol >> 8, rowcol & 0xFF);
 	}
 }
