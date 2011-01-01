@@ -129,8 +129,6 @@ C64::C64()
 	// Remove after debugging
 	cpu->max_traces = 20000;
 	cpu->trace_enable_address = 2070; 	
-	// cpu->setLogfile(logfile);
-	// cia1->setLogfile(logfile);
 }
 
 // Construction and destruction

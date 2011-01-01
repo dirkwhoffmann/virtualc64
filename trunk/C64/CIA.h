@@ -31,7 +31,7 @@ class IEC;
 class Keyboard;
 class Joystick;
 
-// From PC64WIN
+// Adapted from PC64WIN
 #define CountA0     0x00000001
 #define CountA1     0x00000002
 #define CountA2     0x00000004
@@ -53,6 +53,32 @@ class Joystick;
 #define OneShotA0   0x00040000
 #define OneShotB0   0x00080000
 #define DelayMask ~(0x00100000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0)
+
+#if 0
+#define CountA0     0x00000001
+#define CountA1     0x00000002
+#define CountA2     0x00000004
+#define CountA3     0x00000008
+#define CountB0     0x00000010
+#define CountB1     0x00000020
+#define CountB2     0x00000040
+#define CountB3     0x00000080
+#define LoadA0      0x00000100
+#define LoadA1      0x00000200
+#define LoadA2      0x00000400
+#define LoadB0      0x00000800
+#define LoadB1      0x00001000
+#define LoadB2      0x00002000
+#define PB6Low0     0x00004000
+#define PB6Low1     0x00008000
+#define PB7Low0     0x00010000
+#define PB7Low1     0x00020000
+#define Interrupt0  0x00040000
+#define Interrupt1  0x00080000
+#define OneShotA0   0x00100000
+#define OneShotB0   0x00200000
+#define DelayMask ~(0x00400000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0)
+#endif
 
 
 //! Virtual complex interface adapter (CIA)
@@ -143,6 +169,7 @@ public:
 	//
 		
 	// control
+	uint32_t oldDelay;
 	uint32_t dwDelay;        // performs delay by shifting left at each clock
 	uint32_t dwFeed;         // new bits to feed into dwDelay
 	uint8_t bCRA;            // control register A
