@@ -214,7 +214,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>503D504B12CF9AB2006C94E1</string>
+						<string>503D508712CF9D81006C94E1</string>
 						<key>history</key>
 						<array>
 							<string>503D4F6412CF7B4F006C94E1</string>
@@ -334,7 +334,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 452}, {241, 924}}</string>
+							<string>{{0, 1099}, {241, 924}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -353,7 +353,7 @@
 							<real>241</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>94 195 1344 983 0 0 1920 1178 </string>
+						<string>183 195 1344 983 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -381,7 +381,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>503D504912CF9AB2006C94E1</string>
+										<string>503D508512CF9D81006C94E1</string>
 										<key>history</key>
 										<array>
 											<string>50558A680C48CC9400FDF0CA</string>
@@ -518,7 +518,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1081, 134}}</string>
 								<key>RubberWindowFrame</key>
-								<string>94 195 1344 983 0 0 1920 1178 </string>
+								<string>183 195 1344 983 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -545,7 +545,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>503D504A12CF9AB2006C94E1</string>
+										<string>503D508612CF9D81006C94E1</string>
 										<key>history</key>
 										<array>
 											<string>50558A680C48CC9400FDF0CA</string>
@@ -682,7 +682,7 @@
 								<key>Frame</key>
 								<string>{{0, 139}, {1081, 732}}</string>
 								<key>RubberWindowFrame</key>
-								<string>94 195 1344 983 0 0 1920 1178 </string>
+								<string>183 195 1344 983 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -702,7 +702,7 @@
 								<key>Frame</key>
 								<string>{{0, 876}, {1081, 67}}</string>
 								<key>RubberWindowFrame</key>
-								<string>94 195 1344 983 0 0 1920 1178 </string>
+								<string>183 195 1344 983 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -866,17 +866,17 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>503D504C12CF9AB2006C94E1</string>
+		<string>503D508812CF9D81006C94E1</string>
 		<string>503D4F7212CF7B4F006C94E1</string>
 		<string>503D4F7312CF7B4F006C94E1</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>503D4F5212CF64B1006C94E1</string>
-		<string>50BEB1590CDF2AAE00C7DB33</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/hoff/work/Software/VirtualC64/virtualc64/V64.xcodeproj</string>
+		<string>50BEB1590CDF2AAE00C7DB33</string>
 	</array>
 	<key>WindowString</key>
-	<string>94 195 1344 983 0 0 1920 1178 </string>
+	<string>183 195 1344 983 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -908,7 +908,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1487, 504}}</string>
 								<key>RubberWindowFrame</key>
-								<string>469 289 1487 755 0 0 1920 1178 </string>
+								<string>278 418 1487 755 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -932,7 +932,7 @@
 								<key>Frame</key>
 								<string>{{0, 509}, {1487, 205}}</string>
 								<key>RubberWindowFrame</key>
-								<string>469 289 1487 755 0 0 1920 1178 </string>
+								<string>278 418 1487 755 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
@@ -962,7 +962,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.buildV3</string>
 			<key>WindowString</key>
-			<string>469 289 1487 755 0 0 1920 1178 </string>
+			<string>278 418 1487 755 0 0 1920 1178 </string>
 			<key>WindowToolGUID</key>
 			<string>50BEB1590CDF2AAE00C7DB33</string>
 			<key>WindowToolIsVisible</key>
