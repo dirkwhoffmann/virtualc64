@@ -138,21 +138,6 @@ CIA::save(uint8_t **buffer)
 	return true;	
 }
 
-void 
-CIA::triggerInterrupt(uint8_t source)
-{
-	// Set interrupt source
-	ICR |= source; 
-	
-	// Trigger interrupt, if enabled
-	if (IMR & source) {
-		// The uppermost bit indicates that an interrupt occured
-		// printf("Triggering CIA interrupt (source = %02X) at cycle %d\n", source, (int)cpu->getCycles());
-		ICR |= 0x80;
-		raiseInterruptLine();
-	}
-}
-
 uint8_t CIA::peek(uint16_t addr)
 {
 	uint8_t result;
@@ -347,8 +332,6 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 		case CIA_SERIAL_IO_BUFFER:
 			// Serial I/O communication is not (yet) implemented
-			// We simply acknowledge the operation (interrupt) and discard the value
-			// TODO
 			//triggerInterrupt(0x08);
 			// debug("poke CIA_SERIAL_IO_BUFFER: %0x2X\n", value);
 			return;
@@ -496,7 +479,16 @@ void
 CIA::incrementTOD()
 {
 	if (tod.increment()) {
-		triggerInterrupt(0x04);
+		// Set interrupt source
+		ICR |= 0x04; 
+		
+		// Trigger interrupt, if enabled
+		if (IMR & 0x04) {
+			// The uppermost bit indicates that an interrupt occured
+			// printf("Triggering CIA interrupt (source = %02X) at cycle %d\n", source, (int)cpu->getCycles());
+			ICR |= 0x80;
+			raiseInterruptLine();
+		}
 	}
 }
 
@@ -682,7 +674,7 @@ void CIA::_executeOneCycle()
 	//          |                           |               |       ----------------
 	//          |                           | bCRA & 0x04   |------>| 0x02 (timer) |
 	// timerA   |  Flip --------------- (8) | timer mode    |       |              |
-	// output  -X------>| bPB67Toggle |---->| 0x04 (toggle) |       | bCRA & 0x02  | (8)
+	// output  -X------>| bPB67Toggle |---->| 0x04 (toggle) |       | bCRA & 0x02  | 
 	//              (5) |  ^ 0x04     |     |     (6)       |       | output mode  |----> PB6 output
 	//                  ---------------     -----------------       |              |
 	//                        ^ Set                                 | 0x00 (port)  |
@@ -750,28 +742,28 @@ void CIA::_executeOneCycle()
 	
 	// Source: "A Software Model of the CIA6526" by Wolfgang Lorenz
 	//
-	//                  ----------
-	//                  | bIMR & |----
-	//                  |  0x01  |   |    -----
-	//                  ----------   ---->| & |----
-	// timerA   (3) Set ----------   ---->|   |   |
-	// output  -------->| bICR & |   |    -----   |
-	//           ------>|  0x01  |----            |  -----
-	//           |  Clr ----------                -->|>=1|---
-	//           |      ----------                -->|   |  |
-	//           |      | bIMR & |----            |  -----  |
-	//           |      |  0x02  |   |    -----   |         |
-	//           |      ----------   ---->| & |----         |
-	// timerB    |  Set ----------   ---->|   |             |
-	// output  --|----->| bICR & |   |    -----             |
-	//           X----->|  0x01  |----                      |
-	//           |  Clr ----------       	                |
-	// read      |                                          |
-	// ICR ------X-------------X----------------            |
-	//                         |               |            |
-	//                         v Clr           v Clr        |
-	//           ------    ----------    ----------------   | (4)
-	// Int    <--| -1 |<---| bICR & |<---|   dwDelay &  |<---
+	//                      ----------
+	//                      | bIMR & |----
+	//                      |  0x01  |   |    -----
+	//                      ----------   ---->| & |----
+	// timerA       (9) Set ----------   ---->|   |   |
+	// output  ------------>| bICR & |   |    -----   |
+	//           ---------->|  0x01  |----            |  -----
+	//           |      Clr ----------                -->|>=1|---
+	//           |          ----------                -->|   |  |
+	//           |          | bIMR & |----            |  -----  |
+	//           |          |  0x02  |   |    -----   |         |
+	//           |          ----------   ---->| & |----         |
+	// timerB    | (10) Set ----------   ---->|   |             |
+	// output  --|--------->| bICR & |   |    -----             |
+	//           X--------->|  0x01  |----                      |
+	//           |      Clr ----------       	                |
+	// read      |                                              |
+	// ICR ------X-------------X----------------                |
+	//                         |               |                |
+	//                         v Clr           v Clr            |
+	//           ------    ----------    ----------------       | (11)
+	// Int    <--| -1 |<---| bICR & |<---|   dwDelay &  |<-------
 	// ouptput   |    |    |  0x80  |Set |  Interrupt1  |     
 	//           ------    ----------    -------^--------   	
 	//                                          |
@@ -783,13 +775,13 @@ void CIA::_executeOneCycle()
 		raiseInterruptLine();
 	}
 	
-	if (timerAOutput) // (?)
+	if (timerAOutput) // (9)
 		ICR |= 0x01;
 	
-	if (timerBOutput) // (?)
+	if (timerBOutput) // (10)
 		ICR |= 0x02;
 
-	if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) // (?)
+	if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) // (11)
 		delay |= Interrupt0;
 	
 

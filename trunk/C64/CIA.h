@@ -150,8 +150,8 @@ public:
 	//
 		
 	// control
-	uint32_t delay;        // performs delay by shifting left at each clock
-	uint32_t feed;         // new bits to feed into dwDelay
+	uint32_t delay;         // performs delay by shifting left at each clock
+	uint32_t feed;          // new bits to feed into dwDelay
 	uint8_t CRA;            // control register A
 	uint8_t CRB;            // control register B
 	uint8_t ICR;            // interrupt control register
@@ -172,10 +172,6 @@ public:
 	bool CNT;   // serial clock or input timer clock or timer gate
 	bool INT;
 	
-	 //! Trigger interrupt
-	/*! Annotates the interrupt source in the interrupt control register and triggers a CPU interrupt. */
-	void triggerInterrupt(uint8_t source);	
-
 	//! Activates the interrupt line
 	/*! The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
 		Whereas the CIA 1 activates the IRQ line, the CIA 2 activates clears the NMI line.
