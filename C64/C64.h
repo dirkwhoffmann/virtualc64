@@ -19,6 +19,8 @@
 
 // Release notes
 // 1. First release milestone reached: VirtualC64 passes all Lorenz tests
+// 2. CIA code has been simplified 
+// 3. Fixed an issue with the virtual keyboard mapping (Turbo assembler now works well)
 
 #ifndef _C64_INC
 #define _C64_INC
