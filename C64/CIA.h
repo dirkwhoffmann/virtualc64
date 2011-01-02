@@ -348,7 +348,8 @@ public:
 	inline void setCounterAHi(uint8_t value) { counterA = (value << 8) | (counterA & 0xFF); }
 	
 	//! Load latched value into timer 
-	inline void reloadTimerA() { counterA = latchA; }
+	/*! As a side effect, CountA2 is cleared. This causes the timer to wait for one cycle before it continous to count */
+	inline void reloadTimerA() { counterA = latchA; delay &= ~CountA2; }
 	
 	//! Returns true, if timer is running, 0 if stopped
 	inline bool isStartedA() { return CRA & 0x01; }
@@ -433,7 +434,8 @@ public:
 	inline void setCounterBHi(uint8_t value) { counterB = (value << 8) | (counterB & 0xFF); }
 	
 	//! Load latched value into timer 
-	inline void reloadTimerB() { counterB = latchB; }
+	/*! As a side effect, CountB2 is cleared. This causes the timer to wait for one cycle before it continous to count */
+	inline void reloadTimerB() { counterB = latchB; delay &= ~CountB2; }
 	
 	//! Returns true, if timer is running, 0 if stopped
 	inline bool isStartedB() { return CRB & 0x01; }

@@ -271,6 +271,12 @@
 			5017399A12D0840700332869 /* PBXTextBookmark */ = 5017399A12D0840700332869 /* PBXTextBookmark */;
 			5017399B12D0840700332869 /* PBXTextBookmark */ = 5017399B12D0840700332869 /* PBXTextBookmark */;
 			5017399C12D0840700332869 /* PBXTextBookmark */ = 5017399C12D0840700332869 /* PBXTextBookmark */;
+			501739A512D0859C00332869 /* PBXTextBookmark */ = 501739A512D0859C00332869 /* PBXTextBookmark */;
+			501739A612D0859C00332869 /* PBXTextBookmark */ = 501739A612D0859C00332869 /* PBXTextBookmark */;
+			501739A812D0864B00332869 /* PBXBookmark */ = 501739A812D0864B00332869 /* PBXBookmark */;
+			501739AE12D0874200332869 /* PBXTextBookmark */ = 501739AE12D0874200332869 /* PBXTextBookmark */;
+			501739AF12D0874200332869 /* PBXTextBookmark */ = 501739AF12D0874200332869 /* PBXTextBookmark */;
+			501739B112D0874200332869 /* PBXTextBookmark */ = 501739B112D0874200332869 /* PBXTextBookmark */;
 			501908550F27773B00E3CE63 = 501908550F27773B00E3CE63 /* PBXTextBookmark */;
 			5024FDA7122144BE0043E54C = 5024FDA7122144BE0043E54C /* PBXTextBookmark */;
 			5024FDA9122144BE0043E54C = 5024FDA9122144BE0043E54C /* PBXTextBookmark */;
@@ -829,7 +835,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 984";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 74;
 		vrLoc = 33898;
@@ -949,7 +955,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 982";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 74;
 		vrLoc = 33885;
@@ -999,7 +1005,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 964";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 102;
 		vrLoc = 33610;
@@ -1019,7 +1025,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 438";
 		rLen = 0;
-		rLoc = 15827;
+		rLoc = 15966;
 		rType = 0;
 		vrLen = 1502;
 		vrLoc = 14652;
@@ -1029,7 +1035,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 440";
 		rLen = 0;
-		rLoc = 15898;
+		rLoc = 16037;
 		rType = 0;
 		vrLen = 1500;
 		vrLoc = 14654;
@@ -1049,7 +1055,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 964";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 102;
 		vrLoc = 33610;
@@ -1059,7 +1065,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 422";
 		rLen = 0;
-		rLoc = 15237;
+		rLoc = 15376;
 		rType = 0;
 		vrLen = 1785;
 		vrLoc = 15676;
@@ -1079,7 +1085,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 968";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 5;
 		vrLoc = 33656;
@@ -1089,7 +1095,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 422";
 		rLen = 0;
-		rLoc = 15237;
+		rLoc = 15376;
 		rType = 0;
 		vrLen = 1647;
 		vrLoc = 14864;
@@ -1129,7 +1135,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 972";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 36;
 		vrLoc = 33716;
@@ -1149,7 +1155,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 422";
 		rLen = 0;
-		rLoc = 15237;
+		rLoc = 15376;
 		rType = 0;
 		vrLen = 1647;
 		vrLoc = 14864;
@@ -1179,7 +1185,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 961";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 112;
 		vrLoc = 33740;
@@ -1209,7 +1215,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 961";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 112;
 		vrLoc = 33740;
@@ -1243,6 +1249,60 @@
 		rType = 0;
 		vrLen = 1332;
 		vrLoc = 283;
+	};
+	501739A512D0859C00332869 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
+		name = "CIA.cpp: 959";
+		rLen = 0;
+		rLoc = 32300;
+		rType = 0;
+		vrLen = 86;
+		vrLoc = 33817;
+	};
+	501739A612D0859C00332869 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
+		name = "CIA.h: 24";
+		rLen = 0;
+		rLoc = 865;
+		rType = 0;
+		vrLen = 1284;
+		vrLoc = 395;
+	};
+	501739A812D0864B00332869 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
+	};
+	501739AE12D0874200332869 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
+		name = "CIA.cpp: 959";
+		rLen = 0;
+		rLoc = 32300;
+		rType = 0;
+		vrLen = 86;
+		vrLoc = 33823;
+	};
+	501739AF12D0874200332869 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
+		name = "CIA.h: 24";
+		rLen = 0;
+		rLoc = 865;
+		rType = 0;
+		vrLen = 1183;
+		vrLoc = 528;
+	};
+	501739B112D0874200332869 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
+		name = "CIA.h: 438";
+		rLen = 0;
+		rLoc = 16331;
+		rType = 0;
+		vrLen = 1860;
+		vrLoc = 15600;
 	};
 	50176C4F0A6F72F3009E80BD /* basic.cpp */ = {
 		uiCtxt = {
@@ -1282,18 +1342,18 @@
 	};
 	50176C530A6F72F3009E80BD /* CIA.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 21024}}";
-			sepNavSelRange = "{32296, 0}";
-			sepNavVisRange = "{33740, 112}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 21040}}";
+			sepNavSelRange = "{32300, 0}";
+			sepNavVisRange = "{33823, 86}";
 			sepNavVisRect = "{{0, 7915}, {946, 751}}";
 			sepNavWindowFrame = "{{342, 219}, {1210, 871}}";
 		};
 	};
 	50176C540A6F72F3009E80BD /* CIA.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 10096}}";
-			sepNavSelRange = "{865, 0}";
-			sepNavVisRange = "{283, 1332}";
+			sepNavIntBoundsRect = "{{0, 0}, {926, 10080}}";
+			sepNavSelRange = "{16331, 0}";
+			sepNavVisRange = "{15600, 1860}";
 			sepNavVisRect = "{{0, 1234}, {793, 446}}";
 			sepNavWindowFrame = "{{757, 298}, {985, 880}}";
 		};
@@ -1951,7 +2011,7 @@
 		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
 		name = "CIA.h: 319";
 		rLen = 0;
-		rLoc = 17690;
+		rLoc = 17968;
 		rType = 0;
 		vrLen = 1774;
 		vrLoc = 5283;
@@ -2496,7 +2556,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 955";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 79;
 		vrLoc = 33136;
@@ -3075,7 +3135,7 @@
 		fRef = 50176C530A6F72F3009E80BD /* CIA.cpp */;
 		name = "CIA.cpp: 955";
 		rLen = 0;
-		rLoc = 32296;
+		rLoc = 32300;
 		rType = 0;
 		vrLen = 67;
 		vrLoc = 33136;
