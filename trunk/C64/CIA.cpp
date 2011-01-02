@@ -18,161 +18,6 @@
 
 #include "C64.h"
 
-// Memory layout
-//
-// DC00-DCFF	56320-56575	MOS 6526 Complex Interface Adapter (CIA) #1
-// -----------------------------------------------------------------------------------------
-// DC00       56320                 Data Port A (Keyboard, Joystick, Paddles, Light-Pen)
-//                           7-0    Write Keyboard Column Values for Keyboard Scan
-//                           7-6    Read Paddles on Port A / B (01 = Port A, 10 = Port B)
-//                           4      Joystick A Fire Button: 1 = Fire
-//                           3-2    Paddle Fire Buttons
-//                           3-0    Joystick A Direction (0-15)
-// DC01       56321                 Data Port B (Keyboard, Joystick, Paddles): Game Port 1
-//                           7-0    Read Keyboard Row Values for Keyboard Scan
-//                           7      Timer B Toggle/Pulse Output
-//                           6      Timer A: Toggle/Pulse Output
-//							 4      Joystick 1 Fire Button: 1 = Fire
-//                           3-2    Paddle Fire Buttons
-//                           3-0    Joystick 1 Direction
-//
-// DC02       56322                 Data Direction Register - Port A (56320)
-// DC03       56323                 Data Direction Register - Port B (56321)
-// DC04       56324                 Timer A: Low-Byte
-// DC05       56325                 Timer A: High-Byte
-// DC06       56326                 Timer B: Low-Byte
-// DC07       56327                 Timer B: High-Byte
-//
-// DC08       56328                 Time-of-Day Clock: 1/10 Seconds
-// DC09       56329                 Time-of-Day Clock: Seconds
-// DC0A       56330                 Time-of-Day Clock: Minutes
-// DC0B       56331                 Time-of-Day Clock: Hours + AM/PM Flag (Bit 7)
-// DC0C       56332                 Synchronous Serial I/O Data Buffer
-// DC0D       56333                 CIA Interrupt Control Register (Read IRQs/Write Mask)
-//                           7      IRQ Flag (1 = IRQ Occurred) / Set-Clear Flag
-//                           4      FLAG1 IRQ (Cassette Read / Serial Bus SRQ Input)
-//                           3      Serial Port Interrupt
-//                           2      Time-of-Day Clock Alarm Interrupt
-//                           1      Timer B Interrupt
-//                           0      Timer A Interrupt
-// DC0E       56334                 CIA Control Register A
-//                           7      Time-of-Day Clock Frequency: 1 = 50 Hz, 0 = 60 Hz
-//                           6      Serial Port I/O Mode Output, 0 = Input
-//                           5      Timer A Counts: 1 = CNT Signals, 0 = System 02 Clock
-//                           4      Force Load Timer A: 1 = Yes
-//                           3      Timer A Run Mode: 1 = One-Shot, 0 = Continuous
-//							 2      Timer A Output Mode to PB6: 1 = Toggle, 0 = Pulse
-//                           1      Timer A Output on PB6: 1 = Yes, 0 = No
-//                           0      Start/Stop Timer A: 1 = Start, 0 = Stop
-// DC0F       56335                 CIA Control Register B
-//                           7      Set Alarm/TOD-Clock: 1 = Alarm, 0 = Clock
-//                           6-5    Timer B Mode Select:
-//                                  00 = Count System 02 Clock Pulses
-//                                  01 = Count Positive CNT Transitions
-//                                  10 = Count Timer A Underflow Pulses
-//                                  11 = Count Timer A Underflows While	CNT Positive
-//                           4-0    Same as CIA Control Reg. A - for Timer B
-
-// DD00-DDFF  56576-56831           MOS 6526 Complex Interface Adapter (CIA) #2
-// -----------------------------------------------------------------------------------------
-
-//	DD00       56576                 Data Port A (Serial Bus, RS-232, VIC Memory Control)
-//                            7      Serial Bus Data Input
-//                            6      Serial Bus Clock Pulse Input
-//                            5      Serial Bus Data Output
-//                            4      Serial Bus Clock Pulse Output
-//                            3      Serial Bus ATN Signal Output
-//                            2      RS-232 Data Output (User Port)
-//                            1-0    VIC Chip System Memory Bank Select (Default = 11)
-//	DD01       56577                 Data Port B (User Port, RS-232)
-//                            7      User / RS-232 Data Set Ready
-//                            6      User / RS-232 Clear to Send
-//                            5      User
-//                            4      User / RS-232 Carrier Detect
-//                            3      User / RS-232 Ring Indicator
-//                            2      User / RS-232 Data Terminal Ready
-//                            1      User / RS-232 Request to Send
-//                            0      User / RS-232 Received Data
-//  DD02       56578                 Data Direction Register - Port A
-//  DD03       56579                 Data Direction Register - Port B
-//  DD04       56580                 Timer A: Low-Byte
-//  DD05       56581                 Timer A: High-Byte
-//  DD06       56582                 Timer B: Low-Byte
-//  DD07       56583                 Timer B: High-Byte
-//  DD08       56584                 Time-of-Day Clock: 1/10 Seconds
-//  DD09       56585                 Time-of-Day Clock: Seconds
-//  DD0A       56586                 Time-of-Day Clock: Minutes
-//  DD0B       56587                 Time-of-Day Clock: Hours + AM/PM Flag (Bit 7)
-//  DD0C       56588                 Synchronous Serial I/O Data Buffer
-//  DD0D       56589                 CIA Interrupt Control Register (Read NMls/Write Mask)
-//	                          7      NMI Flag (1 = NMI Occurred) / Set-Clear Flag
-//                            4      FLAG1 NMI (User/RS-232 Received Data Input)
-//                            3      Serial Port Interrupt
-//                            1      Timer B Interrupt
-//                            0      Timer A Interrupt
-//  DD0E       56590                 CIA Control Register A
-//                            7      Time-of-Day Clock Frequency: 1 = 50 Hz, 0 = 60 Hz
-//                            6      Serial Port I/O Mode Output, 0 = Input
-//                            5      Timer A Counts: 1 = CNT Signals, 0 = System 02 Clock
-//                            4      Force Load Timer A: 1 = Yes
-//                            3      Timer A Run Mode: 1 = One-Shot, 0 = Continuous
-//                            2      Timer A Output Mode to PB6: 1 = Toggle, 0 = Pulse
-//                            1      Timer A Output on PB6: 1 = Yes, 0 = No
-//                            0      Start/Stop Timer A: 1 = Start, 0 = Stop
-//  DD0F       56591                 CIA Control Register B
-//                            7      Set Alarm/TOD-Clock: 1=Alarm, 0=Clock
-//                            6-5    Timer B Mode Select:
-//                                   00 = Count System 02 Clock Pulses
-//                                   01 = Count Positive CNT Transitions
-//                                   10 = Count Timer A Underflow Pulses
-//                                   11 = Count Timer A Underflows While CNT Positive
-//                            4-0    Same as CIA Control Reg. A - for Timer B
-//  DE00-DEFF  56832-57087           Reserved for Future I/O Expansion
-//  DF00-DFFF  57088-57343           Reserved for Future I/O Expansion
-
-
-
-// To be supported:
-//
-// DC0D, DD0D: Interrupt controll register
-// DC00 : Data Port A
-// Timer A Run Mode = One shot (CIA#1)
-// Timer A Run Mode = One shot (CIA#2)
-// Timer B Run Mode = One shot (CIA#1)
-// Timer B Run Mode = One shot (CIA#2)
-// CIA #1 Timer A, lo und hi byte
-// Timer A, 50 Hz start
-
-/* Programmierung des CIA
-Zur Steuerung von CIA-Interrupts dient das schon erwähnte Interrupt-Control-Register (ICR) $DC0D. 
-Dieses Register hat zwei Funktionen, je nachdem, ob schreibend oder lesend darauf zugegriffen wird. 
-Bei Lesezugriff zeigt es an, ob, und wenn ja, woher ein Interrupt ausgelöst wurde.
-Zugleich wird das Register gelöscht und die Interrupt-Anforderung zurückgenommen 
-(Die IRQ-Leitung geht von low auf high). Die Bits 0-4 sind dabei verschiedenen Interruptquellen zugeordnet. 
-Uns interessieren hier nur die Bits 0 und 1, welche zu den Timer-Interrupts gehören. Durch einen Schreibzugriff 
-wird dagegen ein Masken-Register angesprochen. Damit lassen sich die Interruptquellen einzeln freigeben oder sperren. 
-Die Bits 0-4 kann man einzeln setzen oder zurücksetzen. Ist im geschriebenen Byte Bit 7 gesetzt, wird jedes mit 
-einer 1 beschriebene Bit gesetzt, während die anderen Bits unverändert bleiben. Ist Bit 7 rückgesetzt, so wird jedes 
-mit einer 1 beschriebene Bit zurückgesetzt, während die anderen Bits wieder unverändert bleiben. Gesetzte Bits ermöglichen 
-eine Interrupterzeugung durch die jeweilige Quelle. Die Freigabe der Interrupterzeugung durch Timer B sieht also so aus:
-
-LDA #%10000010
-STA $DD0D ;ICR Bit 1 setzen
-
-Der Timer selbst wird durch drei Register gesteuert.
-
-Das Registerpaar TIMER B ($DC06/$DC07) liefert bei Lesezugriff den aktuellen 16-Bit-Zählerstand. Dieser Wert wird 
-kontinuierlich heruntergezählt. Bei Erreichen von Null stoppt der Timer entweder (One-Shot-Mode) oder lädt einen Wert aus 
-einem Timer-Latch (Latch = Zwischenspeicher) nach und zählt von neuem herunter (Continous Mode ). Bei diesem Timer-Unterlauf 
-wird ein Interrupt erzeugt, wenn Bit 1 im ICR gesetzt ist. Ein Schreibzugriff auf TIMER A bezieht sich dagegen auf das 16-Bit-Latch. 
-Mit dem Latch-Wert kann man die Zeit zwischen zwei Interrupts im Bereich von 1 bis 65535 Mikrosekunden steuern.
-
-Das Register CRB (Control Register B, $DC0F) steuert die Betriebsart des Timers (Start/Stop, One Shot/Contmous, u.a.) 
-Durch LDA #%00010001
-STA $DD0E
-wird der Zählerstand mit dem Latch-Wert geladen und der Timer gestartet.
-*/
-
 CIA::CIA()
 {
 	name = "CIA";
@@ -187,13 +32,9 @@ CIA::~CIA()
 
 void
 CIA::reset() 
-{
-	//portLinesA = 0xff;
-	//portLinesB = 0xff;
-	
+{	
 	clearInterruptLine();
 
-	// From PC64WIN
 	// reset control
 	delay = 0;
 	feed = 0;
@@ -204,6 +45,7 @@ CIA::reset()
 	PB67TimerMode = 0;
 	PB67TimerOut = 0;
 	PB67Toggle = 0;
+
 	// reset ports
 	PALatch = 0;
 	PBLatch = 0;
@@ -722,9 +564,6 @@ void CIA::dumpState()
 
 void CIA::_executeOneCycle()
 {
-	bool timerAOutput;
-	bool timerBOutput;
-		
 #if 0
 	if (cpu->c64->event2 && this == cpu->c64->cia1)
 	{
@@ -732,7 +571,6 @@ void CIA::_executeOneCycle()
 	}
 #endif
 	
-
 	//
 	// Layout of timer (A and B)
 	//
@@ -741,9 +579,9 @@ void CIA::_executeOneCycle()
 	//
     //                              Phi2            Phi2                  Phi2
 	//                               |               |                     |
-	// timerA      -----       ------v------   ------v------ (1) ----------v-----------
+	// timerA      -----       ------v------   ------v------     ----------v-----------
 	// input  ---->| & |------>| dwDelay & |-X-| dwDelay & |---->| decrement counter  |
-	//         --->|   |       |  CountA2  | | |  CountA3  |     |                    |
+	//         --->|   |       |  CountA2  | | |  CountA3  |     |        (1)         |
 	//         |   -----       ------------- | -------------     |                    |
 	// -----------------             ^ Clr   |                   |                    |
 	// | bCRA & 0x01   |             |       | ------------------| new counter ==  0? |
@@ -758,13 +596,13 @@ void CIA::_executeOneCycle()
     //                     | |                |            |     |                    |    
 	// timer A             | |                |    -----   |     |                    |
 	// output  <-----------|-X----------------X--->|>=1|---X---->| load from latch    | 
-	//                     |                   --->|   |(8)      |                    |
-	//                    ----- (7)            |   -----         ----------------------
+	//                     |                   --->|   |         |        (4)         |
+	//                    -----                |   -----         ----------------------
 	//                    |>=1|                |
 	//                    |   |                |       Phi2
 	//                    -----                |        |
 	//                     ^ ^                 |  ------v------      ----------------
-	//                     | |                 ---| dwDelay & |<-----| bcRA & 0x10  |
+	//                     | | (3)             ---| dwDelay & |<-----| bcRA & 0x10  |
 	//                     | -----------------    |  LoadA1   |      | force load   |
 	//                     |       Phi2      |    -------------      ----------------
     //                     |        |        |                              ^ Clr
@@ -773,151 +611,139 @@ void CIA::_executeOneCycle()
 	// | one shot      |---X->| oneShotA0 |---
 	// -----------------      -------------
 
+				
+	// Timer A
+	
+	// Decrement counter
+	if ((delay & CountA3) != 0)
+		counterA--; // (1)
+	
+	// (2) Check underflow condition
+	bool timerAOutput = (counterA == 0 && (delay & CountA2) != 0); // (2)
+
+	if (timerAOutput) {
+		
+		// Stop timer in one shot mode
+		if (((delay | feed) & OneShotA0) != 0) { // (3)
+			CRA &= ~0x01;
+			delay &= ~(CountA2 | CountA1 | CountA0);
+			feed &= ~CountA0;
+		}
+		
+		// Timer A output to timer B in cascade mode
+		if ((CRB & 0x61) == 0x41 || (CRB & 0x61) == 0x61 && CNT) {
+			delay |= CountB1;
+		}
+		
+		// Load counter
+		delay |= LoadA1;
+	}
+	
+	// Load counter
+	if ((delay & LoadA1) != 0) // (4)
+		reloadTimerA(); 
+	
+	// Timer B
+	
+	// Decrement counter
+	if ((delay & CountB3) != 0) {
+		counterB--; // (1)
+	}
+	
+	// Check underflow condition
+	bool timerBOutput = (counterB == 0 && (delay & CountB2) != 0); // (2)
+
+	if (timerBOutput) {
+						
+		// Stop timer in one shot mode
+		if (((delay | feed) & OneShotB0) != 0) { // (3)
+			CRB &= ~0x01;
+			delay &= ~(CountB2 | CountB1 | CountB0);
+			feed &= ~CountB0;
+		}
+		
+		// Load counter
+		delay |= LoadB1;
+	}
+	
+	// Load counter
+	if ((delay & LoadB1) != 0) // (4)
+		reloadTimerB();
+		
+	
 	//
 	// Timer output to PB6 (timer A) and PB7 (timer B)
     // 
 	
 	// Source: "A Software Model of the CIA6526" by Wolfgang Lorenz
 	//
-	//                                      -----------------
+	//                       (7)            -----------------
 	//          --------------------------->| 0x00 (pulse)  |
-	//          |                           |               | (6.2) ----------------
+	//          |                           |               |       ----------------
 	//          |                           | bCRA & 0x04   |------>| 0x02 (timer) |
-	// timerA   |  Flip ---------------     | timer mode    |       |              |
-	// output  -X------>| bPB67Toggle |---->| 0x04 (toggle) |       | bCRA & 0x02  | (6)
-	//              (5) |  ^ 0x04     |     |               |       | output mode  |----> PB6 output
+	// timerA   |  Flip --------------- (8) | timer mode    |       |              |
+	// output  -X------>| bPB67Toggle |---->| 0x04 (toggle) |       | bCRA & 0x02  | (8)
+	//              (5) |  ^ 0x04     |     |     (6)       |       | output mode  |----> PB6 output
 	//                  ---------------     -----------------       |              |
-	//                        ^ Set                           (6.1) | 0x00 (port)  |
+	//                        ^ Set                                 | 0x00 (port)  |
 	//                        |                                ---->|              |
 	// ----------------- 0->1 |             -----------------  |    ----------------
 	// | bCRA & 0x01   |-------             | port B bit 6  |---  
 	// | timer A start |                    |    output     |
 	// -----------------                    -----------------
-	
 
+	// Timer A output to PB6
 	
-	// 
-	// Adapted from PC64Win by Wolfgang Lorenz
-	//
-	
-	// don't output PB67 changes more than once
-				
-	// ------------------------- TIMER A --------------------------------
-	// (1) : decrement counter A
-	if ((delay & CountA3) != 0) {
-		counterA--;
-	}
-	
-	// (2) : underflow counter A
-	timerAOutput = (counterA == 0 && (delay & CountA2) != 0);
 	if (timerAOutput) {
 		
-		// (5) toggle underflow counter bit
-		PB67Toggle ^= 0x40;
+		PB67Toggle ^= 0x40; // (5) toggle underflow counter bit
 		
-		// (6) timer A output to PB6
-		if ((CRA & 0x02) != 0) {
-			
-			// (6.1) set PB6 high for one clock
-			if ((CRA & 0x04) == 0) {
+		if ((CRA & 0x02) != 0) { // (6)
+
+			if ((CRA & 0x04) == 0) { 
+				// (7) set PB6 high for one clock cycle
 				PB67TimerOut |= 0x40;
 				delay |= PB6Low0;
 				delay &= ~PB6Low1;
-			} else {
-				// toggle PB6 between high and low (copy bit 6 from PB67Toggle)
+			} else { 
+				// (8) toggle PB6 (copy bit 6 from PB67Toggle)
 				PB67TimerOut = (PB67TimerOut & 0xBF) | (PB67Toggle & 0x40);
 			}
 		}
-		
-		// (7) stop timer in one shot mode
-		if (((delay | feed) & OneShotA0) != 0) {
-			CRA &= ~0x01;
-			delay &= ~(CountA2 | CountA1 | CountA0);
-			feed &= ~CountA0;
-		}
-		
-		// timer A output to timer B in cascade mode
-		if ((CRB & 0x61) == 0x41 || (CRB & 0x61) == 0x61 && CNT) {
-			delay |= CountB1;
-		}
-		
-		// (8) : load counter A
-		delay |= LoadA1;
 	}
+
+	// Timer B output to PB7
 	
-	// (8) : load counter A
-	if ((delay & LoadA1) != 0) {
-		reloadTimerA(); // load counter from latch
-		
-		// don't decrement counter in next clock
-		// delay &= ~CountA2;
-	}
-	
-	// ------------------------- TIMER B --------------------------------
-	// decrement counter B
-	if ((delay & CountB3) != 0) {
-		counterB--;
-	}
-	
-	// (2) : underflow counter B
-	timerBOutput = (counterB == 0 && (delay & CountB2) != 0);
 	if (timerBOutput) {
-				
-		// toggle underflow counter bit
-		PB67Toggle ^= 0x80;
 		
-		// timer B output to PB7
-		if ((CRB & 0x02) != 0) {
-			
-			// set PB7 high for one clock
+		PB67Toggle ^= 0x80; // (5) toggle underflow counter bit
+	
+		if ((CRB & 0x02) != 0) { // (6)
+		
 			if ((CRB & 0x04) == 0) {
+				// (7) set PB7 high for one clock cycle
 				PB67TimerOut |= 0x80;
 				delay |= PB7Low0;
 				delay &= ~PB7Low1;				
 			} else {
-				// toggle PB7 between high and low (copy bit 7 from PB67Toggle)
+				// (8) toggle PB7 (copy bit 7 from PB67Toggle)
 				PB67TimerOut = (PB67TimerOut & 0x7F) | (PB67Toggle & 0x80);
 			}
 		}
-		
-		// stop timer in one shot mode
-		if (((delay | feed) & OneShotB0) != 0) {
-			CRB &= ~0x01;
-			delay &= ~(CountB2 | CountB1 | CountB0);
-			feed &= ~CountB0;
-		}
-		
-		// load counter B
-		delay |= LoadB1;
 	}
 	
-	// load counter B
-	if ((delay & LoadB1) != 0) {
-		reloadTimerB();
-		
-		// don't decrement counter in next clock
-		// delay &= ~CountB2;
-	}
+	// Set PB67 back to low
+	if (delay & PB6Low1) 
+		PB67TimerOut &= ~0x40;
+
+	if (delay & PB7Low1)
+		PB67TimerOut &= ~0x80;
+
 	
-	// set PB67 back to low
-	if ((delay & (PB6Low1 | PB7Low1)) != 0) {
-		if ((delay & PB6Low1) != 0) {
-			PB67TimerOut &= ~0x40;
-		}
-		if ((delay & PB7Low1) != 0) {
-			PB67TimerOut &= ~0x80;
-		}
-	}
-	
-	// write new PB 
+	// Write new PB 
 	PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 	
-	// set interrupt register and interrupt line
-	if ((delay & Interrupt1) != 0) {
-		INT = 0;
-		raiseInterruptLine();
-	}
-
+	
 	//
 	// Interrupt logic
     //
@@ -951,27 +777,23 @@ void CIA::_executeOneCycle()
 	//                                          |
 	//                                         Phi2
 	
-	// Interrupt logic
-	if (timerAOutput) {
-		// (3) : signal underflow event
+	// Set interrupt register and interrupt line
+	if (delay & Interrupt1) {
+		INT = 0;
+		raiseInterruptLine();
+	}
+	
+	if (timerAOutput) // (?)
 		ICR |= 0x01;
 	
-		// (4) : underflow interrupt in next clock
-		if ((IMR & 0x01) != 0) {
-			delay |= Interrupt0;
-		}
-	}
-	
-	if (timerBOutput) {
-		// signal underflow event
+	if (timerBOutput) // (?)
 		ICR |= 0x02;
-		
-		// underflow interrupt in next clock
-		if ((IMR & 0x02) != 0) {
-			delay |= Interrupt0;
-		}
-	}
+
+	if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) // (?)
+		delay |= Interrupt0;
 	
+
+	// move delay flags left and feed in new bits
 	delay = (delay << 1) & DelayMask | feed;
 }
 
