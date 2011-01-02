@@ -214,7 +214,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>501739B112D0874200332869</string>
+						<string>501739E212D08F0E00332869</string>
 						<key>history</key>
 						<array>
 							<string>501739A812D0864B00332869</string>
@@ -379,7 +379,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>501739AE12D0874200332869</string>
+										<string>501739E012D08F0E00332869</string>
 										<key>history</key>
 										<array>
 											<string>50558A680C48CC9400FDF0CA</string>
@@ -539,7 +539,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>501739AF12D0874200332869</string>
+										<string>501739E112D08F0E00332869</string>
 										<key>history</key>
 										<array>
 											<string>50558A680C48CC9400FDF0CA</string>
@@ -858,13 +858,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>501739B212D0874200332869</string>
+		<string>501739E312D08F0E00332869</string>
 		<string>5017395112D0804600332869</string>
 		<string>5017395212D0804600332869</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/hoff/work/Software/VirtualC64/virtualc64/V64.xcodeproj</string>
 		<string>501739A912D0864B00332869</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>50BEB1590CDF2AAE00C7DB33</string>
 	</array>
 	<key>WindowString</key>
@@ -900,7 +900,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1487, 649}}</string>
 								<key>RubberWindowFrame</key>
-								<string>414 423 1487 755 0 0 1920 1178 </string>
+								<string>206 423 1487 755 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -924,7 +924,7 @@
 								<key>Frame</key>
 								<string>{{0, 654}, {1487, 60}}</string>
 								<key>RubberWindowFrame</key>
-								<string>414 423 1487 755 0 0 1920 1178 </string>
+								<string>206 423 1487 755 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
@@ -954,7 +954,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.buildV3</string>
 			<key>WindowString</key>
-			<string>414 423 1487 755 0 0 1920 1178 </string>
+			<string>206 423 1487 755 0 0 1920 1178 </string>
 			<key>WindowToolGUID</key>
 			<string>50BEB1590CDF2AAE00C7DB33</string>
 			<key>WindowToolIsVisible</key>
