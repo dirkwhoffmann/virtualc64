@@ -21,7 +21,6 @@
 #ifndef _CIA_INC
 #define _CIA_INC
 
-#include "Timer.h"
 #include "TOD.h"
 
 // Forward declarations
@@ -116,12 +115,18 @@ public:
 	static const uint16_t CIA_CONTROL_REG_A = 0x0E;
 	//! Address offset of the CIA Control Register B
 	static const uint16_t CIA_CONTROL_REG_B = 0x0F;
+		
+	//! Timer A counter
+	uint16_t counterA;
 	
-	//! First timer
-	TimerA timerA;
+	//! Timer A latch
+	uint16_t latchA;
+
+	//! Timer B counter
+	uint16_t counterB;
 	
-	//! Second timer
-	TimerB timerB;
+	//! Timer B latch
+	uint16_t latchB;
 	
 	//! Time of day clock
 	TOD tod;
@@ -302,20 +307,174 @@ public:
 	//! Enable or disable "time of day" interrupts 
 	inline void setInterruptEnabledTOD(bool b) { if (b) ICR |= 0x04; else ICR &= (0xff-0x04); }
 
-	// Timer A control
-
-	//!
+	//
+	// Timer A
+	// 
+	
+	//! Return latch value
+	inline uint16_t getLatchA() { return latchA; }
+	
+	//! Set latch value
+	inline void setLatchA(uint16_t value) { latchA = value; }
+	
+	//! Get low byte of latch
+	inline uint8_t getLatchALo() { return (uint8_t)(latchA & 0xFF); }
+	
+	//! Set low byte of latch
+	inline void setLatchALo(uint8_t value) { latchA = (latchA & 0xFF00) | value; }
+	
+	//! Get high byte of latch
+	inline uint8_t getLatchAHi() { return (uint8_t)(latchA >> 8); }
+	
+	//! Set high byte of latch
+	inline void setLatchAHi(uint8_t value) { latchA = (value << 8) | (latchA & 0xFF); }
+	
+	//! Return current timer value
+	inline uint16_t getCounterA() { return counterA; }
+	
+	//! Set current timer value
+	inline void setCounterA(uint16_t value) { counterA = value; }
+	
+	//! Get low byte of current timer value
+	inline uint8_t getCounterALo() { return (uint8_t)(counterA & 0xFF); }
+	
+	//! Set low byte of current timer value
+	inline void setCounterALo(uint8_t value) { counterA = (counterA & 0xFF00) | value; }
+	
+	//! Get high byte of current timer value
+	inline uint8_t getCounterAHi() { return (uint8_t)(counterA >> 8); }
+	
+	//! Set high byte of current timer value
+	inline void setCounterAHi(uint8_t value) { counterA = (value << 8) | (counterA & 0xFF); }
+	
+	//! Load latched value into timer 
+	inline void reloadTimerA() { counterA = latchA; }
+	
+	//! Returns true, if timer is running, 0 if stopped
+	inline bool isStartedA() { return CRA & 0x01; }
+	
+	//! Start or stop timer
+	inline void setStartedA(bool b) { if (b) CRA |= 0x01; else CRA &= 0xFE; }
+	
+	//! Toggle start flag
+	inline void toggleStartFlagA() { setStartedA(!isStartedA()); }
+	
+	//! Returns true, if the force load strobe is 1
+	inline bool forceLoadStrobeA() { return CRA & 0x10; }
+	
+	//! Returns true, if an underflow will be indicated in bit #6 in Port B register
+	inline bool willIndicateUnderflowA() { return CRA & 0x02; }
+	
+	//! Returns true, if an underflow will be indicated as a single pulse
+	inline bool willIndicateUnderflowAsPulseA() { return !(CRA & 0x04); }
+	
+	//! Enable or disable underflow indication
+	inline void setIndicateUnderflowA(bool b) { if (b) CRA |= 0x02; else CRA &= (0xFF-0x02); }
+	
+	//! Toggle underflow indication flag
+	inline void toggleUnderflowFlagA() { setIndicateUnderflowA(!willIndicateUnderflowA()); }
+	
+	//! Returns true, if timer is in one shot mode
+	inline bool isOneShotA() { return CRA & 0x08; }
+	
+	//! Enable or disable one-shot-mode 
+	inline void setOneShotA(bool b) { if (b) CRA |= 0x08; else CRA &= (0xff-0x08); }
+	
+	//! Toggle one shot flag 
+	inline void toggleOneShotFlagA() { setOneShotA(!isOneShotA()); }
+	
+	//! Returns true, if timer counts clock ticks
+	inline bool isCountingClockTicksA() { return (CRA & 0x20) == 0x00; }
+	
+	//! Return value of timer control register
 	inline bool getControlRegA() { return CRA; }
 
-	//!
+	//! Set value of timer control register
 	inline void setControlRegA(uint8_t value) { CRA = value; }
 	
-	// Timer B control
+	//
+	// Timer B
+	// 
 	
-	//!
+	//! Return latch value
+	inline uint16_t getLatchB() { return latchB; }
+	
+	//! Set latch value
+	inline void setLatchB(uint16_t value) { latchB = value; }
+	
+	//! Get low byte of latch
+	inline uint8_t getLatchBLo() { return (uint8_t)(latchB & 0xFF); }
+	
+	//! Set low byte of latch
+	inline void setLatchBLo(uint8_t value) { latchB = (latchB & 0xFF00) | value; }
+	
+	//! Get high byte of latch
+	inline uint8_t getLatchBHi() { return (uint8_t)(latchB >> 8); }
+	
+	//! Set high byte of latch
+	inline void setLatchBHi(uint8_t value) { latchB = (value << 8) | (latchB & 0xFF); }
+	
+	//! Return current timer value
+	inline uint16_t getCounterB() { return counterB; }
+	
+	//! Set current timer value
+	inline void setCounterB(uint16_t value) { counterB = value; }
+	
+	//! Get low byte of current timer value
+	inline uint8_t getCounterBLo() { return (uint8_t)(counterB & 0xFF); }
+	
+	//! Set low byte of current timer value
+	inline void setCounterBLo(uint8_t value) { counterB = (counterB & 0xFF00) | value; }
+	
+	//! Get high byte of current timer value
+	inline uint8_t getCounterBHi() { return (uint8_t)(counterB >> 8); }
+	
+	//! Set high byte of current timer value
+	inline void setCounterBHi(uint8_t value) { counterB = (value << 8) | (counterB & 0xFF); }
+	
+	//! Load latched value into timer 
+	inline void reloadTimerB() { counterB = latchB; }
+	
+	//! Returns true, if timer is running, 0 if stopped
+	inline bool isStartedB() { return CRB & 0x01; }
+	
+	//! Start or stop timer
+	inline void setStartedB(bool b) { if (b) CRB |= 0x01; else CRB &= 0xFE; }
+	
+	//! Toggle start flag
+	inline void toggleStartFlagB() { setStartedB(!isStartedB()); }
+	
+	//! Returns true, if the force load strobe is 1
+	inline bool forceLoadStrobeB() { return CRB & 0x10; }
+	
+	//! Returns true, if an underflow will be indicated in bit #7 in Port B register
+	inline bool willIndicateUnderflowB() { return CRB & 0x02; }
+	
+	//! Returns true, if an underflow will be indicated as a single pulse
+	inline bool willIndicateUnderflowAsPulseB() { return !(CRB & 0x04); }
+	
+	//! Enable or disable underflow indication
+	inline void setIndicateUnderflowB(bool b) { if (b) CRB |= 0x02; else CRB &= (0xFF-0x02); }
+	
+	//! Toggle underflow indication flag
+	inline void toggleUnderflowFlagB() { setIndicateUnderflowB(!willIndicateUnderflowB()); }
+	
+	//! Returns true, if timer is in one shot mode
+	inline bool isOneShotB() { return CRB & 0x08; }
+	
+	//! Enable or disable one-shot-mode 
+	inline void setOneShotB(bool b) { if (b) CRB |= 0x08; else CRB &= (0xff-0x08); }
+	
+	//! Toggle one shot flag 
+	inline void toggleOneShotFlagB() { setOneShotB(!isOneShotB()); }
+	
+	//! Returns true, if timer counts clock ticks
+	inline bool isCountingClockTicksB() { return (CRB & 0x20) == 0x00; }
+	
+	//! Return value of timer control register
 	inline bool getControlRegB() { return CRB; }
-
-	//!
+	
+	//! Set value of timer control register
 	inline void setControlRegB(uint8_t value) { CRB = value; }
 	
 	

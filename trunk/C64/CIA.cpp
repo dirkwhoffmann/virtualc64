@@ -179,10 +179,6 @@ CIA::CIA()
 
 	cpu = NULL;
     vic = NULL;
-	timerA.setCIA(this);
-	timerB.setCIA(this);
-	timerA.setOtherTimer(&timerB);
-	timerB.setOtherTimer(&timerA);
 }
 
 CIA::~CIA()
@@ -218,9 +214,12 @@ CIA::reset()
 	CNT = true; // CNT line is high by default
 	INT = 1;
 	
+	counterA = 0x0000;
+	latchA = 0xFFFF;
+	counterB = 0x0000;
+	latchB = 0xFFFF;
+	
 	tod.reset();
-	timerA.reset();
-	timerB.reset();
 }
 
 // Loading and saving snapshots
@@ -250,10 +249,13 @@ bool CIA::load(uint8_t **buffer)
 	
 	CNT = (bool)read8(buffer);
 	INT = (bool)read8(buffer);
-	
+		
+	counterA = read16(buffer);
+	latchA = read16(buffer);
+	counterB = read16(buffer);
+	latchB = read16(buffer);
+
 	tod.load(buffer);
-	timerA.load(buffer);
-	timerB.load(buffer);
 
 	return true;
 }
@@ -284,9 +286,12 @@ CIA::save(uint8_t **buffer)
 	write8(buffer, (uint8_t)CNT);
 	write8(buffer, (uint8_t)INT);
 	
+	write16(buffer, counterA);
+	write16(buffer, latchA);
+	write16(buffer, counterB);
+	write16(buffer, latchB);
+
 	tod.save(buffer);
-	timerA.save(buffer);
-	timerB.save(buffer);
 	
 	return true;	
 }
@@ -323,21 +328,21 @@ uint8_t CIA::peek(uint16_t addr)
 			
 		case CIA_TIMER_A_LOW:  
 			
-			result = timerA.getCounterLo();
+			result = getCounterALo();
 			break;
 			
 		case CIA_TIMER_A_HIGH: 
-			result = timerA.getCounterHi();
+			result = getCounterAHi();
 			break;
 			
 		case CIA_TIMER_B_LOW:  
 
-			result = timerB.getCounterLo();
+			result = getCounterBLo();
 			break;
 			
 		case CIA_TIMER_B_HIGH: 
 			
-			result = timerB.getCounterHi();
+			result = getCounterBHi();
 			break;
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
@@ -415,17 +420,17 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 		case CIA_TIMER_A_LOW:
 			
-			timerA.setLatchLo(value);
-
+			setLatchALo(value);
+			
 			// If timer A is currently in LOAD state, this value goes directly into the counter
 			if (delay & LoadA2) {
-				timerA.setCounterLo(value);
+				setCounterALo(value);
 			}
 			return;
 			
 		case CIA_TIMER_A_HIGH:
 						
-			timerA.setLatchHi(value);		
+			setLatchAHi(value);		
 			
 			// load counter if timer is stopped
 			if ((CRA & 0x01) == 0) {
@@ -434,23 +439,23 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 			// If timer A is currently in LOAD state, this value goes directly into the counter
 			if (delay & LoadA2) {
-				timerA.setCounterHi(value);
+				setCounterAHi(value);
 			}
 			return;
 			
 		case CIA_TIMER_B_LOW:  
 
-			timerB.setLatchLo(value);
+			setLatchBLo(value);
 
 			// If timer B is currently in LOAD state, this value goes directly into the counter
 			if (delay & LoadB2) {
-				timerB.setCounterLo(value);
+				setCounterBLo(value);
 			}			
 			return;
 			
 		case CIA_TIMER_B_HIGH: 
 			
-			timerB.setLatchHi(value);
+			setLatchBHi(value);
 			// load counter if timer is stopped
 			if ((CRB & 0x01) == 0) {
 				delay |= LoadB0;
@@ -458,7 +463,7 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			
 			// If timer B is currently in LOAD state, this value goes directly into the counter
 			if (delay & LoadB2) {
-				timerB.setCounterHi(value);
+				setCounterBHi(value);
 			}						
 			return;
 			
@@ -672,8 +677,10 @@ void CIA::dumpTrace()
 			delay & CountB3 ? "CntB3 " : "",
 			delay & LoadA0 ? "LdA0 " : "",
 			delay & LoadA1 ? "LdA1 " : "",
+			delay & LoadA2 ? "LdA2 " : "",
 			delay & LoadB0 ? "LdB0 " : "",
 			delay & LoadB1 ? "LdB1 " : "",
+			delay & LoadB1 ? "LdB2 " : "",
 			delay & PB6Low0 ? "PB6Lo0 " : "",
 			delay & PB6Low1 ? "PB6Lo1 " : "",
 			delay & PB7Low0 ? "PB7Lo0 " : "",
@@ -684,33 +691,32 @@ void CIA::dumpTrace()
 			delay & OneShotB0 ? "1ShotB0 " : "");
 
 	debug(1, "%sA: %04X (%04X) PA: %02X (%02X) DDRA: %02X CRA: %02X\n",
-		  indent, timerA.counter, timerA.latch, PA, PALatch, DDRA, CRA);
+		  indent, counterA, latchA, PA, PALatch, DDRA, CRA);
 	debug(1, "%sB: %04X (%04X) PB: %02X (%02X) DDRB: %02X CRB: %02X\n",
-		  indent, timerB.counter, timerB.latch, PB, PBLatch, DDRB, CRB);
+		  indent, counterB, latchB, PB, PBLatch, DDRB, CRB);
 }
 
 void CIA::dumpState()
 {
+	debug(1, "              Counter A : %02X\n", getCounterA());
+	debug(1, "                Latch A : %02X\n", getLatchA());
 	debug(1, "            Data port A : %02X\n", getDataPortA());
-	debug(1, "            Data port B : %02X\n", getDataPortA());
 	debug(1, "  Data port direction A : %02X\n", getDataPortDirectionA());
-	debug(1, "  Data port direction B : %02X\n", getDataPortDirectionB());
 	debug(1, "     Control register A : %02X\n", getControlRegA());
-	debug(1, "     Control register B : %02X\n", getControlRegB());
 	debug(1, "     Timer A interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
-	debug(1, "     Timer B interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
-	debug(1, "         TOD interrupts : %s\n", isInterruptEnabledTOD() ? "enabled" : "disabled");	
 	debug(1, "       Signal pending A : %s\n", isSignalPendingA() ? "yes" : "no");
+	debug(1, "\n");
+	debug(1, "              Counter B : %02X\n", getCounterB());
+	debug(1, "                Latch B : %02X\n", getLatchB());
+	debug(1, "            Data port B : %02X\n", getDataPortB());
+	debug(1, "  Data port direction B : %02X\n", getDataPortDirectionB());
+	debug(1, "     Control register B : %02X\n", getControlRegB());
+	debug(1, "     Timer B interrupts : %s\n", isInterruptEnabledB() ? "enabled" : "disabled");	
 	debug(1, "       Signal pending B : %s\n", isSignalPendingB() ? "yes" : "no");
-	debug(1, "\n\n");
-	debug(1, "Timer A:\n");
-	debug(1, "--------\n\n");
-	timerA.dumpState();
-	debug(1, "Timer B:\n");
-	debug(1, "--------\n\n");
-	timerB.dumpState();
-	debug(1, "Time of day clock:\n");
-	debug(1, "------------------\n\n");
+	debug(1, "\n");
+	debug(1, "  Interrupt control reg : %s\n", ICR);
+	debug(1, "     Interrupt mask reg : %s\n", IMR);
+	debug(1, "\n");	
 	tod.dumpState();
 }
 
@@ -820,11 +826,11 @@ void CIA::_executeOneCycle()
 	// ------------------------- TIMER A --------------------------------
 	// (1) : decrement counter A
 	if ((delay & CountA3) != 0) {
-		timerA.counter--;
+		counterA--;
 	}
 	
 	// (2) : underflow counter A
-	timerAOutput = (timerA.counter == 0 && (delay & CountA2) != 0);
+	timerAOutput = (counterA == 0 && (delay & CountA2) != 0);
 	if (timerAOutput) {
 		
 		// (3) : signal underflow event
@@ -871,7 +877,7 @@ void CIA::_executeOneCycle()
 	
 	// (8) : load counter A
 	if ((delay & LoadA1) != 0) {
-		timerA.reloadTimer(); // load counter from latch
+		reloadTimerA(); // load counter from latch
 		
 		// don't decrement counter in next clock
 		delay &= ~CountA2;
@@ -880,11 +886,11 @@ void CIA::_executeOneCycle()
 	// ------------------------- TIMER B --------------------------------
 	// decrement counter B
 	if ((delay & CountB3) != 0) {
-		timerB.counter--;
+		counterB--;
 	}
 	
 	// (2) : underflow counter B
-	timerBOutput = (timerB.counter == 0 && (delay & CountB2) != 0);
+	timerBOutput = (counterB == 0 && (delay & CountB2) != 0);
 	if (timerBOutput) {
 		
 		// signal underflow event
@@ -927,7 +933,7 @@ void CIA::_executeOneCycle()
 	
 	// load counter B
 	if ((delay & LoadB1) != 0) {
-		timerB.reloadTimer();
+		reloadTimerB();
 		
 		// don't decrement counter in next clock
 		delay &= ~CountB2;

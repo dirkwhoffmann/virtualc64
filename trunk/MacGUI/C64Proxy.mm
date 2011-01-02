@@ -244,19 +244,19 @@
 - (void) setDataPortA:(uint8_t)v { cia->setDataPortA(v); }
 - (uint8_t) getDataPortDirectionA { return cia->getDataPortDirectionA(); }
 - (void) setDataPortDirectionA:(uint8_t)v { cia->setDataPortDirectionA(v); }
-- (uint16_t) getTimerA { return cia->timerA.getCounter(); }
-- (void) setTimerA:(uint16_t)v { cia->timerA.setCounter(v); }
-- (uint16_t) getTimerLatchA { return cia->timerA.getLatch(); }
-- (void) setTimerLatchA:(uint16_t)v { cia->timerA.setLatch(v); }
-- (bool) getStartFlagA { return cia->timerA.isStarted(); }
-- (void) setStartFlagA:(bool)b { cia->timerA.setStarted(b); }
-- (void) toggleStartFlagA {cia->timerA.toggleStartFlag(); }
-- (bool) getOneShotFlagA { return cia->timerA.isOneShot(); }
-- (void) setOneShotFlagA:(bool)b { cia->timerA.setOneShot(b); }
-- (void) toggleOneShotFlagA { cia->timerA.toggleOneShotFlag(); }
-- (bool) getUnderflowFlagA { return cia->timerA.willIndicateUnderflow(); }
-- (void) setUnderflowFlagA:(bool)b { return cia->timerA.setIndicateUnderflow(b); }
-- (void) toggleUnderflowFlagA { cia->timerA.toggleUnderflowFlag(); }
+- (uint16_t) getTimerA { return cia->getCounterA(); }
+- (void) setTimerA:(uint16_t)v { cia->setCounterA(v); }
+- (uint16_t) getTimerLatchA { return cia->getLatchA(); }
+- (void) setTimerLatchA:(uint16_t)v { cia->setLatchA(v); }
+- (bool) getStartFlagA { return cia->isStartedA(); }
+- (void) setStartFlagA:(bool)b { cia->setStartedA(b); }
+- (void) toggleStartFlagA {cia->toggleStartFlagA(); }
+- (bool) getOneShotFlagA { return cia->isOneShotA(); }
+- (void) setOneShotFlagA:(bool)b { cia->setOneShotA(b); }
+- (void) toggleOneShotFlagA { cia->toggleOneShotFlagA(); }
+- (bool) getUnderflowFlagA { return cia->willIndicateUnderflowA(); }
+- (void) setUnderflowFlagA:(bool)b { return cia->setIndicateUnderflowA(b); }
+- (void) toggleUnderflowFlagA { cia->toggleUnderflowFlagA(); }
 - (bool) getPendingSignalFlagA {return cia->isSignalPendingA(); }
 - (void) setPendingSignalFlagA:(bool)b { cia->setSignalPendingA(b); }
 - (void) togglePendingSignalFlagA { cia->togglePendingSignalFlagA(); }
@@ -268,19 +268,19 @@
 - (void) setDataPortB:(uint8_t)v { cia->setDataPortB(v); }
 - (uint8_t) getDataPortDirectionB { return cia->getDataPortDirectionB(); }
 - (void) setDataPortDirectionB:(uint8_t)v { cia->setDataPortDirectionB(v); }
-- (uint16_t) getTimerB { return cia->timerB.getCounter(); }
-- (void) setTimerB:(uint16_t)v { cia->timerB.setCounter(v); }
-- (uint16_t) getTimerLatchB { return cia->timerB.getLatch(); }
-- (void) setTimerLatchB:(uint16_t)v { cia->timerB.setLatch(v); }
-- (bool) getStartFlagB { return cia->timerB.isStarted(); }
-- (void) setStartFlagB:(bool)b { cia->timerB.setStarted(b); }
-- (void) toggleStartFlagB {cia->timerB.toggleStartFlag(); }
-- (bool) getOneShotFlagB { return cia->timerB.isOneShot(); }
-- (void) setOneShotFlagB:(bool)b { cia->timerB.setOneShot(b); }
-- (void) toggleOneShotFlagB { cia->timerB.toggleOneShotFlag(); }
-- (bool) getUnderflowFlagB { return cia->timerB.willIndicateUnderflow(); }
-- (void) setUnderflowFlagB:(bool)b { return cia->timerB.setIndicateUnderflow(b); }
-- (void) toggleUnderflowFlagB { cia->timerB.toggleUnderflowFlag(); }
+- (uint16_t) getTimerB { return cia->getCounterB(); }
+- (void) setTimerB:(uint16_t)v { cia->setCounterB(v); }
+- (uint16_t) getTimerLatchB { return cia->getLatchB(); }
+- (void) setTimerLatchB:(uint16_t)v { cia->setLatchB(v); }
+- (bool) getStartFlagB { return cia->isStartedB(); }
+- (void) setStartFlagB:(bool)b { cia->setStartedB(b); }
+- (void) toggleStartFlagB {cia->toggleStartFlagB(); }
+- (bool) getOneShotFlagB { return cia->isOneShotB(); }
+- (void) setOneShotFlagB:(bool)b { cia->setOneShotB(b); }
+- (void) toggleOneShotFlagB { cia->toggleOneShotFlagB(); }
+- (bool) getUnderflowFlagB { return cia->willIndicateUnderflowB(); }
+- (void) setUnderflowFlagB:(bool)b { return cia->setIndicateUnderflowB(b); }
+- (void) toggleUnderflowFlagB { cia->toggleUnderflowFlagB(); }
 - (bool) getPendingSignalFlagB {return cia->isSignalPendingB(); }
 - (void) setPendingSignalFlagB:(bool)b { cia->setSignalPendingB(b); }
 - (void) togglePendingSignalFlagB { cia->togglePendingSignalFlagB(); }
