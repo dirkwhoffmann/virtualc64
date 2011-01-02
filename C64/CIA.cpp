@@ -732,9 +732,12 @@ void CIA::_executeOneCycle()
 	}
 #endif
 	
-	// Pictures taken from "A Software Model of the CIA6526" from Wolfgang Lorenz 
 
-	// Figure 3: Layout of timer (A and B)
+	//
+	// Layout of timer (A and B)
+	//
+
+    // Source: "A Software Model of the CIA6526" by Wolfgang Lorenz
 	//
     //                              Phi2            Phi2                  Phi2
 	//                               |               |                     |
@@ -770,8 +773,12 @@ void CIA::_executeOneCycle()
 	// | one shot      |---X->| oneShotA0 |---
 	// -----------------      -------------
 
-	// Figure 4: Timer output to PB6 (timer A) and PB7 (timer B)
-    //                            
+	//
+	// Timer output to PB6 (timer A) and PB7 (timer B)
+    // 
+	
+	// Source: "A Software Model of the CIA6526" by Wolfgang Lorenz
+	//
 	//                                      -----------------
 	//          --------------------------->| 0x00 (pulse)  |
 	//          |                           |               | (6.2) ----------------
@@ -788,34 +795,6 @@ void CIA::_executeOneCycle()
 	// -----------------                    -----------------
 	
 
-	// Figure 5: Interrupt logic
-    //                            
-	//                  ----------
-	//                  | bIMR & |----
-	//                  |  0x01  |   |    -----
-	//                  ----------   ---->| & |----
-	// timerA   (3) Set ----------   ---->|   |   |
-	// output  -------->| bICR & |   |    -----   |
-	//           ------>|  0x01  |----            |  -----
-	//           |  Clr ----------                -->|>=1|---
-	//           |      ----------                -->|   |  |
-	//           |      | bIMR & |----            |  -----  |
-	//           |      |  0x02  |   |    -----   |         |
-	//           |      ----------   ---->| & |----         |
-	// timerB    |  Set ----------   ---->|   |             |
-	// output  --|----->| bICR & |   |    -----             |
-	//           X----->|  0x01  |----                      |
-	//           |  Clr ----------       	                |
-	// read      |                                          |
-	// ICR ------X-------------X----------------            |
-	//                         |               |            |
-	//                         v Clr           v Clr        |
-	//           ------    ----------    ----------------   | (4)
-	// Int    <--| -1 |<---| bICR & |<---|   dwDelay &  |<---
-	// ouptput   |    |    |  0x80  |Set |  Interrupt1  |     
-	//           ------    ----------    -------^--------   	
-	//                                          |
-	//                                         Phi2
 	
 	// 
 	// Adapted from PC64Win by Wolfgang Lorenz
@@ -864,15 +843,6 @@ void CIA::_executeOneCycle()
 		
 		// (8) : load counter A
 		delay |= LoadA1;
-		
-		// Interrupt logic
-		// (3) : signal underflow event
-		ICR |= 0x01;
-		
-		// (4) : underflow interrupt in next clock
-		if ((IMR & 0x01) != 0) {
-			delay |= Interrupt0;
-		}
 	}
 	
 	// (8) : load counter A
@@ -892,15 +862,7 @@ void CIA::_executeOneCycle()
 	// (2) : underflow counter B
 	timerBOutput = (counterB == 0 && (delay & CountB2) != 0);
 	if (timerBOutput) {
-		
-		// signal underflow event
-		ICR |= 0x02;
-		
-		// underflow interrupt in next clock
-		if ((IMR & 0x02) != 0) {
-			delay |= Interrupt0;
-		}
-		
+				
 		// toggle underflow counter bit
 		PB67Toggle ^= 0x80;
 		
@@ -956,6 +918,60 @@ void CIA::_executeOneCycle()
 		raiseInterruptLine();
 	}
 
+	//
+	// Interrupt logic
+    //
+	
+	// Source: "A Software Model of the CIA6526" by Wolfgang Lorenz
+	//
+	//                  ----------
+	//                  | bIMR & |----
+	//                  |  0x01  |   |    -----
+	//                  ----------   ---->| & |----
+	// timerA   (3) Set ----------   ---->|   |   |
+	// output  -------->| bICR & |   |    -----   |
+	//           ------>|  0x01  |----            |  -----
+	//           |  Clr ----------                -->|>=1|---
+	//           |      ----------                -->|   |  |
+	//           |      | bIMR & |----            |  -----  |
+	//           |      |  0x02  |   |    -----   |         |
+	//           |      ----------   ---->| & |----         |
+	// timerB    |  Set ----------   ---->|   |             |
+	// output  --|----->| bICR & |   |    -----             |
+	//           X----->|  0x01  |----                      |
+	//           |  Clr ----------       	                |
+	// read      |                                          |
+	// ICR ------X-------------X----------------            |
+	//                         |               |            |
+	//                         v Clr           v Clr        |
+	//           ------    ----------    ----------------   | (4)
+	// Int    <--| -1 |<---| bICR & |<---|   dwDelay &  |<---
+	// ouptput   |    |    |  0x80  |Set |  Interrupt1  |     
+	//           ------    ----------    -------^--------   	
+	//                                          |
+	//                                         Phi2
+	
+	// Interrupt logic
+	if (timerAOutput) {
+		// (3) : signal underflow event
+		ICR |= 0x01;
+	
+		// (4) : underflow interrupt in next clock
+		if ((IMR & 0x01) != 0) {
+			delay |= Interrupt0;
+		}
+	}
+	
+	if (timerBOutput) {
+		// signal underflow event
+		ICR |= 0x02;
+		
+		// underflow interrupt in next clock
+		if ((IMR & 0x02) != 0) {
+			delay |= Interrupt0;
+		}
+	}
+	
 	delay = (delay << 1) & DelayMask | feed;
 }
 
