@@ -833,14 +833,6 @@ void CIA::_executeOneCycle()
 	timerAOutput = (counterA == 0 && (delay & CountA2) != 0);
 	if (timerAOutput) {
 		
-		// (3) : signal underflow event
-		ICR |= 0x01;
-		
-		// (4) : underflow interrupt in next clock
-		if ((IMR & 0x01) != 0) {
-			delay |= Interrupt0;
-		}
-		
 		// (5) toggle underflow counter bit
 		PB67Toggle ^= 0x40;
 		
@@ -852,9 +844,8 @@ void CIA::_executeOneCycle()
 				PB67TimerOut |= 0x40;
 				delay |= PB6Low0;
 				delay &= ~PB6Low1;
-				
 			} else {
-				// (6.2) copy bit 6 from PB67Toggle to PB67TimerOut
+				// toggle PB6 between high and low (copy bit 6 from PB67Toggle)
 				PB67TimerOut = (PB67TimerOut & 0xBF) | (PB67Toggle & 0x40);
 			}
 		}
@@ -873,6 +864,15 @@ void CIA::_executeOneCycle()
 		
 		// (8) : load counter A
 		delay |= LoadA1;
+		
+		// Interrupt logic
+		// (3) : signal underflow event
+		ICR |= 0x01;
+		
+		// (4) : underflow interrupt in next clock
+		if ((IMR & 0x01) != 0) {
+			delay |= Interrupt0;
+		}
 	}
 	
 	// (8) : load counter A
@@ -880,7 +880,7 @@ void CIA::_executeOneCycle()
 		reloadTimerA(); // load counter from latch
 		
 		// don't decrement counter in next clock
-		delay &= ~CountA2;
+		// delay &= ~CountA2;
 	}
 	
 	// ------------------------- TIMER B --------------------------------
@@ -911,11 +911,9 @@ void CIA::_executeOneCycle()
 			if ((CRB & 0x04) == 0) {
 				PB67TimerOut |= 0x80;
 				delay |= PB7Low0;
-				delay &= ~PB7Low1;
-				
-				// toggle PB7 between high and low
+				delay &= ~PB7Low1;				
 			} else {
-				// (6.2) copy bit 7 from PB67Toggle to PB67TimerOut
+				// toggle PB7 between high and low (copy bit 7 from PB67Toggle)
 				PB67TimerOut = (PB67TimerOut & 0x7F) | (PB67Toggle & 0x80);
 			}
 		}
@@ -936,7 +934,7 @@ void CIA::_executeOneCycle()
 		reloadTimerB();
 		
 		// don't decrement counter in next clock
-		delay &= ~CountB2;
+		// delay &= ~CountB2;
 	}
 	
 	// set PB67 back to low
