@@ -20,6 +20,7 @@
 
 @interface RomDialog : NSWindow
 {
+	IBOutlet NSTextField *learnMore;
 	IBOutlet NSImageView *kernelRom;
 	IBOutlet NSImageView *basicRom;
 	IBOutlet NSImageView *characterRom;
@@ -27,6 +28,8 @@
 	IBOutlet NSBox *dragBox;
 	IBOutlet NSButton *cancelButton;
 }
+
+- (IBAction)helpAction:(id)sender;
 
 - (void) initialize:(int)missingRoms;
 - (void) update:(int)missingRoms;

@@ -66,7 +66,8 @@ VC1541Memory::save(uint8_t **buffer)
 bool 
 VC1541Memory::is1541Rom(const char *filename)
 {
-	int magic_bytes[] = { 0x97, 0xAA, 0xAA, EOF };
+	int magic_bytes1[] = { 0x97, 0xAA, 0xAA, EOF };
+	int magic_bytes2[] = { 0x97, 0xE0, 0x43, EOF };
 
 	if (filename == NULL)
 		return false;
@@ -74,7 +75,7 @@ VC1541Memory::is1541Rom(const char *filename)
 	if (!checkFileSize(filename, 0x4000, 0x4000))
 		return false;
 	
-	if (!checkFileHeader(filename, magic_bytes))
+	if (!checkFileHeader(filename, magic_bytes1) && !checkFileHeader(filename, magic_bytes2))
 		return false;
 		
 	return true;
