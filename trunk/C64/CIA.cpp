@@ -615,16 +615,16 @@ void CIA::_executeOneCycle()
 	// Timer A
 	
 	// Decrement counter
-	if ((delay & CountA3) != 0)
+	if (delay & CountA3)
 		counterA--; // (1)
 	
 	// (2) Check underflow condition
-	bool timerAOutput = (counterA == 0 && (delay & CountA2) != 0); // (2)
+	bool timerAOutput = (counterA == 0 && (delay & CountA2)); // (2)
 
 	if (timerAOutput) {
 		
 		// Stop timer in one shot mode
-		if (((delay | feed) & OneShotA0) != 0) { // (3)
+		if ((delay | feed) & OneShotA0) { // (3)
 			CRA &= ~0x01;
 			delay &= ~(CountA2 | CountA1 | CountA0);
 			feed &= ~CountA0;
@@ -640,23 +640,23 @@ void CIA::_executeOneCycle()
 	}
 	
 	// Load counter
-	if ((delay & LoadA1) != 0) // (4)
+	if (delay & LoadA1) // (4)
 		reloadTimerA(); 
 	
 	// Timer B
 	
 	// Decrement counter
-	if ((delay & CountB3) != 0) {
+	if (delay & CountB3) {
 		counterB--; // (1)
 	}
 	
 	// Check underflow condition
-	bool timerBOutput = (counterB == 0 && (delay & CountB2) != 0); // (2)
+	bool timerBOutput = (counterB == 0 && (delay & CountB2)); // (2)
 
 	if (timerBOutput) {
 						
 		// Stop timer in one shot mode
-		if (((delay | feed) & OneShotB0) != 0) { // (3)
+		if ((delay | feed) & OneShotB0) { // (3)
 			CRB &= ~0x01;
 			delay &= ~(CountB2 | CountB1 | CountB0);
 			feed &= ~CountB0;
@@ -667,7 +667,7 @@ void CIA::_executeOneCycle()
 	}
 	
 	// Load counter
-	if ((delay & LoadB1) != 0) // (4)
+	if (delay & LoadB1) // (4)
 		reloadTimerB();
 		
 	
@@ -698,7 +698,7 @@ void CIA::_executeOneCycle()
 		
 		PB67Toggle ^= 0x40; // (5) toggle underflow counter bit
 		
-		if ((CRA & 0x02) != 0) { // (6)
+		if (CRA & 0x02) { // (6)
 
 			if ((CRA & 0x04) == 0) { 
 				// (7) set PB6 high for one clock cycle
@@ -718,7 +718,7 @@ void CIA::_executeOneCycle()
 		
 		PB67Toggle ^= 0x80; // (5) toggle underflow counter bit
 	
-		if ((CRB & 0x02) != 0) { // (6)
+		if (CRB & 0x02) { // (6)
 		
 			if ((CRB & 0x04) == 0) {
 				// (7) set PB7 high for one clock cycle
