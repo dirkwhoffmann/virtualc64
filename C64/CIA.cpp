@@ -554,7 +554,7 @@ void CIA::dumpState()
 	tod.dumpState();
 }
 
-void CIA::_executeOneCycle()
+void CIA::executeOneCycle()
 {
 #if 0
 	if (cpu->c64->event2 && this == cpu->c64->cia1)
@@ -605,14 +605,15 @@ void CIA::_executeOneCycle()
 
 				
 	// Timer A
-	
+
 	// Decrement counter
+
 	if (delay & CountA3)
 		counterA--; // (1)
 	
-	// (2) Check underflow condition
+	// Check underflow condition
 	bool timerAOutput = (counterA == 0 && (delay & CountA2)); // (2)
-
+	
 	if (timerAOutput) {
 		
 		// Stop timer in one shot mode
@@ -626,8 +627,6 @@ void CIA::_executeOneCycle()
 		if ((CRB & 0x61) == 0x41 || (CRB & 0x61) == 0x61 && CNT) {
 			delay |= CountB1;
 		}
-		
-		// Load counter
 		delay |= LoadA1;
 	}
 	
@@ -641,10 +640,10 @@ void CIA::_executeOneCycle()
 	if (delay & CountB3) {
 		counterB--; // (1)
 	}
-	
+
 	// Check underflow condition
 	bool timerBOutput = (counterB == 0 && (delay & CountB2)); // (2)
-
+	
 	if (timerBOutput) {
 						
 		// Stop timer in one shot mode
@@ -653,8 +652,6 @@ void CIA::_executeOneCycle()
 			delay &= ~(CountB2 | CountB1 | CountB0);
 			feed &= ~CountB0;
 		}
-		
-		// Load counter
 		delay |= LoadB1;
 	}
 	

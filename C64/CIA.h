@@ -171,7 +171,8 @@ public:
 	uint8_t PB;
 	bool CNT;   // serial clock or input timer clock or timer gate
 	bool INT;
-	
+		
+
 	//! Activates the interrupt line
 	/*! The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
 		Whereas the CIA 1 activates the IRQ line, the CIA 2 activates clears the NMI line.
@@ -484,12 +485,7 @@ public:
 	/*! The CIA will be executed for one clock cycle
 		The functions decreases all running counters and triggers an CPU interrput if necessary.
 	*/
-	
-inline void executeOneCycle() { 
-	_executeOneCycle();
-}
-	
-	void _executeOneCycle();
+	void executeOneCycle();
 
 	//! Increment the TOD clock by one tenth of a second
 	/*! Issues an interrupt if the alarm time is reached.
