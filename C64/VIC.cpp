@@ -260,63 +260,65 @@ VIC::saveScreenshot(uint8_t **buffer)
 void 
 VIC::dumpState()
 {
-	//debug(1, "VIC\n");
-	//debug(1, "---\n\n");
-	debug(1, "     Bank address : %04X\n", bankAddr, bankAddr);
-	debug(1, "    Screen memory : %04X\n", screenMemoryAddr);
-	debug(1, " Character memory : %04X (%s)\n", characterMemoryAddr, characterMemoryMappedToROM ? "ROM" : "RAM");
-	debug(1, "  Text resolution : %d x %d\n", numberOfRows(), numberOfColumns());
-	debug(1, "X/Y raster scroll : %d / %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
-	debug(1, "     Display mode : ");
+	msg("VIC\n");
+	msg("---\n\n");
+	msg("     Bank address : %04X\n", bankAddr, bankAddr);
+	msg("    Screen memory : %04X\n", screenMemoryAddr);
+	msg(" Character memory : %04X (%s)\n", characterMemoryAddr, characterMemoryMappedToROM ? "ROM" : "RAM");
+	msg("  Text resolution : %d x %d\n", numberOfRows(), numberOfColumns());
+	msg("X/Y raster scroll : %d / %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
+	msg("     Display mode : ");
 	switch (getDisplayMode()) {
 		case STANDARD_TEXT: 
-			debug(1, "Standard character mode\n");
+			msg("Standard character mode\n");
 			break;
 		case MULTICOLOR_TEXT:
-			debug(1, "Multicolor character mode\n");
+			msg("Multicolor character mode\n");
 			break;
 		case STANDARD_BITMAP:
-			debug(1, "Standard bitmap mode\n");
+			msg("Standard bitmap mode\n");
 			break;
 		case MULTICOLOR_BITMAP:
-			debug(1, "Multicolor bitmap mode\n");
+			msg("Multicolor bitmap mode\n");
 			break;
 		case EXTENDED_BACKGROUND_COLOR:
-			debug(1, "Extended background color mode\n");
+			msg("Extended background color mode\n");
 			break;
 		default:
-			debug(1, "Invalid\n");
+			msg("Invalid\n");
 	}
-	debug(1, "            (X,Y) : (%d,%d) %s %s\n", xCounter, scanline,  dmaLine ? "(DMA line)" : "", dmaLinesEnabled ? "" : "(DMA lines disabled)");
-	debug(1, "               VC : %02X\n", registerVC);
-	debug(1, "           VCBASE : %02X\n", registerVCBASE);
-	debug(1, "               RC : %02X\n", registerRC);
-	debug(1, "             VMLI : %02X\n", registerVMLI);
-	debug(1, "          BA line : %s\n", BAlow ? "low" : "high");
-	debug(1, "      MainFrameFF : %d\n", mainFrameFF);
-	debug(1, "  VerticalFrameFF : %d\n", verticalFrameFF);
-	debug(1, "      Draw Vframe : %s\n", drawVerticalFrame ? "yes" : "no");
-	debug(1, "      Draw Hframe : %s\n", drawHorizontalFrame ? "yes" : "no");	
-	debug(1, "     DisplayState : %s\n", displayState ? "on" : "off");
-	debug(1, "         SpriteOn : %02X ( ", spriteOnOff);
-	for (int i = 0; i < 8; i++) debugSimple(1, "%d ", spriteOnOff & (1 << i) != 0);
-	debugSimple(1, ")\n");
-	debug(1, "        SpriteDma : %02X ( ", spriteDmaOnOff);
-	for (int i = 0; i < 8; i++) debugSimple(1, "%d ", spriteDmaOnOff & (1 << i) != 0 );
-	debugSimple(1, ")\n");
-	debug(1, "      Y expansion : %02X ( ", expansionFF);
-	for (int i = 0; i < 8; i++) debugSimple(1, "%d ", expansionFF & (1 << i) != 0);
-	debugSimple(1, ")\n");
+	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, scanline,  dmaLine ? "(DMA line)" : "", dmaLinesEnabled ? "" : "(DMA lines disabled)");
+	msg("               VC : %02X\n", registerVC);
+	msg("           VCBASE : %02X\n", registerVCBASE);
+	msg("               RC : %02X\n", registerRC);
+	msg("             VMLI : %02X\n", registerVMLI);
+	msg("          BA line : %s\n", BAlow ? "low" : "high");
+	msg("      MainFrameFF : %d\n", mainFrameFF);
+	msg("  VerticalFrameFF : %d\n", verticalFrameFF);
+	msg("      Draw Vframe : %s\n", drawVerticalFrame ? "yes" : "no");
+	msg("      Draw Hframe : %s\n", drawHorizontalFrame ? "yes" : "no");	
+	msg("     DisplayState : %s\n", displayState ? "on" : "off");
+	msg("         SpriteOn : %02X ( ", spriteOnOff);
+	for (int i = 0; i < 8; i++) 
+		msg("%d ", spriteOnOff & (1 << i) != 0);
+	msg(")\n");
+	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
+	for (int i = 0; i < 8; i++) 
+		msg("%d ", spriteDmaOnOff & (1 << i) != 0 );
+	msg(")\n");
+	msg("      Y expansion : %02X ( ", expansionFF);
+	for (int i = 0; i < 8; i++) 
+		msg("%d ", expansionFF & (1 << i) != 0);
+	msg(")\n");
 	
-	debug(1, "        IO memory : ");
+	msg("        IO memory : ");
 	for (unsigned i = 0; i < sizeof(iomem); i += 16) {
 		for (unsigned j = 0; j < 16; j ++) {
-			debugSimple(1, "%02X ", iomem[i + j]);
+			msg("%02X ", iomem[i + j]);
 		}
-		debugSimple(1, "\n");
-		debug(1, "                    ");
+		msg("\n                    ");
 	}
-	debugSimple(1, "\n");
+	msg("\n");
 }
 
 

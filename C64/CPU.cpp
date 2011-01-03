@@ -218,19 +218,19 @@ CPU::save(uint8_t **buffer)
 void 
 CPU::dumpState()
 {
-	//debug(1, "CPU:\n");
-	//debug(1, "----\n\n");
-    debug(1, "%s\n", disassemble());
-	debug(1, "Processor port : %02X\n", port);
-	debug(1, "Port direction : %02X\n", port_direction);
-	debug(1, "      Rdy line : %s\n", rdyLine ? "high" : "low");
-	debug(1, "      Irq line : %02X\n", irqLine);
-	debug(1, "      Nmi line : %02X %s\n", nmiLine, nmiNegEdge ? "(negative edge)" : "");
-	debug(1, " no IRQ before : %ull\n", nextPossibleIrqCycle);
-	debug(1, " no NMI before : %ull\n", nextPossibleNmiCycle);
-	debug(1, "   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
-	debug(1, "   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
-	debug(1, "\n");
+	msg("CPU:\n");
+	msg("----\n\n");
+    msg("%s\n", disassemble());
+	msg("Processor port : %02X\n", port);
+	msg("Port direction : %02X\n", port_direction);
+	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
+	msg("      Irq line : %02X\n", irqLine);
+	msg("      Nmi line : %02X %s\n", nmiLine, nmiNegEdge ? "(negative edge)" : "");
+	msg(" no IRQ before : %ull\n", nextPossibleIrqCycle);
+	msg(" no NMI before : %ull\n", nextPossibleNmiCycle);
+	msg("   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
+	msg("   NMI routine : %02X%02X\n", mem->peek(0xFFFB), mem->peek(0xFFFA));	
+	msg("\n");
 }
 
 void 

@@ -135,28 +135,27 @@ bool VIA6522::execute(int cycles)
 void 
 VIA6522::dumpState()
 {
-	debug(1, "VIA:\n");
-	debug(1, "----\n\n");
-	
-	debug(1, "          Input register (IRA) : %02X\n", ira);
-	debug(1, "          Input register (IRB) : %02X\n", irb);
-	debug(1, "         Output register (ORA) : %02X\n", ora);
-	debug(1, "         Output register (ORB) : %02X\n", orb);
-	debug(1, "Data direction register (DDRA) : %02X\n", ddra);
-	debug(1, "Data direction register (DDRB) : %02X\n", ddrb);
-	debug(1, "              Input latching A : %s\n", inputLatchingEnabledA() ? "enabled" : "disabled");
-	debug(1, "              Input latching B : %s\n", inputLatchingEnabledB() ? "enabled" : "disabled");
-	debug(1, "                       Timer 1 : %d (latched: %d)\n", LO_HI(t1_counter_lo, t1_counter_hi), LO_HI(t1_latch_lo, t1_latch_hi));
-	debug(1, "                       Timer 2 : %d (latched: %d)\n", LO_HI(t2_counter_lo, t2_counter_hi), LO_HI(t2_latch_lo, 0));
-	debug(1, "            Timer 1 interrupts : %s\n", timerInterruptEnabled1() ? "enabled" : "disabled");
-	debug(1, "            Timer 2 interrupts : %s\n", timerInterruptEnabled2() ? "enabled" : "disabled");
-	debug(1, "        Timer 1 interrupt flag : %d\n", (io[0x0D] & 0x40) != 0);
-	debug(1, "        Timer 2 interrupt flag : %d\n", (io[0x0D] & 0x20) != 0);
-	debug(1, "                     IO memory : ");
+	msg("VIA:\n");
+	msg("----\n\n");
+	msg("          Input register (IRA) : %02X\n", ira);
+	msg("          Input register (IRB) : %02X\n", irb);
+	msg("         Output register (ORA) : %02X\n", ora);
+	msg("         Output register (ORB) : %02X\n", orb);
+	msg("Data direction register (DDRA) : %02X\n", ddra);
+	msg("Data direction register (DDRB) : %02X\n", ddrb);
+	msg("              Input latching A : %s\n", inputLatchingEnabledA() ? "enabled" : "disabled");
+	msg("              Input latching B : %s\n", inputLatchingEnabledB() ? "enabled" : "disabled");
+	msg("                       Timer 1 : %d (latched: %d)\n", LO_HI(t1_counter_lo, t1_counter_hi), LO_HI(t1_latch_lo, t1_latch_hi));
+	msg("                       Timer 2 : %d (latched: %d)\n", LO_HI(t2_counter_lo, t2_counter_hi), LO_HI(t2_latch_lo, 0));
+	msg("            Timer 1 interrupts : %s\n", timerInterruptEnabled1() ? "enabled" : "disabled");
+	msg("            Timer 2 interrupts : %s\n", timerInterruptEnabled2() ? "enabled" : "disabled");
+	msg("        Timer 1 interrupt flag : %d\n", (io[0x0D] & 0x40) != 0);
+	msg("        Timer 2 interrupt flag : %d\n", (io[0x0D] & 0x20) != 0);
+	msg("                     IO memory : ");
 	for (int j = 0; j < 16; j ++) {
-		debug(1, "%02X ", io[j]);
+		msg("%02X ", io[j]);
 	}
-	debug(1, "\n");
+	msg("\n");
 }
 
 uint8_t 

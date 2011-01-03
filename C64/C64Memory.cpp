@@ -116,18 +116,18 @@ C64Memory::save(uint8_t **buffer)
 void 
 C64Memory::dumpState()
 {
-	debug(1, "C64 Memory:\n");
-	debug(1, "-----------\n");
-	debug(1, "    Basic ROM :%s loaded,%s visible\n", basicRomIsLoaded() ? "" : " not", basicRomIsVisible ? "" : " not");
-	debug(1, "Character ROM :%s loaded,%s visible\n", charRomIsLoaded() ? "" : " not", charRomIsVisible ? "" : " not");
-	debug(1, "   Kernel ROM :%s loaded,%s visible\n", kernelRomIsLoaded() ? "" : " not", kernelRomIsVisible ? "" : " not");
+	msg("C64 Memory:\n");
+	msg("-----------\n");
+	msg("    Basic ROM :%s loaded,%s visible\n", basicRomIsLoaded() ? "" : " not", basicRomIsVisible ? "" : " not");
+	msg("Character ROM :%s loaded,%s visible\n", charRomIsLoaded() ? "" : " not", charRomIsVisible ? "" : " not");
+	msg("   Kernel ROM :%s loaded,%s visible\n", kernelRomIsLoaded() ? "" : " not", kernelRomIsVisible ? "" : " not");
 	for (uint16_t i = 0; i < 0xFFFF; i++) {
 		uint8_t tag = cpu->getBreakpointTag(i);
 		if (tag != CPU::NO_BREAKPOINT) {
-			debug(1, "Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
+			msg("Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
 		}
 	}
-	debug(1, "\n");
+	msg("\n");
 }
 
 

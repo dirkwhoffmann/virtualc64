@@ -141,8 +141,8 @@ VC1541::save(uint8_t **buffer)
 void 
 VC1541::dumpState()
 {
-	debug(1, "VC1541\n");
-	debug(1, "------\n\n");
+	msg("VC1541\n");
+	msg("------\n\n");
 	
 #if 0	
 	FILE *file = fopen("/Users/hoff/tmp/d64image.txt","w");
@@ -165,13 +165,13 @@ VC1541::dumpState()
 	}
 #endif
 	
-	debug(1, "         Head timer : %d\n", byteReadyTimer);
-	debug(1, "              Track : %d\n", track);
-	debug(1, "       Track offset : %d\n", offset);
-	debug(1, "Sync bytes in a row : %d\n", noOfFFBytes);
-	debug(1, "  Symbol under head : %02X\n", readHead());
-	debug(1, "        Next symbol : %02X\n", readHeadLookAhead());
-	debug(1, "\n");
+	msg("         Head timer : %d\n", byteReadyTimer);
+	msg("              Track : %d\n", track);
+	msg("       Track offset : %d\n", offset);
+	msg("Sync bytes in a row : %d\n", noOfFFBytes);
+	msg("  Symbol under head : %02X\n", readHead());
+	msg("        Next symbol : %02X\n", readHeadLookAhead());
+	msg("\n");
 }
 
 void 

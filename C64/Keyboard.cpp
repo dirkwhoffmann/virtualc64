@@ -119,15 +119,15 @@ Keyboard::save(uint8_t **buffer)
 void 
 Keyboard::dumpState()
 {
-	debug(1, "Keyboard:\n");
-	debug(1, "---------\n\n");
-	debug(1, "Keyboard matrix: ");
+	msg("Keyboard:\n");
+	msg("---------\n\n");
+	msg("Keyboard matrix: ");
 	for (int i = 0; i < 8; i++) {
-		debug(1, "%d %d %d %d %d %d %d %d\n                 ", 
+		msg("%d %d %d %d %d %d %d %d\n                 ", 
 			  kbMatrix[i] & 0x01 != 0, kbMatrix[i] & 0x02 != 0, kbMatrix[i] & 0x04 != 0, kbMatrix[i] & 0x08 != 0,
 			  kbMatrix[i] & 0x10 != 0, kbMatrix[i] & 0x20 != 0, kbMatrix[i] & 0x40 != 0, kbMatrix[i] & 0x80 != 0);				
 	}
-	debug(1, "\n");
+	msg("\n");
 }
 
 uint8_t Keyboard::getRowValues(uint8_t columnMask)

@@ -95,6 +95,17 @@ VirtualComponent::dumpState()
 }
 
 void
+VirtualComponent::msg(const char *fmt, ...)
+{
+	char buf[256];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(buf, sizeof(buf), fmt, ap); 
+	va_end(ap);
+	fprintf(logfile ? logfile : stderr, "%s", buf);
+}
+
+void
 VirtualComponent::debug(const char *fmt, ...)
 {
 	char buf[256];
@@ -117,20 +128,6 @@ VirtualComponent::debug(int level, const char *fmt, ...)
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
 	va_end(ap);
 	fprintf(logfile ? logfile : stderr, "%s: %s", name, buf);
-}
-
-void
-VirtualComponent::debugSimple(int level, const char *fmt, ...)
-{
-	if (level > debugLevel) 
-		return;
-	
-	char buf[256];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap); 
-	va_end(ap);
-	fprintf(logfile ? logfile : stderr, "%s", buf);
 }
 
 void

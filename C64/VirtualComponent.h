@@ -170,10 +170,12 @@ public:
 	//! Read 64 bit value from a memory in big endian format
 	inline uint64_t read64(uint8_t **ptr) { return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
 	
+	//! Print message
+	void msg(const char *fmt, ...);
 	//! Print debug message
 	void debug(const char *fmt, ...);
-	void debug(int level, const char *fmt, ...); // higher level = less output
-	void debugSimple(int level, const char *fmt, ...);
+	//! Print debug message (higher level = less output) 
+	void debug(int level, const char *fmt, ...); 
 	//! Print warning message
 	void warn(const char *fmt, ...);
 	//! Print error message and exit
