@@ -70,12 +70,12 @@ TOD::save(uint8_t **buffer)
 void 
 TOD::dumpState()
 {
-	debug(1, "            Time of day : %02X:%02X:%02X:%02X\n", tod.time.hours, tod.time.minutes, tod.time.seconds, tod.time.tenth);
-	debug(1, "                  Alarm : %02X:%02X:%02X:%02X\n", alarm.time.hours, alarm.time.minutes, alarm.time.seconds, alarm.time.tenth);
-	debug(1, "                  Latch : %02X:%02X:%02X:%02X\n", latch.time.hours, latch.time.minutes, latch.time.seconds, latch.time.tenth);
-	debug(1, "                 Frozen : %s\n", isFrozen() ? "yes" : "no");
-	debug(1, "                Stopped : %s\n", stopped ? "yes" : "no");
-	//debug(1, "\n");
+	msg("            Time of day : %02X:%02X:%02X:%02X\n", tod.time.hours, tod.time.minutes, tod.time.seconds, tod.time.tenth);
+	msg("                  Alarm : %02X:%02X:%02X:%02X\n", alarm.time.hours, alarm.time.minutes, alarm.time.seconds, alarm.time.tenth);
+	msg("                  Latch : %02X:%02X:%02X:%02X\n", latch.time.hours, latch.time.minutes, latch.time.seconds, latch.time.tenth);
+	msg("                 Frozen : %s\n", isFrozen() ? "yes" : "no");
+	msg("                Stopped : %s\n", stopped ? "yes" : "no");
+	msg("\n");
 }
 
 bool 

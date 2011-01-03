@@ -671,23 +671,22 @@ uint8_t SID::getEGOutput()
 
 void SID::dumpState()
 {
-	// debug(1, "SID\n");
-	// debug(1, "---\n\n");
-	debug(1, "   Sample rate : %d\n", samplerate);
-	debug(1, " CPU frequency : %d\n", cpuFrequency);
-	debug(1, "        Buffer : %s\n", mono ? "continous" : "interleaved");
-	debug(1, "   Buffer size : %d\n", bufferSize);
-	debug(1, "        Volume : %f\n", masterVolume);
-	debug(1, "  Sound filter : %s\n", filtersEnabled ? "on" : "off");
-	debug(1, "     IO memory : ");
+	msg("SID\n");
+	msg("---\n\n");
+	msg("   Sample rate : %d\n", samplerate);
+	msg(" CPU frequency : %d\n", cpuFrequency);
+	msg("        Buffer : %s\n", mono ? "continous" : "interleaved");
+	msg("   Buffer size : %d\n", bufferSize);
+	msg("        Volume : %f\n", masterVolume);
+	msg("  Sound filter : %s\n", filtersEnabled ? "on" : "off");
+	msg("     IO memory : ");
 	for (unsigned i = 0; i < sizeof(iomem); i += 16) {
 		for (unsigned j = 0; j < 16; j ++) {
-			debugSimple(1, "%02X ", iomem[i + j]);
+			msg("%02X ", iomem[i + j]);
 		}
-		debugSimple(1, "\n");
-		debug(1, "                 ");
+		msg("\n                 ");
 	}
-	debugSimple(1, "\n");
+	msg("\n");
 }
 
 

@@ -95,16 +95,16 @@ VC1541Memory::loadRom(const char *filename)
 void 
 VC1541Memory::dumpState()
 {
-	debug(1, "VC1541 Memory:\n");
-	debug(1, "--------------\n\n");
-	debug(1, "VC1541 ROM :%s loaded\n", romIsLoaded() ? "" : " not");
+	msg("VC1541 Memory:\n");
+	msg("--------------\n\n");
+	msg("VC1541 ROM :%s loaded\n", romIsLoaded() ? "" : " not");
 	for (uint16_t i = 0; i < 0xFFFF; i++) {
 		uint8_t tag = cpu->getBreakpointTag(i);
 		if (tag != CPU::NO_BREAKPOINT) {
-			debug(1, "Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
+			msg("Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
 		}
 	}
-	debug(1, "\n");
+	msg("\n");
 }
 
 bool 

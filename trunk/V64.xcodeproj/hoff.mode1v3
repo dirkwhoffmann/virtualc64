@@ -214,7 +214,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>5056891912D2696E009E7365</string>
+						<string>5056891E12D269D9009E7365</string>
 						<key>history</key>
 						<array>
 							<string>505688DA12D264A5009E7365</string>
@@ -334,7 +334,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 252}, {241, 924}}</string>
+							<string>{{0, 1065}, {241, 924}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -353,7 +353,7 @@
 							<real>241</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>282 172 1344 983 0 0 1920 1178 </string>
+						<string>329 176 1344 983 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -505,7 +505,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1081, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>282 172 1344 983 0 0 1920 1178 </string>
+								<string>329 176 1344 983 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -532,7 +532,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>5056891812D2696E009E7365</string>
+										<string>5056891D12D269D9009E7365</string>
 										<key>history</key>
 										<array>
 											<string>50558A680C48CC9400FDF0CA</string>
@@ -659,7 +659,7 @@
 								<key>Frame</key>
 								<string>{{0, 5}, {1081, 774}}</string>
 								<key>RubberWindowFrame</key>
-								<string>282 172 1344 983 0 0 1920 1178 </string>
+								<string>329 176 1344 983 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -679,7 +679,7 @@
 								<key>Frame</key>
 								<string>{{0, 784}, {1081, 158}}</string>
 								<key>RubberWindowFrame</key>
-								<string>282 172 1344 983 0 0 1920 1178 </string>
+								<string>329 176 1344 983 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -843,7 +843,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>5056891A12D2696E009E7365</string>
 		<string>505688B012D25C7C009E7365</string>
 		<string>505688B112D25C7C009E7365</string>
 		<string>1CD10A99069EF8BA00B06720</string>
@@ -853,7 +852,7 @@
 		<string>/Users/hoff/work/Software/VirtualC64/virtualc64/V64.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>282 172 1344 983 0 0 1920 1178 </string>
+	<string>329 176 1344 983 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

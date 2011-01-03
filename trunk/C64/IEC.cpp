@@ -105,16 +105,16 @@ IEC::save(uint8_t **buffer)
 void 
 IEC::dumpState()
 {
-	debug(1, "IEC bus\n");
-	debug(1, "-------\n");
-	debug(1, "\n");
+	msg("IEC bus\n");
+	msg("-------\n");
+	msg("\n");
 	dumpTrace();
-	debug(1, "\n");
-	debug(1, "Drive connected : %s\n", driveConnected ? "yes" : "no");
-	debug(1, "        old ATN : %d\n", oldAtnLine);
-	debug(1, "        old CLK : %d\n", oldClockLine);
-	debug(1, "       old DATA : %d\n", oldDataLine);
-	debug(1, "\n");	
+	msg("\n");
+	msg("Drive connected : %s\n", driveConnected ? "yes" : "no");
+	msg("        old ATN : %d\n", oldAtnLine);
+	msg("        old CLK : %d\n", oldClockLine);
+	msg("       old DATA : %d\n", oldDataLine);
+	msg("\n");	
 }
 
 void 
