@@ -104,13 +104,6 @@
 
 - (bool) isValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)source;
 
-- (Memory::WatchpointType) getWatchpointType:(uint16_t)addr;
-- (void) setWatchpoint:(uint16_t)addr;
-- (void) setWatchpoint:(uint16_t)addr watchvalue:(uint8_t)value;
-- (void) setWatchpoint:(uint16_t)addr tag:(Memory::WatchpointType)type watchvalue:(uint8_t)value;
-- (void) deleteWatchpoint:(uint16_t)addr;
-- (uint8_t) getWatchValue:(uint16_t)addr;
-
 @end
 
 // --------------------------------------------------------------------------

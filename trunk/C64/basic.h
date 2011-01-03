@@ -16,10 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Last review: 24.7.06
-
 #ifndef _BASIC_INC
 #define _BASIC_INC
+
+// TURN OFF ASSERTION CHECKING (FOR RELEASE VERSION ONLY)
+// #define NDEBUG
 
 // General Includes
 #include <stdint.h>

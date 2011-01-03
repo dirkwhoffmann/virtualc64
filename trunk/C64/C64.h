@@ -21,6 +21,8 @@
 // 1. First release milestone reached: VirtualC64 passes all Lorenz tests
 // 2. CIA code has been simplified 
 // 3. Fixed an issue with the virtual keyboard mapping (Turbo assembler now works well)
+// 4. VirtualC64 now accepts a wider variety of VC1541 Roms
+// 5. Added help button to missing ROM dialog
 
 #ifndef _C64_INC
 #define _C64_INC

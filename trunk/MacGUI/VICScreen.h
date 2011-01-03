@@ -120,6 +120,8 @@ const int BG_TEXTURE_DEPTH = 4;
 	float currentZoffset, targetZoffeset, deltaOffset;
 	int frames;
 	
+	bool drawC64texture;
+	
 	// Mapping from Mac keycode to the C64 row/column format
 	uint16_t kb[256];
 
@@ -144,6 +146,8 @@ const int BG_TEXTURE_DEPTH = 4;
 - (void) updateAngles;
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
 - (NSImage *)screenshot;
+
+- (void) drawC64texture:(bool)value;
 
 // Graphics conversion methods
 - (NSImage *) flipImage: (NSImage *)image;

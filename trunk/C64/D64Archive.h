@@ -58,13 +58,8 @@ private:
 	//! Return beginning of next sector 
 	int jumpToNextSector(int pos); 
 	
-	//! Returns true, iff the archive contains the n-th directory item
-	//* Set n to zero to watch for the first item */
-	//bool directoryItemIsPresent(int n);
-
 	void dumpDir();
 	int findDirectoryEntry(int itemNumber);
-
 
 public:
 
