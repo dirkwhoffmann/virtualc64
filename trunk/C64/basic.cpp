@@ -21,6 +21,28 @@
 struct timeval t;
 long tv_base = (gettimeofday(&t,NULL), t.tv_sec);
 
+char 
+toASCII(char c)
+{
+	uint8_t u = (uint8_t)c;
+
+	/*
+	if (u >= 65 && u <= 90) 
+		u |= 32;
+	if (u >= 193 && u <= 219) 
+		u &= 127;
+	*/
+	
+	u &= 0x7F;
+	
+	if (u >= 0x20 && u <= 0x7A) {
+		return (char)u;
+	} else {
+		return '.';
+	}
+}
+
+
 bool
 checkFileSuffix(const char *filename, const char *suffix)
 {

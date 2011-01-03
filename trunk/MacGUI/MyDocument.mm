@@ -844,7 +844,7 @@
 - (IBAction)setDecimalAction:(id)sender
 {
 	Formatter *bF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,2}" outFormat:@"%02d"];
-	Formatter *wF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,4}" outFormat:@"%02d"];
+	Formatter *wF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,5}" outFormat:@"%05d"];
 	Disassembler *dis = [[Disassembler alloc] init:c64 byteFormatter:bF wordFormatter:wF ];
 	
 	[self refresh:bF word:wF disassembler:dis];
@@ -2291,14 +2291,16 @@
 		// VIC panel
 		VicRasterline, VicRasterInterrupt,
 		NULL };
-
+	
 	// Bind formatters
 	for (int i = 0; ByteFormatterControls[i] != NULL; i++) {
+		[ByteFormatterControls[i] abortEditing];
 		[ByteFormatterControls[i] setFormatter:byteFormatter];
 		[ByteFormatterControls[i] setNeedsDisplay];
 	}
 
 	for (int i = 0; WordFormatterControls[i] != NULL; i++) {
+		[WordFormatterControls[i] abortEditing];
 		[WordFormatterControls[i] setFormatter:wordFormatter];
 		[WordFormatterControls[i] setNeedsDisplay];
 	}
@@ -2399,10 +2401,10 @@
 			return nil;
 		else
 			return [NSString stringWithFormat:@"%c%c%c%c", 
-				[[c64 mem] peekFrom:(addr+0) memtype:[self currentMemSource]],
-				[[c64 mem] peekFrom:(addr+1) memtype:[self currentMemSource]],
-				[[c64 mem] peekFrom:(addr+2) memtype:[self currentMemSource]],
-				[[c64 mem] peekFrom:(addr+3) memtype:[self currentMemSource]]];
+				toASCII([[c64 mem] peekFrom:(addr+0) memtype:[self currentMemSource]]),
+				toASCII([[c64 mem] peekFrom:(addr+1) memtype:[self currentMemSource]]),
+				toASCII([[c64 mem] peekFrom:(addr+2) memtype:[self currentMemSource]]),
+				toASCII([[c64 mem] peekFrom:(addr+3) memtype:[self currentMemSource]])];
 	}
 	
 	// One of the hexadecimal columns...

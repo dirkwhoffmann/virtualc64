@@ -445,18 +445,6 @@ C64::step()
 	executeOneCycle();
 }
 
-#if 0
-#define EXECUTE(x) \
-cia1->triggerInterrupts(); \
-cia2->triggerInterrupts(); \
-cia1->executeOneCycle(); \
-cia2->executeOneCycle(); \
-if (!cpu->executeOneCycle()) result = false; \
-if (!floppy->executeOneCycle()) result = false; \
-cycles++; \
-rasterlineCycle++;
-#endif
-
 // From Wolfgang Lorenz: Clock.txt
 //
 // o2 high phase |                  o2 low phase
