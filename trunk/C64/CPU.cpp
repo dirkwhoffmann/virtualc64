@@ -218,10 +218,9 @@ CPU::save(uint8_t **buffer)
 void 
 CPU::dumpState()
 {
-	debug(1, "CPU:\n");
-	debug(1, "----\n\n");
-    debug(1, "%s", disassemble());
-	debug(1, "\n");
+	//debug(1, "CPU:\n");
+	//debug(1, "----\n\n");
+    debug(1, "%s\n", disassemble());
 	debug(1, "Processor port : %02X\n", port);
 	debug(1, "Port direction : %02X\n", port_direction);
 	debug(1, "      Rdy line : %s\n", rdyLine ? "high" : "low");
@@ -365,20 +364,14 @@ CPU::getAddressOfNextIthInstruction(int i, uint16_t addr)
 }
 
 char *
-CPU::disassemble(uint64_t state)
+CPU::disassemble()
 {
 	char buf[64], msg[128];
 	int i, op;
-
-	// Unpack state
-	uint8_t y = (uint8_t)(state & 0xff); state >>= 8;
-	uint8_t x = (uint8_t)(state & 0xff); state >>= 8;
-	uint8_t a = (uint8_t)(state & 0xff); state >>= 8;
-	uint8_t p = (uint8_t)(state & 0xff); state >>= 8;
-	uint8_t sp = (uint8_t)(state & 0xff); state >>= 8;		
-	uint16_t pc = (uint16_t)(state & 0xffff);
+	
+	uint16_t pc = PC_at_cycle_0;
 	uint8_t opcode = mem->peek(pc);	
-		
+	
 	strcpy(msg, "");
 	
 	// Program counter
@@ -397,19 +390,19 @@ CPU::disassemble(uint64_t state)
 	}
 	
 	// Register
-	sprintf(buf, "  %02X %02X %02X %02X ", a, x, y, sp);
+	sprintf(buf, "  %02X %02X %02X %02X ", A, X, Y, SP);
 	strcat(msg, buf);
 	
 	// Flags
 	sprintf(buf, "%c%c%c%c%c%c%c%c ",
-			(p & N_FLAG) ? 'N' : 'n',
-			(p & V_FLAG) ? 'V' : 'v',
+			N ? 'N' : 'n',
+			V ? 'V' : 'v',
 			'-',
-			(p & B_FLAG) ? 'B' : 'b',
-			(p & D_FLAG) ? 'D' : 'd',
-			(p & I_FLAG) ? 'I' : 'i',
-			(p & Z_FLAG) ? 'Z' : 'z',
-			(p & C_FLAG) ? 'C' : 'c');
+			B ? 'B' : 'b',
+			D ? 'D' : 'd',
+			I ? 'I' : 'i',
+			Z ? 'Z' : 'z',
+			C ? 'C' : 'c');
 	strcat(msg, buf);
 	
 	// Mnemonic
@@ -485,23 +478,6 @@ CPU::disassemble(uint64_t state)
 	}
 	strcat(msg, buf);
 	return strdup(msg);
-}
-
-char *
-CPU::disassemble()
-{
-	return disassemble(packState());
-}
-
-void 
-CPU::dumpHistory()
-{
-	uint8_t i = historyPtr;
-	for (int j = 0; j < 256; j++) {
-		debug(1, "%s", disassemble(history[i]));
-		i++;
-	}
-	debug(1, "End of history trace\n");
 }
 
 CPU::ErrorState 
