@@ -538,7 +538,6 @@ void CIA::dumpState()
 	debug(1, "  Data port direction A : %02X\n", getDataPortDirectionA());
 	debug(1, "     Control register A : %02X\n", getControlRegA());
 	debug(1, "     Timer A interrupts : %s\n", isInterruptEnabledA() ? "enabled" : "disabled");	
-	debug(1, "       Signal pending A : %s\n", isSignalPendingA() ? "yes" : "no");
 	debug(1, "\n");
 	debug(1, "              Counter B : %02X\n", getCounterB());
 	debug(1, "                Latch B : %02X\n", getLatchB());
@@ -546,10 +545,9 @@ void CIA::dumpState()
 	debug(1, "  Data port direction B : %02X\n", getDataPortDirectionB());
 	debug(1, "     Control register B : %02X\n", getControlRegB());
 	debug(1, "     Timer B interrupts : %s\n", isInterruptEnabledB() ? "enabled" : "disabled");	
-	debug(1, "       Signal pending B : %s\n", isSignalPendingB() ? "yes" : "no");
 	debug(1, "\n");
-	debug(1, "  Interrupt control reg : %s\n", ICR);
-	debug(1, "     Interrupt mask reg : %s\n", IMR);
+	debug(1, "  Interrupt control reg : %02X\n", ICR);
+	debug(1, "     Interrupt mask reg : %02X\n", IMR);
 	debug(1, "\n");	
 	tod.dumpState();
 }
@@ -816,8 +814,8 @@ CIA1::reset()
 void 
 CIA1::dumpState()
 {
-	debug(1, "CIA 1:\n");
-	debug(1, "------\n\n");
+	//debug(1, "CIA 1:\n");
+	//debug(1, "------\n\n");
 	CIA::dumpState();
 }
 
@@ -1027,8 +1025,8 @@ void CIA2::reset()
 void 
 CIA2::dumpState()
 {
-	debug(1, "CIA 2:\n");
-	debug(1, "------\n\n");
+	// debug(1, "CIA 2:\n");
+	// debug(1, "------\n\n");
 	CIA::dumpState();
 }
 

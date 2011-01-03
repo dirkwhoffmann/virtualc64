@@ -25,13 +25,6 @@ char
 toASCII(char c)
 {
 	uint8_t u = (uint8_t)c;
-
-	/*
-	if (u >= 65 && u <= 90) 
-		u |= 32;
-	if (u >= 193 && u <= 219) 
-		u &= 127;
-	*/
 	
 	u &= 0x7F;
 	
@@ -42,6 +35,15 @@ toASCII(char c)
 	}
 }
 
+void 
+binary8_to_string(uint8_t value, char *s)
+{
+	unsigned i;
+	for (i = 0; i < 8; i++) {
+		s[7-i] = (value & (1 << i)) ? '1' : '0';
+	}
+	s[i] = 0;
+}
 
 bool
 checkFileSuffix(const char *filename, const char *suffix)

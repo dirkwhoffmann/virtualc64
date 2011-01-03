@@ -260,8 +260,8 @@ VIC::saveScreenshot(uint8_t **buffer)
 void 
 VIC::dumpState()
 {
-	debug(1, "VIC\n");
-	debug(1, "---\n\n");
+	//debug(1, "VIC\n");
+	//debug(1, "---\n\n");
 	debug(1, "     Bank address : %04X\n", bankAddr, bankAddr);
 	debug(1, "    Screen memory : %04X\n", screenMemoryAddr);
 	debug(1, " Character memory : %04X (%s)\n", characterMemoryAddr, characterMemoryMappedToROM ? "ROM" : "RAM");
@@ -298,21 +298,25 @@ VIC::dumpState()
 	debug(1, "      Draw Vframe : %s\n", drawVerticalFrame ? "yes" : "no");
 	debug(1, "      Draw Hframe : %s\n", drawHorizontalFrame ? "yes" : "no");	
 	debug(1, "     DisplayState : %s\n", displayState ? "on" : "off");
-	debug(1, "         SpriteOn : ");
-	for (int i = 0; i < 8; i++) debug(1, "%d ", spriteOnOff & (1 << i) != 0);
-	debug(1, "\n        SpriteDma : ");
-	for (int i = 0; i < 8; i++) debug(1, "%d ", spriteDmaOnOff & (1 << i) != 0 );
-	debug(1, "\n      Y expansion : ");
-	for (int i = 0; i < 8; i++) debug(1, "%d ", expansionFF & (1 << i) != 0);
+	debug(1, "         SpriteOn : %02X ( ", spriteOnOff);
+	for (int i = 0; i < 8; i++) debugSimple(1, "%d ", spriteOnOff & (1 << i) != 0);
+	debugSimple(1, ")\n");
+	debug(1, "        SpriteDma : %02X ( ", spriteDmaOnOff);
+	for (int i = 0; i < 8; i++) debugSimple(1, "%d ", spriteDmaOnOff & (1 << i) != 0 );
+	debugSimple(1, ")\n");
+	debug(1, "      Y expansion : %02X ( ", expansionFF);
+	for (int i = 0; i < 8; i++) debugSimple(1, "%d ", expansionFF & (1 << i) != 0);
+	debugSimple(1, ")\n");
 	
-	debug(1, "\n        IO memory : ");
+	debug(1, "        IO memory : ");
 	for (unsigned i = 0; i < sizeof(iomem); i += 16) {
 		for (unsigned j = 0; j < 16; j ++) {
-			debug(1, "%02X ", iomem[i + j]);
+			debugSimple(1, "%02X ", iomem[i + j]);
 		}
-		debug(1, "\n                    ");
+		debugSimple(1, "\n");
+		debug(1, "                    ");
 	}
-	debug(1, "\n");
+	debugSimple(1, "\n");
 }
 
 

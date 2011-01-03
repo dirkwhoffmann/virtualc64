@@ -119,7 +119,19 @@ VirtualComponent::debug(int level, const char *fmt, ...)
 	fprintf(logfile ? logfile : stderr, "%s: %s", name, buf);
 }
 
-void format_string(char *fmt,va_list argptr );
+void
+VirtualComponent::debugSimple(int level, const char *fmt, ...)
+{
+	if (level > debugLevel) 
+		return;
+	
+	char buf[256];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(buf, sizeof(buf), fmt, ap); 
+	va_end(ap);
+	fprintf(logfile ? logfile : stderr, "%s", buf);
+}
 
 void
 VirtualComponent::warn(const char *fmt, ...)
