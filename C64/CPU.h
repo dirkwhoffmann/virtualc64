@@ -213,14 +213,7 @@ private:
 	/*! Whenever a JSR instruction is executed, the address of the instruction is recorded in the callstack.
 	*/
 	uint16_t callStack[256];
-	
-	//! CPU state history
-	/*! Used for debugging only */
-	uint64_t history[256];
-	
-	//! Read/Write pointer into history buffer 
-	uint8_t historyPtr;
-	
+		
 	//! Location of the next free cell of the callstack
 	uint8_t callStackPointer;
 
@@ -327,7 +320,7 @@ public:
 		or NMI is triggered internally, the status register is pushed on the stack with the B-flag cleared. */
 	inline uint8_t getPWithClearedB() { return getN() | getV() | 32 | getD() | getI() | getZ() | getC(); }
 	//! Pack CPU state
-	inline uint64_t packState() { return (((((((((((uint64_t)PC << 8) | SP) << 8) | getP()) << 8) | A) << 8) | X) << 8) | Y); }
+	//inline uint64_t packState() { return (((((((((((uint64_t)PC << 8) | SP) << 8) | getP()) << 8) | A) << 8) | X) << 8) | Y); }
 	
 	//! Write value to the accumulator register. Flags remain untouched.
 	inline void setA(uint8_t a) { A = a; }
@@ -467,7 +460,7 @@ public:
 	inline int getAddressOfNextInstruction() { return getAddressOfNextIthInstruction(1, PC_at_cycle_0); }
 	//! Disassemble current instruction
 	char *disassemble();
-	char *disassemble(uint64_t state);
+	// char *disassemble(uint64_t state);
 				
 	//! Returns true, iff the next cycle is the first cycle of a command
 	inline bool atBeginningOfNewCommand() { return next == &CPU::fetch; }
@@ -515,6 +508,6 @@ public:
 	//! Read entry from callstack
 	int getTopOfCallStack() { return (callStackPointer > 0) ? callStack[callStackPointer-1] : -1; }
 	
-	void dumpHistory();
+	// void dumpHistory();
 };
 #endif
