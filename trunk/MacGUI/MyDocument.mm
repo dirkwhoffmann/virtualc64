@@ -843,7 +843,7 @@
 
 - (IBAction)setDecimalAction:(id)sender
 {
-	Formatter *bF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,2}" outFormat:@"%02d"];
+	Formatter *bF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,3}" outFormat:@"%02d"];
 	Formatter *wF = [[Formatter alloc] init:DECIMAL_FORMATTER inFormat:@"[0-9]{0,5}" outFormat:@"%05d"];
 	Disassembler *dis = [[Disassembler alloc] init:c64 byteFormatter:bF wordFormatter:wF ];
 	
