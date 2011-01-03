@@ -105,13 +105,6 @@
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(Memory::MemoryType)type { mem->pokeTo(addr, val, type); }
 - (bool) isValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)type { return mem->isValidAddr(addr, type); }
 
-- (Memory::WatchpointType) getWatchpointType:(uint16_t)addr { return mem->getWatchpointType(addr); }
-- (void) setWatchpoint:(uint16_t)addr { mem->setWatchpoint(addr); }
-- (void) setWatchpoint:(uint16_t)addr watchvalue:(uint8_t)value {mem->setWatchpoint(addr, value); }
-- (void) setWatchpoint:(uint16_t)addr tag:(Memory::WatchpointType)type watchvalue:(uint8_t)value { mem->setWatchpoint(addr, (uint8_t)type, value); }
-- (void) deleteWatchpoint:(uint16_t)addr { mem->deleteWatchpoint(addr); }
-- (uint8_t) getWatchValue:(uint16_t)addr { return mem->getWatchValue(addr); }
-
 @end
 
 // --------------------------------------------------------------------------

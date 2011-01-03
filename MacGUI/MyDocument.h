@@ -86,8 +86,6 @@
 	// Debug panel (Memory)
 	IBOutlet NSTableView *memTableView;
 	IBOutlet NSSearchField *addr_search;	
-	IBOutlet NSMatrix *watchMode;
-	IBOutlet NSTextField *watchValField;
 	IBOutlet NSButtonCell *ramSource;
 	IBOutlet NSButtonCell *romSource;
 	IBOutlet NSButtonCell *ioSource;	
@@ -286,10 +284,6 @@
 - (IBAction)setMemSourceToRAM:(id)sender;
 - (IBAction)setMemSourceToROM:(id)sender;
 - (IBAction)setMemSourceToIO:(id)sender;
-- (IBAction)setWatchForNone:(id)sender;
-- (IBAction)setWatchForAll:(id)sender;
-- (IBAction)setWatchForValue:(id)sender;
-- (IBAction)setWatchValue:(id)sender;
 
 // Debug pabel (CIA)
 - (IBAction)ciaSelectCiaAction:(id)sender;

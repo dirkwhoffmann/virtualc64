@@ -23,14 +23,9 @@
 
 #include "basic.h"
 #include "VirtualComponent.h"
-// #include "CPU.h"
 
 // Forward declarations
 class CPU;
-//class VIC;
-//class SID;
-//class CIA1;
-//class CIA2;
 
 class Memory : public VirtualComponent {
 
@@ -45,8 +40,7 @@ public:
 	enum MemoryType {
 		MEM_RAM,
 		MEM_ROM,
-		MEM_IO,
-		MEM_WATCHPOINT
+		MEM_IO
 	};
 	
 	//! Returns true, if the specified address is a valid memory address
@@ -55,14 +49,6 @@ public:
 	
 	//! Reference to the connected virtual CPU
 	CPU *cpu; 
-
-private:
-	
-	//! Watchpoint tags
-	uint8_t watchpoint[65536];
-	
-	//! Watchpoint values (only take effekt for WATCH_VALUE tags)
-	uint8_t watchValue[65536];
 
 public:
 	
@@ -130,12 +116,11 @@ public:
 
 	//! Standard peek function
 	/*!	This functions implements the standard peek function that is invoked when the virtual CPU accesses
-		memory. Note that the functions checks for watchpoints. I.e., the CPU will be sent a freeze signal
-		if a guarded memory cell is accessed.
+		memory.
 		\param addr Memory address
 		\return RAM, ROM, or I/O memory contents at address addr 
 	*/	
-	uint8_t peek(uint16_t addr);
+	inline uint8_t peek(uint16_t addr) { return peekAuto(addr); }
 	
 	//! Wrapper around peek
 	/*!	Memory address is provided in LO/HIBYTE format.
@@ -212,12 +197,11 @@ public:
 
 	//! Standard poke function
 	/*! This functions implements the standard poke function that is invoked when the virtual CPU accesses
-		memory. Note that the functions checks for watchpoints. I.e., the CPU will be sent a freeze signal
-		if a guarded memory cell is accessed.
+		memory. 
 		\param addr Memory address
 		\param value Value to write
 	*/	  
-	void poke(uint16_t addr, uint8_t value);
+	inline void poke(uint16_t addr, uint8_t value) { pokeAuto(addr, value); }
 
 	//! Wrapper around poke
 	/*!	Memory address is provided in LO/HIBYTE format.
@@ -255,49 +239,6 @@ public:
 	   \param start Start address in ROM memory 
 	*/
 	void flashRom(const char *filename, uint16_t start);
-
-
-	// --------------------------------------------------------------------------------
-	//                               Watchpoint handling
-	// --------------------------------------------------------------------------------
-
-public:
-
-	//! Watchpoint type
-	/*! For debugging purposes, a watchpoint can be set on each memory cell.
-	NO_WATCHPOINT is the default value and has no effect. WATCH_FOR_ALL causes the CPU to freeze
-	whenever the specific memory cell is peeked or poked. Using WATCH_FOR_VALUE, program execution
-	can be freezed if a specific value is found in a specific memory cell. */	
-	enum WatchpointType {
-		NO_WATCHPOINT   = 0x00,
-		WATCH_FOR_ALL   = 0x01,
-		WATCH_FOR_VALUE = 0x02
-	};
-	
-	//! Returns the watchpoint tag of the specified address
-	WatchpointType getWatchpointType(uint16_t addr) { return (WatchpointType)watchpoint[addr]; }
-
-	//! Returns the watchpoint tag of the specified address
-	uint8_t getWatchValue(uint16_t addr) { return watchValue[addr]; }
-
-	//! Set watchpoint tag and value the specified address.
-	inline void setWatchpoint(uint16_t addr, uint8_t tag, uint8_t value) { watchpoint[addr] = tag; watchValue[addr] = value; }
-
-	//! Set watchpoint tag at the specified address.
-	inline void setWatchpoint(uint16_t addr) { watchpoint[addr] = (uint8_t)WATCH_FOR_ALL; }
-
-	//! Set watchpoint at the specified address.
-	inline void setWatchpoint(uint16_t addr, uint8_t value) { watchpoint[addr] = (uint8_t)WATCH_FOR_VALUE; watchValue[addr] = value; }
-
-	//! Delete watchpoint tag at the specified address.
-	inline void deleteWatchpoint(uint16_t addr) { watchpoint[addr] = (uint8_t)NO_WATCHPOINT; }
-
-	//! Returns true, iff program execution schould stop due to a watchpoint
-	inline bool checkWatchpoint(uint16_t addr, uint8_t value) { 
-		if (watchpoint[addr] == NO_WATCHPOINT) return false;
-		return (watchpoint[addr] != WATCH_FOR_VALUE) || (watchValue[addr] == value);
-	}
-
 };
 
 #endif

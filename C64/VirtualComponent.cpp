@@ -68,7 +68,7 @@ VirtualComponent::isHalted()
 void 
 VirtualComponent::suspend()
 {
-	debug(1, "Suspending...\n");
+	debug(2, "Suspending...\n");
 	if (suspendCounter == 0) {
 		suspendedState = isRunning();
 		halt();
@@ -81,7 +81,7 @@ VirtualComponent::suspend()
 void 
 VirtualComponent::resume()
 {
-	debug(1, "Resuming...\n");
+	debug(2, "Resuming...\n");
 	suspendCounter--;
 	if (suspendCounter == 0 && suspendedState == true)
 		run();

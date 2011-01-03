@@ -1058,7 +1058,7 @@ bool
 C64::loadRom(const char *filename)
 {
 	bool result = false; 
-	
+		
 	suspend(); 
 	
 	if (C64Memory::isBasicRom(filename)) {

@@ -81,6 +81,12 @@ void checkForOpenGLErrors()
 	// Lock around draw method
 	lock = [NSRecursiveLock new];
 		
+	// Initial scene position (for animation)
+	currentDistance= 6;
+	targetXAngle = targetYAngle = targetZAngle = targetDistance = 0;
+	deltaX = deltaY = deltaZ = 0;
+	drawC64texture = false;
+	
 	// Core video
 	displayLink = nil;
 	
@@ -116,12 +122,10 @@ void checkForOpenGLErrors()
 	// Drag and Drop
 	[self registerForDraggedTypes:
 	 [NSArray arrayWithObject:NSFilenamesPboardType]];
-	
-	// Initial scene position (for animation)
-	currentDistance= 6;
 }
 
-- (void) dealloc {
+- (void) dealloc 
+{
 	[self cleanUp];
     [super dealloc];
 }
@@ -149,6 +153,11 @@ void checkForOpenGLErrors()
     }
 }
 
+- (void) drawC64texture:(bool)value
+{ 
+	drawC64texture = value; 
+}
+
 - (void)prepareOpenGL
 {
 	NSLog(@"VICScreen::prepareOpenGL");	
@@ -159,13 +168,11 @@ void checkForOpenGLErrors()
 	[glcontext makeCurrentContext];
 	
 	// Configure the view
-	NSLog(@"prepareOpenGL (1)");
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST); 
 	checkForOpenGLErrors();
 
 	// Disable everything we don't need
-	NSLog(@"prepareOpenGL (2)");
 	glDisable(GL_DITHER);
 	glDisable(GL_ALPHA_TEST);
 	glDisable(GL_BLEND);
@@ -173,13 +180,11 @@ void checkForOpenGLErrors()
 	glDisable(GL_FOG);
 	
 	// Create C64 monitor texture
-	NSLog(@"prepareOpenGL (3)");	
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, (GLuint *)&texture);
 	checkForOpenGLErrors();
 	assert(texture > 0);
 	
-	NSLog(@"prepareOpenGL (4)");
 	glBindTexture(GL_TEXTURE_2D, texture);	
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -189,14 +194,14 @@ void checkForOpenGLErrors()
 	checkForOpenGLErrors();
 	
 	// Create background texture
-	NSLog(@"prepareOpenGL (5)");
+	NSLog(@"Create background texture");
 	NSImage *bgImage = [NSImage imageNamed:@"c64"];
 	NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
 	bgTexture = [self makeTexture:bgImageResized];
 	checkForOpenGLErrors();
 	
 	// Turn on synchronization
-	NSLog(@"prepareOpenGL (6)");
+	NSLog(@"Turn on synchronization");
 	const GLint VBL = 1;
 	[[self openGLContext] setValues:&VBL forParameter:NSOpenGLCPSwapInterval];
 	checkForOpenGLErrors();
@@ -208,24 +213,22 @@ void checkForOpenGLErrors()
 	
     if (displayLink != NULL) {
 		CVReturn success;
-    	// set the current display of a display link.
-		NSLog(@"CVDisplayLinkSetCurrentCGDisplay");
+    	// Set the current display of a display link
     	if ((success = CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay)) != 0) {
 			NSLog(@"CVDisplayLinkSetCurrentCGDisplay failed with return code %d", success);
 			CVDisplayLinkRelease(displayLink);
 			exit(0);
 		}
         
-        // set the renderer output callback function
-		NSLog(@"CVDisplayLinkSetOutputCallback");
+        // Set the renderer output callback function
     	if ((success = CVDisplayLinkSetOutputCallback(displayLink, &MyRenderCallback, self)) != 0) {
 			NSLog(@"CVDisplayLinkSetOutputCallback failed with return code %d", success);
   	        CVDisplayLinkRelease(displayLink);
 			exit(0);
 		}
         
-        // activates a display link.
-		NSLog(@"CVDisplayLinkStart");
+        // Activates display link
+		NSLog(@"Activate display link");
     	if ((success = CVDisplayLinkStart(displayLink)) != 0) {
 			NSLog(@"CVDisplayLinkStart failed with return code %d", success);
 		        CVDisplayLinkRelease(displayLink);
@@ -514,8 +517,11 @@ void checkForOpenGLErrors()
 
 - (void)drawRect:(NSRect)r
 {	
+	if (!c64) 
+		return;
+	
 	[lock lock]; 
-		
+			
 	frames++;
 
 	[glcontext makeCurrentContext];
@@ -553,7 +559,8 @@ void checkForOpenGLErrors()
 					  currentZAngle != targetZAngle || 
 					  currentDistance != targetDistance);	
 	if (animation) {
-		// Draw background image if visible
+		//NSLog(@"Animation");
+		// Draw background image (it's visible during animations) 
 		float depth = -5.0f;
 		float scale = 9.2f;
 		glBindTexture(GL_TEXTURE_2D, bgTexture); 
@@ -567,7 +574,9 @@ void checkForOpenGLErrors()
 		glTexCoord2f(BG_TEX_RIGHT, BG_TEX_BOTTOM);
 		glVertex3f(scale*0.64f, scale*0.4f, depth); // Bottom right
 		glEnd();		
-
+		
+		// goto end;
+		
 		// Rotate around Z axis
 		glRotatef(currentZAngle,0.0f,0.0f,1.0f);
 	
@@ -581,22 +590,26 @@ void checkForOpenGLErrors()
 	// Zoom in or zoom out
 	glTranslatef(0, 0, -currentDistance);
 	
-	// If emulation is halted, we brighten up the display by adding some fog...
-	if (!c64 || c64->isHalted()) {
-		GLfloat fogColor[4]= {1.0f, 1.0f, 1.0f, 1.0f};
-		glFogfv(GL_FOG_COLOR, fogColor);
-		glFogi(GL_FOG_MODE, GL_EXP);
-		glFogf(GL_FOG_DENSITY, 1.0f);				
-		glHint(GL_FOG_HINT, GL_DONT_CARE);	
-		glFogf(GL_FOG_START, 0.0f);	
-		glFogf(GL_FOG_END, 2.0f);
-		glEnable(GL_FOG);	
-	} else {
-		glDisable(GL_FOG);
-	}		
+	if (drawC64texture) {	
 
-	glBindTexture(GL_TEXTURE_2D, texture);		
-	glBegin(GL_QUADS);			
+		// If emulation is halted, we brighten up the display by adding some fog...
+		if (c64->isHalted()) {
+			GLfloat fogColor[4]= {1.0f, 1.0f, 1.0f, 1.0f};
+			glFogfv(GL_FOG_COLOR, fogColor);
+			glFogi(GL_FOG_MODE, GL_EXP);
+			glFogf(GL_FOG_DENSITY, 1.0f);				
+			glHint(GL_FOG_HINT, GL_DONT_CARE);	
+			glFogf(GL_FOG_START, 0.0f);	
+			glFogf(GL_FOG_END, 2.0f);
+			glEnable(GL_FOG);	
+		} else {
+			glDisable(GL_FOG);
+		}		
+
+		// NSLog(@"drawingC64Texture");
+		glBindTexture(GL_TEXTURE_2D, texture);		
+		glBegin(GL_QUADS);			
+		
 		// FRONT
 		glTexCoord2f(TEX_RIGHT, TEX_TOP);
 		glVertex3f( 0.64f, 0.4f, 0.64f);		// Top Right Of The Quad (Front)
@@ -608,64 +621,66 @@ void checkForOpenGLErrors()
 		glVertex3f( 0.64f,-0.4f, 0.64f);		// Bottom Right Of The Quad (Front)
 	
 		if (animation) {
-		// TOP
-		glColor3f(1.0f,1.0f,1.0f);				// Set The Color
-		glTexCoord2f(TEX_RIGHT, TEX_TOP);
-		glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Right (TOP)
-		glTexCoord2f(TEX_LEFT, TEX_TOP);
-		glVertex3f(-0.64f, 0.4f,-0.64f);		// Top Left (TOP)
-		glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-		glVertex3f(-0.64f, 0.4f, 0.64f);		// Bottom Left (TOP)
-		glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-		glVertex3f( 0.64f, 0.4f, 0.64f);		// Bottom Right (TOP)
+			
+			// TOP
+			glColor3f(1.0f,1.0f,1.0f);				// Set The Color
+			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Right (TOP)
+			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glVertex3f(-0.64f, 0.4f,-0.64f);		// Top Left (TOP)
+			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glVertex3f(-0.64f, 0.4f, 0.64f);		// Bottom Left (TOP)
+			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glVertex3f( 0.64f, 0.4f, 0.64f);		// Bottom Right (TOP)
+				
+			// BOTTOM
+			glColor3f(1.0f,1.0f,1.0f);			    // Set The Color
+			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glVertex3f( 0.64f,-0.4f, 0.64f);		// Top Right (BOTTOM)
+			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glVertex3f(-0.64f,-0.4f, 0.64f);		// Top Left (BOTTOM)
+			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glVertex3f(-0.64f,-0.4f,-0.64f);		// Bottom Left (BOTTOM)
+			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glVertex3f( 0.64f,-0.4f,-0.64f);	    // Bottom right (BOTTOM)
 
-		// BOTTOM
-		glColor3f(1.0f,1.0f,1.0f);			    // Set The Color
-		glTexCoord2f(TEX_RIGHT, TEX_TOP);
-		glVertex3f( 0.64f,-0.4f, 0.64f);		// Top Right (BOTTOM)
-		glTexCoord2f(TEX_LEFT, TEX_TOP);
-		glVertex3f(-0.64f,-0.4f, 0.64f);		// Top Left (BOTTOM)
-		glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-		glVertex3f(-0.64f,-0.4f,-0.64f);		// Bottom Left (BOTTOM)
-		glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-		glVertex3f( 0.64f,-0.4f,-0.64f);	    // Bottom right (BOTTOM)
-
-		// BACK
-		glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-		glVertex3f( 0.64f,-0.4f,-0.64f);		// Bottom Left Of The Quad (Back)
-		glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-		glVertex3f(-0.64f,-0.4f,-0.64f);		// Bottom Right Of The Quad (Back)
-		glTexCoord2f(TEX_RIGHT, TEX_TOP);
-		glVertex3f(-0.64f, 0.4f,-0.64f);		// Top Right Of The Quad (Back)
-		glTexCoord2f(TEX_LEFT, TEX_TOP);
-		glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Left Of The Quad (Back)
-							  
-		// LEFT
-		glTexCoord2f(TEX_RIGHT, TEX_TOP);
-		glVertex3f(-0.64f, 0.4f, 0.64f);		// Top Right Of The Quad (Left)
-		glTexCoord2f(TEX_LEFT, TEX_TOP);
-		glVertex3f(-0.64f, 0.4f,-0.64f);		// Top Left Of The Quad (Left)
-		glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-		glVertex3f(-0.64f,-0.4f,-0.64f);		// Bottom Left Of The Quad (Left)
-		glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-		glVertex3f(-0.64f,-0.4f, 0.64f);		// Bottom Right Of The Quad (Left)
-
-		// RIGHT
-		glTexCoord2f(TEX_RIGHT, TEX_TOP);
-		glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Right Of The Quad (Right)
-		glTexCoord2f(TEX_LEFT, TEX_TOP);
-		glVertex3f( 0.64f, 0.4f, 0.64f);		// Top Left Of The Quad (Right)
-		glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-		glVertex3f( 0.64f,-0.4f, 0.64f);		// Bottom Left Of The Quad (Right)
-		glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-		glVertex3f( 0.64f,-0.4f,-0.64f);		// Bottom Right Of The Quad (Right)
+			// BACK
+			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glVertex3f( 0.64f,-0.4f,-0.64f);		// Bottom Left Of The Quad (Back)
+			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glVertex3f(-0.64f,-0.4f,-0.64f);		// Bottom Right Of The Quad (Back)
+			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glVertex3f(-0.64f, 0.4f,-0.64f);		// Top Right Of The Quad (Back)
+			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Left Of The Quad (Back)
+						  
+			// LEFT
+			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glVertex3f(-0.64f, 0.4f, 0.64f);		// Top Right Of The Quad (Left)
+			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glVertex3f(-0.64f, 0.4f,-0.64f);		// Top Left Of The Quad (Left)
+			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glVertex3f(-0.64f,-0.4f,-0.64f);		// Bottom Left Of The Quad (Left)
+			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glVertex3f(-0.64f,-0.4f, 0.64f);		// Bottom Right Of The Quad (Left)
+				
+			// RIGHT
+			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Right Of The Quad (Right)
+			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glVertex3f( 0.64f, 0.4f, 0.64f);		// Top Left Of The Quad (Right)
+			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glVertex3f( 0.64f,-0.4f, 0.64f);		// Bottom Left Of The Quad (Right)
+			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glVertex3f( 0.64f,-0.4f,-0.64f);		// Bottom Right Of The Quad (Right)
 		}
-		
+			
 		glEnd();		
+	}
 
-		// Flush screen
-	    glFinish();
-		[glcontext flushBuffer];
+	// Flush screen
+	glFinish();
+	[glcontext flushBuffer];
 
     [lock unlock];
 }

@@ -104,14 +104,6 @@ VC1541Memory::dumpState()
 			debug(1, "Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
 		}
 	}
-	for (uint16_t i = 0; i < 0xFFFF; i++) {
-		uint8_t tag = getWatchpointType(i);
-		if (tag == WATCH_FOR_VALUE) {
-			debug(1, "Watchpoint at %0x4X (watch for value %02X)\n", i, getWatchValue(i));
-		} else if (tag == WATCH_FOR_ALL) {
-			debug(1, "Watchpoint at %0x4X\n", i);
-		}
-	}
 	debug(1, "\n");
 }
 
@@ -125,8 +117,6 @@ VC1541Memory::isValidAddr(uint16_t addr, MemoryType type)
 			return (addr >= 0xC000);
 		case MEM_IO:
 			return (addr >= 0x1800 && addr <= 0x1c00) || (addr >= 0x1c00 && addr <= 0x2000);
-		case MEM_WATCHPOINT:
-			return getWatchpointType(addr) != NO_WATCHPOINT;
 		default:
 			assert(false);
 			return false;

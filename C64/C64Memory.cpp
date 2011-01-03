@@ -235,8 +235,6 @@ bool C64Memory::isValidAddr(uint16_t addr, MemoryType type)
 			return isRomAddr(addr);
 		case MEM_IO:
 			return isCharRomAddr(addr);
-		case MEM_WATCHPOINT:
-			return getWatchpointType(addr) != NO_WATCHPOINT;
 		default:
 			assert(false);
 			return false;

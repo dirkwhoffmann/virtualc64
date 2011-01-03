@@ -114,9 +114,9 @@
 	[screen cleanUp];
 	
 	// release C64
-	NSLog(@"getting Timer lock");
+	NSLog(@"Killing timer");
 	[timerLock lock];
-	NSLog(@"Got lock");
+	NSLog(@"Killing C64");
 	[c64 kill];
 	c64 = nil;
 	[timerLock unlock];
@@ -499,8 +499,18 @@
 			}
 			// Start drawing when all ROMS are loaded...
 			if ([c64 numberOfMissingRoms] == 0) { //	} && [c64 isHalted]) {
-				[screen zoom];
+				
+				// Close ROM dialog
+				[NSApp endSheet:romDialog];
+				[romDialog orderOut:nil];
+				romDialog = NULL;
+
+				// Start emulator
 				[c64 run];
+				
+				// Trigger a nice zoom animation and start drawing
+				[screen zoom];
+				[screen drawC64texture:true];
 			}
 			break;
 			
@@ -544,11 +554,8 @@
 				case CPU::HARD_BREAKPOINT_REACHED:
 					[info setStringValue:@"Breakpoint reached"];
 					break;
-				case CPU::WATCHPOINT_REACHED:
-					[info setStringValue:@"Watchpoint reached"];
-					break;
 				case CPU::ILLEGAL_INSTRUCTION:
-					[info setStringValue:@"CPU halted due to an illegal instruction"];
+					[info setStringValue:@"Illegal instruction"];
 					break;
 				default:
 					assert(0);
@@ -1316,10 +1323,6 @@
 
 - (void)doubleClickInMemTable:(id)sender
 {
-	// Can we do anything meaningful here?
-	// It'll be nice to set watchpoints by double clicking a cell
-	// For doing that, we need to determine the clicked column. 
-	// Can we determine the clicked column at all?
 	[self refresh];
 }
 
@@ -1363,56 +1366,6 @@
 {
 	[self setMemSource:Memory::MEM_IO];
 }
-
-- (void)setWatchPoint:(int)addr type:(Memory::WatchpointType)t value:(uint8_t)v
-{
-	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] setWatchPoint:addr type:[[c64 mem] getWatchpointType:addr] value:[[c64 mem] getWatchValue:addr]];
-	if (![undo isUndoing]) [undo setActionName:@"Watchpoint"];
-
-	switch(t) {
-		case Memory::NO_WATCHPOINT:
-			NSLog(@"Deleting watchpoint at address %d", addr);
-			break;
-		case Memory::WATCH_FOR_ALL:
-			NSLog(@"Watching for any change at address %d", addr);
-			break;
-		case Memory::WATCH_FOR_VALUE:
-			NSLog(@"Watching for value %d at address %d", v, addr);
-			break;
-		default:
-			assert(false);
-	}
-	[[c64 mem] setWatchpoint:addr tag:t watchvalue:v];
-	[self refresh];
-}
-
-- (IBAction)setWatchForNone:(id)sender;
-{
-	uint16_t addr = [addr_search intValue];
-
-	[self setWatchPoint:addr type:Memory::NO_WATCHPOINT value:[[c64 mem] getWatchValue:addr]];
-}
-
-- (IBAction)setWatchForAll:(id)sender;
-{
-
-	uint16_t addr = [addr_search intValue];
-	[self setWatchPoint:addr type:Memory::WATCH_FOR_ALL value:[[c64 mem] getWatchValue:addr]];
-}
-
-- (IBAction)setWatchForValue:(id)sender;
-{
-	uint16_t addr = [addr_search intValue];
-	[self setWatchPoint:addr type:Memory::WATCH_FOR_VALUE value:[watchValField intValue]];
-}
-
-- (IBAction)setWatchValue:(id)sender;
-{
-	uint16_t addr = [addr_search intValue];
-	[self setWatchPoint:addr type:Memory::WATCH_FOR_VALUE value:[sender intValue]];
-}
-
 
 // --------------------------------------------------------------------------------
 // Action methods (CIA)
@@ -2195,6 +2148,7 @@
 
 - (void)refreshMemory
 {
+#if 0
 	uint16_t addr = [addr_search intValue];
 	switch ([[c64 mem] getWatchpointType:addr]) {
 		case Memory::NO_WATCHPOINT:
@@ -2208,6 +2162,7 @@
 			break;
 	}	
 	[watchValField setIntValue:[[c64 mem] getWatchValue:addr]];	
+#endif	
 }
 
 - (void)refreshCIA
@@ -2316,8 +2271,6 @@
 	NSControl *ByteFormatterControls[] = { 
 		// CPU panel
 		sp, a, x, y,
-		// Memory panel
-		watchValField,
 		// CIA panel
 		ciaDataPortA, ciaDataPortDirectionA, ciaDataPortB, ciaDataPortDirectionB,
 		todHours, todMinutes, todSeconds, todTenth, alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
@@ -2370,8 +2323,6 @@
 		pc, sp, a, x, y, 
 		N, Z, C, I, B, D, V,
 		// mhzField,
-		// Memory panel
-		watchValField,
 		// CIA panel
 		ciaDataPortA, ciaDataPortDirectionA, ciaTimerA, ciaLatchedTimerA, 
 		ciaRunningA, ciaOneShotA, ciaCountUnderflowsA, ciaSignalPendingA, ciaInterruptEnableA,
@@ -2519,7 +2470,9 @@
 		} else {
 			[aCell setTextColor:[NSColor blackColor]];
 		}
-	} else if (aTableView == memTableView) {
+	} 
+#if 0
+	else if (aTableView == memTableView) {
 		if ([[aTableColumn identifier] isEqual:@"hex0"])
 			[aCell setTextColor:([[c64 mem] getWatchpointType:(0+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
 		else if ([[aTableColumn identifier] isEqual:@"hex1"])
@@ -2529,6 +2482,7 @@
 		else if ([[aTableColumn identifier] isEqual:@"hex3"])
 			[aCell setTextColor:([[c64 mem] getWatchpointType:(3+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];		
 	}
+#endif
 }
 
 // --------------------------------------------------------------------------------

@@ -23,12 +23,6 @@ Memory::Memory()
 	name = "MEM";
 	
 	cpu = NULL;
-	
-	// Clear all watchpoint tags
-	for (int i = 0; i <  65536; i++) {
-		watchpoint[i] = NO_WATCHPOINT;	
-		watchValue[i] = 0;
-	}
 }
 
 Memory::~Memory()
@@ -38,24 +32,12 @@ Memory::~Memory()
 bool
 Memory::load(uint8_t **buffer)
 {	
-#if 0
-	for (unsigned i = 0; i < sizeof(watchpoint); i++)
-		watchpoint[i] = read8(buffer);	
-	for (unsigned i = 0; i < sizeof(watchValue); i++) 
-		watchValue[i] = read8(buffer);	
-#endif
 	return true;
 }
 
 bool
 Memory::save(uint8_t **buffer) 
 {
-#if 0
-	for (unsigned i = 0; i < sizeof(watchpoint); i++)
-		write8(buffer, watchpoint[i]);
-	for (unsigned i = 0; i < sizeof(watchValue); i++) 
-		write8(buffer, watchValue[i]);
-#endif
 	return true;
 }
 
@@ -73,27 +55,10 @@ uint8_t Memory::peekFrom(uint16_t addr, MemoryType source)
 			return peekRom(addr);
 		case MEM_IO: 
 			return peekIO(addr);
-		case MEM_WATCHPOINT: 
-			return watchValue[addr];
 		default: 
 			assert(false);
 			return 0;
 	}
-}
-
-uint8_t Memory::peek(uint16_t addr)
-{
-	uint8_t result;
-
-	// Peek value 
-	result = peekAuto(addr);
-	
-	// Check for watchpoint
-	if (checkWatchpoint(addr, result)) {
-		debug(1, "Peek: Watchpoint reached, access to address %04X\n", addr);
-		cpu->setErrorState(CPU::WATCHPOINT_REACHED);
-	}
-	return result;
 }
 
 
@@ -116,18 +81,6 @@ void Memory::pokeTo(uint16_t addr, uint8_t value, MemoryType dest)
 		default: 
 			assert(false);
 	}
-}
-
-void Memory::poke(uint16_t addr, uint8_t value)
-{		
-	// Check for a watchpoint
-	if (checkWatchpoint(addr, value)) {
-		debug(1, "Poke: Watchpoint reached, access to address %04X\n", addr);
-		cpu->dumpHistory();
-		cpu->setErrorState(CPU::WATCHPOINT_REACHED);
-	}
-	
-	pokeAuto(addr, value);
 }
 
 void Memory::flashRom(const char *filename, uint16_t start)
