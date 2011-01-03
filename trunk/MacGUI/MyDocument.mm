@@ -497,14 +497,17 @@
 			if (romDialog != NULL) {
 				[romDialog update:[c64 missingRoms]];
 			}
+			
 			// Start drawing when all ROMS are loaded...
 			if ([c64 numberOfMissingRoms] == 0) { //	} && [c64 isHalted]) {
 				
 				// Close ROM dialog
-				[NSApp endSheet:romDialog];
-				[romDialog orderOut:nil];
-				romDialog = NULL;
-
+				if (romDialog) {					
+					[NSApp endSheet:romDialog];
+					[romDialog orderOut:nil];
+					romDialog = NULL;
+				}
+				
 				// Start emulator
 				[c64 run];
 				

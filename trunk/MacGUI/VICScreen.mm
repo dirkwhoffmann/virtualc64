@@ -194,20 +194,17 @@ void checkForOpenGLErrors()
 	checkForOpenGLErrors();
 	
 	// Create background texture
-	NSLog(@"Create background texture");
 	NSImage *bgImage = [NSImage imageNamed:@"c64"];
 	NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
 	bgTexture = [self makeTexture:bgImageResized];
 	checkForOpenGLErrors();
 	
 	// Turn on synchronization
-	NSLog(@"Turn on synchronization");
 	const GLint VBL = 1;
 	[[self openGLContext] setValues:&VBL forParameter:NSOpenGLCPSwapInterval];
 	checkForOpenGLErrors();
 	
     // Create display link for the main display
-	NSLog(@"CVDisplayLinkCreateWithCGDisplay");
     CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
 	checkForOpenGLErrors();
 	
@@ -228,12 +225,13 @@ void checkForOpenGLErrors()
 		}
         
         // Activates display link
-		NSLog(@"Activate display link");
     	if ((success = CVDisplayLinkStart(displayLink)) != 0) {
 			NSLog(@"CVDisplayLinkStart failed with return code %d", success);
 		        CVDisplayLinkRelease(displayLink);
 			exit(0);				
 		}	
+
+		NSLog(@"Display link activated successfully");
 	}
 }
 
@@ -734,19 +732,19 @@ void checkForOpenGLErrors()
 
 - (BOOL)acceptsFirstResponder
 {
-    NSLog(@"%@ accepting first responder...", self);
+    // NSLog(@"%@ accepting first responder...", self);
 	return YES;
 }
 
 - (BOOL)resignFirstResponder
 {
-    NSLog(@"%@ resigning first responder...", self);
+    // NSLog(@"%@ resigning first responder...", self);
 	return YES;
 }
 
 - (BOOL)becomeFirstResonder 
 {
-    NSLog(@"%@ is becoming first responder...", self);
+    // NSLog(@"%@ is becoming first responder...", self);
 	return YES;
 }
 
