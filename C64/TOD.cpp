@@ -75,7 +75,7 @@ TOD::dumpState()
 	debug(1, "                  Latch : %02X:%02X:%02X:%02X\n", latch.time.hours, latch.time.minutes, latch.time.seconds, latch.time.tenth);
 	debug(1, "                 Frozen : %s\n", isFrozen() ? "yes" : "no");
 	debug(1, "                Stopped : %s\n", stopped ? "yes" : "no");
-	debug(1, "\n");
+	//debug(1, "\n");
 }
 
 bool 

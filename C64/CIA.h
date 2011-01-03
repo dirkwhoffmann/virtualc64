@@ -116,6 +116,17 @@ public:
 	//! Address offset of the CIA Control Register B
 	static const uint16_t CIA_CONTROL_REG_B = 0x0F;
 		
+	//! Reference to the connected video interface controller (VIC). 
+	/*! The CIA chip needs to know about the VIC chip, because 
+	 1. the video memory bank selection is handled by the CIA chip (register 0xDD00).
+	 2. lightpen interrupts can be simulated by writing into a CIA register
+	 */
+	VIC *vic;
+	
+	//! Reference to the connected CPU. 
+	CPU *cpu;
+	
+	
 	//! Timer A counter
 	uint16_t counterA;
 	
@@ -131,18 +142,6 @@ public:
 	//! Time of day clock
 	TOD tod;
 	
-public:
-	
-	//! Reference to the connected video interface controller (VIC). 
-	/*! The CIA chip needs to know about the VIC chip, because 
-	 1. the video memory bank selection is handled by the CIA chip (register 0xDD00).
-	 2. lightpen interrupts can be simulated by writing into a CIA register
-	 */
-	VIC *vic;
-	
-	//! Reference to the connected CPU. 
-	CPU *cpu;
-
 public:	
 	
 	// 
@@ -259,41 +258,37 @@ public:
 	// Interrupt control
 	
 	//! Returns true, if timer can trigger interrupts
-	inline bool isInterruptEnabledA() { return ICR & 0x01; }
+	inline bool isInterruptEnabledA() { return IMR & 0x01; }
 
 	//! Set or delete interrupt enable flag
-	inline void setInterruptEnabledA(bool b) { if (b) ICR |= 0x01; else ICR &= (0xff-0x01); }
+	inline void setInterruptEnabledA(bool b) { if (b) IMR |= 0x01; else IMR &= (0xff-0x01); }
 
 	//! Toggle interrupt enable flag of timer A
 	inline void toggleInterruptEnableFlagA() { setInterruptEnabledA(!isInterruptEnabledA()); }
 
 	//! Returns true, if timer A has reached zero
-	inline bool isSignalPendingA() { return false; } // TODO
-	//inline bool isSignalPendingA() { return interruptDataRegister & 0x01; }
+	inline bool isSignalPendingA() { return ICR & 0x01; }
 
 	//! Set or delete signal pending flag
-	inline void setSignalPendingA(bool b) { } // TODO
-	//inline void setSignalPendingA(bool b) { if (b) interruptDataRegister |= 0x01; else interruptDataRegister &= (0xff-0x01); }
+	inline void setSignalPendingA(bool b) { if (b) ICR |= 0x01; else ICR &= (0xff-0x01); }
 
 	//! Toggle signal pending flag of timer A
 	inline void togglePendingSignalFlagA() { setSignalPendingA(!isSignalPendingA()); }
 		
 	//! Returns true, if timer B can trigger interrupts
-	inline bool isInterruptEnabledB() { return ICR & 0x02; }
+	inline bool isInterruptEnabledB() { return IMR & 0x02; }
 
 	//! Set or delete interrupt enable flag
-	inline void setInterruptEnabledB(bool b) { if (b) ICR |= 0x02; else ICR &= (0xff-0x02); }
+	inline void setInterruptEnabledB(bool b) { if (b) IMR |= 0x02; else IMR &= (0xff-0x02); }
 
 	//! Toggle interrupt enable flag of timer B
 	inline void toggleInterruptEnableFlagB() { setInterruptEnabledB(!isInterruptEnabledB()); }
 
 	//! Returns true, if timer B has reached zero
-	inline bool isSignalPendingB() { return false; } // TODO
-	//inline bool isSignalPendingB() { return interruptDataRegister & 0x02; }
+	inline bool isSignalPendingB() { return ICR & 0x02; }
 
 	//! Set or delete signal pending flag
-	inline void setSignalPendingB(bool b) { } // TODO
-	//inline void setSignalPendingB(bool b) { if (b) interruptDataRegister |= 0x02; else interruptDataRegister &= (0xff-0x02); }
+	inline void setSignalPendingB(bool b) { if (b) ICR |= 0x02; else ICR &= (0xff-0x02); }
 	
 	//! Toggle signal pending flag of timer B
 	inline void togglePendingSignalFlagB() { setSignalPendingB(!isSignalPendingB()); }

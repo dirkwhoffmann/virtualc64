@@ -295,8 +295,8 @@ C64::save(uint8_t **buffer)
 
 void 
 C64::dumpState() {
-	debug(1, "C64:\n");
-	debug(1, "----\n\n");
+	//debug(1, "C64:\n");
+	//debug(1, "----\n\n");
 	debug(1, "            Machine type : %s\n", (noOfRasterlines == VIC::PAL_RASTERLINES) ? "PAL" : "NTSC");
 	debug(1, "       Frames per second : %d\n", fps);
 	debug(1, "   Rasterlines per frame : %d\n", noOfRasterlines);
@@ -305,7 +305,7 @@ C64::dumpState() {
 	debug(1, "           Current frame : %d\n", frame);
 	debug(1, "      Current rasterline : %d\n", rasterline);
 	debug(1, "Current rasterline cycle : %d\n", rasterlineCycle);
-	debug(1, "\n");
+	//debug(1, "\n");
 }
 
 Message *C64::getMessage()
