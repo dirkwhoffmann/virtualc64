@@ -61,6 +61,10 @@
 
 // Conversion functions
 
+//! Convert PETASCII character to ASCII
+/*! Returns '.' if character has no printable equivalent */
+char toASCII(char c);
+ 
 //! Convert a BCD number to a binary value
 inline uint8_t BCDToBinary(uint8_t value) { return 10 * (value & 0xF0) + (value & 0x0F); }
 
