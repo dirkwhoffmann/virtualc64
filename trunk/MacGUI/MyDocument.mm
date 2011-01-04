@@ -130,7 +130,6 @@
 
 	// Initialize variables
 	alwaysWarp = false;
-	enableOpenGL = false;  
 	selectedSprite = 0;
 	
 	// Create virtual C64
@@ -281,7 +280,7 @@
 	[c64 run];
 	
 	// Start drawing
-	enableOpenGL = true;
+	// enableOpenGL = true;
 	
 	// Mount archive if applicable
 	if (archive != NULL) {
@@ -2120,7 +2119,7 @@
 	[[undo prepareWithInvocationTarget:self] vicEnableOpenGL:self];
 	if (![undo isUndoing]) [undo setActionName:@"OpenGL"];
 	
-	enableOpenGL = !enableOpenGL;
+	[screen setEnableOpenGL:![screen enableOpenGL]];
 	[self refresh];
 }
 

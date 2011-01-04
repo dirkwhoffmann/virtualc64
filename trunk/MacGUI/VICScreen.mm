@@ -48,7 +48,7 @@ void checkForOpenGLErrors()
 
 @implementation VICScreen
 
-@synthesize c64, frames;
+@synthesize c64, frames, enableOpenGL;
 
 // --------------------------------------------------------------------------------
 //                                  Initializiation
@@ -92,6 +92,7 @@ void checkForOpenGLErrors()
 	
 	// Graphics
 	frames = 0;
+	enableOpenGL = true;  
 
 	// Keyboard
 	for (int i = 0; i < 256; i++) {
@@ -515,7 +516,7 @@ void checkForOpenGLErrors()
 
 - (void)drawRect:(NSRect)r
 {	
-	if (!c64) 
+	if (!c64 || !enableOpenGL) 
 		return;
 	
 	[lock lock]; 

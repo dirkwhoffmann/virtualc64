@@ -266,7 +266,7 @@ VIC::dumpState()
 	msg("    Screen memory : %04X\n", screenMemoryAddr);
 	msg(" Character memory : %04X (%s)\n", characterMemoryAddr, characterMemoryMappedToROM ? "ROM" : "RAM");
 	msg("  Text resolution : %d x %d\n", numberOfRows(), numberOfColumns());
-	msg("X/Y raster scroll : %d / %d\n", getVerticalRasterScroll(), getHorizontalRasterScroll());
+	msg("X/Y raster scroll : %d / %d\n", getHorizontalRasterScroll(), getVerticalRasterScroll());
 	msg("     Display mode : ");
 	switch (getDisplayMode()) {
 		case STANDARD_TEXT: 
