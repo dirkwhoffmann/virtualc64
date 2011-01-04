@@ -119,8 +119,13 @@ const int BG_TEXTURE_DEPTH = 4;
 	float currentDistance, targetDistance, deltaDistance;
 	float currentZoffset, targetZoffeset, deltaOffset;
 	int frames;
-	
+
+	//! If false, the C64 screen is not drawn (background will be visible)
 	bool drawC64texture;
+
+	//! Usually set to true. If set to false, OpenGL drawing is disabled
+	/*! Setting the variable to false only makes sense during performance tests */
+	bool enableOpenGL;
 	
 	// Mapping from Mac keycode to the C64 row/column format
 	uint16_t kb[256];
@@ -133,6 +138,7 @@ const int BG_TEXTURE_DEPTH = 4;
 
 @property C64 *c64;
 @property (readonly) int frames;
+@property bool enableOpenGL;
 
 - (void) cleanUp;
 - (void) startAnimation;

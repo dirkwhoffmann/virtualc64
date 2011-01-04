@@ -179,10 +179,6 @@
 	// Address of the first disassembled instruction in the CPU Debug window
 	uint16_t disassembleStartAddr; 	
 	
-	// Usually set to true. If set to false, OpenGL drawing is disabled
-	// Setting the variable to false only makes sense during performance tests
-	bool enableOpenGL;	
-
 	// Selected sprite in VIC debug panel
 	int selectedSprite;
 	

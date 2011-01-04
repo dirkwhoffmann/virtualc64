@@ -779,7 +779,7 @@ public:
 	inline uint16_t rasterInterruptLine() { return ((iomem[0x11] & 128) << 1) + iomem[0x12]; }
 
 	//! Set interrupt rasterline 
-	inline void setRasterInterruptLine(uint16_t line) { iomem[0x12] = line & 0xFF; if (line > 0xFF) iomem[0x10] |= 0x80; else iomem[0x10] &= 0x7F; }
+	inline void setRasterInterruptLine(uint16_t line) { iomem[0x12] = line & 0xFF; if (line > 0xFF) iomem[0x11] |= 0x80; else iomem[0x11] &= 0x7F; }
 	
 	//! Returns true, iff rasterline interrupts are enabled
 	inline bool rasterInterruptEnabled() { return iomem[0x1A] & 1; }
