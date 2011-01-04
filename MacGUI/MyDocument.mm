@@ -527,7 +527,7 @@
 			break;
 			
 		case MSG_RUN:
-			NSLog(@"runAction");
+			// NSLog(@"runAction");
 			[info setStringValue:@""];
 			[self enableUserEditing:NO];
 			[self refresh];
@@ -537,17 +537,13 @@
 			break;
 			
 		case MSG_HALT:
-			NSLog(@"haltAction");
+			// NSLog(@"haltAction");
 			[self enableUserEditing:YES];	
 			[self refresh];			
 			break;
-			
-		//case MSG_DRAW:
-		//	[screen updateTexture:(int *)msg->p];
-		//	break;
-			
+						
 		case MSG_CPU:
-			NSLog(@"cpuAction");
+			// NSLog(@"cpuAction");
 			switch(msg->i) {
 				case CPU::OK: 
 				case CPU::SOFT_BREAKPOINT_REACHED:
@@ -566,14 +562,14 @@
 			break;
 			
 		case MSG_WARP:
-			NSLog(@"warpmodeAction");
+			// NSLog(@"warpmodeAction");
 			break;
 			
 		case MSG_LOG:
 			break;
 			
 		case MSG_VC1541_ATTACHED:
-			NSLog(@"driveAttachedAction");
+			// NSLog(@"driveAttachedAction");
 			if (msg->i)
 				[greenLED setImage:[NSImage imageNamed:@"LEDgreen"]];
 			else
@@ -581,7 +577,7 @@
 			break;
 			
 		case MSG_VC1541_DISC:
-			NSLog(@"driveDiscAction");
+			// NSLog(@"driveDiscAction");
 			[drive setHidden:!msg->i];
 			[eject setHidden:!msg->i];			
 			break;
@@ -594,7 +590,7 @@
 			break;
 			
 		case MSG_VC1541_DATA:
-			NSLog(@"driveDataAction (%s)", msg->i ? "on" : "off");
+			// NSLog(@"driveDataAction (%s)", msg->i ? "on" : "off");
 			
 			if (msg->i) {
 				[driveBusy setHidden:false];
@@ -610,11 +606,11 @@
 			break;
 			
 		case MSG_VC1541_MOTOR:
-			NSLog(@"driveMotorAction");
+			// NSLog(@"driveMotorAction");
 			break;
 			
 		case MSG_CARTRIDGE:
-			NSLog(@"MSG_CARTRIDGE");
+			// NSLog(@"MSG_CARTRIDGE");
 			[cartridgeIcon setHidden:!msg->i];
 			[cartridgeEject setHidden:!msg->i];			
 			break;
@@ -2150,21 +2146,6 @@
 
 - (void)refreshMemory
 {
-#if 0
-	uint16_t addr = [addr_search intValue];
-	switch ([[c64 mem] getWatchpointType:addr]) {
-		case Memory::NO_WATCHPOINT:
-			[watchMode selectCellWithTag:1];
-			break;
-		case Memory::WATCH_FOR_ALL:
-			[watchMode selectCellWithTag:2];
-			break;
-		case Memory::WATCH_FOR_VALUE:
-			[watchMode selectCellWithTag:3];
-			break;
-	}	
-	[watchValField setIntValue:[[c64 mem] getWatchValue:addr]];	
-#endif	
 }
 
 - (void)refreshCIA
