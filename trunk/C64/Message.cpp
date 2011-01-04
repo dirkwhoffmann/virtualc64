@@ -35,9 +35,6 @@ void MessageQueue::printMessage(Message *msg)
 		case MSG_HALT:
 			fprintf(stderr, "MSG_HALT");
 			break;
-		//case MSG_DRAW:
-		//	fprintf(stderr, "MSG_DRAW");
-		//	break;
 		case MSG_CPU:
 			fprintf(stderr, "MSG_CPU");
 			break;
@@ -82,12 +79,8 @@ Message *MessageQueue::getMessage()
 		// fprintf(stderr, "MessageQueue::read: Queue is empty!\n");
 		result = NULL;
 	} else {
+		// fprintf(stderr, "getMessage: "); printMessage(&queue[r]); fprintf(stderr,"\n");
 		result = (r == w) ? NULL : &queue[r]; 
-#if 0		
-		if (result->id != MSG_DRAW) {
-			fprintf(stderr, "getMessage: "); printMessage(&queue[r]); fprintf(stderr,"\n");
-		}
-#endif
 	}
 	
 	// Move read pointer to next location
@@ -112,18 +105,15 @@ void MessageQueue::putMessage(int id, int i, void *p, const char *c)
 	queue[w].i = i; 
 	queue[w].p = p; 
 	if (c != NULL) strncpy(queue[w].c, c, 128); 
-#if 0	
-	if (id != MSG_DRAW) {		 
-		fprintf(stderr, "putMessage: "); printMessage(&queue[w]); fprintf(stderr,"\n");
-	}
-#endif
+	 
+	// fprintf(stderr, "putMessage: "); printMessage(&queue[w]); fprintf(stderr,"\n");
 	
 	// Move write pointer to next location
 	w = (w + 1) % QUEUE_SIZE;
 
 	if (w == r) {
 		fprintf(stderr, "putMessag: Queue overflow!!! Message is lost!!!\n");
-		assert(0);
+		// assert(0);
 		r = (r + 1) % QUEUE_SIZE;
 	} 
 	

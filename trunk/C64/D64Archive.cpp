@@ -344,7 +344,7 @@ int D64Archive::getSizeOfItem(int n)
 	int size = 0;
 	int pos;
 
-	fprintf(stderr, "getSizeOfItem:%d\n", n);
+	// fprintf(stderr, "getSizeOfItem:%d\n", n);
 
 	// jump to beginning of the n-th directory entry
 	pos = findDirectoryEntry(n);
@@ -434,7 +434,7 @@ uint8_t *D64Archive::findSector(unsigned halftrack, unsigned sector)
 	assert(1 <= halftrack && halftrack <= 84);
 	assert(sector < numberOfSectors(halftrack));
 	
-	fprintf(stderr,"findSector:%d %d\n", halftrack, sector);
+	// fprintf(stderr,"findSector:%d %d\n", halftrack, sector);
 
 	// Halftrack mapping: 1 -> 1.0, 2 -> 1.5, 3 -> 2.0, 4 -> 2.5, etc.
 	if (halftrack % 2 == 0) {

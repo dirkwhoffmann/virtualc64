@@ -184,8 +184,7 @@ void C64::reset()
 }
 
 void C64::fastReset()
-{
-#if 0	
+{	
 	Snapshot *snapshot; 
 	
 	debug (1, "Resetting virtual C64 (fast reset via image file)\n");
@@ -197,8 +196,6 @@ void C64::fastReset()
 	}
 
 	delete snapshot;
-#endif
-	warn("fastReset: Not implemented, yet\n");
 }
 
 bool 
