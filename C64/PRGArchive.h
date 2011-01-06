@@ -45,6 +45,9 @@ public:
 	//! Destructor
 	~PRGArchive();
 	
+	//! Returns true of filename points to a valid file of that type
+	static bool isPRGFile(const char *filename);
+
 	//! Factory method
 	static PRGArchive *archiveFromFile(const char *filename);
 

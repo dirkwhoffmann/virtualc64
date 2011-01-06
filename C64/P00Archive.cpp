@@ -29,6 +29,21 @@ P00Archive::~P00Archive()
 	cleanup();
 }
 
+bool P00Archive::isP00File(const char *filename)
+{
+	int magic_bytes[] = {0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00, EOF};	
+	
+	assert (filename != NULL);
+	
+	if (!checkFileSize(filename, 0x1A, -1))
+		return false;
+	
+	if (!checkFileHeader(filename, magic_bytes))
+		return false;
+	
+	return true;
+}
+
 P00Archive *P00Archive::archiveFromFile(const char *filename)
 {
 	P00Archive *archive;
@@ -56,17 +71,7 @@ void P00Archive::cleanup()
 
 bool P00Archive::fileIsValid(const char *filename)
 {
-	int magic_bytes[] = {0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00, EOF};	
-	
-	assert (filename != NULL);
-
-	if (!checkFileSize(filename, 0x1A, -1))
-		return false;
-
-	if (!checkFileHeader(filename, magic_bytes))
-		return false;
-
-	return true;
+	return isP00File(filename);
 }
 
 bool P00Archive::readDataFromFile(FILE *file, struct stat fileProperties)

@@ -29,6 +29,19 @@ PRGArchive::~PRGArchive()
 	cleanup();
 }
 
+bool PRGArchive::isPRGFile(const char *filename)
+{
+	assert(filename != NULL);
+	
+	if (!checkFileSuffix(filename, ".PRG") && !checkFileSuffix(filename, ".prg"))
+		return false;
+	
+	if (!checkFileSize(filename, 2, -1))
+		return false;
+	
+	return true;
+}
+
 PRGArchive *PRGArchive::archiveFromFile(const char *filename)
 {
 	PRGArchive *archive;
@@ -56,15 +69,7 @@ void PRGArchive::cleanup()
 
 bool PRGArchive::fileIsValid(const char *filename)
 {
-	assert(filename != NULL);
-
-	if (!checkFileSuffix(filename, ".PRG") && !checkFileSuffix(filename, ".prg"))
-		return false;
-
-	if (!checkFileSize(filename, 2, -1))
-		return false;
-		
-	return true;
+	return isPRGFile(filename);
 }
 
 bool PRGArchive::readDataFromFile(FILE *file, struct stat fileProperties)

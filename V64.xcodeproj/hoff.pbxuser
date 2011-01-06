@@ -47,7 +47,7 @@
 			8D15AC270486D014006FF6A4 /* VirtualC64 */,
 		);
 		breakpoints = (
-			508BD4FB0A73C9AF00BCC764 /* MyDocument.mm:2546 */,
+			508BD4FB0A73C9AF00BCC764 /* MyDocument.mm:2542 */,
 			509C67CB0A751AD0008D34E5 /* C64Listener.h:18 */,
 			50AE1A8D0A8736C100073959 /* VIC.h:861 */,
 			5022BF3E0A8BBAE500C71B6C /* CIA.h:295 */,
@@ -57,7 +57,7 @@
 			5001D1C30B8F081E001B5B4A /* VIC.h:391 */,
 			500B6C620B904F96002C36EC /* C64Proxy.mm:546 */,
 			50B289620C2D0B6B002AC21A /* IEC.cpp:252 */,
-			50D5FFDC0C2EB9810022CA3A /* MyDocument.mm:2525 */,
+			50D5FFDC0C2EB9810022CA3A /* MyDocument.mm:2521 */,
 			50D5007F0C2ED5950022CA3A /* Archive.h:2 */,
 			50298FE60C3111C300422DED /* D64Archive.cpp:1 */,
 			509AEB1F0C32641D001FC9FD /* VICScreen.mm:986 */,
@@ -520,6 +520,40 @@
 			50C024FD12D63F6E00513880 /* PBXTextBookmark */ = 50C024FD12D63F6E00513880 /* PBXTextBookmark */;
 			50C024FE12D63F6E00513880 /* PBXTextBookmark */ = 50C024FE12D63F6E00513880 /* PBXTextBookmark */;
 			50C024FF12D63F6E00513880 /* PBXTextBookmark */ = 50C024FF12D63F6E00513880 /* PBXTextBookmark */;
+			50C0250712D6420B00513880 /* XCBuildMessageTextBookmark */ = 50C0250712D6420B00513880 /* XCBuildMessageTextBookmark */;
+			50C0251A12D645BE00513880 /* PBXTextBookmark */ = 50C0251A12D645BE00513880 /* PBXTextBookmark */;
+			50C0251B12D645BE00513880 /* PBXTextBookmark */ = 50C0251B12D645BE00513880 /* PBXTextBookmark */;
+			50C0251C12D645BE00513880 /* PBXTextBookmark */ = 50C0251C12D645BE00513880 /* PBXTextBookmark */;
+			50C0251D12D645BE00513880 /* PBXTextBookmark */ = 50C0251D12D645BE00513880 /* PBXTextBookmark */;
+			50C0251E12D645BE00513880 /* PBXTextBookmark */ = 50C0251E12D645BE00513880 /* PBXTextBookmark */;
+			50C0251F12D645BE00513880 /* PBXTextBookmark */ = 50C0251F12D645BE00513880 /* PBXTextBookmark */;
+			50C0252012D645BE00513880 /* PBXTextBookmark */ = 50C0252012D645BE00513880 /* PBXTextBookmark */;
+			50C0252112D645BE00513880 /* PBXTextBookmark */ = 50C0252112D645BE00513880 /* PBXTextBookmark */;
+			50C0252212D645BE00513880 /* PBXTextBookmark */ = 50C0252212D645BE00513880 /* PBXTextBookmark */;
+			50C0252312D645BE00513880 /* PBXTextBookmark */ = 50C0252312D645BE00513880 /* PBXTextBookmark */;
+			50C0252412D645BE00513880 /* PBXTextBookmark */ = 50C0252412D645BE00513880 /* PBXTextBookmark */;
+			50C0252512D645BE00513880 /* PBXTextBookmark */ = 50C0252512D645BE00513880 /* PBXTextBookmark */;
+			50C0252612D645BE00513880 /* PBXTextBookmark */ = 50C0252612D645BE00513880 /* PBXTextBookmark */;
+			50C0252712D645BE00513880 /* PBXTextBookmark */ = 50C0252712D645BE00513880 /* PBXTextBookmark */;
+			50C0252812D645BE00513880 /* PBXTextBookmark */ = 50C0252812D645BE00513880 /* PBXTextBookmark */;
+			50C0252912D645BE00513880 /* PBXTextBookmark */ = 50C0252912D645BE00513880 /* PBXTextBookmark */;
+			50C0252A12D645BE00513880 /* PBXTextBookmark */ = 50C0252A12D645BE00513880 /* PBXTextBookmark */;
+			50C0252B12D645BE00513880 /* PBXTextBookmark */ = 50C0252B12D645BE00513880 /* PBXTextBookmark */;
+			50C0252C12D645BE00513880 /* PBXTextBookmark */ = 50C0252C12D645BE00513880 /* PBXTextBookmark */;
+			50C0252D12D645BE00513880 /* PBXTextBookmark */ = 50C0252D12D645BE00513880 /* PBXTextBookmark */;
+			50C0252E12D645BE00513880 /* PBXTextBookmark */ = 50C0252E12D645BE00513880 /* PBXTextBookmark */;
+			50C0252F12D645BE00513880 /* PBXTextBookmark */ = 50C0252F12D645BE00513880 /* PBXTextBookmark */;
+			50C0253012D645BE00513880 /* PBXTextBookmark */ = 50C0253012D645BE00513880 /* PBXTextBookmark */;
+			50C0253112D645BE00513880 /* PBXTextBookmark */ = 50C0253112D645BE00513880 /* PBXTextBookmark */;
+			50C0253512D6471200513880 /* XCBuildMessageTextBookmark */ = 50C0253512D6471200513880 /* XCBuildMessageTextBookmark */;
+			50C0253A12D64C1000513880 /* PBXTextBookmark */ = 50C0253A12D64C1000513880 /* PBXTextBookmark */;
+			50C0253B12D64C1000513880 /* PBXTextBookmark */ = 50C0253B12D64C1000513880 /* PBXTextBookmark */;
+			50C0253C12D64C1000513880 /* PBXTextBookmark */ = 50C0253C12D64C1000513880 /* PBXTextBookmark */;
+			50C0253D12D64C1000513880 /* PBXTextBookmark */ = 50C0253D12D64C1000513880 /* PBXTextBookmark */;
+			50C0253E12D64C1000513880 /* PBXTextBookmark */ = 50C0253E12D64C1000513880 /* PBXTextBookmark */;
+			50C0253F12D64C1000513880 /* PBXTextBookmark */ = 50C0253F12D64C1000513880 /* PBXTextBookmark */;
+			50C0254012D64C1000513880 /* PBXTextBookmark */ = 50C0254012D64C1000513880 /* PBXTextBookmark */;
+			50C0254112D64C1000513880 /* PBXTextBookmark */ = 50C0254112D64C1000513880 /* PBXTextBookmark */;
 			50C9A80810E75CBC00B6F16E = 50C9A80810E75CBC00B6F16E /* PBXTextBookmark */;
 			50D2499712D3BF8100C71D0F = 50D2499712D3BF8100C71D0F /* PBXTextBookmark */;
 			50D249B012D3C36700C71D0F = 50D249B012D3C36700C71D0F /* PBXTextBookmark */;
@@ -629,9 +663,9 @@
 	};
 	5000C80D0D13CE680011A2E9 /* C64Memory.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 8720}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 8496}}";
 			sepNavSelRange = "{3302, 0}";
-			sepNavVisRange = "{5817, 1115}";
+			sepNavVisRange = "{5817, 1022}";
 			sepNavWindowFrame = "{{450, 148}, {985, 880}}";
 		};
 	};
@@ -653,9 +687,9 @@
 	};
 	5000C8230D13CEE10011A2E9 /* VC1541.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 9760}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 9616}}";
 			sepNavSelRange = "{4217, 0}";
-			sepNavVisRange = "{3212, 1082}";
+			sepNavVisRange = "{3213, 1081}";
 			sepNavWindowFrame = "{{568, 148}, {985, 880}}";
 		};
 	};
@@ -726,7 +760,7 @@
 		fRef = 50D500500C2ED13F0022CA3A /* T64Archive.h */;
 		name = "T64Archive.h: 60";
 		rLen = 0;
-		rLoc = 1563;
+		rLoc = 1677;
 		rType = 0;
 		vrLen = 626;
 		vrLoc = 1063;
@@ -789,9 +823,9 @@
 	};
 	5007A5EB0C3FC99F0069B0CE /* VIC_colors.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1047, 4800}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 4864}}";
 			sepNavSelRange = "{692, 107}";
-			sepNavVisRange = "{6150, 599}";
+			sepNavVisRange = "{0, 1382}";
 			sepNavVisRect = "{{0, 0}, {793, 651}}";
 			sepNavWindowFrame = "{{38, 122}, {985, 880}}";
 		};
@@ -994,9 +1028,9 @@
 	};
 	50176C500A6F72F3009E80BD /* basic.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 2384}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 2448}}";
 			sepNavSelRange = "{2134, 0}";
-			sepNavVisRange = "{1010, 1403}";
+			sepNavVisRange = "{2824, 1506}";
 			sepNavVisRect = "{{0, 1068}, {793, 446}}";
 			sepNavWindowFrame = "{{787, 234}, {900, 619}}";
 		};
@@ -1030,9 +1064,9 @@
 	};
 	50176C540A6F72F3009E80BD /* CIA.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 9840}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 10080}}";
 			sepNavSelRange = "{5198, 0}";
-			sepNavVisRange = "{15877, 1838}";
+			sepNavVisRange = "{20857, 940}";
 			sepNavVisRect = "{{0, 1234}, {793, 446}}";
 			sepNavWindowFrame = "{{873, 298}, {985, 880}}";
 		};
@@ -1111,18 +1145,18 @@
 	};
 	50176C5F0A6F72F3009E80BD /* VIC.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 25392}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 29680}}";
 			sepNavSelRange = "{7113, 0}";
-			sepNavVisRange = "{23786, 1058}";
+			sepNavVisRange = "{0, 1504}";
 			sepNavVisRect = "{{0, 199}, {814, 149}}";
 			sepNavWindowFrame = "{{284, 148}, {985, 880}}";
 		};
 	};
 	50176C600A6F72F3009E80BD /* VIC.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1048, 16528}}";
-			sepNavSelRange = "{31208, 0}";
-			sepNavVisRange = "{30342, 1947}";
+			sepNavIntBoundsRect = "{{0, 0}, {1188, 16160}}";
+			sepNavSelRange = "{32357, 0}";
+			sepNavVisRange = "{32031, 1691}";
 			sepNavVisRect = "{{0, 0}, {793, 651}}";
 			sepNavWindowFrame = "{{617, 148}, {985, 880}}";
 		};
@@ -1184,7 +1218,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1076, 41776}}";
 			sepNavSelRange = "{72835, 0}";
-			sepNavVisRange = "{71904, 1315}";
+			sepNavVisRange = "{71904, 1317}";
 			sepNavVisRect = "{{0, 9886}, {793, 446}}";
 			sepNavWindowFrame = "{{411, 182}, {1210, 871}}";
 		};
@@ -1227,16 +1261,16 @@
 	};
 	5018E47F12240F7100F0820E /* Container.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 1184}}";
-			sepNavSelRange = "{935, 0}";
-			sepNavVisRange = "{770, 881}";
+			sepNavIntBoundsRect = "{{0, 0}, {1080, 1184}}";
+			sepNavSelRange = "{1505, 0}";
+			sepNavVisRange = "{893, 1035}";
 		};
 	};
 	5018E48012240F7100F0820E /* Container.cpp */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1020, 2064}}";
 			sepNavSelRange = "{1950, 0}";
-			sepNavVisRange = "{1685, 739}";
+			sepNavVisRange = "{1117, 769}";
 		};
 	};
 	501908550F27773B00E3CE63 /* PBXTextBookmark */ = {
@@ -1455,7 +1489,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 128";
 		rLen = 0;
-		rLoc = 3082;
+		rLoc = 4451;
 		rType = 0;
 		vrLen = 729;
 		vrLoc = 2621;
@@ -1465,7 +1499,7 @@
 		fRef = 509AEA0A0C324AB0001FC9FD /* PRGArchive.h */;
 		name = "PRGArchive.h: 53";
 		rLen = 0;
-		rLoc = 1366;
+		rLoc = 1479;
 		rType = 0;
 		vrLen = 619;
 		vrLoc = 1109;
@@ -1475,7 +1509,7 @@
 		fRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */;
 		name = "PRGArchive.cpp: 70";
 		rLen = 0;
-		rLoc = 1542;
+		rLoc = 1626;
 		rType = 0;
 		vrLen = 544;
 		vrLoc = 1265;
@@ -1485,7 +1519,7 @@
 		fRef = 509AEAFD0C325EFB001FC9FD /* P00Archive.h */;
 		name = "P00Archive.h: 53";
 		rLen = 0;
-		rLoc = 1366;
+		rLoc = 1479;
 		rType = 0;
 		vrLen = 619;
 		vrLoc = 1109;
@@ -1495,7 +1529,7 @@
 		fRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */;
 		name = "P00Archive.cpp: 72";
 		rLen = 0;
-		rLoc = 1590;
+		rLoc = 1676;
 		rType = 0;
 		vrLen = 540;
 		vrLoc = 1317;
@@ -1709,7 +1743,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1020, 5024}}";
 			sepNavSelRange = "{1900, 0}";
-			sepNavVisRange = "{1378, 1146}";
+			sepNavVisRange = "{1421, 791}";
 		};
 	};
 	50414726122188FC00A80E0C /* Cartridge.h */ = {
@@ -2271,7 +2305,7 @@
 		fRef = 50D500500C2ED13F0022CA3A /* T64Archive.h */;
 		name = "T64Archive.h: 63";
 		rLen = 7;
-		rLoc = 1678;
+		rLoc = 1792;
 		rType = 0;
 		vrLen = 1093;
 		vrLoc = 845;
@@ -2281,7 +2315,7 @@
 		fRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */;
 		name = "T64Archive.cpp: 97";
 		rLen = 7;
-		rLoc = 2140;
+		rLoc = 2235;
 		rType = 0;
 		vrLen = 1213;
 		vrLoc = 0;
@@ -2448,7 +2482,7 @@
 		path = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Foundation.framework/Versions/C/Headers/NSString.h;
 		sourceTree = "<absolute>";
 	};
-	508BD4FB0A73C9AF00BCC764 /* MyDocument.mm:2546 */ = {
+	508BD4FB0A73C9AF00BCC764 /* MyDocument.mm:2542 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -2460,7 +2494,7 @@
 		functionName = "-keyDown:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 2546;
+		lineNumber = 2542;
 		location = VirtualC64;
 		modificationTime = 304687997.056459;
 		originalNumberOfMultipleMatches = 1;
@@ -2628,36 +2662,36 @@
 	};
 	509AEA0A0C324AB0001FC9FD /* PRGArchive.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1173, 1072}}";
-			sepNavSelRange = "{1366, 0}";
-			sepNavVisRange = "{1109, 619}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 1120}}";
+			sepNavSelRange = "{1271, 0}";
+			sepNavVisRange = "{845, 970}";
 			sepNavVisRect = "{{0, 0}, {793, 651}}";
 			sepNavWindowFrame = "{{445, 140}, {985, 880}}";
 		};
 	};
 	509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1173, 2112}}";
-			sepNavSelRange = "{1542, 0}";
-			sepNavVisRange = "{1265, 544}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 2272}}";
+			sepNavSelRange = "{918, 0}";
+			sepNavVisRange = "{775, 678}";
 			sepNavVisRect = "{{0, 0}, {946, 751}}";
 			sepNavWindowFrame = "{{468, 146}, {985, 880}}";
 		};
 	};
 	509AEAFD0C325EFB001FC9FD /* P00Archive.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1173, 1072}}";
-			sepNavSelRange = "{1366, 0}";
-			sepNavVisRange = "{1109, 619}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 1120}}";
+			sepNavSelRange = "{1271, 0}";
+			sepNavVisRange = "{846, 985}";
 			sepNavVisRect = "{{0, 0}, {946, 751}}";
 			sepNavWindowFrame = "{{560, 148}, {985, 880}}";
 		};
 	};
 	509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1173, 2384}}";
-			sepNavSelRange = "{1590, 0}";
-			sepNavVisRange = "{1317, 540}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 2432}}";
+			sepNavSelRange = "{919, 0}";
+			sepNavVisRange = "{849, 714}";
 			sepNavVisRect = "{{0, 1607}, {793, 651}}";
 			sepNavWindowFrame = "{{461, 148}, {985, 880}}";
 		};
@@ -2731,18 +2765,18 @@
 	};
 	50A52A170C2FD43700A1377F /* D64Archive.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 2352}}";
-			sepNavSelRange = "{4031, 0}";
-			sepNavVisRange = "{1162, 1681}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 2528}}";
+			sepNavSelRange = "{3351, 62}";
+			sepNavVisRange = "{2596, 1296}";
 			sepNavVisRect = "{{0, 70}, {793, 651}}";
 			sepNavWindowFrame = "{{643, 148}, {985, 880}}";
 		};
 	};
 	50A52A180C2FD43700A1377F /* D64Archive.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {926, 13904}}";
-			sepNavSelRange = "{13194, 0}";
-			sepNavVisRange = "{12214, 1254}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 13712}}";
+			sepNavSelRange = "{3962, 0}";
+			sepNavVisRange = "{2908, 1272}";
 			sepNavVisRect = "{{0, 1022}, {861, 490}}";
 			sepNavWindowFrame = "{{524, 148}, {985, 880}}";
 		};
@@ -2752,7 +2786,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 82";
 		rLen = 0;
-		rLoc = 3073;
+		rLoc = 3516;
 		rType = 0;
 		vrLen = 868;
 		vrLoc = 312;
@@ -2835,9 +2869,9 @@
 	};
 	50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 1168}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 1072}}";
 			sepNavSelRange = "{813, 0}";
-			sepNavVisRange = "{270, 1111}";
+			sepNavVisRange = "{775, 811}";
 			sepNavVisRect = "{{0, 182}, {793, 651}}";
 			sepNavWindowFrame = "{{479, -93}, {908, 751}}";
 		};
@@ -2978,7 +3012,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 110";
 		rLen = 378;
-		rLoc = 4171;
+		rLoc = 4614;
 		rType = 0;
 		vrLen = 1177;
 		vrLoc = 1731;
@@ -2988,7 +3022,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 492";
 		rLen = 0;
-		rLoc = 16663;
+		rLoc = 18032;
 		rType = 0;
 		vrLen = 919;
 		vrLoc = 9312;
@@ -2998,7 +3032,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 520";
 		rLen = 0;
-		rLoc = 16663;
+		rLoc = 18032;
 		rType = 0;
 		vrLen = 932;
 		vrLoc = 10155;
@@ -3009,7 +3043,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 515;
+		rLoc = 564;
 		rType = 1;
 	};
 	50C0233812D5EB1E00513880 /* PBXTextBookmark */ = {
@@ -3017,7 +3051,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 468";
 		rLen = 0;
-		rLoc = 10763;
+		rLoc = 12132;
 		rType = 0;
 		vrLen = 957;
 		vrLoc = 9211;
@@ -3027,7 +3061,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 114";
 		rLen = 0;
-		rLoc = 4307;
+		rLoc = 4750;
 		rType = 0;
 		vrLen = 1349;
 		vrLoc = 2241;
@@ -3057,7 +3091,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 594";
 		rLen = 0;
-		rLoc = 17401;
+		rLoc = 18770;
 		rType = 0;
 		vrLen = 1052;
 		vrLoc = 11473;
@@ -3087,7 +3121,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 114";
 		rLen = 0;
-		rLoc = 4307;
+		rLoc = 4750;
 		rType = 0;
 		vrLen = 1349;
 		vrLoc = 2241;
@@ -3097,7 +3131,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 120";
 		rLen = 0;
-		rLoc = 4343;
+		rLoc = 4786;
 		rType = 0;
 		vrLen = 1224;
 		vrLoc = 2455;
@@ -3107,7 +3141,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 492";
 		rLen = 0;
-		rLoc = 16445;
+		rLoc = 17814;
 		rType = 0;
 		vrLen = 945;
 		vrLoc = 9487;
@@ -3117,7 +3151,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 120";
 		rLen = 0;
-		rLoc = 4343;
+		rLoc = 4786;
 		rType = 0;
 		vrLen = 1319;
 		vrLoc = 2360;
@@ -3137,7 +3171,7 @@
 		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
 		name = "MyDocument.mm: 2485";
 		rLen = 0;
-		rLoc = 72835;
+		rLoc = 72681;
 		rType = 0;
 		vrLen = 1337;
 		vrLoc = 71848;
@@ -3147,7 +3181,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 468";
 		rLen = 0;
-		rLoc = 10763;
+		rLoc = 12132;
 		rType = 0;
 		vrLen = 835;
 		vrLoc = 9656;
@@ -3157,7 +3191,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 565";
 		rLen = 0;
-		rLoc = 16704;
+		rLoc = 18073;
 		rType = 0;
 		vrLen = 847;
 		vrLoc = 10145;
@@ -3167,7 +3201,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 496";
 		rLen = 0;
-		rLoc = 16445;
+		rLoc = 17814;
 		rType = 0;
 		vrLen = 1000;
 		vrLoc = 9293;
@@ -3177,7 +3211,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 565";
 		rLen = 0;
-		rLoc = 16704;
+		rLoc = 18073;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 10228;
@@ -3187,7 +3221,7 @@
 		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
 		name = "MyDocument.mm: 2485";
 		rLen = 0;
-		rLoc = 72835;
+		rLoc = 72681;
 		rType = 0;
 		vrLen = 1337;
 		vrLoc = 71848;
@@ -3197,7 +3231,7 @@
 		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
 		name = "MyDocument.mm: 2486";
 		rLen = 0;
-		rLoc = 72823;
+		rLoc = 72681;
 		rType = 0;
 		vrLen = 1206;
 		vrLoc = 72040;
@@ -3207,7 +3241,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 496";
 		rLen = 0;
-		rLoc = 16445;
+		rLoc = 17814;
 		rType = 0;
 		vrLen = 1000;
 		vrLoc = 9293;
@@ -3217,7 +3251,7 @@
 		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
 		name = "MyDocument.mm: 2489";
 		rLen = 0;
-		rLoc = 72835;
+		rLoc = 72681;
 		rType = 0;
 		vrLen = 1183;
 		vrLoc = 72040;
@@ -3227,7 +3261,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 496";
 		rLen = 0;
-		rLoc = 16445;
+		rLoc = 17814;
 		rType = 0;
 		vrLen = 1000;
 		vrLoc = 9293;
@@ -3237,7 +3271,7 @@
 		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
 		name = "MyDocument.mm: 2478";
 		rLen = 0;
-		rLoc = 72472;
+		rLoc = 72605;
 		rType = 0;
 		vrLen = 1363;
 		vrLoc = 71848;
@@ -3247,7 +3281,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 565";
 		rLen = 0;
-		rLoc = 16704;
+		rLoc = 18073;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 10228;
@@ -3257,7 +3291,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 558";
 		rLen = 0;
-		rLoc = 16663;
+		rLoc = 18032;
 		rType = 0;
 		vrLen = 933;
 		vrLoc = 10634;
@@ -3267,7 +3301,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 496";
 		rLen = 0;
-		rLoc = 16445;
+		rLoc = 17814;
 		rType = 0;
 		vrLen = 1000;
 		vrLoc = 9293;
@@ -3277,7 +3311,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 498";
 		rLen = 0;
-		rLoc = 11410;
+		rLoc = 12779;
 		rType = 0;
 		vrLen = 967;
 		vrLoc = 9991;
@@ -3307,7 +3341,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 525";
 		rLen = 0;
-		rLoc = 16445;
+		rLoc = 17814;
 		rType = 0;
 		vrLen = 1312;
 		vrLoc = 9293;
@@ -3318,7 +3352,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 0;
-		rLoc = 767;
+		rLoc = 816;
 		rType = 1;
 	};
 	50C0238A12D6005E00513880 /* PBXTextBookmark */ = {
@@ -3336,7 +3370,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 462";
 		rLen = 0;
-		rLoc = 10212;
+		rLoc = 11581;
 		rType = 0;
 		vrLen = 943;
 		vrLoc = 8900;
@@ -3346,7 +3380,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 619";
 		rLen = 0;
-		rLoc = 16981;
+		rLoc = 18350;
 		rType = 0;
 		vrLen = 1042;
 		vrLoc = 12353;
@@ -3356,7 +3390,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 470";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1183;
 		vrLoc = 9171;
@@ -3376,7 +3410,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 625";
 		rLen = 0;
-		rLoc = 17261;
+		rLoc = 18630;
 		rType = 0;
 		vrLen = 630;
 		vrLoc = 1896;
@@ -3386,7 +3420,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 637";
 		rLen = 0;
-		rLoc = 17401;
+		rLoc = 18770;
 		rType = 0;
 		vrLen = 1101;
 		vrLoc = 12730;
@@ -3396,7 +3430,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 470";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1104;
 		vrLoc = 9171;
@@ -3406,7 +3440,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 637";
 		rLen = 0;
-		rLoc = 17401;
+		rLoc = 18770;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 3023;
@@ -3416,7 +3450,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 468";
 		rLen = 0;
-		rLoc = 10375;
+		rLoc = 11744;
 		rType = 0;
 		vrLen = 1041;
 		vrLoc = 8996;
@@ -3426,7 +3460,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 471";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 9171;
@@ -3436,7 +3470,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 496";
 		rLen = 0;
-		rLoc = 11491;
+		rLoc = 12860;
 		rType = 0;
 		vrLen = 982;
 		vrLoc = 9968;
@@ -3446,7 +3480,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 471";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 9171;
@@ -3456,7 +3490,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 468";
 		rLen = 0;
-		rLoc = 10312;
+		rLoc = 11681;
 		rType = 0;
 		vrLen = 1129;
 		vrLoc = 9208;
@@ -3466,7 +3500,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 471";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 9171;
@@ -3476,7 +3510,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 502";
 		rLen = 0;
-		rLoc = 11677;
+		rLoc = 13046;
 		rType = 0;
 		vrLen = 951;
 		vrLoc = 9921;
@@ -3486,7 +3520,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 471";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 9171;
@@ -3496,7 +3530,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 606";
 		rLen = 0;
-		rLoc = 16981;
+		rLoc = 18350;
 		rType = 0;
 		vrLen = 1085;
 		vrLoc = 12306;
@@ -3506,7 +3540,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 471";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 9171;
@@ -3516,7 +3550,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 610";
 		rLen = 0;
-		rLoc = 16981;
+		rLoc = 18350;
 		rType = 0;
 		vrLen = 1055;
 		vrLoc = 12303;
@@ -3526,7 +3560,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 617";
 		rLen = 0;
-		rLoc = 16981;
+		rLoc = 18350;
 		rType = 0;
 		vrLen = 1135;
 		vrLoc = 12306;
@@ -3536,7 +3570,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 471";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 9171;
@@ -3546,7 +3580,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 612";
 		rLen = 0;
-		rLoc = 16981;
+		rLoc = 18350;
 		rType = 0;
 		vrLen = 1211;
 		vrLoc = 12523;
@@ -3556,7 +3590,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 471";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 9171;
@@ -3566,7 +3600,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 102";
 		rLen = 41;
-		rLoc = 3581;
+		rLoc = 4024;
 		rType = 0;
 		vrLen = 1258;
 		vrLoc = 561;
@@ -3576,7 +3610,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 526";
 		rLen = 0;
-		rLoc = 12043;
+		rLoc = 13412;
 		rType = 0;
 		vrLen = 631;
 		vrLoc = 10582;
@@ -3586,7 +3620,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 528";
 		rLen = 0;
-		rLoc = 12080;
+		rLoc = 13449;
 		rType = 0;
 		vrLen = 622;
 		vrLoc = 10549;
@@ -3596,7 +3630,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 471";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1166;
 		vrLoc = 9171;
@@ -3606,7 +3640,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 181";
 		rLen = 0;
-		rLoc = 4232;
+		rLoc = 5601;
 		rType = 0;
 		vrLen = 936;
 		vrLoc = 3583;
@@ -3616,7 +3650,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 480";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1101;
 		vrLoc = 9268;
@@ -3626,7 +3660,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 558";
 		rLen = 0;
-		rLoc = 16570;
+		rLoc = 17939;
 		rType = 0;
 		vrLen = 964;
 		vrLoc = 11268;
@@ -3636,7 +3670,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 480";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1049;
 		vrLoc = 9282;
@@ -3646,7 +3680,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 643";
 		rLen = 0;
-		rLoc = 16981;
+		rLoc = 18350;
 		rType = 0;
 		vrLen = 1109;
 		vrLoc = 13307;
@@ -3656,7 +3690,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 480";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1049;
 		vrLoc = 9282;
@@ -3666,7 +3700,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 687";
 		rLen = 0;
-		rLoc = 17651;
+		rLoc = 19020;
 		rType = 0;
 		vrLen = 1067;
 		vrLoc = 13659;
@@ -3676,7 +3710,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 480";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1049;
 		vrLoc = 9282;
@@ -3686,7 +3720,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 621";
 		rLen = 0;
-		rLoc = 16764;
+		rLoc = 18133;
 		rType = 0;
 		vrLen = 1194;
 		vrLoc = 12643;
@@ -3696,7 +3730,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 480";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1049;
 		vrLoc = 9282;
@@ -3706,7 +3740,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 646";
 		rLen = 0;
-		rLoc = 16981;
+		rLoc = 18350;
 		rType = 0;
 		vrLen = 1130;
 		vrLoc = 12860;
@@ -3716,7 +3750,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 480";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1049;
 		vrLoc = 9282;
@@ -3726,7 +3760,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 102";
 		rLen = 0;
-		rLoc = 3621;
+		rLoc = 4064;
 		rType = 0;
 		vrLen = 1405;
 		vrLoc = 945;
@@ -3736,7 +3770,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 168";
 		rLen = 5;
-		rLoc = 3875;
+		rLoc = 5244;
 		rType = 0;
 		vrLen = 778;
 		vrLoc = 8188;
@@ -3746,7 +3780,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 201";
 		rLen = 0;
-		rLoc = 4849;
+		rLoc = 6218;
 		rType = 0;
 		vrLen = 908;
 		vrLoc = 3920;
@@ -3756,7 +3790,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 482";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1064;
 		vrLoc = 9321;
@@ -3766,7 +3800,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 238";
 		rLen = 0;
-		rLoc = 5692;
+		rLoc = 7061;
 		rType = 0;
 		vrLen = 975;
 		vrLoc = 4767;
@@ -3776,7 +3810,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 441";
 		rLen = 0;
-		rLoc = 9234;
+		rLoc = 10603;
 		rType = 0;
 		vrLen = 719;
 		vrLoc = 8389;
@@ -3786,7 +3820,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 484";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 1069;
 		vrLoc = 8889;
@@ -3796,7 +3830,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 409";
 		rLen = 0;
-		rLoc = 8710;
+		rLoc = 10079;
 		rType = 0;
 		vrLen = 918;
 		vrLoc = 7783;
@@ -3806,7 +3840,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 486";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 975;
 		vrLoc = 8547;
@@ -3816,7 +3850,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 561";
 		rLen = 0;
-		rLoc = 16555;
+		rLoc = 17924;
 		rType = 0;
 		vrLen = 820;
 		vrLoc = 11401;
@@ -3826,7 +3860,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 486";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 975;
 		vrLoc = 8547;
@@ -3836,7 +3870,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 417";
 		rLen = 0;
-		rLoc = 8833;
+		rLoc = 10202;
 		rType = 0;
 		vrLen = 815;
 		vrLoc = 8147;
@@ -3846,7 +3880,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 646";
 		rLen = 0;
-		rLoc = 16981;
+		rLoc = 18350;
 		rType = 0;
 		vrLen = 1255;
 		vrLoc = 12906;
@@ -3856,7 +3890,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 486";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 975;
 		vrLoc = 8547;
@@ -3866,7 +3900,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 407";
 		rLen = 0;
-		rLoc = 8618;
+		rLoc = 9987;
 		rType = 0;
 		vrLen = 726;
 		vrLoc = 8033;
@@ -3876,7 +3910,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 487";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 875;
 		vrLoc = 8473;
@@ -3886,7 +3920,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 691";
 		rLen = 0;
-		rLoc = 17401;
+		rLoc = 18770;
 		rType = 0;
 		vrLen = 1125;
 		vrLoc = 14110;
@@ -3896,7 +3930,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 487";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 875;
 		vrLoc = 8473;
@@ -3906,7 +3940,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 665";
 		rLen = 0;
-		rLoc = 17299;
+		rLoc = 18668;
 		rType = 0;
 		vrLen = 1117;
 		vrLoc = 14136;
@@ -3916,7 +3950,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 487";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 875;
 		vrLoc = 8473;
@@ -3936,7 +3970,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 554";
 		rLen = 0;
-		rLoc = 13949;
+		rLoc = 15318;
 		rType = 0;
 		vrLen = 930;
 		vrLoc = 11405;
@@ -3946,7 +3980,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 604";
 		rLen = 0;
-		rLoc = 15331;
+		rLoc = 16700;
 		rType = 0;
 		vrLen = 1065;
 		vrLoc = 12029;
@@ -3956,7 +3990,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 487";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 983;
 		vrLoc = 8473;
@@ -3966,7 +4000,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 603";
 		rLen = 0;
-		rLoc = 15171;
+		rLoc = 16540;
 		rType = 0;
 		vrLen = 1129;
 		vrLoc = 11957;
@@ -3976,7 +4010,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 487";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 875;
 		vrLoc = 8473;
@@ -3986,7 +4020,7 @@
 		fRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */;
 		name = "T64Archive.cpp: 97";
 		rLen = 7;
-		rLoc = 2140;
+		rLoc = 2235;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 2248;
@@ -3996,7 +4030,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 553";
 		rLen = 0;
-		rLoc = 12162;
+		rLoc = 13531;
 		rType = 0;
 		vrLen = 837;
 		vrLoc = 11205;
@@ -4026,7 +4060,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 487";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 875;
 		vrLoc = 8473;
@@ -4046,7 +4080,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 553";
 		rLen = 0;
-		rLoc = 12162;
+		rLoc = 13531;
 		rType = 0;
 		vrLen = 837;
 		vrLoc = 11205;
@@ -4056,7 +4090,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 402";
 		rLen = 0;
-		rLoc = 8535;
+		rLoc = 9904;
 		rType = 0;
 		vrLen = 933;
 		vrLoc = 14260;
@@ -4066,7 +4100,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 484";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 959;
 		vrLoc = 8371;
@@ -4126,7 +4160,7 @@
 		fRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */;
 		name = "T64Archive.cpp: 191";
 		rLen = 0;
-		rLoc = 4099;
+		rLoc = 4194;
 		rType = 0;
 		vrLen = 953;
 		vrLoc = 3520;
@@ -4136,7 +4170,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 710";
 		rLen = 0;
-		rLoc = 16874;
+		rLoc = 18243;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 14595;
@@ -4146,7 +4180,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 710";
 		rLen = 0;
-		rLoc = 16879;
+		rLoc = 18248;
 		rType = 0;
 		vrLen = 1298;
 		vrLoc = 14624;
@@ -4156,7 +4190,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 484";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 959;
 		vrLoc = 8371;
@@ -4166,7 +4200,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 721";
 		rLen = 0;
-		rLoc = 17379;
+		rLoc = 18748;
 		rType = 0;
 		vrLen = 1259;
 		vrLoc = 14622;
@@ -4176,7 +4210,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 484";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 959;
 		vrLoc = 8371;
@@ -4186,7 +4220,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 386";
 		rLen = 0;
-		rLoc = 8270;
+		rLoc = 9639;
 		rType = 0;
 		vrLen = 841;
 		vrLoc = 7316;
@@ -4196,7 +4230,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 486";
 		rLen = 0;
-		rLoc = 10497;
+		rLoc = 11866;
 		rType = 0;
 		vrLen = 800;
 		vrLoc = 8147;
@@ -4207,7 +4241,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 204;
+		rLoc = 253;
 		rType = 1;
 	};
 	50C0249412D628BB00513880 /* PBXTextBookmark */ = {
@@ -4215,7 +4249,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 491";
 		rLen = 0;
-		rLoc = 10496;
+		rLoc = 11865;
 		rType = 0;
 		vrLen = 950;
 		vrLoc = 9658;
@@ -4225,7 +4259,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 203";
 		rLen = 0;
-		rLoc = 4715;
+		rLoc = 6084;
 		rType = 0;
 		vrLen = 1250;
 		vrLoc = 4043;
@@ -4255,7 +4289,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 696";
 		rLen = 0;
-		rLoc = 16398;
+		rLoc = 17767;
 		rType = 0;
 		vrLen = 889;
 		vrLoc = 14227;
@@ -4265,7 +4299,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 203";
 		rLen = 0;
-		rLoc = 4715;
+		rLoc = 6084;
 		rType = 0;
 		vrLen = 1250;
 		vrLoc = 4043;
@@ -4275,7 +4309,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 662";
 		rLen = 173;
-		rLoc = 15406;
+		rLoc = 16775;
 		rType = 0;
 		vrLen = 928;
 		vrLoc = 14241;
@@ -4285,7 +4319,7 @@
 		fRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */;
 		name = "T64Archive.cpp: 191";
 		rLen = 0;
-		rLoc = 4099;
+		rLoc = 4194;
 		rType = 0;
 		vrLen = 953;
 		vrLoc = 3520;
@@ -4295,7 +4329,7 @@
 		fRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */;
 		name = "T64Archive.cpp: 227";
 		rLen = 0;
-		rLoc = 4683;
+		rLoc = 4778;
 		rType = 0;
 		vrLen = 694;
 		vrLoc = 4022;
@@ -4305,7 +4339,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 203";
 		rLen = 0;
-		rLoc = 4715;
+		rLoc = 6084;
 		rType = 0;
 		vrLen = 1250;
 		vrLoc = 4043;
@@ -4315,7 +4349,7 @@
 		fRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */;
 		name = "T64Archive.cpp: 227";
 		rLen = 0;
-		rLoc = 4683;
+		rLoc = 4778;
 		rType = 0;
 		vrLen = 694;
 		vrLoc = 4022;
@@ -4325,7 +4359,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 126";
 		rLen = 0;
-		rLoc = 4031;
+		rLoc = 4474;
 		rType = 0;
 		vrLen = 1187;
 		vrLoc = 3364;
@@ -4335,7 +4369,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 476";
 		rLen = 0;
-		rLoc = 9898;
+		rLoc = 11267;
 		rType = 0;
 		vrLen = 866;
 		vrLoc = 9390;
@@ -4345,7 +4379,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 95";
 		rLen = 0;
-		rLoc = 2314;
+		rLoc = 2907;
 		rType = 0;
 		vrLen = 633;
 		vrLoc = 2019;
@@ -4355,7 +4389,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 206";
 		rLen = 0;
-		rLoc = 4715;
+		rLoc = 6084;
 		rType = 0;
 		vrLen = 1251;
 		vrLoc = 4071;
@@ -4365,7 +4399,7 @@
 		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
 		name = "D64Archive.h: 126";
 		rLen = 0;
-		rLoc = 4031;
+		rLoc = 4474;
 		rType = 0;
 		vrLen = 1681;
 		vrLoc = 1162;
@@ -4375,7 +4409,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 94";
 		rLen = 0;
-		rLoc = 2303;
+		rLoc = 2907;
 		rType = 0;
 		vrLen = 779;
 		vrLoc = 5567;
@@ -4385,7 +4419,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 715";
 		rLen = 0;
-		rLoc = 16398;
+		rLoc = 17767;
 		rType = 0;
 		vrLen = 1011;
 		vrLoc = 14633;
@@ -4395,7 +4429,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 206";
 		rLen = 0;
-		rLoc = 4715;
+		rLoc = 6084;
 		rType = 0;
 		vrLen = 1251;
 		vrLoc = 4071;
@@ -4405,7 +4439,7 @@
 		fRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */;
 		name = "T64Archive.cpp: 227";
 		rLen = 0;
-		rLoc = 4667;
+		rLoc = 4762;
 		rType = 0;
 		vrLen = 750;
 		vrLoc = 3969;
@@ -4415,7 +4449,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 450";
 		rLen = 0;
-		rLoc = 9218;
+		rLoc = 10587;
 		rType = 0;
 		vrLen = 733;
 		vrLoc = 8691;
@@ -4425,7 +4459,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 421";
 		rLen = 0;
-		rLoc = 8751;
+		rLoc = 10120;
 		rType = 0;
 		vrLen = 1257;
 		vrLoc = 15464;
@@ -4435,7 +4469,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 206";
 		rLen = 0;
-		rLoc = 4715;
+		rLoc = 6084;
 		rType = 0;
 		vrLen = 1251;
 		vrLoc = 4071;
@@ -4445,7 +4479,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 522";
 		rLen = 0;
-		rLoc = 11131;
+		rLoc = 12500;
 		rType = 0;
 		vrLen = 1244;
 		vrLoc = 10299;
@@ -4455,7 +4489,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 206";
 		rLen = 0;
-		rLoc = 4715;
+		rLoc = 6084;
 		rType = 0;
 		vrLen = 1253;
 		vrLoc = 4071;
@@ -4465,7 +4499,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 509";
 		rLen = 0;
-		rLoc = 10522;
+		rLoc = 11891;
 		rType = 0;
 		vrLen = 1228;
 		vrLoc = 10305;
@@ -4475,7 +4509,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 206";
 		rLen = 0;
-		rLoc = 4715;
+		rLoc = 6084;
 		rType = 0;
 		vrLen = 1251;
 		vrLoc = 4071;
@@ -4486,7 +4520,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 204;
+		rLoc = 253;
 		rType = 1;
 	};
 	50C024DD12D639E800513880 /* PBXTextBookmark */ = {
@@ -4494,7 +4528,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 593";
 		rLen = 0;
-		rLoc = 12805;
+		rLoc = 14174;
 		rType = 0;
 		vrLen = 1148;
 		vrLoc = 11963;
@@ -4504,7 +4538,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 394";
 		rLen = 0;
-		rLoc = 8270;
+		rLoc = 9639;
 		rType = 0;
 		vrLen = 899;
 		vrLoc = 7555;
@@ -4514,7 +4548,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 593";
 		rLen = 0;
-		rLoc = 12805;
+		rLoc = 14174;
 		rType = 0;
 		vrLen = 1171;
 		vrLoc = 11964;
@@ -4524,7 +4558,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 394";
 		rLen = 0;
-		rLoc = 8270;
+		rLoc = 9639;
 		rType = 0;
 		vrLen = 899;
 		vrLoc = 7555;
@@ -4534,7 +4568,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 606";
 		rLen = 0;
-		rLoc = 12805;
+		rLoc = 14174;
 		rType = 0;
 		vrLen = 1014;
 		vrLoc = 10861;
@@ -4544,7 +4578,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 394";
 		rLen = 0;
-		rLoc = 8270;
+		rLoc = 9639;
 		rType = 0;
 		vrLen = 899;
 		vrLoc = 7555;
@@ -4554,7 +4588,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 612";
 		rLen = 0;
-		rLoc = 12805;
+		rLoc = 14174;
 		rType = 0;
 		vrLen = 1019;
 		vrLoc = 10834;
@@ -4564,7 +4598,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 622";
 		rLen = 0;
-		rLoc = 13194;
+		rLoc = 14563;
 		rType = 0;
 		vrLen = 1243;
 		vrLoc = 12204;
@@ -4574,7 +4608,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 612";
 		rLen = 0;
-		rLoc = 12805;
+		rLoc = 14174;
 		rType = 0;
 		vrLen = 1239;
 		vrLoc = 312;
@@ -4604,7 +4638,7 @@
 		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
 		name = "MyDocument.mm: 2478";
 		rLen = 0;
-		rLoc = 72472;
+		rLoc = 72605;
 		rType = 0;
 		vrLen = 1363;
 		vrLoc = 71848;
@@ -4614,7 +4648,7 @@
 		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
 		name = "MyDocument.mm: 2489";
 		rLen = 0;
-		rLoc = 72835;
+		rLoc = 72681;
 		rType = 0;
 		vrLen = 1315;
 		vrLoc = 71904;
@@ -4624,10 +4658,348 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 622";
 		rLen = 0;
-		rLoc = 13194;
+		rLoc = 14563;
 		rType = 0;
 		vrLen = 1254;
 		vrLoc = 12214;
+	};
+	50C0250712D6420B00513880 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Initializer specified for static member function 'static bool Container::isValid()'";
+		fRef = 5018E47F12240F7100F0820E /* Container.h */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 0;
+		rLoc = 54;
+		rType = 1;
+	};
+	50C0251A12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C760A6F7357009E80BD /* MyDocument.mm */;
+		name = "MyDocument.mm: 2489";
+		rLen = 0;
+		rLoc = 72681;
+		rType = 0;
+		vrLen = 1317;
+		vrLoc = 71904;
+	};
+	50C0251B12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50D5004B0C2ED1200022CA3A /* Archive.h */;
+		name = "Archive.h: 46";
+		rLen = 0;
+		rLoc = 1497;
+		rType = 0;
+		vrLen = 1401;
+		vrLoc = 129;
+	};
+	50C0251C12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5018E48012240F7100F0820E /* Container.cpp */;
+		name = "Container.cpp: 96";
+		rLen = 0;
+		rLoc = 1950;
+		rType = 0;
+		vrLen = 769;
+		vrLoc = 1117;
+	};
+	50C0251D12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50414725122188FC00A80E0C /* Cartridge.cpp */;
+		name = "Cartridge.cpp: 80";
+		rLen = 0;
+		rLoc = 1900;
+		rType = 0;
+		vrLen = 791;
+		vrLoc = 1421;
+	};
+	50C0251E12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5018E47F12240F7100F0820E /* Container.h */;
+		name = "Container.h: 58";
+		rLen = 0;
+		rLoc = 1506;
+		rType = 0;
+		vrLen = 1071;
+		vrLoc = 891;
+	};
+	50C0251F12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */;
+		name = "Archive.cpp: 22";
+		rLen = 0;
+		rLoc = 813;
+		rType = 0;
+		vrLen = 811;
+		vrLoc = 775;
+	};
+	50C0252012D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C500A6F72F3009E80BD /* basic.h */;
+		name = "basic.h: 69";
+		rLen = 0;
+		rLoc = 2134;
+		rType = 0;
+		vrLen = 1506;
+		vrLoc = 2824;
+	};
+	50C0252112D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C540A6F72F3009E80BD /* CIA.h */;
+		name = "CIA.h: 129";
+		rLen = 0;
+		rLoc = 5198;
+		rType = 0;
+		vrLen = 940;
+		vrLoc = 20857;
+	};
+	50C0252212D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */;
+		name = "VC1541.cpp: 174";
+		rLen = 0;
+		rLoc = 4217;
+		rType = 0;
+		vrLen = 1081;
+		vrLoc = 3213;
+	};
+	50C0252312D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5007A5EB0C3FC99F0069B0CE /* VIC_colors.cpp */;
+		name = "VIC_colors.cpp: 15";
+		rLen = 107;
+		rLoc = 692;
+		rType = 0;
+		vrLen = 1382;
+		vrLoc = 0;
+	};
+	50C0252412D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */;
+		name = "VIC.cpp: 269";
+		rLen = 0;
+		rLoc = 7113;
+		rType = 0;
+		vrLen = 1504;
+		vrLoc = 0;
+	};
+	50C0252512D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C600A6F72F3009E80BD /* VIC.h */;
+		name = "VIC.h: 807";
+		rLen = 0;
+		rLoc = 32357;
+		rType = 0;
+		vrLen = 1691;
+		vrLoc = 32031;
+	};
+	50C0252612D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */;
+		name = "C64Memory.cpp: 111";
+		rLen = 0;
+		rLoc = 3302;
+		rType = 0;
+		vrLen = 1022;
+		vrLoc = 5817;
+	};
+	50C0252712D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
+		name = "D64Archive.h: 89";
+		rLen = 0;
+		rLoc = 2976;
+		rType = 0;
+		vrLen = 1341;
+		vrLoc = 2394;
+	};
+	50C0252812D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 509AEA0A0C324AB0001FC9FD /* PRGArchive.h */;
+		name = "PRGArchive.h: 49";
+		rLen = 0;
+		rLoc = 1271;
+		rType = 0;
+		vrLen = 970;
+		vrLoc = 845;
+	};
+	50C0252912D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 509AEAFD0C325EFB001FC9FD /* P00Archive.h */;
+		name = "P00Archive.h: 49";
+		rLen = 0;
+		rLoc = 1271;
+		rType = 0;
+		vrLen = 985;
+		vrLoc = 846;
+	};
+	50C0252A12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50D500500C2ED13F0022CA3A /* T64Archive.h */;
+		name = "T64Archive.h: 55";
+		rLen = 112;
+		rLoc = 1385;
+		rType = 0;
+		vrLen = 994;
+		vrLoc = 1063;
+	};
+	50C0252B12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */;
+		name = "T64Archive.cpp: 75";
+		rLen = 0;
+		rLoc = 1654;
+		rType = 0;
+		vrLen = 747;
+		vrLoc = 856;
+	};
+	50C0252C12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
+		name = "D64Archive.cpp: 85";
+		rLen = 0;
+		rLoc = 2130;
+		rType = 0;
+		vrLen = 977;
+		vrLoc = 2046;
+	};
+	50C0252D12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */;
+		name = "PRGArchive.cpp: 32";
+		rLen = 0;
+		rLoc = 918;
+		rType = 0;
+		vrLen = 678;
+		vrLoc = 775;
+	};
+	50C0252E12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */;
+		name = "P00Archive.cpp: 72";
+		rLen = 0;
+		rLoc = 1676;
+		rType = 0;
+		vrLen = 831;
+		vrLoc = 1203;
+	};
+	50C0252F12D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */;
+		name = "P00Archive.cpp: 32";
+		rLen = 0;
+		rLoc = 919;
+		rType = 0;
+		vrLen = 693;
+		vrLoc = 849;
+	};
+	50C0253012D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
+		name = "D64Archive.cpp: 626";
+		rLen = 0;
+		rLoc = 14563;
+		rType = 0;
+		vrLen = 1295;
+		vrLoc = 12322;
+	};
+	50C0253112D645BE00513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5018E47F12240F7100F0820E /* Container.h */;
+		name = "Container.h: 55";
+		rLen = 0;
+		rLoc = 1505;
+		rType = 0;
+		vrLen = 1035;
+		vrLoc = 893;
+	};
+	50C0253512D6471200513880 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "'isPRGFile' is not a member of 'T64Archive'";
+		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 0;
+		rLoc = 146;
+		rType = 1;
+	};
+	50C0253A12D64C1000513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */;
+		name = "P00Archive.cpp: 32";
+		rLen = 0;
+		rLoc = 919;
+		rType = 0;
+		vrLen = 714;
+		vrLoc = 849;
+	};
+	50C0253B12D64C1000513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */;
+		name = "T64Archive.cpp: 75";
+		rLen = 0;
+		rLoc = 1654;
+		rType = 0;
+		vrLen = 747;
+		vrLoc = 856;
+	};
+	50C0253C12D64C1000513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50D500500C2ED13F0022CA3A /* T64Archive.h */;
+		name = "T64Archive.h: 58";
+		rLen = 0;
+		rLoc = 1517;
+		rType = 0;
+		vrLen = 994;
+		vrLoc = 1063;
+	};
+	50C0253D12D64C1000513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50A52A170C2FD43700A1377F /* D64Archive.h */;
+		name = "D64Archive.h: 102";
+		rLen = 62;
+		rLoc = 3351;
+		rType = 0;
+		vrLen = 1385;
+		vrLoc = 2360;
+	};
+	50C0253E12D64C1000513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
+		name = "D64Archive.cpp: 134";
+		rLen = 0;
+		rLoc = 3760;
+		rType = 0;
+		vrLen = 824;
+		vrLoc = 2642;
+	};
+	50C0253F12D64C1000513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
+		name = "D64Archive.cpp: 149";
+		rLen = 0;
+		rLoc = 3948;
+		rType = 0;
+		vrLen = 1206;
+		vrLoc = 2885;
+	};
+	50C0254012D64C1000513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5018E47F12240F7100F0820E /* Container.h */;
+		name = "Container.h: 55";
+		rLen = 0;
+		rLoc = 1505;
+		rType = 0;
+		vrLen = 1035;
+		vrLoc = 893;
+	};
+	50C0254112D64C1000513880 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
+		name = "D64Archive.cpp: 149";
+		rLen = 0;
+		rLoc = 3948;
+		rType = 0;
+		vrLen = 1291;
+		vrLoc = 2288;
 	};
 	50C3AA5C0EF540B700F18984 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -4785,25 +5157,25 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1020, 1248}}";
 			sepNavSelRange = "{1497, 0}";
-			sepNavVisRange = "{1005, 1343}";
+			sepNavVisRange = "{129, 1401}";
 			sepNavVisRect = "{{0, 210}, {793, 651}}";
 			sepNavWindowFrame = "{{643, 148}, {985, 880}}";
 		};
 	};
 	50D500500C2ED13F0022CA3A /* T64Archive.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 1216}}";
-			sepNavSelRange = "{1678, 7}";
-			sepNavVisRange = "{845, 1093}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 1296}}";
+			sepNavSelRange = "{1517, 0}";
+			sepNavVisRange = "{1063, 994}";
 			sepNavVisRect = "{{0, 0}, {793, 651}}";
 			sepNavWindowFrame = "{{600, 148}, {985, 880}}";
 		};
 	};
 	50D500510C2ED13F0022CA3A /* T64Archive.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1020, 3744}}";
-			sepNavSelRange = "{4667, 0}";
-			sepNavVisRange = "{3969, 750}";
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 3680}}";
+			sepNavSelRange = "{1654, 0}";
+			sepNavVisRange = "{856, 747}";
 			sepNavVisRect = "{{0, 2639}, {793, 651}}";
 			sepNavWindowFrame = "{{831, 148}, {985, 880}}";
 		};
@@ -4859,7 +5231,7 @@
 			sepNavWindowFrame = "{{524, 148}, {985, 880}}";
 		};
 	};
-	50D5FFDC0C2EB9810022CA3A /* MyDocument.mm:2525 */ = {
+	50D5FFDC0C2EB9810022CA3A /* MyDocument.mm:2521 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -4871,7 +5243,7 @@
 		functionName = "-endMountDialogAndFlash:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 2525;
+		lineNumber = 2521;
 		location = VirtualC64;
 		modificationTime = 304687997.056064;
 		originalNumberOfMultipleMatches = 1;
@@ -5123,7 +5495,7 @@
 		fRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */;
 		name = "D64Archive.cpp: 347";
 		rLen = 0;
-		rLoc = 7626;
+		rLoc = 8995;
 		rType = 0;
 		vrLen = 700;
 		vrLoc = 6758;

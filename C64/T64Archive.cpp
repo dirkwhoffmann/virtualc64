@@ -29,6 +29,24 @@ T64Archive::~T64Archive()
 	cleanup();
 }
 
+bool T64Archive::isT64File(const char *filename)
+{
+	int magic_bytes[] = { 0x43, 0x36, 0x34, EOF };
+	
+	assert(filename != NULL);
+	
+	if (!checkFileSuffix(filename, ".T64") && !checkFileSuffix(filename, ".t64"))
+		return false;
+	
+	if (!checkFileSize(filename, 0x40, -1))
+		return false;
+	
+	if (!checkFileHeader(filename, magic_bytes))
+		return false;
+	
+	return true;
+}
+
 T64Archive *T64Archive::archiveFromFile(const char *filename)
 {
 	T64Archive *archive;
@@ -57,20 +75,7 @@ void T64Archive::cleanup()
 
 bool T64Archive::fileIsValid(const char *filename)
 {
-	int magic_bytes[] = { 0x43, 0x36, 0x34, EOF };
-
-	assert(filename != NULL);
-	
-	if (!checkFileSuffix(filename, ".T64") && !checkFileSuffix(filename, ".t64"))
-		return false;
-
-	if (!checkFileSize(filename, 0x40, -1))
-		return false;
-		
-	if (!checkFileHeader(filename, magic_bytes))
-		return false;
-		
-	return true;
+	return T64Archive::isT64File(filename);
 }
 
 bool T64Archive::readDataFromFile(FILE *file, struct stat fileProperties)

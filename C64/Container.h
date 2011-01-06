@@ -52,7 +52,7 @@ public:
 	
 	//! Destructor
 	virtual ~Container();
-		
+			
 	//! Return physical name
 	 const char *getPath();
 

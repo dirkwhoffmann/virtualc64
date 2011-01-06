@@ -85,8 +85,22 @@ public:
 	//! Destructor
 	~D64Archive();
 	
-	//! Factory method
+	//! Returns true of filename points to a valid file of that type
+	static bool isD64File(const char *filename);
+
+
+	// Factory methods
+
+	//! Create D64 archive from D64 file
 	static D64Archive *archiveFromFile(const char *filename);
+
+	//! Create D64 archive from arbitrary file
+	/*! T64, PRG, P00, ... files are automatically converted to D64 format */
+	static D64Archive *archiveFromArbitraryFile(const char *filename);
+	
+	//! Create D64 from other archive
+	static D64Archive *archiveFromOtherArchive(Archive *archive);
+	
 
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);

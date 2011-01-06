@@ -82,20 +82,86 @@ D64Archive::~D64Archive()
 	cleanup();
 }
 
+bool D64Archive::isD64File(const char *filename)
+{
+	bool fileOK = false;
+	
+	assert (filename != NULL);
+	
+	if (!checkFileSuffix(filename, ".D64") && !checkFileSuffix(filename, ".d64"))
+		return false;
+	
+	fileOK = checkFileSize(filename, 174848, 174848)
+	|| checkFileSize(filename, 175531, 175531)
+	|| checkFileSize(filename, 196608, 196608)
+	|| checkFileSize(filename, 197376, 197376)
+	|| checkFileSize(filename, 205312, 205312)
+	|| checkFileSize(filename, 206114, 206114);
+	
+	// Unfortunaltely, D64 containers do not contain magic bytes,
+	// so we can't check anything further here
+	
+	return fileOK;
+}
+
 D64Archive *D64Archive::archiveFromFile(const char *filename)
 {
 	D64Archive *archive;
-	
+		
 	archive = new D64Archive();	
 	if (!archive->readFromFile(filename)) {
 		delete archive;
 		archive = NULL;
 	}
 	
-	archive->dumpSector(12,3);
-
 	return archive;
 }
+
+D64Archive *D64Archive::archiveFromArbitraryFile(const char *filename)
+{
+	if (D64Archive::isD64File(filename)) {
+		fprintf(stderr, "Loading D64 archive from D64 file...");
+		return D64Archive::archiveFromFile(filename);
+	}
+
+	// FOR DEBUGGING (CONVERT D64 TO D64)
+	if (D64Archive::isD64File(filename)) {
+		fprintf(stderr, "Creating D64 archive from D64 file...");
+		return D64Archive::archiveFromOtherArchive(D64Archive::archiveFromFile(filename));
+	}
+	
+	if (T64Archive::isT64File(filename)) {
+		fprintf(stderr, "Creating D64 archive from T64 file...");
+		return D64Archive::archiveFromOtherArchive(T64Archive::archiveFromFile(filename));
+	}
+
+	if (PRGArchive::isPRGFile(filename)) {
+		fprintf(stderr, "Creating D64 archive from PRG file...");
+		return D64Archive::archiveFromOtherArchive(PRGArchive::archiveFromFile(filename));
+	}
+
+	if (P00Archive::isP00File(filename)) {
+		fprintf(stderr, "Creating D64 archive from P00 file...");
+		return D64Archive::archiveFromOtherArchive(P00Archive::archiveFromFile(filename));
+	}
+	
+	return NULL;
+}
+
+D64Archive *D64Archive::archiveFromOtherArchive(Archive *otherArchive)
+{
+	if (otherArchive == NULL)
+		return NULL;
+	
+	D64Archive *archive = new D64Archive();
+	if (!archive->writeArchive(otherArchive)) {
+		delete archive;
+		archive = NULL;
+	}
+	
+	return archive;
+}
+
 
 const char *D64Archive::getTypeOfContainer() 
 {
@@ -108,24 +174,7 @@ void D64Archive::cleanup()
 
 bool D64Archive::fileIsValid(const char *filename)
 {
-	bool fileOK = false;
-	
-	assert (filename != NULL);
-
-	if (!checkFileSuffix(filename, ".D64") && !checkFileSuffix(filename, ".d64"))
-		return false;
-
-	fileOK = checkFileSize(filename, 174848, 174848)
-		|| checkFileSize(filename, 175531, 175531)
-		|| checkFileSize(filename, 196608, 196608)
-		|| checkFileSize(filename, 197376, 197376)
-		|| checkFileSize(filename, 205312, 205312)
-		|| checkFileSize(filename, 206114, 206114);
-
-	// Unfortunaltely, D64 containers do not contain magic bytes,
-	// so we can't check anything further here
-
-	return fileOK;
+	return D64Archive::isD64File(filename);
 }
 
 bool D64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
