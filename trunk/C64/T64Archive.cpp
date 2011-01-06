@@ -188,7 +188,6 @@ uint16_t T64Archive::getDestinationAddrOfItem(int n)
 {
 	int i = 0x42 + (n * 0x20);
 	uint16_t result = data[i] + (data[i+1] << 8);
-	fprintf(stderr, "Will load to location %X\n", result);
 	return result;
 }
 
@@ -225,5 +224,6 @@ int T64Archive::getByte()
 		fp++;
 	}
 
+	// fprintf(stderr, "%02X ", result);
 	return result;
 }

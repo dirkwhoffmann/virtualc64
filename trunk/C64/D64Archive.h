@@ -49,17 +49,33 @@ private:
 	//! Returns true iff offset points to the last byte of a file
 	bool isEndOfFile(int offset);
 	
-	//! Returns the next track number following this sector
+	//! Returns the next logical track number following this sector
 	int nextTrack(int offset) { return data[(offset / 256) * 256]; }
 
-	//! Returns the next sector number following this sector
+	//! Returns the next logical sector number following this sector
 	int nextSector(int offset) { return data[((offset / 256) * 256)+1]; }
 
+	//! Return the next physical track and sector
+	bool nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector, bool skipDirectory = false);
+
+	//! Return the next physical track and sector and skip track 18 (directory track)
+	// void nextTrackAndSectorSkipDirectory(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector);
+	
 	//! Return beginning of next sector 
 	int jumpToNextSector(int pos); 
 	
 	void dumpDir();
 	int findDirectoryEntry(int itemNumber);
+
+	//! Write BAM (track 18, sector 0)
+	void writeBAM(const char *name);
+	
+	//! Write directory item (used to convert other archive format into D64 format)
+	bool writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, unsigned filesize);
+
+	//! Write byte to specified track and sector
+	/*! If sector overflows, the values of track and sector are overwritten with the next free sector */
+	bool writeByteToSector(uint8_t byte, uint8_t *track, uint8_t *sector);
 
 public:
 
@@ -92,6 +108,9 @@ public:
 	bool isMountable() { return true; }
 	bool isFlashable() { return true; }	
 
+	//! Write to file
+	bool writeToFile(const char *filename);
+	
 	//! Returns the number of sectors in the specified track
 	unsigned numberOfSectors(unsigned trackNr);
 
@@ -107,5 +126,21 @@ public:
 	//! Return HI BYTE of disk ID
 	uint8_t diskIdHi() { return data[offset(18, 1) + 0xA3]; }
 
+	//! Dump sector contents to stderr
+	void dumpSector(int track, int sector);
+	
+	//! Clear all data on disk
+	void clear();
+	
+	//! Mark as single sector as "used"
+	void markSectorAsUsed(uint8_t track, uint8_t sector);
+
+	
+	//! Write raw data to disk
+	// bool writeData(uint8_t startTrack, uint8_t startSector, uint8_t *data, unsigned length, uint8_t *lastTrack, uint8_t *lastSector);
+	
+	//! Write archive contents to disk
+	bool writeArchive(Archive *archive);
+	
 };
 #endif
