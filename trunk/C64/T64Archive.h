@@ -51,7 +51,10 @@ public:
 	
 	//! Destructor
 	~T64Archive();
-	
+		
+	//! Returns true of filename points to a valid file of that type
+	static bool isT64File(const char *filename);
+
 	//! Factory method
 	static T64Archive *archiveFromFile(const char *filename);
 
@@ -71,5 +74,7 @@ public:
 	void selectItem(int n);
 	int getByte();
 };
+
+
 #endif
 

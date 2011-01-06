@@ -2476,19 +2476,15 @@
 
 - (BOOL)setArchiveWithName:(NSString *)path
 {
-	if ((archive = T64Archive::archiveFromFile([path UTF8String])) != NULL) {
-		
 #if 0
-		// experimental stuff
-		// create D64 container and initialize with contents of T64 archive
-
-		D64Archive *myD64 = new D64Archive();
-		fprintf(stderr, "Created new D64 archive\n");
-		myD64->writeArchive(archive);
-		fprintf(stderr, "Writing T64 data into D64 object\n");
-#endif
+	if ((archive = D64Archive::archiveFromArbitraryFile([path UTF8String])) != NULL)
 		return YES;
-	}
+#endif	
+	
+	// OLD CODE BELOW
+	
+	if ((archive = T64Archive::archiveFromFile([path UTF8String])) != NULL)
+		return YES;
 
 	if ((archive = D64Archive::archiveFromFile([path UTF8String])) != NULL)
 		return YES;

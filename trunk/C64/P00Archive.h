@@ -45,6 +45,9 @@ public:
 	//! Destructor
 	~P00Archive();
 	
+	//! Returns true of filename points to a valid file of that type
+	static bool isP00File(const char *filename);
+
 	//! Factory method
 	static P00Archive *archiveFromFile(const char *filename);
 
