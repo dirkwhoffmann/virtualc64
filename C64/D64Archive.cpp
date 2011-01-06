@@ -91,6 +91,9 @@ D64Archive *D64Archive::archiveFromFile(const char *filename)
 		delete archive;
 		archive = NULL;
 	}
+	
+	archive->dumpSector(12,3);
+
 	return archive;
 }
 
@@ -177,6 +180,15 @@ bool D64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
 	}
 		
 	fprintf(stderr, "D64 Container imported successfully (%d bytes total, tracks = %d)\n", (int)fileProperties.st_size, numTracks);
+
+	unsigned pos = offset(18, 1);
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			fprintf(stderr, "%02X ", data[pos+i*8+j]);
+		}
+		fprintf(stderr, "\n");
+	}
+	
 	return true;
 }
 
@@ -188,9 +200,15 @@ D64Archive::jumpToNextSector(int pos)
 	nTrack = nextTrack(pos);
 	nSector = nextSector(pos);
 	nOffset = offset(nTrack, nSector);
-		
+
+	// Warn, if we got an invalid track/sector combination
+	if (nTrack > (int)numTracks || nSector > D64Map[nTrack].numberOfSectors) {
+		fprintf(stderr, "WARNING: Sector links to %d/%d which is an invalid track/sector combination\n", nTrack, nSector);
+		return pos;
+	}
+
+	fprintf(stderr, "Jumping to %d/%d \n", nTrack, nSector);
 	return nOffset;
-	
 }
 
 void D64Archive::dumpDir()
@@ -363,8 +381,6 @@ uint16_t D64Archive::getDestinationAddrOfItem(int n)
 	int sector;
 	uint16_t result;
 	
-	fprintf(stderr, "getDestinationAddrOfItem:%d\n", n);
-
 	// Search for beginning of file data
 	pos = findDirectoryEntry(n);
 	track = data[pos+0x03];
@@ -373,7 +389,8 @@ uint16_t D64Archive::getDestinationAddrOfItem(int n)
 		return 0;
 
 	result = data[pos+2] + (data[pos+3] << 8); 
-	fprintf(stderr, "Destination address of item %d is %X\n", n, result);
+	
+	fprintf(stderr, "Loading item %d to address %04X\n", n, result);
 	return result;
 }
 
@@ -391,17 +408,20 @@ void D64Archive::selectItem(int item)
 	if ((fp = findDirectoryEntry(item)) < 0)
 		return;
 
+	fprintf(stderr, "First data sector: %02X, %02X", data[fp+0x03], data[fp+0x04]);
+
 	// find first data sector
 	if ((fp = offset(data[fp+0x03], data[fp+0x04])) < 0)
 		return;
-		
-	// skip t/s sequence
+	
+	
+	// Skip t/s sequence
 	fp += 2;
 	
-	// skip destination address
+	// Skip destination address
 	fp += 2;
 
-	// We now reached the first real data byte :)
+	// We finally reached the first real data byte :-)
 	fprintf(stderr, "Item selected (%d,%d)\n", data[fp+0x03], data[fp+0x04]);
 }
 
@@ -426,6 +446,8 @@ int D64Archive::getByte()
 			fp++;
 		}
 	}
+	
+	// fprintf(stderr, "%02X ", result);
 	return result;
 }
 
@@ -446,5 +468,327 @@ uint8_t *D64Archive::findSector(unsigned halftrack, unsigned sector)
 	if ((pos = offset((halftrack+1) / 2, sector)) < 0)
 		return NULL;
 	
-	return &data[pos]; 
+	return &data[pos];
+}
+
+void 
+D64Archive::dumpSector(int track, int sector)
+{
+	int pos = offset(track, sector);
+	
+	printf("Sector %d/%d\n", track, sector);
+	for (int i = 0; i < 256; i++) {
+		printf("%02X ", data[pos++]);
+	}
+}
+
+// 
+// Convert arbitrary archives to D64 format
+// 
+
+void 
+D64Archive::clear() 
+{
+	fprintf(stderr, "Clearing tracks and sectors\n");
+	
+	numTracks = 35;
+	memset(data, 0x00, sizeof(data));
+	memset(errors, 0x00, sizeof(errors));
+
+#if 0
+	// Initialize sector headers
+	uint8_t track = 1, sector = 0;
+	do {
+		//fprintf(stderr, "Writing header for %d/%d\n", track, sector);
+		// data[offset(track, sector) + 1] = 0xFF;
+	} while (nextTrackAndSector(track, sector, &track, &sector));			 
+#endif
+}
+
+void 
+D64Archive::markSectorAsUsed(uint8_t track, uint8_t sector)
+{
+	// For each track and sector, there exists a single bit in the BAM. 1 = used, 0 = unused
+	
+	// fprintf(stderr,"Marking track %d and sector %d as used\n", track, sector);
+	
+	// First byte of BAM
+	int bam = offset(18,0);
+	
+	// Select byte group correspondig to track
+	bam += (4 * track); 
+
+	// Select byte carrying the information for sector
+	int offset = 1 + (sector >> 3);
+	assert(offset >= 1 && offset <= 3);
+	
+	// Select bit for this sector
+	uint8_t bitmask = 0x01 << (sector & 0x07);
+
+	if (data[bam+offset] & bitmask) {
+		// Clear bit
+		data[bam + offset] &= ~bitmask; 
+
+		// Descrease number of free sectors
+		assert(data[bam] > 0);
+		data[bam]--;
+	}
+}
+
+//! Return the next physical track and sector
+bool 
+D64Archive::nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector, bool skipDirectoryTrack) 
+{
+	unsigned highestSectorNumberInThisTrack = D64Map[track].numberOfSectors - 1;
+		
+	// PROBLEM?: A REAL VC1541 DISK USUALLY SHOWS AN INTERLEAVE OF 10
+	
+	if (sector < highestSectorNumberInThisTrack) {
+		sector++;
+	} else if (track < numTracks) {
+		track++;
+		sector = 0;
+	} else {
+		return false; // there is no next sector
+	}
+
+	if (track == 18 && skipDirectoryTrack) {
+		track = 19;
+		sector = 0;
+	}
+
+	*nextTrack = track;
+	*nextSector = sector;
+	
+	return true;
+}
+
+bool 
+D64Archive::writeToFile(const char *filename)
+{
+	FILE *file;
+	
+	if (!(file = fopen(filename, "w")))
+		return false;
+	
+	// write 683 sectors
+	for (int i = 0; i < 683; i++) {
+		for (int j = 0; j < 256; j++){
+			fputc(data[i*256+j], file);
+		}		
+	}
+	
+	fclose(file);
+	return true;
+}
+
+void
+D64Archive::writeBAM(const char *name)
+{
+	int pos;
+
+	fprintf(stderr, "Writing BAM\n");
+	
+	// 00/01: Track/Sector location of the first directory sector (should be 18/1)
+	markSectorAsUsed(18, 0);
+	pos = offset(18,0);
+	data[pos++] = 18; 
+	data[pos++] = 1;
+	
+	// 02: Disk DOS version type (see note below)
+	data[pos++] = 0x41; // "A"
+	
+	// 03: Unused
+	pos++;
+	
+	// 04-8F: BAM entries for each track, in groups  of  four  bytes
+	for (unsigned k = 1; k <= 35; k++) {
+		if (k == 18) {
+			data[pos++] = 0; // no free sectors on directory track
+			data[pos++] = 0x00;
+			data[pos++] = 0x00;
+			data[pos++] = 0x00;
+		} else {
+			int sectors = D64Map[k].numberOfSectors;
+			data[pos++] = sectors; // Number of free sectors on this track
+			data[pos++] = 0xFF;    // Occupation bitmap: 1 = sector is free
+			data[pos++] = 0xFF;	   
+			if (sectors == 21) data[pos++] = 0x1F;
+			else if (sectors == 19) data[pos++] = 0x07;
+			else if (sectors == 18) data[pos++] = 0x03;
+			else if (sectors == 17) data[pos++] = 0x01;
+			else assert(0);		
+		}
+	}
+	assert(pos == offset(18,0) + 0x90);
+
+	// 90-9F: Disk Name (padded with $A0)
+	size_t len = strlen(name);
+	for (unsigned k = 0; k < 16; k++)
+		data[pos++] = (len > k) ? name[k] : 0xA0;
+	
+	assert(pos == offset(18,0) + 0xA0);
+	
+	// A0-A1: Filled with $A0
+	data[pos++] = 0xA0;
+	data[pos++] = 0xA0;
+	
+	// A2-A3: Disk ID
+	data[pos++] = 0x56;
+	data[pos++] = 0x54;
+	
+    // A4: Usually $A0
+	data[pos++] = 0xA0;
+	
+	// A5-A6: DOS type
+	data[pos++] = 0x32; // "2"
+	data[pos++] = 0x41; // "A"
+	
+	// A7-AA: Filled with $A0
+	data[pos++] = 0xA0;
+	data[pos++] = 0xA0;
+	data[pos++] = 0xA0;
+	data[pos++] = 0xA0;
+	
+	assert(pos == offset(18,0) + 0xAB);	
+}
+
+bool
+D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, unsigned filesize)
+{
+	int pos;
+	
+	if (nr >= 144) {
+		fprintf(stderr, "Directories with more than 144 entries are not supported\n");
+		return false;
+	}
+
+	fprintf(stderr, "Writing directory entry number %d\n", nr);
+
+	// determine sector and relative sector position
+	uint8_t sector = 1 + (nr / 8);
+	uint8_t rel = (nr % 8) * 0x20;
+	
+	markSectorAsUsed(18, sector);
+
+	// link to this sector if it is not the first
+	if (sector >= 2) {
+		pos = offset(18, sector - 1);
+		data[pos++] = 18;
+		data[pos] = sector;
+	}
+
+	pos = offset(18, sector) + rel;
+	
+	// 00-01: Next directory sector (item 0) or 00 00 (other items)
+	if (nr == 0) {
+		pos++; // don't modify
+		pos++; // don't modify
+	} else {
+		data[pos++] = 0x00;
+		data[pos++] = 0x00;
+	}
+		
+	// 02: File type (0x82 = PRG)
+	data[pos++] = 0x82;
+	
+	// 03-04: Track/sector location of first sector of file
+	data[pos++] = startTrack;
+	data[pos++] = startSector;
+	
+	// 05-14: 16 character filename (in PETASCII, padded with $A0)
+	size_t len = strlen(name);
+	for (unsigned k = 0; k < 16; k++)
+		data[pos++] = (len > k) ? name[k] : 0xA0;
+	
+	assert(pos == offset(18, sector) + ((int)nr * 0x20) + 0x15);
+	
+	// 1E-1F: File size in sectors, low/high byte order
+	pos = offset(18, sector) + rel + 0x1E;
+	filesize += 2; // Each file stores 2 additional bytes containing the load address
+	uint16_t fileSizeInSectors = (filesize % 254 == 0) ? filesize / 254 : filesize / 254 + 1; 
+	data[pos++] = LO_BYTE(fileSizeInSectors);
+	data[pos++] = HI_BYTE(fileSizeInSectors);
+
+	return true;
+}
+
+bool 
+D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
+{
+	uint8_t track = *t;
+	uint8_t sector = *s;
+	
+	int pos = offset(track, sector);
+	uint8_t positionOfLastDataByte = data[pos + 1];
+	
+	if (positionOfLastDataByte == 0xFF) {
+		printf("%d/%d is full. ", track, sector);
+		// No rool in this sector, proceed to next one
+		if (!nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */)) {
+			// Sorry, disk is full
+			return false;
+		}
+		printf("Switching to %d/%d\n", track, sector);
+		// link previous sector with the new one 
+		data[pos++] = track;
+		data[pos] = sector;
+		pos = offset(track, sector);
+		positionOfLastDataByte = 0;
+	}
+	
+	// Write byte
+	if (positionOfLastDataByte == 0) {
+		markSectorAsUsed(track, sector);
+		data[pos + 2] = byte;
+		data[pos + 1] = 0x02;
+	} else {
+		positionOfLastDataByte++;
+		data[pos + positionOfLastDataByte] = byte;
+		data[pos + 1] = positionOfLastDataByte;		
+	}
+	
+	*t = track;
+	*s = sector;
+	
+	return true;
+}
+
+bool 
+D64Archive::writeArchive(Archive *archive)
+{	
+	// Current position of data write ptr
+	uint8_t track = 1, sector = 0;
+		
+	// Clear all tracks and sectors
+	clear();
+	
+	// Write BAM
+	writeBAM(archive->getName());
+			
+	// Loop over all entries in archive	
+	for (int i = 0; i < archive->getNumberOfItems(); i++) {
+		
+		fprintf(stderr, "Writing directory entry %d out of %d (%s)\n", i, archive->getNumberOfItems(), archive->getName());		
+		writeDirectoryEntry(i, archive->getNameOfItem(i), track, sector, archive->getSizeOfItem(i));
+				
+		// Every file is preceded with two bytes containing its load address
+		writeByteToSector(LO_BYTE(archive->getDestinationAddrOfItem(i)), &track, &sector);
+		writeByteToSector(HI_BYTE(archive->getDestinationAddrOfItem(i)), &track, &sector);
+						  
+		// Write raw data to disk
+		int byte;
+		archive->selectItem(i);	
+		while ((byte = archive->getByte()) != EOF) {						
+			writeByteToSector(byte, &track, &sector);
+		}
+		
+		// Item i has been written. Goto next free sector and proceed with the next item
+		(void)nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */);
+	}
+
+	// All items have been written to disk
+	writeToFile("/Users/hoff/tmp/test.d64");
+	
+	return true;
 }
