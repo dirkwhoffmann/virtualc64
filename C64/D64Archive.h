@@ -118,10 +118,6 @@ public:
 	void selectItem(int n);
 	int getByte();
 
-	// Inherited from Archive class...
-	bool isMountable() { return true; }
-	bool isFlashable() { return true; }	
-
 	//! Write to file
 	bool writeToFile(const char *filename);
 	

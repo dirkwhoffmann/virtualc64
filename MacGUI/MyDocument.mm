@@ -2230,7 +2230,7 @@
 	// The implementation is a little tricky. We distinguish two cases:
 	// 1. The PC points to an address that is already visible in some row
 	//    In this case, we simply select the row and don't modify anything else
-	// 2. The PC points to an address that is not yet displayes
+	// 2. The PC points to an address that is not yet displayed
 	//    In that case, we display the PC address in row 0
 	uint16_t rowIndex = 0xffff;
 	uint16_t address = [[c64 cpu] getPC];
@@ -2476,13 +2476,11 @@
 
 - (BOOL)setArchiveWithName:(NSString *)path
 {
-#if 0
+
 	if ((archive = D64Archive::archiveFromArbitraryFile([path UTF8String])) != NULL)
 		return YES;
-#endif	
-	
-	// OLD CODE BELOW
-	
+#if 0	
+	// OLD CODE	
 	if ((archive = T64Archive::archiveFromFile([path UTF8String])) != NULL)
 		return YES;
 
@@ -2494,7 +2492,8 @@
 
 	if ((archive = P00Archive::archiveFromFile([path UTF8String])) != NULL)
 		return YES;
-
+#endif
+	
 	return NO;
 }
 

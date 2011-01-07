@@ -108,11 +108,13 @@ D64Archive *D64Archive::archiveFromFile(const char *filename)
 {
 	D64Archive *archive;
 		
+	fprintf(stderr, "Loading D64 archive from D64 file...\n");
 	archive = new D64Archive();	
 	if (!archive->readFromFile(filename)) {
 		delete archive;
 		archive = NULL;
 	}
+	fprintf(stderr, "D64 archive loaded successfully.\n");
 	
 	return archive;
 }
@@ -120,28 +122,27 @@ D64Archive *D64Archive::archiveFromFile(const char *filename)
 D64Archive *D64Archive::archiveFromArbitraryFile(const char *filename)
 {
 	if (D64Archive::isD64File(filename)) {
-		fprintf(stderr, "Loading D64 archive from D64 file...");
 		return D64Archive::archiveFromFile(filename);
 	}
 
 	// FOR DEBUGGING (CONVERT D64 TO D64)
 	if (D64Archive::isD64File(filename)) {
-		fprintf(stderr, "Creating D64 archive from D64 file...");
+		fprintf(stderr, "Creating D64 archive from D64 file...\n");
 		return D64Archive::archiveFromOtherArchive(D64Archive::archiveFromFile(filename));
 	}
 	
 	if (T64Archive::isT64File(filename)) {
-		fprintf(stderr, "Creating D64 archive from T64 file...");
+		fprintf(stderr, "Creating D64 archive from T64 file...\n");
 		return D64Archive::archiveFromOtherArchive(T64Archive::archiveFromFile(filename));
 	}
 
 	if (PRGArchive::isPRGFile(filename)) {
-		fprintf(stderr, "Creating D64 archive from PRG file...");
+		fprintf(stderr, "Creating D64 archive from PRG file...\n");
 		return D64Archive::archiveFromOtherArchive(PRGArchive::archiveFromFile(filename));
 	}
 
 	if (P00Archive::isP00File(filename)) {
-		fprintf(stderr, "Creating D64 archive from P00 file...");
+		fprintf(stderr, "Creating D64 archive from P00 file...\n");
 		return D64Archive::archiveFromOtherArchive(P00Archive::archiveFromFile(filename));
 	}
 	
@@ -153,6 +154,7 @@ D64Archive *D64Archive::archiveFromOtherArchive(Archive *otherArchive)
 	if (otherArchive == NULL)
 		return NULL;
 	
+	fprintf(stderr, "Creating D64 archive from other archive...\n");
 	D64Archive *archive = new D64Archive();
 	if (!archive->writeArchive(otherArchive)) {
 		delete archive;
@@ -227,9 +229,10 @@ bool D64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
 		n = fread(errors, 1, numberOfErrors, file);
 		assert(n == numberOfErrors);
 	}
-		
-	fprintf(stderr, "D64 Container imported successfully (%d bytes total, tracks = %d)\n", (int)fileProperties.st_size, numTracks);
 
+	fprintf(stderr, "%d bytes read\n", (int)fileProperties.st_size);
+
+#if 0
 	unsigned pos = offset(18, 1);
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
@@ -237,6 +240,7 @@ bool D64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
 		}
 		fprintf(stderr, "\n");
 	}
+#endif
 	
 	return true;
 }

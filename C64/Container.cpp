@@ -21,12 +21,16 @@
 Container::Container()
 {
 	path = NULL;
+	name = NULL;
 }
 
 Container::~Container()
 {
 	if (path)
 		free(path);
+
+	if (name)
+		free(name);
 }
 
 const char *

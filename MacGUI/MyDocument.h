@@ -181,12 +181,9 @@
 	
 	// Selected sprite in VIC debug panel
 	int selectedSprite;
-	
-	// Selected CIA in debug panel
-	// CIAProxy *cia; 
-	
-	//! Reference to the attached archive, e.g., a T64 or D64 container
-	Archive *archive;
+		
+	//! Reference to the attached D64 archive
+	D64Archive *archive;
 
 	//! Reference to the attached cartridge
 	Cartridge *cartridge;
@@ -198,7 +195,7 @@
 
 @property bool warpLoad;
 @property bool alwaysWarp;
-@property Archive *archive;
+@property D64Archive *archive;
 @property Cartridge *cartridge;
 
 - (BOOL)setArchiveWithName:(NSString *)path;

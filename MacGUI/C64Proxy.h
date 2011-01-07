@@ -439,7 +439,7 @@
 - (bool) detachCartridge;
 - (bool) isCartridgeAttached;
 
-- (bool) mountArchive:(Archive *)a;
+- (bool) mountArchive:(D64Archive *)a;
 - (bool) flushArchive:(Archive *)a item:(int)nr;
 
 - (bool) getWarpMode;
