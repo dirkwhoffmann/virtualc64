@@ -138,6 +138,8 @@
 
 #define NUM_INPUT_DEVICES 4
 
+#define BACK_IN_TIME_BUFFER_SIZE 16
+
 enum INPUT_DEVICES {
 	IPD_UNCONNECTED = 0,
 	IPD_KEYBOARD,
@@ -235,6 +237,17 @@ private:
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
 	int port[2];
 			
+	//! BackInTime feature
+	/*! VirtualC64 constantly takes snapshots. This enables the user to revert to a previous state.
+	 All snapshots are stored in this ringbuffer. */
+	Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE]; 
+	
+	//! BackInTime read pointer
+	unsigned backInTimeReadPtr;
+	
+	//! BackInTime write pointer
+	unsigned backInTimeWritePtr;
+
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                             Methods
@@ -256,15 +269,25 @@ public:
 	/*! A (faked) reset is performed by loading a presaved image from disk. */
 	void fastReset();           
 
-	//! Load snapshot
+	//! Load snapshot (TODO: Make function void)
 	bool load(uint8_t **buffer);
 	
-	//! Save snapshot
+	//! Save snapshot (TODO: Make function void)
 	bool save(uint8_t **buffer);
 
 	//! Dump current state into logfile
 	void dumpState();
 	
+	//! Take a snapshot and store it in ringbuffer
+	void takeSnapshot();
+	
+	//! Helper function for load
+	/*! This function is not thread safe, don't call it directly! Call load instead */
+	void _load(uint8_t **buffer);
+
+	//! Helper function for save
+	/*! This function is not thread safe, don't call it directly! Call save instead */
+	void _save(uint8_t **buffer);
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                         Configure

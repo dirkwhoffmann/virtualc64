@@ -16,8 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Last review: 25.7.06
-
 #ifndef _VIRTUAL_COMPONENT_INC
 #define _VIRTUAL_COMPONENT_INC
 

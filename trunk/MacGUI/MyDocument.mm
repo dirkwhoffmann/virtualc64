@@ -33,6 +33,9 @@
 
 	NSLog(@"initialize");
 	
+	V64Snapshot *testSnapshot = [[V64Snapshot alloc] init];
+	[testSnapshot release];
+	
 	// Create a dictionary
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 		
@@ -89,6 +92,7 @@
 			NSLog(@"WARNING: Could not change working directory.");
 	}
 	snapshot = NULL;
+
     return self;
 }
 
@@ -628,7 +632,7 @@
 {	
 	[timerLock lock];
 	
-	// Do 6 times a second...
+	// Do 6 times a second ...
 	animationCounter++;
 
 	// Process pending messages
@@ -644,9 +648,10 @@
 	
 	// Do less times ... 
 	if ((animationCounter & 0x01) == 0) {	
+		
 		[self measureEmulationSpeed];
 	}
-
+		
 	[timerLock unlock];
 }
 

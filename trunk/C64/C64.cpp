@@ -39,7 +39,9 @@ threadCleanup(void* thisC64)
 // Main execution loop
 void 
 *runThread(void *thisC64) {
-		
+	
+	uint8_t delay = 0;
+	
 	assert(thisC64 != NULL);
 	
 	C64 *c64 = (C64 *)thisC64;
@@ -59,15 +61,29 @@ void
 	while (1) {		
 		if (!c64->executeOneLine())
 			break;		
-		// c64->rasterlineCycle = 1;
-		if (c64->getFrame() == 0 && c64->getRasterline() == 0)
-			pthread_testcancel();
-	}
 
+		if (c64->getFrame() == 0 && c64->getRasterline() == 0) {
+
+			// Check if thread was requested to terminate
+			pthread_testcancel();
+
+			// Take snapshot once in a while
+			if ((++delay & 0x1F) == 0)
+				c64->takeSnapshot();
+		}
+	}
+	
 	pthread_cleanup_pop(1);
 	pthread_exit(NULL);	
 }
 
+// MOVE BELOW
+void C64::takeSnapshot() 
+{
+	fprintf(stderr, "Taking snapshot\n");
+	backInTimeHistory[backInTimeWritePtr]->initWithContentsOfC64(this);
+	backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
+}
 
 // --------------------------------------------------------------------------------
 // Class methods
@@ -121,9 +137,14 @@ C64::C64()
 	joystick1 = new Joystick;
 	joystick2 = new Joystick;
 		
-	// Configure
-	setNTSC(); // Why NTSC??
+	// Initialize snapshot ringbuffer (BackInTime feature)
+	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
+		backInTimeHistory[i] = new Snapshot();	
+	backInTimeReadPtr = 0;
+	backInTimeWritePtr = 0;
 	
+	// Configure and reset
+	setNTSC(); // Why NTSC??	
 	reset();
 	
 	// Remove after debugging
@@ -198,18 +219,14 @@ void C64::fastReset()
 	delete snapshot;
 }
 
-bool 
-C64::load(uint8_t **buffer)
+void 
+C64::_load(uint8_t **buffer)
 {	
-	uint8_t *old = *buffer;
-	
-	suspend();
-	
-	debug(1, "Loading...\n");
-
+	// uint8_t *old = *buffer;
+		
 	// Load screenshot
 	vic->loadScreenshot(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 
 	// Load internal state
 	cycles = read64(buffer);
@@ -220,42 +237,48 @@ C64::load(uint8_t **buffer)
 	
 	// Load internal state of sub components
 	cpu->load(buffer);
-	debug(2, "%d\n", *buffer - old);
-	// cpu->dumpState();
+	// debug(2, "%d\n", *buffer - old);
 	vic->load(buffer);
-	debug(2, "%d\n", *buffer - old);
-	// vic->dumpState();
+	// debug(2, "%d\n", *buffer - old);
 	sid->load(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	cia1->load(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	cia2->load(buffer);	
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	mem->load(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	keyboard->load(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	iec->load(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	floppy->load(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
+}
+
+bool 
+C64::load(uint8_t **buffer)
+{
+	uint8_t *old = *buffer;
+	
+	suspend();
+	
+	debug(1, "Loading... ");
+	_save(buffer);
+	debug(1, "%d bytes.\n", *buffer - old);
 	
 	resume();
 	return true;
 }
 
-bool 
-C64::save(uint8_t **buffer)
+void 
+C64::_save(uint8_t **buffer)
 {	
-	uint8_t *old = *buffer;
-	
-	suspend();
-	
-	debug(1, "Saving...\n");
-		
+	// uint8_t *old = *buffer;
+			
 	// Save screenshot
 	vic->saveScreenshot(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 
 	// Save internal state
 	write64(buffer, cycles);
@@ -266,30 +289,40 @@ C64::save(uint8_t **buffer)
 	
 	// Save internal state of sub components
 	cpu->save(buffer);
-	debug(2, "%d\n", *buffer - old);
-	// cpu->dumpState();
+	// debug(2, "%d\n", *buffer - old);
 	vic->save(buffer);
-	debug(2, "%d\n", *buffer - old);
-	// vic->dumpState();
+	// debug(2, "%d\n", *buffer - old);
 	sid->save(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	cia1->save(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	cia2->save(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	mem->save(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	keyboard->save(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	iec->save(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
 	floppy->save(buffer);
-	debug(2, "%d\n", *buffer - old);
+	// debug(2, "%d\n", *buffer - old);
+}
+
+bool 
+C64::save(uint8_t **buffer)
+{
+	uint8_t *old = *buffer;
+
+	suspend();
+	
+	debug(1, "Saving... ");
+	_save(buffer);
+	debug(1, "%d bytes.\n", *buffer - old);
 	
 	resume();
 	return true;
 }
-
+	
 void 
 C64::dumpState() {
 	msg("C64:\n");

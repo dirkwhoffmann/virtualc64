@@ -188,9 +188,9 @@
 	//! Reference to the attached cartridge
 	Cartridge *cartridge;
 
-	// Initial snapshot
-	// If unequal NULL, the newly created document will be initialized with the provided snapshot data
-	Snapshot *snapshot;
+	//! Initial snapshot
+	//! If unequal NULL, the newly created document will be initialized with the provided snapshot data
+	Snapshot *snapshot;	
 }
 
 @property bool warpLoad;

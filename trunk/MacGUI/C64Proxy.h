@@ -467,9 +467,11 @@
 // -------------------------------------------------------------------------
 
 @interface V64Snapshot : NSObject {
+	@private
 	Snapshot *snapshot;
 }
 
+// - (id) init;
 + (id) snapshotFromC64:(C64Proxy *)c64;
 + (id) snapshotFromFile:(NSString *)path;
 

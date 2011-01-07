@@ -554,29 +554,47 @@
 
 // --------------------------------------------------------------------------
 //                                  Snapshot
-// -------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 
 @implementation V64Snapshot
 
-- (id) init
+#if 0
++ (id) alloc
 {
-	if (!(self = [super init]))
+	NSLog(@"V64Snapshot::alloc");
+
+	if (!(self = [super alloc]))
 		return nil;
 	
+	return self;
+}
+#endif
+
+- (id) init
+{
+	NSLog(@"V64Snapshot::init");
+	
+	if (!(self = [super init]))
+		return nil;
+
 	snapshot = new Snapshot;
 	return self;
 }
 
 - (void) dealloc
 {	
+	NSLog(@"V64Snapshot::dealloc");
+
 	if (snapshot)
 		delete snapshot;
 	
 	[super dealloc];
 }
 
-+ (id) snapshotFromC64:(C64Proxy *)c64;
++ (id) snapshotFromC64:(C64Proxy *)c64
 {
+	NSLog(@"V64Snapshot::snapshotFromC64");
+
 	V64Snapshot *newSnapshot = [[self alloc] init];
 	
 	if (![newSnapshot readDataFromC64:c64]) {
@@ -587,8 +605,10 @@
 	return newSnapshot;
 }
 
-+ (id) snapshotFromFile:(NSString *)path;
++ (id) snapshotFromFile:(NSString *)path
 {
+	NSLog(@"V64Snapshot::snapshotFromFile");
+
 	V64Snapshot *newSnapshot = [[self alloc] init];
 	
 	if (![newSnapshot readDataFromFile:path]) {
