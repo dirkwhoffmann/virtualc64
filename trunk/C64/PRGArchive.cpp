@@ -46,11 +46,14 @@ PRGArchive *PRGArchive::archiveFromFile(const char *filename)
 {
 	PRGArchive *archive;
 	
+	fprintf(stderr, "Loading PRG archive from PRG file...\n");
 	archive = new PRGArchive();	
 	if (!archive->readFromFile(filename)) {
 		delete archive;
 		archive = NULL;
 	}
+	
+	fprintf(stderr, "PRG archive loaded successfully.\n");
 	return archive;
 }
 
@@ -88,7 +91,7 @@ bool PRGArchive::readDataFromFile(FILE *file, struct stat fileProperties)
 		c = fgetc(file);
 	}
 
-	fprintf(stderr, "PRG Container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
+	// fprintf(stderr, "%d bytes read (out of %d)\n", (int)fileProperties.st_size, size);
 	return true;
 }
 
@@ -118,7 +121,6 @@ const char *PRGArchive::getTypeOfItem(int n)
 uint16_t PRGArchive::getDestinationAddrOfItem(int n)
 {
 	uint16_t result = data[0] + (data[1] << 8);
-	fprintf(stderr, "Will load to location %X\n", result);
 	return result;
 }
 
@@ -148,5 +150,6 @@ int PRGArchive::getByte()
 		fp++;
 	}
 
+	fprintf(stderr, "%02X ", result);
 	return result;
 }

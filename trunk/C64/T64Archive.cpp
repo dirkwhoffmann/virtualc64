@@ -51,11 +51,14 @@ T64Archive *T64Archive::archiveFromFile(const char *filename)
 {
 	T64Archive *archive;
 	
+	fprintf(stderr, "Loading T64 archive from T64 file...\n");
 	archive = new T64Archive();	
 	if (!archive->readFromFile(filename)) {
 		delete archive;
 		archive = NULL;
 	}
+	
+	fprintf(stderr, "T64 archive loaded successfully.\n");
 	return archive;
 }
 
@@ -95,7 +98,7 @@ bool T64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
 		c = fgetc(file);
 	}
 	
-	fprintf(stderr, "T64 Container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
+	fprintf(stderr, "%d bytes read (out of %d)\n", (int)fileProperties.st_size, size);
 	return true;
 }
 

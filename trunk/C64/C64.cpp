@@ -1132,15 +1132,12 @@ C64::flushArchive(Archive *a, int item)
 }
 
 bool 
-C64::mountArchive(Archive *a)
+C64::mountArchive(D64Archive *a)
 {	
-	// Archive loaded and mountable?
-	if (a == NULL || !a->isMountable())
+	if (a == NULL)
 		return false;
-	
-	// Insert disc
-	floppy->insertDisc((D64Archive *)a);
-	
+		
+	floppy->insertDisc(a);	
 	return true;
 }
 

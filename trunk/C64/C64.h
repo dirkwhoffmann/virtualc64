@@ -16,6 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// Release notes for 0.9.3
+//
+// T64 files, PRG files and P00 files can now be mounted as disk
+// Fixed a bug that caused unallocated memory to be freed
+// 
+
+// 
 #ifndef _C64_INC
 #define _C64_INC
 
@@ -373,10 +380,12 @@ public:
 	// void setArchive (Archive *a) { archive = a; }
 	
 	//! Flush specified item from archive into memory and delete archive
+	/*! All archive types are flushable */
 	bool flushArchive(Archive *a, int item);
 	
-	//! Mount specified archive in the virtual disk drive
-	bool mountArchive(Archive *a);
+	//! Mount specified archive in the virtual disk drive.
+	/*! Only D64 archives are mountable */
+	bool mountArchive(D64Archive *a);
 
 	
 	// ---------------------------------------------------------------------------------------------

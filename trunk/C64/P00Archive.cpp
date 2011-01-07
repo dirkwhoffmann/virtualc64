@@ -48,11 +48,14 @@ P00Archive *P00Archive::archiveFromFile(const char *filename)
 {
 	P00Archive *archive;
 
+	fprintf(stderr, "Loading P00 archive from P00 file...\n");
 	archive = new P00Archive();	
 	if (!archive->readFromFile(filename)) {
 		delete archive;
 		archive = NULL;
 	}
+	
+	fprintf(stderr, "P00 archive loaded successfully.\n");
 	return archive;
 }
 
@@ -90,7 +93,7 @@ bool P00Archive::readDataFromFile(FILE *file, struct stat fileProperties)
 		c = fgetc(file);
 	}
 
-	fprintf(stderr, "P00 Container imported successfully (%d bytes total, size = %d)\n", (int)fileProperties.st_size, size);
+	fprintf(stderr, "%d bytes read (out of %d)\n", (int)fileProperties.st_size, size);
 	return true;
 }
 

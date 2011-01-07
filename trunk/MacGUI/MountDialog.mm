@@ -33,23 +33,16 @@
 	if (archive->getNumberOfItems() == 0) {
 		[mountButton setEnabled:false];
 		[flashButton setEnabled:false];
-	} else {
-		[mountButton setEnabled:archive->isMountable()];
-		[flashButton setEnabled:archive->isFlashable()];
 	}
 	[directory reloadData];
 }
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	// SEVERE PROBLEM HERE:
-	// THIS FUNCTION IS INVOKED BEFORE ARCHIVE IS INITIALIZED
-	// IF THE VALUE HAPPENS TO BE GREATER ZERO, WE'LL CRASH HERE!!!!
-	if (archive == NULL) {
+	if (archive == NULL)
 		return 0;
-	} else {
-		return archive->getNumberOfItems();
-	}
+
+	return archive->getNumberOfItems();
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row

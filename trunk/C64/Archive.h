@@ -36,14 +36,6 @@ public:
 	/*! Returns -1, if the file is not found.
 		The function supports the wildcard characters '?' and '*' */
 	int getItemWithName(char *filename);
-
-	//! Is archive mountable?
-	/*! Returns true, iff the archive can be mounted as a disk drive */
-	virtual bool isMountable(void) { return false; }
-
-	//! Is archive flashable?
-	/*! Returns true, iff the archive can be flashed into memory */
-	virtual bool isFlashable(void) { return true; }
 			
 	//! Number of stored items
 	virtual int getNumberOfItems() = 0;
