@@ -192,6 +192,10 @@
 	[cpuTableView setDoubleAction:@selector(doubleClickInCpuTable:)];
 	[memTableView setTarget:self];
 	[memTableView setDoubleAction:@selector(doubleClickInMemTable:)];
+	[historyTableView setTarget:self];
+	[historyTableView setDoubleAction:@selector(doubleClickInHistoryTable:)];
+	// [historyTableView setTarget:self];
+	[historyTableView setAction:@selector(clickInHistoryTable:)];
 		
 	// Create timer
 	cycleCount = 0;
@@ -831,6 +835,13 @@
 	[self refresh];
 }
 
+- (IBAction)backInTimeAction:(id)sender
+{	
+	NSLog(@"Back in time action");
+	[backInTime_panel toggle:self];
+	[self refresh];
+}
+
 - (IBAction)setHardBreakpointAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
@@ -937,6 +948,23 @@
 		[c64 run];
 	
 	[self refresh];
+}
+
+- (IBAction)timeTravelAction:(id)sender
+{	
+	if ([backInTime_panel state] == NSDrawerOpenState) {
+		if ([c64 isHalted]) {
+			[c64 run];
+			[backInTime_panel close];
+		}
+	}
+	if ([backInTime_panel state] == NSDrawerClosedState) {
+		if ([c64 isRunning]) {
+			[c64 halt];
+			[backInTime_panel open];
+			[historyTableView reloadData];
+		}
+	}	
 }
 
 - (IBAction)resetAction:(id)sender
@@ -1335,6 +1363,51 @@
 
 	addr = [[c64 cpu] getAddressOfNextIthInstruction:[sender selectedRow] from:disassembleStartAddr];
 	[self setHardBreakpointAction:[NSNumber numberWithInt:addr]];
+}
+
+- (void)clickInHistoryTable:(id)sender
+{
+	char buf[64];
+	
+	NSLog(@"Click in cheatbox (item %d)", [sender selectedRow]);
+	
+	C64 *myc64 = [c64 c64];
+	Snapshot *s = myc64->getHistoricSnapshot([sender selectedRow]);
+	if (s) {
+		// Dispay time stamp
+		time_t stamp = s->getTimestamp();
+		strftime(buf, sizeof(buf)-1, "Snapshot taken at %H:%M:%S", localtime(&stamp));
+		[historyDateField1 setStringValue:[NSString stringWithUTF8String:buf]];
+			
+		// Display time difference
+		sprintf(buf, "%d seconds ago", (int)difftime(time(NULL),stamp));
+		[historyDateField2 setStringValue:[NSString stringWithUTF8String:buf]];
+		
+		// Enable revert button
+		[revertToSnapshot setEnabled:YES];
+	}	
+}
+
+- (void)doubleClickInHistoryTable:(id)sender
+{
+	NSLog(@"Double click in cheatbox (item %d)", [sender selectedRow]);
+	
+	[self revertToSnapshotAction:sender];	
+}
+
+- (void)revertToSnapshotAction:(id)sender;
+{
+	NSLog(@"revertToSnapshotAction");
+
+	C64 *myc64 = [c64 c64];
+				
+	Snapshot *s = myc64->getHistoricSnapshot([historyTableView selectedRow]);
+	if (s) {
+		[c64 initWithContentsOfSnapshot:s];
+		if ([c64 isHalted])
+			[c64 run];
+		[backInTime_panel close];
+	}
 }
 
 
@@ -2346,8 +2419,15 @@
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	if (aTableView == memTableView)		
-		return 65536/4;
+	if (aTableView == memTableView)	{
+		return 65536/4;		
+	}	
+	if (aTableView == historyTableView) {	
+		C64 *myc64 = [c64 c64];
+		fprintf(stderr, "numHistoric = %d", myc64->numHistoricSnapshots());
+		return myc64->numHistoricSnapshots();
+		// return 16;
+	}
 	
 	return 128;
 }
@@ -2404,13 +2484,61 @@
 	
 	return nil;
 }
+
+- (id)objectValueForHistoryTableColumn:(NSTableColumn *)aTableColumn row:(int)row
+{
+	NSLog(@"Requesting data for row %d", row);
+
+	// THIS METHOD IS INVOKED FREQUENTLY. MOVE TO CONVERSION STUFF TO SNAPSHOT PROXY CLASS AND CACHE RESULT	
+	// Get snapshot from history buffer
+	C64 *myc64 = [c64 c64];
+	Snapshot *s = myc64->getHistoricSnapshot(row);	
+	if (s == NULL)
+		return nil;
+	NSLog(@"Got snapshot object");
+
+	// Get pointer to raw image data
+	unsigned char *data = (unsigned char *)s->getImageData();
+	assert(data != NULL);
+	NSLog(@"Image data found");
 	
+	// Convert data into an NSImage
+	int width = VIC::TOTAL_SCREEN_WIDTH;
+	int height = VIC::TOTAL_SCREEN_HEIGHT;
+	
+	// Skip first few rows (upper and lower border should be same size)
+	height -= 38;
+	data += 38 * 4 * width;
+	
+	NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data // &tmpbufptr
+																	pixelsWide: width
+																	pixelsHigh: height // better call snapshot->height
+																 bitsPerSample: 8
+															   samplesPerPixel: 4 // ???
+																	  hasAlpha: YES
+																	  isPlanar: NO
+																colorSpaceName: NSCalibratedRGBColorSpace
+																   bytesPerRow: 4*width
+																  bitsPerPixel: 32];	
+	NSImage *image = [[NSImage alloc] initWithSize:[bmp size]];
+	[image addRepresentation: bmp];
+	[bmp release];
+
+	[image setSize:NSMakeSize(120,80)];
+	// NSAttributedString *str = [self meltImageAndString:image string:@"\n3 seconds ago\nbla bla\n"];
+	// return str;
+	return image;
+}
+
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
 	if (aTableView == cpuTableView)
 		return [self objectValueForCpuTableColumn:aTableColumn row:row];
 	if (aTableView == memTableView)
 		return [self objectValueForMemTableColumn:aTableColumn row:row];
+	if (aTableView == historyTableView)
+		return [self objectValueForHistoryTableColumn:aTableColumn row:row];	
+	
 	return nil;
 }
 
@@ -2461,18 +2589,6 @@
 			[aCell setTextColor:[NSColor blackColor]];
 		}
 	} 
-#if 0
-	else if (aTableView == memTableView) {
-		if ([[aTableColumn identifier] isEqual:@"hex0"])
-			[aCell setTextColor:([[c64 mem] getWatchpointType:(0+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
-		else if ([[aTableColumn identifier] isEqual:@"hex1"])
-			[aCell setTextColor:([[c64 mem] getWatchpointType:(1+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
-		else if ([[aTableColumn identifier] isEqual:@"hex2"])
-			[aCell setTextColor:([[c64 mem] getWatchpointType:(2+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];
-		else if ([[aTableColumn identifier] isEqual:@"hex3"])
-			[aCell setTextColor:([[c64 mem] getWatchpointType:(3+4*row)] != Memory::NO_WATCHPOINT ? [NSColor redColor] : [NSColor blackColor])];		
-	}
-#endif
 }
 
 // --------------------------------------------------------------------------------

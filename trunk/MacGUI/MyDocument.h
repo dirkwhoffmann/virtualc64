@@ -50,6 +50,7 @@
 	// Main screen
 	IBOutlet VICScreen *screen;
 	IBOutlet NSDrawer *debug_panel;
+	IBOutlet NSDrawer *backInTime_panel;
 	IBOutlet NSButton *drive;
 	IBOutlet NSButton *eject;
 	IBOutlet NSButton *cartridgeIcon;
@@ -63,6 +64,12 @@
 	IBOutlet NSStepper *clockSpeedStepper;
 	IBOutlet NSButton *warpMode;
 
+	// BackInTime pabel
+	IBOutlet NSTableView *historyTableView;
+	IBOutlet NSButton *revertToSnapshot;
+	IBOutlet NSTextField *historyDateField1;
+	IBOutlet NSTextField *historyDateField2;
+	
 	// Debug panel (common)
 	IBOutlet NSMatrix *dezHexSelector;
 	
@@ -204,11 +211,17 @@
 // Main screen
 - (IBAction)fullscreenAction:(id)sender;
 - (IBAction)debugAction:(id)sender;
+- (IBAction)backInTimeAction:(id)sender;
 - (IBAction)stepperAction:(id)sender;
 - (IBAction)warpAction:(id)sender;
 - (IBAction)ejectAction:(id)sender;
 - (IBAction)driveAction:(id)sender;
 - (IBAction)cartridgeEjectAction:(id)sender;
+
+// Timetravel panel
+- (void)revertToSnapshotAction:(id)sender;
+- (void)clickInHistoryTable:(id)sender;
+- (void)doubleClickInHistoryTable:(id)sender;
 
 // Debug menu
 - (IBAction)hideSpritesAction:(id)sender;
@@ -245,6 +258,7 @@
 - (IBAction)pauseAction:(id)sender;
 - (IBAction)continueAction:(id)sender;
 - (IBAction)resetAction:(id)sender;
+- (IBAction)timeTravelAction:(id)sender;
 - (IBAction)fastResetAction:(id)sender;
 - (IBAction)showPreferencesAction:(id)sender;
 
@@ -360,6 +374,7 @@
 // Getter
 - (id)objectValueForCpuTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
 - (id)objectValueForMemTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
+- (id)objectValueForHistoryTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
 
 // Setter

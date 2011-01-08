@@ -2,20 +2,21 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10H574</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
 		<string key="IBDocument.InterfaceBuilderVersion">788</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">788</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="38"/>
-			<integer value="6"/>
+			<integer value="1845"/>
 			<integer value="1017"/>
+			<integer value="770"/>
 			<integer value="1873"/>
+			<integer value="2024"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -70,6 +71,7 @@
 							<string>5AE8C652-052D-45A8-BF8C-DBEFB550E34F</string>
 							<string>8B02FC8B-F607-438F-AC91-AC0880622B18</string>
 							<string>944C7CF2-507D-458E-A37A-DA6E3FC68049</string>
+							<string>C3789870-2CD2-49F8-934D-1F89FB4FA381</string>
 							<string>D88C46BA-2484-4508-88A3-BD022DF84B51</string>
 							<string>F0905B6B-C07D-45C1-B277-16ACCA3274BA</string>
 							<string>NSToolbarCustomizeToolbarItem</string>
@@ -229,6 +231,28 @@
 								<bool key="NSToolbarItemEnabled">YES</bool>
 								<bool key="NSToolbarItemAutovalidates">YES</bool>
 								<int key="NSToolbarItemTag">30</int>
+								<bool key="NSToolbarIsUserRemovable">YES</bool>
+								<int key="NSToolbarItemVisibilityPriority">0</int>
+							</object>
+							<object class="NSToolbarItem" id="666194094">
+								<object class="NSMutableString" key="NSToolbarItemIdentifier">
+									<characters key="NS.bytes">C3789870-2CD2-49F8-934D-1F89FB4FA381</characters>
+								</object>
+								<string key="NSToolbarItemLabel">Time travel</string>
+								<string key="NSToolbarItemPaletteLabel">Time travel</string>
+								<string key="NSToolbarItemToolTip"/>
+								<nil key="NSToolbarItemView"/>
+								<object class="NSCustomResource" key="NSToolbarItemImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">time2</string>
+								</object>
+								<nil key="NSToolbarItemTarget"/>
+								<nil key="NSToolbarItemAction"/>
+								<string key="NSToolbarItemMinSize">{0, 0}</string>
+								<string key="NSToolbarItemMaxSize">{0, 0}</string>
+								<bool key="NSToolbarItemEnabled">YES</bool>
+								<bool key="NSToolbarItemAutovalidates">YES</bool>
+								<int key="NSToolbarItemTag">21</int>
 								<bool key="NSToolbarIsUserRemovable">YES</bool>
 								<int key="NSToolbarItemVisibilityPriority">0</int>
 							</object>
@@ -435,6 +459,7 @@
 						<reference ref="790764339"/>
 						<reference ref="529717122"/>
 						<reference ref="14802826"/>
+						<reference ref="666194094"/>
 						<reference ref="726696914"/>
 						<reference ref="636815256"/>
 						<reference ref="771654827"/>
@@ -445,19 +470,22 @@
 					</object>
 					<object class="NSMutableArray" key="NSToolbarIBDefaultItems">
 						<bool key="EncodedWithXMLCoder">YES</bool>
+						<reference ref="726696914"/>
+						<reference ref="264428634"/>
 						<reference ref="636815256"/>
 						<reference ref="771654827"/>
 						<reference ref="880895324"/>
 						<reference ref="814685338"/>
 						<reference ref="264428634"/>
-						<reference ref="636134006"/>
+						<reference ref="352149274"/>
 						<reference ref="807727096"/>
 						<reference ref="781988016"/>
+						<reference ref="352149274"/>
 						<reference ref="14802826"/>
+						<reference ref="666194094"/>
 						<reference ref="352149274"/>
 						<reference ref="264428634"/>
 						<reference ref="529717122"/>
-						<reference ref="726696914"/>
 					</object>
 					<object class="NSMutableArray" key="NSToolbarIBSelectableItems">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -797,7 +825,7 @@
 				<nil key="NSNextResponder"/>
 				<string key="NSContentSize">{300, 473}</string>
 				<string key="NSMinContentSize">{50, 50}</string>
-				<string key="NSMaxContentSize">{600, 400}</string>
+				<string key="NSMaxContentSize">{600, 600}</string>
 				<int key="NSPreferredEdge">0</int>
 				<double key="NSLeadingOffset">15</double>
 				<double key="NSTrailingOffset">15</double>
@@ -812,7 +840,7 @@
 					<object class="NSTabView" id="456711377">
 						<reference key="NSNextResponder" ref="341283785"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{2, 14}, {299, 372}}</string>
+						<string key="NSFrame">{{2, 10}, {299, 372}}</string>
 						<reference key="NSSuperview" ref="341283785"/>
 						<object class="NSMutableArray" key="NSTabViewItems">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1542,6 +1570,7 @@
 													<int key="NSsFlags">1</int>
 													<reference key="NSTarget" ref="718932001"/>
 													<string key="NSAction">_doScroller:</string>
+													<double key="NSCurValue">0.0037593984962406013</double>
 													<double key="NSPercent">0.44196429999999998</double>
 												</object>
 												<object class="NSClipView" id="962726180">
@@ -4451,6 +4480,7 @@
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="280889329"/>
 									<string key="NSAction">_doScroller:</string>
+									<double key="NSCurValue">0.0023201856148491878</double>
 									<double key="NSPercent">0.23013700000000001</double>
 								</object>
 								<object class="NSClipView" id="793709059">
@@ -4911,6 +4941,208 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
 				<string key="NSMaxSize">{480, 292}</string>
+			</object>
+			<object class="NSCustomView" id="744615794">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">274</int>
+				<object class="NSMutableArray" key="NSSubviews">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<object class="NSButton" id="87375320">
+						<reference key="NSNextResponder" ref="744615794"/>
+						<int key="NSvFlags">293</int>
+						<string key="NSFrame">{{24, 8}, {159, 32}}</string>
+						<reference key="NSSuperview" ref="744615794"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSButtonCell" key="NSCell" id="436278431">
+							<int key="NSCellFlags">604110336</int>
+							<int key="NSCellFlags2">134217728</int>
+							<string key="NSContents">Revert to snapshot</string>
+							<reference key="NSSupport" ref="237492425"/>
+							<reference key="NSControlView" ref="87375320"/>
+							<int key="NSButtonFlags">-2038284033</int>
+							<int key="NSButtonFlags2">129</int>
+							<string key="NSAlternateContents"/>
+							<string type="base64-UTF8" key="NSKeyEquivalent">DQ</string>
+							<int key="NSPeriodicDelay">200</int>
+							<int key="NSPeriodicInterval">25</int>
+						</object>
+					</object>
+					<object class="NSTextField" id="972535627">
+						<reference key="NSNextResponder" ref="744615794"/>
+						<int key="NSvFlags">269</int>
+						<string key="NSFrame">{{1, 334}, {206, 14}}</string>
+						<reference key="NSSuperview" ref="744615794"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="979534122">
+							<int key="NSCellFlags">68288064</int>
+							<int key="NSCellFlags2">138544128</int>
+							<string key="NSContents">taken the following snapshots</string>
+							<reference key="NSSupport" ref="26"/>
+							<reference key="NSControlView" ref="972535627"/>
+							<reference key="NSBackgroundColor" ref="567631968"/>
+							<object class="NSColor" key="NSTextColor" id="634255095">
+								<int key="NSColorSpace">6</int>
+								<string key="NSCatalogName">System</string>
+								<string key="NSColorName">disabledControlTextColor</string>
+								<object class="NSColor" key="NSColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+								</object>
+							</object>
+						</object>
+					</object>
+					<object class="NSTextField" id="813126128">
+						<reference key="NSNextResponder" ref="744615794"/>
+						<int key="NSvFlags">269</int>
+						<string key="NSFrame">{{10, 350}, {187, 14}}</string>
+						<reference key="NSSuperview" ref="744615794"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="192584701">
+							<int key="NSCellFlags">68288064</int>
+							<int key="NSCellFlags2">138544128</int>
+							<string key="NSContents">VirtualC64 has recently</string>
+							<reference key="NSSupport" ref="26"/>
+							<reference key="NSControlView" ref="813126128"/>
+							<reference key="NSBackgroundColor" ref="567631968"/>
+							<reference key="NSTextColor" ref="634255095"/>
+						</object>
+					</object>
+					<object class="NSTextField" id="341382582">
+						<reference key="NSNextResponder" ref="744615794"/>
+						<int key="NSvFlags">269</int>
+						<string key="NSFrame">{{10, 368}, {187, 17}}</string>
+						<reference key="NSSuperview" ref="744615794"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="416319014">
+							<int key="NSCellFlags">68288064</int>
+							<int key="NSCellFlags2">138413056</int>
+							<string key="NSContents">Cheat box</string>
+							<reference key="NSSupport" ref="237492425"/>
+							<reference key="NSControlView" ref="341382582"/>
+							<reference key="NSBackgroundColor" ref="567631968"/>
+							<reference key="NSTextColor" ref="148931887"/>
+						</object>
+					</object>
+					<object class="NSScrollView" id="725702831">
+						<reference key="NSNextResponder" ref="744615794"/>
+						<int key="NSvFlags">274</int>
+						<object class="NSMutableArray" key="NSSubviews">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="NSClipView" id="545384796">
+								<reference key="NSNextResponder" ref="725702831"/>
+								<int key="NSvFlags">2304</int>
+								<object class="NSMutableArray" key="NSSubviews">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<object class="NSTableView" id="296909516">
+										<reference key="NSNextResponder" ref="545384796"/>
+										<int key="NSvFlags">256</int>
+										<string key="NSFrameSize">{179, 273}</string>
+										<reference key="NSSuperview" ref="545384796"/>
+										<bool key="NSEnabled">YES</bool>
+										<object class="_NSCornerView" key="NSCornerView">
+											<nil key="NSNextResponder"/>
+											<int key="NSvFlags">-2147483392</int>
+											<string key="NSFrame">{{224, 0}, {16, 17}}</string>
+										</object>
+										<object class="NSMutableArray" key="NSTableColumns">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSTableColumn" id="412013764">
+												<double key="NSWidth">176</double>
+												<double key="NSMinWidth">40</double>
+												<double key="NSMaxWidth">1000</double>
+												<object class="NSTableHeaderCell" key="NSHeaderCell">
+													<int key="NSCellFlags">75628096</int>
+													<int key="NSCellFlags2">2048</int>
+													<string key="NSContents">Snapshot history</string>
+													<reference key="NSSupport" ref="26"/>
+													<object class="NSColor" key="NSBackgroundColor">
+														<int key="NSColorSpace">3</int>
+														<bytes key="NSWhite">MC4zMzMzMzI5ODU2AA</bytes>
+													</object>
+													<reference key="NSTextColor" ref="1046851125"/>
+												</object>
+												<object class="NSImageCell" key="NSDataCell" id="944725385">
+													<int key="NSCellFlags">67239424</int>
+													<int key="NSCellFlags2">33554432</int>
+													<reference key="NSSupport" ref="237492425"/>
+													<int key="NSAlign">0</int>
+													<int key="NSScale">2</int>
+													<int key="NSStyle">0</int>
+													<bool key="NSAnimates">NO</bool>
+												</object>
+												<int key="NSResizingMask">3</int>
+												<bool key="NSIsResizeable">YES</bool>
+												<reference key="NSTableView" ref="296909516"/>
+											</object>
+										</object>
+										<double key="NSIntercellSpacingWidth">3</double>
+										<double key="NSIntercellSpacingHeight">2</double>
+										<reference key="NSBackgroundColor" ref="379252191"/>
+										<reference key="NSGridColor" ref="359787203"/>
+										<double key="NSRowHeight">96</double>
+										<int key="NSTvFlags">-1765801984</int>
+										<reference key="NSDelegate"/>
+										<reference key="NSDataSource"/>
+										<int key="NSColumnAutoresizingStyle">4</int>
+										<int key="NSDraggingSourceMaskForLocal">15</int>
+										<int key="NSDraggingSourceMaskForNonLocal">0</int>
+										<bool key="NSAllowsTypeSelect">YES</bool>
+										<int key="NSTableViewDraggingDestinationStyle">0</int>
+									</object>
+								</object>
+								<string key="NSFrame">{{1, 1}, {179, 273}}</string>
+								<reference key="NSSuperview" ref="725702831"/>
+								<reference key="NSNextKeyView" ref="296909516"/>
+								<reference key="NSDocView" ref="296909516"/>
+								<reference key="NSBGColor" ref="806774386"/>
+								<int key="NScvFlags">4</int>
+							</object>
+							<object class="NSScroller" id="518193292">
+								<reference key="NSNextResponder" ref="725702831"/>
+								<int key="NSvFlags">-2147483392</int>
+								<string key="NSFrame">{{224, 17}, {15, 102}}</string>
+								<reference key="NSSuperview" ref="725702831"/>
+								<reference key="NSTarget" ref="725702831"/>
+								<string key="NSAction">_doScroller:</string>
+								<double key="NSCurValue">0.014545454545454552</double>
+								<double key="NSPercent">0.99710144927536237</double>
+							</object>
+							<object class="NSScroller" id="609128419">
+								<reference key="NSNextResponder" ref="725702831"/>
+								<int key="NSvFlags">-2147483392</int>
+								<string key="NSFrame">{{1, 294}, {168, 15}}</string>
+								<reference key="NSSuperview" ref="725702831"/>
+								<int key="NSsFlags">1</int>
+								<reference key="NSTarget" ref="725702831"/>
+								<string key="NSAction">_doScroller:</string>
+								<double key="NSCurValue">0.21229050279329609</double>
+								<double key="NSPercent">0.99476439790575921</double>
+							</object>
+						</object>
+						<string key="NSFrame">{{14, 50}, {181, 275}}</string>
+						<reference key="NSSuperview" ref="744615794"/>
+						<reference key="NSNextKeyView" ref="545384796"/>
+						<int key="NSsFlags">562</int>
+						<reference key="NSVScroller" ref="518193292"/>
+						<reference key="NSHScroller" ref="609128419"/>
+						<reference key="NSContentView" ref="545384796"/>
+						<bytes key="NSScrollAmts">QSAAAEEgAABCxAAAQsQAAA</bytes>
+					</object>
+				</object>
+				<string key="NSFrameSize">{210, 389}</string>
+				<reference key="NSSuperview"/>
+				<string key="NSClassName">NSView</string>
+			</object>
+			<object class="NSDrawer" id="82105302">
+				<nil key="NSNextResponder"/>
+				<string key="NSContentSize">{210, 473}</string>
+				<string key="NSMinContentSize">{50, 50}</string>
+				<string key="NSMaxContentSize">{400, 600}</string>
+				<int key="NSPreferredEdge">2</int>
+				<double key="NSLeadingOffset">15</double>
+				<double key="NSTrailingOffset">15</double>
+				<nil key="NSParentWindow"/>
+				<nil key="NSDelegate"/>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -6564,6 +6796,94 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					</object>
 					<int key="connectionID">2022</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">contentView</string>
+						<reference key="source" ref="82105302"/>
+						<reference key="destination" ref="744615794"/>
+					</object>
+					<int key="connectionID">2028</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">parentWindow</string>
+						<reference key="source" ref="82105302"/>
+						<reference key="destination" ref="811244080"/>
+					</object>
+					<int key="connectionID">2029</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">backInTime_panel</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="82105302"/>
+					</object>
+					<int key="connectionID">2030</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">historyTableView</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="296909516"/>
+					</object>
+					<int key="connectionID">2052</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">dataSource</string>
+						<reference key="source" ref="296909516"/>
+						<reference key="destination" ref="662028313"/>
+					</object>
+					<int key="connectionID">2053</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="296909516"/>
+						<reference key="destination" ref="662028313"/>
+					</object>
+					<int key="connectionID">2054</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">historyDateField1</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="813126128"/>
+					</object>
+					<int key="connectionID">2074</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">historyDateField2</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="972535627"/>
+					</object>
+					<int key="connectionID">2075</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">timeTravelAction:</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="666194094"/>
+					</object>
+					<int key="connectionID">2076</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">revertToSnapshot</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="87375320"/>
+					</object>
+					<int key="connectionID">2083</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">revertToSnapshotAction:</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="87375320"/>
+					</object>
+					<int key="connectionID">2084</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -6795,6 +7115,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<reference ref="814685338"/>
 							<reference ref="807727096"/>
 							<reference ref="781988016"/>
+							<reference ref="666194094"/>
 						</object>
 						<reference key="parent" ref="811244080"/>
 					</object>
@@ -6884,8 +7205,8 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<reference key="object" ref="341283785"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="456711377"/>
 							<reference ref="1035917507"/>
+							<reference ref="456711377"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">DrawContentView</string>
@@ -6937,8 +7258,8 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<reference ref="640131747"/>
 							<reference ref="815082505"/>
 							<reference ref="46838506"/>
-							<reference ref="718932001"/>
 							<reference ref="215294628"/>
+							<reference ref="718932001"/>
 						</object>
 						<reference key="parent" ref="355621993"/>
 					</object>
@@ -9602,6 +9923,131 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<reference key="object" ref="1025699538"/>
 						<reference key="parent" ref="215294628"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2024</int>
+						<reference key="object" ref="744615794"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="341382582"/>
+							<reference ref="725702831"/>
+							<reference ref="813126128"/>
+							<reference ref="972535627"/>
+							<reference ref="87375320"/>
+						</object>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">BackInTime Drawer Content View</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2025</int>
+						<reference key="object" ref="82105302"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">BackInTime Drawer</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2033</int>
+						<reference key="object" ref="666194094"/>
+						<reference key="parent" ref="250865503"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2035</int>
+						<reference key="object" ref="725702831"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="518193292"/>
+							<reference ref="609128419"/>
+							<reference ref="296909516"/>
+						</object>
+						<reference key="parent" ref="744615794"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2036</int>
+						<reference key="object" ref="518193292"/>
+						<reference key="parent" ref="725702831"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2037</int>
+						<reference key="object" ref="609128419"/>
+						<reference key="parent" ref="725702831"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2038</int>
+						<reference key="object" ref="296909516"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="412013764"/>
+						</object>
+						<reference key="parent" ref="725702831"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2040</int>
+						<reference key="object" ref="412013764"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="944725385"/>
+						</object>
+						<reference key="parent" ref="296909516"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2061</int>
+						<reference key="object" ref="341382582"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="416319014"/>
+						</object>
+						<reference key="parent" ref="744615794"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2062</int>
+						<reference key="object" ref="416319014"/>
+						<reference key="parent" ref="341382582"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2063</int>
+						<reference key="object" ref="813126128"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="192584701"/>
+						</object>
+						<reference key="parent" ref="744615794"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2064</int>
+						<reference key="object" ref="192584701"/>
+						<reference key="parent" ref="813126128"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2066</int>
+						<reference key="object" ref="944725385"/>
+						<reference key="parent" ref="412013764"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2070</int>
+						<reference key="object" ref="972535627"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="979534122"/>
+						</object>
+						<reference key="parent" ref="744615794"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2071</int>
+						<reference key="object" ref="979534122"/>
+						<reference key="parent" ref="972535627"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2081</int>
+						<reference key="object" ref="87375320"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="436278431"/>
+						</object>
+						<reference key="parent" ref="744615794"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2082</int>
+						<reference key="object" ref="436278431"/>
+						<reference key="parent" ref="87375320"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -10068,6 +10514,24 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>2004.ImportedFromIB2</string>
 					<string>2018.IBPluginDependency</string>
 					<string>2019.IBPluginDependency</string>
+					<string>2024.IBEditorWindowLastContentRect</string>
+					<string>2024.IBPluginDependency</string>
+					<string>2025.IBPluginDependency</string>
+					<string>2033.IBPluginDependency</string>
+					<string>2035.IBPluginDependency</string>
+					<string>2036.IBPluginDependency</string>
+					<string>2037.IBPluginDependency</string>
+					<string>2038.IBPluginDependency</string>
+					<string>2040.IBPluginDependency</string>
+					<string>2061.IBPluginDependency</string>
+					<string>2062.IBPluginDependency</string>
+					<string>2063.IBPluginDependency</string>
+					<string>2064.IBPluginDependency</string>
+					<string>2066.IBPluginDependency</string>
+					<string>2070.IBPluginDependency</string>
+					<string>2071.IBPluginDependency</string>
+					<string>2081.IBPluginDependency</string>
+					<string>2082.IBPluginDependency</string>
 					<string>212.IBPluginDependency</string>
 					<string>212.ImportedFromIB2</string>
 					<string>214.IBPluginDependency</string>
@@ -10828,7 +11292,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{474, 781}, {616, 0}}</string>
+					<string>{{79, 874}, {616, 227}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -10864,9 +11328,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{287, 739}, {480, 270}}</string>
+					<string>{{364, 467}, {480, 270}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{287, 739}, {480, 270}}</string>
+					<string>{{364, 467}, {480, 270}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<boolean value="NO"/>
@@ -10962,6 +11426,24 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{765, 292}, {210, 389}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -10983,7 +11465,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{347, 675}, {300, 389}}</string>
+					<string>{{776, 694}, {300, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11020,9 +11502,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{551, 120}, {652, 432}}</string>
+					<string>{{61, 669}, {652, 432}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{551, 120}, {652, 432}}</string>
+					<string>{{61, 669}, {652, 432}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<integer value="1"/>
@@ -11368,7 +11850,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2022</int>
+			<int key="maxID">2084</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -11481,6 +11963,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmMinutesAction:</string>
 							<string>alarmSecondsAction:</string>
 							<string>alarmTenthAction:</string>
+							<string>backInTimeAction:</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
 							<string>cartridgeEjectAction:</string>
@@ -11503,10 +11986,12 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>ciaSignalPendingBAction:</string>
 							<string>ciaTimerAAction:</string>
 							<string>ciaTimerBAction:</string>
+							<string>clickInHistoryTable:</string>
 							<string>commodoreKeyAction:</string>
 							<string>continueAction:</string>
 							<string>debugAction:</string>
 							<string>doubleClickInCpuTable:</string>
+							<string>doubleClickInHistoryTable:</string>
 							<string>doubleClickInMemTable:</string>
 							<string>driveAction:</string>
 							<string>dumpC64:</string>
@@ -11535,6 +12020,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>pauseAction:</string>
 							<string>pcAction:</string>
 							<string>resetAction:</string>
+							<string>revertToSnapshotAction:</string>
 							<string>runstopAction:</string>
 							<string>runstopRestoreAction:</string>
 							<string>saveScreenshotDialog:</string>
@@ -11552,6 +12038,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>stepOverAction:</string>
 							<string>stepperAction:</string>
 							<string>stopAndGoAction:</string>
+							<string>timeTravelAction:</string>
 							<string>todHoursAction:</string>
 							<string>todInterruptEnabledAction:</string>
 							<string>todMinutesAction:</string>
@@ -11591,6 +12078,11 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -11730,6 +12222,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmMinutesAction:</string>
 							<string>alarmSecondsAction:</string>
 							<string>alarmTenthAction:</string>
+							<string>backInTimeAction:</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
 							<string>cartridgeEjectAction:</string>
@@ -11752,10 +12245,12 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>ciaSignalPendingBAction:</string>
 							<string>ciaTimerAAction:</string>
 							<string>ciaTimerBAction:</string>
+							<string>clickInHistoryTable:</string>
 							<string>commodoreKeyAction:</string>
 							<string>continueAction:</string>
 							<string>debugAction:</string>
 							<string>doubleClickInCpuTable:</string>
+							<string>doubleClickInHistoryTable:</string>
 							<string>doubleClickInMemTable:</string>
 							<string>driveAction:</string>
 							<string>dumpC64:</string>
@@ -11784,6 +12279,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>pauseAction:</string>
 							<string>pcAction:</string>
 							<string>resetAction:</string>
+							<string>revertToSnapshotAction:</string>
 							<string>runstopAction:</string>
 							<string>runstopRestoreAction:</string>
 							<string>saveScreenshotDialog:</string>
@@ -11801,6 +12297,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>stepOverAction:</string>
 							<string>stepperAction:</string>
 							<string>stopAndGoAction:</string>
+							<string>timeTravelAction:</string>
 							<string>todHoursAction:</string>
 							<string>todInterruptEnabledAction:</string>
 							<string>todMinutesAction:</string>
@@ -11893,6 +12390,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">backInTimeAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">cancelMountDialog:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -11981,6 +12482,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">clickInHistoryTable:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">commodoreKeyAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -11994,6 +12499,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">doubleClickInCpuTable:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">doubleClickInHistoryTable:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12109,6 +12618,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">revertToSnapshotAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">runstopAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -12174,6 +12687,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">stopAndGoAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">timeTravelAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12362,6 +12879,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmMinutes</string>
 							<string>alarmSeconds</string>
 							<string>alarmTenth</string>
+							<string>backInTime_panel</string>
 							<string>breakpoint</string>
 							<string>cartridgeEject</string>
 							<string>cartridgeIcon</string>
@@ -12394,6 +12912,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>driveBusy</string>
 							<string>eject</string>
 							<string>greenLED</string>
+							<string>historyDateField1</string>
+							<string>historyDateField2</string>
+							<string>historyTableView</string>
 							<string>info</string>
 							<string>ioSource</string>
 							<string>memTableView</string>
@@ -12402,6 +12923,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>pc</string>
 							<string>ramSource</string>
 							<string>redLED</string>
+							<string>revertToSnapshot</string>
 							<string>romDialog</string>
 							<string>romSource</string>
 							<string>screen</string>
@@ -12462,6 +12984,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>NSDrawer</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
@@ -12495,12 +13018,16 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTableView</string>
+							<string>NSTextField</string>
 							<string>NSButtonCell</string>
 							<string>NSTableView</string>
 							<string>NSTextField</string>
 							<string>MountDialog</string>
 							<string>NSTextField</string>
 							<string>NSButtonCell</string>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>RomDialog</string>
 							<string>NSButtonCell</string>
@@ -12565,6 +13092,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmMinutes</string>
 							<string>alarmSeconds</string>
 							<string>alarmTenth</string>
+							<string>backInTime_panel</string>
 							<string>breakpoint</string>
 							<string>cartridgeEject</string>
 							<string>cartridgeIcon</string>
@@ -12597,6 +13125,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>driveBusy</string>
 							<string>eject</string>
 							<string>greenLED</string>
+							<string>historyDateField1</string>
+							<string>historyDateField2</string>
+							<string>historyTableView</string>
 							<string>info</string>
 							<string>ioSource</string>
 							<string>memTableView</string>
@@ -12605,6 +13136,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>pc</string>
 							<string>ramSource</string>
 							<string>redLED</string>
+							<string>revertToSnapshot</string>
 							<string>romDialog</string>
 							<string>romSource</string>
 							<string>screen</string>
@@ -12774,6 +13306,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">backInTime_panel</string>
+								<string key="candidateClassName">NSDrawer</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">breakpoint</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
@@ -12902,6 +13438,18 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">historyDateField1</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">historyDateField2</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">historyTableView</string>
+								<string key="candidateClassName">NSTableView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">info</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
@@ -12931,6 +13479,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">redLED</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">revertToSnapshot</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -14024,6 +14576,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				<string>stepInto32</string>
 				<string>stepOut32</string>
 				<string>stepOver32</string>
+				<string>time2</string>
 				<string>warpOff</string>
 				<string>warpOn</string>
 				<string>window_fullscreen</string>
@@ -14047,6 +14600,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				<string>{32, 32}</string>
 				<string>{32, 32}</string>
 				<string>{32, 32}</string>
+				<string>{48, 48}</string>
 				<string>{18, 18}</string>
 				<string>{18, 18}</string>
 				<string>{32, 32}</string>
