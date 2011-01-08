@@ -2495,12 +2495,10 @@
 	Snapshot *s = myc64->getHistoricSnapshot(row);	
 	if (s == NULL)
 		return nil;
-	NSLog(@"Got snapshot object");
 
 	// Get pointer to raw image data
 	unsigned char *data = (unsigned char *)s->getImageData();
 	assert(data != NULL);
-	NSLog(@"Image data found");
 	
 	// Convert data into an NSImage
 	int width = VIC::TOTAL_SCREEN_WIDTH;

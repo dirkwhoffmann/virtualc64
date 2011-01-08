@@ -150,6 +150,6 @@ int PRGArchive::getByte()
 		fp++;
 	}
 
-	fprintf(stderr, "%02X ", result);
+	// fprintf(stderr, "%02X ", result);
 	return result;
 }
