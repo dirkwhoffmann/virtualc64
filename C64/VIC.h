@@ -452,9 +452,12 @@ public:
 	//! Destructor
 	~VIC();
 	
-	//! Get current screen buffer
+	//! Get screen buffer
 	inline void *screenBuffer() { return (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1; }
-	
+
+	//! Get current screen buffer (DEPRECATED)
+	// inline void *getCurrentScreenBuffer() { return currentScreenBuffer; }
+
 	//! Reset the VIC chip to its initial state
 	void reset();
 	

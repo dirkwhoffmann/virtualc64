@@ -78,11 +78,39 @@ void
 }
 
 // MOVE BELOW
-void C64::takeSnapshot() 
+void 
+C64::takeSnapshot() 
 {
 	fprintf(stderr, "Taking snapshot\n");
 	backInTimeHistory[backInTimeWritePtr]->initWithContentsOfC64(this);
 	backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
+}
+
+unsigned 
+C64::numHistoricSnapshots()
+{
+	for (int i = BACK_IN_TIME_BUFFER_SIZE - 1; i >= 0; i--) {
+		if (backInTimeHistory[i]->getSize() != 0) 
+			return i + 1;
+	}
+	return 0;
+}
+
+Snapshot *
+C64::getHistoricSnapshot(int nr)
+{
+	if (nr >= BACK_IN_TIME_BUFFER_SIZE)
+		return NULL;
+	
+	int pos = (BACK_IN_TIME_BUFFER_SIZE + backInTimeWritePtr - 1 - nr) % BACK_IN_TIME_BUFFER_SIZE;
+
+	Snapshot *snapshot = backInTimeHistory[pos];
+	assert(snapshot != NULL);
+	
+	if (snapshot->getSize() == 0)
+		return NULL;
+
+	return snapshot;
 }
 
 // --------------------------------------------------------------------------------
@@ -140,7 +168,6 @@ C64::C64()
 	// Initialize snapshot ringbuffer (BackInTime feature)
 	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
 		backInTimeHistory[i] = new Snapshot();	
-	backInTimeReadPtr = 0;
 	backInTimeWritePtr = 0;
 	
 	// Configure and reset
@@ -264,7 +291,7 @@ C64::load(uint8_t **buffer)
 	suspend();
 	
 	debug(1, "Loading... ");
-	_save(buffer);
+	_load(buffer);
 	debug(1, "%d bytes.\n", *buffer - old);
 	
 	resume();

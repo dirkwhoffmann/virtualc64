@@ -30,6 +30,8 @@ private:
 
 	//! Size of a snapshot file in bytes
 	static const int MAX_SNAPSHOT_SIZE = 2000000; // 1831822; 
+
+private:
 	
 	//! Version number (major)
 	uint8_t major;
@@ -37,11 +39,14 @@ private:
 	//! Version number (minor)
 	uint8_t minor;
 	
+	//! Date and time of snapshot creation
+	time_t timestamp;
+	
 	//! Binary snapshot data
 	uint8_t data[MAX_SNAPSHOT_SIZE];
 		
 	//! Copy of the screen buffer
-	int screen[512 * 512];
+	uint32_t screen[512 * 512];
 	
 	//! Actual snapshot size
 	int size;
@@ -70,6 +75,14 @@ public:
 	//! Initialize virtual computer with snapshot data
 	bool writeToC64(C64 *c64);
 
+	//! Return snapshot size
+	int getSize() {	return size; }
+
+	//! Return timestamp
+	time_t getTimestamp() { return timestamp; }
+
+	//! Return screen buffer
+	uint32_t *getImageData() { return screen; }
 };
 
 #endif

@@ -241,10 +241,7 @@ private:
 	/*! VirtualC64 constantly takes snapshots. This enables the user to revert to a previous state.
 	 All snapshots are stored in this ringbuffer. */
 	Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE]; 
-	
-	//! BackInTime read pointer
-	unsigned backInTimeReadPtr;
-	
+		
 	//! BackInTime write pointer
 	unsigned backInTimeWritePtr;
 
@@ -280,6 +277,14 @@ public:
 	
 	//! Take a snapshot and store it in ringbuffer
 	void takeSnapshot();
+
+	//! Returns the number of previously taken snapshots
+	/*! Returns a number between 0 and BACK_IN_TIME_BUFFER_SIZE */
+	unsigned numHistoricSnapshots();
+	
+	//! Get snapshot from history buffer
+	/*! 0 = latest. Return NULL, if requested snapshot does not exist */
+	Snapshot *getHistoricSnapshot(int nr);
 	
 	//! Helper function for load
 	/*! This function is not thread safe, don't call it directly! Call load instead */
