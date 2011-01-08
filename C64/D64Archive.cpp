@@ -260,7 +260,7 @@ D64Archive::jumpToNextSector(int pos)
 		return pos;
 	}
 
-	fprintf(stderr, "Jumping to %d/%d \n", nTrack, nSector);
+	// fprintf(stderr, "Jumping to %d/%d \n", nTrack, nSector);
 	return nOffset;
 }
 
