@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1845"/>
-			<integer value="1017"/>
-			<integer value="770"/>
-			<integer value="1873"/>
 			<integer value="2024"/>
+			<integer value="44"/>
+			<integer value="1873"/>
+			<integer value="1017"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -736,22 +736,6 @@
 								</object>
 								<int key="NSPeriodicDelay">200</int>
 								<int key="NSPeriodicInterval">25</int>
-							</object>
-						</object>
-						<object class="NSTextField" id="1054439841">
-							<reference key="NSNextResponder" ref="870948684"/>
-							<int key="NSvFlags">256</int>
-							<string key="NSFrame">{{253, 3}, {129, 14}}</string>
-							<reference key="NSSuperview" ref="870948684"/>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSTextFieldCell" key="NSCell" id="611346925">
-								<int key="NSCellFlags">67239424</int>
-								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents"/>
-								<reference key="NSSupport" ref="26"/>
-								<reference key="NSControlView" ref="1054439841"/>
-								<reference key="NSBackgroundColor" ref="567631968"/>
-								<reference key="NSTextColor" ref="148931887"/>
 							</object>
 						</object>
 						<object class="NSButton" id="328428070">
@@ -4947,26 +4931,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSButton" id="87375320">
-						<reference key="NSNextResponder" ref="744615794"/>
-						<int key="NSvFlags">293</int>
-						<string key="NSFrame">{{24, 8}, {159, 32}}</string>
-						<reference key="NSSuperview" ref="744615794"/>
-						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="436278431">
-							<int key="NSCellFlags">604110336</int>
-							<int key="NSCellFlags2">134217728</int>
-							<string key="NSContents">Revert to snapshot</string>
-							<reference key="NSSupport" ref="237492425"/>
-							<reference key="NSControlView" ref="87375320"/>
-							<int key="NSButtonFlags">-2038284033</int>
-							<int key="NSButtonFlags2">129</int>
-							<string key="NSAlternateContents"/>
-							<string type="base64-UTF8" key="NSKeyEquivalent">DQ</string>
-							<int key="NSPeriodicDelay">200</int>
-							<int key="NSPeriodicInterval">25</int>
-						</object>
-					</object>
 					<object class="NSTextField" id="972535627">
 						<reference key="NSNextResponder" ref="744615794"/>
 						<int key="NSvFlags">269</int>
@@ -4989,6 +4953,38 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 									<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 								</object>
 							</object>
+						</object>
+					</object>
+					<object class="NSTextField" id="486407414">
+						<reference key="NSNextResponder" ref="744615794"/>
+						<int key="NSvFlags">293</int>
+						<string key="NSFrame">{{11, 8}, {187, 14}}</string>
+						<reference key="NSSuperview" ref="744615794"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="884945758">
+							<int key="NSCellFlags">68288064</int>
+							<int key="NSCellFlags2">138544128</int>
+							<string key="NSContents"> to a previous state</string>
+							<reference key="NSSupport" ref="26"/>
+							<reference key="NSControlView" ref="486407414"/>
+							<reference key="NSBackgroundColor" ref="567631968"/>
+							<reference key="NSTextColor" ref="634255095"/>
+						</object>
+					</object>
+					<object class="NSTextField" id="212236395">
+						<reference key="NSNextResponder" ref="744615794"/>
+						<int key="NSvFlags">293</int>
+						<string key="NSFrame">{{11, 23}, {187, 14}}</string>
+						<reference key="NSSuperview" ref="744615794"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="251451968">
+							<int key="NSCellFlags">68288064</int>
+							<int key="NSCellFlags2">138544128</int>
+							<string key="NSContents">Double click to revert</string>
+							<reference key="NSSupport" ref="26"/>
+							<reference key="NSControlView" ref="212236395"/>
+							<reference key="NSBackgroundColor" ref="567631968"/>
+							<reference key="NSTextColor" ref="634255095"/>
 						</object>
 					</object>
 					<object class="NSTextField" id="813126128">
@@ -5036,7 +5032,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 									<object class="NSTableView" id="296909516">
 										<reference key="NSNextResponder" ref="545384796"/>
 										<int key="NSvFlags">256</int>
-										<string key="NSFrameSize">{179, 273}</string>
+										<string key="NSFrameSize">{179, 280}</string>
 										<reference key="NSSuperview" ref="545384796"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="_NSCornerView" key="NSCornerView">
@@ -5090,7 +5086,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 										<int key="NSTableViewDraggingDestinationStyle">0</int>
 									</object>
 								</object>
-								<string key="NSFrame">{{1, 1}, {179, 273}}</string>
+								<string key="NSFrame">{{1, 1}, {179, 280}}</string>
 								<reference key="NSSuperview" ref="725702831"/>
 								<reference key="NSNextKeyView" ref="296909516"/>
 								<reference key="NSDocView" ref="296909516"/>
@@ -5104,7 +5100,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<reference key="NSSuperview" ref="725702831"/>
 								<reference key="NSTarget" ref="725702831"/>
 								<string key="NSAction">_doScroller:</string>
-								<double key="NSCurValue">0.014545454545454552</double>
+								<double key="NSCurValue">0.0072194472194472255</double>
 								<double key="NSPercent">0.99710144927536237</double>
 							</object>
 							<object class="NSScroller" id="609128419">
@@ -5119,7 +5115,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<double key="NSPercent">0.99476439790575921</double>
 							</object>
 						</object>
-						<string key="NSFrame">{{14, 50}, {181, 275}}</string>
+						<string key="NSFrame">{{14, 45}, {181, 282}}</string>
 						<reference key="NSSuperview" ref="744615794"/>
 						<reference key="NSNextKeyView" ref="545384796"/>
 						<int key="NSsFlags">562</int>
@@ -6334,14 +6330,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">driveProgress</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="1054439841"/>
-					</object>
-					<int key="connectionID">1064</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">greenLED</string>
 						<reference key="source" ref="662028313"/>
 						<reference key="destination" ref="328428070"/>
@@ -6822,30 +6810,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">historyTableView</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="296909516"/>
-					</object>
-					<int key="connectionID">2052</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">dataSource</string>
-						<reference key="source" ref="296909516"/>
-						<reference key="destination" ref="662028313"/>
-					</object>
-					<int key="connectionID">2053</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="296909516"/>
-						<reference key="destination" ref="662028313"/>
-					</object>
-					<int key="connectionID">2054</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">historyDateField1</string>
 						<reference key="source" ref="662028313"/>
 						<reference key="destination" ref="813126128"/>
@@ -6870,19 +6834,11 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">revertToSnapshot</string>
+						<string key="label">ttTableView</string>
 						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="87375320"/>
+						<reference key="destination" ref="296909516"/>
 					</object>
-					<int key="connectionID">2083</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">revertToSnapshotAction:</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="87375320"/>
-					</object>
-					<int key="connectionID">2084</int>
+					<int key="connectionID">2085</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -6933,7 +6889,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<reference ref="861850350"/>
 							<reference ref="644831449"/>
 							<reference ref="253954559"/>
-							<reference ref="1054439841"/>
 							<reference ref="328428070"/>
 							<reference ref="76858149"/>
 							<reference ref="16358680"/>
@@ -7047,20 +7002,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<int key="objectID">1707</int>
 						<reference key="object" ref="238873109"/>
 						<reference key="parent" ref="253954559"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1063</int>
-						<reference key="object" ref="1054439841"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="611346925"/>
-						</object>
-						<reference key="parent" ref="870948684"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1708</int>
-						<reference key="object" ref="611346925"/>
-						<reference key="parent" ref="1054439841"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1208</int>
@@ -9932,7 +9873,8 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<reference ref="725702831"/>
 							<reference ref="813126128"/>
 							<reference ref="972535627"/>
-							<reference ref="87375320"/>
+							<reference ref="486407414"/>
+							<reference ref="212236395"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">BackInTime Drawer Content View</string>
@@ -10035,18 +9977,32 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<reference key="parent" ref="972535627"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2081</int>
-						<reference key="object" ref="87375320"/>
+						<int key="objectID">2086</int>
+						<reference key="object" ref="212236395"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="436278431"/>
+							<reference ref="251451968"/>
 						</object>
 						<reference key="parent" ref="744615794"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2082</int>
-						<reference key="object" ref="436278431"/>
-						<reference key="parent" ref="87375320"/>
+						<int key="objectID">2087</int>
+						<reference key="object" ref="251451968"/>
+						<reference key="parent" ref="212236395"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2088</int>
+						<reference key="object" ref="486407414"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="884945758"/>
+						</object>
+						<reference key="parent" ref="744615794"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2089</int>
+						<reference key="object" ref="884945758"/>
+						<reference key="parent" ref="486407414"/>
 					</object>
 				</object>
 			</object>
@@ -10058,7 +10014,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>-3.ImportedFromIB2</string>
 					<string>1004.IBEditorWindowLastContentRect</string>
 					<string>1004.IBPluginDependency</string>
-					<string>1004.IBViewEditorWindowController.showingLayoutRectangles</string>
 					<string>1004.IBWindowTemplateEditedContentRect</string>
 					<string>1004.ImportedFromIB2</string>
 					<string>1004.windowTemplate.hasMinSize</string>
@@ -10102,8 +10057,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>1052.IBAttributePlaceholdersKey</string>
 					<string>1052.IBPluginDependency</string>
 					<string>1052.ImportedFromIB2</string>
-					<string>1063.IBPluginDependency</string>
-					<string>1063.ImportedFromIB2</string>
 					<string>1208.IBAttributePlaceholdersKey</string>
 					<string>1208.IBPluginDependency</string>
 					<string>1208.ImportedFromIB2</string>
@@ -10128,8 +10081,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>1706.ImportedFromIB2</string>
 					<string>1707.IBPluginDependency</string>
 					<string>1707.ImportedFromIB2</string>
-					<string>1708.IBPluginDependency</string>
-					<string>1708.ImportedFromIB2</string>
 					<string>1709.IBPluginDependency</string>
 					<string>1709.ImportedFromIB2</string>
 					<string>1710.IBPluginDependency</string>
@@ -10521,6 +10472,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>2035.IBPluginDependency</string>
 					<string>2036.IBPluginDependency</string>
 					<string>2037.IBPluginDependency</string>
+					<string>2038.CustomClassName</string>
 					<string>2038.IBPluginDependency</string>
 					<string>2040.IBPluginDependency</string>
 					<string>2061.IBPluginDependency</string>
@@ -10530,8 +10482,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>2066.IBPluginDependency</string>
 					<string>2070.IBPluginDependency</string>
 					<string>2071.IBPluginDependency</string>
-					<string>2081.IBPluginDependency</string>
-					<string>2082.IBPluginDependency</string>
+					<string>2086.IBPluginDependency</string>
+					<string>2087.IBPluginDependency</string>
+					<string>2088.IBPluginDependency</string>
+					<string>2089.IBPluginDependency</string>
 					<string>212.IBPluginDependency</string>
 					<string>212.ImportedFromIB2</string>
 					<string>214.IBPluginDependency</string>
@@ -10919,10 +10873,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{110, 377}, {488, 267}}</string>
+					<string>{{106, 353}, {488, 267}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
-					<string>{{110, 377}, {488, 267}}</string>
+					<string>{{106, 353}, {488, 267}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<string>{488, 267}</string>
@@ -10984,8 +10937,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string key="toolTip">Warp mode</string>
 						</object>
 					</object>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<object class="NSMutableDictionary">
@@ -11290,21 +11241,17 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<integer value="1"/>
-					<string>{{79, 874}, {616, 227}}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<integer value="1"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<integer value="1"/>
-					<integer value="1"/>
+					<string>{{79, 1101}, {616, 0}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<integer value="1"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<integer value="1"/>
+					<integer value="1"/>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -11328,9 +11275,11 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{364, 467}, {480, 270}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{364, 467}, {480, 270}}</string>
+					<integer value="1"/>
+					<string>{{107, 851}, {480, 270}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{107, 851}, {480, 270}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<boolean value="NO"/>
@@ -11426,11 +11375,14 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{765, 292}, {210, 389}}</string>
+					<string>{{794, 240}, {210, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>TimeTravelTableView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11502,9 +11454,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{61, 669}, {652, 432}}</string>
+					<string>{{136, 530}, {652, 432}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{61, 669}, {652, 432}}</string>
+					<string>{{136, 530}, {652, 432}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<integer value="1"/>
@@ -11850,7 +11802,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2084</int>
+			<int key="maxID">2089</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -11986,12 +11938,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>ciaSignalPendingBAction:</string>
 							<string>ciaTimerAAction:</string>
 							<string>ciaTimerBAction:</string>
-							<string>clickInHistoryTable:</string>
 							<string>commodoreKeyAction:</string>
 							<string>continueAction:</string>
 							<string>debugAction:</string>
 							<string>doubleClickInCpuTable:</string>
-							<string>doubleClickInHistoryTable:</string>
 							<string>doubleClickInMemTable:</string>
 							<string>driveAction:</string>
 							<string>dumpC64:</string>
@@ -12020,7 +11970,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>pauseAction:</string>
 							<string>pcAction:</string>
 							<string>resetAction:</string>
-							<string>revertToSnapshotAction:</string>
 							<string>runstopAction:</string>
 							<string>runstopRestoreAction:</string>
 							<string>saveScreenshotDialog:</string>
@@ -12200,9 +12149,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -12245,12 +12191,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>ciaSignalPendingBAction:</string>
 							<string>ciaTimerAAction:</string>
 							<string>ciaTimerBAction:</string>
-							<string>clickInHistoryTable:</string>
 							<string>commodoreKeyAction:</string>
 							<string>continueAction:</string>
 							<string>debugAction:</string>
 							<string>doubleClickInCpuTable:</string>
-							<string>doubleClickInHistoryTable:</string>
 							<string>doubleClickInMemTable:</string>
 							<string>driveAction:</string>
 							<string>dumpC64:</string>
@@ -12279,7 +12223,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>pauseAction:</string>
 							<string>pcAction:</string>
 							<string>resetAction:</string>
-							<string>revertToSnapshotAction:</string>
 							<string>runstopAction:</string>
 							<string>runstopRestoreAction:</string>
 							<string>saveScreenshotDialog:</string>
@@ -12482,10 +12425,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">clickInHistoryTable:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">commodoreKeyAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -12499,10 +12438,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">doubleClickInCpuTable:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">doubleClickInHistoryTable:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12615,10 +12550,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">resetAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">revertToSnapshotAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12914,7 +12845,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>greenLED</string>
 							<string>historyDateField1</string>
 							<string>historyDateField2</string>
-							<string>historyTableView</string>
 							<string>info</string>
 							<string>ioSource</string>
 							<string>memTableView</string>
@@ -12942,6 +12872,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>todMinutes</string>
 							<string>todSeconds</string>
 							<string>todTenth</string>
+							<string>ttTableView</string>
 							<string>warpMode</string>
 							<string>x</string>
 							<string>y</string>
@@ -13019,7 +12950,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
-							<string>NSTableView</string>
 							<string>NSTextField</string>
 							<string>NSButtonCell</string>
 							<string>NSTableView</string>
@@ -13047,6 +12977,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>TimeTravelTableView</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
@@ -13127,7 +13058,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>greenLED</string>
 							<string>historyDateField1</string>
 							<string>historyDateField2</string>
-							<string>historyTableView</string>
 							<string>info</string>
 							<string>ioSource</string>
 							<string>memTableView</string>
@@ -13155,6 +13085,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>todMinutes</string>
 							<string>todSeconds</string>
 							<string>todTenth</string>
+							<string>ttTableView</string>
 							<string>warpMode</string>
 							<string>x</string>
 							<string>y</string>
@@ -13446,10 +13377,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">historyTableView</string>
-								<string key="candidateClassName">NSTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
 								<string key="name">info</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
@@ -13556,6 +13483,10 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">todTenth</string>
 								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">ttTableView</string>
+								<string key="candidateClassName">TimeTravelTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">warpMode</string>
@@ -13768,6 +13699,53 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">MacGUI/RomDialog.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TimeTravelTableView</string>
+					<string key="superclassName">NSTableView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>clickAction:</string>
+							<string>doubleClickAction:</string>
+							<string>revertAction:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>clickAction:</string>
+							<string>doubleClickAction:</string>
+							<string>revertAction:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">clickAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">doubleClickAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">revertAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">MacGUI/TimeTravelTableView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

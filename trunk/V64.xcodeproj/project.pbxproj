@@ -88,6 +88,7 @@
 		50DA14A30A6418470022B4A7 /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DA14A20A6418470022B4A7 /* bottom.png */; };
 		50DA154A0A642EA20022B4A7 /* window_fullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DA15490A642EA20022B4A7 /* window_fullscreen.png */; };
 		50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */; };
+		50DF4EDF12D9AE6B0088256B /* TimeTravelTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50DF4EDE12D9AE6B0088256B /* TimeTravelTableView.mm */; };
 		50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA60C3CE95400CB6B43 /* floppy.png */; };
 		50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA90C3CEAB700CB6B43 /* warpOff.png */; };
 		50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */; };
@@ -245,6 +246,8 @@
 		50DA15490A642EA20022B4A7 /* window_fullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = window_fullscreen.png; path = images/window_fullscreen.png; sourceTree = "<group>"; };
 		50DAD6900A736F9B00BB44AC /* VirtualComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualComponent.h; sourceTree = "<group>"; };
 		50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualComponent.cpp; sourceTree = "<group>"; };
+		50DF4EDD12D9AE6B0088256B /* TimeTravelTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTravelTableView.h; sourceTree = "<group>"; };
+		50DF4EDE12D9AE6B0088256B /* TimeTravelTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TimeTravelTableView.mm; sourceTree = "<group>"; };
 		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = floppy.png; path = images/floppy.png; sourceTree = "<group>"; };
 		50E4BFA90C3CEAB700CB6B43 /* warpOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = warpOff.png; path = images/warpOff.png; sourceTree = "<group>"; };
 		50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = warpOn.png; path = images/warpOn.png; sourceTree = "<group>"; };
@@ -419,6 +422,8 @@
 				5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */,
 				50A8F8F10E47171300ACE17D /* RomDialog.h */,
 				50A8F8F20E47171300ACE17D /* RomDialog.mm */,
+				50DF4EDD12D9AE6B0088256B /* TimeTravelTableView.h */,
+				50DF4EDE12D9AE6B0088256B /* TimeTravelTableView.mm */,
 			);
 			path = MacGUI;
 			sourceTree = "<group>";
@@ -709,6 +714,7 @@
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
 				50414727122188FC00A80E0C /* Cartridge.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
+				50DF4EDF12D9AE6B0088256B /* TimeTravelTableView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
