@@ -12,10 +12,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="319"/>
 			<integer value="2024"/>
-			<integer value="38"/>
-			<integer value="1873"/>
 			<integer value="1017"/>
+			<integer value="1873"/>
 			<integer value="5"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -3897,7 +3897,7 @@
 										<object class="NSMatrix" id="636824790">
 											<reference key="NSNextResponder" ref="678882413"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{60, 144}, {216, 18}}</string>
+											<string key="NSFrame">{{57, 144}, {216, 18}}</string>
 											<reference key="NSSuperview" ref="678882413"/>
 											<bool key="NSEnabled">YES</bool>
 											<int key="NSNumRows">1</int>
@@ -9745,68 +9745,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<reference key="parent" ref="606369526"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">804</int>
-						<reference key="object" ref="636824790"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="447702568"/>
-							<reference ref="754256473"/>
-							<reference ref="382627819"/>
-							<reference ref="378397232"/>
-							<reference ref="28016868"/>
-							<reference ref="536391250"/>
-							<reference ref="16708873"/>
-							<reference ref="507090659"/>
-							<reference ref="480691275"/>
-						</object>
-						<reference key="parent" ref="678882413"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1820</int>
-						<reference key="object" ref="447702568"/>
-						<reference key="parent" ref="636824790"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">815</int>
-						<reference key="object" ref="754256473"/>
-						<reference key="parent" ref="636824790"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">814</int>
-						<reference key="object" ref="382627819"/>
-						<reference key="parent" ref="636824790"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">813</int>
-						<reference key="object" ref="378397232"/>
-						<reference key="parent" ref="636824790"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">812</int>
-						<reference key="object" ref="28016868"/>
-						<reference key="parent" ref="636824790"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">811</int>
-						<reference key="object" ref="536391250"/>
-						<reference key="parent" ref="636824790"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">810</int>
-						<reference key="object" ref="16708873"/>
-						<reference key="parent" ref="636824790"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">809</int>
-						<reference key="object" ref="507090659"/>
-						<reference key="parent" ref="636824790"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">808</int>
-						<reference key="object" ref="480691275"/>
-						<reference key="parent" ref="636824790"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">2000</int>
 						<reference key="object" ref="651874792"/>
 						<object class="NSMutableArray" key="children">
@@ -10090,6 +10028,68 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<int key="objectID">2123</int>
 						<reference key="object" ref="770146501"/>
 						<reference key="parent" ref="357226810"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">804</int>
+						<reference key="object" ref="636824790"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="480691275"/>
+							<reference ref="507090659"/>
+							<reference ref="16708873"/>
+							<reference ref="536391250"/>
+							<reference ref="28016868"/>
+							<reference ref="378397232"/>
+							<reference ref="382627819"/>
+							<reference ref="754256473"/>
+							<reference ref="447702568"/>
+						</object>
+						<reference key="parent" ref="678882413"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">808</int>
+						<reference key="object" ref="480691275"/>
+						<reference key="parent" ref="636824790"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">809</int>
+						<reference key="object" ref="507090659"/>
+						<reference key="parent" ref="636824790"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">810</int>
+						<reference key="object" ref="16708873"/>
+						<reference key="parent" ref="636824790"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">811</int>
+						<reference key="object" ref="536391250"/>
+						<reference key="parent" ref="636824790"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">812</int>
+						<reference key="object" ref="28016868"/>
+						<reference key="parent" ref="636824790"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">813</int>
+						<reference key="object" ref="378397232"/>
+						<reference key="parent" ref="636824790"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">814</int>
+						<reference key="object" ref="382627819"/>
+						<reference key="parent" ref="636824790"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">815</int>
+						<reference key="object" ref="754256473"/>
+						<reference key="parent" ref="636824790"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1820</int>
+						<reference key="object" ref="447702568"/>
+						<reference key="parent" ref="636824790"/>
 					</object>
 				</object>
 			</object>
@@ -10573,6 +10573,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>2110.ImportedFromIB2</string>
 					<string>2111.IBPluginDependency</string>
 					<string>2111.ImportedFromIB2</string>
+					<string>2118.IBPluginDependency</string>
 					<string>212.IBPluginDependency</string>
 					<string>212.ImportedFromIB2</string>
 					<string>2120.IBPluginDependency</string>
@@ -11479,6 +11480,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -11505,7 +11507,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{44, 287}, {300, 389}}</string>
+					<string>{{50, 458}, {300, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
