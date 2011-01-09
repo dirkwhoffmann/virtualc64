@@ -75,7 +75,6 @@
 	IBOutlet NSMatrix *dezHexSelector;
 	
 	// Debug panel (CPU)
-	IBOutlet NSTextField *mhzField;
 	IBOutlet NSTableView *cpuTableView;
 	IBOutlet NSTextField *pc;
 	IBOutlet NSTextField *sp;
@@ -89,6 +88,10 @@
 	IBOutlet NSButton *B;
 	IBOutlet NSButton *D;
 	IBOutlet NSButton *V;
+	IBOutlet NSButton *stopAndGoButton;
+	IBOutlet NSButton *stepIntoButton;
+	IBOutlet NSButton *stepOverButton;
+	IBOutlet NSButton *stepOutButton;
 	IBOutlet NSTextField *breakpoint;
 
 	// Debug panel (Memory)
