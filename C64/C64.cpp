@@ -103,7 +103,6 @@ C64::getHistoricSnapshot(int nr)
 		return NULL;
 	
 	int pos = (BACK_IN_TIME_BUFFER_SIZE + backInTimeWritePtr - 1 - nr) % BACK_IN_TIME_BUFFER_SIZE;
-
 	Snapshot *snapshot = backInTimeHistory[pos];
 	assert(snapshot != NULL);
 	

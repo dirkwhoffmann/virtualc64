@@ -22,6 +22,7 @@
 
 @synthesize warpLoad;
 @synthesize alwaysWarp;
+@synthesize c64;
 @synthesize archive;
 @synthesize cartridge;
 
@@ -192,10 +193,6 @@
 	[cpuTableView setDoubleAction:@selector(doubleClickInCpuTable:)];
 	[memTableView setTarget:self];
 	[memTableView setDoubleAction:@selector(doubleClickInMemTable:)];
-	[historyTableView setTarget:self];
-	[historyTableView setDoubleAction:@selector(doubleClickInHistoryTable:)];
-	// [historyTableView setTarget:self];
-	[historyTableView setAction:@selector(clickInHistoryTable:)];
 		
 	// Create timer
 	cycleCount = 0;
@@ -962,7 +959,8 @@
 		if ([c64 isRunning]) {
 			[c64 halt];
 			[backInTime_panel open];
-			[historyTableView reloadData];
+			[ttTableView setItems:self];
+			// [historyTableView reloadData];
 		}
 	}	
 }
@@ -1363,51 +1361,6 @@
 
 	addr = [[c64 cpu] getAddressOfNextIthInstruction:[sender selectedRow] from:disassembleStartAddr];
 	[self setHardBreakpointAction:[NSNumber numberWithInt:addr]];
-}
-
-- (void)clickInHistoryTable:(id)sender
-{
-	char buf[64];
-	
-	NSLog(@"Click in cheatbox (item %d)", [sender selectedRow]);
-	
-	C64 *myc64 = [c64 c64];
-	Snapshot *s = myc64->getHistoricSnapshot([sender selectedRow]);
-	if (s) {
-		// Dispay time stamp
-		time_t stamp = s->getTimestamp();
-		strftime(buf, sizeof(buf)-1, "Snapshot taken at %H:%M:%S", localtime(&stamp));
-		[historyDateField1 setStringValue:[NSString stringWithUTF8String:buf]];
-			
-		// Display time difference
-		sprintf(buf, "%d seconds ago", (int)difftime(time(NULL),stamp));
-		[historyDateField2 setStringValue:[NSString stringWithUTF8String:buf]];
-		
-		// Enable revert button
-		[revertToSnapshot setEnabled:YES];
-	}	
-}
-
-- (void)doubleClickInHistoryTable:(id)sender
-{
-	NSLog(@"Double click in cheatbox (item %d)", [sender selectedRow]);
-	
-	[self revertToSnapshotAction:sender];	
-}
-
-- (void)revertToSnapshotAction:(id)sender;
-{
-	NSLog(@"revertToSnapshotAction");
-
-	C64 *myc64 = [c64 c64];
-				
-	Snapshot *s = myc64->getHistoricSnapshot([historyTableView selectedRow]);
-	if (s) {
-		[c64 initWithContentsOfSnapshot:s];
-		if ([c64 isHalted])
-			[c64 run];
-		[backInTime_panel close];
-	}
 }
 
 
@@ -2419,15 +2372,8 @@
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	if (aTableView == memTableView)	{
+	if (aTableView == memTableView)
 		return 65536/4;		
-	}	
-	if (aTableView == historyTableView) {	
-		C64 *myc64 = [c64 c64];
-		fprintf(stderr, "numHistoric = %d", myc64->numHistoricSnapshots());
-		return myc64->numHistoricSnapshots();
-		// return 16;
-	}
 	
 	return 128;
 }
@@ -2534,8 +2480,6 @@
 		return [self objectValueForCpuTableColumn:aTableColumn row:row];
 	if (aTableView == memTableView)
 		return [self objectValueForMemTableColumn:aTableColumn row:row];
-	if (aTableView == historyTableView)
-		return [self objectValueForHistoryTableColumn:aTableColumn row:row];	
 	
 	return nil;
 }
@@ -2777,6 +2721,12 @@
 		currentAddr += [[c64 cpu] getLengthOfInstruction:[[c64 mem] peek:currentAddr]];
 	}
 	return NO;
+}
+
+- (void)updateTimeTravelInfoText:(NSString *)s1 secondText:(NSString *)s2
+{
+	[historyDateField1 setStringValue:s1];
+	[historyDateField2 setStringValue:s2];	
 }
 
 @end

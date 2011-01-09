@@ -32,6 +32,7 @@
 #import "AudioDevice.h"
 #import "C64Proxy.h"
 #import "JoystickManager.h"
+#import "TimeTravelTableView.h"
 
 @interface MyDocument : NSDocument
 {
@@ -64,8 +65,8 @@
 	IBOutlet NSStepper *clockSpeedStepper;
 	IBOutlet NSButton *warpMode;
 
-	// BackInTime pabel
-	IBOutlet NSTableView *historyTableView;
+	// Time travel panel (cheatbox)
+	IBOutlet TimeTravelTableView *ttTableView;
 	IBOutlet NSButton *revertToSnapshot;
 	IBOutlet NSTextField *historyDateField1;
 	IBOutlet NSTextField *historyDateField2;
@@ -202,6 +203,7 @@
 
 @property bool warpLoad;
 @property bool alwaysWarp;
+@property C64Proxy *c64;
 @property D64Archive *archive;
 @property Cartridge *cartridge;
 
@@ -219,9 +221,7 @@
 - (IBAction)cartridgeEjectAction:(id)sender;
 
 // Timetravel panel
-- (void)revertToSnapshotAction:(id)sender;
-- (void)clickInHistoryTable:(id)sender;
-- (void)doubleClickInHistoryTable:(id)sender;
+- (void)updateTimeTravelInfoText:(NSString *)s1 secondText:(NSString *)s2;
 
 // Debug menu
 - (IBAction)hideSpritesAction:(id)sender;
