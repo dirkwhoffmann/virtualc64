@@ -2164,7 +2164,6 @@
 	[y setIntValue:[[c64 cpu] getY]];
 	[pc setIntValue:[[c64 cpu] getPC]];
 	[sp setIntValue:[[c64 cpu] getSP]];
-	[mhzField setFloatValue:mhz];
 	
 	[N setIntValue:[[c64 cpu] getN]];
 	[V setIntValue:[[c64 cpu] getV]];
@@ -2338,7 +2337,6 @@
 		// CPU panel
 		pc, sp, a, x, y, 
 		N, Z, C, I, B, D, V,
-		// mhzField,
 		// CIA panel
 		ciaDataPortA, ciaDataPortDirectionA, ciaTimerA, ciaLatchedTimerA, 
 		ciaRunningA, ciaOneShotA, ciaCountUnderflowsA, ciaSignalPendingA, ciaInterruptEnableA,
@@ -2348,6 +2346,8 @@
 		alarmHours, alarmMinutes, alarmSeconds, alarmTenth, todInterruptEnabled,
 		// VIC panel
 		VicSpriteX, VicSpriteY, VicSpriteColor, VicRasterline, VicRasterInterrupt, VicDX, VicDY,
+		// Debug controls
+		stepIntoButton, stepOverButton, stepOutButton,
 		NULL };
 	
 	// Enable / disable controls
@@ -2362,8 +2362,12 @@
 	[[memTableView tableColumnWithIdentifier:@"hex2"] setEditable:enabled];
 	[[memTableView tableColumnWithIdentifier:@"hex3"] setEditable:enabled];
 	
-	// The following components are always disabled
-	[mhzField setEnabled:NO];
+	// Change image of stopAndGoButton
+	if (enabled) {
+		[stopAndGoButton setImage:[NSImage imageNamed:@"play32"]];
+	} else {
+		[stopAndGoButton setImage:[NSImage imageNamed:@"pause32"]];			 
+	}
 }
 
 // --------------------------------------------------------------------------------
