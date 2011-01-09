@@ -25,7 +25,7 @@
 @class MyDocument;
 @class VICScreen;
 @class AudioDevice;
-
+@class V64Snapshot;
 
 
 // --------------------------------------------------------------------------
@@ -368,6 +368,7 @@
 
 @end
 
+
 // --------------------------------------------------------------------------
 //                                    C64
 // -------------------------------------------------------------------------
@@ -387,6 +388,9 @@
 	KeyboardProxy *keyboard;
 	IECProxy *iec;
 	VC1541Proxy *vc1541;
+	
+	// Objective-C wrapper around each timetravel snapshot
+	V64Snapshot *timetravelbuffer[BACK_IN_TIME_BUFFER_SIZE];
 }
 
 @property (readonly) C64 *c64;
@@ -446,6 +450,10 @@
 - (void) setWarpMode:(bool)b;
 - (long) getCycles;
 
+// Time travel
+- (int) historicSnapshots;
+- (V64Snapshot *)historicSnapshot:(int)nr;
+
 // Joystick
 - (void) switchInputDevice:(int)devNo;
 - (void) switchInputDevices;
@@ -462,6 +470,7 @@
 
 @end
 
+
 // --------------------------------------------------------------------------
 //                                  Snapshot
 // -------------------------------------------------------------------------
@@ -471,15 +480,21 @@
 	Snapshot *snapshot;
 }
 
-// - (id) init;
+@property Snapshot *snapshot;
+
+- (id) init;
+- (id) initWithSnapshot:(Snapshot *)s;
+
 + (id) snapshotFromC64:(C64Proxy *)c64;
 + (id) snapshotFromFile:(NSString *)path;
 
+- (unsigned char *)imageData;
+- (time_t)timeStamp;
+	
 - (bool) readDataFromC64:(C64Proxy *)c64;
 - (bool) readDataFromFile:(NSString *)path;
 - (bool) writeDataToC64:(C64Proxy *)c64;
 - (bool) writeDataToFile:(NSString *)path;
-
 
 @end
 

@@ -2425,49 +2425,6 @@
 	return nil;
 }
 
-- (id)objectValueForHistoryTableColumn:(NSTableColumn *)aTableColumn row:(int)row
-{
-	NSLog(@"Requesting data for row %d", row);
-
-	// THIS METHOD IS INVOKED FREQUENTLY. MOVE TO CONVERSION STUFF TO SNAPSHOT PROXY CLASS AND CACHE RESULT	
-	// Get snapshot from history buffer
-	C64 *myc64 = [c64 c64];
-	Snapshot *s = myc64->getHistoricSnapshot(row);	
-	if (s == NULL)
-		return nil;
-
-	// Get pointer to raw image data
-	unsigned char *data = (unsigned char *)s->getImageData();
-	assert(data != NULL);
-	
-	// Convert data into an NSImage
-	int width = VIC::TOTAL_SCREEN_WIDTH;
-	int height = VIC::TOTAL_SCREEN_HEIGHT;
-	
-	// Skip first few rows (upper and lower border should be same size)
-	height -= 38;
-	data += 38 * 4 * width;
-	
-	NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data // &tmpbufptr
-																	pixelsWide: width
-																	pixelsHigh: height // better call snapshot->height
-																 bitsPerSample: 8
-															   samplesPerPixel: 4 // ???
-																	  hasAlpha: YES
-																	  isPlanar: NO
-																colorSpaceName: NSCalibratedRGBColorSpace
-																   bytesPerRow: 4*width
-																  bitsPerPixel: 32];	
-	NSImage *image = [[NSImage alloc] initWithSize:[bmp size]];
-	[image addRepresentation: bmp];
-	[bmp release];
-
-	[image setSize:NSMakeSize(120,80)];
-	// NSAttributedString *str = [self meltImageAndString:image string:@"\n3 seconds ago\nbla bla\n"];
-	// return str;
-	return image;
-}
-
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
 	if (aTableView == cpuTableView)

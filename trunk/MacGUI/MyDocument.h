@@ -376,7 +376,6 @@
 // Getter
 - (id)objectValueForCpuTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
 - (id)objectValueForMemTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
-- (id)objectValueForHistoryTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
 
 // Setter
