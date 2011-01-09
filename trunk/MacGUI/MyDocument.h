@@ -216,7 +216,6 @@
 // Main screen
 - (IBAction)fullscreenAction:(id)sender;
 - (IBAction)debugAction:(id)sender;
-- (IBAction)backInTimeAction:(id)sender;
 - (IBAction)stepperAction:(id)sender;
 - (IBAction)warpAction:(id)sender;
 - (IBAction)ejectAction:(id)sender;
@@ -225,6 +224,7 @@
 
 // Timetravel panel
 - (void)updateTimeTravelInfoText:(NSString *)s1 secondText:(NSString *)s2;
+- (IBAction)timeTravelAction:(id)sender;
 
 // Debug menu
 - (IBAction)hideSpritesAction:(id)sender;
@@ -261,7 +261,6 @@
 - (IBAction)pauseAction:(id)sender;
 - (IBAction)continueAction:(id)sender;
 - (IBAction)resetAction:(id)sender;
-- (IBAction)timeTravelAction:(id)sender;
 - (IBAction)fastResetAction:(id)sender;
 - (IBAction)showPreferencesAction:(id)sender;
 

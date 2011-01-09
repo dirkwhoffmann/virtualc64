@@ -536,6 +536,8 @@
 			[info setStringValue:@""];
 			[self enableUserEditing:NO];
 			[self refresh];
+			[backInTime_panel close];
+			
 			// disable undo because the internal state changes permanently
 			[self updateChangeCount:NSChangeDone];
 			[[self undoManager] removeAllActions];			
@@ -832,13 +834,6 @@
 	[self refresh];
 }
 
-- (IBAction)backInTimeAction:(id)sender
-{	
-	NSLog(@"Back in time action");
-	[backInTime_panel toggle:self];
-	[self refresh];
-}
-
 - (IBAction)setHardBreakpointAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
@@ -950,18 +945,13 @@
 - (IBAction)timeTravelAction:(id)sender
 {	
 	if ([backInTime_panel state] == NSDrawerOpenState) {
-		if ([c64 isHalted]) {
-			[c64 run];
-			[backInTime_panel close];
-		}
+		[c64 run];
+		[backInTime_panel close];
 	}
 	if ([backInTime_panel state] == NSDrawerClosedState) {
-		if ([c64 isRunning]) {
-			[c64 halt];
-			[backInTime_panel open];
-			[ttTableView setItems:self];
-			// [historyTableView reloadData];
-		}
+		[c64 halt];
+		[backInTime_panel open];
+		[ttTableView setItems:self];
 	}	
 }
 
