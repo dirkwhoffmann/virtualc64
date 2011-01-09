@@ -464,6 +464,9 @@
 	iec = [[IECProxy alloc] initWithIEC:c64->iec];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:c64->floppy];
 
+	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
+		timetravelbuffer[i] = [[V64Snapshot alloc] initWithSnapshot:nil];
+	
 	// Initialize CoreAudio sound interface
 	if (!(audioDevice = [[AudioDevice alloc] initWithSID:c64->sid])) {
 		NSLog(@"WARNING: Couldn't initialize AudioDevice. Sound disabled.");
@@ -481,7 +484,6 @@
 	return self;
 }
 
-//- (void) release
 - (void) kill
 {
 	assert(c64 != NULL);
@@ -536,6 +538,18 @@
 - (void) setWarpMode:(bool)b {  c64->setWarpMode(b); }	
 - (long) getCycles { return (long)c64->getCycles(); }
 
+// Time travel
+- (int) historicSnapshots { return c64->numHistoricSnapshots(); }
+- (V64Snapshot *)historicSnapshot:(int)nr {
+	Snapshot *s = c64->getHistoricSnapshot(nr);
+	if (s) {
+		[timetravelbuffer[nr] setSnapshot:s];
+		return timetravelbuffer[nr];
+	} else {
+		return nil;
+	}
+}
+
 // Joystick
 - (void) switchInputDevice:(int)devNo { c64->switchInputDevice( devNo ); }
 - (void) switchInputDevices { c64->switchInputDevices(); }
@@ -558,17 +572,7 @@
 
 @implementation V64Snapshot
 
-#if 0
-+ (id) alloc
-{
-	NSLog(@"V64Snapshot::alloc");
-
-	if (!(self = [super alloc]))
-		return nil;
-	
-	return self;
-}
-#endif
+@synthesize snapshot;
 
 - (id) init
 {
@@ -578,6 +582,17 @@
 		return nil;
 
 	snapshot = new Snapshot;
+	return self;
+}
+
+- (id) initWithSnapshot:(Snapshot *)s
+{
+	NSLog(@"V64Snapshot::initWithSnapshot");
+	
+	if (!(self = [super init]))
+		return nil;
+	
+	snapshot = s;
 	return self;
 }
 
@@ -618,6 +633,9 @@
 	
 	return newSnapshot;
 }
+
+- (unsigned char *)imageData { return snapshot->getImageData(); }
+- (time_t)timeStamp { return snapshot->getTimestamp(); }
 
 - (bool) readDataFromFile:(NSString *)path { return snapshot->readFromFile([path UTF8String]); }
 - (bool) readDataFromC64:(C64Proxy *)c64 { return snapshot->initWithContentsOfC64([c64 c64]); }

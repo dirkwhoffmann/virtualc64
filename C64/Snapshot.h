@@ -82,7 +82,7 @@ public:
 	time_t getTimestamp() { return timestamp; }
 
 	//! Return screen buffer
-	uint32_t *getImageData() { return screen; }
+	unsigned char *getImageData() { return (unsigned char *)screen; }
 };
 
 #endif
