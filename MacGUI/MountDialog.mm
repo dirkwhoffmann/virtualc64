@@ -28,12 +28,18 @@
 	
 	archive = a;
 	[archiveName setStringValue:[NSString stringWithFormat:@"%s", archive->getName()]];
-	[archiveType setStringValue:[NSString stringWithFormat:@"%s (%d %s)", archive->getTypeOfContainer(), 
-		numberOfFiles, numberOfFiles == 1 ? "file" : "files"]];
-	if (archive->getNumberOfItems() == 0) {
+	[archiveType setStringValue:[NSString stringWithFormat:@"%d %s", numberOfFiles, numberOfFiles == 1 ? "file" : "files"]];
+	if (archive->getNumberOfItems() > 0) {
+		// select first item by default
+		[directory selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+		// register for double click events (double clicking an item will flash it into memory)
+		[directory setTarget:self];
+		[directory setDoubleAction:@selector(doubleClickAction:)];
+	} else {
 		[mountButton setEnabled:false];
 		[flashButton setEnabled:false];
 	}
+	
 	[directory reloadData];
 }
 
@@ -59,13 +65,16 @@
 	return @"???";
 }
 
+- (void)doubleClickAction:(id)sender
+{
+	NSLog(@"doubleClickAction");
+	[flashButton performClick:self];
+}
+
 - (int)getSelectedFile
 {
 	int row = [directory selectedRow];
-	if (row < 0) 
-		return 0; // flash first file by default
-	else
-		return row;
+	return (row < 0) ? 0 : row;
 }
 
 
