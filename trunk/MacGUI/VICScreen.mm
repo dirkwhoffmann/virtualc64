@@ -557,9 +557,10 @@ void checkForOpenGLErrors()
 					  currentYAngle != targetYAngle ||
 					  currentZAngle != targetZAngle || 
 					  currentDistance != targetDistance);	
-	if (animation) {
-		//NSLog(@"Animation");
-		// Draw background image (it's visible during animations) 
+	bool backgroundIsVisible = animation || !drawC64texture;
+		
+	if (backgroundIsVisible) {
+		
 		float depth = -5.0f;
 		float scale = 9.2f;
 		glBindTexture(GL_TEXTURE_2D, bgTexture); 
@@ -573,21 +574,23 @@ void checkForOpenGLErrors()
 		glTexCoord2f(BG_TEX_RIGHT, BG_TEX_BOTTOM);
 		glVertex3f(scale*0.64f, scale*0.4f, depth); // Bottom right
 		glEnd();		
-		
-		// goto end;
+	}
+	
+	if (animation) {
 		
 		// Rotate around Z axis
 		glRotatef(currentZAngle,0.0f,0.0f,1.0f);
-	
+		
 		// Rotate around Y axis
 		glRotatef(currentYAngle,0.0f,1.0f,0.0f);
-
+		
 		// Rotate around X axis
 		glRotatef(currentXAngle,1.0f,0.0f,0.0f);
+
+		// Zoom in or zoom out
+		glTranslatef(0, 0, -currentDistance);
 	}
 
-	// Zoom in or zoom out
-	glTranslatef(0, 0, -currentDistance);
 	
 	if (drawC64texture) {	
 

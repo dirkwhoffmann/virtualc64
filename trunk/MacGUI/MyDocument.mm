@@ -522,7 +522,10 @@
 			break;
 			
 		case MSG_ROM_MISSING:
+
 			assert(msg->i != 0);
+			[self enableUserEditing:YES];	
+			[self refresh];
 			[romDialog initialize:msg->i];
 			[NSApp beginSheet:romDialog
 			   modalForWindow:[self windowForSheet]
@@ -2352,12 +2355,27 @@
 	[[memTableView tableColumnWithIdentifier:@"hex2"] setEditable:enabled];
 	[[memTableView tableColumnWithIdentifier:@"hex3"] setEditable:enabled];
 	
-	// Change image of stopAndGoButton
-	if (enabled) {
-		[stopAndGoButton setImage:[NSImage imageNamed:@"play32"]];
+	// Change image and state of debugger control buttons
+	if (![c64 isRunnable]) {
+		[stopAndGoButton setImage:[NSImage imageNamed:@"play32"]];		
+		[stopAndGoButton setEnabled:false];
+		[stepIntoButton setEnabled:false];
+		[stepOverButton setEnabled:false];
+		[stepOutButton setEnabled:false];		
+		
+	} else if ([c64 isHalted]) {
+		[stopAndGoButton setImage:[NSImage imageNamed:@"play32"]];		
+		[stopAndGoButton setEnabled:true];
+		[stepIntoButton setEnabled:true];
+		[stepOverButton setEnabled:true];
+		[stepOutButton setEnabled:true];		
 	} else {
-		[stopAndGoButton setImage:[NSImage imageNamed:@"pause32"]];			 
-	}
+		[stopAndGoButton setImage:[NSImage imageNamed:@"pause32"]];
+		[stopAndGoButton setEnabled:true];
+		[stepIntoButton setEnabled:false];
+		[stepOverButton setEnabled:false];
+		[stepOutButton setEnabled:false];		
+	}		
 }
 
 // --------------------------------------------------------------------------------
