@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="319"/>
-			<integer value="2024"/>
-			<integer value="1017"/>
-			<integer value="1873"/>
+			<integer value="1005"/>
 			<integer value="5"/>
+			<integer value="2024"/>
+			<integer value="1900"/>
+			<integer value="319"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4279,22 +4279,20 @@
 						<object class="NSButton" id="50607270">
 							<reference key="NSNextResponder" ref="560364445"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{116, 3}, {177, 32}}</string>
+							<string key="NSFrame">{{115, 3}, {178, 32}}</string>
 							<reference key="NSSuperview" ref="560364445"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="773246094">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Mount archive as disc</string>
+								<string key="NSContents">Mount archive as disk</string>
 								<reference key="NSSupport" ref="237492425"/>
 								<reference key="NSControlView" ref="50607270"/>
 								<int key="NSButtonFlags">-2038284033</int>
 								<int key="NSButtonFlags2">1</int>
 								<reference key="NSAlternateImage" ref="237492425"/>
 								<string key="NSAlternateContents"/>
-								<object class="NSMutableString" key="NSKeyEquivalent">
-									<characters key="NS.bytes"/>
-								</object>
+								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">200</int>
 								<int key="NSPeriodicInterval">25</int>
 							</object>
@@ -4369,7 +4367,7 @@
 													</object>
 													<object class="NSTextFieldCell" key="NSDataCell" id="319131387">
 														<int key="NSCellFlags">1411513920</int>
-														<int key="NSCellFlags2">2048</int>
+														<int key="NSCellFlags2">33556480</int>
 														<string key="NSContents">Text Cell</string>
 														<reference key="NSSupport" ref="237492425"/>
 														<reference key="NSControlView" ref="302838975"/>
@@ -4395,7 +4393,7 @@
 													</object>
 													<object class="NSTextFieldCell" key="NSDataCell" id="491518117">
 														<int key="NSCellFlags">1411513920</int>
-														<int key="NSCellFlags2">2048</int>
+														<int key="NSCellFlags2">33556480</int>
 														<string key="NSContents">Text Cell</string>
 														<reference key="NSSupport" ref="237492425"/>
 														<reference key="NSControlView" ref="302838975"/>
@@ -4421,7 +4419,7 @@
 													</object>
 													<object class="NSTextFieldCell" key="NSDataCell" id="557840147">
 														<int key="NSCellFlags">1411513920</int>
-														<int key="NSCellFlags2">2048</int>
+														<int key="NSCellFlags2">33556480</int>
 														<string key="NSContents">Text Cell</string>
 														<reference key="NSSupport" ref="237492425"/>
 														<reference key="NSControlView" ref="302838975"/>
@@ -4430,7 +4428,6 @@
 													</object>
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
-													<bool key="NSIsEditable">YES</bool>
 													<reference key="NSTableView" ref="302838975"/>
 												</object>
 											</object>
@@ -4474,7 +4471,7 @@
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="280889329"/>
 									<string key="NSAction">_doScroller:</string>
-									<double key="NSCurValue">0.0023201856148491878</double>
+									<double key="NSCurValue">0.0046403712296983757</double>
 									<double key="NSPercent">0.23013700000000001</double>
 								</object>
 								<object class="NSClipView" id="793709059">
@@ -4529,9 +4526,9 @@
 							<object class="NSTextFieldCell" key="NSCell" id="268349388">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string type="base64-UTF8" key="NSContents">WW91IGhhdmUgdHdvIG9wdGlvbnM6CiAgLSBNb3VudCB0aGUgYXJjaGl2ZSBhcyBhIHZpcnR1YWwgZmxv
-cHB5IGRpc2MgKG1vcmUgY29tcGF0aWJsZSwgYnV0IHNsb3cpCiAgLSBGbGFzaCB0aGUgc2VsZWN0ZWQg
-ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
+								<string type="base64-UTF8" key="NSContents">WW91IGhhdmUgdHdvIG9wdGlvbnM6CiAgLSBNb3VudCBhcmNoaXZlIGFzIGEgdmlydHVhbCBmbG9wcHkg
+ZGlzayAobW9yZSBjb21wYXRpYmxlLCBidXQgc2xvdykKICAtIEZsYXNoIHNlbGVjdGVkIGZpbGUgaW50
+byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="594668033"/>
 								<reference key="NSBackgroundColor" ref="567631968"/>
@@ -9329,14 +9326,14 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="877942644"/>
-							<reference ref="50607270"/>
-							<reference ref="337597044"/>
 							<reference ref="280889329"/>
 							<reference ref="55702973"/>
 							<reference ref="594668033"/>
 							<reference ref="403399640"/>
 							<reference ref="217866223"/>
 							<reference ref="406751409"/>
+							<reference ref="337597044"/>
+							<reference ref="50607270"/>
 						</object>
 						<reference key="parent" ref="140585129"/>
 					</object>
@@ -10956,9 +10953,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{106, 353}, {488, 267}}</string>
+					<string>{{265, 404}, {488, 267}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{106, 353}, {488, 267}}</string>
+					<string>{{265, 404}, {488, 267}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<string>{488, 267}</string>
@@ -11348,9 +11345,9 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{107, 851}, {480, 270}}</string>
+					<string>{{391, 687}, {480, 270}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{107, 851}, {480, 270}}</string>
+					<string>{{391, 687}, {480, 270}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<boolean value="NO"/>
@@ -11507,7 +11504,7 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{50, 458}, {300, 389}}</string>
+					<string>{{72, 471}, {300, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11908,6 +11905,17 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 				<object class="IBPartialClassDescription">
 					<string key="className">MountDialog</string>
 					<string key="superclassName">NSWindow</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">doubleClickAction:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">doubleClickAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">doubleClickAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -11994,7 +12002,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmMinutesAction:</string>
 							<string>alarmSecondsAction:</string>
 							<string>alarmTenthAction:</string>
-							<string>backInTimeAction:</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
 							<string>cartridgeEjectAction:</string>
@@ -12227,7 +12234,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
-							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
@@ -12247,7 +12253,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							<string>alarmMinutesAction:</string>
 							<string>alarmSecondsAction:</string>
 							<string>alarmTenthAction:</string>
-							<string>backInTimeAction:</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
 							<string>cartridgeEjectAction:</string>
@@ -12409,10 +12414,6 @@ ZmlsZSBkaXJlY3RseSBpbnRvIG1lbW9yeSAobGVzcyBjb21wYXRpYmxlLCBidXQgZmFzdCk</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">alarmTenthAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">backInTimeAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

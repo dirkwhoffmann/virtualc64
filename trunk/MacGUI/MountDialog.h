@@ -35,6 +35,7 @@ class Archive;
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
+- (void)doubleClickAction:(id)sender;
 - (int)getSelectedFile;
 
 @end
