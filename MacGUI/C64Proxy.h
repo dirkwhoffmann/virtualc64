@@ -22,8 +22,7 @@
 #import <Cocoa/Cocoa.h>
 
 // Forward declarations
-@class MyDocument;
-@class VICScreen;
+@class MyController;
 @class AudioDevice;
 @class V64Snapshot;
 
@@ -405,8 +404,8 @@
 @property (readonly) VC1541Proxy *vc1541;
 
 // Initialization
-- (id) initWithDocument:(MyDocument *)d;
-- (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s;
+//- (id) initWithDocument;
+//- (id) initWithScreen:(VICScreen *)s;
 //- (void) release;
 - (void) kill;
 

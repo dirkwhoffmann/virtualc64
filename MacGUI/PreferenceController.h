@@ -54,7 +54,7 @@ extern NSString *VC64CustomCol15Key;
 @interface PreferenceController : NSWindowController {
 
 	C64Proxy *c64;
-	MyDocument *mydoc;
+	MyController *mydoc;
 	
 	/* System */
 	IBOutlet NSButtonCell *pal;
@@ -94,7 +94,7 @@ extern NSString *VC64CustomCol15Key;
 }
 
 @property C64Proxy *c64;
-@property MyDocument *mydoc;
+@property MyController *mydoc;
 
 - (void)updateColorWell:(NSColorWell *)well color:(int)rgba;
 - (void)updateColorWells:(VIC::ColorScheme)scheme;

@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "MyDocument.h"
+#import "MyController.h"
 #import "AudioDevice.h"
 
 
@@ -440,18 +440,19 @@
 
 @synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, iec, vc1541;
 
-- (id) initWithDocument:(MyDocument *)d
+#if 0
+- (id) initWithDocument:(MyController *)d
 {
 	return [self initWithDocument:d withScreen:nil];
 }
+#endif
 
-- (id) initWithDocument:(MyDocument *)d withScreen:(VICScreen *)s
+- (id) init
 {
     self = [super init];
 	
 	// Create virtual machine and initialize references
 	c64 = new C64();
-	[s setC64:c64];
 	
 	// Create sub proxys
 	cpu = [[CPUProxy alloc] initWithCPU:c64->cpu];

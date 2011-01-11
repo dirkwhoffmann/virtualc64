@@ -52,7 +52,7 @@
 	return nil;
 }
 
-- (void)setItems:(MyDocument *)doc {
+- (void)setItems:(MyController *)doc {
 	
 	V64Snapshot *s;
 	
