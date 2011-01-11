@@ -18,7 +18,6 @@
 		5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */; };
 		5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */; };
 		5000474C12DCEE500098D890 /* MyControllerDebugging.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5000474B12DCEE500098D890 /* MyControllerDebugging.mm */; };
-		500047E612DCF4120098D890 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500047E412DCF4120098D890 /* MyControllerDebugPanel.mm */; };
 		5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */; };
 		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
 		5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */; };
@@ -155,8 +154,6 @@
 		5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCiaPanel.mm; sourceTree = "<group>"; };
 		5000474A12DCEE500098D890 /* MyControllerDebugging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugging.h; sourceTree = "<group>"; };
 		5000474B12DCEE500098D890 /* MyControllerDebugging.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugging.mm; sourceTree = "<group>"; };
-		500047E412DCF4120098D890 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
-		500047E712DCF4300098D890 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
 		5000C80D0D13CE680011A2E9 /* C64Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Memory.cpp; sourceTree = "<group>"; };
 		5000C80E0D13CE680011A2E9 /* C64Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Memory.h; sourceTree = "<group>"; };
 		5000C8220D13CEE10011A2E9 /* VC1541.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541.h; sourceTree = "<group>"; };
@@ -483,8 +480,6 @@
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				5000474A12DCEE500098D890 /* MyControllerDebugging.h */,
 				5000474B12DCEE500098D890 /* MyControllerDebugging.mm */,
-				500047E712DCF4300098D890 /* MyControllerDebugPanel.h */,
-				500047E412DCF4120098D890 /* MyControllerDebugPanel.mm */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -812,7 +807,6 @@
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				5000474C12DCEE500098D890 /* MyControllerDebugging.mm in Sources */,
-				500047E612DCF4120098D890 /* MyControllerDebugPanel.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
