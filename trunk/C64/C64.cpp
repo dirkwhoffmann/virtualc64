@@ -123,8 +123,9 @@ C64::C64()
 	debug(1, "Creating virtual C64 at address %p...\n", this);
 
 	p = NULL;
-	warpMode = false;
-
+	warp = false;
+	warpLoad = false;
+	
 	// Create components
 	mem = new C64Memory();
 	cpu = new CPU();	
@@ -401,20 +402,28 @@ C64::setNTSC()
 	frameDelay = (1000000 / fps);
 }
 
-bool 
-C64::getWarpMode() 
-{ 
-	return warpMode;
+void
+C64::setWarp(bool b)
+{
+	if (warp != b) {
+		warp = b;
+		restartTimer();
+		putMessage(MSG_WARP, b, NULL, NULL);
+	}
 }
 
 void
-C64::setWarpMode(bool b)
+C64::setAlwaysWarp(bool b)
 {
-	warpMode = b;
-	restartTimer();
-	putMessage(MSG_WARP, b, NULL, NULL);
+	alwaysWarp = b;
+	setWarp(b);
 }
 
+void
+C64::setWarpLoad(bool b)
+{
+	warpLoad = b;
+}
 
 // -----------------------------------------------------------------------------------------------
 //                                              Control
@@ -553,7 +562,7 @@ C64::endOfRasterline()
 		iec->execute();
 			
 		// Sleep... 
-		if (!getWarpMode()) 
+		if (!getWarp()) 
 			synchronizeTiming();
 	}
 }
