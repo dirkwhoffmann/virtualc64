@@ -81,6 +81,7 @@
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
 		50B10338121E7C70003E7729 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B10337121E7C70003E7729 /* QuartzCore.framework */; };
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
+		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50CA0D520A9076FD00A5A08D /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* SID.cpp */; };
 		50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */; };
 		50D5FDB40C2E9CF50022CA3A /* MountDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */; };
@@ -101,6 +102,7 @@
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F55DD10F28EC2D0040592B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCF0F28EC2D0040592B /* Preferences.xib */; };
+		50FBE90B12DC992B0093194C /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerDebugPanel.mm */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -234,6 +236,8 @@
 		50B1032E121E7C4C003E7729 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		50B10337121E7C70003E7729 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
+		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
 		50CA0D500A9076FD00A5A08D /* SID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SID.h; sourceTree = "<group>"; };
 		50CA0D510A9076FD00A5A08D /* SID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SID.cpp; sourceTree = "<group>"; };
 		50D5004B0C2ED1200022CA3A /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archive.h; sourceTree = "<group>"; };
@@ -260,6 +264,8 @@
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		50F55DD00F28EC2D0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
+		50FBE90912DC992B0093194C /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
+		50FBE90A12DC992B0093194C /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* VirtualC64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualC64.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC8146860FE54238007ED085 /* JoystickManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoystickManager.h; sourceTree = "<group>"; };
@@ -410,6 +416,10 @@
 				50176C710A6F7357009E80BD /* Disassembler.mm */,
 				50176C750A6F7357009E80BD /* MyDocument.h */,
 				50176C760A6F7357009E80BD /* MyDocument.mm */,
+				50B6894612DCA7B100CBB5B7 /* MyController.h */,
+				50B6894712DCA7B100CBB5B7 /* MyController.mm */,
+				50FBE90912DC992B0093194C /* MyControllerDebugPanel.h */,
+				50FBE90A12DC992B0093194C /* MyControllerDebugPanel.mm */,
 				50176C770A6F7357009E80BD /* VICScreen.h */,
 				50176C780A6F7357009E80BD /* VICScreen.mm */,
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
@@ -715,6 +725,8 @@
 				50414727122188FC00A80E0C /* Cartridge.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
 				50DF4EDF12D9AE6B0088256B /* TimeTravelTableView.mm in Sources */,
+				50FBE90B12DC992B0093194C /* MyControllerDebugPanel.mm in Sources */,
+				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

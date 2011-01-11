@@ -27,7 +27,7 @@
 #define RADIUS_TAG  2
 
 // Forward declaration
-@class MyDocument;
+@class MyController;
 
 // Keyboard constants (US MacBook Pro)
 const uint16_t MAC_A = 0;
@@ -104,7 +104,7 @@ const int BG_TEXTURE_DEPTH = 4;
 
 @interface VICScreen : NSOpenGLView
 {
-	IBOutlet MyDocument *myDoc;
+	IBOutlet MyController *myDoc;
 	C64 *c64;
     NSBitmapImageRep *theImage;
 	NSOpenGLContext *glcontext;

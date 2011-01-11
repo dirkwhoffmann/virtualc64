@@ -27,7 +27,7 @@
 
 @interface TimeTravelTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
 { 
-	MyDocument *mydoc;
+	MyController *mydoc;
 	NSMutableArray *items;
 	time_t setupTime;
 }
@@ -48,7 +48,7 @@
 // Mutators
 
 //! Initialize all items
-- (void)setItems:(MyDocument *)doc;
+- (void)setItems:(MyController *)doc;
 	
 @end
 
