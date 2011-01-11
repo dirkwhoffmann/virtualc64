@@ -230,9 +230,15 @@ private:
 	//! Time between two frames
 	int frameDelay;
 	
-	//! Indicates that we should always run as fast as possible
-	bool warpMode;
-	
+	//! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
+	bool warp;
+
+	//! Indicates that we should always run as possible
+	bool alwaysWarp;
+
+	//! Indicates that we should run as fast as possible at least during disk operations
+	bool warpLoad;
+
 	//! Holds the configuration for the game port.
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
 	int port[2];
@@ -306,12 +312,24 @@ public:
 	//! Set NTSC mode
 	void setNTSC();
 	
-	//! Returns true iff warp mode is enabled
-	bool getWarpMode();
+	//! Returns true iff cpu currently runs at maximum speed
+	bool getWarp() { return warp; }
 	
-	//! Enable or disable warp mode
-	void setWarpMode(bool b);
-		
+	//! Enable or disable timing synchronization
+	void setWarp(bool b);
+	
+	//! Returns true iff cpu should always run at maximun speed
+	bool getAlwaysWarp() { return alwaysWarp; }
+	
+	//! Setter for alwaysWarp
+	void setAlwaysWarp(bool b);
+	
+	//! Returns true iff warp mode is activated during disk operations
+	bool getWarpLoad() { return warpLoad; }
+
+	//! Setter for warpLoad
+	void setWarpLoad(bool b);
+	
 
 	// -----------------------------------------------------------------------------------------------
 	//                                           Control

@@ -535,8 +535,13 @@
 - (bool) mountArchive:(D64Archive *)a { return c64->mountArchive(a); }
 - (bool) flushArchive:(Archive *)a item:(int)nr { return c64->flushArchive(a,nr); }
 
-- (bool) getWarpMode { return c64->getWarpMode(); }
-- (void) setWarpMode:(bool)b {  c64->setWarpMode(b); }	
+- (bool) warp { return c64->getWarp(); }
+- (void) setWarp:(bool)b { c64->setWarp(b); }	
+- (bool) alwaysWarp { return c64->getAlwaysWarp(); }
+- (void) setAlwaysWarp:(bool)b { return c64->setAlwaysWarp(b); }
+- (bool) warpLoad { return c64->getWarpLoad(); }
+- (void) setWarpLoad:(bool)b { return c64->setWarpLoad(b); }
+
 - (long) getCycles { return (long)c64->getCycles(); }
 
 // Time travel

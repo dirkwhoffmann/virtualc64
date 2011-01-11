@@ -200,8 +200,11 @@ void IEC::updateIecLines()
 	}
 
 	if (signals_changed) {
-		if (busActivity == 0)
+		if (busActivity == 0) {
+			// Bus activity detected
 			drive->c64->putMessage(MSG_VC1541_DATA, 1);
+			drive->c64->setWarp(drive->c64->getAlwaysWarp() || drive->c64->getWarpLoad());
+		}
 		busActivity = 10;
 	}
 
@@ -245,7 +248,10 @@ void IEC::execute()
 	if (busActivity > 0) {
 
 		busActivity--;
-		if (busActivity == 0)
+		if (busActivity == 0) {
+			// Bus is idle 
 			drive->c64->putMessage(MSG_VC1541_DATA, 0);
+			drive->c64->setWarp(drive->c64->getAlwaysWarp());
 		}
+	}
 }

@@ -227,29 +227,6 @@
 - (IBAction)timeTravelAction:(id)sender;
 
 // MOVE TO CATEGORY MyController(Debugging)
-- (IBAction)hideSpritesAction:(id)sender;
-- (IBAction)markIRQLinesAction:(id)sender;
-- (IBAction)markDMALinesAction:(id)sender;
-
-- (IBAction)traceC64CpuAction:(id)sender;
-- (IBAction)traceIecAction:(id)sender;
-- (IBAction)traceVC1541CpuAction:(id)sender;
-- (IBAction)traceViaAction:(id)sender;
-
-- (IBAction)dumpC64:(id)sender;
-- (IBAction)dumpC64CPU:(id)sender;
-- (IBAction)dumpC64CIA1:(id)sender;
-- (IBAction)dumpC64CIA2:(id)sender;
-- (IBAction)dumpC64VIC:(id)sender;
-- (IBAction)dumpC64SID:(id)sender;
-- (IBAction)dumpC64Memory:(id)sender;
-- (IBAction)dumpVC1541:(id)sender;
-- (IBAction)dumpVC1541CPU:(id)sender;
-- (IBAction)dumpVC1541VIA1:(id)sender;
-- (IBAction)dumpVC1541VIA2:(id)sender;
-- (IBAction)dumpVC1541Memory:(id)sender;
-- (IBAction)dumpKeyboard:(id)sender;
-- (IBAction)dumpIEC:(id)sender;
 
 // MOVE TO CATEGORY MyController
 - (IBAction)stepIntoAction:(id)sender;
@@ -265,6 +242,7 @@
 
 - (IBAction)resetAction:(id)sender;
 - (IBAction)fastResetAction:(id)sender;
+
 - (IBAction)showPreferencesAction:(id)sender;
 
 // Keyboard actions
@@ -277,8 +255,6 @@
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView;
 
 // Getter
-- (id)objectValueForCpuTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
-- (id)objectValueForMemTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
 
 // Setter

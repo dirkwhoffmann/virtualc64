@@ -21,8 +21,6 @@
 @implementation MyDocument
 
 @synthesize c64;
-@synthesize warpLoad;
-@synthesize alwaysWarp;
 
 - (void)makeWindowControllers
 {

@@ -51,19 +51,10 @@
 	// Data model
 	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
 	C64Proxy *c64;
-	
-	// True iff file transfer should be performed in warp mode
-	// TO BE ELIMINATED. INFORMATION IS STORED IN C64 OBJECT (SINGLE SOURCE VIOLATION)
-	bool warpLoad;
-	
-	// True iff the emulator should always run in warp mode
-	bool alwaysWarp;	
 }
 
 
 @property C64Proxy *c64;
-@property bool warpLoad;
-@property bool alwaysWarp;
 
 //-(void)initC64WithScreen:
 

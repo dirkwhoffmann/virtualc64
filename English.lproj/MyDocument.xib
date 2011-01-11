@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
-			<integer value="2024"/>
 			<integer value="1900"/>
-			<integer value="1005"/>
+			<integer value="2024"/>
 			<integer value="38"/>
+			<integer value="1005"/>
+			<integer value="5"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -34,7 +34,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="786774271">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="662028313">
-				<string key="NSClassName">MyDocument</string>
+				<string key="NSClassName">MyController</string>
 			</object>
 			<object class="NSCustomObject" id="136618999">
 				<string key="NSClassName">FirstResponder</string>
@@ -5161,14 +5161,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">window</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="811244080"/>
-					</object>
-					<int key="connectionID">18</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">contentView</string>
 						<reference key="source" ref="964686301"/>
 						<reference key="destination" ref="341283785"/>
@@ -6902,6 +6894,14 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<reference key="destination" ref="305791488"/>
 					</object>
 					<int key="connectionID">2119</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">window</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="811244080"/>
+					</object>
+					<int key="connectionID">2125</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -11532,9 +11532,9 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{285, 547}, {652, 432}}</string>
+					<string>{{335, 581}, {652, 432}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{285, 547}, {652, 432}}</string>
+					<string>{{335, 581}, {652, 432}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<integer value="1"/>
@@ -11878,7 +11878,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2124</int>
+			<int key="maxID">2125</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -11983,52 +11983,27 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<string key="superclassName">NSWindowController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">MacGUI/MyController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">MyDocument</string>
 					<string key="superclassName">NSDocument</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>BAction:</string>
-							<string>CAction:</string>
-							<string>DAction:</string>
 							<string>FormatDiskAction:</string>
-							<string>IAction:</string>
-							<string>NAction:</string>
-							<string>VAction:</string>
-							<string>ZAction:</string>
-							<string>aAction:</string>
-							<string>alarmHoursAction:</string>
-							<string>alarmMinutesAction:</string>
-							<string>alarmSecondsAction:</string>
-							<string>alarmTenthAction:</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
 							<string>cartridgeEjectAction:</string>
-							<string>ciaCountUnterflowsAAction:</string>
-							<string>ciaCountUnterflowsBAction:</string>
-							<string>ciaDataPortAAction:</string>
-							<string>ciaDataPortBAction:</string>
-							<string>ciaDataPortDirectionAAction:</string>
-							<string>ciaDataPortDirectionBAction:</string>
-							<string>ciaInterruptEnableAAction:</string>
-							<string>ciaInterruptEnableBAction:</string>
-							<string>ciaLatchedTimerAAction:</string>
-							<string>ciaLatchedTimerBAction:</string>
-							<string>ciaOneShotAAction:</string>
-							<string>ciaOneShotBAction:</string>
-							<string>ciaRunningAAction:</string>
-							<string>ciaRunningBAction:</string>
-							<string>ciaSelectCiaAction:</string>
-							<string>ciaSignalPendingAAction:</string>
-							<string>ciaSignalPendingBAction:</string>
-							<string>ciaTimerAAction:</string>
-							<string>ciaTimerBAction:</string>
 							<string>commodoreKeyAction:</string>
 							<string>continueAction:</string>
 							<string>debugAction:</string>
-							<string>doubleClickInCpuTable:</string>
-							<string>doubleClickInMemTable:</string>
 							<string>driveAction:</string>
 							<string>dumpC64:</string>
 							<string>dumpC64CIA1:</string>
@@ -12052,139 +12027,28 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>hideSpritesAction:</string>
 							<string>markDMALinesAction:</string>
 							<string>markIRQLinesAction:</string>
-							<string>mhzAction:</string>
 							<string>pauseAction:</string>
-							<string>pcAction:</string>
 							<string>resetAction:</string>
 							<string>runstopAction:</string>
 							<string>runstopRestoreAction:</string>
 							<string>saveScreenshotDialog:</string>
-							<string>searchAction:</string>
 							<string>setDecimalAction:</string>
-							<string>setHardBreakpointAction:</string>
 							<string>setHexadecimalAction:</string>
-							<string>setMemSourceToIO:</string>
-							<string>setMemSourceToRAM:</string>
-							<string>setMemSourceToROM:</string>
 							<string>showPreferencesAction:</string>
-							<string>spAction:</string>
 							<string>stepIntoAction:</string>
 							<string>stepOutAction:</string>
 							<string>stepOverAction:</string>
 							<string>stepperAction:</string>
 							<string>stopAndGoAction:</string>
 							<string>timeTravelAction:</string>
-							<string>todHoursAction:</string>
-							<string>todInterruptEnabledAction:</string>
-							<string>todMinutesAction:</string>
-							<string>todSecondsAction:</string>
-							<string>todTenthAction:</string>
 							<string>traceC64CpuAction:</string>
 							<string>traceIecAction:</string>
 							<string>traceVC1541CpuAction:</string>
 							<string>traceViaAction:</string>
-							<string>vicCharacterMemoryAction:</string>
-							<string>vicDXAction:</string>
-							<string>vicDXStepperAction:</string>
-							<string>vicDYAction:</string>
-							<string>vicDYStepperAction:</string>
-							<string>vicEnableOpenGL:</string>
-							<string>vicEnableRasterInterruptAction:</string>
-							<string>vicMemoryBankAction:</string>
-							<string>vicRasterInterruptAction:</string>
-							<string>vicRasterlineAction:</string>
-							<string>vicScreenGeometryAction:</string>
-							<string>vicScreenMemoryAction:</string>
-							<string>vicSpriteActiveAction:</string>
-							<string>vicSpriteBackgroundCollisionAction:</string>
-							<string>vicSpriteColorAction:</string>
-							<string>vicSpriteInFrontAction:</string>
-							<string>vicSpriteMulticolorAction:</string>
-							<string>vicSpriteSelectAction:</string>
-							<string>vicSpriteSpriteCollisionAction:</string>
-							<string>vicSpriteStretchXAction:</string>
-							<string>vicSpriteStretchYAction:</string>
-							<string>vicSpriteXAction:</string>
-							<string>vicSpriteYAction:</string>
-							<string>vicVideoModeAction:</string>
 							<string>warpAction:</string>
-							<string>xAction:</string>
-							<string>yAction:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -12240,46 +12104,13 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>BAction:</string>
-							<string>CAction:</string>
-							<string>DAction:</string>
 							<string>FormatDiskAction:</string>
-							<string>IAction:</string>
-							<string>NAction:</string>
-							<string>VAction:</string>
-							<string>ZAction:</string>
-							<string>aAction:</string>
-							<string>alarmHoursAction:</string>
-							<string>alarmMinutesAction:</string>
-							<string>alarmSecondsAction:</string>
-							<string>alarmTenthAction:</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
 							<string>cartridgeEjectAction:</string>
-							<string>ciaCountUnterflowsAAction:</string>
-							<string>ciaCountUnterflowsBAction:</string>
-							<string>ciaDataPortAAction:</string>
-							<string>ciaDataPortBAction:</string>
-							<string>ciaDataPortDirectionAAction:</string>
-							<string>ciaDataPortDirectionBAction:</string>
-							<string>ciaInterruptEnableAAction:</string>
-							<string>ciaInterruptEnableBAction:</string>
-							<string>ciaLatchedTimerAAction:</string>
-							<string>ciaLatchedTimerBAction:</string>
-							<string>ciaOneShotAAction:</string>
-							<string>ciaOneShotBAction:</string>
-							<string>ciaRunningAAction:</string>
-							<string>ciaRunningBAction:</string>
-							<string>ciaSelectCiaAction:</string>
-							<string>ciaSignalPendingAAction:</string>
-							<string>ciaSignalPendingBAction:</string>
-							<string>ciaTimerAAction:</string>
-							<string>ciaTimerBAction:</string>
 							<string>commodoreKeyAction:</string>
 							<string>continueAction:</string>
 							<string>debugAction:</string>
-							<string>doubleClickInCpuTable:</string>
-							<string>doubleClickInMemTable:</string>
 							<string>driveAction:</string>
 							<string>dumpC64:</string>
 							<string>dumpC64CIA1:</string>
@@ -12303,117 +12134,30 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>hideSpritesAction:</string>
 							<string>markDMALinesAction:</string>
 							<string>markIRQLinesAction:</string>
-							<string>mhzAction:</string>
 							<string>pauseAction:</string>
-							<string>pcAction:</string>
 							<string>resetAction:</string>
 							<string>runstopAction:</string>
 							<string>runstopRestoreAction:</string>
 							<string>saveScreenshotDialog:</string>
-							<string>searchAction:</string>
 							<string>setDecimalAction:</string>
-							<string>setHardBreakpointAction:</string>
 							<string>setHexadecimalAction:</string>
-							<string>setMemSourceToIO:</string>
-							<string>setMemSourceToRAM:</string>
-							<string>setMemSourceToROM:</string>
 							<string>showPreferencesAction:</string>
-							<string>spAction:</string>
 							<string>stepIntoAction:</string>
 							<string>stepOutAction:</string>
 							<string>stepOverAction:</string>
 							<string>stepperAction:</string>
 							<string>stopAndGoAction:</string>
 							<string>timeTravelAction:</string>
-							<string>todHoursAction:</string>
-							<string>todInterruptEnabledAction:</string>
-							<string>todMinutesAction:</string>
-							<string>todSecondsAction:</string>
-							<string>todTenthAction:</string>
 							<string>traceC64CpuAction:</string>
 							<string>traceIecAction:</string>
 							<string>traceVC1541CpuAction:</string>
 							<string>traceViaAction:</string>
-							<string>vicCharacterMemoryAction:</string>
-							<string>vicDXAction:</string>
-							<string>vicDXStepperAction:</string>
-							<string>vicDYAction:</string>
-							<string>vicDYStepperAction:</string>
-							<string>vicEnableOpenGL:</string>
-							<string>vicEnableRasterInterruptAction:</string>
-							<string>vicMemoryBankAction:</string>
-							<string>vicRasterInterruptAction:</string>
-							<string>vicRasterlineAction:</string>
-							<string>vicScreenGeometryAction:</string>
-							<string>vicScreenMemoryAction:</string>
-							<string>vicSpriteActiveAction:</string>
-							<string>vicSpriteBackgroundCollisionAction:</string>
-							<string>vicSpriteColorAction:</string>
-							<string>vicSpriteInFrontAction:</string>
-							<string>vicSpriteMulticolorAction:</string>
-							<string>vicSpriteSelectAction:</string>
-							<string>vicSpriteSpriteCollisionAction:</string>
-							<string>vicSpriteStretchXAction:</string>
-							<string>vicSpriteStretchYAction:</string>
-							<string>vicSpriteXAction:</string>
-							<string>vicSpriteYAction:</string>
-							<string>vicVideoModeAction:</string>
 							<string>warpAction:</string>
-							<string>xAction:</string>
-							<string>yAction:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
-								<string key="name">BAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">CAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">DAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">FormatDiskAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">IAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">NAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">VAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ZAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">aAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">alarmHoursAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">alarmMinutesAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">alarmSecondsAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">alarmTenthAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12429,82 +12173,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">ciaCountUnterflowsAAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaCountUnterflowsBAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaDataPortAAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaDataPortBAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaDataPortDirectionAAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaDataPortDirectionBAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaInterruptEnableAAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaInterruptEnableBAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaLatchedTimerAAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaLatchedTimerBAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaOneShotAAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaOneShotBAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaRunningAAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaRunningBAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaSelectCiaAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaSignalPendingAAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaSignalPendingBAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaTimerAAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">ciaTimerBAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">commodoreKeyAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -12514,14 +12182,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">debugAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">doubleClickInCpuTable:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">doubleClickInMemTable:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12617,15 +12277,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">mhzAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">pauseAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">pcAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12645,15 +12297,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">searchAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">setDecimalAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">setHardBreakpointAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12661,23 +12305,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">setMemSourceToIO:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">setMemSourceToRAM:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">setMemSourceToROM:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">showPreferencesAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">spAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12705,6 +12333,431 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">traceC64CpuAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">traceIecAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">traceVC1541CpuAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">traceViaAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">warpAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">MacGUI/MyDocument.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyDocument</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>BAction:</string>
+							<string>CAction:</string>
+							<string>DAction:</string>
+							<string>IAction:</string>
+							<string>NAction:</string>
+							<string>VAction:</string>
+							<string>ZAction:</string>
+							<string>aAction:</string>
+							<string>alarmHoursAction:</string>
+							<string>alarmMinutesAction:</string>
+							<string>alarmSecondsAction:</string>
+							<string>alarmTenthAction:</string>
+							<string>ciaCountUnterflowsAAction:</string>
+							<string>ciaCountUnterflowsBAction:</string>
+							<string>ciaDataPortAAction:</string>
+							<string>ciaDataPortBAction:</string>
+							<string>ciaDataPortDirectionAAction:</string>
+							<string>ciaDataPortDirectionBAction:</string>
+							<string>ciaInterruptEnableAAction:</string>
+							<string>ciaInterruptEnableBAction:</string>
+							<string>ciaLatchedTimerAAction:</string>
+							<string>ciaLatchedTimerBAction:</string>
+							<string>ciaOneShotAAction:</string>
+							<string>ciaOneShotBAction:</string>
+							<string>ciaRunningAAction:</string>
+							<string>ciaRunningBAction:</string>
+							<string>ciaSelectCiaAction:</string>
+							<string>ciaSignalPendingAAction:</string>
+							<string>ciaSignalPendingBAction:</string>
+							<string>ciaTimerAAction:</string>
+							<string>ciaTimerBAction:</string>
+							<string>doubleClickInCpuTable:</string>
+							<string>doubleClickInMemTable:</string>
+							<string>mhzAction:</string>
+							<string>pcAction:</string>
+							<string>searchAction:</string>
+							<string>setHardBreakpointAction:</string>
+							<string>setMemSourceToIO:</string>
+							<string>setMemSourceToRAM:</string>
+							<string>setMemSourceToROM:</string>
+							<string>spAction:</string>
+							<string>todHoursAction:</string>
+							<string>todInterruptEnabledAction:</string>
+							<string>todMinutesAction:</string>
+							<string>todSecondsAction:</string>
+							<string>todTenthAction:</string>
+							<string>vicCharacterMemoryAction:</string>
+							<string>vicDXAction:</string>
+							<string>vicDXStepperAction:</string>
+							<string>vicDYAction:</string>
+							<string>vicDYStepperAction:</string>
+							<string>vicEnableOpenGL:</string>
+							<string>vicEnableRasterInterruptAction:</string>
+							<string>vicMemoryBankAction:</string>
+							<string>vicRasterInterruptAction:</string>
+							<string>vicRasterlineAction:</string>
+							<string>vicScreenGeometryAction:</string>
+							<string>vicScreenMemoryAction:</string>
+							<string>vicSpriteActiveAction:</string>
+							<string>vicSpriteBackgroundCollisionAction:</string>
+							<string>vicSpriteColorAction:</string>
+							<string>vicSpriteInFrontAction:</string>
+							<string>vicSpriteMulticolorAction:</string>
+							<string>vicSpriteSelectAction:</string>
+							<string>vicSpriteSpriteCollisionAction:</string>
+							<string>vicSpriteStretchXAction:</string>
+							<string>vicSpriteStretchYAction:</string>
+							<string>vicSpriteXAction:</string>
+							<string>vicSpriteYAction:</string>
+							<string>vicVideoModeAction:</string>
+							<string>xAction:</string>
+							<string>yAction:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>BAction:</string>
+							<string>CAction:</string>
+							<string>DAction:</string>
+							<string>IAction:</string>
+							<string>NAction:</string>
+							<string>VAction:</string>
+							<string>ZAction:</string>
+							<string>aAction:</string>
+							<string>alarmHoursAction:</string>
+							<string>alarmMinutesAction:</string>
+							<string>alarmSecondsAction:</string>
+							<string>alarmTenthAction:</string>
+							<string>ciaCountUnterflowsAAction:</string>
+							<string>ciaCountUnterflowsBAction:</string>
+							<string>ciaDataPortAAction:</string>
+							<string>ciaDataPortBAction:</string>
+							<string>ciaDataPortDirectionAAction:</string>
+							<string>ciaDataPortDirectionBAction:</string>
+							<string>ciaInterruptEnableAAction:</string>
+							<string>ciaInterruptEnableBAction:</string>
+							<string>ciaLatchedTimerAAction:</string>
+							<string>ciaLatchedTimerBAction:</string>
+							<string>ciaOneShotAAction:</string>
+							<string>ciaOneShotBAction:</string>
+							<string>ciaRunningAAction:</string>
+							<string>ciaRunningBAction:</string>
+							<string>ciaSelectCiaAction:</string>
+							<string>ciaSignalPendingAAction:</string>
+							<string>ciaSignalPendingBAction:</string>
+							<string>ciaTimerAAction:</string>
+							<string>ciaTimerBAction:</string>
+							<string>doubleClickInCpuTable:</string>
+							<string>doubleClickInMemTable:</string>
+							<string>mhzAction:</string>
+							<string>pcAction:</string>
+							<string>searchAction:</string>
+							<string>setHardBreakpointAction:</string>
+							<string>setMemSourceToIO:</string>
+							<string>setMemSourceToRAM:</string>
+							<string>setMemSourceToROM:</string>
+							<string>spAction:</string>
+							<string>todHoursAction:</string>
+							<string>todInterruptEnabledAction:</string>
+							<string>todMinutesAction:</string>
+							<string>todSecondsAction:</string>
+							<string>todTenthAction:</string>
+							<string>vicCharacterMemoryAction:</string>
+							<string>vicDXAction:</string>
+							<string>vicDXStepperAction:</string>
+							<string>vicDYAction:</string>
+							<string>vicDYStepperAction:</string>
+							<string>vicEnableOpenGL:</string>
+							<string>vicEnableRasterInterruptAction:</string>
+							<string>vicMemoryBankAction:</string>
+							<string>vicRasterInterruptAction:</string>
+							<string>vicRasterlineAction:</string>
+							<string>vicScreenGeometryAction:</string>
+							<string>vicScreenMemoryAction:</string>
+							<string>vicSpriteActiveAction:</string>
+							<string>vicSpriteBackgroundCollisionAction:</string>
+							<string>vicSpriteColorAction:</string>
+							<string>vicSpriteInFrontAction:</string>
+							<string>vicSpriteMulticolorAction:</string>
+							<string>vicSpriteSelectAction:</string>
+							<string>vicSpriteSpriteCollisionAction:</string>
+							<string>vicSpriteStretchXAction:</string>
+							<string>vicSpriteStretchYAction:</string>
+							<string>vicSpriteXAction:</string>
+							<string>vicSpriteYAction:</string>
+							<string>vicVideoModeAction:</string>
+							<string>xAction:</string>
+							<string>yAction:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">BAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">CAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">DAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">IAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">NAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">VAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ZAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">aAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">alarmHoursAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">alarmMinutesAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">alarmSecondsAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">alarmTenthAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaCountUnterflowsAAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaCountUnterflowsBAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaDataPortAAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaDataPortBAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaDataPortDirectionAAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaDataPortDirectionBAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaInterruptEnableAAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaInterruptEnableBAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaLatchedTimerAAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaLatchedTimerBAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaOneShotAAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaOneShotBAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaRunningAAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaRunningBAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaSelectCiaAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaSignalPendingAAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaSignalPendingBAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaTimerAAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">ciaTimerBAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">doubleClickInCpuTable:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">doubleClickInMemTable:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">mhzAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">pcAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">searchAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">setHardBreakpointAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">setMemSourceToIO:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">setMemSourceToRAM:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">setMemSourceToROM:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">spAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">todHoursAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -12722,22 +12775,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">todTenthAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">traceC64CpuAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">traceIecAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">traceVC1541CpuAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">traceViaAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12837,10 +12874,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">warpAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">xAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -12850,762 +12883,9 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							</object>
 						</object>
 					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>B</string>
-							<string>C</string>
-							<string>D</string>
-							<string>I</string>
-							<string>N</string>
-							<string>V</string>
-							<string>VicCharacterMemory</string>
-							<string>VicDX</string>
-							<string>VicDXStepper</string>
-							<string>VicDY</string>
-							<string>VicDYStepper</string>
-							<string>VicEnableOpenGL</string>
-							<string>VicEnableRasterInterrupt</string>
-							<string>VicMemoryBank</string>
-							<string>VicRasterInterrupt</string>
-							<string>VicRasterline</string>
-							<string>VicScreenGeometry</string>
-							<string>VicScreenMemory</string>
-							<string>VicSpriteActive</string>
-							<string>VicSpriteBackgroundCollision</string>
-							<string>VicSpriteColor</string>
-							<string>VicSpriteInFront</string>
-							<string>VicSpriteMulticolor</string>
-							<string>VicSpriteSpriteCollision</string>
-							<string>VicSpriteStretchX</string>
-							<string>VicSpriteStretchY</string>
-							<string>VicSpriteX</string>
-							<string>VicSpriteY</string>
-							<string>VicVideoMode</string>
-							<string>Z</string>
-							<string>a</string>
-							<string>addr_search</string>
-							<string>alarmHours</string>
-							<string>alarmMinutes</string>
-							<string>alarmSeconds</string>
-							<string>alarmTenth</string>
-							<string>backInTime_panel</string>
-							<string>breakpoint</string>
-							<string>cartridgeEject</string>
-							<string>cartridgeIcon</string>
-							<string>ciaCountUnderflowsA</string>
-							<string>ciaCountUnderflowsB</string>
-							<string>ciaDataPortA</string>
-							<string>ciaDataPortB</string>
-							<string>ciaDataPortDirectionA</string>
-							<string>ciaDataPortDirectionB</string>
-							<string>ciaInterruptEnableA</string>
-							<string>ciaInterruptEnableB</string>
-							<string>ciaLatchedTimerA</string>
-							<string>ciaLatchedTimerB</string>
-							<string>ciaOneShotA</string>
-							<string>ciaOneShotB</string>
-							<string>ciaRunningA</string>
-							<string>ciaRunningB</string>
-							<string>ciaSelector</string>
-							<string>ciaSignalPendingA</string>
-							<string>ciaSignalPendingB</string>
-							<string>ciaTimerA</string>
-							<string>ciaTimerB</string>
-							<string>clockSpeed</string>
-							<string>clockSpeedBar</string>
-							<string>clockSpeedStepper</string>
-							<string>cpuTableView</string>
-							<string>debug_panel</string>
-							<string>dezHexSelector</string>
-							<string>drive</string>
-							<string>driveBusy</string>
-							<string>eject</string>
-							<string>greenLED</string>
-							<string>historyDateField1</string>
-							<string>historyDateField2</string>
-							<string>info</string>
-							<string>ioSource</string>
-							<string>memTableView</string>
-							<string>mountDialog</string>
-							<string>pc</string>
-							<string>ramSource</string>
-							<string>redLED</string>
-							<string>revertToSnapshot</string>
-							<string>romDialog</string>
-							<string>romSource</string>
-							<string>screen</string>
-							<string>sp</string>
-							<string>sprite0</string>
-							<string>sprite1</string>
-							<string>sprite2</string>
-							<string>sprite3</string>
-							<string>sprite4</string>
-							<string>sprite5</string>
-							<string>sprite6</string>
-							<string>sprite7</string>
-							<string>spriteSelector</string>
-							<string>stepIntoButton</string>
-							<string>stepOutButton</string>
-							<string>stepOverButton</string>
-							<string>stopAndGoButton</string>
-							<string>todHours</string>
-							<string>todInterruptEnabled</string>
-							<string>todMinutes</string>
-							<string>todSeconds</string>
-							<string>todTenth</string>
-							<string>ttTableView</string>
-							<string>warpMode</string>
-							<string>x</string>
-							<string>y</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSPopUpButton</string>
-							<string>NSTextField</string>
-							<string>NSStepper</string>
-							<string>NSTextField</string>
-							<string>NSStepper</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSPopUpButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSPopUpButton</string>
-							<string>NSPopUpButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSPopUpButton</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSSearchField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSDrawer</string>
-							<string>NSTextField</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSPopUpButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSLevelIndicator</string>
-							<string>NSStepper</string>
-							<string>NSTableView</string>
-							<string>NSDrawer</string>
-							<string>NSMatrix</string>
-							<string>NSButton</string>
-							<string>NSProgressIndicator</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSButtonCell</string>
-							<string>NSTableView</string>
-							<string>MountDialog</string>
-							<string>NSTextField</string>
-							<string>NSButtonCell</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>RomDialog</string>
-							<string>NSButtonCell</string>
-							<string>VICScreen</string>
-							<string>NSTextField</string>
-							<string>NSButtonCell</string>
-							<string>NSButtonCell</string>
-							<string>NSButtonCell</string>
-							<string>NSButtonCell</string>
-							<string>NSButtonCell</string>
-							<string>NSButtonCell</string>
-							<string>NSButtonCell</string>
-							<string>NSButtonCell</string>
-							<string>NSMatrix</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>TimeTravelTableView</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>B</string>
-							<string>C</string>
-							<string>D</string>
-							<string>I</string>
-							<string>N</string>
-							<string>V</string>
-							<string>VicCharacterMemory</string>
-							<string>VicDX</string>
-							<string>VicDXStepper</string>
-							<string>VicDY</string>
-							<string>VicDYStepper</string>
-							<string>VicEnableOpenGL</string>
-							<string>VicEnableRasterInterrupt</string>
-							<string>VicMemoryBank</string>
-							<string>VicRasterInterrupt</string>
-							<string>VicRasterline</string>
-							<string>VicScreenGeometry</string>
-							<string>VicScreenMemory</string>
-							<string>VicSpriteActive</string>
-							<string>VicSpriteBackgroundCollision</string>
-							<string>VicSpriteColor</string>
-							<string>VicSpriteInFront</string>
-							<string>VicSpriteMulticolor</string>
-							<string>VicSpriteSpriteCollision</string>
-							<string>VicSpriteStretchX</string>
-							<string>VicSpriteStretchY</string>
-							<string>VicSpriteX</string>
-							<string>VicSpriteY</string>
-							<string>VicVideoMode</string>
-							<string>Z</string>
-							<string>a</string>
-							<string>addr_search</string>
-							<string>alarmHours</string>
-							<string>alarmMinutes</string>
-							<string>alarmSeconds</string>
-							<string>alarmTenth</string>
-							<string>backInTime_panel</string>
-							<string>breakpoint</string>
-							<string>cartridgeEject</string>
-							<string>cartridgeIcon</string>
-							<string>ciaCountUnderflowsA</string>
-							<string>ciaCountUnderflowsB</string>
-							<string>ciaDataPortA</string>
-							<string>ciaDataPortB</string>
-							<string>ciaDataPortDirectionA</string>
-							<string>ciaDataPortDirectionB</string>
-							<string>ciaInterruptEnableA</string>
-							<string>ciaInterruptEnableB</string>
-							<string>ciaLatchedTimerA</string>
-							<string>ciaLatchedTimerB</string>
-							<string>ciaOneShotA</string>
-							<string>ciaOneShotB</string>
-							<string>ciaRunningA</string>
-							<string>ciaRunningB</string>
-							<string>ciaSelector</string>
-							<string>ciaSignalPendingA</string>
-							<string>ciaSignalPendingB</string>
-							<string>ciaTimerA</string>
-							<string>ciaTimerB</string>
-							<string>clockSpeed</string>
-							<string>clockSpeedBar</string>
-							<string>clockSpeedStepper</string>
-							<string>cpuTableView</string>
-							<string>debug_panel</string>
-							<string>dezHexSelector</string>
-							<string>drive</string>
-							<string>driveBusy</string>
-							<string>eject</string>
-							<string>greenLED</string>
-							<string>historyDateField1</string>
-							<string>historyDateField2</string>
-							<string>info</string>
-							<string>ioSource</string>
-							<string>memTableView</string>
-							<string>mountDialog</string>
-							<string>pc</string>
-							<string>ramSource</string>
-							<string>redLED</string>
-							<string>revertToSnapshot</string>
-							<string>romDialog</string>
-							<string>romSource</string>
-							<string>screen</string>
-							<string>sp</string>
-							<string>sprite0</string>
-							<string>sprite1</string>
-							<string>sprite2</string>
-							<string>sprite3</string>
-							<string>sprite4</string>
-							<string>sprite5</string>
-							<string>sprite6</string>
-							<string>sprite7</string>
-							<string>spriteSelector</string>
-							<string>stepIntoButton</string>
-							<string>stepOutButton</string>
-							<string>stepOverButton</string>
-							<string>stopAndGoButton</string>
-							<string>todHours</string>
-							<string>todInterruptEnabled</string>
-							<string>todMinutes</string>
-							<string>todSeconds</string>
-							<string>todTenth</string>
-							<string>ttTableView</string>
-							<string>warpMode</string>
-							<string>x</string>
-							<string>y</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">B</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">C</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">D</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">I</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">N</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">V</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicCharacterMemory</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicDX</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicDXStepper</string>
-								<string key="candidateClassName">NSStepper</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicDY</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicDYStepper</string>
-								<string key="candidateClassName">NSStepper</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicEnableOpenGL</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicEnableRasterInterrupt</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicMemoryBank</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicRasterInterrupt</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicRasterline</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicScreenGeometry</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicScreenMemory</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteActive</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteBackgroundCollision</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteColor</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteInFront</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteMulticolor</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteSpriteCollision</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteStretchX</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteStretchY</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteX</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicSpriteY</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">VicVideoMode</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">Z</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">a</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">addr_search</string>
-								<string key="candidateClassName">NSSearchField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">alarmHours</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">alarmMinutes</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">alarmSeconds</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">alarmTenth</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">backInTime_panel</string>
-								<string key="candidateClassName">NSDrawer</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">breakpoint</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">cartridgeEject</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">cartridgeIcon</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaCountUnderflowsA</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaCountUnderflowsB</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaDataPortA</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaDataPortB</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaDataPortDirectionA</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaDataPortDirectionB</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaInterruptEnableA</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaInterruptEnableB</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaLatchedTimerA</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaLatchedTimerB</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaOneShotA</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaOneShotB</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaRunningA</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaRunningB</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaSelector</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaSignalPendingA</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaSignalPendingB</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaTimerA</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ciaTimerB</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">clockSpeed</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">clockSpeedBar</string>
-								<string key="candidateClassName">NSLevelIndicator</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">clockSpeedStepper</string>
-								<string key="candidateClassName">NSStepper</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">cpuTableView</string>
-								<string key="candidateClassName">NSTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">debug_panel</string>
-								<string key="candidateClassName">NSDrawer</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">dezHexSelector</string>
-								<string key="candidateClassName">NSMatrix</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">drive</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">driveBusy</string>
-								<string key="candidateClassName">NSProgressIndicator</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">eject</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">greenLED</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">historyDateField1</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">historyDateField2</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">info</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ioSource</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">memTableView</string>
-								<string key="candidateClassName">NSTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mountDialog</string>
-								<string key="candidateClassName">MountDialog</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">pc</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ramSource</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">redLED</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">revertToSnapshot</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">romDialog</string>
-								<string key="candidateClassName">RomDialog</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">romSource</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">screen</string>
-								<string key="candidateClassName">VICScreen</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sp</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sprite0</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sprite1</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sprite2</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sprite3</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sprite4</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sprite5</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sprite6</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sprite7</string>
-								<string key="candidateClassName">NSButtonCell</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">spriteSelector</string>
-								<string key="candidateClassName">NSMatrix</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">stepIntoButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">stepOutButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">stepOverButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">stopAndGoButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">todHours</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">todInterruptEnabled</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">todMinutes</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">todSeconds</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">todTenth</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ttTableView</string>
-								<string key="candidateClassName">TimeTravelTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">warpMode</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">x</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">y</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">MacGUI/MyDocument.h</string>
+						<string key="minorKey">MacGUI/MyDocumentDebugPanel.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -14605,6 +13885,25 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSWindowScripting.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSWindowController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">showWindow:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">showWindow:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">showWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSWindowController.h</string>
 					</object>
 				</object>
 			</object>

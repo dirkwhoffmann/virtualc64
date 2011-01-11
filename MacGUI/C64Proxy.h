@@ -1,5 +1,5 @@
 /*
- * (C) 2006 - 2010 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2011 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -445,8 +445,12 @@
 - (bool) mountArchive:(D64Archive *)a;
 - (bool) flushArchive:(Archive *)a item:(int)nr;
 
-- (bool) getWarpMode;
-- (void) setWarpMode:(bool)b;
+- (bool) warp;
+- (void) setWarp:(bool)b;
+- (bool) alwaysWarp;
+- (void) setAlwaysWarp:(bool)b;
+- (bool) warpLoad;
+- (void) setWarpLoad:(bool)b;
 - (long) getCycles;
 
 // Time travel
