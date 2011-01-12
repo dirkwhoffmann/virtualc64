@@ -387,9 +387,6 @@
 	KeyboardProxy *keyboard;
 	IECProxy *iec;
 	VC1541Proxy *vc1541;
-	
-	// Objective-C wrapper around each timetravel snapshot
-	V64Snapshot *timetravelbuffer[BACK_IN_TIME_BUFFER_SIZE];
 }
 
 @property (readonly) C64 *c64;
@@ -455,7 +452,9 @@
 
 // Time travel
 - (int) historicSnapshots;
-- (V64Snapshot *)historicSnapshot:(int)nr;
+- (unsigned char *)historicSnapshotImageData:(int)nr;
+- (time_t)historicSnapshotTimestamp:(int)nr;
+- (bool)revertToHistoricSnapshot:(int)nr;
 
 // Joystick
 - (void) switchInputDevice:(int)devNo;

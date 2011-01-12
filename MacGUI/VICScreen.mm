@@ -950,7 +950,7 @@ void checkForOpenGLErrors()
 		// Try to load file
 		
 		// Is it a ROM file?
-		if ([myDoc loadRom:path]) {
+		if ([[controller document] loadRom:path]) {
 			NSLog(@"ROM loaded");
 			// Try to run...
 			// Update romDialog...
@@ -966,14 +966,14 @@ void checkForOpenGLErrors()
 		}
 		
 		// Is it a cartridge?
-		if ([myDoc attachCartridge:path]) {
+		if ([[controller document] setCartridgeWithName:path]) {
 			NSLog(@"Cartridge attached");
 			return YES;
 		}
 		
 		// Is it an archive?
-		if ([myDoc setArchiveWithName:path]) {
-			[myDoc showMountDialog];			
+		if ([[controller document] setArchiveWithName:path]) {
+			[controller showMountDialog];			
 		}			
 	}
 	return NO;

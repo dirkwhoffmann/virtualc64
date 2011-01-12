@@ -112,6 +112,32 @@ C64::getHistoricSnapshot(int nr)
 	return snapshot;
 }
 
+unsigned char *
+C64::getHistoricSnapshotImageData(int nr)
+{
+	Snapshot *s = getHistoricSnapshot(nr);
+	return (s != NULL) ? s->getImageData() : NULL;
+}
+
+time_t
+C64::getHistoricSnapshotTimestamp(int nr)
+{
+	Snapshot *s = getHistoricSnapshot(nr);
+	return (s != NULL) ? s->getTimestamp() : NULL;
+}
+
+bool
+C64::revertToHistoricSnapshot(int nr)
+{
+	Snapshot *s = getHistoricSnapshot(nr);
+
+	if (s == NULL) 
+		return false;
+	
+	loadFromSnapshot(s);
+	return true;
+}
+
 // --------------------------------------------------------------------------------
 // Class methods
 // --------------------------------------------------------------------------------
@@ -124,6 +150,7 @@ C64::C64()
 
 	p = NULL;
 	warp = false;
+	alwaysWarp = false;
 	warpLoad = false;
 	
 	// Create components
@@ -296,6 +323,15 @@ C64::load(uint8_t **buffer)
 	
 	resume();
 	return true;
+}
+
+void 
+C64::loadFromSnapshot(Snapshot *s)
+{ 
+	assert(s != NULL);
+	
+	uint8_t *data = s->getData();
+	load(&data); 
 }
 
 void 

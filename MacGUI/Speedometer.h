@@ -16,32 +16,38 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
 #import <Cocoa/Cocoa.h>
 
-// Forward declarations
-@class C64Proxy;
-@class MyDocument;
+@interface Speedometer : NSObject {
 
-@interface TimeTravelTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
-{ 
-	MyController *controller;
 	
-	NSMutableArray *items;
-	time_t setupTime;
+	// MOVE msec() FROM BASIC.H INTO THIS CLASS
+	
+	//! Current emulation speed
+	/*! Call update before reading value */
+	float mhz;
+
+	//! Current drawing speed
+	/*! Call update before reading value */
+	float fps;
+	
+	//! Previous cycle count
+	/*! Needed to calculate current clock frequency */
+	long cycles;
+	
+	//! Previous frame count
+	/*! Needed to determine frames per second */
+	long frames;
+	
+	//! Remembers when the update method was called 
+	/*! Needed to determine current clock frequency and frames per second */
+	long timestamp;
 }
 
-@property MyController *controller;
+@property (readonly) float mhz;
+@property (readonly) float fps;
 
-//! Action method for single clicking a table item
-- (void)clickAction:(id)sender;
+- (void)updateWithCurrentCycle:(long)cycles currentFrame:(long)frames;
 
-//! Action method for double clicking a table item
-- (void)doubleClickAction:(id)sender;
-
-//! Revert to selected snapshot
-- (void)revertAction:(id)sender;
-
-//! Refresh  data items to display
-- (void)refresh;
-	
 @end

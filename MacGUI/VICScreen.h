@@ -104,7 +104,8 @@ const int BG_TEXTURE_DEPTH = 4;
 
 @interface VICScreen : NSOpenGLView
 {
-	IBOutlet MyController *myDoc;
+	IBOutlet MyController *controller;
+	
 	C64 *c64;
     NSBitmapImageRep *theImage;
 	NSOpenGLContext *glcontext;

@@ -102,6 +102,7 @@
 		50E4C0280C3CFBE400CB6B43 /* fullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4C0270C3CFBE400CB6B43 /* fullscreen.png */; };
 		50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FC0C42698E00AFB05F /* flag_usa.png */; };
 		50E555FF0C42699300AFB05F /* flag_eu.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FE0C42699300AFB05F /* flag_eu.png */; };
+		50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.mm */; };
 		50F4D2940C46262700ED4E4E /* ResetImage.VC64 in Resources */ = {isa = PBXBuildFile; fileRef = 50F4D2930C46262700ED4E4E /* ResetImage.VC64 */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
@@ -272,6 +273,8 @@
 		50E4C0270C3CFBE400CB6B43 /* fullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fullscreen.png; path = images/fullscreen.png; sourceTree = "<group>"; };
 		50E555FC0C42698E00AFB05F /* flag_usa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag_usa.png; path = images/flag_usa.png; sourceTree = "<group>"; };
 		50E555FE0C42699300AFB05F /* flag_eu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag_eu.png; path = images/flag_eu.png; sourceTree = "<group>"; };
+		50ED5BF612DD99C000596417 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
+		50ED5BF712DD99C000596417 /* Speedometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Speedometer.mm; sourceTree = "<group>"; };
 		50F4D2930C46262700ED4E4E /* ResetImage.VC64 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ResetImage.VC64; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -461,6 +464,8 @@
 				50176C730A6F7357009E80BD /* Formatter.mm */,
 				50176C770A6F7357009E80BD /* VICScreen.h */,
 				50176C780A6F7357009E80BD /* VICScreen.mm */,
+				50DF4EDD12D9AE6B0088256B /* TimeTravelTableView.h */,
+				50DF4EDE12D9AE6B0088256B /* TimeTravelTableView.mm */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -504,6 +509,8 @@
 				BC8146870FE54238007ED085 /* JoystickManager.mm */,
 				023023FE0DC902A700F8818A /* AudioDevice.h */,
 				023023FF0DC902A700F8818A /* AudioDevice.mm */,
+				50ED5BF612DD99C000596417 /* Speedometer.h */,
+				50ED5BF712DD99C000596417 /* Speedometer.mm */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -542,8 +549,6 @@
 				5000474112DCECBA0098D890 /* Controller */,
 				5000474212DCECDB0098D890 /* Dialogs */,
 				5000474312DCED190098D890 /* Misc */,
-				50DF4EDD12D9AE6B0088256B /* TimeTravelTableView.h */,
-				50DF4EDE12D9AE6B0088256B /* TimeTravelTableView.mm */,
 			);
 			path = MacGUI;
 			sourceTree = "<group>";
@@ -807,6 +812,7 @@
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				5000474C12DCEE500098D890 /* MyControllerDebugging.mm in Sources */,
+				50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

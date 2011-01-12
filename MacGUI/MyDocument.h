@@ -48,15 +48,31 @@
 
 @interface MyDocument : NSDocument
 {
-	// Data model
-	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
+	// ObjC/C++ bridge
 	C64Proxy *c64;
+
+	//! Reference to an attached D64 archive
+	D64Archive *archive;
+	
+	//! Reference to an attached cartridge 
+	Cartridge *cartridge;
+	
+	//! Initial snapshot
+	/*! If unequal NULL, the newly created document will be initialized with the provided snapshot data */
+	Snapshot *snapshot;			
 }
 
-
 @property C64Proxy *c64;
+@property D64Archive *archive;
+@property Cartridge *cartridge;
+@property Snapshot *snapshot;
 
-//-(void)initC64WithScreen:
+- (BOOL)setArchiveWithName:(NSString *)path;
+- (BOOL)setCartridgeWithName:(NSString *)path;
+- (BOOL)detachCartridge;
+
+// Loading and saving
+- (BOOL)loadRom:(NSString *)filename;
 
 @end
 
