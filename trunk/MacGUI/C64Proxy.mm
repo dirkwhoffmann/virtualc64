@@ -464,9 +464,6 @@
 	keyboard = [[KeyboardProxy alloc] initWithKeyboard:c64->keyboard];
 	iec = [[IECProxy alloc] initWithIEC:c64->iec];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:c64->floppy];
-
-	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
-		timetravelbuffer[i] = [[V64Snapshot alloc] initWithSnapshot:nil];
 	
 	// Initialize CoreAudio sound interface
 	if (!(audioDevice = [[AudioDevice alloc] initWithSID:c64->sid])) {
@@ -546,15 +543,9 @@
 
 // Time travel
 - (int) historicSnapshots { return c64->numHistoricSnapshots(); }
-- (V64Snapshot *)historicSnapshot:(int)nr {
-	Snapshot *s = c64->getHistoricSnapshot(nr);
-	if (s) {
-		[timetravelbuffer[nr] setSnapshot:s];
-		return timetravelbuffer[nr];
-	} else {
-		return nil;
-	}
-}
+- (unsigned char *)historicSnapshotImageData:(int)nr { return c64->getHistoricSnapshotImageData(nr); }
+- (time_t)historicSnapshotTimestamp:(int)nr { return c64->getHistoricSnapshotTimestamp(nr); }
+- (bool) revertToHistoricSnapshot:(int)nr { return c64->revertToHistoricSnapshot(nr); }
 
 // Joystick
 - (void) switchInputDevice:(int)devNo { c64->switchInputDevice( devNo ); }

@@ -78,6 +78,9 @@ public:
 	//! Return snapshot size
 	int getSize() {	return size; }
 
+	//! Return snapshot size
+	uint8_t *getData() {	return data; }
+
 	//! Return timestamp
 	time_t getTimestamp() { return timestamp; }
 

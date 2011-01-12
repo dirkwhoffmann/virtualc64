@@ -27,8 +27,6 @@
 @implementation MyController
 
 @synthesize c64;
-@synthesize archive;
-@synthesize cartridge;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -93,6 +91,11 @@
 		if (chdir([path UTF8String]) != 0)
 			NSLog(@"WARNING: Could not change working directory.");
 	}
+	timer = nil;
+	timerLock = nil;
+	animationCounter = 0;
+	speedometer = nil;
+	
 	snapshot = NULL;
 	
     return self;
@@ -188,20 +191,30 @@
 	// Create and bind number formatters
 	[self setHexadecimalAction:self];
 	
+	// Setup table views
+	[ttTableView setController:self];
+	// [cpuTableView setController:self];
+	// [memTableView setController:self];
+	
+	// DEPRECATED. MOVE TO TABLE VIEW CLASSES
 	// Prepare to get double-click messages
 	[cpuTableView setTarget:self];
 	[cpuTableView setDoubleAction:@selector(doubleClickInCpuTable:)];
 	[memTableView setTarget:self];
 	[memTableView setDoubleAction:@selector(doubleClickInMemTable:)];
 	
-	// Create timer
-	cycleCount = 0;
-	timeStamp  = msec();
-	if (!timer)
-		timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/6.0f) 
-												 target:self 
-											   selector:@selector(timerFunc) 
-											   userInfo:nil repeats:YES];
+	// Create timer and speedometer
+	assert(timerLock == nil);
+	timerLock = [[NSLock alloc] init];
+
+	assert(timer == nil);
+	timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/6.0f) 
+											 target:self 
+										   selector:@selector(timerFunc) 
+										   userInfo:nil repeats:YES];
+
+	assert(speedometer == nil);
+	speedometer = [[Speedometer alloc] init];
 	
 	NSLog(@"GUI has been initialized, timer is running");	
 }
@@ -212,7 +225,7 @@
 	[self loadUserDefaults];
 		
 	// Mount archive if applicable
-	if (archive != NULL) {
+	if ([[self document] archive] != NULL) {
 		[self showMountDialog];
 	}		
 }
@@ -233,10 +246,10 @@
 	} else {
 		[c64 setPAL];
 	}
-	[self loadRom:[defaults stringForKey:VC64BasicRomFileKey]];
-	[self loadRom:[defaults stringForKey:VC64CharRomFileKey]];
-	[self loadRom:[defaults stringForKey:VC64KernelRomFileKey]];
-	[self loadRom:[defaults stringForKey:VC64VC1541RomFileKey]];
+	[[self document] loadRom:[defaults stringForKey:VC64BasicRomFileKey]];
+	[[self document] loadRom:[defaults stringForKey:VC64CharRomFileKey]];
+	[[self document] loadRom:[defaults stringForKey:VC64KernelRomFileKey]];
+	[[self document] loadRom:[defaults stringForKey:VC64VC1541RomFileKey]];
 	
 	/* Peripherals */
 	//[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
@@ -275,141 +288,6 @@
 // --------------------------------------------------------------------------------
 // Loading and saving
 // --------------------------------------------------------------------------------
-
-#if 0
-+ (NSArray *)readableTypes 
-{ 
-	NSLog(@"+ (NSArray *)readableTypes"); 
-	return [NSArray arrayWithObjects:@"VC64", nil]; 
-} 
-
-+ (NSArray *)writableTypes 
-{ 
-	NSLog(@"+ (NSArray *)writableTypes"); 
-	return [NSArray arrayWithObjects:@"VC64", nil]; 
-} 
-
-+ (bool)isNativeType:(NSString *)aType
-{
-	NSLog(@"+ (bool)isNativeType"); 
-	return [aType isEqual:@"VC64"];
-}
-
-- (BOOL)shouldShowFilename:(NSString *)filename { 
-	NSLog(@"shouldShowFilename");
-    NSString *lpc = [filename lastPathComponent]; 
-    if ([lpc characterAtIndex:0] == '_') 
-        return NO; 
-    return YES; 
-} 
-
--(NSData *)dataRepresentationOfType:(NSString *)type
-{
-	NSLog(@"dataRepresentationOfType:%@", type);
-	NSLog(@"c64 == %p", c64);
-	
-	return nil;
-}
-
--(bool)loadDataRepresentation:(NSData *)docData ofType:(NSString *)type
-{
-	NSLog(@"loadDataRepresentation:%@", type);
-	NSLog(@"c64 == %p", c64);
-	
-	return NO;
-}
-#endif
-
--(BOOL)writeToFile:(NSString *)filename ofType:(NSString *)type
-{
-	NSLog(@"writeToFile %@ (type %@)", filename, type);
-	
-	if (![type isEqualToString:@"VC64"]) {
-		NSLog(@"File is not of type VC64\n");
-		return NO;
-	}
-	
-#if 0
-	snapshot = new Snapshot();
-	[c64 dumpContentsToSnapshot:snapshot];
-	// snapshot->initWithContentsOfC64([c64 getC64]);
-	snapshot->writeToFile([filename UTF8String]);
-	delete snapshot;
-	snapshot = NULL;
-#endif
-	V64Snapshot *s = [V64Snapshot snapshotFromC64:c64];
-	[s writeDataToFile:filename];
-	[s release];
-	
-	return YES;
-}
-
--(BOOL)readFromFile:(NSString *)filename ofType:(NSString *)type
-{
-	NSLog(@"readFromFile %@ (type %@)", filename, type);
-	
-	if ([type isEqualToString:@"VC64"]) {
-		snapshot = Snapshot::snapshotFromFile([filename UTF8String]);
-		if (!snapshot) {
-			NSLog(@"Error while reading snapshot\n");
-			return NO;
-		}
-	} else if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
-		if (![self setArchiveWithName:filename]) {
-			NSLog(@"Error while reading archive\n");
-			return NO;
-		}
-	}			
-	
-	return YES;
-}
-
-- (BOOL)revertToSavedFromFile:(NSString *)filename ofType:(NSString *)type
-{
-	bool success = NO;
-	
-	if ([type isEqualToString:@"VC64"]) {
-		snapshot = Snapshot::snapshotFromFile([filename UTF8String]);
-		if (snapshot) {
-			// snapshot->writeToC64([c64 getC64]);
-			[c64 initWithContentsOfSnapshot:snapshot];
-			delete snapshot;
-			snapshot = NULL;
-			success = YES;
-		}
-	} else if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
-		if ([self setArchiveWithName:filename]) {
-			[self showMountDialog];
-			success = YES;
-		}
-	}
-	return success;
-}
-
-- (BOOL)loadRom:(NSString *)filename
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	bool success = NO;
-	
-	if ([c64 loadBasicRom:filename]) {
-		[defaults setObject:filename forKey:VC64BasicRomFileKey];
-		success = YES;
-	}
-	else if ([c64 loadCharRom:filename]) {
-		[defaults setObject:filename forKey:VC64CharRomFileKey];
-		success = YES;
-	}
-	else if ([c64 loadKernelRom:filename]) {
-		[defaults setObject:filename forKey:VC64KernelRomFileKey];
-		success = YES;
-	}
-	else if ([c64 loadVC1541Rom:filename]) {
-		[defaults setObject:filename forKey:VC64VC1541RomFileKey];
-		success = YES;
-	}
-	
-	return success;
-}
 
 - (IBAction)saveScreenshotDialog:(id)sender
 {
@@ -610,6 +488,8 @@
 
 - (void)timerFunc
 {	
+	if (timerLock == NULL)
+		NSLog(@"TIMER IS NIL");
 	[timerLock lock];
 	
 	// Do 6 times a second ...
@@ -628,32 +508,12 @@
 	
 	// Do less times ... 
 	if ((animationCounter & 0x01) == 0) {	
-		
-		[self measureEmulationSpeed];
+		[speedometer updateWithCurrentCycle:[c64 getCycles] currentFrame:[screen frames]];
+		[clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %02d fps", [speedometer mhz], (int)[speedometer fps]]];
+		[clockSpeedBar setFloatValue:10.0 * [speedometer mhz]];
 	}
 	
 	[timerLock unlock];
-}
-
-- (void)measureEmulationSpeed
-{
-	// Measure clock frequency and frame rate
-	long currentTime   = msec();
-	long currentCycles = [c64 getCycles];
-	long currentFrames = [screen frames];
-	long elapsedTime   = currentTime - timeStamp;
-	long elapsedCycles = currentCycles - cycleCount;
-	long elapsedFrames = currentFrames - frameCount;
-	
-	// print how fast we're flying
-	mhz = (float)elapsedCycles / (float)elapsedTime;
-	float fps = round(((float)(elapsedFrames * 1000000) / (float)elapsedTime));
-	
-	[clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %02d fps", mhz, (int)fps]];
-	[clockSpeedBar setFloatValue:10.0 * (float)elapsedCycles / (float)elapsedTime];
-	timeStamp  = currentTime;
-	cycleCount = currentCycles;
-	frameCount = currentFrames;		
 }
 
 // --------------------------------------------------------------------------------
@@ -916,8 +776,8 @@
 	}
 	if ([backInTime_panel state] == NSDrawerClosedState) {
 		[c64 halt];
+		[ttTableView refresh];
 		[backInTime_panel open];
-		[ttTableView setItems:self];
 	}	
 }
 
@@ -1196,29 +1056,6 @@
 // Dialogs
 // --------------------------------------------------------------------------------
 
-- (BOOL)setArchiveWithName:(NSString *)path
-{
-	
-	if ((archive = D64Archive::archiveFromArbitraryFile([path UTF8String])) != NULL)
-		return YES;
-#if 0	
-	// OLD CODE	
-	if ((archive = T64Archive::archiveFromFile([path UTF8String])) != NULL)
-		return YES;
-	
-	if ((archive = D64Archive::archiveFromFile([path UTF8String])) != NULL)
-		return YES;
-	
-	if ((archive = PRGArchive::archiveFromFile([path UTF8String])) != NULL)
-		return YES;
-	
-	if ((archive = P00Archive::archiveFromFile([path UTF8String])) != NULL)
-		return YES;
-#endif
-	
-	return NO;
-}
-
 - (IBAction)cancelRomDialog:(id)sender
 {
 	// Hide sheet
@@ -1230,10 +1067,10 @@
 
 - (BOOL)showMountDialog
 {
-	if (archive == NULL)
+	if ([[self document] archive] == NULL)
 		return NO;
 	
-	[mountDialog initialize:archive];
+	[mountDialog initialize:[[self document] archive]];
 	
 	[NSApp beginSheet:mountDialog
 	   modalForWindow:[[self document] windowForSheet]
@@ -1264,7 +1101,7 @@
 	// Return to normal event handling
 	[NSApp endSheet:mountDialog returnCode:1];
 	
-	[c64 mountArchive:archive];
+	[c64 mountArchive:[[self document] archive]];
 }
 
 - (IBAction)endMountDialogAndFlash:(id)sender
@@ -1279,13 +1116,13 @@
 	[NSApp endSheet:mountDialog returnCode:1];
 	
 	// Try to mount archive
-	[c64 mountArchive:archive];
+	[c64 mountArchive:[[self document] archive]];
 	
 	// Load clean image 
 	[c64 fastReset];
 	
 	// Flash selected file into memory
-	[c64 flushArchive:archive item:[mountDialog getSelectedFile]];
+	[c64 flushArchive:[[self document] archive] item:[mountDialog getSelectedFile]];
 	
 	// Wait and type "RUN"
 	fprintf(stderr,"Wating...\n");
@@ -1294,35 +1131,12 @@
 	[[c64 keyboard] typeRun];
 }
 
-- (BOOL)attachCartridge:(NSString *)path
-{
-	if (!(cartridge = Cartridge::cartridgeFromFile([path UTF8String])))
-		return NO;
-	
-	// Try to mount archive
-	[c64 attachCartridge:cartridge];
-	
-	// reset
-	[c64 reset];
-	
-	return YES;
-}
-
-- (BOOL)detachCartridge
-{
-	[c64 detachCartridge];	
-	delete cartridge;
-	cartridge = NULL;
-	
-	return YES;
-}
-
 - (IBAction)cartridgeEjectAction:(id)sender
 {
 	NSLog(@"cartridgeEjectAction");	
 	[c64 detachCartridge];
-	delete cartridge;
-	cartridge = NULL;
+	// delete [[self document] cartridge];
+	[[self document] setCartridge:NULL];
 	[c64 reset];
 }
 

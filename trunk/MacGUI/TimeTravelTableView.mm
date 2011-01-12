@@ -16,22 +16,29 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "MyDocument.h"
+#import "MyController.h"
 
 
 @implementation TimeTravelTableView 
+
+@synthesize controller;
+
+#pragma mark NSTableView
 
 - (void)awakeFromNib {
 	
 	NSLog(@"TimeTravelTableView::awakeFromNib");
 	
 	items = [NSMutableArray new];
+
+	// we are our own data source
 	[self setDelegate:self];
 	[self setDataSource:self];
 
+	// prepare to get click and double click messages
 	[self setTarget:self];
-	[self setDoubleAction:@selector(doubleClickAction:)];
 	[self setAction:@selector(clickAction:)];
+	[self setDoubleAction:@selector(doubleClickAction:)];
 
 	[self reloadData];
 }
@@ -41,108 +48,42 @@
 	[super dealloc];
 }
 
-- (NSMutableArray *)items {
-	return items;
-}
-
-- (id)selectedRowItemforColumnIdentifier:(NSString *)anIdentifier {
-	if ([self selectedRow] != -1)
-		return [[items objectAtIndex:[self selectedRow]] objectForKey:anIdentifier];
-	
-	return nil;
-}
-
-- (void)setItems:(MyController *)doc {
-	
-	V64Snapshot *s;
-	
-	NSLog(@"TimeTravelTableView::setItems");
-
-	mydoc = doc;
-	setupTime = time(NULL);
-	[items removeAllObjects];
-	
-	for (int i = 0; (s = [[mydoc c64] historicSnapshot:i]) != nil; i++) {
-				
-		// Get pointer to raw image data
-		unsigned char *data = [s imageData];
-		assert(data != NULL);
-		
-		// Convert data into an NSImage
-		int width = VIC::TOTAL_SCREEN_WIDTH;
-		int height = VIC::TOTAL_SCREEN_HEIGHT;
-		
-		// Skip first few rows (upper and lower border should be same size)
-		height -= 38;
-		data += 38 * 4 * width;
-		
-		// Create bitmap representation
-		NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&data 
-																		pixelsWide: width
-																		pixelsHigh: height 
-																	 bitsPerSample: 8
-																   samplesPerPixel: 4 
-																		  hasAlpha: YES
-																		  isPlanar: NO
-																	colorSpaceName: NSCalibratedRGBColorSpace
-																	   bytesPerRow: 4*width
-																	  bitsPerPixel: 32];	
-
-		// Create NSImage from bitmap representation
-		NSImage *image = [[NSImage alloc] initWithSize:[bmp size]];
-		[image addRepresentation: bmp];
-		[bmp release];
-
-		[image setSize:NSMakeSize(120,80)];
-		[items addObject:image];
+- (void)keyDown:(NSEvent *)theEvent
+{
+	if([theEvent keyCode] == 0x24 && [self numberOfSelectedRows] == 1) {
+		[self revertAction:self];
+	} else {
+		[super keyDown:theEvent];		
 	}
-
-	[self reloadData];
 }
 
-- (void)addRow:(NSDictionary *)item {
-	[items insertObject:item atIndex:[items count]];
-	[self reloadData];
-}
+#pragma mark NSTableViewDataSource
 
-- (void)removeRow:(unsigned)row {
-	[items removeObjectAtIndex:row];
-	[self reloadData];
-}
-
-- (int)numberOfRowsInTableView:(NSTableView *)tableView {
-	
-	NSLog(@"TimeTravelTableView::numberOfRowsInTableView");
-
+- (int)numberOfRowsInTableView:(NSTableView *)tableView 
+{	
 	return [items count];
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row {
-	
-	// NSLog(@"TimeTravelTableView::objectValueForTableColumn:%d", row);
-
-	if (row != -1)
-		return [items objectAtIndex:row];
-	
-	return nil;
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row 
+{
+	return (row >= 0)  ? [items objectAtIndex:row] : nil;
 }
+
+#pragma mark NSTableViewDelegate
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
 	NSLog(@"tableViewSelectionDidChange (item %d)", [self selectedRow]);
 	
-	V64Snapshot *s = [[mydoc c64] historicSnapshot:[self selectedRow]];
-	assert(s != NULL);
-
 	// Compute info strings
 	char buf1[64], buf2[64];
-	time_t stamp = [s timeStamp];
+	time_t stamp = [[controller c64] historicSnapshotTimestamp:[self selectedRow]];
 	strftime(buf1, sizeof(buf1)-1, "Snapshot taken at %H:%M:%S", localtime(&stamp));
 	sprintf(buf2, "%d seconds ago", (int)difftime(setupTime, stamp));
 		
 	// Display info strings
-	[mydoc updateTimeTravelInfoText:(NSString *)[NSString stringWithUTF8String:buf1]
-						 secondText:(NSString *)[NSString stringWithUTF8String:buf2]];
+	[controller updateTimeTravelInfoText:(NSString *)[NSString stringWithUTF8String:buf1]
+							  secondText:(NSString *)[NSString stringWithUTF8String:buf2]];
 }
 
 - (void)clickAction:(id)sender
@@ -161,21 +102,52 @@
 {
 	NSLog(@"revertAction");
 
-	V64Snapshot *s = [[mydoc c64] historicSnapshot:[self selectedRow]];
-
-	if (s) {
-		[s writeDataToC64:[mydoc c64]];
-		[mydoc timeTravelAction:self];
-	}
+	[[controller c64] revertToHistoricSnapshot:[self selectedRow]];
+	[controller timeTravelAction:self];
 }
 
-- (void)keyDown:(NSEvent *)theEvent
-{
-	if([theEvent keyCode] == 0x24 && [self numberOfSelectedRows] == 1) {
-		[self revertAction:self];
-	} else {
-		[super keyDown:theEvent];		
+- (void)refresh {
+	
+	unsigned char *data;
+	
+	NSLog(@"TimeTravelTableView::setItems");
+	
+	setupTime = time(NULL);
+	[items removeAllObjects];
+	
+	for (int i = 0; (data = [[controller c64] historicSnapshotImageData:i]) != NULL; i++) {
+				
+		// Convert data into an NSImage
+		int width = VIC::TOTAL_SCREEN_WIDTH;
+		int height = VIC::TOTAL_SCREEN_HEIGHT;
+		
+		// Skip first few rows (upper and lower border should be same size)
+		height -= 38;
+		data += 38 * 4 * width;
+		
+		// Create bitmap representation
+		NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:	&data 
+																		pixelsWide: width
+																		pixelsHigh: height 
+																	 bitsPerSample: 8
+																   samplesPerPixel: 4 
+																		  hasAlpha: YES
+																		  isPlanar: NO
+																	colorSpaceName: NSCalibratedRGBColorSpace
+																	   bytesPerRow: 4*width
+																	  bitsPerPixel: 32];	
+		
+		// Create NSImage from bitmap representation
+		NSImage *image = [[NSImage alloc] initWithSize:[bmp size]];
+		[image addRepresentation:bmp];
+		[bmp release];
+		
+		[image setSize:NSMakeSize(120,80)];
+		[items addObject:image];
 	}
+	
+	[self reloadData];
 }
+
 
 @end

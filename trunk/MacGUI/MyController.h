@@ -34,6 +34,7 @@
 #import "C64Proxy.h"
 #import "JoystickManager.h"
 #import "TimeTravelTableView.h"
+#import "Speedometer.h"
 
 @interface MyController : NSWindowController 
 {
@@ -69,7 +70,7 @@
 	
 	// Cheat box
 	IBOutlet TimeTravelTableView *ttTableView;
-	IBOutlet NSButton *revertToSnapshot;
+	// IBOutlet NSButton *revertToSnapshot;
 	IBOutlet NSTextField *historyDateField1;
 	IBOutlet NSTextField *historyDateField2;
 	
@@ -177,11 +178,11 @@
 	// Timer lock
 	NSLock *timerLock;
 	
-	// Measured clock frequency
-	float mhz;
-	
-	// The following variables are needed to calculate the clock frequency
-	long cycleCount, frameCount, timeStamp, animationCounter; 
+	// Used inside timer function
+	long animationCounter; 
+
+	// Speedometer to measure clock frequence and frames per second
+	Speedometer *speedometer;
 	
 	// Address of the first disassembled instruction in the CPU Debug window
 	// TODO: SHOULD BE RETRIEVED FROM VIEW
@@ -191,29 +192,15 @@
 	// TODO: SHOULD BE RETRIEVED FROM VIEW
 	int selectedSprite;
 	
-	//! Reference to the attached D64 archive
-	// MOVE TO MYDOCUMENT, IS PART OF MODEL
-	D64Archive *archive;
-	
-	//! Reference to the attached cartridge
-	// MOVE TO MYDOCUMENT, IS PART OF MODEL
-	Cartridge *cartridge;
-	
-	//! Initial snapshot
-	//! If unequal NULL, the newly created document will be initialized with the provided snapshot data
-	// MOVE TO MYDOCUMENT, IS PART OF MODEL
-	Snapshot *snapshot;		
+	Snapshot *snapshot;
 }
 
 @property C64Proxy *c64;
-@property D64Archive *archive;
-@property Cartridge *cartridge;
-
-// MOVE TO MYDOCUMENT, IS PART OF MODEL
-- (BOOL)setArchiveWithName:(NSString *)path;
-- (BOOL)attachCartridge:(NSString *)path;
 
 // Main screen
+- (IBAction)joystick1Action:(id)sender;
+- (IBAction)joystick2Action:(id)sender;
+- (IBAction)switchJoysticksAction:(id)sender;
 - (IBAction)fullscreenAction:(id)sender;
 - (IBAction)debugAction:(id)sender;
 - (IBAction)stepperAction:(id)sender;
@@ -273,15 +260,11 @@
 // Enable / disable editing
 - (void)enableUserEditing:(BOOL)enabled;
 
-// Loading and saving
-- (BOOL)loadRom:(NSString *)filename;
-
 // Misc
 // MOVE TO category MyController(CpuDebugPanel)
 - (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row;
 
 - (BOOL)showMountDialog;
-- (void)measureEmulationSpeed;
 
 // MOVE TO category MyController(Dialogs)
 - (IBAction)cancelRomDialog:(id)sender;

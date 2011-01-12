@@ -281,17 +281,6 @@ public:
 	//! Dump current state into logfile
 	void dumpState();
 	
-	//! Take a snapshot and store it in ringbuffer
-	void takeSnapshot();
-
-	//! Returns the number of previously taken snapshots
-	/*! Returns a number between 0 and BACK_IN_TIME_BUFFER_SIZE */
-	unsigned numHistoricSnapshots();
-	
-	//! Get snapshot from history buffer
-	/*! 0 = latest. Return NULL, if requested snapshot does not exist */
-	Snapshot *getHistoricSnapshot(int nr);
-	
 	//! Helper function for load
 	/*! This function is not thread safe, don't call it directly! Call load instead */
 	void _load(uint8_t **buffer);
@@ -299,6 +288,32 @@ public:
 	//! Helper function for save
 	/*! This function is not thread safe, don't call it directly! Call save instead */
 	void _save(uint8_t **buffer);
+	
+	//! Load snapshot (TODO: Make function void)
+	void loadFromSnapshot(Snapshot *s);
+
+	//! Take a snapshot and store it in ringbuffer
+	void takeSnapshot();
+	
+	//! Returns the number of previously taken snapshots
+	/*! Returns a number between 0 and BACK_IN_TIME_BUFFER_SIZE */
+	unsigned numHistoricSnapshots();
+	
+	//! Get snapshot from history buffer
+	/*! nr = 0 : latest snapshot. Return NULL, if requested snapshot does not exist */
+	Snapshot *getHistoricSnapshot(int nr);
+	
+	//! Get image data of snapshot from history buffer
+	/*! nr = 0 : latest snapshot. Return NULL, if requested snapshot does not exist */
+	unsigned char *getHistoricSnapshotImageData(int nr);
+	
+	//! Get time stamp of snapshot from history buffer
+	/*! nr = 0 : latest snapshot. Return NULL, if requested snapshot does not exist */
+	time_t getHistoricSnapshotTimestamp(int nr);
+	
+	//! Revert to historic snapshot
+	bool revertToHistoricSnapshot(int nr);
+	
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                         Configure
