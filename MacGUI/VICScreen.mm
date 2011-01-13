@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "MyDocument.h"
+#import "C64GUI.h"
 
 const float TEX_LEFT   = 0.0 / ((float)TEXTURE_WIDTH);
 const float TEX_RIGHT  = (VIC::SCREEN_WIDTH+2*VIC::BORDER_WIDTH) / ((float)TEXTURE_WIDTH);

@@ -16,8 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "MyController.h"
-#import "MyControllerCpuPanel.h"
+#import "C64GUI.h"
 
 @implementation MyController(CpuPanel) 
 
@@ -162,33 +161,6 @@
 	
 	[[c64 cpu] toggleHardBreakpoint:[sender intValue]];
 	[self refresh];
-}
-
-- (void)doubleClickInCpuTable:(id)sender
-{
-	uint16_t addr;
-	
-	addr = [[c64 cpu] getAddressOfNextIthInstruction:[sender selectedRow] from:disassembleStartAddr];
-	[self setHardBreakpointAction:[NSNumber numberWithInt:addr]];
-}
-
-- (id)objectValueForCpuTableColumn:(NSTableColumn *)aTableColumn row:(int)row
-{
-	uint16_t addr = [[c64 cpu] getAddressOfNextIthInstruction:row from:disassembleStartAddr];
-	uint8_t length = [[c64 cpu] getLengthOfInstruction:[[c64 mem] peek:addr]];
-	
-	if ([[aTableColumn identifier] isEqual:@"addr"]) 
-		return [NSNumber numberWithInt:addr];
-	else if ([[aTableColumn identifier] isEqual:@"data01"]) 
-		return (length > 0 ? [NSNumber numberWithInt:[[c64 mem] peek:addr]] : nil);
-	else if ([[aTableColumn identifier] isEqual:@"data02"]) 
-		return (length > 1 ? [NSNumber numberWithInt:[[c64 mem] peek:(addr+1)]] : nil);
-	else if ([[aTableColumn identifier] isEqual:@"data03"]) 
-		return (length > 2 ? [NSNumber numberWithInt:[[c64 mem] peek:(addr+2)]] : nil);
-	else if ([[aTableColumn identifier] isEqual:@"ascii"]) 
-		return [NSNumber numberWithInt:addr];
-	
-	return @"???";
 }
 
 - (void)refreshCPU

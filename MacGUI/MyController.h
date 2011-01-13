@@ -16,25 +16,41 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef INC_MYCONTROLLER
-#define INC_MYCONTROLLER
-
 #import <Cocoa/Cocoa.h>
-#import <OpenGL/OpenGL.h>
-#import <OpenGL/glu.h>
+
+#if 0
 #import "C64.h"
-#import "Formatter.h"
+#import "C64Proxy.h"
+#import "MyDocument.h"
 #import "Disassembler.h"
+#import "Formatter.h"
 #import "VICScreen.h"
+#import "CpuTableView.h"
+#import "MemTableView.h"
+#import "TimeTravelTableView.h"
 #import "MountDialog.h"
 #import "RomDialog.h"
-#import "MyController.h"
 #import "PreferenceController.h"
-#import "AudioDevice.h"
-#import "C64Proxy.h"
 #import "JoystickManager.h"
-#import "TimeTravelTableView.h"
+#import "AudioDevice.h"
 #import "Speedometer.h"
+#endif
+
+// Forward declarations
+@class C64Proxy;
+@class MountDialog;
+@class RomDialog;
+@class PreferenceController;
+@class VICScreen;
+@class TimeTravelTableView;
+@class CpuTableView;
+@class MemTableView;
+@class Speedometer;
+
+class JoystickManager;
+class Snapshot;
+
+// @class MyDocument;
 
 @interface MyController : NSWindowController 
 {
@@ -82,7 +98,7 @@
 	IBOutlet NSButton *stepOutButton;
 	
 	// Debug panel (CPU)
-	IBOutlet NSTableView *cpuTableView;
+	IBOutlet CpuTableView *cpuTableView;
 	IBOutlet NSTextField *pc;
 	IBOutlet NSTextField *sp;
 	IBOutlet NSTextField *a;
@@ -98,7 +114,7 @@
 	IBOutlet NSTextField *breakpoint;
 	
 	// Debug panel (Memory)
-	IBOutlet NSTableView *memTableView;
+	IBOutlet MemTableView *memTableView;
 	IBOutlet NSSearchField *addr_search;	
 	IBOutlet NSButtonCell *ramSource;
 	IBOutlet NSButtonCell *romSource;
@@ -183,11 +199,7 @@
 
 	// Speedometer to measure clock frequence and frames per second
 	Speedometer *speedometer;
-	
-	// Address of the first disassembled instruction in the CPU Debug window
-	// TODO: SHOULD BE RETRIEVED FROM VIEW
-	uint16_t disassembleStartAddr; 	
-	
+		
 	// Selected sprite in VIC debug panel
 	// TODO: SHOULD BE RETRIEVED FROM VIEW
 	int selectedSprite;
@@ -238,20 +250,6 @@
 - (IBAction)commodoreKeyAction:(id)sender;
 - (IBAction)FormatDiskAction:(id)sender;
 
-// Table views handling
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView;
-
-// Getter
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
-
-// Setter
-- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex;
-
-// Delegate
-- (void)tableView:(NSTableView *)aTableView willDisplayCell: (id)aCell forTableColumn: (NSTableColumn *)aTableColumn row: (int)aRowIndex;
-
-// End table view handling
-
 // Refresh methods
 - (void)loadUserDefaults;
 - (void)refresh;
@@ -259,10 +257,6 @@
 
 // Enable / disable editing
 - (void)enableUserEditing:(BOOL)enabled;
-
-// Misc
-// MOVE TO category MyController(CpuDebugPanel)
-- (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row;
 
 - (BOOL)showMountDialog;
 
@@ -274,5 +268,3 @@
 - (IBAction)saveScreenshotDialog:(id)sender;
 
 @end
-
-#endif

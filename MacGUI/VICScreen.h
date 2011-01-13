@@ -16,9 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef VICSCREEN_INC
-#define VICSCREEN_INC
-
 #import <Cocoa/Cocoa.h>
 #import <QuickTime/QuickTime.h>
 
@@ -163,5 +160,3 @@ const int BG_TEXTURE_DEPTH = 4;
 - (int) makeTexture:(NSImage *)img;
 
 @end
-
-#endif

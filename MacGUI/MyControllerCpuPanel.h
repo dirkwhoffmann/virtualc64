@@ -16,9 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef INC_MYCONTROLLER_CPU_PANEL
-#define INC_MYCONTROLLER_CPU_PANEL
-
 #import "MyController.h"
 
 @interface MyController(CpuPanel)
@@ -40,12 +37,6 @@
 
 - (IBAction)setHardBreakpointAction:(id)sender;
 
-- (id)objectValueForCpuTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
-
-- (void)doubleClickInCpuTable:(id)sender;
-
 - (void)refreshCPU;
 
 @end
-
-#endif

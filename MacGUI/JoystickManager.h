@@ -16,17 +16,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef __JOYSTICK_MANAGER_H__
-#define __JOYSTICK_MANAGER_H__
 
-#include "C64.h"
-#include "C64Proxy.h"
-#include <IOKit/hid/IOHIDLib.h>
-#include <IOKit/hid/IOHIDManager.h>
-#include <map>
-#include <set>
+#import <IOKit/hid/IOHIDLib.h>
+#import <IOKit/hid/IOHIDManager.h>
+#import <map>
+#import <set>
+#import "Joystick.h"
+
+@class C64Proxy;
+
 using std::map;
 using std::set;
+
 
 class JoystickProxy
 {
@@ -91,4 +92,3 @@ class IOHIDDeviceInfo
 		char *_name;
 };
 
-#endif

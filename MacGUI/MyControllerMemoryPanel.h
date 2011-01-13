@@ -16,9 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef INC_MYCONTROLLER_MEMORY_PANEL
-#define INC_MYCONTROLLER_MEMORY_PANEL
-
 #import "MyController.h"
 
 @interface MyController(MemoryPanel)
@@ -26,19 +23,11 @@
 // Debug panel (Memory)
 - (IBAction)searchAction:(id)sender;
 
-- (Memory::MemoryType)currentMemSource;
 - (IBAction)setMemSourceToRAM:(id)sender;
 - (IBAction)setMemSourceToROM:(id)sender;
 - (IBAction)setMemSourceToIO:(id)sender;
-
-- (id)objectValueForMemTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
-- (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(Memory::MemoryType)t;
-- (void)setMemObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex;
-
-- (void)doubleClickInMemTable:(id)sender;
 
 - (void)refreshMemory;
 
 @end
 
-#endif

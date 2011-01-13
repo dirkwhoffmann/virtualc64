@@ -16,38 +16,33 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "C64GUI.h"
+#import <Cocoa/Cocoa.h>
+#import <OpenGL/OpenGL.h>
+#import <OpenGL/glu.h>
 
-@implementation MyController(MemoryPanel) 
+#import "C64.h"
+#import "C64Proxy.h"
+#import "MyDocument.h"
 
-- (IBAction)searchAction:(id)sender
-{
-	uint16_t addr = [sender intValue];
-	[memTableView scrollRowToVisible:addr/4];
-	[self refresh];
-}
+#import "Disassembler.h"
+#import "Formatter.h"
 
-- (IBAction)setMemSourceToRAM:(id)sender
-{
-	[memTableView setSource:Memory::MEM_RAM];
-	[memTableView refresh];
-}
+#import "VICScreen.h"
+#import "CpuTableView.h"
+#import "MemTableView.h"
+#import "TimeTravelTableView.h"
 
-- (IBAction)setMemSourceToROM:(id)sender
-{
-	[memTableView setSource:Memory::MEM_ROM];
-	[memTableView refresh];
-}
+#import "MyController.h"
+#import "MyControllerCpuPanel.h"
+#import "MyControllerMemoryPanel.h"
+#import "MyControllerCiaPanel.h"
+#import "MyControllerVicPanel.h"
+#import "MyController.h"
 
-- (IBAction)setMemSourceToIO:(id)sender
-{
-	[memTableView setSource:Memory::MEM_IO];
-	[memTableView refresh];
-}
+#import "MountDialog.h"
+#import "RomDialog.h"
+#import "PreferenceController.h"
 
-- (void)refreshMemory
-{
-	[memTableView reloadData];
-}
-
-@end
+#import "JoystickManager.h"
+#import "AudioDevice.h"
+#import "Speedometer.h"

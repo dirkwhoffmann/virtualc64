@@ -16,9 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "MyController.h"
-#import "AudioDevice.h"
-
+#import "C64GUI.h"
 
 // --------------------------------------------------------------------------
 //                                    CPU
@@ -535,9 +533,9 @@
 - (bool) warp { return c64->getWarp(); }
 - (void) setWarp:(bool)b { c64->setWarp(b); }	
 - (bool) alwaysWarp { return c64->getAlwaysWarp(); }
-- (void) setAlwaysWarp:(bool)b { return c64->setAlwaysWarp(b); }
+- (void) setAlwaysWarp:(bool)b { c64->setAlwaysWarp(b); }
 - (bool) warpLoad { return c64->getWarpLoad(); }
-- (void) setWarpLoad:(bool)b { return c64->setWarpLoad(b); }
+- (void) setWarpLoad:(bool)b { c64->setWarpLoad(b); }
 
 - (long) getCycles { return (long)c64->getCycles(); }
 
