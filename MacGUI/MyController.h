@@ -18,33 +18,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-#if 0
-#import "C64.h"
-#import "C64Proxy.h"
-#import "MyDocument.h"
-#import "Disassembler.h"
-#import "Formatter.h"
-#import "VICScreen.h"
-#import "CpuTableView.h"
-#import "MemTableView.h"
-#import "TimeTravelTableView.h"
-#import "MountDialog.h"
-#import "RomDialog.h"
-#import "PreferenceController.h"
-#import "JoystickManager.h"
-#import "AudioDevice.h"
-#import "Speedometer.h"
-#endif
-
 // Forward declarations
 @class C64Proxy;
 @class MountDialog;
 @class RomDialog;
 @class PreferenceController;
-@class VICScreen;
-@class TimeTravelTableView;
+@class MyOpenGLView;
 @class CpuTableView;
 @class MemTableView;
+@class TimeTravelTableView;
 @class Speedometer;
 
 class JoystickManager;
@@ -68,7 +50,7 @@ class Snapshot;
 	PreferenceController *preferenceController;
 	
 	// Main screen
-	IBOutlet VICScreen *screen;
+	IBOutlet MyOpenGLView *screen;
 	IBOutlet NSDrawer *debug_panel;
 	IBOutlet NSDrawer *backInTime_panel;
 	IBOutlet NSButton *drive;
@@ -86,6 +68,7 @@ class Snapshot;
 	
 	// Cheat box
 	IBOutlet TimeTravelTableView *ttTableView;
+	IBOutlet CheatboxImageBrowserView *cheatboxImageBrowserView;
 	// IBOutlet NSButton *revertToSnapshot;
 	IBOutlet NSTextField *historyDateField1;
 	IBOutlet NSTextField *historyDateField2;

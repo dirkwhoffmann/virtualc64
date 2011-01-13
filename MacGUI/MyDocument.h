@@ -17,22 +17,13 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <OpenGL/OpenGL.h>
-#import <OpenGL/glu.h>
-#import "C64.h"
-#import "Formatter.h"
-#import "Disassembler.h"
-#import "VICScreen.h"
-#import "MountDialog.h"
-#import "RomDialog.h"
-#import "MyController.h"
-#import "PreferenceController.h"
-#import "AudioDevice.h"
-#import "C64Proxy.h"
-#import "JoystickManager.h"
-#import "TimeTravelTableView.h"
-#import "CpuTableView.h"
-#import "MemTableView.h"
+//#import <OpenGL/OpenGL.h>
+//#import <OpenGL/glu.h>
+
+@class C64Proxy;
+class D64Archive;
+class Cartridge;
+class Snapshot;
 
 @interface MyDocument : NSDocument
 {

@@ -16,37 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import <Cocoa/Cocoa.h>
-#import <OpenGL/OpenGL.h>
-#import <OpenGL/glu.h>
 #import <Quartz/Quartz.h>
+#import <Cocoa/Cocoa.h>
 
-#import "C64.h"
-#import "C64Proxy.h"
-#import "MyDocument.h"
 
-#import "Disassembler.h"
-#import "Formatter.h"
+@interface CheatboxImageBrowserCell : IKImageBrowserCell {
+}
 
-#import "MyOpenGLView.h"
-#import "CpuTableView.h"
-#import "MemTableView.h"
-#import "CheatboxItem.h"
-#import "CheatboxImageBrowserCell.h"
-#import "CheatboxImageBrowserView.h"
-#import "TimeTravelTableView.h"
-
-#import "MyController.h"
-#import "MyControllerCpuPanel.h"
-#import "MyControllerMemoryPanel.h"
-#import "MyControllerCiaPanel.h"
-#import "MyControllerVicPanel.h"
-#import "MyController.h"
-
-#import "MountDialog.h"
-#import "RomDialog.h"
-#import "PreferenceController.h"
-
-#import "JoystickManager.h"
-#import "AudioDevice.h"
-#import "Speedometer.h"
+@end

@@ -48,7 +48,7 @@
 		50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C710A6F7357009E80BD /* Disassembler.mm */; };
 		50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* Formatter.mm */; };
 		50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C760A6F7357009E80BD /* MyDocument.mm */; };
-		50176C800A6F7357009E80BD /* VICScreen.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C780A6F7357009E80BD /* VICScreen.mm */; };
+		50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
@@ -85,7 +85,6 @@
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
-		50B10338121E7C70003E7729 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B10337121E7C70003E7729 /* QuartzCore.framework */; };
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50CA0D520A9076FD00A5A08D /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* SID.cpp */; };
@@ -105,6 +104,12 @@
 		50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FC0C42698E00AFB05F /* flag_usa.png */; };
 		50E555FF0C42699300AFB05F /* flag_eu.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FE0C42699300AFB05F /* flag_eu.png */; };
 		50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.mm */; };
+		50F2380312DF4EC600B1F275 /* CheatboxImageBrowserView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */; };
+		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
+		50F238F412DF576600B1F275 /* CheatboxItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F238F312DF576600B1F275 /* CheatboxItem.mm */; };
+		50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */; };
+		50F23D0812DF932800B1F275 /* glossy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F23D0712DF932800B1F275 /* glossy.png */; };
+		50F23D0A12DF933100B1F275 /* pin.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50F23D0912DF933100B1F275 /* pin.tiff */; };
 		50F4D2940C46262700ED4E4E /* ResetImage.VC64 in Resources */ = {isa = PBXBuildFile; fileRef = 50F4D2930C46262700ED4E4E /* ResetImage.VC64 */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
@@ -205,8 +210,8 @@
 		50176C730A6F7357009E80BD /* Formatter.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Formatter.mm; sourceTree = "<group>"; };
 		50176C750A6F7357009E80BD /* MyDocument.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = MyDocument.h; sourceTree = "<group>"; };
 		50176C760A6F7357009E80BD /* MyDocument.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = MyDocument.mm; sourceTree = "<group>"; };
-		50176C770A6F7357009E80BD /* VICScreen.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = VICScreen.h; sourceTree = "<group>"; };
-		50176C780A6F7357009E80BD /* VICScreen.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = VICScreen.mm; sourceTree = "<group>"; };
+		50176C770A6F7357009E80BD /* MyOpenGLView.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = MyOpenGLView.h; sourceTree = "<group>"; };
+		50176C780A6F7357009E80BD /* MyOpenGLView.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = MyOpenGLView.mm; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
@@ -253,7 +258,6 @@
 		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = romMissing.png; path = images/romMissing.png; sourceTree = "<group>"; };
 		50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Archive.cpp; sourceTree = "<group>"; };
 		50B1032E121E7C4C003E7729 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
-		50B10337121E7C70003E7729 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
@@ -282,6 +286,15 @@
 		50ED5BF612DD99C000596417 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Speedometer.mm; sourceTree = "<group>"; };
 		50F236AE12DF1CCB00B1F275 /* C64GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64GUI.h; sourceTree = "<group>"; };
+		50F2380112DF4EC600B1F275 /* CheatboxImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxImageBrowserView.h; sourceTree = "<group>"; };
+		50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxImageBrowserView.mm; sourceTree = "<group>"; };
+		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		50F238F212DF576600B1F275 /* CheatboxItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxItem.h; sourceTree = "<group>"; };
+		50F238F312DF576600B1F275 /* CheatboxItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxItem.mm; sourceTree = "<group>"; };
+		50F239B912DF66CB00B1F275 /* CheatboxImageBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxImageBrowserCell.h; sourceTree = "<group>"; };
+		50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxImageBrowserCell.mm; sourceTree = "<group>"; };
+		50F23D0712DF932800B1F275 /* glossy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = glossy.png; path = images/glossy.png; sourceTree = "<group>"; };
+		50F23D0912DF933100B1F275 /* pin.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = pin.tiff; path = images/pin.tiff; sourceTree = "<group>"; };
 		50F4D2930C46262700ED4E4E /* ResetImage.VC64 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ResetImage.VC64; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -305,8 +318,8 @@
 				50A0E0250A8F332A0067714C /* System.framework in Frameworks */,
 				025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */,
 				50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */,
-				50B10338121E7C70003E7729 /* QuartzCore.framework in Frameworks */,
 				503A5A9A1222767C00EAA95E /* Sparkle.framework in Frameworks */,
+				50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +402,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				50B10337121E7C70003E7729 /* QuartzCore.framework */,
+				50F2381D12DF505B00B1F275 /* Quartz.framework */,
 				50B1032E121E7C4C003E7729 /* GLUT.framework */,
 				025229EE0AF27E740024DAB3 /* CoreAudio.framework */,
 				50A0E0240A8F332A0067714C /* System.framework */,
@@ -469,12 +482,18 @@
 				50176C710A6F7357009E80BD /* Disassembler.mm */,
 				50176C720A6F7357009E80BD /* Formatter.h */,
 				50176C730A6F7357009E80BD /* Formatter.mm */,
-				50176C770A6F7357009E80BD /* VICScreen.h */,
-				50176C780A6F7357009E80BD /* VICScreen.mm */,
+				50176C770A6F7357009E80BD /* MyOpenGLView.h */,
+				50176C780A6F7357009E80BD /* MyOpenGLView.mm */,
 				5077743112DE490B00D72088 /* CpuTableView.h */,
 				5077743212DE490B00D72088 /* CpuTableView.mm */,
 				5077742E12DE490300D72088 /* MemTableView.h */,
 				5077742F12DE490300D72088 /* MemTableView.mm */,
+				50F238F212DF576600B1F275 /* CheatboxItem.h */,
+				50F238F312DF576600B1F275 /* CheatboxItem.mm */,
+				50F239B912DF66CB00B1F275 /* CheatboxImageBrowserCell.h */,
+				50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */,
+				50F2380112DF4EC600B1F275 /* CheatboxImageBrowserView.h */,
+				50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */,
 				50DF4EDD12D9AE6B0088256B /* TimeTravelTableView.h */,
 				50DF4EDE12D9AE6B0088256B /* TimeTravelTableView.mm */,
 			);
@@ -579,6 +598,8 @@
 		50732BCA0A70D560008D8FF0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				50F23D0912DF933100B1F275 /* pin.tiff */,
+				50F23D0712DF932800B1F275 /* glossy.png */,
 				502F96B512D85F9C00DBE132 /* time2.png */,
 				502F96AF12D85ED700DBE132 /* time.png */,
 				5041486812219F6E00A80E0C /* cartridge.png */,
@@ -752,6 +773,8 @@
 				503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */,
 				502F96B012D85ED700DBE132 /* time.png in Resources */,
 				502F96B612D85F9C00DBE132 /* time2.png in Resources */,
+				50F23D0812DF932800B1F275 /* glossy.png in Resources */,
+				50F23D0A12DF933100B1F275 /* pin.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,7 +813,7 @@
 				50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */,
 				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */,
-				50176C800A6F7357009E80BD /* VICScreen.mm in Sources */,
+				50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
 				50CA0D520A9076FD00A5A08D /* SID.cpp in Sources */,
@@ -827,6 +850,9 @@
 				50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */,
 				5077743012DE490300D72088 /* MemTableView.mm in Sources */,
 				5077743312DE490B00D72088 /* CpuTableView.mm in Sources */,
+				50F2380312DF4EC600B1F275 /* CheatboxImageBrowserView.mm in Sources */,
+				50F238F412DF576600B1F275 /* CheatboxItem.mm in Sources */,
+				50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

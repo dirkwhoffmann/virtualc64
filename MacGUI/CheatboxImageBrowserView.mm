@@ -19,17 +19,19 @@
 #import "C64GUI.h"
 
 
-@implementation TimeTravelTableView 
+@implementation CheatboxImageBrowserView 
 
 - (void)setController:(MyController *)c
 {
 	controller = c;
-	c64 = [c c64];
+	c64 = [c c64];	
 }
+
+#pragma mark NSTableView
 
 - (void)awakeFromNib {
 	
-	NSLog(@"TimeTravelTableView::awakeFromNib");
+	NSLog(@"CheatboxImageBrowserView::awakeFromNib");
 	
 	items = [NSMutableArray new];
 
@@ -38,10 +40,12 @@
 	[self setDataSource:self];
 
 	// prepare to get click and double click messages
-	[self setTarget:self];
-	[self setAction:@selector(clickAction:)];
-	[self setDoubleAction:@selector(doubleClickAction:)];
+	//[self setTarget:self];
+	//[self setAction:@selector(clickAction:)];
+	//[self setDoubleAction:@selector(doubleClickAction:)];
 
+	[self setIntercellSpacing:NSMakeSize(10.0,-40.0)];
+	
 	[self reloadData];
 }
 
@@ -50,6 +54,7 @@
 	[super dealloc];
 }
 
+#if 0
 - (void)keyDown:(NSEvent *)theEvent
 {
 	if([theEvent keyCode] == 0x24 && [self numberOfSelectedRows] == 1) {
@@ -58,21 +63,24 @@
 		[super keyDown:theEvent];		
 	}
 }
+#endif
 
-#pragma mark NSTableViewDataSource
+#pragma mark Browser Data Source Methods
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView 
+- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *)browser
 {	
 	return [items count];
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row 
+- (id) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(NSUInteger)index
 {
-	return (row >= 0)  ? [items objectAtIndex:row] : nil;
+	return [items objectAtIndex:index];
 }
+
 
 #pragma mark NSTableViewDelegate
 
+#if 0
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
 	NSLog(@"tableViewSelectionDidChange (item %d)", [self selectedRow]);
@@ -87,6 +95,7 @@
 	[controller updateTimeTravelInfoText:(NSString *)[NSString stringWithUTF8String:buf1]
 							  secondText:(NSString *)[NSString stringWithUTF8String:buf2]];
 }
+#endif
 
 - (void)clickAction:(id)sender
 {
@@ -97,9 +106,10 @@
 {
 	NSLog(@"doubleClickAction (item %d)", [sender selectedRow]);
 	
-	[self revertAction:self];	
+	// [self revertAction:self];	
 }
 
+#if 0
 - (void)revertAction:(id)sender;
 {
 	NSLog(@"revertAction");
@@ -107,12 +117,13 @@
 	[[controller c64] revertToHistoricSnapshot:[self selectedRow]];
 	[controller timeTravelAction:self];
 }
+#endif
 
 - (void)refresh {
 	
 	unsigned char *data;
 	
-	NSLog(@"TimeTravelTableView::setItems");
+	NSLog(@"CheatboxImageBrowserView::refresh");
 	
 	setupTime = time(NULL);
 	[items removeAllObjects];
@@ -144,11 +155,33 @@
 		[image addRepresentation:bmp];
 		[bmp release];
 		
-		[image setSize:NSMakeSize(120,80)];
-		[items addObject:image];
+	    // Enhance image with some overlays 
+		NSImage *final = [[NSImage alloc] initWithSize:NSMakeSize(width, height+30)];
+		[final lockFocus];
+
+		[image drawInRect:NSMakeRect(0, 0, width, height) 
+				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+
+		NSImage *glossy = [NSImage imageNamed:@"glossy.png"];
+		[glossy drawInRect:NSMakeRect(0, 0, width, height) 
+				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+
+		NSImage *pin = [NSImage imageNamed:@"pin.tiff"];
+		[pin drawInRect:NSMakeRect(width/2, height-30, 48, 60) 
+			   fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+
+		[final unlockFocus];
+
+		CheatboxItem *item = [[CheatboxItem alloc] initWithImage:final imageID:@"imageID" imageTitle:@"title" imageSubtitle:@"subtitle"];
+		[items addObject:item];
 	}
 	
 	[self reloadData];
+}
+
+- (IKImageBrowserCell *)newCellForRepresentedItem:(id)cell
+{
+	return [[CheatboxImageBrowserCell alloc] init];
 }
 
 

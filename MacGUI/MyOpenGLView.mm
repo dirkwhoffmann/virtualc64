@@ -34,7 +34,7 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 								 CVOptionFlags *flagsOut, 
                                  void *displayLinkContext)
 {
-	return [(VICScreen *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
+	return [(MyOpenGLView *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
 }
 
 void checkForOpenGLErrors()
@@ -46,7 +46,7 @@ void checkForOpenGLErrors()
 	}
 }
 
-@implementation VICScreen
+@implementation MyOpenGLView
 
 @synthesize c64, frames, enableOpenGL;
 
@@ -56,7 +56,7 @@ void checkForOpenGLErrors()
 
 - (id)initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)pixFmt
 {
-	NSLog(@"VICScreen::initWithFrame");
+	NSLog(@"MyOpenGLView::initWithFrame");
 	
 	if ((self = [super initWithFrame:frameRect pixelFormat:pixFmt]) == nil) {
 		NSLog(@"ERROR: Can't initiaize VICscreen\n");
@@ -66,7 +66,7 @@ void checkForOpenGLErrors()
 
 - (id)initWithCoder:(NSCoder *)c
 {
-	NSLog(@"VICScreen::initWithCoder");
+	NSLog(@"MyOpenGLView::initWithCoder");
 
 	if ((self = [super initWithCoder:c]) == nil) {
 		NSLog(@"ERROR: Can't initiaize VICscreen\n");
@@ -76,7 +76,7 @@ void checkForOpenGLErrors()
 
 -(void)awakeFromNib
 {
-	NSLog(@"VICScreen::awakeFromNib");
+	NSLog(@"MyOpenGLView::awakeFromNib");
 	
 	// Lock around draw method
 	lock = [NSRecursiveLock new];
@@ -161,7 +161,7 @@ void checkForOpenGLErrors()
 
 - (void)prepareOpenGL
 {
-	NSLog(@"VICScreen::prepareOpenGL");	
+	NSLog(@"MyOpenGLView::prepareOpenGL");	
 	
 	// Set up context
 	glcontext = [self openGLContext];

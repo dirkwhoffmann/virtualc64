@@ -17,36 +17,28 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <OpenGL/OpenGL.h>
-#import <OpenGL/glu.h>
-#import <Quartz/Quartz.h>
 
-#import "C64.h"
-#import "C64Proxy.h"
-#import "MyDocument.h"
+@interface CheatboxItem : NSObject // IKImageBrowserCell 
+{
+	
+	NSImage *image;
+	NSString *imageID;
+	NSString *imageTitle;
+	NSString *imageSubtitle;
+	
+}
 
-#import "Disassembler.h"
-#import "Formatter.h"
+@property(readwrite,copy) NSImage *image;
+@property(readwrite,copy) NSString *imageID;
+@property(readwrite,copy) NSString *imageTitle;
+@property(readwrite,copy) NSString *imageSubtitle;
 
-#import "MyOpenGLView.h"
-#import "CpuTableView.h"
-#import "MemTableView.h"
-#import "CheatboxItem.h"
-#import "CheatboxImageBrowserCell.h"
-#import "CheatboxImageBrowserView.h"
-#import "TimeTravelTableView.h"
+- (id)initWithImage:(NSImage *)img imageID:(NSString *)imgID imageTitle:(NSString *)title imageSubtitle:(NSString *)subtitle;
 
-#import "MyController.h"
-#import "MyControllerCpuPanel.h"
-#import "MyControllerMemoryPanel.h"
-#import "MyControllerCiaPanel.h"
-#import "MyControllerVicPanel.h"
-#import "MyController.h"
+- (NSString *) imageUID;
+- (NSString *) imageRepresentationType;
+- (id) imageRepresentation;
+- (NSString*) imageTitle;
+- (NSString*) imageSubtitle;
 
-#import "MountDialog.h"
-#import "RomDialog.h"
-#import "PreferenceController.h"
-
-#import "JoystickManager.h"
-#import "AudioDevice.h"
-#import "Speedometer.h"
+@end

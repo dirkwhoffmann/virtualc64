@@ -399,9 +399,6 @@
 @property (readonly) VC1541Proxy *vc1541;
 
 // Initialization
-//- (id) initWithDocument;
-//- (id) initWithScreen:(VICScreen *)s;
-//- (void) release;
 - (void) kill;
 
 - (id) initWithContentsOfSnapshot:(Snapshot *)s;

@@ -17,36 +17,34 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <OpenGL/OpenGL.h>
-#import <OpenGL/glu.h>
 #import <Quartz/Quartz.h>
 
-#import "C64.h"
-#import "C64Proxy.h"
-#import "MyDocument.h"
+// Forward declarations
+@class C64Proxy;
+@class MyDocument;
 
-#import "Disassembler.h"
-#import "Formatter.h"
+@interface CheatboxImageBrowserView : IKImageBrowserView
+{ 
+	MyController *controller;
+	C64Proxy *c64;
 
-#import "MyOpenGLView.h"
-#import "CpuTableView.h"
-#import "MemTableView.h"
-#import "CheatboxItem.h"
-#import "CheatboxImageBrowserCell.h"
-#import "CheatboxImageBrowserView.h"
-#import "TimeTravelTableView.h"
+	NSMutableArray *items;
+	time_t setupTime;
+}
 
-#import "MyController.h"
-#import "MyControllerCpuPanel.h"
-#import "MyControllerMemoryPanel.h"
-#import "MyControllerCiaPanel.h"
-#import "MyControllerVicPanel.h"
-#import "MyController.h"
+//! Setter
+- (void)setController:(MyController *)c;
 
-#import "MountDialog.h"
-#import "RomDialog.h"
-#import "PreferenceController.h"
+//! Action method for single clicking a table item
+- (void)clickAction:(id)sender;
 
-#import "JoystickManager.h"
-#import "AudioDevice.h"
-#import "Speedometer.h"
+//! Action method for double clicking a table item
+- (void)doubleClickAction:(id)sender;
+
+//! Revert to selected snapshot
+// - (void)revertAction:(id)sender;
+
+//! Refresh  data items to display
+- (void)refresh;
+	
+@end

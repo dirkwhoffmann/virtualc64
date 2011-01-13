@@ -99,7 +99,7 @@ const int BG_TEXTURE_WIDTH = 1024;
 const int BG_TEXTURE_HEIGHT= 512;
 const int BG_TEXTURE_DEPTH = 4;
 
-@interface VICScreen : NSOpenGLView
+@interface MyOpenGLView : NSOpenGLView
 {
 	IBOutlet MyController *controller;
 	

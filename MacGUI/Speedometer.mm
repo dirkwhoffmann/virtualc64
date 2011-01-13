@@ -17,7 +17,7 @@
  */
 
 #import "Speedometer.h"
-#include "basic.h"
+#import "basic.h"
 
 @implementation Speedometer
 

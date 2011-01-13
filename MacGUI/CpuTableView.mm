@@ -127,7 +127,6 @@
 	//    In that case, we display the PC address in row 0
 	uint16_t rowIndex = 0xffff;
 	uint16_t address = [[c64 cpu] getPC];
-	NSLog(@" PC = %d", address);
 	NSIndexSet *indexSet;
 	if ([self computeRowForAddr:(uint16_t)address maxRows:[self numberOfRowsInTableView:self] row:(uint16_t *)&rowIndex]) {
 		indexSet = [NSIndexSet indexSetWithIndex:rowIndex];		
