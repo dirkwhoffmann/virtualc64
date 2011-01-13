@@ -18,7 +18,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreAudio/AudioHardware.h>
-// #import "SID.h"
 
 class SID;
 

@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "MyDocument.h"
+#import "C64GUI.h"
 
 /* System */
 NSString *VC64PALorNTSCKey    = @"VC64PALorNTSCKey";
@@ -230,7 +230,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-	[[self document] setWarpLoad:[sender state]]; 
+	[c64 setWarpLoad:[sender state]]; 
 	[defaults setBool:[warpLoad state] forKey:VC64WarpLoadKey];
 }
 

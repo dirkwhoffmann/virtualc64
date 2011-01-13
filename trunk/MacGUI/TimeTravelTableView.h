@@ -25,12 +25,14 @@
 @interface TimeTravelTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
 { 
 	MyController *controller;
-	
+	C64Proxy *c64;
+
 	NSMutableArray *items;
 	time_t setupTime;
 }
 
-@property MyController *controller;
+//! Setter
+- (void)setController:(MyController *)c;
 
 //! Action method for single clicking a table item
 - (void)clickAction:(id)sender;

@@ -16,9 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef INC_MYCONTROLLER_CIA_PANEL
-#define INC_MYCONTROLLER_CIA_PANEL
-
 #import "MyController.h"
 
 @interface MyController(CiaPanel)
@@ -61,5 +58,3 @@
 - (void)refreshCIA;
 
 @end
-
-#endif

@@ -70,6 +70,8 @@
 		504CEEA30C467C4E001F4E51 /* BigIconTransparent.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506910C80A74EAE100F48A7F /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */; };
+		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
+		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
@@ -230,6 +232,10 @@
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
 		506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
+		5077742E12DE490300D72088 /* MemTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemTableView.h; sourceTree = "<group>"; };
+		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
+		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
+		5077743212DE490B00D72088 /* CpuTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CpuTableView.mm; sourceTree = "<group>"; };
 		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rom.png; path = images/rom.png; sourceTree = "<group>"; };
 		509AEA0A0C324AB0001FC9FD /* PRGArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGArchive.h; sourceTree = "<group>"; };
 		509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGArchive.cpp; sourceTree = "<group>"; };
@@ -275,6 +281,7 @@
 		50E555FE0C42699300AFB05F /* flag_eu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag_eu.png; path = images/flag_eu.png; sourceTree = "<group>"; };
 		50ED5BF612DD99C000596417 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Speedometer.mm; sourceTree = "<group>"; };
+		50F236AE12DF1CCB00B1F275 /* C64GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64GUI.h; sourceTree = "<group>"; };
 		50F4D2930C46262700ED4E4E /* ResetImage.VC64 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ResetImage.VC64; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -464,6 +471,10 @@
 				50176C730A6F7357009E80BD /* Formatter.mm */,
 				50176C770A6F7357009E80BD /* VICScreen.h */,
 				50176C780A6F7357009E80BD /* VICScreen.mm */,
+				5077743112DE490B00D72088 /* CpuTableView.h */,
+				5077743212DE490B00D72088 /* CpuTableView.mm */,
+				5077742E12DE490300D72088 /* MemTableView.h */,
+				5077742F12DE490300D72088 /* MemTableView.mm */,
 				50DF4EDD12D9AE6B0088256B /* TimeTravelTableView.h */,
 				50DF4EDE12D9AE6B0088256B /* TimeTravelTableView.mm */,
 			);
@@ -479,8 +490,8 @@
 				50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */,
 				5000471012DCE8890098D890 /* MyControllerCpuPanel.h */,
 				5000471112DCE8890098D890 /* MyControllerCpuPanel.mm */,
-				5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */,
 				5000472712DCE9AB0098D890 /* MyControllerMemoryPanel.h */,
+				5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */,
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				5000474A12DCEE500098D890 /* MyControllerDebugging.h */,
@@ -494,10 +505,10 @@
 			children = (
 				50D5FDB20C2E9CF50022CA3A /* MountDialog.h */,
 				50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */,
-				5007A4860C3F9D6A0069B0CE /* PreferenceController.h */,
-				5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */,
 				50A8F8F10E47171300ACE17D /* RomDialog.h */,
 				50A8F8F20E47171300ACE17D /* RomDialog.mm */,
+				5007A4860C3F9D6A0069B0CE /* PreferenceController.h */,
+				5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";
@@ -544,6 +555,7 @@
 		50176C6D0A6F7357009E80BD /* MacGUI */ = {
 			isa = PBXGroup;
 			children = (
+				50F236AE12DF1CCB00B1F275 /* C64GUI.h */,
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
@@ -813,6 +825,8 @@
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
 				5000474C12DCEE500098D890 /* MyControllerDebugging.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */,
+				5077743012DE490300D72088 /* MemTableView.mm in Sources */,
+				5077743312DE490B00D72088 /* CpuTableView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,38 +16,36 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "C64GUI.h"
+#import <Cocoa/Cocoa.h>
 
-@implementation MyController(MemoryPanel) 
+// Forward declarations
+@class C64Proxy;
+@class MyDocument;
 
-- (IBAction)searchAction:(id)sender
-{
-	uint16_t addr = [sender intValue];
-	[memTableView scrollRowToVisible:addr/4];
-	[self refresh];
+@interface CpuTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
+{ 
+	MyController *controller;
+	C64Proxy *c64;
+	
+	// Address of the first disassembled instruction
+	uint16_t disassembleStartAddr; 	
+	
+	// NSMutableArray *items;
 }
 
-- (IBAction)setMemSourceToRAM:(id)sender
-{
-	[memTableView setSource:Memory::MEM_RAM];
-	[memTableView refresh];
-}
+//! Setter
+- (void)setController:(MyController *)c;
 
-- (IBAction)setMemSourceToROM:(id)sender
-{
-	[memTableView setSource:Memory::MEM_ROM];
-	[memTableView refresh];
-}
+//! Action method for single clicking a table item
+- (void)clickAction:(id)sender;
 
-- (IBAction)setMemSourceToIO:(id)sender
-{
-	[memTableView setSource:Memory::MEM_IO];
-	[memTableView refresh];
-}
+//! Action method for double clicking a table item
+- (void)doubleClickAction:(id)sender;
 
-- (void)refreshMemory
-{
-	[memTableView reloadData];
-}
+//! Refresh  data items to display
+- (void)refresh;
+	
+//! Helper method
+- (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row;
 
 @end

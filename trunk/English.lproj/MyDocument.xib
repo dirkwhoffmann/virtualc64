@@ -12,11 +12,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1005"/>
-			<integer value="42"/>
-			<integer value="2024"/>
-			<integer value="6"/>
 			<integer value="1900"/>
+			<integer value="766"/>
+			<integer value="1005"/>
+			<integer value="6"/>
+			<integer value="2024"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -10705,6 +10705,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<string>65.ImportedFromIB2</string>
 					<string>66.IBPluginDependency</string>
 					<string>66.ImportedFromIB2</string>
+					<string>67.CustomClassName</string>
 					<string>67.IBPluginDependency</string>
 					<string>67.ImportedFromIB2</string>
 					<string>677.IBPluginDependency</string>
@@ -10810,6 +10811,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<string>75.ImportedFromIB2</string>
 					<string>766.IBPluginDependency</string>
 					<string>766.ImportedFromIB2</string>
+					<string>767.CustomClassName</string>
 					<string>767.IBPluginDependency</string>
 					<string>767.ImportedFromIB2</string>
 					<string>768.IBPluginDependency</string>
@@ -11560,7 +11562,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{61, 588}, {300, 389}}</string>
+					<string>{{174, 714}, {300, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11617,6 +11619,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
+					<string>MemTableView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11722,6 +11725,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
+					<string>CpuTableView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11940,6 +11944,46 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
+					<string key="className">CpuTableView</string>
+					<string key="superclassName">NSTableView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>clickAction:</string>
+							<string>doubleClickAction:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>clickAction:</string>
+							<string>doubleClickAction:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">clickAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">doubleClickAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">MacGUI/CpuTableView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -11956,6 +12000,14 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MemTableView</string>
+					<string key="superclassName">NSTableView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">MacGUI/MemTableView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -12449,7 +12501,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>NSTextField</string>
 							<string>NSLevelIndicator</string>
 							<string>NSStepper</string>
-							<string>NSTableView</string>
+							<string>CpuTableView</string>
 							<string>NSDrawer</string>
 							<string>NSMatrix</string>
 							<string>NSButton</string>
@@ -12460,7 +12512,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSButtonCell</string>
-							<string>NSTableView</string>
+							<string>MemTableView</string>
 							<string>MountDialog</string>
 							<string>NSTextField</string>
 							<string>NSButtonCell</string>
@@ -12854,7 +12906,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">cpuTableView</string>
-								<string key="candidateClassName">NSTableView</string>
+								<string key="candidateClassName">CpuTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">debug_panel</string>
@@ -12898,7 +12950,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">memTableView</string>
-								<string key="candidateClassName">NSTableView</string>
+								<string key="candidateClassName">MemTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">mountDialog</string>
@@ -13262,7 +13314,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>VAction:</string>
 							<string>ZAction:</string>
 							<string>aAction:</string>
-							<string>doubleClickInCpuTable:</string>
 							<string>mhzAction:</string>
 							<string>pcAction:</string>
 							<string>setHardBreakpointAction:</string>
@@ -13272,7 +13323,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -13301,7 +13351,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>VAction:</string>
 							<string>ZAction:</string>
 							<string>aAction:</string>
-							<string>doubleClickInCpuTable:</string>
 							<string>mhzAction:</string>
 							<string>pcAction:</string>
 							<string>setHardBreakpointAction:</string>
@@ -13341,10 +13390,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">aAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">doubleClickInCpuTable:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -13556,7 +13601,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>doubleClickInMemTable:</string>
 							<string>searchAction:</string>
 							<string>setMemSourceToIO:</string>
 							<string>setMemSourceToRAM:</string>
@@ -13564,7 +13608,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -13575,7 +13618,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>doubleClickInMemTable:</string>
 							<string>searchAction:</string>
 							<string>setMemSourceToIO:</string>
 							<string>setMemSourceToRAM:</string>
@@ -13583,10 +13625,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">doubleClickInMemTable:</string>
-								<string key="candidateClassName">id</string>
-							</object>
 							<object class="IBActionInfo">
 								<string key="name">searchAction:</string>
 								<string key="candidateClassName">id</string>

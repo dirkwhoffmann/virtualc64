@@ -16,20 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-// TODOs
-// - Add a separate NSWindowController (MyWindowController) and make it the files owner
-// - Add categories 
-//    CpuPanelController (data source for CPU panel)
-//    MemoryPanelController (data source for Memory panel)
-//    CiaPanelController (data source for CIA panel)
-//    VicPanelController (does this make sense???) 
-//    TimeTravelController 
-
-
-#ifndef INC_MYDOCUMENT
-#define INC_MYDOCUMENT
-
 #import <Cocoa/Cocoa.h>
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glu.h>
@@ -45,6 +31,8 @@
 #import "C64Proxy.h"
 #import "JoystickManager.h"
 #import "TimeTravelTableView.h"
+#import "CpuTableView.h"
+#import "MemTableView.h"
 
 @interface MyDocument : NSDocument
 {
@@ -75,6 +63,4 @@
 - (BOOL)loadRom:(NSString *)filename;
 
 @end
-
-#endif
 

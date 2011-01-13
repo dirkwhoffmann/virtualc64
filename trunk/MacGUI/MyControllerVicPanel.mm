@@ -16,8 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "MyController.h"
-#import "MyControllerVicPanel.h"
+#import "C64GUI.h"
 
 @implementation MyController(VicPanel) 
 

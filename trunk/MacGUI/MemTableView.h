@@ -16,38 +16,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "C64GUI.h"
+#import <Cocoa/Cocoa.h>
 
-@implementation MyController(MemoryPanel) 
+// Forward declarations
+@class C64Proxy;
+@class MyDocument;
 
-- (IBAction)searchAction:(id)sender
-{
-	uint16_t addr = [sender intValue];
-	[memTableView scrollRowToVisible:addr/4];
-	[self refresh];
+@interface MemTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
+{ 
+	MyController *controller;
+	C64Proxy *c64;
+
+	//! Determines whether we display RAM, ROM or IO space
+	Memory::MemoryType source;
 }
 
-- (IBAction)setMemSourceToRAM:(id)sender
-{
-	[memTableView setSource:Memory::MEM_RAM];
-	[memTableView refresh];
-}
+@property Memory::MemoryType source;
 
-- (IBAction)setMemSourceToROM:(id)sender
-{
-	[memTableView setSource:Memory::MEM_ROM];
-	[memTableView refresh];
-}
+//! Setter
+- (void)setController:(MyController *)c;
 
-- (IBAction)setMemSourceToIO:(id)sender
-{
-	[memTableView setSource:Memory::MEM_IO];
-	[memTableView refresh];
-}
-
-- (void)refreshMemory
-{
-	[memTableView reloadData];
-}
-
+//! Refresh  data items to display
+- (void)refresh;
+	
 @end

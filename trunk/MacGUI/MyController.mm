@@ -16,13 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-#import "MyController.h"
-#import "MyControllerCpuPanel.h"
-#import "MyControllerMemoryPanel.h"
-#import "MyControllerCiaPanel.h"
-#import "MyControllerVicPanel.h"
-#import "MyDocument.h"
+#import "C64GUI.h"
 
 @implementation MyController
 
@@ -151,9 +145,7 @@
 		delete snapshot;
 		snapshot = NULL;
 	}
-	
-	disassembleStartAddr = [[c64 cpu] getPC];
-	
+		
 	// Joystick handling
 	joystickManager = new JoystickManager( c64 );
 	joystickManager->Initialize();
@@ -193,16 +185,9 @@
 	
 	// Setup table views
 	[ttTableView setController:self];
-	// [cpuTableView setController:self];
-	// [memTableView setController:self];
-	
-	// DEPRECATED. MOVE TO TABLE VIEW CLASSES
-	// Prepare to get double-click messages
-	[cpuTableView setTarget:self];
-	[cpuTableView setDoubleAction:@selector(doubleClickInCpuTable:)];
-	[memTableView setTarget:self];
-	[memTableView setDoubleAction:@selector(doubleClickInMemTable:)];
-	
+	[cpuTableView setController:self];
+	[memTableView setController:self];
+		
 	// Create timer and speedometer
 	assert(timerLock == nil);
 	timerLock = [[NSLock alloc] init];
@@ -252,8 +237,7 @@
 	[[self document] loadRom:[defaults stringForKey:VC64VC1541RomFileKey]];
 	
 	/* Peripherals */
-	//[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
-	[[self document] setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
+	[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
 	
 	/* Audio */
 	// [c64 sidEnableFilter:[defaults boolForKey:VC64SIDFilterKey]];
@@ -882,28 +866,8 @@
 	[self refreshMemory];
 	[self refreshCIA];
 	[self refreshVIC];
-	
-	// Prepare Disassembler window.
-	// The implementation is a little tricky. We distinguish two cases:
-	// 1. The PC points to an address that is already visible in some row
-	//    In this case, we simply select the row and don't modify anything else
-	// 2. The PC points to an address that is not yet displayed
-	//    In that case, we display the PC address in row 0
-	uint16_t rowIndex = 0xffff;
-	uint16_t address = [[c64 cpu] getPC];
-	NSIndexSet *indexSet;
-	if ([self computeRowForAddr:(uint16_t)address maxRows:[self numberOfRowsInTableView:cpuTableView] row:(uint16_t *)&rowIndex]) {
-		indexSet = [NSIndexSet indexSetWithIndex:rowIndex];		
-		[cpuTableView scrollRowToVisible:rowIndex];
-	} else {
-		disassembleStartAddr = address;
-		indexSet = [NSIndexSet indexSetWithIndex:0];	
-		[cpuTableView scrollRowToVisible:0];
-	}
-	[cpuTableView selectRowIndexes:indexSet byExtendingSelection:NO];
-	
-	[cpuTableView reloadData];
-	[memTableView reloadData];
+	[cpuTableView refresh];
+	[memTableView refresh];
 }
 
 - (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter disassembler:(NSFormatter *)disassembler
@@ -1011,48 +975,6 @@
 }
 
 // --------------------------------------------------------------------------------
-// Responder methods for table views
-// --------------------------------------------------------------------------------
-
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
-{
-	if (aTableView == memTableView)
-		return 65536/4;		
-	
-	return 128;
-}
-
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
-{
-	if (aTableView == cpuTableView)
-		return [self objectValueForCpuTableColumn:aTableColumn row:row];
-	if (aTableView == memTableView)
-		return [self objectValueForMemTableColumn:aTableColumn row:row];
-	
-	return nil;
-}
-
-- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)row
-{
-	// Only the memory table can be edited, yet
-	if (aTableView == memTableView)
-		[self setMemObjectValue:anObject forTableColumn:aTableColumn row:(int)row];
-}
-
-- (void)tableView: (NSTableView *)aTableView willDisplayCell: (id)aCell forTableColumn: (NSTableColumn *)aTableColumn row: (int)row
-{
-	if (aTableView == cpuTableView && [[aTableColumn identifier] isEqual:@"addr"]) {
-		
-		uint16_t addr = [[c64 cpu] getAddressOfNextIthInstruction:row from:disassembleStartAddr];
-		if ([[c64 cpu] getBreakpoint:addr] == CPU::HARD_BREAKPOINT) {
-			[aCell setTextColor:[NSColor redColor]];
-		} else {
-			[aCell setTextColor:[NSColor blackColor]];
-		}
-	} 
-}
-
-// --------------------------------------------------------------------------------
 // Dialogs
 // --------------------------------------------------------------------------------
 
@@ -1125,7 +1047,7 @@
 	[c64 flushArchive:[[self document] archive] item:[mountDialog getSelectedFile]];
 	
 	// Wait and type "RUN"
-	fprintf(stderr,"Wating...\n");
+	fprintf(stderr,"Waiting...\n");
 	usleep(1000000);
 	fprintf(stderr,"Typing RUN...\n");
 	[[c64 keyboard] typeRun];
@@ -1143,22 +1065,6 @@
 // --------------------------------------------------------------------------------
 // Helper functions
 // --------------------------------------------------------------------------------
-
-
-- (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row
-{
-	uint16_t currentRow  = 0;
-	uint16_t currentAddr = disassembleStartAddr;
-	while (currentAddr <= addr && currentRow < maxRows) {
-		if (currentAddr == addr) {
-			*row = currentRow;
-			return YES;
-		}
-		currentRow++;
-		currentAddr += [[c64 cpu] getLengthOfInstruction:[[c64 mem] peek:currentAddr]];
-	}
-	return NO;
-}
 
 - (void)updateTimeTravelInfoText:(NSString *)s1 secondText:(NSString *)s2
 {
