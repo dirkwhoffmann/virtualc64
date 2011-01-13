@@ -187,7 +187,8 @@
 	[ttTableView setController:self];
 	[cpuTableView setController:self];
 	[memTableView setController:self];
-		
+	[cheatboxImageBrowserView setController:self];
+	
 	// Create timer and speedometer
 	assert(timerLock == nil);
 	timerLock = [[NSLock alloc] init];
@@ -761,6 +762,7 @@
 	if ([backInTime_panel state] == NSDrawerClosedState) {
 		[c64 halt];
 		[ttTableView refresh];
+		[cheatboxImageBrowserView refresh];		
 		[backInTime_panel open];
 	}	
 }
