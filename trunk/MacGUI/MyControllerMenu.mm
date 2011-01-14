@@ -18,7 +18,114 @@
 
 #import "C64GUI.h"
 
-@implementation MyController(Debugging) 
+@implementation MyController(Menu) 
+
+// --------------------------------------------------------------------------------
+//                                 File menu
+// --------------------------------------------------------------------------------
+
+#pragma mark file menu
+
+- (IBAction)showPreferencesAction:(id)sender
+{
+	NSLog(@"Showing preferences window...");
+	if (!preferenceController) {
+		preferenceController = [[PreferenceController alloc] init];
+		[preferenceController setC64:c64];
+		[preferenceController setMydoc:self];
+	}
+	[preferenceController showWindow:self];
+}
+
+- (IBAction)saveScreenshotDialog:(id)sender
+{
+	NSArray *fileTypes = [NSArray arrayWithObjects:@"tif", @"jpg", @"gif", @"png", @"psd", @"tga", nil];
+	
+	// Create the file save panel
+	NSSavePanel* sPanel = [NSSavePanel savePanel];
+	
+	// [sPanel setCanChooseDirectories:NO];
+	// [sPanel setCanChooseFiles:YES];
+	// [sPanel setCanCreateDirectories:YES];
+	// [sPanel setAllowsMultipleSelection:NO];
+	// [sPanel setAlphaValue:0.95];
+	// [sPanel setTitle:@"Select a file to open"];
+	[sPanel setCanSelectHiddenExtension:YES];
+	[sPanel setAllowedFileTypes:fileTypes];	
+	if ([sPanel runModalForDirectory:nil file:nil] == NSOKButton) {
+		
+		NSString *selectedFile = [sPanel filename];
+		NSLog(@"Writing to file %@", selectedFile);
+		
+		NSImage *image = [screen screenshot];
+		// [image setFlipped:NO];
+		NSData *data = [image TIFFRepresentation];
+		[data writeToFile:selectedFile atomically:YES];
+	}
+}
+
+// --------------------------------------------------------------------------------
+//                                  Edit menu
+// --------------------------------------------------------------------------------
+
+#pragma mark edit menu
+
+- (IBAction)resetAction:(id)sender
+{
+	[[self document] updateChangeCount:NSChangeDone];
+	[screen rotateBack];
+	[c64 reset];
+	[self continueAction:self];
+}
+
+- (IBAction)fastResetAction:(id)sender
+{
+	[c64 fastReset];
+}
+
+- (IBAction)runstopAction:(id)sender
+{
+	NSLog(@"Rustop key pressed");
+	[[self document] updateChangeCount:NSChangeDone];
+	[[c64 keyboard] pressRunstopKey];
+	sleepMicrosec(100000);
+	[[c64 keyboard] releaseRunstopKey];	
+	[self refresh];
+}
+
+- (IBAction)runstopRestoreAction:(id)sender
+{
+	[[self document] updateChangeCount:NSChangeDone];
+	
+	[c64 keyboardPressRunstopRestore];
+	
+	[self refresh];
+}
+
+- (IBAction)commodoreKeyAction:(id)sender
+{
+	NSLog(@"Commodore key pressed");
+	[[self document] updateChangeCount:NSChangeDone];
+	[[c64 keyboard] pressCommodoreKey];	
+	sleepMicrosec(100000);
+	[[c64 keyboard] releaseCommodoreKey];	
+	[self refresh];
+}
+
+- (IBAction)FormatDiskAction:(id)sender
+{
+	NSLog(@"Format disk");
+	[[self document] updateChangeCount:NSChangeDone];
+	[[c64 keyboard] typeFormat];	
+	[self refresh];
+}
+
+
+// --------------------------------------------------------------------------------
+//                                 Debug menu
+// --------------------------------------------------------------------------------
+
+#pragma mark debug menu
 
 - (IBAction)hideSpritesAction:(id)sender
 {

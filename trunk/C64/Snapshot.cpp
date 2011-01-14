@@ -94,6 +94,8 @@ Snapshot::readDataFromFile(FILE *file, struct stat fileProperties)
 	}
 	size = i;
 
+	fprintf(stderr, "Snapshot read from file\n");
+	
 	return true;
 }
 
@@ -125,13 +127,22 @@ Snapshot::initWithContentsOfC64(C64 *c64)
 	major = 1;
 	minor = 0;
 	memcpy(screen, c64->vic->screenBuffer(), sizeof(screen));	
-	c64->_save(&ptr);
+	c64->save(&ptr);
 	size = ptr - data;
-	timestamp = time(NULL);
-	
-	// fprintf(stderr, "initWithContentsOfC64: Packed state into %d bytes\n", size);
+	timestamp = time(NULL);	
 	return true;
 }
+
+bool 
+Snapshot::updateWithContentsOfC64(C64 *c64)
+{
+	uint8_t *ptr = data;
+	memcpy(screen, c64->vic->screenBuffer(), sizeof(screen));	
+	c64->_save(&ptr); 
+	size = ptr - data;
+	timestamp = time(NULL);	
+	return true;
+}	
 	
 bool 
 Snapshot::writeToC64(C64 *c64)

@@ -615,18 +615,22 @@
 	return newSnapshot;
 }
 
++ (id) snapshotFromSnapshot:(Snapshot *)snapshot
+{
+	NSLog(@"V64Snapshot::snapshotFromSnapshot");
+	
+	if (snapshot == NULL)
+		return nil;
+	
+	V64Snapshot *newSnapshot = [[self alloc] initWithSnapshot:snapshot];
+	return newSnapshot;
+}
+	
 + (id) snapshotFromFile:(NSString *)path
 {
 	NSLog(@"V64Snapshot::snapshotFromFile");
 
-	V64Snapshot *newSnapshot = [[self alloc] init];
-	
-	if (![newSnapshot readDataFromFile:path]) {
-		[newSnapshot release];
-		newSnapshot = nil;
-	}
-	
-	return newSnapshot;
+	return [self snapshotFromSnapshot:Snapshot::snapshotFromFile([path UTF8String])];
 }
 
 - (unsigned char *)imageData { return snapshot->getImageData(); }

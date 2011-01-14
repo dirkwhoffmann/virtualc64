@@ -8,7 +8,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -77,66 +77,6 @@ void
 	pthread_exit(NULL);	
 }
 
-// MOVE BELOW
-void 
-C64::takeSnapshot() 
-{
-	fprintf(stderr, "Taking snapshot\n");
-	backInTimeHistory[backInTimeWritePtr]->initWithContentsOfC64(this);
-	backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
-}
-
-unsigned 
-C64::numHistoricSnapshots()
-{
-	for (int i = BACK_IN_TIME_BUFFER_SIZE - 1; i >= 0; i--) {
-		if (backInTimeHistory[i]->getSize() != 0) 
-			return i + 1;
-	}
-	return 0;
-}
-
-Snapshot *
-C64::getHistoricSnapshot(int nr)
-{
-	if (nr >= BACK_IN_TIME_BUFFER_SIZE)
-		return NULL;
-	
-	int pos = (BACK_IN_TIME_BUFFER_SIZE + backInTimeWritePtr - 1 - nr) % BACK_IN_TIME_BUFFER_SIZE;
-	Snapshot *snapshot = backInTimeHistory[pos];
-	assert(snapshot != NULL);
-	
-	if (snapshot->getSize() == 0)
-		return NULL;
-
-	return snapshot;
-}
-
-unsigned char *
-C64::getHistoricSnapshotImageData(int nr)
-{
-	Snapshot *s = getHistoricSnapshot(nr);
-	return (s != NULL) ? s->getImageData() : NULL;
-}
-
-time_t
-C64::getHistoricSnapshotTimestamp(int nr)
-{
-	Snapshot *s = getHistoricSnapshot(nr);
-	return (s != NULL) ? s->getTimestamp() : NULL;
-}
-
-bool
-C64::revertToHistoricSnapshot(int nr)
-{
-	Snapshot *s = getHistoricSnapshot(nr);
-
-	if (s == NULL) 
-		return false;
-	
-	loadFromSnapshot(s);
-	return true;
-}
 
 // --------------------------------------------------------------------------------
 // Class methods
@@ -1173,6 +1113,67 @@ C64::loadRom(const char *filename)
 	resume();
 	return result;
 }
+
+void 
+C64::takeSnapshot() 
+{
+	// fprintf(stderr, "Taking snapshot\n");
+	backInTimeHistory[backInTimeWritePtr]->updateWithContentsOfC64(this);
+	backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
+}
+
+unsigned 
+C64::numHistoricSnapshots()
+{
+	for (int i = BACK_IN_TIME_BUFFER_SIZE - 1; i >= 0; i--) {
+		if (backInTimeHistory[i]->getSize() != 0) 
+			return i + 1;
+	}
+	return 0;
+}
+
+Snapshot *
+C64::getHistoricSnapshot(int nr)
+{
+	if (nr >= BACK_IN_TIME_BUFFER_SIZE)
+		return NULL;
+	
+	int pos = (BACK_IN_TIME_BUFFER_SIZE + backInTimeWritePtr - 1 - nr) % BACK_IN_TIME_BUFFER_SIZE;
+	Snapshot *snapshot = backInTimeHistory[pos];
+	assert(snapshot != NULL);
+	
+	if (snapshot->getSize() == 0)
+		return NULL;
+	
+	return snapshot;
+}
+
+unsigned char *
+C64::getHistoricSnapshotImageData(int nr)
+{
+	Snapshot *s = getHistoricSnapshot(nr);
+	return (s != NULL) ? s->getImageData() : NULL;
+}
+
+time_t
+C64::getHistoricSnapshotTimestamp(int nr)
+{
+	Snapshot *s = getHistoricSnapshot(nr);
+	return (s != NULL) ? s->getTimestamp() : NULL;
+}
+
+bool
+C64::revertToHistoricSnapshot(int nr)
+{
+	Snapshot *s = getHistoricSnapshot(nr);
+	
+	if (s == NULL) 
+		return false;
+	
+	loadFromSnapshot(s);
+	return true;
+}
+
 
 // -----------------------------------------------------------------------------------------------
 //                                           Timing

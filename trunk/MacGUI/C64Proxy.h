@@ -483,6 +483,7 @@
 - (id) initWithSnapshot:(Snapshot *)s;
 
 + (id) snapshotFromC64:(C64Proxy *)c64;
++ (id) snapshotFromSnapshot:(Snapshot *)snapshot;
 + (id) snapshotFromFile:(NSString *)path;
 
 - (unsigned char *)imageData;

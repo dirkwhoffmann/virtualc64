@@ -23,7 +23,6 @@
 @synthesize c64;
 @synthesize archive;
 @synthesize cartridge;
-@synthesize snapshot;
 
 - (void)makeWindowControllers
 {
@@ -44,9 +43,8 @@
     self = [super init];
 
 	// Initialize variables
-	// archive = NULL;
+	archive = NULL;
 	cartridge = NULL;
-	snapshot = NULL;
 	
 	// Create virtual C64
 	c64 = [[C64Proxy alloc] init];
@@ -136,13 +134,14 @@
 		return NO;
 	}
 	
-	snapshot = Snapshot::snapshotFromFile([filename UTF8String]);
-		
+	V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:filename];
+	
 	if (!snapshot) {
 		NSLog(@"Error while reading snapshot\n");
 		return NO;
 	}
-
+	
+	[c64 initWithContentsOfSnapshot:[snapshot snapshot]];
 	return YES;
 }
 	
@@ -154,20 +153,16 @@
 		NSLog(@"File is not of type VC64\n");
 		return NO;
 	}
-		
-	snapshot = Snapshot::snapshotFromFile([filename UTF8String]);
+			
+	V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:filename];
 
 	if (!snapshot) {
-		NSLog(@"Error while reading snapshot\n");
+		NSLog(@"Error while reverting to older snapshot\n");
 		return NO;
 	}
-	
-	[c64 initWithContentsOfSnapshot:snapshot];
-	delete snapshot;
-	snapshot = NULL;
-
+		
+	[c64 initWithContentsOfSnapshot:[snapshot snapshot]];
 	return YES;
 }
-
 
 @end

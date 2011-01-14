@@ -51,4 +51,8 @@
 
 - (void)refreshVIC;
 
+// Selected sprite in VIC debug panel
+// TODO: SHOULD BE RETRIEVED FROM VIEW
+// int selectedSprite;
+
 @end

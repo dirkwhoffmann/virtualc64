@@ -18,8 +18,23 @@
 
 #import "MyController.h"
 
-@interface MyController(Debugging)
+@interface MyController(Menu)
 
+
+#pragma mark file menu
+- (IBAction)showPreferencesAction:(id)sender;
+- (IBAction)saveScreenshotDialog:(id)sender;
+
+#pragma mark edit menu
+- (IBAction)resetAction:(id)sender;
+- (IBAction)fastResetAction:(id)sender;
+
+- (IBAction)runstopAction:(id)sender;
+- (IBAction)runstopRestoreAction:(id)sender;
+- (IBAction)commodoreKeyAction:(id)sender;
+- (IBAction)FormatDiskAction:(id)sender;
+
+#pragma mark debug menu
 - (IBAction)hideSpritesAction:(id)sender;
 - (IBAction)markIRQLinesAction:(id)sender;
 - (IBAction)markDMALinesAction:(id)sender;

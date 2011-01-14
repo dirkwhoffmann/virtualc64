@@ -137,9 +137,9 @@
 
 - (IBAction)vicSpriteSelectAction:(id)sender
 {
-	selectedSprite = [sender selectedTag];
+	// selectedSprite = [sender selectedTag];
 	
-	NSLog(@"selectedSprite = %d", selectedSprite);
+	NSLog(@"selectedSprite = %d", [self currentSprite]);
 	[self refresh];
 }
 
@@ -360,9 +360,8 @@
 
 - (int)currentSprite
 {
-	return selectedSprite; 
+	// return selectedSprite; 
 	
-#if 0	
 	if ([sprite0 intValue]) return 0;
 	if ([sprite1 intValue]) return 1;
 	if ([sprite2 intValue]) return 2;
@@ -374,7 +373,6 @@
 	
 	assert(false);
 	return 0;
-#endif
 }
 
 @end
