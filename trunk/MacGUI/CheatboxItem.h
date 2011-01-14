@@ -18,22 +18,22 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface CheatboxItem : NSObject // IKImageBrowserCell 
+@interface CheatboxItem : NSObject 
 {
 	
 	NSImage *image;
-	NSString *imageID;
+	NSString *imageUID;
 	NSString *imageTitle;
 	NSString *imageSubtitle;
 	
 }
 
 @property(readwrite,copy) NSImage *image;
-@property(readwrite,copy) NSString *imageID;
+@property(readwrite,copy) NSString *imageUID;
 @property(readwrite,copy) NSString *imageTitle;
 @property(readwrite,copy) NSString *imageSubtitle;
 
-- (id)initWithImage:(NSImage *)img imageID:(NSString *)imgID imageTitle:(NSString *)title imageSubtitle:(NSString *)subtitle;
+- (id)initWithImage:(NSImage *)img imageUID:(NSString *)imgUID imageTitle:(NSString *)title imageSubtitle:(NSString *)subtitle;
 
 - (NSString *) imageUID;
 - (NSString *) imageRepresentationType;

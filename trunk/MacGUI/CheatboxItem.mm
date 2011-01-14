@@ -21,15 +21,15 @@
 @implementation CheatboxItem
 
 @synthesize image;
-@synthesize imageID;
+@synthesize imageUID;
 @synthesize imageTitle;
 @synthesize imageSubtitle;
 
-- (id)initWithImage:(NSImage *)img imageID:(NSString *)imgID imageTitle:(NSString *)title imageSubtitle:(NSString *)subtitle
+- (id)initWithImage:(NSImage *)img imageUID:(NSString *)imgUID imageTitle:(NSString *)title imageSubtitle:(NSString *)subtitle
 {
 	if ((self = [super init])) {
 		image = [img copy];
-		imageID = [imgID copy];
+		imageUID = [imgUID copy];
 		imageTitle = [title copy];
 		imageSubtitle = [subtitle copy];
 	}
@@ -39,13 +39,13 @@
 - (void)dealloc
 {
 	[image release];
-	[imageID release];
+	[imageUID release];
 	[super dealloc];
 }
 
 - (NSString *) imageUID
 {
-	return imageID;
+	return imageUID;
 }
 - (NSString *) imageRepresentationType
 {
@@ -61,19 +61,10 @@
 	return imageTitle;
 }
 
-#if 0
-- (NSRect)imageContainerFrame
+- (NSString*) imageSubtitle
 {
-	NSLog(@"imageContainerFrame");
-	return NSMakeRect(2,2,40,20);
+	return imageSubtitle;
 }
-
-- (NSRect)imageFrame
-{
-	NSLog(@"imageFrame");
-	return NSMakeRect(2,2,40,20);
-}
-#endif
 
 @end
 

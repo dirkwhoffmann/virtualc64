@@ -207,8 +207,7 @@ class Snapshot;
 // Timetravel panel
 - (void)updateTimeTravelInfoText:(NSString *)s1 secondText:(NSString *)s2;
 - (IBAction)timeTravelAction:(id)sender;
-
-// MOVE TO CATEGORY MyController(Debugging)
+- (void)revertAction:(int)nr;
 
 // MOVE TO CATEGORY MyController
 - (IBAction)stepIntoAction:(id)sender;

@@ -21,11 +21,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2182"/>
-			<integer value="5"/>
 			<integer value="1900"/>
-			<integer value="766"/>
 			<integer value="1005"/>
+			<integer value="2024"/>
+			<integer value="766"/>
+			<integer value="5"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -5148,7 +5148,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<reference key="NSSuperview" ref="363225128"/>
 								<reference key="NSTarget" ref="363225128"/>
 								<string key="NSAction">_doScroller:</string>
-								<double key="NSCurValue">1</double>
+								<double key="NSCurValue">0.13494809688581305</double>
 								<double key="NSPercent">0.99404761904761907</double>
 							</object>
 							<object class="NSScroller" id="1051569602">
@@ -5173,7 +5173,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					</object>
 					<object class="NSTextField" id="972535627">
 						<reference key="NSNextResponder" ref="744615794"/>
-						<int key="NSvFlags">269</int>
+						<int key="NSvFlags">271</int>
 						<string key="NSFrame">{{18, 334}, {174, 14}}</string>
 						<reference key="NSSuperview" ref="744615794"/>
 						<bool key="NSEnabled">YES</bool>
@@ -5197,7 +5197,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					</object>
 					<object class="NSTextField" id="367970076">
 						<reference key="NSNextResponder" ref="744615794"/>
-						<int key="NSvFlags">293</int>
+						<int key="NSvFlags">295</int>
 						<string key="NSFrame">{{11, 8}, {187, 14}}</string>
 						<reference key="NSSuperview" ref="744615794"/>
 						<bool key="NSEnabled">YES</bool>
@@ -5213,7 +5213,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					</object>
 					<object class="NSTextField" id="206380507">
 						<reference key="NSNextResponder" ref="744615794"/>
-						<int key="NSvFlags">293</int>
+						<int key="NSvFlags">295</int>
 						<string key="NSFrame">{{11, 23}, {187, 14}}</string>
 						<reference key="NSSuperview" ref="744615794"/>
 						<bool key="NSEnabled">YES</bool>
@@ -5229,7 +5229,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					</object>
 					<object class="NSTextField" id="813126128">
 						<reference key="NSNextResponder" ref="744615794"/>
-						<int key="NSvFlags">269</int>
+						<int key="NSvFlags">271</int>
 						<string key="NSFrame">{{11, 350}, {187, 14}}</string>
 						<reference key="NSSuperview" ref="744615794"/>
 						<bool key="NSEnabled">YES</bool>
@@ -5245,7 +5245,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					</object>
 					<object class="NSTextField" id="341382582">
 						<reference key="NSNextResponder" ref="744615794"/>
-						<int key="NSvFlags">269</int>
+						<int key="NSvFlags">271</int>
 						<string key="NSFrame">{{11, 368}, {187, 17}}</string>
 						<reference key="NSSuperview" ref="744615794"/>
 						<bool key="NSEnabled">YES</bool>
@@ -10748,6 +10748,9 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<string>2182.IBViewIntegration.shadowColor</string>
 					<string>2182.IBViewIntegration.shadowOffsetHeight</string>
 					<string>2182.IBViewIntegration.shadowOffsetWidth</string>
+					<string>2189.IBPluginDependency</string>
+					<string>2190.IBPluginDependency</string>
+					<string>2191.IBPluginDependency</string>
 					<string>24.IBPluginDependency</string>
 					<string>24.ImportedFromIB2</string>
 					<string>262.CustomClassName</string>
@@ -11610,7 +11613,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{963, 651}, {210, 389}}</string>
+					<string>{{1046, 575}, {210, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11655,6 +11658,9 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<reference ref="708233885"/>
 					<real value="0.0"/>
 					<real value="0.0"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>MyOpenGLView</string>
