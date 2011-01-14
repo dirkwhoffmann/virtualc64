@@ -438,13 +438,6 @@
 
 @synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, iec, vc1541;
 
-#if 0
-- (id) initWithDocument:(MyController *)d
-{
-	return [self initWithDocument:d withScreen:nil];
-}
-#endif
-
 - (id) init
 {
     self = [super init];
@@ -471,15 +464,6 @@
     return self;
 }
 
-- (id) initWithContentsOfSnapshot:(Snapshot *)snapshot
-{
-	if (snapshot != NULL) {
-		snapshot->writeToC64(c64);
-	}
-	
-	return self;
-}
-
 - (void) kill
 {
 	assert(c64 != NULL);
@@ -496,10 +480,12 @@
 	c64 = NULL;
 }
 
+- (void) loadFromSnapshot:(V64Snapshot *)snapshot { c64->suspend(); c64->loadFromSnapshot([snapshot snapshot]); c64->resume(); }
+- (void) saveToSnapshot:(V64Snapshot *)snapshot { c64->suspend(); c64->saveToSnapshot([snapshot snapshot]); c64->resume(); }
+
 - (CIAProxy *) cia:(int)num { if (num == 1) return [self cia1]; else if (num == 2) return [self cia2]; else assert(0); } 
 
 - (void) dump { c64->dumpState(); }
-- (void) dumpContentsToSnapshot:(Snapshot *)snapshot { snapshot->initWithContentsOfC64(c64); }
 
 - (Message *)getMessage { return c64->getMessage(); }
 - (void) reset { c64->reset(); }
@@ -606,12 +592,7 @@
 	NSLog(@"V64Snapshot::snapshotFromC64");
 
 	V64Snapshot *newSnapshot = [[self alloc] init];
-	
-	if (![newSnapshot readDataFromC64:c64]) {
-		[newSnapshot release];
-		newSnapshot = nil;
-	}
-	
+	[c64 saveToSnapshot:newSnapshot];
 	return newSnapshot;
 }
 
@@ -635,10 +616,7 @@
 
 - (unsigned char *)imageData { return snapshot->getImageData(); }
 - (time_t)timeStamp { return snapshot->getTimestamp(); }
-
 - (bool) readDataFromFile:(NSString *)path { return snapshot->readFromFile([path UTF8String]); }
-- (bool) readDataFromC64:(C64Proxy *)c64 { return snapshot->initWithContentsOfC64([c64 c64]); }
-- (bool) writeDataToC64:(C64Proxy *)c64 { return snapshot->writeToC64([c64 c64]); }
 - (bool) writeDataToFile:(NSString *)path { return snapshot->writeToFile([path UTF8String]); }
 
 @end
