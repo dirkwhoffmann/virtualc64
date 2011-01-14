@@ -122,7 +122,7 @@ void checkForOpenGLErrors()
 	
 	// Drag and Drop
 	[self registerForDraggedTypes:
-	 [NSArray arrayWithObject:NSFilenamesPboardType]];
+	 [NSArray arrayWithObjects:NSFilenamesPboardType,NSPasteboardTypeString,nil]];
 }
 
 - (void) dealloc 
@@ -894,21 +894,27 @@ void checkForOpenGLErrors()
 
 - (unsigned int)draggingEntered:(id <NSDraggingInfo>)sender
 {
-	if ([sender draggingSource] != self) {
-		NSPasteboard *pb = [sender draggingPasteboard];
-		NSString *type = [pb availableTypeFromArray:
-			[NSArray arrayWithObject:NSFilenamesPboardType]];
-		if (type != nil) {
-			// [self setNeedsDisplay:YES];
-			return NSDragOperationCopy;
-		}
+	if ([sender draggingSource] == self)
+		return NSDragOperationNone;
+
+	NSPasteboard *pb = [sender draggingPasteboard];
+	NSString *besttype = [pb availableTypeFromArray:[NSArray arrayWithObjects:NSFilenamesPboardType,NSPasteboardTypeString,nil]];
+
+	if (besttype == NSFilenamesPboardType) {
+		NSLog(@"Dragged in filename");
+		return NSDragOperationCopy;
 	}
+
+	if (besttype == NSPasteboardTypeString) {
+		NSLog(@"Dragged in string");
+		return NSDragOperationMove;
+	}
+
 	return NSDragOperationNone;
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
-	// [self setNeedsDisplay:YES];
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
@@ -918,42 +924,25 @@ void checkForOpenGLErrors()
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-    NSPasteboard *paste;
-    NSArray *types;
-    NSString *desiredType;
-    NSData *carriedData;
+	NSString *type;
+    NSPasteboard *pb = [sender draggingPasteboard];
 
-	// Get pasteboard
-	paste = [sender draggingPasteboard];
-	
-	// Get the dragging-specific pasteboard from the sender
-	types = [NSArray arrayWithObjects:NSFilenamesPboardType, nil];
-	
-	// Get a list of types that we can accept
-	desiredType = [paste availableTypeFromArray:types];
-	
-	// Get carried data
-	carriedData = [paste dataForType:desiredType];
-
-    if (nil == carriedData) {
-        //the operation failed for some reason
-        NSRunAlertPanel(@"Paste Error", @"Sorry, the paste operation failed", nil, nil, nil);
-        return NO;
-    }
-
-	// The pasteboard was able to give us some meaningful data
-    if ([desiredType isEqualToString:NSFilenamesPboardType]) {
-        NSArray *fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
-        NSString *path = [fileArray objectAtIndex:0];			
+	type = [pb availableTypeFromArray:[NSArray arrayWithObject:NSPasteboardTypeString]];
+	if (type) {
+		int nr = [[pb stringForType:NSPasteboardTypeString] intValue];
+		NSLog(@"Got data %d", nr);
+		[controller revertAction:nr];
+	   return YES;
+   }
+			   
+	type = [pb availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]];
+	if (type) {
+        NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];			
 		NSLog(@"Got filename %@", path);
-			
-		// Try to load file
 		
 		// Is it a ROM file?
 		if ([[controller document] loadRom:path]) {
 			NSLog(@"ROM loaded");
-			// Try to run...
-			// Update romDialog...
 			return YES;
 		}
 		
@@ -974,14 +963,15 @@ void checkForOpenGLErrors()
 		// Is it an archive?
 		if ([[controller document] setArchiveWithName:path]) {
 			[controller showMountDialog];			
+			return YES;
 		}			
 	}
-	return NO;
+	
+	return NO;	
 }
 
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender
 {
-	// [self setNeedsDisplay:YES];
 }
 
 @end

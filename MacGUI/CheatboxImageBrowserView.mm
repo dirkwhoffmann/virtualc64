@@ -44,7 +44,8 @@
 	//[self setAction:@selector(clickAction:)];
 	//[self setDoubleAction:@selector(doubleClickAction:)];
 
-	[self setIntercellSpacing:NSMakeSize(10.0,-40.0)];
+	//[self setIntercellSpacing:NSMakeSize(10.0,-40.0)];
+	[self setIntercellSpacing:NSMakeSize(10.0,-20.0)];
 	
 	[self reloadData];
 }
@@ -80,23 +81,6 @@
 
 #pragma mark NSTableViewDelegate
 
-#if 0
-- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
-{
-	NSLog(@"tableViewSelectionDidChange (item %d)", [self selectedRow]);
-	
-	// Compute info strings
-	char buf1[64], buf2[64];
-	time_t stamp = [[controller c64] historicSnapshotTimestamp:[self selectedRow]];
-	strftime(buf1, sizeof(buf1)-1, "Snapshot taken at %H:%M:%S", localtime(&stamp));
-	sprintf(buf2, "%d seconds ago", (int)difftime(setupTime, stamp));
-		
-	// Display info strings
-	[controller updateTimeTravelInfoText:(NSString *)[NSString stringWithUTF8String:buf1]
-							  secondText:(NSString *)[NSString stringWithUTF8String:buf2]];
-}
-#endif
-
 - (void)clickAction:(id)sender
 {
 	NSLog(@"clickAction (item %d)", [sender selectedRow]);
@@ -105,19 +89,7 @@
 - (void)doubleClickAction:(id)sender
 {
 	NSLog(@"doubleClickAction (item %d)", [sender selectedRow]);
-	
-	// [self revertAction:self];	
 }
-
-#if 0
-- (void)revertAction:(id)sender;
-{
-	NSLog(@"revertAction");
-
-	[[controller c64] revertToHistoricSnapshot:[self selectedRow]];
-	[controller timeTravelAction:self];
-}
-#endif
 
 - (void)refresh {
 	
@@ -128,13 +100,28 @@
 	setupTime = time(NULL);
 	[items removeAllObjects];
 	
+	NSImage *tmIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Image Capture.app"];
+	NSImage *glossy = [NSImage imageNamed:@"glossy.png"];
+	// NSImage *pin = [NSImage imageNamed:@"pin.png"];
+
 	for (int i = 0; (data = [[controller c64] historicSnapshotImageData:i]) != NULL; i++) {
 				
-		// Convert data into an NSImage
+		// Time information
+		char buf[64]; // , subtitle[64];
+		time_t stamp = [c64 historicSnapshotTimestamp:i];
+		int diff = (int)difftime(setupTime, stamp);
+
+		sprintf(buf, "%d %s ago", diff, diff == 1 ? "second" : "seconds");
+		NSString *title = [NSString stringWithUTF8String:buf];
+
+		strftime(buf, sizeof(buf)-1, "Snapshot taken at %H:%M:%S", localtime(&stamp));
+		NSString *subtitle = [NSString stringWithUTF8String:buf];
+		
+		// Determine texture bounds
 		int width = VIC::TOTAL_SCREEN_WIDTH;
 		int height = VIC::TOTAL_SCREEN_HEIGHT;
 		
-		// Skip first few rows (upper and lower border should be same size)
+		// We skip a couple of rows (upper and lower border should be same size)
 		height -= 38;
 		data += 38 * 4 * width;
 		
@@ -154,25 +141,22 @@
 		NSImage *image = [[NSImage alloc] initWithSize:[bmp size]];
 		[image addRepresentation:bmp];
 		[bmp release];
-		
+
 	    // Enhance image with some overlays 
-		NSImage *final = [[NSImage alloc] initWithSize:NSMakeSize(width, height+30)];
+		NSImage *final = [[NSImage alloc] initWithSize:NSMakeSize(width, height+70)];
 		[final lockFocus];
-
 		[image drawInRect:NSMakeRect(0, 0, width, height) 
-				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-
-		NSImage *glossy = [NSImage imageNamed:@"glossy.png"];
+				 fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];		
 		[glossy drawInRect:NSMakeRect(0, 0, width, height) 
 				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-
-		NSImage *pin = [NSImage imageNamed:@"pin.tiff"];
-		[pin drawInRect:NSMakeRect(width/2, height-30, 48, 60) 
-			   fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-
+		[tmIcon drawInRect:NSMakeRect(0, height-30, 100, 100) 
+				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 		[final unlockFocus];
-
-		CheatboxItem *item = [[CheatboxItem alloc] initWithImage:final imageID:@"imageID" imageTitle:@"title" imageSubtitle:@"subtitle"];
+		
+		CheatboxItem *item = [[CheatboxItem alloc] initWithImage:final 
+														imageUID:subtitle
+													  imageTitle:title
+												   imageSubtitle:subtitle];
 		[items addObject:item];
 	}
 	
@@ -184,5 +168,50 @@
 	return [[CheatboxImageBrowserCell alloc] init];
 }
 
+#pragma mark Drag'n drop
 
+- (unsigned int)dragginSourceOperationMaskForLocal:(BOOL)isLocal
+{
+	return NSDragOperationMove;
+}
+
+- (void)mouseDragged:(NSEvent *)event
+{
+	NSLog(@"mouseDragged");
+	
+	// Get location of drag event
+	NSPoint imageLoc = [self convertPoint:[event locationInWindow] fromView:nil];
+
+	// Get index of dragged item
+	NSUInteger index = (NSUInteger)[self indexOfItemAtPoint:imageLoc];
+	if (index >= [items count])
+		return;
+	
+	NSLog(@"Dragging item %d", index);
+	
+	// Get image for item
+	NSImage *anImage = [[items objectAtIndex:index] image];
+
+	// Scale image to correct size and adjust drag position
+	NSSize s = [[self cellForItemAtIndex:index] imageFrame].size;	
+	[anImage setSize:s];
+	imageLoc.x -= s.width / 2;			
+	imageLoc.y -= s.height / 2;			
+	
+	// Get pasteboard
+	NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
+	
+	// Put number of selected snapshot in pasteboard
+	[pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:self];
+	[pboard setString:[NSString stringWithFormat:@"%d", index] forType:NSStringPboardType];
+
+	// Start dragging
+	[self dragImage:anImage 
+				 at:imageLoc
+			 offset:NSMakeSize(0.0,0.0)
+			  event:event 
+		 pasteboard:pboard 
+			 source:self
+		  slideBack:YES];
+}
 @end

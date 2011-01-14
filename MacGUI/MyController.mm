@@ -767,6 +767,14 @@
 	}	
 }
 
+- (void)revertAction:(int)nr;
+{
+	NSLog(@"Reverting to cached snapshot at index %d", nr);
+	
+	[c64 revertToHistoricSnapshot:nr];
+	[self timeTravelAction:self];
+}
+
 - (IBAction)resetAction:(id)sender
 {
 	[[self document] updateChangeCount:NSChangeDone];

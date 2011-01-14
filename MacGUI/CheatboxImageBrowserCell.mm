@@ -5,6 +5,7 @@
 - (NSImageAlignment)imageAlignment
 {
 	return NSImageAlignTop;
+	// return NSImageAlignBottom;
 	// return [super imageAlignment];
 }
 
@@ -26,14 +27,16 @@
 }
 #endif
 
+
 - (NSRect) selectionFrame
 {
 	NSRect frame = [super selectionFrame];
-	frame.origin.y += 25;
-	frame.size.height -= 50; 
+	frame.origin.y += 12;
+	frame.size.height -= 24; 
 
 	return frame;
 }
+
 
 @end
 
