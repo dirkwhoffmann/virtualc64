@@ -27,17 +27,19 @@
 
 - (void)makeWindowControllers
 {
-	NSLog(@"makeWindowControllers");
+	NSLog(@"MyDocument::makeWindowControllers");
 	
 	MyController *myController;
 	
 	myController = [[[MyController alloc] initWithWindowNibName:@"MyDocument"] autorelease];
 	[self addWindowController:myController];
+	
+	[[self windowForSheet] setContentAspectRatio:NSMakeSize(652,432)];
 }
 
 - (id)init
 {
-	NSLog(@"init");
+	NSLog(@"MyDocument::init");
 	
     self = [super init];
 
@@ -50,16 +52,6 @@
 	c64 = [[C64Proxy alloc] init];
 	
 	return self;
-}
-
-- (void)windowControllerDidLoadNib:(NSWindowController *) aController
-{	
-	NSLog(@"windowControllerDidLoadNib");
-	
-	[super windowControllerDidLoadNib:aController];
-	
-	// Fixate window aspect ratio
-	[[self windowForSheet] setContentAspectRatio:NSMakeSize(652,432)];
 }
 
 - (BOOL)setArchiveWithName:(NSString *)path

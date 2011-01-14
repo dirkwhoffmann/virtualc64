@@ -35,16 +35,7 @@
 //! Setter
 - (void)setController:(MyController *)c;
 
-//! Action method for single clicking a table item
-- (void)clickAction:(id)sender;
-
-//! Action method for double clicking a table item
-- (void)doubleClickAction:(id)sender;
-
-//! Revert to selected snapshot
-// - (void)revertAction:(id)sender;
-
-//! Refresh  data items to display
+//! Refresh data items to display
 - (void)refresh;
 	
 @end
