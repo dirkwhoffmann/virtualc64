@@ -16,13 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Release notes for 0.9.3
-//
-// T64 files, PRG files and P00 files can now be mounted as disk
-// Fixed a bug that caused unallocated memory to be freed
-// 
-
-// 
 #ifndef _C64_INC
 #define _C64_INC
 
