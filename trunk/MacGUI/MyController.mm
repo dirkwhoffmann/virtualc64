@@ -184,7 +184,6 @@
 	[self setHexadecimalAction:self];
 	
 	// Setup table views
-	[ttTableView setController:self];
 	[cpuTableView setController:self];
 	[memTableView setController:self];
 	[cheatboxImageBrowserView setController:self];
@@ -380,7 +379,7 @@
 			[info setStringValue:@""];
 			[self enableUserEditing:NO];
 			[self refresh];
-			[backInTime_panel close];
+			[cheatboxPanel close];
 			
 			// disable undo because the internal state changes permanently
 			[[self document] updateChangeCount:NSChangeDone];
@@ -753,17 +752,16 @@
 	[self refresh];
 }
 
-- (IBAction)timeTravelAction:(id)sender
+- (IBAction)cheatboxAction:(id)sender
 {	
-	if ([backInTime_panel state] == NSDrawerOpenState) {
+	if ([cheatboxPanel state] == NSDrawerOpenState) {
 		[c64 run];
-		[backInTime_panel close];
+		[cheatboxPanel close];
 	}
-	if ([backInTime_panel state] == NSDrawerClosedState) {
+	if ([cheatboxPanel state] == NSDrawerClosedState) {
 		[c64 halt];
-		[ttTableView refresh];
 		[cheatboxImageBrowserView refresh];		
-		[backInTime_panel open];
+		[cheatboxPanel open];
 	}	
 }
 
@@ -772,7 +770,7 @@
 	NSLog(@"Reverting to cached snapshot at index %d", nr);
 	
 	[c64 revertToHistoricSnapshot:nr];
-	[self timeTravelAction:self];
+	[self cheatboxAction:self];
 }
 
 - (IBAction)resetAction:(id)sender
@@ -1070,16 +1068,6 @@
 	// delete [[self document] cartridge];
 	[[self document] setCartridge:NULL];
 	[c64 reset];
-}
-
-// --------------------------------------------------------------------------------
-// Helper functions
-// --------------------------------------------------------------------------------
-
-- (void)updateTimeTravelInfoText:(NSString *)s1 secondText:(NSString *)s2
-{
-	[historyDateField1 setStringValue:s1];
-	[historyDateField2 setStringValue:s2];	
 }
 
 @end

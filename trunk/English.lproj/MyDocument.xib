@@ -21,11 +21,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2024"/>
-			<integer value="5"/>
-			<integer value="1900"/>
 			<integer value="1005"/>
 			<integer value="766"/>
+			<integer value="5"/>
+			<integer value="1900"/>
+			<integer value="2024"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -6528,38 +6528,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">backInTime_panel</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="82105302"/>
-					</object>
-					<int key="connectionID">2030</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">historyDateField1</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="813126128"/>
-					</object>
-					<int key="connectionID">2074</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">historyDateField2</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="972535627"/>
-					</object>
-					<int key="connectionID">2075</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">timeTravelAction:</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="666194094"/>
-					</object>
-					<int key="connectionID">2076</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">stopAndGoButton</string>
 						<reference key="source" ref="662028313"/>
 						<reference key="destination" ref="394044151"/>
@@ -7054,6 +7022,22 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					</object>
 					<int key="connectionID">2184</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">cheatboxPanel</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="82105302"/>
+					</object>
+					<int key="connectionID">2193</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cheatboxAction:</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="666194094"/>
+					</object>
+					<int key="connectionID">2194</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -7353,7 +7337,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<int key="objectID">35</int>
 						<reference key="object" ref="964686301"/>
 						<reference key="parent" ref="0"/>
-						<string key="objectName">Drawer</string>
+						<string key="objectName">Debug Drawer</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">38</int>
@@ -9951,7 +9935,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<int key="objectID">2025</int>
 						<reference key="object" ref="82105302"/>
 						<reference key="parent" ref="0"/>
-						<string key="objectName">BackInTime Drawer</string>
+						<string key="objectName">Cheatbox Drawer</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2033</int>
@@ -11414,7 +11398,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{508, 1101}, {616, 0}}</string>
+					<string>{{394, 1011}, {616, 0}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11981,7 +11965,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2192</int>
+			<int key="maxID">2194</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -11989,38 +11973,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 				<object class="IBPartialClassDescription">
 					<string key="className">CheatboxImageBrowserView</string>
 					<string key="superclassName">IKImageBrowserView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>clickAction:</string>
-							<string>doubleClickAction:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>clickAction:</string>
-							<string>doubleClickAction:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">clickAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">doubleClickAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">MacGUI/CheatboxImageBrowserView.h</string>
@@ -12184,6 +12136,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
 							<string>cartridgeEjectAction:</string>
+							<string>cheatboxAction:</string>
 							<string>commodoreKeyAction:</string>
 							<string>continueAction:</string>
 							<string>debugAction:</string>
@@ -12209,7 +12162,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>stepperAction:</string>
 							<string>stopAndGoAction:</string>
 							<string>switchJoysticksAction:</string>
-							<string>timeTravelAction:</string>
 							<string>warpAction:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -12255,6 +12207,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>cancelMountDialog:</string>
 							<string>cancelRomDialog:</string>
 							<string>cartridgeEjectAction:</string>
+							<string>cheatboxAction:</string>
 							<string>commodoreKeyAction:</string>
 							<string>continueAction:</string>
 							<string>debugAction:</string>
@@ -12280,7 +12233,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>stepperAction:</string>
 							<string>stopAndGoAction:</string>
 							<string>switchJoysticksAction:</string>
-							<string>timeTravelAction:</string>
 							<string>warpAction:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -12299,6 +12251,10 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">cartridgeEjectAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">cheatboxAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -12402,10 +12358,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">timeTravelAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">warpAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -12451,11 +12403,11 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>alarmMinutes</string>
 							<string>alarmSeconds</string>
 							<string>alarmTenth</string>
-							<string>backInTime_panel</string>
 							<string>breakpoint</string>
 							<string>cartridgeEject</string>
 							<string>cartridgeIcon</string>
 							<string>cheatboxImageBrowserView</string>
+							<string>cheatboxPanel</string>
 							<string>ciaCountUnderflowsA</string>
 							<string>ciaCountUnderflowsB</string>
 							<string>ciaDataPortA</string>
@@ -12485,8 +12437,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>driveBusy</string>
 							<string>eject</string>
 							<string>greenLED</string>
-							<string>historyDateField1</string>
-							<string>historyDateField2</string>
 							<string>info</string>
 							<string>ioSource</string>
 							<string>memTableView</string>
@@ -12516,7 +12466,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>todMinutes</string>
 							<string>todSeconds</string>
 							<string>todTenth</string>
-							<string>ttTableView</string>
 							<string>warpMode</string>
 							<string>x</string>
 							<string>y</string>
@@ -12559,11 +12508,11 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
-							<string>NSDrawer</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>CheatboxImageBrowserView</string>
+							<string>NSDrawer</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
@@ -12594,8 +12543,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
 							<string>NSButtonCell</string>
 							<string>MemTableView</string>
 							<string>MountDialog</string>
@@ -12624,7 +12571,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
-							<string>TimeTravelTableView</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
@@ -12670,11 +12616,11 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>alarmMinutes</string>
 							<string>alarmSeconds</string>
 							<string>alarmTenth</string>
-							<string>backInTime_panel</string>
 							<string>breakpoint</string>
 							<string>cartridgeEject</string>
 							<string>cartridgeIcon</string>
 							<string>cheatboxImageBrowserView</string>
+							<string>cheatboxPanel</string>
 							<string>ciaCountUnderflowsA</string>
 							<string>ciaCountUnderflowsB</string>
 							<string>ciaDataPortA</string>
@@ -12704,8 +12650,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>driveBusy</string>
 							<string>eject</string>
 							<string>greenLED</string>
-							<string>historyDateField1</string>
-							<string>historyDateField2</string>
 							<string>info</string>
 							<string>ioSource</string>
 							<string>memTableView</string>
@@ -12735,7 +12679,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>todMinutes</string>
 							<string>todSeconds</string>
 							<string>todTenth</string>
-							<string>ttTableView</string>
 							<string>warpMode</string>
 							<string>x</string>
 							<string>y</string>
@@ -12887,10 +12830,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">backInTime_panel</string>
-								<string key="candidateClassName">NSDrawer</string>
-							</object>
-							<object class="IBToOneOutletInfo">
 								<string key="name">breakpoint</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
@@ -12905,6 +12844,10 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">cheatboxImageBrowserView</string>
 								<string key="candidateClassName">CheatboxImageBrowserView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">cheatboxPanel</string>
+								<string key="candidateClassName">NSDrawer</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">ciaCountUnderflowsA</string>
@@ -13023,14 +12966,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">historyDateField1</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">historyDateField2</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
 								<string key="name">info</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
@@ -13145,10 +13080,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">todTenth</string>
 								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">ttTableView</string>
-								<string key="candidateClassName">TimeTravelTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">warpMode</string>
@@ -14042,53 +13973,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">MacGUI/RomDialog.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TimeTravelTableView</string>
-					<string key="superclassName">NSTableView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>clickAction:</string>
-							<string>doubleClickAction:</string>
-							<string>revertAction:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>clickAction:</string>
-							<string>doubleClickAction:</string>
-							<string>revertAction:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">clickAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">doubleClickAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">revertAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">MacGUI/TimeTravelTableView.h</string>
 					</object>
 				</object>
 			</object>

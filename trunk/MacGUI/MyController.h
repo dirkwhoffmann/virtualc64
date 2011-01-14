@@ -26,7 +26,6 @@
 @class MyOpenGLView;
 @class CpuTableView;
 @class MemTableView;
-@class TimeTravelTableView;
 @class Speedometer;
 
 class JoystickManager;
@@ -52,7 +51,7 @@ class Snapshot;
 	// Main screen
 	IBOutlet MyOpenGLView *screen;
 	IBOutlet NSDrawer *debug_panel;
-	IBOutlet NSDrawer *backInTime_panel;
+	IBOutlet NSDrawer *cheatboxPanel;
 	IBOutlet NSButton *drive;
 	IBOutlet NSButton *eject;
 	IBOutlet NSButton *cartridgeIcon;
@@ -66,12 +65,8 @@ class Snapshot;
 	IBOutlet NSStepper *clockSpeedStepper;
 	IBOutlet NSButton *warpMode;
 	
-	// Cheat box
-	IBOutlet TimeTravelTableView *ttTableView;
+	// Cheatbox panel
 	IBOutlet CheatboxImageBrowserView *cheatboxImageBrowserView;
-	// IBOutlet NSButton *revertToSnapshot;
-	IBOutlet NSTextField *historyDateField1;
-	IBOutlet NSTextField *historyDateField2;
 	
 	// Debug panel (common)
 	IBOutlet NSMatrix *dezHexSelector;
@@ -204,9 +199,8 @@ class Snapshot;
 - (IBAction)driveAction:(id)sender;
 - (IBAction)cartridgeEjectAction:(id)sender;
 
-// Timetravel panel
-- (void)updateTimeTravelInfoText:(NSString *)s1 secondText:(NSString *)s2;
-- (IBAction)timeTravelAction:(id)sender;
+// Cheatbox panel
+- (IBAction)cheatboxAction:(id)sender;
 - (void)revertAction:(int)nr;
 
 // MOVE TO CATEGORY MyController
