@@ -55,40 +55,22 @@
 	[super dealloc];
 }
 
-#if 0
-- (void)keyDown:(NSEvent *)theEvent
-{
-	if([theEvent keyCode] == 0x24 && [self numberOfSelectedRows] == 1) {
-		[self revertAction:self];
-	} else {
-		[super keyDown:theEvent];		
-	}
-}
-#endif
-
 #pragma mark Browser Data Source Methods
 
-- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *)browser
+- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *)aBrowser
 {	
 	return [items count];
 }
 
-- (id) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(NSUInteger)index
+- (id) imageBrowser:(IKImageBrowserView *)aBrowser itemAtIndex:(NSUInteger)index
 {
 	return [items objectAtIndex:index];
 }
 
-
-#pragma mark NSTableViewDelegate
-
-- (void)clickAction:(id)sender
+-(void) imageBrowser:(IKImageBrowserView *)aBrowser cellWasDoubleClickedAtIndex:(NSUInteger)index
 {
-	NSLog(@"clickAction (item %d)", [sender selectedRow]);
-}
-
-- (void)doubleClickAction:(id)sender
-{
-	NSLog(@"doubleClickAction (item %d)", [sender selectedRow]);
+	NSLog(@"doubleClickAction (item %d)", index);
+	[controller revertAction:index];
 }
 
 - (void)refresh {
@@ -114,7 +96,7 @@
 		sprintf(buf, "%d %s ago", diff, diff == 1 ? "second" : "seconds");
 		NSString *title = [NSString stringWithUTF8String:buf];
 
-		strftime(buf, sizeof(buf)-1, "Snapshot taken at %H:%M:%S", localtime(&stamp));
+		strftime(buf, sizeof(buf)-1, "taken at %H:%M:%S", localtime(&stamp));
 		NSString *subtitle = [NSString stringWithUTF8String:buf];
 		
 		// Determine texture bounds
