@@ -118,8 +118,8 @@ VIC::reset()
 }
 			
 // Loading and saving snapshots
-bool
-VIC::load(uint8_t **buffer)
+void
+VIC::loadFromBuffer(uint8_t **buffer)
 {
 	debug(2, "  Loading VIC state...\n");
 	
@@ -162,12 +162,10 @@ VIC::load(uint8_t **buffer)
 	
 	// Lightpen
 	lightpenIRQhasOccured = (bool)read8(buffer);
-	
-	return true;
 }
 
-bool
-VIC::save(uint8_t **buffer)
+void
+VIC::saveToBuffer(uint8_t **buffer)
 {
 	debug(2, "  Saving VIC state...\n");
 
@@ -210,8 +208,6 @@ VIC::save(uint8_t **buffer)
 	
 	// Lightpen
 	write8(buffer, lightpenIRQhasOccured);
-
-	return true;
 }
 
 bool

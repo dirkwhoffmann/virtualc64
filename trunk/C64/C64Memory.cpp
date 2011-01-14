@@ -71,12 +71,12 @@ void C64Memory::reset()
 //                                      Input / Output
 // --------------------------------------------------------------------------------
 
-bool
-C64Memory::load(uint8_t **buffer)
+void
+C64Memory::loadFromBuffer(uint8_t **buffer)
 {	
 	debug(2, "  Loading C64 memory state...\n");
 	
-	Memory::load(buffer);
+	Memory::loadFromBuffer(buffer);
 	
 	for (unsigned i = 0; i < sizeof(ram); i++)
 		ram[i] = read8(buffer);	
@@ -88,16 +88,14 @@ C64Memory::load(uint8_t **buffer)
 	kernelRomIsVisible = (bool)read8(buffer);
 	IOIsVisible = (bool)read8(buffer);
 	cartridgeRomIsVisible = (bool)read8(buffer);
-	
-	return true;
 }
 
-bool
-C64Memory::save(uint8_t **buffer) 
+void
+C64Memory::saveToBuffer(uint8_t **buffer) 
 {
 	debug(2, "  Saving C64 memory state...\n");
 	
-	Memory::save(buffer);
+	Memory::saveToBuffer(buffer);
 
 	for (unsigned i = 0; i < sizeof(ram); i++)
 		write8(buffer, ram[i]);
@@ -109,8 +107,6 @@ C64Memory::save(uint8_t **buffer)
 	write8(buffer, (uint8_t)kernelRomIsVisible);
 	write8(buffer, (uint8_t)IOIsVisible);
 	write8(buffer, (uint8_t)cartridgeRomIsVisible);
-
-	return true;
 }
 
 void 

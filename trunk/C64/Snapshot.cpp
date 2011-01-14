@@ -49,7 +49,7 @@ Snapshot::getTypeOfContainer()
 void 
 Snapshot::cleanup()
 {
-	major = 0;
+	major = 1;
 	minor = 0;
 	size = 0;
 }
@@ -120,6 +120,7 @@ Snapshot::writeDataToFile(FILE *file, struct stat fileProperties)
 	return true;	
 }
 
+#if 0
 bool 
 Snapshot::initWithContentsOfC64(C64 *c64)
 {
@@ -143,7 +144,7 @@ Snapshot::updateWithContentsOfC64(C64 *c64)
 	timestamp = time(NULL);	
 	return true;
 }	
-	
+
 bool 
 Snapshot::writeToC64(C64 *c64)
 {
@@ -152,3 +153,4 @@ Snapshot::writeToC64(C64 *c64)
 	fprintf(stderr, "writeToC64: Extracted state from %d bytes\n", ptr - data);
 	return true;
 }
+#endif

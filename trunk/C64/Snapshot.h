@@ -69,25 +69,24 @@ public:
 	void cleanup();
 	const char *getTypeOfContainer();
 	
-	//! Take snapshot from a virtual computer
-	bool initWithContentsOfC64(C64 *c64);
-	
-	//! Update contents of an already initializes snapshot
-	/*! This function is not thread safe. It must not be called outside the execution thread. */
-	bool updateWithContentsOfC64(C64 *c64);
-
-	//! Initialize virtual computer with snapshot data
-	bool writeToC64(C64 *c64);
+	//! Return pointer snapshot data
+	uint8_t *getData() {	return data; }
 
 	//! Return snapshot size
 	int getSize() {	return size; }
 
-	//! Return snapshot size
-	uint8_t *getData() {	return data; }
+	//! Set snapshot size
+	void setSize(int value) { size = value; }
 
 	//! Return timestamp
 	time_t getTimestamp() { return timestamp; }
 
+	//! Set timestamp
+	void setTimestamp(time_t value) { timestamp = value; }
+
+	//! Take screenshot
+	void takeScreenshot(uint32_t *buf) { memcpy(screen, buf, sizeof(screen)); }
+		 
 	//! Return screen buffer
 	unsigned char *getImageData() { return (unsigned char *)screen; }
 };

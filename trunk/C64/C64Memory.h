@@ -191,11 +191,11 @@ public:
 	//! Restore initial state
 	void reset();
 
-	//! Load snapshot
-	bool load(uint8_t **ptr);
+	//! Load state
+	void loadFromBuffer(uint8_t **buffer);
 	
-	//! Save snapshot
-	bool save(uint8_t **ptr);
+	//! Save state
+	void saveToBuffer(uint8_t **buffer);	
 	
 	//! Dump current state into logfile
 	void dumpState();

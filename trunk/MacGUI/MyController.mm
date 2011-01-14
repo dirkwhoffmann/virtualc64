@@ -32,28 +32,6 @@
 	[self registerStandardDefaults];	
 }
 
-- (id)init  
-{	
-	NSLog(@"MyController::init");
-	
-    self = [super init];
-    if (self) {
-		// Change working directory to the main bundle ressource path. We may find some ROMs there...
-		NSBundle* mainBundle = [NSBundle mainBundle];
-		NSString *path = [mainBundle resourcePath];
-		if (chdir([path UTF8String]) != 0)
-			NSLog(@"WARNING: Could not change working directory.");
-	}
-	timer = nil;
-	timerLock = nil;
-	animationCounter = 0;
-	speedometer = nil;
-	
-	// snapshot = NULL;
-	
-    return self;
-}
-
 - (void)dealloc
 {	
 	NSLog(@"dealloc");
@@ -89,20 +67,16 @@
 - (void)awakeFromNib
 {	
 	NSLog(@"MyController::awakeFromNib");
-		
+	
+	// Change working directory to the main bundle ressource path. We may find some ROMs there...
+	NSBundle* mainBundle = [NSBundle mainBundle];
+	NSString *path = [mainBundle resourcePath];
+	if (chdir([path UTF8String]) != 0)
+		NSLog(@"WARNING: Could not change working directory.");
+
 	// Create virtual C64
 	c64 = [(MyDocument *)[self document] c64];
 	[screen setC64:[c64 c64]];
-
-#if 0
-	// Load snapshot if applicable
-	if ([[self document] snapshot] != NULL) {
-		NSLog(@"Snapshot found");
-		[c64 initWithContentsOfSnapshot:[[self document] snapshot]];
-		// delete snapshot;
-		// snapshot = NULL;
-	}
-#endif
 	
 	// Joystick handling
 	joystickManager = new JoystickManager( c64 );
@@ -120,19 +94,14 @@
 	[cheatboxImageBrowserView setController:self];
 	
 	// Create timer and speedometer
-	assert(timerLock == nil);
 	timerLock = [[NSLock alloc] init];
-
-	assert(timer == nil);
 	timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/6.0f) 
 											 target:self 
 										   selector:@selector(timerFunc) 
 										   userInfo:nil repeats:YES];
-
-	assert(speedometer == nil);
 	speedometer = [[Speedometer alloc] init];
 	
-	NSLog(@"GUI has been initialized, timer is running");	
+	NSLog(@"GUI is initialized, timer is running");	
 }
 
 - (void)windowDidLoad
@@ -140,6 +109,9 @@
 	// Load user defaults
 	[self loadUserDefaults];
 		
+	// Launch emulator
+	[c64 run];
+	
 	// Mount archive if applicable
 	if ([[self document] archive] != NULL) {
 		[self showMountDialog];
@@ -347,6 +319,7 @@
 			
 		case MSG_ROM_MISSING:
 			
+			NSLog(@"MSG_ROM_MISSING");
 			assert(msg->i != 0);
 			[self enableUserEditing:YES];	
 			[self refresh];

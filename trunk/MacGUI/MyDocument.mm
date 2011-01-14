@@ -141,7 +141,7 @@
 		return NO;
 	}
 	
-	[c64 initWithContentsOfSnapshot:[snapshot snapshot]];
+	[c64 loadFromSnapshot:snapshot];
 	return YES;
 }
 	
@@ -161,7 +161,7 @@
 		return NO;
 	}
 		
-	[c64 initWithContentsOfSnapshot:[snapshot snapshot]];
+	[c64 loadFromSnapshot:snapshot];
 	return YES;
 }
 

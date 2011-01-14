@@ -49,7 +49,7 @@ void VIA6522::reset()
 		io[i] = 0;
 }
 
-bool VIA6522::load(uint8_t **buffer)
+void VIA6522::loadFromBuffer(uint8_t **buffer)
 {
 	debug(2, "    Loading VIA6522 state...\n");
 
@@ -69,11 +69,9 @@ bool VIA6522::load(uint8_t **buffer)
 	
 	for (unsigned i = 0; i < sizeof(io); i++)
 		io[i] = read8(buffer);
-	
-	return true;
 }
 
-bool VIA6522::save(uint8_t **buffer)
+void VIA6522::saveToBuffer(uint8_t **buffer)
 {
 	debug(2, "    Saving VIA6522 state...\n");
 
@@ -93,8 +91,6 @@ bool VIA6522::save(uint8_t **buffer)
 	
 	for (unsigned i = 0; i < sizeof(io); i++)
 		write8(buffer, io[i]);
-
-	return true;
 }
 
 bool VIA6522::execute(int cycles)

@@ -43,24 +43,22 @@ VC1541Memory::reset()
 		mem[i] = 0;	
 }	
 
-bool 
-VC1541Memory::load(uint8_t **buffer)
+void 
+VC1541Memory::loadFromBuffer(uint8_t **buffer)
 {
 	debug(2, "    Loading VC1541 memory state...\n");
 
 	for (unsigned i = 0; i < 0xC000; i++)
 		mem[i] = read8(buffer);	
-	return true;
 }
 
-bool 
-VC1541Memory::save(uint8_t **buffer)
+void 
+VC1541Memory::saveToBuffer(uint8_t **buffer)
 {
 	debug(2, "    Saving VC1541 memory state...\n");
 
 	for (unsigned i = 0; i < 0xC000; i++)
 		write8(buffer, mem[i]);
-	return true;
 }
 
 bool 

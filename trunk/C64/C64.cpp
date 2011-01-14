@@ -199,131 +199,21 @@ void C64::reset()
 }
 
 void C64::fastReset()
-{	
-	Snapshot *snapshot; 
-	
+{		
 	debug (1, "Resetting virtual C64 (fast reset via image file)\n");
 	
-	if ((snapshot = Snapshot::snapshotFromFile("ResetImage.VC64")) != NULL) {
-		snapshot->writeToC64(this);
-	} else {
-		debug(1, "Error while reading reset image\n");
+	Snapshot *snapshot = Snapshot::snapshotFromFile("ResetImage.VC64");
+
+	if (snapshot == NULL) {
+		warn("Could not read reset image\n");
+		return;
 	}
+	
+	suspend();
+	loadFromSnapshot(snapshot);
+	resume();
 
 	delete snapshot;
-}
-
-void 
-C64::_load(uint8_t **buffer)
-{	
-	// uint8_t *old = *buffer;
-		
-	// Load screenshot
-	vic->loadScreenshot(buffer);
-	// debug(2, "%d\n", *buffer - old);
-
-	// Load internal state
-	cycles = read64(buffer);
-	frame = (int)read32(buffer);
-	rasterline = (int)read32(buffer);
-	rasterlineCycle = (int)read32(buffer);
-	targetTime = read64(buffer);
-	
-	// Load internal state of sub components
-	cpu->load(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	vic->load(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	sid->load(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	cia1->load(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	cia2->load(buffer);	
-	// debug(2, "%d\n", *buffer - old);
-	mem->load(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	keyboard->load(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	iec->load(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	floppy->load(buffer);
-	// debug(2, "%d\n", *buffer - old);
-}
-
-bool 
-C64::load(uint8_t **buffer)
-{
-	uint8_t *old = *buffer;
-	
-	suspend();
-	
-	debug(1, "Loading... ");
-	_load(buffer);
-	debug(1, "%d bytes.\n", *buffer - old);
-	
-	resume();
-	return true;
-}
-
-void 
-C64::loadFromSnapshot(Snapshot *s)
-{ 
-	assert(s != NULL);
-	
-	uint8_t *data = s->getData();
-	load(&data); 
-}
-
-void 
-C64::_save(uint8_t **buffer)
-{	
-	// uint8_t *old = *buffer;
-			
-	// Save screenshot
-	vic->saveScreenshot(buffer);
-	// debug(2, "%d\n", *buffer - old);
-
-	// Save internal state
-	write64(buffer, cycles);
-	write32(buffer, (uint32_t)frame);
-	write32(buffer, (uint32_t)rasterline);
-	write32(buffer, (uint32_t)rasterlineCycle);
-	write64(buffer, targetTime);
-	
-	// Save internal state of sub components
-	cpu->save(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	vic->save(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	sid->save(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	cia1->save(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	cia2->save(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	mem->save(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	keyboard->save(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	iec->save(buffer);
-	// debug(2, "%d\n", *buffer - old);
-	floppy->save(buffer);
-	// debug(2, "%d\n", *buffer - old);
-}
-
-bool 
-C64::save(uint8_t **buffer)
-{
-	uint8_t *old = *buffer;
-
-	suspend();
-	
-	debug(1, "Saving... ");
-	_save(buffer);
-	debug(1, "%d bytes.\n", *buffer - old);
-	
-	resume();
-	return true;
 }
 	
 void 
@@ -400,6 +290,97 @@ C64::setWarpLoad(bool b)
 {
 	warpLoad = b;
 }
+
+
+// -----------------------------------------------------------------------------------------------
+//                                       Loading and saving
+// -----------------------------------------------------------------------------------------------
+
+void C64::loadFromSnapshot(Snapshot *snapshot)
+{
+	if (snapshot == NULL)
+		return;
+
+	uint8_t *ptr = snapshot->getData();
+	loadFromBuffer(&ptr);		
+}
+
+void 
+C64::loadFromBuffer(uint8_t **buffer)
+{	
+	uint8_t *old = *buffer;
+		
+	debug(2, "Loading... ");
+
+	// Load screenshot
+	vic->loadScreenshot(buffer);
+	
+	// Load state of this component
+	cycles = read64(buffer);
+	frame = (int)read32(buffer);
+	rasterline = (int)read32(buffer);
+	rasterlineCycle = (int)read32(buffer);
+	targetTime = read64(buffer);
+	
+	// Load state of sub components
+	cpu->loadFromBuffer(buffer);
+	vic->loadFromBuffer(buffer);
+	sid->loadFromBuffer(buffer);
+	cia1->loadFromBuffer(buffer);
+	cia2->loadFromBuffer(buffer);	
+	mem->loadFromBuffer(buffer);
+	keyboard->loadFromBuffer(buffer);
+	iec->loadFromBuffer(buffer);
+	floppy->loadFromBuffer(buffer);
+
+	debug(2, "%d bytes.\n", *buffer - old);	
+}
+
+void 
+C64::saveToSnapshot(Snapshot *snapshot)
+{	
+	if (snapshot == NULL)
+		return;
+	
+	snapshot->takeScreenshot((uint32_t *)vic->screenBuffer());
+	snapshot->setTimestamp(time(NULL));
+
+	uint8_t *ptr = snapshot->getData();
+	saveToBuffer(&ptr);
+	snapshot->setSize(ptr - snapshot->getData());
+}
+
+void 
+C64::saveToBuffer(uint8_t **buffer)
+{	
+	uint8_t *old = *buffer;
+		
+	debug(2, "Saving... ");
+	
+	// Save screenshot
+	vic->saveScreenshot(buffer);
+	
+	// Save state of this component
+	write64(buffer, cycles);
+	write32(buffer, (uint32_t)frame);
+	write32(buffer, (uint32_t)rasterline);
+	write32(buffer, (uint32_t)rasterlineCycle);
+	write64(buffer, targetTime);
+	
+	// Save state of sub components
+	cpu->saveToBuffer(buffer);
+	vic->saveToBuffer(buffer);
+	sid->saveToBuffer(buffer);
+	cia1->saveToBuffer(buffer);
+	cia2->saveToBuffer(buffer);
+	mem->saveToBuffer(buffer);
+	keyboard->saveToBuffer(buffer);
+	iec->saveToBuffer(buffer);
+	floppy->saveToBuffer(buffer);
+	
+	debug(2, "%d bytes.\n", *buffer - old);	
+}
+
 
 // -----------------------------------------------------------------------------------------------
 //                                              Control
@@ -1118,7 +1099,7 @@ void
 C64::takeSnapshot() 
 {
 	// fprintf(stderr, "Taking snapshot\n");
-	backInTimeHistory[backInTimeWritePtr]->updateWithContentsOfC64(this);
+	saveToSnapshot(backInTimeHistory[backInTimeWritePtr]);
 	backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
 }
 

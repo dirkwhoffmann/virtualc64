@@ -102,11 +102,11 @@ public:
 	/*! The VIA chip will be executed for the specified number of clock cycles. */
 	bool execute(int cycles); 
 
-	//! Load snapshot
-	bool load(uint8_t **buffer);
-
-	//! Save snapshot
-	bool save(uint8_t **buffer);
+	//! Load state
+	void loadFromBuffer(uint8_t **buffer);
+	
+	//! Save state
+	void saveToBuffer(uint8_t **buffer);	
 	
 	//! Special peek function for the I/O memory range
 	/*! The peek function only handles those registers that are treated similarily by both VIA chips */

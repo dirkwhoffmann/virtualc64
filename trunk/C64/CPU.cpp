@@ -96,8 +96,8 @@ CPU::reset()
 	setTraceMode(false);	
 }
 
-bool 
-CPU::load(uint8_t **buffer) 
+void 
+CPU::loadFromBuffer(uint8_t **buffer) 
 {
 	debug(2, "  Loading CPU state...\n");
 
@@ -139,20 +139,14 @@ CPU::load(uint8_t **buffer)
 	errorState = (ErrorState)read8(buffer);
 	next = CPU::callbacks[read16(buffer)];
 	
-#if 0
-	for (unsigned i = 0; i < sizeof(breakpoint); i++) 
-		breakpoint[i] = read8(buffer);
-#endif
 	for (unsigned i = 0; i < 256; i++) 
 		callStack[i] = read16(buffer);	
 	callStackPointer = read8(buffer);
 	oldI = read8(buffer);
-
-	return true;
 }
 
-bool
-CPU::save(uint8_t **buffer) 
+void
+CPU::saveToBuffer(uint8_t **buffer) 
 {
 	debug(2, "  Saving CPU state...\n");
 
@@ -195,24 +189,18 @@ CPU::save(uint8_t **buffer)
 
 	for (uint16_t i = 0;; i++) {
 		if (callbacks[i] == NULL) {
-			debug(1, "ERROR while saving state: Callback pointer not found!\n");
-			return false;
+			panic("ERROR while saving state: Callback pointer not found!\n");
 		}
 		if (callbacks[i] == next) {
 			write16(buffer, i);
 			break;
 		}
 	}
-#if 0		
-	for (unsigned i = 0; i < sizeof(breakpoint); i++) 
-		write8(buffer, breakpoint[i]);
-#endif
+
 	for (unsigned i = 0; i < 256; i++) 
 		write16(buffer, callStack[i]);
 	write8(buffer, callStackPointer);
 	write8(buffer, oldI);
-	
-	return true;
 }
 
 void 

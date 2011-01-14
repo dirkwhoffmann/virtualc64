@@ -943,7 +943,7 @@ void checkForOpenGLErrors()
 		// Is it an image file?
 		V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:path];
 		if (snapshot) {
-			[snapshot writeDataToC64:[controller c64]];
+			[[controller c64] loadFromSnapshot:snapshot];
 			NSLog(@"Image file loaded");
 			return YES;
 		}

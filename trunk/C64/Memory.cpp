@@ -29,16 +29,14 @@ Memory::~Memory()
 {
 }
 
-bool
-Memory::load(uint8_t **buffer)
+void
+Memory::loadFromBuffer(uint8_t **buffer)
 {	
-	return true;
 }
 
-bool
-Memory::save(uint8_t **buffer) 
+void
+Memory::saveToBuffer(uint8_t **buffer) 
 {
-	return true;
 }
 
 
