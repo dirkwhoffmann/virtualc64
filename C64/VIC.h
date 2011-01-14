@@ -461,14 +461,14 @@ public:
 	//! Reset the VIC chip to its initial state
 	void reset();
 	
-	//! Load snapshot
-	bool load(uint8_t **buffer);
+	//! Load state
+	void loadFromBuffer(uint8_t **buffer);
+	
+	//! Save state
+	void saveToBuffer(uint8_t **buffer);	
 	
 	//! Load screen buffer
 	bool loadScreenshot(uint8_t **buffer);
-
-	//! Save snapshot
-	bool save(uint8_t **buffer);
 
 	//! Save screen buffer
 	bool saveScreenshot(uint8_t **buffer);

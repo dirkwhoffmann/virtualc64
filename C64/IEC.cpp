@@ -58,8 +58,8 @@ IEC::reset()
 	busActivity = 0;
 }
  
-bool
-IEC::load(uint8_t **buffer)
+void
+IEC::loadFromBuffer(uint8_t **buffer)
 {
 	debug(2, "  Loading IEC state...\n");
 	driveConnected = (bool)read8(buffer);
@@ -77,11 +77,10 @@ IEC::load(uint8_t **buffer)
 	ciaClockIsOutput = (bool)read8(buffer);
 	ciaAtnPin = (bool)read8(buffer);
 	ciaAtnIsOutput = (bool)read8(buffer);
-	return true;
 }
 
-bool
-IEC::save(uint8_t **buffer)
+void
+IEC::saveToBuffer(uint8_t **buffer)
 {
 	debug(2, "  Saving IEC state...\n");
 	write8(buffer, (uint8_t)driveConnected);
@@ -99,7 +98,6 @@ IEC::save(uint8_t **buffer)
 	write8(buffer, (uint8_t)ciaClockIsOutput);
 	write8(buffer, (uint8_t)ciaAtnPin);
 	write8(buffer, (uint8_t)ciaAtnIsOutput);
-	return true;
 }
 
 void 

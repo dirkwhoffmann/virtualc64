@@ -81,19 +81,19 @@ public:
 	*/
 	virtual void reset() = 0; 
 	
-	//! Load snapshot from a memory buffer
+	//! Load state from memory buffer
 	/*! The function is used for loading a snapshot of the virtual computer
 	/seealso C64::loadSnapshot
 	/param file file handle of the snapshot file
 	*/
-	virtual bool load(uint8_t **ptr) = 0;
+	virtual void loadFromBuffer(uint8_t **ptr) = 0;
 	
-	//! Save internal state from a memory buffer
+	//! Save state to memory buffer
 	/*! The function is used for saving a snapshot of the virtual computer
 		/seealso C64::saveSnapshot
 		/param file file handle of the snapshot file
 	*/
-	virtual bool save(uint8_t **ptr) = 0;
+	virtual void saveToBuffer(uint8_t **ptr) = 0;
 
 	//! Print info about the internal state
 	/*! This functions is intended for debugging purposes only. Any derived component should override

@@ -110,6 +110,7 @@ public:
 		
 	//! Pointer to voice that modulates this one.
 	SIDVoice *mod_by;
+	
 	//! Pointer to voice that is modulated by this one.
 	SIDVoice *mod_to;
 	

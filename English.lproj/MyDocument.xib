@@ -21,11 +21,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1005"/>
 			<integer value="766"/>
-			<integer value="5"/>
-			<integer value="1900"/>
 			<integer value="2024"/>
+			<integer value="1005"/>
+			<integer value="1900"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -512,7 +512,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="261188972">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272760832</int>
-								<string key="NSContents">Succeeded</string>
+								<string key="NSContents"/>
 								<object class="NSFont" key="NSSupport" id="26">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>

@@ -272,26 +272,9 @@ public:
 	/*! A (faked) reset is performed by loading a presaved image from disk. */
 	void fastReset();           
 
-	//! Load snapshot (TODO: Make function void)
-	bool load(uint8_t **buffer);
-	
-	//! Save snapshot (TODO: Make function void)
-	bool save(uint8_t **buffer);
-
 	//! Dump current state into logfile
 	void dumpState();
 	
-	//! Helper function for load
-	/*! This function is not thread safe, don't call it directly! Call load instead */
-	void _load(uint8_t **buffer);
-
-	//! Helper function for save
-	/*! This function is not thread safe, don't call it directly! Call save instead */
-	void _save(uint8_t **buffer);
-	
-	//! Load snapshot (TODO: Make function void)
-	void loadFromSnapshot(Snapshot *s);
-
 	//! Take a snapshot and store it in ringbuffer
 	void takeSnapshot();
 	
@@ -313,7 +296,7 @@ public:
 	
 	//! Revert to historic snapshot
 	bool revertToHistoricSnapshot(int nr);
-	
+		
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                         Configure
@@ -345,7 +328,36 @@ public:
 	//! Setter for warpLoad
 	void setWarpLoad(bool b);
 	
+	
+	// -----------------------------------------------------------------------------------------------
+	//                                       Loading and saving
+	// -----------------------------------------------------------------------------------------------
 
+	//! Load state from snapshot container
+	void loadFromSnapshot(Snapshot *snapshot);
+
+	//! Load state from memory buffer
+	void loadFromBuffer(uint8_t **buffer);
+	
+	//! Save state to snapshot container
+	void saveToSnapshot(Snapshot *snapshot);
+	
+	//! Save state to memory buffer
+	void saveToBuffer(uint8_t **buffer);
+	
+#if 0	
+	//! Save snapshot
+	void save(uint8_t **buffer);
+	
+	//! Helper function for load
+	/*! This function is not thread safe, don't call it directly! Call load instead */
+	void _load(uint8_t **buffer);
+	
+	//! Helper function for save
+	/*! This function is not thread safe, don't call it directly! Call save instead */
+	void _save(uint8_t **buffer);
+#endif
+	
 	// -----------------------------------------------------------------------------------------------
 	//                                           Control
 	// -----------------------------------------------------------------------------------------------

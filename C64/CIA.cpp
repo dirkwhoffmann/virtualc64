@@ -64,11 +64,9 @@ CIA::reset()
 	tod.reset();
 }
 
-// Loading and saving snapshots
-bool CIA::load(uint8_t **buffer)
-{
-	
-	// TODO
+void 
+CIA::loadFromBuffer(uint8_t **buffer)
+{	
 	debug(2, "  Loading CIA state...\n");
 	
 	delay = read32(buffer);
@@ -97,13 +95,11 @@ bool CIA::load(uint8_t **buffer)
 	counterB = read16(buffer);
 	latchB = read16(buffer);
 
-	tod.load(buffer);
-
-	return true;
+	tod.loadFromBuffer(buffer);
 }
 
-bool 
-CIA::save(uint8_t **buffer)
+void 
+CIA::saveToBuffer(uint8_t **buffer)
 {
 	debug(2, "  Saving CIA state...\n");
 	
@@ -133,9 +129,7 @@ CIA::save(uint8_t **buffer)
 	write16(buffer, counterB);
 	write16(buffer, latchB);
 
-	tod.save(buffer);
-	
-	return true;	
+	tod.saveToBuffer(buffer);
 }
 
 uint8_t CIA::peek(uint16_t addr)

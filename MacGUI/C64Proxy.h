@@ -401,11 +401,14 @@
 // Initialization
 - (void) kill;
 
-- (id) initWithContentsOfSnapshot:(Snapshot *)s;
+// Loadind and saving
+- (void)loadFromSnapshot:(V64Snapshot *) snapshot;
+- (void)saveToSnapshot:(V64Snapshot *) snapshot;
+
+// - (id) initWithContentsOfSnapshot:(Snapshot *)s;
 - (CIAProxy *) cia:(int)num;
 
 - (void) dump;
-- (void) dumpContentsToSnapshot:(Snapshot *)s;
 
 - (Message *)getMessage;
 
@@ -489,9 +492,7 @@
 - (unsigned char *)imageData;
 - (time_t)timeStamp;
 	
-- (bool) readDataFromC64:(C64Proxy *)c64;
 - (bool) readDataFromFile:(NSString *)path;
-- (bool) writeDataToC64:(C64Proxy *)c64;
 - (bool) writeDataToFile:(NSString *)path;
 
 @end

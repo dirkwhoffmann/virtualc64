@@ -40,9 +40,8 @@ TOD::reset()
 	stopped = false;
 }
 
-// Loading and saving snapshots
-bool
-TOD::load(uint8_t **buffer)
+void
+TOD::loadFromBuffer(uint8_t **buffer)
 {
 	debug(2, "    Loading TOD state...\n");
 
@@ -51,11 +50,10 @@ TOD::load(uint8_t **buffer)
 	latch.value = read32(buffer);
 	frozen = read8(buffer);
 	stopped = read8(buffer);
-	return true;
 }
 
-bool
-TOD::save(uint8_t **buffer)
+void
+TOD::saveToBuffer(uint8_t **buffer)
 {
 	debug(2, "    Saving TOD state...\n");
 
@@ -64,7 +62,6 @@ TOD::save(uint8_t **buffer)
 	write32(buffer, latch.value);
 	write8(buffer, frozen);
 	write8(buffer, stopped);
-	return true;
 }
 
 void 

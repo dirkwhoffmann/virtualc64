@@ -152,8 +152,8 @@ SID::setVideoMode(uint32_t frequency)
 	updateConstants();
 }
 
-bool 
-SID::load(uint8_t **buffer)
+void 
+SID::loadFromBuffer(uint8_t **buffer)
 {
 	debug(2, "  Loading SID state...\n");
 
@@ -161,17 +161,15 @@ SID::load(uint8_t **buffer)
 	this->reset();
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
 		poke(i,read8(buffer)); // poke will store this value in iomem[] beside other things
-	return true;
 }
 
-bool
-SID::save(uint8_t **buffer)
+void
+SID::saveToBuffer(uint8_t **buffer)
 {
 	debug(2, "  Saving SID state...\n");
 
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
 		write8(buffer, iomem[i]);
-	return true;
 }
 
 uint8_t 

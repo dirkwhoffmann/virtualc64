@@ -94,26 +94,24 @@ Keyboard::reset()
 	}		
 }
 
-bool
-Keyboard::load(uint8_t **buffer)
+void
+Keyboard::loadFromBuffer(uint8_t **buffer)
 {
 	debug(2, "    Loading keyboard state...\n");
 	
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		kbMatrix[i] = read8(buffer);
 	}
-	return true;
 }
 
-bool
-Keyboard::save(uint8_t **buffer)
+void
+Keyboard::saveToBuffer(uint8_t **buffer)
 {
 	debug(2, "    Saving keyboard state...\n");
 
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		write8(buffer, kbMatrix[i]);
 	}
-	return true;
 }
 
 void 

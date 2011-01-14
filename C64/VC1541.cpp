@@ -77,8 +77,8 @@ VC1541::reset()
 	deactivateRedLED();	
 }
 
-bool
-VC1541::load(uint8_t **buffer)
+void
+VC1541::loadFromBuffer(uint8_t **buffer)
 {
 	uint8_t *old = *buffer;
 	
@@ -96,19 +96,18 @@ VC1541::load(uint8_t **buffer)
 	noOfFFBytes = (int)read16(buffer);
 	writeProtection = (bool)read8(buffer);
 	debug(2, "%d\n", *buffer - old);
-	cpu->load(buffer);
+	cpu->loadFromBuffer(buffer);
 	debug(2, "%d\n", *buffer - old);
-	via1->load(buffer);	
+	via1->loadFromBuffer(buffer);	
 	debug(2, "%d\n", *buffer - old);
-	via2->load(buffer);
+	via2->loadFromBuffer(buffer);
 	debug(2, "%d\n", *buffer - old);
-	mem->load(buffer);
+	mem->loadFromBuffer(buffer);
 	debug(2, "%d\n", *buffer - old);
-	return true;
 }
 
-bool 
-VC1541::save(uint8_t **buffer)
+void 
+VC1541::saveToBuffer(uint8_t **buffer)
 {
 	uint8_t *old = *buffer;
 	
@@ -126,16 +125,14 @@ VC1541::save(uint8_t **buffer)
 	write16(buffer, (uint16_t)noOfFFBytes);
 	write8(buffer, (uint8_t)writeProtection);
 	debug(2, "%d\n", *buffer - old);
-	cpu->save(buffer);
+	cpu->saveToBuffer(buffer);
 	debug(2, "%d\n", *buffer - old);
-	via1->save(buffer);	
+	via1->saveToBuffer(buffer);	
 	debug(2 ,"%d\n", *buffer - old);
-	via2->save(buffer);	
+	via2->saveToBuffer(buffer);	
 	debug(2, "%d\n", *buffer - old);
-	mem->save(buffer);	
+	mem->saveToBuffer(buffer);	
 	debug(2, "%d\n", *buffer - old);
-
-	return true;
 }
 
 void 
