@@ -940,6 +940,14 @@ void checkForOpenGLErrors()
         NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];			
 		NSLog(@"Got filename %@", path);
 		
+		// Is it an image file?
+		V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:path];
+		if (snapshot) {
+			[snapshot writeDataToC64:[controller c64]];
+			NSLog(@"Image file loaded");
+			return YES;
+		}
+			
 		// Is it a ROM file?
 		if ([[controller document] loadRom:path]) {
 			NSLog(@"ROM loaded");

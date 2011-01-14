@@ -72,6 +72,10 @@ public:
 	//! Take snapshot from a virtual computer
 	bool initWithContentsOfC64(C64 *c64);
 	
+	//! Update contents of an already initializes snapshot
+	/*! This function is not thread safe. It must not be called outside the execution thread. */
+	bool updateWithContentsOfC64(C64 *c64);
+
 	//! Initialize virtual computer with snapshot data
 	bool writeToC64(C64 *c64);
 

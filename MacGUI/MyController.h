@@ -66,6 +66,7 @@ class Snapshot;
 	IBOutlet NSButton *warpMode;
 	
 	// Cheatbox panel
+	IBOutlet NSToolbarItem *cheatboxIcon;
 	IBOutlet CheatboxImageBrowserView *cheatboxImageBrowserView;
 	
 	// Debug panel (common)
@@ -172,75 +173,48 @@ class Snapshot;
 	// Timer lock
 	NSLock *timerLock;
 	
-	// Used inside timer function
+	// Used inside timer function to fine tune timed events
 	long animationCounter; 
 
 	// Speedometer to measure clock frequence and frames per second
 	Speedometer *speedometer;
 		
-	// Selected sprite in VIC debug panel
-	// TODO: SHOULD BE RETRIEVED FROM VIEW
-	int selectedSprite;
-	
-	Snapshot *snapshot;
+	//! Attached snapshot
+	/*! Used to communicate between mount dialog panel and controller.
+		There might be a better way to do this. Getting rid of this variable is appreciated. */
+	// Snapshot *snapshot;
 }
 
 @property C64Proxy *c64;
 
-// Main screen
-- (IBAction)joystick1Action:(id)sender;
-- (IBAction)joystick2Action:(id)sender;
-- (IBAction)switchJoysticksAction:(id)sender;
-- (IBAction)fullscreenAction:(id)sender;
-- (IBAction)debugAction:(id)sender;
+// User defaults
++ (void)registerStandardDefaults;
+- (void)loadUserDefaults;
+
+// Timer and message processing
+- (void)timerFunc;
+- (void)processMessage:(Message *)msg;
+
+// Refresh
+- (void)refresh;
+- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter disassembler:(NSFormatter *)disassembler;
+- (void)enableUserEditing:(BOOL)enabled;
+
+// Main window controls
 - (IBAction)stepperAction:(id)sender;
 - (IBAction)warpAction:(id)sender;
 - (IBAction)ejectAction:(id)sender;
 - (IBAction)driveAction:(id)sender;
 - (IBAction)cartridgeEjectAction:(id)sender;
 
-// Cheatbox panel
-- (IBAction)cheatboxAction:(id)sender;
+// Cheatbox actions
 - (void)revertAction:(int)nr;
 
-// MOVE TO CATEGORY MyController
-- (IBAction)stepIntoAction:(id)sender;
-- (IBAction)stepOutAction:(id)sender;
-- (IBAction)stepOverAction:(id)sender;
-- (IBAction)stopAndGoAction:(id)sender;
-- (IBAction)pauseAction:(id)sender;
-- (IBAction)continueAction:(id)sender;
-
-
-- (IBAction)setDecimalAction:(id)sender;
-- (IBAction)setHexadecimalAction:(id)sender;
-
-- (IBAction)resetAction:(id)sender;
-- (IBAction)fastResetAction:(id)sender;
-
-- (IBAction)showPreferencesAction:(id)sender;
-
-// Keyboard actions
-- (IBAction)runstopRestoreAction:(id)sender;
-- (IBAction)runstopAction:(id)sender;
-- (IBAction)commodoreKeyAction:(id)sender;
-- (IBAction)FormatDiskAction:(id)sender;
-
-// Refresh methods
-- (void)loadUserDefaults;
-- (void)refresh;
-- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter disassembler:(NSFormatter *)disassembler;
-
-// Enable / disable editing
-- (void)enableUserEditing:(BOOL)enabled;
-
+// Dialogs
 - (BOOL)showMountDialog;
-
-// MOVE TO category MyController(Dialogs)
 - (IBAction)cancelRomDialog:(id)sender;
 - (IBAction)cancelMountDialog:(id)sender;
 - (IBAction)endMountDialogAndMount:(id)sender;
 - (IBAction)endMountDialogAndFlash:(id)sender;
-- (IBAction)saveScreenshotDialog:(id)sender;
 
 @end

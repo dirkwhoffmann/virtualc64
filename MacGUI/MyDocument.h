@@ -31,6 +31,8 @@ class Snapshot;
 	C64Proxy *c64;
 
 	//! Reference to an attached D64 archive
+	/*! Used to communicate between mount dialog panel and controller.
+	 There might be a better way to do this. Getting rid of this variable is appreciated. */
 	D64Archive *archive;
 	
 	//! Reference to an attached cartridge 
@@ -38,13 +40,13 @@ class Snapshot;
 	
 	//! Initial snapshot
 	/*! If unequal NULL, the newly created document will be initialized with the provided snapshot data */
-	Snapshot *snapshot;			
+	// Snapshot *snapshot;			
 }
 
 @property C64Proxy *c64;
 @property D64Archive *archive;
 @property Cartridge *cartridge;
-@property Snapshot *snapshot;
+// @property Snapshot *snapshot;
 
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;
