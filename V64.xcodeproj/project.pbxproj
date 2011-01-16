@@ -94,13 +94,13 @@
 		50D5FDB40C2E9CF50022CA3A /* MountDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */; };
 		50D6954812E3759500D9C738 /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954312E3759500D9C738 /* IconCRT.icns */; };
 		50D6954912E3759500D9C738 /* IconD64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954412E3759500D9C738 /* IconD64.icns */; };
-		50D6954A12E3759500D9C738 /* IconPRG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954512E3759500D9C738 /* IconPRG.icns */; };
 		50D6954B12E3759500D9C738 /* IconT64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954612E3759500D9C738 /* IconT64.icns */; };
 		50D6954C12E3759500D9C738 /* IconV64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954712E3759500D9C738 /* IconV64.icns */; };
 		50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6956B12E380E500D9C738 /* IconPRG.icns */; };
 		50DA14A30A6418470022B4A7 /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DA14A20A6418470022B4A7 /* bottom.png */; };
 		50DA154A0A642EA20022B4A7 /* window_fullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DA15490A642EA20022B4A7 /* window_fullscreen.png */; };
 		50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */; };
+		50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50E033BA12E3868100ABF9E3 /* IconP00.icns */; };
 		50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA60C3CE95400CB6B43 /* floppy.png */; };
 		50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA90C3CEAB700CB6B43 /* warpOff.png */; };
 		50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */; };
@@ -280,7 +280,6 @@
 		50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = MountDialog.mm; sourceTree = "<group>"; };
 		50D6954312E3759500D9C738 /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconCRT.icns; path = images/IconCRT.icns; sourceTree = "<group>"; };
 		50D6954412E3759500D9C738 /* IconD64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconD64.icns; path = images/IconD64.icns; sourceTree = "<group>"; };
-		50D6954512E3759500D9C738 /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconPRG.icns; path = images/IconPRG.icns; sourceTree = "<group>"; };
 		50D6954612E3759500D9C738 /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconT64.icns; path = images/IconT64.icns; sourceTree = "<group>"; };
 		50D6954712E3759500D9C738 /* IconV64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconV64.icns; path = images/IconV64.icns; sourceTree = "<group>"; };
 		50D6956B12E380E500D9C738 /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconPRG.icns; path = images/IconPRG.icns; sourceTree = "<group>"; };
@@ -288,6 +287,7 @@
 		50DA15490A642EA20022B4A7 /* window_fullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = window_fullscreen.png; path = images/window_fullscreen.png; sourceTree = "<group>"; };
 		50DAD6900A736F9B00BB44AC /* VirtualComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualComponent.h; sourceTree = "<group>"; };
 		50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualComponent.cpp; sourceTree = "<group>"; };
+		50E033BA12E3868100ABF9E3 /* IconP00.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconP00.icns; path = images/IconP00.icns; sourceTree = "<group>"; };
 		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = floppy.png; path = images/floppy.png; sourceTree = "<group>"; };
 		50E4BFA90C3CEAB700CB6B43 /* warpOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = warpOff.png; path = images/warpOff.png; sourceTree = "<group>"; };
 		50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = warpOn.png; path = images/warpOn.png; sourceTree = "<group>"; };
@@ -654,7 +654,6 @@
 				50471FE50A7B679A00A8DB94 /* stepInto32.png */,
 				50287EEA0A7CA86900292533 /* stepOut32.png */,
 				50471FE70A7B67A100A8DB94 /* stepOver32.png */,
-				506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */,
 				50E4BFA90C3CEAB700CB6B43 /* warpOff.png */,
 				50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */,
 				50DA15490A642EA20022B4A7 /* window_fullscreen.png */,
@@ -688,12 +687,13 @@
 		50D6955012E375A800D9C738 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */,
 				50D6954312E3759500D9C738 /* IconCRT.icns */,
 				50D6954412E3759500D9C738 /* IconD64.icns */,
-				50D6954512E3759500D9C738 /* IconPRG.icns */,
 				50D6954612E3759500D9C738 /* IconT64.icns */,
 				50D6954712E3759500D9C738 /* IconV64.icns */,
 				50D6956B12E380E500D9C738 /* IconPRG.icns */,
+				50E033BA12E3868100ABF9E3 /* IconP00.icns */,
 			);
 			name = Icons;
 			sourceTree = "<group>";
@@ -804,10 +804,10 @@
 				50F23D0A12DF933100B1F275 /* pin.tiff in Resources */,
 				50D6954812E3759500D9C738 /* IconCRT.icns in Resources */,
 				50D6954912E3759500D9C738 /* IconD64.icns in Resources */,
-				50D6954A12E3759500D9C738 /* IconPRG.icns in Resources */,
 				50D6954B12E3759500D9C738 /* IconT64.icns in Resources */,
 				50D6954C12E3759500D9C738 /* IconV64.icns in Resources */,
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
+				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
