@@ -405,7 +405,6 @@
 - (void)loadFromSnapshot:(V64Snapshot *) snapshot;
 - (void)saveToSnapshot:(V64Snapshot *) snapshot;
 
-// - (id) initWithContentsOfSnapshot:(Snapshot *)s;
 - (CIAProxy *) cia:(int)num;
 
 - (void) dump;

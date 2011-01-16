@@ -112,10 +112,12 @@
 	// Launch emulator
 	[c64 run];
 	
+#if 0
 	// Mount archive if applicable
 	if ([[self document] archive] != NULL) {
 		[self showMountDialog];
 	}		
+#endif
 }
 
 // --------------------------------------------------------------------------------
@@ -273,7 +275,23 @@
 - (void)processMessage:(Message *)msg
 {
 	switch (msg->id) {
+			
+		case MSG_ROM_MISSING:
+			
+			NSLog(@"MSG_ROM_MISSING");
+			assert(msg->i != 0);
+			[self enableUserEditing:YES];	
+			[self refresh];
+			[romDialog initialize:msg->i];
+			[NSApp beginSheet:romDialog
+			   modalForWindow:[[self document] windowForSheet]
+				modalDelegate:self
+			   didEndSelector:NULL
+				  contextInfo:NULL];	
+			break;
+			
 		case MSG_ROM_LOADED:
+			
 			switch (msg->i) {
 				case BASIC_ROM:
 					[info setStringValue:@"Basic Rom loaded"];
@@ -297,40 +315,31 @@
 			if (romDialog != NULL) {
 				[romDialog update:[c64 missingRoms]];
 			}
+			break;
 			
-			// Start drawing when all ROMS are loaded...
-			if ([c64 numberOfMissingRoms] == 0) { 
+		case MSG_ROM_COMPLETE:
+			
+			// Close ROM dialog
+			if (romDialog) {					
+				[NSApp endSheet:romDialog];
+				[romDialog orderOut:nil];
+				romDialog = NULL;
+			}
 				
-				// Close ROM dialog
-				if (romDialog) {					
-					[NSApp endSheet:romDialog];
-					[romDialog orderOut:nil];
-					romDialog = NULL;
-				}
-				
-				// Start emulator
-				[c64 run];
-				
-				// Trigger a nice zoom animation and start drawing
-				[screen zoom];
-				[screen drawC64texture:true];
+			// Start emulator
+			[c64 run];
+								
+			// Trigger a nice zoom animation and start drawing
+			[screen zoom];
+			[screen drawC64texture:true];
+
+			// Check for attached archive
+			if ([[self document] archive]) {
+				NSLog(@"Found attached archive");
+				[self showMountDialog];
 			}
 			break;
-			
-		case MSG_ROM_MISSING:
-			
-			NSLog(@"MSG_ROM_MISSING");
-			assert(msg->i != 0);
-			[self enableUserEditing:YES];	
-			[self refresh];
-			[romDialog initialize:msg->i];
-			[NSApp beginSheet:romDialog
-			   modalForWindow:[[self document] windowForSheet]
-				modalDelegate:self
-			   didEndSelector:NULL
-				  contextInfo:NULL];	
-			break;
-			
+						
 		case MSG_RUN:
 			// NSLog(@"runAction");
 			[info setStringValue:@""];

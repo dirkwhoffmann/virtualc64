@@ -63,6 +63,8 @@
 			<array>
 				<string>PRG</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Default</string>
 			<key>CFBundleTypeName</key>
 			<string>PRG</string>
 			<key>CFBundleTypeRole</key>
