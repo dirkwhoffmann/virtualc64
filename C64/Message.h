@@ -27,8 +27,9 @@
 // Message types
 #define MSG_ROM_LOADED 1
 #define MSG_ROM_MISSING 2
-#define MSG_RUN 3
-#define MSG_HALT 4
+#define MSG_ROM_COMPLETE 3
+#define MSG_RUN 4
+#define MSG_HALT 5
 #define MSG_CPU 6
 #define MSG_WARP 7
 #define MSG_LOG 8

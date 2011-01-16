@@ -1064,6 +1064,8 @@ C64::loadRom(const char *filename)
 		
 	suspend(); 
 	
+	int wasMissing = numberOfMissingRoms();
+	
 	if (C64Memory::isBasicRom(filename)) {
 		result = mem->loadBasicRom(filename);
 		if (result) putMessage(MSG_ROM_LOADED, BASIC_ROM);
@@ -1082,6 +1084,13 @@ C64::loadRom(const char *filename)
 	if (VC1541Memory::is1541Rom(filename)) {
 		result = floppy->mem->loadRom(filename);
 		if (result) putMessage(MSG_ROM_LOADED, VC1541_ROM);
+	}
+			
+	int isMissing = numberOfMissingRoms();
+	
+	if (wasMissing > 0 && isMissing == 0) {
+		// Last missing ROM was loaded
+		putMessage(MSG_ROM_COMPLETE);
 	}
 	
 	resume();

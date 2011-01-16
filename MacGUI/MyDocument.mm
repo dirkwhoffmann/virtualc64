@@ -129,20 +129,30 @@
 {
 	NSLog(@"MyDocument:readFromFile:%@ ofType:%@", filename, type);
 	
-	if (![type isEqualToString:@"VC64"]) {
-		NSLog(@"File is not of type VC64\n");
-		return NO;
+	if ([type isEqualToString:@"VC64"]) {
+		
+		V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:filename];
+	
+		if (!snapshot) {
+			NSLog(@"Error while reading snapshot\n");
+			return NO;
+		}
+		
+		[c64 loadFromSnapshot:snapshot];
+		return YES;
 	}
 	
-	V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:filename];
-	
-	if (!snapshot) {
-		NSLog(@"Error while reading snapshot\n");
-		return NO;
+	if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
+		
+		if (![self setArchiveWithName:filename]) {
+			NSLog(@"Error while reading archive\n");
+			return NO;
+		}
+		
+		return YES;
 	}
 	
-	[c64 loadFromSnapshot:snapshot];
-	return YES;
+	return NO;
 }
 	
 - (BOOL)revertToSavedFromFile:(NSString *)filename ofType:(NSString *)type
