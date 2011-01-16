@@ -29,7 +29,8 @@ PRGArchive::~PRGArchive()
 	cleanup();
 }
 
-bool PRGArchive::isPRGFile(const char *filename)
+bool 
+PRGArchive::isPRGFile(const char *filename)
 {
 	assert(filename != NULL);
 	
@@ -42,7 +43,8 @@ bool PRGArchive::isPRGFile(const char *filename)
 	return true;
 }
 
-PRGArchive *PRGArchive::archiveFromFile(const char *filename)
+PRGArchive *
+PRGArchive::archiveFromFile(const char *filename)
 {
 	PRGArchive *archive;
 	
@@ -57,12 +59,14 @@ PRGArchive *PRGArchive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-const char *PRGArchive::getTypeOfContainer() 
+const char *
+PRGArchive::getTypeOfContainer() 
 {
 	return "PRG";
 }
 
-void PRGArchive::cleanup()
+void 
+PRGArchive::cleanup()
 {
 	if (data) free(data);
 	data = NULL;
@@ -70,12 +74,26 @@ void PRGArchive::cleanup()
 	fp = -1;
 }
 
-bool PRGArchive::fileIsValid(const char *filename)
+bool 
+PRGArchive::fileIsValid(const char *filename)
 {
 	return isPRGFile(filename);
 }
 
-bool PRGArchive::readDataFromFile(FILE *file, struct stat fileProperties)
+bool 
+PRGArchive::readFromBuffer(const void *buffer, unsigned length)
+{	
+	if ((data = (uint8_t *)malloc(length)) == NULL)
+		return false;
+
+	memcpy(data, buffer, length);
+	size = length;
+	
+	return true;
+}
+
+bool 
+PRGArchive::readDataFromFile(FILE *file, struct stat fileProperties)
 {
 	int c = 0;
 	
@@ -95,17 +113,20 @@ bool PRGArchive::readDataFromFile(FILE *file, struct stat fileProperties)
 	return true;
 }
 
-int PRGArchive::getNumberOfItems()
+int 
+PRGArchive::getNumberOfItems()
 {
 	return 1;
 }
 
-const char *PRGArchive::getNameOfItem(int n)
+const char *
+PRGArchive::getNameOfItem(int n)
 {
 	return "UNKNOWN";
 }
 	
-int PRGArchive::getSizeOfItem(int n)
+int 
+PRGArchive::getSizeOfItem(int n)
 {
 	if (size > 0)
 		return size-2;
@@ -113,18 +134,21 @@ int PRGArchive::getSizeOfItem(int n)
 		return 0;
 }		
 
-const char *PRGArchive::getTypeOfItem(int n)
+const char *
+PRGArchive::getTypeOfItem(int n)
 {
 	return "PRG";
 }
 
-uint16_t PRGArchive::getDestinationAddrOfItem(int n)
+uint16_t 
+PRGArchive::getDestinationAddrOfItem(int n)
 {
 	uint16_t result = data[0] + (data[1] << 8);
 	return result;
 }
 
-void PRGArchive::selectItem(int n)
+void 
+PRGArchive::selectItem(int n)
 {
 	fp = 2; // skip load address
 
@@ -132,7 +156,8 @@ void PRGArchive::selectItem(int n)
 		fp = -1;
 }
 
-int PRGArchive::getByte()
+int 
+PRGArchive::getByte()
 {
 	int result;
 	

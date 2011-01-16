@@ -82,7 +82,8 @@ D64Archive::~D64Archive()
 	cleanup();
 }
 
-bool D64Archive::isD64File(const char *filename)
+bool 
+D64Archive::isD64File(const char *filename)
 {
 	bool fileOK = false;
 	
@@ -104,7 +105,8 @@ bool D64Archive::isD64File(const char *filename)
 	return fileOK;
 }
 
-D64Archive *D64Archive::archiveFromFile(const char *filename)
+D64Archive *
+D64Archive::archiveFromFile(const char *filename)
 {
 	D64Archive *archive;
 		
@@ -119,7 +121,8 @@ D64Archive *D64Archive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-D64Archive *D64Archive::archiveFromArbitraryFile(const char *filename)
+D64Archive *
+D64Archive::archiveFromArbitraryFile(const char *filename)
 {
 	if (D64Archive::isD64File(filename)) {
 		return D64Archive::archiveFromFile(filename);
@@ -149,7 +152,8 @@ D64Archive *D64Archive::archiveFromArbitraryFile(const char *filename)
 	return NULL;
 }
 
-D64Archive *D64Archive::archiveFromOtherArchive(Archive *otherArchive)
+D64Archive *
+D64Archive::archiveFromOtherArchive(Archive *otherArchive)
 {
 	if (otherArchive == NULL)
 		return NULL;
@@ -165,26 +169,30 @@ D64Archive *D64Archive::archiveFromOtherArchive(Archive *otherArchive)
 }
 
 
-const char *D64Archive::getTypeOfContainer() 
+const char *
+D64Archive::getTypeOfContainer() 
 {
 	return "D64";
 }
 
-void D64Archive::cleanup()
+void 
+D64Archive::cleanup()
 {
 }
 
-bool D64Archive::fileIsValid(const char *filename)
+bool 
+D64Archive::fileIsValid(const char *filename)
 {
 	return D64Archive::isD64File(filename);
 }
 
-bool D64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
+bool 
+D64Archive::readFromBuffer(const void *buffer, unsigned length)
 {
 	unsigned track = 0;
 	int numberOfErrors = 0;
-		
-	switch (fileProperties.st_size)
+	
+	switch (length)
 	{
 		case 174848:
 			// 35 tracks, no errors
@@ -205,44 +213,32 @@ bool D64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
 			numberOfErrors = 768;
 			break;
 		case 205312:
-//			numTracks = 42; ???
-			break;
+			// numTracks = 42; (???)
+			// break;
 		case 206114:
-//			numTracks = 42; ???
-//			numberOfErrors = ???
-			break;
+			// numTracks = 42; (???)
+			// numberOfErrors = (???)
+			// break;
+		default:
+			return false;
 	}
 	
-	// Read each track
+	// Read tracks
+	uint8_t *source = (uint8_t *)buffer;
 	for(track = 1; track <= numTracks; track++) {
 		
-		void *ptr = &data[D64Map[track].offset];
+		uint8_t *destination = &data[D64Map[track].offset];
 		int sectors = D64Map[track].numberOfSectors;
-		int n = 0;
-		n = fread(ptr, 256, sectors, file);
-		assert (n == sectors);
+		memcpy(destination, source, 256 * sectors);
+		source += 256 * sectors;
 	}
-
+	
 	// Read errors
 	if (numberOfErrors > 0) {
-		int n = 0;
-		n = fread(errors, 1, numberOfErrors, file);
-		assert(n == numberOfErrors);
+		memcpy(errors, source, numberOfErrors);
 	}
 
-	fprintf(stderr, "%d bytes read\n", (int)fileProperties.st_size);
-
-#if 0
-	unsigned pos = offset(18, 1);
-	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++) {
-			fprintf(stderr, "%02X ", data[pos+i*8+j]);
-		}
-		fprintf(stderr, "\n");
-	}
-#endif
-	
-	return true;
+	return true;	
 }
 
 int 
@@ -264,11 +260,13 @@ D64Archive::jumpToNextSector(int pos)
 	return nOffset;
 }
 
-void D64Archive::dumpDir()
+void 
+D64Archive::dumpDir()
 {	
 }
 
-int D64Archive::findDirectoryEntry(int itemNr)
+int 
+D64Archive::findDirectoryEntry(int itemNr)
 {
 	// The Block Allocation Map (BAM) is stored on track 18 - sector 0; 
 	// the directory starts at track 18 - sector 1.
@@ -344,7 +342,8 @@ D64Archive::offset(int track, int sector)
 	return D64Map[track].offset + (sector * 256);
 }
 	
-const char *D64Archive::getName()
+const char *
+D64Archive::getName()
 {
 	int i, pos = offset(18, 0) + 0x90;
 	
@@ -357,7 +356,8 @@ const char *D64Archive::getName()
 	return name;
 }
 
-int D64Archive::getNumberOfItems()
+int 
+D64Archive::getNumberOfItems()
 {
 	int i = 0;
 	
@@ -367,7 +367,8 @@ int D64Archive::getNumberOfItems()
 	return i;
 }
 
-const char *D64Archive::getNameOfItem(int n)
+const char *
+D64Archive::getNameOfItem(int n)
 {
 	int i, pos = findDirectoryEntry(n);
 
@@ -382,7 +383,8 @@ const char *D64Archive::getNameOfItem(int n)
 	return name;
 }
 
-const char *D64Archive::getTypeOfItem(int n)
+const char *
+D64Archive::getTypeOfItem(int n)
 {
 	int pos = findDirectoryEntry(n) + 0x02;
 	int type = data[pos] & 0x07;
@@ -410,7 +412,8 @@ const char *D64Archive::getTypeOfItem(int n)
 }
 
 	
-int D64Archive::getSizeOfItem(int n)
+int 
+D64Archive::getSizeOfItem(int n)
 {
 	int size = 0;
 	int pos;
@@ -427,7 +430,8 @@ int D64Archive::getSizeOfItem(int n)
 	return size;
 }
 
-uint16_t D64Archive::getDestinationAddrOfItem(int n)
+uint16_t 
+D64Archive::getDestinationAddrOfItem(int n)
 {
 	int pos;
 	int track;
@@ -447,7 +451,8 @@ uint16_t D64Archive::getDestinationAddrOfItem(int n)
 	return result;
 }
 
-void D64Archive::selectItem(int item)
+void 
+D64Archive::selectItem(int item)
 {
 	fp = -1;
 	
@@ -478,7 +483,8 @@ void D64Archive::selectItem(int item)
 	fprintf(stderr, "Item selected (%d,%d)\n", data[fp+0x03], data[fp+0x04]);
 }
 
-int D64Archive::getByte()
+int 
+D64Archive::getByte()
 {
 	int result;
 	
@@ -504,7 +510,8 @@ int D64Archive::getByte()
 	return result;
 }
 
-uint8_t *D64Archive::findSector(unsigned halftrack, unsigned sector) 
+uint8_t *
+D64Archive::findSector(unsigned halftrack, unsigned sector) 
 { 
 	assert(1 <= halftrack && halftrack <= 84);
 	assert(sector < numberOfSectors(halftrack));

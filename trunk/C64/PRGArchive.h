@@ -53,6 +53,7 @@ public:
 
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
+	bool readFromBuffer(const void *buffer, unsigned length);
 	bool readDataFromFile(FILE *file, struct stat fileProperties);
 	void cleanup();
 	const char *getTypeOfContainer();

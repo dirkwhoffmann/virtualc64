@@ -88,28 +88,6 @@ Snapshot::fileIsValid(const char *filename)
 }
 
 bool 
-Snapshot::readDataFromFile(FILE *file, struct stat fileProperties)
-{
-	// Read binary snapshot data
-	uint8_t *fc = (uint8_t *)&fileContents;
-	for (unsigned i = 0; i < sizeof(fileContents); i++) {
-		int c = fgetc(file);
-		if (c == EOF)
-			break;
-		fc[i] = (uint8_t)c;
-	}
-
-	// Do we support this snapshot format?
-	if (fileContents.major != 1 || fileContents.minor != 0) {
-		fprintf(stderr, "Found unsupported snapshot format V%d.%d\n", fileContents.major, fileContents.minor);		
-		return false;
-	}
-	
-	fprintf(stderr, "Snapshot data imported from file\n");
-	return true;
-}
-
-bool 
 Snapshot::writeDataToFile(FILE *file, struct stat fileProperties)
 {	
 	// Write binary snapshot data
@@ -121,11 +99,28 @@ Snapshot::writeDataToFile(FILE *file, struct stat fileProperties)
 }
 
 bool 
-Snapshot::readFromBuffer(const void *buffer, unsigned size)
+Snapshot::readFromBuffer(const void *buffer, unsigned length)
 {	
-	if (size > sizeof(fileContents))
+	if (length > sizeof(fileContents)) {
+		fprintf(stderr, "Snapshot image is too big %d\n", length);
 		return false;
+	}
 	
-	memcpy((void *)&fileContents, buffer, size);
+	memcpy((void *)&fileContents, buffer, length);
 	return true;
+}
+
+bool 
+Snapshot::writeToBuffer(void *buffer)
+{	
+	assert(buffer != NULL);
+	
+	memcpy(buffer, (void *)&fileContents, sizeof(fileContents));
+	return true;
+}
+
+unsigned
+Snapshot::sizeOnDisk()
+{	
+	return sizeof(fileContents);
 }

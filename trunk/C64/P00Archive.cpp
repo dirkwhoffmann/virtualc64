@@ -29,7 +29,8 @@ P00Archive::~P00Archive()
 	cleanup();
 }
 
-bool P00Archive::isP00File(const char *filename)
+bool 
+P00Archive::isP00File(const char *filename)
 {
 	int magic_bytes[] = {0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00, EOF};	
 	
@@ -44,7 +45,8 @@ bool P00Archive::isP00File(const char *filename)
 	return true;
 }
 
-P00Archive *P00Archive::archiveFromFile(const char *filename)
+P00Archive *
+P00Archive::archiveFromFile(const char *filename)
 {
 	P00Archive *archive;
 
@@ -59,12 +61,14 @@ P00Archive *P00Archive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-const char *P00Archive::getTypeOfContainer() 
+const char *
+P00Archive::getTypeOfContainer() 
 {
 	return "P00";
 }
 
-void P00Archive::cleanup()
+void 
+P00Archive::cleanup()
 {
 	if (data) free(data);
 	data = NULL;
@@ -72,37 +76,32 @@ void P00Archive::cleanup()
 	fp = -1;
 }
 
-bool P00Archive::fileIsValid(const char *filename)
+bool 
+P00Archive::fileIsValid(const char *filename)
 {
 	return isP00File(filename);
 }
 
-bool P00Archive::readDataFromFile(FILE *file, struct stat fileProperties)
+bool 
+P00Archive::readFromBuffer(const void *buffer, unsigned length)
 {
-	int c = 0;
-	
-	// Allocate memory
-	if ((data = (uint8_t *)malloc(fileProperties.st_size)) == NULL) {
+	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;
-	}
 		
-	// Read data
-	c = fgetc(file);
-	while(c != EOF) {
-		data[size++] = c;
-		c = fgetc(file);
-	}
-
-	fprintf(stderr, "%d bytes read (out of %d)\n", (int)fileProperties.st_size, size);
+	memcpy(data, buffer, length);
+	size = length;
+	
 	return true;
 }
-
-int P00Archive::getNumberOfItems()
+		
+int 
+P00Archive::getNumberOfItems()
 {
 	return 1;
 }
 
-const char *P00Archive::getNameOfItem(int n)
+const char *
+P00Archive::getNameOfItem(int n)
 {
 	int i;
 	
@@ -116,7 +115,8 @@ const char *P00Archive::getNameOfItem(int n)
 	return name;
 }
 	
-int P00Archive::getSizeOfItem(int n)
+int 
+P00Archive::getSizeOfItem(int n)
 {
 	if (size > 0)
 		return size-0x1A;
@@ -124,19 +124,22 @@ int P00Archive::getSizeOfItem(int n)
 		return 0;
 }		
 
-const char *P00Archive::getTypeOfItem(int n)
+const char *
+P00Archive::getTypeOfItem(int n)
 {
 	return "PRG";
 }
 
-uint16_t P00Archive::getDestinationAddrOfItem(int n)
+uint16_t 
+P00Archive::getDestinationAddrOfItem(int n)
 {
 	uint16_t result = data[0x1A] + (data[0x1B] << 8);
 	printf("Will load to location %X\n", result);
 	return result;
 }
 
-void P00Archive::selectItem(int n)
+void 
+P00Archive::selectItem(int n)
 {		
 	fp = 0x1C; // skip header and load address
 
@@ -144,7 +147,8 @@ void P00Archive::selectItem(int n)
 		fp = -1;
 }
 
-int P00Archive::getByte()
+int 
+P00Archive::getByte()
 {
 	int result;
 	
