@@ -34,23 +34,15 @@
 	NSLog(@"CheatboxImageBrowserView::awakeFromNib");
 	
 	items = [NSMutableArray new];
-
-	// we are our own data source
+	
 	[self setDelegate:self];
 	[self setDataSource:self];
-
-	// prepare to get click and double click messages
-	//[self setTarget:self];
-	//[self setAction:@selector(clickAction:)];
-	//[self setDoubleAction:@selector(doubleClickAction:)];
-
-	//[self setIntercellSpacing:NSMakeSize(10.0,-40.0)];
-	[self setIntercellSpacing:NSMakeSize(10.0,-20.0)];
-	
+	[self setIntercellSpacing:NSMakeSize(10.0,-20.0)];	
 	[self reloadData];
 }
 
 - (void)dealloc {
+	
 	[items release];
 	[super dealloc];
 }
@@ -70,7 +62,10 @@
 -(void) imageBrowser:(IKImageBrowserView *)aBrowser cellWasDoubleClickedAtIndex:(NSUInteger)index
 {
 	NSLog(@"doubleClickAction (item %d)", index);
-	[controller revertAction:index];
+	
+	//[controller revertToSnapshotWithNumber:index];
+	[c64 revertToHistoricSnapshot:index];
+	[controller cheatboxAction:self];
 }
 
 - (void)refresh {
@@ -82,9 +77,8 @@
 	setupTime = time(NULL);
 	[items removeAllObjects];
 	
-	NSImage *tmIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Image Capture.app"];
+	NSImage *camera = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Image Capture.app"];
 	NSImage *glossy = [NSImage imageNamed:@"glossy.png"];
-	// NSImage *pin = [NSImage imageNamed:@"pin.png"];
 
 	for (int i = 0; (data = [[controller c64] historicSnapshotImageData:i]) != NULL; i++) {
 				
@@ -131,7 +125,7 @@
 				 fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];		
 		[glossy drawInRect:NSMakeRect(0, 0, width, height) 
 				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-		[tmIcon drawInRect:NSMakeRect(0, height-30, 100, 100) 
+		[camera drawInRect:NSMakeRect(0, height-30, 100, 100) 
 				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 		[final unlockFocus];
 		
@@ -152,48 +146,35 @@
 
 #pragma mark Drag'n drop
 
-- (unsigned int)dragginSourceOperationMaskForLocal:(BOOL)isLocal
+- (NSUInteger) imageBrowser:(IKImageBrowserView *)browser writeItemsAtIndexes:(NSIndexSet *)itemIndexes toPasteboard:(NSPasteboard *)pboard
 {
-	return NSDragOperationMove;
-}
-
-- (void)mouseDragged:(NSEvent *)event
-{
-	NSLog(@"mouseDragged");
-	
-	// Get location of drag event
-	NSPoint imageLoc = [self convertPoint:[event locationInWindow] fromView:nil];
-
-	// Get index of dragged item
-	NSUInteger index = (NSUInteger)[self indexOfItemAtPoint:imageLoc];
-	if (index >= [items count])
-		return;
-	
-	NSLog(@"Dragging item %d", index);
-	
-	// Get image for item
-	NSImage *anImage = [[items objectAtIndex:index] image];
-
-	// Scale image to correct size and adjust drag position
-	NSSize s = [[self cellForItemAtIndex:index] imageFrame].size;	
-	[anImage setSize:s];
-	imageLoc.x -= s.width / 2;			
-	imageLoc.y -= s.height / 2;			
-	
-	// Get pasteboard
-	NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
-	
 	// Put number of selected snapshot in pasteboard
-	[pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:self];
-	[pboard setString:[NSString stringWithFormat:@"%d", index] forType:NSStringPboardType];
+	NSUInteger index = [itemIndexes firstIndex];
+	
+	if (index == NSNotFound) {
+		NSLog(@"imageBrowser:writeItemsAtIndexes:NSNotFound (%d)", index);
+		return 0;
+	}
+	//NSLog(@"imageBrowser:writeItemsAtIndexes:%d", index);
 
-	// Start dragging
-	[self dragImage:anImage 
-				 at:imageLoc
-			 offset:NSMakeSize(0.0,0.0)
-			  event:event 
-		 pasteboard:pboard 
-			 source:self
-		  slideBack:YES];
+	[pboard declareTypes:[NSArray arrayWithObject:NSFileContentsPboardType] owner:self];
+	const void *fileContents = [c64 historicSnapshotFileContents:index];
+	unsigned fileContentsSize = [c64 historicSnapshotFileContentsSize:index];
+	NSData *fileData = [NSData dataWithBytes:fileContents length:fileContentsSize];
+	NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
+	[fileWrapper setPreferredFilename:@"Snapshot.VC64"];
+	[pboard writeFileWrapper:fileWrapper];
+	[fileWrapper release];
+	return 1;
 }
+
+- (void)draggedImage:(NSImage *)image endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation
+{
+	if (operation == NSDragOperationCopy) {
+		// Drag n drop operation was successful. Close cheatbox panel
+		//NSLog(@"draggedImage:endedAt:operation:NSDragOperationCopy");		
+		[controller cheatboxAction:self];
+	}
+}
+
 @end

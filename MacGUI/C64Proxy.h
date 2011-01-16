@@ -450,6 +450,8 @@
 
 // Time travel
 - (int) historicSnapshots;
+- (uint8_t *) historicSnapshotFileContents:(int)nr;
+- (unsigned) historicSnapshotFileContentsSize:(int)nr;
 - (unsigned char *)historicSnapshotImageData:(int)nr;
 - (time_t)historicSnapshotTimestamp:(int)nr;
 - (bool)revertToHistoricSnapshot:(int)nr;
@@ -473,7 +475,7 @@
 
 // --------------------------------------------------------------------------
 //                                  Snapshot
-// -------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 
 @interface V64Snapshot : NSObject {
 	@private
@@ -488,7 +490,10 @@
 + (id) snapshotFromC64:(C64Proxy *)c64;
 + (id) snapshotFromSnapshot:(Snapshot *)snapshot;
 + (id) snapshotFromFile:(NSString *)path;
++ (id) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
 
+- (uint8_t *)fileContents;
+- (unsigned)fileContentsSize;
 - (unsigned char *)imageData;
 - (time_t)timeStamp;
 	

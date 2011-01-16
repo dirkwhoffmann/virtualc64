@@ -33,23 +33,31 @@ private:
 
 private:
 	
-	//! Version number (major)
-	uint8_t major;
-	
-	//! Version number (minor)
-	uint8_t minor;
+	struct {
+		//! Magic bytes ('V','C','6','4')
+		char magic[4];
+		
+		//! Version number (major)
+		uint8_t major;
+		
+		//! Version number (minor)
+		uint8_t minor;
+
+		//! Binary snapshot data
+		uint8_t data[MAX_SNAPSHOT_SIZE];
+	} fileContents;
 	
 	//! Date and time of snapshot creation
 	time_t timestamp;
 	
-	//! Binary snapshot data
-	uint8_t data[MAX_SNAPSHOT_SIZE];
 		
 	//! Copy of the screen buffer
+	// TODO: SREENSHOT IS ALREADY STORED IN DATA ARRAY. 
+	// MOVE Variable inside fileContents array
 	uint32_t screen[512 * 512];
 	
 	//! Actual snapshot size
-	int size;
+	// unsigned size;
 	
 public:
 
@@ -61,22 +69,24 @@ public:
 			
 	//! Factory methods
 	static Snapshot *snapshotFromFile(const char *filename);
+	static Snapshot *snapshotFromBuffer(const void *buffer, unsigned size);
 	
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
 	bool readDataFromFile(FILE *file, struct stat fileProperties);
+	bool readFromBuffer(const void *buffer, unsigned size);
 	bool writeDataToFile(FILE *file, struct stat fileProperties);
 	void cleanup();
 	const char *getTypeOfContainer();
 	
-	//! Return pointer snapshot data
-	uint8_t *getData() {	return data; }
+	//! Returns pointer to core data
+	uint8_t *getData() { return fileContents.data; }
 
-	//! Return snapshot size
-	int getSize() {	return size; }
+	//! Returns pointer to file contents
+	uint8_t *getFileContents() { return (uint8_t *)&fileContents; }
 
-	//! Set snapshot size
-	void setSize(int value) { size = value; }
+	//! Returns size of file contents
+	unsigned getFileContentsSize() { return sizeof(fileContents); }
 
 	//! Return timestamp
 	time_t getTimestamp() { return timestamp; }
@@ -84,7 +94,11 @@ public:
 	//! Set timestamp
 	void setTimestamp(time_t value) { timestamp = value; }
 
+	//! Returns true, if snapshot does not contain data yet
+	bool isEmpty() { return timestamp == 0; }
+
 	//! Take screenshot
+	// DEPRECATED. Already stored in snapshot
 	void takeScreenshot(uint32_t *buf) { memcpy(screen, buf, sizeof(screen)); }
 		 
 	//! Return screen buffer

@@ -527,6 +527,8 @@
 
 // Time travel
 - (int) historicSnapshots { return c64->numHistoricSnapshots(); }
+- (uint8_t *) historicSnapshotFileContents:(int)nr { return c64->getHistoricSnapshotFileContents(nr); }
+- (unsigned) historicSnapshotFileContentsSize:(int) nr { return c64->getHistoricSnapshotFileContentsSize(nr); }
 - (unsigned char *)historicSnapshotImageData:(int)nr { return c64->getHistoricSnapshotImageData(nr); }
 - (time_t)historicSnapshotTimestamp:(int)nr { return c64->getHistoricSnapshotTimestamp(nr); }
 - (bool) revertToHistoricSnapshot:(int)nr { return c64->revertToHistoricSnapshot(nr); }
@@ -614,6 +616,15 @@
 	return [self snapshotFromSnapshot:Snapshot::snapshotFromFile([path UTF8String])];
 }
 
++ (id) snapshotFromBuffer:(const void *)buffer length:(unsigned)length
+{
+	NSLog(@"V64Snapshot::snapshotFromBuffer");
+	
+	return [self snapshotFromSnapshot:Snapshot::snapshotFromBuffer(buffer, length)];
+}
+
+- (uint8_t *)fileContents { return snapshot->getFileContents(); }
+- (unsigned)fileContentsSize { return snapshot->getFileContentsSize(); }
 - (unsigned char *)imageData { return snapshot->getImageData(); }
 - (time_t)timeStamp { return snapshot->getTimestamp(); }
 - (bool) readDataFromFile:(NSString *)path { return snapshot->readFromFile([path UTF8String]); }

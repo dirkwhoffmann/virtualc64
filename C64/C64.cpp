@@ -347,7 +347,6 @@ C64::saveToSnapshot(Snapshot *snapshot)
 
 	uint8_t *ptr = snapshot->getData();
 	saveToBuffer(&ptr);
-	snapshot->setSize(ptr - snapshot->getData());
 }
 
 void 
@@ -1107,7 +1106,7 @@ unsigned
 C64::numHistoricSnapshots()
 {
 	for (int i = BACK_IN_TIME_BUFFER_SIZE - 1; i >= 0; i--) {
-		if (backInTimeHistory[i]->getSize() != 0) 
+		if (!backInTimeHistory[i]->isEmpty()) 
 			return i + 1;
 	}
 	return 0;
@@ -1123,10 +1122,24 @@ C64::getHistoricSnapshot(int nr)
 	Snapshot *snapshot = backInTimeHistory[pos];
 	assert(snapshot != NULL);
 	
-	if (snapshot->getSize() == 0)
+	if (snapshot->isEmpty())
 		return NULL;
 	
 	return snapshot;
+}
+
+uint8_t *
+C64::getHistoricSnapshotFileContents(int nr)
+{
+	Snapshot *s = getHistoricSnapshot(nr);
+	return (s != NULL) ? s->getFileContents() : NULL;
+}
+
+unsigned 
+C64::getHistoricSnapshotFileContentsSize(int nr)
+{
+	Snapshot *s = getHistoricSnapshot(nr);
+	return (s != NULL) ? s->getFileContentsSize() : 0;
 }
 
 unsigned char *
