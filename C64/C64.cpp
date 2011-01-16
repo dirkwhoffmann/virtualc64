@@ -310,10 +310,7 @@ C64::loadFromBuffer(uint8_t **buffer)
 {	
 	uint8_t *old = *buffer;
 		
-	debug(2, "Loading... ");
-
-	// Load screenshot
-	vic->loadScreenshot(buffer);
+	debug(1, "Loading... ");
 	
 	// Load state of this component
 	cycles = read64(buffer);
@@ -333,7 +330,7 @@ C64::loadFromBuffer(uint8_t **buffer)
 	iec->loadFromBuffer(buffer);
 	floppy->loadFromBuffer(buffer);
 
-	debug(2, "%d bytes.\n", *buffer - old);	
+	debug(1, "%d bytes.\n", *buffer - old);	
 }
 
 void 
@@ -355,10 +352,7 @@ C64::saveToBuffer(uint8_t **buffer)
 	uint8_t *old = *buffer;
 		
 	debug(2, "Saving... ");
-	
-	// Save screenshot
-	vic->saveScreenshot(buffer);
-	
+		
 	// Save state of this component
 	write64(buffer, cycles);
 	write32(buffer, (uint32_t)frame);

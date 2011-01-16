@@ -136,7 +136,7 @@ private:
 	uint8_t *data;
 	
 	//! Size of data array
-	unsigned int size;
+	//unsigned int size;
 	
 	//! Chip packets
 	Chip *chip[MAX_CHIPS];
@@ -241,8 +241,11 @@ public:
 	
 	//! Virtual functions from Component class
 	bool fileIsValid(const char *filename);
-	bool readDataFromFile(FILE *file, struct stat fileProperties);
+
+	bool readDataFromBuffer(const void *buffer, unsigned length);
+	
 	void cleanup();
+	
 	const char *getTypeOfContainer();
 	
 	//! The GAME line status

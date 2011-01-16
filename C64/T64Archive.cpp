@@ -29,7 +29,8 @@ T64Archive::~T64Archive()
 	cleanup();
 }
 
-bool T64Archive::isT64File(const char *filename)
+bool 
+T64Archive::isT64File(const char *filename)
 {
 	int magic_bytes[] = { 0x43, 0x36, 0x34, EOF };
 	
@@ -47,7 +48,8 @@ bool T64Archive::isT64File(const char *filename)
 	return true;
 }
 
-T64Archive *T64Archive::archiveFromFile(const char *filename)
+T64Archive *
+T64Archive::archiveFromFile(const char *filename)
 {
 	T64Archive *archive;
 	
@@ -62,7 +64,8 @@ T64Archive *T64Archive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-const char *T64Archive::getTypeOfContainer() 
+const char *
+T64Archive::getTypeOfContainer() 
 {
 	return "T64";
 }
@@ -76,33 +79,26 @@ void T64Archive::cleanup()
 	fp_eof = -1;
 }
 
-bool T64Archive::fileIsValid(const char *filename)
+bool 
+T64Archive::fileIsValid(const char *filename)
 {
 	return T64Archive::isT64File(filename);
 }
 
-bool T64Archive::readDataFromFile(FILE *file, struct stat fileProperties)
-{
-	int c;
-	
-	// Allocate memory
-	if ((data = (uint8_t *)malloc(fileProperties.st_size)) == NULL) {
-		// Didn't get enough memory
+bool 
+T64Archive::readFromBuffer(const void *buffer, unsigned length)
+{	
+	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;
-	}
-		
-	// Read data
-	c = fgetc(file);
-	while(c != EOF) {
-		data[size++] = c;
-		c = fgetc(file);
-	}
-	
-	fprintf(stderr, "%d bytes read (out of %d)\n", (int)fileProperties.st_size, size);
+
+	memcpy(data, buffer, length);
+	size = length;
+
 	return true;
 }
 
-const char *T64Archive::getName()
+const char *
+T64Archive::getName()
 {
 	int i,j;
 	int first = 0x28;
@@ -116,7 +112,8 @@ const char *T64Archive::getName()
 	return name;
 }
 
-bool T64Archive::directoryItemIsPresent(int n)
+bool 
+T64Archive::directoryItemIsPresent(int n)
 {
 	int first = 0x40 + (n * 0x20);
 	int last  = 0x60 + (n * 0x20);
@@ -131,7 +128,8 @@ bool T64Archive::directoryItemIsPresent(int n)
 	return false;
 }
 
-int T64Archive::getNumberOfItems()
+int 
+T64Archive::getNumberOfItems()
 {
 	int noOfItems;
 
@@ -149,7 +147,8 @@ int T64Archive::getNumberOfItems()
 	return noOfItems;
 }
 
-const char *T64Archive::getNameOfItem(int n)
+const char *
+T64Archive::getNameOfItem(int n)
 {
 	int i,j;
 	int first = 0x50 + (n * 0x20);
@@ -167,7 +166,8 @@ const char *T64Archive::getNameOfItem(int n)
 	return name;
 }
 	
-int T64Archive::getSizeOfItem(int n)
+int 
+T64Archive::getSizeOfItem(int n)
 {
 	int i = 0x42 + (n * 0x20);
 	uint16_t startAddrInMemory = data[i] + (data[i+1] << 8);
@@ -182,7 +182,8 @@ int T64Archive::getSizeOfItem(int n)
 	return (endAddrInMemory - startAddrInMemory) + 1;
 }
 
-const char *T64Archive::getTypeOfItem(int n)
+const char *
+T64Archive::getTypeOfItem(int n)
 {
 	int i = 0x41 + (n * 0x20);
 	if (data[i] != 00)
@@ -192,14 +193,16 @@ const char *T64Archive::getTypeOfItem(int n)
 	return "???";
 }
 
-uint16_t T64Archive::getDestinationAddrOfItem(int n)
+uint16_t 
+T64Archive::getDestinationAddrOfItem(int n)
 {
 	int i = 0x42 + (n * 0x20);
 	uint16_t result = data[i] + (data[i+1] << 8);
 	return result;
 }
 
-void T64Archive::selectItem(int n)
+void 
+T64Archive::selectItem(int n)
 {
 	int i;
 	
@@ -214,7 +217,8 @@ void T64Archive::selectItem(int n)
 	return;
 }
 
-int T64Archive::getByte()
+int 
+T64Archive::getByte()
 {
 	int result;
 	

@@ -29,7 +29,7 @@ class Snapshot : public Container {
 private:
 
 	//! Size of a snapshot file in bytes
-	static const int MAX_SNAPSHOT_SIZE = 2000000; // 1831822; 
+	static const int MAX_SNAPSHOT_SIZE = 800000; // 783342; 
 
 private:
 	
@@ -43,21 +43,18 @@ private:
 		//! Version number (minor)
 		uint8_t minor;
 
-		//! Binary snapshot data
+		//! Width and height of screenshot image
+		uint16_t width, height;
+		
+		//! Screenshot data 
+		uint32_t screen[512 * 512];
+		
+		//! Internal state
 		uint8_t data[MAX_SNAPSHOT_SIZE];
 	} fileContents;
 	
 	//! Date and time of snapshot creation
 	time_t timestamp;
-	
-		
-	//! Copy of the screen buffer
-	// TODO: SREENSHOT IS ALREADY STORED IN DATA ARRAY. 
-	// MOVE Variable inside fileContents array
-	uint32_t screen[512 * 512];
-	
-	//! Actual snapshot size
-	// unsigned size;
 	
 public:
 
@@ -73,9 +70,12 @@ public:
 	
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
-	bool readDataFromFile(FILE *file, struct stat fileProperties);
-	bool readFromBuffer(const void *buffer, unsigned size);
+	bool readFromBuffer(const void *buffer, unsigned length);
+	bool writeToBuffer(void *buffer);
+	unsigned sizeOnDisk();
+		
 	bool writeDataToFile(FILE *file, struct stat fileProperties);
+	
 	void cleanup();
 	const char *getTypeOfContainer();
 	
@@ -99,10 +99,12 @@ public:
 
 	//! Take screenshot
 	// DEPRECATED. Already stored in snapshot
-	void takeScreenshot(uint32_t *buf) { memcpy(screen, buf, sizeof(screen)); }
-		 
+	//void takeScreenshot(uint32_t *buf) { memcpy(screen, buf, sizeof(screen)); }
+	
+	void takeScreenshot(uint32_t *buf) { memcpy(fileContents.screen, buf, sizeof(fileContents.screen)); }
+	
 	//! Return screen buffer
-	unsigned char *getImageData() { return (unsigned char *)screen; }
+	unsigned char *getImageData() { return (unsigned char *)fileContents.screen; }
 };
 
 #endif

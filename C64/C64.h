@@ -16,6 +16,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// New in 0.9.4
+// Thumbnail images can now be dragged and dropped between different emulator windows
+
 #ifndef _C64_INC
 #define _C64_INC
 

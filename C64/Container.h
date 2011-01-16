@@ -31,19 +31,19 @@ private:
 	
 	//! Logical name of archive
 	char *name;
-	
-	//! Discard previously loaded contents if present
+		
+	//! Free allocated memory
+	// TODO: RENAME TO dealloc
 	virtual void cleanup() = 0;
 
+	//! Returns how many bytes are needed to store this container on disk
+	virtual unsigned sizeOnDisk();
+	
+protected:
+
 	//! Check file type
-	/*! Returns true, iff the specifies file is a valid archive file. */
+	/*! Returns true, iff the specified file is a valid file of this container type. */
 	virtual bool fileIsValid(const char *filename) = 0;
-
-	//! Load container data from file
-	virtual bool readDataFromFile(FILE *file, struct stat fileProperties);
-
-	//! Save container data to file
-	virtual bool writeDataToFile(FILE *file, struct stat fileProperties);
 
 public:
 	
@@ -62,11 +62,18 @@ public:
 	//! Type of container in plain text (T64, D64, PRG, ...)
 	virtual const char *getTypeOfContainer() = 0;
 	
+	//! Read container data from memory buffer
+	virtual bool readFromBuffer(const void *buffer, unsigned length);
+	
 	//! Read container data from file
 	bool readFromFile(const char *filename);
-	
+
+	//! Write container data to memory buffer
+	virtual bool writeToBuffer(void *buffer);
+
 	//! Write container data to file
 	bool writeToFile(const char *filename);
+	
 	
 };
 

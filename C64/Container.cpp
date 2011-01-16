@@ -33,6 +33,12 @@ Container::~Container()
 		free(name);
 }
 
+unsigned
+Container::sizeOnDisk()
+{
+	return 0;
+}
+
 const char *
 Container::getPath()
 {
@@ -46,13 +52,7 @@ Container::getName()
 }
 
 bool 
-Container::readDataFromFile(FILE *file, struct stat fileProperties)
-{
-	return false;
-}
-
-bool 
-Container::writeDataToFile(FILE *file, struct stat fileProperties)
+Container::readFromBuffer(const void *buffer, unsigned length)
 {
 	return false;
 }
@@ -60,43 +60,48 @@ Container::writeDataToFile(FILE *file, struct stat fileProperties)
 bool 
 Container::readFromFile(const char *filename)
 {
+	bool success = false;
+	uint8_t *buffer = NULL;
+	FILE *file = NULL;
 	struct stat fileProperties;
-	FILE *file;
 	
 	assert (filename != NULL);
-		
+			
 	// Check file type
-	if (!fileIsValid(filename)) 
-		return false;
+	if (!fileIsValid(filename)) {
+		goto exit;
+	}
 	
 	// Get file properties
     if (stat(filename, &fileProperties) != 0) {
-		// Could not open file...
-		return false;
+		goto exit;
 	}
-	
-	// Check file size, archive must at least contain a valid header
-	if (fileProperties.st_size < 0x40) {
-		// too small
-		return false;
-	}
-	
+		
 	// Open file
 	if (!(file = fopen(filename, "r"))) {
-		// Can't open for read (Huh?)
-		return false;
+		goto exit;
+	}
+
+	// Allocate memory
+	if (!(buffer = (uint8_t *)malloc(fileProperties.st_size))) {
+		goto exit;
 	}
 	
-	// Free old data
-	cleanup();
-
-	// Load data
-	if (!readDataFromFile(file, fileProperties)) {
-		fclose(file);
-		return false;
+	// Read from file
+	int c;
+	for (unsigned i = 0; i < fileProperties.st_size; i++) {
+		c = fgetc(file);
+		if (c == EOF)
+			break;
+		buffer[i] = (uint8_t)c;
 	}
-	fclose(file);
-
+	
+	// Read from buffer (subclass specific behaviour)
+	cleanup();
+	if (!readFromBuffer(buffer, fileProperties.st_size)) {
+		goto exit;
+	}
+	
 	// Set path and default name
 	if (path)
 		free (path);
@@ -104,29 +109,63 @@ Container::readFromFile(const char *filename)
 	if (name)
 		free(name);
 	name = strdup(ChangeExtension(ExtractFilename(getPath()), "").c_str());
-		   
-	return true;
+	
+	success = true;
+
+exit:
+	
+	if (file)
+		fclose(file);
+	if (buffer)
+		free(buffer);
+
+	return success;
+}
+
+bool 
+Container::writeToBuffer(void *buffer)
+{
+	return false;
 }
 
 bool 
 Container::writeToFile(const char *filename)
 {
-	struct stat fileProperties;
+	bool success = false;
+	uint8_t *data = NULL;
 	FILE *file;
-	
+	unsigned filesize = sizeOnDisk();
+
 	assert (filename != NULL);
 		
 	// Open file
 	if (!(file = fopen(filename, "w"))) {
-		return false;
+		goto exit;
 	}
 		
-	// Write data
-	if (!writeDataToFile(file, fileProperties)) {
-		fclose(file);
-		return false;
+	// Allocate memory
+		if (!(data = (uint8_t *)malloc(filesize))) {
+		goto exit;
 	}
+	
+	// Write to buffer 
+	if (!writeToBuffer(data)) {
+		goto exit;
+	}
+
+	// Write to file
+	for (unsigned i = 0; i < filesize; i++) {
+		fputc(data[i], file);
+	}	
+	
+	success = true;
+
+exit:
+		
+	if (file)
 	fclose(file);
+	if (data)
+	free(data);
 		
-	return true;
+	return success;
 }

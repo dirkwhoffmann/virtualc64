@@ -467,12 +467,6 @@ public:
 	//! Save state
 	void saveToBuffer(uint8_t **buffer);	
 	
-	//! Load screen buffer
-	bool loadScreenshot(uint8_t **buffer);
-
-	//! Save screen buffer
-	bool saveScreenshot(uint8_t **buffer);
-
 	//! Dump internal state to console
 	void dumpState();	
 	
