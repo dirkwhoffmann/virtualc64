@@ -12,7 +12,7 @@
 				<string>VC64</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>DocIcon</string>
+			<string>IconV64</string>
 			<key>CFBundleTypeName</key>
 			<string>VC64</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -31,6 +31,8 @@
 			<array>
 				<string>D64</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IconD64</string>
 			<key>CFBundleTypeName</key>
 			<string>D64</string>
 			<key>CFBundleTypeRole</key>
@@ -47,6 +49,8 @@
 			<array>
 				<string>T64</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IconT64</string>
 			<key>CFBundleTypeName</key>
 			<string>T64</string>
 			<key>CFBundleTypeRole</key>
@@ -64,7 +68,7 @@
 				<string>PRG</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>Default</string>
+			<string>IconPRG</string>
 			<key>CFBundleTypeName</key>
 			<string>PRG</string>
 			<key>CFBundleTypeRole</key>
@@ -81,6 +85,8 @@
 			<array>
 				<string>P00</string>
 			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IconPRG</string>
 			<key>CFBundleTypeName</key>
 			<string>P00</string>
 			<key>CFBundleTypeRole</key>
