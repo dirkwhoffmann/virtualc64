@@ -40,18 +40,38 @@ Snapshot::snapshotFromFile(const char *filename)
 	return snapshot;
 }
 
-const char *
-Snapshot::getTypeOfContainer() 
+Snapshot *
+Snapshot::snapshotFromBuffer(const void *buffer, unsigned size)
 {
-	return "V64";
+	Snapshot *snapshot;
+	
+	snapshot = new Snapshot();	
+	if (!snapshot->readFromBuffer(buffer, size)) {
+		delete snapshot;
+		snapshot = NULL;
+	}
+	return snapshot;	
 }
 
 void 
 Snapshot::cleanup()
 {
-	major = 1;
-	minor = 0;
-	size = 0;
+	fileContents.magic[0] = 'V';
+	fileContents.magic[1] = 'C';
+	fileContents.magic[2] = '6';
+	fileContents.magic[3] = '4';
+	fileContents.major = 1;
+	fileContents.minor = 0;
+	memset(fileContents.data, 0, sizeof(fileContents.data));
+
+	//size = 0;
+	timestamp = (time_t)0;
+}
+
+const char *
+Snapshot::getTypeOfContainer() 
+{
+	return "V64";
 }
 
 bool 
@@ -70,87 +90,42 @@ Snapshot::fileIsValid(const char *filename)
 bool 
 Snapshot::readDataFromFile(FILE *file, struct stat fileProperties)
 {
-	int i, c;
-	
-	// Skip header
-	for (i = 0; i < 4; i++)
-		(void)fgetc(file);
-	
-	// Read version number
-	major = (uint8_t)fgetc(file);
-	minor = (uint8_t)fgetc(file);
-	
-	// Do we support this snapshot format?
-	if (major != 1 || minor != 0) {
-		fclose(file);
-		return false;	
-	}
-	
 	// Read binary snapshot data
-	for (i = 0; i < MAX_SNAPSHOT_SIZE; i++) {
-		if ((c = fgetc(file)) == EOF)
+	uint8_t *fc = (uint8_t *)&fileContents;
+	for (unsigned i = 0; i < sizeof(fileContents); i++) {
+		int c = fgetc(file);
+		if (c == EOF)
 			break;
-		data[i] = (uint8_t)c;
+		fc[i] = (uint8_t)c;
 	}
-	size = i;
 
-	fprintf(stderr, "Snapshot read from file\n");
+	// Do we support this snapshot format?
+	if (fileContents.major != 1 || fileContents.minor != 0) {
+		fprintf(stderr, "Found unsupported snapshot format V%d.%d\n", fileContents.major, fileContents.minor);		
+		return false;
+	}
 	
+	fprintf(stderr, "Snapshot data imported from file\n");
 	return true;
 }
 
 bool 
 Snapshot::writeDataToFile(FILE *file, struct stat fileProperties)
 {	
-	// Write magic bytes
-	fputc((int)'V', file);
-	fputc((int)'C', file);
-	fputc((int)'6', file);
-	fputc((int)'4', file);
-	
-	// Write version number
-	fputc(1, file);
-	fputc(0, file);
-		
 	// Write binary snapshot data
-	for (int i = 0; i < size; i++) {
-		fputc((int)data[i], file);
+	uint8_t *fc = (uint8_t *)&fileContents;
+	for (unsigned i = 0; i < sizeof(fileContents); i++) {
+		fputc((int)fc[i], file);
 	}
-
 	return true;	
 }
 
-#if 0
 bool 
-Snapshot::initWithContentsOfC64(C64 *c64)
-{
-	uint8_t *ptr = data;
-	major = 1;
-	minor = 0;
-	memcpy(screen, c64->vic->screenBuffer(), sizeof(screen));	
-	c64->save(&ptr);
-	size = ptr - data;
-	timestamp = time(NULL);	
+Snapshot::readFromBuffer(const void *buffer, unsigned size)
+{	
+	if (size > sizeof(fileContents))
+		return false;
+	
+	memcpy((void *)&fileContents, buffer, size);
 	return true;
 }
-
-bool 
-Snapshot::updateWithContentsOfC64(C64 *c64)
-{
-	uint8_t *ptr = data;
-	memcpy(screen, c64->vic->screenBuffer(), sizeof(screen));	
-	c64->_save(&ptr); 
-	size = ptr - data;
-	timestamp = time(NULL);	
-	return true;
-}	
-
-bool 
-Snapshot::writeToC64(C64 *c64)
-{
-	uint8_t *ptr = data;
-	c64->load(&ptr);
-	fprintf(stderr, "writeToC64: Extracted state from %d bytes\n", ptr - data);
-	return true;
-}
-#endif

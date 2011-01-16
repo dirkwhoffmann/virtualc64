@@ -276,15 +276,23 @@ public:
 	unsigned numHistoricSnapshots();
 	
 	//! Get snapshot from history buffer
-	/*! nr = 0 : latest snapshot. Return NULL, if requested snapshot does not exist */
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
 	Snapshot *getHistoricSnapshot(int nr);
+
+	//! Get file contents start address of snapshot from history buffer
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
+	uint8_t *getHistoricSnapshotFileContents(int nr);
+
+	//! Get file contents size of snapshot from history buffer
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
+	unsigned getHistoricSnapshotFileContentsSize(int nr);
 	
 	//! Get image data of snapshot from history buffer
-	/*! nr = 0 : latest snapshot. Return NULL, if requested snapshot does not exist */
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
 	unsigned char *getHistoricSnapshotImageData(int nr);
 	
 	//! Get time stamp of snapshot from history buffer
-	/*! nr = 0 : latest snapshot. Return NULL, if requested snapshot does not exist */
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
 	time_t getHistoricSnapshotTimestamp(int nr);
 	
 	//! Revert to historic snapshot

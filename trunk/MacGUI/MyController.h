@@ -208,7 +208,8 @@ class Snapshot;
 - (IBAction)cartridgeEjectAction:(id)sender;
 
 // Cheatbox actions
-- (void)revertAction:(int)nr;
+// - (void)revertToSnapshot:(V64Snapshot *)snapshot;
+// - (void)revertToSnapshotWithNumber:(int)nr;
 
 // Dialogs
 - (BOOL)showMountDialog;

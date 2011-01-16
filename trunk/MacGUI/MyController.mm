@@ -610,14 +610,23 @@
 //                                     Cheatbox
 // --------------------------------------------------------------------------------
 
-- (void)revertAction:(int)nr;
+#if 0
+- (void)revertToSnapshot:(V64Snapshot *)snapshot;
 {
-	NSLog(@"Reverting to cached snapshot at index %d", nr);
+	NSLog(@"Reverting to snapshot");
+	
+	[c64 loadFromSnapshot:snapshot];
+	[self cheatboxAction:self];
+}
+
+- (void)revertToSnapshotWithNumber:(int)nr;
+{
+	NSLog(@"Reverting to snapshot number %d", nr);
 	
 	[c64 revertToHistoricSnapshot:nr];
 	[self cheatboxAction:self];
 }
-
+#endif
 
 // --------------------------------------------------------------------------------
 //                                     Dialogs
@@ -692,9 +701,7 @@
 	[c64 flushArchive:[[self document] archive] item:[mountDialog getSelectedFile]];
 	
 	// Wait and type "RUN"
-	fprintf(stderr,"Waiting...\n");
 	usleep(1000000);
-	fprintf(stderr,"Typing RUN...\n");
 	[[c64 keyboard] typeRun];
 }
 
