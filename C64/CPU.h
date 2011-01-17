@@ -449,15 +449,15 @@ public:
 	//! Returns the length in bytes of the instruction with the specified opcode
 	/*! Possible values: 1 to 3 */
 	int getLengthOfInstruction(uint8_t opcode);
+	//! Returns the length in bytes of the instruction with the specified address
+	/*! Possible values: 1 to 3 */
+	inline int getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->peek(addr)); }
 	//! Returns the length in bytes of the next instruction to execute
 	/*! Possible values: 1 to 3 */
-	inline int getLengthOfCurrentInstruction() { return getLengthOfInstruction(mem->peek(PC)); }
-	//! Returns the address of the i-th next instruction, starting from the provided address
-	/*! i = 0 will return the current value of the program counter */
-	int getAddressOfNextIthInstruction(int i, uint16_t addr);
+	inline int getLengthOfCurrentInstruction() { return getLengthOfInstructionAtAddress(PC_at_cycle_0); }
 	//! Returns the address of the instruction following the current instruction
 	/*! Possible values: 1 to 3 */
-	inline int getAddressOfNextInstruction() { return getAddressOfNextIthInstruction(1, PC_at_cycle_0); }
+	inline uint16_t getAddressOfNextInstruction() { return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
 	//! Disassemble current instruction
 	char *disassemble();
 	// char *disassemble(uint64_t state);

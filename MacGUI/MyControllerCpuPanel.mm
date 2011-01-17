@@ -160,7 +160,7 @@
 	if (![undo isUndoing]) [undo setActionName:@"Breakpoint"];
 	
 	[[c64 cpu] toggleHardBreakpoint:[sender intValue]];
-	[self refresh];
+	[cpuTableView reloadData]; // [self refresh];
 }
 
 - (void)refreshCPU

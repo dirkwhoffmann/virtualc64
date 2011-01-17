@@ -62,8 +62,8 @@
 
 - (uint16_t) peekPC { return cpu->mem->peek(cpu->getPC_at_cycle_0()); }
 - (uint8_t) getLengthOfInstruction:(uint8_t)opcode { return cpu->getLengthOfInstruction(opcode); }
+- (uint8_t) getLengthOfInstructionAtAddress:(uint16_t)addr { return cpu->getLengthOfInstructionAtAddress(addr); }
 - (uint8_t) getLengthOfCurrentInstruction { return cpu->getLengthOfCurrentInstruction(); }
-- (uint16_t) getAddressOfNextIthInstruction:(int)i from:(uint16_t)addr { return cpu->getAddressOfNextIthInstruction(i, addr); }
 - (uint16_t) getAddressOfNextInstruction { return cpu->getAddressOfNextInstruction(); }
 - (const char *) getMnemonic:(uint8_t)opcode { return cpu->getMnemonic(opcode); }
 - (CPU::AddressingMode) getAddressingMode:(uint8_t)opcode { return cpu->getAddressingMode(opcode); }

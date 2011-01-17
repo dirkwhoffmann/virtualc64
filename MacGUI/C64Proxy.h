@@ -64,8 +64,8 @@
 
 - (uint16_t) peekPC;
 - (uint8_t) getLengthOfInstruction:(uint8_t)opcode;
+- (uint8_t) getLengthOfInstructionAtAddress:(uint16_t)addr;
 - (uint8_t) getLengthOfCurrentInstruction;
-- (uint16_t) getAddressOfNextIthInstruction:(int)i from:(uint16_t)addr;
 - (uint16_t) getAddressOfNextInstruction;
 - (char *) getMnemonic:(uint8_t)opcode;
 - (CPU::AddressingMode) getAddressingMode:(uint8_t)opcode;
