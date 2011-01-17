@@ -22,30 +22,38 @@
 @class C64Proxy;
 @class MyDocument;
 
+#define CPU_TABLE_VIEW_ITEMS 256
+
 @interface CpuTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
 { 
 	MyController *controller;
 	C64Proxy *c64;
+
+	NSMutableArray * items;
 	
 	// Address of the first disassembled instruction
 	uint16_t disassembleStartAddr; 	
 	
-	// NSMutableArray *items;
+	// Mapping from table rows to displayed memory address
+	uint16_t displayedAddress[CPU_TABLE_VIEW_ITEMS];	
 }
 
 //! Setter
 - (void)setController:(MyController *)c;
 
-//! Action method for single clicking a table item
-- (void)clickAction:(id)sender;
+//! Returns row in which addr is displays (-1 if addr is not displayed)
+- (int)rowForAddress:(uint16_t)addr;
+
+//! Returns which address is displayed in row
+- (uint16_t)addressForRow:(unsigned)row;
 
 //! Action method for double clicking a table item
 - (void)doubleClickAction:(id)sender;
 
+//! Updates the displayedAddress array 
+- (void)updateDisplayedAddresses:(uint16_t)startAddr;
+
 //! Refresh  data items to display
 - (void)refresh;
-	
-//! Helper method
-- (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row;
 
 @end

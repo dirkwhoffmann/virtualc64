@@ -24,13 +24,12 @@
 {
 	controller = c;
 	c64 = [c c64];
+	[self updateDisplayedAddresses:[[c64 cpu] getPC]];
 }
 
 #pragma mark NSTableView
 
 - (void)awakeFromNib {
-		
-	// items = [NSMutableArray new];
 
 	// we are our own data source
 	[self setDelegate:self];
@@ -38,27 +37,40 @@
 
 	// prepare to get click and double click messages
 	[self setTarget:self];
-	// [self setAction:@selector(clickAction:)];
 	[self setDoubleAction:@selector(doubleClickAction:)];
 
 	[self reloadData];
 }
 
 - (void)dealloc {
-	// [items release];
 	[super dealloc];
+}
+
+- (int)rowForAddress:(uint16_t)addr
+{
+	for (unsigned i = 0; i < CPU_TABLE_VIEW_ITEMS; i++) {
+		if (displayedAddress[i] == addr)
+			return i;
+	}
+	return -1;
+}
+
+- (uint16_t)addressForRow:(unsigned)row;
+{
+	assert (row < CPU_TABLE_VIEW_ITEMS);
+	return displayedAddress[row];
 }
 
 #pragma mark NSTableViewDataSource
 
 - (int)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	return 128;
+	return 256;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
-	uint16_t addr = [[c64 cpu] getAddressOfNextIthInstruction:row from:disassembleStartAddr];
+	uint16_t addr = [self addressForRow:row];
 	uint8_t length = [[c64 cpu] getLengthOfInstruction:[[c64 mem] peek:addr]];
 	
 	if ([[aTableColumn identifier] isEqual:@"addr"]) 
@@ -77,7 +89,7 @@
 
 - (void)tableView: (NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)row
 {
-	uint16_t addr = [[c64 cpu] getAddressOfNextIthInstruction:row from:disassembleStartAddr];
+	uint16_t addr = [self addressForRow:row];
 	if ([[c64 cpu] getBreakpoint:addr] == CPU::HARD_BREAKPOINT) {
 		[cell setTextColor:[NSColor redColor]];
 	} else {
@@ -87,59 +99,51 @@
 
 #pragma mark NSTableViewDelegate
 
-- (void)clickAction:(id)sender
-{
-	NSLog(@"clickAction (item %d)", [sender selectedRow]);
-}
-
 - (void)doubleClickAction:(id)sender
 {
 	NSLog(@"doubleClickAction (item %d)", [sender selectedRow]);
 	
 	uint16_t addr;
 		
-	addr = [[c64 cpu] getAddressOfNextIthInstruction:[sender selectedRow] from:disassembleStartAddr];
+	addr = [self addressForRow:[sender selectedRow]]; 
 	[controller setHardBreakpointAction:[NSNumber numberWithInt:addr]];
 }
 
-- (BOOL)computeRowForAddr:(uint16_t)addr maxRows:(uint16_t)maxRows row:(uint16_t *)row
+- (void)updateDisplayedAddresses:(uint16_t)startAddr
 {
-	uint16_t currentRow  = 0;
-	uint16_t currentAddr = disassembleStartAddr;
-	while (currentAddr <= addr && currentRow < maxRows) {
-		if (currentAddr == addr) {
-			*row = currentRow;
-			return YES;
-		}
-		currentRow++;
-		currentAddr += [[c64 cpu] getLengthOfInstruction:[[c64 mem] peek:currentAddr]];
-	}
-	return NO;
+	uint16_t address = startAddr;
+	
+	for (unsigned i = 0; i < CPU_TABLE_VIEW_ITEMS; i++) {
+		displayedAddress[i] = address;
+		address += [[c64 cpu] getLengthOfInstructionAtAddress:address];
+	}	
 }
 
 - (void)refresh {
-	
-	// Prepare Disassembler window.
-	// The implementation is a little tricky. We distinguish two cases:
-	// 1. The PC points to an address that is already visible in some row
-	//    In this case, we simply select the row and don't modify anything else
-	// 2. The PC points to an address that is not yet displayed
-	//    In that case, we display the PC address in row 0
-	uint16_t rowIndex = 0xffff;
-	uint16_t address = [[c64 cpu] getPC];
-	NSIndexSet *indexSet;
-	if ([self computeRowForAddr:(uint16_t)address maxRows:[self numberOfRowsInTableView:self] row:(uint16_t *)&rowIndex]) {
-		indexSet = [NSIndexSet indexSetWithIndex:rowIndex];		
-		[self scrollRowToVisible:rowIndex];
-	} else {
-		disassembleStartAddr = address;
-		indexSet = [NSIndexSet indexSetWithIndex:0];	
-		[self scrollRowToVisible:0];
-	}
-	[self selectRowIndexes:indexSet byExtendingSelection:NO];
 
+	// Refreshing the cpu disassembler window works the following way:
+	//
+	// Case 1: PC points to an address which is already displayed.
+	//         In this case, we simply select the correspondig row and don't modify anything else
+	// Case 2: PC points to an address that is not yet displayed.
+	//         In that case, we display PC in row 0.
+	
+	uint16_t address = [[c64 cpu] getPC];
+	int row = [self rowForAddress:address];
+	
+	if (row != -1) { // Case 1
+
+		[self scrollRowToVisible:row];
+		[self selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+
+	} else {
+
+		[self updateDisplayedAddresses:address];
+		[self scrollRowToVisible:0];
+		[self selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];		
+	}
+	
 	[self reloadData];
 }
-
 
 @end

@@ -336,21 +336,6 @@ CPU::getLengthOfInstruction(uint8_t opcode)
 	return 1;
 }
 
-int
-CPU::getAddressOfNextIthInstruction(int i, uint16_t addr)
-{
-	int length = 0;
-	
-	// determine the instruction to display...
-	do {
-		addr += length;
-		length = getLengthOfInstruction(mem->peek(addr));
-		i--;
-	} while (i >= 0);
-	
-	return addr;
-}
-
 char *
 CPU::disassemble()
 {
