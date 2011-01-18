@@ -44,7 +44,7 @@ C64Memory::C64Memory()
 	charRomIsVisible = false;
 	IOIsVisible = false;
 	cartridgeRomIsVisible = false;
-	initializePeekFunctionArray();
+	initializePeekPokeLookupTables();
 }
 
 C64Memory::~C64Memory()
@@ -92,7 +92,7 @@ C64Memory::loadFromBuffer(uint8_t **buffer)
 	kernelRomIsVisible = (bool)read8(buffer);
 	IOIsVisible = (bool)read8(buffer);
 	cartridgeRomIsVisible = (bool)read8(buffer);
-	updatePeekFunctionArray();
+	updatePeekPokeLookupTables();
 }
 
 void
@@ -243,18 +243,6 @@ bool C64Memory::isValidAddr(uint16_t addr, MemoryType type)
 }
 
 uint8_t 
-C64Memory::peek0x00XX(uint16_t addr) 
-{ 
-	if (addr > 0x0001)
-		return ram[addr];
-
-	// Processor port
-	uint8_t dir = cpu->getPortDirection();
-	uint8_t ext = cpu->getExternalPortBits();
-	return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext);
-} 
-
-uint8_t 
 C64Memory::peekRam(uint16_t addr) 
 { 
 	return ram[addr];
@@ -265,36 +253,6 @@ C64Memory::peekRom(uint16_t addr)
 { 
 	return rom[addr];
 } 
-
-uint8_t 
-C64Memory::peekVIC(uint16_t addr)
-{
-	return vic->peek(addr & 0x003F);	
-}
-
-uint8_t 
-C64Memory::peekSID(uint16_t addr)
-{
-	return sid->peek(addr & 0x001F);
-}
-
-uint8_t 
-C64Memory::peekColorRam(uint16_t addr)
-{
-	return (colorRam[addr - 0xD800] & 0x0F) | (rand() << 4);
-}
-
-uint8_t 
-C64Memory::peekCIA1(uint16_t addr)
-{
-	return cia1->peek(addr & 0x000F);
-}
-
-uint8_t 
-C64Memory::peekCIA2(uint16_t addr)
-{
-	return cia2->peek(addr & 0x000F);
-}
 
 uint8_t 
 C64Memory::peekCartridge(uint16_t addr)
@@ -308,84 +266,87 @@ C64Memory::peekCartridge(uint16_t addr)
 	if (addr >= 0xE000) 
 		return kernelRomIsVisible ? rom[addr] : ram[addr];
 
+	if (IOIsVisible && addr >= 0xDE00 && addr <= 0xDFFF)
+		return (uint8_t)(rand());
+	
 	return ram[addr];
 }
 
-uint8_t 
-C64Memory::peekRand(uint16_t addr)
-{
-	return (uint8_t)(rand());
-}
-
 void 
-C64Memory::initializePeekFunctionArray()
+C64Memory::initializePeekPokeLookupTables()
 {	
-	for (unsigned i = 0x01; i <= 0xFF; i++)
-		peekFunc[i] = &C64Memory::peekRam;
+	for (unsigned i = 0x1; i <= 0xF; i++) 
+		peekSource[i] = MEM_SOURCE_RAM;
+	peekSource[0x0] = MEM_SOURCE_PP;
 
-	peekFunc[0x00] = &C64Memory::peek0x00XX;	
+	for (unsigned i = 0x1; i <= 0xF; i++)
+		pokeTarget[i] = MEM_SOURCE_RAM;
+	pokeTarget[0x0] = MEM_SOURCE_PP;
 }
 
 void 
-C64Memory::updatePeekFunctionArray()
+C64Memory::updatePeekPokeLookupTables()
 {
-	uint8_t (C64Memory::*func)(uint16_t);
-			
+	MemorySource source;
+	
 	// 0x8000 - 0x9FFFF (Cartridge ROM, or RAM)
-	func = cartridge ? &C64Memory::peekCartridge : &C64Memory::peekRam;
-	for (unsigned i = 0x80; i <= 0x9F; i++)
-		peekFunc[i] = func;
-
+	source = cartridge ? MEM_SOURCE_CRT : MEM_SOURCE_RAM;
+	peekSource[0x8] = source;
+	peekSource[0x9] = source;
+		
 	// 0xA000 - 0xBFFF (Cartridge ROM, Basic ROM, or RAM)
-	func = cartridge ? &C64Memory::peekCartridge : (basicRomIsVisible ? &C64Memory::peekRom : &C64Memory::peekRam);
-	for (unsigned i = 0xA0; i <= 0xBF; i++)
-		peekFunc[i] = func;
-
-	// 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)
-	if (IOIsVisible) {
-		// TODO
-	}
-	func = IOIsVisible ? &C64Memory::peekIO : (charRomIsVisible ? &C64Memory::peekRom : &C64Memory::peekRam);
-	for (unsigned i = 0xD0; i <= 0xDF; i++)
-		peekFunc[i] = func;
+	source = cartridge ? MEM_SOURCE_CRT : (basicRomIsVisible ? MEM_SOURCE_ROM : MEM_SOURCE_RAM);
+	peekSource[0xA] = source;
+	peekSource[0xB] = source;
+	
+	// 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)	
+	source = IOIsVisible ? MEM_SOURCE_IO : (charRomIsVisible ? MEM_SOURCE_ROM : MEM_SOURCE_RAM);
+	peekSource[0xD] = source;
 	
 	// 0xE000 - 0xFFFF (Cartridge Rom, Kernel ROM, or RAM)
-	func = cartridge ? &C64Memory::peekCartridge : (kernelRomIsVisible ? &C64Memory::peekRom : &C64Memory::peekRam);
-	for (unsigned i = 0xE0; i <= 0xFF; i++)
-		peekFunc[i] = func;
+	source = cartridge ? MEM_SOURCE_CRT : (kernelRomIsVisible ? MEM_SOURCE_ROM : MEM_SOURCE_RAM);
+	peekSource[0xE] = source;
+	peekSource[0xF] = source;	
+
+	
+	MemorySource target;
+
+	// 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)	
+	target = IOIsVisible ? MEM_SOURCE_IO : MEM_SOURCE_RAM;
+	pokeTarget[0xD] = target;
 }
 
 
 uint8_t C64Memory::peekIO(uint16_t addr)
 {
 	// 0xD000 - 0xD3FF (VIC)
-	if (VIC::isVicAddr(addr)) {
+	if (addr < 0xD400) {
 		// Note: Only the lower 6 bits are used for adressing the VIC I/O space
 		// Therefore, the VIC I/O memory repeats every 64 bytes
 		return vic->peek(addr & 0x003F);	
 	}
 	
 	// 0xD400 - 0xD7FF (SID)
-	if (SID::isSidAddr(addr)) {
+	if (addr < 0xD800) {
 		// Note: Only the lower 5 bits are used for adressing the SID I/O space
 		// Therefore, the SID I/O memory repeats every 32 bytes
 		return sid->peek(addr & 0x001F);
 	}
 	
 	// 0xD800 - 0xDBFF (Color RAM)
-	if (addr >= 0xD800 && addr <= 0xDBFF) {
+	if (addr < 0xDC00) {
 		return (colorRam[addr - 0xD800] & 0x0F) | (rand() << 4);
 	}
 	
 	// 0xDC00 - 0xDCFF (CIA 1)
-	if (CIA1::isCia1Addr(addr)) {
+	if (addr < 0xDD00) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the CIA I/O memory repeats every 16 bytes
 		return cia1->peek(addr & 0x000F);
 	}
 	
 	// 0xDD00 - 0xDDFF (CIA 2)
-	if (CIA2::isCia2Addr(addr)) {
+	if (addr < 0xDE00) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the CIA I/O memory repeats every 16 bytes
 		return cia2->peek(addr & 0x000F);
@@ -393,7 +354,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	
 	// 0xDE00 - 0xDEFF (I/O area 1)
 	// 0xDF00 - 0xDFFF (I/O area 2) 
-	if (addr >= 0xDE00 && addr <= 0xDFFF) {
+	if (addr < 0xDFFF) {
 		// Note: Reserved for further I/O expansion
 		// When read, a random value is returned
 		if (cartridge != NULL && cartridgeRomIsVisible) {
@@ -408,164 +369,38 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 
 uint8_t C64Memory::peekAuto(uint16_t addr)
 {	
-	uint8_t (C64Memory::*func)(uint16_t) = peekFunc[addr >> 8];
-	return (*this.*func)(addr);
+	MemorySource source = peekSource[addr >> 12];
 	
-#if 0	
-	// FOR DEBUGGING: RUN NEW CODE AGAINST OLD, REMOVE LATER...
-	const char *source, *source2;
-	if (addr < 0xA000) {
-		if (addr <= 0x0001) {
-			// 0x0000, 0x0001  (processor port)
-			source = "RAM";
-			goto end;
-		} else if (addr < 0x8000){
-			source = "RAM";
-			goto end;		
-		} else {
-			// 0x8000 - 0x9FFFF
-			// RAM, or Cartridge ROM from $8000 - $9FFF
-			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
-				source = "CRT";
-				goto end;
-			} else {
-				source = "RAM";
-				goto end;		
-			}
-		}
-	} else if (addr < 0xD000) {
-		if (addr < 0xC000) {
-			// 0xA000 - 0xBFFF
-			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
-			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
-				source = "CRT";
-				goto end;
-			} else if (basicRomIsVisible) {
-				source = "ROM";
-				goto end;
-			} else {
-				source = "RAM";
-				goto end;
-			}
-		} else {
-			// 0xC000 - 0xCFFF
-			// RAM
-			source = "RAM";
-			goto end;
-		}
-	} else {
-		if (addr < 0xE000) {
-			// 0xD000 - 0xDFFF
-			// Character ROM
-			if (IOIsVisible) {		
-				source = "IO";
-				goto end;
-			} else {		
-				if (charRomIsVisible) {
-					source = "ROM";
-					goto end;
-				} else {
-					source = "RAM";
-					goto end;
-				}
-			}
-		} else {
-			// 0xE000 - 0xFFFF
-			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
-				// ULTIMAX 0xE000 GAME low, EXROM high
-				source = "CRT";
-				goto end;
-			} else {
-				// Kernel ROM
-				if (kernelRomIsVisible) {
-					source = "ROM";
-					goto end;
-				} else {
-					source = "RAM";
-					goto end;
-				}
-			}
-		}
-	}
+	switch(source) {
 
-end:
-	if (func == &C64Memory::peekRam) 
-		source2 = "RAM";
-	if (func == &C64Memory::peekRom) 
-		source2 = "ROM";
-	if (func == &C64Memory::peekIO) 
-		source2 = "IO";
-	if (func == &C64Memory::peekCartridge) 
-		source2 = "CRT";
-	if (func == &C64Memory::peek0x00XX) 
-		source2 = "RAM";
+		case MEM_SOURCE_RAM:
+			return ram[addr];
+			
+		case MEM_SOURCE_ROM:
+			return rom[addr];
+			
+		case MEM_SOURCE_IO:
+			return peekIO(addr);
+			
+		case MEM_SOURCE_CRT:
+			return peekCartridge(addr);
+						
+		case MEM_SOURCE_PP:
+			
+			uint8_t dir, ext; 
+			
+			if (addr > 0x0001)
+				return ram[addr];
 
-	if (strcmp(source, source2) != 0) {
-		fprintf(stderr, "OLD: Peeking %04X from %s\n", addr, source);
-		fprintf(stderr, "NEW: Peeking %04X from %s %02X\n", addr, source2, addr >> 8);
-		exit(-1);
+			// Processor port
+			dir = cpu->getPortDirection();
+			ext = cpu->getExternalPortBits();
+			return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext);
+			
+		default:
+			assert(0);
+			return 0;
 	}
-	
-	return (*this.*func)(addr);
-#endif
-	
-#if 0	
-	// ORIGINAL OLD CODE
-	if (addr < 0xA000) {
-		if (addr <= 0x0001) {
-			// 0x0000, 0x0001  (processor port)
-			uint8_t dir = cpu->getPortDirection();
-			uint8_t ext = cpu->getExternalPortBits();
-			return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext); // (~dir & 0x5F); // (~dir & 0x7F); //   (~dir & 0x17);
-		} else if (addr < 0x8000){
-			// 0x0002 - 0x7FFFF
-			return ram[addr];
-		} else {
-			// 0x8000 - 0x9FFFF
-			// RAM, or Cartridge ROM from $8000 - $9FFF
-			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
-				return cartridge->peek(addr);
-			} else {
-				return ram[addr];
-			}
-		}
-	} else if (addr < 0xD000) {
-		if (addr < 0xC000) {
-			// 0xA000 - 0xBFFF
-			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
-			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
-				return cartridge->peek(addr);
-			} else if (basicRomIsVisible) {
-				return rom[addr];
-			} else {
-				return ram[addr];
-			}
-		} else {
-			// 0xC000 - 0xCFFF
-			// RAM
-			return ram[addr];
-		}
-	} else {
-		if (addr < 0xE000) {
-			// 0xD000 - 0xDFFF
-			// Character ROM
-			if (IOIsVisible) {			
-				return peekIO(addr);
-			} else {		
-				return charRomIsVisible ? rom[addr] : ram[addr];
-			}
-		} else {
-			// 0xE000 - 0xFFFF
-			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
-				// ULTIMAX 0xE000 GAME low, EXROM high
-				return cartridge->peek(addr);
-			} else {
-				// Kernel ROM
-				return kernelRomIsVisible ? rom[addr] : ram[addr];	
-			}
-		}
-	}
-#endif
 }
 
 
@@ -619,13 +454,13 @@ C64Memory::processorPortHasChanged(uint8_t newPortLines)
 	charRomIsVisible   = ((newPortLines & 4) == 0) && ((newPortLines & 3) != 0); // 0xx, but not x00
 	IOIsVisible        = ((newPortLines & 4) == 4) && ((newPortLines & 3) != 0); // 1xx, but not x00 		
 
-	updatePeekFunctionArray();
+	updatePeekPokeLookupTables();
 }
 
 void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 {
 	// 0xD000 - 0xD3FF (VIC)
-	if (VIC::isVicAddr(addr)) {
+	if (addr < 0xD400) {
 		// Note: Only the lower 6 bits are used for adressing the VIC I/O space
 		// Therefore, the VIC I/O memory repeats every 64 bytes
 		vic->poke(addr & 0x003F, value);
@@ -633,7 +468,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	}
 	
 	// 0xD400 - 0xD7FF (SID)
-	if (SID::isSidAddr(addr)) {
+	if (addr < 0xD800) {
 		// Note: Only the lower 5 bits are used for adressing the SID I/O space
 		// Therefore, the SID I/O memory repeats every 32 bytes
 		sid->poke(addr & 0x001F, value);
@@ -641,7 +476,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	}
 
 	// 0xD800 - 0xDBFF (Color RAM)
-	if (addr >= 0xD800 && addr <= 0xDBFF) {
+	if (addr < 0xDC00) {
 		// Note: The color RAM only saves 4 Bit per address (one nibble)
 		// When reading the color RAM, the upper 4 bits will contain random values
 		colorRam[addr - 0xD800] = (value & 0x0F) | (rand() & 0xF0);
@@ -649,7 +484,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	}	
 
 	// 0xDC00 - 0xDCFF (CIA 1)
-	if (CIA1::isCia1Addr(addr)) {
+	if (addr < 0xDD00) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the VIC I/O memory repeats every 16 bytes
 		cia1->poke(addr & 0x000F, value);
@@ -657,7 +492,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	}
 	
 	// 0xDD00 - 0xDDFF (CIA 2)	
-	if (CIA2::isCia2Addr(addr)) {
+	if (addr < 0xDE00) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the VIC I/O memory repeats every 16 bytes
 		cia2->poke(addr & 0x000F, value);
@@ -666,18 +501,59 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	
 	// 0xDE00 - 0xDEFF (I/O area 1)
 	// 0xDF00 - 0xDFFF (I/O area 2)
-	if (addr >= 0xDE00 && addr <= 0xDFFF) {
+	if (addr < 0xE000) {
 		// Expansion port I/O.
 		if (cartridge != NULL && cartridgeRomIsVisible) {
 			cartridge->poke(addr, value);
 			// store for debugging purposes (DE00-DFFF are I/O or RAM addresses)
 			rom[addr] = value;
 		}
+		return;
 	}
+
+	assert(false);
 }
 
 void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
 {	
+
+	MemorySource target = pokeTarget[addr >> 12];
+	
+	switch(target) {
+			
+		case MEM_SOURCE_RAM:
+			ram[addr] = value;
+			return;
+			
+		case MEM_SOURCE_IO:
+			pokeIO(addr, value);
+			return;
+			
+		case MEM_SOURCE_PP:
+			
+			if (addr > 0x0001) {
+				ram[addr] = value;
+				return;
+			}
+			
+			// Processor port
+			if (addr == 0x0000) {
+				cpu->setPortDirection(value);
+				processorPortHasChanged(cpu->getPortLines());
+			} else {
+				cpu->setPort(value);
+				processorPortHasChanged(cpu->getPortLines());
+			}
+			return;
+
+			
+		default:
+			assert(0);
+			return;
+	}
+	
+#if 0
+
 	if (isCharRomAddr(addr)) {
 		if (IOIsVisible) {		
 			pokeIO(addr, value);
@@ -695,7 +571,9 @@ void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
 	}
 
 	// Default: Write to RAM
-	ram[addr] = value;
+	ram[addr] = value;	
+#endif
+
 }
 
 bool C64Memory::attachCartridge(Cartridge *c)
@@ -704,7 +582,7 @@ bool C64Memory::attachCartridge(Cartridge *c)
 	
 	// Cartridge rom is visible when EXROM or GAME lines are pulled low (grounded).
 	cartridgeRomIsVisible = c->exromIsHigh()==false || c->gameIsHigh()==false;
-	updatePeekFunctionArray();
+	updatePeekPokeLookupTables();
 	
 	printf ("Cartridge attached %d\n", cartridgeRomIsVisible);
 	return true;
@@ -714,7 +592,7 @@ bool C64Memory::detachCartridge()
 {
 	cartridge = NULL;	
 	cartridgeRomIsVisible = false;
-	updatePeekFunctionArray();
+	updatePeekPokeLookupTables();
 
 	return true;
 }
