@@ -54,24 +54,21 @@
 
 - (BOOL)setArchiveWithName:(NSString *)path
 {
+	if (!(archive = D64Archive::archiveFromArbitraryFile([path UTF8String])))
+		return NO;
 	
-	if ((archive = D64Archive::archiveFromArbitraryFile([path UTF8String])) != NULL)
-		return YES;
-	
-	return NO;
+	return YES;
 }
 
 - (BOOL)setCartridgeWithName:(NSString *)path
-{
+{	
 	if (!(cartridge = Cartridge::cartridgeFromFile([path UTF8String])))
 		return NO;
 	
 	// Try to mount archive
-	[c64 attachCartridge:cartridge];
-	
-	// reset
-	[c64 reset];
-	
+	//[c64 attachCartridge:cartridge];
+	// [c64 reset];
+
 	return YES;
 }
 
@@ -147,11 +144,20 @@
 		if (![self setArchiveWithName:filename]) {
 			NSLog(@"Error while reading archive\n");
 			return NO;
-		}
-		
+		}		
 		return YES;
 	}
 	
+	if ([type isEqualToString:@"CRT"]) {
+		
+		if (![self setCartridgeWithName:filename]) {
+			NSLog(@"Error while reading cartridge\n");
+			return NO;
+		}
+		return YES;
+	}
+	
+	// Unknown type
 	return NO;
 }
 	

@@ -80,10 +80,14 @@ bool Cartridge::fileIsValid(const char *filename)
 }
 
 bool 
-Cartridge::readDataFromBuffer(const void *buffer, unsigned length)
+Cartridge::readFromBuffer(const void *buffer, unsigned length)
 {
-	unsigned i = 0;
-
+	// Allocate memory
+	if ((data = (uint8_t *)malloc(length)) == NULL) {
+		return false;
+	}
+	memcpy(data, buffer, length);
+		
 	// C64 CARTRIDGE
 	uint8_t magic_cartridge[] = { 'C', '6', '4', ' ', 'C', 'A', 'R', 'T', 'R', 'I', 'D', 'G', 'E', ' ', ' ', ' ' };
 	if (memcmp(magic_cartridge, &data[0], 16) != 0) {
@@ -105,7 +109,7 @@ Cartridge::readDataFromBuffer(const void *buffer, unsigned length)
 	fprintf(stderr, "EXROM = %d, GAME = %d\n", data[0x0019], data[0x0018]);
 	
 	// Load chip packets
-	for (i = headerSize; i < length; ) {
+	for (unsigned i = headerSize; i < length; ) {
 		
 		uint8_t magic_chip[] = { 'C', 'H', 'I', 'P' };
 		if (memcmp(magic_chip, &data[i], 4) != 0) {

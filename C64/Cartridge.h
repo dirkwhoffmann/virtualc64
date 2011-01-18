@@ -242,7 +242,7 @@ public:
 	//! Virtual functions from Component class
 	bool fileIsValid(const char *filename);
 
-	bool readDataFromBuffer(const void *buffer, unsigned length);
+	bool readFromBuffer(const void *buffer, unsigned length);
 	
 	void cleanup();
 	

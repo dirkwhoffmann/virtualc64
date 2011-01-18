@@ -31,16 +31,11 @@ class Snapshot;
 	C64Proxy *c64;
 
 	//! Reference to an attached D64 archive
-	/*! Used to communicate between mount dialog panel and controller.
-	 There might be a better way to do this. Getting rid of this variable is appreciated. */
+	/*! When a new documents opens and this variable is not NULL, the archive is automatically mounted */
 	D64Archive *archive;
 	
 	//! Reference to an attached cartridge 
 	Cartridge *cartridge;
-	
-	//! Initial snapshot
-	/*! If unequal NULL, the newly created document will be initialized with the provided snapshot data */
-	// Snapshot *snapshot;			
 }
 
 @property C64Proxy *c64;

@@ -139,21 +139,30 @@ const int BG_TEXTURE_DEPTH = 4;
 @property bool enableOpenGL;
 
 - (void) cleanUp;
+
+#pragma mark Animation
+
 - (void) startAnimation;
 - (void) stopAnimation;
 - (void) toggleAnimation;
 - (void) zoom;
 - (void) rotate;
 - (void) rotateBack;
+- (void) updateAngles;
+
+#pragma mark Full screen mode
+
 - (void) setFullscreenMode:(bool)b;
 - (void) toggleFullscreenMode;
-- (void) updateAngles;
--(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
-- (NSImage *)screenshot;
 
+#pragma mark Drawing
+
+-(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
 - (void) drawC64texture:(bool)value;
 
-// Graphics conversion methods
+#pragma mark Graphics conversion
+
+- (NSImage *)screenshot;
 - (NSImage *) flipImage: (NSImage *)image;
 - (NSImage *) expandImage: (NSImage *)image toSize:(NSSize) size;
 - (NSImage *) extendImage: (NSImage *)image toSize:(NSSize) size;

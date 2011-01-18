@@ -26,29 +26,27 @@
 
 @interface CpuTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
 { 
+	//! Reference to window controller
 	MyController *controller;
-	C64Proxy *c64;
 
-	NSMutableArray * items;
-	
-	// Address of the first disassembled instruction
-	uint16_t disassembleStartAddr; 	
+	//! Reference to C64
+	C64Proxy *c64;
 	
 	// Mapping from table rows to displayed memory address
-	uint16_t displayedAddress[CPU_TABLE_VIEW_ITEMS];	
+	uint16_t displayedAddresses[CPU_TABLE_VIEW_ITEMS];	
 }
 
 //! Setter
 - (void)setController:(MyController *)c;
+
+//! Action method for double clicking a table item
+- (void)doubleClickAction:(id)sender;
 
 //! Returns row in which addr is displays (-1 if addr is not displayed)
 - (int)rowForAddress:(uint16_t)addr;
 
 //! Returns which address is displayed in row
 - (uint16_t)addressForRow:(unsigned)row;
-
-//! Action method for double clicking a table item
-- (void)doubleClickAction:(id)sender;
 
 //! Updates the displayedAddress array 
 - (void)updateDisplayedAddresses:(uint16_t)startAddr;
