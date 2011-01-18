@@ -372,7 +372,8 @@ VIC::cAccess()
 {
 	if (dmaLine) {
 		characterSpace[registerVMLI] = mem->ram[bankAddr + screenMemoryAddr + registerVC];
-		colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
+		// colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
+		colorSpace[registerVMLI] = mem->colorRam[registerVC] & 0xf;
 	}
 }
 

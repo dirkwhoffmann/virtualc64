@@ -32,15 +32,19 @@ C64Memory::C64Memory()
 	sid = NULL;
 	cia1 = NULL;
 	cia2 = NULL;
+	
 	cartridge = NULL;	
+
 	charRomFile = NULL;
 	kernelRomFile = NULL;
 	basicRomFile = NULL;
+	
 	basicRomIsVisible = false;
 	kernelRomIsVisible = false;
 	charRomIsVisible = false;
 	IOIsVisible = false;
 	cartridgeRomIsVisible = false;
+	initializePeekFunctionArray();
 }
 
 C64Memory::~C64Memory()
@@ -88,6 +92,7 @@ C64Memory::loadFromBuffer(uint8_t **buffer)
 	kernelRomIsVisible = (bool)read8(buffer);
 	IOIsVisible = (bool)read8(buffer);
 	cartridgeRomIsVisible = (bool)read8(buffer);
+	updatePeekFunctionArray();
 }
 
 void
@@ -237,19 +242,119 @@ bool C64Memory::isValidAddr(uint16_t addr, MemoryType type)
 	}
 }
 
-uint8_t C64Memory::peekRam(uint16_t addr) 
+uint8_t 
+C64Memory::peek0x00XX(uint16_t addr) 
+{ 
+	if (addr > 0x0001)
+		return ram[addr];
+
+	// Processor port
+	uint8_t dir = cpu->getPortDirection();
+	uint8_t ext = cpu->getExternalPortBits();
+	return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext);
+} 
+
+uint8_t 
+C64Memory::peekRam(uint16_t addr) 
 { 
 	return ram[addr];
 } 
 
-uint8_t C64Memory::peekRom(uint16_t addr) 
+uint8_t 
+C64Memory::peekRom(uint16_t addr) 
 { 
-	if (cartridge != NULL && cartridge->isRomAddr(addr)) {
-		return cartridge->peek(addr);
-	}
-
 	return rom[addr];
 } 
+
+uint8_t 
+C64Memory::peekVIC(uint16_t addr)
+{
+	return vic->peek(addr & 0x003F);	
+}
+
+uint8_t 
+C64Memory::peekSID(uint16_t addr)
+{
+	return sid->peek(addr & 0x001F);
+}
+
+uint8_t 
+C64Memory::peekColorRam(uint16_t addr)
+{
+	return (colorRam[addr - 0xD800] & 0x0F) | (rand() << 4);
+}
+
+uint8_t 
+C64Memory::peekCIA1(uint16_t addr)
+{
+	return cia1->peek(addr & 0x000F);
+}
+
+uint8_t 
+C64Memory::peekCIA2(uint16_t addr)
+{
+	return cia2->peek(addr & 0x000F);
+}
+
+uint8_t 
+C64Memory::peekCartridge(uint16_t addr)
+{
+	if (cartridge != NULL && cartridge->isRomAddr(addr))
+		return cartridge->peek(addr);
+	
+	if (addr >= 0xA000 && addr <= 0xBFFF) 
+		return basicRomIsVisible ? rom[addr] : ram[addr];
+
+	if (addr >= 0xE000) 
+		return kernelRomIsVisible ? rom[addr] : ram[addr];
+
+	return ram[addr];
+}
+
+uint8_t 
+C64Memory::peekRand(uint16_t addr)
+{
+	return (uint8_t)(rand());
+}
+
+void 
+C64Memory::initializePeekFunctionArray()
+{	
+	for (unsigned i = 0x01; i <= 0xFF; i++)
+		peekFunc[i] = &C64Memory::peekRam;
+
+	peekFunc[0x00] = &C64Memory::peek0x00XX;	
+}
+
+void 
+C64Memory::updatePeekFunctionArray()
+{
+	uint8_t (C64Memory::*func)(uint16_t);
+			
+	// 0x8000 - 0x9FFFF (Cartridge ROM, or RAM)
+	func = cartridge ? &C64Memory::peekCartridge : &C64Memory::peekRam;
+	for (unsigned i = 0x80; i <= 0x9F; i++)
+		peekFunc[i] = func;
+
+	// 0xA000 - 0xBFFF (Cartridge ROM, Basic ROM, or RAM)
+	func = cartridge ? &C64Memory::peekCartridge : (basicRomIsVisible ? &C64Memory::peekRom : &C64Memory::peekRam);
+	for (unsigned i = 0xA0; i <= 0xBF; i++)
+		peekFunc[i] = func;
+
+	// 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)
+	if (IOIsVisible) {
+		// TODO
+	}
+	func = IOIsVisible ? &C64Memory::peekIO : (charRomIsVisible ? &C64Memory::peekRom : &C64Memory::peekRam);
+	for (unsigned i = 0xD0; i <= 0xDF; i++)
+		peekFunc[i] = func;
+	
+	// 0xE000 - 0xFFFF (Cartridge Rom, Kernel ROM, or RAM)
+	func = cartridge ? &C64Memory::peekCartridge : (kernelRomIsVisible ? &C64Memory::peekRom : &C64Memory::peekRam);
+	for (unsigned i = 0xE0; i <= 0xFF; i++)
+		peekFunc[i] = func;
+}
+
 
 uint8_t C64Memory::peekIO(uint16_t addr)
 {
@@ -302,16 +407,121 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 }
 
 uint8_t C64Memory::peekAuto(uint16_t addr)
-{			
+{	
+	uint8_t (C64Memory::*func)(uint16_t) = peekFunc[addr >> 8];
+	return (*this.*func)(addr);
+	
+#if 0	
+	// FOR DEBUGGING: RUN NEW CODE AGAINST OLD, REMOVE LATER...
+	const char *source, *source2;
 	if (addr < 0xA000) {
 		if (addr <= 0x0001) {
-			// Processor port
+			// 0x0000, 0x0001  (processor port)
+			source = "RAM";
+			goto end;
+		} else if (addr < 0x8000){
+			source = "RAM";
+			goto end;		
+		} else {
+			// 0x8000 - 0x9FFFF
+			// RAM, or Cartridge ROM from $8000 - $9FFF
+			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+				source = "CRT";
+				goto end;
+			} else {
+				source = "RAM";
+				goto end;		
+			}
+		}
+	} else if (addr < 0xD000) {
+		if (addr < 0xC000) {
+			// 0xA000 - 0xBFFF
+			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
+			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+				source = "CRT";
+				goto end;
+			} else if (basicRomIsVisible) {
+				source = "ROM";
+				goto end;
+			} else {
+				source = "RAM";
+				goto end;
+			}
+		} else {
+			// 0xC000 - 0xCFFF
+			// RAM
+			source = "RAM";
+			goto end;
+		}
+	} else {
+		if (addr < 0xE000) {
+			// 0xD000 - 0xDFFF
+			// Character ROM
+			if (IOIsVisible) {		
+				source = "IO";
+				goto end;
+			} else {		
+				if (charRomIsVisible) {
+					source = "ROM";
+					goto end;
+				} else {
+					source = "RAM";
+					goto end;
+				}
+			}
+		} else {
+			// 0xE000 - 0xFFFF
+			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+				// ULTIMAX 0xE000 GAME low, EXROM high
+				source = "CRT";
+				goto end;
+			} else {
+				// Kernel ROM
+				if (kernelRomIsVisible) {
+					source = "ROM";
+					goto end;
+				} else {
+					source = "RAM";
+					goto end;
+				}
+			}
+		}
+	}
+
+end:
+	if (func == &C64Memory::peekRam) 
+		source2 = "RAM";
+	if (func == &C64Memory::peekRom) 
+		source2 = "ROM";
+	if (func == &C64Memory::peekIO) 
+		source2 = "IO";
+	if (func == &C64Memory::peekCartridge) 
+		source2 = "CRT";
+	if (func == &C64Memory::peek0x00XX) 
+		source2 = "RAM";
+
+	if (strcmp(source, source2) != 0) {
+		fprintf(stderr, "OLD: Peeking %04X from %s\n", addr, source);
+		fprintf(stderr, "NEW: Peeking %04X from %s %02X\n", addr, source2, addr >> 8);
+		exit(-1);
+	}
+	
+	return (*this.*func)(addr);
+#endif
+	
+#if 0	
+	// ORIGINAL OLD CODE
+	if (addr < 0xA000) {
+		if (addr <= 0x0001) {
+			// 0x0000, 0x0001  (processor port)
 			uint8_t dir = cpu->getPortDirection();
 			uint8_t ext = cpu->getExternalPortBits();
 			return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext); // (~dir & 0x5F); // (~dir & 0x7F); //   (~dir & 0x17);
 		} else if (addr < 0x8000){
+			// 0x0002 - 0x7FFFF
 			return ram[addr];
 		} else {
+			// 0x8000 - 0x9FFFF
 			// RAM, or Cartridge ROM from $8000 - $9FFF
 			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
 				return cartridge->peek(addr);
@@ -321,6 +531,7 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 		}
 	} else if (addr < 0xD000) {
 		if (addr < 0xC000) {
+			// 0xA000 - 0xBFFF
 			// Basic ROM, or Cartridge ROM from $A000 - $BFFF
 			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
 				return cartridge->peek(addr);
@@ -330,11 +541,13 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 				return ram[addr];
 			}
 		} else {
+			// 0xC000 - 0xCFFF
 			// RAM
 			return ram[addr];
 		}
 	} else {
 		if (addr < 0xE000) {
+			// 0xD000 - 0xDFFF
 			// Character ROM
 			if (IOIsVisible) {			
 				return peekIO(addr);
@@ -342,6 +555,7 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 				return charRomIsVisible ? rom[addr] : ram[addr];
 			}
 		} else {
+			// 0xE000 - 0xFFFF
 			if (cartridge != NULL && cartridge->isRomAddr(addr)) {
 				// ULTIMAX 0xE000 GAME low, EXROM high
 				return cartridge->peek(addr);
@@ -351,6 +565,7 @@ uint8_t C64Memory::peekAuto(uint16_t addr)
 			}
 		}
 	}
+#endif
 }
 
 
@@ -403,6 +618,8 @@ C64Memory::processorPortHasChanged(uint8_t newPortLines)
 	basicRomIsVisible  = ((newPortLines & 3) == 3); // x11
 	charRomIsVisible   = ((newPortLines & 4) == 0) && ((newPortLines & 3) != 0); // 0xx, but not x00
 	IOIsVisible        = ((newPortLines & 4) == 4) && ((newPortLines & 3) != 0); // 1xx, but not x00 		
+
+	updatePeekFunctionArray();
 }
 
 void C64Memory::pokeIO(uint16_t addr, uint8_t value)
@@ -487,6 +704,7 @@ bool C64Memory::attachCartridge(Cartridge *c)
 	
 	// Cartridge rom is visible when EXROM or GAME lines are pulled low (grounded).
 	cartridgeRomIsVisible = c->exromIsHigh()==false || c->gameIsHigh()==false;
+	updatePeekFunctionArray();
 	
 	printf ("Cartridge attached %d\n", cartridgeRomIsVisible);
 	return true;
@@ -496,7 +714,8 @@ bool C64Memory::detachCartridge()
 {
 	cartridge = NULL;	
 	cartridgeRomIsVisible = false;
-	
+	updatePeekFunctionArray();
+
 	return true;
 }
 

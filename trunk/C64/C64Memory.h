@@ -114,6 +114,8 @@ public:
 	Only the lower four bits are accessible, the upper four bits are open and can show any value */
 	uint8_t colorRam[1024];
 	
+private:
+	
 	//! True if Basic ROM is visible.
 	/*! The variable is updated whenever a value is written to memory location 0x0001. */
 	bool basicRomIsVisible;
@@ -133,6 +135,8 @@ public:
 	//! True if the cartridge ROM is visible
 	/*! The variable is updated whenever a cartridge is attached or detached. */
 	bool cartridgeRomIsVisible;
+	
+public:
 	
 	//! File name of the Character ROM image.
 	/*! The file name is set by the loadRom routine. It is saved for further reference, so the ROM can be reloaded any tim e. */
@@ -258,19 +262,29 @@ public:
 	//! Returns true, iff the provided address is in one of the three ROM address ranges
 	static inline bool isRomAddr(uint16_t addr) 
 		{ return isCharRomAddr(addr) || isKernelRomAddr(addr) || isBasicRomAddr(addr) || isCartridgeRomAddr(addr); }
-
-	//! Read a BYTE from Color RAM.
-	/*! The BYTE is always read from the color RAM, regardless of the value of the processor port register.
-		\param offset Memory address relative to the beginning of the color Ram
-		\return Color RAM contents at address addr
-		\see peek 
-	*/
-	inline uint8_t peekColorRam(uint16_t offset) { assert(offset < 1024); return colorRam[offset]; } 
 	
+	//! Lookup table for memory peek function
+	uint8_t (C64Memory::*peekFunc[256])(uint16_t addr);
+
 	bool isValidAddr(uint16_t addr, MemoryType type);
-	uint8_t peekRam(uint16_t addr);
+
+	uint8_t peek0x00XX(uint16_t addr);
+	uint8_t peekRam(uint16_t addr); 
 	uint8_t peekRom(uint16_t addr);
+	uint8_t peekVIC(uint16_t addr);
+	uint8_t peekColorRam(uint16_t addr);
+	uint8_t peekCIA1(uint16_t addr);
+	uint8_t peekCIA2(uint16_t addr);
+	uint8_t peekSID(uint16_t addr);
+	uint8_t peekCartridge(uint16_t addr);
+	uint8_t peekRand(uint16_t addr);
+
+	void initializePeekFunctionArray();
+	void updatePeekFunctionArray();
+
+	// DEPRECATED
 	uint8_t peekIO(uint16_t addr);
+	// DEPRECATED
 	uint8_t peekAuto(uint16_t addr);             
 	                  																
 	void pokeRam(uint16_t addr, uint8_t value);                  
