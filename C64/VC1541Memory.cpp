@@ -148,7 +148,7 @@ VC1541Memory::peekIO(uint16_t addr)
 }
 
 uint8_t 
-VC1541Memory::peekAuto(uint16_t addr)
+VC1541Memory::peek(uint16_t addr)
 {
 	uint8_t result;
 	
@@ -191,7 +191,7 @@ VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
 }
 			 			 
 void 
-VC1541Memory::pokeAuto(uint16_t addr, uint8_t value)
+VC1541Memory::poke(uint16_t addr, uint8_t value)
 {
 	if (addr < 0x1000) {
 		// RAM (repeats multiply times, hence we apply a bitmask)

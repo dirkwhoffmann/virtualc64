@@ -367,7 +367,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	return 0;
 }
 
-uint8_t C64Memory::peekAuto(uint16_t addr)
+uint8_t C64Memory::peek(uint16_t addr)
 {	
 	MemorySource source = peekSource[addr >> 12];
 	
@@ -514,7 +514,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	assert(false);
 }
 
-void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
+void C64Memory::poke(uint16_t addr, uint8_t value)
 {	
 
 	MemorySource target = pokeTarget[addr >> 12];
@@ -546,34 +546,10 @@ void C64Memory::pokeAuto(uint16_t addr, uint8_t value)
 			}
 			return;
 
-			
 		default:
 			assert(0);
 			return;
 	}
-	
-#if 0
-
-	if (isCharRomAddr(addr)) {
-		if (IOIsVisible) {		
-			pokeIO(addr, value);
-			return;
-		}
-	} else if (addr <= 0x0001) {
-		if (addr == 0x0000) {
-			cpu->setPortDirection(value);
-			processorPortHasChanged(cpu->getPortLines());
-		} else {
-			cpu->setPort(value);
-			processorPortHasChanged(cpu->getPortLines());
-		}
-		return;
-	}
-
-	// Default: Write to RAM
-	ram[addr] = value;	
-#endif
-
 }
 
 bool C64Memory::attachCartridge(Cartridge *c)
