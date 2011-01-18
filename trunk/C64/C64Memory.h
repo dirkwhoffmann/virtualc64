@@ -285,24 +285,24 @@ public:
 	//! Lookup table for poke function
 	MemorySource pokeTarget[16];
 
+	void initializePeekPokeLookupTables();
+	void updatePeekPokeLookupTables();
+
 	bool isValidAddr(uint16_t addr, MemoryType type);
 
 	uint8_t peekRam(uint16_t addr); 
 	uint8_t peekRom(uint16_t addr);
+	uint8_t peekIO(uint16_t addr);
+	uint8_t peek(uint16_t addr);         
+	
+	// Helper function. We should get rid of this one
 	uint8_t peekCartridge(uint16_t addr);
 	
-	void initializePeekPokeLookupTables();
-	void updatePeekPokeLookupTables();
-
-	// DEPRECATED
-	uint8_t peekIO(uint16_t addr);
-	// DEPRECATED
-	uint8_t peekAuto(uint16_t addr);             
-	                  																
+	
 	void pokeRam(uint16_t addr, uint8_t value);                  
 	void pokeRom(uint16_t addr, uint8_t value);             
 	void pokeIO(uint16_t addr, uint8_t value);
-	void pokeAuto(uint16_t addr, uint8_t value);
+	void poke(uint16_t addr, uint8_t value);
 };
 
 #endif

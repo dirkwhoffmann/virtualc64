@@ -94,12 +94,12 @@ public:
 	uint8_t peekRam(uint16_t addr);
 	uint8_t peekRom(uint16_t addr);
 	uint8_t peekIO(uint16_t addr);
-	uint8_t peekAuto(uint16_t addr);             
+	uint8_t peek(uint16_t addr);             
 	                  																
 	void pokeRam(uint16_t addr, uint8_t value);                  
 	void pokeRom(uint16_t addr, uint8_t value);             
 	void pokeIO(uint16_t addr, uint8_t value);
-	void pokeAuto(uint16_t addr, uint8_t value);
+	void poke(uint16_t addr, uint8_t value);
 };
 
 #endif

@@ -98,29 +98,21 @@ protected:
 	*/
 	virtual uint8_t peekIO(uint16_t addr) = 0;
 
-	//! Read a BYTE from memory.
-	/*! This functions implements the native memory peek of the original C64 including all side effects.
-		The functions automatically determines the correct memory source by the value of the processor 
-		port register. Afterwards, the value is read either from RAM, ROM, or the I/O address space and 
-		returned.
-		\param addr Memory address
-		\return RAM, ROM, or I/O memory contents at address addr 
-	*/
-	virtual uint8_t peekAuto(uint16_t addr) = 0;
-
 public:
 
 	//! Read a BYTE from the specified memory source.
 	/*! Depending in the specified memory type, either \a peekRam, \a peekRom, or \a peekIO is called. */
 	uint8_t peekFrom(uint16_t addr, MemoryType source);
 
-	//! Standard peek function
-	/*!	This functions implements the standard peek function that is invoked when the virtual CPU accesses
-		memory.
-		\param addr Memory address
-		\return RAM, ROM, or I/O memory contents at address addr 
-	*/	
-	inline uint8_t peek(uint16_t addr) { return peekAuto(addr); }
+	//! Read a BYTE from memory.
+	/*! This functions implements the native memory peek of the original C64 including all side effects.
+	 The functions automatically determines the correct memory source by the value of the processor 
+	 port register. Afterwards, the value is read either from RAM, ROM, or the I/O address space and 
+	 returned.
+	 \param addr Memory address
+	 \return RAM, ROM, or I/O memory contents at address addr 
+	 */
+	virtual uint8_t peek(uint16_t addr) = 0;
 	
 	//! Wrapper around peek
 	/*!	Memory address is provided in LO/HIBYTE format.
@@ -179,15 +171,6 @@ protected:
 		\see poke 
 	*/
 	virtual void pokeIO(uint16_t addr, uint8_t value) = 0;
-
-	//! Write a BYTE to memory.
-	/*! This functions implements the native memory poke of the original C64 including all side effects.
-		The functions automatically determines the correct memory source by the value of the processor 
-		port register. Afterwards, the value is written either to RAM, ROM, or the I/O address space and.
-		\param addr Memory address
-		\param value Value to write
-	*/
-	virtual void pokeAuto(uint16_t addr, uint8_t value) = 0;
 	
 public:
 	
@@ -195,13 +178,14 @@ public:
 	/*! Depending in the specified memory type, either \a pokeRam, \a pokeRom, or \a pokeIO is called. */
 	void pokeTo(uint16_t addr, uint8_t value, MemoryType dest);
 
-	//! Standard poke function
-	/*! This functions implements the standard poke function that is invoked when the virtual CPU accesses
-		memory. 
-		\param addr Memory address
-		\param value Value to write
-	*/	  
-	inline void poke(uint16_t addr, uint8_t value) { pokeAuto(addr, value); }
+	//! Write a BYTE to memory.
+	/*! This functions implements the native memory poke of the original C64 including all side effects.
+	 The functions automatically determines the correct memory source by the value of the processor 
+	 port register. Afterwards, the value is written either to RAM, ROM, or the I/O address space and.
+	 \param addr Memory address
+	 \param value Value to write
+	 */
+	virtual void poke(uint16_t addr, uint8_t value) = 0;
 
 	//! Wrapper around poke
 	/*!	Memory address is provided in LO/HIBYTE format.
