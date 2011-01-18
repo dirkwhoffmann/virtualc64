@@ -737,7 +737,7 @@ uint8_t
 VIC::peek(uint16_t addr)
 {
 	uint8_t result;
-	
+		
 	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
 	
 	switch(addr) {

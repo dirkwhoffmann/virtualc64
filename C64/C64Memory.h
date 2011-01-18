@@ -33,6 +33,22 @@ class CIA2;
     The contents of memory location 0x0001 determines which kind of memory is currently visible. */
 class C64Memory : public Memory {
 
+	enum MemorySource
+	{
+		MEM_SOURCE_RAM,
+		MEM_SOURCE_ROM,
+		MEM_SOURCE_IO,
+
+		// DEPRECATED
+		MEM_SOURCE_VIC,
+		MEM_SOURCE_SID,
+		MEM_SOURCE_COLOR,
+		MEM_SOURCE_CIA1,
+		MEM_SOURCE_CIA2,
+		MEM_SOURCE_PP,
+		MEM_SOURCE_CRT
+	};
+	
 	/*
 	 The following is a chart taken from the "Commodore Programmers  Reference
 	 Guide". It details the state of various areas of memory  depending  on  the
@@ -263,24 +279,20 @@ public:
 	static inline bool isRomAddr(uint16_t addr) 
 		{ return isCharRomAddr(addr) || isKernelRomAddr(addr) || isBasicRomAddr(addr) || isCartridgeRomAddr(addr); }
 	
-	//! Lookup table for memory peek function
-	uint8_t (C64Memory::*peekFunc[256])(uint16_t addr);
+	//! Lookup table for peek function
+	MemorySource peekSource[16];
+
+	//! Lookup table for poke function
+	MemorySource pokeTarget[16];
 
 	bool isValidAddr(uint16_t addr, MemoryType type);
 
-	uint8_t peek0x00XX(uint16_t addr);
 	uint8_t peekRam(uint16_t addr); 
 	uint8_t peekRom(uint16_t addr);
-	uint8_t peekVIC(uint16_t addr);
-	uint8_t peekColorRam(uint16_t addr);
-	uint8_t peekCIA1(uint16_t addr);
-	uint8_t peekCIA2(uint16_t addr);
-	uint8_t peekSID(uint16_t addr);
 	uint8_t peekCartridge(uint16_t addr);
-	uint8_t peekRand(uint16_t addr);
-
-	void initializePeekFunctionArray();
-	void updatePeekFunctionArray();
+	
+	void initializePeekPokeLookupTables();
+	void updatePeekPokeLookupTables();
 
 	// DEPRECATED
 	uint8_t peekIO(uint16_t addr);
