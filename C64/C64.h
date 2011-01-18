@@ -18,6 +18,8 @@
 
 // New in 0.9.4
 // Thumbnail images can now be dragged and dropped between different emulator windows
+// All supported fies types can be loaded via the open file dialog
+// Added new icons for all supported file types
 
 #ifndef _C64_INC
 #define _C64_INC
