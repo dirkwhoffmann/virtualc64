@@ -21,6 +21,8 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
@@ -37,6 +39,8 @@
 			<string>D64</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
@@ -55,6 +59,8 @@
 			<string>T64</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
@@ -63,6 +69,8 @@
 			<string>Binary</string>
 		</dict>
 		<dict>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>PRG</string>
@@ -81,6 +89,8 @@
 			<string>Binary</string>
 		</dict>
 		<dict>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>P00</string>
@@ -89,6 +99,26 @@
 			<string>IconP00</string>
 			<key>CFBundleTypeName</key>
 			<string>P00</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>MyDocument</string>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+		<dict>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>CRT</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IconCRT</string>
+			<key>CFBundleTypeName</key>
+			<string>CRT</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSTypeIsPackage</key>
@@ -109,14 +139,14 @@
 	<string>VirtualC64Icon</string>
 	<key>CFBundleIdentifier</key>
 	<string>de.dirkwhoffmann.VirtualC64</string>
-	<key>CFBundleVersion</key>
-	<string>0.9.4</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>vc64</string>
+	<key>CFBundleVersion</key>
+	<string>0.9.4</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

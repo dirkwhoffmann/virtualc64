@@ -122,7 +122,7 @@ void checkForOpenGLErrors()
 	
 	// Drag and Drop
 	[self registerForDraggedTypes:
-	 [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,NSPasteboardTypeString,nil]];
+	 [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
 }
 
 - (void) dealloc 
@@ -899,7 +899,7 @@ void checkForOpenGLErrors()
 		return NSDragOperationNone;
 
 	NSPasteboard *pb = [sender draggingPasteboard];
-	NSString *besttype = [pb availableTypeFromArray:[NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,NSPasteboardTypeString,nil]];
+	NSString *besttype = [pb availableTypeFromArray:[NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
 
 	if (besttype == NSFilenamesPboardType) {
 		NSLog(@"Dragged in filename");
@@ -931,30 +931,20 @@ void checkForOpenGLErrors()
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
 	NSLog(@"performDragOperation");
-	NSString *type;
+	//NSString *type;
     NSPasteboard *pb = [sender draggingPasteboard];
-
-#if 0
-	// DEPRECATED
-	type = [pb availableTypeFromArray:[NSArray arrayWithObject:NSPasteboardTypeString]];
-	if (type) {
-		int nr = [[pb stringForType:NSPasteboardTypeString] intValue];
-		NSLog(@"Got data %d", nr);
-		[controller revertToSnapshotWithNumberAction:nr];
-	   return YES;
-   }
-#endif
 	
-	if ( [[pb types] containsObject:NSFileContentsPboardType] ) {
+	if ([[pb types] containsObject:NSFileContentsPboardType]) {
+		
         NSFileWrapper *fileWrapper = [pb readFileWrapper];
 		NSData *fileData = [fileWrapper regularFileContents];
 		V64Snapshot *snapshot = [V64Snapshot snapshotFromBuffer:[fileData bytes] length:[fileData length]];
 		[[controller c64] loadFromSnapshot:snapshot];
 		return YES;
 	}
-	
-	type = [pb availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]];
-	if (type) {
+
+	if ([[pb types] containsObject:NSFilenamesPboardType]) {
+		
         NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];			
 		NSLog(@"Got filename %@", path);
 		
@@ -982,7 +972,7 @@ void checkForOpenGLErrors()
 		
 		// Is it a cartridge?
 		if ([[controller document] setCartridgeWithName:path]) {
-			NSLog(@"Cartridge attached");
+			[controller mountCartridge];
 			return YES;
 		}
 		

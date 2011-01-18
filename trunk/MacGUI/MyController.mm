@@ -111,13 +111,6 @@
 		
 	// Launch emulator
 	[c64 run];
-	
-#if 0
-	// Mount archive if applicable
-	if ([[self document] archive] != NULL) {
-		[self showMountDialog];
-	}		
-#endif
 }
 
 // --------------------------------------------------------------------------------
@@ -319,17 +312,21 @@
 			
 		case MSG_ROM_COMPLETE:
 			
-			// Close ROM dialog
+			// Close ROM dialog if open
 			if (romDialog) {					
 				[NSApp endSheet:romDialog];
 				[romDialog orderOut:nil];
 				romDialog = NULL;
 			}
-				
+
+			// Check for attached cartridge
+			if ([[self document] cartridge]) {
+				NSLog(@"Found attached cartridge");
+				[self mountCartridge];
+			}				
+
 			// Start emulator
 			[c64 run];
-								
-			// Trigger a nice zoom animation and start drawing
 			[screen zoom];
 			[screen drawC64texture:true];
 
@@ -338,6 +335,7 @@
 				NSLog(@"Found attached archive");
 				[self showMountDialog];
 			}
+			
 			break;
 						
 		case MSG_RUN:
@@ -616,26 +614,20 @@
 
 
 // --------------------------------------------------------------------------------
-//                                     Cheatbox
+//                                     Cartridges
 // --------------------------------------------------------------------------------
 
-#if 0
-- (void)revertToSnapshot:(V64Snapshot *)snapshot;
+- (BOOL)mountCartridge
 {
-	NSLog(@"Reverting to snapshot");
+	if ([[self document] cartridge] == NULL)
+		return NO;
+
+	[c64 attachCartridge:[[self document] cartridge]];
+	[c64 reset];
 	
-	[c64 loadFromSnapshot:snapshot];
-	[self cheatboxAction:self];
+	return YES;
 }
 
-- (void)revertToSnapshotWithNumber:(int)nr;
-{
-	NSLog(@"Reverting to snapshot number %d", nr);
-	
-	[c64 revertToHistoricSnapshot:nr];
-	[self cheatboxAction:self];
-}
-#endif
 
 // --------------------------------------------------------------------------------
 //                                     Dialogs

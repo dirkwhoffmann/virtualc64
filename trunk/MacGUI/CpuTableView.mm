@@ -46,26 +46,11 @@
 	[super dealloc];
 }
 
-- (int)rowForAddress:(uint16_t)addr
-{
-	for (unsigned i = 0; i < CPU_TABLE_VIEW_ITEMS; i++) {
-		if (displayedAddress[i] == addr)
-			return i;
-	}
-	return -1;
-}
-
-- (uint16_t)addressForRow:(unsigned)row;
-{
-	assert (row < CPU_TABLE_VIEW_ITEMS);
-	return displayedAddress[row];
-}
-
 #pragma mark NSTableViewDataSource
 
 - (int)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	return 256;
+	return CPU_TABLE_VIEW_ITEMS;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
@@ -109,12 +94,28 @@
 	[controller setHardBreakpointAction:[NSNumber numberWithInt:addr]];
 }
 
+
+- (int)rowForAddress:(uint16_t)addr
+{
+	for (unsigned i = 0; i < CPU_TABLE_VIEW_ITEMS; i++) {
+		if (displayedAddresses[i] == addr)
+			return i;
+	}
+	return -1;
+}
+
+- (uint16_t)addressForRow:(unsigned)row;
+{
+	assert (row < CPU_TABLE_VIEW_ITEMS);
+	return displayedAddresses[row];
+}
+
 - (void)updateDisplayedAddresses:(uint16_t)startAddr
 {
 	uint16_t address = startAddr;
 	
 	for (unsigned i = 0; i < CPU_TABLE_VIEW_ITEMS; i++) {
-		displayedAddress[i] = address;
+		displayedAddresses[i] = address;
 		address += [[c64 cpu] getLengthOfInstructionAtAddress:address];
 	}	
 }

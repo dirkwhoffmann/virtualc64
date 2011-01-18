@@ -207,12 +207,11 @@ class Snapshot;
 - (IBAction)driveAction:(id)sender;
 - (IBAction)cartridgeEjectAction:(id)sender;
 
-// Cheatbox actions
-// - (void)revertToSnapshot:(V64Snapshot *)snapshot;
-// - (void)revertToSnapshotWithNumber:(int)nr;
+// Cartridges
+- (BOOL)mountCartridge;
 
 // Dialogs
-- (BOOL)showMountDialog;
+- (BOOL)showMountDialog; 
 - (IBAction)cancelRomDialog:(id)sender;
 - (IBAction)cancelMountDialog:(id)sender;
 - (IBAction)endMountDialogAndMount:(id)sender;
