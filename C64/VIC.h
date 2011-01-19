@@ -137,13 +137,20 @@ public:
 
 	//! Number of viewable rasterlines of an PAL screen
 	static const uint16_t PAL_VIEWABLE_RASTERLINES = 284;
-	
+
+	//! Maximum number of viewable rasterlines
+	static const uint16_t MAX_VIEWABLE_RASTERLINES = PAL_VIEWABLE_RASTERLINES;
+
 	//! Number of viewable pixels per rasterline of an NTSC screen
 	static const uint16_t NTSC_VIEWABLE_PIXELS = 418;
 
-	//! Number of viewable pixels per rasterline of an NTSC screen
+	//! Number of viewable pixels per rasterline of an PAL screen
 	static const uint16_t PAL_VIEWABLE_PIXELS = 403;
 
+	//! Maximum number of viewable pixels per rasterline
+	static const uint16_t MAX_VIEWABLE_PIXELS = NTSC_VIEWABLE_PIXELS;
+	
+	
 	//! Border width of an NTSC screen
 	//* 49 + SCREEN_WIDTH + 49 = NTSC_VIEWABLE_PIXELS */
 	static const uint16_t NTSC_BORDER_WIDTH = 49;
@@ -157,32 +164,31 @@ public:
 	static const uint16_t NTSC_BORDER_HEIGHT = 17;
 	
 	//! Border height of a PAL screen
-	//* 42 + SCREEN_HEIGHT + 42 = PAL_VIEWABLE_RASTERLINES */
+	//* 42 + SCREEN_HEIGHT + 42 = PAL_VIEWABLE_RASTERLINES */g
 	static const uint16_t PAL_BORDER_HEIGHT = 42;
 		
-
 	
 	// OLD VALUES BELOW (DEPRECATED)
 	
 	//! First column coordinate that belongs to the drawable screen area
-	static const uint16_t BORDER_WIDTH = 24; // should be 
+	static const uint16_t BORDER_WIDTH = 24;  
 	
 	//! First rasterline that belongs to the drawable screen area
 	static const uint16_t BORDER_HEIGHT = 51;
 
 	//! First rasterline that can be seen // WRONG VALUE AND MISSPELLED
-	static const uint16_t FIRST_VIEABLE_LINE = 16;
+	// static const uint16_t FIRST_VIEABLE_LINE = 16;
 
 	//! Last rasterline that can be seen // WRONG VALUE AND MISSPELLED
-	static const uint16_t LAST_VIEABLE_LINE = 287;
+	// static const uint16_t LAST_VIEABLE_LINE = 287;
 
 	//! Total number of pixels in one screen buffer line
 	// TODO this should be 403 for PAL and 418 for NTSC currently this is 368
-	static const uint16_t TOTAL_SCREEN_WIDTH = BORDER_WIDTH + SCREEN_WIDTH + BORDER_WIDTH;
+	// static const uint16_t TOTAL_SCREEN_WIDTH = BORDER_WIDTH + SCREEN_WIDTH + BORDER_WIDTH;
 
 	//! Total number of lines in the screen buffer
 	// TODO this should be 284 for PAL and 235 for NTSC, note that these are visible rasterlines
-	static const uint16_t TOTAL_SCREEN_HEIGHT = NTSC_RASTERLINES;
+	// static const uint16_t TOTAL_SCREEN_HEIGHT = NTSC_RASTERLINES;
 		
 	
 	// -----------------------------------------------------------------------------------------------
@@ -257,6 +263,8 @@ private:
 	// -----------------------------------------------------------------------------------------------
 	//                                        Screen parameters
 	// -----------------------------------------------------------------------------------------------
+
+private:
 	
 	// Current border width in pixels
 	unsigned borderWidth;
@@ -270,10 +278,17 @@ private:
 	// Total height of visible screen (including border)
 	unsigned totalScreenHeight;
 
+public:
+	
+	inline unsigned getTotalScreenWidth() {	return totalScreenWidth; }
+	inline unsigned getTotalScreenHeight() { return totalScreenHeight; }
+	
 	
 	// -----------------------------------------------------------------------------------------------
 	//                         I/O memory and temporary storage space
 	// -----------------------------------------------------------------------------------------------
+
+private:
 	
 	//! I/O Memory
 	/*! If a value is poked to the VIC address space, it is stored here. */
@@ -293,11 +308,11 @@ private:
 	//! First screen buffer
 	/*! The VIC chip writes it output into this buffer. The contents of the array is later copied into to
 	 texture RAM of your graphic card by the drawRect method in the OpenGL related code. */
-	int screenBuffer1[512 * 512]; // [TOTAL_SCREEN_WIDTH * TOTAL_SCREEN_HEIGHT];
+	int screenBuffer1[512 * 512];
 	
 	//! Second screen buffer
 	/*! The VIC chip uses double buffering. Once a frame is drawn, the VIC chip writes the next frame to the second buffer */
-	int screenBuffer2[512 * 512]; // [TOTAL_SCREEN_WIDTH * TOTAL_SCREEN_HEIGHT];
+	int screenBuffer2[512 * 512];
 	
 	//! Currently used screen buffer
 	/*! The variable points either to screenBuffer1 or screenBuffer2 */
@@ -307,7 +322,6 @@ private:
 	/*! The pixel buffer is used for drawing a single line on the screen. When a sreen line is drawn, the pixels
 	 are first written in the pixel buffer. When the whole line is drawn, it is copied into the screen buffer.
 	 */
-	// int pixelBuffer[TOTAL_SCREEN_WIDTH];
 	int *pixelBuffer;
 	
 	//! Z buffer
@@ -316,13 +330,13 @@ private:
 	 of the z buffer, the closer it is to the viewer.
 	 The z buffer is cleared before a new rasterline is drawn.
 	 */
-	int zBuffer[TOTAL_SCREEN_WIDTH];
+	int zBuffer[MAX_VIEWABLE_PIXELS];
 	
 	//! Indicates the source of a drawn pixel
 	/*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
 	 The information is utilized to detect sprite-sprite and sprite-background collisions. 
 	 */
-	int pixelSource[TOTAL_SCREEN_WIDTH];
+	int pixelSource[MAX_VIEWABLE_PIXELS];
 	
 	//! Start address of the currently selected memory bank
 	/*! There are four banks in total since the VIC chip can only "see" 16 KB of memory at one time
@@ -489,7 +503,7 @@ private:
 	//! mark rasterline for debugging
 	/*! If set to a positive value, the specific rasterline is highlighted. The feature is intended for 
 	    debugging purposes, only */
-	int rasterlineDebug[PAL_RASTERLINES];
+	int rasterlineDebug[MAX_VIEWABLE_RASTERLINES];
 
 	
 	// -----------------------------------------------------------------------------------------------
@@ -594,26 +608,26 @@ private:
 	 \param fgcolor Foreground color in RGBA format
 	 \param bgcolor Background color in RGBA format
 	 */		
-	void drawSingleColorCharacter(int offset, uint8_t pattern, int fgcolor, int bgcolor);
+	void drawSingleColorCharacter(unsigned offset, uint8_t pattern, int fgcolor, int bgcolor);
 	
 	//! Draw a single character line (8 pixels) in multi-color mode
 	/*! \param offset X coordiate of the first pixel to draw
 	 \param pattern Bitmap of the character row to draw
 	 \param colorLookup Four element array containing the different colors in RGBA format
 	 */
-	void drawMultiColorCharacter(int offset, uint8_t pattern, int *colorLookup);
+	void drawMultiColorCharacter(unsigned offset, uint8_t pattern, int *colorLookup);
 	
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
 	 \param color Pixel color in RGBA format
 	 */
-	void setForegroundPixel(int offset, int color);
+	void setForegroundPixel(unsigned offset, int color);
 	
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
 	 \param color Pixel color in RGBA format
 	 */
-	void setBackgroundPixel(int offset, int color);
+	void setBackgroundPixel(unsigned offset, int color);
 	
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
@@ -621,7 +635,7 @@ private:
 	 \param nr Number of sprite (0 to 7)
 	 \note The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected
 	 */
-	void setSpritePixel(int offset, int color, int nr);
+	void setSpritePixel(unsigned offset, int color, int nr);
 		
 	//! Draws all sprites into the pixelbuffer
 	/*! A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging */
