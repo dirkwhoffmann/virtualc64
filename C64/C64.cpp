@@ -39,9 +39,7 @@ threadCleanup(void* thisC64)
 // Main execution loop
 void 
 *runThread(void *thisC64) {
-	
-	uint8_t delay = 0;
-	
+		
 	assert(thisC64 != NULL);
 	
 	C64 *c64 = (C64 *)thisC64;
@@ -62,14 +60,10 @@ void
 		if (!c64->executeOneLine())
 			break;		
 
-		if (c64->getFrame() == 0 && c64->getRasterline() == 0) {
+		if (c64->getRasterline() == 0 && c64->getFrame() % 8 == 0) {
 
 			// Check if thread was requested to terminate
 			pthread_testcancel();
-
-			// Take snapshot once in a while
-			if ((++delay & 0x1F) == 0)
-				c64->takeSnapshot();
 		}
 	}
 	
@@ -494,17 +488,25 @@ C64::endOfRasterline()
 	vic->endRasterline();
 	rasterlineCycle = 1;
 	rasterline++;
+
 	if (rasterline >= getRasterlinesPerFrame()) {
+		
 		// Last rasterline of frame
 		rasterline = 0;			
 		vic->endFrame();
 		frame++;
-		if (frame >= getFramesPerSecond() / 10) {
-			// Increment the "time of day clocks" every tenth of a second
-			frame = 0;
+
+		// Increment time of day clocks every tenth of a second
+		if (frame % (getFramesPerSecond() / 10) == 0) {
 			cia1->incrementTOD();
 			cia2->incrementTOD();
 		}
+		
+		// Take a snapshot once in a while
+		if (frame % (getFramesPerSecond() * 2) == 0) {
+			takeSnapshot();			
+		}
+		
 		// Pass control to the virtual sound chip
 		sid->execute(getCyclesPerFrame());
 			
