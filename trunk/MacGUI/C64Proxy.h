@@ -127,6 +127,9 @@
 - (uint16_t) getCharacterMemoryAddr;
 - (void) setCharacterMemoryAddr:(uint16_t)addr;
 
+- (unsigned)totalScreenWidth;
+- (unsigned)totalScreenHeight;
+
 - (int) getDisplayMode;
 - (void) setDisplayMode:(int)mode;
 - (int) getScreenGeometry;

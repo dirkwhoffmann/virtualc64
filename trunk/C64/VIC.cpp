@@ -284,8 +284,10 @@ VIC::setPAL()
 { 
 	borderWidth = PAL_BORDER_WIDTH;
 	borderHeight = PAL_BORDER_HEIGHT;
-	totalScreenWidth = PAL_VIEWABLE_PIXELS;
-	totalScreenHeight = PAL_VIEWABLE_RASTERLINES;
+	totalScreenWidth = BORDER_WIDTH + SCREEN_WIDTH + BORDER_WIDTH;   // OLD VALUE, WORKING BUT WRONG
+	// totalScreenWidth = PAL_VIEWABLE_PIXELS; // Need to fix xCoord to get this working
+	totalScreenHeight = NTSC_RASTERLINES; // OLD VALUE, WORKING BUT WRONG
+	// totalScreenHeight = PAL_VIEWABLE_RASTERLINES; // Need to fix xCoord to get this working
 }
 
 void
@@ -294,7 +296,10 @@ VIC::setNTSC()
 	borderWidth = NTSC_BORDER_WIDTH;
 	borderHeight = NTSC_BORDER_HEIGHT;
 	totalScreenWidth = NTSC_VIEWABLE_PIXELS;
-	totalScreenHeight = NTSC_VIEWABLE_RASTERLINES;
+	totalScreenWidth = BORDER_WIDTH + SCREEN_WIDTH + BORDER_WIDTH; // OLD VALUE, WORKING BUT WRONG
+	// totalScreenWidth = NTSC_VIEWABLE_PIXELS; // Need to fix xCoord to get this working
+	totalScreenHeight = NTSC_RASTERLINES; // OLD VALUE, WORKING BUT WRONG
+	// totalScreenHeight = NTSC_VIEWABLE_RASTERLINES; // Need to fix xCoord to get this working
 }
 
 
@@ -309,7 +314,7 @@ VIC::gAccess()
 	uint8_t fgcolor;
 	uint8_t bgcolor;
 	int colorLookup[4];
-	uint16_t xCoord = xCounter + getHorizontalRasterScroll();
+	uint16_t xCoord = (xCounter - 20) + BORDER_WIDTH + getHorizontalRasterScroll();
 	
 	switch (getDisplayMode()) {
 		case STANDARD_TEXT:
@@ -384,9 +389,9 @@ VIC::cAccess()
 }
 
 inline void 
-VIC::drawSingleColorCharacter(int offset, uint8_t pattern, int fgcolor, int bgcolor)
+VIC::drawSingleColorCharacter(unsigned offset, uint8_t pattern, int fgcolor, int bgcolor)
 {
-	assert(offset >= 0 && offset+7 < TOTAL_SCREEN_WIDTH);
+	assert(offset >= 0 && offset+7 < MAX_VIEWABLE_PIXELS);
 	if (pattern & 128) setForegroundPixel(offset+0, fgcolor); else setBackgroundPixel(offset+0, bgcolor);
 	if (pattern & 64)  setForegroundPixel(offset+1, fgcolor); else setBackgroundPixel(offset+1, bgcolor);
 	if (pattern & 32)  setForegroundPixel(offset+2, fgcolor); else setBackgroundPixel(offset+2, bgcolor);
@@ -398,11 +403,12 @@ VIC::drawSingleColorCharacter(int offset, uint8_t pattern, int fgcolor, int bgco
 }
 
 inline void 
-VIC::drawMultiColorCharacter(int offset, uint8_t pattern, int *colorLookup)
+VIC::drawMultiColorCharacter(unsigned offset, uint8_t pattern, int *colorLookup)
 {
+	assert(offset+7 < MAX_VIEWABLE_PIXELS);
+
 	int col;
 	uint8_t colBits;
-	assert(offset >= 0 && offset+7 < TOTAL_SCREEN_WIDTH);
 	colBits = (pattern >> 6) & 0x03;
 	col = colorLookup[colBits];
 	if (colBits & 0x02) {
@@ -448,7 +454,7 @@ VIC::drawMultiColorCharacter(int offset, uint8_t pattern, int *colorLookup)
 }
 
 inline void 
-VIC::setForegroundPixel(int offset, int color) 
+VIC::setForegroundPixel(unsigned offset, int color) 
 {
 	pixelBuffer[offset] = color;
 	zBuffer[offset]     = 0x10; //TODO: deprecated
@@ -456,17 +462,17 @@ VIC::setForegroundPixel(int offset, int color)
 }
 
 inline void 
-VIC::setBackgroundPixel(int offset, int color) 
+VIC::setBackgroundPixel(unsigned offset, int color) 
 {
 	pixelBuffer[offset] = color;
 }
 
 inline void 
-VIC::setSpritePixel(int offset, int color, int nr) 
+VIC::setSpritePixel(unsigned offset, int color, int nr) 
 {	
 	uint8_t mask = (1 << nr);
 	
-	if (offset >= 0 && offset < TOTAL_SCREEN_WIDTH) {
+	if (offset < totalScreenWidth) {
 		int depth = spriteDepth(nr);
 		if (depth < zBuffer[offset]) {
 			pixelBuffer[offset] = color;
@@ -657,10 +663,10 @@ VIC::drawHorizontalBorder()
 {
 	int bcolor = colors[getBorderColor()];
 	
-	for (int i = 0; i < xStart(); i++) {
+	for (unsigned i = 0; i < (unsigned)xStart(); i++) {
 		pixelBuffer[i] = bcolor;
 	}
-	for (int i = xEnd()+1; i < TOTAL_SCREEN_WIDTH; i++) {
+	for (unsigned i = xEnd()+1; i < totalScreenWidth; i++) {
 		pixelBuffer[i] = bcolor;
 	}
 }
@@ -670,7 +676,7 @@ VIC::drawVerticalBorder()
 {
 	int bcolor = colors[getBorderColor()];
 	
-	for (int i = 0; i < TOTAL_SCREEN_WIDTH; i++) {
+	for (unsigned i = 0; i < totalScreenWidth; i++) {
 		pixelBuffer[i] = bcolor;
 	}
 }
@@ -1016,8 +1022,7 @@ void
 VIC::endRasterline()
 {
 	// Copy pixel buffer of old line to screen buffer
-	// memcpy(currentScreenBuffer + (scanline * TOTAL_SCREEN_WIDTH), pixelBuffer, sizeof(pixelBuffer));
-	pixelBuffer += TOTAL_SCREEN_WIDTH;
+	pixelBuffer += totalScreenWidth;
 }
 
 void 
@@ -1154,7 +1159,7 @@ VIC::cycle12()
 	releaseBusForSprite(7);
 
 	// Reset the X coordinate to 0
-	xCounter = 0;
+	// xCounter = 0;
 	update_display_and_ba;
 }
 
@@ -1163,11 +1168,16 @@ VIC::cycle13()
 {
 	countX();
 	update_display_and_ba;
+	
+	// FRODO: raster_x = 0xfffc;
 }
 
 void
 VIC::cycle14()
 {
+	// NEW CODE
+	xCounter = 0x04;
+	
 	/* In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
 	 (VCBASE->VC) und VMLI gelšscht. Wenn zu diesem Zeitpunkt ein
 	 Bad-Line-Zustand vorliegt, wird zusŠtzlich RC auf Null gesetzt. */
@@ -1715,11 +1725,11 @@ VIC::cycle63()
 
 	// draw debug markers
 	if (markIRQLines && scanline == rasterInterruptLine()) 
-		markLine(0, TOTAL_SCREEN_WIDTH, colors[WHITE]);
+		markLine(0, totalScreenWidth, colors[WHITE]);
 	if (markDMALines && dmaLine)	
-		markLine(0, TOTAL_SCREEN_WIDTH, colors[RED]);
+		markLine(0, totalScreenWidth, colors[RED]);
 	if (rasterlineDebug[scanline] >= 0) {
-		markLine(0, TOTAL_SCREEN_WIDTH, colors[rasterlineDebug[scanline] % 16]);
+		markLine(0, totalScreenWidth, colors[rasterlineDebug[scanline] % 16]);
 		rasterlineDebug[scanline] = -1;
 	}		
 

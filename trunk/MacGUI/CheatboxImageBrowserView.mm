@@ -94,8 +94,8 @@
 		NSString *subtitle = [NSString stringWithUTF8String:buf];
 		
 		// Determine texture bounds
-		int width = VIC::TOTAL_SCREEN_WIDTH;
-		int height = VIC::TOTAL_SCREEN_HEIGHT;
+		int width = [[c64 vic] totalScreenWidth];
+		int height = [[c64 vic] totalScreenHeight];
 		
 		// We skip a couple of rows (upper and lower border should be same size)
 		height -= 38;
