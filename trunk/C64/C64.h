@@ -201,7 +201,7 @@ private:
 	uint64_t cycles;
 	
 	//! Current frame number
-	int frame;
+	uint64_t frame;
 	
 	//! Current rasterline number
 	int rasterline;

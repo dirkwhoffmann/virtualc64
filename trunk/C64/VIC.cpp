@@ -282,13 +282,19 @@ VIC::dumpState()
 void 
 VIC::setPAL()
 { 
-	// Nothing to do so far
+	borderWidth = PAL_BORDER_WIDTH;
+	borderHeight = PAL_BORDER_HEIGHT;
+	totalScreenWidth = PAL_VIEWABLE_PIXELS;
+	totalScreenHeight = PAL_VIEWABLE_RASTERLINES;
 }
 
 void
 VIC::setNTSC()
 {
-	// Nothing to do so far
+	borderWidth = NTSC_BORDER_WIDTH;
+	borderHeight = NTSC_BORDER_HEIGHT;
+	totalScreenWidth = NTSC_VIEWABLE_PIXELS;
+	totalScreenHeight = NTSC_VIEWABLE_RASTERLINES;
 }
 
 

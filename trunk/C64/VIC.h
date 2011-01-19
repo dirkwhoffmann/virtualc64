@@ -102,43 +102,78 @@ public:
 		
 	//! Start address of the VIC I/O space
 	static const uint16_t VIC_START_ADDR = 0xD000;
+	
 	//! End address of the VIC I/O space
 	static const uint16_t VIC_END_ADDR = 0xD3FF;
 	
-	//! Number of drawn rasterlines on an NTSC screen
-	static const uint16_t NTSC_RASTERLINES = 263;
 
-	//! Number of drawn rasterlines on a PAL format
-	static const uint16_t PAL_RASTERLINES = 312;
+	//! Widht of the drawable screen area in pixels
+	static const uint16_t SCREEN_WIDTH = 320;
+	
+	//! Height of the drawable screen area in pixels
+	static const uint16_t SCREEN_HEIGHT = 200;
+	
 	
 	//! Refresh rate of the NTSC screen format in Hz
 	static const uint16_t NTSC_REFRESH_RATE = 60;
-
+	
 	//! Refresh rate of the PAL screen format in Hz
 	static const uint16_t PAL_REFRESH_RATE = 50;
-
+	
 	//! CPU cycles per rasterline on a NTSC machine
 	static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
-
+	
 	//! CPU cycles per rasterline on a PAL machine
 	static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
 	
-	//! Widht of the drawable screen area in pixels
-	static const uint16_t SCREEN_WIDTH = 320;
+	//! Number of rasterlines of an NTSC screen
+	static const uint16_t NTSC_RASTERLINES = 263;
 
-	//! Height of the drawable screen area in pixels
-	static const uint16_t SCREEN_HEIGHT = 200;
+	//! Number of rasterlines of a PAL screen
+	static const uint16_t PAL_RASTERLINES = 312;
 
+	//! Number of viewable rasterlines of an NTSC screen
+	static const uint16_t NTSC_VIEWABLE_RASTERLINES = 235;
+
+	//! Number of viewable rasterlines of an PAL screen
+	static const uint16_t PAL_VIEWABLE_RASTERLINES = 284;
+	
+	//! Number of viewable pixels per rasterline of an NTSC screen
+	static const uint16_t NTSC_VIEWABLE_PIXELS = 418;
+
+	//! Number of viewable pixels per rasterline of an NTSC screen
+	static const uint16_t PAL_VIEWABLE_PIXELS = 403;
+
+	//! Border width of an NTSC screen
+	//* 49 + SCREEN_WIDTH + 49 = NTSC_VIEWABLE_PIXELS */
+	static const uint16_t NTSC_BORDER_WIDTH = 49;
+
+	//! Border width of a PAL screen
+	//* 41 + SCREEN_WIDTH + 42 = PAL_VIEWABLE_PIXELS */
+	static const uint16_t PAL_BORDER_WIDTH = 41;
+
+	//! Border height of an NTSC screen
+	//* 17 + SCREEN_HEIGHT + 18 = NTSC_VIEWABLE_RASTERLINES */
+	static const uint16_t NTSC_BORDER_HEIGHT = 17;
+	
+	//! Border height of a PAL screen
+	//* 42 + SCREEN_HEIGHT + 42 = PAL_VIEWABLE_RASTERLINES */
+	static const uint16_t PAL_BORDER_HEIGHT = 42;
+		
+
+	
+	// OLD VALUES BELOW (DEPRECATED)
+	
 	//! First column coordinate that belongs to the drawable screen area
-	static const uint16_t BORDER_WIDTH = 24;
+	static const uint16_t BORDER_WIDTH = 24; // should be 
 	
 	//! First rasterline that belongs to the drawable screen area
 	static const uint16_t BORDER_HEIGHT = 51;
 
-	//! First rasterline that can be seen
+	//! First rasterline that can be seen // WRONG VALUE AND MISSPELLED
 	static const uint16_t FIRST_VIEABLE_LINE = 16;
 
-	//! Last rasterline that can be seen
+	//! Last rasterline that can be seen // WRONG VALUE AND MISSPELLED
 	static const uint16_t LAST_VIEABLE_LINE = 287;
 
 	//! Total number of pixels in one screen buffer line
@@ -218,6 +253,23 @@ private:
 	//! Horizontal border on/off switch
 	bool drawHorizontalFrame;
 	
+	
+	// -----------------------------------------------------------------------------------------------
+	//                                        Screen parameters
+	// -----------------------------------------------------------------------------------------------
+	
+	// Current border width in pixels
+	unsigned borderWidth;
+	
+	// Current border height in pixels
+	unsigned borderHeight;
+	
+	// Total width of visible screen (including border)
+	unsigned totalScreenWidth;
+
+	// Total height of visible screen (including border)
+	unsigned totalScreenHeight;
+
 	
 	// -----------------------------------------------------------------------------------------------
 	//                         I/O memory and temporary storage space
