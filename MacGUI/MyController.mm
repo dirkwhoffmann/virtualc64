@@ -142,7 +142,7 @@
 	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Z] forKey:VC64EyeZ];
 
 	[defaultValues setObject:[NSNumber numberWithInt:VIC::CUSTOM_PALETTE] forKey:VC64ColorSchemeKey];
-	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:VC64VideoFilterKey];	
+	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64VideoFilterKey];	
 	
 	[defaultValues setObject:[NSNumber numberWithInt:0x101010ff] forKey:VC64CustomCol0Key];
 	[defaultValues setObject:[NSNumber numberWithInt:0xffffffff] forKey:VC64CustomCol1Key];
@@ -193,12 +193,11 @@
 	// [c64 sidEnableFilter:[defaults boolForKey:VC64SIDFilterKey]];
 	
 	// Video 
-	// [c64 vicSetVideoFilter:[defaults integerForKey:VC64VideoFilterKey];
-	
 	[screen setEyeX:[defaults floatForKey:VC64EyeX]];
 	[screen setEyeY:[defaults floatForKey:VC64EyeY]];
 	[screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
-	
+
+	[screen setAntiAliasing:[defaults integerForKey:VC64VideoFilterKey]];
 	colorScheme = [defaults integerForKey:VC64ColorSchemeKey];
 	if (colorScheme == VIC::CUSTOM_PALETTE) {
 		NSLog(@"Applying custom colors...");

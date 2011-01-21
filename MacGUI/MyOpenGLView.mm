@@ -45,7 +45,7 @@ void checkForOpenGLErrors()
 
 @implementation MyOpenGLView
 
-@synthesize c64, frames, enableOpenGL, drawC64texture, drawBackground, drawEntireCube;
+@synthesize c64, frames, enableOpenGL, drawC64texture, drawBackground, drawEntireCube, antiAliasing;
 
 // --------------------------------------------------------------------------------
 //                                  Initializiation
@@ -87,6 +87,7 @@ void checkForOpenGLErrors()
 	drawC64texture = false;
 	drawBackground = true;
 	drawEntireCube = false;
+	antiAliasing = true;
 	
 	// Core video
 	displayLink = nil;
@@ -202,9 +203,11 @@ void checkForOpenGLErrors()
 	// NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
 	// NSImage *bgImage = [NSImage imageNamed:@"C64G_P8"];
 	//NSImage *bgImage = [NSImage imageNamed:@"c64orig"];
-	NSString *file = @"/Library/Desktop Pictures/Nature/Aurora.jpg";
-	NSImage *bgImage = [[NSImage alloc] initWithContentsOfFile:file];
 	
+	// NSString *file = @"/Library/Desktop Pictures/Nature/Aurora.jpg";
+	// NSImage *bgImage = [[NSImage alloc] initWithContentsOfFile:file];
+	NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
+	NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
 	NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
 	bgTexture = [self makeTexture:bgImageResized];
 	checkForOpenGLErrors();
@@ -361,12 +364,12 @@ void checkForOpenGLErrors()
 {
 	NSLog(@"Scrolling...\n");
 
-	currentEyeY    = 0.9;
+	currentEyeY    = 1.3; // 0.9;
 	targetXAngle   = 0;
 	targetYAngle   = 0;
 	targetZAngle   = 0;
 
-	[self computeAnimationDeltaSteps:110];
+	[self computeAnimationDeltaSteps:120];
 		
 	if (targetYAngle < 0) 
 		targetYAngle += 360;
@@ -532,11 +535,14 @@ void checkForOpenGLErrors()
 	TEX_BOTTOM = (float)c64->vic->getLastVisibleLine() / (float)TEXTURE_HEIGHT;
 	dimX = 0.64;
 	dimY = dimX * (float)c64->vic->getTotalScreenHeight() / (float)c64->vic->getTotalScreenWidth() / c64->vic->getPixelAspectRatio();
+
 	
 	[glcontext makeCurrentContext];
 
+	// Changing the shadeModel has no effect
+	// glShadeModel(antiAliasing ? GL_SMOOTH : GL_FLAT);
+
 	// Clear screen and depth buffer
-	//uint32_t col = 0xffffffff;
 	//glClearColor((float)EXTRACT_RED(col)/0xff, (float)EXTRACT_GREEN(col)/0xff, (float)EXTRACT_BLUE(col)/0xff, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

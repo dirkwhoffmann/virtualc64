@@ -515,7 +515,7 @@ C64::endOfRasterline()
 		}
 		
 		// Take a snapshot once in a while
-		if (frame % (getFramesPerSecond() * 2) == 0) {
+		if (frame % (getFramesPerSecond() * 4) == 0) {
 			takeSnapshot();			
 		}
 		
