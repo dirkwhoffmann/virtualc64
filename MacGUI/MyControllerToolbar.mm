@@ -107,12 +107,6 @@
 	[imageView release];
 }
 
-- (IBAction)debugAction:(id)sender
-{	
-	[debug_panel toggle:self];
-	[self refresh];
-}
-
 
 - (IBAction)joystick1Action:(id)sender
 {
@@ -134,17 +128,65 @@
 	[screen toggleFullscreenMode];
 }
 
-- (IBAction)cheatboxAction:(id)sender
+
+- (IBAction)debugOpenAction:(id)sender
+{
+	NSLog(@"debugOpenAction");
+
+	if ([debugPanel state] == NSDrawerClosedState || [debugPanel state] == NSDrawerClosingState) {
+		[debugPanel open];
+	}
+}
+
+- (IBAction)debugCloseAction:(id)sender
+{
+	NSLog(@"debugCloseAction");
+	
+	if ([debugPanel state] == NSDrawerOpenState || [debugPanel state] == NSDrawerOpeningState) {
+		[debugPanel close];
+	}
+}
+
+- (IBAction)debugAction:(id)sender
 {	
-	if ([cheatboxPanel state] == NSDrawerOpenState) {
-		[c64 run];
+	NSLog(@"debugAction");
+	if ([debugPanel state] == NSDrawerClosedState || [debugPanel state] == NSDrawerClosingState) {
+		[self cheatboxCloseAction:self];
+		[self debugOpenAction:self];
+	} else {
+		[self debugCloseAction:self];
+	}
+	
+	[self refresh];
+}
+
+
+- (IBAction)cheatboxOpenAction:(id)sender
+{
+	if ([cheatboxPanel state] == NSDrawerClosedState || [cheatboxPanel state] == NSDrawerClosingState) {
+		[c64 suspend];
+		[cheatboxImageBrowserView refresh];
+		[cheatboxPanel open];
+	}
+}
+
+- (IBAction)cheatboxCloseAction:(id)sender
+{
+	if ([cheatboxPanel state] == NSDrawerOpenState || [cheatboxPanel state] == NSDrawerOpeningState) {
+		[c64 resume];
 		[cheatboxPanel close];
 	}
-	if ([cheatboxPanel state] == NSDrawerClosedState) {
-		[c64 halt];
-		[cheatboxImageBrowserView refresh];		
-		[cheatboxPanel open];
-	}	
 }
+
+- (IBAction)cheatboxAction:(id)sender
+{	
+	if ([cheatboxPanel state] == NSDrawerClosedState || [cheatboxPanel state] == NSDrawerClosingState) {
+		[self debugCloseAction:self];
+		[self cheatboxOpenAction:self];
+	} else {
+		[self cheatboxCloseAction:self];
+	}
+}
+
 
 @end

@@ -24,13 +24,18 @@
 
 - (void) printDocument:(id) sender;
 
-- (IBAction)debugAction:(id)sender;
-
 - (IBAction)joystick1Action:(id)sender;
 - (IBAction)joystick2Action:(id)sender;
 - (IBAction)switchJoysticksAction:(id)sender;
 
 - (IBAction)fullscreenAction:(id)sender;
+
+- (IBAction)debugOpenAction:(id)sender;
+- (IBAction)debugCloseAction:(id)sender;
+- (IBAction)debugAction:(id)sender;
+
+- (IBAction)cheatboxOpenAction:(id)sender;
+- (IBAction)cheatboxCloseAction:(id)sender;
 - (IBAction)cheatboxAction:(id)sender;
 
 @end

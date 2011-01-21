@@ -21,10 +21,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="766"/>
+			<integer value="1005"/>
 			<integer value="6"/>
 			<integer value="2024"/>
-			<integer value="1005"/>
-			<integer value="766"/>
 			<integer value="1900"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -5464,14 +5464,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">debug_panel</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="964686301"/>
-					</object>
-					<int key="connectionID">208</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">info</string>
 						<reference key="source" ref="662028313"/>
 						<reference key="destination" ref="16358680"/>
@@ -7045,6 +7037,14 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<reference key="destination" ref="666194094"/>
 					</object>
 					<int key="connectionID">2195</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">debugPanel</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="964686301"/>
+					</object>
+					<int key="connectionID">2196</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -11538,7 +11538,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1046, 575}, {210, 389}}</string>
+					<string>{{1126, 590}, {210, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11597,7 +11597,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{174, 714}, {300, 389}}</string>
+					<string>{{146, 749}, {300, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11973,7 +11973,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2195</int>
+			<int key="maxID">2196</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -12265,7 +12265,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>clockSpeedBar</string>
 							<string>clockSpeedStepper</string>
 							<string>cpuTableView</string>
-							<string>debug_panel</string>
+							<string>debugPanel</string>
 							<string>dezHexSelector</string>
 							<string>drive</string>
 							<string>driveBusy</string>
@@ -12480,7 +12480,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>clockSpeedBar</string>
 							<string>clockSpeedStepper</string>
 							<string>cpuTableView</string>
-							<string>debug_panel</string>
+							<string>debugPanel</string>
 							<string>dezHexSelector</string>
 							<string>drive</string>
 							<string>driveBusy</string>
@@ -12782,7 +12782,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">CpuTableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">debug_panel</string>
+								<string key="name">debugPanel</string>
 								<string key="candidateClassName">NSDrawer</string>
 							</object>
 							<object class="IBToOneOutletInfo">
