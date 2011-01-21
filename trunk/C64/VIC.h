@@ -32,6 +32,7 @@ class C64Memory;
 #define EXTRACT_BLUE(x)  ((x & 0x0000ff00) >> 8)
 #define EXTRACT_ALPHA(x) (x & 0x000000ff)
 
+
 //! The virtual Video Controller
 /*! VIC is the video controller chip of the Commodore 64.
 	The VIC chip occupied the memory mapped I/O space from address 0xD000 to 0xD02E.
@@ -106,75 +107,111 @@ public:
 	//! End address of the VIC I/O space
 	static const uint16_t VIC_END_ADDR = 0xD3FF;
 	
-
-	//! Widht of the drawable screen area in pixels
+	//! Widht of inner screen area in pixels
 	static const uint16_t SCREEN_WIDTH = 320;
 	
-	//! Height of the drawable screen area in pixels
+	//! Height of inner screen area in pixels
 	static const uint16_t SCREEN_HEIGHT = 200;
 	
+	//! First column coordinate of inner screen area
+	static const uint16_t FIRST_X_COORD_OF_INNER_AREA = 24;  
 	
-	//! Refresh rate of the NTSC screen format in Hz
+	//! First row coordinate of inner screen area
+	static const uint16_t FIRST_Y_COORD_OF_INNER_AREA = 51;
+	
+	
+	// NTSC machines
+
+	//! Refresh rate in Hz
 	static const uint16_t NTSC_REFRESH_RATE = 60;
-	
-	//! Refresh rate of the PAL screen format in Hz
-	static const uint16_t PAL_REFRESH_RATE = 50;
-	
-	//! CPU cycles per rasterline on a NTSC machine
+
+	//! CPU cycles per rasterline
 	static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
-	
-	//! CPU cycles per rasterline on a PAL machine
-	static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
-	
-	//! Number of rasterlines of an NTSC screen
-	static const uint16_t NTSC_RASTERLINES = 263;
 
-	//! Number of rasterlines of a PAL screen
-	static const uint16_t PAL_RASTERLINES = 312;
+	//! Width of left border
+	static const uint16_t NTSC_LEFT_BORDER_WIDTH = 49; // ??? Needs verification
+	
+	//! Width of right border
+	static const uint16_t NTSC_RIGHT_BORDER_WIDTH = 49; // ??? Needs verification
 
-	//! Number of viewable rasterlines of an NTSC screen
+	//! Number of viewable pixels in one rasterline
+	static const uint16_t NTSC_VIEWABLE_PIXELS = 418;
+
+	//! Number of invisible lines above upper border (first visible line is ???) // Needs verification
+	static const uint16_t NTSC_UPPER_INVISIBLE = 28;  
+
+	//! Upper border height 
+	static const uint16_t NTSC_UPPER_BORDER_HEIGHT = 23; // Needs verification
+	
+	//! Lower border height
+	static const uint16_t NTSC_LOWER_BORDER_HEIGHT = 12; // Needs verification
+
+	//! Number of invisible lines below lower border (last visible line is ???) // Needs verification
+	static const uint16_t NTSC_LOWER_INVISIBLE = 0;  
+	
+	//! Number of viewable rasterlines
 	static const uint16_t NTSC_VIEWABLE_RASTERLINES = 235;
 
-	//! Number of viewable rasterlines of an PAL screen
-	static const uint16_t PAL_VIEWABLE_RASTERLINES = 284;
+	//! Total number of rasterlines, including invisible areas
+	static const uint16_t NTSC_RASTERLINES = 263;
+	
+	
+	// PAL machines
+	
+	//! Refresh rate in Hz
+	static const uint16_t PAL_REFRESH_RATE = 50;
+	
+	//! CPU cycles per rasterline
+	static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
+		
+	//! Width of left border
+	static const uint16_t PAL_LEFT_BORDER_WIDTH = 46;
+
+	//! Width of right border
+	static const uint16_t PAL_RIGHT_BORDER_WIDTH = 36;
+	
+	//! Number of viewable pixels in one rasterline
+	static const uint16_t PAL_VIEWABLE_PIXELS = 402;
+	
+	//! Number of invisible lines above upper border (first visible line is 0x008)
+	static const uint16_t PAL_UPPER_INVISIBLE = 8;  
+
+	//! Upper border height 
+	static const uint16_t PAL_UPPER_BORDER_HEIGHT = 43;
+	
+	//! Lower border height
+	static const uint16_t PAL_LOWER_BORDER_HEIGHT = 49;
+	
+	//! Number of invisible lines below lower border (last visible line is 0x12B)
+	static const uint16_t PAL_LOWER_INVISIBLE = 12;  
+
+	//! Number of viewable rasterlines 
+	static const uint16_t PAL_VIEWABLE_RASTERLINES = 292;
+
+	//! Total number of rasterlines, including invisible areas
+	static const uint16_t PAL_RASTERLINES = 312;
+
+
+
+	
+
 
 	//! Maximum number of viewable rasterlines
 	static const uint16_t MAX_VIEWABLE_RASTERLINES = PAL_VIEWABLE_RASTERLINES;
-
-	//! Number of viewable pixels per rasterline of an NTSC screen
-	static const uint16_t NTSC_VIEWABLE_PIXELS = 418;
-
-	//! Number of viewable pixels per rasterline of an PAL screen
-	static const uint16_t PAL_VIEWABLE_PIXELS = 403;
 
 	//! Maximum number of viewable pixels per rasterline
 	static const uint16_t MAX_VIEWABLE_PIXELS = NTSC_VIEWABLE_PIXELS;
 	
 	
-	//! Border width of an NTSC screen
-	//* 49 + SCREEN_WIDTH + 49 = NTSC_VIEWABLE_PIXELS */
-	static const uint16_t NTSC_BORDER_WIDTH = 49;
-
-	//! Border width of a PAL screen
-	//* 41 + SCREEN_WIDTH + 42 = PAL_VIEWABLE_PIXELS */
-	static const uint16_t PAL_BORDER_WIDTH = 41;
-
-	//! Border height of an NTSC screen
-	//* 17 + SCREEN_HEIGHT + 18 = NTSC_VIEWABLE_RASTERLINES */
-	static const uint16_t NTSC_BORDER_HEIGHT = 17;
-	
-	//! Border height of a PAL screen
-	//* 42 + SCREEN_HEIGHT + 42 = PAL_VIEWABLE_RASTERLINES */g
-	static const uint16_t PAL_BORDER_HEIGHT = 42;
 		
 	
 	// OLD VALUES BELOW (DEPRECATED)
 	
 	//! First column coordinate that belongs to the drawable screen area
-	static const uint16_t BORDER_WIDTH = 24;  
+	// static const uint16_t BORDER_WIDTH = 24;  
 	
 	//! First rasterline that belongs to the drawable screen area
-	static const uint16_t BORDER_HEIGHT = 51;
+	// static const uint16_t BORDER_HEIGHT = 51;
 
 	//! First rasterline that can be seen // WRONG VALUE AND MISSPELLED
 	// static const uint16_t FIRST_VIEABLE_LINE = 16;
@@ -267,21 +304,30 @@ private:
 private:
 	
 	// Current border width in pixels
-	unsigned borderWidth;
+	unsigned leftBorderWidth, rightBorderWidth;
 	
 	// Current border height in pixels
-	unsigned borderHeight;
-	
+	unsigned upperBorderHeight, lowerBorderHeight;
+
+	// First and last visible rasterline
+	unsigned firstVisibleLine, lastVisibleLine;
+		
 	// Total width of visible screen (including border)
 	unsigned totalScreenWidth;
 
 	// Total height of visible screen (including border)
 	unsigned totalScreenHeight;
 
+	// Pixel aspect ratio (X:Y)
+	float pixelAspectRatio;
+
 public:
-	
+
+	inline unsigned getFirstVisibleLine() { return firstVisibleLine; }
+	inline unsigned getLastVisibleLine() { return lastVisibleLine; }
 	inline unsigned getTotalScreenWidth() {	return totalScreenWidth; }
 	inline unsigned getTotalScreenHeight() { return totalScreenHeight; }
+	inline float getPixelAspectRatio() { return pixelAspectRatio; }
 	
 	
 	// -----------------------------------------------------------------------------------------------
@@ -724,16 +770,22 @@ public:
 	
 public:
 	
-	//! Return left bound of inner screen area
-	inline int xStart() { return numberOfColumns() == 40 ? 24 : 31; }
+	//! Return left bound of inner screen area. 
+	//* The returned value is the leftmost coordinate inside the inner screen area */
+	//inline int xStart() { return numberOfColumns() == 40 ? 24 : 31; }
+	inline int xStart() { return numberOfColumns() == 40 ? leftBorderWidth : leftBorderWidth + 7; }
 
 	//! Return right bound of inner screen area
-	inline int xEnd() { return numberOfColumns() == 40 ? 343 : 334; }
-
+	//* The returned value is the leftmost coordinate inside the right border */
+	// inline int xEnd() { return numberOfColumns() == 40 ? 343 : 334; }
+	inline int xEnd() { return numberOfColumns() == 40 ? leftBorderWidth + SCREEN_WIDTH : leftBorderWidth + SCREEN_WIDTH - 7; }
+	
 	//! Return upper bound of inner screen area
+	// inline int yStart() { return numberOfRows() == 25 ? 51 : 55; }
 	inline int yStart() { return numberOfRows() == 25 ? 51 : 55; }
 	
 	//! Return lower bound of inner screen area
+	// inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 	inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 	
 	//! Returns the state of the CSEL register
@@ -787,10 +839,10 @@ public:
 	inline void setHorizontalRasterScroll(uint8_t offset) { iomem[0x16] = (iomem[0x16] & 0xF8) | (offset & 0x07); }
 		
 	//! Returns the row number for a given rasterline
-	inline uint8_t getRowNumberForRasterline(uint16_t line) { return (line - BORDER_HEIGHT + 3 - getVerticalRasterScroll()) / 8; }
+	inline uint8_t getRowNumberForRasterline(uint16_t line) { return (line - FIRST_Y_COORD_OF_INNER_AREA + 3 - getVerticalRasterScroll()) / 8; }
 	
 	//! Returns the character row number for a given rasterline
-	inline uint8_t getRowOffsetForRasterline(uint16_t line) { return (line - BORDER_HEIGHT + 3 - getVerticalRasterScroll()) % 8; }
+	inline uint8_t getRowOffsetForRasterline(uint16_t line) { return (line - FIRST_Y_COORD_OF_INNER_AREA + 3 - getVerticalRasterScroll()) % 8; }
 	
 	//! Return border color
 	inline uint8_t getBorderColor() { return iomem[0x20] & 0x0F; }
@@ -1018,10 +1070,14 @@ public:
 	// -----------------------------------------------------------------------------------------------
 	//                                              Debugging
 	// -----------------------------------------------------------------------------------------------
+
+private:
 	
 	//! Colorize line
-	void markLine(int start, int end, int color);
+	void markLine(int start, unsigned length, int color);
 
+public: 
+	
 	//! Return true iff IRQ lines are colorized
 	bool showIrqLines() { return markIRQLines; }
 

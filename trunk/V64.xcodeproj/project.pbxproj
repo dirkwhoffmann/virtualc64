@@ -530,6 +530,8 @@
 				5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */,
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
+				5007A4860C3F9D6A0069B0CE /* PreferenceController.h */,
+				5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -541,8 +543,6 @@
 				50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */,
 				50A8F8F10E47171300ACE17D /* RomDialog.h */,
 				50A8F8F20E47171300ACE17D /* RomDialog.mm */,
-				5007A4860C3F9D6A0069B0CE /* PreferenceController.h */,
-				5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";

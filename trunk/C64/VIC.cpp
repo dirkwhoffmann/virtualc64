@@ -282,24 +282,47 @@ VIC::dumpState()
 void 
 VIC::setPAL()
 { 
-	borderWidth = PAL_BORDER_WIDTH;
-	borderHeight = PAL_BORDER_HEIGHT;
-	totalScreenWidth = BORDER_WIDTH + SCREEN_WIDTH + BORDER_WIDTH;   // OLD VALUE, WORKING BUT WRONG
-	// totalScreenWidth = PAL_VIEWABLE_PIXELS; // Need to fix xCoord to get this working
-	totalScreenHeight = NTSC_RASTERLINES; // OLD VALUE, WORKING BUT WRONG
-	// totalScreenHeight = PAL_VIEWABLE_RASTERLINES; // Need to fix xCoord to get this working
+#if 0
+	// OLD VALUES (WORKING, BUT WRONG)
+	borderWidth = 24; 
+	borderHeight = 51;
+	totalScreenWidth = 24 + 320 + 24;  
+	totalScreenHeight = 263;
+#endif
+	
+	// NEW VALUE (EXPERIMENTAL)
+	leftBorderWidth = PAL_LEFT_BORDER_WIDTH;
+	rightBorderWidth = PAL_RIGHT_BORDER_WIDTH;
+	upperBorderHeight = PAL_UPPER_BORDER_HEIGHT;
+	lowerBorderHeight = PAL_LOWER_BORDER_HEIGHT;
+	totalScreenWidth = PAL_VIEWABLE_PIXELS;
+	totalScreenHeight = PAL_VIEWABLE_RASTERLINES;
+	firstVisibleLine = PAL_UPPER_INVISIBLE;
+	lastVisibleLine = PAL_UPPER_INVISIBLE + PAL_VIEWABLE_RASTERLINES;
+	pixelAspectRatio = 0.9365;
 }
 
 void
 VIC::setNTSC()
 {
-	borderWidth = NTSC_BORDER_WIDTH;
-	borderHeight = NTSC_BORDER_HEIGHT;
+#if 0
+	// OLD VALUES (WORKING, BUT WRONG)
+	borderWidth = 24; 
+	borderHeight = 51;
+	totalScreenWidth = 24 + 320 + 24;  
+	totalScreenHeight = 263;
+#endif
+
+	// NEW VALUE (EXPERIMENTAL)
+	leftBorderWidth = NTSC_LEFT_BORDER_WIDTH;
+	rightBorderWidth = NTSC_RIGHT_BORDER_WIDTH;
+	upperBorderHeight = NTSC_UPPER_BORDER_HEIGHT;
+	lowerBorderHeight = NTSC_LOWER_BORDER_HEIGHT;
 	totalScreenWidth = NTSC_VIEWABLE_PIXELS;
-	totalScreenWidth = BORDER_WIDTH + SCREEN_WIDTH + BORDER_WIDTH; // OLD VALUE, WORKING BUT WRONG
-	// totalScreenWidth = NTSC_VIEWABLE_PIXELS; // Need to fix xCoord to get this working
-	totalScreenHeight = NTSC_RASTERLINES; // OLD VALUE, WORKING BUT WRONG
-	// totalScreenHeight = NTSC_VIEWABLE_RASTERLINES; // Need to fix xCoord to get this working
+	totalScreenHeight = NTSC_VIEWABLE_RASTERLINES;
+	firstVisibleLine = NTSC_UPPER_INVISIBLE;
+	lastVisibleLine = NTSC_UPPER_INVISIBLE + NTSC_VIEWABLE_RASTERLINES;
+	pixelAspectRatio = 0.75;
 }
 
 
@@ -314,7 +337,7 @@ VIC::gAccess()
 	uint8_t fgcolor;
 	uint8_t bgcolor;
 	int colorLookup[4];
-	uint16_t xCoord = (xCounter - 20) + BORDER_WIDTH + getHorizontalRasterScroll();
+	uint16_t xCoord = (xCounter - 20) + leftBorderWidth + getHorizontalRasterScroll();
 	
 	switch (getDisplayMode()) {
 		case STANDARD_TEXT:
@@ -666,7 +689,7 @@ VIC::drawHorizontalBorder()
 	for (unsigned i = 0; i < (unsigned)xStart(); i++) {
 		pixelBuffer[i] = bcolor;
 	}
-	for (unsigned i = xEnd()+1; i < totalScreenWidth; i++) {
+	for (unsigned i = xEnd(); i < totalScreenWidth; i++) {
 		pixelBuffer[i] = bcolor;
 	}
 }
@@ -1721,7 +1744,7 @@ VIC::cycle63()
 	drawBorder();
 			
 	// illegal display modes cause a black line to appear
-	if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR) markLine(xStart(), xEnd(), colors[BLACK]);
+	if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR) markLine(xStart(), SCREEN_WIDTH, colors[BLACK]);
 
 	// draw debug markers
 	if (markIRQLines && scanline == rasterInterruptLine()) 
@@ -1760,10 +1783,10 @@ VIC::cycle65()
 // -----------------------------------------------------------------------------------------------
 
 void inline
-VIC::markLine(int start, int end, int color)
+VIC::markLine(int start, unsigned length, int color)
 {
-	for (int i = start; i <= end; i++) {
-		pixelBuffer[i] = color;
+	for (unsigned i = 0; i < length; i++) {
+		pixelBuffer[start + i] = color;
 	}	
 }
 

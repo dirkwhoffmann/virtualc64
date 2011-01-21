@@ -111,16 +111,21 @@ const int BG_TEXTURE_DEPTH = 4;
 
 	bool emulateJoystick1;
 	bool emulateJoystick2;
-	float currentXAngle, targetXAngle, deltaX;
-	float currentYAngle, targetYAngle, deltaY;
-	float currentZAngle, targetZAngle, deltaZ;
-	float currentDistance, targetDistance, deltaDistance;
-	float currentZoffset, targetZoffeset, deltaOffset;
+	float currentXAngle, targetXAngle, deltaXAngle;
+	float currentYAngle, targetYAngle, deltaYAngle;
+	float currentZAngle, targetZAngle, deltaZAngle;
+	float currentEyeX, targetEyeX, deltaEyeX;
+	float currentEyeY, targetEyeY, deltaEyeY;
+	float currentEyeZ, targetEyeZ, deltaEyeZ;
+	
 	int frames;
 
 	//! If false, the C64 screen is not drawn (background will be visible)
 	bool drawC64texture;
 
+	//! If false, only the front facing part of the texture cube is drawn
+	bool drawEntireCube;
+	
 	//! Usually set to true. If set to false, OpenGL drawing is disabled
 	/*! Setting the variable to false only makes sense during performance tests */
 	bool enableOpenGL;
@@ -128,6 +133,20 @@ const int BG_TEXTURE_DEPTH = 4;
 	// Mapping from Mac keycode to the C64 row/column format
 	uint16_t kb[256];
 
+	// View point
+	// DEPRECATED
+	// float eyeX, eyeY, eyeZ;
+
+	// Texture cut-out (Visible texture area)
+	// TODO: Rename
+	float TEX_LEFT;
+	float TEX_RIGHT;
+	float TEX_TOP;
+	float TEX_BOTTOM;
+	
+	// Size of drawn rectangle 
+	float dimX, dimY;
+	
 	// Textures
 	uint8_t data[TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXTURE_DEPTH];
 	GLuint texture;   // C64 screen
@@ -142,13 +161,34 @@ const int BG_TEXTURE_DEPTH = 4;
 
 #pragma mark Animation
 
-- (void) startAnimation;
-- (void) stopAnimation;
-- (void) toggleAnimation;
+//! Returns true if view is currently drawing animation effects
+- (bool) animates;
+
+- (void)setEyeX:(float)newX;
+- (void)setEyeY:(float)newY;
+- (void)setEyeZ:(float)newZ;
+
+//! Trigger animation effect. Move smoothly to specified location
+// - (void)moveToX:(float)newX;
+// - (void)moveToY:(float)newY;
+// - (void)moveToZ:(float)newZ;
+
+//! Trigger animation effect. Zooms in from far away
 - (void) zoom;
+
+//! Trigger animation effect. Scroll in from below
+- (void) scroll;
+
+//! Trigger animation effect. Rotate cube in one direction
 - (void) rotate;
+
+//! Trigger animation effect. Rotate cube in other direction
 - (void) rotateBack;
+
+
+//! Compute geometry parameters for next animation cycle
 - (void) updateAngles;
+
 
 #pragma mark Full screen mode
 

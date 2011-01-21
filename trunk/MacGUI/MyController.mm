@@ -20,7 +20,7 @@
 
 @implementation MyController
 
-@synthesize c64;
+@synthesize c64, screen;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -137,6 +137,10 @@
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64SIDFilterKey];
 	
 	// Video
+	[defaultValues setObject:[NSNumber numberWithFloat:0.0] forKey:VC64EyeX];
+	[defaultValues setObject:[NSNumber numberWithFloat:0.0] forKey:VC64EyeY];
+	[defaultValues setObject:[NSNumber numberWithFloat:0.0] forKey:VC64EyeZ];
+
 	[defaultValues setObject:[NSNumber numberWithInt:VIC::CUSTOM_PALETTE] forKey:VC64ColorSchemeKey];
 	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:VC64VideoFilterKey];	
 	
@@ -190,6 +194,12 @@
 	
 	// Video 
 	// [c64 vicSetVideoFilter:[defaults integerForKey:VC64VideoFilterKey];
+	
+	// ENABLE AFTER DEBUGGING
+	// [screen setEyeX:[defaults floatForKey:VC64EyeX]];
+	// [screen setEyeY:[defaults floatForKey:VC64EyeY]];
+	// [screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
+	
 	colorScheme = [defaults integerForKey:VC64ColorSchemeKey];
 	if (colorScheme == VIC::CUSTOM_PALETTE) {
 		NSLog(@"Applying custom colors...");
@@ -328,6 +338,7 @@
 			// Start emulator
 			[c64 run];
 			[screen zoom];
+			//[screen scroll];
 			[screen drawC64texture:true];
 
 			// Check for attached archive

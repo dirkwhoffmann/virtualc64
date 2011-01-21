@@ -36,6 +36,9 @@ NSString *VC64SIDVolumeKey    = @"VC64SIDVolumeKey";
 NSString *VC64SIDFilterKey    = @"VC64SIDFilterKey";
 
 /* Video */
+NSString *VC64EyeX            = @"VC64EyeX";
+NSString *VC64EyeY            = @"VC64EyeY";
+NSString *VC64EyeZ            = @"VC64EyeZ";
 NSString *VC64ColorSchemeKey  = @"VC64ColorSchemeKey";
 NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 NSString *VC64CustomCol0Key   = @"VC64CustomCol0Key";
@@ -57,7 +60,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 
 @implementation PreferenceController
 
-@synthesize c64, mydoc;
+@synthesize c64, controller;
 
 - (id)init
 {
@@ -83,6 +86,9 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[SIDFilter setState:[defaults boolForKey:VC64SIDFilterKey]];
 	
 	/* Video */
+	[eyeXSlider setFloatValue:[defaults floatForKey:VC64EyeX]];
+	[eyeYSlider setFloatValue:[defaults floatForKey:VC64EyeY]];
+	[eyeZSlider setFloatValue:[defaults floatForKey:VC64EyeZ]];	
 	colorSchemeTag = [defaults integerForKey:VC64ColorSchemeKey];
 	[colorScheme selectItemWithTag:colorSchemeTag];
 	[videoFilter selectItemWithTag:[defaults boolForKey:VC64VideoFilterKey]];
@@ -302,6 +308,33 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	customColor[col] = (customColor[col] << 8) | (uint8_t)(a * 0xff);	
 	[[c64 vic] setColor:col rgba:[sender color]];
 	[defaults setInteger:customColor[col] forKey:key];
+}
+
+- (IBAction)setEyeXAction:(id)sender
+{
+	NSLog(@"X adjust: %f\n", [sender floatValue]);
+
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[[controller screen] setEyeX:[sender floatValue]];
+	[defaults setFloat:[sender floatValue] forKey:VC64EyeX];
+}
+
+- (IBAction)setEyeYAction:(id)sender
+{
+	NSLog(@"Y adjust: %f\n", [sender floatValue]);
+
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[[controller screen] setEyeY:[sender floatValue]];
+	[defaults setFloat:[sender floatValue] forKey:VC64EyeY];
+}
+
+- (IBAction)setEyeZAction:(id)sender
+{
+	NSLog(@"Z adjust: %f\n", [sender floatValue]);
+
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[[controller screen] setEyeZ:[sender floatValue]];
+	[defaults setFloat:[sender floatValue] forKey:VC64EyeZ];
 }
 
 @end

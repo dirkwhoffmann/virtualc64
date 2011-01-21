@@ -186,6 +186,7 @@ class Snapshot;
 }
 
 @property C64Proxy *c64;
+@property (readonly) MyOpenGLView *screen;
 
 // User defaults
 + (void)registerStandardDefaults;

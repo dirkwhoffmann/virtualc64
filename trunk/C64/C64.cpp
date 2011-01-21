@@ -131,10 +131,12 @@ C64::C64()
 		backInTimeHistory[i] = new Snapshot();	
 	backInTimeWritePtr = 0;
 	
+
 	// Configure and reset
 	setNTSC(); // Why NTSC??	
+
 	reset();
-	
+
 	// Remove after debugging
 	cpu->max_traces = 20000;
 	cpu->trace_enable_address = 2070; 	
@@ -243,23 +245,31 @@ void C64::putMessage(int id, int i, void *p, const char *c)
 void
 C64::setPAL()
 {
+	suspend();
+	
 	fps = VIC::PAL_REFRESH_RATE;
 	noOfRasterlines = VIC::PAL_RASTERLINES; 
 	cpuCyclesPerRasterline = VIC::PAL_CYCLES_PER_RASTERLINE;
 	vic->setPAL();
 	sid->setVideoMode(CPU::CLOCK_FREQUENCY_PAL);
 	frameDelay = (1000000 / fps);
+
+	resume();
 }
 
 void 
 C64::setNTSC()
 {
+	suspend();
+	
 	fps = VIC::NTSC_REFRESH_RATE;
 	noOfRasterlines = VIC::NTSC_RASTERLINES; 
 	cpuCyclesPerRasterline = VIC::NTSC_CYCLES_PER_RASTERLINE;
 	vic->setNTSC();
 	sid->setVideoMode(CPU::CLOCK_FREQUENCY_NTSC);
 	frameDelay = (1000000 / fps);
+
+	resume();
 }
 
 void
@@ -490,6 +500,8 @@ C64::endOfRasterline()
 	rasterline++;
 
 	if (rasterline >= getRasterlinesPerFrame()) {
+		
+		// fprintf(stderr, "Last rasterline = %d\n", rasterline);
 		
 		// Last rasterline of frame
 		rasterline = 0;			

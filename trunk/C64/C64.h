@@ -17,9 +17,19 @@
  */
 
 // New in 0.9.4
+// Visible screen area and borders are now different in PAL and NTSC mode
+// Added controls for shifting and zooming screen contents
 // Thumbnail images can now be dragged and dropped between different emulator windows
-// All supported fies types can be loaded via the open file dialog
+// All supported fies types can now be loaded via the open file dialog
 // Added new icons for all supported file types
+
+// TODO
+// Determine best size for OpenGLView -> Adjust in interface builder
+// Determine nice screen parameters for PAL (looks OK for NTSC?)
+// Determine nice values for sliders
+// Save slider values in user settings
+// Fix sprite position issues
+
 
 #ifndef _C64_INC
 #define _C64_INC
@@ -316,6 +326,12 @@ public:
 	//! Set NTSC mode
 	void setNTSC();
 	
+	//! Returns true, iff machine type is PAL
+	inline bool isPAL() { return fps == VIC::PAL_REFRESH_RATE; }
+		
+	//! Returns true, iff machine type is NTSC
+	inline bool isNTSC() { return fps == VIC::NTSC_REFRESH_RATE; }
+
 	//! Returns true iff cpu currently runs at maximum speed
 	bool getWarp() { return warp; }
 	
