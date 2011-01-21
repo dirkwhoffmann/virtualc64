@@ -23,9 +23,9 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="766"/>
 			<integer value="1005"/>
-			<integer value="6"/>
+			<integer value="5"/>
 			<integer value="2024"/>
-			<integer value="1900"/>
+			<integer value="1873"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4904,7 +4904,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<object class="NSButtonCell" key="NSCell" id="888744742">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">OK</string>
+								<string key="NSContents">Quit</string>
 								<reference key="NSSupport" ref="237492425"/>
 								<reference key="NSControlView" ref="86744657"/>
 								<int key="NSButtonFlags">-2038284033</int>
@@ -5461,6 +5461,14 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<reference key="destination" ref="46838506"/>
 					</object>
 					<int key="connectionID">205</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">debug_panel</string>
+						<reference key="source" ref="662028313"/>
+						<reference key="destination" ref="964686301"/>
+					</object>
+					<int key="connectionID">208</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -9693,10 +9701,10 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="771590826"/>
 							<reference ref="334671794"/>
-							<reference ref="86744657"/>
-							<reference ref="606369526"/>
 							<reference ref="898791997"/>
+							<reference ref="606369526"/>
 							<reference ref="198601155"/>
+							<reference ref="86744657"/>
 						</object>
 						<reference key="parent" ref="434767277"/>
 					</object>
@@ -9841,20 +9849,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<int key="objectID">1897</int>
 						<reference key="object" ref="14396179"/>
 						<reference key="parent" ref="101664868"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1898</int>
-						<reference key="object" ref="86744657"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="888744742"/>
-						</object>
-						<reference key="parent" ref="802974266"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1899</int>
-						<reference key="object" ref="888744742"/>
-						<reference key="parent" ref="86744657"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1900</int>
@@ -10182,6 +10176,20 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<int key="objectID">2182</int>
 						<reference key="object" ref="500957015"/>
 						<reference key="parent" ref="363225128"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1898</int>
+						<reference key="object" ref="86744657"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="888744742"/>
+						</object>
+						<reference key="parent" ref="802974266"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1899</int>
+						<reference key="object" ref="888744742"/>
+						<reference key="parent" ref="86744657"/>
 					</object>
 				</object>
 			</object>
@@ -11406,7 +11414,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{511, 1009}, {616, 0}}</string>
+					<string>{{623, 828}, {616, 0}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11440,9 +11448,9 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{55, 556}, {480, 270}}</string>
+					<string>{{637, 544}, {480, 270}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{55, 556}, {480, 270}}</string>
+					<string>{{637, 544}, {480, 270}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<boolean value="NO"/>
@@ -11625,9 +11633,9 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{443, 387}, {804, 645}}</string>
+					<string>{{15, 114}, {804, 645}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{443, 387}, {804, 645}}</string>
+					<string>{{15, 114}, {804, 645}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<integer value="1"/>
@@ -13653,7 +13661,11 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cheatboxAction:</string>
+							<string>cheatboxCloseAction:</string>
+							<string>cheatboxOpenAction:</string>
 							<string>debugAction:</string>
+							<string>debugCloseAction:</string>
+							<string>debugOpenAction:</string>
 							<string>fullscreenAction:</string>
 							<string>joystick1Action:</string>
 							<string>joystick2Action:</string>
@@ -13662,6 +13674,10 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -13676,7 +13692,11 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cheatboxAction:</string>
+							<string>cheatboxCloseAction:</string>
+							<string>cheatboxOpenAction:</string>
 							<string>debugAction:</string>
+							<string>debugCloseAction:</string>
+							<string>debugOpenAction:</string>
 							<string>fullscreenAction:</string>
 							<string>joystick1Action:</string>
 							<string>joystick2Action:</string>
@@ -13690,7 +13710,23 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">cheatboxCloseAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">cheatboxOpenAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">debugAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">debugCloseAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">debugOpenAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

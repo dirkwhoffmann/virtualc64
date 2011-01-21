@@ -69,6 +69,8 @@
 		504CEE7D0C46774F001F4E51 /* BigIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CEE7C0C46774F001F4E51 /* BigIcon.png */; };
 		504CEEA30C467C4E001F4E51 /* BigIconTransparent.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
+		5060B47012E9E37600A4B66F /* c64orig.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5060B46F12E9E37600A4B66F /* c64orig.jpg */; };
+		5060B49412E9E4C900A4B66F /* C64G_P8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5060B49312E9E4C900A4B66F /* C64G_P8.jpg */; };
 		506910C80A74EAE100F48A7F /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
@@ -242,6 +244,8 @@
 		504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = BigIconTransparent.tiff; path = images/BigIconTransparent.tiff; sourceTree = "<group>"; };
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
+		5060B46F12E9E37600A4B66F /* c64orig.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = c64orig.jpg; path = images/c64orig.jpg; sourceTree = "<group>"; };
+		5060B49312E9E4C900A4B66F /* C64G_P8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = C64G_P8.jpg; path = images/C64G_P8.jpg; sourceTree = "<group>"; };
 		506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
 		5077742E12DE490300D72088 /* MemTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemTableView.h; sourceTree = "<group>"; };
 		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
@@ -623,6 +627,8 @@
 				504CEEA20C467C4E001F4E51 /* BigIconTransparent.tiff */,
 				50DA14A20A6418470022B4A7 /* bottom.png */,
 				502562AE0C4AA0C7008AAB85 /* c64.png */,
+				5060B46F12E9E37600A4B66F /* c64orig.jpg */,
+				5060B49312E9E4C900A4B66F /* C64G_P8.jpg */,
 				50471FED0A7B67B800A8DB94 /* debugger32.png */,
 				50E555FE0C42699300AFB05F /* flag_eu.png */,
 				50E555FC0C42698E00AFB05F /* flag_usa.png */,
@@ -808,6 +814,8 @@
 				50D6954C12E3759500D9C738 /* IconV64.icns in Resources */,
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
 				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
+				5060B47012E9E37600A4B66F /* c64orig.jpg in Resources */,
+				5060B49412E9E4C900A4B66F /* C64G_P8.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
