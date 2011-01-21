@@ -129,6 +129,8 @@
 
 - (unsigned)totalScreenWidth;
 - (unsigned)totalScreenHeight;
+- (unsigned)firstVisibleLine;
+- (unsigned)lastVisibleLine;
 
 - (int) getDisplayMode;
 - (void) setDisplayMode:(int)mode;

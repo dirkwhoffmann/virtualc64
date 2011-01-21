@@ -540,9 +540,9 @@ VIC::drawSprite(uint8_t nr)
 	spriteX = getSpriteX(nr);
 	
 	if (spriteX < 488) 
-		offset = spriteX;
+		offset = spriteX + (leftBorderWidth - 22);
 	else
-		offset = spriteX - 488; 
+		offset = spriteX + (leftBorderWidth - 22) - 488; 
 	
 	if (spriteIsMulticolor(nr)) {
 		

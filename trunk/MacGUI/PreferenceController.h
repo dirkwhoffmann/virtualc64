@@ -18,6 +18,18 @@
 
 #import <Cocoa/Cocoa.h>
 
+// Initial viewpoint translation values eyeX, eyeY, and eyeZ
+// On a real C64, the upper and lower border are of different height and the left and right border are of different width
+// The following values will be used to adjust the viewpoint such that the initial screen shows up in a centered position
+#define NTSC_INITIAL_EYE_X 0.000000
+#define NTSC_INITIAL_EYE_Y -0.024490
+#define NTSC_INITIAL_EYE_Z 0.0
+//0.065306
+#define PAL_INITIAL_EYE_X 0.016327
+#define PAL_INITIAL_EYE_Y 0.008163
+#define PAL_INITIAL_EYE_Z 0.0
+// 0.065306
+
 /* System */
 extern NSString *VC64PALorNTSCKey;
 extern NSString *VC64BasicRomFileKey;
@@ -102,6 +114,8 @@ extern NSString *VC64CustomCol15Key;
 @property C64Proxy *c64;
 @property MyController *controller;
 
+- (void)updateMachineType:(int)type;
+- (void)updateSliderX:(float)newX Y:(float)newY Z:(float)newZ;
 - (void)updateColorWell:(NSColorWell *)well color:(int)rgba;
 - (void)updateColorWells:(VIC::ColorScheme)scheme;
 

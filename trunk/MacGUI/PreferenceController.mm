@@ -74,10 +74,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	int colorSchemeTag;
 	
 	/* System */
-	if ([defaults integerForKey:VC64PALorNTSCKey])
-		[self setNtscAction:self];
-	else
-		[self setPalAction:self];
+	[self updateMachineType:[defaults integerForKey:VC64PALorNTSCKey]];
 		
 	/* Peripherals */
 	[warpLoad setState:[defaults boolForKey:VC64WarpLoadKey]];
@@ -86,9 +83,11 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[SIDFilter setState:[defaults boolForKey:VC64SIDFilterKey]];
 	
 	/* Video */
-	[eyeXSlider setFloatValue:[defaults floatForKey:VC64EyeX]];
-	[eyeYSlider setFloatValue:[defaults floatForKey:VC64EyeY]];
-	[eyeZSlider setFloatValue:[defaults floatForKey:VC64EyeZ]];	
+	[self updateSliderX:[defaults floatForKey:VC64EyeX] Y:[defaults floatForKey:VC64EyeY] Z:[defaults floatForKey:VC64EyeZ]];
+	
+	//[eyeXSlider setFloatValue:[defaults floatForKey:VC64EyeX]];
+	//[eyeYSlider setFloatValue:[defaults floatForKey:VC64EyeY]];
+	//[eyeZSlider setFloatValue:[defaults floatForKey:VC64EyeZ]];	
 	colorSchemeTag = [defaults integerForKey:VC64ColorSchemeKey];
 	[colorScheme selectItemWithTag:colorSchemeTag];
 	[videoFilter selectItemWithTag:[defaults boolForKey:VC64VideoFilterKey]];
@@ -109,6 +108,30 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	customColor[14] = [defaults integerForKey:VC64CustomCol14Key];
 	customColor[15] = [defaults integerForKey:VC64CustomCol15Key];	
 	[self updateColorWells:(VIC::ColorScheme)colorSchemeTag];
+}
+
+- (void)updateMachineType:(int)type
+{
+	if (type == 0) {
+		[palntsc selectCellWithTag:type];
+		[systemText1 setStringValue:@"PAL machine"];
+		[systemText2 setStringValue:@"0.985 MHz"];
+		[systemText3 setStringValue:@"63 cycles per rasterline"];
+		[flag setState:false];
+	} else {
+		[palntsc selectCellWithTag:1];
+		[systemText1 setStringValue:@"NTSC machine"];
+		[systemText2 setStringValue:@"1.022 MHz"];
+		[systemText3 setStringValue:@"65 cycles per rasterline"];
+		[flag setState:true];		
+	}
+}
+
+- (void)updateSliderX:(float)newX Y:(float)newY Z:(float)newZ
+{
+	[eyeXSlider setFloatValue:newX];
+	[eyeYSlider setFloatValue:newY];
+	[eyeZSlider setFloatValue:newZ];		
 }
 
 - (void)updateColorWell:(NSColorWell *)well color:(int)rgba
@@ -201,12 +224,17 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-	[palntsc selectCellWithTag:0];
-	[systemText1 setStringValue:@"PAL machine"];
-	[systemText2 setStringValue:@"0.985 MHz"];
-	[systemText3 setStringValue:@"63 cycles per rasterline"];
-	[flag setState:false];
+	[self updateMachineType:0];
+	[self setEyeXAction:[NSNumber numberWithFloat:PAL_INITIAL_EYE_X]];
+	[self setEyeYAction:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Y]];
+	[self setEyeZAction:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Z]];
+	[self updateSliderX:[defaults floatForKey:VC64EyeX] Y:[defaults floatForKey:VC64EyeY] Z:[defaults floatForKey:VC64EyeZ]];
+	//[eyeXSlider setFloatValue:PAL_INITIAL_EYE_X];
+	//[eyeYSlider setFloatValue:PAL_INITIAL_EYE_Y];
+	//[eyeZSlider setFloatValue:PAL_INITIAL_EYE_Z];	
+	
 	[c64 setPAL];
+	
 	[defaults setInteger:[[palntsc selectedCell] tag] forKey:VC64PALorNTSCKey];
 }
 
@@ -214,12 +242,17 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-	[palntsc selectCellWithTag:1];
-	[systemText1 setStringValue:@"NTSC machine"];
-	[systemText2 setStringValue:@"1.022 MHz"];
-	[systemText3 setStringValue:@"65 cycles per rasterline"];
-	[flag setState:true];
+	[self updateMachineType:1];
+	[self setEyeXAction:[NSNumber numberWithFloat:NTSC_INITIAL_EYE_X]];
+	[self setEyeYAction:[NSNumber numberWithFloat:NTSC_INITIAL_EYE_Y]];
+	[self setEyeZAction:[NSNumber numberWithFloat:NTSC_INITIAL_EYE_Z]];
+	[self updateSliderX:[defaults floatForKey:VC64EyeX] Y:[defaults floatForKey:VC64EyeY] Z:[defaults floatForKey:VC64EyeZ]];
+	//[eyeXSlider setFloatValue:NTSC_INITIAL_EYE_X];
+	//[eyeYSlider setFloatValue:NTSC_INITIAL_EYE_Y];
+	//[eyeZSlider setFloatValue:NTSC_INITIAL_EYE_Z];	
+
 	[c64 setNTSC];
+	
 	[defaults setInteger:[[palntsc selectedCell] tag] forKey:VC64PALorNTSCKey];
 }
 

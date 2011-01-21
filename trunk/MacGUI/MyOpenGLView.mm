@@ -18,13 +18,7 @@
 
 #import "C64GUI.h"
 
-#if 0
-const float TEX_LEFT   = 0.0 / ((float)TEXTURE_WIDTH);
-const float TEX_RIGHT  = (VIC::SCREEN_WIDTH+2*VIC::BORDER_WIDTH) / ((float)TEXTURE_WIDTH);
-const float TEX_TOP    = 37.0 / ((float)TEXTURE_HEIGHT);
-const float TEX_BOTTOM = 263.0 / ((float)TEXTURE_HEIGHT);
-#endif
-
+// Background texture
 const float BG_TEX_LEFT   = 0.0; 
 const float BG_TEX_RIGHT  = 642.0 / BG_TEXTURE_WIDTH;
 const float BG_TEX_TOP    = 0.0; 
@@ -51,8 +45,7 @@ void checkForOpenGLErrors()
 
 @implementation MyOpenGLView
 
-@synthesize c64, frames, enableOpenGL;
-// @synthesize eyeX, eyeY, eyeZ;
+@synthesize c64, frames, enableOpenGL, drawC64texture, drawBackground, drawEntireCube;
 
 // --------------------------------------------------------------------------------
 //                                  Initializiation
@@ -92,10 +85,8 @@ void checkForOpenGLErrors()
 	deltaEyeX = deltaEyeY = deltaEyeZ = 0;
 	
 	drawC64texture = false;
+	drawBackground = true;
 	drawEntireCube = false;
-	//eyeX = 0; 
-	//eyeY = 0; 
-	//eyeZ = 0; 
 	
 	// Core video
 	displayLink = nil;
@@ -164,10 +155,12 @@ void checkForOpenGLErrors()
     }
 }
 
+#if 0
 - (void) drawC64texture:(bool)value
 { 
 	drawC64texture = value; 
 }
+#endif
 
 - (void)prepareOpenGL
 {
@@ -546,8 +539,6 @@ void checkForOpenGLErrors()
 	if (c64) {
 		void *buf = c64->vic->screenBuffer(); 
 		assert(buf != NULL);
-		//glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIC::TOTAL_SCREEN_WIDTH, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
-		//glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 368, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, c64->vic->getTotalScreenWidth(), TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
 		checkForOpenGLErrors();
 	}
@@ -561,10 +552,9 @@ void checkForOpenGLErrors()
 		
 	bool animation = [self animates];
 
-	// bool backgroundIsVisible = animation || !drawC64texture;
-	//if (backgroundIsVisible) {
-	if (true) {
-		
+	// bool drawBackground = animation || !drawC64texture;
+	// bool drawBackground = !drawC64texture;
+	if (drawBackground) {
 		float depth = -5.0f;
 		float scale = 9.2f;
 		glBindTexture(GL_TEXTURE_2D, bgTexture); 
@@ -581,7 +571,7 @@ void checkForOpenGLErrors()
 	}
 
 	// Zoom in or zoom out
-	glTranslatef(-currentEyeX, -currentEyeY, -currentEyeZ);
+	glTranslatef(-currentEyeX, -currentEyeY, -0.065306 - currentEyeZ);
 
 	if (animation) {
 		
@@ -722,9 +712,18 @@ void checkForOpenGLErrors()
 {
 	if (b) {
 		NSLog(@"Entering fullscreen mode");
+
+		drawBackground = false; 
+		oldCurrentEyeX = currentEyeX; // always draw centered
+		[self setEyeX:0.0];
+		
 		[self enterFullScreenMode:[NSScreen mainScreen] withOptions:nil];
 	} else {
 		NSLog(@"Exiting fullscreen mode");
+		
+		drawBackground = true;
+		[self setEyeX:oldCurrentEyeX];
+		
 		[self exitFullScreenModeWithOptions:nil];
 	}
 }

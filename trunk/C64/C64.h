@@ -17,18 +17,16 @@
  */
 
 // New in 0.9.4
-// Visible screen area and borders are now different in PAL and NTSC mode
-// Added controls for shifting and zooming screen contents
-// Thumbnail images can now be dragged and dropped between different emulator windows
-// All supported fies types can now be loaded via the open file dialog
+// Now using more accurate screen geometries in PAL and NTSC mode
+// Added controls that allow to shift and zoom screen borders (Wizball is now playable)
+// Improved drag'n'drop. Thumbnail images can now be dragged across different emulator windows
 // Added new icons for all supported file types
+// D64, T64, PRG, and P00 files can now be opened via the open file dialog (Open menu)
+
 
 // TODO
-// Determine best size for OpenGLView -> Adjust in interface builder
-// Determine nice screen parameters for PAL (looks OK for NTSC?)
-// Determine nice values for sliders
-// Save slider values in user settings
-// Fix sprite position issues
+// Fix texture grappgin in printing and cheatbox
+// Always center screen in fullscreen mode
 
 
 #ifndef _C64_INC
@@ -367,18 +365,6 @@ public:
 	//! Save state to memory buffer
 	void saveToBuffer(uint8_t **buffer);
 	
-#if 0	
-	//! Save snapshot
-	void save(uint8_t **buffer);
-	
-	//! Helper function for load
-	/*! This function is not thread safe, don't call it directly! Call load instead */
-	void _load(uint8_t **buffer);
-	
-	//! Helper function for save
-	/*! This function is not thread safe, don't call it directly! Call save instead */
-	void _save(uint8_t **buffer);
-#endif
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                           Control

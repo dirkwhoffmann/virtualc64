@@ -111,25 +111,31 @@ const int BG_TEXTURE_DEPTH = 4;
 
 	bool emulateJoystick1;
 	bool emulateJoystick2;
+
 	float currentXAngle, targetXAngle, deltaXAngle;
 	float currentYAngle, targetYAngle, deltaYAngle;
 	float currentZAngle, targetZAngle, deltaZAngle;
 	float currentEyeX, targetEyeX, deltaEyeX;
 	float currentEyeY, targetEyeY, deltaEyeY;
 	float currentEyeZ, targetEyeZ, deltaEyeZ;
+
+	//! Place to store value of currentEyeX in fullscreen mode
+	float oldCurrentEyeX;
 	
 	int frames;
 
-	//! If false, the C64 screen is not drawn (background will be visible)
+	//! If false, OpenGL drawing is disabled (only used in performance debugging)
+	bool enableOpenGL;
+	
+	//! If false, the C64 screen is not drawn (background texture or black screen will be visible)
 	bool drawC64texture;
+
+	//! If false, the background is not drawn 
+	bool drawBackground;
 
 	//! If false, only the front facing part of the texture cube is drawn
 	bool drawEntireCube;
-	
-	//! Usually set to true. If set to false, OpenGL drawing is disabled
-	/*! Setting the variable to false only makes sense during performance tests */
-	bool enableOpenGL;
-	
+		
 	// Mapping from Mac keycode to the C64 row/column format
 	uint16_t kb[256];
 
@@ -156,6 +162,9 @@ const int BG_TEXTURE_DEPTH = 4;
 @property C64 *c64;
 @property (readonly) int frames;
 @property bool enableOpenGL;
+@property bool drawC64texture;
+@property bool drawBackground;
+@property bool drawEntireCube;
 
 - (void) cleanUp;
 
@@ -167,11 +176,6 @@ const int BG_TEXTURE_DEPTH = 4;
 - (void)setEyeX:(float)newX;
 - (void)setEyeY:(float)newY;
 - (void)setEyeZ:(float)newZ;
-
-//! Trigger animation effect. Move smoothly to specified location
-// - (void)moveToX:(float)newX;
-// - (void)moveToY:(float)newY;
-// - (void)moveToZ:(float)newZ;
 
 //! Trigger animation effect. Zooms in from far away
 - (void) zoom;
@@ -198,7 +202,7 @@ const int BG_TEXTURE_DEPTH = 4;
 #pragma mark Drawing
 
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
-- (void) drawC64texture:(bool)value;
+// - (void) drawC64texture:(bool)value;
 
 #pragma mark Graphics conversion
 

@@ -155,6 +155,8 @@
 
 - (unsigned)totalScreenWidth { return vic->getTotalScreenWidth(); }
 - (unsigned)totalScreenHeight {	return vic->getTotalScreenHeight(); }
+- (unsigned)firstVisibleLine { return vic->getFirstVisibleLine(); }
+- (unsigned)lastVisibleLine { return vic->getLastVisibleLine(); }
 
 - (int) getDisplayMode { return vic->getDisplayMode(); }
 - (void) setDisplayMode:(int)mode { vic->setDisplayMode((VIC::DisplayMode)mode); }
