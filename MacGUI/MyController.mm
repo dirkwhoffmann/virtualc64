@@ -336,8 +336,8 @@
 
 			// Start emulator
 			[c64 run];
-			[screen zoom];
-			//[screen scroll];
+			//[screen zoom];
+			[screen scroll];
 			[screen setDrawC64texture:true];
 
 			// Check for attached archive

@@ -60,7 +60,7 @@
 			50D5FFDC0C2EB9810022CA3A /* MyDocument.mm:184 */,
 			50D5007F0C2ED5950022CA3A /* Archive.h:2 */,
 			50298FE60C3111C300422DED /* D64Archive.cpp:1 */,
-			509AEB1F0C32641D001FC9FD /* MyOpenGLView.mm:1001 */,
+			509AEB1F0C32641D001FC9FD /* MyOpenGLView.mm:1004 */,
 			500016F90C34F724003C1449 /* MyOpenGLView.h:112 */,
 			50CEE83C0C36A66C00E0320C /* Drive.cpp:11 */,
 			50CEE84D0C36B0AD00E0320C /* C64.h:34 */,
@@ -372,6 +372,21 @@
 			5060B4CC12E9E8B200A4B66F /* PBXTextBookmark */ = 5060B4CC12E9E8B200A4B66F /* PBXTextBookmark */;
 			5060B4D012E9E8E500A4B66F /* PBXTextBookmark */ = 5060B4D012E9E8E500A4B66F /* PBXTextBookmark */;
 			5060B4D112E9E8E500A4B66F /* PBXTextBookmark */ = 5060B4D112E9E8E500A4B66F /* PBXTextBookmark */;
+			5060B4E012E9EBE100A4B66F /* PBXBookmark */ = 5060B4E012E9EBE100A4B66F /* PBXBookmark */;
+			5060B4E112E9EBE100A4B66F /* PBXTextBookmark */ = 5060B4E112E9EBE100A4B66F /* PBXTextBookmark */;
+			5060B4E212E9EBE100A4B66F /* PBXTextBookmark */ = 5060B4E212E9EBE100A4B66F /* PBXTextBookmark */;
+			5060B4E312E9EBE100A4B66F /* PBXTextBookmark */ = 5060B4E312E9EBE100A4B66F /* PBXTextBookmark */;
+			5060B4E812E9EC7C00A4B66F /* PBXTextBookmark */ = 5060B4E812E9EC7C00A4B66F /* PBXTextBookmark */;
+			5060B4E912E9EC7C00A4B66F /* PBXTextBookmark */ = 5060B4E912E9EC7C00A4B66F /* PBXTextBookmark */;
+			5060B4EA12E9EC7C00A4B66F /* PBXTextBookmark */ = 5060B4EA12E9EC7C00A4B66F /* PBXTextBookmark */;
+			5060B4EB12E9EC7C00A4B66F /* PBXTextBookmark */ = 5060B4EB12E9EC7C00A4B66F /* PBXTextBookmark */;
+			5060B4F712E9ED2000A4B66F /* PBXTextBookmark */ = 5060B4F712E9ED2000A4B66F /* PBXTextBookmark */;
+			5060B4F812E9ED2000A4B66F /* PBXTextBookmark */ = 5060B4F812E9ED2000A4B66F /* PBXTextBookmark */;
+			5060B4F912E9ED2000A4B66F /* PBXTextBookmark */ = 5060B4F912E9ED2000A4B66F /* PBXTextBookmark */;
+			5060B4FA12E9ED2000A4B66F /* PBXTextBookmark */ = 5060B4FA12E9ED2000A4B66F /* PBXTextBookmark */;
+			5060B4FB12E9ED2000A4B66F /* PBXTextBookmark */ = 5060B4FB12E9ED2000A4B66F /* PBXTextBookmark */;
+			5060B50312E9ED4B00A4B66F /* PBXTextBookmark */ = 5060B50312E9ED4B00A4B66F /* PBXTextBookmark */;
+			5060B50412E9ED4B00A4B66F /* PBXTextBookmark */ = 5060B50412E9ED4B00A4B66F /* PBXTextBookmark */;
 			5061BED5121FE01D008EE816 = 5061BED5121FE01D008EE816 /* PBXTextBookmark */;
 			506580E71224360D00D2E547 = 506580E71224360D00D2E547 /* PBXTextBookmark */;
 			506581571224416400D2E547 = 506581571224416400D2E547 /* PBXTextBookmark */;
@@ -935,7 +950,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 574";
 		rLen = 0;
-		rLoc = 18310;
+		rLoc = 18449;
 		rType = 0;
 		vrLen = 1416;
 		vrLoc = 17337;
@@ -1005,7 +1020,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 726";
 		rLen = 0;
-		rLoc = 23134;
+		rLoc = 23273;
 		rType = 0;
 		vrLen = 1210;
 		vrLoc = 21966;
@@ -1015,7 +1030,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 716";
 		rLen = 0;
-		rLoc = 22874;
+		rLoc = 23013;
 		rType = 0;
 		vrLen = 1148;
 		vrLoc = 22213;
@@ -1025,7 +1040,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 525";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1441;
 		vrLoc = 15723;
@@ -1468,9 +1483,9 @@
 	};
 	50176C780A6F7357009E80BD /* MyOpenGLView.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {943, 16512}}";
-			sepNavSelRange = "{16557, 31}";
-			sepNavVisRange = "{15823, 1282}";
+			sepNavIntBoundsRect = "{{0, 0}, {943, 16624}}";
+			sepNavSelRange = "{16696, 31}";
+			sepNavVisRange = "{15868, 1322}";
 			sepNavVisRect = "{{0, 958}, {869, 622}}";
 			sepNavWindowFrame = "{{658, 132}, {908, 751}}";
 		};
@@ -2395,7 +2410,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 716";
 		rLen = 0;
-		rLoc = 22874;
+		rLoc = 23013;
 		rType = 0;
 		vrLen = 1191;
 		vrLoc = 22170;
@@ -2485,7 +2500,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 525";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1412;
 		vrLoc = 15723;
@@ -2545,7 +2560,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 525";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1412;
 		vrLoc = 15723;
@@ -2565,7 +2580,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 525";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1412;
 		vrLoc = 15723;
@@ -2585,7 +2600,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 525";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1412;
 		vrLoc = 15723;
@@ -2605,7 +2620,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 525";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1412;
 		vrLoc = 15723;
@@ -2639,7 +2654,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 201";
 		rLen = 0;
-		rLoc = 7533;
+		rLoc = 7536;
 		rType = 0;
 		vrLen = 1708;
 		vrLoc = 6890;
@@ -2649,7 +2664,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 202";
 		rLen = 0;
-		rLoc = 7800;
+		rLoc = 7803;
 		rType = 0;
 		vrLen = 1692;
 		vrLoc = 6910;
@@ -2659,7 +2674,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 526";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1290;
 		vrLoc = 15777;
@@ -2669,7 +2684,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 204";
 		rLen = 0;
-		rLoc = 7843;
+		rLoc = 7981;
 		rType = 0;
 		vrLen = 1693;
 		vrLoc = 6861;
@@ -2679,7 +2694,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 527";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1330;
 		vrLoc = 15773;
@@ -2689,7 +2704,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 203";
 		rLen = 0;
-		rLoc = 7745;
+		rLoc = 7748;
 		rType = 0;
 		vrLen = 1880;
 		vrLoc = 7033;
@@ -2699,7 +2714,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 528";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 15808;
@@ -2709,7 +2724,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 203";
 		rLen = 0;
-		rLoc = 7742;
+		rLoc = 7745;
 		rType = 0;
 		vrLen = 1857;
 		vrLoc = 7098;
@@ -2719,7 +2734,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 528";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 15807;
@@ -2729,7 +2744,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 203";
 		rLen = 0;
-		rLoc = 7742;
+		rLoc = 7745;
 		rType = 0;
 		vrLen = 1864;
 		vrLoc = 7222;
@@ -2739,7 +2754,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 528";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 15808;
@@ -2749,7 +2764,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 204";
 		rLen = 0;
-		rLoc = 7752;
+		rLoc = 7755;
 		rType = 0;
 		vrLen = 1858;
 		vrLoc = 7289;
@@ -2759,7 +2774,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 528";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 15808;
@@ -2779,7 +2794,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 205";
 		rLen = 6;
-		rLoc = 7837;
+		rLoc = 7975;
 		rType = 0;
 		vrLen = 1729;
 		vrLoc = 6890;
@@ -2799,7 +2814,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 528";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 15824;
@@ -2859,7 +2874,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 528";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 15824;
@@ -2889,7 +2904,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 203";
 		rLen = 0;
-		rLoc = 7697;
+		rLoc = 7700;
 		rType = 0;
 		vrLen = 1579;
 		vrLoc = 6742;
@@ -2899,7 +2914,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 528";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 15823;
@@ -2909,7 +2924,7 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 203";
 		rLen = 0;
-		rLoc = 7697;
+		rLoc = 7700;
 		rType = 0;
 		vrLen = 1623;
 		vrLoc = 6768;
@@ -2919,10 +2934,154 @@
 		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
 		name = "MyOpenGLView.mm: 528";
 		rLen = 31;
-		rLoc = 16557;
+		rLoc = 16696;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 15823;
+	};
+	5060B4E012E9EBE100A4B66F /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 5060B46F12E9E37600A4B66F /* c64orig.jpg */;
+	};
+	5060B4E112E9EBE100A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 203";
+		rLen = 0;
+		rLoc = 7700;
+		rType = 0;
+		vrLen = 1770;
+		vrLoc = 6855;
+	};
+	5060B4E212E9EBE100A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 206";
+		rLen = 0;
+		rLoc = 7883;
+		rType = 0;
+		vrLen = 1723;
+		vrLoc = 6805;
+	};
+	5060B4E312E9EBE100A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 531";
+		rLen = 31;
+		rLoc = 16696;
+		rType = 0;
+		vrLen = 1213;
+		vrLoc = 15830;
+	};
+	5060B4E812E9EC7C00A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 202";
+		rLen = 0;
+		rLoc = 7626;
+		rType = 0;
+		vrLen = 1787;
+		vrLoc = 6985;
+	};
+	5060B4E912E9EC7C00A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */;
+		name = "MyController.mm: 669";
+		rLen = 0;
+		rLoc = 20465;
+		rType = 0;
+		vrLen = 847;
+		vrLoc = 20484;
+	};
+	5060B4EA12E9EC7C00A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */;
+		name = "MyController.mm: 340";
+		rLen = 0;
+		rLoc = 11238;
+		rType = 0;
+		vrLen = 863;
+		vrLoc = 10633;
+	};
+	5060B4EB12E9EC7C00A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 531";
+		rLen = 31;
+		rLoc = 16696;
+		rType = 0;
+		vrLen = 1179;
+		vrLoc = 15831;
+	};
+	5060B4F712E9ED2000A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 5088A6E812E06DB700378033 /* MyControllerToolbar.h */;
+		name = "MyControllerToolbar.h: 26";
+		rLen = 0;
+		rLoc = 900;
+		rType = 0;
+		vrLen = 1320;
+		vrLoc = 0;
+	};
+	5060B4F812E9ED2000A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */;
+		name = "MyController.mm: 327";
+		rLen = 0;
+		rLoc = 11001;
+		rType = 0;
+		vrLen = 876;
+		vrLoc = 10731;
+	};
+	5060B4F912E9ED2000A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 202";
+		rLen = 0;
+		rLoc = 7626;
+		rType = 0;
+		vrLen = 1866;
+		vrLoc = 6959;
+	};
+	5060B4FA12E9ED2000A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 369";
+		rLen = 0;
+		rLoc = 12543;
+		rType = 0;
+		vrLen = 638;
+		vrLoc = 12134;
+	};
+	5060B4FB12E9ED2000A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 531";
+		rLen = 31;
+		rLoc = 16696;
+		rType = 0;
+		vrLen = 1179;
+		vrLoc = 15832;
+	};
+	5060B50312E9ED4B00A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 369";
+		rLen = 0;
+		rLoc = 12542;
+		rType = 0;
+		vrLen = 703;
+		vrLoc = 12154;
+	};
+	5060B50412E9ED4B00A4B66F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */;
+		name = "MyOpenGLView.mm: 531";
+		rLen = 31;
+		rLoc = 16696;
+		rType = 0;
+		vrLen = 1322;
+		vrLoc = 15868;
 	};
 	5061BED5121FE01D008EE816 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -3297,7 +3456,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1077, 3328}}";
 			sepNavSelRange = "{4587, 0}";
-			sepNavVisRange = "{4329, 740}";
+			sepNavVisRange = "{4329, 741}";
 		};
 	};
 	5088A75B12E07DAD00378033 /* PBXTextBookmark */ = {
@@ -3564,7 +3723,7 @@
 			sepNavWindowFrame = "{{461, 148}, {985, 880}}";
 		};
 	};
-	509AEB1F0C32641D001FC9FD /* MyOpenGLView.mm:1001 */ = {
+	509AEB1F0C32641D001FC9FD /* MyOpenGLView.mm:1004 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -3576,7 +3735,7 @@
 		functionName = "-performDragOperation:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 1001;
+		lineNumber = 1004;
 		modificationTime = 316779940.38327;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
@@ -4039,9 +4198,9 @@
 	};
 	50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {988, 12416}}";
-			sepNavSelRange = "{20465, 0}";
-			sepNavVisRange = "{20484, 867}";
+			sepNavIntBoundsRect = "{{0, 0}, {988, 11856}}";
+			sepNavSelRange = "{11001, 0}";
+			sepNavVisRange = "{10731, 876}";
 		};
 	};
 	50B8659E0DC8A8630059925F /* PBXTextBookmark */ = {

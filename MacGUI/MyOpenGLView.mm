@@ -198,10 +198,13 @@ void checkForOpenGLErrors()
 	checkForOpenGLErrors();
 	
 	// Create background texture
-	NSImage *bgImage = [NSImage imageNamed:@"c64"];
+	// NSImage *bgImage = [NSImage imageNamed:@"c64"];
 	// NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
 	// NSImage *bgImage = [NSImage imageNamed:@"C64G_P8"];
 	//NSImage *bgImage = [NSImage imageNamed:@"c64orig"];
+	NSString *file = @"/Library/Desktop Pictures/Nature/Aurora.jpg";
+	NSImage *bgImage = [[NSImage alloc] initWithContentsOfFile:file];
+	
 	NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
 	bgTexture = [self makeTexture:bgImageResized];
 	checkForOpenGLErrors();
@@ -363,7 +366,7 @@ void checkForOpenGLErrors()
 	targetYAngle   = 0;
 	targetZAngle   = 0;
 
-	[self computeAnimationDeltaSteps:90 /* 1 sec */];
+	[self computeAnimationDeltaSteps:110];
 		
 	if (targetYAngle < 0) 
 		targetYAngle += 360;
