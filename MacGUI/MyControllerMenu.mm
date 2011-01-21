@@ -32,7 +32,7 @@
 	if (!preferenceController) {
 		preferenceController = [[PreferenceController alloc] init];
 		[preferenceController setC64:c64];
-		[preferenceController setMydoc:self];
+		[preferenceController setController:self];
 	}
 	[preferenceController showWindow:self];
 }

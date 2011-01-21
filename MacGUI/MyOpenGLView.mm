@@ -18,10 +18,13 @@
 
 #import "C64GUI.h"
 
+#if 0
 const float TEX_LEFT   = 0.0 / ((float)TEXTURE_WIDTH);
 const float TEX_RIGHT  = (VIC::SCREEN_WIDTH+2*VIC::BORDER_WIDTH) / ((float)TEXTURE_WIDTH);
 const float TEX_TOP    = 37.0 / ((float)TEXTURE_HEIGHT);
 const float TEX_BOTTOM = 263.0 / ((float)TEXTURE_HEIGHT);
+#endif
+
 const float BG_TEX_LEFT   = 0.0; 
 const float BG_TEX_RIGHT  = 642.0 / BG_TEXTURE_WIDTH;
 const float BG_TEX_TOP    = 0.0; 
@@ -49,6 +52,7 @@ void checkForOpenGLErrors()
 @implementation MyOpenGLView
 
 @synthesize c64, frames, enableOpenGL;
+// @synthesize eyeX, eyeY, eyeZ;
 
 // --------------------------------------------------------------------------------
 //                                  Initializiation
@@ -81,11 +85,17 @@ void checkForOpenGLErrors()
 	// Lock around draw method
 	lock = [NSRecursiveLock new];
 		
-	// Initial scene position (for animation)
-	currentDistance= 6;
-	targetXAngle = targetYAngle = targetZAngle = targetDistance = 0;
-	deltaX = deltaY = deltaZ = 0;
+	// Initial scene position
+	targetXAngle = targetYAngle = targetZAngle = 0;
+	deltaXAngle = deltaYAngle = deltaZAngle = 0;
+	currentEyeX = currentEyeY = currentEyeZ = 0;
+	deltaEyeX = deltaEyeY = deltaEyeZ = 0;
+	
 	drawC64texture = false;
+	drawEntireCube = false;
+	//eyeX = 0; 
+	//eyeY = 0; 
+	//eyeZ = 0; 
 	
 	// Core video
 	displayLink = nil;
@@ -240,155 +250,148 @@ void checkForOpenGLErrors()
 //                               Animation effects
 // --------------------------------------------------------------------------------
 
+- (bool)animates
+{	
+	return (currentXAngle != targetXAngle || currentYAngle != targetYAngle || currentZAngle != targetZAngle || 		
+			currentEyeX != targetEyeX || currentEyeY != targetEyeY || currentEyeZ != targetEyeZ);
+}
+
+- (void)setEyeX:(float)newX
+{
+	currentEyeX = targetEyeX = newX;
+}
+
+- (void)setEyeY:(float)newY
+{
+	currentEyeY = targetEyeY = newY;
+}
+
+- (void)setEyeZ:(float)newZ
+{
+	currentEyeZ = targetEyeZ = newZ;
+}
+
 - (void)updateAngles
 {	
-	// Update current angles
-	if (currentXAngle != targetXAngle || 
-		currentYAngle != targetYAngle || 
-		currentZAngle != targetZAngle || 		
-		currentDistance != targetDistance) { 
-
-		if (fabs(currentXAngle - targetXAngle) < fabs(deltaX)) currentXAngle = targetXAngle;
-		else                                                   currentXAngle += deltaX;
-
-		if (fabs(currentYAngle - targetYAngle) < fabs(deltaY)) currentYAngle = targetYAngle;
-		else                                                   currentYAngle += deltaY;
-
-		if (fabs(currentZAngle - targetZAngle) < fabs(deltaZ)) currentZAngle = targetZAngle;
-		else                                                   currentZAngle += deltaZ;
-
-		if (fabs(currentDistance - targetDistance) < fabs(deltaDistance))
-			currentDistance = targetDistance;
-		else 
-			currentDistance += deltaDistance;
+	if ([self animates]) {
 	
+		if (fabs(currentXAngle - targetXAngle) < fabs(deltaXAngle)) currentXAngle = targetXAngle;
+		else														currentXAngle += deltaXAngle;
+
+		if (fabs(currentYAngle - targetYAngle) < fabs(deltaYAngle)) currentYAngle = targetYAngle;
+		else														currentYAngle += deltaYAngle;
+
+		if (fabs(currentZAngle - targetZAngle) < fabs(deltaZAngle)) currentZAngle = targetZAngle;
+		else														currentZAngle += deltaZAngle;
+
+		if (fabs(currentEyeX - targetEyeX) < fabs(deltaEyeX))       currentEyeX   = targetEyeX;
+		else														currentEyeX   += deltaEyeX;
+
+		if (fabs(currentEyeY - targetEyeY) < fabs(deltaEyeY))       currentEyeY   = targetEyeY;
+		else														currentEyeY   += deltaEyeY;
+
+		if (fabs(currentEyeZ - targetEyeZ) < fabs(deltaEyeZ))       currentEyeZ   = targetEyeZ;
+		else														currentEyeZ   += deltaEyeZ;
+		
 		if (currentXAngle >= 360.0) currentXAngle -= 360.0;
 		if (currentXAngle < 0.0) currentXAngle += 360.0;
 		if (currentYAngle >= 360.0) currentYAngle -= 360.0;	
 		if (currentYAngle < 0.0) currentYAngle += 360.0;
 		if (currentZAngle >= 360.0) currentZAngle -= 360.0;	
 		if (currentZAngle < 0.0) currentZAngle += 360.0;
+
+	} else {
+		drawEntireCube = false;
 	}
 }
 
-- (void)startAnimation
-{	
-	const int ANIM_CYCLES = 60; // 1 sec.
-
-	targetXAngle = -1.0;
-	targetYAngle = -1.0; // will rotate forever
-	targetZAngle = -1.0;
-	targetDistance = 0.4;
-	deltaX = -1.0;
-	deltaY = -0.8;
-	deltaZ = -0.6;
-	deltaDistance = (targetDistance - currentDistance) / ANIM_CYCLES;
-}
-
-- (void)stopAnimation
+- (void)computeAnimationDeltaSteps:(int)animationCycles
 {
-	const int ANIM_CYCLES = 120; 
-	
-	targetXAngle   = 0;
-	targetYAngle   = 0;
-	targetZAngle   = 0;
-	targetDistance = 0; //0; //-0.5;
-	deltaX         = (targetXAngle - currentXAngle) / ANIM_CYCLES;
-	deltaY         = (targetYAngle - currentYAngle) / ANIM_CYCLES;	
-	deltaZ         = (targetZAngle - currentZAngle) / ANIM_CYCLES;	
-	deltaDistance  = (targetDistance - currentDistance) / ANIM_CYCLES;
-}
-
-- (void)toggleAnimation
-{
-	if (targetXAngle == 0 && targetYAngle == 0 && targetZAngle == 0)
-		[self startAnimation];
-	else
-		[self stopAnimation];
+	deltaXAngle = (targetXAngle - currentXAngle) / animationCycles;
+	deltaYAngle = (targetYAngle - currentYAngle) / animationCycles;	
+	deltaZAngle = (targetZAngle - currentZAngle) / animationCycles;	
+	deltaEyeX = (targetEyeX - currentEyeX) / animationCycles;
+	deltaEyeY = (targetEyeY - currentEyeY) / animationCycles;
+	deltaEyeZ = (targetEyeZ - currentEyeZ) / animationCycles;
 }
 
 - (void)zoom
 {
-	const int ANIM_CYCLES = 120; 
+	NSLog(@"Zooming in...\n");
+
+	currentEyeZ     = 6;
+	targetXAngle    = 0;
+	targetYAngle    = 0;
+	targetZAngle    = 0;
 	
-	currentDistance= 6;
-	targetXAngle   = 0;
-	targetYAngle   = 0;
-	targetZAngle   = 0;
-	targetDistance = 0; //-0.5;
-	deltaX         = (targetXAngle - currentXAngle) / ANIM_CYCLES;
-	deltaY         = (targetYAngle - currentYAngle) / ANIM_CYCLES;	
-	deltaZ         = (targetZAngle - currentZAngle) / ANIM_CYCLES;	
-	deltaDistance  = (targetDistance - currentDistance) / ANIM_CYCLES;
+	[self computeAnimationDeltaSteps:120 /* 2 sec */];
 }
 
 - (void)rotateBack
 {
-	const int ANIM_CYCLES = 60; 
-		
+	NSLog(@"Rotating back...\n");
+
 	targetXAngle   = 0;
 	targetZAngle   = 0;
 	targetYAngle   += 90;
-	NSLog(@"Rotating...\n");
-
-	targetDistance = 0; // -0.5;
-	deltaX         = (targetXAngle - currentXAngle) / ANIM_CYCLES;
-	deltaY         = (targetYAngle - currentYAngle) / ANIM_CYCLES;	
-	deltaZ         = (targetZAngle - currentZAngle) / ANIM_CYCLES;	
-	deltaDistance  = (targetDistance - currentDistance) / ANIM_CYCLES;	
+	
+	[self computeAnimationDeltaSteps:60 /* 1 sec */];
 
 	if (targetYAngle >= 360) 
 		targetYAngle -= 360;
+
+	drawEntireCube = true;
 }
 
 - (void)rotate
 {
-	const int ANIM_CYCLES = 60; 
-	
+	NSLog(@"Rotating...\n");
+
 	targetXAngle   = 0;
 	targetZAngle   = 0;
 	targetYAngle   -= 90;
-	NSLog(@"Rotating...\n");
-
-	targetDistance = 0; // -0.5;
-	deltaX         = (targetXAngle - currentXAngle) / ANIM_CYCLES;
-	deltaY         = (targetYAngle - currentYAngle) / ANIM_CYCLES;	
-	deltaZ         = (targetZAngle - currentZAngle) / ANIM_CYCLES;	
-	deltaDistance  = (targetDistance - currentDistance) / ANIM_CYCLES;	
+	drawEntireCube = true;
+	
+	[self computeAnimationDeltaSteps:60 /* 1 sec */];
 
 	if (targetYAngle < 0) 
 		targetYAngle += 360;
 }
 
-/*
-- (void)tiltOn
+- (void)scroll
 {
-	const int ANIM_CYCLES = 30; 
-	
+	NSLog(@"Scrolling...\n");
+
+	currentEyeY    = 0.9;
 	targetXAngle   = 0;
+	targetYAngle   = 0;
 	targetZAngle   = 0;
-	targetYAngle   = 90;
-	targetDistance = 0; // -0.5;
-	deltaX         = (targetXAngle - currentXAngle) / ANIM_CYCLES;
-	deltaY         = (targetYAngle - currentYAngle) / ANIM_CYCLES;	
-	deltaZ         = (targetZAngle - currentZAngle) / ANIM_CYCLES;	
-	deltaDistance  = (targetDistance - currentDistance) / ANIM_CYCLES;	
+
+	[self computeAnimationDeltaSteps:90 /* 1 sec */];
+		
+	if (targetYAngle < 0) 
+		targetYAngle += 360;
 }
 
-- (void)tiltOff
+#if 0
+- (void)moveToX:(float)newX
 {
-	const int ANIM_CYCLES = 30; 
-	
-	targetXAngle   = 0;
-	targetZAngle   = 0;
-	targetYAngle   = 0;
-	targetDistance = 0; // -0.5;
-	deltaX         = (targetXAngle - currentXAngle) / ANIM_CYCLES;
-	deltaY         = (targetYAngle - currentYAngle) / ANIM_CYCLES;	
-	deltaZ         = (targetZAngle - currentZAngle) / ANIM_CYCLES;	
-	deltaDistance  = (targetDistance - currentDistance) / ANIM_CYCLES;	
+	targetEyeX = newX;
+	[self computeAnimationDeltaSteps:60 /* 1 sec */];
 }
-*/
+
+- (void)moveToY:(float)newY 
+{
+	targetEyeY = newY;
+	[self computeAnimationDeltaSteps:60 /* 1 sec */];
+}
+
+- (void)moveToZ:(float)newZ 
+{
+	targetEyeZ = newZ;
+	[self computeAnimationDeltaSteps:60 /* 1 sec */];
+}
+#endif
 
 
 // --------------------------------------------------------------------------------
@@ -523,6 +526,14 @@ void checkForOpenGLErrors()
 			
 	frames++;
 
+	// Determine screen geometry (differs between NTSC and PAL)
+	TEX_LEFT   = 0.0;
+	TEX_RIGHT  = (float)c64->vic->getTotalScreenWidth() / (float)TEXTURE_WIDTH;
+	TEX_TOP    = (float)c64->vic->getFirstVisibleLine() / (float)TEXTURE_HEIGHT;
+	TEX_BOTTOM = (float)c64->vic->getLastVisibleLine() / (float)TEXTURE_HEIGHT;
+	dimX = 0.64;
+	dimY = dimX * (float)c64->vic->getTotalScreenHeight() / (float)c64->vic->getTotalScreenWidth() / c64->vic->getPixelAspectRatio();
+	
 	[glcontext makeCurrentContext];
 
 	// Clear screen and depth buffer
@@ -535,7 +546,8 @@ void checkForOpenGLErrors()
 	if (c64) {
 		void *buf = c64->vic->screenBuffer(); 
 		assert(buf != NULL);
-		// glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIC::TOTAL_SCREEN_WIDTH, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+		//glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIC::TOTAL_SCREEN_WIDTH, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+		//glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 368, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, c64->vic->getTotalScreenWidth(), TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
 		checkForOpenGLErrors();
 	}
@@ -543,24 +555,15 @@ void checkForOpenGLErrors()
 	// Set location
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-	// Set the view point
-	float eyeX, eyeY, eyeZ;
-	
-	eyeX = 0; 
-	eyeY = 0; 
-	eyeZ = 1.33; 
-			  
-	//	NSLog(@"eyeX = %f eyeY = %f eyeZ = %f\n", eyeX, eyeY, eyeZ);
-	gluLookAt(eyeX, eyeY, eyeZ, 0, 0, 0, 0, 1, 0);
-	
-	bool animation = (currentXAngle != targetXAngle || 
-					  currentYAngle != targetYAngle ||
-					  currentZAngle != targetZAngle || 
-					  currentDistance != targetDistance);	
-	bool backgroundIsVisible = animation || !drawC64texture;
+				  
+	// Set viewpoint
+	gluLookAt(0, 0, 1.33, 0, 0, 0, 0, 1, 0);
 		
-	if (backgroundIsVisible) {
+	bool animation = [self animates];
+
+	// bool backgroundIsVisible = animation || !drawC64texture;
+	//if (backgroundIsVisible) {
+	if (true) {
 		
 		float depth = -5.0f;
 		float scale = 9.2f;
@@ -576,7 +579,10 @@ void checkForOpenGLErrors()
 		glVertex3f(scale*0.64f, scale*0.4f, depth); // Bottom right
 		glEnd();		
 	}
-	
+
+	// Zoom in or zoom out
+	glTranslatef(-currentEyeX, -currentEyeY, -currentEyeZ);
+
 	if (animation) {
 		
 		// Rotate around Z axis
@@ -588,10 +594,7 @@ void checkForOpenGLErrors()
 		// Rotate around X axis
 		glRotatef(currentXAngle,1.0f,0.0f,0.0f);
 
-		// Zoom in or zoom out
-		glTranslatef(0, 0, -currentDistance);
 	}
-
 	
 	if (drawC64texture) {	
 
@@ -615,67 +618,67 @@ void checkForOpenGLErrors()
 		
 		// FRONT
 		glTexCoord2f(TEX_RIGHT, TEX_TOP);
-		glVertex3f( 0.64f, 0.4f, 0.64f);		// Top Right Of The Quad (Front)
+		glVertex3f( dimX, dimY, dimX);		// Top Right Of The Quad (Front)
 		glTexCoord2f(TEX_LEFT, TEX_TOP);
-		glVertex3f(-0.64f, 0.4f, 0.64f);		// Top Left Of The Quad (Front)
+		glVertex3f(-dimX, dimY, dimX);		// Top Left Of The Quad (Front)
 		glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-		glVertex3f(-0.64f,-0.4f, 0.64f);		// Bottom Left Of The Quad (Front)
+		glVertex3f(-dimX,-dimY, dimX);		// Bottom Left Of The Quad (Front)
 		glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-		glVertex3f( 0.64f,-0.4f, 0.64f);		// Bottom Right Of The Quad (Front)
+		glVertex3f( dimX,-dimY, dimX);		// Bottom Right Of The Quad (Front)
 	
-		if (animation) {
+		if (drawEntireCube) {
 			
 			// TOP
 			glColor3f(1.0f,1.0f,1.0f);				// Set The Color
 			glTexCoord2f(TEX_RIGHT, TEX_TOP);
-			glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Right (TOP)
+			glVertex3f( dimX, dimY,-dimX);		// Top Right (TOP)
 			glTexCoord2f(TEX_LEFT, TEX_TOP);
-			glVertex3f(-0.64f, 0.4f,-0.64f);		// Top Left (TOP)
+			glVertex3f(-dimX, dimY,-dimX);		// Top Left (TOP)
 			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-			glVertex3f(-0.64f, 0.4f, 0.64f);		// Bottom Left (TOP)
+			glVertex3f(-dimX, dimY, dimX);		// Bottom Left (TOP)
 			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-			glVertex3f( 0.64f, 0.4f, 0.64f);		// Bottom Right (TOP)
+			glVertex3f( dimX, dimY, dimX);		// Bottom Right (TOP)
 				
 			// BOTTOM
 			glColor3f(1.0f,1.0f,1.0f);			    // Set The Color
 			glTexCoord2f(TEX_RIGHT, TEX_TOP);
-			glVertex3f( 0.64f,-0.4f, 0.64f);		// Top Right (BOTTOM)
+			glVertex3f( dimX,-dimY, dimX);		// Top Right (BOTTOM)
 			glTexCoord2f(TEX_LEFT, TEX_TOP);
-			glVertex3f(-0.64f,-0.4f, 0.64f);		// Top Left (BOTTOM)
+			glVertex3f(-dimX,-dimY, dimX);		// Top Left (BOTTOM)
 			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-			glVertex3f(-0.64f,-0.4f,-0.64f);		// Bottom Left (BOTTOM)
+			glVertex3f(-dimX,-dimY,-dimX);		// Bottom Left (BOTTOM)
 			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-			glVertex3f( 0.64f,-0.4f,-0.64f);	    // Bottom right (BOTTOM)
+			glVertex3f( dimX,-dimY,-dimX);	    // Bottom right (BOTTOM)
 
 			// BACK
 			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-			glVertex3f( 0.64f,-0.4f,-0.64f);		// Bottom Left Of The Quad (Back)
+			glVertex3f( dimX,-dimY,-dimX);		// Bottom Left Of The Quad (Back)
 			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-			glVertex3f(-0.64f,-0.4f,-0.64f);		// Bottom Right Of The Quad (Back)
+			glVertex3f(-dimX,-dimY,-dimX);		// Bottom Right Of The Quad (Back)
 			glTexCoord2f(TEX_RIGHT, TEX_TOP);
-			glVertex3f(-0.64f, 0.4f,-0.64f);		// Top Right Of The Quad (Back)
+			glVertex3f(-dimX, dimY,-dimX);		// Top Right Of The Quad (Back)
 			glTexCoord2f(TEX_LEFT, TEX_TOP);
-			glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Left Of The Quad (Back)
+			glVertex3f( dimX, dimY,-dimX);		// Top Left Of The Quad (Back)
 						  
 			// LEFT
 			glTexCoord2f(TEX_RIGHT, TEX_TOP);
-			glVertex3f(-0.64f, 0.4f, 0.64f);		// Top Right Of The Quad (Left)
+			glVertex3f(-dimX, dimY, dimX);		// Top Right Of The Quad (Left)
 			glTexCoord2f(TEX_LEFT, TEX_TOP);
-			glVertex3f(-0.64f, 0.4f,-0.64f);		// Top Left Of The Quad (Left)
+			glVertex3f(-dimX, dimY,-dimX);		// Top Left Of The Quad (Left)
 			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-			glVertex3f(-0.64f,-0.4f,-0.64f);		// Bottom Left Of The Quad (Left)
+			glVertex3f(-dimX,-dimY,-dimX);		// Bottom Left Of The Quad (Left)
 			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-			glVertex3f(-0.64f,-0.4f, 0.64f);		// Bottom Right Of The Quad (Left)
+			glVertex3f(-dimX,-dimY, dimX);		// Bottom Right Of The Quad (Left)
 				
 			// RIGHT
 			glTexCoord2f(TEX_RIGHT, TEX_TOP);
-			glVertex3f( 0.64f, 0.4f,-0.64f);		// Top Right Of The Quad (Right)
+			glVertex3f( dimX, dimY,-dimX);		// Top Right Of The Quad (Right)
 			glTexCoord2f(TEX_LEFT, TEX_TOP);
-			glVertex3f( 0.64f, 0.4f, 0.64f);		// Top Left Of The Quad (Right)
+			glVertex3f( dimX, dimY, dimX);		// Top Left Of The Quad (Right)
 			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
-			glVertex3f( 0.64f,-0.4f, 0.64f);		// Bottom Left Of The Quad (Right)
+			glVertex3f( dimX,-dimY, dimX);		// Bottom Left Of The Quad (Right)
 			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
-			glVertex3f( 0.64f,-0.4f,-0.64f);		// Bottom Right Of The Quad (Right)
+			glVertex3f( dimX,-dimY,-dimX);		// Bottom Right Of The Quad (Right)
 		}
 			
 		glEnd();		
