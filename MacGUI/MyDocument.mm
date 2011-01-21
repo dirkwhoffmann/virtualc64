@@ -33,7 +33,8 @@
 	myController = [[[MyController alloc] initWithWindowNibName:@"MyDocument"] autorelease];
 	[self addWindowController:myController];
 	
-	[[self windowForSheet] setContentAspectRatio:NSMakeSize(652,432)];
+	// [[self windowForSheet] setContentAspectRatio:NSMakeSize(652,432)];
+	[[self windowForSheet] setContentAspectRatio:NSMakeSize(804,623 + 20 /* controls below OpenGL window */)];
 }
 
 - (id)init

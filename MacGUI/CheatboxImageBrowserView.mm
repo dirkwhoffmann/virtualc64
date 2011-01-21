@@ -98,8 +98,8 @@
 		int height = [[c64 vic] totalScreenHeight];
 		
 		// We skip a couple of rows (upper and lower border should be same size)
-		height -= 38;
-		data += 38 * 4 * width;
+		// height -= [[c64 vic] firstVisibleLine];
+		data += [[c64 vic] firstVisibleLine] * 4 * width;
 		
 		// Create bitmap representation
 		NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:	&data 

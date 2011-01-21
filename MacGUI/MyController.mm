@@ -124,7 +124,7 @@
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	
 	// System 
-	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64PALorNTSCKey];
+	[defaultValues setObject:[NSNumber numberWithInt:0/*PAL*/] forKey:VC64PALorNTSCKey];
 	[defaultValues setObject:@"" forKey:VC64BasicRomFileKey];
 	[defaultValues setObject:@"" forKey:VC64CharRomFileKey];
 	[defaultValues setObject:@"" forKey:VC64KernelRomFileKey];
@@ -137,9 +137,9 @@
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64SIDFilterKey];
 	
 	// Video
-	[defaultValues setObject:[NSNumber numberWithFloat:0.0] forKey:VC64EyeX];
-	[defaultValues setObject:[NSNumber numberWithFloat:0.0] forKey:VC64EyeY];
-	[defaultValues setObject:[NSNumber numberWithFloat:0.0] forKey:VC64EyeZ];
+	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_X] forKey:VC64EyeX];
+	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Y] forKey:VC64EyeY];
+	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Z] forKey:VC64EyeZ];
 
 	[defaultValues setObject:[NSNumber numberWithInt:VIC::CUSTOM_PALETTE] forKey:VC64ColorSchemeKey];
 	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:VC64VideoFilterKey];	
@@ -195,10 +195,9 @@
 	// Video 
 	// [c64 vicSetVideoFilter:[defaults integerForKey:VC64VideoFilterKey];
 	
-	// ENABLE AFTER DEBUGGING
-	// [screen setEyeX:[defaults floatForKey:VC64EyeX]];
-	// [screen setEyeY:[defaults floatForKey:VC64EyeY]];
-	// [screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
+	[screen setEyeX:[defaults floatForKey:VC64EyeX]];
+	[screen setEyeY:[defaults floatForKey:VC64EyeY]];
+	[screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
 	
 	colorScheme = [defaults integerForKey:VC64ColorSchemeKey];
 	if (colorScheme == VIC::CUSTOM_PALETTE) {
@@ -339,7 +338,7 @@
 			[c64 run];
 			[screen zoom];
 			//[screen scroll];
-			[screen drawC64texture:true];
+			[screen setDrawC64texture:true];
 
 			// Check for attached archive
 			if ([[self document] archive]) {
