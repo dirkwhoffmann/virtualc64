@@ -273,7 +273,7 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[defaults setBool:[warpLoad state] forKey:VC64WarpLoadKey];
 }
 
-- (IBAction)sidFilterAction:(id)sender
+- (IBAction)SIDFilterAction:(id)sender
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -298,9 +298,8 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 - (IBAction)setVideoFilterAction:(id)sender
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-	// set filter...
-	// not implemented yet
+	
+	[[controller screen] setAntiAliasing:[[videoFilter selectedItem] tag]];
 	
 	[defaults setInteger:[[videoFilter selectedItem] tag] forKey:VC64VideoFilterKey];
 }

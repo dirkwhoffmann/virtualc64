@@ -21,11 +21,11 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="766"/>
 			<integer value="1005"/>
-			<integer value="5"/>
-			<integer value="2024"/>
 			<integer value="1873"/>
+			<integer value="2024"/>
+			<integer value="766"/>
+			<integer value="5"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -55,7 +55,7 @@
 			<object class="NSWindowTemplate" id="811244080">
 				<int key="NSWindowStyleMask">4111</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{514, 88}, {804, 645}}</string>
+				<string key="NSWindowRect">{{545, 342}, {804, 645}}</string>
 				<int key="NSWTFlags">1610612736</int>
 				<string key="NSWindowTitle">Window</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -806,7 +806,7 @@
 					<string key="NSFrameSize">{804, 645}</string>
 					<reference key="NSSuperview"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{652, 509}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
@@ -5179,7 +5179,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<object class="NSTextFieldCell" key="NSCell" id="979534122">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">138544128</int>
-							<string key="NSContents">have been taken recently</string>
+							<string key="NSContents">have been recorded</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="972535627"/>
 							<reference key="NSBackgroundColor" ref="567631968"/>
@@ -5461,14 +5461,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<reference key="destination" ref="46838506"/>
 					</object>
 					<int key="connectionID">205</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">debug_panel</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="964686301"/>
-					</object>
-					<int key="connectionID">208</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -11546,7 +11538,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1126, 590}, {210, 389}}</string>
+					<string>{{1079, 590}, {210, 389}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -11633,9 +11625,9 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{15, 114}, {804, 645}}</string>
+					<string>{{295, 362}, {804, 645}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{15, 114}, {804, 645}}</string>
+					<string>{{295, 362}, {804, 645}}</string>
 					<integer value="1"/>
 					<integer value="1"/>
 					<integer value="1"/>

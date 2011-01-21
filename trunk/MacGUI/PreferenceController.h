@@ -128,7 +128,7 @@ extern NSString *VC64CustomCol15Key;
 - (IBAction)warpLoadAction:(id)sender;
 
 // SID
-- (IBAction)sidFilterAction:(id)sender;
+- (IBAction)SIDFilterAction:(id)sender;
 
 // VIC
 - (IBAction)changeColorScheme:(id)sender;

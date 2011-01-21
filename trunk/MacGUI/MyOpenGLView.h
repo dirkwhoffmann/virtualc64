@@ -136,6 +136,9 @@ const int BG_TEXTURE_DEPTH = 4;
 	//! If false, only the front facing part of the texture cube is drawn
 	bool drawEntireCube;
 		
+	//! Turns anti-aliasing on and off
+	bool antiAliasing;
+	
 	// Mapping from Mac keycode to the C64 row/column format
 	uint16_t kb[256];
 
@@ -165,6 +168,7 @@ const int BG_TEXTURE_DEPTH = 4;
 @property bool drawC64texture;
 @property bool drawBackground;
 @property bool drawEntireCube;
+@property bool antiAliasing;
 
 - (void) cleanUp;
 
