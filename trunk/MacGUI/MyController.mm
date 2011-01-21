@@ -664,8 +664,12 @@
 	// Hide sheet
 	[romDialog orderOut:sender];
 	
+	// Exit
+	[[NSApplication sharedApplication] terminate: nil];
+	
+	// OLD BEHAVIOUR
 	// Return to normal event handling
-	[NSApp endSheet:romDialog returnCode:1];
+	// [NSApp endSheet:romDialog returnCode:1];
 }
 
 - (IBAction)cancelMountDialog:(id)sender

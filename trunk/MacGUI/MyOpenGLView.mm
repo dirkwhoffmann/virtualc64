@@ -20,9 +20,9 @@
 
 // Background texture
 const float BG_TEX_LEFT   = 0.0; 
-const float BG_TEX_RIGHT  = 642.0 / BG_TEXTURE_WIDTH;
+const float BG_TEX_RIGHT  = 1.0; // 642.0 / BG_TEXTURE_WIDTH;
 const float BG_TEX_TOP    = 0.0; 
-const float BG_TEX_BOTTOM = 482.0 / BG_TEXTURE_HEIGHT;
+const float BG_TEX_BOTTOM = 1.0; // 482.0 / BG_TEXTURE_HEIGHT;
 
 static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink, 
 								 const CVTimeStamp *inNow, 
@@ -199,7 +199,10 @@ void checkForOpenGLErrors()
 	
 	// Create background texture
 	NSImage *bgImage = [NSImage imageNamed:@"c64"];
-	NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
+	// NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
+	// NSImage *bgImage = [NSImage imageNamed:@"C64G_P8"];
+	//NSImage *bgImage = [NSImage imageNamed:@"c64orig"];
+	NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
 	bgTexture = [self makeTexture:bgImageResized];
 	checkForOpenGLErrors();
 	
