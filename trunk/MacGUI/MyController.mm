@@ -260,7 +260,7 @@
 	}
 	
 	// Refresh debug panel if open
-	if ([c64 isRunning] && ([debug_panel state] == NSDrawerOpenState || [debug_panel state] == NSDrawerOpeningState)) {
+	if ([c64 isRunning] && ([debugPanel state] == NSDrawerOpenState || [debugPanel state] == NSDrawerOpeningState)) {
 		[self refresh];
 	}
 	

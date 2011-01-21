@@ -498,6 +498,8 @@
 - (void) halt { c64->halt(); }
 - (void) step { c64->step(); }
 - (void) run { c64->run(); }
+- (void) suspend { c64->suspend(); }
+- (void) resume { c64->resume(); }
 - (bool) isHalted { return c64->isHalted(); }
 - (bool) isRunnable { return c64->isRunnable(); }
 - (bool) isRunning { return c64->isRunning(); }

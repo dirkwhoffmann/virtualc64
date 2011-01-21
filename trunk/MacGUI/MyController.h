@@ -50,7 +50,7 @@ class Snapshot;
 	
 	// Main screen
 	IBOutlet MyOpenGLView *screen;
-	IBOutlet NSDrawer *debug_panel;
+	IBOutlet NSDrawer *debugPanel;
 	IBOutlet NSDrawer *cheatboxPanel;
 	IBOutlet NSButton *drive;
 	IBOutlet NSButton *eject;

@@ -66,7 +66,7 @@
 		[c64 run];
 	} else {
 		[c64 halt];
-		[debug_panel open];
+		[debugPanel open];
 	}
 	
 	[self refresh];
@@ -76,7 +76,7 @@
 {	
 	if ([c64 isRunning]) {
 		[c64 halt];
-		[debug_panel open];
+		[debugPanel open];
 	}
 	
 	[self refresh];

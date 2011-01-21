@@ -422,6 +422,8 @@
 - (void) step;
 - (bool) isRunnable;
 - (void) run;
+- (void) suspend;
+- (void) resume; 
 - (bool) isHalted;
 - (bool) isRunning;
 - (void) setPAL;
