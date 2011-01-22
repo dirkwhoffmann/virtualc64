@@ -146,12 +146,11 @@ const int BG_TEXTURE_DEPTH = 4;
 	// DEPRECATED
 	// float eyeX, eyeY, eyeZ;
 
-	// Texture cut-out (Visible texture area)
-	// TODO: Rename
-	float TEX_LEFT;
-	float TEX_RIGHT;
-	float TEX_TOP;
-	float TEX_BOTTOM;
+	// Texture cut-out (fist and last visible texture coordinates)
+	float textureXStart;
+	float textureXEnd;
+	float textureYStart;
+	float textureYEnd;
 	
 	// Size of drawn rectangle 
 	float dimX, dimY;
@@ -186,6 +185,9 @@ const int BG_TEXTURE_DEPTH = 4;
 
 //! Trigger animation effect. Scroll in from below
 - (void) scroll;
+
+//! Trigger animation effect. Combination of zooming and rotating
+- (void) fadeIn;
 
 //! Trigger animation effect. Rotate cube in one direction
 - (void) rotate;
