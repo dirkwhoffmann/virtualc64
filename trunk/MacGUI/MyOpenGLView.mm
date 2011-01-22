@@ -363,16 +363,29 @@ void checkForOpenGLErrors()
 - (void)scroll
 {
 	NSLog(@"Scrolling...\n");
-
-	currentEyeY    = 1.3; // 0.9;
+	
+	currentEyeY    = 0.9;
 	targetXAngle   = 0;
 	targetYAngle   = 0;
 	targetZAngle   = 0;
 
-	[self computeAnimationDeltaSteps:120];
-		
-	if (targetYAngle < 0) 
-		targetYAngle += 360;
+	[self computeAnimationDeltaSteps:120];		
+}
+
+- (void)fadeIn
+{
+	NSLog(@"Fading in...\n");
+	
+	
+	currentXAngle  = -90;
+	currentEyeZ    = 5.0;
+	
+	currentEyeY    = 2.5;
+	targetXAngle   = 0;
+	targetYAngle   = 0;
+	targetZAngle   = 0;
+	
+	[self computeAnimationDeltaSteps:120];	
 }
 
 #if 0
@@ -529,10 +542,10 @@ void checkForOpenGLErrors()
 	frames++;
 
 	// Determine screen geometry (differs between NTSC and PAL)
-	TEX_LEFT   = 0.0;
-	TEX_RIGHT  = (float)c64->vic->getTotalScreenWidth() / (float)TEXTURE_WIDTH;
-	TEX_TOP    = (float)c64->vic->getFirstVisibleLine() / (float)TEXTURE_HEIGHT;
-	TEX_BOTTOM = (float)c64->vic->getLastVisibleLine() / (float)TEXTURE_HEIGHT;
+	textureXStart = (float)c64->vic->getFirstVisiblePixel() / (float)TEXTURE_WIDTH;
+	textureXEnd = (float)c64->vic->getLastVisiblePixel() / (float)TEXTURE_WIDTH;
+	textureYStart = (float)c64->vic->getFirstVisibleLine() / (float)TEXTURE_HEIGHT;
+	textureYEnd = (float)c64->vic->getLastVisibleLine() / (float)TEXTURE_HEIGHT;
 	dimX = 0.64;
 	dimY = dimX * (float)c64->vic->getTotalScreenHeight() / (float)c64->vic->getTotalScreenWidth() / c64->vic->getPixelAspectRatio();
 
@@ -619,67 +632,67 @@ void checkForOpenGLErrors()
 		glBegin(GL_QUADS);			
 		
 		// FRONT
-		glTexCoord2f(TEX_RIGHT, TEX_TOP);
+		glTexCoord2f(textureXEnd, textureYStart);
 		glVertex3f( dimX, dimY, dimX);		// Top Right Of The Quad (Front)
-		glTexCoord2f(TEX_LEFT, TEX_TOP);
+		glTexCoord2f(textureXStart, textureYStart);
 		glVertex3f(-dimX, dimY, dimX);		// Top Left Of The Quad (Front)
-		glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+		glTexCoord2f(textureXStart, textureYEnd);
 		glVertex3f(-dimX,-dimY, dimX);		// Bottom Left Of The Quad (Front)
-		glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+		glTexCoord2f(textureXEnd, textureYEnd);
 		glVertex3f( dimX,-dimY, dimX);		// Bottom Right Of The Quad (Front)
 	
 		if (drawEntireCube) {
 			
 			// TOP
 			glColor3f(1.0f,1.0f,1.0f);				// Set The Color
-			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glTexCoord2f(textureXEnd, textureYStart);
 			glVertex3f( dimX, dimY,-dimX);		// Top Right (TOP)
-			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glTexCoord2f(textureXStart, textureYStart);
 			glVertex3f(-dimX, dimY,-dimX);		// Top Left (TOP)
-			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glTexCoord2f(textureXStart, textureYEnd);
 			glVertex3f(-dimX, dimY, dimX);		// Bottom Left (TOP)
-			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glTexCoord2f(textureXEnd, textureYEnd);
 			glVertex3f( dimX, dimY, dimX);		// Bottom Right (TOP)
 				
 			// BOTTOM
 			glColor3f(1.0f,1.0f,1.0f);			    // Set The Color
-			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glTexCoord2f(textureXEnd, textureYStart);
 			glVertex3f( dimX,-dimY, dimX);		// Top Right (BOTTOM)
-			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glTexCoord2f(textureXStart, textureYStart);
 			glVertex3f(-dimX,-dimY, dimX);		// Top Left (BOTTOM)
-			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glTexCoord2f(textureXStart, textureYEnd);
 			glVertex3f(-dimX,-dimY,-dimX);		// Bottom Left (BOTTOM)
-			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glTexCoord2f(textureXEnd, textureYEnd);
 			glVertex3f( dimX,-dimY,-dimX);	    // Bottom right (BOTTOM)
 
 			// BACK
-			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glTexCoord2f(textureXStart, textureYEnd);
 			glVertex3f( dimX,-dimY,-dimX);		// Bottom Left Of The Quad (Back)
-			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glTexCoord2f(textureXEnd, textureYEnd);
 			glVertex3f(-dimX,-dimY,-dimX);		// Bottom Right Of The Quad (Back)
-			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glTexCoord2f(textureXEnd, textureYStart);
 			glVertex3f(-dimX, dimY,-dimX);		// Top Right Of The Quad (Back)
-			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glTexCoord2f(textureXStart, textureYStart);
 			glVertex3f( dimX, dimY,-dimX);		// Top Left Of The Quad (Back)
 						  
 			// LEFT
-			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glTexCoord2f(textureXEnd, textureYStart);
 			glVertex3f(-dimX, dimY, dimX);		// Top Right Of The Quad (Left)
-			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glTexCoord2f(textureXStart, textureYStart);
 			glVertex3f(-dimX, dimY,-dimX);		// Top Left Of The Quad (Left)
-			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glTexCoord2f(textureXStart, textureYEnd);
 			glVertex3f(-dimX,-dimY,-dimX);		// Bottom Left Of The Quad (Left)
-			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glTexCoord2f(textureXEnd, textureYEnd);
 			glVertex3f(-dimX,-dimY, dimX);		// Bottom Right Of The Quad (Left)
 				
 			// RIGHT
-			glTexCoord2f(TEX_RIGHT, TEX_TOP);
+			glTexCoord2f(textureXEnd, textureYStart);
 			glVertex3f( dimX, dimY,-dimX);		// Top Right Of The Quad (Right)
-			glTexCoord2f(TEX_LEFT, TEX_TOP);
+			glTexCoord2f(textureXStart, textureYStart);
 			glVertex3f( dimX, dimY, dimX);		// Top Left Of The Quad (Right)
-			glTexCoord2f(TEX_LEFT, TEX_BOTTOM);
+			glTexCoord2f(textureXStart, textureYEnd);
 			glVertex3f( dimX,-dimY, dimX);		// Bottom Left Of The Quad (Right)
-			glTexCoord2f(TEX_RIGHT, TEX_BOTTOM);
+			glTexCoord2f(textureXEnd, textureYEnd);
 			glVertex3f( dimX,-dimY,-dimX);		// Bottom Right Of The Quad (Right)
 		}
 			

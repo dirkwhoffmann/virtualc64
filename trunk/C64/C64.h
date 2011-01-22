@@ -16,23 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// New in 0.9.4
-// Now using more accurate screen geometries in PAL and NTSC mode
-// Added controls that allow to shift and zoom screen borders (Wizball is now playable)
-// Improved drag'n'drop. Thumbnail images can now be dragged across different emulator windows
-// Added new icons for all supported file types
-// D64, T64, PRG, and P00 files can now be opened via the open file dialog (Open menu)
-
-
-// TODO
-// Fix texture grappgin in printing and cheatbox
-// Always center screen in fullscreen mode
+// New in 0.9.5
+// Fixed a bug that caused a discolored line to appear at the right border of the screen texture
 
 
 #ifndef _C64_INC
 #define _C64_INC
 
-// Personal Includes
 #include "basic.h"
 #include "VirtualComponent.h"
 #include "Message.h"

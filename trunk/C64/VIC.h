@@ -202,32 +202,7 @@ public:
 	//! Maximum number of viewable pixels per rasterline
 	static const uint16_t MAX_VIEWABLE_PIXELS = NTSC_VIEWABLE_PIXELS;
 	
-	
 		
-	
-	// OLD VALUES BELOW (DEPRECATED)
-	
-	//! First column coordinate that belongs to the drawable screen area
-	// static const uint16_t BORDER_WIDTH = 24;  
-	
-	//! First rasterline that belongs to the drawable screen area
-	// static const uint16_t BORDER_HEIGHT = 51;
-
-	//! First rasterline that can be seen // WRONG VALUE AND MISSPELLED
-	// static const uint16_t FIRST_VIEABLE_LINE = 16;
-
-	//! Last rasterline that can be seen // WRONG VALUE AND MISSPELLED
-	// static const uint16_t LAST_VIEABLE_LINE = 287;
-
-	//! Total number of pixels in one screen buffer line
-	// TODO this should be 403 for PAL and 418 for NTSC currently this is 368
-	// static const uint16_t TOTAL_SCREEN_WIDTH = BORDER_WIDTH + SCREEN_WIDTH + BORDER_WIDTH;
-
-	//! Total number of lines in the screen buffer
-	// TODO this should be 284 for PAL and 235 for NTSC, note that these are visible rasterlines
-	// static const uint16_t TOTAL_SCREEN_HEIGHT = NTSC_RASTERLINES;
-		
-	
 	// -----------------------------------------------------------------------------------------------
 	//                                      Member variables
 	// -----------------------------------------------------------------------------------------------
@@ -323,6 +298,8 @@ private:
 
 public:
 
+	inline unsigned getFirstVisiblePixel() { return 0; }
+	inline unsigned getLastVisiblePixel() { return totalScreenWidth - 1; }	
 	inline unsigned getFirstVisibleLine() { return firstVisibleLine; }
 	inline unsigned getLastVisibleLine() { return lastVisibleLine; }
 	inline unsigned getTotalScreenWidth() {	return totalScreenWidth; }
