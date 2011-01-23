@@ -1029,9 +1029,9 @@
 	};
 	50176C510A6F72F3009E80BD /* C64.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {988, 22544}}";
-			sepNavSelRange = "{378, 0}";
-			sepNavVisRange = "{21695, 761}";
+			sepNavIntBoundsRect = "{{0, 0}, {1077, 22880}}";
+			sepNavSelRange = "{23396, 0}";
+			sepNavVisRange = "{23032, 695}";
 			sepNavVisRect = "{{0, 7969}, {869, 622}}";
 			sepNavWindowFrame = "{{599, 81}, {985, 880}}";
 		};
@@ -2058,6 +2058,13 @@
 		lastKnownFileType = sourcecode.cpp.objcpp;
 		name = ConsoleController.mm;
 		path = /Users/hoff/work/Software/VirtualC64/virtualc64/MacGUI/ConsoleController.mm;
+		sourceTree = "<absolute>";
+	};
+	504CEE7C0C46774F001F4E51 /* BigIcon.png */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = image.png;
+		name = BigIcon.png;
+		path = /Users/hoff/work/Software/VirtualC64/virtualc64/images/BigIcon.png;
 		sourceTree = "<absolute>";
 	};
 	504CEF9F0C4694F5001F4E51 /* ConsoleController.mm:52 */ = {

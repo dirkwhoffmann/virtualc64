@@ -63,7 +63,6 @@
 		50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE70A7B67A100A8DB94 /* stepOver32.png */; };
 		50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FEB0A7B67AE00A8DB94 /* restart32.png */; };
 		50471FEE0A7B67B800A8DB94 /* debugger32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FED0A7B67B800A8DB94 /* debugger32.png */; };
-		504CEE7D0C46774F001F4E51 /* BigIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CEE7C0C46774F001F4E51 /* BigIcon.png */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506910C80A74EAE100F48A7F /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
@@ -231,10 +230,9 @@
 		50471FE70A7B67A100A8DB94 /* stepOver32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepOver32.png; path = images/stepOver32.png; sourceTree = "<group>"; };
 		50471FEB0A7B67AE00A8DB94 /* restart32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = restart32.png; path = images/restart32.png; sourceTree = "<group>"; };
 		50471FED0A7B67B800A8DB94 /* debugger32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = debugger32.png; path = images/debugger32.png; sourceTree = "<group>"; };
-		504CEE7C0C46774F001F4E51 /* BigIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BigIcon.png; path = images/BigIcon.png; sourceTree = "<group>"; };
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
 		505EB0A00F3047C300960BC0 /* Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Snapshot.cpp; sourceTree = "<group>"; };
-		506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
+		506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VirtualC64Icon.icns; path = images/VirtualC64Icon.icns; sourceTree = "<group>"; };
 		5077742E12DE490300D72088 /* MemTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemTableView.h; sourceTree = "<group>"; };
 		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
 		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
@@ -610,7 +608,6 @@
 				50804AE212EB3CDA00394049 /* iphone48.png */,
 				502F96B512D85F9C00DBE132 /* time2.png */,
 				5041486812219F6E00A80E0C /* cartridge.png */,
-				504CEE7C0C46774F001F4E51 /* BigIcon.png */,
 				50DA14A20A6418470022B4A7 /* bottom.png */,
 				50471FED0A7B67B800A8DB94 /* debugger32.png */,
 				50E555FE0C42699300AFB05F /* flag_eu.png */,
@@ -765,7 +762,6 @@
 				50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */,
 				50E555FF0C42699300AFB05F /* flag_eu.png in Resources */,
 				50F4D2940C46262700ED4E4E /* ResetImage.VC64 in Resources */,
-				504CEE7D0C46774F001F4E51 /* BigIcon.png in Resources */,
 				38AF838C0C7BA24A00F6DBCE /* joystick1_32.png in Resources */,
 				38AF838D0C7BA24A00F6DBCE /* joystick2_32.png in Resources */,
 				38AF838E0C7BA24A00F6DBCE /* none_32.png in Resources */,
