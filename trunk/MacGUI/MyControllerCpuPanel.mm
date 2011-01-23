@@ -23,7 +23,7 @@
 - (IBAction)aAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] aAction:[NSNumber numberWithInt:[[c64 cpu] getA]]];
+	[[undo prepareWithInvocationTarget:self] aAction:[NSNumber numberWithInt:[[c64 cpu] A]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set accumulator"];
 	
 	[[c64 cpu] setA:[sender intValue]];
@@ -33,7 +33,7 @@
 - (IBAction)xAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] xAction:[NSNumber numberWithInt:[[c64 cpu] getX]]];
+	[[undo prepareWithInvocationTarget:self] xAction:[NSNumber numberWithInt:[[c64 cpu] X]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set X register"];
 	
 	[[c64 cpu] setX:[sender intValue]];
@@ -43,7 +43,7 @@
 - (IBAction)yAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] yAction:[NSNumber numberWithInt:[[c64 cpu] getY]]];
+	[[undo prepareWithInvocationTarget:self] yAction:[NSNumber numberWithInt:[[c64 cpu] Y]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set Y register"];
 	
 	[[c64 cpu] setY:[sender intValue]];
@@ -53,7 +53,7 @@
 - (IBAction)pcAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] pcAction:[NSNumber numberWithInt:[[c64 cpu] getPC]]];
+	[[undo prepareWithInvocationTarget:self] pcAction:[NSNumber numberWithInt:[[c64 cpu] PC]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set program counter"];
 	
 	[[c64 cpu] setPC:[sender intValue]];
@@ -63,7 +63,7 @@
 - (IBAction)spAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] spAction:[NSNumber numberWithInt:[[c64 cpu] getSP]]];
+	[[undo prepareWithInvocationTarget:self] spAction:[NSNumber numberWithInt:[[c64 cpu] SP]]];
 	if (![undo isUndoing]) [undo setActionName:@"Set stack pointer"];
 	
 	[[c64 cpu] setSP:[sender intValue]];
@@ -73,7 +73,7 @@
 - (IBAction)NAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] NAction:[NSNumber numberWithInt:[[c64 cpu] getN]]];
+	[[undo prepareWithInvocationTarget:self] NAction:[NSNumber numberWithInt:[[c64 cpu] N]]];
 	if (![undo isUndoing]) [undo setActionName:@"Negative Flag"];
 	
 	[[c64 cpu] setN:[sender intValue]];
@@ -83,7 +83,7 @@
 - (IBAction)ZAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ZAction:[NSNumber numberWithInt:[[c64 cpu] getZ]]];
+	[[undo prepareWithInvocationTarget:self] ZAction:[NSNumber numberWithInt:[[c64 cpu] Z]]];
 	if (![undo isUndoing]) [undo setActionName:@"Zero Flag"];
 	
 	[[c64 cpu] setZ:[sender intValue]];
@@ -93,7 +93,7 @@
 - (IBAction)CAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] CAction:[NSNumber numberWithInt:[[c64 cpu] getC]]];
+	[[undo prepareWithInvocationTarget:self] CAction:[NSNumber numberWithInt:[[c64 cpu] C]]];
 	if (![undo isUndoing]) [undo setActionName:@"Carry Flag"];
 	
 	[[c64 cpu] setC:[sender intValue]];
@@ -103,7 +103,7 @@
 - (IBAction)IAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] IAction:[NSNumber numberWithInt:[[c64 cpu] getI]]];
+	[[undo prepareWithInvocationTarget:self] IAction:[NSNumber numberWithInt:[[c64 cpu] I]]];
 	if (![undo isUndoing]) [undo setActionName:@"Interrupt Flag"];
 	
 	[[c64 cpu] setI:[sender intValue]];
@@ -113,7 +113,7 @@
 - (IBAction)BAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] BAction:[NSNumber numberWithInt:[[c64 cpu] getB]]];
+	[[undo prepareWithInvocationTarget:self] BAction:[NSNumber numberWithInt:[[c64 cpu] B]]];
 	if (![undo isUndoing]) [undo setActionName:@"Break Flag"];
 	
 	[[c64 cpu] setB:[sender intValue]];
@@ -123,7 +123,7 @@
 - (IBAction)DAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] DAction:[NSNumber numberWithInt:[[c64 cpu] getD]]];
+	[[undo prepareWithInvocationTarget:self] DAction:[NSNumber numberWithInt:[[c64 cpu] D]]];
 	if (![undo isUndoing]) [undo setActionName:@"Decimal Flag"];
 	
 	[[c64 cpu] setD:[sender intValue]];
@@ -133,7 +133,7 @@
 - (IBAction)VAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] VAction:[NSNumber numberWithInt:[[c64 cpu] getV]]];
+	[[undo prepareWithInvocationTarget:self] VAction:[NSNumber numberWithInt:[[c64 cpu] V]]];
 	if (![undo isUndoing]) [undo setActionName:@"Overflow Flag"];
 	
 	[[c64 cpu] setV:[sender intValue]];
@@ -165,19 +165,19 @@
 
 - (void)refreshCPU
 {
-	[a setIntValue:[[c64 cpu] getA]];
-	[x setIntValue:[[c64 cpu] getX]];
-	[y setIntValue:[[c64 cpu] getY]];
-	[pc setIntValue:[[c64 cpu] getPC]];
-	[sp setIntValue:[[c64 cpu] getSP]];
+	[a setIntValue:[[c64 cpu] A]];
+	[x setIntValue:[[c64 cpu] X]];
+	[y setIntValue:[[c64 cpu] Y]];
+	[pc setIntValue:[[c64 cpu] PC]];
+	[sp setIntValue:[[c64 cpu] SP]];
 	
-	[N setIntValue:[[c64 cpu] getN]];
-	[V setIntValue:[[c64 cpu] getV]];
-	[B setIntValue:[[c64 cpu] getB]];
-	[D setIntValue:[[c64 cpu] getD]];
-	[I setIntValue:[[c64 cpu] getI]];
-	[Z setIntValue:[[c64 cpu] getZ]];
-	[C setIntValue:[[c64 cpu] getC]];	
+	[N setIntValue:[[c64 cpu] N]];
+	[V setIntValue:[[c64 cpu] V]];
+	[B setIntValue:[[c64 cpu] B]];
+	[D setIntValue:[[c64 cpu] D]];
+	[I setIntValue:[[c64 cpu] I]];
+	[Z setIntValue:[[c64 cpu] Z]];
+	[C setIntValue:[[c64 cpu] C]];	
 }
 
 @end

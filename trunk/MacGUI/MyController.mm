@@ -267,7 +267,7 @@
 	
 	// Process pending messages
 	Message *message;
-	while ((message = [c64 getMessage]) != NULL) {
+	while ((message = [c64 message]) != NULL) {
 		[self processMessage:message];
 	}
 	
@@ -278,7 +278,7 @@
 	
 	// Do less times ... 
 	if ((animationCounter & 0x01) == 0) {	
-		[speedometer updateWithCurrentCycle:[c64 getCycles] currentFrame:[screen frames]];
+		[speedometer updateWithCurrentCycle:[c64 cycles] currentFrame:[screen frames]];
 		[clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %02d fps", [speedometer mhz], (int)[speedometer fps]]];
 		[clockSpeedBar setFloatValue:10.0 * [speedometer mhz]];
 	}
@@ -292,7 +292,7 @@
 			
 		case MSG_ROM_MISSING:
 			
-			NSLog(@"MSG_ROM_MISSING");
+			NSLog(@"MSG_ROM_MISSING");			
 			assert(msg->i != 0);
 			[self enableUserEditing:YES];	
 			[self refresh];
@@ -586,7 +586,7 @@
 	[[undo prepareWithInvocationTarget:self] stepperAction:[NSNumber numberWithInt:-[sender intValue]]];
 	if (![undo isUndoing]) [undo setActionName:@"Clock frequency"];
 	
-	int newFrameDelay = [c64 getFrameDelay] - 1000*[sender intValue];
+	int newFrameDelay = [c64 frameDelay] - 1000*[sender intValue];
 	
 	if (newFrameDelay < 0)
 		newFrameDelay = 0;

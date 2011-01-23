@@ -32,7 +32,7 @@
 	[[self document] updateChangeCount:NSChangeDone];
 	
 	// Get return address from callstack
-	int addr = [[c64 cpu] getTopOfCallStack];
+	int addr = [[c64 cpu] topOfCallStack];
 	if (addr < 0)
 		return;
 	
@@ -49,7 +49,7 @@
 	uint8_t opcode = [[c64 cpu] peekPC];
 	if (opcode == 0x20) {
 		// set soft breakpoint at next command
-		[[c64 cpu] setSoftBreakpoint:[[c64 cpu] getAddressOfNextInstruction]];	
+		[[c64 cpu] setSoftBreakpoint:[[c64 cpu] addressOfNextInstruction]];	
 		[c64 run];
 	} else {
 		// same as step

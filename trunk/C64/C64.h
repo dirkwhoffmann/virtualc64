@@ -327,11 +327,10 @@ public:
 	/*! On a real C64, a soft reset is triggered by hitting Runstop and Restore */
 	void runstopRestore(); 
 	
-	//! Returns true iff the virtual C64 is able to run */
-	/*! The function checks for missing ROM images etc. */
+	//! Returns true iff the virtual C64 is able to run (i.e., all ROMs are loaded)
 	bool isRunnable();
 	
-	//! Power on the virtual C64
+	//! Power on virtual C64
 	/*! The execution thread is launched and the virtual computer enters the "running" state */
 	void run();
 	
@@ -354,10 +353,10 @@ public:
 	//! Execute until the end of the rasterline
 	bool executeOneLine();
 	
-	//! Get a notification message from the message queue
+	//! Get notification message from message queue
 	Message *getMessage();
 	
-	//! Put a notification message into the message queue
+	//! Feed notification message into message queue
 	void putMessage(int id, int i = 0, void *p = NULL, const char *c = NULL);
 	
 private:
@@ -375,11 +374,8 @@ private:
 
 public:
 		
-	//! Returns the number of missing ROM images */
-	int numberOfMissingRoms();
-	
 	//! Missing ROMs are indicated by a 1 in the returned bitmap */
-	int getMissingRoms();
+	uint8_t getMissingRoms();
 
 	//! Load ROM image into memory
 	bool loadRom(const char *filename);
@@ -395,25 +391,6 @@ public:
 	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
 	Snapshot *getHistoricSnapshot(int nr);
 	
-	//! Get file contents start address of snapshot from history buffer
-	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
-	uint8_t *getHistoricSnapshotFileContents(int nr);
-	
-	//! Get file contents size of snapshot from history buffer
-	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
-	unsigned getHistoricSnapshotFileContentsSize(int nr);
-	
-	//! Get image data of snapshot from history buffer
-	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
-	unsigned char *getHistoricSnapshotImageData(int nr);
-	
-	//! Get time stamp of snapshot from history buffer
-	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
-	time_t getHistoricSnapshotTimestamp(int nr);
-	
-	//! Revert to historic snapshot
-	bool revertToHistoricSnapshot(int nr);
-
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                           Timing

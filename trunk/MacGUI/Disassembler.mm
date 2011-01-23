@@ -49,10 +49,10 @@
 
 	addr     = (uint16_t)[anObject intValue];
 	opcode   = [[c64 mem] peek:addr];
-	mnemonic = [[c64 cpu] getMnemonic:opcode];
+	mnemonic = [[c64 cpu] mnemonic:opcode];
 		
 	// Display instruction
-	switch ([[c64 cpu] getAddressingMode:opcode]) {
+	switch ([[c64 cpu] addressingMode:opcode]) {
 		case CPU::ADDR_IMPLIED:
 		case CPU::ADDR_ACCUMULATOR:
 			op = @"";
@@ -77,7 +77,7 @@
 			break;
 	}
 			
-	switch ([[c64 cpu] getAddressingMode:opcode]) {
+	switch ([[c64 cpu] addressingMode:opcode]) {
 		case CPU::ADDR_IMPLIED:
 		case CPU::ADDR_ACCUMULATOR:
 			return [NSString stringWithFormat:@"%s", mnemonic];

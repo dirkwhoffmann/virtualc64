@@ -37,41 +37,41 @@
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
-- (uint16_t) getPC;
+- (uint16_t) PC;
 - (void) setPC:(uint16_t)pc;
-- (uint8_t) getSP;
+- (uint8_t) SP;
 - (void) setSP:(uint8_t)sp;
-- (uint8_t) getA;
+- (uint8_t) A;
 - (void) setA:(uint8_t)a;
-- (uint8_t) getX;
+- (uint8_t) X;
 - (void) setX:(uint8_t)x;
-- (uint8_t) getY;
+- (uint8_t) Y;
 - (void) setY:(uint8_t)y;
-- (bool) getN;
+- (bool) N;
 - (void) setN:(bool)b;
-- (bool) getZ;
+- (bool) Z;
 - (void) setZ:(bool)b;
-- (bool) getC;
+- (bool) C;
 - (void) setC:(bool)b;
-- (bool) getI;
+- (bool) I;
 - (void) setI:(bool)b;
-- (bool) getB;
+- (bool) B;
 - (void) setB:(bool)b;
-- (bool) getD;
+- (bool) D;
 - (void) setD:(bool)b;
-- (bool) getV;
+- (bool) V;
 - (void) setV:(bool)b;
 
 - (uint16_t) peekPC;
-- (uint8_t) getLengthOfInstruction:(uint8_t)opcode;
-- (uint8_t) getLengthOfInstructionAtAddress:(uint16_t)addr;
-- (uint8_t) getLengthOfCurrentInstruction;
-- (uint16_t) getAddressOfNextInstruction;
-- (char *) getMnemonic:(uint8_t)opcode;
-- (CPU::AddressingMode) getAddressingMode:(uint8_t)opcode;
+- (uint8_t) lengthOfInstruction:(uint8_t)opcode;
+- (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr;
+- (uint8_t) lengthOfCurrentInstruction;
+- (uint16_t) addressOfNextInstruction;
+- (char *) mnemonic:(uint8_t)opcode;
+- (CPU::AddressingMode) addressingMode:(uint8_t)opcode;
 
-- (int) getTopOfCallStack;
-- (int) getBreakpoint:(int)addr;
+- (int) topOfCallStack;
+- (int) breakpoint:(int)addr;
 - (void) setBreakpoint:(int)addr tag:(uint8_t)t;
 - (void) setHardBreakpoint:(int)addr;
 - (void) deleteHardBreakpoint:(int)addr;
@@ -115,16 +115,16 @@
 - (void) dump;
 
 - (void *) screenBuffer;
-- (NSColor *) getColor:(VIC::ColorScheme)scheme nr:(int)nr;
+- (NSColor *) color:(VIC::ColorScheme)scheme nr:(int)nr;
 - (void) setColor:(int)color rgba:(NSColor *)rgba;
 - (void) setColorInt:(int)color rgba:(int)rgba;
 - (void) setColorScheme:(VIC::ColorScheme)scheme;
 
-- (uint16_t) getMemoryBankAddr;
+- (uint16_t) memoryBankAddr;
 - (void) setMemoryBankAddr:(uint16_t)addr;
-- (uint16_t) getScreenMemoryAddr;
+- (uint16_t) screenMemoryAddr;
 - (void) setScreenMemoryAddr:(uint16_t)addr;
-- (uint16_t) getCharacterMemoryAddr;
+- (uint16_t) characterMemoryAddr;
 - (void) setCharacterMemoryAddr:(uint16_t)addr;
 
 - (unsigned)totalScreenWidth;
@@ -132,42 +132,42 @@
 - (unsigned)firstVisibleLine;
 - (unsigned)lastVisibleLine;
 
-- (int) getDisplayMode;
+- (int) displayMode;
 - (void) setDisplayMode:(int)mode;
-- (int) getScreenGeometry;
+- (int) screenGeometry;
 - (void) setScreenGeometry:(int)mode;
-- (int) getHorizontalRasterScroll;
+- (int) horizontalRasterScroll;
 - (void) setHorizontalRasterScroll:(int)offset;
-- (int) getVerticalRasterScroll;
+- (int) verticalRasterScroll;
 - (void) setVerticalRasterScroll:(int)offset;
 
-- (bool) spriteGetVisibilityFlag:(int)nr;
-- (void) spriteSetVisibilityFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleVisibilityFlag:(int)nr;
+- (bool) spriteVisibilityFlag:(int)nr;
+- (void) setSpriteVisibilityFlag:(int)nr value:(bool)flag;
+- (void) toggleSpriteVisibilityFlag:(int)nr;
 
-- (bool) spriteGetSpriteSpriteCollisionFlag:(int)nr;
-- (void) spriteSetSpriteSpriteCollisionFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleSpriteSpriteCollisionFlag:(int)nr;
+- (bool) spriteSpriteCollisionFlag:(int)nr;
+- (void) setSpriteSpriteCollisionFlag:(int)nr value:(bool)flag;
+- (void) toggleSpriteSpriteCollisionFlag:(int)nr;
 
-- (bool) spriteGetSpriteBackgroundCollisionFlag:(int)nr;
-- (void) spriteSetSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleSpriteBackgroundCollisionFlag:(int)nr;
+- (bool) spriteBackgroundCollisionFlag:(int)nr;
+- (void) setSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag;
+- (void) toggleSpriteBackgroundCollisionFlag:(int)nr;
 
-- (bool) spriteGetBackgroundPriorityFlag:(int)nr;
-- (void) spriteSetBackgroundPriorityFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleBackgroundPriorityFlag:(int)nr;
+- (bool) spriteBackgroundPriorityFlag:(int)nr;
+- (void) setSpriteBackgroundPriorityFlag:(int)nr value:(bool)flag;
+- (void) toggleSpriteBackgroundPriorityFlag:(int)nr;
 
-- (bool) spriteGetMulticolorFlag:(int)nr;
-- (void) spriteSetMulticolorFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleMulticolorFlag:(int)nr;
+- (bool) spriteMulticolorFlag:(int)nr;
+- (void) setSpriteMulticolorFlag:(int)nr value:(bool)flag;
+- (void) toggleSpriteMulticolorFlag:(int)nr;
 
-- (bool) spriteGetStretchXFlag:(int)nr;
-- (void) spriteSetStretchXFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleStretchXFlag:(int)nr;
+- (bool) spriteStretchXFlag:(int)nr;
+- (void) setSpriteStretchXFlag:(int)nr value:(bool)flag;
+- (void) toggleSpriteStretchXFlag:(int)nr;
 
-- (bool) spriteGetStretchYFlag:(int)nr;
-- (void) spriteSetStretchYFlag:(int)nr value:(bool)flag;
-- (void) spriteToggleStretchYFlag:(int)nr;
+- (bool) spriteStretchYFlag:(int)nr;
+- (void) setSpriteStretchYFlag:(int)nr value:(bool)flag;
+- (void) toggleSpriteStretchYFlag:(int)nr;
 
 - (int) spriteGetX:(int)nr;
 - (void) spriteSetX:(int)nr value:(int)x;
@@ -414,7 +414,7 @@
 
 - (void) dump;
 
-- (Message *)getMessage;
+- (Message *)message;
 
 - (void) reset;
 - (void) fastReset;
@@ -428,12 +428,12 @@
 - (bool) isRunning;
 - (void) setPAL;
 - (void) setNTSC;
-- (int) getFrameDelay;
+- (int) frameDelay;
 - (void) setFrameDelay:(int)delay;
 - (int) buildNr;
 
-- (int) numberOfMissingRoms;
-- (int) missingRoms;
+//- (int) numberOfMissingRoms;
+- (uint8_t) missingRoms;
 - (bool) loadBasicRom:(NSString *)filename;
 - (bool) loadCharRom:(NSString *)filename;
 - (bool) loadKernelRom:(NSString *)filename;
@@ -452,7 +452,7 @@
 - (void) setAlwaysWarp:(bool)b;
 - (bool) warpLoad;
 - (void) setWarpLoad:(bool)b;
-- (long) getCycles;
+- (long) cycles;
 
 // Time travel
 - (int) historicSnapshots;
@@ -465,7 +465,7 @@
 // Joystick
 - (void) switchInputDevice:(int)devNo;
 - (void) switchInputDevices;
-- (uint8_t) getPortAssignment:(int)devNo;
+- (uint8_t) portAssignment:(int)devNo;
 - (Joystick *) addJoystick;
 - (void) removeJoystick:(Joystick *)joystick;
 
