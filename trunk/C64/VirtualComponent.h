@@ -158,6 +158,8 @@ public:
 	inline void write32(uint8_t **ptr, uint32_t value) { write16(ptr, (uint16_t)(value >> 16)); write16(ptr, (uint16_t)value); }
 	//! Write 64 bit value to memory in big endian format
 	inline void write64(uint8_t **ptr, uint64_t value) { write32(ptr, (uint32_t)(value >> 32)); write32(ptr, (uint32_t)value); }
+	//! Write memory block 
+	inline void writeBlock(uint8_t **ptr, uint8_t *values, size_t length) { memcpy(*ptr, values, length); *ptr += length; }
 	
 	//! Read 8 bit value from a memory in big endian format
 	inline uint8_t read8(uint8_t **ptr) { return (uint8_t)(*((*ptr)++)); }
@@ -167,6 +169,8 @@ public:
 	inline uint32_t read32(uint8_t **ptr) { return ((uint32_t)read16(ptr) << 16) | (uint32_t)read16(ptr); }
 	//! Read 64 bit value from a memory in big endian format
 	inline uint64_t read64(uint8_t **ptr) { return ((uint64_t)read32(ptr) << 32) | (uint64_t)read32(ptr); }
+	//! Read memory block 
+	inline void readBlock(uint8_t **ptr, uint8_t *values, size_t length) { memcpy(values, *ptr, length); *ptr += length; }
 	
 	//! Print message
 	void msg(const char *fmt, ...);

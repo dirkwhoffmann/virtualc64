@@ -38,4 +38,7 @@
 - (IBAction)cheatboxCloseAction:(id)sender;
 - (IBAction)cheatboxAction:(id)sender;
 
+// Experimental
+- (IBAction)iPhoneAction:(id)sender;
+
 @end

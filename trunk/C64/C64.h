@@ -49,83 +49,87 @@
 /*! The class puts all components together to a working virtual computer.
 
     \verbatim
-	------------------------
-	|  (Execution Thread)  |
-	|                      |
-	|         C64          |
-	------------------------      
-        ^
-        |
-        |    --------------------------------------------------------------------------------------         
-        |--->|                                      CPU                                           |<--------
-        |    --------------------------------------------------------------------------------------        |
-        |                                              |                                                   |
-        |                                         peek | poke                                              |
-        |                                              |                                                   |
-        |                                     A000     V AFFF     D000       DFFF                 FFFF     |    
-        |    --------------------------------------------------------------------------------------        |
-        |    |          Memory                | Basic ROM|        | Char ROM | Kernel ROM         |        |
-        |    --------------------------------------------------------------------------------------        |
-        |                                                              |                                   |
-        |                                                         peek | poke                              |
-        |                                                              V                                   |
-		|    							  execute()               -------------            interrupt       |     
-        |-------------------------------------------------------->|    CIA    |----------------------------|
-        |                                 execute()               ------------                             |
-        |-------------------------------------------------------->|    SID    |                            |
-		|                                                         -------------  setDeviceXXXPin()         |
-        |-------------------------------------------------------->|    IEC    |<------                     |
-        |                                 execute()               -------------      |     interrupt       |
-        |-------------------------------------------------------->|    VIC    |-----------------------------
-        |                                                         -------------      |
-        V                                                              |             | execute()
-    ----------------------------                                       |             | 
-	|   | C64Listener          |                                       |             V
-    |   -----------------------|                                       |          -------------
-	|       |   C64 Proxy      |                                       |          |   Drive   |
-	|       |                  |                                       |          -------------
-	--------|-------------------                                       |
-	        |                                                          |
-            | draw(), run(), halt()                                    |
-	        |                                                          |
-			V                                                          V 
-     ------------------------       copy to openGL texture      -----------------
-     | GUI                  |<----------------------------------| Screen buffer |
-     ------------------------                                   -----------------
+	
+	------------------------    ------------------------
+    |                      |    |                      |
+ -->|       C64Proxy       |<-->|         C64          |
+ |  |  Obj-C / C++ bridge  |    |      (c++ world)     |
+ |  ------------------------    ------------------------
+ |                                         |
+ |  ------------------------               |
+ |	|  (Execution Thread)  |               |
+ |	|                      |<--------------- run()            
+ |	|         C64          |
+ |	------------------------      
+ |      |
+ |      |
+ |      |    --------------------------------------------------------------------------------------         
+ |      |--->|                                      CPU                                           |<--------
+ |      |    --------------------------------------------------------------------------------------        |
+ |      |  execute()                                   |                                                   |
+ |      |                                         peek | poke                                              |
+ |      |                                              |                                                   |
+ |      |                                     A000     V AFFF     D000       DFFF                 FFFF     |    
+ |      |    --------------------------------------------------------------------------------------        |
+ |      |    |          Memory                | Basic ROM|        | Char ROM | Kernel ROM         |        |
+ |      |    --------------------------------------------------------------------------------------        |
+ |      |                                                              |                                   |
+ |      |                                                         peek | poke                              |
+ |      |                                                              V                                   |
+ |   	|    							  execute()               -------------            interrupt       |     
+ |      |-------------------------------------------------------->|    CIA    |----------------------------|
+ |      |                                 execute()               ------------                             |
+ |      |-------------------------------------------------------->|    SID    |                            |
+ |		|                                                         -------------  setDeviceXXXPin()         |
+ |      |-------------------------------------------------------->|    IEC    |<------                     |
+ |      |                                 execute()               -------------      |     interrupt       |
+ |      |-------------------------------------------------------->|    VIC    |-----------------------------
+ |      |                                                         -------------      |
+ |      V                                                              |             | execute()
+ |  --------------------------                                         |             | 
+ |	|   Message queue        |                                         |             V
+ |  --------------------------                                         |          -------------
+ |				|													   |          |   Drive   |
+ |				|													   |          -------------
+ |			    |                                                      |
+ |	            |                                                      |
+ |              |                                                      |
+ |	            |                                                      |
+ |			    V                                                      V 
+ |    ------------------------       copy to openGL texture      -----------------
+ ---->| GUI                  |<----------------------------------| Screen buffer |
+      ------------------------                                   -----------------
 	\endverbatim
 
 
 	The execution thread is the "engine" of the virtual computer. 
 	Like all virtual components, the virtual C64 can be in two states: "running" and "halted". 
-	When the virtual C64 enters the "run" state, it starts the asynchronously running execution thread. 
+	When the virtual C64 enters the "run" state, it starts the execution thread which runs asynchoneously. 
 	The thread runs until an error occurrs (illegal instruction, etc.) or the user asks the virtual 
 	machine to freeze. In both cases, the thread terminates and the virtual C64 enters the "halt" state.
 
 	The execution thread is organized as an infinite loop. In each iteration, control is passed to the
-	virtual CPU, the virtual CIA and the virtual VIC chip. The VIC chip draws the screen contents into a
+	VIC, CIAs, CPU, VIAs, and the disk drive. The VIC chip draws the screen contents into a
 	simple byte array, the so called screen buffer. The asynchronously running GUI copies the screen buffer
 	contents onto an OpenGL texture which is then rendered by the graphic card.
 
-	The C64Listener serves as a proxy object to the outer world (i.e., the GUI). When the C64 enters
-	the "running" or "halt" state, it invokes run() or halt(), respectively. Similarily, the draw() method
-	is invoked when a frame has been completed by the VIC chip.
-
+    Class C64 is the most important class of the core emulator and MyController the most important GUI class. 
+    C64Proxy implements a bridge between the GUI (written in Objective-C) anf the emulator (written in C++).
+  
 	Initialization sequence:
 	
 	1. Create C64 object 
 	   c64 = new C64()
 	   
-	2. Register listener
-	   c64->setListener(...)
-	   
-	3. Reset emulator
-	   c64->reset()
-	   
-	4. Load Roms
+	2. Configure
+	   c64->setPAL() etc.
+ 
+	3. Load Roms
 	   c64->loadRom(...)
 	
-	   The emulator launches automatically when the last ROM is loaded
- */
+    4. Run
+	   c64->run() 
+*/
 
 #define BASIC_ROM 1
 #define CHAR_ROM 2
@@ -147,7 +151,7 @@ class C64 : public VirtualComponent {
 
 public:	
 	
-	//! Message queue. Used to communicate with the GUI
+	//! Message queue. Used to communicate with the graphical user interface.
 	MessageQueue queue;
 	
 	//! Reference to the connected virtual memory. 	
@@ -180,15 +184,8 @@ public:
 	//! Reference to the virtual VC1541
 	VC1541 *floppy;
 		
-	//! Size of a snapshot file in bytes
-	static const int SNAPSHOT_SIZE = 3000000; 
-
 	//! Current clock cycle since beginning of rasterline (ranges from 1 .. 63 (PAL) or 65 (NTSC))
 	int rasterlineCycle;
-
-	//! Logfile
-	//* For debugging only */
-	FILE *logfile;
 		
 private:
 
@@ -198,7 +195,7 @@ private:
 	//! Current clock cycle since power up
 	uint64_t cycles;
 	
-	//! Current frame number
+	//! Current frame number since power up
 	uint64_t frame;
 	
 	//! Current rasterline number
@@ -208,22 +205,16 @@ private:
 	/*! Used to synchronize emulation speed */
 	uint64_t targetTime; 
 	
-	//! Number of frames per second
-	/*! Number varies between PAL and NTSC machines. Don't modify this value directly. It is automatically computed 
-		in setPAL or setNTSC. */	
+	//! Number of frames per second. Value is set in setPAL and setNTSC.
 	int fps;
 	
-	//! Number of rasterlines
-	/*! Number varies between PAL and NTSC machines. Don't modify this value directly. It is automatically computed 
-		in setPAL or setNTSC. */	
+	//! Number of rasterlines. Value is set in setPAL and setNTSC.
 	int noOfRasterlines;
 	
-	//! Number of cycles per rasterline
-	/*! Number varies between PAL and NTSC machines. Don't modify this value directly. It is automatically computed 
-		in setPAL or setNTSC. */	
+	//! Number of cycles per rasterline. Value is set in setPAL and setNTSC.
 	int cpuCyclesPerRasterline;
 	
-	//! Time between two frames
+	//! Time between two frames. Used for synchronizing clock speed.
 	int frameDelay;
 	
 	//! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
@@ -235,16 +226,14 @@ private:
 	//! Indicates that we should run as fast as possible at least during disk operations
 	bool warpLoad;
 
-	//! Holds the configuration for the game port.
+	//! Game port configuration.
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
 	int port[2];
 			
-	//! BackInTime feature
-	/*! VirtualC64 constantly takes snapshots. This enables the user to revert to a previous state.
-	 All snapshots are stored in this ringbuffer. */
+	//! Snapshot history ring buffer (for cheatbox)
 	Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE]; 
 		
-	//! BackInTime write pointer
+	//! ring buffer write pointer
 	unsigned backInTimeWritePtr;
 
 	
@@ -271,37 +260,7 @@ public:
 	//! Dump current state into logfile
 	void dumpState();
 	
-	//! Take a snapshot and store it in ringbuffer
-	void takeSnapshot();
-	
-	//! Returns the number of previously taken snapshots
-	/*! Returns a number between 0 and BACK_IN_TIME_BUFFER_SIZE */
-	unsigned numHistoricSnapshots();
-	
-	//! Get snapshot from history buffer
-	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
-	Snapshot *getHistoricSnapshot(int nr);
-
-	//! Get file contents start address of snapshot from history buffer
-	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
-	uint8_t *getHistoricSnapshotFileContents(int nr);
-
-	//! Get file contents size of snapshot from history buffer
-	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
-	unsigned getHistoricSnapshotFileContentsSize(int nr);
-	
-	//! Get image data of snapshot from history buffer
-	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
-	unsigned char *getHistoricSnapshotImageData(int nr);
-	
-	//! Get time stamp of snapshot from history buffer
-	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
-	time_t getHistoricSnapshotTimestamp(int nr);
-	
-	//! Revert to historic snapshot
-	bool revertToHistoricSnapshot(int nr);
-		
-	
+			
 	// -----------------------------------------------------------------------------------------------
 	//                                         Configure
 	// -----------------------------------------------------------------------------------------------
@@ -343,6 +302,8 @@ public:
 	//                                       Loading and saving
 	// -----------------------------------------------------------------------------------------------
 
+public:
+	
 	//! Load state from snapshot container
 	void loadFromSnapshot(Snapshot *snapshot);
 
@@ -420,12 +381,40 @@ public:
 	//! Missing ROMs are indicated by a 1 in the returned bitmap */
 	int getMissingRoms();
 
-	//! Load a ROM image into memory
-	/*! The functions can be safely invoked even if the virtual C64 is in "running" state. Execution is automatically
-	    suspended before loading and resumed afterwards.
-	*/ 
+	//! Load ROM image into memory
 	bool loadRom(const char *filename);
 
+	//! Take a snapshot and store it in ringbuffer
+	void takeSnapshot();
+	
+	//! Returns the number of previously taken snapshots
+	/*! Returns a number between 0 and BACK_IN_TIME_BUFFER_SIZE */
+	unsigned numHistoricSnapshots();
+	
+	//! Get snapshot from history buffer
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
+	Snapshot *getHistoricSnapshot(int nr);
+	
+	//! Get file contents start address of snapshot from history buffer
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
+	uint8_t *getHistoricSnapshotFileContents(int nr);
+	
+	//! Get file contents size of snapshot from history buffer
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
+	unsigned getHistoricSnapshotFileContentsSize(int nr);
+	
+	//! Get image data of snapshot from history buffer
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
+	unsigned char *getHistoricSnapshotImageData(int nr);
+	
+	//! Get time stamp of snapshot from history buffer
+	/*! The latest snapshot has number 0. Return NULL, if requested snapshot does not exist */
+	time_t getHistoricSnapshotTimestamp(int nr);
+	
+	//! Revert to historic snapshot
+	bool revertToHistoricSnapshot(int nr);
+
+	
 	// -----------------------------------------------------------------------------------------------
 	//                                           Timing
 	// -----------------------------------------------------------------------------------------------
@@ -446,9 +435,6 @@ public:
 	// ---------------------------------------------------------------------------------------------
 	//                                 Archives (disks, tapes, etc.)
 	// ---------------------------------------------------------------------------------------------
-	
-	//! Assign an archive to the virtual C64
-	// void setArchive (Archive *a) { archive = a; }
 	
 	//! Flush specified item from archive into memory and delete archive
 	/*! All archive types are flushable */
