@@ -24,7 +24,7 @@
 {
 	controller = c;
 	c64 = [c c64];
-	[self updateDisplayedAddresses:[[c64 cpu] getPC]];
+	[self updateDisplayedAddresses:[[c64 cpu] PC]];
 }
 
 #pragma mark NSTableView
@@ -56,7 +56,7 @@
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
 	uint16_t addr = [self addressForRow:row];
-	uint8_t length = [[c64 cpu] getLengthOfInstruction:[[c64 mem] peek:addr]];
+	uint8_t length = [[c64 cpu] lengthOfInstruction:[[c64 mem] peek:addr]];
 	
 	if ([[aTableColumn identifier] isEqual:@"addr"]) 
 		return [NSNumber numberWithInt:addr];
@@ -75,7 +75,7 @@
 - (void)tableView: (NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)row
 {
 	uint16_t addr = [self addressForRow:row];
-	if ([[c64 cpu] getBreakpoint:addr] == CPU::HARD_BREAKPOINT) {
+	if ([[c64 cpu] breakpoint:addr] == CPU::HARD_BREAKPOINT) {
 		[cell setTextColor:[NSColor redColor]];
 	} else {
 		[cell setTextColor:[NSColor blackColor]];
@@ -116,7 +116,7 @@
 	
 	for (unsigned i = 0; i < CPU_TABLE_VIEW_ITEMS; i++) {
 		displayedAddresses[i] = address;
-		address += [[c64 cpu] getLengthOfInstructionAtAddress:address];
+		address += [[c64 cpu] lengthOfInstructionAtAddress:address];
 	}	
 }
 
@@ -129,7 +129,7 @@
 	// Case 2: PC points to an address that is not yet displayed.
 	//         In that case, we display PC in row 0.
 	
-	uint16_t address = [[c64 cpu] getPC];
+	uint16_t address = [[c64 cpu] PC];
 	int row = [self rowForAddress:address];
 	
 	if (row != -1) { // Case 1

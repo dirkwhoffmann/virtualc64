@@ -35,42 +35,41 @@
 - (bool) tracingEnabled { return cpu->tracingEnabled(); }
 - (void) setTraceMode:(bool)b { cpu->setTraceMode(b); }
 
-- (uint16_t) getPC { return cpu->getPC_at_cycle_0(); }
+- (uint16_t) PC { return cpu->getPC_at_cycle_0(); }
 - (void) setPC:(uint16_t)pc { cpu->setPC_at_cycle_0(pc); }
-- (uint8_t) getSP { return cpu->getSP(); }
+- (uint8_t) SP { return cpu->getSP(); }
 - (void) setSP:(uint8_t)sp { cpu->setSP(sp); }
-- (uint8_t) getA { return cpu->getA(); }
+- (uint8_t) A { return cpu->getA(); }
 - (void) setA:(uint8_t)a { cpu->setA(a); }
-- (uint8_t) getX { return cpu->getX(); }
+- (uint8_t) X { return cpu->getX(); }
 - (void) setX:(uint8_t)x { cpu->setX(x); }
-- (uint8_t) getY { return cpu->getY(); }
+- (uint8_t) Y { return cpu->getY(); }
 - (void) setY:(uint8_t)y { cpu->setY(y); }
-- (bool) getN { return cpu->getN(); }
+- (bool) N { return cpu->getN(); }
 - (void) setN:(bool)b { cpu->setN(b); }
-- (bool) getZ { return cpu->getZ(); }
+- (bool) Z { return cpu->getZ(); }
 - (void) setZ:(bool)b { cpu->setZ(b); }
-- (bool) getC { return cpu->getC(); }
+- (bool) C { return cpu->getC(); }
 - (void) setC:(bool)b { cpu->setC(b); }
-- (bool) getI { return cpu->getI(); }
+- (bool) I { return cpu->getI(); }
 - (void) setI:(bool)b { cpu->setI(b); }
-- (bool) getB { return cpu->getB(); }
+- (bool) B { return cpu->getB(); }
 - (void) setB:(bool)b { cpu->setB(b); }
-- (bool) getD { return cpu->getD(); }
+- (bool) D { return cpu->getD(); }
 - (void) setD:(bool)b { cpu->setD(b); }
-- (bool) getV { return cpu->getV(); }
+- (bool) V { return cpu->getV(); }
 - (void) setV:(bool)b { cpu->setV(b); }
 
 - (uint16_t) peekPC { return cpu->mem->peek(cpu->getPC_at_cycle_0()); }
-- (uint8_t) getLengthOfInstruction:(uint8_t)opcode { return cpu->getLengthOfInstruction(opcode); }
-- (uint8_t) getLengthOfInstructionAtAddress:(uint16_t)addr { return cpu->getLengthOfInstructionAtAddress(addr); }
-- (uint8_t) getLengthOfCurrentInstruction { return cpu->getLengthOfCurrentInstruction(); }
-- (uint16_t) getAddressOfNextInstruction { return cpu->getAddressOfNextInstruction(); }
-- (const char *) getMnemonic:(uint8_t)opcode { return cpu->getMnemonic(opcode); }
-- (CPU::AddressingMode) getAddressingMode:(uint8_t)opcode { return cpu->getAddressingMode(opcode); }
+- (uint8_t) lengthOfInstruction:(uint8_t)opcode { return cpu->getLengthOfInstruction(opcode); }
+- (uint8_t) lengthOfInstructionAtAddress:(uint16_t)addr { return cpu->getLengthOfInstructionAtAddress(addr); }
+- (uint8_t) lengthOfCurrentInstruction { return cpu->getLengthOfCurrentInstruction(); }
+- (uint16_t) addressOfNextInstruction { return cpu->getAddressOfNextInstruction(); }
+- (const char *) mnemonic:(uint8_t)opcode { return cpu->getMnemonic(opcode); }
+- (CPU::AddressingMode) addressingMode:(uint8_t)opcode { return cpu->getAddressingMode(opcode); }
 
-- (int) getTopOfCallStack { return cpu->getTopOfCallStack(); }
-
-- (int) getBreakpoint:(int)addr { return cpu->getBreakpoint(addr); }
+- (int) topOfCallStack { return cpu->getTopOfCallStack(); }
+- (int) breakpoint:(int)addr { return cpu->getBreakpoint(addr); }
 - (void) setBreakpoint:(int)addr tag:(uint8_t)t { cpu->setBreakpoint(addr, t); }
 - (void) setHardBreakpoint:(int)addr { cpu->setHardBreakpoint(addr); };
 - (void) deleteHardBreakpoint:(int)addr { cpu->deleteHardBreakpoint(addr); }
@@ -122,10 +121,9 @@
 
 - (void *) screenBuffer { return vic->screenBuffer(); }
 - (void) setColorScheme:(VIC::ColorScheme)scheme { vic->setColorScheme(scheme); }
-- (NSColor *) getColor:(VIC::ColorScheme)scheme nr:(int)nr
+- (NSColor *) color:(VIC::ColorScheme)scheme nr:(int)nr
 {
 	uint8_t r, g, b;
-	
 	vic->getColor(scheme, nr, &r, &g, &b);
 	return [NSColor colorWithCalibratedRed:(float)r/255.0 green:(float)g/255.0 blue:(float)b/255.0 alpha:1.0];
 }
@@ -146,11 +144,11 @@
 	vic->setColor(color, r, g, b, a);
 }
 
-- (uint16_t) getMemoryBankAddr { return vic->getMemoryBankAddr(); }
+- (uint16_t) memoryBankAddr { return vic->getMemoryBankAddr(); }
 - (void) setMemoryBankAddr:(uint16_t)addr { vic->setMemoryBankAddr(addr); }
-- (uint16_t) getScreenMemoryAddr { return vic->getScreenMemoryAddr(); }
+- (uint16_t) screenMemoryAddr { return vic->getScreenMemoryAddr(); }
 - (void) setScreenMemoryAddr:(uint16_t)addr { vic->setScreenMemoryAddr(addr); }
-- (uint16_t) getCharacterMemoryAddr { return vic->getCharacterMemoryAddr(); }
+- (uint16_t) characterMemoryAddr { return vic->getCharacterMemoryAddr(); }
 - (void) setCharacterMemoryAddr:(uint16_t)addr { vic->setCharacterMemoryAddr(addr); }
 
 - (unsigned)totalScreenWidth { return vic->getTotalScreenWidth(); }
@@ -158,42 +156,42 @@
 - (unsigned)firstVisibleLine { return vic->getFirstVisibleLine(); }
 - (unsigned)lastVisibleLine { return vic->getLastVisibleLine(); }
 
-- (int) getDisplayMode { return vic->getDisplayMode(); }
+- (int) displayMode { return vic->getDisplayMode(); }
 - (void) setDisplayMode:(int)mode { vic->setDisplayMode((VIC::DisplayMode)mode); }
-- (int) getScreenGeometry { return (int)vic->getScreenGeometry(); }
+- (int) screenGeometry { return (int)vic->getScreenGeometry(); }
 - (void) setScreenGeometry:(int)mode { vic->setScreenGeometry((VIC::ScreenGeometry)mode); }
-- (int) getHorizontalRasterScroll { return vic->getHorizontalRasterScroll(); }
+- (int) horizontalRasterScroll { return vic->getHorizontalRasterScroll(); }
 - (void) setHorizontalRasterScroll:(int)offset { vic->setHorizontalRasterScroll(offset & 0x07); }
-- (int) getVerticalRasterScroll { return vic->getVerticalRasterScroll(); }
+- (int) verticalRasterScroll { return vic->getVerticalRasterScroll(); }
 - (void) setVerticalRasterScroll:(int)offset { vic->setVerticalRasterScroll(offset & 0x07); }
 
-- (bool) spriteGetVisibilityFlag:(int)nr { return vic->spriteIsEnabled(nr); }
-- (void) spriteSetVisibilityFlag:(int)nr value:(bool)flag { vic->setSpriteEnabled(nr, flag); }
-- (void) spriteToggleVisibilityFlag:(int)nr { vic->toggleSpriteEnabled(nr); }
+- (bool) spriteVisibilityFlag:(int)nr { return vic->spriteIsEnabled(nr); }
+- (void) setSpriteVisibilityFlag:(int)nr value:(bool)flag { vic->setSpriteEnabled(nr, flag); }
+- (void) toggleSpriteVisibilityFlag:(int)nr { vic->toggleSpriteEnabled(nr); }
 
-- (bool) spriteGetSpriteSpriteCollisionFlag:(int)nr { return vic->getSpriteSpriteCollision(nr); }
-- (void) spriteSetSpriteSpriteCollisionFlag:(int)nr value:(bool)flag { vic->setSpriteSpriteCollision(nr, flag); }
-- (void) spriteToggleSpriteSpriteCollisionFlag:(int)nr { vic->toggleSpriteSpriteCollisionFlag(nr); }
+- (bool) spriteSpriteCollisionFlag:(int)nr { return vic->getSpriteSpriteCollision(nr); }
+- (void) setSpriteSpriteCollisionFlag:(int)nr value:(bool)flag { vic->setSpriteSpriteCollision(nr, flag); }
+- (void) toggleSpriteSpriteCollisionFlag:(int)nr { vic->toggleSpriteSpriteCollisionFlag(nr); }
 
-- (bool) spriteGetSpriteBackgroundCollisionFlag:(int)nr { return vic->getSpriteBackgroundCollision(nr); }
-- (void) spriteSetSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag { vic->setSpriteBackgroundCollision(nr, flag); }
-- (void) spriteToggleSpriteBackgroundCollisionFlag:(int)nr { vic->toggleSpriteBackgroundCollisionFlag(nr); }
+- (bool) spriteBackgroundCollisionFlag:(int)nr { return vic->getSpriteBackgroundCollision(nr); }
+- (void) setSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag { vic->setSpriteBackgroundCollision(nr, flag); }
+- (void) toggleSpriteBackgroundCollisionFlag:(int)nr { vic->toggleSpriteBackgroundCollisionFlag(nr); }
 
-- (bool) spriteGetBackgroundPriorityFlag:(int)nr { return vic->spriteIsDrawnInBackground(nr); }
-- (void) spriteSetBackgroundPriorityFlag:(int)nr value:(bool)flag { vic->setSpriteInBackground(nr, flag); }
-- (void) spriteToggleBackgroundPriorityFlag:(int)nr { vic->spriteToggleBackgroundPriorityFlag(nr); }
+- (bool) spriteBackgroundPriorityFlag:(int)nr { return vic->spriteIsDrawnInBackground(nr); }
+- (void) setSpriteBackgroundPriorityFlag:(int)nr value:(bool)flag { vic->setSpriteInBackground(nr, flag); }
+- (void) toggleSpriteBackgroundPriorityFlag:(int)nr { vic->spriteToggleBackgroundPriorityFlag(nr); }
 
-- (bool) spriteGetMulticolorFlag:(int)nr { return vic->spriteIsMulticolor(nr); }
-- (void) spriteSetMulticolorFlag:(int)nr value:(bool)flag { vic->setSpriteMulticolor(nr, flag); }
-- (void) spriteToggleMulticolorFlag:(int)nr { vic->toggleMulticolorFlag(nr); }
+- (bool) spriteMulticolorFlag:(int)nr { return vic->spriteIsMulticolor(nr); }
+- (void) setSpriteMulticolorFlag:(int)nr value:(bool)flag { vic->setSpriteMulticolor(nr, flag); }
+- (void) toggleSpriteMulticolorFlag:(int)nr { vic->toggleMulticolorFlag(nr); }
 
-- (bool) spriteGetStretchXFlag:(int)nr { return vic->spriteWidthIsDoubled(nr); }
-- (void) spriteSetStretchXFlag:(int)nr value:(bool)flag { vic->setSpriteStretchX(nr, flag); }
-- (void) spriteToggleStretchXFlag:(int)nr { vic->spriteToggleStretchXFlag(nr); }
+- (bool) spriteStretchXFlag:(int)nr { return vic->spriteWidthIsDoubled(nr); }
+- (void) setSpriteStretchXFlag:(int)nr value:(bool)flag { vic->setSpriteStretchX(nr, flag); }
+- (void) toggleSpriteStretchXFlag:(int)nr { vic->spriteToggleStretchXFlag(nr); }
 
-- (bool) spriteGetStretchYFlag:(int)nr { return vic->spriteHeightIsDoubled(nr); }
-- (void) spriteSetStretchYFlag:(int)nr value:(bool)flag { return vic->setSpriteStretchY(nr, flag); }
-- (void) spriteToggleStretchYFlag:(int)nr { vic->spriteToggleStretchYFlag(nr); }
+- (bool) spriteStretchYFlag:(int)nr { return vic->spriteHeightIsDoubled(nr); }
+- (void) setSpriteStretchYFlag:(int)nr value:(bool)flag { return vic->setSpriteStretchY(nr, flag); }
+- (void) toggleSpriteStretchYFlag:(int)nr { vic->spriteToggleStretchYFlag(nr); }
 
 - (int) spriteGetX:(int)nr { return vic->getSpriteX(nr); }
 - (void) spriteSetX:(int)nr value:(int)x { vic->setSpriteX(nr, x); }
@@ -492,7 +490,7 @@
 
 - (void) dump { c64->dumpState(); }
 
-- (Message *)getMessage { return c64->getMessage(); }
+- (Message *)message { return c64->getMessage(); }
 - (void) reset { c64->reset(); }
 - (void) fastReset { c64->fastReset(); }
 - (void) halt { c64->halt(); }
@@ -505,12 +503,12 @@
 - (bool) isRunning { return c64->isRunning(); }
 - (void) setPAL { c64->setPAL(); }
 - (void) setNTSC { c64->setNTSC(); }
-- (int) getFrameDelay { return c64->getFrameDelay(); }
+- (int) frameDelay { return c64->getFrameDelay(); }
 - (void) setFrameDelay:(int)delay { c64->setFrameDelay(delay); }
 - (int) buildNr { return c64->build(); }
 
-- (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
-- (int) missingRoms { return c64->getMissingRoms(); }
+//- (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
+- (uint8_t) missingRoms { return c64->getMissingRoms(); }
 - (bool) loadBasicRom:(NSString *)filename { return c64->mem->isBasicRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
 - (bool) loadKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
@@ -530,20 +528,20 @@
 - (bool) warpLoad { return c64->getWarpLoad(); }
 - (void) setWarpLoad:(bool)b { c64->setWarpLoad(b); }
 
-- (long) getCycles { return (long)c64->getCycles(); }
+- (long) cycles { return (long)c64->getCycles(); }
 
-// Time travel
+// Cheatbox
 - (int) historicSnapshots { return c64->numHistoricSnapshots(); }
-- (uint8_t *) historicSnapshotFileContents:(int)nr { return c64->getHistoricSnapshotFileContents(nr); }
-- (unsigned) historicSnapshotFileContentsSize:(int) nr { return c64->getHistoricSnapshotFileContentsSize(nr); }
-- (unsigned char *)historicSnapshotImageData:(int)nr { return c64->getHistoricSnapshotImageData(nr); }
-- (time_t)historicSnapshotTimestamp:(int)nr { return c64->getHistoricSnapshotTimestamp(nr); }
-- (bool) revertToHistoricSnapshot:(int)nr { return c64->revertToHistoricSnapshot(nr); }
+- (uint8_t *) historicSnapshotFileContents:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getFileContents() : NULL; }
+- (unsigned) historicSnapshotFileContentsSize:(int) nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getFileContentsSize() : 0; }
+- (unsigned char *)historicSnapshotImageData:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getImageData() : NULL; }
+- (time_t)historicSnapshotTimestamp:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getTimestamp() : 0; }
+- (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
 - (void) switchInputDevice:(int)devNo { c64->switchInputDevice( devNo ); }
 - (void) switchInputDevices { c64->switchInputDevices(); }
-- (uint8_t) getPortAssignment:(int)devNo { return c64->getDeviceOfPort(devNo); }
+- (uint8_t) portAssignment:(int)devNo { return c64->getDeviceOfPort(devNo); }
 - (Joystick *) addJoystick { return c64->addJoystick(); }
 - (void) removeJoystick:(Joystick *)joystick { return c64->removeJoystick( joystick ); }
 

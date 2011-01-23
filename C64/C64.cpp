@@ -397,7 +397,7 @@ C64::runstopRestore()
 
 bool
 C64::isRunnable() {
-	return (numberOfMissingRoms() == 0);
+	return mem->basicRomIsLoaded() && mem->charRomIsLoaded() && mem->kernelRomIsLoaded() && floppy->mem->romIsLoaded();
 }
 
 void 
@@ -824,245 +824,15 @@ C64::executeOneLine()
 	return true;
 }
 
-#if 0
-// Execute until the end of the rasterline
-inline bool
-C64::executeOneLine(int cycle)
-{
-	switch(cycle) {
-		case 1:
-			beginOfRasterline();			
-			vic->cycle1();
-			EXECUTE(1);
-		case 2: 
-			vic->cycle2();
-			EXECUTE(2);
-		case 3: 
-			vic->cycle3();
-			EXECUTE(3);
-		case 4: 
-			vic->cycle4();
-			EXECUTE(4);
-		case 5: 
-			vic->cycle5();
-			EXECUTE(5);
-		case 6: 
-			vic->cycle6();
-			EXECUTE(6);
-		case 7: 
-			vic->cycle7();
-			EXECUTE(7);
-		case 8: 
-			vic->cycle8();
-			EXECUTE(8);
-		case 9: 
-			vic->cycle9();
-			EXECUTE(9);
-		case 10: 
-			vic->cycle10();
-			EXECUTE(10);
-		case 11: 
-			vic->cycle11();
-			EXECUTE(11);
-		case 12: 
-			vic->cycle12();
-			EXECUTE(12);
-		case 13: 
-			vic->cycle13();
-			EXECUTE(13);
-		case 14: 
-			vic->cycle14();
-			EXECUTE(14);
-		case 15: 
-			vic->cycle15();
-			EXECUTE(15);
-		case 16: 
-			vic->cycle16();
-			EXECUTE(16);
-		case 17: 
-			vic->cycle17();
-			EXECUTE(17);
-		case 18: 
-			vic->cycle18();
-			EXECUTE(18);
-		case 19: 
-			vic->cycle19();
-			EXECUTE(19);
-		case 20: 
-			vic->cycle20();
-			EXECUTE(20);
-		case 21: 
-			vic->cycle21();
-			EXECUTE(21);
-		case 22: 
-			vic->cycle22();
-			EXECUTE(22);
-		case 23: 
-			vic->cycle23();
-			EXECUTE(23);
-		case 24: 
-			vic->cycle24();
-			EXECUTE(24);
-		case 25: 
-			vic->cycle25();
-			EXECUTE(25);
-		case 26: 
-			vic->cycle26();
-			EXECUTE(26);
-		case 27: 
-			vic->cycle27();
-			EXECUTE(27);
-		case 28: 
-			vic->cycle28();
-			EXECUTE(28);
-		case 29: 
-			vic->cycle29();
-			EXECUTE(29);
-		case 30: 
-			vic->cycle30();
-			EXECUTE(30);
-		case 31: 
-			vic->cycle31();
-			EXECUTE(31);
-		case 32: 
-			vic->cycle32();
-			EXECUTE(32);
-		case 33: 
-			vic->cycle33();
-			EXECUTE(33);
-		case 34: 
-			vic->cycle34();
-			EXECUTE(34);
-		case 35: 
-			vic->cycle35();
-			EXECUTE(35);
-		case 36: 
-			vic->cycle36();
-			EXECUTE(36);
-		case 37: 
-			vic->cycle37();
-			EXECUTE(37);
-		case 38: 
-			vic->cycle38();
-			EXECUTE(38);
-		case 39: 
-			vic->cycle39();
-			EXECUTE(39);
-		case 40: 
-			vic->cycle40();
-			EXECUTE(40);
-		case 41: 
-			vic->cycle41();
-			EXECUTE(41);
-		case 42: 
-			vic->cycle42();
-			EXECUTE(42);
-		case 43: 
-			vic->cycle43();
-			EXECUTE(43);
-		case 44: 
-			vic->cycle44();
-			EXECUTE(44);
-		case 45: 
-			vic->cycle45();
-			EXECUTE(45);
-		case 46: 
-			vic->cycle46();
-			EXECUTE(46);
-		case 47: 
-			vic->cycle47();
-			EXECUTE(47);
-		case 48: 
-			vic->cycle48();
-			EXECUTE(48);
-		case 49: 
-			vic->cycle49();
-			EXECUTE(49);
-		case 50: 
-			vic->cycle50();
-			EXECUTE(50);
-		case 51: 
-			vic->cycle51();
-			EXECUTE(51);
-		case 52: 
-			vic->cycle52();
-			EXECUTE(52);
-		case 53: 
-			vic->cycle53();
-			EXECUTE(53);
-		case 54: 
-			vic->cycle54();
-			EXECUTE(54);
-		case 55: 
-			vic->cycle55();
-			EXECUTE(55);
-		case 56: 
-			vic->cycle56();
-			EXECUTE(56);
-		case 57: 
-			vic->cycle57();
-			EXECUTE(57);
-		case 58: 
-			vic->cycle58();
-			EXECUTE(58);
-		case 59: 
-			vic->cycle59();
-			EXECUTE(59);
-		case 60: 
-			vic->cycle60();
-			EXECUTE(60);
-		case 61: 
-			vic->cycle61();
-			EXECUTE(61);
-		case 62: 
-			vic->cycle62();
-			EXECUTE(62);
-		case 63: 
-			vic->cycle63();
-			EXECUTE(63);
-			
-			if (getCyclesPerRasterline() == 63) {
-				// last cycle for PAL machines
-				endOfRasterline();
-				return true;
-			}			
-		case 64: 
-			vic->cycle64();
-			EXECUTE(64);			
-		case 65: 
-			vic->cycle65();
-			EXECUTE(65);
-			endOfRasterline();
-			return true;
-			
-		default:
-			// can't reach
-			assert(false);
-			return false;
-	}	
-}
-#endif
 
 // -----------------------------------------------------------------------------------------------
 //                                  ROM and snapshot handling
 // -----------------------------------------------------------------------------------------------
 
-int
-C64::numberOfMissingRoms() {
-	
-	int result = 0;
-	
-	if (!mem->basicRomIsLoaded()) result++;
-	if (!mem->charRomIsLoaded()) result++;
-	if (!mem->kernelRomIsLoaded()) result++;
-	if (!floppy->mem->romIsLoaded()) result++;
-	return result;
-}
-
-int
+uint8_t
 C64::getMissingRoms() {
 	
-	int missingRoms = 0;
+	uint8_t missingRoms = 0;
 	
 	if (!mem->basicRomIsLoaded()) missingRoms |= BASIC_ROM;
 	if (!mem->charRomIsLoaded()) missingRoms |= CHAR_ROM;
@@ -1078,7 +848,7 @@ C64::loadRom(const char *filename)
 		
 	suspend(); 
 	
-	int wasMissing = numberOfMissingRoms();
+	bool wasRunnable = isRunnable();
 	
 	if (C64Memory::isBasicRom(filename)) {
 		result = mem->loadBasicRom(filename);
@@ -1100,9 +870,9 @@ C64::loadRom(const char *filename)
 		if (result) putMessage(MSG_ROM_LOADED, VC1541_ROM);
 	}
 			
-	int isMissing = numberOfMissingRoms();
+	bool isNowRunnable = isRunnable();
 	
-	if (wasMissing > 0 && isMissing == 0) {
+	if (!wasRunnable && isNowRunnable) {
 		// Last missing ROM was loaded
 		putMessage(MSG_ROM_COMPLETE);
 	}
@@ -1143,46 +913,6 @@ C64::getHistoricSnapshot(int nr)
 		return NULL;
 	
 	return snapshot;
-}
-
-uint8_t *
-C64::getHistoricSnapshotFileContents(int nr)
-{
-	Snapshot *s = getHistoricSnapshot(nr);
-	return (s != NULL) ? s->getFileContents() : NULL;
-}
-
-unsigned 
-C64::getHistoricSnapshotFileContentsSize(int nr)
-{
-	Snapshot *s = getHistoricSnapshot(nr);
-	return (s != NULL) ? s->getFileContentsSize() : 0;
-}
-
-unsigned char *
-C64::getHistoricSnapshotImageData(int nr)
-{
-	Snapshot *s = getHistoricSnapshot(nr);
-	return (s != NULL) ? s->getImageData() : NULL;
-}
-
-time_t
-C64::getHistoricSnapshotTimestamp(int nr)
-{
-	Snapshot *s = getHistoricSnapshot(nr);
-	return (s != NULL) ? s->getTimestamp() : NULL;
-}
-
-bool
-C64::revertToHistoricSnapshot(int nr)
-{
-	Snapshot *s = getHistoricSnapshot(nr);
-	
-	if (s == NULL) 
-		return false;
-	
-	loadFromSnapshot(s);
-	return true;
 }
 
 

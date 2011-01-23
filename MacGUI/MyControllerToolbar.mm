@@ -49,7 +49,7 @@
 	/* Jostick port */
 	if ([theItem tag] == 10 || [theItem tag] == 11) { 
 
-		int port = ([theItem tag] == 10) ? [c64 getPortAssignment:0] : [c64 getPortAssignment:1];
+		int port = ([theItem tag] == 10) ? [c64 portAssignment:0] : [c64 portAssignment:1];
 		switch (port) {
 			case IPD_KEYBOARD:
 				[theItem setImage:[NSImage imageNamed:@"keyboard32"]];

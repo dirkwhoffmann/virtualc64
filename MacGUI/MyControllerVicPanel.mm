@@ -23,7 +23,7 @@
 - (void)_vicVideoModeAction:(int)mode
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _vicVideoModeAction:[[c64 vic] getDisplayMode]];
+	[[undo prepareWithInvocationTarget:self] _vicVideoModeAction:[[c64 vic] displayMode]];
 	if (![undo isUndoing]) [undo setActionName:@"Display mode"];
 	
 	[[c64 vic] setDisplayMode:mode];
@@ -38,7 +38,7 @@
 - (void)_vicScreenGeometryAction:(int)mode
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _vicScreenGeometryAction:[[c64 vic] getScreenGeometry]];
+	[[undo prepareWithInvocationTarget:self] _vicScreenGeometryAction:[[c64 vic] screenGeometry]];
 	if (![undo isUndoing]) [undo setActionName:@"Screen geometry"];
 	
 	[[c64 vic] setScreenGeometry:mode];
@@ -53,7 +53,7 @@
 - (void)vicSetMemoryBank:(int)addr
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicSetMemoryBank:[[c64 vic] getMemoryBankAddr]];
+	[[undo prepareWithInvocationTarget:self] vicSetMemoryBank:[[c64 vic] memoryBankAddr]];
 	if (![undo isUndoing]) [undo setActionName:@"Memory bank"];
 	
 	[[c64 vic] setMemoryBankAddr:addr];
@@ -68,7 +68,7 @@
 - (void)vicSetScreenMemory:(int)addr
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicSetScreenMemory:[[c64 vic] getScreenMemoryAddr]];
+	[[undo prepareWithInvocationTarget:self] vicSetScreenMemory:[[c64 vic] screenMemoryAddr]];
 	if (![undo isUndoing]) [undo setActionName:@"Screen memory"];
 	
 	[[c64 vic] setScreenMemoryAddr:addr];
@@ -83,7 +83,7 @@
 - (void)vicSetCharacterMemory:(int)addr
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicSetCharacterMemory:[[c64 vic] getCharacterMemoryAddr]];
+	[[undo prepareWithInvocationTarget:self] vicSetCharacterMemory:[[c64 vic] characterMemoryAddr]];
 	if (![undo isUndoing]) [undo setActionName:@"Character memory"];
 	
 	[[c64 vic] setCharacterMemoryAddr:addr];
@@ -98,7 +98,7 @@
 - (IBAction)vicDXAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicDXAction:[NSNumber numberWithInt:[[c64 vic] getHorizontalRasterScroll]]];
+	[[undo prepareWithInvocationTarget:self] vicDXAction:[NSNumber numberWithInt:[[c64 vic] horizontalRasterScroll]]];
 	if (![undo isUndoing]) [undo setActionName:@"Horizontal raster scroll"];
 	
 	[[c64 vic] setHorizontalRasterScroll:[sender intValue]];
@@ -108,7 +108,7 @@
 - (IBAction)vicDYAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicDYAction:[NSNumber numberWithInt:[[c64 vic] getVerticalRasterScroll]]];
+	[[undo prepareWithInvocationTarget:self] vicDYAction:[NSNumber numberWithInt:[[c64 vic] verticalRasterScroll]]];
 	if (![undo isUndoing]) [undo setActionName:@"Vertical raster scroll"];
 	
 	[[c64 vic] setVerticalRasterScroll:[sender intValue]];
@@ -131,7 +131,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleVisibilityFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite visability"];
 	
-	[[c64 vic] spriteToggleVisibilityFlag:nr];
+	[[c64 vic] toggleSpriteVisibilityFlag:nr];
 	[self refresh];
 }
 
@@ -155,7 +155,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleMulticolorFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite multicolor"];
 	
-	[[c64 vic] spriteToggleMulticolorFlag:nr];
+	[[c64 vic] toggleSpriteMulticolorFlag:nr];
 	[self refresh];
 }
 
@@ -170,7 +170,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleStretchXFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite stretch X"];
 	
-	[[c64 vic] spriteToggleStretchXFlag:nr];
+	[[c64 vic] toggleSpriteStretchXFlag:nr];
 	[self refresh];
 }
 
@@ -185,7 +185,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleStretchYFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite stretch Y"];
 	
-	[[c64 vic] spriteToggleStretchYFlag:nr];
+	[[c64 vic] toggleSpriteStretchYFlag:nr];
 	[self refresh];
 }
 
@@ -200,7 +200,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleBackgroundPriorityFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite background priority"];
 	
-	[[c64 vic] spriteToggleBackgroundPriorityFlag:nr];
+	[[c64 vic] toggleSpriteBackgroundPriorityFlag:nr];
 	[self refresh];
 }
 
@@ -215,7 +215,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleSpriteSpriteCollisionFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Detect sprite/sprite collisions"];
 	
-	[[c64 vic] spriteToggleSpriteSpriteCollisionFlag:nr];
+	[[c64 vic] toggleSpriteSpriteCollisionFlag:nr];
 	[self refresh];
 }
 
@@ -230,7 +230,7 @@
 	[[undo prepareWithInvocationTarget:self] spriteToggleSpriteBackgroundCollisionFlag:nr];
 	if (![undo isUndoing]) [undo setActionName:@"Detect sprite/background collisions"];
 	
-	[[c64 vic] spriteToggleSpriteBackgroundCollisionFlag:nr];
+	[[c64 vic] toggleSpriteBackgroundCollisionFlag:nr];
 	[self refresh];
 }
 
@@ -329,27 +329,27 @@
 
 - (void)refreshVIC
 {
-	if (![VicVideoMode selectItemWithTag:[[c64 vic] getDisplayMode]])
+	if (![VicVideoMode selectItemWithTag:[[c64 vic] displayMode]])
 		[VicVideoMode selectItemWithTag:1];
-	if (![VicScreenGeometry selectItemWithTag:[[c64 vic] getScreenGeometry]])
+	if (![VicScreenGeometry selectItemWithTag:[[c64 vic] screenGeometry]])
 		NSLog(@"Can't refresh screen geometry field");
-	if (![VicMemoryBank selectItemWithTag:[[c64 vic] getMemoryBankAddr]])
+	if (![VicMemoryBank selectItemWithTag:[[c64 vic] memoryBankAddr]])
 		NSLog(@"Can't refresh memory bank field");
-	if (![VicScreenMemory selectItemWithTag:[[c64 vic] getScreenMemoryAddr]])
+	if (![VicScreenMemory selectItemWithTag:[[c64 vic] screenMemoryAddr]])
 		NSLog(@"Can't refresh screen memory field");
-	if (![VicCharacterMemory selectItemWithTag:[[c64 vic] getCharacterMemoryAddr]])
+	if (![VicCharacterMemory selectItemWithTag:[[c64 vic] characterMemoryAddr]])
 		NSLog(@"Can't refresh screen memory field");
-	[VicDX setIntValue:[[c64 vic] getHorizontalRasterScroll]];
-	[VicDXStepper setIntValue:[[c64 vic] getHorizontalRasterScroll]];
-	[VicDY setIntValue:[[c64 vic] getVerticalRasterScroll]];
-	[VicDYStepper setIntValue:[[c64 vic] getVerticalRasterScroll]];
-	[VicSpriteActive setIntValue:[[c64 vic] spriteGetVisibilityFlag:[self currentSprite]]];
-	[VicSpriteMulticolor setIntValue:[[c64 vic] spriteGetMulticolorFlag:[self currentSprite]]];
-	[VicSpriteStretchX setIntValue:[[c64 vic] spriteGetStretchXFlag:[self currentSprite]]];
-	[VicSpriteStretchY setIntValue:[[c64 vic] spriteGetStretchYFlag:[self currentSprite]]];
-	[VicSpriteInFront setIntValue:[[c64 vic] spriteGetBackgroundPriorityFlag:[self currentSprite]]];
-	[VicSpriteSpriteCollision setIntValue:[[c64 vic] spriteGetSpriteSpriteCollisionFlag:[self currentSprite]]];
-	[VicSpriteBackgroundCollision setIntValue:[[c64 vic] spriteGetSpriteBackgroundCollisionFlag:[self currentSprite]]];
+	[VicDX setIntValue:[[c64 vic] horizontalRasterScroll]];
+	[VicDXStepper setIntValue:[[c64 vic] horizontalRasterScroll]];
+	[VicDY setIntValue:[[c64 vic] verticalRasterScroll]];
+	[VicDYStepper setIntValue:[[c64 vic] verticalRasterScroll]];
+	[VicSpriteActive setIntValue:[[c64 vic] spriteVisibilityFlag:[self currentSprite]]];
+	[VicSpriteMulticolor setIntValue:[[c64 vic] spriteMulticolorFlag:[self currentSprite]]];
+	[VicSpriteStretchX setIntValue:[[c64 vic] spriteStretchXFlag:[self currentSprite]]];
+	[VicSpriteStretchY setIntValue:[[c64 vic] spriteStretchYFlag:[self currentSprite]]];
+	[VicSpriteInFront setIntValue:[[c64 vic] spriteBackgroundPriorityFlag:[self currentSprite]]];
+	[VicSpriteSpriteCollision setIntValue:[[c64 vic] spriteSpriteCollisionFlag:[self currentSprite]]];
+	[VicSpriteBackgroundCollision setIntValue:[[c64 vic] spriteBackgroundCollisionFlag:[self currentSprite]]];
 	[VicSpriteX setIntValue:[[c64 vic] spriteGetX:[self currentSprite]]];
 	[VicSpriteY setIntValue:[[c64 vic] spriteGetY:[self currentSprite]]];
 	[VicSpriteColor setIntValue:[[c64 vic] spriteGetColor:[self currentSprite]]];
