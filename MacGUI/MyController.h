@@ -27,13 +27,14 @@
 @class CpuTableView;
 @class MemTableView;
 @class Speedometer;
+@class Server;
 
 class JoystickManager;
 class Snapshot;
 
 // @class MyDocument;
 
-@interface MyController : NSWindowController 
+@interface MyController : NSWindowController
 {
 	// MOVE TO MYDOCUMENT
 	// Proxy object. Used get data from and sent data to the virtual C64
@@ -179,14 +180,17 @@ class Snapshot;
 	// Speedometer to measure clock frequence and frames per second
 	Speedometer *speedometer;
 		
-	//! Attached snapshot
-	/*! Used to communicate between mount dialog panel and controller.
-		There might be a better way to do this. Getting rid of this variable is appreciated. */
-	// Snapshot *snapshot;
+	// Bonjour server
+	Server *server;
+	NSMutableArray *services;
+	bool isConnectedToService;
 }
 
 @property C64Proxy *c64;
 @property (readonly) MyOpenGLView *screen;
+@property(nonatomic, retain) Server *server;
+@property(nonatomic, retain) NSMutableArray *services;
+@property(readwrite, nonatomic) bool isConnectedToService;
 
 // User defaults
 + (void)registerStandardDefaults;

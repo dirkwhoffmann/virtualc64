@@ -79,9 +79,7 @@ VC1541::reset()
 
 void
 VC1541::loadFromBuffer(uint8_t **buffer)
-{
-	uint8_t *old = *buffer;
-	
+{	
 	debug(2, "  Loading VC1541 state...\n");
 
 	for (unsigned i = 0; i < 84; i++)
@@ -95,22 +93,15 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 	offset = (int)read16(buffer);
 	noOfFFBytes = (int)read16(buffer);
 	writeProtection = (bool)read8(buffer);
-	debug(2, "%d\n", *buffer - old);
 	cpu->loadFromBuffer(buffer);
-	debug(2, "%d\n", *buffer - old);
 	via1->loadFromBuffer(buffer);	
-	debug(2, "%d\n", *buffer - old);
 	via2->loadFromBuffer(buffer);
-	debug(2, "%d\n", *buffer - old);
 	mem->loadFromBuffer(buffer);
-	debug(2, "%d\n", *buffer - old);
 }
 
 void 
 VC1541::saveToBuffer(uint8_t **buffer)
-{
-	uint8_t *old = *buffer;
-	
+{	
 	debug(2, "  Saving VC1541 state...\n");
 
 	for (unsigned i = 0; i < 84; i++)
@@ -124,15 +115,10 @@ VC1541::saveToBuffer(uint8_t **buffer)
 	write16(buffer, (uint16_t)offset);
 	write16(buffer, (uint16_t)noOfFFBytes);
 	write8(buffer, (uint8_t)writeProtection);
-	debug(2, "%d\n", *buffer - old);
 	cpu->saveToBuffer(buffer);
-	debug(2, "%d\n", *buffer - old);
 	via1->saveToBuffer(buffer);	
-	debug(2 ,"%d\n", *buffer - old);
 	via2->saveToBuffer(buffer);	
-	debug(2, "%d\n", *buffer - old);
 	mem->saveToBuffer(buffer);	
-	debug(2, "%d\n", *buffer - old);
 }
 
 void 

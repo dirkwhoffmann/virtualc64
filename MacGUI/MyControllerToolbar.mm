@@ -188,5 +188,10 @@
 	}
 }
 
+- (IBAction)iPhoneAction:(id)sender
+{	
+	NSLog(@"iPhoneAction");
+	// [self sendSnapshotToIPhone];
+}
 
 @end

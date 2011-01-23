@@ -81,11 +81,19 @@ C64Memory::loadFromBuffer(uint8_t **buffer)
 	debug(2, "  Loading C64 memory state...\n");
 	
 	Memory::loadFromBuffer(buffer);
-	
+
+#if 0
 	for (unsigned i = 0; i < sizeof(ram); i++)
 		ram[i] = read8(buffer);	
 	for (unsigned i = 0; i < sizeof(colorRam); i++) 
 		colorRam[i] = read8(buffer);
+#endif
+	
+	readBlock(buffer, ram, sizeof(ram)); 
+	readBlock(buffer, colorRam, sizeof(colorRam)); 
+	readBlock(buffer, &rom[0xA000], 0x2000); // Basic ROM
+	readBlock(buffer, &rom[0xD000], 0x1000); // Character ROM
+	readBlock(buffer, &rom[0xE000], 0x2000); // Kernel ROM
 	
 	basicRomIsVisible = (bool)read8(buffer);
 	charRomIsVisible = (bool)read8(buffer);
@@ -102,10 +110,18 @@ C64Memory::saveToBuffer(uint8_t **buffer)
 	
 	Memory::saveToBuffer(buffer);
 
+#if 0
 	for (unsigned i = 0; i < sizeof(ram); i++)
 		write8(buffer, ram[i]);
 	for (unsigned i = 0; i < sizeof(colorRam); i++) 
 		write8(buffer, colorRam[i]);
+#endif
+	
+	writeBlock(buffer, ram, sizeof(ram)); 
+	writeBlock(buffer, colorRam, sizeof(colorRam)); 
+	writeBlock(buffer, &rom[0xA000], 0x2000); // Basic ROM
+	writeBlock(buffer, &rom[0xD000], 0x1000); // Character ROM
+	writeBlock(buffer, &rom[0xE000], 0x2000); // Kernel ROM
 	
 	write8(buffer, (uint8_t)basicRomIsVisible);
 	write8(buffer, (uint8_t)charRomIsVisible);

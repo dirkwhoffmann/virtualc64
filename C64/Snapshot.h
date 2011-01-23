@@ -29,11 +29,12 @@ class Snapshot : public Container {
 private:
 
 	//! Size of a snapshot file in bytes
-	static const int MAX_SNAPSHOT_SIZE = 800000; // 783342; 
+	static const int MAX_SNAPSHOT_SIZE = 850000; // 783342; 
 
 private:
 	
 	struct {
+		
 		//! Magic bytes ('V','C','6','4')
 		char magic[4];
 		
@@ -42,12 +43,17 @@ private:
 		
 		//! Version number (minor)
 		uint8_t minor;
-
-		//! Width and height of screenshot image
-		uint16_t width, height;
 		
-		//! Screenshot data 
-		uint32_t screen[512 * 512];
+		// Screenshot
+		struct { 	
+			
+			//! Image width and height
+			uint16_t width, height;
+		
+			//! Screen buffer data 
+			uint32_t screen[512 * 512];
+		
+		} screenshot;
 		
 		//! Internal state
 		uint8_t data[MAX_SNAPSHOT_SIZE];
@@ -101,10 +107,10 @@ public:
 	// DEPRECATED. Already stored in snapshot
 	//void takeScreenshot(uint32_t *buf) { memcpy(screen, buf, sizeof(screen)); }
 	
-	void takeScreenshot(uint32_t *buf) { memcpy(fileContents.screen, buf, sizeof(fileContents.screen)); }
+	void takeScreenshot(uint32_t *buf) { memcpy(fileContents.screenshot.screen, buf, sizeof(fileContents.screenshot.screen)); }
 	
 	//! Return screen buffer
-	unsigned char *getImageData() { return (unsigned char *)fileContents.screen; }
+	unsigned char *getImageData() { return (unsigned char *)fileContents.screenshot.screen; }
 };
 
 #endif

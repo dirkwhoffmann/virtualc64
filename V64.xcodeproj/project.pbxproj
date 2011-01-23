@@ -68,6 +68,7 @@
 		506910C80A74EAE100F48A7F /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 506910C70A74EAE100F48A7F /* VirtualC64Icon.icns */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
+		50804AE312EB3CDA00394049 /* iphone48.png in Resources */ = {isa = PBXBuildFile; fileRef = 50804AE212EB3CDA00394049 /* iphone48.png */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6E912E06DB700378033 /* MyControllerToolbar.mm */; };
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
@@ -238,6 +239,7 @@
 		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
 		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
 		5077743212DE490B00D72088 /* CpuTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CpuTableView.mm; sourceTree = "<group>"; };
+		50804AE212EB3CDA00394049 /* iphone48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iphone48.png; path = images/iphone48.png; sourceTree = "<group>"; };
 		5088A6D412E0676200378033 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
 		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
 		5088A6E812E06DB700378033 /* MyControllerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerToolbar.h; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 			children = (
 				50D6955012E375A800D9C738 /* Icons */,
 				50F23D0712DF932800B1F275 /* glossy.png */,
+				50804AE212EB3CDA00394049 /* iphone48.png */,
 				502F96B512D85F9C00DBE132 /* time2.png */,
 				5041486812219F6E00A80E0C /* cartridge.png */,
 				504CEE7C0C46774F001F4E51 /* BigIcon.png */,
@@ -788,6 +791,7 @@
 				50D6954C12E3759500D9C738 /* IconV64.icns in Resources */,
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
 				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
+				50804AE312EB3CDA00394049 /* iphone48.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

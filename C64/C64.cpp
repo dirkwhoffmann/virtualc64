@@ -343,9 +343,9 @@ C64::saveToSnapshot(Snapshot *snapshot)
 	if (snapshot == NULL)
 		return;
 	
-	snapshot->takeScreenshot((uint32_t *)vic->screenBuffer());
 	snapshot->setTimestamp(time(NULL));
-
+	snapshot->takeScreenshot((uint32_t *)vic->screenBuffer());
+	
 	uint8_t *ptr = snapshot->getData();
 	saveToBuffer(&ptr);
 }

@@ -21,6 +21,7 @@
 @implementation MyController
 
 @synthesize c64, screen;
+@synthesize server, services, isConnectedToService;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -100,6 +101,18 @@
 										   selector:@selector(timerFunc) 
 										   userInfo:nil repeats:YES];
 	speedometer = [[Speedometer alloc] init];
+	
+	// Setup bonjour server for snapshot sharing with iPhone (EXPERIMENTAL)
+	// Probably not a good idea. Use iTunes file sharing instead (much simpler)
+#if 0	
+	server = [[Server alloc] initWithProtocol:@"TestingProtocol"];
+    server.delegate = self;
+    NSError *error = nil;
+    if(![server start:&error]) {
+        NSLog(@"Failed to setup server: %@", error);
+		server = nil;
+    }	
+#endif
 	
 	NSLog(@"GUI is initialized, timer is running");	
 }
