@@ -193,18 +193,18 @@
 - (void) setSpriteStretchYFlag:(int)nr value:(bool)flag { return vic->setSpriteStretchY(nr, flag); }
 - (void) toggleSpriteStretchYFlag:(int)nr { vic->spriteToggleStretchYFlag(nr); }
 
-- (int) spriteGetX:(int)nr { return vic->getSpriteX(nr); }
-- (void) spriteSetX:(int)nr value:(int)x { vic->setSpriteX(nr, x); }
-- (int) spriteGetY:(int)nr { return vic->getSpriteY(nr); }
-- (void) spriteSetY:(int)nr value:(int)y { vic->setSpriteY(nr, y); }
-- (int) spriteGetColor:(int)nr { return vic->spriteColor(nr); }
-- (void) spriteSetColor:(int)nr value:(int)c { vic->setSpriteColor(nr, c); }
+- (int) spriteX:(int)nr { return vic->getSpriteX(nr); }
+- (void) setSpriteX:(int)nr value:(int)x { vic->setSpriteX(nr, x); }
+- (int) spriteY:(int)nr { return vic->getSpriteY(nr); }
+- (void) setSpriteY:(int)nr value:(int)y { vic->setSpriteY(nr, y); }
+- (int) spriteColor:(int)nr { return vic->spriteColor(nr); }
+- (void) setSpriteColor:(int)nr value:(int)c { vic->setSpriteColor(nr, c); }
 
-- (uint16_t) getRasterLine { return vic->getScanline(); }
-- (void) setRasterLine:(uint16_t)line { vic->setScanline(line); }
-- (uint16_t) getRasterInterruptLine { return vic->rasterInterruptLine(); }
+- (uint16_t) rasterline { return vic->getScanline(); }
+- (void) setRasterline:(uint16_t)line { vic->setScanline(line); }
+- (uint16_t) rasterInterruptLine { return vic->rasterInterruptLine(); }
 - (void) setRasterInterruptLine:(uint16_t)line { vic->setRasterInterruptLine(line); }
-- (bool) getRasterInterruptFlag { return vic->rasterInterruptEnabled(); }
+- (bool) rasterInterruptFlag { return vic->rasterInterruptEnabled(); }
 - (void) setRasterInterruptFlag:(bool)b { vic->setRasterInterruptEnable(b); }
 - (void) toggleRasterInterruptFlag { vic->toggleRasterInterruptFlag(); }
 
@@ -234,73 +234,73 @@
 - (bool) tracingEnabled { return cia->tracingEnabled(); }
 - (void) setTraceMode:(bool)b { cia->setTraceMode(b); }
 
-- (uint8_t) getDataPortA { return cia->getDataPortA(); }
+- (uint8_t) dataPortA { return cia->getDataPortA(); }
 - (void) setDataPortA:(uint8_t)v { cia->setDataPortA(v); }
-- (uint8_t) getDataPortDirectionA { return cia->getDataPortDirectionA(); }
+- (uint8_t) dataPortDirectionA { return cia->getDataPortDirectionA(); }
 - (void) setDataPortDirectionA:(uint8_t)v { cia->setDataPortDirectionA(v); }
-- (uint16_t) getTimerA { return cia->getCounterA(); }
+- (uint16_t) timerA { return cia->getCounterA(); }
 - (void) setTimerA:(uint16_t)v { cia->setCounterA(v); }
-- (uint16_t) getTimerLatchA { return cia->getLatchA(); }
+- (uint16_t) timerLatchA { return cia->getLatchA(); }
 - (void) setTimerLatchA:(uint16_t)v { cia->setLatchA(v); }
-- (bool) getStartFlagA { return cia->isStartedA(); }
+- (bool) startFlagA { return cia->isStartedA(); }
 - (void) setStartFlagA:(bool)b { cia->setStartedA(b); }
 - (void) toggleStartFlagA {cia->toggleStartFlagA(); }
-- (bool) getOneShotFlagA { return cia->isOneShotA(); }
+- (bool) oneShotFlagA { return cia->isOneShotA(); }
 - (void) setOneShotFlagA:(bool)b { cia->setOneShotA(b); }
 - (void) toggleOneShotFlagA { cia->toggleOneShotFlagA(); }
-- (bool) getUnderflowFlagA { return cia->willIndicateUnderflowA(); }
+- (bool) underflowFlagA { return cia->willIndicateUnderflowA(); }
 - (void) setUnderflowFlagA:(bool)b { return cia->setIndicateUnderflowA(b); }
 - (void) toggleUnderflowFlagA { cia->toggleUnderflowFlagA(); }
-- (bool) getPendingSignalFlagA {return cia->isSignalPendingA(); }
+- (bool) pendingSignalFlagA {return cia->isSignalPendingA(); }
 - (void) setPendingSignalFlagA:(bool)b { cia->setSignalPendingA(b); }
 - (void) togglePendingSignalFlagA { cia->togglePendingSignalFlagA(); }
-- (bool) getInterruptEnableFlagA { return cia->isInterruptEnabledA(); }
+- (bool) interruptEnableFlagA { return cia->isInterruptEnabledA(); }
 - (void) setInterruptEnableFlagA:(bool)b { cia->setInterruptEnabledA(b); }
 - (void) toggleInterruptEnableFlagA {cia->toggleInterruptEnableFlagA(); }
 
-- (uint8_t) getDataPortB { return cia->getDataPortB(); }
+- (uint8_t) dataPortB { return cia->getDataPortB(); }
 - (void) setDataPortB:(uint8_t)v { cia->setDataPortB(v); }
-- (uint8_t) getDataPortDirectionB { return cia->getDataPortDirectionB(); }
+- (uint8_t) dataPortDirectionB { return cia->getDataPortDirectionB(); }
 - (void) setDataPortDirectionB:(uint8_t)v { cia->setDataPortDirectionB(v); }
-- (uint16_t) getTimerB { return cia->getCounterB(); }
+- (uint16_t) timerB { return cia->getCounterB(); }
 - (void) setTimerB:(uint16_t)v { cia->setCounterB(v); }
-- (uint16_t) getTimerLatchB { return cia->getLatchB(); }
+- (uint16_t) timerLatchB { return cia->getLatchB(); }
 - (void) setTimerLatchB:(uint16_t)v { cia->setLatchB(v); }
-- (bool) getStartFlagB { return cia->isStartedB(); }
+- (bool) startFlagB { return cia->isStartedB(); }
 - (void) setStartFlagB:(bool)b { cia->setStartedB(b); }
 - (void) toggleStartFlagB {cia->toggleStartFlagB(); }
-- (bool) getOneShotFlagB { return cia->isOneShotB(); }
+- (bool) oneShotFlagB { return cia->isOneShotB(); }
 - (void) setOneShotFlagB:(bool)b { cia->setOneShotB(b); }
 - (void) toggleOneShotFlagB { cia->toggleOneShotFlagB(); }
-- (bool) getUnderflowFlagB { return cia->willIndicateUnderflowB(); }
+- (bool) underflowFlagB { return cia->willIndicateUnderflowB(); }
 - (void) setUnderflowFlagB:(bool)b { return cia->setIndicateUnderflowB(b); }
 - (void) toggleUnderflowFlagB { cia->toggleUnderflowFlagB(); }
-- (bool) getPendingSignalFlagB {return cia->isSignalPendingB(); }
+- (bool) pendingSignalFlagB {return cia->isSignalPendingB(); }
 - (void) setPendingSignalFlagB:(bool)b { cia->setSignalPendingB(b); }
 - (void) togglePendingSignalFlagB { cia->togglePendingSignalFlagB(); }
-- (bool) getInterruptEnableFlagB { return cia->isInterruptEnabledB(); }
+- (bool) interruptEnableFlagB { return cia->isInterruptEnabledB(); }
 - (void) setInterruptEnableFlagB:(bool)b { cia->setInterruptEnabledB(b); }
 - (void) toggleInterruptEnableFlagB {cia->toggleInterruptEnableFlagB(); }
 
-- (uint8_t) getTodHours { return cia->tod.getTodHours(); }
+- (uint8_t) todHours { return cia->tod.getTodHours(); }
 - (void) setTodHours:(uint8_t)value { cia->tod.setTodHours(value); }
-- (uint8_t) getTodMinutes { return cia->tod.getTodMinutes(); }
+- (uint8_t) todMinutes { return cia->tod.getTodMinutes(); }
 - (void) setTodMinutes:(uint8_t)value { cia->tod.setTodMinutes(value); }
-- (uint8_t) getTodSeconds { return cia->tod.getTodSeconds(); }
+- (uint8_t) todSeconds { return cia->tod.getTodSeconds(); }
 - (void) setTodSeconds:(uint8_t)value { cia->tod.setTodSeconds(value); }
-- (uint8_t) getTodTenth { return cia->tod.getTodTenth(); }
+- (uint8_t) todTenth { return cia->tod.getTodTenth(); }
 - (void) setTodTenth:(uint8_t)value { cia->tod.setTodTenth(value); }
 
-- (uint8_t) getAlarmHours { return cia->tod.getAlarmHours(); }
+- (uint8_t) alarmHours { return cia->tod.getAlarmHours(); }
 - (void) setAlarmHours:(uint8_t)value { cia->tod.setAlarmHours(value); }
-- (uint8_t) getAlarmMinutes { return cia->tod.getAlarmMinutes(); }
+- (uint8_t) alarmMinutes { return cia->tod.getAlarmMinutes(); }
 - (void) setAlarmMinutes:(uint8_t)value { cia->tod.setAlarmMinutes(value); }
-- (uint8_t) getAlarmSeconds { return cia->tod.getAlarmSeconds(); }
+- (uint8_t) alarmSeconds { return cia->tod.getAlarmSeconds(); }
 - (void) setAlarmSeconds:(uint8_t)value { cia->tod.setAlarmSeconds(value); }
-- (uint8_t) getAlarmTenth { return cia->tod.getAlarmTenth(); }
+- (uint8_t) alarmTenth { return cia->tod.getAlarmTenth(); }
 - (void) setAlarmTenth:(uint8_t)value { cia->tod.setAlarmTenth(value); }
-- (bool) todIsInterruptEnabled { return cia->isInterruptEnabledTOD(); }
-- (void) todSetInterruptEnabled:(bool)b { cia->setInterruptEnabledTOD(b); }
+- (bool) isTodInterruptEnabled { return cia->isInterruptEnabledTOD(); }
+- (void) setTodInterruptEnabled:(bool)b { cia->setInterruptEnabledTOD(b); }
 
 @end 
 
@@ -536,6 +536,7 @@
 - (unsigned) historicSnapshotFileContentsSize:(int) nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getFileContentsSize() : 0; }
 - (unsigned char *)historicSnapshotImageData:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getImageData() : NULL; }
 - (time_t)historicSnapshotTimestamp:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getTimestamp() : 0; }
+- (bool)historicSnapshotIsPAL:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->isPAL() : false; }
 - (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick

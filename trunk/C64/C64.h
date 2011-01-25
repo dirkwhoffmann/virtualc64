@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2011 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
  */
 
 // New in 0.9.5
+// Thumbnail don't get corrupted any more when switching from PAL to NTSC and vice versa (issue #107)
+// Fixed a bug that caused keyboard events to be rejected when the main window got focus (issue #110)
 // Fixed a bug that caused a discolored line to appear at the right border of the screen texture
 
 

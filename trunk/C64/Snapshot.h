@@ -44,6 +44,9 @@ private:
 		//! Version number (minor)
 		uint8_t minor;
 		
+		//! Is this a snapshot of a PAL machine or an NTSC machine?
+		uint8_t isPAL;
+		
 		// Screenshot
 		struct { 	
 			
@@ -100,6 +103,12 @@ public:
 	//! Set timestamp
 	void setTimestamp(time_t value) { timestamp = value; }
 
+	//! Return PAL/NTSC flag
+	bool isPAL() { return (bool)fileContents.isPAL; }
+	
+	//! Set PAL/NTSC flag
+	void setPAL(bool value) { fileContents.isPAL = (uint8_t)value; }
+	
 	//! Returns true, if snapshot does not contain data yet
 	bool isEmpty() { return timestamp == 0; }
 

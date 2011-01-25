@@ -115,7 +115,7 @@
 {	
 	int nr = [self currentCIA];
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaDataPortAAction:nr value:[[c64 cia:nr] getDataPortA]];
+	[[undo prepareWithInvocationTarget:self] _ciaDataPortAAction:nr value:[[c64 cia:nr] dataPortA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port A"];
 	
 	[self _ciaDataPortAAction:nr value:[sender intValue]];
@@ -131,7 +131,7 @@
 {
 	int nr = [self currentCIA];
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaDataPortDirectionAAction:nr value:[[c64 cia:nr] getDataPortDirectionA]];
+	[[undo prepareWithInvocationTarget:self] _ciaDataPortDirectionAAction:nr value:[[c64 cia:nr] dataPortDirectionA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port direction A"];
 	
 	[self _ciaDataPortDirectionAAction:nr value:[sender intValue]];
@@ -147,7 +147,7 @@
 {
 	int nr = [self currentCIA];
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaTimerAAction:nr value:[[c64 cia:nr] getDataPortDirectionA]];
+	[[undo prepareWithInvocationTarget:self] _ciaTimerAAction:nr value:[[c64 cia:nr] dataPortDirectionA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer A"];
 	
 	[self _ciaTimerAAction:nr value:[sender intValue]];
@@ -163,7 +163,7 @@
 {
 	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaLatchedTimerAAction:nr value:[[c64 cia:nr] getTimerLatchA]];
+	[[undo prepareWithInvocationTarget:self] _ciaLatchedTimerAAction:nr value:[[c64 cia:nr] timerLatchA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer latch A"];
 	
 	[self _ciaLatchedTimerAAction:nr value:[sender intValue]];
@@ -179,7 +179,7 @@
 {
 	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaRunningAAction:nr value:[[c64 cia:nr] getStartFlagA]];
+	[[undo prepareWithInvocationTarget:self] _ciaRunningAAction:nr value:[[c64 cia:nr] startFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"Start/Stop CIA timer A"];
 	
 	[self _ciaRunningAAction:nr value:[sender intValue]];
@@ -196,7 +196,7 @@
 {
 	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaOneShotAAction:nr value:[[c64 cia:nr] getOneShotFlagA]];
+	[[undo prepareWithInvocationTarget:self] _ciaOneShotAAction:nr value:[[c64 cia:nr] oneShotFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA one shot flag A"];
 	
 	[self _ciaOneShotAAction:nr value:[sender intValue]];
@@ -212,7 +212,7 @@
 {
 	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaCountUnterflowsAAction:nr value:[[c64 cia:nr] getUnderflowFlagA]];
+	[[undo prepareWithInvocationTarget:self] _ciaCountUnterflowsAAction:nr value:[[c64 cia:nr] underflowFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA underflow flag A"];
 	
 	[self _ciaCountUnterflowsAAction:nr value:[sender intValue]];
@@ -228,7 +228,7 @@
 {
 	int nr = [self currentCIA];	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaSignalPendingAAction:nr value:[[c64 cia:nr] getPendingSignalFlagA]];
+	[[undo prepareWithInvocationTarget:self] _ciaSignalPendingAAction:nr value:[[c64 cia:nr] pendingSignalFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA signal pending A"];
 	
 	[self _ciaSignalPendingAAction:nr value:[sender intValue]];
@@ -244,7 +244,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaInterruptEnableAAction:nr value:[[c64 cia:nr] getInterruptEnableFlagA]];
+	[[undo prepareWithInvocationTarget:self] _ciaInterruptEnableAAction:nr value:[[c64 cia:nr] interruptEnableFlagA]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA interrupt enable flag A"];
 	
 	[self _ciaInterruptEnableAAction:nr value:[sender intValue]];
@@ -260,7 +260,7 @@
 {	
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaDataPortBAction:nr value:[[c64 cia:nr] getDataPortB]];
+	[[undo prepareWithInvocationTarget:self] _ciaDataPortBAction:nr value:[[c64 cia:nr] dataPortB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port B"];
 	
 	[self _ciaDataPortBAction:nr value:[sender intValue]];
@@ -276,7 +276,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaDataPortDirectionBAction:nr value:[[c64 cia:nr] getDataPortDirectionB]];
+	[[undo prepareWithInvocationTarget:self] _ciaDataPortDirectionBAction:nr value:[[c64 cia:nr] dataPortDirectionB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA data port direction B"];
 	
 	[self _ciaDataPortDirectionBAction:nr value:[sender intValue]];
@@ -292,7 +292,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaTimerBAction:nr value:[[c64 cia:nr] getTimerB]];
+	[[undo prepareWithInvocationTarget:self] _ciaTimerBAction:nr value:[[c64 cia:nr] timerB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer B"];
 	
 	[self _ciaTimerBAction:nr value:[sender intValue]];
@@ -308,7 +308,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaLatchedTimerBAction:nr value:[[c64 cia:nr] getTimerLatchB]];
+	[[undo prepareWithInvocationTarget:self] _ciaLatchedTimerBAction:nr value:[[c64 cia:nr] timerLatchB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA timer latch B"];
 	
 	[self _ciaLatchedTimerBAction:nr value:[sender intValue]];
@@ -324,7 +324,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaRunningBAction:nr value:[[c64 cia:nr] getStartFlagB]];
+	[[undo prepareWithInvocationTarget:self] _ciaRunningBAction:nr value:[[c64 cia:nr] startFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"Start/Stop CIA timer B"];
 	
 	[self _ciaRunningBAction:nr value:[sender intValue]];
@@ -340,7 +340,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaOneShotBAction:nr value:[[c64 cia:nr] getOneShotFlagB]];
+	[[undo prepareWithInvocationTarget:self] _ciaOneShotBAction:nr value:[[c64 cia:nr] oneShotFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA one shot flag B"];
 	
 	[self _ciaOneShotBAction:nr value:[sender intValue]];
@@ -356,7 +356,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaCountUnterflowsBAction:nr value:[[c64 cia:nr] getUnderflowFlagB]];
+	[[undo prepareWithInvocationTarget:self] _ciaCountUnterflowsBAction:nr value:[[c64 cia:nr] underflowFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA underflow flag B"];
 	
 	[self _ciaCountUnterflowsBAction:nr value:[sender intValue]];
@@ -372,7 +372,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaSignalPendingBAction:nr value:[[c64 cia:nr] getPendingSignalFlagB]];
+	[[undo prepareWithInvocationTarget:self] _ciaSignalPendingBAction:nr value:[[c64 cia:nr] pendingSignalFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA signal pending B"];
 	
 	[self _ciaSignalPendingBAction:nr value:[sender intValue]];
@@ -388,7 +388,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _ciaInterruptEnableBAction:nr value:[[c64 cia:nr] getInterruptEnableFlagB]];
+	[[undo prepareWithInvocationTarget:self] _ciaInterruptEnableBAction:nr value:[[c64 cia:nr] interruptEnableFlagB]];
 	if (![undo isUndoing]) [undo setActionName:@"CIA interrupt enable flag B"];
 	
 	[self _ciaInterruptEnableBAction:nr value:[sender intValue]];
@@ -404,7 +404,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _todHoursAction:nr value:[[c64 cia:nr] getTodHours]];
+	[[undo prepareWithInvocationTarget:self] _todHoursAction:nr value:[[c64 cia:nr] todHours]];
 	if (![undo isUndoing]) [undo setActionName:@"TOD hours"];
 	
 	[self _todHoursAction:nr value:[sender intValue]];
@@ -420,7 +420,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _todMinutesAction:nr value:[[c64 cia:nr] getTodMinutes]];
+	[[undo prepareWithInvocationTarget:self] _todMinutesAction:nr value:[[c64 cia:nr] todMinutes]];
 	if (![undo isUndoing]) [undo setActionName:@"TOD minutes"];
 	
 	[self _todMinutesAction:nr value:[sender intValue]];
@@ -436,7 +436,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _todSecondsAction:nr value:[[c64 cia:nr] getTodSeconds]];
+	[[undo prepareWithInvocationTarget:self] _todSecondsAction:nr value:[[c64 cia:nr] todSeconds]];
 	if (![undo isUndoing]) [undo setActionName:@"TOD seconds"];
 	
 	[self _todSecondsAction:nr value:[sender intValue]];
@@ -452,7 +452,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _todTenthAction:nr value:[[c64 cia:nr] getTodTenth]];
+	[[undo prepareWithInvocationTarget:self] _todTenthAction:nr value:[[c64 cia:nr] todTenth]];
 	if (![undo isUndoing]) [undo setActionName:@"TOD hours"];
 	
 	[self _todTenthAction:nr value:[sender intValue]];
@@ -468,7 +468,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _alarmHoursAction:nr value:[[c64 cia:nr] getAlarmHours]];
+	[[undo prepareWithInvocationTarget:self] _alarmHoursAction:nr value:[[c64 cia:nr] alarmHours]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm hours"];
 	
 	[self _alarmHoursAction:nr value:[sender intValue]];
@@ -484,7 +484,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _alarmMinutesAction:nr value:[[c64 cia:nr] getAlarmMinutes]];
+	[[undo prepareWithInvocationTarget:self] _alarmMinutesAction:nr value:[[c64 cia:nr] alarmMinutes]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm minutes"];
 	
 	[self _alarmMinutesAction:nr value:[sender intValue]];
@@ -500,7 +500,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _alarmSecondsAction:nr value:[[c64 cia:nr] getAlarmSeconds]];
+	[[undo prepareWithInvocationTarget:self] _alarmSecondsAction:nr value:[[c64 cia:nr] alarmSeconds]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm seconds"];
 	
 	[self _alarmSecondsAction:nr value:[sender intValue]];
@@ -516,7 +516,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _alarmTenthAction:nr value:[[c64 cia:nr] getAlarmTenth]];
+	[[undo prepareWithInvocationTarget:self] _alarmTenthAction:nr value:[[c64 cia:nr] alarmTenth]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm hours"];
 	
 	[self _alarmTenthAction:nr value:[sender intValue]];
@@ -524,7 +524,7 @@
 
 - (IBAction)_todInterruptEnabledAction:(int)nr value:(bool)b
 {
-	[[c64 cia:nr] todSetInterruptEnabled:b];
+	[[c64 cia:nr] setTodInterruptEnabled:b];
 	[self refresh];
 }
 
@@ -532,7 +532,7 @@
 {
 	int nr = [self currentCIA];		
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] _todInterruptEnabledAction:nr value:[[c64 cia:nr] todIsInterruptEnabled]];
+	[[undo prepareWithInvocationTarget:self] _todInterruptEnabledAction:nr value:[[c64 cia:nr] isTodInterruptEnabled]];
 	if (![undo isUndoing]) [undo setActionName:@"Alarm enable"];
 	
 	[self _todInterruptEnabledAction:nr value:[sender intValue]];
@@ -550,34 +550,34 @@
 {
 	CIAProxy *cia = [c64 cia:[self currentCIA]];
 	
-	[ciaDataPortA setIntValue:[cia getDataPortA]];
-	[ciaDataPortDirectionA setIntValue:[cia getDataPortDirectionA]];
-	[ciaTimerA setIntValue:[cia getTimerA]];
-	[ciaLatchedTimerA setIntValue:[cia getTimerLatchA]];
-	[ciaRunningA setIntValue:[cia getStartFlagA]];
-	[ciaOneShotA setIntValue:[cia getOneShotFlagA]];
-	[ciaSignalPendingA setIntValue:[cia getPendingSignalFlagA]];
-	[ciaInterruptEnableA setIntValue:[cia getInterruptEnableFlagA]];
+	[ciaDataPortA setIntValue:[cia dataPortA]];
+	[ciaDataPortDirectionA setIntValue:[cia dataPortDirectionA]];
+	[ciaTimerA setIntValue:[cia timerA]];
+	[ciaLatchedTimerA setIntValue:[cia timerLatchA]];
+	[ciaRunningA setIntValue:[cia startFlagA]];
+	[ciaOneShotA setIntValue:[cia oneShotFlagA]];
+	[ciaSignalPendingA setIntValue:[cia pendingSignalFlagA]];
+	[ciaInterruptEnableA setIntValue:[cia interruptEnableFlagA]];
 	
-	[ciaDataPortB setIntValue:[cia getDataPortB]];
-	[ciaDataPortDirectionB setIntValue:[cia getDataPortDirectionB]];
-	[ciaTimerB setIntValue:[cia getTimerB]];
-	[ciaLatchedTimerB setIntValue:[cia getTimerLatchB]];
-	[ciaRunningB setIntValue:[cia getStartFlagB]];
-	[ciaOneShotB setIntValue:[cia getOneShotFlagB]];
-	[ciaSignalPendingB setIntValue:[cia getPendingSignalFlagB]];
-	[ciaInterruptEnableB setIntValue:[cia getInterruptEnableFlagB]];
+	[ciaDataPortB setIntValue:[cia dataPortB]];
+	[ciaDataPortDirectionB setIntValue:[cia dataPortDirectionB]];
+	[ciaTimerB setIntValue:[cia timerB]];
+	[ciaLatchedTimerB setIntValue:[cia timerLatchB]];
+	[ciaRunningB setIntValue:[cia startFlagB]];
+	[ciaOneShotB setIntValue:[cia oneShotFlagB]];
+	[ciaSignalPendingB setIntValue:[cia pendingSignalFlagB]];
+	[ciaInterruptEnableB setIntValue:[cia interruptEnableFlagB]];
 	
-	[todHours setIntValue:[cia getTodHours]];
-	[todMinutes setIntValue:[cia getTodMinutes]];
-	[todSeconds setIntValue:[cia getTodSeconds]];
-	[todTenth setIntValue:[cia getTodTenth]];
+	[todHours setIntValue:[cia todHours]];
+	[todMinutes setIntValue:[cia todMinutes]];
+	[todSeconds setIntValue:[cia todSeconds]];
+	[todTenth setIntValue:[cia todTenth]];
 	
-	[alarmHours setIntValue:[cia getAlarmHours]];
-	[alarmMinutes setIntValue:[cia getAlarmMinutes]];
-	[alarmSeconds setIntValue:[cia getAlarmSeconds]];
-	[alarmTenth setIntValue:[cia getAlarmTenth]];	
-	[todInterruptEnabled setIntValue:[cia todIsInterruptEnabled]];
+	[alarmHours setIntValue:[cia alarmHours]];
+	[alarmMinutes setIntValue:[cia alarmMinutes]];
+	[alarmSeconds setIntValue:[cia alarmSeconds]];
+	[alarmTenth setIntValue:[cia alarmTenth]];	
+	[todInterruptEnabled setIntValue:[cia isTodInterruptEnabled]];
 }
 
 @end

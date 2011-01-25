@@ -169,18 +169,18 @@
 - (void) setSpriteStretchYFlag:(int)nr value:(bool)flag;
 - (void) toggleSpriteStretchYFlag:(int)nr;
 
-- (int) spriteGetX:(int)nr;
-- (void) spriteSetX:(int)nr value:(int)x;
-- (int) spriteGetY:(int)nr;
-- (void) spriteSetY:(int)nr value:(int)y;
-- (int) spriteGetColor:(int)nr;
-- (void) spriteSetColor:(int)nr value:(int)c;
+- (int) spriteX:(int)nr;
+- (void) setSpriteX:(int)nr value:(int)x;
+- (int) spriteY:(int)nr;
+- (void) setSpriteY:(int)nr value:(int)y;
+- (int) spriteColor:(int)nr;
+- (void) setSpriteColor:(int)nr value:(int)c;
 
-- (uint16_t) getRasterLine;
-- (void) setRasterLine:(uint16_t)line;
-- (uint16_t) getRasterInterruptLine;
+- (uint16_t) rasterline;
+- (void) setRasterline:(uint16_t)line;
+- (uint16_t) rasterInterruptLine;
 - (void) setRasterInterruptLine:(uint16_t)line;
-- (bool) getRasterInterruptFlag;
+- (bool) rasterInterruptFlag;
 - (void) setRasterInterruptFlag:(bool)b;
 - (void) toggleRasterInterruptFlag;
 
@@ -206,73 +206,73 @@
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
 
-- (uint8_t) getDataPortA;
+- (uint8_t) dataPortA;
 - (void) setDataPortA:(uint8_t)v;
-- (uint8_t) getDataPortDirectionA;
+- (uint8_t) dataPortDirectionA;
 - (void) setDataPortDirectionA:(uint8_t)v;
-- (uint16_t) getTimerA;
+- (uint16_t) timerA;
 - (void) setTimerA:(uint16_t)v;
-- (uint16_t) getTimerLatchA;
+- (uint16_t) timerLatchA;
 - (void) setTimerLatchA:(uint16_t)v;
-- (bool) getStartFlagA;
+- (bool) startFlagA;
 - (void) setStartFlagA:(bool)b;
 - (void) toggleStartFlagA;
-- (bool) getOneShotFlagA;
+- (bool) oneShotFlagA;
 - (void) setOneShotFlagA:(bool)b;
 - (void) toggleOneShotFlagA;
-- (bool) getUnderflowFlagA;
+- (bool) underflowFlagA;
 - (void) setUnderflowFlagA:(bool)b;
 - (void) toggleUnderflowFlagA;
-- (bool) getPendingSignalFlagA;
+- (bool) pendingSignalFlagA;
 - (void) setPendingSignalFlagA:(bool)b;
 - (void) togglePendingSignalFlagA;
-- (bool) getInterruptEnableFlagA;
+- (bool) interruptEnableFlagA;
 - (void) setInterruptEnableFlagA:(bool)b;
 - (void) toggleInterruptEnableFlagA;
 
-- (uint8_t) getDataPortB;
+- (uint8_t) dataPortB;
 - (void) setDataPortB:(uint8_t)v;
-- (uint8_t) getDataPortDirectionB;
+- (uint8_t) dataPortDirectionB;
 - (void) setDataPortDirectionB:(uint8_t)v;
-- (uint16_t) getTimerB;
+- (uint16_t) timerB;
 - (void) setTimerB:(uint16_t)v;
-- (uint16_t) getTimerLatchB;
+- (uint16_t) timerLatchB;
 - (void) setTimerLatchB:(uint16_t)v;
-- (bool) getStartFlagB;
+- (bool) startFlagB;
 - (void) setStartFlagB:(bool)b;
 - (void) toggleStartFlagB;
-- (bool) getOneShotFlagB;
+- (bool) oneShotFlagB;
 - (void) setOneShotFlagB:(bool)b;
 - (void) toggleOneShotFlagB;
-- (bool) getUnderflowFlagB;
+- (bool) underflowFlagB;
 - (void) setUnderflowFlagB:(bool)b;
 - (void) toggleUnderflowFlagB;
-- (bool) getPendingSignalFlagB;
+- (bool) pendingSignalFlagB;
 - (void) setPendingSignalFlagB:(bool)b;
 - (void) togglePendingSignalFlagB;
-- (bool) getInterruptEnableFlagB;
+- (bool) interruptEnableFlagB;
 - (void) setInterruptEnableFlagB:(bool)b;
 - (void) toggleInterruptEnableFlagB;
 
-- (uint8_t) getTodHours;
+- (uint8_t) todHours;
 - (void) setTodHours:(uint8_t)value;
-- (uint8_t) getTodMinutes;
+- (uint8_t) todMinutes;
 - (void) setTodMinutes:(uint8_t)value;
-- (uint8_t) getTodSeconds;
+- (uint8_t) todSeconds;
 - (void) setTodSeconds:(uint8_t)value;
-- (uint8_t) getTodTenth;
+- (uint8_t) todTenth;
 - (void) setTodTenth:(uint8_t)value;
 
-- (uint8_t) getAlarmHours;
+- (uint8_t) alarmHours;
 - (void) setAlarmHours:(uint8_t)value;
-- (uint8_t) getAlarmMinutes;
+- (uint8_t) alarmMinutes;
 - (void) setAlarmMinutes:(uint8_t)value;
-- (uint8_t) getAlarmSeconds;
+- (uint8_t) alarmSeconds;
 - (void) setAlarmSeconds:(uint8_t)value;
-- (uint8_t) getAlarmTenth;
+- (uint8_t) alarmTenth;
 - (void) setAlarmTenth:(uint8_t)value;
-- (bool) todIsInterruptEnabled;
-- (void) todSetInterruptEnabled:(bool)b;
+- (bool) isTodInterruptEnabled;
+- (void) setTodInterruptEnabled:(bool)b;
 
 @end 
 
@@ -454,12 +454,13 @@
 - (void) setWarpLoad:(bool)b;
 - (long) cycles;
 
-// Time travel
+// Cheatbox
 - (int) historicSnapshots;
 - (uint8_t *) historicSnapshotFileContents:(int)nr;
 - (unsigned) historicSnapshotFileContentsSize:(int)nr;
 - (unsigned char *)historicSnapshotImageData:(int)nr;
 - (time_t)historicSnapshotTimestamp:(int)nr;
+- (bool)historicSnapshotIsPAL:(int)nr;
 - (bool)revertToHistoricSnapshot:(int)nr;
 
 // Joystick
