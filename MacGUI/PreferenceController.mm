@@ -369,4 +369,35 @@ NSString *VC64CustomCol15Key  = @"VC64CustomCol15Key";
 	[defaults setFloat:[sender floatValue] forKey:VC64EyeZ];
 }
 
+// --------------------------------------------------------------------------------
+//                                  Keyboard events 
+// --------------------------------------------------------------------------------
+
+- (BOOL)acceptsFirstResponder
+{
+	return YES;
+}
+
+- (BOOL)resignFirstResponder
+{
+	return YES;
+}
+
+- (BOOL)becomeFirstResonder 
+{
+	return YES;
+}
+
+- (void)keyDown:(NSEvent *)event
+{
+	// Pass all keyboard events to C64
+	[[controller screen] keyDown:event];
+}
+
+- (void)keyUp:(NSEvent *)event
+{
+	// Pass all keyboard events to C64
+	[[controller screen] keyUp:event];
+}
+
 @end

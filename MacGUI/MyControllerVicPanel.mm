@@ -244,10 +244,10 @@
 - (void)spriteSetX:(int)nr value:(int)v
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] spriteSetX:nr value:[[c64 vic] spriteGetX:nr]];
+	[[undo prepareWithInvocationTarget:self] setSpriteX:nr value:[[c64 vic] spriteX:nr]];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite X"];
 	
-	[[c64 vic] spriteSetX:nr value:v];
+	[[c64 vic] setSpriteX:nr value:v];
 	[self refresh];
 }
 
@@ -259,10 +259,10 @@
 - (void)spriteSetY:(int)nr value:(int)v
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] spriteSetY:nr value:[[c64 vic] spriteGetY:nr]];
+	[[undo prepareWithInvocationTarget:self] setSpriteY:nr value:[[c64 vic] spriteY:nr]];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite Y"];
 	
-	[[c64 vic] spriteSetY:nr value:v];
+	[[c64 vic] setSpriteY:nr value:v];
 	[self refresh];
 }
 
@@ -274,10 +274,10 @@
 - (void)spriteSetColor:(int)nr value:(int)v
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] spriteSetColor:nr value:[[c64 vic] spriteGetColor:nr]];
+	[[undo prepareWithInvocationTarget:self] setSpriteColor:nr value:[[c64 vic] spriteColor:nr]];
 	if (![undo isUndoing]) [undo setActionName:@"Sprite color"];
 	
-	[[c64 vic] spriteSetColor:nr value:v];
+	[[c64 vic] setSpriteColor:nr value:v];
 	[self refresh];
 }
 
@@ -290,10 +290,10 @@
 - (IBAction)vicRasterlineAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicRasterlineAction:[NSNumber numberWithInt:[[c64 vic] getRasterLine]]];
+	[[undo prepareWithInvocationTarget:self] vicRasterlineAction:[NSNumber numberWithInt:[[c64 vic] rasterline]]];
 	if (![undo isUndoing]) [undo setActionName:@"Raster line"];
 	
-	[[c64 vic] setRasterLine:[sender intValue]];
+	[[c64 vic] setRasterline:[sender intValue]];
 	[self refresh];
 }
 
@@ -310,7 +310,7 @@
 - (IBAction)vicRasterInterruptAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicRasterInterruptAction:[NSNumber numberWithInt:[[c64 vic] getRasterInterruptLine]]];
+	[[undo prepareWithInvocationTarget:self] vicRasterInterruptAction:[NSNumber numberWithInt:[[c64 vic] rasterInterruptLine]]];
 	if (![undo isUndoing]) [undo setActionName:@"Raster interrupt line"];
 	
 	[[c64 vic] setRasterInterruptLine:[sender intValue]];
@@ -350,12 +350,12 @@
 	[VicSpriteInFront setIntValue:[[c64 vic] spriteBackgroundPriorityFlag:[self currentSprite]]];
 	[VicSpriteSpriteCollision setIntValue:[[c64 vic] spriteSpriteCollisionFlag:[self currentSprite]]];
 	[VicSpriteBackgroundCollision setIntValue:[[c64 vic] spriteBackgroundCollisionFlag:[self currentSprite]]];
-	[VicSpriteX setIntValue:[[c64 vic] spriteGetX:[self currentSprite]]];
-	[VicSpriteY setIntValue:[[c64 vic] spriteGetY:[self currentSprite]]];
-	[VicSpriteColor setIntValue:[[c64 vic] spriteGetColor:[self currentSprite]]];
-	[VicRasterline setIntValue:[[c64 vic] getRasterLine]];
-	[VicEnableRasterInterrupt setIntValue:[[c64 vic] getRasterInterruptFlag]];
-	[VicRasterInterrupt setIntValue:[[c64 vic] getRasterInterruptLine]];
+	[VicSpriteX setIntValue:[[c64 vic] spriteX:[self currentSprite]]];
+	[VicSpriteY setIntValue:[[c64 vic] spriteY:[self currentSprite]]];
+	[VicSpriteColor setIntValue:[[c64 vic] spriteColor:[self currentSprite]]];
+	[VicRasterline setIntValue:[[c64 vic] rasterline]];
+	[VicEnableRasterInterrupt setIntValue:[[c64 vic] rasterInterruptFlag]];
+	[VicRasterInterrupt setIntValue:[[c64 vic] rasterInterruptLine]];
 }
 
 - (int)currentSprite

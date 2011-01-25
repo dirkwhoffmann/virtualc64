@@ -82,8 +82,8 @@
 
 	for (int i = 0; (data = [[controller c64] historicSnapshotImageData:i]) != NULL; i++) {
 				
-		// Time information
-		char buf[64]; // , subtitle[64];
+		// Setup time information
+		char buf[64];
 		time_t stamp = [c64 historicSnapshotTimestamp:i];
 		int diff = (int)difftime(setupTime, stamp);
 
@@ -94,13 +94,21 @@
 		NSString *subtitle = [NSString stringWithUTF8String:buf];
 		
 		// Determine texture bounds
-		int width = [[c64 vic] totalScreenWidth];
-		int height = [[c64 vic] totalScreenHeight];
-		
-		// We skip a couple of rows (upper and lower border should be same size)
-		// height -= [[c64 vic] firstVisibleLine];
-		data += [[c64 vic] firstVisibleLine] * 4 * width;
-		
+		int width, height;
+		if ([c64 historicSnapshotIsPAL:i]) {
+			width = VIC::PAL_VIEWABLE_PIXELS;
+			height = VIC::PAL_VIEWABLE_RASTERLINES;
+			// Skip invisible lines
+			// TODO: Why do we store invisible lines in screen texture???
+			data += VIC::PAL_UPPER_INVISIBLE * 4 * width;
+		} else {
+			width = VIC::NTSC_VIEWABLE_PIXELS;
+			height = VIC::NTSC_VIEWABLE_RASTERLINES;	
+			// Skip invisible lines
+			// TODO: Why do we store invisible lines in screen texture???
+			data += VIC::NTSC_UPPER_INVISIBLE * 4 * width;
+		}
+					
 		// Create bitmap representation
 		NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:	&data 
 																		pixelsWide: width

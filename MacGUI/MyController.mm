@@ -733,4 +733,36 @@
 	[[c64 keyboard] typeRun];
 }
 
+// --------------------------------------------------------------------------------
+//                                  Keyboard events 
+// --------------------------------------------------------------------------------
+
+- (BOOL)acceptsFirstResponder
+{
+	return YES;
+}
+
+- (BOOL)resignFirstResponder
+{
+	return YES;
+}
+
+- (BOOL)becomeFirstResonder 
+{
+	return YES;
+}
+
+- (void)keyDown:(NSEvent *)event
+{
+	// Pass all keyboard events to C64
+	[screen keyDown:event];
+}
+
+- (void)keyUp:(NSEvent *)event
+{
+	// Pass all keyboard events to C64
+	[screen keyUp:event];
+}
+
+
 @end

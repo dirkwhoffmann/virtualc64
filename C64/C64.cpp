@@ -306,7 +306,13 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
 		return;
 
 	uint8_t *ptr = snapshot->getData();
-	loadFromBuffer(&ptr);		
+	loadFromBuffer(&ptr);
+	
+	if (snapshot->isPAL()) {
+		setPAL();
+	} else {
+		setNTSC();
+	}
 }
 
 void 
@@ -344,6 +350,7 @@ C64::saveToSnapshot(Snapshot *snapshot)
 		return;
 	
 	snapshot->setTimestamp(time(NULL));
+	snapshot->setPAL(isPAL());
 	snapshot->takeScreenshot((uint32_t *)vic->screenBuffer());
 	
 	uint8_t *ptr = snapshot->getData();

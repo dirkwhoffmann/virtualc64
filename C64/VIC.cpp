@@ -282,15 +282,6 @@ VIC::dumpState()
 void 
 VIC::setPAL()
 { 
-#if 0
-	// OLD VALUES (WORKING, BUT WRONG)
-	borderWidth = 24; 
-	borderHeight = 51;
-	totalScreenWidth = 24 + 320 + 24;  
-	totalScreenHeight = 263;
-#endif
-	
-	// NEW VALUE (EXPERIMENTAL)
 	leftBorderWidth = PAL_LEFT_BORDER_WIDTH;
 	rightBorderWidth = PAL_RIGHT_BORDER_WIDTH;
 	upperBorderHeight = PAL_UPPER_BORDER_HEIGHT;
@@ -305,15 +296,6 @@ VIC::setPAL()
 void
 VIC::setNTSC()
 {
-#if 0
-	// OLD VALUES (WORKING, BUT WRONG)
-	borderWidth = 24; 
-	borderHeight = 51;
-	totalScreenWidth = 24 + 320 + 24;  
-	totalScreenHeight = 263;
-#endif
-
-	// NEW VALUE (EXPERIMENTAL)
 	leftBorderWidth = NTSC_LEFT_BORDER_WIDTH;
 	rightBorderWidth = NTSC_RIGHT_BORDER_WIDTH;
 	upperBorderHeight = NTSC_UPPER_BORDER_HEIGHT;
