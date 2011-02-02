@@ -128,11 +128,14 @@ D64Archive::archiveFromArbitraryFile(const char *filename)
 		return D64Archive::archiveFromFile(filename);
 	}
 
-	// FOR DEBUGGING (CONVERT D64 TO D64)
+
+#if 0
+	// FOR DEBUGGING (CONVERT D64 TO D64)	
 	if (D64Archive::isD64File(filename)) {
 		fprintf(stderr, "Creating D64 archive from D64 file...\n");
 		return D64Archive::archiveFromOtherArchive(D64Archive::archiveFromFile(filename));
 	}
+#endif
 	
 	if (T64Archive::isT64File(filename)) {
 		fprintf(stderr, "Creating D64 archive from T64 file...\n");
@@ -147,6 +150,11 @@ D64Archive::archiveFromArbitraryFile(const char *filename)
 	if (P00Archive::isP00File(filename)) {
 		fprintf(stderr, "Creating D64 archive from P00 file...\n");
 		return D64Archive::archiveFromOtherArchive(P00Archive::archiveFromFile(filename));
+	}
+
+	if (FileArchive::isAcceptableFile(filename)) {
+		fprintf(stderr, "Creating file archive from file...\n");
+		return D64Archive::archiveFromOtherArchive(FileArchive::archiveFromFile(filename));
 	}
 	
 	return NULL;

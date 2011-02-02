@@ -158,7 +158,7 @@ public:
 	uint8_t PB67TimerMode;  // bit mask for PB outputs: 0 = port register, 1 = timer
 	uint8_t PB67TimerOut;   // PB outputs bits 6 and 7 in timer mode
 	uint8_t PB67Toggle;     // PB outputs bits 6 and 7 in toggle mode
-	
+		
 	// ports
 	uint8_t PALatch;        // buffered output values
 	uint8_t PBLatch;
@@ -171,6 +171,7 @@ public:
 	bool CNT;   // serial clock or input timer clock or timer gate
 	bool INT;
 		
+	bool readICR; // Indicated if ICR register is currently read
 
 	//! Activates the interrupt line
 	/*! The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.

@@ -723,7 +723,7 @@
 	[c64 mountArchive:[[self document] archive]];
 	
 	// Load clean image 
-	[c64 fastReset];
+	// [c64 fastReset];
 	
 	// Flash selected file into memory
 	[c64 flushArchive:[[self document] archive] item:[mountDialog getSelectedFile]];

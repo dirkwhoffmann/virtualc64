@@ -115,6 +115,7 @@
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F55DD10F28EC2D0040592B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCF0F28EC2D0040592B /* Preferences.xib */; };
+		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
 		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
@@ -302,6 +303,8 @@
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		50F55DD00F28EC2D0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
+		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
+		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
 		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
 		50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerVicPanel.mm; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -665,6 +668,8 @@
 				509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */,
 				509AEAFD0C325EFB001FC9FD /* P00Archive.h */,
 				509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */,
+				50F93BE612EF309900DD6A8A /* FileArchive.h */,
+				50F93BE512EF309900DD6A8A /* FileArchive.cpp */,
 			);
 			name = "Loading and saving";
 			sourceTree = "<group>";
@@ -867,6 +872,7 @@
 				50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */,
 				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */,
+				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
