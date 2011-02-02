@@ -1008,7 +1008,7 @@ void checkForOpenGLErrors()
 		if ([[controller document] setArchiveWithName:path]) {
 			[controller showMountDialog];			
 			return YES;
-		}			
+		}					
 	}
 	
 	return NO;	

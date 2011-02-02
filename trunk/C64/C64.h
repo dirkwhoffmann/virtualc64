@@ -17,9 +17,11 @@
  */
 
 // New in 0.9.5
-// Thumbnail don't get corrupted any more when switching from PAL to NTSC and vice versa (issue #107)
-// Fixed a bug that caused keyboard events to be rejected when the main window got focus (issue #110)
-// Fixed a bug that caused a discolored line to appear at the right border of the screen texture
+// Fixed a bug that caused bit 2 in the ICR register to adapt a wrong value when a simultanious read access occurs.
+// VirtualC64 now passes tests cases cia1 to cia14 of the VICE emulator. cia15 is sill broken though.
+// Thumbnail images are now rendered properly after switching from PAL to NTSC and vice versa (issue #107).
+// Fixed a bug that caused keyboard events to be rejected when the main window got focus (issue #110).
+// Fixed a bug that caused a discolored line to appear at the right border of the screen texture.
 
 
 #ifndef _C64_INC
@@ -33,6 +35,7 @@
 #include "D64Archive.h"
 #include "PRGArchive.h"
 #include "P00Archive.h"
+#include "FileArchive.h"
 #include "IEC.h"
 #include "Keyboard.h"
 #include "Joystick.h"

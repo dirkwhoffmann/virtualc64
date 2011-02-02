@@ -55,6 +55,7 @@ CIA::reset()
 	PB = 0xff; 
 	CNT = true; // CNT line is high by default
 	INT = 1;
+	readICR = false;
 	
 	counterA = 0x0000;
 	latchA = 0xFFFF;
@@ -201,7 +202,7 @@ uint8_t CIA::peek(uint16_t addr)
 		case CIA_INTERRUPT_CONTROL:
 		
 			result = ICR;
-			
+
 			// get status of the Int line into bit 7 and draw Int high
 			if (INT == 0) {
 				result |= 0x80;
@@ -211,9 +212,13 @@ uint8_t CIA::peek(uint16_t addr)
 			
 			// discard pending interrupts
 			delay &= ~(Interrupt0 | Interrupt1);
-			
+
+			// Remember read access
+			readICR = true;
+
 			// set all events to 0
 			ICR = 0;
+						
 			break;
 
 		case CIA_CONTROL_REG_A:
@@ -548,12 +553,13 @@ void CIA::dumpState()
 
 void CIA::executeOneCycle()
 {
-#if 0
-	if (cpu->c64->event2 && this == cpu->c64->cia1)
+//#if 0
+	// if (cpu->c64->event2 && this == cpu->c64->cia2)
+	if (this == cpu->c64->cia1)
 	{
 		dumpTrace();	
 	}
-#endif
+//#endif
 	
 	//
 	// Layout of timer (A and B)
@@ -764,15 +770,22 @@ void CIA::executeOneCycle()
 		raiseInterruptLine();
 	}
 	
-	if (timerAOutput) // (9)
+	if (timerAOutput) { // (9)
+		// On a real C64, there is a race condition here. If ICR is currently read, 
+		// the read access occurs *before* timer A sets bit 1. Hence, bit 1 always shows up.
 		ICR |= 0x01;
+	}
 	
-	if (timerBOutput) // (10)
+	if (timerBOutput && !readICR) { // (10)
+		// On a real C64, there is a race condition here. If ICR is currently read, 
+		// the read access occurs *after* timer B sets bit 2. Hence, bit 2 won't show up.
 		ICR |= 0x02;
-
+	}
+	
 	if ((timerAOutput && (IMR & 0x01)) || (timerBOutput && (IMR & 0x02))) // (11)
 		delay |= Interrupt0;
 	
+	readICR = false;
 
 	// move delay flags left and feed in new bits
 	delay = (delay << 1) & DelayMask | feed;

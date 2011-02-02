@@ -81,13 +81,6 @@ C64Memory::loadFromBuffer(uint8_t **buffer)
 	debug(2, "  Loading C64 memory state...\n");
 	
 	Memory::loadFromBuffer(buffer);
-
-#if 0
-	for (unsigned i = 0; i < sizeof(ram); i++)
-		ram[i] = read8(buffer);	
-	for (unsigned i = 0; i < sizeof(colorRam); i++) 
-		colorRam[i] = read8(buffer);
-#endif
 	
 	readBlock(buffer, ram, sizeof(ram)); 
 	readBlock(buffer, colorRam, sizeof(colorRam)); 
@@ -109,13 +102,6 @@ C64Memory::saveToBuffer(uint8_t **buffer)
 	debug(2, "  Saving C64 memory state...\n");
 	
 	Memory::saveToBuffer(buffer);
-
-#if 0
-	for (unsigned i = 0; i < sizeof(ram); i++)
-		write8(buffer, ram[i]);
-	for (unsigned i = 0; i < sizeof(colorRam); i++) 
-		write8(buffer, colorRam[i]);
-#endif
 	
 	writeBlock(buffer, ram, sizeof(ram)); 
 	writeBlock(buffer, colorRam, sizeof(colorRam)); 
