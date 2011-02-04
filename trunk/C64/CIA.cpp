@@ -171,26 +171,26 @@ uint8_t CIA::peek(uint16_t addr)
 			
 			// debug("peek CIA_TIME_OF_DAY_SEC_FRAC\n");
 			tod.defreeze();
-			result = BinaryToBCD(tod.getTodTenth());
+			result = tod.getTodTenth();
 			break;
 		
 		case CIA_TIME_OF_DAY_SECONDS:
 			
 			// debug("peek CIA_TIME_OF_DAY_SECONDS\n");
-			result = BinaryToBCD(tod.getTodSeconds());
+			result = tod.getTodSeconds();
 			break;
 			
 		case CIA_TIME_OF_DAY_MINUTES:
 			
 			// debug("peek CIA_TIME_OF_DAY_MINUTES\n");
-			result = BinaryToBCD(tod.getTodMinutes());
+			result = tod.getTodMinutes();
 			break;
 			
 		case CIA_TIME_OF_DAY_HOURS:
 
 			// debug("peek CIA_TIME_OF_DAY_HOURS\n");
 			tod.freeze();
-			result = (tod.getTodHours() & 0x80) /* AM/PM */ | BinaryToBCD(tod.getTodHours() & 0x1F);
+			result = tod.getTodHours();
 			break;
 			
 		case CIA_SERIAL_IO_BUFFER:
@@ -294,37 +294,40 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
-			// debug("poke CIA_TIME_OF_DAY_SEC_FRAC: %02X\n", value);
-			if (value & 0x80) {
-				tod.setAlarmTenth(BCDToBinary(value & 0x0F));
+			if (CRB & 0x80) {
+				tod.setAlarmTenth(value);
 			} else { 
-				tod.setTodTenth(BCDToBinary(value & 0x0F));
+				tod.setTodTenth(value);
 				tod.cont();
 			}
 			return;
 			
 		case CIA_TIME_OF_DAY_SECONDS:
-			// debug("poke CIA_TIME_OF_DAY_SECONDS: %02X\n", value);
-			if (value & 0x80)
-				tod.setAlarmSeconds(BCDToBinary(value & 0x7F));
+			if (CRB & 0x80)
+				tod.setAlarmSeconds(value);
 			else 
-				tod.setTodSeconds(BCDToBinary(value & 0x7F));
+				tod.setTodSeconds(value);
 			return;
 			
 		case CIA_TIME_OF_DAY_MINUTES:
-			// debug("poke CIA_TIME_OF_DAY_MINUTES: %02X\n", value);
-			if (value & 0x80)
-				tod.setAlarmMinutes(BCDToBinary(value & 0x7F));
+			if (CRB & 0x80)
+				tod.setAlarmMinutes(value);
 			else 
-				tod.setTodMinutes(BCDToBinary(value & 0x7F));
+				tod.setTodMinutes(value);
 			return;
 			
 		case CIA_TIME_OF_DAY_HOURS:
-			// debug("poke CIA_TIME_OF_DAY_HOURS: %02X\n", value);
-			if (value & 0x80) {
-				tod.setAlarmHours((value & 0x80) /* AM/PM */ | BCDToBinary(value & 0x1F));
+
+			if ((value & 0x1F) == 0x12) {
+				// A real C64 shows strange behaviour when writing 0x12 or 0x92 into this register. 
+				// In this case, the AM/PM flag is inverted
+				value ^= 0x80;
+			}
+			
+			if (CRB & 0x80) {
+				tod.setAlarmHours(value);
 			} else {
-				tod.setTodHours((value & 0x80) /* AM/PM */ | BCDToBinary(value & 0x1F));
+				tod.setTodHours(value);
 				tod.stop();
 			}
 			return;
