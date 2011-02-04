@@ -170,8 +170,8 @@ uint8_t CIA::peek(uint16_t addr)
 		case CIA_TIME_OF_DAY_SEC_FRAC:
 			
 			// debug("peek CIA_TIME_OF_DAY_SEC_FRAC\n");
-			tod.defreeze();
 			result = tod.getTodTenth();
+			tod.defreeze();
 			break;
 		
 		case CIA_TIME_OF_DAY_SECONDS:
@@ -317,16 +317,14 @@ void CIA::poke(uint16_t addr, uint8_t value)
 			return;
 			
 		case CIA_TIME_OF_DAY_HOURS:
-
-			if ((value & 0x1F) == 0x12) {
-				// A real C64 shows strange behaviour when writing 0x12 or 0x92 into this register. 
-				// In this case, the AM/PM flag is inverted
-				value ^= 0x80;
-			}
 			
 			if (CRB & 0x80) {
 				tod.setAlarmHours(value);
 			} else {
+				// Note: A real C64 shows strange behaviour when writing 0x12 or 0x92 
+				// into this register. In this case, the AM/PM flag is inverted
+				if ((value & 0x1F) == 0x12)
+					value ^= 0x80;
 				tod.setTodHours(value);
 				tod.stop();
 			}

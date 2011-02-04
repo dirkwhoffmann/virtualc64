@@ -81,19 +81,29 @@ TOD::increment()
 	if (stopped)
 		return false;
 	
-	// TODO: INCREMENT BCD NUMBERS, NOT BINARY NUMBERS
-
 	if (tod.time.tenth == 0x09) {
 		tod.time.tenth = 0;
 		if (tod.time.seconds == 0x59) {
 			tod.time.seconds = 0;
 			if (tod.time.minutes == 0x59) {
 				tod.time.minutes = 0;
-				if (tod.time.hours == 0x11) {
-					tod.time.hours = ((tod.time.hours & 0x80) ? 0 : 0x80);
-				} else {
-					tod.time.hours++;
-				}
+				
+				// Adopted from VICE
+				uint8_t pm = tod.time.hours & 0x80;
+				uint8_t hr = tod.time.hours & 0x1F;
+				
+				if (hr == 0x11)
+					pm ^= 0x80;					
+				if (hr == 0x12)
+					hr = 0x00;
+
+				hr++;
+
+				if (hr == 0x0A)
+					hr = 0x10;
+
+				tod.time.hours = pm | (hr & 0x1F);
+
 			} else {
 				tod.time.minutes = incBCD(tod.time.minutes);
 			}
