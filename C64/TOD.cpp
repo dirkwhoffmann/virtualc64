@@ -81,25 +81,27 @@ TOD::increment()
 	if (stopped)
 		return false;
 	
-	if (tod.time.tenth == 9) {
+	// TODO: INCREMENT BCD NUMBERS, NOT BINARY NUMBERS
+
+	if (tod.time.tenth == 0x09) {
 		tod.time.tenth = 0;
-		if (tod.time.seconds == 59) {
+		if (tod.time.seconds == 0x59) {
 			tod.time.seconds = 0;
-			if (tod.time.minutes == 59) {
+			if (tod.time.minutes == 0x59) {
 				tod.time.minutes = 0;
-				if (tod.time.hours == 11) {
+				if (tod.time.hours == 0x11) {
 					tod.time.hours = ((tod.time.hours & 0x80) ? 0 : 0x80);
 				} else {
 					tod.time.hours++;
 				}
 			} else {
-				tod.time.minutes++;
+				tod.time.minutes = incBCD(tod.time.minutes);
 			}
 		} else {
-			tod.time.seconds++;
+			tod.time.seconds = incBCD(tod.time.seconds);
 		}
 	} else {
-		tod.time.tenth++;
+		tod.time.tenth = incBCD(tod.time.tenth);
 	}
 	
 	return (tod.value == alarm.value);

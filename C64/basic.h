@@ -69,10 +69,14 @@ char toASCII(char c);
 void binary8_to_string(uint8_t value, char *s);
 
 //! Convert a BCD number to a binary value
-inline uint8_t BCDToBinary(uint8_t value) { return 10 * (value & 0xF0) + (value & 0x0F); }
+inline uint8_t BCDToBinary(uint8_t value) { return (10 * (value >> 4)) + (value & 0x0F); }
 
 //! Convert a binary value to a BCD number
-inline uint8_t BinaryToBCD(uint8_t value) { return (value / 10) << 4 + (value % 10); }
+inline uint8_t BinaryToBCD(uint8_t value) { return ((value / 10) << 4) + (value % 10); }
+
+//! Increment BCD number by one
+inline uint8_t incBCD(uint8_t value) { return ((value & 0x0F) == 0x09) ?  (value & 0xF0) + 0x10 : (value & 0xF0) + ((value + 0x01) & 0x0F); }
+// inline uint8_t incBCD(uint8_t value) { uint8_t newValue = _incBCD(value); printf("%02X -> %02X\n", value, newValue); return newValue; }
 
 //! Extract directory from path
 inline std::string ExtractDirectory( const std::string& path )
