@@ -18,7 +18,9 @@
 
 // New in 0.9.5
 // Fixed a bug that caused bit 2 in the ICR register to adopt a wrong value when a simultanious read access occurs.
-// VirtualC64 now passes tests cases cia1 to cia14 of the VICE emulator. cia15 is sill broken though.
+// Fixed a bug in the BCD to binary conversion routine.
+// Fixed a bug that caused the TOD to wake up too early after reading the tenth of a second register. 
+// The AM/PM flag now flips when writing 0x12 into the TOD hour register. 
 // Thumbnail images are rendered properly when switching from PAL to NTSC and vice versa (issue #107).
 // Fixed a bug that caused keyboard events to be rejected when the main window got focus (issue #110).
 // Fixed a bug that caused a discolored line to appear at the right border of the screen texture.

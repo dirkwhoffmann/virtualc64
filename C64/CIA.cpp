@@ -554,13 +554,13 @@ void CIA::dumpState()
 
 void CIA::executeOneCycle()
 {
-//#if 0
+#if 0
 	// if (cpu->c64->event2 && this == cpu->c64->cia2)
 	if (this == cpu->c64->cia1)
 	{
 		dumpTrace();	
 	}
-//#endif
+#endif
 	
 	//
 	// Layout of timer (A and B)

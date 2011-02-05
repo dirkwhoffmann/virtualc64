@@ -51,7 +51,7 @@ CPU::fetch() {
 		return;
 	} 
 
-//#if 0
+#if 0
 	// REMOVE AFTER DEBUGGING!!!
 	// Automatically switch on tracing when PC reaches a certain address
 	if (current_trace > 0 && current_trace <= max_traces) {		
@@ -82,7 +82,7 @@ CPU::fetch() {
 		logfile = NULL;
 	}
 	// END DEBUG
-//#endif
+#endif
 	
 	// Disassemble command if requested
 	if (tracingEnabled()) {
