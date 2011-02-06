@@ -440,6 +440,7 @@
 @implementation C64Proxy
 
 @synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, iec, vc1541;
+@synthesize iecBusIsBusy;
 
 - (id) init
 {
@@ -488,6 +489,13 @@
 	NSLog(@"  Deleting virtual machine");
 	delete c64;
 	c64 = NULL;
+}
+
+- (void) refresh
+{
+	// TODO: Implement iecBusIsBusy in core emulator
+	// iecBusIsBusy = c64->iecBusIsBusy;
+	
 }
 
 - (void) loadFromSnapshot:(V64Snapshot *)snapshot { c64->suspend(); c64->loadFromSnapshot([snapshot snapshot]); c64->resume(); }

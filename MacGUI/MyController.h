@@ -58,7 +58,6 @@ class Snapshot;
 	IBOutlet NSButton *cartridgeEject;
 	IBOutlet NSButton *greenLED;
 	IBOutlet NSButton *redLED;
-	IBOutlet NSProgressIndicator *driveBusy;
 	IBOutlet NSTextField *info;
 	IBOutlet NSTextField *clockSpeed;
 	IBOutlet NSLevelIndicator *clockSpeedBar;

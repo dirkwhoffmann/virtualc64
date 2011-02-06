@@ -390,6 +390,9 @@
 	KeyboardProxy *keyboard;
 	IECProxy *iec;
 	VC1541Proxy *vc1541;
+	
+	//! Is set to true when data gets transfered on the IEC bus
+	BOOL iecBusIsBusy;
 }
 
 @property (readonly) C64 *c64;
@@ -403,8 +406,13 @@
 @property (readonly) IECProxy *iec;
 @property (readonly) VC1541Proxy *vc1541;
 
+@property BOOL iecBusIsBusy;
+
 // Initialization
 - (void) kill;
+
+// Poll C64 to refresh internal state
+- (void) refresh;
 
 // Loadind and saving
 - (void)loadFromSnapshot:(V64Snapshot *) snapshot;
