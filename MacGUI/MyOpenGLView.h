@@ -102,8 +102,10 @@ const int BG_TEXTURE_DEPTH = 4;
 @interface MyOpenGLView : NSOpenGLView
 {
 	IBOutlet MyController *controller;
+	IBOutlet C64Proxy* c64proxy; 
 	
-	C64 *c64;
+	C64 *c64; // DEPRECATED. GET RID OF THIS VARIABLE AND RENAME c64proxy to c64
+	
     NSBitmapImageRep *theImage;
 	NSOpenGLContext *glcontext;
 	CVDisplayLinkRef displayLink;

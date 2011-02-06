@@ -443,6 +443,8 @@
 
 - (id) init
 {
+	NSLog(@"C64Proxy::init");
+	
     self = [super init];
 	
 	// Create virtual machine and initialize references
@@ -465,6 +467,11 @@
 	}
 		
     return self;
+}
+
+- (void) awakeFromNib
+{
+	NSLog(@"C64Proxy::awakeFromNib");
 }
 
 - (void) kill

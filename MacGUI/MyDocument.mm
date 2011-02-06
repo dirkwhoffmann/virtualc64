@@ -23,6 +23,7 @@
 @synthesize c64;
 @synthesize archive;
 @synthesize cartridge;
+@synthesize iecBusIsBusy;
 
 - (void)makeWindowControllers
 {
@@ -48,9 +49,14 @@
 	cartridge = NULL;
 	
 	// Create virtual C64
-	c64 = [[C64Proxy alloc] init];
+	// c64 = [[C64Proxy alloc] init];
 	
 	return self;
+}
+
+- (void)awakeFromNib
+{
+	NSLog(@"MyDocument::awakeFromNib");
 }
 
 - (BOOL)setArchiveWithName:(NSString *)path

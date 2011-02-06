@@ -75,6 +75,9 @@ void checkForOpenGLErrors()
 {
 	NSLog(@"MyOpenGLView::awakeFromNib");
 	
+	// DEPRECATED
+	c64 = [c64proxy c64];
+	
 	// Lock around draw method
 	lock = [NSRecursiveLock new];
 		

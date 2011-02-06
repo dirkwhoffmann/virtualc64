@@ -21,7 +21,6 @@
 @implementation MyController
 
 @synthesize c64, screen;
-@synthesize server, services, isConnectedToService;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -75,9 +74,10 @@
 	if (chdir([path UTF8String]) != 0)
 		NSLog(@"WARNING: Could not change working directory.");
 
-	// Create virtual C64
-	c64 = [(MyDocument *)[self document] c64];
-	[screen setC64:[c64 c64]];
+	// Bind virtual C64 to other object
+	// c64 = [(MyDocument *)[self document] c64];
+	[[self document] setC64:c64];
+	// [screen setC64:[c64 c64]];
 	
 	// Joystick handling
 	joystickManager = new JoystickManager( c64 );
@@ -101,19 +101,7 @@
 										   selector:@selector(timerFunc) 
 										   userInfo:nil repeats:YES];
 	speedometer = [[Speedometer alloc] init];
-	
-	// Setup bonjour server for snapshot sharing with iPhone (EXPERIMENTAL)
-	// Probably not a good idea. Use iTunes file sharing instead (much simpler)
-#if 0	
-	server = [[Server alloc] initWithProtocol:@"TestingProtocol"];
-    server.delegate = self;
-    NSError *error = nil;
-    if(![server start:&error]) {
-        NSLog(@"Failed to setup server: %@", error);
-		server = nil;
-    }	
-#endif
-	
+		
 	NSLog(@"GUI is initialized, timer is running");	
 }
 
@@ -432,9 +420,11 @@
 			if (msg->i) {
 				[driveBusy setHidden:false];
 				[driveBusy startAnimation:self];
+				[[self document] setIecBusIsBusy:true];
 			} else {
 				[driveBusy stopAnimation:self];
 				[driveBusy setHidden:true];		
+				[[self document] setIecBusIsBusy:false];
 			}			
 			break;
 			
