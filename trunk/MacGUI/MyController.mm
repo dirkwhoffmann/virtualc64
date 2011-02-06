@@ -418,13 +418,9 @@
 			// NSLog(@"driveDataAction (%s)", msg->i ? "on" : "off");
 			
 			if (msg->i) {
-				[driveBusy setHidden:false];
-				[driveBusy startAnimation:self];
-				[[self document] setIecBusIsBusy:true];
+				[c64 setIecBusIsBusy:true];
 			} else {
-				[driveBusy stopAnimation:self];
-				[driveBusy setHidden:true];		
-				[[self document] setIecBusIsBusy:false];
+				[c64 setIecBusIsBusy:false];
 			}			
 			break;
 			

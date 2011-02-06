@@ -34,7 +34,6 @@ class Snapshot;
 @interface MyDocument : NSDocument
 {
 	// ObjC/C++ bridge
-	//C64Proxy *c64;
 	C64Proxy *c64;
 	
 	//! Reference to an attached D64 archive
@@ -42,17 +41,12 @@ class Snapshot;
 	D64Archive *archive;
 	
 	//! Reference to an attached cartridge 
-	Cartridge *cartridge;
-	
-	//! Is set to true when data gets transfered on the IEC bus
-	//  TODO: Move to C64Proxy class
-	BOOL iecBusIsBusy;
+	Cartridge *cartridge;	
 }
 
 @property C64Proxy *c64;
 @property D64Archive *archive;
 @property Cartridge *cartridge;
-@property BOOL iecBusIsBusy;
 
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;

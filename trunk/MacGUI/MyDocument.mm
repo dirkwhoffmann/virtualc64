@@ -23,7 +23,6 @@
 @synthesize c64;
 @synthesize archive;
 @synthesize cartridge;
-@synthesize iecBusIsBusy;
 
 - (void)makeWindowControllers
 {
@@ -34,8 +33,7 @@
 	myController = [[[MyController alloc] initWithWindowNibName:@"MyDocument"] autorelease];
 	[self addWindowController:myController];
 	
-	// [[self windowForSheet] setContentAspectRatio:NSMakeSize(652,432)];
-	[[self windowForSheet] setContentAspectRatio:NSMakeSize(804,623 + 20 /* controls below OpenGL window */)];
+	[[self windowForSheet] setContentAspectRatio:NSMakeSize(804,623 + 20 /* control bar below OpenGL window */)];
 }
 
 - (id)init
@@ -44,13 +42,9 @@
 	
     self = [super init];
 
-	// Initialize variables
 	archive = NULL;
 	cartridge = NULL;
-	
-	// Create virtual C64
-	// c64 = [[C64Proxy alloc] init];
-	
+		
 	return self;
 }
 
@@ -72,10 +66,6 @@
 	if (!(cartridge = Cartridge::cartridgeFromFile([path UTF8String])))
 		return NO;
 	
-	// Try to mount archive
-	//[c64 attachCartridge:cartridge];
-	// [c64 reset];
-
 	return YES;
 }
 

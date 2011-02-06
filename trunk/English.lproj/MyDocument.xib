@@ -25,7 +25,7 @@
 			<integer value="38"/>
 			<integer value="2024"/>
 			<integer value="1873"/>
-			<integer value="262"/>
+			<integer value="2203"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -816,21 +816,11 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
-						<object class="NSProgressIndicator" id="611288439">
-							<reference key="NSNextResponder" ref="870948684"/>
-							<int key="NSvFlags">-2147482332</int>
-							<object class="NSPSMatrix" key="NSDrawMatrix"/>
-							<string key="NSFrame">{{42, 5}, {16, 16}}</string>
-							<reference key="NSSuperview" ref="870948684"/>
-							<int key="NSpiFlags">20746</int>
-							<double key="NSMinValue">16</double>
-							<double key="NSMaxValue">100</double>
-						</object>
 						<object class="NSProgressIndicator" id="1058136006">
 							<reference key="NSNextResponder" ref="870948684"/>
 							<int key="NSvFlags">1292</int>
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
-							<string key="NSFrame">{{143, 4}, {16, 16}}</string>
+							<string key="NSFrame">{{41, 4}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="870948684"/>
 							<int key="NSpiFlags">28938</int>
 							<double key="NSMaxValue">100</double>
@@ -5280,11 +5270,12 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>iecBusIsBusy</string>
 					<string>document.iecBusIsBusy</string>
+					<string>c64.iecBusIsBusy</string>
 				</object>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
 			</object>
-			<object class="NSCustomObject" id="1002144886">
+			<object class="NSCustomObject" id="789294713">
 				<string key="NSClassName">C64Proxy</string>
 			</object>
 		</object>
@@ -6162,14 +6153,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<reference key="destination" ref="328428070"/>
 					</object>
 					<int key="connectionID">1370</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">driveBusy</string>
-						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="611288439"/>
-					</object>
-					<int key="connectionID">1525</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -7117,33 +7100,9 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">content</string>
-						<reference key="source" ref="829283283"/>
-						<reference key="destination" ref="662028313"/>
-					</object>
-					<int key="connectionID">2206</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">animate: selection.document.iecBusIsBusy</string>
-						<reference key="source" ref="1058136006"/>
-						<reference key="destination" ref="829283283"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1058136006"/>
-							<reference key="NSDestination" ref="829283283"/>
-							<string key="NSLabel">animate: selection.document.iecBusIsBusy</string>
-							<string key="NSBinding">animate</string>
-							<string key="NSKeyPath">selection.document.iecBusIsBusy</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2207</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">c64</string>
 						<reference key="source" ref="662028313"/>
-						<reference key="destination" ref="1002144886"/>
+						<reference key="destination" ref="789294713"/>
 					</object>
 					<int key="connectionID">2209</int>
 				</object>
@@ -7151,9 +7110,33 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">c64proxy</string>
 						<reference key="source" ref="861850350"/>
-						<reference key="destination" ref="1002144886"/>
+						<reference key="destination" ref="789294713"/>
 					</object>
 					<int key="connectionID">2210</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">content</string>
+						<reference key="source" ref="829283283"/>
+						<reference key="destination" ref="789294713"/>
+					</object>
+					<int key="connectionID">2211</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">animate: selection.iecBusIsBusy</string>
+						<reference key="source" ref="1058136006"/>
+						<reference key="destination" ref="829283283"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1058136006"/>
+							<reference key="NSDestination" ref="829283283"/>
+							<string key="NSLabel">animate: selection.iecBusIsBusy</string>
+							<string key="NSBinding">animate</string>
+							<string key="NSKeyPath">selection.iecBusIsBusy</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2213</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -7210,7 +7193,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<reference ref="253954559"/>
 							<reference ref="328428070"/>
 							<reference ref="76858149"/>
-							<reference ref="611288439"/>
 							<reference ref="861850350"/>
 							<reference ref="1058136006"/>
 						</object>
@@ -7346,11 +7328,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 						<int key="objectID">1710</int>
 						<reference key="object" ref="410703916"/>
 						<reference key="parent" ref="76858149"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1524</int>
-						<reference key="object" ref="611288439"/>
-						<reference key="parent" ref="870948684"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1845</int>
@@ -10312,7 +10289,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">2208</int>
-						<reference key="object" ref="1002144886"/>
+						<reference key="object" ref="789294713"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">c64</string>
 					</object>
@@ -10375,8 +10352,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<string>1210.IBAttributePlaceholdersKey</string>
 					<string>1210.IBPluginDependency</string>
 					<string>1210.ImportedFromIB2</string>
-					<string>1524.IBPluginDependency</string>
-					<string>1524.ImportedFromIB2</string>
 					<string>158.IBPluginDependency</string>
 					<string>158.ImportedFromIB2</string>
 					<string>1701.IBPluginDependency</string>
@@ -11541,8 +11516,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<integer value="1"/>
 					<string>{{817, 1086}, {616, 0}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -12114,7 +12087,7 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2210</int>
+			<int key="maxID">2213</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -12418,7 +12391,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>debugPanel</string>
 							<string>dezHexSelector</string>
 							<string>drive</string>
-							<string>driveBusy</string>
 							<string>eject</string>
 							<string>greenLED</string>
 							<string>info</string>
@@ -12525,7 +12497,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>NSDrawer</string>
 							<string>NSMatrix</string>
 							<string>NSButton</string>
-							<string>NSProgressIndicator</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
@@ -12635,7 +12606,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<string>debugPanel</string>
 							<string>dezHexSelector</string>
 							<string>drive</string>
-							<string>driveBusy</string>
 							<string>eject</string>
 							<string>greenLED</string>
 							<string>info</string>
@@ -12948,10 +12918,6 @@ byBtZW1vcnkgKGxlc3MgY29tcGF0aWJsZSwgYnV0IGZhc3QpA</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">drive</string>
 								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">driveBusy</string>
-								<string key="candidateClassName">NSProgressIndicator</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">eject</string>
