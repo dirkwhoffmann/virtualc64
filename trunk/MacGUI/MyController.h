@@ -36,10 +36,9 @@ class Snapshot;
 
 @interface MyController : NSWindowController
 {
-	// MOVE TO MYDOCUMENT
 	// Proxy object. Used get data from and sent data to the virtual C64
-	// Moreover, the class implements a bridge between C++ (simulator) and Objective-C (GUI)
-	C64Proxy *c64;
+	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
+	IBOutlet C64Proxy *c64;
 	
 	// JoystickManager
 	JoystickManager *joystickManager;
@@ -178,19 +177,11 @@ class Snapshot;
 	long animationCounter; 
 
 	// Speedometer to measure clock frequence and frames per second
-	Speedometer *speedometer;
-		
-	// Bonjour server
-	Server *server;
-	NSMutableArray *services;
-	bool isConnectedToService;
+	Speedometer *speedometer;		
 }
 
 @property C64Proxy *c64;
 @property (readonly) MyOpenGLView *screen;
-@property(nonatomic, retain) Server *server;
-@property(nonatomic, retain) NSMutableArray *services;
-@property(readwrite, nonatomic) bool isConnectedToService;
 
 // User defaults
 + (void)registerStandardDefaults;

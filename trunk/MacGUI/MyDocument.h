@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2011 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,31 +17,42 @@
  */
 
 #import <Cocoa/Cocoa.h>
-//#import <OpenGL/OpenGL.h>
-//#import <OpenGL/glu.h>
 
 @class C64Proxy;
 class D64Archive;
 class Cartridge;
 class Snapshot;
 
+// TODO
+// 1. Intantiate C64Proxy in XIB file
+//    No more custom creation of proxy needed
+// 2. Use C64Proxy as data source for ObjectController (key value coding)
+// 3. C64Proxy will look at received messages (before passing them to the controller) and update internal values accordingly
+// 4. Sending "refresh" to C64Proxy object will update all internal values (frequently called when debug pabel is open or on startup)
+// 5. Eliminate outlets and custom code for key/value controlled objects
+
 @interface MyDocument : NSDocument
 {
 	// ObjC/C++ bridge
+	//C64Proxy *c64;
 	C64Proxy *c64;
-
+	
 	//! Reference to an attached D64 archive
 	/*! When a new documents opens and this variable is not NULL, the archive is automatically mounted */
 	D64Archive *archive;
 	
 	//! Reference to an attached cartridge 
 	Cartridge *cartridge;
+	
+	//! Is set to true when data gets transfered on the IEC bus
+	//  TODO: Move to C64Proxy class
+	BOOL iecBusIsBusy;
 }
 
 @property C64Proxy *c64;
 @property D64Archive *archive;
 @property Cartridge *cartridge;
-// @property Snapshot *snapshot;
+@property BOOL iecBusIsBusy;
 
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;
