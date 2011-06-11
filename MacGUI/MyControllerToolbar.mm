@@ -74,8 +74,13 @@
 
 - (void) setupToolbarIcons
 {
-	//NSImage *tmIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Time Machine.app"];
-	//[cheatboxIcon setImage:tmIcon];
+	NSImage *tmIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Time Machine.app"];
+    if (tmIcon)
+        [cheatboxIcon setImage:tmIcon];
+
+    NSImage *amIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Utilities/Activity Monitor.app"];
+    if (amIcon)
+        [inspectIcon setImage:amIcon];
 }
 
 
