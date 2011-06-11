@@ -27,20 +27,17 @@
 		return nil; \
 	}
 
-	
 #define SET_PROPS() \
-	if (AudioDeviceSetProperty (mySoundDeviceID, NULL, 0, 0, \
-								kAudioDevicePropertyStreamFormat, \
-								myPropertySize, &mySoundBasicDescription)) \
-	{ \
-		CHECK_ERROR \
-		( \
-			MPERR_OSX_BAD_PROPERTY, \
-			AudioDeviceGetProperty (mySoundDeviceID, 0, 0, \
-									kAudioDevicePropertyStreamFormat, \
-									&myPropertySize, &mySoundBasicDescription) \
-		); \
-	}
+    if (AudioObjectSetPropertyData(mySoundDeviceID, &streamFormatPropertyAddress, \
+        0, NULL, sizeof(mySoundBasicDescription), &mySoundBasicDescription)) \
+    { \
+        CHECK_ERROR \
+        ( \
+            MPERR_OSX_BAD_PROPERTY, \
+            AudioObjectGetPropertyData(mySoundDeviceID, &streamFormatPropertyAddress, \
+            0, NULL, &myPropertySize, &mySoundBasicDescription) \
+        ); \
+    }
 
 // my sound IO proc
 static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
@@ -66,8 +63,24 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 
 @implementation AudioDevice
 
+
 - (id)initWithSID:(SID *)sid
-{
+{    
+    AudioObjectPropertyAddress devicePropertyAddress = { 
+        kAudioHardwarePropertyDefaultOutputDevice, 
+        kAudioObjectPropertyScopeGlobal, 
+        kAudioObjectPropertyElementMaster };
+
+    AudioObjectPropertyAddress streamFormatPropertyAddress = { 
+        kAudioDevicePropertyStreamFormat, 
+        kAudioDevicePropertyScopeOutput, 
+        kAudioObjectPropertyElementMaster };
+
+    AudioObjectPropertyAddress bufferSizeFormatPropertyAddress = { 
+        kAudioDevicePropertyBufferSize, 
+        kAudioDevicePropertyScopeOutput, 
+        kAudioObjectPropertyElementMaster };
+
 	self = [super init];
     if (self) 
 	{	
@@ -76,31 +89,32 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		
 		if (ioProcIsInstalled == 1)
 			return self;
-			
+
 		// get the device...
 		myPropertySize = sizeof (mySoundDeviceID);
-		CHECK_ERROR
-			(
-			 MPERR_DETECTING_DEVICE,
-			 AudioHardwareGetProperty (kAudioHardwarePropertyDefaultOutputDevice,
-									   &myPropertySize, &mySoundDeviceID)
-			 );
-		
+        if (AudioObjectGetPropertyData(kAudioObjectSystemObject, &devicePropertyAddress, 
+                                       0, NULL, 
+                                       &myPropertySize, &mySoundDeviceID) != noErr) 
+        {
+            lastError = MPERR_DETECTING_DEVICE;
+            return nil;
+        }
+
 		if (mySoundDeviceID == kAudioDeviceUnknown)
 		{
 			lastError = MPERR_OSX_UNKNOWN_DEVICE;
 			return nil;
 		}
-		
-		// get the device format...
-		myPropertySize = sizeof (mySoundBasicDescription);
-		CHECK_ERROR
-			(
-			 MPERR_OSX_BAD_PROPERTY,
-			 AudioDeviceGetProperty (mySoundDeviceID, 0, 0, kAudioDevicePropertyStreamFormat,
-									 &myPropertySize, &mySoundBasicDescription)
-			 );
-		
+        
+        myPropertySize = sizeof(mySoundBasicDescription);
+        if (AudioObjectGetPropertyData(mySoundDeviceID, &streamFormatPropertyAddress, 
+                                       0, NULL, 
+                                       &myPropertySize, &mySoundBasicDescription) != noErr) 
+        {
+			lastError = MPERR_OSX_BAD_PROPERTY;
+			return nil;
+		}
+        
 		// try the selected mix frequency, if failure, fall back to native frequency and ajust SID's samplerate...
 		if (mySoundBasicDescription.mSampleRate != sid->getSamplerate())
 		{
@@ -157,14 +171,15 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		}
 		
 		myBufferByteCount = inBufferSize * sizeof(float);
-		CHECK_ERROR
-			(
-			 MPERR_OSX_BUFFER_ALLOC,
-			 AudioDeviceSetProperty (mySoundDeviceID, NULL, 0, 0, kAudioDevicePropertyBufferSize,
-									 sizeof(myBufferByteCount), &myBufferByteCount)
-			 );
 
-
+        if (AudioObjectSetPropertyData(mySoundDeviceID, &bufferSizeFormatPropertyAddress, 
+                                       0, NULL, 
+                                       sizeof(myBufferByteCount), &myBufferByteCount) != noErr) 
+        {
+            lastError = MPERR_OSX_BUFFER_ALLOC;
+            return nil;
+        }
+                
 		// add our audio IO procedure....
 		// the optional void pointer is used in order to submit the SID to the callback
 		CHECK_ERROR

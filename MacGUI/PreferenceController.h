@@ -111,8 +111,8 @@ extern NSString *VC64CustomCol15Key;
 	IBOutlet NSColorWell *colorWell15;	
 }
 
-@property C64Proxy *c64;
-@property MyController *controller;
+@property (assign) C64Proxy *c64;
+@property (assign) MyController *controller;
 
 - (void)updateMachineType:(int)type;
 - (void)updateSliderX:(float)newX Y:(float)newY Z:(float)newZ;

@@ -44,9 +44,9 @@ class Snapshot;
 	Cartridge *cartridge;	
 }
 
-@property C64Proxy *c64;
-@property D64Archive *archive;
-@property Cartridge *cartridge;
+@property (assign) C64Proxy *c64;
+@property (assign) D64Archive *archive;
+@property (assign) Cartridge *cartridge;
 
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;
