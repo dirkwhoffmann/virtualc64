@@ -86,6 +86,8 @@
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50CA0D520A9076FD00A5A08D /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* SID.cpp */; };
 		50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */; };
+		50CE89DC13A341AB00A2FDCE /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50CE89DB13A341AB00A2FDCE /* VirtualC64Icon.icns */; };
+		50CE89DE13A341B200A2FDCE /* DocIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50CE89DD13A341B200A2FDCE /* DocIcon.icns */; };
 		50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */; };
 		50D5FDB40C2E9CF50022CA3A /* MountDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */; };
 		50D6954812E3759500D9C738 /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954312E3759500D9C738 /* IconCRT.icns */; };
@@ -265,6 +267,8 @@
 		50CA0D500A9076FD00A5A08D /* SID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SID.h; sourceTree = "<group>"; };
 		50CA0D510A9076FD00A5A08D /* SID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SID.cpp; sourceTree = "<group>"; };
 		50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VirtualC64Icon.icns; path = images/VirtualC64Icon.icns; sourceTree = "<group>"; };
+		50CE89DB13A341AB00A2FDCE /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
+		50CE89DD13A341B200A2FDCE /* DocIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = DocIcon.icns; sourceTree = "<group>"; };
 		50D5004B0C2ED1200022CA3A /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archive.h; sourceTree = "<group>"; };
 		50D500500C2ED13F0022CA3A /* T64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64Archive.h; sourceTree = "<group>"; };
 		50D500510C2ED13F0022CA3A /* T64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = T64Archive.cpp; sourceTree = "<group>"; };
@@ -606,6 +610,8 @@
 		50732BCA0A70D560008D8FF0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				50CE89DB13A341AB00A2FDCE /* VirtualC64Icon.icns */,
+				50CE89DD13A341B200A2FDCE /* DocIcon.icns */,
 				50D6955012E375A800D9C738 /* Icons */,
 				50F23D0712DF932800B1F275 /* glossy.png */,
 				50804AE212EB3CDA00394049 /* iphone48.png */,
@@ -797,6 +803,8 @@
 				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
 				50804AE312EB3CDA00394049 /* iphone48.png in Resources */,
 				50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */,
+				50CE89DC13A341AB00A2FDCE /* VirtualC64Icon.icns in Resources */,
+				50CE89DE13A341B200A2FDCE /* DocIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
