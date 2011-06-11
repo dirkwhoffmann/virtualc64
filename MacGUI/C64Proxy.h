@@ -115,9 +115,8 @@
 - (void) dump;
 
 - (void *) screenBuffer;
-- (NSColor *) color:(VIC::ColorScheme)scheme nr:(int)nr;
-- (void) setColor:(int)color rgba:(NSColor *)rgba;
-- (void) setColorInt:(int)color rgba:(int)rgba;
+- (NSColor *) color:(int)nr;
+- (VIC::ColorScheme) colorScheme;
 - (void) setColorScheme:(VIC::ColorScheme)scheme;
 
 - (uint16_t) memoryBankAddr;
@@ -434,6 +433,8 @@
 - (void) resume; 
 - (bool) isHalted;
 - (bool) isRunning;
+- (bool) isPAL;
+- (bool) isNTSC;
 - (void) setPAL;
 - (void) setNTSC;
 - (int) frameDelay;

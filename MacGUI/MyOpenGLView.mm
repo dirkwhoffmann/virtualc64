@@ -261,14 +261,29 @@ void checkForOpenGLErrors()
 			currentEyeX != targetEyeX || currentEyeY != targetEyeY || currentEyeZ != targetEyeZ);
 }
 
+- (float)eyeX
+{
+    return currentEyeX;
+}
+
 - (void)setEyeX:(float)newX
 {
 	currentEyeX = targetEyeX = newX;
 }
 
+- (float)eyeY
+{
+    return currentEyeY;
+}
+
 - (void)setEyeY:(float)newY
 {
 	currentEyeY = targetEyeY = newY;
+}
+
+- (float)eyeZ
+{
+    return currentEyeZ;
 }
 
 - (void)setEyeZ:(float)newZ

@@ -44,9 +44,9 @@
 #import "MyControllerCiaPanel.h"
 #import "MyControllerVicPanel.h"
 
+#import "PropertiesDialog.h"
 #import "MountDialog.h"
 #import "RomDialog.h"
-#import "PreferenceController.h"
 
 #import "JoystickManager.h"
 #import "AudioDevice.h"

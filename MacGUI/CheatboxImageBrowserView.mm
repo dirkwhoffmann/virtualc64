@@ -101,12 +101,14 @@
 			// Skip invisible lines
 			// TODO: Why do we store invisible lines in screen texture???
 			data += VIC::PAL_UPPER_INVISIBLE * 4 * width;
+            NSLog(@"PAL image %d x %d", width, height);
 		} else {
 			width = VIC::NTSC_VIEWABLE_PIXELS;
 			height = VIC::NTSC_VIEWABLE_RASTERLINES;	
 			// Skip invisible lines
 			// TODO: Why do we store invisible lines in screen texture???
 			data += VIC::NTSC_UPPER_INVISIBLE * 4 * width;
+            NSLog(@"NTSC image %d x %d", width, height);
 		}
 					
 		// Create bitmap representation
@@ -135,8 +137,8 @@
 				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 		[camera drawInRect:NSMakeRect(0, height-30, 100, 100) 
 				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-		[final unlockFocus];
-		
+        [final unlockFocus];
+         
 		CheatboxItem *item = [[CheatboxItem alloc] initWithImage:final 
 														imageUID:subtitle
 													  imageTitle:title

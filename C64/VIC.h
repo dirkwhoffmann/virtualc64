@@ -325,6 +325,9 @@ private:
 	/*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the characters to display */
 	uint8_t colorSpace[40];
 
+    //! Currently used color scheme
+    ColorScheme colorScheme;
+    
 	//! All 16 color codes in an array
 	uint32_t colors[16];
 
@@ -570,19 +573,15 @@ public:
 	
 	//! Configure the VIC chip for NTSC video output
 	void setNTSC();	
-	
+
+    //! Get color scheme
+	uint32_t getColor(int nr) { return colors[nr]; }
+    
+    //! Get color scheme
+	ColorScheme getColorScheme() { return colorScheme; }
+
 	//! Set color scheme
-	/*! Changes the RGB values of all 16 colors */
 	void setColorScheme(ColorScheme scheme);
-	
-	//! Set color
-	/*! Changes the RGB value of one of the 16 colors */
-	void setColor(int nr, uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 0xff);
-	
-	//! Get color
-	/*! Returns the rgb color code of the specified color scheme */
-	void getColor(ColorScheme scheme, int nr, uint8_t *r, uint8_t *g, uint8_t *b);
-	
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                         Drawing

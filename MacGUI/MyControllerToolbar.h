@@ -28,6 +28,8 @@
 - (IBAction)joystick2Action:(id)sender;
 - (IBAction)switchJoysticksAction:(id)sender;
 
+- (IBAction)propertiesAction:(id)sender;
+
 - (IBAction)fullscreenAction:(id)sender;
 
 - (IBAction)debugOpenAction:(id)sender;
