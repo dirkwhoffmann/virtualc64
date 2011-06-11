@@ -74,6 +74,7 @@
 
 - (void) setupToolbarIcons
 {
+    /*
 	NSImage *tmIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Time Machine.app"];
     if (tmIcon)
         [cheatboxIcon setImage:tmIcon];
@@ -81,6 +82,11 @@
     NSImage *amIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Utilities/Activity Monitor.app"];
     if (amIcon)
         [inspectIcon setImage:amIcon];
+
+    NSImage *prIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/System Preferences.app"];
+    if (amIcon)
+        [preferencesIcon setImage:prIcon];
+*/
 }
 
 
@@ -131,6 +137,16 @@
 - (IBAction)fullscreenAction:(id)sender
 {
 	[screen toggleFullscreenMode];
+}
+
+- (IBAction)propertiesAction:(id)sender
+{
+    [propertiesDialog initialize:self];
+    [NSApp beginSheet:propertiesDialog
+       modalForWindow:[[self document] windowForSheet]
+        modalDelegate:self
+       didEndSelector:NULL
+          contextInfo:NULL];	
 }
 
 

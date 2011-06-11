@@ -26,7 +26,6 @@
 		5005966A0D23F9E800FD44B3 /* LEDgray.png in Resources */ = {isa = PBXBuildFile; fileRef = 500596670D23F9E800FD44B3 /* LEDgray.png */; };
 		5005966C0D23FA1800FD44B3 /* LEDyellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5005966B0D23FA1800FD44B3 /* LEDyellow.png */; };
 		5005966E0D23FA1C00FD44B3 /* LEDblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 5005966D0D23FA1C00FD44B3 /* LEDblue.png */; };
-		5007A4880C3F9D6A0069B0CE /* PreferenceController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */; };
 		5007A5EC0C3FC99F0069B0CE /* VIC_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007A5EB0C3FC99F0069B0CE /* VIC_colors.cpp */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500B9D370C40E554008237C6 /* pref_disk.png in Resources */ = {isa = PBXBuildFile; fileRef = 500B9D360C40E554008237C6 /* pref_disk.png */; };
@@ -86,7 +85,6 @@
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50CA0D520A9076FD00A5A08D /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* SID.cpp */; };
 		50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */; };
-		50CE89DE13A341B200A2FDCE /* DocIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50CE89DD13A341B200A2FDCE /* DocIcon.icns */; };
 		50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D500510C2ED13F0022CA3A /* T64Archive.cpp */; };
 		50D5FDB40C2E9CF50022CA3A /* MountDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */; };
 		50D6954812E3759500D9C738 /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954312E3759500D9C738 /* IconCRT.icns */; };
@@ -106,6 +104,7 @@
 		50E4C0280C3CFBE400CB6B43 /* fullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4C0270C3CFBE400CB6B43 /* fullscreen.png */; };
 		50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FC0C42698E00AFB05F /* flag_usa.png */; };
 		50E555FF0C42699300AFB05F /* flag_eu.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FE0C42699300AFB05F /* flag_eu.png */; };
+		50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */; };
 		50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.mm */; };
 		50F2380312DF4EC600B1F275 /* CheatboxImageBrowserView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */; };
 		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
@@ -115,7 +114,6 @@
 		50F4D2940C46262700ED4E4E /* ResetImage.VC64 in Resources */ = {isa = PBXBuildFile; fileRef = 50F4D2930C46262700ED4E4E /* ResetImage.VC64 */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
-		50F55DD10F28EC2D0040592B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCF0F28EC2D0040592B /* Preferences.xib */; };
 		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
 		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -176,8 +174,6 @@
 		500596670D23F9E800FD44B3 /* LEDgray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDgray.png; path = images/LEDgray.png; sourceTree = "<group>"; };
 		5005966B0D23FA1800FD44B3 /* LEDyellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDyellow.png; path = images/LEDyellow.png; sourceTree = "<group>"; };
 		5005966D0D23FA1C00FD44B3 /* LEDblue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDblue.png; path = images/LEDblue.png; sourceTree = "<group>"; };
-		5007A4860C3F9D6A0069B0CE /* PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceController.h; sourceTree = "<group>"; };
-		5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = PreferenceController.mm; sourceTree = "<group>"; };
 		5007A5EB0C3FC99F0069B0CE /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
@@ -266,7 +262,6 @@
 		50CA0D500A9076FD00A5A08D /* SID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SID.h; sourceTree = "<group>"; };
 		50CA0D510A9076FD00A5A08D /* SID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SID.cpp; sourceTree = "<group>"; };
 		50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VirtualC64Icon.icns; path = images/VirtualC64Icon.icns; sourceTree = "<group>"; };
-		50CE89DD13A341B200A2FDCE /* DocIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = DocIcon.icns; sourceTree = "<group>"; };
 		50D5004B0C2ED1200022CA3A /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archive.h; sourceTree = "<group>"; };
 		50D500500C2ED13F0022CA3A /* T64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64Archive.h; sourceTree = "<group>"; };
 		50D500510C2ED13F0022CA3A /* T64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = T64Archive.cpp; sourceTree = "<group>"; };
@@ -290,6 +285,8 @@
 		50E4C0270C3CFBE400CB6B43 /* fullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fullscreen.png; path = images/fullscreen.png; sourceTree = "<group>"; };
 		50E555FC0C42698E00AFB05F /* flag_usa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag_usa.png; path = images/flag_usa.png; sourceTree = "<group>"; };
 		50E555FE0C42699300AFB05F /* flag_eu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag_eu.png; path = images/flag_eu.png; sourceTree = "<group>"; };
+		50E6014613A3653900EDBEA9 /* PropertiesDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesDialog.h; sourceTree = "<group>"; };
+		50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PropertiesDialog.mm; sourceTree = "<group>"; };
 		50ED5BF612DD99C000596417 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Speedometer.mm; sourceTree = "<group>"; };
 		50F236AE12DF1CCB00B1F275 /* C64GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64GUI.h; sourceTree = "<group>"; };
@@ -304,7 +301,6 @@
 		50F4D2930C46262700ED4E4E /* ResetImage.VC64 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ResetImage.VC64; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		50F55DD00F28EC2D0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
 		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
 		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
 		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
@@ -397,7 +393,6 @@
 				503A5AD612227C0300EAA95E /* dsa_pub.pem */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
-				50F55DCF0F28EC2D0040592B /* Preferences.xib */,
 				50F4D28F0C4625E200ED4E4E /* Snapshots */,
 				50732BCA0A70D560008D8FF0 /* Images */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -525,8 +520,6 @@
 				5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */,
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
-				5007A4860C3F9D6A0069B0CE /* PreferenceController.h */,
-				5007A4870C3F9D6A0069B0CE /* PreferenceController.mm */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -534,6 +527,8 @@
 		5000474212DCECDB0098D890 /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
+				50E6014613A3653900EDBEA9 /* PropertiesDialog.h */,
+				50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */,
 				50D5FDB20C2E9CF50022CA3A /* MountDialog.h */,
 				50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */,
 				50A8F8F10E47171300ACE17D /* RomDialog.h */,
@@ -608,7 +603,6 @@
 		50732BCA0A70D560008D8FF0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				50CE89DD13A341B200A2FDCE /* DocIcon.icns */,
 				50D6955012E375A800D9C738 /* Icons */,
 				50F23D0712DF932800B1F275 /* glossy.png */,
 				50804AE212EB3CDA00394049 /* iphone48.png */,
@@ -787,7 +781,6 @@
 				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
 				50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */,
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
-				50F55DD10F28EC2D0040592B /* Preferences.xib in Resources */,
 				5041486912219F6E00A80E0C /* cartridge.png in Resources */,
 				503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */,
 				502F96B612D85F9C00DBE132 /* time2.png in Resources */,
@@ -800,7 +793,6 @@
 				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
 				50804AE312EB3CDA00394049 /* iphone48.png in Resources */,
 				50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */,
-				50CE89DE13A341B200A2FDCE /* DocIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,7 +844,6 @@
 				509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */,
 				509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
-				5007A4880C3F9D6A0069B0CE /* PreferenceController.mm in Sources */,
 				5007A5EC0C3FC99F0069B0CE /* VIC_colors.cpp in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
@@ -881,6 +872,7 @@
 				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
+				50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,14 +909,6 @@
 				50F55DCC0F28EC010040592B /* English */,
 			);
 			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		50F55DCF0F28EC2D0040592B /* Preferences.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				50F55DD00F28EC2D0040592B /* English */,
-			);
-			name = Preferences.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1020,7 +1004,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 3;
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				GCC_VERSION = 4.2;
+				SDKROOT = "";
 				VERSIONING_SYSTEM = "";
 			};
 			name = Development;
@@ -1037,15 +1022,17 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_UNROLL_LOOPS = YES;
+				GCC_VERSION = 4.2;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
+				SDKROOT = "";
 			};
 			name = Deployment;
 		};
 		504F83700A89E0D2009FA225 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				GCC_VERSION = 4.2;
+				SDKROOT = "";
 			};
 			name = Default;
 		};

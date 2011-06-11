@@ -22,7 +22,7 @@
 
 
 #pragma mark file menu
-- (IBAction)showPreferencesAction:(id)sender;
+// - (IBAction)showPreferencesAction:(id)sender;
 - (IBAction)saveScreenshotDialog:(id)sender;
 
 #pragma mark edit menu

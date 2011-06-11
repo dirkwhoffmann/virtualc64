@@ -20,6 +20,7 @@
 
 // Forward declarations
 @class C64Proxy;
+@class PropertiesDialog;
 @class MountDialog;
 @class RomDialog;
 @class PreferenceController;
@@ -44,6 +45,7 @@ class Snapshot;
 	JoystickManager *joystickManager;
 	
 	// Dialogs
+    IBOutlet PropertiesDialog *propertiesDialog;
 	IBOutlet MountDialog *mountDialog;
 	IBOutlet RomDialog *romDialog;
 	PreferenceController *preferenceController;
@@ -188,6 +190,7 @@ class Snapshot;
 // User defaults
 + (void)registerStandardDefaults;
 - (void)loadUserDefaults;
+- (void)saveUserDefaults;
 
 // Timer and message processing
 - (void)timerFunc;
@@ -209,8 +212,9 @@ class Snapshot;
 - (BOOL)mountCartridge;
 
 // Dialogs
-- (BOOL)showMountDialog; 
+- (IBAction)cancelPropertiesDialog:(id)sender;
 - (IBAction)cancelRomDialog:(id)sender;
+- (BOOL)showMountDialog; 
 - (IBAction)cancelMountDialog:(id)sender;
 - (IBAction)endMountDialogAndMount:(id)sender;
 - (IBAction)endMountDialogAndFlash:(id)sender;

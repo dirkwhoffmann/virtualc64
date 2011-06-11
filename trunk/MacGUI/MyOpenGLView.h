@@ -178,8 +178,11 @@ const int BG_TEXTURE_DEPTH = 4;
 //! Returns true if view is currently drawing animation effects
 - (bool) animates;
 
+- (float)eyeX;
 - (void)setEyeX:(float)newX;
+- (float)eyeY;
 - (void)setEyeY:(float)newY;
+- (float)eyeZ;
 - (void)setEyeZ:(float)newZ;
 
 //! Trigger animation effect. Zooms in from far away

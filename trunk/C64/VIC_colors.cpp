@@ -19,10 +19,12 @@
 #include "C64.h"
 
 void 
-VIC::getColor(ColorScheme scheme, int nr, uint8_t *r, uint8_t *g, uint8_t *b)
+VIC::setColorScheme(ColorScheme scheme)
 {
-	uint8_t rgb[12][16][3] = {
+    assert(scheme >= 0 && scheme < 12);
 
+    uint8_t rgb[12][16][3] = {
+        
 		/* Source: http://www.geocities.com/Area51/Vault/8611/cbm/c64col.htm */
 		
 		/* CCS64 */
@@ -164,7 +166,7 @@ VIC::getColor(ColorScheme scheme, int nr, uint8_t *r, uint8_t *g, uint8_t *b)
 			{ 0x5e, 0x70, 0xf2 },
 			{ 0xac, 0xac, 0xac }
 		}, 
-
+        
 		/* C64ALIVE */
 		{
 			{ 0x00, 0x00, 0x00 },
@@ -244,7 +246,7 @@ VIC::getColor(ColorScheme scheme, int nr, uint8_t *r, uint8_t *g, uint8_t *b)
 			{ 0x6c, 0x5e, 0xb5 },
 			{ 0x95, 0x95, 0x95 }
 		},
-	
+        
 		/* GRAYSCALE */
 		{
 			{ 0x10, 0x10, 0x10 },
@@ -265,40 +267,13 @@ VIC::getColor(ColorScheme scheme, int nr, uint8_t *r, uint8_t *g, uint8_t *b)
 			{ 0xc0, 0xc0, 0xc0 }
 		}
 	};
-	
-	assert(scheme >= 0 && scheme < 12);
-	assert(nr >= 0 && nr < 16);
-	
-	*r = rgb[scheme][nr][0];
-	*g = rgb[scheme][nr][1];
-	*b = rgb[scheme][nr][2];
-}
 
-
-void 
-VIC::setColor(int nr, uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
-{
-	uint8_t *color = (uint8_t *)(&colors[nr]);
-
-	assert(nr >= 0 && nr < 16);
-	
-	color[0] = red;
-	color[1] = green;
-	color[2] = blue;
-	color[3] = alpha;
-}
-
-void 
-VIC::setColorScheme(ColorScheme scheme)
-{
-	uint8_t i, r, g, b;
-	
-	if (scheme == CUSTOM_PALETTE)
-		return;
-
-	for (i = 0; i < 16; i++) {
-		getColor(scheme, i, &r, &g, &b);
-		setColor(i, r, g, b);
+    colorScheme = scheme;
+	for (unsigned i = 0; i < 16; i++) {
+        colors[i] = 
+            (rgb[scheme][i][0]) |
+            (rgb[scheme][i][1] << 8) |
+            (rgb[scheme][i][2] << 16) | 
+            (0xFF << 24);
 	}
-
 }			

@@ -71,10 +71,10 @@
 - (int) topOfCallStack { return cpu->getTopOfCallStack(); }
 - (int) breakpoint:(int)addr { return cpu->getBreakpoint(addr); }
 - (void) setBreakpoint:(int)addr tag:(uint8_t)t { cpu->setBreakpoint(addr, t); }
-- (void) setHardBreakpoint:(int)addr { cpu->setHardBreakpoint(addr); };
+- (void) setHardBreakpoint:(int)addr { cpu->setHardBreakpoint(addr); }
 - (void) deleteHardBreakpoint:(int)addr { cpu->deleteHardBreakpoint(addr); }
 - (void) toggleHardBreakpoint:(int)addr { cpu->toggleHardBreakpoint(addr); }
-- (void) setSoftBreakpoint:(int)addr { cpu->setSoftBreakpoint(addr); };
+- (void) setSoftBreakpoint:(int)addr { cpu->setSoftBreakpoint(addr); }
 - (void) deleteSoftBreakpoint:(int)addr { cpu->deleteSoftBreakpoint(addr); }
 - (void) toggleSoftBreakpoint:(int)addr { cpu->toggleSoftBreakpoint(addr); }
 
@@ -120,28 +120,24 @@
 - (void) dump { vic->dumpState(); }
 
 - (void *) screenBuffer { return vic->screenBuffer(); }
+- (VIC::ColorScheme) colorScheme { return vic->getColorScheme(); }
 - (void) setColorScheme:(VIC::ColorScheme)scheme { vic->setColorScheme(scheme); }
-- (NSColor *) color:(VIC::ColorScheme)scheme nr:(int)nr
+
+- (NSColor *) color:(int)nr
 {
-	uint8_t r, g, b;
-	vic->getColor(scheme, nr, &r, &g, &b);
+    assert (0 <= nr && nr < 16);
+    
+    uint32_t color = vic->getColor(nr);
+/*
+    uint8_t r = (color >> 24) & 0xFF;
+    uint8_t g = (color >> 16) & 0xFF;
+    uint8_t b = (color >> 8) & 0xFF;
+*/
+    uint8_t r = color & 0xFF;
+    uint8_t g = (color >> 8) & 0xFF;
+    uint8_t b = (color >> 16) & 0xFF;
+    
 	return [NSColor colorWithCalibratedRed:(float)r/255.0 green:(float)g/255.0 blue:(float)b/255.0 alpha:1.0];
-}
-
-- (void) setColor:(int)color rgba:(NSColor *)rgba
-{	
-	float r, g, b, a;
-	[rgba getRed:&r green:&g blue:&b alpha:&a];
-	vic->setColor(color, (uint8_t)(r * 0xff), (uint8_t)(g * 0xff), (uint8_t)(b * 0xff), (uint8_t)(a * 0xff));
-}
-
-- (void) setColorInt:(int)color rgba:(int)rgba
-{
-	uint8_t r = (rgba >> 24) & 0xff;
-	uint8_t g = (rgba >> 16) & 0xff;
-	uint8_t b = (rgba >> 8)  & 0xff;
-	uint8_t a = rgba         & 0xff;
-	vic->setColor(color, r, g, b, a);
 }
 
 - (uint16_t) memoryBankAddr { return vic->getMemoryBankAddr(); }
@@ -516,6 +512,8 @@
 - (bool) isHalted { return c64->isHalted(); }
 - (bool) isRunnable { return c64->isRunnable(); }
 - (bool) isRunning { return c64->isRunning(); }
+- (bool) isPAL { return c64->isPAL(); }
+- (bool) isNTSC { return c64->isNTSC(); }
 - (void) setPAL { c64->setPAL(); }
 - (void) setNTSC { c64->setNTSC(); }
 - (int) frameDelay { return c64->getFrameDelay(); }

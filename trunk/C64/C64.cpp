@@ -976,7 +976,6 @@ C64::flushArchive(Archive *a, int item)
 		data = a->getByte();
 		if (data < 0) break;
 		
-		fprintf(stderr, "Poking %02X to %04X\n", (uint8_t)data, addr);
 		mem->pokeRam(addr, (uint8_t)data);
 		if (addr == 0xFFFF) break;
 		

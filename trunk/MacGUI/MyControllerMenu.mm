@@ -26,6 +26,7 @@
 
 #pragma mark file menu
 
+#if 0
 - (IBAction)showPreferencesAction:(id)sender
 {
 	NSLog(@"Showing preferences window...");
@@ -36,6 +37,7 @@
 	}
 	[preferenceController showWindow:self];
 }
+#endif
 
 - (IBAction)saveScreenshotDialog:(id)sender
 {

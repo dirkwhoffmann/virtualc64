@@ -144,24 +144,7 @@
 
 	[defaultValues setObject:[NSNumber numberWithInt:VIC::CUSTOM_PALETTE] forKey:VC64ColorSchemeKey];
 	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64VideoFilterKey];	
-	
-	[defaultValues setObject:[NSNumber numberWithInt:0x101010ff] forKey:VC64CustomCol0Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0xffffffff] forKey:VC64CustomCol1Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0xe04040ff] forKey:VC64CustomCol2Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0x60ffffff] forKey:VC64CustomCol3Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0xe060e0ff] forKey:VC64CustomCol4Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0x40e040ff] forKey:VC64CustomCol5Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0x4040e0ff] forKey:VC64CustomCol6Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0xffff40ff] forKey:VC64CustomCol7Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0xe0a040ff] forKey:VC64CustomCol8Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0x9c7448ff] forKey:VC64CustomCol9Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0xffa0a0ff] forKey:VC64CustomCol10Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0x545454ff] forKey:VC64CustomCol11Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0x888888ff] forKey:VC64CustomCol12Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0xa0ffa0ff] forKey:VC64CustomCol13Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0xa0a0ffff] forKey:VC64CustomCol14Key];
-	[defaultValues setObject:[NSNumber numberWithInt:0xc0c0c0ff] forKey:VC64CustomCol15Key];
-	
+		
 	// Register dictionary
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 }
@@ -170,12 +153,8 @@
 {
 	NSLog(@"Loading user defaults");
 	
-	int colorScheme;
-	NSUserDefaults *defaults;
-	
-	// Set standard user defaults
-	defaults = [NSUserDefaults standardUserDefaults];
-	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		
 	// System
 	if ([defaults integerForKey:VC64PALorNTSCKey]) {
 		[c64 setNTSC];
@@ -199,28 +178,34 @@
 	[screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
 
 	[screen setAntiAliasing:[defaults integerForKey:VC64VideoFilterKey]];
-	colorScheme = [defaults integerForKey:VC64ColorSchemeKey];
-	if (colorScheme == VIC::CUSTOM_PALETTE) {
-		NSLog(@"Applying custom colors...");
-		[[c64 vic] setColorInt:0 rgba:[defaults integerForKey:VC64CustomCol0Key]];
-		[[c64 vic] setColorInt:1 rgba:[defaults integerForKey:VC64CustomCol1Key]];
-		[[c64 vic] setColorInt:2 rgba:[defaults integerForKey:VC64CustomCol2Key]];
-		[[c64 vic] setColorInt:3 rgba:[defaults integerForKey:VC64CustomCol3Key]];
-		[[c64 vic] setColorInt:4 rgba:[defaults integerForKey:VC64CustomCol4Key]];
-		[[c64 vic] setColorInt:5 rgba:[defaults integerForKey:VC64CustomCol5Key]];
-		[[c64 vic] setColorInt:6 rgba:[defaults integerForKey:VC64CustomCol6Key]];
-		[[c64 vic] setColorInt:7 rgba:[defaults integerForKey:VC64CustomCol7Key]];
-		[[c64 vic] setColorInt:8 rgba:[defaults integerForKey:VC64CustomCol8Key]];
-		[[c64 vic] setColorInt:9 rgba:[defaults integerForKey:VC64CustomCol9Key]];
-		[[c64 vic] setColorInt:10 rgba:[defaults integerForKey:VC64CustomCol10Key]];
-		[[c64 vic] setColorInt:11 rgba:[defaults integerForKey:VC64CustomCol11Key]];
-		[[c64 vic] setColorInt:12 rgba:[defaults integerForKey:VC64CustomCol12Key]];
-		[[c64 vic] setColorInt:13 rgba:[defaults integerForKey:VC64CustomCol13Key]];
-		[[c64 vic] setColorInt:14 rgba:[defaults integerForKey:VC64CustomCol14Key]];
-		[[c64 vic] setColorInt:15 rgba:[defaults integerForKey:VC64CustomCol15Key]];
-	} else {
-		[[c64 vic] setColorScheme:(VIC::ColorScheme)colorScheme];
-	}
+    [[c64 vic] setColorScheme:(VIC::ColorScheme)[defaults integerForKey:VC64ColorSchemeKey]];
+    NSLog(@"Setting color scheme %d\n", [defaults integerForKey:VC64ColorSchemeKey]);
+}
+
+- (void)saveUserDefaults
+{
+	NSLog(@"Saving user defaults");
+	
+	NSUserDefaults *defaults;
+	
+	// Set standard user defaults
+	defaults = [NSUserDefaults standardUserDefaults];
+	
+	// System
+    [defaults setInteger:[c64 isNTSC] forKey:VC64PALorNTSCKey];
+    	
+	// Peripherals
+	[defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
+	
+	// Audio
+	
+	// Video 
+    [defaults setFloat:[screen eyeX] forKey:VC64EyeX];
+    [defaults setFloat:[screen eyeY] forKey:VC64EyeY];
+    [defaults setFloat:[screen eyeZ] forKey:VC64EyeZ];
+    
+    [defaults setInteger:[[c64 vic] colorScheme] forKey:VC64ColorSchemeKey];
+    NSLog(@"Saving color scheme %d\n", [[c64 vic] colorScheme]);
 }
 
 
@@ -642,6 +627,28 @@
 //                                     Dialogs
 // --------------------------------------------------------------------------------
 
+- (IBAction)cancelPropertiesDialog:(id)sender
+{
+	// Hide sheet
+	[propertiesDialog orderOut:sender];
+	
+	// Return to normal event handling
+	[NSApp endSheet:propertiesDialog returnCode:1];
+}
+
+- (IBAction)cancelRomDialog:(id)sender
+{
+	// Hide sheet
+	[romDialog orderOut:sender];
+	
+	// Exit
+	[[NSApplication sharedApplication] terminate: nil];
+	
+	// OLD BEHAVIOUR
+	// Return to normal event handling
+	// [NSApp endSheet:romDialog returnCode:1];
+}
+
 - (BOOL)showMountDialog
 {
 	if ([[self document] archive] == NULL)
@@ -656,19 +663,6 @@
 		  contextInfo:NULL];
 	
 	return YES;
-}
-
-- (IBAction)cancelRomDialog:(id)sender
-{
-	// Hide sheet
-	[romDialog orderOut:sender];
-	
-	// Exit
-	[[NSApplication sharedApplication] terminate: nil];
-	
-	// OLD BEHAVIOUR
-	// Return to normal event handling
-	// [NSApp endSheet:romDialog returnCode:1];
 }
 
 - (IBAction)cancelMountDialog:(id)sender

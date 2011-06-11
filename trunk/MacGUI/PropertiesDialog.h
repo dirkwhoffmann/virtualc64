@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2008 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+#import <Cocoa/Cocoa.h>
 
 #import <Cocoa/Cocoa.h>
 
@@ -49,28 +51,12 @@ extern NSString *VC64EyeY;
 extern NSString *VC64EyeZ;
 extern NSString *VC64ColorSchemeKey;
 extern NSString *VC64VideoFilterKey;
-extern NSString *VC64CustomCol0Key;
-extern NSString *VC64CustomCol1Key;
-extern NSString *VC64CustomCol2Key;
-extern NSString *VC64CustomCol3Key;
-extern NSString *VC64CustomCol4Key;
-extern NSString *VC64CustomCol5Key;
-extern NSString *VC64CustomCol6Key;
-extern NSString *VC64CustomCol7Key;
-extern NSString *VC64CustomCol8Key;
-extern NSString *VC64CustomCol9Key;
-extern NSString *VC64CustomCol10Key;
-extern NSString *VC64CustomCol11Key;
-extern NSString *VC64CustomCol12Key;
-extern NSString *VC64CustomCol13Key;
-extern NSString *VC64CustomCol14Key;
-extern NSString *VC64CustomCol15Key;
 
-@interface PreferenceController : NSWindowController {
-
-	C64Proxy *c64;
-	MyController *controller;
-		
+@interface PropertiesDialog : NSWindow
+{
+    C64Proxy *c64;
+    MyController *controller;
+    
 	/* System */
 	IBOutlet NSButtonCell *pal;
 	IBOutlet NSButtonCell *ntsc;
@@ -111,13 +97,10 @@ extern NSString *VC64CustomCol15Key;
 	IBOutlet NSColorWell *colorWell15;	
 }
 
-@property (assign) C64Proxy *c64;
-@property (assign) MyController *controller;
+- (void) initialize:(MyController *)mycontroller;
 
-- (void)updateMachineType:(int)type;
-- (void)updateSliderX:(float)newX Y:(float)newY Z:(float)newZ;
-- (void)updateColorWell:(NSColorWell *)well color:(int)rgba;
-- (void)updateColorWells:(VIC::ColorScheme)scheme;
+// Update methods
+- (void) update;
 
 // System
 - (IBAction)setPalAction:(id)sender;
@@ -133,10 +116,13 @@ extern NSString *VC64CustomCol15Key;
 // VIC
 - (IBAction)changeColorScheme:(id)sender;
 - (IBAction)setVideoFilterAction:(id)sender;
-- (IBAction)setColorAction:(id)sender;
 - (IBAction)setEyeXAction:(id)sender;
 - (IBAction)setEyeYAction:(id)sender;
 - (IBAction)setEyeZAction:(id)sender;
+
+// Action buttons
+- (IBAction)useAsDefaultAction:(id)sender;
+- (IBAction)factorySettingsAction:(id)sender;
 
 
 @end
