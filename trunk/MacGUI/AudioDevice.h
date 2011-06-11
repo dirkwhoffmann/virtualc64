@@ -18,6 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreAudio/AudioHardware.h>
+#import <AudioToolbox/AudioServices.h>
 
 class SID;
 

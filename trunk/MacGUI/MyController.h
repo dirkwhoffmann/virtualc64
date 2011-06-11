@@ -179,8 +179,8 @@ class Snapshot;
 	Speedometer *speedometer;		
 }
 
-@property C64Proxy *c64;
-@property (readonly) MyOpenGLView *screen;
+@property (assign) C64Proxy *c64;
+@property (assign,readonly) MyOpenGLView *screen;
 
 // User defaults
 + (void)registerStandardDefaults;
