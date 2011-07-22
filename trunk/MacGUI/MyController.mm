@@ -444,8 +444,10 @@
 		// CPU panel
 		sp, a, x, y,
 		// CIA panel
-		ciaDataPortA, ciaDataPortDirectionA, ciaDataPortB, ciaDataPortDirectionB,
-		todHours, todMinutes, todSeconds, todTenth, alarmHours, alarmMinutes, alarmSeconds, alarmTenth,
+		cia1DataPortA, cia1DataPortDirectionA, cia1DataPortB, cia1DataPortDirectionB,
+		tod1Hours, tod1Minutes, tod1Seconds, tod1Tenth, alarm1Hours, alarm1Minutes, alarm1Seconds, alarm1Tenth,
+		cia2DataPortA, cia2DataPortDirectionA, cia2DataPortB, cia2DataPortDirectionB,
+		tod2Hours, tod2Minutes, tod2Seconds, tod2Tenth, alarm2Hours, alarm2Minutes, alarm2Seconds, alarm2Tenth,
 		// VIC panel
 		VicSpriteX, VicSpriteY, VicSpriteColor, 
  		NULL };
@@ -456,7 +458,8 @@
 		// Memory panel
 		addr_search,
 		// CIA panel
-		ciaTimerA, ciaLatchedTimerA, ciaTimerB, ciaLatchedTimerB,
+		cia1TimerA, cia1LatchedTimerA, cia1TimerB, cia1LatchedTimerB,
+		cia2TimerA, cia2LatchedTimerA, cia2TimerB, cia2LatchedTimerB,
 		// VIC panel
 		VicRasterline, VicRasterInterrupt,
 		NULL };
@@ -497,12 +500,18 @@
 		pc, sp, a, x, y, 
 		N, Z, C, I, B, D, V,
 		// CIA panel
-		ciaDataPortA, ciaDataPortDirectionA, ciaTimerA, ciaLatchedTimerA, 
-		ciaRunningA, ciaOneShotA, ciaCountUnderflowsA, ciaSignalPendingA, ciaInterruptEnableA,
-		ciaDataPortB, ciaDataPortDirectionB, ciaTimerB, ciaLatchedTimerB, 
-		ciaRunningB, ciaOneShotB, ciaCountUnderflowsB, ciaSignalPendingB, ciaInterruptEnableB,
-		todHours, todMinutes, todSeconds, todTenth,
-		alarmHours, alarmMinutes, alarmSeconds, alarmTenth, todInterruptEnabled,
+		cia1DataPortA, cia1DataPortDirectionA, cia1TimerA, cia1LatchedTimerA, 
+		cia1RunningA, cia1OneShotA, cia1CountUnderflowsA, cia1SignalPendingA, cia1InterruptEnableA,
+		cia1DataPortB, cia1DataPortDirectionB, cia1TimerB, cia1LatchedTimerB, 
+		cia1RunningB, cia1OneShotB, cia1CountUnderflowsB, cia1SignalPendingB, cia1InterruptEnableB,
+		tod1Hours, tod1Minutes, tod1Seconds, tod1Tenth,
+		alarm1Hours, alarm1Minutes, alarm1Seconds, alarm1Tenth, tod1InterruptEnabled,
+		cia2DataPortA, cia2DataPortDirectionA, cia2TimerA, cia2LatchedTimerA, 
+		cia2RunningA, cia2OneShotA, cia2CountUnderflowsA, cia2SignalPendingA, cia2InterruptEnableA,
+		cia2DataPortB, cia2DataPortDirectionB, cia2TimerB, cia2LatchedTimerB, 
+		cia2RunningB, cia2OneShotB, cia2CountUnderflowsB, cia2SignalPendingB, cia2InterruptEnableB,
+		tod2Hours, tod2Minutes, tod2Seconds, tod2Tenth,
+		alarm2Hours, alarm2Minutes, alarm2Seconds, alarm2Tenth, tod2InterruptEnabled,
 		// VIC panel
 		VicSpriteX, VicSpriteY, VicSpriteColor, VicRasterline, VicRasterInterrupt, VicDX, VicDY,
 		NULL };
