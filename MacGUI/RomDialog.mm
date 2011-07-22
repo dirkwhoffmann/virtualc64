@@ -20,39 +20,6 @@
 
 @implementation RomDialog
 
-#if 0
--(void)awakeFromNib
-{
-	NSLog(@"RomDialog::awakeFromNib");
-
-	// Create clickable URL string
-	[learnMore setAllowsEditingTextAttributes: YES];
-	[learnMore setSelectable: YES];
- 	
-	NSURL* url = [NSURL URLWithString:@"http://www.dirkwhoffmann.de"];
- 	
-	
-	NSMutableAttributedString* attrString = [[NSMutableAttributedString alloc] initWithString:@"www.dirkwhoffmann.de/virtualC64/ROMs.html"];
-	NSRange range = NSMakeRange(0, [attrString length]);
- 	
-	[attrString beginEditing];
-	[attrString addAttribute:NSLinkAttributeName value:[url absoluteString] range:range];
- 	
-	// make the text appear in blue
-	[attrString addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:range];
- 	
-	// next make the text appear with an underline
-	[attrString addAttribute:
- 	 NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSSingleUnderlineStyle] range:range];
- 	
-	[attrString endEditing];
- 	
-	NSMutableAttributedString* string = [[NSMutableAttributedString alloc] initWithString:@"Learn more about compatible ROMs at "];
-	[string appendAttributedString:attrString];
-	
-	[learnMore setAttributedStringValue:string];	
-}
-#endif
 
 - (IBAction)helpAction:(id)sender
 {

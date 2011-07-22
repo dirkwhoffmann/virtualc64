@@ -103,40 +103,69 @@ class Snapshot;
 	IBOutlet NSButtonCell *romSource;
 	IBOutlet NSButtonCell *ioSource;	
 	
-	// Debug pabel (CIA)
-	IBOutlet NSPopUpButton *ciaSelector;
+	// Debug pabel (CIA)	
+	IBOutlet NSTextField *cia1DataPortA;
+	IBOutlet NSTextField *cia1DataPortDirectionA;
+	IBOutlet NSTextField *cia1TimerA;
+	IBOutlet NSTextField *cia1LatchedTimerA;
+	IBOutlet NSButton *cia1RunningA;
+	IBOutlet NSButton *cia1OneShotA;
+	IBOutlet NSButton *cia1CountUnderflowsA;
+	IBOutlet NSButton *cia1SignalPendingA;
+	IBOutlet NSButton *cia1InterruptEnableA;
 	
-	IBOutlet NSTextField *ciaDataPortA;
-	IBOutlet NSTextField *ciaDataPortDirectionA;
-	IBOutlet NSTextField *ciaTimerA;
-	IBOutlet NSTextField *ciaLatchedTimerA;
-	IBOutlet NSButton *ciaRunningA;
-	IBOutlet NSButton *ciaOneShotA;
-	IBOutlet NSButton *ciaCountUnderflowsA;
-	IBOutlet NSButton *ciaSignalPendingA;
-	IBOutlet NSButton *ciaInterruptEnableA;
+	IBOutlet NSTextField *cia1DataPortB;
+	IBOutlet NSTextField *cia1DataPortDirectionB;
+	IBOutlet NSTextField *cia1TimerB;
+	IBOutlet NSTextField *cia1LatchedTimerB;
+	IBOutlet NSButton *cia1RunningB;
+	IBOutlet NSButton *cia1OneShotB;
+	IBOutlet NSButton *cia1CountUnderflowsB;
+	IBOutlet NSButton *cia1SignalPendingB;
+	IBOutlet NSButton *cia1InterruptEnableB;
 	
-	IBOutlet NSTextField *ciaDataPortB;
-	IBOutlet NSTextField *ciaDataPortDirectionB;
-	IBOutlet NSTextField *ciaTimerB;
-	IBOutlet NSTextField *ciaLatchedTimerB;
-	IBOutlet NSButton *ciaRunningB;
-	IBOutlet NSButton *ciaOneShotB;
-	IBOutlet NSButton *ciaCountUnderflowsB;
-	IBOutlet NSButton *ciaSignalPendingB;
-	IBOutlet NSButton *ciaInterruptEnableB;
+	IBOutlet NSTextField *tod1Hours;
+	IBOutlet NSTextField *tod1Minutes;
+	IBOutlet NSTextField *tod1Seconds;
+	IBOutlet NSTextField *tod1Tenth;
 	
-	IBOutlet NSTextField *todHours;
-	IBOutlet NSTextField *todMinutes;
-	IBOutlet NSTextField *todSeconds;
-	IBOutlet NSTextField *todTenth;
+	IBOutlet NSTextField *alarm1Hours;
+	IBOutlet NSTextField *alarm1Minutes;
+	IBOutlet NSTextField *alarm1Seconds;
+	IBOutlet NSTextField *alarm1Tenth;
+	IBOutlet NSButton *tod1InterruptEnabled;
+
+    IBOutlet NSTextField *cia2DataPortA;
+	IBOutlet NSTextField *cia2DataPortDirectionA;
+	IBOutlet NSTextField *cia2TimerA;
+	IBOutlet NSTextField *cia2LatchedTimerA;
+	IBOutlet NSButton *cia2RunningA;
+	IBOutlet NSButton *cia2OneShotA;
+	IBOutlet NSButton *cia2CountUnderflowsA;
+	IBOutlet NSButton *cia2SignalPendingA;
+	IBOutlet NSButton *cia2InterruptEnableA;
 	
-	IBOutlet NSTextField *alarmHours;
-	IBOutlet NSTextField *alarmMinutes;
-	IBOutlet NSTextField *alarmSeconds;
-	IBOutlet NSTextField *alarmTenth;
-	IBOutlet NSButton *todInterruptEnabled;
+	IBOutlet NSTextField *cia2DataPortB;
+	IBOutlet NSTextField *cia2DataPortDirectionB;
+	IBOutlet NSTextField *cia2TimerB;
+	IBOutlet NSTextField *cia2LatchedTimerB;
+	IBOutlet NSButton *cia2RunningB;
+	IBOutlet NSButton *cia2OneShotB;
+	IBOutlet NSButton *cia2CountUnderflowsB;
+	IBOutlet NSButton *cia2SignalPendingB;
+	IBOutlet NSButton *cia2InterruptEnableB;
 	
+	IBOutlet NSTextField *tod2Hours;
+	IBOutlet NSTextField *tod2Minutes;
+	IBOutlet NSTextField *tod2Seconds;
+	IBOutlet NSTextField *tod2Tenth;
+	
+	IBOutlet NSTextField *alarm2Hours;
+	IBOutlet NSTextField *alarm2Minutes;
+	IBOutlet NSTextField *alarm2Seconds;
+	IBOutlet NSTextField *alarm2Tenth;
+	IBOutlet NSButton *tod2InterruptEnabled;
+
 	// Debug pabel (VIC)	
 	IBOutlet NSPopUpButton *VicVideoMode;
 	IBOutlet NSPopUpButton *VicScreenGeometry;

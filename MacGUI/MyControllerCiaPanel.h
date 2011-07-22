@@ -20,40 +20,67 @@
 
 @interface MyController(CiaPanel)
 
-- (IBAction)ciaSelectCiaAction:(id)sender;
+- (IBAction)cia1DataPortAAction:(id)sender;
+- (IBAction)cia1DataPortDirectionAAction:(id)sender;
+- (IBAction)cia1TimerAAction:(id)sender;
+- (IBAction)cia1LatchedTimerAAction:(id)sender;
+- (IBAction)cia1RunningAAction:(id)sender;
+- (IBAction)cia1OneShotAAction:(id)sender;
+- (IBAction)cia1CountUnterflowsAAction:(id)sender;
+- (IBAction)cia1SignalPendingAAction:(id)sender;
+- (IBAction)cia1InterruptEnableAAction:(id)sender;
 
-- (IBAction)ciaDataPortAAction:(id)sender;
-- (IBAction)ciaDataPortDirectionAAction:(id)sender;
-- (IBAction)ciaTimerAAction:(id)sender;
-- (IBAction)ciaLatchedTimerAAction:(id)sender;
-- (IBAction)ciaRunningAAction:(id)sender;
-- (IBAction)ciaOneShotAAction:(id)sender;
-- (IBAction)ciaCountUnterflowsAAction:(id)sender;
-- (IBAction)ciaSignalPendingAAction:(id)sender;
-- (IBAction)ciaInterruptEnableAAction:(id)sender;
+- (IBAction)cia1DataPortBAction:(id)sender;
+- (IBAction)cia1DataPortDirectionBAction:(id)sender;
+- (IBAction)cia1TimerBAction:(id)sender;
+- (IBAction)cia1LatchedTimerBAction:(id)sender;
+- (IBAction)cia1RunningBAction:(id)sender;
+- (IBAction)cia1OneShotBAction:(id)sender;
+- (IBAction)cia1CountUnterflowsBAction:(id)sender;
+- (IBAction)cia1SignalPendingBAction:(id)sender;
+- (IBAction)cia1InterruptEnableBAction:(id)sender;
 
-- (IBAction)ciaDataPortBAction:(id)sender;
-- (IBAction)ciaDataPortDirectionBAction:(id)sender;
-- (IBAction)ciaTimerBAction:(id)sender;
-- (IBAction)ciaLatchedTimerBAction:(id)sender;
-- (IBAction)ciaRunningBAction:(id)sender;
-- (IBAction)ciaOneShotBAction:(id)sender;
-- (IBAction)ciaCountUnterflowsBAction:(id)sender;
-- (IBAction)ciaSignalPendingBAction:(id)sender;
-- (IBAction)ciaInterruptEnableBAction:(id)sender;
+- (IBAction)tod1HoursAction:(id)sender;
+- (IBAction)tod1MinutesAction:(id)sender;
+- (IBAction)tod1SecondsAction:(id)sender;
+- (IBAction)tod1TenthAction:(id)sender;
+- (IBAction)tod1InterruptEnabledAction:(id)sender;
 
-- (IBAction)todHoursAction:(id)sender;
-- (IBAction)todMinutesAction:(id)sender;
-- (IBAction)todSecondsAction:(id)sender;
-- (IBAction)todTenthAction:(id)sender;
+- (IBAction)alarm1HoursAction:(id)sender;
+- (IBAction)alarm1MinutesAction:(id)sender;
+- (IBAction)alarm1SecondsAction:(id)sender;
+- (IBAction)alarm1TenthAction:(id)sender;
 
-- (IBAction)alarmHoursAction:(id)sender;
-- (IBAction)alarmMinutesAction:(id)sender;
-- (IBAction)alarmSecondsAction:(id)sender;
-- (IBAction)alarmTenthAction:(id)sender;
-- (IBAction)todInterruptEnabledAction:(id)sender;
+- (IBAction)cia2DataPortAAction:(id)sender;
+- (IBAction)cia2DataPortDirectionAAction:(id)sender;
+- (IBAction)cia2TimerAAction:(id)sender;
+- (IBAction)cia2LatchedTimerAAction:(id)sender;
+- (IBAction)cia2RunningAAction:(id)sender;
+- (IBAction)cia2OneShotAAction:(id)sender;
+- (IBAction)cia2CountUnterflowsAAction:(id)sender;
+- (IBAction)cia2SignalPendingAAction:(id)sender;
+- (IBAction)cia2InterruptEnableAAction:(id)sender;
 
-- (int)currentCIA;
+- (IBAction)cia2DataPortBAction:(id)sender;
+- (IBAction)cia2DataPortDirectionBAction:(id)sender;
+- (IBAction)cia2TimerBAction:(id)sender;
+- (IBAction)cia2LatchedTimerBAction:(id)sender;
+- (IBAction)cia2RunningBAction:(id)sender;
+- (IBAction)cia2OneShotBAction:(id)sender;
+- (IBAction)cia2CountUnterflowsBAction:(id)sender;
+- (IBAction)cia2SignalPendingBAction:(id)sender;
+- (IBAction)cia2InterruptEnableBAction:(id)sender;
+
+- (IBAction)tod2HoursAction:(id)sender;
+- (IBAction)tod2MinutesAction:(id)sender;
+- (IBAction)tod2SecondsAction:(id)sender;
+- (IBAction)tod2TenthAction:(id)sender;
+- (IBAction)tod2InterruptEnabledAction:(id)sender;
+
+- (IBAction)alarm2HoursAction:(id)sender;
+- (IBAction)alarm2MinutesAction:(id)sender;
+- (IBAction)alarm2SecondsAction:(id)sender;
+- (IBAction)alarm2TenthAction:(id)sender;
 
 - (void)refreshCIA;
 
