@@ -182,7 +182,7 @@ void JoystickManager::RemoveCallback( void *inContext, IOReturn inResult, void *
 	
 	if( _joysticks.find( devInfo.GetLocationID() ) == _joysticks.end() )
 	{
-		NSLog( @"%s: device %p (%s) not found in open list (%i)\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName() );
+		NSLog( @"%s: device %p (%s) not found in open list\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName() );
 		return;
 	}
 	
@@ -212,7 +212,7 @@ void JoystickManager::InputValueCallback( void *inContext, IOReturn inResult, vo
 	map<int, JoystickProxy>::iterator it;
 	if( ( it = _joysticks.find( devInfo.GetLocationID() ) ) == _joysticks.end() )
 	{
-		NSLog( @"%s: device %p (%s) not found in open list (%i)\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName() );
+		NSLog( @"%s: device %p (%s) not found in open list\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName() );
 		return;
 	}
 	JoystickProxy &joystick = it->second;
@@ -240,7 +240,7 @@ void JoystickManager::InputValueCallback( void *inContext, IOReturn inResult, vo
 	}
 	else if( ( elementType == kIOHIDElementTypeInput_Axis ) || ( elementType == kIOHIDElementTypeInput_Misc /* why misc? */ ) )
 	{
-		if( ( elementPage == kHIDPage_GenericDesktop ) )
+		if( elementPage == kHIDPage_GenericDesktop )
 		{
 			// set values to conform to -1 / 0 / 1
 			IOHIDElement_SetDoubleProperty( element, CFSTR( kIOHIDElementCalibrationMinKey ), -1 );

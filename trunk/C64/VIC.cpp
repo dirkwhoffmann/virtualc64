@@ -98,7 +98,7 @@ VIC::reset()
 		mcbase[i] = 0;
 		spriteShiftReg[i][0] = 0;
 		spriteShiftReg[i][1] = 0;
-		spriteShiftReg[i][3] = 0; 
+		spriteShiftReg[i][2] = 0; 
 	}
 	spriteOnOff = 0;
 	oldSpriteOnOff = 0;
@@ -153,7 +153,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
 		mcbase[i] = read8(buffer);
 		spriteShiftReg[i][0] = read8(buffer);
 		spriteShiftReg[i][1] = read8(buffer);
-		spriteShiftReg[i][3] = read8(buffer);
+		spriteShiftReg[i][2] = read8(buffer);
 	}
 	spriteOnOff = read8(buffer);
 	oldSpriteOnOff = read8(buffer);
@@ -199,7 +199,7 @@ VIC::saveToBuffer(uint8_t **buffer)
 		write8(buffer, mcbase[i]);
 		write8(buffer, spriteShiftReg[i][0]);
 		write8(buffer, spriteShiftReg[i][1]);
-		write8(buffer, spriteShiftReg[i][3]); 
+		write8(buffer, spriteShiftReg[i][2]); 
 	}
 	write8(buffer, spriteOnOff);
 	write8(buffer, oldSpriteOnOff);
@@ -253,15 +253,15 @@ VIC::dumpState()
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
 	msg("         SpriteOn : %02X ( ", spriteOnOff);
 	for (int i = 0; i < 8; i++) 
-		msg("%d ", spriteOnOff & (1 << i) != 0);
+		msg("%d ", (spriteOnOff & (1 << i)) != 0);
 	msg(")\n");
 	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
 	for (int i = 0; i < 8; i++) 
-		msg("%d ", spriteDmaOnOff & (1 << i) != 0 );
+		msg("%d ", (spriteDmaOnOff & (1 << i)) != 0 );
 	msg(")\n");
 	msg("      Y expansion : %02X ( ", expansionFF);
 	for (int i = 0; i < 8; i++) 
-		msg("%d ", expansionFF & (1 << i) != 0);
+		msg("%d ", (expansionFF & (1 << i)) != 0);
 	msg(")\n");
 	
 	msg("        IO memory : ");

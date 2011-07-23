@@ -43,27 +43,14 @@
 	[super dealloc];
 }
 
-- (NSString *) imageUID
-{
-	return imageUID;
-}
 - (NSString *) imageRepresentationType
 {
 	return IKImageBrowserNSImageRepresentationType;
 }
+
 - (id) imageRepresentation
 {
 	return image;
-}
-
-- (NSString*) imageTitle
-{
-	return imageTitle;
-}
-
-- (NSString*) imageSubtitle
-{
-	return imageSubtitle;
 }
 
 @end

@@ -122,8 +122,8 @@ Keyboard::dumpState()
 	msg("Keyboard matrix: ");
 	for (int i = 0; i < 8; i++) {
 		msg("%d %d %d %d %d %d %d %d\n                 ", 
-			  kbMatrix[i] & 0x01 != 0, kbMatrix[i] & 0x02 != 0, kbMatrix[i] & 0x04 != 0, kbMatrix[i] & 0x08 != 0,
-			  kbMatrix[i] & 0x10 != 0, kbMatrix[i] & 0x20 != 0, kbMatrix[i] & 0x40 != 0, kbMatrix[i] & 0x80 != 0);				
+			  (kbMatrix[i] & 0x01) != 0, (kbMatrix[i] & 0x02) != 0, (kbMatrix[i] & 0x04) != 0, (kbMatrix[i] & 0x08) != 0,
+			  (kbMatrix[i] & 0x10) != 0, (kbMatrix[i] & 0x20) != 0, (kbMatrix[i] & 0x40) != 0, (kbMatrix[i] & 0x80) != 0);				
 	}
 	msg("\n");
 }
@@ -150,7 +150,7 @@ void Keyboard::pressKey(uint8_t row, uint8_t col)
 void Keyboard::pressKey(char c)
 {
 	unsigned i = (unsigned)c;
-	if ((i >= 0 && i <= 127) && ASCII[i] != 0x0000) {
+	if (i <= 127 && ASCII[i] != 0x0000) {
 		uint16_t rowcol = ASCII[i];
 		if ((rowcol & SHIFT_FLAG) == SHIFT_FLAG) {
 			pressShiftKey();
@@ -171,7 +171,7 @@ void Keyboard::releaseKey(uint8_t row, uint8_t col)
 void Keyboard::releaseKey(char c)
 {
 	unsigned i = (unsigned)c;
-	if ((i >=0 && i <= 127) && ASCII[i] != 0x0000) {
+	if (i <= 127 && ASCII[i] != 0x0000) {
 		uint16_t rowcol = ASCII[i];
 		if ((rowcol & SHIFT_FLAG) == SHIFT_FLAG) {
 			releaseShiftKey();

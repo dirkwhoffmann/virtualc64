@@ -262,5 +262,4 @@ public:
 	void reset();
 };
 
-
 #endif

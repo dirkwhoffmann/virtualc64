@@ -623,7 +623,7 @@ void CIA::executeOneCycle()
 		}
 		
 		// Timer A output to timer B in cascade mode
-		if ((CRB & 0x61) == 0x41 || (CRB & 0x61) == 0x61 && CNT) {
+		if ((CRB & 0x61) == 0x41 || ((CRB & 0x61) == 0x61 && CNT)) {
 			delay |= CountB1;
 		}
 		delay |= LoadA1;

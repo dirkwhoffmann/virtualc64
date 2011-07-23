@@ -1004,7 +1004,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				SDKROOT = "";
 				VERSIONING_SYSTEM = "";
 			};
@@ -1022,7 +1023,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				SDKROOT = "";
 			};
@@ -1031,7 +1032,8 @@
 		504F83700A89E0D2009FA225 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				SDKROOT = "";
 			};
 			name = Default;

@@ -302,7 +302,7 @@ Cartridge::CartridgeType Cartridge::getCartridgeType()
 
 Cartridge::Chip *Cartridge::getChip(unsigned index)
 {
-	if (index >= 0 && index < numberOfChips) {
+	if (index < numberOfChips) {
 		return chip[index];
 	}
 	return NULL;
