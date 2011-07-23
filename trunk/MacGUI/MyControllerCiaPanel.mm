@@ -799,16 +799,16 @@
 	[cia2SignalPendingB setIntValue:[[c64 cia2] pendingSignalFlagB]];
 	[cia2InterruptEnableB setIntValue:[[c64 cia2] interruptEnableFlagB]];
 	
-	[tod1Hours setIntValue:[[c64 cia1] todHours]];
-	[tod1Minutes setIntValue:[[c64 cia1] todMinutes]];
-	[tod1Seconds setIntValue:[[c64 cia1] todSeconds]];
-	[tod1Tenth setIntValue:[[c64 cia1] todTenth]];
+	[tod2Hours setIntValue:[[c64 cia2] todHours]];
+	[tod2Minutes setIntValue:[[c64 cia2] todMinutes]];
+	[tod2Seconds setIntValue:[[c64 cia2] todSeconds]];
+	[tod2Tenth setIntValue:[[c64 cia2] todTenth]];
 	
-	[alarm1Hours setIntValue:[[c64 cia1] alarmHours]];
-	[alarm1Minutes setIntValue:[[c64 cia1] alarmMinutes]];
-	[alarm1Seconds setIntValue:[[c64 cia1] alarmSeconds]];
-	[alarm1Tenth setIntValue:[[c64 cia1] alarmTenth]];	
-	[tod1InterruptEnabled setIntValue:[[c64 cia1] isTodInterruptEnabled]];
+	[alarm2Hours setIntValue:[[c64 cia2] alarmHours]];
+	[alarm2Minutes setIntValue:[[c64 cia2] alarmMinutes]];
+	[alarm2Seconds setIntValue:[[c64 cia2] alarmSeconds]];
+	[alarm2Tenth setIntValue:[[c64 cia2] alarmTenth]];	
+	[tod2InterruptEnabled setIntValue:[[c64 cia2] isTodInterruptEnabled]];
 
 }
 
