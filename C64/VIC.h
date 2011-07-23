@@ -844,7 +844,7 @@ private:
 	
 	//! checkDmaLineCondition
 	/*! DEPRECATED. It's only used once and should be moved into the program code */
-	inline void checkDmaLineCondition() { if (dmaLine = (dmaLinesEnabled && isDMALine())) displayState = true; }
+	inline void checkDmaLineCondition() { if ((dmaLine = (dmaLinesEnabled && isDMALine()))) displayState = true; }
 	
 	//! Set BA line to low
 	/*! Note: The BA pin is directly connected to the RDY line of the CPU */

@@ -41,7 +41,7 @@
 {	
 	uint16_t addr;
 	uint8_t opcode;
-	char *mnemonic;
+	const char *mnemonic;
 	NSString *op = nil;
 	
     if (![anObject isKindOfClass:[NSNumber class]])

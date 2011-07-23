@@ -283,5 +283,3 @@ public:
 };
 
 #endif
-
-	
