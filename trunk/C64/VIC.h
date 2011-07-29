@@ -56,8 +56,7 @@ public:
 		GODOT           = 0x08,
 		C64SALLY        = 0x09,
 		PEPTO           = 0x0A,
-		GRAYSCALE       = 0x0B,
-		CUSTOM_PALETTE  = 0xFF
+		GRAYSCALE       = 0x0B
 	};
 	
 	//! Display mode

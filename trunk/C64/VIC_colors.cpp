@@ -21,7 +21,8 @@
 void 
 VIC::setColorScheme(ColorScheme scheme)
 {
-    assert(scheme >= 0 && scheme < 12);
+    if (scheme < 0 || scheme > 11) 
+        scheme = CCS64;
 
     uint8_t rgb[12][16][3] = {
         
