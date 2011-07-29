@@ -142,7 +142,7 @@
 	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Y] forKey:VC64EyeY];
 	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Z] forKey:VC64EyeZ];
 
-	[defaultValues setObject:[NSNumber numberWithInt:VIC::CUSTOM_PALETTE] forKey:VC64ColorSchemeKey];
+	[defaultValues setObject:[NSNumber numberWithInt:VIC::CCS64] forKey:VC64ColorSchemeKey];
 	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64VideoFilterKey];	
 		
 	// Register dictionary
