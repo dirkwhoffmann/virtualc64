@@ -202,13 +202,6 @@ void checkForOpenGLErrors()
 	checkForOpenGLErrors();
 	
 	// Create background texture
-	// NSImage *bgImage = [NSImage imageNamed:@"c64"];
-	// NSImage *bgImageResized = [self extendImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
-	// NSImage *bgImage = [NSImage imageNamed:@"C64G_P8"];
-	//NSImage *bgImage = [NSImage imageNamed:@"c64orig"];
-	
-	// NSString *file = @"/Library/Desktop Pictures/Nature/Aurora.jpg";
-	// NSImage *bgImage = [[NSImage alloc] initWithContentsOfFile:file];
 	NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
 	NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
 	NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
@@ -451,30 +444,33 @@ void checkForOpenGLErrors()
 
 - (NSImage *) expandImage: (NSImage *)image toSize:(NSSize) size
 {
-	assert(image != nil);
-
 	NSImage *newImage = [[NSImage alloc] initWithSize:size];
-	[newImage setFlipped:YES];
-	[newImage lockFocus];
-	[image drawInRect:NSMakeRect(0,0,size.width,size.height) 
-			fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
-			operation:NSCompositeSourceOver fraction:1.0];
-	[newImage unlockFocus];
-	return newImage;
+
+	if (image) {
+        [newImage setFlipped:YES];
+        [newImage lockFocus];
+        [image drawInRect:NSMakeRect(0,0,size.width,size.height) 
+                 fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
+                operation:NSCompositeSourceOver fraction:1.0];
+        [newImage unlockFocus];
+    }
+    
+    return newImage;
 }
 
 - (NSImage *) extendImage: (NSImage *)image toSize:(NSSize) size
-{
-	assert(image != nil);
-	
+{	
 	NSImage *newImage = [[NSImage alloc] initWithSize:size];
-	[newImage setFlipped:YES];
-	[newImage lockFocus];
-	[image drawInRect:NSMakeRect(0,0,[image size].width, [image size].height) 
-			 fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
-			operation:NSCompositeSourceOver fraction:1.0];
-	[newImage unlockFocus];
-	return newImage;
+    
+    if (image) {
+        [newImage setFlipped:YES];
+        [newImage lockFocus];
+        [image drawInRect:NSMakeRect(0,0,[image size].width, [image size].height) 
+                 fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
+                operation:NSCompositeSourceOver fraction:1.0];
+        [newImage unlockFocus];
+    }
+    return newImage;
 }
 
 - (int) makeTexture:(NSImage *)image
