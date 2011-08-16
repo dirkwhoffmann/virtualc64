@@ -109,7 +109,12 @@
 {
 	// Load user defaults
 	[self loadUserDefaults];
-		
+
+    // Enable fullscreen mode
+    // Need to
+    // 1) hide toolbar 2) hide bottom row 3) use display aspect ratio
+    [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+    
 	// Launch emulator
 	[c64 run];
 }
