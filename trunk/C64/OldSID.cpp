@@ -43,16 +43,16 @@ enum {
 	FILT_ALL
 };
 
-const float SID::volumeLevelTable[16] = { 0.0f, 0.07f, 0.13f, 0.20f, 0.27f, 0.33f,
+const float OldSID::volumeLevelTable[16] = { 0.0f, 0.07f, 0.13f, 0.20f, 0.27f, 0.33f,
  0.4f, 0.47f, 0.53f, 0.6f, 0.67f, 0.73f, 0.8f, 0.87f, 0.93f, 1.0f };
 
 
-SID::SID()
+OldSID::OldSID()
 {
 	name = "SID";
 
 	debug(2, "  Creating SID at address %p...\n", this);
-
+    
 	// link voices together
 	voice[0].mod_by = &voice[2];
 	voice[1].mod_by = &voice[0];
@@ -62,17 +62,11 @@ SID::SID()
 	voice[2].mod_to = &voice[0];
 	
 	// set default samplerate
-	setSamplerate(44100);
-	
-	// use NTSC
-	setVideoMode(true);
-	
+	setSampleRate(44100);
+		
 	// by default SID doesn't filter voices
 	filtersEnabled = false;
-	
-	// by default SID treats buffer as interleaved buffer
-	mono = false;
-		
+			
 	// init ringbuffer
 	bufferSize = 12288;
 	ringBuffer = new float[bufferSize];
@@ -81,14 +75,14 @@ SID::SID()
 	volumeControl = 0.1;
 }
 
-SID::~SID()
+OldSID::~OldSID()
 {
 	delete ringBuffer;
 	ringBuffer = writeBuffer = readBuffer = endBuffer = NULL;
 }
 
 void
-SID::reset() 
+OldSID::reset() 
 {
 	debug(2, "  Resetting SID...\n");
 
@@ -129,7 +123,7 @@ SID::reset()
 	
 }
 
-void SID::setSamplerate(uint32_t sr) 
+void OldSID::setSampleRate(uint32_t sr) 
 {
 	this->samplerate = sr;
 	for (int i = 0; i < 3; i++)
@@ -141,7 +135,7 @@ void SID::setSamplerate(uint32_t sr)
 
 
 void 
-SID::setVideoMode(uint32_t frequency)
+OldSID::setClockFrequency(uint32_t frequency)
 {
 	cpuFrequency = frequency;
 	
@@ -153,7 +147,7 @@ SID::setVideoMode(uint32_t frequency)
 }
 
 void 
-SID::loadFromBuffer(uint8_t **buffer)
+OldSID::loadFromBuffer(uint8_t **buffer)
 {
 	debug(2, "  Loading SID state...\n");
 
@@ -164,7 +158,7 @@ SID::loadFromBuffer(uint8_t **buffer)
 }
 
 void
-SID::saveToBuffer(uint8_t **buffer)
+OldSID::saveToBuffer(uint8_t **buffer)
 {
 	debug(2, "  Saving SID state...\n");
 
@@ -173,9 +167,9 @@ SID::saveToBuffer(uint8_t **buffer)
 }
 
 uint8_t 
-SID::peek(uint16_t addr)
+OldSID::peek(uint16_t addr)
 {	
-	switch(addr) 
+ 	switch(addr) 
 	{
 		case 0x19: // Potentiometer (paddle) x position
 		case 0x1A: // Potentiometer (paddle) y position
@@ -201,9 +195,9 @@ SID::peek(uint16_t addr)
 }
 
 void 
-SID::poke(uint16_t addr, uint8_t value)
+OldSID::poke(uint16_t addr, uint8_t value)
 {
-	lastByte = value; // local copy for peek()
+ 	lastByte = value; // local copy for peek()
 	
 	iomem[addr] = value; // store value in SID I/O Memory
 	
@@ -299,7 +293,7 @@ SID::poke(uint16_t addr, uint8_t value)
 		// volume/filter mode register
 		case 0x18:
 			// set master volume
-			this->masterVolume = SID::volumeLevelTable[(value & 0x0F)]; 
+			this->masterVolume = OldSID::volumeLevelTable[(value & 0x0F)]; 
 			// bit 7: muting voice 3
 			voice[2].mute = ((value & 0x80) >> 7);
 			
@@ -324,7 +318,7 @@ SID::poke(uint16_t addr, uint8_t value)
 
 
 bool 
-SID::execute(int elapsedCycles)
+OldSID::execute(int elapsedCycles)
 {
 	// get filter coefficients, so the emulator won't change
 	// them in the middle of our calculations
@@ -334,7 +328,7 @@ SID::execute(int elapsedCycles)
 	// calculate how many samples we have to generate for this video frame
 	// (at samplerate of 44,1kHz and NTSC video mode (60Hz) it should be about 735 samples) 
 	int samples = lroundf( elapsedCycles * this->samplerateCpuFrequencyRp );
-		
+
 	// store here how many samples we've generated in advance of callback
 	this->preCalcSamples += samples;
 	
@@ -419,7 +413,7 @@ SID::execute(int elapsedCycles)
 
 
 // generate triangle waveform
-float SID::triangleWave(SIDVoice* voice)
+float OldSID::triangleWave(SIDVoice* voice)
 {	
 	if (voice->getFreqRegValue() == 0)
 		return 0.0f;
@@ -446,7 +440,7 @@ float SID::triangleWave(SIDVoice* voice)
 }
 
 // generate sawtooth waveform
-float SID::sawtoothWave(SIDVoice* voice)
+float OldSID::sawtoothWave(SIDVoice* voice)
 {
 	if (voice->getFreqRegValue() == 0)
 		return 0.0f;
@@ -468,7 +462,7 @@ float SID::sawtoothWave(SIDVoice* voice)
 	return saw;
 }
 
-float SID::pulseWave(SIDVoice* voice)
+float OldSID::pulseWave(SIDVoice* voice)
 {
 	// frequency is zero -> no sound output
 	if (voice->getFreqRegValue() == 0)
@@ -491,7 +485,7 @@ float SID::pulseWave(SIDVoice* voice)
 	return pulse;
 }
 
-float SID::randomWave(SIDVoice* voice)
+float OldSID::randomWave(SIDVoice* voice)
 {
 	// number of samples with same random values depends from value of frequency register
 	uint32_t samples = lroundf(this->samplerate/((float)voice->getFreqRegValue()));
@@ -510,7 +504,7 @@ float SID::randomWave(SIDVoice* voice)
 }
 
 
-float SID::noise(SIDVoice* voice)
+float OldSID::noise(SIDVoice* voice)
 {
 	long bit22;	/* Temp. to keep bit 22 */
 	long bit17;	/* Temp. to keep bit 17 */
@@ -545,16 +539,15 @@ float SID::noise(SIDVoice* voice)
 
 }
 
-inline long SID::bit(long val, uint8_t bitnr)
+inline long OldSID::bit(long val, uint8_t bitnr)
 {
 	return (val & (1<<bitnr))? 1:0;
 }
 
 
-
 // this method is needed for the ring modulation
 // we need a symmetrical square wave
-float SID::squareWave(SIDVoice* voice)
+float OldSID::squareWave(SIDVoice* voice)
 {
 	float pmod = voice->counter * 360.0;
 	float pulse;
@@ -570,74 +563,57 @@ float SID::squareWave(SIDVoice* voice)
 	return pulse;
 }
 
-void 
-SID::mix(float* myOutBuffer, uint32_t size)
-{	
-	if (isRunning() && startPlaying) // C64 running && ringbuffer has enough advance
-	{
-		if (mono) // myOutBuffer is noninterleaved
-		{
-			for (unsigned i = 0; i < size; i++)
-			{
-				// fill buffer
-				myOutBuffer[i] = readData();
-			}
-		}
-		else // myOutBufer is a interleaved buffer
-		{
-			for (unsigned i = 0; i < size; i++)
-			{
-				// fill buffer
-				float value = readData();
-				myOutBuffer[i*2] = value;		// left channel	
-				myOutBuffer[i*2+1] = value;		// right channel
-			}
-		}
-	}
-	else // C64 paused there won't be any reasonable data in buffer
-	{
-		if (mono) // myOutBuffer is noninterleaved
-		{
-			for (unsigned i = 0; i < size; i++)
-			{
-				// fill buffer with no sound
-				myOutBuffer[i] = 0.0f;
-			}
-		}
-		else // myOutBufer is a interleaved Buffer
-		{
-			for (unsigned i = 0; i < size; i++)
-			{
-				// fill buffer with no sound
-				myOutBuffer[i*2] = 0.0f;		// left channel	
-				myOutBuffer[i*2+1] = 0.0f;		// right channel
-			}
-		}
-	}
+void OldSID::handleBufferException()
+{
+    size_t delay = 8*735;
+    
+    callbackStarted = false;
+    startPlaying = false;
+
+//    readBuffer = writeBuffer = ringBuffer;
+//    preCalcSamples = 0;
+    // Add some delay
+
+    memset(ringBuffer, 0, delay); 
+    readBuffer = ringBuffer;
+    writeBuffer = ringBuffer + delay;
 }
 
+float OldSID::readData()
+{	
+	float value;
+    
+    if (readBuffer == writeBuffer) {
+        fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%d)\n", readBuffer - ringBuffer);
+        handleBufferException();
+    }
 
-float SID::readData()
-{		
-	//! There's no error handling in case that the reading pointer gets ahead
-	//! of the writing pointer, because of real time demand.
-	//! If this happens CPU emulation doesn't compute at 100 percent on average.
-	if (readBuffer == (endBuffer+1)) // end of buffer reached
-		readBuffer = ringBuffer; // pass 'go' and don't collect $200	
-	float value = *readBuffer;
-	readBuffer++;
+    value = *readBuffer;
+    
+    if (readBuffer == endBuffer)
+        readBuffer = ringBuffer;
+    else 
+        readBuffer++;
+
 	return value;
 }
 	
-void SID::writeData(float data)
+void OldSID::writeData(float data)
 {
-	if (writeBuffer == (endBuffer+1)) // end of buffer reached
-		writeBuffer = ringBuffer; // pass 'go' and don't collect $200
-	*writeBuffer = data;
-	writeBuffer++;
+    if (readBuffer == writeBuffer) {
+        fprintf(stderr, "SID RINGBUFFER OVERFLOW (%d)\n", writeBuffer - ringBuffer);
+        handleBufferException();
+    }
+
+    *writeBuffer = data;
+    
+    if (writeBuffer == endBuffer)
+        writeBuffer = ringBuffer;
+    else 
+        writeBuffer++;
 }
 	
-uint8_t SID::getOsciOutput()
+uint8_t OldSID::getOsciOutput()
 {
 	// get wavevalue
 	float output = 0.0f;
@@ -662,18 +638,17 @@ uint8_t SID::getOsciOutput()
 	return lroundf( (output + 1.0f) * 127.5f );
 }
 
-uint8_t SID::getEGOutput()
+uint8_t OldSID::getEGOutput()
 {
 	return lroundf(voice[2].getEnvelopeValue() * 255);
 }
 
-void SID::dumpState()
+void OldSID::dumpState()
 {
 	msg("SID\n");
 	msg("---\n\n");
 	msg("   Sample rate : %d\n", samplerate);
 	msg(" CPU frequency : %d\n", cpuFrequency);
-	msg("        Buffer : %s\n", mono ? "continous" : "interleaved");
 	msg("   Buffer size : %d\n", bufferSize);
 	msg("        Volume : %f\n", masterVolume);
 	msg("  Sound filter : %s\n", filtersEnabled ? "on" : "off");
@@ -688,7 +663,7 @@ void SID::dumpState()
 }
 
 
-void SID::computeFilter()
+void OldSID::computeFilter()
 {
 	//! The filters implementation is taken from SID implementation of Frodo (http://frodo.cebix.net/)
 	//! because it would go beyond scope of my student research project (there are a lot of empirical values).

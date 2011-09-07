@@ -19,8 +19,9 @@
 #import <Cocoa/Cocoa.h>
 #import <CoreAudio/AudioHardware.h>
 #import <AudioToolbox/AudioServices.h>
+#include "sid.h"
 
-class SID;
+class OldSID;
 
 #define MPERR_DETECTING_DEVICE			-1
 #define MPERR_OSX_UNKNOWN_DEVICE		-2
@@ -29,6 +30,9 @@ class SID;
 #define MPERR_OSX_BUFFER_ALLOC			-5
 #define MPERR_OSX_ADD_IO_PROC			-6
 #define MPERR_OSX_DEVICE_START			-7
+
+//! true if audio hardware only supports mono playback
+extern bool mono;
 
 @interface AudioDevice : NSObject {
 
@@ -46,10 +50,7 @@ class SID;
 	int				lastError;
 	
 	//! true if callback is installed
-	bool			ioProcIsInstalled;
-	
-	//! true if audio hardware only supports mono playback
-	bool			bufferMono;
+	bool			ioProcIsInstalled;	
 }
 
 //! initializes the audio hardware
@@ -57,9 +58,8 @@ class SID;
 	Supported are stereo und mono audio devices.
 	If the selected samplerate of SID isn't supported by hardware 
 	the samplerate of SID will be changed to native frequency of audio hardware
-	\param sid pointer to SID instance generating the audio data for us
 */
--(id)initWithSID:(SID *)sid;
+-(id)initWithC64:(C64 *)c64;
 
 //! starts playback (callback mechanism) of generated sound
 /*! 
