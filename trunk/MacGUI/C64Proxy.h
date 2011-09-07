@@ -304,8 +304,14 @@
 
 - (id) initWithSID:(SIDWrapper *)s;
 - (void) dump;
-- (void) enableFilters:(bool)b;
-- (void) enableReSID:(bool)b;
+- (bool) audioFilter;
+- (void) setAudioFilter:(bool)b;
+- (bool) reSID;
+- (void) setReSID:(bool)b;
+- (int) samplingMethod;
+- (void) setSamplingMethod:(int)value;
+- (int) chipModel;
+- (void) setChipModel:(int)value;
 
 @end
 

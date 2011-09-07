@@ -256,7 +256,7 @@ public:
 		By default filters of SID are disabled.
 		\param enable True to switch filters on, else false.
 	*/
-	void enableFilters(bool enable){this->filtersEnabled = enable;}
+	void setAudioFilter(bool enable) {this->filtersEnabled = enable;}
 
 	//! Return volumeControl value
 	float getVolumeControl() { return volumeControl; }

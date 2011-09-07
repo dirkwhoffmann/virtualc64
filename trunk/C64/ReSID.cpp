@@ -25,16 +25,22 @@ ReSID::ReSID()
 	debug(2, "  Creating ReSID at address %p...\n", this);
 
     sid = new SID();
-    sid->enable_filter(false);
+    
+    // Default chip model
+    chipModel = MOS8580;
+    sid->set_chip_model(chipModel);
+        
+    // Default audio filter settings
+    audioFilter = false;
+    sid->enable_filter(audioFilter);
     sid->enable_external_filter(false);
-    sid->set_chip_model(MOS8580);
     	
-	// set default samplerate
-	setSampleRate(44100);
-		
-	// by default SID doesn't filter voices
-	// filtersEnabled = false;
-			
+    // Default sample parameters
+	sampleRate = 44100;
+    cpuFrequency = CPU::CLOCK_FREQUENCY_PAL; 
+    samplingMethod = SAMPLE_FAST;
+    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
+					
 	// init ringbuffer
 	bufferSize = 12288;
 	ringBuffer = new float[bufferSize];
@@ -63,25 +69,68 @@ ReSID::reset()
 }
 
 void 
-ReSID::enableFilters(bool enable)
+ReSID::setAudioFilter(bool enable)
 {
+    audioFilter = enable;
     sid->enable_filter(enable);
 }
 
 void 
 ReSID::setSampleRate(uint32_t sr) 
 {
-	samplerate = sr;
+	sampleRate = sr;
+    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
 }
 
+void 
+ReSID::setSamplingMethod(sampling_method method)
+{
+    switch (method) {
+        case SAMPLE_FAST:
+            debug("Using sample method SAMPLE_FAST\n");
+            break;
+        case SAMPLE_INTERPOLATE:
+            debug("Using sample method SAMPLE_INTERPOLATE\n");
+            break;
+        case SAMPLE_RESAMPLE_INTERPOLATE:
+            debug("Using sample method SAMPLE_RESAMPLE_INTERPOLATE\n");
+            break;
+        case SAMPLE_RESAMPLE_FAST:
+            debug("Using sample method SAMPLE_RESAMPLE_FAST\n");
+            break;
+        default:
+            warn("Unknown sample method. Using SAMPLE_FAST\n");
+            method = SAMPLE_FAST;
+    }
+    
+    samplingMethod = method;
+    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate); 
+}
+
+void 
+ReSID::setChipModel(chip_model model)
+{
+    switch (model) {
+        case MOS6581:
+            debug("Plugging in MOS6581\n");
+            break;
+        case MOS8580:
+            debug("Plugging in MOS8580\n");
+            break;
+        default:
+            warn("Unknown chip model. Using  MOS8580\n");
+            model = MOS8580;
+    }
+    
+    chipModel = model;
+    sid->set_chip_model(model);
+}
 
 void 
 ReSID::setClockFrequency(uint32_t frequency)
-{
-    sid->set_sampling_parameters(frequency, SAMPLE_FAST, 44100);
-    // reSID->adjust_sampling_frequency(frequency);
-
+{ 
 	cpuFrequency = frequency;
+    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
 }
 
 void 
@@ -173,7 +222,7 @@ void
 ReSID::writeData(float data)
 {
     if (readBuffer == writeBuffer) {
-        fprintf(stderr, "SID RINGBUFFER OVERFLOW (%d)\n", writeBuffer - ringBuffer);
+        // fprintf(stderr, "SID RINGBUFFER OVERFLOW (%d)\n", writeBuffer - ringBuffer);
         handleBufferException();
     }
 
@@ -190,7 +239,7 @@ ReSID::dumpState()
 {
 	msg("SID\n");
 	msg("---\n\n");
-	msg("   Sample rate : %d\n", samplerate);
+	msg("   Sample rate : %d\n", sampleRate);
 	msg(" CPU frequency : %d\n", cpuFrequency);
 	msg("   Buffer size : %d\n", bufferSize);
 	msg("\n");

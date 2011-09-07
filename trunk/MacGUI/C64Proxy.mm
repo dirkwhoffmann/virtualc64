@@ -337,8 +337,14 @@
 }
 
 - (void) dump { sid->dumpState(); }
-- (void) enableFilters:(bool)b { sid->enableFilters(b); }
-- (void) enableReSID:(bool)b { sid->enableReSID(b); }
+- (bool) audioFilter { return sid->getAudioFilter(); }
+- (void) setAudioFilter:(bool)b { sid->setAudioFilter(b); }
+- (bool) reSID { return sid-> getReSID(); }
+- (void) setReSID:(bool)b { sid->setReSID(b); }
+- (int) samplingMethod { return (int)(sid->getSamplingMethod()); }
+- (void) setSamplingMethod:(int)value { sid->setSamplingMethod((sampling_method)value); }
+- (int) chipModel { return (chip_model)(sid->getChipModel()); }
+- (void) setChipModel:(int)value {sid->setChipModel((chip_model)value); }
 
 @end
 
