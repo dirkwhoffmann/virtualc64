@@ -45,7 +45,7 @@
 #include "C64Memory.h"
 #include "VC1541Memory.h"
 #include "VIC.h"
-#include "SID.h"
+#include "SIDWrapper.h"
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
@@ -177,7 +177,7 @@ public:
 	CIA2 *cia2;
 	
 	//! Reference to the connected sound interface device (SID).
-	SID *sid;
+	SIDWrapper *sid;
 	
 	//! Reference to the connected virtual keyboard.
 	Keyboard *keyboard;
@@ -303,7 +303,12 @@ public:
 
 	//! Setter for warpLoad
 	void setWarpLoad(bool b);
-	
+
+    //! Returns sample rate of sound chip in Hz
+    //uint32_t getSampleRate(); 
+
+	//! Set sample rate of sound chip in Hz
+    // void setSampleRate(uint32_t sr); 
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                       Loading and saving
@@ -478,7 +483,7 @@ public:
 	//! Returns the time interval between two frames
 	inline void setFrameDelay(int delay) { frameDelay = delay; }
 
-
+    
 	// ---------------------------------------------------------------------------------------------
 	//                                             Misc
 	// ---------------------------------------------------------------------------------------------
