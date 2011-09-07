@@ -601,7 +601,7 @@ float OldSID::readData()
 void OldSID::writeData(float data)
 {
     if (readBuffer == writeBuffer) {
-        fprintf(stderr, "SID RINGBUFFER OVERFLOW (%d)\n", writeBuffer - ringBuffer);
+        // fprintf(stderr, "SID RINGBUFFER OVERFLOW (%d)\n", writeBuffer - ringBuffer);
         handleBufferException();
     }
 

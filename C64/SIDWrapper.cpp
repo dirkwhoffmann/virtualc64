@@ -37,7 +37,7 @@ SIDWrapper::~SIDWrapper()
 }
 
 void 
-SIDWrapper::enableReSID(bool enable)
+SIDWrapper::setReSID(bool enable)
 {
     if (enable)
         debug("Using ReSID library\n");
@@ -112,24 +112,27 @@ SIDWrapper::readData()
 }
 
 void 
-SIDWrapper::enableFilters(bool enable)
+SIDWrapper::setAudioFilter(bool enable)
 {
     if (enable)
         debug("Enabling audio filters\n");
     else
         debug("Disabling audio filters\n");
 
-    oldsid->enableFilters(enable);
-    resid->enableFilters(enable);
+    oldsid->setAudioFilter(enable);
+    resid->setAudioFilter(enable);
 }
 
-uint32_t 
-SIDWrapper::getSampleRate()
+void
+SIDWrapper::setSamplingMethod(sampling_method value)
 {
-    if (useReSID)
-        return resid->getSampleRate();
-    else
-        return oldsid->getSampleRate();
+     resid->setSamplingMethod(value);
+}
+
+void 
+SIDWrapper::setChipModel(chip_model value)
+{
+    resid->setChipModel(value);
 }
 
 void 

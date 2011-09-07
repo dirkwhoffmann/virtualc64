@@ -80,18 +80,39 @@ public:
     //! Get next sample from \a ringBuffer.
 	float readData();
 	
+    //! Returns true iff audio filters are enabled.
+	inline bool getAudioFilter() { return resid->getAudioFilter(); }
+
 	//! Enable or disable filters of SID.
-	void enableFilters(bool enable);
+	void setAudioFilter(bool enable);
 
+    //! Returns true, iff ReSID libray shall be used.
+    inline bool getReSID() { return useReSID; }
+    
     //! Enable or disable ReSID library.
-	void enableReSID(bool enable);
+	void setReSID(bool enable);
 
-	//! Returns samplerate of SID.
-	uint32_t getSampleRate();
+    //! Get sampling method
+    inline sampling_method getSamplingMethod() { return resid->getSamplingMethod(); }
+
+    //! Set sampling method (ReSID only)
+    void setSamplingMethod(sampling_method value);
+    
+    //! Get chip model 
+    inline chip_model getChipModel() { return resid->getChipModel(); }
+
+    //! Set chip model (ReSID only)
+    void setChipModel(chip_model value);
+
+    //! Return samplerate.
+	inline uint32_t getSampleRate() { return resid->getSampleRate(); }
 
 	//! Sets samplerate of SID and it's 3 voices.
 	void setSampleRate(uint32_t sr);
-	
+
+    //! Get clock frequency
+	inline uint32_t getClockFrequency() { return resid->getClockFrequency(); }	
+    
 	//! Set clock frequency
 	void setClockFrequency(uint32_t frequency);	
 };

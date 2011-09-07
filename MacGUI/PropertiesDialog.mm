@@ -22,21 +22,19 @@
 
 /* System */
 NSString *VC64PALorNTSCKey    = @"VC64PALorNTSCKey";
-// NSString *VC64IllegalInstrKey = @"VC64IllegalInstrKey";
-// NSString *VC64FastResetKey    = @"VC64FastResetKey";
 NSString *VC64BasicRomFileKey = @"VC64BasicRomFileKey";
 NSString *VC64CharRomFileKey  = @"VC64CharRomFileKey";
 NSString *VC64KernelRomFileKey= @"VC64KernelRomFileKey";
 NSString *VC64VC1541RomFileKey= @"VC64VC1541RomFileKey";
 
 /* Peripherals */
-//NSString *VC64Real1541Key     = @"VC64Real1541Key";
 NSString *VC64WarpLoadKey     = @"VC64WarpLoadKey";
 
 /* Audio */
-//NSString *VC64SIDVolumeKey    = @"VC64SIDVolumeKey";
 NSString *VC64SIDFilterKey    = @"VC64SIDFilterKey";
 NSString *VC64SIDReSIDKey     = @"VC64SIDReSIDKey";
+NSString *VC64SIDChipModelKey = @"VC64SIDChipModelKey";
+NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 
 /* Video */
 NSString *VC64EyeX            = @"VC64EyeX";
@@ -69,7 +67,11 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 	[c64 setWarpLoad:true];
 	
 	// Audio
-	
+	[[c64 sid] setReSID:YES];
+    [[c64 sid] setAudioFilter:NO];
+    [[c64 sid] setChipModel:1];
+    [[c64 sid] setSamplingMethod:0];
+    
 	// Video     
     [[c64 vic] setColorScheme:VIC::CCS64];
     
@@ -113,19 +115,31 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 - (IBAction)SIDFilterAction:(id)sender
 {
 	if ([sender state]) {
-		[[c64 sid] enableFilters:true];
+		[[c64 sid] setAudioFilter:true];
 	} else {
-		[[c64 sid] enableFilters:false];
+		[[c64 sid] setAudioFilter:false];
 	}
 }
 
 - (IBAction)SIDReSIDAction:(id)sender
 {
 	if ([sender state]) {
-		[[c64 sid] enableReSID:true];
+		[[c64 sid] setReSID:true];
 	} else {
-		[[c64 sid] enableReSID:false];
+		[[c64 sid] setReSID:false];
 	}
+}
+
+- (IBAction)SIDSamplingMethodAction:(id)sender
+{
+    int value = [[sender selectedItem] tag];
+    [[c64 sid] setSamplingMethod:value];
+}
+
+- (IBAction)SIDChipModelAction:(id)sender
+{
+    int value = [[sender selectedItem] tag];
+    [[c64 sid] setChipModel:value];
 }
 
 - (IBAction)changeColorScheme:(id)sender
@@ -180,8 +194,14 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 	[warpLoad setState:[c64 warpLoad]];
 	
 	/* Audio */
-     
+    [SIDUseReSID setState:[[c64 sid] reSID]];
+    [SIDFilter setState:[[c64 sid] audioFilter]];
+    [SIDChipModel selectItemWithTag:[[c64 sid] chipModel]];
+    [SIDSamplingMethod selectItemWithTag:[[c64 sid] samplingMethod]];
+
 	/* Video */
+    [colorScheme selectItemWithTag:[[c64 vic] colorScheme]];
+
     [eyeXSlider setFloatValue:[[controller screen] eyeX]]; 
     [eyeYSlider setFloatValue:[[controller screen] eyeY]]; 
     [eyeZSlider setFloatValue:[[controller screen] eyeZ]]; 

@@ -140,7 +140,10 @@
 	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64WarpLoadKey];
 	
 	// Audio
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64SIDFilterKey];
+	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64SIDReSIDKey];
+	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:VC64SIDFilterKey];
+	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64SIDChipModelKey];
+	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:VC64SIDSamplingMethodKey];
 	
 	// Video
 	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_X] forKey:VC64EyeX];
@@ -175,7 +178,10 @@
 	[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
 	
 	// Audio
-	// [c64 sidEnableFilter:[defaults boolForKey:VC64SIDFilterKey]];
+	[[c64 sid] setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
+	[[c64 sid] setAudioFilter:[defaults boolForKey:VC64SIDFilterKey]];
+	[[c64 sid] setChipModel:[defaults boolForKey:VC64SIDChipModelKey]];
+	[[c64 sid] setSamplingMethod:[defaults boolForKey:VC64SIDSamplingMethodKey]];
 	
 	// Video 
 	[screen setEyeX:[defaults floatForKey:VC64EyeX]];
@@ -203,7 +209,11 @@
 	[defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
 	
 	// Audio
-	
+	[defaults setBool:[[c64 sid] reSID] forKey:VC64SIDReSIDKey];
+	[defaults setBool:[[c64 sid] audioFilter] forKey:VC64SIDFilterKey];
+	[defaults setBool:[[c64 sid] chipModel] forKey:VC64SIDChipModelKey];
+	[defaults setBool:[[c64 sid] samplingMethod] forKey:VC64SIDSamplingMethodKey];
+    
 	// Video 
     [defaults setFloat:[screen eyeX] forKey:VC64EyeX];
     [defaults setFloat:[screen eyeY] forKey:VC64EyeY];
