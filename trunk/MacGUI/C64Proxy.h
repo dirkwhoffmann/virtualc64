@@ -304,8 +304,8 @@
 
 - (id) initWithSID:(SIDWrapper *)s;
 - (void) dump;
-// - (float) getVolumeControl;
-// - (void) setVolumeControl:(float)value;
+- (void) enableFilters:(bool)b;
+- (void) enableReSID:(bool)b;
 
 @end
 

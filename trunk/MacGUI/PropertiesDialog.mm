@@ -36,6 +36,7 @@ NSString *VC64WarpLoadKey     = @"VC64WarpLoadKey";
 /* Audio */
 //NSString *VC64SIDVolumeKey    = @"VC64SIDVolumeKey";
 NSString *VC64SIDFilterKey    = @"VC64SIDFilterKey";
+NSString *VC64SIDReSIDKey     = @"VC64SIDReSIDKey";
 
 /* Video */
 NSString *VC64EyeX            = @"VC64EyeX";
@@ -112,9 +113,18 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 - (IBAction)SIDFilterAction:(id)sender
 {
 	if ([sender state]) {
-		// [c64 setSIDFilter:true];
+		[[c64 sid] enableFilters:true];
 	} else {
-		// [c64 setSIDFilter:false];
+		[[c64 sid] enableFilters:false];
+	}
+}
+
+- (IBAction)SIDReSIDAction:(id)sender
+{
+	if ([sender state]) {
+		[[c64 sid] enableReSID:true];
+	} else {
+		[[c64 sid] enableReSID:false];
 	}
 }
 

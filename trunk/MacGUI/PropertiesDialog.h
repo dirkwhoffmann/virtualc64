@@ -44,6 +44,7 @@ extern NSString *VC64WarpLoadKey;
 
 /* Audio */
 extern NSString *VC64SIDFilterKey;
+extern NSString *VC64SIDReSIDKey;
 
 /* Video */
 extern NSString *VC64EyeX;
@@ -71,6 +72,7 @@ extern NSString *VC64VideoFilterKey;
 	
 	/* Audio */
 	IBOutlet NSButton *SIDFilter;
+	IBOutlet NSButton *SIDUseReSID;
 	
 	/* Video */
 	int customColor[16];
@@ -112,6 +114,7 @@ extern NSString *VC64VideoFilterKey;
 
 // SID
 - (IBAction)SIDFilterAction:(id)sender;
+- (IBAction)SIDReSIDAction:(id)sender;
 
 // VIC
 - (IBAction)changeColorScheme:(id)sender;

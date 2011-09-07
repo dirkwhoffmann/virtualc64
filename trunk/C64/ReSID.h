@@ -25,7 +25,7 @@
 class ReSID : public VirtualComponent {
 		
 private:
-    SID *reSID;
+    SID *sid;
     	
 	//! Samplerate of SID.
 	uint32_t samplerate;
@@ -49,7 +49,7 @@ private:
 	float* endBuffer;
 			
 	//! True if filters are enabled.
-	bool filtersEnabled;
+	// bool filtersEnabled;
 
 public:
 		
@@ -94,7 +94,7 @@ public:
 	void writeData(float data);
 
 	//! Enable or disable filters of SID.
-	void enableFilters(bool enable){this->filtersEnabled = enable;}
+	void enableFilters(bool enable);
 		
 	//! Set sample rate 
 	void setSampleRate(uint32_t sr);

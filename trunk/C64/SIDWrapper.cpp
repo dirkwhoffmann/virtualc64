@@ -36,6 +36,16 @@ SIDWrapper::~SIDWrapper()
     delete resid;
 }
 
+void 
+SIDWrapper::enableReSID(bool enable)
+{
+    if (enable)
+        debug("Using ReSID library\n");
+    else
+        debug("Using old SID implementation\n");
+    
+    useReSID = enable;
+}
 
 void 
 SIDWrapper::reset()
@@ -104,6 +114,11 @@ SIDWrapper::readData()
 void 
 SIDWrapper::enableFilters(bool enable)
 {
+    if (enable)
+        debug("Enabling audio filters\n");
+    else
+        debug("Disabling audio filters\n");
+
     oldsid->enableFilters(enable);
     resid->enableFilters(enable);
 }
