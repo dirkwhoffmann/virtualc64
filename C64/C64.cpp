@@ -91,7 +91,7 @@ C64::C64()
 	mem = new C64Memory();
 	cpu = new CPU();	
 	vic = new VIC();
-	sid = new SID();
+	sid = new SIDWrapper();
 	cia1 = new CIA1();
 	cia2 = new CIA2();
 	keyboard = new Keyboard();
@@ -251,7 +251,7 @@ C64::setPAL()
 	noOfRasterlines = VIC::PAL_RASTERLINES; 
 	cpuCyclesPerRasterline = VIC::PAL_CYCLES_PER_RASTERLINE;
 	vic->setPAL();
-	sid->setVideoMode(CPU::CLOCK_FREQUENCY_PAL);
+	sid->setClockFrequency(CPU::CLOCK_FREQUENCY_PAL);
 	frameDelay = (1000000 / fps);
 
 	resume();
@@ -266,7 +266,7 @@ C64::setNTSC()
 	noOfRasterlines = VIC::NTSC_RASTERLINES; 
 	cpuCyclesPerRasterline = VIC::NTSC_CYCLES_PER_RASTERLINE;
 	vic->setNTSC();
-	sid->setVideoMode(CPU::CLOCK_FREQUENCY_NTSC);
+	sid->setClockFrequency(CPU::CLOCK_FREQUENCY_NTSC);
 	frameDelay = (1000000 / fps);
 
 	resume();
@@ -294,7 +294,6 @@ C64::setWarpLoad(bool b)
 {
 	warpLoad = b;
 }
-
 
 // -----------------------------------------------------------------------------------------------
 //                                       Loading and saving

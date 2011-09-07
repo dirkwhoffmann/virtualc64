@@ -82,7 +82,7 @@ void SIDVoice::setAttackDecay(uint8_t value)
 void SIDVoice::setSustainRelease(uint8_t value)
 {
 	// set sustain level
-	float nSustainLevel = SID::volumeLevelTable[((value & 0xF0) >> 4)];
+	float nSustainLevel = OldSID::volumeLevelTable[((value & 0xF0) >> 4)];
 	
 	// if you try to increase ths sustain level above its current value while the voice is in the
 	// sustain phase, the voice will be turned off

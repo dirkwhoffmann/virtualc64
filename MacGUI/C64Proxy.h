@@ -299,13 +299,13 @@
 // --------------------------------------------------------------------------
 
 @interface SIDProxy : NSObject {
-	SID *sid;
+	SIDWrapper *sid;
 }
 
-- (id) initWithSID:(SID *)s;
+- (id) initWithSID:(SIDWrapper *)s;
 - (void) dump;
-- (float) getVolumeControl;
-- (void) setVolumeControl:(float)value;
+// - (float) getVolumeControl;
+// - (void) setVolumeControl:(float)value;
 
 @end
 

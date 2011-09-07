@@ -39,6 +39,8 @@
         ); \
     }
 
+bool mono;
+
 // my sound IO proc
 static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 							   const AudioTimeStamp* inNow,
@@ -51,12 +53,21 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
     register float*	myOutBuffer = (float*)outOutputData->mBuffers[0].mData;
     register UInt32 size = BUFFERSIZE;
 
-	// cast void pointer to SID*
-	SID* sid = reinterpret_cast<SID*>(inClientData);
-
+    C64 *c64 = reinterpret_cast<C64*>(inClientData);
+    
 	// get samples from SID
-	sid->mix(myOutBuffer, size);
-	
+    if (mono) {        
+        for (unsigned i = 0; i < size; i++) {
+            myOutBuffer[i] = c64->sid->readData();
+        }
+    } else {
+        for (unsigned i = 0; i < size; i++) {
+            float value = c64->sid->readData();
+            myOutBuffer[i*2] = value;		// left channel	
+            myOutBuffer[i*2+1] = value;		// right channel
+        }
+    }
+
     return noErr;
 }
 
@@ -64,8 +75,8 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 @implementation AudioDevice
 
 
-- (id)initWithSID:(SID *)sid
-{    
+- (id)initWithC64:(C64 *)c64
+{       
     AudioObjectPropertyAddress devicePropertyAddress = { 
         kAudioHardwarePropertyDefaultOutputDevice, 
         kAudioObjectPropertyScopeGlobal, 
@@ -116,15 +127,15 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		}
         
 		// try the selected mix frequency, if failure, fall back to native frequency and ajust SID's samplerate...
-		if (mySoundBasicDescription.mSampleRate != sid->getSamplerate())
+		if (mySoundBasicDescription.mSampleRate != c64->sid->getSampleRate())
 		{
 			// try adjusting changing samplerate to wanted samplerate
-			mySoundBasicDescription.mSampleRate = sid->getSamplerate();
+			mySoundBasicDescription.mSampleRate = c64->sid->getSampleRate();
 			SET_PROPS ();
 			// samplerate couldn't be changed
-			if (mySoundBasicDescription.mSampleRate != sid->getSamplerate())
+			if (mySoundBasicDescription.mSampleRate != c64->sid->getSampleRate())
 			{
-				sid->setSamplerate(mySoundBasicDescription.mSampleRate); // adjust SID's samplerate to native frequency of hardware
+				c64->sid->setSampleRate(mySoundBasicDescription.mSampleRate); // adjust SID's samplerate to native frequency of hardware
 				printf("Samplerate of SID was changed to native frequency of used audio hardware.");
 			}
 		}
@@ -133,6 +144,7 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		if (mySoundBasicDescription.mChannelsPerFrame != 2)
 		{
 			// change channels to stereo
+            mono = false;
 			mySoundBasicDescription.mChannelsPerFrame = 2;
 			SET_PROPS();
 			
@@ -147,8 +159,7 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 				}
 				else 
 				{
-					bufferMono = true;
-					sid->setMono();
+                    mono = true;
 				}
 			}
 		}
@@ -161,7 +172,7 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		}
 		
 		// prepare the buffers...
-		if (bufferMono)
+		if (mono)
 		{
 			inBufferSize = BUFFERSIZE;
 		}
@@ -185,7 +196,7 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		CHECK_ERROR
 			(
 			 MPERR_OSX_ADD_IO_PROC,
-			 AudioDeviceCreateIOProcID(mySoundDeviceID, OSX_AudioIOProc16Bit, sid, &mySoundIOProcID)
+			 AudioDeviceCreateIOProcID(mySoundDeviceID, OSX_AudioIOProc16Bit, c64, &mySoundIOProcID)
 			 );
 		
 		// callback successfully started

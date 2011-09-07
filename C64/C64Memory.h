@@ -24,7 +24,7 @@
 
 // Forward declarations
 class VIC;
-class SID;
+class SIDWrapper;
 class CIA1;
 class CIA2;
 
@@ -103,7 +103,7 @@ public:
 	VIC *vic; 
 	
 	//! Reference to the connected SID chip
-	SID *sid; 
+	SIDWrapper *sid; 
 	
 	//! References to CIA 1
 	CIA1 *cia1; 
@@ -226,7 +226,7 @@ public:
 
 	//! Bind the virtual memory to the specified SID chip.
 	/*! The binding is irreversible and the function "call once". */
-	void setSID(SID *s) { assert(sid == NULL); sid = s; }
+	void setSID(SIDWrapper *s) { assert(sid == NULL); sid = s; }
 	
 	//! Bind the virtual memory to the specified CIA chip (CIA 1).
 	/*! The binding is irreversible and the function "call once". */

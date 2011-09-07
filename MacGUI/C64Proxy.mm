@@ -329,7 +329,7 @@
 
 @implementation SIDProxy
 
-- (id) initWithSID:(SID *)s
+- (id) initWithSID:(SIDWrapper *)s
 {
     self = [super init];	
 	sid = s;	
@@ -338,6 +338,7 @@
 
 - (void) dump { sid->dumpState(); }
 
+#if 0
 - (float) getVolumeControl 
 {
 	return sid->getVolumeControl(); 
@@ -347,6 +348,7 @@
 { 
 	sid->setVolumeControl(value); 
 } 
+#endif
 
 @end
 
@@ -459,7 +461,7 @@
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:c64->floppy];
 	
 	// Initialize CoreAudio sound interface
-	if (!(audioDevice = [[AudioDevice alloc] initWithSID:c64->sid])) {
+	if (!(audioDevice = [[AudioDevice alloc] initWithC64:c64])) {
 		NSLog(@"WARNING: Couldn't initialize AudioDevice. Sound disabled.");
 	}
 		
