@@ -24,16 +24,16 @@ ReSID::ReSID()
 
 	debug(2, "  Creating ReSID at address %p...\n", this);
 
-    reSID = new SID();
-    reSID->enable_filter(false);
-    reSID->enable_external_filter(false);
-    reSID->set_chip_model(MOS8580);
+    sid = new SID();
+    sid->enable_filter(false);
+    sid->enable_external_filter(false);
+    sid->set_chip_model(MOS8580);
     	
 	// set default samplerate
 	setSampleRate(44100);
 		
 	// by default SID doesn't filter voices
-	filtersEnabled = false;
+	// filtersEnabled = false;
 			
 	// init ringbuffer
 	bufferSize = 12288;
@@ -43,7 +43,7 @@ ReSID::ReSID()
 
 ReSID::~ReSID()
 {
-    delete reSID;
+    delete sid;
 	delete ringBuffer;
 	ringBuffer = writeBuffer = readBuffer = endBuffer = NULL;
 }
@@ -63,6 +63,12 @@ ReSID::reset()
 }
 
 void 
+ReSID::enableFilters(bool enable)
+{
+    sid->enable_filter(enable);
+}
+
+void 
 ReSID::setSampleRate(uint32_t sr) 
 {
 	samplerate = sr;
@@ -72,7 +78,7 @@ ReSID::setSampleRate(uint32_t sr)
 void 
 ReSID::setClockFrequency(uint32_t frequency)
 {
-    reSID->set_sampling_parameters(frequency, SAMPLE_FAST, 44100);
+    sid->set_sampling_parameters(frequency, SAMPLE_FAST, 44100);
     // reSID->adjust_sampling_frequency(frequency);
 
 	cpuFrequency = frequency;
@@ -97,13 +103,13 @@ ReSID::saveToBuffer(uint8_t **buffer)
 uint8_t 
 ReSID::peek(uint16_t addr)
 {	
-    return reSID->read(addr);
+    return sid->read(addr);
 }
 
 void 
 ReSID::poke(uint16_t addr, uint8_t value)
 {
-    reSID->write(addr, value);
+    sid->write(addr, value);
 }
 
 bool 
@@ -116,7 +122,7 @@ ReSID::execute(int elapsedCycles)
     
     // TODO: SPEEDUP: Write directly into ringbuffer
     while (delta_t) {
-        bufindex += reSID->clock(delta_t, buf + bufindex, buflength - bufindex);
+        bufindex += sid->clock(delta_t, buf + bufindex, buflength - bufindex);
 
         // write to ringbuffer
         for (int i = 0; i < bufindex; i++) {
@@ -187,7 +193,6 @@ ReSID::dumpState()
 	msg("   Sample rate : %d\n", samplerate);
 	msg(" CPU frequency : %d\n", cpuFrequency);
 	msg("   Buffer size : %d\n", bufferSize);
-	msg("  Sound filter : %s\n", filtersEnabled ? "on" : "off");
 	msg("\n");
 }
 

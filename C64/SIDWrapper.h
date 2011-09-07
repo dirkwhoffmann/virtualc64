@@ -82,7 +82,10 @@ public:
 	
 	//! Enable or disable filters of SID.
 	void enableFilters(bool enable);
-        
+
+    //! Enable or disable ReSID library.
+	void enableReSID(bool enable);
+
 	//! Returns samplerate of SID.
 	uint32_t getSampleRate();
 

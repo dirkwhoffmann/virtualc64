@@ -337,18 +337,8 @@
 }
 
 - (void) dump { sid->dumpState(); }
-
-#if 0
-- (float) getVolumeControl 
-{
-	return sid->getVolumeControl(); 
-}
-
-- (void) setVolumeControl:(float)value 
-{ 
-	sid->setVolumeControl(value); 
-} 
-#endif
+- (void) enableFilters:(bool)b { sid->enableFilters(b); }
+- (void) enableReSID:(bool)b { sid->enableReSID(b); }
 
 @end
 
