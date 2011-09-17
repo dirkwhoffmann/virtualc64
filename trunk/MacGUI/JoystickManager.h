@@ -29,6 +29,12 @@ using std::map;
 using std::set;
 
 
+typedef struct {
+    JoystickManager *manager;
+    int locationID;
+    IOHIDDeviceRef deviceRef;
+} CallbackContext;
+
 class JoystickProxy
 {
 	public:
@@ -79,16 +85,21 @@ class JoystickManager
 
 class IOHIDDeviceInfo
 {
-	public:
-		IOHIDDeviceInfo( IOHIDDeviceRef device );
-		IOHIDDeviceInfo( const IOHIDDeviceInfo &copy );
-		~IOHIDDeviceInfo();
-		
-		int GetLocationID() const;
-		const char *GetName() const;
-		
-	private:
-		int _locationID;
-		char *_name;
+    private:
+
+    int _locationID;
+    char *_name;
+
+    public:
+
+    IOHIDDeviceInfo();
+	IOHIDDeviceInfo( IOHIDDeviceRef device );
+	IOHIDDeviceInfo( const IOHIDDeviceInfo &copy );
+	~IOHIDDeviceInfo();
+		    
+    inline int GetLocationID() { return _locationID; }
+    inline void setLocationID(int value) { _locationID = value; }
+    inline const char *GetName() { return ( _name ? _name : "<NO NAME>" ); }
+    inline void setName(char *value) { _name = value; }
 };
 
