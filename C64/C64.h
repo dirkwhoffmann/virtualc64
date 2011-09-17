@@ -199,6 +199,59 @@ private:
 	//! The execution thread
 	pthread_t p;
 
+    // -------------------------------------
+    // Hardware configuration of virtual C64
+    // -------------------------------------
+    
+    // CPU
+    
+    //! PAL or NTSC machine?
+    bool pal;
+    
+	//! Additional frame delay
+    /*! = 0 : Emulator runs at original speed (varies between PAL and NTSC) (default value) 
+        > 0 : Emulator runs slower than origonal machine 
+        < 0 : Emulator runs faster than original machine 
+    */
+    int frameDelayOffset;
+     
+	// int frameDelay;
+
+    //! Indicates that we should always run as possible
+	bool alwaysWarp;
+
+    // SID
+    
+    //! Sound chip (MOS??? or MOS???)
+    
+    //! Use reSID
+    
+    //! Enable audio filters
+    
+    //! ReSID sampling method
+
+    // Floppy disc
+        
+	//! Indicates that we should run as fast as possible at least during disk operations
+	bool warpLoad;
+    
+    //! Monitor
+    
+    //! Color scheme
+        
+    //! xOffset
+    
+    //! yOffset
+    
+    //! zoom
+    
+    
+    
+    
+    // -------------------------------------
+    // Current state
+    // -------------------------------------
+
 	//! Current clock cycle since power up
 	uint64_t cycles;
 	
@@ -211,27 +264,9 @@ private:
 	//! Target time
 	/*! Used to synchronize emulation speed */
 	uint64_t targetTime; 
-	
-	//! Number of frames per second. Value is set in setPAL and setNTSC.
-	int fps;
-	
-	//! Number of rasterlines. Value is set in setPAL and setNTSC.
-	int noOfRasterlines;
-	
-	//! Number of cycles per rasterline. Value is set in setPAL and setNTSC.
-	int cpuCyclesPerRasterline;
-	
-	//! Time between two frames. Used for synchronizing clock speed.
-	int frameDelay;
-	
+		
 	//! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
 	bool warp;
-
-	//! Indicates that we should always run as possible
-	bool alwaysWarp;
-
-	//! Indicates that we should run as fast as possible at least during disk operations
-	bool warpLoad;
 
 	//! Game port configuration.
 	/*! The value is determined by the enumeration type INPUT_DEVICES */
@@ -281,10 +316,12 @@ public:
 	void setNTSC();
 	
 	//! Returns true, iff machine type is PAL
-	inline bool isPAL() { return fps == VIC::PAL_REFRESH_RATE; }
+	// inline bool isPAL() { return fps == VIC::PAL_REFRESH_RATE; }
+	inline bool isPAL() { return pal; }
 		
 	//! Returns true, iff machine type is NTSC
-	inline bool isNTSC() { return fps == VIC::NTSC_REFRESH_RATE; }
+	// inline bool isNTSC() { return fps == VIC::NTSC_REFRESH_RATE; }
+	inline bool isNTSC() { return !pal; }
 
 	//! Returns true iff cpu currently runs at maximum speed
 	bool getWarp() { return warp; }
@@ -304,11 +341,6 @@ public:
 	//! Setter for warpLoad
 	void setWarpLoad(bool b);
 
-    //! Returns sample rate of sound chip in Hz
-    //uint32_t getSampleRate(); 
-
-	//! Set sample rate of sound chip in Hz
-    // void setSampleRate(uint32_t sr); 
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                       Loading and saving
@@ -408,16 +440,10 @@ public:
 	//                                           Timing
 	// -----------------------------------------------------------------------------------------------
 	
-	//! Set interval timer delay
-	void setDelay(int d);
-
-	//! Set interval timer delay based on the current value of fps
-	void setDelay() { setDelay((uint64_t)(1000000 / fps)); }
-
-	//! Restart timer
+	//! Initialize timer (sets variable target_time)
 	void restartTimer();
 	
-	//! Synchronize timing
+	//! Wait until target_time has been reached and then updates target_time.
 	void synchronizeTiming();
 	
 	
@@ -463,25 +489,28 @@ public:
 
 	// Returns the number of frames per second
 	/*! Number varies between PAL and NTSC machines */	
-	inline int getFramesPerSecond() { return fps; }
+    inline int getFramesPerSecond() { if (pal) return VIC::PAL_REFRESH_RATE; else return VIC::NTSC_REFRESH_RATE; }
 	
 	//! Returns the number of rasterlines per frame
 	/*! Number varies between PAL and NTSC machines */	
-	inline int getRasterlinesPerFrame() { return noOfRasterlines; }
+    inline int getRasterlinesPerFrame() { if (pal) return VIC::PAL_RASTERLINES; else return VIC::NTSC_RASTERLINES; }
 	
 	//! Returns the number of CPU cycles performed per rasterline
 	/*! Number varies between PAL and NTSC machines */	
-	inline int getCyclesPerRasterline() { return cpuCyclesPerRasterline; }
+	inline int getCyclesPerRasterline() { if (pal) return VIC::PAL_CYCLES_PER_RASTERLINE; else return VIC::NTSC_CYCLES_PER_RASTERLINE; }
 	
 	//! Returns the number of CPU cycles performed per frame
 	/*! Number varies between PAL and NTSC machines */	
 	inline int getCyclesPerFrame() { return getRasterlinesPerFrame() * getCyclesPerRasterline(); }
 
 	//! Returns the time interval between two frames
-	inline int getFrameDelay() { return frameDelay; }
+	inline int getFrameDelay() { return 1000000 / getFramesPerSecond(); }
 
-	//! Returns the time interval between two frames
-	inline void setFrameDelay(int delay) { frameDelay = delay; }
+	//! Returns the user definable speed adjustment (msec per frame)
+	inline int getFrameDelayOffset() { return frameDelayOffset; } 
+
+	//! Sets the user definable speed adjustment (msec per frame)
+	inline void setFrameDelayOffset(int delay) { frameDelayOffset = delay; }
 
     
 	// ---------------------------------------------------------------------------------------------

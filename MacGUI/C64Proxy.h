@@ -443,8 +443,8 @@
 - (bool) isNTSC;
 - (void) setPAL;
 - (void) setNTSC;
-- (int) frameDelay;
-- (void) setFrameDelay:(int)delay;
+- (int) frameDelayOffset;
+- (void) setFrameDelayOffset:(int)delay;
 - (int) buildNr;
 
 //- (int) numberOfMissingRoms;

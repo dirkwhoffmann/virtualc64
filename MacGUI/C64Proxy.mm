@@ -514,8 +514,8 @@
 - (bool) isNTSC { return c64->isNTSC(); }
 - (void) setPAL { c64->setPAL(); }
 - (void) setNTSC { c64->setNTSC(); }
-- (int) frameDelay { return c64->getFrameDelay(); }
-- (void) setFrameDelay:(int)delay { c64->setFrameDelay(delay); }
+- (int) frameDelayOffset { return c64->getFrameDelayOffset(); }
+- (void) setFrameDelayOffset:(int)delay { c64->setFrameDelayOffset(delay); }
 - (int) buildNr { return c64->build(); }
 
 //- (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }

@@ -54,7 +54,7 @@ void
 	// Prepare to run...
 	c64->cpu->clearErrorState();
 	c64->floppy->cpu->clearErrorState();
-	c64->setDelay();
+	c64->restartTimer();
 	
 	while (1) {		
 		if (!c64->executeOneLine())
@@ -132,9 +132,8 @@ C64::C64()
 	backInTimeWritePtr = 0;
 	
 
-	// Configure and reset
-	setNTSC(); // Why NTSC??	
-
+	// Configure machine and reset
+	setNTSC(); 
 	reset();
 
 	// Remove after debugging
@@ -190,7 +189,8 @@ void C64::reset()
 	rasterline = 0;
 	rasterlineCycle = 1;
 	targetTime = 0UL;
-
+    frameDelayOffset = 0;
+    
 	resume();
 }
 
@@ -216,10 +216,10 @@ void
 C64::dumpState() {
 	msg("C64:\n");
 	msg("----\n\n");
-	msg("            Machine type : %s\n", (noOfRasterlines == VIC::PAL_RASTERLINES) ? "PAL" : "NTSC");
-	msg("       Frames per second : %d\n", fps);
-	msg("   Rasterlines per frame : %d\n", noOfRasterlines);
-	msg("   Cycles per rasterline : %d\n", cpuCyclesPerRasterline);
+	msg("            Machine type : %s\n", isPAL() ? "PAL" : "NTSC");
+	msg("       Frames per second : %d\n", getFramesPerSecond());
+	msg("   Rasterlines per frame : %d\n", getRasterlinesPerFrame()); 
+	msg("   Cycles per rasterline : %d\n", getCyclesPerRasterline());
 	msg("           Current cycle : %llu\n", cycles);
 	msg("           Current frame : %d\n", frame);
 	msg("      Current rasterline : %d\n", rasterline);
@@ -247,12 +247,11 @@ C64::setPAL()
 {
 	suspend();
 	
-	fps = VIC::PAL_REFRESH_RATE;
-	noOfRasterlines = VIC::PAL_RASTERLINES; 
-	cpuCyclesPerRasterline = VIC::PAL_CYCLES_PER_RASTERLINE;
+    pal = true;
+    
 	vic->setPAL();
 	sid->setClockFrequency(CPU::CLOCK_FREQUENCY_PAL);
-	frameDelay = (1000000 / fps);
+	// frameDelay = (1000000 / getFramesPerSecond());
 
 	resume();
 }
@@ -262,12 +261,11 @@ C64::setNTSC()
 {
 	suspend();
 	
-	fps = VIC::NTSC_REFRESH_RATE;
-	noOfRasterlines = VIC::NTSC_RASTERLINES; 
-	cpuCyclesPerRasterline = VIC::NTSC_CYCLES_PER_RASTERLINE;
+    pal = false;
+    
 	vic->setNTSC();
 	sid->setClockFrequency(CPU::CLOCK_FREQUENCY_NTSC);
-	frameDelay = (1000000 / fps);
+	// frameDelay = (1000000 / getFramesPerSecond());
 
 	resume();
 }
@@ -927,16 +925,9 @@ C64::getHistoricSnapshot(int nr)
 // -----------------------------------------------------------------------------------------------
 
 void 
-C64::setDelay(int delay) 
-{ 
-	frameDelay = delay;
-	restartTimer();
-}
-
-void 
 C64::restartTimer() 
 { 
-	targetTime = msec() + frameDelay;
+	targetTime = msec() + (uint64_t)getFrameDelay() + (uint64_t)frameDelayOffset;
 }
 
 void 
@@ -946,7 +937,7 @@ C64::synchronizeTiming()
 	uint64_t timeToSleep = targetTime - msec();
 	
 	// update target time
-	targetTime += (uint64_t)frameDelay;
+	targetTime += (uint64_t)getFrameDelay() + (uint64_t)frameDelayOffset;
 	
 	// sleep
 	if (timeToSleep > 0) {
