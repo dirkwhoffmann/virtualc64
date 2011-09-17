@@ -44,6 +44,8 @@ class VC1541;
 
 class IEC : public VirtualComponent {
 
+    friend class C64;
+
 public:
 	
 	//! Reference to the virtual disc drive

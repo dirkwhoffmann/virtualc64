@@ -116,8 +116,6 @@
 
 - (void *) screenBuffer;
 - (NSColor *) color:(int)nr;
-- (VIC::ColorScheme) colorScheme;
-- (void) setColorScheme:(VIC::ColorScheme)scheme;
 
 - (uint16_t) memoryBankAddr;
 - (void) setMemoryBankAddr:(uint16_t)addr;
@@ -304,14 +302,6 @@
 
 - (id) initWithSID:(SIDWrapper *)s;
 - (void) dump;
-- (bool) audioFilter;
-- (void) setAudioFilter:(bool)b;
-- (bool) reSID;
-- (void) setReSID:(bool)b;
-- (int) samplingMethod;
-- (void) setSamplingMethod:(int)value;
-- (int) chipModel;
-- (void) setChipModel:(int)value;
 
 @end
 
@@ -418,6 +408,18 @@
 
 // Poll C64 to refresh internal state
 - (void) refresh;
+
+// Hardware configuration
+- (VIC::ColorScheme) colorScheme;
+- (void) setColorScheme:(VIC::ColorScheme)scheme;
+- (bool) reSID;
+- (void) setReSID:(bool)b;
+- (bool) audioFilter;
+- (void) setAudioFilter:(bool)b;
+- (int) samplingMethod;
+- (void) setSamplingMethod:(int)value;
+- (int) chipModel;
+- (void) setChipModel:(int)value;
 
 // Loadind and saving
 - (void)loadFromSnapshot:(V64Snapshot *) snapshot;

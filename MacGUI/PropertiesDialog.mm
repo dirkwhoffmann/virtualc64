@@ -67,13 +67,13 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 	[c64 setWarpLoad:true];
 	
 	// Audio
-	[[c64 sid] setReSID:YES];
-    [[c64 sid] setAudioFilter:NO];
-    [[c64 sid] setChipModel:1];
-    [[c64 sid] setSamplingMethod:0];
+	[c64 setReSID:YES];
+    [c64 setAudioFilter:NO];
+    [c64 setChipModel:1];
+    [c64 setSamplingMethod:0];
     
 	// Video     
-    [[c64 vic] setColorScheme:VIC::CCS64];
+    [c64 setColorScheme:VIC::CCS64];
     
     [self update];
     [self useAsDefaultAction:self];
@@ -115,37 +115,37 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 - (IBAction)SIDFilterAction:(id)sender
 {
 	if ([sender state]) {
-		[[c64 sid] setAudioFilter:true];
+		[c64 setAudioFilter:true];
 	} else {
-		[[c64 sid] setAudioFilter:false];
+		[c64 setAudioFilter:false];
 	}
 }
 
 - (IBAction)SIDReSIDAction:(id)sender
 {
 	if ([sender state]) {
-		[[c64 sid] setReSID:true];
+		[c64 setReSID:true];
 	} else {
-		[[c64 sid] setReSID:false];
+		[c64 setReSID:false];
 	}
 }
 
 - (IBAction)SIDSamplingMethodAction:(id)sender
 {
     int value = [[sender selectedItem] tag];
-    [[c64 sid] setSamplingMethod:value];
+    [c64 setSamplingMethod:value];
 }
 
 - (IBAction)SIDChipModelAction:(id)sender
 {
     int value = [[sender selectedItem] tag];
-    [[c64 sid] setChipModel:value];
+    [c64 setChipModel:value];
 }
 
 - (IBAction)changeColorScheme:(id)sender
 {
 	VIC::ColorScheme scheme = (VIC::ColorScheme)[[sender selectedItem] tag];
-    [[c64 vic] setColorScheme:scheme];
+    [c64 setColorScheme:scheme];
 	[self update];    
 }
 
@@ -194,13 +194,13 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 	[warpLoad setState:[c64 warpLoad]];
 	
 	/* Audio */
-    [SIDUseReSID setState:[[c64 sid] reSID]];
-    [SIDFilter setState:[[c64 sid] audioFilter]];
-    [SIDChipModel selectItemWithTag:[[c64 sid] chipModel]];
-    [SIDSamplingMethod selectItemWithTag:[[c64 sid] samplingMethod]];
+    [SIDUseReSID setState:[c64 reSID]];
+    [SIDFilter setState:[c64 audioFilter]];
+    [SIDChipModel selectItemWithTag:[c64 chipModel]];
+    [SIDSamplingMethod selectItemWithTag:[c64 samplingMethod]];
 
 	/* Video */
-    [colorScheme selectItemWithTag:[[c64 vic] colorScheme]];
+    [colorScheme selectItemWithTag:[c64 colorScheme]];
 
     [eyeXSlider setFloatValue:[[controller screen] eyeX]]; 
     [eyeYSlider setFloatValue:[[controller screen] eyeY]]; 

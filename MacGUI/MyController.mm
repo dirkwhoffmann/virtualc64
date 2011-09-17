@@ -221,10 +221,10 @@
 	[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
 	
 	// Audio
-	[[c64 sid] setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
-	[[c64 sid] setAudioFilter:[defaults boolForKey:VC64SIDFilterKey]];
-	[[c64 sid] setChipModel:[defaults boolForKey:VC64SIDChipModelKey]];
-	[[c64 sid] setSamplingMethod:[defaults boolForKey:VC64SIDSamplingMethodKey]];
+	[c64 setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
+	[c64 setAudioFilter:[defaults boolForKey:VC64SIDFilterKey]];
+	[c64 setChipModel:[defaults boolForKey:VC64SIDChipModelKey]];
+	[c64 setSamplingMethod:[defaults boolForKey:VC64SIDSamplingMethodKey]];
 	
 	// Video 
 	[screen setEyeX:[defaults floatForKey:VC64EyeX]];
@@ -232,7 +232,7 @@
 	[screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
 
 	[screen setAntiAliasing:[defaults integerForKey:VC64VideoFilterKey]];
-    [[c64 vic] setColorScheme:(VIC::ColorScheme)[defaults integerForKey:VC64ColorSchemeKey]];
+    [c64 setColorScheme:(VIC::ColorScheme)[defaults integerForKey:VC64ColorSchemeKey]];
     NSLog(@"Setting color scheme %d\n", [defaults integerForKey:VC64ColorSchemeKey]);
 }
 
@@ -252,18 +252,18 @@
 	[defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
 	
 	// Audio
-	[defaults setBool:[[c64 sid] reSID] forKey:VC64SIDReSIDKey];
-	[defaults setBool:[[c64 sid] audioFilter] forKey:VC64SIDFilterKey];
-	[defaults setBool:[[c64 sid] chipModel] forKey:VC64SIDChipModelKey];
-	[defaults setBool:[[c64 sid] samplingMethod] forKey:VC64SIDSamplingMethodKey];
+	[defaults setBool:[c64 reSID] forKey:VC64SIDReSIDKey];
+	[defaults setBool:[c64 audioFilter] forKey:VC64SIDFilterKey];
+	[defaults setBool:[c64 chipModel] forKey:VC64SIDChipModelKey];
+	[defaults setBool:[c64 samplingMethod] forKey:VC64SIDSamplingMethodKey];
     
 	// Video 
     [defaults setFloat:[screen eyeX] forKey:VC64EyeX];
     [defaults setFloat:[screen eyeY] forKey:VC64EyeY];
     [defaults setFloat:[screen eyeZ] forKey:VC64EyeZ];
     
-    [defaults setInteger:[[c64 vic] colorScheme] forKey:VC64ColorSchemeKey];
-    NSLog(@"Saving color scheme %d\n", [[c64 vic] colorScheme]);
+    [defaults setInteger:[c64 colorScheme] forKey:VC64ColorSchemeKey];
+    NSLog(@"Saving color scheme %d\n", [c64 colorScheme]);
 }
 
 

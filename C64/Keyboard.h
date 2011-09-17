@@ -32,6 +32,8 @@
 */
 class Keyboard : public VirtualComponent {
 	
+    friend class C64;
+
 	//! The C64 keyboard matrix
 	/*! The C64 maintains a 8x8 matrix. Each key corresponds to a specific bit in the matrix and
 	    is uniquely determined by a row and a column value. 

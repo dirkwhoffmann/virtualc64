@@ -25,6 +25,8 @@
 
 class SIDWrapper : public VirtualComponent {
 
+    friend class C64;
+    
 public:	
 	//! Start address of the SID I/O space.
 	static const uint16_t SID_START_ADDR = 0xD400;
@@ -80,30 +82,9 @@ public:
     //! Get next sample from \a ringBuffer.
 	float readData();
 	
-    //! Returns true iff audio filters are enabled.
-	inline bool getAudioFilter() { return resid->getAudioFilter(); }
-
-	//! Enable or disable filters of SID.
-	void setAudioFilter(bool enable);
-
     //! Returns true, iff ReSID libray shall be used.
     inline bool getReSID() { return useReSID; }
     
-    //! Enable or disable ReSID library.
-	void setReSID(bool enable);
-
-    //! Get sampling method
-    inline sampling_method getSamplingMethod() { return resid->getSamplingMethod(); }
-
-    //! Set sampling method (ReSID only)
-    void setSamplingMethod(sampling_method value);
-    
-    //! Get chip model 
-    inline chip_model getChipModel() { return resid->getChipModel(); }
-
-    //! Set chip model (ReSID only)
-    void setChipModel(chip_model value);
-
     //! Return samplerate.
 	inline uint32_t getSampleRate() { return resid->getSampleRate(); }
 
@@ -111,10 +92,23 @@ public:
 	void setSampleRate(uint32_t sr);
 
     //! Get clock frequency
-	inline uint32_t getClockFrequency() { return resid->getClockFrequency(); }	
+	// inline uint32_t getClockFrequency() { return resid->getClockFrequency(); }	
     
 	//! Set clock frequency
 	void setClockFrequency(uint32_t frequency);	
+    
+private:
+    //! Enable or disable ReSID library.
+	void setReSID(bool enable);
+    
+    //! Set sampling method (ReSID only)
+    void setSamplingMethod(sampling_method value);
+    
+    //! Set chip model (ReSID only)
+    void setChipModel(chip_model value);
+    
+    //! Enable or disable filters of SID.
+	void setAudioFilter(bool enable);
 };
 
 #endif

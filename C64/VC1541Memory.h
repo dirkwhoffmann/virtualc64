@@ -26,6 +26,8 @@ class VC1541;
 //! This class represents the RAM and ROM of a virtual VC1541 floopy disk drive
 class VC1541Memory : public Memory {
 
+    friend class C64;
+
 private: 
 	//! Reference to the connected IEC bus
 	IEC *iec;

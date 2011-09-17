@@ -28,7 +28,9 @@ class IEC;
 
 //! The virtual 6510 processor
 class CPU : public VirtualComponent {
-		
+
+    friend class C64;
+
 public:	
 	//! Addressing modes of the 6510 processor
 	enum AddressingMode { 

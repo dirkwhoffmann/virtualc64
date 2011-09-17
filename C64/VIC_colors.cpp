@@ -269,7 +269,7 @@ VIC::setColorScheme(ColorScheme scheme)
 		}
 	};
 
-    colorScheme = scheme;
+    // colorScheme = scheme;
 	for (unsigned i = 0; i < 16; i++) {
         colors[i] = 
             (rgb[scheme][i][0]) |
