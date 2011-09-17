@@ -112,11 +112,54 @@
 
     // Enable fullscreen mode
     // Need to
-    // 1) hide toolbar 2) hide bottom row 3) use display aspect ratio
+    // hide bottom row 3) use display aspect ratio
     [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     
 	// Launch emulator
 	[c64 run];
+}
+
+// --------------------------------------------------------------------------------
+//                                   Full screen
+// --------------------------------------------------------------------------------
+
+- (void)windowWillEnterFullScreen:(NSNotification *)notification
+{
+    NSLog(@"windowWillEnterFullScreen");
+}
+
+- (void)windowDidEnterFullScreen:(NSNotification *)notification
+{
+    NSLog(@"windowDidEnterFullScreen");
+}
+
+- (void)windowWillExitFullScreen:(NSNotification *)notification
+{
+    NSLog(@"windowWillExitFullScreen");
+}
+
+- (void)windowDidExitFullScreen:(NSNotification *)notification
+{
+    NSLog(@"windowDidExitFullScreen");
+}
+
+- (NSApplicationPresentationOptions)window:(NSWindow *)window
+      willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions
+{
+    NSLog(@"window:willUseFullScreenPresentationOptions");
+    proposedOptions |= NSApplicationPresentationAutoHideToolbar;
+    return proposedOptions;
+}
+
+- (NSSize)window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
+{
+    NSLog(@"Proposed full screen size: %f x %f", proposedSize.width, proposedSize.height);
+    
+    NSRect myRect = [screen bounds];
+    myRect.size = proposedSize;
+    // [screen setFrame:myRect];
+    // [window setFrame:myRect display:YES];
+    return proposedSize;
 }
 
 // --------------------------------------------------------------------------------
