@@ -158,7 +158,7 @@
 	<key>SUAllowsAutomaticUpdates</key>
 	<string>NO</string>
 	<key>SUEnableAutomaticChecks</key>
-	<string>NO</string>
+	<string>YES</string>
 	<key>SUEnableSystemProfiling</key>
 	<string>NO</string>
 	<key>SUFeedURL</key>

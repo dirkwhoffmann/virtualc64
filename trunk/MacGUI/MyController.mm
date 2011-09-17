@@ -626,12 +626,9 @@
 	[[undo prepareWithInvocationTarget:self] stepperAction:[NSNumber numberWithInt:-[sender intValue]]];
 	if (![undo isUndoing]) [undo setActionName:@"Clock frequency"];
 	
-	int newFrameDelay = [c64 frameDelay] - 1000*[sender intValue];
-	
-	if (newFrameDelay < 0)
-		newFrameDelay = 0;
-	
-	[c64 setFrameDelay:newFrameDelay];
+	int newFrameDelayOffset = [c64 frameDelayOffset] - 1000*[sender intValue];
+		
+	[c64 setFrameDelayOffset:newFrameDelayOffset];
 }
 
 - (IBAction)warpAction:(id)sender
