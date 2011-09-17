@@ -29,6 +29,8 @@ class CPU;
 
 class Memory : public VirtualComponent {
 
+    friend class C64;
+
 public:
 
 	// --------------------------------------------------------------------------------

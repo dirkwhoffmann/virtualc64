@@ -33,6 +33,8 @@ class CIA2;
     The contents of memory location 0x0001 determines which kind of memory is currently visible. */
 class C64Memory : public Memory {
 
+    friend class C64;
+
 	enum MemorySource
 	{
 		MEM_SOURCE_RAM,

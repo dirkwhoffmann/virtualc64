@@ -26,7 +26,9 @@
 Every TOD clock features an alarm mechanism. When the alarm time is reached, an interrupt is initiated.
 */
 class TOD : public VirtualComponent {
-	
+
+    friend class C64;
+
 private:
 	typedef	union {
 		struct { 

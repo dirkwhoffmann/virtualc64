@@ -39,6 +39,8 @@ class C64Memory;
 */
 class VIC : public VirtualComponent {
 
+    friend class C64;
+
 	// -----------------------------------------------------------------------------------------------
 	//                                     Constant definitions
 	// -----------------------------------------------------------------------------------------------
@@ -325,7 +327,7 @@ private:
 	uint8_t colorSpace[40];
 
     //! Currently used color scheme
-    ColorScheme colorScheme;
+    // ColorScheme colorScheme;
     
 	//! All 16 color codes in an array
 	uint32_t colors[16];
@@ -565,7 +567,7 @@ public:
 	//                                         Configuring
 	// -----------------------------------------------------------------------------------------------
 	
-public:
+private:
 	
 	//! Configure the VIC chip for PAL video output
 	void setPAL();
@@ -574,14 +576,16 @@ public:
 	void setNTSC();	
 
     //! Get color scheme
-	uint32_t getColor(int nr) { return colors[nr]; }
-    
-    //! Get color scheme
-	ColorScheme getColorScheme() { return colorScheme; }
+	// ColorScheme getColorScheme() { return colorScheme; }
 
 	//! Set color scheme
 	void setColorScheme(ColorScheme scheme);
 	
+public:
+
+    //! Get color
+	uint32_t getColor(int nr) { return colors[nr]; }
+    
 	// -----------------------------------------------------------------------------------------------
 	//                                         Drawing
 	// -----------------------------------------------------------------------------------------------

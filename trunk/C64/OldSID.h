@@ -29,13 +29,7 @@
 */
 class OldSID : public VirtualComponent {
 
-#if 0
-public:	
-	//! Start address of the SID I/O space.
-	static const uint16_t SID_START_ADDR = 0xD400;
-	//! End address of the SID I/O space.
-	static const uint16_t SID_END_ADDR = 0xD7FF;
-#endif
+    friend class SIDWrapper;
 
 public:	
 	//! Table holding volume levels of SID.

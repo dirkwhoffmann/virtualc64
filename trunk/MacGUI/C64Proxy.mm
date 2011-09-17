@@ -120,8 +120,6 @@
 - (void) dump { vic->dumpState(); }
 
 - (void *) screenBuffer { return vic->screenBuffer(); }
-- (VIC::ColorScheme) colorScheme { return vic->getColorScheme(); }
-- (void) setColorScheme:(VIC::ColorScheme)scheme { vic->setColorScheme(scheme); }
 
 - (NSColor *) color:(int)nr
 {
@@ -337,14 +335,6 @@
 }
 
 - (void) dump { sid->dumpState(); }
-- (bool) audioFilter { return sid->getAudioFilter(); }
-- (void) setAudioFilter:(bool)b { sid->setAudioFilter(b); }
-- (bool) reSID { return sid-> getReSID(); }
-- (void) setReSID:(bool)b { sid->setReSID(b); }
-- (int) samplingMethod { return (int)(sid->getSamplingMethod()); }
-- (void) setSamplingMethod:(int)value { sid->setSamplingMethod((sampling_method)value); }
-- (int) chipModel { return (chip_model)(sid->getChipModel()); }
-- (void) setChipModel:(int)value {sid->setChipModel((chip_model)value); }
 
 @end
 
@@ -491,6 +481,17 @@
 	// iecBusIsBusy = c64->iecBusIsBusy;
 	
 }
+
+- (VIC::ColorScheme) colorScheme { return c64->getColorScheme(); }
+- (void) setColorScheme:(VIC::ColorScheme)scheme { c64->setColorScheme(scheme); }
+- (bool) audioFilter { return c64->getAudioFilter(); }
+- (void) setAudioFilter:(bool)b { c64->setAudioFilter(b); }
+- (bool) reSID { return c64->getReSID(); }
+- (void) setReSID:(bool)b { c64->setReSID(b); }
+- (int) samplingMethod { return (int)(c64->getSamplingMethod()); }
+- (void) setSamplingMethod:(int)value { c64->setSamplingMethod((sampling_method)value); }
+- (int) chipModel { return (chip_model)(c64->getChipModel()); }
+- (void) setChipModel:(int)value {c64->setChipModel((chip_model)value); }
 
 - (void) loadFromSnapshot:(V64Snapshot *)snapshot { c64->suspend(); c64->loadFromSnapshot([snapshot snapshot]); c64->resume(); }
 - (void) saveToSnapshot:(V64Snapshot *)snapshot { c64->suspend(); c64->saveToSnapshot([snapshot snapshot]); c64->resume(); }

@@ -82,10 +82,8 @@ C64::C64()
 	
 	debug(1, "Creating virtual C64 at address %p...\n", this);
 
-	p = NULL;
-	warp = false;
-	alwaysWarp = false;
-	warpLoad = false;
+	p = NULL;    
+    warp = false;
 	
 	// Create components
 	mem = new C64Memory();
@@ -119,8 +117,19 @@ C64::C64()
 	floppy->setIEC(iec);
 	floppy->setC64(this);
 	
-	// Setup initial game port mapping
-	// 0 joysticks connected
+    // Set initial hardware configuration
+    HardwareConfiguration c;
+    c.pal            = true;
+    c.alwaysWarp     = false;
+    c.warpLoad       = false;
+    c.audioFilter    = false;
+    c.useReSID       = true;
+    c.chipModel      = MOS8580;
+    c.samplingMethod = SAMPLE_FAST;
+    c.colorScheme    = VIC::CCS64;
+    setHardwareConfiguration(c);
+    
+	// Setup initial game port mapping (0 joysticks connected)
 	setInputDevice(0, IPD_UNCONNECTED);
 	setInputDevice(1, IPD_UNCONNECTED);
 	joystick1 = new Joystick;
@@ -130,10 +139,8 @@ C64::C64()
 	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
 		backInTimeHistory[i] = new Snapshot();	
 	backInTimeWritePtr = 0;
-	
-
-	// Configure machine and reset
-	setNTSC(); 
+    
+	// Perform a reset
 	reset();
 
 	// Remove after debugging
@@ -189,7 +196,9 @@ void C64::reset()
 	rasterline = 0;
 	rasterlineCycle = 1;
 	targetTime = 0UL;
-    frameDelayOffset = 0;
+    
+    // we also reset some hardware configuration settings
+    config.frameDelayOffset = 0;
     
 	resume();
 }
@@ -242,12 +251,30 @@ void C64::putMessage(int id, int i, void *p, const char *c)
 //                                           Configure
 // -----------------------------------------------------------------------------------------------
 
+void 
+C64::setHardwareConfiguration(HardwareConfiguration c)
+{
+    if (c.pal) 
+        setPAL(); 
+    else 
+        setNTSC();
+    
+    setFrameDelayOffset(c.frameDelayOffset);
+    setAlwaysWarp(c.alwaysWarp);
+    setWarpLoad(c.warpLoad);
+    setAudioFilter(c.audioFilter);
+    setReSID(c.useReSID);
+    setChipModel(c.chipModel);
+    setSamplingMethod(c.samplingMethod);
+    setColorScheme(c.colorScheme);
+}
+
 void
 C64::setPAL()
 {
 	suspend();
 	
-    pal = true;
+    config.pal = true;
     
 	vic->setPAL();
 	sid->setClockFrequency(CPU::CLOCK_FREQUENCY_PAL);
@@ -261,7 +288,7 @@ C64::setNTSC()
 {
 	suspend();
 	
-    pal = false;
+    config.pal = false;
     
 	vic->setNTSC();
 	sid->setClockFrequency(CPU::CLOCK_FREQUENCY_NTSC);
@@ -283,14 +310,14 @@ C64::setWarp(bool b)
 void
 C64::setAlwaysWarp(bool b)
 {
-	alwaysWarp = b;
+	config.alwaysWarp = b;
 	setWarp(b);
 }
 
 void
 C64::setWarpLoad(bool b)
 {
-	warpLoad = b;
+	config.warpLoad = b;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -927,7 +954,7 @@ C64::getHistoricSnapshot(int nr)
 void 
 C64::restartTimer() 
 { 
-	targetTime = msec() + (uint64_t)getFrameDelay() + (uint64_t)frameDelayOffset;
+	targetTime = msec() + (uint64_t)getFrameDelay() + (uint64_t)getFrameDelayOffset();
 }
 
 void 
@@ -937,7 +964,7 @@ C64::synchronizeTiming()
 	uint64_t timeToSleep = targetTime - msec();
 	
 	// update target time
-	targetTime += (uint64_t)getFrameDelay() + (uint64_t)frameDelayOffset;
+	targetTime += (uint64_t)getFrameDelay() + (uint64_t)getFrameDelayOffset();
 	
 	// sleep
 	if (timeToSleep > 0) {

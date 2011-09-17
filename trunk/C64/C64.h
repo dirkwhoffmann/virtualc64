@@ -153,7 +153,44 @@ enum INPUT_DEVICES {
 	IPD_JOYSTICK_1,
 	IPD_JOYSTICK_2
 };
-	
+
+typedef struct {
+
+    //! Is it a PAL machine?
+    bool pal;
+
+    //! Extra frame delay
+    /*! = 0 : Emulator runs at original PAL or NTSC speed (default) 
+        > 0 : Emulator runs slower than origonal machine 
+        < 0 : Emulator runs faster than original machine 
+     */
+    int frameDelayOffset;
+    
+    //! Shall we ingnore delay settings and always run as possible?
+	bool alwaysWarp;
+        
+	//! Indicates that we should run as fast as possible during disk operations
+	bool warpLoad;
+
+    //! Turn on audio filters?
+    bool audioFilter;
+
+    //! Use reSID library for playing sound?
+    bool useReSID;
+
+    //! Sound chip (MOS6581 or MOS858
+    /*! Only takes effect if reSID librarty is used */
+    chip_model chipModel;
+            
+    //! Sampling method
+    /*! Only takes effect if reSID librarty is used */
+    sampling_method samplingMethod;
+    
+    //! Color scheme
+    VIC::ColorScheme colorScheme;
+    
+} HardwareConfiguration;
+
 class C64 : public VirtualComponent {
 
 public:	
@@ -199,59 +236,9 @@ private:
 	//! The execution thread
 	pthread_t p;
 
-    // -------------------------------------
-    // Hardware configuration of virtual C64
-    // -------------------------------------
+    //! Hardware configuration of virtual computer
+    HardwareConfiguration config;
     
-    // CPU
-    
-    //! PAL or NTSC machine?
-    bool pal;
-    
-	//! Additional frame delay
-    /*! = 0 : Emulator runs at original speed (varies between PAL and NTSC) (default value) 
-        > 0 : Emulator runs slower than origonal machine 
-        < 0 : Emulator runs faster than original machine 
-    */
-    int frameDelayOffset;
-     
-	// int frameDelay;
-
-    //! Indicates that we should always run as possible
-	bool alwaysWarp;
-
-    // SID
-    
-    //! Sound chip (MOS??? or MOS???)
-    
-    //! Use reSID
-    
-    //! Enable audio filters
-    
-    //! ReSID sampling method
-
-    // Floppy disc
-        
-	//! Indicates that we should run as fast as possible at least during disk operations
-	bool warpLoad;
-    
-    //! Monitor
-    
-    //! Color scheme
-        
-    //! xOffset
-    
-    //! yOffset
-    
-    //! zoom
-    
-    
-    
-    
-    // -------------------------------------
-    // Current state
-    // -------------------------------------
-
 	//! Current clock cycle since power up
 	uint64_t cycles;
 	
@@ -304,42 +291,76 @@ public:
 	
 			
 	// -----------------------------------------------------------------------------------------------
-	//                                         Configure
+	//                                         Configure hardware
 	// -----------------------------------------------------------------------------------------------
 	
 public:
 	
+    //! Set hardware configuration
+    void setHardwareConfiguration(HardwareConfiguration c);
+    
+	//! Returns true for PAL machines
+	inline bool isPAL() { return config.pal; }
+
 	//! Set PAL mode
 	void setPAL();
 	
+	//! Returns true for NTSC machines
+	inline bool isNTSC() { return !config.pal; }
+
 	//! Set NTSC mode
 	void setNTSC();
 	
-	//! Returns true, iff machine type is PAL
-	// inline bool isPAL() { return fps == VIC::PAL_REFRESH_RATE; }
-	inline bool isPAL() { return pal; }
-		
-	//! Returns true, iff machine type is NTSC
-	// inline bool isNTSC() { return fps == VIC::NTSC_REFRESH_RATE; }
-	inline bool isNTSC() { return !pal; }
-
-	//! Returns true iff cpu currently runs at maximum speed
-	bool getWarp() { return warp; }
-	
+    //! Returns the user definable speed adjustment (msec per frame)
+	inline int getFrameDelayOffset() { return config.frameDelayOffset; } 
+    
+	//! Sets the user definable speed adjustment (msec per frame)
+	inline void setFrameDelayOffset(int delay) { config.frameDelayOffset = delay; }
+    
 	//! Enable or disable timing synchronization
 	void setWarp(bool b);
 	
 	//! Returns true iff cpu should always run at maximun speed
-	bool getAlwaysWarp() { return alwaysWarp; }
+	bool getAlwaysWarp() { return config.alwaysWarp; }
 	
 	//! Setter for alwaysWarp
 	void setAlwaysWarp(bool b);
 	
 	//! Returns true iff warp mode is activated during disk operations
-	bool getWarpLoad() { return warpLoad; }
+	bool getWarpLoad() { return config.warpLoad; }
 
 	//! Setter for warpLoad
 	void setWarpLoad(bool b);
+
+    //! Get color scheme
+    VIC::ColorScheme getColorScheme() { return config.colorScheme; }
+    
+	//! Set color scheme
+	void setColorScheme(VIC::ColorScheme scheme) { config.colorScheme = scheme; vic->setColorScheme(scheme); }
+
+    //! Returns true iff audio filters are enabled.
+    bool getAudioFilter() { return config.audioFilter; }
+    
+	//! Enable or disable filters of SID.
+	void setAudioFilter(bool value) { config.audioFilter = value; sid->setAudioFilter(value); }
+      
+    //! Returns true if reSID library is used
+    bool getReSID() { return config.useReSID; }
+
+    //! Turn reSID library on or off
+    void setReSID(bool value) { config.useReSID = value; sid->setReSID(value); }
+
+    //! Get sampling method
+    inline sampling_method getSamplingMethod() { return config.samplingMethod; }
+    
+    //! Set sampling method
+    void setSamplingMethod(sampling_method value) { config.samplingMethod = value; sid->setSamplingMethod(value); }
+    
+    //! Get chip model 
+    inline chip_model getChipModel() { return config.chipModel; }
+    
+    //! Set chip model 
+    void setChipModel(chip_model value) {config.chipModel = value; sid->setChipModel(value); }
 
 	
 	// -----------------------------------------------------------------------------------------------
@@ -446,7 +467,10 @@ public:
 	//! Wait until target_time has been reached and then updates target_time.
 	void synchronizeTiming();
 	
+    //! Returns true iff cpu runs at maximum speed (timing sychronization is disabled)
+	bool getWarp() { return warp; }
 	
+    
 	// ---------------------------------------------------------------------------------------------
 	//                                 Archives (disks, tapes, etc.)
 	// ---------------------------------------------------------------------------------------------
@@ -489,15 +513,15 @@ public:
 
 	// Returns the number of frames per second
 	/*! Number varies between PAL and NTSC machines */	
-    inline int getFramesPerSecond() { if (pal) return VIC::PAL_REFRESH_RATE; else return VIC::NTSC_REFRESH_RATE; }
+    inline int getFramesPerSecond() { if (config.pal) return VIC::PAL_REFRESH_RATE; else return VIC::NTSC_REFRESH_RATE; }
 	
 	//! Returns the number of rasterlines per frame
 	/*! Number varies between PAL and NTSC machines */	
-    inline int getRasterlinesPerFrame() { if (pal) return VIC::PAL_RASTERLINES; else return VIC::NTSC_RASTERLINES; }
+    inline int getRasterlinesPerFrame() { if (config.pal) return VIC::PAL_RASTERLINES; else return VIC::NTSC_RASTERLINES; }
 	
 	//! Returns the number of CPU cycles performed per rasterline
 	/*! Number varies between PAL and NTSC machines */	
-	inline int getCyclesPerRasterline() { if (pal) return VIC::PAL_CYCLES_PER_RASTERLINE; else return VIC::NTSC_CYCLES_PER_RASTERLINE; }
+	inline int getCyclesPerRasterline() { if (config.pal) return VIC::PAL_CYCLES_PER_RASTERLINE; else return VIC::NTSC_CYCLES_PER_RASTERLINE; }
 	
 	//! Returns the number of CPU cycles performed per frame
 	/*! Number varies between PAL and NTSC machines */	
@@ -505,12 +529,6 @@ public:
 
 	//! Returns the time interval between two frames
 	inline int getFrameDelay() { return 1000000 / getFramesPerSecond(); }
-
-	//! Returns the user definable speed adjustment (msec per frame)
-	inline int getFrameDelayOffset() { return frameDelayOffset; } 
-
-	//! Sets the user definable speed adjustment (msec per frame)
-	inline void setFrameDelayOffset(int delay) { frameDelayOffset = delay; }
 
     
 	// ---------------------------------------------------------------------------------------------

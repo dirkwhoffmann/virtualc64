@@ -25,7 +25,10 @@
 #include "sid.h"
 
 class ReSID : public VirtualComponent {
-		
+
+    // friend class C64;
+    friend class SIDWrapper;
+
 private:
     SID *sid;
     	
@@ -103,35 +106,37 @@ public:
 
     // Configuring
     
+    //! Return samplerate.
+	inline uint32_t getSampleRate() { return sampleRate; }
+    
+	//! Set sample rate 
+	void setSampleRate(uint32_t sr);
+
+    //! Get clock frequency
+	uint32_t getClockFrequency();	
+    
+	//! Set clock frequency
+	void setClockFrequency(uint32_t frequency);	
+
+private:
+    
     //! Returns true iff audio filters are enabled.
-	inline bool getAudioFilter() { return audioFilter; }
+	// inline bool getAudioFilter() { return audioFilter; }
 
 	//! Enable or disable filters of SID.
 	void setAudioFilter(bool enable);
 
-    //! Return samplerate.
-	inline uint32_t getSampleRate() { return sampleRate; }
-
-	//! Set sample rate 
-	void setSampleRate(uint32_t sr);
-
     //! Get sampling method
-    inline sampling_method getSamplingMethod() { return samplingMethod; }
+    // inline sampling_method getSamplingMethod() { return samplingMethod; }
 
     //! Set sampling method
     void setSamplingMethod(sampling_method value);
 
     //! Get chip model 
-    inline chip_model getChipModel() { return chipModel; }
+    // inline chip_model getChipModel() { return chipModel; }
 
     //! Set chip model 
     void setChipModel(chip_model value);
-
-    //! Get clock frequency
-	uint32_t getClockFrequency();	
-
-	//! Set clock frequency
-	void setClockFrequency(uint32_t frequency);	
 };
 
 #endif
