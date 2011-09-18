@@ -17,6 +17,7 @@
  */
 
 #include "SIDWrapper.h"
+#include "CPU.h"
 
 SIDWrapper::SIDWrapper()
 {
@@ -77,6 +78,18 @@ SIDWrapper::dumpState()
         oldsid->dumpState();
 }
 
+void
+SIDWrapper::setPAL()
+{
+    setClockFrequency(CPU::CLOCK_FREQUENCY_PAL);
+}
+
+void
+SIDWrapper::setNTSC()
+{
+    setClockFrequency(CPU::CLOCK_FREQUENCY_NTSC);    
+}
+
 uint8_t 
 SIDWrapper::peek(uint16_t addr)
 {
@@ -100,6 +113,20 @@ SIDWrapper::execute(int cycles)
         return resid->execute(cycles);
     else
         return oldsid->execute(cycles);
+}
+
+void 
+SIDWrapper::run()
+{   
+    oldsid->run();
+    resid->run();
+}
+
+void 
+SIDWrapper::halt()
+{   
+    oldsid->halt();
+    resid->halt();
 }
 
 float 

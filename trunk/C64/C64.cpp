@@ -84,6 +84,8 @@ C64::C64()
 
 	p = NULL;    
     warp = false;
+    alwaysWarp = false;
+    warpLoad = false;
 	
 	// Create components
 	mem = new C64Memory();
@@ -117,18 +119,6 @@ C64::C64()
 	floppy->setIEC(iec);
 	floppy->setC64(this);
 	
-    // Set initial hardware configuration
-    HardwareConfiguration c;
-    c.pal            = true;
-    c.alwaysWarp     = false;
-    c.warpLoad       = false;
-    c.audioFilter    = false;
-    c.useReSID       = true;
-    c.chipModel      = MOS8580;
-    c.samplingMethod = SAMPLE_FAST;
-    c.colorScheme    = VIC::CCS64;
-    setHardwareConfiguration(c);
-    
 	// Setup initial game port mapping (0 joysticks connected)
 	setInputDevice(0, IPD_UNCONNECTED);
 	setInputDevice(1, IPD_UNCONNECTED);
@@ -140,8 +130,9 @@ C64::C64()
 		backInTimeHistory[i] = new Snapshot();	
 	backInTimeWritePtr = 0;
     
-	// Perform a reset
-	reset();
+    // Configure machine type and reset
+    setPAL();
+    reset();
 
 	// Remove after debugging
 	cpu->max_traces = 20000;
@@ -196,9 +187,7 @@ void C64::reset()
 	rasterline = 0;
 	rasterlineCycle = 1;
 	targetTime = 0UL;
-    
-    // we also reset some hardware configuration settings
-    config.frameDelayOffset = 0;
+    frameDelayOffset = 0;
     
 	resume();
 }
@@ -251,34 +240,15 @@ void C64::putMessage(int id, int i, void *p, const char *c)
 //                                           Configure
 // -----------------------------------------------------------------------------------------------
 
-void 
-C64::setHardwareConfiguration(HardwareConfiguration c)
-{
-    if (c.pal) 
-        setPAL(); 
-    else 
-        setNTSC();
-    
-    setFrameDelayOffset(c.frameDelayOffset);
-    setAlwaysWarp(c.alwaysWarp);
-    setWarpLoad(c.warpLoad);
-    setAudioFilter(c.audioFilter);
-    setReSID(c.useReSID);
-    setChipModel(c.chipModel);
-    setSamplingMethod(c.samplingMethod);
-    setColorScheme(c.colorScheme);
-}
-
 void
 C64::setPAL()
 {
 	suspend();
 	
-    config.pal = true;
+    pal = true;
     
 	vic->setPAL();
-	sid->setClockFrequency(CPU::CLOCK_FREQUENCY_PAL);
-	// frameDelay = (1000000 / getFramesPerSecond());
+	sid->setPAL();
 
 	resume();
 }
@@ -288,11 +258,10 @@ C64::setNTSC()
 {
 	suspend();
 	
-    config.pal = false;
+    pal = false;
     
 	vic->setNTSC();
-	sid->setClockFrequency(CPU::CLOCK_FREQUENCY_NTSC);
-	// frameDelay = (1000000 / getFramesPerSecond());
+	sid->setNTSC();
 
 	resume();
 }
@@ -310,14 +279,14 @@ C64::setWarp(bool b)
 void
 C64::setAlwaysWarp(bool b)
 {
-	config.alwaysWarp = b;
+	alwaysWarp = b;
 	setWarp(b);
 }
 
 void
 C64::setWarpLoad(bool b)
 {
-	config.warpLoad = b;
+	warpLoad = b;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -441,13 +410,12 @@ C64::run() {
 			putMessage(MSG_ROM_MISSING, getMissingRoms());
 			return;
 		}
-		
+
+        // Power on sub components
+		sid->run();
+
 		// Start execution thread
 		pthread_create(&p, NULL, runThread, (void *)this);	
-		
-		// Power on sub components
-		sid->run();
-		
 	}
 }
 
@@ -461,14 +429,14 @@ C64::halt()
 {
 	if (isRunning()) {
 		
-		// Shut down sub components
-		sid->halt();
 		// Cancel execution thread
 		pthread_cancel(p);
 		// Wait until thread terminates
 		pthread_join(p, NULL);
 		// Finish the current command (to reach a clean state)
 		step();
+		// Shut down sub components
+		sid->halt();
 	}
 }
 

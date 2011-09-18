@@ -1011,7 +1011,6 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{2, 38}, {299, 596}}</string>
 						<reference key="NSSuperview" ref="341283785"/>
-						<reference key="NSNextKeyView" ref="678882413"/>
 						<object class="NSMutableArray" key="NSTabViewItems">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSTabViewItem" id="355621993">
@@ -5168,7 +5167,6 @@
 						<int key="NSvFlags">289</int>
 						<string key="NSFrame">{{242, 0}, {58, 45}}</string>
 						<reference key="NSSuperview" ref="341283785"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<int key="NSNumRows">2</int>
 						<int key="NSNumCols">1</int>

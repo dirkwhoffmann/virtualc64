@@ -26,9 +26,6 @@
 
 class ReSID : public VirtualComponent {
 
-    // friend class C64;
-    friend class SIDWrapper;
-
 private:
     SID *sid;
     	
@@ -95,6 +92,12 @@ public:
 	*/
 	bool execute(int cycles);
 	
+    //! Notifies the SID chip that the emulator has started
+    void run();
+	
+	//! Notifies the SID chip that the emulator has started
+	void halt();
+
     //! Get next sample from \a ringBuffer.
 	float readData();
 	
@@ -106,37 +109,35 @@ public:
 
     // Configuring
     
+    //! Returns true iff audio filters are enabled.
+	inline bool getAudioFilter() { return audioFilter; }
+    
+	//! Enable or disable filters of SID.
+	void setAudioFilter(bool enable);
+    
     //! Return samplerate.
 	inline uint32_t getSampleRate() { return sampleRate; }
     
 	//! Set sample rate 
 	void setSampleRate(uint32_t sr);
-
+    
+    //! Get sampling method
+    inline sampling_method getSamplingMethod() { return samplingMethod; }
+    
+    //! Set sampling method
+    void setSamplingMethod(sampling_method value);
+    
+    //! Get chip model 
+    inline chip_model getChipModel() { return chipModel; }
+    
+    //! Set chip model 
+    void setChipModel(chip_model value);
+    
     //! Get clock frequency
 	uint32_t getClockFrequency();	
     
 	//! Set clock frequency
 	void setClockFrequency(uint32_t frequency);	
-
-private:
-    
-    //! Returns true iff audio filters are enabled.
-	// inline bool getAudioFilter() { return audioFilter; }
-
-	//! Enable or disable filters of SID.
-	void setAudioFilter(bool enable);
-
-    //! Get sampling method
-    // inline sampling_method getSamplingMethod() { return samplingMethod; }
-
-    //! Set sampling method
-    void setSamplingMethod(sampling_method value);
-
-    //! Get chip model 
-    // inline chip_model getChipModel() { return chipModel; }
-
-    //! Set chip model 
-    void setChipModel(chip_model value);
 };
 
 #endif

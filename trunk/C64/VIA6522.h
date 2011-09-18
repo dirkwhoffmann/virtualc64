@@ -25,8 +25,6 @@ class VC1541;
 
 class VIA6522 : public VirtualComponent {
 	
-    friend class C64;
-
 public:
 	
 	//! Reference to the connected disk drive. 
