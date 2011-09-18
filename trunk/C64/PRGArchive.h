@@ -55,7 +55,7 @@ public:
 	bool fileIsValid(const char *filename);
 	bool readFromBuffer(const void *buffer, unsigned length);
 	bool readDataFromFile(FILE *file, struct stat fileProperties);
-	void cleanup();
+	void dealloc();
 	const char *getTypeOfContainer();
 	
 	// Virtual functions from Archive class

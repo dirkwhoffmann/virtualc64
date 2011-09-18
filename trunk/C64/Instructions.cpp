@@ -1189,8 +1189,8 @@ void CPU::BCC_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		nextPossibleIrqCycle++; // Delay IRQs by one cycle
-		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++;
 		DONE;
 	}
 }
@@ -1223,8 +1223,8 @@ void CPU::BCS_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		nextPossibleIrqCycle++; // Delay IRQs by one cycle
-		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++;
 		DONE;
 	}
 }
@@ -1257,8 +1257,8 @@ void CPU::BEQ_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		nextPossibleIrqCycle++; // Delay IRQs by one cycle
-		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++;
 		DONE;
 	}
 }
@@ -1335,8 +1335,8 @@ void CPU::BMI_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		nextPossibleIrqCycle++; // Delay IRQs by one cycle
-		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++;
 		DONE;
 	}
 }
@@ -1369,8 +1369,8 @@ void CPU::BNE_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		nextPossibleIrqCycle++; // Delay IRQs by one cycle
-		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++;
 		DONE;
 	}
 }
@@ -1403,9 +1403,9 @@ void CPU::BPL_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		nextPossibleIrqCycle++; // Delay IRQs by one cycle
-		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
-		DONE;
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+        nextPossibleNmiCycle++;
+        DONE;
 	}
 }
 
@@ -1513,9 +1513,9 @@ void CPU::BVC_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		nextPossibleIrqCycle++; // Delay IRQs by one cycle
-		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
-		DONE;
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++;
+        DONE;
 	}
 }
 
@@ -1547,8 +1547,8 @@ void CPU::BVS_relative_2()
 	if (pc_hi != HI_BYTE(PC)) {
 		next = (data & 0x80) ? &CPU::branch_3_underflow : &CPU::branch_3_overflow;
 	} else {
-		nextPossibleIrqCycle++; // Delay IRQs by one cycle
-		nextPossibleNmiCycle++; // TODO: Not for VC1541 CPU
+		nextPossibleIrqCycle++; // Delay IRQs by one cycle
+		nextPossibleNmiCycle++; 
 		DONE;
 	}
 }

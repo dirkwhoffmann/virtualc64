@@ -140,12 +140,7 @@ uint8_t localTimeMin();
 //! Read real-time clock (hours)
 uint8_t localTimeHour();
 
-//! Let the process sleep for msec microseconds
-/*! \todo The functions is right now called inside the execution thread of the CPU. The value is slightly too high, because
-    falling asleep and waking up also costs some time. As a result, we get a refresh rate slightly lower than the expected 60 Hz.
-	We should either take care of this time gap here or in the CPU method. 
-	\param millisec Time to sleep in milliseconds
-*/
+//! Sleep for some microseconds
 void sleepMicrosec(uint64_t millisec);
 
 #endif

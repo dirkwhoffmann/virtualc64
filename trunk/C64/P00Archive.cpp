@@ -21,12 +21,12 @@
 P00Archive::P00Archive()
 {
 	data = NULL;
-	cleanup(); 
+	dealloc(); 
 }
 
 P00Archive::~P00Archive()
 {
-	cleanup();
+	dealloc();
 }
 
 bool 
@@ -68,7 +68,7 @@ P00Archive::getTypeOfContainer()
 }
 
 void 
-P00Archive::cleanup()
+P00Archive::dealloc()
 {
 	if (data) free(data);
 	data = NULL;

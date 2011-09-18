@@ -187,9 +187,7 @@ public:
 	//! Reference to the virtual VC1541
 	VC1541 *floppy;
 		
-	//! Current clock cycle since beginning of rasterline (ranges from 1 .. 63 (PAL) or 65 (NTSC))
-    // TODO: MAKE PRIVATE
-	int rasterlineCycle;
+
 		
 private:
 
@@ -233,6 +231,11 @@ private:
 	//! Current clock cycle since power up
 	uint64_t cycles;
 	
+    //! Current clock cycle relative to the current rasterline
+    /*! Range: 1 ... 63 on PAL machines
+               1 ... 65 on NTSC machines */
+	int rasterlineCycle;
+    
 	//! Current frame number since power up
 	uint64_t frame;
 	

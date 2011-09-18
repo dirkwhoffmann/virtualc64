@@ -97,7 +97,7 @@ Container::readFromFile(const char *filename)
 	}
 	
 	// Read from buffer (subclass specific behaviour)
-	cleanup();
+	dealloc();
 	if (!readFromBuffer(buffer, fileProperties.st_size)) {
 		goto exit;
 	}

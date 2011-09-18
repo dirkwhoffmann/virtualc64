@@ -85,7 +85,7 @@ public:
 		
 	bool writeDataToFile(FILE *file, struct stat fileProperties);
 	
-	void cleanup();
+	void dealloc();
 	const char *getTypeOfContainer();
 	
 	//! Returns pointer to core data

@@ -20,7 +20,7 @@
 
 Snapshot::Snapshot()
 {
-	cleanup();
+	dealloc();
 }
 
 Snapshot::~Snapshot()
@@ -54,7 +54,7 @@ Snapshot::snapshotFromBuffer(const void *buffer, unsigned size)
 }
 
 void 
-Snapshot::cleanup()
+Snapshot::dealloc()
 {
 	fileContents.magic[0] = 'V';
 	fileContents.magic[1] = 'C';

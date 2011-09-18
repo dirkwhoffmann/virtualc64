@@ -74,12 +74,12 @@ static const D64TrackInfo D64Map[] =
 
 D64Archive::D64Archive()
 {
-	cleanup();
+	dealloc();
 }
 
 D64Archive::~D64Archive()
 {
-	cleanup();
+	dealloc();
 }
 
 bool 
@@ -184,7 +184,7 @@ D64Archive::getTypeOfContainer()
 }
 
 void 
-D64Archive::cleanup()
+D64Archive::dealloc()
 {
 }
 
