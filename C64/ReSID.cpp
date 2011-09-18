@@ -169,6 +169,8 @@ ReSID::execute(int elapsedCycles)
     int delta_t = elapsedCycles;
     int bufindex = 0;
     
+    //if (isHalted()) return true;
+    
     // TODO: SPEEDUP: Write directly into ringbuffer
     while (delta_t) {
         bufindex += sid->clock(delta_t, buf + bufindex, buflength - bufindex);
@@ -187,6 +189,22 @@ ReSID::execute(int elapsedCycles)
 }
 
 void 
+ReSID::run()
+{
+    handleBufferException();
+}
+
+void 
+ReSID::halt()
+{
+    // clear ringBuffer
+	for (unsigned i = 0; i < bufferSize; i++)
+	{
+		ringBuffer[i] = 0.0f;
+	}
+}
+
+void 
 ReSID::handleBufferException()
 {    
     // Reset pointers
@@ -194,7 +212,7 @@ ReSID::handleBufferException()
 
     // Add some delay
     size_t delay = 8*735;
-    memset(ringBuffer, 0, delay); 
+    memset(ringBuffer, 0, delay * sizeof(float)); 
     writeBuffer += delay;
 }
 
@@ -204,7 +222,7 @@ ReSID::readData()
 	float value;
     
     if (readBuffer == writeBuffer) {
-        fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%d)\n", readBuffer - ringBuffer);
+        // fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%d)\n", readBuffer - ringBuffer);
         handleBufferException();
     }
 

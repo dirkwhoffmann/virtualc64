@@ -411,6 +411,19 @@ OldSID::execute(int elapsedCycles)
 	return true;
 }
 
+#if 0
+void 
+OldSID::run()
+{
+    debug("OldSID::run");
+}
+
+void 
+OldSID::halt()
+{
+    debug("OldSID::halt");
+}
+#endif
 
 // generate triangle waveform
 float OldSID::triangleWave(SIDVoice* voice)
@@ -563,6 +576,22 @@ float OldSID::squareWave(SIDVoice* voice)
 	return pulse;
 }
 
+void 
+OldSID::run()
+{
+    handleBufferException();
+}
+
+void 
+OldSID::halt()
+{
+    // clear ringBuffer
+	for (unsigned i = 0; i < bufferSize; i++)
+	{
+		ringBuffer[i] = 0.0f;
+	}
+}
+
 void OldSID::handleBufferException()
 {
     size_t delay = 8*735;
@@ -570,11 +599,7 @@ void OldSID::handleBufferException()
     callbackStarted = false;
     startPlaying = false;
 
-//    readBuffer = writeBuffer = ringBuffer;
-//    preCalcSamples = 0;
-    // Add some delay
-
-    memset(ringBuffer, 0, delay); 
+    memset(ringBuffer, 0, delay * sizeof(float)); 
     readBuffer = ringBuffer;
     writeBuffer = ringBuffer + delay;
 }
@@ -584,7 +609,7 @@ float OldSID::readData()
 	float value;
     
     if (readBuffer == writeBuffer) {
-        fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%d)\n", readBuffer - ringBuffer);
+        // fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%d)\n", readBuffer - ringBuffer);
         handleBufferException();
     }
 

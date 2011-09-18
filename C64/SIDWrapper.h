@@ -25,7 +25,6 @@
 
 class SIDWrapper : public VirtualComponent {
 
-    friend class C64;
     
 public:	
 	//! Start address of the SID I/O space.
@@ -66,49 +65,83 @@ public:
 	//! Dump internal state to console
 	void dumpState();
 	
+    // -----------------------------------------------------------------------------------------------
+	//                                         Configuring
+	// -----------------------------------------------------------------------------------------------
+
+    //! Configure the SID chip for being used in PAL machines
+    void setPAL();
+    
+    //! Configure the SID chip for being used in NTSC machines
+    void setNTSC();
+    
+    //! Returns true iff audio filters are enabled.
+	inline bool getAudioFilter() { return resid->getAudioFilter(); }
+    
+	//! Enable or disable filters of SID.
+	void setAudioFilter(bool enable);
+
+    //! Returns true, iff ReSID libray shall be used.
+    inline bool getReSID() { return useReSID; }
+    
+    //! Enable or disable ReSID library.
+	void setReSID(bool enable);
+    
+    //! Get sampling method
+    inline sampling_method getSamplingMethod() { return resid->getSamplingMethod(); }
+    
+    //! Set sampling method (ReSID only)
+    void setSamplingMethod(sampling_method value);
+    
+    //! Get chip model 
+    inline chip_model getChipModel() { return resid->getChipModel(); }
+    
+    //! Set chip model (ReSID only)
+    void setChipModel(chip_model value);
+    
+    //! Return samplerate.
+	inline uint32_t getSampleRate() { return resid->getSampleRate(); }
+    
+	//! Sets samplerate of SID and it's 3 voices.
+	void setSampleRate(uint32_t sr);
+    
+    //! Get clock frequency
+	inline uint32_t getClockFrequency() { return resid->getClockFrequency(); }	
+    
+	//! Set clock frequency
+	void setClockFrequency(uint32_t frequency);	
+
+
+    // -----------------------------------------------------------------------------------------------
+	//                                           Execution
+	// -----------------------------------------------------------------------------------------------
+
+    //! Pass control to the SID chip.
+	/*! The SID will be executed and generate audio samples for about one video frame.
+     Actual number of generated samples depends on executed CPU cycles since last call.
+     \param cycles Number of cycles to execute (ignored).
+     */
+	bool execute(int cycles);
+
+    //! Notifies the SID chip that the emulator has started
+    void run();
+	
+	//! Notifies the SID chip that the emulator has started
+	void halt();
+
+    
+	// -----------------------------------------------------------------------------------------------
+	//                                       Getter and setter
+	// -----------------------------------------------------------------------------------------------
+    
 	//! Special peek function for the I/O memory range.
 	uint8_t peek(uint16_t addr);
 	
 	//! Special poke function for the I/O memory range.
 	void poke(uint16_t addr, uint8_t value);
 	
-	//! Pass control to the SID chip.
-	/*! The SID will be executed and generate audio samples for about one video frame.
-     Actual number of generated samples depends on executed CPU cycles since last call.
-     \param cycles Number of cycles to execute (ignored).
-     */
-	bool execute(int cycles);
-	
     //! Get next sample from \a ringBuffer.
 	float readData();
-	
-    //! Returns true, iff ReSID libray shall be used.
-    inline bool getReSID() { return useReSID; }
-    
-    //! Return samplerate.
-	inline uint32_t getSampleRate() { return resid->getSampleRate(); }
-
-	//! Sets samplerate of SID and it's 3 voices.
-	void setSampleRate(uint32_t sr);
-
-    //! Get clock frequency
-	// inline uint32_t getClockFrequency() { return resid->getClockFrequency(); }	
-    
-	//! Set clock frequency
-	void setClockFrequency(uint32_t frequency);	
-    
-private:
-    //! Enable or disable ReSID library.
-	void setReSID(bool enable);
-    
-    //! Set sampling method (ReSID only)
-    void setSamplingMethod(sampling_method value);
-    
-    //! Set chip model (ReSID only)
-    void setChipModel(chip_model value);
-    
-    //! Enable or disable filters of SID.
-	void setAudioFilter(bool enable);
 };
 
 #endif

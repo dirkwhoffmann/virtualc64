@@ -29,8 +29,6 @@
 */
 class OldSID : public VirtualComponent {
 
-    friend class SIDWrapper;
-
 public:	
 	//! Table holding volume levels of SID.
 	static const float volumeLevelTable[16];
@@ -242,6 +240,12 @@ public:
 	*/
 	bool execute(int cycles);
 	
+    //! Notifies the SID chip that the emulator has started
+    void run();
+	
+	//! Notifies the SID chip that the emulator has started
+	void halt();
+
     //! Get next sample from \a ringBuffer.
 	float readData();
 	

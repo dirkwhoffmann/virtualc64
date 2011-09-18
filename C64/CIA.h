@@ -65,8 +65,6 @@ class Joystick;
 */
 class CIA : public VirtualComponent {
 
-    friend class C64;
-
 public:
 	//! Start address of the CIA I/O space (CIA 1 and CIA 2)
 	static const uint16_t CIA_START_ADDR = 0xDC00;

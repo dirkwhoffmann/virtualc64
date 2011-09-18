@@ -154,42 +154,6 @@ enum INPUT_DEVICES {
 	IPD_JOYSTICK_2
 };
 
-typedef struct {
-
-    //! Is it a PAL machine?
-    bool pal;
-
-    //! Extra frame delay
-    /*! = 0 : Emulator runs at original PAL or NTSC speed (default) 
-        > 0 : Emulator runs slower than origonal machine 
-        < 0 : Emulator runs faster than original machine 
-     */
-    int frameDelayOffset;
-    
-    //! Shall we ingnore delay settings and always run as possible?
-	bool alwaysWarp;
-        
-	//! Indicates that we should run as fast as possible during disk operations
-	bool warpLoad;
-
-    //! Turn on audio filters?
-    bool audioFilter;
-
-    //! Use reSID library for playing sound?
-    bool useReSID;
-
-    //! Sound chip (MOS6581 or MOS858
-    /*! Only takes effect if reSID librarty is used */
-    chip_model chipModel;
-            
-    //! Sampling method
-    /*! Only takes effect if reSID librarty is used */
-    sampling_method samplingMethod;
-    
-    //! Color scheme
-    VIC::ColorScheme colorScheme;
-    
-} HardwareConfiguration;
 
 class C64 : public VirtualComponent {
 
@@ -229,6 +193,7 @@ public:
 	VC1541 *floppy;
 		
 	//! Current clock cycle since beginning of rasterline (ranges from 1 .. 63 (PAL) or 65 (NTSC))
+    // TODO: MAKE PRIVATE
 	int rasterlineCycle;
 		
 private:
@@ -236,9 +201,40 @@ private:
 	//! The execution thread
 	pthread_t p;
 
-    //! Hardware configuration of virtual computer
-    HardwareConfiguration config;
+    //! Additional frame delay
+    /*! = 0 : Emulator runs at original speed (varies between PAL and NTSC) (default value) 
+     > 0 : Emulator runs slower than origonal machine 
+     < 0 : Emulator runs faster than original machine 
+     */
+    int frameDelayOffset;
+
+	//! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
+	bool warp;
     
+    //! Indicates that we should always run as possible
+	bool alwaysWarp;
+    
+    //! Indicates that we should run as fast as possible at least during disk operations
+	bool warpLoad;
+
+	//! Game port configuration.
+	/*! The value is determined by the enumeration type INPUT_DEVICES */
+	int port[2];
+    
+	//! Snapshot history ring buffer (for cheatbox)
+	Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE]; 
+    
+	//! ring buffer write pointer
+	unsigned backInTimeWritePtr;
+    
+    
+    //
+    //  State variables (will be saves to snapshot)
+    //
+
+    //! PAL or NTSC machine?
+    bool pal;
+
 	//! Current clock cycle since power up
 	uint64_t cycles;
 	
@@ -252,20 +248,7 @@ private:
 	/*! Used to synchronize emulation speed */
 	uint64_t targetTime; 
 		
-	//! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
-	bool warp;
-
-	//! Game port configuration.
-	/*! The value is determined by the enumeration type INPUT_DEVICES */
-	int port[2];
-			
-	//! Snapshot history ring buffer (for cheatbox)
-	Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE]; 
-		
-	//! ring buffer write pointer
-	unsigned backInTimeWritePtr;
-
-	
+    
 	// -----------------------------------------------------------------------------------------------
 	//                                             Methods
 	// -----------------------------------------------------------------------------------------------
@@ -296,71 +279,68 @@ public:
 	
 public:
 	
-    //! Set hardware configuration
-    void setHardwareConfiguration(HardwareConfiguration c);
-    
 	//! Returns true for PAL machines
-	inline bool isPAL() { return config.pal; }
+	inline bool isPAL() { return pal; }
 
 	//! Set PAL mode
 	void setPAL();
 	
 	//! Returns true for NTSC machines
-	inline bool isNTSC() { return !config.pal; }
+	inline bool isNTSC() { return !pal; }
 
 	//! Set NTSC mode
 	void setNTSC();
 	
     //! Returns the user definable speed adjustment (msec per frame)
-	inline int getFrameDelayOffset() { return config.frameDelayOffset; } 
+	inline int getFrameDelayOffset() { return frameDelayOffset; } 
     
 	//! Sets the user definable speed adjustment (msec per frame)
-	inline void setFrameDelayOffset(int delay) { config.frameDelayOffset = delay; }
+	inline void setFrameDelayOffset(int delay) { frameDelayOffset = delay; }
     
 	//! Enable or disable timing synchronization
 	void setWarp(bool b);
 	
 	//! Returns true iff cpu should always run at maximun speed
-	bool getAlwaysWarp() { return config.alwaysWarp; }
+	inline bool getAlwaysWarp() { return alwaysWarp; }
 	
 	//! Setter for alwaysWarp
 	void setAlwaysWarp(bool b);
 	
 	//! Returns true iff warp mode is activated during disk operations
-	bool getWarpLoad() { return config.warpLoad; }
+	inline bool getWarpLoad() { return warpLoad; }
 
 	//! Setter for warpLoad
 	void setWarpLoad(bool b);
 
     //! Get color scheme
-    VIC::ColorScheme getColorScheme() { return config.colorScheme; }
+    VIC::ColorScheme getColorScheme() { return vic->getColorScheme(); }
     
 	//! Set color scheme
-	void setColorScheme(VIC::ColorScheme scheme) { config.colorScheme = scheme; vic->setColorScheme(scheme); }
+	void setColorScheme(VIC::ColorScheme scheme) { vic->setColorScheme(scheme); }
 
     //! Returns true iff audio filters are enabled.
-    bool getAudioFilter() { return config.audioFilter; }
+    bool getAudioFilter() { return sid->getAudioFilter(); }
     
 	//! Enable or disable filters of SID.
-	void setAudioFilter(bool value) { config.audioFilter = value; sid->setAudioFilter(value); }
+	void setAudioFilter(bool value) { sid->setAudioFilter(value); }
       
     //! Returns true if reSID library is used
-    bool getReSID() { return config.useReSID; }
+    bool getReSID() { return sid->getReSID(); }
 
     //! Turn reSID library on or off
-    void setReSID(bool value) { config.useReSID = value; sid->setReSID(value); }
+    void setReSID(bool value) { sid->setReSID(value); }
 
     //! Get sampling method
-    inline sampling_method getSamplingMethod() { return config.samplingMethod; }
+    inline sampling_method getSamplingMethod() { return sid->getSamplingMethod(); }
     
     //! Set sampling method
-    void setSamplingMethod(sampling_method value) { config.samplingMethod = value; sid->setSamplingMethod(value); }
+    void setSamplingMethod(sampling_method value) { sid->setSamplingMethod(value); }
     
     //! Get chip model 
-    inline chip_model getChipModel() { return config.chipModel; }
+    inline chip_model getChipModel() { return sid->getChipModel(); }
     
     //! Set chip model 
-    void setChipModel(chip_model value) {config.chipModel = value; sid->setChipModel(value); }
+    void setChipModel(chip_model value) { sid->setChipModel(value); }
 
 	
 	// -----------------------------------------------------------------------------------------------
@@ -513,22 +493,22 @@ public:
 
 	// Returns the number of frames per second
 	/*! Number varies between PAL and NTSC machines */	
-    inline int getFramesPerSecond() { if (config.pal) return VIC::PAL_REFRESH_RATE; else return VIC::NTSC_REFRESH_RATE; }
+    inline int getFramesPerSecond() { if (pal) return VIC::PAL_REFRESH_RATE; else return VIC::NTSC_REFRESH_RATE; }
 	
 	//! Returns the number of rasterlines per frame
 	/*! Number varies between PAL and NTSC machines */	
-    inline int getRasterlinesPerFrame() { if (config.pal) return VIC::PAL_RASTERLINES; else return VIC::NTSC_RASTERLINES; }
+    inline int getRasterlinesPerFrame() { if (pal) return VIC::PAL_RASTERLINES; else return VIC::NTSC_RASTERLINES; }
 	
 	//! Returns the number of CPU cycles performed per rasterline
 	/*! Number varies between PAL and NTSC machines */	
-	inline int getCyclesPerRasterline() { if (config.pal) return VIC::PAL_CYCLES_PER_RASTERLINE; else return VIC::NTSC_CYCLES_PER_RASTERLINE; }
+	inline int getCyclesPerRasterline() { if (pal) return VIC::PAL_CYCLES_PER_RASTERLINE; else return VIC::NTSC_CYCLES_PER_RASTERLINE; }
 	
 	//! Returns the number of CPU cycles performed per frame
 	/*! Number varies between PAL and NTSC machines */	
-	inline int getCyclesPerFrame() { return getRasterlinesPerFrame() * getCyclesPerRasterline(); }
-
+	inline int getCyclesPerFrame() { if (pal) return VIC::PAL_RASTERLINES * VIC::PAL_CYCLES_PER_RASTERLINE; else return VIC::NTSC_RASTERLINES * VIC::NTSC_CYCLES_PER_RASTERLINE; }
+        
 	//! Returns the time interval between two frames
-	inline int getFrameDelay() { return 1000000 / getFramesPerSecond(); }
+	inline int getFrameDelay() { if (pal) return 1000000 / VIC::PAL_REFRESH_RATE; else return 1000000 / VIC::NTSC_REFRESH_RATE; }
 
     
 	// ---------------------------------------------------------------------------------------------

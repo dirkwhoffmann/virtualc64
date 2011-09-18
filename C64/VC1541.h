@@ -31,8 +31,6 @@ class C64;
 //! Virtual VC 1541 drive
 class VC1541 : public VirtualComponent { 
 
-    friend class C64;
-
 public:
 	//! Reference to the virtual IEC bus
 	C64 *c64;
