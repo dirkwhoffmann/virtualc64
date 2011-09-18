@@ -81,19 +81,15 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (IBAction)setPalAction:(id)sender
 {
-	[self setEyeXAction:[NSNumber numberWithFloat:PAL_INITIAL_EYE_X]];
-	[self setEyeYAction:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Y]];
-	[self setEyeZAction:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Z]];
 	[c64 setPAL];
+    [[controller screen] setPAL];
 	[self update];	
 }
 
 - (IBAction)setNtscAction:(id)sender
 {
-	[self setEyeXAction:[NSNumber numberWithFloat:NTSC_INITIAL_EYE_X]];
-	[self setEyeYAction:[NSNumber numberWithFloat:NTSC_INITIAL_EYE_Y]];
-	[self setEyeZAction:[NSNumber numberWithFloat:NTSC_INITIAL_EYE_Z]];
 	[c64 setNTSC];
+    [[controller screen] setNTSC];
 	[self update];	
 }
 

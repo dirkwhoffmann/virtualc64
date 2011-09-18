@@ -23,6 +23,7 @@
 @class MyController;
 @class AudioDevice;
 @class V64Snapshot;
+@class MyOpenGLView;
 
 
 // --------------------------------------------------------------------------
@@ -30,6 +31,7 @@
 // --------------------------------------------------------------------------
 
 @interface CPUProxy : NSObject {
+        
 	CPU *cpu;
 }
 
@@ -372,6 +374,8 @@
 
 @interface C64Proxy : NSObject {	
 	
+    IBOutlet MyOpenGLView* screen; 
+
 	C64 *c64;
 	AudioDevice *audioDevice;
 
