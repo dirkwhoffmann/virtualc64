@@ -23,14 +23,6 @@ class D64Archive;
 class Cartridge;
 class Snapshot;
 
-// TODO
-// 1. Intantiate C64Proxy in XIB file
-//    No more custom creation of proxy needed
-// 2. Use C64Proxy as data source for ObjectController (key value coding)
-// 3. C64Proxy will look at received messages (before passing them to the controller) and update internal values accordingly
-// 4. Sending "refresh" to C64Proxy object will update all internal values (frequently called when debug pabel is open or on startup)
-// 5. Eliminate outlets and custom code for key/value controlled objects
-
 @interface MyDocument : NSDocument
 {
 	// ObjC/C++ bridge

@@ -33,8 +33,7 @@ private:
 	char *name;
 		
 	//! Free allocated memory
-	// TODO: RENAME TO dealloc
-	virtual void cleanup() = 0;
+	virtual void dealloc() = 0;
 
 	//! Returns how many bytes are needed to store this container on disk
 	virtual unsigned sizeOnDisk();

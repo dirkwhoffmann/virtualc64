@@ -61,7 +61,7 @@ public:
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
 	bool readFromBuffer(const void *buffer, unsigned length);
-	void cleanup();
+	void dealloc();
 	const char *getTypeOfContainer();
 	const char *getName();
 

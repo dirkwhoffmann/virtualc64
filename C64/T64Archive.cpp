@@ -21,12 +21,12 @@
 T64Archive::T64Archive()
 {
 	data = NULL;
-	cleanup();
+	dealloc();
 }
 
 T64Archive::~T64Archive()
 {
-	cleanup();
+	dealloc();
 }
 
 bool 
@@ -70,7 +70,7 @@ T64Archive::getTypeOfContainer()
 	return "T64";
 }
 
-void T64Archive::cleanup()
+void T64Archive::dealloc()
 {
 	if (data) free(data);
 	data = NULL;

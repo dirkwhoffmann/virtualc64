@@ -21,12 +21,12 @@
 PRGArchive::PRGArchive()
 {
 	data = NULL;
-	cleanup();
+	dealloc();
 }
 
 PRGArchive::~PRGArchive()
 {
-	cleanup();
+	dealloc();
 }
 
 bool 
@@ -66,7 +66,7 @@ PRGArchive::getTypeOfContainer()
 }
 
 void 
-PRGArchive::cleanup()
+PRGArchive::dealloc()
 {
 	if (data) free(data);
 	data = NULL;

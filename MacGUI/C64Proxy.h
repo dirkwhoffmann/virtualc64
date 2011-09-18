@@ -390,7 +390,7 @@
 	IECProxy *iec;
 	VC1541Proxy *vc1541;
 	
-	//! Is set to true when data gets transfered on the IEC bus
+	//! Indicates that data is transmitted on the IEC bus
 	BOOL iecBusIsBusy;
 }
 

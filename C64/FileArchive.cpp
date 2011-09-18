@@ -21,12 +21,12 @@
 FileArchive::FileArchive()
 {
 	data = NULL;
-	cleanup(); 
+	dealloc(); 
 }
 
 FileArchive::~FileArchive()
 {
-	cleanup();
+	dealloc();
 }
 
 bool 
@@ -66,7 +66,7 @@ FileArchive::getTypeOfContainer()
 }
 
 void 
-FileArchive::cleanup()
+FileArchive::dealloc()
 {
 	if (data) free(data);
 	data = NULL;

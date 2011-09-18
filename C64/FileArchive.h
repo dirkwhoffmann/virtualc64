@@ -54,7 +54,7 @@ public:
 	
 	bool fileIsValid(const char *filename);
 	bool readFromBuffer(const void *buffer, unsigned length);
-	void cleanup();
+	void dealloc();
 	const char *getTypeOfContainer();
 	
 #pragma mark Archive

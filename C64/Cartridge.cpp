@@ -38,12 +38,12 @@ Cartridge::Cartridge()
 {
 	path = NULL;
 	data = NULL;
-	cleanup();
+	dealloc();
 }
 
 Cartridge::~Cartridge()
 {
-	cleanup();
+	dealloc();
 }
 
 Cartridge *
@@ -176,7 +176,7 @@ Cartridge::readDataFromFile(FILE *file, struct stat fileProperties)
 #endif
 
 void 
-Cartridge::cleanup()
+Cartridge::dealloc()
 {
 	if (path) {
 		free(path);
