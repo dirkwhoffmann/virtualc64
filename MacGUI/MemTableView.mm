@@ -118,7 +118,7 @@
 
 - (void)refresh 
 {
-	// Nothing to do
+	[self setNeedsDisplay];
 }
 
 @end

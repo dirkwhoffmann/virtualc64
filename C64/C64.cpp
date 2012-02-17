@@ -133,6 +133,7 @@ C64::C64()
     // Configure machine type and reset
     setPAL();
     reset();
+    floppy->reset();
 
 	// Remove after debugging
 	cpu->max_traces = 20000;
@@ -179,9 +180,7 @@ void C64::reset()
 	cia2->reset();
 	keyboard->reset();
 	iec->reset();
-	floppy->reset();
 
-	// archive = NULL;
 	cycles = 0UL;
 	frame = 0;
 	rasterline = 0;
@@ -193,7 +192,8 @@ void C64::reset()
 }
 
 void C64::fastReset()
-{		
+{
+    reset();
 	debug (1, "Resetting virtual C64 (fast reset via image file)\n");
 	
 	Snapshot *snapshot = Snapshot::snapshotFromFile("ResetImage.VC64");

@@ -23,7 +23,7 @@ VC1541::VC1541()
 	debug(2, "Creating virtual VC1541 at address %p\n", this);
 	name = "1541";
 	
-	// Initialize references
+	// Clear references
 	c64 = NULL;
 	iec = NULL;
 	cpu = NULL;
@@ -40,10 +40,7 @@ VC1541::VC1541()
 	mem->setCPU(cpu);
 	mem->setDrive(this);
 	via1->setDrive(this);
-	via2->setDrive(this);
-	
-	// Initialize variables
-	rotating = false;
+	via2->setDrive(this);	
 }
 
 VC1541::~VC1541()

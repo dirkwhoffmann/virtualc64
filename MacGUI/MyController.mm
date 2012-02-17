@@ -496,7 +496,7 @@
 	[memTableView refresh];
 }
 
-- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter disassembler:(NSFormatter *)disassembler
+- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threeDigitFormatter disassembler:(NSFormatter *)disassembler
 {		
 	NSControl *ByteFormatterControls[] = { 
 		// CPU panel
@@ -507,7 +507,7 @@
 		cia2DataPortA, cia2DataPortDirectionA, cia2DataPortB, cia2DataPortDirectionB,
 		tod2Hours, tod2Minutes, tod2Seconds, tod2Tenth, alarm2Hours, alarm2Minutes, alarm2Seconds, alarm2Tenth,
 		// VIC panel
-		VicSpriteX, VicSpriteY, VicSpriteColor, 
+		VicSpriteY, VicSpriteColor, 
  		NULL };
 	
 	NSControl *WordFormatterControls[] = { 
@@ -521,7 +521,12 @@
 		// VIC panel
 		VicRasterline, VicRasterInterrupt,
 		NULL };
-	
+
+    NSControl *threeDigitFormatterControls[] = { 
+		// VIC panel
+		VicSpriteX,
+		NULL };
+
 	// Bind formatters
 	for (int i = 0; ByteFormatterControls[i] != NULL; i++) {
 		[ByteFormatterControls[i] abortEditing];
@@ -534,7 +539,13 @@
 		[WordFormatterControls[i] setFormatter:wordFormatter];
 		[WordFormatterControls[i] setNeedsDisplay];
 	}
-	
+
+    for (int i = 0; threeDigitFormatterControls[i] != NULL; i++) {
+		[threeDigitFormatterControls[i] abortEditing];
+		[threeDigitFormatterControls[i] setFormatter:threeDigitFormatter];
+		[threeDigitFormatterControls[i] setNeedsDisplay];
+	}
+
 	// Assign formatters to all table view cells
 	[[[cpuTableView tableColumnWithIdentifier:@"addr"] dataCell] setFormatter:wordFormatter];
 	[[[cpuTableView tableColumnWithIdentifier:@"data01"] dataCell] setFormatter:byteFormatter];

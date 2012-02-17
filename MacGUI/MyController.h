@@ -227,7 +227,7 @@ class Snapshot;
 
 // Refresh
 - (void)refresh;
-- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter disassembler:(NSFormatter *)disassembler;
+- (void)refresh:(NSFormatter *)byteFormatter word:(NSFormatter *)wordFormatter threedigit:(NSFormatter *)threedigitFormatter disassembler:(NSFormatter *)disassembler;
 - (void)enableUserEditing:(BOOL)enabled;
 
 // Main window controls

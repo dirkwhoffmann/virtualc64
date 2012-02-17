@@ -932,13 +932,13 @@ public:
 	inline uint16_t getSpriteX(uint8_t nr) { return iomem[2*nr] + (iomem[0x10] & (1 << nr) ? 256 : 0); }
 
 	//! Set X coordinate if sprite
-	inline void setSpriteX(uint8_t nr, uint16_t x) { poke(2*nr, x & 0xFF); if (x > 0xFF) poke(0x10, peek(0x10) | (1 << nr)); else poke(0x10, peek(0x10) & ~(1 << nr)); }
+	inline void setSpriteX(uint8_t nr, int x) { if (x < 512) { poke(2*nr, x & 0xFF); if (x > 0xFF) poke(0x10, peek(0x10) | (1 << nr)); else poke(0x10, peek(0x10) & ~(1 << nr));} }
 	
 	//! Get Y coordinate of sprite
 	inline uint8_t getSpriteY(uint8_t nr) { return iomem[1+2*nr]; }
 
 	//! Set Y coordinate of sprite
-	inline void setSpriteY(uint8_t nr, int y) { poke(1+2*nr, y); }
+	inline void setSpriteY(uint8_t nr, int y) { if (y < 256) { poke(1+2*nr, y);} }
 	
 	//! Returns true, if sprite is enabled (drawn on the screen)
 	inline bool spriteIsEnabled(uint8_t nr) { return iomem[0x15] & (1 << nr); }		
