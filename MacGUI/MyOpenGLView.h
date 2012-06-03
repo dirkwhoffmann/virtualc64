@@ -131,9 +131,6 @@ const int BG_TEXTURE_DEPTH = 4;
 	float currentEyeX, targetEyeX, deltaEyeX;
 	float currentEyeY, targetEyeY, deltaEyeY;
 	float currentEyeZ, targetEyeZ, deltaEyeZ;
-
-	//! Place to store value of currentEyeX in fullscreen mode
-	float oldCurrentEyeX;
 	
 	int frames;
 
@@ -224,12 +221,6 @@ const int BG_TEXTURE_DEPTH = 4;
 
 //! Compute geometry parameters for next animation cycle
 - (void) updateAngles;
-
-
-#pragma mark Full screen mode
-
-- (void) setFullscreenMode:(bool)b;
-- (void) toggleFullscreenMode;
 
 #pragma mark Drawing
 

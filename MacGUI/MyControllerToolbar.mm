@@ -134,11 +134,6 @@
 	[c64 switchInputDevices];
 }
 
-- (IBAction)fullscreenAction:(id)sender
-{
-	[screen toggleFullscreenMode];
-}
-
 - (IBAction)propertiesAction:(id)sender
 {
     [propertiesDialog initialize:self];

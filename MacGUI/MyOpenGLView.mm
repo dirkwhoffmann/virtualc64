@@ -809,31 +809,6 @@ void checkForOpenGLErrors()
 	return screenshot;
 }
 
-- (void) setFullscreenMode:(bool)b
-{
-	if (b) {
-		NSLog(@"Entering fullscreen mode");
-
-		drawBackground = false; 
-		oldCurrentEyeX = currentEyeX; // always draw centered
-		[self setEyeX:0.0];
-		
-		[self enterFullScreenMode:[NSScreen mainScreen] withOptions:nil];
-	} else {
-		NSLog(@"Exiting fullscreen mode");
-		
-		drawBackground = true;
-		[self setEyeX:oldCurrentEyeX];
-		
-		[self exitFullScreenModeWithOptions:nil];
-	}
-}
-
-- (void) toggleFullscreenMode
-{
-	[self setFullscreenMode:![self isInFullScreenMode]];
-}
-
 // --------------------------------------------------------------------------------
 //                                  Keyboard events 
 // --------------------------------------------------------------------------------
