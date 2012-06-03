@@ -45,7 +45,7 @@ void checkForOpenGLErrors()
 
 @implementation MyOpenGLView
 
-@synthesize c64, frames, enableOpenGL, drawC64texture, drawBackground, drawEntireCube, antiAliasing;
+@synthesize c64, frames, enableOpenGL, drawIn3D, drawC64texture, drawBackground, drawEntireCube, antiAliasing;
 
 // --------------------------------------------------------------------------------
 //                                  Initializiation
@@ -98,7 +98,8 @@ void checkForOpenGLErrors()
 	// Graphics
 	frames = 0;
 	enableOpenGL = true;  
-
+    drawIn3D = true;
+    
 	// Keyboard
 	for (int i = 0; i < 256; i++) {
 		kb[i] = 0xff;
@@ -560,34 +561,19 @@ void checkForOpenGLErrors()
 	return kCVReturnSuccess;
 }
 
-- (void)drawRect:(NSRect)r
-{	
-	if (!c64 || !enableOpenGL) 
-		return;
-	
-	[lock lock]; 
-			
-	frames++;
-
-	// Determine screen geometry (differs between NTSC and PAL)
+- (void)determineScreenGeometry
+{
+    // Determine screen geometry (differs between NTSC and PAL)
 	textureXStart = (float)c64->vic->getFirstVisiblePixel() / (float)TEXTURE_WIDTH;
 	textureXEnd = (float)c64->vic->getLastVisiblePixel() / (float)TEXTURE_WIDTH;
 	textureYStart = (float)c64->vic->getFirstVisibleLine() / (float)TEXTURE_HEIGHT;
 	textureYEnd = (float)c64->vic->getLastVisibleLine() / (float)TEXTURE_HEIGHT;
 	dimX = 0.64;
 	dimY = dimX * (float)c64->vic->getTotalScreenHeight() / (float)c64->vic->getTotalScreenWidth() / c64->vic->getPixelAspectRatio();
+}
 
-	
-	[glcontext makeCurrentContext];
-
-	// Changing the shadeModel has no effect
-	// glShadeModel(antiAliasing ? GL_SMOOTH : GL_FLAT);
-
-	// Clear screen and depth buffer
-	//glClearColor((float)EXTRACT_RED(col)/0xff, (float)EXTRACT_GREEN(col)/0xff, (float)EXTRACT_BLUE(col)/0xff, 0.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// Update screen texture
+- (void)updateScreenTexture
+{
 	glBindTexture(GL_TEXTURE_2D, texture);			
 	if (c64) {
 		void *buf = c64->vic->screenBuffer(); 
@@ -595,6 +581,53 @@ void checkForOpenGLErrors()
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, c64->vic->getTotalScreenWidth(), TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
 		checkForOpenGLErrors();
 	}
+}
+
+- (void)drawRect2D:(NSRect)r
+{
+    const int XSize = 640;
+    const int YSize = 480;
+
+    [self determineScreenGeometry];
+    
+    [glcontext makeCurrentContext];
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, XSize, YSize, 0, 0, 1);
+    glMatrixMode(GL_MODELVIEW);    
+    glDisable(GL_DEPTH_TEST);
+    
+    // Clear screen and depth buffer
+	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    [self updateScreenTexture];
+    
+    glBindTexture(GL_TEXTURE_2D, texture);		
+    glBegin(GL_QUADS);			
+        glTexCoord2f(textureXEnd, textureYStart);
+    glVertex2f(640,0);		// Top Right Of The Quad (Front)
+    glTexCoord2f(textureXStart, textureYStart);
+    glVertex2f(0,0);		// Top Left Of The Quad (Front)
+    glTexCoord2f(textureXStart, textureYEnd);
+    glVertex2f(0,480);		// Bottom Left Of The Quad (Front)
+    glTexCoord2f(textureXEnd, textureYEnd);
+    glVertex2f(640,480);	// Bottom Right Of The Quad (Front)
+    glEnd();		
+}
+
+
+- (void)drawRect3D:(NSRect)r
+{	
+    [self determineScreenGeometry];
+	
+	[glcontext makeCurrentContext];
+	// Changing the shadeModel has no effect
+	// glShadeModel(antiAliasing ? GL_SMOOTH : GL_FLAT);
+
+    glEnable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    [self updateScreenTexture];
 	
 	// Set location
 	glMatrixMode(GL_MODELVIEW);
@@ -726,11 +759,26 @@ void checkForOpenGLErrors()
 			
 		glEnd();		
 	}
+}
+
+- (void)drawRect:(NSRect)r
+{	 
+	if (!c64 || !enableOpenGL) 
+		return;
+	
+	[lock lock];     
+	frames++;
+        
+    if (drawIn3D) {
+        [self drawRect3D:r];
+    } else {
+        [self drawRect2D:r];
+    }
 
 	// Flush screen
 	glFinish();
 	[glcontext flushBuffer];
-
+    
     [lock unlock];
 }
 

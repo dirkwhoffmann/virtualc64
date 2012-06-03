@@ -126,6 +126,8 @@
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
 {
     NSLog(@"windowWillEnterFullScreen");
+    
+    [screen setDrawIn3D:false];
 }
 
 - (void)windowDidEnterFullScreen:(NSNotification *)notification
@@ -136,6 +138,8 @@
 - (void)windowWillExitFullScreen:(NSNotification *)notification
 {
     NSLog(@"windowWillExitFullScreen");
+    
+    [screen setDrawIn3D:true];
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
