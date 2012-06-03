@@ -30,8 +30,6 @@
 
 - (IBAction)propertiesAction:(id)sender;
 
-- (IBAction)fullscreenAction:(id)sender;
-
 - (IBAction)debugOpenAction:(id)sender;
 - (IBAction)debugCloseAction:(id)sender;
 - (IBAction)debugAction:(id)sender;

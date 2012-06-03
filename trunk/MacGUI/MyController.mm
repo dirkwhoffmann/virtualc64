@@ -111,8 +111,6 @@
 	[self loadUserDefaults];
 
     // Enable fullscreen mode
-    // Need to
-    // hide bottom row 3) use display aspect ratio
     [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     
 	// Launch emulator
