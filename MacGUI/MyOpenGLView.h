@@ -139,7 +139,10 @@ const int BG_TEXTURE_DEPTH = 4;
 
 	//! If false, OpenGL drawing is disabled (only used in performance debugging)
 	bool enableOpenGL;
-	
+
+    //! If false, 3D drawing is switched off (2D drawing is used in fullscreen mode, only)
+	bool drawIn3D;
+
 	//! If false, the C64 screen is not drawn (background texture or black screen will be visible)
 	bool drawC64texture;
 
@@ -177,6 +180,7 @@ const int BG_TEXTURE_DEPTH = 4;
 @property C64 *c64;
 @property (readonly) int frames;
 @property bool enableOpenGL;
+@property bool drawIn3D;
 @property bool drawC64texture;
 @property bool drawBackground;
 @property bool drawEntireCube;
