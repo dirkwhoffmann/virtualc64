@@ -101,6 +101,7 @@ void checkForOpenGLErrors()
     drawIn3D = true;
     
 	// Keyboard
+    numKeysPressed = 0;
 	for (int i = 0; i < 256; i++) {
 		kb[i] = 0xff;
 	}
@@ -837,6 +838,15 @@ void checkForOpenGLErrors()
 	unsigned short keycode = [event keyCode];
 	unsigned int   flags   = [event modifierFlags];
 
+    // NSLog(@"> key down %d %d (%c)\n", keycode, c, c);
+
+    // Ignore command key
+    if (flags & NSCommandKeyMask)
+        return;
+    
+    numKeysPressed++;
+    // NSLog(@"NumKeysPressed = %d", numKeysPressed);
+    
     if (c64->getDeviceOfPort(0) == IPD_KEYBOARD || c64->getDeviceOfPort(1) == IPD_KEYBOARD) {
 		switch (keycode) {
 			case MAC_CU: 
@@ -895,6 +905,17 @@ void checkForOpenGLErrors()
 	unsigned short keycode = [event keyCode];
 	unsigned int c         = [[event characters] UTF8String][0];
 	
+    // NSLog(@"> key up %d %d (%c)\n", keycode, c, c);
+
+    numKeysPressed--;
+    // NSLog(@"NumKeysPressed = %d", numKeysPressed);
+
+    // If nothing is pressed, simply release all virtual keys and return
+    if (numKeysPressed == 0) {
+        // NSLog(@"Release all");
+        c64->keyboard->releaseAll();
+    }
+
 #if 0
 	// TO BE REMOVED: FOR DEBUGGING ONLY
 	if (keycode == MAC_F7) {
@@ -934,15 +955,13 @@ void checkForOpenGLErrors()
 				return;
 		}
 	}
-	// release all keys
-	//keyboard->releaseAll();
-	
+
 	// We always relase the special keys
 	// That's the easiest way to cope with race conditions due to fast typing
 	// (Problems can occur, if a new key is hit before the previous is released)
 	c64->keyboard->releaseShiftKey();
 	c64->keyboard->releaseCommodoreKey();
-	
+    
 	if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
 		c64->keyboard->releaseKey(c);
 		return;
@@ -956,16 +975,34 @@ void checkForOpenGLErrors()
 		case MAC_CU: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,7); return;
 		case MAC_CL: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,2); return;
 	}
-	
-	if (keycode == MAC_ESC) {
-		// The escape key will exit fullscreen mode
-		[self setFullscreenMode:false];
-	}
-	
+		
 	// For all other characters, we use a direct key mapping
 	c64->keyboard->releaseKey(kb[keycode] >> 8, kb[keycode] & 0xFF);
 }
 
+#if 0
+- (void)flagsChanged:(NSEvent *)event
+{
+	unsigned int flags = [event modifierFlags];
+
+    // NSLog(@"flagsChanged");
+
+    if (flags & NSShiftKeyMask) {
+		c64->keyboard->pressShiftKey();
+        // NSLog(@"shift pressed");
+    } else {
+        c64->keyboard->releaseShiftKey();
+        // NSLog(@"shift released");
+    }    
+	if (flags & NSAlternateKeyMask) {
+		c64->keyboard->pressCommodoreKey();
+        // NSLog(@"commodore key pressed");
+    } else {
+        c64->keyboard->releaseCommodoreKey();
+        // NSLog(@"commodore key released");
+    }
+}
+#endif
 
 // --------------------------------------------------------------------------------
 //                                  Drag and Drop 

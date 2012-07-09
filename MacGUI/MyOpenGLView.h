@@ -155,6 +155,9 @@ const int BG_TEXTURE_DEPTH = 4;
 	// Mapping from Mac keycode to the C64 row/column format
 	uint16_t kb[256];
 
+    // Number of keys that are currently pressed down
+    int numKeysPressed;
+    
 	// View point
 	// DEPRECATED
 	// float eyeX, eyeY, eyeZ;
