@@ -364,6 +364,8 @@
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
 - (void) ejectDisk;
+- (bool) hasRedLED;
+- (bool) hasDisk;
 
 @end
 

@@ -68,7 +68,32 @@
 		}
 	}	
 	
-	/* All other items */
+    /* Drive icon */
+    // PROBLEM: ICONS DO NOT UPDATE FAST ENOUGH, SO THIS APPROACH DOES NOT SEEM TO WORK
+#if 0    
+ 	if ([theItem tag] == 88) 
+    { 
+        NSImage *background, *foreground;
+        
+        bool isConnected = [[c64 iec] isDriveConnected];
+        bool showsRed = [[c64 vc1541] hasRedLED];
+        bool hasDisk = [[c64 vc1541] hasDisk];
+
+        NSLog(@"Update drive icon %d", showsRed);
+
+        background = hasDisk ? [NSImage imageNamed:@"diskette"] : [NSImage imageNamed:@"drive48"];
+        foreground = isConnected ? (showsRed ? [NSImage imageNamed:@"LEDgr"] : [NSImage imageNamed:@"LEDgb"]) : [NSImage imageNamed:@"LEDbb"];
+        
+        [background lockFocus];
+        [foreground compositeToPoint:NSMakePoint(0,0) operation:NSCompositeSourceOver];
+        [background unlockFocus];
+        [theItem setImage:background];
+        
+        return YES;
+    }
+#endif
+    
+    /* All other items */
     return YES;
 }
 

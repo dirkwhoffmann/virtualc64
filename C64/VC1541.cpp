@@ -214,12 +214,14 @@ VC1541::simulateAtnInterrupt()
 void 
 VC1541::activateRedLED() 
 {
+    redLED = true;
 	c64->putMessage(MSG_VC1541_LED, 1);
 }
 
 void
 VC1541::deactivateRedLED() 
 { 
+    redLED = false;
 	c64->putMessage(MSG_VC1541_LED, 0); 
 }
 
@@ -453,6 +455,7 @@ VC1541::insertDisc(D64Archive *a)
 		assert(length[i-1] <= 7928);
 	}
 
+    diskInserted = true;
 	c64->putMessage(MSG_VC1541_DISC, 1);
 }
 
@@ -471,6 +474,7 @@ VC1541::ejectDisc()
 	// Zero out disk data
 	clearDisk();
 	
+    diskInserted = false;
 	c64->putMessage(MSG_VC1541_DISC, 0);
 }
 			
