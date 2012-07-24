@@ -414,6 +414,8 @@
 - (bool) tracingEnabled { return vc1541->tracingEnabled(); }
 - (void) setTraceMode:(bool)b { vc1541->setTraceMode(b); }
 - (void) ejectDisk { vc1541->ejectDisc(); }
+- (bool) hasRedLED { return vc1541->hasRedLED(); }
+- (bool) hasDisk { return vc1541->hasDisk(); }
 
 @end
 

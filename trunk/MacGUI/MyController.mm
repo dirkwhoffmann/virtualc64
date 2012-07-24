@@ -443,13 +443,15 @@
 			if (msg->i)
 				[greenLED setImage:[NSImage imageNamed:@"LEDgreen"]];
 			else
-				[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];			
+				[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];	
+            // [self validateToolbarItem:nil]; 
 			break;
 			
 		case MSG_VC1541_DISC:
 			// NSLog(@"driveDiscAction");
 			[drive setHidden:!msg->i];
 			[eject setHidden:!msg->i];			
+            // [self validateToolbarItem:nil]; 
 			break;
 			
 		case MSG_VC1541_LED:
@@ -457,6 +459,7 @@
 				[redLED setImage:[NSImage imageNamed:@"LEDred"]];
 			else
 				[redLED setImage:[NSImage imageNamed:@"LEDgray"]];			
+            // [self validateToolbarItem:nil]; 
 			break;
 			
 		case MSG_VC1541_DATA:

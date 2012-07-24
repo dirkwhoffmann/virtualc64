@@ -59,7 +59,13 @@ private:
 	
 	//! Indicates whether disk is rotating or not
 	bool rotating;
-		
+    
+	//! Indicates whether red LED is on or off
+	bool redLED;
+
+    //! Indicates whether a disk is inserted
+	bool diskInserted;
+
 public:
 	
 	//! Timer
@@ -117,9 +123,10 @@ public:
 
 	void activateRedLED();
 	void deactivateRedLED();
+    inline bool hasRedLED() { return redLED; };
 	void startRotating();
 	void stopRotating();
-	bool isRotating() { return rotating; };
+	inline bool isRotating() { return rotating; };
 	bool isWriteProtected() { return writeProtection; };
 	void setWriteProtection(bool b);
 	void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
@@ -143,6 +150,7 @@ public:
 	//! Insert a virtual disc
 	void insertDisc(Archive *a);
 	void insertDisc(D64Archive *a);
+    inline bool hasDisk() { return diskInserted; }
 
 	//! Eject virtual disc
 	void ejectDisc();
