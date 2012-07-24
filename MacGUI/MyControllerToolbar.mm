@@ -69,8 +69,6 @@
 	}	
 	
     /* Drive icon */
-    // PROBLEM: ICONS DO NOT UPDATE FAST ENOUGH, SO THIS APPROACH DOES NOT SEEM TO WORK
-#if 0    
  	if ([theItem tag] == 88) 
     { 
         NSImage *background, *foreground;
@@ -85,13 +83,13 @@
         foreground = isConnected ? (showsRed ? [NSImage imageNamed:@"LEDgr"] : [NSImage imageNamed:@"LEDgb"]) : [NSImage imageNamed:@"LEDbb"];
         
         [background lockFocus];
-        [foreground compositeToPoint:NSMakePoint(0,0) operation:NSCompositeSourceOver];
+        // PROBLEM: ICONS DO NOT UPDATE FAST ENOUGH, SO THIS APPROACH DOES NOT SEEM TO WORK
+        // [foreground compositeToPoint:NSMakePoint(0,0) operation:NSCompositeSourceOver];
         [background unlockFocus];
         [theItem setImage:background];
         
         return YES;
     }
-#endif
     
     /* All other items */
     return YES;

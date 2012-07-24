@@ -451,7 +451,7 @@
 			// NSLog(@"driveDiscAction");
 			[drive setHidden:!msg->i];
 			[eject setHidden:!msg->i];			
-            // [self validateToolbarItem:nil]; 
+            //[self validateToolbarItem:nil]; 
 			break;
 			
 		case MSG_VC1541_LED:
