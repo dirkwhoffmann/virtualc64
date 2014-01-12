@@ -235,7 +235,7 @@
 
 	[screen setAntiAliasing:[defaults integerForKey:VC64VideoFilterKey]];
     [c64 setColorScheme:(VIC::ColorScheme)[defaults integerForKey:VC64ColorSchemeKey]];
-    NSLog(@"Setting color scheme %d\n", [defaults integerForKey:VC64ColorSchemeKey]);
+    NSLog(@"Setting color scheme %ld\n", (long)[defaults integerForKey:VC64ColorSchemeKey]);
 }
 
 - (void)saveUserDefaults

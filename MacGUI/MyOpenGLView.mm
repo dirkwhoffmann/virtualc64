@@ -1008,7 +1008,7 @@ void checkForOpenGLErrors()
 //                                  Drag and Drop 
 // --------------------------------------------------------------------------------
 
-- (unsigned int)draggingEntered:(id <NSDraggingInfo>)sender
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
 	NSLog(@"draggingEntered");
 	if ([sender draggingSource] == self)

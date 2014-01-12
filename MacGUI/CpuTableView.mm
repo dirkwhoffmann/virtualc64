@@ -48,12 +48,12 @@
 
 #pragma mark NSTableViewDataSource
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
 	return CPU_TABLE_VIEW_ITEMS;
 }
 
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)row
 {
 	uint16_t addr = [self addressForRow:row];
 	uint8_t length = [[c64 cpu] lengthOfInstruction:[[c64 mem] peek:addr]];
@@ -72,7 +72,7 @@
 	return @"???";
 }
 
-- (void)tableView: (NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)row
+- (void)tableView: (NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	uint16_t addr = [self addressForRow:row];
 	if ([[c64 cpu] breakpoint:addr] == CPU::HARD_BREAKPOINT) {
@@ -86,7 +86,7 @@
 
 - (void)doubleClickAction:(id)sender
 {
-	NSLog(@"doubleClickAction (item %d)", [sender selectedRow]);
+	NSLog(@"doubleClickAction (item %ld)", (long)[sender selectedRow]);
 	
 	uint16_t addr;
 		

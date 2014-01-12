@@ -48,12 +48,12 @@
 
 #pragma mark NSTableViewDataSource
 
-- (int)numberOfRowsInTableView:(NSTableView *)tableView 
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {	
 	return 65536 / 4;	
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row 
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row 
 {
 	uint16_t addr = row * 4;
 	NSString *id  = [tableColumn identifier];

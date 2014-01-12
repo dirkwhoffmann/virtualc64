@@ -789,7 +789,7 @@ void CIA::executeOneCycle()
 	readICR = false;
 
 	// move delay flags left and feed in new bits
-	delay = (delay << 1) & DelayMask | feed;
+	delay = ((delay << 1) & DelayMask) | feed;
 }
 
 
