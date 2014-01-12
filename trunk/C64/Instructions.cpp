@@ -4949,7 +4949,7 @@ void CPU::ARR_immediate()
 		setZ(A == 0);
 		setV((tmp2 ^ A) & 0x40);
 		if ((tmp2 & 0x0f) + (tmp2 & 0x01) > 5)
-			A = A & 0xf0 | (A + 6) & 0x0f;
+			A = (A & 0xf0) | ((A + 6) & 0x0f);
 		c_flag = (tmp2 + (tmp2 & 0x10)) & 0x1f0;
 		if (c_flag > 0x50) {
 			setC(1);

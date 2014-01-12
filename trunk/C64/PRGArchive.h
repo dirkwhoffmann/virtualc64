@@ -25,7 +25,7 @@ class PRGArchive : public Archive {
 
 private:
 	//! Name of the PRG container file
-	char name[256];
+	// char name[256];
 
 	//! Raw data of PRG container file
 	uint8_t *data;

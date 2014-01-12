@@ -68,6 +68,7 @@
 		}
 	}	
 	
+#if 0
     /* Drive icon */
  	if ([theItem tag] == 88) 
     { 
@@ -90,6 +91,7 @@
         
         return YES;
     }
+#endif
     
     /* All other items */
     return YES;

@@ -126,11 +126,11 @@ private:
 	char *path;
 	
 	//! Name of the CRT container file
-	char name[256];
+	// char name[256];
 	
 	//! File pointer
 	/*! Stores an offset into the data array */
-	int fp;
+	// int fp;
 	
 	//! Raw data of CRT container file
 	uint8_t *data;

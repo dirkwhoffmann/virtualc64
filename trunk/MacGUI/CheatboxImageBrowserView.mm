@@ -61,7 +61,7 @@
 
 -(void) imageBrowser:(IKImageBrowserView *)aBrowser cellWasDoubleClickedAtIndex:(NSUInteger)index
 {
-	NSLog(@"doubleClickAction (item %d)", index);
+	NSLog(@"doubleClickAction (item %lu)", (unsigned long)index);
 	
 	//[controller revertToSnapshotWithNumber:index];
 	[c64 revertToHistoricSnapshot:index];
@@ -162,7 +162,7 @@
 	NSUInteger index = [itemIndexes firstIndex];
 	
 	if (index == NSNotFound) {
-		NSLog(@"imageBrowser:writeItemsAtIndexes:NSNotFound (%d)", index);
+		NSLog(@"imageBrowser:writeItemsAtIndexes:NSNotFound (%lu)", (unsigned long)index);
 		return 0;
 	}
 	//NSLog(@"imageBrowser:writeItemsAtIndexes:%d", index);

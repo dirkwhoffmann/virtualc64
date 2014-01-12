@@ -71,7 +71,7 @@ public:
 	VirtualComponent();
 
 	//! Destructor
-	~VirtualComponent();
+	virtual ~VirtualComponent();
 
 	//! Assign name
 	inline void setName(const char *componentName) { name = componentName; }
