@@ -95,7 +95,7 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (IBAction)togglePalNtscAction:(id)sender
 {
-	if ([sender state]) {
+	if ([(NSButton *)sender state]) {
 		[self setNtscAction:self];
 	} else {
 		[self setPalAction:self];
@@ -104,13 +104,13 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (IBAction)warpLoadAction:(id)sender
 {
-	[c64 setWarpLoad:[sender state]]; 
+	[c64 setWarpLoad:[(NSButton *)sender state]];
     [self update];
 }
 
 - (IBAction)SIDFilterAction:(id)sender
 {
-	if ([sender state]) {
+	if ([(NSButton *)sender state]) {
 		[c64 setAudioFilter:true];
 	} else {
 		[c64 setAudioFilter:false];
@@ -119,7 +119,7 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (IBAction)SIDReSIDAction:(id)sender
 {
-	if ([sender state]) {
+	if ([(NSButton *)sender state]) {
 		[c64 setReSID:true];
 	} else {
 		[c64 setReSID:false];

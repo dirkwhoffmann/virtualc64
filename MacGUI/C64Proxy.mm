@@ -469,7 +469,6 @@
 	// Delete sound device
 	NSLog(@"  Deleting sound device");
 	[self disableAudio];
-	[audioDevice release];
 	audioDevice = nil;
 	
 	NSLog(@"  Deleting virtual machine");
@@ -621,7 +620,6 @@
 	if (snapshot)
 		delete snapshot;
 	
-	[super dealloc];
 }
 
 + (id) snapshotFromC64:(C64Proxy *)c64

@@ -39,7 +39,7 @@ class Snapshot;
 {
 	// Proxy object. Used get data from and sent data to the virtual C64
 	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
-	IBOutlet C64Proxy *c64;
+	IBOutlet C64Proxy *__strong c64;
 	
 	// JoystickManager
 	JoystickManager *joystickManager;
@@ -51,7 +51,7 @@ class Snapshot;
 	PreferenceController *preferenceController;
 	
 	// Main screen
-	IBOutlet MyOpenGLView *screen;
+	IBOutlet MyOpenGLView *__strong screen;
 	IBOutlet NSDrawer *debugPanel;
 	IBOutlet NSDrawer *cheatboxPanel;
 	IBOutlet NSButton *drive;
@@ -213,8 +213,8 @@ class Snapshot;
 	Speedometer *speedometer;		
 }
 
-@property (assign) C64Proxy *c64;
-@property (assign,readonly) MyOpenGLView *screen;
+@property (strong) C64Proxy *c64;
+@property (strong,readonly) MyOpenGLView *screen;
 
 // User defaults
 + (void)registerStandardDefaults;

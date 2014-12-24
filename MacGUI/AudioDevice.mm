@@ -237,7 +237,6 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		AudioDeviceDestroyIOProcID( mySoundDeviceID, mySoundIOProcID );
 		ioProcIsInstalled = 0;
 	}
-	[super dealloc];
 }
 
 

@@ -30,7 +30,7 @@
 	
 	MyController *myController;
 	
-	myController = [[[MyController alloc] initWithWindowNibName:@"MyDocument"] autorelease];
+	myController = [[MyController alloc] initWithWindowNibName:@"MyDocument"];
 	[self addWindowController:myController];
 	
 	[[self windowForSheet] setContentAspectRatio:NSMakeSize(804,623 + 20 /* control bar below OpenGL window */)];
@@ -114,7 +114,6 @@
 	
 	V64Snapshot *s = [V64Snapshot snapshotFromC64:c64];
 	[s writeDataToFile:filename];
-	[s release];
 	
 	return YES;
 }

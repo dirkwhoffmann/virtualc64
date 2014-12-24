@@ -42,9 +42,6 @@
 	[self reloadData];
 }
 
-- (void)dealloc {
-	[super dealloc];
-}
 
 #pragma mark NSTableViewDataSource
 

@@ -26,7 +26,7 @@ class Snapshot;
 @interface MyDocument : NSDocument
 {
 	// ObjC/C++ bridge
-	C64Proxy *c64;
+	C64Proxy *__strong c64;
 	
 	//! Reference to an attached D64 archive
 	/*! When a new documents opens and this variable is not NULL, the archive is automatically mounted */
@@ -36,7 +36,7 @@ class Snapshot;
 	Cartridge *cartridge;	
 }
 
-@property (assign) C64Proxy *c64;
+@property (strong) C64Proxy *c64;
 @property (assign) D64Archive *archive;
 @property (assign) Cartridge *cartridge;
 

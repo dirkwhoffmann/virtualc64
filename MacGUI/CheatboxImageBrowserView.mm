@@ -41,11 +41,6 @@
 	[self reloadData];
 }
 
-- (void)dealloc {
-	
-	[items release];
-	[super dealloc];
-}
 
 #pragma mark Browser Data Source Methods
 
@@ -126,7 +121,6 @@
 		// Create NSImage from bitmap representation
 		NSImage *image = [[NSImage alloc] initWithSize:[bmp size]];
 		[image addRepresentation:bmp];
-		[bmp release];
 
 	    // Enhance image with some overlays 
 		NSImage *final = [[NSImage alloc] initWithSize:NSMakeSize(width, height+70)];
@@ -174,7 +168,6 @@
 	NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
 	[fileWrapper setPreferredFilename:@"Snapshot.VC64"];
 	[pboard writeFileWrapper:fileWrapper];
-	[fileWrapper release];
 	return 1;
 }
 

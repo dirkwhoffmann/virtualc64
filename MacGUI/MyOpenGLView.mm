@@ -24,6 +24,7 @@ const float BG_TEX_RIGHT  = 1.0; // 642.0 / BG_TEXTURE_WIDTH;
 const float BG_TEX_TOP    = 0.0; 
 const float BG_TEX_BOTTOM = 1.0; // 482.0 / BG_TEXTURE_HEIGHT;
 
+
 static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink, 
 								 const CVTimeStamp *inNow, 
 								 const CVTimeStamp *inOutputTime, 
@@ -31,7 +32,9 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
 								 CVOptionFlags *flagsOut, 
                                  void *displayLinkContext)
 {
-	return [(MyOpenGLView *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
+    @autoreleasepool {
+        return [(__bridge MyOpenGLView *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
+    }
 }
 
 void checkForOpenGLErrors()
@@ -135,7 +138,6 @@ void checkForOpenGLErrors()
 - (void) dealloc 
 {
 	[self cleanUp];
-    [super dealloc];
 }
 
 -(void)cleanUp
@@ -156,7 +158,6 @@ void checkForOpenGLErrors()
     //}
 	    
     if (lock) {
-    	[lock release];
         lock = nil;
     }
 }
@@ -229,7 +230,7 @@ void checkForOpenGLErrors()
 		}
         
         // Set the renderer output callback function
-    	if ((success = CVDisplayLinkSetOutputCallback(displayLink, &MyRenderCallback, self)) != 0) {
+        if ((success = CVDisplayLinkSetOutputCallback(displayLink, &MyRenderCallback, (__bridge void *)self)) != 0) {
 			NSLog(@"CVDisplayLinkSetOutputCallback failed with return code %d", success);
   	        CVDisplayLinkRelease(displayLink);
 			exit(0);
@@ -497,7 +498,6 @@ void checkForOpenGLErrors()
 	int texformat = GL_RGB;
 	
 	NSBitmapImageRep *imgBitmap = [[NSBitmapImageRep alloc] initWithData:[image TIFFRepresentation]];
-	[imgBitmap retain];
 	
 	if ([imgBitmap samplesPerPixel] == 4)
 		texformat = GL_RGBA;
@@ -520,7 +520,6 @@ void checkForOpenGLErrors()
 					  texformat, 
 					  GL_UNSIGNED_BYTE, 
 					  [imgBitmap bitmapData]);
-	[imgBitmap release];
 	return tid;
 }
 
@@ -549,17 +548,17 @@ void checkForOpenGLErrors()
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	@autoreleasepool {
 	
 	// Update angles for screen animation
-	[self updateAngles];
-	
-	// Draw scene
+		[self updateAngles];
+		
+		// Draw scene
    	[self drawRect:NSZeroRect];
     
-    [pool release];
-	
-	return kCVReturnSuccess;
+		
+		return kCVReturnSuccess;
+	}
 }
 
 - (void)determineScreenGeometry
@@ -791,7 +790,7 @@ void checkForOpenGLErrors()
 	NSBitmapImageRep *imageRep;
 	NSImage *image;
 	
-	imageRep=[[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
+	imageRep=[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
 													  pixelsWide:width
 													  pixelsHigh:height
 												   bitsPerSample:8
@@ -800,10 +799,10 @@ void checkForOpenGLErrors()
 														isPlanar:NO
 												  colorSpaceName:NSCalibratedRGBColorSpace
 													 bytesPerRow:width*4
-													bitsPerPixel:0] autorelease];
+													bitsPerPixel:0];
 	[[self openGLContext] makeCurrentContext];
 	glReadPixels(0,0,width,height,GL_RGBA,GL_UNSIGNED_BYTE,[imageRep bitmapData]);
-	image=[[[NSImage alloc] initWithSize:NSMakeSize(width,height)] autorelease];
+	image=[[NSImage alloc] initWithSize:NSMakeSize(width,height)];
 	[image addRepresentation:imageRep];
 
 	NSImage *screenshot = [self flipImage:image];
