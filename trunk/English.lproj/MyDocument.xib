@@ -147,8 +147,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="545" y="342" width="804" height="645"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="804" height="645"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
             <value key="minSize" type="size" width="652" height="432"/>
             <view key="contentView" id="6">
@@ -363,6 +362,7 @@
                 <outlet property="delegate" destination="-2" id="2165"/>
                 <outlet property="initialFirstResponder" destination="262" id="316"/>
             </connections>
+            <point key="canvasLocation" x="1034" y="299.5"/>
         </window>
         <drawer preferredEdge="minX" leadingOffset="15" trailingOffset="15" id="35" userLabel="Debug Drawer">
             <size key="contentSize" width="300" height="473"/>
@@ -409,8 +409,52 @@
                         <action selector="setHexadecimalAction:" target="-2" id="2013"/>
                     </connections>
                 </matrix>
+                <button verticalHuggingPriority="750" id="2100">
+                    <rect key="frame" x="8" y="5" width="36" height="36"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="pause32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2101">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="stopAndGoAction:" target="-2" id="2103"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="2098">
+                    <rect key="frame" x="46" y="5" width="36" height="36"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepInto32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2099">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="stepIntoAction:" target="-2" id="2104"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="2096">
+                    <rect key="frame" x="84" y="5" width="36" height="36"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOver32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2097">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="stepOverAction:" target="-2" id="2105"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="2094">
+                    <rect key="frame" x="122" y="5" width="36" height="36"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOut32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2095">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="stepOutAction:" target="-2" id="2106"/>
+                    </connections>
+                </button>
                 <tabView id="42">
-                    <rect key="frame" x="2" y="38" width="299" height="596"/>
+                    <rect key="frame" x="1" y="38" width="299" height="596"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <font key="font" metaFont="system"/>
                     <tabViewItems>
@@ -913,7 +957,7 @@
                         <tabViewItem label="CIA" identifier="" id="74">
                             <view key="view" id="75">
                                 <rect key="frame" x="10" y="33" width="279" height="550"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <box autoresizesSubviews="NO" title="CIA 1" borderType="line" id="2401">
                                         <rect key="frame" x="0.0" y="277" width="279" height="271"/>
@@ -1860,7 +1904,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <button id="819">
-                                                    <rect key="frame" x="14" y="110" width="64" height="18"/>
+                                                    <rect key="frame" x="6" y="110" width="64" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <buttonCell key="cell" type="check" title="Active" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1788">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1871,7 +1915,7 @@
                                                     </connections>
                                                 </button>
                                                 <button id="828">
-                                                    <rect key="frame" x="14" y="84" width="76" height="18"/>
+                                                    <rect key="frame" x="6" y="84" width="76" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <buttonCell key="cell" type="check" title="Multicolor" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1789">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1882,7 +1926,7 @@
                                                     </connections>
                                                 </button>
                                                 <button id="829">
-                                                    <rect key="frame" x="14" y="61" width="76" height="18"/>
+                                                    <rect key="frame" x="6" y="61" width="76" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <buttonCell key="cell" type="check" title="Stretch X" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1790">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1893,7 +1937,7 @@
                                                     </connections>
                                                 </button>
                                                 <button id="830">
-                                                    <rect key="frame" x="14" y="36" width="76" height="18"/>
+                                                    <rect key="frame" x="6" y="36" width="76" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <buttonCell key="cell" type="check" title="Stretch Y" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1791">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1904,7 +1948,7 @@
                                                     </connections>
                                                 </button>
                                                 <button id="831">
-                                                    <rect key="frame" x="14" y="11" width="86" height="18"/>
+                                                    <rect key="frame" x="6" y="11" width="86" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <buttonCell key="cell" type="check" title="Background" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1792">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1915,7 +1959,7 @@
                                                     </connections>
                                                 </button>
                                                 <button id="832">
-                                                    <rect key="frame" x="97" y="36" width="138" height="18"/>
+                                                    <rect key="frame" x="89" y="36" width="138" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <buttonCell key="cell" type="check" title="Sprite/Sprite collision" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1793">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1926,7 +1970,7 @@
                                                     </connections>
                                                 </button>
                                                 <button id="833">
-                                                    <rect key="frame" x="97" y="11" width="170" height="18"/>
+                                                    <rect key="frame" x="89" y="11" width="170" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <buttonCell key="cell" type="check" title="Sprite/Background collision" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1794">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1984,7 +2028,7 @@
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </box>
                                     <button id="386">
-                                        <rect key="frame" x="132" y="145" width="103" height="18"/>
+                                        <rect key="frame" x="132" y="142" width="103" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <buttonCell key="cell" type="check" title="Enable OpenGL" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1779">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2093,7 +2137,7 @@
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" id="836">
-                                        <rect key="frame" x="73" y="165" width="50" height="22"/>
+                                        <rect key="frame" x="73" y="162" width="50" height="22"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1801">
                                             <font key="font" metaFont="system"/>
@@ -2102,7 +2146,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" id="837">
-                                        <rect key="frame" x="6" y="169" width="66" height="14"/>
+                                        <rect key="frame" x="6" y="166" width="66" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Rasterline:" id="1802">
                                             <font key="font" metaFont="smallSystem"/>
@@ -2111,7 +2155,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button id="838">
-                                        <rect key="frame" x="132" y="167" width="83" height="18"/>
+                                        <rect key="frame" x="132" y="164" width="83" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <buttonCell key="cell" type="check" title="interrupt at" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1803">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2122,7 +2166,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" id="839">
-                                        <rect key="frame" x="219" y="166" width="50" height="22"/>
+                                        <rect key="frame" x="219" y="163" width="50" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1804">
                                             <font key="font" metaFont="system"/>
@@ -2233,15 +2277,36 @@
                                             <action selector="vicCharacterMemoryAction:" target="-2" id="915"/>
                                         </connections>
                                     </popUpButton>
+                                    <textField verticalHuggingPriority="750" id="827">
+                                        <rect key="frame" x="221" y="361" width="34" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1800">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <action selector="vicSpriteColorAction:" target="-2" id="926"/>
+                                        </connections>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" id="826">
+                                        <rect key="frame" x="181" y="365" width="43" height="14"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Color:" id="1799">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="804">
-                                        <rect key="frame" x="11" y="195" width="256" height="25"/>
+                                        <rect key="frame" x="7" y="193" width="264" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        <size key="cellSize" width="32" height="25"/>
+                                        <size key="cellSize" width="33" height="23"/>
                                         <size key="intercellSpacing" width="0.0" height="2"/>
-                                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="1820">
+                                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" controlSize="mini" inset="2" id="1820">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="system"/>
+                                            <font key="font" metaFont="miniSystem"/>
                                         </buttonCell>
                                         <cells>
                                             <column>
@@ -2297,76 +2362,11 @@
                                             <action selector="vicSpriteSelectAction:" target="-2" id="1997"/>
                                         </connections>
                                     </matrix>
-                                    <textField verticalHuggingPriority="750" id="827">
-                                        <rect key="frame" x="221" y="361" width="34" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1800">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                        <connections>
-                                            <action selector="vicSpriteColorAction:" target="-2" id="926"/>
-                                        </connections>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" id="826">
-                                        <rect key="frame" x="181" y="365" width="43" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Color:" id="1799">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                 </subviews>
                             </view>
                         </tabViewItem>
                     </tabViewItems>
                 </tabView>
-                <button verticalHuggingPriority="750" id="2100">
-                    <rect key="frame" x="8" y="5" width="36" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="pause32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2101">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="stopAndGoAction:" target="-2" id="2103"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="2098">
-                    <rect key="frame" x="46" y="5" width="36" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepInto32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2099">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="stepIntoAction:" target="-2" id="2104"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="2096">
-                    <rect key="frame" x="84" y="5" width="36" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOver32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2097">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="stepOverAction:" target="-2" id="2105"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="2094">
-                    <rect key="frame" x="122" y="5" width="36" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOut32" imagePosition="only" alignment="center" borderStyle="border" inset="2" id="2095">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="stepOutAction:" target="-2" id="2106"/>
-                    </connections>
-                </button>
             </subviews>
         </customView>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1004" userLabel="MountDialog" customClass="MountDialog">

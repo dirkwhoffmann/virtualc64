@@ -57,7 +57,7 @@
 	
 	// Address column...
 	if ([[tableColumn identifier] isEqual:@"addr"]) 
-		return [NSNumber numberWithInt:4*row];
+		return @((int)(4*row));
 	
 	// ASCII column...
 	if ([[tableColumn identifier] isEqual:@"ascii"]) {
@@ -79,7 +79,7 @@
 	if (![[c64 mem] isValidAddr:addr memtype:source])
 		return nil;
 	
-	return [NSNumber numberWithInt:[[c64 mem] peekFrom:addr memtype:source]];
+	return @((int)[[c64 mem] peekFrom:addr memtype:source]);
 	
 	return nil;
 }

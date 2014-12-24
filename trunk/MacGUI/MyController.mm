@@ -175,28 +175,28 @@
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	
 	// System 
-	[defaultValues setObject:[NSNumber numberWithInt:0/*PAL*/] forKey:VC64PALorNTSCKey];
+	[defaultValues setObject:@0 forKey:VC64PALorNTSCKey]; /*PAL*/
 	[defaultValues setObject:@"" forKey:VC64BasicRomFileKey];
 	[defaultValues setObject:@"" forKey:VC64CharRomFileKey];
 	[defaultValues setObject:@"" forKey:VC64KernelRomFileKey];
 	[defaultValues setObject:@"" forKey:VC64VC1541RomFileKey];
 	
 	// Peripherals
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64WarpLoadKey];
+	[defaultValues setObject:@YES forKey:VC64WarpLoadKey];
 	
 	// Audio
-	[defaultValues setObject:[NSNumber numberWithBool:YES] forKey:VC64SIDReSIDKey];
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:VC64SIDFilterKey];
-	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64SIDChipModelKey];
-	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:VC64SIDSamplingMethodKey];
+	[defaultValues setObject:@YES forKey:VC64SIDReSIDKey];
+	[defaultValues setObject:@NO forKey:VC64SIDFilterKey];
+	[defaultValues setObject:@1 forKey:VC64SIDChipModelKey];
+	[defaultValues setObject:@0 forKey:VC64SIDSamplingMethodKey];
 	
 	// Video
-	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_X] forKey:VC64EyeX];
-	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Y] forKey:VC64EyeY];
-	[defaultValues setObject:[NSNumber numberWithFloat:PAL_INITIAL_EYE_Z] forKey:VC64EyeZ];
+	[defaultValues setObject:@((float)PAL_INITIAL_EYE_X) forKey:VC64EyeX];
+	[defaultValues setObject:@((float)PAL_INITIAL_EYE_Y) forKey:VC64EyeY];
+	[defaultValues setObject:@((float)PAL_INITIAL_EYE_Z) forKey:VC64EyeZ];
 
-	[defaultValues setObject:[NSNumber numberWithInt:VIC::CCS64] forKey:VC64ColorSchemeKey];
-	[defaultValues setObject:[NSNumber numberWithInt:1] forKey:VC64VideoFilterKey];	
+	[defaultValues setObject:@((int)VIC::CCS64) forKey:VC64ColorSchemeKey];
+	[defaultValues setObject:@1 forKey:VC64VideoFilterKey];
 		
 	// Register dictionary
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
@@ -639,7 +639,7 @@
 	NSLog(@"stepperAction");
 	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] stepperAction:[NSNumber numberWithInt:-[sender intValue]]];
+	[[undo prepareWithInvocationTarget:self] stepperAction:@(-[sender intValue])];
 	if (![undo isUndoing]) [undo setActionName:@"Clock frequency"];
 	
 	int newFrameDelayOffset = [c64 frameDelayOffset] - 1000*[sender intValue];
@@ -652,7 +652,7 @@
 	NSLog(@"warpAction");	
 	
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] warpAction:[NSNumber numberWithInt:![c64 warp]]];
+	[[undo prepareWithInvocationTarget:self] warpAction:@((int)![c64 warp])];
 	if (![undo isUndoing]) [undo setActionName:@"Native speed"];
 	
 	[c64 setAlwaysWarp:![c64 warp]];

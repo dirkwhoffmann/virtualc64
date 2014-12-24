@@ -98,7 +98,7 @@
 - (IBAction)vicDXAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicDXAction:[NSNumber numberWithInt:[[c64 vic] horizontalRasterScroll]]];
+    [[undo prepareWithInvocationTarget:self] vicDXAction:@((int)[[c64 vic] horizontalRasterScroll])];
 	if (![undo isUndoing]) [undo setActionName:@"Horizontal raster scroll"];
 	
 	[[c64 vic] setHorizontalRasterScroll:[sender intValue]];
@@ -108,7 +108,7 @@
 - (IBAction)vicDYAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicDYAction:[NSNumber numberWithInt:[[c64 vic] verticalRasterScroll]]];
+	[[undo prepareWithInvocationTarget:self] vicDYAction:@((int)[[c64 vic] verticalRasterScroll])];
 	if (![undo isUndoing]) [undo setActionName:@"Vertical raster scroll"];
 	
 	[[c64 vic] setVerticalRasterScroll:[sender intValue]];
@@ -290,7 +290,7 @@
 - (IBAction)vicRasterlineAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicRasterlineAction:[NSNumber numberWithInt:[[c64 vic] rasterline]]];
+	[[undo prepareWithInvocationTarget:self] vicRasterlineAction:@((int)[[c64 vic] rasterline])];
 	if (![undo isUndoing]) [undo setActionName:@"Raster line"];
 	
 	[[c64 vic] setRasterline:[sender intValue]];
@@ -310,7 +310,7 @@
 - (IBAction)vicRasterInterruptAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] vicRasterInterruptAction:[NSNumber numberWithInt:[[c64 vic] rasterInterruptLine]]];
+	[[undo prepareWithInvocationTarget:self] vicRasterInterruptAction:@((int)[[c64 vic] rasterInterruptLine])];
 	if (![undo isUndoing]) [undo setActionName:@"Raster interrupt line"];
 	
 	[[c64 vic] setRasterInterruptLine:[sender intValue]];
