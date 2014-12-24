@@ -216,6 +216,9 @@ class Snapshot;
 @property (strong) C64Proxy *c64;
 @property (strong,readonly) MyOpenGLView *screen;
 
+// Undo manager
+- (NSUndoManager *)undoManager;
+
 // User defaults
 + (void)registerStandardDefaults;
 - (void)loadUserDefaults;
