@@ -235,7 +235,6 @@ const int BG_TEXTURE_DEPTH = 4;
 - (NSImage *)screenshot;
 - (NSImage *) flipImage: (NSImage *)image;
 - (NSImage *) expandImage: (NSImage *)image toSize:(NSSize) size;
-- (NSImage *) extendImage: (NSImage *)image toSize:(NSSize) size;
 - (int) makeTexture:(NSImage *)img;
 
 @end

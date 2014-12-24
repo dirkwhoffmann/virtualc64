@@ -443,56 +443,52 @@ void checkForOpenGLErrors()
 //                                    Graphics
 // --------------------------------------------------------------------------------
 
-- (NSImage *) flipImage: (NSImage *)image
+- (NSImage *) flipImage:(NSImage *)image
 {
 	assert(image != nil);
 	
 	NSSize size = [image size];
 	NSImage *newImage = [[NSImage alloc] initWithSize:size];
 
-    [NSGraphicsContext saveGraphicsState];
-    [newImage lockFocus];
+    if (image) {
+        [NSGraphicsContext saveGraphicsState];
+        [newImage lockFocus];
 
-    NSAffineTransform* t = [NSAffineTransform transform];
-    [t translateXBy:0 yBy:size.height];
-    [t scaleXBy:1 yBy:-1];
-    [t concat];
-    [image drawInRect:NSMakeRect(0, 0, size.width,size.height)];
+        NSAffineTransform* t = [NSAffineTransform transform];
+        [t translateXBy:0 yBy:size.height];
+        [t scaleXBy:1 yBy:-1];
+        [t concat];
+        
+        [image drawInRect:NSMakeRect(0, 0, size.width,size.height)];
 
-    [newImage unlockFocus];
-    [NSGraphicsContext restoreGraphicsState];
-
+        [newImage unlockFocus];
+        [NSGraphicsContext restoreGraphicsState];
+    }
+    
     return newImage;
 }
 
-- (NSImage *) expandImage: (NSImage *)image toSize:(NSSize) size
+- (NSImage *) expandImage:(NSImage *)image toSize:(NSSize)size
 {
 	NSImage *newImage = [[NSImage alloc] initWithSize:size];
 
 	if (image) {
-        [newImage setFlipped:YES];
+        [NSGraphicsContext saveGraphicsState];
         [newImage lockFocus];
-        [image drawInRect:NSMakeRect(0,0,size.width,size.height) 
-                 fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
-                operation:NSCompositeSourceOver fraction:1.0];
-        [newImage unlockFocus];
-    }
-    
-    return newImage;
-}
 
-- (NSImage *) extendImage: (NSImage *)image toSize:(NSSize) size
-{	
-	NSImage *newImage = [[NSImage alloc] initWithSize:size];
-    
-    if (image) {
-        [newImage setFlipped:YES];
-        [newImage lockFocus];
-        [image drawInRect:NSMakeRect(0,0,[image size].width, [image size].height) 
+        NSAffineTransform* t = [NSAffineTransform transform];
+        [t translateXBy:0 yBy:size.height];
+        [t scaleXBy:1 yBy:-1];
+        [t concat];
+        
+        [image drawInRect:NSMakeRect(0,0,size.width,size.height)
                  fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
                 operation:NSCompositeSourceOver fraction:1.0];
+        
         [newImage unlockFocus];
+        [NSGraphicsContext restoreGraphicsState];
     }
+    
     return newImage;
 }
 

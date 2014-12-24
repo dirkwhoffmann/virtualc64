@@ -50,4 +50,48 @@
 	[memTableView reloadData];
 }
 
+- (Memory::MemoryType)currentMemSource
+{
+    if ([ramSource intValue]) return Memory::MEM_RAM;
+    if ([romSource intValue]) return Memory::MEM_ROM;
+    if ([ioSource intValue]) return Memory::MEM_IO;
+    
+    assert(false);
+    return Memory::MEM_RAM;
+}
+
+- (void)doubleClickInMemTable:(id)sender
+{
+    [self refresh];
+}
+
+- (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(Memory::MemoryType)t
+{
+    NSUndoManager *undo = [self undoManager];
+    [[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] peekFrom:addr memtype:t] memtype:t];
+    if (![undo isUndoing]) [undo setActionName:@"Memory contents"];
+    
+    [[c64 mem] pokeTo:addr value:v memtype:t];
+    [self refresh];
+}
+
+- (void)setMemObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)row
+{
+    
+    uint16_t addr = row * 4;
+    int16_t value = [anObject intValue];
+    NSString *id  = [aTableColumn identifier];
+    
+    // Compute exact address
+    if ([id isEqual:@"hex1"]) addr += 1;
+    if ([id isEqual:@"hex2"]) addr += 2;
+    if ([id isEqual:@"hex3"]) addr += 3;
+    
+    uint8_t oldValue = [[c64 mem] peekFrom:addr memtype:[self currentMemSource]];
+    if (oldValue == value)
+        return;
+    
+    [self changeMemValue:addr value:value memtype:[self currentMemSource]];
+}
+
 @end
