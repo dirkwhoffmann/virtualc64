@@ -36,10 +36,10 @@
 {	
 	NSLog(@"dealloc");
 	
-	[preferenceController release];
-	NSLog(@"Preference controller released");
-	[super dealloc];
-	NSLog(@"super released");
+	// [preferenceController release];
+	// NSLog(@"Preference controller released");
+	// [super dealloc];
+	// NSLog(@"super released");
 }
 
 - (void)windowWillClose:(NSNotification *)aNotification

@@ -36,12 +36,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[image release];
-	[imageUID release];
-	[super dealloc];
-}
 
 - (NSString *) imageRepresentationType
 {

@@ -101,10 +101,6 @@
 	
 	[self refresh:bF word:wF threedigit:sF disassembler:dis];
 	
-	[wF release];
-    [sF release];
-	[bF release];
-	[dis release];	
 }
 
 - (IBAction)setHexadecimalAction:(id)sender
@@ -116,10 +112,6 @@
 	
 	[self refresh:bF word:wF threedigit:sF disassembler:dis];
 	
-	[wF release];
-    [sF release];
-	[bF release];
-	[dis release];
 }
 
 @end
