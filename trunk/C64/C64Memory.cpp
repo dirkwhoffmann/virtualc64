@@ -322,33 +322,33 @@ C64Memory::updatePeekPokeLookupTables()
 uint8_t C64Memory::peekIO(uint16_t addr)
 {
 	// 0xD000 - 0xD3FF (VIC)
-	if (addr < 0xD400) {
+	if (addr <= 0xD3FF) {
 		// Note: Only the lower 6 bits are used for adressing the VIC I/O space
 		// Therefore, the VIC I/O memory repeats every 64 bytes
 		return vic->peek(addr & 0x003F);	
 	}
 	
 	// 0xD400 - 0xD7FF (SID)
-	if (addr < 0xD800) {
+	if (addr <= 0xD7FF) {
 		// Note: Only the lower 5 bits are used for adressing the SID I/O space
 		// Therefore, the SID I/O memory repeats every 32 bytes
 		return sid->peek(addr & 0x001F);
 	}
 	
 	// 0xD800 - 0xDBFF (Color RAM)
-	if (addr < 0xDC00) {
+	if (addr <= 0xDBFF) {
 		return (colorRam[addr - 0xD800] & 0x0F) | (rand() << 4);
 	}
 	
 	// 0xDC00 - 0xDCFF (CIA 1)
-	if (addr < 0xDD00) {
+	if (addr <= 0xDCFF) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the CIA I/O memory repeats every 16 bytes
 		return cia1->peek(addr & 0x000F);
 	}
 	
 	// 0xDD00 - 0xDDFF (CIA 2)
-	if (addr < 0xDE00) {
+	if (addr <= 0xDDFF) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the CIA I/O memory repeats every 16 bytes
 		return cia2->peek(addr & 0x000F);
@@ -356,7 +356,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	
 	// 0xDE00 - 0xDEFF (I/O area 1)
 	// 0xDF00 - 0xDFFF (I/O area 2) 
-	if (addr < 0xDFFF) {
+	if (addr <= 0xDFFF) {
 		// Note: Reserved for further I/O expansion
 		// When read, a random value is returned
 		if (cartridge != NULL && cartridgeRomIsVisible) {
