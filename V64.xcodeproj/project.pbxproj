@@ -59,8 +59,6 @@
 		5039A31D15BE97440038ACBC /* LEDgb.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31915BE97440038ACBC /* LEDgb.png */; };
 		5039A31E15BE97440038ACBC /* LEDgr.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31A15BE97440038ACBC /* LEDgr.png */; };
 		5039A32015BE97500038ACBC /* diskette.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31F15BE97500038ACBC /* diskette.png */; };
-		503A5A9A1222767C00EAA95E /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503A5A991222767C00EAA95E /* Sparkle.framework */; };
-		503A5AC6122278A500EAA95E /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 503A5A991222767C00EAA95E /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
 		50414727122188FC00A80E0C /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* Cartridge.cpp */; };
 		5041486912219F6E00A80E0C /* cartridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5041486812219F6E00A80E0C /* cartridge.png */; };
@@ -71,6 +69,8 @@
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDWrapper.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
+		5074BE2C1A4AF6CB00EA9AEE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5074BE2B1A4AF6CB00EA9AEE /* Sparkle.framework */; };
+		5074BE2D1A4AF7E100EA9AEE /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5074BE2B1A4AF6CB00EA9AEE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
 		50804AE312EB3CDA00394049 /* iphone48.png in Resources */ = {isa = PBXBuildFile; fileRef = 50804AE212EB3CDA00394049 /* iphone48.png */; };
@@ -154,7 +154,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				503A5AC6122278A500EAA95E /* Sparkle.framework in CopyFiles */,
+				5074BE2D1A4AF7E100EA9AEE /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,7 +249,6 @@
 		5039A31915BE97440038ACBC /* LEDgb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDgb.png; path = images/LEDgb.png; sourceTree = "<group>"; };
 		5039A31A15BE97440038ACBC /* LEDgr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDgr.png; path = images/LEDgr.png; sourceTree = "<group>"; };
 		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = diskette.png; path = images/diskette.png; sourceTree = "<group>"; };
-		503A5A991222767C00EAA95E /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* Cartridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* Cartridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
@@ -264,6 +263,7 @@
 		506D39D3141780FF00268AF6 /* SIDWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDWrapper.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
 		506D39D5141788E700268AF6 /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
+		5074BE2B1A4AF6CB00EA9AEE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		5077742E12DE490300D72088 /* MemTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemTableView.h; sourceTree = "<group>"; };
 		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
 		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
@@ -381,8 +381,8 @@
 				50A0E0250A8F332A0067714C /* System.framework in Frameworks */,
 				025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */,
 				50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */,
-				503A5A9A1222767C00EAA95E /* Sparkle.framework in Frameworks */,
 				50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */,
+				5074BE2C1A4AF6CB00EA9AEE /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +392,7 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				503A5A991222767C00EAA95E /* Sparkle.framework */,
+				5074BE2B1A4AF6CB00EA9AEE /* Sparkle.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -1053,6 +1053,7 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1067,6 +1068,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = VirtualC64;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -1083,6 +1085,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
@@ -1097,6 +1100,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = VirtualC64;
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-Wall";
@@ -1114,6 +1118,7 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
@@ -1126,6 +1131,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = VirtualC64;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
