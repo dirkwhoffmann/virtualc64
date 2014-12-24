@@ -57,7 +57,7 @@
 		return [NSString stringWithFormat:@"%s", archive->getNameOfItem(row)];
 	}
 	if ([[aTableColumn identifier] isEqual:@"filesize"]) {
-		return [NSNumber numberWithInt:archive->getSizeOfItem(row)];
+		return @((int)archive->getSizeOfItem(row));
 	}
 	if ([[aTableColumn identifier] isEqual:@"filetype"]) {
 		return [NSString stringWithFormat:@"%s", archive->getTypeOfItem(row)];

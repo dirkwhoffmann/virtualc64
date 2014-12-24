@@ -62,18 +62,18 @@
 	if (type == DECIMAL_FORMATTER) {
 		int result;
 		if ([scanner scanInt:&result] && [scanner isAtEnd])
-			*obj = [NSNumber numberWithInt:result];
+			*obj = @((int)result);
 		else
-			*obj = [NSNumber numberWithInt:0];
+            *obj = @0;
 		return YES;
 	}
 	
 	if (type == HEXADECIMAL_FORMATTER) {
 		unsigned int result;
 		if ([scanner scanHexInt:&result] && [scanner isAtEnd])
-			*obj = [NSNumber numberWithInt:result];
+            *obj = @((int)result);
 		else
-			*obj = [NSNumber numberWithInt:0];
+			*obj = @0;
 		return YES;
 	}
 
