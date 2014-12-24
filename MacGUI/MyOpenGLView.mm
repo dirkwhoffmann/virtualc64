@@ -33,7 +33,9 @@ static CVReturn MyRenderCallback(CVDisplayLinkRef displayLink,
                                  void *displayLinkContext)
 {
     @autoreleasepool {
+        
         return [(__bridge MyOpenGLView *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
+    
     }
 }
 
@@ -447,16 +449,20 @@ void checkForOpenGLErrors()
 	
 	NSSize size = [image size];
 	NSImage *newImage = [[NSImage alloc] initWithSize:size];
-	bool flipped = [image isFlipped];
-	[image setFlipped:!flipped];
-	// [newImage setFlipped:YES];
-	[newImage lockFocus];
-	[image drawInRect:NSMakeRect(0,0,size.width,size.height) 
-			 fromRect:NSMakeRect(0,0,[image size].width, [image size].height) 
-			operation:NSCompositeSourceOver fraction:1.0];
-	[newImage unlockFocus];
-	[image setFlipped:!flipped];	
-	return newImage;
+
+    [NSGraphicsContext saveGraphicsState];
+    [newImage lockFocus];
+
+    NSAffineTransform* t = [NSAffineTransform transform];
+    [t translateXBy:0 yBy:size.height];
+    [t scaleXBy:1 yBy:-1];
+    [t concat];
+    [image drawInRect:NSMakeRect(0, 0, size.width,size.height)];
+
+    [newImage unlockFocus];
+    [NSGraphicsContext restoreGraphicsState];
+
+    return newImage;
 }
 
 - (NSImage *) expandImage: (NSImage *)image toSize:(NSSize) size
@@ -550,13 +556,12 @@ void checkForOpenGLErrors()
 {
 	@autoreleasepool {
 	
-	// Update angles for screen animation
-		[self updateAngles];
+        // Update angles for screen animation
+        [self updateAngles];
 		
-		// Draw scene
-   	[self drawRect:NSZeroRect];
+        // Draw scene
+        [self drawRect:NSZeroRect];
     
-		
 		return kCVReturnSuccess;
 	}
 }
@@ -768,7 +773,9 @@ void checkForOpenGLErrors()
 	
 	[lock lock];     
 	frames++;
-        
+
+    // CGLLockContext([[self openGLContext] CGLContextObj]);
+    
     if (drawIn3D) {
         [self drawRect3D:r];
     } else {
@@ -800,13 +807,18 @@ void checkForOpenGLErrors()
 												  colorSpaceName:NSCalibratedRGBColorSpace
 													 bytesPerRow:width*4
 													bitsPerPixel:0];
-	[[self openGLContext] makeCurrentContext];
+    
+    [lock lock];
+
+    [[self openGLContext] makeCurrentContext];
 	glReadPixels(0,0,width,height,GL_RGBA,GL_UNSIGNED_BYTE,[imageRep bitmapData]);
 	image=[[NSImage alloc] initWithSize:NSMakeSize(width,height)];
 	[image addRepresentation:imageRep];
 
-	NSImage *screenshot = [self flipImage:image];
-	return screenshot;
+    [lock unlock];
+
+    NSImage *screenshot = [self flipImage:image];
+    return screenshot;
 }
 
 // --------------------------------------------------------------------------------
