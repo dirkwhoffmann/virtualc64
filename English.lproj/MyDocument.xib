@@ -179,14 +179,6 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <openGLView colorSize="8bit_RGB" depthSize="16bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" id="262" customClass="MyOpenGLView">
-                        <rect key="frame" x="0.0" y="22" width="804" height="623"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <connections>
-                            <outlet property="c64proxy" destination="2208" id="2210"/>
-                            <outlet property="controller" destination="-2" id="2181"/>
-                        </connections>
-                    </openGLView>
                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="415">
                         <rect key="frame" x="781" y="4" width="13" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -276,6 +268,14 @@
                             <binding destination="2201" name="animate" keyPath="selection.iecBusIsBusy" id="2213"/>
                         </connections>
                     </progressIndicator>
+                    <openGLView colorSize="8bit_RGB" depthSize="16bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" id="262" customClass="MyOpenGLView">
+                        <rect key="frame" x="0.0" y="0.0" width="804" height="623"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <connections>
+                            <outlet property="c64proxy" destination="2208" id="2210"/>
+                            <outlet property="controller" destination="-2" id="2181"/>
+                        </connections>
+                    </openGLView>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="1845">
@@ -337,6 +337,32 @@
                             <action selector="joystick2Action:" target="-2" id="2167"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Serial A" paletteLabel="Serial A" image="joystick2_32" id="kR6-IR-lNs" userLabel="Serial A">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="10" height="20"/>
+                        <size key="maxSize" width="56" height="80"/>
+                        <popUpButton key="view" id="L2b-nG-yBo" userLabel="Port A Popup">
+                            <rect key="frame" x="0.0" y="14" width="56" height="36"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 2" bezelStyle="regularSquare" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="1PP-xx-NoT" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <menu key="menu" id="zHf-yH-YTM">
+                                    <items>
+                                        <menuItem title="None" image="none_32" id="VD3-Wr-Ufe"/>
+                                        <menuItem title="Cursor, Space" state="on" image="keyboard32" id="L2h-xt-iO6"/>
+                                        <menuItem title="WASY, X" image="keyboard32" id="7yW-Md-lfq">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="USB Joystick 1" image="joystick1_32" id="yOc-MG-77p"/>
+                                        <menuItem title="USB Joystick 2" state="on" image="joystick2_32" id="1PP-xx-NoT">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
+                        </popUpButton>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="C4BBEAC4-6A59-431B-B5E5-7926EC568CC2" label="Preferences" paletteLabel="Preferences" tag="-1" image="pref_system" id="2226">
                         <connections>
                             <action selector="propertiesAction:" target="-2" id="2323"/>
@@ -350,6 +376,7 @@
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="1860"/>
                     <toolbarItem reference="1861"/>
+                    <toolbarItem reference="kR6-IR-lNs"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="2226"/>
@@ -362,7 +389,7 @@
                 <outlet property="delegate" destination="-2" id="2165"/>
                 <outlet property="initialFirstResponder" destination="262" id="316"/>
             </connections>
-            <point key="canvasLocation" x="1034" y="299.5"/>
+            <point key="canvasLocation" x="1102" y="335.5"/>
         </window>
         <drawer preferredEdge="minX" leadingOffset="15" trailingOffset="15" id="35" userLabel="Debug Drawer">
             <size key="contentSize" width="300" height="473"/>
@@ -3346,6 +3373,9 @@ DQ
         <image name="flag_eu" width="67" height="42"/>
         <image name="flag_usa" width="67" height="41"/>
         <image name="floppy" width="18" height="18"/>
+        <image name="joystick1_32" width="35" height="35"/>
+        <image name="joystick2_32" width="35" height="35"/>
+        <image name="keyboard32" width="34" height="35"/>
         <image name="none_32" width="39" height="39"/>
         <image name="pause32" width="32" height="32"/>
         <image name="pref_disk" width="49" height="48"/>
