@@ -55,32 +55,41 @@ class JoystickProxy
 class JoystickManager 
 {
 	public:
-		JoystickManager( C64Proxy *proxy );
-		~JoystickManager();
+
+    JoystickManager(C64Proxy *proxy);
+	~JoystickManager();
 		
-		bool Initialize();
-		void Dispose();
+	bool Initialize();
+	void Dispose();
 		
-		static void MatchingCallback_static( void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef );
-		void MatchingCallback( void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef );
+	static void MatchingCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef);
+	void MatchingCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef);
 		
-		static void RemoveCallback_static( void *inContext, IOReturn inResult, void *inSender );
-		void RemoveCallback( void *inContext, IOReturn inResult, void *inSenderf );
+	static void RemoveCallback_static(void *inContext, IOReturn inResult, void *inSender);
+	void RemoveCallback(void *inContext, IOReturn inResult, void *inSenderf);
 		
-		static void InputValueCallback_static( void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef );
-		void InputValueCallback( void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef );
+	static void InputValueCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef);
+	void InputValueCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef);
 
 	private:
-		void IOHIDElement_SetDoubleProperty( IOHIDElementRef element, CFStringRef key, double value );
+    
+    void IOHIDElement_SetDoubleProperty( IOHIDElementRef element, CFStringRef key, double value );
 		
-		C64Proxy *_proxy;
+    void addJoystickProxyWithLocationID(int locationID, JoystickProxy *proxy);
+    JoystickProxy *getJoystickProxyWithLocationID(int locationID);
+    void removeJoystickProxyWithLocationID(int locationID);
+    
+	C64Proxy *_proxy;
 		
-		bool _initialized;
-		IOHIDManagerRef _manager;
-		map<int, JoystickProxy> _joysticks;
+	bool _initialized;
+	IOHIDManagerRef _manager;
+    int locationID1;
+    int locationID2;
+    JoystickProxy *proxy1;
+    JoystickProxy *proxy2;
 		
-		static const int UsageToSearch[][ 2 ];
-		static const unsigned MaxJoystickCount;
+	static const int UsageToSearch[][ 2 ];
+	static const unsigned MaxJoystickCount;
 };
 
 class IOHIDDeviceInfo
