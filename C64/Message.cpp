@@ -62,6 +62,12 @@ void MessageQueue::printMessage(Message *msg)
 		case MSG_CARTRIDGE:
 			fprintf(stderr, "MSG_CARTRIDGE");
 			break;
+        case MSG_JOYSTICK_ATTACHED:
+            fprintf(stderr, "MSG_JOYSTICK_ATTACHED");
+            break;
+        case MSG_JOYSTICK_REMOVED   :
+            fprintf(stderr, "MSG_JOYSTICK_REMOVED");
+            break;
 		default:
 			assert(0);
 	}

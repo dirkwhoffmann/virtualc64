@@ -39,6 +39,8 @@
 #define MSG_VC1541_DATA 12
 #define MSG_VC1541_MOTOR 13
 #define MSG_CARTRIDGE 14
+#define MSG_JOYSTICK_ATTACHED 15
+#define MSG_JOYSTICK_REMOVED 16
 
 typedef struct {
 	int id;			// Message ID

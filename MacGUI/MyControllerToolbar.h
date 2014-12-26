@@ -39,6 +39,9 @@
 - (IBAction)cheatboxCloseAction:(id)sender;
 - (IBAction)cheatboxAction:(id)sender;
 
+// Custom toobar validation
+- (void)validateJoystickItems;
+
 // Experimental
 - (IBAction)iPhoneAction:(id)sender;
 
