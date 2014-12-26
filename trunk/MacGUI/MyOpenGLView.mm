@@ -924,10 +924,9 @@ void checkForOpenGLErrors()
     [self pullJoystick:1 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(0)];
     [self pullJoystick:2 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(1)];
 
-//    if (device:c64->getDeviceOfPort(0) != IPD_KEYBOARD_2 && device:c64->getDeviceOfPort(0) != IPD_KEYBOARD_3) {
-        // Check for standard keys
+    // Check for standard keys
     if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
-            // c64->keyboard->pressKey(c);
+            c64->keyboard->pressKey(c);
             return;
         }
 
@@ -987,7 +986,7 @@ void checkForOpenGLErrors()
 
     // Release standard keys
 	if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
-		// c64->keyboard->releaseKey(c);
+		c64->keyboard->releaseKey(c);
 		return;
 	}
     
