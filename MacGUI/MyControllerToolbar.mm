@@ -24,8 +24,8 @@
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
 {
-    NSLog(@"Validating %d...",[theItem tag]);
-	/* */
+    // NSLog(@"Validating %d...",[theItem tag]);
+	
 	if ([c64 isRunning]) {
 		[[self document] updateChangeCount:NSChangeDone];
 	}
