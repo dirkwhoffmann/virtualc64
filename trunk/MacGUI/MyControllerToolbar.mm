@@ -24,7 +24,7 @@
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
 {
-    // NSLog(@"Validating %d...",[theItem tag]);
+    // NSLog(@"Validating %d...",(int)[theItem tag]);
 	
 	if ([c64 isRunning]) {
 		[[self document] updateChangeCount:NSChangeDone];
@@ -47,55 +47,6 @@
 		return ![c64 isRunning] && [c64 isRunnable];
 	}
 
-    /* Jostick port 1 */
-    /* Problem: Only image type items receive validation messages
-       For now, we always validate */
-    // if ([theItem tag] == 10)
-    {
-        NSMenuItem *item1 = [portA itemWithTag:4];
-        NSMenuItem *item2 = [portA itemWithTag:5];
-        [item1 setEnabled:[c64 joystickOneIsActive]];
-        [item2 setEnabled:[c64 joystickTwoIsActive]];
-        [[portA itemWithTag:[c64 portAssignment:0]] setState:1];
-    }
-    
-    /* Jostick port 2 */
-    /* Problem: Only image type items receive validation messages
-     For now, we always validate */
-    // if ([theItem tag] == 10)
-    {
-        NSMenuItem *item1 = [portB itemWithTag:4];
-        NSMenuItem *item2 = [portB itemWithTag:5];
-        [item1 setEnabled:[c64 joystickOneIsActive]];
-        [item2 setEnabled:[c64 joystickTwoIsActive]];
-        [[portB itemWithTag:[c64 portAssignment:1]] setState:1];
-    }
-
-    
-#if 0
-	/* Jostick port */
-	if ([theItem tag] == 10 || [theItem tag] == 11) { 
-
-		int port = ([theItem tag] == 10) ? [c64 portAssignment:0] : [c64 portAssignment:1];
-		switch (port) {
-			case IPD_KEYBOARD_1:
-				[theItem setImage:[NSImage imageNamed:@"keyboard32"]];
-				return YES;
-			case IPD_JOYSTICK_1:
-				[theItem setImage:[NSImage imageNamed:@"joystick1_32"]];
-				return YES;
-			case IPD_JOYSTICK_2:
-				[theItem setImage:[NSImage imageNamed:@"joystick2_32"]];
-				return YES;
-			case IPD_UNCONNECTED:
-				[theItem setImage:[NSImage imageNamed:@"none_32"]];
-				return YES;
-			default:
-				assert(0);
-		}
-	}	
-#endif 
-    
 #if 0
     /* Drive icon */
  	if ([theItem tag] == 88) 
@@ -123,6 +74,27 @@
     
     /* All other items */
     return YES;
+}
+
+- (void)validateJoystickItems
+{
+    /* Jostick port 1 */
+    {
+        NSMenuItem *item1 = [portA itemWithTag:4];
+        NSMenuItem *item2 = [portA itemWithTag:5];
+        [item1 setEnabled:[c64 joystickOneIsActive]];
+        [item2 setEnabled:[c64 joystickTwoIsActive]];
+        [[portA itemWithTag:[c64 portAssignment:0]] setState:1];
+    }
+    
+    /* Jostick port 2 */
+    {
+        NSMenuItem *item1 = [portB itemWithTag:4];
+        NSMenuItem *item2 = [portB itemWithTag:5];
+        [item1 setEnabled:[c64 joystickOneIsActive]];
+        [item2 setEnabled:[c64 joystickTwoIsActive]];
+        [[portB itemWithTag:[c64 portAssignment:1]] setState:1];
+    }
 }
 
 - (void) setupToolbarIcons

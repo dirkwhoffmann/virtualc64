@@ -1122,18 +1122,20 @@ C64::getDeviceOfPort( int portNo ) {
 
 Joystick *C64::addJoystick()
 {
-	if( !joystick1->IsActive())
+	if(!joystick1->IsActive())
 	{
-		joystick1->SetActiveState( true );
+		joystick1->SetActiveState(true);
+        putMessage(MSG_JOYSTICK_ATTACHED);
 		return joystick1;
 	}
-	else if( !joystick2->IsActive() )
+	else if(!joystick2->IsActive())
 	{
-		joystick2->SetActiveState( true );
+		joystick2->SetActiveState(true);
+        putMessage(MSG_JOYSTICK_ATTACHED);
 		return joystick2;
 	}
 	else
-		throw( "Joystick 1 and 2 are allready assigned!" );
+		throw("Joystick 1 and 2 are allready assigned!");
 }
 
 void C64::removeJoystick( Joystick *joystick )
@@ -1143,7 +1145,7 @@ void C64::removeJoystick( Joystick *joystick )
 	if( joystick == joystick1 )
 	{
 		if( !joystick1->IsActive() )
-			throw( "Joystick1 is not assigned" );
+			throw("Joystick1 is not assigned");
 		
 		if( getDeviceOfPort( 0 ) == IPD_JOYSTICK_1 )
 			setInputDevice( 0, IPD_UNCONNECTED );
@@ -1151,12 +1153,14 @@ void C64::removeJoystick( Joystick *joystick )
 		if( getDeviceOfPort( 1 ) == IPD_JOYSTICK_1 )
 			setInputDevice( 1, IPD_UNCONNECTED ); 
 		
-		joystick1->SetActiveState( false );
+		joystick1->SetActiveState(false);
+        putMessage(MSG_JOYSTICK_REMOVED);
+
 	}
 	else if( joystick == joystick2 )
 	{
 		if( !joystick2->IsActive() )
-			throw( "Joystick2 is not assigned" );
+			throw("Joystick2 is not assigned");
 		
 		if( getDeviceOfPort( 0 ) == IPD_JOYSTICK_2 )
 			setInputDevice( 0, IPD_UNCONNECTED );
@@ -1164,10 +1168,11 @@ void C64::removeJoystick( Joystick *joystick )
 		if( getDeviceOfPort( 1 ) == IPD_JOYSTICK_2 )
 			setInputDevice( 1, IPD_UNCONNECTED ); 
 		
-		joystick2->SetActiveState( false );
+		joystick2->SetActiveState(false);
+        putMessage(MSG_JOYSTICK_REMOVED);
 	}
 	else
-		throw( "Invalid joystick" );
+		throw("Invalid joystick");
 }
 
 void 

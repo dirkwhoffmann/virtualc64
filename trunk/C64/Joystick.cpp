@@ -18,21 +18,50 @@
  
 #include "C64.h"
 
-Joystick::Joystick() : _active( false ), _buttonPressed( false ), _axisX( JOYSTICK_AXIS_NONE ), _axisY( JOYSTICK_AXIS_NONE ) { }
-bool Joystick::IsActive()
-{ return _active; }
-bool Joystick::GetButtonPressed()
-{ return _buttonPressed; }
-JoystickAxisState Joystick::GetAxisX()
-{ return _axisX; }
-JoystickAxisState Joystick::GetAxisY()
-{ return _axisY; }
+Joystick::Joystick() {
+    _active = false;
+    _buttonPressed = false;
+    _axisX = JOYSTICK_AXIS_NONE;
+    _axisY = JOYSTICK_AXIS_NONE;
+}
 
-void Joystick::SetActiveState( bool active )
-{ _active = active; }
+bool Joystick::IsActive()
+{
+    return _active;
+}
+
+bool Joystick::GetButtonPressed()
+{
+    return _buttonPressed;
+}
+
+JoystickAxisState Joystick::GetAxisX()
+{
+    return _axisX;
+}
+
+JoystickAxisState Joystick::GetAxisY()
+{
+    return _axisY;
+}
+
+void Joystick::SetActiveState(bool active)
+{
+    // Send message here...
+    _active = active;
+}
+
 void Joystick::SetButtonPressed( bool pressed )
-{ _buttonPressed = pressed; }
+{
+    _buttonPressed = pressed;
+}
+
 void Joystick::SetAxisX( JoystickAxisState state )
-{ _axisX = state; }
+{
+    _axisX = state;
+}
+
 void Joystick::SetAxisY( JoystickAxisState state )
-{ _axisY = state; }
+{
+    _axisY = state;
+}

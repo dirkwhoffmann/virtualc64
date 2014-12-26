@@ -486,7 +486,13 @@
 			[cartridgeIcon setHidden:!msg->i];
 			[cartridgeEject setHidden:!msg->i];			
 			break;
-			
+
+        case MSG_JOYSTICK_ATTACHED:
+        case MSG_JOYSTICK_REMOVED:
+            NSLog(@"Joystick MSG");
+            [self validateJoystickItems];
+            break;
+            
 		default:
 			assert(0);
 	}

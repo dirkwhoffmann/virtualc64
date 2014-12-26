@@ -493,7 +493,7 @@
 - (void) switchInputDevice:(int)devNo;
 - (void) switchInputDevices;
 - (uint8_t) portAssignment:(int)devNo;
-- (Joystick *) addJoystick;
+ - (Joystick *) addJoystick;
 - (void) removeJoystick:(Joystick *)joystick;
 
 // Audio hardware
