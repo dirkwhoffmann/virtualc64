@@ -78,6 +78,7 @@ class JoystickManager
     void addJoystickProxyWithLocationID(int locationID, JoystickProxy *proxy);
     JoystickProxy *getJoystickProxyWithLocationID(int locationID);
     void removeJoystickProxyWithLocationID(int locationID);
+    void listJoystickManagers();
     
 	C64Proxy *_proxy;
 		

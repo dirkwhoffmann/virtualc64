@@ -80,7 +80,7 @@
 	// [screen setC64:[c64 c64]];
 	
 	// Joystick handling
-	joystickManager = new JoystickManager( c64 );
+	joystickManager = new JoystickManager(c64);
 	joystickManager->Initialize();
 	
 	// Update some toolbar icons
