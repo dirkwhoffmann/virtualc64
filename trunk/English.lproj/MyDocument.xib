@@ -107,6 +107,8 @@
                 <outlet property="memTableView" destination="67" id="515"/>
                 <outlet property="mountDialog" destination="1004" id="1021"/>
                 <outlet property="pc" destination="47" id="163"/>
+                <outlet property="portA" destination="zHf-yH-YTM" id="QwY-sk-L5n"/>
+                <outlet property="portB" destination="L3K-on-eyR" id="D2J-pm-whp"/>
                 <outlet property="preferencesIcon" destination="2226" id="2227"/>
                 <outlet property="propertiesDialog" destination="2228" id="2324"/>
                 <outlet property="ramSource" destination="974" id="1691"/>
@@ -269,7 +271,7 @@
                         </connections>
                     </progressIndicator>
                     <openGLView colorSize="8bit_RGB" depthSize="16bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" id="262" customClass="MyOpenGLView">
-                        <rect key="frame" x="0.0" y="0.0" width="804" height="623"/>
+                        <rect key="frame" x="0.0" y="22" width="804" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <connections>
                             <outlet property="c64proxy" destination="2208" id="2210"/>
@@ -325,42 +327,68 @@
                             <action selector="stepOverAction:" target="-2" id="1865"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="8B02FC8B-F607-438F-AC91-AC0880622B18" label="Port A" paletteLabel="Port A" tag="10" image="none_32" id="1860">
-                        <nil key="toolTip"/>
-                        <connections>
-                            <action selector="joystick1Action:" target="-2" id="2166"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="12A9E460-213C-42E9-A8F9-B5A4FF5CB7E7" label="Port B" paletteLabel="Port B" tag="11" image="none_32" id="1861">
-                        <nil key="toolTip"/>
-                        <connections>
-                            <action selector="joystick2Action:" target="-2" id="2167"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Serial A" paletteLabel="Serial A" image="joystick2_32" id="kR6-IR-lNs" userLabel="Serial A">
+                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port A" paletteLabel="Port A" tag="10" id="kR6-IR-lNs" userLabel="Port A">
                         <nil key="toolTip"/>
                         <size key="minSize" width="10" height="20"/>
                         <size key="maxSize" width="56" height="80"/>
-                        <popUpButton key="view" id="L2b-nG-yBo" userLabel="Port A Popup">
+                        <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port A">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 2" bezelStyle="regularSquare" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="1PP-xx-NoT" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="keyboard32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                                <menu key="menu" id="zHf-yH-YTM">
+                                <font key="font" metaFont="smallSystem"/>
+                                <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
                                     <items>
                                         <menuItem title="None" image="none_32" id="VD3-Wr-Ufe"/>
-                                        <menuItem title="Cursor, Space" state="on" image="keyboard32" id="L2h-xt-iO6"/>
-                                        <menuItem title="WASY, X" image="keyboard32" id="7yW-Md-lfq">
+                                        <menuItem title="Cursor, Space" image="keyboard32" tag="1" id="L2h-xt-iO6"/>
+                                        <menuItem title="WASY, -" image="keyboard32" tag="2" id="7yW-Md-lfq">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 1" image="joystick1_32" id="yOc-MG-77p"/>
-                                        <menuItem title="USB Joystick 2" state="on" image="joystick2_32" id="1PP-xx-NoT">
+                                        <menuItem title="4619, 0" image="keyboard32" tag="3" id="O3U-A9-CMi">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="USB Joystick 1" image="joystick1_32" tag="4" id="yOc-MG-77p"/>
+                                        <menuItem title="USB Joystick 2" image="joystick2_32" tag="5" id="1PP-xx-NoT">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
                                 </menu>
                             </popUpButtonCell>
+                            <connections>
+                                <action selector="portAAction:" target="-2" id="HM2-PR-EXU"/>
+                            </connections>
+                        </popUpButton>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="B42FBC61-316F-46F4-B1B7-C136C71316EC" label="Port B" paletteLabel="Port B" tag="11" id="Klt-YL-0mv" userLabel="Port B">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="10" height="20"/>
+                        <size key="maxSize" width="56" height="80"/>
+                        <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
+                            <rect key="frame" x="0.0" y="14" width="56" height="36"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="keyboard32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="skK-6M-sib" userLabel="PopupButtonCell">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                                <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
+                                    <items>
+                                        <menuItem title="None" image="none_32" id="xyt-eC-0im"/>
+                                        <menuItem title="Cursor, Space" image="keyboard32" tag="1" id="PAa-za-K8O"/>
+                                        <menuItem title="WASY, -" image="keyboard32" tag="2" id="8LF-y4-Ocd">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="4619, 0" image="keyboard32" tag="3" id="yHY-6a-32k">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="USB Joystick 1" image="joystick1_32" tag="4" id="JM3-8Y-xZU"/>
+                                        <menuItem title="USB Joystick 2" image="joystick2_32" tag="5" id="Ahc-WA-2jp">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
+                            <connections>
+                                <action selector="portBAction:" target="-2" id="0tV-uA-8uo"/>
+                            </connections>
                         </popUpButton>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="C4BBEAC4-6A59-431B-B5E5-7926EC568CC2" label="Preferences" paletteLabel="Preferences" tag="-1" image="pref_system" id="2226">
@@ -374,9 +402,8 @@
                 <defaultToolbarItems>
                     <toolbarItem reference="1855"/>
                     <toolbarItem reference="1851"/>
-                    <toolbarItem reference="1860"/>
-                    <toolbarItem reference="1861"/>
                     <toolbarItem reference="kR6-IR-lNs"/>
+                    <toolbarItem reference="Klt-YL-0mv"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="1851"/>
                     <toolbarItem reference="2226"/>
@@ -389,7 +416,7 @@
                 <outlet property="delegate" destination="-2" id="2165"/>
                 <outlet property="initialFirstResponder" destination="262" id="316"/>
             </connections>
-            <point key="canvasLocation" x="1102" y="335.5"/>
+            <point key="canvasLocation" x="1205" y="328.5"/>
         </window>
         <drawer preferredEdge="minX" leadingOffset="15" trailingOffset="15" id="35" userLabel="Debug Drawer">
             <size key="contentSize" width="300" height="473"/>

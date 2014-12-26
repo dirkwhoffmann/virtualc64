@@ -24,6 +24,7 @@
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem
 {
+    NSLog(@"Validating %d...",[theItem tag]);
 	/* */
 	if ([c64 isRunning]) {
 		[[self document] updateChangeCount:NSChangeDone];
@@ -45,13 +46,39 @@
 	if ([theItem tag] >= 2 && [theItem tag] <= 4) {
 		return ![c64 isRunning] && [c64 isRunnable];
 	}
-	
+
+    /* Jostick port 1 */
+    /* Problem: Only image type items receive validation messages
+       For now, we always validate */
+    // if ([theItem tag] == 10)
+    {
+        NSMenuItem *item1 = [portA itemWithTag:4];
+        NSMenuItem *item2 = [portA itemWithTag:5];
+        [item1 setEnabled:[c64 joystickOneIsActive]];
+        [item2 setEnabled:[c64 joystickTwoIsActive]];
+        [[portA itemWithTag:[c64 portAssignment:0]] setState:1];
+    }
+    
+    /* Jostick port 2 */
+    /* Problem: Only image type items receive validation messages
+     For now, we always validate */
+    // if ([theItem tag] == 10)
+    {
+        NSMenuItem *item1 = [portB itemWithTag:4];
+        NSMenuItem *item2 = [portB itemWithTag:5];
+        [item1 setEnabled:[c64 joystickOneIsActive]];
+        [item2 setEnabled:[c64 joystickTwoIsActive]];
+        [[portB itemWithTag:[c64 portAssignment:1]] setState:1];
+    }
+
+    
+#if 0
 	/* Jostick port */
 	if ([theItem tag] == 10 || [theItem tag] == 11) { 
 
 		int port = ([theItem tag] == 10) ? [c64 portAssignment:0] : [c64 portAssignment:1];
 		switch (port) {
-			case IPD_KEYBOARD:
+			case IPD_KEYBOARD_1:
 				[theItem setImage:[NSImage imageNamed:@"keyboard32"]];
 				return YES;
 			case IPD_JOYSTICK_1:
@@ -67,7 +94,8 @@
 				assert(0);
 		}
 	}	
-	
+#endif 
+    
 #if 0
     /* Drive icon */
  	if ([theItem tag] == 88) 
@@ -163,6 +191,38 @@
 - (IBAction)switchJoysticksAction:(id)sender
 {
 	[c64 switchInputDevices];
+}
+
+- (IBAction)portAAction:(id)sender
+{
+    int value = (int)[[sender selectedItem] tag];
+
+    NSLog(@"portAAction (%d)", value);
+    
+    switch (value) {
+        case 0: [c64 setInputDevice:0 device:IPD_UNCONNECTED]; break;
+        case 1: [c64 setInputDevice:0 device:IPD_KEYBOARD_1]; break;
+        case 2: [c64 setInputDevice:0 device:IPD_KEYBOARD_2]; break;
+        case 3: [c64 setInputDevice:0 device:IPD_KEYBOARD_3]; break;
+        case 4: [c64 setInputDevice:0 device:IPD_JOYSTICK_1]; break;
+        case 5: [c64 setInputDevice:0 device:IPD_JOYSTICK_2]; break;
+    }
+}
+
+- (IBAction)portBAction:(id)sender
+{
+    int value = (int)[[sender selectedItem] tag];
+    
+    NSLog(@"portBAction (%d)", value);
+    
+    switch (value) {
+        case 0: [c64 setInputDevice:1 device:IPD_UNCONNECTED]; break;
+        case 1: [c64 setInputDevice:1 device:IPD_KEYBOARD_1]; break;
+        case 2: [c64 setInputDevice:1 device:IPD_KEYBOARD_2]; break;
+        case 3: [c64 setInputDevice:1 device:IPD_KEYBOARD_3]; break;
+        case 4: [c64 setInputDevice:1 device:IPD_JOYSTICK_1]; break;
+        case 5: [c64 setInputDevice:1 device:IPD_JOYSTICK_2]; break;
+    }
 }
 
 - (IBAction)propertiesAction:(id)sender

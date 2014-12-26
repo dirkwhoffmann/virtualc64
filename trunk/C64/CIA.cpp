@@ -832,10 +832,11 @@ CIA1::setJoystickToPort( int portNo, Joystick *j ) {
 	joy[portNo] = j;
 }
 
-void 
-CIA1::setKeyboardToPort( int portNo, bool b ) {
-	bKeyboard[portNo] = b;
-}
+//void
+//CIA1::setKeyboardToPort( int portNo, bool b ) {
+//	bKeyboard[portNo] = b;
+//}
+//#endif
 
 void 
 CIA1::raiseInterruptLine()
