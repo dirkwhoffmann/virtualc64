@@ -1044,30 +1044,44 @@ C64::setInputDevice(int portNo, int newDevice)
 	port[portNo] = newDevice;
 	
 	// Update CIA structure
-	switch(newDevice) {
+    switch(newDevice) {
+        case IPD_JOYSTICK_1:
+            cia1->setJoystickToPort( portNo, joystick1 );
+            break;
+            
+        case IPD_JOYSTICK_2:
+            cia1->setJoystickToPort( portNo, joystick2 );
+            break;
+
+        default:
+            cia1->setJoystickToPort( portNo, NULL );
+    }
+#if 0
+    switch(newDevice) {
 		case IPD_UNCONNECTED:
 			cia1->setJoystickToPort( portNo, NULL );
-			cia1->setKeyboardToPort( portNo, false );
+			// cia1->setKeyboardToPort( portNo, false );
 			break;
 			
 		case IPD_KEYBOARD: 
 			cia1->setJoystickToPort( portNo, NULL );
-			cia1->setKeyboardToPort( portNo, true );
+			// cia1->setKeyboardToPort( portNo, true );
 			break;
 			
 		case IPD_JOYSTICK_1: 
 			cia1->setJoystickToPort( portNo, joystick1 );
-			cia1->setKeyboardToPort( portNo, false );
+			// cia1->setKeyboardToPort( portNo, false );
 			break;
 			
 		case IPD_JOYSTICK_2: 
 			cia1->setJoystickToPort( portNo, joystick2 );
-			cia1->setKeyboardToPort( portNo, false );
+			// cia1->setKeyboardToPort( portNo, false );
 			break;
 			
 		default:
 			assert(false);
 	}
+#endif
 }
 
 void

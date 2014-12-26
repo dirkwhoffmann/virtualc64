@@ -839,6 +839,72 @@ void checkForOpenGLErrors()
 	return YES;
 }
 
+- (void)pullJoystick:(int)nr withKey:(char)c up:(char)u down:(char)d left:(char)l right:(char)r fire:(char)f
+{
+    if (c == u) { c64->cia1->clearJoystickBits(nr, 1); return; }
+    if (c == d) { c64->cia1->clearJoystickBits(nr, 2); return; }
+    if (c == l) { c64->cia1->clearJoystickBits(nr, 4); return; }
+    if (c == r) { c64->cia1->clearJoystickBits(nr, 8); return; }
+    if (c == f) { c64->cia1->clearJoystickBits(nr, 16); }
+}
+
+- (void)pullJoystick:(int)nr withKeycode:(int)k up:(int)u down:(int)d left:(int)l right:(int)r fire:(int)f
+{
+    if (k == u) { c64->cia1->clearJoystickBits(nr, 1); return; }
+    if (k == d) { c64->cia1->clearJoystickBits(nr, 2); return; }
+    if (k == l) { c64->cia1->clearJoystickBits(nr, 4); return; }
+    if (k == r) { c64->cia1->clearJoystickBits(nr, 8); return; }
+    if (k == f) { c64->cia1->clearJoystickBits(nr, 16); }
+}
+
+- (void)pullJoystick:(int)nr withKey:(char)c withKeycode:(int)k device:(int)d
+{
+    switch (d) {
+        case IPD_KEYBOARD_1:
+            [self pullJoystick:nr withKeycode:k up:MAC_CU down:MAC_CD left:MAC_CL right:MAC_CR fire:MAC_SPC];
+            break;
+        case IPD_KEYBOARD_2:
+            [self pullJoystick:nr withKey:c up:'w' down:'y' left:'a' right:'s' fire:'-'];
+            break;
+        case IPD_KEYBOARD_3:
+            [self pullJoystick:nr withKey:c up:'8' down:'2' left:'4' right:'6' fire:'0'];
+            break;
+    }
+}
+
+- (void)releaseJoystick:(int)nr withKey:(char)c up:(char)u down:(char)d left:(char)l right:(char)r fire:(char)f
+{
+    if (c == u) { c64->cia1->setJoystickBits(nr, 1); return; }
+    if (c == d) { c64->cia1->setJoystickBits(nr, 2); return; }
+    if (c == l) { c64->cia1->setJoystickBits(nr, 4); return; }
+    if (c == r) { c64->cia1->setJoystickBits(nr, 8); return; }
+    if (c == f) { c64->cia1->setJoystickBits(nr, 16); }
+}
+
+- (void)releaseJoystick:(int)nr withKeycode:(int)k up:(int)u down:(int)d left:(int)l right:(int)r fire:(int)f
+{
+    if (k == u) { c64->cia1->setJoystickBits(nr, 1); return; }
+    if (k == d) { c64->cia1->setJoystickBits(nr, 2); return; }
+    if (k == l) { c64->cia1->setJoystickBits(nr, 4); return; }
+    if (k == r) { c64->cia1->setJoystickBits(nr, 8); return; }
+    if (k == f) { c64->cia1->setJoystickBits(nr, 16); }
+}
+
+- (void)releaseJoystick:(int)nr withKey:(char)c withKeycode:(int)k device:(int)d
+{
+    switch (d) {
+        case IPD_KEYBOARD_1:
+            [self releaseJoystick:nr withKeycode:k up:MAC_CU down:MAC_CD left:MAC_CL right:MAC_CR fire:MAC_SPC];
+            break;
+        case IPD_KEYBOARD_2:
+            [self releaseJoystick:nr withKey:c up:'w' down:'y' left:'a' right:'s' fire:'-'];
+            break;
+        case IPD_KEYBOARD_3:
+            [self releaseJoystick:nr withKey:c up:'8' down:'2' left:'4' right:'6' fire:'0'];
+            break;
+    }
+}
+
 - (void)keyDown:(NSEvent *)event
 {
 	unsigned int   c       = [[event characters] UTF8String][0];
@@ -854,41 +920,17 @@ void checkForOpenGLErrors()
     numKeysPressed++;
     // NSLog(@"NumKeysPressed = %d", numKeysPressed);
     
-    if (c64->getDeviceOfPort(0) == IPD_KEYBOARD || c64->getDeviceOfPort(1) == IPD_KEYBOARD) {
-		switch (keycode) {
-			case MAC_CU: 
-				// debug("Up\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(1, 1);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(2, 1);
-				return;
-			case MAC_CD:
-				// debug("Down\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(1, 2);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(2, 2);
-				return;
-			case MAC_CL:
-				// debug("Left\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(1, 4);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(2, 4);
-				return;
-			case MAC_CR:
-				// debug("Right\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(1, 8);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(2, 8);
-				return;
-			case MAC_SPC:
-				// debug("Fire\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(1, 16);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->clearJoystickBits(2, 16);
-				return;
-		}
-	}
+    // Simulate joysticks
+    [self pullJoystick:1 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(0)];
+    [self pullJoystick:2 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(1)];
 
-	if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
-		c64->keyboard->pressKey(c);
-		return;
-	}
-	
+//    if (device:c64->getDeviceOfPort(0) != IPD_KEYBOARD_2 && device:c64->getDeviceOfPort(0) != IPD_KEYBOARD_3) {
+        // Check for standard keys
+    if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
+            // c64->keyboard->pressKey(c);
+            return;
+        }
+
 	switch (keycode) {			
 		case MAC_F2: c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(0,4); return;
 		case MAC_F4: c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(0,5); return;
@@ -933,47 +975,22 @@ void checkForOpenGLErrors()
 	}
 #endif	
 
-    if (c64->getDeviceOfPort(0) == IPD_KEYBOARD || c64->getDeviceOfPort(1) == IPD_KEYBOARD) {
-		switch (keycode) {
-			case MAC_CU: 
-				// debug("Releasing Up\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->setJoystickBits(1, 1);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->setJoystickBits(2, 1);
-				return;
-			case MAC_CD:
-				// debug("Releasing Down\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->setJoystickBits(1, 2);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->setJoystickBits(2, 2);
-				return;
-			case MAC_CL:
-				// debug("Releasing Left\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->setJoystickBits(1, 4);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->setJoystickBits(2, 4);
-				return;
-			case MAC_CR:
-				// debug("Releasing Right\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->setJoystickBits(1, 8);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->setJoystickBits(2, 8);
-				return;
-			case MAC_SPC:
-				// debug("Releasing Fire\n");
-				if (c64->getDeviceOfPort(0) == IPD_KEYBOARD) c64->cia1->setJoystickBits(1, 16);
-				if (c64->getDeviceOfPort(1) == IPD_KEYBOARD) c64->cia1->setJoystickBits(2, 16);
-				return;
-		}
-	}
-
+    // Simulate joysticks
+    [self releaseJoystick:1 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(0)];
+    [self releaseJoystick:2 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(1)];
+    
 	// We always relase the special keys
 	// That's the easiest way to cope with race conditions due to fast typing
 	// (Problems can occur, if a new key is hit before the previous is released)
 	c64->keyboard->releaseShiftKey();
 	c64->keyboard->releaseCommodoreKey();
-    
+
+    // Release standard keys
 	if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
-		c64->keyboard->releaseKey(c);
+		// c64->keyboard->releaseKey(c);
 		return;
 	}
-		
+    
 	switch (keycode) {			
 		case MAC_F2: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,4); return;
 		case MAC_F4: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,5); return;

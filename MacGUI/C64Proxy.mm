@@ -568,6 +568,9 @@
 - (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
+- (bool) joystickOneIsActive { return c64->joystick1->IsActive(); }
+- (bool) joystickTwoIsActive { return c64->joystick2->IsActive(); }
+- (void) setInputDevice:(int)devNo device:(int)dev { c64->setInputDevice(devNo, dev); }
 - (void) switchInputDevice:(int)devNo { c64->switchInputDevice( devNo ); }
 - (void) switchInputDevices { c64->switchInputDevices(); }
 - (uint8_t) portAssignment:(int)devNo { return c64->getDeviceOfPort(devNo); }

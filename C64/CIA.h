@@ -513,7 +513,8 @@ private:
 	Keyboard *keyboard;
 	Joystick *joy[2];
 
-	bool bKeyboard[2];
+    // Deprecated
+	// bool bKeyboard[2];
 
 	void pollJoystick( Joystick *joy, int joyDevNo );
 
@@ -535,23 +536,23 @@ public:
 	//! Bind the CIA chip to the specified keyboard.
 	void setKeyboard(Keyboard *k) { assert(keyboard == NULL); keyboard = k; }
 	
-	//! Bind the joystick port on the VIC chip to the specified joystick
+	//! Bind the joystick port to the specified joystick
 	void setJoystickToPort( int portNo, Joystick *j );
 	
-	//! Get the joysick mapped to port A
-	Joystick *getJoystickOnPortA() { return joy[0]; }
+	//! Get joysick mapped to port A
+	//Joystick *getJoystickOnPortA() { return joy[0]; }
 	
-	//! Get the joystick mapped to port B
-	Joystick *getJoystickOnPortB() { return joy[1]; }
+	//! Get joystick mapped to port B
+	//Joystick *getJoystickOnPortB() { return joy[1]; }
 
-	//! Bind the keyboard on the VIC chip to the specified game port
-	void setKeyboardToPort( int portNo, bool b );
+	//! Bind the keyboard to the specified game port
+	// void setKeyboardToPort( int portNo, bool b );
 	
 	//! Return true, if the keyboard simulates the joystick on gameport A */
-	bool getKeyboardOnPortA() { return bKeyboard[0]; }
+	// bool getKeyboardOnPortA() { return bKeyboard[0]; }
 	
 	//! Return true, if the keyboard simulates the joystick on gameport B */
-	bool getKeyboardOnPortB() { return bKeyboard[1]; }
+	// bool getKeyboardOnPortB() { return bKeyboard[1]; }
 
 	//! Returns true if the \a addr is located in the I/O range of the CIA 1 chip
 	static inline bool isCia1Addr(uint16_t addr) 

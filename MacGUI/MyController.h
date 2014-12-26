@@ -50,6 +50,10 @@ class Snapshot;
 	IBOutlet RomDialog *romDialog;
 	PreferenceController *preferenceController;
 	
+    // Toolbar
+    IBOutlet NSMenu *portA;
+    IBOutlet NSMenu *portB;
+
 	// Main screen
 	IBOutlet MyOpenGLView *__strong screen;
 	IBOutlet NSDrawer *debugPanel;

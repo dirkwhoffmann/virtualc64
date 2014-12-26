@@ -487,6 +487,9 @@
 - (bool)revertToHistoricSnapshot:(int)nr;
 
 // Joystick
+- (bool) joystickOneIsActive;
+- (bool) joystickTwoIsActive;
+- (void) setInputDevice:(int)devNo device:(int)dev;
 - (void) switchInputDevice:(int)devNo;
 - (void) switchInputDevices;
 - (uint8_t) portAssignment:(int)devNo;
