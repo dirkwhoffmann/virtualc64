@@ -32,7 +32,7 @@ const int JoystickManager::UsageToSearch[][ 2 ] =
 };
 const unsigned JoystickManager::MaxJoystickCount = 2;
 
-JoystickManager::JoystickManager( C64Proxy *proxy )
+JoystickManager::JoystickManager(C64Proxy *proxy)
 {
     _proxy = proxy;
     _initialized = false;
@@ -55,7 +55,7 @@ void JoystickManager::addJoystickProxyWithLocationID(int locationID, JoystickPro
         proxy1 = proxy;
         return;
     }
-    if (proxy1 == NULL) {
+    if (proxy2 == NULL) {
         locationID2 = locationID;
         proxy2 = proxy;
         return;
@@ -75,18 +75,24 @@ JoystickProxy *JoystickManager::getJoystickProxyWithLocationID(int locationID)
     return NULL;
 }
 
-void JoystickManager::removeJoystickProxyWithLocationID(int id)
+void JoystickManager::removeJoystickProxyWithLocationID(int locationID)
 {
-    if (locationID1 == id) {
+    if (locationID1 == locationID) {
         locationID1 = 0;
         proxy1 = NULL;
         return;
     }
-    if (locationID2 == id) {
+    if (locationID2 == locationID) {
         locationID2 = 0;
         proxy2 = NULL;
         return;
     }
+}
+
+void JoystickManager::listJoystickManagers()
+{
+    NSLog(@"Slot 1: %p (ID %d)", proxy1, locationID1);
+    NSLog(@"Slot 2: %p (ID %d)", proxy2, locationID2);
 }
 
 bool JoystickManager::Initialize()
@@ -175,40 +181,45 @@ void JoystickManager::Dispose()
 }
 
 void 
-JoystickManager::MatchingCallback_static( void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef )
-{ 
-    ( (JoystickManager *) inContext)->MatchingCallback( inContext, inResult, inSender, inIOHIDDeviceRef );
+JoystickManager::MatchingCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef)
+{
+    assert (inContext != NULL);
+    
+    JoystickManager *context = (JoystickManager *)inContext;
+    context->MatchingCallback( inContext, inResult, inSender, inIOHIDDeviceRef);
 }
 
 void 
 JoystickManager::MatchingCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef)
 {
-    NSLog(@"MatchingCallback:inIOHIDDeviceRef = %@", inIOHIDDeviceRef);
-    
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    // listJoystickManagers();
+
 	IOHIDDeviceInfo devInfo = IOHIDDeviceInfo(inIOHIDDeviceRef);
 	
 	if( inResult != kIOReturnSuccess )
 	{
-		NSLog( @"%s: device %p (%s) is not in successful state (%i)\n", __PRETTY_FUNCTION__, inIOHIDDeviceRef, devInfo.GetName(), inResult );
+		NSLog(@"Device %p (%s) is not in successful state (%i)\n",
+              inIOHIDDeviceRef, devInfo.GetName(), inResult);
 		return;
 	}
 	
     if(getJoystickProxyWithLocationID(devInfo.GetLocationID()) != NULL) {
-        NSLog(@"%s: device %p (%s) already opend.\n",
-              __PRETTY_FUNCTION__, inIOHIDDeviceRef, devInfo.GetName() );
+        NSLog(@"Device %p (%s) already opend.\n",
+              inIOHIDDeviceRef, devInfo.GetName());
         return;
 	}
 	
     if(proxy1 != NULL && proxy2 != NULL) {
-		NSLog(@"%s: device %p (%s) will not be opend -> maximum device count reached.\n",
-              __PRETTY_FUNCTION__, inIOHIDDeviceRef, devInfo.GetName());
+		NSLog(@"Device %p (%s) will not be opend -> maximum device count reached.\n",
+              inIOHIDDeviceRef, devInfo.GetName());
 		return;
 	}
 	
 	IOReturn status;
 	if( ( status = IOHIDDeviceOpen(inIOHIDDeviceRef, kIOHIDOptionsTypeNone ) ) != kIOReturnSuccess) {
-		NSLog(@"%s: failed to open device %p (%s) (status=%i)\n",
-              __PRETTY_FUNCTION__, inIOHIDDeviceRef, devInfo.GetName(), status );
+		NSLog(@"Failed to open device %p (%s) (status = %i)\n",
+              inIOHIDDeviceRef, devInfo.GetName(), status );
 		return;
 	}
 	
@@ -229,44 +240,48 @@ JoystickManager::MatchingCallback(void *inContext, IOReturn inResult, void *inSe
 		IOHIDDeviceRegisterRemovalCallback( inIOHIDDeviceRef, NULL, NULL );
 		IOHIDDeviceClose( inIOHIDDeviceRef, kIOHIDOptionsTypeNone );
 		
-		NSLog(@"%s: joystick coulnd't be created for %p (%s)\n",
-              __PRETTY_FUNCTION__, inIOHIDDeviceRef, devInfo.GetName());
+		NSLog(@"Joystick coulnd't be created for %p (%s)\n",
+              inIOHIDDeviceRef, devInfo.GetName());
 		return;
 	}
 	
     JoystickProxy *proxy = new JoystickProxy(joystick);
     addJoystickProxyWithLocationID(devInfo.GetLocationID(), proxy);
     
-	NSLog(@"%s: opened device %p (%s) %d %x\n", __PRETTY_FUNCTION__,
-          inIOHIDDeviceRef, devInfo.GetName(), devInfo.GetLocationID(), devInfo.GetLocationID());
+	NSLog(@"Successfully opened device %s (ID %d)\n",
+          devInfo.GetName(), devInfo.GetLocationID());
 }
 
 void 
-JoystickManager::RemoveCallback_static( void *inContext, IOReturn inResult, void *inSender )
+JoystickManager::RemoveCallback_static(void *inContext, IOReturn inResult, void *inSender)
 {
     assert (inContext != NULL);
-    ( (JoystickManager *) inContext)->RemoveCallback( inContext, inResult, inSender ); 
+
+    CallbackContext *context = (CallbackContext *)inContext;
+    context->manager->RemoveCallback(inContext, inResult, inSender);
 }
 
 void 
-JoystickManager::RemoveCallback( void *inContext, IOReturn inResult, void *inSender )
+JoystickManager::RemoveCallback(void *inContext, IOReturn inResult, void *inSender)
 {
-    NSLog(@"JoystickManager::RemoveCallback");
+    JoystickProxy *proxy;
     
-	IOHIDDeviceInfo devInfo = IOHIDDeviceInfo( (IOHIDDeviceRef) inSender );
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    // listJoystickManagers();
+    
+	IOHIDDeviceInfo devInfo = IOHIDDeviceInfo((IOHIDDeviceRef)inSender);
 	    
 	if(inResult != kIOReturnSuccess) {
-		NSLog( @"%s: device %p (%s) is not in successful state (%i)\n",
-              __PRETTY_FUNCTION__, inSender, devInfo.GetName(), inResult );
+		NSLog(@"Device %s (ID %d) is not in successful state (%i)\n",
+              devInfo.GetName(), devInfo.GetLocationID(), inResult);
 		return;
 	}
-
-    NSLog(@"Searching for %s: device %p (%s) in open list\n", __PRETTY_FUNCTION__, inSender, devInfo.GetName() );
     
-    JoystickProxy *proxy = getJoystickProxyWithLocationID(devInfo.GetLocationID());
+    proxy = getJoystickProxyWithLocationID(devInfo.GetLocationID());
+    
     if(proxy == NULL) {
-		NSLog(@"%s: device %p (%s) not found in open list\n",
-              __PRETTY_FUNCTION__, inSender, devInfo.GetName() );
+		NSLog(@"Device %s (ID %d) not found in open list\n",
+              devInfo.GetName(), devInfo.GetLocationID());
 		return;
 	}
 	
@@ -278,36 +293,41 @@ JoystickManager::RemoveCallback( void *inContext, IOReturn inResult, void *inSen
     [_proxy removeJoystick:joystick];
     removeJoystickProxyWithLocationID(devInfo.GetLocationID());
 
-    NSLog(@"%s: closed device %p (%s)\n",
-          __PRETTY_FUNCTION__, inSender, devInfo.GetName());
+    NSLog(@"Successfully closed device %s (ID %d)\n",
+          devInfo.GetName(), devInfo.GetLocationID());
 }
 
 void 
-JoystickManager::InputValueCallback_static( void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef )
-{ 
+JoystickManager::InputValueCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef )
+{
+    assert (inContext != NULL);
+
     CallbackContext *context = (CallbackContext *)inContext;
-    context->manager->InputValueCallback(inContext, inResult, inSender, inIOHIDValueRef); 
+    context->manager->InputValueCallback(inContext, inResult, inSender, inIOHIDValueRef);
 }
 
 void 
-JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef )
+JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef)
 {
     CallbackContext *context = (CallbackContext *)inContext;
-            
+
+    // NSLog(@"%s", __PRETTY_FUNCTION__);
+    // listJoystickManagers();
+
 	if( inResult != kIOReturnSuccess )
 	{
-		NSLog( @"%s: device %p is not in successful state (%i)\n", __PRETTY_FUNCTION__, context->deviceRef, inResult );
+		NSLog(@"Device %p (ID %d) is not in successful state (%i)\n",
+              context->deviceRef, context->locationID, inResult);
 		return;
 	}
 	
-	map<int, JoystickProxy>::iterator it;
+	// map<int, JoystickProxy>::iterator it;
     JoystickProxy *proxy = getJoystickProxyWithLocationID(context->locationID);
     if (proxy == NULL) {
-		NSLog( @"%s: device %p not found in open list\n",
-              __PRETTY_FUNCTION__, context->deviceRef);
+		NSLog(@"Device %p (ID %d) not found in open list\n",
+              context->deviceRef, context->locationID);
 		return;
 	}
-    // JoystickProxy &joystick = *proxy;
     
 	IOHIDElementRef element = IOHIDValueGetElement( inIOHIDValueRef );
 	IOHIDElementType elementType = IOHIDElementGetType( element );
@@ -327,8 +347,8 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 			proxy->ChangeButton(elementUsage, pressed);
 		}
 		else
-			NSLog( @"%s: device %p type and page mismatch (Type=%i, Page=%i)\n", 
-                  __PRETTY_FUNCTION__, context->deviceRef, elementType, elementPage );
+			NSLog( @"Device %p (ID %d) type and page mismatch (Type=%i, Page=%i)\n",
+                  context->deviceRef, context->locationID, elementType, elementPage );
 		
 	}
 	else if( ( elementType == kIOHIDElementTypeInput_Axis ) || ( elementType == kIOHIDElementTypeInput_Misc /* why misc? */ ) )
@@ -360,13 +380,13 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 						proxy->ChangeAxisY(JOYSTICK_AXIS_Y_NONE);
 					break;
 				default:
-					NSLog(@"%s: device %p page and page usage mismatch (Type=%i, Page=%i)\n",
-                          __PRETTY_FUNCTION__, context->deviceRef, elementPage, elementUsage);
+					NSLog(@"Device %p (ID %d) page and page usage mismatch (Type=%i, Page=%i)\n",
+                          context->deviceRef, context->locationID, elementPage, elementUsage);
 			}
 		}
 		else
-			NSLog(@"%s: device %p type and page mismatch (Type=%i, Page=%i)\n", 
-                  __PRETTY_FUNCTION__, context->deviceRef, elementType, elementPage);
+			NSLog(@"Device %p (ID %d) type and page mismatch (Type=%i, Page=%i)\n",
+                  context->deviceRef, context->locationID, elementType, elementPage);
 	}
 }
 

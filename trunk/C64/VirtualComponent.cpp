@@ -18,7 +18,7 @@
 
 #include "C64.h"
 
-int VirtualComponent::debugLevel = 2;
+int VirtualComponent::debugLevel = 1;
 
 VirtualComponent::VirtualComponent()
 {
