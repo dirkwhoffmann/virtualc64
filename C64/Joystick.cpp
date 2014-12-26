@@ -47,7 +47,6 @@ JoystickAxisState Joystick::GetAxisY()
 
 void Joystick::SetActiveState(bool active)
 {
-    // Send message here...
     _active = active;
 }
 

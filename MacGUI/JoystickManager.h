@@ -1,5 +1,5 @@
 /*
- * (C) 2009 Benjamin Klein. All rights reserved.
+ * (C) 2009 - 2015 Benjamin Klein, Dirk Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,15 +19,16 @@
 
 #import <IOKit/hid/IOHIDLib.h>
 #import <IOKit/hid/IOHIDManager.h>
-#import <map>
+
+// TO BE REMOVED
 #import <set>
+
 #import "Joystick.h"
 
 @class C64Proxy;
 
-using std::map;
+// TO BE REMOVED
 using std::set;
-
 
 typedef struct {
     JoystickManager *manager;
@@ -39,11 +40,11 @@ class JoystickProxy
 {
 	public:
 		JoystickProxy();
-		JoystickProxy( Joystick *joystick );
+		JoystickProxy(Joystick *joystick);
 		
-		void ChangeButton( int index, bool pressed );
-		void ChangeAxisX( JoystickAxisState state ) const;
-		void ChangeAxisY( JoystickAxisState state ) const;
+		void ChangeButton(int index, bool pressed);
+		void ChangeAxisX(JoystickAxisState state) const;
+		void ChangeAxisY(JoystickAxisState state) const;
 		
 		Joystick *GetJoystick() const;
 		
@@ -73,7 +74,7 @@ class JoystickManager
 
 	private:
     
-    void IOHIDElement_SetDoubleProperty( IOHIDElementRef element, CFStringRef key, double value );
+    void IOHIDElement_SetDoubleProperty(IOHIDElementRef element, CFStringRef key, double value);
 		
     void addJoystickProxyWithLocationID(int locationID, JoystickProxy *proxy);
     JoystickProxy *getJoystickProxyWithLocationID(int locationID);
@@ -103,8 +104,8 @@ class IOHIDDeviceInfo
     public:
 
     IOHIDDeviceInfo();
-	IOHIDDeviceInfo( IOHIDDeviceRef device );
-	IOHIDDeviceInfo( const IOHIDDeviceInfo &copy );
+	IOHIDDeviceInfo(IOHIDDeviceRef device);
+	IOHIDDeviceInfo(const IOHIDDeviceInfo &copy);
 	~IOHIDDeviceInfo();
 		    
     inline int GetLocationID() { return _locationID; }

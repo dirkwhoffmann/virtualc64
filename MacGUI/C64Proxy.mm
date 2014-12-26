@@ -517,6 +517,7 @@
 - (void) dump { c64->dumpState(); }
 
 - (Message *)message { return c64->getMessage(); }
+- (void) putMessage:(int)msg { c64->putMessage(msg); }
 - (void) reset { c64->reset(); }
 - (void) fastReset { c64->fastReset(); }
 - (void) halt { c64->halt(); }

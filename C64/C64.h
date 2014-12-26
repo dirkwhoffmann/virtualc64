@@ -16,12 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// New in 0.9.6.1
-
-// SID stops playing in pause mode (bug was introduced in 0.9.6) (issue #116)
-// Screen geometry is now adjusted correctly when dragging an NTSC image into a PAL screen or vice versa (issue #113)
-// Memory panel now refreshes correctly (issue #111)
-// Floppy disks mow remain in drive after reset (issue +)
 
 #ifndef _C64_INC
 #define _C64_INC
