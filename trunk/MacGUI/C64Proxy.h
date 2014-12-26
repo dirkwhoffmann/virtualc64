@@ -436,6 +436,7 @@
 - (void) dump;
 
 - (Message *)message;
+- (void) putMessage:(int)msg;
 
 - (void) reset;
 - (void) fastReset;
