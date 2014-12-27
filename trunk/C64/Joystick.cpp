@@ -19,15 +19,9 @@
 #include "C64.h"
 
 Joystick::Joystick() {
-    _active = false;
     _buttonPressed = false;
     _axisX = JOYSTICK_AXIS_NONE;
     _axisY = JOYSTICK_AXIS_NONE;
-}
-
-bool Joystick::IsActive()
-{
-    return _active;
 }
 
 bool Joystick::GetButtonPressed()
@@ -45,25 +39,20 @@ JoystickAxisState Joystick::GetAxisY()
     return _axisY;
 }
 
-void Joystick::SetActiveState(bool active)
-{
-    _active = active;
-}
-
 void Joystick::SetButtonPressed(bool pressed)
 {
-    fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
+    // fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
     _buttonPressed = pressed;
 }
 
 void Joystick::SetAxisX(JoystickAxisState state)
 {
-    fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
+    // fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
     _axisX = state;
 }
 
 void Joystick::SetAxisY(JoystickAxisState state)
 {
-    fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
+    // fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
     _axisY = state;
 }

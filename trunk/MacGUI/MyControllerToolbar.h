@@ -23,9 +23,6 @@
 - (void) setupToolbarIcons;
 - (void) printDocument:(id) sender;
 
-- (IBAction)joystick1Action:(id)sender;
-- (IBAction)joystick2Action:(id)sender;
-- (IBAction)switchJoysticksAction:(id)sender;
 - (IBAction)portAAction:(id)sender;
 - (IBAction)portBAction:(id)sender;
 

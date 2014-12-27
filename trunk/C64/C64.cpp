@@ -97,7 +97,9 @@ C64::C64()
 	keyboard = new Keyboard();
 	iec = new IEC();
 	floppy = new VC1541();
-	
+    joystick1 = new Joystick;
+    joystick2 = new Joystick;
+
 	// Bind components
 	cpu->setC64(this);
 	cpu->setMemory(mem);
@@ -109,6 +111,7 @@ C64::C64()
 	cia1->setCPU(cpu);
 	cia1->setVIC(vic);	
 	cia1->setKeyboard(keyboard);
+    cia1->setJoysticksToPort(joystick1,joystick2);
 	cia2->setCPU(cpu);
 	cia2->setVIC(vic);	
 	cia2->setIEC(iec);
@@ -122,8 +125,6 @@ C64::C64()
 	// Setup initial game port mapping (0 joysticks connected)
 	setInputDevice(0, IPD_UNCONNECTED);
 	setInputDevice(1, IPD_UNCONNECTED);
-	joystick1 = new Joystick;
-	joystick2 = new Joystick;
 		
 	// Initialize snapshot ringbuffer (BackInTime feature)
 	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
@@ -158,14 +159,6 @@ C64::~C64()
 	delete mem;
     delete joystick1;
     delete joystick2;
-    
-#if 0
-	if( joystick1 != NULL )
-		delete joystick1;
-	
-	if( joystick2 != NULL )
-		delete joystick2;
-#endif
     
 	debug(1, "Cleaned up virtual C64 at address %p\n", this);
 }
@@ -1055,143 +1048,6 @@ C64::setInputDevice(int portNo, int newDevice)
     debug(1,"Input device for port %c has been changed to %d\n",portNo == 0 ? 'A' : 'B', newDevice);
     
     port[portNo] = newDevice;
-	
-	// Update CIA structure
-    switch(newDevice) {
-        case IPD_JOYSTICK_1:
-            cia1->setJoystickToPort( portNo, joystick1 );
-            break;
-            
-        case IPD_JOYSTICK_2:
-            cia1->setJoystickToPort( portNo, joystick2 );
-            break;
-
-        default:
-            cia1->setJoystickToPort( portNo, NULL );
-    }
-#if 0
-    switch(newDevice) {
-		case IPD_UNCONNECTED:
-			cia1->setJoystickToPort( portNo, NULL );
-			// cia1->setKeyboardToPort( portNo, false );
-			break;
-			
-		case IPD_KEYBOARD: 
-			cia1->setJoystickToPort( portNo, NULL );
-			// cia1->setKeyboardToPort( portNo, true );
-			break;
-			
-		case IPD_JOYSTICK_1: 
-			cia1->setJoystickToPort( portNo, joystick1 );
-			// cia1->setKeyboardToPort( portNo, false );
-			break;
-			
-		case IPD_JOYSTICK_2: 
-			cia1->setJoystickToPort( portNo, joystick2 );
-			// cia1->setKeyboardToPort( portNo, false );
-			break;
-			
-		default:
-			assert(false);
-	}
-#endif
-}
-
-// TO BE REMOVED
-void
-C64::switchInputDevice( int portNo ) 
-{
-#if 0
-	int newDevice = port[portNo];
-	bool invalid;
-			
-	assert(portNo == 0 || portNo == 1);
-
-	do {
-		newDevice = (newDevice + 1) % NUM_INPUT_DEVICES;
-	
-		if (newDevice == IPD_JOYSTICK_1 && !joystick1->IsActive())
-			invalid = true;
-		else if (newDevice == IPD_JOYSTICK_2 && !joystick2->IsActive())
-			invalid = true;
-		else 
-			invalid = false;
-	} while (invalid);
-				
-	setInputDevice(portNo, newDevice);
-#endif
-}
-
-// TO BE REMOVED
-void 
-C64::switchInputDevices()
-{
-#if 0
-	debug(1, "Switching input devides\n");
-	int tmp_port = port[0];
-	port[0] = port[1];
-	port[1] = tmp_port;
-#endif
-}
-
-// TO BE REMOVED
-Joystick *C64::addJoystick()
-{
-#if 0
-	if(!joystick1->IsActive())
-	{
-		joystick1->SetActiveState(true);
-		return joystick1;
-	}
-	else if(!joystick2->IsActive())
-	{
-		joystick2->SetActiveState(true);
-		return joystick2;
-	}
-	else
-		throw("Joystick 1 and 2 are allready assigned!");
-#endif
-    return NULL;
-}
-
-// TO BE REMOVED
-void C64::removeJoystick(Joystick *joystick)
-{
-#if 0
-	assert((joystick == joystick1) || (joystick == joystick2));
-	
-	if(joystick == joystick1)
-	{
-		if(!joystick1->IsActive())
-			throw("Joystick1 is not assigned");
-		
-		if(getDeviceOfPort(0) == IPD_JOYSTICK_1)
-            setInputDevice(0, IPD_UNCONNECTED);
-		
-		if(getDeviceOfPort(1) == IPD_JOYSTICK_1)
-			setInputDevice(1, IPD_UNCONNECTED);
-		
-		joystick1->SetActiveState(false);
-        putMessage(MSG_JOYSTICK_REMOVED);
-
-	}
-	else if(joystick == joystick2)
-	{
-		if(!joystick2->IsActive())
-			throw("Joystick2 is not assigned");
-		
-		if(getDeviceOfPort(0) == IPD_JOYSTICK_2)
-           setInputDevice(0, IPD_UNCONNECTED );
-		
-		if(getDeviceOfPort(1) == IPD_JOYSTICK_2)
-			setInputDevice(1, IPD_UNCONNECTED );
-		
-		joystick2->SetActiveState(false);
-        putMessage(MSG_JOYSTICK_REMOVED);
-	}
-	else
-		throw("Invalid joystick");
-#endif
 }
 
 void 

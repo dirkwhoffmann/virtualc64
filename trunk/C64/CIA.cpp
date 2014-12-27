@@ -803,6 +803,8 @@ CIA1::CIA1()
 
 	name = "CIA1";
 	keyboard = NULL;
+    joy[0] = NULL;
+    joy[1] = NULL;
 	joystick[0] = 0xff;
 	joystick[1] = 0xff;	
 }
@@ -827,16 +829,10 @@ CIA1::dumpState()
 	CIA::dumpState();
 }
 
-void 
-CIA1::setJoystickToPort( int portNo, Joystick *j ) {
-	joy[portNo] = j;
-}
-
 //void
-//CIA1::setKeyboardToPort( int portNo, bool b ) {
-//	bKeyboard[portNo] = b;
+//CIA1::setJoystickToPort( int portNo, Joystick *j ) {
+//	joy[portNo] = j;
 //}
-//#endif
 
 void 
 CIA1::raiseInterruptLine()
@@ -857,18 +853,22 @@ CIA1::getInterruptLine()
 }
 
 void 
-CIA1::pollJoystick( Joystick *joy, int joyDevNo ) {
-	JoystickAxisState leftRightState	= joy->GetAxisX(); 
-	JoystickAxisState upDownState		= joy->GetAxisY();
-	bool buttonState					= joy->GetButtonPressed();
+CIA1::pollJoystick(Joystick *joy, int joyDevNo) {
+
+    JoystickAxisState leftRightState = joy->GetAxisX();
+	JoystickAxisState upDownState = joy->GetAxisY();
+	bool buttonState = joy->GetButtonPressed();
 	
+    assert (joy != NULL);
+    
 	// up/down
 	// set the down bit: 2, 2 and clear up bit: 2, 1		
-	// ATTENTION: clearJoystickBits( x, y ) means pressed and setJoystickBits( x, y ) means released
-	if( upDownState == JOYSTICK_AXIS_Y_UP ) {
+	// Remember: clearJoystickBits(x, y) means pressed
+    //           setJoystickBits( x, y ) means released
+	if(upDownState == JOYSTICK_AXIS_Y_UP) {
 		clearJoystickBits(joyDevNo, 1);
 		setJoystickBits(joyDevNo, 2);
-	} else if( upDownState == JOYSTICK_AXIS_Y_DOWN ) {
+	} else if(upDownState == JOYSTICK_AXIS_Y_DOWN) {
 		clearJoystickBits(joyDevNo, 2);
 		setJoystickBits(joyDevNo, 1);
 	} else {
@@ -877,10 +877,10 @@ CIA1::pollJoystick( Joystick *joy, int joyDevNo ) {
 	}
 	
 	// left/right
-	if( leftRightState == JOYSTICK_AXIS_X_LEFT ) {
+	if(leftRightState == JOYSTICK_AXIS_X_LEFT) {
 		clearJoystickBits(joyDevNo, 4);
 		setJoystickBits(joyDevNo, 8);
-	} else if( leftRightState == JOYSTICK_AXIS_X_RIGHT ) {
+	} else if(leftRightState == JOYSTICK_AXIS_X_RIGHT) {
 		clearJoystickBits(joyDevNo, 8);			
 		setJoystickBits(joyDevNo, 4);
 	} else {
@@ -889,7 +889,7 @@ CIA1::pollJoystick( Joystick *joy, int joyDevNo ) {
 	}
 	
 	// fire
-	if( buttonState ) {
+	if(buttonState) {
 		clearJoystickBits(joyDevNo, 16);
 	} else {
 		setJoystickBits(joyDevNo, 16);
@@ -905,11 +905,10 @@ CIA1::peek(uint16_t addr)
 	
 	switch(addr) {		
 		case CIA_DATA_PORT_A:
-						
-			if ( joy[0] != NULL )
-				pollJoystick( joy[0], 1 );
-			
-			// We change only those bits that are configured as outputs, all input bits are 1
+				
+			pollJoystick(joy[0], 1);
+
+            // We change only those bits that are configured as outputs, all input bits are 1
 			result = PA; // iomem[addr] | ~iomem[CIA_DATA_DIRECTION_A];
 			
 			// The external port lines can pull down any bit, even if it configured as output
@@ -924,8 +923,7 @@ CIA1::peek(uint16_t addr)
 			uint8_t bitmask = CIA1::peek(CIA_DATA_PORT_A);
 			uint8_t keyboardBits = keyboard->getRowValues(bitmask); 
 			
-			if ( joy[1] != NULL )
-				pollJoystick( joy[1], 2 );
+			pollJoystick(joy[1], 2);
 			
 			result = PB;
 			

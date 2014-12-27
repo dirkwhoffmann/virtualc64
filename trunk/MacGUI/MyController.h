@@ -51,8 +51,6 @@ class Snapshot;
 	PreferenceController *preferenceController;
 	
     // Toolbar
-    IBOutlet NSMenu *portA; // DEPRECATED
-    IBOutlet NSMenu *portB; // DEPRECATED
     IBOutlet NSPopUpButton *joystickPortA;
     IBOutlet NSPopUpButton *joystickPortB;
 

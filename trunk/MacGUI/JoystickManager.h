@@ -52,8 +52,6 @@ class JoystickProxy
 	void ChangeAxisX(JoystickAxisState state) const;
 	void ChangeAxisY(JoystickAxisState state) const;
 	
-	// Joystick *GetJoystick() const; // DEPRECATED
-
     // Bind virtual joystick of the emulator
     // 'Joystick' must be one of the two objects initialized by the emulator
     // It can be either the object representing port 1 or the object representing port 2
@@ -89,7 +87,6 @@ class JoystickManager
 	private:
     
     C64Proxy *_proxy;
-	bool _initialized; // DO WE NEED THIS?
 	IOHIDManagerRef _manager;
     int locationID1;
     int locationID2;

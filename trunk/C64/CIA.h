@@ -126,7 +126,6 @@ public:
 	//! Reference to the connected CPU. 
 	CPU *cpu;
 	
-	
 	//! Timer A counter
 	uint16_t counterA;
 	
@@ -534,25 +533,12 @@ public:
 	void reset();
 	
 	//! Bind the CIA chip to the specified keyboard.
-	void setKeyboard(Keyboard *k) { assert(keyboard == NULL); keyboard = k; }
+	void setKeyboard(Keyboard *k)
+        { assert(keyboard == NULL); keyboard = k; }
 	
-	//! Bind the joystick port to the specified joystick
-	void setJoystickToPort( int portNo, Joystick *j );
-	
-	//! Get joysick mapped to port A
-	//Joystick *getJoystickOnPortA() { return joy[0]; }
-	
-	//! Get joystick mapped to port B
-	//Joystick *getJoystickOnPortB() { return joy[1]; }
-
-	//! Bind the keyboard to the specified game port
-	// void setKeyboardToPort( int portNo, bool b );
-	
-	//! Return true, if the keyboard simulates the joystick on gameport A */
-	// bool getKeyboardOnPortA() { return bKeyboard[0]; }
-	
-	//! Return true, if the keyboard simulates the joystick on gameport B */
-	// bool getKeyboardOnPortB() { return bKeyboard[1]; }
+    //! Bind the CIA chip to joysticks connected in port A and B
+    void setJoysticksToPort(Joystick *j1, Joystick *j2)
+        { assert(j1 != NULL); assert(j2 != NULL); joy[0] = j1; joy[1] = j2; }
 
 	//! Returns true if the \a addr is located in the I/O range of the CIA 1 chip
 	static inline bool isCia1Addr(uint16_t addr) 
