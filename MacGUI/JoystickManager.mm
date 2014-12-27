@@ -30,13 +30,6 @@ JoystickProxy::JoystickProxy()
     
 }
 
-#if 0
-JoystickProxy::JoystickProxy(Joystick *joystick)
-{
-    _joystick = joystick;
-}
-#endif
-
 void JoystickProxy::bindJoystick(Joystick *joy)
 {
     _joystick = joy;
@@ -68,13 +61,6 @@ void JoystickProxy::ChangeAxisY(JoystickAxisState state) const
         _joystick->SetAxisY(state);
 }
 
-#if 0
-Joystick *JoystickProxy::GetJoystick() const
-{
-    return _joystick;
-}
-#endif
-
 // ---------------------------------------------------------------------------------------------
 //                                             JoystickManager
 // ---------------------------------------------------------------------------------------------
@@ -90,7 +76,6 @@ const unsigned JoystickManager::MaxJoystickCount = 2;
 JoystickManager::JoystickManager(C64Proxy *proxy)
 {
     _proxy = proxy;
-    _initialized = false;
     _manager = NULL;
     locationID1 = 0;
     locationID2 = 0;
@@ -255,7 +240,6 @@ bool JoystickManager::Initialize()
 		return false;
 	}
     
-    _initialized = true;
     [_proxy putMessage:MSG_JOYSTICK_REMOVED];
     NSLog(@"HIDManager initialized successfully");
     return true;
@@ -317,29 +301,13 @@ JoystickManager::MatchingCallback(void *inContext, IOReturn inResult, void *inSe
     context->locationID = devInfo.GetLocationID();
     context->deviceRef = inIOHIDDeviceRef;
     
-    // Register call back functions
+    // Register callback functions
 	IOHIDDeviceRegisterRemovalCallback( inIOHIDDeviceRef, RemoveCallback_static, (void *)context);
 	IOHIDDeviceRegisterInputValueCallback( inIOHIDDeviceRef, InputValueCallback_static, (void *)context); 
-
-#if 0
-	Joystick *joystick = [_proxy addJoystick];
-    
-	if(!joystick)
-	{
-		IOHIDDeviceRegisterInputValueCallback(inIOHIDDeviceRef, NULL, NULL);
-		IOHIDDeviceRegisterRemovalCallback( inIOHIDDeviceRef, NULL, NULL);
-		IOHIDDeviceClose(inIOHIDDeviceRef, kIOHIDOptionsTypeNone);
-		
-		NSLog(@"Joystick coulnd't be created for %p (%s)\n",
-              inIOHIDDeviceRef, devInfo.GetName());
-		return;
-	}
-#endif
 	
-//    JoystickProxy *proxy = new JoystickProxy(joystick);
+    // Add proxy object to list of connected USB joysticks
+    addJoystickProxyWithLocationID(devInfo.GetLocationID(), new JoystickProxy());
     [_proxy putMessage:MSG_JOYSTICK_ATTACHED];
-    JoystickProxy *proxy = new JoystickProxy();
-    addJoystickProxyWithLocationID(devInfo.GetLocationID(), proxy);
     
 	NSLog(@"Successfully opened device %s (ID %d)\n",
           devInfo.GetName(), devInfo.GetLocationID());
@@ -382,13 +350,8 @@ JoystickManager::RemoveCallback(void *inContext, IOReturn inResult, void *inSend
 	IOHIDDeviceRegisterRemovalCallback((IOHIDDeviceRef)inSender, NULL, this);
 	IOHIDDeviceClose((IOHIDDeviceRef)inSender, kIOHIDOptionsTypeNone);
 
-#if 0
-    Joystick *joystick = proxy->GetJoystick();
-    [_proxy removeJoystick:joystick];
-#endif
-
-    [_proxy putMessage:MSG_JOYSTICK_REMOVED];
     removeJoystickProxyWithLocationID(devInfo.GetLocationID());
+    [_proxy putMessage:MSG_JOYSTICK_REMOVED];
 
     NSLog(@"Successfully closed device %s (ID %d)\n",
           devInfo.GetName(), devInfo.GetLocationID());
@@ -418,7 +381,6 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 		return;
 	}
 	
-	// map<int, JoystickProxy>::iterator it;
     JoystickProxy *proxy = getJoystickProxyWithLocationID(context->locationID);
     if (proxy == NULL) {
 		NSLog(@"Device %p (ID %d) not found in open list\n",
@@ -445,7 +407,7 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
                   context->deviceRef, context->locationID, elementType, elementPage );
         }
 	}
-	else if( ( elementType == kIOHIDElementTypeInput_Axis ) || ( elementType == kIOHIDElementTypeInput_Misc /* why misc? */ ) )
+	else if((elementType == kIOHIDElementTypeInput_Axis) || (elementType == kIOHIDElementTypeInput_Misc /* why misc? */ ))
 	{
 		if( elementPage == kHIDPage_GenericDesktop )
 		{
@@ -467,7 +429,7 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 					break;
 				case kHIDUsage_GD_Y:
 					if( axis == -1 )
-						proxy->ChangeAxisY(JOYSTICK_AXIS_Y_UP );
+						proxy->ChangeAxisY(JOYSTICK_AXIS_Y_UP);
 					else if( axis == 1 )
 						proxy->ChangeAxisY(JOYSTICK_AXIS_Y_DOWN);
 					else

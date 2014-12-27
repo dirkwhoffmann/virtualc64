@@ -113,9 +113,7 @@ public:
 	bool isEmpty() { return timestamp == 0; }
 
 	//! Take screenshot
-	// DEPRECATED. Already stored in snapshot
-	//void takeScreenshot(uint32_t *buf) { memcpy(screen, buf, sizeof(screen)); }
-	
+	// DEPRECATED. Already stored in snapshot	
 	void takeScreenshot(uint32_t *buf) { memcpy(fileContents.screenshot.screen, buf, sizeof(fileContents.screenshot.screen)); }
 	
 	//! Return screen buffer

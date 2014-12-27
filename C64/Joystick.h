@@ -37,18 +37,15 @@ class Joystick
 	public:
 		Joystick();
 		
-		bool IsActive(); // DEPRECATED
 		bool GetButtonPressed();
 		JoystickAxisState GetAxisX();
 		JoystickAxisState GetAxisY();
 		
-		void SetActiveState( bool active ); // DEPRECATED
 		void SetButtonPressed(bool pressed);
 		void SetAxisX(JoystickAxisState state);
 		void SetAxisY(JoystickAxisState state);
 		
 	private:
-		bool _active; // DEPRECATED
 		bool _buttonPressed;
 		JoystickAxisState _axisX;
 		JoystickAxisState _axisY;

@@ -142,22 +142,6 @@
 	
 }
 
-
-- (IBAction)joystick1Action:(id)sender
-{
-	[c64 switchInputDevice:0];
-}
-
-- (IBAction)joystick2Action:(id)sender
-{
-	[c64 switchInputDevice:1];
-}
-
-- (IBAction)switchJoysticksAction:(id)sender
-{
-	[c64 switchInputDevices];
-}
-
 - (IBAction)portAAction:(id)sender
 {
     int oldvalue = (int)[c64 portAssignment:0]; /* Old pop-up menu selection */

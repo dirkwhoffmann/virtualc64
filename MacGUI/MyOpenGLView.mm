@@ -841,20 +841,34 @@ void checkForOpenGLErrors()
 
 - (void)pullJoystick:(int)nr withKey:(char)c up:(char)u down:(char)d left:(char)l right:(char)r fire:(char)f
 {
+    assert (nr == 1 || nr == 2);
+    Joystick *joy = ((nr == 1) ? c64->joystick1 : c64->joystick2);
+    
+    if (c == u) { joy->SetAxisY(JOYSTICK_AXIS_Y_UP); }
+    if (c == d) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); }
+    if (c == l) { joy->SetAxisX(JOYSTICK_AXIS_X_LEFT); }
+    if (c == r) { joy->SetAxisX(JOYSTICK_AXIS_X_RIGHT); }
+    if (c == f) { joy->SetButtonPressed(true); }
+    
+#if 0
     if (c == u) { c64->cia1->clearJoystickBits(nr, 1); return; }
     if (c == d) { c64->cia1->clearJoystickBits(nr, 2); return; }
     if (c == l) { c64->cia1->clearJoystickBits(nr, 4); return; }
     if (c == r) { c64->cia1->clearJoystickBits(nr, 8); return; }
     if (c == f) { c64->cia1->clearJoystickBits(nr, 16); }
+#endif
 }
 
 - (void)pullJoystick:(int)nr withKeycode:(int)k up:(int)u down:(int)d left:(int)l right:(int)r fire:(int)f
 {
-    if (k == u) { c64->cia1->clearJoystickBits(nr, 1); return; }
-    if (k == d) { c64->cia1->clearJoystickBits(nr, 2); return; }
-    if (k == l) { c64->cia1->clearJoystickBits(nr, 4); return; }
-    if (k == r) { c64->cia1->clearJoystickBits(nr, 8); return; }
-    if (k == f) { c64->cia1->clearJoystickBits(nr, 16); }
+    assert (nr == 1 || nr == 2);
+    Joystick *joy = ((nr == 1) ? c64->joystick1 : c64->joystick2);
+    
+    if (k == u) { joy->SetAxisY(JOYSTICK_AXIS_Y_UP); }
+    if (k == d) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); }
+    if (k == l) { joy->SetAxisX(JOYSTICK_AXIS_X_LEFT); }
+    if (k == r) { joy->SetAxisX(JOYSTICK_AXIS_X_RIGHT); }
+    if (k == f) { joy->SetButtonPressed(true); }
 }
 
 - (void)pullJoystick:(int)nr withKey:(char)c withKeycode:(int)k device:(int)d
@@ -874,20 +888,26 @@ void checkForOpenGLErrors()
 
 - (void)releaseJoystick:(int)nr withKey:(char)c up:(char)u down:(char)d left:(char)l right:(char)r fire:(char)f
 {
-    if (c == u) { c64->cia1->setJoystickBits(nr, 1); return; }
-    if (c == d) { c64->cia1->setJoystickBits(nr, 2); return; }
-    if (c == l) { c64->cia1->setJoystickBits(nr, 4); return; }
-    if (c == r) { c64->cia1->setJoystickBits(nr, 8); return; }
-    if (c == f) { c64->cia1->setJoystickBits(nr, 16); }
+    assert (nr == 1 || nr == 2);
+    Joystick *joy = ((nr == 1) ? c64->joystick1 : c64->joystick2);
+    
+    if (c == u) { joy->SetAxisY(JOYSTICK_AXIS_NONE); }
+    if (c == d) { joy->SetAxisY(JOYSTICK_AXIS_NONE); }
+    if (c == l) { joy->SetAxisX(JOYSTICK_AXIS_NONE); }
+    if (c == r) { joy->SetAxisX(JOYSTICK_AXIS_NONE); }
+    if (c == f) { joy->SetButtonPressed(false); }
 }
 
 - (void)releaseJoystick:(int)nr withKeycode:(int)k up:(int)u down:(int)d left:(int)l right:(int)r fire:(int)f
 {
-    if (k == u) { c64->cia1->setJoystickBits(nr, 1); return; }
-    if (k == d) { c64->cia1->setJoystickBits(nr, 2); return; }
-    if (k == l) { c64->cia1->setJoystickBits(nr, 4); return; }
-    if (k == r) { c64->cia1->setJoystickBits(nr, 8); return; }
-    if (k == f) { c64->cia1->setJoystickBits(nr, 16); }
+    assert (nr == 1 || nr == 2);
+    Joystick *joy = ((nr == 1) ? c64->joystick1 : c64->joystick2);
+    
+    if (k == u) { joy->SetAxisY(JOYSTICK_AXIS_NONE); }
+    if (k == d) { joy->SetAxisY(JOYSTICK_AXIS_NONE); }
+    if (k == l) { joy->SetAxisX(JOYSTICK_AXIS_NONE); }
+    if (k == r) { joy->SetAxisX(JOYSTICK_AXIS_NONE); }
+    if (k == f) { joy->SetButtonPressed(false); }
 }
 
 - (void)releaseJoystick:(int)nr withKey:(char)c withKeycode:(int)k device:(int)d
