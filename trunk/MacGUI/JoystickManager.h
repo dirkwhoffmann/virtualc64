@@ -38,19 +38,26 @@ typedef struct {
 
 class JoystickProxy
 {
-	public:
-		JoystickProxy();
-		JoystickProxy(Joystick *joystick);
+    private:
+    
+    Joystick *_joystick;
+    set<int> _pressedButtons; // Can't we get rid of the SDL library?
+
+    public:
+
+    JoystickProxy();
+	// JoystickProxy(Joystick *joystick);
 		
-		void ChangeButton(int index, bool pressed);
-		void ChangeAxisX(JoystickAxisState state) const;
-		void ChangeAxisY(JoystickAxisState state) const;
-		
-		Joystick *GetJoystick() const;
-		
-	private:
-		Joystick *_joystick;
-		set<int> _pressedButtons;
+	void ChangeButton(int index, bool pressed);
+	void ChangeAxisX(JoystickAxisState state) const;
+	void ChangeAxisY(JoystickAxisState state) const;
+	
+	// Joystick *GetJoystick() const; // DEPRECATED
+
+    // Bind virtual joystick of the emulator
+    // 'Joystick' must be one of the two objects initialized by the emulator
+    // It can be either the object representing port 1 or the object representing port 2
+    void bindJoystick(Joystick *joy);
 };
 
 class JoystickManager 
@@ -62,7 +69,14 @@ class JoystickManager
 		
 	bool Initialize();
 	void Dispose();
-		
+
+    bool joystickIsPluggedIn(int nr);
+
+    // Bind virtual joystick of the emulator
+    // 'Joystick' must be one of the two objects initialized by the emulator
+    // It can be either the object representing port 1 or the object representing port 2
+    void bindJoystick(int nr, Joystick *joy);
+    
 	static void MatchingCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef);
 	void MatchingCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef);
 		
@@ -74,24 +88,23 @@ class JoystickManager
 
 	private:
     
-    void IOHIDElement_SetDoubleProperty(IOHIDElementRef element, CFStringRef key, double value);
-		
-    void addJoystickProxyWithLocationID(int locationID, JoystickProxy *proxy);
-    JoystickProxy *getJoystickProxyWithLocationID(int locationID);
-    void removeJoystickProxyWithLocationID(int locationID);
-    void listJoystickManagers();
-    
-	C64Proxy *_proxy;
-		
-	bool _initialized;
+    C64Proxy *_proxy;
+	bool _initialized; // DO WE NEED THIS?
 	IOHIDManagerRef _manager;
     int locationID1;
     int locationID2;
     JoystickProxy *proxy1;
     JoystickProxy *proxy2;
 		
-	static const int UsageToSearch[][ 2 ];
+	static const int UsageToSearch[][2];
 	static const unsigned MaxJoystickCount;
+
+    void IOHIDElement_SetDoubleProperty(IOHIDElementRef element, CFStringRef key, double value);
+    
+    void addJoystickProxyWithLocationID(int locationID, JoystickProxy *proxy);
+    JoystickProxy *getJoystickProxyWithLocationID(int locationID);
+    void removeJoystickProxyWithLocationID(int locationID);
+    void listJoystickManagers();
 };
 
 class IOHIDDeviceInfo

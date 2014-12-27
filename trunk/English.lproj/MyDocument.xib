@@ -104,6 +104,8 @@
                 <outlet property="info" destination="24" id="209"/>
                 <outlet property="inspectIcon" destination="1855" id="2225"/>
                 <outlet property="ioSource" destination="976" id="1689"/>
+                <outlet property="joystickPortA" destination="L2b-nG-yBo" id="EVC-v9-DPf"/>
+                <outlet property="joystickPortB" destination="4MP-rV-xX2" id="mps-Jv-PSQ"/>
                 <outlet property="memTableView" destination="67" id="515"/>
                 <outlet property="mountDialog" destination="1004" id="1021"/>
                 <outlet property="pc" destination="47" id="163"/>
@@ -327,14 +329,14 @@
                             <action selector="stepOverAction:" target="-2" id="1865"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port A" paletteLabel="Port A" tag="10" id="kR6-IR-lNs" userLabel="Port A">
+                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port A" paletteLabel="Port A" tag="10" image="joystick1_32" id="kR6-IR-lNs" userLabel="Port A">
                         <nil key="toolTip"/>
                         <size key="minSize" width="10" height="20"/>
                         <size key="maxSize" width="56" height="80"/>
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port A">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="keyboard32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="4" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="yOc-MG-77p" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
@@ -347,7 +349,7 @@
                                         <menuItem title="4619, 0" image="keyboard32" tag="3" id="O3U-A9-CMi">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="USB Joystick 1" image="joystick1_32" tag="4" id="yOc-MG-77p"/>
+                                        <menuItem title="USB Joystick 1" state="on" image="joystick1_32" tag="4" id="yOc-MG-77p"/>
                                         <menuItem title="USB Joystick 2" image="joystick2_32" tag="5" id="1PP-xx-NoT">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
@@ -366,7 +368,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="keyboard32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">

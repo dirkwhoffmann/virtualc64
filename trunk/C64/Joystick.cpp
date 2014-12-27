@@ -50,17 +50,20 @@ void Joystick::SetActiveState(bool active)
     _active = active;
 }
 
-void Joystick::SetButtonPressed( bool pressed )
+void Joystick::SetButtonPressed(bool pressed)
 {
+    fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
     _buttonPressed = pressed;
 }
 
-void Joystick::SetAxisX( JoystickAxisState state )
+void Joystick::SetAxisX(JoystickAxisState state)
 {
+    fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
     _axisX = state;
 }
 
-void Joystick::SetAxisY( JoystickAxisState state )
+void Joystick::SetAxisY(JoystickAxisState state)
 {
+    fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
     _axisY = state;
 }
