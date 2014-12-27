@@ -121,11 +121,7 @@ C64::C64()
 	iec->setDrive(floppy);
 	floppy->setIEC(iec);
 	floppy->setC64(this);
-	
-	// Setup initial game port mapping (0 joysticks connected)
-	setInputDevice(0, IPD_UNCONNECTED);
-	setInputDevice(1, IPD_UNCONNECTED);
-		
+			
 	// Initialize snapshot ringbuffer (BackInTime feature)
 	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
 		backInTimeHistory[i] = new Snapshot();	

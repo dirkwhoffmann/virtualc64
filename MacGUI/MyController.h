@@ -33,6 +33,15 @@
 class JoystickManager;
 class Snapshot;
 
+enum INPUT_DEVICES {
+    IPD_UNCONNECTED = 0,
+    IPD_KEYBOARD_1,
+    IPD_KEYBOARD_2,
+    IPD_KEYBOARD_3,
+    IPD_JOYSTICK_1,
+    IPD_JOYSTICK_2
+};
+
 // @class MyDocument;
 
 @interface MyController : NSWindowController
@@ -44,6 +53,10 @@ class Snapshot;
 	// JoystickManager
 	JoystickManager *joystickManager;
 	
+    // Port mappings (joystick simulation)
+    //int inputDeviceA;
+    //int inputDeviceB;
+    
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;
 	IBOutlet MountDialog *mountDialog;
@@ -219,6 +232,8 @@ class Snapshot;
 
 @property (strong) C64Proxy *c64;
 @property (strong,readonly) MyOpenGLView *screen;
+@property int inputDeviceA;
+@property int inputDeviceB;
 
 // Undo manager
 - (NSUndoManager *)undoManager;
