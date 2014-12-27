@@ -134,19 +134,7 @@
 #define KERNEL_ROM 4
 #define VC1541_ROM 8
 
-#define NUM_INPUT_DEVICES 4
-
 #define BACK_IN_TIME_BUFFER_SIZE 16
-
-// TODO: MOVE TO C64 GUI
-enum INPUT_DEVICES {
-	IPD_UNCONNECTED = 0,
-	IPD_KEYBOARD_1,
-    IPD_KEYBOARD_2,
-    IPD_KEYBOARD_3,
-	IPD_JOYSTICK_1,
-	IPD_JOYSTICK_2
-};
 
 
 class C64 : public VirtualComponent {
