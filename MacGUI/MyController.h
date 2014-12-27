@@ -51,10 +51,12 @@ class Snapshot;
 	PreferenceController *preferenceController;
 	
     // Toolbar
-    IBOutlet NSMenu *portA;
-    IBOutlet NSMenu *portB;
+    IBOutlet NSMenu *portA; // DEPRECATED
+    IBOutlet NSMenu *portB; // DEPRECATED
+    IBOutlet NSPopUpButton *joystickPortA;
+    IBOutlet NSPopUpButton *joystickPortB;
 
-	// Main screen
+    // Main screen
 	IBOutlet MyOpenGLView *__strong screen;
 	IBOutlet NSDrawer *debugPanel;
 	IBOutlet NSDrawer *cheatboxPanel;

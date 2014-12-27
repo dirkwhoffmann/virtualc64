@@ -488,14 +488,15 @@
 - (bool)revertToHistoricSnapshot:(int)nr;
 
 // Joystick
-- (bool) joystickOneIsActive;
-- (bool) joystickTwoIsActive;
-- (void) setInputDevice:(int)devNo device:(int)dev;
-- (void) switchInputDevice:(int)devNo;
-- (void) switchInputDevices;
-- (uint8_t) portAssignment:(int)devNo;
- - (Joystick *) addJoystick;
-- (void) removeJoystick:(Joystick *)joystick;
+- (bool) joystickOneIsActive; // DEPRECATED
+- (bool) joystickTwoIsActive; // DEPRECTAED
+- (void) setInputDevice:(int)devNo device:(int)dev; // DEPRECTAED
+- (void) switchInputDevice:(int)devNo; // DEPRECTAED
+- (void) switchInputDevices; // DEPRECTAED
+- (uint8_t) portAssignment:(int)devNo; // DEPRECTAED
+- (Joystick *) addJoystick; // DEPRECTAED
+- (void) removeJoystick:(Joystick *)joystick; // DEPRECTAED
+- (Joystick *) joystick:(int)nr; 
 
 // Audio hardware
 - (void) enableAudio;

@@ -578,6 +578,13 @@
 - (Joystick *) addJoystick { return c64->addJoystick(); }
 - (void) removeJoystick:(Joystick *)joystick { return c64->removeJoystick( joystick ); }
 
+- (Joystick *) joystick:(int)nr
+{
+    if (nr == 1) return c64->joystick1;
+    if (nr == 2) return c64->joystick2;
+    assert(0);
+};
+
 // Audio hardware
 - (void) enableAudio { [audioDevice startPlayback]; }
 - (void) disableAudio {	[audioDevice stopPlayback]; }

@@ -80,38 +80,31 @@
 {
     /* Jostick port 1 */
     {
-        NSMenuItem *item1 = [portA itemWithTag:4];
-        NSMenuItem *item2 = [portA itemWithTag:5];
-        [item1 setEnabled:[c64 joystickOneIsActive]];
-        [item2 setEnabled:[c64 joystickTwoIsActive]];
-        [[portA itemWithTag:[c64 portAssignment:0]] setState:1];
+        NSMenuItem *item1 = [[joystickPortA menu] itemWithTag:4];
+        NSMenuItem *item2 = [[joystickPortA menu] itemWithTag:5];
+        [item1 setEnabled:joystickManager->joystickIsPluggedIn(1)];
+        [item2 setEnabled:joystickManager->joystickIsPluggedIn(2)];
+//        [[portA itemWithTag:[c64 portAssignment:0]] setState:1];
+        [joystickPortA selectItemAtIndex:[c64 portAssignment:0]];
     }
     
     /* Jostick port 2 */
     {
-        NSMenuItem *item1 = [portB itemWithTag:4];
-        NSMenuItem *item2 = [portB itemWithTag:5];
-        [item1 setEnabled:[c64 joystickOneIsActive]];
-        [item2 setEnabled:[c64 joystickTwoIsActive]];
-        [[portB itemWithTag:[c64 portAssignment:1]] setState:1];
+        NSMenuItem *item1 = [[joystickPortB menu] itemWithTag:4];
+        NSMenuItem *item2 = [[joystickPortB menu] itemWithTag:5];
+        [item1 setEnabled:joystickManager->joystickIsPluggedIn(1)];
+        [item2 setEnabled:joystickManager->joystickIsPluggedIn(2)];
+//        [[portB itemWithTag:[c64 portAssignment:1]] setState:1];
+        [joystickPortB selectItemAtIndex:[c64 portAssignment:1]];
     }
 }
 
 - (void) setupToolbarIcons
 {
-    /*
-	NSImage *tmIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Time Machine.app"];
-    if (tmIcon)
-        [cheatboxIcon setImage:tmIcon];
-
-    NSImage *amIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Utilities/Activity Monitor.app"];
-    if (amIcon)
-        [inspectIcon setImage:amIcon];
-
-    NSImage *prIcon = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/System Preferences.app"];
-    if (amIcon)
-        [preferencesIcon setImage:prIcon];
-*/
+    // Joystick selectors
+    [joystickPortA selectItemAtIndex:0];
+    [joystickPortB selectItemAtIndex:0];
+    [self validateJoystickItems];
 }
 
 
@@ -167,34 +160,110 @@
 
 - (IBAction)portAAction:(id)sender
 {
-    int value = (int)[[sender selectedItem] tag];
-
-    NSLog(@"portAAction (%d)", value);
+    int oldvalue = (int)[c64 portAssignment:0]; /* Old pop-up menu selection */
+    int newvalue = (int)[[sender selectedItem] tag]; /* New pop-up menu selection */
+    int othervalue = (int)[[joystickPortB selectedItem] tag]; /* Pop-up selection of other port */
     
-    switch (value) {
-        case 0: [c64 setInputDevice:0 device:IPD_UNCONNECTED]; break;
-        case 1: [c64 setInputDevice:0 device:IPD_KEYBOARD_1]; break;
-        case 2: [c64 setInputDevice:0 device:IPD_KEYBOARD_2]; break;
-        case 3: [c64 setInputDevice:0 device:IPD_KEYBOARD_3]; break;
-        case 4: [c64 setInputDevice:0 device:IPD_JOYSTICK_1]; break;
-        case 5: [c64 setInputDevice:0 device:IPD_JOYSTICK_2]; break;
+    // Target joystick is second joystick (port A)
+    Joystick* targetPort =[c64 c64]->joystick1;
+    
+    NSLog(@"portAAction (%d)", newvalue);
+    
+    // Remember old value
+    [c64 setInputDevice:0 device:newvalue];
+    
+    // Unconnect old joystick
+    if (oldvalue == IPD_JOYSTICK_1)
+        joystickManager->bindJoystick(1,NULL);
+    if (oldvalue == IPD_JOYSTICK_2)
+        joystickManager->bindJoystick(2,NULL);
+    
+    switch (newvalue) {
+        case IPD_UNCONNECTED:
+        case IPD_KEYBOARD_1:
+        case IPD_KEYBOARD_2:
+        case IPD_KEYBOARD_3:
+            /* Nothing to do */
+            break;
+            
+        case IPD_JOYSTICK_1:
+            
+            if (othervalue == IPD_JOYSTICK_1) {
+                // Disconnect from other port
+                NSLog(@"First USB joystick has double mapping");
+                [c64 setInputDevice:1 device:IPD_UNCONNECTED];
+            }
+            joystickManager->bindJoystick(1,targetPort);
+            break;
+            
+        case IPD_JOYSTICK_2:
+            
+            if (othervalue == IPD_JOYSTICK_2) {
+                // Disconnect from other port
+                NSLog(@"Second USB joystick has double mapping");
+                [c64 setInputDevice:1 device:IPD_UNCONNECTED];
+            }
+            joystickManager->bindJoystick(2,targetPort);
+            break;
+            
+        default:
+            assert(0);
     }
+    [self validateJoystickItems];
 }
 
 - (IBAction)portBAction:(id)sender
 {
-    int value = (int)[[sender selectedItem] tag];
+    int oldvalue = (int)[c64 portAssignment:1]; /* Old pop-up menu selection */
+    int newvalue = (int)[[sender selectedItem] tag]; /* New pop-up menu selection */
+    int othervalue = (int)[[joystickPortA selectedItem] tag]; /* Pop-up selection of other port */
     
-    NSLog(@"portBAction (%d)", value);
+    // Target joystick is second joystick (port B)
+    Joystick* targetPort =[c64 c64]->joystick2;
     
-    switch (value) {
-        case 0: [c64 setInputDevice:1 device:IPD_UNCONNECTED]; break;
-        case 1: [c64 setInputDevice:1 device:IPD_KEYBOARD_1]; break;
-        case 2: [c64 setInputDevice:1 device:IPD_KEYBOARD_2]; break;
-        case 3: [c64 setInputDevice:1 device:IPD_KEYBOARD_3]; break;
-        case 4: [c64 setInputDevice:1 device:IPD_JOYSTICK_1]; break;
-        case 5: [c64 setInputDevice:1 device:IPD_JOYSTICK_2]; break;
+    NSLog(@"portBAction (%d)", newvalue);
+    
+    // Remember old value
+    [c64 setInputDevice:1 device:newvalue];
+    
+    // Unconnect old joystick
+    if (oldvalue == IPD_JOYSTICK_1)
+        joystickManager->bindJoystick(1,NULL);
+    if (oldvalue == IPD_JOYSTICK_2)
+        joystickManager->bindJoystick(2,NULL);
+    
+    switch (newvalue) {
+        case IPD_UNCONNECTED:
+        case IPD_KEYBOARD_1:
+        case IPD_KEYBOARD_2:
+        case IPD_KEYBOARD_3:
+            /* Nothing to do */
+            break;
+            
+        case IPD_JOYSTICK_1:
+            
+            if (othervalue == IPD_JOYSTICK_1) {
+                // Disconnect from other port
+                NSLog(@"First USB joystick has double mapping");
+                [c64 setInputDevice:0 device:IPD_UNCONNECTED];
+            }
+            joystickManager->bindJoystick(1,targetPort);
+            break;
+            
+        case IPD_JOYSTICK_2:
+            
+            if (othervalue == IPD_JOYSTICK_2) {
+                // Disconnect from other port
+                NSLog(@"Second USB joystick has double mapping");
+                [c64 setInputDevice:0 device:IPD_UNCONNECTED];
+            }
+            joystickManager->bindJoystick(2,targetPort);
+            break;
+            
+        default:
+            assert(0);
     }
+    [self validateJoystickItems];
 }
 
 - (IBAction)propertiesAction:(id)sender

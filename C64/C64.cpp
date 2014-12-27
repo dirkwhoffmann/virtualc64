@@ -156,13 +156,17 @@ C64::~C64()
 	delete sid;
 	delete cpu;	
 	delete mem;
-	
+    delete joystick1;
+    delete joystick2;
+    
+#if 0
 	if( joystick1 != NULL )
 		delete joystick1;
 	
 	if( joystick2 != NULL )
 		delete joystick2;
-		
+#endif
+    
 	debug(1, "Cleaned up virtual C64 at address %p\n", this);
 }
 
@@ -1038,10 +1042,19 @@ C64::build()
 	return ((year - 2000) * 10000) + (mon * 100) + day;
 }
 
+int
+C64::getDeviceOfPort( int portNo ) {
+    return port[portNo];
+}
+
 void
 C64::setInputDevice(int portNo, int newDevice) 
 {			
-	port[portNo] = newDevice;
+    assert (portNo == 0 || portNo == 1);
+    
+    debug(1,"Input device for port %c has been changed to %d\n",portNo == 0 ? 'A' : 'B', newDevice);
+    
+    port[portNo] = newDevice;
 	
 	// Update CIA structure
     switch(newDevice) {
@@ -1084,9 +1097,11 @@ C64::setInputDevice(int portNo, int newDevice)
 #endif
 }
 
+// TO BE REMOVED
 void
 C64::switchInputDevice( int portNo ) 
 {
+#if 0
 	int newDevice = port[portNo];
 	bool invalid;
 			
@@ -1104,24 +1119,25 @@ C64::switchInputDevice( int portNo )
 	} while (invalid);
 				
 	setInputDevice(portNo, newDevice);
+#endif
 }
 
+// TO BE REMOVED
 void 
 C64::switchInputDevices()
 {
+#if 0
 	debug(1, "Switching input devides\n");
 	int tmp_port = port[0];
 	port[0] = port[1];
 	port[1] = tmp_port;
+#endif
 }
 
-int
-C64::getDeviceOfPort( int portNo ) {
-	return port[portNo];
-}
-
+// TO BE REMOVED
 Joystick *C64::addJoystick()
 {
+#if 0
 	if(!joystick1->IsActive())
 	{
 		joystick1->SetActiveState(true);
@@ -1134,10 +1150,14 @@ Joystick *C64::addJoystick()
 	}
 	else
 		throw("Joystick 1 and 2 are allready assigned!");
+#endif
+    return NULL;
 }
 
+// TO BE REMOVED
 void C64::removeJoystick(Joystick *joystick)
 {
+#if 0
 	assert((joystick == joystick1) || (joystick == joystick2));
 	
 	if(joystick == joystick1)
@@ -1171,6 +1191,7 @@ void C64::removeJoystick(Joystick *joystick)
 	}
 	else
 		throw("Invalid joystick");
+#endif
 }
 
 void 

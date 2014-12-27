@@ -138,6 +138,7 @@
 
 #define BACK_IN_TIME_BUFFER_SIZE 16
 
+// TODO: MOVE TO C64 GUI
 enum INPUT_DEVICES {
 	IPD_UNCONNECTED = 0,
 	IPD_KEYBOARD_1,
@@ -176,9 +177,12 @@ public:
 	//! Reference to the connected virtual keyboard.
 	Keyboard *keyboard;
 	
-	//! Reference to the connected joysticks
-	Joystick *joystick1, *joystick2;
-	
+	//! Reference to joystick in port 1
+	Joystick *joystick1;
+
+    //! Reference to joystick in port 2
+    Joystick *joystick2;
+
 	//! Reference to the virtual IEC bus
 	IEC *iec;
 	
