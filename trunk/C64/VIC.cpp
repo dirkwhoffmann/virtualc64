@@ -23,10 +23,10 @@
 
 
 // Update value of the display variable according to the dma line condition 
-#define update_display if (dmaLine) { displayState = true; }
+#define update_display if (badLineCondition) { displayState = true; }
 
 // Update value of the display variable and the BA line according to the dma line condition 
-#define update_display_and_ba if (dmaLine) { displayState = true; pullDownBA(0x100); }
+#define update_display_and_ba if (badLineCondition) { displayState = true; pullDownBA(0x100); }
 
 
 VIC::VIC()
@@ -73,8 +73,8 @@ VIC::reset()
 	registerVCBASE = 0;
 	registerRC = 0;
 	registerVMLI = 0;
-	dmaLine = false;
-	dmaLinesEnabled = false;
+	badLineCondition = false;
+    DENwasSetInRasterline30 = false;
 	displayState = false;
 	BAlow = 0;
 	mainFrameFF = false;
@@ -130,8 +130,8 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	registerVCBASE = read16(buffer);
 	registerRC = read16(buffer);
 	registerVMLI = read16(buffer);
-	dmaLine = (bool)read8(buffer);
-	dmaLinesEnabled = (bool)read8(buffer);
+	badLineCondition = (bool)read8(buffer);
+	DENwasSetInRasterline30 = (bool)read8(buffer);
 	displayState = (bool)read8(buffer);
 	BAlow = (bool)read8(buffer);
 	mainFrameFF = (bool)read8(buffer);
@@ -176,8 +176,8 @@ VIC::saveToBuffer(uint8_t **buffer)
 	write16(buffer, registerVCBASE);
 	write16(buffer, registerRC);
 	write16(buffer, registerVMLI);
-	write8(buffer, (uint8_t)dmaLine);
-	write8(buffer, (uint8_t)dmaLinesEnabled);
+	write8(buffer, (uint8_t)badLineCondition);
+	write8(buffer, (uint8_t)DENwasSetInRasterline30);
 	write8(buffer, (uint8_t)displayState);
 	write8(buffer, (uint8_t)BAlow);
 	write8(buffer, (uint8_t)mainFrameFF);
@@ -240,7 +240,7 @@ VIC::dumpState()
 		default:
 			msg("Invalid\n");
 	}
-	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, scanline,  dmaLine ? "(DMA line)" : "", dmaLinesEnabled ? "" : "(DMA lines disabled)");
+	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, scanline,  badLineCondition ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
 	msg("               VC : %02X\n", registerVC);
 	msg("           VCBASE : %02X\n", registerVCBASE);
 	msg("               RC : %02X\n", registerRC);
@@ -386,7 +386,7 @@ VIC::gAccess()
 inline void 
 VIC::cAccess()
 {
-	if (dmaLine) {
+	if (badLineCondition) {
 		characterSpace[registerVMLI] = mem->ram[bankAddr + screenMemoryAddr + registerVC];
 		// colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
 		colorSpace[registerVMLI] = mem->colorRam[registerVC] & 0xf;
@@ -760,26 +760,42 @@ VIC::peek(uint16_t addr)
 	switch(addr) {
 		case 0x11: // SCREEN CONTROL REGISTER #1
 			result = (iomem[addr] & 0x7f) + (scanline > 0xff ? 128 : 0);
-			return result;		
+			return result;
+            
 		case 0x12: // VIC_RASTER_READ_WRITE
 			result = scanline & 0xff;
 			return result;
+            
 		case 0x13:
 			debug(2, "Reading lightpen X position: %d\n", iomem[addr]);
-			return iomem[addr];			
+			return iomem[addr];
+            
 		case 0x14:
 			debug(2, "Reading lightpen Y position: %d\n", iomem[addr]);
-			return iomem[addr];			
+			return iomem[addr];
+            
+        case 0x16:
+            result = iomem[addr] | 0xC0; // Bits 7 and 8 are unused (always 1)
+            return result;
+            
+   		case 0x18:
+            result = iomem[addr] | 0x01; // Bit 1 is unused (always 1)
+            return result;
+            
 		case 0x19:
-			result = iomem[addr] | 0x70; // Bits 4 to 6 are not used and always contain "1"
+			result = iomem[addr] | 0x70; // Bits 4 to 6 are unused (always 1)
 			return result;
+            
 		case 0x1A:
-			result = iomem[addr] | 0xF0; // Bits 4 to 7 are not used and always contain "1"
+			result = iomem[addr] | 0xF0; // Bits 4 to 7 are unsed (always 1)
 			return result;
+            
 		case 0x1E: // Sprite-to-sprite collision
 			result = iomem[addr];
+            
 			iomem[addr] = 0x00;  // Clear on read
 			return result;
+            
 		case 0x1F: // Sprite-to-background collision
 			result = iomem[addr];
 			iomem[addr] = 0x00;  // Clear on read
@@ -787,8 +803,8 @@ VIC::peek(uint16_t addr)
 	}
 	
 	if (addr >= 0x20 && addr <= 0x2E) {
-		// Color registers: Bits 4 to 7 are not used and always contain "1"
-		return iomem[addr] | 0xF0;
+		// Color registers
+		return iomem[addr] | 0xF0; // Bits 4 to 7 are unsed (always 1)
 	}
 	
 	if (addr >= 0x2F && addr <= 0x3F) {
@@ -816,14 +832,14 @@ VIC::poke(uint16_t addr, uint8_t value)
 				iomem[addr] = value;
 			}
 			
-			// Bit 4 is the DEN bit and controls whether DMA lines are enabled or disabled. 
-			// Note that it is only inspected in rasterline 0x30
-			if (scanline == 0x30 && (value & 0x10))
-				dmaLinesEnabled = true;
+			// Check the DEN bit if we're in rasterline 30
+            // If it's set at some point in that line, bad line conditions can occur
+			if (scanline == 0x30 && (value & 0x10) != 0)
+                DENwasSetInRasterline30 = true;
 			
 			// Bit 0 - 3 determine the vertical scroll offset. By changing these bits, the DMA line condition 
 			// can appear or disappear in the middle of a rasterline.
-			checkDmaLineCondition();
+			updateBadLineCondition();
 			return;
 			
 		case 0x12: // RASTER_COUNTER
@@ -836,18 +852,14 @@ VIC::poke(uint16_t addr, uint8_t value)
 				iomem[addr] = value;
 			}
 			return;
-			
-		case 0x16:
-			iomem[addr] = value | (128 + 64); // The upper two bits are unused and always return 1 when read
-			return;
-			
+						
 		case 0x17:
 			iomem[addr] = value;
 			expansionFF |= ~value;
 			return;
 			
 		case 0x18: // MEMORY_SETUP_REGISTER
-			iomem[addr] = value | 0x01; // Bit 0 is unused and always 1 when read
+            iomem[addr] = value;
 			setScreenMemoryAddr((value & 0xF0) << 6);
 			setCharacterMemoryAddr((value & 0x0E) << 10);
 			return;
@@ -1033,20 +1045,21 @@ VIC::endRasterline()
 void 
 VIC::cycle1()
 {
-	// Check, if we are currently processing a DMA line. The result is stored in variable dmaLine.
+	// Check, if we are currently processing a DMA line. The result is stored in variable badLineCondition.
 	// Be aware that the value of variable dmaLine can change in the middle of a rasterline as a side effect 
 	// of modifying the y scroll offset.
-	checkDmaLineCondition();
+	updateBadLineCondition();
 
 	// Trigger rasterline interrupt if applicable
-	// Note: In line 0, the interrupt is triggered in cycle 2
+	// In line 0, the interrupt is triggered in cycle 2
+    // In all other lines, it is triggered in cycle 1
 	if (scanline == rasterInterruptLine() && scanline != 0)
 		triggerIRQ(1);
 			
-	// Determine the value of the DEN bit (in rasterline 0x30 only)
-	if (scanline == 0x30)
-		dmaLinesEnabled = isVisible();
-			
+	// Check for the DEN bit if we're processing rasterline 30
+    if (scanline == 0x30 && (iomem[0x11] & 0x10) != 0)
+        DENwasSetInRasterline30 = true;
+    
 	// Get sprite data address and sprite data of sprite 3
 	releaseBusForSprite(2);
 	readSpritePtr(3);
@@ -1059,6 +1072,8 @@ void
 VIC::cycle2()
 {
 	// Trigger rasterline interrupt if applicable
+    // In line 0, the interrupt is triggered in cycle 2
+    // In all other lines, it is triggered in cycle 1
 	if (scanline == 0 && scanline == rasterInterruptLine())
 		triggerIRQ(1);
 			
@@ -1158,7 +1173,7 @@ VIC::cycle11()
 void
 VIC::cycle12()
 {
-	if (dmaLine) {
+	if (badLineCondition) {
 		pullDownBA(0x100);
 	}
 	releaseBusForSprite(7);
@@ -1188,7 +1203,7 @@ VIC::cycle14()
 	 Bad-Line-Zustand vorliegt, wird zusŠtzlich RC auf Null gesetzt. */
 	registerVC = registerVCBASE;
 	registerVMLI = 0;
-	if (dmaLine) 
+	if (badLineCondition)
 		registerRC = 0;
 	countX();
 	update_display_and_ba;
@@ -1606,7 +1621,7 @@ void
 VIC::cycle56()
 {
 	updateSpriteDmaOnOff();
-	requestBusForSprite(0);
+    requestBusForSprite(0); // Bus is again requested because DMA conditions may have changed
 	countX();
 	update_display;
 }
@@ -1616,6 +1631,7 @@ VIC::cycle57()
 {
 	if (isCSEL()) mainFrameFF = true;
 	drawHorizontalFrame = mainFrameFF;
+    
 	requestBusForSprite(1);
 	countX();
 	update_display;
@@ -1624,17 +1640,20 @@ VIC::cycle57()
 void
 VIC::cycle58()
 {
-	/* Der †bergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile, 
-	 wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt.
-	 In der ersten Phase von Zyklus 58 wird geprŸft, ob RC=7 ist. Wenn ja,
-	 geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
-	 (VC->VCBASE). Ist die Videologik danach im Display-Zustand (liegt ein
-	 Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhšht. */
-	if (displayState && registerRC == 7 && !dmaLine) {
-		displayState = false;	
+	/* "Der †bergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
+	    wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt.
+	    In der ersten Phase von Zyklus 58 wird geprŸft, ob RC=7 ist. Wenn ja,
+        geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
+	    (VC->VCBASE). Ist die Videologik danach im Display-Zustand (liegt ein
+        Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhšht." 
+        [Christian Bauer, VIC II documentation] */
+    if (displayState && registerRC == 7 && !badLineCondition) {
+        displayState = false;
 		registerVCBASE = registerVC;	
 	}
-	if (displayState) {
+    // "(liegt ein Bad-Line-Zustand vor, ist dies immer der Fall)"
+    // According to this, do we really need || badLineCondition() in the next statement?
+	if (displayState || badLineCondition) {
 		registerRC++;
 		registerRC &= 7;  // 3 bit overflow
 	}
@@ -1731,7 +1750,7 @@ VIC::cycle63()
 	// draw debug markers
 	if (markIRQLines && scanline == rasterInterruptLine()) 
 		markLine(0, totalScreenWidth, colors[WHITE]);
-	if (markDMALines && dmaLine)	
+	if (markDMALines && badLineCondition)	
 		markLine(0, totalScreenWidth, colors[RED]);
 	if (rasterlineDebug[scanline] >= 0) {
 		markLine(0, totalScreenWidth, colors[rasterlineDebug[scanline] % 16]);

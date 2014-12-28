@@ -243,19 +243,27 @@ private:
 	uint8_t registerVMLI; 
 		
 	//! Indicates that we are curretly processing a DMA line (bad line)
-	bool dmaLine;
+	bool badLineCondition;
 	
-	//! Determines, if DMA lines (bad lines) can occurr within the current frame
-	/*! The value of this flag is determined in rasterline 30, by checking Bit 4 of the VIC control register */
-	bool dmaLinesEnabled;
+	//! Determines, if DMA lines (bad lines) can occurr within the current frame.
+    /*! Bad lines can only occur, if the DEN bit was set during an arbitary cycle in rasterline 30
+	    The DEN bit is located in register 0x11 (CONTROL REGISTER 1) */
+    bool DENwasSetInRasterline30;
 
 	//! Display State
 	/*! The VIC is either in idle or display state */
 	bool displayState;
 
 	//! BA line
-	/*! The BA line can be pulled down by multiple sources. Each source is represented by a single bit.
-	 Hence, the BA is low, if at least one bit is 1, BA is high, if all bits are zero. */
+	/* Remember: Each CPU cycle is split into two phases:
+     
+     First phase (LOW):   VIC gets access to the bus
+     Second phase (HIGH): CPU gets access to the bus
+
+     In rare cases, VIC needs access in the HIGH phase, too. To block the CPU, the BA line is pulled
+     down. 
+     
+     Note: The BA line can be pulled down by multiple sources (wired AND). */
 	uint16_t BAlow;
 		
 	//! Main frame Flipflop
@@ -835,15 +843,32 @@ public:
 	// -----------------------------------------------------------------------------------------------
 
 private:
-	
+    
 	//! Returns true, if the specified rasterline is a DMA line
 	/*! Every eigths row, the VIC chip performs a DMA access and fetches data from screen memory and color memory
 	 The first DMA access occurrs within lines 0x30 to 0xf7 and  */
-	inline bool isDMALine() { return scanline >= 0x30 && scanline <= 0xf7 && (scanline & 7) == getVerticalRasterScroll(); }	
-	
+	// inline bool isDMALine() { return scanline >= 0x30 && scanline <= 0xf7 && (scanline & 7) == getVerticalRasterScroll(); }
+
+    /*! Update bad line condition
+        From Christina Bauers VIC II documentation:
+
+        "Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
+         negativen Flanke von ø0 zu Beginn des 
+         [1] Zyklus RASTER >= $30 und RASTER <= $f7 und
+         [2] die unteren drei Bits von RASTER mit YSCROLL Ÿbereinstimmen 
+         [3] und in einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war." */
+    
+     inline void updateBadLineCondition() {
+         badLineCondition =
+            scanline >= 0x30 && scanline <= 0xf7 /* [1] */ &&
+            (scanline & 0x07) == getVerticalRasterScroll() /* [2] */ &&
+            DENwasSetInRasterline30 /* [3] */;
+         if (badLineCondition)
+             displayState = true;
+     }
+    
 	//! checkDmaLineCondition
-	/*! DEPRECATED. It's only used once and should be moved into the program code */
-	inline void checkDmaLineCondition() { if ((dmaLine = (dmaLinesEnabled && isDMALine()))) displayState = true; }
+//	inline void checkDmaLineCondition() { if ((dmaLine = (DENwasSetInRasterline30 && isDMALine()))) displayState = true; }
 	
 	//! Set BA line to low
 	/*! Note: The BA pin is directly connected to the RDY line of the CPU */
@@ -854,7 +879,10 @@ private:
 	void releaseBA(uint16_t source);
 
 	//! Request memory bus for a specific sprite
-	inline void requestBusForSprite(uint8_t spriteNr) { if (spriteDmaOnOff & (1 << spriteNr)) pullDownBA(1 << spriteNr); }
+	inline void requestBusForSprite(uint8_t spriteNr) {
+        if (spriteDmaOnOff & (1 << spriteNr))
+            pullDownBA(1 << spriteNr);
+    }
 	
 	//! Release memory bus for a specific sprite
 	inline void releaseBusForSprite(uint8_t spriteNr) { releaseBA(1 << spriteNr); }
