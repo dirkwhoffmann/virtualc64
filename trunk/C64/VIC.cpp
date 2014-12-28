@@ -1174,6 +1174,7 @@ void
 VIC::cycle12()
 {
 	if (badLineCondition) {
+        // Freeze CPU because c-accesses are coming up...
 		pullDownBA(0x100);
 	}
 	releaseBusForSprite(7);
@@ -1212,9 +1213,15 @@ VIC::cycle14()
 void
 VIC::cycle15()
 {
-	/* In der ersten Phase von Zyklus 15 wird geprüft, ob das
-	 Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 2 erhöht. */
-	// Note: Done in cycle 16
+	/* "7. In der ersten Phase von Zyklus 15 wird geprüft, ob das
+	       Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 2 erhöht." [C.B.] */
+    for (int i = 0; i < 8; i++) {
+        uint8_t mask = (1 << i);
+        if (expansionFF & mask) {
+            mcbase[i] += 2;
+            mcbase[i] &= 0x3F; // 6 bit counter
+        }
+    }
 
 	cAccess();
 	countX();
@@ -1226,19 +1233,18 @@ VIC::cycle16()
 {
 	if (isCSEL()) mainFrameFF = false;		
 			
-	/* 8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
-	 Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 1 erhöht.
-	 Dann wird geprüft, ob MCBASE auf 63 steht und bei positivem Vergleich
-	 der DMA und die Darstellung für das jeweilige Sprite abgeschaltet. */
+	/* "8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
+	       Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 1 erhöht.
+	       Dann wird geprüft, ob MCBASE auf 63 steht und bei positivem Vergleich
+	       der DMA und die Darstellung für das jeweilige Sprite abgeschaltet." [C.B.] */
 			
 	for (int i = 0; i < 8; i++) {
 		uint8_t mask = (1 << i);
 		if (expansionFF & mask) {
-			mcbase[i] += 3;
+			mcbase[i] += 1;
 			mcbase[i] &= 0x3F; // 6 bit counter
 		}
 		if (mcbase[i] == 63) {			
-			// spriteOnOff &= ~mask;
 			spriteDmaOnOff &= ~mask;
 		}
 	}		
