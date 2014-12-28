@@ -265,20 +265,54 @@ private:
      
      Note: The BA line can be pulled down by multiple sources (wired AND). */
 	uint16_t BAlow;
-		
+	
+    /* "Der VIC benutzt zwei Flipflops, um den Rahmen um das Anzeigefenster
+        herum zu erzeugen: Ein Haupt-Rahmenflipflop und ein vertikales
+        Rahmenflipflop. [...]
+
+        Die Flipflops werden nach den folgenden Regeln geschaltet:
+     
+        1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
+           Haupt-Rahmenflipflop gesetzt.
+        2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
+           das vertikale Rahmenflipflop gesetzt.
+        3. Erreicht die Y-Koordinate den oberern Vergleichswert in Zyklus 63 und
+           ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
+           Rahmenflipflop gelšscht.
+        4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+           den unteren, wird das vertikale Rahmenflipflop gesetzt.
+        5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+           den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
+           vertikale Rahmenflipflop gelšscht.
+        6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
+           vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
+     */
+
 	//! Main frame Flipflop
 	bool mainFrameFF;
 	
 	//! Vertiacl frame Flipflop
 	bool verticalFrameFF;
 	
+    //! Comparison values for frame flipflops
+    inline uint16_t leftComparisonValue() { return isCSEL() ? 24 : 31; }
+    inline uint16_t rightComparisonValue() { return isCSEL() ? 344 : 335; }
+    inline uint16_t upperComparisonValue() { return isRSEL() ? 51 : 55; }
+    inline uint16_t lowerComparisonValue() { return isRSEL() ? 251 : 247; }
+    
 	//! Vertical border on/off switch
+    // DEPRECTAED
 	bool drawVerticalFrame;
 	
 	//! Horizontal border on/off switch
+    // DEPRECATED
 	bool drawHorizontalFrame;
 	
-	
+	//! Clear main frame flipflop
+    /*! Can only be cleared if the vertical frame flipflop is not set */
+    inline void clearMainFrameFF() { if (!verticalFrameFF) mainFrameFF = false; }
+     
+    
 	// -----------------------------------------------------------------------------------------------
 	//                                        Screen parameters
 	// -----------------------------------------------------------------------------------------------
@@ -771,10 +805,10 @@ public:
 	// inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 	inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 	
-	//! Returns the state of the CSEL register
+	//! Returns the state of the CSEL bit
 	inline bool isCSEL() { return iomem[0x16] & 8; }
 	
-	//! Returns the state of the RSEL register
+	//! Returns the state of the RSEL bit
 	inline bool isRSEL() { return iomem[0x11] & 8; }
 	
 	//! Returns the currently set display mode

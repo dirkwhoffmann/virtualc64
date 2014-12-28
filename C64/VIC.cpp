@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,9 @@
  */
 
 /* Cycle accurate VIC II emulation.
-   Mostly based on the extensive VIC II documentation by Christian Bauer. Thanks, Christian! */
+   Mostly based on the extensive VIC II documentation by Christian Bauer ([C.B.])
+   Many thanks, Christian! 
+*/
 
 #include "C64.h"
 
@@ -25,7 +27,15 @@
 // Update value of the display variable according to the dma line condition 
 #define update_display if (badLineCondition) { displayState = true; }
 
-// Update value of the display variable and the BA line according to the dma line condition 
+// Update value of the display variable and the BA line according to the dma line condition
+/* "3. Liegt in den Zyklen 12-54 ein Bad-Line-Zustand vor, wird BA auf Low
+    gelegt und die c-Zugriffe gestartet. Einmal gestartet, findet in der
+    zweiten Phase jedes Taktzyklus im Bereich 15-54 ein c-Zugriff statt. Die
+    gelesenen Daten werden in der Videomatrix-/Farbzeile an der durch VMLI
+    angegebenen Position abgelegt. Bei jedem g-Zugriff im Display-Zustand
+    werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
+    wieder intern gelesen." [C.B.] */
+ 
 #define update_display_and_ba if (badLineCondition) { displayState = true; pullDownBA(0x100); }
 
 
@@ -1199,13 +1209,20 @@ VIC::cycle14()
 	// NEW CODE
 	xCounter = 0x04;
 	
-	/* In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
-	 (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
-	 Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt. */
-	registerVC = registerVCBASE;
+    /* WHERE DO WE IMPLEMENT THIS ONE?
+       "1. Irgendwo einmal auﬂerhalb des Bereiches der Rasterzeilen $30-$f7 (also
+           außerhalb des Bad-Line-Bereiches) wird VCBASE auf Null gesetzt.
+           Vermutlich geschieht dies in Rasterzeile 0, der genaue Zeitpunkt ist
+           nicht zu bestimmen, er spielt aber auch keine Rolle." [C.B.] */
+    
+	/* "2. In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
+	       (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
+           Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt." [C.B.] */
+    registerVC = registerVCBASE;
 	registerVMLI = 0;
 	if (badLineCondition)
 		registerRC = 0;
+    
 	countX();
 	update_display_and_ba;
 }
@@ -1231,8 +1248,6 @@ VIC::cycle15()
 void
 VIC::cycle16()
 {
-	if (isCSEL()) mainFrameFF = false;		
-			
 	/* "8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
 	       Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 1 erhöht.
 	       Dann wird geprüft, ob MCBASE auf 63 steht und bei positivem Vergleich
@@ -1257,7 +1272,29 @@ VIC::cycle16()
 void
 VIC::cycle17()
 {
-	gAccess();
+/*
+    Die Flipflops werden nach den folgenden Regeln geschaltet:
+    
+    1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
+    Haupt-Rahmenflipflop gesetzt.
+    2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
+    das vertikale Rahmenflipflop gesetzt.
+    3. Erreicht die Y-Koordinate den oberern Vergleichswert in Zyklus 63 und
+    ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
+    Rahmenflipflop gelöscht.
+    4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+    den unteren, wird das vertikale Rahmenflipflop gesetzt.
+    5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+    den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
+    vertikale Rahmenflipflop gelöscht.
+    6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
+    vertikale Rahmenflipflop gelöscht, wird das Haupt-Flipflop gelöscht.
+*/
+    
+    // Delete main frame flipflop in 40 column mode
+   	if (isCSEL()) clearMainFrameFF();
+    
+    gAccess();
 	cAccess();
 	countX();
 	update_display_and_ba;
@@ -1266,8 +1303,10 @@ VIC::cycle17()
 void
 VIC::cycle18()
 {
-	if (!isCSEL()) mainFrameFF = false;
-	gAccess();
+    // Delete main frame flipflop in 38 column mode
+	if (!isCSEL()) clearMainFrameFF();
+
+    gAccess();
 	cAccess();
 	countX();
 	update_display_and_ba;
@@ -1635,7 +1674,7 @@ VIC::cycle56()
 void
 VIC::cycle57()
 {
-	if (isCSEL()) mainFrameFF = true;
+    if (isCSEL()) clearMainFrameFF();
 	drawHorizontalFrame = mainFrameFF;
     
 	requestBusForSprite(1);
@@ -1647,12 +1686,11 @@ void
 VIC::cycle58()
 {
 	/* "Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
-	    wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt.
-	    In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
-        geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
-	    (VC->VCBASE). Ist die Videologik danach im Display-Zustand (liegt ein
-        Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhöht." 
-        [Christian Bauer, VIC II documentation] */
+	    wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
+	    "5. In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
+            geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
+	        (VC->VCBASE). Ist die Videologik danach im Display-Zustand (liegt ein
+            Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhöht." [C.B.] */
     if (displayState && registerRC == 7 && !badLineCondition) {
         displayState = false;
 		registerVCBASE = registerVC;	
@@ -1664,10 +1702,10 @@ VIC::cycle58()
 		registerRC &= 7;  // 3 bit overflow
 	}
 			
-	/* In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE
-	 geladen (MCBASE->MC) und geprüft, ob der DMA für das Sprite angeschaltet
-	 und die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
-	 ist. Ist dies der Fall, wird die Darstellung des Sprites angeschaltet. */
+	/* "4. In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE
+	    geladen (MCBASE->MC) und geprüft, ob der DMA für das Sprite angeschaltet
+	    und die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
+	    ist. Ist dies der Fall, wird die Darstellung des Sprites angeschaltet." [C.B.] */
 	oldSpriteOnOff = spriteOnOff; // remember last value
 	for (int i = 0; i < 8; i++) {
 		mc[i] = mcbase[i];
