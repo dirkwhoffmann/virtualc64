@@ -163,8 +163,10 @@ private:
 	//! Experimental
 	uint8_t external_port_bits;
 	
-	//! RDY line (ready line).
-	/*! If pulled low (set to 0), the CPU freezes. The signal is used by the VIC chip to freeze the CPU during memory access. */
+	//! RDY line (ready line)
+	/*! If this line is LOW, the CPU freezes on the next read access.
+        RDY is pulled down by VIC to perform longer lasting read operations.
+    */
 	bool rdyLine;
 	
 	//! IRQ line (maskable interrupts)
