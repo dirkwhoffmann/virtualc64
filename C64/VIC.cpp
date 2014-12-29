@@ -89,8 +89,8 @@ VIC::reset()
 	BAlow = 0;
 	mainFrameFF = false;
 	verticalFrameFF = false;
-	drawVerticalFrame = false;
-	drawHorizontalFrame = false;
+	// drawVerticalFrame = false;
+	// drawHorizontalFrame = false;
 	
 	// Memory
 	memset(iomem, 0x00, sizeof(iomem));
@@ -146,9 +146,11 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	BAlow = (bool)read8(buffer);
 	mainFrameFF = (bool)read8(buffer);
 	verticalFrameFF = (bool)read8(buffer);
-	drawVerticalFrame = (bool)read8(buffer);
-	drawHorizontalFrame = (bool)read8(buffer);
-	
+	// drawVerticalFrame = (bool)read8(buffer);
+	// drawHorizontalFrame = (bool)read8(buffer);
+    (void)read8(buffer);
+    (void)read8(buffer);
+    
 	// Memory
 	for (unsigned i = 0; i < sizeof(iomem); i++)
 		iomem[i] = read8(buffer);
@@ -192,8 +194,10 @@ VIC::saveToBuffer(uint8_t **buffer)
 	write8(buffer, (uint8_t)BAlow);
 	write8(buffer, (uint8_t)mainFrameFF);
 	write8(buffer, (uint8_t)verticalFrameFF);
-	write8(buffer, (uint8_t)drawVerticalFrame);
-	write8(buffer, (uint8_t)drawHorizontalFrame);
+	// write8(buffer, (uint8_t)drawVerticalFrame);
+	// write8(buffer, (uint8_t)drawHorizontalFrame);
+    write8(buffer, (uint8_t)0);
+    write8(buffer, (uint8_t)0);
 	
 	// Memory
 	for (unsigned i = 0; i < sizeof(iomem); i++)
@@ -258,8 +262,6 @@ VIC::dumpState()
 	msg("          BA line : %s\n", BAlow ? "low" : "high");
 	msg("      MainFrameFF : %d\n", mainFrameFF);
 	msg("  VerticalFrameFF : %d\n", verticalFrameFF);
-	msg("      Draw Vframe : %s\n", drawVerticalFrame ? "yes" : "no");
-	msg("      Draw Hframe : %s\n", drawHorizontalFrame ? "yes" : "no");	
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
 	msg("         SpriteOn : %02X ( ", spriteOnOff);
 	for (int i = 0; i < 8; i++) 
@@ -330,7 +332,22 @@ VIC::gAccess()
 	uint8_t bgcolor;
 	int colorLookup[4];
 	uint16_t xCoord = (xCounter - 20) + leftBorderWidth + getHorizontalRasterScroll();
-	
+
+    uint16_t xCoordBorder = (xCounter - 20) + leftBorderWidth;
+
+#if 0
+// MOVE SOMEWHERE ELSE.
+// PROBLEM: OUTER PARTS OF BORDER HAVE NO G ACCESSES
+    // Check border flipflops
+    if (mainFrameFF || verticalFrameFF) {
+        int bordercolor = colors[4]; // getBorderColor()];
+        for (unsigned i = 0; i < 8; i++) {
+            pixelBuffer[xCoordBorder+i] = bordercolor;
+        }
+        goto end;
+    }
+#endif
+    
 	switch (getDisplayMode()) {
 		case STANDARD_TEXT:
 			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
@@ -384,7 +401,9 @@ VIC::gAccess()
 			break;
 	}
 	
-	// VC and VMLI are increased after each g access 
+end:
+    
+	// VC and VMLI are increased after each g access
 	if (displayState) {
 		registerVC++;
 		registerVC &= 0x3ff; // 10 bit overflow
@@ -1272,27 +1291,31 @@ VIC::cycle16()
 void
 VIC::cycle17()
 {
-/*
-    Die Flipflops werden nach den folgenden Regeln geschaltet:
+    const uint16_t x_coord = 24;
+
+    // Set or clear frame flipflops in 40 column mode
+    if (x_coord == leftComparisonValue()) {
+
+        // "4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+        //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
+
+        if (scanline == lowerComparisonValue()) {
+            verticalFrameFF = true;
+        }
+
+        // "5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+        //     den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
+        //     vertikale Rahmenflipflop gelšscht." [C.B.]
+
+        else if (scanline == upperComparisonValue() && DENbit()) {
+            verticalFrameFF = false;
+        }
     
-    1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
-    Haupt-Rahmenflipflop gesetzt.
-    2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
-    das vertikale Rahmenflipflop gesetzt.
-    3. Erreicht die Y-Koordinate den oberern Vergleichswert in Zyklus 63 und
-    ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
-    Rahmenflipflop gelšscht.
-    4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-    den unteren, wird das vertikale Rahmenflipflop gesetzt.
-    5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-    den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
-    vertikale Rahmenflipflop gelšscht.
-    6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
-    vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht.
-*/
-    
-    // Delete main frame flipflop in 40 column mode
-   	if (isCSEL()) clearMainFrameFF();
+        // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
+        //     vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
+
+        clearMainFrameFF();
+    }
     
     gAccess();
 	cAccess();
@@ -1303,8 +1326,31 @@ VIC::cycle17()
 void
 VIC::cycle18()
 {
-    // Delete main frame flipflop in 38 column mode
-	if (!isCSEL()) clearMainFrameFF();
+    const uint16_t x_coord = 31;
+    
+    // Set or clear frame flipflops in 38 column mode
+    if (x_coord == leftComparisonValue()) {
+        
+        // "4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+        //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
+        
+        if (scanline == lowerComparisonValue()) {
+            verticalFrameFF = true;
+        }
+        
+        // "5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+        //     den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
+        //     vertikale Rahmenflipflop gelšscht." [C.B.]
+        
+        else if (scanline == upperComparisonValue() && DENbit()) {
+            verticalFrameFF = false;
+        }
+        
+        // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
+        //     vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
+        
+        clearMainFrameFF();
+    }
 
     gAccess();
 	cAccess();
@@ -1665,6 +1711,15 @@ VIC::cycle55()
 void
 VIC::cycle56()
 {
+    const uint16_t x_coord = 344;
+    
+     // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
+     //     Haupt-Rahmenflipflop gesetzt." [C.B.]
+
+     if (x_coord == rightComparisonValue()) {
+         mainFrameFF = true;
+     }
+
 	updateSpriteDmaOnOff();
     requestBusForSprite(0); // Bus is again requested because DMA conditions may have changed
 	countX();
@@ -1674,8 +1729,14 @@ VIC::cycle56()
 void
 VIC::cycle57()
 {
-    if (isCSEL()) clearMainFrameFF();
-	drawHorizontalFrame = mainFrameFF;
+    const uint16_t x_coord = 335;
+    
+    // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
+    //     Haupt-Rahmenflipflop gesetzt." [C.B.]
+    
+    if (x_coord == rightComparisonValue()) {
+        mainFrameFF = true;
+    }
     
 	requestBusForSprite(1);
 	countX();
@@ -1774,19 +1835,26 @@ VIC::cycle62()
 
 void
 VIC::cycle63()
-{			
-	// update border flipflops
-	if (scanline == 51 && isRSEL() && isVisible()) 
-		drawVerticalFrame = verticalFrameFF = false;
-	else if (scanline == 55 && !isRSEL() && isVisible()) 
-		drawVerticalFrame = verticalFrameFF = false;
-	else if (scanline == 247 && !isRSEL()) 
-		drawVerticalFrame = verticalFrameFF = true;
-	else if (scanline == 251 && isRSEL()) 
-		drawVerticalFrame = verticalFrameFF = true;
+{
+
+    // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
+    //     das vertikale Rahmenflipflop gesetzt." [C.B.]
+
+    if (scanline == lowerComparisonValue()) {
+        verticalFrameFF = true;
+    }
+
+    // "3. Erreicht die Y-Koordinate den oberern Vergleichswert in Zyklus 63 und
+    //     ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
+    //     Rahmenflipflop gelšscht." [C.B.]
+    
+    else if (scanline == upperComparisonValue() && DENbit()) {
+        verticalFrameFF = false;
+    }
 			
 	// draw border
-	drawBorder();
+    // TODO: HANDLE IN EACH CYCLE
+    drawBorder();
 			
 	// illegal display modes cause a black line to appear
 	if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR) markLine(xStart(), SCREEN_WIDTH, colors[BLACK]);
