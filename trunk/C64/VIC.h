@@ -16,7 +16,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Last review: 25.7.06
+// TODO:
+// Implement X offset shifts correctly
+// Don't draw border at once
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -190,11 +192,6 @@ public:
 	//! Total number of rasterlines, including invisible areas
 	static const uint16_t PAL_RASTERLINES = 312;
 
-
-
-	
-
-
 	//! Maximum number of viewable rasterlines
 	static const uint16_t MAX_VIEWABLE_RASTERLINES = PAL_VIEWABLE_RASTERLINES;
 
@@ -302,14 +299,16 @@ private:
     
 	//! Vertical border on/off switch
     // DEPRECTAED
-	bool drawVerticalFrame;
+	// bool drawVerticalFrame;
 	
 	//! Horizontal border on/off switch
     // DEPRECATED
-	bool drawHorizontalFrame;
+	// bool drawHorizontalFrame;
 	
 	//! Clear main frame flipflop
-    /*! Can only be cleared if the vertical frame flipflop is not set */
+    /*  "Das vertikale Rahmenflipflop dient zur Unterstützung bei der Darstellung
+         des oberen/unteren Rahmens. Ist es gesetzt, kann das Haupt-Rahmenflipflop
+         nicht gelöscht werden." [C.B.] */
     inline void clearMainFrameFF() { if (!verticalFrameFF) mainFrameFF = false; }
      
     
@@ -640,20 +639,22 @@ private:
 	inline void countX() { xCounter += 8; }
 		
 	//! returns the character pattern for the current cycle
-	inline uint8_t getCharacterPattern() 
-	//{ return characterMemory[(characterSpace[registerVMLI] << 3) | registerRC]; }
-	{ uint16_t offset = characterMemoryAddr + (characterSpace[registerVMLI] << 3) | registerRC; return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset]; }
+	inline uint8_t getCharacterPattern() {
+        uint16_t offset = characterMemoryAddr + (characterSpace[registerVMLI] << 3) | registerRC;
+        return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset];
+    }
 	
 	//! returns the extended character pattern for the current cycle
-	inline uint8_t getExtendedCharacterPattern()
-	//return characterMemory[((characterSpace[registerVMLI] & 0x3f) << 3 )  | registerRC]; }
-	{ uint16_t offset = characterMemoryAddr + ((characterSpace[registerVMLI] & 0x3F) << 3) | registerRC; return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset]; }
+	inline uint8_t getExtendedCharacterPattern() {
+        uint16_t offset = characterMemoryAddr + ((characterSpace[registerVMLI] & 0x3F) << 3) | registerRC;
+        return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset];
+    }
 
-	
 	//! returns the bitmap pattern for the current cycle
-	inline uint8_t getBitmapPattern() 
-	// { return characterMemory[(registerVC << 3) | registerRC];	}
-	{ uint16_t offset = characterMemoryAddr + (registerVC << 3) | registerRC; return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset]; }
+	inline uint8_t getBitmapPattern() {
+        uint16_t offset = characterMemoryAddr + (registerVC << 3) | registerRC;
+        return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset];
+    }
 	
 	//! This method returns the pattern for a idle access. 
 	/*! This is iportant for the Hyperscreen and FLD effects (maybe others as well).
@@ -663,7 +664,9 @@ private:
 		(return 0 to see difference)
 		TODO: check if one of the addresses is mapped into the rom? 
 	 */
-	inline uint8_t getIdleAccessPattern() { return mem->ram[bankAddr + (iomem[0x11] & 0x40) ? 0x39ff : 0x3fff]; }
+	inline uint8_t getIdleAccessPattern() {
+        return mem->ram[bankAddr + (iomem[0x11] & 0x40) ? 0x39ff : 0x3fff];
+    }
 
 	//! Draw a single character line (8 pixels) in single-color mode
 	/*! \param offset X coordinate of the first pixel to draw
@@ -714,7 +717,10 @@ private:
 	inline bool isVisible() { return iomem[0x11] & 0x10; }
 	
 	//! Draw horizontal and vertical border
-	inline void drawBorder() { if (drawVerticalFrame) drawVerticalBorder(); else if (drawHorizontalFrame) drawHorizontalBorder(); }
+	inline void drawBorder() {
+        if (verticalFrameFF) drawVerticalBorder();
+        else if (mainFrameFF) drawHorizontalBorder();
+    }
 	
 	//! Draw horizontal border into the pixelbuffer
 	void drawHorizontalBorder();
@@ -804,12 +810,15 @@ public:
 	//! Return lower bound of inner screen area
 	// inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 	inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
-	
+
+    //! Returns the DEN bit (DIsplay Enable bis)
+    inline bool DENbit() { return iomem[0x11] & 0x10; }
+
 	//! Returns the state of the CSEL bit
-	inline bool isCSEL() { return iomem[0x16] & 8; }
+	inline bool isCSEL() { return iomem[0x16] & 0x08; }
 	
 	//! Returns the state of the RSEL bit
-	inline bool isRSEL() { return iomem[0x11] & 8; }
+	inline bool isRSEL() { return iomem[0x11] & 0x08; }
 	
 	//! Returns the currently set display mode
 	/*! The display mode is determined by Bit 5 and Bit 6 of control register 1 and Bit 4 of control register 2.
