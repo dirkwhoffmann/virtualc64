@@ -389,12 +389,12 @@ inline void VIC::gAccess()
         if (BMMbit()) {
             
             // |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
-            addr = (CB13() << 4) | (registerVC << 3) | registerRC;
+            addr = (CB13() << 10) | (registerVC << 3) | registerRC;
 
         } else {
 
             // |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0|
-            addr = (CB13CB12CB11() << 4) | (characterSpace[registerVMLI] << 3) | registerRC;
+            addr = (CB13CB12CB11() << 10) | (characterSpace[registerVMLI] << 3) | registerRC;
         
         }
     }
@@ -414,65 +414,15 @@ inline void VIC::gAccess()
     }
     
     gAccessResult = memAccess(addr);
-}
-
-
-// MOVE THE FOLLOWING STUFF SOMEWHERE
-
-    /* "Der Grafikdatensequenzer beherrscht 8 verschiedene Grafikmodi, die über die
-        Bits ECM, BMM und MCM (Extended Color Mode, Bit Map Mode und Multi Color
-        Mode) in den Registern $d011 und $d016 ausgewählt werden (von den 8
-        möglichen Bitkombinationen sind 3 unültig und erzeugen die gleiche
-        Ausgabe, nämlich nur die Farbe Schwarz). Der Idle-Zustand ist ein
-        Spezialfall, da darin keine c-Zugriffe stattfinden und der Sequenzer
-        '0'-Bits als Videomatrix-Daten verwendet." [C.B.] */
-
     
-    
-
-    // IDEE:
-    //! 8 bit shift register for video output
-    /*! The upper 8 bits are used to simulate the load delay */
-#if 0
-    uint16_t graphicSequencer;
-    
-    void VIC::loadGraphicSequencer(uint8_t byte)
-    {
-        int xshift = getHorizontalRasterScroll();
-        
-        sequencer >>= 8; // remaining bits of previous cycle
-        sequencer &= (1 << xshift) - 1; // free space for new bits
-        sequencer |= ((uint16_t)byte << xshift); // add new bits
-    }
-
-    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
-     Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
-     Abschnitt 3.9.). Außerhalb der Anzeigespalte und bei gesetztem Flipflop wird
-     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
-     normalerweise vom Rahmen überdeckt). Kernstück des Sequenzers ist ein
-     8-Bit-Schieberegister, das mit jedem Pixel um 1 Bit weitergeschoben und
-     nach jedem g-Zugriff mit den gelesenen Pixeldaten geladen wird. Mit XSCROLL
-     aus Register $d016 lässt sich das Laden des Schieberegisters um 0-7 Pixel
-     verzögern und dadurch die Anzeige um bis zu 7 Pixel nach rechts
-     verschieben." [C.B.] */
-    uint8_t spriteSequencer;
-
-#endif
-    
-#if 0
-    
-    /* "Kernstück des Sequenzers ist ein 8-Bit-Schieberegister, das mit jedem Pixel um 
-        1 Bit weitergeschoben und nach jedem g-Zugriff mit den gelesenen Pixeldaten 
-        geladen wird." [C.B.] */
-    loadGraphicSequencer(...);
-
-    /* "4. Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhöht." [C.B.] */
+    // VC and VMLI are increased after each g access
     if (displayState) {
-        registerVC = (registerVC + 1) & 0x3FF; // 10 bit counter
-        registerVMLI = (registerVMLI + 1) & 0x3F; // 6 bit counter
+        registerVC++;
+        registerVC &= 0x3FF; // 10 bit overflow
+        registerVMLI++;
+        registerVMLI &= 0x3F; // 6 bit overflow;
     }
-#endif
-
+}
 
 inline void VIC::pAccess()
 {
@@ -512,16 +462,40 @@ VIC::drawPixels()
     }
 #endif
     
+    // OLD CODE TO FETCH PATTERN
+    // REMOVE ONCE NEW CODE IS WORKING
+    switch (getDisplayMode()) {
+        case STANDARD_TEXT:
+            pattern = displayState ? getCharacterPattern() : getIdleAccessPattern();
+            break;
+        case MULTICOLOR_TEXT:
+            pattern = displayState ? getCharacterPattern() : getIdleAccessPattern();
+            break;
+        case STANDARD_BITMAP:
+            pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
+            break;
+        case MULTICOLOR_BITMAP:
+            pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
+            break;
+        case EXTENDED_BACKGROUND_COLOR:
+            pattern = displayState ? getExtendedCharacterPattern() : getIdleAccessPattern();
+            break;
+        case INVALID_DISPLAY_MODE:
+            // do nothing (?)
+            break;
+    }
+
+    // NEW CODE TO FETCH PATTERN (pattern is computed in gAccess)
+    // pattern = gAccessResult;
+    
 	switch (getDisplayMode()) {
 		case STANDARD_TEXT:
-			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
-			fgcolor   = colorSpace[registerVMLI];
-			bgcolor   = getBackgroundColor();
+			fgcolor = colorSpace[registerVMLI];
+			bgcolor = getBackgroundColor();
 			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
 			break;
 		case MULTICOLOR_TEXT:
-			pattern   = displayState ? getCharacterPattern() : getIdleAccessPattern();
-			fgcolor   = colorSpace[registerVMLI];
+            fgcolor = colorSpace[registerVMLI];
 			if (fgcolor & 0x8) {
 				colorLookup[0] = colors[getBackgroundColor()];
 				colorLookup[1] = colors[getExtraBackgroundColor(1)];
@@ -533,22 +507,19 @@ VIC::drawPixels()
 			}
 			break;
 		case STANDARD_BITMAP:
-			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
-			fgcolor = characterSpace[registerVMLI] >> 4;
+            fgcolor = characterSpace[registerVMLI] >> 4;
 			bgcolor = characterSpace[registerVMLI] & 0xf;
 			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
 			break;
 		case MULTICOLOR_BITMAP:
-			pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
-			colorLookup[0]  = colors[getBackgroundColor()];
-			colorLookup[1]  = colors[characterSpace[registerVMLI] >> 4];
-			colorLookup[2]  = colors[characterSpace[registerVMLI] & 0x0F];
-			colorLookup[3]  = colors[colorSpace[registerVMLI]];			
+            colorLookup[0] = colors[getBackgroundColor()];
+			colorLookup[1] = colors[characterSpace[registerVMLI] >> 4];
+			colorLookup[2] = colors[characterSpace[registerVMLI] & 0x0F];
+			colorLookup[3] = colors[colorSpace[registerVMLI]];
 			drawMultiColorCharacter(xCoord, pattern, colorLookup);
 			break;
 		case EXTENDED_BACKGROUND_COLOR:
-			pattern = displayState ? getExtendedCharacterPattern() : getIdleAccessPattern();
-			fgcolor = colorSpace[registerVMLI]; 
+            fgcolor = colorSpace[registerVMLI];
 			bgcolor = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);
 			if (fgcolor & 0x8) {
 				colorLookup[0] = colors[bgcolor];
@@ -565,8 +536,7 @@ VIC::drawPixels()
 			break;
 	}
 	
-// end:
-    
+#if 0
 	// VC and VMLI are increased after each g access
 	if (displayState) {
 		registerVC++;
@@ -574,6 +544,7 @@ VIC::drawPixels()
 		registerVMLI++;
 		registerVMLI &= 0x3F; // 6 bit overflow;
 	}
+#endif
 }
 
 inline void 
@@ -975,7 +946,6 @@ VIC::peek(uint16_t addr)
             
 		case 0x1E: // Sprite-to-sprite collision
 			result = iomem[addr];
-            
 			iomem[addr] = 0x00;  // Clear on read
 			return result;
             
@@ -1433,6 +1403,15 @@ VIC::cycle15()
 void
 VIC::cycle16()
 {
+    /* CORRECTED RULE:
+       "7. In the first phase of cycle 16, it is checked if the expansion flip flop
+        is set. If so, MCBASE load from MC (MC->MCBASE), unless the CPU cleared
+        the Y expansion bit in $d017 in the second phase of cycle 15, in which case
+        MCBASE is set to X = (101010 & (MCBASE & MC)) | (010101 & (MCBASE | MC)).
+        After the MCBASE update, the VIC checks if MCBASE is equal to 63 and turns
+        off the DMA of the sprite if it is." [VIC Addendum]
+     */
+    
 	/* "8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
 	       Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 1 erhöht.
 	       Dann wird geprüft, ob MCBASE auf 63 steht und bei positivem Vergleich
@@ -1450,7 +1429,10 @@ VIC::cycle16()
 	}		
 	drawPixels();
     
-    // Second clock phase
+    // First clock phase (LOW)
+    gAccess();
+    
+    // Second clock phase (HIGH)
 	cAccess();
 	countX();
 	update_display_and_ba;
@@ -1487,7 +1469,10 @@ VIC::cycle17()
     
     drawPixels();
 
-    // Second clock phase
+    // First clock phase (LOW)
+    gAccess();
+
+    // Second clock phase (HIGH)
     cAccess();
 	countX();
 	update_display_and_ba;
@@ -1524,7 +1509,10 @@ VIC::cycle18()
 
     drawPixels();
 
-    // Second clock phase
+    // First clock phase (LOW)
+    gAccess();
+
+    // Second clock phase (HIGH)
     cAccess();
 	countX();
 	update_display_and_ba;
@@ -1535,7 +1523,10 @@ VIC::cycle19to54()
 {
 	drawPixels();
     
-    // Second clock phase
+    // First clock phase (LOW)
+    gAccess();
+
+    // Second clock phase (HIGH)
 	cAccess();
 	countX();
 	update_display_and_ba;
@@ -1544,16 +1535,17 @@ VIC::cycle19to54()
 void
 VIC::cycle55()
 {
-	if (!isCSEL()) mainFrameFF = true;
-	
 	drawPixels();
-	
-	/* In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
-	 invertiert, wenn das MxYE-Bit gesetzt ist. */
-	expansionFF ^= iomem[0x17];
-			
-	releaseBA(0x100);
 
+    // First clock phase (LOW)
+
+    /* "In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
+     invertiert, wenn das MxYE-Bit gesetzt ist." [C.B.] */
+    expansionFF ^= iomem[0x17];
+
+    gAccess();
+
+    
 	/* In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
 	 ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
 	 Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
@@ -1562,6 +1554,8 @@ VIC::cycle55()
 	 und, wenn das MxYE-Bit gesetzt ist, das Expansions-Flipflop gelöscht.
 	 */
 	updateSpriteDmaOnOff();
+    
+    releaseBA(0x100);
 	requestBusForSprite(0);
 	countX();
 	update_display;

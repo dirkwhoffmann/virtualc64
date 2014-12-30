@@ -17,11 +17,11 @@
  */
 
 // TODO:
-// Implement peek and poke, as seen from VIC
-//   Needs bank, setBank
-// Implementing gAccess
-// How does the sequencer work?
-// Don't draw borders at once
+// Check if sequencer shift registers store color pixels or bits
+// Hint: If we can stretch a multicolor sprite, it must be pixels??? (bits most likely, though)
+// Implement graphics sequencer
+// Implement sprite sequencers
+// Don't draw borders at once, implement a multiplexer instead
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -512,6 +512,49 @@ private:
     // DEPRECATED
 	bool characterMemoryMappedToROM;
 
+    // -----------------------------------------------------------------------------------------------
+    //                                      Sequencers
+    // -----------------------------------------------------------------------------------------------
+
+#if 0
+    //! Graphics sequencer shift register (8 bit)
+    /*! The upper 8 bits are used to simulate the load delay */
+    uint16_t graphicSequencerShiftReg;
+    
+    //! Graphics sequencer output (8 color pixels or 8 bits???)
+    uint64_t graphicsSequencerOutput;
+    
+    //! Load graphics sequencer
+    void loadGraphicsSequencer(uint8_t byte);
+
+    //! Update graphics sequencer output
+    /*! */
+    // void updateGraphicsSequencer(uint8_t byte);
+
+    
+    //! Sprite sequencer shift registers (24 pixels)
+    /*! The upper 8 bits are used to simulate the output delay */
+    uint8_t spriteSequencerShiftReg[24][8];
+
+    //! State of the sequencer
+    /*! 0 = off, 3 ... 1 = currently outputting */
+    int spriteSequencerCycle[8];
+    
+    //! Sprite sequencer output (8 color pixels or 8 bits???)
+    uint64_t spriteSequencerOutput[8];
+    
+    //! Load sprite sequencer
+    //* Shift contents to left, add lower bits
+    void loadSpriteSequencer(unsigned sprite, unsigned byte, uint8_t value);
+    
+    //! Start sprite sequencer
+    void startSpriteSequencer(unsigned sprite);
+
+    //! update sprite sequencer output
+    void updateSPriteSequencerOutput(unsigned sprite);
+#endif
+    
+    
 	// -----------------------------------------------------------------------------------------------
 	//                                         Sprites
 	// -----------------------------------------------------------------------------------------------
