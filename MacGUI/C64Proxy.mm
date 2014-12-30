@@ -569,9 +569,6 @@
 - (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
-- (void) setInputDevice:(int)devNo device:(int)dev { c64->setInputDevice(devNo, dev); }
-- (uint8_t) portAssignment:(int)devNo { return c64->getDeviceOfPort(devNo); }
-
 - (Joystick *) joystick:(int)nr
 {
     if (nr == 1) return c64->joystick1;

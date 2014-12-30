@@ -266,6 +266,12 @@ private:
      Note: The BA line can be pulled down by multiple sources (wired AND). */
 	uint16_t BAlow;
 	
+    //! Remember at which cycle BA line has been pulled down
+    uint64_t BAwentLowAtCycle;
+    
+    //! cAccesses can only be performed is BA line is down for more than 2 cycles
+    bool BApulledDownForAtLeastThreeCycles();
+    
     /* "Der VIC benutzt zwei Flipflops, um den Rahmen um das Anzeigefenster
         herum zu erzeugen: Ein Haupt-Rahmenflipflop und ein vertikales
         Rahmenflipflop. [...]
@@ -653,11 +659,6 @@ private:
     //! Increase the x coordinate by 8
     inline void countX() { xCounter += 8; }
 
-    
-    
-    //! Old cAccess
-    inline void old_cAccess();
-    
 	//! returns the character pattern for the current cycle
 	inline uint8_t getCharacterPattern() {
         uint16_t offset = characterMemoryAddr + (characterSpace[registerVMLI] << 3) | registerRC;

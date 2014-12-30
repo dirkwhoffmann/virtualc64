@@ -199,10 +199,6 @@ private:
     
     //! Indicates that we should run as fast as possible at least during disk operations
 	bool warpLoad;
-
-	//! Game port configuration.
-	/*! The value is determined by the enumeration type INPUT_DEVICES */
-	int port[2];
     
 	//! Snapshot history ring buffer (for cheatbox)
 	Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE]; 
@@ -506,24 +502,6 @@ public:
 	//! Returns the build number
 	/*! The build number is composed out of the build date */
 	int build();
-	
-	//! Bind input device with game port
-	void setInputDevice(int portNo, int newDevice);
-
-	//! Switch the input device to the next available
-	void switchInputDevice(int port);
-
-	//! Switch input devices between both ports
-	void switchInputDevices();
-	
-	//! Get the device mapped to the port portNo
-	int getDeviceOfPort(int portNo);
-	
-	//! Sets a new joystick
-	Joystick *addJoystick();
-	
-	//! Removes a joystick
-	void removeJoystick(Joystick *joystick);
 	
 	//! The tread exit function.
 	/*! Automatically invoked by the execution thread on termination */

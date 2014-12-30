@@ -1031,21 +1031,6 @@ C64::build()
 	return ((year - 2000) * 10000) + (mon * 100) + day;
 }
 
-int
-C64::getDeviceOfPort( int portNo ) {
-    return port[portNo];
-}
-
-void
-C64::setInputDevice(int portNo, int newDevice) 
-{			
-    assert (portNo == 0 || portNo == 1);
-    
-    debug(1,"Input device for port %c has been changed to %d\n",portNo == 0 ? 'A' : 'B', newDevice);
-    
-    port[portNo] = newDevice;
-}
-
 void 
 C64::threadCleanup()
 {
