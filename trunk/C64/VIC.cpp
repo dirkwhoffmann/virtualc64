@@ -355,8 +355,7 @@ inline void VIC::cAccess()
         return;
 
     // If BA is pulled down for at least three cycles, perform memory access
-    // TODO: BApulledDownForAtLeastThreeCycles()
-    if (1) /* (BApulledDownForAtLeastThreeCycles()) */ {
+    if (BApulledDownForAtLeastThreeCycles()) {
         
         // |VM13|VM12|VM11|VM10| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0|
         uint16_t addr = (VM13VM12VM11VM10() << 6) | registerVC;
@@ -365,7 +364,7 @@ inline void VIC::cAccess()
             colorSpace[registerVMLI] = mem->colorRam[registerVC] & 0x0F;
     }
     
-    // Otherwise, assign default values
+    // Otherwise, 0xFF is read
     else {
         characterSpace[registerVMLI] = 0xFF;
             colorSpace[registerVMLI] = 0xFF;
@@ -566,7 +565,7 @@ VIC::drawPixels()
 			break;
 	}
 	
-end:
+// end:
     
 	// VC and VMLI are increased after each g access
 	if (displayState) {
@@ -574,15 +573,6 @@ end:
 		registerVC &= 0x3FF; // 10 bit overflow
 		registerVMLI++;
 		registerVMLI &= 0x3F; // 6 bit overflow;
-	}
-}
-
-inline void 
-VIC::old_cAccess()
-{
-	if (badLineCondition) {
-		characterSpace[registerVMLI] = mem->ram[bankAddr + screenMemoryAddr + registerVC];
-		colorSpace[registerVMLI] = mem->colorRam[registerVC] & 0xf;
 	}
 }
 
@@ -1121,7 +1111,12 @@ VIC::getScreenGeometry()
 
 void 
 VIC::pullDownBA(uint16_t source)
-{ 
+{
+    assert (source != 0);
+    
+    if (!BAlow)
+        BAwentLowAtCycle = c64->getCycles();
+    
 	BAlow |= source;
 	cpu->setRDY(BAlow == 0); 
 }
@@ -1131,6 +1126,12 @@ VIC::releaseBA(uint16_t source)
 { 
 	BAlow &= ~source;
 	cpu->setRDY(BAlow == 0); 
+}
+
+inline bool
+VIC::BApulledDownForAtLeastThreeCycles()
+{
+    return (c64->getCycles() - BAwentLowAtCycle) > 2;
 }
 
 void 
@@ -1424,7 +1425,7 @@ VIC::cycle15()
     }
 
     // Second clock phase
-	old_cAccess();
+	cAccess();
 	countX();
 	update_display_and_ba;
 }
@@ -1450,7 +1451,7 @@ VIC::cycle16()
 	drawPixels();
     
     // Second clock phase
-	old_cAccess();
+	cAccess();
 	countX();
 	update_display_and_ba;
 }
@@ -1487,7 +1488,7 @@ VIC::cycle17()
     drawPixels();
 
     // Second clock phase
-    old_cAccess();
+    cAccess();
 	countX();
 	update_display_and_ba;
 }
@@ -1524,7 +1525,7 @@ VIC::cycle18()
     drawPixels();
 
     // Second clock phase
-    old_cAccess();
+    cAccess();
 	countX();
 	update_display_and_ba;
 }
@@ -1535,7 +1536,7 @@ VIC::cycle19to54()
 	drawPixels();
     
     // Second clock phase
-	old_cAccess();
+	cAccess();
 	countX();
 	update_display_and_ba;
 }

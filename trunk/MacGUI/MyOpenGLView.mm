@@ -848,7 +848,7 @@ void checkForOpenGLErrors()
     if (c == d) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); }
     if (c == l) { joy->SetAxisX(JOYSTICK_AXIS_X_LEFT); }
     if (c == r) { joy->SetAxisX(JOYSTICK_AXIS_X_RIGHT); }
-    if (c == f) { joy->SetButtonPressed(true); }
+    if (c == f) { joy->SetButtonPressed(true); NSLog(@"Fire"); }
     
 #if 0
     if (c == u) { c64->cia1->clearJoystickBits(nr, 1); return; }
@@ -868,13 +868,14 @@ void checkForOpenGLErrors()
     if (k == d) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); }
     if (k == l) { joy->SetAxisX(JOYSTICK_AXIS_X_LEFT); }
     if (k == r) { joy->SetAxisX(JOYSTICK_AXIS_X_RIGHT); }
-    if (k == f) { joy->SetButtonPressed(true); }
+    if (k == f) { joy->SetButtonPressed(true); NSLog(@"Fire"); }
 }
 
 - (void)pullJoystick:(int)nr withKey:(char)c withKeycode:(int)k device:(int)d
 {
     switch (d) {
         case IPD_KEYBOARD_1:
+            NSLog(@"Cursor, space simulation");
             [self pullJoystick:nr withKeycode:k up:MAC_CU down:MAC_CD left:MAC_CL right:MAC_CR fire:MAC_SPC];
             break;
         case IPD_KEYBOARD_2:
@@ -895,7 +896,7 @@ void checkForOpenGLErrors()
     if (c == d) { joy->SetAxisY(JOYSTICK_AXIS_NONE); }
     if (c == l) { joy->SetAxisX(JOYSTICK_AXIS_NONE); }
     if (c == r) { joy->SetAxisX(JOYSTICK_AXIS_NONE); }
-    if (c == f) { joy->SetButtonPressed(false); }
+    if (c == f) { joy->SetButtonPressed(false); NSLog(@"Fire release"); }
 }
 
 - (void)releaseJoystick:(int)nr withKeycode:(int)k up:(int)u down:(int)d left:(int)l right:(int)r fire:(int)f
@@ -907,7 +908,7 @@ void checkForOpenGLErrors()
     if (k == d) { joy->SetAxisY(JOYSTICK_AXIS_NONE); }
     if (k == l) { joy->SetAxisX(JOYSTICK_AXIS_NONE); }
     if (k == r) { joy->SetAxisX(JOYSTICK_AXIS_NONE); }
-    if (k == f) { joy->SetButtonPressed(false); }
+    if (k == f) { joy->SetButtonPressed(false); NSLog(@"Fire release"); }
 }
 
 - (void)releaseJoystick:(int)nr withKey:(char)c withKeycode:(int)k device:(int)d
@@ -941,8 +942,8 @@ void checkForOpenGLErrors()
     // NSLog(@"NumKeysPressed = %d", numKeysPressed);
     
     // Simulate joysticks
-    [self pullJoystick:1 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(0)];
-    [self pullJoystick:2 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(1)];
+    [self pullJoystick:1 withKey:(char)c withKeycode:keycode device:[controller inputDeviceA]];
+    [self pullJoystick:2 withKey:(char)c withKeycode:keycode device:[controller inputDeviceB]];
 
     // Check for standard keys
     if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
@@ -995,8 +996,8 @@ void checkForOpenGLErrors()
 #endif	
 
     // Simulate joysticks
-    [self releaseJoystick:1 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(0)];
-    [self releaseJoystick:2 withKey:(char)c withKeycode:keycode device:c64->getDeviceOfPort(1)];
+    [self releaseJoystick:1 withKey:(char)c withKeycode:keycode device:[controller inputDeviceA]];
+    [self releaseJoystick:2 withKey:(char)c withKeycode:keycode device:[controller inputDeviceB]];
     
 	// We always relase the special keys
 	// That's the easiest way to cope with race conditions due to fast typing
