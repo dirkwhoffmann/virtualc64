@@ -17,8 +17,11 @@
  */
 
 // TODO:
-// Implement X offset shifts correctly
-// Don't draw border at once
+// Implement peek and poke, as seen from VIC
+//   Needs bank, setBank
+// Implementing gAccess
+// How does the sequencer work?
+// Don't draw borders at once
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -348,7 +351,7 @@ public:
 	
 	
 	// -----------------------------------------------------------------------------------------------
-	//                         I/O memory and temporary storage space
+	//                              I/O memory handling and RAM access
 	// -----------------------------------------------------------------------------------------------
 
 private:
@@ -356,6 +359,44 @@ private:
 	//! I/O Memory
 	/*! If a value is poked to the VIC address space, it is stored here. */
 	uint8_t iomem[64]; 
+
+    //! Start address of the currently selected memory bank
+    /*! There are four banks in total since the VIC chip can only "see" 16 KB of memory at one time
+        Two bank select bits in the CIA I/O space determine which quarter of the memory we're actually seeing
+     
+        \verbatim
+        +-------+------+-------+----------+-------------------------------------+
+        | VALUE | BITS |  BANK | STARTING |  VIC-II CHIP RANGE                  |
+        |  OF A |      |       | LOCATION |                                     |
+        +-------+------+-------+----------+-------------------------------------+
+        |   0   |  00  |   3   |   49152  | ($C000-$FFFF)                       |
+        |   1   |  01  |   2   |   32768  | ($8000-$BFFF)                       |
+        |   2   |  10  |   1   |   16384  | ($4000-$7FFF)                       |
+        |   3   |  11  |   0   |       0  | ($0000-$3FFF) (DEFAULT VALUE)       |
+        +-------+------+-------+----------+-------------------------------------+
+        \endverbatim 
+    */
+    uint16_t bankAddr;
+
+    //! General memory access via address and data bus
+    inline uint8_t memAccess(uint16_t addr);
+    
+    // VIC performs four special types of memory accesses (c, g, p and s)
+    
+    //! During a 'c access', VIC accesses the video matrix
+    inline void cAccess();
+    
+    //! During a 'g access', VIC reads graphics data (character or bitmap patterns)
+    inline void gAccess();
+    
+    //! During a 'p access', VIC reads sprite pointers
+    inline void pAccess();
+    
+    //! During a 's access', VIC reads sprite data
+    inline void sAccess();
+
+    //! Results of the gAccess is stored here
+    uint8_t gAccessResult;
 
 	//! Temporary space for display characters
 	/*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the characters to display */
@@ -404,23 +445,6 @@ private:
 	 */
 	int pixelSource[MAX_VIEWABLE_PIXELS];
 	
-	//! Start address of the currently selected memory bank
-	/*! There are four banks in total since the VIC chip can only "see" 16 KB of memory at one time
-	 Two bank select bits in the CIA I/O space determine which quarter of the memory we're actually seeing
-	 
-	 \verbatim
-	 +-------+------+-------+----------+-------------------------------------+
-	 | VALUE | BITS |  BANK | STARTING |  VIC-II CHIP RANGE                  |
-	 |  OF A |      |       | LOCATION |                                     |
-	 +-------+------+-------+----------+-------------------------------------+
-	 |   0   |  00  |   3   |   49152  | ($C000-$FFFF)                       |
-	 |   1   |  01  |   2   |   32768  | ($8000-$BFFF)                       |
-	 |   2   |  10  |   1   |   16384  | ($4000-$7FFF)                       |
-	 |   3   |  11  |   0   |       0  | ($0000-$3FFF) (DEFAULT VALUE)       |
-	 +-------+------+-------+----------+-------------------------------------+
-	 \endverbatim
-	 */
-	uint16_t bankAddr;
 	
 	//! Start address of screen memory
 	/*! The screen memory stores the character codes to display
@@ -451,6 +475,7 @@ private:
 	 +---------+------------+---------+-------------------+	
 	 \endverbatim
 	 */
+    // DEPRECATED
 	uint16_t screenMemoryAddr;
 		
 	//! Start address of character memory
@@ -474,16 +499,12 @@ private:
 	 +-----+----------+-------+----------------------------------------------+
 	 \endverbatim
 	 */
+    // DEPRECATED
 	uint16_t characterMemoryAddr;
 		
 	//! True, iff character data is read from ROM space
+    // DEPRECATED
 	bool characterMemoryMappedToROM;
-	
-	//! Physical start address of the character memory.
-	/*! The variable can point into the RAM or ROM of the virtual machine.
-	 The physical memory address is stored only to improve efficiency. */
-	// uint8_t *characterMemory;
-	
 
 	// -----------------------------------------------------------------------------------------------
 	//                                         Sprites
@@ -629,15 +650,14 @@ public:
 
 private:	
 	
-	//! Performs the g-access of the VIC
-	void gAccess();
-	
-	//! Performs the c-access of the VIC
-	inline void cAccess();
-	
-	//! Increase the x coordinate by 8
-	inline void countX() { xCounter += 8; }
-		
+    //! Increase the x coordinate by 8
+    inline void countX() { xCounter += 8; }
+
+    
+    
+    //! Old cAccess
+    inline void old_cAccess();
+    
 	//! returns the character pattern for the current cycle
 	inline uint8_t getCharacterPattern() {
         uint16_t offset = characterMemoryAddr + (characterSpace[registerVMLI] << 3) | registerRC;
@@ -667,6 +687,9 @@ private:
 	inline uint8_t getIdleAccessPattern() {
         return mem->ram[bankAddr + (iomem[0x11] & 0x40) ? 0x39ff : 0x3fff];
     }
+
+    //! Draw character or bitmap pixels
+    void drawPixels();
 
 	//! Draw a single character line (8 pixels) in single-color mode
 	/*! \param offset X coordinate of the first pixel to draw
@@ -778,6 +801,7 @@ public:
 	 passes it to the corresponding I/O chip.
 	 */
 	uint8_t peek(uint16_t addr);
+    
 	//! Poke fallthrough
 	/*! The fallthrough mechanism works as follows:
 	 If the memory is asked to poke a value, it first checks whether the RAM, ROM, or I/O space is visible.
@@ -811,15 +835,31 @@ public:
 	// inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 	inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 
-    //! Returns the DEN bit (DIsplay Enable bis)
+    //! Returns the DEN bit (DIsplay Enabled)
     inline bool DENbit() { return iomem[0x11] & 0x10; }
 
+    //! Returns the BMM bit (Bit Map Mode)
+    inline bool BMMbit() { return iomem[0x11] & 0x20; }
+
+    //! Returns the ECM bit (Extended Character Mode)
+    inline bool ECMbit() { return iomem[0x11] & 0x40; }
+
+    //! Returns masked CB13 bit (controls memory access)
+    inline uint8_t CB13() { return iomem[0x18] & 0x08; }
+
+    //! Returns masked CB13/CB12/CB11 bits (controls memory access)
+    inline uint8_t CB13CB12CB11() { return iomem[0x18] & 0x0E; }
+
+    //! Returns masked VM13/VM12/VM11/VM10 bits (controls memory access)
+    inline uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
+
+    
 	//! Returns the state of the CSEL bit
 	inline bool isCSEL() { return iomem[0x16] & 0x08; }
 	
 	//! Returns the state of the RSEL bit
 	inline bool isRSEL() { return iomem[0x11] & 0x08; }
-	
+    
 	//! Returns the currently set display mode
 	/*! The display mode is determined by Bit 5 and Bit 6 of control register 1 and Bit 4 of control register 2.
 	    To enable a fast handling, we put the bits together into a single integer value. */
@@ -1104,13 +1144,17 @@ public:
 	void endFrame();
 		
 	//! VIC execution functions
-	void cycle1();  void cycle2();  void cycle3();  void cycle4();  void cycle5();  void cycle6();  void cycle7();  void cycle8();  void cycle9();  void cycle10();
-	void cycle11(); void cycle12(); void cycle13(); void cycle14(); void cycle15(); void cycle16(); void cycle17(); void cycle18(); void cycle19(); void cycle20();
-	void cycle21(); void cycle22(); void cycle23(); void cycle24(); void cycle25(); void cycle26(); void cycle27(); void cycle28(); void cycle29(); void cycle30();
-	void cycle31(); void cycle32(); void cycle33(); void cycle34(); void cycle35(); void cycle36(); void cycle37(); void cycle38(); void cycle39(); void cycle40();
-	void cycle41(); void cycle42(); void cycle43(); void cycle44(); void cycle45(); void cycle46(); void cycle47(); void cycle48(); void cycle49(); void cycle50();
-	void cycle51(); void cycle52(); void cycle53(); void cycle54(); void cycle55(); void cycle56(); void cycle57(); void cycle58(); void cycle59(); void cycle60();
-	void cycle61(); void cycle62(); void cycle63(); void cycle64(); void cycle65();
+	void cycle1();  void cycle2();  void cycle3();  void cycle4();
+    void cycle5();  void cycle6();  void cycle7();  void cycle8();
+    void cycle9();  void cycle10(); void cycle11(); void cycle12();
+    void cycle13(); void cycle14(); void cycle15(); void cycle16();
+    void cycle17(); void cycle18();
+
+    void cycle19to54();
+
+    void cycle55(); void cycle56(); void cycle57(); void cycle58();
+    void cycle59(); void cycle60(); void cycle61(); void cycle62();
+    void cycle63(); void cycle64(); void cycle65();
 	
 	
 	// -----------------------------------------------------------------------------------------------

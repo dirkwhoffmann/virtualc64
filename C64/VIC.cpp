@@ -319,13 +319,178 @@ VIC::setNTSC()
 	pixelAspectRatio = 0.75;
 }
 
+// -----------------------------------------------------------------------------------------------
+//                             I/O memory handling and RAM access
+// -----------------------------------------------------------------------------------------------
+
+inline uint8_t VIC::memAccess(uint16_t addr)
+{
+    /* "Der VIC besitzt nur 14 Adreﬂleitungen, kann also nur 16KB Speicher
+        adressieren. Er kann trotzdem auf die kompletten 64KB Hauptspeicher
+        zugreifen, denn die 2 fehlenden oberen Adressbits werden von einem der
+        CIA-I/O-Chips zur Verfügung gestellt (es sind dies die invertierten Bits 0
+        und 1 von Port A der CIA 2). Damit kann jeweils eine von 4 16KB-Bänken für
+        den VIC eingestellt werden." [C.B.]
+
+       "Das Char-ROM wird in den Bänken 0 und 2 jeweils an den VIC-Adressen
+        $1000-$1fff eingeblendet" [C.B.] */
+    
+    assert((addr & 0xC000) == 0); /* 14 bit address */
+    
+    uint16_t extaddr = bankAddr + addr;
+    
+    if ((extaddr & 0x7000) == 0x1000) { // Address points into character ROM
+        assert ((0xC000 + addr) >= 0xD000 && (0xC000 + addr) <= 0xDFFF); // Really?
+        return mem->rom[0xC000 + addr]; // Read from character ROM
+    } else {
+        return mem->ram[extaddr];
+    }
+}
+
+inline void VIC::cAccess()
+{
+    // Only proceed if the BA line is pulled down
+    // TODO: Checking badLineCondition is not accurate here.
+    if (!badLineCondition)
+        return;
+
+    // If BA is pulled down for at least three cycles, perform memory access
+    // TODO: BApulledDownForAtLeastThreeCycles()
+    if (1) /* (BApulledDownForAtLeastThreeCycles()) */ {
+        
+        // |VM13|VM12|VM11|VM10| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0|
+        uint16_t addr = (VM13VM12VM11VM10() << 6) | registerVC;
+        
+        characterSpace[registerVMLI] = memAccess(addr);
+            colorSpace[registerVMLI] = mem->colorRam[registerVC] & 0x0F;
+    }
+    
+    // Otherwise, assign default values
+    else {
+        characterSpace[registerVMLI] = 0xFF;
+            colorSpace[registerVMLI] = 0xFF;
+    }
+}
+
+inline void VIC::gAccess()
+{
+    uint16_t addr;
+
+    assert ((registerVC & 0xFC00) == 0); // 10 bit register
+    assert ((registerRC & 0xF8) == 0);   // 3 bit register
+    
+    /* "Der Adressgenerator für die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
+        besitzt bei den g-Zugriffen im wesentlichen 3 Modi (die c-Zugriffe erfolgen
+        immer nach dem selben Adressschema). Im Display-Zustand wählt das BMM-Bit
+        entweder Zeichengenerator-Zugriffe (BMM=0) oder Bitmap-Zugriffe (BMM=1)
+        aus" [C.B.] */
+
+    if (displayState) {
+        
+        if (BMMbit()) {
+            
+            // |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
+            addr = (CB13() << 4) | (registerVC << 3) | registerRC;
+
+        } else {
+
+            // |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0|
+            addr = (CB13CB12CB11() << 4) | (characterSpace[registerVMLI] << 3) | registerRC;
+        
+        }
+    }
+                   
+    /* "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.] */
+
+    else {
+        addr = 0x3FFF;
+    }
+
+    /* "Bei gesetztem ECM-Bit schaltet der Adreﬂgenerator bei den g-Zugriffen die
+        Adreﬂleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
+        (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.] */
+
+    if (ECMbit()) {
+        addr &= 0xF9FF;
+    }
+    
+    gAccessResult = memAccess(addr);
+}
+
+
+// MOVE THE FOLLOWING STUFF SOMEWHERE
+
+    /* "Der Grafikdatensequenzer beherrscht 8 verschiedene Grafikmodi, die über die
+        Bits ECM, BMM und MCM (Extended Color Mode, Bit Map Mode und Multi Color
+        Mode) in den Registern $d011 und $d016 ausgewählt werden (von den 8
+        möglichen Bitkombinationen sind 3 unültig und erzeugen die gleiche
+        Ausgabe, nämlich nur die Farbe Schwarz). Der Idle-Zustand ist ein
+        Spezialfall, da darin keine c-Zugriffe stattfinden und der Sequenzer
+        '0'-Bits als Videomatrix-Daten verwendet." [C.B.] */
+
+    
+    
+
+    // IDEE:
+    //! 8 bit shift register for video output
+    /*! The upper 8 bits are used to simulate the load delay */
+#if 0
+    uint16_t graphicSequencer;
+    
+    void VIC::loadGraphicSequencer(uint8_t byte)
+    {
+        int xshift = getHorizontalRasterScroll();
+        
+        sequencer >>= 8; // remaining bits of previous cycle
+        sequencer &= (1 << xshift) - 1; // free space for new bits
+        sequencer |= ((uint16_t)byte << xshift); // add new bits
+    }
+
+    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
+     Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
+     Abschnitt 3.9.). Außerhalb der Anzeigespalte und bei gesetztem Flipflop wird
+     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
+     normalerweise vom Rahmen überdeckt). Kernstück des Sequenzers ist ein
+     8-Bit-Schieberegister, das mit jedem Pixel um 1 Bit weitergeschoben und
+     nach jedem g-Zugriff mit den gelesenen Pixeldaten geladen wird. Mit XSCROLL
+     aus Register $d016 lässt sich das Laden des Schieberegisters um 0-7 Pixel
+     verzögern und dadurch die Anzeige um bis zu 7 Pixel nach rechts
+     verschieben." [C.B.] */
+    uint8_t spriteSequencer;
+
+#endif
+    
+#if 0
+    
+    /* "Kernstück des Sequenzers ist ein 8-Bit-Schieberegister, das mit jedem Pixel um 
+        1 Bit weitergeschoben und nach jedem g-Zugriff mit den gelesenen Pixeldaten 
+        geladen wird." [C.B.] */
+    loadGraphicSequencer(...);
+
+    /* "4. Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhöht." [C.B.] */
+    if (displayState) {
+        registerVC = (registerVC + 1) & 0x3FF; // 10 bit counter
+        registerVMLI = (registerVMLI + 1) & 0x3F; // 6 bit counter
+    }
+#endif
+
+
+inline void VIC::pAccess()
+{
+    
+}
+
+inline void VIC::sAccess()
+{
+
+}
 
 // -----------------------------------------------------------------------------------------------
 //                                         Drawing
 // -----------------------------------------------------------------------------------------------
 
 void 
-VIC::gAccess()
+VIC::drawPixels()
 {
 	uint8_t pattern;
 	uint8_t fgcolor;
@@ -333,9 +498,9 @@ VIC::gAccess()
 	int colorLookup[4];
 	uint16_t xCoord = (xCounter - 20) + leftBorderWidth + getHorizontalRasterScroll();
 
+#if 0
     uint16_t xCoordBorder = (xCounter - 20) + leftBorderWidth;
 
-#if 0
 // MOVE SOMEWHERE ELSE.
 // PROBLEM: OUTER PARTS OF BORDER HAVE NO G ACCESSES
     // Check border flipflops
@@ -406,18 +571,17 @@ end:
 	// VC and VMLI are increased after each g access
 	if (displayState) {
 		registerVC++;
-		registerVC &= 0x3ff; // 10 bit overflow
+		registerVC &= 0x3FF; // 10 bit overflow
 		registerVMLI++;
-		registerVMLI &= 0x3f; // 6 bit overflow; 	
+		registerVMLI &= 0x3F; // 6 bit overflow;
 	}
 }
 
 inline void 
-VIC::cAccess()
+VIC::old_cAccess()
 {
 	if (badLineCondition) {
 		characterSpace[registerVMLI] = mem->ram[bankAddr + screenMemoryAddr + registerVC];
-		// colorSpace[registerVMLI] = mem->peekColorRam(registerVC) & 0xf;
 		colorSpace[registerVMLI] = mem->colorRam[registerVC] & 0xf;
 	}
 }
@@ -733,8 +897,8 @@ VIC::setMemoryBankAddr(uint16_t addr)
 	bankAddr = addr;
 	
 	// changing the memory bank also affects the start address of the screen and character memory
-	setScreenMemoryAddr((iomem[0x18] & 0xF0) << 6);
-	setCharacterMemoryAddr((iomem[0x18] & 0x0E) << 10);
+	setScreenMemoryAddr((iomem[0x18] & 0xF0) << 6); // DEPRECTAD
+	setCharacterMemoryAddr((iomem[0x18] & 0x0E) << 10); // DEPRECTAD
 }
 
 uint16_t
@@ -1259,7 +1423,8 @@ VIC::cycle15()
         }
     }
 
-	cAccess();
+    // Second clock phase
+	old_cAccess();
 	countX();
 	update_display_and_ba;
 }
@@ -1282,8 +1447,10 @@ VIC::cycle16()
 			spriteDmaOnOff &= ~mask;
 		}
 	}		
-	gAccess();
-	cAccess();
+	drawPixels();
+    
+    // Second clock phase
+	old_cAccess();
 	countX();
 	update_display_and_ba;
 }
@@ -1317,8 +1484,10 @@ VIC::cycle17()
         clearMainFrameFF();
     }
     
-    gAccess();
-	cAccess();
+    drawPixels();
+
+    // Second clock phase
+    old_cAccess();
 	countX();
 	update_display_and_ba;
 }
@@ -1352,332 +1521,21 @@ VIC::cycle18()
         clearMainFrameFF();
     }
 
-    gAccess();
-	cAccess();
+    drawPixels();
+
+    // Second clock phase
+    old_cAccess();
 	countX();
 	update_display_and_ba;
 }
 
 void
-VIC::cycle19()
+VIC::cycle19to54()
 {
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle20()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle21()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle22()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle23()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle24()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle25()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle26()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle27()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle28()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle29()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle30()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle31()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle32()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle33()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle34()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle35()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle36()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle37()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle38()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle39()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle40()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle41()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle42()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle43()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle44()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle45()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle46()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle47()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle48()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle49()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle50()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle51()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle52()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle53()
-{
-	gAccess();
-	cAccess();
-	countX();
-	update_display_and_ba;
-}
-
-void
-VIC::cycle54()
-{
-	gAccess();
-	cAccess();
+	drawPixels();
+    
+    // Second clock phase
+	old_cAccess();
 	countX();
 	update_display_and_ba;
 }
@@ -1687,7 +1545,7 @@ VIC::cycle55()
 {
 	if (!isCSEL()) mainFrameFF = true;
 	
-	gAccess();
+	drawPixels();
 	
 	/* In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
 	 invertiert, wenn das MxYE-Bit gesetzt ist. */
@@ -1760,7 +1618,7 @@ VIC::cycle58()
     // According to this, do we really need || badLineCondition() in the next statement?
 	if (displayState || badLineCondition) {
 		registerRC++;
-		registerRC &= 7;  // 3 bit overflow
+		registerRC &= 0x07;  // 3 bit overflow
 	}
 			
 	/* "4. In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE

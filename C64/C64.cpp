@@ -603,147 +603,147 @@ C64::executeOneCycle()
 			EXECUTE(18);
 			break;
 		case 19: 
-			vic->cycle19();
+			vic->cycle19to54();
 			EXECUTE(19);
 			break;
 		case 20: 
-			vic->cycle20();
+			vic->cycle19to54();
 			EXECUTE(20);
 			break;
 		case 21: 
-			vic->cycle21();
+			vic->cycle19to54();
 			EXECUTE(21);
 			break;
 		case 22: 
-			vic->cycle22();
+			vic->cycle19to54();
 			EXECUTE(22);
 			break;
 		case 23: 
-			vic->cycle23();
+			vic->cycle19to54();
 			EXECUTE(23);
 			break;
 		case 24: 
-			vic->cycle24();
+			vic->cycle19to54();
 			EXECUTE(24);
 			break;
 		case 25: 
-			vic->cycle25();
+			vic->cycle19to54();
 			EXECUTE(25);
 			break;
 		case 26: 
-			vic->cycle26();
+			vic->cycle19to54();
 			EXECUTE(26);
 			break;
 		case 27: 
-			vic->cycle27();
+			vic->cycle19to54();
 			EXECUTE(27);
 			break;
 		case 28: 
-			vic->cycle28();
+			vic->cycle19to54();
 			EXECUTE(28);
 			break;
 		case 29: 
-			vic->cycle29();
+			vic->cycle19to54();
 			EXECUTE(29);
 			break;
 		case 30: 
-			vic->cycle30();
+			vic->cycle19to54();
 			EXECUTE(30);
 			break;
 		case 31: 
-			vic->cycle31();
+			vic->cycle19to54();
 			EXECUTE(31);
 			break;
 		case 32: 
-			vic->cycle32();
+			vic->cycle19to54();
 			EXECUTE(32);
 			break;
 		case 33: 
-			vic->cycle33();
+			vic->cycle19to54();
 			EXECUTE(33);
 			break;
 		case 34: 
-			vic->cycle34();
+			vic->cycle19to54();
 			EXECUTE(34);
 			break;
 		case 35: 
-			vic->cycle35();
+			vic->cycle19to54();
 			EXECUTE(35);
 			break;
 		case 36: 
-			vic->cycle36();
+			vic->cycle19to54();
 			EXECUTE(36);
 			break;
 		case 37: 
-			vic->cycle37();
+			vic->cycle19to54();
 			EXECUTE(37);
 			break;
 		case 38: 
-			vic->cycle38();
+			vic->cycle19to54();
 			EXECUTE(38);
 			break;
 		case 39: 
-			vic->cycle39();
+			vic->cycle19to54();
 			EXECUTE(39);
 			break;
 		case 40: 
-			vic->cycle40();
+			vic->cycle19to54();
 			EXECUTE(40);
 			break;
 		case 41: 
-			vic->cycle41();
+			vic->cycle19to54();
 			EXECUTE(41);
 			break;
 		case 42: 
-			vic->cycle42();
+			vic->cycle19to54();
 			EXECUTE(42);
 			break;
 		case 43: 
-			vic->cycle43();
+			vic->cycle19to54();
 			EXECUTE(43);
 			break;
 		case 44: 
-			vic->cycle44();
+			vic->cycle19to54();
 			EXECUTE(44);
 			break;
 		case 45: 
-			vic->cycle45();
+			vic->cycle19to54();
 			EXECUTE(45);
 			break;
 		case 46: 
-			vic->cycle46();
+			vic->cycle19to54();
 			EXECUTE(46);
 			break;
 		case 47: 
-			vic->cycle47();
+			vic->cycle19to54();
 			EXECUTE(47);
 			break;
 		case 48: 
-			vic->cycle48();
+			vic->cycle19to54();
 			EXECUTE(48);
 			break;
 		case 49: 
-			vic->cycle49();
+			vic->cycle19to54();
 			EXECUTE(49);
 			break;
 		case 50: 
-			vic->cycle50();
+			vic->cycle19to54();
 			EXECUTE(50);
 			break;
 		case 51: 
-			vic->cycle51();
+			vic->cycle19to54();
 			EXECUTE(51);
 			break;
 		case 52: 
-			vic->cycle52();
+			vic->cycle19to54();
 			EXECUTE(52);
 			break;
 		case 53: 
-			vic->cycle53();
+			vic->cycle19to54();
 			EXECUTE(53);
 			break;
 		case 54: 
-			vic->cycle54();
+			vic->cycle19to54();
 			EXECUTE(54);
 			break;
 		case 55: 
