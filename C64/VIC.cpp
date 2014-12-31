@@ -507,8 +507,33 @@ void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
     }
 }
 
-void VIC::runGraphicSequencerAtBorder()
+void VIC::runGraphicSequencerAtBorder(int cycle)
 {
+    if (!mainFrameFF)
+        return;
+    
+    uint16_t xCoord = ((int16_t)xCounter - 28) + leftBorderWidth;
+    int bordercolor = colors[getBorderColor()];
+    
+    if (cycle == 17) {
+        // Set 7 pixels
+        for (unsigned i = 0; i < 7; i++) {
+            setFramePixel(xCoord++, bordercolor);
+        }
+    } else if (cycle == 56) {
+        // Set 9 pixels
+        xCoord--;
+        for (unsigned i = 0; i < 9; i++) {
+            setFramePixel(xCoord++, bordercolor);
+        }
+    } else {
+        // set 8 pixels
+        for (unsigned i = 0; i < 8; i++) {
+            setFramePixel(xCoord++, bordercolor);
+        }
+    }
+
+#if 0
     uint16_t xCoord;
     
     xCoord = ((int16_t)xCounter - 28) + leftBorderWidth;
@@ -521,14 +546,15 @@ void VIC::runGraphicSequencerAtBorder()
     }
 
     // What do we do if frame flipflops are off?
+#endif
 }
 
 void VIC::runGraphicSequencer()
 {
     uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
 
-    // Only run the sequencer if no frame flipflop is set
-    if (mainFrameFF || verticalFrameFF) {
+    // Check vertical frame flipflop
+    if (verticalFrameFF) {
         int bordercolor = colors[getBorderColor()]; // colors[4];
         for (unsigned i = 0; i < 8; i++) {
             setFramePixel(xCoord+i, bordercolor);
@@ -610,6 +636,9 @@ inline void
 VIC::setFramePixel(unsigned offset, int color)
 {
     setPixel(offset, color, 0x00 /* in front of everything */, 0x00);
+    
+    // clear foreground source bit to diable collision detection inside border
+    pixelSource[offset] &= (~0x80);
 }
 
 inline void
@@ -1279,7 +1308,7 @@ VIC::beginRasterline(uint16_t line)
 	memset(zBuffer, 0x7f, sizeof(zBuffer));
 
 	// Clear pixel source
-	memset(pixelSource, 0x00, sizeof(pixelSource));		
+	memset(pixelSource, 0x00, sizeof(pixelSource));    
 }
 
 void 
@@ -1438,7 +1467,7 @@ VIC::cycle13()
     // Frodo: xCounter = 0xFFFC; // -3??
     
     // We reach the left border here and start drawing
-    runGraphicSequencerAtBorder();
+    runGraphicSequencerAtBorder(13);
 
 	countX();
 	update_display_and_ba;
@@ -1464,7 +1493,7 @@ VIC::cycle14()
 	if (badLineCondition)
 		registerRC = 0;
     
-    runGraphicSequencerAtBorder();
+    runGraphicSequencerAtBorder(14);
 
 	countX();
 	update_display_and_ba;
@@ -1483,7 +1512,7 @@ VIC::cycle15()
         }
     }
 
-    runGraphicSequencerAtBorder();
+    runGraphicSequencerAtBorder(15);
 
     // Second clock phase
 	cAccess();
@@ -1518,7 +1547,7 @@ VIC::cycle16()
 			spriteDmaOnOff &= ~mask;
 		}
 	}		
-    runGraphicSequencerAtBorder();
+    runGraphicSequencerAtBorder(16);
     
     // First clock phase (LOW)
     gAccess();
@@ -1557,9 +1586,10 @@ VIC::cycle17()
 
         clearMainFrameFF();
     }
-    
+
     // We reach the main screen area here (start drawing pixels)
     runGraphicSequencer();
+    runGraphicSequencerAtBorder(17);
 
     // First clock phase (LOW)
     gAccess();
@@ -1666,7 +1696,8 @@ VIC::cycle56()
      }
 
     runGraphicSequencer();
-    
+    runGraphicSequencerAtBorder(56);
+
 	updateSpriteDmaOnOff();
     requestBusForSprite(0); // Bus is again requested because DMA conditions may have changed
 	countX();
@@ -1686,7 +1717,7 @@ VIC::cycle57()
     }
     
     // We reach the right border here (stop drawing pixels)
-    runGraphicSequencerAtBorder();
+    runGraphicSequencerAtBorder(57);
     
 	requestBusForSprite(1);
 	countX();
@@ -1696,7 +1727,7 @@ VIC::cycle57()
 void
 VIC::cycle58()
 {
-    runGraphicSequencerAtBorder();
+    runGraphicSequencerAtBorder(58);
 
 	/* "Der †bergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
 	    wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
@@ -1748,7 +1779,7 @@ VIC::cycle58()
 void
 VIC::cycle59()
 {
-    runGraphicSequencerAtBorder();
+    runGraphicSequencerAtBorder(59);
 
 	readSpriteData(0);
 	readSpriteData(0);
@@ -1761,7 +1792,7 @@ void
 VIC::cycle60()
 {
     // This is the last invocation of the graphic sequencer
-    runGraphicSequencerAtBorder();
+    runGraphicSequencerAtBorder(60);
 
 	releaseBusForSprite(0);
 	readSpritePtr(1);
