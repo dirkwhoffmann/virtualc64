@@ -17,9 +17,8 @@
  */
 
 // TODO:
-// Figure out coordinate of first and last visible pixel
+// Implement VBlanking
 // Implement proper background drawing
-// Implement invalid display modes
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -572,6 +571,7 @@ private:
 	//! Expansion flipflop
 	/*! Used to handle Y sprite stretching. One bit for each sprite */
 	uint8_t expansionFF;
+    uint8_t expansionFF_in_015;
 	
 				
 	// -----------------------------------------------------------------------------------------------
