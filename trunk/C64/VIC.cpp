@@ -378,6 +378,9 @@ inline void VIC::gAccess()
     assert ((registerVC & 0xFC00) == 0); // 10 bit register
     assert ((registerRC & 0xF8) == 0);   // 3 bit register
     
+
+    // Run address generator
+    
     /* "Der Adressgenerator fŸr die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
         besitzt bei den g-Zugriffen im wesentlichen 3 Modi (die c-Zugriffe erfolgen
         immer nach dem selben Adressschema). Im Display-Zustand wŠhlt das BMM-Bit
@@ -413,9 +416,13 @@ inline void VIC::gAccess()
         addr &= 0xF9FF;
     }
     
-    gAccessResult = memAccess(addr);
+    // Load graphics sequencer
+    loadGraphicSequencer(memAccess(addr));
     
-    // VC and VMLI are increased after each g access
+    
+    gAccessResult = memAccess(addr); // DEPRECATED
+    
+    // VC and VMLI are increased after each gAccess
     if (displayState) {
         registerVC++;
         registerVC &= 0x3FF; // 10 bit overflow
@@ -435,32 +442,143 @@ inline void VIC::sAccess()
 }
 
 // -----------------------------------------------------------------------------------------------
-//                                         Drawing
+//                                         Graphics sequencer
 // -----------------------------------------------------------------------------------------------
 
-void 
+void VIC::loadGraphicSequencer(uint8_t data)
+{
+    gs_data = data;
+
+    // Determine how to interpret the data
+    gs_mode = getDisplayMode();
+    switch (gs_mode) {
+            
+        case STANDARD_TEXT:
+            gs_fg_color = colorSpace[registerVMLI];
+            gs_bg_color = getBackgroundColor();
+            break;
+            
+        case MULTICOLOR_TEXT:
+            gs_fg_color = colorSpace[registerVMLI];
+            if (gs_fg_color & 0x8) {
+                gs_colorLookup[0] = colors[getBackgroundColor()];
+                gs_colorLookup[1] = colors[getExtraBackgroundColor(1)];
+                gs_colorLookup[2] = colors[getExtraBackgroundColor(2)];
+                gs_colorLookup[3] = colors[gs_fg_color & 0x07];
+            }
+            break;
+        case STANDARD_BITMAP:
+            gs_fg_color = characterSpace[registerVMLI] >> 4;
+            gs_bg_color = characterSpace[registerVMLI] & 0xf;
+            break;
+            
+        case MULTICOLOR_BITMAP:
+            gs_colorLookup[0] = colors[getBackgroundColor()];
+            gs_colorLookup[1] = colors[characterSpace[registerVMLI] >> 4];
+            gs_colorLookup[2] = colors[characterSpace[registerVMLI] & 0x0F];
+            gs_colorLookup[3] = colors[colorSpace[registerVMLI]];
+            break;
+            
+        case EXTENDED_BACKGROUND_COLOR:
+            gs_fg_color = colorSpace[registerVMLI];
+            gs_bg_color = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);
+            if (gs_fg_color & 0x8) {
+                gs_colorLookup[0] = colors[gs_bg_color];
+                gs_colorLookup[1] = colors[getExtraBackgroundColor(1)];
+                gs_colorLookup[2] = colors[getExtraBackgroundColor(2)];
+                gs_colorLookup[3] = colors[gs_fg_color & 0x07];
+            }
+            break;
+            
+        case INVALID_DISPLAY_MODE:
+            // do nothing (?)
+            break;
+    }
+}
+
+void VIC::runGraphicSequencerAtBorder()
+{
+    uint16_t xCoord;
+    
+    xCoord = ((int16_t)xCounter - 28) + leftBorderWidth;
+    
+    if (mainFrameFF || verticalFrameFF) {
+        int bordercolor = colors[getBorderColor()]; // colors[7];
+        for (unsigned i = 0; i < 8; i++) {
+            setFramePixel(xCoord+i, bordercolor);
+        }
+    }
+
+    // What do we do if frame flipflops are off?
+}
+
+void VIC::runGraphicSequencer()
+{
+    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
+
+    // Only run the sequencer if no frame flipflop is set
+    if (mainFrameFF || verticalFrameFF) {
+        int bordercolor = colors[getBorderColor()]; // colors[4];
+        for (unsigned i = 0; i < 8; i++) {
+            setFramePixel(xCoord+i, bordercolor);
+        }
+        return;
+    }
+    
+    // Synthesize pixels
+    switch (getDisplayMode()) {
+            
+        case STANDARD_TEXT:
+            drawSingleColorCharacter(xCoord, gs_data, colors[gs_fg_color], colors[gs_bg_color]);
+            break;
+            
+        case MULTICOLOR_TEXT:
+            if (gs_fg_color & 0x8) {
+                drawMultiColorCharacter(xCoord, gs_data, gs_colorLookup);
+            } else {
+                drawSingleColorCharacter(xCoord, gs_data, colors[gs_fg_color], colors[getBackgroundColor()]);
+            }
+            break;
+            
+        case STANDARD_BITMAP:
+            drawSingleColorCharacter(xCoord, gs_data, gs_fg_color, gs_bg_color);
+            break;
+            
+        case MULTICOLOR_BITMAP:
+            drawMultiColorCharacter(xCoord, gs_data, gs_colorLookup);
+            break;
+            
+        case EXTENDED_BACKGROUND_COLOR:
+            if (gs_fg_color & 0x8) {
+                drawMultiColorCharacter(xCoord, gs_data, gs_colorLookup);
+            } else {
+                drawSingleColorCharacter(xCoord, gs_data, colors[gs_fg_color], colors[getBackgroundColor()]);
+            }
+            break;		
+
+        case INVALID_DISPLAY_MODE:
+            // do nothing (?)
+            break;
+    }
+}
+
+
+
+
+// Old stuff
+void
 VIC::drawPixels()
 {
+#if 0
 	uint8_t pattern;
 	uint8_t fgcolor;
 	uint8_t bgcolor;
 	int colorLookup[4];
-	uint16_t xCoord = (xCounter - 20) + leftBorderWidth + getHorizontalRasterScroll();
+	// uint16_t xCoord = (xCounter - 20) + leftBorderWidth + getHorizontalRasterScroll();
 
-#if 0
-    uint16_t xCoordBorder = (xCounter - 20) + leftBorderWidth;
-
-// MOVE SOMEWHERE ELSE.
-// PROBLEM: OUTER PARTS OF BORDER HAVE NO G ACCESSES
-    // Check border flipflops
-    if (mainFrameFF || verticalFrameFF) {
-        int bordercolor = colors[4]; // getBorderColor()];
-        for (unsigned i = 0; i < 8; i++) {
-            pixelBuffer[xCoordBorder+i] = bordercolor;
-        }
-        goto end;
-    }
-#endif
+    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
+    
+    xCoord += getHorizontalRasterScroll();
     
     // OLD CODE TO FETCH PATTERN
     // REMOVE ONCE NEW CODE IS WORKING
@@ -486,12 +604,13 @@ VIC::drawPixels()
     }
 
     // NEW CODE TO FETCH PATTERN (pattern is computed in gAccess)
-    // pattern = gAccessResult;
+    pattern = gAccessResult;
     
+    // switch (gAccessDisplayMode) { // WHICH ONE IS CORRECT?
 	switch (getDisplayMode()) {
 		case STANDARD_TEXT:
-			fgcolor = colorSpace[registerVMLI];
-			bgcolor = getBackgroundColor();
+            fgcolor = colorSpace[registerVMLI];
+            bgcolor = getBackgroundColor();
 			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
 			break;
 		case MULTICOLOR_TEXT:
@@ -534,15 +653,6 @@ VIC::drawPixels()
 		case INVALID_DISPLAY_MODE:
 			// do nothing (?)
 			break;
-	}
-	
-#if 0
-	// VC and VMLI are increased after each g access
-	if (displayState) {
-		registerVC++;
-		registerVC &= 0x3FF; // 10 bit overflow
-		registerVMLI++;
-		registerVMLI &= 0x3F; // 6 bit overflow;
 	}
 #endif
 }
@@ -612,12 +722,30 @@ VIC::drawMultiColorCharacter(unsigned offset, uint8_t pattern, int *colorLookup)
 	}	
 }
 
+inline void
+VIC::setPixel(unsigned offset, int color, int depth, int source)
+{
+    pixelSource[offset] |= source;
+
+    if (depth < zBuffer[offset]) {
+        zBuffer[offset] = depth;
+        pixelBuffer[offset] = color;
+    }
+}
+
+inline void
+VIC::setFramePixel(unsigned offset, int color)
+{
+    setPixel(offset, color, 0x00 /* in front of everything */, 0x00);
+}
+
 inline void 
 VIC::setForegroundPixel(unsigned offset, int color) 
 {
-	pixelBuffer[offset] = color;
-	zBuffer[offset]     = 0x10; //TODO: deprecated
-	pixelSource[offset] = 0x80; //
+    setPixel(offset, color, 0x20, 0x80);
+//  pixelBuffer[offset] = color;
+//  zBuffer[offset]     = 0x10;
+//	pixelSource[offset] = 0x80;
 }
 
 inline void 
@@ -632,11 +760,12 @@ VIC::setSpritePixel(unsigned offset, int color, int nr)
 	uint8_t mask = (1 << nr);
 	
 	if (offset < totalScreenWidth) {
-		int depth = spriteDepth(nr);
-		if (depth < zBuffer[offset]) {
-			pixelBuffer[offset] = color;
-			zBuffer[offset] = depth;
-		}
+
+        //int depth = spriteDepth(nr);
+		//if (depth < zBuffer[offset]) {
+		//	pixelBuffer[offset] = color;
+		//	zBuffer[offset] = depth;
+		// }
 		
 		// Check sprite/sprite collision
 		if ((spriteSpriteCollisionEnabled & mask) && (pixelSource[offset] & 0x7F)) {
@@ -650,8 +779,10 @@ VIC::setSpritePixel(unsigned offset, int color, int nr)
 			triggerIRQ(2);
 		}
 		
-		if (nr < 7)
-			pixelSource[offset] |= mask;
+        if (nr == 7)
+            mask = 0;
+        
+        setPixel(offset, color, spriteDepth(nr), mask);
 	}
 }
 
@@ -1351,17 +1482,21 @@ VIC::cycle12()
 void
 VIC::cycle13()
 {
+    xCounter = -4;
+    // Frodo: xCounter = 0xFFFC; // -3??
+    
+    // We reach the left border here and start drawing
+    runGraphicSequencerAtBorder();
+
 	countX();
 	update_display_and_ba;
-	
-	// FRODO: raster_x = 0xfffc;
 }
 
 void
 VIC::cycle14()
 {
 	// NEW CODE
-	xCounter = 0x04;
+	// xCounter = 0x04;
 	
     /* WHERE DO WE IMPLEMENT THIS ONE?
        "1. Irgendwo einmal außerhalb des Bereiches der Rasterzeilen $30-$f7 (also
@@ -1377,6 +1512,8 @@ VIC::cycle14()
 	if (badLineCondition)
 		registerRC = 0;
     
+    runGraphicSequencerAtBorder();
+
 	countX();
 	update_display_and_ba;
 }
@@ -1393,6 +1530,8 @@ VIC::cycle15()
             mcbase[i] &= 0x3F; // 6 bit counter
         }
     }
+
+    runGraphicSequencerAtBorder();
 
     // Second clock phase
 	cAccess();
@@ -1427,7 +1566,8 @@ VIC::cycle16()
 			spriteDmaOnOff &= ~mask;
 		}
 	}		
-	drawPixels();
+	// drawPixels();
+    runGraphicSequencerAtBorder();
     
     // First clock phase (LOW)
     gAccess();
@@ -1467,6 +1607,8 @@ VIC::cycle17()
         clearMainFrameFF();
     }
     
+    // We reach the main screen area here (start drawing pixels)
+    runGraphicSequencer();
     drawPixels();
 
     // First clock phase (LOW)
@@ -1507,6 +1649,7 @@ VIC::cycle18()
         clearMainFrameFF();
     }
 
+    runGraphicSequencer();
     drawPixels();
 
     // First clock phase (LOW)
@@ -1521,6 +1664,7 @@ VIC::cycle18()
 void
 VIC::cycle19to54()
 {
+    runGraphicSequencer();
 	drawPixels();
     
     // First clock phase (LOW)
@@ -1535,6 +1679,7 @@ VIC::cycle19to54()
 void
 VIC::cycle55()
 {
+    runGraphicSequencer();
 	drawPixels();
 
     // First clock phase (LOW)
@@ -1564,15 +1709,18 @@ VIC::cycle55()
 void
 VIC::cycle56()
 {
-    const uint16_t x_coord = 344;
+    const uint16_t x_coord = 335;
     
-     // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
+    // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
      //     Haupt-Rahmenflipflop gesetzt." [C.B.]
 
      if (x_coord == rightComparisonValue()) {
          mainFrameFF = true;
      }
 
+    runGraphicSequencer();
+    drawPixels();
+    
 	updateSpriteDmaOnOff();
     requestBusForSprite(0); // Bus is again requested because DMA conditions may have changed
 	countX();
@@ -1582,7 +1730,7 @@ VIC::cycle56()
 void
 VIC::cycle57()
 {
-    const uint16_t x_coord = 335;
+    const uint16_t x_coord = 344;
     
     // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
     //     Haupt-Rahmenflipflop gesetzt." [C.B.]
@@ -1590,6 +1738,9 @@ VIC::cycle57()
     if (x_coord == rightComparisonValue()) {
         mainFrameFF = true;
     }
+    
+    // We reach the right border here (stop drawing pixels)
+    runGraphicSequencerAtBorder();
     
 	requestBusForSprite(1);
 	countX();
@@ -1599,6 +1750,8 @@ VIC::cycle57()
 void
 VIC::cycle58()
 {
+    runGraphicSequencerAtBorder();
+
 	/* "Der †bergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
 	    wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
 	    "5. In der ersten Phase von Zyklus 58 wird geprŸft, ob RC=7 ist. Wenn ja,
@@ -1649,6 +1802,8 @@ VIC::cycle58()
 void
 VIC::cycle59()
 {
+    runGraphicSequencerAtBorder();
+
 	readSpriteData(0);
 	readSpriteData(0);
 	requestBusForSprite(2);
@@ -1659,6 +1814,9 @@ VIC::cycle59()
 void
 VIC::cycle60()
 {
+    // This is the last invocation of the graphic sequencer
+    runGraphicSequencerAtBorder();
+
 	releaseBusForSprite(0);
 	readSpritePtr(1);
 	readSpriteData(1);
@@ -1707,7 +1865,7 @@ VIC::cycle63()
 			
 	// draw border
     // TODO: HANDLE IN EACH CYCLE
-    drawBorder();
+    // drawBorder();
 			
 	// illegal display modes cause a black line to appear
 	if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR) markLine(xStart(), SCREEN_WIDTH, colors[BLACK]);
