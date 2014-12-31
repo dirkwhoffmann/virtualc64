@@ -539,7 +539,7 @@ private:
     uint8_t gs_delay;
 
     //! Load graphic sequencer with data and determine conversion parameters
-    void loadGraphicSequencer(uint8_t data);
+    void loadGraphicSequencer(uint8_t data, uint8_t load_delay);
     
     //! Synthesize pixels in border area
     void runGraphicSequencerAtBorder();

@@ -417,7 +417,7 @@ inline void VIC::gAccess()
     }
     
     // Load graphics sequencer
-    loadGraphicSequencer(memAccess(addr));
+    loadGraphicSequencer(memAccess(addr), getHorizontalRasterScroll());
     
     
     gAccessResult = memAccess(addr); // DEPRECATED
@@ -445,10 +445,11 @@ inline void VIC::sAccess()
 //                                         Graphics sequencer
 // -----------------------------------------------------------------------------------------------
 
-void VIC::loadGraphicSequencer(uint8_t data)
+void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
 {
     gs_data = data;
-
+    gs_delay = load_delay;
+    
     // Determine how to interpret the data
     gs_mode = getDisplayMode();
     switch (gs_mode) {
@@ -524,6 +525,8 @@ void VIC::runGraphicSequencer()
         }
         return;
     }
+    
+    xCoord += gs_delay;
     
     // Synthesize pixels
     switch (getDisplayMode()) {

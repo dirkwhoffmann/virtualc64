@@ -55,8 +55,8 @@
 {
     /* Jostick port 1 */
     {
-        NSMenuItem *item1 = [[joystickPortA menu] itemWithTag:4];
-        NSMenuItem *item2 = [[joystickPortA menu] itemWithTag:5];
+        NSMenuItem *item1 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_1];
+        NSMenuItem *item2 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_2];
         [item1 setEnabled:joystickManager->joystickIsPluggedIn(1)];
         [item2 setEnabled:joystickManager->joystickIsPluggedIn(2)];
         [joystickPortA selectItemAtIndex:[self inputDeviceA]];
@@ -64,8 +64,8 @@
     
     /* Jostick port 2 */
     {
-        NSMenuItem *item1 = [[joystickPortB menu] itemWithTag:4];
-        NSMenuItem *item2 = [[joystickPortB menu] itemWithTag:5];
+        NSMenuItem *item1 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_1];
+        NSMenuItem *item2 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_2];
         [item1 setEnabled:joystickManager->joystickIsPluggedIn(1)];
         [item2 setEnabled:joystickManager->joystickIsPluggedIn(2)];
         [joystickPortB selectItemAtIndex:[self inputDeviceB]];
