@@ -532,12 +532,12 @@ private:
     void loadGraphicSequencer(uint8_t data, uint8_t load_delay);
     
     //! Synthesize pixels in border area
-    void runGraphicSequencerAtBorder();
+    void runGraphicSequencerAtBorder(int cycle);
 
     //! Synthesize pixels in main screen area
     void runGraphicSequencer();
 
-        
+
 	// -----------------------------------------------------------------------------------------------
 	//                                         Sprites
 	// -----------------------------------------------------------------------------------------------
