@@ -17,10 +17,9 @@
  */
 
 // TODO:
-// Synthesize pixels in gAccess. Use graphicSequencerShiftRegister
-//
-// Draw border outside of gAccesses
-// pullJoystick should return value if key was a joystick key, return then
+// Figure out coordinate of first and last visible pixel
+// Implement proper background drawing
+// Implement invalid display modes
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -48,6 +47,7 @@ class VIC : public VirtualComponent {
 	// -----------------------------------------------------------------------------------------------
 	
 public:
+    //! Predefined color schemes
 	enum ColorScheme {
 		CCS64           = 0x00,
 		VICE            = 0x01,
@@ -64,20 +64,18 @@ public:
 	};
 	
 	//! Display mode
-	/*! The VIC chip supports five distinct display modes. The currently set display mode is 
-		determined by Bit 5 and Bit 6 of control register 1 and Bit 4 of control register 2.
-	*/
 	enum DisplayMode {
 		STANDARD_TEXT             = 0x00,
 		MULTICOLOR_TEXT           = 0x10,
 		STANDARD_BITMAP           = 0x20,
 		MULTICOLOR_BITMAP         = 0x30,
 		EXTENDED_BACKGROUND_COLOR = 0x40,
-		INVALID_DISPLAY_MODE      = 0x01
+        INVALID_TEXT              = 0x50,
+        INVALID_STANDARD_BITMAP   = 0x60,
+        INVALID_MULTICOLOR_BITMAP = 0x70
 	};
 
 	//! Screen geometry
-	/*! The VIC chip supports four different screen geometries. */
 	enum ScreenGeometry {
 		COL_40_ROW_25 = 0x01,
 		COL_38_ROW_25 = 0x02,
@@ -85,6 +83,7 @@ public:
 		COL_38_ROW_24 = 0x04
 	};
 
+    //! VIC colors
 	enum Color {
 		BLACK   = 0x00,
 		WHITE   = 0x01,
@@ -259,8 +258,7 @@ private:
      First phase (LOW):   VIC gets access to the bus
      Second phase (HIGH): CPU gets access to the bus
 
-     In rare cases, VIC needs access in the HIGH phase, too. To block the CPU, the BA line is pulled
-     down. 
+     In rare cases, VIC needs access in the HIGH phase, too. To block the CPU, the BA line is pulled down.
      
      Note: The BA line can be pulled down by multiple sources (wired AND). */
 	uint16_t BAlow;
@@ -305,14 +303,6 @@ private:
     inline uint16_t upperComparisonValue() { return isRSEL() ? 51 : 55; }
     inline uint16_t lowerComparisonValue() { return isRSEL() ? 251 : 247; }
     
-	//! Vertical border on/off switch
-    // DEPRECTAED
-	// bool drawVerticalFrame;
-	
-	//! Horizontal border on/off switch
-    // DEPRECATED
-	// bool drawHorizontalFrame;
-	
 	//! Clear main frame flipflop
     /*  "Das vertikale Rahmenflipflop dient zur UnterstŸtzung bei der Darstellung
          des oberen/unteren Rahmens. Ist es gesetzt, kann das Haupt-Rahmenflipflop
@@ -531,9 +521,9 @@ private:
     
     //! Graphic sequencer foreground color to be used in data->pixel conversion)
     uint8_t gs_bg_color;
-    
-    //! Color array for multicolor modes
-    int gs_colorLookup[4];
+
+    //! Graphic sequencer colors for multi color modes
+    uint8_t gs_multicol0, gs_multicol1, gs_multicol2, gs_multicol3;
 
     //! Graphic sequencer load delay
     uint8_t gs_delay;
@@ -547,30 +537,7 @@ private:
     //! Synthesize pixels in main screen area
     void runGraphicSequencer();
 
-#if 0
-    //! Sprite sequencer shift registers (24 pixels)
-    /*! The upper 8 bits are used to simulate the output delay */
-    uint8_t spriteSequencerShiftReg[24][8];
-
-    //! State of the sequencer
-    /*! 0 = off, 3 ... 1 = currently outputting */
-    int spriteSequencerCycle[8];
-    
-    //! Sprite sequencer output (8 color pixels or 8 bits???)
-    uint64_t spriteSequencerOutput[8];
-    
-    //! Load sprite sequencer
-    //* Shift contents to left, add lower bits
-    void loadSpriteSequencer(unsigned sprite, unsigned byte, uint8_t value);
-    
-    //! Start sprite sequencer
-    void startSpriteSequencer(unsigned sprite);
-
-    //! update sprite sequencer output
-    void updateSPriteSequencerOutput(unsigned sprite);
-#endif
-    
-    
+        
 	// -----------------------------------------------------------------------------------------------
 	//                                         Sprites
 	// -----------------------------------------------------------------------------------------------
@@ -673,9 +640,6 @@ public:
 	//! Get screen buffer
 	inline void *screenBuffer() { return (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1; }
 
-	//! Get current screen buffer (DEPRECATED)
-	// inline void *getCurrentScreenBuffer() { return currentScreenBuffer; }
-
 	//! Reset the VIC chip to its initial state
 	void reset();
 	
@@ -709,6 +673,7 @@ public:
     //! Get color
 	uint32_t getColor(int nr) { return colors[nr]; }
     
+    
 	// -----------------------------------------------------------------------------------------------
 	//                                         Drawing
 	// -----------------------------------------------------------------------------------------------
@@ -718,55 +683,7 @@ private:
     //! Increase the x coordinate by 8
     inline void countX() { xCounter += 8; }
 
-	//! returns the character pattern for the current cycle
-	inline uint8_t getCharacterPattern() {
-        uint16_t offset = characterMemoryAddr + (characterSpace[registerVMLI] << 3) | registerRC;
-        return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset];
-    }
-	
-	//! returns the extended character pattern for the current cycle
-	inline uint8_t getExtendedCharacterPattern() {
-        uint16_t offset = characterMemoryAddr + ((characterSpace[registerVMLI] & 0x3F) << 3) | registerRC;
-        return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset];
-    }
-
-	//! returns the bitmap pattern for the current cycle
-	inline uint8_t getBitmapPattern() {
-        uint16_t offset = characterMemoryAddr + (registerVC << 3) | registerRC;
-        return characterMemoryMappedToROM ? mem->rom[offset] : mem->ram[offset];
-    }
-	
-	//! This method returns the pattern for a idle access. 
-	/*! This is iportant for the Hyperscreen and FLD effects (maybe others as well).
-	    3.7.1. Idle-Zustand/Display-Zustand the idle access always reads at $3fff or $39ff when the ECM bit is set.
-		Here the doc conflicts: the ECM bit is either at $d016 (chap 3.7.1) or $d011 (3.2)
-		For now i'm ging with $d011 ... wow... this actually seems to work! noticable in the "rbi 2 baseball" intro 
-		(return 0 to see difference)
-		TODO: check if one of the addresses is mapped into the rom? 
-	 */
-	inline uint8_t getIdleAccessPattern() {
-        return mem->ram[bankAddr + (iomem[0x11] & 0x40) ? 0x39ff : 0x3fff];
-    }
-
-    //! Draw character or bitmap pixels
-    void drawPixels();
-
-	//! Draw a single character line (8 pixels) in single-color mode
-	/*! \param offset X coordinate of the first pixel to draw
-	 \param pattern Bitmap of the character row to draw
-	 \param fgcolor Foreground color in RGBA format
-	 \param bgcolor Background color in RGBA format
-	 */		
-	void drawSingleColorCharacter(unsigned offset, uint8_t pattern, int fgcolor, int bgcolor);
-	
-	//! Draw a single character line (8 pixels) in multi-color mode
-	/*! \param offset X coordiate of the first pixel to draw
-	 \param pattern Bitmap of the character row to draw
-	 \param colorLookup Four element array containing the different colors in RGBA format
-	 */
-	void drawMultiColorCharacter(unsigned offset, uint8_t pattern, int *colorLookup);
-
-    //! Draw single pixel
+    //! Draw single pixel into pixel buffer
     /*! \param offset X coordinate of the pixel to draw
         \param color Pixel color in RGBA format
         \param z buffer depth (0 = background)
@@ -790,7 +707,28 @@ private:
         \param color Pixel color in RGBA format
 	 */
 	void setBackgroundPixel(unsigned offset, int color);
-	
+    
+    //! Draw a single character line (8 pixels) in single-color mode
+    /*! \param offset X coordinate of the first pixel to draw */
+    void drawSingleColorCharacter(unsigned offset);
+    
+    //! Draw a single character line (8 pixels) in multi-color mode
+    /*! \param offset X coordiate of the first pixel to draw
+     */
+    void drawMultiColorCharacter(unsigned offset);
+
+    //! Draw a single color character in invalid text mode
+    /*! \param offset X coordiate of the first pixel to draw
+     */
+    void drawInvalidSingleColorCharacter(unsigned offset);
+
+    //! Draw a multi color character in invalid text mode
+    /*! \param offset X coordiate of the first pixel to draw
+     */
+    void drawInvalidMultiColorCharacter(unsigned offset);
+
+    
+    
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
 	    \param color Pixel color in RGBA format
@@ -926,7 +864,6 @@ public:
     //! Returns masked VM13/VM12/VM11/VM10 bits (controls memory access)
     inline uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
 
-    
 	//! Returns the state of the CSEL bit
 	inline bool isCSEL() { return iomem[0x16] & 0x08; }
 	
@@ -934,8 +871,7 @@ public:
 	inline bool isRSEL() { return iomem[0x11] & 0x08; }
     
 	//! Returns the currently set display mode
-	/*! The display mode is determined by Bit 5 and Bit 6 of control register 1 and Bit 4 of control register 2.
-	    To enable a fast handling, we put the bits together into a single integer value. */
+	/*! The display mode is determined by bits 5 and 6 of control register 1 and bit 4 of control register 2. */
 	inline DisplayMode getDisplayMode() 
 	{ return (DisplayMode)((iomem[0x11] & 0x60) | (iomem[0x16] & 0x10)); }
 	

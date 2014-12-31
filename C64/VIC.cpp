@@ -461,38 +461,48 @@ void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
             
         case MULTICOLOR_TEXT:
             gs_fg_color = colorSpace[registerVMLI];
-            if (gs_fg_color & 0x8) {
-                gs_colorLookup[0] = colors[getBackgroundColor()];
-                gs_colorLookup[1] = colors[getExtraBackgroundColor(1)];
-                gs_colorLookup[2] = colors[getExtraBackgroundColor(2)];
-                gs_colorLookup[3] = colors[gs_fg_color & 0x07];
+            if (gs_fg_color & 0x8 /* MC flag */) {
+                gs_multicol0 = getBackgroundColor();
+                gs_multicol1 = getExtraBackgroundColor(1);
+                gs_multicol2 = getExtraBackgroundColor(2);
+                gs_multicol3 = gs_fg_color & 0x07;
+            } else {
+                gs_bg_color = getBackgroundColor();
             }
             break;
+            
         case STANDARD_BITMAP:
             gs_fg_color = characterSpace[registerVMLI] >> 4;
-            gs_bg_color = characterSpace[registerVMLI] & 0xf;
+            gs_bg_color = characterSpace[registerVMLI] & 0x0F;
             break;
             
         case MULTICOLOR_BITMAP:
-            gs_colorLookup[0] = colors[getBackgroundColor()];
-            gs_colorLookup[1] = colors[characterSpace[registerVMLI] >> 4];
-            gs_colorLookup[2] = colors[characterSpace[registerVMLI] & 0x0F];
-            gs_colorLookup[3] = colors[colorSpace[registerVMLI]];
+            gs_multicol0 = getBackgroundColor();
+            gs_multicol1 = characterSpace[registerVMLI] >> 4;
+            gs_multicol2 = characterSpace[registerVMLI] & 0x0F;
+            gs_multicol3 = colorSpace[registerVMLI];
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
             gs_fg_color = colorSpace[registerVMLI];
-            gs_bg_color = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);
-            if (gs_fg_color & 0x8) {
-                gs_colorLookup[0] = colors[gs_bg_color];
-                gs_colorLookup[1] = colors[getExtraBackgroundColor(1)];
-                gs_colorLookup[2] = colors[getExtraBackgroundColor(2)];
-                gs_colorLookup[3] = colors[gs_fg_color & 0x07];
+            if (gs_fg_color & 0x8 /* MC flag */) {
+                gs_multicol0 = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);;
+                gs_multicol1 = getExtraBackgroundColor(1);
+                gs_multicol2 = getExtraBackgroundColor(2);
+                gs_multicol3 = gs_fg_color & 0x07;
+            } else {
+                gs_bg_color = getBackgroundColor();
             }
             break;
             
-        case INVALID_DISPLAY_MODE:
-            // do nothing (?)
+        case INVALID_TEXT:
+        case INVALID_STANDARD_BITMAP:
+        case INVALID_MULTICOLOR_BITMAP:
+            // Nothing to do
+            break;
+
+        default:
+            assert(0);
             break;
     }
 }
@@ -532,204 +542,64 @@ void VIC::runGraphicSequencer()
     switch (getDisplayMode()) {
             
         case STANDARD_TEXT:
-            drawSingleColorCharacter(xCoord, gs_data, colors[gs_fg_color], colors[gs_bg_color]);
+            drawSingleColorCharacter(xCoord);
             break;
             
         case MULTICOLOR_TEXT:
-            if (gs_fg_color & 0x8) {
-                drawMultiColorCharacter(xCoord, gs_data, gs_colorLookup);
+            if (gs_fg_color & 0x8 /* MC flag */) {
+                drawMultiColorCharacter(xCoord);
             } else {
-                drawSingleColorCharacter(xCoord, gs_data, colors[gs_fg_color], colors[getBackgroundColor()]);
+                drawSingleColorCharacter(xCoord);
             }
             break;
             
         case STANDARD_BITMAP:
-            drawSingleColorCharacter(xCoord, gs_data, gs_fg_color, gs_bg_color);
+            drawSingleColorCharacter(xCoord);
             break;
             
         case MULTICOLOR_BITMAP:
-            drawMultiColorCharacter(xCoord, gs_data, gs_colorLookup);
+            drawMultiColorCharacter(xCoord);
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            if (gs_fg_color & 0x8) {
-                drawMultiColorCharacter(xCoord, gs_data, gs_colorLookup);
+            if (gs_fg_color & 0x8 /* MC flag */) {
+                drawMultiColorCharacter(xCoord);
             } else {
-                drawSingleColorCharacter(xCoord, gs_data, colors[gs_fg_color], colors[getBackgroundColor()]);
+                drawSingleColorCharacter(xCoord);
             }
             break;		
 
-        case INVALID_DISPLAY_MODE:
-            // do nothing (?)
+        case INVALID_TEXT:
+            if (gs_fg_color & 0x8 /* MC flag */) {
+                drawInvalidMultiColorCharacter(xCoord);
+            } else {
+                drawInvalidSingleColorCharacter(xCoord);
+            }
+            break;
+            
+        case INVALID_STANDARD_BITMAP:
+            drawInvalidSingleColorCharacter(xCoord);
+            break;
+            
+        case INVALID_MULTICOLOR_BITMAP:
+            drawInvalidMultiColorCharacter(xCoord);
+            break;
+
+        default:
+            assert(0);
             break;
     }
 }
 
-
-
-
-// Old stuff
-void
-VIC::drawPixels()
-{
-#if 0
-	uint8_t pattern;
-	uint8_t fgcolor;
-	uint8_t bgcolor;
-	int colorLookup[4];
-	// uint16_t xCoord = (xCounter - 20) + leftBorderWidth + getHorizontalRasterScroll();
-
-    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
-    
-    xCoord += getHorizontalRasterScroll();
-    
-    // OLD CODE TO FETCH PATTERN
-    // REMOVE ONCE NEW CODE IS WORKING
-    switch (getDisplayMode()) {
-        case STANDARD_TEXT:
-            pattern = displayState ? getCharacterPattern() : getIdleAccessPattern();
-            break;
-        case MULTICOLOR_TEXT:
-            pattern = displayState ? getCharacterPattern() : getIdleAccessPattern();
-            break;
-        case STANDARD_BITMAP:
-            pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
-            break;
-        case MULTICOLOR_BITMAP:
-            pattern = displayState ? getBitmapPattern() : getIdleAccessPattern();
-            break;
-        case EXTENDED_BACKGROUND_COLOR:
-            pattern = displayState ? getExtendedCharacterPattern() : getIdleAccessPattern();
-            break;
-        case INVALID_DISPLAY_MODE:
-            // do nothing (?)
-            break;
-    }
-
-    // NEW CODE TO FETCH PATTERN (pattern is computed in gAccess)
-    pattern = gAccessResult;
-    
-    // switch (gAccessDisplayMode) { // WHICH ONE IS CORRECT?
-	switch (getDisplayMode()) {
-		case STANDARD_TEXT:
-            fgcolor = colorSpace[registerVMLI];
-            bgcolor = getBackgroundColor();
-			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
-			break;
-		case MULTICOLOR_TEXT:
-            fgcolor = colorSpace[registerVMLI];
-			if (fgcolor & 0x8) {
-				colorLookup[0] = colors[getBackgroundColor()];
-				colorLookup[1] = colors[getExtraBackgroundColor(1)];
-				colorLookup[2] = colors[getExtraBackgroundColor(2)];
-				colorLookup[3] = colors[fgcolor & 0x07];
-				drawMultiColorCharacter(xCoord, pattern, colorLookup);
-			} else {
-				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
-			}
-			break;
-		case STANDARD_BITMAP:
-            fgcolor = characterSpace[registerVMLI] >> 4;
-			bgcolor = characterSpace[registerVMLI] & 0xf;
-			drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[bgcolor]);
-			break;
-		case MULTICOLOR_BITMAP:
-            colorLookup[0] = colors[getBackgroundColor()];
-			colorLookup[1] = colors[characterSpace[registerVMLI] >> 4];
-			colorLookup[2] = colors[characterSpace[registerVMLI] & 0x0F];
-			colorLookup[3] = colors[colorSpace[registerVMLI]];
-			drawMultiColorCharacter(xCoord, pattern, colorLookup);
-			break;
-		case EXTENDED_BACKGROUND_COLOR:
-            fgcolor = colorSpace[registerVMLI];
-			bgcolor = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);
-			if (fgcolor & 0x8) {
-				colorLookup[0] = colors[bgcolor];
-				colorLookup[1] = colors[getExtraBackgroundColor(1)];
-				colorLookup[2] = colors[getExtraBackgroundColor(2)];
-				colorLookup[3] = colors[fgcolor & 0x07];
-				drawMultiColorCharacter(xCoord, pattern, colorLookup);
-			} else {
-				drawSingleColorCharacter(xCoord, pattern, colors[fgcolor], colors[getBackgroundColor()]);
-			}
-			break;		
-		case INVALID_DISPLAY_MODE:
-			// do nothing (?)
-			break;
-	}
-#endif
-}
-
-inline void 
-VIC::drawSingleColorCharacter(unsigned offset, uint8_t pattern, int fgcolor, int bgcolor)
-{
-	assert(offset >= 0 && offset+7 < MAX_VIEWABLE_PIXELS);
-	if (pattern & 128) setForegroundPixel(offset+0, fgcolor); else setBackgroundPixel(offset+0, bgcolor);
-	if (pattern & 64)  setForegroundPixel(offset+1, fgcolor); else setBackgroundPixel(offset+1, bgcolor);
-	if (pattern & 32)  setForegroundPixel(offset+2, fgcolor); else setBackgroundPixel(offset+2, bgcolor);
-	if (pattern & 16)  setForegroundPixel(offset+3, fgcolor); else setBackgroundPixel(offset+3, bgcolor);
-	if (pattern & 8)   setForegroundPixel(offset+4, fgcolor); else setBackgroundPixel(offset+4, bgcolor);
-	if (pattern & 4)   setForegroundPixel(offset+5, fgcolor); else setBackgroundPixel(offset+5, bgcolor);
-	if (pattern & 2)   setForegroundPixel(offset+6, fgcolor); else setBackgroundPixel(offset+6, bgcolor);
-	if (pattern & 1)   setForegroundPixel(offset+7, fgcolor); else setBackgroundPixel(offset+7, bgcolor);
-}
-
-inline void 
-VIC::drawMultiColorCharacter(unsigned offset, uint8_t pattern, int *colorLookup)
-{
-	assert(offset+7 < MAX_VIEWABLE_PIXELS);
-
-	int col;
-	uint8_t colBits;
-	colBits = (pattern >> 6) & 0x03;
-	col = colorLookup[colBits];
-	if (colBits & 0x02) {
-		setForegroundPixel(offset, col);
-		setForegroundPixel(offset + 1, col);
-	} else {
-		setBackgroundPixel(offset, col);
-		setBackgroundPixel(offset + 1, col);
-	}
-	offset += 2;
-	
-	colBits = (pattern >> 4) & 0x03;
-	col = colorLookup[colBits];
-	if (colBits & 0x02) {
-		setForegroundPixel(offset, col);
-		setForegroundPixel(offset + 1, col);
-	} else {
-		setBackgroundPixel(offset, col);
-		setBackgroundPixel(offset + 1, col);
-	}
-	offset += 2;
-	
-	colBits = (pattern >> 2) & 0x03;
-	col = colorLookup[colBits];
-	if (colBits & 0x02) {
-		setForegroundPixel(offset, col);
-		setForegroundPixel(offset + 1, col);
-	} else {
-		setBackgroundPixel(offset, col);
-		setBackgroundPixel(offset + 1, col);
-	}
-	offset += 2;
-	
-	colBits = (pattern >> 0) & 0x03;
-	col = colorLookup[colBits];
-	if (colBits & 0x02) {
-		setForegroundPixel(offset, col);
-		setForegroundPixel(offset + 1, col);
-	} else {
-		setBackgroundPixel(offset, col);
-		setBackgroundPixel(offset + 1, col);
-	}	
-}
+// -----------------------------------------------------------------------------------------------
+//                                           Drawing
+// -----------------------------------------------------------------------------------------------
 
 inline void
 VIC::setPixel(unsigned offset, int color, int depth, int source)
 {
     pixelSource[offset] |= source;
-
+    
     if (depth < zBuffer[offset]) {
         zBuffer[offset] = depth;
         pixelBuffer[offset] = color;
@@ -742,19 +612,98 @@ VIC::setFramePixel(unsigned offset, int color)
     setPixel(offset, color, 0x00 /* in front of everything */, 0x00);
 }
 
-inline void 
-VIC::setForegroundPixel(unsigned offset, int color) 
+inline void
+VIC::setForegroundPixel(unsigned offset, int color)
 {
     setPixel(offset, color, 0x20, 0x80);
-//  pixelBuffer[offset] = color;
-//  zBuffer[offset]     = 0x10;
-//	pixelSource[offset] = 0x80;
+}
+
+inline void
+VIC::setBackgroundPixel(unsigned offset, int color)
+{
+    pixelBuffer[offset] = color;
 }
 
 inline void 
-VIC::setBackgroundPixel(unsigned offset, int color) 
+VIC::drawSingleColorCharacter(unsigned offset)
 {
-	pixelBuffer[offset] = color;
+    int fg_rgba = colors[gs_fg_color];
+    int bg_rgba = colors[gs_bg_color];
+    
+	assert(offset >= 0 && offset+7 < MAX_VIEWABLE_PIXELS);
+    
+	if (gs_data & 128) setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
+	if (gs_data & 64)  setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
+	if (gs_data & 32)  setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
+	if (gs_data & 16)  setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
+	if (gs_data & 8)   setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
+	if (gs_data & 4)   setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
+	if (gs_data & 2)   setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
+	if (gs_data & 1)   setForegroundPixel(offset, fg_rgba); else setBackgroundPixel(offset, bg_rgba);
+}
+
+inline void 
+VIC::drawMultiColorCharacter(unsigned offset)
+{
+    int col, colorLookup[4];;
+    uint8_t colBits;
+    
+	assert(offset+7 < MAX_VIEWABLE_PIXELS);
+
+    colorLookup[0] = colors[gs_multicol0];
+    colorLookup[1] = colors[gs_multicol1];
+    colorLookup[2] = colors[gs_multicol2];
+    colorLookup[3] = colors[gs_multicol3];
+    
+    for (unsigned i = 0; i < 4; i++, gs_data <<= 2) {
+
+        colBits = (gs_data & 0xC0) >> 6;
+        col = colorLookup[colBits];
+        
+        if (colBits & 0x02) {
+            setForegroundPixel(offset++, col);
+            setForegroundPixel(offset++, col);
+        } else {
+            setBackgroundPixel(offset++, col);
+            setBackgroundPixel(offset++, col);
+        }
+    }
+}
+
+inline void
+VIC::drawInvalidSingleColorCharacter(unsigned offset)
+{
+    int col = colors[BLACK];
+
+    assert(offset+7 < MAX_VIEWABLE_PIXELS);
+    
+    for (unsigned i = 0; i < 8; i++, gs_data <<= 1) {
+        
+        if (gs_data & 0xF0) {
+            setForegroundPixel(offset++, col);
+        } else {
+            setBackgroundPixel(offset++, col);
+        }
+    }
+}
+
+inline void
+VIC::drawInvalidMultiColorCharacter(unsigned offset)
+{
+    int col = colors[BLACK];
+
+    assert(offset+7 < MAX_VIEWABLE_PIXELS);
+    
+    for (unsigned i = 0; i < 4; i++, gs_data <<= 2) {
+        
+        if (gs_data & 0xF0) {
+            setForegroundPixel(offset++, col);
+            setForegroundPixel(offset++, col);
+        } else {
+            setBackgroundPixel(offset++, col);
+            setBackgroundPixel(offset++, col);
+        }
+    }
 }
 
 inline void 
@@ -1569,7 +1518,6 @@ VIC::cycle16()
 			spriteDmaOnOff &= ~mask;
 		}
 	}		
-	// drawPixels();
     runGraphicSequencerAtBorder();
     
     // First clock phase (LOW)
@@ -1612,7 +1560,6 @@ VIC::cycle17()
     
     // We reach the main screen area here (start drawing pixels)
     runGraphicSequencer();
-    drawPixels();
 
     // First clock phase (LOW)
     gAccess();
@@ -1653,7 +1600,6 @@ VIC::cycle18()
     }
 
     runGraphicSequencer();
-    drawPixels();
 
     // First clock phase (LOW)
     gAccess();
@@ -1668,7 +1614,6 @@ void
 VIC::cycle19to54()
 {
     runGraphicSequencer();
-	drawPixels();
     
     // First clock phase (LOW)
     gAccess();
@@ -1683,7 +1628,6 @@ void
 VIC::cycle55()
 {
     runGraphicSequencer();
-	drawPixels();
 
     // First clock phase (LOW)
 
@@ -1722,7 +1666,6 @@ VIC::cycle56()
      }
 
     runGraphicSequencer();
-    drawPixels();
     
 	updateSpriteDmaOnOff();
     requestBusForSprite(0); // Bus is again requested because DMA conditions may have changed
