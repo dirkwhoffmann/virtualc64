@@ -1311,8 +1311,8 @@ VIC::cycle1()
 		triggerIRQ(1);
 			
 	// Check for the DEN bit if we're processing rasterline 30
-    if (scanline == 0x30 && (iomem[0x11] & 0x10) != 0)
-        DENwasSetInRasterline30 = true;
+    if (scanline == 0x30)
+        DENwasSetInRasterline30 = (iomem[0x11] & 0x10);
     
 	// Get sprite data address and sprite data of sprite 3
 	releaseBusForSprite(2);
@@ -1482,6 +1482,7 @@ VIC::cycle15()
 {
 	/* "7. In der ersten Phase von Zyklus 15 wird geprüft, ob das
 	       Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 2 erhöht." [C.B.] */
+#if 0
     for (int i = 0; i < 8; i++) {
         uint8_t mask = (1 << i);
         if (expansionFF & mask) {
@@ -1489,7 +1490,10 @@ VIC::cycle15()
             mcbase[i] &= 0x3F; // 6 bit counter
         }
     }
-
+#endif
+    
+    expansionFF_in_015 = expansionFF;
+    
     runGraphicSequencerAtBorder(15);
 
     // Second clock phase
@@ -1509,12 +1513,27 @@ VIC::cycle16()
         After the MCBASE update, the VIC checks if MCBASE is equal to 63 and turns
         off the DMA of the sprite if it is." [VIC Addendum]
      */
+    for (int i = 0; i < 8; i++) {
+        uint8_t mask = (1 << i);
+        if (expansionFF & mask) {
+            mcbase[i] = mc[i];
+            assert (mcbase[i] <= 0x3F);
+        }
+        else if (expansionFF_in_015 & mask) {
+            // CPU has cleared expansionFF in the meantime
+            mcbase[i] = (0x101010 & (mcbase[i] & mc[i])) | (0x010101 & (mcbase[i] | mc[i]));
+        }
+        
+        if (mcbase[i] == 63) {
+            spriteDmaOnOff &= ~mask;
+        }
+    }
     
 	/* "8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
 	       Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 1 erhöht.
 	       Dann wird geprüft, ob MCBASE auf 63 steht und bei positivem Vergleich
 	       der DMA und die Darstellung für das jeweilige Sprite abgeschaltet." [C.B.] */
-			
+#if 0
 	for (int i = 0; i < 8; i++) {
 		uint8_t mask = (1 << i);
 		if (expansionFF & mask) {
@@ -1524,7 +1543,9 @@ VIC::cycle16()
 		if (mcbase[i] == 63) {			
 			spriteDmaOnOff &= ~mask;
 		}
-	}		
+	}
+#endif
+    
     runGraphicSequencerAtBorder(16);
     
     // First clock phase (LOW)
