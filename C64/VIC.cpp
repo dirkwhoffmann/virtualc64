@@ -512,7 +512,7 @@ void VIC::runGraphicSequencerAtBorder(int cycle)
     if (!mainFrameFF)
         return;
     
-    uint16_t xCoord = ((int16_t)xCounter - 28) + leftBorderWidth;
+    uint16_t xCoord = ((int16_t)xCounter - 29) + leftBorderWidth;
     int bordercolor = colors[getBorderColor()];
     
     if (cycle == 17) {
@@ -536,7 +536,7 @@ void VIC::runGraphicSequencerAtBorder(int cycle)
 #if 0
     uint16_t xCoord;
     
-    xCoord = ((int16_t)xCounter - 28) + leftBorderWidth;
+    xCoord = ((int16_t)xCounter - 29) + leftBorderWidth;
     
     if (mainFrameFF || verticalFrameFF) {
         int bordercolor = colors[getBorderColor()]; // colors[7];
@@ -551,7 +551,7 @@ void VIC::runGraphicSequencerAtBorder(int cycle)
 
 void VIC::runGraphicSequencer()
 {
-    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
+    uint16_t xCoord = (xCounter - 29) + leftBorderWidth;
 
     // Check vertical frame flipflop
     if (verticalFrameFF) {
@@ -638,7 +638,7 @@ VIC::setFramePixel(unsigned offset, int color)
     setPixel(offset, color, 0x00 /* in front of everything */, 0x00);
     
     // clear foreground source bit to diable collision detection inside border
-    pixelSource[offset] &= (~0x80);
+    pixelSource[offset] &= (~0x80);    
 }
 
 inline void
@@ -788,9 +788,9 @@ VIC::drawSprite(uint8_t nr)
 	spriteX = getSpriteX(nr);
 	
 	if (spriteX < 488) 
-		offset = spriteX + (leftBorderWidth - 22);
+		offset = spriteX + (leftBorderWidth - 24);
 	else
-		offset = spriteX + (leftBorderWidth - 22) - 488; 
+		offset = spriteX + (leftBorderWidth - 24) - 488;
 	
 	if (spriteIsMulticolor(nr)) {
 		
@@ -929,28 +929,6 @@ VIC::drawSprite(uint8_t nr)
 	}
 }
 
-void inline
-VIC::drawHorizontalBorder()
-{
-	int bcolor = colors[getBorderColor()];
-	
-	for (unsigned i = 0; i < (unsigned)xStart(); i++) {
-		pixelBuffer[i] = bcolor;
-	}
-	for (unsigned i = xEnd(); i < totalScreenWidth; i++) {
-		pixelBuffer[i] = bcolor;
-	}
-}
-
-void inline
-VIC::drawVerticalBorder()
-{
-	int bcolor = colors[getBorderColor()];
-	
-	for (unsigned i = 0; i < totalScreenWidth; i++) {
-		pixelBuffer[i] = bcolor;
-	}
-}
 
 // -----------------------------------------------------------------------------------------------
 //                                       Getter and setter
@@ -1308,7 +1286,7 @@ VIC::beginRasterline(uint16_t line)
 	memset(zBuffer, 0x7f, sizeof(zBuffer));
 
 	// Clear pixel source
-	memset(pixelSource, 0x00, sizeof(pixelSource));    
+	memset(pixelSource, 0x00, sizeof(pixelSource));
 }
 
 void 
@@ -1463,8 +1441,8 @@ VIC::cycle12()
 void
 VIC::cycle13()
 {
-    xCounter = -4;
-    // Frodo: xCounter = 0xFFFC; // -3??
+    // xCounter = -4; // OLD CODE
+    xCounter = -3; // We use this value because Frodo SC does
     
     // We reach the left border here and start drawing
     runGraphicSequencerAtBorder(13);
@@ -1839,13 +1817,17 @@ VIC::cycle63()
     else if (scanline == upperComparisonValue() && DENbit()) {
         verticalFrameFF = false;
     }
-			
-	// draw border
-    // TODO: HANDLE IN EACH CYCLE
-    // drawBorder();
-			
-	// illegal display modes cause a black line to appear
-	if (getDisplayMode() > EXTENDED_BACKGROUND_COLOR) markLine(xStart(), SCREEN_WIDTH, colors[BLACK]);
+
+    // Extend pixel buffer to the left and right to make it look nice
+    int color = pixelBuffer[14];
+    for (unsigned i = 0; i <= 13; i++) {
+        pixelBuffer[i] = color;
+    }
+
+    color = pixelBuffer[397];
+    for (unsigned i = 398; i < totalScreenWidth; i++) {
+        pixelBuffer[i] = color;
+    }
 
 	// draw debug markers
 	if (markIRQLines && scanline == rasterInterruptLine()) 
