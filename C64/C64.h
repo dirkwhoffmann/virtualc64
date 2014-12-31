@@ -43,6 +43,11 @@
 #include "VC1541.h"
 #include "Cartridge.h"
 
+// Changes:
+// Improved VIC-II compatibility
+// Fixed a bug in the keyboard/joystick mapping introduced in the previous release
+
+
 //! A complete virtual C64
 /*! The class puts all components together to a working virtual computer.
 
