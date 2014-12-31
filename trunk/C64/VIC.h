@@ -749,19 +749,7 @@ private:
 	/*! If the screen is off, the whole area will be covered by the border color.
 	 The technical documentation calls this the DEN (display enable?) bit. */
 	inline bool isVisible() { return iomem[0x11] & 0x10; }
-	
-	//! Draw horizontal and vertical border
-	inline void drawBorder() {
-        if (verticalFrameFF) drawVerticalBorder();
-        else if (mainFrameFF) drawHorizontalBorder();
-    }
-	
-	//! Draw horizontal border into the pixelbuffer
-	void drawHorizontalBorder();
-
-	//! Draw vertical border into the pixelbuffer
-	void drawVerticalBorder();
-		
+			
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                       Getter and setter
