@@ -17,11 +17,10 @@
  */
 
 // TODO:
-// Check if sequencer shift registers store color pixels or bits
-// Hint: If we can stretch a multicolor sprite, it must be pixels??? (bits most likely, though)
-// Implement graphics sequencer
-// Implement sprite sequencers
-// Don't draw borders at once, implement a multiplexer instead
+// Synthesize pixels in gAccess. Use graphicSequencerShiftRegister
+//
+// Draw border outside of gAccesses
+// pullJoystick should return value if key was a joystick key, return then
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -401,8 +400,13 @@ private:
     //! During a 's access', VIC reads sprite data
     inline void sAccess();
 
+    //! Display mode during gAccess
+    uint8_t gAccessDisplayMode;
+
     //! Results of the gAccess is stored here
     uint8_t gAccessResult;
+    uint8_t gAccessfgColor;
+    uint8_t gAccessbgColor;
 
 	//! Temporary space for display characters
 	/*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the characters to display */
@@ -516,22 +520,34 @@ private:
     //                                      Sequencers
     // -----------------------------------------------------------------------------------------------
 
+    //! Graphic sequencer raw data (not yet converted to pixels)
+    uint8_t gs_data;
+    
+    //! Graphic sequencer display mode (conversion method)
+    DisplayMode gs_mode;
+    
+    //! Graphic sequencer foreground color to be used in data->pixel conversion)
+    uint8_t gs_fg_color;
+    
+    //! Graphic sequencer foreground color to be used in data->pixel conversion)
+    uint8_t gs_bg_color;
+    
+    //! Color array for multicolor modes
+    int gs_colorLookup[4];
+
+    //! Graphic sequencer load delay
+    uint8_t gs_delay;
+
+    //! Load graphic sequencer with data and determine conversion parameters
+    void loadGraphicSequencer(uint8_t data);
+    
+    //! Synthesize pixels in border area
+    void runGraphicSequencerAtBorder();
+
+    //! Synthesize pixels in main screen area
+    void runGraphicSequencer();
+
 #if 0
-    //! Graphics sequencer shift register (8 bit)
-    /*! The upper 8 bits are used to simulate the load delay */
-    uint16_t graphicSequencerShiftReg;
-    
-    //! Graphics sequencer output (8 color pixels or 8 bits???)
-    uint64_t graphicsSequencerOutput;
-    
-    //! Load graphics sequencer
-    void loadGraphicsSequencer(uint8_t byte);
-
-    //! Update graphics sequencer output
-    /*! */
-    // void updateGraphicsSequencer(uint8_t byte);
-
-    
     //! Sprite sequencer shift registers (24 pixels)
     /*! The upper 8 bits are used to simulate the output delay */
     uint8_t spriteSequencerShiftReg[24][8];
@@ -749,24 +765,37 @@ private:
 	 \param colorLookup Four element array containing the different colors in RGBA format
 	 */
 	void drawMultiColorCharacter(unsigned offset, uint8_t pattern, int *colorLookup);
-	
+
+    //! Draw single pixel
+    /*! \param offset X coordinate of the pixel to draw
+        \param color Pixel color in RGBA format
+        \param z buffer depth (0 = background)
+     */
+    void setPixel(unsigned offset, int color, int depth, int source);
+
+    //! Draw a single foreground pixel
+    /*! \param offset X coordinate of the pixel to draw
+        \param color Pixel color in RGBA format
+     */
+    void setFramePixel(unsigned offset, int color);
+    
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
-	 \param color Pixel color in RGBA format
+        \param color Pixel color in RGBA format
 	 */
 	void setForegroundPixel(unsigned offset, int color);
 	
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
-	 \param color Pixel color in RGBA format
+        \param color Pixel color in RGBA format
 	 */
 	void setBackgroundPixel(unsigned offset, int color);
 	
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
-	 \param color Pixel color in RGBA format
-	 \param nr Number of sprite (0 to 7)
-	 \note The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected
+	    \param color Pixel color in RGBA format
+	    \param nr Number of sprite (0 to 7)
+        \note The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected
 	 */
 	void setSpritePixel(unsigned offset, int color, int nr);
 		
@@ -1067,7 +1096,7 @@ private:
 	
 	//! Get sprite depth
 	/*! The value is written to the z buffer to resolve overlapping pixels */
-	inline uint8_t spriteDepth(uint8_t nr) { return spriteIsDrawnInBackground(nr) ? 0xf0 + nr : nr; }
+	inline uint8_t spriteDepth(uint8_t nr) { return spriteIsDrawnInBackground(nr) ? 0x30 | nr : 0x10 | nr; }
 	
 public: 
 	
