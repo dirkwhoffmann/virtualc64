@@ -933,8 +933,6 @@ void checkForOpenGLErrors()
 	unsigned short keycode = [event keyCode];
 	unsigned int   flags   = [event modifierFlags];
 
-    NSLog(@"> key down %d %d (%c)\n", keycode, c, c);
-
     // Ignore command key
     if (flags & NSCommandKeyMask)
         return;
@@ -977,8 +975,6 @@ void checkForOpenGLErrors()
 	unsigned short keycode = [event keyCode];
 	unsigned int c         = [[event characters] UTF8String][0];
 	
-    // NSLog(@"> key up %d %d (%c)\n", keycode, c, c);
-
     numKeysPressed--;
     // NSLog(@"NumKeysPressed = %d", numKeysPressed);
 

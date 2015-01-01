@@ -168,11 +168,12 @@ void C64::reset()
 	cpu->reset();
 	cpu->setPC(0xFCE2);
 	vic->reset();
-	sid->reset();
 	cia1->reset();
 	cia2->reset();
+    sid->reset();
 	keyboard->reset();
 	iec->reset();
+    floppy->reset();
 
 	cycles = 0UL;
 	frame = 0;
