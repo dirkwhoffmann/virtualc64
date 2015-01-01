@@ -84,10 +84,18 @@ VIC::reset()
 	registerVCBASE = 0;
 	registerRC = 0;
 	registerVMLI = 0;
+    refreshCounter = 0;
+    addrBus = 0;
+    dataBus = 0;
+    gAccessDisplayMode = 0;
+    gAccessResult = 0;
+    gAccessfgColor = 0;
+    gAccessbgColor = 0;
 	badLineCondition = false;
     DENwasSetInRasterline30 = false;
 	displayState = false;
 	BAlow = 0;
+    BAwentLowAtCycle = 0;
 	mainFrameFF = false;
 	verticalFrameFF = false;
 	// drawVerticalFrame = false;
@@ -103,6 +111,18 @@ VIC::reset()
 	characterMemoryAddr = 0x0000;
 	characterMemoryMappedToROM = false;
 	
+    // Graphic sequencer
+    gs_data = 0;
+    gs_data_old = 0;
+    gs_mode = STANDARD_TEXT;
+    gs_fg_color = 0;
+    gs_bg_color = 0;
+    gs_bg_color_old = 0;
+    gs_multicol0 = 0;
+    gs_multicol1 = 0;
+    gs_multicol2 = 0;
+    gs_multicol3 = 0;
+    
 	// Sprites
 	for (int i = 0; i < 8; i++) {
 		mc[i] = 0;
@@ -114,8 +134,8 @@ VIC::reset()
 	spriteOnOff = 0;
 	oldSpriteOnOff = 0;
 	spriteDmaOnOff = 0;
-	expansionFF = 0xff;
-	
+	expansionFF = 0xFF;
+    expansionFF_in_015 = 0xFF;
 	// Lightpen
 	lightpenIRQhasOccured = false;
 	
@@ -139,18 +159,22 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	xCounter = read16(buffer);
 	registerVC = read16(buffer);
 	registerVCBASE = read16(buffer);
-	registerRC = read16(buffer);
-	registerVMLI = read16(buffer);
+	registerRC = read8(buffer);
+	registerVMLI = read8(buffer);
+    refreshCounter = read8(buffer);
+    addrBus = read16(buffer);
+    dataBus = read8(buffer);
+    gAccessDisplayMode = read8(buffer);
+    gAccessResult = read8(buffer);
+    gAccessfgColor = read8(buffer);
+    gAccessbgColor = read8(buffer);
 	badLineCondition = (bool)read8(buffer);
 	DENwasSetInRasterline30 = (bool)read8(buffer);
 	displayState = (bool)read8(buffer);
-	BAlow = (bool)read8(buffer);
+	BAlow = read16(buffer);
+    BAwentLowAtCycle = read64(buffer);
 	mainFrameFF = (bool)read8(buffer);
 	verticalFrameFF = (bool)read8(buffer);
-	// drawVerticalFrame = (bool)read8(buffer);
-	// drawHorizontalFrame = (bool)read8(buffer);
-    (void)read8(buffer);
-    (void)read8(buffer);
     
 	// Memory
 	for (unsigned i = 0; i < sizeof(iomem); i++)
@@ -187,18 +211,22 @@ VIC::saveToBuffer(uint8_t **buffer)
 	write16(buffer, xCounter);
 	write16(buffer, registerVC);
 	write16(buffer, registerVCBASE);
-	write16(buffer, registerRC);
-	write16(buffer, registerVMLI);
+	write8(buffer, registerRC);
+	write8(buffer, registerVMLI);
+    write8(buffer, refreshCounter);
+    write16(buffer, addrBus);
+    write8(buffer, dataBus);
+    write8(buffer, gAccessDisplayMode);
+    write8(buffer, gAccessResult);
+    write8(buffer, gAccessfgColor);
+    write8(buffer, gAccessbgColor);
 	write8(buffer, (uint8_t)badLineCondition);
 	write8(buffer, (uint8_t)DENwasSetInRasterline30);
 	write8(buffer, (uint8_t)displayState);
-	write8(buffer, (uint8_t)BAlow);
+	write16(buffer, BAlow);
+    write64(buffer, BAwentLowAtCycle);
 	write8(buffer, (uint8_t)mainFrameFF);
 	write8(buffer, (uint8_t)verticalFrameFF);
-	// write8(buffer, (uint8_t)drawVerticalFrame);
-	// write8(buffer, (uint8_t)drawHorizontalFrame);
-    write8(buffer, (uint8_t)0);
-    write8(buffer, (uint8_t)0);
 	
 	// Memory
 	for (unsigned i = 0; i < sizeof(iomem); i++)

@@ -20,6 +20,9 @@
 #ifndef _C64_INC
 #define _C64_INC
 
+#define NDEBUG // Diables all assertions (release versions, only)
+#define DEBUG_LEVEL 1
+
 #include "basic.h"
 #include "VirtualComponent.h"
 #include "Message.h"
@@ -44,8 +47,8 @@
 #include "Cartridge.h"
 
 // Changes:
-// Improved VIC-II compatibility
-// Fixed a bug in the keyboard/joystick mapping introduced in the previous release
+// This relase contains considerable VIC II compatibility improvements
+// Fixed another keyboard bug introduced in 0.9.7 and 0.9.7.x
 
 
 //! A complete virtual C64

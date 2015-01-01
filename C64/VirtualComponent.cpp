@@ -18,10 +18,12 @@
 
 #include "C64.h"
 
-int VirtualComponent::debugLevel = 1;
+int VirtualComponent::debugLevel = DEBUG_LEVEL;
 
 VirtualComponent::VirtualComponent()
 {
+    assert(0);
+    
 	name = "Unnamed component";
 	running = false;
 	suspendCounter = 0;	

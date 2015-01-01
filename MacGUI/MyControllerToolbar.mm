@@ -98,17 +98,12 @@
 	[myPrintInfo setBottomMargin:0.0]; // 32.0
 	
 	// Capture image and create image view
-    NSLog(@"screenshot");
     NSImage *image = [screen screenshot];
-    NSLog(@"NSMakeRect");
 	NSRect printRect = NSMakeRect(0.0, 0.0, [image size].width, [image size].height);
-    NSLog(@"NSImageView");
 	NSImageView *imageView = [[NSImageView alloc] initWithFrame:printRect];
-    NSLog(@"setImage");
 	[imageView setImage:image];
 	[imageView setImageScaling:NSScaleToFit];
 
-    NSLog(@"NSPrintOperation");
 	// Print image
     NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:imageView  printInfo:myPrintInfo];
     [printOperation runOperationModalForWindow:[[self document] windowForSheet] delegate: nil didRunSelector: NULL contextInfo:NULL];

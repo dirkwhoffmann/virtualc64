@@ -17,8 +17,10 @@
  */
 
 // TODO:
+
+// Test fast reset
+// Log messages
 // Implement VBlanking
-// Implement proper background drawing
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -253,6 +255,18 @@ private:
     /*! Whenever VIC performs a memory read, the result is stored here */
     uint8_t dataBus;
     
+    //! Display mode in latest gAccess
+    uint8_t gAccessDisplayMode;
+    
+    //! Graphic bits fetched in latest gAccess
+    uint8_t gAccessResult;
+
+    //! Foreground color fetched in latest gAccess
+    uint8_t gAccessfgColor;
+
+    //! Background color fetched in latest gAccess
+    uint8_t gAccessbgColor;
+
 	//! Indicates that we are curretly processing a DMA line (bad line)
 	bool badLineCondition;
 	
@@ -266,14 +280,11 @@ private:
 	bool displayState;
 
 	//! BA line
-	/* Remember: Each CPU cycle is split into two phases:
-     
-     First phase (LOW):   VIC gets access to the bus
-     Second phase (HIGH): CPU gets access to the bus
-
-     In rare cases, VIC needs access in the HIGH phase, too. To block the CPU, the BA line is pulled down.
-     
-     Note: The BA line can be pulled down by multiple sources (wired AND). */
+	/* Remember: Each CPU cycle is split into two phases
+           First phase (LOW):   VIC gets access to the bus
+           Second phase (HIGH): CPU gets access to the bus
+       In rare cases, VIC needs access in the HIGH phase, too. To block the CPU, the BA line is pulled down.
+       Note: The BA line can be pulled down by multiple sources (wired AND). */
 	uint16_t BAlow;
 	
     //! Remember at which cycle BA line has been pulled down
@@ -409,14 +420,6 @@ private:
     //! Perform a DRAM idle access
     inline void rIdleAccess() { (void)memAccess(0x3FFF); }
     
-    //! Display mode during gAccess
-    uint8_t gAccessDisplayMode;
-
-    //! Results of the gAccess is stored here
-    uint8_t gAccessResult;
-    uint8_t gAccessfgColor;
-    uint8_t gAccessbgColor;
-
 	//! Temporary space for display characters
 	/*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the characters to display */
 	uint8_t characterSpace[40];
