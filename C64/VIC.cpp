@@ -36,7 +36,8 @@
     werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
     wieder intern gelesen." [C.B.] */
  
-#define update_display_and_ba if (badLineCondition) { displayState = true; pullDownBA(0x100); }
+//#define update_display_and_ba if (badLineCondition) { displayState = true; pullDownBA(0x100); }
+#define update_display_and_ba if (badLineCondition) { displayState = true; }
 
 
 VIC::VIC()
@@ -337,14 +338,20 @@ inline uint8_t VIC::memAccess(uint16_t addr)
     
     assert((addr & 0xC000) == 0); /* 14 bit address */
     
-    uint16_t extaddr = bankAddr + addr;
+    addrBus = bankAddr + addr;
     
-    if ((extaddr & 0x7000) == 0x1000) { // Address points into character ROM
-        assert ((0xC000 + addr) >= 0xD000 && (0xC000 + addr) <= 0xDFFF); // Really?
-        return mem->rom[0xC000 + addr]; // Read from character ROM
+    if ((addrBus & 0x7000) == 0x1000) {
+
+        // Accessing range 0x1000 - 0x1FFF or 0x9000 - 0x9FFF
+        // Character ROM is blended in here
+        assert ((0xC000 + addr) >= 0xD000 && (0xC000 + addr) <= 0xDFFF);
+        dataBus = mem->rom[0xC000 + addr];
+
     } else {
-        return mem->ram[extaddr];
+        dataBus = mem->ram[addrBus];
     }
+    
+    return dataBus;
 }
 
 inline void VIC::cAccess()
@@ -438,6 +445,9 @@ inline void VIC::pAccess()
 
 inline void VIC::sAccess()
 {
+    // TODO
+    
+    // rIdleAccess();
 
 }
 
@@ -1264,6 +1274,7 @@ VIC::beginFrame()
 {
 	lightpenIRQhasOccured = false; // only one event per frame is permitted
 	registerVCBASE = 0;
+    refreshCounter = 0xFF;
 }
 
 void 
@@ -1312,7 +1323,7 @@ VIC::cycle1()
 			
 	// Check for the DEN bit if we're processing rasterline 30
     if (scanline == 0x30)
-        DENwasSetInRasterline30 = (iomem[0x11] & 0x10);
+        DENwasSetInRasterline30 = DENbit();
     
 	// Get sprite data address and sprite data of sprite 3
 	releaseBusForSprite(2);
@@ -1427,15 +1438,24 @@ VIC::cycle11()
 void
 VIC::cycle12()
 {
+    /* "3. Liegt in den Zyklen 12-54 ein Bad-Line-Zustand vor, wird BA auf Low
+        gelegt und die c-Zugriffe gestartet. Einmal gestartet, findet in der
+        zweiten Phase jedes Taktzyklus im Bereich 15-54 ein c-Zugriff statt. Die
+        gelesenen Daten werden in der Videomatrix-/Farbzeile an der durch VMLI
+        angegebenen Position abgelegt. Bei jedem g-Zugriff im Display-Zustand
+        werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
+        wieder intern gelesen." [C.B.] */
+    
 	if (badLineCondition) {
         // Freeze CPU because c-accesses are coming up...
 		pullDownBA(0x100);
 	}
 	releaseBusForSprite(7);
 
-	// Reset the X coordinate to 0
-	// xCounter = 0;
-	update_display_and_ba;
+    // First clock phase (LOW)
+    rAccess();
+
+    update_display_and_ba;
 }
 
 void
@@ -1447,7 +1467,10 @@ VIC::cycle13()
     // We reach the left border here and start drawing
     runGraphicSequencerAtBorder(13);
 
-	countX();
+    // First clock phase (LOW)
+    rAccess();
+
+    countX();
 	update_display_and_ba;
 }
 
@@ -1473,7 +1496,10 @@ VIC::cycle14()
     
     runGraphicSequencerAtBorder(14);
 
-	countX();
+    // First clock phase (LOW)
+    rAccess();
+
+    countX();
 	update_display_and_ba;
 }
 
@@ -1496,7 +1522,10 @@ VIC::cycle15()
     
     runGraphicSequencerAtBorder(15);
 
-    // Second clock phase
+    // First clock phase (LOW)
+    rAccess();
+
+    // Second clock phase (HIGH)
 	cAccess();
 	countX();
 	update_display_and_ba;
@@ -1699,7 +1728,11 @@ VIC::cycle56()
 
 	updateSpriteDmaOnOff();
     requestBusForSprite(0); // Bus is again requested because DMA conditions may have changed
-	countX();
+
+    // First clock phase (LOW)
+    rIdleAccess();
+
+    countX();
 	update_display;
 }
 
@@ -1718,8 +1751,12 @@ VIC::cycle57()
     // We reach the right border here (stop drawing pixels)
     runGraphicSequencerAtBorder(57);
     
-	requestBusForSprite(1);
-	countX();
+    requestBusForSprite(1);
+
+    // First clock phase (LOW)
+    rIdleAccess();
+
+    countX();
 	update_display;
 }
 
