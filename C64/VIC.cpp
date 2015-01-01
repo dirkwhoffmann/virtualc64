@@ -324,7 +324,7 @@ VIC::setNTSC()
 //                             I/O memory handling and RAM access
 // -----------------------------------------------------------------------------------------------
 
-inline uint8_t VIC::memAccess(uint16_t addr)
+uint8_t VIC::memAccess(uint16_t addr)
 {
     /* "Der VIC besitzt nur 14 Adreﬂleitungen, kann also nur 16KB Speicher
         adressieren. Er kann trotzdem auf die kompletten 64KB Hauptspeicher
@@ -457,6 +457,8 @@ inline void VIC::sAccess()
 
 void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
 {
+    // gs_data_old = gs_data;  // CURRENTLY NOT USED
+    gs_bg_color_old = gs_bg_color;
     gs_data = data;
     gs_delay = load_delay;
     
@@ -517,64 +519,61 @@ void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
     }
 }
 
-void VIC::runGraphicSequencerAtBorder(int cycle)
-{
-    if (!mainFrameFF)
-        return;
-    
-    uint16_t xCoord = ((int16_t)xCounter - 29) + leftBorderWidth;
-    int bordercolor = colors[getBorderColor()];
-    
-    if (cycle == 17) {
-        // Set 7 pixels
-        for (unsigned i = 0; i < 7; i++) {
-            setFramePixel(xCoord++, bordercolor);
-        }
-    } else if (cycle == 56) {
-        // Set 9 pixels
-        xCoord--;
-        for (unsigned i = 0; i < 9; i++) {
-            setFramePixel(xCoord++, bordercolor);
-        }
-    } else {
-        // set 8 pixels
-        for (unsigned i = 0; i < 8; i++) {
-            setFramePixel(xCoord++, bordercolor);
-        }
-    }
 
-#if 0
-    uint16_t xCoord;
-    
-    xCoord = ((int16_t)xCounter - 29) + leftBorderWidth;
-    
-    if (mainFrameFF || verticalFrameFF) {
-        int bordercolor = colors[getBorderColor()]; // colors[7];
-        for (unsigned i = 0; i < 8; i++) {
-            setFramePixel(xCoord+i, bordercolor);
-        }
-    }
-
-    // What do we do if frame flipflops are off?
-#endif
-}
-
-void VIC::runGraphicSequencer()
+void VIC::runGraphicSequencer(uint8_t cycle)
 {
     uint16_t xCoord = (xCounter - 29) + leftBorderWidth;
+    
+    // draw border if necessary
+    if (mainFrameFF) {
+        
+        int border_rgba = colors[getBorderColor()];
 
-    // Check vertical frame flipflop
-    if (verticalFrameFF) {
-        int bordercolor = colors[getBorderColor()]; // colors[4];
-        for (unsigned i = 0; i < 8; i++) {
-            setFramePixel(xCoord+i, bordercolor);
+        if (cycle == 17) {
+            
+            // left border in 38 column mode
+            drawSevenFramePixels(xCoord, border_rgba);
+            // don't return here, because the border only captures seven pixels
+            
+        } else if (cycle == 18) {
+            
+            // also capture missed out pixel in cycle 17
+            drawNineFramePixels(xCoord, border_rgba);
+            return;
+            
+        } else if (cycle == 56) {
+            
+            // right border in 38 column mode
+            drawNineFramePixels(xCoord, border_rgba);
+            return;
+            
+        } else {
+            
+            // in the middle of the display window
+            drawEightFramePixels(xCoord, border_rgba);
+            return;
         }
-        return;
     }
     
-    xCoord += gs_delay;
+    // Run the synthesizer
     
-    // Synthesize pixels
+    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
+     Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
+     Abschnitt 3.9.). Außerhalb der Anzeigespalte und bei gesetztem Flipflop wird
+     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
+     normalerweise vom Rahmen überdeckt)." [C.B.] */
+
+    if (verticalFrameFF || cycle < 17 || cycle > 56) {
+        drawEightBackgroudPixels(xCoord);
+        return;
+    }
+
+    // Shift x coordinate according to the load delay
+    if (gs_delay) {
+        drawEightBackgroudPixels(xCoord);
+        xCoord += gs_delay;
+    }
+
     switch (getDisplayMode()) {
             
         case STANDARD_TEXT:
@@ -632,7 +631,16 @@ void VIC::runGraphicSequencer()
 // -----------------------------------------------------------------------------------------------
 
 inline void
-VIC::setPixel(unsigned offset, int color, int depth, int source)
+VIC::setPixel(unsigned offset, int color, int depth)
+{
+    if (depth <= zBuffer[offset]) {
+        zBuffer[offset] = depth;
+        pixelBuffer[offset] = color;
+    }
+}
+
+inline void
+VIC::setPixelWithSource(unsigned offset, int color, int depth, int source)
 {
     pixelSource[offset] |= source;
     
@@ -645,7 +653,7 @@ VIC::setPixel(unsigned offset, int color, int depth, int source)
 inline void
 VIC::setFramePixel(unsigned offset, int color)
 {
-    setPixel(offset, color, 0x00 /* in front of everything */, 0x00);
+    setPixel(offset, color, 0x00 /* in front of everything */);
     
     // clear foreground source bit to diable collision detection inside border
     pixelSource[offset] &= (~0x80);    
@@ -654,13 +662,28 @@ VIC::setFramePixel(unsigned offset, int color)
 inline void
 VIC::setForegroundPixel(unsigned offset, int color)
 {
-    setPixel(offset, color, 0x20, 0x80);
+    setPixelWithSource(offset, color, 0x20, 0x80);
 }
 
 inline void
 VIC::setBackgroundPixel(unsigned offset, int color)
 {
-    pixelBuffer[offset] = color;
+    setPixel(offset, color, 0x40);
+}
+
+void
+VIC::drawEightBackgroudPixels(unsigned offset)
+{
+    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
+        Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
+        Abschnitt 3.9.). Außerhalb der Anzeigespalte und bei gesetztem Flipflop wird
+        die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
+        normalerweise vom Rahmen überdeckt)." [C.B.] */
+
+    int bg_rgba = colors[gs_bg_color_old];
+    for (unsigned i = 0; i < 8; i++) {
+        setBackgroundPixel(offset++, bg_rgba);
+    }    
 }
 
 inline void 
@@ -773,7 +796,7 @@ VIC::setSpritePixel(unsigned offset, int color, int nr)
         if (nr == 7)
             mask = 0;
         
-        setPixel(offset, color, spriteDepth(nr), mask);
+        setPixelWithSource(offset, color, spriteDepth(nr), mask);
 	}
 }
 
@@ -1273,11 +1296,24 @@ void
 VIC::beginFrame()
 {
 	lightpenIRQhasOccured = false; // only one event per frame is permitted
-	registerVCBASE = 0;
+
+    /* "Der [Refresh-]Zähler wird in Rasterzeile 0 mit
+        $ff gelöscht und nach jedem Refresh-Zugriff um 1 verringert.
+        Der VIC greift also in Zeile 0 auf die Adressen $3fff, $3ffe, $3ffd, $3ffc
+        und $3ffb zu, in Zeile 1 auf $3ffa, $3ff9, $3ff8, $3ff7 und $3ff6 usw." [C.B.] */
+   
     refreshCounter = 0xFF;
+
+    /* "1. Irgendwo einmal auﬂerhalb des Bereiches der Rasterzeilen $30-$f7 (also
+           außerhalb des Bad-Line-Bereiches) wird VCBASE auf Null gesetzt.
+           Vermutlich geschieht dies in Rasterzeile 0, der genaue Zeitpunkt ist
+           nicht zu bestimmen, er spielt aber auch keine Rolle." [C.B.] */
+ 
+    registerVCBASE = 0;
+
 }
 
-void 
+void
 VIC::endFrame()
 {
 	// Frame complete. Notify listener...
@@ -1294,10 +1330,13 @@ VIC::beginRasterline(uint16_t line)
 	scanline = line;
 		
 	// Clear z buffer. The buffer is initialized with a high, positive value (meaning the pixel is far away)
-	memset(zBuffer, 0x7f, sizeof(zBuffer));
+	memset(zBuffer, 0x7f, sizeof(zBuffer)); // Why don't we use 0xFF???
 
 	// Clear pixel source
 	memset(pixelSource, 0x00, sizeof(pixelSource));
+
+    // Clear pixel buffer
+    memset(pixelBuffer, 0x00, sizeof(pixelSource));
 }
 
 void 
@@ -1464,8 +1503,8 @@ VIC::cycle13()
     // xCounter = -4; // OLD CODE
     xCounter = -3; // We use this value because Frodo SC does
     
-    // We reach the left border here and start drawing
-    runGraphicSequencerAtBorder(13);
+    // This is the first invocation of the graphic sequencer
+    runGraphicSequencer(13);
 
     // First clock phase (LOW)
     rAccess();
@@ -1477,15 +1516,6 @@ VIC::cycle13()
 void
 VIC::cycle14()
 {
-	// NEW CODE
-	// xCounter = 0x04;
-	
-    /* WHERE DO WE IMPLEMENT THIS ONE?
-       "1. Irgendwo einmal auﬂerhalb des Bereiches der Rasterzeilen $30-$f7 (also
-           außerhalb des Bad-Line-Bereiches) wird VCBASE auf Null gesetzt.
-           Vermutlich geschieht dies in Rasterzeile 0, der genaue Zeitpunkt ist
-           nicht zu bestimmen, er spielt aber auch keine Rolle." [C.B.] */
-    
 	/* "2. In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
 	       (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
            Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt." [C.B.] */
@@ -1494,7 +1524,7 @@ VIC::cycle14()
 	if (badLineCondition)
 		registerRC = 0;
     
-    runGraphicSequencerAtBorder(14);
+    runGraphicSequencer(14);
 
     // First clock phase (LOW)
     rAccess();
@@ -1520,7 +1550,7 @@ VIC::cycle15()
     
     expansionFF_in_015 = expansionFF;
     
-    runGraphicSequencerAtBorder(15);
+    runGraphicSequencer(15);
 
     // First clock phase (LOW)
     rAccess();
@@ -1575,7 +1605,7 @@ VIC::cycle16()
 	}
 #endif
     
-    runGraphicSequencerAtBorder(16);
+    runGraphicSequencer(16);
     
     // First clock phase (LOW)
     gAccess();
@@ -1611,13 +1641,11 @@ VIC::cycle17()
     
         // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
         //     vertikale Rahmenflipflop gelöscht, wird das Haupt-Flipflop gelöscht." [C.B.]
-
         clearMainFrameFF();
     }
 
     // We reach the main screen area here (start drawing pixels)
-    runGraphicSequencer();
-    runGraphicSequencerAtBorder(17);
+    runGraphicSequencer(17);
 
     // First clock phase (LOW)
     gAccess();
@@ -1657,7 +1685,7 @@ VIC::cycle18()
         clearMainFrameFF();
     }
 
-    runGraphicSequencer();
+    runGraphicSequencer(18);
 
     // First clock phase (LOW)
     gAccess();
@@ -1671,7 +1699,7 @@ VIC::cycle18()
 void
 VIC::cycle19to54()
 {
-    runGraphicSequencer();
+    runGraphicSequencer(19); // value '19' is OK for each cycle
     
     // First clock phase (LOW)
     gAccess();
@@ -1685,7 +1713,7 @@ VIC::cycle19to54()
 void
 VIC::cycle55()
 {
-    runGraphicSequencer();
+    runGraphicSequencer(55);
 
     // First clock phase (LOW)
 
@@ -1723,8 +1751,7 @@ VIC::cycle56()
          mainFrameFF = true;
      }
 
-    runGraphicSequencer();
-    runGraphicSequencerAtBorder(56);
+    runGraphicSequencer(56);
 
 	updateSpriteDmaOnOff();
     requestBusForSprite(0); // Bus is again requested because DMA conditions may have changed
@@ -1749,7 +1776,7 @@ VIC::cycle57()
     }
     
     // We reach the right border here (stop drawing pixels)
-    runGraphicSequencerAtBorder(57);
+    runGraphicSequencer(57);
     
     requestBusForSprite(1);
 
@@ -1763,7 +1790,7 @@ VIC::cycle57()
 void
 VIC::cycle58()
 {
-    runGraphicSequencerAtBorder(58);
+    runGraphicSequencer(58);
 
 	/* "Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
 	    wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
@@ -1815,7 +1842,7 @@ VIC::cycle58()
 void
 VIC::cycle59()
 {
-    runGraphicSequencerAtBorder(59);
+    runGraphicSequencer(59);
 
 	readSpriteData(0);
 	readSpriteData(0);
@@ -1828,7 +1855,7 @@ void
 VIC::cycle60()
 {
     // This is the last invocation of the graphic sequencer
-    runGraphicSequencerAtBorder(60);
+    runGraphicSequencer(60);
 
 	releaseBusForSprite(0);
 	readSpritePtr(1);

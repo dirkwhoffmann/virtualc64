@@ -241,11 +241,8 @@ private:
 		
     //! DRAM refresh counter
     /*! "In jeder Rasterzeile fŸhrt der VIC fŸnf Lesezugriffe zum Refresh des
-         dynamischen RAM durch. Es wird ein 8-Bit Refreshzähler (REF) zur Erzeugung
-         von 256 DRAM-Zeilenadressen benutzt. Der ZŠhler wird in Rasterzeile 0 mit
-         $ff gelšscht und nach jedem Refresh-Zugriff um 1 verringert.
-         Der VIC greift also in Zeile 0 auf die Adressen $3fff, $3ffe, $3ffd, $3ffc
-         und $3ffb zu, in Zeile 1 auf $3ffa, $3ff9, $3ff8, $3ff7 und $3ff6 usw." [C.B.] */
+         dynamischen RAM durch. Es wird ein 8-Bit RefreshzŠhler (REF) zur Erzeugung
+         von 256 DRAM-Zeilenadressen benutzt." [C.B.] */
     uint8_t refreshCounter;
     
     //! Address bus
@@ -390,21 +387,21 @@ private:
     uint16_t bankAddr;
 
     //! General memory access via address and data bus
-    inline uint8_t memAccess(uint16_t addr);
+    uint8_t memAccess(uint16_t addr);
     
     // VIC performs four special types of memory accesses (c, g, p and s)
     
     //! During a 'c access', VIC accesses the video matrix
-    inline void cAccess();
+    void cAccess();
     
     //! During a 'g access', VIC reads graphics data (character or bitmap patterns)
-    inline void gAccess();
+    void gAccess();
     
     //! During a 'p access', VIC reads sprite pointers
-    inline void pAccess();
+    void pAccess();
     
     //! During a 's access', VIC reads sprite data
-    inline void sAccess();
+    void sAccess();
 
     //! Perform a DRAM refresh
     inline void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
@@ -534,15 +531,21 @@ private:
 
     //! Graphic sequencer raw data (not yet converted to pixels)
     uint8_t gs_data;
-    
+
+    //! Raw data in previous cycle
+    uint8_t gs_data_old;
+
     //! Graphic sequencer display mode (conversion method)
     DisplayMode gs_mode;
     
     //! Graphic sequencer foreground color to be used in data->pixel conversion)
     uint8_t gs_fg_color;
     
-    //! Graphic sequencer foreground color to be used in data->pixel conversion)
+    //! Graphic sequencer background color to be used in data->pixel conversion)
     uint8_t gs_bg_color;
+
+    //! Background color in previous cycle
+    uint8_t gs_bg_color_old;
 
     //! Graphic sequencer colors for multi color modes
     uint8_t gs_multicol0, gs_multicol1, gs_multicol2, gs_multicol3;
@@ -553,11 +556,8 @@ private:
     //! Load graphic sequencer with data and determine conversion parameters
     void loadGraphicSequencer(uint8_t data, uint8_t load_delay);
     
-    //! Synthesize pixels in border area
-    void runGraphicSequencerAtBorder(int cycle);
-
-    //! Synthesize pixels in main screen area
-    void runGraphicSequencer();
+    //! Synthesize pixels or border
+    void runGraphicSequencer(uint8_t cycle);
 
 
 	// -----------------------------------------------------------------------------------------------
@@ -594,6 +594,9 @@ private:
 	//! Expansion flipflop
 	/*! Used to handle Y sprite stretching. One bit for each sprite */
 	uint8_t expansionFF;
+
+    //! Expansion flipflop in cycle 15
+    /*! This value is needed to detect a falling edge in cycle 16 */
     uint8_t expansionFF_in_015;
 	
 				
@@ -709,9 +712,17 @@ private:
     //! Draw single pixel into pixel buffer
     /*! \param offset X coordinate of the pixel to draw
         \param color Pixel color in RGBA format
-        \param z buffer depth (0 = background)
+        \param depth z buffer depth (0 = background)
      */
-    void setPixel(unsigned offset, int color, int depth, int source);
+    void setPixel(unsigned offset, int color, int depth);
+
+    //! Draw single pixel into pixel buffer
+    /*! \param offset X coordinate of the pixel to draw
+        \param color Pixel color in RGBA format
+        \param depth buffer depth (0 = background)
+        \param source remember who has written the pixel (e.g. sprite)
+     */
+    void setPixelWithSource(unsigned offset, int color, int depth, int source);
 
     //! Draw a single foreground pixel
     /*! \param offset X coordinate of the pixel to draw
@@ -730,6 +741,22 @@ private:
         \param color Pixel color in RGBA format
 	 */
 	void setBackgroundPixel(unsigned offset, int color);
+
+    //! Draw background pixels
+    /*! This method is invoked when the sequencer is outside the main drawing area or the upper and lower border
+        \param offset X coordinate of the first pixel to draw */
+    void drawEightBackgroudPixels(unsigned offset);
+
+    //! Draw frame pixels
+    inline void drawSevenFramePixels(unsigned offset, int rgba_color) {
+        for (unsigned i = 0; i < 7; i++) setFramePixel(offset++, rgba_color); }
+    
+    inline void drawEightFramePixels(unsigned offset, int rgba_color) {
+        for (unsigned i = 0; i < 8; i++) setFramePixel(offset++, rgba_color); }
+
+    inline void drawNineFramePixels(unsigned offset, int rgba_color) {
+        offset--; for (unsigned i = 0; i < 9; i++) setFramePixel(offset++, rgba_color); }
+
     
     //! Draw a single character line (8 pixels) in single-color mode
     /*! \param offset X coordinate of the first pixel to draw */
@@ -749,8 +776,6 @@ private:
     /*! \param offset X coordiate of the first pixel to draw
      */
     void drawInvalidMultiColorCharacter(unsigned offset);
-
-    
     
 	//! Draw a single foreground pixel
 	/*! \param offset X coordinate of the pixel to draw
