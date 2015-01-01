@@ -239,6 +239,23 @@ private:
 	//! Internal VIC-II register, 6 bit video matrix line index
 	uint8_t registerVMLI; 
 		
+    //! DRAM refresh counter
+    /*! "In jeder Rasterzeile führt der VIC fünf Lesezugriffe zum Refresh des
+         dynamischen RAM durch. Es wird ein 8-Bit Refreshz‰hler (REF) zur Erzeugung
+         von 256 DRAM-Zeilenadressen benutzt. Der Zähler wird in Rasterzeile 0 mit
+         $ff gelöscht und nach jedem Refresh-Zugriff um 1 verringert.
+         Der VIC greift also in Zeile 0 auf die Adressen $3fff, $3ffe, $3ffd, $3ffc
+         und $3ffb zu, in Zeile 1 auf $3ffa, $3ff9, $3ff8, $3ff7 und $3ff6 usw." [C.B.] */
+    uint8_t refreshCounter;
+    
+    //! Address bus
+    /*! Whenever VIC performs a memory read, the generated memory address is stored here */
+    uint16_t addrBus;
+
+    //! Data bus
+    /*! Whenever VIC performs a memory read, the result is stored here */
+    uint8_t dataBus;
+    
 	//! Indicates that we are curretly processing a DMA line (bad line)
 	bool badLineCondition;
 	
@@ -389,6 +406,12 @@ private:
     //! During a 's access', VIC reads sprite data
     inline void sAccess();
 
+    //! Perform a DRAM refresh
+    inline void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
+    
+    //! Perform a DRAM idle access
+    inline void rIdleAccess() { (void)memAccess(0x3FFF); }
+    
     //! Display mode during gAccess
     uint8_t gAccessDisplayMode;
 
@@ -680,7 +703,7 @@ public:
 
 private:	
 	
-    //! Increase the x coordinate by 8
+    //! Increase the x coordinate by 8 (sptrite coordinate system)
     inline void countX() { xCounter += 8; }
 
     //! Draw single pixel into pixel buffer
@@ -744,11 +767,6 @@ private:
 	//! Draw single sprite into pixel buffer
 	/*! Helper function for drawSprites */
 	void drawSprite(uint8_t nr);
-
-	//! Return true if the screen contents is visible, aslo known as DEN bit
-	/*! If the screen is off, the whole area will be covered by the border color.
-	 The technical documentation calls this the DEN (display enable?) bit. */
-	inline bool isVisible() { return iomem[0x11] & 0x10; }
 			
 	
 	// -----------------------------------------------------------------------------------------------
