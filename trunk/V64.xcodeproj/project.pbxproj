@@ -89,7 +89,7 @@
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
-		50B37D791A56CA4F0055A540 /* ROMDropTargetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.m */; };
+		50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */; };
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* OldSID.cpp */; };
@@ -292,7 +292,7 @@
 		50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Archive.cpp; sourceTree = "<group>"; };
 		50B1032E121E7C4C003E7729 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		50B37D771A56CA4F0055A540 /* ROMDropTargetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROMDropTargetView.h; sourceTree = "<group>"; };
-		50B37D781A56CA4F0055A540 /* ROMDropTargetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROMDropTargetView.m; sourceTree = "<group>"; };
+		50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ROMDropTargetView.mm; sourceTree = "<group>"; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
@@ -555,7 +555,7 @@
 				50176C770A6F7357009E80BD /* MyOpenGLView.h */,
 				50176C780A6F7357009E80BD /* MyOpenGLView.mm */,
 				50B37D771A56CA4F0055A540 /* ROMDropTargetView.h */,
-				50B37D781A56CA4F0055A540 /* ROMDropTargetView.m */,
+				50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */,
 				5077743112DE490B00D72088 /* CpuTableView.h */,
 				5077743212DE490B00D72088 /* CpuTableView.mm */,
 				5077742E12DE490300D72088 /* MemTableView.h */,
@@ -968,7 +968,7 @@
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
 				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
-				50B37D791A56CA4F0055A540 /* ROMDropTargetView.m in Sources */,
+				50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
 				BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,

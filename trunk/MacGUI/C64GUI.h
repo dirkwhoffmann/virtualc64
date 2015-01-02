@@ -29,6 +29,7 @@
 #import "Formatter.h"
 
 #import "MyOpenGLView.h"
+#import "ROMDropTargetView.h"
 #import "CpuTableView.h"
 #import "MemTableView.h"
 #import "CheatboxItem.h"

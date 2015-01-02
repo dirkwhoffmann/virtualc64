@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#import "ROMDropTargetView.h"
+#import "C64GUI.h"
 
 @implementation ROMDropTargetView
 
@@ -33,7 +33,7 @@
 
     if (self) {
         // Register pasteboard types
-        [self registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType,nil]];
+        [self registerForDraggedTypes:@[NSFilenamesPboardType]];
         self.allowDrop = YES;
     }
     
@@ -46,6 +46,18 @@
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
     NSLog(@"ROMDropTargetView:draggingEntered");
+
+    if (!self.allowDrop)
+        return NSDragOperationNone;
+
+    NSPasteboard *pb = [sender draggingPasteboard];
+    NSString *besttype = [pb availableTypeFromArray:@[NSFilenamesPboardType]];
+    
+    if (besttype == NSFilenamesPboardType) {
+        NSLog(@"ROMDropTargetView:Dragged in filename");
+        return NSDragOperationCopy;
+    }
+    
     return NSDragOperationNone;
 }
 
@@ -59,13 +71,30 @@
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
+    NSPasteboard *pb = [sender draggingPasteboard];
+
     NSLog(@"ROMDropTargetView:prepareForDragOperation");
     
     highlight = NO;
     [self setNeedsDisplay: YES];
+
+    // Did we receive a filename?
+    if (![[pb types] containsObject:NSFilenamesPboardType])
+        return NO;
     
-    // Verify data type
-    return [NSImage canInitWithPasteboard:[sender draggingPasteboard]];
+    // Did we receive the name of a valid ROM image?
+    NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];
+    NSLog(@"Got filename %@", path);
+
+#if 0
+    // Is it a ROM file? DON'T LOAD HERE!
+    if ([[controller document] loadRom:path]) {
+        NSLog(@"ROM loaded");
+        return YES;
+    }
+#endif
+    
+    return NO;
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender

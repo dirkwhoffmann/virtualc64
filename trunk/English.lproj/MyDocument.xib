@@ -2652,21 +2652,33 @@ DQ
                                     <rect key="frame" x="1" y="22" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom" id="1881"/>
+                                    <connections>
+                                        <outlet property="controller" destination="-2" id="zpg-DT-nvd"/>
+                                    </connections>
                                 </imageView>
                                 <imageView id="1886" customClass="ROMDropTargetView">
                                     <rect key="frame" x="107" y="22" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom" id="1887"/>
+                                    <connections>
+                                        <outlet property="controller" destination="-2" id="fpj-1E-QfS"/>
+                                    </connections>
                                 </imageView>
                                 <imageView id="1888" customClass="ROMDropTargetView">
                                     <rect key="frame" x="212" y="22" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom" id="1889"/>
+                                    <connections>
+                                        <outlet property="controller" destination="-2" id="pZM-TK-3B1"/>
+                                    </connections>
                                 </imageView>
                                 <imageView id="1890" customClass="ROMDropTargetView">
                                     <rect key="frame" x="318" y="22" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom" id="1891"/>
+                                    <connections>
+                                        <outlet property="controller" destination="-2" id="i00-Ge-OBH"/>
+                                    </connections>
                                 </imageView>
                                 <textField verticalHuggingPriority="750" id="1884">
                                     <rect key="frame" x="31" y="10" width="67" height="14"/>
