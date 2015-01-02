@@ -538,10 +538,16 @@
 
 //- (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
 - (uint8_t) missingRoms { return c64->getMissingRoms(); }
-- (bool) loadBasicRom:(NSString *)filename { return c64->mem->isBasicRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
-- (bool) loadCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
-- (bool) loadKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
-- (bool) loadVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]) && c64->loadRom([filename UTF8String]); }
+- (bool) isBasicRom:(NSString *)filename { return c64->mem->isBasicRom([filename UTF8String]); }
+- (bool) loadBasicRom:(NSString *)filename { return [self isBasicRom:filename] && c64->loadRom([filename UTF8String]); }
+- (bool) isCharRom:(NSString *)filename { return c64->mem->isCharRom([filename UTF8String]); }
+- (bool) loadCharRom:(NSString *)filename { return [self isCharRom:filename] && c64->loadRom([filename UTF8String]); }
+- (bool) isKernelRom:(NSString *)filename { return c64->mem->isKernelRom([filename UTF8String]); }
+- (bool) loadKernelRom:(NSString *)filename { return [self isKernelRom:filename] && c64->loadRom([filename UTF8String]); }
+- (bool) isVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]); }
+- (bool) loadVC1541Rom:(NSString *)filename { return [self isVC1541Rom:filename] && c64->loadRom([filename UTF8String]); }
+- (bool) isRom:(NSString *)filename { return [self isBasicRom:filename] || [self isCharRom:filename] || [self isKernelRom:filename] || [self isVC1541Rom:filename]; }
+- (bool) loadRom:(NSString *)filename { return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename]; }
 
 - (bool) attachCartridge:(Cartridge *)c { return c64->attachCartridge(c); }
 - (bool) detachCartridge { return c64->detachCartridge(); }

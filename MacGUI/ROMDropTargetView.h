@@ -24,26 +24,13 @@
 @interface ROMDropTargetView : NSImageView <NSDraggingDestination>
 {
     IBOutlet MyController *controller;
-    
-    // Drop zone highlighting on/off
-    BOOL highlight;
+    NSImage *originalImage;
 }
 
 @property (assign) BOOL allowDrop;
-@property (assign) id<DragDropImageViewDelegate> delegate;
 
 - (id)initWithCoder:(NSCoder *)coder;
 
 @end
 
-
-#if 0
-
-@protocol DragDropImageViewDelegate <NSObject>
-
-- (void)dropComplete:(NSString *)filePath;
-
-@end
-
-#endif
 

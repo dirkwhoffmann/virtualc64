@@ -458,10 +458,16 @@
 
 //- (int) numberOfMissingRoms;
 - (uint8_t) missingRoms;
+- (bool) isBasicRom:(NSString *)filename;
 - (bool) loadBasicRom:(NSString *)filename;
+- (bool) isCharRom:(NSString *)filename;
 - (bool) loadCharRom:(NSString *)filename;
+- (bool) isKernelRom:(NSString *)filename;
 - (bool) loadKernelRom:(NSString *)filename;
+- (bool) isVC1541Rom:(NSString *)filename;
 - (bool) loadVC1541Rom:(NSString *)filename;
+- (bool) isRom:(NSString *)filename;
+- (bool) loadRom:(NSString *)filename;
 
 - (bool) attachCartridge:(Cartridge *)c;
 - (bool) detachCartridge;
