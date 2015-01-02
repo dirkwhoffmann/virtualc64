@@ -16,10 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// Forward declaration
+@class MyController;
+
 @protocol DragDropImageViewDelegate;
 
 @interface ROMDropTargetView : NSImageView <NSDraggingDestination>
 {
+    IBOutlet MyController *controller;
+    
     // Drop zone highlighting on/off
     BOOL highlight;
 }
