@@ -22,8 +22,6 @@ int VirtualComponent::debugLevel = DEBUG_LEVEL;
 
 VirtualComponent::VirtualComponent()
 {
-    assert(0);
-    
 	name = "Unnamed component";
 	running = false;
 	suspendCounter = 0;	

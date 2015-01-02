@@ -575,7 +575,7 @@
 - (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
-- (Joystick *) joystick:(int)nr { assert (num == 1 || num == 2); return (nr == 1) ? c64->joystick1 : c64->joystick2; }
+- (Joystick *) joystick:(int)nr { assert(nr == 1 || nr == 2); return (nr == 1) ? c64->joystick1 : c64->joystick2; }
 
 // Audio hardware
 - (void) enableAudio { [audioDevice startPlayback]; }

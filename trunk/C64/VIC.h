@@ -19,7 +19,6 @@
 // TODO:
 
 // Test fast reset
-// Log messages
 // Implement VBlanking
 
 #ifndef _VIC_INC
