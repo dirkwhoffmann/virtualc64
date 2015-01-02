@@ -17,13 +17,13 @@
  */
 
 // New:
-// 1. Fixed a bug in the background drawing routine (Bug #149)
+// 1. Fixed a severe bug in the background drawing routine (Bug #149)
 // 2. Cartridge images in the ROM dialog are now drop targets (Bug #132)
 
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG // Diables all assertions (release versions, only)
+#define NDEBUG // Diables all assertions (release versions, only)
 #define DEBUG_LEVEL 1
 
 #include "basic.h"
