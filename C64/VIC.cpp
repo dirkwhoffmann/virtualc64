@@ -591,16 +591,14 @@ void VIC::runGraphicSequencer(uint8_t cycle)
      die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
      normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
 
-    if (verticalFrameFF || cycle < 17 || cycle > 56) {
+    if (verticalFrameFF || cycle <= 17 || cycle > 56) {
         drawEightBackgroudPixels(xCoord);
-        return;
+        if (cycle != 17)
+            return;
     }
 
     // Shift x coordinate according to the load delay
-    if (gs_delay) {
-        drawEightBackgroudPixels(xCoord);
-        xCoord += gs_delay;
-    }
+    xCoord += gs_delay;
 
     switch (getDisplayMode()) {
             
@@ -769,7 +767,7 @@ VIC::drawInvalidSingleColorCharacter(unsigned offset)
     
     for (unsigned i = 0; i < 8; i++, gs_data <<= 1) {
         
-        if (gs_data & 0xF0) {
+        if (gs_data & 0x80) {
             setForegroundPixel(offset++, col);
         } else {
             setBackgroundPixel(offset++, col);
@@ -786,7 +784,7 @@ VIC::drawInvalidMultiColorCharacter(unsigned offset)
     
     for (unsigned i = 0; i < 4; i++, gs_data <<= 2) {
         
-        if (gs_data & 0xF0) {
+        if (gs_data & 0x80) {
             setForegroundPixel(offset++, col);
             setForegroundPixel(offset++, col);
         } else {
