@@ -512,7 +512,7 @@
     c64->resume(); 
 }
 
-- (CIAProxy *) cia:(int)num { if (num == 1) return [self cia1]; else if (num == 2) return [self cia2]; else assert(0); } 
+- (CIAProxy *) cia:(int)num { assert(num == 1 || num == 2); return (num == 1) ? [self cia1] : [self cia2]; }
 
 - (void) dump { c64->dumpState(); }
 
@@ -569,12 +569,7 @@
 - (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
-- (Joystick *) joystick:(int)nr
-{
-    if (nr == 1) return c64->joystick1;
-    if (nr == 2) return c64->joystick2;
-    assert(0);
-};
+- (Joystick *) joystick:(int)nr { assert (num == 1 || num == 2); return (nr == 1) ? c64->joystick1 : c64->joystick2; }
 
 // Audio hardware
 - (void) enableAudio { [audioDevice startPlayback]; }
