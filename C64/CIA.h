@@ -512,9 +512,6 @@ private:
 	Keyboard *keyboard;
 	Joystick *joy[2];
 
-    // Deprecated
-	// bool bKeyboard[2];
-
 	void pollJoystick( Joystick *joy, int joyDevNo );
 
 	void raiseInterruptLine();
