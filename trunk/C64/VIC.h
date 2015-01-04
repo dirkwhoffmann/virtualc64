@@ -1025,7 +1025,7 @@ public:
 	/*! Although we do not support hardware lightpens, we need to take care of it because lightpen interrupts 
 	 can be triggered by software. It is used by some games to determine the current X position within 
 	 the current rasterline. */
-	void simulateLightPenInterrupt();
+	void triggerLightPenInterrupt();
 
 	
 	// -----------------------------------------------------------------------------------------------

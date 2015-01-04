@@ -1296,26 +1296,22 @@ VIC::triggerIRQ(uint8_t source)
 }
 
 void
-VIC::simulateLightPenInterrupt()
+VIC::triggerLightPenInterrupt()
 {
-	int x, x_max, y;
-	
-	if (!lightpenIRQhasOccured) {
+    // https://svn.code.sf.net/p/vice-emu/code/testprogs/VICII/lp-trigger/
+
+    if (!lightpenIRQhasOccured) {
 
 		// lightpen interrupts can only occur once per frame
 		lightpenIRQhasOccured = true;
 
 		// determine current coordinates
-		x_max = 8 * c64->getCyclesPerRasterline() - 4;
-		if (xCounter >= 16)
-			x = xCounter - 12;
-		else 
-			x = x_max - xCounter;
-		y = scanline;
+        int x = xCounter;
+        int y = scanline;
 				
 		// latch coordinates 
 		iomem[0x13] = x / 2; // value equals the current x coordinate divided by 2
-		iomem[0x14] = y + 1; // value is based on sprite coordinate system (hence, + 1)
+		iomem[0x14] = y;
 
 		// Simulate interrupt
 		triggerIRQ(0x08);
@@ -1351,7 +1347,7 @@ VIC::updateSpriteDmaOnOff()
 void 
 VIC::beginFrame()
 {
-	lightpenIRQhasOccured = false; // only one event per frame is permitted
+	lightpenIRQhasOccured = false;
 
     /* "Der [Refresh-]ZŠhler wird in Rasterzeile 0 mit
         $ff gelšscht und nach jedem Refresh-Zugriff um 1 verringert.

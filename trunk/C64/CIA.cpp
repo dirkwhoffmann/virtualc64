@@ -853,8 +853,8 @@ CIA1::getInterruptLine()
 }
 
 void 
-CIA1::pollJoystick(Joystick *joy, int joyDevNo) {
-
+CIA1::pollJoystick(Joystick *joy, int joyDevNo)
+{
     JoystickAxisState leftRightState = joy->GetAxisX();
 	JoystickAxisState upDownState = joy->GetAxisY();
 	bool buttonState = joy->GetButtonPressed();
@@ -947,6 +947,8 @@ CIA1::peek(uint16_t addr)
 void 
 CIA1::poke(uint16_t addr, uint8_t value)
 {
+    uint8_t PBold;
+    
 	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
 	
 	// log("Poking %02X to %04X\n", value, 0xDC00 + addr);
@@ -968,17 +970,28 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			
 		case CIA_DATA_PORT_B:
 			
+            PBold = PB;
+            
 			PBLatch = value;
 			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-			// oldPB = PB;
+            
+            if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
+                vic->triggerLightPenInterrupt();
+            }
 			return;
 			
 		case CIA_DATA_DIRECTION_B:
 
+            PBold = PB;
+
 			DDRB = value;
 			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
-			// oldPB = PB;
-			return;
+
+            if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
+                vic->triggerLightPenInterrupt();
+            }
+            
+            return;
 		
 		default:
 			CIA::poke(addr, value);
