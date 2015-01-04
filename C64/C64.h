@@ -17,8 +17,8 @@
  */
 
 // New:
-// 1. Fixed a severe bug in the background drawing routine (Bug #149)
-// 2. Cartridge images in the ROM dialog are now drop targets (Bug #132)
+// 1. Time of day clocks are initialized with the current time
+// 2.
 
 #ifndef _C64_INC
 #define _C64_INC
