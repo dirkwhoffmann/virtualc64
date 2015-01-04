@@ -86,7 +86,6 @@ VIC::reset()
     addrBus = 0;
     dataBus = 0;
     gAccessDisplayMode = 0;
-    gAccessResult = 0;
     gAccessfgColor = 0;
     gAccessbgColor = 0;
 	badLineCondition = false;
@@ -163,7 +162,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     addrBus = read16(buffer);
     dataBus = read8(buffer);
     gAccessDisplayMode = read8(buffer);
-    gAccessResult = read8(buffer);
+    (void)read8(buffer);
     gAccessfgColor = read8(buffer);
     gAccessbgColor = read8(buffer);
 	badLineCondition = (bool)read8(buffer);
@@ -215,7 +214,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     write16(buffer, addrBus);
     write8(buffer, dataBus);
     write8(buffer, gAccessDisplayMode);
-    write8(buffer, gAccessResult);
+    write8(buffer, 0);
     write8(buffer, gAccessfgColor);
     write8(buffer, gAccessbgColor);
 	write8(buffer, (uint8_t)badLineCondition);
@@ -380,6 +379,12 @@ uint8_t VIC::memAccess(uint16_t addr)
     return dataBus;
 }
 
+uint8_t VIC::memIdleAccess()
+{
+    // TODO: Optimize
+    return memAccess(0x3FFF);
+}
+
 inline void VIC::cAccess()
 {
     // Only proceed if the BA line is pulled down
@@ -451,10 +456,7 @@ inline void VIC::gAccess()
     
     // Load graphics sequencer
     loadGraphicSequencer(memAccess(addr), getHorizontalRasterScroll());
-    
-    
-    gAccessResult = memAccess(addr); // DEPRECATED
-    
+        
     // VC and VMLI are increased after each gAccess
     if (displayState) {
         registerVC++;
@@ -464,17 +466,35 @@ inline void VIC::gAccess()
     }
 }
 
-inline void VIC::pAccess()
+inline void VIC::pAccess(int sprite)
 {
-    
+    spritePtr[sprite] = memAccess(screenMemoryAddr | 0x03F8 | sprite) << 6;
 }
 
-inline void VIC::sAccess()
+inline void VIC::sFirstAccess(int sprite)
 {
-    // TODO
-    
-    // rIdleAccess();
+    if (spriteDmaOnOff & (1 << sprite)) {
+        spriteShiftReg[sprite][0] = memAccess(spritePtr[sprite] | mc[sprite]);
+        mc[sprite]++;
+    }
+}
 
+inline void VIC::sSecondAccess(int sprite)
+{
+    if (spriteDmaOnOff & (1 << sprite)) {
+        spriteShiftReg[sprite][1] = memAccess(spritePtr[sprite] | mc[sprite]);
+        mc[sprite]++;
+    } else {
+        memIdleAccess();
+    }
+}
+
+inline void VIC::sThirdAccess(int sprite)
+{
+    if (spriteDmaOnOff & (1 << sprite)) {
+        spriteShiftReg[sprite][2] = memAccess(spritePtr[sprite] | mc[sprite]);
+        mc[sprite]++;
+    }
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1400,10 +1420,13 @@ VIC::cycle1()
     if (scanline == 0x30)
         DENwasSetInRasterline30 = DENbit();
     
-	// Get sprite data address and sprite data of sprite 3
 	releaseBusForSprite(2);
-	readSpritePtr(3);
-	readSpriteData(3);
+
+    // Memory access (first clock phase)
+    pAccess(3);
+    // Memory access (second clock phase)
+	sFirstAccess(3);
+    
 	countX();
 	update_display;
 }
@@ -1416,11 +1439,15 @@ VIC::cycle2()
     // In all other lines, it is triggered in cycle 1
 	if (scanline == 0 && scanline == rasterInterruptLine())
 		triggerIRQ(1);
-			
-	readSpriteData(3);
-	readSpriteData(3);
+
+    // Memory access (first clock phase)
+	sSecondAccess(3);
+    // Memory access (second clock phase)
+	sThirdAccess(3);
+    
 	requestBusForSprite(5);
-	countX();
+
+    countX();
 	update_display;
 }
 
@@ -1428,8 +1455,12 @@ void
 VIC::cycle3()
 {
 	releaseBusForSprite(3);
-	readSpritePtr(4);
-	readSpriteData(4);
+    
+    // Memory access (first clock phase)
+	pAccess(4);
+    // Memory access (second clock phase)
+	sFirstAccess(4);
+    
 	countX();
 	update_display;
 }
@@ -1437,10 +1468,14 @@ VIC::cycle3()
 void 
 VIC::cycle4()
 {
-	readSpriteData(4);
-	readSpriteData(4);
+    // Memory access (first clock phase)
+	sSecondAccess(4);
+    // Memory access (second clock phase)
+	sThirdAccess(4);
+    
 	requestBusForSprite(6);
-	countX();
+
+    countX();
 	update_display;
 }
 
@@ -1448,19 +1483,27 @@ void
 VIC::cycle5()
 {
 	releaseBusForSprite(4);
-	readSpritePtr(5);
-	readSpriteData(5);
-	countX();
+
+    // Memory access (first clock phase)
+    pAccess(5);
+    // Memory access (second clock phase)
+	sFirstAccess(5);
+
+    countX();
 	update_display;
 }
 
 void 
 VIC::cycle6()
 {
-	readSpriteData(5);
-	readSpriteData(5);
-	requestBusForSprite(7);
-	countX();
+    // Memory access (first clock phase)
+	sSecondAccess(5);
+    // Memory access (second clock phase)
+	sThirdAccess(5);
+
+    requestBusForSprite(7);
+
+    countX();
 	update_display;
 }
 
@@ -1468,8 +1511,12 @@ void
 VIC::cycle7()
 {
 	releaseBusForSprite(5);
-	readSpritePtr(6);
-	readSpriteData(6);
+
+    // Memory access (first clock phase)
+    pAccess(6);
+    // Memory access (second clock phase)
+	sFirstAccess(6);
+    
 	countX();
 	update_display;
 }
@@ -1477,9 +1524,12 @@ VIC::cycle7()
 void 
 VIC::cycle8()
 {
-	readSpriteData(6);
-	readSpriteData(6);
-	countX();
+    // Memory access (first clock phase)
+	sSecondAccess(6);
+    // Memory access (second clock phase)
+	sThirdAccess(6);
+
+    countX();
 	update_display;
 }
 
@@ -1487,8 +1537,12 @@ void
 VIC::cycle9()
 {
 	releaseBusForSprite(6);
-	readSpritePtr(7);
-	readSpriteData(7);
+
+    // Memory access (first clock phase)
+    pAccess(7);
+    // Memory access (second clock phase)
+	sFirstAccess(7);
+    
 	countX();
 	update_display;
 }
@@ -1496,8 +1550,11 @@ VIC::cycle9()
 void 
 VIC::cycle10()
 {
-	readSpriteData(7);
-	readSpriteData(7);
+    // Memory access (first clock phase)
+	sSecondAccess(7);
+    // Memory access (second clock phase)
+	sThirdAccess(7);
+    
 	countX();
 	update_display;
 }
@@ -1506,7 +1563,11 @@ void
 VIC::cycle11()
 {
 	releaseBusForSprite(7);
-	countX();
+
+    // Memory access (first out of five DRAM refreshs)
+    rAccess();
+
+    countX();
 	update_display;
 }
 
@@ -1527,7 +1588,7 @@ VIC::cycle12()
 	}
 	releaseBusForSprite(7);
 
-    // First clock phase (LOW)
+    // Memory access (second out of five DRAM refreshs)
     rAccess();
 
     update_display_and_ba;
@@ -1542,7 +1603,7 @@ VIC::cycle13()
     // This is the first invocation of the graphic sequencer
     runGraphicSequencer(13);
 
-    // First clock phase (LOW)
+    // Memory access (third out of five DRAM refreshs)
     rAccess();
 
     countX();
@@ -1562,7 +1623,7 @@ VIC::cycle14()
     
     runGraphicSequencer(14);
 
-    // First clock phase (LOW)
+    // Memory access (forth out of five DRAM refreshs)
     rAccess();
 
     countX();
@@ -1588,7 +1649,7 @@ VIC::cycle15()
     
     runGraphicSequencer(15);
 
-    // First clock phase (LOW)
+    // Memory access (last DRAM refresh)
     rAccess();
 
     // Second clock phase (HIGH)
@@ -1643,11 +1704,12 @@ VIC::cycle16()
     
     runGraphicSequencer(16);
     
-    // First clock phase (LOW)
+    // Memory access (first clock phase)
     gAccess();
     
-    // Second clock phase (HIGH)
+    // Memory access (second clock phase)
 	cAccess();
+    
 	countX();
 	update_display_and_ba;
 }
@@ -1682,12 +1744,13 @@ VIC::cycle17()
 
     // We reach the main screen area here (start drawing pixels)
     runGraphicSequencer(17);
-
-    // First clock phase (LOW)
+    
+    // Memory access (first clock phase)
     gAccess();
-
-    // Second clock phase (HIGH)
+    
+    // Memory access (second clock phase)
     cAccess();
+
 	countX();
 	update_display_and_ba;
 }
@@ -1722,13 +1785,14 @@ VIC::cycle18()
     }
 
     runGraphicSequencer(18);
-
-    // First clock phase (LOW)
+    
+    // Memory access (first clock phase)
     gAccess();
-
-    // Second clock phase (HIGH)
+    
+    // Memory access (second clock phase)
     cAccess();
-	countX();
+
+    countX();
 	update_display_and_ba;
 }
 
@@ -1737,12 +1801,13 @@ VIC::cycle19to54()
 {
     runGraphicSequencer(19); // value '19' is OK for each cycle
     
-    // First clock phase (LOW)
+    // Memory access (first clock phase)
     gAccess();
+    
+    // Memory access (second clock phase)
+    cAccess();
 
-    // Second clock phase (HIGH)
-	cAccess();
-	countX();
+    countX();
 	update_display_and_ba;
 }
 
@@ -1757,9 +1822,9 @@ VIC::cycle55()
      invertiert, wenn das MxYE-Bit gesetzt ist." [C.B.] */
     expansionFF ^= iomem[0x17];
 
+    // Memory access (first clock phase)
     gAccess();
 
-    
 	/* In den ersten Phasen von Zyklus 55 und 56 wird fŸr jedes Sprite geprŸft,
 	 ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
 	 Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
@@ -1792,7 +1857,7 @@ VIC::cycle56()
 	updateSpriteDmaOnOff();
     requestBusForSprite(0); // Bus is again requested because DMA conditions may have changed
 
-    // First clock phase (LOW)
+    // Memory access (first clock phase, nothing to read)
     rIdleAccess();
 
     countX();
@@ -1816,7 +1881,7 @@ VIC::cycle57()
     
     requestBusForSprite(1);
 
-    // First clock phase (LOW)
+    // Memory access (first clock phase, nothing to read)
     rIdleAccess();
 
     countX();
@@ -1872,9 +1937,12 @@ VIC::cycle58()
 		if ((spriteOnOff & mask) && !(spriteDmaOnOff & mask))
 			spriteOnOff &= ~mask;
 	}
-			
-	readSpritePtr(0);
-	readSpriteData(0);
+
+    // Memory access (first clock phase)
+	pAccess(0);
+    
+    // Memory access (second clock phase)
+	sFirstAccess(0);
 	countX();
 }
 
@@ -1883,8 +1951,11 @@ VIC::cycle59()
 {
     runGraphicSequencer(59);
 
-	readSpriteData(0);
-	readSpriteData(0);
+    // Memory access (first clock phase)
+	sSecondAccess(0);
+    // Memory access (second clock phase)
+    sThirdAccess(0);
+    
 	requestBusForSprite(2);
 	countX();
 	update_display;
@@ -1897,17 +1968,24 @@ VIC::cycle60()
     runGraphicSequencer(60);
 
 	releaseBusForSprite(0);
-	readSpritePtr(1);
-	readSpriteData(1);
-	countX();
+
+    // Memory access (first clock phase)
+    pAccess(1);
+    // Memory access (second clock phase)
+	sFirstAccess(1);
+
+    countX();
 	update_display;
 }
 
 void
 VIC::cycle61()
 {
-	readSpriteData(1);
-	readSpriteData(1);
+    // Memory access (first clock phase)
+	sSecondAccess(1);
+    // Memory access (second clock phase)
+    sThirdAccess(1);
+    
 	requestBusForSprite(3);
 	countX();
 	update_display;
@@ -1917,8 +1995,12 @@ void
 VIC::cycle62()
 {
 	releaseBusForSprite(1);
-	readSpritePtr(2);
-	readSpriteData(2);
+
+    // Memory access (first clock phase)
+    pAccess(2);
+    // Memory access (second clock phase)
+	sFirstAccess(2);
+    
 	countX();
 	update_display;
 }
@@ -1963,25 +2045,33 @@ VIC::cycle63()
 		rasterlineDebug[scanline] = -1;
 	}		
 
-	readSpriteData(2);
-	readSpriteData(2);
+    // Memory access (first clock phase)
+	sSecondAccess(2);
+    // Memory access (second clock phase)
+	sThirdAccess(2);
+    
 	requestBusForSprite(4);
 	countX();
 	update_display;
 }
 
 void
-VIC::cycle64()
+VIC::cycle64() 	// NTSC only
 {
-	// NTSC only
+    // Memory access (first clock phase, nothing to read)
+    rIdleAccess();
+    
 	countX();
 }
 
 void
-VIC::cycle65()
+VIC::cycle65() 	// NTSC only
+
 {
-	// NTSC only
-	countX();
+    // Memory access (first clock phase, nothing to read)
+    rIdleAccess();
+    
+    countX();
 }
 
 

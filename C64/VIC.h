@@ -262,9 +262,6 @@ private:
     //! Display mode in latest gAccess
     uint8_t gAccessDisplayMode;
     
-    //! Graphic bits fetched in latest gAccess
-    uint8_t gAccessResult;
-
     //! Foreground color fetched in latest gAccess
     uint8_t gAccessfgColor;
 
@@ -403,7 +400,10 @@ private:
 
     //! General memory access via address and data bus
     uint8_t memAccess(uint16_t addr);
-    
+
+    //! Idle memory access at address 0x3fff
+    uint8_t memIdleAccess();
+
     // VIC performs four special types of memory accesses (c, g, p and s)
     
     //! During a 'c access', VIC accesses the video matrix
@@ -413,16 +413,18 @@ private:
     void gAccess();
     
     //! During a 'p access', VIC reads sprite pointers
-    void pAccess();
+    void pAccess(int sprite);
     
     //! During a 's access', VIC reads sprite data
-    void sAccess();
+    void sFirstAccess(int sprite);
+    void sSecondAccess(int sprite);
+    void sThirdAccess(int sprite);
 
     //! Perform a DRAM refresh
     inline void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
     
     //! Perform a DRAM idle access
-    inline void rIdleAccess() { (void)memAccess(0x3FFF); }
+    inline void rIdleAccess() { (void)memIdleAccess(); }
     
 	//! Temporary space for display characters
 	/*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the characters to display */
@@ -842,7 +844,9 @@ public:
 	 */	
 	void poke(uint16_t addr, uint8_t value);
 	
-	
+    //! Return last value on VIC data bus
+    uint8_t getDataBus() { return dataBus; }
+    
 	// -----------------------------------------------------------------------------------------------
 	//                                         Properties
 	// -----------------------------------------------------------------------------------------------
@@ -1042,18 +1046,22 @@ private:
 	
 	//! Read sprite pointer
 	/*! Determines the start adress of sprite data and stores the value into spritePtr */
-	inline void readSpritePtr(int sprite) { 
+#if 0
+    inline void readSpritePtr(int sprite) {
 		spritePtr[sprite] = bankAddr + (mem->ram[bankAddr + screenMemoryAddr + 0x03F8 + sprite] << 6); 
 	}
-	
-	//! Read sprite data 
+#endif
+    
+	//! Read sprite data
 	/*! Read next byte of sprite data into shift register. */
-	inline void readSpriteData(int sprite) { 
+#if 0
+    inline void readSpriteData(int sprite) {
 		if (spriteDmaOnOff & (1 << sprite)) { 
 			spriteShiftReg[sprite][mc[sprite]%3] = mem->ram[spritePtr[sprite]+mc[sprite]]; mc[sprite]++; 
 		}
 	}
-	
+#endif
+    
 	//! Get sprite depth
 	/*! The value is written to the z buffer to resolve overlapping pixels */
 	inline uint8_t spriteDepth(uint8_t nr) {
