@@ -65,7 +65,9 @@ ReSID::reset()
 		ringBuffer[i] = 0.0f;
 	}
 	readBuffer = ringBuffer;
-	writeBuffer = ringBuffer;	
+	writeBuffer = ringBuffer;
+    
+    sid->reset();
 }
 
 void 

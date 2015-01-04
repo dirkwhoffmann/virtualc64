@@ -17,8 +17,10 @@
  */
 
 // New:
-// 1. CIA chips can now trigger light pen interrupts
-// 2. Time of day clocks are initialized with the current time
+// 1. CIA chips can trigger light pen interrupts
+// 2. Open lines in color RAM and I/O are handled correctly now
+// 3. VIC chip now performs idle memory accesses
+// 4. Time of day clocks are initialized with the current time
 
 #ifndef _C64_INC
 #define _C64_INC
@@ -48,10 +50,6 @@
 #include "CPU.h"
 #include "VC1541.h"
 #include "Cartridge.h"
-
-// Changes:
-// This relase contains considerable VIC II compatibility improvements
-// Fixed another keyboard bug introduced in 0.9.7 and 0.9.7.x
 
 
 //! A complete virtual C64
