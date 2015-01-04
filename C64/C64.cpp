@@ -172,7 +172,9 @@ void C64::reset()
 	cia2->reset();
     sid->reset();
 	keyboard->reset();
-	iec->reset();
+    joystick1->reset();
+    joystick2->reset();
+    iec->reset();
     floppy->reset();
 
 	cycles = 0UL;
@@ -324,7 +326,9 @@ C64::loadFromBuffer(uint8_t **buffer)
 	cia2->loadFromBuffer(buffer);	
 	mem->loadFromBuffer(buffer);
 	keyboard->loadFromBuffer(buffer);
-	iec->loadFromBuffer(buffer);
+    joystick1->loadFromBuffer(buffer);
+    joystick2->loadFromBuffer(buffer);
+    iec->loadFromBuffer(buffer);
 	floppy->loadFromBuffer(buffer);
 
 	debug(1, "%d bytes.\n", *buffer - old);	
@@ -366,6 +370,8 @@ C64::saveToBuffer(uint8_t **buffer)
 	cia2->saveToBuffer(buffer);
 	mem->saveToBuffer(buffer);
 	keyboard->saveToBuffer(buffer);
+    joystick1->saveToBuffer(buffer);
+    joystick2->saveToBuffer(buffer);
 	iec->saveToBuffer(buffer);
 	floppy->saveToBuffer(buffer);
 	

@@ -506,19 +506,12 @@
 				50176C570A6F72F3009E80BD /* Instructions.cpp */,
 				50176C5A0A6F72F3009E80BD /* Keyboard.h */,
 				50176C590A6F72F3009E80BD /* Keyboard.cpp */,
+				389E777F0C7A3B6F00BEAFA6 /* Joystick.h */,
+				389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */,
 				5020F28A0BBABE3C0093C396 /* IEC.h */,
 				5020F28B0BBABE3C0093C396 /* IEC.cpp */,
 			);
 			name = Computer;
-			sourceTree = "<group>";
-		};
-		5000473D12DCEC190098D890 /* Peripherals */ = {
-			isa = PBXGroup;
-			children = (
-				389E777F0C7A3B6F00BEAFA6 /* Joystick.h */,
-				389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */,
-			);
-			name = Peripherals;
 			sourceTree = "<group>";
 		};
 		5000473E12DCEC7D0098D890 /* General */ = {
@@ -639,7 +632,6 @@
 				5000473C12DCEC060098D890 /* Computer */,
 				504B39910C45192700286F18 /* Drive */,
 				5000C8070D13CE490011A2E9 /* Memory */,
-				5000473D12DCEC190098D890 /* Peripherals */,
 				509AE9FE0C3249D4001FC9FD /* Loading and saving */,
 			);
 			path = C64;
