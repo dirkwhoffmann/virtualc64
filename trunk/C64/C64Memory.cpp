@@ -62,7 +62,7 @@ void C64Memory::reset()
 	
 	// Initialize color memory...
 	// It's important here to write in random values as some games peek the color RAM 
-	// to generate random numbers. E.g., Paradroid is doing it that way.
+	// to generate random numbers.
     for (unsigned i = 0; i < sizeof(colorRam); i++) {
         colorRam[i] = (rand() & 0xFF);
         // fprintf(stderr, "%2X ", colorRam[i]);

@@ -36,10 +36,10 @@ VirtualComponent::~VirtualComponent()
 		fclose(logfile);
 }
 
-void 
-VirtualComponent::reset()
-{
-}
+//void
+//VirtualComponent::reset()
+//{
+//}
 
 void 
 VirtualComponent::run()

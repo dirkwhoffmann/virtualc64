@@ -19,9 +19,45 @@
 #include "C64.h"
 
 Joystick::Joystick() {
+
+    name = "JOYSTICK";
+    
+    debug(2, "    Creating joystick at address %p...\n", this);
+
+}
+
+Joystick::~Joystick()
+{
+}
+
+void
+Joystick::reset()
+{
+    debug(2, "  Resetting Joystick...\n");
+    
     _buttonPressed = false;
     _axisX = JOYSTICK_AXIS_NONE;
     _axisY = JOYSTICK_AXIS_NONE;
+}
+
+void
+Joystick::loadFromBuffer(uint8_t **buffer)
+{
+    debug(2, "    Loading joystick state...\n");
+    
+    _buttonPressed = (uint8_t)read8(buffer);
+    _axisX = (JoystickAxisState)read8(buffer);
+    _axisY = (JoystickAxisState)read8(buffer);
+}
+
+void
+Joystick::saveToBuffer(uint8_t **buffer)
+{
+    debug(2, "    Saving joystick state...\n");
+
+    write8(buffer,(uint8_t)_buttonPressed);
+    write8(buffer,(uint8_t)_axisX);
+    write8(buffer,(uint8_t)_axisY);
 }
 
 bool Joystick::GetButtonPressed()

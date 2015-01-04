@@ -1,5 +1,6 @@
 /*
- * (C) 2009 Benjamin Klein. All rights reserved.
+ * Authors: Benjamin Klein
+ *          Dirk Hoffmann
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,23 +33,39 @@ enum JoystickAxisState
 	JOYSTICK_AXIS_Y_NONE = 0
 };
 
-class Joystick
-{
-	public:
-		Joystick();
+class Joystick : public VirtualComponent {
+
+private:
+    
+    bool _buttonPressed;
+    JoystickAxisState _axisX;
+    JoystickAxisState _axisY;
+    
+public:
+
+    //! Constructor
+    Joystick();
+    
+    //! Destructor
+    ~Joystick();
+    
+    //! Reset
+    void reset();
+    
+    //! Load state
+    void loadFromBuffer(uint8_t **buffer);
+    
+    //! Save state
+    void saveToBuffer(uint8_t **buffer);
+
+    bool GetButtonPressed();
+	JoystickAxisState GetAxisX();
+	JoystickAxisState GetAxisY();
 		
-		bool GetButtonPressed();
-		JoystickAxisState GetAxisX();
-		JoystickAxisState GetAxisY();
-		
-		void SetButtonPressed(bool pressed);
-		void SetAxisX(JoystickAxisState state);
-		void SetAxisY(JoystickAxisState state);
-		
-	private:
-		bool _buttonPressed;
-		JoystickAxisState _axisX;
-		JoystickAxisState _axisY;
+	void SetButtonPressed(bool pressed);
+	void SetAxisX(JoystickAxisState state);
+	void SetAxisY(JoystickAxisState state);
+
 };
 
 #endif

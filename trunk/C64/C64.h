@@ -17,8 +17,8 @@
  */
 
 // New:
-// 1. Time of day clocks are initialized with the current time
-// 2.
+// 1. CIA chips can now trigger light pen interrupts
+// 2. Time of day clocks are initialized with the current time
 
 #ifndef _C64_INC
 #define _C64_INC
