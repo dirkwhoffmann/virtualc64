@@ -63,9 +63,11 @@ void C64Memory::reset()
 	// Initialize color memory...
 	// It's important here to write in random values as some games peek the color RAM 
 	// to generate random numbers. E.g., Paradroid is doing it that way.
-	for (unsigned i = 0; i < sizeof(colorRam); i++)
-		colorRam[i] = rand();
-		
+    for (unsigned i = 0; i < sizeof(colorRam); i++) {
+        colorRam[i] = (rand() & 0xFF);
+        // fprintf(stderr, "%2X ", colorRam[i]);
+    }
+    
 	// Initialize processor port data direction register and processor port
 	poke(0x0000, 0x2F); // Data direction
 	poke(0x0001, 0x1F);	// IO port, set default memory layout
@@ -337,7 +339,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	
 	// 0xD800 - 0xDBFF (Color RAM)
 	if (addr <= 0xDBFF) {
-		return (colorRam[addr - 0xD800] & 0x0F) | (rand() << 4);
+        return (colorRam[addr - 0xD800] & 0x0F) | (vic->getDataBus() & 0xF0);
 	}
 	
 	// 0xDC00 - 0xDCFF (CIA 1)
@@ -357,12 +359,20 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	// 0xDE00 - 0xDEFF (I/O area 1)
 	// 0xDF00 - 0xDFFF (I/O area 2) 
 	if (addr <= 0xDFFF) {
-		// Note: Reserved for further I/O expansion
-		// When read, a random value is returned
-		if (cartridge != NULL && cartridgeRomIsVisible) {
+
+        /* "Die beiden mit "I/O 1" und "I/O 2" bezeichneten Bereiche
+            sind für Erweiterungskarten reserviert und normalerweise ebenfalls offen,
+            ein Lesezugriff liefert auch hier "zufällige" Daten (daﬂ diese Daten gar
+            nicht so zufällig sind, wird in Kapitel 4 noch ausf¸hrlich erklärt. Ein
+            Lesen von offenen Adressen liefert nämlich auf vielen C64 das zuletzt vom
+            VIC gelesene Byte zurück!)" [C.B.] */
+
+        if (cartridge != NULL && cartridgeRomIsVisible) {
 			return cartridge->peek(addr);
-		}
-		return (uint8_t)(rand());
+            fprintf(stderr,"Cartridge peek\n");
+        }
+        
+		return vic->getDataBus();
 	}
 
 	assert(false);
