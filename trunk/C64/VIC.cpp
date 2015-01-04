@@ -35,9 +35,7 @@
     angegebenen Position abgelegt. Bei jedem g-Zugriff im Display-Zustand
     werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
     wieder intern gelesen." [C.B.] */
- 
-//#define update_display_and_ba if (badLineCondition) { displayState = true; pullDownBA(0x100); }
-#define update_display_and_ba if (badLineCondition) { displayState = true; }
+ #define update_display_and_ba if (badLineCondition) { displayState = true; pullDownBA(0x100); }
 
 
 VIC::VIC()
@@ -591,15 +589,19 @@ void VIC::runGraphicSequencer(uint8_t cycle)
      die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
      normalerweise vom Rahmen überdeckt)." [C.B.] */
 
-    if (verticalFrameFF || cycle <= 17 || cycle > 56) {
-        drawEightBackgroudPixels(xCoord);
-        if (cycle != 17)
-            return;
+    if (verticalFrameFF || cycle < 17 || cycle > 56) {
+        drawEightBehindBackgroudPixels(xCoord);
+        return;
     }
 
-    // Shift x coordinate according to the load delay
-    xCoord += gs_delay;
+    // Take care of horizontal scrolling
+    int rgba = colors[gs_bg_color_old]; // TODO: WE PROBABLY SELECT THE WRONG COLOR HERE
+    for (unsigned i = 0; i < gs_delay; i++) {
+        setBehindBackgroundPixel(xCoord++, rgba);
+    }
+    // xCoord += gs_delay;
 
+    // Synthesize pixels
     switch (getDisplayMode()) {
             
         case STANDARD_TEXT:
@@ -657,48 +659,56 @@ void VIC::runGraphicSequencer(uint8_t cycle)
 // -----------------------------------------------------------------------------------------------
 
 inline void
-VIC::setPixel(unsigned offset, int color, int depth)
+VIC::setFramePixel(unsigned offset, int rgba)
 {
+    zBuffer[offset] = BORDER_LAYER_DEPTH;
+    pixelBuffer[offset] = rgba;
+    pixelSource[offset] &= (~0x80); // disable sprite/foreground collision detection in border
+}
+
+inline void
+VIC::setSpritePixel(unsigned offset, int rgba, int depth, int source)
+{
+    assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
+
     if (depth <= zBuffer[offset]) {
         zBuffer[offset] = depth;
-        pixelBuffer[offset] = color;
+        pixelBuffer[offset] = rgba;
     }
-}
-
-inline void
-VIC::setPixelWithSource(unsigned offset, int color, int depth, int source)
-{
     pixelSource[offset] |= source;
-    
-    if (depth < zBuffer[offset]) {
-        zBuffer[offset] = depth;
-        pixelBuffer[offset] = color;
+}
+
+inline void
+VIC::setForegroundPixel(unsigned offset, int rgba)
+{
+    if (FOREGROUND_LAYER_DEPTH <= zBuffer[offset]) {
+        zBuffer[offset] = FOREGROUND_LAYER_DEPTH;
+        pixelBuffer[offset] = rgba;
+        pixelSource[offset] |= 0x80;
     }
 }
 
 inline void
-VIC::setFramePixel(unsigned offset, int color)
+VIC::setBackgroundPixel(unsigned offset, int rgba)
 {
-    setPixel(offset, color, 0x00 /* in front of everything */);
-    
-    // clear foreground source bit to diable collision detection inside border
-    pixelSource[offset] &= (~0x80);    
+    if (BACKGROUD_LAYER__DEPTH <= zBuffer[offset]) {
+        zBuffer[offset] = BACKGROUD_LAYER__DEPTH;
+        pixelBuffer[offset] = rgba;
+    }
 }
 
 inline void
-VIC::setForegroundPixel(unsigned offset, int color)
+VIC::setBehindBackgroundPixel(unsigned offset, int rgba)
 {
-    setPixelWithSource(offset, color, 0x20, 0x80);
+    if (BEIND_BACKGROUND_DEPTH <= zBuffer[offset]) {
+        zBuffer[offset] = BEIND_BACKGROUND_DEPTH;
+        pixelBuffer[offset] = rgba;
+    }
 }
 
-inline void
-VIC::setBackgroundPixel(unsigned offset, int color)
-{
-    setPixel(offset, color, 0x40);
-}
 
 void
-VIC::drawEightBackgroudPixels(unsigned offset)
+VIC::drawEightBehindBackgroudPixels(unsigned offset)
 {
     /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
         Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
@@ -706,9 +716,9 @@ VIC::drawEightBackgroudPixels(unsigned offset)
         die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
         normalerweise vom Rahmen überdeckt)." [C.B.] */
 
-    int bg_rgba = colors[gs_bg_color_old];
+    int bg_rgba = colors[gs_bg_color_old]; // TODO: WE PROBABLY SELECT THE WRONG COLOR HERE
     for (unsigned i = 0; i < 8; i++) {
-        setBackgroundPixel(offset++, bg_rgba);
+        setBehindBackgroundPixel(offset++, bg_rgba);
     }    
 }
 
@@ -822,7 +832,7 @@ VIC::setSpritePixel(unsigned offset, int color, int nr)
         if (nr == 7)
             mask = 0;
         
-        setPixelWithSource(offset, color, spriteDepth(nr), mask);
+        setSpritePixel(offset, color, spriteDepth(nr), mask);
 	}
 }
 
@@ -1139,8 +1149,8 @@ VIC::poke(uint16_t addr, uint8_t value)
 			if (scanline == 0x30 && (value & 0x10) != 0)
                 DENwasSetInRasterline30 = true;
 			
-			// Bit 0 - 3 determine the vertical scroll offset. By changing these bits, the DMA line condition 
-			// can appear or disappear in the middle of a rasterline.
+			// Bits 0 - 3 determine the vertical scroll offset.
+            // Changing these bits directly affects the badline line condition the middle of a rasterline
 			updateBadLineCondition();
 			return;
 			
@@ -1822,18 +1832,21 @@ VIC::cycle58()
 	    wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
 	    "5. In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
             geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
-	        (VC->VCBASE). Ist die Videologik danach im Display-Zustand (liegt ein
-            Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhöht." [C.B.] */
+	        (VC->VCBASE)." [C.B.] */
     if (displayState && registerRC == 7 && !badLineCondition) {
         displayState = false;
 		registerVCBASE = registerVC;	
 	}
-    // "(liegt ein Bad-Line-Zustand vor, ist dies immer der Fall)"
-    // According to this, do we really need || badLineCondition() in the next statement?
-	if (displayState || badLineCondition) {
-		registerRC++;
-		registerRC &= 0x07;  // 3 bit overflow
-	}
+
+    /* "Ist die Videologik danach im Display-Zustand (liegt ein
+        Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhöht." [C.B.] */
+    if (displayState) {
+        // 3 bit overflow register
+        registerRC = (registerRC + 1) & 0x07;
+    } else {
+        // "(liegt ein Bad-Line-Zustand vor, ist dies immer der Fall)"
+        assert(!badLineCondition);
+    }
 			
 	/* "4. In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE
 	    geladen (MCBASE->MC) und geprüft, ob der DMA für das Sprite angeschaltet

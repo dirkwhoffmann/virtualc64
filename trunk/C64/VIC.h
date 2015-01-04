@@ -18,8 +18,13 @@
 
 // TODO:
 
-// Test fast reset
+// Implement graphic sequencer as 16 bit shift register
+// Synthesize pixels in gAccess
+// Rename runGraphicSequencer to runMultiplexer
+// At beginning of gAccess(?): runShiftRegister
 // Implement VBlanking
+// Remove fast reset (if really not needed)
+
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -711,43 +716,26 @@ private:
     //! Increase the x coordinate by 8 (sptrite coordinate system)
     inline void countX() { xCounter += 8; }
 
-    //! Draw single pixel into pixel buffer
-    /*! \param offset X coordinate of the pixel to draw
-        \param color Pixel color in RGBA format
-        \param depth z buffer depth (0 = background)
-     */
-    void setPixel(unsigned offset, int color, int depth);
-
-    //! Draw single pixel into pixel buffer
-    /*! \param offset X coordinate of the pixel to draw
-        \param color Pixel color in RGBA format
-        \param depth buffer depth (0 = background)
-        \param source remember who has written the pixel (e.g. sprite)
-     */
-    void setPixelWithSource(unsigned offset, int color, int depth, int source);
-
     //! Draw a single foreground pixel
-    /*! \param offset X coordinate of the pixel to draw
-        \param color Pixel color in RGBA format
-     */
-    void setFramePixel(unsigned offset, int color);
+    void setFramePixel(unsigned offset, int rgba);
     
-	//! Draw a single foreground pixel
-	/*! \param offset X coordinate of the pixel to draw
-        \param color Pixel color in RGBA format
-	 */
-	void setForegroundPixel(unsigned offset, int color);
-	
-	//! Draw a single foreground pixel
-	/*! \param offset X coordinate of the pixel to draw
-        \param color Pixel color in RGBA format
-	 */
-	void setBackgroundPixel(unsigned offset, int color);
+    //! Draw a single sprite pixel
+    void setSpritePixel(unsigned offset, int rgba, int depth, int source);
 
+	//! Draw a single foreground pixel
+	void setForegroundPixel(unsigned offset, int rgba);
+	
+	//! Draw a single background pixel
+	void setBackgroundPixel(unsigned offset, int rgba);
+
+    //! Draw a single pixel behind background layer
+    void setBehindBackgroundPixel(unsigned offset, int rgba);
+
+    
     //! Draw background pixels
     /*! This method is invoked when the sequencer is outside the main drawing area or the upper and lower border
         \param offset X coordinate of the first pixel to draw */
-    void drawEightBackgroudPixels(unsigned offset);
+    void drawEightBehindBackgroudPixels(unsigned offset);
 
     //! Draw frame pixels
     inline void drawSevenFramePixels(unsigned offset, int rgba_color) {
@@ -982,7 +970,6 @@ private:
          [1] Zyklus RASTER >= $30 und RASTER <= $f7 und
          [2] die unteren drei Bits von RASTER mit YSCROLL Ÿbereinstimmen 
          [3] und in einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war." */
-    
      inline void updateBadLineCondition() {
          badLineCondition =
             scanline >= 0x30 && scanline <= 0xf7 /* [1] */ &&
@@ -992,9 +979,6 @@ private:
              displayState = true;
      }
     
-	//! checkDmaLineCondition
-//	inline void checkDmaLineCondition() { if ((dmaLine = (DENwasSetInRasterline30 && isDMALine()))) displayState = true; }
-	
 	//! Set BA line to low
 	/*! Note: The BA pin is directly connected to the RDY line of the CPU */
 	void pullDownBA(uint16_t source);
@@ -1045,7 +1029,14 @@ public:
 	// -----------------------------------------------------------------------------------------------
 
 private:
-	
+
+    #define BORDER_LAYER_DEPTH 0x10         /* in front of everything */
+    #define SPRITE_LAYER_FG_DEPTH 0x20      /* behind border */
+    #define FOREGROUND_LAYER_DEPTH 0x30     /* behind sprite 1 layer  */
+    #define SPRITE_LAYER_BG_DEPTH 0x40      /* behind foreground */
+    #define BACKGROUD_LAYER__DEPTH 0x50     /* behind sprite 2 layer */
+    #define BEIND_BACKGROUND_DEPTH 0x60     /* behind background */
+
 	//! Update sprite DMA bits
 	void updateSpriteDmaOnOff();
 	
@@ -1065,7 +1056,8 @@ private:
 	
 	//! Get sprite depth
 	/*! The value is written to the z buffer to resolve overlapping pixels */
-	inline uint8_t spriteDepth(uint8_t nr) { return spriteIsDrawnInBackground(nr) ? 0x30 | nr : 0x10 | nr; }
+	inline uint8_t spriteDepth(uint8_t nr) {
+        return spriteIsDrawnInBackground(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
 	
 public: 
 	
