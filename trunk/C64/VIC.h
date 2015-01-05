@@ -40,6 +40,14 @@ class C64Memory;
 #define EXTRACT_BLUE(x)  ((x & 0x0000ff00) >> 8)
 #define EXTRACT_ALPHA(x) (x & 0x000000ff)
 
+#define SPR0 0x01
+#define SPR1 0x02
+#define SPR2 0x04
+#define SPR3 0x08
+#define SPR4 0x10
+#define SPR5 0x20
+#define SPR6 0x40
+#define SPR7 0x80
 
 //! The virtual Video Controller
 /*! VIC is the video controller chip of the Commodore 64.
@@ -344,6 +352,9 @@ private:
 
 private:
 	
+    // Is it a PAL or an NTSC machiche?
+    bool isPAL;
+    
 	// Current border width in pixels
 	unsigned leftBorderWidth, rightBorderWidth;
 	
@@ -980,13 +991,11 @@ private:
 	// inline bool isDMALine() { return scanline >= 0x30 && scanline <= 0xf7 && (scanline & 7) == getVerticalRasterScroll(); }
 
     /*! Update bad line condition
-        From Christina Bauers VIC II documentation:
-
         "Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
          negativen Flanke von ø0 zu Beginn des 
          [1] Zyklus RASTER >= $30 und RASTER <= $f7 und
          [2] die unteren drei Bits von RASTER mit YSCROLL Ÿbereinstimmen 
-         [3] und in einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war." */
+         [3] und in einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war." [C.B.] */
      inline void updateBadLineCondition() {
          badLineCondition =
             scanline >= 0x30 && scanline <= 0xf7 /* [1] */ &&
@@ -996,22 +1005,8 @@ private:
              displayState = true;
      }
     
-	//! Set BA line to low
-	/*! Note: The BA pin is directly connected to the RDY line of the CPU */
-	void pullDownBA(uint16_t source);
-	
-	//! Set BA line to high
-	/*! Note: The BA pin is directly connected to the RDY line of the CPU */
-	void releaseBA(uint16_t source);
-
-	//! Request memory bus for a specific sprite
-	inline void requestBusForSprite(uint8_t spriteNr) {
-        if (spriteDmaOnOff & (1 << spriteNr))
-            pullDownBA(1 << spriteNr);
-    }
-	
-	//! Release memory bus for a specific sprite
-	inline void releaseBusForSprite(uint8_t spriteNr) { releaseBA(1 << spriteNr); }
+    //! Set BA line
+    void setBAlow(bool value);
 	
 	//! Trigger a VIC interrupt
 	/*! VIC interrupts can be triggered from multiple sources. Each one is associated with a specific bit */
