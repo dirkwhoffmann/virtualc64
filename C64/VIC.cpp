@@ -1455,7 +1455,10 @@ void
 VIC::cycle1()
 {
     // Phi1.1 Fetch
-    pAccess(3);
+    if (isPAL)
+        pAccess(3);
+    else
+        sSecondAccess(3);
     
     // Phi1.2. Check horizontal border
     // Phi1.3. Draw
@@ -1474,7 +1477,10 @@ VIC::cycle1()
         setBAlow(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
     
     // Phi2.5 Fetch
-    sFirstAccess(3);
+    if (isPAL)
+        sFirstAccess(3);
+    else
+        sThirdAccess(3);
     
     // Finalize
 	countX();
@@ -1484,10 +1490,13 @@ void
 VIC::cycle2()
 {
     // Phi1.1 Fetch
-    sSecondAccess(3);
-
-    // Phi1.2. Check horizontal border
-    // Phi1.3. Draw
+    if (isPAL)
+        sSecondAccess(3);
+    else
+        pAccess(4);
+    
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
     // multiplex
     
     // Phi2.1 Rasterline interrupt
@@ -1503,7 +1512,10 @@ VIC::cycle2()
         setBAlow(spriteDmaOnOff & (SPR4 | SPR5));
 
     // Phi2.5 Fetch
-	sThirdAccess(3);
+    if (isPAL)
+        sThirdAccess(3);
+    else
+        sFirstAccess(4);
     
     // Finalize
     countX();
@@ -1513,10 +1525,13 @@ void
 VIC::cycle3()
 {
     // Phi1.1 Fetch
-    pAccess(4);
-
-    // Phi1.2. Check horizontal border
-    // Phi1.3. Draw
+    if (isPAL)
+        pAccess(4);
+    else
+        sSecondAccess(4);
+    
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
     // multiplex
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
@@ -1528,52 +1543,92 @@ VIC::cycle3()
         setBAlow(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
     
     // Phi2.5 Fetch
-	sFirstAccess(4);
+    if (isPAL)
+        sFirstAccess(4);
+    else
+        sThirdAccess(4);
     
+    // Finalize
 	countX();
 }
 
 void 
 VIC::cycle4()
 {
-    // Memory access (first clock phase)
-	sSecondAccess(4);
-
+    // Phi1.1 Fetch
+    if (isPAL)
+        sSecondAccess(4);
+    else
+        pAccess(5);
+    
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     if (isPAL) {
         setBAlow(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
     } else {
         setBAlow(spriteDmaOnOff & (SPR5 | SPR6));
     }
-    // Memory access (second clock phase)
-	sThirdAccess(4);
+
+    // Phi2.5 Fetch
+    if (isPAL)
+        sThirdAccess(4);
+    else
+        sFirstAccess(5);
     
+    // Finalize
     countX();
 }
 
 void
 VIC::cycle5()
 {
-    // Memory access (first clock phase)
-    pAccess(5);
+    // Phi1.1 Fetch
+    if (isPAL)
+        pAccess(5);
+    else
+        sSecondAccess(5);
     
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     if (isPAL) {
         setBAlow(spriteDmaOnOff & (SPR5 | SPR6));
     } else {
         setBAlow(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
     }
         
-    // Memory access (second clock phase)
-	sFirstAccess(5);
-
+    // Phi2.5 Fetch
+    if (isPAL)
+        sFirstAccess(5);
+    else
+        sThirdAccess(5);
+    
+    // Finalize
     countX();
 }
 
 void 
 VIC::cycle6()
 {
-    // Memory access (first clock phase)
-	sSecondAccess(5);
+    // Phi1.1 Fetch
+    if (isPAL)
+        sSecondAccess(5);
+    else
+        pAccess(6);
     
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     if (isPAL) {
         setBAlow(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
     } else {
@@ -1581,90 +1636,161 @@ VIC::cycle6()
 
     }
     
-    // Memory access (second clock phase)
-	sThirdAccess(5);
-
+    // Phi2.5 Fetch
+    if (isPAL)
+        sThirdAccess(5);
+    else
+        sFirstAccess(6);
+    
+    // Finalize
     countX();
 }
 
 void 
 VIC::cycle7()
 {
-    // Memory access (first clock phase)
-    pAccess(6);
+    // Phi1.1 Fetch
+    if (isPAL)
+        pAccess(6);
+    else
+        sSecondAccess(6);
     
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
 
-    // Memory access (second clock phase)
-	sFirstAccess(6);
+    // Phi2.5 Fetch
+    if (isPAL)
+        sFirstAccess(6);
+    else
+        sThirdAccess(6);
     
+    // Finalize
 	countX();
 }
 
 void 
 VIC::cycle8()
 {
-    // Memory access (first clock phase)
-	sSecondAccess(6);
-
-    if (isPAL) {
-        setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
-    } else {
-        setBAlow(spriteDmaOnOff & SPR7);
-    }
+    // Phi1.1 Fetch
+    if (isPAL)
+        sSecondAccess(6);
+    else
+        pAccess(7);
     
-    // Memory access (second clock phase)
-	sThirdAccess(6);
-
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
+    if (isPAL)
+        setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+    else
+        setBAlow(spriteDmaOnOff & SPR7);
+    
+    // Phi2.5 Fetch
+    if (isPAL)
+        sThirdAccess(6);
+    else
+        sFirstAccess(7);
+    
+    // Finalize
     countX();
 }
 
 void 
 VIC::cycle9()
 {
-    // Memory access (first clock phase)
-    pAccess(7);
+    // Phi1.1 Fetch
+    if (isPAL)
+        pAccess(7);
+    else
+        sSecondAccess(7);
     
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & SPR7);
 
-    // Memory access (second clock phase)
-	sFirstAccess(7);
+    // Phi2.5 Fetch
+    if (isPAL)
+        sFirstAccess(7);
+    else
+        sThirdAccess(7);
     
+    // Finalize
 	countX();
 }
 
 void 
 VIC::cycle10()
 {
-    // Memory access (first clock phase)
-	sSecondAccess(7);
+    // Phi1.1 Fetch
+    if (isPAL)
+        sSecondAccess(7);
+    else
+        rIdleAccess();
     
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     if (isPAL) {
         setBAlow(spriteDmaOnOff & SPR7);
     } else {
         setBAlow(false);
     }
     
-    // Memory access (second clock phase)
-	sThirdAccess(7);
+    // Phi2.5 Fetch
+    if (isPAL)
+        sThirdAccess(7);
     
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle11()
 {
+    // Phi1.1 Fetch
+    rAccess(); // first out of five DRAM refreshs
+    
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(false);
-
-    // Memory access (first out of five DRAM refreshs)
-    rAccess();
-
+    
+    // Phi2.5 Fetch
+    // Finalize
     countX();
 }
 
 void
 VIC::cycle12()
 {
+    // Phi1.1 Fetch
+    rAccess(); // second out of five DRAM refreshs
+
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
+
     /* "3. Liegt in den Zyklen 12-54 ein Bad-Line-Zustand vor, wird BA auf Low
         gelegt und die c-Zugriffe gestartet. Einmal gestartet, findet in der
         zweiten Phase jedes Taktzyklus im Bereich 15-54 ein c-Zugriff statt. Die
@@ -1674,31 +1800,50 @@ VIC::cycle12()
         wieder intern gelesen." [C.B.] */
     
     setBAlow(badLineCondition);
-
-    // Memory access (second out of five DRAM refreshs)
-    rAccess();
+    
+    // Phi2.5 Fetch
+    // Finalize
+    countX();
 }
 
 void
 VIC::cycle13()
 {
+    // Phi1.1 Fetch
+    rAccess(); // third out of five DRAM refreshs
+    
     // xCounter = -4; // OLD CODE
     xCounter = -3; // We use this value because Frodo SC does
     
-    // This is the first invocation of the graphic sequencer
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
     runGraphicSequencer(13);
-
+    
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(badLineCondition);
 
-    // Memory access (third out of five DRAM refreshs)
-    rAccess();
-
+    // Phi2.5 Fetch
+    // Finalize
     countX();
 }
 
 void
 VIC::cycle14()
 {
+    // Phi1.1 Fetch
+    rAccess(); // forth out of five DRAM refreshs
+
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    runGraphicSequencer(14);
+    
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    
 	/* "2. In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
 	       (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
            Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt." [C.B.] */
@@ -1707,22 +1852,30 @@ VIC::cycle14()
 	if (badLineCondition)
 		registerRC = 0;
     
-    runGraphicSequencer(14);
-
+    // Phi2.4 BA logic
     setBAlow(badLineCondition);
 
-    // Memory access (forth out of five DRAM refreshs)
-    rAccess();
-
+    // Phi2.5 Fetch
+    // Finalize
     countX();
 }
 
 void
 VIC::cycle15()
 {
-	/* "7. In der ersten Phase von Zyklus 15 wird geprüft, ob das
-	       Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 2 erhöht." [C.B.] */
+    // Phi1.1 Fetch
+    rAccess(); // last DRAM refresh
+
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    runGraphicSequencer(15);
+
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.2b Sprite logic
 #if 0
+    /* "7. In der ersten Phase von Zyklus 15 wird geprüft, ob das
+     Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 2 erhöht." [C.B.] */
     for (int i = 0; i < 8; i++) {
         uint8_t mask = (1 << i);
         if (expansionFF & mask) {
@@ -1731,24 +1884,36 @@ VIC::cycle15()
         }
     }
 #endif
-    
+
     expansionFF_in_015 = expansionFF;
     
-    runGraphicSequencer(15);
-
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(badLineCondition);
 
-    // Memory access (last DRAM refresh)
-    rAccess();
-
-    // Second clock phase (HIGH)
+    // Phi2.5 Fetch
 	cAccess();
-	countX();
+
+    // Finalize
+    countX();
 }
 
 void
 VIC::cycle16()
 {
+    runGraphicSequencer(16); // WRONG ORDER
+
+    // Phi1.1 Fetch
+    gAccess();
+    
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    // runGraphicSequencer(16);
+
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.2b Sprite logic
+
     /* CORRECTED RULE:
        "7. In the first phase of cycle 16, it is checked if the expansion flip flop
         is set. If so, MCBASE load from MC (MC->MCBASE), unless the CPU cleared
@@ -1773,43 +1938,22 @@ VIC::cycle16()
         }
     }
     
-	/* "8. In der ersten Phase von Zyklus 16 wird geprüft, ob das
-	       Expansions-Flipflop gesetzt ist. Wenn ja, wird MCBASE um 1 erhöht.
-	       Dann wird geprüft, ob MCBASE auf 63 steht und bei positivem Vergleich
-	       der DMA und die Darstellung für das jeweilige Sprite abgeschaltet." [C.B.] */
-#if 0
-	for (int i = 0; i < 8; i++) {
-		uint8_t mask = (1 << i);
-		if (expansionFF & mask) {
-			mcbase[i] += 1;
-			mcbase[i] &= 0x3F; // 6 bit counter
-		}
-		if (mcbase[i] == 63) {			
-			spriteDmaOnOff &= ~mask;
-		}
-	}
-#endif
-    
-    runGraphicSequencer(16);
-    
-    // Memory access (first clock phase)
-    gAccess();
-    
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(badLineCondition);
 
-    // Memory access (second clock phase)
-	cAccess();
+    // Phi2.5 Fetch
+    cAccess();
     
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle17()
 {
-    const uint16_t x_coord = 24;
-
-    // Set or clear frame flipflops in 40 column mode
-    if (x_coord == leftComparisonValue()) {
+    // Phi1.2 Check horizontal border
+    if (24 == leftComparisonValue()) {
 
         // "4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
         //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
@@ -1831,27 +1975,30 @@ VIC::cycle17()
         clearMainFrameFF();
     }
 
-    // We reach the main screen area here (start drawing pixels)
-    runGraphicSequencer(17);
+    runGraphicSequencer(17); // WRONG ORDER
     
-    // Memory access (first clock phase)
-    gAccess();
+    // Phi1.1 Fetch
+    gAccess(); // WRONG ORDER
+
+    // Phi1.3 Draw
+    //runGraphicSequencer(17);
     
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(badLineCondition);
 
-    // Memory access (second clock phase)
+    // Phi2.5 Fetch
     cAccess();
 
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle18()
 {
-    const uint16_t x_coord = 31;
-    
     // Set or clear frame flipflops in 38 column mode
-    if (x_coord == leftComparisonValue()) {
+    if (31 == leftComparisonValue()) {
         
         // "4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
         //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
@@ -1874,48 +2021,57 @@ VIC::cycle18()
         clearMainFrameFF();
     }
 
-    runGraphicSequencer(18);
+    runGraphicSequencer(18); // WRONG ORDER
+
+    // Phi1.1 Fetch
+    gAccess(); // WRONG ORDER
     
-    // Memory access (first clock phase)
-    gAccess();
+
+    // runGraphicSequencer(18);
     
     setBAlow(badLineCondition);
 
-    // Memory access (second clock phase)
+    // Phi2.5 Fetch
     cAccess();
 
+    // Finalize
     countX();
 }
 
 void
 VIC::cycle19to54()
 {
-    runGraphicSequencer(19); // value '19' is OK for each cycle
-    
-    // Memory access (first clock phase)
+    runGraphicSequencer(19); // WRONG ORDER
+
+    // Phi1.1 Fetch
     gAccess();
+
+    // runGraphicSequencer(19); // value '19' is OK for each cycle
     
     setBAlow(badLineCondition);
 
-    // Memory access (second clock phase)
+    // Phi2.5 Fetch
     cAccess();
-
+    
+    // Finalize
     countX();
 }
 
 void
 VIC::cycle55()
 {
-    runGraphicSequencer(55);
+    runGraphicSequencer(55); // WRONG ORDER
+
+    // Phi1.1 Fetch
+    gAccess();
+
+    // runGraphicSequencer(55);
 
     // First clock phase (LOW)
 
     /* "In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
      invertiert, wenn das MxYE-Bit gesetzt ist." [C.B.] */
     expansionFF ^= iomem[0x17];
-
-    // Memory access (first clock phase)
-    gAccess();
 
 	/* In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
 	 ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
@@ -1932,18 +2088,20 @@ VIC::cycle55()
         setBAlow(false);
     }
     
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle56()
 {
-    const uint16_t x_coord = 335;
+    // Phi1.1 Fetch
+    rIdleAccess();
     
     // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
      //     Haupt-Rahmenflipflop gesetzt." [C.B.]
 
-     if (x_coord == rightComparisonValue()) {
+     if (335 == rightComparisonValue()) {
          mainFrameFF = true;
      }
 
@@ -1953,15 +2111,17 @@ VIC::cycle56()
     
     setBAlow(spriteDmaOnOff & SPR0);
     
-    // Memory access (first clock phase, nothing to read)
-    rIdleAccess();
-
+    // Phi2.5 Fetch
+    // Finalize
     countX();
 }
 
 void
 VIC::cycle57()
 {
+    // Phi1.1 Fetch
+    rIdleAccess();
+
     const uint16_t x_coord = 344;
     
     // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
@@ -1980,15 +2140,20 @@ VIC::cycle57()
         setBAlow(spriteDmaOnOff & SPR0);
     }
     
-    // Memory access (first clock phase, nothing to read)
-    rIdleAccess();
-
+    // Phi2.5 Fetch
+    // Finalize
     countX();
 }
 
 void
 VIC::cycle58()
 {
+    // Phi1.1 Fetch
+    if (isPAL)
+        pAccess(0);
+    else
+        rIdleAccess();
+        
     runGraphicSequencer(58);
 
 	/* "Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
@@ -2036,93 +2201,125 @@ VIC::cycle58()
 			spriteOnOff &= ~mask;
 	}
 
-    // Memory access (first clock phase)
-	pAccess(0);
-
     setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     
-    // Memory access (second clock phase)
+    // Phi2.5 Fetch
 	sFirstAccess(0);
+    
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle59()
 {
+    // Phi1.1 Fetch
+    if (isPAL)
+        sSecondAccess(0);
+    else
+        pAccess(0);
+    
     runGraphicSequencer(59);
 
-    // Memory access (first clock phase)
-	sSecondAccess(0);
-
-    setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
-
-    // Memory access (second clock phase)
-    sThirdAccess(0);
+    if (isPAL)
+        setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
+    else
+        setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     
+    // Phi2.5 Fetch
+    if (isPAL)
+        sThirdAccess(0);
+    else
+        sFirstAccess(0);
+    
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle60()
 {
+    // Phi1.1 Fetch
+    if (isPAL)
+        pAccess(1);
+    else
+        sSecondAccess(0);
+    
     // This is the last invocation of the graphic sequencer
     runGraphicSequencer(60);
-
-    // Memory access (first clock phase)
-    pAccess(1);
     
-    if (isPAL) {
+    if (isPAL)
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
-    } else {
+    else
         setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
-    }
     
-    // Memory access (second clock phase)
-	sFirstAccess(1);
-
+    // Phi2.5 Fetch
+    if (isPAL)
+        sFirstAccess(1);
+    else
+        sThirdAccess(0);
+    
+    // Finalize
     countX();
 }
 
 void
 VIC::cycle61()
 {
-    // Memory access (first clock phase)
-	sSecondAccess(1);
-
-    if (isPAL) {
+    // Phi1.1 Fetch
+    if (isPAL)
+        sSecondAccess(1);
+    else
+        pAccess(1);
+    
+    if (isPAL)
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
-    } else {
+    else
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
-    }
     
-    // Memory access (second clock phase)
-    sThirdAccess(1);
+    // Phi2.5 Fetch
+    if (isPAL)
+        sThirdAccess(1);
+    else
+        sFirstAccess(1);
     
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle62()
 {
-    // Memory access (first clock phase)
-    pAccess(2);
+    // Phi1.1 Fetch
+    if (isPAL)
+        pAccess(2);
+    else
+        sSecondAccess(1);
     
-    if (isPAL) {
+    if (isPAL)
         setBAlow(spriteDmaOnOff & (SPR2 | SPR3));
-    } else {
+    else
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
-    }
     
-    // Memory access (second clock phase)
-	sFirstAccess(2);
+    // Phi2.5 Fetch
+    if (isPAL)
+        sFirstAccess(2);
+    else
+        sThirdAccess(1);
     
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle63()
 {
-
+    // Phi1.1 Fetch
+    if (isPAL)
+        sSecondAccess(2);
+    else
+        pAccess(2);
+    
     // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
     //     das vertikale Rahmenflipflop gesetzt." [C.B.]
 
@@ -2159,8 +2356,6 @@ VIC::cycle63()
 		rasterlineDebug[scanline] = -1;
 	}		
 
-    // Memory access (first clock phase)
-	sSecondAccess(2);
     
     if (isPAL) {
         setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
@@ -2168,32 +2363,37 @@ VIC::cycle63()
         setBAlow(spriteDmaOnOff & (SPR2 | SPR3));        
     }
     
-    // Memory access (second clock phase)
-	sThirdAccess(2);
+    // Phi2.5 Fetch
+    if (isPAL)
+        sThirdAccess(2);
+    else
+        sFirstAccess(2);
     
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle64() 	// NTSC only
 {
-    // Memory access (first clock phase, nothing to read)
+    // Phi1.1 Fetch
     rIdleAccess();
  
     setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
 
+    // Finalize
 	countX();
 }
 
 void
 VIC::cycle65() 	// NTSC only
-
 {
-    // Memory access (first clock phase, nothing to read)
+    // Phi1.1 Fetch
     rIdleAccess();
     
     setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
 
+    // Finalize
     countX();
 }
 
