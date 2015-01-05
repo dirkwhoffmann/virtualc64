@@ -286,9 +286,9 @@ public:
 	
 	//! Returns current value of the accumulator register
 	inline uint8_t getA() { return A; };
-	//! Returns current value of the X register
+	//! Returns current value of the X register
 	inline uint8_t getX() { return X; };
-	//! Returns current value of the Y register
+	//! Returns current value of the Y register
 	inline uint8_t getY() { return Y; };
 	//! Returns current value of the program counter
 	inline uint16_t getPC() { return PC; };
@@ -321,9 +321,10 @@ public:
 	/*! The bit position of the B flag is always 0. This function is needed for proper interrupt handling. When an IRQ
 		or NMI is triggered internally, the status register is pushed on the stack with the B-flag cleared. */
 	inline uint8_t getPWithClearedB() { return getN() | getV() | 32 | getD() | getI() | getZ() | getC(); }
-	//! Pack CPU state
-	//inline uint64_t packState() { return (((((((((((uint64_t)PC << 8) | SP) << 8) | getP()) << 8) | A) << 8) | X) << 8) | Y); }
 	
+    //! Return current opcode
+    inline uint8_t getOpcode() { return opcode; }
+    
 	//! Write value to the accumulator register. Flags remain untouched.
 	inline void setA(uint8_t a) { A = a; }
 	//! Write value to the the X register. Flags remain untouched.

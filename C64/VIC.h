@@ -244,7 +244,10 @@ private:
 	
 	//! Internal VIC-II register, 6 bit video matrix line index
 	uint8_t registerVMLI; 
-		
+
+    //! Contents of control register 1 (0xD011) in previous cycle
+    uint8_t oldControlReg1;
+
     //! DRAM refresh counter
     /*! "In jeder Rasterzeile führt der VIC fünf Lesezugriffe zum Refresh des
          dynamischen RAM durch. Es wird ein 8-Bit Refreshzähler (REF) zur Erzeugung
@@ -416,9 +419,10 @@ private:
     void pAccess(int sprite);
     
     //! During a 's access', VIC reads sprite data
-    void sFirstAccess(int sprite);
-    void sSecondAccess(int sprite);
-    void sThirdAccess(int sprite);
+    /*  Returns true iff sprite data was fetched (a memory access has occurred) */
+    bool sFirstAccess(int sprite);
+    bool sSecondAccess(int sprite);
+    bool sThirdAccess(int sprite);
 
     //! Perform a DRAM refresh
     inline void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
@@ -716,7 +720,7 @@ public:
 private:	
 	
     //! Increase the x coordinate by 8 (sptrite coordinate system)
-    inline void countX() { xCounter += 8; }
+    inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
 
     //! Draw a single foreground pixel
     void setFramePixel(unsigned offset, int rgba);
@@ -871,14 +875,23 @@ public:
 	// inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 	inline int yEnd() { return numberOfRows() == 25 ? 250 : 246; }
 
-    //! Returns the DEN bit (DIsplay Enabled)
+    //! Current value of DEN bit (DIsplay Enabled)
     inline bool DENbit() { return iomem[0x11] & 0x10; }
 
-    //! Returns the BMM bit (Bit Map Mode)
+    //! DEN bit in previous cycle (DIsplay Enabled)
+    inline bool DENbitInPreviousCycle() { return oldControlReg1 & 0x10; }
+
+    //! Current value of BMM bit (Bit Map Mode)
     inline bool BMMbit() { return iomem[0x11] & 0x20; }
 
-    //! Returns the ECM bit (Extended Character Mode)
+    //! BMM bit in previous cycle (Bit Map Mode)
+    inline bool BMMbitInPreviousCycle() { return oldControlReg1 & 0x20; }
+    
+    //! Current value of ECM bit (Extended Character Mode)
     inline bool ECMbit() { return iomem[0x11] & 0x40; }
+
+    //! ECM bit in previous cycle (Extended Character Mode)
+    inline bool ECMbitInPreviousCycle() { return oldControlReg1 & 0x40; }
 
     //! Returns masked CB13 bit (controls memory access)
     inline uint8_t CB13() { return iomem[0x18] & 0x08; }
@@ -1007,6 +1020,8 @@ private:
 public: 
 	
 	//! Return next interrupt rasterline
+    /*! Note: In line 0, the interrupt is triggered in cycle 2
+              In all other lines, it is triggered in cycle 1 */
 	inline uint16_t rasterInterruptLine() { return ((iomem[0x11] & 128) << 1) + iomem[0x12]; }
 
 	//! Set interrupt rasterline 
