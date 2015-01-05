@@ -16,15 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// TODO:
-
-// Implement graphic sequencer as 16 bit shift register
-// Synthesize pixels in gAccess
-// Rename runGraphicSequencer to runMultiplexer
-// At beginning of gAccess(?): runShiftRegister
-// Implement VBlanking
-// Remove fast reset (if really not needed)
-
+// NEXT STEPS:
+// In cylce16: Handle Sprite expansion flip flop correctly
 
 #ifndef _VIC_INC
 #define _VIC_INC
