@@ -23,22 +23,6 @@
 
 #include "C64.h"
 
-
-// Update value of the display variable according to the dma line condition 
-#define update_display if (badLineCondition) { displayState = true; }
-
-// Update value of the display variable and the BA line according to the dma line condition
-/* "3. Liegt in den Zyklen 12-54 ein Bad-Line-Zustand vor, wird BA auf Low
-    gelegt und die c-Zugriffe gestartet. Einmal gestartet, findet in der
-    zweiten Phase jedes Taktzyklus im Bereich 15-54 ein c-Zugriff statt. Die
-    gelesenen Daten werden in der Videomatrix-/Farbzeile an der durch VMLI
-    angegebenen Position abgelegt. Bei jedem g-Zugriff im Display-Zustand
-    werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
-    wieder intern gelesen." [C.B.] */
-// #define update_display_and_ba if (badLineCondition) { displayState = true; pullDownBA(0x100); }
-#define update_display_and_ba if (badLineCondition) { displayState = true; }
-
-
 VIC::VIC()
 {
 	name = "VIC";
@@ -1494,7 +1478,6 @@ VIC::cycle1()
     
     // Finalize
 	countX();
-	update_display;
 }
 
 void
@@ -1524,7 +1507,6 @@ VIC::cycle2()
     
     // Finalize
     countX();
-	update_display;
 }
 
 void 
@@ -1549,7 +1531,6 @@ VIC::cycle3()
 	sFirstAccess(4);
     
 	countX();
-	update_display;
 }
 
 void 
@@ -1567,7 +1548,6 @@ VIC::cycle4()
 	sThirdAccess(4);
     
     countX();
-	update_display;
 }
 
 void
@@ -1586,7 +1566,6 @@ VIC::cycle5()
 	sFirstAccess(5);
 
     countX();
-	update_display;
 }
 
 void 
@@ -1606,7 +1585,6 @@ VIC::cycle6()
 	sThirdAccess(5);
 
     countX();
-	update_display;
 }
 
 void 
@@ -1621,7 +1599,6 @@ VIC::cycle7()
 	sFirstAccess(6);
     
 	countX();
-	update_display;
 }
 
 void 
@@ -1640,7 +1617,6 @@ VIC::cycle8()
 	sThirdAccess(6);
 
     countX();
-	update_display;
 }
 
 void 
@@ -1655,7 +1631,6 @@ VIC::cycle9()
 	sFirstAccess(7);
     
 	countX();
-	update_display;
 }
 
 void 
@@ -1674,7 +1649,6 @@ VIC::cycle10()
 	sThirdAccess(7);
     
 	countX();
-	update_display;
 }
 
 void
@@ -1686,7 +1660,6 @@ VIC::cycle11()
     rAccess();
 
     countX();
-	update_display;
 }
 
 void
@@ -1704,8 +1677,6 @@ VIC::cycle12()
 
     // Memory access (second out of five DRAM refreshs)
     rAccess();
-
-    update_display_and_ba;
 }
 
 void
@@ -1723,7 +1694,6 @@ VIC::cycle13()
     rAccess();
 
     countX();
-	update_display_and_ba;
 }
 
 void
@@ -1745,7 +1715,6 @@ VIC::cycle14()
     rAccess();
 
     countX();
-	update_display_and_ba;
 }
 
 void
@@ -1775,7 +1744,6 @@ VIC::cycle15()
     // Second clock phase (HIGH)
 	cAccess();
 	countX();
-	update_display_and_ba;
 }
 
 void
@@ -1833,7 +1801,6 @@ VIC::cycle16()
 	cAccess();
     
 	countX();
-	update_display_and_ba;
 }
 
 void
@@ -1876,7 +1843,6 @@ VIC::cycle17()
     cAccess();
 
 	countX();
-	update_display_and_ba;
 }
 
 void
@@ -1919,7 +1885,6 @@ VIC::cycle18()
     cAccess();
 
     countX();
-	update_display_and_ba;
 }
 
 void
@@ -1936,7 +1901,6 @@ VIC::cycle19to54()
     cAccess();
 
     countX();
-	update_display_and_ba;
 }
 
 void
@@ -1969,7 +1933,6 @@ VIC::cycle55()
     }
     
 	countX();
-	update_display;
 }
 
 void
@@ -1994,7 +1957,6 @@ VIC::cycle56()
     rIdleAccess();
 
     countX();
-	update_display;
 }
 
 void
@@ -2022,7 +1984,6 @@ VIC::cycle57()
     rIdleAccess();
 
     countX();
-	update_display;
 }
 
 void
@@ -2099,7 +2060,6 @@ VIC::cycle59()
     sThirdAccess(0);
     
 	countX();
-	update_display;
 }
 
 void
@@ -2121,7 +2081,6 @@ VIC::cycle60()
 	sFirstAccess(1);
 
     countX();
-	update_display;
 }
 
 void
@@ -2140,7 +2099,6 @@ VIC::cycle61()
     sThirdAccess(1);
     
 	countX();
-	update_display;
 }
 
 void
@@ -2159,7 +2117,6 @@ VIC::cycle62()
 	sFirstAccess(2);
     
 	countX();
-	update_display;
 }
 
 void
@@ -2215,7 +2172,6 @@ VIC::cycle63()
 	sThirdAccess(2);
     
 	countX();
-	update_display;
 }
 
 void
