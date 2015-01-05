@@ -349,6 +349,7 @@ VIC::setNTSC()
 //                             I/O memory handling and RAM access
 // -----------------------------------------------------------------------------------------------
 
+// TODO: VICE distinguishes between phi1 accesses (clock LOW) and phi2 accesses (clock HIGH)
 uint8_t VIC::memAccess(uint16_t addr)
 {
     /* "Der VIC besitzt nur 14 Adreﬂleitungen, kann also nur 16KB Speicher
@@ -388,7 +389,6 @@ uint8_t VIC::memIdleAccess()
 inline void VIC::cAccess()
 {
     // Only proceed if the BA line is pulled down
-    // TODO: Checking badLineCondition is not accurate here.
     if (!badLineCondition)
         return;
 
@@ -399,102 +399,162 @@ inline void VIC::cAccess()
         uint16_t addr = (VM13VM12VM11VM10() << 6) | registerVC;
         
         characterSpace[registerVMLI] = memAccess(addr);
-            colorSpace[registerVMLI] = mem->colorRam[registerVC] & 0x0F;
+        colorSpace[registerVMLI] = mem->colorRam[registerVC] & 0x0F;
     }
     
-    // Otherwise, 0xFF is read
+    // VIC has no access, yet
     else {
+        
+        /* "Trotzdem greift der VIC auf die Videomatrix zu, oder versucht es zumindest,
+            denn solange AEC in der zweiten Taktphase noch High ist, sind die
+            Adressbustreiber und Datenbustreiber D0-D7 des VIC im Tri-State und der VIC
+            liest statt der Daten aus der Videomatrix in den ersten drei Zyklen den
+            Wert $ff an D0-D7. Die Datenleitungen D8-D13 des VIC haben allerdings
+            keinen Tri-State-Treiber und sind immer auf Eingang geschaltet. Allerdings
+            bekommt der VIC auch dort keine g¸ltigen Farb-RAM-Daten, denn da AEC High
+            ist, kontrolliert offiziell der 6510 noch den Bus und sofern dieser nicht
+            zufällig gerade den nächsten Opcode vom Farb-RAM lesen will, ist der
+            Chip-Select-Eingang des Farb-RAMs nicht aktiv.
+         
+            Lange Rede, kurzer Sinn: Der VIC liest in den ersten drei
+            Zyklen, nachdem BA auf Low gegangen ist als Zeichenzeiger $ff und als
+            Farbinformation die untersten 4 Bit des Opcodes nach dem Zugriff auf $d011.
+            Erst danach werden wieder reguläre Videomatrixdaten gelesen." [C.B.] */
+        
         characterSpace[registerVMLI] = 0xFF;
-            colorSpace[registerVMLI] = 0xFF;
+        colorSpace[registerVMLI] = c64->mem->ram[cpu->getPC()] & 0x0F;
     }
 }
 
 inline void VIC::gAccess()
 {
     uint16_t addr;
-
+    uint8_t data;
+    
     assert ((registerVC & 0xFC00) == 0); // 10 bit register
     assert ((registerRC & 0xF8) == 0);   // 3 bit register
-    
-
-    // Run address generator
-    
-    /* "Der Adressgenerator für die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
-        besitzt bei den g-Zugriffen im wesentlichen 3 Modi (die c-Zugriffe erfolgen
-        immer nach dem selben Adressschema). Im Display-Zustand wählt das BMM-Bit
-        entweder Zeichengenerator-Zugriffe (BMM=0) oder Bitmap-Zugriffe (BMM=1)
-        aus" [C.B.] */
 
     if (displayState) {
+
+        /* "Der Adressgenerator für die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
+            besitzt bei den g-Zugriffen im wesentlichen 3 Modi (die c-Zugriffe erfolgen
+            immer nach dem selben Adressschema). Im Display-Zustand wählt das BMM-Bit
+            entweder Zeichengenerator-Zugriffe (BMM=0) oder Bitmap-Zugriffe (BMM=1)
+            aus" [C.B.] */
         
-        if (BMMbit()) {
-            
-            // |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
+        /*  BMM = 1 : |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
+            BMM = 0 : |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0| */
+        
+        if (BMMbitInPreviousCycle()) {
             addr = (CB13() << 10) | (registerVC << 3) | registerRC;
-
         } else {
-
-            // |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0|
             addr = (CB13CB12CB11() << 10) | (characterSpace[registerVMLI] << 3) | registerRC;
-        
         }
-    }
-                   
-    /* "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.] */
 
-    else {
-        addr = 0x3FFF;
-    }
-
-    /* "Bei gesetztem ECM-Bit schaltet der Adreﬂgenerator bei den g-Zugriffen die
-        Adreﬂleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
-        (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.] */
-
-    if (ECMbit()) {
-        addr &= 0xF9FF;
-    }
-    
-    // Load graphics sequencer
-    loadGraphicSequencer(memAccess(addr), getHorizontalRasterScroll());
+        /* "Bei gesetztem ECM-Bit schaltet der Adreﬂgenerator bei den g-Zugriffen die
+            Adreﬂleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
+            (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.] */
         
-    // VC and VMLI are increased after each gAccess
-    if (displayState) {
+        if (ECMbitInPreviousCycle())
+            addr &= 0xF9FF;
+
+        // Fetch data
+        data = memAccess(addr);
+        
+        // Load graphics sequencer
+        loadGraphicSequencer(data, getHorizontalRasterScroll());
+
+        // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhöht." [C.B.]
         registerVC++;
         registerVC &= 0x3FF; // 10 bit overflow
         registerVMLI++;
-        registerVMLI &= 0x3F; // 6 bit overflow;
+        registerVMLI &= 0x3F; // 6 bit overflow
+
+        return;
     }
+    
+    /* "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.] */
+
+    addr = ECMbitInPreviousCycle() ? 0x39FF : 0x3FFF;
+
+    // Fetch data
+    data = memAccess(addr);
+    
+    // Load graphics sequencer
+    loadGraphicSequencer(data, getHorizontalRasterScroll());
 }
 
 inline void VIC::pAccess(int sprite)
 {
-    spritePtr[sprite] = memAccess(screenMemoryAddr | 0x03F8 | sprite) << 6;
+    // |VM13|VM12|VM11|VM10|  1 |  1 |  1 |  1 |  1 |  1 |  1 |  Spr.-Nummer |
+    // spritePtr[sprite] = memAccess(screenMemoryAddr | 0x03F8 | sprite) << 6;
+    spritePtr[sprite] = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite) << 6;
+
 }
 
-inline void VIC::sFirstAccess(int sprite)
+inline bool VIC::sFirstAccess(int sprite)
 {
+    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
+    bool memAccessed = false;
+    
     if (spriteDmaOnOff & (1 << sprite)) {
-        spriteShiftReg[sprite][0] = memAccess(spritePtr[sprite] | mc[sprite]);
+        
+        if (BApulledDownForAtLeastThreeCycles()) {
+            data = memAccess(spritePtr[sprite] | mc[sprite]);
+            memAccessed = true;
+        }
+
         mc[sprite]++;
+        mc[sprite] &= 0x3F; // 6 bit overflow
     }
+    
+    spriteShiftReg[sprite][0] = data;
+    return memAccessed;
 }
 
-inline void VIC::sSecondAccess(int sprite)
+inline bool VIC::sSecondAccess(int sprite)
 {
+    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
+    bool memAccessed = false;
+    
     if (spriteDmaOnOff & (1 << sprite)) {
-        spriteShiftReg[sprite][1] = memAccess(spritePtr[sprite] | mc[sprite]);
+        
+        if (BApulledDownForAtLeastThreeCycles()) {
+            data = memAccess(spritePtr[sprite] | mc[sprite]);
+            memAccessed = true;
+        }
+        
         mc[sprite]++;
-    } else {
+        mc[sprite] &= 0x3F; // 6 bit overflow
+    }
+    
+    // If no memory access has happened here, we perform an idle access
+    // The obtained data might be overwritten by the third sprite access
+    if (!memAccessed)
         memIdleAccess();
-    }
+    
+    spriteShiftReg[sprite][1] = data;
+    return memAccessed;
 }
 
-inline void VIC::sThirdAccess(int sprite)
+inline bool VIC::sThirdAccess(int sprite)
 {
+    uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
+    bool memAccessed = false;
+    
     if (spriteDmaOnOff & (1 << sprite)) {
-        spriteShiftReg[sprite][2] = memAccess(spritePtr[sprite] | mc[sprite]);
+        
+        if (BApulledDownForAtLeastThreeCycles()) {
+            data = memAccess(spritePtr[sprite] | mc[sprite]);
+            memAccessed = true;
+        }
+
         mc[sprite]++;
+        mc[sprite] &= 0x3F; // 6 bit overflow
     }
+    
+    spriteShiftReg[sprite][2] = data;
+    return memAccessed;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -513,7 +573,7 @@ void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
     switch (gs_mode) {
             
         case STANDARD_TEXT:
-            gs_fg_color = colorSpace[registerVMLI];
+            gs_fg_color = colorSpace[registerVMLI]; // might be the wrong color if v boder is open
             gs_bg_color = getBackgroundColor();
             break;
             
@@ -585,18 +645,21 @@ void VIC::runGraphicSequencer(uint8_t cycle)
             
             // also capture missed out pixel in cycle 17
             drawNineFramePixels(xCoord, border_rgba);
+            gs_data = 0;
             return;
             
         } else if (cycle == 56) {
             
             // right border in 38 column mode
             drawNineFramePixels(xCoord, border_rgba);
+            gs_data = 0;
             return;
             
         } else {
             
             // in the middle of the display window
             drawEightFramePixels(xCoord, border_rgba);
+            gs_data = 0;
             return;
         }
     }
@@ -611,6 +674,7 @@ void VIC::runGraphicSequencer(uint8_t cycle)
 
     if (verticalFrameFF || cycle < 17 || cycle > 56) {
         drawEightBehindBackgroudPixels(xCoord);
+        gs_data = 0;
         return;
     }
 
@@ -619,7 +683,6 @@ void VIC::runGraphicSequencer(uint8_t cycle)
     for (unsigned i = 0; i < gs_delay; i++) {
         setBehindBackgroundPixel(xCoord++, rgba);
     }
-    // xCoord += gs_delay;
 
     // Synthesize pixels
     switch (getDisplayMode()) {
@@ -672,6 +735,8 @@ void VIC::runGraphicSequencer(uint8_t cycle)
             assert(0);
             break;
     }
+    
+    gs_data = 0;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1280,7 +1345,7 @@ VIC::releaseBA(uint16_t source)
 inline bool
 VIC::BApulledDownForAtLeastThreeCycles()
 {
-    return (c64->getCycles() - BAwentLowAtCycle) > 2;
+    return BAlow && (c64->getCycles() - BAwentLowAtCycle > 2);
 }
 
 void 
@@ -1389,6 +1454,16 @@ VIC::beginRasterline(uint16_t line)
 
     // Clear pixel buffer
     memset(pixelBuffer, 0x00, sizeof(pixelSource));
+
+    // Check, if we are currently processing a DMA line. The result is stored in variable badLineCondition.
+    // The initial value can change in the middle of a rasterline.
+    updateBadLineCondition();
+
+    // Check for the DEN bit if we're processing rasterline 30
+    // The initial value can change in the middle of a rasterline.
+    if (scanline == 0x30)
+        DENwasSetInRasterline30 = DENbit();
+
 }
 
 void 
@@ -1401,27 +1476,29 @@ VIC::endRasterline()
 void 
 VIC::cycle1()
 {
-	// Check, if we are currently processing a DMA line. The result is stored in variable badLineCondition.
-	// Be aware that the value of variable dmaLine can change in the middle of a rasterline as a side effect 
-	// of modifying the y scroll offset.
-	updateBadLineCondition();
+    // Phi1.1 Fetch
+    pAccess(3);
+    
+    // Phi1.2. Check horizontal border
 
-	// Trigger rasterline interrupt if applicable
-	// In line 0, the interrupt is triggered in cycle 2
-    // In all other lines, it is triggered in cycle 1
+    // Phi1.3. Draw
+    // multiplex
+    
+    // Phi2.1 Rasterline interrupt
 	if (scanline == rasterInterruptLine() && scanline != 0)
 		triggerIRQ(1);
-			
-	// Check for the DEN bit if we're processing rasterline 30
-    if (scanline == 0x30)
-        DENwasSetInRasterline30 = DENbit();
-    
-	releaseBusForSprite(2);
 
-    // Memory access (first clock phase)
-    pAccess(3);
-    // Memory access (second clock phase)
-	sFirstAccess(3);
+    // Phi2.2 Check vertical border
+    // BA logic
+
+    // Phi2.3 VC logic
+    // Phi2.4 RC logic
+
+    // Phi2.5 BA logic
+    releaseBusForSprite(2);
+    
+    // Phi2.6 Fetch
+    sFirstAccess(3);
     
 	countX();
 	update_display;
@@ -1431,8 +1508,6 @@ void
 VIC::cycle2()
 {
 	// Trigger rasterline interrupt if applicable
-    // In line 0, the interrupt is triggered in cycle 2
-    // In all other lines, it is triggered in cycle 1
 	if (scanline == 0 && scanline == rasterInterruptLine())
 		triggerIRQ(1);
 

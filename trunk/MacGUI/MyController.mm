@@ -346,19 +346,19 @@
 			
 			switch (msg->i) {
 				case BASIC_ROM:
-					[info setStringValue:@"Basic Rom loaded"];
+					// [info setStringValue:@"Basic Rom loaded"];
 					// NSLog(@"BASIC ROM loaded");
 					break;
 				case CHAR_ROM:
-					[info setStringValue:@"Character Rom loaded"];
+					// [info setStringValue:@"Character Rom loaded"];
 					// NSLog(@"CHARACTER ROM loaded");
 					break;
 				case KERNEL_ROM:
-					[info setStringValue:@"Kernel Rom loaded"];
+					// [info setStringValue:@"Kernel Rom loaded"];
 					// NSLog(@"KERNEL ROM loaded");
 					break;
 				case VC1541_ROM:
-					[info setStringValue:@"VC1541 Rom loaded"];
+					// [info setStringValue:@"VC1541 Rom loaded"];
 					// NSLog(@"VC1541 ROM loaded");
 					break;
 			}		
