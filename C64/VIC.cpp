@@ -35,7 +35,8 @@
     angegebenen Position abgelegt. Bei jedem g-Zugriff im Display-Zustand
     werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
     wieder intern gelesen." [C.B.] */
- #define update_display_and_ba if (badLineCondition) { displayState = true; pullDownBA(0x100); }
+// #define update_display_and_ba if (badLineCondition) { displayState = true; pullDownBA(0x100); }
+#define update_display_and_ba if (badLineCondition) { displayState = true; }
 
 
 VIC::VIC()
@@ -319,7 +320,8 @@ VIC::dumpState()
 
 void 
 VIC::setPAL()
-{ 
+{
+    isPAL = true;
 	leftBorderWidth = PAL_LEFT_BORDER_WIDTH;
 	rightBorderWidth = PAL_RIGHT_BORDER_WIDTH;
 	upperBorderHeight = PAL_UPPER_BORDER_HEIGHT;
@@ -334,6 +336,7 @@ VIC::setPAL()
 void
 VIC::setNTSC()
 {
+    isPAL = false;
 	leftBorderWidth = NTSC_LEFT_BORDER_WIDTH;
 	rightBorderWidth = NTSC_RIGHT_BORDER_WIDTH;
 	upperBorderHeight = NTSC_UPPER_BORDER_HEIGHT;
@@ -1323,23 +1326,14 @@ VIC::getScreenGeometry()
 //                                DMA lines, BA signal and IRQs
 // -----------------------------------------------------------------------------------------------
 
-void 
-VIC::pullDownBA(uint16_t source)
+inline void
+VIC::setBAlow(bool value)
 {
-    assert (source != 0);
-    
-    if (!BAlow)
+    if (!BAlow && value) {
         BAwentLowAtCycle = c64->getCycles();
-    
-	BAlow |= source;
-	cpu->setRDY(BAlow == 0); 
-}
-
-void 
-VIC::releaseBA(uint16_t source)
-{ 
-	BAlow &= ~source;
-	cpu->setRDY(BAlow == 0); 
+    }
+    BAlow = value;
+    cpu->setRDY(value == 0);
 }
 
 inline bool
@@ -1480,7 +1474,6 @@ VIC::cycle1()
     pAccess(3);
     
     // Phi1.2. Check horizontal border
-
     // Phi1.3. Draw
     // multiplex
     
@@ -1489,17 +1482,17 @@ VIC::cycle1()
 		triggerIRQ(1);
 
     // Phi2.2 Check vertical border
-    // BA logic
-
-    // Phi2.3 VC logic
-    // Phi2.4 RC logic
-
-    // Phi2.5 BA logic
-    releaseBusForSprite(2);
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
+    if (isPAL)
+        setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
+    else
+        setBAlow(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
     
-    // Phi2.6 Fetch
+    // Phi2.5 Fetch
     sFirstAccess(3);
     
+    // Finalize
 	countX();
 	update_display;
 }
@@ -1507,17 +1500,29 @@ VIC::cycle1()
 void
 VIC::cycle2()
 {
-	// Trigger rasterline interrupt if applicable
+    // Phi1.1 Fetch
+    sSecondAccess(3);
+
+    // Phi1.2. Check horizontal border
+    // Phi1.3. Draw
+    // multiplex
+    
+    // Phi2.1 Rasterline interrupt
 	if (scanline == 0 && scanline == rasterInterruptLine())
 		triggerIRQ(1);
 
-    // Memory access (first clock phase)
-	sSecondAccess(3);
-    // Memory access (second clock phase)
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
+    if (isPAL)
+        setBAlow(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
+    else
+        setBAlow(spriteDmaOnOff & (SPR4 | SPR5));
+
+    // Phi2.5 Fetch
 	sThirdAccess(3);
     
-	requestBusForSprite(5);
-
+    // Finalize
     countX();
 	update_display;
 }
@@ -1525,11 +1530,22 @@ VIC::cycle2()
 void 
 VIC::cycle3()
 {
-	releaseBusForSprite(3);
+    // Phi1.1 Fetch
+    pAccess(4);
+
+    // Phi1.2. Check horizontal border
+    // Phi1.3. Draw
+    // multiplex
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
+    if (isPAL)
+        setBAlow(spriteDmaOnOff & (SPR4 | SPR5));
+    else
+        setBAlow(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
     
-    // Memory access (first clock phase)
-	pAccess(4);
-    // Memory access (second clock phase)
+    // Phi2.5 Fetch
 	sFirstAccess(4);
     
 	countX();
@@ -1541,11 +1557,15 @@ VIC::cycle4()
 {
     // Memory access (first clock phase)
 	sSecondAccess(4);
+
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
+    } else {
+        setBAlow(spriteDmaOnOff & (SPR5 | SPR6));
+    }
     // Memory access (second clock phase)
 	sThirdAccess(4);
     
-	requestBusForSprite(6);
-
     countX();
 	update_display;
 }
@@ -1553,10 +1573,15 @@ VIC::cycle4()
 void
 VIC::cycle5()
 {
-	releaseBusForSprite(4);
-
     // Memory access (first clock phase)
     pAccess(5);
+    
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & (SPR5 | SPR6));
+    } else {
+        setBAlow(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
+    }
+        
     // Memory access (second clock phase)
 	sFirstAccess(5);
 
@@ -1569,10 +1594,16 @@ VIC::cycle6()
 {
     // Memory access (first clock phase)
 	sSecondAccess(5);
+    
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
+    } else {
+        setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+
+    }
+    
     // Memory access (second clock phase)
 	sThirdAccess(5);
-
-    requestBusForSprite(7);
 
     countX();
 	update_display;
@@ -1581,10 +1612,11 @@ VIC::cycle6()
 void 
 VIC::cycle7()
 {
-	releaseBusForSprite(5);
-
     // Memory access (first clock phase)
     pAccess(6);
+    
+    setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+
     // Memory access (second clock phase)
 	sFirstAccess(6);
     
@@ -1597,6 +1629,13 @@ VIC::cycle8()
 {
     // Memory access (first clock phase)
 	sSecondAccess(6);
+
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
+    } else {
+        setBAlow(spriteDmaOnOff & SPR7);
+    }
+    
     // Memory access (second clock phase)
 	sThirdAccess(6);
 
@@ -1607,10 +1646,11 @@ VIC::cycle8()
 void 
 VIC::cycle9()
 {
-	releaseBusForSprite(6);
-
     // Memory access (first clock phase)
     pAccess(7);
+    
+    setBAlow(spriteDmaOnOff & SPR7);
+
     // Memory access (second clock phase)
 	sFirstAccess(7);
     
@@ -1623,6 +1663,13 @@ VIC::cycle10()
 {
     // Memory access (first clock phase)
 	sSecondAccess(7);
+    
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & SPR7);
+    } else {
+        setBAlow(false);
+    }
+    
     // Memory access (second clock phase)
 	sThirdAccess(7);
     
@@ -1633,7 +1680,7 @@ VIC::cycle10()
 void
 VIC::cycle11()
 {
-	releaseBusForSprite(7);
+    setBAlow(false);
 
     // Memory access (first out of five DRAM refreshs)
     rAccess();
@@ -1653,11 +1700,7 @@ VIC::cycle12()
         werden diese Daten ebenfalls an der durch VMLI spezifizierten Position
         wieder intern gelesen." [C.B.] */
     
-	if (badLineCondition) {
-        // Freeze CPU because c-accesses are coming up...
-		pullDownBA(0x100);
-	}
-	releaseBusForSprite(7);
+    setBAlow(badLineCondition);
 
     // Memory access (second out of five DRAM refreshs)
     rAccess();
@@ -1673,6 +1716,8 @@ VIC::cycle13()
     
     // This is the first invocation of the graphic sequencer
     runGraphicSequencer(13);
+
+    setBAlow(badLineCondition);
 
     // Memory access (third out of five DRAM refreshs)
     rAccess();
@@ -1693,6 +1738,8 @@ VIC::cycle14()
 		registerRC = 0;
     
     runGraphicSequencer(14);
+
+    setBAlow(badLineCondition);
 
     // Memory access (forth out of five DRAM refreshs)
     rAccess();
@@ -1719,6 +1766,8 @@ VIC::cycle15()
     expansionFF_in_015 = expansionFF;
     
     runGraphicSequencer(15);
+
+    setBAlow(badLineCondition);
 
     // Memory access (last DRAM refresh)
     rAccess();
@@ -1778,6 +1827,8 @@ VIC::cycle16()
     // Memory access (first clock phase)
     gAccess();
     
+    setBAlow(badLineCondition);
+
     // Memory access (second clock phase)
 	cAccess();
     
@@ -1819,6 +1870,8 @@ VIC::cycle17()
     // Memory access (first clock phase)
     gAccess();
     
+    setBAlow(badLineCondition);
+
     // Memory access (second clock phase)
     cAccess();
 
@@ -1860,6 +1913,8 @@ VIC::cycle18()
     // Memory access (first clock phase)
     gAccess();
     
+    setBAlow(badLineCondition);
+
     // Memory access (second clock phase)
     cAccess();
 
@@ -1875,6 +1930,8 @@ VIC::cycle19to54()
     // Memory access (first clock phase)
     gAccess();
     
+    setBAlow(badLineCondition);
+
     // Memory access (second clock phase)
     cAccess();
 
@@ -1905,8 +1962,12 @@ VIC::cycle55()
 	 */
 	updateSpriteDmaOnOff();
     
-    releaseBA(0x100);
-	requestBusForSprite(0);
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & SPR0);
+    } else {
+        setBAlow(false);
+    }
+    
 	countX();
 	update_display;
 }
@@ -1926,8 +1987,9 @@ VIC::cycle56()
     runGraphicSequencer(56);
 
 	updateSpriteDmaOnOff();
-    requestBusForSprite(0); // Bus is again requested because DMA conditions may have changed
-
+    
+    setBAlow(spriteDmaOnOff & SPR0);
+    
     // Memory access (first clock phase, nothing to read)
     rIdleAccess();
 
@@ -1950,8 +2012,12 @@ VIC::cycle57()
     // We reach the right border here (stop drawing pixels)
     runGraphicSequencer(57);
     
-    requestBusForSprite(1);
-
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
+    } else {
+        setBAlow(spriteDmaOnOff & SPR0);
+    }
+    
     // Memory access (first clock phase, nothing to read)
     rIdleAccess();
 
@@ -2011,6 +2077,8 @@ VIC::cycle58()
 
     // Memory access (first clock phase)
 	pAccess(0);
+
+    setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     
     // Memory access (second clock phase)
 	sFirstAccess(0);
@@ -2024,10 +2092,12 @@ VIC::cycle59()
 
     // Memory access (first clock phase)
 	sSecondAccess(0);
+
+    setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
+
     // Memory access (second clock phase)
     sThirdAccess(0);
     
-	requestBusForSprite(2);
 	countX();
 	update_display;
 }
@@ -2038,10 +2108,15 @@ VIC::cycle60()
     // This is the last invocation of the graphic sequencer
     runGraphicSequencer(60);
 
-	releaseBusForSprite(0);
-
     // Memory access (first clock phase)
     pAccess(1);
+    
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
+    } else {
+        setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
+    }
+    
     // Memory access (second clock phase)
 	sFirstAccess(1);
 
@@ -2054,10 +2129,16 @@ VIC::cycle61()
 {
     // Memory access (first clock phase)
 	sSecondAccess(1);
+
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
+    } else {
+        setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
+    }
+    
     // Memory access (second clock phase)
     sThirdAccess(1);
     
-	requestBusForSprite(3);
 	countX();
 	update_display;
 }
@@ -2065,10 +2146,15 @@ VIC::cycle61()
 void
 VIC::cycle62()
 {
-	releaseBusForSprite(1);
-
     // Memory access (first clock phase)
     pAccess(2);
+    
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & (SPR2 | SPR3));
+    } else {
+        setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
+    }
+    
     // Memory access (second clock phase)
 	sFirstAccess(2);
     
@@ -2118,10 +2204,16 @@ VIC::cycle63()
 
     // Memory access (first clock phase)
 	sSecondAccess(2);
+    
+    if (isPAL) {
+        setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
+    } else {
+        setBAlow(spriteDmaOnOff & (SPR2 | SPR3));        
+    }
+    
     // Memory access (second clock phase)
 	sThirdAccess(2);
     
-	requestBusForSprite(4);
 	countX();
 	update_display;
 }
@@ -2131,7 +2223,9 @@ VIC::cycle64() 	// NTSC only
 {
     // Memory access (first clock phase, nothing to read)
     rIdleAccess();
-    
+ 
+    setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
+
 	countX();
 }
 
@@ -2142,6 +2236,8 @@ VIC::cycle65() 	// NTSC only
     // Memory access (first clock phase, nothing to read)
     rIdleAccess();
     
+    setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
+
     countX();
 }
 
