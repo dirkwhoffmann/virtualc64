@@ -422,12 +422,6 @@ inline void VIC::gAccess()
     assert ((registerVC & 0xFC00) == 0); // 10 bit register
     assert ((registerRC & 0xF8) == 0);   // 3 bit register
 
-    // Prepare graphic sequencer
-    gs_delay = getHorizontalRasterScroll();
-    gs_characterSpace = characterSpace[registerVMLI];
-    gs_colorSpace = colorSpace[registerVMLI];
-    gs_mode = getDisplayMode();
-
     if (displayState) {
 
         // "Der Adressgenerator für die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
@@ -452,9 +446,13 @@ inline void VIC::gAccess()
         if (ECMbitInPreviousCycle())
             addr &= 0xF9FF;
 
-        // Fetch data
+        // Prepare graphic sequencer
         gs_data = memAccess(addr);
-        
+        gs_delay = getHorizontalRasterScroll();
+        gs_characterSpace = characterSpace[registerVMLI];
+        gs_colorSpace = colorSpace[registerVMLI];
+        gs_mode = getDisplayMode();
+
         // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhöht." [C.B.]
         registerVC++;
         registerVC &= 0x3FF; // 10 bit overflow
@@ -465,7 +463,14 @@ inline void VIC::gAccess()
     
         // "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.]
         addr = ECMbitInPreviousCycle() ? 0x39FF : 0x3FFF;
+        
+        // Prepare graphic sequencer
         gs_data = memAccess(addr);
+        gs_delay = getHorizontalRasterScroll();
+        gs_characterSpace = 0;
+        gs_colorSpace = 0;
+        gs_mode = getDisplayMode();
+
     }
 
     
@@ -669,12 +674,15 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
     // Copy pixel to pixel buffer
     pixelBuffer[offset] = pixelBufferTmp[0];
     pixelBufferTmp[0] = pixelBufferTmp[1];
-
+    // pixelBufferTmp[1] = 0x00;
+    
     zBuffer[offset] = zBufferTmp[0];
     zBufferTmp[0] = zBufferTmp[1];
+    // zBufferTmp[1] = 0x00;
     
     pixelSource[offset] = pixelSourceTmp[0];
     pixelSourceTmp[0] = pixelSourceTmp[1];
+    // pixelSourceTmp[1] = 0x00;
 
     // Shift register and toggle flipflop
     gs_shift_reg <<= 1;

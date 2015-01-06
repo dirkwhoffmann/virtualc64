@@ -17,9 +17,8 @@
  */
 
 // NEXT STEPS:
-// Load the sequencer with correct values outside the main screen area
-//    There is an idle fetch in VICE (or something like this)
-// Make colorsplit.prg test case work
+// Border drawing: Use something like drawPixel(0) ... drawPixel(6) checkBorderFF drawPixel(7)
+// Fix execution order in remaining cycles
 
 #ifndef _VIC_INC
 #define _VIC_INC
