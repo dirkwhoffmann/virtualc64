@@ -97,13 +97,13 @@ VIC::reset()
     gs_data = 0;
     gs_data_old = 0;
     gs_mode = STANDARD_TEXT;
-    gs_fg_color = 0;
-    gs_bg_color = 0;
-    gs_bg_color_old = 0;
-    gs_multicol0 = 0;
-    gs_multicol1 = 0;
-    gs_multicol2 = 0;
-    gs_multicol3 = 0;
+    // gs_fg_color = 0;
+    // gs_bg_color = 0;
+    // gs_bg_color_old = 0;
+    // gs_multicol0 = 0;
+    // gs_multicol1 = 0;
+    // gs_multicol2 = 0;
+    // gs_multicol3 = 0;
     
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -551,7 +551,7 @@ inline bool VIC::sThirdAccess(int sprite)
 void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
 {
     // gs_data_old = gs_data;  // CURRENTLY NOT USED
-    gs_bg_color_old = gs_bg_color;
+    // gs_bg_color_old = gs_bg_color;
     gs_data = data;
     gs_delay = load_delay;
     
@@ -560,50 +560,72 @@ void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
     switch (gs_mode) {
             
         case STANDARD_TEXT:
-            gs_fg_color = colorSpace[registerVMLI]; // might be the wrong color if v boder is open
-            gs_bg_color = getBackgroundColor();
+            col_rgba[0] = colors[getBackgroundColor()];
+            col_rgba[1] = colors[colorSpace[registerVMLI]]; // might be the wrong color if v boder is open
+            // gs_fg_color = colorSpace[registerVMLI]; // might be the wrong color if v boder is open
+            // gs_bg_color = getBackgroundColor();
             break;
             
         case MULTICOLOR_TEXT:
-            gs_fg_color = colorSpace[registerVMLI];
-            if (gs_fg_color & 0x8 /* MC flag */) {
-                gs_multicol0 = getBackgroundColor();
-                gs_multicol1 = getExtraBackgroundColor(1);
-                gs_multicol2 = getExtraBackgroundColor(2);
-                gs_multicol3 = gs_fg_color & 0x07;
+            // gs_fg_color = colorSpace[registerVMLI];
+            if (colorSpace[registerVMLI] & 0x8 /* MC flag */) {
+                col_rgba[0] = colors[getBackgroundColor()];
+                col_rgba[1] = colors[getExtraBackgroundColor(1)];
+                col_rgba[2] = colors[getExtraBackgroundColor(2)];
+                col_rgba[3] = colors[colorSpace[registerVMLI] & 0x07];
+                // gs_multicol0 = getBackgroundColor();
+                // gs_multicol1 = getExtraBackgroundColor(1);
+                // gs_multicol2 = getExtraBackgroundColor(2);
+                // gs_multicol3 = gs_fg_color & 0x07;
             } else {
-                gs_bg_color = getBackgroundColor();
+                // gs_bg_color = getBackgroundColor();
+                col_rgba[0] = colors[getBackgroundColor()];
+                col_rgba[1] = colors[colorSpace[registerVMLI]];
             }
             break;
             
         case STANDARD_BITMAP:
-            gs_fg_color = characterSpace[registerVMLI] >> 4;
-            gs_bg_color = characterSpace[registerVMLI] & 0x0F;
+            // gs_fg_color = characterSpace[registerVMLI] >> 4;
+            // gs_bg_color = characterSpace[registerVMLI] & 0x0F;
+            col_rgba[0] = colors[characterSpace[registerVMLI] & 0x0F];
+            col_rgba[1] = colors[characterSpace[registerVMLI] >> 4];
             break;
             
         case MULTICOLOR_BITMAP:
-            gs_multicol0 = getBackgroundColor();
-            gs_multicol1 = characterSpace[registerVMLI] >> 4;
-            gs_multicol2 = characterSpace[registerVMLI] & 0x0F;
-            gs_multicol3 = colorSpace[registerVMLI];
+            // gs_multicol0 = getBackgroundColor();
+            // gs_multicol1 = characterSpace[registerVMLI] >> 4;
+            // gs_multicol2 = characterSpace[registerVMLI] & 0x0F;
+            // gs_multicol3 = colorSpace[registerVMLI];
+            col_rgba[0] = colors[getBackgroundColor()];
+            col_rgba[1] = colors[characterSpace[registerVMLI] >> 4];
+            col_rgba[2] = colors[characterSpace[registerVMLI] & 0x0F];
+            col_rgba[3] = colors[colorSpace[registerVMLI]];
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            gs_fg_color = colorSpace[registerVMLI];
-            if (gs_fg_color & 0x8 /* MC flag */) {
-                gs_multicol0 = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);;
-                gs_multicol1 = getExtraBackgroundColor(1);
-                gs_multicol2 = getExtraBackgroundColor(2);
-                gs_multicol3 = gs_fg_color & 0x07;
+            // gs_fg_color = colorSpace[registerVMLI];
+            if (colorSpace[registerVMLI] & 0x8 /* MC flag */) {
+                // gs_multicol0 = getExtraBackgroundColor(characterSpace[registerVMLI] >> 6);
+                // gs_multicol1 = getExtraBackgroundColor(1);
+                // gs_multicol2 = getExtraBackgroundColor(2);
+                // gs_multicol3 = gs_fg_color & 0x07;
+                col_rgba[0] = colors[getExtraBackgroundColor(characterSpace[registerVMLI] >> 6)];
+                col_rgba[1] = colors[getExtraBackgroundColor(1)];
+                col_rgba[2] = colors[getExtraBackgroundColor(2)];
+                col_rgba[3] = colors[colorSpace[registerVMLI] & 0x07];
+
             } else {
-                gs_bg_color = getBackgroundColor();
+                // gs_bg_color = getBackgroundColor();
+                col_rgba[0] = colors[getBackgroundColor()];
+                col_rgba[1] = colors[colorSpace[registerVMLI]];
             }
             break;
             
         case INVALID_TEXT:
         case INVALID_STANDARD_BITMAP:
         case INVALID_MULTICOLOR_BITMAP:
-            // Nothing to do
+                col_rgba[0] = colors[BLACK];
+                col_rgba[1] = colors[BLACK];
             break;
 
         default:
@@ -666,7 +688,8 @@ void VIC::runGraphicSequencer(uint8_t cycle)
     }
 
     // Take care of horizontal scrolling
-    int rgba = colors[gs_bg_color_old]; // TODO: WE PROBABLY SELECT THE WRONG COLOR HERE
+    // int rgba = colors[gs_bg_color_old]; // TODO: WE MOST LIKELY SELECT THE WRONG COLOR HERE
+    int rgba = col_rgba[0]; // TODO: WE MOST LIKELY SELECT THE WRONG COLOR HERE
     for (unsigned i = 0; i < gs_delay; i++) {
         setBehindBackgroundPixel(xCoord++, rgba);
     }
@@ -679,7 +702,7 @@ void VIC::runGraphicSequencer(uint8_t cycle)
             break;
             
         case MULTICOLOR_TEXT:
-            if (gs_fg_color & 0x8 /* MC flag */) {
+            if (colorSpace[registerVMLI] & 0x8 /* MC flag */) {
                 drawMultiColorCharacter(xCoord);
             } else {
                 drawSingleColorCharacter(xCoord);
@@ -695,7 +718,7 @@ void VIC::runGraphicSequencer(uint8_t cycle)
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            if (gs_fg_color & 0x8 /* MC flag */) {
+            if (colorSpace[registerVMLI] & 0x8 /* MC flag */) {
                 drawMultiColorCharacter(xCoord);
             } else {
                 drawSingleColorCharacter(xCoord);
@@ -703,7 +726,7 @@ void VIC::runGraphicSequencer(uint8_t cycle)
             break;		
 
         case INVALID_TEXT:
-            if (gs_fg_color & 0x8 /* MC flag */) {
+            if (colorSpace[registerVMLI] & 0x8 /* MC flag */) {
                 drawInvalidMultiColorCharacter(xCoord);
             } else {
                 drawInvalidSingleColorCharacter(xCoord);
@@ -729,6 +752,18 @@ void VIC::runGraphicSequencer(uint8_t cycle)
 // -----------------------------------------------------------------------------------------------
 //                                           Drawing
 // -----------------------------------------------------------------------------------------------
+
+void
+VIC::drawUnvisible()
+{
+    return;
+}
+
+void
+VIC::draw()
+{
+    return;
+}
 
 inline void
 VIC::setFramePixel(unsigned offset, int rgba)
@@ -788,54 +823,54 @@ VIC::drawEightBehindBackgroudPixels(unsigned offset)
         die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
         normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
 
-    int bg_rgba = colors[gs_bg_color_old]; // TODO: WE PROBABLY SELECT THE WRONG COLOR HERE
+    // int bg_rgba = colors[gs_bg_color_old]; // TODO: WE PROBABLY SELECT THE WRONG COLOR HERE
     for (unsigned i = 0; i < 8; i++) {
-        setBehindBackgroundPixel(offset++, bg_rgba);
+        setBehindBackgroundPixel(offset++, col_rgba[0]);
     }    
 }
 
 inline void 
 VIC::drawSingleColorCharacter(unsigned offset)
 {
-    int fg_rgba = colors[gs_fg_color];
-    int bg_rgba = colors[gs_bg_color];
+    // int fg_rgba = colors[gs_fg_color];
+    // int bg_rgba = colors[gs_bg_color];
     
 	assert(offset >= 0 && offset+7 < MAX_VIEWABLE_PIXELS);
     
-	if (gs_data & 128) setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
-	if (gs_data & 64)  setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
-	if (gs_data & 32)  setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
-	if (gs_data & 16)  setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
-	if (gs_data & 8)   setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
-	if (gs_data & 4)   setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
-	if (gs_data & 2)   setForegroundPixel(offset++, fg_rgba); else setBackgroundPixel(offset++, bg_rgba);
-	if (gs_data & 1)   setForegroundPixel(offset, fg_rgba); else setBackgroundPixel(offset, bg_rgba);
+	if (gs_data & 128) setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
+	if (gs_data & 64)  setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
+	if (gs_data & 32)  setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
+	if (gs_data & 16)  setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
+	if (gs_data & 8)   setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
+	if (gs_data & 4)   setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
+	if (gs_data & 2)   setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
+	if (gs_data & 1)   setForegroundPixel(offset, col_rgba[1]); else setBackgroundPixel(offset, col_rgba[0]);
 }
 
 inline void 
 VIC::drawMultiColorCharacter(unsigned offset)
 {
-    int col, colorLookup[4];;
+    // int col, colorLookup[4];
     uint8_t colBits;
     
 	assert(offset+7 < MAX_VIEWABLE_PIXELS);
 
-    colorLookup[0] = colors[gs_multicol0];
-    colorLookup[1] = colors[gs_multicol1];
-    colorLookup[2] = colors[gs_multicol2];
-    colorLookup[3] = colors[gs_multicol3];
+    // colorLookup[0] = colors[gs_multicol0];
+    // colorLookup[1] = colors[gs_multicol1];
+    // colorLookup[2] = colors[gs_multicol2];
+    // colorLookup[3] = colors[gs_multicol3];
     
     for (unsigned i = 0; i < 4; i++, gs_data <<= 2) {
 
         colBits = (gs_data & 0xC0) >> 6;
-        col = colorLookup[colBits];
+        // col = colorLookup[colBits];
         
         if (colBits & 0x02) {
-            setForegroundPixel(offset++, col);
-            setForegroundPixel(offset++, col);
+            setForegroundPixel(offset++, col_rgba[colBits]);
+            setForegroundPixel(offset++, col_rgba[colBits]);
         } else {
-            setBackgroundPixel(offset++, col);
-            setBackgroundPixel(offset++, col);
+            setBackgroundPixel(offset++, col_rgba[colBits]);
+            setBackgroundPixel(offset++, col_rgba[colBits]);
         }
     }
 }
@@ -1465,7 +1500,7 @@ VIC::cycle1()
     
     // Phi1.2. Check horizontal border
     // Phi1.3. Draw
-    // multiplex
+    drawUnvisible();
     
     // Phi2.1 Rasterline interrupt
 	if (scanline == rasterInterruptLine() && scanline != 0)
@@ -1500,7 +1535,7 @@ VIC::cycle2()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
-    // multiplex
+    drawUnvisible();
     
     // Phi2.1 Rasterline interrupt
 	if (scanline == 0 && scanline == rasterInterruptLine())
@@ -1535,6 +1570,8 @@ VIC::cycle3()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+
     // multiplex
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
@@ -1566,6 +1603,8 @@ VIC::cycle4()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
@@ -1597,6 +1636,8 @@ VIC::cycle5()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
@@ -1628,6 +1669,8 @@ VIC::cycle6()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
@@ -1660,6 +1703,8 @@ VIC::cycle7()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
@@ -1687,6 +1732,8 @@ VIC::cycle8()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
@@ -1717,6 +1764,8 @@ VIC::cycle9()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+    
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
@@ -1744,6 +1793,8 @@ VIC::cycle10()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
@@ -1770,6 +1821,8 @@ VIC::cycle11()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
@@ -1789,6 +1842,8 @@ VIC::cycle12()
 
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
+
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
@@ -1820,6 +1875,7 @@ VIC::cycle13()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
     runGraphicSequencer(13);
     
     // Phi2.1 Rasterline interrupt
@@ -1841,6 +1897,7 @@ VIC::cycle14()
 
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
     runGraphicSequencer(14);
     
     // Phi2.1 Rasterline interrupt
@@ -1871,6 +1928,7 @@ VIC::cycle15()
 
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
+    drawUnvisible();
     runGraphicSequencer(15);
 
     // Phi2.1 Rasterline interrupt
@@ -1910,8 +1968,9 @@ VIC::cycle16()
     
     // Phi1.2 Check horizontal border
     // Phi1.3 Draw
-    // runGraphicSequencer(16);
-
+    //draw();
+    drawUnvisible();
+    
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Check vertical border
     // Phi2.2b Sprite logic
@@ -1952,6 +2011,15 @@ VIC::cycle16()
 void
 VIC::cycle17()
 {
+    // Phi1.1 Fetch
+    // BELOW (WRONG ORDER)
+
+    // Phi1.2 Check horizontal border
+    // BELOW (WRONG ORDER)
+    
+    // Phi1.3 Draw
+    draw();
+
     // Phi1.2 Check horizontal border
     if (24 == leftComparisonValue()) {
 
@@ -1979,9 +2047,6 @@ VIC::cycle17()
     
     // Phi1.1 Fetch
     gAccess(); // WRONG ORDER
-
-    // Phi1.3 Draw
-    //runGraphicSequencer(17);
     
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
@@ -1997,6 +2062,15 @@ VIC::cycle17()
 void
 VIC::cycle18()
 {
+    // Phi1.1 Fetch
+    // BELOW (WRONG ORDER)
+    
+    // Phi1.2 Check horizontal border
+    // BELOW (WRONG ORDER)
+    
+    // Phi1.3 Draw
+    draw();
+    
     // Set or clear frame flipflops in 38 column mode
     if (31 == leftComparisonValue()) {
         
@@ -2041,6 +2115,15 @@ VIC::cycle18()
 void
 VIC::cycle19to54()
 {
+    // Phi1.1 Fetch
+    // BELOW (WRONG ORDER)
+    
+    // Phi1.2 Check horizontal border
+    // BELOW (WRONG ORDER)
+    
+    // Phi1.3 Draw
+    draw();
+
     runGraphicSequencer(19); // WRONG ORDER
 
     // Phi1.1 Fetch
@@ -2064,6 +2147,10 @@ VIC::cycle55()
 
     // Phi1.1 Fetch
     gAccess();
+
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    draw();
 
     // runGraphicSequencer(55);
 
@@ -2098,6 +2185,10 @@ VIC::cycle56()
     // Phi1.1 Fetch
     rIdleAccess();
     
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    draw();
+
     // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
      //     Haupt-Rahmenflipflop gesetzt." [C.B.]
 
@@ -2122,15 +2213,17 @@ VIC::cycle57()
     // Phi1.1 Fetch
     rIdleAccess();
 
-    const uint16_t x_coord = 344;
-    
+    // Phi1.2 Check horizontal border
     // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
     //     Haupt-Rahmenflipflop gesetzt." [C.B.]
     
-    if (x_coord == rightComparisonValue()) {
+    if (344 == rightComparisonValue()) {
         mainFrameFF = true;
     }
     
+    // Phi1.3 Draw
+    draw();
+
     // We reach the right border here (stop drawing pixels)
     runGraphicSequencer(57);
     
@@ -2153,7 +2246,11 @@ VIC::cycle58()
         pAccess(0);
     else
         rIdleAccess();
-        
+    
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    drawUnvisible();
+    
     runGraphicSequencer(58);
 
 	/* "Der †bergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
@@ -2218,7 +2315,11 @@ VIC::cycle59()
         sSecondAccess(0);
     else
         pAccess(0);
-    
+ 
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    drawUnvisible();
+
     runGraphicSequencer(59);
 
     if (isPAL)
@@ -2245,6 +2346,10 @@ VIC::cycle60()
     else
         sSecondAccess(0);
     
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    drawUnvisible();
+
     // This is the last invocation of the graphic sequencer
     runGraphicSequencer(60);
     
@@ -2272,6 +2377,12 @@ VIC::cycle61()
     else
         pAccess(1);
     
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    drawUnvisible();
+
+    
+    
     if (isPAL)
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
     else
@@ -2295,6 +2406,11 @@ VIC::cycle62()
         pAccess(2);
     else
         sSecondAccess(1);
+
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    drawUnvisible();
+
     
     if (isPAL)
         setBAlow(spriteDmaOnOff & (SPR2 | SPR3));
@@ -2320,6 +2436,8 @@ VIC::cycle63()
     else
         pAccess(2);
     
+    // Phi1.2 Check horizontal border
+    
     // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
     //     das vertikale Rahmenflipflop gesetzt." [C.B.]
 
@@ -2335,16 +2453,21 @@ VIC::cycle63()
         verticalFrameFF = false;
     }
 
+    // Phi1.3 Draw
+    drawUnvisible();
+    
     // Extend pixel buffer to the left and right to make it look nice
+#if 0
     int color = pixelBuffer[14];
     for (unsigned i = 0; i <= 13; i++) {
         pixelBuffer[i] = color;
     }
-
+    
     color = pixelBuffer[397];
     for (unsigned i = 398; i < totalScreenWidth; i++) {
         pixelBuffer[i] = color;
     }
+#endif
 
 	// draw debug markers
 	if (markIRQLines && scanline == rasterInterruptLine()) 
@@ -2378,9 +2501,18 @@ VIC::cycle64() 	// NTSC only
 {
     // Phi1.1 Fetch
     rIdleAccess();
- 
+    
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    drawUnvisible();
+
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
 
+    // Phi2.5 Fetch
     // Finalize
 	countX();
 }
@@ -2391,8 +2523,17 @@ VIC::cycle65() 	// NTSC only
     // Phi1.1 Fetch
     rIdleAccess();
     
+    // Phi1.2 Check horizontal border
+    // Phi1.3 Draw
+    drawUnvisible();
+
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Check vertical border
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
 
+    // Phi2.5 Fetch
     // Finalize
     countX();
 }
