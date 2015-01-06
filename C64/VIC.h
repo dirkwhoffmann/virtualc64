@@ -612,9 +612,9 @@ private:
 	/*! Used to handle Y sprite stretching. One bit for each sprite */
 	uint8_t expansionFF;
 
-    //! Expansion flipflop in cycle 15
-    /*! This value is needed to detect a falling edge in cycle 16 */
-    uint8_t expansionFF_in_015;
+    //! Remembers which bits the CPU has cleared in the expansion Y register (D017)
+    /*! This value is set in pokeIO and cycle 15 and read in cycle 16 */
+    uint8_t cleared_bits_in_d017;
 	
 				
 	// -----------------------------------------------------------------------------------------------
