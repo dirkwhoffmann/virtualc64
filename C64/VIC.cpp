@@ -418,10 +418,15 @@ inline void VIC::cAccess()
 inline void VIC::gAccess()
 {
     uint16_t addr;
-    uint8_t data;
     
     assert ((registerVC & 0xFC00) == 0); // 10 bit register
     assert ((registerRC & 0xF8) == 0);   // 3 bit register
+
+    // Prepare graphic sequencer
+    gs_delay = getHorizontalRasterScroll();
+    gs_characterSpace = characterSpace[registerVMLI];
+    gs_colorSpace = colorSpace[registerVMLI];
+    gs_mode = getDisplayMode();
 
     if (displayState) {
 
@@ -448,7 +453,7 @@ inline void VIC::gAccess()
             addr &= 0xF9FF;
 
         // Fetch data
-        data = memAccess(addr);
+        gs_data = memAccess(addr);
         
         // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhšht." [C.B.]
         registerVC++;
@@ -460,16 +465,10 @@ inline void VIC::gAccess()
     
         // "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.]
         addr = ECMbitInPreviousCycle() ? 0x39FF : 0x3FFF;
-        data = memAccess(addr);
+        gs_data = memAccess(addr);
     }
-    
-    // Prepare graphic sequencer
-    gs_data = data;
-    gs_delay = getHorizontalRasterScroll();
-    gs_characterSpace = characterSpace[registerVMLI];
-    gs_colorSpace = colorSpace[registerVMLI];
-    gs_mode = getDisplayMode();
 
+    
 #ifndef NEWCODE
     loadPixelSynthesizerWithColors(gs_mode, gs_characterSpace, gs_colorSpace);
 #endif
@@ -761,7 +760,6 @@ void VIC::drawBorderArea(uint8_t cycle)
         int border_rgba = colors[getBorderColor()];
         
         drawEightFramePixels(xCoord, border_rgba);
-        // gs_data = 0;
         return;
     }
     
@@ -1675,6 +1673,12 @@ VIC::beginRasterline(uint16_t line)
     if (scanline == 0x30)
         DENwasSetInRasterline30 = DENbit();
 
+    // Reset graphic sequencer
+    // gs_data = 0;
+    gs_shift_reg = 0;
+    pixelBufferTmp[0] = pixelBuffer[1] = 0;
+    zBufferTmp[0] = zBufferTmp[1] = 0;
+    pixelSourceTmp[0] = pixelSourceTmp[1] = 0;
 }
 
 void 
