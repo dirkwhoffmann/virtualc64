@@ -17,7 +17,9 @@
  */
 
 // NEXT STEPS:
-// In cylce16: Handle Sprite expansion flip flop correctly
+// Load the sequencer with correct values outside the main screen area
+//    There is an idle fetch in VICE (or something like this)
+// Make colorsplit.prg test case work
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -592,7 +594,7 @@ private:
 
     //! Load graphic sequencer with data and determine conversion parameters
     // DEPRECATED
-    void loadGraphicSequencer(uint8_t data, uint8_t load_delay);
+    // void loadGraphicSequencer(uint8_t data, uint8_t load_delay);
     
     // Determine pixel colors accordig to the provided display mode
     void loadPixelSynthesizerWithColors(DisplayMode mode,uint8_t characterSpace, uint8_t colorSpace);

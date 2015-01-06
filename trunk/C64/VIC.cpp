@@ -425,14 +425,14 @@ inline void VIC::gAccess()
 
     if (displayState) {
 
-        /* "Der Adressgenerator für die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
-            besitzt bei den g-Zugriffen im wesentlichen 3 Modi (die c-Zugriffe erfolgen
-            immer nach dem selben Adressschema). Im Display-Zustand wählt das BMM-Bit
-            entweder Zeichengenerator-Zugriffe (BMM=0) oder Bitmap-Zugriffe (BMM=1)
-            aus" [C.B.] */
+        // "Der Adressgenerator für die Text-/Bitmap-Zugriffe (c- und g-Zugriffe)
+        //  besitzt bei den g-Zugriffen im wesentlichen 3 Modi (die c-Zugriffe erfolgen
+        //  immer nach dem selben Adressschema). Im Display-Zustand wählt das BMM-Bit
+        //  entweder Zeichengenerator-Zugriffe (BMM=0) oder Bitmap-Zugriffe (BMM=1)
+        //  aus" [C.B.]
         
-        /*  BMM = 1 : |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
-            BMM = 0 : |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0| */
+        //  BMM = 1 : |CB13| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0| RC2| RC1| RC0|
+        //  BMM = 0 : |CB13|CB12|CB11| D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 | RC2| RC1| RC0|
         
         if (BMMbitInPreviousCycle()) {
             addr = (CB13() << 10) | (registerVC << 3) | registerRC;
@@ -440,9 +440,9 @@ inline void VIC::gAccess()
             addr = (CB13CB12CB11() << 10) | (characterSpace[registerVMLI] << 3) | registerRC;
         }
 
-        /* "Bei gesetztem ECM-Bit schaltet der Adreﬂgenerator bei den g-Zugriffen die
-            Adreﬂleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
-            (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.] */
+        // "Bei gesetztem ECM-Bit schaltet der Adreﬂgenerator bei den g-Zugriffen die
+        //  Adreﬂleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
+        //  (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.]
         
         if (ECMbitInPreviousCycle())
             addr &= 0xF9FF;
@@ -450,33 +450,34 @@ inline void VIC::gAccess()
         // Fetch data
         data = memAccess(addr);
         
-        // Load graphics sequencer
-        loadGraphicSequencer(data, getHorizontalRasterScroll());
-
         // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhöht." [C.B.]
         registerVC++;
         registerVC &= 0x3FF; // 10 bit overflow
         registerVMLI++;
         registerVMLI &= 0x3F; // 6 bit overflow
-
-        return;
+    
+    } else {
+    
+        // "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.]
+        addr = ECMbitInPreviousCycle() ? 0x39FF : 0x3FFF;
+        data = memAccess(addr);
     }
     
-    /* "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.] */
+    // Prepare graphic sequencer
+    gs_data = data;
+    gs_delay = getHorizontalRasterScroll();
+    gs_characterSpace = characterSpace[registerVMLI];
+    gs_colorSpace = colorSpace[registerVMLI];
+    gs_mode = getDisplayMode();
 
-    addr = ECMbitInPreviousCycle() ? 0x39FF : 0x3FFF;
-
-    // Fetch data
-    data = memAccess(addr);
-    
-    // Load graphics sequencer
-    loadGraphicSequencer(data, getHorizontalRasterScroll());
+#ifndef NEWCODE
+    loadPixelSynthesizerWithColors(gs_mode, gs_characterSpace, gs_colorSpace);
+#endif
 }
 
 inline void VIC::pAccess(int sprite)
 {
     // |VM13|VM12|VM11|VM10|  1 |  1 |  1 |  1 |  1 |  1 |  1 |  Spr.-Nummer |
-    // spritePtr[sprite] = memAccess(screenMemoryAddr | 0x03F8 | sprite) << 6;
     spritePtr[sprite] = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite) << 6;
 
 }
@@ -550,10 +551,10 @@ inline bool VIC::sThirdAccess(int sprite)
 //                                         Graphics sequencer
 // -----------------------------------------------------------------------------------------------
 
+// DEPRECATED
+#if 0
 void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
 {
-    // gs_data_old = gs_data;
-    // gs_bg_color_old = gs_bg_color;
     gs_data = data;
     gs_delay = load_delay;
     gs_characterSpace = characterSpace[registerVMLI];
@@ -561,6 +562,7 @@ void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
     gs_mode = getDisplayMode();
     loadPixelSynthesizerWithColors(gs_mode, gs_characterSpace, gs_colorSpace);
 }
+#endif
 
 void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
@@ -647,21 +649,17 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
     
     if (gs_delay == pixel) {
         
-        // Load graphic sequencer shift register
-
-        // VICE: vbuf_reg = vbuf_pipe1_reg;
-        //       cbuf_reg = cbuf_pipe1_reg;
-        //       gbuf_reg = gbuf_pipe1_reg;
+        // Load shift register
         gs_shift_reg = gs_data;
+        // Remember how to synthesize pixels
         LatchedCharacterSpace = gs_characterSpace;
         LatchedColorSpace = gs_colorSpace;
         gs_mc_flop = true;
     }
     
     if (gs_mc_flop) {
-        // determine pixel colors
+        // Determine pixel colors and render
         loadPixelSynthesizerWithColors(gs_mode,LatchedCharacterSpace,LatchedColorSpace);
-        // and render
         if (multicol) {
             renderTwoMultiColorPixels(gs_shift_reg >> 6);
         } else {
@@ -669,7 +667,7 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
         }
     }
     
-    // Draw pixel
+    // Copy pixel to pixel buffer
     pixelBuffer[offset] = pixelBufferTmp[0];
     pixelBufferTmp[0] = pixelBufferTmp[1];
 
@@ -679,7 +677,7 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
     pixelSource[offset] = pixelSourceTmp[0];
     pixelSourceTmp[0] = pixelSourceTmp[1];
 
-    // Perform shift and toggle flipflop
+    // Shift register and toggle flipflop
     gs_shift_reg <<= 1;
     gs_mc_flop = !gs_mc_flop;
 }
