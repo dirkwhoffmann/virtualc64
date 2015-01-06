@@ -117,7 +117,7 @@ VIC::reset()
 	oldSpriteOnOff = 0;
 	spriteDmaOnOff = 0;
 	expansionFF = 0xFF;
-    expansionFF_in_015 = 0xFF;
+    cleared_bits_in_d017 = 0;
 	// Lightpen
 	lightpenIRQhasOccured = false;
 	
@@ -1151,12 +1151,10 @@ VIC::peek(uint16_t addr)
 			result = scanline & 0xff;
 			return result;
             
-		case 0x13:
-			debug(2, "Reading lightpen X position: %d\n", iomem[addr]);
+		case 0x13: // LIGHTPEN X
 			return iomem[addr];
             
-		case 0x14:
-			debug(2, "Reading lightpen Y position: %d\n", iomem[addr]);
+		case 0x14: // LIGHTPEN Y
 			return iomem[addr];
             
         case 0x16:
@@ -1237,8 +1235,13 @@ VIC::poke(uint16_t addr, uint8_t value)
 			}
 			return;
 						
-		case 0x17:
+		case 0x17: // SPRITE Y EXPANSION
 			iomem[addr] = value;
+            cleared_bits_in_d017 = (~value) & (~expansionFF);
+            
+            /* "1. Das Expansions-Flipflop ist gesetzt, solange das zum jeweiligen Sprite
+                   gehšrende Bit MxYE in Register $d017 gelšscht ist." [C.B.] */
+            
 			expansionFF |= ~value;
 			return;
 			
@@ -1884,8 +1887,6 @@ VIC::cycle15()
         }
     }
 #endif
-
-    expansionFF_in_015 = expansionFF;
     
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
@@ -1895,6 +1896,7 @@ VIC::cycle15()
 	cAccess();
 
     // Finalize
+    cleared_bits_in_d017 = 0;
     countX();
 }
 
@@ -1914,23 +1916,21 @@ VIC::cycle16()
     // Phi2.2 Check vertical border
     // Phi2.2b Sprite logic
 
-    /* CORRECTED RULE:
-       "7. In the first phase of cycle 16, it is checked if the expansion flip flop
-        is set. If so, MCBASE load from MC (MC->MCBASE), unless the CPU cleared
-        the Y expansion bit in $d017 in the second phase of cycle 15, in which case
-        MCBASE is set to X = (101010 & (MCBASE & MC)) | (010101 & (MCBASE | MC)).
-        After the MCBASE update, the VIC checks if MCBASE is equal to 63 and turns
-        off the DMA of the sprite if it is." [VIC Addendum]
-     */
+    /* "7. In the first phase of cycle 16, it is checked if the expansion flip flop
+           is set. If so, MCBASE load from MC (MC->MCBASE), unless the CPU cleared
+           the Y expansion bit in $d017 in the second phase of cycle 15, in which case
+           MCBASE is set to X = (101010 & (MCBASE & MC)) | (010101 & (MCBASE | MC)).
+           After the MCBASE update, the VIC checks if MCBASE is equal to 63 and turns
+           off the DMA of the sprite if it is." [VIC Addendum] */
+    
     for (int i = 0; i < 8; i++) {
         uint8_t mask = (1 << i);
         if (expansionFF & mask) {
-            mcbase[i] = mc[i];
-            assert (mcbase[i] <= 0x3F);
-        }
-        else if (expansionFF_in_015 & mask) {
-            // CPU has cleared expansionFF in the meantime
-            mcbase[i] = (0x101010 & (mcbase[i] & mc[i])) | (0x010101 & (mcbase[i] | mc[i]));
+            if (cleared_bits_in_d017 & mask) {
+                mcbase[i] = (0x2A /* 101010 */ & (mcbase[i] & mc[i])) | (0x15 /* 010101 */ & (mcbase[i] | mc[i]));
+            } else {
+                mcbase[i] = mc[i];
+            }
         }
         
         if (mcbase[i] == 63) {
