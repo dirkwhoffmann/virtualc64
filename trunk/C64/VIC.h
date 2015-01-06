@@ -324,9 +324,15 @@ private:
 	//! Main frame Flipflop
 	bool mainFrameFF;
 	
-	//! Vertiacl frame Flipflop
+	//! Vertical frame Flipflop
 	bool verticalFrameFF;
 	
+    //! Check frame fliplops at left border
+    void checkFrameFlipflopsLeft(uint16_t comparisonValue);
+
+    //! Check frame fliplops at right border
+    void checkFrameFlipflopsRight(uint16_t comparisonValue);
+
     //! Comparison values for frame flipflops
     inline uint16_t leftComparisonValue() { return isCSEL() ? 24 : 31; }
     inline uint16_t rightComparisonValue() { return isCSEL() ? 344 : 335; }
