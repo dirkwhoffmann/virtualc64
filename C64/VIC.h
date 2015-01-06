@@ -554,22 +554,6 @@ private:
 
     //! Graphic sequencer display mode (conversion method)
     DisplayMode gs_mode;
-    
-    //! Graphic sequencer foreground color to be used in data->pixel conversion)
-    // DEPRECATED
-    // uint8_t gs_fg_color;
-    
-    //! Graphic sequencer background color to be used in data->pixel conversion)
-    // DEPRECATED
-    // uint8_t gs_bg_color;
-
-    //! Background color in previous cycle
-    // DEPRECATED
-    // uint8_t gs_bg_color_old;
-
-    //! Graphic sequencer colors for multi color modes
-    // DEPRECATED
-    // uint8_t gs_multicol0, gs_multicol1, gs_multicol2, gs_multicol3;
 
     //! Graphic sequencer load delay
     uint8_t gs_delay;
@@ -778,25 +762,29 @@ private:
     inline void drawNineFramePixels(unsigned offset, int rgba_color) {
         offset--; for (unsigned i = 0; i < 9; i++) setFramePixel(offset++, rgba_color); }
 
-    //! Draw two / one
+    //! Draw 2 pixels in single-color mode
+    void drawTwoSingleColorPixels(unsigned offset, uint8_t bits);
 
     //! Draw a single character line (8 pixels) in single-color mode
     /*! \param offset X coordinate of the first pixel to draw */
     void drawSingleColorCharacter(unsigned offset);
     
+    //! Draw 2 pixels in multi-color mode
+    void drawTwoMultiColorPixels(unsigned offset, uint8_t bits);
+
     //! Draw a single character line (8 pixels) in multi-color mode
-    /*! \param offset X coordiate of the first pixel to draw
-     */
     void drawMultiColorCharacter(unsigned offset);
 
+    //! Draw 2 single color pixels in invalid text mode
+    void drawTwoInvalidSingleColorPixels(unsigned offset, uint8_t bits);
+    
     //! Draw a single color character in invalid text mode
-    /*! \param offset X coordiate of the first pixel to draw
-     */
     void drawInvalidSingleColorCharacter(unsigned offset);
 
+    //! Draw 2 multicolor pixels in invalid text mode
+    void drawTwoInvalidMultiColorPixels(unsigned offset, uint8_t bits);
+
     //! Draw a multi color character in invalid text mode
-    /*! \param offset X coordiate of the first pixel to draw
-     */
     void drawInvalidMultiColorCharacter(unsigned offset);
     
 	//! Draw a single foreground pixel

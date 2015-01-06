@@ -829,6 +829,20 @@ VIC::drawEightBehindBackgroudPixels(unsigned offset)
     }    
 }
 
+inline void
+VIC::drawTwoSingleColorPixels(unsigned offset, uint8_t bits)
+{
+    if (bits & 0x02)
+        setForegroundPixel(offset++, col_rgba[1]);
+    else
+        setBackgroundPixel(offset++, col_rgba[0]);
+
+    if (bits & 0x01)
+        setForegroundPixel(offset, col_rgba[1]);
+    else
+        setBackgroundPixel(offset, col_rgba[0]);
+}
+
 inline void 
 VIC::drawSingleColorCharacter(unsigned offset)
 {
@@ -836,79 +850,70 @@ VIC::drawSingleColorCharacter(unsigned offset)
     // int bg_rgba = colors[gs_bg_color];
     
 	assert(offset >= 0 && offset+7 < MAX_VIEWABLE_PIXELS);
-    
-	if (gs_data & 128) setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
-	if (gs_data & 64)  setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
-	if (gs_data & 32)  setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
-	if (gs_data & 16)  setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
-	if (gs_data & 8)   setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
-	if (gs_data & 4)   setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
-	if (gs_data & 2)   setForegroundPixel(offset++, col_rgba[1]); else setBackgroundPixel(offset++, col_rgba[0]);
-	if (gs_data & 1)   setForegroundPixel(offset, col_rgba[1]); else setBackgroundPixel(offset, col_rgba[0]);
+
+    drawTwoSingleColorPixels(offset, gs_data >> 6);
+    drawTwoSingleColorPixels(offset + 2, gs_data >> 4);
+    drawTwoSingleColorPixels(offset + 4, gs_data >> 2);
+    drawTwoSingleColorPixels(offset + 6, gs_data);
 }
 
-inline void 
+inline void
+VIC::drawTwoMultiColorPixels(unsigned offset, uint8_t bits)
+{
+    int rgba = col_rgba[bits & 0x03];
+    
+    if (bits & 0x02) {
+        setForegroundPixel(offset++, rgba);
+        setForegroundPixel(offset++, rgba);
+    } else {
+        setBackgroundPixel(offset++, rgba);
+        setBackgroundPixel(offset++, rgba);
+    }
+}
+
+inline void
 VIC::drawMultiColorCharacter(unsigned offset)
 {
-    // int col, colorLookup[4];
-    uint8_t colBits;
-    
 	assert(offset+7 < MAX_VIEWABLE_PIXELS);
 
-    // colorLookup[0] = colors[gs_multicol0];
-    // colorLookup[1] = colors[gs_multicol1];
-    // colorLookup[2] = colors[gs_multicol2];
-    // colorLookup[3] = colors[gs_multicol3];
-    
-    for (unsigned i = 0; i < 4; i++, gs_data <<= 2) {
+    drawTwoMultiColorPixels(offset, gs_data >> 6);
+    drawTwoMultiColorPixels(offset + 2, gs_data >> 4);
+    drawTwoMultiColorPixels(offset + 4, gs_data >> 2);
+    drawTwoMultiColorPixels(offset + 6, gs_data);
+}
 
-        colBits = (gs_data & 0xC0) >> 6;
-        // col = colorLookup[colBits];
-        
-        if (colBits & 0x02) {
-            setForegroundPixel(offset++, col_rgba[colBits]);
-            setForegroundPixel(offset++, col_rgba[colBits]);
-        } else {
-            setBackgroundPixel(offset++, col_rgba[colBits]);
-            setBackgroundPixel(offset++, col_rgba[colBits]);
-        }
-    }
+inline void
+VIC::drawTwoInvalidSingleColorPixels(unsigned offset, uint8_t bits)
+{
+    drawTwoSingleColorPixels(offset, bits);
 }
 
 inline void
 VIC::drawInvalidSingleColorCharacter(unsigned offset)
 {
-    int col = colors[BLACK];
-
     assert(offset+7 < MAX_VIEWABLE_PIXELS);
-    
-    for (unsigned i = 0; i < 8; i++, gs_data <<= 1) {
-        
-        if (gs_data & 0x80) {
-            setForegroundPixel(offset++, col);
-        } else {
-            setBackgroundPixel(offset++, col);
-        }
-    }
+
+    drawTwoInvalidSingleColorPixels(offset, gs_data >> 6);
+    drawTwoInvalidSingleColorPixels(offset + 2, gs_data >> 4);
+    drawTwoInvalidSingleColorPixels(offset + 4, gs_data >> 2);
+    drawTwoInvalidSingleColorPixels(offset + 6, gs_data);
+}
+
+inline void
+VIC::drawTwoInvalidMultiColorPixels(unsigned offset, uint8_t bits)
+{
+    drawTwoMultiColorPixels(offset, bits);
 }
 
 inline void
 VIC::drawInvalidMultiColorCharacter(unsigned offset)
 {
-    int col = colors[BLACK];
-
     assert(offset+7 < MAX_VIEWABLE_PIXELS);
     
-    for (unsigned i = 0; i < 4; i++, gs_data <<= 2) {
-        
-        if (gs_data & 0x80) {
-            setForegroundPixel(offset++, col);
-            setForegroundPixel(offset++, col);
-        } else {
-            setBackgroundPixel(offset++, col);
-            setBackgroundPixel(offset++, col);
-        }
-    }
+    drawTwoInvalidMultiColorPixels(offset, gs_data >> 6);
+    drawTwoInvalidMultiColorPixels(offset + 2, gs_data >> 4);
+    drawTwoInvalidMultiColorPixels(offset + 4, gs_data >> 2);
+    drawTwoInvalidMultiColorPixels(offset + 6, gs_data);
 }
 
 inline void 
