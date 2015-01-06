@@ -696,7 +696,7 @@ void VIC::drawPixels(uint8_t cycle)
     assert(cycle >= 17 && cycle <= 56);
 
     
-    uint16_t xCoord = (xCounter - 29) + leftBorderWidth;
+    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
     
     /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
      Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
@@ -760,7 +760,7 @@ void VIC::drawBorderArea(uint8_t cycle)
 #ifdef NEWCODE
     assert((cycle >= 13 && cycle <= 16) || (cycle >= 57 && cycle <= 60));
     
-    uint16_t xCoord = (xCounter - 29) + leftBorderWidth;
+    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
 
     // draw border
     if (mainFrameFF) {
@@ -785,7 +785,7 @@ void VIC::drawBorderArea(uint8_t cycle)
 void VIC::runGraphicSequencer(uint8_t cycle)
 {
 #ifndef NEWCODE
-    uint16_t xCoord = (xCounter - 29) + leftBorderWidth;
+    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
     
     // draw border if necessary
     if (mainFrameFF) {
@@ -1621,10 +1621,64 @@ VIC::updateSpriteDmaOnOff()
 	}
 }
 
+// -----------------------------------------------------------------------------------------------
+//                                      Frame flipflops
+// -----------------------------------------------------------------------------------------------
+
+void
+VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
+{
+    if (comparisonValue == leftComparisonValue()) {
+        
+        // "4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+        //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
+        
+        if (scanline == lowerComparisonValue()) {
+            verticalFrameFF = true;
+        }
+        
+        // "5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
+        //     den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
+        //     vertikale Rahmenflipflop gelöscht." [C.B.]
+        
+        else if (scanline == upperComparisonValue() && DENbit()) {
+            verticalFrameFF = false;
+        }
+        
+        // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
+        //     vertikale Rahmenflipflop gelöscht, wird das Haupt-Flipflop gelöscht." [C.B.]
+        clearMainFrameFF();
+    }
+
+}
+
+void
+VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
+{
+    // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
+    //     Haupt-Rahmenflipflop gesetzt." [C.B.]
+    
+    if (comparisonValue == rightComparisonValue()) {
+        mainFrameFF = true;
+    }
+
+}
 
 // -----------------------------------------------------------------------------------------------
 //                                    Execution functions
+//
+// All cycles are processed in this order:
+//
+//   Phi1.1 Frame logic
+//   Phi1.2 Draw
+//   Phi1.3 Fetch
+//   Phi2.1 Rasterline interrupt
+//   Phi2.2 Sprite logic
+//   Phi2.3 VC/RC logic
+//   Phi2.4 BA logic
+//   Phi2.5 Fetch
 // -----------------------------------------------------------------------------------------------
+
 
 void 
 VIC::beginFrame()
@@ -1699,19 +1753,19 @@ VIC::endRasterline()
 void 
 VIC::cycle1()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         pAccess(3);
     else
         sSecondAccess(3);
     
-    // Phi1.2. Check horizontal border
-    
     // Phi2.1 Rasterline interrupt
 	if (scanline == rasterInterruptLine() && scanline != 0)
 		triggerIRQ(1);
 
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL)
@@ -1732,19 +1786,19 @@ VIC::cycle1()
 void
 VIC::cycle2()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(3);
     else
         pAccess(4);
     
-    // Phi1.2 Check horizontal border
-    
+    // Phi2.2 Sprite logic
     // Phi2.1 Rasterline interrupt
 	if (scanline == 0 && scanline == rasterInterruptLine())
 		triggerIRQ(1);
 
-    // Phi2.2 Check vertical border
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL)
@@ -1765,17 +1819,16 @@ VIC::cycle2()
 void 
 VIC::cycle3()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         pAccess(4);
     else
         sSecondAccess(4);
     
-    // Phi1.2 Check horizontal border
-
-    // multiplex
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL)
@@ -1796,16 +1849,16 @@ VIC::cycle3()
 void 
 VIC::cycle4()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(4);
     else
         pAccess(5);
     
-    // Phi1.2 Check horizontal border
-
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL) {
@@ -1827,15 +1880,16 @@ VIC::cycle4()
 void
 VIC::cycle5()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         pAccess(5);
     else
         sSecondAccess(5);
     
-    // Phi1.2 Check horizontal border
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL) {
@@ -1857,15 +1911,16 @@ VIC::cycle5()
 void 
 VIC::cycle6()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(5);
     else
         pAccess(6);
     
-    // Phi1.2 Check horizontal border
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL) {
@@ -1888,16 +1943,16 @@ VIC::cycle6()
 void 
 VIC::cycle7()
 {
-
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         pAccess(6);
     else
         sSecondAccess(6);
     
-    // Phi1.2 Check horizontal border
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
@@ -1915,15 +1970,16 @@ VIC::cycle7()
 void 
 VIC::cycle8()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(6);
     else
         pAccess(7);
     
-    // Phi1.2 Check horizontal border
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL)
@@ -1944,15 +2000,16 @@ VIC::cycle8()
 void 
 VIC::cycle9()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         pAccess(7);
     else
         sSecondAccess(7);
     
-    // Phi1.2 Check horizontal border
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & SPR7);
@@ -1970,15 +2027,16 @@ VIC::cycle9()
 void 
 VIC::cycle10()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(7);
     else
         rIdleAccess();
     
-    // Phi1.2 Check horizontal border
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL) {
@@ -1998,12 +2056,13 @@ VIC::cycle10()
 void
 VIC::cycle11()
 {
-    // Phi1.1 Fetch
-    rAccess(); // first out of five DRAM refreshs
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch (first out of five DRAM refreshs)
+    rAccess();
     
-    // Phi1.2 Check horizontal border
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(false);
@@ -2016,14 +2075,13 @@ VIC::cycle11()
 void
 VIC::cycle12()
 {
-    // Draw
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
+    // Phi1.3 Fetch (second out of five DRAM refreshs)
+    rAccess();
 
-    // Phi1.1 Fetch
-    rAccess(); // second out of five DRAM refreshs
-
-    // Phi1.2 Check horizontal border
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
 
@@ -2043,55 +2101,54 @@ VIC::cycle12()
 }
 
 void
-VIC::cycle13()
+VIC::cycle13() // X Coordinate -3 - 4 (?)
 {
-    xCounter = -3; // We use this value because Frodo SC does
-
-    // Draw
-    drawBorderArea(13); // Border starts here
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw (border starts here)
+    drawBorderArea(13);
     runGraphicSequencer(13);
 
-    // Phi1.1 Fetch
-    rAccess(); // third out of five DRAM refreshs
-    
-    // Phi1.2 Check horizontal border
+    // Phi1.3 Fetch (third out of five DRAM refreshs)
+    rAccess();
     
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(badLineCondition);
 
     // Phi2.5 Fetch
     // Finalize
+    // xCounter = 0xfffc; // We use this value (-4) because Frodo SC does
     countX();
 }
 
 void
-VIC::cycle14()
+VIC::cycle14() // SpriteX: 0 - 7 (?)
 {
-    // Draw
+    xCounter = 4;
+    
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
     drawBorderArea(14);
     runGraphicSequencer(14);
 
-    // Phi1.1 Fetch
-    rAccess(); // forth out of five DRAM refreshs
+    // Phi1.3 Fetch (forth out of five DRAM refreshs)
+    rAccess();
 
-    // Phi1.2 Check horizontal border
-    // Phi1.3 Draw
-    
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     
-	/* "2. In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
-	       (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
-           Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt." [C.B.] */
+	// "2. In der ersten Phase von Zyklus 14 jeder Zeile wird VC mit VCBASE geladen
+    //     (VCBASE->VC) und VMLI gelöscht. Wenn zu diesem Zeitpunkt ein
+    //     Bad-Line-Zustand vorliegt, wird zusätzlich RC auf Null gesetzt." [C.B.]
+
     registerVC = registerVCBASE;
 	registerVMLI = 0;
 	if (badLineCondition)
 		registerRC = 0;
-    
+
     // Phi2.4 BA logic
     setBAlow(badLineCondition);
 
@@ -2101,21 +2158,18 @@ VIC::cycle14()
 }
 
 void
-VIC::cycle15()
+VIC::cycle15() // SpriteX: 8 - 15 (?)
 {
-    // Draw
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
     drawBorderArea(15);
     runGraphicSequencer(15);
 
-    // Phi1.1 Fetch
-    rAccess(); // last DRAM refresh
-
-    // Phi1.2 Check horizontal border
-    // Phi1.3 Draw
+    // Phi1.3 Fetch (last DRAM refresh)
+    rAccess();
 
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
-    // Phi2.2b Sprite logic
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(badLineCondition);
@@ -2129,27 +2183,25 @@ VIC::cycle15()
 }
 
 void
-VIC::cycle16()
+VIC::cycle16() // SpriteX: 16 - 23 (?)
 {
-    // Draw
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
     drawBorderArea(16);
     runGraphicSequencer(16);
     
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     gAccess();
 
-    // Phi1.2 Check horizontal border
-    
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
-    // Phi2.2b Sprite logic
+    // Phi2.2 Sprite logic
 
-    /* "7. In the first phase of cycle 16, it is checked if the expansion flip flop
-           is set. If so, MCBASE load from MC (MC->MCBASE), unless the CPU cleared
-           the Y expansion bit in $d017 in the second phase of cycle 15, in which case
-           MCBASE is set to X = (101010 & (MCBASE & MC)) | (010101 & (MCBASE | MC)).
-           After the MCBASE update, the VIC checks if MCBASE is equal to 63 and turns
-           off the DMA of the sprite if it is." [VIC Addendum] */
+    // "7. In the first phase of cycle 16, it is checked if the expansion flip flop
+    //     is set. If so, MCBASE load from MC (MC->MCBASE), unless the CPU cleared
+    //     the Y expansion bit in $d017 in the second phase of cycle 15, in which case
+    //     MCBASE is set to X = (101010 & (MCBASE & MC)) | (010101 & (MCBASE | MC)).
+    //     After the MCBASE update, the VIC checks if MCBASE is equal to 63 and turns
+    //     off the DMA of the sprite if it is." [VIC Addendum]
     
     for (int i = 0; i < 8; i++) {
         uint8_t mask = (1 << i);
@@ -2165,7 +2217,7 @@ VIC::cycle16()
             spriteDmaOnOff &= ~mask;
         }
     }
-    
+
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(badLineCondition);
@@ -2178,38 +2230,20 @@ VIC::cycle16()
 }
 
 void
-VIC::cycle17()
+VIC::cycle17() // SpriteX: 24 - 31 (?)
 {
-    // Check horizontal border
-    if (24 == leftComparisonValue()) {
-        
-        // "4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-        //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
-        
-        if (scanline == lowerComparisonValue()) {
-            verticalFrameFF = true;
-        }
-        
-        // "5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-        //     den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
-        //     vertikale Rahmenflipflop gelöscht." [C.B.]
-        
-        else if (scanline == upperComparisonValue() && DENbit()) {
-            verticalFrameFF = false;
-        }
-        
-        // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
-        //     vertikale Rahmenflipflop gelöscht, wird das Haupt-Flipflop gelöscht." [C.B.]
-        clearMainFrameFF();
-    }
+    // Phi1.1 Frame logic
+    checkFrameFlipflopsLeft(24);
     
-    // Draw
+    // Phi1.2 Draw (main screen area starts here)
     runGraphicSequencer(17);
-    drawPixels(17); // main screen area starts here
+    drawPixels(17);
     
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     gAccess();
     
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(badLineCondition);
@@ -2222,40 +2256,20 @@ VIC::cycle17()
 }
 
 void
-VIC::cycle18()
+VIC::cycle18() // SpriteX: 32 - 39
 {
-    // Phi1.? Check horizontal border
+    // Phi1.1 Frame logic
+    checkFrameFlipflopsLeft(31);
     
-    // Set or clear frame flipflops in 38 column mode
-    if (31 == leftComparisonValue()) {
-        
-        // "4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-        //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
-        
-        if (scanline == lowerComparisonValue()) {
-            verticalFrameFF = true;
-        }
-        
-        // "5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-        //     den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
-        //     vertikale Rahmenflipflop gelöscht." [C.B.]
-        
-        else if (scanline == upperComparisonValue() && DENbit()) {
-            verticalFrameFF = false;
-        }
-        
-        // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
-        //     vertikale Rahmenflipflop gelöscht, wird das Haupt-Flipflop gelöscht." [C.B.]
-        
-        clearMainFrameFF();
-    }
-
+    // Phi1.2 Draw
     drawPixels(18);
     runGraphicSequencer(18);
 
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     gAccess();
     
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(badLineCondition);
@@ -2270,13 +2284,16 @@ VIC::cycle18()
 void
 VIC::cycle19to54()
 {
-    // Draw
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
     drawPixels(19);
     runGraphicSequencer(19);
 
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     gAccess();
 
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(badLineCondition);
@@ -2291,30 +2308,30 @@ VIC::cycle19to54()
 void
 VIC::cycle55()
 {
-    // Draw
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
     drawPixels(55);
     runGraphicSequencer(55);
 
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     gAccess();
 
-    // Phi1.2 Check horizontal border
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
 
-    // Phi1.? Sprites
-
-    /* "In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
-     invertiert, wenn das MxYE-Bit gesetzt ist." [C.B.] */
+    // "In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
+    //  invertiert, wenn das MxYE-Bit gesetzt ist." [C.B.]
     expansionFF ^= iomem[0x17];
 
-	/* In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
-	 ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
-	 Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
-	 unteren 8 Bits von RASTER ist. Ist dies der Fall und der DMA für das
-	 Sprite noch ausgeschaltet, wird der DMA angeschaltet, MCBASE gelöscht
-	 und, wenn das MxYE-Bit gesetzt ist, das Expansions-Flipflop gelöscht.
-	 */
+	// "In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
+    //  ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
+    //  Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
+    //  unteren 8 Bits von RASTER ist. Ist dies der Fall und der DMA für das
+    //  Sprite noch ausgeschaltet, wird der DMA angeschaltet, MCBASE gelöscht
+    //  und, wenn das MxYE-Bit gesetzt ist, das Expansions-Flipflop gelöscht." [C.B.]
+	 
 	updateSpriteDmaOnOff();
-    
+
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL) {
@@ -2323,6 +2340,7 @@ VIC::cycle55()
         setBAlow(false);
     }
     
+    // Phi2.5 Fetch
     // Finalize
 	countX();
 }
@@ -2330,24 +2348,22 @@ VIC::cycle55()
 void
 VIC::cycle56()
 {
-    // Phi1.2 Check horizontal border
+    // Phi1.1 Frame logic
+    checkFrameFlipflopsRight(335);
 
-    // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
-     //     Haupt-Rahmenflipflop gesetzt." [C.B.]
-
-     if (335 == rightComparisonValue()) {
-         mainFrameFF = true;
-     }
-
-    // Draw
+    // Phi1.2 Draw
     drawPixels(56);
     runGraphicSequencer(56);
 
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     rIdleAccess();
 
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
 	updateSpriteDmaOnOff();
     
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & SPR0);
     
     // Phi2.5 Fetch
@@ -2358,21 +2374,18 @@ VIC::cycle56()
 void
 VIC::cycle57()
 {
-    // Phi1.2 Check horizontal border
-    // "1. Erreicht die X-Koordinate den rechten Vergleichswert, wird das
-    //     Haupt-Rahmenflipflop gesetzt." [C.B.]
+    // Phi1.1 Frame logic
+    checkFrameFlipflopsRight(344);
     
-    if (344 == rightComparisonValue()) {
-        mainFrameFF = true;
-    }
-    
-    // Draw
-    drawBorderArea(57); // Border starts here
+    // Phi1.2 Draw (border starts here)
+    drawBorderArea(57);
     runGraphicSequencer(57);
     
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     rIdleAccess();
 
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL) {
@@ -2389,43 +2402,26 @@ VIC::cycle57()
 void
 VIC::cycle58()
 {
-    // Draw
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
     drawBorderArea(58);
     runGraphicSequencer(58);
 
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     if (isPAL)
         pAccess(0);
     else
         rIdleAccess();
     
-    // Phi1.2 Check horizontal border
-    
-	/* "Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
-	    wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
-	    "5. In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
-            geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
-	        (VC->VCBASE)." [C.B.] */
-    if (displayState && registerRC == 7 && !badLineCondition) {
-        displayState = false;
-		registerVCBASE = registerVC;	
-	}
-
-    /* "Ist die Videologik danach im Display-Zustand (liegt ein
-        Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhöht." [C.B.] */
-    if (displayState) {
-        // 3 bit overflow register
-        registerRC = (registerRC + 1) & 0x07;
-    } else {
-        // "(liegt ein Bad-Line-Zustand vor, ist dies immer der Fall)"
-        assert(!badLineCondition);
-    }
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
 			
-	/* "4. In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE
-	    geladen (MCBASE->MC) und geprüft, ob der DMA für das Sprite angeschaltet
-	    und die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
-	    ist. Ist dies der Fall, wird die Darstellung des Sprites angeschaltet." [C.B.] */
-	oldSpriteOnOff = spriteOnOff; // remember last value
+	// "4. In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE
+    //     geladen (MCBASE->MC) und geprüft, ob der DMA für das Sprite angeschaltet
+    //     und die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
+    //     ist. Ist dies der Fall, wird die Darstellung des Sprites angeschaltet." [C.B.]
+
+    oldSpriteOnOff = spriteOnOff; // remember last value
 	for (int i = 0; i < 8; i++) {
 		mc[i] = mcbase[i];
 		uint8_t mask = (1 << i);
@@ -2436,7 +2432,7 @@ VIC::cycle58()
 		}
 	}
 		
-	/* Draw rasterline into pixel buffer */
+	// Draw rasterline into pixel buffer
 	drawAllSprites();
 			
 	// switch off sprites if dma is off
@@ -2446,6 +2442,31 @@ VIC::cycle58()
 			spriteOnOff &= ~mask;
 	}
 
+    // Phi2.3 VC/RC logic
+    
+    // "Der Übergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
+    //  wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
+    // "5. In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,
+    //     geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
+    //     (VC->VCBASE)." [C.B.]
+    
+    if (displayState && registerRC == 7 && !badLineCondition) {
+        displayState = false;
+        registerVCBASE = registerVC;
+    }
+    
+    // "Ist die Videologik danach im Display-Zustand (liegt ein
+    //  Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhöht." [C.B.]
+    
+    if (displayState) {
+        // 3 bit overflow register
+        registerRC = (registerRC + 1) & 0x07;
+    } else {
+        // "(liegt ein Bad-Line-Zustand vor, ist dies immer der Fall)"
+        assert(!badLineCondition);
+    }
+
+    // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     
     // Phi2.5 Fetch
@@ -2458,18 +2479,19 @@ VIC::cycle58()
 void
 VIC::cycle59()
 {
-    // Draw
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw
     drawBorderArea(59);
     runGraphicSequencer(59);
 
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(0);
     else
         pAccess(0);
  
-    // Phi1.2 Check horizontal border
-    
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     if (isPAL)
@@ -2490,19 +2512,21 @@ VIC::cycle59()
 void
 VIC::cycle60()
 {
-    // Draw
-    drawBorderArea(60); // Last visible cycle
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw (last visible cycle)
+    drawBorderArea(60);
     runGraphicSequencer(60);
     
-    // Phi1.1 Fetch
+    // Phi1.3 Fetch
     if (isPAL)
         pAccess(1);
     else
         sSecondAccess(0);
     
-    // Phi1.2 Check horizontal border
-    // Phi1.3 Draw
-    
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     if (isPAL)
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
     else
@@ -2521,15 +2545,18 @@ VIC::cycle60()
 void
 VIC::cycle61()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw (last visible cycle)
+    // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(1);
     else
         pAccess(1);
     
-    // Phi1.2 Check horizontal border
-    // Phi1.3 Draw
-    
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     if (isPAL)
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
     else
@@ -2548,15 +2575,18 @@ VIC::cycle61()
 void
 VIC::cycle62()
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw (last visible cycle)
+    // Phi1.3 Fetch
     if (isPAL)
         pAccess(2);
     else
         sSecondAccess(1);
 
-    // Phi1.2 Check horizontal border
-
-    
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     if (isPAL)
         setBAlow(spriteDmaOnOff & (SPR2 | SPR3));
     else
@@ -2575,21 +2605,15 @@ VIC::cycle62()
 void
 VIC::cycle63()
 {
-    // Phi1.1 Fetch
-    if (isPAL)
-        sSecondAccess(2);
-    else
-        pAccess(2);
-    
-    // Phi1.2 Check horizontal border
-    
+    // Phi1.1 Frame logic
+
     // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
     //     das vertikale Rahmenflipflop gesetzt." [C.B.]
-
+    
     if (scanline == lowerComparisonValue()) {
         verticalFrameFF = true;
     }
-
+    
     // "3. Erreicht die Y-Koordinate den oberern Vergleichswert in Zyklus 63 und
     //     ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
     //     Rahmenflipflop gelöscht." [C.B.]
@@ -2597,19 +2621,19 @@ VIC::cycle63()
     else if (scanline == upperComparisonValue() && DENbit()) {
         verticalFrameFF = false;
     }
-    
+
+    // Phi1.2 Draw (last visible cycle)
+
     // Extend pixel buffer to the left and right to make it look nice
-#if 0
-    int color = pixelBuffer[14];
-    for (unsigned i = 0; i <= 13; i++) {
+    int color = pixelBuffer[22];
+    for (unsigned i = 0; i <= 22; i++) {
         pixelBuffer[i] = color;
     }
     
-    color = pixelBuffer[397];
-    for (unsigned i = 398; i < totalScreenWidth; i++) {
+    color = pixelBuffer[389];
+    for (unsigned i = 390; i < totalScreenWidth; i++) {
         pixelBuffer[i] = color;
     }
-#endif
 
 	// draw debug markers
 	if (markIRQLines && scanline == rasterInterruptLine()) 
@@ -2621,7 +2645,16 @@ VIC::cycle63()
 		rasterlineDebug[scanline] = -1;
 	}		
 
+    // Phi1.3 Fetch
+    if (isPAL)
+        sSecondAccess(2);
+    else
+        pAccess(2);
     
+    // Phi2.1 Rasterline interrupt
+    // Phi2.2 Sprite logic
+    // Phi2.3 VC/RC logic
+    // Phi2.4 BA logic
     if (isPAL) {
         setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
     } else {
@@ -2641,13 +2674,13 @@ VIC::cycle63()
 void
 VIC::cycle64() 	// NTSC only
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw (last visible cycle)
+    // Phi1.3 Fetch
     rIdleAccess();
     
-    // Phi1.2 Check horizontal border
-
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
@@ -2660,13 +2693,13 @@ VIC::cycle64() 	// NTSC only
 void
 VIC::cycle65() 	// NTSC only
 {
-    // Phi1.1 Fetch
+    // Phi1.1 Frame logic
+    // Phi1.2 Draw (last visible cycle)
+    // Phi1.3 Fetch
     rIdleAccess();
     
-    // Phi1.2 Check horizontal border
-
     // Phi2.1 Rasterline interrupt
-    // Phi2.2 Check vertical border
+    // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
