@@ -556,24 +556,30 @@ private:
     DisplayMode gs_mode;
     
     //! Graphic sequencer foreground color to be used in data->pixel conversion)
-    uint8_t gs_fg_color;
+    // DEPRECATED
+    // uint8_t gs_fg_color;
     
     //! Graphic sequencer background color to be used in data->pixel conversion)
-    uint8_t gs_bg_color;
+    // DEPRECATED
+    // uint8_t gs_bg_color;
 
     //! Background color in previous cycle
-    uint8_t gs_bg_color_old;
+    // DEPRECATED
+    // uint8_t gs_bg_color_old;
 
     //! Graphic sequencer colors for multi color modes
-    uint8_t gs_multicol0, gs_multicol1, gs_multicol2, gs_multicol3;
+    // DEPRECATED
+    // uint8_t gs_multicol0, gs_multicol1, gs_multicol2, gs_multicol3;
 
     //! Graphic sequencer load delay
     uint8_t gs_delay;
 
     //! Load graphic sequencer with data and determine conversion parameters
+    // DEPRECATED
     void loadGraphicSequencer(uint8_t data, uint8_t load_delay);
     
     //! Synthesize pixels or border
+    // DEPRECATED
     void runGraphicSequencer(uint8_t cycle);
 
 
@@ -722,7 +728,22 @@ public:
 	// -----------------------------------------------------------------------------------------------
 
 private:	
-	
+
+    //! When the pixel synthesizer is invoked, these colors are used
+    /*! [0] : color for '0' pixels in single color mode or '00' pixels in multicolor mode
+        [1] : color for '1' pixels in single color mode or '01' pixels in multicolor mode
+        [2] : color for '10' pixels in multicolor mode
+        [3] : color for '11' pixels in multicolor mode */
+    int col_rgba[4];
+    
+    //! Main drawing routine
+    /*  Invoked in each visible VIC cycle */
+    void draw();
+    
+    //! Main drawing routine for unvisible screen area
+    /*  Invoked in each unvisible VIC cycle */
+    void drawUnvisible();
+    
     //! Increase the x coordinate by 8 (sptrite coordinate system)
     inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
 
@@ -757,7 +778,8 @@ private:
     inline void drawNineFramePixels(unsigned offset, int rgba_color) {
         offset--; for (unsigned i = 0; i < 9; i++) setFramePixel(offset++, rgba_color); }
 
-    
+    //! Draw two / one
+
     //! Draw a single character line (8 pixels) in single-color mode
     /*! \param offset X coordinate of the first pixel to draw */
     void drawSingleColorCharacter(unsigned offset);
