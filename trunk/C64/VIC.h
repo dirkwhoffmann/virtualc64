@@ -467,6 +467,10 @@ private:
 	 */
 	int *pixelBuffer;
 	
+    //! Temporary pixel source
+    /*! Data is first created here and later copied to pixelBuffer */
+    int pixelBufferTmp[2];
+
 	//! Z buffer
 	/*! The z Buffer is used for drawing a single line on the screen. A pixel is only written to the screen buffer,
 	 if it is closer to the view point. The depth of the closest pixel is kept in the z buffer. The lower the value
@@ -475,13 +479,20 @@ private:
 	 */
 	int zBuffer[MAX_VIEWABLE_PIXELS];
 	
+    //! Temporary Z buffer
+    /*! Data is first created here and later copied to zBuffer */
+    int zBufferTmp[2];
+    
 	//! Indicates the source of a drawn pixel
 	/*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
 	 The information is utilized to detect sprite-sprite and sprite-background collisions. 
 	 */
 	int pixelSource[MAX_VIEWABLE_PIXELS];
 	
-	
+	//! Temporary pixel source
+    /*! Data is first created here and later copied to pixelSource */
+    int pixelSourceTmp[2];
+    
 	//! Start address of screen memory
 	/*! The screen memory stores the character codes to display
 	 The upper four bits of the VIC register 0xD018 determine where the screen memory starts (relative to the bank address):
@@ -546,9 +557,30 @@ private:
     //                                      Sequencers
     // -----------------------------------------------------------------------------------------------
 
+    //! Graphic sequencer shift register (8 bit)
+    uint8_t gs_shift_reg;
+    
+    //! Graphic sequencer flipflop
+    /*! Flipflop is set when the shift register is loaded and then toggled in each cycle */
+    bool gs_mc_flop;
+    
+    //! Latched version of value that is read during a cAccess
+    /*! Value is latched when the shift register is loaded */
+    uint8_t LatchedCharacterSpace;
+
+    //! Latched version of value that is read during a cAccess
+    /*! Value is latched when the shift register is loaded */
+    uint8_t LatchedColorSpace;
+
     //! Graphic sequencer raw data (not yet converted to pixels)
     uint8_t gs_data;
 
+    //! Character space value during c-Access
+    uint8_t gs_characterSpace;
+
+    //! Color space value during c-Access
+    uint8_t gs_colorSpace;
+    
     //! Raw data in previous cycle
     uint8_t gs_data_old;
 
@@ -562,6 +594,18 @@ private:
     // DEPRECATED
     void loadGraphicSequencer(uint8_t data, uint8_t load_delay);
     
+    // Determine pixel colors accordig to the provided display mode
+    void loadPixelSynthesizerWithColors(DisplayMode mode,uint8_t characterSpace, uint8_t colorSpace);
+    
+    //! Synthesize a single pixel
+    void drawPixel(uint16_t offset, uint8_t pixel);
+
+    //! Synthesize a chunk of 8 pixels
+    void drawPixels(uint8_t cycle);
+
+    //! Synthesize a chunk of 8 pixels in border area
+    void drawBorderArea(uint8_t cycle);
+
     //! Synthesize pixels or border
     // DEPRECATED
     void runGraphicSequencer(uint8_t cycle);
@@ -720,31 +764,39 @@ private:
         [3] : color for '11' pixels in multicolor mode */
     int col_rgba[4];
     
-    //! Main drawing routine
-    /*  Invoked in each visible VIC cycle */
-    void draw();
-    
-    //! Main drawing routine for unvisible screen area
-    /*  Invoked in each unvisible VIC cycle */
-    void drawUnvisible();
-    
+    //! Indicates if multicolor pixels or single color pixels are to be synthesized
+    bool multicol;
+        
     //! Increase the x coordinate by 8 (sptrite coordinate system)
     inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
 
-    //! Draw a single foreground pixel
+    //! Draw a single frame pixel
+    // DEPRECATED
     void setFramePixel(unsigned offset, int rgba);
+    
+    //! Render a singel frame pixel into temporary buffer
+    // void renderFramePixel(unsigned offset, int rgba);
+    
+	//! Draw a single foreground pixel
+    // DEPRECATED
+    void setForegroundPixel(unsigned offset, int rgba);
+
+    //! Render a singel foreground pixel into temporary buffer
+    void renderForegroundPixel(unsigned offset, int rgba);
+
+	//! Draw a single background pixel
+    // DEPRECATED
+	void setBackgroundPixel(unsigned offset, int rgba);
+
+    //! Render a singel background pixel into temporary buffer
+    void renderBackgroundPixel(unsigned offset, int rgba);
+    
+    //! Draw a single pixel behind background layer
+    // DEPRECATED
+    void setBehindBackgroundPixel(unsigned offset, int rgba);
     
     //! Draw a single sprite pixel
     void setSpritePixel(unsigned offset, int rgba, int depth, int source);
-
-	//! Draw a single foreground pixel
-	void setForegroundPixel(unsigned offset, int rgba);
-	
-	//! Draw a single background pixel
-	void setBackgroundPixel(unsigned offset, int rgba);
-
-    //! Draw a single pixel behind background layer
-    void setBehindBackgroundPixel(unsigned offset, int rgba);
 
     
     //! Draw background pixels
@@ -762,29 +814,42 @@ private:
     inline void drawNineFramePixels(unsigned offset, int rgba_color) {
         offset--; for (unsigned i = 0; i < 9; i++) setFramePixel(offset++, rgba_color); }
 
+    //! Render 2 pixels in single-color mode
+    void renderTwoSingleColorPixels(uint8_t bits);
+
     //! Draw 2 pixels in single-color mode
+    // DEPRECATED
     void drawTwoSingleColorPixels(unsigned offset, uint8_t bits);
 
     //! Draw a single character line (8 pixels) in single-color mode
-    /*! \param offset X coordinate of the first pixel to draw */
+    // DEPRECATED
     void drawSingleColorCharacter(unsigned offset);
     
+    //! Render 2 pixels in multi-color mode
+    void renderTwoMultiColorPixels(uint8_t bits);
+
     //! Draw 2 pixels in multi-color mode
+    // DEPRECATED
     void drawTwoMultiColorPixels(unsigned offset, uint8_t bits);
 
     //! Draw a single character line (8 pixels) in multi-color mode
+    // DEPRECATED
     void drawMultiColorCharacter(unsigned offset);
 
     //! Draw 2 single color pixels in invalid text mode
+    // DEPRECATED
     void drawTwoInvalidSingleColorPixels(unsigned offset, uint8_t bits);
     
     //! Draw a single color character in invalid text mode
+    // DEPRECATED
     void drawInvalidSingleColorCharacter(unsigned offset);
 
     //! Draw 2 multicolor pixels in invalid text mode
+    // DEPRECATED
     void drawTwoInvalidMultiColorPixels(unsigned offset, uint8_t bits);
 
     //! Draw a multi color character in invalid text mode
+    // DEPRECATED
     void drawInvalidMultiColorCharacter(unsigned offset);
     
 	//! Draw a single foreground pixel
