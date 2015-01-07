@@ -58,6 +58,7 @@ SIDWrapper::reset()
 void 
 SIDWrapper::loadFromBuffer(uint8_t **buffer)
 {
+    latchedDataBus = read8(buffer);
     oldsid->loadFromBuffer(buffer);
     // resid->loadFromBuffer(buffer);
 }
@@ -65,6 +66,7 @@ SIDWrapper::loadFromBuffer(uint8_t **buffer)
 void 
 SIDWrapper::saveToBuffer(uint8_t **buffer)
 {
+    write8(buffer, latchedDataBus);
     oldsid->saveToBuffer(buffer);
     // resid->saveToBuffer(buffer);
 }
@@ -93,15 +95,29 @@ SIDWrapper::setNTSC()
 uint8_t 
 SIDWrapper::peek(uint16_t addr)
 {
+    // Take care of possible side effects, but discard value
     if (useReSID)
-        return resid->peek(addr);
+        (void)resid->peek(addr);
     else
-        return oldsid->peek(addr);
+        (void)oldsid->peek(addr);
+
+    if (addr == 0x19 || addr == 0x1A) {
+        latchedDataBus = 0;
+        return 0xFF;
+    }
+    
+    if (addr == 0x1B || addr == 0x1C) {
+        latchedDataBus = 0;
+        return rand();
+    }
+    
+    return latchedDataBus;
 }
 
 void 
 SIDWrapper::poke(uint16_t addr, uint8_t value)
 {
+    latchedDataBus = value;
     oldsid->poke(addr, value);
     resid->poke(addr, value);
 }
