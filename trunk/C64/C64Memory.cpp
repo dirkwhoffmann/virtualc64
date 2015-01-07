@@ -58,7 +58,7 @@ void C64Memory::reset()
 	
 	// Zero out RAM...
 	for (unsigned i = 0; i < sizeof(ram); i++)
-		ram[i] = 0;
+        ram[i] = 0;
 	
 	// Initialize color memory...
 	// It's important here to write in random values as some games peek the color RAM 
@@ -362,14 +362,13 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 
         /* "Die beiden mit "I/O 1" und "I/O 2" bezeichneten Bereiche
             sind für Erweiterungskarten reserviert und normalerweise ebenfalls offen,
-            ein Lesezugriff liefert auch hier "zufällige" Daten (daﬂ diese Daten gar
-            nicht so zufällig sind, wird in Kapitel 4 noch ausf¸hrlich erklärt. Ein
+            ein Lesezugriff liefert auch hier "zufällige" Daten (dass diese Daten gar
+            nicht so zufällig sind, wird in Kapitel 4 noch ausführlich erklärt. Ein
             Lesen von offenen Adressen liefert nämlich auf vielen C64 das zuletzt vom
             VIC gelesene Byte zurück!)" [C.B.] */
 
         if (cartridge != NULL && cartridgeRomIsVisible) {
 			return cartridge->peek(addr);
-            fprintf(stderr,"Cartridge peek\n");
         }
         
 		return vic->getDataBus();

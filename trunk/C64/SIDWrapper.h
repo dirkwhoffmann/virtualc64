@@ -42,6 +42,9 @@ private:
     //! SID selector
     bool useReSID;
     
+    //! Remembers latest written value
+    uint8_t latchedDataBus;
+    
 public:
     //! Returns true if the \a addr is located in the I/O range of the SID chip.
 	static inline bool isSidAddr(uint16_t addr) 
