@@ -33,7 +33,11 @@
 	myController = [[MyController alloc] initWithWindowNibName:@"MyDocument"];
 	[self addWindowController:myController];
 	
+    // Kepp aspect ratio during window resizing
 	[[self windowForSheet] setContentAspectRatio:NSMakeSize(804,623 + 20 /* control bar below OpenGL window */)];
+
+    // Restore previous position and size
+    [[self windowForSheet] setFrameUsingName:@"dirkwhoffmann.de.virtualC64.window"];
 }
 
 - (id)init

@@ -26,16 +26,64 @@
                 <outlet property="VicRasterline" destination="836" id="905"/>
                 <outlet property="VicScreenGeometry" destination="795" id="886"/>
                 <outlet property="VicScreenMemory" destination="849" id="892"/>
-                <outlet property="VicSpriteActive" destination="819" id="2127"/>
+                <outlet property="VicSpriteActive1" destination="h10-GO-jLx" id="0pj-FM-60q"/>
+                <outlet property="VicSpriteActive2" destination="ETm-jK-dI6" id="9nl-Ip-GzJ"/>
+                <outlet property="VicSpriteActive3" destination="vqm-lD-cU7" id="EQV-95-Yu3"/>
+                <outlet property="VicSpriteActive4" destination="kV8-mu-1U7" id="HwN-0J-rE3"/>
+                <outlet property="VicSpriteActive5" destination="vkw-ys-nOk" id="2Pq-e1-r1G"/>
+                <outlet property="VicSpriteActive6" destination="RQe-vQ-Vqp" id="vac-TV-Ndf"/>
+                <outlet property="VicSpriteActive7" destination="oRa-3d-5dk" id="iMe-a1-DOu"/>
+                <outlet property="VicSpriteActive8" destination="iuQ-Ly-t2D" id="J9j-e8-Mj3"/>
                 <outlet property="VicSpriteBackgroundCollision" destination="833" id="2133"/>
-                <outlet property="VicSpriteColor" destination="827" id="2134"/>
-                <outlet property="VicSpriteInFront" destination="831" id="2131"/>
-                <outlet property="VicSpriteMulticolor" destination="828" id="2128"/>
+                <outlet property="VicSpriteCol1" destination="j0N-zq-9ef" id="Pb4-sW-n7q"/>
+                <outlet property="VicSpriteCol2" destination="l9n-pS-UJ1" id="Ifw-fZ-CZg"/>
+                <outlet property="VicSpriteCol3" destination="MnN-Os-Fv6" id="Vmw-JQ-xE6"/>
+                <outlet property="VicSpriteCol4" destination="lUX-ZI-SeP" id="WOh-R1-yTc"/>
+                <outlet property="VicSpriteCol5" destination="GJE-4m-tSc" id="EOo-Su-dfx"/>
+                <outlet property="VicSpriteCol6" destination="fiD-fX-zsP" id="aNH-fJ-csF"/>
+                <outlet property="VicSpriteCol7" destination="3cA-cH-igs" id="CsN-ID-UhH"/>
+                <outlet property="VicSpriteCol8" destination="3Uv-2I-jfV" id="bfL-PA-gDb"/>
+                <outlet property="VicSpriteMulticolor1" destination="0i6-Bg-Zbc" id="Dp4-yv-jj9"/>
+                <outlet property="VicSpriteMulticolor2" destination="fNO-Yd-HOt" id="1yS-FV-bdE"/>
+                <outlet property="VicSpriteMulticolor3" destination="UFW-L7-NXW" id="064-fe-F2R"/>
+                <outlet property="VicSpriteMulticolor4" destination="R4S-zf-xJ8" id="TTf-jS-eO7"/>
+                <outlet property="VicSpriteMulticolor5" destination="gEu-G4-Q7g" id="aVy-gq-kid"/>
+                <outlet property="VicSpriteMulticolor6" destination="KjZ-yg-MAy" id="Vpw-8E-pW8"/>
+                <outlet property="VicSpriteMulticolor7" destination="Zw3-Mw-AYZ" id="CJp-oc-GqY"/>
+                <outlet property="VicSpriteMulticolor8" destination="8Gs-VH-8r9" id="6QL-eo-1qg"/>
                 <outlet property="VicSpriteSpriteCollision" destination="832" id="2132"/>
-                <outlet property="VicSpriteStretchX" destination="829" id="2129"/>
-                <outlet property="VicSpriteStretchY" destination="830" id="2130"/>
-                <outlet property="VicSpriteX" destination="821" id="2135"/>
-                <outlet property="VicSpriteY" destination="825" id="2136"/>
+                <outlet property="VicSpriteStretchX1" destination="Frm-ta-oyS" id="cId-kc-JYO"/>
+                <outlet property="VicSpriteStretchX2" destination="gz5-3A-CaZ" id="vmo-NZ-5a6"/>
+                <outlet property="VicSpriteStretchX3" destination="V3m-Dx-oVq" id="ssX-M5-q51"/>
+                <outlet property="VicSpriteStretchX4" destination="rlW-S1-e7n" id="Rp5-Vg-JRW"/>
+                <outlet property="VicSpriteStretchX5" destination="9GT-pe-wm2" id="RAL-Ww-LNi"/>
+                <outlet property="VicSpriteStretchX6" destination="bTO-57-vAA" id="3pf-z6-5mB"/>
+                <outlet property="VicSpriteStretchX7" destination="1XQ-DG-UZA" id="mi9-5s-vLd"/>
+                <outlet property="VicSpriteStretchX8" destination="Fqj-aF-6Ci" id="EF8-Wi-jgX"/>
+                <outlet property="VicSpriteStretchY1" destination="KYo-wM-pvE" id="d2S-5X-0Md"/>
+                <outlet property="VicSpriteStretchY2" destination="tea-lW-Aal" id="nVG-JX-EjZ"/>
+                <outlet property="VicSpriteStretchY3" destination="0ch-7t-6y1" id="0jC-4Z-6Nt"/>
+                <outlet property="VicSpriteStretchY4" destination="dd4-h6-GCC" id="Xu7-dq-lD9"/>
+                <outlet property="VicSpriteStretchY5" destination="qtm-bK-uXq" id="Iac-VJ-qrq"/>
+                <outlet property="VicSpriteStretchY6" destination="4OU-D0-1ma" id="ng3-y0-bTI"/>
+                <outlet property="VicSpriteStretchY7" destination="SQ8-If-zoc" id="qPU-ML-5ix"/>
+                <outlet property="VicSpriteStretchY8" destination="IZO-QI-4yY" id="dDW-eG-6Lw"/>
+                <outlet property="VicSpriteX1" destination="bzW-uK-dWQ" id="VIW-qF-T3G"/>
+                <outlet property="VicSpriteX2" destination="rnZ-ou-dqP" id="fVV-36-WKH"/>
+                <outlet property="VicSpriteX3" destination="BsB-sE-B3v" id="43V-f1-pgv"/>
+                <outlet property="VicSpriteX4" destination="ZfD-T5-sqK" id="0v9-HQ-siK"/>
+                <outlet property="VicSpriteX5" destination="PUn-95-aLP" id="rhJ-Kq-HBO"/>
+                <outlet property="VicSpriteX6" destination="c0x-e4-n66" id="4Fs-8U-GkZ"/>
+                <outlet property="VicSpriteX7" destination="KTm-fA-75y" id="K62-CV-LRb"/>
+                <outlet property="VicSpriteX8" destination="TOT-AL-bF9" id="B7n-6H-bAc"/>
+                <outlet property="VicSpriteY1" destination="A3I-1Q-Yhb" id="k6H-ux-BLU"/>
+                <outlet property="VicSpriteY2" destination="TIY-bV-SjM" id="eN4-WC-4AG"/>
+                <outlet property="VicSpriteY3" destination="lM4-TT-7MO" id="6vY-fP-oQq"/>
+                <outlet property="VicSpriteY4" destination="s9N-bv-K83" id="dsa-FC-Ja3"/>
+                <outlet property="VicSpriteY5" destination="pgF-UJ-2Cd" id="2tf-Vz-EjT"/>
+                <outlet property="VicSpriteY6" destination="kwh-m0-Dr5" id="9yu-7H-zTc"/>
+                <outlet property="VicSpriteY7" destination="BlL-aO-Fgy" id="6pN-1m-4Yp"/>
+                <outlet property="VicSpriteY8" destination="YyV-XC-CIP" id="0WY-k1-rdO"/>
                 <outlet property="VicVideoMode" destination="774" id="885"/>
                 <outlet property="Z" destination="190" id="198"/>
                 <outlet property="a" destination="51" id="165"/>
@@ -119,14 +167,6 @@
                 <outlet property="romSource" destination="975" id="1690"/>
                 <outlet property="screen" destination="262" id="277"/>
                 <outlet property="sp" destination="158" id="164"/>
-                <outlet property="sprite0" destination="808" id="1681"/>
-                <outlet property="sprite1" destination="809" id="1682"/>
-                <outlet property="sprite2" destination="810" id="1683"/>
-                <outlet property="sprite3" destination="811" id="1684"/>
-                <outlet property="sprite4" destination="812" id="1685"/>
-                <outlet property="sprite5" destination="813" id="1686"/>
-                <outlet property="sprite6" destination="814" id="1687"/>
-                <outlet property="sprite7" destination="815" id="1688"/>
                 <outlet property="stepIntoButton" destination="2098" id="2107"/>
                 <outlet property="stepOutButton" destination="2094" id="2109"/>
                 <outlet property="stepOverButton" destination="2096" id="2108"/>
@@ -369,7 +409,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="none_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -420,7 +460,7 @@
                 <outlet property="delegate" destination="-2" id="2165"/>
                 <outlet property="initialFirstResponder" destination="262" id="316"/>
             </connections>
-            <point key="canvasLocation" x="1205" y="328.5"/>
+            <point key="canvasLocation" x="-75" y="816.5"/>
         </window>
         <drawer preferredEdge="minX" leadingOffset="15" trailingOffset="15" id="35" userLabel="Debug Drawer">
             <size key="contentSize" width="300" height="473"/>
@@ -1955,71 +1995,60 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <box title="Sprites" id="817">
-                                        <rect key="frame" x="6" y="220" width="266" height="187"/>
+                                        <rect key="frame" x="6" y="86" width="266" height="321"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <view key="contentView">
-                                            <rect key="frame" x="2" y="2" width="262" height="170"/>
+                                            <rect key="frame" x="2" y="2" width="262" height="304"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <button id="819">
-                                                    <rect key="frame" x="6" y="110" width="64" height="18"/>
+                                                <button id="h10-GO-jLx">
+                                                    <rect key="frame" x="27" y="255" width="18" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="check" title="Active" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1788">
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="hSr-fd-oPQ">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="vicSpriteActiveAction:" target="-2" id="916"/>
+                                                        <action selector="vicSpriteActiveAction:" target="-2" id="jif-UR-mv0"/>
                                                     </connections>
                                                 </button>
-                                                <button id="828">
-                                                    <rect key="frame" x="6" y="84" width="76" height="18"/>
+                                                <button id="0i6-Bg-Zbc">
+                                                    <rect key="frame" x="164" y="255" width="18" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="check" title="Multicolor" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1789">
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="Vl5-I2-pFD">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="vicSpriteMulticolorAction:" target="-2" id="917"/>
+                                                        <action selector="vicSpriteMulticolorAction:" target="-2" id="9sO-Dz-V22"/>
                                                     </connections>
                                                 </button>
-                                                <button id="829">
-                                                    <rect key="frame" x="6" y="61" width="76" height="18"/>
+                                                <button id="Frm-ta-oyS">
+                                                    <rect key="frame" x="207" y="255" width="18" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="check" title="Stretch X" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1790">
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="SXY-Ak-syV">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="vicSpriteStretchXAction:" target="-2" id="918"/>
+                                                        <action selector="vicSpriteStretchXAction:" target="-2" id="acK-oL-odb"/>
                                                     </connections>
                                                 </button>
-                                                <button id="830">
-                                                    <rect key="frame" x="6" y="36" width="76" height="18"/>
+                                                <button id="KYo-wM-pvE">
+                                                    <rect key="frame" x="228" y="255" width="18" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="check" title="Stretch Y" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1791">
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="DCE-qg-6d9">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="vicSpriteStretchYAction:" target="-2" id="919"/>
-                                                    </connections>
-                                                </button>
-                                                <button id="831">
-                                                    <rect key="frame" x="6" y="11" width="86" height="18"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="check" title="Background" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1792">
-                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                    </buttonCell>
-                                                    <connections>
-                                                        <action selector="vicSpriteInFrontAction:" target="-2" id="920"/>
+                                                        <action selector="vicSpriteStretchYAction:" target="-2" id="4z9-De-nHI"/>
                                                     </connections>
                                                 </button>
                                                 <button id="832">
-                                                    <rect key="frame" x="89" y="36" width="138" height="18"/>
+                                                    <rect key="frame" x="14" y="33" width="190" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="check" title="Sprite/Sprite collision" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1793">
+                                                    <buttonCell key="cell" type="check" title="Sprite/Sprite collision detection" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1793">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
@@ -2028,9 +2057,9 @@
                                                     </connections>
                                                 </button>
                                                 <button id="833">
-                                                    <rect key="frame" x="89" y="11" width="170" height="18"/>
+                                                    <rect key="frame" x="14" y="10" width="223" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <buttonCell key="cell" type="check" title="Sprite/Background collision" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1794">
+                                                    <buttonCell key="cell" type="check" title="Sprite/Background collision detection" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1794">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
                                                     </buttonCell>
@@ -2038,64 +2067,716 @@
                                                         <action selector="vicSpriteBackgroundCollisionAction:" target="-2" id="922"/>
                                                     </connections>
                                                 </button>
-                                                <textField verticalHuggingPriority="750" id="822">
-                                                    <rect key="frame" x="97" y="141" width="19" height="14"/>
+                                                <textField verticalHuggingPriority="750" id="A3I-1Q-Yhb">
+                                                    <rect key="frame" x="88" y="253" width="34" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Y:" id="1797">
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <textField verticalHuggingPriority="750" id="825">
-                                                    <rect key="frame" x="116" y="138" width="34" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1798">
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="5Y0-Ti-cEC">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <connections>
-                                                        <action selector="vicSpriteYAction:" target="-2" id="924"/>
+                                                        <action selector="vicSpriteYAction:" target="-2" id="8qv-Ex-wfJ"/>
                                                     </connections>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" id="820">
-                                                    <rect key="frame" x="14" y="142" width="19" height="14"/>
+                                                <textField verticalHuggingPriority="750" id="Pt3-Xh-jdu">
+                                                    <rect key="frame" x="162" y="278" width="23" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="X:" id="1795">
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="MC" id="mDB-zA-v6E">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField verticalHuggingPriority="750" id="821">
-                                                    <rect key="frame" x="32" y="138" width="34" height="22"/>
+                                                <textField verticalHuggingPriority="750" id="8qB-uD-deP">
+                                                    <rect key="frame" x="56" y="278" width="19" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1796">
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="X" id="YE9-fH-CGt">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="Gex-LD-79B">
+                                                    <rect key="frame" x="96" y="278" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="Y" id="21o-bQ-RdX">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="uoL-jX-rLo">
+                                                    <rect key="frame" x="207" y="279" width="19" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="⬌" id="hac-kO-uHe">
+                                                        <font key="font" size="11" name="Cambria"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="iru-Te-5ax">
+                                                    <rect key="frame" x="228" y="278" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="⬍" id="lUM-Ds-HCT">
+                                                        <font key="font" size="11" name="Cambria"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="S8C-30-wTY">
+                                                    <rect key="frame" x="12" y="257" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="1" id="ylo-5G-hLU">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="bzW-uK-dWQ">
+                                                    <rect key="frame" x="48" y="253" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="vKU-c1-ecd">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                     <connections>
-                                                        <action selector="vicSpriteXAction:" target="-2" id="923"/>
+                                                        <action selector="vicSpriteXAction:" target="-2" id="CrA-4k-EDA"/>
                                                     </connections>
                                                 </textField>
+                                                <button tag="1" id="ETm-jK-dI6">
+                                                    <rect key="frame" x="27" y="229" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="hZY-Xa-LFP">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteActiveAction:" target="-2" id="i0Y-sF-g3d"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="1" id="fNO-Yd-HOt">
+                                                    <rect key="frame" x="164" y="229" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="cjo-X7-Wh4">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteMulticolorAction:" target="-2" id="v1G-2D-DgK"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="1" id="gz5-3A-CaZ">
+                                                    <rect key="frame" x="207" y="229" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="buB-bY-hJA">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchXAction:" target="-2" id="ZJd-o2-ORJ"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="1" id="tea-lW-Aal">
+                                                    <rect key="frame" x="228" y="229" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="1jT-eL-1ZZ">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchYAction:" target="-2" id="w3T-DT-I5R"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" tag="1" id="TIY-bV-SjM">
+                                                    <rect key="frame" x="88" y="227" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="f7D-c4-GKs">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteYAction:" target="-2" id="8po-sK-XLO"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="1pe-Ae-GrE">
+                                                    <rect key="frame" x="12" y="231" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="2" id="vGN-TA-1OT">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" tag="1" id="rnZ-ou-dqP">
+                                                    <rect key="frame" x="48" y="227" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="G33-YE-pgv">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteXAction:" target="-2" id="hVL-6P-GPm"/>
+                                                    </connections>
+                                                </textField>
+                                                <button tag="2" id="vqm-lD-cU7">
+                                                    <rect key="frame" x="27" y="203" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="oZH-gf-GJy">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteActiveAction:" target="-2" id="zAK-xm-dAf"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="2" id="UFW-L7-NXW">
+                                                    <rect key="frame" x="164" y="203" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="D2u-16-Z2x">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteMulticolorAction:" target="-2" id="Mnk-QS-pt2"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="2" id="V3m-Dx-oVq">
+                                                    <rect key="frame" x="207" y="203" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="uj3-kB-znC">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchXAction:" target="-2" id="eQD-4H-1NA"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="2" id="0ch-7t-6y1">
+                                                    <rect key="frame" x="228" y="203" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="0CK-Ln-LU9">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchYAction:" target="-2" id="rti-2z-w0w"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" tag="2" id="lM4-TT-7MO">
+                                                    <rect key="frame" x="88" y="201" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="ky9-12-v4X">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteYAction:" target="-2" id="7mA-Q1-vG2"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="eHL-0x-YfX">
+                                                    <rect key="frame" x="12" y="205" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="3" id="Yrd-7o-ckJ">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" tag="2" id="BsB-sE-B3v">
+                                                    <rect key="frame" x="48" y="201" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="t7n-3r-Fnr">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteXAction:" target="-2" id="uyD-kw-T2v"/>
+                                                    </connections>
+                                                </textField>
+                                                <button tag="3" id="kV8-mu-1U7">
+                                                    <rect key="frame" x="26" y="177" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="Egj-PK-pss">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteActiveAction:" target="-2" id="EBo-QQ-CnA"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="3" id="R4S-zf-xJ8">
+                                                    <rect key="frame" x="164" y="177" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="rhW-NG-jF3">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteMulticolorAction:" target="-2" id="Og7-i6-6Xd"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="3" id="rlW-S1-e7n">
+                                                    <rect key="frame" x="207" y="177" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="yb8-Cz-7pH">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchXAction:" target="-2" id="LAt-kS-uCh"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="3" id="dd4-h6-GCC">
+                                                    <rect key="frame" x="228" y="177" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="tYo-58-c0Q">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchYAction:" target="-2" id="lps-gG-xV3"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" tag="3" id="s9N-bv-K83">
+                                                    <rect key="frame" x="88" y="175" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="4sd-zZ-5Pg">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteYAction:" target="-2" id="64e-8U-eTA"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="8gf-tC-AVg">
+                                                    <rect key="frame" x="12" y="179" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="4" id="2Ho-2G-oza">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" tag="3" id="ZfD-T5-sqK">
+                                                    <rect key="frame" x="48" y="175" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="SCE-bO-ecI">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteXAction:" target="-2" id="oxv-bx-FRe"/>
+                                                    </connections>
+                                                </textField>
+                                                <button tag="4" id="vkw-ys-nOk">
+                                                    <rect key="frame" x="26" y="151" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="PVE-21-9Ld">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteActiveAction:" target="-2" id="kgM-7M-rFj"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="4" id="gEu-G4-Q7g">
+                                                    <rect key="frame" x="164" y="151" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="djN-eA-K4A">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteMulticolorAction:" target="-2" id="Z0u-Qn-9A0"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="4" id="9GT-pe-wm2">
+                                                    <rect key="frame" x="207" y="151" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="cY8-Ln-ajY">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchXAction:" target="-2" id="q3W-Gp-54y"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="4" id="qtm-bK-uXq">
+                                                    <rect key="frame" x="228" y="151" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="598-55-1Xd">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchYAction:" target="-2" id="L7s-bB-i1T"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" tag="4" id="pgF-UJ-2Cd">
+                                                    <rect key="frame" x="88" y="149" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="QyF-bK-ZMk">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteYAction:" target="-2" id="0sT-Dm-qgO"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="4w4-gF-XOR">
+                                                    <rect key="frame" x="12" y="153" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="5" id="Tdf-FH-MpS">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" tag="4" id="PUn-95-aLP">
+                                                    <rect key="frame" x="48" y="149" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="vbe-k5-gCn">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteXAction:" target="-2" id="Mqi-Jh-ddc"/>
+                                                    </connections>
+                                                </textField>
+                                                <button tag="5" id="RQe-vQ-Vqp">
+                                                    <rect key="frame" x="26" y="125" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="Zdm-Px-oc7">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteActiveAction:" target="-2" id="Hj6-ok-xpC"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="5" id="KjZ-yg-MAy">
+                                                    <rect key="frame" x="164" y="125" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="9cQ-Aw-4eU">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteMulticolorAction:" target="-2" id="ZC4-pY-cr4"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="5" id="bTO-57-vAA">
+                                                    <rect key="frame" x="207" y="125" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="XVj-p3-gLy">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchXAction:" target="-2" id="1Ac-Xi-YDg"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="5" id="4OU-D0-1ma">
+                                                    <rect key="frame" x="228" y="125" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="nk7-dD-tci">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchYAction:" target="-2" id="TqT-dE-SXJ"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" tag="5" id="kwh-m0-Dr5">
+                                                    <rect key="frame" x="88" y="123" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Tdf-9e-Bgj">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteYAction:" target="-2" id="58Q-qO-hHm"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="1pO-gT-TMH">
+                                                    <rect key="frame" x="12" y="127" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="6" id="7no-gO-fQg">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" tag="5" id="c0x-e4-n66">
+                                                    <rect key="frame" x="48" y="123" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1c4-Qo-1ZV">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteXAction:" target="-2" id="DYg-hk-Lof"/>
+                                                    </connections>
+                                                </textField>
+                                                <button tag="6" id="oRa-3d-5dk">
+                                                    <rect key="frame" x="26" y="99" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="EMy-Ni-B0S">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteActiveAction:" target="-2" id="kAW-Uv-uq2"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="6" id="Zw3-Mw-AYZ">
+                                                    <rect key="frame" x="164" y="99" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="4JG-r2-Z08">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteMulticolorAction:" target="-2" id="7jQ-pA-Yr5"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="6" id="1XQ-DG-UZA">
+                                                    <rect key="frame" x="207" y="99" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="YSk-At-cJZ">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchXAction:" target="-2" id="tYh-7X-0Yn"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="6" id="SQ8-If-zoc">
+                                                    <rect key="frame" x="228" y="99" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="cMZ-7f-7Yz">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchYAction:" target="-2" id="BEM-q4-7Y2"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" tag="6" id="BlL-aO-Fgy">
+                                                    <rect key="frame" x="88" y="97" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="YCF-ip-ItI">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteYAction:" target="-2" id="33p-ib-ukZ"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="mGV-L2-Ceb">
+                                                    <rect key="frame" x="12" y="101" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="7" id="Nxr-An-Dq0">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" tag="6" id="KTm-fA-75y">
+                                                    <rect key="frame" x="48" y="97" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="S43-1G-C0e">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteXAction:" target="-2" id="SLi-ZA-XaC"/>
+                                                    </connections>
+                                                </textField>
+                                                <button tag="7" id="iuQ-Ly-t2D">
+                                                    <rect key="frame" x="26" y="73" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="f3h-07-iFL">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteActiveAction:" target="-2" id="wdX-BF-BjE"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="7" id="8Gs-VH-8r9">
+                                                    <rect key="frame" x="164" y="73" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="5tt-BW-JVM">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteMulticolorAction:" target="-2" id="s9f-O1-hIJ"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="7" id="Fqj-aF-6Ci">
+                                                    <rect key="frame" x="207" y="73" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="1SQ-tm-vAp">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchXAction:" target="-2" id="mwy-3i-rIN"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="7" id="IZO-QI-4yY">
+                                                    <rect key="frame" x="228" y="73" width="18" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" controlSize="small" inset="2" id="ec1-va-QAn">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteStretchYAction:" target="-2" id="WSl-e5-Msv"/>
+                                                    </connections>
+                                                </button>
+                                                <textField verticalHuggingPriority="750" tag="7" id="YyV-XC-CIP">
+                                                    <rect key="frame" x="88" y="71" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="c8X-Zy-g5q">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteYAction:" target="-2" id="syM-Q0-6tl"/>
+                                                    </connections>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" id="kcF-mL-C5i">
+                                                    <rect key="frame" x="12" y="75" width="19" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="8" id="UHL-aD-AK4">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" tag="7" id="TOT-AL-bF9">
+                                                    <rect key="frame" x="48" y="71" width="34" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="ZhJ-gF-gWf">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteXAction:" target="-2" id="8Au-hw-iTU"/>
+                                                    </connections>
+                                                </textField>
+                                                <button id="j0N-zq-9ef">
+                                                    <rect key="frame" x="128" y="255" width="30" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="dD6-2C-ir7">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteColorAction:" target="-2" id="Zjg-KO-kZ5"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="2" id="MnN-Os-Fv6">
+                                                    <rect key="frame" x="128" y="203" width="30" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="ulH-Xo-ZaB">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteColorAction:" target="-2" id="8iN-Gr-p1N"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="3" id="lUX-ZI-SeP">
+                                                    <rect key="frame" x="128" y="177" width="30" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="left" alignment="center" state="on" inset="2" id="xxx-dN-ZAJ">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteColorAction:" target="-2" id="f0h-rt-pOc"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="4" id="GJE-4m-tSc">
+                                                    <rect key="frame" x="128" y="151" width="30" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="VmZ-Ht-25I">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteColorAction:" target="-2" id="QUX-FX-mRE"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="5" id="fiD-fX-zsP">
+                                                    <rect key="frame" x="128" y="125" width="30" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="BQ6-71-XUh">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteColorAction:" target="-2" id="Wz2-Pe-1hw"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="6" id="3cA-cH-igs">
+                                                    <rect key="frame" x="128" y="99" width="30" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="WIq-LE-Jqc">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteColorAction:" target="-2" id="eom-hg-Qer"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="7" id="3Uv-2I-jfV">
+                                                    <rect key="frame" x="128" y="73" width="30" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="WYl-YN-q7V">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteColorAction:" target="-2" id="Qya-Fn-nh1"/>
+                                                    </connections>
+                                                </button>
+                                                <button tag="1" id="l9n-pS-UJ1">
+                                                    <rect key="frame" x="128" y="229" width="30" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="YWK-OE-2W3">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="vicSpriteColorAction:" target="-2" id="CSO-kZ-vGA"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </view>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </box>
-                                    <button id="386">
-                                        <rect key="frame" x="132" y="142" width="103" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Enable OpenGL" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1779">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="smallSystem"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="vicEnableOpenGL:" target="-2" id="929"/>
-                                        </connections>
-                                    </button>
                                     <popUpButton verticalHuggingPriority="750" id="774">
                                         <rect key="frame" x="6" y="519" width="161" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -2194,47 +2875,6 @@
                                             <action selector="vicScreenGeometryAction:" target="-2" id="910"/>
                                         </connections>
                                     </popUpButton>
-                                    <textField verticalHuggingPriority="750" id="836">
-                                        <rect key="frame" x="73" y="162" width="50" height="22"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1801">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" id="837">
-                                        <rect key="frame" x="6" y="166" width="66" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Rasterline:" id="1802">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <button id="838">
-                                        <rect key="frame" x="132" y="164" width="83" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <buttonCell key="cell" type="check" title="interrupt at" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1803">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="smallSystem"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="vicEnableRasterInterruptAction:" target="-2" id="927"/>
-                                        </connections>
-                                    </button>
-                                    <textField verticalHuggingPriority="750" id="839">
-                                        <rect key="frame" x="219" y="163" width="50" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1804">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                        <connections>
-                                            <action selector="vicRasterInterruptAction:" target="-2" id="928"/>
-                                        </connections>
-                                    </textField>
                                     <textField verticalHuggingPriority="750" id="840">
                                         <rect key="frame" x="6" y="471" width="96" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -2335,97 +2975,65 @@
                                             <action selector="vicCharacterMemoryAction:" target="-2" id="915"/>
                                         </connections>
                                     </popUpButton>
-                                    <textField verticalHuggingPriority="750" id="827">
-                                        <rect key="frame" x="221" y="361" width="34" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1800">
+                                    <button id="386">
+                                        <rect key="frame" x="134" y="14" width="103" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <buttonCell key="cell" type="check" title="Enable OpenGL" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1779">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="vicEnableOpenGL:" target="-2" id="929"/>
+                                        </connections>
+                                    </button>
+                                    <textField verticalHuggingPriority="750" id="836">
+                                        <rect key="frame" x="75" y="34" width="50" height="22"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1801">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <action selector="vicSpriteColorAction:" target="-2" id="926"/>
-                                        </connections>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" id="826">
-                                        <rect key="frame" x="181" y="365" width="43" height="14"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Color:" id="1799">
+                                    <textField verticalHuggingPriority="750" id="837">
+                                        <rect key="frame" x="8" y="38" width="66" height="14"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Rasterline:" id="1802">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="804">
-                                        <rect key="frame" x="7" y="193" width="264" height="23"/>
+                                    <button id="838">
+                                        <rect key="frame" x="134" y="36" width="83" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        <size key="cellSize" width="33" height="23"/>
-                                        <size key="intercellSpacing" width="0.0" height="2"/>
-                                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" controlSize="mini" inset="2" id="1820">
+                                        <buttonCell key="cell" type="check" title="interrupt at" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1803">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="miniSystem"/>
+                                            <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
-                                        <cells>
-                                            <column>
-                                                <buttonCell type="radio" title="0" imagePosition="left" alignment="left" controlSize="mini" state="on" inset="2" id="808">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                </buttonCell>
-                                            </column>
-                                            <column>
-                                                <buttonCell type="radio" title="1" imagePosition="left" alignment="left" controlSize="mini" tag="1" inset="2" id="809">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                </buttonCell>
-                                            </column>
-                                            <column>
-                                                <buttonCell type="radio" title="2" imagePosition="left" alignment="left" controlSize="mini" tag="2" inset="2" id="810">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                </buttonCell>
-                                            </column>
-                                            <column>
-                                                <buttonCell type="radio" title="3" imagePosition="left" alignment="left" controlSize="mini" tag="3" inset="2" id="811">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                </buttonCell>
-                                            </column>
-                                            <column>
-                                                <buttonCell type="radio" title="4" imagePosition="left" alignment="left" controlSize="mini" tag="4" inset="2" id="812">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                </buttonCell>
-                                            </column>
-                                            <column>
-                                                <buttonCell type="radio" title="5" imagePosition="left" alignment="left" controlSize="mini" tag="5" inset="2" id="813">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                </buttonCell>
-                                            </column>
-                                            <column>
-                                                <buttonCell type="radio" title="6" imagePosition="left" alignment="left" controlSize="mini" tag="6" inset="2" id="814">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                </buttonCell>
-                                            </column>
-                                            <column>
-                                                <buttonCell type="radio" title="7" imagePosition="left" alignment="left" controlSize="mini" tag="7" inset="2" id="815">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="miniSystem"/>
-                                                </buttonCell>
-                                            </column>
-                                        </cells>
                                         <connections>
-                                            <action selector="vicSpriteSelectAction:" target="-2" id="1997"/>
+                                            <action selector="vicEnableRasterInterruptAction:" target="-2" id="927"/>
                                         </connections>
-                                    </matrix>
+                                    </button>
+                                    <textField verticalHuggingPriority="750" id="839">
+                                        <rect key="frame" x="221" y="35" width="50" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="1804">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <action selector="vicRasterInterruptAction:" target="-2" id="928"/>
+                                        </connections>
+                                    </textField>
                                 </subviews>
                             </view>
                         </tabViewItem>
                     </tabViewItems>
                 </tabView>
             </subviews>
+            <point key="canvasLocation" x="831" y="618"/>
         </customView>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1004" userLabel="MountDialog" customClass="MountDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
@@ -2513,7 +3121,7 @@ DQ
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="filesize" editable="NO" width="92.538089999999997" minWidth="25.53809" maxWidth="1000" id="1034">
+                                        <tableColumn identifier="filesize" editable="NO" width="91.538089999999997" minWidth="25.53809" maxWidth="1000" id="1034">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -2603,6 +3211,7 @@ DQ
                 <outlet property="initialFirstResponder" destination="262" id="2199"/>
                 <outlet property="mountButton" destination="1010" id="1032"/>
             </connections>
+            <point key="canvasLocation" x="-419" y="-58.5"/>
         </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1872" userLabel="RomDialog" customClass="RomDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
@@ -2795,7 +3404,7 @@ DQ
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <clipView key="contentView" copiesOnScroll="NO" id="qbt-6L-5ue">
                         <rect key="frame" x="1" y="1" width="189" height="304"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <ikImageBrowserView autoresizesSubviews="NO" zoomValue="1" allowsMultipleSelection="NO" id="2182" customClass="CheatboxImageBrowserView">
                                 <rect key="frame" x="0.0" y="0.0" width="189" height="304"/>
@@ -3386,26 +3995,32 @@ DQ
                 <outlet property="videoFilter" destination="2239" id="2345"/>
                 <outlet property="warpLoad" destination="2261" id="2340"/>
             </connections>
+            <point key="canvasLocation" x="748.5" y="13"/>
         </window>
         <view id="1028">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
             <autoresizingMask key="autoresizingMask"/>
+            <point key="canvasLocation" x="542.5" y="390.5"/>
         </view>
         <view id="2285">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
             <autoresizingMask key="autoresizingMask"/>
+            <point key="canvasLocation" x="542.5" y="442.5"/>
         </view>
         <view id="2284">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
             <autoresizingMask key="autoresizingMask"/>
+            <point key="canvasLocation" x="542.5" y="345.5"/>
         </view>
         <view id="2283">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
             <autoresizingMask key="autoresizingMask"/>
+            <point key="canvasLocation" x="542.5" y="494.5"/>
         </view>
         <view id="2332">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
             <autoresizingMask key="autoresizingMask"/>
+            <point key="canvasLocation" x="542.5" y="298.5"/>
         </view>
     </objects>
     <resources>

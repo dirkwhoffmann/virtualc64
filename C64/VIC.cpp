@@ -922,6 +922,7 @@ VIC::setSpritePixel(unsigned offset, int rgba, int depth, int source)
     pixelSource[offset] |= source;
 }
 
+// DEPRECATED
 inline void
 VIC::setForegroundPixel(unsigned offset, int rgba)
 {
@@ -947,8 +948,8 @@ VIC::renderForegroundPixel(unsigned offset, int rgba)
 inline void
 VIC::setBackgroundPixel(unsigned offset, int rgba)
 {
-    if (BACKGROUD_LAYER__DEPTH <= zBuffer[offset]) {
-        zBuffer[offset] = BACKGROUD_LAYER__DEPTH;
+    if (BACKGROUD_LAYER_DEPTH <= zBuffer[offset]) {
+        zBuffer[offset] = BACKGROUD_LAYER_DEPTH;
         pixelBuffer[offset] = rgba;
     }
 }
@@ -958,8 +959,9 @@ VIC::renderBackgroundPixel(unsigned offset, int rgba)
 {
     assert(offset == 0 || offset == 1);
     
-    zBufferTmp[offset] = BACKGROUD_LAYER__DEPTH;
+    zBufferTmp[offset] = BACKGROUD_LAYER_DEPTH;
     pixelBufferTmp[offset] = rgba;
+    pixelSourceTmp[offset] = 0;
 }
 
 // DEPRECATED
@@ -1126,13 +1128,13 @@ VIC::setSpritePixel(unsigned offset, int color, int nr)
 		// }
 		
 		// Check sprite/sprite collision
-		if ((spriteSpriteCollisionEnabled & mask) && (pixelSource[offset] & 0x7F)) {
+		if (spriteSpriteCollisionEnabled && (pixelSource[offset] & 0x7F)) {
 			iomem[0x1E] |= ((pixelSource[offset] & 0x7F) | mask);
 			triggerIRQ(4);
 		}
 		
 		// Check sprite/background collision
-		if ((spriteBackgroundCollisionEnabled & mask) && (pixelSource[offset] & 0x80)) {
+		if (spriteBackgroundCollisionEnabled && (pixelSource[offset] & 0x80)) {
 			iomem[0x1F] |= mask;
 			triggerIRQ(2);
 		}

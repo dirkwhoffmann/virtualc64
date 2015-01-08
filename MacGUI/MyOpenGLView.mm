@@ -79,7 +79,7 @@ void checkForOpenGLErrors()
 -(void)awakeFromNib
 {
 	NSLog(@"MyOpenGLView::awakeFromNib");
-	
+	    
 	// DEPRECATED
 	c64 = [c64proxy c64];
 	

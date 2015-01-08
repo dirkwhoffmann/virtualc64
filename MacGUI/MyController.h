@@ -194,25 +194,82 @@ enum INPUT_DEVICES {
 	IBOutlet NSStepper *VicDXStepper;
 	IBOutlet NSTextField *VicDY;
 	IBOutlet NSStepper *VicDYStepper;
-	IBOutlet NSMatrix *spriteSelector;
-	IBOutlet NSButtonCell *sprite0; 	
-	IBOutlet NSButtonCell *sprite1;
-	IBOutlet NSButtonCell *sprite2; 	
-	IBOutlet NSButtonCell *sprite3;
-	IBOutlet NSButtonCell *sprite4; 	
-	IBOutlet NSButtonCell *sprite5;
-	IBOutlet NSButtonCell *sprite6;
-	IBOutlet NSButtonCell *sprite7;
-	IBOutlet NSButton *VicSpriteActive;
-	IBOutlet NSButton *VicSpriteMulticolor;
-	IBOutlet NSButton *VicSpriteStretchX;
-	IBOutlet NSButton *VicSpriteStretchY;
-	IBOutlet NSButton *VicSpriteInFront; 
-	IBOutlet NSButton *VicSpriteSpriteCollision;
-	IBOutlet NSButton *VicSpriteBackgroundCollision;
-	IBOutlet NSTextField *VicSpriteX;
-	IBOutlet NSTextField *VicSpriteY;
-	IBOutlet NSTextField *VicSpriteColor;
+    
+    IBOutlet NSButton *VicSpriteActive1;
+    IBOutlet NSTextField *VicSpriteX1;
+    IBOutlet NSTextField *VicSpriteY1;
+    IBOutlet NSColorWell *VicSpriteColor1;
+    IBOutlet NSButton *VicSpriteCol1;
+    IBOutlet NSButton *VicSpriteMulticolor1;
+    IBOutlet NSButton *VicSpriteStretchX1;
+    IBOutlet NSButton *VicSpriteStretchY1;
+
+    IBOutlet NSButton *VicSpriteActive2;
+    IBOutlet NSTextField *VicSpriteX2;
+    IBOutlet NSTextField *VicSpriteY2;
+    IBOutlet NSColorWell *VicSpriteColor2;
+    IBOutlet NSButton *VicSpriteCol2;
+    IBOutlet NSButton *VicSpriteMulticolor2;
+    IBOutlet NSButton *VicSpriteStretchX2;
+    IBOutlet NSButton *VicSpriteStretchY2;
+
+    IBOutlet NSButton *VicSpriteActive3;
+    IBOutlet NSTextField *VicSpriteX3;
+    IBOutlet NSTextField *VicSpriteY3;
+    IBOutlet NSColorWell *VicSpriteColor3;
+    IBOutlet NSButton *VicSpriteCol3;
+    IBOutlet NSButton *VicSpriteMulticolor3;
+    IBOutlet NSButton *VicSpriteStretchX3;
+    IBOutlet NSButton *VicSpriteStretchY3;
+
+    IBOutlet NSButton *VicSpriteActive4;
+    IBOutlet NSTextField *VicSpriteX4;
+    IBOutlet NSTextField *VicSpriteY4;
+    IBOutlet NSColorWell *VicSpriteColor4;
+    IBOutlet NSButton *VicSpriteCol4;
+    IBOutlet NSButton *VicSpriteMulticolor4;
+    IBOutlet NSButton *VicSpriteStretchX4;
+    IBOutlet NSButton *VicSpriteStretchY4;
+
+    IBOutlet NSButton *VicSpriteActive5;
+    IBOutlet NSTextField *VicSpriteX5;
+    IBOutlet NSTextField *VicSpriteY5;
+    IBOutlet NSColorWell *VicSpriteColor5;
+    IBOutlet NSButton *VicSpriteCol5;
+    IBOutlet NSButton *VicSpriteMulticolor5;
+    IBOutlet NSButton *VicSpriteStretchX5;
+    IBOutlet NSButton *VicSpriteStretchY5;
+
+    IBOutlet NSButton *VicSpriteActive6;
+    IBOutlet NSTextField *VicSpriteX6;
+    IBOutlet NSTextField *VicSpriteY6;
+    IBOutlet NSColorWell *VicSpriteColor6;
+    IBOutlet NSButton *VicSpriteCol6;
+    IBOutlet NSButton *VicSpriteMulticolor6;
+    IBOutlet NSButton *VicSpriteStretchX6;
+    IBOutlet NSButton *VicSpriteStretchY6;
+
+    IBOutlet NSButton *VicSpriteActive7;
+    IBOutlet NSTextField *VicSpriteX7;
+    IBOutlet NSTextField *VicSpriteY7;
+    IBOutlet NSColorWell *VicSpriteColor7;
+    IBOutlet NSButton *VicSpriteCol7;
+    IBOutlet NSButton *VicSpriteMulticolor7;
+    IBOutlet NSButton *VicSpriteStretchX7;
+    IBOutlet NSButton *VicSpriteStretchY7;
+
+    IBOutlet NSButton *VicSpriteActive8;
+    IBOutlet NSTextField *VicSpriteX8;
+    IBOutlet NSTextField *VicSpriteY8;
+    IBOutlet NSColorWell *VicSpriteColor8;
+    IBOutlet NSButton *VicSpriteCol8;
+    IBOutlet NSButton *VicSpriteMulticolor8;
+    IBOutlet NSButton *VicSpriteStretchX8;
+    IBOutlet NSButton *VicSpriteStretchY8;
+
+    IBOutlet NSButton *VicSpriteSpriteCollision;
+    IBOutlet NSButton *VicSpriteBackgroundCollision;
+
 	IBOutlet NSTextField *VicRasterline;
 	IBOutlet NSButton *VicEnableRasterInterrupt;
 	IBOutlet NSTextField *VicRasterInterrupt;

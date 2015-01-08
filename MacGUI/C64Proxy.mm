@@ -163,18 +163,13 @@
 - (void) setSpriteVisibilityFlag:(int)nr value:(bool)flag { vic->setSpriteEnabled(nr, flag); }
 - (void) toggleSpriteVisibilityFlag:(int)nr { vic->toggleSpriteEnabled(nr); }
 
-- (bool) spriteSpriteCollisionFlag:(int)nr { return vic->getSpriteSpriteCollision(nr); }
-- (void) setSpriteSpriteCollisionFlag:(int)nr value:(bool)flag { vic->setSpriteSpriteCollision(nr, flag); }
-- (void) toggleSpriteSpriteCollisionFlag:(int)nr { vic->toggleSpriteSpriteCollisionFlag(nr); }
+- (int) spriteX:(int)nr { return vic->getSpriteX(nr); }
+- (void) setSpriteX:(int)nr value:(int)x { vic->setSpriteX(nr, x); }
+- (int) spriteY:(int)nr { return vic->getSpriteY(nr); }
+- (void) setSpriteY:(int)nr value:(int)y { vic->setSpriteY(nr, y); }
 
-- (bool) spriteBackgroundCollisionFlag:(int)nr { return vic->getSpriteBackgroundCollision(nr); }
-- (void) setSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag { vic->setSpriteBackgroundCollision(nr, flag); }
-- (void) toggleSpriteBackgroundCollisionFlag:(int)nr { vic->toggleSpriteBackgroundCollisionFlag(nr); }
-
-- (bool) spriteBackgroundPriorityFlag:(int)nr { return vic->spriteIsDrawnInBackground(nr); }
-- (void) setSpriteBackgroundPriorityFlag:(int)nr value:(bool)flag { vic->setSpriteInBackground(nr, flag); }
-- (void) toggleSpriteBackgroundPriorityFlag:(int)nr { vic->spriteToggleBackgroundPriorityFlag(nr); }
-
+- (int) spriteColor:(int)nr { return vic->spriteColor(nr); }
+- (void) setSpriteColor:(int)nr value:(int)c { vic->setSpriteColor(nr, c); }
 - (bool) spriteMulticolorFlag:(int)nr { return vic->spriteIsMulticolor(nr); }
 - (void) setSpriteMulticolorFlag:(int)nr value:(bool)flag { vic->setSpriteMulticolor(nr, flag); }
 - (void) toggleSpriteMulticolorFlag:(int)nr { vic->toggleMulticolorFlag(nr); }
@@ -187,12 +182,13 @@
 - (void) setSpriteStretchYFlag:(int)nr value:(bool)flag { return vic->setSpriteStretchY(nr, flag); }
 - (void) toggleSpriteStretchYFlag:(int)nr { vic->spriteToggleStretchYFlag(nr); }
 
-- (int) spriteX:(int)nr { return vic->getSpriteX(nr); }
-- (void) setSpriteX:(int)nr value:(int)x { vic->setSpriteX(nr, x); }
-- (int) spriteY:(int)nr { return vic->getSpriteY(nr); }
-- (void) setSpriteY:(int)nr value:(int)y { vic->setSpriteY(nr, y); }
-- (int) spriteColor:(int)nr { return vic->spriteColor(nr); }
-- (void) setSpriteColor:(int)nr value:(int)c { vic->setSpriteColor(nr, c); }
+- (bool) spriteSpriteCollisionFlag { return vic->getSpriteSpriteCollisionFlag(); }
+- (void) setSpriteSpriteCollisionFlag:(bool)flag { vic->setSpriteSpriteCollisionFlag(flag); }
+- (void) toggleSpriteSpriteCollisionFlag { vic->toggleSpriteSpriteCollisionFlag(); }
+
+- (bool) spriteBackgroundCollisionFlag { return vic->getSpriteBackgroundCollisionFlag(); }
+- (void) setSpriteBackgroundCollisionFlag:(bool)flag { vic->setSpriteBackgroundCollisionFlag(flag); }
+- (void) toggleSpriteBackgroundCollisionFlag { vic->toggleSpriteBackgroundCollisionFlag(); }
 
 - (uint16_t) rasterline { return vic->getScanline(); }
 - (void) setRasterline:(uint16_t)line { vic->setScanline(line); }

@@ -1123,7 +1123,7 @@ private:
     #define SPRITE_LAYER_FG_DEPTH 0x20      /* behind border */
     #define FOREGROUND_LAYER_DEPTH 0x30     /* behind sprite 1 layer  */
     #define SPRITE_LAYER_BG_DEPTH 0x40      /* behind foreground */
-    #define BACKGROUD_LAYER__DEPTH 0x50     /* behind sprite 2 layer */
+    #define BACKGROUD_LAYER_DEPTH 0x50      /* behind sprite 2 layer */
     #define BEIND_BACKGROUND_DEPTH 0x60     /* behind background */
 
 	//! Update sprite DMA bits
@@ -1314,22 +1314,22 @@ public:
 	void setHideSprites(bool hide) { drawSprites = !hide; }
 	
 	//! Return true iff sprite-sprite collision detection is enabled
-	bool getSpriteSpriteCollision(uint8_t nr) { return spriteSpriteCollisionEnabled & (1 << nr); }
+	bool getSpriteSpriteCollisionFlag() { return spriteSpriteCollisionEnabled; }
 
 	//! Enable or disable sprite-sprite collision detection
-	void setSpriteSpriteCollision(uint8_t nr, bool b) { if (b) SET_BIT(spriteSpriteCollisionEnabled, nr); else CLR_BIT(spriteSpriteCollisionEnabled, nr); }
+    void setSpriteSpriteCollisionFlag(bool b) { spriteSpriteCollisionEnabled = b; };
 
 	//! Enable or disable sprite-sprite collision detection
-	void toggleSpriteSpriteCollisionFlag(uint8_t nr) { setSpriteSpriteCollision(nr, !getSpriteSpriteCollision(nr)); }
+    void toggleSpriteSpriteCollisionFlag() { spriteSpriteCollisionEnabled = !spriteSpriteCollisionEnabled; }
 	
 	//! Return true iff sprite-background collision detection is enabled
-	bool getSpriteBackgroundCollision(uint8_t nr) { return spriteBackgroundCollisionEnabled & (1 << nr); }
+	bool getSpriteBackgroundCollisionFlag() { return spriteBackgroundCollisionEnabled; }
 
 	//! Enable or disable sprite-background collision detection
-	void setSpriteBackgroundCollision(uint8_t nr, bool b) { if (b) SET_BIT(spriteBackgroundCollisionEnabled, nr); else CLR_BIT(spriteBackgroundCollisionEnabled, nr); }
+    void setSpriteBackgroundCollisionFlag(bool b) { spriteBackgroundCollisionEnabled = b; }
 
 	//! Enable or disable sprite-background collision detection
-	void toggleSpriteBackgroundCollisionFlag(uint8_t nr) { setSpriteBackgroundCollision(nr, !getSpriteBackgroundCollision(nr)); }
+    void toggleSpriteBackgroundCollisionFlag() { spriteBackgroundCollisionEnabled = !spriteBackgroundCollisionEnabled; }
 };
 
 #endif
