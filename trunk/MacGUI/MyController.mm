@@ -107,11 +107,24 @@
 
 - (void)windowDidLoad
 {
+    NSLog(@"MyController::windowDidLoad");
+
+    NSWindow *window = [self window];
+
+    // Enable auto-save for window coordinates
+    [[[self window] windowController] setShouldCascadeWindows:NO];
+    [[self window] setFrameAutosaveName:@"dirkwhoffmann.de.virtualC64.window"];
+    
 	// Load user defaults
 	[self loadUserDefaults];
 
+    // Set frame
+    //NSLog(@"Set frame coordinates");
+    //[window setFrameUsingName:@"dirkwhoffmann.de.virtualC64.window"];
+    //[[self screen] reshape];
+    
     // Enable fullscreen mode
-    [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+    [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     
 	// Launch emulator
 	[c64 run];
@@ -175,7 +188,7 @@
 
 + (void)registerStandardDefaults
 {
-	NSLog(@"Registering standard user defaults");
+	NSLog(@"MyController::Registering standard user defaults");
 	
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	
@@ -523,7 +536,7 @@
 		cia2DataPortA, cia2DataPortDirectionA, cia2DataPortB, cia2DataPortDirectionB,
 		tod2Hours, tod2Minutes, tod2Seconds, tod2Tenth, alarm2Hours, alarm2Minutes, alarm2Seconds, alarm2Tenth,
 		// VIC panel
-		VicSpriteY, VicSpriteColor, 
+		VicSpriteY1, VicSpriteY2, VicSpriteY3, VicSpriteY4, VicSpriteY5, VicSpriteY6, VicSpriteY7, VicSpriteY8,
  		NULL };
 	
 	NSControl *WordFormatterControls[] = { 
@@ -540,7 +553,7 @@
 
     NSControl *threeDigitFormatterControls[] = { 
 		// VIC panel
-		VicSpriteX,
+		VicSpriteX1, VicSpriteX2, VicSpriteX3, VicSpriteX4, VicSpriteX5, VicSpriteX6, VicSpriteX7, VicSpriteX8,
 		NULL };
 
 	// Bind formatters
@@ -600,7 +613,10 @@
 		alarm2Hours, alarm2Minutes, alarm2Seconds, alarm2Tenth,
         // tod2InterruptEnabled,
 		// VIC panel
-		VicSpriteX, VicSpriteY, VicSpriteColor, VicRasterline, VicRasterInterrupt, VicDX, VicDY,
+		VicSpriteX1, VicSpriteX2, VicSpriteX3, VicSpriteX4, VicSpriteX5, VicSpriteX6, VicSpriteX7, VicSpriteX8,
+        VicSpriteY1, VicSpriteY2, VicSpriteY3, VicSpriteY4, VicSpriteY5, VicSpriteY6, VicSpriteY7, VicSpriteY8,
+        
+        VicRasterline, VicRasterInterrupt, VicDX, VicDY,
 		NULL };
 	
 	// Enable / disable controls

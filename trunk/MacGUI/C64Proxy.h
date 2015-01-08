@@ -144,18 +144,13 @@
 - (void) setSpriteVisibilityFlag:(int)nr value:(bool)flag;
 - (void) toggleSpriteVisibilityFlag:(int)nr;
 
-- (bool) spriteSpriteCollisionFlag:(int)nr;
-- (void) setSpriteSpriteCollisionFlag:(int)nr value:(bool)flag;
-- (void) toggleSpriteSpriteCollisionFlag:(int)nr;
+- (int) spriteX:(int)nr;
+- (void) setSpriteX:(int)nr value:(int)x;
+- (int) spriteY:(int)nr;
+- (void) setSpriteY:(int)nr value:(int)y;
 
-- (bool) spriteBackgroundCollisionFlag:(int)nr;
-- (void) setSpriteBackgroundCollisionFlag:(int)nr value:(bool)flag;
-- (void) toggleSpriteBackgroundCollisionFlag:(int)nr;
-
-- (bool) spriteBackgroundPriorityFlag:(int)nr;
-- (void) setSpriteBackgroundPriorityFlag:(int)nr value:(bool)flag;
-- (void) toggleSpriteBackgroundPriorityFlag:(int)nr;
-
+- (int) spriteColor:(int)nr;
+- (void) setSpriteColor:(int)nr value:(int)c;
 - (bool) spriteMulticolorFlag:(int)nr;
 - (void) setSpriteMulticolorFlag:(int)nr value:(bool)flag;
 - (void) toggleSpriteMulticolorFlag:(int)nr;
@@ -163,17 +158,17 @@
 - (bool) spriteStretchXFlag:(int)nr;
 - (void) setSpriteStretchXFlag:(int)nr value:(bool)flag;
 - (void) toggleSpriteStretchXFlag:(int)nr;
-
 - (bool) spriteStretchYFlag:(int)nr;
 - (void) setSpriteStretchYFlag:(int)nr value:(bool)flag;
 - (void) toggleSpriteStretchYFlag:(int)nr;
 
-- (int) spriteX:(int)nr;
-- (void) setSpriteX:(int)nr value:(int)x;
-- (int) spriteY:(int)nr;
-- (void) setSpriteY:(int)nr value:(int)y;
-- (int) spriteColor:(int)nr;
-- (void) setSpriteColor:(int)nr value:(int)c;
+- (bool) spriteSpriteCollisionFlag;
+- (void) setSpriteSpriteCollisionFlag:(bool)flag;
+- (void) toggleSpriteSpriteCollisionFlag;
+
+- (bool) spriteBackgroundCollisionFlag;
+- (void) setSpriteBackgroundCollisionFlag:(bool)flag;
+- (void) toggleSpriteBackgroundCollisionFlag;
 
 - (uint16_t) rasterline;
 - (void) setRasterline:(uint16_t)line;

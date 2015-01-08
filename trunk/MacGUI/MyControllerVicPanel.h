@@ -31,28 +31,23 @@
 - (IBAction)vicDYAction:(id)sender;
 - (IBAction)vicDXStepperAction:(id)sender;
 - (IBAction)vicDYStepperAction:(id)sender;
-- (IBAction)vicSpriteSelectAction:(id)sender;
+
 - (IBAction)vicSpriteActiveAction:(id)sender;
-- (IBAction)vicSpriteMulticolorAction:(id)sender;
-- (IBAction)vicSpriteStretchXAction:(id)sender;
-- (IBAction)vicSpriteStretchYAction:(id)sender;
-- (IBAction)vicSpriteInFrontAction:(id)sender;
-- (IBAction)vicSpriteSpriteCollisionAction:(id)sender;
-- (IBAction)vicSpriteBackgroundCollisionAction:(id)sender;
 - (IBAction)vicSpriteXAction:(id)sender;
 - (IBAction)vicSpriteYAction:(id)sender;
 - (IBAction)vicSpriteColorAction:(id)sender;
+- (IBAction)vicSpriteMulticolorAction:(id)sender;
+- (IBAction)vicSpriteStretchXAction:(id)sender;
+- (IBAction)vicSpriteStretchYAction:(id)sender;
+
+- (IBAction)vicSpriteSpriteCollisionAction:(id)sender;
+- (IBAction)vicSpriteBackgroundCollisionAction:(id)sender;
+
 - (IBAction)vicRasterlineAction:(id)sender;
 - (IBAction)vicEnableRasterInterruptAction:(id)sender;
 - (IBAction)vicRasterInterruptAction:(id)sender;
 - (IBAction)vicEnableOpenGL:(id)sender;
 
-- (int)currentSprite;
-
 - (void)refreshVIC;
-
-// Selected sprite in VIC debug panel
-// TODO: SHOULD BE RETRIEVED FROM VIEW
-// int selectedSprite;
 
 @end
