@@ -30,7 +30,7 @@
 		[[self document] updateChangeCount:NSChangeDone];
 	}
 	
-	/* Pause/Continue */
+	// Pause/Continue
 	if ([theItem tag] == 1) { 
 		if ([c64 isRunning]) {
 			[theItem setImage:[NSImage imageNamed:@"pause32"]];
@@ -42,12 +42,19 @@
 		return YES;
 	}
 	
-	/* Step into, Step out, Step over */
+	// Step into, Step out, Step over
 	if ([theItem tag] >= 2 && [theItem tag] <= 4) {
 		return ![c64 isRunning] && [c64 isRunnable];
 	}
     
-    /* All other items */
+    // VC1541
+    if ([theItem tag] == 20) {
+        if (![[c64 vc1541] hasDisk]) {
+            return NO;
+        }
+    }
+    
+    // All other items
     return YES;
 }
 
@@ -218,6 +225,11 @@
           contextInfo:NULL];	
 }
 
+- (IBAction)VC1541Action:(id)sender
+{
+    NSLog(@"VC1541 action");
+    [self showMountDialog];
+}
 
 - (IBAction)debugOpenAction:(id)sender
 {
