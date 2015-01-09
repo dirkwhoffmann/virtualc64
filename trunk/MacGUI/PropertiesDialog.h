@@ -49,10 +49,7 @@ extern NSString *VC64VideoFilterKey;
     MyController *controller;
     
 	/* System */
-	IBOutlet NSButtonCell *pal;
-	IBOutlet NSButtonCell *ntsc;
-	IBOutlet NSMatrix *palntsc;
-	IBOutlet NSButton *flag;
+    IBOutlet NSPopUpButton *machineType;
 	IBOutlet NSTextField *systemText1;
 	IBOutlet NSTextField *systemText2;
 	IBOutlet NSTextField *systemText3;
@@ -99,7 +96,6 @@ extern NSString *VC64VideoFilterKey;
 // System
 - (IBAction)setPalAction:(id)sender;
 - (IBAction)setNtscAction:(id)sender;
-- (IBAction)togglePalNtscAction:(id)sender;
 
 // VC 1541
 - (IBAction)warpLoadAction:(id)sender;

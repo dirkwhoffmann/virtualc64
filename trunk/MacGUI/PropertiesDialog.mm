@@ -93,15 +93,6 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 	[self update];	
 }
 
-- (IBAction)togglePalNtscAction:(id)sender
-{
-	if ([(NSButton *)sender state]) {
-		[self setNtscAction:self];
-	} else {
-		[self setPalAction:self];
-	}
-}
-
 - (IBAction)warpLoadAction:(id)sender
 {
 	[c64 setWarpLoad:[(NSButton *)sender state]];
@@ -173,17 +164,15 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 {	
 	/* System */
 	if ([c64 isPAL]) {
-		[palntsc selectCellWithTag:0];
+        [machineType selectItemWithTag:0];
 		[systemText1 setStringValue:@"PAL machine"];
 		[systemText2 setStringValue:@"0.985 MHz"];
 		[systemText3 setStringValue:@"63 cycles per rasterline"];
-		[flag setState:false];
 	} else {
-		[palntsc selectCellWithTag:1];
+        [machineType selectItemWithTag:1];
 		[systemText1 setStringValue:@"NTSC machine"];
 		[systemText2 setStringValue:@"1.022 MHz"];
 		[systemText3 setStringValue:@"65 cycles per rasterline"];
-		[flag setState:true];		
 	}
          
 	/* Peripherals */
