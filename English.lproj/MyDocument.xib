@@ -3764,7 +3764,7 @@ DQ
                     <popUpButton verticalHuggingPriority="750" id="2236">
                         <rect key="frame" x="346" y="102" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <popUpButtonCell key="cell" type="push" title="CCS64" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2301" id="2299">
+                        <popUpButtonCell key="cell" type="push" title="WIN64" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="6" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2307" id="2299">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="2300">
@@ -3775,16 +3775,12 @@ DQ
                                     <menuItem title="PC64" tag="3" id="2303"/>
                                     <menuItem title="C64S" tag="4" id="2305"/>
                                     <menuItem title="ALEC64" tag="5" id="2306"/>
-                                    <menuItem title="WIN64" tag="6" id="2307"/>
+                                    <menuItem title="WIN64" state="on" tag="6" id="2307"/>
                                     <menuItem title="C64ALIVE" tag="7" id="2309"/>
                                     <menuItem title="GODOT" tag="8" id="2310"/>
                                     <menuItem title="C64SALLY" tag="9" id="2311"/>
                                     <menuItem title="PEPTO" tag="10" id="2312"/>
                                     <menuItem title="GRAYSCALE" tag="11" id="2308"/>
-                                    <menuItem isSeparatorItem="YES" id="2313">
-                                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                    </menuItem>
-                                    <menuItem title="Custom palette" tag="255" id="2314"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -3804,46 +3800,6 @@ IAo
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autosizesCells="NO" id="2259">
-                        <rect key="frame" x="94" y="364" width="63" height="38"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        <size key="cellSize" width="63" height="18"/>
-                        <size key="intercellSpacing" width="4" height="2"/>
-                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="2288">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <cells>
-                            <column>
-                                <buttonCell type="radio" title="PAL" imagePosition="left" alignment="left" inset="2" id="2290">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <connections>
-                                        <action selector="setPalAction:" target="2228" id="2370"/>
-                                    </connections>
-                                </buttonCell>
-                                <buttonCell type="radio" title="NTSC" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="2289">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <connections>
-                                        <action selector="setNtscAction:" target="2228" id="2371"/>
-                                    </connections>
-                                </buttonCell>
-                            </column>
-                        </cells>
-                    </matrix>
-                    <button id="2258">
-                        <rect key="frame" x="156" y="347" width="72" height="59"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="flag_eu" imagePosition="above" alignment="center" alternateImage="flag_usa" inset="2" id="2291">
-                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="togglePalNtscAction:" target="2228" id="2372"/>
-                        </connections>
-                    </button>
                     <textField verticalHuggingPriority="750" id="2256">
                         <rect key="frame" x="230" y="374" width="147" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -3965,6 +3921,29 @@ DQ
                             <action selector="cancelPropertiesDialog:" target="-2" id="2396"/>
                         </connections>
                     </button>
+                    <popUpButton id="f9Q-5a-m2E" userLabel="System">
+                        <rect key="frame" x="83" y="362" width="125" height="42"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <popUpButtonCell key="cell" type="bevel" title="PAL" bezelStyle="regularSquare" imagePosition="left" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="SzA-cm-N1a" id="OAf-0Q-Gvn" userLabel="System">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="TAZ-lc-LBb">
+                                <items>
+                                    <menuItem title="PAL" state="on" image="flag_eu" id="SzA-cm-N1a">
+                                        <attributedString key="attributedTitle"/>
+                                        <connections>
+                                            <action selector="setPalAction:" target="2228" id="zwF-4J-S4v"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="NTSC" image="flag_usa" tag="1" id="XTY-T9-79E">
+                                        <connections>
+                                            <action selector="setNtscAction:" target="2228" id="onG-Ws-HE2"/>
+                                        </connections>
+                                    </menuItem>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
                 </subviews>
             </view>
             <connections>
@@ -3992,10 +3971,7 @@ DQ
                 <outlet property="eyeXSlider" destination="2233" id="2342"/>
                 <outlet property="eyeYSlider" destination="2232" id="2343"/>
                 <outlet property="eyeZSlider" destination="2234" id="2344"/>
-                <outlet property="flag" destination="2258" id="2336"/>
-                <outlet property="ntsc" destination="2289" id="2334"/>
-                <outlet property="pal" destination="2290" id="2333"/>
-                <outlet property="palntsc" destination="2259" id="2335"/>
+                <outlet property="machineType" destination="f9Q-5a-m2E" id="Rkz-qH-Oxi"/>
                 <outlet property="systemText1" destination="2260" id="2337"/>
                 <outlet property="systemText2" destination="2256" id="2338"/>
                 <outlet property="systemText3" destination="2257" id="2339"/>
