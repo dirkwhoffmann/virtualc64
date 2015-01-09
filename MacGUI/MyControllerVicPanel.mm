@@ -308,7 +308,7 @@
     VICProxy *vic = [c64 vic];
     
 	if (![VicVideoMode selectItemWithTag:[vic displayMode]])
-		[VicVideoMode selectItemWithTag:1];
+        NSLog(@"Can't refresh display mode field");
 	if (![VicScreenGeometry selectItemWithTag:[vic screenGeometry]])
 		NSLog(@"Can't refresh screen geometry field");
 	if (![VicMemoryBank selectItemWithTag:[vic memoryBankAddr]])

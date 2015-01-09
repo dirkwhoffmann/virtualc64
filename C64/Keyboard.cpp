@@ -30,6 +30,7 @@ Keyboard::Keyboard()
 		ASCII[i] = 0x0000;
 	}
 	
+    ASCII[(unsigned)'\n'] = 0x0001;
 	ASCII[(unsigned)' '] = 0x0704;
 	ASCII[(unsigned)'*'] = 0x0601;
 	ASCII[(unsigned)'+'] = 0x0500;
@@ -178,56 +179,6 @@ void Keyboard::releaseKey(char c)
 			rowcol &= 0x0FFF; // clear shift flag
 		}
 		releaseKey(rowcol >> 8, rowcol & 0xFF);
-	}
-}
-
-void Keyboard::typeRun()
-{
-	// RUN<RETURN>
-	uint8_t i, rowcol[] = { 2, 1,   3, 6,    4, 7,   0, 1 }; 
-
-	for (i = 0; i < sizeof(rowcol); i+= 2) {
-		pressKey(rowcol[i], rowcol[i+1]);
-		usleep(100000);
-		releaseKey(rowcol[i], rowcol[i+1]);
-	}
-}
-
-void Keyboard::typeFormat()
-{
-	debug(1, "typeFormat\n");
-	
-	// OPEN 1,8,15,"N:TEST, ID": CLOSE 1<RETURN>
-	unsigned i;
-	uint8_t rowcol1[] = { 4,6, 5,1, 1,6, 4,7, 7,4, 7,0, 5,7, 3,3, 5,7, 7,0, 2,0, 5,7 };
-	uint8_t rowcol2[] = { 4,7, 5,5, 2,6, 1,6, 1,5, 2,6, 5,7, 7,4, 4,1, 2,2 }; 
-	uint8_t rowcol3[] = { 5,5, 7,4, 2,4, 5,2, 4,6, 1,5, 1,6, 7,4, 7,0, 0,1 };
-	
-	for (i = 0; i < sizeof(rowcol1); i+= 2) {
-		pressKey(rowcol1[i], rowcol1[i+1]);
-		usleep(20000);
-		releaseKey(rowcol1[i], rowcol1[i+1]);
-	}
-	usleep(20000);
-	pressShiftKey(); pressKey(7,3);
-	usleep(20000);
-	releaseKey(7,3); releaseShiftKey();
-	usleep(20000);	
-
-	for (i = 0; i < sizeof(rowcol2); i+= 2) {
-		pressKey(rowcol2[i], rowcol2[i+1]);
-		usleep(20000);
-		releaseKey(rowcol2[i], rowcol2[i+1]);
-	}
-	usleep(20000);
-	pressShiftKey(); pressKey(7,3);
-	usleep(20000);
-	releaseKey(7,3); releaseShiftKey();
-	usleep(20000);	
-	for (i = 0; i < sizeof(rowcol3); i+= 2) {
-		pressKey(rowcol3[i], rowcol3[i+1]);
-		usleep(20000);
-		releaseKey(rowcol3[i], rowcol3[i+1]);
 	}
 }
 

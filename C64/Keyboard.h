@@ -85,10 +85,12 @@ public:
 	void pressCommodoreKey() { pressKey(7,5); }
 	//! Inform keyboard that the Runstop key has been pressen
 	void pressRunstopKey() { pressKey(7,7); }
-	//! Type "RUN<RETURN>"
-	void typeRun();
-	//! Type format command
-	void typeFormat();
+    //! Inform keyboard that the Clear key has been pressen
+    void pressClearKey() { pressShiftKey(); pressKey(6,3); }
+    //! Inform keyboard that the Home key has been pressen
+    void pressHomeKey() { pressKey(6,3); }
+    //! Inform keyboard that the Insert key has been pressen
+    void pressInsertKey() { pressShiftKey(); pressKey(0,0); }
 	
 	//! Inform keyboard about a released key (by keycode)
 	void releaseKey(uint8_t row, uint8_t col);	
@@ -100,7 +102,13 @@ public:
 	void releaseCommodoreKey() { releaseKey(7,5); }
 	//! Inform keyboard that the Runstop key has been released
 	void releaseRunstopKey() { releaseKey(7,7); }
-	
+    //! Inform keyboard that the Clear key has been released
+    void releaseClearKey() { releaseKey(6,3); releaseShiftKey(); }
+    //! Inform keyboard that the Home key has been released
+    void releaseHomeKey() { releaseKey(6,3); }
+    //! Inform keyboard that the Insert key has been released
+    void releaseInsertKey() { releaseKey(0,0); releaseShiftKey(); }
+
 	void releaseAll() { for (int i=0; i<8; i++) kbMatrix[i] = 0xff; }
 	//! Read the keyboard matrix
 	/*! /param columnMask determines the column bits to be read. */

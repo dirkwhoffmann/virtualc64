@@ -624,6 +624,8 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
         case INVALID_TEXT:
             col_rgba[0] = colors[BLACK];
             col_rgba[1] = colors[BLACK];
+            col_rgba[2] = colors[BLACK];
+            col_rgba[3] = colors[BLACK];
             multicol = (colorSpace & 0x8 /* MC flag */);
             break;
             
