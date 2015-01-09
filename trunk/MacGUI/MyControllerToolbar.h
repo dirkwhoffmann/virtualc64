@@ -27,6 +27,7 @@
 - (IBAction)portBAction:(id)sender;
 
 - (IBAction)propertiesAction:(id)sender;
+- (IBAction)VC1541Action:(id)sender;
 
 - (IBAction)debugOpenAction:(id)sender;
 - (IBAction)debugCloseAction:(id)sender;
