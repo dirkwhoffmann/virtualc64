@@ -84,41 +84,89 @@
 	[c64 fastReset];
 }
 
+// --------------------------------------------------------------------------------
+//                               Keyboard menu
+// --------------------------------------------------------------------------------
+
 - (IBAction)runstopAction:(id)sender
 {
-	NSLog(@"Rustop key pressed");
-	[[self document] updateChangeCount:NSChangeDone];
-	[[c64 keyboard] pressRunstopKey];
-	sleepMicrosec(100000);
-	[[c64 keyboard] releaseRunstopKey];	
-	[self refresh];
+    NSLog(@"Rustop key pressed");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 keyboard] pressRunstopKey];
+    sleepMicrosec(100000);
+    [[c64 keyboard] releaseRunstopKey];
+    [self refresh];
 }
 
 - (IBAction)runstopRestoreAction:(id)sender
 {
-	[[self document] updateChangeCount:NSChangeDone];
-	
-	[c64 keyboardPressRunstopRestore];
-	
-	[self refresh];
+    NSLog(@"Rustop Restore combination pressed");
+    [[self document] updateChangeCount:NSChangeDone];
+    
+    [c64 keyboardPressRunstopRestore];
+    
+    [self refresh];
 }
 
 - (IBAction)commodoreKeyAction:(id)sender
 {
-	NSLog(@"Commodore key pressed");
-	[[self document] updateChangeCount:NSChangeDone];
-	[[c64 keyboard] pressCommodoreKey];	
-	sleepMicrosec(100000);
-	[[c64 keyboard] releaseCommodoreKey];	
-	[self refresh];
+    NSLog(@"Commodore key pressed");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 keyboard] pressCommodoreKey];
+    sleepMicrosec(100000);
+    [[c64 keyboard] releaseCommodoreKey];
+    [self refresh];
+}
+
+- (IBAction)ClearKeyAction:(id)sender
+{
+    NSLog(@"Clear key pressed");
+
+    [[c64 keyboard] pressClearKey];
+    sleepMicrosec(100000);
+    [[c64 keyboard] releaseClearKey];
+}
+
+- (IBAction)HomeKeyAction:(id)sender
+{
+    NSLog(@"Home key pressed");
+
+    [[c64 keyboard] pressHomeKey];
+    sleepMicrosec(100000);
+    [[c64 keyboard] releaseHomeKey];
+}
+
+- (IBAction)InsertKeyAction:(id)sender
+{
+    NSLog(@"Insert key pressed");
+
+    [[c64 keyboard] pressInsertKey];
+    sleepMicrosec(100000);
+    [[c64 keyboard] releaseInsertKey];
+}
+
+- (IBAction)LoadDirectoryAction:(id)sender
+{
+    NSLog(@"LoadDirectoryAction");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 keyboard] typeText:@"LOAD \"$\",8"];
+    [self refresh];
+}
+
+- (IBAction)LoadFirstFileAction:(id)sender
+{
+    NSLog(@"LoadFirstFileAction");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 keyboard] typeText:@"LOAD \"*\",8,1"];
+    [self refresh];
 }
 
 - (IBAction)FormatDiskAction:(id)sender
 {
-	NSLog(@"Format disk");
-	[[self document] updateChangeCount:NSChangeDone];
-	[[c64 keyboard] typeFormat];	
-	[self refresh];
+    NSLog(@"FormatDiskAction");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 keyboard] typeText:@"OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1"];
+    [self refresh];
 }
 
 

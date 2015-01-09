@@ -280,12 +280,21 @@
 
 - (id) initWithKeyboard:(Keyboard *)kb;
 - (void) dump;
+
+- (void) pressKey:(char)c;
+- (void) releaseKey:(char)c;
 - (void) pressRunstopKey;
 - (void) releaseRunstopKey;
 - (void) pressCommodoreKey;
 - (void) releaseCommodoreKey;
-- (void) typeFormat;
-- (void) typeRun;
+- (void) pressClearKey;
+- (void) releaseClearKey;
+- (void) pressHomeKey;
+- (void) releaseHomeKey;
+- (void) pressInsertKey;
+- (void) releaseInsertKey;
+
+- (void) typeText:(NSString *)text;
 
 @end 
 

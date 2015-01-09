@@ -32,6 +32,11 @@
 - (IBAction)runstopAction:(id)sender;
 - (IBAction)runstopRestoreAction:(id)sender;
 - (IBAction)commodoreKeyAction:(id)sender;
+- (IBAction)ClearKeyAction:(id)sender;
+- (IBAction)HomeKeyAction:(id)sender;
+- (IBAction)InsertKeyAction:(id)sender;
+- (IBAction)LoadDirectoryAction:(id)sender;
+- (IBAction)LoadFirstFileAction:(id)sender;
 - (IBAction)FormatDiskAction:(id)sender;
 
 #pragma mark debug menu

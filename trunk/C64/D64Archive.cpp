@@ -464,7 +464,7 @@ D64Archive::selectItem(int item)
 {
 	fp = -1;
 	
-	fprintf(stderr, "selectItem:%d\n", item);
+	// fprintf(stderr, "selectItem:%d\n", item);
 
 	// check, if item exists
 	if (item >= getNumberOfItems())
@@ -474,7 +474,7 @@ D64Archive::selectItem(int item)
 	if ((fp = findDirectoryEntry(item)) < 0)
 		return;
 
-	fprintf(stderr, "First data sector: %02X, %02X", data[fp+0x03], data[fp+0x04]);
+	// fprintf(stderr, "First data sector: %02X, %02X", data[fp+0x03], data[fp+0x04]);
 
 	// find first data sector
 	if ((fp = offset(data[fp+0x03], data[fp+0x04])) < 0)
@@ -488,7 +488,7 @@ D64Archive::selectItem(int item)
 	fp += 2;
 
 	// We finally reached the first real data byte :-)
-	fprintf(stderr, "Item selected (%d,%d)\n", data[fp+0x03], data[fp+0x04]);
+	// fprintf(stderr, "Item selected (%d,%d)\n", data[fp+0x03], data[fp+0x04]);
 }
 
 int 
@@ -544,9 +544,9 @@ D64Archive::dumpSector(int track, int sector)
 {
 	int pos = offset(track, sector);
 	
-	printf("Sector %d/%d\n", track, sector);
+	fprintf(stderr, "Sector %d/%d\n", track, sector);
 	for (int i = 0; i < 256; i++) {
-		printf("%02X ", data[pos++]);
+		fprintf(stderr, "%02X ", data[pos++]);
 	}
 }
 
@@ -791,13 +791,13 @@ D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
 	uint8_t positionOfLastDataByte = data[pos + 1];
 	
 	if (positionOfLastDataByte == 0xFF) {
-		printf("%d/%d is full. ", track, sector);
+		// fprintf(stderr, "%d/%d is full. ", track, sector);
 		// No rool in this sector, proceed to next one
 		if (!nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */)) {
 			// Sorry, disk is full
 			return false;
 		}
-		printf("Switching to %d/%d\n", track, sector);
+		// fprintf(stderr, "Switching to %d/%d\n", track, sector);
 		// link previous sector with the new one 
 		data[pos++] = track;
 		data[pos] = sector;

@@ -26,7 +26,7 @@
 #define _C64_INC
 
 // #define NDEBUG // Diables all assertions (release versions, only)
-#define DEBUG_LEVEL 2
+#define DEBUG_LEVEL 1
 
 #include "basic.h"
 #include "VirtualComponent.h"

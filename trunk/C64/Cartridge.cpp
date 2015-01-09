@@ -219,20 +219,20 @@ bool Cartridge::exromIsHigh()
 
 void Cartridge::switchBank(int bankNumber)
 {
-	fprintf(stderr, "Switching to bank %d ... ", bankNumber);
+	// fprintf(stderr, "Switching to bank %d ... ", bankNumber);
 	Cartridge::Chip *chip = getChip(bankNumber);
 	if (chip != NULL) {
 		memcpy(&rom[chip->loadAddress], chip->rom, chip->size);
-		fprintf(stderr, "Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
+		// fprintf(stderr, "Banked %d bytes to 0x%04x", chip->size, chip->loadAddress);
 	} else {
-		fprintf(stderr, "Bank %d does not exist\n", bankNumber);
+		// fprintf(stderr, "Bank %d does not exist\n", bankNumber);
 	}
 	printf("\n");
 }
 
 void Cartridge::poke(uint16_t addr, uint8_t value)             
 {
-	fprintf(stderr, "Cartridge poke %04X %02x (%d)\n", addr, value, value);
+	// fprintf(stderr, "Cartridge poke %04X %02x (%d)\n", addr, value, value);
 	// 0xDE00 - 0xDEFF (I/O area 1)
 	// 0xDF00 - 0xDFFF (I/O area 2) 
 	if (addr >= 0xDE00 && addr <= 0xDFFF) {
@@ -248,7 +248,7 @@ void Cartridge::poke(uint16_t addr, uint8_t value)
 		if (type == Normal_Cartridge) {
 			
 		} else if (type == Simons_Basic && addr == 0xDE00) {
-			fprintf(stderr, "Switching to bank %d (%02X) ... ", 1, value);
+			// fprintf(stderr, "Switching to bank %d (%02X) ... ", 1, value);
 			// Simon banks the second chip into $A000-BFFF
 			if (value == 0x01) {
 				switchBank(1);

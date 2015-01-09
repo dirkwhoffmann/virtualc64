@@ -308,12 +308,50 @@
 }
 
 - (void) dump { keyboard->dumpState(); }
+- (void) pressKey:(char)c { keyboard->pressKey(c); }
+- (void) releaseKey:(char)c { keyboard->releaseKey(c); }
 - (void) pressRunstopKey { keyboard->pressRunstopKey(); }
 - (void) releaseRunstopKey { keyboard->releaseRunstopKey(); }
 - (void) pressCommodoreKey { keyboard->pressCommodoreKey(); }
 - (void) releaseCommodoreKey { keyboard->releaseCommodoreKey(); }
-- (void) typeFormat { keyboard->typeFormat(); }
-- (void) typeRun { keyboard->typeRun(); }
+- (void) pressClearKey { keyboard->pressClearKey(); }
+- (void) releaseClearKey { keyboard->releaseClearKey(); }
+- (void) pressHomeKey { keyboard->pressHomeKey(); }
+- (void) releaseHomeKey { keyboard->releaseHomeKey(); }
+- (void) pressInsertKey { keyboard->pressInsertKey(); }
+- (void) releaseInsertKey { keyboard->releaseInsertKey(); }
+
+- (void)typeText:(NSString *)text
+{
+    const unsigned MAXCHARS = 32;
+    unsigned i;
+    
+    for (i = 0; i < [text length] && i < MAXCHARS; i++) {
+        
+        unichar uc = [text characterAtIndex:i];
+        char c = (char)uc;
+        
+        if (isupper(c))
+            c = tolower(c);
+        
+        fprintf(stderr,"%c",c);
+        
+        [self pressKey:c];
+        usleep(20000);
+        [self releaseKey:c];
+        usleep(20000);
+    }
+    
+    if (i != [text length]) {
+        // Abbreviate text by three dots
+        for (i = 0; i < 3; i++) {
+            [self pressKey:'.'];
+            usleep(20000);
+            [self releaseKey:'.'];
+            usleep(20000);
+        }
+    }
+}
 
 @end
 

@@ -306,7 +306,7 @@
                     </button>
                     <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
                         <rect key="frame" x="41" y="4" width="16" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <connections>
                             <binding destination="2201" name="animate" keyPath="selection.iecBusIsBusy" id="2213"/>
                         </connections>
@@ -2785,7 +2785,7 @@
                                     <popUpButton verticalHuggingPriority="750" id="774">
                                         <rect key="frame" x="6" y="519" width="161" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="push" title="Extended BG Color" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="64" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="785" id="1780">
+                                        <popUpButtonCell key="cell" type="push" title="Invalid Multicolor Bitmap" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="112" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="ySZ-f5-Lkq" id="1780">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                             <menu key="menu" title="OtherViews" id="775">
@@ -2794,8 +2794,10 @@
                                                     <menuItem title="Multicolor Text" tag="16" id="776"/>
                                                     <menuItem title="Standard Bitmap" tag="32" id="777"/>
                                                     <menuItem title="Multicolor Bitmap" tag="48" id="786"/>
-                                                    <menuItem title="Extended BG Color" state="on" tag="64" id="785"/>
-                                                    <menuItem title="Invalid" tag="1" id="784"/>
+                                                    <menuItem title="Extended BG Color" tag="64" id="785"/>
+                                                    <menuItem title="Invalid Text" tag="80" id="784"/>
+                                                    <menuItem title="Invalid Standard Bitmap" tag="96" id="dAB-fv-3D5"/>
+                                                    <menuItem title="Invalid Multicolor Bitmap" state="on" tag="112" id="ySZ-f5-Lkq"/>
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
