@@ -20,22 +20,43 @@
 
 class Archive;
 
-@interface MountDialog : NSWindow
+@interface MountDialog : NSWindow <NSTableViewDelegate, NSTableViewDataSource>
 {
-	IBOutlet NSTextField *archiveName;
-	IBOutlet NSTextField *archiveType;
 	IBOutlet NSTableView *directory;
-	IBOutlet NSButton *mountButton;
-	IBOutlet NSButton *flashButton;
-	
-	Archive *archive;
+	IBOutlet NSButton *OKButton;
+    IBOutlet NSPopUpButton *loadOptions;
+    IBOutlet NSTextField *loadText;
+    IBOutlet NSTextField *warningText;
+    IBOutlet NSButton *writeProtect;
+    IBOutlet NSBox *diskIconFrame;
+    
+    Archive *archive;
+    NSString *selectedFile;
+    int selectedLoadOption;
 }
 
-- (void) initialize:(Archive *)archive;
+@property Archive *archive;
+@property NSString *selectedFile;
+@property int selectedLoadOption;
 
+- (void) initialize:(Archive *)archive;
+- (void)setSelectedLoadOption:(int)option;
+
+// Action methods
+- (IBAction)writeProtectAction:(id)sender;
+- (IBAction)loadOptionsAction:(id)sender;
+- (void)singleClickAction:(id)sender;
+- (void)doubleClickAction:(id)sender;
+
+// Table
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
-- (void)doubleClickAction:(id)sender;
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)row;
+
+// Misc
 - (int)getSelectedFile;
+- (NSString *)selectedFilename;
+- (NSString *)loadCommand;
+- (void)update;
 
 @end

@@ -1162,7 +1162,7 @@ void checkForOpenGLErrors()
 		
 		// Is it an archive?
 		if ([[controller document] setArchiveWithName:path]) {
-			[controller showMountDialog];			
+			[controller showMountDialog];
 			return YES;
 		}					
 	}
