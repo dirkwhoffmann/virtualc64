@@ -2474,7 +2474,8 @@ VIC::cycle58()
     setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     
     // Phi2.5 Fetch
-	sFirstAccess(0);
+    if (isPAL)
+        sFirstAccess(0);
     
     // Finalize
 	countX();
@@ -2672,7 +2673,7 @@ VIC::cycle63()
         sFirstAccess(2);
     
     // Finalize
-	countX();
+    countX();
 }
 
 void
@@ -2681,7 +2682,7 @@ VIC::cycle64() 	// NTSC only
     // Phi1.1 Frame logic
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch
-    rIdleAccess();
+    sSecondAccess(2);
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -2689,7 +2690,9 @@ VIC::cycle64() 	// NTSC only
     // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
 
-    // Phi2.5 Fetch
+     // Phi2.5 Fetch
+    sThirdAccess(2);
+    
     // Finalize
 	countX();
 }
@@ -2700,7 +2703,7 @@ VIC::cycle65() 	// NTSC only
     // Phi1.1 Frame logic
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch
-    rIdleAccess();
+    pAccess(3);
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -2709,6 +2712,7 @@ VIC::cycle65() 	// NTSC only
     setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
 
     // Phi2.5 Fetch
+    sFirstAccess(3);
     // Finalize
     countX();
 }

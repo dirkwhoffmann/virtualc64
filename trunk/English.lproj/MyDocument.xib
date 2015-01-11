@@ -465,7 +465,7 @@
                 <outlet property="delegate" destination="-2" id="2165"/>
                 <outlet property="initialFirstResponder" destination="262" id="316"/>
             </connections>
-            <point key="canvasLocation" x="-75" y="816.5"/>
+            <point key="canvasLocation" x="99" y="781.5"/>
         </window>
         <drawer preferredEdge="minX" leadingOffset="15" trailingOffset="15" id="35" userLabel="Debug Drawer">
             <size key="contentSize" width="300" height="473"/>
@@ -3096,7 +3096,7 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="1844" id="1017">
-                                    <rect key="frame" x="0.0" y="0.0" width="430" height="19"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="431" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3432,6 +3432,7 @@ DQ
                     </scroller>
                 </scrollView>
             </subviews>
+            <point key="canvasLocation" x="-582" y="348.5"/>
         </customView>
         <drawer leadingOffset="15" trailingOffset="15" id="2025" userLabel="Cheatbox Drawer">
             <size key="contentSize" width="210" height="473"/>
@@ -3769,7 +3770,7 @@ DQ
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="2300">
                                 <items>
-                                    <menuItem title="CCS64" state="on" id="2301"/>
+                                    <menuItem title="CCS64" id="2301"/>
                                     <menuItem title="VICE" tag="1" id="2302"/>
                                     <menuItem title="FRODO" tag="2" id="2304"/>
                                     <menuItem title="PC64" tag="3" id="2303"/>
