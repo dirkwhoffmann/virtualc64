@@ -3045,64 +3045,111 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1004" userLabel="MountDialog" customClass="MountDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="19" y="153" width="488" height="267"/>
+            <rect key="contentRect" x="19" y="153" width="488" height="314"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
             <value key="minSize" type="size" width="488" height="267"/>
             <view key="contentView" id="1005">
-                <rect key="frame" x="0.0" y="0.0" width="488" height="267"/>
+                <rect key="frame" x="0.0" y="7" width="488" height="314"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" id="1006">
-                        <rect key="frame" x="14" y="3" width="82" height="32"/>
+                    <textField verticalHuggingPriority="750" id="1025">
+                        <rect key="frame" x="339" y="64" width="124" height="54"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="1811">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" id="1815">
+                            <font key="font" metaFont="smallSystem"/>
+                            <string key="title">WARNING: 
+Flashing ist fast, but does not always work</string>
+                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="q3x-ap-LsB">
+                        <rect key="frame" x="77" y="23" width="315" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Text" id="UB9-Pc-0vD">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1027">
+                        <rect key="frame" x="20" y="282" width="448" height="5"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <textField verticalHuggingPriority="750" id="1031">
+                        <rect key="frame" x="200" y="290" width="89" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VC1541 drive" id="1816">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <popUpButton identifier="Load options" verticalHuggingPriority="750" id="yIn-rf-6xJ" userLabel="Load options">
+                        <rect key="frame" x="334" y="50" width="137" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="Load options" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" identifier="Load options" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="VNN-XE-VO5" userLabel="Load options">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="smallSystem"/>
+                            <menu key="menu" id="7H8-iy-Vua">
+                                <items>
+                                    <menuItem title="Load options" hidden="YES" id="XeE-db-dpd"/>
+                                    <menuItem title="Load at custom address" tag="1" id="eJB-H2-yne"/>
+                                    <menuItem title="Load at standard address" tag="2" id="RhC-YB-If7"/>
+                                    <menuItem title="Flash binary into memory" tag="3" id="29N-xy-sHB"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
                         <connections>
-                            <action selector="cancelMountDialog:" target="-2" id="1022"/>
+                            <action selector="loadOptionsAction:" target="1004" id="D7q-fq-xNA"/>
                         </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="1010">
-                        <rect key="frame" x="115" y="3" width="178" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Mount archive as disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="1812">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
+                    </popUpButton>
+                    <box autoresizesSubviews="NO" title="Archive name" borderType="line" id="3Y3-Wc-m3k">
+                        <rect key="frame" x="335" y="141" width="137" height="135"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <view key="contentView">
+                            <rect key="frame" x="1" y="1" width="135" height="119"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <imageView id="mSf-Ra-lAe">
+                                    <rect key="frame" x="17" y="13" width="101" height="97"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="diskette" id="xYz-Tm-iXo"/>
+                                </imageView>
+                            </subviews>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </box>
+                    <button id="sna-BJ-dds">
+                        <rect key="frame" x="342" y="120" width="121" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Write protected" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="h2S-lY-XLc">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
                         <connections>
-                            <action selector="endMountDialogAndMount:" target="-2" id="1037"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="1011">
-                        <rect key="frame" x="293" y="3" width="181" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Flash file into memory" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="1813">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="endMountDialogAndFlash:" target="-2" id="1023"/>
+                            <action selector="writeProtectAction:" target="1004" id="aAu-G7-5Gt"/>
                         </connections>
                     </button>
                     <scrollView horizontalLineScroll="19" horizontalPageScroll="0.0" verticalLineScroll="19" verticalPageScroll="0.0" usesPredominantAxisScrolling="NO" id="1016">
-                        <rect key="frame" x="20" y="97" width="448" height="141"/>
+                        <rect key="frame" x="19" y="53" width="311" height="223"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="eoY-tS-MLP">
                             <rect key="frame" x="1" y="17" width="446" height="123"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" headerView="1844" id="1017">
-                                    <rect key="frame" x="0.0" y="0.0" width="431" height="19"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="1844" id="1017">
+                                    <rect key="frame" x="0.0" y="0.0" width="294" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="filename" editable="NO" width="286" minWidth="40" maxWidth="1000" id="1018">
+                                        <tableColumn identifier="filename" editable="NO" width="216" minWidth="40" maxWidth="1000" id="1018">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="File name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -3128,7 +3175,7 @@ DQ
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="filesize" editable="NO" width="91.538089999999997" minWidth="25.53809" maxWidth="1000" id="1034">
+                                        <tableColumn identifier="filesize" editable="NO" width="25.53809" minWidth="25.53809" maxWidth="1000" id="1034">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -3149,7 +3196,7 @@ DQ
                             </subviews>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.0046403712296983757" horizontal="YES" id="1843">
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="1843">
                             <rect key="frame" x="1" y="124" width="446" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -3162,63 +3209,48 @@ DQ
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
-                    <textField verticalHuggingPriority="750" id="1020">
-                        <rect key="frame" x="100" y="246" width="212" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Archive" id="1814">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="1025">
-                        <rect key="frame" x="17" y="35" width="454" height="47"/>
+                    <button verticalHuggingPriority="750" id="1011">
+                        <rect key="frame" x="392" y="13" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="1815">
-                            <font key="font" metaFont="smallSystem"/>
-                            <string key="title">You have two options:
-  - Mount archive as a virtual floppy disk (more compatible, but slow)
-  - Flash selected file into memory (less compatible, but fast)</string>
-                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1027">
-                        <rect key="frame" x="20" y="86" width="448" height="5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" metaFont="system"/>
-                    </box>
-                    <textField verticalHuggingPriority="750" id="1031">
-                        <rect key="frame" x="17" y="246" width="89" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Archive name:" id="1816">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="1035">
-                        <rect key="frame" x="314" y="246" width="157" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Type" id="1817">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="1813">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="endMountDialog:" target="-2" id="1Xc-m0-SBP"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="eY8-2X-Y2A">
+                        <rect key="frame" x="14" y="13" width="82" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="FLP-6t-zU7">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancelMountDialog:" target="-2" id="Xcd-jb-ZZS"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <connections>
-                <outlet property="archiveName" destination="1020" id="1029"/>
-                <outlet property="archiveType" destination="1035" id="1036"/>
+                <outlet property="OKButton" destination="1011" id="92g-nh-FSO"/>
                 <outlet property="directory" destination="1017" id="1030"/>
+                <outlet property="diskIconFrame" destination="3Y3-Wc-m3k" id="ag6-0r-aZU"/>
                 <outlet property="flashButton" destination="1011" id="1033"/>
                 <outlet property="initialFirstResponder" destination="262" id="2199"/>
-                <outlet property="mountButton" destination="1010" id="1032"/>
+                <outlet property="loadOptions" destination="yIn-rf-6xJ" id="BSS-vr-fqc"/>
+                <outlet property="loadText" destination="q3x-ap-LsB" id="b0U-hV-2Ho"/>
+                <outlet property="warningText" destination="1025" id="EaN-ow-O7c"/>
+                <outlet property="writeProtect" destination="sna-BJ-dds" id="6dN-c2-aft"/>
             </connections>
-            <point key="canvasLocation" x="-419" y="-58.5"/>
+            <point key="canvasLocation" x="-419" y="-35"/>
         </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1872" userLabel="RomDialog" customClass="RomDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
@@ -4012,6 +4044,7 @@ DQ
         <image name="bottom" width="24" height="24"/>
         <image name="cartridge" width="18" height="18"/>
         <image name="debugger32" width="34" height="35"/>
+        <image name="diskette" width="101" height="97"/>
         <image name="drive48" width="101" height="97"/>
         <image name="flag_eu" width="67" height="42"/>
         <image name="flag_usa" width="67" height="41"/>

@@ -406,9 +406,9 @@
 
 			// Check for attached archive
 			if ([[self document] archive]) {
-				NSLog(@"Found attached archive");
-				[self showMountDialog];
-			}
+                NSLog(@"Found attached archive");
+                [self showMountDialog];
+            }
 			
 			break;
 						
@@ -783,6 +783,7 @@
 	[NSApp endSheet:mountDialog returnCode:1];
 }
 
+#if 0
 - (IBAction)endMountDialogAndMount:(id)sender
 {
 	// Rotate C64 screen
@@ -796,9 +797,16 @@
 	
 	[c64 mountArchive:[[self document] archive]];
 }
+#endif
 
-- (IBAction)endMountDialogAndFlash:(id)sender
+- (IBAction)endMountDialog:(id)sender
 {
+    NSString *toDo =[mountDialog loadCommand];
+    int loadOption = [mountDialog selectedLoadOption];
+         
+    NSLog(@"loadOption: %ld", (long)loadOption);
+    NSLog(@"loadCommand: %@", toDo);
+    
 	// Rotate C64 screen
 	[screen rotate];
 	
@@ -811,15 +819,41 @@
 	// Try to mount archive
 	[c64 mountArchive:[[self document] archive]];
 	
-	// Load clean image 
-	// [c64 fastReset];
-	
-	// Flash selected file into memory
-	[c64 flushArchive:[[self document] archive] item:[mountDialog getSelectedFile]];
-	
-	// Wait and type "RUN"
-	usleep(1000000);
-	[[c64 keyboard] typeText:@"RUN\n"];
+    // Return here if we only had to mount the image
+    if ([toDo length] == 0) {
+        NSLog(@"Nothing to load");
+        return;
+    }
+
+    // Load file
+    switch (loadOption) {
+
+        case 1: /* ,8,1 */
+        case 2: /* ,8 */
+            
+            // Wait and type
+            NSLog(@"Typing %@", toDo);
+            usleep(100000);
+            [[c64 keyboard] typeText:toDo];
+            [[c64 keyboard] typeText:@"\n"];
+            break;
+            
+        case 3: /* Flash */
+
+            // Load clean image
+            // [c64 fastReset];
+            
+            // Flash selected file into memory
+            [c64 flushArchive:[[self document] archive] item:[mountDialog getSelectedFile]];
+            
+            // Wait and type "RUN"
+            usleep(100000);
+            [[c64 keyboard] typeText:@"RUN\n"];
+            break;
+            
+        default:
+            assert(false);
+    }
 }
 
 // --------------------------------------------------------------------------------

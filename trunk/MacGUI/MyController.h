@@ -325,7 +325,7 @@ enum INPUT_DEVICES {
 - (IBAction)cancelRomDialog:(id)sender;
 - (BOOL)showMountDialog; 
 - (IBAction)cancelMountDialog:(id)sender;
-- (IBAction)endMountDialogAndMount:(id)sender;
-- (IBAction)endMountDialogAndFlash:(id)sender;
+// - (IBAction)endMountDialogAndMount:(id)sender;
+- (IBAction)endMountDialog:(id)sender;
 
 @end
