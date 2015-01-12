@@ -758,12 +758,29 @@
 	// [NSApp endSheet:romDialog returnCode:1];
 }
 
-- (BOOL)showMountDialog
+- (bool)showDriveContentsDialog
+{
+    if ([[self document] archive] == NULL)
+        return NO;
+    
+    [mountDialog initialize:[[self document] archive] c64proxy:c64 mountBeforeLoading:NO];
+    
+    [NSApp beginSheet:mountDialog
+       modalForWindow:[[self document] windowForSheet]
+        modalDelegate:self
+       didEndSelector:NULL
+          contextInfo:NULL];
+    
+    return YES;
+}
+
+- (bool)showMountDialog
 {
 	if ([[self document] archive] == NULL)
 		return NO;
 	
-	[mountDialog initialize:[[self document] archive]];
+    [mountDialog initialize:[[self document] archive] c64proxy:c64 mountBeforeLoading:YES];
+     
 	
 	[NSApp beginSheet:mountDialog
 	   modalForWindow:[[self document] windowForSheet]
@@ -801,14 +818,18 @@
 
 - (IBAction)endMountDialog:(id)sender
 {
-    NSString *toDo =[mountDialog loadCommand];
-    int loadOption = [mountDialog selectedLoadOption];
-         
-    NSLog(@"loadOption: %ld", (long)loadOption);
-    NSLog(@"loadCommand: %@", toDo);
+    NSString *textToType =[mountDialog loadCommand];
+    bool doMount = [mountDialog doMount];
+    bool doType = [mountDialog doType];
+    bool doFlash = [mountDialog doFlash];
+
+    NSLog(@"Should mount: %ld", (long)doMount);
+    NSLog(@"Should flash: %ld", (long)doFlash);
+    NSLog(@"Should type:  %ld (%@)", (long)doType, textToType);
     
 	// Rotate C64 screen
-	[screen rotate];
+    if (doMount || doFlash)
+        [screen rotate];
 	
 	// Hide sheet
 	[mountDialog orderOut:sender];
@@ -816,43 +837,24 @@
 	// Return to normal event handling
 	[NSApp endSheet:mountDialog returnCode:1];
 	
-	// Try to mount archive
-	[c64 mountArchive:[[self document] archive]];
-	
-    // Return here if we only had to mount the image
-    if ([toDo length] == 0) {
-        NSLog(@"Nothing to load");
-        return;
+	// Mount image if requested
+    if (doMount) {
+        if (![c64 mountArchive:[[self document] archive]]) {
+            NSLog(@"FAILED TO MOUNT ARCHIVE");
+        }
     }
-
-    // Load file
-    switch (loadOption) {
-
-        case 1: /* ,8,1 */
-        case 2: /* ,8 */
-            
-            // Wait and type
-            NSLog(@"Typing %@", toDo);
-            usleep(100000);
-            [[c64 keyboard] typeText:toDo];
-            [[c64 keyboard] typeText:@"\n"];
-            break;
-            
-        case 3: /* Flash */
-
-            // Load clean image
-            // [c64 fastReset];
-            
-            // Flash selected file into memory
-            [c64 flushArchive:[[self document] archive] item:[mountDialog getSelectedFile]];
-            
-            // Wait and type "RUN"
-            usleep(100000);
-            [[c64 keyboard] typeText:@"RUN\n"];
-            break;
-            
-        default:
-            assert(false);
+    
+    // Flash data if requested
+    if (doFlash) {
+        [c64 flushArchive:[[self document] archive] item:[mountDialog selection]];
+    }
+    
+    // Type command if requested
+    if (doType) {
+        NSLog(@"Typing %@", textToType);
+        usleep(100000);
+        [[c64 keyboard] typeText:textToType];
+        [[c64 keyboard] typeText:@"\n"];
     }
 }
 

@@ -21,97 +21,135 @@
 @implementation MountDialog
 
 @synthesize archive;
-@synthesize selectedFile;
-// @synthesize selectedLoadOption;
+@synthesize doMount;
+@synthesize doFlash;
+@synthesize doType;
 
-- (void) initialize:(Archive *)a
+- (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy mountBeforeLoading:(bool)mount
 {
 	assert(a != NULL);
 
     archive = a;
-    selectedLoadOption = 1;
-
+    loadOption = 1;
+    selectedRow = -1;
+    
+    c64 = proxy;
+    doMount = mount;
+    
+    [CancelButton setHidden:!cancel];
+    
     NSString *archiveName = [NSString stringWithFormat:@"%s", archive->getName()];
     NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
     NSString *archiveLastPath = [archivePath lastPathComponent];
+    NSString *archiveExtension = [archiveLastPath pathExtension];
     
     [[[directory tableColumnWithIdentifier:@"filename"] headerCell] setStringValue:archiveName];
-    [diskIconFrame setTitle:archiveLastPath];
     
-    
-    [directory setTarget:self];
-    [directory setAction:@selector(singleClickAction:)];
-	[directory setDoubleAction:@selector(doubleClickAction:)];
+    if ([archiveExtension isEqualToString:@"T64"])
+        [diskIcon setImage:[NSImage imageNamed:@"IconT64"]];
+    else if ([archiveExtension isEqualToString:@"D64"])
+        [diskIcon setImage:[NSImage imageNamed:@"IconD64"]];
+    else if ([archiveExtension isEqualToString:@"PRG"])
+        [diskIcon setImage:[NSImage imageNamed:@"IconPRG"]];
+    else if ([archiveExtension isEqualToString:@"P00"])
+        [diskIcon setImage:[NSImage imageNamed:@"IconP00"]];
 
-    [self update];
+    // NSLog(@"path %@",archivePath);
+    // NSLog(@"lastPath %@",archiveLastPath);
+    // NSLog(@"extension %@",archiveExtension);
+
+    [diskIconFrame setTitle:archiveLastPath];
+    // [writeProtect setTag:[[c64prox VC1541Proxy] writeProtection];
+    
+    [directory deselectAll:self];
+    [directory setTarget:self];
     [directory setDelegate:self];
     [directory setDataSource:self];
+    [directory setAction:@selector(singleClickAction:)];
+	[directory setDoubleAction:@selector(doubleClickAction:)];
 	[directory reloadData];
+
+    [self update];
+
 }
+
+- (int)selection
+{
+    return [directory selectedRow];
+}
+
+- (NSString *)selectedFilename
+{
+    NSString *result;
+    
+    if ([directory selectedRow] < 0) {
+        result = @"";
+    } else {
+        result = [NSString stringWithFormat:@"%s", archive->getNameOfItem([directory selectedRow])];
+    }
+    
+    return result;
+}
+
 
 - (NSString *)loadCommand
 {
-    NSString *s;
     
-    switch (selectedLoadOption) {
+    if ([directory selectedRow] < 0)
+        return @"";
+
+    NSString *name = [self selectedFilename];
+                      
+    switch (loadOption) {
             
         case 1:
-            [warningText setHidden:YES];
-            
-            if ([directory selectedRow] < 0) {
-                s = [NSString stringWithFormat:@""];
-            } else {
-                s = [NSString stringWithFormat:@"LOAD \"%@\",8,1", [self selectedFilename]];
-            }
-            break;
+            return [NSString stringWithFormat:@"LOAD \"%@\",8,1", name];
             
         case 2:
-            [warningText setHidden:YES];
-            
-            if ([directory selectedRow] < 0) {
-                s = [NSString stringWithFormat:@""];
-            } else {
-                s = [NSString stringWithFormat:@"LOAD \"%@\",8", [self selectedFilename]];
-            }
-            break;
+            return [NSString stringWithFormat:@"LOAD \"%@\",8", name];
             
         case 3:
-            [warningText setHidden:NO];
-            
-            if ([directory selectedRow] < 0) {
-                s = [NSString stringWithFormat:@""];
-            } else {
-                s = [NSString stringWithFormat:@"Flash %@ into memory", [self selectedFilename]];
-            }
-            break;
+            return [NSString stringWithFormat:@"RUN"];
             
         default:
             assert(false);
     }
 
-    // Remove spaces from the end
-    int i;
-    for (i = s.length - 1; i >= 0 && [s characterAtIndex:i] == ' '; i--);
-    return [s substringToIndex:i+1];
+    return nil;
 }
 
 - (void)update
 {
-    [loadText setStringValue:[self loadCommand]];
-    [warningText setHidden:(selectedLoadOption != 3 || [directory selectedRow] < 0)];
-    [OKButton setTitle:([directory selectedRow] < 0) ? @"Mount" : @"Load"];
+    NSString *cmd = [self loadCommand];
+    
+    doType = ([directory selectedRow] >= 0);
+    doFlash = (loadOption == 3 && [directory selectedRow] >= 0);
+
+    [loadText setStringValue:cmd];
+    [loadOptions setEnabled:doType];
+    [warningText setHidden:loadOption != 3];
+    if (doMount && doFlash) {
+        [CancelButton setHidden:NO];
+        [OKButton setTitle:@"Insert and flash"];
+    } else if (doFlash) {
+        [CancelButton setHidden:NO];
+        [OKButton setTitle:@"Flash"];
+    } else if (doMount && doType) {
+        [CancelButton setHidden:NO];
+        [OKButton setTitle:@"Insert and load"];
+    } else if (doType) {
+        [CancelButton setHidden:NO];
+        [OKButton setTitle:@"Load"];
+    } else if (doMount) {
+        [CancelButton setHidden:NO];
+        [OKButton setTitle:@"Insert disc"];
+    } else {
+        [CancelButton setHidden:YES];
+        [OKButton setTitle:@"OK"];
+    }
 }
 
-- (int)selectedLoadOption
-{
-    return selectedLoadOption;
-}
-
-- (void)setSelectedLoadOption:(int)option
-{
-    selectedLoadOption = option;
-    [self update];
- }
+#pragma mark NSTableViewDataSource
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
@@ -135,6 +173,8 @@
 	return @"???";
 }
 
+#pragma mark NSTableViewDelegate
+
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)row
 {
     NSLog(@"Should select");
@@ -154,6 +194,7 @@
     return cell;
 }
 
+#pragma mark Action methods
 
 - (IBAction)writeProtectAction:(id)sender
 {
@@ -166,36 +207,24 @@
 
 - (IBAction)loadOptionsAction:(id)sender
 {
-    selectedLoadOption = [[sender selectedItem] tag];
-    NSLog(@"%d %d", (int)[[sender selectedItem] tag], (int)selectedLoadOption);
+    loadOption = [[sender selectedItem] tag];
     [self update];
 }
 
 - (void)singleClickAction:(id)sender
 {
-    NSLog(@"singleClickAction");
-    [self update];
+    if (selectedRow == [directory selectedRow]) {
+        selectedRow = -1;
+        [directory deselectAll:self];
+    } else {
+        selectedRow = [directory selectedRow];
+        [self update];
+    }
 }
 
 - (void)doubleClickAction:(id)sender
 {
-	NSLog(@"doubleClickAction");
 	[OKButton performClick:self];
-}
-
-- (int)getSelectedFile
-{
-	int row = [directory selectedRow];
-	return (row < 0) ? 0 : row;
-}
-
-- (NSString *)selectedFilename
-{
-    if ([directory selectedRow] < 0) {
-        return @"*";
-    } else {
-        return [NSString stringWithFormat:@"%s", archive->getNameOfItem([directory selectedRow])];
-    }
 }
 
 @end

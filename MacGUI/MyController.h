@@ -323,7 +323,8 @@ enum INPUT_DEVICES {
 // Dialogs
 - (IBAction)cancelPropertiesDialog:(id)sender;
 - (IBAction)cancelRomDialog:(id)sender;
-- (BOOL)showMountDialog; 
+- (bool)showDriveContentsDialog;
+- (bool)showMountDialog;
 - (IBAction)cancelMountDialog:(id)sender;
 // - (IBAction)endMountDialogAndMount:(id)sender;
 - (IBAction)endMountDialog:(id)sender;

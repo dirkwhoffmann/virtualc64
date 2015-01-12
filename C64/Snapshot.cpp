@@ -68,8 +68,14 @@ Snapshot::dealloc()
 	timestamp = (time_t)0;
 }
 
+Container::ContainerType
+Snapshot::getType()
+{
+    return V64_CONTAINER;
+}
+
 const char *
-Snapshot::getTypeOfContainer() 
+Snapshot::getTypeAsString() 
 {
 	return "V64";
 }

@@ -61,11 +61,18 @@ T64Archive::archiveFromFile(const char *filename)
 	}
 	
 	fprintf(stderr, "T64 archive loaded successfully.\n");
+    fprintf(stderr, "%s\n",archive->getPath());
 	return archive;
 }
 
+Container::ContainerType
+T64Archive::getType()
+{
+    return T64_CONTAINER;
+}
+
 const char *
-T64Archive::getTypeOfContainer() 
+T64Archive::getTypeAsString() 
 {
 	return "T64";
 }

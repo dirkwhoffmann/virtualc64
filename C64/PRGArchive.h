@@ -56,7 +56,8 @@ public:
 	bool readFromBuffer(const void *buffer, unsigned length);
 	bool readDataFromFile(FILE *file, struct stat fileProperties);
 	void dealloc();
-	const char *getTypeOfContainer();
+    ContainerType getType();
+	const char *getTypeAsString();
 	
 	// Virtual functions from Archive class
 	int getNumberOfItems();

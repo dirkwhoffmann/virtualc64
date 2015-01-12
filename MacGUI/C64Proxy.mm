@@ -323,7 +323,7 @@
 
 - (void)typeText:(NSString *)text
 {
-    const unsigned MAXCHARS = 32;
+    const unsigned MAXCHARS = 64;
     unsigned i;
     
     for (i = 0; i < [text length] && i < MAXCHARS; i++) {
@@ -450,7 +450,8 @@
 - (void) ejectDisk { vc1541->ejectDisc(); }
 - (bool) hasRedLED { return vc1541->hasRedLED(); }
 - (bool) hasDisk { return vc1541->hasDisk(); }
-
+- (bool) writeProtection { return vc1541->writeProtection; }
+- (void) setWriteProtection:(bool)b { vc1541->setWriteProtection(b); }
 @end
 
 // --------------------------------------------------------------------------

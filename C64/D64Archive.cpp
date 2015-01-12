@@ -177,8 +177,14 @@ D64Archive::archiveFromOtherArchive(Archive *otherArchive)
 }
 
 
+Container::ContainerType
+D64Archive::getType()
+{
+    return D64_CONTAINER;
+}
+
 const char *
-D64Archive::getTypeOfContainer() 
+D64Archive::getTypeAsString()
 {
 	return "D64";
 }
@@ -825,9 +831,12 @@ D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
 bool 
 D64Archive::writeArchive(Archive *archive)
 {	
-	// Current position of data write ptr
+    // Copy file path
+    setPath(archive->getPath());
+    
+    // Current position of data write ptr
 	uint8_t track = 1, sector = 0;
-		
+
 	// Clear all tracks and sectors
 	clear();
 	
@@ -856,7 +865,7 @@ D64Archive::writeArchive(Archive *archive)
 	}
 
 	// All items have been written to disk
-	writeToFile("/Users/hoff/tmp/test.d64");
+	// writeToFile("/Users/hoff/tmp/test.d64");
 	
 	return true;
 }

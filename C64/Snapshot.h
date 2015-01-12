@@ -86,7 +86,8 @@ public:
 	bool writeDataToFile(FILE *file, struct stat fileProperties);
 	
 	void dealloc();
-	const char *getTypeOfContainer();
+    ContainerType getType();
+	const char *getTypeAsString();
 	
 	//! Returns pointer to core data
 	uint8_t *getData() { return fileContents.data; }

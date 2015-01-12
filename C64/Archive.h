@@ -34,7 +34,7 @@ public:
 	
 	//! Search directory for filename and return item number
 	/*! Returns -1, if the file is not found.
-		The function supports the wildcard characters '?' and '*' */
+		Function supports wildcard characters '?' and '*' */
 	int getItemWithName(char *filename);
 			
 	//! Number of stored items
