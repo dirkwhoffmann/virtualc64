@@ -106,7 +106,8 @@ public:
 	bool fileIsValid(const char *filename);
 	bool readFromBuffer(const void *buffer, unsigned length);
 	void dealloc();
-	const char *getTypeOfContainer();
+    ContainerType getType();
+    const char *getTypeAsString();
 	const char *getName();
 	
 	// Virtual functions from Archive class

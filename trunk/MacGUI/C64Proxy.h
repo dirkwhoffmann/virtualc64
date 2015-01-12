@@ -370,7 +370,8 @@
 - (void) ejectDisk;
 - (bool) hasRedLED;
 - (bool) hasDisk;
-
+- (bool) writeProtection;
+- (void) setWriteProtection:(bool)b;
 @end
 
 

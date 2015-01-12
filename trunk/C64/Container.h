@@ -46,20 +46,36 @@ protected:
 
 public:
 	
+    enum ContainerType {
+        CRT_CONTAINER = 1, // Cartridge
+        V64_CONTAINER,     // Snapshot
+        T64_CONTAINER,
+        D64_CONTAINER,
+        PRG_CONTAINER,
+        P00_CONTAINER,
+        FILE_CONTAINER
+    };
+    
 	//! Constructor
 	Container();
 	
 	//! Destructor
 	virtual ~Container();
 			
-	//! Return physical name
+	//! Get physical name
 	 const char *getPath();
 
-	//! Return logical name (can be overwritten by sub classes)
+    //! Set physical name
+    void setPath(const char *path);
+
+	//! Get logical name (can be overwritten by sub classes)
 	virtual const char *getName();
-	
-	//! Type of container in plain text (T64, D64, PRG, ...)
-	virtual const char *getTypeOfContainer() = 0;
+
+    //! Type of container
+    virtual Container::ContainerType getType() = 0;
+
+    //! Type of container in plain text ("T64", "D64", "PRG", ...)
+	virtual const char *getTypeAsString() = 0;
 	
 	//! Read container data from memory buffer
 	virtual bool readFromBuffer(const void *buffer, unsigned length);

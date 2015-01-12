@@ -228,7 +228,8 @@
 - (IBAction)VC1541Action:(id)sender
 {
     NSLog(@"VC1541 action");
-    [self showMountDialog];
+    
+    [self showDriveContentsDialog];
 }
 
 - (IBAction)debugOpenAction:(id)sender

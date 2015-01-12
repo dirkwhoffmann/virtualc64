@@ -3064,7 +3064,7 @@ Flashing ist fast, but does not always work</string>
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="q3x-ap-LsB">
-                        <rect key="frame" x="77" y="23" width="315" height="14"/>
+                        <rect key="frame" x="96" y="23" width="236" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Text" id="UB9-Pc-0vD">
                             <font key="font" metaFont="smallSystem"/>
@@ -3124,7 +3124,7 @@ Flashing ist fast, but does not always work</string>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <button id="sna-BJ-dds">
+                    <button hidden="YES" id="sna-BJ-dds">
                         <rect key="frame" x="342" y="120" width="121" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Write protected" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="h2S-lY-XLc">
@@ -3143,7 +3143,7 @@ Flashing ist fast, but does not always work</string>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="1844" id="1017">
-                                    <rect key="frame" x="0.0" y="0.0" width="294" height="19"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="289" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3162,7 +3162,7 @@ Flashing ist fast, but does not always work</string>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="filetype" editable="NO" width="43.538089999999997" minWidth="29.53809" maxWidth="1000" id="1019">
+                                        <tableColumn identifier="filetype" editable="NO" width="32" minWidth="32" maxWidth="1000" id="1019">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Type">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -3175,7 +3175,7 @@ Flashing ist fast, but does not always work</string>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="filesize" editable="NO" width="25.53809" minWidth="25.53809" maxWidth="1000" id="1034">
+                                        <tableColumn identifier="filesize" editable="NO" width="32" minWidth="32" maxWidth="1000" id="1034">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -3210,7 +3210,7 @@ Flashing ist fast, but does not always work</string>
                         </tableHeaderView>
                     </scrollView>
                     <button verticalHuggingPriority="750" id="1011">
-                        <rect key="frame" x="392" y="13" width="82" height="32"/>
+                        <rect key="frame" x="331" y="13" width="143" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="1813">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3240,8 +3240,10 @@ Gw
                 </subviews>
             </view>
             <connections>
+                <outlet property="CancelButton" destination="eY8-2X-Y2A" id="OTb-tI-pNz"/>
                 <outlet property="OKButton" destination="1011" id="92g-nh-FSO"/>
                 <outlet property="directory" destination="1017" id="1030"/>
+                <outlet property="diskIcon" destination="mSf-Ra-lAe" id="6Vx-YJ-LxN"/>
                 <outlet property="diskIconFrame" destination="3Y3-Wc-m3k" id="ag6-0r-aZU"/>
                 <outlet property="flashButton" destination="1011" id="1033"/>
                 <outlet property="initialFirstResponder" destination="262" id="2199"/>

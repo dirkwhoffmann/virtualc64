@@ -245,8 +245,9 @@ public:
 	bool readFromBuffer(const void *buffer, unsigned length);
 	
 	void dealloc();
-	
-	const char *getTypeOfContainer();
+
+    ContainerType getType();
+	const char *getTypeAsString();
 	
 	//! The GAME line status
 	bool gameIsHigh();

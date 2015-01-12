@@ -193,8 +193,14 @@ Cartridge::dealloc()
 	}
 }
 
+Container::ContainerType
+Cartridge::getType()
+{
+    return CRT_CONTAINER;
+}
+
 const char *
-Cartridge::getTypeOfContainer()
+Cartridge::getTypeAsString()
 {
 	return "CRT";
 }

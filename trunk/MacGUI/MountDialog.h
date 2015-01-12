@@ -24,23 +24,39 @@ class Archive;
 {
 	IBOutlet NSTableView *directory;
 	IBOutlet NSButton *OKButton;
+    IBOutlet NSButton *CancelButton;
     IBOutlet NSPopUpButton *loadOptions;
     IBOutlet NSTextField *loadText;
     IBOutlet NSTextField *warningText;
     IBOutlet NSButton *writeProtect;
+    IBOutlet NSImageView *diskIcon;
     IBOutlet NSBox *diskIconFrame;
     
+    // Internal state
     Archive *archive;
-    NSString *selectedFile;
-    int selectedLoadOption;
+    C64Proxy *c64;
+    int loadOption;
+    int selectedRow;
+    
+    // Configuration
+    bool showEjectButton;
+    bool showCancelButton;
+
+    // Todo items (when window closes)
+    bool doMount;
+    bool doFlash;
+    bool doType;
 }
 
-@property Archive *archive;
-@property NSString *selectedFile;
-@property int selectedLoadOption;
+// @property(readonly) int loadOption;
+@property(readonly) Archive *archive;
+@property(readonly) bool doMount;
+@property(readonly) bool doFlash;
+@property(readonly) bool doType;
 
-- (void) initialize:(Archive *)archive;
-- (void)setSelectedLoadOption:(int)option;
+
+// Initialization
+- (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy mountBeforeLoading:(bool)mount;
 
 // Action methods
 - (IBAction)writeProtectAction:(id)sender;
@@ -54,7 +70,7 @@ class Archive;
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)row;
 
 // Misc
-- (int)getSelectedFile;
+- (int)selection;
 - (NSString *)selectedFilename;
 - (NSString *)loadCommand;
 - (void)update;
