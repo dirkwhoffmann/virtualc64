@@ -456,6 +456,7 @@ VC1541::insertDisc(D64Archive *a)
 	}
 
     diskInserted = true;
+    setWriteProtection(a->writeProtection);
 	c64->putMessage(MSG_VC1541_DISC, 1);
 }
 

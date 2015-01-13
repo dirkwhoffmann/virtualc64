@@ -537,17 +537,19 @@ uint8_t VIA2::peek(uint16_t addr)
 	switch(addr) {
 		case 0x00:
 			// Bit 4: 0 = disc is write protected
-			if (floppy->isWriteProtected())
+            if (floppy->isWriteProtected()) {
 				orb &= 0xEF;
-			else
+            } else {
 				orb |= 0x10;
-				
+            }
+            
 			// Bit 7: 0 = SYNC mark
-			if (floppy->readHead() == 0xFF)
+            if (floppy->readHead() == 0xFF) {
 				orb &= 0x7F;
-			else
+            } else {
 				orb |= 0x80;
-	
+            }
+            
 			return orb;
 
 		case 0x01:
