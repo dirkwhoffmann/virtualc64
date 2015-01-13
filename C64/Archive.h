@@ -32,6 +32,9 @@ public:
 	//! Destructor
 	virtual ~Archive();
 	
+    //! Write protection flag
+    bool writeProtection;
+    
 	//! Search directory for filename and return item number
 	/*! Returns -1, if the file is not found.
 		Function supports wildcard characters '?' and '*' */

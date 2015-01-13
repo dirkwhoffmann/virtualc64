@@ -36,7 +36,10 @@
     c64 = proxy;
     doMount = mount;
     
-    [CancelButton setHidden:!cancel];
+    // Only show write protection check box if a disc will be inserted
+    // Otherwise, VC1541 gets confused
+    // (changing the protecting mark would be interpreted a as disc removal) 
+    [writeProtect setHidden:!mount];
     
     NSString *archiveName = [NSString stringWithFormat:@"%s", archive->getName()];
     NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
@@ -59,7 +62,6 @@
     // NSLog(@"extension %@",archiveExtension);
 
     [diskIconFrame setTitle:archiveLastPath];
-    [writeProtect setTag:[[proxy vc1541] writeProtection]];
     
     [directory deselectAll:self];
     [directory setTarget:self];
@@ -128,8 +130,8 @@
     [loadText setStringValue:cmd];
     [loadOptions setEnabled:doType];
     [warningText setHidden:loadOption != 3];
-    [writeProtect setIntValue:[[c64 vc1541] writeProtection]];
-     
+    [writeProtect setIntValue:archive->writeProtection];
+    
     if (doMount && doFlash) {
         [CancelButton setHidden:NO];
         [OKButton setTitle:@"Insert and flash"];
@@ -202,10 +204,10 @@
 {
     if ([sender intValue]) {
         NSLog(@"Write protection");
-        [[c64 vc1541] setWriteProtection:YES];
+        archive->writeProtection = true;
     } else {
         NSLog(@"No write protection");
-        [[c64 vc1541] setWriteProtection:NO];
+        archive->writeProtection = false;
     }
 }
 
