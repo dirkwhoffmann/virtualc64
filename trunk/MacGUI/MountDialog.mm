@@ -59,7 +59,7 @@
     // NSLog(@"extension %@",archiveExtension);
 
     [diskIconFrame setTitle:archiveLastPath];
-    // [writeProtect setTag:[[c64prox VC1541Proxy] writeProtection];
+    [writeProtect setTag:[[proxy vc1541] writeProtection]];
     
     [directory deselectAll:self];
     [directory setTarget:self];
@@ -128,6 +128,8 @@
     [loadText setStringValue:cmd];
     [loadOptions setEnabled:doType];
     [warningText setHidden:loadOption != 3];
+    [writeProtect setIntValue:[[c64 vc1541] writeProtection]];
+     
     if (doMount && doFlash) {
         [CancelButton setHidden:NO];
         [OKButton setTitle:@"Insert and flash"];
@@ -198,10 +200,12 @@
 
 - (IBAction)writeProtectAction:(id)sender
 {
-    if ([sender tag]) {
+    if ([sender intValue]) {
         NSLog(@"Write protection");
+        [[c64 vc1541] setWriteProtection:YES];
     } else {
         NSLog(@"No write protection");
+        [[c64 vc1541] setWriteProtection:NO];
     }
 }
 
