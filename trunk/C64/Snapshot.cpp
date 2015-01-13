@@ -60,8 +60,8 @@ Snapshot::dealloc()
 	fileContents.magic[1] = 'C';
 	fileContents.magic[2] = '6';
 	fileContents.magic[3] = '4';
-	fileContents.major = 1;
-	fileContents.minor = 0;
+	fileContents.major = V_MAJOR;
+	fileContents.minor = V_MINOR;
 	memset(fileContents.data, 0, sizeof(fileContents.data));
 
 	//size = 0;
@@ -80,10 +80,23 @@ Snapshot::getTypeAsString()
 	return "V64";
 }
 
+bool
+Snapshot::isSnapshot(const char *filename, int *major, int *minor)
+{
+    int magic_bytes[] = { 'V', 'C', '6', '4', EOF };
+    
+    assert(filename != NULL);
+    
+    if (!checkFileHeader(filename, magic_bytes, major, minor))
+        return false;
+    
+    return true;
+}
+
 bool 
 Snapshot::fileIsValid(const char *filename)
 {
-	int magic_bytes[] = { 'V', 'C', '6', '4', EOF };
+	int magic_bytes[] = { 'V', 'C', '6', '4', V_MAJOR, V_MINOR, EOF };
 	
 	assert(filename != NULL);
 	

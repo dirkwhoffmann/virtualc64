@@ -46,6 +46,7 @@ class Snapshot;
 
 // Loading and saving
 - (BOOL)loadRom:(NSString *)filename;
+- (void)showVersionNumberAlert;
 
 @end
 

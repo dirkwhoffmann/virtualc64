@@ -28,6 +28,10 @@
 // #define NDEBUG // Diables all assertions (release versions, only)
 #define DEBUG_LEVEL 1
 
+// Snapshot version number of this release
+#define V_MAJOR 1
+#define V_MINOR 1
+
 #include "basic.h"
 #include "VirtualComponent.h"
 #include "Message.h"
