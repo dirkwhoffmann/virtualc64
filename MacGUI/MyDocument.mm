@@ -107,6 +107,16 @@
 	return success;
 }
 
+- (void)showVersionNumberAlert
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"Snapshot from other VirtualC64 release"];
+    [alert setInformativeText:@"The snapshot was created with a different version of VirtualC64 and cannot be opened."];
+    [alert addButtonWithTitle:@"Ok"];
+    [alert runModal];
+}
+
+
 -(BOOL)writeToFile:(NSString *)filename ofType:(NSString *)type
 {
 	NSLog(@"MyDocument:writeToFile:%@ ofType:%@", filename, type);
@@ -129,7 +139,7 @@
 	if ([type isEqualToString:@"VC64"]) {
 		
 		V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:filename];
-	
+        
 		if (!snapshot) {
 			NSLog(@"Error while reading snapshot\n");
 			return NO;

@@ -72,7 +72,10 @@ public:
 	
 	//! Destructor
 	~Snapshot();
-			
+	
+    //! Returns true if 'fileIsValid' and additionally gets version numbers
+    static bool isSnapshot(const char *filename, int *major, int *minor);
+    
 	//! Factory methods
 	static Snapshot *snapshotFromFile(const char *filename);
 	static Snapshot *snapshotFromBuffer(const void *buffer, unsigned size);

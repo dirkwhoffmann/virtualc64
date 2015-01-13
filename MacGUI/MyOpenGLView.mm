@@ -1132,15 +1132,25 @@ void checkForOpenGLErrors()
         NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];			
 		NSLog(@"Got filename %@", path);
 		
-		// Is it an image file?
-		V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:path];
-		if (snapshot) {
-			[[controller c64] loadFromSnapshot:snapshot];
-			NSLog(@"Image file loaded");
-			return YES;
-		}
-			
-		// Is it a ROM file?
+        // Check snapshot version if applicable
+        int major, minor;
+        if (Snapshot::isSnapshot([path UTF8String], &major, &minor)) {
+            if (major != V_MAJOR || minor != V_MINOR) {
+                NSLog(@"Unsupported snapshot version");
+                [[controller document] showVersionNumberAlert];
+                return NO;
+            }
+        }
+
+        // Is it an image file?
+        V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:path];
+        if (snapshot) {
+            [[controller c64] loadFromSnapshot:snapshot];
+            NSLog(@"Image file loaded");
+            return YES;
+        }
+
+        // Is it a ROM file?
 		if ([[controller document] loadRom:path]) {
 			NSLog(@"ROM loaded");
 			return YES;

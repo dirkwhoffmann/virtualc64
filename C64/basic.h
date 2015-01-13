@@ -121,7 +121,7 @@ bool checkFileSize(const char *filename, int min, int max);
 	\see Memory::isBasicRom Memory::isKernelRom Memory::isCharRom
 */
 bool 
-checkFileHeader(const char *filename, int *header);
+checkFileHeader(const char *filename, int *header, int *major = NULL, int *minor = NULL);
 
 // Timing
 
