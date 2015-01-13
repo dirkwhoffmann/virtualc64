@@ -357,25 +357,6 @@
 			
 		case MSG_ROM_LOADED:
 			
-			switch (msg->i) {
-				case BASIC_ROM:
-					// [info setStringValue:@"Basic Rom loaded"];
-					// NSLog(@"BASIC ROM loaded");
-					break;
-				case CHAR_ROM:
-					// [info setStringValue:@"Character Rom loaded"];
-					// NSLog(@"CHARACTER ROM loaded");
-					break;
-				case KERNEL_ROM:
-					// [info setStringValue:@"Kernel Rom loaded"];
-					// NSLog(@"KERNEL ROM loaded");
-					break;
-				case VC1541_ROM:
-					// [info setStringValue:@"VC1541 Rom loaded"];
-					// NSLog(@"VC1541 ROM loaded");
-					break;
-			}		
-			
 			// Update ROM dialog
 			if (romDialog != NULL) {
 				[romDialog update:[c64 missingRoms]];
@@ -413,7 +394,6 @@
 			break;
 						
 		case MSG_RUN:
-			// NSLog(@"runAction");
 			[info setStringValue:@""];
 			[self enableUserEditing:NO];
 			[self refresh];
@@ -425,23 +405,23 @@
 			break;
 			
 		case MSG_HALT:
-			// NSLog(@"haltAction");
-			[self enableUserEditing:YES];	
+			[self enableUserEditing:YES];
 			[self refresh];			
 			break;
 			
 		case MSG_CPU:
-			// NSLog(@"cpuAction");
 			switch(msg->i) {
 				case CPU::OK: 
 				case CPU::SOFT_BREAKPOINT_REACHED:
 					[info setStringValue:@""];
 					break;
 				case CPU::HARD_BREAKPOINT_REACHED:
-					[info setStringValue:@"Breakpoint reached"];
+                    [self debugOpenAction:self];
+					// [info setStringValue:@"Breakpoint reached"];
 					break;
 				case CPU::ILLEGAL_INSTRUCTION:
-					[info setStringValue:@"Illegal instruction"];
+                    [self debugOpenAction:self];
+					// [info setStringValue:@"Illegal instruction"];
 					break;
 				default:
 					assert(0);
@@ -450,26 +430,21 @@
 			break;
 			
 		case MSG_WARP:
-			// NSLog(@"warpmodeAction");
 			break;
 			
 		case MSG_LOG:
 			break;
 			
 		case MSG_VC1541_ATTACHED:
-			// NSLog(@"driveAttachedAction");
 			if (msg->i)
 				[greenLED setImage:[NSImage imageNamed:@"LEDgreen"]];
 			else
 				[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];	
-            // [self validateToolbarItem:nil]; 
 			break;
 			
 		case MSG_VC1541_DISC:
-			// NSLog(@"driveDiscAction");
 			[drive setHidden:!msg->i];
 			[eject setHidden:!msg->i];			
-            //[self validateToolbarItem:nil]; 
 			break;
 			
 		case MSG_VC1541_LED:
@@ -477,12 +452,9 @@
 				[redLED setImage:[NSImage imageNamed:@"LEDred"]];
 			else
 				[redLED setImage:[NSImage imageNamed:@"LEDgray"]];			
-            // [self validateToolbarItem:nil]; 
 			break;
 			
 		case MSG_VC1541_DATA:
-			// NSLog(@"driveDataAction (%s)", msg->i ? "on" : "off");
-			
 			if (msg->i) {
 				[c64 setIecBusIsBusy:true];
 			} else {
@@ -491,11 +463,9 @@
 			break;
 			
 		case MSG_VC1541_MOTOR:
-			// NSLog(@"driveMotorAction");
 			break;
 			
 		case MSG_CARTRIDGE:
-			// NSLog(@"MSG_CARTRIDGE");
 			[cartridgeIcon setHidden:!msg->i];
 			[cartridgeEject setHidden:!msg->i];			
 			break;

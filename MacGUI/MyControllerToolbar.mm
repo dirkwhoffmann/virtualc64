@@ -236,6 +236,7 @@
 {
 	NSLog(@"debugOpenAction");
 
+    [self cheatboxCloseAction:self];
 	if ([debugPanel state] == NSDrawerClosedState || [debugPanel state] == NSDrawerClosingState) {
 		[debugPanel open];
 	}
@@ -254,7 +255,7 @@
 {	
 	NSLog(@"debugAction");
 	if ([debugPanel state] == NSDrawerClosedState || [debugPanel state] == NSDrawerClosingState) {
-		[self cheatboxCloseAction:self];
+		// [self cheatboxCloseAction:self];
 		[self debugOpenAction:self];
 	} else {
 		[self debugCloseAction:self];
@@ -266,6 +267,7 @@
 
 - (IBAction)cheatboxOpenAction:(id)sender
 {
+    [self debugCloseAction:self];
 	if ([cheatboxPanel state] == NSDrawerClosedState || [cheatboxPanel state] == NSDrawerClosingState) {
 		[c64 suspend];
 		[cheatboxImageBrowserView refresh];
@@ -284,7 +286,7 @@
 - (IBAction)cheatboxAction:(id)sender
 {	
 	if ([cheatboxPanel state] == NSDrawerClosedState || [cheatboxPanel state] == NSDrawerClosingState) {
-		[self debugCloseAction:self];
+		// [self debugCloseAction:self];
 		[self cheatboxOpenAction:self];
 	} else {
 		[self cheatboxCloseAction:self];
