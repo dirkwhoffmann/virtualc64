@@ -146,7 +146,7 @@
 - (void)spriteSetX:(NSInteger)nr value:(int)v
 {
     NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] setSpriteX:nr value:[[c64 vic] spriteX:nr]];
+    [[undo prepareWithInvocationTarget:self] spriteSetX:nr value:[[c64 vic] spriteX:nr]];
     if (![undo isUndoing]) [undo setActionName:@"X coordinate"];
     
     [[c64 vic] setSpriteX:nr value:v];
@@ -155,7 +155,7 @@
 
 - (IBAction)vicSpriteXAction:(id)sender
 {
-    NSLog(@"vicSpriteXAction:%ld",(long)[sender tag]);
+    NSLog(@"vicSpriteXAction:%ld (%ld)",(long)[sender tag], (long)[sender intValue]);
 
     [self spriteSetX:[sender tag] value:[sender intValue]];
 }
@@ -163,7 +163,7 @@
 - (void)spriteSetY:(NSInteger)nr value:(int)v
 {
     NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] setSpriteY:nr value:[[c64 vic] spriteY:nr]];
+    [[undo prepareWithInvocationTarget:self] spriteSetY:nr value:[[c64 vic] spriteY:nr]];
     if (![undo isUndoing]) [undo setActionName:@"Y coordinate"];
     
     [[c64 vic] setSpriteY:nr value:v];
@@ -172,7 +172,7 @@
 
 - (IBAction)vicSpriteYAction:(id)sender
 {
-    NSLog(@"vicSpriteYAction:%ld",(long)[sender tag]);
+    NSLog(@"vicSpriteYAction:%ld (%ld)",(long)[sender tag], (long)[sender intValue]);
 
     [self spriteSetY:[sender tag] value:[sender intValue]];
 }
