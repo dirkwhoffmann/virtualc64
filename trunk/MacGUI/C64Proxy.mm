@@ -126,11 +126,6 @@
     assert (0 <= nr && nr < 16);
     
     uint32_t color = vic->getColor(nr);
-/*
-    uint8_t r = (color >> 24) & 0xFF;
-    uint8_t g = (color >> 16) & 0xFF;
-    uint8_t b = (color >> 8) & 0xFF;
-*/
     uint8_t r = color & 0xFF;
     uint8_t g = (color >> 8) & 0xFF;
     uint8_t b = (color >> 16) & 0xFF;

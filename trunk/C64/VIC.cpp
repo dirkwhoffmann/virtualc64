@@ -91,9 +91,6 @@ VIC::reset()
 	iomem[0x21] = BLUE;   // Let the background color look correct right from the beginning
 	iomem[0x11] = 0x10;   // Make screen visible from the beginning	
 	bankAddr = 0;
-	screenMemoryAddr = 0x0000;
-	characterMemoryAddr = 0x0000;
-	characterMemoryMappedToROM = false;
 	
     // Graphic sequencer
     gs_data = 0;
@@ -164,10 +161,10 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	for (unsigned i = 0; i < sizeof(iomem); i++)
 		iomem[i] = read8(buffer);
 	bankAddr = read16(buffer);
-	screenMemoryAddr = read16(buffer);
-	characterMemoryAddr = read16(buffer);
-	characterMemoryMappedToROM = (bool)read8(buffer);
-	
+	(void)read16(buffer);
+	(void)read16(buffer);
+    (void)read8(buffer);
+    
 	// Sprites
 	for (int i = 0; i < 8; i++) {
 		mc[i] = read8(buffer);
@@ -216,9 +213,9 @@ VIC::saveToBuffer(uint8_t **buffer)
 	for (unsigned i = 0; i < sizeof(iomem); i++)
 		write8(buffer, iomem[i]);
 	write16(buffer, bankAddr);
-	write16(buffer, screenMemoryAddr);
-	write16(buffer, characterMemoryAddr);
-	write8(buffer, characterMemoryMappedToROM);
+    write16(buffer, (uint16_t)0);
+	write16(buffer, (uint16_t)0);
+    write8(buffer, (uint8_t)0);
 	
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -243,8 +240,8 @@ VIC::dumpState()
 	msg("VIC\n");
 	msg("---\n\n");
 	msg("     Bank address : %04X\n", bankAddr, bankAddr);
-	msg("    Screen memory : %04X\n", screenMemoryAddr);
-	msg(" Character memory : %04X (%s)\n", characterMemoryAddr, characterMemoryMappedToROM ? "ROM" : "RAM");
+    msg("    Screen memory : %04X\n", getScreenMemoryAddr());
+	msg(" Character memory : %04X\n", getCharacterMemoryAddr());
 	msg("  Text resolution : %d x %d\n", numberOfRows(), numberOfColumns());
 	msg("X/Y raster scroll : %d / %d\n", getHorizontalRasterScroll(), getVerticalRasterScroll());
 	msg("     Display mode : ");
@@ -1327,52 +1324,37 @@ VIC::setMemoryBankAddr(uint16_t addr)
 	assert(addr % 0x4000 == 0);
 	
 	bankAddr = addr;
-	
-	// changing the memory bank also affects the start address of the screen and character memory
-	setScreenMemoryAddr((iomem[0x18] & 0xF0) << 6); // DEPRECTAD
-	setCharacterMemoryAddr((iomem[0x18] & 0x0E) << 10); // DEPRECTAD
 }
 
 uint16_t
 VIC::getScreenMemoryAddr()
 {
-	return screenMemoryAddr;
+    return VM13VM12VM11VM10() << 6;
 }
 
 void
 VIC::setScreenMemoryAddr(uint16_t addr)
 {
-	assert(addr <= 0x3C00);
-	assert(addr % 0x400 == 0);
-	screenMemoryAddr = addr;
+    assert((addr & ~0x3C00) == 0);
+    
+    addr >>= 6;
+    iomem[0x18] = (iomem[0x18] & ~0xF0) | (addr & 0xF0);
 }
 
-uint16_t 
+uint16_t
 VIC::getCharacterMemoryAddr()
 {
-	return characterMemoryAddr % 0x4000;
+    return (CB13CB12CB11() << 10) % 0x4000;
 }
+
 
 void 
 VIC::setCharacterMemoryAddr(uint16_t addr)
 {
-	assert(addr <= 0x3800);
-	assert(addr % 0x800 == 0);
+    assert((addr & ~0x3800) == 0);
 	
-	if (bankAddr == 0x0000 || bankAddr == 0x8000) {
-		if (addr == 0x1000) {
-			characterMemoryMappedToROM = true;
-			characterMemoryAddr = 0xD000;
-			return;
-		}
-		if (addr == 0x1800) {
-			characterMemoryMappedToROM = true;
-			characterMemoryAddr = 0xD800;
-			return;
-		}
-	}
-	characterMemoryMappedToROM = false;
-	characterMemoryAddr = bankAddr + addr;
+    addr >>= 10;
+    iomem[0x18] = (iomem[0x18] & ~0x0E) | (addr & 0x0E);
 }
 
 uint8_t 
@@ -1487,8 +1469,6 @@ VIC::poke(uint16_t addr, uint8_t value)
 			
 		case 0x18: // MEMORY_SETUP_REGISTER
             iomem[addr] = value;
-			setScreenMemoryAddr((value & 0xF0) << 6);
-			setCharacterMemoryAddr((value & 0x0E) << 10);
 			return;
 			
 		case 0x19: // IRQ flags

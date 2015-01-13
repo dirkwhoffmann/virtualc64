@@ -500,66 +500,7 @@ private:
     /*! Data is first created here and later copied to pixelSource */
     int pixelSourceTmp[2];
     
-	//! Start address of screen memory
-	/*! The screen memory stores the character codes to display
-	 The upper four bits of the VIC register 0xD018 determine where the screen memory starts (relative to the bank address):
-	 
-	 \verbatim
-	 +---------+------------+-----------------------------+
-	 |         |            |         LOCATION*           |
-	 |    A    |    BITS    +---------+-------------------+
-	 |         |            | DECIMAL |        HEX        |
-	 +---------+------------+---------+-------------------+
-	 |     0   |  0000XXXX  |      0  |  $0000            |
-	 |    16   |  0001XXXX  |   1024  |  $0400 (DEFAULT)  |
-	 |    32   |  0010XXXX  |   2048  |  $0800            |
-	 |    48   |  0011XXXX  |   3072  |  $0C00            |
-	 |    64   |  0100XXXX  |   4096  |  $1000            |
-	 |    80   |  0101XXXX  |   5120  |  $1400            |
-	 |    96   |  0110XXXX  |   6144  |  $1800            |
-	 |   112   |  0111XXXX  |   7168  |  $1C00            |
-	 |   128   |  1000XXXX  |   8192  |  $2000            |
-	 |   144   |  1001XXXX  |   9216  |  $2400            |
-	 |   160   |  1010XXXX  |  10240  |  $2800            |
-	 |   176   |  1011XXXX  |  11264  |  $2C00            |
-	 |   192   |  1100XXXX  |  12288  |  $3000            |
-	 |   208   |  1101XXXX  |  13312  |  $3400            |
-	 |   224   |  1110XXXX  |  14336  |  $3800            |
-	 |   240   |  1111XXXX  |  15360  |  $3C00            |
-	 +---------+------------+---------+-------------------+	
-	 \endverbatim
-	 */
-    // DEPRECATED
-	uint16_t screenMemoryAddr;
-		
-	//! Start address of character memory
-	/*! The character memory stores the bitmaps for each character.
-	 The location of character memory is determined by VIC register 0xD018
-	 
-	 \verbatim
-	 +-----+----------+------------------------------------------------------+
-	 |VALUE|          |            LOCATION OF CHARACTER MEMORY*             |
-	 | of A|   BITS   +-------+----------------------------------------------+
-	 |     |          |DECIMAL|         HEX                                  |
-	 +-----+----------+-------+----------------------------------------------+
-	 |   0 | XXXX000X |     0 | $0000-$07FF                                  |
-	 |   2 | XXXX001X |  2048 | $0800-$0FFF                                  |
-	 |   4 | XXXX010X |  4096 | $1000-$17FF ROM IMAGE in BANK 0 & 2 (default)|
-	 |   6 | XXXX011X |  6144 | $1800-$1FFF ROM IMAGE in BANK 0 & 2          |
-	 |   8 | XXXX100X |  8192 | $2000-$27FF                                  |
-	 |  10 | XXXX101X | 10240 | $2800-$2FFF                                  |
-	 |  12 | XXXX110X | 12288 | $3000-$37FF                                  |
-	 |  14 | XXXX111X | 14336 | $3800-$3FFF                                  |
-	 +-----+----------+-------+----------------------------------------------+
-	 \endverbatim
-	 */
-    // DEPRECATED
-	uint16_t characterMemoryAddr;
-		
-	//! True, iff character data is read from ROM space
-    // DEPRECATED
-	bool characterMemoryMappedToROM;
-
+    
     // -----------------------------------------------------------------------------------------------
     //                                      Sequencers
     // -----------------------------------------------------------------------------------------------
@@ -907,15 +848,19 @@ public:
 	void setMemoryBankAddr(uint16_t addr);
 			
 	//! Get screen memory address
+    /*! This function is not needed internally and only invoked by the GUI debug panel */
 	uint16_t getScreenMemoryAddr();
 	
 	//! Set screen memory address
+    /*! This function is not needed internally and only invoked by the GUI debug panel */
 	void setScreenMemoryAddr(uint16_t addr);
 		
 	//! Get character memory start address
+    /*! This function is not needed internally and only invoked by the GUI debug panel */
 	uint16_t getCharacterMemoryAddr();
 	
 	//! Set character memory start address
+    /*! This function is not needed internally and only invoked by the GUI debug panel */
 	void setCharacterMemoryAddr(uint16_t addr);
 		
 	//! Peek fallthrough
@@ -1128,25 +1073,7 @@ private:
 
 	//! Update sprite DMA bits
 	void updateSpriteDmaOnOff();
-	
-	//! Read sprite pointer
-	/*! Determines the start adress of sprite data and stores the value into spritePtr */
-#if 0
-    inline void readSpritePtr(int sprite) {
-		spritePtr[sprite] = bankAddr + (mem->ram[bankAddr + screenMemoryAddr + 0x03F8 + sprite] << 6); 
-	}
-#endif
-    
-	//! Read sprite data
-	/*! Read next byte of sprite data into shift register. */
-#if 0
-    inline void readSpriteData(int sprite) {
-		if (spriteDmaOnOff & (1 << sprite)) { 
-			spriteShiftReg[sprite][mc[sprite]%3] = mem->ram[spritePtr[sprite]+mc[sprite]]; mc[sprite]++; 
-		}
-	}
-#endif
-    
+	    
 	//! Get sprite depth
 	/*! The value is written to the z buffer to resolve overlapping pixels */
 	inline uint8_t spriteDepth(uint8_t nr) {
