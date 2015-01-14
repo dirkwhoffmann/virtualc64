@@ -19,12 +19,11 @@
 #include "SIDWrapper.h"
 #include "CPU.h"
 
-SIDWrapper::SIDWrapper()
+SIDWrapper::SIDWrapper(C64 *c64)
 {
 	name = "SIDWrapper";
     
-	// debug(2, "  Creating SIDWrapper at address %p...\n", this);
-    
+    this->c64 = c64;
     oldsid = new OldSID();
     resid = new ReSID();
     

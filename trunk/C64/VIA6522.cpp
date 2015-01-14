@@ -21,8 +21,6 @@
 VIA6522::VIA6522()
 {
 	name = "VIA";
-	floppy = NULL;
-	reset();
 }
 
 VIA6522::~VIA6522()
@@ -31,6 +29,10 @@ VIA6522::~VIA6522()
 	
 void VIA6522::reset()
 {
+    // Establish bindings
+    floppy = c64->floppy;
+    
+    // Reset state
 	ddra = 0;
 	ddrb = 0;
 	ora = 0;
@@ -755,10 +757,11 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 }
 
 
-VIA1::VIA1()
+VIA1::VIA1(C64 *c64)
 {
 	debug(2, "  Creating VIA1 at address %p...\n", this);
 	name = "VIA1";
+    this->c64 = c64;
 }
 	
 VIA1::~VIA1()
@@ -772,10 +775,11 @@ void VIA1::reset()
 	VIA6522::reset();
 }
 
-VIA2::VIA2()
+VIA2::VIA2(C64 *c64)
 {
 	debug(2, "  Creating VIA2 at address %p...\n", this);
 	name = "VIA2";
+    this->c64 = c64;
 }
 	
 VIA2::~VIA2()

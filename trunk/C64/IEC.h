@@ -120,7 +120,7 @@ private:
 public:
 
 	//! Constructor
-	IEC();
+	IEC(C64 *c64);
 	
 	//! Destructor
 	~IEC();

@@ -20,12 +20,14 @@
 
 #define SHIFT_FLAG 0x1000
 
-Keyboard::Keyboard()
+Keyboard::Keyboard(C64 *c64)
 {
 	name = "Keyboard";
 
 	debug(2, "Creating keyboard at address %p...\n", this);
 	
+    this->c64 = c64;
+    
 	for (int i = 0; i < 128; i++) {
 		ASCII[i] = 0x0000;
 	}

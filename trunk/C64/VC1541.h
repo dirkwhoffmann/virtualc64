@@ -83,7 +83,7 @@ public:
 public:
 	
 	//! Constructor
-	VC1541();
+	VC1541(C64 *c64);
 	
 	//! Destructor
 	~VC1541();
@@ -104,12 +104,6 @@ public:
 		{ assert(track < 84); assert (offset < 7928); return data[halftrack][offset]; }
 	inline void setData(unsigned halftrack, unsigned offset, uint8_t value) 
 		{ assert(track < 84); assert (offset < 7928); data[halftrack][offset] = value; }
-
-	//! Bind disc drive to a virtual IEC bus
-	void setIEC(IEC *bus) { assert(iec == NULL); iec = bus; mem->setIEC(bus); }
-
-	//! Bind disc drive to a virtual C64
-	void setC64(C64 *c) { assert(c64 == NULL); c64 = c; cpu->setC64(c); }
 	
 	//! Pass control to the virtual drive
 	/*! The drive will be executed for the specified number of clock cycles. */

@@ -21,9 +21,6 @@
 CIA::CIA()
 {
 	name = "CIA";
-
-	cpu = NULL;
-    vic = NULL;
 }
 
 CIA::~CIA()
@@ -33,7 +30,11 @@ CIA::~CIA()
 void
 CIA::reset() 
 {	
-	clearInterruptLine();
+    // Establish bindings
+    cpu = c64->cpu;
+    vic = c64->vic;
+    
+    clearInterruptLine();
 
 	// reset control
 	delay = 0;
@@ -797,11 +798,12 @@ void CIA::executeOneCycle()
 // Complex Interface Adapter 1
 // -----------------------------------------------------------------------------------------
 
-CIA1::CIA1()
+CIA1::CIA1(C64 *c64)
 {
 	debug(2, "  Creating CIA1 at address %p...\n", this);
 
 	name = "CIA1";
+    this->c64 = c64;
 	keyboard = NULL;
     joy[0] = NULL;
     joy[1] = NULL;
@@ -818,6 +820,9 @@ void
 CIA1::reset()
 {
 	debug(2, "  Resetting CIA1...\n");
+    keyboard = c64->keyboard;
+    joy[0] = c64->joystick1;
+    joy[1] = c64->joystick2;
 	CIA::reset();
 }
 
@@ -828,11 +833,6 @@ CIA1::dumpState()
 	msg("------\n\n");
 	CIA::dumpState();
 }
-
-//void
-//CIA1::setJoystickToPort( int portNo, Joystick *j ) {
-//	joy[portNo] = j;
-//}
 
 void 
 CIA1::raiseInterruptLine()
@@ -1023,12 +1023,12 @@ CIA1::clearJoystickBits(int nr, uint8_t mask)
 // Complex Interface Adapter 2
 // -----------------------------------------------------------------------------------------
 
-CIA2::CIA2()
+CIA2::CIA2(C64 *c64)
 {
 	debug(2, "  Creating CIA2 at address %p...\n", this);
 
 	name = "CIA2";
-	iec = NULL;
+    this->c64 = c64;
 }
 
 CIA2::~CIA2()
@@ -1039,6 +1039,7 @@ CIA2::~CIA2()
 void CIA2::reset()
 {
 	debug(2, "  Resetting CIA2...\n");
+    iec = c64->iec;
 	CIA::reset();
 }
 

@@ -44,7 +44,7 @@ private:
 public:
 
     //! Constructor
-    Joystick();
+    Joystick(C64 *c64);
     
     //! Destructor
     ~Joystick();

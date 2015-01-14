@@ -93,7 +93,7 @@ public:
 	~VIA6522();
 	
 	//! Bind components
-	void setDrive(VC1541 *d) { assert(floppy == NULL); floppy = d; }
+	// void setDrive(VC1541 *d) { assert(floppy == NULL); floppy = d; }
 	
 	//! Bring the VIA back to its initial state
 	void reset();
@@ -151,7 +151,7 @@ class VIA1 : public VIA6522 {
 public:
 
 	//! Constructor
-	VIA1();
+	VIA1(C64 *c64);
 	
 	//! Destructor
 	~VIA1();
@@ -173,7 +173,7 @@ class VIA2 : public VIA6522 {
 public:
 
 	//! Constructor
-	VIA2();
+	VIA2(C64 *c64);
 	
 	//! Destructor
 	~VIA2();

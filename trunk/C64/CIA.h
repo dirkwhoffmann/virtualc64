@@ -217,12 +217,6 @@ public:
 	//! Dump trace line
 	void dumpTrace();	
 
-	//! Bind the CIA chip to the specified virtual CPU.
-	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
-
-	//! Bind the CIA chip to the specified VIC chip.
-	void setVIC(VIC *v) { assert(vic == NULL); vic = v; }
-
 	//! Returns the value of data port A
 	inline uint8_t getDataPortA() { return peek(CIA_DATA_PORT_A); }
 
@@ -521,22 +515,14 @@ private:
 public:
 
 	//! Constructor
-	CIA1();
+	CIA1(C64 *c64);
 
 	//! Destructor
 	~CIA1();
 	
 	//! Bring the CIA back to its initial state
 	void reset();
-	
-	//! Bind the CIA chip to the specified keyboard.
-	void setKeyboard(Keyboard *k)
-        { assert(keyboard == NULL); keyboard = k; }
-	
-    //! Bind the CIA chip to joysticks connected in port A and B
-    void setJoysticksToPort(Joystick *j1, Joystick *j2)
-        { assert(j1 != NULL); assert(j2 != NULL); joy[0] = j1; joy[1] = j2; }
-
+		
 	//! Returns true if the \a addr is located in the I/O range of the CIA 1 chip
 	static inline bool isCia1Addr(uint16_t addr) 
 		{ return (CIA1_START_ADDR <= addr && addr <= CIA1_END_ADDR); }
@@ -579,16 +565,13 @@ private:
 public:
 
 	//! Constructor
-	CIA2();
+	CIA2(C64 *c64);
 	
 	//! Destructor
 	~CIA2();
 	
 	//! Bring the CIA back to its initial state
 	void reset();
-
-	//! Bind the CIA chip to the specified IEC bus.
-	void setIEC(IEC *i) { assert(iec == NULL); iec = i; }
 	
 	//! Returns true if the \a addr is located in the I/O range of the CIA 2 chip
 	static inline bool isCia2Addr(uint16_t addr) 

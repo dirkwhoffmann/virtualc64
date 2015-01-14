@@ -26,7 +26,6 @@
 #include "VirtualComponent.h"
 
 // Forward declarations
-class C64;
 class C64Memory;
 
 #define EXTRACT_RED(x)   ((x & 0xff000000) >> 24)
@@ -214,7 +213,7 @@ public:
 private:
 	
 	//! Reference to the connected virtual C64
-	C64 *c64;
+	// C64 *c64;
 	
 	//! Reference to the connected CPU. 
 	CPU *cpu;
@@ -657,7 +656,7 @@ private:
 public:
 	
 	//! Constructor
-	VIC();
+	VIC(C64 *c64);
 	
 	//! Destructor
 	~VIC();
@@ -825,16 +824,7 @@ public:
 	
 	//! Returns true if the specified address lies in the VIC I/O range
 	static inline bool isVicAddr(uint16_t addr)	{ return (VIC_START_ADDR <= addr && addr <= VIC_END_ADDR); }
-
-	//! Bind the VIC chip to the virtual C64.
-	void setC64(C64 *c) { assert(c64 == NULL); c64 = c; }
-	
-	//! Bind the VIC chip to the specified CPU.
-	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
-	
-	//! Bind the VIC chip to the specified virtual memory.
-	void setMemory(C64Memory *m) { assert(mem == NULL); mem = m; }
-	
+		
 	//! Get current scanline
 	inline uint16_t getScanline() { return scanline; }
 			
