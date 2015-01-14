@@ -19,6 +19,9 @@
 #ifndef _VIRTUAL_COMPONENT_INC
 #define _VIRTUAL_COMPONENT_INC
 
+// Forward declarations
+class C64;
+
 #include "basic.h"
 
 //! Common functionality of all virtual computer components
@@ -37,6 +40,9 @@ protected:
 	//! Name of this component
 	const char *name;
 
+    //! Reference to the virtual c64 top-level object
+    C64 *c64;
+    
 private:
 	//! Returns true iff the component is currently active.
 	/*! All virtual components can be in two states. They can either be running or halted.
@@ -63,7 +69,7 @@ private:
 public:
 	//! Log file
 	/*! By default, this variable is NULL and all debug and trace messages are sent to
-	 stdout or stderr. Assign a file handle, if you wish to send debug output to a file
+        stdout or stderr. Assign a file handle, if you wish to send debug output to a file
 	 */
 	FILE *logfile;
 
@@ -81,10 +87,16 @@ public:
 	*/
 	virtual void reset() = 0; 
 	
-	//! Load state from memory buffer
+    //! Trigger the component to send messages about its current state.
+    /*! The GUI invokes this function to update its visual elements, e.g., after loading an image file.
+        Only a few components overwrite this function. All others stay silent on default.
+     */
+    virtual void ping();
+
+    //! Load state from memory buffer
 	/*! The function is used for loading a snapshot of the virtual computer
-	/seealso C64::loadSnapshot
-	/param file file handle of the snapshot file
+        /seealso C64::loadSnapshot
+        /param file file handle of the snapshot file
 	*/
 	virtual void loadFromBuffer(uint8_t **ptr) = 0;
 	

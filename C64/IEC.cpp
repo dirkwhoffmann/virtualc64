@@ -18,13 +18,13 @@
 
 #include "C64.h"
 
-IEC::IEC()
+IEC::IEC(C64 *c64)
 {
 	name = "IEC";
 	
 	debug(2, "  Creating IEC bus at address %p...\n", this);
 
-	drive = NULL;
+    this->c64 = c64;
 }
 
 IEC::~IEC()
@@ -37,6 +37,8 @@ IEC::reset()
 {
 	debug(2, "  Resetting IEC bus...\n");
 
+    drive = c64->floppy;
+    
 	atnLine = 1;
 	oldAtnLine = 1;
 	clockLine = 1;

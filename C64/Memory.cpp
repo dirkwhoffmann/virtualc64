@@ -21,8 +21,6 @@
 Memory::Memory()
 {	
 	name = "MEM";
-	
-	cpu = NULL;
 }
 
 Memory::~Memory()

@@ -203,7 +203,7 @@ public:
 public:
 	
 	//! Constructor
-	C64Memory();
+	C64Memory(C64 *c64);
 	
 	//! Destructor
 	~C64Memory();
@@ -219,22 +219,6 @@ public:
 	
 	//! Dump current state into logfile
 	void dumpState();
-
-	//! Bind the virtual memory to the specified VIC chip.
-	/*! The binding is irreversible and the function "call once". */
-	void setVIC(VIC *v) { assert(vic == NULL); vic = v; }
-
-	//! Bind the virtual memory to the specified SID chip.
-	/*! The binding is irreversible and the function "call once". */
-	void setSID(SIDWrapper *s) { assert(sid == NULL); sid = s; }
-	
-	//! Bind the virtual memory to the specified CIA chip (CIA 1).
-	/*! The binding is irreversible and the function "call once". */
-	void setCIA1(CIA1 *c) { assert(cia1 == NULL); cia1 = c; }
-
-	//! Bind the virtual memory to the specified CIA chip (CIA 2).
-	/*! The binding is irreversible and the function "call once". */
-	void setCIA2(CIA2 *c) { assert(cia2 == NULL); cia2 = c; }
 		
 	//! Return physical start address of RAM
 	uint8_t *getRam() { return ram; }

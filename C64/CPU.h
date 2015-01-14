@@ -228,27 +228,13 @@ private:
 	    determines whether an interrupt is triggered or not. To handle timing correctly, the previous value of I is stored in 
 		variable oldI whenever SEI or CLI is executed. */
 	bool IRQsAreBlocked();
-	
-public: 
-	// Enable auto trace
-	int autotracing;
-	
-	// Auto enable trace when reaching this address
-	uint16_t trace_enable_address;
-	
-	// Trace counter
-	int current_trace;
-	
-	// How many instructions should be traced?
-	int max_traces;
 
-	
 #include "Instructions.h"
 		
 public:
 
 	// Constructor
-	CPU();
+	CPU(C64 *c64, Memory *mem);
 	
 	// Destructor
 	~CPU();
@@ -265,11 +251,8 @@ public:
 	//! Dump internal state to console
 	void dumpState();	
 
-	//! Binds CPU and C64 together
-	void setC64(C64 *c) { assert(c64 == NULL); c64 = c; }
-
 	//! Binds CPU and memory together
-	void setMemory(Memory *m) { assert(mem == NULL); mem = m; }
+	// void setMemory(Memory *m) { assert(mem == NULL); mem = m; }
 		
 	//! Get value of processor port
 	inline uint8_t getPort() { return port; }

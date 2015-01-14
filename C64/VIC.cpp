@@ -25,15 +25,13 @@
 
 #include "C64.h"
 
-VIC::VIC()
+VIC::VIC(C64 *c64)
 {
 	name = "VIC";
 
 	debug(2, "  Creating VIC at address %p...\n", this);
 
-	c64 = NULL;
-	cpu = NULL;
-	mem = NULL;
+	this->c64 = c64;
 	
 	// Delete screen buffers
 	for (unsigned i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
@@ -61,7 +59,11 @@ void
 VIC::reset() 
 {
 	debug(2, "  Resetting VIC...\n");
-		
+	
+    // Establish bindungs
+    cpu = c64->cpu;
+    mem = c64->mem;
+    
 	// Internal registers
 	scanline = 0;
 	xCounter = 0;

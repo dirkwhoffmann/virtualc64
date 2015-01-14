@@ -22,16 +22,13 @@
 //                          Construction and Destruction
 // --------------------------------------------------------------------------------
 
-C64Memory::C64Memory()
+C64Memory::C64Memory(C64 *c64)
 {	
 	name ="C64 memory";
 	
 	debug (2, "  Creating main memory at address %p...\n", this);
 	
-	vic = NULL;
-	sid = NULL;
-	cia1 = NULL;
-	cia2 = NULL;
+    this->c64 = c64;
 	
 	cartridge = NULL;	
 
@@ -56,6 +53,13 @@ void C64Memory::reset()
 {
 	debug (2, "  Resetting main memory...\n");
 	
+    // Establish bindings
+    vic = c64->vic;
+    sid = c64->sid;
+    cia1 = c64->cia1;
+    cia2 = c64->cia2;
+    cpu = c64->cpu;
+    
 	// Zero out RAM...
 	for (unsigned i = 0; i < sizeof(ram); i++)
         ram[i] = 0;

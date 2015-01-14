@@ -52,7 +52,7 @@ public:
 public:
 	
 	//! Constructor
-	VC1541Memory();
+	VC1541Memory(C64 *c64);
 	
 	//! Destructor
 	~VC1541Memory();
@@ -68,15 +68,7 @@ public:
 	
 	//! Dump current state into logfile
 	void dumpState();
-	
-	//! Bind the virtual memory to the specified IEC bus.
-	/*! The binding is irreversible and the function "call once". */
-	void setIEC(IEC *i) { assert(iec == NULL); iec = i; }
-
-	//! Bind the virtual memory to the specified disk drive.
-	/*! The binding is irreversible and the function "call once". */
-	void setDrive(VC1541 *d) { assert(floppy == NULL); floppy = d; }
-	
+		
 	//! Load a ROM image into memory.
 	/*! The function automatically determines the type of the specified file. In case of a valid ROM image, it
 		is loaded into the ROM space at the proper location. 

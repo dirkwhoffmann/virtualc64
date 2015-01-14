@@ -18,13 +18,14 @@
 
 #include "C64.h"
 
-VC1541Memory::VC1541Memory()
+VC1541Memory::VC1541Memory(C64 *c64)
 {
 	debug(2, "  Creating VC1541 memory at %p...\n", this);	
 
 	name = "1541MEM";
-	iec = NULL;
-	floppy = NULL;
+    this->c64 = c64;
+	// iec = NULL;
+	// floppy = NULL;
 	romFile = NULL;
 }
 
@@ -38,6 +39,11 @@ VC1541Memory::reset()
 {
 	debug (2, "    Resetting VC1541 memory...\n");
 
+    // Establish bindings
+    cpu = c64->cpu;
+    iec = c64->iec;
+    floppy = c64->floppy;
+    
 	// Zero out RAM...
 	for (unsigned i = 0; i < 0xC000; i++)
 		mem[i] = 0;	

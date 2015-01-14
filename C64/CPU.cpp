@@ -18,19 +18,14 @@
 
 #include "C64.h"
 
-CPU::CPU()
+CPU::CPU(C64 *c64, Memory *mem)
 {	
 	name = "CPU";
-
-	// Remove later...
-	autotracing = 0;
-	current_trace = 0;
-	
+    
 	debug(2, "  Creating CPU at address %p...\n", this);
 
-	// Initialize connected components
-	c64 = NULL;
-	mem = NULL;
+    this->c64 = c64;
+	this->mem = mem;
 	
 	// Establish callback for each instruction
 	registerInstructions();

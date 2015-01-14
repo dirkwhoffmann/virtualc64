@@ -18,29 +18,20 @@
 
 #include "C64.h"
 
-VC1541::VC1541()
+VC1541::VC1541(C64 *c64)
 {
 	debug(2, "Creating virtual VC1541 at address %p\n", this);
 	name = "1541";
 	
 	// Clear references
-	c64 = NULL;
-	iec = NULL;
-	cpu = NULL;
+    this->c64 = c64;
 	
 	// Create sub components
-	mem = new VC1541Memory();
-	cpu = new CPU();	
+	mem = new VC1541Memory(c64);
+	cpu = new CPU(c64, mem);
 	cpu->setName("1541CPU");
-	via1 = new VIA1();
-	via2 = new VIA2();
-		
-	// Connect components
-	cpu->setMemory(mem);
-	mem->setCPU(cpu);
-	mem->setDrive(this);
-	via1->setDrive(this);
-	via2->setDrive(this);	
+	via1 = new VIA1(c64);
+	via2 = new VIA2(c64);		
 }
 
 VC1541::~VC1541()
@@ -58,6 +49,10 @@ VC1541::reset()
 {
 	debug (2, "Resetting VC1541...\n");
 
+    // Establish bindings
+    iec = c64->iec;
+    
+    // Reset subcomponents
 	cpu->reset();
 	cpu->setPC(0xEAA0);
 	mem->reset();

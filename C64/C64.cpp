@@ -88,53 +88,26 @@ C64::C64()
     warpLoad = false;
 	
 	// Create components
-	mem = new C64Memory();
-	cpu = new CPU();	
-	vic = new VIC();
-	sid = new SIDWrapper();
-	cia1 = new CIA1();
-	cia2 = new CIA2();
-	keyboard = new Keyboard();
-	iec = new IEC();
-	floppy = new VC1541();
-    joystick1 = new Joystick;
-    joystick2 = new Joystick;
+	mem = new C64Memory(this);
+	cpu = new CPU(this, mem);
+	vic = new VIC(this);
+	sid = new SIDWrapper(this);
+	cia1 = new CIA1(this);
+	cia2 = new CIA2(this);
+	keyboard = new Keyboard(this);
+	iec = new IEC(this);
+	floppy = new VC1541(this);
+    joystick1 = new Joystick(this);
+    joystick2 = new Joystick(this);
 
-	// Bind components
-	cpu->setC64(this);
-	cpu->setMemory(mem);
-	mem->setVIC(vic);
-	mem->setSID(sid);
-	mem->setCIA1(cia1);
-	mem->setCIA2(cia2);
-	mem->setCPU(cpu);
-	cia1->setCPU(cpu);
-	cia1->setVIC(vic);	
-	cia1->setKeyboard(keyboard);
-    cia1->setJoysticksToPort(joystick1,joystick2);
-	cia2->setCPU(cpu);
-	cia2->setVIC(vic);	
-	cia2->setIEC(iec);
-	vic->setC64(this);
-	vic->setCPU(cpu);
-	vic->setMemory(mem);
-	iec->setDrive(floppy);
-	floppy->setIEC(iec);
-	floppy->setC64(this);
+    // Configure machine type and reset
+    setPAL();
+    reset();
 			
 	// Initialize snapshot ringbuffer (BackInTime feature)
 	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
 		backInTimeHistory[i] = new Snapshot();	
 	backInTimeWritePtr = 0;
-    
-    // Configure machine type and reset
-    setPAL();
-    reset();
-    floppy->reset();
-
-	// Remove after debugging
-	cpu->max_traces = 20000;
-	cpu->trace_enable_address = 2070; 	
 }
 
 // Construction and destruction

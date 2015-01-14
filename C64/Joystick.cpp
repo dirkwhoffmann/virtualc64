@@ -1,5 +1,6 @@
 /*
- * (C) 2009 Benjamin Klein. All rights reserved.
+ * Authors: Benjamin Klein (Original)
+ *          Dirk W. Hoffmann (Further development) 
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +19,11 @@
  
 #include "C64.h"
 
-Joystick::Joystick() {
+Joystick::Joystick(C64 *c64) {
 
     name = "JOYSTICK";
-    
     debug(2, "    Creating joystick at address %p...\n", this);
-
+    this->c64 = c64;
 }
 
 Joystick::~Joystick()

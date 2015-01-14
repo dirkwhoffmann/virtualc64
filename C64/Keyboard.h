@@ -40,7 +40,7 @@ class Keyboard : public VirtualComponent {
 			
 public:
 	//! Constructor
-	Keyboard();
+	Keyboard(C64 *c64);
 
 	//! Destructor
 	~Keyboard();

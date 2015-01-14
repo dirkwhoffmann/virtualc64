@@ -50,46 +50,11 @@ CPU::fetch() {
 		doIRQ = true;
 		return;
 	} 
-
-#if 0
-	// REMOVE AFTER DEBUGGING!!!
-	// Automatically switch on tracing when PC reaches a certain address
-	if (current_trace > 0 && current_trace <= max_traces) {		
-		// keep tracing
-		current_trace++; 
-	}
-	if (PC == 0x0B40 && current_trace == 0 && max_traces > 0) {
-	//if (c64->event2 && current_trace == 0 && max_traces > 0) {
-		if (!(logfile = fopen("/tmp/virtualc64.log", "w"))) {
-			panic("Cannot open logfile\n");
-		}
-		// start tracing
-		setTraceMode(true); 
-		c64->cia1->logfile = logfile;
-		c64->cia1->setTraceMode(true); 
-		c64->cia2->logfile = logfile;
-		c64->cia2->setTraceMode(true); 
-		current_trace = 1;
-	} 
-
-	if (current_trace > 1 && current_trace == max_traces) {
-		// stop tracing
-		setTraceMode(false); 
-		c64->cia2->setTraceMode(false); 
-		c64->cia1->setTraceMode(false); 
-		c64->cia1->logfile = NULL;
-		c64->cia2->logfile = NULL;		
-		logfile = NULL;
-	}
-	// END DEBUG
-#endif
 	
 	// Disassemble command if requested
 	if (tracingEnabled()) {
 		//c64->cia1->dumpTrace();
 		//c64->cia2->dumpTrace();
-		if (current_trace)
-			debug(1, "%05d: ", current_trace);
 		debug(1, "%s\n", disassemble());
 	}
 	

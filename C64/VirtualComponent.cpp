@@ -21,7 +21,7 @@
 int VirtualComponent::debugLevel = DEBUG_LEVEL;
 
 VirtualComponent::VirtualComponent()
-{
+{    
 	name = "Unnamed component";
 	running = false;
 	suspendCounter = 0;	
@@ -36,10 +36,10 @@ VirtualComponent::~VirtualComponent()
 		fclose(logfile);
 }
 
-//void
-//VirtualComponent::reset()
-//{
-//}
+void
+VirtualComponent::ping()
+{
+}
 
 void 
 VirtualComponent::run()

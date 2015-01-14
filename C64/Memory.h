@@ -64,9 +64,6 @@ public:
 	//! Save state
 	void saveToBuffer(uint8_t **buffer);	
 	
-	//! Bind the virtual memory to the specified virtual CPU.
-	void setCPU(CPU *c) { assert(cpu == NULL); cpu = c; }
-
 
 	// --------------------------------------------------------------------------------
 	//                                    Peek
