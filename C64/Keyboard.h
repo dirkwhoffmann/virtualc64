@@ -39,6 +39,25 @@ class Keyboard : public VirtualComponent {
 	uint8_t kbMatrix[8];
 			
 public:
+    //! Predefined color schemes
+    enum C64Key {
+        C64KEY_F1 = 0x80,
+        C64KEY_F2,
+        C64KEY_F3,
+        C64KEY_F4,
+        C64KEY_F5,
+        C64KEY_F6,
+        C64KEY_F7,
+        C64KEY_F8,
+        C64KEY_DEL,
+        C64KEY_INS,
+        C64KEY_RET,
+        C64KEY_CL,
+        C64KEY_CR,
+        C64KEY_CU,
+        C64KEY_CD
+    };
+
 	//! Constructor
 	Keyboard(C64 *c64);
 
@@ -57,67 +76,65 @@ public:
 	//! Dump internal state to console
 	void dumpState();	
 
-	//! Inform keyboard about a pressed key
-	/*! The key is specified in the C64 row/column format:
-
-	\verbatim
-	The C64 keyboard matrix:
-	       
-		   0        1         2         3         4         5         6         7
-	 
-	 0    DEL    RETURN   CUR LR      F7        F1        F3        F5       CUR UD
-	 1     3        W        A         4         Z         S         E       LSHIFT
-	 2     5        R        D         6         C         F         T         X
-	 3     7        Y        G         8         B         H         U         V
-	 4     9        I        J         0         M         K         O         N
-	 5     +        P        L         -         .         :         @         ,
-	 6    LIRA      *        ;       HOME     RSHIFT       =         ^         /
-	 7     1       <-       CTRL       2       SPACE       C=        Q        STOP		
-	\endverbatim
-	*/
 	//! Inform keyboard about a pressed key (by keycode)
 	void pressKey(uint8_t row, uint8_t col);
+    
 	//! Inform keyboard about a pressed key (by character)
-	void pressKey(char c);
+	void pressKey(unsigned char c);
+    
 	//! Inform keyboard that the Shift key has been pressen
 	void pressShiftKey() { pressKey(1,7); }
+    
 	//! Inform keyboard that the Commodore key has been pressen
 	void pressCommodoreKey() { pressKey(7,5); }
+    
 	//! Inform keyboard that the Runstop key has been pressen
 	void pressRunstopKey() { pressKey(7,7); }
+    
     //! Inform keyboard that the Clear key has been pressen
     void pressClearKey() { pressShiftKey(); pressKey(6,3); }
+    
     //! Inform keyboard that the Home key has been pressen
     void pressHomeKey() { pressKey(6,3); }
+    
     //! Inform keyboard that the Insert key has been pressen
     void pressInsertKey() { pressShiftKey(); pressKey(0,0); }
 	
 	//! Inform keyboard about a released key (by keycode)
-	void releaseKey(uint8_t row, uint8_t col);	
+	void releaseKey(uint8_t row, uint8_t col);
+    
 	//! Inform keyboard about a pressed key (by character)
-	void releaseKey(char c);
+	void releaseKey(unsigned char c);
+    
 	//! Inform keyboard that the Shift key has been released
 	void releaseShiftKey() { releaseKey(1,7); }
+    
 	//! Inform keyboard that the Commodore key has been released
 	void releaseCommodoreKey() { releaseKey(7,5); }
+    
 	//! Inform keyboard that the Runstop key has been released
 	void releaseRunstopKey() { releaseKey(7,7); }
+    
     //! Inform keyboard that the Clear key has been released
     void releaseClearKey() { releaseKey(6,3); releaseShiftKey(); }
+    
     //! Inform keyboard that the Home key has been released
     void releaseHomeKey() { releaseKey(6,3); }
+    
     //! Inform keyboard that the Insert key has been released
     void releaseInsertKey() { releaseKey(0,0); releaseShiftKey(); }
 
+    //! Clear keyboard matrix
 	void releaseAll() { for (int i=0; i<8; i++) kbMatrix[i] = 0xff; }
+    
 	//! Read the keyboard matrix
 	/*! /param columnMask determines the column bits to be read. */
 	uint8_t getRowValues(uint8_t columnMask);
 	
 private:
 	
-	//! Mapping from ASCII to the C64 row/column format
-	uint16_t ASCII[128];
+	//! Mapping from characters to the C64 row/column format
+	uint16_t rowcolmap[256];
 };
 	
 #endif

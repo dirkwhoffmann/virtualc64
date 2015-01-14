@@ -83,56 +83,31 @@ void checkForOpenGLErrors()
 	// DEPRECATED
 	c64 = [c64proxy c64];
 	
-	// Lock around draw method
+	// Create lock used by the draw method
 	lock = [NSRecursiveLock new];
 		
-	// Initial scene position
+	// Set initial scene position and drawing properties
 	targetXAngle = targetYAngle = targetZAngle = 0;
 	deltaXAngle = deltaYAngle = deltaZAngle = 0;
 	currentEyeX = currentEyeY = currentEyeZ = 0;
 	deltaEyeX = deltaEyeY = deltaEyeZ = 0;
-	
 	drawC64texture = false;
 	drawBackground = true;
 	drawEntireCube = false;
 	antiAliasing = true;
 	
-	// Core video
+	// Core video and graphics stuff
 	displayLink = nil;
-	
-	// Graphics
 	frames = 0;
 	enableOpenGL = true;  
     drawIn3D = true;
     
-	// Keyboard
-    numKeysPressed = 0;
-	for (int i = 0; i < 256; i++) {
-		kb[i] = 0xff;
-	}
-	emulateJoystick1 = emulateJoystick2 = false;
-	
-	//              0                    1                     2                     3                   4                       5                     6                   7
-	// 
-	// 0           DEL                 RETURN                CUR LR                  F7                 F1                      F3                    F5                 CUR UD
-	// 1            3                    W                     A                     4                   Z                       S                     E                 LSHIFT
-	// 2            5                    R                     D                     6                   C                       F                     T                   X
-	// 3            7                    Y                     G                     8                   B                       H                     U                   V
-	// 4            9                    I                     J                     0                   M                       K                     O                   N
-	// 5            +                    P                     L                     -                   .                       :                     @                   ,
-	// 6           LIRA                  *                     ;                   HOME               RSHIFT                     =                     ^                   /
-	// 7            1                   <-                    CTRL                   2                 SPACE                     C=                    Q                  STOP		
-	kb[MAC_DEL] = 0x0000; kb[MAC_RET] = 0x0001; kb[MAC_CR]  = 0x0002; kb[MAC_F7]  = 0x0003;  kb[MAC_F1]  = 0x0004;   kb[MAC_F3]  = 0x0005;  kb[MAC_F5]  = 0x0006; kb[MAC_CD]  = 0x0007;	
-	kb[MAC_3]   = 0x0100; kb[MAC_W]   = 0x0101; kb[MAC_A]   = 0x0102; kb[MAC_4]   = 0x0103;  kb[MAC_Z]   = 0x0104;   kb[MAC_S]   = 0x0105;  kb[MAC_E]   = 0x0106; 
-	kb[MAC_5]   = 0x0200; kb[MAC_R]   = 0x0201; kb[MAC_D]   = 0x0202; kb[MAC_6]   = 0x0203;  kb[MAC_C]   = 0x0204;   kb[MAC_F]   = 0x0205;  kb[MAC_T]   = 0x0206; kb[MAC_X]   = 0x0207;	
-	kb[MAC_7]   = 0x0300; kb[MAC_Y]   = 0x0301; kb[MAC_G]   = 0x0302; kb[MAC_8]   = 0x0303;  kb[MAC_B]   = 0x0304;   kb[MAC_H]   = 0x0305;  kb[MAC_U]   = 0x0306; kb[MAC_V]   = 0x0307;	
-	kb[MAC_9]   = 0x0400; kb[MAC_I]   = 0x0401; kb[MAC_J]   = 0x0402; kb[MAC_0]   = 0x0403;  kb[MAC_M]   = 0x0404;   kb[MAC_K]   = 0x0405;  kb[MAC_O]   = 0x0406; kb[MAC_N]   = 0x0407;	
-	kb[MAC_PLS] = 0x0500; kb[MAC_P]   = 0x0501; kb[MAC_L]   = 0x0502; kb[MAC_MNS] = 0x0503;  kb[MAC_DOT] = 0x0504;                                                kb[MAC_COM] = 0x0507;	
-						  kb[MAC_DIV] = 0x0607;
-	kb[MAC_1]   = 0x0700; kb[MAC_HAT] = 0x0701;                       kb[MAC_2]   = 0x0703;  kb[MAC_SPC] = 0x0704;                          kb[MAC_Q]   = 0x0706;
-	
-	
-	// Drag and Drop
+	// Keyboard initialization
+    for (int i = 0; i < 256; i++) {
+        pressedKeys[i] = 0;
+    }
+    
+	// Register for drag and drop
 	[self registerForDraggedTypes:
 	 [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
 }
@@ -163,13 +138,6 @@ void checkForOpenGLErrors()
         lock = nil;
     }
 }
-
-#if 0
-- (void) drawC64texture:(bool)value
-{ 
-	drawC64texture = value; 
-}
-#endif
 
 - (void)prepareOpenGL
 {
@@ -927,102 +895,83 @@ void checkForOpenGLErrors()
     return NO;
 }
 
+- (unsigned char)translateKey:(char)key keycode:(short)keycode flags:(int)flags
+{
+    switch (keycode) {
+        case MAC_F1: return Keyboard::C64KEY_F1;
+        case MAC_F2: return Keyboard::C64KEY_F2;
+        case MAC_F3: return Keyboard::C64KEY_F3;
+        case MAC_F4: return Keyboard::C64KEY_F4;
+        case MAC_F5: return Keyboard::C64KEY_F5;
+        case MAC_F6: return Keyboard::C64KEY_F6;
+        case MAC_F7: return Keyboard::C64KEY_F7;
+        case MAC_F8: return Keyboard::C64KEY_F8;
+        case MAC_DEL: return (flags & NSShiftKeyMask) ? Keyboard::C64KEY_INS : Keyboard::C64KEY_DEL;
+        case MAC_RET: return Keyboard::C64KEY_RET;
+        case MAC_CL: return Keyboard::C64KEY_CL;
+        case MAC_CR: return Keyboard::C64KEY_CR;
+        case MAC_CU: return Keyboard::C64KEY_CU;
+        case MAC_CD: return Keyboard::C64KEY_CD;
+    }
+    
+    // All other keys don't need a translation
+    return (unsigned char)key;
+}
+
 - (void)keyDown:(NSEvent *)event
 {
-	unsigned int   c       = [[event characters] UTF8String][0];
+	unsigned char  c       = [[event characters] UTF8String][0];
 	unsigned short keycode = [event keyCode];
 	unsigned int   flags   = [event modifierFlags];
-
+    unsigned char  c64key  = [self translateKey:c keycode:keycode flags:flags];
+    
+    // NSLog(@"keyDown: '%c' keycode: %ld flags: %ld", c, (long)keycode, (long)flags);
+    
+    // Ignore keys that are already pressed
+    if (pressedKeys[(unsigned char)keycode])
+        return;
+    
     // Ignore command key
     if (flags & NSCommandKeyMask)
         return;
-    
-    numKeysPressed++;
-    // NSLog(@"NumKeysPressed = %d", numKeysPressed);
     
     // Simulate joysticks
     if ([self pullJoystick:1 withKey:(char)c withKeycode:keycode device:[controller inputDeviceA]])
         return;
     if ([self pullJoystick:2 withKey:(char)c withKeycode:keycode device:[controller inputDeviceB]])
         return;
-
-    // Check for standard keys
-    if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
-            c64->keyboard->pressKey(c);
-            return;
-        }
-
-	switch (keycode) {			
-		case MAC_F2: c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(0,4); return;
-		case MAC_F4: c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(0,5); return;
-		case MAC_F6: c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(0,6); return;
-		case MAC_F8: c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(0,3); return;
-		case MAC_CU: c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(0,7); return;
-		case MAC_CL: c64->keyboard->pressShiftKey(); c64->keyboard->pressKey(0,2); return;
-	}
-	
-	// For all other characters, we use a direct key mapping
-	if (flags & NSShiftKeyMask)
-		c64->keyboard->pressShiftKey();
-	if (flags & NSAlternateKeyMask)
-		c64->keyboard->pressCommodoreKey();
-	
-	c64->keyboard->pressKey(kb[keycode] >> 8, kb[keycode] & 0xFF);
+    
+    // Only proceed if translation succeeded
+    if (!c64key)
+        return;
+    
+    // Press key
+    // NSLog(@"Storing key %c for keycode %ld",c64key, (long)keycode);
+    pressedKeys[(unsigned char)keycode] = c64key;
+    c64->keyboard->pressKey(c64key);
 }
 
 - (void)keyUp:(NSEvent *)event
 {
-	unsigned short keycode = [event keyCode];
-	unsigned int c         = [[event characters] UTF8String][0];
-	
-    numKeysPressed--;
-    // NSLog(@"NumKeysPressed = %d", numKeysPressed);
-
-    // If nothing is pressed, simply release all virtual keys and return
-    if (numKeysPressed == 0) {
-        // NSLog(@"Release all");
-        c64->keyboard->releaseAll();
-    }
-
-#if 0
-	// TO BE REMOVED: FOR DEBUGGING ONLY
-	if (keycode == MAC_F7) {
-		c64->floppy->dumpTrack();
-	}
-	if (keycode == MAC_F8) {
-		c64->floppy->dumpFullTrack();
-	}
-#endif	
-
+    unsigned char  c       = [[event characters] UTF8String][0];
+    unsigned short keycode = [event keyCode];
+    
+    // NSLog(@"keyUp: '%c' keycode: %ld flags: %ld", c, (long)keycode, (long)flags);
+    
     // Simulate joysticks
     if ([self releaseJoystick:1 withKey:(char)c withKeycode:keycode device:[controller inputDeviceA]])
         return;
     if ([self releaseJoystick:2 withKey:(char)c withKeycode:keycode device:[controller inputDeviceB]])
-        return; 
-    
-	// We always relase the special keys
-	// That's the easiest way to cope with race conditions due to fast typing
-	// (Problems can occur, if a new key is hit before the previous is released)
-	c64->keyboard->releaseShiftKey();
-	c64->keyboard->releaseCommodoreKey();
+        return;
 
-    // Release standard keys
-	if ((c >= 32 && c <= 64) || (c >= 97 && c <= 122)) {
-		c64->keyboard->releaseKey(c);
-		return;
-	}
+    // Only proceed if the released key is on the records
+    if (!pressedKeys[(unsigned char)keycode])
+        return;
     
-	switch (keycode) {			
-		case MAC_F2: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,4); return;
-		case MAC_F4: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,5); return;
-		case MAC_F6: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,6); return;
-		case MAC_F8: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,3); return;
-		case MAC_CU: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,7); return;
-		case MAC_CL: c64->keyboard->releaseShiftKey(); c64->keyboard->releaseKey(0,2); return;
-	}
-		
-	// For all other characters, we use a direct key mapping
-	c64->keyboard->releaseKey(kb[keycode] >> 8, kb[keycode] & 0xFF);
+    // Release key
+    // NSLog(@"Releasing stored key %c for keycode %ld",pressedKeys[keycode], (long)keycode);
+    c64->keyboard->releaseKey(pressedKeys[keycode]);
+    pressedKeys[(unsigned char)keycode] = 0;
 }
 
 #if 0
@@ -1030,6 +979,7 @@ void checkForOpenGLErrors()
 {
 	unsigned int flags = [event modifierFlags];
 
+    NSLog(@"flagsChanged: %ld", (long)flags);
     // NSLog(@"flagsChanged");
 
     if (flags & NSShiftKeyMask) {
