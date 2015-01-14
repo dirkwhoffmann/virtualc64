@@ -230,6 +230,8 @@
 
 - (void)doubleClickAction:(id)sender
 {
+    selectedRow = [directory selectedRow];
+    [self update];
 	[OKButton performClick:self];
 }
 

@@ -906,7 +906,7 @@ CIA1::peek(uint16_t addr)
 	switch(addr) {		
 		case CIA_DATA_PORT_A:
 				
-			pollJoystick(joy[0], 1);
+			pollJoystick(joy[1], 2);
 
             // We change only those bits that are configured as outputs, all input bits are 1
 			result = PA; // iomem[addr] | ~iomem[CIA_DATA_DIRECTION_A];
@@ -915,7 +915,7 @@ CIA1::peek(uint16_t addr)
 			// result &= portLinesA; 
 			
 			// Check joystick movement
-			result &= joystick[0];
+			result &= joystick[1];
 			break;
 			
 		case CIA_DATA_PORT_B:
@@ -923,12 +923,12 @@ CIA1::peek(uint16_t addr)
 			uint8_t bitmask = CIA1::peek(CIA_DATA_PORT_A);
 			uint8_t keyboardBits = keyboard->getRowValues(bitmask); 
 			
-			pollJoystick(joy[1], 2);
+            pollJoystick(joy[0], 1);
 			
 			result = PB;
 			
 			// Check joystick movement
-			result &= joystick[1];
+            result &= joystick[0];
 			
 			// Check for pressed keys
 			result &= keyboardBits;

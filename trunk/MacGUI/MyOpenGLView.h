@@ -26,33 +26,7 @@
 // Forward declaration
 @class MyController;
 
-// Keyboard constants (US MacBook Pro)
-const uint16_t MAC_A = 0;
-const uint16_t MAC_B = 11;
-const uint16_t MAC_C = 8;
-const uint16_t MAC_D = 2;
-const uint16_t MAC_E = 14;
-const uint16_t MAC_F = 3;
-const uint16_t MAC_G = 5;
-const uint16_t MAC_H = 4;
-const uint16_t MAC_I = 34;
-const uint16_t MAC_J = 38;
-const uint16_t MAC_K = 40;
-const uint16_t MAC_L = 37;
-const uint16_t MAC_M = 46;
-const uint16_t MAC_N = 45;
-const uint16_t MAC_O = 31;
-const uint16_t MAC_P = 35;
-const uint16_t MAC_Q = 12;
-const uint16_t MAC_R = 15;
-const uint16_t MAC_S = 1;
-const uint16_t MAC_T = 17;
-const uint16_t MAC_U = 32;
-const uint16_t MAC_V = 9;
-const uint16_t MAC_W = 13;
-const uint16_t MAC_X = 7;
-const uint16_t MAC_Y = 16;
-const uint16_t MAC_Z = 6;
+// Mac keycodes of special keys
 const uint16_t MAC_F1 = 122;
 const uint16_t MAC_F2 = 120;
 const uint16_t MAC_F3 = 99;
@@ -61,16 +35,6 @@ const uint16_t MAC_F5 = 96;
 const uint16_t MAC_F6 = 97;
 const uint16_t MAC_F7 = 98;
 const uint16_t MAC_F8 = 100;
-const uint16_t MAC_1 = 18;
-const uint16_t MAC_2 = 19;
-const uint16_t MAC_3 = 20;
-const uint16_t MAC_4 = 21;
-const uint16_t MAC_5 = 23;
-const uint16_t MAC_6 = 22;
-const uint16_t MAC_7 = 26;
-const uint16_t MAC_8 = 28;
-const uint16_t MAC_9 = 25;
-const uint16_t MAC_0 = 29;
 const uint16_t MAC_APO = 39;
 const uint16_t MAC_DEL = 51;
 const uint16_t MAC_RET = 36;
@@ -78,17 +42,9 @@ const uint16_t MAC_CL = 123;
 const uint16_t MAC_CR = 124;
 const uint16_t MAC_CU = 126;
 const uint16_t MAC_CD = 125;
-const uint16_t MAC_PLS = 24;
-const uint16_t MAC_MNS = 27;
-const uint16_t MAC_MUL = 200; 
-const uint16_t MAC_DIV = 44; 
-const uint16_t MAC_DOT = 47;
-const uint16_t MAC_COM = 43;
-const uint16_t MAC_SEM = 41;
 const uint16_t MAC_SPC = 49;
 const uint16_t MAC_ESC = 53;
 const uint16_t MAC_HAT = 10;
-const uint16_t MAC_CMP = 50; // ??? 53;
 
 // Graphics constants
 const int TEXTURE_WIDTH = 512;
@@ -122,9 +78,6 @@ const int BG_TEXTURE_DEPTH = 4;
 	CVDisplayLinkRef displayLink;
 	NSRecursiveLock *lock;
 
-	bool emulateJoystick1;
-	bool emulateJoystick2;
-
 	float currentXAngle, targetXAngle, deltaXAngle;
 	float currentYAngle, targetYAngle, deltaYAngle;
 	float currentZAngle, targetZAngle, deltaZAngle;
@@ -152,11 +105,9 @@ const int BG_TEXTURE_DEPTH = 4;
 	//! Turns anti-aliasing on and off
 	bool antiAliasing;
 	
-	// Mapping from Mac keycode to the C64 row/column format
-	uint16_t kb[256];
-
-    // Number of keys that are currently pressed down
-    int numKeysPressed;
+    //! Stores which keys are currently pressed
+    /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
+    unsigned char pressedKeys[256];
     
 	// View point
 	// DEPRECATED
@@ -239,9 +190,6 @@ const int BG_TEXTURE_DEPTH = 4;
 
 #pragma mark Joystick simulation
 
-
-
-
 // Compare character with provided key mapping and pull joystick if appropriate
 - (BOOL)pullJoystick:(int)nr withKey:(char)c up:(char)u down:(char)d left:(char)l right:(char)r fire:(char)f;
 
@@ -259,5 +207,11 @@ const int BG_TEXTURE_DEPTH = 4;
 
 // Compare keycode with predefined key mapping and relase joystick if appropriate
 - (BOOL)releaseJoystick:(int)nr withKey:(char)c withKeycode:(int)keycode device:(int)d;
+
+#pragma mark Joystick simulation
+
+//! Get mac specific character and keycode and translate it to a virtual c64 key
+/*! The returned value can be passed to the pressKey() method of the emulator */
+- (unsigned char)translateKey:(char)key keycode:(short)keycode flags:(int)flags;
 
 @end
