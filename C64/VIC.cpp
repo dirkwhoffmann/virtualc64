@@ -21,8 +21,6 @@
    Many thanks, Christian! 
 */
 
-#define NEWCODE
-
 #include "C64.h"
 
 VIC::VIC(C64 *c64)
@@ -471,11 +469,6 @@ inline void VIC::gAccess()
         gs_mode = getDisplayMode();
 
     }
-
-    
-#ifndef NEWCODE
-    loadPixelSynthesizerWithColors(gs_mode, gs_characterSpace, gs_colorSpace);
-#endif
 }
 
 inline void VIC::pAccess(int sprite)
@@ -692,10 +685,7 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
 
 void VIC::drawPixels(uint8_t cycle)
 {
-#ifdef NEWCODE
-
     assert(cycle >= 17 && cycle <= 56);
-
     
     uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
     
@@ -753,16 +743,14 @@ void VIC::drawPixels(uint8_t cycle)
             return;
         }
     }
-#endif
 }
 
 void VIC::drawBorderArea(uint8_t cycle)
 {
-#ifdef NEWCODE
     assert((cycle >= 13 && cycle <= 16) || (cycle >= 57 && cycle <= 60));
     
     uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
-
+    
     // draw border
     if (mainFrameFF) {
         
@@ -778,125 +766,6 @@ void VIC::drawBorderArea(uint8_t cycle)
     
     // WHICH COLOR TO USE?
     drawEightBehindBackgroudPixels(xCoord);
-#endif
-}
-
-
-// DEPRECATED
-void VIC::runGraphicSequencer(uint8_t cycle)
-{
-#ifndef NEWCODE
-    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
-    
-    // draw border if necessary
-    if (mainFrameFF) {
-        
-        int border_rgba = colors[getBorderColor()];
-
-        if (cycle == 17) {
-            
-            // left border in 38 column mode
-            drawSevenFramePixels(xCoord, border_rgba);
-            // don't return here, because the border only captures seven pixels
-            
-        } else if (cycle == 18) {
-            
-            // also capture missed out pixel in cycle 17
-            drawNineFramePixels(xCoord, border_rgba);
-            gs_data = 0;
-            return;
-            
-        } else if (cycle == 56) {
-            
-            // right border in 38 column mode
-            drawNineFramePixels(xCoord, border_rgba);
-            gs_data = 0;
-            return;
-            
-        } else {
-            
-            // in the middle of the display window
-            drawEightFramePixels(xCoord, border_rgba);
-            gs_data = 0;
-            return;
-        }
-    }
-    
-    // Run the synthesizer
-    
-    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
-     Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelšscht ist (siehe
-     Abschnitt 3.9.). Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
-     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
-     normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
-
-    if (verticalFrameFF || cycle < 17 || cycle > 56) {
-        drawEightBehindBackgroudPixels(xCoord);
-        gs_data = 0;
-        return;
-    }
-
-    // Take care of horizontal scrolling
-    // int rgba = colors[gs_bg_color_old]; // TODO: WE MOST LIKELY SELECT THE WRONG COLOR HERE
-    int rgba = col_rgba[0]; // TODO: WE MOST LIKELY SELECT THE WRONG COLOR HERE
-    for (unsigned i = 0; i < gs_delay; i++) {
-        setBehindBackgroundPixel(xCoord++, rgba);
-    }
-
-    // Synthesize pixels
-    switch (getDisplayMode()) {
-            
-        case STANDARD_TEXT:
-            drawSingleColorCharacter(xCoord);
-            break;
-            
-        case MULTICOLOR_TEXT:
-            if (colorSpace[registerVMLI] & 0x8 /* MC flag */) {
-                drawMultiColorCharacter(xCoord);
-            } else {
-                drawSingleColorCharacter(xCoord);
-            }
-            break;
-            
-        case STANDARD_BITMAP:
-            drawSingleColorCharacter(xCoord);
-            break;
-            
-        case MULTICOLOR_BITMAP:
-            drawMultiColorCharacter(xCoord);
-            break;
-            
-        case EXTENDED_BACKGROUND_COLOR:
-            if (colorSpace[registerVMLI] & 0x8 /* MC flag */) {
-                drawMultiColorCharacter(xCoord);
-            } else {
-                drawSingleColorCharacter(xCoord);
-            }
-            break;		
-
-        case INVALID_TEXT:
-            if (colorSpace[registerVMLI] & 0x8 /* MC flag */) {
-                drawInvalidMultiColorCharacter(xCoord);
-            } else {
-                drawInvalidSingleColorCharacter(xCoord);
-            }
-            break;
-            
-        case INVALID_STANDARD_BITMAP:
-            drawInvalidSingleColorCharacter(xCoord);
-            break;
-            
-        case INVALID_MULTICOLOR_BITMAP:
-            drawInvalidMultiColorCharacter(xCoord);
-            break;
-
-        default:
-            assert(0);
-            break;
-    }
-    
-    gs_data = 0;
-#endif
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -2092,7 +1961,6 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     // Phi1.1 Frame logic
     // Phi1.2 Draw (border starts here)
     drawBorderArea(13);
-    runGraphicSequencer(13);
 
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess();
@@ -2117,7 +1985,6 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     // Phi1.1 Frame logic
     // Phi1.2 Draw
     drawBorderArea(14);
-    runGraphicSequencer(14);
 
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
     rAccess();
@@ -2149,7 +2016,6 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     // Phi1.1 Frame logic
     // Phi1.2 Draw
     drawBorderArea(15);
-    runGraphicSequencer(15);
 
     // Phi1.3 Fetch (last DRAM refresh)
     rAccess();
@@ -2174,7 +2040,6 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     // Phi1.1 Frame logic
     // Phi1.2 Draw
     drawBorderArea(16);
-    runGraphicSequencer(16);
     
     // Phi1.3 Fetch
     gAccess();
@@ -2222,7 +2087,6 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     checkFrameFlipflopsLeft(24);
     
     // Phi1.2 Draw (main screen area starts here)
-    runGraphicSequencer(17);
     drawPixels(17);
     
     // Phi1.3 Fetch
@@ -2249,7 +2113,6 @@ VIC::cycle18() // SpriteX: 32 - 39
     
     // Phi1.2 Draw
     drawPixels(18);
-    runGraphicSequencer(18);
 
     // Phi1.3 Fetch
     gAccess();
@@ -2273,7 +2136,6 @@ VIC::cycle19to54()
     // Phi1.1 Frame logic
     // Phi1.2 Draw
     drawPixels(19);
-    runGraphicSequencer(19);
 
     // Phi1.3 Fetch
     gAccess();
@@ -2297,7 +2159,6 @@ VIC::cycle55()
     // Phi1.1 Frame logic
     // Phi1.2 Draw
     drawPixels(55);
-    runGraphicSequencer(55);
 
     // Phi1.3 Fetch
     gAccess();
@@ -2339,7 +2200,6 @@ VIC::cycle56()
 
     // Phi1.2 Draw
     drawPixels(56);
-    runGraphicSequencer(56);
 
     // Phi1.3 Fetch
     rIdleAccess();
@@ -2365,7 +2225,6 @@ VIC::cycle57()
     
     // Phi1.2 Draw (border starts here)
     drawBorderArea(57);
-    runGraphicSequencer(57);
     
     // Phi1.3 Fetch
     rIdleAccess();
@@ -2391,7 +2250,6 @@ VIC::cycle58()
     // Phi1.1 Frame logic
     // Phi1.2 Draw
     drawBorderArea(58);
-    runGraphicSequencer(58);
 
     // Phi1.3 Fetch
     if (isPAL)
@@ -2469,7 +2327,6 @@ VIC::cycle59()
     // Phi1.1 Frame logic
     // Phi1.2 Draw
     drawBorderArea(59);
-    runGraphicSequencer(59);
 
     // Phi1.3 Fetch
     if (isPAL)
@@ -2502,7 +2359,6 @@ VIC::cycle60()
     // Phi1.1 Frame logic
     // Phi1.2 Draw (last visible cycle)
     drawBorderArea(60);
-    runGraphicSequencer(60);
     
     // Phi1.3 Fetch
     if (isPAL)
