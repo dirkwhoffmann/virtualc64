@@ -553,10 +553,6 @@ private:
     //! Synthesize a chunk of 8 pixels in border area
     void drawBorderArea(uint8_t cycle);
 
-    //! Synthesize pixels or border
-    // DEPRECATED
-    void runGraphicSequencer(uint8_t cycle);
-
 
 	// -----------------------------------------------------------------------------------------------
 	//                                         Sprites
