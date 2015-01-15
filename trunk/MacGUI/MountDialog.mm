@@ -44,24 +44,34 @@
     NSString *archiveName = [NSString stringWithFormat:@"%s", archive->getName()];
     NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
     NSString *archiveLastPath = [archivePath lastPathComponent];
-    NSString *archiveExtension = [archiveLastPath pathExtension];
+    NSString *archiveExtension = [[archiveLastPath pathExtension] uppercaseString];
+    NSString *archiveWithoutExt = [archiveLastPath stringByDeletingPathExtension];
     
     [[[directory tableColumnWithIdentifier:@"filename"] headerCell] setStringValue:archiveName];
-    
-    if ([archiveExtension isEqualToString:@"T64"])
-        [diskIcon setImage:[NSImage imageNamed:@"IconT64"]];
-    else if ([archiveExtension isEqualToString:@"D64"])
-        [diskIcon setImage:[NSImage imageNamed:@"IconD64"]];
-    else if ([archiveExtension isEqualToString:@"PRG"])
-        [diskIcon setImage:[NSImage imageNamed:@"IconPRG"]];
-    else if ([archiveExtension isEqualToString:@"P00"])
-        [diskIcon setImage:[NSImage imageNamed:@"IconP00"]];
 
+    if (mount) {
+    
+        [diskIconFrame setTitle:archiveLastPath];
+
+        if ([archiveExtension isEqualToString:@"T64"])
+            [diskIcon setImage:[NSImage imageNamed:@"IconT64"]];
+        else if ([archiveExtension isEqualToString:@"D64"])
+            [diskIcon setImage:[NSImage imageNamed:@"IconD64"]];
+        else if ([archiveExtension isEqualToString:@"PRG"])
+            [diskIcon setImage:[NSImage imageNamed:@"IconPRG"]];
+        else if ([archiveExtension isEqualToString:@"P00"])
+            [diskIcon setImage:[NSImage imageNamed:@"IconP00"]];
+
+    } else {
+        
+        [diskIcon setImage:[NSImage imageNamed:@"diskette"]];
+        [diskIconFrame setTitle:archiveWithoutExt];
+    }
+    
     // NSLog(@"path %@",archivePath);
     // NSLog(@"lastPath %@",archiveLastPath);
     // NSLog(@"extension %@",archiveExtension);
 
-    [diskIconFrame setTitle:archiveLastPath];
     
     [directory deselectAll:self];
     [directory setTarget:self];

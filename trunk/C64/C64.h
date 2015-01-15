@@ -30,7 +30,7 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 1
-#define V_MINOR 1
+#define V_MINOR 2
 
 #include "basic.h"
 #include "VirtualComponent.h"
@@ -265,6 +265,9 @@ public:
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A (faked) reset is performed by loading a presaved image from disk. */
 	void fastReset();           
+
+    //! Dump current configuration into message queue
+    void ping();
 
 	//! Dump current state into logfile
 	void dumpState();

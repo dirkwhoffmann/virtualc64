@@ -770,22 +770,6 @@
 	[NSApp endSheet:mountDialog returnCode:1];
 }
 
-#if 0
-- (IBAction)endMountDialogAndMount:(id)sender
-{
-	// Rotate C64 screen
-	[screen rotate];
-	
-	// Hide sheet
-	[mountDialog orderOut:sender];
-	
-	// Return to normal event handling
-	[NSApp endSheet:mountDialog returnCode:1];
-	
-	[c64 mountArchive:[[self document] archive]];
-}
-#endif
-
 - (IBAction)endMountDialog:(id)sender
 {
     NSString *textToType =[mountDialog loadCommand];

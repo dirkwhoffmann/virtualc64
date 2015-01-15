@@ -39,7 +39,7 @@ class Keyboard : public VirtualComponent {
 	uint8_t kbMatrix[8];
 			
 public:
-    //! Predefined color schemes
+    //! Special keys
     enum C64Key {
         C64KEY_F1 = 0x80,
         C64KEY_F2,
@@ -55,9 +55,10 @@ public:
         C64KEY_CL,
         C64KEY_CR,
         C64KEY_CU,
-        C64KEY_CD
+        C64KEY_CD,
+        C64KEY_COMMODORE = 0x0100 // flag that is combinable with all other keys
     };
-
+    
 	//! Constructor
 	Keyboard(C64 *c64);
 
@@ -80,7 +81,7 @@ public:
 	void pressKey(uint8_t row, uint8_t col);
     
 	//! Inform keyboard about a pressed key (by character)
-	void pressKey(unsigned char c);
+	void pressKey(int c);
     
 	//! Inform keyboard that the Shift key has been pressen
 	void pressShiftKey() { pressKey(1,7); }
@@ -104,7 +105,7 @@ public:
 	void releaseKey(uint8_t row, uint8_t col);
     
 	//! Inform keyboard about a pressed key (by character)
-	void releaseKey(unsigned char c);
+	void releaseKey(int c);
     
 	//! Inform keyboard that the Shift key has been released
 	void releaseShiftKey() { releaseKey(1,7); }

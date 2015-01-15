@@ -90,9 +90,6 @@ private:
 	//! True, iff the device clock pin is configured as output
 	bool deviceClockIsOutput;
 	
-	//! Current value of the atn pin of the connected external device (should be constantly 1)
-	// bool deviceAtnPin;
-
 	//! Current value of the data pin of the connected CIA chip
 	bool ciaDataPin;
 	
@@ -112,7 +109,7 @@ private:
 	bool ciaAtnIsOutput;
 
 	//! Used to determine if the bus is idle or if data is transferred 
-	int busActivity;
+	uint32_t busActivity;
 	
 	//! Update IEC bus lines depending on the CIA and device pins
 	bool _updateIecLines(bool *atnedge = NULL);
@@ -127,6 +124,9 @@ public:
 			
 	//! Bring the component back to its initial state
 	void reset();
+
+    //! Dump current configuration into message queue
+    void ping();
 
 	//! Load state
 	void loadFromBuffer(uint8_t **buffer);
