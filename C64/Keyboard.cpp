@@ -32,7 +32,7 @@ Keyboard::Keyboard(C64 *c64)
 		rowcolmap[i] = 0xFFFF;
 	}
 	
-    //    0        1         2         3         4         5         6         7
+    //          0        1         2         3         4         5         6         7
     //
     //    0    DEL    RETURN   CUR LR      F7        F1        F3        F5       CUR UD
     //    1     3        W        A         4         Z         S         E       LSHIFT
@@ -43,13 +43,14 @@ Keyboard::Keyboard(C64 *c64)
     //    6    LIRA      *        ;       HOME     RSHIFT       =         ^         /
     //    7     1       <-       CTRL       2       SPACE       C=        Q        STOP
     rowcolmap[(unsigned)'\n'] = 0x0001;
-	rowcolmap[(unsigned)' '] = 0x0704;
+    rowcolmap[(unsigned)' '] = 0x0704;
 	rowcolmap[(unsigned)'*'] = 0x0601;
 	rowcolmap[(unsigned)'+'] = 0x0500;
 	rowcolmap[(unsigned)','] = 0x0507; rowcolmap[(unsigned)'<'] = 0x0507 | SHIFT_FLAG;
 	rowcolmap[(unsigned)'-'] = 0x0503;
 	rowcolmap[(unsigned)'.'] = 0x0504; rowcolmap[(unsigned)'>'] = 0x0504 | SHIFT_FLAG;
 	rowcolmap[(unsigned)'/'] = 0x0607; rowcolmap[(unsigned)'?'] = 0x0607 | SHIFT_FLAG;
+    rowcolmap[(unsigned)'^'] = 0x0701;
 	rowcolmap[(unsigned)'0'] = 0x0403;
 	rowcolmap[(unsigned)'1'] = 0x0700; rowcolmap[(unsigned)'!'] = 0x0700 | SHIFT_FLAG;
 	rowcolmap[(unsigned)'2'] = 0x0703; rowcolmap[(unsigned)'"'] = 0x0703 | SHIFT_FLAG;
@@ -171,8 +172,15 @@ void Keyboard::pressKey(uint8_t row, uint8_t col)
 		kbMatrix[row] &= 255 - (1 << col);
 }
 
-void Keyboard::pressKey(unsigned char c)
+void Keyboard::pressKey(int c)
 {
+    // Check for commodore key flag
+    if (c & C64KEY_COMMODORE) {
+        pressCommodoreKey();
+    }
+
+    c &= 0xFF;
+    
     // Only proceed if key is known and mapped
     if (rowcolmap[c] == 0xFFFF)
         return;
@@ -195,8 +203,15 @@ void Keyboard::releaseKey(uint8_t row, uint8_t col)
 	}
 }
 
-void Keyboard::releaseKey(unsigned char c)
+void Keyboard::releaseKey(int c)
 {
+    // Check for commodore key flag
+    if (c & C64KEY_COMMODORE) {
+        releaseCommodoreKey();
+    }
+    
+    c &= 0xFF;
+
     // Only proceed if key is known and mapped
     if (rowcolmap[c] == 0xFFFF)
         return;

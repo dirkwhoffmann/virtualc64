@@ -895,7 +895,7 @@ void checkForOpenGLErrors()
     return NO;
 }
 
-- (unsigned char)translateKey:(char)key keycode:(short)keycode flags:(int)flags
+- (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(int)flags
 {
     switch (keycode) {
         case MAC_F1: return Keyboard::C64KEY_F1;
@@ -912,20 +912,27 @@ void checkForOpenGLErrors()
         case MAC_CR: return Keyboard::C64KEY_CR;
         case MAC_CU: return Keyboard::C64KEY_CU;
         case MAC_CD: return Keyboard::C64KEY_CD;
+        case MAC_HAT: return '^';
     }
     
-    // All other keys don't need a translation
-    return (unsigned char)key;
+    if (flags & NSAlternateKeyMask) {
+        // Commodore key (ALT) is pressed
+        return (int)plainkey | Keyboard::C64KEY_COMMODORE;
+    } else {
+        // No special translation needed here
+        return (int)key;
+    }
 }
 
 - (void)keyDown:(NSEvent *)event
 {
 	unsigned char  c       = [[event characters] UTF8String][0];
+    unsigned char  c_unmod = [[event charactersIgnoringModifiers] UTF8String][0];
 	unsigned short keycode = [event keyCode];
 	unsigned int   flags   = [event modifierFlags];
-    unsigned char  c64key  = [self translateKey:c keycode:keycode flags:flags];
+    int c64key;
     
-    // NSLog(@"keyDown: '%c' keycode: %ld flags: %ld", c, (long)keycode, (long)flags);
+    // NSLog(@"keyDown: '%c' keycode: %ld flags: %ld", (char)c, (long)keycode, (long)flags);
     
     // Ignore keys that are already pressed
     if (pressedKeys[(unsigned char)keycode])
@@ -940,9 +947,13 @@ void checkForOpenGLErrors()
         return;
     if ([self pullJoystick:2 withKey:(char)c withKeycode:keycode device:[controller inputDeviceB]])
         return;
-    
-    // Only proceed if translation succeeded
-    if (!c64key)
+
+    // Remove alternate key modifier if present
+    if (flags & NSAlternateKeyMask)
+        c = [[event charactersIgnoringModifiers] UTF8String][0];
+
+    // Translate key
+    if (!(c64key = [self translateKey:c plainkey:c_unmod keycode:keycode flags:flags]))
         return;
     
     // Press key
@@ -956,7 +967,7 @@ void checkForOpenGLErrors()
     unsigned char  c       = [[event characters] UTF8String][0];
     unsigned short keycode = [event keyCode];
     
-    // NSLog(@"keyUp: '%c' keycode: %ld flags: %ld", c, (long)keycode, (long)flags);
+    // NSLog(@"keyUp: '%c' keycode: %ld flags: %ld", (char)c, (long)keycode);
     
     // Simulate joysticks
     if ([self releaseJoystick:1 withKey:(char)c withKeycode:keycode device:[controller inputDeviceA]])
@@ -979,17 +990,9 @@ void checkForOpenGLErrors()
 {
 	unsigned int flags = [event modifierFlags];
 
-    NSLog(@"flagsChanged: %ld", (long)flags);
-    // NSLog(@"flagsChanged");
-
-    if (flags & NSShiftKeyMask) {
-		c64->keyboard->pressShiftKey();
-        // NSLog(@"shift pressed");
-    } else {
-        c64->keyboard->releaseShiftKey();
-        // NSLog(@"shift released");
-    }    
-	if (flags & NSAlternateKeyMask) {
+    // NSLog(@"flagsChanged: %ld", (long)flags);
+    
+    if (flags & NSAlternateKeyMask) {
 		c64->keyboard->pressCommodoreKey();
         // NSLog(@"commodore key pressed");
     } else {

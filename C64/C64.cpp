@@ -157,7 +157,29 @@ void C64::reset()
 	targetTime = 0UL;
     frameDelayOffset = 0;
     
+    ping();
+    
 	resume();
+}
+
+void C64::ping()
+{
+    debug (1, "Pinging virtual C64\n");
+    
+    putMessage(MSG_WARP, warp);
+    putMessage(MSG_CARTRIDGE, isCartridgeAttached());
+
+    mem->ping();
+    cpu->ping();
+    vic->ping();
+    cia1->ping();
+    cia2->ping();
+    sid->ping();
+    keyboard->ping();
+    joystick1->ping();
+    joystick2->ping();
+    iec->ping();
+    floppy->ping();
 }
 
 void C64::fastReset()
@@ -241,7 +263,7 @@ C64::setWarp(bool b)
 	if (warp != b) {
 		warp = b;
 		restartTimer();
-		putMessage(MSG_WARP, b, NULL, NULL);
+		putMessage(MSG_WARP, b);
 	}
 }
 
@@ -304,7 +326,9 @@ C64::loadFromBuffer(uint8_t **buffer)
     iec->loadFromBuffer(buffer);
 	floppy->loadFromBuffer(buffer);
 
-	debug(1, "%d bytes.\n", *buffer - old);	
+	debug(1, "%d bytes.\n", *buffer - old);
+    
+    ping();
 }
 
 void 

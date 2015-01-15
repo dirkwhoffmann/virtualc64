@@ -417,9 +417,6 @@
 // Initialization
 - (void) kill;
 
-// Poll C64 to refresh internal state
-- (void) refresh;
-
 // Hardware configuration
 - (VIC::ColorScheme) colorScheme;
 - (void) setColorScheme:(VIC::ColorScheme)scheme;
@@ -445,6 +442,7 @@
 
 - (void) reset;
 - (void) fastReset;
+- (void) ping;
 - (void) halt;
 - (void) step;
 - (bool) isRunnable;

@@ -91,6 +91,9 @@ public:
 	//! Restore initial state
 	void reset();
 	
+    //! Dump current configuration into message queue
+    void ping();
+
 	//! Load state
 	void loadFromBuffer(uint8_t **buffer);
 	

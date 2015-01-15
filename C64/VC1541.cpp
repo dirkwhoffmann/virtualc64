@@ -59,14 +59,30 @@ VC1541::reset()
 	via1->reset();
 	via2->reset();
 		
-	byteReadyTimer = 0;
+    clearDisk();
+    rotating = false;
+    redLED = false;
+    diskInserted = false;
+
+    byteReadyTimer = 0;
 	track = 40;
 	offset = 0;
 	noOfFFBytes = 0;
+    writeProtection = false;
+}
 
-	clearDisk();
-	stopRotating();
-	deactivateRedLED();	
+void
+VC1541::ping()
+{
+    debug(1, "Pinging VC1541...\n");
+    c64->putMessage(MSG_VC1541_LED, redLED ? 1 : 0);
+    c64->putMessage(MSG_VC1541_MOTOR, rotating ? 1 : 0);
+    c64->putMessage(MSG_VC1541_DISC, diskInserted ? 1 : 0);
+
+    cpu->ping();
+    mem->ping();
+    via1->ping();
+    via2->ping();
 }
 
 void
@@ -80,6 +96,8 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 	for (unsigned i = 0; i < 84; i++) 
 		length[i] = read16(buffer);
 	rotating = (bool)read8(buffer);
+    redLED = (bool)read8(buffer);
+    diskInserted = (bool)read8(buffer);
 	byteReadyTimer = (int)read16(buffer);
 	track = (int)read16(buffer);
 	offset = (int)read16(buffer);
@@ -102,6 +120,8 @@ VC1541::saveToBuffer(uint8_t **buffer)
 	for (unsigned i = 0; i < 84; i++) 
 		write16(buffer, length[i]);
 	write8(buffer, (uint8_t)rotating);
+    write8(buffer, (uint8_t)redLED);
+    write8(buffer, (uint8_t)diskInserted);
 	write16(buffer, (uint16_t)byteReadyTimer);
 	write16(buffer, (uint16_t)track);
 	write16(buffer, (uint16_t)offset);

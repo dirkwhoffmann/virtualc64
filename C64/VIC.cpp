@@ -547,16 +547,43 @@ inline bool VIC::sThirdAccess(int sprite)
 //                                         Graphics sequencer
 // -----------------------------------------------------------------------------------------------
 
-// DEPRECATED
 #if 0
-void VIC::loadGraphicSequencer(uint8_t data, uint8_t load_delay)
+void VIC::currentBackgroundColor(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
-    gs_data = data;
-    gs_delay = load_delay;
-    gs_characterSpace = characterSpace[registerVMLI];
-    gs_colorSpace = colorSpace[registerVMLI];
-    gs_mode = getDisplayMode();
-    loadPixelSynthesizerWithColors(gs_mode, gs_characterSpace, gs_colorSpace);
+    int bgcol;
+    
+    switch (gs_mode) {
+            
+        case STANDARD_TEXT:
+        case MULTICOLOR_TEXT:
+        case MULTICOLOR_BITMAP:
+            bgcol = colors[getBackgroundColor()];
+            break;
+            
+        case STANDARD_BITMAP:
+            bgcol = colors[characterSpace & 0x0F];
+            break;
+            
+            
+        case EXTENDED_BACKGROUND_COLOR:
+            if (colorSpace & 0x8 /* MC flag */) {
+                bgcol = colors[getExtraBackgroundColor(characterSpace >> 6)];
+            } else {
+                bgcol = colors[getBackgroundColor()];
+            }
+            break;
+            
+        case INVALID_TEXT:
+        case INVALID_STANDARD_BITMAP:
+        case INVALID_MULTICOLOR_BITMAP:
+            bgcol = colors[BLACK];
+            break;
+            
+        default:
+            assert(0);
+            break;
+    }
+
 }
 #endif
 
@@ -763,9 +790,8 @@ void VIC::drawBorderArea(uint8_t cycle)
     /* "Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
      die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
      normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
-    
-    // WHICH COLOR TO USE?
     drawEightBehindBackgroudPixels(xCoord);
+
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -855,6 +881,7 @@ VIC::drawEightBehindBackgroudPixels(unsigned offset)
         normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
 
     // int bg_rgba = colors[gs_bg_color_old]; // TODO: WE PROBABLY SELECT THE WRONG COLOR HERE
+    loadPixelSynthesizerWithColors(gs_mode,LatchedCharacterSpace,LatchedColorSpace);
     for (unsigned i = 0; i < 8; i++) {
         setBehindBackgroundPixel(offset++, col_rgba[0]);
     }    
@@ -1593,7 +1620,7 @@ VIC::beginRasterline(uint16_t line)
     // Reset graphic sequencer
     // gs_data = 0;
     gs_shift_reg = 0;
-    pixelBufferTmp[0] = pixelBuffer[1] = 0;
+    // pixelBufferTmp[0] = pixelBuffer[1] = 0;
     zBufferTmp[0] = zBufferTmp[1] = 0;
     pixelSourceTmp[0] = pixelSourceTmp[1] = 0;
 }

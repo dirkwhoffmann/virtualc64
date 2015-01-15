@@ -39,6 +39,7 @@ IEC::reset()
 
     drive = c64->floppy;
     
+    driveConnected = 1;
 	atnLine = 1;
 	oldAtnLine = 1;
 	clockLine = 1;
@@ -54,12 +55,19 @@ IEC::reset()
 	ciaAtnPin = 1;
 	ciaAtnIsOutput = 1;
 	
-	connectDrive();
 	setDeviceClockPin(1);
 	setDeviceDataPin(1);
 	busActivity = 0;
 }
- 
+
+void
+IEC::ping()
+{
+ 	drive->c64->putMessage(MSG_VC1541_ATTACHED, driveConnected);
+    drive->c64->putMessage(MSG_VC1541_DATA, busActivity > 0);
+    
+}
+
 void
 IEC::loadFromBuffer(uint8_t **buffer)
 {
@@ -71,14 +79,19 @@ IEC::loadFromBuffer(uint8_t **buffer)
 	oldClockLine = (bool)read8(buffer);
 	dataLine = (bool)read8(buffer);
 	oldDataLine = (bool)read8(buffer);
-	deviceDataPin = (bool)read8(buffer);
+    deviceAtnPin = (bool)read8(buffer);
+    deviceAtnIsOutput = (bool)read8(buffer);
+    deviceDataPin = (bool)read8(buffer);
+    deviceDataIsOutput = (bool)read8(buffer);
 	deviceClockPin = (bool)read8(buffer);
+    deviceClockIsOutput = (bool)read8(buffer);
 	ciaDataPin = (bool)read8(buffer);
 	ciaDataIsOutput = (bool)read8(buffer);
 	ciaClockPin = (bool)read8(buffer);
 	ciaClockIsOutput = (bool)read8(buffer);
 	ciaAtnPin = (bool)read8(buffer);
 	ciaAtnIsOutput = (bool)read8(buffer);
+    busActivity = read32(buffer);
 }
 
 void
@@ -92,14 +105,19 @@ IEC::saveToBuffer(uint8_t **buffer)
 	write8(buffer, (uint8_t)oldClockLine);
 	write8(buffer, (uint8_t)dataLine);
 	write8(buffer, (uint8_t)oldDataLine);
+    write8(buffer, (uint8_t)deviceAtnPin);
+    write8(buffer, (uint8_t)deviceAtnIsOutput);
 	write8(buffer, (uint8_t)deviceDataPin);
+    write8(buffer, (uint8_t)deviceDataIsOutput);
 	write8(buffer, (uint8_t)deviceClockPin);
+    write8(buffer, (uint8_t)deviceClockIsOutput);
 	write8(buffer, (uint8_t)ciaDataPin);
 	write8(buffer, (uint8_t)ciaDataIsOutput);
 	write8(buffer, (uint8_t)ciaClockPin);
 	write8(buffer, (uint8_t)ciaClockIsOutput);
 	write8(buffer, (uint8_t)ciaAtnPin);
 	write8(buffer, (uint8_t)ciaAtnIsOutput);
+    write32(buffer, busActivity);
 }
 
 void 

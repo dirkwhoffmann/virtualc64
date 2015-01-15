@@ -107,7 +107,7 @@ const int BG_TEXTURE_DEPTH = 4;
 	
     //! Stores which keys are currently pressed
     /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
-    unsigned char pressedKeys[256];
+    unsigned int pressedKeys[256];
     
 	// View point
 	// DEPRECATED
@@ -212,6 +212,6 @@ const int BG_TEXTURE_DEPTH = 4;
 
 //! Get mac specific character and keycode and translate it to a virtual c64 key
 /*! The returned value can be passed to the pressKey() method of the emulator */
-- (unsigned char)translateKey:(char)key keycode:(short)keycode flags:(int)flags;
+- (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(int)flags;
 
 @end

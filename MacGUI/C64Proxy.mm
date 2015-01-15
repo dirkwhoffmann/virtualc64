@@ -506,12 +506,6 @@
 	c64 = NULL;
 }
 
-- (void) refresh
-{
-	// TODO: Implement iecBusIsBusy in core emulator
-	// iecBusIsBusy = c64->iecBusIsBusy;
-	
-}
 
 - (VIC::ColorScheme) colorScheme { return c64->getColorScheme(); }
 - (void) setColorScheme:(VIC::ColorScheme)scheme { c64->setColorScheme(scheme); }
@@ -550,6 +544,7 @@
 - (void) putMessage:(int)msg { c64->putMessage(msg); }
 - (void) reset { c64->reset(); }
 - (void) fastReset { c64->fastReset(); }
+- (void) ping { c64->ping(); }
 - (void) halt { c64->halt(); }
 - (void) step { c64->step(); }
 - (void) run { c64->run(); }
