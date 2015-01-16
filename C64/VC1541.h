@@ -192,6 +192,9 @@ public:
 
 	//! Insert a G64 disk image
 	bool readG64Image(const char *filename);
+    
+    //! Export currently inserted disc to D64 file
+    bool exportToD64(const char *filename); 
 };
 
 #endif

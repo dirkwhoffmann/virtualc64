@@ -372,6 +372,8 @@
 - (bool) hasDisk;
 - (bool) writeProtection;
 - (void) setWriteProtection:(bool)b;
+- (bool) exportToD64:(NSString *)path;
+
 @end
 
 

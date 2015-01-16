@@ -87,6 +87,7 @@
 		50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A52A180C2FD43700A1377F /* D64Archive.cpp */; };
 		50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50A8F8F20E47171300ACE17D /* RomDialog.mm */; };
 		50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 50A8F9E90E472BA800ACE17D /* romMissing.png */; };
+		50AE4A351A693AA0003EA774 /* MountDragView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50AE4A341A693AA0003EA774 /* MountDragView.mm */; };
 		50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AFEDBB0C3A7A78007749E7 /* Archive.cpp */; };
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
 		50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */; };
@@ -289,6 +290,8 @@
 		50A8F8F10E47171300ACE17D /* RomDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomDialog.h; sourceTree = "<group>"; };
 		50A8F8F20E47171300ACE17D /* RomDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RomDialog.mm; sourceTree = "<group>"; };
 		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = romMissing.png; path = images/romMissing.png; sourceTree = "<group>"; };
+		50AE4A331A693AA0003EA774 /* MountDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MountDragView.h; sourceTree = "<group>"; };
+		50AE4A341A693AA0003EA774 /* MountDragView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MountDragView.mm; sourceTree = "<group>"; };
 		50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Archive.cpp; sourceTree = "<group>"; };
 		50B1032E121E7C4C003E7729 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		50B37D771A56CA4F0055A540 /* ROMDropTargetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROMDropTargetView.h; sourceTree = "<group>"; };
@@ -595,6 +598,8 @@
 				50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */,
 				50A8F8F10E47171300ACE17D /* RomDialog.h */,
 				50A8F8F20E47171300ACE17D /* RomDialog.mm */,
+				50AE4A331A693AA0003EA774 /* MountDragView.h */,
+				50AE4A341A693AA0003EA774 /* MountDragView.mm */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";
@@ -933,6 +938,7 @@
 				50176C650A6F72F3009E80BD /* CIA.cpp in Sources */,
 				50176C660A6F72F3009E80BD /* CPU.cpp in Sources */,
 				50176C670A6F72F3009E80BD /* Instructions.cpp in Sources */,
+				50AE4A351A693AA0003EA774 /* MountDragView.mm in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,

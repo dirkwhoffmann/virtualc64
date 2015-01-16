@@ -611,4 +611,24 @@ VC1541::readG64Image(const char *filename)
 	return true;
 }
 
+bool
+VC1541::exportToD64(const char *filename)
+{
+    FILE *file;
+
+    assert(filename != NULL);
+    
+    // Open file for write access
+    if ((file = fopen(filename, "w")) == NULL) {
+        debug("Failed to open file %s\n", filename);
+        return false;
+    }
+    
+    debug(1, "Writing D64 archive to %s\n",filename);
+    
+    
+    
+    return false;
+}
+
 
