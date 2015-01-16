@@ -88,6 +88,8 @@ public:
 	//! Returns true of filename points to a valid file of that type
 	static bool isD64File(const char *filename);
 
+    //! Class function that returns the number of sectors in a specific track
+    static unsigned numberOfSectors(unsigned trackNr);
 
 	// Factory methods
 
@@ -101,7 +103,6 @@ public:
 	//! Create D64 from other archive
 	static D64Archive *archiveFromOtherArchive(Archive *archive);
 	
-
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
 	bool readFromBuffer(const void *buffer, unsigned length);
@@ -122,9 +123,6 @@ public:
 	//! Write to file
 	bool writeToFile(const char *filename);
 	
-	//! Returns the number of sectors in the specified track
-	unsigned numberOfSectors(unsigned trackNr);
-
 	//! Returns the number of tracks stored in this image
 	unsigned numberOfTracks();
 	

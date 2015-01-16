@@ -825,7 +825,7 @@
     
     for (unsigned i = 2; i < 256; i++) {
         
-        // Hopefully, the file does not yes exist...
+        // Hopefully, the file does not yet exist...
         if (![[NSFileManager defaultManager] fileExistsAtPath:proposedName]) {
             
             NSLog(@"Using file name %@...", proposedName);
