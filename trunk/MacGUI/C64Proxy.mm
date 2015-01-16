@@ -447,6 +447,8 @@
 - (bool) hasDisk { return vc1541->hasDisk(); }
 - (bool) writeProtection { return vc1541->writeProtection; }
 - (void) setWriteProtection:(bool)b { vc1541->setWriteProtection(b); }
+- (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
+
 @end
 
 // --------------------------------------------------------------------------

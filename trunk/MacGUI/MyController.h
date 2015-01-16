@@ -326,7 +326,6 @@ enum INPUT_DEVICES {
 - (bool)showDriveContentsDialog;
 - (bool)showMountDialog;
 - (IBAction)cancelMountDialog:(id)sender;
-// - (IBAction)endMountDialogAndMount:(id)sender;
 - (IBAction)endMountDialog:(id)sender;
-
+- (BOOL)exportToD64:(NSString *)path;
 @end

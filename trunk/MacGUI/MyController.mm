@@ -812,6 +812,35 @@
     }
 }
 
+
+- (BOOL)exportToD64:(NSString *)path
+{
+    NSLog(@"Writing drive contents to D64 archive in %@...",path);
+
+    // Determine full destination path
+    NSString *archivePath = [NSString stringWithFormat:@"%s", [[self document] archive]->getPath()];
+    NSString *archiveName = [[archivePath lastPathComponent] stringByDeletingPathExtension];
+    
+    NSString *proposedName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.D64", archiveName]];
+    
+    for (unsigned i = 2; i < 256; i++) {
+        
+        // Hopefully, the file does not yes exist...
+        if (![[NSFileManager defaultManager] fileExistsAtPath:proposedName]) {
+            
+            NSLog(@"Using file name %@...", proposedName);
+            return [[c64 vc1541] exportToD64:proposedName];
+        }
+
+        // Try a different name
+        proposedName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%d.D64", archiveName, i]];
+    }
+    
+    // Sorry, too many failures
+    return NO;
+}
+
+
 // --------------------------------------------------------------------------------
 //                                  Keyboard events 
 // --------------------------------------------------------------------------------
