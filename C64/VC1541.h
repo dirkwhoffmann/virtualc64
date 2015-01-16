@@ -50,13 +50,22 @@ public:
 
 private:
 	
+    //! GCR encoding table
+    /*! Data on a VC 1541 disk ist GCR encoded. Four data bytes will be expanded to five GCR encoded bytes. */
+    const uint16_t gcr[16] = {
+        0x0a, 0x0b, 0x12, 0x13, 0x0e, 0x0f, 0x16, 0x17, 0x09, 0x19, 0x1a, 0x1b, 0x0d, 0x1d, 0x1e, 0x15
+    };
+
+    //! Number of tracks
+    uint8_t numTracks;
+
 	//! Disk data
 	/*! Each disk consists of 42 halftracks with a maximum of 7928 bytes */
 	uint8_t data[84][7928];
-	
+
 	//! Real length of each track
 	uint16_t length[84];
-	
+
 	//! Indicates whether disk is rotating or not
 	bool rotating;
     
@@ -103,9 +112,24 @@ public:
 	//! Dump current state into logfile
 	void dumpState();
 	
+    //! Getter and setter
+    void activateRedLED();
+    void deactivateRedLED();
+    inline bool hasRedLED() { return redLED; };
+    
+    void startRotating();
+    void stopRotating();
+    inline bool isRotating() { return rotating; };
+    
+    bool isWriteProtected() { return writeProtection; };
+    void setWriteProtection(bool b);
+
+    //! Read data from haftrack
 	inline uint8_t getData(unsigned halftrack, unsigned offset) 
 		{ assert(track < 84); assert (offset < 7928); return data[halftrack][offset]; }
-	inline void setData(unsigned halftrack, unsigned offset, uint8_t value) 
+
+    //! Write data to haftrack
+	inline void setData(unsigned halftrack, unsigned offset, uint8_t value)
 		{ assert(track < 84); assert (offset < 7928); data[halftrack][offset] = value; }
 	
 	//! Pass control to the virtual drive
@@ -118,32 +142,11 @@ public:
 	
 	void moveHead(int distance);
 
-	void activateRedLED();
-	void deactivateRedLED();
-    inline bool hasRedLED() { return redLED; };
-	void startRotating();
-	void stopRotating();
-	inline bool isRotating() { return rotating; };
-	bool isWriteProtected() { return writeProtection; };
-	void setWriteProtection(bool b);
 	void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
-#if 0
-	inline void writeByteToDisk(uint8_t val) { debug(" (%d,%d)(%02X %02X %02X %02X)->(%02X)", 
-		track, offset,
-		getData(track,offset), getData(track, (offset+1)%7928), 
-		getData(track,(offset+2)%7928), getData(track, (offset+3)%7928), val); 
-		setData(track, offset, val); }
-#endif
+
 	inline void writeByteToDisk(uint8_t val) { setData(track, offset, val); }
-
-	// inline void writeByteToDisk(uint8_t val, int delta) { setData(track, (offset + delta) % 7928, val); }
-
-		
 	inline void writeOraToDisk() { writeByteToDisk(via2->ora); }
 	
-	// void writeByteToDisk() { assert(writeBuf != -1); setData(track, offset, (uint8_t)writeBuf); debug(" (%02X)", via2->ora); }
-
-
 	//! Insert a virtual disc
 	void insertDisc(Archive *a);
 	void insertDisc(D64Archive *a);
@@ -154,7 +157,8 @@ public:
 
 	//! Rotate disk
 	/*! Moves the RW head to next byte on the current track */
-	void rotateDisk(); 
+	void rotateDisk();
+    
 	uint8_t readHead() { return data[track][offset]; }
 	uint8_t readHeadLookAhead() { return data[track][(offset + 1) % length[track]]; }
 	uint8_t readHeadLookBehind() { return data[track][(offset + length[track] - 1) % length[track]]; }
@@ -175,16 +179,26 @@ public:
 	/*! All tracks of the disk image are zeroed out. */
 	void clearDisk();
 
-	//! Encode four bytes in GCR format
-	/*! Data on a VC 1541 disk ist GCR encoded. Four data bytes will result in five bytes
-	    on the floppy disk. */
+	//! Translate 4 data bytes into 5 GCR encodes bytes
 	void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest);
 
+    //! Translate 5 GCR encoded bytes into 4 data bytes
+    void decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, uint8_t *dest);
+
 	//! Encode sector in real VC1541 format
-	/*! source points to the input data, dest to the target location od the encoded data. 
-		This function converts the input data to a native VCR1541 byte stream including sync 
+	/*! This function converts the input data to a native VCR1541 byte stream including sync
 		marks, GCR encodings, etc. Returns the number of  bytes written */
 	int encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
+
+    //! Decode sector from real VC1541 format
+    void decodeSector(uint8_t halftrack, uint8_t sector, uint8_t *dest);
+
+    //! Convert D64 format to VC1541 format
+    /*! Invoke this function in insert disk */
+    void encodeDisk(D64Archive *a);
+
+    //! Decode VC1541 format to D64 format
+    void decodeDisk(FILE *file);
 
 	//! Check file type
 	/*! Returns true, iff the specifies file is a valid G64 image file. */

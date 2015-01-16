@@ -105,6 +105,17 @@ D64Archive::isD64File(const char *filename)
 	return fileOK;
 }
 
+unsigned
+D64Archive::numberOfSectors(unsigned halftrack)
+{
+    assert(halftrack >= 1 && halftrack <= 84);
+    
+    // convert halftrack number to track number
+    unsigned track = (halftrack + 1) / 2;
+    
+    return D64Map[track].numberOfSectors;
+}
+
 D64Archive *
 D64Archive::archiveFromFile(const char *filename)
 {
@@ -330,17 +341,6 @@ D64Archive::isEndOfFile(int offset)
 			return true;
 	}
 	return false;
-}
-
-unsigned 
-D64Archive::numberOfSectors(unsigned halftrack)
-{
-	assert(halftrack >= 1 && halftrack <= 84);
-	
-	// convert halftrack number to track number 
-	unsigned track = (halftrack + 1) / 2;
-	
-	return D64Map[track].numberOfSectors;
 }
 
 unsigned 

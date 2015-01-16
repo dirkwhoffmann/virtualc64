@@ -90,6 +90,7 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 {	
 	debug(2, "  Loading VC1541 state...\n");
 
+    numTracks = read8(buffer);
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
 			data[i][j] = read8(buffer);
@@ -114,6 +115,7 @@ VC1541::saveToBuffer(uint8_t **buffer)
 {	
 	debug(2, "  Saving VC1541 state...\n");
 
+    write8(buffer, numTracks);
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
 			write8(buffer, data[i][j]);
@@ -207,7 +209,7 @@ VC1541::executeOneCycle()
 	if (via2->isReadMode()) {
 		via2->ora = readHead();
 	} else {
-		writeByteToDisk(via2->ora);
+        writeOraToDisk(); 
 		signalByteReady();
 	}	
 
@@ -300,42 +302,37 @@ VC1541::clearDisk()
 		clearHalftrack(i);
 }
 
-void gcr_conv4(uint8_t *from, uint8_t *to)
-{
-const uint16_t gcr_table[16] = {
-	0x0a, 0x0b, 0x12, 0x13, 0x0e, 0x0f, 0x16, 0x17,
-	0x09, 0x19, 0x1a, 0x1b, 0x0d, 0x1d, 0x1e, 0x15
-};
-
-	uint16_t g;
-
-	g = (gcr_table[*from >> 4] << 5) | gcr_table[*from & 15];
-	*to++ = g >> 2;
-	*to = (g << 6) & 0xc0;
-	from++;
-
-	g = (gcr_table[*from >> 4] << 5) | gcr_table[*from & 15];
-	*to++ |= (g >> 4) & 0x3f;
-	*to = (g << 4) & 0xf0;
-	from++;
-
-	g = (gcr_table[*from >> 4] << 5) | gcr_table[*from & 15];
-	*to++ |= (g >> 6) & 0x0f;
-	*to = (g << 2) & 0xfc;
-	from++;
-
-	g = (gcr_table[*from >> 4] << 5) | gcr_table[*from & 15];
-	*to++ |= (g >> 8) & 0x03;
-	*to = g;
-}
-
 void
 VC1541::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest)
 {
-	const uint16_t gcr[16] = { 
-		0x0a, 0x0b, 0x12, 0x13, 0x0e, 0x0f, 0x16, 0x17, 0x09, 0x19, 0x1a, 0x1b, 0x0d, 0x1d, 0x1e, 0x15 
-	};
-	uint16_t shift_reg;
+    uint64_t shift_reg = 0;
+    
+    // printf("Encoding...\n");
+    // printf("%02X %02X %02X %02X\n", b1, b2, b3, b4);
+    
+    // shift in
+    shift_reg = gcr[b1 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b1 & 0x0F];
+    shift_reg = (shift_reg << 5) | gcr[b2 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b2 & 0x0F];
+    shift_reg = (shift_reg << 5) | gcr[b3 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b3 & 0x0F];
+    shift_reg = (shift_reg << 5) | gcr[b4 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b4 & 0x0F];
+
+    // printf("%llX\n", shift_reg);
+
+    // shift out
+    dest[4] = shift_reg & 0xFF; shift_reg >>= 8;
+    dest[3] = shift_reg & 0xFF; shift_reg >>= 8;
+    dest[2] = shift_reg & 0xFF; shift_reg >>= 8;
+    dest[1] = shift_reg & 0xFF; shift_reg >>= 8;
+    dest[0] = shift_reg & 0xFF;
+    
+    // printf("%02X %02X %02X %02X %02X\n", dest[0], dest[1], dest[2], dest[3], dest[4]);
+    
+#if 0
+    uint16_t shift_reg;
 
 	// shift in first data byte
 	shift_reg = 0;	
@@ -365,9 +362,58 @@ VC1541::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest)
 	shift_reg |= gcr[b4 & 0x0F];
 	dest[3] = (shift_reg >> 8) & 0xFF;
 	dest[4] = shift_reg & 0xFF;
+#endif
+    
 }
 
-int 
+void
+VC1541::decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, uint8_t *dest)
+{
+    uint64_t shift_reg;
+   
+    // printf("Decoding %02X %02X %02X %02X %02X\n", b1, b2, b3, b4, b5);
+
+    // Create inverse lookup table
+    uint8_t lookup[32];
+    memset(lookup, 0, sizeof(lookup));
+    for (unsigned i = 0; i < 16; i++)
+        lookup[gcr[i]] = i;
+
+    // Shift in
+    shift_reg = b1;
+    shift_reg = (shift_reg << 8) | b2;
+    shift_reg = (shift_reg << 8) | b3;
+    shift_reg = (shift_reg << 8) | b4;
+    shift_reg = (shift_reg << 8) | b5;
+
+    // printf("%llX\n", shift_reg);
+
+    // Shift out
+    dest[3] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
+    dest[3] |= (lookup[shift_reg & 0x1F] << 4); shift_reg >>= 5;
+    dest[2] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
+    dest[2] |= (lookup[shift_reg & 0x1F] << 4); shift_reg >>= 5;
+    dest[1] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
+    dest[1] |= (lookup[shift_reg & 0x1F] << 4); shift_reg >>= 5;
+    dest[0] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
+    dest[0] |= (lookup[shift_reg & 0x1F] << 4);
+
+    // printf("Result: %02X %02X %02X %02X\n", dest[0], dest[1], dest[2], dest[3]);
+
+    // Remove when tested...
+#if 0
+    uint8_t test[5];
+    encodeGcr(dest[0], dest[1], dest[2], dest[3], test);
+    printf("Test: %02X %02X %02X %02X %02X\n", test[0], test[1], test[2], test[3], test[4]);
+    assert (test[0] == b1);
+    assert (test[1] == b2);
+    assert (test[2] == b3);
+    assert (test[3] == b4);
+    assert (test[4] == b5);
+#endif
+}
+
+int
 VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *dest, int gap)
 {
 	int i;
@@ -415,18 +461,18 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 	for (i = 1; i < 256; i++)
 		checksum ^= source[i];
 		
-	// Write magic byte (data mark), first three data bytes
+	// Encode magic byte (data mark), first three data bytes
 	encodeGcr(0x07, source[0], source[1], source[2], ptr);
 	ptr += 5;
 	
-	// Write chunks of data
+	// Encode chunks of data
 	for (i = 3; i < 255; i += 4) {
 		encodeGcr(source[i], source[i+1], source[i+2], source[i+3], ptr);
 		ptr += 5;
 	}
 	assert(i == 255);
 	
-	// Write last byte, checksum, 0x00, 0x00
+	// Encode last byte, checksum, 0x00, 0x00
 	encodeGcr(source[255], checksum, 0, 0, ptr);
 	ptr += 5;
 	
@@ -438,37 +484,128 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 	return ptr - dest;
 }
 
+void
+VC1541::decodeSector(uint8_t halftrack, uint8_t sector, uint8_t *dest)
+{
+    assert(dest != NULL);
+    assert(1 <= halftrack && halftrack <= 84);
+
+    int i;
+    uint8_t databytes[4];
+    uint8_t *source = &data[halftrack-1][sector * 256]; // WRONG! BRUTTO-BYTES RECHNEN, NICHT NETTO
+    uint8_t *ptr = dest;
+    
+    debug(2, "Decoding halftrack %d, sector %d\n", halftrack, sector);
+    
+    // Skip SYNC mark
+    source += 6;
+    
+    // Skip magic byte (header mark), checksum, sector and track
+    source += 5;
+    
+    // Skip id lo, id hi, 0x0F, 0x0F
+    source += 5;
+    
+    // Skip gap (9 x 0x55)
+    source += 9;
+    
+    // Skip SYNC mark
+    source += 6;
+    
+    // Decode magic byte (data mark), first three data bytes
+    decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
+
+    if (databytes[0] != 0x07)
+        warn("Expected magic byte 07. Found %02X",databytes[0]);
+
+    *(ptr++) = databytes[1];
+    *(ptr++) = databytes[2];
+    *(ptr++) = databytes[3];
+    source += 4;
+    
+    // Decode chunks of data
+    for (i = 3; i < 255; i += 4) {
+        decodeGcr(source[0], source[1], source[2], source[3], source[4], ptr);
+        source += 5;
+        ptr += 4;
+    }
+    assert(i == 255);
+    
+    // Decode last byte, checksum, 0x00, 0x00
+    decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
+    *(ptr++) = databytes[0];
+    
+    // Hopefully, 256 bytes have been decoded...
+    assert(ptr-dest == 256);
+}
+
 void 
 VC1541::insertDisc(Archive *a)
 {
 	warn("Can only mount D64 images.\n");
 }
 
+void
+VC1541::encodeDisk(D64Archive *a)
+{
+    unsigned i,j;
+    uint8_t *dest;
+    
+    assert(a != NULL);
+    
+    numTracks = a->numberOfTracks();
+    
+    // For each full track...
+    for (i = 1; i <= 2*a->numberOfTracks(); i += 2) {
+        // For each sector...
+        int gap =  (7928 - (a->numberOfSectors(i) * 356)) / a->numberOfSectors(i);
+        for (j = 0, dest = data[i-1]; j < a->numberOfSectors(i); j++) {
+            dest += encodeSector(a, i, j, dest, gap);
+        }
+        
+        length[i-1] = dest - data[i-1];
+        debug(2, "Length of track %d: %d bytes\n", i, dest - data[i-1]);
+    }
+    
+    for (i = 1; i <= 84; i++) {
+        assert(length[i-1] <= 7928);
+    }
+}
+
+void
+VC1541::decodeDisk(FILE *file)
+{
+    unsigned track, halftrack;
+    uint8_t buffer[256]; // should be 256 later
+    int count = 0;
+    
+    // For each full track...
+    for (track = halftrack = 1; track <= numTracks; track++, halftrack += 2) {
+
+        debug(1,"Decoding track %d\n", track);
+
+        // For each sector...
+        for (unsigned sector = 0; sector < D64Archive::numberOfSectors(halftrack); sector++) {
+
+            debug(1,"  Decoding sector %d\n", sector);
+            decodeSector(halftrack, sector, buffer);
+            count++;
+            for (unsigned i = 0; i < 256; i++) {
+                fputc(buffer[i], file);
+            }
+            
+        }
+    }
+    printf("%d sectors (%d bytes) have been written", count, count * 256);
+}
+
 void 
 VC1541::insertDisc(D64Archive *a)
 {
-	unsigned i,j;
-	uint8_t *dest;
-	
 	assert(a != NULL);
 
-	ejectDisc();
-	
-	// For each full track...
-	for (i = 1; i <= 2*a->numberOfTracks(); i += 2) {
-		// For each sector...
-		int gap =  (7928 - (a->numberOfSectors(i) * 356)) / a->numberOfSectors(i);
-		for (j = 0, dest = data[i-1]; j < a->numberOfSectors(i); j++) {
-			dest += encodeSector(a, i, j, dest, gap);
-		}
-
-		length[i-1] = dest - data[i-1];
-		debug(2, "Length of track %d: %d bytes\n", i, dest - data[i-1]); 
-	}
-
-	for (i = 1; i <= 84; i++) {
-		assert(length[i-1] <= 7928);
-	}
+    ejectDisc();
+    encodeDisk(a);
 
     diskInserted = true;
     setWriteProtection(a->writeProtection);
@@ -625,10 +762,10 @@ VC1541::exportToD64(const char *filename)
     }
     
     debug(1, "Writing D64 archive to %s\n",filename);
+    decodeDisk(file);
     
-    
-    
-    return false;
+    fclose(file);
+    return true;
 }
 
 
