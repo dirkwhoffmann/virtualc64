@@ -60,8 +60,14 @@ private:
     uint8_t numTracks;
 
 	//! Disk data
-	/*! Each disk consists of 42 halftracks with a maximum of 7928 bytes */
+	/*! Each disk consists of 42 tracks (84 halftracks) with a maximum of 7928 bytes */
 	uint8_t data[84][7928];
+
+    //! Return start address of a given halftrack (1...84)
+    uint8_t *startOfHalftrack(unsigned ht) { assert(ht >= 1 && ht <= 84); return &data[ht-1][0]; }
+
+    //! Return start address of a given track (1...42)
+    uint8_t *startOfTrack(unsigned t) { assert(t >= 1 && t <= 42); return startOfHalftrack(2*t-1); }
 
 	//! Real length of each track
 	uint16_t length[84];
@@ -124,6 +130,9 @@ public:
     bool isWriteProtected() { return writeProtection; };
     void setWriteProtection(bool b);
 
+    //! Calculate start address of a specific sector
+    // uint8_t *findSector(unsigned halftrack, unsigned sector);
+    
     //! Read data from haftrack
 	inline uint8_t getData(unsigned halftrack, unsigned offset) 
 		{ assert(track < 84); assert (offset < 7928); return data[halftrack][offset]; }
@@ -191,8 +200,9 @@ public:
 	int encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
 
     //! Decode sector from real VC1541 format
-    void decodeSector(uint8_t halftrack, uint8_t sector, uint8_t *dest);
-
+    // void decodeSector(uint8_t halftrack, uint8_t sector, uint8_t *dest);
+    void decodeSector(uint8_t *source, uint8_t *dest);
+    
     //! Convert D64 format to VC1541 format
     /*! Invoke this function in insert disk */
     void encodeDisk(D64Archive *a);
