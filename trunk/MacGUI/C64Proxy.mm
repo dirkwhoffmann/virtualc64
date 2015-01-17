@@ -332,18 +332,18 @@
         fprintf(stderr,"%c",c);
         
         [self pressKey:c];
-        usleep(20000);
+        usleep(25000);
         [self releaseKey:c];
-        usleep(20000);
+        usleep(25000);
     }
     
     if (i != [text length]) {
         // Abbreviate text by three dots
         for (i = 0; i < 3; i++) {
             [self pressKey:'.'];
-            usleep(20000);
+            usleep(25000);
             [self releaseKey:'.'];
-            usleep(20000);
+            usleep(25000);
         }
     }
 }

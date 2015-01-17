@@ -284,6 +284,14 @@ VC1541::moveHead(int distance)
 		debug(2, "Head ???\n");
 }
 
+#if 0
+uint8_t *
+VC1541::findSector(unsigned halftrack, unsigned sector)
+{
+    
+}
+#endif
+
 void
 VC1541::clearHalftrack(int nr)
 {
@@ -307,9 +315,6 @@ VC1541::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest)
 {
     uint64_t shift_reg = 0;
     
-    // printf("Encoding...\n");
-    // printf("%02X %02X %02X %02X\n", b1, b2, b3, b4);
-    
     // shift in
     shift_reg = gcr[b1 >> 4];
     shift_reg = (shift_reg << 5) | gcr[b1 & 0x0F];
@@ -320,50 +325,12 @@ VC1541::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest)
     shift_reg = (shift_reg << 5) | gcr[b4 >> 4];
     shift_reg = (shift_reg << 5) | gcr[b4 & 0x0F];
 
-    // printf("%llX\n", shift_reg);
-
     // shift out
     dest[4] = shift_reg & 0xFF; shift_reg >>= 8;
     dest[3] = shift_reg & 0xFF; shift_reg >>= 8;
     dest[2] = shift_reg & 0xFF; shift_reg >>= 8;
     dest[1] = shift_reg & 0xFF; shift_reg >>= 8;
     dest[0] = shift_reg & 0xFF;
-    
-    // printf("%02X %02X %02X %02X %02X\n", dest[0], dest[1], dest[2], dest[3], dest[4]);
-    
-#if 0
-    uint16_t shift_reg;
-
-	// shift in first data byte
-	shift_reg = 0;	
-	shift_reg |= gcr[b1 >> 4];
-	shift_reg <<= 5;
-	shift_reg |= gcr[b1 & 0x0F];
-	dest[0] = (shift_reg >> 2) & 0xFF;
-	
-	// shift in second data byte
-	shift_reg <<= 5;	
-	shift_reg |= gcr[b2 >> 4];
-	shift_reg <<= 5;
-	shift_reg |= gcr[b2 & 0x0F];
-	dest[1] = (shift_reg >> 4) & 0xFF;
-
-	// shift in third data byte
-	shift_reg <<= 5;	
-	shift_reg |= gcr[b3 >> 4];
-	shift_reg <<= 5;
-	shift_reg |= gcr[b3 & 0x0F];
-	dest[2] = (shift_reg >> 6) & 0xFF;
-
-	// shift in fourth data byte
-	shift_reg <<= 5;	
-	shift_reg |= gcr[b4 >> 4];
-	shift_reg <<= 5;
-	shift_reg |= gcr[b4 & 0x0F];
-	dest[3] = (shift_reg >> 8) & 0xFF;
-	dest[4] = shift_reg & 0xFF;
-#endif
-    
 }
 
 void
@@ -371,8 +338,6 @@ VC1541::decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, ui
 {
     uint64_t shift_reg;
    
-    // printf("Decoding %02X %02X %02X %02X %02X\n", b1, b2, b3, b4, b5);
-
     // Create inverse lookup table
     uint8_t lookup[32];
     memset(lookup, 0, sizeof(lookup));
@@ -386,8 +351,6 @@ VC1541::decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, ui
     shift_reg = (shift_reg << 8) | b4;
     shift_reg = (shift_reg << 8) | b5;
 
-    // printf("%llX\n", shift_reg);
-
     // Shift out
     dest[3] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
     dest[3] |= (lookup[shift_reg & 0x1F] << 4); shift_reg >>= 5;
@@ -397,20 +360,6 @@ VC1541::decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, ui
     dest[1] |= (lookup[shift_reg & 0x1F] << 4); shift_reg >>= 5;
     dest[0] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
     dest[0] |= (lookup[shift_reg & 0x1F] << 4);
-
-    // printf("Result: %02X %02X %02X %02X\n", dest[0], dest[1], dest[2], dest[3]);
-
-    // Remove when tested...
-#if 0
-    uint8_t test[5];
-    encodeGcr(dest[0], dest[1], dest[2], dest[3], test);
-    printf("Test: %02X %02X %02X %02X %02X\n", test[0], test[1], test[2], test[3], test[4]);
-    assert (test[0] == b1);
-    assert (test[1] == b2);
-    assert (test[2] == b3);
-    assert (test[3] == b4);
-    assert (test[4] == b5);
-#endif
 }
 
 int
@@ -426,7 +375,7 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 	assert(1 <= track && track <= 42);
 	
 	if ((source = a->findSector(halftrack, sector)) == 0) {
-		warn("Can't encode halftrack. Not supported by the D64 format.\n");
+		warn("Can't find halftrack data in archive\n");
 		return 0;
 	}
 	debug(2, "Encoding track %d, sector %d\n", track, sector);
@@ -485,17 +434,15 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 }
 
 void
-VC1541::decodeSector(uint8_t halftrack, uint8_t sector, uint8_t *dest)
+VC1541::decodeSector(uint8_t *source, uint8_t *dest)
 {
     assert(dest != NULL);
-    assert(1 <= halftrack && halftrack <= 84);
 
     int i;
     uint8_t databytes[4];
-    uint8_t *source = &data[halftrack-1][sector * 256]; // WRONG! BRUTTO-BYTES RECHNEN, NICHT NETTO
     uint8_t *ptr = dest;
     
-    debug(2, "Decoding halftrack %d, sector %d\n", halftrack, sector);
+    debug(2, "Decoding sector\n");
     
     // Skip SYNC mark
     source += 6;
@@ -516,12 +463,12 @@ VC1541::decodeSector(uint8_t halftrack, uint8_t sector, uint8_t *dest)
     decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
 
     if (databytes[0] != 0x07)
-        warn("Expected magic byte 07. Found %02X",databytes[0]);
+        warn("Expected magic byte 07. Found %02X\n", databytes[0]);
 
     *(ptr++) = databytes[1];
     *(ptr++) = databytes[2];
     *(ptr++) = databytes[3];
-    source += 4;
+    source += 5;
     
     // Decode chunks of data
     for (i = 3; i < 255; i += 4) {
@@ -557,6 +504,7 @@ VC1541::encodeDisk(D64Archive *a)
     
     // For each full track...
     for (i = 1; i <= 2*a->numberOfTracks(); i += 2) {
+
         // For each sector...
         int gap =  (7928 - (a->numberOfSectors(i) * 356)) / a->numberOfSectors(i);
         for (j = 0, dest = data[i-1]; j < a->numberOfSectors(i); j++) {
@@ -564,7 +512,7 @@ VC1541::encodeDisk(D64Archive *a)
         }
         
         length[i-1] = dest - data[i-1];
-        debug(2, "Length of track %d: %d bytes\n", i, dest - data[i-1]);
+        debug(3, "Length of track %d: %d bytes\n", i, dest - data[i-1]);
     }
     
     for (i = 1; i <= 84; i++) {
@@ -580,23 +528,31 @@ VC1541::decodeDisk(FILE *file)
     int count = 0;
     
     // For each full track...
-    for (track = halftrack = 1; track <= numTracks; track++, halftrack += 2) {
+    for (track = 1, halftrack = 0; track <= numTracks; track++, halftrack += 2) {
 
-        debug(1,"Decoding track %d\n", track);
+        debug(3,"Decoding track %d\n", track);
 
-        // For each sector...
-        for (unsigned sector = 0; sector < D64Archive::numberOfSectors(halftrack); sector++) {
+        for (unsigned j = 0; j < length[halftrack]; j++) {
+            
+            uint8_t *sector_start = &data[halftrack][j];
+            if (sector_start[0] != 0xFF) continue;
+            if (sector_start[1] != 0xFF) continue;
+            if (sector_start[2] != 0xFF) continue;
+            if (sector_start[3] != 0xFF) continue;
+            if (sector_start[4] != 0xFF) continue;
+            if (sector_start[5] != 0xFF) continue;
+            if (sector_start[6] != 0x52) continue;
 
-            debug(1,"  Decoding sector %d\n", sector);
-            decodeSector(halftrack, sector, buffer);
+            // Sync mark found (reached start of sector)
             count++;
+            decodeSector(sector_start, buffer);
+
             for (unsigned i = 0; i < 256; i++) {
                 fputc(buffer[i], file);
             }
             
         }
     }
-    printf("%d sectors (%d bytes) have been written", count, count * 256);
 }
 
 void 
