@@ -33,70 +33,76 @@ class CIA2;
     The contents of memory location 0x0001 determines which kind of memory is currently visible. */
 class C64Memory : public Memory {
 
-	enum MemorySource
-	{
-		MEM_SOURCE_RAM,
-		MEM_SOURCE_ROM,
-		MEM_SOURCE_IO,
+    enum MemorySource
+    {
+        // FUTURE USE
+        M_PP = 1,
+        M_RAM,
+        M_BASIC,
+        M_CHAR,
+        M_KERNEL,
+        M_IO,
+        M_CRTLO,
+        M_CRTHI,
+        M_NONE,
+        
+        // CURRENTLY USED (DEPRECATED)
+        MEM_SOURCE_RAM,
+        MEM_SOURCE_ROM,
+        MEM_SOURCE_IO,
+        MEM_SOURCE_PP,
+        MEM_SOURCE_CRT
+    };
+    
+    //! C64 bank mapping
+    //
+    // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
+    //   BankMap[x][0] = mapping for range $1000 - $7FFF
+    //   BankMap[x][1] = mapping for range $8000 - $9FFF
+    //   BankMap[x][2] = mapping for range $A000 - $BFFF
+    //   BankMap[x][3] = mapping for range $C000 - $CFFF
+    //   BankMap[x][4] = mapping for range $D000 - $DFFF
+    //   BankMap[x][5] = mapping for range $E000 - $FFFF
 
-		// DEPRECATED
-		MEM_SOURCE_VIC,
-		MEM_SOURCE_SID,
-		MEM_SOURCE_COLOR,
-		MEM_SOURCE_CIA1,
-		MEM_SOURCE_CIA2,
-		MEM_SOURCE_PP,
-		MEM_SOURCE_CRT
-	};
-	
-	/*
-	 The following is a chart taken from the "Commodore Programmers  Reference
-	 Guide". It details the state of various areas of memory  depending  on  the
-	 state of the control lines.
-	 
-	 
-	 Legend:
-	 L - ROML (low)
-	 H - ROMH (high)
-	 G - GAME
-	 E - EXROM
-	 
-	 Addr       LHGE   LHGE   LHGE   LHGE   LHGE   LHGE   LHGE   LHGE   LHGE
-	 Range
-	 1111   101X   1000   011X   001X   1110   0100   1100   XX01
-	 default                00X0                             Ultimax
-	 -------------------------------------------------------------------------
-	 E000-FFFF Kernal  RAM    RAM   Kernal  RAM   Kernal Kernal Kernal ROMH(*)
-	 D000-DFFF IO/CHR IO/CHR IO/RAM IO/CHR  RAM   IO/CHR IO/CHR IO/CHR   I/O
-	 C000-CFFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM     -
-	 A000-BFFF BASIC   RAM    RAM    RAM    RAM   BASIC   ROMH   ROMH    -
-	 8000-9FFF  RAM    RAM    RAM    RAM    RAM    ROML   RAM    ROML  ROML(*)
-	 4000-7FFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM     -
-	 1000-3FFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM     -
-	 0000-0FFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM
-	 
-	 (*) Internal memory does not respond to write accesses in these areas
-	 
-	 
-	 From the above chart, the following table can be built. It shows standard
-	 cartridges, either 8K or 16K in size, and the memory ranges they load into.
-	 
-	 Type     Size   Game   EXRom  Low Bank  High Bank
-	 in K   Line   Line    (ROML)    (ROMH)
-	 -------------------------------------------------
-	 Normal    8k     hi     lo     $8000      ----
-	 Normal    16k    lo     lo     $8000     $A000
-	 Ultimax   8k     lo     hi     $E000      ----
-	 
-	 The ROMH and ROML lines are CPU-controlled status  lines,  used  to  bank
-	 in/out RAM, ROM or I/O, depending on what is needed at the time.
-	 
-	 Ultimax cartridges typically are situated  in  the  $E000-FFFF  (8K)  ROM
-	 address range. There are some cartridges  which  only  use  4K  of  the  8K
-	 allocation. If the cartridge is 16K in size, then it will  reside  in  both
-	 $8000-9FFF and $E000-FFFF.
-	 */
+    // TODO: CHECK THIS MAP
+    const MemorySource BankMap[32][6] = {
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
+        M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNEL,
+        M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNEL,
+        
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL,
+        M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNEL,
 
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL,
+        M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNEL
+    };
+    
 public:		
 
 	//! Reference to the connected VIC chip 
@@ -198,7 +204,7 @@ public:
 	/*! This function is called by the CPU when the port lines change.
 	 Besides others, the processor port register determines whether the RAM, ROM, or the IO space is visible. 
 	 */ 
-	 void processorPortHasChanged(uint8_t newPortLines);
+	 void processorPortHasChanged();
 		
 public:
 	
@@ -262,8 +268,11 @@ public:
 	//! Returns true, iff the provided address is in one of the three ROM address ranges
 	static inline bool isRomAddr(uint16_t addr) 
 		{ return isCharRomAddr(addr) || isKernelRomAddr(addr) || isBasicRomAddr(addr) || isCartridgeRomAddr(addr); }
-	
-	//! Lookup table for peek function
+
+    //! Lookup table for peek function
+    MemorySource peekSrc[16];
+
+	//! Lookup table for peek function (DEPRECTATED)
 	MemorySource peekSource[16];
 
 	//! Lookup table for poke function
