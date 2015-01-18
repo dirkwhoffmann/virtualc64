@@ -96,6 +96,7 @@ C64::C64()
 	cia2 = new CIA2(this);
 	keyboard = new Keyboard(this);
 	iec = new IEC(this);
+    expansionport = new ExpansionPort(this);
 	floppy = new VC1541(this);
     joystick1 = new Joystick(this);
     joystick2 = new Joystick(this);
@@ -117,17 +118,18 @@ C64::~C64()
 	halt();	
 		
 	// Release all components
-	delete floppy;
-	delete keyboard;
-	delete iec;
-	delete cia1;
-	delete cia2;
-	delete vic;
-	delete sid;
-	delete cpu;	
-	delete mem;
-    delete joystick1;
     delete joystick2;
+    delete joystick1;
+	delete floppy;
+    delete expansionport;
+    delete iec;
+	delete keyboard;
+	delete cia2;
+	delete cia1;
+    delete sid;
+	delete vic;
+	delete cpu;
+	delete mem;
     
 	debug(1, "Cleaned up virtual C64 at address %p\n", this);
 }
@@ -148,6 +150,7 @@ void C64::reset()
     joystick1->reset();
     joystick2->reset();
     iec->reset();
+    expansionport->reset();
     floppy->reset();
 
 	cycles = 0UL;
@@ -167,7 +170,6 @@ void C64::ping()
     debug (1, "Pinging virtual C64\n");
     
     putMessage(MSG_WARP, warp);
-    putMessage(MSG_CARTRIDGE, isCartridgeAttached());
 
     mem->ping();
     cpu->ping();
@@ -179,6 +181,7 @@ void C64::ping()
     joystick1->ping();
     joystick2->ping();
     iec->ping();
+    expansionport->ping();
     floppy->ping();
 }
 
@@ -324,6 +327,7 @@ C64::loadFromBuffer(uint8_t **buffer)
     joystick1->loadFromBuffer(buffer);
     joystick2->loadFromBuffer(buffer);
     iec->loadFromBuffer(buffer);
+    expansionport->loadFromBuffer(buffer);
 	floppy->loadFromBuffer(buffer);
 
 	debug(1, "%d bytes.\n", *buffer - old);
@@ -370,6 +374,7 @@ C64::saveToBuffer(uint8_t **buffer)
     joystick1->saveToBuffer(buffer);
     joystick2->saveToBuffer(buffer);
 	iec->saveToBuffer(buffer);
+    expansionport->saveToBuffer(buffer);
 	floppy->saveToBuffer(buffer);
 	
 	debug(2, "%d bytes.\n", *buffer - old);	

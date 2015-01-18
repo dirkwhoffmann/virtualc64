@@ -54,6 +54,7 @@
 #include "CPU.h"
 #include "VC1541.h"
 #include "Cartridge.h"
+#include "ExpansionPort.h"
 
 
 //! A complete virtual C64
@@ -186,7 +187,10 @@ public:
 
 	//! Reference to the virtual IEC bus
 	IEC *iec;
-	
+
+    //! Reference to the virtual expansion port (cartdrige slot)
+    ExpansionPort *expansionport;
+
 	//! Reference to the virtual VC1541
 	VC1541 *floppy;
 		
