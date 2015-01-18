@@ -295,6 +295,23 @@ C64Memory::initializePeekPokeLookupTables()
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
+    // Addr    LHGE   LHGE   LHGE   LHGE   LHGE   LHGE   LHGE   LHGE   LHGE
+    // Range   1111   101X   1000   011X   001X   1110   0100   1100   XX01
+    //       default                00X0                             Ultimax
+    // -------------------------------------------------------------------------
+    // E000-FFFF Kernal  RAM    RAM   Kernal  RAM   Kernal Kernal Kernal ROMH(*)
+    // D000-DFFF IO/CHR IO/CHR IO/RAM IO/CHR  RAM   IO/CHR IO/CHR IO/CHR   I/O
+    // C000-CFFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM     -
+    // A000-BFFF BASIC   RAM    RAM    RAM    RAM   BASIC   ROMH   ROMH    -
+    // 8000-9FFF  RAM    RAM    RAM    RAM    RAM    ROML   RAM    ROML  ROML(*)
+    // 4000-7FFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM     -
+    // 1000-3FFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM     -
+    // 0000-0FFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM
+    //
+    // (*) Internal memory does not respond to write accesses in these areas
+
+    // TODO: IMPLEMENT PROPER CRT ROM SELECTION
+    
 	MemorySource source;
 	
 	// 0x8000 - 0x9FFFF (Cartridge ROM, or RAM)
@@ -370,10 +387,6 @@ uint8_t C64Memory::peekIO(uint16_t addr)
             nicht so zufällig sind, wird in Kapitel 4 noch ausführlich erklärt. Ein
             Lesen von offenen Adressen liefert nämlich auf vielen C64 das zuletzt vom
             VIC gelesene Byte zurück!)" [C.B.] */
-
-        if (cartridge != NULL && cartridgeRomIsVisible) {
-			return cartridge->peek(addr);
-        }
         
 		return vic->getDataBus();
 	}

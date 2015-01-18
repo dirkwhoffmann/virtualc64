@@ -211,10 +211,7 @@ public:
 	// -----------------------------------------------------------------------------------------------
 	
 private:
-	
-	//! Reference to the connected virtual C64
-	// C64 *c64;
-	
+		
 	//! Reference to the connected CPU. 
 	CPU *cpu;
 	

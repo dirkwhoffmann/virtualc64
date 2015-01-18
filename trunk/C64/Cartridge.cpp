@@ -98,7 +98,7 @@ Cartridge::readFromBuffer(const void *buffer, unsigned length)
 	
 	// Cartridge header size
 	uint16_t hi = LO_HI(data[0x0011], data[0x0010]);
-	uint16_t lo  = LO_HI(data[0x0013], data[0x0012]);
+	uint16_t lo = LO_HI(data[0x0013], data[0x0012]);
 	uint32_t headerSize = (uint32_t)((hi << 16) | (lo));
 	
 	version = LO_HI(data[0x0015], data[0x0014]);
@@ -127,7 +127,7 @@ Cartridge::readFromBuffer(const void *buffer, unsigned length)
 		fprintf(stderr, "Chip ROM size: 0x%04x (%d)  type: %d  Bank: 0x%04x  Address: 0x%04x\n", 
 				romSize, romSize, chipType, bank, addr );
 		
-		Cartridge::Chip * chipPacket = new Cartridge::Chip();
+		Cartridge::Chip *chipPacket = new Cartridge::Chip();
 		chipPacket->loadAddress = addr;
 		chipPacket->size = romSize;
 		
