@@ -282,11 +282,18 @@ C64Memory::peekCartridge(uint16_t addr)
 
 void 
 C64Memory::initializePeekPokeLookupTables()
-{	
-	for (unsigned i = 0x1; i <= 0xF; i++) 
+{
+    // Peek source space
+    for (unsigned i = 0x1; i <= 0xF; i++)
+        peekSrc[i] = MEM_SOURCE_RAM;
+    peekSrc[0x0] = MEM_SOURCE_PP;
+
+    // DEPRECATED
+	for (unsigned i = 0x1; i <= 0xF; i++)
 		peekSource[i] = MEM_SOURCE_RAM;
 	peekSource[0x0] = MEM_SOURCE_PP;
 
+    // Poke target space
 	for (unsigned i = 0x1; i <= 0xF; i++)
 		pokeTarget[i] = MEM_SOURCE_RAM;
 	pokeTarget[0x0] = MEM_SOURCE_PP;
@@ -295,26 +302,63 @@ C64Memory::initializePeekPokeLookupTables()
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
-    // Addr    LHGE   LHGE   LHGE   LHGE   LHGE   LHGE   LHGE   LHGE   LHGE
-    // Range   1111   101X   1000   011X   001X   1110   0100   1100   XX01
-    //       default                00X0                             Ultimax
-    // -------------------------------------------------------------------------
-    // E000-FFFF Kernal  RAM    RAM   Kernal  RAM   Kernal Kernal Kernal ROMH(*)
-    // D000-DFFF IO/CHR IO/CHR IO/RAM IO/CHR  RAM   IO/CHR IO/CHR IO/CHR   I/O
-    // C000-CFFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM     -
-    // A000-BFFF BASIC   RAM    RAM    RAM    RAM   BASIC   ROMH   ROMH    -
-    // 8000-9FFF  RAM    RAM    RAM    RAM    RAM    ROML   RAM    ROML  ROML(*)
-    // 4000-7FFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM     -
-    // 1000-3FFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM     -
-    // 0000-0FFF  RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM    RAM
-    //
-    // (*) Internal memory does not respond to write accesses in these areas
-
-    // TODO: IMPLEMENT PROPER CRT ROM SELECTION
-    
 	MemorySource source;
-	
-	// 0x8000 - 0x9FFFF (Cartridge ROM, or RAM)
+    
+    // NEW CODE (yet unenabled)
+    uint8_t EXROM = c64->expansionport->exromLine ? 0x10 : 0x00;
+    uint8_t GAME = c64->expansionport->gameLine ? 0x08 : 0x00;
+    uint8_t index = (cpu->getPortLines() & 0x07) | EXROM | GAME;
+    
+    // 0x1000 - 0x7FFF (RAM or unmapped)
+    source = BankMap[index][0];
+    assert(source == M_RAM || source == M_NONE);
+    peekSrc[0x1] = source;
+    peekSrc[0x2] = source;
+    peekSrc[0x3] = source;
+    peekSrc[0x4] = source;
+    peekSrc[0x5] = source;
+    peekSrc[0x6] = source;
+    peekSrc[0x7] = source;
+
+    // 0x8000 - 0x9FFF (Cartridge ROM or RAM)
+    source = BankMap[index][1];
+    assert(source == M_CRTLO || source == M_CRTHI || source == M_RAM);
+    peekSrc[0x8] = source;
+    peekSrc[0x9] = source;
+
+    // 0xA000 - 0xBFFF (Cartridge ROM, basic ROM, RAM, or unmapped)
+    source = BankMap[index][2];
+    assert(source == M_CRTLO || source == M_CRTHI || source == M_BASIC || source == M_RAM || source == M_NONE);
+    peekSrc[0xA] = source;
+    peekSrc[0xB] = source;
+
+    // 0xC000 - 0xCFFF (RAM or unmapped)
+    source = BankMap[index][3];
+    assert(source == M_RAM || source == M_NONE);
+    peekSrc[0xC] = source;
+
+    // 0xD000 - 0xDFFF (IO space, character ROM, or RAM)
+    source = BankMap[index][4];
+    assert(source == M_IO || source == M_CHAR || source == M_RAM);
+    peekSrc[0xD] = source;
+
+    // 0xE000 - 0xFFFF (Cartridge Rom, Kernel ROM, or RAM)
+    source = BankMap[index][5];
+    assert(source == M_CRTLO || source == M_CRTHI || source == M_KERNEL || source == M_RAM);
+    peekSrc[0xE] = source;
+    peekSrc[0xF] = source;
+
+    
+    MemorySource target;
+    
+    // 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)
+    target = IOIsVisible ? MEM_SOURCE_IO : MEM_SOURCE_RAM;
+    pokeTarget[0xD] = target;
+
+    
+    // OLD CODE BELOW (CURRENTLY USED)
+    
+	// 0x8000 - 0x9FFF (Cartridge ROM, or RAM)
 	source = cartridge ? MEM_SOURCE_CRT : MEM_SOURCE_RAM;
 	peekSource[0x8] = source;
 	peekSource[0x9] = source;
@@ -327,18 +371,12 @@ C64Memory::updatePeekPokeLookupTables()
 	// 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)	
 	source = IOIsVisible ? MEM_SOURCE_IO : (charRomIsVisible ? MEM_SOURCE_ROM : MEM_SOURCE_RAM);
 	peekSource[0xD] = source;
-	
+
 	// 0xE000 - 0xFFFF (Cartridge Rom, Kernel ROM, or RAM)
 	source = cartridge ? MEM_SOURCE_CRT : (kernelRomIsVisible ? MEM_SOURCE_ROM : MEM_SOURCE_RAM);
 	peekSource[0xE] = source;
 	peekSource[0xF] = source;	
-
 	
-	MemorySource target;
-
-	// 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)	
-	target = IOIsVisible ? MEM_SOURCE_IO : MEM_SOURCE_RAM;
-	pokeTarget[0xD] = target;
 }
 
 
@@ -451,32 +489,11 @@ void C64Memory::pokeRom(uint16_t addr, uint8_t value)
 }
 
 void
-C64Memory::processorPortHasChanged(uint8_t newPortLines)
+C64Memory::processorPortHasChanged()
 {
-	// Processor port.
-	// Bits #0-#2: Configuration for memory areas $A000-$BFFF, $D000-$DFFF and $E000-$FFFF. Values:
-	//	           x00:  RAM visible in all three areas.
-	//  		   x01:  RAM visible at $A000-$BFFF and $E000-$FFFF.
-	// 			   x10: RAM visible at $A000-$BFFF; KERNAL ROM visible at $E000-$FFFF.
-	//			   x11: BASIC ROM visible at $A000-$BFFF; KERNAL ROM visible at $E000-$FFFF.
-	//			   0xx: Character ROM visible at $D000-$DFFF. (Except for the value %000, see above.)
-	//			   1xx: I/O area visible at $D000-$DFFF. (Except for the value %100, see above.)
-	//
-	// Bit #3:     Datasette output signal level.
-	// Bit #4:     Datasette button status; 0 = One or more of PLAY, RECORD, F.FWD or REW pressed; 1 = No button is pressed.
-	// Bit #5:     Datasette motor control; 0 = On; 1 = Off.
-	
-	//          $01   $a000-$bfff  $d000-$dfff  $e000-$ffff
-	//	*     -----------------------------------------------
-	//	*      0 000      RAM          RAM          RAM
-	//	*      1 001      RAM       Char ROM        RAM
-	//	*      2 010      RAM       Char ROM    Kernal ROM
-	//	*      3 011   Basic ROM    Char ROM    Kernal ROM
-	//	*      4 100      RAM          RAM          RAM
-	//	*      5 101      RAM          I/O          RAM
-	//	*      6 110      RAM          I/O      Kernal ROM
-	//	*      7 111   Basic ROM       I/O      Kernal ROM
-	
+
+    uint8_t newPortLines = cpu->getPortLines();
+    
 	kernelRomIsVisible = ((newPortLines & 2) == 2); // x1x
 	basicRomIsVisible  = ((newPortLines & 3) == 3); // x11
 	charRomIsVisible   = ((newPortLines & 4) == 0) && ((newPortLines & 3) != 0); // 0xx, but not x00
@@ -567,10 +584,10 @@ void C64Memory::poke(uint16_t addr, uint8_t value)
 			// Processor port
 			if (addr == 0x0000) {
 				cpu->setPortDirection(value);
-				processorPortHasChanged(cpu->getPortLines());
+				processorPortHasChanged();
 			} else {
 				cpu->setPort(value);
-				processorPortHasChanged(cpu->getPortLines());
+				processorPortHasChanged();
 			}
 			return;
 
