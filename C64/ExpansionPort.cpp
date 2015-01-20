@@ -79,6 +79,20 @@ ExpansionPort::dumpState()
     msg("(no output)\n");
 }
 
+void
+ExpansionPort::setGameLine(bool value)
+{
+    gameLine = value;
+    c64->mem->updatePeekPokeLookupTables();
+}
+
+void
+ExpansionPort::setExromLine(bool value)
+{
+    exromLine = value;
+    c64->mem->updatePeekPokeLookupTables();
+}
+
 bool
 ExpansionPort::attachCartridge(Cartridge *c)
 {

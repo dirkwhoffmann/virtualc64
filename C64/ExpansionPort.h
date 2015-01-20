@@ -115,6 +115,12 @@ public:
     //! Dump internal state to console
     void dumpState();	
     
+    //! Getter and setter
+    bool getGameLine() { return gameLine; }
+    void setGameLine(bool value);
+    bool getExromLine() { return exromLine; }
+    void setExromLine(bool value);
+    
     //! Returns true if a cartridge is attached to the expansion port
     inline bool getCartridgeAttached() { return cartridgeAttached; }
     
