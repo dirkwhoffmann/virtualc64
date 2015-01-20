@@ -33,76 +33,18 @@ class CIA2;
     The contents of memory location 0x0001 determines which kind of memory is currently visible. */
 class C64Memory : public Memory {
 
+    // Memory source identifiers used inside the peek/poke lookup tables
     enum MemorySource
     {
-        // FUTURE USE
-        M_PP = 1,
-        M_RAM,
-        M_BASIC,
-        M_CHAR,
-        M_KERNEL,
+        M_RAM = 1,
+        M_ROM,
         M_IO,
         M_CRTLO,
         M_CRTHI,
-        M_NONE,
-        
-        // CURRENTLY USED (DEPRECATED)
-        MEM_SOURCE_RAM,
-        MEM_SOURCE_ROM,
-        MEM_SOURCE_IO,
-        MEM_SOURCE_PP,
-        MEM_SOURCE_CRT
+        M_PP,
+        M_NONE
     };
-    
-    //! C64 bank mapping
-    //
-    // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
-    //   BankMap[x][0] = mapping for range $1000 - $7FFF
-    //   BankMap[x][1] = mapping for range $8000 - $9FFF
-    //   BankMap[x][2] = mapping for range $A000 - $BFFF
-    //   BankMap[x][3] = mapping for range $C000 - $CFFF
-    //   BankMap[x][4] = mapping for range $D000 - $DFFF
-    //   BankMap[x][5] = mapping for range $E000 - $FFFF
-
-    // TODO: CHECK THIS MAP
-    const MemorySource BankMap[32][6] = {
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
-        M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNEL,
-        M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNEL,
         
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL,
-        M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNEL,
-
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL,
-        M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNEL
-    };
-    
 public:		
 
 	//! Reference to the connected VIC chip 
@@ -138,22 +80,6 @@ public:
 	
 private:
 	
-	//! True if Basic ROM is visible.
-	/*! The variable is updated whenever a value is written to memory location 0x0001. */
-	bool basicRomIsVisible;
-	
-	//! True if Character ROM is visible.
-	/*! The variable is updated whenever a value is written to memory location 0x0001. */
-	bool charRomIsVisible;
-
-	//! True if Kernel ROM is visible.
-	/*! The variable is updated whenever a value is written to memory location 0x0001. */
-	bool kernelRomIsVisible;
-
-	//! True if the I/O space is visible.
-	/*! The variable is updated whenever a value is written to memory location 0x0001. */
-	bool IOIsVisible;
-
 	//! True if the cartridge ROM is visible
 	/*! The variable is updated whenever a cartridge is attached or detached. */
 	bool cartridgeRomIsVisible;
@@ -199,13 +125,7 @@ public:
 		@param filename Name of the file being loaded
 	*/
 	static bool isRom(const char *filename);
-	
-	//! Callback function
-	/*! This function is called by the CPU when the port lines change.
-	 Besides others, the processor port register determines whether the RAM, ROM, or the IO space is visible. 
-	 */ 
-	 void processorPortHasChanged();
-		
+			
 public:
 	
 	//! Constructor
@@ -272,13 +192,9 @@ public:
     //! Lookup table for peek function
     MemorySource peekSrc[16];
 
-	//! Lookup table for peek function (DEPRECTATED)
-	MemorySource peekSource[16];
-
 	//! Lookup table for poke function
 	MemorySource pokeTarget[16];
 
-	void initializePeekPokeLookupTables();
 	void updatePeekPokeLookupTables();
 
 	bool isValidAddr(uint16_t addr, MemoryType type);
