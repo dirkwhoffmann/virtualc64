@@ -38,6 +38,9 @@ Cartridge::Cartridge()
 {
 	path = NULL;
 	data = NULL;
+    for (unsigned i = 0; i < 64; i++)
+        chips[i] = NULL;
+
 	dealloc();
 }
 
@@ -79,18 +82,18 @@ bool Cartridge::fileIsValid(const char *filename)
 	return true;
 }
 
-bool 
+
+bool
 Cartridge::readFromBuffer(const void *buffer, unsigned length)
 {
-	// Allocate memory
+	// Allocate memory and copy file date
 	if ((data = (uint8_t *)malloc(length)) == NULL) {
 		return false;
 	}
 	memcpy(data, buffer, length);
 		
-	// C64 CARTRIDGE
-	uint8_t magic_cartridge[] = { 'C', '6', '4', ' ', 'C', 'A', 'R', 'T', 'R', 'I', 'D', 'G', 'E', ' ', ' ', ' ' };
-	if (memcmp(magic_cartridge, &data[0], 16) != 0) {
+	// Scan cartridge header
+    if (memcmp("C64 CARTRIDGE   ", data, 16) != 0) {
 		fprintf(stderr, "Bad cartridge signature. Expected 'C64  CARTRIDGE  ', got ...\n");
 		printReadable(&data[0], 16);
 		return false;
@@ -99,31 +102,44 @@ Cartridge::readFromBuffer(const void *buffer, unsigned length)
 	// Cartridge header size
 	uint16_t hi = LO_HI(data[0x0011], data[0x0010]);
 	uint16_t lo = LO_HI(data[0x0013], data[0x0012]);
-	uint32_t headerSize = (uint32_t)((hi << 16) | (lo));
+	uint32_t headerSizeOld = (uint32_t)((hi << 16) | (lo));
+
+    uint32_t headerSize = HI_HI_LO_LO(data[0x10],data[0x11],data[0x12],data[0x13]);
+    assert(headerSize == headerSizeOld);
+    
+	version = HI_LO(data[0x0014], data[0x0015]);
+	type = HI_LO(data[0x0016], data[0x0017]);
 	
-	version = LO_HI(data[0x0015], data[0x0014]);
-	type = LO_HI(data[0x0017], data[0x0016]);
-	
-	fprintf(stderr, "Header size is: 0x%08X (normally 0x40)\n", headerSize);
-	fprintf(stderr, "Cartridge: %s, type: %d\n", &data[0x0020], type);
-	fprintf(stderr, "EXROM = %d, GAME = %d\n", data[0x0019], data[0x0018]);
+	fprintf(stderr, "Cartridge: %s\n", getCartridgeName());
+    fprintf(stderr, "   Header: %08X bytes long (normally 0x40)\n", headerSize);
+    fprintf(stderr, "   Type:   %d\n", getType());
+    fprintf(stderr, "   EXROM:  %d\n", getExromLine());
+    fprintf(stderr, "   GAME:   %d\n", getGameLine());
 	
 	// Load chip packets
-	for (unsigned i = headerSize; i < length; ) {
-		
-		uint8_t magic_chip[] = { 'C', 'H', 'I', 'P' };
-		if (memcmp(magic_chip, &data[i], 4) != 0) {
+    uint8_t *ptr = &data[headerSize];
+    for (unsigned chipnr = 0; ptr < data + length; chipnr++) {
+        
+		// uint8_t magic_chip[] = { 'C', 'H', 'I', 'P' };
+		if (memcmp("CHIP", ptr, 4) != 0) {
 			fprintf(stderr, "Unexpected data in cartridge, expected 'CHIP'\n");
-			printReadable(&data[i], 4);
+			printReadable(ptr, 4);
 			return false;
-		}
-		
+        }
+
+        // Remember start address of each chip section
+        chips[chipnr] = ptr;
+
 		// Check the size of the rom contained in the chip packet
-		unsigned int romSize = LO_HI(data[i+0x000F], data[i+0x000E]);
-		unsigned int chipType = LO_HI(data[i+0x0009], data[i+0x0008]);
-		unsigned int bank = LO_HI(data[i+0x000B], data[i+0x000A]);
-		unsigned int addr = LO_HI(data[i+0x000D], data[i+0x000C]);
-		
+        unsigned int romSize = LO_HI(ptr[0x000F], ptr[0x000E]);
+        unsigned int chipType = LO_HI(ptr[0x0009], ptr[0x0008]);
+        unsigned int bank = LO_HI(ptr[0x000B], ptr[0x000A]);
+        unsigned int addr = LO_HI(ptr[0x000D], ptr[0x000C]);
+        assert(romSize == getChipSize(chipnr));
+        assert(chipType == getChipType(chipnr));
+        assert(bank == getChipBank(chipnr));
+        assert(addr == getChipAddr(chipnr));
+        
 		fprintf(stderr, "Chip ROM size: 0x%04x (%d)  type: %d  Bank: 0x%04x  Address: 0x%04x\n", 
 				romSize, romSize, chipType, bank, addr );
 		
@@ -135,12 +151,14 @@ Cartridge::readFromBuffer(const void *buffer, unsigned length)
 			fprintf(stderr, "Chip Rom too large\n");
 			return false;
 		}
-		memcpy(chipPacket->rom, &data[i+0x0010], romSize);
-		
+        
+        ptr += 0x10;
+        
+        memcpy(chipPacket->rom, getChipData(chipnr), romSize);
 		chip[numberOfChips++] = chipPacket;
 		
-		i += 0x0010 + romSize;
-	}
+        ptr += romSize;
+    }
 	
 	if(numberOfChips > 0) {
 		switchBank(0);
@@ -149,31 +167,6 @@ Cartridge::readFromBuffer(const void *buffer, unsigned length)
 	fprintf(stderr, "CRT container imported successfully (%d chips)\n", numberOfChips);
 	return true;	
 }
-
-#if 0
-bool 
-Cartridge::readDataFromFile(FILE *file, struct stat fileProperties)
-{
-	int c = 0;
-	int size = 0;
-	
-	// Allocate memory
-	if ((data = (uint8_t *)malloc(fileProperties.st_size)) == NULL) {
-		return false;
-	}
-	
-	// Read data
-	c = fgetc(file);
-	while(c != EOF) {
-		data[size++] = c;
-		c = fgetc(file);
-	}
-	
-	assert(size == fileProperties.st_size);
-
-	return readDataFromBuffer(data, size);
-}
-#endif
 
 void 
 Cartridge::dealloc()
@@ -250,7 +243,7 @@ void Cartridge::poke(uint16_t addr, uint8_t value)
 		// at the specified ROM locations.
 		rom[addr] = value;
 		
-		Cartridge::CartridgeType type = getCartridgeType();
+		Cartridge::CartridgeType type = (Cartridge::CartridgeType)getCartridgeType();
 		if (type == Normal_Cartridge) {
 			
 		} else if (type == Simons_Basic && addr == 0xDE00) {
@@ -297,10 +290,12 @@ unsigned int Cartridge::getVersion()
 	return version;
 }
 
+#if 0
 Cartridge::CartridgeType Cartridge::getCartridgeType()
 {
 	return (Cartridge::CartridgeType)type;
 }
+#endif
 
 // --------------------------------------------------------------------------------
 //                       Cartridge Chip methods

@@ -44,7 +44,59 @@ class C64Memory : public Memory {
         M_PP,
         M_NONE
     };
+
+#define M_CHAR M_ROM
+#define M_KERNEL M_ROM
+#define M_BASIC M_ROM
+
+    //! C64 bank mapping
+    //
+    // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
+    //   BankMap[x][0] = mapping for range $1000 - $7FFF
+    //   BankMap[x][1] = mapping for range $8000 - $9FFF
+    //   BankMap[x][2] = mapping for range $A000 - $BFFF
+    //   BankMap[x][3] = mapping for range $C000 - $CFFF
+    //   BankMap[x][4] = mapping for range $D000 - $DFFF
+    //   BankMap[x][5] = mapping for range $E000 - $FFFF
+
+    const MemorySource BankMap[32][6] = {
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
+        M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNEL,
+        M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNEL,
         
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL,
+        M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNEL,
+        
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
+        
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNEL,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
+        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL,
+        M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNEL
+    };
+    
 public:		
 
 	//! Reference to the connected VIC chip 

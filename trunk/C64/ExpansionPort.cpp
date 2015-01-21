@@ -23,16 +23,16 @@ ExpansionPort::ExpansionPort(C64 *c64)
     name = "Expansion port";
     
     debug(2, "  Creating expansion port at address %p...\n", this);
-    
     this->c64 = c64;
+    
+    // We reset the expansion port here as it is *not* reset when resetting the emulator
+    reset();
 }
 
 ExpansionPort::~ExpansionPort()
 {
     debug(2, "  Releasing expansion port...\n");
-
-    // Iterate through all chips and free allocated memory
-    // TODO
+    detachCartridge();
 }
 
 void
@@ -41,11 +41,13 @@ ExpansionPort::reset()
     debug(2, "  Resetting expansion port...\n");
 
     cartridgeAttached = false;
-    gameLine = false;
-    exromLine = false;
+    gameLine = true;
+    exromLine = true;
     
     for (unsigned i = 0; i < 64; i++) {
-        chips[i] = NULL;
+        chip[i] = NULL;
+        chipStartAddress[i] = 0;
+        chipSize[i] = 0;
     }
 }
 
@@ -93,24 +95,53 @@ ExpansionPort::setExromLine(bool value)
     c64->mem->updatePeekPokeLookupTables();
 }
 
+void
+ExpansionPort::attachChip(unsigned nr, Cartridge *c)
+{
+    assert(nr < 64);
+    
+    if (chip[nr])
+        free(chip[nr]);
+    
+    if (!(chip[nr] = (uint8_t *)malloc(c->getChipSize(nr))))
+        return;
+    
+    chipStartAddress[nr] = c->getChipAddr(nr);
+    chipSize[nr] = c->getChipSize(nr);
+    memcpy(chip[nr], c->getChipData(nr), c->getChipSize(nr));
+    
+    debug(1, "Chip %d is now in place: %d KB starting at $%04X (type: %d bank:%X)\n",
+          nr, chipSize[nr] / 1024, chipStartAddress[nr], c->getChipType(nr), c->getChipBank(nr));
+}
+
 bool
 ExpansionPort::attachCartridge(Cartridge *c)
 {
-    removeCartridge();
+    detachCartridge();
     
     cartridgeAttached = true;
-    // gameLine = ??;
-    // exromLine = ??;
+    gameLine = c->gameIsHigh();
+    exromLine = c->exromIsHigh();
+
+    // Load chip packets
+    for (unsigned i = 0; i < c->getNumberOfChips(); i++) {
+        attachChip(i, c);
+    }
     
-    // TODO
+    // if(numberOfChips > 0) {
+    //     switchBank(0);
+    // }
+    
+    debug(1,"%d chips imported successfully\n", c->getNumberOfChips());
     return true;
 }
 
 void
-ExpansionPort::removeCartridge()
+ExpansionPort::detachCartridge()
 {
     for (unsigned i = 0; i < 64; i++) {
-        if (chips[i]) free(chips[i]);
+        if (chip[i])
+            free(chip[i]);
     }
 
     reset();

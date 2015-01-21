@@ -287,72 +287,17 @@ C64Memory::peekCartridge(uint16_t addr)
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
-    //! C64 bank mapping
-    //
-    // If x = (EXROM, GAME, CHAREN, HIRAM, LORAM), then
-    //   BankMap[x][0] = mapping for range $1000 - $7FFF
-    //   BankMap[x][1] = mapping for range $8000 - $9FFF
-    //   BankMap[x][2] = mapping for range $A000 - $BFFF
-    //   BankMap[x][3] = mapping for range $C000 - $CFFF
-    //   BankMap[x][4] = mapping for range $D000 - $DFFF
-    //   BankMap[x][5] = mapping for range $E000 - $FFFF
-
-#define M_CHAR M_ROM
-#define M_KERNEL M_ROM
-#define M_BASIC M_ROM
-    
-    const MemorySource BankMap[32][6] = {
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
-        M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNEL,
-        M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNEL,
-        
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL,
-        M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNEL,
-        
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI,
-        
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNEL,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM,
-        M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNEL,
-        M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNEL
-    };
-
-	MemorySource source;
-    uint8_t index, EXROM, GAME;
-    
-    // NEW CODE (yet unenabled)
-    EXROM = c64->expansionport->exromLine ? 0x10 : 0x00;
-    GAME = c64->expansionport->gameLine ? 0x08 : 0x00;
+    uint8_t EXROM = c64->expansionport->exromLine ? 0x10 : 0x00;
+    uint8_t GAME = c64->expansionport->gameLine ? 0x08 : 0x00;
 
     // DEPRECATED
-    EXROM = (cartridge ? (cartridge->exromIsHigh() ? 0x10 : 0x00) : 0x10);
-    GAME = (cartridge ? (cartridge->gameIsHigh() ? 0x08 : 0x00) : 0x08);
+    // EXROM = (cartridge ? (cartridge->exromIsHigh() ? 0x10 : 0x00) : 0x10);
+    // GAME = (cartridge ? (cartridge->gameIsHigh() ? 0x08 : 0x00) : 0x08);
     
-    index = (cpu->getPortLines() & 0x07) | EXROM | GAME;
+    uint8_t index = (cpu->getPortLines() & 0x07) | EXROM | GAME;
     
-    
+    MemorySource source;
+
     // 0x1000 - 0x7FFF (RAM or unmapped)
     source = BankMap[index][0];
     assert(source == M_RAM || source == M_NONE);
@@ -392,12 +337,11 @@ C64Memory::updatePeekPokeLookupTables()
     peekSrc[0xE] = source;
     peekSrc[0xF] = source;
 
-    
     MemorySource target;
     
     // 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)
     target = BankMap[index][4];
-    assert(target == M_IO || target == M_RAM);
+    assert(target == M_IO || target == M_CHAR || target == M_RAM);
     pokeTarget[0xD] = target;
 }
 

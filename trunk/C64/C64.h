@@ -476,7 +476,7 @@ public:
 	bool attachCartridge(Cartridge *c);
 	
 	// Detach cartridge
-	bool detachCartridge();
+	void detachCartridge();
 
 	//! Returns true iff a cartridge is attached
 	bool isCartridgeAttached();

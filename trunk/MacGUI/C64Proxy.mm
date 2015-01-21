@@ -577,7 +577,7 @@
 - (bool) loadRom:(NSString *)filename { return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename]; }
 
 - (bool) attachCartridge:(Cartridge *)c { return c64->attachCartridge(c); }
-- (bool) detachCartridge { return c64->detachCartridge(); }
+- (void) detachCartridge { c64->detachCartridge(); }
 - (bool) isCartridgeAttached { return c64->isCartridgeAttached(); }
 
 - (bool) mountArchive:(D64Archive *)a { return c64->mountArchive(a); }
