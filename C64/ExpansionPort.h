@@ -87,10 +87,13 @@ public:
 private:
     
     //! A cartridge can contain up to 64 chips that contain ROM data
-    uint8_t *chips[64];
-    
-    //! Indicated the currently selected chip (bank)
-    // uint8_t selectedChip;
+    uint8_t *chip[64];
+
+    //! Load address of chip
+    uint16_t chipStartAddress[64];
+
+    //! Chip size in Number of bytes in chip
+    uint16_t chipSize[64];
     
 public:
     
@@ -118,17 +121,21 @@ public:
     //! Getter and setter
     bool getGameLine() { return gameLine; }
     void setGameLine(bool value);
+    
     bool getExromLine() { return exromLine; }
     void setExromLine(bool value);
     
     //! Returns true if a cartridge is attached to the expansion port
     inline bool getCartridgeAttached() { return cartridgeAttached; }
-    
-    //! Attach a cartridge to the expansion port
+
+    //! Attach a single cartridge chip
+    void attachChip(unsigned nr, Cartridge *c);
+
+    //! Attach a cartridge to the expansion port (cartridges can contain multiple chips)
     bool attachCartridge(Cartridge *c);
 
     //! Remove a cartridge from the expansion port
-    void removeCartridge();
+    void detachCartridge();
 
     //! Returns true iff the currently attached cartridge contains data at the specified address
     bool isRomAddr(uint16_t addr);

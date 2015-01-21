@@ -105,20 +105,17 @@ Container::readFromFile(const char *filename)
 		buffer[i] = (uint8_t)c;
 	}
 	
-    fprintf(stderr,"Read from buffer");
 	// Read from buffer (subclass specific behaviour)
 	dealloc();
 	if (!readFromBuffer(buffer, fileProperties.st_size)) {
 		goto exit;
 	}
 
-    fprintf(stderr,"Read from buffer (2)");
-
 	// Set path and default name
 	if (path)
 		free (path);
 	path = strdup(filename);
-    fprintf(stderr,"Filename: %s",path);
+    // fprintf(stderr,"Filename: %s",path);
 	if (name)
 		free(name);
 	name = strdup(ChangeExtension(ExtractFilename(getPath()), "").c_str());

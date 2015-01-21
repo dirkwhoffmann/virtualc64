@@ -475,7 +475,7 @@
 - (bool) loadRom:(NSString *)filename;
 
 - (bool) attachCartridge:(Cartridge *)c;
-- (bool) detachCartridge;
+- (void) detachCartridge;
 - (bool) isCartridgeAttached;
 
 - (bool) mountArchive:(D64Archive *)a;

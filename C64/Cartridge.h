@@ -125,16 +125,12 @@ private:
 	//! Physical name of archive 
 	char *path;
 	
-	//! Name of the CRT container file
-	// char name[256];
-	
-	//! File pointer
-	/*! Stores an offset into the data array */
-	// int fp;
-	
 	//! Raw data of CRT container file
 	uint8_t *data;
 	
+    //! Indicates where each chip section starts
+    uint8_t *chips[64];
+    
 	//! Size of data array
 	//unsigned int size;
 	
@@ -191,7 +187,7 @@ public:
 		Chip();
 		
 		~Chip();
-		
+        
 		unsigned int loadAddress;
 		
 		int size;
@@ -244,8 +240,51 @@ public:
 
 	bool readFromBuffer(const void *buffer, unsigned length);
 	
+    //
+    // Cartridge information
+    //
+    
+    //! Return logical cartridge name
+    char *getCartridgeName() { return (char *)&data[0x20]; }
+    
+    //! Return cartridge version number
+    uint16_t getCartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
+
+    //! Return cartridge type
+    uint16_t getCartridgeType() { return LO_HI(data[0x17], data[0x16]); }
+
+    //! Return game line
+    bool getGameLine() { return data[0x0018]; };
+
+    //! Return exrom line
+    bool getExromLine() { return data[0x0019]; };
+    
+    //
+    // Chip information
+    //
+    
+    //! Return how many chips are contained in this cartridge
+    uint8_t getNumberOfChips() { return numberOfChips; }
+    
+    //! Return start address of chip data
+    uint8_t *getChipData(unsigned nr) { return chips[nr]+0x10; }
+    
+    //! Return size of chip (8 KB or 16 KB)
+    uint16_t getChipSize(unsigned nr) { return LO_HI(chips[nr][0xF], chips[nr][0xE]); }
+    
+    //! Return type of chip
+    uint16_t getChipType(unsigned nr) { return LO_HI(chips[nr][0x9], chips[nr][0x8]); }
+    
+    //! Return bank information
+    uint16_t getChipBank(unsigned nr) { return LO_HI(chips[nr][0x000B], chips[nr][0x000A]); }
+    
+    //! Returns start of chip rom in address space
+    uint16_t getChipAddr(unsigned nr) { return LO_HI(chips[nr][0x000D], chips[nr][0x000C]); }
+
+    
 	void dealloc();
 
+    
     ContainerType getType();
 	const char *getTypeAsString();
 	
@@ -275,7 +314,7 @@ public:
 	unsigned int getVersion();
 	
 	//! Cartridge type
-	CartridgeType getCartridgeType();
+	// CartridgeType getCartridgeType();
 };
 
 #endif

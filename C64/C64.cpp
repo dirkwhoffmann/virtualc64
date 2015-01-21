@@ -150,7 +150,7 @@ void C64::reset()
     joystick1->reset();
     joystick2->reset();
     iec->reset();
-    expansionport->reset();
+    // Don't reset the expansion port because we want cartridges to remain in place during a reset
     floppy->reset();
 
 	cycles = 0UL;
@@ -989,25 +989,35 @@ C64::mountArchive(D64Archive *a)
 bool
 C64::attachCartridge(Cartridge *c)
 {
+    // OLD CODE
 	mem->attachCartridge(c);
-	
+    
 	putMessage(MSG_CARTRIDGE, 1);
-	return true;
+
+    // NEW CODE
+    return expansionport->attachCartridge(c);
 }
 
-bool
+void
 C64::detachCartridge()
 {
-	mem->detachCartridge();
+    // OLD CODE
+    mem->detachCartridge();
 
 	putMessage(MSG_CARTRIDGE, 0);
-	return true;
+
+    // NEW CODE
+    expansionport->detachCartridge();
 }
 
 bool
 C64::isCartridgeAttached()
 {
+    // OLD CODE
  	return mem->isCartridgeAttached();
+
+    // NEW CODE
+    // return expansionport->cartridgeAttached;
 }
 
 
