@@ -101,8 +101,9 @@ private:
     uint8_t rom[32768];
     
     //! Indicates if ROM is blended in (0x01) or or out (0x00)
-    uint8_t visible[32768];
-
+    /*! Each array item represents a 4k block above $8000 */
+    uint8_t blendedIn[16];
+    
 public:
     
     //! Constructor
@@ -130,7 +131,7 @@ public:
     void dumpState();	
     
     //! Returns true if cartride ROM is blended in at the specified location
-    bool romIsBlendedIn(uint16_t addr) { return visible[addr & 0x7FFF]; }
+    bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
     //! Peek fallthrough
     uint8_t peek(uint16_t addr) { return rom[addr & 0x7FFF]; }
