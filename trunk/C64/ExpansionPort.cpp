@@ -109,9 +109,12 @@ void ExpansionPort::poke(uint16_t addr, uint8_t value)
 {
     uint8_t bankNumber;
     
-    printf("ExpansionPort::poke %d,%d\n", addr, value);
+    // printf("ExpansionPort::poke %d,%d\n", addr, value);
     
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
+    
+    if (!getCartridgeAttached())
+        return;
     
     // For some cartridges like Simons basic, bank switching is triggered by writing
     // into I/O area 1 (0xDE00 - 0xDEFF) or I/O area 2 (0xDF00 - 0xDFFF)

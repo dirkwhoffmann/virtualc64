@@ -255,11 +255,7 @@ public:
 	uint8_t peekRom(uint16_t addr);
 	uint8_t peekIO(uint16_t addr);
 	uint8_t peek(uint16_t addr);         
-	
-	// Helper function. We should get rid of this one
-	uint8_t peekCartridge(uint16_t addr);
-	
-	
+		
 	void pokeRam(uint16_t addr, uint8_t value);                  
 	void pokeRom(uint16_t addr, uint8_t value);             
 	void pokeIO(uint16_t addr, uint8_t value);

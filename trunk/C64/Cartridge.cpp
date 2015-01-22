@@ -147,9 +147,11 @@ Cartridge::readFromBuffer(const void *buffer, unsigned length)
 	if(numberOfChips > 0) {
 		switchBank(0);
 	}
-	
+
+
 	fprintf(stderr, "CRT container imported successfully (%d chips)\n", numberOfChips);
-	return true;	
+    fprintf(stderr, "is8k: %d is16k: %d isUltimax: %d\n", is8k(),is16k(),isUltimax());
+	return true;
 }
 
 void 
