@@ -1,5 +1,5 @@
 /*
- * (C) 2009 A. Carl Douglas. All rights reserved.
+ * Written by Dirk Hoffmann based on the original code by A. Carl Douglas.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,104 +17,62 @@
  */
 
 /*
+ For general info about C64 cartridges,
+ see: http://www.c64-wiki.com/index.php/Cartridge
  
- See: http://www.c64-wiki.com/index.php/Cartridge
+ For information about bank switching,
+ see: http://www.c64-wiki.com/index.php/Bankswitching
  
- "The cartridge system implemented in the C64 provides an easy way to 
- hook 8 or 16 kilobytes of ROM into the computer's address space: 
- This allows for applications and games up to 16 K, or BASIC expansions 
- up to 8 K in size and appearing to the CPU along with the built-in 
- BASIC ROM. In theory, such a cartridge need only contain the 
- ROM circuit without any extra support electronics."
- 
- Also: http://www.c64-wiki.com/index.php/Bankswitching
+ For details about the .CRT format,
+ see: http://ist.uwaterloo.ca/~schepers/formats/CRT.TXT
  
  As well read the Commodore 64 Programmers Reference Guide pages 260-267.
- 
  */
+
 #ifndef _CARTRIDGE_H
 #define _CARTRIDGE_H
 
 #include "Container.h"
 
-#define MAX_CHIPS 64
-
 class Cartridge : public Container {
-	 
-//! crt file format
-/*! 
-	This information came from: http://ist.uwaterloo.ca/~schepers/formats/CRT.TXT
- 
-			 *** CRT - CaRTridge Images (from the CCS64 emulator)
-			 *** Document revision: 1.13
-			 *** Last updated: June 12, 2007
-			 *** Compiler/Editor: Peter Schepers
-			 *** Contributors/sources: Per Hakan Sundell,
-			 Markus Brenner
-			 Marco Van Den Heuvel
- 
- Bytes:    $0000-000F - 16-byte cartridge signature  "C64  CARTRIDGE"  (padded with space characters)
-			0010-0013 - File header length  ($00000040,  in  high/low  format,
-						calculated from offset $0000). The default  (also  the
-						minimum) value is $40.  Some  cartridges  exist  which
-						show a value of $00000020 which is wrong.
-			0014-0015 - Cartridge version (high/low, presently 01.00)
-			0016-0017 - Cartridge hardware type ($0000, high/low)
-						0 - Normal cartridge
-						1 - Action Replay
-						2 - KCS Power Cartridge
-						3 - Final Cartridge III
-						4 - Simons Basic
-						5 - Ocean type 1*
-						6 - Expert Cartridge
-						7 - Fun Play, Power Play
-						8 - Super Games
-						9 - Atomic Power
-						10 - Epyx Fastload
-						11 - Westermann Learning
-						12 - Rex Utility
-						13 - Final Cartridge I
-						14 - Magic Formel
-						15 - C64 Game System, System 3
-						16 - WarpSpeed
-						17 - Dinamic**
-						18 - Zaxxon, Super Zaxxon (SEGA)
-						19 - Magic Desk, Domark, HES Australia
-						20 - Super Snapshot 5
-						21 - Comal-80
-						22 - Structured Basic
-						23 - Ross
-						24 - Dela EP64
-						25 - Dela EP7x8
-						26 - Dela EP256
-						27 - Rex EP256
-			0018 - Cartridge port EXROM line status
-						0 - inactive
-						1 - active
-			0019 - Cartridge port GAME line status
-						0 - inactive
-						1 - active
-			001A-001F - Reserved for future use
-			0020-003F - 32-byte cartridge  name  "CCSMON"  (uppercase,  padded
-						with null characters)
-			0040-xxxx - Cartridge contents (called CHIP PACKETS, as there  can
-						be more than one  per  CRT  file).  See  below  for  a
-						breakdown of the CHIP format.
 
-	(*Note: Ocean type 1 includes Navy Seals, Robocop 2 & 3,  Shadow  of  the
-	Beast, Toki, Terminator 2 and more)
+private:
+    
+    //! Raw data of CRT container file
+    uint8_t *data;
+    
+    //! Number of chips contained in cartridge file
+    unsigned int numberOfChips;
+    
+    //! Indicates where each chip section starts
+    uint8_t *chips[64];
 
-	(**Note: Dinamic includes Narco Police and more)
- 
- 
-	 Type     Size   Game   EXRom  Low Bank  High Bank
-	          in K   Line   Line    (ROML)    (ROMH)
-	 -------------------------------------------------
-	 Normal    8k     hi     lo     $8000      ----
-	 Normal    16k    lo     lo     $8000     $A000
-	 Ultimax   8k     lo     hi     $E000      ----
- 
- */
+public:
+    
+    //! Constructor
+    Cartridge();
+    
+    //! Destructor
+    ~Cartridge();
+    
+    //! Free allocated memory
+    void dealloc();
+    
+    //! Type of container
+    Container::ContainerType getType() { return CRT_CONTAINER; }
+    
+    //! Type of container in plain text
+    const char *getTypeAsString() { return "CRT"; }
+    
+    //! Returns true of filename points to a valid file of that type
+    static bool isCRTFile(const char *filename);
+    
+    //! Check file type
+    bool fileIsValid(const char *filename) { return Cartridge::isCRTFile(filename); }
+
+    
+    
+    
 public:
 	
 	//! forward declarion of nested chip class
@@ -125,21 +83,14 @@ private:
 	//! Physical name of archive 
 	char *path;
 	
-	//! Raw data of CRT container file
-	uint8_t *data;
 	
-    //! Indicates where each chip section starts
-    uint8_t *chips[64];
     
 	//! Size of data array
 	//unsigned int size;
 	
 	//! Chip packets
-	Chip *chip[MAX_CHIPS];
-	
-	//! The number of chips (banks) in this cartridge file
-	unsigned int numberOfChips;
-	
+	Chip *chip[64];
+		
 	//! The type of cartridge (manufacturer/model)
 	unsigned int type;
 	
@@ -226,17 +177,10 @@ public:
 		Rex_EP256 = 27
 	};
 	
-	//! Constructor
-	Cartridge();
-	
-	//! Destructor
-	~Cartridge();
 	
 	//! Factory method
 	static Cartridge *cartridgeFromFile(const char *filename);
 	
-	//! Virtual functions from Component class
-	bool fileIsValid(const char *filename);
 
 	bool readFromBuffer(const void *buffer, unsigned length);
 	
@@ -281,12 +225,8 @@ public:
     //! Returns start of chip rom in address space
     uint16_t getChipAddr(unsigned nr) { return LO_HI(chips[nr][0x000D], chips[nr][0x000C]); }
 
-    
-	void dealloc();
 
     
-    ContainerType getType();
-	const char *getTypeAsString();
 	
 	//! The GAME line status
 	bool gameIsHigh();

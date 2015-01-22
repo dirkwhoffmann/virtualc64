@@ -35,11 +35,14 @@
 #include <sched.h>
 #include <assert.h>
 #include <math.h>
+#include <ctype.h> 
 
 // C++ includes
 #include <string>
 
+//
 // Macros
+//
 
 //! Evaluates to the high byte of x. x is expected to be of type uint16_t.
 #define HI_BYTE(x) (uint8_t)((x) >> 8)
@@ -65,7 +68,15 @@
 //! Evaluates to the value of x with bit "nr" set to 0. All other bits remain untouched.
 #define CLR_BIT(x,nr) ((x) &= ~(1 << (nr)))
 
+//
+// Pretty printing
+//
+
+void printReadable(const void *data, int length);
+
+//
 // Conversion functions
+//
 
 //! Convert PETASCII character to ASCII
 /*! Returns '.' if character has no printable equivalent */
@@ -83,6 +94,10 @@ inline uint8_t BinaryToBCD(uint8_t value) { return ((value / 10) << 4) + (value 
 //! Increment BCD number by one
 inline uint8_t incBCD(uint8_t value) { return ((value & 0x0F) == 0x09) ?  (value & 0xF0) + 0x10 : (value & 0xF0) + ((value + 0x01) & 0x0F); }
 // inline uint8_t incBCD(uint8_t value) { uint8_t newValue = _incBCD(value); printf("%02X -> %02X\n", value, newValue); return newValue; }
+
+//
+// File handling
+//
 
 //! Extract directory from path
 inline std::string ExtractDirectory( const std::string& path )
@@ -129,7 +144,9 @@ bool checkFileSize(const char *filename, int min, int max);
 bool 
 checkFileHeader(const char *filename, int *header, int *major = NULL, int *minor = NULL);
 
+//
 // Timing
+//
 
 //! Application launch time in seconds
 /*! The value is read by function \a msec for computing the elapsed number of microseconds. */

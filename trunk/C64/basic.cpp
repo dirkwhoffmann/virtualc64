@@ -21,6 +21,23 @@
 struct timeval t;
 long tv_base = (gettimeofday(&t,NULL), t.tv_sec);
 
+void
+printReadable(const void *data, int length)
+{
+    int i;
+    for(i = 0; i < length; i++) {
+        char ch = ((char*)(data))[i];
+        if (isascii(ch)) {
+            fprintf(stderr, "%02x %c ", ch, ch);
+        } else {
+            fprintf(stderr, "%02x ? ", ch);
+        }
+        if (i > 0 && i % 16 == 0) {
+            fprintf(stderr, "\n");
+        }
+    }
+}
+
 char 
 toASCII(char c)
 {
