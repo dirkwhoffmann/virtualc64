@@ -269,17 +269,6 @@ C64Memory::peekCartridge(uint16_t addr)
 {
 	if (cartridge != NULL && cartridge->isRomAddr(addr))
 		return cartridge->peek(addr);
-
-#if 0
-	if (addr >= 0xA000 && addr <= 0xBFFF) 
-		return basicRomIsVisible ? rom[addr] : ram[addr];
-
-	if (addr >= 0xE000) 
-		return kernelRomIsVisible ? rom[addr] : ram[addr];
-
-	if (IOIsVisible && addr >= 0xDE00 && addr <= 0xDFFF)
-		return (uint8_t)(rand());
-#endif
     
 	return ram[addr];
 }
@@ -287,8 +276,8 @@ C64Memory::peekCartridge(uint16_t addr)
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
-    uint8_t EXROM = c64->expansionport->exromLine ? 0x10 : 0x00;
-    uint8_t GAME = c64->expansionport->gameLine ? 0x08 : 0x00;
+    uint8_t EXROM = c64->expansionport->getExromLine() ? 0x10 : 0x00;
+    uint8_t GAME = c64->expansionport->getGameLine() ? 0x08 : 0x00;
 
     // DEPRECATED
     // EXROM = (cartridge ? (cartridge->exromIsHigh() ? 0x10 : 0x00) : 0x10);

@@ -70,21 +70,23 @@ public:
         CRT_DELA_EP64 = 24,
         CRT_DELA_EP7x8 = 25,
         CRT_DELA_EP256 = 26,
-        CRT_REX_EP256 = 27
+        CRT_REX_EP256 = 27,
+        CRT_NONE = 255
     };
 
-public:
+private:
     
+    //! Type of attached cartridge (CRT_NONE if no cartridge is plugged in)
+    uint8_t type;
+
     //! Indicated whether a cartridge is currently plugged in
-    bool cartridgeAttached;
+    // bool cartridgeAttached;
     
     //! Game line of cartridge (HIGH if no cartridge is attached)
     bool gameLine;
 
     //! Exrom line of cartridge (HIGH if no cartridge is attached)
     bool exromLine;
-
-private:
     
     //! A cartridge can contain up to 64 chips that contain ROM data
     uint8_t *chip[64];
@@ -94,7 +96,13 @@ private:
 
     //! Chip size in Number of bytes in chip
     uint16_t chipSize[64];
+
+    //! Virtual cartridge ROM (32 kb starting at $8000)
+    uint8_t rom[32768];
     
+    //! Indicates if ROM is blended in (0x01) or or out (0x00)
+    uint8_t visible[32768];
+
 public:
     
     //! Constructor
@@ -106,6 +114,9 @@ public:
     //! Revert to initial state
     void reset();
     
+    //! Revert to initial state but keep cartridge data in place
+    void softreset();
+
     //! Dump current configuration into message queue
     void ping();
 
@@ -118,15 +129,29 @@ public:
     //! Dump internal state to console
     void dumpState();	
     
+    //! Returns true if cartride ROM is blended in at the specified location
+    bool romIsBlendedIn(uint16_t addr) { return visible[addr & 0x7FFF]; }
+    
+    //! Peek fallthrough
+    uint8_t peek(uint16_t addr) { return rom[addr & 0x7FFF]; }
+    
+    //! Poke fallthrough
+    void poke(uint16_t addr, uint8_t value);
+    
     //! Getter and setter
+    CartridgeType getCartridgeType() { return (CartridgeType)type; }
+    
     bool getGameLine() { return gameLine; }
     void setGameLine(bool value);
     
     bool getExromLine() { return exromLine; }
     void setExromLine(bool value);
     
+    //! Make chip contents visible
+    void switchBank(unsigned nr);
+
     //! Returns true if a cartridge is attached to the expansion port
-    inline bool getCartridgeAttached() { return cartridgeAttached; }
+    inline bool getCartridgeAttached() { return type != CRT_NONE; }
 
     //! Attach a single cartridge chip
     void attachChip(unsigned nr, Cartridge *c);
@@ -136,15 +161,6 @@ public:
 
     //! Remove a cartridge from the expansion port
     void detachCartridge();
-
-    //! Returns true iff the currently attached cartridge contains data at the specified address
-    bool isRomAddr(uint16_t addr);
-
-	//! Peek fallthrough
-    uint8_t peek(uint16_t addr);
-    
-    //! Poke fallthrough
-    void poke(uint16_t addr, uint8_t value);
 
 };
     

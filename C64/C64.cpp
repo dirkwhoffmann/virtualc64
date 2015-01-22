@@ -150,7 +150,7 @@ void C64::reset()
     joystick1->reset();
     joystick2->reset();
     iec->reset();
-    // Don't reset the expansion port because we want cartridges to remain in place during a reset
+    expansionport->softreset();
     floppy->reset();
 
 	cycles = 0UL;

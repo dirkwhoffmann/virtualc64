@@ -18,22 +18,6 @@
 #include <ctype.h> // for printReadable only
 #include "Cartridge.h"
 
-static void printReadable(const void *data, int length)
-{
-	int i;
-	for(i = 0; i < length; i++) {
-		char ch = ((char*)(data))[i];
-		if (isascii(ch)) {
-			fprintf(stderr, "%02x %c ", ch, ch);
-		} else {
-			fprintf(stderr, "%02x ? ", ch);
-		}
-		if (i > 0 && i % 16 == 0) {
-			fprintf(stderr, "\n");
-		}
-	}
-}
-
 Cartridge::Cartridge()
 {
 	path = NULL;
@@ -63,23 +47,23 @@ Cartridge::cartridgeFromFile(const char *filename)
 	
 }
 
-bool Cartridge::fileIsValid(const char *filename)
+bool
+Cartridge::isCRTFile(const char *filename)
 {
-	int magic_bytes[] = 
-	{'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ',EOF};
-	
-	assert(filename != NULL);
-	
-	if (!checkFileSuffix(filename, ".CRT") && !checkFileSuffix(filename, ".crt"))
-		return false;
-	
-	if (!checkFileSize(filename, 0x40, -1))
-		return false;
-	
-	if (!checkFileHeader(filename, magic_bytes))
-		return false;
-	
-	return true;
+    int magic_bytes[] = { 'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ',EOF };
+    
+    assert(filename != NULL);
+    
+    if (!checkFileSuffix(filename, ".CRT") && !checkFileSuffix(filename, ".crt"))
+        return false;
+    
+    if (!checkFileSize(filename, 0x40, -1))
+        return false;
+    
+    if (!checkFileHeader(filename, magic_bytes))
+        return false;
+    
+    return true;
 }
 
 
@@ -181,21 +165,9 @@ Cartridge::dealloc()
 	}
 	// size = 0;	
 	numberOfChips = 0;
-	for(int i = 0; i < MAX_CHIPS; i++) {
+	for(int i = 0; i < 64; i++) {
 		chip[i] = NULL;
 	}
-}
-
-Container::ContainerType
-Cartridge::getType()
-{
-    return CRT_CONTAINER;
-}
-
-const char *
-Cartridge::getTypeAsString()
-{
-	return "CRT";
 }
 
 //! The GAME line status

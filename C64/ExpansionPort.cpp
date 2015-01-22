@@ -40,10 +40,13 @@ ExpansionPort::reset()
 {
     debug(2, "  Resetting expansion port...\n");
 
-    cartridgeAttached = false;
+    type = CRT_NONE;
     gameLine = true;
     exromLine = true;
     
+    memset(rom, 0, sizeof(rom));
+    memset(visible, 0, sizeof(visible));
+
     for (unsigned i = 0; i < 64; i++) {
         chip[i] = NULL;
         chipStartAddress[i] = 0;
@@ -52,11 +55,18 @@ ExpansionPort::reset()
 }
 
 void
+ExpansionPort::softreset()
+{
+    debug(2, "  Soft-resetting expansion port...\n");
+    
+    if (chip[0])
+        switchBank(0);
+}
+
+void
 ExpansionPort::ping()
 {
     c64->putMessage(MSG_CARTRIDGE, c64->isCartridgeAttached());
-    // IN FUTURE:
-    // c64->putMessage(MSG_CARTRIDGE, cartridgeAttached);
 }
 
 void
@@ -78,7 +88,75 @@ ExpansionPort::dumpState()
 {
     msg("Expansion port\n");
     msg("--------------\n");
-    msg("(no output)\n");
+
+    if (!getCartridgeAttached()) {
+        msg("No cartridge attached");
+        return;
+    }
+    
+    msg("Cartridge type: %d\n", getCartridgeType());
+    msg("Game line:      %d\n", getGameLine());
+    msg("Exrom line:     %d\n", getExromLine());
+    
+    for (unsigned i = 0; i < 64; i++) {
+        msg("Chips:          %d KB starting at $%04X\n", chipSize[i] / 1024, chipStartAddress[i]);
+        if (chip[i] != NULL) msg("%d ", i);
+    }
+    msg("\n");
+}
+
+void ExpansionPort::poke(uint16_t addr, uint8_t value)
+{
+    uint8_t bankNumber;
+    
+    printf("ExpansionPort::poke %d,%d\n", addr, value);
+    
+    assert(addr >= 0xDE00 && addr <= 0xDFFF);
+    
+    // For some cartridges like Simons basic, bank switching is triggered by writing
+    // into I/O area 1 (0xDE00 - 0xDEFF) or I/O area 2 (0xDF00 - 0xDFFF)
+    
+    // Why do we need to store the written value here?
+    rom[addr & 0x7FFF] = value;
+    
+    switch (type) {
+        case CRT_NORMAL:
+            break;
+            
+        case CRT_SIMONS_BASIC:
+            if (addr == 0xDE00) {
+                // Simon banks the second chip into $A000-BFFF
+                if (value == 0x01) {
+                    debug(3, "Simons basic: Writing %d into $DE00\n", value);
+                    switchBank(1);
+                } else {
+                    debug(3, "Simons basic: Writing %d into $DE00\n", value);
+                    // $A000-BFFF is additional RAM
+                    // We need to remove the chip?!
+                }
+            }
+            
+        case CRT_C64_GAME_SYSTEM_SYSTEM_3:
+            bankNumber = addr - 0xDE00;
+            //  Huh? Bank numbers greater than 63 can occur?
+            switchBank(bankNumber);
+            break;
+            
+        case CRT_OCEAN_TYPE_1:
+            printf("Switching...\n");
+            bankNumber = value & 0x3F;
+            switchBank(bankNumber);
+            break;
+            
+#if 0
+        case CRT_FUN_PLAY_POWER_PLAY:
+            // TODO
+            break;
+#endif
+            
+        default:
+            warn("Unsupported cartridge (type %d)\n", type);
+    }
 }
 
 void
@@ -93,6 +171,27 @@ ExpansionPort::setExromLine(bool value)
 {
     exromLine = value;
     c64->mem->updatePeekPokeLookupTables();
+}
+
+void
+ExpansionPort::switchBank(unsigned nr)
+{
+    if (chip[nr] == NULL) {
+        warn("Chip %d does not exist (cannot switch)", nr);
+        return;
+    }
+    
+    uint16_t loadAddr = chipStartAddress[nr];
+    uint16_t size = chipSize[nr];
+    
+    if (0xFFFF - loadAddr < size) {
+        warn("Chip %d covers an invalid memory area (start: %04X size: %d KB)", nr, loadAddr, size / 1024);
+        return;
+    }
+    
+    debug(1, "Switching to bank %d (start: %04X size: %d KB)", nr, loadAddr, size / 1024);
+    memcpy(rom + loadAddr - 0x8000, chip[nr], size);
+    memset(visible + loadAddr - 0x8000, 1, size);
 }
 
 void
@@ -119,7 +218,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
 {
     detachCartridge();
     
-    cartridgeAttached = true;
+    type = c->getCartridgeType();
     gameLine = c->gameIsHigh();
     exromLine = c->exromIsHigh();
 
@@ -128,11 +227,19 @@ ExpansionPort::attachCartridge(Cartridge *c)
         attachChip(i, c);
     }
     
-    // if(numberOfChips > 0) {
-    //     switchBank(0);
-    // }
+    // Hopefully, we got at least one chip
+    if(chip[0] == NULL) {
+        warn("Cartridge does not contain any chips");
+        return false;
+    }
+
+    // Blend in chip 0
+    switchBank(0);
+    c64->mem->updatePeekPokeLookupTables();
+    dumpState();
+
+    c64->putMessage(MSG_CARTRIDGE, 1);
     
-    debug(1,"%d chips imported successfully\n", c->getNumberOfChips());
     return true;
 }
 
@@ -143,31 +250,10 @@ ExpansionPort::detachCartridge()
         if (chip[i])
             free(chip[i]);
     }
-
+    
+    c64->putMessage(MSG_CARTRIDGE, 0);
     reset();
 }
-
-bool
-ExpansionPort::isRomAddr(uint16_t addr)
-{
-    // TODO
-    return false;
-}
-
-uint8_t
-ExpansionPort::peek(uint16_t addr)
-{
-    // TODO
-    return 0;
-}
-
-void
-ExpansionPort::poke(uint16_t addr, uint8_t value)
-{
-}
-
-
-
 
 
 
