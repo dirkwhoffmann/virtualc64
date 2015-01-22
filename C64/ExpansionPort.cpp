@@ -45,8 +45,9 @@ ExpansionPort::reset()
     exromLine = true;
     
     memset(rom, 0, sizeof(rom));
-    memset(visible, 0, sizeof(visible));
-
+    memset(blendedIn, 0, sizeof(blendedIn));
+    
+    
     for (unsigned i = 0; i < 64; i++) {
         chip[i] = NULL;
         chipStartAddress[i] = 0;
@@ -194,7 +195,10 @@ ExpansionPort::switchBank(unsigned nr)
     
     debug(1, "Switching to bank %d (start: %04X size: %d KB)", nr, loadAddr, size / 1024);
     memcpy(rom + loadAddr - 0x8000, chip[nr], size);
-    memset(visible + loadAddr - 0x8000, 1, size);
+    for (unsigned i = loadAddr >> 12; i < (loadAddr + size) >> 12; i++) {
+        assert (i < 16);
+        blendedIn[i] = 1;
+    }
 }
 
 void

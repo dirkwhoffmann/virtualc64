@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1050" identifier="macosx"/>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
         <plugIn identifier="com.apple.imagekit.ibplugin" version="6254"/>
     </dependencies>
@@ -2772,29 +2772,6 @@
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </box>
-                                    <popUpButton verticalHuggingPriority="750" id="774">
-                                        <rect key="frame" x="6" y="519" width="161" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="push" title="Invalid Multicolor Bitmap" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="112" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="ySZ-f5-Lkq" id="1780">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <menu key="menu" title="OtherViews" id="775">
-                                                <items>
-                                                    <menuItem title="Standard Text" id="778"/>
-                                                    <menuItem title="Multicolor Text" tag="16" id="776"/>
-                                                    <menuItem title="Standard Bitmap" tag="32" id="777"/>
-                                                    <menuItem title="Multicolor Bitmap" tag="48" id="786"/>
-                                                    <menuItem title="Extended BG Color" tag="64" id="785"/>
-                                                    <menuItem title="Invalid Text" tag="80" id="784"/>
-                                                    <menuItem title="Invalid Standard Bitmap" tag="96" id="dAB-fv-3D5"/>
-                                                    <menuItem title="Invalid Multicolor Bitmap" state="on" tag="112" id="ySZ-f5-Lkq"/>
-                                                </items>
-                                            </menu>
-                                        </popUpButtonCell>
-                                        <connections>
-                                            <action selector="vicVideoModeAction:" target="-2" id="909"/>
-                                        </connections>
-                                    </popUpButton>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="788">
                                         <rect key="frame" x="253" y="492" width="19" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -2854,7 +2831,7 @@
                                         </connections>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" id="795">
-                                        <rect key="frame" x="6" y="496" width="161" height="22"/>
+                                        <rect key="frame" x="6" y="496" width="171" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="push" title="38x24" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="4" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="802" id="1787">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3024,6 +3001,29 @@
                                             <action selector="vicRasterInterruptAction:" target="-2" id="928"/>
                                         </connections>
                                     </textField>
+                                    <popUpButton verticalHuggingPriority="750" id="774">
+                                        <rect key="frame" x="5" y="519" width="172" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="push" title="Invalid Multicolor Bitmap" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="112" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="ySZ-f5-Lkq" id="1780">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <menu key="menu" title="OtherViews" id="775">
+                                                <items>
+                                                    <menuItem title="Standard Text" id="778"/>
+                                                    <menuItem title="Multicolor Text" tag="16" id="776"/>
+                                                    <menuItem title="Standard Bitmap" tag="32" id="777"/>
+                                                    <menuItem title="Multicolor Bitmap" tag="48" id="786"/>
+                                                    <menuItem title="Extended BG Color" tag="64" id="785"/>
+                                                    <menuItem title="Invalid Text" tag="80" id="784"/>
+                                                    <menuItem title="Invalid Standard Bitmap" tag="96" id="dAB-fv-3D5"/>
+                                                    <menuItem title="Invalid Multicolor Bitmap" state="on" tag="112" id="ySZ-f5-Lkq"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="vicVideoModeAction:" target="-2" id="909"/>
+                                        </connections>
+                                    </popUpButton>
                                 </subviews>
                             </view>
                         </tabViewItem>
