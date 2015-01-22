@@ -264,6 +264,7 @@ C64Memory::peekRom(uint16_t addr)
 	return rom[addr];
 } 
 
+#if 0
 uint8_t 
 C64Memory::peekCartridge(uint16_t addr)
 {
@@ -272,16 +273,13 @@ C64Memory::peekCartridge(uint16_t addr)
     
 	return ram[addr];
 }
+#endif
 
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
     uint8_t EXROM = c64->expansionport->getExromLine() ? 0x10 : 0x00;
     uint8_t GAME = c64->expansionport->getGameLine() ? 0x08 : 0x00;
-
-    // DEPRECATED
-    // EXROM = (cartridge ? (cartridge->exromIsHigh() ? 0x10 : 0x00) : 0x10);
-    // GAME = (cartridge ? (cartridge->gameIsHigh() ? 0x08 : 0x00) : 0x08);
     
     uint8_t index = (cpu->getPortLines() & 0x07) | EXROM | GAME;
     
@@ -331,7 +329,7 @@ C64Memory::updatePeekPokeLookupTables()
     // 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)
     target = BankMap[index][4];
     assert(target == M_IO || target == M_CHAR || target == M_RAM);
-    pokeTarget[0xD] = target;
+    pokeTarget[0xD] = (target == M_IO ? M_IO : M_RAM);
 }
 
 
@@ -405,7 +403,11 @@ uint8_t C64Memory::peek(uint16_t addr)
             
         case M_CRTLO:
         case M_CRTHI:
-            return peekCartridge(addr);
+
+            if (c64->expansionport->romIsBlendedIn(addr))
+                return c64->expansionport->peek(addr);
+            else
+                return ram[addr];
             
         case M_PP:
             
@@ -441,11 +443,15 @@ void C64Memory::pokeRam(uint16_t addr, uint8_t value)
 
 void C64Memory::pokeRom(uint16_t addr, uint8_t value)             
 { 
-	if (cartridge != NULL && cartridge->isRomAddr(addr)) {
-		cartridge->poke(addr, value);
-	} else {
-		rom[addr] = value;
-	}
+#if 0
+    if (cartridge != NULL && cartridge->isRomAddr(addr)) {
+        cartridge->poke(addr, value);
+    } else {
+        rom[addr] = value;
+    }
+#endif
+    
+    rom[addr] = value;
 }
 
 void C64Memory::pokeIO(uint16_t addr, uint8_t value)
@@ -493,13 +499,10 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	// 0xDE00 - 0xDEFF (I/O area 1)
 	// 0xDF00 - 0xDFFF (I/O area 2)
 	if (addr < 0xE000) {
-		// Expansion port I/O.
-		if (cartridge != NULL && cartridgeRomIsVisible) {
-			cartridge->poke(addr, value);
-			// store for debugging purposes (DE00-DFFF are I/O or RAM addresses)
-			rom[addr] = value;
-		}
-		return;
+        // Some registers in this area trigger a bank switch in the
+        // attached cartridge module. So we pass the value there...
+        c64->expansionport->poke(addr, value);
+        return;
 	}
 
 	assert(false);
