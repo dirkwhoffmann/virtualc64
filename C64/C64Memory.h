@@ -20,7 +20,6 @@
 #define _C64MEMORY_INC
 
 #include "Memory.h"
-#include "Cartridge.h"
 
 // Forward declarations
 class VIC;
@@ -110,10 +109,7 @@ public:
 	
 	//! References to CIA 2
 	CIA2 *cia2;
-	
-	//! References to cartridge
-	Cartridge *cartridge;
-	
+		
 	//! Virtual RAM
 	/*! All memory cells can be read or written. */
 	uint8_t ram[65536];
@@ -129,13 +125,7 @@ public:
 	/*! The color RAM is located in the I/O space, starting at D800 and ending at DBFF
 	Only the lower four bits are accessible, the upper four bits are open and can show any value */
 	uint8_t colorRam[1024];
-	
-private:
-	
-	//! True if the cartridge ROM is visible
-	/*! The variable is updated whenever a cartridge is attached or detached. */
-	bool cartridgeRomIsVisible;
-	
+		
 public:
 	
 	//! File name of the Character ROM image.
@@ -210,14 +200,7 @@ public:
 	bool loadCharRom(const char *filename);
 	//! Load kernel ROM image into memory 
 	bool loadKernelRom(const char *filename);
-	
-	//! attach cartridge
-	bool attachCartridge(Cartridge *c);
-	//! detach cartridge
-	bool detachCartridge();
-	//! Returns true if a cartridge is present
-	bool isCartridgeAttached() { return cartridge != NULL; }
-	
+		
 	//! Returns true, iff the Basic ROM is alrady loaded
 	bool basicRomIsLoaded() { return basicRomFile != NULL; }
 	//! Returns true, iff the Kernel ROM is alrady loaded

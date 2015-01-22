@@ -989,35 +989,19 @@ C64::mountArchive(D64Archive *a)
 bool
 C64::attachCartridge(Cartridge *c)
 {
-    // OLD CODE
-	mem->attachCartridge(c);
-    
-	putMessage(MSG_CARTRIDGE, 1);
-
-    // NEW CODE
     return expansionport->attachCartridge(c);
 }
 
 void
 C64::detachCartridge()
 {
-    // OLD CODE
-    mem->detachCartridge();
-
-	putMessage(MSG_CARTRIDGE, 0);
-
-    // NEW CODE
     expansionport->detachCartridge();
 }
 
 bool
 C64::isCartridgeAttached()
 {
-    // OLD CODE
- 	return mem->isCartridgeAttached();
-
-    // NEW CODE
-    // return expansionport->cartridgeAttached;
+    return expansionport->getCartridgeAttached();
 }
 
 

@@ -30,13 +30,11 @@ C64Memory::C64Memory(C64 *c64)
 	
     this->c64 = c64;
 	
-	cartridge = NULL;	
+	// cartridge = NULL;
 
 	charRomFile = NULL;
 	kernelRomFile = NULL;
 	basicRomFile = NULL;
-	
-	cartridgeRomIsVisible = false;
 }
 
 C64Memory::~C64Memory()
@@ -100,7 +98,7 @@ C64Memory::loadFromBuffer(uint8_t **buffer)
 	(void)read8(buffer);
 	(void)read8(buffer);
 	(void)read8(buffer);
-	cartridgeRomIsVisible = (bool)read8(buffer);
+    (void)read8(buffer);
 	updatePeekPokeLookupTables();
 }
 
@@ -121,7 +119,7 @@ C64Memory::saveToBuffer(uint8_t **buffer)
 	write8(buffer, (uint8_t)0);
 	write8(buffer, (uint8_t)0);
 	write8(buffer, (uint8_t)0);
-	write8(buffer, (uint8_t)cartridgeRomIsVisible);
+    write8(buffer, (uint8_t)0);
 }
 
 void 
@@ -545,27 +543,5 @@ void C64Memory::poke(uint16_t addr, uint8_t value)
 			return;
 	}
 }
-
-bool C64Memory::attachCartridge(Cartridge *c)
-{
-	cartridge = c;
-	
-	// Cartridge rom is visible when EXROM or GAME lines are pulled low (grounded).
-	cartridgeRomIsVisible = c->exromIsHigh()==false || c->gameIsHigh()==false;
-	updatePeekPokeLookupTables();
-	
-	printf ("Cartridge attached %d\n", cartridgeRomIsVisible);
-	return true;
-}
-
-bool C64Memory::detachCartridge()
-{
-	cartridge = NULL;	
-	cartridgeRomIsVisible = false;
-	updatePeekPokeLookupTables();
-
-	return true;
-}
-
 
 
