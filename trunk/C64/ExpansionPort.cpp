@@ -99,10 +99,10 @@ ExpansionPort::dumpState()
     msg("Exrom line:     %d\n", getExromLine());
     
     for (unsigned i = 0; i < 64; i++) {
-        msg("Chips:          %d KB starting at $%04X\n", chipSize[i] / 1024, chipStartAddress[i]);
-        if (chip[i] != NULL) msg("%d ", i);
+        if (chip[i] != NULL) {
+            msg("Chip %2d:        %d KB starting at $%04X\n", i, chipSize[i] / 1024, chipStartAddress[i]);
+        }
     }
-    msg("\n");
 }
 
 void ExpansionPort::poke(uint16_t addr, uint8_t value)
@@ -222,8 +222,8 @@ ExpansionPort::attachCartridge(Cartridge *c)
     detachCartridge();
     
     type = c->getCartridgeType();
-    gameLine = c->gameIsHigh();
-    exromLine = c->exromIsHigh();
+    gameLine = c->getGameLine();
+    exromLine = c->getExromLine();
 
     // Load chip packets
     for (unsigned i = 0; i < c->getNumberOfChips(); i++) {
@@ -242,7 +242,6 @@ ExpansionPort::attachCartridge(Cartridge *c)
     dumpState();
 
     c64->putMessage(MSG_CARTRIDGE, 1);
-    
     return true;
 }
 
