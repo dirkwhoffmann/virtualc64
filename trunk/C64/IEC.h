@@ -128,6 +128,9 @@ public:
     //! Dump current configuration into message queue
     void ping();
 
+    //! Size of internal state
+    uint32_t stateSize();
+
 	//! Load state
 	void loadFromBuffer(uint8_t **buffer);
 	

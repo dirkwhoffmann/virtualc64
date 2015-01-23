@@ -146,12 +146,16 @@ OldSID::setClockFrequency(uint32_t frequency)
 	updateConstants();
 }
 
+uint32_t
+OldSID::stateSize()
+{
+    return sizeof(iomem);
+}
+
 void 
 OldSID::loadFromBuffer(uint8_t **buffer)
 {
-	debug(2, "  Loading SID state...\n");
-
-	// reset ringbuffer, buffer pointers, callback synchronisation mechanism, etc. 
+	// reset ringbuffer, buffer pointers, callback synchronisation mechanism, etc.
 	this->reset();
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
 		poke(i,read8(buffer)); // poke will store this value in iomem[] beside other things
@@ -160,8 +164,6 @@ OldSID::loadFromBuffer(uint8_t **buffer)
 void
 OldSID::saveToBuffer(uint8_t **buffer)
 {
-	debug(2, "  Saving SID state...\n");
-
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
 		write8(buffer, iomem[i]);
 }

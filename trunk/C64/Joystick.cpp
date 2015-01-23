@@ -40,24 +40,36 @@ Joystick::reset()
     _axisY = JOYSTICK_AXIS_NONE;
 }
 
+uint32_t
+Joystick::stateSize()
+{
+    return 3;
+}
+
 void
 Joystick::loadFromBuffer(uint8_t **buffer)
 {
-    debug(2, "    Loading joystick state...\n");
+    uint8_t *old = *buffer;
     
     _buttonPressed = (uint8_t)read8(buffer);
     _axisX = (JoystickAxisState)read8(buffer);
     _axisY = (JoystickAxisState)read8(buffer);
+
+    debug(2, "  Joystick state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void
 Joystick::saveToBuffer(uint8_t **buffer)
 {
-    debug(2, "    Saving joystick state...\n");
+    uint8_t *old = *buffer;
 
     write8(buffer,(uint8_t)_buttonPressed);
     write8(buffer,(uint8_t)_axisX);
     write8(buffer,(uint8_t)_axisY);
+
+    debug(2, "  Joystick state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 bool Joystick::GetButtonPressed()

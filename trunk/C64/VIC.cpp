@@ -129,12 +129,17 @@ VIC::reset()
 	spriteBackgroundCollisionEnabled = 0xFF;
 }
 			
-// Loading and saving snapshots
+uint32_t
+VIC::stateSize()
+{
+    return 151;
+}
+
 void
 VIC::loadFromBuffer(uint8_t **buffer)
 {
-	debug(2, "  Loading VIC state...\n");
-	
+    uint8_t *old = *buffer;
+
 	// Internal registers
 	scanline = read32(buffer);
 	xCounter = read16(buffer);
@@ -180,12 +185,15 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	
 	// Lightpen
 	lightpenIRQhasOccured = (bool)read8(buffer);
+    
+    debug(2, "  VIC state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void
 VIC::saveToBuffer(uint8_t **buffer)
 {
-	debug(2, "  Saving VIC state...\n");
+    uint8_t *old = *buffer;
 
 	// Internal registers
 	write32(buffer, scanline);
@@ -232,6 +240,9 @@ VIC::saveToBuffer(uint8_t **buffer)
 	
 	// Lightpen
 	write8(buffer, lightpenIRQhasOccured);
+    
+    debug(2, "  VIC state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 

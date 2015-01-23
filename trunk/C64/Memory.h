@@ -59,10 +59,10 @@ public:
 	~Memory();
 
 	//! Load state
-	void loadFromBuffer(uint8_t **buffer);
+	void loadFromBuffer(uint8_t **buffer) = 0;
 	
 	//! Save state
-	void saveToBuffer(uint8_t **buffer);	
+	void saveToBuffer(uint8_t **buffer) = 0;
 	
 
 	// --------------------------------------------------------------------------------

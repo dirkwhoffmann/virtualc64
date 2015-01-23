@@ -91,10 +91,16 @@ CPU::reset()
 	setTraceMode(false);	
 }
 
+uint32_t
+CPU::stateSize()
+{
+    return 563;
+}
+
 void 
 CPU::loadFromBuffer(uint8_t **buffer) 
 {
-	debug(2, "  Loading CPU state...\n");
+    uint8_t *old = *buffer;
 
 	// Registers and flags
 	A = read8(buffer);
@@ -138,12 +144,15 @@ CPU::loadFromBuffer(uint8_t **buffer)
 		callStack[i] = read16(buffer);	
 	callStackPointer = read8(buffer);
 	oldI = read8(buffer);
+    
+    debug(2, "  CPU state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void
 CPU::saveToBuffer(uint8_t **buffer) 
 {
-	debug(2, "  Saving CPU state...\n");
+    uint8_t *old = *buffer;
 
 	// Registers and flags
 	write8(buffer, A);
@@ -196,6 +205,9 @@ CPU::saveToBuffer(uint8_t **buffer)
 		write16(buffer, callStack[i]);
 	write8(buffer, callStackPointer);
 	write8(buffer, oldI);
+    
+    debug(2, "  CPU state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 

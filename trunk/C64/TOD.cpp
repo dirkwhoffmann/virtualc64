@@ -50,28 +50,40 @@ TOD::reset()
 	stopped = false;
 }
 
+uint32_t
+TOD::stateSize()
+{
+    return 14;
+}
+
 void
 TOD::loadFromBuffer(uint8_t **buffer)
 {
-	debug(2, "    Loading TOD state...\n");
+    uint8_t *old = *buffer;
 
 	tod.value = read32(buffer);
 	alarm.value = read32(buffer);
 	latch.value = read32(buffer);
 	frozen = read8(buffer);
 	stopped = read8(buffer);
+
+    debug(2, "    TOD state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void
 TOD::saveToBuffer(uint8_t **buffer)
 {
-	debug(2, "    Saving TOD state...\n");
+    uint8_t *old = *buffer;
 
 	write32(buffer, tod.value);
 	write32(buffer, alarm.value);
 	write32(buffer, latch.value);
 	write8(buffer, frozen);
 	write8(buffer, stopped);
+    
+    debug(2, "    TOD state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 

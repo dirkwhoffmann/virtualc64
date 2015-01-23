@@ -302,12 +302,34 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
 	}
 }
 
+uint32_t
+C64::stateSize()
+{
+    uint32_t size;
+    
+    size = 28;
+    size += cpu->stateSize();
+    size += vic->stateSize();
+    size += sid->stateSize();
+    size += cia1->stateSize();
+    size += cia2->stateSize();
+    size += mem->stateSize();
+    size += keyboard->stateSize();
+    size += joystick1->stateSize();
+    size += joystick2->stateSize();
+    size += iec->stateSize();
+    size += expansionport->stateSize();
+    size += floppy->stateSize();
+    
+    return size;
+}
+
 void 
 C64::loadFromBuffer(uint8_t **buffer)
 {	
 	uint8_t *old = *buffer;
 		
-	debug(1, "Loading... ");
+	debug(2, "Loading internal state...\n");
 	
 	// Load state of this component
 	cycles = read64(buffer);
@@ -330,7 +352,8 @@ C64::loadFromBuffer(uint8_t **buffer)
     expansionport->loadFromBuffer(buffer);
 	floppy->loadFromBuffer(buffer);
 
-	debug(1, "%d bytes.\n", *buffer - old);
+    debug(2, "  C64 state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
     
     ping();
 }
@@ -345,6 +368,7 @@ C64::saveToSnapshot(Snapshot *snapshot)
 	snapshot->setPAL(isPAL());
 	snapshot->takeScreenshot((uint32_t *)vic->screenBuffer());
 	
+    snapshot->alloc(this);
 	uint8_t *ptr = snapshot->getData();
 	saveToBuffer(&ptr);
 }
@@ -354,7 +378,7 @@ C64::saveToBuffer(uint8_t **buffer)
 {	
 	uint8_t *old = *buffer;
 		
-	debug(2, "Saving... ");
+    debug(2, "Saving internal state...\n");
 		
 	// Save state of this component
 	write64(buffer, cycles);
@@ -377,7 +401,8 @@ C64::saveToBuffer(uint8_t **buffer)
     expansionport->saveToBuffer(buffer);
 	floppy->saveToBuffer(buffer);
 	
-	debug(2, "%d bytes.\n", *buffer - old);	
+    debug(2, "  C64 state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 

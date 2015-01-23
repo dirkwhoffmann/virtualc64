@@ -51,10 +51,16 @@ void VIA6522::reset()
 		io[i] = 0;
 }
 
+uint32_t
+VIA6522::stateSize()
+{
+    return 13 + sizeof(io);
+}
+
 void VIA6522::loadFromBuffer(uint8_t **buffer)
 {
-	debug(2, "    Loading VIA6522 state...\n");
-
+    uint8_t *old = *buffer;
+    
 	ddra = read8(buffer);
 	ddrb = read8(buffer);
 	ora = read8(buffer);
@@ -71,12 +77,15 @@ void VIA6522::loadFromBuffer(uint8_t **buffer)
 	
 	for (unsigned i = 0; i < sizeof(io); i++)
 		io[i] = read8(buffer);
+
+    debug(2, "  VIA6522 state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void VIA6522::saveToBuffer(uint8_t **buffer)
 {
-	debug(2, "    Saving VIA6522 state...\n");
-
+    uint8_t *old = *buffer;
+    
 	write8(buffer, ddra);
 	write8(buffer, ddrb);
 	write8(buffer, ora);
@@ -93,6 +102,9 @@ void VIA6522::saveToBuffer(uint8_t **buffer)
 	
 	for (unsigned i = 0; i < sizeof(io); i++)
 		write8(buffer, io[i]);
+
+    debug(2, "  VIA6522 state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 bool VIA6522::execute(int cycles)

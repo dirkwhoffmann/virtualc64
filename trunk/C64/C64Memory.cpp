@@ -81,12 +81,16 @@ void C64Memory::reset()
 //                                      Input / Output
 // --------------------------------------------------------------------------------
 
+uint32_t
+C64Memory::stateSize()
+{
+    return sizeof(ram) + sizeof(colorRam) + 0x2000 + 0x1000 + 0x2000 + 5;
+}
+
 void
 C64Memory::loadFromBuffer(uint8_t **buffer)
 {	
-	debug(2, "  Loading C64 memory state...\n");
-	
-	Memory::loadFromBuffer(buffer);
+    uint8_t *old = *buffer;
 	
 	readBlock(buffer, ram, sizeof(ram)); 
 	readBlock(buffer, colorRam, sizeof(colorRam)); 
@@ -100,15 +104,17 @@ C64Memory::loadFromBuffer(uint8_t **buffer)
 	(void)read8(buffer);
     (void)read8(buffer);
 	updatePeekPokeLookupTables();
+    
+    debug(2, "  C64 memory state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
+
 }
 
 void
 C64Memory::saveToBuffer(uint8_t **buffer) 
 {
-	debug(2, "  Saving C64 memory state...\n");
-	
-	Memory::saveToBuffer(buffer);
-	
+    uint8_t *old = *buffer;
+		
 	writeBlock(buffer, ram, sizeof(ram)); 
 	writeBlock(buffer, colorRam, sizeof(colorRam)); 
 	writeBlock(buffer, &rom[0xA000], 0x2000); // Basic ROM
@@ -120,6 +126,9 @@ C64Memory::saveToBuffer(uint8_t **buffer)
 	write8(buffer, (uint8_t)0);
 	write8(buffer, (uint8_t)0);
     write8(buffer, (uint8_t)0);
+
+    debug(2, "  C64 memory state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 

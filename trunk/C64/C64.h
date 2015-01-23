@@ -26,7 +26,7 @@
 #define _C64_INC
 
 // #define NDEBUG // Diables all assertions (release versions, only)
-#define DEBUG_LEVEL 1
+#define DEBUG_LEVEL 2
 
 // Snapshot version number of this release
 #define V_MAJOR 1
@@ -355,6 +355,9 @@ public:
 	
 	//! Load state from snapshot container
 	void loadFromSnapshot(Snapshot *snapshot);
+
+    //! Size of internal state
+    uint32_t stateSize();
 
 	//! Load state from memory buffer
 	void loadFromBuffer(uint8_t **buffer);

@@ -70,18 +70,32 @@ ExpansionPort::ping()
     c64->putMessage(MSG_CARTRIDGE, c64->isCartridgeAttached());
 }
 
+uint32_t
+ExpansionPort::stateSize()
+{
+    return 0;
+}
+
 void
 ExpansionPort::loadFromBuffer(uint8_t **buffer)
 {
-    debug(2, "  Loading expansion port state...\n");
+    uint8_t *old = *buffer;
+    
     debug(2, "  IMPLEMENTEATION MISSING...\n");
+    
+    debug(2, "  Expansion port state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void
 ExpansionPort::saveToBuffer(uint8_t **buffer)
 {
-    debug(2, "  Saving expansion port state...\n");
+    uint8_t *old = *buffer;
+    
     debug(2, "  IMPLEMENTEATION MISSING...\n");
+
+    debug(2, "  Expansion port state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void

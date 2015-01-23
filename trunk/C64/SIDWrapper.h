@@ -59,6 +59,9 @@ public:
 	//! Bring SID back to it's initial state.
 	void reset();
 	
+    //! Size of internal state
+    uint32_t stateSize();
+
 	//! Load state
 	void loadFromBuffer(uint8_t **buffer);
 	

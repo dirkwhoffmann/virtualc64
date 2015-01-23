@@ -93,6 +93,10 @@ public:
      */
     virtual void ping();
 
+    //! Size of internal state
+    /*! Returns how many bytes will be loaded by loadFromBuffer or saved by saveToBuffer */
+    virtual uint32_t stateSize() { return 0; };
+    
     //! Load state from memory buffer
 	/*! The function is used for loading a snapshot of the virtual computer
         /seealso C64::loadSnapshot

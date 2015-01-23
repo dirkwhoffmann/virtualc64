@@ -68,10 +68,17 @@ IEC::ping()
     
 }
 
+uint32_t
+IEC::stateSize()
+{
+    return 23;
+}
+
 void
 IEC::loadFromBuffer(uint8_t **buffer)
 {
-	debug(2, "  Loading IEC state...\n");
+    uint8_t *old = *buffer;
+    
 	driveConnected = (bool)read8(buffer);
 	atnLine = (bool)read8(buffer);
 	oldAtnLine = (bool)read8(buffer);
@@ -92,12 +99,16 @@ IEC::loadFromBuffer(uint8_t **buffer)
 	ciaAtnPin = (bool)read8(buffer);
 	ciaAtnIsOutput = (bool)read8(buffer);
     busActivity = read32(buffer);
+    
+    debug(2, "  IEC state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void
 IEC::saveToBuffer(uint8_t **buffer)
 {
-	debug(2, "  Saving IEC state...\n");
+    uint8_t *old = *buffer;
+    
 	write8(buffer, (uint8_t)driveConnected);
 	write8(buffer, (uint8_t)atnLine);
 	write8(buffer, (uint8_t)oldAtnLine);
@@ -118,6 +129,9 @@ IEC::saveToBuffer(uint8_t **buffer)
 	write8(buffer, (uint8_t)ciaAtnPin);
 	write8(buffer, (uint8_t)ciaAtnIsOutput);
     write32(buffer, busActivity);
+    
+    debug(2, "  IEC state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 
