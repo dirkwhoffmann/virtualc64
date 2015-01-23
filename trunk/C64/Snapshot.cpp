@@ -105,6 +105,7 @@ Snapshot::isSnapshot(const char *filename, int *major, int *minor)
     if (!checkFileHeader(filename, magic_bytes, major, minor))
         return false;
     
+    fprintf(stderr, "\n%s is a valid snapshot file\n\n", filename);
     return true;
 }
 
@@ -151,10 +152,12 @@ Snapshot::writeToBuffer(void *buffer)
     uint8_t *target = (uint8_t *)buffer;
     
     // Copy header
+    // fprintf(stderr, "Copying %d bytes to %p\n", sizeof(header), target);
     memcpy(target, (uint8_t *)&header, sizeof(header));
 
     // Copy state data
-    memcpy(target + sizeof(header), state, header.size - sizeof(header));
+    // fprintf(stderr, "Copying %d bytes to %p\n", header.size, target + sizeof(header));
+    memcpy(target + sizeof(header), state, header.size);
 
     return true;
 }

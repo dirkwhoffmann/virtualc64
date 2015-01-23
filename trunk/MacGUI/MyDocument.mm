@@ -21,6 +21,7 @@
 @implementation MyDocument
 
 @synthesize c64;
+@synthesize snapshot;
 @synthesize archive;
 @synthesize cartridge;
 
@@ -55,6 +56,14 @@
 - (void)awakeFromNib
 {
 	NSLog(@"MyDocument::awakeFromNib");
+}
+
+- (BOOL)setSnapshotWithName:(NSString *)path
+{
+    if (!(snapshot = Snapshot::snapshotFromFile([path UTF8String])))
+        return NO;
+    
+    return YES;
 }
 
 - (BOOL)setArchiveWithName:(NSString *)path
@@ -138,17 +147,13 @@
 	
 	if ([type isEqualToString:@"VC64"]) {
 		
-		V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:filename];
-        
-		if (!snapshot) {
-			NSLog(@"Error while reading snapshot\n");
-			return NO;
-		}
-		
-		[c64 loadFromSnapshot:snapshot];
-		return YES;
-	}
-	
+        if (![self setSnapshotWithName:filename]) {
+            NSLog(@"Error while reading snapshot\n");
+            return NO;
+        }		
+        return YES;
+    }
+    
 	if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
 		
 		if (![self setArchiveWithName:filename]) {
@@ -180,14 +185,14 @@
 		return NO;
 	}
 			
-	V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:filename];
+	V64Snapshot *reverted = [V64Snapshot snapshotFromFile:filename];
 
-	if (!snapshot) {
+	if (!reverted) {
 		NSLog(@"Error while reverting to older snapshot\n");
 		return NO;
 	}
 		
-	[c64 loadFromSnapshot:snapshot];
+	[c64 loadFromSnapshot:reverted];
 	return YES;
 }
 

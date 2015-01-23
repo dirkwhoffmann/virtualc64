@@ -520,22 +520,32 @@
 - (int) chipModel { return (chip_model)(c64->getChipModel()); }
 - (void) setChipModel:(int)value {c64->setChipModel((chip_model)value); }
 
-- (void) loadFromSnapshot:(V64Snapshot *)snapshot 
-{ 
-    c64->suspend(); 
-    c64->loadFromSnapshot([snapshot snapshot]); 
-    if ([self isPAL]) 
+- (void) _loadFromSnapshot:(Snapshot *)snapshot
+{
+    c64->suspend();
+    c64->loadFromSnapshot(snapshot);
+    if ([self isPAL])
         [screen setPAL];
     else
         [screen setNTSC];
-    c64->resume(); 
+    c64->resume();
+}
+
+- (void) loadFromSnapshot:(V64Snapshot *)snapshot 
+{
+    [self _loadFromSnapshot:[snapshot snapshot]];
+}
+
+- (void) _saveToSnapshot:(Snapshot *)snapshot
+{
+    c64->suspend();
+    c64->saveToSnapshot(snapshot);
+    c64->resume();
 }
 
 - (void) saveToSnapshot:(V64Snapshot *)snapshot 
-{ 
-    c64->suspend(); 
-    c64->saveToSnapshot([snapshot snapshot]); 
-    c64->resume(); 
+{
+    [self _saveToSnapshot:[snapshot snapshot]];
 }
 
 - (CIAProxy *) cia:(int)num { assert(num == 1 || num == 2); return (num == 1) ? [self cia1] : [self cia2]; }

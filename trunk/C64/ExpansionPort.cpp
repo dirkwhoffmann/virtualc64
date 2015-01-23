@@ -73,7 +73,15 @@ ExpansionPort::ping()
 uint32_t
 ExpansionPort::stateSize()
 {
-    return 0;
+    uint32_t size = 3;
+    
+    for (unsigned i = 0; i < 64; i++)
+        size += 4 + chipSize[i];
+
+    size += sizeof(rom);
+    size += sizeof(blendedIn);
+    
+    return size;
 }
 
 void
@@ -81,7 +89,24 @@ ExpansionPort::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    debug(2, "  IMPLEMENTEATION MISSING...\n");
+    type = read8(buffer);
+    gameLine = (bool)read8(buffer);
+    exromLine = (bool)read8(buffer);
+
+    for (unsigned i = 0; i < 64; i++) {
+        chipStartAddress[i] = read16(buffer);
+        chipSize[i] = read16(buffer);
+        
+        if (chipSize[i] > 0) {
+            chip[i] = (uint8_t *)malloc(chipSize[i]);
+            readBlock(buffer, chip[i], chipSize[i]);
+        } else {
+            chip[i] = NULL;
+        }
+    }
+
+    readBlock(buffer, rom, sizeof(rom));
+    readBlock(buffer, blendedIn, sizeof(blendedIn));
     
     debug(2, "  Expansion port state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
@@ -92,7 +117,21 @@ ExpansionPort::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    debug(2, "  IMPLEMENTEATION MISSING...\n");
+    write8(buffer, type);
+    write8(buffer, (uint8_t)gameLine);
+    write8(buffer, (uint8_t)exromLine);
+    
+    for (unsigned i = 0; i < 64; i++) {
+        write16(buffer, chipStartAddress[i]);
+        write16(buffer, chipSize[i]);
+        
+        if (chipSize[i] > 0) {
+            writeBlock(buffer, chip[i], chipSize[i]);
+        }
+    }
+    
+    writeBlock(buffer, rom, sizeof(rom));
+    writeBlock(buffer, blendedIn, sizeof(blendedIn));
 
     debug(2, "  Expansion port state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());

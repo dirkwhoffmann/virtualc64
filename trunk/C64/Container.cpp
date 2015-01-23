@@ -146,6 +146,8 @@ Container::writeToFile(const char *filename)
 	FILE *file;
 	unsigned filesize = sizeOnDisk();
 
+    fprintf(stderr, "Writing %d bytes to file ******\n", filesize);
+    
 	assert (filename != NULL);
 		
 	// Open file

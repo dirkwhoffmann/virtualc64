@@ -27,19 +27,26 @@ class Snapshot;
 {
 	// ObjC/C++ bridge
 	C64Proxy *__strong c64;
-	
+
+    //! Reference to an attached VC64 snapshot
+    /*! When a new documents opens and this variable is not NULL, the snapshot is automatically flashed */
+    Snapshot *snapshot;
+
 	//! Reference to an attached D64 archive
 	/*! When a new documents opens and this variable is not NULL, the archive is automatically mounted */
 	D64Archive *archive;
 	
 	//! Reference to an attached cartridge 
-	Cartridge *cartridge;	
+    /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged in */
+	Cartridge *cartridge;
 }
 
 @property (strong) C64Proxy *c64;
+@property (assign) Snapshot *snapshot;
 @property (assign) D64Archive *archive;
 @property (assign) Cartridge *cartridge;
 
+- (BOOL)setSnapshotWithName:(NSString *)path;
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;
 - (BOOL)detachCartridge;

@@ -361,8 +361,6 @@ C64::loadFromBuffer(uint8_t **buffer)
 void 
 C64::saveToSnapshot(Snapshot *snapshot)
 {
-    fprintf(stderr, "C64::saveToSnapshot:%p\n", snapshot);
-
 	if (snapshot == NULL)
 		return;
 	
@@ -912,7 +910,7 @@ C64::loadRom(const char *filename)
 void 
 C64::takeSnapshot() 
 {
-    debug(1, "Taking snapshop %d (%p)\n", backInTimeWritePtr, backInTimeHistory[backInTimeWritePtr]);
+    debug(2, "Taking snapshop %d (%p)\n", backInTimeWritePtr, backInTimeHistory[backInTimeWritePtr]);
     
 	saveToSnapshot(backInTimeHistory[backInTimeWritePtr]);
 	backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
