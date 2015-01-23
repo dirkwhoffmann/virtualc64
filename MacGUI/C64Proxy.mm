@@ -594,8 +594,22 @@
 
 // Cheatbox
 - (int) historicSnapshots { return c64->numHistoricSnapshots(); }
-- (uint8_t *) historicSnapshotFileContents:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getFileContents() : NULL; }
-- (unsigned) historicSnapshotFileContentsSize:(int) nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getFileContentsSize() : 0; }
+
+- (int) historicSnapshotHeaderSize:(int)nr
+    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getHeaderSize() : 0; }
+
+- (uint8_t *) historicSnapshotHeader:(int)nr
+    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getHeader() : NULL; }
+
+- (int) historicSnapshotDataSize:(int)nr
+    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getDataSize() : 0; }
+
+- (uint8_t *) historicSnapshotData:(int)nr
+    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getData() : NULL; }
+
+
+// - (uint8_t *) historicSnapshotFileContents:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getFileContents() : NULL; }
+// - (unsigned) historicSnapshotFileContentsSize:(int) nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getFileContentsSize() : 0; }
 - (unsigned char *)historicSnapshotImageData:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getImageData() : NULL; }
 - (time_t)historicSnapshotTimestamp:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getTimestamp() : 0; }
 - (bool)historicSnapshotIsPAL:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->isPAL() : false; }
@@ -686,8 +700,6 @@
 	return [self snapshotFromSnapshot:Snapshot::snapshotFromBuffer(buffer, length)];
 }
 
-- (uint8_t *)fileContents { return snapshot->getFileContents(); }
-- (unsigned)fileContentsSize { return snapshot->getFileContentsSize(); }
 - (unsigned char *)imageData { return snapshot->getImageData(); }
 - (time_t)timeStamp { return snapshot->getTimestamp(); }
 - (bool) readDataFromFile:(NSString *)path { return snapshot->readFromFile([path UTF8String]); }

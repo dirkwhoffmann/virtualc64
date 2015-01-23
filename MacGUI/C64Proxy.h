@@ -491,8 +491,11 @@
 
 // Cheatbox
 - (int) historicSnapshots;
-- (uint8_t *) historicSnapshotFileContents:(int)nr;
-- (unsigned) historicSnapshotFileContentsSize:(int)nr;
+- (int) historicSnapshotHeaderSize:(int)nr;
+- (uint8_t *) historicSnapshotHeader:(int)nr;
+- (int) historicSnapshotDataSize:(int)nr;
+- (uint8_t *) historicSnapshotData:(int)nr;
+
 - (unsigned char *)historicSnapshotImageData:(int)nr;
 - (time_t)historicSnapshotTimestamp:(int)nr;
 - (bool)historicSnapshotIsPAL:(int)nr;
@@ -530,8 +533,6 @@
 + (id) snapshotFromFile:(NSString *)path;
 + (id) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
 
-- (uint8_t *)fileContents;
-- (unsigned)fileContentsSize;
 - (unsigned char *)imageData;
 - (time_t)timeStamp;
 	

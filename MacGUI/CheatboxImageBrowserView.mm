@@ -159,13 +159,16 @@
 		NSLog(@"imageBrowser:writeItemsAtIndexes:NSNotFound (%lu)", (unsigned long)index);
 		return 0;
 	}
-	//NSLog(@"imageBrowser:writeItemsAtIndexes:%d", index);
-
 	[pboard declareTypes:[NSArray arrayWithObject:NSFileContentsPboardType] owner:self];
-	const void *fileContents = [c64 historicSnapshotFileContents:index];
-	unsigned fileContentsSize = [c64 historicSnapshotFileContentsSize:index];
-	NSData *fileData = [NSData dataWithBytes:fileContents length:fileContentsSize];
-	NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
+    
+    uint32_t headerSize = [c64 historicSnapshotHeaderSize:index];
+    uint8_t *header = [c64 historicSnapshotHeader:index];
+    uint32_t dataSize = [c64 historicSnapshotDataSize:index];
+    uint8_t *data = [c64 historicSnapshotData:index];
+    
+    NSMutableData *fileData = [NSMutableData dataWithBytes:header length:headerSize];
+    [fileData appendBytes:data length:dataSize];
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:fileData];
 	[fileWrapper setPreferredFilename:@"Snapshot.VC64"];
 	[pboard writeFileWrapper:fileWrapper];
 	return 1;
