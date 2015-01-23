@@ -66,11 +66,17 @@ CIA::reset()
 	tod.reset();
 }
 
+uint32_t
+CIA::stateSize()
+{
+    return 31 + tod.stateSize();
+}
+
 void 
 CIA::loadFromBuffer(uint8_t **buffer)
-{	
-	debug(2, "  Loading CIA state...\n");
-	
+{
+    uint8_t *old = *buffer;
+    
 	delay = read32(buffer);
 	feed = read32(buffer);
 	CRA = read8(buffer);
@@ -98,12 +104,15 @@ CIA::loadFromBuffer(uint8_t **buffer)
 	latchB = read16(buffer);
 
 	tod.loadFromBuffer(buffer);
+    
+    debug(2, "  CIA state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 
 CIA::saveToBuffer(uint8_t **buffer)
 {
-	debug(2, "  Saving CIA state...\n");
+    uint8_t *old = *buffer;
 	
 	write32(buffer, delay);
 	write32(buffer, feed);
@@ -132,6 +141,9 @@ CIA::saveToBuffer(uint8_t **buffer)
 	write16(buffer, latchB);
 
 	tod.saveToBuffer(buffer);
+    
+    debug(2, "  CIA state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 uint8_t CIA::peek(uint16_t addr)

@@ -102,6 +102,9 @@ public:
 	/*! The VIA chip will be executed for the specified number of clock cycles. */
 	bool execute(int cycles); 
 
+    //! Size of internal state
+    uint32_t stateSize();
+
 	//! Load state
 	void loadFromBuffer(uint8_t **buffer);
 	

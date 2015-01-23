@@ -119,24 +119,36 @@ Keyboard::reset()
 	}		
 }
 
+uint32_t
+Keyboard::stateSize()
+{
+    return sizeof(kbMatrix);
+}
+
 void
 Keyboard::loadFromBuffer(uint8_t **buffer)
 {
-	debug(2, "    Loading keyboard state...\n");
+    uint8_t *old = *buffer;
 	
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		kbMatrix[i] = read8(buffer);
 	}
+
+    debug(2, "  Keyboard state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void
 Keyboard::saveToBuffer(uint8_t **buffer)
 {
-	debug(2, "    Saving keyboard state...\n");
+    uint8_t *old = *buffer;
 
 	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
 		write8(buffer, kbMatrix[i]);
 	}
+
+    debug(2, "  Keyboard state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 

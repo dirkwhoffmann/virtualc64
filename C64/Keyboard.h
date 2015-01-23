@@ -67,6 +67,9 @@ public:
 
 	//! Reset 
 	void reset();
+    
+    //! Size of internal state
+    uint32_t stateSize();
 	
 	//! Load state
 	void loadFromBuffer(uint8_t **buffer);

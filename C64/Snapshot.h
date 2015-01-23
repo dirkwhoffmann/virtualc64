@@ -57,11 +57,19 @@ private:
 			uint32_t screen[512 * 512];
 		
 		} screenshot;
-		
-		//! Internal state
-		uint8_t data[MAX_SNAPSHOT_SIZE];
-	} fileContents;
+        
+        //! Internal state
+        // DEPRECATED
+        uint8_t data[MAX_SNAPSHOT_SIZE];
+
+        // Size of internal state
+        uint32_t size;
+
+    } fileContents;  // RENAME TO 'header'
 	
+    // Internal state data
+    uint8_t *state;
+
 	//! Date and time of snapshot creation
 	time_t timestamp;
 	
@@ -73,6 +81,12 @@ public:
 	//! Destructor
 	~Snapshot();
 	
+    //! Free allocated memory
+    void dealloc();
+
+    //! Allocate memory big enough to save internal state for provided 64
+    bool alloc(C64 *c64);
+    
     //! Returns true if 'fileIsValid' and additionally gets version numbers
     static bool isSnapshot(const char *filename, int *major, int *minor);
     
@@ -88,7 +102,6 @@ public:
 		
 	bool writeDataToFile(FILE *file, struct stat fileProperties);
 	
-	void dealloc();
     ContainerType getType();
 	const char *getTypeAsString();
 	

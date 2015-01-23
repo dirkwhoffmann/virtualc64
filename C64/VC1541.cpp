@@ -85,11 +85,29 @@ VC1541::ping()
     via2->ping();
 }
 
+uint32_t
+VC1541::stateSize()
+{
+    uint32_t result = 13;
+
+    for (unsigned i = 0; i < 84; i++)
+        result += sizeof(data[i]);
+    
+    result += 2*84;
+    
+    result += cpu->stateSize();
+    result += via1->stateSize();
+    result += via2->stateSize();
+    result += mem->stateSize();
+    
+    return result;
+}
+
 void
 VC1541::loadFromBuffer(uint8_t **buffer)
 {	
-	debug(2, "  Loading VC1541 state...\n");
-
+    uint8_t *old = *buffer;
+    
     numTracks = read8(buffer);
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
@@ -108,13 +126,16 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 	via1->loadFromBuffer(buffer);	
 	via2->loadFromBuffer(buffer);
 	mem->loadFromBuffer(buffer);
+    
+    debug(2, "  VC1541 state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 
 VC1541::saveToBuffer(uint8_t **buffer)
 {	
-	debug(2, "  Saving VC1541 state...\n");
-
+    uint8_t *old = *buffer;
+    
     write8(buffer, numTracks);
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
@@ -132,7 +153,10 @@ VC1541::saveToBuffer(uint8_t **buffer)
 	cpu->saveToBuffer(buffer);
 	via1->saveToBuffer(buffer);	
 	via2->saveToBuffer(buffer);	
-	mem->saveToBuffer(buffer);	
+	mem->saveToBuffer(buffer);
+    
+    debug(2, "  VC1541 state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 
@@ -140,28 +164,6 @@ VC1541::dumpState()
 {
 	msg("VC1541\n");
 	msg("------\n\n");
-	
-#if 0	
-	FILE *file = fopen("/Users/hoff/tmp/d64image.txt","w");
-	
-	if (file != NULL) {
-		dumpDisk(file);
-		fclose(file);
-	}
-	
-	int t, i;
-	/* Directory track... */
-	t = 18;
-	for (i = 0; i < 4096; i+= 16) {
-		debug(1, "(%d,%d): %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", 
-			  t, i,
-			  getData(t,i+0), getData(t,i+1), getData(t,i+2), getData(t,i+3),
-			  getData(t,i+4), getData(t,i+5), getData(t,i+6), getData(t,i+7),
-			  getData(t,i+8), getData(t,i+9), getData(t,i+10), getData(t,i+11),
-			  getData(t,i+12), getData(t,i+13), getData(t,i+14), getData(t,i+15));
-	}
-#endif
-	
 	msg("         Head timer : %d\n", byteReadyTimer);
 	msg("              Track : %d\n", track);
 	msg("       Track offset : %d\n", offset);

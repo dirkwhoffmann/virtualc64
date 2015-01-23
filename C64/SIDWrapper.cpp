@@ -54,20 +54,35 @@ SIDWrapper::reset()
     resid->reset();
 }
 
-void 
+uint32_t
+SIDWrapper::stateSize()
+{
+    return 1 + oldsid->stateSize();
+}
+
+void
 SIDWrapper::loadFromBuffer(uint8_t **buffer)
 {
+    uint8_t *old = *buffer;
+
     latchedDataBus = read8(buffer);
     oldsid->loadFromBuffer(buffer);
-    // resid->loadFromBuffer(buffer);
+    
+    debug(2, "  SID state loaded (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
 }
 
 void 
 SIDWrapper::saveToBuffer(uint8_t **buffer)
 {
+    uint8_t *old = *buffer;
+
     write8(buffer, latchedDataBus);
     oldsid->saveToBuffer(buffer);
-    // resid->saveToBuffer(buffer);
+    
+    debug(2, "  SID state saved (%d bytes)\n", *buffer - old);
+    assert(*buffer - old == stateSize());
+
 }
 
 void 
