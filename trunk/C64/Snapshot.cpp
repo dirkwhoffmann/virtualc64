@@ -20,14 +20,13 @@
 
 Snapshot::Snapshot()
 {
-    fileContents.magic[0] = 'V';
-    fileContents.magic[1] = 'C';
-    fileContents.magic[2] = '6';
-    fileContents.magic[3] = '4';
-    fileContents.major = V_MAJOR;
-    fileContents.minor = V_MINOR;
-    fileContents.size = 0;
-    memset(fileContents.data, 0, sizeof(fileContents.data));
+    header.magic[0] = 'V';
+    header.magic[1] = 'C';
+    header.magic[2] = '6';
+    header.magic[3] = '4';
+    header.major = V_MAJOR;
+    header.minor = V_MINOR;
+    header.size = 0;
     timestamp = (time_t)0;
     state = NULL;
 }
@@ -35,6 +34,27 @@ Snapshot::Snapshot()
 Snapshot::~Snapshot()
 {
     dealloc();
+}
+
+void
+Snapshot::dealloc()
+{
+    if (state != NULL) {
+        free(state);
+        header.size = 0;
+    }
+}
+
+bool
+Snapshot::alloc(unsigned size)
+{
+    dealloc();
+    
+    if ((state = (uint8_t *)malloc(size)) == NULL)
+        return false;
+    
+    header.size = size;
+    return true;
 }
 
 Snapshot *
@@ -61,31 +81,6 @@ Snapshot::snapshotFromBuffer(const void *buffer, unsigned size)
 		snapshot = NULL;
 	}
 	return snapshot;	
-}
-
-void 
-Snapshot::dealloc()
-{
-    if (state != NULL) {
-        free(state);
-        fileContents.size = 0;
-    }
-}
-
-bool
-Snapshot::alloc(C64 *c64)
-{
-    dealloc();
-    
-    // determine size of snapshot data
-    // uint32_t size = c64->calculateSnapshotSize();
-    uint32_t size = MAX_SNAPSHOT_SIZE;
-    
-    if ((state = (uint8_t *)malloc(size)) == NULL)
-        return false;
-    
-    fileContents.size = size;
-    return true;
 }
 
 Container::ContainerType
@@ -127,44 +122,39 @@ Snapshot::fileIsValid(const char *filename)
 }
 
 bool 
-Snapshot::writeDataToFile(FILE *file, struct stat fileProperties)
-{	
-	// Write binary snapshot data
-	uint8_t *fc = (uint8_t *)&fileContents;
-	for (unsigned i = 0; i < sizeof(fileContents); i++) {
-		fputc((int)fc[i], file);
-	}
-	return true;	
-}
-
-bool 
 Snapshot::readFromBuffer(const void *buffer, unsigned length)
 {
-    // NEW CODE:
-    // 1. Read header
-    // 2. Allocate memory for state
-    // 3. Read state
+    uint8_t *source = (uint8_t *)buffer;
+
+    assert(source != NULL);
+    assert(length > sizeof(header));
+
+    // Allocate memory
+    alloc(length - sizeof(header));
     
-	if (length > sizeof(fileContents)) {
-		fprintf(stderr, "Snapshot image is too big %d\n", length);
-		return false;
-	}
-	
-	memcpy((void *)&fileContents, buffer, length);
+    // Copy header
+    memcpy((uint8_t *)&header, source, sizeof(header));
+    assert(header.size == length - sizeof(header));
+    
+    // Copy state data
+    memcpy(state, source + sizeof(header), length - sizeof(header));
+    
 	return true;
 }
 
 bool 
 Snapshot::writeToBuffer(void *buffer)
-{	
+{
 	assert(buffer != NULL);
-	
-	memcpy(buffer, (void *)&fileContents, sizeof(fileContents));
-	return true;
-}
+    assert(state != NULL);
 
-unsigned
-Snapshot::sizeOnDisk()
-{	
-	return sizeof(fileContents);
+    uint8_t *target = (uint8_t *)buffer;
+    
+    // Copy header
+    memcpy(target, (uint8_t *)&header, sizeof(header));
+
+    // Copy state data
+    memcpy(target + sizeof(header), state, header.size - sizeof(header));
+
+    return true;
 }
