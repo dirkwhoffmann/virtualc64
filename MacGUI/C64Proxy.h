@@ -432,7 +432,9 @@
 - (void) setChipModel:(int)value;
 
 // Loadind and saving
+- (void)_loadFromSnapshot:(Snapshot *) snapshot;
 - (void)loadFromSnapshot:(V64Snapshot *) snapshot;
+- (void)_saveToSnapshot:(Snapshot *) snapshot;
 - (void)saveToSnapshot:(V64Snapshot *) snapshot;
 
 - (CIAProxy *) cia:(int)num;

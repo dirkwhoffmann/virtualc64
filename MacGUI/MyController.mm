@@ -372,6 +372,12 @@
 				romDialog = NULL;
 			}
 
+            // Check for attached snapshot
+            if ([[self document] snapshot]) {
+                NSLog(@"Found attached snapshot");
+                [c64 _loadFromSnapshot:[[self document] snapshot]];
+            }				
+
 			// Check for attached cartridge
 			if ([[self document] cartridge]) {
 				NSLog(@"Found attached cartridge");
