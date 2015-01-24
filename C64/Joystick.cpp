@@ -55,7 +55,7 @@ Joystick::loadFromBuffer(uint8_t **buffer)
     _axisX = (JoystickAxisState)read8(buffer);
     _axisY = (JoystickAxisState)read8(buffer);
 
-    debug(2, "  Joystick state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  Joystick state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

@@ -206,7 +206,7 @@ CPU::saveToBuffer(uint8_t **buffer)
 	write8(buffer, callStackPointer);
 	write8(buffer, oldI);
     
-    debug(2, "  CPU state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  CPU state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

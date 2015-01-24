@@ -103,7 +103,7 @@ void VIA6522::saveToBuffer(uint8_t **buffer)
 	for (unsigned i = 0; i < sizeof(io); i++)
 		write8(buffer, io[i]);
 
-    debug(2, "  VIA6522 state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  VIA6522 state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

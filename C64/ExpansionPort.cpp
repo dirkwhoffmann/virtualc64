@@ -133,7 +133,7 @@ ExpansionPort::saveToBuffer(uint8_t **buffer)
     writeBlock(buffer, rom, sizeof(rom));
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
 
-    debug(2, "  Expansion port state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  Expansion port state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

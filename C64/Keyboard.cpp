@@ -147,7 +147,7 @@ Keyboard::saveToBuffer(uint8_t **buffer)
 		write8(buffer, kbMatrix[i]);
 	}
 
-    debug(2, "  Keyboard state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  Keyboard state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

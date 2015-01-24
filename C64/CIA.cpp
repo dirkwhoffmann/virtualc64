@@ -142,7 +142,7 @@ CIA::saveToBuffer(uint8_t **buffer)
 
 	tod.saveToBuffer(buffer);
     
-    debug(2, "  CIA state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  CIA state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 
