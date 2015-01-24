@@ -321,6 +321,8 @@
     const unsigned MAXCHARS = 64;
     unsigned i;
     
+    fprintf(stderr,"Typing: ");
+    
     for (i = 0; i < [text length] && i < MAXCHARS; i++) {
         
         unichar uc = [text characterAtIndex:i];
@@ -346,6 +348,8 @@
             usleep(25000);
         }
     }
+
+    fprintf(stderr,"\n");
 }
 
 @end
@@ -490,24 +494,21 @@
 
 - (void) awakeFromNib
 {
-	NSLog(@"C64Proxy::awakeFromNib");
 }
 
 - (void) kill
 {
 	assert(c64 != NULL);
-	NSLog(@"Deleting C64...");
+	NSLog(@"C64Proxy::kill");
 
 	// Delete sound device
-	NSLog(@"  Deleting sound device");
 	[self disableAudio];
 	audioDevice = nil;
 	
-	NSLog(@"  Deleting virtual machine");
-	delete c64;
+    // Delete emulator
+    delete c64;
 	c64 = NULL;
 }
-
 
 - (VIC::ColorScheme) colorScheme { return c64->getColorScheme(); }
 - (void) setColorScheme:(VIC::ColorScheme)scheme { c64->setColorScheme(scheme); }
@@ -647,7 +648,7 @@
 
 - (id) init
 {
-	NSLog(@"V64Snapshot::init");
+	// NSLog(@"V64Snapshot::init");
 	
 	if (!(self = [super init]))
 		return nil;
@@ -658,7 +659,7 @@
 
 - (id) initWithSnapshot:(Snapshot *)s
 {
-	NSLog(@"V64Snapshot::initWithSnapshot");
+	// NSLog(@"V64Snapshot::initWithSnapshot");
 	
 	if (!(self = [super init]))
 		return nil;
@@ -669,7 +670,7 @@
 
 - (void) dealloc
 {	
-	NSLog(@"V64Snapshot::dealloc");
+	// NSLog(@"V64Snapshot::dealloc");
 
 	if (snapshot)
 		delete snapshot;
@@ -678,8 +679,6 @@
 
 + (id) snapshotFromC64:(C64Proxy *)c64
 {
-	NSLog(@"V64Snapshot::snapshotFromC64");
-
 	V64Snapshot *newSnapshot = [[self alloc] init];
 	[c64 saveToSnapshot:newSnapshot];
 	return newSnapshot;
@@ -687,8 +686,6 @@
 
 + (id) snapshotFromSnapshot:(Snapshot *)snapshot
 {
-	NSLog(@"V64Snapshot::snapshotFromSnapshot");
-	
 	if (snapshot == NULL)
 		return nil;
 	
@@ -698,15 +695,11 @@
 	
 + (id) snapshotFromFile:(NSString *)path
 {
-	NSLog(@"V64Snapshot::snapshotFromFile");
-
 	return [self snapshotFromSnapshot:Snapshot::snapshotFromFile([path UTF8String])];
 }
 
 + (id) snapshotFromBuffer:(const void *)buffer length:(unsigned)length
 {
-	NSLog(@"V64Snapshot::snapshotFromBuffer");
-	
 	return [self snapshotFromSnapshot:Snapshot::snapshotFromBuffer(buffer, length)];
 }
 

@@ -321,11 +321,17 @@ enum INPUT_DEVICES {
 - (BOOL)mountCartridge;
 
 // Dialogs
+- (bool)showPropertiesDialog;
 - (IBAction)cancelPropertiesDialog:(id)sender;
+
+- (bool)showRomDialog:(Message *)msg;
 - (IBAction)cancelRomDialog:(id)sender;
+
 - (bool)showDriveContentsDialog;
 - (bool)showMountDialog;
 - (IBAction)cancelMountDialog:(id)sender;
 - (IBAction)endMountDialog:(id)sender;
+
+// Exporting
 - (BOOL)exportToD64:(NSString *)path;
 @end

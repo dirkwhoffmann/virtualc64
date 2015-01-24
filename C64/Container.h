@@ -63,13 +63,13 @@ public:
 	virtual ~Container();
 			
 	//! Get physical name
-	 const char *getPath();
+    const char *getPath() { return path ? path : ""; }
 
     //! Set physical name
     void setPath(const char *path);
 
 	//! Get logical name (can be overwritten by sub classes)
-	virtual const char *getName();
+    virtual const char *getName() { return name ? name : ""; }
 
     //! Type of container
     virtual Container::ContainerType getType() = 0;

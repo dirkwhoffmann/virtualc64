@@ -172,7 +172,8 @@ void JoystickManager::listJoystickManagers()
 
 bool JoystickManager::Initialize()
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    // NSLog(@"JoystickManager::Initialize");
+    // NSLog(@"%s", __PRETTY_FUNCTION__);
     
 	CFMutableArrayRef matchingArray = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
 
@@ -241,13 +242,13 @@ bool JoystickManager::Initialize()
 	}
     
     [_proxy putMessage:MSG_JOYSTICK_REMOVED];
-    NSLog(@"HIDManager initialized successfully");
+    NSLog(@"HID manager is initialized");
     return true;
 }
 
 void JoystickManager::Dispose()
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    // NSLog(@"%s", __PRETTY_FUNCTION__);
 
 	IOHIDManagerClose(_manager, kIOHIDOptionsTypeNone);
 	CFRelease(_manager);
@@ -264,8 +265,7 @@ void JoystickManager::MatchingCallback_static(void *inContext, IOReturn inResult
 void 
 JoystickManager::MatchingCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef)
 {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
-    // listJoystickManagers();
+    // NSLog(@"%s",__PRETTY_FUNCTION__);
 
 	IOHIDDeviceInfo devInfo = IOHIDDeviceInfo(inIOHIDDeviceRef);
 	
@@ -327,8 +327,7 @@ JoystickManager::RemoveCallback(void *inContext, IOReturn inResult, void *inSend
 {
     JoystickProxy *proxy;
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    // listJoystickManagers();
+    // NSLog(@"%s", __PRETTY_FUNCTION__);
     
 	IOHIDDeviceInfo devInfo = IOHIDDeviceInfo((IOHIDDeviceRef)inSender);
 	    
@@ -372,7 +371,6 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
     CallbackContext *context = (CallbackContext *)inContext;
 
     // NSLog(@"%s", __PRETTY_FUNCTION__);
-    // listJoystickManagers();
 
 	if( inResult != kIOReturnSuccess )
 	{

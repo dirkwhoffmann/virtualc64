@@ -40,9 +40,9 @@ void
 SIDWrapper::setReSID(bool enable)
 {
     if (enable)
-        debug("Using ReSID library\n");
+        debug(2, "Using ReSID library\n");
     else
-        debug("Using old SID implementation\n");
+        debug(2, "Using old SID implementation\n");
     
     useReSID = enable;
 }
@@ -172,9 +172,9 @@ void
 SIDWrapper::setAudioFilter(bool enable)
 {
     if (enable)
-        debug("Enabling audio filters\n");
+        debug(2, "Enabling audio filters\n");
     else
-        debug("Disabling audio filters\n");
+        debug(2, "Disabling audio filters\n");
 
     oldsid->setAudioFilter(enable);
     resid->setAudioFilter(enable);

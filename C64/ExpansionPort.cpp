@@ -163,8 +163,6 @@ void ExpansionPort::poke(uint16_t addr, uint8_t value)
 {
     uint8_t bankNumber;
     
-    // printf("ExpansionPort::poke %d,%d\n", addr, value);
-    
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
     if (!getCartridgeAttached())
@@ -200,7 +198,6 @@ void ExpansionPort::poke(uint16_t addr, uint8_t value)
             break;
             
         case CRT_OCEAN_TYPE_1:
-            printf("Switching...\n");
             bankNumber = value & 0x3F;
             switchBank(bankNumber);
             break;
@@ -246,7 +243,7 @@ ExpansionPort::switchBank(unsigned nr)
         return;
     }
     
-    debug(1, "Switching to bank %d (start: %04X size: %d KB)", nr, loadAddr, size / 1024);
+    debug(2, "Switching to bank %d (start: %04X size: %d KB)\n", nr, loadAddr, size / 1024);
     memcpy(rom + loadAddr - 0x8000, chip[nr], size);
     for (unsigned i = loadAddr >> 12; i < (loadAddr + size) >> 12; i++) {
         assert (i < 16);
@@ -269,7 +266,7 @@ ExpansionPort::attachChip(unsigned nr, Cartridge *c)
     chipSize[nr] = c->getChipSize(nr);
     memcpy(chip[nr], c->getChipData(nr), c->getChipSize(nr));
     
-    debug(1, "Chip %d is now in place: %d KB starting at $%04X (type: %d bank:%X)\n",
+    debug(1, "Chip %d is in place: %d KB starting at $%04X (type: %d bank:%X)\n",
           nr, chipSize[nr] / 1024, chipStartAddress[nr], c->getChipType(nr), c->getChipBank(nr));
 }
 
@@ -296,7 +293,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     // Blend in chip 0
     switchBank(0);
     c64->mem->updatePeekPokeLookupTables();
-    dumpState();
+    // dumpState();
 
     c64->putMessage(MSG_CARTRIDGE, 1);
     return true;

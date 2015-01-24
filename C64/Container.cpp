@@ -39,12 +39,6 @@ Container::sizeOnDisk()
 	return 0;
 }
 
-const char *
-Container::getPath()
-{
-	return path ? path : "";
-}
-
 void
 Container::setPath(const char *name)
 {
@@ -52,12 +46,6 @@ Container::setPath(const char *name)
         free(path);
     
     path = strdup(name);
-}
-
-const char *
-Container::getName()
-{
- 	return name ? name : "";
 }
 
 bool 
@@ -115,7 +103,6 @@ Container::readFromFile(const char *filename)
 	if (path)
 		free (path);
 	path = strdup(filename);
-    // fprintf(stderr,"Filename: %s",path);
 	if (name)
 		free(name);
 	name = strdup(ChangeExtension(ExtractFilename(getPath()), "").c_str());
@@ -145,9 +132,7 @@ Container::writeToFile(const char *filename)
 	uint8_t *data = NULL;
 	FILE *file;
 	unsigned filesize = sizeOnDisk();
-
-    fprintf(stderr, "Writing %d bytes to file ******\n", filesize);
-    
+   
 	assert (filename != NULL);
 		
 	// Open file

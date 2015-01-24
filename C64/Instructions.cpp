@@ -410,13 +410,11 @@ void CPU::registerInstructions()
 void CPU::JAM()
 {
 	setErrorState(ILLEGAL_INSTRUCTION);
-	// debug("Illegal instruction\n");
 	next = &CPU::JAM_2;
 }
 
 void CPU::JAM_2()
 {
-	// debug("JAM 2\n");
 	DONE;
 }
 

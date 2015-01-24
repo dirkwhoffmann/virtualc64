@@ -51,11 +51,11 @@ FileArchive::archiveFromFile(const char *filename)
 	fprintf(stderr, "Loading file archive from file...\n");
 	archive = new FileArchive();	
 	if (!archive->readFromFile(filename)) {
-		delete archive;
+        fprintf(stderr, "Failed to load archive\n");
+        delete archive;
 		archive = NULL;
 	}
 	
-	fprintf(stderr, "File archive loaded successfully.\n");
 	return archive;
 }
 
