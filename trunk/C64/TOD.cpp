@@ -82,7 +82,7 @@ TOD::saveToBuffer(uint8_t **buffer)
 	write8(buffer, frozen);
 	write8(buffer, stopped);
     
-    debug(2, "    TOD state saved (%d bytes)\n", *buffer - old);
+    debug(4, "    TOD state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

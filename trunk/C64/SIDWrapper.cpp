@@ -80,7 +80,7 @@ SIDWrapper::saveToBuffer(uint8_t **buffer)
     write8(buffer, latchedDataBus);
     oldsid->saveToBuffer(buffer);
     
-    debug(2, "  SID state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  SID state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 
 }

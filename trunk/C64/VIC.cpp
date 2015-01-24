@@ -241,7 +241,7 @@ VIC::saveToBuffer(uint8_t **buffer)
 	// Lightpen
 	write8(buffer, lightpenIRQhasOccured);
     
-    debug(2, "  VIC state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  VIC state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

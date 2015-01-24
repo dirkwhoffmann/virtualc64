@@ -84,7 +84,7 @@ void C64Memory::reset()
 uint32_t
 C64Memory::stateSize()
 {
-    return sizeof(ram) + sizeof(colorRam) + 0x2000 + 0x1000 + 0x2000 + 5;
+    return sizeof(ram) + sizeof(colorRam) + sizeof(peekSrc) + sizeof(pokeTarget) + 0x2000 + 0x1000 + 0x2000;
 }
 
 void
@@ -98,12 +98,8 @@ C64Memory::loadFromBuffer(uint8_t **buffer)
 	readBlock(buffer, &rom[0xD000], 0x1000); // Character ROM
 	readBlock(buffer, &rom[0xE000], 0x2000); // Kernel ROM
 	
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-	(void)read8(buffer);
-    (void)read8(buffer);
-	updatePeekPokeLookupTables();
+    readBlock(buffer, (uint8_t *)peekSrc, sizeof(peekSrc));
+    readBlock(buffer, (uint8_t *)pokeTarget, sizeof(pokeTarget));
     
     debug(2, "  C64 memory state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
@@ -121,13 +117,10 @@ C64Memory::saveToBuffer(uint8_t **buffer)
 	writeBlock(buffer, &rom[0xD000], 0x1000); // Character ROM
 	writeBlock(buffer, &rom[0xE000], 0x2000); // Kernel ROM
 	
-	write8(buffer, (uint8_t)0);
-	write8(buffer, (uint8_t)0);
-	write8(buffer, (uint8_t)0);
-	write8(buffer, (uint8_t)0);
-    write8(buffer, (uint8_t)0);
+    writeBlock(buffer, (uint8_t *)peekSrc, sizeof(peekSrc));
+    writeBlock(buffer, (uint8_t *)pokeTarget, sizeof(pokeTarget));
 
-    debug(2, "  C64 memory state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  C64 memory state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

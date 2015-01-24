@@ -130,7 +130,7 @@ IEC::saveToBuffer(uint8_t **buffer)
 	write8(buffer, (uint8_t)ciaAtnIsOutput);
     write32(buffer, busActivity);
     
-    debug(2, "  IEC state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  IEC state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

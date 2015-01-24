@@ -378,7 +378,7 @@ C64::saveToBuffer(uint8_t **buffer)
 {	
 	uint8_t *old = *buffer;
 		
-    debug(2, "Saving internal state...\n");
+    debug(3, "Saving internal state...\n");
 		
 	// Save state of this component
 	write64(buffer, cycles);
@@ -401,7 +401,7 @@ C64::saveToBuffer(uint8_t **buffer)
     expansionport->saveToBuffer(buffer);
 	floppy->saveToBuffer(buffer);
 	
-    debug(2, "  C64 state saved (%d bytes)\n", *buffer - old);
+    debug(3, "  C64 state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

@@ -75,7 +75,7 @@ VC1541Memory::saveToBuffer(uint8_t **buffer)
 	for (unsigned i = 0; i < 0xC000; i++)
 		write8(buffer, mem[i]);
 
-    debug(2, "    VC1541 memory state saved (%d bytes)\n", *buffer - old);
+    debug(4, "    VC1541 memory state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 
