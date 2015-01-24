@@ -132,7 +132,7 @@ VIC::reset()
 uint32_t
 VIC::stateSize()
 {
-    return 151;
+    return 237;
 }
 
 void
@@ -147,11 +147,11 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	registerVCBASE = read16(buffer);
 	registerRC = read8(buffer);
 	registerVMLI = read8(buffer);
+    oldControlReg1 = read8(buffer);
     refreshCounter = read8(buffer);
     addrBus = read16(buffer);
     dataBus = read8(buffer);
     gAccessDisplayMode = read8(buffer);
-    (void)read8(buffer);
     gAccessfgColor = read8(buffer);
     gAccessbgColor = read8(buffer);
 	badLineCondition = (bool)read8(buffer);
@@ -163,12 +163,22 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	verticalFrameFF = (bool)read8(buffer);
     
 	// Memory
-	for (unsigned i = 0; i < sizeof(iomem); i++)
-		iomem[i] = read8(buffer);
+    readBlock(buffer, iomem, sizeof(iomem));
 	bankAddr = read16(buffer);
-	(void)read16(buffer);
-	(void)read16(buffer);
-    (void)read8(buffer);
+    readBlock(buffer, characterSpace, sizeof(characterSpace));
+    readBlock(buffer, colorSpace, sizeof(colorSpace));
+
+    // Sequencer
+    gs_shift_reg = read8(buffer);
+    gs_mc_flop = (bool)read8(buffer);
+    LatchedCharacterSpace = read8(buffer);
+    LatchedColorSpace = read8(buffer);
+    gs_data = read8(buffer);
+    gs_characterSpace = read8(buffer);
+    gs_colorSpace = read8(buffer);
+    gs_data_old = read8(buffer);
+    gs_mode = (DisplayMode)read8(buffer);
+    gs_delay = read8(buffer);
     
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -182,7 +192,8 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	oldSpriteOnOff = read8(buffer);
 	spriteDmaOnOff = read8(buffer);
 	expansionFF = read8(buffer);
-	
+    cleared_bits_in_d017 = read8(buffer);
+    
 	// Lightpen
 	lightpenIRQhasOccured = (bool)read8(buffer);
     
@@ -202,11 +213,11 @@ VIC::saveToBuffer(uint8_t **buffer)
 	write16(buffer, registerVCBASE);
 	write8(buffer, registerRC);
 	write8(buffer, registerVMLI);
+    write8(buffer, oldControlReg1);
     write8(buffer, refreshCounter);
     write16(buffer, addrBus);
     write8(buffer, dataBus);
     write8(buffer, gAccessDisplayMode);
-    write8(buffer, 0);
     write8(buffer, gAccessfgColor);
     write8(buffer, gAccessbgColor);
 	write8(buffer, (uint8_t)badLineCondition);
@@ -218,14 +229,24 @@ VIC::saveToBuffer(uint8_t **buffer)
 	write8(buffer, (uint8_t)verticalFrameFF);
 	
 	// Memory
-	for (unsigned i = 0; i < sizeof(iomem); i++)
-		write8(buffer, iomem[i]);
+    writeBlock(buffer, iomem, sizeof(iomem));
 	write16(buffer, bankAddr);
-    write16(buffer, (uint16_t)0);
-	write16(buffer, (uint16_t)0);
-    write8(buffer, (uint8_t)0);
-	
-	// Sprites
+    writeBlock(buffer, characterSpace, sizeof(characterSpace));
+    writeBlock(buffer, colorSpace, sizeof(colorSpace));
+
+    // Sequencer
+    write8(buffer, gs_shift_reg);
+    write8(buffer, (uint8_t)gs_mc_flop);
+    write8(buffer, LatchedCharacterSpace);
+    write8(buffer, LatchedColorSpace);
+    write8(buffer, gs_data);
+    write8(buffer, gs_characterSpace);
+    write8(buffer, gs_colorSpace);
+    write8(buffer, gs_data_old);
+    write8(buffer, (uint8_t)gs_mode);
+    write8(buffer, gs_delay);
+    
+    // Sprites
 	for (int i = 0; i < 8; i++) {
 		write8(buffer, mc[i]);
 		write8(buffer, mcbase[i]);
@@ -237,7 +258,8 @@ VIC::saveToBuffer(uint8_t **buffer)
 	write8(buffer, oldSpriteOnOff);
 	write8(buffer, spriteDmaOnOff);
 	write8(buffer, expansionFF);
-	
+    write8(buffer, cleared_bits_in_d017);
+
 	// Lightpen
 	write8(buffer, lightpenIRQhasOccured);
     

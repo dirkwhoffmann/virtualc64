@@ -78,9 +78,6 @@ private:
     
     //! Type of attached cartridge (CRT_NONE if no cartridge is plugged in)
     uint8_t type;
-
-    //! Indicated whether a cartridge is currently plugged in
-    // bool cartridgeAttached;
     
     //! Game line of cartridge (HIGH if no cartridge is attached)
     bool gameLine;
