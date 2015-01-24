@@ -34,7 +34,7 @@
 
 - (void)dealloc
 {	
-	NSLog(@"dealloc");
+	NSLog(@"MyController::dealloc");
 	
 	// [preferenceController release];
 	// NSLog(@"Preference controller released");
@@ -44,7 +44,7 @@
 
 - (void)windowWillClose:(NSNotification *)aNotification
 {
-	NSLog(@"windowWillClose");
+	// NSLog(@"windowWillClose");
 	
 	// stop timer
 	[timer invalidate];
@@ -75,9 +75,7 @@
 		NSLog(@"WARNING: Could not change working directory.");
 
 	// Bind virtual C64 to other object
-	// c64 = [(MyDocument *)[self document] c64];
 	[[self document] setC64:c64];
-	// [screen setC64:[c64 c64]];
 	
 	// Joystick handling
 	joystickManager = new JoystickManager(c64);
@@ -117,11 +115,6 @@
     
 	// Load user defaults
 	[self loadUserDefaults];
-
-    // Set frame
-    //NSLog(@"Set frame coordinates");
-    //[window setFrameUsingName:@"dirkwhoffmann.de.virtualC64.window"];
-    //[[self screen] reshape];
     
     // Enable fullscreen mode
     [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
@@ -188,7 +181,7 @@
 
 + (void)registerStandardDefaults
 {
-	NSLog(@"MyController::Registering standard user defaults");
+	// NSLog(@"MyController::Registering standard user defaults");
 	
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	
@@ -222,7 +215,7 @@
 
 - (void)loadUserDefaults
 {
-	NSLog(@"Loading user defaults");
+	NSLog(@"MyController::Loading user defaults");
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
@@ -258,7 +251,7 @@
 
 - (void)saveUserDefaults
 {
-	NSLog(@"Saving user defaults");
+	NSLog(@"MyController::Saving user defaults");
 	
 	NSUserDefaults *defaults;
 	
@@ -281,9 +274,7 @@
     [defaults setFloat:[screen eyeX] forKey:VC64EyeX];
     [defaults setFloat:[screen eyeY] forKey:VC64EyeY];
     [defaults setFloat:[screen eyeZ] forKey:VC64EyeZ];
-    
     [defaults setInteger:[c64 colorScheme] forKey:VC64ColorSchemeKey];
-    NSLog(@"Saving color scheme %d\n", [c64 colorScheme]);
 }
 
 
@@ -347,13 +338,8 @@
 			assert(msg->i != 0);
 			[self enableUserEditing:YES];	
 			[self refresh];
-			[romDialog initialize:msg->i];
-			[NSApp beginSheet:romDialog
-			   modalForWindow:[[self document] windowForSheet]
-				modalDelegate:self
-			   didEndSelector:NULL
-				  contextInfo:NULL];	
-			break;
+            [self showRomDialog:msg];
+            break;
 			
 		case MSG_ROM_LOADED:
 			
@@ -423,11 +409,9 @@
 					break;
 				case CPU::HARD_BREAKPOINT_REACHED:
                     [self debugOpenAction:self];
-					// [info setStringValue:@"Breakpoint reached"];
 					break;
 				case CPU::ILLEGAL_INSTRUCTION:
                     [self debugOpenAction:self];
-					// [info setStringValue:@"Illegal instruction"];
 					break;
 				default:
 					assert(0);
@@ -478,7 +462,6 @@
 
         case MSG_JOYSTICK_ATTACHED:
         case MSG_JOYSTICK_REMOVED:
-            NSLog(@"Joystick MSG");
             [self validateJoystickItems];
             break;
             
@@ -712,6 +695,21 @@
 //                                     Dialogs
 // --------------------------------------------------------------------------------
 
+- (bool)showPropertiesDialog
+{
+    // Initialize dialog
+    [propertiesDialog initialize:self];
+
+    // Open sheet
+    [NSApp beginSheet:propertiesDialog
+       modalForWindow:[[self document] windowForSheet]
+        modalDelegate:self
+       didEndSelector:NULL
+          contextInfo:NULL];
+    
+    return YES;
+}
+
 - (IBAction)cancelPropertiesDialog:(id)sender
 {
 	// Hide sheet
@@ -719,6 +717,21 @@
 	
 	// Return to normal event handling
 	[NSApp endSheet:propertiesDialog returnCode:1];
+}
+
+- (bool)showRomDialog:(Message *)msg
+{
+    // Initialize dialog
+    [romDialog initialize:msg->i];
+
+    // Open sheet
+    [NSApp beginSheet:romDialog
+       modalForWindow:[[self document] windowForSheet]
+        modalDelegate:self
+       didEndSelector:NULL
+          contextInfo:NULL];
+
+    return YES;
 }
 
 - (IBAction)cancelRomDialog:(id)sender
@@ -739,8 +752,10 @@
     if ([[self document] archive] == NULL)
         return NO;
     
+    // Initialize dialog
     [mountDialog initialize:[[self document] archive] c64proxy:c64 mountBeforeLoading:NO];
     
+    // Open sheet
     [NSApp beginSheet:mountDialog
        modalForWindow:[[self document] windowForSheet]
         modalDelegate:self
@@ -811,7 +826,6 @@
     
     // Type command if requested
     if (doType) {
-        NSLog(@"Typing %@", textToType);
         usleep(100000);
         [[c64 keyboard] typeText:textToType];
         [[c64 keyboard] typeText:@"\n"];

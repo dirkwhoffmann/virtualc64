@@ -28,7 +28,7 @@
 - (void)makeWindowControllers
 {
 	NSLog(@"MyDocument::makeWindowControllers");
-	
+    
 	MyController *myController;
 	
 	myController = [[MyController alloc] initWithWindowNibName:@"MyDocument"];

@@ -31,7 +31,7 @@
 
 - (void)awakeFromNib {
 	
-	NSLog(@"CheatboxImageBrowserView::awakeFromNib");
+	// NSLog(@"CheatboxImageBrowserView::awakeFromNib");
 	
 	items = [NSMutableArray new];
 	
@@ -56,9 +56,8 @@
 
 -(void) imageBrowser:(IKImageBrowserView *)aBrowser cellWasDoubleClickedAtIndex:(NSUInteger)index
 {
-	NSLog(@"doubleClickAction (item %lu)", (unsigned long)index);
+	// NSLog(@"doubleClickAction (item %lu)", (unsigned long)index);
 	
-	//[controller revertToSnapshotWithNumber:index];
 	[c64 revertToHistoricSnapshot:index];
 	[controller cheatboxAction:self];
 }
@@ -67,7 +66,7 @@
 	
 	unsigned char *data;
 	
-	NSLog(@"CheatboxImageBrowserView::refresh");
+	// NSLog(@"CheatboxImageBrowserView::refresh");
 	
 	setupTime = time(NULL);
 	[items removeAllObjects];
@@ -96,14 +95,14 @@
 			// Skip invisible lines
 			// TODO: Why do we store invisible lines in screen texture???
 			data += VIC::PAL_UPPER_INVISIBLE * 4 * width;
-            NSLog(@"PAL image %d x %d", width, height);
+            // NSLog(@"PAL image %d x %d", width, height);
 		} else {
 			width = VIC::NTSC_VIEWABLE_PIXELS;
 			height = VIC::NTSC_VIEWABLE_RASTERLINES;	
 			// Skip invisible lines
 			// TODO: Why do we store invisible lines in screen texture???
 			data += VIC::NTSC_UPPER_INVISIBLE * 4 * width;
-            NSLog(@"NTSC image %d x %d", width, height);
+            // NSLog(@"NTSC image %d x %d", width, height);
 		}
 					
 		// Create bitmap representation
@@ -177,8 +176,6 @@
 - (void)draggedImage:(NSImage *)image endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation
 {
 	if (operation == NSDragOperationCopy) {
-		// Drag n drop operation was successful. Close cheatbox panel
-		//NSLog(@"draggedImage:endedAt:operation:NSDragOperationCopy");		
 		[controller cheatboxAction:self];
 	}
 }

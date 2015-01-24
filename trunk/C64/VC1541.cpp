@@ -74,7 +74,7 @@ VC1541::reset()
 void
 VC1541::ping()
 {
-    debug(1, "Pinging VC1541...\n");
+    debug(2, "Pinging VC1541...\n");
     c64->putMessage(MSG_VC1541_LED, redLED ? 1 : 0);
     c64->putMessage(MSG_VC1541_MOTOR, rotating ? 1 : 0);
     c64->putMessage(MSG_VC1541_DISC, diskInserted ? 1 : 0);

@@ -80,7 +80,7 @@ C64::C64()
 {	
 	name = "C64";
 	
-	debug(1, "Creating virtual C64 at address %p...\n", this);
+	debug(1, "Creating virtual C64\n");
 
 	p = NULL;    
     warp = false;
@@ -131,7 +131,7 @@ C64::~C64()
 	delete cpu;
 	delete mem;
     
-	debug(1, "Cleaned up virtual C64 at address %p\n", this);
+	debug(1, "Cleaned up virtual C64\n", this);
 }
 
 void C64::reset()
@@ -188,7 +188,7 @@ void C64::ping()
 void C64::fastReset()
 {
     reset();
-	debug (1, "Resetting virtual C64 (fast reset via image file)\n");
+	debug (1, "Fast resetting virtual C64 (via image file)\n");
 	
 	Snapshot *snapshot = Snapshot::snapshotFromFile("ResetImage.VC64");
 

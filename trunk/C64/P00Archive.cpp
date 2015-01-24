@@ -53,11 +53,11 @@ P00Archive::archiveFromFile(const char *filename)
 	fprintf(stderr, "Loading P00 archive from P00 file...\n");
 	archive = new P00Archive();	
 	if (!archive->readFromFile(filename)) {
-		delete archive;
+        fprintf(stderr, "Failed to load archive\n");
+        delete archive;
 		archive = NULL;
 	}
 	
-	fprintf(stderr, "P00 archive loaded successfully.\n");
 	return archive;
 }
 

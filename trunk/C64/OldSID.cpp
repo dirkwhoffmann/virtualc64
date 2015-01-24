@@ -414,20 +414,6 @@ OldSID::execute(int elapsedCycles)
 	return true;
 }
 
-#if 0
-void 
-OldSID::run()
-{
-    debug("OldSID::run");
-}
-
-void 
-OldSID::halt()
-{
-    debug("OldSID::halt");
-}
-#endif
-
 // generate triangle waveform
 float OldSID::triangleWave(SIDVoice* voice)
 {	

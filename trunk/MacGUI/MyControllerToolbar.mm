@@ -217,25 +217,16 @@
 
 - (IBAction)propertiesAction:(id)sender
 {
-    [propertiesDialog initialize:self];
-    [NSApp beginSheet:propertiesDialog
-       modalForWindow:[[self document] windowForSheet]
-        modalDelegate:self
-       didEndSelector:NULL
-          contextInfo:NULL];	
+    [self showPropertiesDialog];
 }
 
 - (IBAction)VC1541Action:(id)sender
 {
-    NSLog(@"VC1541 action");
-    
     [self showDriveContentsDialog];
 }
 
 - (IBAction)debugOpenAction:(id)sender
 {
-	NSLog(@"debugOpenAction");
-
     [self cheatboxCloseAction:self];
 	if ([debugPanel state] == NSDrawerClosedState || [debugPanel state] == NSDrawerClosingState) {
 		[debugPanel open];
@@ -244,8 +235,6 @@
 
 - (IBAction)debugCloseAction:(id)sender
 {
-	NSLog(@"debugCloseAction");
-	
 	if ([debugPanel state] == NSDrawerOpenState || [debugPanel state] == NSDrawerOpeningState) {
 		[debugPanel close];
 	}
@@ -253,9 +242,7 @@
 
 - (IBAction)debugAction:(id)sender
 {	
-	NSLog(@"debugAction");
 	if ([debugPanel state] == NSDrawerClosedState || [debugPanel state] == NSDrawerClosingState) {
-		// [self cheatboxCloseAction:self];
 		[self debugOpenAction:self];
 	} else {
 		[self debugCloseAction:self];
@@ -263,7 +250,6 @@
 	
 	[self refresh];
 }
-
 
 - (IBAction)cheatboxOpenAction:(id)sender
 {
@@ -286,17 +272,16 @@
 - (IBAction)cheatboxAction:(id)sender
 {	
 	if ([cheatboxPanel state] == NSDrawerClosedState || [cheatboxPanel state] == NSDrawerClosingState) {
-		// [self debugCloseAction:self];
 		[self cheatboxOpenAction:self];
 	} else {
 		[self cheatboxCloseAction:self];
 	}
 }
 
+// UNUSED
 - (IBAction)iPhoneAction:(id)sender
 {	
 	NSLog(@"iPhoneAction");
-	// [self sendSnapshotToIPhone];
 }
 
 @end

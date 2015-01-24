@@ -182,33 +182,28 @@ uint8_t CIA::peek(uint16_t addr)
 			
 		case CIA_TIME_OF_DAY_SEC_FRAC:
 			
-			// debug("peek CIA_TIME_OF_DAY_SEC_FRAC\n");
 			result = tod.getTodTenth();
 			tod.defreeze();
 			break;
 		
 		case CIA_TIME_OF_DAY_SECONDS:
 			
-			// debug("peek CIA_TIME_OF_DAY_SECONDS\n");
 			result = tod.getTodSeconds();
 			break;
 			
 		case CIA_TIME_OF_DAY_MINUTES:
 			
-			// debug("peek CIA_TIME_OF_DAY_MINUTES\n");
 			result = tod.getTodMinutes();
 			break;
 			
 		case CIA_TIME_OF_DAY_HOURS:
 
-			// debug("peek CIA_TIME_OF_DAY_HOURS\n");
 			tod.freeze();
 			result = tod.getTodHours();
 			break;
 			
 		case CIA_SERIAL_IO_BUFFER:
 			
-			// debug("peek CIA_SERIAL_IO_BUFFER\n");			
 			result = 0x00;
 			break;
 			

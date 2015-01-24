@@ -89,16 +89,16 @@ ReSID::setSamplingMethod(sampling_method method)
 {
     switch (method) {
         case SAMPLE_FAST:
-            debug("Using sample method SAMPLE_FAST\n");
+            debug(2, "Using sample method SAMPLE_FAST\n");
             break;
         case SAMPLE_INTERPOLATE:
-            debug("Using sample method SAMPLE_INTERPOLATE\n");
+            debug(2, "Using sample method SAMPLE_INTERPOLATE\n");
             break;
         case SAMPLE_RESAMPLE_INTERPOLATE:
-            debug("Using sample method SAMPLE_RESAMPLE_INTERPOLATE\n");
+            debug(2, "Using sample method SAMPLE_RESAMPLE_INTERPOLATE\n");
             break;
         case SAMPLE_RESAMPLE_FAST:
-            debug("Using sample method SAMPLE_RESAMPLE_FAST\n");
+            debug(2, "Using sample method SAMPLE_RESAMPLE_FAST\n");
             break;
         default:
             warn("Unknown sample method. Using SAMPLE_FAST\n");
@@ -114,10 +114,10 @@ ReSID::setChipModel(chip_model model)
 {
     switch (model) {
         case MOS6581:
-            debug("Plugging in MOS6581\n");
+            debug(2, "Plugging in MOS6581\n");
             break;
         case MOS8580:
-            debug("Plugging in MOS8580\n");
+            debug(2, "Plugging in MOS8580\n");
             break;
         default:
             warn("Unknown chip model. Using  MOS8580\n");

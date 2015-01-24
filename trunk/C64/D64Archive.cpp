@@ -124,10 +124,10 @@ D64Archive::archiveFromFile(const char *filename)
 	fprintf(stderr, "Loading D64 archive from D64 file...\n");
 	archive = new D64Archive();	
 	if (!archive->readFromFile(filename)) {
-		delete archive;
+        fprintf(stderr, "Failed to load archive\n");
+        delete archive;
 		archive = NULL;
 	}
-	fprintf(stderr, "D64 archive loaded successfully.\n");
 	
 	return archive;
 }
@@ -143,28 +143,23 @@ D64Archive::archiveFromArbitraryFile(const char *filename)
 #if 0
 	// FOR DEBUGGING (CONVERT D64 TO D64)	
 	if (D64Archive::isD64File(filename)) {
-		fprintf(stderr, "Creating D64 archive from D64 file...\n");
 		return D64Archive::archiveFromOtherArchive(D64Archive::archiveFromFile(filename));
 	}
 #endif
 	
 	if (T64Archive::isT64File(filename)) {
-		fprintf(stderr, "Creating D64 archive from T64 file...\n");
 		return D64Archive::archiveFromOtherArchive(T64Archive::archiveFromFile(filename));
 	}
 
 	if (PRGArchive::isPRGFile(filename)) {
-		fprintf(stderr, "Creating D64 archive from PRG file...\n");
 		return D64Archive::archiveFromOtherArchive(PRGArchive::archiveFromFile(filename));
 	}
 
 	if (P00Archive::isP00File(filename)) {
-		fprintf(stderr, "Creating D64 archive from P00 file...\n");
 		return D64Archive::archiveFromOtherArchive(P00Archive::archiveFromFile(filename));
 	}
 
 	if (FileArchive::isAcceptableFile(filename)) {
-		fprintf(stderr, "Creating file archive from file...\n");
 		return D64Archive::archiveFromOtherArchive(FileArchive::archiveFromFile(filename));
 	}
 	
@@ -177,8 +172,9 @@ D64Archive::archiveFromOtherArchive(Archive *otherArchive)
 	if (otherArchive == NULL)
 		return NULL;
 	
-	fprintf(stderr, "Creating D64 archive from other archive...\n");
-	D64Archive *archive = new D64Archive();
+	fprintf(stderr, "Creating D64 archive from %s archive...\n", otherArchive->getTypeAsString());
+
+    D64Archive *archive = new D64Archive();
 	if (!archive->writeArchive(otherArchive)) {
 		delete archive;
 		archive = NULL;
@@ -459,9 +455,7 @@ D64Archive::getDestinationAddrOfItem(int n)
 	if ((pos = offset(track, sector)) < 0)
 		return 0;
 
-	result = data[pos+2] + (data[pos+3] << 8); 
-	
-	fprintf(stderr, "Loading item %d to address %04X\n", n, result);
+	result = data[pos+2] + (data[pos+3] << 8); 	
 	return result;
 }
 
@@ -563,20 +557,9 @@ D64Archive::dumpSector(int track, int sector)
 void 
 D64Archive::clear() 
 {
-	fprintf(stderr, "Clearing tracks and sectors\n");
-	
 	numTracks = 35;
 	memset(data, 0x00, sizeof(data));
 	memset(errors, 0x00, sizeof(errors));
-
-#if 0
-	// Initialize sector headers
-	uint8_t track = 1, sector = 0;
-	do {
-		//fprintf(stderr, "Writing header for %d/%d\n", track, sector);
-		// data[offset(track, sector) + 1] = 0xFF;
-	} while (nextTrackAndSector(track, sector, &track, &sector));			 
-#endif
 }
 
 void 
@@ -661,8 +644,6 @@ D64Archive::writeBAM(const char *name)
 {
 	int pos;
 
-	fprintf(stderr, "Writing BAM\n");
-	
 	// 00/01: Track/Sector location of the first directory sector (should be 18/1)
 	markSectorAsUsed(18, 0);
 	pos = offset(18,0);
@@ -736,8 +717,6 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrac
 		fprintf(stderr, "Directories with more than 144 entries are not supported\n");
 		return false;
 	}
-
-	fprintf(stderr, "Writing directory entry number %d\n", nr);
 
 	// determine sector and relative sector position
 	uint8_t sector = 1 + (nr / 8);
@@ -845,8 +824,7 @@ D64Archive::writeArchive(Archive *archive)
 			
 	// Loop over all entries in archive	
 	for (int i = 0; i < archive->getNumberOfItems(); i++) {
-		
-		fprintf(stderr, "Writing directory entry %d out of %d (%s)\n", i, archive->getNumberOfItems(), archive->getName());		
+			
 		writeDirectoryEntry(i, archive->getNameOfItem(i), track, sector, archive->getSizeOfItem(i));
 				
 		// Every file is preceded with two bytes containing its load address
@@ -863,9 +841,6 @@ D64Archive::writeArchive(Archive *archive)
 		// Item i has been written. Goto next free sector and proceed with the next item
 		(void)nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */);
 	}
-
-	// All items have been written to disk
-	// writeToFile("/Users/hoff/tmp/test.d64");
 	
 	return true;
 }

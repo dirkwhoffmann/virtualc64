@@ -51,11 +51,11 @@ PRGArchive::archiveFromFile(const char *filename)
 	fprintf(stderr, "Loading PRG archive from PRG file...\n");
 	archive = new PRGArchive();	
 	if (!archive->readFromFile(filename)) {
-		delete archive;
+        fprintf(stderr, "Failed to load archive\n");
+        delete archive;
 		archive = NULL;
 	}
 	
-	fprintf(stderr, "PRG archive loaded successfully.\n");
 	return archive;
 }
 

@@ -58,10 +58,10 @@ void checkForOpenGLErrors()
 
 - (id)initWithFrame:(NSRect)frameRect pixelFormat:(NSOpenGLPixelFormat *)pixFmt
 {
-	NSLog(@"MyOpenGLView::initWithFrame");
+	// NSLog(@"MyOpenGLView::initWithFrame");
 	
 	if ((self = [super initWithFrame:frameRect pixelFormat:pixFmt]) == nil) {
-		NSLog(@"ERROR: Can't initiaize VICscreen\n");
+		NSLog(@"ERROR: Can't initiaize OpenGLView");
 	}
 	return self;
 }
@@ -71,14 +71,14 @@ void checkForOpenGLErrors()
 	NSLog(@"MyOpenGLView::initWithCoder");
 
 	if ((self = [super initWithCoder:c]) == nil) {
-		NSLog(@"ERROR: Can't initiaize VICscreen\n");
+		NSLog(@"ERROR: Can't initiaize OpenGLView");
 	}
 		return self;
 }
 
 -(void)awakeFromNib
 {
-	NSLog(@"MyOpenGLView::awakeFromNib");
+	// NSLog(@"MyOpenGLView::awakeFromNib");
 	    
 	// DEPRECATED
 	c64 = [c64proxy c64];
@@ -119,7 +119,7 @@ void checkForOpenGLErrors()
 
 -(void)cleanUp
 {    
-	NSLog(@"Deallocating OpenGL ressources");
+	// NSLog(@"Deallocating OpenGL ressources");
 	
 	// release display link
     if (displayLink) {
@@ -128,12 +128,6 @@ void checkForOpenGLErrors()
         displayLink = NULL;
     }
     
-	// release current frame
-    //if (currentFrame) {
-    //	CVOpenGLTextureRelease(currentFrame);
-    //    currentFrame = NULL;
-    //}
-	    
     if (lock) {
         lock = nil;
     }
@@ -141,7 +135,7 @@ void checkForOpenGLErrors()
 
 - (void)prepareOpenGL
 {
-	NSLog(@"MyOpenGLView::prepareOpenGL");	
+	NSLog(@"MyOpenGLView::prepareOpenGL");
 	
 	// Set up context
 	glcontext = [self openGLContext];
@@ -213,7 +207,7 @@ void checkForOpenGLErrors()
 			exit(0);				
 		}	
 
-		NSLog(@"Display link activated successfully");
+		// NSLog(@"Display link activated successfully");
 	}
 }
 
@@ -317,7 +311,7 @@ void checkForOpenGLErrors()
 
 - (void)zoom
 {
-	NSLog(@"Zooming in...\n");
+	NSLog(@"Zooming in...\n\n");
 
 	currentEyeZ     = 6;
 	targetXAngle    = 0;
@@ -329,7 +323,7 @@ void checkForOpenGLErrors()
 
 - (void)rotateBack
 {
-	NSLog(@"Rotating back...\n");
+	NSLog(@"Rotating back...\n\n");
 
 	targetXAngle   = 0;
 	targetZAngle   = 0;
@@ -345,7 +339,7 @@ void checkForOpenGLErrors()
 
 - (void)rotate
 {
-	NSLog(@"Rotating...\n");
+	NSLog(@"Rotating...\n\n");
 
 	targetXAngle   = 0;
 	targetZAngle   = 0;
@@ -360,7 +354,7 @@ void checkForOpenGLErrors()
 
 - (void)scroll
 {
-	NSLog(@"Scrolling...\n");
+	NSLog(@"Scrolling...\n\n");
 	
 	currentEyeY    = 0.9;
 	targetXAngle   = 0;
@@ -372,7 +366,7 @@ void checkForOpenGLErrors()
 
 - (void)fadeIn
 {
-	NSLog(@"Fading in...\n");
+	NSLog(@"Fading in...\n\n");
 	
 	
 	currentXAngle  = -90;
@@ -657,8 +651,7 @@ void checkForOpenGLErrors()
 			glDisable(GL_FOG);
 		}		
 
-		// NSLog(@"drawingC64Texture");
-		glBindTexture(GL_TEXTURE_2D, texture);		
+		glBindTexture(GL_TEXTURE_2D, texture);
 		glBegin(GL_QUADS);			
 		
 		// FRONT
@@ -791,19 +784,16 @@ void checkForOpenGLErrors()
 
 - (BOOL)acceptsFirstResponder
 {
-    // NSLog(@"%@ accepting first responder...", self);
 	return YES;
 }
 
 - (BOOL)resignFirstResponder
 {
-    // NSLog(@"%@ resigning first responder...", self);
 	return YES;
 }
 
 - (BOOL)becomeFirstResonder 
 {
-    // NSLog(@"%@ is becoming first responder...", self);
 	return YES;
 }
 
@@ -1020,7 +1010,6 @@ void checkForOpenGLErrors()
         return;
     }
 
-    NSLog(@"Pasting %@", text);
     [[[controller c64] keyboard] typeText:text];
 }
 
@@ -1031,7 +1020,7 @@ void checkForOpenGLErrors()
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-	NSLog(@"draggingEntered");
+	// NSLog(@"draggingEntered");
 	if ([sender draggingSource] == self)
 		return NSDragOperationNone;
 
@@ -1039,17 +1028,17 @@ void checkForOpenGLErrors()
 	NSString *besttype = [pb availableTypeFromArray:[NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
 
 	if (besttype == NSFilenamesPboardType) {
-		NSLog(@"Dragged in filename");
+		// NSLog(@"Dragged in filename");
 		return NSDragOperationCopy;
 	}
 
 	if (besttype == NSPasteboardTypeString) {
-		NSLog(@"Dragged in string");
+		// NSLog(@"Dragged in string");
 		return NSDragOperationCopy;
 	}
 
 	if (besttype == NSFileContentsPboardType) {
-		NSLog(@"Dragged in file contents");
+		// NSLog(@"Dragged in file contents");
 		return NSDragOperationCopy;
 	}
 	
@@ -1067,8 +1056,6 @@ void checkForOpenGLErrors()
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-	NSLog(@"performDragOperation");
-	//NSString *type;
     NSPasteboard *pb = [sender draggingPasteboard];
 	
 	if ([[pb types] containsObject:NSFileContentsPboardType]) {
@@ -1083,13 +1070,14 @@ void checkForOpenGLErrors()
 	if ([[pb types] containsObject:NSFilenamesPboardType]) {
 		
         NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];			
-		NSLog(@"Got filename %@", path);
+		NSLog(@"Processing file %@", path);
 		
         // Check snapshot version if applicable
         int major, minor;
         if (Snapshot::isSnapshot([path UTF8String], &major, &minor)) {
+            NSLog(@"  Filetype: Snapshot %d.%d", major, minor);
             if (major != V_MAJOR || minor != V_MINOR) {
-                NSLog(@"Unsupported snapshot version");
+                NSLog(@"  ERROR: Version must be %d.%d", V_MAJOR, V_MINOR);
                 [[controller document] showVersionNumberAlert];
                 return NO;
             }
@@ -1099,22 +1087,19 @@ void checkForOpenGLErrors()
         V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:path];
         if (snapshot) {
             [[controller c64] loadFromSnapshot:snapshot];
-            NSLog(@"Image file loaded");
             return YES;
         }
 
         // Is it a ROM file?
 		if ([[controller document] loadRom:path]) {
-			NSLog(@"ROM loaded");
 			return YES;
 		}
 		
 		// Is it raw VC 1541 data?
 		if (VC1541::isG64Image([path UTF8String])) {
 			c64->floppy->readG64Image([path UTF8String]);
-			// [self rotate];
-			NSLog(@"G64 loaded");
-			return YES;	
+            NSLog(@"Filetype: G64");
+			return YES;
 		}
 		
 		// Is it a cartridge?
