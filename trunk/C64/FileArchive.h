@@ -21,6 +21,10 @@
 
 #include "Archive.h"
 
+/*! @class FileArchive
+ *  @brief The FileArchive class declares the programmatic interface for a file that does not match any of the standard formats.
+    @discussion If a file does not match any of the standard formats, each byte is interpreted as raw data and is loaded at the standard memory location.
+ */
 class FileArchive : public Archive {
 
 private:

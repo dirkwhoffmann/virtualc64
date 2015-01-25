@@ -24,13 +24,11 @@
 
 class C64;
 
+/*! @class Snapshot
+ *  @brief The Snapshot class declares the programmatic interface for a file that contains an emulator snapshot (a frozen internal state).
+ */
 class Snapshot : public Container {
 	
-private:
-
-	//! Size of a snapshot file in bytes
-	static const int MAX_SNAPSHOT_SIZE = 850000; // 783342; 
-
 private:
 	
 	struct {
@@ -82,9 +80,12 @@ public:
 
     //! Allocate memory for storing internal state
     bool alloc(unsigned size);
-    
-    //! Returns true if 'fileIsValid' and additionally gets version numbers
-    static bool isSnapshot(const char *filename, int *major, int *minor);
+
+    //! Returns true if file header matches
+    static bool isSnapshot(const char *filename);
+
+    //! Returns true if 'fileIsValid' and version number match
+    static bool isSnapshot(const char *filename, int major, int minor);
     
 	//! Factory methods
 	static Snapshot *snapshotFromFile(const char *filename);

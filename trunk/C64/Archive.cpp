@@ -20,7 +20,7 @@
 
 Archive::Archive()
 {
-    writeProtection = false; 
+    // writeProtection = false;
 }
 
 Archive::~Archive()

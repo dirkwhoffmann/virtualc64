@@ -21,6 +21,9 @@
 
 #include "Archive.h"
 
+/*! @class P00Archive
+ *  @brief The P00Archive class declares the programmatic interface for a file of the P00 format type.
+ */
 class P00Archive : public Archive {
 
 private:
@@ -39,10 +42,7 @@ private:
 
 public:
 
-	//! Constructor
 	P00Archive();
-	
-	//! Destructor
 	~P00Archive();
 	
 	//! Returns true of filename points to a valid file of that type

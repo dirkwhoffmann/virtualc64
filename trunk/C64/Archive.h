@@ -1,5 +1,5 @@
 /*
- * (C) 2007 Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann, www.dirkwhoffmann.de
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,51 +21,70 @@
 
 #include "Container.h"
 
-//! Loadable object with multiple files included
+/*!
+ * @class Container
+ * @brief Base class for all loadable objects with multiple files included
+ */
 class Archive : public Container {
 	
 public:
 
-	//! Constructor
 	Archive();
-	
-	//! Destructor
 	virtual ~Archive();
 	
-    //! Write protection flag
+    /*! @brief Write protection flag.
+     *  @discussion Indicates whether the archives represents a write protected medium.
+     *  The flag determines the state of the optical write protection sensor of the VC1541 drive when an archive is inserted as disk.
+     *  @deprecated The flag is only meaningful for D64 archives and should be implemented there.
+     */
     bool writeProtection;
     
-	//! Search directory for filename and return item number
-	/*! Returns -1, if the file is not found.
-		Function supports wildcard characters '?' and '*' */
+    //! @brief The number of items in this archive.
+    virtual int getNumberOfItems() = 0;
+
+    /*! @brief Search directory for a specific item.
+     *  @param filename The name of a directory item. The name may contain the wildcard characters '?' and '*'.
+     *  @return The number of item or -1, if no matching item was found. The first item is numbered 0.
+     */
 	int getItemWithName(char *filename);
 			
-	//! Number of stored items
-	virtual int getNumberOfItems() = 0;
-	
-	//! Get name of n-th item
+    /*! @brief Returns the name of the item located at the specified index.
+     *  @return NULL, if the item does not exists.
+     */
 	virtual const char *getNameOfItem(int n) = 0;
 
-	//! Get file type of n-th item
+    /*! @brief Returns the type of the item located at the specified index.
+     *  @return The type of the item as a string, e.g., "PRG" or "DEL".
+     */
 	virtual const char *getTypeOfItem(int n) = 0;
 	
-	//! Get size of n-th item in bytes
+    /*! @brief Returns the size of the item located at the specified index.
+     *  @return The size of item \param n in bytes. Returns 0, if the item does not exist.
+     */
 	virtual int getSizeOfItem(int n) = 0;
 
-	//! Get size of n-th item in blocks
+    /*! @brief Returns the size of the item located at the specified index.
+     *  @return The size of the item in blocks. Returns 0, if the item does not exist.
+     */
 	int getSizeOfItemInBlocks(int n) { return (getSizeOfItem(n) + 253) / 254; }
 		
-	//! Get destination memory location
-	/*! When flash() is invoked, the raw data is copied to this location in virtual memory. */
+    /*! @brief Returns the memory location of an item.
+     *  @discussion When a file is flashed into memory, the raw data is copied to this location.
+     *  @return The destination address in the C64 ram.
+     */
 	virtual uint16_t getDestinationAddrOfItem(int n) = 0;
 	
-	//! Select item to read from
-	/*! You need to select an item before you read data */
+
+    /*! @brief Select item to read from
+     *  @discussion This functions has to be invoked before calling \see getBytes
+     */
 	virtual void selectItem(int n) = 0;
 	
-	//! Read next byte from selected item
-	/*! -1 indicates EOF (End of File) */
-	virtual int getByte() = 0;	
+    /*! @brief Read next byte from the currently selected item
+     *  @return The next character from the currently selected item or -1 (indicating EOF)
+     *  @seealso getByte
+     */
+	virtual int getByte() = 0;
 };
 
 #endif

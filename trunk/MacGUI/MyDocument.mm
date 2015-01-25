@@ -143,8 +143,28 @@
 
 -(BOOL)readFromFile:(NSString *)filename ofType:(NSString *)type
 {
+    const char *name = [filename UTF8String];
+    
 	NSLog(@"MyDocument:readFromFile:%@ ofType:%@", filename, type);
 	
+    // Is it a snapshot?
+    if (Snapshot::isSnapshot(name)) {
+
+        // Do the version numbers match?
+        if (Snapshot::isSnapshot(name, V_MAJOR, V_MINOR)) {
+
+            if (![self setSnapshotWithName:filename]) {
+                NSLog(@"Error while reading snapshot\n");
+                return NO;
+            }
+            return YES;
+        }
+    
+        [self showVersionNumberAlert];
+        return NO; 
+    }
+    
+#if 0
 	if ([type isEqualToString:@"VC64"]) {
 		
         if (![self setSnapshotWithName:filename]) {
@@ -153,7 +173,9 @@
         }		
         return YES;
     }
+#endif
     
+    // Is it an archive?
 	if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
 		
 		if (![self setArchiveWithName:filename]) {
@@ -163,6 +185,7 @@
 		return YES;
 	}
 	
+    // Is it a cartridge?
 	if ([type isEqualToString:@"CRT"]) {
 		
 		if (![self setCartridgeWithName:filename]) {

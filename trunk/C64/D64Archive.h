@@ -32,7 +32,9 @@ class VC1541;
 #define D64_802_SECTORS 205312
 #define D64_802_SECTORS_ECC 206114
 
-
+/*! @class D64Archive
+ *  @brief The D64Archive class declares the programmatic interface for a file of the D64 format type.
+ */
 class D64Archive : public Archive {
 
 private:
