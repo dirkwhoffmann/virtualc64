@@ -33,12 +33,6 @@ Container::~Container()
 		free(name);
 }
 
-unsigned
-Container::sizeOnDisk()
-{
-	return 0;
-}
-
 void
 Container::setPath(const char *name)
 {
@@ -46,12 +40,6 @@ Container::setPath(const char *name)
         free(path);
     
     path = strdup(name);
-}
-
-bool 
-Container::readFromBuffer(const void *buffer, unsigned length)
-{
-	return false;
 }
 
 bool 
@@ -119,10 +107,10 @@ exit:
 	return success;
 }
 
-bool 
-Container::writeToBuffer(void *buffer)
+unsigned
+Container::writeToBuffer(uint8_t *buffer)
 {
-	return false;
+	return 0;
 }
 
 bool 
@@ -131,7 +119,7 @@ Container::writeToFile(const char *filename)
 	bool success = false;
 	uint8_t *data = NULL;
 	FILE *file;
-	unsigned filesize = sizeOnDisk();
+	unsigned filesize = writeToBuffer(NULL);
    
 	assert (filename != NULL);
 		

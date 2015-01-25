@@ -88,12 +88,12 @@ public:
     
 	//! Factory methods
 	static Snapshot *snapshotFromFile(const char *filename);
-	static Snapshot *snapshotFromBuffer(const void *buffer, unsigned size);
+	static Snapshot *snapshotFromBuffer(const uint8_t *buffer, unsigned size);
 	
 	//! Virtual functions from Container class
 	bool fileIsValid(const char *filename);
-	bool readFromBuffer(const void *buffer, unsigned length);
-	bool writeToBuffer(void *buffer);
+	bool readFromBuffer(const uint8_t *buffer, unsigned length);
+	unsigned writeToBuffer(uint8_t *buffer);
     unsigned sizeOnDisk() { return getHeaderSize() + getDataSize(); }
     
     ContainerType getType();

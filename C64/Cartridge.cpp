@@ -77,7 +77,7 @@ Cartridge::cartridgeFromFile(const char *filename)
 }
 
 bool
-Cartridge::readFromBuffer(const void *buffer, unsigned length)
+Cartridge::readFromBuffer(const uint8_t *buffer, unsigned length)
 {
     if ((data = (uint8_t *)malloc(length)) == NULL) {
         return false;

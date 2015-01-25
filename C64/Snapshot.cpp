@@ -71,7 +71,7 @@ Snapshot::snapshotFromFile(const char *filename)
 }
 
 Snapshot *
-Snapshot::snapshotFromBuffer(const void *buffer, unsigned size)
+Snapshot::snapshotFromBuffer(const uint8_t *buffer, unsigned size)
 {
 	Snapshot *snapshot;
 	
@@ -123,10 +123,8 @@ Snapshot::fileIsValid(const char *filename)
 }
 
 bool 
-Snapshot::readFromBuffer(const void *buffer, unsigned length)
+Snapshot::readFromBuffer(const uint8_t *buffer, unsigned length)
 {
-    uint8_t *source = (uint8_t *)buffer;
-
     assert(source != NULL);
     assert(length > sizeof(header));
 
@@ -134,30 +132,29 @@ Snapshot::readFromBuffer(const void *buffer, unsigned length)
     alloc(length - sizeof(header));
     
     // Copy header
-    memcpy((uint8_t *)&header, source, sizeof(header));
+    memcpy((uint8_t *)&header, buffer, sizeof(header));
     assert(header.size == length - sizeof(header));
     
     // Copy state data
-    memcpy(state, source + sizeof(header), length - sizeof(header));
+    memcpy(state, buffer + sizeof(header), length - sizeof(header));
     
 	return true;
 }
 
-bool 
-Snapshot::writeToBuffer(void *buffer)
+unsigned
+Snapshot::writeToBuffer(uint8_t *buffer)
 {
-	assert(buffer != NULL);
     assert(state != NULL);
-
-    uint8_t *target = (uint8_t *)buffer;
     
     // Copy header
     // fprintf(stderr, "Copying %d bytes to %p\n", sizeof(header), target);
-    memcpy(target, (uint8_t *)&header, sizeof(header));
+    if (buffer)
+        memcpy(buffer, (uint8_t *)&header, sizeof(header));
 
     // Copy state data
     // fprintf(stderr, "Copying %d bytes to %p\n", header.size, target + sizeof(header));
-    memcpy(target + sizeof(header), state, header.size);
+    if (buffer)
+        memcpy(buffer + sizeof(header), state, header.size);
 
-    return true;
+    return sizeof(header) + header.size;
 }

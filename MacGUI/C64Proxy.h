@@ -399,6 +399,7 @@
 - (bool) writeProtection;
 - (void) setWriteProtection:(bool)b;
 - (bool) exportToD64:(NSString *)path;
+- (D64Archive *)archiveFromDrive;
 
 @end
 

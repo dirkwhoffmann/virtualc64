@@ -34,9 +34,6 @@ private:
 		
 	//! Free allocated memory
 	virtual void dealloc() = 0;
-
-	//! Returns how many bytes are needed to store this container on disk
-	virtual unsigned sizeOnDisk();
 	
 protected:
 
@@ -78,13 +75,19 @@ public:
 	virtual const char *getTypeAsString() = 0;
 	
 	//! Read container data from memory buffer
-	virtual bool readFromBuffer(const void *buffer, unsigned length);
+	virtual bool readFromBuffer(const uint8_t *buffer, unsigned length) = 0;
 	
 	//! Read container data from file
 	bool readFromFile(const char *filename);
 
 	//! Write container data to memory buffer
-	virtual bool writeToBuffer(void *buffer);
+    /*! Returns the number of bytes written.
+     *  If buffer is NULL, a test run is performed. Nothing is written and the return value can be used
+     *  to determine the prospected container size. 
+     *  The function returns 0 to indicate an error. 
+     */
+    // TODO: REMOVE DEFAULT IMPLEMENTATION, FORCE EACH CONTAINER TO IMPLEMENT THIS FUNCTION
+	virtual unsigned writeToBuffer(uint8_t *buffer);
 
 	//! Write container data to file
 	bool writeToFile(const char *filename);

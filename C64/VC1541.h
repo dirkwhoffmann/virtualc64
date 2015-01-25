@@ -211,7 +211,13 @@ public:
     void encodeDisk(D64Archive *a);
 
     //! Decode VC1541 format to D64 format
-    void decodeDisk(FILE *file);
+    //! Returns the number of bytes written
+    /*! Pass a NULL pointer to perform a test run, i.e., to see how many bytes will be written */
+    unsigned decodeDisk(uint8_t *dest);
+    
+    //! Decode VC1541 format to D64 format
+    // DEPRECATED
+    void decodeDiskToFile(FILE *file);
 
 	//! Check file type
 	/*! Returns true, iff the specifies file is a valid G64 image file. */
