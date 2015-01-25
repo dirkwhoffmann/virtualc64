@@ -522,18 +522,16 @@ VC1541::encodeDisk(D64Archive *a)
     }
 }
 
-void
-VC1541::decodeDisk(FILE *file)
+unsigned
+VC1541::decodeDisk(uint8_t *dest)
 {
-    unsigned track, halftrack;
-    uint8_t buffer[256]; // should be 256 later
-    int count = 0;
+    unsigned track, halftrack, count;
     
     // For each full track...
-    for (track = 1, halftrack = 0; track <= numTracks; track++, halftrack += 2) {
-
-        debug(3,"Decoding track %d\n", track);
-
+    for (track = 1, halftrack = count = 0; track <= numTracks; track++, halftrack += 2) {
+        
+        debug(4, "Decoding track %d %s\n", track, dest == NULL ? "(test run)" : "");
+        
         for (unsigned j = 0; j < length[halftrack]; j++) {
             
             uint8_t *sector_start = &data[halftrack][j];
@@ -544,17 +542,22 @@ VC1541::decodeDisk(FILE *file)
             if (sector_start[4] != 0xFF) continue;
             if (sector_start[5] != 0xFF) continue;
             if (sector_start[6] != 0x52) continue;
-
+            
             // Sync mark found (reached start of sector)
             count++;
-            decodeSector(sector_start, buffer);
-
-            for (unsigned i = 0; i < 256; i++) {
-                fputc(buffer[i], file);
+            if (dest != NULL) {
+                decodeSector(sector_start, dest);
+                dest += 256;
             }
-            
         }
     }
+    return count * 256; 
+}
+
+void
+VC1541::decodeDiskToFile(FILE *file)
+{
+    debug("IMPLEMENTATION MISSING");
 }
 
 void 
@@ -709,20 +712,18 @@ VC1541::readG64Image(const char *filename)
 bool
 VC1541::exportToD64(const char *filename)
 {
-    FILE *file;
-
+    D64Archive *archive;
+    
     assert(filename != NULL);
     
-    // Open file for write access
-    if ((file = fopen(filename, "w")) == NULL) {
-        debug("Failed to open file %s\n", filename);
+    // Create archive
+    if ((archive = D64Archive::archiveFromDrive(this)) == NULL)
         return false;
-    }
     
-    debug(1, "Writing D64 archive to %s\n",filename);
-    decodeDisk(file);
+    // Write archive to disk
+    archive->writeToFile(filename);
     
-    fclose(file);
+    delete archive;
     return true;
 }
 

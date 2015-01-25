@@ -21,17 +21,29 @@
 
 #include "Archive.h"
 
+// Forward declarations
+class VC1541;
+
+// D64 files come in six different sizes
+#define D64_683_SECTORS 174848
+#define D64_683_SECTORS_ECC 175531
+#define D64_768_SECTORS 196608
+#define D64_768_SECTORS_ECC 197376
+#define D64_802_SECTORS 205312
+#define D64_802_SECTORS_ECC 206114
+
+
 class D64Archive : public Archive {
 
 private:
 	//! Name of the D64 container file
-	char name[256];
+    char name[256];
 
 	//! Raw data of D64 container file
-	uint8_t data[206114];
+	uint8_t data[D64_802_SECTORS_ECC];
 	
 	//! Errors stored at the end of some D64 files
-	uint8_t errors[768];
+	uint8_t errors[802];
 	
 	//! Number of tracks in this image (can be 35, 40, or 42)
 	unsigned numTracks; 
@@ -91,8 +103,10 @@ public:
     //! Class function that returns the number of sectors in a specific track
     static unsigned numberOfSectors(unsigned trackNr);
 
+    //
 	// Factory methods
-
+	//
+    
 	//! Create D64 archive from D64 file
 	static D64Archive *archiveFromFile(const char *filename);
 
@@ -102,17 +116,27 @@ public:
 	
 	//! Create D64 from other archive
 	static D64Archive *archiveFromOtherArchive(Archive *archive);
-	
-	//! Virtual functions from Container class
+
+    //! Create D64 from current drive contents
+    static D64Archive *archiveFromDrive(VC1541 *drive);
+
+	//
+    // Virtual functions from Container class
+    //
+    
 	bool fileIsValid(const char *filename);
-	bool readFromBuffer(const void *buffer, unsigned length);
-	void dealloc();
-    ContainerType getType();
-    const char *getTypeAsString();
+	bool readFromBuffer(const uint8_t *buffer, unsigned length);
+    unsigned writeToBuffer(uint8_t *buffer);
+    void dealloc() { };
+    ContainerType getType() { return D64_CONTAINER; }
+    const char *getTypeAsString() { return "D64"; }
 	const char *getName();
 	
+    //
 	// Virtual functions from Archive class
-	int getNumberOfItems();
+	//
+    
+    int getNumberOfItems();
 	const char *getNameOfItem(int n);
 	const char *getTypeOfItem(int n);
 	int getSizeOfItem(int n);
@@ -120,8 +144,6 @@ public:
 	void selectItem(int n);
 	int getByte();
 
-	//! Write to file
-	bool writeToFile(const char *filename);
 	
 	//! Returns the number of tracks stored in this image
 	unsigned numberOfTracks();
@@ -143,13 +165,9 @@ public:
 	
 	//! Mark as single sector as "used"
 	void markSectorAsUsed(uint8_t track, uint8_t sector);
-
-	
-	//! Write raw data to disk
-	// bool writeData(uint8_t startTrack, uint8_t startSector, uint8_t *data, unsigned length, uint8_t *lastTrack, uint8_t *lastSector);
 	
 	//! Write archive contents to disk
-	bool writeArchive(Archive *archive);
+	// bool writeArchive(Archive *archive);
 	
 };
 #endif

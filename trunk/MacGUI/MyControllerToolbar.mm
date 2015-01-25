@@ -222,7 +222,7 @@
 
 - (IBAction)VC1541Action:(id)sender
 {
-    [self showDriveContentsDialog];
+    [self showMountDialogWithDriveContents];
 }
 
 - (IBAction)debugOpenAction:(id)sender

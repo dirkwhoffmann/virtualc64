@@ -74,7 +74,11 @@ static const D64TrackInfo D64Map[] =
 
 D64Archive::D64Archive()
 {
-	dealloc();
+    memset(name, 0, sizeof(name));
+    memset(data, 0, sizeof(data));
+    memset(errors, 0, sizeof(errors));
+    numTracks = 0;
+    fp = 0;
 }
 
 D64Archive::~D64Archive()
@@ -92,12 +96,12 @@ D64Archive::isD64File(const char *filename)
 	if (!checkFileSuffix(filename, ".D64") && !checkFileSuffix(filename, ".d64"))
 		return false;
 	
-	fileOK = checkFileSize(filename, 174848, 174848)
-	|| checkFileSize(filename, 175531, 175531)
-	|| checkFileSize(filename, 196608, 196608)
-	|| checkFileSize(filename, 197376, 197376)
-	|| checkFileSize(filename, 205312, 205312)
-	|| checkFileSize(filename, 206114, 206114);
+	fileOK = checkFileSize(filename, D64_683_SECTORS, D64_683_SECTORS)
+	|| checkFileSize(filename, D64_683_SECTORS_ECC, D64_683_SECTORS_ECC)
+	|| checkFileSize(filename, D64_768_SECTORS, D64_768_SECTORS)
+	|| checkFileSize(filename, D64_768_SECTORS_ECC, D64_768_SECTORS_ECC)
+	|| checkFileSize(filename, D64_802_SECTORS, D64_802_SECTORS)
+	|| checkFileSize(filename, D64_802_SECTORS_ECC, D64_802_SECTORS_ECC);
 	
 	// Unfortunaltely, D64 containers do not contain magic bytes,
 	// so we can't check anything further here
@@ -169,37 +173,79 @@ D64Archive::archiveFromArbitraryFile(const char *filename)
 D64Archive *
 D64Archive::archiveFromOtherArchive(Archive *otherArchive)
 {
-	if (otherArchive == NULL)
+    D64Archive *archive;
+    
+    if (otherArchive == NULL)
 		return NULL;
-	
+        
 	fprintf(stderr, "Creating D64 archive from %s archive...\n", otherArchive->getTypeAsString());
 
-    D64Archive *archive = new D64Archive();
-	if (!archive->writeArchive(otherArchive)) {
-		delete archive;
-		archive = NULL;
-	}
-	
-	return archive;
+    if ((archive = new D64Archive()) == NULL) {
+        fprintf(stderr, "Failed to create D64 archive\n");
+        return NULL;
+    }
+    
+    // Copy file path
+    archive->setPath(otherArchive->getPath());
+    
+    // Current position of data write ptr
+    uint8_t track = 1, sector = 0;
+    
+    // Clear all tracks and sectors
+    archive->clear();
+    
+    // Write BAM
+    archive->writeBAM(otherArchive->getName());
+    
+    // Loop over all entries in archive
+    for (int i = 0; i < otherArchive->getNumberOfItems(); i++) {
+        
+        archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(i), track, sector, otherArchive->getSizeOfItem(i));
+        
+        // Every file is preceded with two bytes containing its load address
+        archive->writeByteToSector(LO_BYTE(otherArchive->getDestinationAddrOfItem(i)), &track, &sector);
+        archive->writeByteToSector(HI_BYTE(otherArchive->getDestinationAddrOfItem(i)), &track, &sector);
+						  
+        // Write raw data to disk
+        int byte;
+        otherArchive->selectItem(i);
+        while ((byte = otherArchive->getByte()) != EOF) {
+            archive->writeByteToSector(byte, &track, &sector);
+        }
+        
+        // Item i has been written. Goto next free sector and proceed with the next item
+        (void)archive->nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */);
+    }
+
+    return archive;
 }
 
-
-Container::ContainerType
-D64Archive::getType()
+D64Archive *
+D64Archive::archiveFromDrive(VC1541 *drive)
 {
-    return D64_CONTAINER;
+    D64Archive *archive;
+    
+    fprintf(stderr, "Creating D64 archive from VC1541 drive...\n");
+    
+    if ((archive = new D64Archive()) == NULL)
+        return NULL;
+    
+    // Perform a test run to ensure that we don't cause a buffer overlow
+    if (drive->decodeDisk(NULL) > D64_802_SECTORS_ECC) {
+        fprintf(stderr, "PANIC! 'decodeDisk' would create a buffer overflow. Aborting.\n");
+        delete archive;
+        return NULL;
+    }
+
+    // Get data from drive
+    archive->numTracks = 42;
+    drive->decodeDisk(archive->data);
+    
+    return archive;
 }
 
-const char *
-D64Archive::getTypeAsString()
-{
-	return "D64";
-}
 
-void 
-D64Archive::dealloc()
-{
-}
+
 
 bool 
 D64Archive::fileIsValid(const char *filename)
@@ -208,45 +254,52 @@ D64Archive::fileIsValid(const char *filename)
 }
 
 bool 
-D64Archive::readFromBuffer(const void *buffer, unsigned length)
+D64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 {
-	unsigned track = 0;
 	int numberOfErrors = 0;
 	
 	switch (length)
 	{
-		case 174848:
-			// 35 tracks, no errors
+		case D64_683_SECTORS: // 35 tracks, no errors
+			
 			numTracks = 35;
 			break;
-		case 175531:
-			// 35 tracks, 683 error bytes
+            
+		case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
+			
 			numTracks = 35;
 			numberOfErrors = 683;
 			break;
-		case 196608:
-			// 40 tracks, no errors
+            
+		case D64_768_SECTORS: // 40 tracks, no errors
+			
 			numTracks = 40;
 			break;
-		case 197376:
-			// 40 tracks, 768 error bytes
+            
+		case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
+			
 			numTracks = 40;
 			numberOfErrors = 768;
 			break;
-		case 205312:
-			// numTracks = 42; (???)
-			// break;
-		case 206114:
-			// numTracks = 42; (???)
-			// numberOfErrors = (???)
-			// break;
+            
+		case D64_802_SECTORS: // 42 tracks, no error bytes
+            
+			numTracks = 42;
+			break;
+            
+		case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
+            
+			numTracks = 42;
+            numberOfErrors = 802;
+			break;
+            
 		default:
 			return false;
 	}
 	
 	// Read tracks
 	uint8_t *source = (uint8_t *)buffer;
-	for(track = 1; track <= numTracks; track++) {
+	for(unsigned track = 1; track <= numTracks; track++) {
 		
 		uint8_t *destination = &data[D64Map[track].offset];
 		int sectors = D64Map[track].numberOfSectors;
@@ -620,23 +673,31 @@ D64Archive::nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack
 	return true;
 }
 
-bool 
-D64Archive::writeToFile(const char *filename)
+unsigned
+D64Archive::writeToBuffer(uint8_t *buffer)
 {
-	FILE *file;
-	
-	if (!(file = fopen(filename, "w")))
-		return false;
-	
-	// write 683 sectors
-	for (int i = 0; i < 683; i++) {
-		for (int j = 0; j < 256; j++){
-			fputc(data[i*256+j], file);
-		}		
-	}
-	
-	fclose(file);
-	return true;
+    switch (numTracks) {
+
+        case 35:
+            if (buffer)
+                memcpy(buffer, data, D64_683_SECTORS);
+            return D64_683_SECTORS;
+            
+        case 40:
+            if (buffer)
+                memcpy(buffer, data, D64_768_SECTORS);
+            return D64_768_SECTORS;
+            
+        case 42:
+            if (buffer)
+                memcpy(buffer, data, D64_802_SECTORS);
+            return D64_802_SECTORS;
+            
+        default:
+            assert(0);
+    }
+
+    return 0;
 }
 
 void
@@ -807,7 +868,8 @@ D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
 	return true;
 }
 
-bool 
+#if 0
+bool
 D64Archive::writeArchive(Archive *archive)
 {	
     // Copy file path
@@ -844,3 +906,4 @@ D64Archive::writeArchive(Archive *archive)
 	
 	return true;
 }
+#endif

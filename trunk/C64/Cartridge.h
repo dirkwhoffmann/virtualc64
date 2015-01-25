@@ -74,7 +74,7 @@ public:
     static Cartridge *cartridgeFromFile(const char *filename);
     
     //! Read container data from memory buffer
-    bool readFromBuffer(const void *buffer, unsigned length);
+    bool readFromBuffer(const uint8_t *buffer, unsigned length);
 
     //
     // Cartridge information

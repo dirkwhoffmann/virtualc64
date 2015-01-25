@@ -89,7 +89,7 @@ P00Archive::fileIsValid(const char *filename)
 }
 
 bool 
-P00Archive::readFromBuffer(const void *buffer, unsigned length)
+P00Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 {
 	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;

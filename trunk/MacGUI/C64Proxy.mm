@@ -486,6 +486,7 @@
 - (bool) writeProtection { return vc1541->writeProtection; }
 - (void) setWriteProtection:(bool)b { vc1541->setWriteProtection(b); }
 - (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
+- (D64Archive *) archiveFromDrive { return D64Archive::archiveFromDrive(vc1541); }
 
 @end
 
@@ -737,7 +738,7 @@
 
 + (id) snapshotFromBuffer:(const void *)buffer length:(unsigned)length
 {
-	return [self snapshotFromSnapshot:Snapshot::snapshotFromBuffer(buffer, length)];
+	return [self snapshotFromSnapshot:Snapshot::snapshotFromBuffer((uint8_t *)buffer, length)];
 }
 
 - (unsigned char *)imageData { return snapshot->getImageData(); }
