@@ -55,7 +55,7 @@ Joystick::loadFromBuffer(uint8_t **buffer)
     _axisX = (JoystickAxisState)read8(buffer);
     _axisY = (JoystickAxisState)read8(buffer);
 
-    debug(4, "  Joystick state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  Joystick state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 
@@ -68,8 +68,16 @@ Joystick::saveToBuffer(uint8_t **buffer)
     write8(buffer,(uint8_t)_axisX);
     write8(buffer,(uint8_t)_axisY);
 
-    debug(2, "  Joystick state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  Joystick state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
+}
+
+void
+Joystick::dumpState()
+{
+    msg("Joystick port\n");
+    msg("-------------\n");
+    msg("Button: %s AxisX: %d AxisY: %d\n", _buttonPressed ? "YES" : "NO", _axisX, _axisY);
 }
 
 bool Joystick::GetButtonPressed()

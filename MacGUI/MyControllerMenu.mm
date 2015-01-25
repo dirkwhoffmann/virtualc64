@@ -21,23 +21,31 @@
 @implementation MyController(Menu) 
 
 // --------------------------------------------------------------------------------
+//                                 General
+// --------------------------------------------------------------------------------
+
+- (BOOL)validateMenuItem:(NSMenuItem *)item
+{
+    if ([item action] == @selector(pauseAction:)) {
+        return [c64 isRunning];
+    }
+
+    if ([item action] == @selector(continueAction:) ||
+        [item action] == @selector(stepIntoAction:) ||
+        [item action] == @selector(stepOutAction:)  ||
+        [item action] == @selector(stepOverAction:) ||
+        [item action] == @selector(stopAndGoAction:)) {
+        return ![c64 isRunning];
+    }
+
+    return YES;
+}
+
+// --------------------------------------------------------------------------------
 //                                 File menu
 // --------------------------------------------------------------------------------
 
 #pragma mark file menu
-
-#if 0
-- (IBAction)showPreferencesAction:(id)sender
-{
-	NSLog(@"Showing preferences window...");
-	if (!preferenceController) {
-		preferenceController = [[PreferenceController alloc] init];
-		[preferenceController setC64:c64];
-		[preferenceController setController:self];
-	}
-	[preferenceController showWindow:self];
-}
-#endif
 
 - (IBAction)saveScreenshotDialog:(id)sender
 {
@@ -267,74 +275,22 @@
 	}	
 }
 
-- (IBAction)dumpC64:(id)sender
-{
-	[c64 dump];
-}
-
-- (IBAction)dumpC64CPU:(id)sender
-{
-	[[c64 cpu] dump];
-}
-
-- (IBAction)dumpC64CIA1:(id)sender
-{
-	[[c64 cia:1] dump];
-}
-
-- (IBAction)dumpC64CIA2:(id)sender
-{
-	[[c64 cia:2] dump];
-}
-
-- (IBAction)dumpC64VIC:(id)sender
-{
-	[[c64 vic] dump];
-}
-
-- (IBAction)dumpC64SID:(id)sender
-{
-	[[c64 sid] dump];
-}
-
-- (IBAction)dumpC64Memory:(id)sender
-{
-	[[c64 mem] dump];
-}
-
-- (IBAction)dumpVC1541:(id)sender
-{
-	[[c64 vc1541] dump];
-}
-
-- (IBAction)dumpVC1541CPU:(id)sender
-{
-	[[[c64 vc1541] cpu] dump];
-}
-
-- (IBAction)dumpVC1541VIA1:(id)sender
-{
-	[[[c64 vc1541] via:1] dump];
-}
-
-- (IBAction)dumpVC1541VIA2:(id)sender
-{
-	[[[c64 vc1541] via:2] dump];
-}
-
-- (IBAction)dumpVC1541Memory:(id)sender
-{
-	[[[c64 vc1541] mem] dump];
-}
-
-- (IBAction)dumpKeyboard:(id)sender
-{
-	[[c64 keyboard] dump];
-}
-
-- (IBAction)dumpIEC:(id)sender
-{
-	[[c64 iec] dump];
-}
+- (IBAction)dumpC64:(id)sender { [c64 dump]; }
+- (IBAction)dumpC64CPU:(id)sender {	[[c64 cpu] dump]; }
+- (IBAction)dumpC64CIA1:(id)sender { [[c64 cia:1] dump]; }
+- (IBAction)dumpC64CIA2:(id)sender { [[c64 cia:2] dump]; }
+- (IBAction)dumpC64VIC:(id)sender { [[c64 vic] dump]; }
+- (IBAction)dumpC64SID:(id)sender { [[c64 sid] dump]; }
+- (IBAction)dumpC64Memory:(id)sender { [[c64 mem] dump]; }
+- (IBAction)dumpVC1541:(id)sender {	[[c64 vc1541] dump]; }
+- (IBAction)dumpVC1541CPU:(id)sender { [[[c64 vc1541] cpu] dump]; }
+- (IBAction)dumpVC1541VIA1:(id)sender {	[[[c64 vc1541] via:1] dump]; }
+- (IBAction)dumpVC1541VIA2:(id)sender { [[[c64 vc1541] via:2] dump]; }
+- (IBAction)dumpVC1541Memory:(id)sender { [[[c64 vc1541] mem] dump]; }
+- (IBAction)dumpKeyboard:(id)sender { [[c64 keyboard] dump]; }
+- (IBAction)dumpC64Joystick1:(id)sender { [[c64 joystick1] dump]; }
+- (IBAction)dumpC64Joystick2:(id)sender { [[c64 joystick2] dump]; }
+- (IBAction)dumpIEC:(id)sender { [[c64 iec] dump]; }
+- (IBAction)dumpC64ExpansionPort:(id)sender { [[c64 expansionport] dump]; }
 
 @end

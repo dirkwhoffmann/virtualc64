@@ -380,7 +380,7 @@ VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *
 		warn("Can't find halftrack data in archive\n");
 		return 0;
 	}
-	debug(2, "Encoding track %d, sector %d\n", track, sector);
+	// debug(3, "Encoding track %d, sector %d\n", track, sector);
 
 	// Get disk id and compute checksum
 	id_lo = a->diskIdLow();

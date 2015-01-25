@@ -20,9 +20,9 @@
 
 @interface MyController(Menu)
 
+- (BOOL)validateMenuItem:(NSMenuItem *)item;
 
 #pragma mark file menu
-// - (IBAction)showPreferencesAction:(id)sender;
 - (IBAction)saveScreenshotDialog:(id)sender;
 
 #pragma mark edit menu
@@ -55,6 +55,9 @@
 - (IBAction)dumpC64CIA2:(id)sender;
 - (IBAction)dumpC64VIC:(id)sender;
 - (IBAction)dumpC64SID:(id)sender;
+- (IBAction)dumpC64Joystick1:(id)sender;
+- (IBAction)dumpC64Joystick2:(id)sender;
+- (IBAction)dumpC64ExpansionPort:(id)sender;
 - (IBAction)dumpC64Memory:(id)sender;
 - (IBAction)dumpVC1541:(id)sender;
 - (IBAction)dumpVC1541CPU:(id)sender;
