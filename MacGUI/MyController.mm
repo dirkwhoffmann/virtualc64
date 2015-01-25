@@ -761,7 +761,7 @@
     
     // Initialize dialog
     NSLog(@"Initialize dialog");
-    [mountDialog initialize:archive c64proxy:c64 mountBeforeLoading:NO];
+    [mountDialog initializeAsDriveDialog:archive c64proxy:c64];
     
     // TODO: THE ARCHIVE IS NEVER DELETED
     // SHOULD THE DIALOG COPY THE ARCHIVE?
@@ -783,7 +783,7 @@
 		return NO;
 	
     // Initialize dialog
-    [mountDialog initialize:[[self document] archive] c64proxy:c64 mountBeforeLoading:YES];
+    [mountDialog initializeAsMountDialog:[[self document] archive] c64proxy:c64];
 
     // Open sheet
 	[NSApp beginSheet:mountDialog
@@ -797,11 +797,18 @@
 
 - (IBAction)cancelMountDialog:(id)sender
 {
+    bool doEject = [mountDialog doEjectOnCancel];
+    
 	// Hide sheet
 	[mountDialog orderOut:sender];
 	
 	// Return to normal event handling
 	[NSApp endSheet:mountDialog returnCode:1];
+    
+    // Eject disc if requested
+    if (doEject) {
+        [[c64 vc1541] ejectDisk];
+    }
 }
 
 - (IBAction)endMountDialog:(id)sender

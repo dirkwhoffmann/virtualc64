@@ -125,7 +125,7 @@ Snapshot::fileIsValid(const char *filename)
 bool 
 Snapshot::readFromBuffer(const uint8_t *buffer, unsigned length)
 {
-    assert(source != NULL);
+    assert(buffer != NULL);
     assert(length > sizeof(header));
 
     // Allocate memory

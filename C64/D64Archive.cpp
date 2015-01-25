@@ -244,9 +244,6 @@ D64Archive::archiveFromDrive(VC1541 *drive)
     return archive;
 }
 
-
-
-
 bool 
 D64Archive::fileIsValid(const char *filename)
 {

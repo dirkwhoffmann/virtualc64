@@ -18,71 +18,111 @@
 
 #import "C64GUI.h"
 
+#define LOAD_OPTION_8_1 0
+#define LOAD_OPTION_8 1
+#define LOAD_OPTION_FLASH 2
+
 @implementation MountDialog
 
 @synthesize archive;
 @synthesize doMount;
 @synthesize doFlash;
 @synthesize doType;
+@synthesize doEjectOnCancel;
 
-- (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy mountBeforeLoading:(bool)mount
+- (void) _initialize:(Archive *)a c64proxy:(C64Proxy *)proxy
 {
-	assert(a != NULL);
-
+    assert(a != NULL);
+    assert(proxy != NULL);
+    
     archive = a;
-    loadOption = 1;
-    selectedRow = -1;
-    
     c64 = proxy;
-    doMount = mount;
     
-    // Only show write protection check box if a disc will be inserted
-    // Otherwise, VC1541 gets confused
-    // (changing the protecting mark would be interpreted a as disc removal) 
-    [writeProtect setHidden:!mount];
+    doFlash = NO;
+    doType = NO;
     
+    // Let the table header show the logical archive name
     NSString *archiveName = [NSString stringWithFormat:@"%s", archive->getName()];
-    NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
-    NSString *archiveLastPath = [archivePath lastPathComponent];
-    NSString *archiveExtension = [[archiveLastPath pathExtension] uppercaseString];
-    NSString *archiveWithoutExt = [archiveLastPath stringByDeletingPathExtension];
-    
     [[[directory tableColumnWithIdentifier:@"filename"] headerCell] setStringValue:archiveName];
-
-    if (mount) {
     
-        [diskIconFrame setTitle:archiveLastPath];
-
-        if ([archiveExtension isEqualToString:@"T64"])
-            [diskIcon setImage:[NSImage imageNamed:@"IconT64"]];
-        else if ([archiveExtension isEqualToString:@"D64"])
-            [diskIcon setImage:[NSImage imageNamed:@"IconD64"]];
-        else if ([archiveExtension isEqualToString:@"PRG"])
-            [diskIcon setImage:[NSImage imageNamed:@"IconPRG"]];
-        else if ([archiveExtension isEqualToString:@"P00"])
-            [diskIcon setImage:[NSImage imageNamed:@"IconP00"]];
-
-    } else {
-        
-        [diskIcon setImage:[NSImage imageNamed:@"diskette"]];
-        [diskIconFrame setTitle:archiveWithoutExt];
-    }
-    
-    // NSLog(@"path %@",archivePath);
-    // NSLog(@"lastPath %@",archiveLastPath);
-    // NSLog(@"extension %@",archiveExtension);
-
-    
+    // Establish necessary binding
     [directory deselectAll:self];
     [directory setTarget:self];
     [directory setDelegate:self];
     [directory setDataSource:self];
     [directory setAction:@selector(singleClickAction:)];
-	[directory setDoubleAction:@selector(doubleClickAction:)];
-	[directory reloadData];
+    [directory setDoubleAction:@selector(doubleClickAction:)];
+    [directory reloadData];
+    
+    // Select first entry
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+    [directory selectRowIndexes:indexSet byExtendingSelection:NO];
+}
+
+- (void) initializeAsMountDialog:(Archive *)a c64proxy:(C64Proxy *)proxy
+{
+    [self _initialize:a c64proxy:proxy];
+    
+    [headerText setStringValue:@"Archive"];
+    doMount = YES;
+    doEjectOnCancel = NO;
+    
+    // Get physical path of archive
+    NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
+    NSString *archiveLastPath = [archivePath lastPathComponent];
+    NSString *archiveExtension = [[archiveLastPath pathExtension] uppercaseString];
+    
+    // Set icon and title
+    [diskIconFrame setTitle:archiveLastPath];
+    if ([archiveExtension isEqualToString:@"D64"]) {
+        
+        [diskIcon setImage:[NSImage imageNamed:@"IconD64"]];
+        loadOption = LOAD_OPTION_8_1;
+        
+    } else if ([archiveExtension isEqualToString:@"T64"]) {
+        
+        [diskIcon setImage:[NSImage imageNamed:@"IconT64"]];
+        loadOption = LOAD_OPTION_FLASH;
+        
+    } else if ([archiveExtension isEqualToString:@"PRG"]) {
+        
+        [diskIcon setImage:[NSImage imageNamed:@"IconPRG"]];
+        loadOption = LOAD_OPTION_FLASH;
+
+    } else if ([archiveExtension isEqualToString:@"P00"]) {
+        
+        [diskIcon setImage:[NSImage imageNamed:@"IconP00"]];
+        loadOption = LOAD_OPTION_FLASH;
+    }
+    
+    [CancelButton setTitle:@"Cancel"];
+    [OKButton setTitle:@"Insert disc"];
+    
+    [self update];
+}
+
+- (void) initializeAsDriveDialog:(Archive *)a c64proxy:(C64Proxy *)proxy
+{
+    [self _initialize:a c64proxy:proxy];
+    
+    [headerText setStringValue:@"VC 1541"];
+    doMount = NO;
+    doEjectOnCancel = YES;
+
+    // Get physical path of archive
+    NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
+    NSString *archiveLastPath = [archivePath lastPathComponent];
+    NSString *archiveWithoutExt = [archiveLastPath stringByDeletingPathExtension];
+    
+    // Set icon and title
+    [diskIconFrame setTitle:archiveWithoutExt];
+    [diskIcon setImage:[NSImage imageNamed:@"diskette"]];
+
+    [CancelButton setTitle:@"Eject"];
+    [OKButton setTitle:@"OK"];
+    loadOption = LOAD_OPTION_8_1;
 
     [self update];
-
 }
 
 - (int)selection
@@ -106,21 +146,22 @@
 
 - (NSString *)loadCommand
 {
+    NSLog(@"loadCommand");
     
     if ([directory selectedRow] < 0)
         return @"";
 
     NSString *name = [self selectedFilename];
-                      
+    
     switch (loadOption) {
             
-        case 1:
+        case LOAD_OPTION_8_1:
             return [NSString stringWithFormat:@"LOAD \"%@\",8,1", name];
             
-        case 2:
+        case LOAD_OPTION_8:
             return [NSString stringWithFormat:@"LOAD \"%@\",8", name];
             
-        case 3:
+        case LOAD_OPTION_FLASH:
             return [NSString stringWithFormat:@"RUN"];
             
         default:
@@ -132,35 +173,13 @@
 
 - (void)update
 {
-    NSString *cmd = [self loadCommand];
+    // NSString *cmd = [self loadCommand];
+    [[loadOptions itemAtIndex:0] setTitle:[NSString stringWithFormat:@"LOAD \"%@\",8,1",[self selectedFilename]]];
+    [[loadOptions itemAtIndex:1] setTitle:[NSString stringWithFormat:@"LOAD \"%@\",8",[self selectedFilename]]];
+    [loadOptions selectItemAtIndex:loadOption];
     
-    doType = ([directory selectedRow] >= 0);
-    doFlash = (loadOption == 3 && [directory selectedRow] >= 0);
-
-    [loadText setStringValue:cmd];
-    [loadOptions setEnabled:doType];
-    [warningText setHidden:loadOption != 3];
+    [warningText setHidden:loadOption != LOAD_OPTION_FLASH];
     [writeProtect setIntValue:archive->writeProtection];
-    
-    if (doMount && doFlash) {
-        [CancelButton setHidden:NO];
-        [OKButton setTitle:@"Insert and flash"];
-    } else if (doFlash) {
-        [CancelButton setHidden:NO];
-        [OKButton setTitle:@"Flash"];
-    } else if (doMount && doType) {
-        [CancelButton setHidden:NO];
-        [OKButton setTitle:@"Insert and load"];
-    } else if (doType) {
-        [CancelButton setHidden:NO];
-        [OKButton setTitle:@"Load"];
-    } else if (doMount) {
-        [CancelButton setHidden:NO];
-        [OKButton setTitle:@"Insert disc"];
-    } else {
-        [CancelButton setHidden:YES];
-        [OKButton setTitle:@"OK"];
-    }
 }
 
 #pragma mark NSTableViewDataSource
@@ -191,8 +210,9 @@
 
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)row
 {
-    NSLog(@"Should select");
-    return (strcmp(archive->getTypeOfItem(row), "PRG") == 0);
+    // NSLog(@"Should select");
+    // return (strcmp(archive->getTypeOfItem(row), "PRG") == 0);
+    return YES;
 }
 
 - (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
@@ -229,19 +249,18 @@
 
 - (void)singleClickAction:(id)sender
 {
-    if (selectedRow == [directory selectedRow]) {
-        selectedRow = -1;
-        [directory deselectAll:self];
-    } else {
-        selectedRow = [directory selectedRow];
-        [self update];
-    }
+    selectedRow = [directory selectedRow];
+    [self update];
 }
 
 - (void)doubleClickAction:(id)sender
 {
     selectedRow = [directory selectedRow];
     [self update];
+    
+    doType = (selectedRow >= 0);
+    doFlash = (loadOption == LOAD_OPTION_FLASH && selectedRow >= 0);
+    
 	[OKButton performClick:self];
 }
 
