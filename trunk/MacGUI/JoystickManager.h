@@ -36,7 +36,7 @@ typedef struct {
     IOHIDDeviceRef deviceRef;
 } CallbackContext;
 
-class JoystickProxy
+class JoystickManagerProxy
 {
     private:
     
@@ -45,8 +45,7 @@ class JoystickProxy
 
     public:
 
-    JoystickProxy();
-	// JoystickProxy(Joystick *joystick);
+    JoystickManagerProxy();
 		
 	void ChangeButton(int index, bool pressed);
 	void ChangeAxisX(JoystickAxisState state) const;
@@ -90,16 +89,16 @@ class JoystickManager
 	IOHIDManagerRef _manager;
     int locationID1;
     int locationID2;
-    JoystickProxy *proxy1;
-    JoystickProxy *proxy2;
+    JoystickManagerProxy *proxy1;
+    JoystickManagerProxy *proxy2;
 		
 	static const int UsageToSearch[][2];
 	static const unsigned MaxJoystickCount;
 
     void IOHIDElement_SetDoubleProperty(IOHIDElementRef element, CFStringRef key, double value);
     
-    void addJoystickProxyWithLocationID(int locationID, JoystickProxy *proxy);
-    JoystickProxy *getJoystickProxyWithLocationID(int locationID);
+    void addJoystickProxyWithLocationID(int locationID, JoystickManagerProxy *proxy);
+    JoystickManagerProxy *getJoystickProxyWithLocationID(int locationID);
     void removeJoystickProxyWithLocationID(int locationID);
     void listJoystickManagers();
 };

@@ -61,6 +61,9 @@ public:
     //! Save state
     void saveToBuffer(uint8_t **buffer);
 
+    //! Dump internal state to console
+    void dumpState();
+
     bool GetButtonPressed();
 	JoystickAxisState GetAxisX();
 	JoystickAxisState GetAxisY();

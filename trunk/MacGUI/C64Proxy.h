@@ -299,6 +299,19 @@
 @end 
 
 // --------------------------------------------------------------------------
+//                                 Joystick
+// -------------------------------------------------------------------------
+
+@interface JoystickProxy : NSObject {
+    Joystick *joystick;
+}
+
+- (id) initWithJoystick:(Joystick *)joy;
+- (void) dump;
+
+@end
+
+// --------------------------------------------------------------------------
 //                                    SID
 // --------------------------------------------------------------------------
 
@@ -326,6 +339,19 @@
 - (bool) isDriveConnected;
 - (void) connectDrive;
 - (void) disconnectDrive;
+
+@end
+
+// --------------------------------------------------------------------------
+//                                 Expansion port
+// -------------------------------------------------------------------------
+
+@interface ExpansionPortProxy : NSObject {
+    ExpansionPort *expansionPort;
+}
+
+- (id) initWithExpansionPort:(ExpansionPort *)v;
+- (void) dump;
 
 @end
 
@@ -396,7 +422,10 @@
 	CIAProxy *cia2;
 	SIDProxy *sid;
 	KeyboardProxy *keyboard;
+    JoystickProxy *joystick1;
+    JoystickProxy *joystick2;
 	IECProxy *iec;
+    ExpansionPortProxy *expansionport;
 	VC1541Proxy *vc1541;
 	
 	//! Indicates that data is transmitted on the IEC bus
@@ -411,7 +440,10 @@
 @property (readonly) CIAProxy *cia2;
 @property (readonly) SIDProxy *sid;
 @property (readonly) KeyboardProxy *keyboard;
+@property (readonly) JoystickProxy *joystick1;
+@property (readonly) JoystickProxy *joystick2;
 @property (readonly) IECProxy *iec;
+@property (readonly) ExpansionPortProxy *expansionport;
 @property (readonly) VC1541Proxy *vc1541;
 
 @property BOOL iecBusIsBusy;

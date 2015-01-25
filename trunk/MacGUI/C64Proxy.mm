@@ -355,6 +355,23 @@
 @end
 
 // --------------------------------------------------------------------------
+//                                 Joystick
+// -------------------------------------------------------------------------
+
+@implementation JoystickProxy
+
+- (id) initWithJoystick:(Joystick *)joy
+{
+    self = [super init];
+    joystick = joy;
+    return self;
+}
+
+- (void) dump { joystick->dumpState(); }
+
+@end
+
+// --------------------------------------------------------------------------
 //                                    SID
 // --------------------------------------------------------------------------
 
@@ -390,6 +407,23 @@
 - (void) connectDrive { iec->connectDrive(); }
 - (void) disconnectDrive { iec->disconnectDrive(); }
 - (bool) isDriveConnected { return iec->driveIsConnected(); }
+
+@end
+
+// --------------------------------------------------------------------------
+//                                 Expansion port
+// -------------------------------------------------------------------------
+
+@implementation ExpansionPortProxy
+
+- (id) initWithExpansionPort:(ExpansionPort *)port
+{
+    self = [super init];
+    expansionPort = port;
+    return self;
+}
+
+- (void) dump { expansionPort->dumpState(); }
 
 @end
 
@@ -461,7 +495,7 @@
 
 @implementation C64Proxy
 
-@synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, iec, vc1541;
+@synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, joystick1, joystick2, iec, expansionport, vc1541;
 @synthesize iecBusIsBusy;
 
 - (id) init
@@ -481,7 +515,10 @@
 	cia2 = [[CIAProxy alloc] initWithCIA:c64->cia2];
 	sid = [[SIDProxy alloc] initWithSID:c64->sid];
 	keyboard = [[KeyboardProxy alloc] initWithKeyboard:c64->keyboard];
-	iec = [[IECProxy alloc] initWithIEC:c64->iec];
+    joystick1 = [[JoystickProxy alloc] initWithJoystick:c64->joystick1];
+    joystick2 = [[JoystickProxy alloc] initWithJoystick:c64->joystick2];
+    iec = [[IECProxy alloc] initWithIEC:c64->iec];
+    expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:c64->floppy];
 	
 	// Initialize CoreAudio sound interface

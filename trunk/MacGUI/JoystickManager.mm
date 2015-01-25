@@ -21,21 +21,21 @@
 using std::make_pair; // DO WE NEED THIS?
 
 // ---------------------------------------------------------------------------------------------
-//                                             JoystickProxy
+//                                             JoystickManagerProxy
 // ---------------------------------------------------------------------------------------------
 
-JoystickProxy::JoystickProxy()
+JoystickManagerProxy::JoystickManagerProxy()
 {
     _joystick = NULL;
     
 }
 
-void JoystickProxy::bindJoystick(Joystick *joy)
+void JoystickManagerProxy::bindJoystick(Joystick *joy)
 {
     _joystick = joy;
 }
 
-void JoystickProxy::ChangeButton(int index, bool pressed)
+void JoystickManagerProxy::ChangeButton(int index, bool pressed)
 {
     bool found = (_pressedButtons.find(index) != _pressedButtons.end());
 
@@ -49,13 +49,13 @@ void JoystickProxy::ChangeButton(int index, bool pressed)
         _joystick->SetButtonPressed(_pressedButtons.size() != 0);
 }
 
-void JoystickProxy::ChangeAxisX(JoystickAxisState state) const
+void JoystickManagerProxy::ChangeAxisX(JoystickAxisState state) const
 {
     if (_joystick)
         _joystick->SetAxisX(state);
 }
 
-void JoystickProxy::ChangeAxisY(JoystickAxisState state) const
+void JoystickManagerProxy::ChangeAxisY(JoystickAxisState state) const
 {
     if (_joystick)
         _joystick->SetAxisY(state);
@@ -121,7 +121,7 @@ void JoystickManager::bindJoystick(int nr, Joystick *joy)
     }
 }
 
-void JoystickManager::addJoystickProxyWithLocationID(int locationID, JoystickProxy *proxy)
+void JoystickManager::addJoystickProxyWithLocationID(int locationID, JoystickManagerProxy *proxy)
 {
     if (proxy1 == NULL) {
         locationID1 = locationID;
@@ -135,7 +135,7 @@ void JoystickManager::addJoystickProxyWithLocationID(int locationID, JoystickPro
     }
 }
 
-JoystickProxy *JoystickManager::getJoystickProxyWithLocationID(int locationID)
+JoystickManagerProxy *JoystickManager::getJoystickProxyWithLocationID(int locationID)
 {
     if (locationID1 == locationID) {
         assert(proxy1 != NULL);
@@ -306,7 +306,7 @@ JoystickManager::MatchingCallback(void *inContext, IOReturn inResult, void *inSe
 	IOHIDDeviceRegisterInputValueCallback( inIOHIDDeviceRef, InputValueCallback_static, (void *)context); 
 	
     // Add proxy object to list of connected USB joysticks
-    addJoystickProxyWithLocationID(devInfo.GetLocationID(), new JoystickProxy());
+    addJoystickProxyWithLocationID(devInfo.GetLocationID(), new JoystickManagerProxy());
     [_proxy putMessage:MSG_JOYSTICK_ATTACHED];
     
 	NSLog(@"Successfully opened device %s (ID %d)\n",
@@ -325,7 +325,7 @@ JoystickManager::RemoveCallback_static(void *inContext, IOReturn inResult, void 
 void 
 JoystickManager::RemoveCallback(void *inContext, IOReturn inResult, void *inSender)
 {
-    JoystickProxy *proxy;
+    JoystickManagerProxy *proxy;
     
     // NSLog(@"%s", __PRETTY_FUNCTION__);
     
@@ -379,7 +379,7 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 		return;
 	}
 	
-    JoystickProxy *proxy = getJoystickProxyWithLocationID(context->locationID);
+    JoystickManagerProxy *proxy = getJoystickProxyWithLocationID(context->locationID);
     if (proxy == NULL) {
 		NSLog(@"Device %p (ID %d) not found in open list\n",
               context->deviceRef, context->locationID);

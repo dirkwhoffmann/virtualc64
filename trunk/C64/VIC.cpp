@@ -96,13 +96,6 @@ VIC::reset()
     gs_data = 0;
     gs_data_old = 0;
     gs_mode = STANDARD_TEXT;
-    // gs_fg_color = 0;
-    // gs_bg_color = 0;
-    // gs_bg_color_old = 0;
-    // gs_multicol0 = 0;
-    // gs_multicol1 = 0;
-    // gs_multicol2 = 0;
-    // gs_multicol3 = 0;
     
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -132,7 +125,7 @@ VIC::reset()
 uint32_t
 VIC::stateSize()
 {
-    return 237;
+    return 157;
 }
 
 void
@@ -165,8 +158,8 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	// Memory
     readBlock(buffer, iomem, sizeof(iomem));
 	bankAddr = read16(buffer);
-    readBlock(buffer, characterSpace, sizeof(characterSpace));
-    readBlock(buffer, colorSpace, sizeof(colorSpace));
+    // readBlock(buffer, characterSpace, sizeof(characterSpace));
+    // readBlock(buffer, colorSpace, sizeof(colorSpace));
 
     // Sequencer
     gs_shift_reg = read8(buffer);
@@ -231,8 +224,8 @@ VIC::saveToBuffer(uint8_t **buffer)
 	// Memory
     writeBlock(buffer, iomem, sizeof(iomem));
 	write16(buffer, bankAddr);
-    writeBlock(buffer, characterSpace, sizeof(characterSpace));
-    writeBlock(buffer, colorSpace, sizeof(colorSpace));
+    // writeBlock(buffer, characterSpace, sizeof(characterSpace));
+    // writeBlock(buffer, colorSpace, sizeof(colorSpace));
 
     // Sequencer
     write8(buffer, gs_shift_reg);

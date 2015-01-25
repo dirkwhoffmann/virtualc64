@@ -244,6 +244,7 @@ C64::setPAL()
 	vic->setPAL();
 	sid->setPAL();
 
+    debug(2, "PAL mode is set\n");
 	resume();
 }
 
@@ -257,6 +258,7 @@ C64::setNTSC()
 	vic->setNTSC();
 	sid->setNTSC();
 
+    debug(2, "NTSC mode is set\n");
 	resume();
 }
 
@@ -910,7 +912,7 @@ C64::loadRom(const char *filename)
 void 
 C64::takeSnapshot() 
 {
-    debug(2, "Taking snapshop %d (%p)\n", backInTimeWritePtr, backInTimeHistory[backInTimeWritePtr]);
+    debug(3, "Taking snapshop %d (%p)\n", backInTimeWritePtr, backInTimeHistory[backInTimeWritePtr]);
     
 	saveToSnapshot(backInTimeHistory[backInTimeWritePtr]);
 	backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;

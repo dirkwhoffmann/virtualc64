@@ -412,8 +412,7 @@
 								<object class="NSMenuItem" id="301115680">
 									<reference key="NSMenu" ref="391254502"/>
 									<string key="NSTitle">INST</string>
-									<string key="NSKeyEquiv">i</string>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1024293694"/>
 									<reference key="NSMixedImage" ref="598777137"/>
@@ -499,20 +498,20 @@
 									<reference key="NSOnImage" ref="1024293694"/>
 									<reference key="NSMixedImage" ref="598777137"/>
 								</object>
-								<object class="NSMenuItem" id="464361630">
-									<reference key="NSMenu" ref="609874395"/>
-									<string key="NSTitle">Continue</string>
-									<string key="NSKeyEquiv">&gt;</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="1024293694"/>
-									<reference key="NSMixedImage" ref="598777137"/>
-								</object>
 								<object class="NSMenuItem" id="596811694">
 									<reference key="NSMenu" ref="609874395"/>
 									<string key="NSTitle">Pause</string>
 									<string key="NSKeyEquiv">p</string>
 									<int key="NSKeyEquivModMask">1572864</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1024293694"/>
+									<reference key="NSMixedImage" ref="598777137"/>
+								</object>
+								<object class="NSMenuItem" id="464361630">
+									<reference key="NSMenu" ref="609874395"/>
+									<string key="NSTitle">Continue</string>
+									<string key="NSKeyEquiv">&gt;</string>
+									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1024293694"/>
 									<reference key="NSMixedImage" ref="598777137"/>
@@ -706,6 +705,14 @@
 															<reference key="NSOnImage" ref="1024293694"/>
 															<reference key="NSMixedImage" ref="598777137"/>
 														</object>
+														<object class="NSMenuItem" id="1049416000">
+															<reference key="NSMenu" ref="61166645"/>
+															<string key="NSTitle">Expansion port</string>
+															<string key="NSKeyEquiv"/>
+															<int key="NSMnemonicLoc">2147483647</int>
+															<reference key="NSOnImage" ref="1024293694"/>
+															<reference key="NSMixedImage" ref="598777137"/>
+														</object>
 														<object class="NSMenuItem" id="443561855">
 															<reference key="NSMenu" ref="61166645"/>
 															<string key="NSTitle">Memory</string>
@@ -775,6 +782,22 @@
 											<object class="NSMenuItem" id="239950035">
 												<reference key="NSMenu" ref="874569900"/>
 												<string key="NSTitle">Keyboard</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1024293694"/>
+												<reference key="NSMixedImage" ref="598777137"/>
+											</object>
+											<object class="NSMenuItem" id="191636668">
+												<reference key="NSMenu" ref="874569900"/>
+												<string key="NSTitle">Joystick port 1</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1024293694"/>
+												<reference key="NSMixedImage" ref="598777137"/>
+											</object>
+											<object class="NSMenuItem" id="953357260">
+												<reference key="NSMenu" ref="874569900"/>
+												<string key="NSTitle">Joystick port 2</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="1024293694"/>
@@ -919,6 +942,13 @@
 			</object>
 			<object class="NSCustomObject" id="10529238">
 				<string key="NSClassName">SUUpdater</string>
+			</object>
+			<object class="NSMenuItem" id="996660645">
+				<string key="NSTitle">Keyboard</string>
+				<string key="NSKeyEquiv"/>
+				<int key="NSMnemonicLoc">2147483647</int>
+				<reference key="NSOnImage" ref="1024293694"/>
+				<reference key="NSMixedImage" ref="598777137"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -1429,6 +1459,38 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">dumpC64ExpansionPort:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="1049416000"/>
+					</object>
+					<int key="connectionID">530</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dumpKeyboard:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="996660645"/>
+					</object>
+					<int key="connectionID">536</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dumpC64Joystick1:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="191636668"/>
+					</object>
+					<int key="connectionID">540</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dumpC64Joystick2:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="953357260"/>
+					</object>
+					<int key="connectionID">541</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">checkForUpdates:</string>
 						<reference key="source" ref="10529238"/>
 						<reference key="destination" ref="1001749454"/>
@@ -1839,10 +1901,10 @@
 							<reference ref="1020753389"/>
 							<reference ref="677135280"/>
 							<reference ref="88158042"/>
-							<reference ref="596811694"/>
 							<reference ref="484346563"/>
 							<reference ref="464361630"/>
 							<reference ref="360022447"/>
+							<reference ref="596811694"/>
 							<reference ref="552429359"/>
 						</array>
 						<reference key="parent" ref="775653531"/>
@@ -1953,6 +2015,8 @@
 							<reference ref="456072191"/>
 							<reference ref="741441865"/>
 							<reference ref="979384269"/>
+							<reference ref="191636668"/>
+							<reference ref="953357260"/>
 						</array>
 						<reference key="parent" ref="974433660"/>
 					</object>
@@ -1993,6 +2057,7 @@
 							<reference ref="860644810"/>
 							<reference ref="321146"/>
 							<reference ref="1366450"/>
+							<reference ref="1049416000"/>
 						</array>
 						<reference key="parent" ref="741441865"/>
 					</object>
@@ -2113,6 +2178,26 @@
 						<reference key="object" ref="301115680"/>
 						<reference key="parent" ref="391254502"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">527</int>
+						<reference key="object" ref="1049416000"/>
+						<reference key="parent" ref="61166645"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">531</int>
+						<reference key="object" ref="191636668"/>
+						<reference key="parent" ref="874569900"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">534</int>
+						<reference key="object" ref="996660645"/>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">537</int>
+						<reference key="object" ref="953357260"/>
+						<reference key="parent" ref="874569900"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2205,6 +2290,10 @@
 				<string key="512.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="515.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="518.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="527.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="531.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="534.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="537.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2225,7 +2314,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">526</int>
+			<int key="maxID">541</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2387,38 +2476,93 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MountDialog</string>
 					<string key="superclassName">NSWindow</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="loadOptionsAction:">id</string>
+						<string key="writeProtectAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="loadOptionsAction:">
+							<string key="name">loadOptionsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="writeProtectAction:">
+							<string key="name">writeProtectAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="archiveName">NSTextField</string>
-						<string key="archiveType">NSTextField</string>
+						<string key="CancelButton">NSButton</string>
+						<string key="OKButton">NSButton</string>
 						<string key="directory">NSTableView</string>
-						<string key="flashButton">NSButton</string>
-						<string key="mountButton">NSButton</string>
+						<string key="diskIcon">NSImageView</string>
+						<string key="diskIconFrame">NSBox</string>
+						<string key="loadOptions">NSPopUpButton</string>
+						<string key="loadText">NSTextField</string>
+						<string key="warningText">NSTextField</string>
+						<string key="writeProtect">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="archiveName">
-							<string key="name">archiveName</string>
-							<string key="candidateClassName">NSTextField</string>
+						<object class="IBToOneOutletInfo" key="CancelButton">
+							<string key="name">CancelButton</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="archiveType">
-							<string key="name">archiveType</string>
-							<string key="candidateClassName">NSTextField</string>
+						<object class="IBToOneOutletInfo" key="OKButton">
+							<string key="name">OKButton</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="directory">
 							<string key="name">directory</string>
 							<string key="candidateClassName">NSTableView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="flashButton">
-							<string key="name">flashButton</string>
-							<string key="candidateClassName">NSButton</string>
+						<object class="IBToOneOutletInfo" key="diskIcon">
+							<string key="name">diskIcon</string>
+							<string key="candidateClassName">NSImageView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="mountButton">
-							<string key="name">mountButton</string>
+						<object class="IBToOneOutletInfo" key="diskIconFrame">
+							<string key="name">diskIconFrame</string>
+							<string key="candidateClassName">NSBox</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="loadOptions">
+							<string key="name">loadOptions</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="loadText">
+							<string key="name">loadText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="warningText">
+							<string key="name">warningText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="writeProtect">
+							<string key="name">writeProtect</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../MacGUI/MountDialog.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MountDialog</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="loadOptionsAction:">id</string>
+						<string key="writeProtectAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="loadOptionsAction:">
+							<string key="name">loadOptionsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="writeProtectAction:">
+							<string key="name">writeProtectAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MountDialog.mm</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2431,8 +2575,7 @@
 						<string key="cartridgeEjectAction:">id</string>
 						<string key="driveAction:">id</string>
 						<string key="ejectAction:">id</string>
-						<string key="endMountDialogAndFlash:">id</string>
-						<string key="endMountDialogAndMount:">id</string>
+						<string key="endMountDialog:">id</string>
 						<string key="stepperAction:">id</string>
 						<string key="warpAction:">id</string>
 					</dictionary>
@@ -2461,12 +2604,8 @@
 							<string key="name">ejectAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="endMountDialogAndFlash:">
-							<string key="name">endMountDialogAndFlash:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="endMountDialogAndMount:">
-							<string key="name">endMountDialogAndMount:</string>
+						<object class="IBActionInfo" key="endMountDialog:">
+							<string key="name">endMountDialog:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="stepperAction:">
@@ -3401,8 +3540,7 @@
 						<string key="cartridgeEjectAction:">id</string>
 						<string key="driveAction:">id</string>
 						<string key="ejectAction:">id</string>
-						<string key="endMountDialogAndFlash:">id</string>
-						<string key="endMountDialogAndMount:">id</string>
+						<string key="endMountDialog:">id</string>
 						<string key="stepperAction:">id</string>
 						<string key="warpAction:">id</string>
 					</dictionary>
@@ -3431,12 +3569,8 @@
 							<string key="name">ejectAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="endMountDialogAndFlash:">
-							<string key="name">endMountDialogAndFlash:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="endMountDialogAndMount:">
-							<string key="name">endMountDialogAndMount:</string>
+						<object class="IBActionInfo" key="endMountDialog:">
+							<string key="name">endMountDialog:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="stepperAction:">
@@ -4355,6 +4489,9 @@
 						<string key="dumpC64CIA1:">id</string>
 						<string key="dumpC64CIA2:">id</string>
 						<string key="dumpC64CPU:">id</string>
+						<string key="dumpC64ExpansionPort:">id</string>
+						<string key="dumpC64Joystick1:">id</string>
+						<string key="dumpC64Joystick2:">id</string>
 						<string key="dumpC64Memory:">id</string>
 						<string key="dumpC64SID:">id</string>
 						<string key="dumpC64VIC:">id</string>
@@ -4421,6 +4558,18 @@
 						</object>
 						<object class="IBActionInfo" key="dumpC64CPU:">
 							<string key="name">dumpC64CPU:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64ExpansionPort:">
+							<string key="name">dumpC64ExpansionPort:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Joystick1:">
+							<string key="name">dumpC64Joystick1:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Joystick2:">
+							<string key="name">dumpC64Joystick2:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="dumpC64Memory:">
@@ -4531,6 +4680,9 @@
 						<string key="dumpC64CIA1:">id</string>
 						<string key="dumpC64CIA2:">id</string>
 						<string key="dumpC64CPU:">id</string>
+						<string key="dumpC64ExpansionPort:">id</string>
+						<string key="dumpC64Joystick1:">id</string>
+						<string key="dumpC64Joystick2:">id</string>
 						<string key="dumpC64Memory:">id</string>
 						<string key="dumpC64SID:">id</string>
 						<string key="dumpC64VIC:">id</string>
@@ -4549,7 +4701,6 @@
 						<string key="runstopAction:">id</string>
 						<string key="runstopRestoreAction:">id</string>
 						<string key="saveScreenshotDialog:">id</string>
-						<string key="showPreferencesAction:">id</string>
 						<string key="traceC64CpuAction:">id</string>
 						<string key="traceIecAction:">id</string>
 						<string key="traceVC1541CpuAction:">id</string>
@@ -4598,6 +4749,18 @@
 						</object>
 						<object class="IBActionInfo" key="dumpC64CPU:">
 							<string key="name">dumpC64CPU:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64ExpansionPort:">
+							<string key="name">dumpC64ExpansionPort:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Joystick1:">
+							<string key="name">dumpC64Joystick1:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Joystick2:">
+							<string key="name">dumpC64Joystick2:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="dumpC64Memory:">
@@ -4670,10 +4833,6 @@
 						</object>
 						<object class="IBActionInfo" key="saveScreenshotDialog:">
 							<string key="name">saveScreenshotDialog:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showPreferencesAction:">
-							<string key="name">showPreferencesAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="traceC64CpuAction:">
@@ -5083,7 +5242,6 @@
 						<string key="setNtscAction:">id</string>
 						<string key="setPalAction:">id</string>
 						<string key="setVideoFilterAction:">id</string>
-						<string key="togglePalNtscAction:">id</string>
 						<string key="useAsDefaultAction:">id</string>
 						<string key="warpLoadAction:">id</string>
 					</dictionary>
@@ -5136,10 +5294,6 @@
 							<string key="name">setVideoFilterAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="togglePalNtscAction:">
-							<string key="name">togglePalNtscAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="useAsDefaultAction:">
 							<string key="name">useAsDefaultAction:</string>
 							<string key="candidateClassName">id</string>
@@ -5174,10 +5328,7 @@
 						<string key="eyeXSlider">NSSlider</string>
 						<string key="eyeYSlider">NSSlider</string>
 						<string key="eyeZSlider">NSSlider</string>
-						<string key="flag">NSButton</string>
-						<string key="ntsc">NSButtonCell</string>
-						<string key="pal">NSButtonCell</string>
-						<string key="palntsc">NSMatrix</string>
+						<string key="machineType">NSPopUpButton</string>
 						<string key="systemText1">NSTextField</string>
 						<string key="systemText2">NSTextField</string>
 						<string key="systemText3">NSTextField</string>
@@ -5281,21 +5432,9 @@
 							<string key="name">eyeZSlider</string>
 							<string key="candidateClassName">NSSlider</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="flag">
-							<string key="name">flag</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="ntsc">
-							<string key="name">ntsc</string>
-							<string key="candidateClassName">NSButtonCell</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pal">
-							<string key="name">pal</string>
-							<string key="candidateClassName">NSButtonCell</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="palntsc">
-							<string key="name">palntsc</string>
-							<string key="candidateClassName">NSMatrix</string>
+						<object class="IBToOneOutletInfo" key="machineType">
+							<string key="name">machineType</string>
+							<string key="candidateClassName">NSPopUpButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="systemText1">
 							<string key="name">systemText1</string>
@@ -5338,7 +5477,6 @@
 						<string key="setNtscAction:">id</string>
 						<string key="setPalAction:">id</string>
 						<string key="setVideoFilterAction:">id</string>
-						<string key="togglePalNtscAction:">id</string>
 						<string key="useAsDefaultAction:">id</string>
 						<string key="warpLoadAction:">id</string>
 					</dictionary>
@@ -5389,10 +5527,6 @@
 						</object>
 						<object class="IBActionInfo" key="setVideoFilterAction:">
 							<string key="name">setVideoFilterAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="togglePalNtscAction:">
-							<string key="name">togglePalNtscAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="useAsDefaultAction:">
