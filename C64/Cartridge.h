@@ -34,6 +34,9 @@
 
 #include "Container.h"
 
+/*! @class Cartridge
+ *  @brief The Cartridge class declares the programmatic interface for a file of the CRT format type.
+ */
 class Cartridge : public Container {
 
 private:

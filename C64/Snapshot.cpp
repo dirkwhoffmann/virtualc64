@@ -96,30 +96,35 @@ Snapshot::getTypeAsString()
 }
 
 bool
-Snapshot::isSnapshot(const char *filename, int *major, int *minor)
+Snapshot::isSnapshot(const char *filename)
 {
     int magic_bytes[] = { 'V', 'C', '6', '4', EOF };
     
     assert(filename != NULL);
     
-    if (!checkFileHeader(filename, magic_bytes, major, minor))
+    if (!checkFileHeader(filename, magic_bytes))
         return false;
     
-    fprintf(stderr, "\n%s is a valid snapshot file\n\n", filename);
+    return true;
+}
+
+bool
+Snapshot::isSnapshot(const char *filename, int major, int minor)
+{
+    int magic_bytes[] = { 'V', 'C', '6', '4', major, minor, EOF };
+    
+    assert(filename != NULL);
+    
+    if (!checkFileHeader(filename, magic_bytes))
+        return false;
+    
     return true;
 }
 
 bool 
 Snapshot::fileIsValid(const char *filename)
 {
-	int magic_bytes[] = { 'V', 'C', '6', '4', V_MAJOR, V_MINOR, EOF };
-	
-	assert(filename != NULL);
-	
-	if (!checkFileHeader(filename, magic_bytes))
-		return false;
-	
-	return true;
+    return Snapshot::isSnapshot(filename, V_MAJOR, V_MINOR);
 }
 
 bool 

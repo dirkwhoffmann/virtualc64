@@ -21,6 +21,9 @@
 
 #include "Archive.h"
 
+/*! @class PRGArchive
+ *  @brief The PRGArchive class declares the programmatic interface for a file of the PRG format type.
+ */
 class PRGArchive : public Archive {
 
 private:
@@ -39,10 +42,7 @@ private:
 
 public:
 
-	//! Constructor
 	PRGArchive();
-	
-	//! Destructor
 	~PRGArchive();
 	
 	//! Returns true of filename points to a valid file of that type

@@ -21,6 +21,9 @@
 
 #include "Archive.h"
 
+/*! @class T64Archive
+ *  @brief The T64Archive class declares the programmatic interface for a file of the T64 format type.
+ */
 class T64Archive : public Archive {
 
 private:	
@@ -46,10 +49,7 @@ private:
 
 public:
 
-	//! Constructor
 	T64Archive();
-	
-	//! Destructor
 	~T64Archive();
 		
 	//! Returns true of filename points to a valid file of that type

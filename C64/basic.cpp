@@ -100,7 +100,7 @@ checkFileSize(const char *filename, int min, int max)
 }
 
 bool 
-checkFileHeader(const char *filename, int *header, int *major, int *minor)
+checkFileHeader(const char *filename, int *header)
 {
 	int i, c;
 	bool result = true;
@@ -119,10 +119,7 @@ checkFileHeader(const char *filename, int *header, int *major, int *minor)
 			break;
 		}
 	}
-	
-    if (major != NULL) *major = fgetc(file);  // get major version number if requested
-    if (minor != NULL) *minor = fgetc(file);  // get minor version number if requested
-    
+	    
 	fclose(file);
 	return result;
 }
