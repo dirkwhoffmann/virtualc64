@@ -26,7 +26,7 @@ class Archive;
 	IBOutlet NSButton *OKButton;
     IBOutlet NSButton *CancelButton;
     IBOutlet NSPopUpButton *loadOptions;
-    IBOutlet NSTextField *loadText;
+    IBOutlet NSTextField *headerText;
     IBOutlet NSTextField *warningText;
     IBOutlet NSButton *writeProtect;
     IBOutlet NSImageView *diskIcon;
@@ -39,13 +39,14 @@ class Archive;
     int selectedRow;
     
     // Configuration
-    bool showEjectButton;
-    bool showCancelButton;
+    //bool showEjectButton;
+    //bool showCancelButton;
 
     // Todo items (when window closes)
     bool doMount;
     bool doFlash;
     bool doType;
+    bool doEjectOnCancel;
 }
 
 // @property(readonly) int loadOption;
@@ -53,10 +54,14 @@ class Archive;
 @property(readonly) bool doMount;
 @property(readonly) bool doFlash;
 @property(readonly) bool doType;
+@property(readonly) bool doEjectOnCancel;
 
 
 // Initialization
-- (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy mountBeforeLoading:(bool)mount;
+// - (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy mountBeforeLoading:(bool)mount;
+- (void) _initialize:(Archive *)a c64proxy:(C64Proxy *)proxy;
+- (void) initializeAsMountDialog:(Archive *)a c64proxy:(C64Proxy *)proxy;
+- (void) initializeAsDriveDialog:(Archive *)a c64proxy:(C64Proxy *)proxy;
 
 // Action methods
 - (IBAction)writeProtectAction:(id)sender;
