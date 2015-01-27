@@ -32,14 +32,11 @@ class VC1541;
 #define D64_802_SECTORS 205312
 #define D64_802_SECTORS_ECC 206114
 
-/*! @class Container
- @brief Base class for all loadable objects. */
 
 /*! @class D64Archive
     @brief An archive of type D64. */
 class D64Archive : public Archive {
 
-//protected:
 private: 
 
 	//! @brief The logical name of this archive.
@@ -59,45 +56,6 @@ private:
         @discussion An offset into the data array. */
 	int fp;
 
-private:
-    
-	//! Translate track and sector numbers
-	int offset(int track, int sector);
-
-	//! Returns true iff offset points to the last byte of a sector
-	bool isLastByteOfSector(int offset) { return ((offset+1) % 256) == 0; }
-
-	//! Returns true iff offset points to the last byte of a file
-	bool isEndOfFile(int offset);
-	
-	//! Returns the next logical track number following this sector
-	int nextTrack(int offset) { return data[(offset / 256) * 256]; }
-
-	//! Returns the next logical sector number following this sector
-	int nextSector(int offset) { return data[((offset / 256) * 256)+1]; }
-
-	//! Return the next physical track and sector
-	bool nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector, bool skipDirectory = false);
-
-	//! Return the next physical track and sector and skip track 18 (directory track)
-	// void nextTrackAndSectorSkipDirectory(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector);
-	
-	//! Return beginning of next sector 
-	int jumpToNextSector(int pos); 
-	
-	void dumpDir();
-	int findDirectoryEntry(int itemNumber);
-
-	//! Write BAM (track 18, sector 0)
-	void writeBAM(const char *name);
-	
-	//! Write directory item (used to convert other archive format into D64 format)
-	bool writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, unsigned filesize);
-
-	//! Write byte to specified track and sector
-	/*! If sector overflows, the values of track and sector are overwritten with the next free sector */
-	bool writeByteToSector(uint8_t byte, uint8_t *track, uint8_t *sector);
-
 public:
 
     //
@@ -110,33 +68,28 @@ public:
     //! @brief Standard destructor.
 	~D64Archive();
     
-    /*! @brief Creates a D64 archive from a D64 file located on disc.
-     *  @param filename The location of a file in D64 format.
-     *  @return A newly created D64 archive; NULL, if the file does not exist or has a different format.
-     */
+    //! @brief Returns true iff the specified file is a D64 file
+    static bool isD64File(const char *filename);
+
+    //! @brief Creates a D64 archive from a D64 file located on disc.
     static D64Archive *archiveFromD64File(const char *filename);
 
 	/*! @brief Create a D64 archive from a file located on disc.
-	 * @discussion If the provided filename points to a D64 archive, @link archiveFromD64File @/link ist invoked. If the provided filename points to a file with different format (e.g. T64, PRG), the file format is converted to the D64 format on the fly.
-     *  @param filename The location of a file in one of the supported file formats.
-     */
+        @discussion If the provided filename points to a D64 archive, @link archiveFromD64File @/link is invoked. Otherwise, the format is converted automatically. */
      static D64Archive *archiveFromArbitraryFile(const char *filename);
 
     /*! @brief Creates a D64 archive from another D64 archive.
-     *  @param archive The source archive to read from.
-     *  @result A one to one copy of the source archive.
-     *  @seealso @link archiveFromOtherArchive @/link */
+        @result A one to one copy of the source archive.
+        @seealso archiveFromArchive */
     static D64Archive *archiveFromD64Archive(D64Archive *archive);
 
     /*! @brief Creates a D64 archive from an arbitrary archive.
-     *  @param archive The source archive to read from.
-     *  @result A D64 archive that contains the same files as the source archive.
-     *  @seealso @link archiveFromD64Archive @/link. */
+        @discussion If the provided archive is a D64 archive, @link archiveFromD64Archive @/link is invoked. Otherwise, the format is converted automatically. */
     static D64Archive *archiveFromArchive(Archive *archive);
 
-    /*! @brief Creates a D64 archive from drive contents.
-     *  @param drive A VC1541 drive with a disk inserted.
-     *  @result A D64 archive containing the same files as the currently inserted disk; NULL if no disk is inserted. */
+    /*! @brief Creates a D64 archive from a VC1541 drive.
+        @param drive A VC1541 drive with a disk inserted.
+        @result A D64 archive containing the same files as the currently inserted disk; NULL if no disk is inserted. */
      static D64Archive *archiveFromDrive(VC1541 *drive);
 
     
@@ -170,36 +123,95 @@ public:
     //! @functiongroup Accessing archive attributes
     //
     
-    //! Returns true of filename points to a valid file of that type
-    static bool isD64File(const char *filename);
-    
-    //! Class function that returns the number of sectors in a specific track
+    //! @brief Class function that returns the total number of sectors in a specific track
     static unsigned numberOfSectors(unsigned trackNr);
 
-	//! Returns the number of tracks stored in this image
+	//! @brief Returns the number of tracks stored in this image
 	unsigned numberOfTracks();
-	
-	//! Return pointer to raw sector data
-	uint8_t *findSector(unsigned track, unsigned sector);
-	
-	//! Return LO BYTE of disk ID
+		
+	//! @brief Returns the low byte of the disk ID
 	uint8_t diskIdLow() { return data[offset(18, 1) + 0xA2]; }
 
-	//! Return HI BYTE of disk ID
+	//! @brief Returns the high byte of the disk ID
 	uint8_t diskIdHi() { return data[offset(18, 1) + 0xA3]; }
 
  
     //
+    //! @functiongroup Accessing tracks and sectors
+    //
+    
+public:
+
+    //! @brief Returns a pointer to the raw sector data
+    uint8_t *findSector(unsigned track, unsigned sector);
+
+private:
+    
+    /*! @brief Converts a track number into a halftrack number
+        @discussion The mapping is: 1->1, 2->3, 3->5, 5->7, ..., 41->81, 42->83 */
+    int trackToHalftrack(int track) { return (2 * track) - 1; }
+
+    /*! @brief Converts a halftrack number into a track number
+        @discussion The mapping is: 1->1, 2->1, 3->2, 4->2, ..., 83->42, 84->42 */
+    int halftrackToTrack(int halftrack) { return (halftrack + 1) / 2; }
+    
+    //! @brief Translates a track and sector number into an offset
+    int offset(int track, int sector);
+
+    /*! @brief Translates a halftrack and sector number into an offset
+        @discussion The argument must be the halftrack number of a real track, because D64 images don't store halftrack information. */
+    int offsetForHalftrack(int halftrack, int sector);
+
+    //! @brief Returns true iff offset points to the last byte of a sector
+    bool isLastByteOfSector(int offset) { return ((offset+1) % 256) == 0; }
+    
+    //! @brief Returns true iff offset points to the last byte of a file
+    bool isEndOfFile(int offset) { return nextTrack(offset) == 0x00 && nextSector(offset) == offset % 256; }
+    
+    //! @brief Returns the next logical track number following this sector
+    int nextTrack(int offset) { return data[(offset / 256) * 256]; }
+    
+    //! @brief Returns the next logical sector number following this sector
+    int nextSector(int offset) { return data[((offset / 256) * 256)+1]; }
+    
+    //! @brief Return the next physical track and sector
+    bool nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector, bool skipDirectory = false);
+    
+    //! @brief Returns the beginning of the next sector
+    int jumpToNextSector(int pos);
+
+    /*! @brief Writes a byte to the specified track and sector
+        @discussion If the sector overflows, the values of track and sector are overwritten with the next free sector */
+    bool writeByteToSector(uint8_t byte, uint8_t *track, uint8_t *sector);
+
+    
+    //
+    //! @functiongroup Accessing file and directory items
+    //
+
+private:
+    
+    //! @brief Marks a single sector as "used"
+    void markSectorAsUsed(uint8_t track, uint8_t sector);
+
+    //! @brief Writes the BAM (track 18, sector 0)
+    void writeBAM(const char *name);
+
+    //! @brief Returns the location of a specific directory item
+    int findDirectoryEntry(int itemNumber);
+    
+    /*! @brief Writes a directory item
+        @discussion This function is used to convert other archive formats into the D64 format. */
+    bool writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, unsigned filesize);
+    
+
+    //
     //! @functiongroup Debugging
     //
     
-	//! Dump sector contents to stderr
+private:
+    
+	//! @brief Dumps the contents of a sector to stderr
 	void dumpSector(int track, int sector);
-	
-    //! @functiongroup Misc
-	
-	//! Mark as single sector as "used"
-	void markSectorAsUsed(uint8_t track, uint8_t sector);
-		
 };
 #endif

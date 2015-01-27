@@ -42,7 +42,8 @@ enum ContainerType {
 
 
 /*! @class Container
-    @brief Base class for all loadable objects. */
+    @brief Base class for all loadable objects. 
+    @discussion The class provides basic functionality for reading and writing files. */
 class Container {
     
 private:
@@ -114,7 +115,6 @@ public:
 
     /*! @brief Write container contents into a memory buffer.
         @param buffer The address of the buffer in memory.
-        @param length The size of the binary representation.
         @discussion If a NULL pointer is passed in, a test run is performed. Test runs are performed to determine the size of the container on disk.
         @warning TODO: Remove default implementation. Force each container to implement this method. */
 	virtual unsigned writeToBuffer(uint8_t *buffer);
