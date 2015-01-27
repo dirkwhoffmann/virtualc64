@@ -45,25 +45,24 @@ enum ContainerType {
     @brief Base class for all loadable objects. 
     @discussion The class provides basic functionality for reading and writing files. */
 class Container {
-    
+
 private:
 	
     //! @brief The physical name (full path name) of the archive.
     char *path;
 	
-    /*! @brief The logical name of the archive.
-        @discussion Most archives store a logical name in their header section. An exception is the D64 format that only contains the raw track and sector data. This archive type uses the physical name (without path and extension) as its logical name. */
-	char *name;
-		
-    //! @brief Frees the memory allocated by this object.
-	virtual void dealloc() = 0;
-	
+protected:
 
-public:
+    /*! @brief The logical name of the archive.
+        @discussion Some archives store a logical name in their header section. If they don't, the logical name is the raw filename (path and extension stripped off). */
+	char name[256];
+    
     
     //
     //! @functiongroup Creating and destructing containers
     //
+
+public:
 
     //! @brief Standard constructor.
     Container();
@@ -71,11 +70,17 @@ public:
     //! @brief Standard destructor.
     virtual ~Container();
 	
+private:
     
+    //! @brief Frees the memory allocated by this object.
+    virtual void dealloc() = 0;
+
     //
     //! @functiongroup Accessing container attributes
     //
 
+public:
+    
 	//! @brief Returns the physical name.
     const char *getPath() { return path ? path : ""; }
 
@@ -83,7 +88,7 @@ public:
     void setPath(const char *path);
 
     //! @brief Returns the logical name.
-    virtual const char *getName() { return name ? name : ""; }
+    virtual const char *getName() { return name; }
 
     //! @brief Sets the logical name.
     void setName(const char *name);

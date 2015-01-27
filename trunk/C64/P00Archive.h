@@ -27,44 +27,62 @@
 class P00Archive : public Archive {
 
 private:
-	//! Name of the P00 container file
-	char name[256];
 
-	//! Raw data of P00 container file
-	uint8_t *data;
+    //! @brief The raw data of this archive.
+    uint8_t *data;
 
-	//! File pointer
-	/*! Stores an offset into the data array */
+    /*! @brief File pointer
+        @discussion An offset into the data array. */
 	int fp;
 		
-	//! Size of data array
+    //! @brief File size
 	int size;
 
 public:
 
-	P00Archive();
-	~P00Archive();
-	
-	//! Returns true of filename points to a valid file of that type
-	static bool isP00File(const char *filename);
+    //! @brief Standard constructor.
+    P00Archive();
+    
+    //! @brief Standard destructor.
+    ~P00Archive();
+    
+    //! @brief Returns true iff the specified file is a P00 file
+    static bool isP00File(const char *filename);
 
-	//! Factory method
-	static P00Archive *archiveFromFile(const char *filename);
+    //! @brief Creates a P00 archive from a P00 file.
+    static P00Archive *archiveFromP00File(const char *filename);
 
-	//! Virtual functions from Container class
-	bool fileIsValid(const char *filename);
-	bool readFromBuffer(const uint8_t *buffer, unsigned length);
-	void dealloc();
-    ContainerType getType();
-	const char *getTypeAsString();
-	
-	// Virtual functions from Archive class
-	int getNumberOfItems();
-	const char *getNameOfItem(int n);
-	const char *getTypeOfItem(int n);
-	int getSizeOfItem(int n);
-	uint16_t getDestinationAddrOfItem(int n);	
-	void selectItem(int n);
-	int getByte();
+    /*! @brief Creates a P00 archive from another archive.
+     @result A P00 archive that contains the first directory item of the other archive. */
+    static P00Archive *archiveFromArchive(Archive *otherArchive);
+
+    
+    //
+    // Virtual functions from Container class
+    //
+    
+    void dealloc();
+    
+    // const char *getName();
+    ContainerType getType() { return P00_CONTAINER; }
+    const char *getTypeAsString() { return "P00"; }
+    
+    bool fileIsValid(const char *filename);
+    bool readFromBuffer(const uint8_t *buffer, unsigned length);
+    // unsigned writeToBuffer(uint8_t *buffer);
+    
+    //
+    // Virtual functions from Archive class
+    //
+    
+    int getNumberOfItems();
+    
+    const char *getNameOfItem(int n);
+    const char *getTypeOfItem(int n);
+    int getSizeOfItem(int n);
+    uint16_t getDestinationAddrOfItem(int n);
+    
+    void selectItem(int n);
+    int getByte();
 };
 #endif

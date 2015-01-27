@@ -46,7 +46,7 @@ P00Archive::isP00File(const char *filename)
 }
 
 P00Archive *
-P00Archive::archiveFromFile(const char *filename)
+P00Archive::archiveFromP00File(const char *filename)
 {
 	P00Archive *archive;
 
@@ -61,16 +61,24 @@ P00Archive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-ContainerType
-P00Archive::getType()
+P00Archive *
+P00Archive::archiveFromArchive(Archive *otherArchive)
 {
-    return P00_CONTAINER;
-}
-
-const char *
-P00Archive::getTypeAsString() 
-{
-	return "P00";
+    P00Archive *archive;
+    
+    if (otherArchive == NULL)
+        return NULL;
+    
+    fprintf(stderr, "Creating P00 archive from %s archive...\n", otherArchive->getTypeAsString());
+    
+    if ((archive = new P00Archive()) == NULL) {
+        fprintf(stderr, "Failed to create archive\n");
+        return NULL;
+    }
+    
+    fprintf(stderr, "IMPLEMENTATION MISSING\n");
+    
+    return archive;
 }
 
 void 

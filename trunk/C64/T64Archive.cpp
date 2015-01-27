@@ -49,7 +49,7 @@ T64Archive::isT64File(const char *filename)
 }
 
 T64Archive *
-T64Archive::archiveFromFile(const char *filename)
+T64Archive::archiveFromT64File(const char *filename)
 {
 	T64Archive *archive;
 	
@@ -64,16 +64,24 @@ T64Archive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-ContainerType
-T64Archive::getType()
+T64Archive *
+T64Archive::archiveFromArchive(Archive *otherArchive)
 {
-    return T64_CONTAINER;
-}
-
-const char *
-T64Archive::getTypeAsString() 
-{
-	return "T64";
+    T64Archive *archive;
+    
+    if (otherArchive == NULL)
+        return NULL;
+    
+    fprintf(stderr, "Creating T64 archive from %s archive...\n", otherArchive->getTypeAsString());
+    
+    if ((archive = new T64Archive()) == NULL) {
+        fprintf(stderr, "Failed to create archive\n");
+        return NULL;
+    }
+    
+    fprintf(stderr, "IMPLEMENTATION MISSING\n");
+    
+    return archive;
 }
 
 void T64Archive::dealloc()

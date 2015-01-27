@@ -27,45 +27,66 @@
 class PRGArchive : public Archive {
 
 private:
-	//! Name of the PRG container file
-	// char name[256];
 
-	//! Raw data of PRG container file
-	uint8_t *data;
+	//! @brief The raw data of this archive.
+    uint8_t *data;
 
-	//! File pointer
-	/*! Stores an offset into the data array */
+    /*! @brief File pointer
+        @discussion An offset into the data array. */
 	int fp;
 		
-	//! Size of data array
+    //! @brief File size
 	int size;
 
 public:
 
-	PRGArchive();
-	~PRGArchive();
-	
-	//! Returns true of filename points to a valid file of that type
-	static bool isPRGFile(const char *filename);
+    //
+    //! @functiongroup Creating and destructing PRG archives
+    //
+    
+    //! @brief Standard constructor.
+    PRGArchive();
+    
+    //! @brief Standard destructor.
+    ~PRGArchive();
 
-	//! Factory method
-	static PRGArchive *archiveFromFile(const char *filename);
+    //! @brief Returns true iff the specified file is a PRG file
+    static bool isPRGFile(const char *filename);
 
-	//! Virtual functions from Container class
-	bool fileIsValid(const char *filename);
-	bool readFromBuffer(const uint8_t *buffer, unsigned length);
-	bool readDataFromFile(FILE *file, struct stat fileProperties);
-	void dealloc();
-    ContainerType getType();
-	const char *getTypeAsString();
-	
-	// Virtual functions from Archive class
-	int getNumberOfItems();
-	const char *getNameOfItem(int n);
-	const char *getTypeOfItem(int n);
-	int getSizeOfItem(int n);
-	uint16_t getDestinationAddrOfItem(int n);	
-	void selectItem(int n);
-	int getByte();
+    //! @brief Creates a PRG archive from a PRG file.
+    static PRGArchive *archiveFromPRGFile(const char *filename);
+
+    /*! @brief Creates a PRG archive from another archive.
+        @result A PRG archive that contains the first directory item of the other archive. */
+    static PRGArchive *archiveFromArchive(Archive *otherArchive);
+
+
+    //
+    // Virtual functions from Container class
+    //
+    
+    void dealloc();
+    
+    // const char *getName();
+    ContainerType getType() { return PRG_CONTAINER; }
+    const char *getTypeAsString() { return "PRG"; }
+    
+    bool fileIsValid(const char *filename);
+    bool readFromBuffer(const uint8_t *buffer, unsigned length);
+    // unsigned writeToBuffer(uint8_t *buffer);
+    
+    //
+    // Virtual functions from Archive class
+    //
+    
+    int getNumberOfItems();
+    
+    const char *getNameOfItem(int n);
+    const char *getTypeOfItem(int n);
+    int getSizeOfItem(int n);
+    uint16_t getDestinationAddrOfItem(int n);
+    
+    void selectItem(int n);
+    int getByte();
 };
 #endif
