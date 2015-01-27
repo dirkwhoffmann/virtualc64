@@ -21,16 +21,13 @@
 Container::Container()
 {
 	path = NULL;
-	name = NULL;
+    memset(name, 0, sizeof(name));
 }
 
 Container::~Container()
 {
 	if (path)
 		free(path);
-
-	if (name)
-		free(name);
 }
 
 void
@@ -45,10 +42,8 @@ Container::setPath(const char *str)
 void
 Container::setName(const char *str)
 {
-    if (name)
-        free(name);
-    
-    name = strdup(str);
+    strncpy(name, str, sizeof(name));
+    name[255] = 0;
 }
 
 bool 
@@ -97,13 +92,10 @@ Container::readFromFile(const char *filename)
 	}
 
 	// Set path and default name
-	if (path)
-		free (path);
-	path = strdup(filename);
-	if (name)
-		free(name);
-	name = strdup(ChangeExtension(ExtractFilename(getPath()), "").c_str());
-	
+    setPath(filename);
+    setName(ChangeExtension(ExtractFilename(getPath()), "").c_str());
+    
+    fprintf(stderr, "Container read successfully: Name = %s\n", getName());
 	success = true;
 
 exit:

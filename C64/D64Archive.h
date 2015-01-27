@@ -39,9 +39,6 @@ class D64Archive : public Archive {
 
 private: 
 
-	//! @brief The logical name of this archive.
-    char name[256];
-
 	//! @brief The raw data of this archive.
 	uint8_t data[D64_802_SECTORS_ECC];
 	
@@ -97,24 +94,27 @@ public:
     // Virtual functions from Container class
     //
     
-	bool fileIsValid(const char *filename);
-	bool readFromBuffer(const uint8_t *buffer, unsigned length);
-    unsigned writeToBuffer(uint8_t *buffer);
     void dealloc() { };
+    
+    const char *getName();
     ContainerType getType() { return D64_CONTAINER; }
     const char *getTypeAsString() { return "D64"; }
-	const char *getName();
 	
+    bool fileIsValid(const char *filename);
+    bool readFromBuffer(const uint8_t *buffer, unsigned length);
+    unsigned writeToBuffer(uint8_t *buffer);
     
     //
 	// Virtual functions from Archive class
 	//
     
     int getNumberOfItems();
+    
 	const char *getNameOfItem(int n);
 	const char *getTypeOfItem(int n);
 	int getSizeOfItem(int n);
-	uint16_t getDestinationAddrOfItem(int n);	
+	uint16_t getDestinationAddrOfItem(int n);
+    
 	void selectItem(int n);
 	int getByte();
 

@@ -145,19 +145,19 @@ D64Archive::archiveFromArbitraryFile(const char *filename)
 #endif
 	
 	if (T64Archive::isT64File(filename)) {
-		return D64Archive::archiveFromArchive(T64Archive::archiveFromFile(filename));
+		return D64Archive::archiveFromArchive(T64Archive::archiveFromT64File(filename));
 	}
 
 	if (PRGArchive::isPRGFile(filename)) {
-		return D64Archive::archiveFromArchive(PRGArchive::archiveFromFile(filename));
+		return D64Archive::archiveFromArchive(PRGArchive::archiveFromPRGFile(filename));
 	}
 
 	if (P00Archive::isP00File(filename)) {
-		return D64Archive::archiveFromArchive(P00Archive::archiveFromFile(filename));
+		return D64Archive::archiveFromArchive(P00Archive::archiveFromP00File(filename));
 	}
 
 	if (FileArchive::isAcceptableFile(filename)) {
-		return D64Archive::archiveFromArchive(FileArchive::archiveFromFile(filename));
+		return D64Archive::archiveFromArchive(FileArchive::archiveFromRawFiledata(filename));
 	}
 	
 	return NULL;

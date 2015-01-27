@@ -44,7 +44,7 @@ PRGArchive::isPRGFile(const char *filename)
 }
 
 PRGArchive *
-PRGArchive::archiveFromFile(const char *filename)
+PRGArchive::archiveFromPRGFile(const char *filename)
 {
 	PRGArchive *archive;
 	
@@ -59,16 +59,24 @@ PRGArchive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-ContainerType
-PRGArchive::getType()
+PRGArchive *
+PRGArchive::archiveFromArchive(Archive *otherArchive)
 {
-    return PRG_CONTAINER;
-}
-
-const char *
-PRGArchive::getTypeAsString()
-{
-	return "PRG";
+    PRGArchive *archive;
+    
+    if (otherArchive == NULL)
+        return NULL;
+    
+    fprintf(stderr, "Creating PRG archive from %s archive...\n", otherArchive->getTypeAsString());
+    
+    if ((archive = new PRGArchive()) == NULL) {
+        fprintf(stderr, "Failed to create archive\n");
+        return NULL;
+    }
+    
+    fprintf(stderr, "IMPLEMENTATION MISSING\n");
+    
+    return archive;
 }
 
 void 
@@ -98,6 +106,7 @@ PRGArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	return true;
 }
 
+#if 0
 bool 
 PRGArchive::readDataFromFile(FILE *file, struct stat fileProperties)
 {
@@ -118,6 +127,7 @@ PRGArchive::readDataFromFile(FILE *file, struct stat fileProperties)
 	// fprintf(stderr, "%d bytes read (out of %d)\n", (int)fileProperties.st_size, size);
 	return true;
 }
+#endif
 
 int 
 PRGArchive::getNumberOfItems()

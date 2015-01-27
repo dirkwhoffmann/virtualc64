@@ -27,53 +27,74 @@
 class T64Archive : public Archive {
 
 private:	
-	//! Name of the T64 container file
-	char name[256];
 
-	//! Raw data of T64 container file
-	uint8_t *data;
+    //! @brief The raw data of this archive.
+    uint8_t *data;
 
-	//! File pointer
-	/*! Stores an offset into the data array */
+    /*! @brief File pointer
+        @discussion An offset into the data array. */
 	int fp;
 	
-	//! End of file position
+    /*! @brief End of file position
+        @discussion Maximum value for fp. Do we really need this? */
 	int fp_eof;
 	
-	//! Size of data array
+    //! @brief File size
 	int size;
 
-	//! Returns true, iff the archive contains the n-th directory item
-	//* Set n to zero to watch for the first item */
+	//! @brief Don't know. Do we really need this?
 	bool directoryItemIsPresent(int n);
 
 public:
 
-	T64Archive();
-	~T64Archive();
+    //
+    //! @functiongroup Creating and destructing T64 archives
+    //
+    
+    //! @brief Standard constructor.
+    T64Archive();
+    
+    //! @brief Standard destructor.
+    ~T64Archive();
 		
-	//! Returns true of filename points to a valid file of that type
-	static bool isT64File(const char *filename);
+    //! @brief Returns true iff the specified file is a T64 file
+    static bool isT64File(const char *filename);
 
-	//! Factory method
-	static T64Archive *archiveFromFile(const char *filename);
+    //! @brief Creates a T64 archive from a T64 file located on disc.
+    static T64Archive *archiveFromT64File(const char *filename);
+    
+    /*! @brief Creates a T64 archive from another archive.
+     @result A T64 archive that contains the first directory item of the other archive. */
+    static T64Archive *archiveFromArchive(Archive *otherArchive);
 
-	//! Virtual functions from Container class
-	bool fileIsValid(const char *filename);
-	bool readFromBuffer(const uint8_t *buffer, unsigned length);
-	void dealloc();
-    ContainerType getType();
-	const char *getTypeAsString();
-	const char *getName();
 
-	// Virtual functions from Archive class
-	int getNumberOfItems();
-	const char *getNameOfItem(int n);
-	const char *getTypeOfItem(int n);
-	int getSizeOfItem(int n);
-	uint16_t getDestinationAddrOfItem(int n);	
-	void selectItem(int n);
-	int getByte();
+    //
+    // Virtual functions from Container class
+    //
+    
+    void dealloc();
+    
+    const char *getName();
+    ContainerType getType() { return T64_CONTAINER; }
+    const char *getTypeAsString() { return "T64"; }
+    
+    bool fileIsValid(const char *filename);
+    bool readFromBuffer(const uint8_t *buffer, unsigned length);
+    // unsigned writeToBuffer(uint8_t *buffer);
+    
+    //
+    // Virtual functions from Archive class
+    //
+    
+    int getNumberOfItems();
+    
+    const char *getNameOfItem(int n);
+    const char *getTypeOfItem(int n);
+    int getSizeOfItem(int n);
+    uint16_t getDestinationAddrOfItem(int n);
+    
+    void selectItem(int n);
+    int getByte();
 };
 
 

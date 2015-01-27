@@ -44,7 +44,7 @@ FileArchive::isAcceptableFile(const char *filename)
 }
 
 FileArchive *
-FileArchive::archiveFromFile(const char *filename)
+FileArchive::archiveFromRawFiledata(const char *filename)
 {
 	FileArchive *archive;
 
@@ -57,18 +57,6 @@ FileArchive::archiveFromFile(const char *filename)
 	}
 	
 	return archive;
-}
-
-ContainerType
-FileArchive::getType()
-{
-    return FILE_CONTAINER;
-}
-
-const char *
-FileArchive::getTypeAsString() 
-{
-	return "File";
 }
 
 void 
