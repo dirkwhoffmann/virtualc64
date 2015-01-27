@@ -34,12 +34,21 @@ Container::~Container()
 }
 
 void
-Container::setPath(const char *name)
+Container::setPath(const char *str)
 {
     if (path)
         free(path);
     
-    path = strdup(name);
+    path = strdup(str);
+}
+
+void
+Container::setName(const char *str)
+{
+    if (name)
+        free(name);
+    
+    name = strdup(str);
 }
 
 bool 

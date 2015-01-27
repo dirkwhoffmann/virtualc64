@@ -62,7 +62,7 @@ public:
     void dealloc();
     
     //! Type of container
-    Container::ContainerType getType() { return CRT_CONTAINER; }
+    ContainerType getType() { return CRT_CONTAINER; }
     
     //! Type of container in plain text
     const char *getTypeAsString() { return "CRT"; }

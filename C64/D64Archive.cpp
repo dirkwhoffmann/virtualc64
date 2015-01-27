@@ -77,7 +77,7 @@ D64Archive::D64Archive()
     memset(name, 0, sizeof(name));
     memset(data, 0, sizeof(data));
     memset(errors, 0, sizeof(errors));
-    numTracks = 0;
+    numTracks = 35;
     fp = 0;
 }
 
@@ -121,7 +121,7 @@ D64Archive::numberOfSectors(unsigned halftrack)
 }
 
 D64Archive *
-D64Archive::archiveFromFile(const char *filename)
+D64Archive::archiveFromD64File(const char *filename)
 {
 	D64Archive *archive;
 		
@@ -140,7 +140,7 @@ D64Archive *
 D64Archive::archiveFromArbitraryFile(const char *filename)
 {
 	if (D64Archive::isD64File(filename)) {
-		return D64Archive::archiveFromFile(filename);
+		return D64Archive::archiveFromD64File(filename);
 	}
 
 
@@ -152,33 +152,57 @@ D64Archive::archiveFromArbitraryFile(const char *filename)
 #endif
 	
 	if (T64Archive::isT64File(filename)) {
-		return D64Archive::archiveFromOtherArchive(T64Archive::archiveFromFile(filename));
+		return D64Archive::archiveFromArchive(T64Archive::archiveFromFile(filename));
 	}
 
 	if (PRGArchive::isPRGFile(filename)) {
-		return D64Archive::archiveFromOtherArchive(PRGArchive::archiveFromFile(filename));
+		return D64Archive::archiveFromArchive(PRGArchive::archiveFromFile(filename));
 	}
 
 	if (P00Archive::isP00File(filename)) {
-		return D64Archive::archiveFromOtherArchive(P00Archive::archiveFromFile(filename));
+		return D64Archive::archiveFromArchive(P00Archive::archiveFromFile(filename));
 	}
 
 	if (FileArchive::isAcceptableFile(filename)) {
-		return D64Archive::archiveFromOtherArchive(FileArchive::archiveFromFile(filename));
+		return D64Archive::archiveFromArchive(FileArchive::archiveFromFile(filename));
 	}
 	
 	return NULL;
 }
 
 D64Archive *
-D64Archive::archiveFromOtherArchive(Archive *otherArchive)
+D64Archive::archiveFromD64Archive(D64Archive *otherArchive)
+{
+    D64Archive *archive;
+    
+    if (otherArchive == NULL)
+        return NULL;
+    
+    fprintf(stderr, "Cloning D64 archive...\n");
+    
+    if ((archive = new D64Archive()) == NULL) {
+        fprintf(stderr, "Failed to create D64 archive\n");
+        return NULL;
+    }
+
+    memcpy(archive->name, otherArchive->name, sizeof(archive->name));
+    memcpy(archive->data, otherArchive->data, sizeof(archive->data));
+    memcpy(archive->errors, otherArchive->errors, sizeof(archive->errors));
+    archive->numTracks = otherArchive->numTracks;
+    archive->fp = otherArchive->fp;
+
+    return archive;
+}
+
+D64Archive *
+D64Archive::archiveFromArchive(Archive *otherArchive)
 {
     D64Archive *archive;
     
     if (otherArchive == NULL)
 		return NULL;
         
-	fprintf(stderr, "Creating D64 archive from %s archive...\n", otherArchive->getTypeAsString());
+	fprintf(stderr, "Creating D64 archive from an %s archive...\n", otherArchive->getTypeAsString());
 
     if ((archive = new D64Archive()) == NULL) {
         fprintf(stderr, "Failed to create D64 archive\n");
@@ -190,10 +214,7 @@ D64Archive::archiveFromOtherArchive(Archive *otherArchive)
     
     // Current position of data write ptr
     uint8_t track = 1, sector = 0;
-    
-    // Clear all tracks and sectors
-    archive->clear();
-    
+        
     // Write BAM
     archive->writeBAM(otherArchive->getName());
     
@@ -604,6 +625,7 @@ D64Archive::dumpSector(int track, int sector)
 // Convert arbitrary archives to D64 format
 // 
 
+#if 0
 void 
 D64Archive::clear() 
 {
@@ -611,6 +633,7 @@ D64Archive::clear()
 	memset(data, 0x00, sizeof(data));
 	memset(errors, 0x00, sizeof(errors));
 }
+#endif
 
 void 
 D64Archive::markSectorAsUsed(uint8_t track, uint8_t sector)

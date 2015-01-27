@@ -59,7 +59,7 @@ FileArchive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-Container::ContainerType
+ContainerType
 FileArchive::getType()
 {
     return FILE_CONTAINER;

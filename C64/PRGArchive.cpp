@@ -59,7 +59,7 @@ PRGArchive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-Container::ContainerType
+ContainerType
 PRGArchive::getType()
 {
     return PRG_CONTAINER;

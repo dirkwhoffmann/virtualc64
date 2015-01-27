@@ -179,7 +179,7 @@
     [loadOptions selectItemAtIndex:loadOption];
     
     [warningText setHidden:loadOption != LOAD_OPTION_FLASH];
-    [writeProtect setIntValue:archive->writeProtection];
+    [writeProtect setIntValue:archive->isWriteProtected()];
 }
 
 #pragma mark NSTableViewDataSource
@@ -234,10 +234,10 @@
 {
     if ([sender intValue]) {
         NSLog(@"Write protection");
-        archive->writeProtection = true;
+        archive->setWriteProtected(true);
     } else {
         NSLog(@"No write protection");
-        archive->writeProtection = false;
+        archive->setWriteProtected(false);
     }
 }
 

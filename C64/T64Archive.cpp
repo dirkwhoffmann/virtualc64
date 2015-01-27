@@ -64,7 +64,7 @@ T64Archive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-Container::ContainerType
+ContainerType
 T64Archive::getType()
 {
     return T64_CONTAINER;
