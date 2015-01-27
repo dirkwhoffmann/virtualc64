@@ -1,5 +1,5 @@
 /*
- * (C) 2007 Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann, www.dirkwhoffmann.de
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,28 +32,35 @@ class VC1541;
 #define D64_802_SECTORS 205312
 #define D64_802_SECTORS_ECC 206114
 
+/*! @class Container
+ @brief Base class for all loadable objects. */
+
 /*! @class D64Archive
- *  @brief The D64Archive class declares the programmatic interface for a file of the D64 format type.
- */
+    @brief An archive of type D64. */
 class D64Archive : public Archive {
 
-private:
-	//! Name of the D64 container file
+//protected:
+private: 
+
+	//! @brief The logical name of this archive.
     char name[256];
 
-	//! Raw data of D64 container file
+	//! @brief The raw data of this archive.
 	uint8_t data[D64_802_SECTORS_ECC];
 	
-	//! Errors stored at the end of some D64 files
+	//! @brief Error information stored in the D64 archive.
 	uint8_t errors[802];
 	
-	//! Number of tracks in this image (can be 35, 40, or 42)
+	/*! @brief The number of tracks stored in this archive.
+        @discussion Possible values are 35, 40, and 42. */
 	unsigned numTracks; 
 	
-	//! File pointer
-	/*! Stores an offset into the data array */
+	/*! @brief File pointer
+        @discussion An offset into the data array. */
 	int fp;
-		
+
+private:
+    
 	//! Translate track and sector numbers
 	int offset(int track, int sector);
 
@@ -93,35 +100,46 @@ private:
 
 public:
 
-	//! Constructor
-	D64Archive();
-	
-	//! Destructor
-	~D64Archive();
-	
-	//! Returns true of filename points to a valid file of that type
-	static bool isD64File(const char *filename);
-
-    //! Class function that returns the number of sectors in a specific track
-    static unsigned numberOfSectors(unsigned trackNr);
-
     //
-	// Factory methods
-	//
+    //! @functiongroup Creating and destructing D64 archives
+    //
+
+    //! @brief Standard constructor.
+	D64Archive();
     
-	//! Create D64 archive from D64 file
-	static D64Archive *archiveFromFile(const char *filename);
+    //! @brief Standard destructor.
+	~D64Archive();
+    
+    /*! @brief Creates a D64 archive from a D64 file located on disc.
+     *  @param filename The location of a file in D64 format.
+     *  @return A newly created D64 archive; NULL, if the file does not exist or has a different format.
+     */
+    static D64Archive *archiveFromD64File(const char *filename);
 
-	//! Create D64 archive from arbitrary file
-	/*! T64, PRG, P00, ... files are automatically converted to D64 format */
-	static D64Archive *archiveFromArbitraryFile(const char *filename);
-	
-	//! Create D64 from other archive
-	static D64Archive *archiveFromOtherArchive(Archive *archive);
+	/*! @brief Create a D64 archive from a file located on disc.
+	 * @discussion If the provided filename points to a D64 archive, @link archiveFromD64File @/link ist invoked. If the provided filename points to a file with different format (e.g. T64, PRG), the file format is converted to the D64 format on the fly.
+     *  @param filename The location of a file in one of the supported file formats.
+     */
+     static D64Archive *archiveFromArbitraryFile(const char *filename);
 
-    //! Create D64 from current drive contents
-    static D64Archive *archiveFromDrive(VC1541 *drive);
+    /*! @brief Creates a D64 archive from another D64 archive.
+     *  @param archive The source archive to read from.
+     *  @result A one to one copy of the source archive.
+     *  @seealso @link archiveFromOtherArchive @/link */
+    static D64Archive *archiveFromD64Archive(D64Archive *archive);
 
+    /*! @brief Creates a D64 archive from an arbitrary archive.
+     *  @param archive The source archive to read from.
+     *  @result A D64 archive that contains the same files as the source archive.
+     *  @seealso @link archiveFromD64Archive @/link. */
+    static D64Archive *archiveFromArchive(Archive *archive);
+
+    /*! @brief Creates a D64 archive from drive contents.
+     *  @param drive A VC1541 drive with a disk inserted.
+     *  @result A D64 archive containing the same files as the currently inserted disk; NULL if no disk is inserted. */
+     static D64Archive *archiveFromDrive(VC1541 *drive);
+
+    
 	//
     // Virtual functions from Container class
     //
@@ -134,6 +152,7 @@ public:
     const char *getTypeAsString() { return "D64"; }
 	const char *getName();
 	
+    
     //
 	// Virtual functions from Archive class
 	//
@@ -146,7 +165,17 @@ public:
 	void selectItem(int n);
 	int getByte();
 
-	
+    
+    //
+    //! @functiongroup Accessing archive attributes
+    //
+    
+    //! Returns true of filename points to a valid file of that type
+    static bool isD64File(const char *filename);
+    
+    //! Class function that returns the number of sectors in a specific track
+    static unsigned numberOfSectors(unsigned trackNr);
+
 	//! Returns the number of tracks stored in this image
 	unsigned numberOfTracks();
 	
@@ -159,17 +188,18 @@ public:
 	//! Return HI BYTE of disk ID
 	uint8_t diskIdHi() { return data[offset(18, 1) + 0xA3]; }
 
+ 
+    //
+    //! @functiongroup Debugging
+    //
+    
 	//! Dump sector contents to stderr
 	void dumpSector(int track, int sector);
 	
-	//! Clear all data on disk
-	void clear();
+    //! @functiongroup Misc
 	
 	//! Mark as single sector as "used"
 	void markSectorAsUsed(uint8_t track, uint8_t sector);
-	
-	//! Write archive contents to disk
-	// bool writeArchive(Archive *archive);
-	
+		
 };
 #endif

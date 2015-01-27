@@ -1,5 +1,5 @@
 /*
- * (C) 2007 Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann, www.dirkwhoffmann.de
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
 
 #include "Archive.h"
 
-/*! @class P00Archive
- *  @brief The P00Archive class declares the programmatic interface for a file of the P00 format type.
+/*! @class D64Archive
+ *  @brief The D64Archive class declares the programmatic interface for a file in P00 format.
  */
 class P00Archive : public Archive {
 

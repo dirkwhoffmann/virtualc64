@@ -1,5 +1,5 @@
 /*
- * (C) 2007 Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann, www.dirkwhoffmann.de
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
 
 #include "Archive.h"
 
-/*! @class PRGArchive
- *  @brief The PRGArchive class declares the programmatic interface for a file of the PRG format type.
+/*! @class D64Archive
+ *  @brief The D64Archive class declares the programmatic interface for a file in PRG format.
  */
 class PRGArchive : public Archive {
 

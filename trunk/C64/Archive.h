@@ -16,74 +16,84 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// For a detailed description of the various file formats, see
+// http://www.infinite-loop.at/Power20/Documentation/Power20-LiesMich/AE-Dateiformate.html
+
+
 #ifndef _ARCHIVE_INC
 #define _ARCHIVE_INC
 
 #include "Container.h"
 
-/*!
- * @class Container
- * @brief Base class for all loadable objects with multiple files included
- */
+/*! @class Archive
+    @brief Base class for all loadable objects with multiple files included. */
+
 class Archive : public Container {
 	
+private:
+    
+    /*! @brief Write protection flag.
+        @discussion When an archive is inserted into the floopy drive, the optical write protection sensor will be set or unset based on this value. By default, archives are write enabled. */
+    bool writeProtection;
+
 public:
 
-	Archive();
-	virtual ~Archive();
-	
-    /*! @brief Write protection flag.
-     *  @discussion Indicates whether the archives represents a write protected medium.
-     *  The flag determines the state of the optical write protection sensor of the VC1541 drive when an archive is inserted as disk.
-     *  @deprecated The flag is only meaningful for D64 archives and should be implemented there.
-     */
-    bool writeProtection;
+    //
+    //! @functiongroup Creating and destructing containers
+    //
     
-    //! @brief The number of items in this archive.
+    //! @brief Standard constructor.
+	Archive();
+    
+    //! @brief Standard destructor.
+	virtual ~Archive();
+    
+    //
+    //! @functiongroup Accessing archive attributes
+    //
+
+    //! @brief Returns the write protection flag.
+    bool isWriteProtected() { return writeProtection; }
+
+    //! @brief Sets the write protection flag.
+    void setWriteProtected(bool value) { writeProtection = value; }
+
+    //! @brief Returns the number of items in this archive.
     virtual int getNumberOfItems() = 0;
 
-    /*! @brief Search directory for a specific item.
-     *  @param filename The name of a directory item. The name may contain the wildcard characters '?' and '*'.
-     *  @return The number of item or -1, if no matching item was found. The first item is numbered 0.
-     */
+    //
+    //! @functiongroup Accessing item attributes
+    //
+
+    /*! @brief Searches the directory for a specific item.
+        @param filename The item name may contain the wildcard characters '?' and '*'.
+        @return The number of the item (starting at 0) or -1, if no matching item was found. */
 	int getItemWithName(char *filename);
 			
-    /*! @brief Returns the name of the item located at the specified index.
-     *  @return NULL, if the item does not exists.
-     */
+    //! @brief Returns the name of an item (NULL, if the item does not exists)
 	virtual const char *getNameOfItem(int n) = 0;
 
-    /*! @brief Returns the type of the item located at the specified index.
-     *  @return The type of the item as a string, e.g., "PRG" or "DEL".
-     */
+    //! @brief Returns the type of an item as a string (e.g., "PRG" or "DEL")
 	virtual const char *getTypeOfItem(int n) = 0;
 	
-    /*! @brief Returns the size of the item located at the specified index.
-     *  @return The size of item \param n in bytes. Returns 0, if the item does not exist.
-     */
+    //! @brief Returns the size of an item in bytes
 	virtual int getSizeOfItem(int n) = 0;
 
-    /*! @brief Returns the size of the item located at the specified index.
-     *  @return The size of the item in blocks. Returns 0, if the item does not exist.
-     */
+    //! @brief Returns the size of an item in blocks
 	int getSizeOfItemInBlocks(int n) { return (getSizeOfItem(n) + 253) / 254; }
 		
-    /*! @brief Returns the memory location of an item.
-     *  @discussion When a file is flashed into memory, the raw data is copied to this location.
-     *  @return The destination address in the C64 ram.
-     */
+    /*! @brief Returns the proposed memory location of an item.
+        @discussion When a file is flashed into memory, the raw data is copied to this location. */
 	virtual uint16_t getDestinationAddrOfItem(int n) = 0;
 	
+    //
+    //! @functiongroup Reading an item
+    //
 
-    /*! @brief Select item to read from
-     *  @discussion This functions has to be invoked before calling \see getBytes
-     */
+    //! @brief Selects an item to read from
 	virtual void selectItem(int n) = 0;
 	
-    /*! @brief Read next byte from the currently selected item
-     *  @return The next character from the currently selected item or -1 (indicating EOF)
-     *  @seealso getByte
-     */
+    //! @brief Reads the next byte from the currently selected item
 	virtual int getByte() = 0;
 };
 

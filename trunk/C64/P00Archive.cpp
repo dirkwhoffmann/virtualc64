@@ -61,7 +61,7 @@ P00Archive::archiveFromFile(const char *filename)
 	return archive;
 }
 
-Container::ContainerType
+ContainerType
 P00Archive::getType()
 {
     return P00_CONTAINER;

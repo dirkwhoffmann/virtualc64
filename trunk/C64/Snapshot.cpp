@@ -83,7 +83,7 @@ Snapshot::snapshotFromBuffer(const uint8_t *buffer, unsigned size)
 	return snapshot;	
 }
 
-Container::ContainerType
+ContainerType
 Snapshot::getType()
 {
     return V64_CONTAINER;
