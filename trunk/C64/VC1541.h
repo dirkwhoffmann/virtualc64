@@ -132,9 +132,6 @@ public:
     
     bool isWriteProtected() { return writeProtection; };
     void setWriteProtection(bool b);
-
-    //! Calculate start address of a specific sector
-    // uint8_t *findSector(unsigned halftrack, unsigned sector);
     
     //! Read data from haftrack
 	inline uint8_t getData(unsigned halftrack, unsigned offset) 

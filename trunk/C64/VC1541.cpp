@@ -286,14 +286,6 @@ VC1541::moveHead(int distance)
 		debug(2, "Head ???\n");
 }
 
-#if 0
-uint8_t *
-VC1541::findSector(unsigned halftrack, unsigned sector)
-{
-    
-}
-#endif
-
 void
 VC1541::clearHalftrack(int nr)
 {
