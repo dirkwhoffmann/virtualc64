@@ -76,8 +76,34 @@ P00Archive::archiveFromArchive(Archive *otherArchive)
         return NULL;
     }
     
-    fprintf(stderr, "IMPLEMENTATION MISSING\n");
+    // Determine container size and allocate memory
+    archive->size = otherArchive->getSizeOfItem(0);
+    if ((archive->data = (uint8_t *)malloc(8 + 17 + 1 + archive->size)) == NULL) {
+        fprintf(stderr, "Failed to allocate %d bytes of memory\n", archive->size);
+        delete archive;
+        return NULL;
+        
+    }
+    // Write magic bytes
+    uint8_t *ptr = archive->data;
+    strcpy((char *)ptr, "C64File");
+    ptr += 8;
     
+    // Write name in PET format (TODO)
+    memset(ptr, 0 , 17);
+    ptr += 17;
+    
+    // Record size (applies to REL files, only)
+    *ptr++ = 0;
+    
+    // File data
+    otherArchive->selectItem(0);
+    for (unsigned i = 0; i < archive->size; i++) {
+        int byte = otherArchive->getByte();
+        assert(byte != -1);
+        *ptr++ = (uint8_t)byte;
+    }
+
     return archive;
 }
 
