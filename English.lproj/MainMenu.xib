@@ -237,17 +237,6 @@
 									<reference key="NSOnImage" ref="1024293694"/>
 									<reference key="NSMixedImage" ref="598777137"/>
 								</object>
-								<object class="NSMenuItem" id="654378447">
-									<reference key="NSMenu" ref="242404350"/>
-									<bool key="NSIsDisabled">YES</bool>
-									<bool key="NSIsSeparator">YES</bool>
-									<string key="NSTitle"/>
-									<string key="NSKeyEquiv"/>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="1024293694"/>
-									<reference key="NSMixedImage" ref="598777137"/>
-								</object>
 								<object class="NSMenuItem" id="478407158">
 									<reference key="NSMenu" ref="242404350"/>
 									<string key="NSTitle">Export Disc...</string>
@@ -262,7 +251,7 @@
 										<array class="NSMutableArray" key="NSMenuItems">
 											<object class="NSMenuItem" id="844764098">
 												<reference key="NSMenu" ref="732159526"/>
-												<string key="NSTitle">D64 format</string>
+												<string key="NSTitle">D64 archive</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="1024293694"/>
@@ -271,7 +260,7 @@
 											</object>
 											<object class="NSMenuItem" id="272944924">
 												<reference key="NSMenu" ref="732159526"/>
-												<string key="NSTitle">T64 format</string>
+												<string key="NSTitle">T64 archive</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="1024293694"/>
@@ -280,7 +269,7 @@
 											</object>
 											<object class="NSMenuItem" id="551808854">
 												<reference key="NSMenu" ref="732159526"/>
-												<string key="NSTitle">PRG format</string>
+												<string key="NSTitle">PRG archive</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="1024293694"/>
@@ -289,7 +278,7 @@
 											</object>
 											<object class="NSMenuItem" id="206384287">
 												<reference key="NSMenu" ref="732159526"/>
-												<string key="NSTitle">P00 format</string>
+												<string key="NSTitle">P00 archive</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="1024293694"/>
@@ -298,6 +287,17 @@
 											</object>
 										</array>
 									</object>
+								</object>
+								<object class="NSMenuItem" id="654378447">
+									<reference key="NSMenu" ref="242404350"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1024293694"/>
+									<reference key="NSMixedImage" ref="598777137"/>
 								</object>
 								<object class="NSMenuItem" id="272250449">
 									<reference key="NSMenu" ref="242404350"/>
@@ -1776,9 +1776,9 @@
 							<reference ref="47622497"/>
 							<reference ref="646623366"/>
 							<reference ref="675716991"/>
-							<reference ref="478407158"/>
 							<reference ref="654378447"/>
 							<reference ref="689383266"/>
+							<reference ref="478407158"/>
 							<reference ref="272250449"/>
 						</array>
 						<reference key="parent" ref="233212308"/>

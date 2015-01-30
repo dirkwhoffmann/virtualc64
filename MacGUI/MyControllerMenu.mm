@@ -104,15 +104,15 @@
         case D64_CONTAINER:
             
             NSLog(@"Exporting to D64 format");
-            fileTypes = @[@"T64"];
+            fileTypes = @[@"D64"];
             target = diskContents;
             break;
             
         case T64_CONTAINER:
             
             NSLog(@"Exporting to T64 format");
-            fileTypes = @[@"P00"];
-            target = P00Archive::archiveFromArchive(diskContents);
+            fileTypes = @[@"T64"];
+            target = T64Archive::archiveFromArchive(diskContents);
             delete diskContents;
             break;
 

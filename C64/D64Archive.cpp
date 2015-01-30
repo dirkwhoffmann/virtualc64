@@ -853,7 +853,7 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrac
 	for (unsigned k = 0; k < 16; k++)
 		data[pos++] = (len > k) ? name[k] : 0xA0;
 	
-	assert(pos == offset(18, sector) + ((int)nr * 0x20) + 0x15);
+	assert(pos == offset(18, sector) + rel + 0x15);
 	
 	// 1E-1F: File size in sectors, low/high byte order
 	pos = offset(18, sector) + rel + 0x1E;
