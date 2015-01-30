@@ -79,8 +79,68 @@ T64Archive::archiveFromArchive(Archive *otherArchive)
         return NULL;
     }
     
-    fprintf(stderr, "IMPLEMENTATION MISSING\n");
+    // Determine container size and allocate memory
+    unsigned currentFiles = otherArchive->getNumberOfItems();
+    unsigned maxFiles = (currentFiles < 30) ? 30 : currentFiles;
+
+    archive->size = 64 /* header */ + maxFiles * 32 /* tape entries */;
     
+    for (unsigned i = 0; i < otherArchive->getNumberOfItems(); i++)
+        archive->size += otherArchive->getSizeOfItem(i);
+    
+    if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
+        fprintf(stderr, "Failed to allocate %d bytes of memory\n", archive->size);
+        delete archive;
+        return NULL;
+    }
+    
+    // Magic bytes (32 bytes)
+    uint8_t *ptr = archive->data;
+    strncpy((char *)ptr, "C64 tape image file", 32);
+    ptr += 32;
+    
+    // Version (2 bytes)
+    *ptr++ = 0x00;
+    *ptr++ = 0x01;
+    
+    // Max files (2 bytes)
+    *ptr++ = LO_BYTE(maxFiles);
+    *ptr++ = HI_BYTE(maxFiles);
+
+    // Current files (2 bytes)
+    *ptr++ = LO_BYTE(currentFiles);
+    *ptr++ = HI_BYTE(currentFiles);
+
+    // Reserved (2 bytes)
+    *ptr++ = 0x00;
+    *ptr++ = 0x00;
+    
+    // User description (24 bytes)
+    strncpy((char *)ptr, (char *)otherArchive->getName(), 24);
+    for (unsigned i = 0; i < 24; i++, ptr++)
+        *ptr = ascii2pet(*ptr);
+    
+    // Tape entries
+    for (unsigned i = 0; i < maxFiles; i++) {
+        // TODO
+        fprintf(stderr, "IMPLEMENTATION MISSING\n");
+        ptr += 32;
+    }
+    
+    // File data
+    for (unsigned i = 0; i < maxFiles; i++) {
+        // TODO
+        fprintf(stderr, "IMPLEMENTATION MISSING\n");
+        int byte;
+        otherArchive->selectItem(i);
+        while ((byte = otherArchive->getByte()) != EOF) {
+            *ptr++ = (uint8_t)byte;
+        }
+        
+    }
+    
+    fprintf(stderr, "%s archive created with %d bytes (size of item 0 = %d).\n",
+            archive->getTypeAsString(), archive->size, archive->getSizeOfItem(0));
     return archive;
 }
 
@@ -110,6 +170,18 @@ T64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 
 	return true;
 }
+
+unsigned
+T64Archive::writeToBuffer(uint8_t *buffer)
+{
+    assert(data != NULL);
+    
+    if (buffer) {
+        memcpy(buffer, data, size);
+    }
+    return size;
+}
+
 
 const char *
 T64Archive::getName()

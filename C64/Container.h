@@ -120,8 +120,7 @@ public:
 
     /*! @brief Write container contents into a memory buffer.
         @param buffer The address of the buffer in memory.
-        @discussion If a NULL pointer is passed in, a test run is performed. Test runs are performed to determine the size of the container on disk.
-        @warning TODO: Remove default implementation. Force each container to implement this method. */
+        @discussion If a NULL pointer is passed in, a test run is performed. Test runs are performed to determine the size of the container on disk. */
 	virtual unsigned writeToBuffer(uint8_t *buffer);
 
     /*! @brief Write container contents to a file.
