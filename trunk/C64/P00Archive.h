@@ -30,13 +30,13 @@ private:
 
     //! @brief The raw data of this archive.
     uint8_t *data;
-
-    /*! @brief File pointer
-        @discussion An offset into the data array. */
-	int fp;
 		
     //! @brief File size
 	int size;
+
+    /*! @brief File pointer
+     @discussion An offset into the data array. */
+    int fp;
 
 public:
 
@@ -69,7 +69,7 @@ public:
     
     bool fileIsValid(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, unsigned length);
-    // unsigned writeToBuffer(uint8_t *buffer);
+    unsigned writeToBuffer(uint8_t *buffer);
     
     //
     // Virtual functions from Archive class
@@ -79,7 +79,6 @@ public:
     
     const char *getNameOfItem(int n);
     const char *getTypeOfItem(int n);
-    int getSizeOfItem(int n);
     uint16_t getDestinationAddrOfItem(int n);
     
     void selectItem(int n);

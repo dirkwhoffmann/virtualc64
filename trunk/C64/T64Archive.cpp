@@ -179,7 +179,8 @@ T64Archive::getNameOfItem(int n)
 	}
 	return name;
 }
-	
+
+#if 0
 int 
 T64Archive::getSizeOfItem(int n)
 {
@@ -195,6 +196,7 @@ T64Archive::getSizeOfItem(int n)
 	}
 	return (endAddrInMemory - startAddrInMemory) + 1;
 }
+#endif
 
 const char *
 T64Archive::getTypeOfItem(int n)
