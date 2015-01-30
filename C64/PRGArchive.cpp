@@ -64,7 +64,7 @@ PRGArchive::archiveFromArchive(Archive *otherArchive)
 {
     PRGArchive *archive;
     
-    if (otherArchive == NULL)
+    if (otherArchive == NULL || otherArchive->getNumberOfItems() == 0)
         return NULL;
     
     fprintf(stderr, "Creating PRG archive from %s archive...\n", otherArchive->getTypeAsString());
@@ -74,28 +74,28 @@ PRGArchive::archiveFromArchive(Archive *otherArchive)
         return NULL;
     }
     
-    if (otherArchive->getNumberOfItems() > 0) {
-        unsigned numBytes = otherArchive->getSizeOfItem(0)+2;
-        if ((archive->data = (uint8_t *)malloc(numBytes)) == NULL) {
-            fprintf(stderr, "Failed to allocate %d bytes\n", numBytes);
-            delete archive;
-            return NULL;
-        }
-        
-        // Copy start address
-        uint8_t* ptr = archive->data;
-        *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem(0));
-        *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem(0));
-        
-        // Copy data
-        int byte;
-        otherArchive->selectItem(0);
-        while ((byte = otherArchive->getByte()) != EOF) {
-            *ptr++ = (uint8_t)byte;
-        }
-        archive->size = ptr - archive->data;
+    // Determine container size and allocate memory
+    archive->size = 2 + otherArchive->getSizeOfItem(0);
+    if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
+        fprintf(stderr, "Failed to allocate %d bytes of memory\n", archive->size);
+        delete archive;
+        return NULL;
     }
     
+    // Load address
+    uint8_t* ptr = archive->data;
+    *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem(0));
+    *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem(0));
+        
+    // File data
+    int byte;
+    otherArchive->selectItem(0);
+    while ((byte = otherArchive->getByte()) != EOF) {
+        *ptr++ = (uint8_t)byte;
+    }
+    
+    fprintf(stderr, "%s archive created with %d bytes (size of item 0 = %d).\n",
+            archive->getTypeAsString(), archive->size, archive->getSizeOfItem(0));
     return archive;
 }
 
@@ -133,7 +133,6 @@ PRGArchive::writeToBuffer(uint8_t *buffer)
 
     if (buffer) {
         memcpy(buffer, data, size);
-        fprintf(stderr, "Copied %d bytes\n", size);
     }
     return size;
 }
@@ -150,15 +149,6 @@ PRGArchive::getNameOfItem(int n)
 	return "UNKNOWN";
 }
 	
-int 
-PRGArchive::getSizeOfItem(int n)
-{
-	if (size > 0)
-		return size-2;
-	else
-		return 0;
-}		
-
 const char *
 PRGArchive::getTypeOfItem(int n)
 {

@@ -135,14 +135,6 @@ D64Archive::archiveFromArbitraryFile(const char *filename)
 	if (D64Archive::isD64File(filename)) {
 		return D64Archive::archiveFromD64File(filename);
 	}
-
-
-#if 0
-	// FOR DEBUGGING (CONVERT D64 TO D64)	
-	if (D64Archive::isD64File(filename)) {
-		return D64Archive::archiveFromOtherArchive(D64Archive::archiveFromFile(filename));
-	}
-#endif
 	
 	if (T64Archive::isT64File(filename)) {
 		return D64Archive::archiveFromArchive(T64Archive::archiveFromT64File(filename));
@@ -222,14 +214,24 @@ D64Archive::archiveFromArchive(Archive *otherArchive)
 						  
         // Write raw data to disk
         int byte;
+        unsigned num = 0;
+
+        fprintf(stderr, "Will write %d bytes\n", otherArchive->getSizeOfItem(i));
+
         otherArchive->selectItem(i);
         while ((byte = otherArchive->getByte()) != EOF) {
             archive->writeByteToSector(byte, &track, &sector);
+            num++;
         }
         
+        fprintf(stderr, "D64 item %d: %d bytes written\n", i, num);
         // Item i has been written. Goto next free sector and proceed with the next item
         (void)archive->nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */);
     }
+
+    fprintf(stderr, "Archive created (item 0 has %d bytes)\n", archive->getSizeOfItem(0));
+    fprintf(stderr, "%s archive created (size of item 0 = %d).\n",
+            archive->getTypeAsString(), archive->getSizeOfItem(0));
 
     return archive;
 }
@@ -254,7 +256,10 @@ D64Archive::archiveFromDrive(VC1541 *drive)
     // Get data from drive
     archive->numTracks = 42;
     drive->decodeDisk(archive->data);
-    
+
+    fprintf(stderr, "Archive has %d files\n", archive->getNumberOfItems());
+    fprintf(stderr, "Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
+
     return archive;
 }
 
@@ -456,7 +461,7 @@ D64Archive::getDestinationAddrOfItem(int n)
     if ((pos = offset(track, sector)) < 0)
         return 0;
     
-    result = data[pos+2] + (data[pos+3] << 8);
+    result = LO_HI(data[pos+2],data[pos+3]);
     return result;
 }
 

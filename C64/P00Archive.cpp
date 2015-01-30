@@ -57,7 +57,9 @@ P00Archive::archiveFromP00File(const char *filename)
         delete archive;
 		archive = NULL;
 	}
-	
+
+    fprintf(stderr, "%s archive created with %d bytes (size of item 0 = %d).\n",
+            archive->getTypeAsString(), archive->size, archive->getSizeOfItem(0));
 	return archive;
 }
 
@@ -66,7 +68,7 @@ P00Archive::archiveFromArchive(Archive *otherArchive)
 {
     P00Archive *archive;
     
-    if (otherArchive == NULL)
+    if (otherArchive == NULL || otherArchive->getNumberOfItems() == 0)
         return NULL;
     
     fprintf(stderr, "Creating P00 archive from %s archive...\n", otherArchive->getTypeAsString());
@@ -77,33 +79,39 @@ P00Archive::archiveFromArchive(Archive *otherArchive)
     }
     
     // Determine container size and allocate memory
-    archive->size = otherArchive->getSizeOfItem(0);
-    if ((archive->data = (uint8_t *)malloc(8 + 17 + 1 + archive->size)) == NULL) {
+    archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem(0);
+    if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
         fprintf(stderr, "Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
         return NULL;
-        
     }
-    // Write magic bytes
+    
+    // Magic bytes (8 bytes)
     uint8_t *ptr = archive->data;
     strcpy((char *)ptr, "C64File");
     ptr += 8;
     
-    // Write name in PET format (TODO)
-    memset(ptr, 0 , 17);
-    ptr += 17;
+    // Name in PET format (17 bytes)
+    strncpy((char *)ptr, (char *)otherArchive->getName(), 17);
+    for (unsigned i = 0; i < 17; i++, ptr++)
+        *ptr = ascii2pet(*ptr);
     
-    // Record size (applies to REL files, only)
+    // Record size (applies to REL files, only) (1 byte)
     *ptr++ = 0;
     
+    // Load address (2 bytes)
+    *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem(0));
+    *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem(0));
+    
     // File data
+    int byte;
     otherArchive->selectItem(0);
-    for (unsigned i = 0; i < archive->size; i++) {
-        int byte = otherArchive->getByte();
-        assert(byte != -1);
+    while ((byte = otherArchive->getByte()) != EOF) {
         *ptr++ = (uint8_t)byte;
     }
 
+    fprintf(stderr, "%s archive created with %d bytes (size of item 0 = %d).\n",
+            archive->getTypeAsString(), archive->size, archive->getSizeOfItem(0));
     return archive;
 }
 
@@ -119,20 +127,13 @@ P00Archive::dealloc()
 const char *
 P00Archive::getName()
 {
-#if 0
-    int i;
-    
-    if (n != 0)
-        return NULL;
+    unsigned i;
     
     for (i = 0; i < 17; i++) {
-        name[i] = data[0x08+i];
+        name[i] = pet2ascii(data[0x08+i]);
     }
     name[i] = 0x00;
     return name;
-#endif
-    
-    return "???";
 }
 
 bool
@@ -152,7 +153,18 @@ P00Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	
 	return true;
 }
-		
+
+unsigned
+P00Archive::writeToBuffer(uint8_t *buffer)
+{
+    assert(data != NULL);
+    
+    if (buffer) {
+        memcpy(buffer, data, size);
+    }
+    return size;
+}
+
 int 
 P00Archive::getNumberOfItems()
 {
@@ -162,27 +174,18 @@ P00Archive::getNumberOfItems()
 const char *
 P00Archive::getNameOfItem(int n)
 {
-	int i;
+	unsigned i;
 	
 	if (n != 0)
 		return NULL;
 		
 	for (i = 0; i < 17; i++) {
-		name[i] = data[0x08+i];
+		name[i] = pet2ascii(data[0x08+i]);
 	}
 	name[i] = 0x00;
 	return name;
 }
 	
-int 
-P00Archive::getSizeOfItem(int n)
-{
-	if (size > 0)
-		return size-0x1A;
-	else
-		return 0;
-}		
-
 const char *
 P00Archive::getTypeOfItem(int n)
 {

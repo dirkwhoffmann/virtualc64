@@ -114,6 +114,9 @@ toASCII(char c)
 uint8_t
 pet2ascii(uint8_t petchar)
 {
+    if (petchar == 0x00)
+        return 0x00;
+
     uint16_t unicodechar = pet2unicode(petchar);
     return (unicodechar & 0xFF00) ? '.' : (uint8_t)unicodechar;
 }
@@ -121,6 +124,9 @@ pet2ascii(uint8_t petchar)
 uint8_t
 ascii2pet(uint8_t asciichar)
 {
+    if (asciichar == 0x00)
+        return 0x00;
+    
     asciichar = toupper(asciichar);
     
     if (asciichar >= 0x20 && asciichar <= 0x5D) {

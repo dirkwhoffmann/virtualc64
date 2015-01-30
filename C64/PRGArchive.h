@@ -82,7 +82,6 @@ public:
     
     const char *getNameOfItem(int n);
     const char *getTypeOfItem(int n);
-    int getSizeOfItem(int n);
     uint16_t getDestinationAddrOfItem(int n);
     
     void selectItem(int n);
