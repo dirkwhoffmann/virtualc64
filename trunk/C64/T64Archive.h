@@ -31,6 +31,9 @@ private:
     //! @brief The raw data of this archive.
     uint8_t *data;
 
+    //! @brief File size
+    int size;
+
     /*! @brief File pointer
         @discussion An offset into the data array. */
 	int fp;
@@ -39,9 +42,6 @@ private:
         @discussion Maximum value for fp. Do we really need this? */
 	int fp_eof;
 	
-    //! @brief File size
-	int size;
-
 	//! @brief Don't know. Do we really need this?
 	bool directoryItemIsPresent(int n);
 
@@ -80,7 +80,7 @@ public:
     
     bool fileIsValid(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, unsigned length);
-    // unsigned writeToBuffer(uint8_t *buffer);
+    unsigned writeToBuffer(uint8_t *buffer);
     
     //
     // Virtual functions from Archive class
