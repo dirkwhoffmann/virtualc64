@@ -95,6 +95,13 @@ public:
 	
     //! @brief Reads the next byte from the currently selected item
 	virtual int getByte() = 0;
+
+    //
+    //! @functiongroup Debugging
+    //
+    
+    virtual void dumpDirectory();
+    
 };
 
 #endif

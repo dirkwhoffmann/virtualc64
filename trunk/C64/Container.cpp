@@ -125,19 +125,16 @@ Container::writeToFile(const char *filename)
 	assert (filename != NULL);
 		
 	// Open file
-    fprintf(stderr, "Opening file\n");
 	if (!(file = fopen(filename, "w"))) {
 		goto exit;
 	}
 		
 	// Allocate memory
-    fprintf(stderr, "Allocating memory\n");
     if (!(data = (uint8_t *)malloc(filesize))) {
 		goto exit;
 	}
 	
 	// Write to buffer 
-    fprintf(stderr, "Writing to buffer\n");
 	if (!writeToBuffer(data)) {
 		goto exit;
 	}

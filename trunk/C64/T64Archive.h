@@ -87,6 +87,7 @@ public:
     //
     
     int getNumberOfItems();
+    // int getSizeOfItem(int n);
     
     const char *getNameOfItem(int n);
     const char *getTypeOfItem(int n);
