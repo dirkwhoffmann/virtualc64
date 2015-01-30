@@ -70,4 +70,19 @@ Archive::getItemWithName(char *pattern)
 	return -1;
 }
 
+int
+Archive::getSizeOfItem(int n)
+{
+    int size = 0;
+
+    if (n < getNumberOfItems()) {
+        
+        selectItem(n);
+        while (getByte() != EOF)
+            size++;
+        }
+
+    return size;
+}
+
 

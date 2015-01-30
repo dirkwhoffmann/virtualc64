@@ -63,7 +63,7 @@ public:
     
     void dealloc();
     
-    // const char *getName();
+    const char *getName();
     ContainerType getType() { return P00_CONTAINER; }
     const char *getTypeAsString() { return "P00"; }
     

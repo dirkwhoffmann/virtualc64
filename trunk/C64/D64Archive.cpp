@@ -432,23 +432,13 @@ D64Archive::getTypeOfItem(int n)
     }
 }
 
-
 int
-D64Archive::getSizeOfItem(int n)
+D64Archive::getSizeOfItemInBlocks(int n)
 {
-    int size = 0;
-    int pos;
-    
-    // fprintf(stderr, "getSizeOfItem:%d\n", n);
-    
-    // jump to beginning of the n-th directory entry
-    pos = findDirectoryEntry(n);
+    int pos = findDirectoryEntry(n);
     if (pos < 0) return 0;
     
-    // file size is at 1E,1F ($1E+$1F*256)
-    size = data[pos+30] + data[pos+31] * 256;
-    
-    return size;
+    return LO_HI(data[pos+0x1E],data[pos+0x1F]);
 }
 
 uint16_t

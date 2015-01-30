@@ -116,7 +116,26 @@ P00Archive::dealloc()
 	fp = -1;
 }
 
-bool 
+const char *
+P00Archive::getName()
+{
+#if 0
+    int i;
+    
+    if (n != 0)
+        return NULL;
+    
+    for (i = 0; i < 17; i++) {
+        name[i] = data[0x08+i];
+    }
+    name[i] = 0x00;
+    return name;
+#endif
+    
+    return "???";
+}
+
+bool
 P00Archive::fileIsValid(const char *filename)
 {
 	return isP00File(filename);
@@ -173,9 +192,9 @@ P00Archive::getTypeOfItem(int n)
 uint16_t 
 P00Archive::getDestinationAddrOfItem(int n)
 {
-	uint16_t result = data[0x1A] + (data[0x1B] << 8);
-	printf("Will load to location %X\n", result);
-	return result;
+//	uint16_t result = data[0x1A] + (data[0x1B] << 8);
+//	return result;
+    return LO_HI(data[0x1A], data[0x1B]);
 }
 
 void 
