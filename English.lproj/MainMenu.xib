@@ -229,14 +229,6 @@
 									<reference key="NSOnImage" ref="1024293694"/>
 									<reference key="NSMixedImage" ref="598777137"/>
 								</object>
-								<object class="NSMenuItem" id="478407158">
-									<reference key="NSMenu" ref="242404350"/>
-									<string key="NSTitle">Save Screenshot...</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="1024293694"/>
-									<reference key="NSMixedImage" ref="598777137"/>
-								</object>
 								<object class="NSMenuItem" id="646623366">
 									<reference key="NSMenu" ref="242404350"/>
 									<string key="NSTitle">Revert</string>
@@ -246,6 +238,76 @@
 									<reference key="NSMixedImage" ref="598777137"/>
 								</object>
 								<object class="NSMenuItem" id="654378447">
+									<reference key="NSMenu" ref="242404350"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1024293694"/>
+									<reference key="NSMixedImage" ref="598777137"/>
+								</object>
+								<object class="NSMenuItem" id="478407158">
+									<reference key="NSMenu" ref="242404350"/>
+									<string key="NSTitle">Export Disc...</string>
+									<string type="base64-UTF8" key="NSKeyEquiv">CA</string>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1024293694"/>
+									<reference key="NSMixedImage" ref="598777137"/>
+									<string key="NSAction">submenuAction:</string>
+									<reference key="NSTarget" ref="732159526"/>
+									<object class="NSMenu" key="NSSubmenu" id="732159526">
+										<string key="NSTitle"/>
+										<array class="NSMutableArray" key="NSMenuItems">
+											<object class="NSMenuItem" id="844764098">
+												<reference key="NSMenu" ref="732159526"/>
+												<string key="NSTitle">D64 format</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1024293694"/>
+												<reference key="NSMixedImage" ref="598777137"/>
+												<int key="NSTag">3</int>
+											</object>
+											<object class="NSMenuItem" id="272944924">
+												<reference key="NSMenu" ref="732159526"/>
+												<string key="NSTitle">T64 format</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1024293694"/>
+												<reference key="NSMixedImage" ref="598777137"/>
+												<int key="NSTag">4</int>
+											</object>
+											<object class="NSMenuItem" id="551808854">
+												<reference key="NSMenu" ref="732159526"/>
+												<string key="NSTitle">PRG format</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1024293694"/>
+												<reference key="NSMixedImage" ref="598777137"/>
+												<int key="NSTag">5</int>
+											</object>
+											<object class="NSMenuItem" id="206384287">
+												<reference key="NSMenu" ref="732159526"/>
+												<string key="NSTitle">P00 format</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1024293694"/>
+												<reference key="NSMixedImage" ref="598777137"/>
+												<int key="NSTag">6</int>
+											</object>
+										</array>
+									</object>
+								</object>
+								<object class="NSMenuItem" id="272250449">
+									<reference key="NSMenu" ref="242404350"/>
+									<string key="NSTitle">Save Screenshot...</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1024293694"/>
+									<reference key="NSMixedImage" ref="598777137"/>
+								</object>
+								<object class="NSMenuItem" id="689383266">
 									<reference key="NSMenu" ref="242404350"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -1155,14 +1217,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">saveScreenshotDialog:</string>
-						<reference key="source" ref="958131061"/>
-						<reference key="destination" ref="478407158"/>
-					</object>
-					<int key="connectionID">343</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">traceVC1541CpuAction:</string>
 						<reference key="source" ref="958131061"/>
 						<reference key="destination" ref="360436317"/>
@@ -1491,6 +1545,46 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">saveScreenshotDialog:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="272250449"/>
+					</object>
+					<int key="connectionID">545</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">exportDiscDialog:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="844764098"/>
+					</object>
+					<int key="connectionID">556</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">exportDiscDialog:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="272944924"/>
+					</object>
+					<int key="connectionID">557</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">exportFileFromDiscDialog:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="551808854"/>
+					</object>
+					<int key="connectionID">558</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">exportFileFromDiscDialog:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="206384287"/>
+					</object>
+					<int key="connectionID">559</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">checkForUpdates:</string>
 						<reference key="source" ref="10529238"/>
 						<reference key="destination" ref="1001749454"/>
@@ -1674,7 +1768,6 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="706024527"/>
 							<reference ref="155861774"/>
-							<reference ref="654378447"/>
 							<reference ref="85494111"/>
 							<reference ref="883562662"/>
 							<reference ref="998241644"/>
@@ -1684,6 +1777,9 @@
 							<reference ref="646623366"/>
 							<reference ref="675716991"/>
 							<reference ref="478407158"/>
+							<reference ref="654378447"/>
+							<reference ref="689383266"/>
+							<reference ref="272250449"/>
 						</array>
 						<reference key="parent" ref="233212308"/>
 					</object>
@@ -1761,6 +1857,9 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">341</int>
 						<reference key="object" ref="478407158"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="732159526"/>
+						</array>
 						<reference key="parent" ref="242404350"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -2198,6 +2297,47 @@
 						<reference key="object" ref="953357260"/>
 						<reference key="parent" ref="874569900"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">542</int>
+						<reference key="object" ref="689383266"/>
+						<reference key="parent" ref="242404350"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">543</int>
+						<reference key="object" ref="272250449"/>
+						<reference key="parent" ref="242404350"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">550</int>
+						<reference key="object" ref="732159526"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="844764098"/>
+							<reference ref="272944924"/>
+							<reference ref="551808854"/>
+							<reference ref="206384287"/>
+						</array>
+						<reference key="parent" ref="478407158"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">551</int>
+						<reference key="object" ref="844764098"/>
+						<reference key="parent" ref="732159526"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">552</int>
+						<reference key="object" ref="272944924"/>
+						<reference key="parent" ref="732159526"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">553</int>
+						<reference key="object" ref="551808854"/>
+						<reference key="parent" ref="732159526"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">554</int>
+						<reference key="object" ref="206384287"/>
+						<reference key="parent" ref="732159526"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2294,6 +2434,13 @@
 				<string key="531.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="534.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="537.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="542.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="543.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="550.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="551.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="552.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="553.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="554.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2314,7 +2461,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">541</int>
+			<int key="maxID">559</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2496,8 +2643,8 @@
 						<string key="directory">NSTableView</string>
 						<string key="diskIcon">NSImageView</string>
 						<string key="diskIconFrame">NSBox</string>
+						<string key="headerText">NSTextField</string>
 						<string key="loadOptions">NSPopUpButton</string>
-						<string key="loadText">NSTextField</string>
 						<string key="warningText">NSTextField</string>
 						<string key="writeProtect">NSButton</string>
 					</dictionary>
@@ -2522,13 +2669,13 @@
 							<string key="name">diskIconFrame</string>
 							<string key="candidateClassName">NSBox</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="headerText">
+							<string key="name">headerText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="loadOptions">
 							<string key="name">loadOptions</string>
 							<string key="candidateClassName">NSPopUpButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="loadText">
-							<string key="name">loadText</string>
-							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="warningText">
 							<string key="name">warningText</string>
@@ -4502,6 +4649,8 @@
 						<string key="dumpVC1541Memory:">id</string>
 						<string key="dumpVC1541VIA1:">id</string>
 						<string key="dumpVC1541VIA2:">id</string>
+						<string key="exportDiscDialog:">id</string>
+						<string key="exportFileFromDiscDialog:">id</string>
 						<string key="fastResetAction:">id</string>
 						<string key="hideSpritesAction:">id</string>
 						<string key="markDMALinesAction:">id</string>
@@ -4610,6 +4759,14 @@
 						</object>
 						<object class="IBActionInfo" key="dumpVC1541VIA2:">
 							<string key="name">dumpVC1541VIA2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="exportDiscDialog:">
+							<string key="name">exportDiscDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="exportFileFromDiscDialog:">
+							<string key="name">exportFileFromDiscDialog:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="fastResetAction:">
@@ -4693,6 +4850,8 @@
 						<string key="dumpVC1541Memory:">id</string>
 						<string key="dumpVC1541VIA1:">id</string>
 						<string key="dumpVC1541VIA2:">id</string>
+						<string key="exportDiscDialog:">id</string>
+						<string key="exportFileFromDiscDialog:">id</string>
 						<string key="fastResetAction:">id</string>
 						<string key="hideSpritesAction:">id</string>
 						<string key="markDMALinesAction:">id</string>
@@ -4801,6 +4960,14 @@
 						</object>
 						<object class="IBActionInfo" key="dumpVC1541VIA2:">
 							<string key="name">dumpVC1541VIA2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="exportDiscDialog:">
+							<string key="name">exportDiscDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="exportFileFromDiscDialog:">
+							<string key="name">exportFileFromDiscDialog:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="fastResetAction:">

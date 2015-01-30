@@ -26,6 +26,16 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
+    if ([item action] == @selector(exportDiscDialog:)) {
+        return [[c64 vc1541] hasDisk];
+    }
+
+    if ([item action] == @selector(exportFileFromDiscDialog:)) {
+        // Possibiliy: Check how many files are present.
+        //             Only enable items when a single file is present
+        return [[c64 vc1541] hasDisk];
+    }
+
     if ([item action] == @selector(pauseAction:)) {
         return [c64 isRunning];
     }
@@ -51,7 +61,7 @@
 {
     NSArray *fileTypes = @[@"tif", @"jpg", @"gif", @"png", @"psd", @"tga"];
 	
-	// Create the file save panel
+	// Create panel
 	NSSavePanel* sPanel = [NSSavePanel savePanel];
 	// [sPanel setCanChooseDirectories:NO];
 	// [sPanel setCanChooseFiles:YES];
@@ -62,15 +72,95 @@
 	[sPanel setCanSelectHiddenExtension:YES];
 	[sPanel setAllowedFileTypes:fileTypes];
     
-	if ([sPanel runModal] == NSOKButton) {
-        
-		NSURL *selectedFile = [sPanel URL];
-		NSLog(@"Saving screenshot to file %@", selectedFile);
+    // Show panel
+	if ([sPanel runModal] != NSOKButton)
+        return;
+    
+    // Export
+    NSURL *selectedFile = [sPanel URL];
+    NSLog(@"Saving screenshot to file %@", selectedFile);
 		
-		NSImage *image = [screen screenshot];
-		NSData *data = [image TIFFRepresentation];
-		[data writeToURL:selectedFile atomically:YES];
-	}
+    NSImage *image = [screen screenshot];
+    NSData *data = [image TIFFRepresentation];
+    [data writeToURL:selectedFile atomically:YES];
+}
+
+- (IBAction)exportDiscDialog:(id)sender
+{
+    VC1541 *floppy = [c64 c64]->floppy;
+    D64Archive *diskContents;
+    NSArray *fileTypes;
+    Archive *target;
+    
+    // Create archive from drive
+    if ((diskContents = D64Archive::archiveFromDrive(floppy)) == NULL) {
+        NSLog(@"Cannot create D64 archive from drive");
+        return;
+    }
+    
+    // Determine target format and convert archive
+    switch ([sender tag]) {
+            
+        case D64_CONTAINER:
+            
+            NSLog(@"Exporting to D64 format");
+            fileTypes = @[@"T64"];
+            target = diskContents;
+            break;
+            
+        case T64_CONTAINER:
+            
+            NSLog(@"Exporting to T64 format");
+            fileTypes = @[@"P00"];
+            target = P00Archive::archiveFromArchive(diskContents);
+            delete diskContents;
+            break;
+
+        case PRG_CONTAINER:
+            
+            NSLog(@"Exporting to PRG format");
+            fileTypes = @[@"PRG"];
+            target = PRGArchive::archiveFromArchive(diskContents);
+            // delete diskContents;
+            break;
+
+        case P00_CONTAINER:
+            
+            NSLog(@"Exporting to P00 format");
+            fileTypes = @[@"P00"];
+            target = P00Archive::archiveFromArchive(diskContents);
+            delete diskContents;
+            break;
+
+        default:
+            assert(0);
+            return;
+    }
+    
+    // Create panel
+    NSSavePanel* sPanel = [NSSavePanel savePanel];
+    [sPanel setCanSelectHiddenExtension:YES];
+    [sPanel setAllowedFileTypes:fileTypes];
+
+    // Show panel
+    if ([sPanel runModal] != NSOKButton) {
+        delete target;
+        return;
+    }
+    
+    // Export
+    NSURL *selectedURL = [sPanel URL];
+    NSString *selectedFileURL = [selectedURL absoluteString];
+    NSString *selectedFile = [selectedFileURL stringByReplacingOccurrencesOfString:@"file://" withString:@""];
+    
+    NSLog(@"Exporting to file %@", selectedFile);
+    target->writeToFile([selectedFile UTF8String]);
+    delete target;
+}
+
+- (IBAction)exportFileFromDiscDialog:(id)sender
+{
+    [self exportDiscDialog: sender];
 }
 
 // --------------------------------------------------------------------------------

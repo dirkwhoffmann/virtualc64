@@ -41,7 +41,7 @@
 #include <string>
 
 //
-// Macros
+//! @functiongroup Handling low level data objects
 //
 
 //! Evaluates to the high byte of x. x is expected to be of type uint16_t.
@@ -69,18 +69,40 @@
 #define CLR_BIT(x,nr) ((x) &= ~(1 << (nr)))
 
 //
-// Pretty printing
+//! @functiongroup Pretty printing
 //
 
 void printReadable(const void *data, int length);
 
 //
-// Conversion functions
+//! @functiongroup Converting low level data objects
 //
 
-//! Convert PETASCII character to ASCII
-/*! Returns '.' if character has no printable equivalent */
+
+/*! @brief Converts a PET character to a unicocde character.
+ *  @discussion This function uses the PET upper case character set.
+ *  @result Returns 0x00 if no unicode counterpart exists. */
+uint16_t pet2unicode(uint8_t petchar);
+
+/*! @brief Converts a PET character to an ASCII character.
+ *  @discussion This function uses the PET upper case character set.
+ *  @result Returns '.' if no ASCII counterpart exists .
+ *  @deprecated Use pet2ascii instead. */
 char toASCII(char c);
+
+/*! @brief Converts a PET character to an ASCII character.
+ *  @discussion This function uses the PET upper case character set.
+ *  @result Returns '.' if no ASCII counterpart exists. */
+uint8_t pet2ascii(uint8_t petchar);
+
+/*! @brief Converts an ASCII character to a PET character.
+ *  @discussion This function translates into the unshifted PET character set. I.e., lower case characters are converted to uppercase characters.
+ *  @result Returns ' ' if the ASCII character is not covered. */
+uint8_t ascii2pet(uint8_t asciichar);
+
+/*! @brief Converts an ASCII string into a PET string. */
+void ascii2pet(char *asciistring);
+
 
 //! Write ASCII representation of 8 bit value to a string
 void binary8_to_string(uint8_t value, char *s);
@@ -93,10 +115,9 @@ inline uint8_t BinaryToBCD(uint8_t value) { return ((value / 10) << 4) + (value 
 
 //! Increment BCD number by one
 inline uint8_t incBCD(uint8_t value) { return ((value & 0x0F) == 0x09) ?  (value & 0xF0) + 0x10 : (value & 0xF0) + ((value + 0x01) & 0x0F); }
-// inline uint8_t incBCD(uint8_t value) { uint8_t newValue = _incBCD(value); printf("%02X -> %02X\n", value, newValue); return newValue; }
 
 //
-// File handling
+//! Handling file and path names
 //
 
 //! Extract directory from path
@@ -145,7 +166,7 @@ bool
 checkFileHeader(const char *filename, int *header);
 
 //
-// Timing
+//! @functiongroup Managing time
 //
 
 //! Application launch time in seconds

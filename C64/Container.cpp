@@ -95,7 +95,7 @@ Container::readFromFile(const char *filename)
     setPath(filename);
     setName(ChangeExtension(ExtractFilename(getPath()), "").c_str());
     
-    fprintf(stderr, "Container read successfully: Name = %s\n", getName());
+    fprintf(stderr, "Container %s (%s) read successfully from file %s\n", name, getName(), path);
 	success = true;
 
 exit:
@@ -125,16 +125,19 @@ Container::writeToFile(const char *filename)
 	assert (filename != NULL);
 		
 	// Open file
+    fprintf(stderr, "Opening file\n");
 	if (!(file = fopen(filename, "w"))) {
 		goto exit;
 	}
 		
 	// Allocate memory
-		if (!(data = (uint8_t *)malloc(filesize))) {
+    fprintf(stderr, "Allocating memory\n");
+    if (!(data = (uint8_t *)malloc(filesize))) {
 		goto exit;
 	}
 	
 	// Write to buffer 
+    fprintf(stderr, "Writing to buffer\n");
 	if (!writeToBuffer(data)) {
 		goto exit;
 	}

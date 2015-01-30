@@ -74,7 +74,27 @@ PRGArchive::archiveFromArchive(Archive *otherArchive)
         return NULL;
     }
     
-    fprintf(stderr, "IMPLEMENTATION MISSING\n");
+    if (otherArchive->getNumberOfItems() > 0) {
+        unsigned numBytes = otherArchive->getSizeOfItem(0)+2;
+        if ((archive->data = (uint8_t *)malloc(numBytes)) == NULL) {
+            fprintf(stderr, "Failed to allocate %d bytes\n", numBytes);
+            delete archive;
+            return NULL;
+        }
+        
+        // Copy start address
+        uint8_t* ptr = archive->data;
+        *ptr++ = LO_BYTE(otherArchive->getDestinationAddrOfItem(0));
+        *ptr++ = HI_BYTE(otherArchive->getDestinationAddrOfItem(0));
+        
+        // Copy data
+        int byte;
+        otherArchive->selectItem(0);
+        while ((byte = otherArchive->getByte()) != EOF) {
+            *ptr++ = (uint8_t)byte;
+        }
+        archive->size = ptr - archive->data;
+    }
     
     return archive;
 }
@@ -102,34 +122,23 @@ PRGArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
 
 	memcpy(data, buffer, length);
 	size = length;
-	
+	    
 	return true;
 }
 
-#if 0
-bool 
-PRGArchive::readDataFromFile(FILE *file, struct stat fileProperties)
+unsigned
+PRGArchive::writeToBuffer(uint8_t *buffer)
 {
-	int c = 0;
-	
-	// Allocate memory
-	if ((data = (uint8_t *)malloc(fileProperties.st_size)) == NULL) {
-		return false;
-	}
-		
-	// Read data
-	c = fgetc(file);
-	while(c != EOF) {
-		data[size++] = c;
-		c = fgetc(file);
-	}
+    assert(data != NULL);
 
-	// fprintf(stderr, "%d bytes read (out of %d)\n", (int)fileProperties.st_size, size);
-	return true;
+    if (buffer) {
+        memcpy(buffer, data, size);
+        fprintf(stderr, "Copied %d bytes\n", size);
+    }
+    return size;
 }
-#endif
 
-int 
+int
 PRGArchive::getNumberOfItems()
 {
 	return 1;
@@ -159,7 +168,7 @@ PRGArchive::getTypeOfItem(int n)
 uint16_t 
 PRGArchive::getDestinationAddrOfItem(int n)
 {
-	uint16_t result = data[0] + (data[1] << 8);
+	uint16_t result = LO_HI(data[0], data[1]);
 	return result;
 }
 
@@ -181,16 +190,11 @@ PRGArchive::getByte()
 		return -1;
 		
 	// get byte
-	result = data[fp];
+	result = data[fp++];
 	
 	// check for end of file
-	if (fp == (size-1)) {
+	if (fp == size)
 		fp = -1;
-	} else {
-		// advance file pointer
-		fp++;
-	}
 
-	// fprintf(stderr, "%02X ", result);
 	return result;
 }
