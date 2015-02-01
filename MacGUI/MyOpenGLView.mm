@@ -847,91 +847,41 @@ void checkForOpenGLErrors()
 	return YES;
 }
 
-- (BOOL)pullJoystick:(int)nr withKey:(char)c up:(char)u down:(char)d left:(char)l right:(char)r fire:(char)f
+- (BOOL)pullJoystick:(int)nr withKeycode:(int)k device:(int)d
 {
     assert (nr == 1 || nr == 2);
-    Joystick *joy = ((nr == 1) ? c64->joystick1 : c64->joystick2);
     
-    if (c == u) { joy->SetAxisY(JOYSTICK_AXIS_Y_UP); return YES; }
-    if (c == d) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); return YES; }
-    if (c == l) { joy->SetAxisX(JOYSTICK_AXIS_X_LEFT); return YES; }
-    if (c == r) { joy->SetAxisX(JOYSTICK_AXIS_X_RIGHT); return YES; }
-    if (c == f) { joy->SetButtonPressed(true); return true; }
+    if (d != IPD_KEYSET_1 && d != IPD_KEYSET_2)
+        return NO;
     
+    unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
+    Joystick *joy = (nr == 1) ? c64->joystick1 : c64->joystick2;
+    
+    if (k == joyKeycode[keyset][JOYSTICK_UP]) { joy->SetAxisY(JOYSTICK_AXIS_Y_UP); return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { joy->SetAxisX(JOYSTICK_AXIS_X_LEFT); return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { joy->SetAxisX(JOYSTICK_AXIS_X_RIGHT); return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { joy->SetButtonPressed(true); return YES; }
+
     return NO;
 }
 
-- (BOOL)pullJoystick:(int)nr withKeycode:(int)k up:(int)u down:(int)d left:(int)l right:(int)r fire:(int)f
+- (BOOL)releaseJoystick:(int)nr withKeycode:(int)k device:(int)d
 {
     assert (nr == 1 || nr == 2);
-    Joystick *joy = ((nr == 1) ? c64->joystick1 : c64->joystick2);
     
-    if (k == u) { joy->SetAxisY(JOYSTICK_AXIS_Y_UP); return YES; }
-    if (k == d) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); return YES; }
-    if (k == l) { joy->SetAxisX(JOYSTICK_AXIS_X_LEFT); return YES; }
-    if (k == r) { joy->SetAxisX(JOYSTICK_AXIS_X_RIGHT); return YES; }
-    if (k == f) { joy->SetButtonPressed(true); return YES; }
-
-    return NO;
-}
-
-- (BOOL)pullJoystick:(int)nr withKey:(char)c withKeycode:(int)k device:(int)d
-{
-    switch (d) {
-        case IPD_KEYBOARD_1:
-            return [self pullJoystick:nr withKeycode:k up:MAC_CU down:MAC_CD left:MAC_CL right:MAC_CR fire:MAC_SPC];
-        case IPD_KEYBOARD_2:
-            return [self pullJoystick:nr withKeycode:k up:MAC_CU down:MAC_CD left:MAC_CL right:MAC_CR fire:18 /* 1 */];
-        case IPD_KEYBOARD_3:
-            return [self pullJoystick:nr withKey:c up:'w' down:'y' left:'a' right:'s' fire:'-'];
-        case IPD_KEYBOARD_4:
-            return [self pullJoystick:nr withKey:c up:'8' down:'2' left:'4' right:'6' fire:'0'];
-    }
-
-    return NO;
-}
-
-- (BOOL)releaseJoystick:(int)nr withKey:(char)c up:(char)u down:(char)d left:(char)l right:(char)r fire:(char)f
-{
-    assert (nr == 1 || nr == 2);
-    Joystick *joy = ((nr == 1) ? c64->joystick1 : c64->joystick2);
+    if (d != IPD_KEYSET_1 && d != IPD_KEYSET_2)
+        return NO;
     
-    if (c == u) { joy->SetAxisY(JOYSTICK_AXIS_NONE); return YES; }
-    if (c == d) { joy->SetAxisY(JOYSTICK_AXIS_NONE); return YES; }
-    if (c == l) { joy->SetAxisX(JOYSTICK_AXIS_NONE); return YES; }
-    if (c == r) { joy->SetAxisX(JOYSTICK_AXIS_NONE); return YES; }
-    if (c == f) { joy->SetButtonPressed(false); return YES; }
-
-    return NO;
-}
-
-- (BOOL)releaseJoystick:(int)nr withKeycode:(int)k up:(int)u down:(int)d left:(int)l right:(int)r fire:(int)f
-{
-    assert (nr == 1 || nr == 2);
-    Joystick *joy = ((nr == 1) ? c64->joystick1 : c64->joystick2);
+    unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
+    Joystick *joy = (nr == 1) ? c64->joystick1 : c64->joystick2;
     
-    if (k == u) { joy->SetAxisY(JOYSTICK_AXIS_NONE); return YES; }
-    if (k == d) { joy->SetAxisY(JOYSTICK_AXIS_NONE); return YES; }
-    if (k == l) { joy->SetAxisX(JOYSTICK_AXIS_NONE); return YES; }
-    if (k == r) { joy->SetAxisX(JOYSTICK_AXIS_NONE); return YES; }
-    if (k == f) { joy->SetButtonPressed(false); return YES; }
-
-    return NO;
-}
-
-- (BOOL)releaseJoystick:(int)nr withKey:(char)c withKeycode:(int)k device:(int)d
-{
-    switch (d) {
-        case IPD_KEYBOARD_1:
-            return [self releaseJoystick:nr withKeycode:k up:MAC_CU down:MAC_CD left:MAC_CL right:MAC_CR fire:MAC_SPC];
-        case IPD_KEYBOARD_2:
-            return [self releaseJoystick:nr withKeycode:k up:MAC_CU down:MAC_CD left:MAC_CL right:MAC_CR fire:18 /* 1 */];
-        case IPD_KEYBOARD_3:
-            return [self releaseJoystick:nr withKey:c up:'w' down:'y' left:'a' right:'s' fire:'-'];
-        case IPD_KEYBOARD_4:
-            return [self releaseJoystick:nr withKey:c up:'8' down:'2' left:'4' right:'6' fire:'0'];
-    }
-
+    if (k == joyKeycode[keyset][JOYSTICK_UP]) { joy->SetAxisY(JOYSTICK_AXIS_NONE); return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { joy->SetAxisY(JOYSTICK_AXIS_NONE); return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { joy->SetAxisX(JOYSTICK_AXIS_NONE); return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { joy->SetAxisX(JOYSTICK_AXIS_NONE); return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { joy->SetButtonPressed(false); return YES; }
+    
     return NO;
 }
 
@@ -983,9 +933,9 @@ void checkForOpenGLErrors()
         return;
     
     // Simulate joysticks
-    if ([self pullJoystick:1 withKey:(char)c withKeycode:keycode device:[controller inputDeviceA]])
+    if ([self pullJoystick:1 withKeycode:keycode device:[controller inputDeviceA]])
         return;
-    if ([self pullJoystick:2 withKey:(char)c withKeycode:keycode device:[controller inputDeviceB]])
+    if ([self pullJoystick:2 withKeycode:keycode device:[controller inputDeviceB]])
         return;
 
     // Remove alternate key modifier if present
@@ -1004,15 +954,14 @@ void checkForOpenGLErrors()
 
 - (void)keyUp:(NSEvent *)event
 {
-    unsigned char  c       = [[event characters] UTF8String][0];
     unsigned short keycode = [event keyCode];
     
     // NSLog(@"keyUp: '%c' keycode: %ld flags: %ld", (char)c, (long)keycode);
     
     // Simulate joysticks
-    if ([self releaseJoystick:1 withKey:(char)c withKeycode:keycode device:[controller inputDeviceA]])
+    if ([self releaseJoystick:1 withKeycode:keycode device:[controller inputDeviceA]])
         return;
-    if ([self releaseJoystick:2 withKey:(char)c withKeycode:keycode device:[controller inputDeviceB]])
+    if ([self releaseJoystick:2 withKeycode:keycode device:[controller inputDeviceB]])
         return;
 
     // Only proceed if the released key is on the records

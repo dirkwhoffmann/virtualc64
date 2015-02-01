@@ -308,7 +308,7 @@ uint16_t
 T64Archive::getDestinationAddrOfItem(int n)
 {
 	int i = 0x42 + (n * 0x20);
-	uint16_t result = data[i] + (data[i+1] << 8);
+	uint16_t result = LO_HI(data[i], data[i+1]);
 	return result;
 }
 
@@ -331,7 +331,7 @@ T64Archive::selectItem(int n)
         // Compute end address in memory
         i = 0x44 + (n * 0x20);
         uint16_t endAddrInMemory = LO_HI(data[i], data[i+1]);
-        
+
         if (endAddrInMemory == 0xC3C6) {
             fprintf(stderr, "WARNING: Corrupted archive. Mostly likely created with CONV64!\n");
             // WHAT DO WE DO ABOUT IT?
@@ -339,6 +339,9 @@ T64Archive::selectItem(int n)
 
         // Compute size of item
         uint16_t length = endAddrInMemory - startAddrInMemory;
+
+        // fprintf(stderr, "start = %d end = %d diff = %d\n", startAddrInMemory, endAddrInMemory, length);
+        // fprintf(stderr, "fp = %d fp_eof = %d\n", fp, fp_eof);
 
         // Store largest offset that belongs to the file
         if ((fp_eof = fp + length) > size)
@@ -365,7 +368,7 @@ T64Archive::getByte()
 	result = data[fp++];
 	
 	// check for end of file
-	if (fp == fp_eof || fp == (size-1))
+	if (fp == fp_eof || fp == size)
 		fp = -1;
 
 	// fprintf(stderr, "%02X ", result);
