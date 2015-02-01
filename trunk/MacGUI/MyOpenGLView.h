@@ -85,10 +85,14 @@ const int BG_TEXTURE_DEPTH = 4;
 	float currentEyeY, targetEyeY, deltaEyeY;
 	float currentEyeZ, targetEyeZ, deltaEyeZ;
 	
-    /*! @brief Stores the keycodes that emulate joysticks
+    /*! @brief Stores the keycode of each joystick emulation key.
      *  @discussion The user can choose from 2 maps */
-    int joyKeymap[2][5];
-    
+    int joyKeycode[2][5];
+
+    /*! @brief Stores a printabel character for each joystick emulation key.
+     *  @discussion These values are only used in the properties dialog for pretty printing the keycodes */
+    char joyChar[2][5];
+
 	int frames;
 
 	//! If false, OpenGL drawing is disabled (only used in performance debugging)
@@ -156,6 +160,12 @@ const int BG_TEXTURE_DEPTH = 4;
 
 //! @brief Sets the keycode for a joystick emulation key
 - (void)setJoyKeycode:(int)keycode keymap:(int)nr direction:(JoystickDirection)dir;
+
+//! @brief Returns a joystick emulation key as printable character
+- (char)joyChar:(int)nr direction:(JoystickDirection)dir;
+
+//! @brief Sets the printable character for a joystick emulation key
+- (void)setJoyChar:(char)c keymap:(int)nr direction:(JoystickDirection)dir;
 
 //! Set appropriate values for eyeX, eyeY and eyeZ for PAL machines
 - (void)setPAL;
