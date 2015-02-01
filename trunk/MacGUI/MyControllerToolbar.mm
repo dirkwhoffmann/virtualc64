@@ -145,9 +145,8 @@
         // Establish new binding
         switch (newvalue) {
             case IPD_UNCONNECTED:
-            case IPD_KEYBOARD_1:
-            case IPD_KEYBOARD_2:
-            case IPD_KEYBOARD_3:
+            case IPD_KEYSET_1:
+            case IPD_KEYSET_2:
                 /* Nothing to do */
                 break;
                 
@@ -194,9 +193,8 @@
     // Establish new binding
     switch (newvalue) {
         case IPD_UNCONNECTED:
-        case IPD_KEYBOARD_1:
-        case IPD_KEYBOARD_2:
-        case IPD_KEYBOARD_3:
+        case IPD_KEYSET_1:
+        case IPD_KEYSET_2:
             /* Nothing to do */
             break;
             

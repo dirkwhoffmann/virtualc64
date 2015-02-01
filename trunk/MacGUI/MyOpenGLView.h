@@ -206,23 +206,11 @@ const int BG_TEXTURE_DEPTH = 4;
 
 #pragma mark Joystick simulation
 
-// Compare character with provided key mapping and pull joystick if appropriate
-- (BOOL)pullJoystick:(int)nr withKey:(char)c up:(char)u down:(char)d left:(char)l right:(char)r fire:(char)f;
+// Compares keycode with the joystick simulation keys and pulls joystick if appropriate
+- (BOOL)pullJoystick:(int)nr withKeycode:(int)keycode device:(int)d;
 
-// Compare keycode with provided key mapping and pull joystick if appropriate
-- (BOOL)pullJoystick:(int)nr withKeycode:(int)k up:(int)u down:(int)d left:(int)l right:(int)r fire:(int)f;
-
-// Compare keycode with predefined key mapping and pull joystick if appropriate
-- (BOOL)pullJoystick:(int)nr withKey:(char)c withKeycode:(int)keycode device:(int)d;
-
-// Compare character with provided key mapping and release joystick if appropriate
-- (BOOL)releaseJoystick:(int)nr withKey:(char)c up:(char)u down:(char)d left:(char)l right:(char)r fire:(char)f;
-
-// Compare keycode with provided key mapping and release joystick if appropriate
-- (BOOL)releaseJoystick:(int)nr withKeycode:(int)k up:(int)u down:(int)d left:(int)l right:(int)r fire:(int)f;
-
-// Compare keycode with predefined key mapping and relase joystick if appropriate
-- (BOOL)releaseJoystick:(int)nr withKey:(char)c withKeycode:(int)keycode device:(int)d;
+// Compares keycode with the joystick simulation keys and releases joystick if appropriate
+- (BOOL)releaseJoystick:(int)nr withKeycode:(int)keycode device:(int)d;
 
 #pragma mark Joystick simulation
 
