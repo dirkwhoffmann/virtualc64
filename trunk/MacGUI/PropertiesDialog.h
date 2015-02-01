@@ -70,10 +70,14 @@ extern NSString *VC64VideoFilterKey;
     C64Proxy *c64;
     MyController *controller;
     
-    /*! @brief Indicates if a keycode should be recorded.
+    /*! @brief Indicates if a keycode should be recorded for keyset 1
      *  @discussion Per default, this value equals -1 (nothing should be recorded) */
-    int recordKey; 
-    
+    int recordKey1;
+
+    /*! @brief Indicates if a keycode should be recorded for keyset 2
+     *  @discussion Per default, this value equals -1 (nothing should be recorded) */
+    int recordKey2;
+
     /* System */
     IBOutlet NSPopUpButton *machineType;
 	IBOutlet NSTextField *systemText1;
@@ -142,6 +146,7 @@ extern NSString *VC64VideoFilterKey;
 
 //! @brief Helper function for update
 - (NSString *)keycodeInPlainText:(int)code character:(char)c;
+- (void)updateKeymap:(int)map direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t;
 - (void) update;
 
 // System
@@ -150,6 +155,9 @@ extern NSString *VC64VideoFilterKey;
 
 // VC 1541
 - (IBAction)warpLoadAction:(id)sender;
+
+// Joystick
+- (IBAction)recordKeyAction:(id)sender;
 
 // SID
 - (IBAction)SIDFilterAction:(id)sender;

@@ -253,7 +253,7 @@ void checkForOpenGLErrors()
 
 - (int)joyKeycode:(int)nr direction:(JoystickDirection)dir
 {
-    assert(dir >= 0 && dir <= 5);
+    assert(dir >= 0 && dir <= 4);
 
     switch (nr) {
         case 1: return joyKeycode[0][dir];
@@ -266,7 +266,7 @@ void checkForOpenGLErrors()
 
 - (char)joyChar:(int)nr direction:(JoystickDirection)dir
 {
-    assert(dir >= 0 && dir <= 5);
+    assert(dir >= 0 && dir <= 4);
     
     switch (nr) {
         case 1: return joyChar[0][dir];
@@ -279,7 +279,7 @@ void checkForOpenGLErrors()
 
 - (void)setJoyKeycode:(int)keycode keymap:(int)nr direction:(JoystickDirection)dir
 {
-    assert(dir >= 0 && dir <= 5);
+    assert(dir >= 0 && dir <= 4);
 
     switch (nr) {
         case 1: joyKeycode[0][dir] = keycode; return;
@@ -291,7 +291,7 @@ void checkForOpenGLErrors()
 
 - (void)setJoyChar:(char)c keymap:(int)nr direction:(JoystickDirection)dir
 {
-    assert(dir >= 0 && dir <= 5);
+    assert(dir >= 0 && dir <= 4);
     
     switch (nr) {
         case 1: joyChar[0][dir] = c; return;

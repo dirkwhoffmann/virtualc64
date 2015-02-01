@@ -22,10 +22,10 @@
 
 enum JoystickDirection
 {
-    JOYSTICK_LEFT = 0,
-    JOYSTICK_RIGHT,
+    JOYSTICK_UP = 0,
     JOYSTICK_DOWN,
-    JOYSTICK_UP,
+    JOYSTICK_LEFT,
+    JOYSTICK_RIGHT,
     JOYSTICK_FIRE
 };
 
