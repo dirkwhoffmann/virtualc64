@@ -95,6 +95,9 @@ char toASCII(char c);
  *  @result Returns '.' if no ASCII counterpart exists. */
 uint8_t pet2ascii(uint8_t petchar);
 
+/*! @brief Converts an PET string into a ASCII string. */
+void pet2ascii(char *petstring);
+
 /*! @brief Converts an ASCII character to a PET character.
  *  @discussion This function translates into the unshifted PET character set. I.e., lower case characters are converted to uppercase characters.
  *  @result Returns ' ' if the ASCII character is not covered. */

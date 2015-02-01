@@ -35,11 +35,6 @@
 - (void)dealloc
 {	
 	NSLog(@"MyController::dealloc");
-	
-	// [preferenceController release];
-	// NSLog(@"Preference controller released");
-	// [super dealloc];
-	// NSLog(@"super released");
 }
 
 - (void)windowWillClose:(NSNotification *)aNotification
@@ -194,7 +189,20 @@
 	
 	// Peripherals
 	[defaultValues setObject:@YES forKey:VC64WarpLoadKey];
-	
+
+    // Joysticks
+    [defaultValues setObject:@123 forKey:VC64Left1Key];
+    [defaultValues setObject:@124 forKey:VC64Right1Key];
+    [defaultValues setObject:@125 forKey:VC64Down1Key];
+    [defaultValues setObject:@126 forKey:VC64Up1Key];
+    [defaultValues setObject:@49 forKey:VC64Fire1Key];
+
+    [defaultValues setObject:@123 forKey:VC64Left2Key];
+    [defaultValues setObject:@124 forKey:VC64Right2Key];
+    [defaultValues setObject:@125 forKey:VC64Down2Key];
+    [defaultValues setObject:@126 forKey:VC64Up2Key];
+    [defaultValues setObject:@49 forKey:VC64Fire2Key];
+
 	// Audio
 	[defaultValues setObject:@YES forKey:VC64SIDReSIDKey];
 	[defaultValues setObject:@NO forKey:VC64SIDFilterKey];
@@ -233,6 +241,19 @@
 	// Peripherals
 	[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
 	
+    // Joysticks
+    [screen setJoyKeycode:[defaults integerForKey:VC64Left1Key] keymap:1 direction:JOYSTICK_LEFT];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Right1Key] keymap:1 direction:JOYSTICK_RIGHT];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Down1Key] keymap:1 direction:JOYSTICK_DOWN];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Up1Key] keymap:1 direction:JOYSTICK_UP];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Fire1Key] keymap:1 direction:JOYSTICK_FIRE];
+
+    [screen setJoyKeycode:[defaults integerForKey:VC64Left2Key] keymap:2 direction:JOYSTICK_LEFT];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Right2Key] keymap:2 direction:JOYSTICK_RIGHT];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Down2Key] keymap:2 direction:JOYSTICK_DOWN];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Up2Key] keymap:2 direction:JOYSTICK_UP];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Fire2Key] keymap:2 direction:JOYSTICK_FIRE];
+    
 	// Audio
 	[c64 setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
 	[c64 setAudioFilter:[defaults boolForKey:VC64SIDFilterKey]];
@@ -264,6 +285,19 @@
 	// Peripherals
 	[defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
 	
+    // Joysticks
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_LEFT] forKey:VC64Left1Key];
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_RIGHT] forKey:VC64Right1Key];
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_DOWN] forKey:VC64Down1Key];
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_UP] forKey:VC64Up1Key];
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_FIRE] forKey:VC64Fire1Key];
+    
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_LEFT] forKey:VC64Left2Key];
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_RIGHT] forKey:VC64Right2Key];
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_DOWN] forKey:VC64Down2Key];
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_UP] forKey:VC64Up2Key];
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2Key];
+    
 	// Audio
 	[defaults setBool:[c64 reSID] forKey:VC64SIDReSIDKey];
 	[defaults setBool:[c64 audioFilter] forKey:VC64SIDFilterKey];

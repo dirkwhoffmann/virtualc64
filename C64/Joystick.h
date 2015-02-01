@@ -20,6 +20,16 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
+enum JoystickDirection
+{
+    JOYSTICK_LEFT = 0,
+    JOYSTICK_RIGHT,
+    JOYSTICK_DOWN,
+    JOYSTICK_UP,
+    JOYSTICK_FIRE
+};
+
+// DEPRECATED
 enum JoystickAxisState
 {
 	JOYSTICK_AXIS_NONE = 0,

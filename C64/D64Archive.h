@@ -123,6 +123,12 @@ public:
     //! @functiongroup Accessing archive attributes
     //
     
+    //! @brief Returns the logical name of the archive in PET format
+    const char *getNameAsPETString();
+    
+    //! @brief Returns the name of an item in PET format
+    const char *getNameOfItemAsPETString(int n);
+    
     //! @brief Class function that returns the total number of sectors in a specific track
     static unsigned numberOfSectors(unsigned trackNr);
 

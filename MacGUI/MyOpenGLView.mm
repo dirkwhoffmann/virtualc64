@@ -251,6 +251,31 @@ void checkForOpenGLErrors()
 	currentEyeZ = targetEyeZ = newZ;
 }
 
+- (int)joyKeycode:(int)nr direction:(JoystickDirection)dir
+{
+    assert(dir >= 0 && dir <= 5);
+
+    switch (nr) {
+        case 1: return joyKeymap[0][dir];
+        case 2: return joyKeymap[1][dir];
+    }
+    
+    assert(0);
+    return 0;
+}
+
+- (void)setJoyKeycode:(int)keycode keymap:(int)nr direction:(JoystickDirection)dir
+{
+    assert(dir >= 0 && dir <= 5);
+
+    switch (nr) {
+        case 1: joyKeymap[0][dir] = keycode; return;
+        case 2: joyKeymap[1][dir] = keycode; return;
+    }
+
+    assert(0);
+}
+
 - (void)setPAL
 {
    	[self setEyeX:PAL_INITIAL_EYE_X];
