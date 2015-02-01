@@ -31,16 +31,26 @@ NSString *VC64VC1541RomFileKey= @"VC64VC1541RomFileKey";
 NSString *VC64WarpLoadKey     = @"VC64WarpLoadKey";
 
 /* Joystick */
-NSString *VC64Left1Key = @"VC64Left1Key";
-NSString *VC64Right1Key = @"VC64Right1Key";
-NSString *VC64Up1Key = @"VC64Up1Key";
-NSString *VC64Down1Key = @"VC64Down1Key";
-NSString *VC64Fire1Key = @"VC64Fire1Key";
-NSString *VC64Left2Key = @"VC64Left2Key";
-NSString *VC64Right2Key = @"VC64Right2Key";
-NSString *VC64Up2Key = @"VC64Up2Key";
-NSString *VC64Down2Key = @"VC64Down2Key";
-NSString *VC64Fire2Key = @"VC64Fire2Key";
+NSString *VC64Left1keycodeKey = @"VC64Left1keycodeKey";
+NSString *VC64Left1charKey = @"VC64Left1charKey";
+NSString *VC64Right1keycodeKey = @"VC64Right1keycodeKey";
+NSString *VC64Right1charKey = @"VC64Right1charKey";
+NSString *VC64Up1keycodeKey = @"VC64Up1keycodeKey";
+NSString *VC64Up1charKey = @"VC64Up1charKey";
+NSString *VC64Down1keycodeKey = @"VC64Down1keycodeKey";
+NSString *VC64Down1charKey = @"VC64Down1charKey";
+NSString *VC64Fire1keycodeKey = @"VC64Fire1keycodeKey";
+NSString *VC64Fire1charKey = @"VC64Fire1charKey";
+NSString *VC64Left2keycodeKey = @"VC64Left2keycodeKey";
+NSString *VC64Left2charKey = @"VC64Left2charKey";
+NSString *VC64Right2keycodeKey = @"VC64Right2keycodeKey";
+NSString *VC64Right2charKey = @"VC64Right2charKey";
+NSString *VC64Up2keycodeKey = @"VC64Up2keycodeKey";
+NSString *VC64Up2charKey = @"VC64Up2charKey";
+NSString *VC64Down2keycodeKey = @"VC64Down2keycodeKey";
+NSString *VC64Down2charKey = @"VC64Down2charKey";
+NSString *VC64Fire2keycodeKey = @"VC64Fire2keycodeKey";
+NSString *VC64Fire2charKey = @"VC64Fire2charKey";
 
 /* Audio */
 NSString *VC64SIDFilterKey    = @"VC64SIDFilterKey";
@@ -179,6 +189,21 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [self update];
 }
 
+- (NSString *)keycodeInPlainText:(int)code character:(char)c
+{
+    // Check for special keys
+    switch (code) {
+        case 123: return @"\u2190"; // Cursor left
+        case 124: return @"\u2192"; // Cursor right
+        case 125: return @"\u2193"; // Cursor down
+        case 126: return @"\u2191"; // Cursor up
+        case 49:  return @"\u2423"; // Space
+    }
+    
+    // Return character a a string
+    return [NSString stringWithFormat:@"%c" , c];
+}
+
 - (void) update
 {	
 	/* System */
@@ -197,6 +222,52 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 	/* Peripherals */
 	[warpLoad setState:[c64 warpLoad]];
 	
+    /* Joystick */
+    int code;
+    char c;
+
+    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_LEFT];
+    c = [[controller screen] joyChar:1 direction:JOYSTICK_LEFT];
+    [left1button setTitle:[@(code) stringValue]];
+    [left1 setStringValue:[self keycodeInPlainText:code character:c]];
+    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_RIGHT];
+    c = [[controller screen] joyChar:1 direction:JOYSTICK_RIGHT];
+    [right1button setTitle:[@(code) stringValue]];
+    [right1 setStringValue:[self keycodeInPlainText:code character:c]];
+    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_UP];
+    c = [[controller screen] joyChar:1 direction:JOYSTICK_UP];
+    [up1button setTitle:[@(code) stringValue]];
+    [up1 setStringValue:[self keycodeInPlainText:code character:c]];
+    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_DOWN];
+    c = [[controller screen] joyChar:1 direction:JOYSTICK_DOWN];
+    [down1button setTitle:[@(code) stringValue]];
+    [down1 setStringValue:[self keycodeInPlainText:code character:c]];
+    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_FIRE];
+    c = [[controller screen] joyChar:1 direction:JOYSTICK_FIRE];
+    [fire1button setTitle:[@(code) stringValue]];
+    [fire1 setStringValue:[self keycodeInPlainText:code character:c]];
+
+    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_LEFT];
+    c = [[controller screen] joyChar:2 direction:JOYSTICK_LEFT];
+    [left2button setTitle:[@(code) stringValue]];
+    [left2 setStringValue:[self keycodeInPlainText:code character:c]];
+    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_RIGHT];
+    c = [[controller screen] joyChar:2 direction:JOYSTICK_RIGHT];
+    [right2button setTitle:[@(code) stringValue]];
+    [right2 setStringValue:[self keycodeInPlainText:code character:c]];
+    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_UP];
+    c = [[controller screen] joyChar:2 direction:JOYSTICK_UP];
+    [up2button setTitle:[@(code) stringValue]];
+    [up2 setStringValue:[self keycodeInPlainText:code character:c]];
+    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_DOWN];
+    c = [[controller screen] joyChar:2 direction:JOYSTICK_DOWN];
+    [down2button setTitle:[@(code) stringValue]];
+    [down2 setStringValue:[self keycodeInPlainText:code character:c]];
+    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_FIRE];
+    c = [[controller screen] joyChar:2 direction:JOYSTICK_FIRE];
+    [fire2button setTitle:[@(code) stringValue]];
+    [fire2 setStringValue:[self keycodeInPlainText:code character:c]];
+    
 	/* Audio */
     [SIDUseReSID setState:[c64 reSID]];
     [SIDFilter setState:[c64 audioFilter]];

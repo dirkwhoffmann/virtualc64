@@ -51,11 +51,7 @@ enum INPUT_DEVICES {
 	
 	// JoystickManager
 	JoystickManager *joystickManager;
-	
-    // Port mappings (joystick simulation)
-    //int inputDeviceA;
-    //int inputDeviceB;
-    
+	    
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;
 	IBOutlet MountDialog *mountDialog;

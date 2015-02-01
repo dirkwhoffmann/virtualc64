@@ -191,17 +191,27 @@
 	[defaultValues setObject:@YES forKey:VC64WarpLoadKey];
 
     // Joysticks
-    [defaultValues setObject:@123 forKey:VC64Left1Key];
-    [defaultValues setObject:@124 forKey:VC64Right1Key];
-    [defaultValues setObject:@125 forKey:VC64Down1Key];
-    [defaultValues setObject:@126 forKey:VC64Up1Key];
-    [defaultValues setObject:@49 forKey:VC64Fire1Key];
+    [defaultValues setObject:@123 forKey:VC64Left1keycodeKey];
+    [defaultValues setObject:@' ' forKey:VC64Left1charKey];
+    [defaultValues setObject:@124 forKey:VC64Right1keycodeKey];
+    [defaultValues setObject:@' ' forKey:VC64Right1charKey];
+    [defaultValues setObject:@125 forKey:VC64Down1keycodeKey];
+    [defaultValues setObject:@' ' forKey:VC64Down1charKey];
+    [defaultValues setObject:@126 forKey:VC64Up1keycodeKey];
+    [defaultValues setObject:@' ' forKey:VC64Up1charKey];
+    [defaultValues setObject:@49  forKey:VC64Fire1keycodeKey];
+    [defaultValues setObject:@' ' forKey:VC64Fire1charKey];
 
-    [defaultValues setObject:@123 forKey:VC64Left2Key];
-    [defaultValues setObject:@124 forKey:VC64Right2Key];
-    [defaultValues setObject:@125 forKey:VC64Down2Key];
-    [defaultValues setObject:@126 forKey:VC64Up2Key];
-    [defaultValues setObject:@49 forKey:VC64Fire2Key];
+    [defaultValues setObject:@0 forKey:VC64Left2keycodeKey];
+    [defaultValues setObject:@'a' forKey:VC64Left2charKey];
+    [defaultValues setObject:@1 forKey:VC64Right2keycodeKey];
+    [defaultValues setObject:@'s' forKey:VC64Right2charKey];
+    [defaultValues setObject:@6 forKey:VC64Down2keycodeKey];
+    [defaultValues setObject:@'y' forKey:VC64Down2charKey];
+    [defaultValues setObject:@13 forKey:VC64Up2keycodeKey];
+    [defaultValues setObject:@'w' forKey:VC64Up2charKey];
+    [defaultValues setObject:@7 forKey:VC64Fire2keycodeKey];
+    [defaultValues setObject:@'x' forKey:VC64Fire2charKey];
 
 	// Audio
 	[defaultValues setObject:@YES forKey:VC64SIDReSIDKey];
@@ -242,17 +252,27 @@
 	[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
 	
     // Joysticks
-    [screen setJoyKeycode:[defaults integerForKey:VC64Left1Key] keymap:1 direction:JOYSTICK_LEFT];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Right1Key] keymap:1 direction:JOYSTICK_RIGHT];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Down1Key] keymap:1 direction:JOYSTICK_DOWN];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Up1Key] keymap:1 direction:JOYSTICK_UP];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Fire1Key] keymap:1 direction:JOYSTICK_FIRE];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Left1keycodeKey] keymap:1 direction:JOYSTICK_LEFT];
+    [screen setJoyChar:[defaults integerForKey:VC64Left1charKey] keymap:1 direction:JOYSTICK_LEFT];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Right1keycodeKey] keymap:1 direction:JOYSTICK_RIGHT];
+    [screen setJoyChar:[defaults integerForKey:VC64Right1charKey] keymap:1 direction:JOYSTICK_RIGHT];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Down1keycodeKey] keymap:1 direction:JOYSTICK_DOWN];
+    [screen setJoyChar:[defaults integerForKey:VC64Down1charKey] keymap:1 direction:JOYSTICK_DOWN];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Up1keycodeKey] keymap:1 direction:JOYSTICK_UP];
+    [screen setJoyChar:[defaults integerForKey:VC64Up1charKey] keymap:1 direction:JOYSTICK_UP];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Fire1keycodeKey] keymap:1 direction:JOYSTICK_FIRE];
+    [screen setJoyChar:[defaults integerForKey:VC64Fire1charKey] keymap:1 direction:JOYSTICK_FIRE];
 
-    [screen setJoyKeycode:[defaults integerForKey:VC64Left2Key] keymap:2 direction:JOYSTICK_LEFT];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Right2Key] keymap:2 direction:JOYSTICK_RIGHT];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Down2Key] keymap:2 direction:JOYSTICK_DOWN];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Up2Key] keymap:2 direction:JOYSTICK_UP];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Fire2Key] keymap:2 direction:JOYSTICK_FIRE];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Left2keycodeKey] keymap:2 direction:JOYSTICK_LEFT];
+    [screen setJoyChar:[defaults integerForKey:VC64Left2charKey] keymap:2 direction:JOYSTICK_LEFT];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Right2keycodeKey] keymap:2 direction:JOYSTICK_RIGHT];
+    [screen setJoyChar:[defaults integerForKey:VC64Right2charKey] keymap:2 direction:JOYSTICK_RIGHT];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Down2keycodeKey] keymap:2 direction:JOYSTICK_DOWN];
+    [screen setJoyChar:[defaults integerForKey:VC64Down2charKey] keymap:2 direction:JOYSTICK_DOWN];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Up2keycodeKey] keymap:2 direction:JOYSTICK_UP];
+    [screen setJoyChar:[defaults integerForKey:VC64Up2charKey] keymap:2 direction:JOYSTICK_UP];
+    [screen setJoyKeycode:[defaults integerForKey:VC64Fire2keycodeKey] keymap:2 direction:JOYSTICK_FIRE];
+    [screen setJoyChar:[defaults integerForKey:VC64Fire2charKey] keymap:2 direction:JOYSTICK_FIRE];
     
 	// Audio
 	[c64 setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
@@ -286,17 +306,27 @@
 	[defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
 	
     // Joysticks
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_LEFT] forKey:VC64Left1Key];
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_RIGHT] forKey:VC64Right1Key];
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_DOWN] forKey:VC64Down1Key];
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_UP] forKey:VC64Up1Key];
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_FIRE] forKey:VC64Fire1Key];
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_LEFT] forKey:VC64Left1keycodeKey];
+    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_LEFT] forKey:VC64Left1charKey];
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_RIGHT] forKey:VC64Right1keycodeKey];
+    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_RIGHT] forKey:VC64Right1charKey];
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_DOWN] forKey:VC64Down1keycodeKey];
+    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_DOWN] forKey:VC64Down1charKey];
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_UP] forKey:VC64Up1keycodeKey];
+    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_UP] forKey:VC64Up1charKey];
+    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_FIRE] forKey:VC64Fire1keycodeKey];
+    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_FIRE] forKey:VC64Fire1charKey];
     
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_LEFT] forKey:VC64Left2Key];
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_RIGHT] forKey:VC64Right2Key];
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_DOWN] forKey:VC64Down2Key];
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_UP] forKey:VC64Up2Key];
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2Key];
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_LEFT] forKey:VC64Left2keycodeKey];
+    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_LEFT] forKey:VC64Left2charKey];
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_RIGHT] forKey:VC64Right2keycodeKey];
+    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_RIGHT] forKey:VC64Right2charKey];
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_DOWN] forKey:VC64Down2keycodeKey];
+    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_DOWN] forKey:VC64Down2charKey];
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_UP] forKey:VC64Up2keycodeKey];
+    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_UP] forKey:VC64Up2charKey];
+    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2keycodeKey];
+    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2charKey];
     
 	// Audio
 	[defaults setBool:[c64 reSID] forKey:VC64SIDReSIDKey];

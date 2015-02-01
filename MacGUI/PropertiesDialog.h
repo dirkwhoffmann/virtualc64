@@ -31,16 +31,26 @@ extern NSString *VC64VC1541RomFileKey;
 extern NSString *VC64WarpLoadKey;
 
 /* Joystick */
-extern NSString *VC64Left1Key;
-extern NSString *VC64Right1Key;
-extern NSString *VC64Up1Key;
-extern NSString *VC64Down1Key;
-extern NSString *VC64Fire1Key;
-extern NSString *VC64Left2Key;
-extern NSString *VC64Right2Key;
-extern NSString *VC64Up2Key;
-extern NSString *VC64Down2Key;
-extern NSString *VC64Fire2Key;
+extern NSString *VC64Left1keycodeKey;
+extern NSString *VC64Left1charKey;
+extern NSString *VC64Right1keycodeKey;
+extern NSString *VC64Right1charKey;
+extern NSString *VC64Up1keycodeKey;
+extern NSString *VC64Up1charKey;
+extern NSString *VC64Down1keycodeKey;
+extern NSString *VC64Down1charKey;
+extern NSString *VC64Fire1keycodeKey;
+extern NSString *VC64Fire1charKey;
+extern NSString *VC64Left2keycodeKey;
+extern NSString *VC64Left2charKey;
+extern NSString *VC64Right2keycodeKey;
+extern NSString *VC64Right2charKey;
+extern NSString *VC64Up2keycodeKey;
+extern NSString *VC64Up2charKey;
+extern NSString *VC64Down2keycodeKey;
+extern NSString *VC64Down2charKey;
+extern NSString *VC64Fire2keycodeKey;
+extern NSString *VC64Fire2charKey;
 
 /* Audio */
 extern NSString *VC64SIDFilterKey;
@@ -75,15 +85,25 @@ extern NSString *VC64VideoFilterKey;
 	
     /* Joystick */
     IBOutlet NSTextField *left1;
+    IBOutlet NSButton *left1button;
     IBOutlet NSTextField *right1;
+    IBOutlet NSButton *right1button;
     IBOutlet NSTextField *up1;
+    IBOutlet NSButton *up1button;
     IBOutlet NSTextField *down1;
+    IBOutlet NSButton *down1button;
     IBOutlet NSTextField *fire1;
+    IBOutlet NSButton *fire1button;
     IBOutlet NSTextField *left2;
+    IBOutlet NSButton *left2button;
     IBOutlet NSTextField *right2;
+    IBOutlet NSButton *right2button;
     IBOutlet NSTextField *up2;
+    IBOutlet NSButton *up2button;
     IBOutlet NSTextField *down2;
+    IBOutlet NSButton *down2button;
     IBOutlet NSTextField *fire2;
+    IBOutlet NSButton *fire2button;
 
 	/* Audio */
 	IBOutlet NSButton *SIDFilter;
@@ -119,6 +139,9 @@ extern NSString *VC64VideoFilterKey;
 - (void) initialize:(MyController *)mycontroller;
 
 // Update methods
+
+//! @brief Helper function for update
+- (NSString *)keycodeInPlainText:(int)code character:(char)c;
 - (void) update;
 
 // System
