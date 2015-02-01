@@ -69,7 +69,8 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 {
     controller = mycontroller;
     c64 = [controller c64];
-    recordKey = -1;
+    recordKey1 = -1;
+    recordKey2 = -1;
 	[self update];
 }
 
@@ -89,6 +90,29 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 	// Peripherals
 	[c64 setWarpLoad:true];
 	
+    // Joystick
+    [[controller screen] setJoyKeycode:126 keymap:1 direction:JOYSTICK_UP];
+    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_UP];
+    [[controller screen] setJoyKeycode:125 keymap:1 direction:JOYSTICK_DOWN];
+    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_DOWN];
+    [[controller screen] setJoyKeycode:123 keymap:1 direction:JOYSTICK_LEFT];
+    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_LEFT];
+    [[controller screen] setJoyKeycode:124 keymap:1 direction:JOYSTICK_RIGHT];
+    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_RIGHT];
+    [[controller screen] setJoyKeycode:49 keymap:1 direction:JOYSTICK_FIRE];
+    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_FIRE];
+
+    [[controller screen] setJoyKeycode:13 keymap:2 direction:JOYSTICK_UP];
+    [[controller screen] setJoyChar:'w' keymap:2 direction:JOYSTICK_UP];
+    [[controller screen] setJoyKeycode:6 keymap:2 direction:JOYSTICK_DOWN];
+    [[controller screen] setJoyChar:'y' keymap:2 direction:JOYSTICK_DOWN];
+    [[controller screen] setJoyKeycode:0 keymap:2 direction:JOYSTICK_LEFT];
+    [[controller screen] setJoyChar:'a' keymap:2 direction:JOYSTICK_LEFT];
+    [[controller screen] setJoyKeycode:1 keymap:2 direction:JOYSTICK_RIGHT];
+    [[controller screen] setJoyChar:'s' keymap:2 direction:JOYSTICK_RIGHT];
+    [[controller screen] setJoyKeycode:7 keymap:2 direction:JOYSTICK_FIRE];
+    [[controller screen] setJoyChar:'x' keymap:2 direction:JOYSTICK_FIRE];
+    
 	// Audio
 	[c64 setReSID:YES];
     [c64 setAudioFilter:NO];
@@ -124,9 +148,20 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (IBAction)recordKeyAction:(id)sender
 {
-    // [c64 setWarpLoad:[(NSButton *)sender state]];
+    if ([sender tag] >= 0 && [sender tag] <= 4) {
+    
+        recordKey1 = [sender tag];
+        recordKey2 = -1;
+        
+    } else if ([sender tag] >= 10 && [sender tag] <= 14) {
+        
+        recordKey1 = -1;
+        recordKey2 = [sender tag] - 10;
+        
+    } else { assert(0); }
+
     [self update];
-}
+ }
 
 - (IBAction)SIDFilterAction:(id)sender
 {
@@ -204,7 +239,34 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     return [NSString stringWithFormat:@"%c" , c];
 }
 
-- (void) update
+- (void)updateKeymap:(int)map direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t
+{
+    int code = [[controller screen] joyKeycode:map direction:dir];
+    char c = [[controller screen] joyChar:map direction:dir];
+    
+    // Change button text and image
+    [b setTitle:[@(code) stringValue]];
+    if (map == 1)
+        [b setImage:[NSImage imageNamed:(recordKey1 == dir ? @"LEDnewRed" : @"")]];
+    if (map == 2)
+        [b setImage:[NSImage imageNamed:(recordKey2 == dir ? @"LEDnewRed" : @"")]];
+
+    // Convert keycode to plain text
+    NSString *str = [NSString stringWithFormat:@"%c" , c];
+    
+    // Change appearance for some special keys
+    switch (code) {
+        case 123: str = @"\u2190"; break; // Cursor left
+        case 124: str = @"\u2192"; break; // Cursor right
+        case 125: str = @"\u2193"; break; // Cursor down
+        case 126: str = @"\u2191"; break; // Cursor up
+        case 49:  str = @"\u2423"; break; // Space
+    }
+    
+    [t setStringValue:str];
+}
+
+- (void)update
 {	
 	/* System */
 	if ([c64 isPAL]) {
@@ -223,50 +285,20 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 	[warpLoad setState:[c64 warpLoad]];
 	
     /* Joystick */
-    int code;
-    char c;
-
-    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_LEFT];
-    c = [[controller screen] joyChar:1 direction:JOYSTICK_LEFT];
-    [left1button setTitle:[@(code) stringValue]];
-    [left1 setStringValue:[self keycodeInPlainText:code character:c]];
-    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_RIGHT];
-    c = [[controller screen] joyChar:1 direction:JOYSTICK_RIGHT];
-    [right1button setTitle:[@(code) stringValue]];
-    [right1 setStringValue:[self keycodeInPlainText:code character:c]];
-    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_UP];
-    c = [[controller screen] joyChar:1 direction:JOYSTICK_UP];
-    [up1button setTitle:[@(code) stringValue]];
-    [up1 setStringValue:[self keycodeInPlainText:code character:c]];
-    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_DOWN];
-    c = [[controller screen] joyChar:1 direction:JOYSTICK_DOWN];
-    [down1button setTitle:[@(code) stringValue]];
-    [down1 setStringValue:[self keycodeInPlainText:code character:c]];
-    code = [[controller screen] joyKeycode:1 direction:JOYSTICK_FIRE];
-    c = [[controller screen] joyChar:1 direction:JOYSTICK_FIRE];
-    [fire1button setTitle:[@(code) stringValue]];
-    [fire1 setStringValue:[self keycodeInPlainText:code character:c]];
-
-    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_LEFT];
-    c = [[controller screen] joyChar:2 direction:JOYSTICK_LEFT];
-    [left2button setTitle:[@(code) stringValue]];
-    [left2 setStringValue:[self keycodeInPlainText:code character:c]];
-    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_RIGHT];
-    c = [[controller screen] joyChar:2 direction:JOYSTICK_RIGHT];
-    [right2button setTitle:[@(code) stringValue]];
-    [right2 setStringValue:[self keycodeInPlainText:code character:c]];
-    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_UP];
-    c = [[controller screen] joyChar:2 direction:JOYSTICK_UP];
-    [up2button setTitle:[@(code) stringValue]];
-    [up2 setStringValue:[self keycodeInPlainText:code character:c]];
-    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_DOWN];
-    c = [[controller screen] joyChar:2 direction:JOYSTICK_DOWN];
-    [down2button setTitle:[@(code) stringValue]];
-    [down2 setStringValue:[self keycodeInPlainText:code character:c]];
-    code = [[controller screen] joyKeycode:2 direction:JOYSTICK_FIRE];
-    c = [[controller screen] joyChar:2 direction:JOYSTICK_FIRE];
-    [fire2button setTitle:[@(code) stringValue]];
-    [fire2 setStringValue:[self keycodeInPlainText:code character:c]];
+    
+    // First key set
+    [self updateKeymap:1 direction:JOYSTICK_UP button:up1button text:up1];
+    [self updateKeymap:1 direction:JOYSTICK_DOWN button:down1button text:down1];
+    [self updateKeymap:1 direction:JOYSTICK_LEFT button:left1button text:left1];
+    [self updateKeymap:1 direction:JOYSTICK_RIGHT button:right1button text:right1];
+    [self updateKeymap:1 direction:JOYSTICK_FIRE button:fire1button text:fire1];
+    
+    // Second key set
+    [self updateKeymap:2 direction:JOYSTICK_UP button:up2button text:up2];
+    [self updateKeymap:2 direction:JOYSTICK_DOWN button:down2button text:down2];
+    [self updateKeymap:2 direction:JOYSTICK_LEFT button:left2button text:left2];
+    [self updateKeymap:2 direction:JOYSTICK_RIGHT button:right2button text:right2];
+    [self updateKeymap:2 direction:JOYSTICK_FIRE button:fire2button text:fire2];
     
 	/* Audio */
     [SIDUseReSID setState:[c64 reSID]];
@@ -302,29 +334,28 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 - (void)keyDown:(NSEvent *)event
 {
     NSLog(@"PREFPANEL keyDown: %ld", (long)[event keyCode]);
+    NSLog(@"PREFPANEL record1: %ld record2: %ld", (long)recordKey1, (long)recordKey2);
 
-    unsigned keymap;
-    JoystickDirection direction;
+    unsigned short keycode = [event keyCode];
+    unsigned char  c       = [[event characters] UTF8String][0];
+    // unsigned char  c_unmod = [[event charactersIgnoringModifiers] UTF8String][0];
 
-    // Return if nothing should be recorded
-    if (recordKey == -1)
-        return;
-
-    // Determine which key should be recorded
-    if (recordKey < 10) {
-        keymap = 0;
-        direction = (JoystickDirection)recordKey;
-    } else {
-        keymap = 1;
-        direction = (JoystickDirection)(recordKey - 10);
+    // First keyset
+    if (recordKey1 != -1) {
+        [[controller screen] setJoyKeycode:keycode keymap:1 direction:(JoystickDirection)recordKey1];
+        [[controller screen] setJoyChar:c keymap:1 direction:(JoystickDirection)recordKey1];
     }
-    assert(direction < 5);
-    
-    // Store keycode
-    [[controller screen] setJoyKeycode:[event keyCode] keymap:keymap direction:direction];
-    recordKey = -1;
-    
-    
+
+    // Second keyset
+    if (recordKey2 != -1) {
+        [[controller screen] setJoyKeycode:keycode keymap:2 direction:(JoystickDirection)recordKey2];
+        [[controller screen] setJoyChar:c keymap:2 direction:(JoystickDirection)recordKey2];
+    }
+
+    recordKey1 = -1;
+    recordKey2 = -1;
+    [self update];
+    return;
 }
 
 
