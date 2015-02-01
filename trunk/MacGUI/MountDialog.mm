@@ -195,8 +195,19 @@
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
 	if ([[aTableColumn identifier] isEqual:@"filename"]) {
-		return [NSString stringWithFormat:@"%s", archive->getNameOfItem(row)];
-	}
+      //  return [NSString stringWithFormat:@"%s", archive->getNameOfItem(row)];
+        const char *itemName = archive->getNameOfItem(row);
+        assert(itemName != NULL);
+
+        unichar uName[18];
+        memset(uName, 0, sizeof(uName));
+        for (unsigned i = 0; i < strlen(itemName) && i < 18; i++)
+            uName[i] = pet2unicode(itemName[i]);
+        
+        NSString *unicodename = [NSString stringWithCharacters:uName length:17];
+        NSLog(@"%@", unicodename);
+        return unicodename;
+    }
 	if ([[aTableColumn identifier] isEqual:@"filesize"]) {
 		return @((int)archive->getSizeOfItemInBlocks(row));
 	}

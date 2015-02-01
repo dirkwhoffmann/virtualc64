@@ -85,6 +85,10 @@ const int BG_TEXTURE_DEPTH = 4;
 	float currentEyeY, targetEyeY, deltaEyeY;
 	float currentEyeZ, targetEyeZ, deltaEyeZ;
 	
+    /*! @brief Stores the keycodes that emulate joysticks
+     *  @discussion The user can choose from 2 maps */
+    int joyKeymap[2][5];
+    
 	int frames;
 
 	//! If false, OpenGL drawing is disabled (only used in performance debugging)
@@ -109,10 +113,6 @@ const int BG_TEXTURE_DEPTH = 4;
     /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
     unsigned int pressedKeys[256];
     
-	// View point
-	// DEPRECATED
-	// float eyeX, eyeY, eyeZ;
-
 	// Texture cut-out (fist and last visible texture coordinates)
 	float textureXStart;
 	float textureXEnd;
@@ -150,6 +150,12 @@ const int BG_TEXTURE_DEPTH = 4;
 - (void)setEyeY:(float)newY;
 - (float)eyeZ;
 - (void)setEyeZ:(float)newZ;
+
+//! @brief Returns the keycode for a joystick emulation key
+- (int)joyKeycode:(int)nr direction:(JoystickDirection)dir;
+
+//! @brief Sets the keycode for a joystick emulation key
+- (void)setJoyKeycode:(int)keycode keymap:(int)nr direction:(JoystickDirection)dir;
 
 //! Set appropriate values for eyeX, eyeY and eyeZ for PAL machines
 - (void)setPAL;

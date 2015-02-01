@@ -30,6 +30,18 @@ NSString *VC64VC1541RomFileKey= @"VC64VC1541RomFileKey";
 /* Peripherals */
 NSString *VC64WarpLoadKey     = @"VC64WarpLoadKey";
 
+/* Joystick */
+NSString *VC64Left1Key = @"VC64Left1Key";
+NSString *VC64Right1Key = @"VC64Right1Key";
+NSString *VC64Up1Key = @"VC64Up1Key";
+NSString *VC64Down1Key = @"VC64Down1Key";
+NSString *VC64Fire1Key = @"VC64Fire1Key";
+NSString *VC64Left2Key = @"VC64Left2Key";
+NSString *VC64Right2Key = @"VC64Right2Key";
+NSString *VC64Up2Key = @"VC64Up2Key";
+NSString *VC64Down2Key = @"VC64Down2Key";
+NSString *VC64Fire2Key = @"VC64Fire2Key";
+
 /* Audio */
 NSString *VC64SIDFilterKey    = @"VC64SIDFilterKey";
 NSString *VC64SIDReSIDKey     = @"VC64SIDReSIDKey";
@@ -47,6 +59,7 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 {
     controller = mycontroller;
     c64 = [controller c64];
+    recordKey = -1;
 	[self update];
 }
 
@@ -96,6 +109,12 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 - (IBAction)warpLoadAction:(id)sender
 {
 	[c64 setWarpLoad:[(NSButton *)sender state]];
+    [self update];
+}
+
+- (IBAction)recordKeyAction:(id)sender
+{
+    // [c64 setWarpLoad:[(NSButton *)sender state]];
     [self update];
 }
 
@@ -208,5 +227,34 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 	[colorWell14 setColor:[[c64 vic] color:14]];
 	[colorWell15 setColor:[[c64 vic] color:15]];
 }
+
+- (void)keyDown:(NSEvent *)event
+{
+    NSLog(@"PREFPANEL keyDown: %ld", (long)[event keyCode]);
+
+    unsigned keymap;
+    JoystickDirection direction;
+
+    // Return if nothing should be recorded
+    if (recordKey == -1)
+        return;
+
+    // Determine which key should be recorded
+    if (recordKey < 10) {
+        keymap = 0;
+        direction = (JoystickDirection)recordKey;
+    } else {
+        keymap = 1;
+        direction = (JoystickDirection)(recordKey - 10);
+    }
+    assert(direction < 5);
+    
+    // Store keycode
+    [[controller screen] setJoyKeycode:[event keyCode] keymap:keymap direction:direction];
+    recordKey = -1;
+    
+    
+}
+
 
 @end

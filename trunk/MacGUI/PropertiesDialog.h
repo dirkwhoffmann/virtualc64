@@ -30,6 +30,18 @@ extern NSString *VC64VC1541RomFileKey;
 /* Peripherals */
 extern NSString *VC64WarpLoadKey;
 
+/* Joystick */
+extern NSString *VC64Left1Key;
+extern NSString *VC64Right1Key;
+extern NSString *VC64Up1Key;
+extern NSString *VC64Down1Key;
+extern NSString *VC64Fire1Key;
+extern NSString *VC64Left2Key;
+extern NSString *VC64Right2Key;
+extern NSString *VC64Up2Key;
+extern NSString *VC64Down2Key;
+extern NSString *VC64Fire2Key;
+
 /* Audio */
 extern NSString *VC64SIDFilterKey;
 extern NSString *VC64SIDReSIDKey;
@@ -48,7 +60,11 @@ extern NSString *VC64VideoFilterKey;
     C64Proxy *c64;
     MyController *controller;
     
-	/* System */
+    /*! @brief Indicates if a keycode should be recorded.
+     *  @discussion Per default, this value equals -1 (nothing should be recorded) */
+    int recordKey; 
+    
+    /* System */
     IBOutlet NSPopUpButton *machineType;
 	IBOutlet NSTextField *systemText1;
 	IBOutlet NSTextField *systemText2;
@@ -57,6 +73,18 @@ extern NSString *VC64VideoFilterKey;
 	/* Peripherals */
 	IBOutlet NSButton *warpLoad;
 	
+    /* Joystick */
+    IBOutlet NSTextField *left1;
+    IBOutlet NSTextField *right1;
+    IBOutlet NSTextField *up1;
+    IBOutlet NSTextField *down1;
+    IBOutlet NSTextField *fire1;
+    IBOutlet NSTextField *left2;
+    IBOutlet NSTextField *right2;
+    IBOutlet NSTextField *up2;
+    IBOutlet NSTextField *down2;
+    IBOutlet NSTextField *fire2;
+
 	/* Audio */
 	IBOutlet NSButton *SIDFilter;
 	IBOutlet NSButton *SIDUseReSID;

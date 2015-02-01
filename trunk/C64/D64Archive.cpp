@@ -366,17 +366,10 @@ D64Archive::writeToBuffer(uint8_t *buffer)
 const char *
 D64Archive::getName()
 {
-    int i, pos = offset(18, 0) + 0x90;
-    
-    for (i = 0; i < 255; i++) {
-        if (data[pos+i] == 0xA0)
-            break;
-        name[i] = data[pos+i];
-    }
-    name[i] = 0x00;
+    (void)getNameAsPETString();
+    pet2ascii(name);
     return name;
 }
-
 
 //
 // Virtual functions from Archive class
@@ -396,16 +389,8 @@ D64Archive::getNumberOfItems()
 const char *
 D64Archive::getNameOfItem(int n)
 {
-    int i, pos = findDirectoryEntry(n);
-    
-    if (pos < 0) return NULL;
-    pos += 0x05; // filename begins here
-    for (i = 0; i < 16; i++) {
-        if (data[pos+i] == 0xA0)
-            break;
-        name[i] = data[pos+i];
-    }
-    name[i] = 0x00;
+    (void)getNameOfItemAsPETString(n);
+    pet2ascii(name);
     return name;
 }
 
@@ -527,6 +512,36 @@ D64Archive::getByte()
 //
 // Accessing archive attributes
 //
+
+const char *
+D64Archive::getNameAsPETString()
+{
+    int i, pos = offset(18, 0) + 0x90;
+    
+    for (i = 0; i < 255; i++) {
+        if (data[pos+i] == 0xA0)
+            break;
+        name[i] = data[pos+i];
+    }
+    name[i] = 0x00;
+    return name;
+}
+
+const char *
+D64Archive::getNameOfItemAsPETString(int n)
+{
+    int i, pos = findDirectoryEntry(n);
+    
+    if (pos < 0) return NULL;
+    pos += 0x05; // filename begins here
+    for (i = 0; i < 16; i++) {
+        if (data[pos+i] == 0xA0)
+            break;
+        name[i] = data[pos+i];
+    }
+    name[i] = 0x00;
+    return name;
+}
 
 unsigned
 D64Archive::numberOfSectors(unsigned halftrack)

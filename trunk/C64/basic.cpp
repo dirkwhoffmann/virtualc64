@@ -121,6 +121,15 @@ pet2ascii(uint8_t petchar)
     return (unicodechar & 0xFF00) ? '.' : (uint8_t)unicodechar;
 }
 
+void
+pet2ascii(char *petstring)
+{
+assert(petstring != NULL);
+
+for (; *petstring != 0; petstring++)
+*petstring = pet2ascii(*petstring);
+}
+
 uint8_t
 ascii2pet(uint8_t asciichar)
 {
