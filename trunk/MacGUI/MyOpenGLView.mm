@@ -974,22 +974,42 @@ void checkForOpenGLErrors()
     pressedKeys[(unsigned char)keycode] = 0;
 }
 
-#if 0
 - (void)flagsChanged:(NSEvent *)event
 {
-	unsigned int flags = [event modifierFlags];
+    // Note: We only respond to this message if one of the special keys is used for joystick emulation
 
-    // NSLog(@"flagsChanged: %ld", (long)flags);
-    
-    if (flags & NSAlternateKeyMask) {
-		c64->keyboard->pressCommodoreKey();
-        // NSLog(@"commodore key pressed");
-    } else {
-        c64->keyboard->releaseCommodoreKey();
-        // NSLog(@"commodore key released");
+    unsigned int flags = [event modifierFlags];
+    int keycode;
+
+    // Check if one of the supported special keys has been pressed or released
+    if (flags & NSAlternateKeyMask)
+        keycode = NSAlternateKeyMask;
+    else if (flags & NSShiftKeyMask)
+        keycode = NSShiftKeyMask;
+    else if (flags & NSCommandKeyMask)
+        keycode = NSCommandKeyMask;
+    else if (flags & NSControlKeyMask)
+        keycode = NSControlKeyMask;
+    else {
+        NSLog(@"Release Joystick");
+        // Relase joysticks
+        (void)([self releaseJoystick:1 withKeycode:NSAlternateKeyMask device:[controller inputDeviceA]]);
+        (void)([self releaseJoystick:1 withKeycode:NSShiftKeyMask device:[controller inputDeviceA]]);
+        (void)([self releaseJoystick:1 withKeycode:NSCommandKeyMask device:[controller inputDeviceA]]);
+        (void)([self releaseJoystick:1 withKeycode:NSControlKeyMask device:[controller inputDeviceA]]);
+        (void)([self releaseJoystick:2 withKeycode:NSAlternateKeyMask device:[controller inputDeviceB]]);
+        (void)([self releaseJoystick:2 withKeycode:NSShiftKeyMask device:[controller inputDeviceB]]);
+        (void)([self releaseJoystick:2 withKeycode:NSCommandKeyMask device:[controller inputDeviceB]]);
+        (void)([self releaseJoystick:2 withKeycode:NSControlKeyMask device:[controller inputDeviceB]]);
+        return;
     }
+
+    // Pull joysticks
+    if ([self pullJoystick:1 withKeycode:keycode device:[controller inputDeviceA]])
+        return;
+    if ([self pullJoystick:2 withKeycode:keycode device:[controller inputDeviceB]])
+        return;
 }
-#endif
 
 
 // --------------------------------------------------------------------------------
