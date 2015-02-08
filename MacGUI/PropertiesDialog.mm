@@ -245,17 +245,23 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     char c = [[controller screen] joyChar:map direction:dir];
     
     // Change button text and image
-    [b setTitle:[@(code) stringValue]];
-    if (map == 1)
+    if (map == 1) {
+        [b setTitle:(recordKey1 == dir ? @"" : [@(code) stringValue])];
         [b setImage:[NSImage imageNamed:(recordKey1 == dir ? @"LEDnewRed" : @"")]];
-    if (map == 2)
+    } else if (map == 2) {
+        [b setTitle:(recordKey2 == dir ? @"" : [@(code) stringValue])];
         [b setImage:[NSImage imageNamed:(recordKey2 == dir ? @"LEDnewRed" : @"")]];
-
+    }
+    
     // Convert keycode to plain text
     NSString *str = [NSString stringWithFormat:@"%c" , c];
     
     // Change appearance for some special keys
     switch (code) {
+        case NSAlternateKeyMask: str = @"\u2325"; break;
+        case NSShiftKeyMask: str = @"\u21E7"; break;
+        case NSCommandKeyMask: str = @"\u2318"; break;
+        case NSControlKeyMask: str = @"\u2303"; break;
         case 123: str = @"\u2190"; break; // Cursor left
         case 124: str = @"\u2192"; break; // Cursor right
         case 125: str = @"\u2193"; break; // Cursor down
@@ -333,8 +339,8 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (void)keyDown:(NSEvent *)event
 {
-    NSLog(@"PREFPANEL keyDown: %ld", (long)[event keyCode]);
-    NSLog(@"PREFPANEL record1: %ld record2: %ld", (long)recordKey1, (long)recordKey2);
+    // NSLog(@"PREFPANEL keyDown: %ld", (long)[event keyCode]);
+    // NSLog(@"PREFPANEL record1: %ld record2: %ld", (long)recordKey1, (long)recordKey2);
 
     unsigned short keycode = [event keyCode];
     unsigned char  c       = [[event characters] UTF8String][0];
@@ -358,5 +364,45 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     return;
 }
 
+- (void)flagsChanged:(NSEvent *)event
+{
+    unsigned int flags = [event modifierFlags];
+    int keycode;
+    
+    NSLog(@"PREFPANEL flagsChanged: %ld", (long)flags);
+    
+    NSLog(@"%ld %ld %ld", (long)NSAlternateKeyMask, (long)NSShiftKeyMask, (long)NSCommandKeyMask);
+    
+    
+    // Check if one of the supported special keys has been pressed or released
+    if (flags & NSAlternateKeyMask)
+        keycode = NSAlternateKeyMask;
+    else if (flags & NSShiftKeyMask)
+        keycode = NSShiftKeyMask;
+    else if (flags & NSCommandKeyMask)
+        keycode = NSCommandKeyMask;
+    else if (flags & NSControlKeyMask)
+        keycode = NSControlKeyMask;
+    else {
+        // Special key released
+        return;
+    }
+    
+    // First keyset
+    if (recordKey1 != -1) {
+        [[controller screen] setJoyKeycode:keycode keymap:1 direction:(JoystickDirection)recordKey1];
+        [[controller screen] setJoyChar:' ' keymap:1 direction:(JoystickDirection)recordKey1];
+    }
+    
+    // Second keyset
+    if (recordKey2 != -1) {
+        [[controller screen] setJoyKeycode:keycode keymap:2 direction:(JoystickDirection)recordKey2];
+        [[controller screen] setJoyChar:' ' keymap:2 direction:(JoystickDirection)recordKey2];
+    }
+    
+    recordKey1 = -1;
+    recordKey2 = -1;
+    [self update];
+}
 
 @end
