@@ -652,18 +652,9 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            if (colorSpace & 0x8 /* MC flag */) {
-                col_rgba[0] = colors[getExtraBackgroundColor(characterSpace >> 6)];
-                col_rgba[1] = colors[getExtraBackgroundColor(1)];
-                col_rgba[2] = colors[getExtraBackgroundColor(2)];
-                col_rgba[3] = colors[colorSpace & 0x07];
-                multicol = true;
-                
-            } else {
-                col_rgba[0] = colors[getBackgroundColor()];
-                col_rgba[1] = colors[colorSpace];
-                multicol = false;
-            }
+            col_rgba[0] = colors[getExtraBackgroundColor(characterSpace >> 6)];
+            col_rgba[1] = colors[colorSpace];
+            multicol = false;
             break;
             
         case INVALID_TEXT:
