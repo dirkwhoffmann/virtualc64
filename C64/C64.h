@@ -16,11 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// New:
-// 1. CIA chips can trigger light pen interrupts
-// 2. Open lines in color RAM and I/O are handled correctly now
-// 3. VIC chip now performs idle memory accesses
-// 4. Time of day clocks are initialized with the current time
 
 #ifndef _C64_INC
 #define _C64_INC
