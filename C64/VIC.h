@@ -209,7 +209,11 @@ public:
 	// -----------------------------------------------------------------------------------------------
 	//                                      Member variables
 	// -----------------------------------------------------------------------------------------------
-	
+
+public:
+    bool show = false; // DIRK: FOR DEBUGGING, REMOVE ASAP
+    void dirk(unsigned cycle); // DIRK: DEBUG FUNC, REMOVE ASAP
+    
 private:
 		
 	//! Reference to the connected CPU. 
@@ -223,6 +227,9 @@ private:
 	//                                     Internal registers
 	// -----------------------------------------------------------------------------------------------
 	
+    //! Debug counter
+    uint64_t frame;
+    
 	//! Number of the next screen line to be drawn
 	/*! Right now, drawing to the border is not supported. Therefore, the value is always in the range
 	 from 0 to SCREEN_HEIGHT-1. */
@@ -317,12 +324,24 @@ private:
            vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
      */
 
-	//! Main frame Flipflop
+	//! Main frame flipflop
 	bool mainFrameFF;
-	
-	//! Vertical frame Flipflop
-	bool verticalFrameFF;
-	
+
+    //! Vertical frame Flipflop
+    bool verticalFrameFF;
+
+    //! Vertical frame flipflop set condition
+    /*! Indicates whether the vertical frame ff needs to be set in current rasterline */
+    bool verticalFrameFFsetCond;
+
+    //! Vertical frame flipflop clear condition
+    /*! Indicates whether the vertical frame ff needs to be cleared in current rasterline */
+    bool verticalFrameFFclearCond;
+
+    //! Check vertical frame flipflop condition
+    /*! Sets mainFrameFFsetCond and mainFrameFFclearCond, if appropriate */
+    void checkVerticalFrameFFconditions();
+    
     //! Check frame fliplops at left border
     void checkFrameFlipflopsLeft(uint16_t comparisonValue);
 

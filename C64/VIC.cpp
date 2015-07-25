@@ -63,6 +63,7 @@ VIC::reset()
     mem = c64->mem;
     
 	// Internal registers
+    frame = 0;
 	scanline = 0;
 	xCounter = 0;
 	registerVC = 0;
@@ -791,6 +792,8 @@ void VIC::drawPixels(uint8_t cycle)
 
 void VIC::drawBorderArea(uint8_t cycle)
 {
+ //   static unsigned counter = 0;
+    
     assert((cycle >= 13 && cycle <= 16) || (cycle >= 57 && cycle <= 60));
     
     uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
@@ -1525,6 +1528,32 @@ VIC::updateSpriteDmaOnOff()
 // -----------------------------------------------------------------------------------------------
 
 void
+VIC::dirk(unsigned cycle)
+{
+#if 0
+    if (show) {
+        printf("%d:%d(%d) ", cycle, isRSEL(),DENbit());
+    }
+#endif
+}
+
+void
+VIC::checkVerticalFrameFFconditions()
+{
+    // Check for upper border
+    if (scanline == upperComparisonValue() && DENbit()) {
+        verticalFrameFFclearCond = true;
+        // VICE clears the flipflop immediately ...
+        verticalFrameFF = false;
+    }
+    
+    // Check for lower border
+    if (scanline == lowerComparisonValue()) {
+        verticalFrameFFsetCond = true;
+    }
+}
+
+void
 VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
 {
     if (comparisonValue == leftComparisonValue()) {
@@ -1532,17 +1561,24 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
         // "4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
         //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
         
+/* OLD CODE
         if (scanline == lowerComparisonValue()) {
             verticalFrameFF = true;
         }
+*/
+        if (verticalFrameFFsetCond)
+            verticalFrameFF = true;
         
         // "5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
         //     den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
         //     vertikale Rahmenflipflop gelšscht." [C.B.]
         
+/* OLD CODE
         else if (scanline == upperComparisonValue() && DENbit()) {
             verticalFrameFF = false;
         }
+*/
+        // Now handled in 'checkVerticalFrameFFconditions'
         
         // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
         //     vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
@@ -1582,6 +1618,8 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
 void 
 VIC::beginFrame()
 {
+    frame++;
+    
 	lightpenIRQhasOccured = false;
 
     /* "Der [Refresh-]ZŠhler wird in Rasterzeile 0 mit
@@ -1614,7 +1652,25 @@ VIC::endFrame()
 void 
 VIC::beginRasterline(uint16_t line)
 {
-	scanline = line;
+    scanline = line;
+    verticalFrameFFsetCond = verticalFrameFFclearCond = false;
+    
+    
+    
+    if ((frame % 300) == 0 && (scanline == 245 || scanline == 49)) {
+        // Turn on debugging
+        show = true;
+    }
+    if (show && (scanline == 253 || scanline == 57)) {
+        // Turn off debugging
+        show = false;
+    }
+    if (show) {
+        printf("\nRasterline %d:\n", scanline);
+    }
+
+    
+    
 		
 	// Clear z buffer. The buffer is initialized with a high, positive value (meaning the pixel is far away)
 	memset(zBuffer, 0x7f, sizeof(zBuffer)); // Why don't we use 0xFF???
@@ -1652,6 +1708,8 @@ VIC::endRasterline()
 void 
 VIC::cycle1()
 {
+    dirk(1);
+    
     // Phi1.1 Frame logic
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -1685,7 +1743,11 @@ VIC::cycle1()
 void
 VIC::cycle2()
 {
+    dirk(2);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+    
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -1718,7 +1780,11 @@ VIC::cycle2()
 void 
 VIC::cycle3()
 {
+    dirk(3);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -1748,7 +1814,11 @@ VIC::cycle3()
 void 
 VIC::cycle4()
 {
+    dirk(4);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -1779,7 +1849,11 @@ VIC::cycle4()
 void
 VIC::cycle5()
 {
+    dirk(5);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -1810,7 +1884,11 @@ VIC::cycle5()
 void 
 VIC::cycle6()
 {
+    dirk(6);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -1842,7 +1920,11 @@ VIC::cycle6()
 void 
 VIC::cycle7()
 {
+    dirk(7);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -1869,7 +1951,11 @@ VIC::cycle7()
 void 
 VIC::cycle8()
 {
+    dirk(8);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -1899,7 +1985,11 @@ VIC::cycle8()
 void 
 VIC::cycle9()
 {
+    dirk(9);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -1926,7 +2016,11 @@ VIC::cycle9()
 void 
 VIC::cycle10()
 {
+    dirk(10);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -1955,7 +2049,11 @@ VIC::cycle10()
 void
 VIC::cycle11()
 {
+    dirk(11);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     rAccess();
@@ -1974,7 +2072,11 @@ VIC::cycle11()
 void
 VIC::cycle12()
 {
+    dirk(12);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     // Phi1.3 Fetch (second out of five DRAM refreshs)
     rAccess();
@@ -2002,7 +2104,11 @@ VIC::cycle12()
 void
 VIC::cycle13() // X Coordinate -3 - 4 (?)
 {
+    dirk(13);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw (border starts here)
     drawBorderArea(13);
 
@@ -2024,9 +2130,13 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
 void
 VIC::cycle14() // SpriteX: 0 - 7 (?)
 {
+    dirk(14);
+    
     xCounter = 4;
     
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     drawBorderArea(14);
 
@@ -2057,7 +2167,11 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
 void
 VIC::cycle15() // SpriteX: 8 - 15 (?)
 {
+    dirk(15);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     drawBorderArea(15);
 
@@ -2081,7 +2195,11 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
 void
 VIC::cycle16() // SpriteX: 16 - 23 (?)
 {
+    dirk(16);
+
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     drawBorderArea(16);
     
@@ -2127,7 +2245,10 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
 void
 VIC::cycle17() // SpriteX: 24 - 31 (?)
 {
+    dirk(17);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
     checkFrameFlipflopsLeft(24);
     
     // Phi1.2 Draw (main screen area starts here)
@@ -2152,7 +2273,10 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
 void
 VIC::cycle18() // SpriteX: 32 - 39
 {
+    dirk(18);
+
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
     checkFrameFlipflopsLeft(31);
     
     // Phi1.2 Draw
@@ -2177,7 +2301,11 @@ VIC::cycle18() // SpriteX: 32 - 39
 void
 VIC::cycle19to54()
 {
+    dirk(0);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     drawPixels(19);
 
@@ -2200,7 +2328,11 @@ VIC::cycle19to54()
 void
 VIC::cycle55()
 {
+    dirk(55);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     drawPixels(55);
 
@@ -2239,7 +2371,10 @@ VIC::cycle55()
 void
 VIC::cycle56()
 {
+    dirk(56);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
     checkFrameFlipflopsRight(335);
 
     // Phi1.2 Draw
@@ -2264,7 +2399,10 @@ VIC::cycle56()
 void
 VIC::cycle57()
 {
+    dirk(57);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
     checkFrameFlipflopsRight(344);
     
     // Phi1.2 Draw (border starts here)
@@ -2291,7 +2429,11 @@ VIC::cycle57()
 void
 VIC::cycle58()
 {
+    dirk(58);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     drawBorderArea(58);
 
@@ -2368,7 +2510,11 @@ VIC::cycle58()
 void
 VIC::cycle59()
 {
+    dirk(59);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw
     drawBorderArea(59);
 
@@ -2400,7 +2546,11 @@ VIC::cycle59()
 void
 VIC::cycle60()
 {
+    dirk(60);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw (last visible cycle)
     drawBorderArea(60);
     
@@ -2432,7 +2582,11 @@ VIC::cycle60()
 void
 VIC::cycle61()
 {
+    dirk(61);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch
     if (isPAL)
@@ -2462,7 +2616,11 @@ VIC::cycle61()
 void
 VIC::cycle62()
 {
+    dirk(62);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch
     if (isPAL)
@@ -2492,7 +2650,10 @@ VIC::cycle62()
 void
 VIC::cycle63()
 {
+    dirk(63);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
 
     // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
     //     das vertikale Rahmenflipflop gesetzt." [C.B.]
@@ -2561,7 +2722,11 @@ VIC::cycle63()
 void
 VIC::cycle64() 	// NTSC only
 {
+    dirk(64);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch
     sSecondAccess(2);
@@ -2582,7 +2747,11 @@ VIC::cycle64() 	// NTSC only
 void
 VIC::cycle65() 	// NTSC only
 {
+    dirk(65);
+    
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch
     pAccess(3);

@@ -837,6 +837,7 @@ C64::executeOneCycle()
 			assert(false);
 			return false;
 	}
+    
 	return result;
 }
 
