@@ -211,7 +211,8 @@ public:
 	// -----------------------------------------------------------------------------------------------
 
 public:
-    bool show = false; // DIRK: FOR DEBUGGING, REMOVE ASAP
+    unsigned show = false; // DIRK: FOR DEBUGGING, REMOVE ASAP
+    unsigned showframe = 0; // DIRK: FOR DEBUGGING, REMOVE ASAP
     void dirk(unsigned cycle); // DIRK: DEBUG FUNC, REMOVE ASAP
     
 private:

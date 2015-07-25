@@ -1531,7 +1531,7 @@ void
 VIC::dirk(unsigned cycle)
 {
 #if 0
-    if (show) {
+    if (show && (scanline == 51 || scanline == 55 || scanline == 247 || scanline == 251)) {
         printf("%d:%d(%d) ", cycle, isRSEL(),DENbit());
     }
 #endif
@@ -1543,13 +1543,13 @@ VIC::checkVerticalFrameFFconditions()
     // Check for upper border
     if (scanline == upperComparisonValue() && DENbit()) {
         verticalFrameFFclearCond = true;
-        // VICE clears the flipflop immediately ...
-        verticalFrameFF = false;
+        verticalFrameFF = false; // VICE clears the flipflop immediately ...
     }
     
     // Check for lower border
     if (scanline == lowerComparisonValue()) {
         verticalFrameFFsetCond = true;
+        verticalFrameFF = true; // VICE DIFFERS
     }
 }
 
@@ -1566,9 +1566,12 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
             verticalFrameFF = true;
         }
 */
-        if (verticalFrameFFsetCond)
+        /* VICE HANDLES THIS IN CYCLE 1 */
+/*
+        if (verticalFrameFFsetCond) {
             verticalFrameFF = true;
-        
+        }
+*/
         // "5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
         //     den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
         //     vertikale Rahmenflipflop gelšscht." [C.B.]
@@ -1582,6 +1585,7 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
         
         // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
         //     vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
+        // verticalFrameFF = false;
         clearMainFrameFF();
     }
 
@@ -1655,23 +1659,6 @@ VIC::beginRasterline(uint16_t line)
     scanline = line;
     verticalFrameFFsetCond = verticalFrameFFclearCond = false;
     
-    
-    
-    if ((frame % 300) == 0 && (scanline == 245 || scanline == 49)) {
-        // Turn on debugging
-        show = true;
-    }
-    if (show && (scanline == 253 || scanline == 57)) {
-        // Turn off debugging
-        show = false;
-    }
-    if (show) {
-        printf("\nRasterline %d:\n", scanline);
-    }
-
-    
-    
-		
 	// Clear z buffer. The buffer is initialized with a high, positive value (meaning the pixel is far away)
 	memset(zBuffer, 0x7f, sizeof(zBuffer)); // Why don't we use 0xFF???
 
@@ -1701,6 +1688,11 @@ VIC::beginRasterline(uint16_t line)
 void 
 VIC::endRasterline()
 {
+    // Set vertical flipflop is condition was hit
+    if (verticalFrameFFsetCond) {
+        verticalFrameFF = true;
+    }
+    
 	// Copy pixel buffer of old line to screen buffer
 	pixelBuffer += totalScreenWidth;
 }
@@ -1711,6 +1703,8 @@ VIC::cycle1()
     dirk(1);
     
     // Phi1.1 Frame logic
+    checkVerticalFrameFFconditions();
+    
     // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
@@ -2655,21 +2649,23 @@ VIC::cycle63()
     // Phi1.1 Frame logic
     checkVerticalFrameFFconditions();
 
+    
     // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
     //     das vertikale Rahmenflipflop gesetzt." [C.B.]
-    
+    /*
     if (scanline == lowerComparisonValue()) {
         verticalFrameFF = true;
     }
-    
+    */
     // "3. Erreicht die Y-Koordinate den oberern Vergleichswert in Zyklus 63 und
     //     ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
     //     Rahmenflipflop gelšscht." [C.B.]
-    
+    /*
     else if (scanline == upperComparisonValue() && DENbit()) {
         verticalFrameFF = false;
     }
-
+    */
+    
     // Phi1.2 Draw (last visible cycle)
 
     // Extend pixel buffer to the left and right to make it look nice
