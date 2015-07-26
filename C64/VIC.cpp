@@ -1538,19 +1538,27 @@ VIC::dirk(unsigned cycle)
 }
 
 void
-VIC::checkVerticalFrameFFconditions()
+VIC::checkVerticalFrameFF()
 {
     // Check for upper border
     if (scanline == upperComparisonValue() && DENbit()) {
         verticalFrameFFclearCond = true;
-        verticalFrameFF = false; // VICE clears the flipflop immediately ...
+    }
+    // Trigger immediately (similar to VICE)
+    if (verticalFrameFFclearCond) {
+        verticalFrameFF = false;
     }
     
     // Check for lower border
     if (scanline == lowerComparisonValue()) {
         verticalFrameFFsetCond = true;
-        verticalFrameFF = true; // VICE DIFFERS
+        verticalFrameFF = true;
     }
+    // Trigger immediately (VICE does this in cycle 1)
+    if (verticalFrameFFsetCond) {
+        verticalFrameFF = true;
+    }
+
 }
 
 void
@@ -1581,7 +1589,7 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
             verticalFrameFF = false;
         }
 */
-        // Now handled in 'checkVerticalFrameFFconditions'
+        // Now handled in 'checkVerticalFrameFF'
         
         // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
         //     vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
@@ -1703,7 +1711,7 @@ VIC::cycle1()
     dirk(1);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
     
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -1740,7 +1748,7 @@ VIC::cycle2()
     dirk(2);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
     
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -1777,7 +1785,7 @@ VIC::cycle3()
     dirk(3);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -1811,7 +1819,7 @@ VIC::cycle4()
     dirk(4);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -1846,7 +1854,7 @@ VIC::cycle5()
     dirk(5);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -1881,7 +1889,7 @@ VIC::cycle6()
     dirk(6);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -1917,7 +1925,7 @@ VIC::cycle7()
     dirk(7);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -1948,7 +1956,7 @@ VIC::cycle8()
     dirk(8);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -1982,7 +1990,7 @@ VIC::cycle9()
     dirk(9);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -2013,7 +2021,7 @@ VIC::cycle10()
     dirk(10);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
@@ -2046,7 +2054,7 @@ VIC::cycle11()
     dirk(11);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch (first out of five DRAM refreshs)
@@ -2069,7 +2077,7 @@ VIC::cycle12()
     dirk(12);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     // Phi1.3 Fetch (second out of five DRAM refreshs)
@@ -2101,7 +2109,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     dirk(13);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw (border starts here)
     drawBorderArea(13);
@@ -2129,7 +2137,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     xCounter = 4;
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     drawBorderArea(14);
@@ -2164,7 +2172,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     dirk(15);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     drawBorderArea(15);
@@ -2192,7 +2200,7 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     dirk(16);
 
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     drawBorderArea(16);
@@ -2242,7 +2250,7 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     dirk(17);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
     checkFrameFlipflopsLeft(24);
     
     // Phi1.2 Draw (main screen area starts here)
@@ -2270,7 +2278,7 @@ VIC::cycle18() // SpriteX: 32 - 39
     dirk(18);
 
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
     checkFrameFlipflopsLeft(31);
     
     // Phi1.2 Draw
@@ -2298,7 +2306,7 @@ VIC::cycle19to54()
     dirk(0);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     drawPixels(19);
@@ -2325,7 +2333,7 @@ VIC::cycle55()
     dirk(55);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     drawPixels(55);
@@ -2368,7 +2376,7 @@ VIC::cycle56()
     dirk(56);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
     checkFrameFlipflopsRight(335);
 
     // Phi1.2 Draw
@@ -2396,7 +2404,7 @@ VIC::cycle57()
     dirk(57);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
     checkFrameFlipflopsRight(344);
     
     // Phi1.2 Draw (border starts here)
@@ -2426,7 +2434,7 @@ VIC::cycle58()
     dirk(58);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     drawBorderArea(58);
@@ -2507,7 +2515,7 @@ VIC::cycle59()
     dirk(59);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw
     drawBorderArea(59);
@@ -2543,7 +2551,7 @@ VIC::cycle60()
     dirk(60);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw (last visible cycle)
     drawBorderArea(60);
@@ -2579,7 +2587,7 @@ VIC::cycle61()
     dirk(61);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch
@@ -2613,7 +2621,7 @@ VIC::cycle62()
     dirk(62);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch
@@ -2647,7 +2655,7 @@ VIC::cycle63()
     dirk(63);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     
     // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
@@ -2721,7 +2729,7 @@ VIC::cycle64() 	// NTSC only
     dirk(64);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch
@@ -2746,7 +2754,7 @@ VIC::cycle65() 	// NTSC only
     dirk(65);
     
     // Phi1.1 Frame logic
-    checkVerticalFrameFFconditions();
+    checkVerticalFrameFF();
 
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch

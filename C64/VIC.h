@@ -339,9 +339,9 @@ private:
     /*! Indicates whether the vertical frame ff needs to be cleared in current rasterline */
     bool verticalFrameFFclearCond;
 
-    //! Check vertical frame flipflop condition
-    /*! Sets mainFrameFFsetCond and mainFrameFFclearCond, if appropriate */
-    void checkVerticalFrameFFconditions();
+    //! Takes care of the vertical frame flipflop value.
+    /*! Invoked in each VIC II cycle */
+    void checkVerticalFrameFF();
     
     //! Check frame fliplops at left border
     void checkFrameFlipflopsLeft(uint16_t comparisonValue);
