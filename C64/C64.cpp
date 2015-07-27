@@ -505,12 +505,13 @@ C64::step()
 #define EXECUTE(x) \
 		cia1->executeOneCycle(); \
 		cia2->executeOneCycle(); \
-		if (!cpu->executeOneCycle()) result = false; \
+        if (cpu->getPC_at_cycle_0() != 2061 || (rasterline == 44 && rasterlineCycle == 19)) \
+            if (!cpu->executeOneCycle()) result = false; \
 		if (!floppy->executeOneCycle()) result = false; \
 		cycles++; \
-		rasterlineCycle++;
+        rasterlineCycle++;
 
-void 
+void
 C64::beginOfRasterline()
 {
 	// First cycle of rasterline

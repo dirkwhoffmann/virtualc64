@@ -64,7 +64,7 @@ VIC::reset()
     
 	// Internal registers
     frame = 0;
-	scanline = 0;
+    yCounter = 0;
 	xCounter = 0;
 	registerVC = 0;
 	registerVCBASE = 0;
@@ -135,7 +135,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
 	// Internal registers
-	scanline = read32(buffer);
+	yCounter = read32(buffer);
 	xCounter = read16(buffer);
 	registerVC = read16(buffer);
 	registerVCBASE = read16(buffer);
@@ -201,7 +201,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
 	// Internal registers
-	write32(buffer, scanline);
+    write32(buffer, yCounter);
 	write16(buffer, xCounter);
 	write16(buffer, registerVC);
 	write16(buffer, registerVCBASE);
@@ -291,7 +291,7 @@ VIC::dumpState()
 		default:
 			msg("Invalid\n");
 	}
-	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, scanline,  badLineCondition ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
+	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, yCounter,  badLineCondition ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
 	msg("               VC : %02X\n", registerVC);
 	msg("           VCBASE : %02X\n", registerVCBASE);
 	msg("               RC : %02X\n", registerRC);
@@ -1284,11 +1284,11 @@ VIC::peek(uint16_t addr)
 	
 	switch(addr) {
 		case 0x11: // SCREEN CONTROL REGISTER #1
-			result = (iomem[addr] & 0x7f) + (scanline > 0xff ? 128 : 0);
+			result = (iomem[addr] & 0x7f) + (yCounter > 0xff ? 128 : 0);
 			return result;
             
 		case 0x12: // VIC_RASTER_READ_WRITE
-			result = scanline & 0xff;
+			result = yCounter & 0xff;
 			return result;
             
 		case 0x13: // LIGHTPEN X
@@ -1348,7 +1348,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 			if ((iomem[addr] & 0x80) != (value & 0x80)) {
 				// Value changed: Check if we need to trigger an interrupt immediately
 				iomem[addr] = value;
-				if (scanline == rasterInterruptLine())
+				if (yCounter == rasterInterruptLine())
 					triggerIRQ(1);
 			} else {
 				iomem[addr] = value;
@@ -1356,7 +1356,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 			
 			// Check the DEN bit if we're in rasterline 30
             // If it's set at some point in that line, bad line conditions can occur
-			if (scanline == 0x30 && (value & 0x10) != 0)
+			if (yCounter == 0x30 && (value & 0x10) != 0)
                 DENwasSetInRasterline30 = true;
 			
 			// Bits 0 - 3 determine the vertical scroll offset.
@@ -1368,7 +1368,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 			if (iomem[addr] != value) {
 				// Value changed: Check if we need to trigger an interrupt immediately
 				iomem[addr] = value;
-				if (scanline == rasterInterruptLine())
+				if (yCounter == rasterInterruptLine())
 					triggerIRQ(1);
 			} else {
 				iomem[addr] = value;
@@ -1475,7 +1475,7 @@ VIC::triggerIRQ(uint8_t source)
 		// Interrupt is enabled
 		iomem[0x19] |= 128;
 		cpu->setIRQLineVIC();
-		// debug("Interrupting at rasterline %x %d\n", scanline, scanline);
+		// debug("Interrupting at rasterline %x %d\n", yCounter, yCounter);
 	}
 }
 
@@ -1491,7 +1491,7 @@ VIC::triggerLightPenInterrupt()
 
 		// determine current coordinates
         int x = xCounter;
-        int y = scanline;
+        int y = yCounter;
 				
 		// latch coordinates 
 		iomem[0x13] = x / 2; // value equals the current x coordinate divided by 2
@@ -1513,7 +1513,7 @@ VIC::updateSpriteDmaOnOff()
 	for (int i = 0; i < 8; i++) {
 		if (spriteIsEnabled(i)) {
 			uint8_t y = getSpriteY(i);
-			if (y == (scanline & 0xff)) {
+			if (y == (yCounter & 0xff)) {
 				spriteDmaOnOff |= (1 << i);
 				mcbase[i] = 0;
 				if (spriteHeightIsDoubled(i))
@@ -1528,20 +1528,60 @@ VIC::updateSpriteDmaOnOff()
 // -----------------------------------------------------------------------------------------------
 
 void
-VIC::dirk(unsigned cycle)
+VIC::dirk()
 {
-#if 0
-    if (show && (scanline == 51 || scanline == 55 || scanline == 247 || scanline == 251)) {
-        printf("%d:%d(%d) ", cycle, isRSEL(),DENbit());
+    unsigned cycle = c64->rasterlineCycle;
+    static uint16_t old_reg_pc = 0;
+    static unsigned mycount = 0;
+    static uint8_t old0x20;
+    // static unsigned reached = 0;
+    static unsigned trace = 0;
+    
+    uint16_t reg_pc = cpu->getPC_at_cycle_0();
+    
+    if (reg_pc == 2067) {
+        printf("2067 reached");
+        trace = 1;
+        mycount = 1;
     }
-#endif
+    
+    if (trace) {
+        if (mycount++ > 10000) {
+            printf("MAX OUTPUT REACHED. ABORTING TRACE");
+            trace = 0;
+        }
+    }
+    
+    if (trace && reg_pc == 2138) {
+        printf("2138 reached, TRACE OFF");
+        trace = 0;
+    }
+    
+    if (trace) {
+/*
+        if (reg_pc != old_reg_pc) {
+            printf("VIC cycle %d: %s\n",cycle, cpu->disassemble());
+        }
+*/
+        printf("(%i,%i) %s\n",yCounter,cycle, cpu->disassemble());
+    }
+    
+    if (trace && old0x20 != iomem[0x20] && (iomem[0x20] & 0x0F) == 2) {
+        printf("Rand wird rot (%d,%d) %d -> %d\n", yCounter,cycle, old0x20,iomem[0x20]);
+    }
+    if (trace && old0x20 != iomem[0x20] && (iomem[0x20] & 0x0F) == 3) {
+        printf("Rand wird cyan (%d,%d) %d -> %d\n", yCounter,cycle, old0x20,iomem[0x20]);
+    }
+
+    old0x20 = iomem[0x20];
+    old_reg_pc = reg_pc;
 }
 
 void
 VIC::checkVerticalFrameFF()
 {
     // Check for upper border
-    if (scanline == upperComparisonValue() && DENbit()) {
+    if (yCounter == upperComparisonValue() && DENbit()) {
         verticalFrameFFclearCond = true;
     }
     // Trigger immediately (similar to VICE)
@@ -1550,7 +1590,7 @@ VIC::checkVerticalFrameFF()
     }
     
     // Check for lower border
-    if (scanline == lowerComparisonValue()) {
+    if (yCounter == lowerComparisonValue()) {
         verticalFrameFFsetCond = true;
         verticalFrameFF = true;
     }
@@ -1570,7 +1610,7 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
         //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
         
 /* OLD CODE
-        if (scanline == lowerComparisonValue()) {
+        if (yCounter == lowerComparisonValue()) {
             verticalFrameFF = true;
         }
 */
@@ -1585,7 +1625,7 @@ VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
         //     vertikale Rahmenflipflop gelšscht." [C.B.]
         
 /* OLD CODE
-        else if (scanline == upperComparisonValue() && DENbit()) {
+        else if (yCounter == upperComparisonValue() && DENbit()) {
             verticalFrameFF = false;
         }
 */
@@ -1664,7 +1704,10 @@ VIC::endFrame()
 void 
 VIC::beginRasterline(uint16_t line)
 {
-    scanline = line;
+    if (line != 0) {
+        yCounter = line; // Overflow case is handled in cycle 2
+    }
+    
     verticalFrameFFsetCond = verticalFrameFFclearCond = false;
     
 	// Clear z buffer. The buffer is initialized with a high, positive value (meaning the pixel is far away)
@@ -1682,7 +1725,7 @@ VIC::beginRasterline(uint16_t line)
 
     // Check for the DEN bit if we're processing rasterline 30
     // The initial value can change in the middle of a rasterline.
-    if (scanline == 0x30)
+    if (line == 0x30)
         DENwasSetInRasterline30 = DENbit();
 
     // Reset graphic sequencer
@@ -1708,7 +1751,7 @@ VIC::endRasterline()
 void 
 VIC::cycle1()
 {
-    dirk(1);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1721,7 +1764,7 @@ VIC::cycle1()
         sSecondAccess(3);
     
     // Phi2.1 Rasterline interrupt
-	if (scanline == rasterInterruptLine() && scanline != 0)
+	if (yCounter == rasterInterruptLine() && c64->getRasterline() != 0)
 		triggerIRQ(1);
 
     // Phi2.2 Sprite logic
@@ -1745,7 +1788,9 @@ VIC::cycle1()
 void
 VIC::cycle2()
 {
-    dirk(2);
+    yCounter = c64->getRasterline();
+
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1759,7 +1804,7 @@ VIC::cycle2()
     
     // Phi2.2 Sprite logic
     // Phi2.1 Rasterline interrupt
-	if (scanline == 0 && scanline == rasterInterruptLine())
+	if (yCounter == 0 && yCounter == rasterInterruptLine())
 		triggerIRQ(1);
 
     // Phi2.3 VC/RC logic
@@ -1782,7 +1827,7 @@ VIC::cycle2()
 void 
 VIC::cycle3()
 {
-    dirk(3);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1816,7 +1861,7 @@ VIC::cycle3()
 void 
 VIC::cycle4()
 {
-    dirk(4);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1851,7 +1896,7 @@ VIC::cycle4()
 void
 VIC::cycle5()
 {
-    dirk(5);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1886,7 +1931,7 @@ VIC::cycle5()
 void 
 VIC::cycle6()
 {
-    dirk(6);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1922,7 +1967,7 @@ VIC::cycle6()
 void 
 VIC::cycle7()
 {
-    dirk(7);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1953,7 +1998,7 @@ VIC::cycle7()
 void 
 VIC::cycle8()
 {
-    dirk(8);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1987,7 +2032,7 @@ VIC::cycle8()
 void 
 VIC::cycle9()
 {
-    dirk(9);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2018,7 +2063,7 @@ VIC::cycle9()
 void 
 VIC::cycle10()
 {
-    dirk(10);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2051,7 +2096,7 @@ VIC::cycle10()
 void
 VIC::cycle11()
 {
-    dirk(11);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2074,7 +2119,7 @@ VIC::cycle11()
 void
 VIC::cycle12()
 {
-    dirk(12);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2106,7 +2151,7 @@ VIC::cycle12()
 void
 VIC::cycle13() // X Coordinate -3 - 4 (?)
 {
-    dirk(13);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2132,7 +2177,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
 void
 VIC::cycle14() // SpriteX: 0 - 7 (?)
 {
-    dirk(14);
+    dirk();
     
     xCounter = 4;
     
@@ -2169,7 +2214,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
 void
 VIC::cycle15() // SpriteX: 8 - 15 (?)
 {
-    dirk(15);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2197,7 +2242,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
 void
 VIC::cycle16() // SpriteX: 16 - 23 (?)
 {
-    dirk(16);
+    dirk();
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2247,7 +2292,7 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
 void
 VIC::cycle17() // SpriteX: 24 - 31 (?)
 {
-    dirk(17);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2275,7 +2320,7 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
 void
 VIC::cycle18() // SpriteX: 32 - 39
 {
-    dirk(18);
+    dirk();
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2303,7 +2348,7 @@ VIC::cycle18() // SpriteX: 32 - 39
 void
 VIC::cycle19to54()
 {
-    dirk(0);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2330,7 +2375,7 @@ VIC::cycle19to54()
 void
 VIC::cycle55()
 {
-    dirk(55);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2373,7 +2418,7 @@ VIC::cycle55()
 void
 VIC::cycle56()
 {
-    dirk(56);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2401,7 +2446,7 @@ VIC::cycle56()
 void
 VIC::cycle57()
 {
-    dirk(57);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2431,7 +2476,7 @@ VIC::cycle57()
 void
 VIC::cycle58()
 {
-    dirk(58);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2459,7 +2504,7 @@ VIC::cycle58()
 		uint8_t mask = (1 << i);
 		if (spriteDmaOnOff & mask) {
 			uint8_t y = getSpriteY(i);
-			if (y == (scanline & 0xff)) 
+			if (y == (yCounter & 0xff))
 				spriteOnOff |= mask;
 		}
 	}
@@ -2512,7 +2557,7 @@ VIC::cycle58()
 void
 VIC::cycle59()
 {
-    dirk(59);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2548,7 +2593,7 @@ VIC::cycle59()
 void
 VIC::cycle60()
 {
-    dirk(60);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2584,7 +2629,7 @@ VIC::cycle60()
 void
 VIC::cycle61()
 {
-    dirk(61);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2618,7 +2663,7 @@ VIC::cycle61()
 void
 VIC::cycle62()
 {
-    dirk(62);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2652,7 +2697,7 @@ VIC::cycle62()
 void
 VIC::cycle63()
 {
-    dirk(63);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2661,7 +2706,7 @@ VIC::cycle63()
     // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
     //     das vertikale Rahmenflipflop gesetzt." [C.B.]
     /*
-    if (scanline == lowerComparisonValue()) {
+    if (yCounter == lowerComparisonValue()) {
         verticalFrameFF = true;
     }
     */
@@ -2669,7 +2714,7 @@ VIC::cycle63()
     //     ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
     //     Rahmenflipflop gelšscht." [C.B.]
     /*
-    else if (scanline == upperComparisonValue() && DENbit()) {
+    else if (yCounter == upperComparisonValue() && DENbit()) {
         verticalFrameFF = false;
     }
     */
@@ -2688,13 +2733,13 @@ VIC::cycle63()
     }
 
 	// draw debug markers
-	if (markIRQLines && scanline == rasterInterruptLine()) 
+	if (markIRQLines && yCounter == rasterInterruptLine())
 		markLine(0, totalScreenWidth, colors[WHITE]);
 	if (markDMALines && badLineCondition)	
 		markLine(0, totalScreenWidth, colors[RED]);
-	if (rasterlineDebug[scanline] >= 0) {
-		markLine(0, totalScreenWidth, colors[rasterlineDebug[scanline] % 16]);
-		rasterlineDebug[scanline] = -1;
+	if (rasterlineDebug[yCounter] >= 0) {
+		markLine(0, totalScreenWidth, colors[rasterlineDebug[yCounter] % 16]);
+		rasterlineDebug[yCounter] = -1;
 	}		
 
     // Phi1.3 Fetch
@@ -2726,7 +2771,7 @@ VIC::cycle63()
 void
 VIC::cycle64() 	// NTSC only
 {
-    dirk(64);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2751,7 +2796,7 @@ VIC::cycle64() 	// NTSC only
 void
 VIC::cycle65() 	// NTSC only
 {
-    dirk(65);
+    dirk();
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();

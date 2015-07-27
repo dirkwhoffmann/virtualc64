@@ -232,7 +232,9 @@ private:
     //! Current clock cycle relative to the current rasterline
     /*! Range: 1 ... 63 on PAL machines
                1 ... 65 on NTSC machines */
-	int rasterlineCycle;
+public:
+    int rasterlineCycle;
+private:
     
 	//! Current frame number since power up
 	uint64_t frame;

@@ -211,9 +211,9 @@ public:
 	// -----------------------------------------------------------------------------------------------
 
 public:
-    unsigned show = false; // DIRK: FOR DEBUGGING, REMOVE ASAP
-    unsigned showframe = 0; // DIRK: FOR DEBUGGING, REMOVE ASAP
-    void dirk(unsigned cycle); // DIRK: DEBUG FUNC, REMOVE ASAP
+    // unsigned show = 0; // DIRK: FOR DEBUGGING, REMOVE ASAP
+    // unsigned showframe = 0; // DIRK: FOR DEBUGGING, REMOVE ASAP
+    void dirk(); // DIRK: DEBUG FUNC, REMOVE ASAP
     
 private:
 		
@@ -231,10 +231,13 @@ private:
     //! Debug counter
     uint64_t frame;
     
+    //! Current rasterline
+    //* Note: The rasterline counter is is usually incremented in cycle 1. The only exception is the overflow condition which is handles in cycle 2 */
+    uint32_t yCounter;
+    
 	//! Number of the next screen line to be drawn
-	/*! Right now, drawing to the border is not supported. Therefore, the value is always in the range
-	 from 0 to SCREEN_HEIGHT-1. */
-	uint32_t scanline;
+    //* DEPRECATED: REPLACED BY yCounter;
+    // uint32_t scanline;
 	
 	//! Internal x counter of the sequencer
 	uint16_t xCounter;
@@ -842,10 +845,10 @@ public:
 	static inline bool isVicAddr(uint16_t addr)	{ return (VIC_START_ADDR <= addr && addr <= VIC_END_ADDR); }
 		
 	//! Get current scanline
-	inline uint16_t getScanline() { return scanline; }
+	inline uint16_t getScanline() { return yCounter; }
 			
 	//! Set rasterline
-	inline void setScanline(uint16_t line) { scanline = line; }
+	inline void setScanline(uint16_t line) { yCounter = line; }
 
 	//! Get memory bank start address
 	uint16_t getMemoryBankAddr();
@@ -1014,7 +1017,7 @@ private:
 	//! Returns true, if the specified rasterline is a DMA line
 	/*! Every eigths row, the VIC chip performs a DMA access and fetches data from screen memory and color memory
 	 The first DMA access occurrs within lines 0x30 to 0xf7 and  */
-	// inline bool isDMALine() { return scanline >= 0x30 && scanline <= 0xf7 && (scanline & 7) == getVerticalRasterScroll(); }
+	// inline bool isDMALine() { return yCounter >= 0x30 && yCounter <= 0xf7 && (yCounter & 7) == getVerticalRasterScroll(); }
 
     /*! Update bad line condition
         "Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
@@ -1024,8 +1027,8 @@ private:
          [3] und in einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war." [C.B.] */
      inline void updateBadLineCondition() {
          badLineCondition =
-            scanline >= 0x30 && scanline <= 0xf7 /* [1] */ &&
-            (scanline & 0x07) == getVerticalRasterScroll() /* [2] */ &&
+            yCounter >= 0x30 && yCounter <= 0xf7 /* [1] */ &&
+            (yCounter & 0x07) == getVerticalRasterScroll() /* [2] */ &&
             DENwasSetInRasterline30 /* [3] */;
          if (badLineCondition)
              displayState = true;
