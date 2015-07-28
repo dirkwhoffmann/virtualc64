@@ -17,7 +17,9 @@
  */
 
 #include "C64.h"
-		
+
+// DIRK DEBUG, REMOVE ASAP
+extern unsigned dirktrace;
 
 // Cycle 0
 void 
@@ -68,10 +70,17 @@ CPU::fetch() {
 		}
 		debug(1, "Breakpoint reached\n");
 	}
+    
+	// opcode = mem->peek(PC);
+	// PC++;
+    
+    FETCH_OPCODE;
+    next = actionFunc[opcode];
 
-	opcode = mem->peek(PC);
-	PC++;
-	next = actionFunc[opcode];
+    // DIRK
+    if (dirktrace && PC > 2000 && PC < 2400) {
+        printf("%d: %s\n",PC-1, disassemble());
+    }
 }
 	
 

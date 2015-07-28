@@ -505,8 +505,7 @@ C64::step()
 #define EXECUTE(x) \
 		cia1->executeOneCycle(); \
 		cia2->executeOneCycle(); \
-        if (cpu->getPC_at_cycle_0() != 2061 || (rasterline == 44 && rasterlineCycle == 19)) \
-            if (!cpu->executeOneCycle()) result = false; \
+        if (!cpu->executeOneCycle()) result = false; \
 		if (!floppy->executeOneCycle()) result = false; \
 		cycles++; \
         rasterlineCycle++;
@@ -560,11 +559,19 @@ C64::endOfRasterline()
 	}
 }
 
+// DIRK
+extern unsigned dirktrace;
+
 inline bool
 C64::executeOneCycle()
 {
 	bool result = true; // Don't break execution
 	
+    // DIRK
+    if (dirktrace) {
+        // printf("Cycle %d\n", rasterlineCycle);
+    }
+    
 	switch(rasterlineCycle) {
 		case 1:
 			beginOfRasterline();			

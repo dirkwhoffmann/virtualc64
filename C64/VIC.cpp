@@ -1527,54 +1527,51 @@ VIC::updateSpriteDmaOnOff()
 //                                      Frame flipflops
 // -----------------------------------------------------------------------------------------------
 
+unsigned dirktrace = 0;
+
 void
 VIC::dirk()
 {
+    /*
     unsigned cycle = c64->rasterlineCycle;
     static uint16_t old_reg_pc = 0;
     static unsigned mycount = 0;
     static uint8_t old0x20;
-    // static unsigned reached = 0;
-    static unsigned trace = 0;
     
     uint16_t reg_pc = cpu->getPC_at_cycle_0();
     
-    if (reg_pc == 2067) {
-        printf("2067 reached");
-        trace = 1;
+    if (reg_pc == 2070) {
+        printf("%d (%X) reached",reg_pc,reg_pc);
+        dirktrace = 1;
         mycount = 1;
     }
     
-    if (trace) {
+    if (dirktrace) {
         if (mycount++ > 10000) {
             printf("MAX OUTPUT REACHED. ABORTING TRACE");
-            trace = 0;
+            dirktrace = 0;
         }
     }
     
-    if (trace && reg_pc == 2138) {
-        printf("2138 reached, TRACE OFF");
-        trace = 0;
+    if (dirktrace && reg_pc == 2194) {
+        printf("%d (%X) reached, TRACE OFF", reg_pc, reg_pc);
+        dirktrace = 0;
     }
     
-    if (trace) {
-/*
-        if (reg_pc != old_reg_pc) {
-            printf("VIC cycle %d: %s\n",cycle, cpu->disassemble());
-        }
-*/
-        printf("(%i,%i) %s\n",yCounter,cycle, cpu->disassemble());
+    if (dirktrace) {
+        printf("(%i,%i)RDY:%d\n",yCounter,cycle,cpu->getRDY());
     }
     
-    if (trace && old0x20 != iomem[0x20] && (iomem[0x20] & 0x0F) == 2) {
+    if (dirktrace && old0x20 != iomem[0x20] && (iomem[0x20] & 0x0F) == 2) {
         printf("Rand wird rot (%d,%d) %d -> %d\n", yCounter,cycle, old0x20,iomem[0x20]);
     }
-    if (trace && old0x20 != iomem[0x20] && (iomem[0x20] & 0x0F) == 3) {
+    if (dirktrace && old0x20 != iomem[0x20] && (iomem[0x20] & 0x0F) == 3) {
         printf("Rand wird cyan (%d,%d) %d -> %d\n", yCounter,cycle, old0x20,iomem[0x20]);
     }
 
     old0x20 = iomem[0x20];
     old_reg_pc = reg_pc;
+    */
 }
 
 void

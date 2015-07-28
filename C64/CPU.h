@@ -424,7 +424,9 @@ public:
 	inline void setNMILineReset() { setNMILine(0x08); }	
 	//! Clear Reset bit of NMI line
 	inline void clearNMILineReset() { clearNMILine(0x08); }
-	//! Set RDY line 
+    //! Get RDY line
+    inline bool getRDY() { return rdyLine; }
+	//! Set RDY line
 	inline void setRDY(bool value) { rdyLine = value; }
 		
 	//! Returns the three letter mnemonic for a given opcode

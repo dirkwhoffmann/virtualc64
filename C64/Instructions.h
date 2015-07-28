@@ -17,6 +17,7 @@
  */
 
 // Atomic CPU tasks
+#define FETCH_OPCODE if (rdyLine) opcode = mem->peek(PC++); else return;
 #define FETCH_ADDR_LO if (rdyLine) addr_lo = mem->peek(PC++); else return;
 #define FETCH_ADDR_HI if (rdyLine) addr_hi = mem->peek(PC++); else return;
 #define FETCH_POINTER_ADDR if (rdyLine) ptr = mem->peek(PC++); else return;
