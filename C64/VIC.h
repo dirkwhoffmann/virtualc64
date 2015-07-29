@@ -1014,11 +1014,10 @@ public:
 
 private:
     
-	//! Returns true, if the specified rasterline is a DMA line
-	/*! Every eigths row, the VIC chip performs a DMA access and fetches data from screen memory and color memory
-	 The first DMA access occurrs within lines 0x30 to 0xf7 and  */
-	// inline bool isDMALine() { return yCounter >= 0x30 && yCounter <= 0xf7 && (yCounter & 7) == getVerticalRasterScroll(); }
-
+    //! Set to true in cycle 1, cycle 63 and cycle 65 iff yCounter equals contents of D012
+    /*! Variable is needed to determine if a rasterline should be issued in cycle 1 or 2 */
+    bool yCounterEqualsIrqRasterline;
+    
     /*! Update bad line condition
         "Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
          negativen Flanke von ø0 zu Beginn des 

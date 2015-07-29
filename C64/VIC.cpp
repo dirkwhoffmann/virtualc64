@@ -64,8 +64,9 @@ VIC::reset()
     
 	// Internal registers
     frame = 0;
+    xCounter = 0;
     yCounter = 0;
-	xCounter = 0;
+    yCounterEqualsIrqRasterline = false;
 	registerVC = 0;
 	registerVCBASE = 0;
 	registerRC = 0;
@@ -135,9 +136,10 @@ VIC::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
 	// Internal registers
+    xCounter = read16(buffer);
 	yCounter = read32(buffer);
-	xCounter = read16(buffer);
-	registerVC = read16(buffer);
+    yCounterEqualsIrqRasterline = (bool)read8(buffer);
+    registerVC = read16(buffer);
 	registerVCBASE = read16(buffer);
 	registerRC = read8(buffer);
 	registerVMLI = read8(buffer);
@@ -201,9 +203,10 @@ VIC::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
 	// Internal registers
+    write16(buffer, xCounter);
     write32(buffer, yCounter);
-	write16(buffer, xCounter);
-	write16(buffer, registerVC);
+    write8(buffer, (uint8_t)yCounterEqualsIrqRasterline);
+    write16(buffer, registerVC);
 	write16(buffer, registerVCBASE);
 	write8(buffer, registerRC);
 	write8(buffer, registerVMLI);
@@ -1528,49 +1531,18 @@ VIC::updateSpriteDmaOnOff()
 // -----------------------------------------------------------------------------------------------
 
 unsigned dirktrace = 0;
+unsigned dirkcnt = 0;
+
 
 void
 VIC::dirk()
 {
     /*
     unsigned cycle = c64->rasterlineCycle;
-    static uint16_t old_reg_pc = 0;
-    static unsigned mycount = 0;
-    static uint8_t old0x20;
-    
-    uint16_t reg_pc = cpu->getPC_at_cycle_0();
-    
-    if (reg_pc == 2070) {
-        printf("%d (%X) reached",reg_pc,reg_pc);
-        dirktrace = 1;
-        mycount = 1;
-    }
-    
-    if (dirktrace) {
-        if (mycount++ > 10000) {
-            printf("MAX OUTPUT REACHED. ABORTING TRACE");
-            dirktrace = 0;
-        }
-    }
-    
-    if (dirktrace && reg_pc == 2194) {
-        printf("%d (%X) reached, TRACE OFF", reg_pc, reg_pc);
-        dirktrace = 0;
-    }
-    
-    if (dirktrace) {
-        printf("(%i,%i)RDY:%d\n",yCounter,cycle,cpu->getRDY());
-    }
-    
-    if (dirktrace && old0x20 != iomem[0x20] && (iomem[0x20] & 0x0F) == 2) {
-        printf("Rand wird rot (%d,%d) %d -> %d\n", yCounter,cycle, old0x20,iomem[0x20]);
-    }
-    if (dirktrace && old0x20 != iomem[0x20] && (iomem[0x20] & 0x0F) == 3) {
-        printf("Rand wird cyan (%d,%d) %d -> %d\n", yCounter,cycle, old0x20,iomem[0x20]);
-    }
 
-    old0x20 = iomem[0x20];
-    old_reg_pc = reg_pc;
+    if (dirktrace == 1) {
+        printf("(%i,%i)D012:%d\n",yCounter,cycle,iomem[0x12]);
+    }
     */
 }
 
@@ -1760,10 +1732,13 @@ VIC::cycle1()
     else
         sSecondAccess(3);
     
-    // Phi2.1 Rasterline interrupt
-	if (yCounter == rasterInterruptLine() && c64->getRasterline() != 0)
-		triggerIRQ(1);
-
+    // Phi2.1 Rasterline interrupt (edge triggered)
+    bool edgeOnYCounter = (c64->getRasterline() != 0);
+    bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
+    if (edgeOnYCounter && edgeOnIrqCond)
+        triggerIRQ(1);
+    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
+    
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
@@ -1800,9 +1775,11 @@ VIC::cycle2()
         pAccess(4);
     
     // Phi2.2 Sprite logic
-    // Phi2.1 Rasterline interrupt
-	if (yCounter == 0 && yCounter == rasterInterruptLine())
-		triggerIRQ(1);
+    // Phi2.1 Rasterline interrupt (edge triggered)
+    bool edgeOnYCounter = (yCounter == 0);
+    bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
+    if (edgeOnYCounter && edgeOnIrqCond)
+        triggerIRQ(1);
 
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
@@ -2698,7 +2675,7 @@ VIC::cycle63()
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
-
+    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
     //     das vertikale Rahmenflipflop gesetzt." [C.B.]
@@ -2797,6 +2774,7 @@ VIC::cycle65() 	// NTSC only
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
+    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
 
     // Phi1.2 Draw (last visible cycle)
     // Phi1.3 Fetch

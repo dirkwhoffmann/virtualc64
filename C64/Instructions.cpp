@@ -20,6 +20,7 @@
 
 // DIRK DEBUG, REMOVE ASAP
 extern unsigned dirktrace;
+extern unsigned dirkcnt;
 
 // Cycle 0
 void 
@@ -71,16 +72,28 @@ CPU::fetch() {
 		debug(1, "Breakpoint reached\n");
 	}
     
-	// opcode = mem->peek(PC);
-	// PC++;
+    // DIRK
+    /*
+    if (dirktrace == 0 && PC == 0x828) {
+        dirktrace = 1; // ON
+    }
+    
+    if (dirktrace == 1)
+        dirkcnt++;
+    
+    if (dirkcnt > 20000) {
+        dirktrace = 2; // OFF
+    }
+    
+    if (dirktrace == 1 && PC > 0x815 && PC < 0x815+400) {
+        printf("%d: %s\n",PC-1, disassemble());
+    }
+    */
+    
+    
     
     FETCH_OPCODE;
     next = actionFunc[opcode];
-
-    // DIRK
-    if (dirktrace && PC > 2000 && PC < 2400) {
-        printf("%d: %s\n",PC-1, disassemble());
-    }
 }
 	
 

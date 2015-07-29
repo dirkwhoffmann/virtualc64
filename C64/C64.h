@@ -16,6 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* 
+ CHANGES
+ VIC-II improvements
+ Fixed a bug that prevented the CPU to freeze during opcode fetch if BA signal was low
+ Fixed a bug that prevented the vertical border to open 
+ Fixes VICE tests "blanking.prg", "denrsel-63.prg", "denrsel-1.prg"
+*/
 
 #ifndef _C64_INC
 #define _C64_INC
