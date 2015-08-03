@@ -102,8 +102,11 @@ public:
 	//! Reference to the connected virtual memory
 	Memory *mem;
 	
-private:
+    // To distiguish between C64 CPU and Floppy CPU
+    bool isC64CPU;
 
+private:
+    
 	// Accumulator register
 	uint8_t A;
 	// X register

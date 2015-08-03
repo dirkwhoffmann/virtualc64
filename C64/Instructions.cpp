@@ -26,7 +26,10 @@ extern unsigned dirkcnt;
 void 
 CPU::fetch() {
 	
-	bool doNMI = false, doIRQ = false;
+    if (isC64CPU && dirktrace == 1)
+        printf("FETCH\n");
+    
+    bool doNMI = false, doIRQ = false;
 	
 	PC_at_cycle_0 = PC;
 	
@@ -39,7 +42,11 @@ CPU::fetch() {
 	 Taktzyklen beim Erreichen des nŠchsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im 
 	 Prozessor auslšsen. Interrupts werden nur erkannt, wenn RDY high ist. */
 	if (nmiNegEdge && NMILineRaisedLongEnough()) {
-		if (tracingEnabled())
+
+        if (isC64CPU && dirktrace == 1)
+             printf("NMI (source = %02X)\n", nmiLine);
+        
+        if (tracingEnabled())
 			debug(1, "NMI (source = %02X)\n", nmiLine);
 		nmiNegEdge = false;
 		next = &CPU::nmi_2;
@@ -47,7 +54,11 @@ CPU::fetch() {
 		return;
 
 	} else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
-		if (tracingEnabled())
+
+        if (isC64CPU && dirktrace == 1)
+            printf("IRQ  (source = %02X)\n", irqLine);
+
+        if (tracingEnabled())
 			debug(1, "IRQ (source = %02X)\n", irqLine);
 		next = &CPU::irq_2;
 		doIRQ = true;
@@ -74,18 +85,18 @@ CPU::fetch() {
     
     // DIRK
     /*
-    if (dirktrace == 0 && PC == 0x828) {
+    if (isC64CPU && dirktrace == 0 && PC == 0x080D) {
         dirktrace = 1; // ON
     }
     
-    if (dirktrace == 1)
+    if (isC64CPU && dirktrace == 1)
         dirkcnt++;
     
-    if (dirkcnt > 20000) {
+    if (isC64CPU && dirkcnt > 20000) {
         dirktrace = 2; // OFF
     }
     
-    if (dirktrace == 1 && PC > 0x815 && PC < 0x815+400) {
+    if (isC64CPU && dirktrace == 1) {
         printf("%d: %s\n",PC-1, disassemble());
     }
     */
@@ -94,8 +105,11 @@ CPU::fetch() {
     
     FETCH_OPCODE;
     next = actionFunc[opcode];
+    
+    if (isC64CPU && dirktrace == 1)
+        printf("next = %p\n",next);
 }
-	
+
 
 void 
 CPU::registerCallback(uint8_t opcode, void (CPU::*func)())

@@ -89,7 +89,7 @@ C64::C64()
 	
 	// Create components
 	mem = new C64Memory(this);
-	cpu = new CPU(this, mem);
+	cpu = new CPU(this, mem); cpu->isC64CPU = true; // DIRK
 	vic = new VIC(this);
 	sid = new SIDWrapper(this);
 	cia1 = new CIA1(this);

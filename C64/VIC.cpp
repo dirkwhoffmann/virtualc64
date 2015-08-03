@@ -23,6 +23,12 @@
 
 #include "C64.h"
 
+// DIRK
+unsigned dirktrace = 0;
+unsigned dirkcnt = 0;
+
+
+
 VIC::VIC(C64 *c64)
 {
 	name = "VIC";
@@ -127,7 +133,7 @@ VIC::reset()
 uint32_t
 VIC::stateSize()
 {
-    return 157;
+    return 158;
 }
 
 void
@@ -486,6 +492,10 @@ inline void VIC::gAccess()
         registerVMLI++;
         registerVMLI &= 0x3F; // 6 bit overflow
     
+        // DIRK
+        if (dirktrace == 1)
+            printf("----> VC++:%d (VCbase:%d) (VMLI++:%d)\n",registerVC, registerVCBASE, registerVMLI);
+
     } else {
     
         // "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.]
@@ -1530,20 +1540,16 @@ VIC::updateSpriteDmaOnOff()
 //                                      Frame flipflops
 // -----------------------------------------------------------------------------------------------
 
-unsigned dirktrace = 0;
-unsigned dirkcnt = 0;
-
-
 void
 VIC::dirk()
 {
-    /*
+    
     unsigned cycle = c64->rasterlineCycle;
 
     if (dirktrace == 1) {
-        printf("(%i,%i)D012:%d\n",yCounter,cycle,iomem[0x12]);
+        printf("(%i,%i) D012:%d BAlow:%d RDY:%d\n",yCounter,cycle,iomem[0x12],BAlow,cpu->getRDY());
     }
-    */
+    
 }
 
 void
@@ -2495,16 +2501,36 @@ VIC::cycle58()
 
     // Phi2.3 VC/RC logic
     
-    // "Der †bergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
-    //  wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
     // "5. In der ersten Phase von Zyklus 58 wird geprŸft, ob RC=7 ist. Wenn ja,
     //     geht die Videologik in den Idle-Zustand und VCBASE wird mit VC geladen
     //     (VC->VCBASE)." [C.B.]
+
+    // "Der †bergang vom Display- in den Idle-Zustand erfolgt in Zyklus 58 einer Zeile,
+    //  wenn der RC den Wert 7 hat und kein Bad-Line-Zustand vorliegt."
     
-    if (displayState && registerRC == 7 && !badLineCondition) {
-        displayState = false;
+    
+    if (registerRC == 7) {
         registerVCBASE = registerVC;
+        if (!badLineCondition)
+            displayState = false;
     }
+
+    if (badLineCondition && !displayState) {
+        // displayState should always be true in bad lines, shouldn't it?
+        assert(0);
+        displayState = true;
+    }
+
+    if (displayState) {
+        // 3 bit overflow register
+        registerRC = (registerRC + 1) & 0x07;
+    }
+    
+    /* OLD
+    //if (displayState && registerRC == 7 && !badLineCondition) {
+    //    displayState = false;
+    //    registerVCBASE = registerVC;
+    // }
     
     // "Ist die Videologik danach im Display-Zustand (liegt ein
     //  Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhšht." [C.B.]
@@ -2516,7 +2542,8 @@ VIC::cycle58()
         // "(liegt ein Bad-Line-Zustand vor, ist dies immer der Fall)"
         assert(!badLineCondition);
     }
-
+    */
+    
     // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     

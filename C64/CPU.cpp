@@ -24,6 +24,8 @@ CPU::CPU(C64 *c64, Memory *mem)
     
 	debug(2, "  Creating CPU at address %p...\n", this);
 
+    isC64CPU = false;
+
     this->c64 = c64;
 	this->mem = mem;
 	
@@ -45,7 +47,7 @@ void
 CPU::reset()
 {
 	debug(2, "  Resetting CPU...\n");
-
+    
 	// Registers and flags
 	A = 0;
 	X = 0;

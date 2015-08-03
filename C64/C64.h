@@ -27,8 +27,8 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-#define NDEBUG // Diables all assertions (release versions, only)
-#define DEBUG_LEVEL 1
+// #define NDEBUG // Diables all assertions (release versions, only)
+#define DEBUG_LEVEL 2
 
 // Snapshot version number of this release
 #define V_MAJOR 1
