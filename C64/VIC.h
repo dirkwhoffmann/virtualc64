@@ -1029,9 +1029,18 @@ private:
             yCounter >= 0x30 && yCounter <= 0xf7 /* [1] */ &&
             (yCounter & 0x07) == getVerticalRasterScroll() /* [2] */ &&
             DENwasSetInRasterline30 /* [3] */;
-         if (badLineCondition)
-             displayState = true;
+
+         // OLD CODE: UPDATE OF DISPLAY STATE IS TOO EARLY. NEEDS TO BE DONE AT THE END OF EACH CYCLE
+         // if (badLineCondition)
+         //    displayState = true;
      }
+    
+    //! Update display state
+    /*! Invoked at the end of each VIC cycle */
+    inline void updateDisplayState() {
+        if (badLineCondition)
+            displayState = true;
+    }
     
     //! Set BA line
     void setBAlow(bool value);

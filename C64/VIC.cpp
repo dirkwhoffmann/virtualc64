@@ -1425,7 +1425,14 @@ VIC::poke(uint16_t addr, uint8_t value)
 		case 0x1F:
 			// Writing has no effect
 			return;
-	}
+
+    
+        case 0x21:
+            // DIRK: REMOVE
+            if (dirktrace == 1)
+                printf("Colorreg D021:%d\n",value);
+            break;
+    }
 	
 	// Default action
 	iomem[addr] = value;
@@ -1547,7 +1554,9 @@ VIC::dirk()
     unsigned cycle = c64->rasterlineCycle;
 
     if (dirktrace == 1) {
-        printf("(%i,%i) D012:%d BAlow:%d RDY:%d\n",yCounter,cycle,iomem[0x12],BAlow,cpu->getRDY());
+        printf("(%i,%i) D012:%d BAlow:%d RDY:%d displayState:%d RC:%d VC:%d VCbase:%d VMLI:%d\n",
+               yCounter,cycle,iomem[0x12],BAlow,cpu->getRDY(),
+               displayState, registerRC, registerVC, registerVCBASE, registerVMLI);
     }
     
 }
@@ -1760,6 +1769,7 @@ VIC::cycle1()
         sThirdAccess(3);
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -1801,6 +1811,7 @@ VIC::cycle2()
         sFirstAccess(4);
     
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -1835,6 +1846,7 @@ VIC::cycle3()
         sThirdAccess(4);
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -1870,6 +1882,7 @@ VIC::cycle4()
         sFirstAccess(5);
     
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -1905,6 +1918,7 @@ VIC::cycle5()
         sThirdAccess(5);
     
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -1941,6 +1955,7 @@ VIC::cycle6()
         sFirstAccess(6);
     
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -1972,6 +1987,7 @@ VIC::cycle7()
         sThirdAccess(6);
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2006,6 +2022,7 @@ VIC::cycle8()
         sFirstAccess(7);
     
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2037,6 +2054,7 @@ VIC::cycle9()
         sThirdAccess(7);
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2070,6 +2088,7 @@ VIC::cycle10()
         sThirdAccess(7);
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2093,6 +2112,7 @@ VIC::cycle11()
     
     // Phi2.5 Fetch
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2125,6 +2145,7 @@ VIC::cycle12()
     
     // Phi2.5 Fetch
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2150,7 +2171,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
 
     // Phi2.5 Fetch
     // Finalize
-    // xCounter = 0xfffc; // We use this value (-4) because Frodo SC does
+    updateDisplayState();
     countX();
 }
 
@@ -2188,6 +2209,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
 
     // Phi2.5 Fetch
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2198,7 +2220,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
-
+    
     // Phi1.2 Draw
     drawBorderArea(15);
 
@@ -2216,6 +2238,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
 
     // Finalize
     cleared_bits_in_d017 = 0;
+    updateDisplayState();
     countX();
 }
 
@@ -2266,6 +2289,7 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     cAccess();
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2294,6 +2318,7 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     cAccess();
 
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2322,6 +2347,7 @@ VIC::cycle18() // SpriteX: 32 - 39
     cAccess();
 
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2349,6 +2375,7 @@ VIC::cycle19to54()
     cAccess();
     
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2392,6 +2419,7 @@ VIC::cycle55()
     
     // Phi2.5 Fetch
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2420,6 +2448,7 @@ VIC::cycle56()
     
     // Phi2.5 Fetch
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2450,6 +2479,7 @@ VIC::cycle57()
     
     // Phi2.5 Fetch
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2515,12 +2545,8 @@ VIC::cycle58()
             displayState = false;
     }
 
-    if (badLineCondition && !displayState) {
-        // displayState should always be true in bad lines, shouldn't it?
-        assert(0);
-        displayState = true;
-    }
-
+    updateDisplayState();
+    
     if (displayState) {
         // 3 bit overflow register
         registerRC = (registerRC + 1) & 0x07;
@@ -2552,6 +2578,7 @@ VIC::cycle58()
         sFirstAccess(0);
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2588,6 +2615,7 @@ VIC::cycle59()
         sFirstAccess(0);
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2624,6 +2652,7 @@ VIC::cycle60()
         sThirdAccess(0);
     
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2658,6 +2687,7 @@ VIC::cycle61()
         sFirstAccess(1);
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2692,6 +2722,7 @@ VIC::cycle62()
         sThirdAccess(1);
     
     // Finalize
+    updateDisplayState();
 	countX();
 }
 
@@ -2766,6 +2797,7 @@ VIC::cycle63()
         sFirstAccess(2);
     
     // Finalize
+    updateDisplayState();
     countX();
 }
 
@@ -2791,7 +2823,8 @@ VIC::cycle64() 	// NTSC only
     sThirdAccess(2);
     
     // Finalize
-	countX();
+	updateDisplayState();
+    countX();
 }
 
 void
@@ -2815,7 +2848,9 @@ VIC::cycle65() 	// NTSC only
 
     // Phi2.5 Fetch
     sFirstAccess(3);
+
     // Finalize
+    updateDisplayState();
     countX();
 }
 

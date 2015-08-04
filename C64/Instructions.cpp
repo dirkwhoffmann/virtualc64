@@ -83,10 +83,12 @@ CPU::fetch() {
 		debug(1, "Breakpoint reached\n");
 	}
     
-    // DIRK
+    // DIRK DEBUG
     /*
-    if (isC64CPU && dirktrace == 0 && PC == 0x080D) {
+    if (isC64CPU && dirktrace == 0 && PC == 0x0A3A) {
         dirktrace = 1; // ON
+        c64->mem->ram[0x0930] = 0x2B;
+        c64->mem->ram[0x0931] = 0x17;
     }
     
     if (isC64CPU && dirktrace == 1)
@@ -1171,7 +1173,7 @@ void CPU::branch_3_overflow()
 	
 // ------------------------------------------------------------------------------
 void CPU::BCC_relative()
-{	
+{
 	READ_IMMEDIATE;
 	if (!getC()) { 
 		next = &CPU::BCC_relative_2;
