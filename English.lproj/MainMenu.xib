@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">13F34</string>
-		<string key="IBDocument.InterfaceBuilderVersion">6254</string>
+		<string key="IBDocument.SystemVersion">13F1096</string>
+		<string key="IBDocument.InterfaceBuilderVersion">6751</string>
 		<string key="IBDocument.AppKitVersion">1265.21</string>
 		<string key="IBDocument.HIToolboxVersion">698.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">6254</string>
+			<string key="NS.object.0">6751</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSCustomObject</string>
@@ -5403,6 +5403,7 @@
 						<string key="SIDSamplingMethodAction:">id</string>
 						<string key="changeColorScheme:">id</string>
 						<string key="factorySettingsAction:">id</string>
+						<string key="recordKeyAction:">id</string>
 						<string key="setEyeXAction:">id</string>
 						<string key="setEyeYAction:">id</string>
 						<string key="setEyeZAction:">id</string>
@@ -5435,6 +5436,10 @@
 						</object>
 						<object class="IBActionInfo" key="factorySettingsAction:">
 							<string key="name">factorySettingsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="recordKeyAction:">
+							<string key="name">recordKeyAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="setEyeXAction:">
@@ -5492,13 +5497,33 @@
 						<string key="colorWell7">NSColorWell</string>
 						<string key="colorWell8">NSColorWell</string>
 						<string key="colorWell9">NSColorWell</string>
+						<string key="down1">NSTextField</string>
+						<string key="down1button">NSButton</string>
+						<string key="down2">NSTextField</string>
+						<string key="down2button">NSButton</string>
 						<string key="eyeXSlider">NSSlider</string>
 						<string key="eyeYSlider">NSSlider</string>
 						<string key="eyeZSlider">NSSlider</string>
+						<string key="fire1">NSTextField</string>
+						<string key="fire1button">NSButton</string>
+						<string key="fire2">NSTextField</string>
+						<string key="fire2button">NSButton</string>
+						<string key="left1">NSTextField</string>
+						<string key="left1button">NSButton</string>
+						<string key="left2">NSTextField</string>
+						<string key="left2button">NSButton</string>
 						<string key="machineType">NSPopUpButton</string>
+						<string key="right1">NSTextField</string>
+						<string key="right1button">NSButton</string>
+						<string key="right2">NSTextField</string>
+						<string key="right2button">NSButton</string>
 						<string key="systemText1">NSTextField</string>
 						<string key="systemText2">NSTextField</string>
 						<string key="systemText3">NSTextField</string>
+						<string key="up1">NSTextField</string>
+						<string key="up1button">NSButton</string>
+						<string key="up2">NSTextField</string>
+						<string key="up2button">NSButton</string>
 						<string key="videoFilter">NSPopUpButton</string>
 						<string key="warpLoad">NSButton</string>
 					</dictionary>
@@ -5587,6 +5612,22 @@
 							<string key="name">colorWell9</string>
 							<string key="candidateClassName">NSColorWell</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="down1">
+							<string key="name">down1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="down1button">
+							<string key="name">down1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="down2">
+							<string key="name">down2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="down2button">
+							<string key="name">down2button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="eyeXSlider">
 							<string key="name">eyeXSlider</string>
 							<string key="candidateClassName">NSSlider</string>
@@ -5599,9 +5640,57 @@
 							<string key="name">eyeZSlider</string>
 							<string key="candidateClassName">NSSlider</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="fire1">
+							<string key="name">fire1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="fire1button">
+							<string key="name">fire1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="fire2">
+							<string key="name">fire2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="fire2button">
+							<string key="name">fire2button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="left1">
+							<string key="name">left1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="left1button">
+							<string key="name">left1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="left2">
+							<string key="name">left2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="left2button">
+							<string key="name">left2button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="machineType">
 							<string key="name">machineType</string>
 							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="right1">
+							<string key="name">right1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="right1button">
+							<string key="name">right1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="right2">
+							<string key="name">right2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="right2button">
+							<string key="name">right2button</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="systemText1">
 							<string key="name">systemText1</string>
@@ -5614,6 +5703,22 @@
 						<object class="IBToOneOutletInfo" key="systemText3">
 							<string key="name">systemText3</string>
 							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="up1">
+							<string key="name">up1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="up1button">
+							<string key="name">up1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="up2">
+							<string key="name">up2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="up2button">
+							<string key="name">up2button</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="videoFilter">
 							<string key="name">videoFilter</string>
@@ -5638,6 +5743,7 @@
 						<string key="SIDSamplingMethodAction:">id</string>
 						<string key="changeColorScheme:">id</string>
 						<string key="factorySettingsAction:">id</string>
+						<string key="recordKeyAction:">id</string>
 						<string key="setEyeXAction:">id</string>
 						<string key="setEyeYAction:">id</string>
 						<string key="setEyeZAction:">id</string>
@@ -5670,6 +5776,10 @@
 						</object>
 						<object class="IBActionInfo" key="factorySettingsAction:">
 							<string key="name">factorySettingsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="recordKeyAction:">
+							<string key="name">recordKeyAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="setEyeXAction:">

@@ -559,18 +559,13 @@ C64::endOfRasterline()
 	}
 }
 
-// DIRK
+// DIRK, TEMPORARY DEBUGGING
 extern unsigned dirktrace;
 
 inline bool
 C64::executeOneCycle()
 {
 	bool result = true; // Don't break execution
-	
-    // DIRK
-    if (dirktrace) {
-        // printf("Cycle %d\n", rasterlineCycle);
-    }
     
 	switch(rasterlineCycle) {
 		case 1:

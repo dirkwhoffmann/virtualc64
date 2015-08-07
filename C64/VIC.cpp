@@ -510,12 +510,6 @@ inline void VIC::gAccess()
         registerVC &= 0x3FF; // 10 bit overflow
         registerVMLI++;
         registerVMLI &= 0x3F; // 6 bit overflow
-    
-        // DIRK
-        /*
-        if (dirktrace == 1)
-            printf("----> VC++:%d (VCbase:%d) (VMLI++:%d)\n",registerVC, registerVCBASE, registerVMLI);
-         */
         
     } else {
     
@@ -679,12 +673,7 @@ void VIC::drawPixels(uint8_t cycle)
     if (dc.mainFrameFF) {
         
         int border_rgba = colors[dc.borderColor];
-        if (dirktrace == 1) {
-            printf("Drawing with border color %d %s\n",
-                   dc.borderColor, dc.borderColor != 10 ? "******" : "");
-        }
-        
-        
+
         if (cycle == 17) {
             
             // left border in 38 column mode
@@ -725,7 +714,8 @@ void VIC::drawBorderArea(uint8_t cycle)
     if (dc.mainFrameFF) {
         
         int border_rgba = colors[dc.borderColor];
-        
+
+        /*
         if (dc.borderColor == 11 && dirktrace == 0) {
             dirktrace = 1; // ON
         }
@@ -734,6 +724,7 @@ void VIC::drawBorderArea(uint8_t cycle)
             printf("Drawing with border color %d %s (left/right border area)\n",
                    dc.borderColor, dc.borderColor != 10 ? "******" : "");
         }
+        */
         
         drawEightFramePixels(xCoord, border_rgba);
         return;
@@ -748,12 +739,6 @@ void VIC::drawBorderArea(uint8_t cycle)
 
 void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
-    
-/*
-    if (dirktrace == 1)
-        printf("VIC::loadPixelSynthesizerWithColors BorderCol:%d BackgroundCol:%d\n",getBorderColor(),getBackgroundColor());
-*/
-    
     switch (gs_mode) {
             
         case STANDARD_TEXT:
@@ -823,83 +808,6 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
             break;
     }
 }
-
-#if 0
-void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
-{
-    if (dirktrace == 1)
-        printf("VIC::loadPixelSynthesizerWithColors BorderCol:%d BackgroundCol:%d\n",getBorderColor(),getBackgroundColor());
-    
-    switch (gs_mode) {
-            
-        case STANDARD_TEXT:
-            col_rgba[0] = colors[getBackgroundColor()];
-            col_rgba[1] = colors[colorSpace];
-            multicol = false; 
-            break;
-            
-        case MULTICOLOR_TEXT:
-            if (colorSpace & 0x8 /* MC flag */) {
-                col_rgba[0] = colors[getBackgroundColor()];
-                col_rgba[1] = colors[getExtraBackgroundColor(1)];
-                col_rgba[2] = colors[getExtraBackgroundColor(2)];
-                col_rgba[3] = colors[colorSpace & 0x07];
-                multicol = true;
-            } else {
-                col_rgba[0] = colors[getBackgroundColor()];
-                col_rgba[1] = colors[colorSpace];
-                multicol = false;
-            }
-            break;
-            
-        case STANDARD_BITMAP:
-            col_rgba[0] = colors[characterSpace & 0x0F];
-            col_rgba[1] = colors[characterSpace >> 4];
-            multicol = false;
-            break;
-            
-        case MULTICOLOR_BITMAP:
-            col_rgba[0] = colors[getBackgroundColor()];
-            col_rgba[1] = colors[characterSpace >> 4];
-            col_rgba[2] = colors[characterSpace & 0x0F];
-            col_rgba[3] = colors[colorSpace];
-            multicol = true;
-            break;
-            
-        case EXTENDED_BACKGROUND_COLOR:
-            col_rgba[0] = colors[getExtraBackgroundColor(characterSpace >> 6)];
-            col_rgba[1] = colors[colorSpace];
-            multicol = false;
-            break;
-            
-        case INVALID_TEXT:
-            col_rgba[0] = colors[BLACK];
-            col_rgba[1] = colors[BLACK];
-            col_rgba[2] = colors[BLACK];
-            col_rgba[3] = colors[BLACK];
-            multicol = (colorSpace & 0x8 /* MC flag */);
-            break;
-            
-        case INVALID_STANDARD_BITMAP:
-            col_rgba[0] = colors[BLACK];
-            col_rgba[1] = colors[BLACK];
-            multicol = false;
-            break;
-            
-        case INVALID_MULTICOLOR_BITMAP:
-            col_rgba[0] = colors[BLACK];
-            col_rgba[1] = colors[BLACK];
-            col_rgba[2] = colors[BLACK];
-            col_rgba[3] = colors[BLACK];
-            multicol = true;
-            break;
-            
-        default:
-            assert(0);
-            break;
-    }
-}
-#endif
 
 void VIC::drawPixel(uint16_t offset, uint8_t pixel)
 {
@@ -1543,20 +1451,6 @@ VIC::poke(uint16_t addr, uint8_t value)
 		case 0x1F:
 			// Writing has no effect
 			return;
-
-        case 0x20:
-            // DIRK: REMOVE
-            // Frame color
-            if (dirktrace == 1)
-                printf("Colorreg D020:%d\n",value & 0x0F);
-            break;
-    
-        case 0x21:
-            // DIRK: REMOVE
-            // Background color
-            //if (dirktrace == 1)
-            //    printf("Colorreg D021:%d\n",value & 0x0F);
-            break;
     }
 	
 	// Default action
@@ -1675,6 +1569,7 @@ VIC::updateSpriteDmaOnOff()
 void
 VIC::dirk()
 {
+/*
     
     unsigned cycle = c64->rasterlineCycle;
 
@@ -1683,7 +1578,7 @@ VIC::dirk()
                yCounter,cycle,iomem[0x12],BAlow,cpu->getRDY(),
                displayState, registerRC, registerVC, registerVCBASE, registerVMLI);
     }
-    
+*/
 }
 
 void

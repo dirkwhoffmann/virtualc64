@@ -39,10 +39,6 @@ CPU::fetch() {
 	 Taktzyklen beim Erreichen des nächsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im 
 	 Prozessor auslösen. Interrupts werden nur erkannt, wenn RDY high ist. */
 	if (nmiNegEdge && NMILineRaisedLongEnough()) {
-
-        if (isC64CPU && dirktrace == 1)
-             printf("NMI (source = %02X)\n", nmiLine);
-        
         if (tracingEnabled())
 			debug(1, "NMI (source = %02X)\n", nmiLine);
 		nmiNegEdge = false;
@@ -51,10 +47,6 @@ CPU::fetch() {
 		return;
 
 	} else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
-
-        if (isC64CPU && dirktrace == 1)
-            printf("IRQ  (source = %02X)\n", irqLine);
-
         if (tracingEnabled())
 			debug(1, "IRQ (source = %02X)\n", irqLine);
 		next = &CPU::irq_2;
@@ -90,6 +82,7 @@ CPU::fetch() {
     }
     */
     
+    /*
     if (isC64CPU && dirktrace == 1)
         dirkcnt++;
     
@@ -100,7 +93,7 @@ CPU::fetch() {
     if (isC64CPU && dirktrace == 1) {
         printf("%d: %s\n",PC-1, disassemble());
     }
-    
+    */
     
     
     
