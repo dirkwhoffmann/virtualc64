@@ -25,10 +25,7 @@ extern unsigned dirkcnt;
 // Cycle 0
 void 
 CPU::fetch() {
-	
-    if (isC64CPU && dirktrace == 1)
-        printf("FETCH\n");
-    
+	    
     bool doNMI = false, doIRQ = false;
 	
 	PC_at_cycle_0 = PC;
@@ -84,12 +81,14 @@ CPU::fetch() {
 	}
     
     // DIRK DEBUG
+    
     /*
-    if (isC64CPU && dirktrace == 0 && PC == 0x0A3A) {
+    if (isC64CPU && dirktrace == 0 && PC == 0x0879) {
         dirktrace = 1; // ON
-        c64->mem->ram[0x0930] = 0x2B;
-        c64->mem->ram[0x0931] = 0x17;
+        // c64->mem->ram[0x0930] = 0x2B;
+        // c64->mem->ram[0x0931] = 0x17;
     }
+    */
     
     if (isC64CPU && dirktrace == 1)
         dirkcnt++;
@@ -101,15 +100,12 @@ CPU::fetch() {
     if (isC64CPU && dirktrace == 1) {
         printf("%d: %s\n",PC-1, disassemble());
     }
-    */
+    
     
     
     
     FETCH_OPCODE;
     next = actionFunc[opcode];
-    
-    if (isC64CPU && dirktrace == 1)
-        printf("next = %p\n",next);
 }
 
 

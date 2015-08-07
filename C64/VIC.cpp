@@ -21,6 +21,25 @@
    Many thanks, Christian! 
 */
 
+
+// TODO: Delay drawing by one cycle
+// To do so, ...
+// add typedef struct drawingContext
+// Stores everything that is needed to draw a chunk of pixels
+// Enables us to delay drawing by some cycles
+
+// Old sequence is simulated by:
+// 1. updateDrawingContext
+// 1. draw
+// 2. updateDrawingContext
+// 2. draw
+
+// Move draw one cycle behind
+// 1. updateDrawingContext
+// 2. draw
+// 2. updateDrawingContext
+// 3. draw
+
 #include "C64.h"
 
 // DIRK
@@ -472,8 +491,8 @@ inline void VIC::gAccess()
             addr = (CB13CB12CB11() << 10) | (characterSpace[registerVMLI] << 3) | registerRC;
         }
 
-        // "Bei gesetztem ECM-Bit schaltet der Adreßgenerator bei den g-Zugriffen die
-        //  Adreßleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
+        // "Bei gesetztem ECM-Bit schaltet der Adressgenerator bei den g-Zugriffen die
+        //  Adressleitungen 9 und 10 immer auf Low, bei ansonsten gleichem Adressschema
         //  (z.B. erfolgen dann die g-Zugriffe im Idle-Zustand an Adresse $39ff)." [C.B.]
         
         if (ECMbitInPreviousCycle())
@@ -493,9 +512,11 @@ inline void VIC::gAccess()
         registerVMLI &= 0x3F; // 6 bit overflow
     
         // DIRK
+        /*
         if (dirktrace == 1)
             printf("----> VC++:%d (VCbase:%d) (VMLI++:%d)\n",registerVC, registerVCBASE, registerVMLI);
-
+         */
+        
     } else {
     
         // "Im Idle-Zustand erfolgen die g-Zugriffe immer an Videoadresse $3fff." [C.B.]
@@ -587,48 +608,228 @@ inline bool VIC::sThirdAccess(int sprite)
 //                                         Graphics sequencer
 // -----------------------------------------------------------------------------------------------
 
-#if 0
-void VIC::currentBackgroundColor(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
+void
+VIC::prepareDrawingContextForCycle(uint8_t cycle)
 {
-    int bgcol;
+    dc.cycle = cycle;
+    dc.yCounter = yCounter;
+    dc.xCounter = xCounter;
+    dc.verticalFrameFF = verticalFrameFF;
+    dc.mainFrameFF = mainFrameFF;
+    // dc.borderColor = getBorderColor();  // THIS IS TOO EARLY. NEEDS TO BE DONE ONE CYCLE LATER
+    dc.data = gs_data;
+    dc.delay = gs_delay;
+    dc.characterSpace = gs_characterSpace;
+    dc.colorSpace = gs_colorSpace;
+    dc.mode = gs_mode;
+}
+
+void
+VIC::updateDrawingContext()
+{
+    dc.borderColor = getBorderColor();
+    dc.backgroundColor[0] = getBackgroundColor();
+    dc.backgroundColor[1] = getExtraBackgroundColor(1);
+    dc.backgroundColor[2] = getExtraBackgroundColor(2);
+    dc.backgroundColor[3] = getExtraBackgroundColor(3);
+}
+
+void
+VIC::draw()
+{
+    updateDrawingContext();
+    drawPixels(dc.cycle);
+}
+
+void
+VIC::drawBorder()
+{
+    updateDrawingContext();
+    drawBorderArea(dc.cycle);
+}
+
+void VIC::drawPixels(uint8_t cycle)
+{
+    assert(cycle >= 17 && cycle <= 56);
+    
+    uint16_t xCoord = (dc.xCounter - 28) + leftBorderWidth;
+    
+    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
+     Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelšscht ist (siehe
+     Abschnitt 3.9.). Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
+     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
+     normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
+    
+    if (!dc.verticalFrameFF) {
+        
+        drawPixel(xCoord, 0);
+        drawPixel(xCoord + 1, 1);
+        drawPixel(xCoord + 2, 2);
+        drawPixel(xCoord + 3, 3);
+        drawPixel(xCoord + 4, 4);
+        drawPixel(xCoord + 5, 5);
+        drawPixel(xCoord + 6, 6);
+        drawPixel(xCoord + 7, 7);
+        
+    } else {
+        drawEightBehindBackgroudPixels(xCoord);
+    }
+    
+    // Draw Border
+    if (dc.mainFrameFF) {
+        
+        int border_rgba = colors[dc.borderColor];
+        if (dirktrace == 1) {
+            printf("Drawing with border color %d %s\n",
+                   dc.borderColor, dc.borderColor != 10 ? "******" : "");
+        }
+        
+        
+        if (cycle == 17) {
+            
+            // left border in 38 column mode
+            drawSevenFramePixels(xCoord, border_rgba);
+            // don't return here, because the border only captures seven pixels
+            
+        } else if (cycle == 18) {
+            
+            // also capture missed out pixel in cycle 17
+            drawNineFramePixels(xCoord, border_rgba);
+            gs_data = 0;
+            return;
+            
+        } else if (cycle == 56) {
+            
+            // right border in 38 column mode
+            drawNineFramePixels(xCoord, border_rgba);
+            gs_data = 0;
+            return;
+            
+        } else {
+            
+            // in the middle of the display window
+            drawEightFramePixels(xCoord, border_rgba);
+            gs_data = 0;
+            return;
+        }
+    }
+}
+
+void VIC::drawBorderArea(uint8_t cycle)
+{
+    assert((cycle >= 13 && cycle <= 16) || (cycle >= 57 && cycle <= 60));
+    
+    uint16_t xCoord = (dc.xCounter - 28) + leftBorderWidth;
+    
+    // draw border
+    if (dc.mainFrameFF) {
+        
+        int border_rgba = colors[dc.borderColor];
+        
+        if (dc.borderColor == 11 && dirktrace == 0) {
+            dirktrace = 1; // ON
+        }
+        
+        if (dirktrace == 1) {
+            printf("Drawing with border color %d %s (left/right border area)\n",
+                   dc.borderColor, dc.borderColor != 10 ? "******" : "");
+        }
+        
+        drawEightFramePixels(xCoord, border_rgba);
+        return;
+    }
+    
+    /* "Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
+     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
+     normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
+    drawEightBehindBackgroudPixels(xCoord);
+    
+}
+
+void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
+{
+    
+/*
+    if (dirktrace == 1)
+        printf("VIC::loadPixelSynthesizerWithColors BorderCol:%d BackgroundCol:%d\n",getBorderColor(),getBackgroundColor());
+*/
     
     switch (gs_mode) {
             
         case STANDARD_TEXT:
+            col_rgba[0] = colors[dc.backgroundColor[0]];
+            col_rgba[1] = colors[dc.colorSpace];
+            multicol = false;
+            break;
+            
         case MULTICOLOR_TEXT:
-        case MULTICOLOR_BITMAP:
-            bgcol = colors[getBackgroundColor()];
-            break;
-            
-        case STANDARD_BITMAP:
-            bgcol = colors[characterSpace & 0x0F];
-            break;
-            
-            
-        case EXTENDED_BACKGROUND_COLOR:
             if (colorSpace & 0x8 /* MC flag */) {
-                bgcol = colors[getExtraBackgroundColor(characterSpace >> 6)];
+                col_rgba[0] = colors[dc.backgroundColor[0]];
+                col_rgba[1] = colors[dc.backgroundColor[1]];
+                col_rgba[2] = colors[dc.backgroundColor[2]];
+                col_rgba[3] = colors[dc.colorSpace & 0x07];
+                multicol = true;
             } else {
-                bgcol = colors[getBackgroundColor()];
+                col_rgba[0] = colors[dc.backgroundColor[0]];
+                col_rgba[1] = colors[dc.colorSpace];
+                multicol = false;
             }
             break;
             
+        case STANDARD_BITMAP:
+            col_rgba[0] = colors[dc.characterSpace & 0x0F];
+            col_rgba[1] = colors[dc.characterSpace >> 4];
+            multicol = false;
+            break;
+            
+        case MULTICOLOR_BITMAP:
+            col_rgba[0] = colors[dc.backgroundColor[0]];
+            col_rgba[1] = colors[dc.characterSpace >> 4];
+            col_rgba[2] = colors[dc.characterSpace & 0x0F];
+            col_rgba[3] = colors[dc.colorSpace];
+            multicol = true;
+            break;
+            
+        case EXTENDED_BACKGROUND_COLOR:
+            col_rgba[0] = colors[dc.backgroundColor[characterSpace >> 6]];
+            col_rgba[1] = colors[dc.colorSpace];
+            multicol = false;
+            break;
+            
         case INVALID_TEXT:
+            col_rgba[0] = colors[BLACK];
+            col_rgba[1] = colors[BLACK];
+            col_rgba[2] = colors[BLACK];
+            col_rgba[3] = colors[BLACK];
+            multicol = (dc.colorSpace & 0x8 /* MC flag */);
+            break;
+            
         case INVALID_STANDARD_BITMAP:
+            col_rgba[0] = colors[BLACK];
+            col_rgba[1] = colors[BLACK];
+            multicol = false;
+            break;
+            
         case INVALID_MULTICOLOR_BITMAP:
-            bgcol = colors[BLACK];
+            col_rgba[0] = colors[BLACK];
+            col_rgba[1] = colors[BLACK];
+            col_rgba[2] = colors[BLACK];
+            col_rgba[3] = colors[BLACK];
+            multicol = true;
             break;
             
         default:
             assert(0);
             break;
     }
-
 }
-#endif
 
+#if 0
 void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
+    if (dirktrace == 1)
+        printf("VIC::loadPixelSynthesizerWithColors BorderCol:%d BackgroundCol:%d\n",getBorderColor(),getBackgroundColor());
+    
     switch (gs_mode) {
             
         case STANDARD_TEXT:
@@ -698,24 +899,25 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
             break;
     }
 }
+#endif
 
 void VIC::drawPixel(uint16_t offset, uint8_t pixel)
 {
     assert(pixel < 8);
     
-    if (gs_delay == pixel) {
+    if (pixel == dc.delay) {
         
         // Load shift register
-        gs_shift_reg = gs_data;
+        gs_shift_reg = dc.data;
         // Remember how to synthesize pixels
-        LatchedCharacterSpace = gs_characterSpace;
-        LatchedColorSpace = gs_colorSpace;
+        LatchedCharacterSpace = dc.characterSpace;
+        LatchedColorSpace = dc.colorSpace;
         gs_mc_flop = true;
     }
     
     if (gs_mc_flop) {
         // Determine pixel colors and render
-        loadPixelSynthesizerWithColors(gs_mode,LatchedCharacterSpace,LatchedColorSpace);
+        loadPixelSynthesizerWithColors(dc.mode,LatchedCharacterSpace,LatchedColorSpace);
         if (multicol) {
             renderTwoMultiColorPixels(gs_shift_reg >> 6);
         } else {
@@ -741,91 +943,7 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
     gs_mc_flop = !gs_mc_flop;
 }
 
-void VIC::drawPixels(uint8_t cycle)
-{
-    assert(cycle >= 17 && cycle <= 56);
-    
-    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
-    
-    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
-     Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelšscht ist (siehe
-     Abschnitt 3.9.). Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
-     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
-     normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
-    
-    if (!verticalFrameFF) {
-        
-        drawPixel(xCoord, 0);
-        drawPixel(xCoord + 1, 1);
-        drawPixel(xCoord + 2, 2);
-        drawPixel(xCoord + 3, 3);
-        drawPixel(xCoord + 4, 4);
-        drawPixel(xCoord + 5, 5);
-        drawPixel(xCoord + 6, 6);
-        drawPixel(xCoord + 7, 7);
-        
-    } else {
-        drawEightBehindBackgroudPixels(xCoord);
-    }
-    
-    // Draw Border
-    if (mainFrameFF) {
-        
-        int border_rgba = colors[getBorderColor()];
-        
-        if (cycle == 17) {
-            
-            // left border in 38 column mode
-            drawSevenFramePixels(xCoord, border_rgba);
-            // don't return here, because the border only captures seven pixels
-            
-        } else if (cycle == 18) {
-            
-            // also capture missed out pixel in cycle 17
-            drawNineFramePixels(xCoord, border_rgba);
-            gs_data = 0;
-            return;
-            
-        } else if (cycle == 56) {
-            
-            // right border in 38 column mode
-            drawNineFramePixels(xCoord, border_rgba);
-            gs_data = 0;
-            return;
-            
-        } else {
-            
-            // in the middle of the display window
-            drawEightFramePixels(xCoord, border_rgba);
-            gs_data = 0;
-            return;
-        }
-    }
-}
 
-void VIC::drawBorderArea(uint8_t cycle)
-{
- //   static unsigned counter = 0;
-    
-    assert((cycle >= 13 && cycle <= 16) || (cycle >= 57 && cycle <= 60));
-    
-    uint16_t xCoord = (xCounter - 28) + leftBorderWidth;
-    
-    // draw border
-    if (mainFrameFF) {
-        
-        int border_rgba = colors[getBorderColor()];
-        
-        drawEightFramePixels(xCoord, border_rgba);
-        return;
-    }
-    
-    /* "Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
-     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
-     normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
-    drawEightBehindBackgroudPixels(xCoord);
-
-}
 
 // -----------------------------------------------------------------------------------------------
 //                                           Drawing
@@ -1426,11 +1544,18 @@ VIC::poke(uint16_t addr, uint8_t value)
 			// Writing has no effect
 			return;
 
+        case 0x20:
+            // DIRK: REMOVE
+            // Frame color
+            if (dirktrace == 1)
+                printf("Colorreg D020:%d\n",value & 0x0F);
+            break;
     
         case 0x21:
             // DIRK: REMOVE
-            if (dirktrace == 1)
-                printf("Colorreg D021:%d\n",value);
+            // Background color
+            //if (dirktrace == 1)
+            //    printf("Colorreg D021:%d\n",value & 0x0F);
             break;
     }
 	
@@ -2158,7 +2283,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw (border starts here)
-    drawBorderArea(13);
+    prepareDrawingContextForCycle(13);
 
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess();
@@ -2186,7 +2311,8 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawBorderArea(14);
+    drawBorder(); // Draw previous cycle
+    prepareDrawingContextForCycle(14); // Prepare for next cycle
 
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
     rAccess();
@@ -2222,8 +2348,9 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    drawBorderArea(15);
-
+    drawBorder(); // Draw previous cycle
+    prepareDrawingContextForCycle(15); // Prepare for next cycle
+    
     // Phi1.3 Fetch (last DRAM refresh)
     rAccess();
 
@@ -2251,7 +2378,8 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawBorderArea(16);
+    drawBorder(); // Draw previous cycle
+    prepareDrawingContextForCycle(16); // Prepare for next cycle
     
     // Phi1.3 Fetch
     gAccess();
@@ -2303,7 +2431,8 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     checkFrameFlipflopsLeft(24);
     
     // Phi1.2 Draw (main screen area starts here)
-    drawPixels(17);
+    drawBorder(); // Draw previous cycle
+    prepareDrawingContextForCycle(17); // Prepare for next cycle
     
     // Phi1.3 Fetch
     gAccess();
@@ -2332,7 +2461,8 @@ VIC::cycle18() // SpriteX: 32 - 39
     checkFrameFlipflopsLeft(31);
     
     // Phi1.2 Draw
-    drawPixels(18);
+    draw(); // Draw previous cycle
+    prepareDrawingContextForCycle(18); // Prepare for next cycle
 
     // Phi1.3 Fetch
     gAccess();
@@ -2360,8 +2490,9 @@ VIC::cycle19to54()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawPixels(19);
-
+    draw(); // Draw previous cycle
+    prepareDrawingContextForCycle(19); // Prepare for next cycle
+    
     // Phi1.3 Fetch
     gAccess();
 
@@ -2388,8 +2519,9 @@ VIC::cycle55()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawPixels(55);
-
+    draw(); // Draw previous cycle
+    prepareDrawingContextForCycle(55); // Prepare for next cycle
+    
     // Phi1.3 Fetch
     gAccess();
 
@@ -2433,8 +2565,9 @@ VIC::cycle56()
     checkFrameFlipflopsRight(335);
 
     // Phi1.2 Draw
-    drawPixels(56);
-
+    draw(); // Draw previous cycle
+    prepareDrawingContextForCycle(56); // Prepare for next cycle
+    
     // Phi1.3 Fetch
     rIdleAccess();
 
@@ -2462,7 +2595,8 @@ VIC::cycle57()
     checkFrameFlipflopsRight(344);
     
     // Phi1.2 Draw (border starts here)
-    drawBorderArea(57);
+    draw(); // Draw previous cycle
+    prepareDrawingContextForCycle(57); // Prepare for next cycle
     
     // Phi1.3 Fetch
     rIdleAccess();
@@ -2492,8 +2626,9 @@ VIC::cycle58()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawBorderArea(58);
-
+    drawBorder(); // Draw previous cycle
+    prepareDrawingContextForCycle(58); // Prepare for next cycle
+    
     // Phi1.3 Fetch
     if (isPAL)
         pAccess(0);
@@ -2591,8 +2726,9 @@ VIC::cycle59()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawBorderArea(59);
-
+    drawBorder(); // Draw previous cycle
+    prepareDrawingContextForCycle(59); // Prepare for next cycle
+    
     // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(0);
@@ -2628,7 +2764,8 @@ VIC::cycle60()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw (last visible cycle)
-    drawBorderArea(60);
+    drawBorder(); // Draw previous cycle
+    prepareDrawingContextForCycle(60); // Prepare for next cycle
     
     // Phi1.3 Fetch
     if (isPAL)
@@ -2664,7 +2801,9 @@ VIC::cycle61()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
 
-    // Phi1.2 Draw (last visible cycle)
+    // Phi1.2 Draw
+    drawBorder(); // Draw previous cycle
+    
     // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(1);
@@ -2699,7 +2838,7 @@ VIC::cycle62()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
 
-    // Phi1.2 Draw (last visible cycle)
+    // Phi1.2 Draw
     // Phi1.3 Fetch
     if (isPAL)
         pAccess(2);
@@ -2751,7 +2890,7 @@ VIC::cycle63()
     }
     */
     
-    // Phi1.2 Draw (last visible cycle)
+    // Phi1.2 Draw
 
     // Extend pixel buffer to the left and right to make it look nice
     int color = pixelBuffer[22];
@@ -2809,7 +2948,7 @@ VIC::cycle64() 	// NTSC only
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
 
-    // Phi1.2 Draw (last visible cycle)
+    // Phi1.2 Draw
     // Phi1.3 Fetch
     sSecondAccess(2);
     
@@ -2836,7 +2975,7 @@ VIC::cycle65() 	// NTSC only
     checkVerticalFrameFF();
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
 
-    // Phi1.2 Draw (last visible cycle)
+    // Phi1.2 Draw
     // Phi1.3 Fetch
     pAccess(3);
     

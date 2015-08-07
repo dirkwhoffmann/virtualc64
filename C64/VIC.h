@@ -235,10 +235,6 @@ private:
     //* Note: The rasterline counter is is usually incremented in cycle 1. The only exception is the overflow condition which is handles in cycle 2 */
     uint32_t yCounter;
     
-	//! Number of the next screen line to be drawn
-    //* DEPRECATED: REPLACED BY yCounter;
-    // uint32_t scanline;
-	
 	//! Internal x counter of the sequencer
 	uint16_t xCounter;
 	
@@ -372,6 +368,7 @@ private:
 private:
 	
     // Is it a PAL or an NTSC machiche?
+    // TODO: Change into chipModel
     bool isPAL;
     
 	// Current border width in pixels
@@ -723,6 +720,58 @@ public:
 
 private:	
 
+    //! Current drawing context
+    /*! This structure stores everything that is needed by the draw() routine to synthesize pixels.
+        The context is set up by prepareDrawingContext(). Hence, each draw() call needs to be preceded 
+        by a prepareDrawingContext() call. Note, that the prepareDrawingContext() call in cycle i sets
+        up the context for the draw() call in cycle i+1.
+     */
+    typedef struct {
+        // To be gathered one cycle before drawing ...
+        uint8_t cycle;
+        uint32_t yCounter;
+        uint16_t xCounter;
+        bool verticalFrameFF;
+        bool mainFrameFF;
+        uint8_t data;
+        uint8_t delay;
+        uint8_t characterSpace;
+        uint8_t colorSpace;
+        DisplayMode mode;
+        // To be gathered right before drawing ...
+        uint8_t borderColor;
+        uint8_t backgroundColor[4];
+        // TO BE CONTINUED IF NECESSARY
+    } DrawingContext;
+    
+    DrawingContext dc;
+    
+    //! Copy portions of the current VIC state into the graphics context.
+    /*! The draw() method uses the information in the next VIC cycle.
+        This function copies the portion of the VIC state that needs to
+        be gathered one cycle before drawing. */
+    void prepareDrawingContextForCycle(uint8_t cycle);
+
+    //! Update portions in the current graphics context.
+    /*! Most of the information that is needed in draw() is gatheres in 
+        prepareDrawingContextForCycle() one cycle prior to drawing. Some
+        information like the current background or border color needs to be 
+        grabbed right before drawing. This information is gathered in this function. */
+    void updateDrawingContext();
+    
+    //! Synthesize 8 pixels according the the current drawing context.
+    /*! To get the correct output, prepareDrawingContextForCycle() and 
+        updateDrawingContext() need to be called. The callig sequence is
+        VIC cycle i:   prepareDrawingContextForCycle(i);
+        VIC cycle i+1: updateDrawingContext(); 
+                       draw(); // draws the 8 pixels belonging to cycle i */
+    void draw();
+
+    //! Synthesize 8 border pixels according the the current drawing context.
+    /*! see also: prepareDrawingContext */
+    void drawBorder();
+
+    
     //! When the pixel synthesizer is invoked, these colors are used
     /*! [0] : color for '0' pixels in single color mode or '00' pixels in multicolor mode
         [1] : color for '1' pixels in single color mode or '01' pixels in multicolor mode
