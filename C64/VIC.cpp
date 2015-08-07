@@ -631,11 +631,53 @@ void
 VIC::draw()
 {
     updateDrawingContext();
-    drawPixels(dc.cycle);
+    drawPixels(dc.cycle); // get rid of parameter
+    // drawSprites()
+    drawBorder();
+    // synthesizePixels();
 }
 
 void
 VIC::drawBorder()
+{
+    uint16_t xCoord = (dc.xCounter - 28) + leftBorderWidth;
+
+    // Take special care of 38 column mode
+    
+    if (dc.cycle == 17 && dc.mainFrameFF && !mainFrameFF) {
+        int border_rgba = colors[dc.borderColor];
+        drawSevenFramePixels(xCoord, border_rgba);
+        // gs_data = 0; ????
+        return;
+    }
+    
+    if (dc.cycle == 55 && !dc.mainFrameFF && mainFrameFF) {
+        int border_rgba = colors[dc.borderColor];
+        setFramePixel(xCoord+7, border_rgba);
+        // gs_data = 0; ????
+        return;
+    }
+
+    // Standard case
+    
+    if (dc.mainFrameFF) {
+        int border_rgba = colors[dc.borderColor];
+        drawEightFramePixels(xCoord, border_rgba);
+        gs_data = 0; // ????? What is that for?
+        return;
+    }
+    
+    /* "Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
+     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
+     normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
+    // SHOULD BE DONE IN DRAW PIXELS ???? MIGHT BE WRONG ANYWAY ...
+    if ((dc.cycle >= 13 && dc.cycle <= 16) || (dc.cycle >= 57 && dc.cycle <= 60))
+        drawEightBehindBackgroudPixels(xCoord);
+
+}
+
+void
+VIC::drawBorderDeprecated()
 {
     updateDrawingContext();
     drawBorderArea(dc.cycle);
@@ -643,7 +685,8 @@ VIC::drawBorder()
 
 void VIC::drawPixels(uint8_t cycle)
 {
-    assert(cycle >= 17 && cycle <= 56);
+    // assert(cycle >= 17 && cycle <= 56);
+    assert(cycle >= 13 && cycle <= 60);
     
     uint16_t xCoord = (dc.xCounter - 28) + leftBorderWidth;
     
@@ -666,40 +709,6 @@ void VIC::drawPixels(uint8_t cycle)
         
     } else {
         drawEightBehindBackgroudPixels(xCoord);
-    }
-    
-    // Draw Border
-    if (dc.mainFrameFF) {
-        
-        int border_rgba = colors[dc.borderColor];
-
-        if (cycle == 17) {
-            
-            // left border in 38 column mode
-            drawSevenFramePixels(xCoord, border_rgba);
-            // don't return here, because the border only captures seven pixels
-            
-        } else if (cycle == 18) {
-            
-            // also capture missed out pixel in cycle 17
-            drawNineFramePixels(xCoord, border_rgba);
-            gs_data = 0;
-            return;
-            
-        } else if (cycle == 56) {
-            
-            // right border in 38 column mode
-            drawNineFramePixels(xCoord, border_rgba);
-            gs_data = 0;
-            return;
-            
-        } else {
-            
-            // in the middle of the display window
-            drawEightFramePixels(xCoord, border_rgba);
-            gs_data = 0;
-            return;
-        }
     }
 }
 
@@ -2205,7 +2214,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawBorder(); // Draw previous cycle
+    drawBorderDeprecated(); // Draw previous cycle
     prepareDrawingContextForCycle(14); // Prepare for next cycle
 
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
@@ -2242,7 +2251,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    drawBorder(); // Draw previous cycle
+    drawBorderDeprecated(); // Draw previous cycle
     prepareDrawingContextForCycle(15); // Prepare for next cycle
     
     // Phi1.3 Fetch (last DRAM refresh)
@@ -2272,7 +2281,7 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawBorder(); // Draw previous cycle
+    drawBorderDeprecated(); // Draw previous cycle
     prepareDrawingContextForCycle(16); // Prepare for next cycle
     
     // Phi1.3 Fetch
@@ -2325,7 +2334,7 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     checkFrameFlipflopsLeft(24);
     
     // Phi1.2 Draw (main screen area starts here)
-    drawBorder(); // Draw previous cycle
+    drawBorderDeprecated(); // Draw previous cycle
     prepareDrawingContextForCycle(17); // Prepare for next cycle
     
     // Phi1.3 Fetch
@@ -2520,7 +2529,7 @@ VIC::cycle58()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawBorder(); // Draw previous cycle
+    drawBorderDeprecated(); // Draw previous cycle
     prepareDrawingContextForCycle(58); // Prepare for next cycle
     
     // Phi1.3 Fetch
@@ -2620,7 +2629,7 @@ VIC::cycle59()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawBorder(); // Draw previous cycle
+    drawBorderDeprecated(); // Draw previous cycle
     prepareDrawingContextForCycle(59); // Prepare for next cycle
     
     // Phi1.3 Fetch
@@ -2658,7 +2667,7 @@ VIC::cycle60()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw (last visible cycle)
-    drawBorder(); // Draw previous cycle
+    drawBorderDeprecated(); // Draw previous cycle
     prepareDrawingContextForCycle(60); // Prepare for next cycle
     
     // Phi1.3 Fetch
@@ -2696,7 +2705,7 @@ VIC::cycle61()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    drawBorder(); // Draw previous cycle
+    drawBorderDeprecated(); // Draw previous cycle
     
     // Phi1.3 Fetch
     if (isPAL)

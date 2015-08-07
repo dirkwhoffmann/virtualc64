@@ -16,9 +16,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// NEXT STEPS:
-// Border drawing: Use something like drawPixel(0) ... drawPixel(6) checkBorderFF drawPixel(7)
-// Fix execution order in remaining cycles
+// TODO:
+// 1. vicii_reg_timing
+//    VC64 schreibt nichts in den Rand hinein. (see BMM line)
+//    Don't distinguish between border drawing and canvas drawing any more (like VICE)
+// 2. videomode
+//    VICE schaltet in der Mitte eines Zeichens um (ein halbes Zeichen früher?), VC64 immer am Anfang. 
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -768,8 +771,13 @@ private:
     void draw();
 
     //! Synthesize 8 border pixels according the the current drawing context.
-    /*! see also: prepareDrawingContext */
+    /*! Invoked inside draw() */
     void drawBorder();
+    
+    //! Synthesize 8 border pixels according the the current drawing context.
+    /*! see also: prepareDrawingContext 
+        DEPRECATED */
+    void drawBorderDeprecated();
 
     
     //! When the pixel synthesizer is invoked, these colors are used
@@ -826,8 +834,8 @@ private:
     inline void drawEightFramePixels(unsigned offset, int rgba_color) {
         for (unsigned i = 0; i < 8; i++) setFramePixel(offset++, rgba_color); }
 
-    inline void drawNineFramePixels(unsigned offset, int rgba_color) {
-        offset--; for (unsigned i = 0; i < 9; i++) setFramePixel(offset++, rgba_color); }
+    //inline void drawNineFramePixels(unsigned offset, int rgba_color) {
+    //    offset--; for (unsigned i = 0; i < 9; i++) setFramePixel(offset++, rgba_color); }
 
     //! Render 2 pixels in single-color mode
     void renderTwoSingleColorPixels(uint8_t bits);
