@@ -610,9 +610,7 @@ VIC::prepareDrawingContextForCycle(uint8_t cycle)
     dc.xCounter = xCounter;
     dc.verticalFrameFF = verticalFrameFF;
     dc.mainFrameFF = mainFrameFF;
-    // dc.borderColor = getBorderColor();  // THIS IS TOO EARLY. NEEDS TO BE DONE ONE CYCLE LATER
     dc.data = gs_data;
-    dc.delay = gs_delay;
     dc.characterSpace = gs_characterSpace;
     dc.colorSpace = gs_colorSpace;
     dc.mode = gs_mode;
@@ -626,6 +624,7 @@ VIC::updateDrawingContext()
     dc.backgroundColor[1] = getExtraBackgroundColor(1);
     dc.backgroundColor[2] = getExtraBackgroundColor(2);
     dc.backgroundColor[3] = getExtraBackgroundColor(3);
+    dc.delay = gs_delay;
 }
 
 void
