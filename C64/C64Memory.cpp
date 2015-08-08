@@ -53,10 +53,14 @@ void C64Memory::reset()
     cia2 = c64->cia2;
     cpu = c64->cpu;
     
-	// Zero out RAM
-	for (unsigned i = 0; i < sizeof(ram); i++)
-        ram[i] = 0;
-	
+	// Initialize RAM (powerup pattern similar to Frodo and VICE)
+    for (unsigned i = 0; i < sizeof(ram); i++)
+        ram[i] = (i & 0x40) ? 0xFF : 0x00;
+        
+    // Clear out initially visible screen memory to make it look nicer on startup
+    for (unsigned i = 0; i < 1000; i++)
+        ram[0x400+i] = 0x00;
+    
     // Initialize peek source lookup table
     for (unsigned i = 0x1; i <= 0xF; i++)
         peekSrc[i] = M_RAM;

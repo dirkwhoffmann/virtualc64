@@ -568,7 +568,7 @@ private:
     void drawPixel(uint16_t offset, uint8_t pixel);
 
     //! Synthesize a chunk of 8 pixels
-    void drawPixels(uint8_t cycle);
+    void drawPixels();
 
     //! Synthesize a chunk of 8 pixels in border area
     void drawBorderArea(uint8_t cycle);
@@ -777,7 +777,7 @@ private:
     //! Synthesize 8 border pixels according the the current drawing context.
     /*! see also: prepareDrawingContext 
         DEPRECATED */
-    void drawBorderDeprecated();
+    // void drawBorderDeprecated();
 
     
     //! When the pixel synthesizer is invoked, these colors are used

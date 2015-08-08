@@ -82,7 +82,7 @@ CPU::fetch() {
     }
     */
     
-    /*
+    
     if (isC64CPU && dirktrace == 1)
         dirkcnt++;
     
@@ -93,7 +93,7 @@ CPU::fetch() {
     if (isC64CPU && dirktrace == 1) {
         printf("%d: %s\n",PC-1, disassemble());
     }
-    */
+    
     
     
     
