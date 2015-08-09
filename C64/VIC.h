@@ -17,11 +17,10 @@
  */
 
 // TODO:
-// 1. vicii_reg_timing
-//    VC64 schreibt nichts in den Rand hinein. (see BMM line)
-//    Don't distinguish between border drawing and canvas drawing any more (like VICE)
-// 2. videomode
-//    VICE schaltet in der Mitte eines Zeichens um (ein halbes Zeichen früher?), VC64 immer am Anfang. 
+// 1. Fix pixel sequencer (colorsplit.prg)
+// 2. Fix video mode switching (VICE often switches in the middle of a cycle, VC64 always at the beginning)
+// 3. Make sprite drawing cycle based.
+// 4. Replace pixel buffers by 8 bit variables and implement mixer(). This makes z buffering obsolete.
 
 #ifndef _VIC_INC
 #define _VIC_INC
@@ -542,6 +541,10 @@ private:
     /*! Value is latched when the shift register is loaded */
     uint8_t LatchedColorSpace;
 
+    //! Latched display mode
+    /*! Value is latched when the shift register is loaded */
+    DisplayMode LatchedMode;
+
     //! Graphic sequencer raw data (not yet converted to pixels)
     uint8_t gs_data;
 
@@ -560,10 +563,9 @@ private:
     //! Graphic sequencer load delay
     uint8_t gs_delay;
 
-    //! Load graphic sequencer with data and determine conversion parameters
-    // DEPRECATED
-    // void loadGraphicSequencer(uint8_t data, uint8_t load_delay);
-    
+    //! Color bits (needed for multicolor mode)
+    uint8_t gs_colorbits;
+
     // Determine pixel colors accordig to the provided display mode
     void loadPixelSynthesizerWithColors(DisplayMode mode,uint8_t characterSpace, uint8_t colorSpace);
     
@@ -837,9 +839,12 @@ private:
     inline void drawEightFramePixels(unsigned offset, int rgba_color) {
         for (unsigned i = 0; i < 8; i++) setFramePixel(offset++, rgba_color); }
 
-    //inline void drawNineFramePixels(unsigned offset, int rgba_color) {
-    //    offset--; for (unsigned i = 0; i < 9; i++) setFramePixel(offset++, rgba_color); }
+    //! Render canvas pixel in single-color mode
+    void renderSingleColorPixel(uint8_t bit);
 
+    //! Render canvas pixel in single-color mode
+    void renderMultiColorPixel(uint8_t color_bits);
+    
     //! Render 2 pixels in single-color mode
     void renderTwoSingleColorPixels(uint8_t bits);
 
@@ -852,6 +857,7 @@ private:
     void drawSingleColorCharacter(unsigned offset);
     
     //! Render 2 pixels in multi-color mode
+    // DEPRECATED
     void renderTwoMultiColorPixels(uint8_t bits);
 
     //! Draw 2 pixels in multi-color mode

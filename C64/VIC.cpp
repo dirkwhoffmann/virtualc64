@@ -43,7 +43,7 @@
 #include "C64.h"
 
 // DIRK
-#define DIRK_DEBUG_LINE 51
+#define DIRK_DEBUG_LINE 77
 unsigned dirktrace = 0;
 unsigned dirkcnt = 0;
 
@@ -821,28 +821,42 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
 {
     assert(pixel < 8);
     
+    // loadPixelSynthesizerWithColors(LatchedMode,LatchedCharacterSpace,LatchedColorSpace);
+  
+    if (pixel == dc.delay) {
+      
+        // Load shift register
+        gs_shift_reg = dc.data;
+        // Remember how to synthesize pixels
+        LatchedCharacterSpace = dc.characterSpace;
+        LatchedColorSpace = dc.colorSpace;
+        // LatchedMode = dc.mode;
+        gs_mc_flop = true;
         
-    if (1) {
-        if (pixel == dc.delay) {
+        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
+            printf("VIC::drawPixel(%d,%d) LOAD SHIFT REG: %d %d %d\n",offset,pixel,gs_shift_reg,dc.characterSpace,dc.colorSpace);
+        }
+    }
+    
+    if (gs_mc_flop) {
+        loadPixelSynthesizerWithColors(dc.mode,LatchedCharacterSpace,LatchedColorSpace);
+        // In multicolor mode, update color bits in every second cycle
+        if (multicol) {
+            gs_colorbits = (gs_shift_reg >> 6);
+        }
+    }
+    
+    // Render pixel
+    if (multicol) {
+        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
+            printf("    renderMultiColorPixel(%d)\n",gs_colorbits);
+        renderMultiColorPixel(gs_colorbits);
+    } else {
         
-            // Load shift register
-            gs_shift_reg = dc.data;
-            // Remember how to synthesize pixels
-            LatchedCharacterSpace = dc.characterSpace;
-            LatchedColorSpace = dc.colorSpace;
-            gs_mc_flop = true;
-        }
-    
-        if (gs_mc_flop) {
-            // Determine pixel colors and render
-            loadPixelSynthesizerWithColors(dc.mode,LatchedCharacterSpace,LatchedColorSpace);
-            if (multicol) {
-                renderTwoMultiColorPixels(gs_shift_reg >> 6);
-            } else {
-                renderTwoSingleColorPixels(gs_shift_reg >> 6);
-            }
-        }
-    
+        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
+            printf("    renderSingleColorPixel(%d)\n",gs_shift_reg >> 7);
+        renderSingleColorPixel(gs_shift_reg >> 7);
+    }
     
     // Copy pixel to pixel buffer
     if (offset < MAX_VIEWABLE_PIXELS) {
@@ -863,7 +877,6 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
     // Shift register and toggle flipflop
     gs_shift_reg <<= 1;
     gs_mc_flop = !gs_mc_flop;
-    }
 }
 
 
@@ -960,13 +973,19 @@ VIC::drawEightBehindBackgroudPixels(unsigned offset)
     }    
 }
 
-#if 0
 inline void
-VIC::renderSingleColorPixels(unsigned offset)
+VIC::renderSingleColorPixel(uint8_t bit)
 {
-}
-#endif
+    assert(bit <= 1);
+    int rgba = col_rgba[bit];
 
+    if (bit)
+        renderForegroundPixel(0, rgba);
+    else
+        renderBackgroundPixel(0, rgba);
+}
+
+// DEPRECATED
 inline void
 VIC::renderTwoSingleColorPixels(uint8_t bits)
 {
@@ -981,7 +1000,7 @@ VIC::renderTwoSingleColorPixels(uint8_t bits)
         renderBackgroundPixel(1, col_rgba[0]);
 }
 
-// DEPRECATED
+// EVEN MORE DEPRECATED
 inline void
 VIC::drawTwoSingleColorPixels(unsigned offset, uint8_t bits)
 {
@@ -1011,6 +1030,19 @@ VIC::drawSingleColorCharacter(unsigned offset)
     drawTwoSingleColorPixels(offset + 6, gs_data);
 }
 
+inline void
+VIC::renderMultiColorPixel(uint8_t color_bits)
+{
+    assert(color_bits <= 3);
+    int rgba = col_rgba[color_bits];
+    
+    if (color_bits & 0x02)
+        renderForegroundPixel(0, rgba);
+    else
+        renderBackgroundPixel(0, rgba);
+}
+
+// DEPRECATED
 inline void
 VIC::renderTwoMultiColorPixels(uint8_t bits)
 {
@@ -1583,15 +1615,13 @@ VIC::updateSpriteDmaOnOff()
 void
 VIC::dirk()
 {
-    /*
     unsigned cycle = c64->rasterlineCycle;
 
-    if (dirktrace == 1) {
+    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
         printf("(%i,%i) BAlow:%d RDY:%d RC:%d VC:%d (VCbase:%d) VMLI:%d bad_line:%d disp_state:%d\n",
                yCounter, cycle, BAlow, cpu->getRDY(),
                registerRC, registerVC, registerVCBASE, registerVMLI, badLineCondition, displayState);
     }
-    */
 }
 
 void
@@ -2813,16 +2843,17 @@ VIC::cycle63()
 
 	// draw debug markers
 
-    /*
-    if (dirktrace == 0 && markIRQLines) {
+    
+    if (markIRQLines && dirktrace == 0) {
         rasterlineDebug[DIRK_DEBUG_LINE] = 1;
         dirktrace = 1; // ON
     }
-    */
 
+    /*
     if (markIRQLines && yCounter == rasterInterruptLine())
 	 	markLine(0, totalScreenWidth, colors[WHITE]);
-	if (markDMALines && badLineCondition)	
+     */
+     if (markDMALines && badLineCondition)
 		markLine(0, totalScreenWidth, colors[RED]);
     if (rasterlineDebug[yCounter] >= 0)
 		markLine(0, totalScreenWidth, colors[rasterlineDebug[yCounter] % 16]);
