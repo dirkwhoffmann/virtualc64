@@ -202,6 +202,9 @@ public:
 	//! Total number of rasterlines, including invisible areas
 	static const uint16_t PAL_RASTERLINES = 312;
 
+    //! Maximum number of viewable rasterlines
+    static const uint16_t MAX_RASTERLINES = PAL_RASTERLINES;
+
 	//! Maximum number of viewable rasterlines
 	static const uint16_t MAX_VIEWABLE_RASTERLINES = PAL_VIEWABLE_RASTERLINES;
 
@@ -662,7 +665,7 @@ private:
 	//! mark rasterline for debugging
 	/*! If set to a positive value, the specific rasterline is highlighted. The feature is intended for 
 	    debugging purposes, only */
-	int rasterlineDebug[MAX_VIEWABLE_RASTERLINES];
+	int rasterlineDebug[MAX_RASTERLINES];
 
 	
 	// -----------------------------------------------------------------------------------------------

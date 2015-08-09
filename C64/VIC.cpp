@@ -743,8 +743,8 @@ void VIC::drawBorderArea(uint8_t cycle)
 
 void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
-    // THIS SHOULD BE mode, not gs_mode???
-    switch (gs_mode) {
+    // switch (gs_mode) {
+    switch (mode) {
             
         case STANDARD_TEXT:
             
@@ -1583,6 +1583,7 @@ VIC::updateSpriteDmaOnOff()
 void
 VIC::dirk()
 {
+    /*
     unsigned cycle = c64->rasterlineCycle;
 
     if (dirktrace == 1) {
@@ -1590,6 +1591,7 @@ VIC::dirk()
                yCounter, cycle, BAlow, cpu->getRDY(),
                registerRC, registerVC, registerVCBASE, registerVMLI, badLineCondition, displayState);
     }
+    */
 }
 
 void
@@ -2811,13 +2813,15 @@ VIC::cycle63()
 
 	// draw debug markers
 
+    /*
     if (dirktrace == 0 && markIRQLines) {
         rasterlineDebug[DIRK_DEBUG_LINE] = 1;
         dirktrace = 1; // ON
     }
-    
-    // if (markIRQLines && yCounter == rasterInterruptLine())
-	// 	markLine(0, totalScreenWidth, colors[WHITE]);
+    */
+
+    if (markIRQLines && yCounter == rasterInterruptLine())
+	 	markLine(0, totalScreenWidth, colors[WHITE]);
 	if (markDMALines && badLineCondition)	
 		markLine(0, totalScreenWidth, colors[RED]);
     if (rasterlineDebug[yCounter] >= 0)
