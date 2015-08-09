@@ -548,8 +548,8 @@ private:
     //! Color space value during c-Access
     uint8_t gs_colorSpace;
     
-    //! Raw data in previous cycle
-    uint8_t gs_data_old;
+    //! Remembers last background color
+    int gs_last_bg_color;
 
     //! Graphic sequencer display mode (conversion method)
     DisplayMode gs_mode;

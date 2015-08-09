@@ -43,6 +43,7 @@
 #include "C64.h"
 
 // DIRK
+#define DIRK_DEBUG_LINE 247
 unsigned dirktrace = 0;
 unsigned dirkcnt = 0;
 
@@ -121,7 +122,7 @@ VIC::reset()
 	
     // Graphic sequencer
     gs_data = 0;
-    gs_data_old = 0;
+    gs_last_bg_color = 0;
     gs_mode = STANDARD_TEXT;
     
 	// Sprites
@@ -200,7 +201,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     gs_data = read8(buffer);
     gs_characterSpace = read8(buffer);
     gs_colorSpace = read8(buffer);
-    gs_data_old = read8(buffer);
+    (void)read8(buffer);
     gs_mode = (DisplayMode)read8(buffer);
     gs_delay = read8(buffer);
     
@@ -267,7 +268,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     write8(buffer, gs_data);
     write8(buffer, gs_characterSpace);
     write8(buffer, gs_colorSpace);
-    write8(buffer, gs_data_old);
+    write8(buffer, 0);
     write8(buffer, (uint8_t)gs_mode);
     write8(buffer, gs_delay);
     
@@ -509,11 +510,10 @@ inline void VIC::gAccess()
         gs_mode = getDisplayMode();
 
         // DIRK
-        /*
-        if (dirktrace == 1)
+        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
             printf("gAccess: data: %d from addr:%4d(%4X) delay:%d charSpace:%d colorSpace:%d mode:%d VC:%d RC:%d VMLI:%d\n",
                    gs_data, addr, addr, gs_delay, gs_characterSpace, gs_colorSpace, gs_mode, registerVC, registerRC, registerVMLI);
-        */
+    
         
         // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhšht." [C.B.]
         registerVC++;
@@ -685,25 +685,7 @@ VIC::drawBorder()
         // gs_data = 0; // ????? What is that for?
         return;
     }
-    
-    /* "Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
-     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
-     normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
-    // SHOULD BE DONE IN DRAW PIXELS ???? MIGHT BE WRONG ANYWAY ...
-    // if ((dc.cycle >= 13 && dc.cycle <= 16) || (dc.cycle >= 57 && dc.cycle <= 60))
-        // drawEightBehindBackgroudPixels(xCoord);
-
 }
-
-/*
-void
-VIC::drawBorderDeprecated()
-{
-    updateDrawingContext();
-    // drawBorderArea(dc.cycle);
-    drawBorder();
-}
-*/
 
 void VIC::drawPixels()
 {
@@ -730,8 +712,10 @@ void VIC::drawPixels()
         drawPixel(xCoord + 7, 7);
         
     } else {
-        // WHERE DO WE DO THAT???
-        // drawEightBehindBackgroudPixels(xCoord);
+        
+        // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
+        drawEightBehindBackgroudPixels(xCoord);
+        
     }
 }
 
@@ -759,9 +743,15 @@ void VIC::drawBorderArea(uint8_t cycle)
 
 void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
+    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
+        printf("VIC::loadPixelSynthesizerWithColors: mode:%d gs_mode: %d (%d %d)\n",
+               mode, gs_mode, dc.backgroundColor[0],colorSpace);
+    }
+
     switch (gs_mode) {
             
         case STANDARD_TEXT:
+            
             col_rgba[0] = colors[dc.backgroundColor[0]];
             col_rgba[1] = colors[colorSpace];
             multicol = false;
@@ -827,12 +817,20 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
             assert(0);
             break;
     }
+    
+    gs_last_bg_color = col_rgba[0];
 }
 
 void VIC::drawPixel(uint16_t offset, uint8_t pixel)
 {
     assert(pixel < 8);
     
+    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
+        printf("VVIC::drawPixel:offset %d pixel %d dc.delay:%d gs_mc_flop:%d\n",
+               offset, pixel, dc.delay, gs_mc_flop);
+    }
+    
+        
     if (1) {
         if (pixel == dc.delay) {
         
@@ -955,7 +953,7 @@ VIC::setBehindBackgroundPixel(unsigned offset, int rgba)
     }
 }
 
-// DEPRECATED
+// FIND MORE SUITABLE NAME
 void
 VIC::drawEightBehindBackgroudPixels(unsigned offset)
 {
@@ -965,10 +963,9 @@ VIC::drawEightBehindBackgroudPixels(unsigned offset)
         die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
         normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
 
-    // int bg_rgba = colors[gs_bg_color_old]; // TODO: WE PROBABLY SELECT THE WRONG COLOR HERE
-    loadPixelSynthesizerWithColors(gs_mode,LatchedCharacterSpace,LatchedColorSpace);
+    int bg_rgba = gs_last_bg_color;
     for (unsigned i = 0; i < 8; i++) {
-        setBehindBackgroundPixel(offset++, col_rgba[0]);
+        setBehindBackgroundPixel(offset++, bg_rgba);
     }    
 }
 
@@ -1597,7 +1594,7 @@ VIC::dirk()
 {
     unsigned cycle = c64->rasterlineCycle;
 
-    if (dirktrace == 1 && (yCounter >= 60 && yCounter <= 64)) {
+    if (dirktrace == 1 && (yCounter >= DIRK_DEBUG_LINE && yCounter <= DIRK_DEBUG_LINE)) {
         printf("(%i,%i) D012:%d BAlow:%d RDY:%d displayState:%d RC:%d VC:%d VCbase:%d VMLI:%d\n",
                yCounter,cycle,iomem[0x12],BAlow,cpu->getRDY(),
                displayState, registerRC, registerVC, registerVCBASE, registerVMLI);
@@ -2822,8 +2819,14 @@ VIC::cycle63()
     }
 
 	// draw debug markers
-    if (markIRQLines && yCounter == rasterInterruptLine())
-		markLine(0, totalScreenWidth, colors[WHITE]);
+
+    if (dirktrace == 0 && markIRQLines) {
+        // rasterlineDebug[247] = 5;
+        dirktrace = 1; // ON
+    }
+    
+    // if (markIRQLines && yCounter == rasterInterruptLine())
+	// 	markLine(0, totalScreenWidth, colors[WHITE]);
 	if (markDMALines && badLineCondition)	
 		markLine(0, totalScreenWidth, colors[RED]);
     if (rasterlineDebug[yCounter] >= 0)
