@@ -535,15 +535,19 @@ private:
     
     //! Latched version of value that is read during a cAccess
     /*! Value is latched when the shift register is loaded */
-    uint8_t LatchedCharacterSpace;
+    uint8_t latchedCharacterSpace;
 
     //! Latched version of value that is read during a cAccess
     /*! Value is latched when the shift register is loaded */
-    uint8_t LatchedColorSpace;
+    uint8_t latchedColorSpace;
 
-    //! Latched display mode
-    /*! Value is latched when the shift register is loaded */
-    DisplayMode LatchedMode;
+    //! Latched io register 0xD011
+    /*! Value is latched in the middle of a 8 bit draw cycle */
+    uint8_t latchedD011;
+
+    //! Latched io register 0xD016
+    /*! Value is latched in the middle of a 8 bit draw cycle */
+    uint8_t latchedD016;
 
     //! Graphic sequencer raw data (not yet converted to pixels)
     uint8_t gs_data;

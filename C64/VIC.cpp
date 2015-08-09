@@ -196,8 +196,8 @@ VIC::loadFromBuffer(uint8_t **buffer)
     // Sequencer
     gs_shift_reg = read8(buffer);
     gs_mc_flop = (bool)read8(buffer);
-    LatchedCharacterSpace = read8(buffer);
-    LatchedColorSpace = read8(buffer);
+    latchedCharacterSpace = read8(buffer);
+    latchedColorSpace = read8(buffer);
     gs_data = read8(buffer);
     gs_characterSpace = read8(buffer);
     gs_colorSpace = read8(buffer);
@@ -263,8 +263,8 @@ VIC::saveToBuffer(uint8_t **buffer)
     // Sequencer
     write8(buffer, gs_shift_reg);
     write8(buffer, (uint8_t)gs_mc_flop);
-    write8(buffer, LatchedCharacterSpace);
-    write8(buffer, LatchedColorSpace);
+    write8(buffer, latchedCharacterSpace);
+    write8(buffer, latchedColorSpace);
     write8(buffer, gs_data);
     write8(buffer, gs_characterSpace);
     write8(buffer, gs_colorSpace);
@@ -510,7 +510,7 @@ inline void VIC::gAccess()
         gs_mode = getDisplayMode();
 
         // DIRK
-        if (dirktrace == 1)
+        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
             printf("gAccess: data: %d from addr:%4d(%4X) delay:%d charSpace:%d colorSpace:%d mode:%d VC:%d RC:%d VMLI:%d\n",
                    gs_data, addr, addr, gs_delay, gs_characterSpace, gs_colorSpace, gs_mode, registerVC, registerRC, registerVMLI);
     
@@ -706,10 +706,12 @@ void VIC::drawPixels()
         drawPixel(xCoord + 1, 1);
         drawPixel(xCoord + 2, 2);
         drawPixel(xCoord + 3, 3);
+        latchedD016 = iomem[0x16];
         drawPixel(xCoord + 4, 4);
         drawPixel(xCoord + 5, 5);
         drawPixel(xCoord + 6, 6);
         drawPixel(xCoord + 7, 7);
+        latchedD011 = iomem[0x11];
         
     } else {
         
@@ -743,7 +745,6 @@ void VIC::drawBorderArea(uint8_t cycle)
 
 void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
-    // switch (gs_mode) {
     switch (mode) {
             
         case STANDARD_TEXT:
@@ -751,6 +752,11 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
             col_rgba[0] = colors[dc.backgroundColor[0]];
             col_rgba[1] = colors[colorSpace];
             multicol = false;
+            
+            if(dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
+                printf("    VIC::loadPixelSynthesizerWithColors mode:%d charspace:%d colspace:%d [0]:%d [1]:%d\n",
+                       mode,characterSpace,colorSpace,dc.backgroundColor[0],colorSpace);
+            }
             break;
             
         case MULTICOLOR_TEXT:
@@ -821,26 +827,29 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
 {
     assert(pixel < 8);
     
-    // loadPixelSynthesizerWithColors(LatchedMode,LatchedCharacterSpace,LatchedColorSpace);
-  
+    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
+        printf("  VIC::drawPixel(%d,%d)\n",offset,pixel);
+    }
+
     if (pixel == dc.delay) {
       
         // Load shift register
         gs_shift_reg = dc.data;
         // Remember how to synthesize pixels
-        LatchedCharacterSpace = dc.characterSpace;
-        LatchedColorSpace = dc.colorSpace;
-        // LatchedMode = dc.mode;
+        latchedCharacterSpace = dc.characterSpace;
+        latchedColorSpace = dc.colorSpace;
         gs_mc_flop = true;
         
         if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-            printf("VIC::drawPixel(%d,%d) LOAD SHIFT REG: %d %d %d\n",offset,pixel,gs_shift_reg,dc.characterSpace,dc.colorSpace);
+            printf("   LOAD SHIFT REG: %d %d %d\n",gs_shift_reg,dc.characterSpace,dc.colorSpace);
         }
     }
     
+    DisplayMode mode = (DisplayMode)((latchedD011 & 0x60) | (latchedD016 & 0x10));
+    loadPixelSynthesizerWithColors(mode, latchedCharacterSpace, latchedColorSpace);
+
+    // In multicolor mode, update color bits in every second cycle
     if (gs_mc_flop) {
-        loadPixelSynthesizerWithColors(dc.mode,LatchedCharacterSpace,LatchedColorSpace);
-        // In multicolor mode, update color bits in every second cycle
         if (multicol) {
             gs_colorbits = (gs_shift_reg >> 6);
         }
