@@ -835,9 +835,12 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
       
         // Load shift register
         gs_shift_reg = dc.data;
+        
         // Remember how to synthesize pixels
         latchedCharacterSpace = dc.characterSpace;
         latchedColorSpace = dc.colorSpace;
+        
+        // Reset the multicolor synchronization flipflop
         gs_mc_flop = true;
         
         if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
@@ -845,42 +848,33 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
         }
     }
     
+    // Determine display mode and colors
     DisplayMode mode = (DisplayMode)((latchedD011 & 0x60) | (latchedD016 & 0x10));
     loadPixelSynthesizerWithColors(mode, latchedCharacterSpace, latchedColorSpace);
-
-    // In multicolor mode, update color bits in every second cycle
-    if (gs_mc_flop) {
-        if (multicol) {
-            gs_colorbits = (gs_shift_reg >> 6);
-        }
-    }
     
     // Render pixel
     if (multicol) {
+        if (gs_mc_flop)
+            gs_colorbits = (gs_shift_reg >> 6);
+        
+        /*
         if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
             printf("    renderMultiColorPixel(%d)\n",gs_colorbits);
-        renderMultiColorPixel(gs_colorbits);
+         */
+         renderMultiColorPixel(gs_colorbits);
     } else {
-        
+        /*
         if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
             printf("    renderSingleColorPixel(%d)\n",gs_shift_reg >> 7);
-        renderSingleColorPixel(gs_shift_reg >> 7);
+         */
+         renderSingleColorPixel(gs_shift_reg >> 7);
     }
     
-    // Copy pixel to pixel buffer
+    // Copy pixel into pixel buffer
     if (offset < MAX_VIEWABLE_PIXELS) {
-        
         pixelBuffer[offset] = pixelBufferTmp[0];
-        pixelBufferTmp[0] = pixelBufferTmp[1];
-        // pixelBufferTmp[1] = 0x00;
-    
         zBuffer[offset] = zBufferTmp[0];
-        zBufferTmp[0] = zBufferTmp[1];
-        // zBufferTmp[1] = 0x00;
-    
         pixelSource[offset] = pixelSourceTmp[0];
-        pixelSourceTmp[0] = pixelSourceTmp[1];
-        // pixelSourceTmp[1] = 0x00;
     }
      
     // Shift register and toggle flipflop
