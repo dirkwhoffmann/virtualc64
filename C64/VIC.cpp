@@ -43,7 +43,7 @@
 #include "C64.h"
 
 // DIRK
-#define DIRK_DEBUG_LINE 247
+#define DIRK_DEBUG_LINE 51
 unsigned dirktrace = 0;
 unsigned dirkcnt = 0;
 
@@ -510,7 +510,7 @@ inline void VIC::gAccess()
         gs_mode = getDisplayMode();
 
         // DIRK
-        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
+        if (dirktrace == 1)
             printf("gAccess: data: %d from addr:%4d(%4X) delay:%d charSpace:%d colorSpace:%d mode:%d VC:%d RC:%d VMLI:%d\n",
                    gs_data, addr, addr, gs_delay, gs_characterSpace, gs_colorSpace, gs_mode, registerVC, registerRC, registerVMLI);
     
@@ -743,11 +743,7 @@ void VIC::drawBorderArea(uint8_t cycle)
 
 void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
-    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-        printf("VIC::loadPixelSynthesizerWithColors: mode:%d gs_mode: %d (%d %d)\n",
-               mode, gs_mode, dc.backgroundColor[0],colorSpace);
-    }
-
+    // THIS SHOULD BE mode, not gs_mode???
     switch (gs_mode) {
             
         case STANDARD_TEXT:
@@ -824,11 +820,6 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
 void VIC::drawPixel(uint16_t offset, uint8_t pixel)
 {
     assert(pixel < 8);
-    
-    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-        printf("VVIC::drawPixel:offset %d pixel %d dc.delay:%d gs_mc_flop:%d\n",
-               offset, pixel, dc.delay, gs_mc_flop);
-    }
     
         
     if (1) {
@@ -1594,10 +1585,10 @@ VIC::dirk()
 {
     unsigned cycle = c64->rasterlineCycle;
 
-    if (dirktrace == 1 && (yCounter >= DIRK_DEBUG_LINE && yCounter <= DIRK_DEBUG_LINE)) {
-        printf("(%i,%i) D012:%d BAlow:%d RDY:%d displayState:%d RC:%d VC:%d VCbase:%d VMLI:%d\n",
-               yCounter,cycle,iomem[0x12],BAlow,cpu->getRDY(),
-               displayState, registerRC, registerVC, registerVCBASE, registerVMLI);
+    if (dirktrace == 1) {
+        printf("(%i,%i) BAlow:%d RDY:%d RC:%d VC:%d (VCbase:%d) VMLI:%d bad_line:%d disp_state:%d\n",
+               yCounter, cycle, BAlow, cpu->getRDY(),
+               registerRC, registerVC, registerVCBASE, registerVMLI, badLineCondition, displayState);
     }
 }
 
@@ -1743,14 +1734,14 @@ VIC::beginRasterline(uint16_t line)
     // Clear pixel buffer
     memset(pixelBuffer, 0x00, sizeof(pixelSource));
 
-    // Check, if we are currently processing a DMA line. The result is stored in variable badLineCondition.
-    // The initial value can change in the middle of a rasterline.
-    updateBadLineCondition();
-
     // Check for the DEN bit if we're processing rasterline 30
     // The initial value can change in the middle of a rasterline.
     if (line == 0x30)
         DENwasSetInRasterline30 = DENbit();
+
+    // Check, if we are currently processing a DMA line. The result is stored in variable badLineCondition.
+    // The initial value can change in the middle of a rasterline.
+    updateBadLineCondition();
 
     // Reset graphic sequencer
     // gs_data = 0;
@@ -2821,7 +2812,7 @@ VIC::cycle63()
 	// draw debug markers
 
     if (dirktrace == 0 && markIRQLines) {
-        // rasterlineDebug[247] = 5;
+        rasterlineDebug[DIRK_DEBUG_LINE] = 1;
         dirktrace = 1; // ON
     }
     
