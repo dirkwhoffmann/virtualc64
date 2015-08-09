@@ -763,7 +763,7 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
             
         case STANDARD_TEXT:
             col_rgba[0] = colors[dc.backgroundColor[0]];
-            col_rgba[1] = colors[dc.colorSpace];
+            col_rgba[1] = colors[colorSpace];
             multicol = false;
             break;
             
@@ -772,32 +772,32 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
                 col_rgba[0] = colors[dc.backgroundColor[0]];
                 col_rgba[1] = colors[dc.backgroundColor[1]];
                 col_rgba[2] = colors[dc.backgroundColor[2]];
-                col_rgba[3] = colors[dc.colorSpace & 0x07];
+                col_rgba[3] = colors[colorSpace & 0x07];
                 multicol = true;
             } else {
                 col_rgba[0] = colors[dc.backgroundColor[0]];
-                col_rgba[1] = colors[dc.colorSpace];
+                col_rgba[1] = colors[colorSpace];
                 multicol = false;
             }
             break;
             
         case STANDARD_BITMAP:
-            col_rgba[0] = colors[dc.characterSpace & 0x0F]; // color of '0' pixels
-            col_rgba[1] = colors[dc.characterSpace >> 4]; // color of '1' pixels
+            col_rgba[0] = colors[characterSpace & 0x0F]; // color of '0' pixels
+            col_rgba[1] = colors[characterSpace >> 4]; // color of '1' pixels
             multicol = false;
             break;
             
         case MULTICOLOR_BITMAP:
             col_rgba[0] = colors[dc.backgroundColor[0]];
-            col_rgba[1] = colors[dc.characterSpace >> 4];
-            col_rgba[2] = colors[dc.characterSpace & 0x0F];
-            col_rgba[3] = colors[dc.colorSpace];
+            col_rgba[1] = colors[characterSpace >> 4];
+            col_rgba[2] = colors[characterSpace & 0x0F];
+            col_rgba[3] = colors[colorSpace];
             multicol = true;
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
             col_rgba[0] = colors[dc.backgroundColor[characterSpace >> 6]];
-            col_rgba[1] = colors[dc.colorSpace];
+            col_rgba[1] = colors[colorSpace];
             multicol = false;
             break;
             
@@ -806,7 +806,7 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
             col_rgba[1] = colors[BLACK];
             col_rgba[2] = colors[BLACK];
             col_rgba[3] = colors[BLACK];
-            multicol = (dc.colorSpace & 0x8 /* MC flag */);
+            multicol = (colorSpace & 0x8 /* MC flag */);
             break;
             
         case INVALID_STANDARD_BITMAP:
