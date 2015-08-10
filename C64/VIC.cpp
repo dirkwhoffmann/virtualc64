@@ -686,44 +686,37 @@ void VIC::drawPixels()
         // Pixel 1
         drawPixel(xCoord, 0);
         
-        // Pixel 2
+        // At this point in time, color register changes show up
         prepareDrawingContextColors();
+
+        // Pixel 2
         drawPixel(xCoord + 1, 1);
 
-        // Pixels 2 and 3
+        // Pixels 3 and 4
         drawPixel(xCoord + 2, 2);
         drawPixel(xCoord + 3, 3);
 
-        // Update register D016 register value (as done in VICE)
-        latchedD016 = iomem[0x16] & 0x10;  // latch 0 and 1 bits
-        latchedD011 |= iomem[0x11] & 0x60; // latch 1 bits
-
-        /* VICE CODE:
-        vmode16_pipe = ( vicii.regs[0x16] & 0x10 ) >> 2;
-        if (vicii.color_latency) {
-            vmode11_pipe |= ( vicii.regs[0x11] & 0x60 ) >> 2;
-        */
-        
-        // Pixels 4 and 5
+        // At this point in time, the 0s and 1s in D016 and the 1s in D011 show up
+        // This corresponds the behavior of the color latency chip model in VICE
+        latchedD016 = iomem[0x16] & 0x10;  // latch 0s and 1s
+        latchedD011 |= iomem[0x11] & 0x60; // latch 1s
+    
+        // Pixels 5 and 6
         drawPixel(xCoord + 4, 4);
         drawPixel(xCoord + 5, 5);
         
-        // Update register D011 register value (as done in VICE)
-        latchedD011 &= iomem[0x11] & 0x60; // latch 0 bits
+        // At this point in time, the 0s in D011 show up
+        // This corresponds the behavior of the color latency chip model in VICE
+        latchedD011 &= iomem[0x11] & 0x60; // latch 0s
         
-        /* VICE CODE:
-        if (vicii.color_latency) {
-         vmode11_pipe &= ( vicii.regs[0x11] & 0x60 ) >> 2;
-        }
-        */
-        
-        // Pixels 6 and 7
+        // Pixels 7 and 8
         drawPixel(xCoord + 6, 6);
         drawPixel(xCoord + 7, 7);
         
     } else {
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
+        prepareDrawingContextColors();
         drawEightBehindBackgroudPixels(xCoord);
         
     }
