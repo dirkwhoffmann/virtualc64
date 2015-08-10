@@ -37,7 +37,10 @@ VIC::VIC(C64 *c64)
 	debug(2, "  Creating VIC at address %p...\n", this);
 
 	this->c64 = c64;
-	
+    
+    // Create sub components
+    pixelEngine = new PixelEngine(c64);
+    
 	// Delete screen buffers
 	for (unsigned i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
 		screenBuffer1[i] = colors[BLUE];
@@ -69,6 +72,9 @@ VIC::reset()
     cpu = c64->cpu;
     mem = c64->mem;
     
+    // Reset subcomponents
+    pixelEngine->reset();
+
 	// Internal registers
     frame = 0;
     xCounter = 0;

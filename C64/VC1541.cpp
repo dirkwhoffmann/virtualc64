@@ -20,10 +20,11 @@
 
 VC1541::VC1541(C64 *c64)
 {
-	debug(2, "Creating virtual VC1541 at address %p\n", this);
 	name = "1541";
-	
-	// Clear references
+    
+    debug(2, "Creating virtual VC1541 at address %p\n", this);
+
+	// Set bindings
     this->c64 = c64;
 	
 	// Create sub components

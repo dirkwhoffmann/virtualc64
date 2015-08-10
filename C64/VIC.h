@@ -17,8 +17,10 @@
  */
 
 // TODO:
-// 1. Fix pixel sequencer (colorsplit.prg)
-// 2. Fix video mode switching (VICE often switches in the middle of a cycle, VC64 always at the beginning)
+// 1. Introduce PixelEngine
+//    Sub component to synthesize pixels
+//    Will contain drawingContents stuff, pixelBuffers, renderRoutines etc.
+// 
 // 3. Make sprite drawing cycle based.
 // 4. Replace pixel buffers by 8 bit variables and implement mixer(). This makes z buffering obsolete.
 
@@ -29,6 +31,7 @@
 
 // Forward declarations
 class C64Memory;
+class PixelEngine; 
 
 #define EXTRACT_RED(x)   ((x & 0xff000000) >> 24)
 #define EXTRACT_GREEN(x) ((x & 0x00ff0000) >> 16)
@@ -50,6 +53,9 @@ class C64Memory;
 */
 class VIC : public VirtualComponent {
 
+    //! Reference to the attached pixel engine (encapsulates drawing routines)
+    PixelEngine *pixelEngine;
+    
 	// -----------------------------------------------------------------------------------------------
 	//                                     Constant definitions
 	// -----------------------------------------------------------------------------------------------
@@ -470,6 +476,15 @@ private:
 	/*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the characters to display */
 	uint8_t colorSpace[40];
 
+    
+    
+    
+    // -----------------------------------------------------------------------------------------------
+    //                              Graphics engine (pixel synthesis)
+    // -----------------------------------------------------------------------------------------------
+
+private:
+    
     //! Currently used color scheme
     ColorScheme colorScheme;
     
@@ -523,8 +538,12 @@ private:
     
     
     // -----------------------------------------------------------------------------------------------
-    //                                      Sequencers
+    //                                      Graphics sequencer
     // -----------------------------------------------------------------------------------------------
+
+    // The drawing enging needs to access various VIC parameters. Changes to these parameters
+    // show up at different point in time, so these values need to be latched. The latches values are
+    // stored in the following variables:
 
     //! Graphic sequencer shift register (8 bit)
     uint8_t gs_shift_reg;
