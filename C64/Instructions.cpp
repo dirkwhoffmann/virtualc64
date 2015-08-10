@@ -82,18 +82,20 @@ CPU::fetch() {
     }
     */
     
-    
+    /*
     if (isC64CPU && dirktrace == 1)
         dirkcnt++;
+    */
     
-    if (isC64CPU && dirkcnt > 50000) {
+    if (isC64CPU && dirkcnt > 10000) {
         dirktrace = 2; // OFF
     }
     
-    if (isC64CPU && dirktrace == 1 && c64->vic->getScanline() == 77) {
+    /*
+    if (isC64CPU && dirktrace == 1) { // && c64->vic->getScanline() == 77) {
         printf("%d: %s\n",PC-1, disassemble());
     }
-    
+    */
     
     
     

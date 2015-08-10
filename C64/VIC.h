@@ -764,6 +764,9 @@ private:
         be gathered one cycle before drawing. */
     void prepareDrawingContextForCycle(uint8_t cycle);
 
+    //! Update drawing contents with current colors
+    void prepareDrawingContextColors();
+    
     //! Update portions in the current graphics context.
     /*! Most of the information that is needed in draw() is gatheres in 
         prepareDrawingContextForCycle() one cycle prior to drawing. Some

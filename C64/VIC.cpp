@@ -21,25 +21,6 @@
    Many thanks, Christian! 
 */
 
-
-// TODO: Delay drawing by one cycle
-// To do so, ...
-// add typedef struct drawingContext
-// Stores everything that is needed to draw a chunk of pixels
-// Enables us to delay drawing by some cycles
-
-// Old sequence is simulated by:
-// 1. updateDrawingContext
-// 1. draw
-// 2. updateDrawingContext
-// 2. draw
-
-// Move draw one cycle behind
-// 1. updateDrawingContext
-// 2. draw
-// 2. updateDrawingContext
-// 3. draw
-
 #include "C64.h"
 
 // DIRK
@@ -510,10 +491,11 @@ inline void VIC::gAccess()
         gs_mode = getDisplayMode();
 
         // DIRK
+        /*
         if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
             printf("gAccess: data: %d from addr:%4d(%4X) delay:%d charSpace:%d colorSpace:%d mode:%d VC:%d RC:%d VMLI:%d\n",
                    gs_data, addr, addr, gs_delay, gs_characterSpace, gs_colorSpace, gs_mode, registerVC, registerRC, registerVMLI);
-    
+         */
         
         // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhšht." [C.B.]
         registerVC++;
@@ -626,23 +608,22 @@ VIC::prepareDrawingContextForCycle(uint8_t cycle)
     dc.colorSpace = gs_colorSpace;
     dc.mode = gs_mode;
     // dc.delay = gs_delay;
-    /*
-    dc.borderColor = getBorderColor();
-    dc.backgroundColor[0] = getBackgroundColor();
-    dc.backgroundColor[1] = getExtraBackgroundColor(1);
-    dc.backgroundColor[2] = getExtraBackgroundColor(2);
-    dc.backgroundColor[3] = getExtraBackgroundColor(3);
-    */
+}
+
+void
+VIC::prepareDrawingContextColors()
+{
+     dc.borderColor = getBorderColor();
+     dc.backgroundColor[0] = getBackgroundColor();
+     dc.backgroundColor[1] = getExtraBackgroundColor(1);
+     dc.backgroundColor[2] = getExtraBackgroundColor(2);
+     dc.backgroundColor[3] = getExtraBackgroundColor(3);
 }
 
 void
 VIC::updateDrawingContext()
 {
-    dc.borderColor = getBorderColor();
-    dc.backgroundColor[0] = getBackgroundColor();
-    dc.backgroundColor[1] = getExtraBackgroundColor(1);
-    dc.backgroundColor[2] = getExtraBackgroundColor(2);
-    dc.backgroundColor[3] = getExtraBackgroundColor(3);
+    // prepareDrawingContextColors();
     dc.delay = gs_delay;
 }
 
@@ -702,16 +683,43 @@ void VIC::drawPixels()
     
     if (!dc.verticalFrameFF) {
         
+        // Pixel 1
         drawPixel(xCoord, 0);
+        
+        // Pixel 2
+        prepareDrawingContextColors();
         drawPixel(xCoord + 1, 1);
+
+        // Pixels 2 and 3
         drawPixel(xCoord + 2, 2);
         drawPixel(xCoord + 3, 3);
-        latchedD016 = iomem[0x16];
+
+        // Update register D016 register value (as done in VICE)
+        latchedD016 = iomem[0x16] & 0x10;  // latch 0 and 1 bits
+        latchedD011 |= iomem[0x11] & 0x60; // latch 1 bits
+
+        /* VICE CODE:
+        vmode16_pipe = ( vicii.regs[0x16] & 0x10 ) >> 2;
+        if (vicii.color_latency) {
+            vmode11_pipe |= ( vicii.regs[0x11] & 0x60 ) >> 2;
+        */
+        
+        // Pixels 4 and 5
         drawPixel(xCoord + 4, 4);
         drawPixel(xCoord + 5, 5);
+        
+        // Update register D011 register value (as done in VICE)
+        latchedD011 &= iomem[0x11] & 0x60; // latch 0 bits
+        
+        /* VICE CODE:
+        if (vicii.color_latency) {
+         vmode11_pipe &= ( vicii.regs[0x11] & 0x60 ) >> 2;
+        }
+        */
+        
+        // Pixels 6 and 7
         drawPixel(xCoord + 6, 6);
         drawPixel(xCoord + 7, 7);
-        latchedD011 = iomem[0x11];
         
     } else {
         
@@ -753,10 +761,12 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
             col_rgba[1] = colors[colorSpace];
             multicol = false;
             
+            /*
             if(dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
                 printf("    VIC::loadPixelSynthesizerWithColors mode:%d charspace:%d colspace:%d [0]:%d [1]:%d\n",
                        mode,characterSpace,colorSpace,dc.backgroundColor[0],colorSpace);
             }
+            */
             break;
             
         case MULTICOLOR_TEXT:
@@ -830,7 +840,7 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
     if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
         printf("  VIC::drawPixel(%d,%d)\n",offset,pixel);
     }
-
+    
     if (pixel == dc.delay) {
       
         // Load shift register
@@ -981,6 +991,10 @@ VIC::renderSingleColorPixel(uint8_t bit)
 {
     assert(bit <= 1);
     int rgba = col_rgba[bit];
+
+    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
+        printf("      VIC::renderSingleColorPixel(%d) rgba:%d\n",bit,rgba);
+    }
 
     if (bit)
         renderForegroundPixel(0, rgba);
@@ -1462,7 +1476,12 @@ VIC::poke(uint16_t addr, uint8_t value)
 				iomem[addr] = value;
 			}
 			return;
-						
+				
+        case 0x16:
+            if (dirktrace == 1)
+                printf("XSCROLL: %d\n",value & 7);
+            break;
+            
 		case 0x17: // SPRITE Y EXPANSION
 			iomem[addr] = value;
             cleared_bits_in_d017 = (~value) & (~expansionFF);
@@ -1621,9 +1640,13 @@ VIC::dirk()
     unsigned cycle = c64->rasterlineCycle;
 
     if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-        printf("(%i,%i) BAlow:%d RDY:%d RC:%d VC:%d (VCbase:%d) VMLI:%d bad_line:%d disp_state:%d\n",
-               yCounter, cycle, BAlow, cpu->getRDY(),
+        printf("(%i,%i) (dx,yd):(%d,%d) D020:%d D021:%d BAlow:%d RDY:%d RC:%d VC:%d (VCbase:%d) VMLI:%d bad_line:%d disp_state:%d\n",
+               yCounter, cycle,
+               getHorizontalRasterScroll(), getVerticalRasterScroll(),
+               iomem[0x20], iomem[0x21],
+               BAlow, cpu->getRDY(),
                registerRC, registerVC, registerVCBASE, registerVMLI, badLineCondition, displayState);
+        dirkcnt++;
     }
 }
 
