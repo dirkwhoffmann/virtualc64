@@ -17,10 +17,9 @@
  */
 
 // TODO:
-// 1. Introduce PixelEngine
-//    Sub component to synthesize pixels
-//    Will contain drawingContents stuff, pixelBuffers, renderRoutines etc.
-// 
+// Making PixelEngine a class has considerably slowed down the emulator.
+// Integrate it in VIC again? 
+//
 // 3. Make sprite drawing cycle based.
 // 4. Replace pixel buffers by 8 bit variables and implement mixer(). This makes z buffering obsolete.
 
