@@ -96,7 +96,6 @@ VIC::reset()
     // Graphic sequencer
     gs_data = 0;
     gs_colorbits = 0;
-    gs_last_bg_color = 0;
     gs_mode = STANDARD_TEXT;
     
 	// Sprites
@@ -700,83 +699,8 @@ void VIC::drawPixels()
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
         prepareDrawingContextColors();
-        pixelEngine->setEightBackgroundPixels(xCoord, gs_last_bg_color);
+        pixelEngine->setEightBackgroundPixels(xCoord, pixelEngine->col_rgba[0]);
     }
-}
-
-void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
-{
-    switch (mode) {
-            
-        case STANDARD_TEXT:
-            
-            col_rgba[0] = pixelEngine->colors[dc.backgroundColor[0]];
-            col_rgba[1] = pixelEngine->colors[colorSpace];
-            multicol = false;
-            break;
-            
-        case MULTICOLOR_TEXT:
-            if (colorSpace & 0x8 /* MC flag */) {
-                col_rgba[0] = pixelEngine->colors[dc.backgroundColor[0]];
-                col_rgba[1] = pixelEngine->colors[dc.backgroundColor[1]];
-                col_rgba[2] = pixelEngine->colors[dc.backgroundColor[2]];
-                col_rgba[3] = pixelEngine->colors[colorSpace & 0x07];
-                multicol = true;
-            } else {
-                col_rgba[0] = pixelEngine->colors[dc.backgroundColor[0]];
-                col_rgba[1] = pixelEngine->colors[colorSpace];
-                multicol = false;
-            }
-            break;
-            
-        case STANDARD_BITMAP:
-            col_rgba[0] = pixelEngine->colors[characterSpace & 0x0F]; // color of '0' pixels
-            col_rgba[1] = pixelEngine->colors[characterSpace >> 4]; // color of '1' pixels
-            multicol = false;
-            break;
-            
-        case MULTICOLOR_BITMAP:
-            col_rgba[0] = pixelEngine->colors[dc.backgroundColor[0]];
-            col_rgba[1] = pixelEngine->colors[characterSpace >> 4];
-            col_rgba[2] = pixelEngine->colors[characterSpace & 0x0F];
-            col_rgba[3] = pixelEngine->colors[colorSpace];
-            multicol = true;
-            break;
-            
-        case EXTENDED_BACKGROUND_COLOR:
-            col_rgba[0] = pixelEngine->colors[dc.backgroundColor[characterSpace >> 6]];
-            col_rgba[1] = pixelEngine->colors[colorSpace];
-            multicol = false;
-            break;
-            
-        case INVALID_TEXT:
-            col_rgba[0] = pixelEngine->colors[PixelEngine::BLACK];
-            col_rgba[1] = pixelEngine->colors[PixelEngine::BLACK];
-            col_rgba[2] = pixelEngine->colors[PixelEngine::BLACK];
-            col_rgba[3] = pixelEngine->colors[PixelEngine::BLACK];
-            multicol = (colorSpace & 0x8 /* MC flag */);
-            break;
-            
-        case INVALID_STANDARD_BITMAP:
-            col_rgba[0] = pixelEngine->colors[PixelEngine::BLACK];
-            col_rgba[1] = pixelEngine->colors[PixelEngine::BLACK];
-            multicol = false;
-            break;
-            
-        case INVALID_MULTICOLOR_BITMAP:
-            col_rgba[0] = pixelEngine->colors[PixelEngine::BLACK];
-            col_rgba[1] = pixelEngine->colors[PixelEngine::BLACK];
-            col_rgba[2] = pixelEngine->colors[PixelEngine::BLACK];
-            col_rgba[3] = pixelEngine->colors[PixelEngine::BLACK];
-            multicol = true;
-            break;
-            
-        default:
-            assert(0);
-            break;
-    }
-    
-    gs_last_bg_color = col_rgba[0];
 }
 
 void VIC::drawPixel(uint16_t offset, uint8_t pixel)
@@ -798,10 +722,10 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
     
     // Determine display mode and colors
     DisplayMode mode = (DisplayMode)((latchedD011 & 0x60) | (latchedD016 & 0x10));
-    loadPixelSynthesizerWithColors(mode, latchedCharacterSpace, latchedColorSpace);
+    pixelEngine->loadColors(mode, latchedCharacterSpace, latchedColorSpace);
     
     // Render pixel
-    if (multicol) {
+    if (pixelEngine->multicol) {
         if (gs_mc_flop)
             gs_colorbits = (gs_shift_reg >> 6);
         pixelEngine->setMultiColorPixel(offset, gs_colorbits);

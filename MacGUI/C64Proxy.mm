@@ -146,7 +146,7 @@
 - (unsigned)lastVisibleLine { return vic->getLastVisibleLine(); }
 
 - (int) displayMode { return vic->getDisplayMode(); }
-- (void) setDisplayMode:(int)mode { vic->setDisplayMode((VIC::DisplayMode)mode); }
+- (void) setDisplayMode:(int)mode { vic->setDisplayMode((DisplayMode)mode); }
 - (int) screenGeometry { return (int)vic->getScreenGeometry(); }
 - (void) setScreenGeometry:(int)mode { vic->setScreenGeometry((VIC::ScreenGeometry)mode); }
 - (int) horizontalRasterScroll { return vic->getHorizontalRasterScroll(); }

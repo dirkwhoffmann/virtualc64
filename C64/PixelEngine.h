@@ -41,6 +41,18 @@
 class VIC;
 class C64;
 
+//! Display mode
+enum DisplayMode {
+    STANDARD_TEXT             = 0x00,
+    MULTICOLOR_TEXT           = 0x10,
+    STANDARD_BITMAP           = 0x20,
+    MULTICOLOR_BITMAP         = 0x30,
+    EXTENDED_BACKGROUND_COLOR = 0x40,
+    INVALID_TEXT              = 0x50,
+    INVALID_STANDARD_BITMAP   = 0x60,
+    INVALID_MULTICOLOR_BITMAP = 0x70
+};
+
 //! PixelEngine
 /*! This component is part of the virtual VICII chip and encapulates all functionality that is related to the
     synthesis of pixels. Its main entry point are prepareForCycle() and draw() which are called in every 
@@ -208,21 +220,52 @@ public:
     void endFrame();
 
     // -----------------------------------------------------------------------------------------------
-    //                                  Higher level drawing routines
-    // -----------------------------------------------------------------------------------------------
-
-public:
-
-    // -----------------------------------------------------------------------------------------------
-    //                                      Character rendering
+    //                                      Drawing entry point
     // -----------------------------------------------------------------------------------------------
 
 public:
     
+    
     // -----------------------------------------------------------------------------------------------
-    //                                        Pixel rendering
+    //                                  High level pixel rendering
     // -----------------------------------------------------------------------------------------------
 
+private:
+    
+    //! This is where loadColors() stores all retrieved colors
+    /*! [0] : color for '0' pixels in single color mode or '00' pixels in multicolor mode
+        [1] : color for '1' pixels in single color mode or '01' pixels in multicolor mode
+        [2] : color for '10' pixels in multicolor mode
+        [3] : color for '11' pixels in multicolor mode */
+    int col_rgba[4];
+    
+    //! loadColors() also determines if we are in single-color or multi-color mode
+    bool multicol;
+
+public:
+    
+    // Determine pixel colors accordig to the provided display mode
+    void loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace);
+    
+    //! Draw single canvas pixel in single-color mode
+    /*! 1s are drawn with setForegroundPixel, 0s are drawn with setBackgroundPixel.
+     Uses the drawing colors that are setup by loadColors(). */
+    void setSingleColorPixel(unsigned offset, uint8_t bit);
+    
+    //! Draw single canvas pixel in multi-color mode
+    /*! The left of the two color bits determines whether setForegroundPixel or setBackgroundPixel is used.
+     Uses the drawing colors that are setup by loadColors(). */
+    void setMultiColorPixel(unsigned offset, uint8_t two_bits);
+    
+    //! Draw a single foreground pixel
+    /*! The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected. */
+    void setSpritePixel(unsigned offset, int color, int nr);
+
+    
+    // -----------------------------------------------------------------------------------------------
+    //                                   Low level pixel rendering
+    // -----------------------------------------------------------------------------------------------
+    
 public:
 
     //! Draw a single frame pixel
@@ -246,22 +289,8 @@ public:
     inline void setEightBackgroundPixels(unsigned offset, int rgba) {
         for (unsigned i = 0; i < 8; i++) setBackgroundPixel(offset++, rgba); }
 
-    //! Draw single canvas pixel in single-color mode
-    /*! 1s are drawn with setForegroundPixel, 0s are drawn with setBackgroundPixel.
-        Uses the drawing colors that are setup by loadColors(). */
-    void setSingleColorPixel(unsigned offset, uint8_t bit);
-    
-    //! Draw single canvas pixel in multi-color mode
-    /*! The left of the two color bits determines whether setForegroundPixel or setBackgroundPixel is used.
-        Uses the drawing colors that are setup by loadColors(). */
-    void setMultiColorPixel(unsigned offset, uint8_t two_bits);
-    
     //! Draw a single sprite pixel
     void setSpritePixel(unsigned offset, int rgba, int depth, int source);
-
-    //! Draw a single foreground pixel
-    /*! The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected. */
-    void setSpritePixel(unsigned offset, int color, int nr);
 
     //! Draw a colored line into the screen buffer
     /*! This method is utilized for debugging purposes, only. */

@@ -66,18 +66,6 @@ class VIC : public VirtualComponent {
 	
 public:
 	
-	//! Display mode
-	enum DisplayMode {
-		STANDARD_TEXT             = 0x00,
-		MULTICOLOR_TEXT           = 0x10,
-		STANDARD_BITMAP           = 0x20,
-		MULTICOLOR_BITMAP         = 0x30,
-		EXTENDED_BACKGROUND_COLOR = 0x40,
-        INVALID_TEXT              = 0x50,
-        INVALID_STANDARD_BITMAP   = 0x60,
-        INVALID_MULTICOLOR_BITMAP = 0x70
-	};
-
 	//! Screen geometry
 	enum ScreenGeometry {
 		COL_40_ROW_25 = 0x01,
@@ -489,9 +477,6 @@ private:
 
     //! Color space value during c-Access
     uint8_t gs_colorSpace;
-    
-    //! Remembers last background color
-    int gs_last_bg_color;
 
     //! Graphic sequencer display mode (conversion method)
     DisplayMode gs_mode;
@@ -501,9 +486,6 @@ private:
 
     //! Color bits (needed for multicolor mode)
     uint8_t gs_colorbits;
-
-    // Determine pixel colors accordig to the provided display mode
-    void loadPixelSynthesizerWithColors(DisplayMode mode,uint8_t characterSpace, uint8_t colorSpace);
     
     //! Synthesize a single pixel
     void drawPixel(uint16_t offset, uint8_t pixel);
@@ -722,16 +704,6 @@ private:
     //! Draw single sprite into pixel buffer
     /*! Helper function for drawSprites */
     void drawSprite(uint8_t nr);
-
-    //! When the pixel synthesizer is invoked, these colors are used
-    /*! [0] : color for '0' pixels in single color mode or '00' pixels in multicolor mode
-        [1] : color for '1' pixels in single color mode or '01' pixels in multicolor mode
-        [2] : color for '10' pixels in multicolor mode
-        [3] : color for '11' pixels in multicolor mode */
-    int col_rgba[4];
-    
-    //! Indicates if multicolor pixels or single color pixels are to be synthesized
-    bool multicol;
         
     //! Increase the x coordinate by 8 (sptrite coordinate system)
     inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }

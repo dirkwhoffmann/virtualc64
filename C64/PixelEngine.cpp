@@ -107,36 +107,82 @@ PixelEngine::endFrame()
    
 }
 
+// Drawing entry point
 
 
-// -----------------------------------------------------------------------------------------------
-//                                           Drawing
-// -----------------------------------------------------------------------------------------------
-
-void
-PixelEngine::setFramePixel(unsigned offset, int rgba)
-{
-    zBuffer[offset] = BORDER_LAYER_DEPTH;
-    pixelBuffer[offset] = rgba;
-    pixelSource[offset] &= (~0x80); // disable sprite/foreground collision detection in border
-}
+// High level pixel rendering
 
 void
-PixelEngine::setForegroundPixel(unsigned offset, int rgba)
+PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
-    if (FOREGROUND_LAYER_DEPTH <= zBuffer[offset]) {
-        zBuffer[offset] = FOREGROUND_LAYER_DEPTH;
-        pixelBuffer[offset] = rgba;
-        pixelSource[offset] |= 0x80;
-    }
-}
-
-void
-PixelEngine::setBackgroundPixel(unsigned offset, int rgba)
-{
-    if (BACKGROUD_LAYER_DEPTH <= zBuffer[offset]) {
-        zBuffer[offset] = BACKGROUD_LAYER_DEPTH;
-        pixelBuffer[offset] = rgba;
+    switch (mode) {
+            
+        case STANDARD_TEXT:
+            
+            col_rgba[0] = colors[vic->dc.backgroundColor[0]];
+            col_rgba[1] = colors[colorSpace];
+            multicol = false;
+            break;
+            
+        case MULTICOLOR_TEXT:
+            if (colorSpace & 0x8 /* MC flag */) {
+                col_rgba[0] = colors[vic->dc.backgroundColor[0]];
+                col_rgba[1] = colors[vic->dc.backgroundColor[1]];
+                col_rgba[2] = colors[vic->dc.backgroundColor[2]];
+                col_rgba[3] = colors[colorSpace & 0x07];
+                multicol = true;
+            } else {
+                col_rgba[0] = colors[vic->dc.backgroundColor[0]];
+                col_rgba[1] = colors[colorSpace];
+                multicol = false;
+            }
+            break;
+            
+        case STANDARD_BITMAP:
+            col_rgba[0] = colors[characterSpace & 0x0F]; // color of '0' pixels
+            col_rgba[1] = colors[characterSpace >> 4]; // color of '1' pixels
+            multicol = false;
+            break;
+            
+        case MULTICOLOR_BITMAP:
+            col_rgba[0] = colors[vic->dc.backgroundColor[0]];
+            col_rgba[1] = colors[characterSpace >> 4];
+            col_rgba[2] = colors[characterSpace & 0x0F];
+            col_rgba[3] = colors[colorSpace];
+            multicol = true;
+            break;
+            
+        case EXTENDED_BACKGROUND_COLOR:
+            col_rgba[0] = colors[vic->dc.backgroundColor[characterSpace >> 6]];
+            col_rgba[1] = colors[colorSpace];
+            multicol = false;
+            break;
+            
+        case INVALID_TEXT:
+            col_rgba[0] = colors[PixelEngine::BLACK];
+            col_rgba[1] = colors[PixelEngine::BLACK];
+            col_rgba[2] = colors[PixelEngine::BLACK];
+            col_rgba[3] = colors[PixelEngine::BLACK];
+            multicol = (colorSpace & 0x8 /* MC flag */);
+            break;
+            
+        case INVALID_STANDARD_BITMAP:
+            col_rgba[0] = colors[PixelEngine::BLACK];
+            col_rgba[1] = colors[PixelEngine::BLACK];
+            multicol = false;
+            break;
+            
+        case INVALID_MULTICOLOR_BITMAP:
+            col_rgba[0] = colors[PixelEngine::BLACK];
+            col_rgba[1] = colors[PixelEngine::BLACK];
+            col_rgba[2] = colors[PixelEngine::BLACK];
+            col_rgba[3] = colors[PixelEngine::BLACK];
+            multicol = true;
+            break;
+            
+        default:
+            assert(0);
+            break;
     }
 }
 
@@ -144,7 +190,7 @@ void
 PixelEngine::setSingleColorPixel(unsigned offset, uint8_t bit)
 {
     assert(bit <= 1);
-    int rgba = vic->col_rgba[bit];
+    int rgba = col_rgba[bit];
     
     if (bit)
         setForegroundPixel(offset, rgba);
@@ -156,24 +202,12 @@ void
 PixelEngine::setMultiColorPixel(unsigned offset, uint8_t two_bits)
 {
     assert(two_bits <= 3);
-    int rgba = vic->col_rgba[two_bits];
+    int rgba = col_rgba[two_bits];
     
     if (two_bits & 0x02)
         setForegroundPixel(offset, rgba);
     else
         setBackgroundPixel(offset, rgba);
-}
-
-void
-PixelEngine::setSpritePixel(unsigned offset, int rgba, int depth, int source)
-{
-    assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
-    
-    if (depth <= zBuffer[offset]) {
-        zBuffer[offset] = depth;
-        pixelBuffer[offset] = rgba;
-    }
-    pixelSource[offset] |= source;
 }
 
 void
@@ -207,6 +241,48 @@ PixelEngine::setSpritePixel(unsigned offset, int color, int nr)
         setSpritePixel(offset, color, vic->spriteDepth(nr), mask);
     }
 }
+
+// Low level pixel rendering
+
+void
+PixelEngine::setFramePixel(unsigned offset, int rgba)
+{
+    zBuffer[offset] = BORDER_LAYER_DEPTH;
+    pixelBuffer[offset] = rgba;
+    pixelSource[offset] &= (~0x80); // disable sprite/foreground collision detection in border
+}
+
+void
+PixelEngine::setForegroundPixel(unsigned offset, int rgba)
+{
+    if (FOREGROUND_LAYER_DEPTH <= zBuffer[offset]) {
+        zBuffer[offset] = FOREGROUND_LAYER_DEPTH;
+        pixelBuffer[offset] = rgba;
+        pixelSource[offset] |= 0x80;
+    }
+}
+
+void
+PixelEngine::setBackgroundPixel(unsigned offset, int rgba)
+{
+    if (BACKGROUD_LAYER_DEPTH <= zBuffer[offset]) {
+        zBuffer[offset] = BACKGROUD_LAYER_DEPTH;
+        pixelBuffer[offset] = rgba;
+    }
+}
+
+void
+PixelEngine::setSpritePixel(unsigned offset, int rgba, int depth, int source)
+{
+    assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
+    
+    if (depth <= zBuffer[offset]) {
+        zBuffer[offset] = depth;
+        pixelBuffer[offset] = rgba;
+    }
+    pixelSource[offset] |= source;
+}
+
 
 void
 PixelEngine::markLine(uint8_t color, unsigned start, unsigned end)
