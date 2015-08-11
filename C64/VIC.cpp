@@ -632,7 +632,7 @@ VIC::drawBorder()
     
     if (dc.cycle == 17 && dc.mainFrameFF && !mainFrameFF) {
         int border_rgba = pixelEngine->colors[dc.borderColor];
-        pixelEngine->drawSevenFramePixels(xCoord, border_rgba);
+        pixelEngine->setSevenFramePixels(xCoord, border_rgba);
         return;
     }
     
@@ -646,7 +646,7 @@ VIC::drawBorder()
     
     if (dc.mainFrameFF) {
         int border_rgba = pixelEngine->colors[dc.borderColor];
-        pixelEngine->drawEightFramePixels(xCoord, border_rgba);
+        pixelEngine->setEightFramePixels(xCoord, border_rgba);
         return;
     }
 }
@@ -700,31 +700,8 @@ void VIC::drawPixels()
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
         prepareDrawingContextColors();
-        pixelEngine->drawEightBehindBackgroudPixels(xCoord);
-        
+        pixelEngine->setEightBackgroundPixels(xCoord, gs_last_bg_color);
     }
-}
-
-void VIC::drawBorderArea(uint8_t cycle)
-{
-    assert((cycle >= 13 && cycle <= 16) || (cycle >= 57 && cycle <= 60));
-    
-    uint16_t xCoord = (dc.xCounter - 28) + leftBorderWidth;
-    
-    // draw border
-    if (dc.mainFrameFF) {
-        
-        int border_rgba = pixelEngine->colors[dc.borderColor];
-        
-        pixelEngine->drawEightFramePixels(xCoord, border_rgba);
-        return;
-    }
-    
-    /* "Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
-     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
-     normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
-    pixelEngine->drawEightBehindBackgroudPixels(xCoord);
-    
 }
 
 void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
@@ -827,18 +804,19 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
     if (multicol) {
         if (gs_mc_flop)
             gs_colorbits = (gs_shift_reg >> 6);
-         pixelEngine->renderMultiColorPixel(gs_colorbits);
+        pixelEngine->setMultiColorPixel(offset, gs_colorbits);
     } else {
-         pixelEngine->renderSingleColorPixel(gs_shift_reg >> 7);
+        pixelEngine->setSingleColorPixel(offset, gs_shift_reg >> 7);
     }
     
     // Copy pixel into pixel buffer
-    if (offset < PixelEngine::MAX_VIEWABLE_PIXELS) {
-        pixelEngine->pixelBuffer[offset] = pixelEngine->pixelBufferTmp[0];
-        pixelEngine->zBuffer[offset] = pixelEngine->zBufferTmp[0];
-        pixelEngine->pixelSource[offset] = pixelEngine->pixelSourceTmp[0];
-    }
-     
+    /*
+    assert(offset < PixelEngine::MAX_VIEWABLE_PIXELS);
+    pixelEngine->pixelBuffer[offset] = pixelEngine->pixelBufferTmp[0];
+    pixelEngine->zBuffer[offset] = pixelEngine->zBufferTmp[0];
+    pixelEngine->pixelSource[offset] = pixelEngine->pixelSourceTmp[0];
+    */
+    
     // Shift register and toggle flipflop
     gs_shift_reg <<= 1;
     gs_mc_flop = !gs_mc_flop;

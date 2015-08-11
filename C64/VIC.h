@@ -511,9 +511,6 @@ private:
     //! Synthesize a chunk of 8 pixels
     void drawPixels();
 
-    //! Synthesize a chunk of 8 pixels in border area
-    void drawBorderArea(uint8_t cycle);
-
 
 	// -----------------------------------------------------------------------------------------------
 	//                                         Sprites

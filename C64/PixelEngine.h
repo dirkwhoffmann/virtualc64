@@ -224,101 +224,44 @@ public:
     // -----------------------------------------------------------------------------------------------
 
 public:
-    
+
     //! Draw a single frame pixel
-    // DEPRECATED
     void setFramePixel(unsigned offset, int rgba);
     
-    //! Render a singel frame pixel into temporary buffer
-    // void renderFramePixel(unsigned offset, int rgba);
+    //! Draw seven frame pixels in a row
+    inline void setSevenFramePixels(unsigned offset, int rgba) {
+        for (unsigned i = 0; i < 7; i++) setFramePixel(offset++, rgba); }
+    
+    //! Draw eight frame pixels in a row
+    inline void setEightFramePixels(unsigned offset, int rgba) {
+        for (unsigned i = 0; i < 8; i++) setFramePixel(offset++, rgba); }
     
     //! Draw a single foreground pixel
-    // DEPRECATED
     void setForegroundPixel(unsigned offset, int rgba);
     
-    //! Render a singel foreground pixel into temporary buffer
-    void renderForegroundPixel(unsigned offset, int rgba);
-    
     //! Draw a single background pixel
-    // DEPRECATED
     void setBackgroundPixel(unsigned offset, int rgba);
+
+    //! Draw eight background pixels in a row
+    inline void setEightBackgroundPixels(unsigned offset, int rgba) {
+        for (unsigned i = 0; i < 8; i++) setBackgroundPixel(offset++, rgba); }
+
+    //! Draw single canvas pixel in single-color mode
+    /*! 1s are drawn with setForegroundPixel, 0s are drawn with setBackgroundPixel.
+        Uses the drawing colors that are setup by loadColors(). */
+    void setSingleColorPixel(unsigned offset, uint8_t bit);
     
-    //! Render a singel background pixel into temporary buffer
-    void renderBackgroundPixel(unsigned offset, int rgba);
-    
-    //! Draw a single pixel behind background layer
-    // DEPRECATED
-    void setBehindBackgroundPixel(unsigned offset, int rgba);
+    //! Draw single canvas pixel in multi-color mode
+    /*! The left of the two color bits determines whether setForegroundPixel or setBackgroundPixel is used.
+        Uses the drawing colors that are setup by loadColors(). */
+    void setMultiColorPixel(unsigned offset, uint8_t two_bits);
     
     //! Draw a single sprite pixel
     void setSpritePixel(unsigned offset, int rgba, int depth, int source);
-    
-    
-    //! Draw background pixels
-    /*! This method is invoked when the sequencer is outside the main drawing area or the upper and lower border
-     \param offset X coordinate of the first pixel to draw */
-    void drawEightBehindBackgroudPixels(unsigned offset);
-    
-    //! Draw frame pixels
-    inline void drawSevenFramePixels(unsigned offset, int rgba_color) {
-        for (unsigned i = 0; i < 7; i++) setFramePixel(offset++, rgba_color); }
-    
-    inline void drawEightFramePixels(unsigned offset, int rgba_color) {
-        for (unsigned i = 0; i < 8; i++) setFramePixel(offset++, rgba_color); }
-    
-    //! Render canvas pixel in single-color mode
-    void renderSingleColorPixel(uint8_t bit);
-    
-    //! Render canvas pixel in single-color mode
-    void renderMultiColorPixel(uint8_t color_bits);
-    
-    //! Render 2 pixels in single-color mode
-    void renderTwoSingleColorPixels(uint8_t bits);
-    
-    //! Draw 2 pixels in single-color mode
-    // DEPRECATED
-    void drawTwoSingleColorPixels(unsigned offset, uint8_t bits);
-    
-    //! Draw a single character line (8 pixels) in single-color mode
-    // DEPRECATED
-    void drawSingleColorCharacter(unsigned offset);
-    
-    //! Render 2 pixels in multi-color mode
-    // DEPRECATED
-    void renderTwoMultiColorPixels(uint8_t bits);
-    
-    //! Draw 2 pixels in multi-color mode
-    // DEPRECATED
-    void drawTwoMultiColorPixels(unsigned offset, uint8_t bits);
-    
-    //! Draw a single character line (8 pixels) in multi-color mode
-    // DEPRECATED
-    void drawMultiColorCharacter(unsigned offset);
-    
-    //! Draw 2 single color pixels in invalid text mode
-    // DEPRECATED
-    void drawTwoInvalidSingleColorPixels(unsigned offset, uint8_t bits);
-    
-    //! Draw a single color character in invalid text mode
-    // DEPRECATED
-    void drawInvalidSingleColorCharacter(unsigned offset);
-    
-    //! Draw 2 multicolor pixels in invalid text mode
-    // DEPRECATED
-    void drawTwoInvalidMultiColorPixels(unsigned offset, uint8_t bits);
-    
-    //! Draw a multi color character in invalid text mode
-    // DEPRECATED
-    void drawInvalidMultiColorCharacter(unsigned offset);
-    
+
     //! Draw a single foreground pixel
-    /*! \param offset X coordinate of the pixel to draw
-	    \param color Pixel color in RGBA format
-	    \param nr Number of sprite (0 to 7)
-     \note The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected
-     */
+    /*! The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected. */
     void setSpritePixel(unsigned offset, int color, int nr);
-    
 
     //! Draw a colored line into the screen buffer
     /*! This method is utilized for debugging purposes, only. */
