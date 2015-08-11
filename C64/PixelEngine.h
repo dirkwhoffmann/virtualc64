@@ -233,8 +233,6 @@ public:
         uint8_t character;
         uint8_t color;
         DisplayMode mode;
-
-        // Gathered right before drawing (in draw) TODO: CLEANUP
         uint8_t delay;
 
         // Gathered in the middle of a 8 pixel chunk (in drawCanvas)
@@ -299,7 +297,11 @@ public:
     //! Synthesize 8 pixels according the the current drawing context.
     /*! This is the main entry point to all drawing routines.
         To get the correct output, preparePixelEngineForCycle() must be called one cycle before. */
-    void draw();
+    inline void draw() {
+        drawCanvas();
+        // TODO: drawSprites()
+        drawBorder();
+    }
 
 private:
     

@@ -125,6 +125,7 @@ PixelEngine::prepareForCycle(uint8_t cycle)
     dc.character = vic->g_character;
     dc.color = vic->g_color;
     dc.mode = vic->g_mode;
+    dc.delay = vic->getHorizontalRasterScroll();
 }
 
 void
@@ -140,18 +141,6 @@ PixelEngine::updateColorRegisters()
 // -----------------------------------------------------------------------------------------------
 //                          High level drawing (canvas, sprites, border)
 // -----------------------------------------------------------------------------------------------
-
-void
-PixelEngine::draw()
-{
-    // Latch everything that needs to be recorded in the drawing cycle
-    dc.delay = vic->g_delay;
-    
-    drawCanvas();
-    // TODO: drawSprites()
-    drawBorder();
-}
-
 
 void
 PixelEngine::drawCanvas()

@@ -97,7 +97,6 @@ VIC::reset()
     g_character = 0;
     g_color = 0;
     g_mode = STANDARD_TEXT;
-    g_delay = 0;
     
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -183,7 +182,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     g_color = read8(buffer);
     (void)read8(buffer);
     g_mode = (DisplayMode)read8(buffer);
-    g_delay = read8(buffer);
+    (void)read8(buffer);
     
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -256,7 +255,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     write8(buffer, g_color);
     write8(buffer, 0);
     write8(buffer, (uint8_t)g_mode);
-    write8(buffer, g_delay);
+    write8(buffer, 0);
     
     // Sprites
 	for (int i = 0; i < 8; i++) {
@@ -493,7 +492,6 @@ inline void VIC::gAccess()
         g_character = characterSpace[registerVMLI];
         g_color = colorSpace[registerVMLI];
         g_mode = getDisplayMode();
-        g_delay = getHorizontalRasterScroll();
         
         // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhšht." [C.B.]
         registerVC++;
@@ -511,8 +509,6 @@ inline void VIC::gAccess()
         g_character = 0;
         g_color = 0;
         g_mode = getDisplayMode();
-        g_delay = getHorizontalRasterScroll();
-
     }
 }
 

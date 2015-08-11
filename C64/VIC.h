@@ -437,9 +437,6 @@ private:
     //! Display mode grabbed in gAccess()
     DisplayMode g_mode;
     
-    //! Load delay grabbed in gAccess()
-    uint8_t g_delay;
-
     
     // -----------------------------------------------------------------------------------------------
     //                             Sprite accesses (pAccess and sAccess)
