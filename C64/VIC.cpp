@@ -92,11 +92,13 @@ VIC::reset()
     iomem[0x21] = PixelEngine::BLUE;   // Let the background color look correct right from the beginning
 	iomem[0x11] = 0x10;   // Make screen visible from the beginning	
 	bankAddr = 0;
-	
-    // Graphic sequencer
-    gs_data = 0;
-    gs_colorbits = 0;
-    gs_mode = STANDARD_TEXT;
+    
+    // gAccess results
+    g_data = 0;
+    g_character = 0;
+    g_color = 0;
+    g_mode = STANDARD_TEXT;
+    g_delay = 0;
     
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -167,16 +169,22 @@ VIC::loadFromBuffer(uint8_t **buffer)
     // readBlock(buffer, colorSpace, sizeof(colorSpace));
 
     // Sequencer
+    /*
     gs_shift_reg = read8(buffer);
     gs_mc_flop = (bool)read8(buffer);
-    latchedCharacterSpace = read8(buffer);
-    latchedColorSpace = read8(buffer);
-    gs_data = read8(buffer);
-    gs_characterSpace = read8(buffer);
-    gs_colorSpace = read8(buffer);
+    latchedCharacter = read8(buffer);
+    latchedColor = read8(buffer);
+    */
     (void)read8(buffer);
-    gs_mode = (DisplayMode)read8(buffer);
-    gs_delay = read8(buffer);
+    (void)read8(buffer);
+    (void)read8(buffer);
+    (void)read8(buffer);
+    g_data = read8(buffer);
+    g_character = read8(buffer);
+    g_color = read8(buffer);
+    (void)read8(buffer);
+    g_mode = (DisplayMode)read8(buffer);
+    g_delay = read8(buffer);
     
 	// Sprites
 	for (int i = 0; i < 8; i++) {
@@ -234,16 +242,22 @@ VIC::saveToBuffer(uint8_t **buffer)
     // writeBlock(buffer, colorSpace, sizeof(colorSpace));
 
     // Sequencer
+    /*
     write8(buffer, gs_shift_reg);
     write8(buffer, (uint8_t)gs_mc_flop);
-    write8(buffer, latchedCharacterSpace);
-    write8(buffer, latchedColorSpace);
-    write8(buffer, gs_data);
-    write8(buffer, gs_characterSpace);
-    write8(buffer, gs_colorSpace);
+    write8(buffer, latchedCharacter);
+    write8(buffer, latchedColor);
+     */
     write8(buffer, 0);
-    write8(buffer, (uint8_t)gs_mode);
-    write8(buffer, gs_delay);
+    write8(buffer, 0);
+    write8(buffer, 0);
+    write8(buffer, 0);
+    write8(buffer, g_data);
+    write8(buffer, g_character);
+    write8(buffer, g_color);
+    write8(buffer, 0);
+    write8(buffer, (uint8_t)g_mode);
+    write8(buffer, g_delay);
     
     // Sprites
 	for (int i = 0; i < 8; i++) {
@@ -476,11 +490,11 @@ inline void VIC::gAccess()
             addr &= 0xF9FF;
 
         // Prepare graphic sequencer
-        gs_data = memAccess(addr);
-        gs_delay = getHorizontalRasterScroll();
-        gs_characterSpace = characterSpace[registerVMLI];
-        gs_colorSpace = colorSpace[registerVMLI];
-        gs_mode = getDisplayMode();
+        g_data = memAccess(addr);
+        g_character = characterSpace[registerVMLI];
+        g_color = colorSpace[registerVMLI];
+        g_mode = getDisplayMode();
+        g_delay = getHorizontalRasterScroll();
         
         // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhšht." [C.B.]
         registerVC++;
@@ -494,11 +508,11 @@ inline void VIC::gAccess()
         addr = ECMbitInPreviousCycle() ? 0x39FF : 0x3FFF;
         
         // Prepare graphic sequencer
-        gs_data = memAccess(addr);
-        gs_delay = getHorizontalRasterScroll();
-        gs_characterSpace = 0;
-        gs_colorSpace = 0;
-        gs_mode = getDisplayMode();
+        g_data = memAccess(addr);
+        g_character = 0;
+        g_color = 0;
+        g_mode = getDisplayMode();
+        g_delay = getHorizontalRasterScroll();
 
     }
 }
@@ -579,172 +593,6 @@ inline bool VIC::sThirdAccess(int sprite)
 //                                         Graphics sequencer
 // -----------------------------------------------------------------------------------------------
 
-void
-VIC::prepareDrawingContextForCycle(uint8_t cycle)
-{
-    dc.cycle = cycle;
-    dc.yCounter = yCounter;
-    dc.xCounter = xCounter;
-    dc.verticalFrameFF = verticalFrameFF;
-    dc.mainFrameFF = mainFrameFF;
-    dc.data = gs_data;
-    gs_data = 0;
-    dc.characterSpace = gs_characterSpace;
-    dc.colorSpace = gs_colorSpace;
-    dc.mode = gs_mode;
-    // dc.delay = gs_delay;
-}
-
-void
-VIC::prepareDrawingContextColors()
-{
-     dc.borderColor = getBorderColor();
-     dc.backgroundColor[0] = getBackgroundColor();
-     dc.backgroundColor[1] = getExtraBackgroundColor(1);
-     dc.backgroundColor[2] = getExtraBackgroundColor(2);
-     dc.backgroundColor[3] = getExtraBackgroundColor(3);
-}
-
-void
-VIC::updateDrawingContext()
-{
-    // prepareDrawingContextColors();
-    dc.delay = gs_delay;
-}
-
-void
-VIC::draw()
-{
-    updateDrawingContext();
-    drawPixels();
-    // drawSprites()
-    drawBorder();
-    // synthesizePixels();
-}
-
-void
-VIC::drawBorder()
-{
-    uint16_t xCoord = (dc.xCounter - 28) + leftBorderWidth;
-
-    // Take special care of 38 column mode
-    
-    if (dc.cycle == 17 && dc.mainFrameFF && !mainFrameFF) {
-        int border_rgba = pixelEngine->colors[dc.borderColor];
-        pixelEngine->setSevenFramePixels(xCoord, border_rgba);
-        return;
-    }
-    
-    if (dc.cycle == 55 && !dc.mainFrameFF && mainFrameFF) {
-        int border_rgba = pixelEngine->colors[dc.borderColor];
-        pixelEngine->setFramePixel(xCoord+7, border_rgba);
-        return;
-    }
-
-    // Standard case
-    
-    if (dc.mainFrameFF) {
-        int border_rgba = pixelEngine->colors[dc.borderColor];
-        pixelEngine->setEightFramePixels(xCoord, border_rgba);
-        return;
-    }
-}
-
-void VIC::drawPixels()
-{
-    // assert(cycle >= 17 && cycle <= 56);
-    assert(dc.cycle >= 13 && dc.cycle <= 60);
-    
-    uint16_t xCoord = (dc.xCounter - 28) + leftBorderWidth;
-    
-    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
-     Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelšscht ist (siehe
-     Abschnitt 3.9.). Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
-     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
-     normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
-    
-    if (!dc.verticalFrameFF) {
-        
-        // Pixel 1
-        drawPixel(xCoord, 0);
-        
-        // At this point in time, color register changes show up
-        prepareDrawingContextColors();
-
-        // Pixel 2
-        drawPixel(xCoord + 1, 1);
-
-        // Pixels 3 and 4
-        drawPixel(xCoord + 2, 2);
-        drawPixel(xCoord + 3, 3);
-
-        // At this point in time, the 0s and 1s in D016 and the 1s in D011 show up
-        // This corresponds the behavior of the color latency chip model in VICE
-        latchedD016 = iomem[0x16] & 0x10;  // latch 0s and 1s
-        latchedD011 |= iomem[0x11] & 0x60; // latch 1s
-    
-        // Pixels 5 and 6
-        drawPixel(xCoord + 4, 4);
-        drawPixel(xCoord + 5, 5);
-        
-        // At this point in time, the 0s in D011 show up
-        // This corresponds the behavior of the color latency chip model in VICE
-        latchedD011 &= iomem[0x11] & 0x60; // latch 0s
-        
-        // Pixels 7 and 8
-        drawPixel(xCoord + 6, 6);
-        drawPixel(xCoord + 7, 7);
-        
-    } else {
-        
-        // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
-        prepareDrawingContextColors();
-        pixelEngine->setEightBackgroundPixels(xCoord, pixelEngine->col_rgba[0]);
-    }
-}
-
-void VIC::drawPixel(uint16_t offset, uint8_t pixel)
-{
-    assert(pixel < 8);
-    
-    if (pixel == dc.delay) {
-      
-        // Load shift register
-        gs_shift_reg = dc.data;
-        
-        // Remember how to synthesize pixels
-        latchedCharacterSpace = dc.characterSpace;
-        latchedColorSpace = dc.colorSpace;
-        
-        // Reset the multicolor synchronization flipflop
-        gs_mc_flop = true;
-    }
-    
-    // Determine display mode and colors
-    DisplayMode mode = (DisplayMode)((latchedD011 & 0x60) | (latchedD016 & 0x10));
-    pixelEngine->loadColors(mode, latchedCharacterSpace, latchedColorSpace);
-    
-    // Render pixel
-    if (pixelEngine->multicol) {
-        if (gs_mc_flop)
-            gs_colorbits = (gs_shift_reg >> 6);
-        pixelEngine->setMultiColorPixel(offset, gs_colorbits);
-    } else {
-        pixelEngine->setSingleColorPixel(offset, gs_shift_reg >> 7);
-    }
-    
-    // Copy pixel into pixel buffer
-    /*
-    assert(offset < PixelEngine::MAX_VIEWABLE_PIXELS);
-    pixelEngine->pixelBuffer[offset] = pixelEngine->pixelBufferTmp[0];
-    pixelEngine->zBuffer[offset] = pixelEngine->zBufferTmp[0];
-    pixelEngine->pixelSource[offset] = pixelEngine->pixelSourceTmp[0];
-    */
-    
-    // Shift register and toggle flipflop
-    gs_shift_reg <<= 1;
-    gs_mc_flop = !gs_mc_flop;
-}
 
 
 
@@ -1378,9 +1226,6 @@ VIC::beginRasterline(uint16_t line)
     // Check, if we are currently processing a DMA line. The result is stored in variable badLineCondition.
     // The initial value can change in the middle of a rasterline.
     updateBadLineCondition();
-
-    // Reset graphic sequencer
-    gs_shift_reg = 0;
     
     pixelEngine->beginRasterline();
 }
@@ -1823,7 +1668,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
 
     // Phi1.2 Draw
     xCounter = -4;
-    prepareDrawingContextForCycle(13); // Prepare for next cycle (first border column)
+    pixelEngine->prepareForCycle(13); // Prepare for next cycle (first border column)
 
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess();
@@ -1849,8 +1694,8 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (first border column)
-    prepareDrawingContextForCycle(14); // Prepare for next cycle (border column 2)
+    pixelEngine->draw(); // Draw previous cycle (first border column)
+    pixelEngine->prepareForCycle(14); // Prepare for next cycle (border column 2)
 
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
     rAccess();
@@ -1886,8 +1731,8 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (border column 2)
-    prepareDrawingContextForCycle(15); // Prepare for next cycle (border column 3)
+    pixelEngine->draw(); // Draw previous cycle (border column 2)
+    pixelEngine->prepareForCycle(15); // Prepare for next cycle (border column 3)
     
     // Phi1.3 Fetch (last DRAM refresh)
     rAccess();
@@ -1916,8 +1761,8 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (border column 3)
-    prepareDrawingContextForCycle(16); // Prepare for next cycle (border column 4)
+    pixelEngine->draw(); // Draw previous cycle (border column 3)
+    pixelEngine->prepareForCycle(16); // Prepare for next cycle (border column 4)
     
     // Phi1.3 Fetch
     gAccess();
@@ -1969,8 +1814,8 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     checkFrameFlipflopsLeft(24);
     
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (border column 4)
-    prepareDrawingContextForCycle(17); // Prepare for next cycle (first canvas column)
+    pixelEngine->draw(); // Draw previous cycle (border column 4)
+    pixelEngine->prepareForCycle(17); // Prepare for next cycle (first canvas column)
     
     // Phi1.3 Fetch
     gAccess();
@@ -1999,8 +1844,8 @@ VIC::cycle18() // SpriteX: 32 - 39
     checkFrameFlipflopsLeft(31);
     
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (first canvas column)
-    prepareDrawingContextForCycle(18); // Prepare for next cycle (canvas column 2)
+    pixelEngine->draw(); // Draw previous cycle (first canvas column)
+    pixelEngine->prepareForCycle(18); // Prepare for next cycle (canvas column 2)
 
     // Phi1.3 Fetch
     gAccess();
@@ -2028,8 +1873,8 @@ VIC::cycle19to54()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    draw(); // Draw previous cycle
-    prepareDrawingContextForCycle(19); // Prepare for next cycle
+    pixelEngine->draw(); // Draw previous cycle
+    pixelEngine->prepareForCycle(19); // Prepare for next cycle
     
     // Phi1.3 Fetch
     gAccess();
@@ -2057,8 +1902,8 @@ VIC::cycle55()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (canvas column)
-    prepareDrawingContextForCycle(55); // Prepare for next cycle (canvas column)
+    pixelEngine->draw(); // Draw previous cycle (canvas column)
+    pixelEngine->prepareForCycle(55); // Prepare for next cycle (canvas column)
     
     // Phi1.3 Fetch
     gAccess();
@@ -2103,8 +1948,8 @@ VIC::cycle56()
     checkFrameFlipflopsRight(335);
 
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (canvas column)
-    prepareDrawingContextForCycle(56); // Prepare for next cycle (last canvas column)
+    pixelEngine->draw(); // Draw previous cycle (canvas column)
+    pixelEngine->prepareForCycle(56); // Prepare for next cycle (last canvas column)
     
     // Phi1.3 Fetch
     rIdleAccess();
@@ -2133,8 +1978,8 @@ VIC::cycle57()
     checkFrameFlipflopsRight(344);
     
     // Phi1.2 Draw (border starts here)
-    draw(); // Draw previous cycle (last canvas column)
-    prepareDrawingContextForCycle(57); // Prepare for next cycle (first column of right border)
+    pixelEngine->draw(); // Draw previous cycle (last canvas column)
+    pixelEngine->prepareForCycle(57); // Prepare for next cycle (first column of right border)
     
     // Phi1.3 Fetch
     rIdleAccess();
@@ -2164,8 +2009,8 @@ VIC::cycle58()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (first column of right border)
-    prepareDrawingContextForCycle(58); // Prepare for next cycle (column 2 of right border)
+    pixelEngine->draw(); // Draw previous cycle (first column of right border)
+    pixelEngine->prepareForCycle(58); // Prepare for next cycle (column 2 of right border)
     
     // Phi1.3 Fetch
     if (isPAL)
@@ -2264,8 +2109,8 @@ VIC::cycle59()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (column 2 of right border)
-    prepareDrawingContextForCycle(59); // Prepare for next cycle (column 3 of right border)
+    pixelEngine->draw(); // Draw previous cycle (column 2 of right border)
+    pixelEngine->prepareForCycle(59); // Prepare for next cycle (column 3 of right border)
     
     // Phi1.3 Fetch
     if (isPAL)
@@ -2302,8 +2147,8 @@ VIC::cycle60()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw (last visible cycle)
-    draw(); // Draw previous cycle (column 3 of right border)
-    prepareDrawingContextForCycle(60); // Prepare for next cycle (last column of right border)
+    pixelEngine->draw(); // Draw previous cycle (column 3 of right border)
+    pixelEngine->prepareForCycle(60); // Prepare for next cycle (last column of right border)
     
     // Phi1.3 Fetch
     if (isPAL)
@@ -2340,7 +2185,7 @@ VIC::cycle61()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    draw(); // Draw previous cycle (last column of right border)
+    pixelEngine->draw(); // Draw previous cycle (last column of right border)
     
     // Phi1.3 Fetch
     if (isPAL)

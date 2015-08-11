@@ -17,17 +17,15 @@
  */
 
 // CLEANUP:
-// pixelBufferTmp.
-//      this is no longer needed(?) as we draw pixels one by one
-//      get rid of it
+// in draw() dc.delay is set to gs_delay.
+// If this value is latched in preparePixelEngine... , gs_delay is not needed any more(?)
 
 // TODO:
-// 1. Introduce PixelEngine
-//    Sub component to synthesize pixels
-//    Will contain drawingContents stuff, pixelBuffers, renderRoutines etc.
 //
-// 3. Make sprite drawing cycle based.
-// 4. Replace pixel buffers by 8 bit variables and implement mixer(). This makes z buffering obsolete.
+// 1. Texture does not extent to the bottom
+//
+// 2. Make sprite drawing cycle based.
+
 
 #ifndef _PIXELENGINGE_INC
 #define _PIXELENGINGE_INC
@@ -207,6 +205,8 @@ public:
     //                                    Execution functions
     // -----------------------------------------------------------------------------------------------
 
+public:
+    
     //! Prepare for new frame
     void beginFrame();
     
@@ -220,14 +220,115 @@ public:
     void endFrame();
 
     // -----------------------------------------------------------------------------------------------
-    //                                      Drawing entry point
+    //                                   VIC state latching
+    // -----------------------------------------------------------------------------------------------
+
+    //! Latched VIC state
+    /*! To draw pixels right, it is important to gather the necessary information at the right time. 
+        Some VIC and memory registers need to be looked up one cycle before drawing, others need
+        to be looked up at the same cycle or even in the middle of drawing an 8 pixel chunk. To make
+        this process transparent, all gatheres information is stored in this structure. */
+
+    struct {
+        // Gathered one cycle before drawing (in prepareForCycle)
+        uint8_t cycle;
+        uint32_t yCounter;
+        int16_t xCounter;
+        bool verticalFrameFF;
+        bool mainFrameFF;
+        uint8_t data;
+        uint8_t character;
+        uint8_t color;
+        DisplayMode mode;
+
+        // Gathered right before drawing (in draw) TODO: CLEANUP
+        uint8_t delay;
+
+        // Gathered in the middle of a 8 pixel chunk (in drawCanvas)
+        uint8_t D011;
+        uint8_t D016;
+        
+        // Gathered in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
+        uint8_t borderColor;
+        uint8_t backgroundColor[4];
+    } dc;
+    
+    //! Latched portions of the VIC state
+    /*! Latches everything that needs to be recorded one cycle prior to drawing */
+    void prepareForCycle(uint8_t cycle);
+
+    //! Latched color information
+    /*! This needs to be done after the first pixel has been drawn */
+    //! Update drawing contents with current colors
+    void updateColorRegisters();
+    
+    
+    // -----------------------------------------------------------------------------------------------
+    //                        Shift register logic (handled in drawCanvasPixel)
+    // -----------------------------------------------------------------------------------------------
+    
+    //! Shift register
+    /*! To synthesize pixels, VICII uses a 8 bit shift register which is loaded whenever the current
+     x scroll offset matches the current pixel number. */
+    
+    struct {
+        //! Shift register data
+        uint8_t data;
+
+        //! Multi-color synchronization flipflop
+        /*! Whenever the shift register is loaded, the synchronization flipflop is also set.
+         It is toggled with each pixel and used to synchronize the synthesis of multi-color pixels. */
+        bool mc_flop;
+        
+        //! Latched character info
+        /*! Whenever the shift register is loaded, the current character value (which was once read during
+         a gAccess) is latched. This value is used until the shift register loads again. */
+        uint8_t latchedCharacter;
+        
+        //! Latched color info
+        /*! Whenever the shift register is loaded, the current color value (which was once read during
+         a gAccess) is latched. This value is used until the shift register loads again. */
+        uint8_t latchedColor;
+        
+        //! Color bits
+        /*! Every second pixel (as synchronized with mc_flop), the  multi-color bits are remembered. */
+        uint8_t colorbits;
+
+    } sr;
+    
+    
+    // -----------------------------------------------------------------------------------------------
+    //                          High level drawing (canvas, sprites, border)
     // -----------------------------------------------------------------------------------------------
 
 public:
+  
+    //! Synthesize 8 pixels according the the current drawing context.
+    /*! This is the main entry point to all drawing routines.
+        To get the correct output, preparePixelEngineForCycle() must be called one cycle before. */
+    void draw();
+
+private:
+    
+    //! Draws 8 canvas pixels
+    /*! Invoked inside draw() */
+    void drawCanvas();
+    
+    //! Draws a single canvas pixel
+    /*! pixel is the pixel number and must be in the range 0 to 7 */
+    void drawCanvasPixel(uint16_t offset, uint8_t pixel);
+    
+    //! Draws 8 sprite pixels
+    /*! Invoked inside draw() */
+    // TODO: drawSprintes();
+
+    //! Draws 8 border pixels
+    /*! Invoked inside draw() */
+    void drawBorder();
     
     
     // -----------------------------------------------------------------------------------------------
-    //                                  High level pixel rendering
+    //                         Mid level drawing (semantic pixel rendering)
     // -----------------------------------------------------------------------------------------------
 
 private:
@@ -263,7 +364,7 @@ public:
 
     
     // -----------------------------------------------------------------------------------------------
-    //                                   Low level pixel rendering
+    //                        Low level drawing (pixel buffer access)
     // -----------------------------------------------------------------------------------------------
     
 public:

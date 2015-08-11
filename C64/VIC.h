@@ -401,13 +401,50 @@ private:
     //! Idle memory access at address 0x3fff
     uint8_t memIdleAccess();
 
-    // VIC performs four special types of memory accesses (c, g, p and s)
     
-    //! During a 'c access', VIC accesses the video matrix
+// -----------------------------------------------------------------------------------------------
+//                                  Character access (cAccess)
+// -----------------------------------------------------------------------------------------------
+    
+    //! During a cAccess, VIC accesses the video matrix
     void cAccess();
     
+    //! cAcess character storage
+    /*! Every 8th rasterline, the VIC chips performs a DMA access and fills this array with character information */
+    uint8_t characterSpace[40];
+    
+    //! cAcess color storage
+    /*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the color information */
+    uint8_t colorSpace[40];
+    
+    
+// -----------------------------------------------------------------------------------------------
+//                                  Graphics access (gAccess)
+// -----------------------------------------------------------------------------------------------
+
     //! During a 'g access', VIC reads graphics data (character or bitmap patterns)
+    /*! The result of the gAccess is stored in variables prefixed with 'g_' */
     void gAccess();
+    
+    //! Data value grabbed in gAccess()
+    uint8_t g_data;
+    
+    //! Character value grabbed in gAccess()
+    uint8_t g_character;
+    
+    //! Color value grabbed in gAccess()
+    uint8_t g_color;
+    
+    //! Display mode grabbed in gAccess()
+    DisplayMode g_mode;
+    
+    //! Load delay grabbed in gAccess()
+    uint8_t g_delay;
+
+    
+    // -----------------------------------------------------------------------------------------------
+    //                             Sprite accesses (pAccess and sAccess)
+    // -----------------------------------------------------------------------------------------------
     
     //! During a 'p access', VIC reads sprite pointers
     void pAccess(int sprite);
@@ -418,19 +455,17 @@ private:
     bool sSecondAccess(int sprite);
     bool sThirdAccess(int sprite);
 
-    //! Perform a DRAM refresh
+    
+    // -----------------------------------------------------------------------------------------------
+    //                           Memory refresh accesses (rAccess)
+    // -----------------------------------------------------------------------------------------------
+    
+    //! Performs a DRAM refresh
     inline void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
     
-    //! Perform a DRAM idle access
+    //! Performs a DRAM idle access
     inline void rIdleAccess() { (void)memIdleAccess(); }
     
-	//! Temporary space for display characters
-	/*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the characters to display */
-	uint8_t characterSpace[40];
-	
-	//! Temporary space for display colors
-	/*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the characters to display */
-	uint8_t colorSpace[40];
 
     
     
@@ -438,60 +473,7 @@ private:
 
     
     
-    // -----------------------------------------------------------------------------------------------
-    //                                      Graphics sequencer
-    // -----------------------------------------------------------------------------------------------
-
-    // The drawing enging needs to access various VIC parameters. Changes to these parameters
-    // show up at different point in time, so these values need to be latched. The latches values are
-    // stored in the following variables:
-
-    //! Graphic sequencer shift register (8 bit)
-    uint8_t gs_shift_reg;
     
-    //! Graphic sequencer flipflop
-    /*! Flipflop is set when the shift register is loaded and then toggled in each cycle */
-    bool gs_mc_flop;
-    
-    //! Latched version of value that is read during a cAccess
-    /*! Value is latched when the shift register is loaded */
-    uint8_t latchedCharacterSpace;
-
-    //! Latched version of value that is read during a cAccess
-    /*! Value is latched when the shift register is loaded */
-    uint8_t latchedColorSpace;
-
-    //! Latched io register 0xD011
-    /*! Value is latched in the middle of a 8 bit draw cycle */
-    uint8_t latchedD011;
-
-    //! Latched io register 0xD016
-    /*! Value is latched in the middle of a 8 bit draw cycle */
-    uint8_t latchedD016;
-
-    //! Graphic sequencer raw data (not yet converted to pixels)
-    uint8_t gs_data;
-
-    //! Character space value during c-Access
-    uint8_t gs_characterSpace;
-
-    //! Color space value during c-Access
-    uint8_t gs_colorSpace;
-
-    //! Graphic sequencer display mode (conversion method)
-    DisplayMode gs_mode;
-
-    //! Graphic sequencer load delay
-    uint8_t gs_delay;
-
-    //! Color bits (needed for multicolor mode)
-    uint8_t gs_colorbits;
-    
-    //! Synthesize a single pixel
-    void drawPixel(uint16_t offset, uint8_t pixel);
-
-    //! Synthesize a chunk of 8 pixels
-    void drawPixels();
 
 
 	// -----------------------------------------------------------------------------------------------
@@ -643,60 +625,6 @@ public:
 
 private:	
 
-    //! Current drawing context
-    /*! This structure stores everything that is needed by the draw() routine to synthesize pixels.
-        The context is set up by prepareDrawingContext(). Hence, each draw() call needs to be preceded 
-        by a prepareDrawingContext() call. Note, that the prepareDrawingContext() call in cycle i sets
-        up the context for the draw() call in cycle i+1.
-     */
-    typedef struct {
-        // To be gathered one cycle before drawing ...
-        uint8_t cycle;
-        uint32_t yCounter;
-        int16_t xCounter;
-        bool verticalFrameFF;
-        bool mainFrameFF;
-        uint8_t data;
-        uint8_t delay;
-        uint8_t characterSpace;
-        uint8_t colorSpace;
-        DisplayMode mode;
-        // To be gathered right before drawing ...
-        uint8_t borderColor;
-        uint8_t backgroundColor[4];
-        // TO BE CONTINUED IF NECESSARY
-    } DrawingContext;
-    
-    DrawingContext dc;
-    
-    //! Copy portions of the current VIC state into the graphics context.
-    /*! The draw() method uses the information in the next VIC cycle.
-        This function copies the portion of the VIC state that needs to
-        be gathered one cycle before drawing. */
-    void prepareDrawingContextForCycle(uint8_t cycle);
-
-    //! Update drawing contents with current colors
-    void prepareDrawingContextColors();
-    
-    //! Update portions in the current graphics context.
-    /*! Most of the information that is needed in draw() is gatheres in 
-        prepareDrawingContextForCycle() one cycle prior to drawing. Some
-        information like the current background or border color needs to be 
-        grabbed right before drawing. This information is gathered in this function. */
-    void updateDrawingContext();
-    
-    //! Synthesize 8 pixels according the the current drawing context.
-    /*! To get the correct output, prepareDrawingContextForCycle() and 
-        updateDrawingContext() need to be called. The callig sequence is
-        VIC cycle i:   prepareDrawingContextForCycle(i);
-        VIC cycle i+1: updateDrawingContext(); 
-                       draw(); // draws the 8 pixels belonging to cycle i */
-    void draw();
-
-    //! Synthesize 8 border pixels according the the current drawing context.
-    /*! Invoked inside draw() */
-    void drawBorder();
-    
     //! Draws all sprites into the pixelbuffer
     /*! A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging */
     void drawAllSprites();

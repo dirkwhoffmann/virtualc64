@@ -60,6 +60,9 @@ PixelEngine::reset()
     
     // Establish bindungs
     vic = c64->vic;
+    
+    // Shift register
+    memset(&sr, 0x00, sizeof(sr));
 }
 
 
@@ -82,6 +85,10 @@ PixelEngine::beginRasterline()
     // Clear pixel buffer
     // TODO: THIS MIGHT NOT BE NECESSARY AS EACH PIXEL GETS OVERWRITTEN
     memset(pixelBuffer, 0x00, sizeof(pixelSource));
+    
+    // Reset shift register ( TODO: DO WE REALLY NEED THIS?)
+    sr.data = 0;
+
     
     // TODO: GET RID OF THESE TWO:
     zBufferTmp[0] = zBufferTmp[1] = 0;
@@ -107,10 +114,166 @@ PixelEngine::endFrame()
    
 }
 
-// Drawing entry point
+// -----------------------------------------------------------------------------------------------
+//                                   VIC state latching
+// -----------------------------------------------------------------------------------------------
+
+void
+PixelEngine::prepareForCycle(uint8_t cycle)
+{
+    dc.cycle = cycle;
+    dc.yCounter = vic->yCounter;
+    dc.xCounter = vic->xCounter;
+    dc.verticalFrameFF = vic->verticalFrameFF;
+    dc.mainFrameFF = vic->mainFrameFF;
+    dc.data = vic->g_data;
+    vic->g_data = 0; // THIS SHOULDN'T BE HERE(??)
+    dc.character = vic->g_character;
+    dc.color = vic->g_color;
+    dc.mode = vic->g_mode;
+}
+
+void
+PixelEngine::updateColorRegisters()
+{
+    dc.borderColor = vic->getBorderColor();
+    dc.backgroundColor[0] = vic->getBackgroundColor();
+    dc.backgroundColor[1] = vic->getExtraBackgroundColor(1);
+    dc.backgroundColor[2] = vic->getExtraBackgroundColor(2);
+    dc.backgroundColor[3] = vic->getExtraBackgroundColor(3);
+}
+
+// -----------------------------------------------------------------------------------------------
+//                          High level drawing (canvas, sprites, border)
+// -----------------------------------------------------------------------------------------------
+
+void
+PixelEngine::draw()
+{
+    // Latch everything that needs to be recorded in the drawing cycle
+    dc.delay = vic->g_delay;
+    
+    drawCanvas();
+    // TODO: drawSprites()
+    drawBorder();
+}
 
 
-// High level pixel rendering
+void
+PixelEngine::drawCanvas()
+{
+    // assert(cycle >= 17 && cycle <= 56);
+    assert(dc.cycle >= 13 && dc.cycle <= 60);
+    
+    uint16_t xCoord = (dc.xCounter - 28) + vic->leftBorderWidth;
+    
+    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
+     Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
+     Abschnitt 3.9.). Außerhalb der Anzeigespalte und bei gesetztem Flipflop wird
+     die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
+     normalerweise vom Rahmen überdeckt)." [C.B.] */
+    
+    if (!dc.verticalFrameFF) {
+        
+        drawCanvasPixel(xCoord, 0);
+        
+        // After pixel 1, color register changes show up
+        updateColorRegisters();
+        
+        drawCanvasPixel(xCoord + 1, 1);
+        drawCanvasPixel(xCoord + 2, 2);
+        drawCanvasPixel(xCoord + 3, 3);
+        
+        // After pixel 4, the one and zero bits in D016 and the one bits in D011 show up
+        // This corresponds the behavior of the color latency chip model in VICE
+        dc.D016 = vic->iomem[0x16] & 0x10;  // latch 0s and 1s
+        dc.D011 |= vic->iomem[0x11] & 0x60; // latch 1s
+        
+        drawCanvasPixel(xCoord + 4, 4);
+        drawCanvasPixel(xCoord + 5, 5);
+        
+        // After pixel 6, the zero bits in D011 show up
+        // This corresponds the behavior of the color latency chip model in VICE
+        dc.D011 &= vic->iomem[0x11] & 0x60; // latch 0s
+        
+        drawCanvasPixel(xCoord + 6, 6);
+        drawCanvasPixel(xCoord + 7, 7);
+        
+    } else {
+        
+        // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
+        updateColorRegisters();
+        setEightBackgroundPixels(xCoord, col_rgba[0]);
+    }
+}
+
+void
+PixelEngine::drawCanvasPixel(uint16_t offset, uint8_t pixel)
+{
+    assert(pixel < 8);
+    
+    if (pixel == dc.delay) {
+        
+        // Load shift register
+        sr.data = dc.data;
+        
+        // Remember how to synthesize pixels
+        sr.latchedCharacter = dc.character;
+        sr.latchedColor = dc.color;
+        
+        // Reset the multicolor synchronization flipflop
+        sr.mc_flop = true;
+    }
+    
+    // Determine display mode and colors
+    DisplayMode mode = (DisplayMode)((dc.D011 & 0x60) | (dc.D016 & 0x10));
+    loadColors(mode, sr.latchedCharacter, sr.latchedColor);
+    
+    // Render pixel
+    if (multicol) {
+        if (sr.mc_flop)
+            sr.colorbits = (sr.data >> 6);
+        setMultiColorPixel(offset, sr.colorbits);
+    } else {
+        setSingleColorPixel(offset, sr.data >> 7);
+    }
+    
+    // Shift register and toggle flipflop
+    sr.data <<= 1;
+    sr.mc_flop = !sr.mc_flop;
+}
+
+void
+PixelEngine::drawBorder()
+{
+    uint16_t xCoord = (dc.xCounter - 28) + vic->leftBorderWidth;
+    
+    // Take special care of 38 column mode
+    
+    if (dc.cycle == 17 && dc.mainFrameFF && !vic->mainFrameFF) {
+        int border_rgba = colors[dc.borderColor];
+        setSevenFramePixels(xCoord, border_rgba);
+        return;
+    }
+    
+    if (dc.cycle == 55 && !dc.mainFrameFF && vic->mainFrameFF) {
+        int border_rgba = colors[dc.borderColor];
+        setFramePixel(xCoord+7, border_rgba);
+        return;
+    }
+    
+    // Standard case
+    
+    if (dc.mainFrameFF) {
+        int border_rgba = colors[dc.borderColor];
+        setEightFramePixels(xCoord, border_rgba);
+        return;
+    }
+}
+
+// -----------------------------------------------------------------------------------------------
+//                         Mid level drawing (semantic pixel rendering)
+// -----------------------------------------------------------------------------------------------
 
 void
 PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
@@ -119,20 +282,20 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             
         case STANDARD_TEXT:
             
-            col_rgba[0] = colors[vic->dc.backgroundColor[0]];
+            col_rgba[0] = colors[dc.backgroundColor[0]];
             col_rgba[1] = colors[colorSpace];
             multicol = false;
             break;
             
         case MULTICOLOR_TEXT:
             if (colorSpace & 0x8 /* MC flag */) {
-                col_rgba[0] = colors[vic->dc.backgroundColor[0]];
-                col_rgba[1] = colors[vic->dc.backgroundColor[1]];
-                col_rgba[2] = colors[vic->dc.backgroundColor[2]];
+                col_rgba[0] = colors[dc.backgroundColor[0]];
+                col_rgba[1] = colors[dc.backgroundColor[1]];
+                col_rgba[2] = colors[dc.backgroundColor[2]];
                 col_rgba[3] = colors[colorSpace & 0x07];
                 multicol = true;
             } else {
-                col_rgba[0] = colors[vic->dc.backgroundColor[0]];
+                col_rgba[0] = colors[dc.backgroundColor[0]];
                 col_rgba[1] = colors[colorSpace];
                 multicol = false;
             }
@@ -145,7 +308,7 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             break;
             
         case MULTICOLOR_BITMAP:
-            col_rgba[0] = colors[vic->dc.backgroundColor[0]];
+            col_rgba[0] = colors[dc.backgroundColor[0]];
             col_rgba[1] = colors[characterSpace >> 4];
             col_rgba[2] = colors[characterSpace & 0x0F];
             col_rgba[3] = colors[colorSpace];
@@ -153,7 +316,7 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            col_rgba[0] = colors[vic->dc.backgroundColor[characterSpace >> 6]];
+            col_rgba[0] = colors[dc.backgroundColor[characterSpace >> 6]];
             col_rgba[1] = colors[colorSpace];
             multicol = false;
             break;
@@ -242,7 +405,9 @@ PixelEngine::setSpritePixel(unsigned offset, int color, int nr)
     }
 }
 
-// Low level pixel rendering
+// -----------------------------------------------------------------------------------------------
+//                        Low level drawing (pixel buffer access)
+// -----------------------------------------------------------------------------------------------
 
 void
 PixelEngine::setFramePixel(unsigned offset, int rgba)
