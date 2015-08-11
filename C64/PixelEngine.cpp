@@ -88,11 +88,6 @@ PixelEngine::beginRasterline()
     
     // Reset shift register ( TODO: DO WE REALLY NEED THIS?)
     sr.data = 0;
-
-    
-    // TODO: GET RID OF THESE TWO:
-    zBufferTmp[0] = zBufferTmp[1] = 0;
-    pixelSourceTmp[0] = pixelSourceTmp[1] = 0;
 }
 
 void
@@ -127,7 +122,6 @@ PixelEngine::prepareForCycle(uint8_t cycle)
     dc.verticalFrameFF = vic->verticalFrameFF;
     dc.mainFrameFF = vic->mainFrameFF;
     dc.data = vic->g_data;
-    vic->g_data = 0; // THIS SHOULDN'T BE HERE(??)
     dc.character = vic->g_character;
     dc.color = vic->g_color;
     dc.mode = vic->g_mode;

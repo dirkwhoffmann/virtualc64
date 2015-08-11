@@ -62,7 +62,6 @@ VIC::reset()
     pixelEngine->reset();
 
 	// Internal registers
-    frame = 0;
     xCounter = 0;
     yCounter = 0;
     yCounterEqualsIrqRasterline = false;
@@ -1183,8 +1182,6 @@ void
 VIC::beginFrame()
 {
     pixelEngine->beginFrame();
-
-    frame++;
     
 	lightpenIRQhasOccured = false;
 
@@ -1953,6 +1950,7 @@ VIC::cycle56()
     
     // Phi1.3 Fetch
     rIdleAccess();
+    g_data = 0; // no more gAccesses from now on (MOVE TO rIdleAccess?)
 
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic

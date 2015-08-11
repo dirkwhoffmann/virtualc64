@@ -49,12 +49,11 @@ class PixelEngine;
 #define SPR7 0x80
 
 //! The virtual Video Controller
-/*! VIC is the video controller chip of the Commodore 64.
-	The VIC chip occupied the memory mapped I/O space from address 0xD000 to 0xD02E.
+/*! VICII is the video controller chip of the Commodore 64.
+	The VICII chip occupied the memory mapped I/O space from address 0xD000 to 0xD02E.
 */
 class VIC : public VirtualComponent {
 
-    // REMOVE AFTER PIXEL ENGINE IS COMPLETE
     friend class PixelEngine;
     
     //! Reference to the attached pixel engine (encapsulates drawing routines)
@@ -194,12 +193,10 @@ private:
 	// -----------------------------------------------------------------------------------------------
 	//                                     Internal registers
 	// -----------------------------------------------------------------------------------------------
-	
-    //! Debug counter
-    uint64_t frame;
-    
+	    
     //! Current rasterline
-    //* Note: The rasterline counter is is usually incremented in cycle 1. The only exception is the overflow condition which is handles in cycle 2 */
+    /*! The rasterline counter is is usually incremented in cycle 1. The only exception is the
+        overflow condition which is handled in cycle 2 */
     uint32_t yCounter;
     
 	//! Internal x counter of the sequencer
@@ -410,11 +407,13 @@ private:
     void cAccess();
     
     //! cAcess character storage
-    /*! Every 8th rasterline, the VIC chips performs a DMA access and fills this array with character information */
+    /*! Every 8th rasterline, the VIC chips performs a DMA access and fills this array with 
+        character information */
     uint8_t characterSpace[40];
     
     //! cAcess color storage
-    /*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with the color information */
+    /*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with t
+        color information */
     uint8_t colorSpace[40];
     
     
@@ -446,13 +445,19 @@ private:
     //                             Sprite accesses (pAccess and sAccess)
     // -----------------------------------------------------------------------------------------------
     
-    //! During a 'p access', VIC reads sprite pointers
+    //! Sprite pointer access
     void pAccess(int sprite);
     
-    //! During a 's access', VIC reads sprite data
-    /*  Returns true iff sprite data was fetched (a memory access has occurred) */
+    //! First sprite data access
+    /*!  Returns true iff sprite data was fetched (a memory access has occurred) */
     bool sFirstAccess(int sprite);
+
+    //! Second sprite data access
+    /*!  Returns true iff sprite data was fetched (a memory access has occurred) */
     bool sSecondAccess(int sprite);
+
+    //! Third sprite data access
+    /*!  Returns true iff sprite data was fetched (a memory access has occurred) */
     bool sThirdAccess(int sprite);
 
     

@@ -177,20 +177,12 @@ private:
      */
     int zBuffer[MAX_VIEWABLE_PIXELS];
     
-    //! Temporary Z buffer
-    /*! Data is first created here and later copied to zBuffer */
-    int zBufferTmp[2];
-    
     //! Indicates the source of a drawn pixel
     /*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
      The information is utilized to detect sprite-sprite and sprite-background collisions.
      */
     int pixelSource[MAX_VIEWABLE_PIXELS];
     
-    //! Temporary pixel source
-    /*! Data is first created here and later copied to pixelSource */
-    int pixelSourceTmp[2];
-
 public:
     
     //! Set color scheme
@@ -219,6 +211,7 @@ public:
     //! Finish up frame
     void endFrame();
 
+    
     // -----------------------------------------------------------------------------------------------
     //                                   VIC state latching
     // -----------------------------------------------------------------------------------------------
