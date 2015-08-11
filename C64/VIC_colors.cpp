@@ -19,7 +19,7 @@
 #include "C64.h"
 
 void 
-VIC::setColorScheme(ColorScheme scheme)
+PixelEngine::setColorScheme(ColorScheme scheme)
 {
     if (scheme < 0 || scheme > 11) 
         scheme = CCS64;

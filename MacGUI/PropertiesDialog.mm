@@ -120,7 +120,7 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [c64 setSamplingMethod:0];
     
 	// Video     
-    [c64 setColorScheme:VIC::CCS64];
+    [c64 setColorScheme:PixelEngine::CCS64];
     
     [self update];
     [self useAsDefaultAction:self];
@@ -195,7 +195,7 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (IBAction)changeColorScheme:(id)sender
 {
-	VIC::ColorScheme scheme = (VIC::ColorScheme)[[sender selectedItem] tag];
+	PixelEngine::ColorScheme scheme = (PixelEngine::ColorScheme)[[sender selectedItem] tag];
     [c64 setColorScheme:scheme];
 	[self update];    
 }

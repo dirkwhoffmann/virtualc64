@@ -28,6 +28,7 @@
 #define _VIC_INC
 
 #include "VirtualComponent.h"
+#include "PixelEngine.h"
 
 // Forward declarations
 class C64Memory;
@@ -53,6 +54,9 @@ class PixelEngine;
 */
 class VIC : public VirtualComponent {
 
+    // REMOVE AFTER PIXEL ENGINE IS COMPLETE
+    friend class PixelEngine;
+    
     //! Reference to the attached pixel engine (encapsulates drawing routines)
     PixelEngine *pixelEngine;
     
@@ -61,21 +65,6 @@ class VIC : public VirtualComponent {
 	// -----------------------------------------------------------------------------------------------
 	
 public:
-    //! Predefined color schemes
-	enum ColorScheme {
-		CCS64           = 0x00,
-		VICE            = 0x01,
-		FRODO           = 0x02,
-		PC64            = 0x03,
-		C64S            = 0x04,
-		ALEC64          = 0x05,
-		WIN64           = 0x06,
-		C64ALIVE_0_9    = 0x07,
-		GODOT           = 0x08,
-		C64SALLY        = 0x09,
-		PEPTO           = 0x0A,
-		GRAYSCALE       = 0x0B
-	};
 	
 	//! Display mode
 	enum DisplayMode {
@@ -95,26 +84,6 @@ public:
 		COL_38_ROW_25 = 0x02,
 		COL_40_ROW_24 = 0x03,
 		COL_38_ROW_24 = 0x04
-	};
-
-    //! VIC colors
-	enum Color {
-		BLACK   = 0x00,
-		WHITE   = 0x01,
-		RED     = 0x02,
-		CYAN    = 0x03,
-		PURPLE  = 0x04,
-		GREEN   = 0x05,
-		BLUE    = 0x06,
-		YELLOW  = 0x07,
-		LTBROWN = 0x08,
-		BROWN   = 0x09,
-		LTRED   = 0x0A,
-		GREY1   = 0x0B,
-		GREY2   = 0x0C,
-		LTGREEN = 0x0D,
-		LTBLUE  = 0x0E,
-		GREY3   = 0x0F
 	};
 		
 	//! Start address of the VIC I/O space
@@ -210,11 +179,10 @@ public:
     //! Maximum number of viewable rasterlines
     static const uint16_t MAX_RASTERLINES = PAL_RASTERLINES;
 
+    // PAL/NTSC independent parameters
+    
 	//! Maximum number of viewable rasterlines
 	static const uint16_t MAX_VIEWABLE_RASTERLINES = PAL_VIEWABLE_RASTERLINES;
-
-	//! Maximum number of viewable pixels per rasterline
-	static const uint16_t MAX_VIEWABLE_PIXELS = NTSC_VIEWABLE_PIXELS;
 	
 		
 	// -----------------------------------------------------------------------------------------------
@@ -247,7 +215,7 @@ private:
     uint32_t yCounter;
     
 	//! Internal x counter of the sequencer
-	uint16_t xCounter;
+	int16_t xCounter;
 	
 	//! Internal VIC register, 10 bit video counter
 	uint16_t registerVC;
@@ -479,62 +447,7 @@ private:
     
     
     
-    // -----------------------------------------------------------------------------------------------
-    //                              Graphics engine (pixel synthesis)
-    // -----------------------------------------------------------------------------------------------
 
-private:
-    
-    //! Currently used color scheme
-    ColorScheme colorScheme;
-    
-	//! All 16 color codes in an array
-	uint32_t colors[16];
-
-	//! First screen buffer
-	/*! The VIC chip writes it output into this buffer. The contents of the array is later copied into to
-	 texture RAM of your graphic card by the drawRect method in the OpenGL related code. */
-	int screenBuffer1[512 * 512];
-	
-	//! Second screen buffer
-	/*! The VIC chip uses double buffering. Once a frame is drawn, the VIC chip writes the next frame to the second buffer */
-	int screenBuffer2[512 * 512];
-	
-	//! Currently used screen buffer
-	/*! The variable points either to screenBuffer1 or screenBuffer2 */
-	int *currentScreenBuffer;
-	
-	//! Pixel buffer
-	/*! The pixel buffer is used for drawing a single line on the screen. When a sreen line is drawn, the pixels
-	 are first written in the pixel buffer. When the whole line is drawn, it is copied into the screen buffer.
-	 */
-	int *pixelBuffer;
-	
-    //! Temporary pixel source
-    /*! Data is first created here and later copied to pixelBuffer */
-    int pixelBufferTmp[2];
-
-	//! Z buffer
-	/*! The z Buffer is used for drawing a single line on the screen. A pixel is only written to the screen buffer,
-	 if it is closer to the view point. The depth of the closest pixel is kept in the z buffer. The lower the value
-	 of the z buffer, the closer it is to the viewer.
-	 The z buffer is cleared before a new rasterline is drawn.
-	 */
-	int zBuffer[MAX_VIEWABLE_PIXELS];
-	
-    //! Temporary Z buffer
-    /*! Data is first created here and later copied to zBuffer */
-    int zBufferTmp[2];
-    
-	//! Indicates the source of a drawn pixel
-	/*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
-	 The information is utilized to detect sprite-sprite and sprite-background collisions. 
-	 */
-	int pixelSource[MAX_VIEWABLE_PIXELS];
-	
-	//! Temporary pixel source
-    /*! Data is first created here and later copied to pixelSource */
-    int pixelSourceTmp[2];
     
     
     // -----------------------------------------------------------------------------------------------
@@ -705,8 +618,8 @@ public:
 	//! Destructor
 	~VIC();
 	
-	//! Get screen buffer
-	inline void *screenBuffer() { return (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1; }
+	//! Get screen buffer that is currently stable
+    inline void *screenBuffer() { return pixelEngine->screenBuffer(); }
 
 	//! Reset the VIC chip to its initial state
 	void reset();
@@ -736,13 +649,13 @@ public:
 	void setNTSC();	
 
     //! Get color scheme
-	ColorScheme getColorScheme() { return colorScheme; }
+    PixelEngine::ColorScheme getColorScheme() { return pixelEngine->colorScheme; }
 
 	//! Set color scheme
-	void setColorScheme(ColorScheme scheme);
+    void setColorScheme(PixelEngine::ColorScheme scheme) { pixelEngine->setColorScheme(scheme); }
 	
     //! Get color
-	uint32_t getColor(int nr) { return colors[nr]; }
+	uint32_t getColor(int nr) { return pixelEngine->colors[nr]; }
     
     
 	// -----------------------------------------------------------------------------------------------
@@ -761,7 +674,7 @@ private:
         // To be gathered one cycle before drawing ...
         uint8_t cycle;
         uint32_t yCounter;
-        uint16_t xCounter;
+        int16_t xCounter;
         bool verticalFrameFF;
         bool mainFrameFF;
         uint8_t data;
@@ -805,12 +718,14 @@ private:
     /*! Invoked inside draw() */
     void drawBorder();
     
-    //! Synthesize 8 border pixels according the the current drawing context.
-    /*! see also: prepareDrawingContext 
-        DEPRECATED */
-    // void drawBorderDeprecated();
-
+    //! Draws all sprites into the pixelbuffer
+    /*! A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging */
+    void drawAllSprites();
     
+    //! Draw single sprite into pixel buffer
+    /*! Helper function for drawSprites */
+    void drawSprite(uint8_t nr);
+
     //! When the pixel synthesizer is invoked, these colors are used
     /*! [0] : color for '0' pixels in single color mode or '00' pixels in multicolor mode
         [1] : color for '1' pixels in single color mode or '01' pixels in multicolor mode
@@ -824,107 +739,6 @@ private:
     //! Increase the x coordinate by 8 (sptrite coordinate system)
     inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
 
-    //! Draw a single frame pixel
-    // DEPRECATED
-    void setFramePixel(unsigned offset, int rgba);
-    
-    //! Render a singel frame pixel into temporary buffer
-    // void renderFramePixel(unsigned offset, int rgba);
-    
-	//! Draw a single foreground pixel
-    // DEPRECATED
-    void setForegroundPixel(unsigned offset, int rgba);
-
-    //! Render a singel foreground pixel into temporary buffer
-    void renderForegroundPixel(unsigned offset, int rgba);
-
-	//! Draw a single background pixel
-    // DEPRECATED
-	void setBackgroundPixel(unsigned offset, int rgba);
-
-    //! Render a singel background pixel into temporary buffer
-    void renderBackgroundPixel(unsigned offset, int rgba);
-    
-    //! Draw a single pixel behind background layer
-    // DEPRECATED
-    void setBehindBackgroundPixel(unsigned offset, int rgba);
-    
-    //! Draw a single sprite pixel
-    void setSpritePixel(unsigned offset, int rgba, int depth, int source);
-
-    
-    //! Draw background pixels
-    /*! This method is invoked when the sequencer is outside the main drawing area or the upper and lower border
-        \param offset X coordinate of the first pixel to draw */
-    void drawEightBehindBackgroudPixels(unsigned offset);
-
-    //! Draw frame pixels
-    inline void drawSevenFramePixels(unsigned offset, int rgba_color) {
-        for (unsigned i = 0; i < 7; i++) setFramePixel(offset++, rgba_color); }
-    
-    inline void drawEightFramePixels(unsigned offset, int rgba_color) {
-        for (unsigned i = 0; i < 8; i++) setFramePixel(offset++, rgba_color); }
-
-    //! Render canvas pixel in single-color mode
-    void renderSingleColorPixel(uint8_t bit);
-
-    //! Render canvas pixel in single-color mode
-    void renderMultiColorPixel(uint8_t color_bits);
-    
-    //! Render 2 pixels in single-color mode
-    void renderTwoSingleColorPixels(uint8_t bits);
-
-    //! Draw 2 pixels in single-color mode
-    // DEPRECATED
-    void drawTwoSingleColorPixels(unsigned offset, uint8_t bits);
-
-    //! Draw a single character line (8 pixels) in single-color mode
-    // DEPRECATED
-    void drawSingleColorCharacter(unsigned offset);
-    
-    //! Render 2 pixels in multi-color mode
-    // DEPRECATED
-    void renderTwoMultiColorPixels(uint8_t bits);
-
-    //! Draw 2 pixels in multi-color mode
-    // DEPRECATED
-    void drawTwoMultiColorPixels(unsigned offset, uint8_t bits);
-
-    //! Draw a single character line (8 pixels) in multi-color mode
-    // DEPRECATED
-    void drawMultiColorCharacter(unsigned offset);
-
-    //! Draw 2 single color pixels in invalid text mode
-    // DEPRECATED
-    void drawTwoInvalidSingleColorPixels(unsigned offset, uint8_t bits);
-    
-    //! Draw a single color character in invalid text mode
-    // DEPRECATED
-    void drawInvalidSingleColorCharacter(unsigned offset);
-
-    //! Draw 2 multicolor pixels in invalid text mode
-    // DEPRECATED
-    void drawTwoInvalidMultiColorPixels(unsigned offset, uint8_t bits);
-
-    //! Draw a multi color character in invalid text mode
-    // DEPRECATED
-    void drawInvalidMultiColorCharacter(unsigned offset);
-    
-	//! Draw a single foreground pixel
-	/*! \param offset X coordinate of the pixel to draw
-	    \param color Pixel color in RGBA format
-	    \param nr Number of sprite (0 to 7)
-        \note The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected
-	 */
-	void setSpritePixel(unsigned offset, int color, int nr);
-		
-	//! Draws all sprites into the pixelbuffer
-	/*! A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging */
-	void drawAllSprites();
-
-	//! Draw single sprite into pixel buffer
-	/*! Helper function for drawSprites */
-	void drawSprite(uint8_t nr);
 			
 	
 	// -----------------------------------------------------------------------------------------------
@@ -1324,11 +1138,7 @@ public:
 	//                                              Debugging
 	// -----------------------------------------------------------------------------------------------
 
-private:
 	
-	//! Colorize line
-	void markLine(int start, unsigned length, int color);
-
 public: 
 	
 	//! Return true iff IRQ lines are colorized

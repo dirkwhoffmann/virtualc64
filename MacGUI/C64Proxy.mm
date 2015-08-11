@@ -548,8 +548,8 @@
 	c64 = NULL;
 }
 
-- (VIC::ColorScheme) colorScheme { return c64->getColorScheme(); }
-- (void) setColorScheme:(VIC::ColorScheme)scheme { c64->setColorScheme(scheme); }
+- (PixelEngine::ColorScheme) colorScheme { return c64->getColorScheme(); }
+- (void) setColorScheme:(PixelEngine::ColorScheme)scheme { c64->setColorScheme(scheme); }
 - (bool) audioFilter { return c64->getAudioFilter(); }
 - (void) setAudioFilter:(bool)b { c64->setAudioFilter(b); }
 - (bool) reSID { return c64->getReSID(); }

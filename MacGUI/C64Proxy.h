@@ -453,8 +453,8 @@
 - (void) kill;
 
 // Hardware configuration
-- (VIC::ColorScheme) colorScheme;
-- (void) setColorScheme:(VIC::ColorScheme)scheme;
+- (PixelEngine::ColorScheme) colorScheme;
+- (void) setColorScheme:(PixelEngine::ColorScheme)scheme;
 - (bool) reSID;
 - (void) setReSID:(bool)b;
 - (bool) audioFilter;

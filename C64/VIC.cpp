@@ -24,7 +24,6 @@
 #include "C64.h"
 
 // DIRK
-#define DIRK_DEBUG_LINE 77
 unsigned dirktrace = 0;
 unsigned dirkcnt = 0;
 
@@ -41,19 +40,6 @@ VIC::VIC(C64 *c64)
     // Create sub components
     pixelEngine = new PixelEngine(c64);
     
-	// Delete screen buffers
-	for (unsigned i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
-		screenBuffer1[i] = colors[BLUE];
-	}
-	for (unsigned i = 0; i < sizeof(screenBuffer2) / sizeof(int); i++) {
-		screenBuffer2[i] = colors[BLUE];
-	}
-	currentScreenBuffer = screenBuffer1;
-	pixelBuffer = currentScreenBuffer;
-	
-	// Initialize colors
-	setColorScheme(CCS64);
-
 	// Start with all debug options disabled
 	markIRQLines = false;
 	markDMALines = false;
@@ -102,13 +88,14 @@ VIC::reset()
 	
 	// Memory
 	memset(iomem, 0x00, sizeof(iomem));
-	iomem[0x20] = LTBLUE; // Let the border color look correct right from the beginning
-	iomem[0x21] = BLUE;   // Let the background color look correct right from the beginning
+    iomem[0x20] = PixelEngine::LTBLUE; // Let the border color look correct right from the beginning
+    iomem[0x21] = PixelEngine::BLUE;   // Let the background color look correct right from the beginning
 	iomem[0x11] = 0x10;   // Make screen visible from the beginning	
 	bankAddr = 0;
 	
     // Graphic sequencer
     gs_data = 0;
+    gs_colorbits = 0;
     gs_last_bg_color = 0;
     gs_mode = STANDARD_TEXT;
     
@@ -495,13 +482,6 @@ inline void VIC::gAccess()
         gs_characterSpace = characterSpace[registerVMLI];
         gs_colorSpace = colorSpace[registerVMLI];
         gs_mode = getDisplayMode();
-
-        // DIRK
-        /*
-        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
-            printf("gAccess: data: %d from addr:%4d(%4X) delay:%d charSpace:%d colorSpace:%d mode:%d VC:%d RC:%d VMLI:%d\n",
-                   gs_data, addr, addr, gs_delay, gs_characterSpace, gs_colorSpace, gs_mode, registerVC, registerRC, registerVMLI);
-         */
         
         // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhšht." [C.B.]
         registerVC++;
@@ -651,25 +631,22 @@ VIC::drawBorder()
     // Take special care of 38 column mode
     
     if (dc.cycle == 17 && dc.mainFrameFF && !mainFrameFF) {
-        int border_rgba = colors[dc.borderColor];
-        drawSevenFramePixels(xCoord, border_rgba);
-        // gs_data = 0; ????
+        int border_rgba = pixelEngine->colors[dc.borderColor];
+        pixelEngine->drawSevenFramePixels(xCoord, border_rgba);
         return;
     }
     
     if (dc.cycle == 55 && !dc.mainFrameFF && mainFrameFF) {
-        int border_rgba = colors[dc.borderColor];
-        setFramePixel(xCoord+7, border_rgba);
-        // gs_data = 0; ????
+        int border_rgba = pixelEngine->colors[dc.borderColor];
+        pixelEngine->setFramePixel(xCoord+7, border_rgba);
         return;
     }
 
     // Standard case
     
     if (dc.mainFrameFF) {
-        int border_rgba = colors[dc.borderColor];
-        drawEightFramePixels(xCoord, border_rgba);
-        // gs_data = 0; // ????? What is that for?
+        int border_rgba = pixelEngine->colors[dc.borderColor];
+        pixelEngine->drawEightFramePixels(xCoord, border_rgba);
         return;
     }
 }
@@ -723,7 +700,7 @@ void VIC::drawPixels()
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
         prepareDrawingContextColors();
-        drawEightBehindBackgroudPixels(xCoord);
+        pixelEngine->drawEightBehindBackgroudPixels(xCoord);
         
     }
 }
@@ -737,16 +714,16 @@ void VIC::drawBorderArea(uint8_t cycle)
     // draw border
     if (dc.mainFrameFF) {
         
-        int border_rgba = colors[dc.borderColor];
+        int border_rgba = pixelEngine->colors[dc.borderColor];
         
-        drawEightFramePixels(xCoord, border_rgba);
+        pixelEngine->drawEightFramePixels(xCoord, border_rgba);
         return;
     }
     
     /* "Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
      die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
      normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
-    drawEightBehindBackgroudPixels(xCoord);
+    pixelEngine->drawEightBehindBackgroudPixels(xCoord);
     
 }
 
@@ -756,71 +733,64 @@ void VIC::loadPixelSynthesizerWithColors(DisplayMode mode, uint8_t characterSpac
             
         case STANDARD_TEXT:
             
-            col_rgba[0] = colors[dc.backgroundColor[0]];
-            col_rgba[1] = colors[colorSpace];
+            col_rgba[0] = pixelEngine->colors[dc.backgroundColor[0]];
+            col_rgba[1] = pixelEngine->colors[colorSpace];
             multicol = false;
-            
-            /*
-            if(dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-                printf("    VIC::loadPixelSynthesizerWithColors mode:%d charspace:%d colspace:%d [0]:%d [1]:%d\n",
-                       mode,characterSpace,colorSpace,dc.backgroundColor[0],colorSpace);
-            }
-            */
             break;
             
         case MULTICOLOR_TEXT:
             if (colorSpace & 0x8 /* MC flag */) {
-                col_rgba[0] = colors[dc.backgroundColor[0]];
-                col_rgba[1] = colors[dc.backgroundColor[1]];
-                col_rgba[2] = colors[dc.backgroundColor[2]];
-                col_rgba[3] = colors[colorSpace & 0x07];
+                col_rgba[0] = pixelEngine->colors[dc.backgroundColor[0]];
+                col_rgba[1] = pixelEngine->colors[dc.backgroundColor[1]];
+                col_rgba[2] = pixelEngine->colors[dc.backgroundColor[2]];
+                col_rgba[3] = pixelEngine->colors[colorSpace & 0x07];
                 multicol = true;
             } else {
-                col_rgba[0] = colors[dc.backgroundColor[0]];
-                col_rgba[1] = colors[colorSpace];
+                col_rgba[0] = pixelEngine->colors[dc.backgroundColor[0]];
+                col_rgba[1] = pixelEngine->colors[colorSpace];
                 multicol = false;
             }
             break;
             
         case STANDARD_BITMAP:
-            col_rgba[0] = colors[characterSpace & 0x0F]; // color of '0' pixels
-            col_rgba[1] = colors[characterSpace >> 4]; // color of '1' pixels
+            col_rgba[0] = pixelEngine->colors[characterSpace & 0x0F]; // color of '0' pixels
+            col_rgba[1] = pixelEngine->colors[characterSpace >> 4]; // color of '1' pixels
             multicol = false;
             break;
             
         case MULTICOLOR_BITMAP:
-            col_rgba[0] = colors[dc.backgroundColor[0]];
-            col_rgba[1] = colors[characterSpace >> 4];
-            col_rgba[2] = colors[characterSpace & 0x0F];
-            col_rgba[3] = colors[colorSpace];
+            col_rgba[0] = pixelEngine->colors[dc.backgroundColor[0]];
+            col_rgba[1] = pixelEngine->colors[characterSpace >> 4];
+            col_rgba[2] = pixelEngine->colors[characterSpace & 0x0F];
+            col_rgba[3] = pixelEngine->colors[colorSpace];
             multicol = true;
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            col_rgba[0] = colors[dc.backgroundColor[characterSpace >> 6]];
-            col_rgba[1] = colors[colorSpace];
+            col_rgba[0] = pixelEngine->colors[dc.backgroundColor[characterSpace >> 6]];
+            col_rgba[1] = pixelEngine->colors[colorSpace];
             multicol = false;
             break;
             
         case INVALID_TEXT:
-            col_rgba[0] = colors[BLACK];
-            col_rgba[1] = colors[BLACK];
-            col_rgba[2] = colors[BLACK];
-            col_rgba[3] = colors[BLACK];
+            col_rgba[0] = pixelEngine->colors[PixelEngine::BLACK];
+            col_rgba[1] = pixelEngine->colors[PixelEngine::BLACK];
+            col_rgba[2] = pixelEngine->colors[PixelEngine::BLACK];
+            col_rgba[3] = pixelEngine->colors[PixelEngine::BLACK];
             multicol = (colorSpace & 0x8 /* MC flag */);
             break;
             
         case INVALID_STANDARD_BITMAP:
-            col_rgba[0] = colors[BLACK];
-            col_rgba[1] = colors[BLACK];
+            col_rgba[0] = pixelEngine->colors[PixelEngine::BLACK];
+            col_rgba[1] = pixelEngine->colors[PixelEngine::BLACK];
             multicol = false;
             break;
             
         case INVALID_MULTICOLOR_BITMAP:
-            col_rgba[0] = colors[BLACK];
-            col_rgba[1] = colors[BLACK];
-            col_rgba[2] = colors[BLACK];
-            col_rgba[3] = colors[BLACK];
+            col_rgba[0] = pixelEngine->colors[PixelEngine::BLACK];
+            col_rgba[1] = pixelEngine->colors[PixelEngine::BLACK];
+            col_rgba[2] = pixelEngine->colors[PixelEngine::BLACK];
+            col_rgba[3] = pixelEngine->colors[PixelEngine::BLACK];
             multicol = true;
             break;
             
@@ -836,10 +806,6 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
 {
     assert(pixel < 8);
     
-    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-        printf("  VIC::drawPixel(%d,%d)\n",offset,pixel);
-    }
-    
     if (pixel == dc.delay) {
       
         // Load shift register
@@ -851,10 +817,6 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
         
         // Reset the multicolor synchronization flipflop
         gs_mc_flop = true;
-        
-        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-            printf("   LOAD SHIFT REG: %d %d %d\n",gs_shift_reg,dc.characterSpace,dc.colorSpace);
-        }
     }
     
     // Determine display mode and colors
@@ -865,25 +827,16 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
     if (multicol) {
         if (gs_mc_flop)
             gs_colorbits = (gs_shift_reg >> 6);
-        
-        /*
-        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
-            printf("    renderMultiColorPixel(%d)\n",gs_colorbits);
-         */
-         renderMultiColorPixel(gs_colorbits);
+         pixelEngine->renderMultiColorPixel(gs_colorbits);
     } else {
-        /*
-        if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE)
-            printf("    renderSingleColorPixel(%d)\n",gs_shift_reg >> 7);
-         */
-         renderSingleColorPixel(gs_shift_reg >> 7);
+         pixelEngine->renderSingleColorPixel(gs_shift_reg >> 7);
     }
     
     // Copy pixel into pixel buffer
-    if (offset < MAX_VIEWABLE_PIXELS) {
-        pixelBuffer[offset] = pixelBufferTmp[0];
-        zBuffer[offset] = zBufferTmp[0];
-        pixelSource[offset] = pixelSourceTmp[0];
+    if (offset < PixelEngine::MAX_VIEWABLE_PIXELS) {
+        pixelEngine->pixelBuffer[offset] = pixelEngine->pixelBufferTmp[0];
+        pixelEngine->zBuffer[offset] = pixelEngine->zBufferTmp[0];
+        pixelEngine->pixelSource[offset] = pixelEngine->pixelSourceTmp[0];
     }
      
     // Shift register and toggle flipflop
@@ -893,276 +846,10 @@ void VIC::drawPixel(uint16_t offset, uint8_t pixel)
 
 
 
-// -----------------------------------------------------------------------------------------------
-//                                           Drawing
-// -----------------------------------------------------------------------------------------------
-
-inline void
-VIC::setFramePixel(unsigned offset, int rgba)
-{
-    zBuffer[offset] = BORDER_LAYER_DEPTH;
-    pixelBuffer[offset] = rgba;
-    pixelSource[offset] &= (~0x80); // disable sprite/foreground collision detection in border
-}
-
-inline void
-VIC::setSpritePixel(unsigned offset, int rgba, int depth, int source)
-{
-    assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
-
-    if (depth <= zBuffer[offset]) {
-        zBuffer[offset] = depth;
-        pixelBuffer[offset] = rgba;
-    }
-    pixelSource[offset] |= source;
-}
-
-// DEPRECATED
-inline void
-VIC::setForegroundPixel(unsigned offset, int rgba)
-{
-    if (FOREGROUND_LAYER_DEPTH <= zBuffer[offset]) {
-        zBuffer[offset] = FOREGROUND_LAYER_DEPTH;
-        pixelBuffer[offset] = rgba;
-        pixelSource[offset] |= 0x80;
-    }
-}
-
-inline void
-VIC::renderForegroundPixel(unsigned offset, int rgba)
-{
-    assert(offset == 0 || offset == 1);
-    
-    zBufferTmp[offset] = FOREGROUND_LAYER_DEPTH;
-    pixelBufferTmp[offset] = rgba;
-    pixelSourceTmp[offset] |= 0x80;
-}
 
 
-// DEPRECATED
-inline void
-VIC::setBackgroundPixel(unsigned offset, int rgba)
-{
-    if (BACKGROUD_LAYER_DEPTH <= zBuffer[offset]) {
-        zBuffer[offset] = BACKGROUD_LAYER_DEPTH;
-        pixelBuffer[offset] = rgba;
-    }
-}
 
-inline void
-VIC::renderBackgroundPixel(unsigned offset, int rgba)
-{
-    assert(offset == 0 || offset == 1);
-    
-    zBufferTmp[offset] = BACKGROUD_LAYER_DEPTH;
-    pixelBufferTmp[offset] = rgba;
-    pixelSourceTmp[offset] = 0;
-}
 
-// DEPRECATED
-inline void
-VIC::setBehindBackgroundPixel(unsigned offset, int rgba)
-{
-    if (BEIND_BACKGROUND_DEPTH <= zBuffer[offset]) {
-        zBuffer[offset] = BEIND_BACKGROUND_DEPTH;
-        pixelBuffer[offset] = rgba;
-    }
-}
-
-// FIND MORE SUITABLE NAME
-void
-VIC::drawEightBehindBackgroudPixels(unsigned offset)
-{
-    /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
-        Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelšscht ist (siehe
-        Abschnitt 3.9.). Au§erhalb der Anzeigespalte und bei gesetztem Flipflop wird
-        die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
-        normalerweise vom Rahmen Ÿberdeckt)." [C.B.] */
-
-    int bg_rgba = gs_last_bg_color;
-    for (unsigned i = 0; i < 8; i++) {
-        setBehindBackgroundPixel(offset++, bg_rgba);
-    }    
-}
-
-inline void
-VIC::renderSingleColorPixel(uint8_t bit)
-{
-    assert(bit <= 1);
-    int rgba = col_rgba[bit];
-
-    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-        printf("      VIC::renderSingleColorPixel(%d) rgba:%d\n",bit,rgba);
-    }
-
-    if (bit)
-        renderForegroundPixel(0, rgba);
-    else
-        renderBackgroundPixel(0, rgba);
-}
-
-// DEPRECATED
-inline void
-VIC::renderTwoSingleColorPixels(uint8_t bits)
-{
-    if (bits & 0x02)
-        renderForegroundPixel(0, col_rgba[1]);
-    else
-        renderBackgroundPixel(0, col_rgba[0]);
-    
-    if (bits & 0x01)
-        renderForegroundPixel(1, col_rgba[1]);
-    else
-        renderBackgroundPixel(1, col_rgba[0]);
-}
-
-// EVEN MORE DEPRECATED
-inline void
-VIC::drawTwoSingleColorPixels(unsigned offset, uint8_t bits)
-{
-    if (bits & 0x02)
-        setForegroundPixel(offset++, col_rgba[1]);
-    else
-        setBackgroundPixel(offset++, col_rgba[0]);
-
-    if (bits & 0x01)
-        setForegroundPixel(offset, col_rgba[1]);
-    else
-        setBackgroundPixel(offset, col_rgba[0]);
-}
-
-// DEPRECATED
-inline void 
-VIC::drawSingleColorCharacter(unsigned offset)
-{
-    // int fg_rgba = colors[gs_fg_color];
-    // int bg_rgba = colors[gs_bg_color];
-    
-	assert(offset >= 0 && offset+7 < MAX_VIEWABLE_PIXELS);
-
-    drawTwoSingleColorPixels(offset, gs_data >> 6);
-    drawTwoSingleColorPixels(offset + 2, gs_data >> 4);
-    drawTwoSingleColorPixels(offset + 4, gs_data >> 2);
-    drawTwoSingleColorPixels(offset + 6, gs_data);
-}
-
-inline void
-VIC::renderMultiColorPixel(uint8_t color_bits)
-{
-    assert(color_bits <= 3);
-    int rgba = col_rgba[color_bits];
-    
-    if (color_bits & 0x02)
-        renderForegroundPixel(0, rgba);
-    else
-        renderBackgroundPixel(0, rgba);
-}
-
-// DEPRECATED
-inline void
-VIC::renderTwoMultiColorPixels(uint8_t bits)
-{
-    int rgba = col_rgba[bits & 0x03];
-    
-    if (bits & 0x02) {
-        renderForegroundPixel(0, rgba);
-        renderForegroundPixel(1, rgba);
-    } else {
-        renderBackgroundPixel(0, rgba);
-        renderBackgroundPixel(1, rgba);
-    }
-}
-
-inline void
-VIC::drawTwoMultiColorPixels(unsigned offset, uint8_t bits)
-{
-    int rgba = col_rgba[bits & 0x03];
-    
-    if (bits & 0x02) {
-        setForegroundPixel(offset++, rgba);
-        setForegroundPixel(offset++, rgba);
-    } else {
-        setBackgroundPixel(offset++, rgba);
-        setBackgroundPixel(offset++, rgba);
-    }
-}
-
-inline void
-VIC::drawMultiColorCharacter(unsigned offset)
-{
-	assert(offset+7 < MAX_VIEWABLE_PIXELS);
-
-    drawTwoMultiColorPixels(offset, gs_data >> 6);
-    drawTwoMultiColorPixels(offset + 2, gs_data >> 4);
-    drawTwoMultiColorPixels(offset + 4, gs_data >> 2);
-    drawTwoMultiColorPixels(offset + 6, gs_data);
-}
-
-inline void
-VIC::drawTwoInvalidSingleColorPixels(unsigned offset, uint8_t bits)
-{
-    drawTwoSingleColorPixels(offset, bits);
-}
-
-inline void
-VIC::drawInvalidSingleColorCharacter(unsigned offset)
-{
-    assert(offset+7 < MAX_VIEWABLE_PIXELS);
-
-    drawTwoInvalidSingleColorPixels(offset, gs_data >> 6);
-    drawTwoInvalidSingleColorPixels(offset + 2, gs_data >> 4);
-    drawTwoInvalidSingleColorPixels(offset + 4, gs_data >> 2);
-    drawTwoInvalidSingleColorPixels(offset + 6, gs_data);
-}
-
-inline void
-VIC::drawTwoInvalidMultiColorPixels(unsigned offset, uint8_t bits)
-{
-    drawTwoMultiColorPixels(offset, bits);
-}
-
-inline void
-VIC::drawInvalidMultiColorCharacter(unsigned offset)
-{
-    assert(offset+7 < MAX_VIEWABLE_PIXELS);
-    
-    drawTwoInvalidMultiColorPixels(offset, gs_data >> 6);
-    drawTwoInvalidMultiColorPixels(offset + 2, gs_data >> 4);
-    drawTwoInvalidMultiColorPixels(offset + 4, gs_data >> 2);
-    drawTwoInvalidMultiColorPixels(offset + 6, gs_data);
-}
-
-inline void 
-VIC::setSpritePixel(unsigned offset, int color, int nr) 
-{	
-	uint8_t mask = (1 << nr);
-	
-	if (offset < totalScreenWidth) {
-
-        //int depth = spriteDepth(nr);
-		//if (depth < zBuffer[offset]) {
-		//	pixelBuffer[offset] = color;
-		//	zBuffer[offset] = depth;
-		// }
-		
-		// Check sprite/sprite collision
-		if (spriteSpriteCollisionEnabled && (pixelSource[offset] & 0x7F)) {
-			iomem[0x1E] |= ((pixelSource[offset] & 0x7F) | mask);
-			triggerIRQ(4);
-		}
-		
-		// Check sprite/background collision
-		if (spriteBackgroundCollisionEnabled && (pixelSource[offset] & 0x80)) {
-			iomem[0x1F] |= mask;
-			triggerIRQ(2);
-		}
-		
-        if (nr == 7)
-            mask = 0;
-        
-        setSpritePixel(offset, color, spriteDepth(nr), mask);
-	}
-}
 
 void inline
 VIC::drawAllSprites()
@@ -1193,9 +880,9 @@ VIC::drawSprite(uint8_t nr)
 		
 		int colorLookup[4] = { 
 			0x00, 
-			colors[spriteExtraColor1()], 
-			colors[spriteColor(nr)],
-			colors[spriteExtraColor2()]
+			pixelEngine->colors[spriteExtraColor1()],
+			pixelEngine->colors[spriteColor(nr)],
+			pixelEngine->colors[spriteExtraColor2()]
 		};
 		
 		for (int i = 0; i < 3; i++) {
@@ -1205,120 +892,120 @@ VIC::drawSprite(uint8_t nr)
 			if (spriteWidthIsDoubled(nr)) {
 				col = (pattern >> 6) & 0x03;
 				if (col) {
-					setSpritePixel(offset, colorLookup[col], nr);
-					setSpritePixel(offset+1, colorLookup[col], nr);
-					setSpritePixel(offset+2, colorLookup[col], nr);
-					setSpritePixel(offset+3, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+1, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+2, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+3, colorLookup[col], nr);
 				}
 				col = (pattern >> 4) & 0x03;
 				if (col) {
-					setSpritePixel(offset+4, colorLookup[col], nr);
-					setSpritePixel(offset+5, colorLookup[col], nr);
-					setSpritePixel(offset+6, colorLookup[col], nr);
-					setSpritePixel(offset+7, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+4, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+5, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+6, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+7, colorLookup[col], nr);
 				}
 				col = (pattern >> 2) & 0x03;
 				if (col) {
-					setSpritePixel(offset+8, colorLookup[col], nr);
-					setSpritePixel(offset+9, colorLookup[col], nr);
-					setSpritePixel(offset+10, colorLookup[col], nr);
-					setSpritePixel(offset+11, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+8, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+9, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+10, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+11, colorLookup[col], nr);
 				}
 				col = pattern & 0x03;
 				if (col) {
-					setSpritePixel(offset+12, colorLookup[col], nr);
-					setSpritePixel(offset+13, colorLookup[col], nr);
-					setSpritePixel(offset+14, colorLookup[col], nr);
-					setSpritePixel(offset+15, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+12, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+13, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+14, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+15, colorLookup[col], nr);
 				}				
 				offset += 16;
 			} else {
 				col = (pattern >> 6) & 0x03;
 				if (col) {
-					setSpritePixel(offset, colorLookup[col], nr);
-					setSpritePixel(offset+1, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+1, colorLookup[col], nr);
 				}
 				col = (pattern >> 4) & 0x03;
 				if (col) {
-					setSpritePixel(offset+2, colorLookup[col], nr);
-					setSpritePixel(offset+3, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+2, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+3, colorLookup[col], nr);
 				}
 				col = (pattern >> 2) & 0x03;
 				if (col) {
-					setSpritePixel(offset+4, colorLookup[col], nr);
-					setSpritePixel(offset+5, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+4, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+5, colorLookup[col], nr);
 				}
 				col = pattern & 0x03;
 				if (col) {
-					setSpritePixel(offset+6, colorLookup[col], nr);
-					setSpritePixel(offset+7, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+6, colorLookup[col], nr);
+					pixelEngine->setSpritePixel(offset+7, colorLookup[col], nr);
 				}				
 				offset += 8;
 			}
 		}
 	} else {
-		int fgcolor = colors[spriteColor(nr)]; 
+		int fgcolor = pixelEngine->colors[spriteColor(nr)];
 		for (int i = 0; i < 3; i++) {
 			uint8_t pattern = spriteShiftReg[nr][i]; 
 			
 			if (spriteWidthIsDoubled(nr)) {
 				if (pattern & 128) {
-					setSpritePixel(offset, fgcolor, nr);
-					setSpritePixel(offset+1, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+1, fgcolor, nr);
 				}
 				if (pattern & 64) {
-					setSpritePixel(offset+2, fgcolor, nr);
-					setSpritePixel(offset+3, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+2, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+3, fgcolor, nr);
 				}
 				if (pattern & 32) {
-					setSpritePixel(offset+4, fgcolor, nr);
-					setSpritePixel(offset+5, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+4, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+5, fgcolor, nr);
 				}
 				if (pattern & 16) {
-					setSpritePixel(offset+6, fgcolor, nr);
-					setSpritePixel(offset+7, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+6, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+7, fgcolor, nr);
 				}
 				if (pattern & 8) {
-					setSpritePixel(offset+8, fgcolor, nr);
-					setSpritePixel(offset+9, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+8, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+9, fgcolor, nr);
 				}
 				if (pattern & 4) {
-					setSpritePixel(offset+10, fgcolor, nr);
-					setSpritePixel(offset+11, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+10, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+11, fgcolor, nr);
 				}
 				if (pattern & 2) {
-					setSpritePixel(offset+12, fgcolor, nr);
-					setSpritePixel(offset+13, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+12, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+13, fgcolor, nr);
 				}
 				if (pattern & 1) {
-					setSpritePixel(offset+14, fgcolor, nr);
-					setSpritePixel(offset+15, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+14, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+15, fgcolor, nr);
 				}
 				offset += 16;
 			} else {
 				if (pattern & 128) {
-					setSpritePixel(offset, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset, fgcolor, nr);
 				}
 				if (pattern & 64) {
-					setSpritePixel(offset+1, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+1, fgcolor, nr);
 				}
 				if (pattern & 32) {
-					setSpritePixel(offset+2, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+2, fgcolor, nr);
 				}
 				if (pattern & 16) {
-					setSpritePixel(offset+3, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+3, fgcolor, nr);
 				}
 				if (pattern & 8) {
-					setSpritePixel(offset+4, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+4, fgcolor, nr);
 				}
 				if (pattern & 4) {
-					setSpritePixel(offset+5, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+5, fgcolor, nr);
 				}
 				if (pattern & 2) {
-					setSpritePixel(offset+6, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+6, fgcolor, nr);
 				}
 				if (pattern & 1) {
-					setSpritePixel(offset+7, fgcolor, nr);
+					pixelEngine->setSpritePixel(offset+7, fgcolor, nr);
 				}
 				offset += 8;
 			}
@@ -1476,10 +1163,11 @@ VIC::poke(uint16_t addr, uint8_t value)
 			}
 			return;
 				
+        /*
         case 0x16:
-            if (dirktrace == 1)
-                printf("XSCROLL: %d\n",value & 7);
+            // DEBUG CODE WAS HERE
             break;
+        */
             
 		case 0x17: // SPRITE Y EXPANSION
 			iomem[addr] = value;
@@ -1636,17 +1324,19 @@ VIC::updateSpriteDmaOnOff()
 void
 VIC::dirk()
 {
+    /*
     unsigned cycle = c64->rasterlineCycle;
 
     if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
         printf("(%i,%i) (dx,yd):(%d,%d) D020:%d D021:%d BAlow:%d RDY:%d RC:%d VC:%d (VCbase:%d) VMLI:%d bad_line:%d disp_state:%d\n",
-               yCounter, cycle,
+               yCounter, c64->rasterCycle,
                getHorizontalRasterScroll(), getVerticalRasterScroll(),
                iomem[0x20], iomem[0x21],
                BAlow, cpu->getRDY(),
                registerRC, registerVC, registerVCBASE, registerVMLI, badLineCondition, displayState);
         dirkcnt++;
     }
+    */
 }
 
 void
@@ -1742,6 +1432,8 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
 void 
 VIC::beginFrame()
 {
+    pixelEngine->beginFrame();
+
     frame++;
     
 	lightpenIRQhasOccured = false;
@@ -1759,18 +1451,12 @@ VIC::beginFrame()
            nicht zu bestimmen, er spielt aber auch keine Rolle." [C.B.] */
  
     registerVCBASE = 0;
-
 }
 
 void
 VIC::endFrame()
 {
-	// Frame complete. Notify listener...
-	// c64->putMessage(MSG_DRAW, 0, currentScreenBuffer);
-	
-	// Switch frame buffer
-	currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;	
-	pixelBuffer = currentScreenBuffer;
+    pixelEngine->endFrame();
 }
 
 void 
@@ -1782,15 +1468,6 @@ VIC::beginRasterline(uint16_t line)
     
     verticalFrameFFsetCond = verticalFrameFFclearCond = false;
     
-	// Clear z buffer. The buffer is initialized with a high, positive value (meaning the pixel is far away)
-	memset(zBuffer, 0x7f, sizeof(zBuffer)); // Why don't we use 0xFF???
-
-	// Clear pixel source
-	memset(pixelSource, 0x00, sizeof(pixelSource));
-
-    // Clear pixel buffer
-    memset(pixelBuffer, 0x00, sizeof(pixelSource));
-
     // Check for the DEN bit if we're processing rasterline 30
     // The initial value can change in the middle of a rasterline.
     if (line == 0x30)
@@ -1801,11 +1478,9 @@ VIC::beginRasterline(uint16_t line)
     updateBadLineCondition();
 
     // Reset graphic sequencer
-    // gs_data = 0;
     gs_shift_reg = 0;
-    // pixelBufferTmp[0] = pixelBuffer[1] = 0;
-    zBufferTmp[0] = zBufferTmp[1] = 0;
-    pixelSourceTmp[0] = pixelSourceTmp[1] = 0;
+    
+    pixelEngine->beginRasterline();
 }
 
 void 
@@ -1816,8 +1491,7 @@ VIC::endRasterline()
         verticalFrameFF = true;
     }
     
-	// Copy pixel buffer of old line to screen buffer
-	pixelBuffer += totalScreenWidth;
+    pixelEngine->endRasterline();
 }
 
 void 
@@ -2246,6 +1920,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    xCounter = -4;
     prepareDrawingContextForCycle(13); // Prepare for next cycle (first border column)
 
     // Phi1.3 Fetch (third out of five DRAM refreshs)
@@ -2267,8 +1942,6 @@ void
 VIC::cycle14() // SpriteX: 0 - 7 (?)
 {
     dirk();
-    
-    xCounter = 4;
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2855,34 +2528,28 @@ VIC::cycle63()
     
     // Phi1.2 Draw
 
+    // TODO: MOVE TO PixelEngine::endOfRasterline
     // Extend pixel buffer to the left and right to make it look nice
-    int color = pixelBuffer[22];
+    int color = pixelEngine->pixelBuffer[22];
     for (unsigned i = 0; i <= 22; i++) {
-        pixelBuffer[i] = color;
+        pixelEngine->pixelBuffer[i] = color;
     }
     
-    color = pixelBuffer[389];
+    color = pixelEngine->pixelBuffer[389];
     for (unsigned i = 390; i < totalScreenWidth; i++) {
-        pixelBuffer[i] = color;
+        pixelEngine->pixelBuffer[i] = color;
     }
 
 	// draw debug markers
 
     
-    if (markIRQLines && dirktrace == 0) {
-        rasterlineDebug[DIRK_DEBUG_LINE] = 1;
-        dirktrace = 1; // ON
-    }
-
-    /*
     if (markIRQLines && yCounter == rasterInterruptLine())
-	 	markLine(0, totalScreenWidth, colors[WHITE]);
-     */
+        pixelEngine->markLine(PixelEngine::WHITE);
      if (markDMALines && badLineCondition)
-		markLine(0, totalScreenWidth, colors[RED]);
+        pixelEngine->markLine(PixelEngine::RED);
     if (rasterlineDebug[yCounter] >= 0)
-		markLine(0, totalScreenWidth, colors[rasterlineDebug[yCounter] % 16]);
-
+        pixelEngine->markLine(rasterlineDebug[yCounter] % 16);
+    
     // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(2);
@@ -2963,16 +2630,4 @@ VIC::cycle65() 	// NTSC only
     countX();
 }
 
-
-// -----------------------------------------------------------------------------------------------
-//                                              Debugging
-// -----------------------------------------------------------------------------------------------
-
-void inline
-VIC::markLine(int start, unsigned length, int color)
-{
-	for (unsigned i = 0; i < length; i++) {
-		pixelBuffer[start + i] = color;
-	}	
-}
 
