@@ -1977,7 +1977,7 @@ VIC::cycle57()
     
     // Phi1.3 Fetch
     rIdleAccess();
-
+    
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic

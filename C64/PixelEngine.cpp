@@ -122,6 +122,7 @@ PixelEngine::prepareForCycle(uint8_t cycle)
     dc.verticalFrameFF = vic->verticalFrameFF;
     dc.mainFrameFF = vic->mainFrameFF;
     dc.data = vic->g_data;
+    // vic->g_data = 0;
     dc.character = vic->g_character;
     dc.color = vic->g_color;
     dc.mode = vic->g_mode;
@@ -185,8 +186,8 @@ PixelEngine::drawCanvas()
     } else {
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
-        updateColorRegisters();
-        setEightBackgroundPixels(xCoord, col_rgba[0]);
+        uint8_t bgcol = vic->getBackgroundColor();
+        setEightBackgroundPixels(xCoord, colors[bgcol]);
     }
 }
 
@@ -248,8 +249,15 @@ PixelEngine::drawBorder()
     // Standard case
     
     if (dc.mainFrameFF) {
-        int border_rgba = colors[dc.borderColor];
-        setEightFramePixels(xCoord, border_rgba);
+        setFramePixel(xCoord, colors[dc.borderColor]);
+        updateColorRegisters();
+        setFramePixel(xCoord + 1, colors[dc.borderColor]);
+        setFramePixel(xCoord + 2, colors[dc.borderColor]);
+        setFramePixel(xCoord + 3, colors[dc.borderColor]);
+        setFramePixel(xCoord + 4, colors[dc.borderColor]);
+        setFramePixel(xCoord + 5, colors[dc.borderColor]);
+        setFramePixel(xCoord + 6, colors[dc.borderColor]);
+        setFramePixel(xCoord + 7, colors[dc.borderColor]);
         return;
     }
 }
