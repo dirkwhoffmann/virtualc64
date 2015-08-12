@@ -25,13 +25,13 @@ extern unsigned dirktrace;
 extern unsigned dirkcnt;
 
 
-PixelEngine::PixelEngine(C64 *c64)
+PixelEngine::PixelEngine() // C64 *c64)
 {
     name = "PixelEngine";
     
     debug(2, "  Creating PixelEngine at address %p...\n", this);
     
-    this->c64 = c64;
+    // this->c64 = c64;
     
     // Delete screen buffers
     for (unsigned i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
@@ -51,6 +51,13 @@ PixelEngine::PixelEngine(C64 *c64)
 PixelEngine::~PixelEngine()
 {
     debug(2, "  Releasing PixelEngine...\n");
+}
+
+void
+PixelEngine::reset(C64 *c64)
+{
+    this->c64 = c64;
+    reset();
 }
 
 void
@@ -113,6 +120,7 @@ PixelEngine::endFrame()
 //                                   VIC state latching
 // -----------------------------------------------------------------------------------------------
 
+#if 0
 void
 PixelEngine::prepareForCycle(uint8_t cycle)
 {
@@ -122,12 +130,12 @@ PixelEngine::prepareForCycle(uint8_t cycle)
     dc.verticalFrameFF = vic->verticalFrameFF;
     dc.mainFrameFF = vic->mainFrameFF;
     dc.data = vic->g_data;
-    // vic->g_data = 0;
     dc.character = vic->g_character;
     dc.color = vic->g_color;
     dc.mode = vic->g_mode;
     dc.delay = vic->getHorizontalRasterScroll();
 }
+#endif
 
 void
 PixelEngine::updateColorRegisters()
@@ -144,11 +152,16 @@ PixelEngine::updateColorRegisters()
 // -----------------------------------------------------------------------------------------------
 
 void
-PixelEngine::drawCanvas()
+PixelEngine::draw()
 {
-    // assert(cycle >= 17 && cycle <= 56);
-    assert(dc.cycle >= 13 && dc.cycle <= 60);
-    
+    drawCanvas();
+    // TODO: drawSprites()
+    drawBorder();
+}
+
+inline void
+PixelEngine::drawCanvas()
+{    
     uint16_t xCoord = (dc.xCounter - 28) + vic->leftBorderWidth;
     
     /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
@@ -191,10 +204,10 @@ PixelEngine::drawCanvas()
     }
 }
 
-void
+inline void
 PixelEngine::drawCanvasPixel(uint16_t offset, uint8_t pixel)
 {
-    assert(pixel < 8);
+    // assert(pixel < 8);
     
     if (pixel == dc.delay) {
         
@@ -228,6 +241,168 @@ PixelEngine::drawCanvasPixel(uint16_t offset, uint8_t pixel)
 }
 
 void
+PixelEngine::drawAllSprites()
+{
+    if (vic->drawSprites) {
+        for (int i = 0; i < 8; i++) {
+            if (vic->oldSpriteOnOff & (1 << i)) {
+                drawSprite(i);
+            }
+        }
+    }
+}
+
+void
+PixelEngine::drawSprite(uint8_t nr)
+{
+    assert(nr < 8);
+    
+    int spriteX, offset;
+    spriteX = vic->getSpriteX(nr);
+    
+    if (spriteX < 488)
+        offset = spriteX + (vic->leftBorderWidth - 24);
+    else
+        offset = spriteX + (vic->leftBorderWidth - 24) - 488;
+    
+    if (vic->spriteIsMulticolor(nr)) {
+        
+        int colorLookup[4] = {
+            0x00,
+            colors[vic->spriteExtraColor1()],
+            colors[vic->spriteColor(nr)],
+            colors[vic->spriteExtraColor2()]
+        };
+        
+        for (int i = 0; i < 3; i++) {
+            uint8_t pattern = vic->spriteShiftReg[nr][i];
+            
+            uint8_t col;
+            if (vic->spriteWidthIsDoubled(nr)) {
+                col = (pattern >> 6) & 0x03;
+                if (col) {
+                    setSpritePixel(offset, colorLookup[col], nr);
+                    setSpritePixel(offset+1, colorLookup[col], nr);
+                    setSpritePixel(offset+2, colorLookup[col], nr);
+                    setSpritePixel(offset+3, colorLookup[col], nr);
+                }
+                col = (pattern >> 4) & 0x03;
+                if (col) {
+                    setSpritePixel(offset+4, colorLookup[col], nr);
+                    setSpritePixel(offset+5, colorLookup[col], nr);
+                    setSpritePixel(offset+6, colorLookup[col], nr);
+                    setSpritePixel(offset+7, colorLookup[col], nr);
+                }
+                col = (pattern >> 2) & 0x03;
+                if (col) {
+                    setSpritePixel(offset+8, colorLookup[col], nr);
+                    setSpritePixel(offset+9, colorLookup[col], nr);
+                    setSpritePixel(offset+10, colorLookup[col], nr);
+                    setSpritePixel(offset+11, colorLookup[col], nr);
+                }
+                col = pattern & 0x03;
+                if (col) {
+                    setSpritePixel(offset+12, colorLookup[col], nr);
+                    setSpritePixel(offset+13, colorLookup[col], nr);
+                    setSpritePixel(offset+14, colorLookup[col], nr);
+                    setSpritePixel(offset+15, colorLookup[col], nr);
+                }
+                offset += 16;
+            } else {
+                col = (pattern >> 6) & 0x03;
+                if (col) {
+                    setSpritePixel(offset, colorLookup[col], nr);
+                    setSpritePixel(offset+1, colorLookup[col], nr);
+                }
+                col = (pattern >> 4) & 0x03;
+                if (col) {
+                    setSpritePixel(offset+2, colorLookup[col], nr);
+                    setSpritePixel(offset+3, colorLookup[col], nr);
+                }
+                col = (pattern >> 2) & 0x03;
+                if (col) {
+                    setSpritePixel(offset+4, colorLookup[col], nr);
+                    setSpritePixel(offset+5, colorLookup[col], nr);
+                }
+                col = pattern & 0x03;
+                if (col) {
+                    setSpritePixel(offset+6, colorLookup[col], nr);
+                    setSpritePixel(offset+7, colorLookup[col], nr);
+                }
+                offset += 8;
+            }
+        }
+    } else {
+        int fgcolor = colors[vic->spriteColor(nr)];
+        for (int i = 0; i < 3; i++) {
+            uint8_t pattern = vic->spriteShiftReg[nr][i];
+            
+            if (vic->spriteWidthIsDoubled(nr)) {
+                if (pattern & 128) {
+                    setSpritePixel(offset, fgcolor, nr);
+                    setSpritePixel(offset+1, fgcolor, nr);
+                }
+                if (pattern & 64) {
+                    setSpritePixel(offset+2, fgcolor, nr);
+                    setSpritePixel(offset+3, fgcolor, nr);
+                }
+                if (pattern & 32) {
+                    setSpritePixel(offset+4, fgcolor, nr);
+                    setSpritePixel(offset+5, fgcolor, nr);
+                }
+                if (pattern & 16) {
+                    setSpritePixel(offset+6, fgcolor, nr);
+                    setSpritePixel(offset+7, fgcolor, nr);
+                }
+                if (pattern & 8) {
+                    setSpritePixel(offset+8, fgcolor, nr);
+                    setSpritePixel(offset+9, fgcolor, nr);
+                }
+                if (pattern & 4) {
+                    setSpritePixel(offset+10, fgcolor, nr);
+                    setSpritePixel(offset+11, fgcolor, nr);
+                }
+                if (pattern & 2) {
+                    setSpritePixel(offset+12, fgcolor, nr);
+                    setSpritePixel(offset+13, fgcolor, nr);
+                }
+                if (pattern & 1) {
+                    setSpritePixel(offset+14, fgcolor, nr);
+                    setSpritePixel(offset+15, fgcolor, nr);
+                }
+                offset += 16;
+            } else {
+                if (pattern & 128) {
+                    setSpritePixel(offset, fgcolor, nr);
+                }
+                if (pattern & 64) {
+                    setSpritePixel(offset+1, fgcolor, nr);
+                }
+                if (pattern & 32) {
+                    setSpritePixel(offset+2, fgcolor, nr);
+                }
+                if (pattern & 16) {
+                    setSpritePixel(offset+3, fgcolor, nr);
+                }
+                if (pattern & 8) {
+                    setSpritePixel(offset+4, fgcolor, nr);
+                }
+                if (pattern & 4) {
+                    setSpritePixel(offset+5, fgcolor, nr);
+                }
+                if (pattern & 2) {
+                    setSpritePixel(offset+6, fgcolor, nr);
+                }
+                if (pattern & 1) {
+                    setSpritePixel(offset+7, fgcolor, nr);
+                }
+                offset += 8;
+            }
+        }
+    }
+}
+
+inline void
 PixelEngine::drawBorder()
 {
     uint16_t xCoord = (dc.xCounter - 28) + vic->leftBorderWidth;
@@ -266,7 +441,7 @@ PixelEngine::drawBorder()
 //                         Mid level drawing (semantic pixel rendering)
 // -----------------------------------------------------------------------------------------------
 
-void
+inline void
 PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorSpace)
 {
     switch (mode) {
@@ -340,10 +515,9 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
     }
 }
 
-void
-PixelEngine::setSingleColorPixel(unsigned offset, uint8_t bit)
+inline void
+PixelEngine::setSingleColorPixel(unsigned offset, uint8_t bit /* valid: 0, 1 */)
 {
-    assert(bit <= 1);
     int rgba = col_rgba[bit];
     
     if (bit)
@@ -352,10 +526,9 @@ PixelEngine::setSingleColorPixel(unsigned offset, uint8_t bit)
         setBackgroundPixel(offset, rgba);
 }
 
-void
-PixelEngine::setMultiColorPixel(unsigned offset, uint8_t two_bits)
+inline void
+PixelEngine::setMultiColorPixel(unsigned offset, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
 {
-    assert(two_bits <= 3);
     int rgba = col_rgba[two_bits];
     
     if (two_bits & 0x02)
@@ -396,11 +569,12 @@ PixelEngine::setSpritePixel(unsigned offset, int color, int nr)
     }
 }
 
+
 // -----------------------------------------------------------------------------------------------
 //                        Low level drawing (pixel buffer access)
 // -----------------------------------------------------------------------------------------------
 
-void
+inline void
 PixelEngine::setFramePixel(unsigned offset, int rgba)
 {
     zBuffer[offset] = BORDER_LAYER_DEPTH;
@@ -408,7 +582,7 @@ PixelEngine::setFramePixel(unsigned offset, int rgba)
     pixelSource[offset] &= (~0x80); // disable sprite/foreground collision detection in border
 }
 
-void
+inline void
 PixelEngine::setForegroundPixel(unsigned offset, int rgba)
 {
     if (FOREGROUND_LAYER_DEPTH <= zBuffer[offset]) {
@@ -418,7 +592,7 @@ PixelEngine::setForegroundPixel(unsigned offset, int rgba)
     }
 }
 
-void
+inline void
 PixelEngine::setBackgroundPixel(unsigned offset, int rgba)
 {
     if (BACKGROUD_LAYER_DEPTH <= zBuffer[offset]) {
@@ -439,6 +613,23 @@ PixelEngine::setSpritePixel(unsigned offset, int rgba, int depth, int source)
     pixelSource[offset] |= source;
 }
 
+void
+PixelEngine::expandBorders()
+{
+    int color;
+    unsigned leftPixelPos = (-4-28) + vic->leftBorderWidth;
+    unsigned rightPixelPos = leftPixelPos+(48*8)-1;
+    
+    color = pixelBuffer[leftPixelPos];
+    for (unsigned i = 0; i <= leftPixelPos; i++)
+        // pixelBuffer[i] = colors[5];
+        pixelBuffer[i] = color;
+    
+    color = pixelBuffer[rightPixelPos];
+    for (unsigned i = rightPixelPos+1; i < vic->totalScreenWidth; i++)
+        // pixelBuffer[i] = colors[5];
+        pixelBuffer[i] = color;
+}
 
 void
 PixelEngine::markLine(uint8_t color, unsigned start, unsigned end)

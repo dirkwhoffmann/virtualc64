@@ -66,13 +66,14 @@ public:
     VIC *vic;
     
     //! Constructor
-    PixelEngine(C64 *c64);
+    PixelEngine();
     
     //! Destructor
     ~PixelEngine();
     
     //! Restore initial state
     void reset();
+    void reset(C64 *c64);
     
     //! Size of internal state
     uint32_t stateSize() { return 0; }
@@ -223,7 +224,7 @@ public:
         this process transparent, all gatheres information is stored in this structure. */
 
     struct {
-        // Gathered one cycle before drawing (in prepareForCycle)
+        // Updated one cycle before drawing (in VIC::reparePixelEngineForCycle)
         uint8_t cycle;
         uint32_t yCounter;
         int16_t xCounter;
@@ -235,22 +236,22 @@ public:
         DisplayMode mode;
         uint8_t delay;
 
-        // Gathered in the middle of a 8 pixel chunk (in drawCanvas)
+        //
+        // Updated in the middle of a 8 pixel chunk (in drawCanvas)
         uint8_t D011;
         uint8_t D016;
         
-        // Gathered in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
+        // Updated in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
         uint8_t borderColor;
         uint8_t backgroundColor[4];
     } dc;
     
     //! Latched portions of the VIC state
     /*! Latches everything that needs to be recorded one cycle prior to drawing */
-    void prepareForCycle(uint8_t cycle);
+    // void prepareForCycle(uint8_t cycle);
 
     //! Latched color information
     /*! This needs to be done after the first pixel has been drawn */
-    //! Update drawing contents with current colors
     void updateColorRegisters();
     
     
@@ -297,11 +298,7 @@ public:
     //! Synthesize 8 pixels according the the current drawing context.
     /*! This is the main entry point to all drawing routines.
         To get the correct output, preparePixelEngineForCycle() must be called one cycle before. */
-    inline void draw() {
-        drawCanvas();
-        // TODO: drawSprites()
-        drawBorder();
-    }
+    void draw();
 
 private:
     
@@ -316,7 +313,15 @@ private:
     //! Draws 8 sprite pixels
     /*! Invoked inside draw() */
     // TODO: drawSprintes();
-
+    
+    //! Draws all sprites into the pixelbuffer
+    /*! A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging */
+    void drawAllSprites();
+    
+    //! Draw single sprite into pixel buffer
+    /*! Helper function for drawSprites */
+    void drawSprite(uint8_t nr);
+    
     //! Draws 8 border pixels
     /*! Invoked inside draw() */
     void drawBorder();
@@ -387,6 +392,10 @@ public:
 
     //! Draw a single sprite pixel
     void setSpritePixel(unsigned offset, int rgba, int depth, int source);
+
+    //! Extend border to the left and right to look nice.
+    /*! This functions replicates the color of the leftmost and rightmost pixel */
+    void expandBorders();
 
     //! Draw a colored line into the screen buffer
     /*! This method is utilized for debugging purposes, only. */

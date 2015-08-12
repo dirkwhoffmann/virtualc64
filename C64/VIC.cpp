@@ -38,7 +38,7 @@ VIC::VIC(C64 *c64)
 	this->c64 = c64;
     
     // Create sub components
-    pixelEngine = new PixelEngine(c64);
+    // pixelEngine = new PixelEngine(c64);
     
 	// Start with all debug options disabled
 	markIRQLines = false;
@@ -59,7 +59,7 @@ VIC::reset()
     mem = c64->mem;
     
     // Reset subcomponents
-    pixelEngine->reset();
+    pixelEngine.reset(c64);
 
 	// Internal registers
     xCounter = 0;
@@ -596,167 +596,6 @@ inline bool VIC::sThirdAccess(int sprite)
 
 
 
-void inline
-VIC::drawAllSprites()
-{	
-	if (drawSprites) {
-		for (int i = 0; i < 8; i++) {
-			if (oldSpriteOnOff & (1 << i)) {
-				drawSprite(i);
-			}				
-		}
-	}
-}
-
-void
-VIC::drawSprite(uint8_t nr)
-{
-	assert(nr < 8);
-	
-	int spriteX, offset;
-	spriteX = getSpriteX(nr);
-	
-	if (spriteX < 488) 
-		offset = spriteX + (leftBorderWidth - 24);
-	else
-		offset = spriteX + (leftBorderWidth - 24) - 488;
-	
-	if (spriteIsMulticolor(nr)) {
-		
-		int colorLookup[4] = { 
-			0x00, 
-			pixelEngine->colors[spriteExtraColor1()],
-			pixelEngine->colors[spriteColor(nr)],
-			pixelEngine->colors[spriteExtraColor2()]
-		};
-		
-		for (int i = 0; i < 3; i++) {
-			uint8_t pattern = spriteShiftReg[nr][i]; 
-			
-			uint8_t col;
-			if (spriteWidthIsDoubled(nr)) {
-				col = (pattern >> 6) & 0x03;
-				if (col) {
-					pixelEngine->setSpritePixel(offset, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+1, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+2, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+3, colorLookup[col], nr);
-				}
-				col = (pattern >> 4) & 0x03;
-				if (col) {
-					pixelEngine->setSpritePixel(offset+4, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+5, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+6, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+7, colorLookup[col], nr);
-				}
-				col = (pattern >> 2) & 0x03;
-				if (col) {
-					pixelEngine->setSpritePixel(offset+8, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+9, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+10, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+11, colorLookup[col], nr);
-				}
-				col = pattern & 0x03;
-				if (col) {
-					pixelEngine->setSpritePixel(offset+12, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+13, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+14, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+15, colorLookup[col], nr);
-				}				
-				offset += 16;
-			} else {
-				col = (pattern >> 6) & 0x03;
-				if (col) {
-					pixelEngine->setSpritePixel(offset, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+1, colorLookup[col], nr);
-				}
-				col = (pattern >> 4) & 0x03;
-				if (col) {
-					pixelEngine->setSpritePixel(offset+2, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+3, colorLookup[col], nr);
-				}
-				col = (pattern >> 2) & 0x03;
-				if (col) {
-					pixelEngine->setSpritePixel(offset+4, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+5, colorLookup[col], nr);
-				}
-				col = pattern & 0x03;
-				if (col) {
-					pixelEngine->setSpritePixel(offset+6, colorLookup[col], nr);
-					pixelEngine->setSpritePixel(offset+7, colorLookup[col], nr);
-				}				
-				offset += 8;
-			}
-		}
-	} else {
-		int fgcolor = pixelEngine->colors[spriteColor(nr)];
-		for (int i = 0; i < 3; i++) {
-			uint8_t pattern = spriteShiftReg[nr][i]; 
-			
-			if (spriteWidthIsDoubled(nr)) {
-				if (pattern & 128) {
-					pixelEngine->setSpritePixel(offset, fgcolor, nr);
-					pixelEngine->setSpritePixel(offset+1, fgcolor, nr);
-				}
-				if (pattern & 64) {
-					pixelEngine->setSpritePixel(offset+2, fgcolor, nr);
-					pixelEngine->setSpritePixel(offset+3, fgcolor, nr);
-				}
-				if (pattern & 32) {
-					pixelEngine->setSpritePixel(offset+4, fgcolor, nr);
-					pixelEngine->setSpritePixel(offset+5, fgcolor, nr);
-				}
-				if (pattern & 16) {
-					pixelEngine->setSpritePixel(offset+6, fgcolor, nr);
-					pixelEngine->setSpritePixel(offset+7, fgcolor, nr);
-				}
-				if (pattern & 8) {
-					pixelEngine->setSpritePixel(offset+8, fgcolor, nr);
-					pixelEngine->setSpritePixel(offset+9, fgcolor, nr);
-				}
-				if (pattern & 4) {
-					pixelEngine->setSpritePixel(offset+10, fgcolor, nr);
-					pixelEngine->setSpritePixel(offset+11, fgcolor, nr);
-				}
-				if (pattern & 2) {
-					pixelEngine->setSpritePixel(offset+12, fgcolor, nr);
-					pixelEngine->setSpritePixel(offset+13, fgcolor, nr);
-				}
-				if (pattern & 1) {
-					pixelEngine->setSpritePixel(offset+14, fgcolor, nr);
-					pixelEngine->setSpritePixel(offset+15, fgcolor, nr);
-				}
-				offset += 16;
-			} else {
-				if (pattern & 128) {
-					pixelEngine->setSpritePixel(offset, fgcolor, nr);
-				}
-				if (pattern & 64) {
-					pixelEngine->setSpritePixel(offset+1, fgcolor, nr);
-				}
-				if (pattern & 32) {
-					pixelEngine->setSpritePixel(offset+2, fgcolor, nr);
-				}
-				if (pattern & 16) {
-					pixelEngine->setSpritePixel(offset+3, fgcolor, nr);
-				}
-				if (pattern & 8) {
-					pixelEngine->setSpritePixel(offset+4, fgcolor, nr);
-				}
-				if (pattern & 4) {
-					pixelEngine->setSpritePixel(offset+5, fgcolor, nr);
-				}
-				if (pattern & 2) {
-					pixelEngine->setSpritePixel(offset+6, fgcolor, nr);
-				}
-				if (pattern & 1) {
-					pixelEngine->setSpritePixel(offset+7, fgcolor, nr);
-				}
-				offset += 8;
-			}
-		}
-	}
-}
 
 
 // -----------------------------------------------------------------------------------------------
@@ -1112,35 +951,9 @@ void
 VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
 {
     if (comparisonValue == leftComparisonValue()) {
-        
-        // "4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-        //     den unteren, wird das vertikale Rahmenflipflop gesetzt." [C.B.]
-        
-/* OLD CODE
-        if (yCounter == lowerComparisonValue()) {
-            verticalFrameFF = true;
-        }
-*/
-        /* VICE HANDLES THIS IN CYCLE 1 */
-/*
-        if (verticalFrameFFsetCond) {
-            verticalFrameFF = true;
-        }
-*/
-        // "5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
-        //     den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
-        //     vertikale Rahmenflipflop gelšscht." [C.B.]
-        
-/* OLD CODE
-        else if (yCounter == upperComparisonValue() && DENbit()) {
-            verticalFrameFF = false;
-        }
-*/
-        // Now handled in 'checkVerticalFrameFF'
-        
+
         // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
         //     vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
-        // verticalFrameFF = false;
         clearMainFrameFF();
     }
 
@@ -1177,7 +990,7 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
 void 
 VIC::beginFrame()
 {
-    pixelEngine->beginFrame();
+    pixelEngine.beginFrame();
     
 	lightpenIRQhasOccured = false;
 
@@ -1199,7 +1012,7 @@ VIC::beginFrame()
 void
 VIC::endFrame()
 {
-    pixelEngine->endFrame();
+    pixelEngine.endFrame();
 }
 
 void 
@@ -1220,7 +1033,7 @@ VIC::beginRasterline(uint16_t line)
     // The initial value can change in the middle of a rasterline.
     updateBadLineCondition();
     
-    pixelEngine->beginRasterline();
+    pixelEngine.beginRasterline();
 }
 
 void 
@@ -1231,10 +1044,25 @@ VIC::endRasterline()
         verticalFrameFF = true;
     }
     
-    pixelEngine->endRasterline();
+    pixelEngine.endRasterline();
 }
 
-void 
+void
+VIC::preparePixelEngineForCycle(uint8_t cycle)
+{
+    pixelEngine.dc.cycle = cycle;
+    pixelEngine.dc.yCounter = yCounter;
+    pixelEngine.dc.xCounter = xCounter;
+    pixelEngine.dc.verticalFrameFF = verticalFrameFF;
+    pixelEngine.dc.mainFrameFF = mainFrameFF;
+    pixelEngine.dc.data = g_data;
+    pixelEngine.dc.character = g_character;
+    pixelEngine.dc.color = g_color;
+    pixelEngine.dc.mode = g_mode;
+    pixelEngine.dc.delay = getHorizontalRasterScroll();
+}
+
+void
 VIC::cycle1()
 {
     dirk();
@@ -1661,7 +1489,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
 
     // Phi1.2 Draw
     xCounter = -4;
-    pixelEngine->prepareForCycle(13); // Prepare for next cycle (first border column)
+    preparePixelEngineForCycle(13); // Prepare for next cycle (first border column)
 
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess();
@@ -1687,8 +1515,8 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (first border column)
-    pixelEngine->prepareForCycle(14); // Prepare for next cycle (border column 2)
+    pixelEngine.draw(); // Draw previous cycle (first border column)
+    preparePixelEngineForCycle(14); // Prepare for next cycle (border column 2)
 
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
     rAccess();
@@ -1724,8 +1552,8 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (border column 2)
-    pixelEngine->prepareForCycle(15); // Prepare for next cycle (border column 3)
+    pixelEngine.draw(); // Draw previous cycle (border column 2)
+    preparePixelEngineForCycle(15); // Prepare for next cycle (border column 3)
     
     // Phi1.3 Fetch (last DRAM refresh)
     rAccess();
@@ -1754,8 +1582,8 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (border column 3)
-    pixelEngine->prepareForCycle(16); // Prepare for next cycle (border column 4)
+    pixelEngine.draw(); // Draw previous cycle (border column 3)
+    preparePixelEngineForCycle(16); // Prepare for next cycle (border column 4)
     
     // Phi1.3 Fetch
     gAccess();
@@ -1807,8 +1635,8 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
     checkFrameFlipflopsLeft(24);
     
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (border column 4)
-    pixelEngine->prepareForCycle(17); // Prepare for next cycle (first canvas column)
+    pixelEngine.draw(); // Draw previous cycle (border column 4)
+    preparePixelEngineForCycle(17); // Prepare for next cycle (first canvas column)
     
     // Phi1.3 Fetch
     gAccess();
@@ -1837,8 +1665,8 @@ VIC::cycle18() // SpriteX: 32 - 39
     checkFrameFlipflopsLeft(31);
     
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (first canvas column)
-    pixelEngine->prepareForCycle(18); // Prepare for next cycle (canvas column 2)
+    pixelEngine.draw(); // Draw previous cycle (first canvas column)
+    preparePixelEngineForCycle(18); // Prepare for next cycle (canvas column 2)
 
     // Phi1.3 Fetch
     gAccess();
@@ -1866,8 +1694,8 @@ VIC::cycle19to54()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle
-    pixelEngine->prepareForCycle(19); // Prepare for next cycle
+    pixelEngine.draw(); // Draw previous cycle
+    preparePixelEngineForCycle(19); // Prepare for next cycle
     
     // Phi1.3 Fetch
     gAccess();
@@ -1895,8 +1723,8 @@ VIC::cycle55()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (canvas column)
-    pixelEngine->prepareForCycle(55); // Prepare for next cycle (canvas column)
+    pixelEngine.draw(); // Draw previous cycle (canvas column)
+    preparePixelEngineForCycle(55); // Prepare for next cycle (canvas column)
     
     // Phi1.3 Fetch
     gAccess();
@@ -1941,8 +1769,8 @@ VIC::cycle56()
     checkFrameFlipflopsRight(335);
 
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (canvas column)
-    pixelEngine->prepareForCycle(56); // Prepare for next cycle (last canvas column)
+    pixelEngine.draw(); // Draw previous cycle (canvas column)
+    preparePixelEngineForCycle(56); // Prepare for next cycle (last canvas column)
     
     // Phi1.3 Fetch
     rIdleAccess();
@@ -1972,8 +1800,8 @@ VIC::cycle57()
     checkFrameFlipflopsRight(344);
     
     // Phi1.2 Draw (border starts here)
-    pixelEngine->draw(); // Draw previous cycle (last canvas column)
-    pixelEngine->prepareForCycle(57); // Prepare for next cycle (first column of right border)
+    pixelEngine.draw(); // Draw previous cycle (last canvas column)
+    preparePixelEngineForCycle(57); // Prepare for next cycle (first column of right border)
     
     // Phi1.3 Fetch
     rIdleAccess();
@@ -2003,8 +1831,8 @@ VIC::cycle58()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (first column of right border)
-    pixelEngine->prepareForCycle(58); // Prepare for next cycle (column 2 of right border)
+    pixelEngine.draw(); // Draw previous cycle (first column of right border)
+    preparePixelEngineForCycle(58); // Prepare for next cycle (column 2 of right border)
     
     // Phi1.3 Fetch
     if (isPAL)
@@ -2032,7 +1860,7 @@ VIC::cycle58()
 	}
 		
 	// Draw rasterline into pixel buffer
-	drawAllSprites();
+	pixelEngine.drawAllSprites();
 			
 	// switch off sprites if dma is off
 	for (int i = 0; i < 8; i++) {
@@ -2064,24 +1892,6 @@ VIC::cycle58()
         registerRC = (registerRC + 1) & 0x07;
     }
     
-    /* OLD
-    //if (displayState && registerRC == 7 && !badLineCondition) {
-    //    displayState = false;
-    //    registerVCBASE = registerVC;
-    // }
-    
-    // "Ist die Videologik danach im Display-Zustand (liegt ein
-    //  Bad-Line-Zustand vor, ist dies immer der Fall), wird RC erhšht." [C.B.]
-    
-    if (displayState) {
-        // 3 bit overflow register
-        registerRC = (registerRC + 1) & 0x07;
-    } else {
-        // "(liegt ein Bad-Line-Zustand vor, ist dies immer der Fall)"
-        assert(!badLineCondition);
-    }
-    */
-    
     // Phi2.4 BA logic
     setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     
@@ -2103,8 +1913,8 @@ VIC::cycle59()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (column 2 of right border)
-    pixelEngine->prepareForCycle(59); // Prepare for next cycle (column 3 of right border)
+    pixelEngine.draw(); // Draw previous cycle (column 2 of right border)
+    preparePixelEngineForCycle(59); // Prepare for next cycle (column 3 of right border)
     
     // Phi1.3 Fetch
     if (isPAL)
@@ -2141,8 +1951,8 @@ VIC::cycle60()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw (last visible cycle)
-    pixelEngine->draw(); // Draw previous cycle (column 3 of right border)
-    pixelEngine->prepareForCycle(60); // Prepare for next cycle (last column of right border)
+    pixelEngine.draw(); // Draw previous cycle (column 3 of right border)
+    preparePixelEngineForCycle(60); // Prepare for next cycle (last column of right border)
     
     // Phi1.3 Fetch
     if (isPAL)
@@ -2179,7 +1989,7 @@ VIC::cycle61()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    pixelEngine->draw(); // Draw previous cycle (last column of right border)
+    pixelEngine.draw(); // Draw previous cycle (last column of right border)
     
     // Phi1.3 Fetch
     if (isPAL)
@@ -2250,46 +2060,17 @@ VIC::cycle63()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
-    
-    // "2. Erreicht die Y-Koordinate den unteren Vergleichswert in Zyklus 63, wird
-    //     das vertikale Rahmenflipflop gesetzt." [C.B.]
-    /*
-    if (yCounter == lowerComparisonValue()) {
-        verticalFrameFF = true;
-    }
-    */
-    // "3. Erreicht die Y-Koordinate den oberern Vergleichswert in Zyklus 63 und
-    //     ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
-    //     Rahmenflipflop gelšscht." [C.B.]
-    /*
-    else if (yCounter == upperComparisonValue() && DENbit()) {
-        verticalFrameFF = false;
-    }
-    */
-    
+        
     // Phi1.2 Draw
-
-    // TODO: MOVE TO PixelEngine::endOfRasterline
-    // Extend pixel buffer to the left and right to make it look nice
-    int color = pixelEngine->pixelBuffer[22];
-    for (unsigned i = 0; i <= 22; i++) {
-        pixelEngine->pixelBuffer[i] = color;
-    }
-    
-    color = pixelEngine->pixelBuffer[389];
-    for (unsigned i = 390; i < totalScreenWidth; i++) {
-        pixelEngine->pixelBuffer[i] = color;
-    }
-
-	// draw debug markers
-
-    
+    pixelEngine.expandBorders(); // Make the border look nice
+ 
+	// Draw debug markers
     if (markIRQLines && yCounter == rasterInterruptLine())
-        pixelEngine->markLine(PixelEngine::WHITE);
+        pixelEngine.markLine(PixelEngine::WHITE);
      if (markDMALines && badLineCondition)
-        pixelEngine->markLine(PixelEngine::RED);
+        pixelEngine.markLine(PixelEngine::RED);
     if (rasterlineDebug[yCounter] >= 0)
-        pixelEngine->markLine(rasterlineDebug[yCounter] % 16);
+        pixelEngine.markLine(rasterlineDebug[yCounter] % 16);
     
     // Phi1.3 Fetch
     if (isPAL)

@@ -97,9 +97,7 @@ CPU::fetch() {
     }
     */
     
-    
-    
-    FETCH_OPCODE;
+    FETCH_OPCODE
     next = actionFunc[opcode];
 }
 

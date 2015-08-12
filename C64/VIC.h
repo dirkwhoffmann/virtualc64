@@ -56,7 +56,7 @@ class VIC : public VirtualComponent {
     friend class PixelEngine;
     
     //! Reference to the attached pixel engine (encapsulates drawing routines)
-    PixelEngine *pixelEngine;
+    PixelEngine pixelEngine;
     
 	// -----------------------------------------------------------------------------------------------
 	//                                     Constant definitions
@@ -198,9 +198,12 @@ private:
         overflow condition which is handled in cycle 2 */
     uint32_t yCounter;
     
-	//! Internal x counter of the sequencer
+	//! Internal x counter of the sequencer (sptrite coordinate system)
 	int16_t xCounter;
 	
+    //! Increase x counter by 8
+    inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
+
 	//! Internal VIC register, 10 bit video counter
 	uint16_t registerVC;
 	
@@ -581,7 +584,7 @@ public:
 	~VIC();
 	
 	//! Get screen buffer that is currently stable
-    inline void *screenBuffer() { return pixelEngine->screenBuffer(); }
+    inline void *screenBuffer() { return pixelEngine.screenBuffer(); }
 
 	//! Reset the VIC chip to its initial state
 	void reset();
@@ -598,6 +601,7 @@ public:
 	//! Dump internal state to console
 	void dumpState();	
 	
+    
 	// -----------------------------------------------------------------------------------------------
 	//                                         Configuring
 	// -----------------------------------------------------------------------------------------------
@@ -611,34 +615,15 @@ public:
 	void setNTSC();	
 
     //! Get color scheme
-    PixelEngine::ColorScheme getColorScheme() { return pixelEngine->colorScheme; }
+    PixelEngine::ColorScheme getColorScheme() { return pixelEngine.colorScheme; }
 
 	//! Set color scheme
-    void setColorScheme(PixelEngine::ColorScheme scheme) { pixelEngine->setColorScheme(scheme); }
+    void setColorScheme(PixelEngine::ColorScheme scheme) { pixelEngine.setColorScheme(scheme); }
 	
     //! Get color
-	uint32_t getColor(int nr) { return pixelEngine->colors[nr]; }
+	uint32_t getColor(int nr) { return pixelEngine.colors[nr]; }
     
     
-	// -----------------------------------------------------------------------------------------------
-	//                                         Drawing
-	// -----------------------------------------------------------------------------------------------
-
-private:	
-
-    //! Draws all sprites into the pixelbuffer
-    /*! A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging */
-    void drawAllSprites();
-    
-    //! Draw single sprite into pixel buffer
-    /*! Helper function for drawSprites */
-    void drawSprite(uint8_t nr);
-        
-    //! Increase the x coordinate by 8 (sptrite coordinate system)
-    inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
-
-			
-	
 	// -----------------------------------------------------------------------------------------------
 	//                                       Getter and setter
 	// -----------------------------------------------------------------------------------------------
@@ -694,6 +679,7 @@ public:
 	
     //! Return last value on VIC data bus
     uint8_t getDataBus() { return dataBus; }
+    
     
 	// -----------------------------------------------------------------------------------------------
 	//                                         Properties
@@ -1017,7 +1003,11 @@ public:
 	//! Finish frame
 	/*! This function is called after the last cycle of the last rasterline */
 	void endFrame();
-		
+	
+    //! Push portions of the VIC state into the pixel engine
+    /*! Pushs everything that needs to be recorded one cycle prior to drawing */
+    void preparePixelEngineForCycle(uint8_t cycle);
+    
 	//! VIC execution functions
 	void cycle1();  void cycle2();  void cycle3();  void cycle4();
     void cycle5();  void cycle6();  void cycle7();  void cycle8();
