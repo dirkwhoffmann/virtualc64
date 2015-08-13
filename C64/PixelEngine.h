@@ -17,9 +17,13 @@
  */
 
 // CLEANUP:
-// in draw() dc.delay is set to gs_delay.
-// If this value is latched in preparePixelEngine... , gs_delay is not needed any more(?)
-
+//
+// SPEEDUP:
+// xCoord is computed multiple times per cycle
+// introduce bufferXOffset, bufferYOffset
+// When setting to (0,0) let pixelbuffer point to something like screenBuffer[bufferYOffset*512 + bufferXOffset]
+// Then, xCoord is the same as dc.xCounter
+//
 // TODO:
 //
 // 1. Texture does not extent to the bottom
@@ -160,15 +164,18 @@ private:
     /*! The variable points either to screenBuffer1 or screenBuffer2 */
     int *currentScreenBuffer;
     
-    //! Pointer to the current rasterline
+    //! Pointer to the beginning of the current rasterline
     /*! This pointer is used by all rendering methods to write pixels. It always points to the beginning of a
         rasterline, either in screenBuffer1 or screenBuffer2. It is reset at the beginning of each frame and 
         incremented at the beginning of each rasterline. */
     int *pixelBuffer;
     
-    //! Temporary pixel source
-    /*! Data is first created here and later copied to pixelBuffer */
-    int pixelBufferTmp[2];
+    //! Pointer into the current rasterline
+    /*! This value of this variable equals pixelBuffer plus some offset. It is a "shifted version" of the 
+        pixel variables that can directly be accessed via xCounter as array offset. In previous versions
+        of the emulator, the xCounter had to be transformed to the proper array offset multiple times. Hence, 
+        this variables has mainly been introduced for speedup purposes. */
+    int *pxbuf;
     
     //! Z buffer
     /*! Virtual VICII uses depth buffering to determine pixel priority. In the various render routines, a pixel is 
@@ -246,14 +253,18 @@ public:
         uint8_t backgroundColor[4];
     } dc;
     
-    //! Latched portions of the VIC state
+    //! Latches portions of the VIC state
     /*! Latches everything that needs to be recorded one cycle prior to drawing */
     // void prepareForCycle(uint8_t cycle);
 
-    //! Latched color information
-    /*! This needs to be done after the first pixel has been drawn */
+    //! Latches the four drawing colors
+    /*! This needs to be done after the first canvas pixel has been drawn */
     void updateColorRegisters();
-    
+
+    //! Latches the border color
+    /*! This needs to be done after the first border pixel has been drawn */
+    void updateBorderColorRegister();
+
     
     // -----------------------------------------------------------------------------------------------
     //                        Shift register logic (handled in drawCanvasPixel)

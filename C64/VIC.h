@@ -17,8 +17,8 @@
  */
 
 // TODO:
-// Making PixelEngine a class has considerably slowed down the emulator.
-// Integrate it in VIC again? 
+// loadColors is done after drawing the first pixel
+// Hence, loadColors is not called at the beginning of the frame which may cause the regtiming border issue. 
 //
 // 3. Make sprite drawing cycle based.
 // 4. Replace pixel buffers by 8 bit variables and implement mixer(). This makes z buffering obsolete.
