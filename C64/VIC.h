@@ -568,7 +568,7 @@ private:
 	//! mark rasterline for debugging
 	/*! If set to a positive value, the specific rasterline is highlighted. The feature is intended for 
 	    debugging purposes, only */
-	int rasterlineDebug[MAX_RASTERLINES];
+    int8_t rasterlineDebug[MAX_RASTERLINES];
 
 	
 	// -----------------------------------------------------------------------------------------------

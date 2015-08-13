@@ -119,9 +119,7 @@ VIC::reset()
     
 	// Debugging	
 	drawSprites = true;
-	for (int i = 0; i < MAX_VIEWABLE_RASTERLINES; i++) {
-		rasterlineDebug[i] = -1;
-	}
+    memset(rasterlineDebug, -1, sizeof(rasterlineDebug));
 	spriteSpriteCollisionEnabled = 0xFF;
 	spriteBackgroundCollisionEnabled = 0xFF;
 }
