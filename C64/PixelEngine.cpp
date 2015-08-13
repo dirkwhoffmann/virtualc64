@@ -166,12 +166,9 @@ PixelEngine::updateBorderColorRegister()
 //                          High level drawing (canvas, sprites, border)
 // -----------------------------------------------------------------------------------------------
 
-static unsigned dcnt = 0;
-
 void
 PixelEngine::draw()
 {
-    if (dcnt++ < 200) printf("%d (%d)\n", vic->xCounter, dc.xCounter);
     drawBorder();
     drawCanvas();
     // TODO: drawSprites()
