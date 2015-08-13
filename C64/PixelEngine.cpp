@@ -193,52 +193,47 @@ PixelEngine::draw55()
 inline void
 PixelEngine::drawBorder()
 {
-    int16_t xCoord = dc.xCounter;
-
-#if 0
-    // Take special care of 38 column mode
-    if (dc.cycle == 17 && dc.mainFrameFF && !vic->mainFrameFF) {
-        int border_rgba = colors[dc.borderColor];
-        setSevenFramePixels(xCoord, border_rgba);
-        return;
-    }
-    
-    if (dc.cycle == 55 && !dc.mainFrameFF && vic->mainFrameFF) {
-        int border_rgba = colors[dc.borderColor];
-        setFramePixel(xCoord+7, border_rgba);
-        return;
-    }
-#endif
-    
     if (dc.mainFrameFF) {
+        
+        int16_t xCoord = dc.xCounter;
         setFramePixel(xCoord++, colors[dc.borderColor]);
         
         // After the first pixel has been drawn, color register changes show up
         updateBorderColorRegister();
         
-        setFramePixel(xCoord++, colors[dc.borderColor]);
-        setFramePixel(xCoord++, colors[dc.borderColor]);
-        setFramePixel(xCoord++, colors[dc.borderColor]);
-        setFramePixel(xCoord++, colors[dc.borderColor]);
-        setFramePixel(xCoord++, colors[dc.borderColor]);
-        setFramePixel(xCoord++, colors[dc.borderColor]);
-        setFramePixel(xCoord++, colors[dc.borderColor]);
-        return;
+        int rgba = colors[dc.borderColor];
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
     }
 }
 
 inline void
 PixelEngine::drawBorder17()
 {
-    int16_t xCoord = dc.xCounter;
-    
     if (dc.mainFrameFF && !vic->mainFrameFF) {
+        
+        int16_t xCoord = dc.xCounter;
 
         // 38 column mode
-        int border_rgba = colors[dc.borderColor];
-        // TODO: Color needs update after pixel 1
-        setSevenFramePixels(xCoord, border_rgba);
-
+        setFramePixel(xCoord++, colors[dc.borderColor]);
+        
+        // After the first pixel has been drawn, color register changes show up
+        updateBorderColorRegister();
+        
+        int rgba = colors[dc.borderColor];
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord++, rgba);
+        setFramePixel(xCoord, rgba);
+        // No pixel 8, we draw 7 pixels, only.
+        
     } else {
 
         // 40 column mode
@@ -249,14 +244,11 @@ PixelEngine::drawBorder17()
 inline void
 PixelEngine::drawBorder55()
 {
-    int16_t xCoord = dc.xCounter;
-    
     if (!dc.mainFrameFF && vic->mainFrameFF) {
         
         // 38 column mode
-        int border_rgba = colors[dc.borderColor];
-        setFramePixel(xCoord+7, border_rgba);
-
+        setFramePixel(dc.xCounter+7, colors[dc.borderColor]);
+        
     } else {
         
         // 40 column mode

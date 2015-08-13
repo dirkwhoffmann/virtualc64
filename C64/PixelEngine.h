@@ -413,11 +413,7 @@ public:
 
     //! Draw a single frame pixel
     void setFramePixel(int offset, int rgba);
-    
-    //! Draw seven frame pixels in a row
-    inline void setSevenFramePixels(int offset, int rgba) {
-        for (unsigned i = 0; i < 7; i++) setFramePixel(offset++, rgba); }
-    
+        
     //! Draw eight frame pixels in a row
     inline void setEightFramePixels(int offset, int rgba) {
         for (unsigned i = 0; i < 8; i++) setFramePixel(offset++, rgba); }
