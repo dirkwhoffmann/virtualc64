@@ -19,10 +19,6 @@
 // CLEANUP:
 //
 // SPEEDUP:
-// xCoord is computed multiple times per cycle
-// introduce bufferXOffset, bufferYOffset
-// When setting to (0,0) let pixelbuffer point to something like screenBuffer[bufferYOffset*512 + bufferXOffset]
-// Then, xCoord is the same as dc.xCounter
 //
 // TODO:
 //
@@ -42,6 +38,14 @@
 // Forward declarations
 class VIC;
 class C64;
+
+// Depth of different drawing layers
+#define BORDER_LAYER_DEPTH 0x10         /* in front of everything */
+#define SPRITE_LAYER_FG_DEPTH 0x20      /* behind border */
+#define FOREGROUND_LAYER_DEPTH 0x30     /* behind sprite 1 layer  */
+#define SPRITE_LAYER_BG_DEPTH 0x40      /* behind foreground */
+#define BACKGROUD_LAYER_DEPTH 0x50      /* behind sprite 2 layer */
+#define BEIND_BACKGROUND_DEPTH 0x60     /* behind background */
 
 //! Display mode
 enum DisplayMode {
@@ -185,12 +189,22 @@ private:
      */
     int zBuffer[MAX_VIEWABLE_PIXELS];
     
+    //! Pointer into the z buffer
+    /*! This value of this variable equals zBufer plus some offset. Using this variable instead of zBuffer makes 
+        the z buffer accessible via the sprite coordinate system (via xCounter). */
+    int *zbuf;
+
     //! Indicates the source of a drawn pixel
     /*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
      The information is utilized to detect sprite-sprite and sprite-background collisions.
      */
     int pixelSource[MAX_VIEWABLE_PIXELS];
     
+    //! Pointer into the pixel source buffer
+    /*! This value of this variable equals pixelSource plus some offset. Using this variable instead of pixelSource makes
+     the source buffer accessible via the sprite coordinate system (via xCounter). */
+    int *srcbuf;
+
 public:
     
     //! Set color scheme
@@ -232,7 +246,6 @@ public:
 
     struct {
         // Updated one cycle before drawing (in VIC::reparePixelEngineForCycle)
-        uint8_t cycle;
         uint32_t yCounter;
         int16_t xCounter;
         bool verticalFrameFF;
@@ -307,9 +320,16 @@ public:
 public:
   
     //! Synthesize 8 pixels according the the current drawing context.
-    /*! This is the main entry point to all drawing routines.
+    /*! This is the main entry point and is invoked in each VIC drawing cycle, except cycle 17 and 
+        cycle 55 which are handles seperately for speedup purposes.
         To get the correct output, preparePixelEngineForCycle() must be called one cycle before. */
     void draw();
+
+    //! The draw routine for cycle 17
+    void draw17();
+
+    //! The draw routine for cycle 55
+    void draw55();
 
 private:
     
@@ -319,7 +339,7 @@ private:
     
     //! Draws a single canvas pixel
     /*! pixel is the pixel number and must be in the range 0 to 7 */
-    void drawCanvasPixel(uint16_t offset, uint8_t pixel);
+    void drawCanvasPixel(int16_t offset, uint8_t pixel);
     
     //! Draws 8 sprite pixels
     /*! Invoked inside draw() */
@@ -336,7 +356,15 @@ private:
     //! Draws 8 border pixels
     /*! Invoked inside draw() */
     void drawBorder();
-    
+
+    //! Draws 8 border pixels
+    /*! Invoked inside draw17() */
+    void drawBorder17();
+
+    //! Draws 8 border pixels
+    /*! Invoked inside draw55() */
+    void drawBorder55();
+
     
     // -----------------------------------------------------------------------------------------------
     //                         Mid level drawing (semantic pixel rendering)
@@ -362,16 +390,16 @@ public:
     //! Draw single canvas pixel in single-color mode
     /*! 1s are drawn with setForegroundPixel, 0s are drawn with setBackgroundPixel.
      Uses the drawing colors that are setup by loadColors(). */
-    void setSingleColorPixel(unsigned offset, uint8_t bit);
+    void setSingleColorPixel(int offset, uint8_t bit);
     
     //! Draw single canvas pixel in multi-color mode
     /*! The left of the two color bits determines whether setForegroundPixel or setBackgroundPixel is used.
      Uses the drawing colors that are setup by loadColors(). */
-    void setMultiColorPixel(unsigned offset, uint8_t two_bits);
+    void setMultiColorPixel(int offset, uint8_t two_bits);
     
     //! Draw a single foreground pixel
     /*! The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected. */
-    void setSpritePixel(unsigned offset, int color, int nr);
+    void setSpritePixel(int offset, int color, int nr);
 
     
     // -----------------------------------------------------------------------------------------------
@@ -381,28 +409,28 @@ public:
 public:
 
     //! Draw a single frame pixel
-    void setFramePixel(unsigned offset, int rgba);
+    void setFramePixel(int offset, int rgba);
     
     //! Draw seven frame pixels in a row
-    inline void setSevenFramePixels(unsigned offset, int rgba) {
+    inline void setSevenFramePixels(int offset, int rgba) {
         for (unsigned i = 0; i < 7; i++) setFramePixel(offset++, rgba); }
     
     //! Draw eight frame pixels in a row
-    inline void setEightFramePixels(unsigned offset, int rgba) {
+    inline void setEightFramePixels(int offset, int rgba) {
         for (unsigned i = 0; i < 8; i++) setFramePixel(offset++, rgba); }
     
     //! Draw a single foreground pixel
-    void setForegroundPixel(unsigned offset, int rgba);
+    void setForegroundPixel(int offset, int rgba);
     
     //! Draw a single background pixel
-    void setBackgroundPixel(unsigned offset, int rgba);
+    void setBackgroundPixel(int offset, int rgba);
 
     //! Draw eight background pixels in a row
-    inline void setEightBackgroundPixels(unsigned offset, int rgba) {
+    inline void setEightBackgroundPixels(int offset, int rgba) {
         for (unsigned i = 0; i < 8; i++) setBackgroundPixel(offset++, rgba); }
 
     //! Draw a single sprite pixel
-    void setSpritePixel(unsigned offset, int rgba, int depth, int source);
+    void setSpritePixel(int offset, int rgba, int depth, int source);
 
     //! Extend border to the left and right to look nice.
     /*! This functions replicates the color of the leftmost and rightmost pixel */

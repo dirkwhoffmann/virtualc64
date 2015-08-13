@@ -43,6 +43,8 @@ PixelEngine::PixelEngine() // C64 *c64)
     currentScreenBuffer = screenBuffer1;
     pixelBuffer = currentScreenBuffer;
     pxbuf = currentScreenBuffer;
+    zbuf = zBuffer;
+    srcbuf = pixelSource;
     
     // Initialize colors
     setColorScheme(CCS64);
@@ -77,18 +79,23 @@ PixelEngine::reset()
 void
 PixelEngine::beginFrame()
 {
-    
+    // Set pxbuf, zbuf, scrcbuf to the beginning of the corresponding buffers plus some horizontal shift
+    pxbuf = pixelBuffer - 28 + vic->leftBorderWidth;
+    zbuf = zBuffer - 28 + vic->leftBorderWidth;
+    srcbuf = pixelSource - 28 + vic->leftBorderWidth;
 }
 
 void
 PixelEngine::beginRasterline()
 {
-    // Clear z buffer. The buffer is initialized with a high, positive value (meaning the pixel is far away)
-    // TODO: WHY DON'T WE USE 0xFF? PLEASE CHECK
-    memset(zBuffer, 0x7f, sizeof(zBuffer));
+    // Clear z buffer. The buffer is initialized with the highest positive 8-bit value (meaning the pixel is far away)
+    memset(zBuffer, SCHAR_MAX, sizeof(zBuffer));
     
     // Clear pixel source
     memset(pixelSource, 0x00, sizeof(pixelSource));
+
+    // Clear pixel buffer (has same size as pixelSource and zBuffer)
+    memset(pixelBuffer, 0xBB, sizeof(pixelSource));
     
     // Reset shift register (DO WE REALLY NEED THIS?)
     // sr.data = 0;
@@ -112,7 +119,6 @@ PixelEngine::endFrame()
     // Switch active screen buffer
     currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
     pixelBuffer = currentScreenBuffer;
-    pxbuf = pixelBuffer - 28 + vic->leftBorderWidth;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -159,19 +165,34 @@ PixelEngine::updateBorderColorRegister()
 void
 PixelEngine::draw()
 {
+    drawBorder();
     drawCanvas();
     // TODO: drawSprites()
-    drawBorder();
+}
+
+void
+PixelEngine::draw17()
+{
+    drawBorder17();
+    drawCanvas();
+    // TODO: drawSprites()
+}
+
+void
+PixelEngine::draw55()
+{
+    drawBorder55();
+    drawCanvas();
+    // TODO: drawSprites()
 }
 
 inline void
 PixelEngine::drawBorder()
 {
-    // uint16_t xCoord = (dc.xCounter - 28) + vic->leftBorderWidth;
-    uint16_t xCoord = dc.xCounter;
-    
+    int16_t xCoord = dc.xCounter;
+
+#if 0
     // Take special care of 38 column mode
-    
     if (dc.cycle == 17 && dc.mainFrameFF && !vic->mainFrameFF) {
         int border_rgba = colors[dc.borderColor];
         setSevenFramePixels(xCoord, border_rgba);
@@ -183,8 +204,7 @@ PixelEngine::drawBorder()
         setFramePixel(xCoord+7, border_rgba);
         return;
     }
-    
-    // Standard case
+#endif
     
     if (dc.mainFrameFF) {
         setFramePixel(xCoord++, colors[dc.borderColor]);
@@ -204,10 +224,47 @@ PixelEngine::drawBorder()
 }
 
 inline void
+PixelEngine::drawBorder17()
+{
+    int16_t xCoord = dc.xCounter;
+    
+    if (dc.mainFrameFF && !vic->mainFrameFF) {
+
+        // 38 column mode
+        int border_rgba = colors[dc.borderColor];
+        // TODO: Color needs update after pixel 1
+        setSevenFramePixels(xCoord, border_rgba);
+
+    } else {
+
+        // 40 column mode
+        drawBorder();
+    }
+}
+
+inline void
+PixelEngine::drawBorder55()
+{
+    int16_t xCoord = dc.xCounter;
+    
+    if (!dc.mainFrameFF && vic->mainFrameFF) {
+        
+        // 38 column mode
+        int border_rgba = colors[dc.borderColor];
+        setFramePixel(xCoord+7, border_rgba);
+
+    } else {
+        
+        // 40 column mode
+        drawBorder();
+    }
+}
+
+inline void
 PixelEngine::drawCanvas()
 {    
     // uint16_t xCoord = (dc.xCounter - 28) + vic->leftBorderWidth;
-    uint16_t xCoord = dc.xCounter;
+    int16_t xCoord = dc.xCounter;
     
     /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
      Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
@@ -217,40 +274,46 @@ PixelEngine::drawCanvas()
     
     if (!dc.verticalFrameFF) {
         
-        drawCanvasPixel(xCoord, 0);
+        drawCanvasPixel(xCoord++, 0);
+        
+        // if (dc.xCounter == -4) // DEBUGGING
+        //    pxbuf[dc.xCounter] = colors[4];
         
         // After the first pixel has been drawn, color register changes show up
         updateColorRegisters();
         
-        drawCanvasPixel(xCoord + 1, 1);
-        drawCanvasPixel(xCoord + 2, 2);
-        drawCanvasPixel(xCoord + 3, 3);
+        drawCanvasPixel(xCoord++, 1);
+        drawCanvasPixel(xCoord++, 2);
+        drawCanvasPixel(xCoord++, 3);
         
         // After pixel 4, the one and zero bits in D016 and the one bits in D011 show up
         // This corresponds the behavior of the color latency chip model in VICE
         dc.D016 = vic->iomem[0x16] & 0x10;  // latch 0s and 1s
         dc.D011 |= vic->iomem[0x11] & 0x60; // latch 1s
         
-        drawCanvasPixel(xCoord + 4, 4);
-        drawCanvasPixel(xCoord + 5, 5);
+        drawCanvasPixel(xCoord++, 4);
+        drawCanvasPixel(xCoord++, 5);
         
         // After pixel 6, the zero bits in D011 show up
         // This corresponds the behavior of the color latency chip model in VICE
         dc.D011 &= vic->iomem[0x11] & 0x60; // latch 0s
         
-        drawCanvasPixel(xCoord + 6, 6);
-        drawCanvasPixel(xCoord + 7, 7);
+        drawCanvasPixel(xCoord++, 6);
+        drawCanvasPixel(xCoord, 7);
         
     } else {
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
         uint8_t bgcol = vic->getBackgroundColor();
         setEightBackgroundPixels(xCoord, colors[bgcol]);
+        
+        //if (dc.xCounter == -4) // DEBUGGING
+        //    pxbuf[dc.xCounter] = colors[5];
     }
 }
 
 inline void
-PixelEngine::drawCanvasPixel(uint16_t offset, uint8_t pixel)
+PixelEngine::drawCanvasPixel(int16_t offset, uint8_t pixel)
 {
     // assert(pixel < 8);
     
@@ -528,7 +591,7 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
 }
 
 inline void
-PixelEngine::setSingleColorPixel(unsigned offset, uint8_t bit /* valid: 0, 1 */)
+PixelEngine::setSingleColorPixel(int offset, uint8_t bit /* valid: 0, 1 */)
 {
     int rgba = col_rgba[bit];
     
@@ -539,7 +602,7 @@ PixelEngine::setSingleColorPixel(unsigned offset, uint8_t bit /* valid: 0, 1 */)
 }
 
 inline void
-PixelEngine::setMultiColorPixel(unsigned offset, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
+PixelEngine::setMultiColorPixel(int offset, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
 {
     int rgba = col_rgba[two_bits];
     
@@ -550,7 +613,7 @@ PixelEngine::setMultiColorPixel(unsigned offset, uint8_t two_bits /* valid: 00, 
 }
 
 void
-PixelEngine::setSpritePixel(unsigned offset, int color, int nr)
+PixelEngine::setSpritePixel(int offset, int color, int nr)
 {
     uint8_t mask = (1 << nr);
     
@@ -581,49 +644,50 @@ PixelEngine::setSpritePixel(unsigned offset, int color, int nr)
 // -----------------------------------------------------------------------------------------------
 
 inline void
-PixelEngine::setFramePixel(unsigned offset, int rgba)
+PixelEngine::setFramePixel(int offset, int rgba)
 {
-    zBuffer[offset] = BORDER_LAYER_DEPTH;
+    zbuf[offset] = BORDER_LAYER_DEPTH;
     pxbuf[offset] = rgba;
-    pixelSource[offset] &= (~0x80); // disable sprite/foreground collision detection in border
+    // SPEEDUP: THE FOLLOWING LINE SHOULD NOT BE NECESSARY WHEN THE BORDER IS DRAWN FIRST
+    srcbuf[offset] &= (~0x80); // disable sprite/foreground collision detection in border
 }
 
 inline void
-PixelEngine::setForegroundPixel(unsigned offset, int rgba)
+PixelEngine::setForegroundPixel(int offset, int rgba)
 {
-    if (FOREGROUND_LAYER_DEPTH <= zBuffer[offset]) {
-        zBuffer[offset] = FOREGROUND_LAYER_DEPTH;
+    if (FOREGROUND_LAYER_DEPTH <= zbuf[offset]) {
+        zbuf[offset] = FOREGROUND_LAYER_DEPTH;
         pxbuf[offset] = rgba;
-        pixelSource[offset] |= 0x80;
+        srcbuf[offset] |= 0x80;
     }
 }
 
 inline void
-PixelEngine::setBackgroundPixel(unsigned offset, int rgba)
+PixelEngine::setBackgroundPixel(int offset, int rgba)
 {
-    if (BACKGROUD_LAYER_DEPTH <= zBuffer[offset]) {
-        zBuffer[offset] = BACKGROUD_LAYER_DEPTH;
+    if (BACKGROUD_LAYER_DEPTH <= zbuf[offset]) {
+        zbuf[offset] = BACKGROUD_LAYER_DEPTH;
         pxbuf[offset] = rgba;
     }
 }
 
 void
-PixelEngine::setSpritePixel(unsigned offset, int rgba, int depth, int source)
+PixelEngine::setSpritePixel(int offset, int rgba, int depth, int source)
 {
     assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
     
-    if (depth <= zBuffer[offset]) {
-        zBuffer[offset] = depth;
+    if (depth <= zbuf[offset]) {
+        zbuf[offset] = depth;
         pxbuf[offset] = rgba;
     }
-    pixelSource[offset] |= source;
+    srcbuf[offset] |= source;
 }
 
 void
 PixelEngine::expandBorders()
 {
     int color;
-    unsigned leftPixelPos = (-4) - 28 + vic->leftBorderWidth;
+    unsigned leftPixelPos = -4 - 28 + vic->leftBorderWidth;
     unsigned rightPixelPos = leftPixelPos+(48*8)-1;
     
     assert(leftPixelPos < 512);
@@ -631,13 +695,13 @@ PixelEngine::expandBorders()
     
     color = pixelBuffer[leftPixelPos];
     for (unsigned i = 0; i < leftPixelPos; i++) {
-        pixelBuffer[i] = colors[5];
-        // pixelBuffer[i] = color;
+        //pixelBuffer[i] = colors[5];
+        pixelBuffer[i] = color;
     }
     color = pixelBuffer[rightPixelPos];
     for (unsigned i = rightPixelPos+1; i < vic->totalScreenWidth; i++) {
-        pixelBuffer[i] = colors[5];
-        // pixelBuffer[i] = color;
+        //pixelBuffer[i] = colors[4];
+        pixelBuffer[i] = color;
     }
 }
 

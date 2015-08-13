@@ -871,13 +871,6 @@ public:
 
 private:
 
-    #define BORDER_LAYER_DEPTH 0x10         /* in front of everything */
-    #define SPRITE_LAYER_FG_DEPTH 0x20      /* behind border */
-    #define FOREGROUND_LAYER_DEPTH 0x30     /* behind sprite 1 layer  */
-    #define SPRITE_LAYER_BG_DEPTH 0x40      /* behind foreground */
-    #define BACKGROUD_LAYER_DEPTH 0x50      /* behind sprite 2 layer */
-    #define BEIND_BACKGROUND_DEPTH 0x60     /* behind background */
-
 	//! Update sprite DMA bits
 	void updateSpriteDmaOnOff();
 	    
@@ -1006,7 +999,7 @@ public:
 	
     //! Push portions of the VIC state into the pixel engine
     /*! Pushs everything that needs to be recorded one cycle prior to drawing */
-    void preparePixelEngineForCycle(uint8_t cycle);
+    void preparePixelEngine();
     
 	//! VIC execution functions
 	void cycle1();  void cycle2();  void cycle3();  void cycle4();
