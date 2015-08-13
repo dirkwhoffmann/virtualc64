@@ -45,6 +45,7 @@ PixelEngine::PixelEngine() // C64 *c64)
     pxbuf = currentScreenBuffer;
     zbuf = zBuffer;
     srcbuf = pixelSource;
+    bufshift = 0;
     
     // Initialize colors
     setColorScheme(CCS64);
@@ -79,6 +80,9 @@ PixelEngine::reset()
 void
 PixelEngine::beginFrame()
 {
+    bufshift = - 28 + vic->leftBorderWidth;
+    assert(bufshift >= 0);
+
     // Set pxbuf, zbuf, scrcbuf to the beginning of the corresponding buffers plus some horizontal shift
     pxbuf = pixelBuffer - 28 + vic->leftBorderWidth;
     zbuf = zBuffer - 28 + vic->leftBorderWidth;
@@ -162,9 +166,12 @@ PixelEngine::updateBorderColorRegister()
 //                          High level drawing (canvas, sprites, border)
 // -----------------------------------------------------------------------------------------------
 
+static unsigned dcnt = 0;
+
 void
 PixelEngine::draw()
 {
+    if (dcnt++ < 200) printf("%d (%d)\n", vic->xCounter, dc.xCounter);
     drawBorder();
     drawCanvas();
     // TODO: drawSprites()
@@ -646,6 +653,7 @@ PixelEngine::setSpritePixel(int offset, int color, int nr)
 inline void
 PixelEngine::setFramePixel(int offset, int rgba)
 {
+    assert(offset + bufshift < MAX_VIEWABLE_PIXELS);
     zbuf[offset] = BORDER_LAYER_DEPTH;
     pxbuf[offset] = rgba;
     // SPEEDUP: THE FOLLOWING LINE SHOULD NOT BE NECESSARY WHEN THE BORDER IS DRAWN FIRST
@@ -655,6 +663,7 @@ PixelEngine::setFramePixel(int offset, int rgba)
 inline void
 PixelEngine::setForegroundPixel(int offset, int rgba)
 {
+    assert(offset + bufshift < MAX_VIEWABLE_PIXELS);
     if (FOREGROUND_LAYER_DEPTH <= zbuf[offset]) {
         zbuf[offset] = FOREGROUND_LAYER_DEPTH;
         pxbuf[offset] = rgba;
@@ -665,6 +674,7 @@ PixelEngine::setForegroundPixel(int offset, int rgba)
 inline void
 PixelEngine::setBackgroundPixel(int offset, int rgba)
 {
+    assert(offset + bufshift < MAX_VIEWABLE_PIXELS);
     if (BACKGROUD_LAYER_DEPTH <= zbuf[offset]) {
         zbuf[offset] = BACKGROUD_LAYER_DEPTH;
         pxbuf[offset] = rgba;
@@ -674,7 +684,14 @@ PixelEngine::setBackgroundPixel(int offset, int rgba)
 void
 PixelEngine::setSpritePixel(int offset, int rgba, int depth, int source)
 {
+    // In the current implementation, offset can get out of bounds.
+    // Make sure that this does not happen any more when sprites are drawn cycle by cycle
+    // assert(offset + bufshift < MAX_VIEWABLE_PIXELS); // WILL TRIGGER, E.G IN SUMMER GAMES II
     assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
+  
+    // QUICK FIX FOR OUT OF BOUNDS BUG. GET RID OF THIS
+    if (offset + bufshift >= MAX_VIEWABLE_PIXELS)
+        return;
     
     if (depth <= zbuf[offset]) {
         zbuf[offset] = depth;

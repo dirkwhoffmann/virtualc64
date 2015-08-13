@@ -205,6 +205,9 @@ private:
      the source buffer accessible via the sprite coordinate system (via xCounter). */
     int *srcbuf;
 
+    //! Indicates how many int's zbuf is shifted relative to zBuffer. For debugging only
+    int bufshift;
+    
 public:
     
     //! Set color scheme
