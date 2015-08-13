@@ -87,9 +87,11 @@ CPU::fetch() {
         dirkcnt++;
     */
     
+    /*
     if (isC64CPU && dirkcnt > 10000) {
         dirktrace = 2; // OFF
     }
+    */
     
     /*
     if (isC64CPU && dirktrace == 1) { // && c64->vic->getScanline() == 77) {

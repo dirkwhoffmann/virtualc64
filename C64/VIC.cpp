@@ -1038,10 +1038,18 @@ VIC::beginRasterline(uint16_t line)
 void 
 VIC::endRasterline()
 {
-    // Set vertical flipflop is condition was hit
+    // Set vertical flipflop if condition was hit
     if (verticalFrameFFsetCond) {
         verticalFrameFF = true;
     }
+    
+    // Draw debug markers
+    if (markIRQLines && yCounter == rasterInterruptLine())
+        pixelEngine.markLine(PixelEngine::WHITE);
+    if (markDMALines && badLineCondition)
+        pixelEngine.markLine(PixelEngine::RED);
+    if (rasterlineDebug[yCounter] >= 0)
+        pixelEngine.markLine(rasterlineDebug[yCounter] % 16);
     
     pixelEngine.endRasterline();
 }
@@ -2063,16 +2071,6 @@ VIC::cycle63()
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
         
     // Phi1.2 Draw
-    pixelEngine.expandBorders(); // Make the border look nice
- 
-	// Draw debug markers
-    if (markIRQLines && yCounter == rasterInterruptLine())
-        pixelEngine.markLine(PixelEngine::WHITE);
-     if (markDMALines && badLineCondition)
-        pixelEngine.markLine(PixelEngine::RED);
-    if (rasterlineDebug[yCounter] >= 0)
-        pixelEngine.markLine(rasterlineDebug[yCounter] % 16);
-    
     // Phi1.3 Fetch
     if (isPAL)
         sSecondAccess(2);

@@ -16,13 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// TODO:
-// loadColors is done after drawing the first pixel
-// Hence, loadColors is not called at the beginning of the frame which may cause the regtiming border issue. 
-//
-// 3. Make sprite drawing cycle based.
-// 4. Replace pixel buffers by 8 bit variables and implement mixer(). This makes z buffering obsolete.
-
 #ifndef _VIC_INC
 #define _VIC_INC
 

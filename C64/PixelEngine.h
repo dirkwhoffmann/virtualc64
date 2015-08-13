@@ -20,20 +20,18 @@
 //
 // SPEEDUP:
 //
+// 1. Merge CIA1 and CIA2 into one object (for V1.1)
+//
 // TODO:
 //
-// 1. Texture does not extent to the bottom
-//
-// 2. Make sprite drawing cycle based.
+// 1. Make sprite drawing cycle based (must have for V1.0)
+//    regtiming.prg has to be correct for V1.0
 
 
 #ifndef _PIXELENGINGE_INC
 #define _PIXELENGINGE_INC
 
-#define DIRK_DEBUG_LINE 77 // REMOVE ASAP
-
 #include "VirtualComponent.h"
-
 
 // Forward declarations
 class VIC;

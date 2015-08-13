@@ -109,6 +109,9 @@ PixelEngine::beginRasterline()
 void
 PixelEngine::endRasterline()
 {
+    // Make the border look nice
+    expandBorders();
+
     // Advance pixelBuffer one line
     pixelBuffer += vic->totalScreenWidth;
     pxbuf += vic->totalScreenWidth;
@@ -123,10 +126,7 @@ PixelEngine::endFrame()
 {
     // Switch active screen buffer
     currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
-    pixelBuffer = currentScreenBuffer;
-    
-    // Max yCounter: 311
-    // printf("yCounter = %d\n",dc.yCounter);
+    pixelBuffer = currentScreenBuffer;    
 }
 
 // -----------------------------------------------------------------------------------------------
