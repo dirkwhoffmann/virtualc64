@@ -396,7 +396,7 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
         if (multicol) {
             // Secure color bits every other cycle
             if (sprite_sr[nr].mc_flop)
-                sprite_sr[nr].colorbits = (sprite_sr[nr].data >> 22) & 0x02;
+                sprite_sr[nr].colorbits = (sprite_sr[nr].data >> 22) & 0x03;
             setMultiColorSpritePixel(nr, offset, sprite_sr[nr].colorbits);
         } else {
             setSingleColorSpritePixel(nr, offset, (sprite_sr[nr].data >> 23) & 0x01);

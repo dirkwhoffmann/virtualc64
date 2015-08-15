@@ -91,10 +91,7 @@ public:
 	
 	//! Destructor
 	~VIA6522();
-	
-	//! Bind components
-	// void setDrive(VC1541 *d) { assert(floppy == NULL); floppy = d; }
-	
+		
 	//! Bring the VIA back to its initial state
 	void reset();
 

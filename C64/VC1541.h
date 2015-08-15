@@ -95,6 +95,12 @@ public:
 	//! Write protection mark
 	bool writeProtection;
 	
+    //! True iff shift register is in read mode EXPERIMENTAL
+    bool readmode;
+    
+    //! Latche ora (when writing) EXPERIMENTAL
+    uint8_t oralatch;
+    
 public:
 	
 	//! Constructor
@@ -153,8 +159,8 @@ public:
 
 	void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
 
-	inline void writeByteToDisk(uint8_t val) { setData(track, offset, val); }
-	inline void writeOraToDisk() { writeByteToDisk(via2->ora); }
+    void writeByteToDisk(uint8_t val);
+    void writeOraToDisk();
 	
 	//! Insert a virtual disc
 	void insertDisc(Archive *a);

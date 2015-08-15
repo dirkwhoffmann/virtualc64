@@ -70,6 +70,7 @@ VC1541::reset()
 	offset = 0;
 	noOfFFBytes = 0;
     writeProtection = false;
+    readmode = true;
 }
 
 void
@@ -172,6 +173,8 @@ VC1541::dumpState()
 	msg("  Symbol under head : %02X\n", readHead());
 	msg("        Next symbol : %02X\n", readHeadLookAhead());
 	msg("\n");
+    msg("Directory track\n");
+    dumpFullTrack(18);
 }
 
 void 
@@ -180,7 +183,7 @@ VC1541::setWriteProtection(bool b)
 	writeProtection = b;
 }
 
-bool 
+bool
 VC1541::executeOneCycle()
 {
 	bool result;
@@ -202,12 +205,17 @@ VC1541::executeOneCycle()
 						
 	// Rotate disk
 	rotateDisk();
-	if (readHead() == 0xFF)
+    
+    if (readHead() == 0xFF) {
+        // Sync found
 		noOfFFBytes++;
-	else
+    } else {
 		noOfFFBytes = 0;
-	if (noOfFFBytes <= 1) signalByteReady();
-			
+    }
+    
+    if (noOfFFBytes <= 1)
+        signalByteReady();
+    
 	// Read or write data
 	if (via2->isReadMode()) {
 		via2->ora = readHead();
@@ -285,6 +293,19 @@ VC1541::moveHead(int distance)
 		debug(2, "Head down (to %2.1f) at %4X\n", (track + 2) / 2.0, cpu->getPC());
 	else 
 		debug(2, "Head ???\n");
+}
+
+void
+VC1541::writeByteToDisk(uint8_t val)
+{
+    setData(track, offset, val);
+}
+
+void
+VC1541::writeOraToDisk()
+{
+    debug(2,"WrORA: (t:%d o:%d) = %d\n", track, offset, via2->ora);
+    writeByteToDisk(via2->ora);
 }
 
 void
@@ -527,6 +548,8 @@ VC1541::decodeDisk(uint8_t *dest)
         
         for (unsigned j = 0; j < length[halftrack]; j++) {
             
+            // debug(4, "    Decoding ?? %d %s\n", j, dest == NULL ? "(test run)" : "");
+
             uint8_t *sector_start = &data[halftrack][j];
             if (sector_start[0] != 0xFF) continue;
             if (sector_start[1] != 0xFF) continue;
@@ -594,13 +617,13 @@ VC1541::dumpTrack(int t)
 	if (min < 0) min = 0;
 	if (max > length[t]) max = length[t];
 	
-	debug(1, "Dumping track %d (length = %d)\n", t, length[t]);
+	msg("Dumping track %d (length = %d)\n", t, length[t]);
 	for (int i = min; i < offset; i++)
-		debug(1, "%02X ", data[t][i]);
-	debug(1, "(%02X) ", data[t][offset]);
+		msg("%02X ", data[t][i]);
+	msg("(%02X) ", data[t][offset]);
 	for (int i = offset+1; i < max; i++)
-		debug(1, "%02X ", data[t][i]);
-	debug(1, "\n");
+		msg("%02X ", data[t][i]);
+	msg("\n");
 }
 
 void 
@@ -608,13 +631,13 @@ VC1541::dumpFullTrack(int t)
 {		
 	if (t < 0) t = track;
 	
-	debug(1, "Dumping track %d (length = %d)\n", t, length[t]);
+	msg("Dumping track %d (length = %d)\n", t, length[t]);
 	for (int i = 0; i < offset; i++)
-		debug(1, "%02X ", data[t][i]);
-	debug(1, "(%02X) ", data[t][offset]);
+		msg("%02X ", data[t][i]);
+	msg("(%02X) ", data[t][offset]);
 	for (int i = offset+1; i < length[t]; i++)
-		debug(1, "%02X ", data[t][i]);
-	debug(1, "\n");
+		msg("%02X ", data[t][i]);
+	msg("\n");
 }
 
 bool 

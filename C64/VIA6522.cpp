@@ -481,7 +481,7 @@ VIA6522::peek(uint16_t addr)
 		//     ORA/ORB WILL NOT CLEAR THE FLAG BIT. INSTEAD, THE BIT MUST BE
 		//     CLEARED BY WRITING INTO THE IFR, AS DESCRIBED PREVIOUSLY.
 		case 0x0D:
-			return io[addr] | (io[addr] & io[0x0E] ? 0x80 : 0);
+			return io[addr] | ((io[addr] & io[0x0E]) ? 0x80 : 0);
 			
 		//                 REG 14 -- INTERRUPT ENABLE REGISTER
 		//                           +-+-+-+-+-+-+-+-+
@@ -552,16 +552,16 @@ uint8_t VIA2::peek(uint16_t addr)
 		case 0x00:
 			// Bit 4: 0 = disc is write protected
             if (floppy->isWriteProtected()) {
-				orb &= 0xEF;
+                CLR_BIT(orb, 4);
             } else {
-				orb |= 0x10;
+                SET_BIT(orb, 4);
             }
             
 			// Bit 7: 0 = SYNC mark
             if (floppy->readHead() == 0xFF) {
-				orb &= 0x7F;
+				CLR_BIT(orb, 7);
             } else {
-				orb |= 0x80;
+				SET_BIT(orb, 7);
             }
             
 			return orb;
@@ -571,6 +571,8 @@ uint8_t VIA2::peek(uint16_t addr)
 				debug(1, "%02X ", ora);			
 			}
 			return ora;
+            
+            // FRODO IS READING FROM DISC HERE (INCLUDING DISC ROTATION) 
 		
 		default:
 			return VIA6522::peek(addr);	
