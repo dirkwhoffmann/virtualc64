@@ -265,23 +265,33 @@ public:
         // Updated in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
         uint8_t borderColor;
         uint8_t backgroundColor[4];
+
+        // Updated in WHEN(?) (in drawSprites via updateSpriteColorRegisters)
+        uint8_t spriteColor[8];
+        uint8_t spriteExtraColor1;
+        uint8_t spriteExtraColor2;
+
     } dc;
     
     //! Latches portions of the VIC state
     /*! Latches everything that needs to be recorded one cycle prior to drawing */
     // void prepareForCycle(uint8_t cycle);
 
-    //! Latches the four drawing colors
-    /*! This needs to be done after the first canvas pixel has been drawn */
-    void updateColorRegisters();
-
     //! Latches the border color
     /*! This needs to be done after the first border pixel has been drawn */
     void updateBorderColorRegister();
 
+    //! Latches the four drawing colors
+    /*! This needs to be done after the first canvas pixel has been drawn */
+    void updateColorRegisters();
+
+    //! Latches the four sprite colors
+    /*! This needs to be done TODO:WHEN? */
+    void updateSpriteColorRegisters();
+
     
     // -----------------------------------------------------------------------------------------------
-    //                        Shift register logic (handled in drawCanvasPixel)
+    //               Shift register logic for canvas pixels (handled in drawCanvasPixel)
     // -----------------------------------------------------------------------------------------------
     
     //! Shift register
@@ -289,6 +299,7 @@ public:
      x scroll offset matches the current pixel number. */
     
     struct {
+        
         //! Shift register data
         uint8_t data;
 
@@ -315,6 +326,43 @@ public:
     
     
     // -----------------------------------------------------------------------------------------------
+    //              Shift register logic for sprite pixels (handled in drawSpritePixel)
+    // -----------------------------------------------------------------------------------------------
+    
+    //! Sprite shift registers
+    /*! The VIC chip has a 24 bit (3 byte) shift register for each sprite. It stores the sprite data
+     for each rasterline. It is loaded bytewise in every sAccess and shifted out bitwise when
+     the sprite is drawn. */
+    
+    struct {
+        
+        //! Shift register data (24 bit)
+        uint32_t data;
+        
+        //! Remaining bits to be pumped out
+        /*! At the beginning of each rasterline, this value is initialized with -1 and set to 
+            24 when the horizontal trigger condition is met (sprite X trigger coord reaches xCounter).
+            When all bits are drawn, this value reaches 0. */
+        int remaining_bits;
+         
+        //! Multi-color synchronization flipflop
+        /*! Whenever the shift register is loaded, the synchronization flipflop is also set.
+         It is toggled with each pixel and used to synchronize the synthesis of multi-color pixels. */
+        bool mc_flop;
+
+        //! xExpansion synchronization flipflop
+        /*! */
+        bool exp_flop;
+
+        //! Color bits
+        /*! Every second pixel (as synchronized with mc_flop), the  multi-color bits are remembered. */
+        uint8_t colorbits;
+        
+    } sprite_sr[8];
+
+    
+    
+    // -----------------------------------------------------------------------------------------------
     //                          High level drawing (canvas, sprites, border)
     // -----------------------------------------------------------------------------------------------
 
@@ -334,6 +382,18 @@ public:
 
 private:
     
+    //! Draws 8 border pixels
+    /*! Invoked inside draw() */
+    void drawBorder();
+    
+    //! Draws 8 border pixels
+    /*! Invoked inside draw17() */
+    void drawBorder17();
+    
+    //! Draws 8 border pixels
+    /*! Invoked inside draw55() */
+    void drawBorder55();
+
     //! Draws 8 canvas pixels
     /*! Invoked inside draw() */
     void drawCanvas();
@@ -344,8 +404,16 @@ private:
     
     //! Draws 8 sprite pixels
     /*! Invoked inside draw() */
-    // TODO: drawSprintes();
-    
+    void drawSprites();
+
+    //! Draws a single sprite pixel for all sprites
+    /*! pixel is the pixel number and must be in the range 0 to 7 */
+    void drawSpritePixel(int16_t offset, uint8_t pixel);
+
+    //! Draws a single sprite pixel for sprite 'nr'
+    /*! pixel is the pixel number and must be in the range 0 to 7 */
+    void drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel);
+
     //! Draws all sprites into the pixelbuffer
     /*! A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging */
     void drawAllSprites();
@@ -354,18 +422,6 @@ private:
     /*! Helper function for drawSprites */
     void drawSprite(uint8_t nr);
     
-    //! Draws 8 border pixels
-    /*! Invoked inside draw() */
-    void drawBorder();
-
-    //! Draws 8 border pixels
-    /*! Invoked inside draw17() */
-    void drawBorder17();
-
-    //! Draws 8 border pixels
-    /*! Invoked inside draw55() */
-    void drawBorder55();
-
     
     // -----------------------------------------------------------------------------------------------
     //                         Mid level drawing (semantic pixel rendering)
@@ -398,8 +454,17 @@ public:
      Uses the drawing colors that are setup by loadColors(). */
     void setMultiColorPixel(int offset, uint8_t two_bits);
     
-    //! Draw a single foreground pixel
-    /*! The function may trigger an interrupt, if a sprite/sprite or sprite/background collision is detected. */
+    //! Draw single sprite pixel in single-color mode
+    /*! Uses the drawing colors that are setup by updateSpriteColors */
+    void setSingleColorSpritePixel(unsigned nr, int offset, uint8_t bit);
+    
+    //! Draw single sprite pixel in multi-color mode
+    /*! Uses the drawing colors that are setup by updateSpriteColors */
+    void setMultiColorSpritePixel(unsigned nr, int offset, uint8_t two_bits);
+
+    //! Draw a single sprite pixel
+    /*! This function is invoked by setSingleColorPixel() and setMultiColorPixel(). 
+        It takes care of collison and invokes setSpritePixel(4) to actually render the pixel. */
     void setSpritePixel(int offset, int color, int nr);
 
     

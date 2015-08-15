@@ -102,9 +102,7 @@ VIC::reset()
 	for (int i = 0; i < 8; i++) {
 		mc[i] = 0;
 		mcbase[i] = 0;
-		spriteShiftReg[i][0] = 0;
-		spriteShiftReg[i][1] = 0;
-		spriteShiftReg[i][2] = 0; 
+        pixelEngine.sprite_sr[i].data = 0;
 	}
 	spriteOnOff = 0;
 	oldSpriteOnOff = 0;
@@ -186,9 +184,9 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	for (int i = 0; i < 8; i++) {
 		mc[i] = read8(buffer);
 		mcbase[i] = read8(buffer);
-		spriteShiftReg[i][0] = read8(buffer);
-		spriteShiftReg[i][1] = read8(buffer);
-		spriteShiftReg[i][2] = read8(buffer);
+		(void)read8(buffer);
+        (void)read8(buffer);
+        (void)read8(buffer);
 	}
 	spriteOnOff = read8(buffer);
 	oldSpriteOnOff = read8(buffer);
@@ -259,9 +257,9 @@ VIC::saveToBuffer(uint8_t **buffer)
 	for (int i = 0; i < 8; i++) {
 		write8(buffer, mc[i]);
 		write8(buffer, mcbase[i]);
-		write8(buffer, spriteShiftReg[i][0]);
-		write8(buffer, spriteShiftReg[i][1]);
-		write8(buffer, spriteShiftReg[i][2]); 
+        write8(buffer, 0);
+        write8(buffer, 0);
+        write8(buffer, 0);
 	}
 	write8(buffer, spriteOnOff);
 	write8(buffer, oldSpriteOnOff);
@@ -535,7 +533,9 @@ inline bool VIC::sFirstAccess(int sprite)
         mc[sprite] &= 0x3F; // 6 bit overflow
     }
     
-    spriteShiftReg[sprite][0] = data;
+    // load data into shift register
+    // pixelEngine.sprite_sr[sprite].data.chunk[0] = data;
+    pixelEngine.sprite_sr[sprite].data = data;
     return memAccessed;
 }
 
@@ -561,7 +561,9 @@ inline bool VIC::sSecondAccess(int sprite)
     if (!memAccessed)
         memIdleAccess();
     
-    spriteShiftReg[sprite][1] = data;
+    // load data into shift register
+    // pixelEngine.sprite_sr[sprite].data.chunk[1] = data;
+    pixelEngine.sprite_sr[sprite].data = (pixelEngine.sprite_sr[sprite].data << 8) | data;
     return memAccessed;
 }
 
@@ -582,22 +584,11 @@ inline bool VIC::sThirdAccess(int sprite)
         mc[sprite] &= 0x3F; // 6 bit overflow
     }
     
-    spriteShiftReg[sprite][2] = data;
+    // load data into shift register
+    // pixelEngine.sprite_sr[sprite].data.chunk[2] = data;
+    pixelEngine.sprite_sr[sprite].data = (pixelEngine.sprite_sr[sprite].data << 8) | data;
     return memAccessed;
 }
-
-// -----------------------------------------------------------------------------------------------
-//                                         Graphics sequencer
-// -----------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
 
 
 // -----------------------------------------------------------------------------------------------
@@ -1900,8 +1891,8 @@ VIC::cycle58()
     // Phi2.2 Sprite logic
     turnSpriteDisplayOn();
 
-    // Make this cycle based... after that, merge turnSpriteDisplayOn with turnSpriteDisplayOff(?)
-	pixelEngine.drawAllSprites();
+    // Old line based sprite drawing routine (DEPRECATED)
+	// pixelEngine.drawAllSprites();
 			
     turnSpriteDisplayOff();
     

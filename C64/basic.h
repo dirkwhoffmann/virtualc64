@@ -65,11 +65,14 @@
 //! Returns true iff bit n is set in x.
 #define GET_BIT(x,nr) ((x) & (1 << (nr)))
 
-//! Evaluates to the value of x with bit "nr" set to 1. All other bits remain untouched.
+//! Set a single bit.
 #define SET_BIT(x,nr) ((x) |= (1 << (nr)))
 
-//! Evaluates to the value of x with bit "nr" set to 0. All other bits remain untouched.
+//! Clear a single bit.
 #define CLR_BIT(x,nr) ((x) &= ~(1 << (nr)))
+
+//! Toggle a single bit.
+#define TOGGLE_BIT(x,nr) ((x) ^= (1 << (nr)))
 
 //
 //! @functiongroup Pretty printing
@@ -112,6 +115,9 @@ void ascii2pet(char *asciistring);
 
 //! Write ASCII representation of 8 bit value to a string
 void binary8_to_string(uint8_t value, char *s);
+
+//! Write ASCII representation of 32 bit value to a string
+void binary32_to_string(uint32_t value, char *s);
 
 //! Convert a BCD number to a binary value
 inline uint8_t BCDToBinary(uint8_t value) { return (10 * (value >> 4)) + (value & 0x0F); }

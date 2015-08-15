@@ -484,11 +484,7 @@ private:
 	//! MCBASE register
 	/*! MOB data counter (6 bit counter). One register for each sprite */
 	uint8_t mcbase[8];
-	
-	//! Sprite data shift registers
-	/*! The VIC chip has a 24 bit (3 byte) shift register for each sprite. It stores the sprite data for each rasterline */
-	uint8_t spriteShiftReg[8][3];
-	
+		
 	//! Sprite pointer
 	/*! Determines where the sprite data comes from */
 	uint16_t spritePtr[8];

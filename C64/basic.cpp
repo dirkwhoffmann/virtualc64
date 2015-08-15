@@ -164,6 +164,16 @@ binary8_to_string(uint8_t value, char *s)
 	s[i] = 0;
 }
 
+void
+binary32_to_string(uint32_t value, char *s)
+{
+    unsigned i;
+    for (i = 0; i < 32; i++) {
+        s[31-i] = (value & (1 << i)) ? '1' : '0';
+    }
+    s[i] = 0;
+}
+
 bool
 checkFileSuffix(const char *filename, const char *suffix)
 {
