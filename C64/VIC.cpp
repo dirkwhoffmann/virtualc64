@@ -518,6 +518,7 @@ inline void VIC::pAccess(int sprite)
 
 }
 
+// TODO: Change return type to void
 inline bool VIC::sFirstAccess(int sprite)
 {
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
@@ -538,6 +539,7 @@ inline bool VIC::sFirstAccess(int sprite)
     return memAccessed;
 }
 
+// TODO: Change return type to void
 inline bool VIC::sSecondAccess(int sprite)
 {
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
@@ -563,6 +565,7 @@ inline bool VIC::sSecondAccess(int sprite)
     return memAccessed;
 }
 
+// TODO: Change return type to void
 inline bool VIC::sThirdAccess(int sprite)
 {
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
@@ -883,22 +886,98 @@ VIC::triggerLightPenInterrupt()
 //                                              Sprites
 // -----------------------------------------------------------------------------------------------
 
-void 
-VIC::updateSpriteDmaOnOff()
+void
+VIC::turnSpriteDmaOff()
 {
-	// determine which sprites are displayes in the next rasterline
-	for (int i = 0; i < 8; i++) {
-		if (spriteIsEnabled(i)) {
-			uint8_t y = getSpriteY(i);
-			if (y == (yCounter & 0xff)) {
-				spriteDmaOnOff |= (1 << i);
-				mcbase[i] = 0;
-				if (spriteHeightIsDoubled(i))
-					expansionFF &= ~(1 << i);
-			}
-		}
-	}
+    // "7. In the first phase of cycle 16, [1] it is checked if the expansion flip flop
+    //     is set. If so, [2] MCBASE load from MC (MC->MCBASE), [3] unless the CPU cleared
+    //     the Y expansion bit in $d017 in the second phase of cycle 15, in which case
+    //     [4] MCBASE is set to X = (101010 & (MCBASE & MC)) | (010101 & (MCBASE | MC)).
+    //     After the MCBASE update, [5] the VIC checks if MCBASE is equal to 63 and [6] turns
+    //     off the DMA of the sprite if it is." [VIC Addendum]
+    
+    for (unsigned i = 0; i < 8; i++) {
+        if (GET_BIT(expansionFF,i)) { /* [1] */
+            if (GET_BIT(cleared_bits_in_d017,i)) { /* [3] */
+                uint8_t b101010 = 0x2A;
+                uint8_t b010101 = 0x15;
+                mcbase[i] = (b101010 & (mcbase[i] & mc[i])) | (b010101 & (mcbase[i] | mc[i])); /* [4] */
+            } else {
+                mcbase[i] = mc[i]; /* [2] */
+            }
+            
+            if (mcbase[i] == 63) { /* [5] */
+                CLR_BIT(spriteDmaOnOff,i); /* [6] */
+            }
+        }
+    }
+
 }
+
+void
+VIC::turnSpriteDmaOn()
+{
+    // "3. In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
+    //     ob [1] das entsprechende MxE-Bit in Register $d015 gesetzt und [2] die
+    //     Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
+    //     unteren 8 Bits von RASTER ist. Ist dies der Fall und [3] der DMA für das
+    //     Sprite noch ausgeschaltet, wird [4] der DMA angeschaltet, [5] MCBASE gelöscht[.]" [C.B.]
+    
+    for (unsigned i = 0; i < 8; i++) {
+        if (spriteIsEnabled(i)) { /* [1] */
+            if (getSpriteY(i) == (yCounter & 0xff)) { /* [2] */
+                if (!GET_BIT(spriteDmaOnOff,i)) { /* [3] */
+                    SET_BIT(spriteDmaOnOff,i); /* [4] */
+                    mcbase[i] = 0; /* [5] */
+                    SET_BIT(expansionFF,i); // will be flipped for stretched sprites in cycle 56
+                }
+            }
+        }
+    }
+}
+
+void
+VIC::toggleExpansionFlipflop()
+{
+    // A '1' in D017 means that the sprite is vertically stretched
+    expansionFF ^= iomem[0x17];
+}
+
+void
+VIC::turnSpriteDisplayOn()
+{
+    // "4. In der ersten Phase von Zyklus 58 wird [1] für jedes Sprite [2] MC mit MCBASE
+    //     geladen (MCBASE->MC) und geprüft, [3] ob der DMA für das Sprite angeschaltet
+    //     und [4] die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
+    //     ist. Ist dies der Fall, wird [5] die Darstellung des Sprites angeschaltet." [C.B.]
+    
+    oldSpriteOnOff = spriteOnOff;
+    for (unsigned i = 0; i < 8; i++) { /* [1] */
+        mc[i] = mcbase[i]; /* [2] */
+        if (GET_BIT(spriteDmaOnOff, i)) { /* [3] */
+            if (getSpriteY(i) == (yCounter & 0xFF)) /* [4] */
+                SET_BIT(spriteOnOff,i); /* [5] */
+        }
+#if 0
+         else {
+            // switch off sprites with no dma access
+            CLR_BIT(spriteOnOff, i);
+        }
+#endif
+        
+    }
+}
+
+void
+VIC::turnSpriteDisplayOff()
+{
+    // switch off sprites if dma is off
+    for (int i = 0; i < 8; i++) {
+        if (GET_BIT(spriteOnOff, i) && !GET_BIT(spriteDmaOnOff, i))
+            CLR_BIT(spriteOnOff, i);
+    }
+}
+
 
 // -----------------------------------------------------------------------------------------------
 //                                      Frame flipflops
@@ -1599,29 +1678,8 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
 
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
-
-    // "7. In the first phase of cycle 16, it is checked if the expansion flip flop
-    //     is set. If so, MCBASE load from MC (MC->MCBASE), unless the CPU cleared
-    //     the Y expansion bit in $d017 in the second phase of cycle 15, in which case
-    //     MCBASE is set to X = (101010 & (MCBASE & MC)) | (010101 & (MCBASE | MC)).
-    //     After the MCBASE update, the VIC checks if MCBASE is equal to 63 and turns
-    //     off the DMA of the sprite if it is." [VIC Addendum]
+    turnSpriteDmaOff();
     
-    for (int i = 0; i < 8; i++) {
-        uint8_t mask = (1 << i);
-        if (expansionFF & mask) {
-            if (cleared_bits_in_d017 & mask) {
-                mcbase[i] = (0x2A /* 101010 */ & (mcbase[i] & mc[i])) | (0x15 /* 010101 */ & (mcbase[i] | mc[i]));
-            } else {
-                mcbase[i] = mc[i];
-            }
-        }
-        
-        if (mcbase[i] == 63) {
-            spriteDmaOnOff &= ~mask;
-        }
-    }
-
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
     setBAlow(badLineCondition);
@@ -1740,19 +1798,7 @@ VIC::cycle55()
 
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
-
-    // "In der ersten Phase von Zyklus 55 wird das Expansions-Flipflop
-    //  invertiert, wenn das MxYE-Bit gesetzt ist." [C.B.]
-    expansionFF ^= iomem[0x17];
-
-	// "In den ersten Phasen von Zyklus 55 und 56 wird für jedes Sprite geprüft,
-    //  ob das entsprechende MxE-Bit in Register $d015 gesetzt und die
-    //  Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
-    //  unteren 8 Bits von RASTER ist. Ist dies der Fall und der DMA für das
-    //  Sprite noch ausgeschaltet, wird der DMA angeschaltet, MCBASE gelöscht
-    //  und, wenn das MxYE-Bit gesetzt ist, das Expansions-Flipflop gelöscht." [C.B.]
-	 
-	updateSpriteDmaOnOff();
+	turnSpriteDmaOn();
 
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
@@ -1783,11 +1829,12 @@ VIC::cycle56()
     
     // Phi1.3 Fetch
     rIdleAccess();
-    g_data = 0; // no more gAccesses from now on (MOVE TO rIdleAccess?)
+    g_data = 0; // no more gAccesses from now on (TODO: BETTER MOVE TO rIdleAccess(?))
 
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
-	updateSpriteDmaOnOff();
+    turnSpriteDmaOn();
+    toggleExpansionFlipflop();
     
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
@@ -1851,33 +1898,13 @@ VIC::cycle58()
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
-			
-	// "4. In der ersten Phase von Zyklus 58 wird für jedes Sprite MC mit MCBASE
-    //     geladen (MCBASE->MC) und geprüft, ob der DMA für das Sprite angeschaltet
-    //     und die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
-    //     ist. Ist dies der Fall, wird die Darstellung des Sprites angeschaltet." [C.B.]
+    turnSpriteDisplayOn();
 
-    oldSpriteOnOff = spriteOnOff; // remember last value
-	for (int i = 0; i < 8; i++) {
-		mc[i] = mcbase[i];
-		uint8_t mask = (1 << i);
-		if (spriteDmaOnOff & mask) {
-			uint8_t y = getSpriteY(i);
-			if (y == (yCounter & 0xff))
-				spriteOnOff |= mask;
-		}
-	}
-		
-	// Draw rasterline into pixel buffer
+    // Make this cycle based... after that, merge turnSpriteDisplayOn with turnSpriteDisplayOff(?)
 	pixelEngine.drawAllSprites();
 			
-	// switch off sprites if dma is off
-	for (int i = 0; i < 8; i++) {
-		uint8_t mask = (1 << i);
-		if ((spriteOnOff & mask) && !(spriteDmaOnOff & mask))
-			spriteOnOff &= ~mask;
-	}
-
+    turnSpriteDisplayOff();
+    
     // Phi2.3 VC/RC logic
     
     // "5. In der ersten Phase von Zyklus 58 wird geprüft, ob RC=7 ist. Wenn ja,

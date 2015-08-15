@@ -620,13 +620,13 @@ PixelEngine::setSpritePixel(int offset, int color, int nr)
     if (offset < vic->totalScreenWidth) {
         
         // Check sprite/sprite collision
-        if (vic->spriteSpriteCollisionEnabled && (pixelSource[offset] & 0x7F)) {
-            vic->iomem[0x1E] |= ((pixelSource[offset] & 0x7F) | mask);
+        if (vic->spriteSpriteCollisionEnabled && (srcbuf[offset] & 0x7F)) {
+            vic->iomem[0x1E] |= ((srcbuf[offset] & 0x7F) | mask);
             vic->triggerIRQ(4);
         }
         
         // Check sprite/background collision
-        if (vic->spriteBackgroundCollisionEnabled && (pixelSource[offset] & 0x80)) {
+        if (vic->spriteBackgroundCollisionEnabled && (srcbuf[offset] & 0x80)) {
             vic->iomem[0x1F] |= mask;
             vic->triggerIRQ(2);
         }

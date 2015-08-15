@@ -498,6 +498,7 @@ private:
 	uint8_t spriteOnOff;
 	
 	//! Previous value of spriteOnOff
+    //  DEPRECATED. WILL BE ELIMINATED WHEN SPRITE DRAWING IS CYCLE BASED
 	uint8_t oldSpriteOnOff; 
 	
 	//! Sprite DMA on off
@@ -864,9 +865,35 @@ public:
 
 private:
 
-	//! Update sprite DMA bits
-	void updateSpriteDmaOnOff();
-	    
+    //! Turn off sprite dma if conditions are met
+    /*! In cycle 16, the mcbase pointer is advanced three bytes for all dma enabled sprites. Advancing 
+        three bytes means that mcbase will then point to the next sprite line. When mcbase reached 63,
+        all 21 sprite lines have been drawn and sprite dma is switched off.
+        The whole operation is skipped when the y expansion flipflop is 0. This never happens for
+        normal sprites (there is no skipping then), but happens every other cycle for vertically expanded 
+        sprites. Thus, mcbase advances for those sprites at half speed which actually causes the expansion. */
+    void turnSpriteDmaOff();
+
+    //! Turn on sprite dma accesses if drawing conditions are met
+    /*! Sprite dma is turned on either in cycle 55 or cycle 56. Dma is turned on iff it's currently turned 
+        off and the sprite y positon equals the lower 8 bits of yCounter. */
+    void turnSpriteDmaOn();
+
+    //! Toggle expansion flipflop for vertically stretched sprites
+    /*! In cycle 56, register D017 is read and the flipflop gets inverted for all sprites with vertical
+        stretching enabled. When the flipflop goes down, advanceMCBase() will have no effect in the
+        next rasterline. This causes each sprite line to be drawn twice. */
+    void toggleExpansionFlipflop();
+    
+    //! Turn on sprite display bit if conditions are met
+    /*! In cycle 58, drawing is switched on for all sprites that got dma access switched on in 
+        cycle 55 or 56. */
+    void turnSpriteDisplayOn();
+
+    //! Turn off sprite display bit if conditions are met
+    /*! In cycle 58, drawing is switched off for all sprites that lost dma access in cycle 16. */
+    void turnSpriteDisplayOff();
+    
 	//! Get sprite depth
 	/*! The value is written to the z buffer to resolve overlapping pixels */
 	inline uint8_t spriteDepth(uint8_t nr) {

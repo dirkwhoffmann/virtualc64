@@ -62,6 +62,9 @@
 //! Evaluates to the 32 bit value specified by x and y in big endian order (highest, high, low, lowest).
 #define HI_HI_LO_LO(x,y,z,w) (uint32_t)((x) << 24 | (y) << 16 | (z) << 8 | w)
 
+//! Returns true iff bit n is set in x.
+#define GET_BIT(x,nr) ((x) & (1 << (nr)))
+
 //! Evaluates to the value of x with bit "nr" set to 1. All other bits remain untouched.
 #define SET_BIT(x,nr) ((x) |= (1 << (nr)))
 
