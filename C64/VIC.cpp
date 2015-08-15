@@ -1136,6 +1136,11 @@ VIC::preparePixelEngine()
     pixelEngine.dc.color = g_color;
     pixelEngine.dc.mode = g_mode;
     pixelEngine.dc.delay = getHorizontalRasterScroll();
+    
+    for (unsigned i = 0; i < 8; i++) {
+        pixelEngine.dc.spriteX[i] = getSpriteX(i);
+    }
+    pixelEngine.dc.spriteXexpand = iomem[0x1D];
 }
 
 void

@@ -256,6 +256,8 @@ public:
         uint8_t color;
         DisplayMode mode;
         uint8_t delay;
+        uint16_t spriteX[8];
+        uint8_t spriteXexpand;
 
         //
         // Updated in the middle of a 8 pixel chunk (in drawCanvas)

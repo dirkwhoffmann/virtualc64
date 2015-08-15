@@ -375,10 +375,8 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
 {
     assert(nr < 8);
 
-    int spriteX = vic->getSpriteX(nr);
-
     // Check for horizontal trigger condition
-    if (dc.xCounter + pixel == spriteX + 4) {
+    if (dc.xCounter + pixel == dc.spriteX[nr] + 4) {
     
         // Make sure that shift register is only activated once per rasterline
         if (sprite_sr[nr].remaining_bits == -1) {
@@ -405,7 +403,7 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
         }
         
         // Toggle horizontal expansion flipflop for stretched sprites
-        if (vic->spriteWidthIsDoubled(nr)) {
+        if (GET_BIT(dc.spriteXexpand, nr)) {
             sprite_sr[nr].exp_flop = !sprite_sr[nr].exp_flop;
         }
 
