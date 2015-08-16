@@ -31,8 +31,8 @@ VC1541::VC1541(C64 *c64)
 	mem = new VC1541Memory(c64);
 	cpu = new CPU(c64, mem);
 	cpu->setName("1541CPU");
-	via1 = new VIA1(c64);
-	via2 = new VIA2(c64);		
+    via1 = new VIA1(c64);
+    via2 = new VIA2(c64);
 }
 
 VC1541::~VC1541()
@@ -41,8 +41,9 @@ VC1541::~VC1541()
 	
 	delete cpu;	
 	delete mem;
-	delete via1;
-	delete via2;
+    delete via1;
+    delete via2;
+
 }
 
 void 
@@ -57,8 +58,8 @@ VC1541::reset()
 	cpu->reset();
 	cpu->setPC(0xEAA0);
 	mem->reset();
-	via1->reset();
-	via2->reset();
+    via1->reset();
+    via2->reset();
 		
     clearDisk();
     rotating = false;
@@ -86,6 +87,7 @@ VC1541::ping()
     mem->ping();
     via1->ping();
     via2->ping();
+
 }
 
 uint32_t
@@ -126,9 +128,9 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 	noOfFFBytes = (int)read16(buffer);
 	writeProtected = (bool)read8(buffer);
 	cpu->loadFromBuffer(buffer);
-	via1->loadFromBuffer(buffer);	
-	via2->loadFromBuffer(buffer);
-	mem->loadFromBuffer(buffer);
+    via1->loadFromBuffer(buffer);
+    via2->loadFromBuffer(buffer);
+    mem->loadFromBuffer(buffer);
     
     debug(2, "  VC1541 state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
@@ -154,8 +156,8 @@ VC1541::saveToBuffer(uint8_t **buffer)
 	write16(buffer, (uint16_t)noOfFFBytes);
 	write8(buffer, (uint8_t)writeProtected);
 	cpu->saveToBuffer(buffer);
-	via1->saveToBuffer(buffer);	
-	via2->saveToBuffer(buffer);	
+    via1->saveToBuffer(buffer);
+    via2->saveToBuffer(buffer);
 	mem->saveToBuffer(buffer);
     
     debug(4, "  VC1541 state saved (%d bytes)\n", *buffer - old);
@@ -358,20 +360,21 @@ VC1541::rotateDisk()
 }
 
 void 
-VC1541::moveHead(int distance)
+VC1541::moveHeadUp()
 {
-	track += distance;
-	if (track < 0) track = 0;
-	if (track > 83) track = 83;
-//	offset = 0;
+    if (track < 83) track++;
 	offset = offset % length[track];
 
-	if (distance == 1)
-		debug(2, "Head up (to %2.1f) at %4X\n", (track + 2) / 2.0, cpu->getPC());
-	else if (distance == -1)
-		debug(2, "Head down (to %2.1f) at %4X\n", (track + 2) / 2.0, cpu->getPC());
-	else 
-		debug(2, "Head ???\n");
+    debug(3, "Moving head up to %2.1f\n", (track + 2) / 2.0);
+}
+
+void
+VC1541::moveHeadDown()
+{
+    if (track > 0) track--;
+    offset = offset % length[track];
+    
+    debug(3, "Moving head down to %2.1f\n", (track + 2) / 2.0);
 }
 
 void
@@ -383,7 +386,6 @@ VC1541::writeByteToDisk(uint8_t val)
 void
 VC1541::writeOraToDisk()
 {
-    debug(2,"WrORA: (t:%d o:%d) = %d\n", track, offset, via2->ora);
     writeByteToDisk(via2->ora);
 }
 

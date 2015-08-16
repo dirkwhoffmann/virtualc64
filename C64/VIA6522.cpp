@@ -707,10 +707,10 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 				// Increase value (%00-%01-%10-%11-%00...) to move head upwards.
 				if ((value & 0x03) == ((orb+1) & 0x03)) {
 					// Move head upwards...
-					floppy->moveHead(1);
+					floppy->moveHeadUp();
 				} else if ((value & 0x03) == ((orb-1) & 0x03)) {
 					// Move head downwards...
-					floppy->moveHead(-1);
+					floppy->moveHeadDown();
 				} else {
 					warn("Unexpected stepper motor control sequence in VC1541 detected\n");
 				}

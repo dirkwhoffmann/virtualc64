@@ -46,9 +46,8 @@ public:
 	VC1541Memory *mem;
 
 	//! The 1541 drive contains two via chips for disk and peripheral I/O
-	VIA1 *via1;
-	VIA2 *via2;
-
+    VIA1 *via1;
+    VIA2 *via2;
 
 
     // -----------------------------------------------------------------------------------------------
@@ -203,7 +202,11 @@ public:
     //                                  Read/Write logic
     // ---------------------------------------------------------------------------------------------
 
-	void moveHead(int distance);
+    // Move head one halftrack up
+    void moveHeadUp();
+
+    // Move head one halftrack down
+    void moveHeadDown();
 
 	inline void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
 
