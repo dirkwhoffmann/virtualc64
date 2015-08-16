@@ -194,6 +194,7 @@ bool
 VC1541::executeOneCycle()
 {
     bool result;
+    static uint8_t oldora;
     
     via1->execute(1);
     via2->execute(1);
@@ -217,7 +218,8 @@ VC1541::executeOneCycle()
         // Write to disk
         noOfFFBytes = 0;
         setSyncMark(0);
-        writeOraToDisk();
+        writeByteToDisk(oldora);
+        signalByteReady();
 
     } else {
         
@@ -239,6 +241,7 @@ VC1541::executeOneCycle()
     // Prepare for next byte
     rotateDisk();
     readmode = via2->isReadMode();
+    oldora = via2->ora;
     
     // "Eine auftretende SYNC-Markierung löst beim Diskcontroller das hardwaremäßig festgelegte
     //  SYNC-Signal aus. Während dieses Signal auftritt, wird der Schreib-/Leseport des Diskcontrollers
