@@ -198,8 +198,8 @@ VC1541::executeOneCycle()
     bool result;
     static uint8_t oldora;
     
-    via1->execute(1);
-    via2->execute(1);
+    via1->execute();
+    via2->execute();
     result = cpu->executeOneCycle();
     
     // Decrement byte ready counter to 1, if active

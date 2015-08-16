@@ -16,6 +16,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// Reference: "R6522 VERSATILE INTERFACE ADAPTER" by Frank Kontros [F. K.]
+
+
 #ifndef _VIA6522_INC
 #define _VIA6522_INC
 
@@ -33,7 +36,7 @@ public:
 public:
 	
 	//! Peripheral ports
-	/*! The  R6522  VIA  has  two  8-bit  bidirectional  I/O ports (Port A and Port B)
+	/*! "The  R6522  VIA  has  two  8-bit  bidirectional  I/O ports (Port A and Port B)
 		and each port has two associated control lines. 
 		
 		Each  8-bit  peripheral  port  has  a Data Direction Register (DDRA, DDRB) for
@@ -47,7 +50,7 @@ public:
 		the  Output  Register.  A  1  in  the  Output Register causes the output to go
 		high,  and  a  0  causes the output to go low. Data may be written into Output
 		Register  bits  corresponding  to pins which are programmed as inputs. In this
-		case, however, the output signal is unaffected.
+		case, however, the output signal is unaffected." [F. K.]
 	*/
 	uint8_t ddra, ddrb;
 	uint8_t ora, orb;
@@ -58,9 +61,7 @@ protected:
 	//! VIA I/O Memory
 	/*! Whenever a value is poked to the VIA address space, it is stored here. */
 	uint8_t io[16];
-	
-private:
-	
+		
 	//! VIA timer 1
 	/*! Interval  Timer  T1  consists  of  two  8-bit latches and a 16-bit
 		counter.  The  latches store data which is to be loaded into the
@@ -72,7 +73,8 @@ private:
 		the  output  signal  on  a peripheral pin (PB7) each time it "times-out". Each
 		of these modes is discussed separately below.
 	*/
-	uint8_t t1_latch_lo, t1_latch_hi, t1_counter_lo, t1_counter_hi;
+    uint16_t t1;
+    uint8_t t1_latch_lo, t1_latch_hi;
 
 	//! VIA timer 2
 	/*! Timer  2  operates  as  an interval timer (in the "one-shot" mode only), or as
@@ -83,7 +85,8 @@ private:
 		(T2C-H).  The  counter  registers  act as a 16-bit counter which decrements at
 		02 rate.
 	*/
-	uint8_t t2_latch_lo, t2_counter_lo, t2_counter_hi;
+    uint16_t t2;
+	uint8_t t2_latch_lo;
 		
 public:	
 	//! Constructor
@@ -95,10 +98,12 @@ public:
 	//! Bring the VIA back to its initial state
 	void reset();
 
-	//! Pass control to the virtual VIA
-	/*! The VIA chip will be executed for the specified number of clock cycles. */
-	bool execute(int cycles); 
+    //! Execution function for timer 1
+    void executeTimer1();
 
+    //! Execution function for timer 2
+    void executeTimer2();
+    
     //! Size of internal state
     uint32_t stateSize();
 
@@ -116,16 +121,8 @@ public:
 	/*! The poke function only handles those registers that are treated similarily by both VIA chips */
 	virtual void poke(uint16_t addr, uint8_t value);
 
-	//! Get 16 bit timer values
-	uint16_t getTimer1() { return ((uint16_t)t1_counter_hi << 8) | t1_counter_lo; }
-	uint16_t getTimer2() { return ((uint16_t)t2_counter_hi << 8) | t2_counter_lo; }
-
-	//! Set 16 bit timer values
-	void setTimer1(uint16_t value) { t1_counter_hi = value >> 8; t1_counter_lo = value & 0xFF; }
-	void setTimer2(uint16_t value) { t2_counter_hi = value >> 8; t2_counter_lo = value & 0xFF; }			
-
 	//! Reload timer from latched values
-	void reloadTimer1() { t1_counter_hi = t1_latch_hi; t1_counter_lo = t1_latch_lo; }
+	void reloadTimer1() { t1 = (t1_latch_hi << 8) | t1_latch_lo; }
 
 	//! Signal time out 
 	void signalTimeOut1() { io[0x0D] |= 0x40; }
@@ -159,6 +156,18 @@ public:
 	//! Bring the VIA back to its initial state
 	void reset();
 
+    //! Execute virtual VIA for one cycle
+    inline void execute() {
+        if (t1) executeTimer1();
+        if (t2) executeTimer2();
+    }
+    
+    //! Execution function for timer 1
+    void executeTimer1();
+    
+    //! Execution function for timer 2
+    void executeTimer2();
+    
 	uint8_t peek(uint16_t addr);
 	void poke(uint16_t addr, uint8_t value);
 	
@@ -181,6 +190,18 @@ public:
 	//! Bring the VIA back to its initial state
 	void reset();
 
+    //! Execute virtual VIA for one cycle
+    inline void execute() {
+        if (t1) executeTimer1();
+        if (t2) executeTimer2();
+    }
+    
+    //! Execution function for timer 1
+    void executeTimer1();
+    
+    //! Execution function for timer 2
+    void executeTimer2();
+    
 	uint8_t peek(uint16_t addr);
 	void poke(uint16_t addr, uint8_t value);
 

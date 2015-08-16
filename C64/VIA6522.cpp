@@ -18,6 +18,12 @@
 
 #include "C64.h"
 
+
+// -----------------------------------------------------------------------------------------------
+//                                   VIA 6522 (Commons)
+// -----------------------------------------------------------------------------------------------
+
+
 VIA6522::VIA6522()
 {
 	name = "VIA";
@@ -39,13 +45,11 @@ void VIA6522::reset()
 	orb = 0;
 	ira = 0;
 	irb = 0;
-	t1_latch_lo = 0;
+    t1 = 0;
+    t2 = 0;
+    t1_latch_lo = 0;
 	t1_latch_hi = 0;
-	t1_counter_lo = 0;
-	t1_counter_hi = 0;
-	t2_latch_lo = 0;
-	t2_counter_lo = 0;
-	t2_counter_hi = 0;
+    t2_latch_lo = 0;
 		
 	for (unsigned i = 0; i < sizeof(io); i++)
 		io[i] = 0;
@@ -67,13 +71,11 @@ void VIA6522::loadFromBuffer(uint8_t **buffer)
 	orb = read8(buffer);
 	ira = read8(buffer);
 	irb = read8(buffer);
-	t1_latch_lo = read8(buffer);
+    t1 = read16(buffer);
+    t2 = read16(buffer);
+    t1_latch_lo = read8(buffer);
 	t1_latch_hi = read8(buffer);
-	t1_counter_lo = read8(buffer);
-	t1_counter_hi = read8(buffer);
 	t2_latch_lo = read8(buffer);
-	t2_counter_lo = read8(buffer);
-	t2_counter_hi = read8(buffer);
 	
 	for (unsigned i = 0; i < sizeof(io); i++)
 		io[i] = read8(buffer);
@@ -92,54 +94,17 @@ void VIA6522::saveToBuffer(uint8_t **buffer)
 	write8(buffer, orb);
 	write8(buffer, ira);
 	write8(buffer, irb);
+    write16(buffer, t1);
+    write16(buffer, t2);
 	write8(buffer, t1_latch_lo);
 	write8(buffer, t1_latch_hi);
-	write8(buffer, t1_counter_lo);
-	write8(buffer, t1_counter_hi);
 	write8(buffer, t2_latch_lo);
-	write8(buffer, t2_counter_lo);
-	write8(buffer, t2_counter_hi);
 	
 	for (unsigned i = 0; i < sizeof(io); i++)
 		write8(buffer, io[i]);
 
     debug(4, "  VIA6522 state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
-}
-
-bool VIA6522::execute(int cycles)
-{
-	uint16_t timer1 = getTimer1();
-	uint16_t timer2 = getTimer2();
-	
-	if (timer1 != 0) {
-		if (timer1 <= cycles) {
-			// Timer 1 time out
-			signalTimeOut1();
-			if (timerInterruptEnabled1()) {
-				floppy->cpu->setIRQLineVIA1();	
-			}
-			// Reload timer
-			setTimer1(0);
-		} else {
-			setTimer1(timer1 - cycles);
-		}
-	}
-	
-	if (timer2 != 0) {
-		if (timer2 <= cycles) {
-			// Timer 2 time out
-			signalTimeOut2();
-			if (timerInterruptEnabled2()) {
-				floppy->cpu->setIRQLineVIA2();
-			}
-			// Reload timer
-			setTimer2(0);
-		} else {
-			setTimer2(timer2 - cycles);
-		}
-	}
-	return true;
 }
 
 void 
@@ -155,8 +120,8 @@ VIA6522::dumpState()
 	msg("Data direction register (DDRB) : %02X\n", ddrb);
 	msg("              Input latching A : %s\n", inputLatchingEnabledA() ? "enabled" : "disabled");
 	msg("              Input latching B : %s\n", inputLatchingEnabledB() ? "enabled" : "disabled");
-	msg("                       Timer 1 : %d (latched: %d)\n", LO_HI(t1_counter_lo, t1_counter_hi), LO_HI(t1_latch_lo, t1_latch_hi));
-	msg("                       Timer 2 : %d (latched: %d)\n", LO_HI(t2_counter_lo, t2_counter_hi), LO_HI(t2_latch_lo, 0));
+	msg("                       Timer 1 : %d (latched: %d)\n", t1, LO_HI(t1_latch_lo, t1_latch_hi));
+	msg("                       Timer 2 : %d (latched: %d)\n", t2, LO_HI(t2_latch_lo, 0));
 	msg("            Timer 1 interrupts : %s\n", timerInterruptEnabled1() ? "enabled" : "disabled");
 	msg("            Timer 2 interrupts : %s\n", timerInterruptEnabled2() ? "enabled" : "disabled");
 	msg("        Timer 1 interrupt flag : %d\n", (io[0x0D] & 0x40) != 0);
@@ -168,12 +133,70 @@ VIA6522::dumpState()
 	msg("\n");
 }
 
+// -----------------------------------------------------------------------------------------------
+//                                    Execution functions
+// -----------------------------------------------------------------------------------------------
+
+void
+VIA1::executeTimer1()
+{
+    if (t1-- == 1) {
+        // Timer 1 time out
+        signalTimeOut1();
+        if (timerInterruptEnabled1()) {
+            // floppy->cpu->setIRQLineVIA1();
+        }
+    }
+}
+
+void
+VIA1::executeTimer2()
+{
+    if (t1-- == 1) {
+        // Timer 2 time out
+        signalTimeOut2();
+        if (timerInterruptEnabled2()) {
+            // floppy->cpu->setIRQLineVIA2();
+        }
+    }
+}
+
+void
+VIA2::executeTimer1()
+{
+    if (t1-- == 1) {
+        // Timer 1 time out
+        signalTimeOut1();
+        if (timerInterruptEnabled1()) {
+            floppy->cpu->setIRQLineVIA1();
+        }
+    }
+}
+
+void
+VIA2::executeTimer2()
+{
+    if (t1-- == 1) {
+        // Timer 2 time out
+        signalTimeOut2();
+        if (timerInterruptEnabled2()) {
+            // floppy->cpu->setIRQLineVIA2();
+        }
+    }
+}
+
+
+// -----------------------------------------------------------------------------------------------
+//                                         Peek and poke
+// -----------------------------------------------------------------------------------------------
+
 uint8_t 
 VIA6522::peek(uint16_t addr)
 {
-	assert (addr <= 0x0F);
+	assert (addr <= 0xF);
 		
 	switch(addr) {
+            
 		//              REG 0 -- ORB/IRB
 		//      +---+---+---+---+---+---+---+---+
 		//      | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
@@ -214,7 +237,8 @@ VIA6522::peek(uint16_t addr)
 		// |                       |                       |THE TIME OF THE LAST CB1   |
 		// |                       |                       |ACTIVE TRANSITION          |
 		// +-----------------------+-----------------------+---------------------------+
-		case 0x00:
+
+        case 0x0:
 			debug(1, "PANIC: VIA register 0 needs individual handling!\n");
 			assert(0);
 			break;
@@ -263,7 +287,9 @@ VIA6522::peek(uint16_t addr)
 		// |                       |                       |THE TIME OF THE LAST CA1   |
 		// |                       |                       |ACTIVE TRANSITION          |
 		// +-----------------------+-----------------------+---------------------------+
-		case 0x01:
+
+        case 0x1:
+        case 0xF:
 			debug(1, "PANIC: VIA register 1 needs individual handling!\n");
 			assert(0);
 			break;
@@ -287,9 +313,11 @@ VIA6522::peek(uint16_t addr)
 		//  "1"  ASSOCIATED PB PIN IS AN OUTPUT    "1"  ASSOCIATED PA PIN IS AN OUTPUT
 		//       WHOSE LEVEL IS DETERMINED BY           WHOSE LEVEL IS DETERMINED BY
 		//       ORB REGISTER BIT                       ORA REGISTER BIT
-		case 0x02: 
+
+        case 0x2:
 			return ddrb;
-		case 0x03: 
+
+        case 0x3:
 			return ddra;
 			
 		// REG 4 -- T1 LOW-ORDER COUNTER           REG 5 -- T1 HIGH-ORDER COUNTER
@@ -318,12 +346,13 @@ VIA6522::peek(uint16_t addr)
 		//         IN ADDITION T1 INTERRUPT FLAG
 		//         IS RESET (BIT 6 IN INTERRUPT
 		//         FLAG REGISTER)
-		case 0x04: 
+
+        case 0x4:
 			clearTimer1Indicator();
-			floppy->cpu->clearIRQLineVIA1();
-			return t1_counter_lo;
-		case 0x05: 
-			return t1_counter_hi;
+            return LO_BYTE(t1);
+
+        case 0x5:
+			return HI_BYTE(t1);
 
 		//  REG 6 -- T1 LOW-ORDER LATCH             REG 7 -- T1 HIGH-ORDER LATCH
 		//  +-+-+-+-+-+-+-+-+                       +-+-+-+-+-+-+-+-+
@@ -349,9 +378,10 @@ VIA6522::peek(uint16_t addr)
 		//         UNLIKE REG 4 OPERATION,
 		//         THIS DOES NOT CAUSE RESET
 		//         OF T1 INTERRUPT FLAG
-		case 0x06: 
+		case 0x6:
 			return t1_latch_lo;
-		case 0x07: 
+            
+		case 0x7:
 			return t1_latch_hi;
 
 		//  REG 8 - T2 LOW-ORDER LATCH/COUNTER      REG 9 - T2 HIGH-ORDER COUNTER
@@ -378,13 +408,13 @@ VIA6522::peek(uint16_t addr)
 		//
         //										   READ  - 8 BITS FROM T2 HIGH-ORDER
 		//                                                 COUNTER TRANSFERRED TO MPU
-		case 0x08:
+
+        case 0x8:
 			clearTimer2Indicator();
-			floppy->cpu->clearIRQLineVIA2();
-			return t2_counter_lo;
+			return LO_BYTE(t2);
 			
-		case 0x09:
-			return t2_counter_hi;
+		case 0x9:
+			return HI_BYTE(t2);
 		
 		// REG 10 -- SHIFT REGISTER              REG 11 -- AUXILIARY CONTROL REGISTER
 		//  +-+-+-+-+-+-+-+-+                               +-+-+-+-+-+-+-+-+
@@ -407,12 +437,13 @@ VIA6522::peek(uint16_t addr)
 		//  2  WHEN SHIFTING IN BITS INITIALLY  |1|1|0|SHIFT OUT UNDER CONTROL OF 02    |
 		//     ENTER BIT 0 AND ARE SHIFTED      |1|1|1|SHIFT OUT UNDER CONT. OF EXT.CLK |
 		//     TOWARDS BIT 7                    +-+-+-+---------------------------------+
-		case 0x0A:
+
+        case 0xA:
 			// Shift register
 			// debug(2, "Drive is peeking the shift register (from %p)\n", floppy->cpu->getPC());
 			break;
 			
-		case 0x0B:
+		case 0xB:
 			// Auxiliary control register
 			// debug(2, "Drive is peeking the auxiliary control register (from %p)\n", floppy->cpu->getPC());
 			break;
@@ -451,7 +482,8 @@ VIA6522::peek(uint16_t addr)
 		// | 0 = NEGATIVE ACTIVE EDGE |              +-+-+-+------------------------+
 		// | 1 = POSITIVE ACTIVE EDGE |              |1|1|1| HIGH OUTPUT            |
 		// +--------------------------+              +-+-+-+------------------------+
-		case 0x0C:
+
+        case 0xC:
 			// Unused
 			break;
 			
@@ -480,7 +512,8 @@ VIA6522::peek(uint16_t addr)
 		//	INTERRUPT INPUT, THEN READING OR WRITING THE OUTPUT REGISTER
 		//     ORA/ORB WILL NOT CLEAR THE FLAG BIT. INSTEAD, THE BIT MUST BE
 		//     CLEARED BY WRITING INTO THE IFR, AS DESCRIBED PREVIOUSLY.
-		case 0x0D:
+
+        case 0xD:
 			return io[addr] | ((io[addr] & io[0x0E]) ? 0x80 : 0);
 			
 		//                 REG 14 -- INTERRUPT ENABLE REGISTER
@@ -504,11 +537,9 @@ VIA6522::peek(uint16_t addr)
 		//             CORRESPONDING INTERRUPT.
 		//          3  IF A READ OF THIS REGISTER IS DONE, BIT 7 WILL BE "1" AND
 		//             ALL OTHER BITS WILL REFLECT THEIR ENABLE/DISABLE STATE.
-		case 0x0E:
-			return io[addr] | 0x80;			
 
-		case 0x0F:
-			break;
+        case 0xE:
+			return io[addr] | 0x80;
 	}
 
 	// default behavior
@@ -518,7 +549,8 @@ VIA6522::peek(uint16_t addr)
 uint8_t VIA1::peek(uint16_t addr)
 {
 	switch(addr) {
-		case 0x00:
+            
+		case 0x0:
 			uint8_t result, pb_pins;
 			// Bit 0: Data in
 			// Bit 1: Data out
@@ -534,7 +566,7 @@ uint8_t VIA1::peek(uint16_t addr)
 			result = (ddrb & orb) | (~ddrb & pb_pins);									
 			return result & 0x9F; // Set device address to zero
 
-		case 0x01:
+		case 0x1:
 			clearAtnIndicator();
 			floppy->cpu->clearIRQLineATN();
 			return ora;
@@ -549,7 +581,8 @@ uint8_t h[16];
 uint8_t VIA2::peek(uint16_t addr)
 {
 	switch(addr) {
-		case 0x00:
+
+        case 0x0:
 			// Bit 4: 0 = disc is write protected
             if (floppy->isWriteProtected()) {
                 CLR_BIT(orb, 4);
@@ -566,11 +599,16 @@ uint8_t VIA2::peek(uint16_t addr)
             
 			return orb;
 
-		case 0x01:
+		case 0x1:
+        case 0xF:
 			if (tracingEnabled()) {
 				msg("%02X ", ora);
 			}
 			return ora;
+            
+        case 0x4:
+            floppy->cpu->clearIRQLineVIA1();
+            return VIA6522::peek(addr);
             
 		default:
 			return VIA6522::peek(addr);	
@@ -583,78 +621,75 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
 	assert (addr <= 0x0F);
 		
 	switch(addr) {
-		case 0x00:
+
+        case 0x0:
 			// Not reached
 			assert(false);
 			break;
 		
-		case 0x01:
+		case 0x1:
+        case 0xF:
 			// Not reached
 			assert(false);
 			break;
 					
-		case 0x02: 
+		case 0x2:
 			ddrb = value;
 			return;
 			
-		case 0x03: 
+		case 0x3:
 			ddra = value;
 			return;
 		
-		case 0x04: 
+		case 0x4:
 			t1_latch_lo = value;
 			return;
 			
-		case 0x05: 
+		case 0x5:
 			t1_latch_hi = value;
-			t1_counter_hi = t1_latch_hi;
-			t1_counter_lo = t1_latch_lo;
+            t1 = HI_LO(t1_latch_hi, t1_latch_lo);
 			clearTimer1Indicator();
 			floppy->cpu->clearIRQLineVIA1();
 			return;
 
-		case 0x06:
+		case 0x6:
 			t1_latch_lo = value;
 			return;
 			
-		case 0x07:
+		case 0x7:
 			t1_latch_hi = value;
 			return;
 		
-		case 0x08:
+		case 0x8:
 			t2_latch_lo = value;
 			return;
 		
-		case 0x09:
-			t2_counter_hi = value;
-			t2_counter_lo = t2_latch_lo;
+		case 0x9:
+            t2 = HI_LO(value, t2_latch_lo);
 			clearTimer2Indicator();
 			floppy->cpu->clearIRQLineVIA2();
 			return;
 
-		case 0x0A:
+		case 0xA:
 			break;
 
-		case 0x0B:
+		case 0xB:
 			break;
 
-		case 0x0C:
+		case 0xC:
 			break;
 
-		case 0x0D:
+		case 0xD:
 			io[addr] &= ~value;
 			return;
 
-		case 0x0E:
+		case 0xE:
 			if (value & 0x80) {
 				io[addr] |= value & 0x7f;
             } else {
 				io[addr] &= ~value;
 			}
 			return;
-
-		case 0x0F:
-			break;
 	}
 
 	// default bevahior
@@ -664,21 +699,23 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
 void VIA1::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
-		case 0x00:
+
+        case 0x0:
 			orb = value;
 			io[0x0D] &= 0xF7;
 			io[0x0D] &= 0xEF; 
 			floppy->iec->updateDevicePins(orb, ddrb);
 			return;
 
-		case 0x01:
+		case 0x1:
+        case 0xF:
 			ora = value;
 			clearAtnIndicator();
 			io[0x0D] &= 0xFE; 
 			floppy->cpu->clearIRQLineATN();
 			return;
 		
-		case 0x02: 
+		case 0x2:
 			ddrb = value;
 			// debug(2, "Writing %d into ddrb via 1\n", value);
 			floppy->iec->updateDevicePins(orb, ddrb);
@@ -692,7 +729,8 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 void VIA2::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
-		case 0x00:
+
+        case 0x0:
 			// Port B, Steuerport
 			// Bit 0: Schrittmotor Spule 0
 			// Bit 1: Schrittmotor Spule 1
@@ -733,7 +771,8 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 			orb = value;
 			return;
 
-		case 0x01: 
+		case 0x1:
+        case 0xF:
 			// Port A: Daten vom/zum Tonkopf
 			if (tracingEnabled()) {
 				debug(1, " W%02X", value);
@@ -741,26 +780,15 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 			ora = value;
 			return;
 
-		case 0x03:
+		case 0x3:
 			ddra = value;
 			if (ddra != 0x00 && ddra != 0xFF) {
 				debug(1, "Data direction bits of VC1541 contain suspicious values\n");
 			}
 			return;
 			
-		case 0x0C:
-			// Auxiliary control register
-			if ((value & 0x02) != (io[addr] & 0x02)) {
-				// debug("%s V-flag to drive head\n", value & 0x02 ? "Attach" : "Detach");
-			}
-			if ((value & 0x20) != (io[addr] & 0x20)) {
-				debug(2, "Switching to %s mode (%04X) ByteReadyTimer = %d\n", value & 0x20 ? "READ" : "WRITE", floppy->cpu->getPC(),floppy->byteReadyTimer);
-			}
+		case 0xC:
 			io[addr] = value;
-			return;
-
-		case 0x15:
-			debug(1, "WARNING: ACCESS TO VIA 2 0x015 detected!\n");
 			return;
 			
 		default:
