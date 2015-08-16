@@ -64,7 +64,8 @@ VC1541::reset()
     rotating = false;
     redLED = false;
     diskInserted = false;
-
+    syncMark = false;
+    
     byteReadyTimer = 0;
 	track = 40;
 	offset = 0;
@@ -192,25 +193,52 @@ VC1541::setSyncMark(bool b)
 bool
 VC1541::executeOneCycle()
 {
-	bool result;
+    bool result;
     
-	via1->execute(1);
-	via2->execute(1);
-	result = cpu->executeOneCycle();
-		
+    via1->execute(1);
+    via2->execute(1);
+    result = cpu->executeOneCycle();
+    
     // Decrement byte ready counter to 1, if active
-	if (byteReadyTimer == 0)
-		return result;
+    if (byteReadyTimer == 0)
+        return result;
     
-	if (byteReadyTimer > 1) {
-		byteReadyTimer--;
-		return result;
-	}
+    if (byteReadyTimer > 1) {
+        byteReadyTimer--;
+        return result;
+    }
     
-	byteReadyTimer = VC1541_CYCLES_PER_BYTE;
-		
-    // Byte is ready. Perform read or write operation
-	rotateDisk();
+    byteReadyTimer = VC1541_CYCLES_PER_BYTE;
+    
+    // Byte is complete.
+    
+    if (!readmode) {
+        
+        // Write to disk
+        noOfFFBytes = 0;
+        setSyncMark(0);
+        writeOraToDisk();
+
+    } else {
+        
+        // Read from disk
+        if (readHead() == 0xFF)
+            noOfFFBytes++;
+        else
+            noOfFFBytes = 0;
+    
+        if (noOfFFBytes <= 1) { // no sync, yet
+            via2->ora = readHead();
+            signalByteReady();
+            setSyncMark(0);
+        } else {
+            setSyncMark(1);
+        }
+    }
+    
+    // Prepare for next byte
+    rotateDisk();
+    readmode = via2->isReadMode();
     
     // "Eine auftretende SYNC-Markierung löst beim Diskcontroller das hardwaremäßig festgelegte
     //  SYNC-Signal aus. Während dieses Signal auftritt, wird der Schreib-/Leseport des Diskcontrollers
@@ -220,21 +248,7 @@ VC1541::executeOneCycle()
     //  Dieser entspricht der Bitfolge, die bis zur Feststellung des SYNC-Bereichs durch den Controller
     //  eingelesen wurde." [Die Floppy 1570/1571, Markt und Technik]
     
-    //  A sync mark is indicated by at least 10 one bits in a row
-    if (sr == 0xFF && readHead() == 0xFF) {
-        setSyncMark(1);
-    } else {
-        setSyncMark(0);
-    }
-    
-    if (!syncMark) {
-        signalByteReady();
-        via2->ora = readHead();
-    }
-
-    // remember last value
-    sr = readHead();
-	return result;
+    return result;
 }
 
 #if 0
