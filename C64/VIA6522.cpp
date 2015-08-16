@@ -558,7 +558,7 @@ uint8_t VIA2::peek(uint16_t addr)
             }
             
 			// Bit 7: 0 = SYNC mark
-            if (floppy->readHead() == 0xFF) {
+            if (floppy->getSyncMark()) {
 				CLR_BIT(orb, 7);
             } else {
 				SET_BIT(orb, 7);
@@ -568,12 +568,10 @@ uint8_t VIA2::peek(uint16_t addr)
 
 		case 0x01:
 			if (tracingEnabled()) {
-				debug(1, "%02X ", ora);			
+				msg("%02X ", ora);
 			}
 			return ora;
             
-            // FRODO IS READING FROM DISC HERE (INCLUDING DISC ROTATION) 
-		
 		default:
 			return VIA6522::peek(addr);	
 	}

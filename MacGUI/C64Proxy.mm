@@ -483,7 +483,7 @@
 - (void) ejectDisk { vc1541->ejectDisc(); }
 - (bool) hasRedLED { return vc1541->hasRedLED(); }
 - (bool) hasDisk { return vc1541->hasDisk(); }
-- (bool) writeProtection { return vc1541->writeProtection; }
+- (bool) writeProtection { return vc1541->isWriteProtected(); }
 - (void) setWriteProtection:(bool)b { vc1541->setWriteProtection(b); }
 - (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
 - (D64Archive *) archiveFromDrive { return D64Archive::archiveFromDrive(vc1541); }

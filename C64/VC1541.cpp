@@ -69,7 +69,7 @@ VC1541::reset()
 	track = 40;
 	offset = 0;
 	noOfFFBytes = 0;
-    writeProtection = false;
+    writeProtected = false;
     readmode = true;
 }
 
@@ -123,7 +123,7 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 	track = (int)read16(buffer);
 	offset = (int)read16(buffer);
 	noOfFFBytes = (int)read16(buffer);
-	writeProtection = (bool)read8(buffer);
+	writeProtected = (bool)read8(buffer);
 	cpu->loadFromBuffer(buffer);
 	via1->loadFromBuffer(buffer);	
 	via2->loadFromBuffer(buffer);
@@ -151,7 +151,7 @@ VC1541::saveToBuffer(uint8_t **buffer)
 	write16(buffer, (uint16_t)track);
 	write16(buffer, (uint16_t)offset);
 	write16(buffer, (uint16_t)noOfFFBytes);
-	write8(buffer, (uint8_t)writeProtection);
+	write8(buffer, (uint8_t)writeProtected);
 	cpu->saveToBuffer(buffer);
 	via1->saveToBuffer(buffer);	
 	via2->saveToBuffer(buffer);	
@@ -180,52 +180,114 @@ VC1541::dumpState()
 void 
 VC1541::setWriteProtection(bool b)
 {
-	writeProtection = b;
+	writeProtected = b;
+}
+
+void
+VC1541::setSyncMark(bool b)
+{
+    syncMark = b;
 }
 
 bool
 VC1541::executeOneCycle()
 {
 	bool result;
-	
+    
 	via1->execute(1);
 	via2->execute(1);
 	result = cpu->executeOneCycle();
 		
+    // Decrement byte ready counter to 1, if active
 	if (byteReadyTimer == 0)
 		return result;
-
+    
 	if (byteReadyTimer > 1) {
 		byteReadyTimer--;
 		return result;
 	}
-
-	// Reset timer
+    
 	byteReadyTimer = VC1541_CYCLES_PER_BYTE;
-						
-	// Rotate disk
+		
+    // Byte is ready. Perform read or write operation
 	rotateDisk();
     
+    // "Eine auftretende SYNC-Markierung löst beim Diskcontroller das hardwaremäßig festgelegte
+    //  SYNC-Signal aus. Während dieses Signal auftritt, wird der Schreib-/Leseport des Diskcontrollers
+    //  gesperrt, das heißt, nicht mehr mit Daten versorgt - und auch kein BYTE READY mehr ausgelöst
+    //  -, bis die SYNC-Zone auf der Diskette vorbei ist. Aus diesem Grund enthält der VIA 2 in seinem
+    //  Port zum Schreib-/Lesekopf nach dem Auftreten des SYNC-Signals einen undefinierten Wert.
+    //  Dieser entspricht der Bitfolge, die bis zur Feststellung des SYNC-Bereichs durch den Controller
+    //  eingelesen wurde." [Die Floppy 1570/1571, Markt und Technik]
+    
+    //  A sync mark is indicated by at least 10 one bits in a row
+    if (sr == 0xFF && readHead() == 0xFF) {
+        setSyncMark(1);
+    } else {
+        setSyncMark(0);
+    }
+    
+    if (!syncMark) {
+        signalByteReady();
+        via2->ora = readHead();
+    }
+
+    // remember last value
+    sr = readHead();
+	return result;
+}
+
+#if 0
+bool
+VC1541::executeOneCycle()
+{
+    bool result;
+    
+    via1->execute(1);
+    via2->execute(1);
+    result = cpu->executeOneCycle();
+    
+    if (byteReadyTimer == 0)
+        return result;
+    
+    if (byteReadyTimer > 1) {
+        byteReadyTimer--;
+        return result;
+    }
+    
+    // Reset timer
+    byteReadyTimer = VC1541_CYCLES_PER_BYTE;
+    
+    // Rotate disk
+    rotateDisk();
+    
+    // Old sync mark logic (brittle)
+    setSyncMark(readHead() == 0xFF);
+
     if (readHead() == 0xFF) {
         // Sync found
-		noOfFFBytes++;
+        noOfFFBytes++;
     } else {
-		noOfFFBytes = 0;
+        noOfFFBytes = 0;
     }
     
     if (noOfFFBytes <= 1)
         signalByteReady();
     
-	// Read or write data
-	if (via2->isReadMode()) {
-		via2->ora = readHead();
-	} else {
-        writeOraToDisk(); 
-		signalByteReady();
-	}	
-
-	return result;
+    // Read or write data
+    // if (via2->isReadMode()) {
+    if (readmode) {
+        via2->ora = readHead();
+    } else {
+        writeOraToDisk();
+        signalByteReady();
+    }	
+    // latch...
+    readmode = via2->isReadMode();
+    
+    return result;
 }
+#endif
 
 void 
 VC1541::simulateAtnInterrupt()

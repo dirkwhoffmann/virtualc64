@@ -32,6 +32,7 @@ class C64;
 class VC1541 : public VirtualComponent { 
 
 public:
+    
 	//! Reference to the virtual IEC bus
 	C64 *c64;
 	
@@ -48,14 +49,30 @@ public:
 	VIA1 *via1;
 	VIA2 *via2;
 
+
+
+    // -----------------------------------------------------------------------------------------------
+    //                                     Constant definitions
+    // -----------------------------------------------------------------------------------------------
+
 private:
-	
+    
     //! GCR encoding table
-    /*! Data on a VC 1541 disk ist GCR encoded. Four data bytes will be expanded to five GCR encoded bytes. */
+    /*! VC1541 uses GCR encoding. Four data bytes will be expanded to five GCR encoded bytes. */
+    
     const uint16_t gcr[16] = {
-        0x0a, 0x0b, 0x12, 0x13, 0x0e, 0x0f, 0x16, 0x17, 0x09, 0x19, 0x1a, 0x1b, 0x0d, 0x1d, 0x1e, 0x15
+        0x0a, 0x0b, 0x12, 0x13,
+        0x0e, 0x0f, 0x16, 0x17,
+        0x09, 0x19, 0x1a, 0x1b,
+        0x0d, 0x1d, 0x1e, 0x15
     };
 
+    // -----------------------------------------------------------------------------------------------
+    //                                Track and sector management
+    // -----------------------------------------------------------------------------------------------
+
+private:
+    
     //! Number of tracks
     uint8_t numTracks;
 
@@ -64,14 +81,33 @@ private:
 	uint8_t data[84][7928];
 
     //! Return start address of a given halftrack (1...84)
-    uint8_t *startOfHalftrack(unsigned ht) { assert(ht >= 1 && ht <= 84); return &data[ht-1][0]; }
+    inline uint8_t *startOfHalftrack(unsigned ht) {
+        assert(ht >= 1 && ht <= 84); return &data[ht-1][0]; }
 
     //! Return start address of a given track (1...42)
-    uint8_t *startOfTrack(unsigned t) { assert(t >= 1 && t <= 42); return startOfHalftrack(2*t-1); }
+    inline uint8_t *startOfTrack(unsigned t) {
+        assert(t >= 1 && t <= 42); return startOfHalftrack(2*t-1); }
 
 	//! Real length of each track
 	uint16_t length[84];
 
+public:
+    
+    //! Read data from haftrack
+    inline uint8_t getData(unsigned halftrack, unsigned offset) {
+        assert(track < 84); assert (offset < 7928); return data[halftrack][offset]; }
+    
+    //! Write data to haftrack
+    inline void setData(unsigned halftrack, unsigned offset, uint8_t value) {
+        assert(track < 84); assert (offset < 7928); data[halftrack][offset] = value; }
+
+    
+    // -----------------------------------------------------------------------------------------------
+    //                                       Properties
+    // -----------------------------------------------------------------------------------------------
+
+private:
+    
 	//! Indicates whether disk is rotating or not
 	bool rotating;
     
@@ -81,25 +117,34 @@ private:
     //! Indicates whether a disk is inserted
 	bool diskInserted;
 
+    //! Write protection mark
+    bool writeProtected;
+    
+    //! Temporarily set to true when the VC1541 reads over a sync mark
+    bool syncMark;
+
 public:
 	
 	//! Timer
+    // TODO: Move to private properties
 	int byteReadyTimer;
 	
 	//! Read write head
+    // TODO: Move to private properties
 	int track, offset;
 	
 	//! Counts the number of consecutively found 0xFF mark 
-	int noOfFFBytes;
-			
-	//! Write protection mark
-	bool writeProtection;
-	
-    //! True iff shift register is in read mode EXPERIMENTAL
+    // TODO: Move to private properties
+    // CHECK: Is this really needed?
+    int noOfFFBytes;
+				
+    //! True iff shift register is in read mode
+    // EXPERIMENTAL VARIABLE
     bool readmode;
     
-    //! Latche ora (when writing) EXPERIMENTAL
-    uint8_t oralatch;
+    //! 8 bit shift register connected to drive head
+    // EXPERIMENTAL VARIABLE
+    uint8_t sr;
     
 public:
 	
@@ -126,26 +171,25 @@ public:
 	
 	//! Dump current state into logfile
 	void dumpState();
-	
-    //! Getter and setter
+
+    // ---------------------------------------------------------------------------------------------
+    //                                        Getter and setter
+    // ---------------------------------------------------------------------------------------------
+
+    inline bool isWriteProtected() { return writeProtected; };
+    void setWriteProtection(bool b);
+
+    inline bool getSyncMark() { return syncMark; }
+    void setSyncMark(bool b);
+
+    inline bool hasRedLED() { return redLED; };
     void activateRedLED();
     void deactivateRedLED();
-    inline bool hasRedLED() { return redLED; };
     
+    inline bool isRotating() { return rotating; };
     void startRotating();
     void stopRotating();
-    inline bool isRotating() { return rotating; };
     
-    bool isWriteProtected() { return writeProtection; };
-    void setWriteProtection(bool b);
-    
-    //! Read data from haftrack
-	inline uint8_t getData(unsigned halftrack, unsigned offset) 
-		{ assert(track < 84); assert (offset < 7928); return data[halftrack][offset]; }
-
-    //! Write data to haftrack
-	inline void setData(unsigned halftrack, unsigned offset, uint8_t value)
-		{ assert(track < 84); assert (offset < 7928); data[halftrack][offset] = value; }
 	
 	//! Pass control to the virtual drive
 	/*! The drive will be executed for the specified number of clock cycles. */
@@ -155,9 +199,13 @@ public:
 	/*! Simulates an interrupt. Will be called when the ATN signal is going high */
 	void simulateAtnInterrupt();
 	
+    // ---------------------------------------------------------------------------------------------
+    //                                  Read/Write logic
+    // ---------------------------------------------------------------------------------------------
+
 	void moveHead(int distance);
 
-	void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
+	inline void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
 
     void writeByteToDisk(uint8_t val);
     void writeOraToDisk();
@@ -171,17 +219,26 @@ public:
 	void ejectDisc();
 
 	//! Rotate disk
-	/*! Moves the RW head to next byte on the current track */
+	/*! Moves read/write head to next byte on the current track */
 	void rotateDisk();
     
-	uint8_t readHead() { return data[track][offset]; }
-	uint8_t readHeadLookAhead() { return data[track][(offset + 1) % length[track]]; }
-	uint8_t readHeadLookBehind() { return data[track][(offset + length[track] - 1) % length[track]]; }
-	bool isSyncByte() { return (readHead() == 0xFF && (readHeadLookAhead() == 0xFF || readHeadLookBehind() == 0xFF)); }	
+    //! Reads data byte at current read/write head position
+	inline uint8_t readHead() { return data[track][offset]; }
 
-	// uint8_t readHead() { return readHeadLookBehind(); }
-	void writeHead(uint8_t value) { data[track][offset] = value; }
-	
+    //! Writes data byte at current read/write head position
+    inline void writeHead(uint8_t value) { data[track][offset] = value; }
+
+    //! Data at next read/write head position
+	inline uint8_t readHeadLookAhead() { return data[track][(offset + 1) % length[track]]; }
+    // BETTER: uint8_t readHeadLookAhead() {
+    // return (offset + 1 < length[track]) ? data[track][offset+1] : data[track][0]; }
+
+    //! Data at previous read/write head position
+    inline uint8_t readHeadLookBehind() {
+        return data[track][(offset + length[track] - 1) % length[track]]; }
+    // BETTER: uint8_t readHeadLookBehind() {
+    //    return (offset > 0) ? data[track][offset - 1] : data[track][length[track] - 1]; }
+    	
 	//! Dump state to debug console
 	void dumpTrack(int track = -1);
 	void dumpFullTrack(int track = -1);
