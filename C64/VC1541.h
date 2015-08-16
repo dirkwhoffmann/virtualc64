@@ -121,8 +121,6 @@ private:
     
     //! Temporarily set to true when the VC1541 reads over a sync mark
     bool syncMark;
-
-public:
 	
 	//! Timer
     // TODO: Move to private properties
@@ -137,13 +135,11 @@ public:
     // CHECK: Is this really needed?
     int noOfFFBytes;
 				
-    //! True iff shift register is in read mode
-    // EXPERIMENTAL VARIABLE
-    bool readmode;
+    //! Indicates whether the next byte on disk will be read or written
+    bool latched_readmode;
     
-    //! 8 bit shift register connected to drive head
-    // EXPERIMENTAL VARIABLE
-    uint8_t sr;
+    //! If drive is in write mode, this is the next byte to be written
+    uint8_t latched_ora;
     
 public:
 	

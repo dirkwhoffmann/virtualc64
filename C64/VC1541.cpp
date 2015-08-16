@@ -43,7 +43,6 @@ VC1541::~VC1541()
 	delete mem;
     delete via1;
     delete via2;
-
 }
 
 void 
@@ -72,7 +71,8 @@ VC1541::reset()
 	offset = 0;
 	noOfFFBytes = 0;
     writeProtected = false;
-    readmode = true;
+    latched_readmode = true;
+    latched_ora = 0; 
 }
 
 void
@@ -196,7 +196,6 @@ bool
 VC1541::executeOneCycle()
 {
     bool result;
-    static uint8_t oldora;
     
     via1->execute();
     via2->execute();
@@ -215,15 +214,23 @@ VC1541::executeOneCycle()
     
     // Byte is complete.
     
-    if (!readmode) {
+    if (!latched_readmode) {
         
         // Write to disk
         noOfFFBytes = 0;
         setSyncMark(0);
-        writeByteToDisk(oldora);
+        writeByteToDisk(latched_ora);
         signalByteReady();
 
     } else {
+        
+        // "Eine auftretende SYNC-Markierung löst beim Diskcontroller das hardwaremäßig festgelegte
+        //  SYNC-Signal aus. Während dieses Signal auftritt, wird der Schreib-/Leseport des Diskcontrollers
+        //  gesperrt, das heißt, nicht mehr mit Daten versorgt - und auch kein BYTE READY mehr ausgelöst
+        //  -, bis die SYNC-Zone auf der Diskette vorbei ist. Aus diesem Grund enthält der VIA 2 in seinem
+        //  Port zum Schreib-/Lesekopf nach dem Auftreten des SYNC-Signals einen undefinierten Wert.
+        //  Dieser entspricht der Bitfolge, die bis zur Feststellung des SYNC-Bereichs durch den Controller
+        //  eingelesen wurde." [Die Floppy 1570/1571, Markt und Technik]
         
         // Read from disk
         if (readHead() == 0xFF)
@@ -242,16 +249,8 @@ VC1541::executeOneCycle()
     
     // Prepare for next byte
     rotateDisk();
-    readmode = via2->isReadMode();
-    oldora = via2->ora;
-    
-    // "Eine auftretende SYNC-Markierung löst beim Diskcontroller das hardwaremäßig festgelegte
-    //  SYNC-Signal aus. Während dieses Signal auftritt, wird der Schreib-/Leseport des Diskcontrollers
-    //  gesperrt, das heißt, nicht mehr mit Daten versorgt - und auch kein BYTE READY mehr ausgelöst
-    //  -, bis die SYNC-Zone auf der Diskette vorbei ist. Aus diesem Grund enthält der VIA 2 in seinem
-    //  Port zum Schreib-/Lesekopf nach dem Auftreten des SYNC-Signals einen undefinierten Wert.
-    //  Dieser entspricht der Bitfolge, die bis zur Feststellung des SYNC-Bereichs durch den Controller
-    //  eingelesen wurde." [Die Floppy 1570/1571, Markt und Technik]
+    latched_readmode = via2->isReadMode();
+    latched_ora = via2->ora;
     
     return result;
 }
