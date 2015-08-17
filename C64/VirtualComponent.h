@@ -85,7 +85,7 @@ public:
 	//! Reset the component to its initial state.
 	/*! The functions is called when a hard reset is performed.
 	*/
-	virtual void reset() = 0; 
+	virtual void reset(C64 *c64) = 0; 
 	
     //! Trigger the component to send messages about its current state.
     /*! The GUI invokes this function to update its visual elements, e.g., after loading an image file.

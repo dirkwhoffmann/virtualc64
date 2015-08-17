@@ -42,7 +42,7 @@ C64Memory::~C64Memory()
 	debug(2, "  Releasing main memory at address %p...\n", this);
 }
 
-void C64Memory::reset()
+void C64Memory::reset(C64 *c64)
 {
 	debug (2, "  Resetting main memory...\n");
 	

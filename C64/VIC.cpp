@@ -50,7 +50,7 @@ VIC::~VIC()
 }
 
 void 
-VIC::reset() 
+VIC::reset(C64 *c64) 
 {
 	debug(2, "  Resetting VIC...\n");
 	

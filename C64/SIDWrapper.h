@@ -57,7 +57,7 @@ public:
 	~SIDWrapper();
 	
 	//! Bring SID back to it's initial state.
-	void reset();
+	void reset(C64 *c64);
 	
     //! Size of internal state
     uint32_t stateSize();

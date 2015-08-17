@@ -82,7 +82,7 @@ OldSID::~OldSID()
 }
 
 void
-OldSID::reset() 
+OldSID::reset(C64 *c64)
 {
 	debug(2, "  Resetting SID...\n");
 
@@ -156,7 +156,7 @@ void
 OldSID::loadFromBuffer(uint8_t **buffer)
 {
 	// reset ringbuffer, buffer pointers, callback synchronisation mechanism, etc.
-	this->reset();
+	this->reset(c64);
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
 		poke(i,read8(buffer)); // poke will store this value in iomem[] beside other things
 }

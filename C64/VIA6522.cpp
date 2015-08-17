@@ -33,9 +33,10 @@ VIA6522::~VIA6522()
 {
 }
 	
-void VIA6522::reset()
+void VIA6522::reset(C64 *c64)
 {
     // Establish bindings
+    this->c64 = c64;
     floppy = c64->floppy;
     
     // Reset state
@@ -797,11 +798,10 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 }
 
 
-VIA1::VIA1(C64 *c64)
+VIA1::VIA1()
 {
+    name = "VIA1";
 	debug(2, "  Creating VIA1 at address %p...\n", this);
-	name = "VIA1";
-    this->c64 = c64;
 }
 	
 VIA1::~VIA1()
@@ -809,17 +809,16 @@ VIA1::~VIA1()
 	debug(2, "  Releasing VIA1...\n");
 }
 
-void VIA1::reset()
+void VIA1::reset(C64 *c64)
 {
 	debug(2, "  Resetting VIA1...\n");
-	VIA6522::reset();
+	VIA6522::reset(c64);
 }
 
-VIA2::VIA2(C64 *c64)
+VIA2::VIA2()
 {
+    name = "VIA2";
 	debug(2, "  Creating VIA2 at address %p...\n", this);
-	name = "VIA2";
-    this->c64 = c64;
 }
 	
 VIA2::~VIA2()
@@ -827,8 +826,8 @@ VIA2::~VIA2()
 	debug(2, "  Releasing VIA2...\n");
 }
 
-void VIA2::reset()
+void VIA2::reset(C64 *c64)
 {
 	debug(2, "  Resetting VIA2...\n");
-	VIA6522::reset();
+	VIA6522::reset(c64);
 }

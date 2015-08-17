@@ -31,7 +31,7 @@ Joystick::~Joystick()
 }
 
 void
-Joystick::reset()
+Joystick::reset(C64 *c64)
 {
     debug(2, "  Resetting Joystick...\n");
     

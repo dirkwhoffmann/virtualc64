@@ -28,7 +28,7 @@ CIA::~CIA()
 }
 
 void
-CIA::reset() 
+CIA::reset(C64 *c64)
 {	
     // Establish bindings
     cpu = c64->cpu;
@@ -63,7 +63,7 @@ CIA::reset()
 	counterB = 0x0000;
 	latchB = 0xFFFF;
 	
-	tod.reset();
+	tod.reset(c64);
 }
 
 uint32_t
@@ -816,13 +816,13 @@ CIA1::~CIA1()
 }
 
 void 
-CIA1::reset()
+CIA1::reset(C64 *c64)
 {
 	debug(2, "  Resetting CIA1...\n");
     keyboard = c64->keyboard;
     joy[0] = c64->joystick1;
     joy[1] = c64->joystick2;
-	CIA::reset();
+	CIA::reset(c64);
 }
 
 void 
@@ -1035,11 +1035,11 @@ CIA2::~CIA2()
 	debug(2, "  Releasing CIA2...\n");
 }
 
-void CIA2::reset()
+void CIA2::reset(C64 *c64)
 {
 	debug(2, "  Resetting CIA2...\n");
     iec = c64->iec;
-	CIA::reset();
+	CIA::reset(c64);
 }
 
 void 

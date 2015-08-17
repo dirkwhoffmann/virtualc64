@@ -109,7 +109,7 @@ Keyboard::~Keyboard()
 }
 
 void 
-Keyboard::reset() 
+Keyboard::reset(C64 *c64) 
 {
 	debug(2, "  Resetting keyboard...\n");
 

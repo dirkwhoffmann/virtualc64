@@ -33,7 +33,7 @@ IEC::~IEC()
 }
 
 void 
-IEC::reset()
+IEC::reset(C64 *c64)
 {
 	debug(2, "  Resetting IEC bus...\n");
 

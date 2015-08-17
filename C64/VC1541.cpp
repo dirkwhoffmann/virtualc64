@@ -31,8 +31,6 @@ VC1541::VC1541(C64 *c64)
 	mem = new VC1541Memory(c64);
 	cpu = new CPU(c64, mem);
 	cpu->setName("1541CPU");
-    via1 = new VIA1(c64);
-    via2 = new VIA2(c64);
 }
 
 VC1541::~VC1541()
@@ -41,12 +39,10 @@ VC1541::~VC1541()
 	
 	delete cpu;	
 	delete mem;
-    delete via1;
-    delete via2;
 }
 
 void 
-VC1541::reset()
+VC1541::reset(C64 *c64)
 {
 	debug (2, "Resetting VC1541...\n");
 
@@ -54,11 +50,11 @@ VC1541::reset()
     iec = c64->iec;
     
     // Reset subcomponents
-	cpu->reset();
+	cpu->reset(c64);
 	cpu->setPC(0xEAA0);
-	mem->reset();
-    via1->reset();
-    via2->reset();
+	mem->reset(c64);
+    via1.reset(c64);
+    via2.reset(c64);
 		
     clearDisk();
     rotating = false;
@@ -85,8 +81,8 @@ VC1541::ping()
 
     cpu->ping();
     mem->ping();
-    via1->ping();
-    via2->ping();
+    via1.ping();
+    via2.ping();
 
 }
 
@@ -101,8 +97,8 @@ VC1541::stateSize()
     result += 2*84;
     
     result += cpu->stateSize();
-    result += via1->stateSize();
-    result += via2->stateSize();
+    result += via1.stateSize();
+    result += via2.stateSize();
     result += mem->stateSize();
     
     return result;
@@ -128,8 +124,8 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 	noOfFFBytes = (int)read16(buffer);
 	writeProtected = (bool)read8(buffer);
 	cpu->loadFromBuffer(buffer);
-    via1->loadFromBuffer(buffer);
-    via2->loadFromBuffer(buffer);
+    via1.loadFromBuffer(buffer);
+    via2.loadFromBuffer(buffer);
     mem->loadFromBuffer(buffer);
     
     debug(2, "  VC1541 state loaded (%d bytes)\n", *buffer - old);
@@ -156,8 +152,8 @@ VC1541::saveToBuffer(uint8_t **buffer)
 	write16(buffer, (uint16_t)noOfFFBytes);
 	write8(buffer, (uint8_t)writeProtected);
 	cpu->saveToBuffer(buffer);
-    via1->saveToBuffer(buffer);
-    via2->saveToBuffer(buffer);
+    via1.saveToBuffer(buffer);
+    via2.saveToBuffer(buffer);
 	mem->saveToBuffer(buffer);
     
     debug(4, "  VC1541 state saved (%d bytes)\n", *buffer - old);
@@ -188,8 +184,8 @@ VC1541::executeOneCycle()
 {
     bool result;
     
-    via1->execute();
-    via2->execute();
+    via1.execute();
+    via2.execute();
     result = cpu->executeOneCycle();
     
     // Decrement byte ready counter to 1, if active
@@ -230,7 +226,7 @@ VC1541::executeOneCycle()
             noOfFFBytes = 0;
     
         if (noOfFFBytes <= 1) { // no sync, yet
-            via2->ora = readHead();
+            via2.ora = readHead();
             signalByteReady();
             setSyncMark(0);
         } else {
@@ -240,8 +236,8 @@ VC1541::executeOneCycle()
     
     // Prepare for next byte
     rotateDisk();
-    latched_readmode = via2->isReadMode();
-    latched_ora = via2->ora;
+    latched_readmode = via2.isReadMode();
+    latched_ora = via2.ora;
     
     return result;
 }
@@ -301,8 +297,8 @@ VC1541::executeOneCycle()
 void 
 VC1541::simulateAtnInterrupt()
 {
-	if (via1->atnInterruptsEnabled()) {
-		via1->indicateAtnInterrupt();
+	if (via1.atnInterruptsEnabled()) {
+		via1.indicateAtnInterrupt();
 		cpu->setIRQLineATN();
 		// debug("CPU is interrupted by ATN line.\n");
 	} else {

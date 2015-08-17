@@ -30,7 +30,7 @@ TOD::~TOD()
 }
 
 void
-TOD::reset() 
+TOD::reset(C64 *c64) 
 {
     time_t rawtime;
     struct tm *timeinfo;

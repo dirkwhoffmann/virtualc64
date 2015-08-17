@@ -48,10 +48,10 @@ SIDWrapper::setReSID(bool enable)
 }
 
 void 
-SIDWrapper::reset()
+SIDWrapper::reset(C64 *c64)
 {
-    oldsid->reset();
-    resid->reset();
+    oldsid->reset(c64);
+    resid->reset(c64);
 }
 
 uint32_t

@@ -68,7 +68,7 @@ public:
 	~ReSID();
 	
 	//! Bring the SID chip back to it's initial state.
-	void reset();
+	void reset(C64 *c64);
 	
 	//! Load state
 	void loadFromBuffer(uint8_t **buffer);

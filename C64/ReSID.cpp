@@ -55,7 +55,7 @@ ReSID::~ReSID()
 }
 
 void
-ReSID::reset() 
+ReSID::reset(C64 *c64)
 {
 	debug(2, "  Resetting ReSID...\n");
 	

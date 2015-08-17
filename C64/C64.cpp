@@ -103,7 +103,7 @@ C64::C64()
 
     // Configure machine type and reset
     setPAL();
-    reset();
+    reset(this);
 			
 	// Initialize snapshot ringbuffer (BackInTime feature)
 	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
@@ -134,24 +134,24 @@ C64::~C64()
 	debug(1, "Cleaned up virtual C64\n", this);
 }
 
-void C64::reset()
+void C64::reset(C64 *c64)
 {
 	suspend();
 
 	debug (1, "Resetting virtual C64\n");
-	mem->reset();
-	cpu->reset();
+	mem->reset(c64);
+	cpu->reset(c64);
 	cpu->setPC(0xFCE2);
-	vic->reset();
-	cia1->reset();
-	cia2->reset();
-    sid->reset();
-	keyboard->reset();
-    joystick1->reset();
-    joystick2->reset();
-    iec->reset();
+	vic->reset(c64);
+	cia1->reset(c64);
+	cia2->reset(c64);
+    sid->reset(c64);
+	keyboard->reset(c64);
+    joystick1->reset(c64);
+    joystick2->reset(c64);
+    iec->reset(c64);
     expansionport->softreset();
-    floppy->reset();
+    floppy->reset(c64);
 
 	cycles = 0UL;
 	frame = 0;

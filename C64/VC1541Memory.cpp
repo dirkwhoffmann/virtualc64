@@ -35,7 +35,7 @@ VC1541Memory::~VC1541Memory()
 }
 
 void 
-VC1541Memory::reset()
+VC1541Memory::reset(C64 *c64)
 {
 	debug (2, "    Resetting VC1541 memory...\n");
 
@@ -155,9 +155,9 @@ uint8_t
 VC1541Memory::peekIO(uint16_t addr)
 {	
 	if ((addr & 0xFC00) == 0x1800) {
-		return floppy->via1->peek(addr & 0x000F);
+		return floppy->via1.peek(addr & 0x000F);
 	} else if ((addr & 0xFC00) == 0x1c00) {
-		return floppy->via2->peek(addr & 0x000F);
+		return floppy->via2.peek(addr & 0x000F);
 	} else {
 		// Return high byte of addr 
 		// VICE and Frodo are doing it that way
@@ -200,9 +200,9 @@ void
 VC1541Memory::pokeIO(uint16_t addr, uint8_t value)
 {	
 	if ((addr & 0xFC00) == 0x1800) {
-		floppy->via1->poke(addr & 0x000F, value);
+		floppy->via1.poke(addr & 0x000F, value);
 	} else if ((addr & 0xFC00) == 0x1c00) {
-		floppy->via2->poke(addr & 0X000F, value);
+		floppy->via2.poke(addr & 0X000F, value);
 	} else {
 		// No memory here, nothing happens
 	}

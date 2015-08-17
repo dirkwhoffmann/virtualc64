@@ -26,7 +26,7 @@ ExpansionPort::ExpansionPort(C64 *c64)
     this->c64 = c64;
     
     // We reset the expansion port here as it is *not* reset when resetting the emulator
-    reset();
+    reset(c64);
 }
 
 ExpansionPort::~ExpansionPort()
@@ -36,7 +36,7 @@ ExpansionPort::~ExpansionPort()
 }
 
 void
-ExpansionPort::reset()
+ExpansionPort::reset(C64 *c64)
 {
     debug(2, "  Resetting expansion port...\n");
 
@@ -308,7 +308,7 @@ ExpansionPort::detachCartridge()
     }
     
     c64->putMessage(MSG_CARTRIDGE, 0);
-    reset();
+    reset(c64);
 }
 
 

@@ -76,7 +76,7 @@ public:
     ~PixelEngine();
     
     //! Restore initial state
-    void reset();
+    void reset(); // TODO: MERGE INTO reset(C64 *c64)
     void reset(C64 *c64);
     
     //! Size of internal state

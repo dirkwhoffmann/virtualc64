@@ -46,10 +46,10 @@ public:
 	VC1541Memory *mem;
 
 	//! VIA6522 connecting the drive CPU with the IEC bus
-    VIA1 *via1;
+    VIA1 via1;
 
     //! VIA6522 connecting the drive CPU with the drives read/write head
-    VIA2 *via2;
+    VIA2 via2;
 
     //! Constructor
     VC1541(C64 *c64);
@@ -58,7 +58,7 @@ public:
     ~VC1541();
     
     //! Restore initial state
-    void reset();
+    void reset(C64 *c64);
     
     //! Dump current configuration into message queue
     void ping();
@@ -200,6 +200,10 @@ public:
     //! Moves head one halftrack down
     void moveHeadDown();
 
+    //! Triggers an ATN interrupt
+    /*! This function is called by the IEC bus when the ATN signal raises. */
+    void simulateAtnInterrupt();
+
 private:
     
     //! Reads the currently processed byte
@@ -217,11 +221,7 @@ private:
     void rotateDisk();
 
     // Signals the CPU that a byte has been processed
-    inline void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
-
-    //! Triggers an ATN interrupt
-	/*! This function is called when the ATN signal is going high */
-	void simulateAtnInterrupt();
+    inline void signalByteReady() { if (via2.overflowEnabled()) cpu->setV(1); }
 	
     
     // ---------------------------------------------------------------------------------------------

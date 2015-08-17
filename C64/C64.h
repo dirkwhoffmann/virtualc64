@@ -258,10 +258,14 @@ public:
 	
 	//! Destructor
 	~C64();
-	
+
+    //! Top-level entry point for resetting the C64
+    /*! Triggers the reset(C64 *c64) methods of all sub components */
+    void reset() { reset(this); }
+
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A reset is performed by simulating a hard reset on a real C64. */
-	void reset();           
+	void reset(C64 *c64);
 	
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A (faked) reset is performed by loading a presaved image from disk. */

@@ -96,7 +96,7 @@ public:
 	~VIA6522();
 		
 	//! Bring the VIA back to its initial state
-	void reset();
+	void reset(C64 *c64);
 
     //! Execution function for timer 1
     void executeTimer1();
@@ -148,13 +148,13 @@ class VIA1 : public VIA6522 {
 public:
 
 	//! Constructor
-	VIA1(C64 *c64);
+	VIA1();
 	
 	//! Destructor
 	~VIA1();
 
 	//! Bring the VIA back to its initial state
-	void reset();
+	void reset(C64 *c64);
 
     //! Execute virtual VIA for one cycle
     inline void execute() {
@@ -182,13 +182,13 @@ class VIA2 : public VIA6522 {
 public:
 
 	//! Constructor
-	VIA2(C64 *c64);
+	VIA2();
 	
 	//! Destructor
 	~VIA2();
 
 	//! Bring the VIA back to its initial state
-	void reset();
+	void reset(C64 *c64);
 
     //! Execute virtual VIA for one cycle
     inline void execute() {

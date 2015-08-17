@@ -198,7 +198,7 @@ public:
 	~C64Memory();
 	
 	//! Restore initial state
-	void reset();
+	void reset(C64 *c64);
 
     //! Size of internal state
     uint32_t stateSize();
