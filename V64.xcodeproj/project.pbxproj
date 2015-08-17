@@ -26,7 +26,6 @@
 		5005966A0D23F9E800FD44B3 /* LEDgray.png in Resources */ = {isa = PBXBuildFile; fileRef = 500596670D23F9E800FD44B3 /* LEDgray.png */; };
 		5005966C0D23FA1800FD44B3 /* LEDyellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5005966B0D23FA1800FD44B3 /* LEDyellow.png */; };
 		5005966E0D23FA1C00FD44B3 /* LEDblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 5005966D0D23FA1C00FD44B3 /* LEDblue.png */; };
-		5007A5EC0C3FC99F0069B0CE /* VIC_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007A5EB0C3FC99F0069B0CE /* VIC_colors.cpp */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500B9D370C40E554008237C6 /* pref_disk.png in Resources */ = {isa = PBXBuildFile; fileRef = 500B9D360C40E554008237C6 /* pref_disk.png */; };
 		500B9D390C40E55A008237C6 /* pref_system.png in Resources */ = {isa = PBXBuildFile; fileRef = 500B9D380C40E55A008237C6 /* pref_system.png */; };
@@ -98,6 +97,7 @@
 		50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */; };
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
+		50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */; };
 		50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* OldSID.cpp */; };
 		50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */; };
 		50D1417E1417A34B0024FC74 /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50D141651417A34B0024FC74 /* envelope.cc */; };
@@ -205,7 +205,6 @@
 		500596670D23F9E800FD44B3 /* LEDgray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDgray.png; path = images/LEDgray.png; sourceTree = "<group>"; };
 		5005966B0D23FA1800FD44B3 /* LEDyellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDyellow.png; path = images/LEDyellow.png; sourceTree = "<group>"; };
 		5005966D0D23FA1C00FD44B3 /* LEDblue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDblue.png; path = images/LEDblue.png; sourceTree = "<group>"; };
-		5007A5EB0C3FC99F0069B0CE /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
 		500B9D360C40E554008237C6 /* pref_disk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pref_disk.png; path = images/pref_disk.png; sourceTree = "<group>"; };
@@ -311,6 +310,8 @@
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
+		50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C64ProxyColors.mm; sourceTree = "<group>"; };
+		50C9CB141B81E3300054EE86 /* C64ProxyColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ProxyColors.h; sourceTree = "<group>"; };
 		50CA0D500A9076FD00A5A08D /* OldSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldSID.h; sourceTree = "<group>"; };
 		50CA0D510A9076FD00A5A08D /* OldSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OldSID.cpp; sourceTree = "<group>"; };
 		50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VirtualC64Icon.icns; path = images/VirtualC64Icon.icns; sourceTree = "<group>"; };
@@ -508,7 +509,6 @@
 				50176C5F0A6F72F3009E80BD /* VIC.cpp */,
 				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
 				506004651B78E9C500EBDD93 /* PixelEngine.h */,
-				5007A5EB0C3FC99F0069B0CE /* VIC_colors.cpp */,
 				506D39D3141780FF00268AF6 /* SIDWrapper.h */,
 				506D39D1141780E500268AF6 /* SIDWrapper.cpp */,
 				506D39D5141788E700268AF6 /* ReSID.h */,
@@ -551,6 +551,8 @@
 			children = (
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
 				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
+				50C9CB141B81E3300054EE86 /* C64ProxyColors.h */,
+				50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */,
 				50176C750A6F7357009E80BD /* MyDocument.h */,
 				50176C760A6F7357009E80BD /* MyDocument.mm */,
 			);
@@ -968,6 +970,7 @@
 				50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */,
 				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */,
+				50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */,
 				50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
@@ -981,7 +984,6 @@
 				509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */,
 				509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
-				5007A5EC0C3FC99F0069B0CE /* VIC_colors.cpp in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,

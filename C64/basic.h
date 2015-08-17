@@ -54,13 +54,13 @@
 #define LO_HI(x,y) (uint16_t)((y) << 8 | (x))
 
 //! Evaluates to the 32 bit value specified by x and y in little endian order (lowest, low, high, highest).
-#define LO_LO_HI_HI(x,y,z,w) (uint32_t)((x) << w | (z) << 16 | (y) << 8 | x)
+#define LO_LO_HI_HI(x,y,z,w) (uint32_t)((w) << 24 | (z) << 16 | (y) << 8 | (x))
 
 //! Evaluates to the 16 bit value specified by x and y in big endian order (high, low).
 #define HI_LO(x,y) (uint16_t)((x) << 8 | (y))
 
 //! Evaluates to the 32 bit value specified by x and y in big endian order (highest, high, low, lowest).
-#define HI_HI_LO_LO(x,y,z,w) (uint32_t)((x) << 24 | (y) << 16 | (z) << 8 | w)
+#define HI_HI_LO_LO(x,y,z,w) (uint32_t)((x) << 24 | (y) << 16 | (z) << 8 | (w))
 
 //! Returns true iff bit n is set in x.
 #define GET_BIT(x,nr) ((x) & (1 << (nr)))

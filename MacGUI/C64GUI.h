@@ -23,6 +23,7 @@
 
 #import "C64.h"
 #import "C64Proxy.h"
+#import "C64ProxyColors.h"
 #import "MyDocument.h"
 
 #import "Disassembler.h"

@@ -431,6 +431,9 @@
 	
 	//! Indicates that data is transmitted on the IEC bus
 	BOOL iecBusIsBusy;
+
+    //! Currently used color scheme
+    int colorScheme;
 }
 
 @property (readonly) C64 *c64;
@@ -453,8 +456,6 @@
 - (void) kill;
 
 // Hardware configuration
-- (PixelEngine::ColorScheme) colorScheme;
-- (void) setColorScheme:(PixelEngine::ColorScheme)scheme;
 - (bool) reSID;
 - (void) setReSID:(bool)b;
 - (bool) audioFilter;

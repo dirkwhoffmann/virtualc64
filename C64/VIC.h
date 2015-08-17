@@ -605,14 +605,17 @@ public:
 	void setNTSC();	
 
     //! Get color scheme
-    PixelEngine::ColorScheme getColorScheme() { return pixelEngine.colorScheme; }
+    // PixelEngine::ColorScheme getColorScheme() { return pixelEngine.colorScheme; }
 
 	//! Set color scheme
-    void setColorScheme(PixelEngine::ColorScheme scheme) { pixelEngine.setColorScheme(scheme); }
+    // void setColorScheme(PixelEngine::ColorScheme scheme) { pixelEngine.setColorScheme(scheme); }
 	
     //! Get color
-	uint32_t getColor(int nr) { return pixelEngine.colors[nr]; }
-    
+    uint32_t getColor(int nr) { assert(nr < 16); return pixelEngine.colors[nr]; }
+
+    //! Get color
+    void setColor(int nr, int rgba) { assert(nr < 16); pixelEngine.colors[nr] = rgba; }
+
     
 	// -----------------------------------------------------------------------------------------------
 	//                                       Getter and setter

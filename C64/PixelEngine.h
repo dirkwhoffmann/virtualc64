@@ -93,22 +93,6 @@ public:
     // -----------------------------------------------------------------------------------------------
     //                                     Constant definitions
     // -----------------------------------------------------------------------------------------------
-
-    //! Predefined color schemes
-    enum ColorScheme {
-        CCS64           = 0x00,
-        VICE            = 0x01,
-        FRODO           = 0x02,
-        PC64            = 0x03,
-        C64S            = 0x04,
-        ALEC64          = 0x05,
-        WIN64           = 0x06,
-        C64ALIVE_0_9    = 0x07,
-        GODOT           = 0x08,
-        C64SALLY        = 0x09,
-        PEPTO           = 0x0A,
-        GRAYSCALE       = 0x0B
-    };
     
     //! VIC colors
     enum Color {
@@ -146,10 +130,27 @@ private:
     /*! Each color scheme uses slightly different RGB values to mimic the colors used in different emulators.
         Changing the color scheme modifies the colors[] array which stores the actual color codes in RGBA format. */
     /*! TODO: MOVE COLORSCHEME TO GUI CODE. IT'S A "LIFESTYLE" PROPERTY AND NOT A MACHINE FEATURE */
-    ColorScheme colorScheme;
+    // ColorScheme colorScheme;
     
-    //! All 16 C64 colors in RGBA format
-    uint32_t colors[16];
+    //! All sixteen C64 colors in RGBA format
+     uint32_t colors[16] = {
+        LO_LO_HI_HI(0x10, 0x10, 0x10, 0xFF),
+        LO_LO_HI_HI(0xff, 0xff, 0xff, 0xFF),
+        LO_LO_HI_HI(0xe0, 0x40, 0x40, 0xFF),
+        LO_LO_HI_HI(0x60, 0xff, 0xff, 0xFF),
+        LO_LO_HI_HI(0xe0, 0x60, 0xe0, 0xFF),
+        LO_LO_HI_HI(0x40, 0xe0, 0x40, 0xFF),
+        LO_LO_HI_HI(0x40, 0x40, 0xe0, 0xFF),
+        LO_LO_HI_HI(0xff, 0xff, 0x40, 0xFF),
+        LO_LO_HI_HI(0xe0, 0xa0, 0x40, 0xFF),
+        LO_LO_HI_HI(0x9c, 0x74, 0x48, 0xFF),
+        LO_LO_HI_HI(0xff, 0xa0, 0xa0, 0xFF),
+        LO_LO_HI_HI(0x54, 0x54, 0x54, 0xFF),
+        LO_LO_HI_HI(0x88, 0x88, 0x88, 0xFF),
+        LO_LO_HI_HI(0xa0, 0xff, 0xa0, 0xFF),
+        LO_LO_HI_HI(0xa0, 0xa0, 0xff, 0xFF),
+        LO_LO_HI_HI(0xc0, 0xc0, 0xc0, 0xFF)
+    };
     
     //! First screen buffer
     /*! The VIC chip writes it output into this buffer. The contents of the array is later copied into to
@@ -208,7 +209,7 @@ private:
 public:
     
     //! Set color scheme
-    void setColorScheme(ColorScheme scheme);
+    // void setColorScheme(ColorScheme scheme);
 
     //! Get screen buffer that is currently stable
     /*! This method is called by the OpenGL code at the beginning of each frame. */

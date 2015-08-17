@@ -224,7 +224,7 @@
 	[defaultValues setObject:@((float)PAL_INITIAL_EYE_Y) forKey:VC64EyeY];
 	[defaultValues setObject:@((float)PAL_INITIAL_EYE_Z) forKey:VC64EyeZ];
 
-	[defaultValues setObject:@((int)PixelEngine::CCS64) forKey:VC64ColorSchemeKey];
+	[defaultValues setObject:@((int)CCS64) forKey:VC64ColorSchemeKey];
 	[defaultValues setObject:@1 forKey:VC64VideoFilterKey];
 		
 	// Register dictionary
@@ -286,7 +286,7 @@
 	[screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
 
 	[screen setAntiAliasing:[defaults integerForKey:VC64VideoFilterKey]];
-    [c64 setColorScheme:(PixelEngine::ColorScheme)[defaults integerForKey:VC64ColorSchemeKey]];
+    [c64 setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
 }
 
 - (void)saveUserDefaults

@@ -48,7 +48,7 @@ PixelEngine::PixelEngine() // C64 *c64)
     bufshift = 0;
     
     // Initialize colors
-    setColorScheme(CCS64);
+    // REMOVE: setColorScheme(CCS64);
 }
 
 
