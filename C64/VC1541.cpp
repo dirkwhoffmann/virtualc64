@@ -210,7 +210,7 @@ VC1541::executeOneCycle()
         // Write to disk
         noOfFFBytes = 0;
         setSyncMark(0);
-        writeByteToDisk(latched_ora);
+        writeHead(latched_ora);
         signalByteReady();
 
     } else {
@@ -365,17 +365,13 @@ VC1541::moveHeadDown()
     debug(3, "Moving head down to %2.1f\n", (track + 2) / 2.0);
 }
 
-void
-VC1541::writeByteToDisk(uint8_t val)
-{
-    setData(track, offset, val);
-}
-
+#if 0
 void
 VC1541::writeOraToDisk()
 {
     writeByteToDisk(via2->ora);
 }
+#endif
 
 void
 VC1541::clearHalftrack(int nr)

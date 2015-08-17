@@ -93,7 +93,7 @@ private:
     };
 
     // ---------------------------------------------------------------------------------------------
-    //                                Disk data and read/Write logic
+    //                                     Disk data storage
     // ---------------------------------------------------------------------------------------------
 
 private:
@@ -111,43 +111,66 @@ private:
     //! Length of halftrack
     uint16_t length[84];
     
-    //! Read data from haftrack
-    inline uint8_t getData(unsigned halftrack, unsigned offset) {
-        assert(halftrack < 84); assert (offset < 7928); return data[halftrack][offset]; }
-    
-    //! Write data to haftrack
-    inline void setData(unsigned halftrack, unsigned offset, uint8_t value) {
-        assert(halftrack < 84); assert (offset < 7928); data[halftrack][offset] = value; }
-
-    
-    // -----------------------------------------------------------------------------------------------
-    //                                       Properties
-    // -----------------------------------------------------------------------------------------------
-
+    // ---------------------------------------------------------------------------------------------
+    //                                   Drive properties
+    // ---------------------------------------------------------------------------------------------
+   
 private:
     
-	//! Indicates whether disk is rotating or not
-	bool rotating;
+    //! Indicates whether disk is rotating or not
+    bool rotating;
     
-	//! Indicates whether red LED is on or off
-	bool redLED;
-
+    //! Indicates whether red LED is on or off
+    bool redLED;
+    
     //! Indicates whether a disk is inserted
-	bool diskInserted;
-
+    bool diskInserted;
+    
     //! Write protection mark
     bool writeProtected;
     
+public:
+    
+    inline bool isWriteProtected() { return writeProtected; }
+    inline void setWriteProtection(bool b) { writeProtected = b; }
+    
+    inline bool getSyncMark() { return syncMark; }
+    inline void setSyncMark(bool b) { syncMark = b; }
+    
+    inline bool hasRedLED() { return redLED; };
+    void activateRedLED();
+    void deactivateRedLED();
+    
+    inline bool isRotating() { return rotating; };
+    void startRotating();
+    void stopRotating();
+
+    //! Insert a virtual disc
+    void insertDisc(Archive *a);
+    void insertDisc(D64Archive *a);
+    
+    //! Returns true if a disk is currently inserted
+    inline bool hasDisk() { return diskInserted; }
+    
+    //! Eject virtual disc
+    void ejectDisc();
+
+    // ---------------------------------------------------------------------------------------------
+    //                                  Read/Write logic
+    // ---------------------------------------------------------------------------------------------
+
+private:
+    
+    //! Position of read write head
+    /*! The position marks the byte that is currently read in. When the
+     byteReadyTimer times out, the byte is copied to ora in via2 */
+    int track, offset;
+
     //! Temporarily set to true when the VC1541 reads over a sync mark
     bool syncMark;
 	
 	//! Timer
 	int byteReadyTimer;
-	
-	//! Position of read write head
-    /*! The position marks the byte that is currently read in. When the 
-        byteReadyTimer times out, the byte is copied to ora in via2 */
-	int track, offset;
 	
 	//! Counts the number of consecutively found 0xFF mark
     /*! This variable is used to detect ynchronization marks on disk.
@@ -166,78 +189,40 @@ private:
     uint8_t latched_ora;
     
 public:
-	
-
-    // ---------------------------------------------------------------------------------------------
-    //                                        Getter and setter
-    // ---------------------------------------------------------------------------------------------
-
-    inline bool isWriteProtected() { return writeProtected; }
-    inline void setWriteProtection(bool b) { writeProtected = b; }
-
-    inline bool getSyncMark() { return syncMark; }
-    inline void setSyncMark(bool b) { syncMark = b; }
-
-    inline bool hasRedLED() { return redLED; };
-    void activateRedLED();
-    void deactivateRedLED();
-    
-    inline bool isRotating() { return rotating; };
-    void startRotating();
-    void stopRotating();
-    
-	
-	//! Pass control to the virtual drive
+		
+	//! Passes control to the virtual drive
 	/*! The drive will be executed for the specified number of clock cycles. */
 	bool executeOneCycle();	
 
-	//! ATN interrupt
-	/*! Simulates an interrupt. Will be called when the ATN signal is going high */
-	void simulateAtnInterrupt();
-	
-    // ---------------------------------------------------------------------------------------------
-    //                                  Read/Write logic
-    // ---------------------------------------------------------------------------------------------
-
-    // Move head one halftrack up
+    //! Moves head one halftrack up
     void moveHeadUp();
-
-    // Move head one halftrack down
+    
+    //! Moves head one halftrack down
     void moveHeadDown();
 
-	inline void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
-
-    void writeByteToDisk(uint8_t val);
-    void writeOraToDisk();
-	
-	//! Insert a virtual disc
-	void insertDisc(Archive *a);
-	void insertDisc(D64Archive *a);
-    inline bool hasDisk() { return diskInserted; }
-
-	//! Eject virtual disc
-	void ejectDisc();
-
-	//! Rotate disk
-	/*! Moves read/write head to next byte on the current track */
-	void rotateDisk();
+private:
     
-    //! Reads data byte at current read/write head position
-	inline uint8_t readHead() { return data[track][offset]; }
-
-    //! Writes data byte at current read/write head position
+    //! Reads the currently processed byte
+    /*! In a real VC1541, the drive head would currently process one out of these eight bits. */
+    inline uint8_t readHead() { return data[track][offset]; }
+    inline uint8_t readHeadLookAhead() { return (offset+1 < length[track]) ? data[track][offset+1] : data[track][0]; }
+    inline uint8_t readHeadLookBehind() { return (offset > 0) ? data[track][offset-1] : data[track][length[track]-1]; }
+        
+    //! Writes byte to the current head position
+    /*! In a real VC1541, the drive head would currently process one out of these eight bits. */
     inline void writeHead(uint8_t value) { data[track][offset] = value; }
 
-    //! Data at next read/write head position
-	inline uint8_t readHeadLookAhead() { return data[track][(offset + 1) % length[track]]; }
-    // BETTER: uint8_t readHeadLookAhead() {
-    // return (offset + 1 < length[track]) ? data[track][offset+1] : data[track][0]; }
+    //! Rotate disk
+    /*! Moves head to next byte on the current track */
+    void rotateDisk();
 
-    //! Data at previous read/write head position
-    inline uint8_t readHeadLookBehind() {
-        return data[track][(offset + length[track] - 1) % length[track]]; }
-    // BETTER: uint8_t readHeadLookBehind() {
-    //    return (offset > 0) ? data[track][offset - 1] : data[track][length[track] - 1]; }
+    // Signals the CPU that a byte has been processed
+    inline void signalByteReady() { if (via2->overflowEnabled()) cpu->setV(1); }
+
+    //! Triggers an ATN interrupt
+	/*! This function is called when the ATN signal is going high */
+	void simulateAtnInterrupt();
+	
     
     // ---------------------------------------------------------------------------------------------
     //                              Track and sector management
@@ -253,6 +238,12 @@ private:
     inline uint8_t *startOfTrack(unsigned track) {
         assert(track >= 1 && track <= 42); return startOfHalftrack(2 * track - 1); }
     
+    //! Zero out a single halftrack
+    void clearHalftrack(int nr);
+    
+    //! Zero out all halftracks on disk
+    void clearDisk();
+
     //! For debugging
     void dumpTrack(int track = -1);
     
@@ -280,12 +271,6 @@ public:
 
 private:
     
-	//! Zero out a single halftrack
-	void clearHalftrack(int nr);
-
-	//! Zero out all halftracks on disk
-	void clearDisk();
-
 	//! Translate 4 data bytes into 5 GCR encodes bytes
 	void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest);
 
