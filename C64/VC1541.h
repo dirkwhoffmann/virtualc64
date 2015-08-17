@@ -45,9 +45,35 @@ public:
 	//! Reference to the virtual drive memory
 	VC1541Memory *mem;
 
-	//! The 1541 drive contains two via chips for disk and peripheral I/O
+	//! VIA6522 connecting the drive CPU with the IEC bus
     VIA1 *via1;
+
+    //! VIA6522 connecting the drive CPU with the drives read/write head
     VIA2 *via2;
+
+    //! Constructor
+    VC1541(C64 *c64);
+    
+    //! Destructor
+    ~VC1541();
+    
+    //! Restore initial state
+    void reset();
+    
+    //! Dump current configuration into message queue
+    void ping();
+    
+    //! Size of internal state
+    uint32_t stateSize();
+    
+    //! Load state
+    void loadFromBuffer(uint8_t **buffer);
+    
+    //! Save state
+    void saveToBuffer(uint8_t **buffer);
+    
+    //! Dump current state into logfile
+    void dumpState();
 
 
     // -----------------------------------------------------------------------------------------------
@@ -66,39 +92,32 @@ private:
         0x0d, 0x1d, 0x1e, 0x15
     };
 
-    // -----------------------------------------------------------------------------------------------
-    //                                Track and sector management
-    // -----------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------
+    //                                Disk data and read/Write logic
+    // ---------------------------------------------------------------------------------------------
 
 private:
     
-    //! Number of tracks
+    //! Disk data storage
+    /*! Each disk consists of 42 tracks (84 halftracks) with a maximum of 7928 bytes.
+     As the number of tracks and the number of byter per track vary, the array is usually filled
+     partially. The number of tracks of the currently inserted disk is stored in variable numTracks
+     and the real length of a given halftrack in array length[]. */
+    uint8_t data[84][7928];
+    
+    //! Total number of halftracks
     uint8_t numTracks;
-
-	//! Disk data
-	/*! Each disk consists of 42 tracks (84 halftracks) with a maximum of 7928 bytes */
-	uint8_t data[84][7928];
-
-    //! Return start address of a given halftrack (1...84)
-    inline uint8_t *startOfHalftrack(unsigned ht) {
-        assert(ht >= 1 && ht <= 84); return &data[ht-1][0]; }
-
-    //! Return start address of a given track (1...42)
-    inline uint8_t *startOfTrack(unsigned t) {
-        assert(t >= 1 && t <= 42); return startOfHalftrack(2*t-1); }
-
-	//! Real length of each track
-	uint16_t length[84];
-
-public:
+    
+    //! Length of halftrack
+    uint16_t length[84];
     
     //! Read data from haftrack
     inline uint8_t getData(unsigned halftrack, unsigned offset) {
-        assert(track < 84); assert (offset < 7928); return data[halftrack][offset]; }
+        assert(halftrack < 84); assert (offset < 7928); return data[halftrack][offset]; }
     
     //! Write data to haftrack
     inline void setData(unsigned halftrack, unsigned offset, uint8_t value) {
-        assert(track < 84); assert (offset < 7928); data[halftrack][offset] = value; }
+        assert(halftrack < 84); assert (offset < 7928); data[halftrack][offset] = value; }
 
     
     // -----------------------------------------------------------------------------------------------
@@ -123,59 +142,41 @@ private:
     bool syncMark;
 	
 	//! Timer
-    // TODO: Move to private properties
 	int byteReadyTimer;
 	
-	//! Read write head
-    // TODO: Move to private properties
+	//! Position of read write head
+    /*! The position marks the byte that is currently read in. When the 
+        byteReadyTimer times out, the byte is copied to ora in via2 */
 	int track, offset;
 	
-	//! Counts the number of consecutively found 0xFF mark 
-    // TODO: Move to private properties
-    // CHECK: Is this really needed?
+	//! Counts the number of consecutively found 0xFF mark
+    /*! This variable is used to detect ynchronization marks on disk.
+        In a real VC1514, a synchronization sequence is detected when at least
+        then 10 consecutive 1-bits are read. As the emulator is byte based, a
+        sync mark is detected when two consecutive 0xFF bytes are found. */
     int noOfFFBytes;
 				
     //! Indicates whether the next byte on disk will be read or written
+    /*! When the read/write head moves to the next byte, the emulator determines
+        the operation mode (read or write) for the next byte. If the operation
+        mode is 'write', the data byte in 'latched_ora' will be written to disk. */
     bool latched_readmode;
     
-    //! If drive is in write mode, this is the next byte to be written
+    //! Next byte to be written on disk
     uint8_t latched_ora;
     
 public:
 	
-	//! Constructor
-	VC1541(C64 *c64);
-	
-	//! Destructor
-	~VC1541();
-
-	//! Restore initial state
-	void reset();
-	
-    //! Dump current configuration into message queue
-    void ping();
-
-    //! Size of internal state
-    uint32_t stateSize();
-    
-	//! Load state
-	void loadFromBuffer(uint8_t **buffer);
-	
-	//! Save state
-	void saveToBuffer(uint8_t **buffer);	
-	
-	//! Dump current state into logfile
-	void dumpState();
 
     // ---------------------------------------------------------------------------------------------
     //                                        Getter and setter
     // ---------------------------------------------------------------------------------------------
 
-    inline bool isWriteProtected() { return writeProtected; };
-    void setWriteProtection(bool b);
+    inline bool isWriteProtected() { return writeProtected; }
+    inline void setWriteProtection(bool b) { writeProtected = b; }
 
     inline bool getSyncMark() { return syncMark; }
-    void setSyncMark(bool b);
+    inline void setSyncMark(bool b) { syncMark = b; }
 
     inline bool hasRedLED() { return redLED; };
     void activateRedLED();
@@ -237,17 +238,52 @@ public:
         return data[track][(offset + length[track] - 1) % length[track]]; }
     // BETTER: uint8_t readHeadLookBehind() {
     //    return (offset > 0) ? data[track][offset - 1] : data[track][length[track] - 1]; }
-    	
-	//! Dump state to debug console
-	void dumpTrack(int track = -1);
-	void dumpFullTrack(int track = -1);
-	
-	//! Clear half track
-	/*! All bytes of the specified half tracked are zeroes out. */
+    
+    // ---------------------------------------------------------------------------------------------
+    //                              Track and sector management
+    // ---------------------------------------------------------------------------------------------
+
+private:
+    
+    //! Return start address of a given halftrack (1...84)
+    inline uint8_t *startOfHalftrack(unsigned halftrack) {
+        assert(halftrack >= 1 && halftrack <= 84); return &data[halftrack - 1][0]; }
+    
+    //! Return start address of a given track (1...42)
+    inline uint8_t *startOfTrack(unsigned track) {
+        assert(track >= 1 && track <= 42); return startOfHalftrack(2 * track - 1); }
+    
+    //! For debugging
+    void dumpTrack(int track = -1);
+    
+    //! For debugging
+    void dumpFullTrack(int track = -1);
+
+    
+    // ---------------------------------------------------------------------------------------------
+    //                                       Data encoding
+    // ---------------------------------------------------------------------------------------------
+
+public:
+    
+    //! Convert D64 format to VC1541 format
+    /*! Invoke this function in insert disk */
+    void encodeDisk(D64Archive *a);
+    
+    //! Decode VC1541 format to D64 format
+    /*! Returns the number of bytes written. Pass a NULL pointer to perform a test run, i.e.,
+     to see how many bytes will be written */
+    unsigned decodeDisk(uint8_t *dest);
+    
+    //! Export currently inserted disc to D64 file
+    bool exportToD64(const char *filename);
+
+private:
+    
+	//! Zero out a single halftrack
 	void clearHalftrack(int nr);
 
-	//! Clear all tracks
-	/*! All tracks of the disk image are zeroed out. */
+	//! Zero out all halftracks on disk
 	void clearDisk();
 
 	//! Translate 4 data bytes into 5 GCR encodes bytes
@@ -256,28 +292,21 @@ public:
     //! Translate 5 GCR encoded bytes into 4 data bytes
     void decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, uint8_t *dest);
 
-	//! Encode sector in real VC1541 format
-	/*! This function converts the input data to a native VCR1541 byte stream including sync
-		marks, GCR encodings, etc. Returns the number of  bytes written */
+	//! Encode a single sector
+	/*! This function translates the logical byte sequence of a single sector into the native VC1541 
+        byte representation. The native representation includes sync marks, GCR data etc. 
+        Returns the number of bytes written */
 	int encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
 
-    //! Decode sector from real VC1541 format
-    // void decodeSector(uint8_t halftrack, uint8_t sector, uint8_t *dest);
+    //! Decode a single sector
+    /*! This function translates the native byte representation of a single sector into a logical
+        byte stream. */
     void decodeSector(uint8_t *source, uint8_t *dest);
     
-    //! Convert D64 format to VC1541 format
-    /*! Invoke this function in insert disk */
-    void encodeDisk(D64Archive *a);
+public:
 
-    //! Decode VC1541 format to D64 format
-    //! Returns the number of bytes written
-    /*! Pass a NULL pointer to perform a test run, i.e., to see how many bytes will be written */
-    unsigned decodeDisk(uint8_t *dest);
+    // EXPERIMENTAL CODE FOR G64 format. TODO: Make it a container class
     
-    //! Decode VC1541 format to D64 format
-    // DEPRECATED
-    void decodeDiskToFile(FILE *file);
-
 	//! Check file type
 	/*! Returns true, iff the specifies file is a valid G64 image file. */
 	static bool isG64Image(const char *filename);
@@ -285,8 +314,6 @@ public:
 	//! Insert a G64 disk image
 	bool readG64Image(const char *filename);
     
-    //! Export currently inserted disc to D64 file
-    bool exportToD64(const char *filename); 
 };
 
 #endif

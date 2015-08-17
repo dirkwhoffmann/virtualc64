@@ -20,13 +20,11 @@
 //
 // SPEEDUP:
 //
-// 1. Merge CIA1 and CIA2 into one object (for V1.1)
+// 1. Make CIA1 and CIA2 dynamic objects (for V1.1)
+//    Inline execution functions as much as possible
 //
 // TODO:
 //
-// 1. Make sprite drawing cycle based (must have for V1.0)
-//    regtiming.prg has to be correct for V1.0
-
 
 #ifndef _PIXELENGINGE_INC
 #define _PIXELENGINGE_INC

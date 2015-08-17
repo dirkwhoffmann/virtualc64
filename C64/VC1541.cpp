@@ -180,17 +180,8 @@ VC1541::dumpState()
     dumpFullTrack(18);
 }
 
-void 
-VC1541::setWriteProtection(bool b)
-{
-	writeProtected = b;
-}
 
-void
-VC1541::setSyncMark(bool b)
-{
-    syncMark = b;
-}
+
 
 bool
 VC1541::executeOneCycle()
@@ -319,22 +310,20 @@ VC1541::simulateAtnInterrupt()
 	}
 }
 
-void 
-VC1541::activateRedLED() 
+void
+VC1541::activateRedLED()
 {
-    redLED = true;
-	c64->putMessage(MSG_VC1541_LED, 1);
+    redLED = true; c64->putMessage(MSG_VC1541_LED, 1);
 }
 
 void
-VC1541::deactivateRedLED() 
-{ 
-    redLED = false;
-	c64->putMessage(MSG_VC1541_LED, 0); 
+VC1541::deactivateRedLED()
+{
+    redLED = false; c64->putMessage(MSG_VC1541_LED, 0);
 }
 
-void 
-VC1541::startRotating() 
+void
+VC1541::startRotating()
 { 
 	debug(2, "Starting drive engine (%2X)\n", cpu->getPC());
 	rotating = true;
@@ -648,12 +637,6 @@ VC1541::decodeDisk(uint8_t *dest)
         }
     }
     return count * 256; 
-}
-
-void
-VC1541::decodeDiskToFile(FILE *file)
-{
-    debug("IMPLEMENTATION MISSING");
 }
 
 void 

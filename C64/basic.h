@@ -199,5 +199,11 @@ uint8_t localTimeHour();
 //! Sleep for some microseconds
 void sleepMicrosec(uint64_t millisec);
 
+//
+//! @functiongroup Debugging
+//
+
+#define RANGE(val,min,max) ((val) >= (min) &&  (val) <= (max))
+
 #endif
 
