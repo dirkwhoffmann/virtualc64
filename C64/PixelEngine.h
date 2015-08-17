@@ -18,6 +18,8 @@
 
 // CLEANUP:
 //
+// 1. Change constructor signature from (C64 *c64) to (). Establish all bindings in reset()
+//
 // SPEEDUP:
 //
 // 1. Make CIA1 and CIA2 dynamic objects (for V1.1)
@@ -76,7 +78,6 @@ public:
     ~PixelEngine();
     
     //! Restore initial state
-    void reset(); // TODO: MERGE INTO reset(C64 *c64)
     void reset(C64 *c64);
     
     //! Size of internal state

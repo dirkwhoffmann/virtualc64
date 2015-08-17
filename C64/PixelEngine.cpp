@@ -60,16 +60,10 @@ PixelEngine::~PixelEngine()
 void
 PixelEngine::reset(C64 *c64)
 {
-    this->c64 = c64;
-    reset();
-}
-
-void
-PixelEngine::reset()
-{
     debug(2, "  Resetting PixelEngine...\n");
     
     // Establish bindings
+    this->c64 = c64;
     vic = c64->vic;
     
     // Shift register

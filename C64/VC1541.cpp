@@ -89,7 +89,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 13;
+    uint32_t result = 16;
 
     for (unsigned i = 0; i < 84; i++)
         result += sizeof(data[i]);
@@ -109,20 +109,30 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 {	
     uint8_t *old = *buffer;
     
-    numTracks = read8(buffer);
+    // Disk data storage
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
 			data[i][j] = read8(buffer);
-	for (unsigned i = 0; i < 84; i++) 
+    numTracks = read8(buffer);
+	for (unsigned i = 0; i < 84; i++)
 		length[i] = read16(buffer);
+    
+    // Drive properties
 	rotating = (bool)read8(buffer);
     redLED = (bool)read8(buffer);
     diskInserted = (bool)read8(buffer);
-	byteReadyTimer = (int)read16(buffer);
-	track = (int)read16(buffer);
-	offset = (int)read16(buffer);
+    writeProtected = (bool)read8(buffer);
+
+    // Read/Write logic
+    track = (int)read16(buffer);
+    offset = (int)read16(buffer);
+    syncMark = (bool)read8(buffer);
+    byteReadyTimer = (int)read16(buffer);
 	noOfFFBytes = (int)read16(buffer);
-	writeProtected = (bool)read8(buffer);
+    latched_readmode = (bool)read8(buffer);
+    latched_ora = (uint8_t)read8(buffer);
+    
+    // Subcomponents
 	cpu->loadFromBuffer(buffer);
     via1.loadFromBuffer(buffer);
     via2.loadFromBuffer(buffer);
@@ -137,26 +147,36 @@ VC1541::saveToBuffer(uint8_t **buffer)
 {	
     uint8_t *old = *buffer;
     
-    write8(buffer, numTracks);
+    // Disk data storage
 	for (unsigned i = 0; i < 84; i++)
 		for (unsigned j = 0; j < sizeof(data[i]); j++)
 			write8(buffer, data[i][j]);
-	for (unsigned i = 0; i < 84; i++) 
+    write8(buffer, numTracks);
+	for (unsigned i = 0; i < 84; i++)
 		write16(buffer, length[i]);
+    
+    // Drive properties
 	write8(buffer, (uint8_t)rotating);
     write8(buffer, (uint8_t)redLED);
     write8(buffer, (uint8_t)diskInserted);
-	write16(buffer, (uint16_t)byteReadyTimer);
-	write16(buffer, (uint16_t)track);
-	write16(buffer, (uint16_t)offset);
-	write16(buffer, (uint16_t)noOfFFBytes);
-	write8(buffer, (uint8_t)writeProtected);
-	cpu->saveToBuffer(buffer);
+    write8(buffer, (uint8_t)writeProtected);
+
+    // Read/Write logic
+    write16(buffer, (uint16_t)track);
+    write16(buffer, (uint16_t)offset);
+    write8(buffer, (uint8_t)syncMark);
+    write16(buffer, (uint16_t)byteReadyTimer);
+    write16(buffer, (uint16_t)noOfFFBytes);
+    write8(buffer, (uint8_t)latched_readmode);
+    write8(buffer, latched_ora);
+
+    // Subcomponents
+    cpu->saveToBuffer(buffer);
     via1.saveToBuffer(buffer);
     via2.saveToBuffer(buffer);
 	mem->saveToBuffer(buffer);
     
-    debug(4, "  VC1541 state saved (%d bytes)\n", *buffer - old);
+    debug(2, "  VC1541 state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 
