@@ -490,22 +490,33 @@ D64Archive::getByte()
     if (fp < 0)
         return -1;
     
-    // get byte
+    // Get byte
     result = data[fp];
     
-    // check for end of file
+    // Check for end of file
     if (isEndOfFile(fp)) {
-        fp = -1;	
-    } else {
-        // advance file pointer
-        if (isLastByteOfSector(fp)) {
-            fp = jumpToNextSector(fp)+2;
+        fp = -1;
+        return result;
+    }
+    
+    if (isLastByteOfSector(fp)) {
+        
+        // Continue reading in new sector
+        if (!jumpToNextSector(&fp)) {
+            // The current sector points to an invalid next track/sector
+            // We won't jump off the cliff and terminate reading here.
+            fp = -1;
+            return result;
         } else {
-            fp++;
+            // Skip the first two data bytes of the new sector as they encode the
+            // next track/sector
+            fp += 2;
+            return result;
         }
     }
     
-    // fprintf(stderr, "%02X ", result);
+    // Continue reading in current sector
+    fp++;
     return result;
 }
 
@@ -618,23 +629,20 @@ D64Archive::nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack
     return true;
 }
 
-int
-D64Archive::jumpToNextSector(int pos)
+bool
+D64Archive::jumpToNextSector(int *pos)
 { 
-	int nTrack, nSector, nOffset;
-	
-	nTrack = nextTrack(pos);
-	nSector = nextSector(pos);
-	nOffset = offset(nTrack, nSector);
-
-	// Warn, if we got an invalid track/sector combination
-	if (nTrack > (int)numTracks || nSector > D64Map[nTrack].numberOfSectors) {
-		fprintf(stderr, "WARNING: Sector links to %d/%d which is an invalid track/sector combination\n", nTrack, nSector);
-		return pos;
-	}
-
-	// fprintf(stderr, "Jumping to %d/%d \n", nTrack, nSector);
-	return nOffset;
+	int nTrack, nSector;
+    
+	nTrack = nextTrack(*pos);
+	nSector = nextSector(*pos);
+    
+    if (nTrack > (int)numTracks || nSector > D64Map[nTrack].numberOfSectors) {
+        return false;
+    }
+    
+    *pos = offset(nTrack, nSector);
+    return true;
 }
 
 bool
@@ -785,41 +793,52 @@ D64Archive::writeBAM(const char *name)
 int
 D64Archive::findDirectoryEntry(int itemNr)
 {
-	// The Block Allocation Map (BAM) is stored on track 18 - sector 0; 
-	// the directory starts at track 18 - sector 1.
-	int i = 0;
-	int track = 18;
-	int sector = 1;
-	int pos = offset(track, sector);
-	bool last_sector = (data[pos] == 0x00);
-	const char emptyEntry[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+	// The Block Allocation Map (BAM) is stored on track 18 / sector 0.
+	// the directory starts at track 18 / sector 1.
+    int pos = offset(18, 1);
+    
+    // As faked disk data could send us into an infinite loop, we will abort
+    // the search proces eventually.
+    const unsigned GIVE_UP = 512;
+    
+    // Signature of an empty directory entry (32 zeroes in a row)
+    const char emptyEntry[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
 	
-	while (1) {
-		// Are we currently looking at a valid directory entry?
-		if (memcmp(&data[pos], emptyEntry, 32)==0) {
-			return -1;
-		}
+    for (unsigned i = 0; i < GIVE_UP;) {
+
+        bool last_sector = (data[pos] == 0x00);
+
+		// Only proceed if we're looking at a valid directory entry
+		if (memcmp(&data[pos], emptyEntry, 32)==0)
+            break;
 	
-		// Check, if we already reached the entry we're looking for
-		if (i == itemNr) {
+		// Return if we reached the item we're looking for
+		if (i == itemNr)
 			return pos;
-		}
 		
-		// Jump to the next item
+		// Jump to next directory item
 		i++;
-		if (i % 8 == 0) {
-			// Jump to the next sector
-			if (last_sector) {
-				return -1;
-			}	
-			// debug("Jump to next sector...\n");
-			pos = jumpToNextSector(pos);
+
+        if (i % 8 == 0) {
+			
+            // Jump to the next sector
+            if (last_sector)
+                break; // Sorry, there is no "next sector"
+            
+			if (!jumpToNextSector(&pos))
+                break; // Sorry, somebody wants to sent us off the cliff
+            
 			last_sector = (data[pos] == 0x00);
+            
 		} else {
-			// Jump inside sector
+
+            // Jump inside the current sector
 			pos += 0x20;
 		}
 	}
+    
+    // Nothing found
+    return -1;
 }
 	
 bool

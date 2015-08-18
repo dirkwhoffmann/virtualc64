@@ -151,7 +151,7 @@
     if (Snapshot::isSnapshot(name)) {
 
         // Do the version numbers match?
-        if (Snapshot::isSnapshot(name, V_MAJOR, V_MINOR)) {
+        if (Snapshot::isSnapshot(name, V_MAJOR, V_MINOR, V_SUBMINOR)) {
 
             if (![self setSnapshotWithName:filename]) {
                 NSLog(@"Error while reading snapshot\n");

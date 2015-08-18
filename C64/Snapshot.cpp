@@ -26,6 +26,7 @@ Snapshot::Snapshot()
     header.magic[3] = '4';
     header.major = V_MAJOR;
     header.minor = V_MINOR;
+    header.subminor = V_SUBMINOR;
     header.size = 0;
     timestamp = (time_t)0;
     state = NULL;
@@ -109,9 +110,9 @@ Snapshot::isSnapshot(const char *filename)
 }
 
 bool
-Snapshot::isSnapshot(const char *filename, int major, int minor)
+Snapshot::isSnapshot(const char *filename, int major, int minor, int subminor)
 {
-    int magic_bytes[] = { 'V', 'C', '6', '4', major, minor, EOF };
+    int magic_bytes[] = { 'V', 'C', '6', '4', major, minor, subminor, EOF };
     
     assert(filename != NULL);
     
@@ -124,7 +125,7 @@ Snapshot::isSnapshot(const char *filename, int major, int minor)
 bool 
 Snapshot::fileIsValid(const char *filename)
 {
-    return Snapshot::isSnapshot(filename, V_MAJOR, V_MINOR);
+    return Snapshot::isSnapshot(filename, V_MAJOR, V_MINOR, V_SUBMINOR);
 }
 
 bool 
@@ -152,12 +153,10 @@ Snapshot::writeToBuffer(uint8_t *buffer)
     assert(state != NULL);
     
     // Copy header
-    // fprintf(stderr, "Copying %d bytes to %p\n", sizeof(header), target);
     if (buffer)
         memcpy(buffer, (uint8_t *)&header, sizeof(header));
 
     // Copy state data
-    // fprintf(stderr, "Copying %d bytes to %p\n", header.size, target + sizeof(header));
     if (buffer)
         memcpy(buffer + sizeof(header), state, header.size);
 

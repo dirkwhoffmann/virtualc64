@@ -1097,7 +1097,7 @@ void checkForOpenGLErrors()
             NSLog(@"  Snapshot found");
             
             // Do the version numbers match?
-            if (Snapshot::isSnapshot([path UTF8String], V_MAJOR, V_MINOR)) {
+            if (Snapshot::isSnapshot([path UTF8String], V_MAJOR, V_MINOR, V_SUBMINOR)) {
                 
                 V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:path];
                 if (snapshot) {

@@ -174,17 +174,22 @@ private:
     //! @brief Returns true iff offset points to the last byte of a file
     bool isEndOfFile(int offset) { return nextTrack(offset) == 0x00 && nextSector(offset) == offset % 256; }
     
-    //! @brief Returns the next logical track number following this sector
-    int nextTrack(int offset) { return data[(offset / 256) * 256]; }
+    //! Returns the next logical track number following this sector
+    /*! The track number is stored in the first byte of the current track */
+    inline int nextTrack(int offset) { return data[offset & (~0xFF)]; }
     
-    //! @brief Returns the next logical sector number following this sector
-    int nextSector(int offset) { return data[((offset / 256) * 256)+1]; }
+    //! Returns the next logical sector number following this sector
+    /*! The track number is stored in the second byte of the current track */
+    inline int nextSector(int offset) { return data[(offset & (~0xFF)) + 1]; }
     
     //! @brief Return the next physical track and sector
     bool nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector, bool skipDirectory = false);
     
-    //! @brief Returns the beginning of the next sector
-    int jumpToNextSector(int pos);
+    //! Jump to the beginning of the next sector
+    /*! If the current sector points to a valid track/sector combination,
+        pos is set to the beginning of the next sector and true is returned.
+        Otherwise, pos remains untouched and false is returned. */
+    bool jumpToNextSector(int *pos);
 
     /*! @brief Writes a byte to the specified track and sector
         @discussion If the sector overflows, the values of track and sector are overwritten with the next free sector */

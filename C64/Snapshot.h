@@ -36,12 +36,11 @@ private:
 		//! Magic bytes ('V','C','6','4')
 		char magic[4];
 		
-		//! Version number (major)
+		//! Version number (V major.minor.subminor)
 		uint8_t major;
-		
-		//! Version number (minor)
 		uint8_t minor;
-		
+        uint8_t subminor;
+
 		//! Is this a snapshot of a PAL machine or an NTSC machine?
 		uint8_t isPAL;
 		
@@ -85,7 +84,7 @@ public:
     static bool isSnapshot(const char *filename);
 
     //! Returns true if 'fileIsValid' and version number match
-    static bool isSnapshot(const char *filename, int major, int minor);
+    static bool isSnapshot(const char *filename, int major, int minor, int subminor);
     
 	//! Factory methods
 	static Snapshot *snapshotFromFile(const char *filename);
