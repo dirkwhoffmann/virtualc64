@@ -596,7 +596,6 @@
 - (void) putMessage:(int)msg { c64->putMessage(msg); }
 - (void) reset { c64->reset(); }
 - (void) resetAndKeepVC1541alive { c64->reset(c64, false); }
-- (void) fastReset { c64->fastReset(); }
 - (void) ping { c64->ping(); }
 - (void) halt { c64->halt(); }
 - (void) step { c64->step(); }

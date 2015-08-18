@@ -264,10 +264,6 @@ public:
     //! Like reset(C64 *c64) with more control over the resetted sub components.
     void reset(C64 *c64, bool resetDrive);
     
-	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
-	/*! A (faked) reset is performed by loading a presaved image from disk. */
-	void fastReset();           
-
     //! Dump current configuration into message queue
     void ping();
 

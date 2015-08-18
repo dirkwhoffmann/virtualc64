@@ -184,25 +184,6 @@ void C64::ping()
     expansionport->ping();
     floppy->ping();
 }
-
-void C64::fastReset()
-{
-    reset();
-	debug (1, "Fast resetting virtual C64 (via image file)\n");
-	
-	Snapshot *snapshot = Snapshot::snapshotFromFile("ResetImage.VC64");
-
-	if (snapshot == NULL) {
-		warn("Could not read reset image\n");
-		return;
-	}
-	
-	suspend();
-	loadFromSnapshot(snapshot);
-	resume();
-
-	delete snapshot;
-}
 	
 void 
 C64::dumpState() {

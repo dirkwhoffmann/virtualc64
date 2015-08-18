@@ -483,7 +483,6 @@
 
 - (void) reset;
 - (void) resetAndKeepVC1541alive;
-- (void) fastReset;
 - (void) ping;
 - (void) halt;
 - (void) step;
