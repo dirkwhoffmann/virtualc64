@@ -10,7 +10,10 @@
 
 @implementation C64Proxy(Colors)
 
-- (int)colorScheme { return colorScheme; }
+- (int)colorScheme
+{
+    return colorScheme;
+}
 
 - (void) setColorScheme:(int)scheme
 {

@@ -46,11 +46,7 @@ PixelEngine::PixelEngine() // C64 *c64)
     zbuf = zBuffer;
     srcbuf = pixelSource;
     bufshift = 0;
-    
-    // Initialize colors
-    // REMOVE: setColorScheme(CCS64);
 }
-
 
 PixelEngine::~PixelEngine()
 {

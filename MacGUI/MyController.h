@@ -21,6 +21,7 @@
 // Forward declarations
 @class C64Proxy;
 @class PropertiesDialog;
+@class HardwareDialog;
 @class MountDialog;
 @class RomDialog;
 @class PreferenceController;
@@ -52,6 +53,7 @@ enum INPUT_DEVICES {
 	    
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;
+    IBOutlet HardwareDialog *hardwareDialog;
 	IBOutlet MountDialog *mountDialog;
 	IBOutlet RomDialog *romDialog;
 	PreferenceController *preferenceController;
@@ -315,6 +317,9 @@ enum INPUT_DEVICES {
 // Dialogs
 - (bool)showPropertiesDialog;
 - (IBAction)cancelPropertiesDialog:(id)sender;
+
+- (bool)showHardwareDialog;
+- (IBAction)cancelHardwareDialog:(id)sender;
 
 - (bool)showRomDialog:(Message *)msg;
 - (IBAction)cancelRomDialog:(id)sender;

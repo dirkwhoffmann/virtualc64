@@ -21,7 +21,6 @@
 @implementation PropertiesDialog
 
 /* System */
-NSString *VC64PALorNTSCKey    = @"VC64PALorNTSCKey";
 NSString *VC64BasicRomFileKey = @"VC64BasicRomFileKey";
 NSString *VC64CharRomFileKey  = @"VC64CharRomFileKey";
 NSString *VC64KernelRomFileKey= @"VC64KernelRomFileKey";
@@ -52,12 +51,6 @@ NSString *VC64Down2charKey = @"VC64Down2charKey";
 NSString *VC64Fire2keycodeKey = @"VC64Fire2keycodeKey";
 NSString *VC64Fire2charKey = @"VC64Fire2charKey";
 
-/* Audio */
-NSString *VC64SIDFilterKey    = @"VC64SIDFilterKey";
-NSString *VC64SIDReSIDKey     = @"VC64SIDReSIDKey";
-NSString *VC64SIDChipModelKey = @"VC64SIDChipModelKey";
-NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
-
 /* Video */
 NSString *VC64EyeX            = @"VC64EyeX";
 NSString *VC64EyeY            = @"VC64EyeY";
@@ -83,13 +76,6 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 {
     NSLog(@"Restoring factoring settings");
     
-    
-	// System
-    [self setPalAction:self];
-    
-	// Peripherals
-	[c64 setWarpLoad:true];
-	
     // Joystick
     [[controller screen] setJoyKeycode:126 keymap:1 direction:JOYSTICK_UP];
     [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_UP];
@@ -126,26 +112,6 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [self useAsDefaultAction:self];
 }
 
-- (IBAction)setPalAction:(id)sender
-{
-	[c64 setPAL];
-    [[controller screen] setPAL];
-	[self update];	
-}
-
-- (IBAction)setNtscAction:(id)sender
-{
-	[c64 setNTSC];
-    [[controller screen] setNTSC];
-	[self update];	
-}
-
-- (IBAction)warpLoadAction:(id)sender
-{
-	[c64 setWarpLoad:[(NSButton *)sender state]];
-    [self update];
-}
-
 - (IBAction)recordKeyAction:(id)sender
 {
     if ([sender tag] >= 0 && [sender tag] <= 4) {
@@ -162,36 +128,6 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
     [self update];
  }
-
-- (IBAction)SIDFilterAction:(id)sender
-{
-	if ([(NSButton *)sender state]) {
-		[c64 setAudioFilter:true];
-	} else {
-		[c64 setAudioFilter:false];
-	}
-}
-
-- (IBAction)SIDReSIDAction:(id)sender
-{
-	if ([(NSButton *)sender state]) {
-		[c64 setReSID:true];
-	} else {
-		[c64 setReSID:false];
-	}
-}
-
-- (IBAction)SIDSamplingMethodAction:(id)sender
-{
-    int value = [[sender selectedItem] tag];
-    [c64 setSamplingMethod:value];
-}
-
-- (IBAction)SIDChipModelAction:(id)sender
-{
-    int value = [[sender selectedItem] tag];
-    [c64 setChipModel:value];
-}
 
 - (IBAction)changeColorScheme:(id)sender
 {
@@ -273,23 +209,7 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 }
 
 - (void)update
-{	
-	/* System */
-	if ([c64 isPAL]) {
-        [machineType selectItemWithTag:0];
-		[systemText1 setStringValue:@"PAL machine"];
-		[systemText2 setStringValue:@"0.985 MHz"];
-		[systemText3 setStringValue:@"63 cycles per rasterline"];
-	} else {
-        [machineType selectItemWithTag:1];
-		[systemText1 setStringValue:@"NTSC machine"];
-		[systemText2 setStringValue:@"1.022 MHz"];
-		[systemText3 setStringValue:@"65 cycles per rasterline"];
-	}
-         
-	/* Peripherals */
-	[warpLoad setState:[c64 warpLoad]];
-	
+{	    
     /* Joystick */
     
     // First key set
@@ -306,12 +226,6 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [self updateKeymap:2 direction:JOYSTICK_RIGHT button:right2button text:right2];
     [self updateKeymap:2 direction:JOYSTICK_FIRE button:fire2button text:fire2];
     
-	/* Audio */
-    [SIDUseReSID setState:[c64 reSID]];
-    [SIDFilter setState:[c64 audioFilter]];
-    [SIDChipModel selectItemWithTag:[c64 chipModel]];
-    [SIDSamplingMethod selectItemWithTag:[c64 samplingMethod]];
-
 	/* Video */
     [colorScheme selectItemWithTag:[c64 colorScheme]];
 

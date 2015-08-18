@@ -47,12 +47,14 @@
 		return ![c64 isRunning] && [c64 isRunnable];
 	}
     
+#if 0
     // VC1541
     if ([theItem tag] == 20) {
         if (![[c64 vc1541] hasDisk]) {
             return NO;
         }
     }
+#endif
     
     // All other items
     return YES;
@@ -216,6 +218,11 @@
 - (IBAction)propertiesAction:(id)sender
 {
     [self showPropertiesDialog];
+}
+
+- (IBAction)hardwareAction:(id)sender
+{
+    [self showHardwareDialog];
 }
 
 - (IBAction)VC1541Action:(id)sender

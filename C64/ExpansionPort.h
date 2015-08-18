@@ -141,6 +141,12 @@ public:
     
     //! Getter and setter
     CartridgeType getCartridgeType() { return (CartridgeType)type; }
+
+    //! Count the number of chips
+    unsigned numberOfChips();
+
+    //! Sums up the sizes of all chips in bytes
+    unsigned numberOfBytes();
     
     bool getGameLine() { return gameLine; }
     void setGameLine(bool value);

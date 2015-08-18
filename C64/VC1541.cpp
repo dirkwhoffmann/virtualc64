@@ -176,7 +176,7 @@ VC1541::saveToBuffer(uint8_t **buffer)
     via2.saveToBuffer(buffer);
 	mem->saveToBuffer(buffer);
     
-    debug(2, "  VC1541 state saved (%d bytes)\n", *buffer - old);
+    debug(4, "  VC1541 state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

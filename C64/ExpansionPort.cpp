@@ -159,6 +159,30 @@ ExpansionPort::dumpState()
     }
 }
 
+unsigned
+ExpansionPort::numberOfChips()
+{
+    unsigned result = 0;
+    
+    for (unsigned i = 0; i < 64; i++)
+        if (chip[i] != NULL)
+            result++;
+
+    return result;
+}
+
+unsigned
+ExpansionPort::numberOfBytes()
+{
+    unsigned result = 0;
+    
+    for (unsigned i = 0; i < 64; i++)
+        if (chip[i] != NULL)
+            result += chipSize[i];
+    
+    return result;
+}
+
 void ExpansionPort::poke(uint16_t addr, uint8_t value)
 {
     uint8_t bankNumber;

@@ -47,6 +47,7 @@
 #import "MyControllerVicPanel.h"
 
 #import "PropertiesDialog.h"
+#import "HardwareDialog.h"
 #import "MountDragView.h"
 #import "MountDialog.h"
 #import "RomDialog.h"

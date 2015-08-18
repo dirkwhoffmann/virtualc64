@@ -732,7 +732,6 @@
 {
 	NSLog(@"cartridgeEjectAction");	
 	[c64 detachCartridge];
-	// delete [[self document] cartridge];
 	[[self document] setCartridge:NULL];
 	[c64 reset];
 }
@@ -780,6 +779,47 @@
 	
 	// Return to normal event handling
 	[NSApp endSheet:propertiesDialog returnCode:1];
+}
+
+- (bool)showHardwareDialog
+{
+    // The hardware dialog required the disk name as argument (if any disk is present).
+    // As the name is not directly acessible, we first convert the disk contents to an
+    // archive, pick the name, and delete the archive. A NULL pointer is passed to
+    // the hardware dialog, if no disk is present.
+    
+    NSString *name = NULL;
+    unsigned files = 0;
+    if ([[c64 vc1541] hasDisk]) {
+        D64Archive *archive = [[c64 vc1541] archiveFromDrive];
+        NSLog(@"Archive found");
+        if (archive != NULL) {
+            name = [NSString stringWithFormat:@"%s", archive->getName()];
+            files = archive->getNumberOfItems();
+            delete archive;
+        }
+    }
+    
+    // Initialize dialog
+    [hardwareDialog initialize:self archiveName:name noOfFiles:files];
+    
+    // Open sheet
+    [NSApp beginSheet:hardwareDialog
+       modalForWindow:[[self document] windowForSheet]
+        modalDelegate:self
+       didEndSelector:NULL
+          contextInfo:NULL];
+    
+    return YES;
+}
+
+- (IBAction)cancelHardwareDialog:(id)sender
+{
+    // Hide sheet
+    [hardwareDialog orderOut:sender];
+    
+    // Return to normal event handling
+    [NSApp endSheet:hardwareDialog returnCode:1];
 }
 
 - (bool)showRomDialog:(Message *)msg

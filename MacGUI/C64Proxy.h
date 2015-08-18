@@ -352,6 +352,9 @@
 
 - (id) initWithExpansionPort:(ExpansionPort *)v;
 - (void) dump;
+- (int) cartridgeType;
+- (unsigned) numberOfChips;
+- (unsigned) numberOfBytes;
 
 @end
 
@@ -510,6 +513,7 @@
 - (bool) isRom:(NSString *)filename;
 - (bool) loadRom:(NSString *)filename;
 
+// TODO: MOVE TO EXPANSION PORT PROXY
 - (bool) attachCartridge:(Cartridge *)c;
 - (void) detachCartridge;
 - (bool) isCartridgeAttached;

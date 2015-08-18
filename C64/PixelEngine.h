@@ -126,12 +126,6 @@ public:
     
 private:
     
-    //! Currently used color scheme
-    /*! Each color scheme uses slightly different RGB values to mimic the colors used in different emulators.
-        Changing the color scheme modifies the colors[] array which stores the actual color codes in RGBA format. */
-    /*! TODO: MOVE COLORSCHEME TO GUI CODE. IT'S A "LIFESTYLE" PROPERTY AND NOT A MACHINE FEATURE */
-    // ColorScheme colorScheme;
-    
     //! All sixteen C64 colors in RGBA format
      uint32_t colors[16] = {
         LO_LO_HI_HI(0x10, 0x10, 0x10, 0xFF),
@@ -208,9 +202,6 @@ private:
     
 public:
     
-    //! Set color scheme
-    // void setColorScheme(ColorScheme scheme);
-
     //! Get screen buffer that is currently stable
     /*! This method is called by the OpenGL code at the beginning of each frame. */
     inline void *screenBuffer() { return (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1; }

@@ -424,6 +424,9 @@
 }
 
 - (void) dump { expansionPort->dumpState(); }
+- (int) cartridgeType { return (int)expansionPort->getCartridgeType(); }
+- (unsigned) numberOfChips { return expansionPort->numberOfChips(); }
+- (unsigned) numberOfBytes { return expansionPort->numberOfBytes(); }
 
 @end
 

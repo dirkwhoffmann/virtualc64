@@ -317,12 +317,6 @@ public:
 	//! Setter for warpLoad
 	void setWarpLoad(bool b);
 
-    //! Get color scheme
-    // PixelEngine::ColorScheme getColorScheme() { return vic->getColorScheme(); }
-    
-	//! Set color scheme
-	// void setColorScheme(PixelEngine::ColorScheme scheme) { vic->setColorScheme(scheme); }
-
     //! Returns true iff audio filters are enabled.
     bool getAudioFilter() { return sid->getAudioFilter(); }
     

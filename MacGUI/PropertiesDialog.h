@@ -18,17 +18,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <Cocoa/Cocoa.h>
-
 /* System */
-extern NSString *VC64PALorNTSCKey;
 extern NSString *VC64BasicRomFileKey;
 extern NSString *VC64CharRomFileKey;
 extern NSString *VC64KernelRomFileKey;
 extern NSString *VC64VC1541RomFileKey;
-
-/* Peripherals */
-extern NSString *VC64WarpLoadKey;
 
 /* Joystick */
 extern NSString *VC64Left1keycodeKey;
@@ -52,12 +46,6 @@ extern NSString *VC64Down2charKey;
 extern NSString *VC64Fire2keycodeKey;
 extern NSString *VC64Fire2charKey;
 
-/* Audio */
-extern NSString *VC64SIDFilterKey;
-extern NSString *VC64SIDReSIDKey;
-extern NSString *VC64SIDChipModelKey;
-extern NSString *VC64SIDSamplingMethodKey;
-
 /* Video */
 extern NSString *VC64EyeX;
 extern NSString *VC64EyeY;
@@ -70,23 +58,14 @@ extern NSString *VC64VideoFilterKey;
     C64Proxy *c64;
     MyController *controller;
     
-    /*! @brief Indicates if a keycode should be recorded for keyset 1
-     *  @discussion Per default, this value equals -1 (nothing should be recorded) */
+    //! Indicates if a keycode should be recorded for keyset 1
+    /*! Per default, this value equals -1 (nothing should be recorded) */
     int recordKey1;
 
-    /*! @brief Indicates if a keycode should be recorded for keyset 2
-     *  @discussion Per default, this value equals -1 (nothing should be recorded) */
+    //! Indicates if a keycode should be recorded for keyset 2
+    /*! Per default, this value equals -1 (nothing should be recorded) */
     int recordKey2;
-
-    /* System */
-    IBOutlet NSPopUpButton *machineType;
-	IBOutlet NSTextField *systemText1;
-	IBOutlet NSTextField *systemText2;
-	IBOutlet NSTextField *systemText3;
-	
-	/* Peripherals */
-	IBOutlet NSButton *warpLoad;
-	
+		
     /* Joystick */
     IBOutlet NSTextField *left1;
     IBOutlet NSButton *left1button;
@@ -108,12 +87,6 @@ extern NSString *VC64VideoFilterKey;
     IBOutlet NSButton *down2button;
     IBOutlet NSTextField *fire2;
     IBOutlet NSButton *fire2button;
-
-	/* Audio */
-	IBOutlet NSButton *SIDFilter;
-	IBOutlet NSButton *SIDUseReSID;
-	IBOutlet NSPopUpButton *SIDChipModel;
-	IBOutlet NSPopUpButton *SIDSamplingMethod;
     
 	/* Video */
 	int customColor[16];
@@ -144,26 +117,14 @@ extern NSString *VC64VideoFilterKey;
 
 // Update methods
 
-//! @brief Helper function for update
+//! Helper function for update
 - (NSString *)keycodeInPlainText:(int)code character:(char)c;
 - (void)updateKeymap:(int)map direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t;
 - (void) update;
 
-// System
-- (IBAction)setPalAction:(id)sender;
-- (IBAction)setNtscAction:(id)sender;
-
-// VC 1541
-- (IBAction)warpLoadAction:(id)sender;
 
 // Joystick
 - (IBAction)recordKeyAction:(id)sender;
-
-// SID
-- (IBAction)SIDFilterAction:(id)sender;
-- (IBAction)SIDReSIDAction:(id)sender;
-- (IBAction)SIDSamplingMethodAction:(id)sender;
-- (IBAction)SIDChipModelAction:(id)sender;
 
 // VIC
 - (IBAction)changeColorScheme:(id)sender;
@@ -175,6 +136,5 @@ extern NSString *VC64VideoFilterKey;
 // Action buttons
 - (IBAction)useAsDefaultAction:(id)sender;
 - (IBAction)factorySettingsAction:(id)sender;
-
 
 @end

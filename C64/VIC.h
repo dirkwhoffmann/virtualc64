@@ -603,12 +603,6 @@ public:
 	
 	//! Configure the VIC chip for NTSC video output
 	void setNTSC();	
-
-    //! Get color scheme
-    // PixelEngine::ColorScheme getColorScheme() { return pixelEngine.colorScheme; }
-
-	//! Set color scheme
-    // void setColorScheme(PixelEngine::ColorScheme scheme) { pixelEngine.setColorScheme(scheme); }
 	
     //! Get color
     uint32_t getColor(int nr) { assert(nr < 16); return pixelEngine.colors[nr]; }
