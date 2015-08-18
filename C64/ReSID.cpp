@@ -135,20 +135,34 @@ ReSID::setClockFrequency(uint32_t frequency)
     sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
 }
 
-void 
+uint32_t
+ReSID::stateSize()
+{
+    return 11;
+}
+
+void
 ReSID::loadFromBuffer(uint8_t **buffer)
 {
 	debug(2, "  Loading ReSID state...\n");
 
-    debug(1, "IMPLEMENTATION MISSING");
+    setChipModel((chip_model)read8(buffer));
+    setAudioFilter((bool)read8(buffer));
+    setSamplingMethod((sampling_method)read8(buffer));
+    setSampleRate(read32(buffer));
+    setClockFrequency(read32(buffer));
 }
 
 void
 ReSID::saveToBuffer(uint8_t **buffer)
 {
-	debug(2, "  Saving ReSID state...\n");
+	debug(4, "  Saving ReSID state...\n");
 
-    debug(1, "IMPLEMENTATION MISSING");
+    write8(buffer, (uint8_t)getChipModel());
+    write8(buffer, (uint8_t)getAudioFilter());
+    write8(buffer, (uint8_t)getSamplingMethod());
+    write32(buffer, getSampleRate());
+    write32(buffer, getClockFrequency());
 }
 
 uint8_t 

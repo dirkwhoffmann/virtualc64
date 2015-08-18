@@ -333,7 +333,7 @@
                             <action selector="resetAction:" target="-2" id="1869"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware" paletteLabel="Hardware" tag="20" image="chip" id="2033" userLabel="Hardware">
+                    <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Virtual machine" paletteLabel="Virtual machine" tag="20" image="motherboard" id="2033" userLabel="Virtual machine">
                         <connections>
                             <action selector="hardwareAction:" target="-2" id="iI3-mf-bse"/>
                         </connections>
@@ -4276,9 +4276,19 @@ DQ
                         </textFieldCell>
                     </textField>
                     <imageView id="t3h-lF-3k7">
-                        <rect key="frame" x="22" y="386" width="48" height="48"/>
+                        <rect key="frame" x="27" y="380" width="48" height="42"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="graphics2" id="0Sq-ko-zGR"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="chip" id="0Sq-ko-zGR"/>
+                    </imageView>
+                    <imageView id="q6X-rk-8sV">
+                        <rect key="frame" x="16" y="382" width="48" height="48"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="graphics2" id="TJi-qn-CZ6"/>
+                    </imageView>
+                    <imageView id="plR-6Q-bAw">
+                        <rect key="frame" x="262" y="363" width="73" height="52"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="flag_eu" id="Wmy-sK-kfi"/>
                     </imageView>
                     <popUpButton id="39A-36-mMb" userLabel="System">
                         <rect key="frame" x="345" y="410" width="182" height="26"/>
@@ -4370,7 +4380,7 @@ DQ
                         </connections>
                     </popUpButton>
                     <imageView id="YS1-Bn-FmA">
-                        <rect key="frame" x="22" y="299" width="48" height="48"/>
+                        <rect key="frame" x="20" y="294" width="46" height="48"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="songs" id="cMs-XS-gzF"/>
                     </imageView>
@@ -4537,10 +4547,10 @@ DQ
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <imageView id="plR-6Q-bAw">
-                        <rect key="frame" x="262" y="363" width="73" height="52"/>
+                    <imageView id="ve8-jr-BSC">
+                        <rect key="frame" x="27" y="286" width="48" height="42"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="flag_eu" id="Wmy-sK-kfi"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="chip" id="AHm-n6-FwF"/>
                     </imageView>
                 </subviews>
             </view>
@@ -4588,6 +4598,7 @@ DQ
         <image name="joystick1_32" width="35" height="35"/>
         <image name="joystick2_32" width="35" height="35"/>
         <image name="keyboard32" width="34" height="35"/>
+        <image name="motherboard" width="256" height="256"/>
         <image name="none_32" width="39" height="39"/>
         <image name="pause32" width="32" height="32"/>
         <image name="pref_system" width="59" height="60"/>

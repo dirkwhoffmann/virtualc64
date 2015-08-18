@@ -88,4 +88,8 @@ extern NSString *VC64SIDSamplingMethodKey;
 - (IBAction)SIDSamplingMethodAction:(id)sender;
 - (IBAction)SIDChipModelAction:(id)sender;
 
+// Action buttons
+- (IBAction)useAsDefaultAction:(id)sender;
+- (IBAction)factorySettingsAction:(id)sender;
+
 @end

@@ -48,25 +48,31 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 
 - (IBAction)useAsDefaultAction:(id)sender
 {
-    // TODO: DON'T SAVE ALL SETTINGS
-    [controller saveUserDefaults];
+    NSLog(@"Saving emulator user defaults");
+    [controller saveVirtualMachineUserDefaults];
 }
 
 - (IBAction)factorySettingsAction:(id)sender
 {
-    NSLog(@"Restoring factoring settings");
+    NSLog(@"Restoring virtual machine factoring settings");
     
     // System
-    [self setPalAction:self];
-        
+    if (![c64 isPAL]) {
+        [self setPalAction:self];
+        // We need to reset those as well because they differ in PAL and NTSC mode: 
+        [[controller screen] setEyeX:(float)PAL_INITIAL_EYE_X];
+        [[controller screen] setEyeY:(float)PAL_INITIAL_EYE_Y];
+        [[controller screen] setEyeZ:(float)PAL_INITIAL_EYE_Z];
+    }
+    
     // Peripherals
     [c64 setWarpLoad:true];
 
     // Audio
     [c64 setReSID:YES];
-    [c64 setAudioFilter:NO];
     [c64 setChipModel:1];
     [c64 setSamplingMethod:0];
+    [c64 setAudioFilter:NO];
 
     [self update];
     [self useAsDefaultAction:self];
@@ -133,6 +139,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     } else {
         [c64 setAudioFilter:false];
     }
+    [self update];
 }
 
 - (IBAction)SIDReSIDAction:(id)sender
@@ -144,6 +151,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     } else {
         [c64 setReSID:false];
     }
+    [self update];
 }
 
 - (IBAction)SIDSamplingMethodAction:(id)sender
@@ -152,6 +160,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     
     int value = [[sender selectedItem] tag];
     [c64 setSamplingMethod:value];
+    [self update];
 }
 
 - (IBAction)SIDChipModelAction:(id)sender
@@ -160,10 +169,13 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     
     int value = [[sender selectedItem] tag];
     [c64 setChipModel:value];
+    [self update];
 }
 
 - (void)update
 {
+    // NSLog(@"update");
+    
     /* System */
     if ([c64 isPAL]) {
         [machineType selectItemWithTag:0];
@@ -179,7 +191,6 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     
     /* VC1541 */
     [warpLoad setState:[c64 warpLoad]];
-    // [warpText setHidden:![c64 warpLoad]];
     
     if ([[c64 vc1541] hasDisk]) {
         
@@ -215,7 +226,11 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
         [cartridgeText2 setStringValue:[NSString stringWithFormat:@"%d chip%s (%d KB total)",
                                         [[c64 expansionport] numberOfChips],
                                         [[c64 expansionport] numberOfChips] == 1 ? "" : "s",
-                                        [[c64 expansionport] numberOfBytes]]];
+                                        [[c64 expansionport] numberOfBytes] / 1024]];
+        [cartridgeEject setEnabled:YES];
+        [cartridgeEject setHidden:NO];
+        [cartridgeEjectText setEnabled:YES];
+        [cartridgeEjectText setHidden:NO];
         
     } else {
         

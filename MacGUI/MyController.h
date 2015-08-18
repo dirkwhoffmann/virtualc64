@@ -293,7 +293,9 @@ enum INPUT_DEVICES {
 // User defaults
 + (void)registerStandardDefaults;
 - (void)loadUserDefaults;
+- (void)loadVirtualMachineUserDefaults;
 - (void)saveUserDefaults;
+- (void)saveVirtualMachineUserDefaults;
 
 // Timer and message processing
 - (void)timerFunc;

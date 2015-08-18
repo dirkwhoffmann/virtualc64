@@ -81,30 +81,30 @@ public:
     //! Configure the SID chip for being used in NTSC machines
     void setNTSC();
     
-    //! Returns true iff audio filters are enabled.
-	inline bool getAudioFilter() { return resid->getAudioFilter(); }
-    
-	//! Enable or disable filters of SID.
-	void setAudioFilter(bool enable);
-
     //! Returns true, iff ReSID libray shall be used.
     inline bool getReSID() { return useReSID; }
     
     //! Enable or disable ReSID library.
-	void setReSID(bool enable);
+    void setReSID(bool enable);
+    
+    //! Get chip model
+    inline chip_model getChipModel() { return resid->getChipModel(); }
+    
+    //! Set chip model (ReSID only)
+    void setChipModel(chip_model value);
+    
+    //! Returns true iff audio filters are enabled.
+    inline bool getAudioFilter() { return resid->getAudioFilter(); }
+    
+    //! Enable or disable filters of SID.
+    void setAudioFilter(bool enable);
     
     //! Get sampling method
     inline sampling_method getSamplingMethod() { return resid->getSamplingMethod(); }
     
     //! Set sampling method (ReSID only)
     void setSamplingMethod(sampling_method value);
-    
-    //! Get chip model 
-    inline chip_model getChipModel() { return resid->getChipModel(); }
-    
-    //! Set chip model (ReSID only)
-    void setChipModel(chip_model value);
-    
+
     //! Return samplerate.
 	inline uint32_t getSampleRate() { return resid->getSampleRate(); }
     
@@ -112,7 +112,7 @@ public:
 	void setSampleRate(uint32_t sr);
     
     //! Get clock frequency
-	inline uint32_t getClockFrequency() { return resid->getClockFrequency(); }	
+    inline uint32_t getClockFrequency();
     
 	//! Set clock frequency
 	void setClockFrequency(uint32_t frequency);	

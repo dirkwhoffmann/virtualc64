@@ -29,34 +29,34 @@ class ReSID : public VirtualComponent {
 private:
     SID *sid;
     	
-	//! Sample rate.
+	//! Sample rate
 	uint32_t sampleRate;
 	
-    //! Audio filters.
+    //! Audio filters
     bool audioFilter;
     
-    //! Sampling method.
+    //! Sampling method
     sampling_method samplingMethod;
 
-    //! Chip model.
+    //! Chip model
     chip_model chipModel;
     
-	//! CPU frequency.
+	//! CPU frequency
 	uint32_t cpuFrequency;
 		
-	//! Size of \a ringBuffer.
+	//! Size of ringBuffer
 	uint32_t bufferSize;
 	
-	//!  Ringbuffer with sound data.
+	//!  Ringbuffer with sound data
 	float* ringBuffer;
 	
-	//! Pointer to write position in buffer.
+	//! Pointer to write position in buffer
 	float* writeBuffer;
 	
-	//! Pointer to read position in buffer.
+	//! Pointer to read position in buffer
 	float* readBuffer;
 	
-	//! Pointer to end of buffer.
+	//! Pointer to end of buffer
 	float* endBuffer;
 			
 public:
@@ -70,7 +70,10 @@ public:
 	//! Bring the SID chip back to it's initial state.
 	void reset(C64 *c64);
 	
-	//! Load state
+    //! Size of internal state
+    uint32_t stateSize();
+
+    //! Load state
 	void loadFromBuffer(uint8_t **buffer);
 	
 	//! Save state
@@ -134,10 +137,10 @@ public:
     void setChipModel(chip_model value);
     
     //! Get clock frequency
-	uint32_t getClockFrequency();	
+    uint32_t getClockFrequency() { return cpuFrequency; }
     
 	//! Set clock frequency
-	void setClockFrequency(uint32_t frequency);	
+    void setClockFrequency(uint32_t f);
 };
 
 #endif

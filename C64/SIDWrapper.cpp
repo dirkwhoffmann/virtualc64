@@ -57,7 +57,7 @@ SIDWrapper::reset(C64 *c64)
 uint32_t
 SIDWrapper::stateSize()
 {
-    return 1 + oldsid->stateSize();
+    return 2 + resid->stateSize() + oldsid->stateSize();
 }
 
 void
@@ -66,6 +66,8 @@ SIDWrapper::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
     latchedDataBus = read8(buffer);
+    useReSID = (bool)read8(buffer);
+    resid->loadFromBuffer(buffer);
     oldsid->loadFromBuffer(buffer);
     
     debug(2, "  SID state loaded (%d bytes)\n", *buffer - old);
@@ -78,6 +80,8 @@ SIDWrapper::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
     write8(buffer, latchedDataBus);
+    write8(buffer, (uint8_t)useReSID);
+    resid->saveToBuffer(buffer);
     oldsid->saveToBuffer(buffer);
     
     debug(4, "  SID state saved (%d bytes)\n", *buffer - old);
@@ -197,6 +201,12 @@ SIDWrapper::setSampleRate(uint32_t sr)
 {
     oldsid->setSampleRate(sr);
     resid->setSampleRate(sr);
+}
+
+uint32_t
+SIDWrapper::getClockFrequency()
+{
+    return resid->getClockFrequency();
 }
 
 void 

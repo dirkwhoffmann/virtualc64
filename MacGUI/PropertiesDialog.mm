@@ -69,12 +69,13 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (IBAction)useAsDefaultAction:(id)sender
 {
+    NSLog(@"Saving emulator user defaults");
     [controller saveUserDefaults];
 }
 
 - (IBAction)factorySettingsAction:(id)sender
 {
-    NSLog(@"Restoring factoring settings");
+    NSLog(@"Restoring emulator factoring settings");
     
     // Joystick
     [[controller screen] setJoyKeycode:126 keymap:1 direction:JOYSTICK_UP];
@@ -98,14 +99,12 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [[controller screen] setJoyChar:'s' keymap:2 direction:JOYSTICK_RIGHT];
     [[controller screen] setJoyKeycode:7 keymap:2 direction:JOYSTICK_FIRE];
     [[controller screen] setJoyChar:'x' keymap:2 direction:JOYSTICK_FIRE];
-    
-	// Audio
-	[c64 setReSID:YES];
-    [c64 setAudioFilter:NO];
-    [c64 setChipModel:1];
-    [c64 setSamplingMethod:0];
-    
-	// Video     
+
+    // Video
+    [[controller screen] setEyeX:(float)PAL_INITIAL_EYE_X];
+    [[controller screen] setEyeY:(float)PAL_INITIAL_EYE_Y];
+    [[controller screen] setEyeZ:(float)PAL_INITIAL_EYE_Z];
+    [[controller screen] setAntiAliasing:1];
     [c64 setColorScheme:CCS64];
     
     [self update];

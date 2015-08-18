@@ -110,6 +110,7 @@
     
 	// Load user defaults
 	[self loadUserDefaults];
+    [self loadVirtualMachineUserDefaults];
     
     // Enable fullscreen mode
     [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
@@ -187,7 +188,7 @@
 	[defaultValues setObject:@"" forKey:VC64KernelRomFileKey];
 	[defaultValues setObject:@"" forKey:VC64VC1541RomFileKey];
 	
-	// Peripherals
+	// VC1541
 	[defaultValues setObject:@YES forKey:VC64WarpLoadKey];
 
     // Joysticks
@@ -233,24 +234,10 @@
 
 - (void)loadUserDefaults
 {
-	NSLog(@"MyController::Loading user defaults");
+	NSLog(@"MyController::Loading emulator user defaults");
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		
-	// System
-	if ([defaults integerForKey:VC64PALorNTSCKey]) {
-		[c64 setNTSC];
-	} else {
-		[c64 setPAL];
-	}
-	[[self document] loadRom:[defaults stringForKey:VC64BasicRomFileKey]];
-	[[self document] loadRom:[defaults stringForKey:VC64CharRomFileKey]];
-	[[self document] loadRom:[defaults stringForKey:VC64KernelRomFileKey]];
-	[[self document] loadRom:[defaults stringForKey:VC64VC1541RomFileKey]];
-	
-	// Peripherals
-	[c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
-	
+			
     // Joysticks
     [screen setJoyKeycode:[defaults integerForKey:VC64Left1keycodeKey] keymap:1 direction:JOYSTICK_LEFT];
     [screen setJoyChar:[defaults integerForKey:VC64Left1charKey] keymap:1 direction:JOYSTICK_LEFT];
@@ -274,12 +261,6 @@
     [screen setJoyKeycode:[defaults integerForKey:VC64Fire2keycodeKey] keymap:2 direction:JOYSTICK_FIRE];
     [screen setJoyChar:[defaults integerForKey:VC64Fire2charKey] keymap:2 direction:JOYSTICK_FIRE];
     
-	// Audio
-	[c64 setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
-	[c64 setAudioFilter:[defaults boolForKey:VC64SIDFilterKey]];
-	[c64 setChipModel:[defaults boolForKey:VC64SIDChipModelKey]];
-	[c64 setSamplingMethod:[defaults boolForKey:VC64SIDSamplingMethodKey]];
-	
 	// Video 
 	[screen setEyeX:[defaults floatForKey:VC64EyeX]];
 	[screen setEyeY:[defaults floatForKey:VC64EyeY]];
@@ -289,21 +270,42 @@
     [c64 setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
 }
 
+- (void)loadVirtualMachineUserDefaults
+{
+    NSLog(@"MyController::Loading virtual machine user defaults");
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // System
+    if ([defaults integerForKey:VC64PALorNTSCKey]) {
+        [c64 setNTSC];
+    } else {
+        [c64 setPAL];
+    }
+    [[self document] loadRom:[defaults stringForKey:VC64BasicRomFileKey]];
+    [[self document] loadRom:[defaults stringForKey:VC64CharRomFileKey]];
+    [[self document] loadRom:[defaults stringForKey:VC64KernelRomFileKey]];
+    [[self document] loadRom:[defaults stringForKey:VC64VC1541RomFileKey]];
+    
+    // Peripherals
+    [c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
+    
+    // Audio
+    [c64 setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
+    [c64 setAudioFilter:[defaults boolForKey:VC64SIDFilterKey]];
+    [c64 setChipModel:[defaults boolForKey:VC64SIDChipModelKey]];
+    [c64 setSamplingMethod:[defaults boolForKey:VC64SIDSamplingMethodKey]];
+}
+
 - (void)saveUserDefaults
 {
-	NSLog(@"MyController::Saving user defaults");
+	NSLog(@"MyController::Saving emulator user defaults");
 	
 	NSUserDefaults *defaults;
 	
 	// Set standard user defaults
 	defaults = [NSUserDefaults standardUserDefaults];
-	
-	// System
-    [defaults setInteger:[c64 isNTSC] forKey:VC64PALorNTSCKey];
-    	
-	// Peripherals
-	[defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
-	
+		
     // Joysticks
     [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_LEFT] forKey:VC64Left1keycodeKey];
     [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_LEFT] forKey:VC64Left1charKey];
@@ -327,17 +329,33 @@
     [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2keycodeKey];
     [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2charKey];
     
-	// Audio
-	[defaults setBool:[c64 reSID] forKey:VC64SIDReSIDKey];
-	[defaults setBool:[c64 audioFilter] forKey:VC64SIDFilterKey];
-	[defaults setBool:[c64 chipModel] forKey:VC64SIDChipModelKey];
-	[defaults setBool:[c64 samplingMethod] forKey:VC64SIDSamplingMethodKey];
-    
 	// Video 
     [defaults setFloat:[screen eyeX] forKey:VC64EyeX];
     [defaults setFloat:[screen eyeY] forKey:VC64EyeY];
     [defaults setFloat:[screen eyeZ] forKey:VC64EyeZ];
     [defaults setInteger:[c64 colorScheme] forKey:VC64ColorSchemeKey];
+}
+
+- (void)saveVirtualMachineUserDefaults
+{
+    NSLog(@"MyController::Saving virtual machine user defaults");
+    
+    NSUserDefaults *defaults;
+    
+    // Set standard user defaults
+    defaults = [NSUserDefaults standardUserDefaults];
+    
+    // System
+    [defaults setInteger:[c64 isNTSC] forKey:VC64PALorNTSCKey];
+    
+    // VC1541
+    [defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
+    
+    // Audio
+    [defaults setBool:[c64 reSID] forKey:VC64SIDReSIDKey];
+    [defaults setBool:[c64 audioFilter] forKey:VC64SIDFilterKey];
+    [defaults setBool:[c64 chipModel] forKey:VC64SIDChipModelKey];
+    [defaults setBool:[c64 samplingMethod] forKey:VC64SIDSamplingMethodKey];
 }
 
 
