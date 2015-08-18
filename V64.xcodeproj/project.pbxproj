@@ -99,7 +99,7 @@
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
 		50C9CB221B826C9D0054EE86 /* workgroup.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB211B826C9D0054EE86 /* workgroup.png */; };
 		50C9CB241B826CD50054EE86 /* expansion.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB231B826CD50054EE86 /* expansion.png */; };
-		50C9CB2D1B826FF20054EE86 /* graphics2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB2B1B826FF20054EE86 /* graphics2.png */; };
+		50C9CB2D1B826FF20054EE86 /* graphics.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB2B1B826FF20054EE86 /* graphics.png */; };
 		50C9CB321B8272DA0054EE86 /* HardwareDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */; };
 		50C9CB351B82797B0054EE86 /* c64.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB341B82797B0054EE86 /* c64.png */; };
 		50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB361B83561E0054EE86 /* pref_vic.png */; };
@@ -316,7 +316,7 @@
 		50C9CB1F1B826C960054EE86 /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = joystick.png; path = images/joystick.png; sourceTree = "<group>"; };
 		50C9CB211B826C9D0054EE86 /* workgroup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = workgroup.png; path = images/workgroup.png; sourceTree = "<group>"; };
 		50C9CB231B826CD50054EE86 /* expansion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = expansion.png; path = images/expansion.png; sourceTree = "<group>"; };
-		50C9CB2B1B826FF20054EE86 /* graphics2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graphics2.png; sourceTree = "<group>"; };
+		50C9CB2B1B826FF20054EE86 /* graphics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = graphics.png; path = images/graphics.png; sourceTree = "<group>"; };
 		50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HardwareDialog.mm; sourceTree = "<group>"; };
 		50C9CB331B8272F40054EE86 /* HardwareDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HardwareDialog.h; sourceTree = "<group>"; };
 		50C9CB341B82797B0054EE86 /* c64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = c64.png; path = images/c64.png; sourceTree = "<group>"; };
@@ -701,7 +701,7 @@
 				50C9CB361B83561E0054EE86 /* pref_vic.png */,
 				50C9CB381B8356280054EE86 /* pref_sid.png */,
 				50C9CB341B82797B0054EE86 /* c64.png */,
-				50C9CB2B1B826FF20054EE86 /* graphics2.png */,
+				50C9CB2B1B826FF20054EE86 /* graphics.png */,
 				50C9CB151B820DFD0054EE86 /* chip.png */,
 				50C9CB1F1B826C960054EE86 /* joystick.png */,
 				50C9CB211B826C9D0054EE86 /* workgroup.png */,
@@ -902,7 +902,7 @@
 				50C9CB161B820DFD0054EE86 /* chip.png in Resources */,
 				50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */,
 				500B9D390C40E55A008237C6 /* pref_system.png in Resources */,
-				50C9CB2D1B826FF20054EE86 /* graphics2.png in Resources */,
+				50C9CB2D1B826FF20054EE86 /* graphics.png in Resources */,
 				500B9D3D0C40E563008237C6 /* pref_grafik.png in Resources */,
 				50C9CB1C1B8213EC0054EE86 /* motherboard.png in Resources */,
 				50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */,

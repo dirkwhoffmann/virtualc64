@@ -290,7 +290,7 @@ C64::stateSize()
 {
     uint32_t size;
     
-    size = 29;
+    size = 31;
     size += cpu->stateSize();
     size += vic->stateSize();
     size += sid->stateSize();
@@ -315,6 +315,8 @@ C64::loadFromBuffer(uint8_t **buffer)
 	debug(2, "Loading internal state...\n");
 	
 	// Load state of this component
+    warp = read8(buffer);
+    alwaysWarp = read8(buffer);
     warpLoad = read8(buffer);
 	cycles = read64(buffer);
 	frame = (int)read32(buffer);
@@ -365,6 +367,8 @@ C64::saveToBuffer(uint8_t **buffer)
     debug(3, "Saving internal state...\n");
 		
 	// Save state of this component
+    write8(buffer, warp);
+    write8(buffer, alwaysWarp);
     write8(buffer, warpLoad);
 	write64(buffer, cycles);
 	write32(buffer, (uint32_t)frame);

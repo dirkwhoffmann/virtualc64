@@ -196,15 +196,6 @@ private:
 
 	//! The execution thread
 	pthread_t p;
-
-	//! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
-	bool warp;
-    
-    //! Indicates that we should always run as possible
-	bool alwaysWarp;
-    
-    //! Indicates that we should run as fast as possible at least during disk operations
-	bool warpLoad;
     
 	//! Snapshot history ring buffer (for cheatbox)
 	Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE]; 
@@ -217,6 +208,15 @@ private:
     //  State variables (will be saves to snapshot)
     //
 
+    //! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
+    bool warp;
+    
+    //! Indicates that we should always run as possible
+    bool alwaysWarp;
+    
+    //! Indicates that we should run as fast as possible at least during disk operations
+    bool warpLoad;
+
     //! PAL or NTSC machine?
     bool pal;
 
@@ -226,9 +226,8 @@ private:
     //! Current clock cycle relative to the current rasterline
     /*! Range: 1 ... 63 on PAL machines
                1 ... 65 on NTSC machines */
-public:
+    
     int rasterlineCycle;
-private:
     
 	//! Current frame number since power up
 	uint64_t frame;
