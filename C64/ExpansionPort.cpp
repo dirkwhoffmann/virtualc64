@@ -327,12 +327,13 @@ void
 ExpansionPort::detachCartridge()
 {
     for (unsigned i = 0; i < 64; i++) {
-        if (chip[i])
+        if (chip[i]) {
             free(chip[i]);
+            chip[i] = NULL;
+        }
     }
-    
-    c64->putMessage(MSG_CARTRIDGE, 0);
     reset(c64);
+    c64->putMessage(MSG_CARTRIDGE, 0);
 }
 
 

@@ -140,7 +140,6 @@
                 <outlet property="cia2TimerB" destination="2545" id="2667"/>
                 <outlet property="clockSpeed" destination="214" id="216"/>
                 <outlet property="clockSpeedBar" destination="212" id="215"/>
-                <outlet property="clockSpeedStepper" destination="415" id="426"/>
                 <outlet property="cpuTableView" destination="767" id="945"/>
                 <outlet property="debugPanel" destination="35" id="2196"/>
                 <outlet property="dezHexSelector" destination="367" id="759"/>
@@ -207,14 +206,14 @@
                         </textFieldCell>
                     </textField>
                     <levelIndicator verticalHuggingPriority="750" id="212">
-                        <rect key="frame" x="700" y="2" width="80" height="18"/>
+                        <rect key="frame" x="721" y="2" width="80" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="11" criticalValue="15" id="1702">
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
                     </levelIndicator>
                     <textField verticalHuggingPriority="750" id="214">
-                        <rect key="frame" x="548" y="6" width="133" height="11"/>
+                        <rect key="frame" x="569" y="6" width="133" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="Clock" id="1703">
                             <font key="font" metaFont="miniSystem"/>
@@ -222,14 +221,6 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="415">
-                        <rect key="frame" x="781" y="4" width="13" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <stepperCell key="cell" controlSize="mini" continuous="YES" alignment="left" increment="2" minValue="-1" maxValue="1" doubleValue="1" id="1704"/>
-                        <connections>
-                            <action selector="stepperAction:" target="-2" id="427"/>
-                        </connections>
-                    </stepper>
                     <button hidden="YES" toolTip="Eject disc" id="1038">
                         <rect key="frame" x="76" y="0.0" width="28" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -259,9 +250,6 @@
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
-                        <connections>
-                            <action selector="driveAction:" target="-2" id="1056"/>
-                        </connections>
                     </button>
                     <button hidden="YES" toolTip="Eject disc" id="2003">
                         <rect key="frame" x="94" y="2" width="20" height="20"/>
@@ -270,12 +258,9 @@
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
-                        <connections>
-                            <action selector="driveAction:" target="-2" id="2005"/>
-                        </connections>
                     </button>
                     <button toolTip="Warp mode" id="1052">
-                        <rect key="frame" x="680" y="-14" width="19" height="35"/>
+                        <rect key="frame" x="701" y="-14" width="19" height="35"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="warpOn" imagePosition="above" alignment="center" alternateImage="warpOff" id="1707">
                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -4332,12 +4317,12 @@ DQ
                     <popUpButton verticalHuggingPriority="750" id="aTL-8a-SsD">
                         <rect key="frame" x="345" y="299" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <popUpButtonCell key="cell" type="push" title="Fast" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="DQt-ri-dpe">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="DQt-ri-dpe">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="A3v-ZW-FJg">
                                 <items>
-                                    <menuItem title="Fast" state="on" id="HHU-nK-7jN">
+                                    <menuItem title="Fast" id="HHU-nK-7jN">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                     <menuItem title="Interpolate" tag="1" id="PBk-eX-ga9">

@@ -701,19 +701,6 @@
 
 // Simulation speed
 
-- (IBAction)stepperAction:(id)sender
-{
-	NSLog(@"stepperAction");
-	
-	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] stepperAction:@(-[sender intValue])];
-	if (![undo isUndoing]) [undo setActionName:@"Clock frequency"];
-	
-	int newFrameDelayOffset = [c64 frameDelayOffset] - 1000*[sender intValue];
-		
-	[c64 setFrameDelayOffset:newFrameDelayOffset];
-}
-
 - (IBAction)warpAction:(id)sender
 {
 	NSLog(@"warpAction");	
@@ -751,7 +738,7 @@
 	NSLog(@"cartridgeEjectAction");	
 	[c64 detachCartridge];
 	[[self document] setCartridge:NULL];
-	[c64 reset];
+	[c64 resetAndKeepVC1541alive];
 }
 
 
@@ -765,7 +752,7 @@
 		return NO;
 
 	[c64 attachCartridge:[[self document] cartridge]];
-	[c64 reset];
+	[c64 resetAndKeepVC1541alive];
 	
 	return YES;
 }

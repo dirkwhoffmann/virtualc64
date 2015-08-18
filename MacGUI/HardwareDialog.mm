@@ -126,7 +126,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 
     [c64 detachCartridge];
     [[controller document] setCartridge:NULL];
-    [c64 reset];
+    [c64 resetAndKeepVC1541alive];
     [self update];
 }
 

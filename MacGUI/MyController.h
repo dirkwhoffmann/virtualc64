@@ -75,7 +75,6 @@ enum INPUT_DEVICES {
 	IBOutlet NSTextField *info;
 	IBOutlet NSTextField *clockSpeed;
 	IBOutlet NSLevelIndicator *clockSpeedBar;
-	IBOutlet NSStepper *clockSpeedStepper;
 	IBOutlet NSButton *warpMode;
 	
 	// Cheatbox panel
@@ -307,7 +306,6 @@ enum INPUT_DEVICES {
 - (void)enableUserEditing:(BOOL)enabled;
 
 // Main window controls
-- (IBAction)stepperAction:(id)sender;
 - (IBAction)warpAction:(id)sender;
 - (IBAction)ejectAction:(id)sender;
 - (IBAction)driveAction:(id)sender;

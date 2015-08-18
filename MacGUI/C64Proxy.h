@@ -482,6 +482,7 @@
 - (void) putMessage:(int)msg;
 
 - (void) reset;
+- (void) resetAndKeepVC1541alive;
 - (void) fastReset;
 - (void) ping;
 - (void) halt;
@@ -496,8 +497,6 @@
 - (bool) isNTSC;
 - (void) setPAL;
 - (void) setNTSC;
-- (int) frameDelayOffset;
-- (void) setFrameDelayOffset:(int)delay;
 - (int) buildNr;
 
 //- (int) numberOfMissingRoms;

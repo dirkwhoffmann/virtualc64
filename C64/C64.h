@@ -197,13 +197,6 @@ private:
 	//! The execution thread
 	pthread_t p;
 
-    //! Additional frame delay
-    /*! = 0 : Emulator runs at original speed (varies between PAL and NTSC) (default value) 
-     > 0 : Emulator runs slower than origonal machine 
-     < 0 : Emulator runs faster than original machine 
-     */
-    int frameDelayOffset;
-
 	//! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
 	bool warp;
     
@@ -261,13 +254,16 @@ public:
 	~C64();
 
     //! Top-level entry point for resetting the C64
-    /*! Triggers the reset(C64 *c64) methods of all sub components */
+    /*! Triggers the reset(C64 *c64) methods of all sub components. */
     void reset() { reset(this); }
 
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A reset is performed by simulating a hard reset on a real C64. */
-	void reset(C64 *c64);
-	
+    void reset(C64 *c64) { reset(c64, true); }
+
+    //! Like reset(C64 *c64) with more control over the resetted sub components.
+    void reset(C64 *c64, bool resetDrive);
+    
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A (faked) reset is performed by loading a presaved image from disk. */
 	void fastReset();           
@@ -296,13 +292,7 @@ public:
 
 	//! Set NTSC mode
 	void setNTSC();
-	
-    //! Returns the user definable speed adjustment (msec per frame)
-	inline int getFrameDelayOffset() { return frameDelayOffset; } 
-    
-	//! Sets the user definable speed adjustment (msec per frame)
-	inline void setFrameDelayOffset(int delay) { frameDelayOffset = delay; }
-    
+	    
 	//! Enable or disable timing synchronization
 	void setWarp(bool b);
 	

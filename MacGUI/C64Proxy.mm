@@ -595,6 +595,7 @@
 - (Message *)message { return c64->getMessage(); }
 - (void) putMessage:(int)msg { c64->putMessage(msg); }
 - (void) reset { c64->reset(); }
+- (void) resetAndKeepVC1541alive { c64->reset(c64, false); }
 - (void) fastReset { c64->fastReset(); }
 - (void) ping { c64->ping(); }
 - (void) halt { c64->halt(); }
@@ -609,8 +610,6 @@
 - (bool) isNTSC { return c64->isNTSC(); }
 - (void) setPAL { c64->setPAL(); }
 - (void) setNTSC { c64->setNTSC(); }
-- (int) frameDelayOffset { return c64->getFrameDelayOffset(); }
-- (void) setFrameDelayOffset:(int)delay { c64->setFrameDelayOffset(delay); }
 - (int) buildNr { return c64->build(); }
 
 //- (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }

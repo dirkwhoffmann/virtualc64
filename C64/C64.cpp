@@ -134,7 +134,7 @@ C64::~C64()
 	debug(1, "Cleaned up virtual C64\n", this);
 }
 
-void C64::reset(C64 *c64)
+void C64::reset(C64 *c64, bool resetDrive)
 {
 	suspend();
 
@@ -151,19 +151,19 @@ void C64::reset(C64 *c64)
     joystick2->reset(c64);
     iec->reset(c64);
     expansionport->softreset();
-    floppy->reset(c64);
+    if (resetDrive) floppy->reset(c64);
 
 	cycles = 0UL;
 	frame = 0;
 	rasterline = 0;
 	rasterlineCycle = 1;
 	targetTime = 0UL;
-    frameDelayOffset = 0;
     
     ping();
     
 	resume();
 }
+
 
 void C64::ping()
 {
@@ -958,7 +958,7 @@ C64::getHistoricSnapshot(int nr)
 void 
 C64::restartTimer() 
 { 
-	targetTime = msec() + (uint64_t)getFrameDelay() + (uint64_t)getFrameDelayOffset();
+	targetTime = msec() + (uint64_t)getFrameDelay();
 }
 
 void 
@@ -968,7 +968,7 @@ C64::synchronizeTiming()
 	uint64_t timeToSleep = targetTime - msec();
 	
 	// update target time
-	targetTime += (uint64_t)getFrameDelay() + (uint64_t)getFrameDelayOffset();
+	targetTime += (uint64_t)getFrameDelay();
 	
 	// sleep
 	if (timeToSleep > 0) {
