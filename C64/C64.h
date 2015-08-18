@@ -23,9 +23,10 @@
 #define DEBUG_LEVEL 2
 
 // Snapshot version number of this release
-#define V_MAJOR 1
-#define V_MINOR 0
-#define V_SUBMINOR 0
+// 1.0rc1 has version number 0.9.10 
+#define V_MAJOR 0
+#define V_MINOR 9
+#define V_SUBMINOR 10
 
 #include "basic.h"
 #include "VirtualComponent.h"
