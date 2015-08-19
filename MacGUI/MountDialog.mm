@@ -101,30 +101,6 @@
     [self update];
 }
 
-- (void) initializeAsDriveDialog:(Archive *)a c64proxy:(C64Proxy *)proxy
-{
-    [self _initialize:a c64proxy:proxy];
-    
-    [headerText setStringValue:@"VC 1541"];
-    doMount = NO;
-    doEjectOnCancel = YES;
-
-    // Get physical path of archive
-    NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
-    NSString *archiveLastPath = [archivePath lastPathComponent];
-    NSString *archiveWithoutExt = [archiveLastPath stringByDeletingPathExtension];
-    
-    // Set icon and title
-    [diskIconFrame setTitle:archiveWithoutExt];
-    [diskIcon setImage:[NSImage imageNamed:@"diskette"]];
-
-    [CancelButton setTitle:@"Eject"];
-    [OKButton setTitle:@"OK"];
-    loadOption = LOAD_OPTION_8_1;
-
-    [self update];
-}
-
 - (int)selection
 {
     return [directory selectedRow];
@@ -142,7 +118,6 @@
     
     return result;
 }
-
 
 - (NSString *)loadCommand
 {
@@ -179,7 +154,6 @@
     [loadOptions selectItemAtIndex:loadOption];
     
     [warningText setHidden:loadOption != LOAD_OPTION_FLASH];
-    [writeProtect setIntValue:archive->isWriteProtected()];
 }
 
 #pragma mark NSTableViewDataSource
@@ -240,17 +214,6 @@
 }
 
 #pragma mark Action methods
-
-- (IBAction)writeProtectAction:(id)sender
-{
-    if ([sender intValue]) {
-        NSLog(@"Write protection");
-        archive->setWriteProtected(true);
-    } else {
-        NSLog(@"No write protection");
-        archive->setWriteProtected(false);
-    }
-}
 
 - (IBAction)loadOptionsAction:(id)sender
 {

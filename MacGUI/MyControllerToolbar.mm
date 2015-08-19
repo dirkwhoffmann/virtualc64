@@ -225,11 +225,6 @@
     [self showHardwareDialog];
 }
 
-- (IBAction)VC1541Action:(id)sender
-{
-    [self showMountDialogWithDriveContents];
-}
-
 - (IBAction)debugOpenAction:(id)sender
 {
     [self cheatboxCloseAction:self];

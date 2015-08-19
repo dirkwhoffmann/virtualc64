@@ -3052,17 +3052,6 @@
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <button id="sna-BJ-dds">
-                        <rect key="frame" x="342" y="102" width="121" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Write protected" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="h2S-lY-XLc">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="smallSystem"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="writeProtectAction:" target="1004" id="aAu-G7-5Gt"/>
-                        </connections>
-                    </button>
                     <scrollView horizontalLineScroll="19" horizontalPageScroll="0.0" verticalLineScroll="19" verticalPageScroll="0.0" usesPredominantAxisScrolling="NO" id="1016">
                         <rect key="frame" x="19" y="73" width="311" height="185"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3216,7 +3205,6 @@ Flashing ist fast, but less compatible</string>
                 <outlet property="initialFirstResponder" destination="262" id="2199"/>
                 <outlet property="loadOptions" destination="yIn-rf-6xJ" id="BSS-vr-fqc"/>
                 <outlet property="warningText" destination="1025" id="EaN-ow-O7c"/>
-                <outlet property="writeProtect" destination="sna-BJ-dds" id="6dN-c2-aft"/>
             </connections>
             <point key="canvasLocation" x="-419" y="-44"/>
         </window>

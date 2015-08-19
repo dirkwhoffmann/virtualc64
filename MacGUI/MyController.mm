@@ -855,35 +855,6 @@
 	// [NSApp endSheet:romDialog returnCode:1];
 }
 
-- (bool)showMountDialogWithDriveContents
-{
-    // Only proceed if a disk is in drive
-    if (![[c64 vc1541] hasDisk])
-        return NO;
-    
-    // Create archive from disk contents
-    NSLog(@"Create archive from disk contents");
-    D64Archive *archive = [[c64 vc1541] archiveFromDrive];
-    if (archive == NULL)
-        return NO;
-    
-    // Initialize dialog
-    NSLog(@"Initialize dialog");
-    [mountDialog initializeAsDriveDialog:archive c64proxy:c64];
-    
-    // TODO: THE ARCHIVE IS NEVER DELETED
-    // SHOULD THE DIALOG COPY THE ARCHIVE?
-    
-    // Open sheet
-    [NSApp beginSheet:mountDialog
-       modalForWindow:[[self document] windowForSheet]
-        modalDelegate:self
-       didEndSelector:NULL
-          contextInfo:NULL];
-    
-    return YES;
-}
-
 - (bool)showMountDialog
 {
     // Only proceed if a an archive is present

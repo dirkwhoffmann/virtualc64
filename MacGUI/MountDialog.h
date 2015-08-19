@@ -28,7 +28,6 @@ class Archive;
     IBOutlet NSPopUpButton *loadOptions;
     IBOutlet NSTextField *headerText;
     IBOutlet NSTextField *warningText;
-    IBOutlet NSButton *writeProtect;
     IBOutlet NSImageView *diskIcon;
     IBOutlet NSBox *diskIconFrame;
     
@@ -58,13 +57,10 @@ class Archive;
 
 
 // Initialization
-// - (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy mountBeforeLoading:(bool)mount;
 - (void) _initialize:(Archive *)a c64proxy:(C64Proxy *)proxy;
 - (void) initializeAsMountDialog:(Archive *)a c64proxy:(C64Proxy *)proxy;
-- (void) initializeAsDriveDialog:(Archive *)a c64proxy:(C64Proxy *)proxy;
 
 // Action methods
-- (IBAction)writeProtectAction:(id)sender;
 - (IBAction)loadOptionsAction:(id)sender;
 - (void)singleClickAction:(id)sender;
 - (void)doubleClickAction:(id)sender;
