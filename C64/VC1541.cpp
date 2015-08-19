@@ -27,6 +27,8 @@ VC1541::VC1541()
 	mem = new VC1541Memory();
 	cpu = new CPU();
 	cpu->setName("1541CPU");
+    
+    resetDisk();
 }
 
 VC1541::~VC1541()
@@ -37,39 +39,44 @@ VC1541::~VC1541()
 	delete mem;
 }
 
-void 
-VC1541::reset(C64 *c64)
+void
+VC1541::resetDrive(C64 *c64)
 {
-	debug (2, "Resetting VC1541...\n");
-
+    debug (2, "Resetting VC1541...\n");
+    
     // Establish bindings
-    this->c64 = c64; 
+    this->c64 = c64;
     iec = c64->iec;
     
     // Reset subcomponents
-	mem->reset(c64);
+    mem->reset(c64);
     cpu->reset(c64, mem);
     cpu->setPC(0xEAA0);
     via1.reset(c64);
     via2.reset(c64);
-		
+    
     // VC1541 properties
     rotating = false;
     redLED = false;
-
+    
     syncMark = false;
     byteReadyTimer = 0;
-	track = 40;
-	offset = 0;
-	noOfFFBytes = 0;
-    writeProtected = false;
+    track = 40;
+    offset = 0;
+    noOfFFBytes = 0;
     latched_readmode = true;
-    latched_ora = 0; 
+    latched_ora = 0;
+}
 
-    // Inserted disk
+void
+VC1541::resetDisk()
+{
+    debug (2, "Resetting disk in VC1541...\n");
+
+    // Disk properties
     clearDisk();
     diskInserted = false;
-
+    writeProtected = false;
 }
 
 void
@@ -677,10 +684,7 @@ VC1541::ejectDisk()
 	// Remove disk (write protection light barrier is no longer blocked)
 	setWriteProtection(false);
 		
-	// Zero out disk data
-	clearDisk();
-	
-    diskInserted = false;
+    resetDisk();
 	c64->putMessage(MSG_VC1541_DISK, 0);
 }
 			

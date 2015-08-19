@@ -482,7 +482,6 @@
 - (void) putMessage:(int)msg;
 
 - (void) reset;
-- (void) resetAndKeepVC1541alive;
 - (void) ping;
 - (void) halt;
 - (void) step;

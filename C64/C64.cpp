@@ -134,7 +134,7 @@ C64::~C64()
 	debug(1, "Cleaned up virtual C64\n", this);
 }
 
-void C64::reset(C64 *c64, bool resetDrive)
+void C64::reset(C64 *c64)
 {
 	suspend();
 
@@ -151,7 +151,7 @@ void C64::reset(C64 *c64, bool resetDrive)
     joystick2->reset(c64);
     iec->reset(c64);
     expansionport->reset(c64);
-    if (resetDrive) floppy->reset(c64);
+    floppy->reset(c64);
 
 	cycles = 0UL;
 	frame = 0;

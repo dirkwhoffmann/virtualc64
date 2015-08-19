@@ -255,10 +255,7 @@ public:
 
 	//! Reset the virtual C64 and all of its virtual sub-components to its initial state.
 	/*! A reset is performed by simulating a hard reset on a real C64. */
-    void reset(C64 *c64) { reset(c64, true); }
-
-    //! Like reset(C64 *c64) with more control over the resetted sub components.
-    void reset(C64 *c64, bool resetDrive);
+    void reset(C64 *c64);
     
     //! Dump current configuration into message queue
     void ping();

@@ -110,7 +110,14 @@ public:
     ~ExpansionPort();
     
     //! Revert to initial state
-    void reset(C64 *c64);
+    /*! A reset will only affect the port. The cartridge is kept alive. */
+    void reset(C64 *c64) { resetPort(c64); }
+    
+    //! Reset expansion port
+    void resetPort(C64 *c64);
+    
+    //! Reset cartridge
+    void resetCartridge();
     
     //! Revert to initial state but keep cartridge data in place
     void softreset();

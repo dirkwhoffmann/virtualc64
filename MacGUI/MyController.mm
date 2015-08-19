@@ -738,7 +738,7 @@
 	NSLog(@"cartridgeEjectAction");	
 	[c64 detachCartridge];
 	[[self document] setCartridge:NULL];
-	[c64 resetAndKeepVC1541alive];
+	[c64 reset];
 }
 
 
@@ -752,7 +752,7 @@
 		return NO;
 
 	[c64 attachCartridge:[[self document] cartridge]];
-	[c64 resetAndKeepVC1541alive];
+	[c64 reset];
 	
 	return YES;
 }

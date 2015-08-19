@@ -57,8 +57,18 @@ public:
     //! Destructor
     ~VC1541();
     
-    //! Restore initial state
-    void reset(C64 *c64);
+    //! Reset VC1541 drive
+    /*! A reset will only affect the VC1541s internal state. It keeps the disk alive */
+    void reset(C64 *c64) { resetDrive(c64); }
+
+    //! Reset drive properties
+    /*! Resets all VC1541 related properties. Disk related properties remain in place. */
+    void resetDrive(C64 *c64);
+
+    //! Reset disk properties
+    /*! Resets all disk related properties.  */
+    void resetDisk();
+
     
     //! Dump current configuration into message queue
     void ping();
