@@ -797,6 +797,9 @@ D64Archive::findDirectoryEntry(int itemNr)
 	// the directory starts at track 18 / sector 1.
     int pos = offset(18, 1);
     
+    // Indicates if we're inside the last sector (successor track is zero then)
+    bool last_sector = (data[pos] == 0x00);
+
     // As faked disk data could send us into an infinite loop, we will abort
     // the search proces eventually.
     const unsigned GIVE_UP = 512;
@@ -804,18 +807,16 @@ D64Archive::findDirectoryEntry(int itemNr)
     // Signature of an empty directory entry (32 zeroes in a row)
     const char emptyEntry[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
 	
-    for (unsigned i = 0; i < GIVE_UP;) {
-
-        bool last_sector = (data[pos] == 0x00);
-
+        for (unsigned i = 0; i < GIVE_UP;) {
+        
 		// Only proceed if we're looking at a valid directory entry
-		if (memcmp(&data[pos], emptyEntry, 32)==0)
+        if (memcmp(&data[pos], emptyEntry, 32) == 0)
             break;
-	
+        
 		// Return if we reached the item we're looking for
-		if (i == itemNr)
-			return pos;
-		
+        if (i == itemNr)
+            return pos;
+        
 		// Jump to next directory item
 		i++;
 
@@ -825,7 +826,7 @@ D64Archive::findDirectoryEntry(int itemNr)
             if (last_sector)
                 break; // Sorry, there is no "next sector"
             
-			if (!jumpToNextSector(&pos))
+            if (!jumpToNextSector(&pos))
                 break; // Sorry, somebody wants to sent us off the cliff
             
 			last_sector = (data[pos] == 0x00);
