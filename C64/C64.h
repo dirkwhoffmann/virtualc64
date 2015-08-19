@@ -16,6 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// This release is currently concerned with code cleanup. 
+// Enhancements
+// Cleaned up reset behavior. Disks and cartridges now remain in place.
+// Bug fixes
+// Fixed a bug in the directory scanner that limited the number of displayed files to eight.
+//
+
 #ifndef _C64_INC
 #define _C64_INC
 
