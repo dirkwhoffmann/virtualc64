@@ -29,13 +29,7 @@
     @brief Base class for all loadable objects with multiple files included. */
 
 class Archive : public Container {
-	
-private:
     
-    /*! Write protection flag.
-        When an archive is inserted into the floopy drive, the optical write protection sensor will be set or unset based on this value. By default, archives are write enabled. */
-    bool writeProtection;
-
 public:
 
     //
@@ -51,12 +45,6 @@ public:
     //
     //! Accessing archive attributes
     //
-
-    //! Returns the write protection flag.
-    bool isWriteProtected() { return writeProtection; }
-
-    //! Sets the write protection flag.
-    void setWriteProtected(bool value) { writeProtection = value; }
 
     //! Returns the number of items in this archive.
     virtual int getNumberOfItems() = 0;
