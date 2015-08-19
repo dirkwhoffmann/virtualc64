@@ -60,7 +60,7 @@ public:
     //! @brief Returns true iff the specified file is a T64 file
     static bool isT64File(const char *filename);
 
-    //! @brief Creates a T64 archive from a T64 file located on disc.
+    //! @brief Creates a T64 archive from a T64 file located on disk.
     static T64Archive *archiveFromT64File(const char *filename);
     
     /*! @brief Creates a T64 archive from another archive.

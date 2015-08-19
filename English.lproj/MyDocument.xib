@@ -221,7 +221,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button hidden="YES" toolTip="Eject disc" id="1038">
+                    <button hidden="YES" toolTip="Eject disk" id="1038">
                         <rect key="frame" x="76" y="0.0" width="28" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="bottom" imagePosition="left" alignment="left" id="1705">
@@ -232,7 +232,7 @@
                             <action selector="ejectAction:" target="-2" id="1043"/>
                         </connections>
                     </button>
-                    <button hidden="YES" toolTip="Eject disc" id="2000">
+                    <button hidden="YES" toolTip="Eject cartridge" id="2000">
                         <rect key="frame" x="109" y="0.0" width="28" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="bottom" imagePosition="left" alignment="left" id="2001">
@@ -243,7 +243,7 @@
                             <action selector="cartridgeEjectAction:" target="-1" id="2008"/>
                         </connections>
                     </button>
-                    <button hidden="YES" toolTip="Eject disc" id="1045">
+                    <button hidden="YES" id="1045">
                         <rect key="frame" x="59" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="floppy" imagePosition="only" alignment="right" id="1706">
@@ -251,7 +251,7 @@
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                     </button>
-                    <button hidden="YES" toolTip="Eject disc" id="2003">
+                    <button hidden="YES" id="2003">
                         <rect key="frame" x="94" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="cartridge" imagePosition="only" alignment="right" id="2004">
@@ -4524,7 +4524,7 @@ DQ
                     <textField verticalHuggingPriority="750" id="JU9-dR-EBW">
                         <rect key="frame" x="395" y="169" width="70" height="22"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Eject disc" placeholderString="" id="DRQ-yA-SrT">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Eject disk" placeholderString="" id="DRQ-yA-SrT">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -4550,9 +4550,9 @@ DQ
                 <outlet property="discIcon" destination="bQM-1M-aKB" id="8dg-5V-27r"/>
                 <outlet property="diskEject" destination="5Nd-Ft-riB" id="OcB-HA-yx1"/>
                 <outlet property="diskEjectText" destination="JU9-dR-EBW" id="kZb-Ph-yH3"/>
+                <outlet property="diskIcon" destination="bQM-1M-aKB" id="ty6-FE-mKF"/>
                 <outlet property="diskText" destination="Ip7-Nw-BeF" id="93j-rZ-G4z"/>
                 <outlet property="diskText2" destination="ZWw-Bk-vul" id="MgM-xg-pZ4"/>
-                <outlet property="driveEject" destination="5Nd-Ft-riB" id="rcF-R4-dZC"/>
                 <outlet property="flag" destination="plR-6Q-bAw" id="pmd-5u-F5L"/>
                 <outlet property="machineType" destination="39A-36-mMb" id="nHb-JB-4JX"/>
                 <outlet property="systemText" destination="rTD-N9-Nqe" id="TQX-5S-gn8"/>

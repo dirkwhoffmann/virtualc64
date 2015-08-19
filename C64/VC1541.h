@@ -145,15 +145,15 @@ public:
     void startRotating();
     void stopRotating();
 
-    //! Insert a virtual disc
-    void insertDisc(Archive *a);
-    void insertDisc(D64Archive *a);
+    //! Insert a virtual disk
+    void insertDisk(Archive *a);
+    void insertDisk(D64Archive *a);
     
     //! Returns true if a disk is currently inserted
     inline bool hasDisk() { return diskInserted; }
     
-    //! Eject virtual disc
-    void ejectDisc();
+    //! Eject virtual disk
+    void ejectDisk();
 
     // ---------------------------------------------------------------------------------------------
     //                                  Read/Write logic
@@ -266,7 +266,7 @@ public:
      to see how many bytes will be written */
     unsigned decodeDisk(uint8_t *dest);
     
-    //! Export currently inserted disc to D64 file
+    //! Export currently inserted disk to D64 file
     bool exportToD64(const char *filename);
 
 private:

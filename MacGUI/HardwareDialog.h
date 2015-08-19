@@ -46,7 +46,7 @@ extern NSString *VC64SIDSamplingMethodKey;
     /* VC1541 */
     IBOutlet NSButton *warpLoad;
     IBOutlet NSTextField *warpText;
-    IBOutlet NSImageView *discIcon;
+    IBOutlet NSImageView *diskIcon;
     IBOutlet NSButton *diskEject;
     IBOutlet NSTextField *diskEjectText;
     IBOutlet NSTextField *diskText;

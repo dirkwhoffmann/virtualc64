@@ -53,12 +53,11 @@ VC1541::reset(C64 *c64)
     via1.reset(c64);
     via2.reset(c64);
 		
-    clearDisk();
+    // VC1541 properties
     rotating = false;
     redLED = false;
-    diskInserted = false;
+
     syncMark = false;
-    
     byteReadyTimer = 0;
 	track = 40;
 	offset = 0;
@@ -66,6 +65,11 @@ VC1541::reset(C64 *c64)
     writeProtected = false;
     latched_readmode = true;
     latched_ora = 0; 
+
+    // Inserted disk
+    clearDisk();
+    diskInserted = false;
+
 }
 
 void
@@ -74,7 +78,7 @@ VC1541::ping()
     debug(2, "Pinging VC1541...\n");
     c64->putMessage(MSG_VC1541_LED, redLED ? 1 : 0);
     c64->putMessage(MSG_VC1541_MOTOR, rotating ? 1 : 0);
-    c64->putMessage(MSG_VC1541_DISC, diskInserted ? 1 : 0);
+    c64->putMessage(MSG_VC1541_DISK, diskInserted ? 1 : 0);
 
     cpu->ping();
     mem->ping();
@@ -581,7 +585,7 @@ VC1541::decodeSector(uint8_t *source, uint8_t *dest)
 }
 
 void 
-VC1541::insertDisc(Archive *a)
+VC1541::insertDisk(Archive *a)
 {
 	warn("Can only mount D64 images.\n");
 }
@@ -649,20 +653,20 @@ VC1541::decodeDisk(uint8_t *dest)
 }
 
 void 
-VC1541::insertDisc(D64Archive *a)
+VC1541::insertDisk(D64Archive *a)
 {
 	assert(a != NULL);
 
-    ejectDisc();
+    ejectDisk();
     encodeDisk(a);
 
     diskInserted = true;
     setWriteProtection(a->isWriteProtected());
-	c64->putMessage(MSG_VC1541_DISC, 1);
+	c64->putMessage(MSG_VC1541_DISK, 1);
 }
 
 void 
-VC1541::ejectDisc()
+VC1541::ejectDisk()
 {
 	// Open lid (write protection light barrier will be blocked)
 	setWriteProtection(true);
@@ -677,7 +681,7 @@ VC1541::ejectDisc()
 	clearDisk();
 	
     diskInserted = false;
-	c64->putMessage(MSG_VC1541_DISC, 0);
+	c64->putMessage(MSG_VC1541_DISK, 0);
 }
 			
 void 

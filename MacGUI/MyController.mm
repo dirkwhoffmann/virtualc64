@@ -513,7 +513,7 @@
 				[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];	
 			break;
 			
-		case MSG_VC1541_DISC:
+		case MSG_VC1541_DISK:
 			[drive setHidden:!msg->i];
 			[eject setHidden:!msg->i];			
 			break;
@@ -913,7 +913,7 @@
 	// Return to normal event handling
 	[NSApp endSheet:mountDialog returnCode:1];
     
-    // Eject disc if requested
+    // Eject disk if requested
     if (doEject) {
         [[c64 vc1541] ejectDisk];
     }

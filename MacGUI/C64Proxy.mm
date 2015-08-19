@@ -483,7 +483,7 @@
 - (void) dump { vc1541->dumpState(); }
 - (bool) tracingEnabled { return vc1541->tracingEnabled(); }
 - (void) setTraceMode:(bool)b { vc1541->setTraceMode(b); }
-- (void) ejectDisk { vc1541->ejectDisc(); }
+- (void) ejectDisk { vc1541->ejectDisk(); }
 - (bool) hasRedLED { return vc1541->hasRedLED(); }
 - (bool) hasDisk { return vc1541->hasDisk(); }
 - (bool) writeProtection { return vc1541->isWriteProtected(); }

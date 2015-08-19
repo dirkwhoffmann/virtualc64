@@ -26,11 +26,11 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
-    if ([item action] == @selector(exportDiscDialog:)) {
+    if ([item action] == @selector(exportDiskDialog:)) {
         return [[c64 vc1541] hasDisk];
     }
 
-    if ([item action] == @selector(exportFileFromDiscDialog:)) {
+    if ([item action] == @selector(exportFileFromDiskDialog:)) {
         // Possibiliy: Check how many files are present.
         //             Only enable items when a single file is present
         return [[c64 vc1541] hasDisk];
@@ -85,7 +85,7 @@
     [data writeToURL:selectedFile atomically:YES];
 }
 
-- (IBAction)exportDiscDialog:(id)sender
+- (IBAction)exportDiskDialog:(id)sender
 {
     VC1541 *floppy = [c64 c64]->floppy;
     D64Archive *diskContents;
@@ -158,9 +158,9 @@
     delete target;
 }
 
-- (IBAction)exportFileFromDiscDialog:(id)sender
+- (IBAction)exportFileFromDiskDialog:(id)sender
 {
-    [self exportDiscDialog: sender];
+    [self exportDiskDialog: sender];
 }
 
 // --------------------------------------------------------------------------------

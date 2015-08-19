@@ -46,7 +46,7 @@ class IEC : public VirtualComponent {
 
 public:
 	
-	//! Reference to the virtual disc drive
+	//! Reference to the virtual disk drive
 	VC1541 *drive;
 
 private:

@@ -32,40 +32,40 @@ class Archive : public Container {
 	
 private:
     
-    /*! @brief Write protection flag.
-        @discussion When an archive is inserted into the floopy drive, the optical write protection sensor will be set or unset based on this value. By default, archives are write enabled. */
+    /*! Write protection flag.
+        When an archive is inserted into the floopy drive, the optical write protection sensor will be set or unset based on this value. By default, archives are write enabled. */
     bool writeProtection;
 
 public:
 
     //
-    //! @functiongroup Creating and destructing containers
+    //! Creating and destructing containers
     //
     
-    //! @brief Standard constructor.
+    //! Standard constructor.
 	Archive();
     
-    //! @brief Standard destructor.
+    //! Standard destructor.
 	virtual ~Archive();
     
     //
-    //! @functiongroup Accessing archive attributes
+    //! Accessing archive attributes
     //
 
-    //! @brief Returns the write protection flag.
+    //! Returns the write protection flag.
     bool isWriteProtected() { return writeProtection; }
 
-    //! @brief Sets the write protection flag.
+    //! Sets the write protection flag.
     void setWriteProtected(bool value) { writeProtection = value; }
 
-    //! @brief Returns the number of items in this archive.
+    //! Returns the number of items in this archive.
     virtual int getNumberOfItems() = 0;
 
     //
-    //! @functiongroup Accessing item attributes
+    //! Accessing item attributes
     //
 
-    /*! @brief Searches the directory for a specific item.
+    /*! Searches the directory for a specific item.
         @param filename The item name may contain the wildcard characters '?' and '*'.
         @return The number of the item (starting at 0) or -1, if no matching item was found. */
 	int getItemWithName(char *filename);

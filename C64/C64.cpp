@@ -996,7 +996,7 @@ C64::mountArchive(D64Archive *a)
 	if (a == NULL)
 		return false;
 		
-	floppy->insertDisc(a);	
+	floppy->insertDisk(a);
 	return true;
 }
 

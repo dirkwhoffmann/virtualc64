@@ -96,7 +96,7 @@
     }
     
     [CancelButton setTitle:@"Cancel"];
-    [OKButton setTitle:@"Insert disc"];
+    [OKButton setTitle:@"Insert disk"];
     
     [self update];
 }

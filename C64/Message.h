@@ -34,7 +34,7 @@
 #define MSG_WARP 7
 #define MSG_LOG 8
 #define MSG_VC1541_ATTACHED 9
-#define MSG_VC1541_DISC 10
+#define MSG_VC1541_DISK 10
 #define MSG_VC1541_LED 11
 #define MSG_VC1541_DATA 12
 #define MSG_VC1541_MOTOR 13

@@ -68,10 +68,10 @@ public:
     //! @brief Returns true iff the specified file is a D64 file
     static bool isD64File(const char *filename);
 
-    //! @brief Creates a D64 archive from a D64 file located on disc.
+    //! @brief Creates a D64 archive from a D64 file located on disk.
     static D64Archive *archiveFromD64File(const char *filename);
 
-	/*! @brief Create a D64 archive from a file located on disc.
+	/*! @brief Create a D64 archive from a file located on disk.
         @discussion If the provided filename points to a D64 archive, @link archiveFromD64File @/link is invoked. Otherwise, the format is converted automatically. */
      static D64Archive *archiveFromArbitraryFile(const char *filename);
 

@@ -239,7 +239,7 @@
 								</object>
 								<object class="NSMenuItem" id="478407158">
 									<reference key="NSMenu" ref="242404350"/>
-									<string key="NSTitle">Export Disc...</string>
+									<string key="NSTitle">Export Disk...</string>
 									<string type="base64-UTF8" key="NSKeyEquiv">CA</string>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1024293694"/>
@@ -247,7 +247,7 @@
 									<string key="NSAction">submenuAction:</string>
 									<reference key="NSTarget" ref="732159526"/>
 									<object class="NSMenu" key="NSSubmenu" id="732159526">
-										<string key="NSTitle"/>
+										<string key="NSTitle">Export Disk...</string>
 										<array class="NSMutableArray" key="NSMenuItems">
 											<object class="NSMenuItem" id="844764098">
 												<reference key="NSMenu" ref="732159526"/>
@@ -1536,35 +1536,35 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">exportDiscDialog:</string>
+						<string key="label">exportDiskDialog:</string>
 						<reference key="source" ref="958131061"/>
 						<reference key="destination" ref="844764098"/>
 					</object>
-					<int key="connectionID">556</int>
+					<int key="connectionID">560</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">exportDiscDialog:</string>
+						<string key="label">exportDiskDialog:</string>
 						<reference key="source" ref="958131061"/>
 						<reference key="destination" ref="272944924"/>
 					</object>
-					<int key="connectionID">557</int>
+					<int key="connectionID">561</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">exportFileFromDiscDialog:</string>
+						<string key="label">exportDiskDialog:</string>
 						<reference key="source" ref="958131061"/>
 						<reference key="destination" ref="551808854"/>
 					</object>
-					<int key="connectionID">558</int>
+					<int key="connectionID">562</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">exportFileFromDiscDialog:</string>
+						<string key="label">exportDiskDialog:</string>
 						<reference key="source" ref="958131061"/>
 						<reference key="destination" ref="206384287"/>
 					</object>
-					<int key="connectionID">559</int>
+					<int key="connectionID">563</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2437,10 +2437,26 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">559</int>
+			<int key="maxID">563</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">CheatboxImageBrowserView</string>
+					<string key="superclassName">IKImageBrowserView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/CheatboxImageBrowserView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">CpuTableView</string>
+					<string key="superclassName">NSTableView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/CpuTableView.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
 					<dictionary class="NSMutableDictionary" key="actions">
@@ -2570,6 +2586,3892 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">HardwareDialog</string>
+					<string key="superclassName">NSWindow</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="SIDChipModelAction:">id</string>
+						<string key="SIDFilterAction:">id</string>
+						<string key="SIDReSIDAction:">id</string>
+						<string key="SIDSamplingMethodAction:">id</string>
+						<string key="ejectCartridgeAction:">id</string>
+						<string key="ejectDiskAction:">id</string>
+						<string key="factorySettingsAction:">id</string>
+						<string key="setNtscAction:">id</string>
+						<string key="setPalAction:">id</string>
+						<string key="useAsDefaultAction:">id</string>
+						<string key="warpLoadAction:">id</string>
+						<string key="writeProtectionAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="SIDChipModelAction:">
+							<string key="name">SIDChipModelAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="SIDFilterAction:">
+							<string key="name">SIDFilterAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="SIDReSIDAction:">
+							<string key="name">SIDReSIDAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="SIDSamplingMethodAction:">
+							<string key="name">SIDSamplingMethodAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ejectCartridgeAction:">
+							<string key="name">ejectCartridgeAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ejectDiskAction:">
+							<string key="name">ejectDiskAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="factorySettingsAction:">
+							<string key="name">factorySettingsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setNtscAction:">
+							<string key="name">setNtscAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setPalAction:">
+							<string key="name">setPalAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="useAsDefaultAction:">
+							<string key="name">useAsDefaultAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="warpLoadAction:">
+							<string key="name">warpLoadAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="writeProtectionAction:">
+							<string key="name">writeProtectionAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="SIDChipModel">NSPopUpButton</string>
+						<string key="SIDFilter">NSButton</string>
+						<string key="SIDSamplingMethod">NSPopUpButton</string>
+						<string key="SIDUseReSID">NSButton</string>
+						<string key="cartridgeEject">NSButton</string>
+						<string key="cartridgeEjectText">NSTextField</string>
+						<string key="cartridgeIcon">NSImageView</string>
+						<string key="cartridgeText">NSTextField</string>
+						<string key="cartridgeText2">NSTextField</string>
+						<string key="diskEject">NSButton</string>
+						<string key="diskEjectText">NSTextField</string>
+						<string key="diskIcon">NSImageView</string>
+						<string key="diskText">NSTextField</string>
+						<string key="diskText2">NSTextField</string>
+						<string key="flag">NSImageView</string>
+						<string key="machineType">NSPopUpButton</string>
+						<string key="systemText">NSTextField</string>
+						<string key="systemText2">NSTextField</string>
+						<string key="warpLoad">NSButton</string>
+						<string key="warpText">NSTextField</string>
+						<string key="writeProtected">NSButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="SIDChipModel">
+							<string key="name">SIDChipModel</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="SIDFilter">
+							<string key="name">SIDFilter</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="SIDSamplingMethod">
+							<string key="name">SIDSamplingMethod</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="SIDUseReSID">
+							<string key="name">SIDUseReSID</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cartridgeEject">
+							<string key="name">cartridgeEject</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cartridgeEjectText">
+							<string key="name">cartridgeEjectText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cartridgeIcon">
+							<string key="name">cartridgeIcon</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cartridgeText">
+							<string key="name">cartridgeText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cartridgeText2">
+							<string key="name">cartridgeText2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="diskEject">
+							<string key="name">diskEject</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="diskEjectText">
+							<string key="name">diskEjectText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="diskIcon">
+							<string key="name">diskIcon</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="diskText">
+							<string key="name">diskText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="diskText2">
+							<string key="name">diskText2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="flag">
+							<string key="name">flag</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="machineType">
+							<string key="name">machineType</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="systemText">
+							<string key="name">systemText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="systemText2">
+							<string key="name">systemText2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="warpLoad">
+							<string key="name">warpLoad</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="warpText">
+							<string key="name">warpText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="writeProtected">
+							<string key="name">writeProtected</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/HardwareDialog.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">HardwareDialog</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="SIDChipModelAction:">id</string>
+						<string key="SIDFilterAction:">id</string>
+						<string key="SIDReSIDAction:">id</string>
+						<string key="SIDSamplingMethodAction:">id</string>
+						<string key="ejectCartridgeAction:">id</string>
+						<string key="ejectDiskAction:">id</string>
+						<string key="factorySettingsAction:">id</string>
+						<string key="setNtscAction:">id</string>
+						<string key="setPalAction:">id</string>
+						<string key="useAsDefaultAction:">id</string>
+						<string key="warpLoadAction:">id</string>
+						<string key="writeProtectionAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="SIDChipModelAction:">
+							<string key="name">SIDChipModelAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="SIDFilterAction:">
+							<string key="name">SIDFilterAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="SIDReSIDAction:">
+							<string key="name">SIDReSIDAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="SIDSamplingMethodAction:">
+							<string key="name">SIDSamplingMethodAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ejectCartridgeAction:">
+							<string key="name">ejectCartridgeAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ejectDiskAction:">
+							<string key="name">ejectDiskAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="factorySettingsAction:">
+							<string key="name">factorySettingsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setNtscAction:">
+							<string key="name">setNtscAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setPalAction:">
+							<string key="name">setPalAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="useAsDefaultAction:">
+							<string key="name">useAsDefaultAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="warpLoadAction:">
+							<string key="name">warpLoadAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="writeProtectionAction:">
+							<string key="name">writeProtectionAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/HardwareDialog.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MemTableView</string>
+					<string key="superclassName">NSTableView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MemTableView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MountDialog</string>
+					<string key="superclassName">NSWindow</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="loadOptionsAction:">id</string>
+						<string key="writeProtectAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="loadOptionsAction:">
+							<string key="name">loadOptionsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="writeProtectAction:">
+							<string key="name">writeProtectAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="CancelButton">NSButton</string>
+						<string key="OKButton">NSButton</string>
+						<string key="directory">NSTableView</string>
+						<string key="diskIcon">NSImageView</string>
+						<string key="diskIconFrame">NSBox</string>
+						<string key="headerText">NSTextField</string>
+						<string key="loadOptions">NSPopUpButton</string>
+						<string key="warningText">NSTextField</string>
+						<string key="writeProtect">NSButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="CancelButton">
+							<string key="name">CancelButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="OKButton">
+							<string key="name">OKButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="directory">
+							<string key="name">directory</string>
+							<string key="candidateClassName">NSTableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="diskIcon">
+							<string key="name">diskIcon</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="diskIconFrame">
+							<string key="name">diskIconFrame</string>
+							<string key="candidateClassName">NSBox</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="headerText">
+							<string key="name">headerText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="loadOptions">
+							<string key="name">loadOptions</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="warningText">
+							<string key="name">warningText</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="writeProtect">
+							<string key="name">writeProtect</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MountDialog.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MountDialog</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="loadOptionsAction:">id</string>
+						<string key="writeProtectAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="loadOptionsAction:">
+							<string key="name">loadOptionsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="writeProtectAction:">
+							<string key="name">writeProtectAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MountDialog.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<string key="superclassName">NSWindowController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cancelHardwareDialog:">id</string>
+						<string key="cancelMountDialog:">id</string>
+						<string key="cancelPropertiesDialog:">id</string>
+						<string key="cancelRomDialog:">id</string>
+						<string key="cartridgeEjectAction:">id</string>
+						<string key="driveAction:">id</string>
+						<string key="ejectAction:">id</string>
+						<string key="endMountDialog:">id</string>
+						<string key="warpAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="cancelHardwareDialog:">
+							<string key="name">cancelHardwareDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cancelMountDialog:">
+							<string key="name">cancelMountDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cancelPropertiesDialog:">
+							<string key="name">cancelPropertiesDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cancelRomDialog:">
+							<string key="name">cancelRomDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cartridgeEjectAction:">
+							<string key="name">cartridgeEjectAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="driveAction:">
+							<string key="name">driveAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ejectAction:">
+							<string key="name">ejectAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="endMountDialog:">
+							<string key="name">endMountDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="warpAction:">
+							<string key="name">warpAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="B">NSButton</string>
+						<string key="C">NSButton</string>
+						<string key="D">NSButton</string>
+						<string key="I">NSButton</string>
+						<string key="N">NSButton</string>
+						<string key="V">NSButton</string>
+						<string key="VicCharacterMemory">NSPopUpButton</string>
+						<string key="VicDX">NSTextField</string>
+						<string key="VicDXStepper">NSStepper</string>
+						<string key="VicDY">NSTextField</string>
+						<string key="VicDYStepper">NSStepper</string>
+						<string key="VicEnableOpenGL">NSButton</string>
+						<string key="VicEnableRasterInterrupt">NSButton</string>
+						<string key="VicMemoryBank">NSPopUpButton</string>
+						<string key="VicRasterInterrupt">NSTextField</string>
+						<string key="VicRasterline">NSTextField</string>
+						<string key="VicScreenGeometry">NSPopUpButton</string>
+						<string key="VicScreenMemory">NSPopUpButton</string>
+						<string key="VicSpriteActive1">NSButton</string>
+						<string key="VicSpriteActive2">NSButton</string>
+						<string key="VicSpriteActive3">NSButton</string>
+						<string key="VicSpriteActive4">NSButton</string>
+						<string key="VicSpriteActive5">NSButton</string>
+						<string key="VicSpriteActive6">NSButton</string>
+						<string key="VicSpriteActive7">NSButton</string>
+						<string key="VicSpriteActive8">NSButton</string>
+						<string key="VicSpriteBackgroundCollision">NSButton</string>
+						<string key="VicSpriteCol1">NSButton</string>
+						<string key="VicSpriteCol2">NSButton</string>
+						<string key="VicSpriteCol3">NSButton</string>
+						<string key="VicSpriteCol4">NSButton</string>
+						<string key="VicSpriteCol5">NSButton</string>
+						<string key="VicSpriteCol6">NSButton</string>
+						<string key="VicSpriteCol7">NSButton</string>
+						<string key="VicSpriteCol8">NSButton</string>
+						<string key="VicSpriteColor1">NSColorWell</string>
+						<string key="VicSpriteColor2">NSColorWell</string>
+						<string key="VicSpriteColor3">NSColorWell</string>
+						<string key="VicSpriteColor4">NSColorWell</string>
+						<string key="VicSpriteColor5">NSColorWell</string>
+						<string key="VicSpriteColor6">NSColorWell</string>
+						<string key="VicSpriteColor7">NSColorWell</string>
+						<string key="VicSpriteColor8">NSColorWell</string>
+						<string key="VicSpriteMulticolor1">NSButton</string>
+						<string key="VicSpriteMulticolor2">NSButton</string>
+						<string key="VicSpriteMulticolor3">NSButton</string>
+						<string key="VicSpriteMulticolor4">NSButton</string>
+						<string key="VicSpriteMulticolor5">NSButton</string>
+						<string key="VicSpriteMulticolor6">NSButton</string>
+						<string key="VicSpriteMulticolor7">NSButton</string>
+						<string key="VicSpriteMulticolor8">NSButton</string>
+						<string key="VicSpriteSpriteCollision">NSButton</string>
+						<string key="VicSpriteStretchX1">NSButton</string>
+						<string key="VicSpriteStretchX2">NSButton</string>
+						<string key="VicSpriteStretchX3">NSButton</string>
+						<string key="VicSpriteStretchX4">NSButton</string>
+						<string key="VicSpriteStretchX5">NSButton</string>
+						<string key="VicSpriteStretchX6">NSButton</string>
+						<string key="VicSpriteStretchX7">NSButton</string>
+						<string key="VicSpriteStretchX8">NSButton</string>
+						<string key="VicSpriteStretchY1">NSButton</string>
+						<string key="VicSpriteStretchY2">NSButton</string>
+						<string key="VicSpriteStretchY3">NSButton</string>
+						<string key="VicSpriteStretchY4">NSButton</string>
+						<string key="VicSpriteStretchY5">NSButton</string>
+						<string key="VicSpriteStretchY6">NSButton</string>
+						<string key="VicSpriteStretchY7">NSButton</string>
+						<string key="VicSpriteStretchY8">NSButton</string>
+						<string key="VicSpriteX1">NSTextField</string>
+						<string key="VicSpriteX2">NSTextField</string>
+						<string key="VicSpriteX3">NSTextField</string>
+						<string key="VicSpriteX4">NSTextField</string>
+						<string key="VicSpriteX5">NSTextField</string>
+						<string key="VicSpriteX6">NSTextField</string>
+						<string key="VicSpriteX7">NSTextField</string>
+						<string key="VicSpriteX8">NSTextField</string>
+						<string key="VicSpriteY1">NSTextField</string>
+						<string key="VicSpriteY2">NSTextField</string>
+						<string key="VicSpriteY3">NSTextField</string>
+						<string key="VicSpriteY4">NSTextField</string>
+						<string key="VicSpriteY5">NSTextField</string>
+						<string key="VicSpriteY6">NSTextField</string>
+						<string key="VicSpriteY7">NSTextField</string>
+						<string key="VicSpriteY8">NSTextField</string>
+						<string key="VicVideoMode">NSPopUpButton</string>
+						<string key="Z">NSButton</string>
+						<string key="a">NSTextField</string>
+						<string key="addr_search">NSSearchField</string>
+						<string key="alarm1Hours">NSTextField</string>
+						<string key="alarm1Minutes">NSTextField</string>
+						<string key="alarm1Seconds">NSTextField</string>
+						<string key="alarm1Tenth">NSTextField</string>
+						<string key="alarm2Hours">NSTextField</string>
+						<string key="alarm2Minutes">NSTextField</string>
+						<string key="alarm2Seconds">NSTextField</string>
+						<string key="alarm2Tenth">NSTextField</string>
+						<string key="breakpoint">NSTextField</string>
+						<string key="c64">C64Proxy</string>
+						<string key="cartridgeEject">NSButton</string>
+						<string key="cartridgeIcon">NSButton</string>
+						<string key="cheatboxIcon">NSToolbarItem</string>
+						<string key="cheatboxImageBrowserView">CheatboxImageBrowserView</string>
+						<string key="cheatboxPanel">NSDrawer</string>
+						<string key="cia1CountUnderflowsA">NSButton</string>
+						<string key="cia1CountUnderflowsB">NSButton</string>
+						<string key="cia1DataPortA">NSTextField</string>
+						<string key="cia1DataPortB">NSTextField</string>
+						<string key="cia1DataPortDirectionA">NSTextField</string>
+						<string key="cia1DataPortDirectionB">NSTextField</string>
+						<string key="cia1InterruptEnableA">NSButton</string>
+						<string key="cia1InterruptEnableB">NSButton</string>
+						<string key="cia1LatchedTimerA">NSTextField</string>
+						<string key="cia1LatchedTimerB">NSTextField</string>
+						<string key="cia1OneShotA">NSButton</string>
+						<string key="cia1OneShotB">NSButton</string>
+						<string key="cia1RunningA">NSButton</string>
+						<string key="cia1RunningB">NSButton</string>
+						<string key="cia1SignalPendingA">NSButton</string>
+						<string key="cia1SignalPendingB">NSButton</string>
+						<string key="cia1TimerA">NSTextField</string>
+						<string key="cia1TimerB">NSTextField</string>
+						<string key="cia2CountUnderflowsA">NSButton</string>
+						<string key="cia2CountUnderflowsB">NSButton</string>
+						<string key="cia2DataPortA">NSTextField</string>
+						<string key="cia2DataPortB">NSTextField</string>
+						<string key="cia2DataPortDirectionA">NSTextField</string>
+						<string key="cia2DataPortDirectionB">NSTextField</string>
+						<string key="cia2InterruptEnableA">NSButton</string>
+						<string key="cia2InterruptEnableB">NSButton</string>
+						<string key="cia2LatchedTimerA">NSTextField</string>
+						<string key="cia2LatchedTimerB">NSTextField</string>
+						<string key="cia2OneShotA">NSButton</string>
+						<string key="cia2OneShotB">NSButton</string>
+						<string key="cia2RunningA">NSButton</string>
+						<string key="cia2RunningB">NSButton</string>
+						<string key="cia2SignalPendingA">NSButton</string>
+						<string key="cia2SignalPendingB">NSButton</string>
+						<string key="cia2TimerA">NSTextField</string>
+						<string key="cia2TimerB">NSTextField</string>
+						<string key="clockSpeed">NSTextField</string>
+						<string key="clockSpeedBar">NSLevelIndicator</string>
+						<string key="cpuTableView">CpuTableView</string>
+						<string key="debugPanel">NSDrawer</string>
+						<string key="dezHexSelector">NSMatrix</string>
+						<string key="drive">NSButton</string>
+						<string key="eject">NSButton</string>
+						<string key="greenLED">NSButton</string>
+						<string key="hardwareDialog">HardwareDialog</string>
+						<string key="info">NSTextField</string>
+						<string key="inspectIcon">NSToolbarItem</string>
+						<string key="ioSource">NSButtonCell</string>
+						<string key="joystickPortA">NSPopUpButton</string>
+						<string key="joystickPortB">NSPopUpButton</string>
+						<string key="memTableView">MemTableView</string>
+						<string key="mountDialog">MountDialog</string>
+						<string key="pc">NSTextField</string>
+						<string key="preferencesIcon">NSToolbarItem</string>
+						<string key="propertiesDialog">PropertiesDialog</string>
+						<string key="ramSource">NSButtonCell</string>
+						<string key="redLED">NSButton</string>
+						<string key="romDialog">RomDialog</string>
+						<string key="romSource">NSButtonCell</string>
+						<string key="screen">MyOpenGLView</string>
+						<string key="sp">NSTextField</string>
+						<string key="stepIntoButton">NSButton</string>
+						<string key="stepOutButton">NSButton</string>
+						<string key="stepOverButton">NSButton</string>
+						<string key="stopAndGoButton">NSButton</string>
+						<string key="tod1Hours">NSTextField</string>
+						<string key="tod1InterruptEnabled">NSButton</string>
+						<string key="tod1Minutes">NSTextField</string>
+						<string key="tod1Seconds">NSTextField</string>
+						<string key="tod1Tenth">NSTextField</string>
+						<string key="tod2Hours">NSTextField</string>
+						<string key="tod2InterruptEnabled">NSButton</string>
+						<string key="tod2Minutes">NSTextField</string>
+						<string key="tod2Seconds">NSTextField</string>
+						<string key="tod2Tenth">NSTextField</string>
+						<string key="warpMode">NSButton</string>
+						<string key="x">NSTextField</string>
+						<string key="y">NSTextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="B">
+							<string key="name">B</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="C">
+							<string key="name">C</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="D">
+							<string key="name">D</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="I">
+							<string key="name">I</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="N">
+							<string key="name">N</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="V">
+							<string key="name">V</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicCharacterMemory">
+							<string key="name">VicCharacterMemory</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicDX">
+							<string key="name">VicDX</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicDXStepper">
+							<string key="name">VicDXStepper</string>
+							<string key="candidateClassName">NSStepper</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicDY">
+							<string key="name">VicDY</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicDYStepper">
+							<string key="name">VicDYStepper</string>
+							<string key="candidateClassName">NSStepper</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicEnableOpenGL">
+							<string key="name">VicEnableOpenGL</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicEnableRasterInterrupt">
+							<string key="name">VicEnableRasterInterrupt</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicMemoryBank">
+							<string key="name">VicMemoryBank</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicRasterInterrupt">
+							<string key="name">VicRasterInterrupt</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicRasterline">
+							<string key="name">VicRasterline</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicScreenGeometry">
+							<string key="name">VicScreenGeometry</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicScreenMemory">
+							<string key="name">VicScreenMemory</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteActive1">
+							<string key="name">VicSpriteActive1</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteActive2">
+							<string key="name">VicSpriteActive2</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteActive3">
+							<string key="name">VicSpriteActive3</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteActive4">
+							<string key="name">VicSpriteActive4</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteActive5">
+							<string key="name">VicSpriteActive5</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteActive6">
+							<string key="name">VicSpriteActive6</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteActive7">
+							<string key="name">VicSpriteActive7</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteActive8">
+							<string key="name">VicSpriteActive8</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteBackgroundCollision">
+							<string key="name">VicSpriteBackgroundCollision</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteCol1">
+							<string key="name">VicSpriteCol1</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteCol2">
+							<string key="name">VicSpriteCol2</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteCol3">
+							<string key="name">VicSpriteCol3</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteCol4">
+							<string key="name">VicSpriteCol4</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteCol5">
+							<string key="name">VicSpriteCol5</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteCol6">
+							<string key="name">VicSpriteCol6</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteCol7">
+							<string key="name">VicSpriteCol7</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteCol8">
+							<string key="name">VicSpriteCol8</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteColor1">
+							<string key="name">VicSpriteColor1</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteColor2">
+							<string key="name">VicSpriteColor2</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteColor3">
+							<string key="name">VicSpriteColor3</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteColor4">
+							<string key="name">VicSpriteColor4</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteColor5">
+							<string key="name">VicSpriteColor5</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteColor6">
+							<string key="name">VicSpriteColor6</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteColor7">
+							<string key="name">VicSpriteColor7</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteColor8">
+							<string key="name">VicSpriteColor8</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteMulticolor1">
+							<string key="name">VicSpriteMulticolor1</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteMulticolor2">
+							<string key="name">VicSpriteMulticolor2</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteMulticolor3">
+							<string key="name">VicSpriteMulticolor3</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteMulticolor4">
+							<string key="name">VicSpriteMulticolor4</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteMulticolor5">
+							<string key="name">VicSpriteMulticolor5</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteMulticolor6">
+							<string key="name">VicSpriteMulticolor6</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteMulticolor7">
+							<string key="name">VicSpriteMulticolor7</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteMulticolor8">
+							<string key="name">VicSpriteMulticolor8</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteSpriteCollision">
+							<string key="name">VicSpriteSpriteCollision</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchX1">
+							<string key="name">VicSpriteStretchX1</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchX2">
+							<string key="name">VicSpriteStretchX2</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchX3">
+							<string key="name">VicSpriteStretchX3</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchX4">
+							<string key="name">VicSpriteStretchX4</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchX5">
+							<string key="name">VicSpriteStretchX5</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchX6">
+							<string key="name">VicSpriteStretchX6</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchX7">
+							<string key="name">VicSpriteStretchX7</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchX8">
+							<string key="name">VicSpriteStretchX8</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchY1">
+							<string key="name">VicSpriteStretchY1</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchY2">
+							<string key="name">VicSpriteStretchY2</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchY3">
+							<string key="name">VicSpriteStretchY3</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchY4">
+							<string key="name">VicSpriteStretchY4</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchY5">
+							<string key="name">VicSpriteStretchY5</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchY6">
+							<string key="name">VicSpriteStretchY6</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchY7">
+							<string key="name">VicSpriteStretchY7</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteStretchY8">
+							<string key="name">VicSpriteStretchY8</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteX1">
+							<string key="name">VicSpriteX1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteX2">
+							<string key="name">VicSpriteX2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteX3">
+							<string key="name">VicSpriteX3</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteX4">
+							<string key="name">VicSpriteX4</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteX5">
+							<string key="name">VicSpriteX5</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteX6">
+							<string key="name">VicSpriteX6</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteX7">
+							<string key="name">VicSpriteX7</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteX8">
+							<string key="name">VicSpriteX8</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteY1">
+							<string key="name">VicSpriteY1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteY2">
+							<string key="name">VicSpriteY2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteY3">
+							<string key="name">VicSpriteY3</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteY4">
+							<string key="name">VicSpriteY4</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteY5">
+							<string key="name">VicSpriteY5</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteY6">
+							<string key="name">VicSpriteY6</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteY7">
+							<string key="name">VicSpriteY7</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicSpriteY8">
+							<string key="name">VicSpriteY8</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="VicVideoMode">
+							<string key="name">VicVideoMode</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="Z">
+							<string key="name">Z</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="a">
+							<string key="name">a</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="addr_search">
+							<string key="name">addr_search</string>
+							<string key="candidateClassName">NSSearchField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="alarm1Hours">
+							<string key="name">alarm1Hours</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="alarm1Minutes">
+							<string key="name">alarm1Minutes</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="alarm1Seconds">
+							<string key="name">alarm1Seconds</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="alarm1Tenth">
+							<string key="name">alarm1Tenth</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="alarm2Hours">
+							<string key="name">alarm2Hours</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="alarm2Minutes">
+							<string key="name">alarm2Minutes</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="alarm2Seconds">
+							<string key="name">alarm2Seconds</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="alarm2Tenth">
+							<string key="name">alarm2Tenth</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="breakpoint">
+							<string key="name">breakpoint</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="c64">
+							<string key="name">c64</string>
+							<string key="candidateClassName">C64Proxy</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cartridgeEject">
+							<string key="name">cartridgeEject</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cartridgeIcon">
+							<string key="name">cartridgeIcon</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cheatboxIcon">
+							<string key="name">cheatboxIcon</string>
+							<string key="candidateClassName">NSToolbarItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cheatboxImageBrowserView">
+							<string key="name">cheatboxImageBrowserView</string>
+							<string key="candidateClassName">CheatboxImageBrowserView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cheatboxPanel">
+							<string key="name">cheatboxPanel</string>
+							<string key="candidateClassName">NSDrawer</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1CountUnderflowsA">
+							<string key="name">cia1CountUnderflowsA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1CountUnderflowsB">
+							<string key="name">cia1CountUnderflowsB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1DataPortA">
+							<string key="name">cia1DataPortA</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1DataPortB">
+							<string key="name">cia1DataPortB</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1DataPortDirectionA">
+							<string key="name">cia1DataPortDirectionA</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1DataPortDirectionB">
+							<string key="name">cia1DataPortDirectionB</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1InterruptEnableA">
+							<string key="name">cia1InterruptEnableA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1InterruptEnableB">
+							<string key="name">cia1InterruptEnableB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1LatchedTimerA">
+							<string key="name">cia1LatchedTimerA</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1LatchedTimerB">
+							<string key="name">cia1LatchedTimerB</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1OneShotA">
+							<string key="name">cia1OneShotA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1OneShotB">
+							<string key="name">cia1OneShotB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1RunningA">
+							<string key="name">cia1RunningA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1RunningB">
+							<string key="name">cia1RunningB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1SignalPendingA">
+							<string key="name">cia1SignalPendingA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1SignalPendingB">
+							<string key="name">cia1SignalPendingB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1TimerA">
+							<string key="name">cia1TimerA</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia1TimerB">
+							<string key="name">cia1TimerB</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2CountUnderflowsA">
+							<string key="name">cia2CountUnderflowsA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2CountUnderflowsB">
+							<string key="name">cia2CountUnderflowsB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2DataPortA">
+							<string key="name">cia2DataPortA</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2DataPortB">
+							<string key="name">cia2DataPortB</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2DataPortDirectionA">
+							<string key="name">cia2DataPortDirectionA</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2DataPortDirectionB">
+							<string key="name">cia2DataPortDirectionB</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2InterruptEnableA">
+							<string key="name">cia2InterruptEnableA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2InterruptEnableB">
+							<string key="name">cia2InterruptEnableB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2LatchedTimerA">
+							<string key="name">cia2LatchedTimerA</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2LatchedTimerB">
+							<string key="name">cia2LatchedTimerB</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2OneShotA">
+							<string key="name">cia2OneShotA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2OneShotB">
+							<string key="name">cia2OneShotB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2RunningA">
+							<string key="name">cia2RunningA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2RunningB">
+							<string key="name">cia2RunningB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2SignalPendingA">
+							<string key="name">cia2SignalPendingA</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2SignalPendingB">
+							<string key="name">cia2SignalPendingB</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2TimerA">
+							<string key="name">cia2TimerA</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cia2TimerB">
+							<string key="name">cia2TimerB</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="clockSpeed">
+							<string key="name">clockSpeed</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="clockSpeedBar">
+							<string key="name">clockSpeedBar</string>
+							<string key="candidateClassName">NSLevelIndicator</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cpuTableView">
+							<string key="name">cpuTableView</string>
+							<string key="candidateClassName">CpuTableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="debugPanel">
+							<string key="name">debugPanel</string>
+							<string key="candidateClassName">NSDrawer</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="dezHexSelector">
+							<string key="name">dezHexSelector</string>
+							<string key="candidateClassName">NSMatrix</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="drive">
+							<string key="name">drive</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="eject">
+							<string key="name">eject</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="greenLED">
+							<string key="name">greenLED</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="hardwareDialog">
+							<string key="name">hardwareDialog</string>
+							<string key="candidateClassName">HardwareDialog</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="info">
+							<string key="name">info</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="inspectIcon">
+							<string key="name">inspectIcon</string>
+							<string key="candidateClassName">NSToolbarItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="ioSource">
+							<string key="name">ioSource</string>
+							<string key="candidateClassName">NSButtonCell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="joystickPortA">
+							<string key="name">joystickPortA</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="joystickPortB">
+							<string key="name">joystickPortB</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="memTableView">
+							<string key="name">memTableView</string>
+							<string key="candidateClassName">MemTableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="mountDialog">
+							<string key="name">mountDialog</string>
+							<string key="candidateClassName">MountDialog</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="pc">
+							<string key="name">pc</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="preferencesIcon">
+							<string key="name">preferencesIcon</string>
+							<string key="candidateClassName">NSToolbarItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="propertiesDialog">
+							<string key="name">propertiesDialog</string>
+							<string key="candidateClassName">PropertiesDialog</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="ramSource">
+							<string key="name">ramSource</string>
+							<string key="candidateClassName">NSButtonCell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="redLED">
+							<string key="name">redLED</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="romDialog">
+							<string key="name">romDialog</string>
+							<string key="candidateClassName">RomDialog</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="romSource">
+							<string key="name">romSource</string>
+							<string key="candidateClassName">NSButtonCell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="screen">
+							<string key="name">screen</string>
+							<string key="candidateClassName">MyOpenGLView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sp">
+							<string key="name">sp</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="stepIntoButton">
+							<string key="name">stepIntoButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="stepOutButton">
+							<string key="name">stepOutButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="stepOverButton">
+							<string key="name">stepOverButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="stopAndGoButton">
+							<string key="name">stopAndGoButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod1Hours">
+							<string key="name">tod1Hours</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod1InterruptEnabled">
+							<string key="name">tod1InterruptEnabled</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod1Minutes">
+							<string key="name">tod1Minutes</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod1Seconds">
+							<string key="name">tod1Seconds</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod1Tenth">
+							<string key="name">tod1Tenth</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod2Hours">
+							<string key="name">tod2Hours</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod2InterruptEnabled">
+							<string key="name">tod2InterruptEnabled</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod2Minutes">
+							<string key="name">tod2Minutes</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod2Seconds">
+							<string key="name">tod2Seconds</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tod2Tenth">
+							<string key="name">tod2Tenth</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="warpMode">
+							<string key="name">warpMode</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="x">
+							<string key="name">x</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="y">
+							<string key="name">y</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cancelHardwareDialog:">id</string>
+						<string key="cancelMountDialog:">id</string>
+						<string key="cancelPropertiesDialog:">id</string>
+						<string key="cancelRomDialog:">id</string>
+						<string key="cartridgeEjectAction:">id</string>
+						<string key="driveAction:">id</string>
+						<string key="ejectAction:">id</string>
+						<string key="endMountDialog:">id</string>
+						<string key="warpAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="cancelHardwareDialog:">
+							<string key="name">cancelHardwareDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cancelMountDialog:">
+							<string key="name">cancelMountDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cancelPropertiesDialog:">
+							<string key="name">cancelPropertiesDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cancelRomDialog:">
+							<string key="name">cancelRomDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cartridgeEjectAction:">
+							<string key="name">cartridgeEjectAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="driveAction:">
+							<string key="name">driveAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ejectAction:">
+							<string key="name">ejectAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="endMountDialog:">
+							<string key="name">endMountDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="warpAction:">
+							<string key="name">warpAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyController.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="alarm1HoursAction:">id</string>
+						<string key="alarm1MinutesAction:">id</string>
+						<string key="alarm1SecondsAction:">id</string>
+						<string key="alarm1TenthAction:">id</string>
+						<string key="alarm2HoursAction:">id</string>
+						<string key="alarm2MinutesAction:">id</string>
+						<string key="alarm2SecondsAction:">id</string>
+						<string key="alarm2TenthAction:">id</string>
+						<string key="cia1CountUnterflowsAAction:">id</string>
+						<string key="cia1CountUnterflowsBAction:">id</string>
+						<string key="cia1DataPortAAction:">id</string>
+						<string key="cia1DataPortBAction:">id</string>
+						<string key="cia1DataPortDirectionAAction:">id</string>
+						<string key="cia1DataPortDirectionBAction:">id</string>
+						<string key="cia1InterruptEnableAAction:">id</string>
+						<string key="cia1InterruptEnableBAction:">id</string>
+						<string key="cia1LatchedTimerAAction:">id</string>
+						<string key="cia1LatchedTimerBAction:">id</string>
+						<string key="cia1OneShotAAction:">id</string>
+						<string key="cia1OneShotBAction:">id</string>
+						<string key="cia1RunningAAction:">id</string>
+						<string key="cia1RunningBAction:">id</string>
+						<string key="cia1SignalPendingAAction:">id</string>
+						<string key="cia1SignalPendingBAction:">id</string>
+						<string key="cia1TimerAAction:">id</string>
+						<string key="cia1TimerBAction:">id</string>
+						<string key="cia2CountUnterflowsAAction:">id</string>
+						<string key="cia2CountUnterflowsBAction:">id</string>
+						<string key="cia2DataPortAAction:">id</string>
+						<string key="cia2DataPortBAction:">id</string>
+						<string key="cia2DataPortDirectionAAction:">id</string>
+						<string key="cia2DataPortDirectionBAction:">id</string>
+						<string key="cia2InterruptEnableAAction:">id</string>
+						<string key="cia2InterruptEnableBAction:">id</string>
+						<string key="cia2LatchedTimerAAction:">id</string>
+						<string key="cia2LatchedTimerBAction:">id</string>
+						<string key="cia2OneShotAAction:">id</string>
+						<string key="cia2OneShotBAction:">id</string>
+						<string key="cia2RunningAAction:">id</string>
+						<string key="cia2RunningBAction:">id</string>
+						<string key="cia2SignalPendingAAction:">id</string>
+						<string key="cia2SignalPendingBAction:">id</string>
+						<string key="cia2TimerAAction:">id</string>
+						<string key="cia2TimerBAction:">id</string>
+						<string key="tod1HoursAction:">id</string>
+						<string key="tod1InterruptEnabledAction:">id</string>
+						<string key="tod1MinutesAction:">id</string>
+						<string key="tod1SecondsAction:">id</string>
+						<string key="tod1TenthAction:">id</string>
+						<string key="tod2HoursAction:">id</string>
+						<string key="tod2InterruptEnabledAction:">id</string>
+						<string key="tod2MinutesAction:">id</string>
+						<string key="tod2SecondsAction:">id</string>
+						<string key="tod2TenthAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="alarm1HoursAction:">
+							<string key="name">alarm1HoursAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm1MinutesAction:">
+							<string key="name">alarm1MinutesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm1SecondsAction:">
+							<string key="name">alarm1SecondsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm1TenthAction:">
+							<string key="name">alarm1TenthAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm2HoursAction:">
+							<string key="name">alarm2HoursAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm2MinutesAction:">
+							<string key="name">alarm2MinutesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm2SecondsAction:">
+							<string key="name">alarm2SecondsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm2TenthAction:">
+							<string key="name">alarm2TenthAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1CountUnterflowsAAction:">
+							<string key="name">cia1CountUnterflowsAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1CountUnterflowsBAction:">
+							<string key="name">cia1CountUnterflowsBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1DataPortAAction:">
+							<string key="name">cia1DataPortAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1DataPortBAction:">
+							<string key="name">cia1DataPortBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1DataPortDirectionAAction:">
+							<string key="name">cia1DataPortDirectionAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1DataPortDirectionBAction:">
+							<string key="name">cia1DataPortDirectionBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1InterruptEnableAAction:">
+							<string key="name">cia1InterruptEnableAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1InterruptEnableBAction:">
+							<string key="name">cia1InterruptEnableBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1LatchedTimerAAction:">
+							<string key="name">cia1LatchedTimerAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1LatchedTimerBAction:">
+							<string key="name">cia1LatchedTimerBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1OneShotAAction:">
+							<string key="name">cia1OneShotAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1OneShotBAction:">
+							<string key="name">cia1OneShotBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1RunningAAction:">
+							<string key="name">cia1RunningAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1RunningBAction:">
+							<string key="name">cia1RunningBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1SignalPendingAAction:">
+							<string key="name">cia1SignalPendingAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1SignalPendingBAction:">
+							<string key="name">cia1SignalPendingBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1TimerAAction:">
+							<string key="name">cia1TimerAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1TimerBAction:">
+							<string key="name">cia1TimerBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2CountUnterflowsAAction:">
+							<string key="name">cia2CountUnterflowsAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2CountUnterflowsBAction:">
+							<string key="name">cia2CountUnterflowsBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2DataPortAAction:">
+							<string key="name">cia2DataPortAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2DataPortBAction:">
+							<string key="name">cia2DataPortBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2DataPortDirectionAAction:">
+							<string key="name">cia2DataPortDirectionAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2DataPortDirectionBAction:">
+							<string key="name">cia2DataPortDirectionBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2InterruptEnableAAction:">
+							<string key="name">cia2InterruptEnableAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2InterruptEnableBAction:">
+							<string key="name">cia2InterruptEnableBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2LatchedTimerAAction:">
+							<string key="name">cia2LatchedTimerAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2LatchedTimerBAction:">
+							<string key="name">cia2LatchedTimerBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2OneShotAAction:">
+							<string key="name">cia2OneShotAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2OneShotBAction:">
+							<string key="name">cia2OneShotBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2RunningAAction:">
+							<string key="name">cia2RunningAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2RunningBAction:">
+							<string key="name">cia2RunningBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2SignalPendingAAction:">
+							<string key="name">cia2SignalPendingAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2SignalPendingBAction:">
+							<string key="name">cia2SignalPendingBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2TimerAAction:">
+							<string key="name">cia2TimerAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2TimerBAction:">
+							<string key="name">cia2TimerBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1HoursAction:">
+							<string key="name">tod1HoursAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1InterruptEnabledAction:">
+							<string key="name">tod1InterruptEnabledAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1MinutesAction:">
+							<string key="name">tod1MinutesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1SecondsAction:">
+							<string key="name">tod1SecondsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1TenthAction:">
+							<string key="name">tod1TenthAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2HoursAction:">
+							<string key="name">tod2HoursAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2InterruptEnabledAction:">
+							<string key="name">tod2InterruptEnabledAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2MinutesAction:">
+							<string key="name">tod2MinutesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2SecondsAction:">
+							<string key="name">tod2SecondsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2TenthAction:">
+							<string key="name">tod2TenthAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerCiaPanel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="alarm1HoursAction:">id</string>
+						<string key="alarm1MinutesAction:">id</string>
+						<string key="alarm1SecondsAction:">id</string>
+						<string key="alarm1TenthAction:">id</string>
+						<string key="alarm2HoursAction:">id</string>
+						<string key="alarm2MinutesAction:">id</string>
+						<string key="alarm2SecondsAction:">id</string>
+						<string key="alarm2TenthAction:">id</string>
+						<string key="cia1CountUnterflowsAAction:">id</string>
+						<string key="cia1CountUnterflowsBAction:">id</string>
+						<string key="cia1DataPortAAction:">id</string>
+						<string key="cia1DataPortBAction:">id</string>
+						<string key="cia1DataPortDirectionAAction:">id</string>
+						<string key="cia1DataPortDirectionBAction:">id</string>
+						<string key="cia1InterruptEnableAAction:">id</string>
+						<string key="cia1InterruptEnableBAction:">id</string>
+						<string key="cia1LatchedTimerAAction:">id</string>
+						<string key="cia1LatchedTimerBAction:">id</string>
+						<string key="cia1OneShotAAction:">id</string>
+						<string key="cia1OneShotBAction:">id</string>
+						<string key="cia1RunningAAction:">id</string>
+						<string key="cia1RunningBAction:">id</string>
+						<string key="cia1SignalPendingAAction:">id</string>
+						<string key="cia1SignalPendingBAction:">id</string>
+						<string key="cia1TimerAAction:">id</string>
+						<string key="cia1TimerBAction:">id</string>
+						<string key="cia2CountUnterflowsAAction:">id</string>
+						<string key="cia2CountUnterflowsBAction:">id</string>
+						<string key="cia2DataPortAAction:">id</string>
+						<string key="cia2DataPortBAction:">id</string>
+						<string key="cia2DataPortDirectionAAction:">id</string>
+						<string key="cia2DataPortDirectionBAction:">id</string>
+						<string key="cia2InterruptEnableAAction:">id</string>
+						<string key="cia2InterruptEnableBAction:">id</string>
+						<string key="cia2LatchedTimerAAction:">id</string>
+						<string key="cia2LatchedTimerBAction:">id</string>
+						<string key="cia2OneShotAAction:">id</string>
+						<string key="cia2OneShotBAction:">id</string>
+						<string key="cia2RunningAAction:">id</string>
+						<string key="cia2RunningBAction:">id</string>
+						<string key="cia2SignalPendingAAction:">id</string>
+						<string key="cia2SignalPendingBAction:">id</string>
+						<string key="cia2TimerAAction:">id</string>
+						<string key="cia2TimerBAction:">id</string>
+						<string key="tod1HoursAction:">id</string>
+						<string key="tod1InterruptEnabledAction:">id</string>
+						<string key="tod1MinutesAction:">id</string>
+						<string key="tod1SecondsAction:">id</string>
+						<string key="tod1TenthAction:">id</string>
+						<string key="tod2HoursAction:">id</string>
+						<string key="tod2InterruptEnabledAction:">id</string>
+						<string key="tod2MinutesAction:">id</string>
+						<string key="tod2SecondsAction:">id</string>
+						<string key="tod2TenthAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="alarm1HoursAction:">
+							<string key="name">alarm1HoursAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm1MinutesAction:">
+							<string key="name">alarm1MinutesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm1SecondsAction:">
+							<string key="name">alarm1SecondsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm1TenthAction:">
+							<string key="name">alarm1TenthAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm2HoursAction:">
+							<string key="name">alarm2HoursAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm2MinutesAction:">
+							<string key="name">alarm2MinutesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm2SecondsAction:">
+							<string key="name">alarm2SecondsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="alarm2TenthAction:">
+							<string key="name">alarm2TenthAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1CountUnterflowsAAction:">
+							<string key="name">cia1CountUnterflowsAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1CountUnterflowsBAction:">
+							<string key="name">cia1CountUnterflowsBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1DataPortAAction:">
+							<string key="name">cia1DataPortAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1DataPortBAction:">
+							<string key="name">cia1DataPortBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1DataPortDirectionAAction:">
+							<string key="name">cia1DataPortDirectionAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1DataPortDirectionBAction:">
+							<string key="name">cia1DataPortDirectionBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1InterruptEnableAAction:">
+							<string key="name">cia1InterruptEnableAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1InterruptEnableBAction:">
+							<string key="name">cia1InterruptEnableBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1LatchedTimerAAction:">
+							<string key="name">cia1LatchedTimerAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1LatchedTimerBAction:">
+							<string key="name">cia1LatchedTimerBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1OneShotAAction:">
+							<string key="name">cia1OneShotAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1OneShotBAction:">
+							<string key="name">cia1OneShotBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1RunningAAction:">
+							<string key="name">cia1RunningAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1RunningBAction:">
+							<string key="name">cia1RunningBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1SignalPendingAAction:">
+							<string key="name">cia1SignalPendingAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1SignalPendingBAction:">
+							<string key="name">cia1SignalPendingBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1TimerAAction:">
+							<string key="name">cia1TimerAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia1TimerBAction:">
+							<string key="name">cia1TimerBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2CountUnterflowsAAction:">
+							<string key="name">cia2CountUnterflowsAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2CountUnterflowsBAction:">
+							<string key="name">cia2CountUnterflowsBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2DataPortAAction:">
+							<string key="name">cia2DataPortAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2DataPortBAction:">
+							<string key="name">cia2DataPortBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2DataPortDirectionAAction:">
+							<string key="name">cia2DataPortDirectionAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2DataPortDirectionBAction:">
+							<string key="name">cia2DataPortDirectionBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2InterruptEnableAAction:">
+							<string key="name">cia2InterruptEnableAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2InterruptEnableBAction:">
+							<string key="name">cia2InterruptEnableBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2LatchedTimerAAction:">
+							<string key="name">cia2LatchedTimerAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2LatchedTimerBAction:">
+							<string key="name">cia2LatchedTimerBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2OneShotAAction:">
+							<string key="name">cia2OneShotAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2OneShotBAction:">
+							<string key="name">cia2OneShotBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2RunningAAction:">
+							<string key="name">cia2RunningAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2RunningBAction:">
+							<string key="name">cia2RunningBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2SignalPendingAAction:">
+							<string key="name">cia2SignalPendingAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2SignalPendingBAction:">
+							<string key="name">cia2SignalPendingBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2TimerAAction:">
+							<string key="name">cia2TimerAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cia2TimerBAction:">
+							<string key="name">cia2TimerBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1HoursAction:">
+							<string key="name">tod1HoursAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1InterruptEnabledAction:">
+							<string key="name">tod1InterruptEnabledAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1MinutesAction:">
+							<string key="name">tod1MinutesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1SecondsAction:">
+							<string key="name">tod1SecondsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod1TenthAction:">
+							<string key="name">tod1TenthAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2HoursAction:">
+							<string key="name">tod2HoursAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2InterruptEnabledAction:">
+							<string key="name">tod2InterruptEnabledAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2MinutesAction:">
+							<string key="name">tod2MinutesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2SecondsAction:">
+							<string key="name">tod2SecondsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="tod2TenthAction:">
+							<string key="name">tod2TenthAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerCiaPanel.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="BAction:">id</string>
+						<string key="CAction:">id</string>
+						<string key="DAction:">id</string>
+						<string key="IAction:">id</string>
+						<string key="NAction:">id</string>
+						<string key="VAction:">id</string>
+						<string key="ZAction:">id</string>
+						<string key="aAction:">id</string>
+						<string key="mhzAction:">id</string>
+						<string key="pcAction:">id</string>
+						<string key="setHardBreakpointAction:">id</string>
+						<string key="spAction:">id</string>
+						<string key="xAction:">id</string>
+						<string key="yAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="BAction:">
+							<string key="name">BAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="CAction:">
+							<string key="name">CAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="DAction:">
+							<string key="name">DAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="IAction:">
+							<string key="name">IAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="NAction:">
+							<string key="name">NAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="VAction:">
+							<string key="name">VAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ZAction:">
+							<string key="name">ZAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="aAction:">
+							<string key="name">aAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="mhzAction:">
+							<string key="name">mhzAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="pcAction:">
+							<string key="name">pcAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setHardBreakpointAction:">
+							<string key="name">setHardBreakpointAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="spAction:">
+							<string key="name">spAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="xAction:">
+							<string key="name">xAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="yAction:">
+							<string key="name">yAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerCpuPanel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="BAction:">id</string>
+						<string key="CAction:">id</string>
+						<string key="DAction:">id</string>
+						<string key="IAction:">id</string>
+						<string key="NAction:">id</string>
+						<string key="VAction:">id</string>
+						<string key="ZAction:">id</string>
+						<string key="aAction:">id</string>
+						<string key="mhzAction:">id</string>
+						<string key="pcAction:">id</string>
+						<string key="setHardBreakpointAction:">id</string>
+						<string key="spAction:">id</string>
+						<string key="xAction:">id</string>
+						<string key="yAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="BAction:">
+							<string key="name">BAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="CAction:">
+							<string key="name">CAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="DAction:">
+							<string key="name">DAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="IAction:">
+							<string key="name">IAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="NAction:">
+							<string key="name">NAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="VAction:">
+							<string key="name">VAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="ZAction:">
+							<string key="name">ZAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="aAction:">
+							<string key="name">aAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="mhzAction:">
+							<string key="name">mhzAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="pcAction:">
+							<string key="name">pcAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setHardBreakpointAction:">
+							<string key="name">setHardBreakpointAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="spAction:">
+							<string key="name">spAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="xAction:">
+							<string key="name">xAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="yAction:">
+							<string key="name">yAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerCpuPanel.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="continueAction:">id</string>
+						<string key="pauseAction:">id</string>
+						<string key="setDecimalAction:">id</string>
+						<string key="setHexadecimalAction:">id</string>
+						<string key="stepIntoAction:">id</string>
+						<string key="stepOutAction:">id</string>
+						<string key="stepOverAction:">id</string>
+						<string key="stopAndGoAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="continueAction:">
+							<string key="name">continueAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="pauseAction:">
+							<string key="name">pauseAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setDecimalAction:">
+							<string key="name">setDecimalAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setHexadecimalAction:">
+							<string key="name">setHexadecimalAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stepIntoAction:">
+							<string key="name">stepIntoAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stepOutAction:">
+							<string key="name">stepOutAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stepOverAction:">
+							<string key="name">stepOverAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stopAndGoAction:">
+							<string key="name">stopAndGoAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerDebugPanel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="continueAction:">id</string>
+						<string key="pauseAction:">id</string>
+						<string key="setDecimalAction:">id</string>
+						<string key="setHexadecimalAction:">id</string>
+						<string key="stepIntoAction:">id</string>
+						<string key="stepOutAction:">id</string>
+						<string key="stepOverAction:">id</string>
+						<string key="stopAndGoAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="continueAction:">
+							<string key="name">continueAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="pauseAction:">
+							<string key="name">pauseAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setDecimalAction:">
+							<string key="name">setDecimalAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setHexadecimalAction:">
+							<string key="name">setHexadecimalAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stepIntoAction:">
+							<string key="name">stepIntoAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stepOutAction:">
+							<string key="name">stepOutAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stepOverAction:">
+							<string key="name">stepOverAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stopAndGoAction:">
+							<string key="name">stopAndGoAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerDebugPanel.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="searchAction:">id</string>
+						<string key="setMemSourceToIO:">id</string>
+						<string key="setMemSourceToRAM:">id</string>
+						<string key="setMemSourceToROM:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="searchAction:">
+							<string key="name">searchAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setMemSourceToIO:">
+							<string key="name">setMemSourceToIO:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setMemSourceToRAM:">
+							<string key="name">setMemSourceToRAM:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setMemSourceToROM:">
+							<string key="name">setMemSourceToROM:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerMemoryPanel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="searchAction:">id</string>
+						<string key="setMemSourceToIO:">id</string>
+						<string key="setMemSourceToRAM:">id</string>
+						<string key="setMemSourceToROM:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="searchAction:">
+							<string key="name">searchAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setMemSourceToIO:">
+							<string key="name">setMemSourceToIO:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setMemSourceToRAM:">
+							<string key="name">setMemSourceToRAM:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setMemSourceToROM:">
+							<string key="name">setMemSourceToROM:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerMemoryPanel.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="ClearKeyAction:">id</string>
+						<string key="FormatDiskAction:">id</string>
+						<string key="HomeKeyAction:">id</string>
+						<string key="InsertKeyAction:">id</string>
+						<string key="LoadDirectoryAction:">id</string>
+						<string key="LoadFirstFileAction:">id</string>
+						<string key="commodoreKeyAction:">id</string>
+						<string key="dumpC64:">id</string>
+						<string key="dumpC64CIA1:">id</string>
+						<string key="dumpC64CIA2:">id</string>
+						<string key="dumpC64CPU:">id</string>
+						<string key="dumpC64ExpansionPort:">id</string>
+						<string key="dumpC64Joystick1:">id</string>
+						<string key="dumpC64Joystick2:">id</string>
+						<string key="dumpC64Memory:">id</string>
+						<string key="dumpC64SID:">id</string>
+						<string key="dumpC64VIC:">id</string>
+						<string key="dumpIEC:">id</string>
+						<string key="dumpKeyboard:">id</string>
+						<string key="dumpVC1541:">id</string>
+						<string key="dumpVC1541CPU:">id</string>
+						<string key="dumpVC1541Memory:">id</string>
+						<string key="dumpVC1541VIA1:">id</string>
+						<string key="dumpVC1541VIA2:">id</string>
+						<string key="exportDiskDialog:">id</string>
+						<string key="exportFileFromDiskDialog:">id</string>
+						<string key="hideSpritesAction:">id</string>
+						<string key="markDMALinesAction:">id</string>
+						<string key="markIRQLinesAction:">id</string>
+						<string key="resetAction:">id</string>
+						<string key="runstopAction:">id</string>
+						<string key="runstopRestoreAction:">id</string>
+						<string key="saveScreenshotDialog:">id</string>
+						<string key="traceC64CpuAction:">id</string>
+						<string key="traceIecAction:">id</string>
+						<string key="traceVC1541CpuAction:">id</string>
+						<string key="traceViaAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="ClearKeyAction:">
+							<string key="name">ClearKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="FormatDiskAction:">
+							<string key="name">FormatDiskAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="HomeKeyAction:">
+							<string key="name">HomeKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="InsertKeyAction:">
+							<string key="name">InsertKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="LoadDirectoryAction:">
+							<string key="name">LoadDirectoryAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="LoadFirstFileAction:">
+							<string key="name">LoadFirstFileAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="commodoreKeyAction:">
+							<string key="name">commodoreKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64:">
+							<string key="name">dumpC64:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64CIA1:">
+							<string key="name">dumpC64CIA1:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64CIA2:">
+							<string key="name">dumpC64CIA2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64CPU:">
+							<string key="name">dumpC64CPU:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64ExpansionPort:">
+							<string key="name">dumpC64ExpansionPort:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Joystick1:">
+							<string key="name">dumpC64Joystick1:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Joystick2:">
+							<string key="name">dumpC64Joystick2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Memory:">
+							<string key="name">dumpC64Memory:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64SID:">
+							<string key="name">dumpC64SID:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64VIC:">
+							<string key="name">dumpC64VIC:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpIEC:">
+							<string key="name">dumpIEC:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpKeyboard:">
+							<string key="name">dumpKeyboard:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541:">
+							<string key="name">dumpVC1541:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541CPU:">
+							<string key="name">dumpVC1541CPU:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541Memory:">
+							<string key="name">dumpVC1541Memory:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541VIA1:">
+							<string key="name">dumpVC1541VIA1:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541VIA2:">
+							<string key="name">dumpVC1541VIA2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="exportDiskDialog:">
+							<string key="name">exportDiskDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="exportFileFromDiskDialog:">
+							<string key="name">exportFileFromDiskDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="hideSpritesAction:">
+							<string key="name">hideSpritesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="markDMALinesAction:">
+							<string key="name">markDMALinesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="markIRQLinesAction:">
+							<string key="name">markIRQLinesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="resetAction:">
+							<string key="name">resetAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="runstopAction:">
+							<string key="name">runstopAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="runstopRestoreAction:">
+							<string key="name">runstopRestoreAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveScreenshotDialog:">
+							<string key="name">saveScreenshotDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="traceC64CpuAction:">
+							<string key="name">traceC64CpuAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="traceIecAction:">
+							<string key="name">traceIecAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="traceVC1541CpuAction:">
+							<string key="name">traceVC1541CpuAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="traceViaAction:">
+							<string key="name">traceViaAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerMenu.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="ClearKeyAction:">id</string>
+						<string key="FormatDiskAction:">id</string>
+						<string key="HomeKeyAction:">id</string>
+						<string key="InsertKeyAction:">id</string>
+						<string key="LoadDirectoryAction:">id</string>
+						<string key="LoadFirstFileAction:">id</string>
+						<string key="commodoreKeyAction:">id</string>
+						<string key="dumpC64:">id</string>
+						<string key="dumpC64CIA1:">id</string>
+						<string key="dumpC64CIA2:">id</string>
+						<string key="dumpC64CPU:">id</string>
+						<string key="dumpC64ExpansionPort:">id</string>
+						<string key="dumpC64Joystick1:">id</string>
+						<string key="dumpC64Joystick2:">id</string>
+						<string key="dumpC64Memory:">id</string>
+						<string key="dumpC64SID:">id</string>
+						<string key="dumpC64VIC:">id</string>
+						<string key="dumpIEC:">id</string>
+						<string key="dumpKeyboard:">id</string>
+						<string key="dumpVC1541:">id</string>
+						<string key="dumpVC1541CPU:">id</string>
+						<string key="dumpVC1541Memory:">id</string>
+						<string key="dumpVC1541VIA1:">id</string>
+						<string key="dumpVC1541VIA2:">id</string>
+						<string key="exportDiskDialog:">id</string>
+						<string key="exportFileFromDiskDialog:">id</string>
+						<string key="hideSpritesAction:">id</string>
+						<string key="markDMALinesAction:">id</string>
+						<string key="markIRQLinesAction:">id</string>
+						<string key="resetAction:">id</string>
+						<string key="runstopAction:">id</string>
+						<string key="runstopRestoreAction:">id</string>
+						<string key="saveScreenshotDialog:">id</string>
+						<string key="traceC64CpuAction:">id</string>
+						<string key="traceIecAction:">id</string>
+						<string key="traceVC1541CpuAction:">id</string>
+						<string key="traceViaAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="ClearKeyAction:">
+							<string key="name">ClearKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="FormatDiskAction:">
+							<string key="name">FormatDiskAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="HomeKeyAction:">
+							<string key="name">HomeKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="InsertKeyAction:">
+							<string key="name">InsertKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="LoadDirectoryAction:">
+							<string key="name">LoadDirectoryAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="LoadFirstFileAction:">
+							<string key="name">LoadFirstFileAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="commodoreKeyAction:">
+							<string key="name">commodoreKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64:">
+							<string key="name">dumpC64:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64CIA1:">
+							<string key="name">dumpC64CIA1:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64CIA2:">
+							<string key="name">dumpC64CIA2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64CPU:">
+							<string key="name">dumpC64CPU:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64ExpansionPort:">
+							<string key="name">dumpC64ExpansionPort:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Joystick1:">
+							<string key="name">dumpC64Joystick1:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Joystick2:">
+							<string key="name">dumpC64Joystick2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64Memory:">
+							<string key="name">dumpC64Memory:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64SID:">
+							<string key="name">dumpC64SID:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpC64VIC:">
+							<string key="name">dumpC64VIC:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpIEC:">
+							<string key="name">dumpIEC:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpKeyboard:">
+							<string key="name">dumpKeyboard:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541:">
+							<string key="name">dumpVC1541:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541CPU:">
+							<string key="name">dumpVC1541CPU:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541Memory:">
+							<string key="name">dumpVC1541Memory:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541VIA1:">
+							<string key="name">dumpVC1541VIA1:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="dumpVC1541VIA2:">
+							<string key="name">dumpVC1541VIA2:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="exportDiskDialog:">
+							<string key="name">exportDiskDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="exportFileFromDiskDialog:">
+							<string key="name">exportFileFromDiskDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="hideSpritesAction:">
+							<string key="name">hideSpritesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="markDMALinesAction:">
+							<string key="name">markDMALinesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="markIRQLinesAction:">
+							<string key="name">markIRQLinesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="resetAction:">
+							<string key="name">resetAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="runstopAction:">
+							<string key="name">runstopAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="runstopRestoreAction:">
+							<string key="name">runstopRestoreAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveScreenshotDialog:">
+							<string key="name">saveScreenshotDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="traceC64CpuAction:">
+							<string key="name">traceC64CpuAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="traceIecAction:">
+							<string key="name">traceIecAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="traceVC1541CpuAction:">
+							<string key="name">traceVC1541CpuAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="traceViaAction:">
+							<string key="name">traceViaAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerMenu.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="VC1541Action:">id</string>
+						<string key="cheatboxAction:">id</string>
+						<string key="cheatboxCloseAction:">id</string>
+						<string key="cheatboxOpenAction:">id</string>
+						<string key="debugAction:">id</string>
+						<string key="debugCloseAction:">id</string>
+						<string key="debugOpenAction:">id</string>
+						<string key="hardwareAction:">id</string>
+						<string key="portAAction:">id</string>
+						<string key="portBAction:">id</string>
+						<string key="propertiesAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="VC1541Action:">
+							<string key="name">VC1541Action:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cheatboxAction:">
+							<string key="name">cheatboxAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cheatboxCloseAction:">
+							<string key="name">cheatboxCloseAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cheatboxOpenAction:">
+							<string key="name">cheatboxOpenAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="debugAction:">
+							<string key="name">debugAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="debugCloseAction:">
+							<string key="name">debugCloseAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="debugOpenAction:">
+							<string key="name">debugOpenAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="hardwareAction:">
+							<string key="name">hardwareAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="portAAction:">
+							<string key="name">portAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="portBAction:">
+							<string key="name">portBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="propertiesAction:">
+							<string key="name">propertiesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerToolbar.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="VC1541Action:">id</string>
+						<string key="cheatboxAction:">id</string>
+						<string key="cheatboxCloseAction:">id</string>
+						<string key="cheatboxOpenAction:">id</string>
+						<string key="debugAction:">id</string>
+						<string key="debugCloseAction:">id</string>
+						<string key="debugOpenAction:">id</string>
+						<string key="hardwareAction:">id</string>
+						<string key="iPhoneAction:">id</string>
+						<string key="portAAction:">id</string>
+						<string key="portBAction:">id</string>
+						<string key="propertiesAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="VC1541Action:">
+							<string key="name">VC1541Action:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cheatboxAction:">
+							<string key="name">cheatboxAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cheatboxCloseAction:">
+							<string key="name">cheatboxCloseAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cheatboxOpenAction:">
+							<string key="name">cheatboxOpenAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="debugAction:">
+							<string key="name">debugAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="debugCloseAction:">
+							<string key="name">debugCloseAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="debugOpenAction:">
+							<string key="name">debugOpenAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="hardwareAction:">
+							<string key="name">hardwareAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="iPhoneAction:">
+							<string key="name">iPhoneAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="portAAction:">
+							<string key="name">portAAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="portBAction:">
+							<string key="name">portBAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="propertiesAction:">
+							<string key="name">propertiesAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerToolbar.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="vicCharacterMemoryAction:">id</string>
+						<string key="vicDXAction:">id</string>
+						<string key="vicDXStepperAction:">id</string>
+						<string key="vicDYAction:">id</string>
+						<string key="vicDYStepperAction:">id</string>
+						<string key="vicEnableOpenGL:">id</string>
+						<string key="vicEnableRasterInterruptAction:">id</string>
+						<string key="vicMemoryBankAction:">id</string>
+						<string key="vicRasterInterruptAction:">id</string>
+						<string key="vicRasterlineAction:">id</string>
+						<string key="vicScreenGeometryAction:">id</string>
+						<string key="vicScreenMemoryAction:">id</string>
+						<string key="vicSpriteActiveAction:">id</string>
+						<string key="vicSpriteBackgroundCollisionAction:">id</string>
+						<string key="vicSpriteColorAction:">id</string>
+						<string key="vicSpriteMulticolorAction:">id</string>
+						<string key="vicSpriteSpriteCollisionAction:">id</string>
+						<string key="vicSpriteStretchXAction:">id</string>
+						<string key="vicSpriteStretchYAction:">id</string>
+						<string key="vicSpriteXAction:">id</string>
+						<string key="vicSpriteYAction:">id</string>
+						<string key="vicVideoModeAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="vicCharacterMemoryAction:">
+							<string key="name">vicCharacterMemoryAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicDXAction:">
+							<string key="name">vicDXAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicDXStepperAction:">
+							<string key="name">vicDXStepperAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicDYAction:">
+							<string key="name">vicDYAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicDYStepperAction:">
+							<string key="name">vicDYStepperAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicEnableOpenGL:">
+							<string key="name">vicEnableOpenGL:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicEnableRasterInterruptAction:">
+							<string key="name">vicEnableRasterInterruptAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicMemoryBankAction:">
+							<string key="name">vicMemoryBankAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicRasterInterruptAction:">
+							<string key="name">vicRasterInterruptAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicRasterlineAction:">
+							<string key="name">vicRasterlineAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicScreenGeometryAction:">
+							<string key="name">vicScreenGeometryAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicScreenMemoryAction:">
+							<string key="name">vicScreenMemoryAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteActiveAction:">
+							<string key="name">vicSpriteActiveAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteBackgroundCollisionAction:">
+							<string key="name">vicSpriteBackgroundCollisionAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteColorAction:">
+							<string key="name">vicSpriteColorAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteMulticolorAction:">
+							<string key="name">vicSpriteMulticolorAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteSpriteCollisionAction:">
+							<string key="name">vicSpriteSpriteCollisionAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteStretchXAction:">
+							<string key="name">vicSpriteStretchXAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteStretchYAction:">
+							<string key="name">vicSpriteStretchYAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteXAction:">
+							<string key="name">vicSpriteXAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteYAction:">
+							<string key="name">vicSpriteYAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicVideoModeAction:">
+							<string key="name">vicVideoModeAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerVicPanel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="vicCharacterMemoryAction:">id</string>
+						<string key="vicDXAction:">id</string>
+						<string key="vicDXStepperAction:">id</string>
+						<string key="vicDYAction:">id</string>
+						<string key="vicDYStepperAction:">id</string>
+						<string key="vicEnableOpenGL:">id</string>
+						<string key="vicEnableRasterInterruptAction:">id</string>
+						<string key="vicMemoryBankAction:">id</string>
+						<string key="vicRasterInterruptAction:">id</string>
+						<string key="vicRasterlineAction:">id</string>
+						<string key="vicScreenGeometryAction:">id</string>
+						<string key="vicScreenMemoryAction:">id</string>
+						<string key="vicSpriteActiveAction:">id</string>
+						<string key="vicSpriteBackgroundCollisionAction:">id</string>
+						<string key="vicSpriteColorAction:">id</string>
+						<string key="vicSpriteMulticolorAction:">id</string>
+						<string key="vicSpriteSpriteCollisionAction:">id</string>
+						<string key="vicSpriteStretchXAction:">id</string>
+						<string key="vicSpriteStretchYAction:">id</string>
+						<string key="vicSpriteXAction:">id</string>
+						<string key="vicSpriteYAction:">id</string>
+						<string key="vicVideoModeAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="vicCharacterMemoryAction:">
+							<string key="name">vicCharacterMemoryAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicDXAction:">
+							<string key="name">vicDXAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicDXStepperAction:">
+							<string key="name">vicDXStepperAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicDYAction:">
+							<string key="name">vicDYAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicDYStepperAction:">
+							<string key="name">vicDYStepperAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicEnableOpenGL:">
+							<string key="name">vicEnableOpenGL:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicEnableRasterInterruptAction:">
+							<string key="name">vicEnableRasterInterruptAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicMemoryBankAction:">
+							<string key="name">vicMemoryBankAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicRasterInterruptAction:">
+							<string key="name">vicRasterInterruptAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicRasterlineAction:">
+							<string key="name">vicRasterlineAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicScreenGeometryAction:">
+							<string key="name">vicScreenGeometryAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicScreenMemoryAction:">
+							<string key="name">vicScreenMemoryAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteActiveAction:">
+							<string key="name">vicSpriteActiveAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteBackgroundCollisionAction:">
+							<string key="name">vicSpriteBackgroundCollisionAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteColorAction:">
+							<string key="name">vicSpriteColorAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteMulticolorAction:">
+							<string key="name">vicSpriteMulticolorAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteSpriteCollisionAction:">
+							<string key="name">vicSpriteSpriteCollisionAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteStretchXAction:">
+							<string key="name">vicSpriteStretchXAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteStretchYAction:">
+							<string key="name">vicSpriteStretchYAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteXAction:">
+							<string key="name">vicSpriteXAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicSpriteYAction:">
+							<string key="name">vicSpriteYAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="vicVideoModeAction:">
+							<string key="name">vicVideoModeAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/MyControllerVicPanel.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PropertiesDialog</string>
+					<string key="superclassName">NSWindow</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="changeColorScheme:">id</string>
+						<string key="factorySettingsAction:">id</string>
+						<string key="recordKeyAction:">id</string>
+						<string key="setEyeXAction:">id</string>
+						<string key="setEyeYAction:">id</string>
+						<string key="setEyeZAction:">id</string>
+						<string key="setVideoFilterAction:">id</string>
+						<string key="useAsDefaultAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="changeColorScheme:">
+							<string key="name">changeColorScheme:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="factorySettingsAction:">
+							<string key="name">factorySettingsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="recordKeyAction:">
+							<string key="name">recordKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setEyeXAction:">
+							<string key="name">setEyeXAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setEyeYAction:">
+							<string key="name">setEyeYAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setEyeZAction:">
+							<string key="name">setEyeZAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setVideoFilterAction:">
+							<string key="name">setVideoFilterAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="useAsDefaultAction:">
+							<string key="name">useAsDefaultAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="colorScheme">NSPopUpButton</string>
+						<string key="colorWell0">NSColorWell</string>
+						<string key="colorWell1">NSColorWell</string>
+						<string key="colorWell10">NSColorWell</string>
+						<string key="colorWell11">NSColorWell</string>
+						<string key="colorWell12">NSColorWell</string>
+						<string key="colorWell13">NSColorWell</string>
+						<string key="colorWell14">NSColorWell</string>
+						<string key="colorWell15">NSColorWell</string>
+						<string key="colorWell2">NSColorWell</string>
+						<string key="colorWell3">NSColorWell</string>
+						<string key="colorWell4">NSColorWell</string>
+						<string key="colorWell5">NSColorWell</string>
+						<string key="colorWell6">NSColorWell</string>
+						<string key="colorWell7">NSColorWell</string>
+						<string key="colorWell8">NSColorWell</string>
+						<string key="colorWell9">NSColorWell</string>
+						<string key="down1">NSTextField</string>
+						<string key="down1button">NSButton</string>
+						<string key="down2">NSTextField</string>
+						<string key="down2button">NSButton</string>
+						<string key="eyeXSlider">NSSlider</string>
+						<string key="eyeYSlider">NSSlider</string>
+						<string key="eyeZSlider">NSSlider</string>
+						<string key="fire1">NSTextField</string>
+						<string key="fire1button">NSButton</string>
+						<string key="fire2">NSTextField</string>
+						<string key="fire2button">NSButton</string>
+						<string key="left1">NSTextField</string>
+						<string key="left1button">NSButton</string>
+						<string key="left2">NSTextField</string>
+						<string key="left2button">NSButton</string>
+						<string key="right1">NSTextField</string>
+						<string key="right1button">NSButton</string>
+						<string key="right2">NSTextField</string>
+						<string key="right2button">NSButton</string>
+						<string key="up1">NSTextField</string>
+						<string key="up1button">NSButton</string>
+						<string key="up2">NSTextField</string>
+						<string key="up2button">NSButton</string>
+						<string key="videoFilter">NSPopUpButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="colorScheme">
+							<string key="name">colorScheme</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell0">
+							<string key="name">colorWell0</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell1">
+							<string key="name">colorWell1</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell10">
+							<string key="name">colorWell10</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell11">
+							<string key="name">colorWell11</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell12">
+							<string key="name">colorWell12</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell13">
+							<string key="name">colorWell13</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell14">
+							<string key="name">colorWell14</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell15">
+							<string key="name">colorWell15</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell2">
+							<string key="name">colorWell2</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell3">
+							<string key="name">colorWell3</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell4">
+							<string key="name">colorWell4</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell5">
+							<string key="name">colorWell5</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell6">
+							<string key="name">colorWell6</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell7">
+							<string key="name">colorWell7</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell8">
+							<string key="name">colorWell8</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="colorWell9">
+							<string key="name">colorWell9</string>
+							<string key="candidateClassName">NSColorWell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="down1">
+							<string key="name">down1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="down1button">
+							<string key="name">down1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="down2">
+							<string key="name">down2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="down2button">
+							<string key="name">down2button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="eyeXSlider">
+							<string key="name">eyeXSlider</string>
+							<string key="candidateClassName">NSSlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="eyeYSlider">
+							<string key="name">eyeYSlider</string>
+							<string key="candidateClassName">NSSlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="eyeZSlider">
+							<string key="name">eyeZSlider</string>
+							<string key="candidateClassName">NSSlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="fire1">
+							<string key="name">fire1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="fire1button">
+							<string key="name">fire1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="fire2">
+							<string key="name">fire2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="fire2button">
+							<string key="name">fire2button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="left1">
+							<string key="name">left1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="left1button">
+							<string key="name">left1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="left2">
+							<string key="name">left2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="left2button">
+							<string key="name">left2button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="right1">
+							<string key="name">right1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="right1button">
+							<string key="name">right1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="right2">
+							<string key="name">right2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="right2button">
+							<string key="name">right2button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="up1">
+							<string key="name">up1</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="up1button">
+							<string key="name">up1button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="up2">
+							<string key="name">up2</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="up2button">
+							<string key="name">up2button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="videoFilter">
+							<string key="name">videoFilter</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/PropertiesDialog.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PropertiesDialog</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="changeColorScheme:">id</string>
+						<string key="factorySettingsAction:">id</string>
+						<string key="recordKeyAction:">id</string>
+						<string key="setEyeXAction:">id</string>
+						<string key="setEyeYAction:">id</string>
+						<string key="setEyeZAction:">id</string>
+						<string key="setVideoFilterAction:">id</string>
+						<string key="useAsDefaultAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="changeColorScheme:">
+							<string key="name">changeColorScheme:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="factorySettingsAction:">
+							<string key="name">factorySettingsAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="recordKeyAction:">
+							<string key="name">recordKeyAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setEyeXAction:">
+							<string key="name">setEyeXAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setEyeYAction:">
+							<string key="name">setEyeYAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setEyeZAction:">
+							<string key="name">setEyeZAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setVideoFilterAction:">
+							<string key="name">setVideoFilterAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="useAsDefaultAction:">
+							<string key="name">useAsDefaultAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/PropertiesDialog.mm</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">RomDialog</string>
+					<string key="superclassName">NSWindow</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">helpAction:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">helpAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">helpAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="VC1541Rom">NSImageView</string>
+						<string key="basicRom">NSImageView</string>
+						<string key="cancelButton">NSButton</string>
+						<string key="characterRom">NSImageView</string>
+						<string key="dragBox">NSBox</string>
+						<string key="kernelRom">NSImageView</string>
+						<string key="learnMore">NSTextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="VC1541Rom">
+							<string key="name">VC1541Rom</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="basicRom">
+							<string key="name">basicRom</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cancelButton">
+							<string key="name">cancelButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="characterRom">
+							<string key="name">characterRom</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="dragBox">
+							<string key="name">dragBox</string>
+							<string key="candidateClassName">NSBox</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="kernelRom">
+							<string key="name">kernelRom</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="learnMore">
+							<string key="name">learnMore</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/RomDialog.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">RomDialog</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">helpAction:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">helpAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">helpAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../MacGUI/RomDialog.mm</string>
+					</object>
+				</object>
+			</array>
+			<array class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
+				<object class="IBPartialClassDescription">
+					<string key="className">IKImageBrowserView</string>
+					<string key="superclassName">NSView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="_dataSource">id</string>
+						<string key="_delegate">id</string>
+						<string key="_dragDestinationDelegate">id</string>
+						<string key="_horizontalScroller">NSScroller</string>
+						<string key="_verticalScroller">NSScroller</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="_dataSource">
+							<string key="name">_dataSource</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_delegate">
+							<string key="name">_delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_dragDestinationDelegate">
+							<string key="name">_dragDestinationDelegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_horizontalScroller">
+							<string key="name">_horizontalScroller</string>
+							<string key="candidateClassName">NSScroller</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_verticalScroller">
+							<string key="name">_verticalScroller</string>
+							<string key="candidateClassName">NSScroller</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">Quartz.framework/Frameworks/ImageKit.framework/Headers/IKImageBrowserView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSActionCell</string>
+					<string key="superclassName">NSCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSActionCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSApplication</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSApplication.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSBox</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSBox.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSButton</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSButtonCell</string>
+					<string key="superclassName">NSActionCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSButtonCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSCell</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSColorWell</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSColorWell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSControl</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSControl.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSDocument</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="printDocument:">id</string>
+						<string key="revertDocumentToSaved:">id</string>
+						<string key="runPageLayout:">id</string>
+						<string key="saveDocument:">id</string>
+						<string key="saveDocumentAs:">id</string>
+						<string key="saveDocumentTo:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="printDocument:">
+							<string key="name">printDocument:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="revertDocumentToSaved:">
+							<string key="name">revertDocumentToSaved:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="runPageLayout:">
+							<string key="name">runPageLayout:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveDocument:">
+							<string key="name">saveDocument:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveDocumentAs:">
+							<string key="name">saveDocumentAs:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveDocumentTo:">
+							<string key="name">saveDocumentTo:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSDocument.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSDocumentController</string>
+					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="clearRecentDocuments:">id</string>
+						<string key="newDocument:">id</string>
+						<string key="openDocument:">id</string>
+						<string key="saveAllDocuments:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="clearRecentDocuments:">
+							<string key="name">clearRecentDocuments:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="newDocument:">
+							<string key="name">newDocument:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="openDocument:">
+							<string key="name">openDocument:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveAllDocuments:">
+							<string key="name">saveAllDocuments:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSDocumentController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSDrawer</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSDrawer.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSFormatter</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">Foundation.framework/Headers/NSFormatter.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSImageView</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSImageView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSLevelIndicator</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSLevelIndicator.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSMatrix</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSMatrix.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSMenu</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSMenu.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSMenuItem</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSMenuItem.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSMovieView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSMovieView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSPopUpButton</string>
+					<string key="superclassName">NSButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSPopUpButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSPopover</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">performClose:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">performClose:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">performClose:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="contentViewController">NSViewController</string>
+						<string key="delegate">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="contentViewController">
+							<string key="name">contentViewController</string>
+							<string key="candidateClassName">NSViewController</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="delegate">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSPopover.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSResponder</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSResponder.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSScroller</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSScroller.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSSearchField</string>
+					<string key="superclassName">NSTextField</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSSearchField.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSSlider</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSSlider.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSStepper</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSStepper.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSTableView</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSTableView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSText</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSText.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSTextField</string>
+					<string key="superclassName">NSControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSTextField.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSToolbarItem</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSToolbarItem.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSView</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSViewController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">view</string>
+						<string key="NS.object.0">NSView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">view</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">view</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSWindow</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSWindow.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSWindowController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">showWindow:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">showWindow:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">showWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSWindowController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">QCView</string>
+					<string key="superclassName">NSView</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="play:">id</string>
+						<string key="start:">id</string>
+						<string key="stop:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="play:">
+							<string key="name">play:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="start:">
+							<string key="name">start:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stop:">
+							<string key="name">stop:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">Quartz.framework/Frameworks/QuartzComposer.framework/Headers/QCView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SUUpdater</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">checkForUpdates:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">checkForUpdates:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">checkForUpdates:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">Sparkle.framework/Headers/SUUpdater.h</string>
 					</object>
 				</object>
 			</array>

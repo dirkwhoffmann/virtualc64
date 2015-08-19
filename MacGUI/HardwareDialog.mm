@@ -194,7 +194,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     
     if ([[c64 vc1541] hasDisk]) {
         
-        [discIcon setHidden:NO];
+        [diskIcon setHidden:NO];
         [diskText setStringValue:archiveName];
         [diskText2 setStringValue:[NSString stringWithFormat:@"%d file%s",
                                    noOfFiles, noOfFiles == 1 ? "" : "s"]];
@@ -207,7 +207,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
         
     } else {
         
-        [discIcon setHidden:YES];
+        [diskIcon setHidden:YES];
         [diskText setStringValue:@"No disk inserted"];
         [diskText2 setStringValue:@""]; // TODO: Number of files
         [diskEject setEnabled:NO];

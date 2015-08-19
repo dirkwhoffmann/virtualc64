@@ -25,13 +25,13 @@
 #pragma mark file menu
 - (IBAction)saveScreenshotDialog:(id)sender;
 
-/*! @brief Action function for export disc feature
- *  @discussion This method is called when exporting to archives that are capable of storing multiple file. */
-- (IBAction)exportDiscDialog:(id)sender;
+/*! Action function for export disk feature
+ *  This method is called when exporting to archives that are capable of storing multiple file. */
+- (IBAction)exportDiskDialog:(id)sender;
 
-/*! @brief Action function for export disc feature
- *  @discussion This method is called when exporting to archives that are capable of storing a single file, only. */
-- (IBAction)exportFileFromDiscDialog:(id)sender;
+/*! Action function for export disk feature
+ *  This method is called when exporting to archives that are capable of storing a single file, only. */
+- (IBAction)exportFileFromDiskDialog:(id)sender;
 
 #pragma mark edit menu
 - (IBAction)resetAction:(id)sender;

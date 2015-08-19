@@ -584,7 +584,7 @@ uint8_t VIA2::peek(uint16_t addr)
 	switch(addr) {
 
         case 0x0:
-			// Bit 4: 0 = disc is write protected
+			// Bit 4: 0 = disk is write protected
             if (floppy->isWriteProtected()) {
                 CLR_BIT(orb, 4);
             } else {
