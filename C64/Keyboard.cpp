@@ -20,13 +20,10 @@
 
 #define SHIFT_FLAG 0x1000
 
-Keyboard::Keyboard(C64 *c64)
+Keyboard::Keyboard()
 {
 	name = "Keyboard";
-
 	debug(2, "Creating keyboard at address %p...\n", this);
-	
-    this->c64 = c64;
     
 	for (int i = 0; i < 256; i++) {
 		rowcolmap[i] = 0xFFFF;
@@ -112,6 +109,8 @@ void
 Keyboard::reset(C64 *c64) 
 {
 	debug(2, "  Resetting keyboard...\n");
+
+    this->c64 = c64;
 
 	// Reset keyboard matrix (0 = pressed, 1 = not pressed)
 	for (int i = 0; i < 8; i++) {

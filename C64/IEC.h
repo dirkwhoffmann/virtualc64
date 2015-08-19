@@ -117,7 +117,7 @@ private:
 public:
 
 	//! Constructor
-	IEC(C64 *c64);
+	IEC();
 	
 	//! Destructor
 	~IEC();

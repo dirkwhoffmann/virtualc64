@@ -60,7 +60,7 @@ public:
     };
     
 	//! Constructor
-	Keyboard(C64 *c64);
+	Keyboard();
 
 	//! Destructor
 	~Keyboard();

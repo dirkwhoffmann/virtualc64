@@ -18,16 +18,10 @@
 
 #include "C64.h"
 
-CPU::CPU(C64 *c64, Memory *mem)
+CPU::CPU()
 {	
 	name = "CPU";
-    
 	debug(2, "  Creating CPU at address %p...\n", this);
-
-    isC64CPU = false;
-
-    this->c64 = c64;
-	this->mem = mem;
 	
 	// Establish callback for each instruction
 	registerInstructions();
@@ -43,7 +37,7 @@ CPU::~CPU()
 	debug(2, "  Releasing CPU...\n");
 }
 
-void 
+void
 CPU::reset(C64 *c64)
 {
 	debug(2, "  Resetting CPU...\n");
@@ -91,6 +85,14 @@ CPU::reset(C64 *c64)
 	
 	// Debug options
 	setTraceMode(false);	
+}
+
+void
+CPU::reset(C64 *c64, Memory *mem)
+{
+    this->c64 = c64;
+    this->mem = mem;
+    reset(c64);
 }
 
 uint32_t

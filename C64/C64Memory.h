@@ -192,7 +192,7 @@ private:
 public:
 	
 	//! Constructor
-	C64Memory(C64 *c64);
+	C64Memory();
 	
 	//! Destructor
 	~C64Memory();

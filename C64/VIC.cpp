@@ -23,19 +23,11 @@
 
 #include "C64.h"
 
-// DIRK
-unsigned dirktrace = 0;
-unsigned dirkcnt = 0;
 
-
-
-VIC::VIC(C64 *c64)
+VIC::VIC()
 {
 	name = "VIC";
-
 	debug(2, "  Creating VIC at address %p...\n", this);
-
-	this->c64 = c64;
     
     // Create sub components
     // pixelEngine = new PixelEngine(c64);
@@ -55,6 +47,7 @@ VIC::reset(C64 *c64)
 	debug(2, "  Resetting VIC...\n");
 	
     // Establish bindungs
+    this->c64 = c64;
     cpu = c64->cpu;
     mem = c64->mem;
     
@@ -975,24 +968,6 @@ VIC::turnSpriteDisplayOff()
 // -----------------------------------------------------------------------------------------------
 
 void
-VIC::dirk()
-{
-    /*
-    unsigned cycle = c64->rasterlineCycle;
-
-    if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
-        printf("(%i,%i) (dx,yd):(%d,%d) D020:%d D021:%d BAlow:%d RDY:%d RC:%d VC:%d (VCbase:%d) VMLI:%d bad_line:%d disp_state:%d\n",
-               yCounter, c64->rasterCycle,
-               getHorizontalRasterScroll(), getVerticalRasterScroll(),
-               iomem[0x20], iomem[0x21],
-               BAlow, cpu->getRDY(),
-               registerRC, registerVC, registerVCBASE, registerVMLI, badLineCondition, displayState);
-        dirkcnt++;
-    }
-    */
-}
-
-void
 VIC::checkVerticalFrameFF()
 {
     // Check for upper border
@@ -1146,7 +1121,7 @@ VIC::preparePixelEngine()
 void
 VIC::cycle1()
 {
-    dirk();
+    debug_cycle(1);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1189,7 +1164,7 @@ VIC::cycle2()
 {
     yCounter = c64->getRasterline();
 
-    dirk();
+    debug_cycle(2);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1229,7 +1204,7 @@ VIC::cycle2()
 void 
 VIC::cycle3()
 {
-    dirk();
+    debug_cycle(3);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1264,7 +1239,7 @@ VIC::cycle3()
 void 
 VIC::cycle4()
 {
-    dirk();
+    debug_cycle(4);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1300,7 +1275,7 @@ VIC::cycle4()
 void
 VIC::cycle5()
 {
-    dirk();
+    debug_cycle(5);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1336,7 +1311,7 @@ VIC::cycle5()
 void 
 VIC::cycle6()
 {
-    dirk();
+    debug_cycle(6);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1373,7 +1348,7 @@ VIC::cycle6()
 void 
 VIC::cycle7()
 {
-    dirk();
+    debug_cycle(7);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1405,7 +1380,7 @@ VIC::cycle7()
 void 
 VIC::cycle8()
 {
-    dirk();
+    debug_cycle(8);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1440,7 +1415,7 @@ VIC::cycle8()
 void 
 VIC::cycle9()
 {
-    dirk();
+    debug_cycle(9);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1472,7 +1447,7 @@ VIC::cycle9()
 void 
 VIC::cycle10()
 {
-    dirk();
+    debug_cycle(10);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1506,7 +1481,7 @@ VIC::cycle10()
 void
 VIC::cycle11()
 {
-    dirk();
+    debug_cycle(11);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1530,7 +1505,7 @@ VIC::cycle11()
 void
 VIC::cycle12()
 {
-    dirk();
+    debug_cycle(12);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1563,7 +1538,7 @@ VIC::cycle12()
 void
 VIC::cycle13() // X Coordinate -3 - 4 (?)
 {
-    dirk();
+    debug_cycle(13);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1593,7 +1568,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
 void
 VIC::cycle14() // SpriteX: 0 - 7 (?)
 {
-    dirk();
+    debug_cycle(14);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1630,7 +1605,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
 void
 VIC::cycle15() // SpriteX: 8 - 15 (?)
 {
-    dirk();
+    debug_cycle(15);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1660,7 +1635,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
 void
 VIC::cycle16() // SpriteX: 16 - 23 (?)
 {
-    dirk();
+    debug_cycle(16);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1691,7 +1666,7 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
 void
 VIC::cycle17() // SpriteX: 24 - 31 (?)
 {
-    dirk();
+    debug_cycle(17);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1721,7 +1696,7 @@ VIC::cycle17() // SpriteX: 24 - 31 (?)
 void
 VIC::cycle18() // SpriteX: 32 - 39
 {
-    dirk();
+    debug_cycle(18);
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1751,7 +1726,7 @@ VIC::cycle18() // SpriteX: 32 - 39
 void
 VIC::cycle19to54()
 {
-    dirk();
+    debug_cycle(19);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1780,7 +1755,7 @@ VIC::cycle19to54()
 void
 VIC::cycle55()
 {
-    dirk();
+    debug_cycle(55);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1813,7 +1788,7 @@ VIC::cycle55()
 void
 VIC::cycle56()
 {
-    dirk();
+    debug_cycle(56);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1845,7 +1820,7 @@ VIC::cycle56()
 void
 VIC::cycle57()
 {
-    dirk();
+    debug_cycle(57);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1877,7 +1852,7 @@ VIC::cycle57()
 void
 VIC::cycle58()
 {
-    dirk();
+    debug_cycle(58);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1939,7 +1914,7 @@ VIC::cycle58()
 void
 VIC::cycle59()
 {
-    dirk();
+    debug_cycle(59);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1977,7 +1952,7 @@ VIC::cycle59()
 void
 VIC::cycle60()
 {
-    dirk();
+    debug_cycle(60);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2015,7 +1990,7 @@ VIC::cycle60()
 void
 VIC::cycle61()
 {
-    dirk();
+    debug_cycle(61);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2052,7 +2027,7 @@ VIC::cycle61()
 void
 VIC::cycle62()
 {
-    dirk();
+    debug_cycle(62);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2087,7 +2062,7 @@ VIC::cycle62()
 void
 VIC::cycle63()
 {
-    dirk();
+    debug_cycle(63);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2124,7 +2099,7 @@ VIC::cycle63()
 void
 VIC::cycle64() 	// NTSC only
 {
-    dirk();
+    debug_cycle(64);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2150,7 +2125,7 @@ VIC::cycle64() 	// NTSC only
 void
 VIC::cycle65() 	// NTSC only
 {
-    dirk();
+    debug_cycle(65);
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -2174,4 +2149,27 @@ VIC::cycle65() 	// NTSC only
     countX();
 }
 
+// unsigned dirktrace = 0;
+// unsigned dirkcnt = 0;
+
+void
+VIC::debug_cycle(unsigned c)
+{
+/*
+    static cycle = 0;
+    cycle = (c == 19) ? (cycle+1) : c;
+*/
+
+/*
+     if (dirktrace == 1 && yCounter == DIRK_DEBUG_LINE) {
+     printf("(%i,%i) (dx,yd):(%d,%d) D020:%d D021:%d BAlow:%d RDY:%d RC:%d VC:%d (VCbase:%d) VMLI:%d bad_line:%d disp_state:%d\n",
+     yCounter, c64->rasterCycle,
+     getHorizontalRasterScroll(), getVerticalRasterScroll(),
+     iomem[0x20], iomem[0x21],
+     BAlow, cpu->getRDY(),
+     registerRC, registerVC, registerVCBASE, registerVMLI, badLineCondition, displayState);
+     dirkcnt++;
+     }
+*/
+}
 

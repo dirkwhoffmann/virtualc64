@@ -52,7 +52,7 @@ public:
 public:
 	
 	//! Constructor
-	VC1541Memory(C64 *c64);
+	VC1541Memory();
 	
 	//! Destructor
 	~VC1541Memory();

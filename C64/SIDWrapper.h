@@ -51,7 +51,7 @@ public:
 	{ return (SID_START_ADDR <= addr && addr <= SID_END_ADDR); }
 	
 	//! Constructor.
-	SIDWrapper(C64 *c64);
+	SIDWrapper();
 	
 	//! Destructor.
 	~SIDWrapper();

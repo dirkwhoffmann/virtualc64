@@ -104,7 +104,7 @@ private:
 public:
     
     //! Constructor
-    ExpansionPort(C64 *c64);
+    ExpansionPort();
     
     //! Destructor
     ~ExpansionPort();

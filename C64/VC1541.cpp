@@ -18,18 +18,14 @@
 
 #include "C64.h"
 
-VC1541::VC1541(C64 *c64)
+VC1541::VC1541()
 {
 	name = "1541";
-    
     debug(2, "Creating virtual VC1541 at address %p\n", this);
-
-	// Set bindings
-    this->c64 = c64;
 	
 	// Create sub components
-	mem = new VC1541Memory(c64);
-	cpu = new CPU(c64, mem);
+	mem = new VC1541Memory();
+	cpu = new CPU();
 	cpu->setName("1541CPU");
 }
 
@@ -47,12 +43,13 @@ VC1541::reset(C64 *c64)
 	debug (2, "Resetting VC1541...\n");
 
     // Establish bindings
+    this->c64 = c64; 
     iec = c64->iec;
     
     // Reset subcomponents
-	cpu->reset(c64);
-	cpu->setPC(0xEAA0);
 	mem->reset(c64);
+    cpu->reset(c64, mem);
+    cpu->setPC(0xEAA0);
     via1.reset(c64);
     via2.reset(c64);
 		

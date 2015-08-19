@@ -797,21 +797,15 @@ void CIA::executeOneCycle()
 // Complex Interface Adapter 1
 // -----------------------------------------------------------------------------------------
 
-CIA1::CIA1(C64 *c64)
+CIA1::CIA1()
 {
+    name = "CIA1";
 	debug(2, "  Creating CIA1 at address %p...\n", this);
-
-	name = "CIA1";
-    this->c64 = c64;
-	keyboard = NULL;
-    joy[0] = NULL;
-    joy[1] = NULL;
-	joystick[0] = 0xff;
-	joystick[1] = 0xff;	
 }
 
 CIA1::~CIA1()
 {
+    this->c64 = c64;
 	debug(2, "  Releasing CIA1\n");
 }
 
@@ -822,6 +816,8 @@ CIA1::reset(C64 *c64)
     keyboard = c64->keyboard;
     joy[0] = c64->joystick1;
     joy[1] = c64->joystick2;
+    joystick[0] = 0xff;
+    joystick[1] = 0xff;
 	CIA::reset(c64);
 }
 
@@ -1022,12 +1018,10 @@ CIA1::clearJoystickBits(int nr, uint8_t mask)
 // Complex Interface Adapter 2
 // -----------------------------------------------------------------------------------------
 
-CIA2::CIA2(C64 *c64)
+CIA2::CIA2()
 {
+    name = "CIA2";
 	debug(2, "  Creating CIA2 at address %p...\n", this);
-
-	name = "CIA2";
-    this->c64 = c64;
 }
 
 CIA2::~CIA2()
@@ -1038,6 +1032,7 @@ CIA2::~CIA2()
 void CIA2::reset(C64 *c64)
 {
 	debug(2, "  Resetting CIA2...\n");
+    this->c64 = c64;
     iec = c64->iec;
 	CIA::reset(c64);
 }

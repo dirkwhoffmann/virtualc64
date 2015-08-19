@@ -19,11 +19,10 @@
  
 #include "C64.h"
 
-Joystick::Joystick(C64 *c64) {
+Joystick::Joystick() {
 
-    name = "JOYSTICK";
+    name = "Joystick";
     debug(2, "    Creating joystick at address %p...\n", this);
-    this->c64 = c64;
 }
 
 Joystick::~Joystick()
@@ -35,6 +34,7 @@ Joystick::reset(C64 *c64)
 {
     debug(2, "  Resetting Joystick...\n");
     
+    this->c64 = c64;
     _buttonPressed = false;
     _axisX = JOYSTICK_AXIS_NONE;
     _axisY = JOYSTICK_AXIS_NONE;

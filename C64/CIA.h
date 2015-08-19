@@ -518,7 +518,7 @@ private:
 public:
 
 	//! Constructor
-	CIA1(C64 *c64);
+	CIA1();
 
 	//! Destructor
 	~CIA1();
@@ -568,7 +568,7 @@ private:
 public:
 
 	//! Constructor
-	CIA2(C64 *c64);
+	CIA2();
 	
 	//! Destructor
 	~CIA2();

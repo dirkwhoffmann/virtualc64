@@ -19,11 +19,10 @@
 #include "SIDWrapper.h"
 #include "CPU.h"
 
-SIDWrapper::SIDWrapper(C64 *c64)
+SIDWrapper::SIDWrapper()
 {
 	name = "SIDWrapper";
     
-    this->c64 = c64;
     oldsid = new OldSID();
     resid = new ReSID();
     
@@ -50,6 +49,7 @@ SIDWrapper::setReSID(bool enable)
 void 
 SIDWrapper::reset(C64 *c64)
 {
+    this->c64 = c64;
     oldsid->reset(c64);
     resid->reset(c64);
 }

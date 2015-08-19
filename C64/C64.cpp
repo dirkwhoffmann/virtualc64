@@ -88,18 +88,18 @@ C64::C64()
     warpLoad = false;
 	
 	// Create components
-	mem = new C64Memory(this);
-	cpu = new CPU(this, mem); cpu->isC64CPU = true; // DIRK
-	vic = new VIC(this);
-	sid = new SIDWrapper(this);
-	cia1 = new CIA1(this);
-	cia2 = new CIA2(this);
-	keyboard = new Keyboard(this);
-	iec = new IEC(this);
-    expansionport = new ExpansionPort(this);
-	floppy = new VC1541(this);
-    joystick1 = new Joystick(this);
-    joystick2 = new Joystick(this);
+	mem = new C64Memory();
+	cpu = new CPU();
+	vic = new VIC();
+	sid = new SIDWrapper();
+	cia1 = new CIA1();
+	cia2 = new CIA2();
+	keyboard = new Keyboard();
+	iec = new IEC();
+    expansionport = new ExpansionPort();
+	floppy = new VC1541();
+    joystick1 = new Joystick();
+    joystick2 = new Joystick();
 
     // Configure machine type and reset
     setPAL();
@@ -140,7 +140,7 @@ void C64::reset(C64 *c64, bool resetDrive)
 
 	debug (1, "Resetting virtual C64\n");
 	mem->reset(c64);
-	cpu->reset(c64);
+	cpu->reset(c64, mem);
 	cpu->setPC(0xFCE2);
 	vic->reset(c64);
 	cia1->reset(c64);
@@ -150,7 +150,7 @@ void C64::reset(C64 *c64, bool resetDrive)
     joystick1->reset(c64);
     joystick2->reset(c64);
     iec->reset(c64);
-    expansionport->softreset();
+    expansionport->reset(c64);
     if (resetDrive) floppy->reset(c64);
 
 	cycles = 0UL;

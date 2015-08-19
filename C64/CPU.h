@@ -102,9 +102,6 @@ public:
 	//! Reference to the connected virtual memory
 	Memory *mem;
 	
-    // To distiguish between C64 CPU and Floppy CPU
-    bool isC64CPU;
-
 private:
     
 	// Accumulator register
@@ -237,13 +234,14 @@ private:
 public:
 
 	// Constructor
-	CPU(C64 *c64, Memory *mem);
+	CPU();
 	
 	// Destructor
 	~CPU();
 
 	// Brings CPU back to its initial state
 	void reset(C64 *c64);
+    void reset(C64 *c64, Memory *mem);
 
     //! Size of internal state
     uint32_t stateSize();
@@ -257,8 +255,8 @@ public:
 	//! Dump internal state to console
 	void dumpState();	
 
-	//! Binds CPU and memory together
-	// void setMemory(Memory *m) { assert(mem == NULL); mem = m; }
+    // Returns true iff this object is the C64 CPU (for debugging, only)
+    bool isC64CPU() { return strcmp(name, "CPU") == 0; /* VC1541 CPU is calles "1541CPU" */ }
 		
 	//! Get value of processor port
 	inline uint8_t getPort() { return port; }

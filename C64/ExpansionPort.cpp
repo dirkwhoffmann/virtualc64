@@ -18,15 +18,17 @@
 
 #include "C64.h"
 
-ExpansionPort::ExpansionPort(C64 *c64)
+ExpansionPort::ExpansionPort()
 {
     name = "Expansion port";
-    
     debug(2, "  Creating expansion port at address %p...\n", this);
-    this->c64 = c64;
     
-    // We reset the expansion port here as it is *not* reset when resetting the emulator
-    reset(c64);
+    // Initialize via detachCartridge()
+    detachCartridge();
+    c64 = NULL;
+    for (unsigned i = 0; i < 64; i++) {
+        chip[i] = NULL;
+    }
 }
 
 ExpansionPort::~ExpansionPort()
@@ -39,7 +41,12 @@ void
 ExpansionPort::reset(C64 *c64)
 {
     debug(2, "  Resetting expansion port...\n");
+    this->c64 = c64;
 
+    // We don't do anything important here as cartridges survive a reset.
+    // Object is brought back to its initial state in detachCartridge()
+    
+    /*
     type = CRT_NONE;
     gameLine = true;
     exromLine = true;
@@ -53,6 +60,7 @@ ExpansionPort::reset(C64 *c64)
         chipStartAddress[i] = 0;
         chipSize[i] = 0;
     }
+    */
 }
 
 void
@@ -326,14 +334,24 @@ ExpansionPort::attachCartridge(Cartridge *c)
 void
 ExpansionPort::detachCartridge()
 {
+    // Deallocate chip memory
+    for (unsigned i = 0; i < 64; i++) if (chip[i]) free(chip[i]);
+
+    // Bring everything back to its initial state
+    type = CRT_NONE;
+    gameLine = true;
+    exromLine = true;
+    
+    memset(rom, 0, sizeof(rom));
+    memset(blendedIn, 0, sizeof(blendedIn));
+    
     for (unsigned i = 0; i < 64; i++) {
-        if (chip[i]) {
-            free(chip[i]);
-            chip[i] = NULL;
-        }
+        chip[i] = NULL;
+        chipStartAddress[i] = 0;
+        chipSize[i] = 0;
     }
-    reset(c64);
-    c64->putMessage(MSG_CARTRIDGE, 0);
+    
+    if (c64) c64->putMessage(MSG_CARTRIDGE, 0);
 }
 
 

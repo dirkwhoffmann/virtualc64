@@ -22,16 +22,11 @@
 //                          Construction and Destruction
 // --------------------------------------------------------------------------------
 
-C64Memory::C64Memory(C64 *c64)
+C64Memory::C64Memory()
 {	
 	name ="C64 memory";
-	
 	debug (2, "  Creating main memory at address %p...\n", this);
-	
-    this->c64 = c64;
-	
-	// cartridge = NULL;
-
+		
 	charRomFile = NULL;
 	kernelRomFile = NULL;
 	basicRomFile = NULL;
@@ -47,6 +42,7 @@ void C64Memory::reset(C64 *c64)
 	debug (2, "  Resetting main memory...\n");
 	
     // Establish bindings
+    this->c64 = c64;
     vic = c64->vic;
     sid = c64->sid;
     cia1 = c64->cia1;

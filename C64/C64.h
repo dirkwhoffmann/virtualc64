@@ -19,11 +19,11 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG // Diables all assertions (release versions, only)
-#define DEBUG_LEVEL 2
+// #define NDEBUG      // RELEASE
+#define DEBUG_LEVEL 2  // RELEASE
+// #define DEBUG_LEVEL 3  // DEVELOPMENT
 
-// Snapshot version number of this release
-// 1.0rc1 has version number 0.9.10 
+// Snapshot version number of this release (1.0rc1 has version number 0.9.10)
 #define V_MAJOR 0
 #define V_MINOR 9
 #define V_SUBMINOR 10
@@ -56,8 +56,6 @@
 
 //! A complete virtual C64
 /*! The class puts all components together to a working virtual computer.
-
-    \verbatim
 	
 	------------------------    ------------------------
     |                      |    |                      |
@@ -108,8 +106,6 @@
  |    ------------------------       copy to openGL texture      -----------------
  ---->| GUI                  |<----------------------------------| Screen buffer |
       ------------------------                                   -----------------
-	\endverbatim
-
 
 	The execution thread is the "engine" of the virtual computer. 
 	Like all virtual components, the virtual C64 can be in two states: "running" and "halted". 
@@ -131,7 +127,7 @@
 	   c64 = new C64()
 	   
 	2. Configure
-	   c64->setPAL() etc.
+	   c64->set...() etc.
  
 	3. Load Roms
 	   c64->loadRom(...)
@@ -205,9 +201,9 @@ private:
 	unsigned backInTimeWritePtr;
     
     
-    //
-    //  State variables (will be saves to snapshot)
-    //
+    // -----------------------------------------------------------------------------------------------
+    //                                          Properties
+    // -----------------------------------------------------------------------------------------------
 
     //! Indicates if c64 is currently running at maximum speed (with timing synchronization disabled)
     bool warp;

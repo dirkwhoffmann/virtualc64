@@ -534,8 +534,8 @@
 				389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */,
 				5020F28A0BBABE3C0093C396 /* IEC.h */,
 				5020F28B0BBABE3C0093C396 /* IEC.cpp */,
-				5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */,
 				5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */,
+				5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */,
 			);
 			name = Computer;
 			sourceTree = "<group>";

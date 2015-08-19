@@ -52,7 +52,7 @@ public:
     VIA2 via2;
 
     //! Constructor
-    VC1541(C64 *c64);
+    VC1541();
     
     //! Destructor
     ~VC1541();

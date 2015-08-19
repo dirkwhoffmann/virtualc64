@@ -163,15 +163,6 @@ public:
 	//! Maximum number of viewable rasterlines
 	static const uint16_t MAX_VIEWABLE_RASTERLINES = PAL_VIEWABLE_RASTERLINES;
 	
-		
-	// -----------------------------------------------------------------------------------------------
-	//                                      Member variables
-	// -----------------------------------------------------------------------------------------------
-
-public:
-    // unsigned show = 0; // DIRK: FOR DEBUGGING, REMOVE ASAP
-    // unsigned showframe = 0; // DIRK: FOR DEBUGGING, REMOVE ASAP
-    void dirk(); // DIRK: DEBUG FUNC, REMOVE ASAP
     
 private:
 		
@@ -464,15 +455,6 @@ private:
     inline void rIdleAccess() { (void)memIdleAccess(); }
     
 
-    
-    
-    
-
-    
-    
-    
-
-
 	// -----------------------------------------------------------------------------------------------
 	//                                         Sprites
 	// -----------------------------------------------------------------------------------------------
@@ -568,7 +550,7 @@ private:
 public:
 	
 	//! Constructor
-	VIC(C64 *c64);
+	VIC();
 	
 	//! Destructor
 	~VIC();
@@ -1027,7 +1009,11 @@ public:
     void cycle59(); void cycle60(); void cycle61(); void cycle62();
     void cycle63(); void cycle64(); void cycle65();
 	
-	
+	//! Debug entry point for each rasterline cycle
+
+private:
+    void debug_cycle(unsigned cycle);
+
 	// -----------------------------------------------------------------------------------------------
 	//                                              Debugging
 	// -----------------------------------------------------------------------------------------------
