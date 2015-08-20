@@ -504,10 +504,6 @@ public:
 	//                                             Misc
 	// ---------------------------------------------------------------------------------------------
 	
-	//! Returns the build number
-	/*! The build number is composed out of the build date */
-	int build();
-	
 	//! The tread exit function.
 	/*! Automatically invoked by the execution thread on termination */
 	void threadCleanup(); 

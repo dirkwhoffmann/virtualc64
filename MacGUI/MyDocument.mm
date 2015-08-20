@@ -84,7 +84,7 @@
 
 - (BOOL)detachCartridge
 {
-	[c64 detachCartridge];	
+	[c64 detachCartridge];
 	delete cartridge;
 	cartridge = NULL;
 	

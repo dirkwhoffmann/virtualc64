@@ -608,7 +608,6 @@
 - (bool) isNTSC { return c64->isNTSC(); }
 - (void) setPAL { c64->setPAL(); }
 - (void) setNTSC { c64->setNTSC(); }
-- (int) buildNr { return c64->build(); }
 
 //- (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
 - (uint8_t) missingRoms { return c64->getMissingRoms(); }

@@ -283,38 +283,45 @@ D64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	{
 		case D64_683_SECTORS: // 35 tracks, no errors
 			
+            fprintf(stderr, "D64 file contains 35 tracks, no EC bytes\n");
 			numTracks = 35;
 			break;
             
 		case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
 			
+            fprintf(stderr, "D64 file contains 35 tracks, 683 EC bytes\n");
 			numTracks = 35;
 			numberOfErrors = 683;
 			break;
             
 		case D64_768_SECTORS: // 40 tracks, no errors
 			
+            fprintf(stderr, "D64 file contains 40 tracks, no EC bytes\n");
 			numTracks = 40;
 			break;
             
 		case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
 			
+            fprintf(stderr, "D64 file contains 40 tracks, 768 EC bytes\n");
 			numTracks = 40;
 			numberOfErrors = 768;
 			break;
             
 		case D64_802_SECTORS: // 42 tracks, no error bytes
             
+            fprintf(stderr, "D64 file contains 42 tracks, no EC bytes\n");
 			numTracks = 42;
 			break;
             
 		case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
             
+            fprintf(stderr, "D64 file contains 42 tracks, 802 EC bytes\n");
 			numTracks = 42;
             numberOfErrors = 802;
 			break;
             
 		default:
+            fprintf(stderr, "D64 has an unknown format\n");
 			return false;
 	}
 	

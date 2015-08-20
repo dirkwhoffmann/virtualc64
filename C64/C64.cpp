@@ -1028,31 +1028,6 @@ C64::isCartridgeAttached()
 //                                            Misc
 // ---------------------------------------------------------------------------------------------
 
-int 
-C64::build()
-{
-	char month[11];
-	int year, mon, day;
-
-	sscanf(__DATE__, "%s %d %d", month, &day, &year);
-	
-	if (!strcmp(month, "Jan")) mon = 1;
-	else if (!strcmp(month, "Feb")) mon = 2;
-	else if (!strcmp(month, "Mar")) mon = 3;
-	else if (!strcmp(month, "Apr")) mon = 4;
-	else if (!strcmp(month, "May")) mon = 5;
-	else if (!strcmp(month, "Jun")) mon = 6;
-	else if (!strcmp(month, "Jul")) mon = 7;
-	else if (!strcmp(month, "Aug")) mon = 8;
-	else if (!strcmp(month, "Sep")) mon = 9;
-	else if (!strcmp(month, "Oct")) mon = 10;
-	else if (!strcmp(month, "Nov")) mon = 11;
-	else if (!strcmp(month, "Dez")) mon = 12;
-	else mon = 0; // Huh?
-
-	return ((year - 2000) * 10000) + (mon * 100) + day;
-}
-
 void 
 C64::threadCleanup()
 {

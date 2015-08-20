@@ -358,21 +358,21 @@
                             <action selector="stepOverAction:" target="-2" id="1865"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port A" paletteLabel="Port A" tag="10" image="keyboard32" id="kR6-IR-lNs" userLabel="Port A">
+                    <toolbarItem implicitItemIdentifier="F19B641C-3162-47E1-8228-6B75CA6F1A5A" label="Port A" paletteLabel="Port A" tag="10" id="kR6-IR-lNs" userLabel="Port A">
                         <nil key="toolTip"/>
                         <size key="minSize" width="10" height="20"/>
                         <size key="maxSize" width="56" height="80"/>
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port A">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="Keyset 2" bezelStyle="regularSquare" image="joystick2_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="2" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="Ohe-Pi-c1S" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="keyboard32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
                                     <items>
                                         <menuItem title="None" image="none32" id="VD3-Wr-Ufe"/>
                                         <menuItem title="Keyset 1" image="keyboard32" tag="1" id="L2h-xt-iO6"/>
-                                        <menuItem title="Keyset 2" state="on" image="keyboard32" tag="2" id="Ohe-Pi-c1S"/>
+                                        <menuItem title="Keyset 2" image="keyboard32" tag="2" id="Ohe-Pi-c1S"/>
                                         <menuItem title="USB Joystick 1" image="joystick1_32" tag="3" id="yOc-MG-77p"/>
                                         <menuItem title="USB Joystick 2" image="joystick2_32" tag="4" id="1PP-xx-NoT">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -3675,10 +3675,10 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="mlc-em-EZy">
-                        <rect key="frame" x="167" y="93" width="362" height="17"/>
+                        <rect key="frame" x="167" y="88" width="362" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VirtualC64 has build-in support for the following devices:" id="jbo-Bp-nam">
-                            <font key="font" metaFont="cellTitle"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VirtualC64 has built-in support for the following devices:" id="jbo-Bp-nam">
+                            <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -3802,7 +3802,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="BeI-Wf-cy0">
-                        <rect key="frame" x="166" y="79" width="357" height="14"/>
+                        <rect key="frame" x="166" y="74" width="357" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="justified" title="Speedlink Competition Pro SL-6602 (USB) " id="b9A-mc-kVN">
                             <font key="font" metaFont="smallSystem"/>
@@ -4005,7 +4005,7 @@ DQ
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <imageView id="cai-g3-O1P">
-                        <rect key="frame" x="5" y="148" width="64" height="64"/>
+                        <rect key="frame" x="7" y="148" width="64" height="64"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="joystick" id="rRU-Hi-d71"/>
                     </imageView>
@@ -4084,11 +4084,11 @@ DQ
         <window title="Hardware" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="YW8-0Q-Xve" userLabel="Virtual Hardware" customClass="HardwareDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="271" y="425" width="537" height="464"/>
+            <rect key="contentRect" x="271" y="425" width="537" height="453"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="EC1-a2-dTe">
-                <rect key="frame" x="0.0" y="-6" width="537" height="464"/>
+                <rect key="frame" x="0.0" y="9" width="537" height="453"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" id="h43-h1-GVM">
@@ -4217,13 +4217,6 @@ DQ
                     </box>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="IAG-eW-1sJ">
                         <rect key="frame" x="9" y="359" width="516" height="5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" metaFont="system"/>
-                    </box>
-                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="cbY-zH-hn7">
-                        <rect key="frame" x="19" y="459" width="516" height="5"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -4550,7 +4543,7 @@ DQ
                 <outlet property="warpText" destination="QJp-hj-s98" id="NhT-6W-RK0"/>
                 <outlet property="writeProtected" destination="Qlq-OA-lTF" id="Ehx-0d-Rcu"/>
             </connections>
-            <point key="canvasLocation" x="1249.5" y="-156"/>
+            <point key="canvasLocation" x="1249.5" y="-161.5"/>
         </window>
     </objects>
     <resources>

@@ -28,7 +28,6 @@
 
 - (IBAction)propertiesAction:(id)sender;
 - (IBAction)hardwareAction:(id)sender;
-- (IBAction)VC1541Action:(id)sender; // OBSOLETE
 
 - (IBAction)debugOpenAction:(id)sender;
 - (IBAction)debugCloseAction:(id)sender;

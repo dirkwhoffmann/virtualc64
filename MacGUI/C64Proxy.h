@@ -495,7 +495,6 @@
 - (bool) isNTSC;
 - (void) setPAL;
 - (void) setNTSC;
-- (int) buildNr;
 
 //- (int) numberOfMissingRoms;
 - (uint8_t) missingRoms;
@@ -510,7 +509,6 @@
 - (bool) isRom:(NSString *)filename;
 - (bool) loadRom:(NSString *)filename;
 
-// TODO: MOVE TO EXPANSION PORT PROXY
 - (bool) attachCartridge:(Cartridge *)c;
 - (void) detachCartridge;
 - (bool) isCartridgeAttached;

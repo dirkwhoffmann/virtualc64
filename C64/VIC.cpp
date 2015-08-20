@@ -342,10 +342,10 @@ VIC::setPAL()
 	rightBorderWidth = PAL_RIGHT_BORDER_WIDTH;
 	upperBorderHeight = PAL_UPPER_BORDER_HEIGHT;
 	lowerBorderHeight = PAL_LOWER_BORDER_HEIGHT;
-	totalScreenWidth = PAL_VIEWABLE_PIXELS;
-	totalScreenHeight = PAL_VIEWABLE_RASTERLINES;
+	totalScreenWidth = PAL_VISIBLE_PIXELS;
+	totalScreenHeight = PAL_VISIBLE_RASTERLINES;
 	firstVisibleLine = PAL_UPPER_INVISIBLE;
-	lastVisibleLine = PAL_UPPER_INVISIBLE + PAL_VIEWABLE_RASTERLINES;
+	lastVisibleLine = PAL_UPPER_INVISIBLE + PAL_VISIBLE_RASTERLINES;
 	pixelAspectRatio = 0.9365;
 }
 
@@ -357,10 +357,10 @@ VIC::setNTSC()
 	rightBorderWidth = NTSC_RIGHT_BORDER_WIDTH;
 	upperBorderHeight = NTSC_UPPER_BORDER_HEIGHT;
 	lowerBorderHeight = NTSC_LOWER_BORDER_HEIGHT;
-	totalScreenWidth = NTSC_VIEWABLE_PIXELS;
-	totalScreenHeight = NTSC_VIEWABLE_RASTERLINES;
+	totalScreenWidth = NTSC_VISIBLE_PIXELS;
+	totalScreenHeight = NTSC_VISIBLE_RASTERLINES;
 	firstVisibleLine = NTSC_UPPER_INVISIBLE;
-	lastVisibleLine = NTSC_UPPER_INVISIBLE + NTSC_VIEWABLE_RASTERLINES;
+	lastVisibleLine = NTSC_UPPER_INVISIBLE + NTSC_VISIBLE_RASTERLINES;
 	pixelAspectRatio = 0.75;
 }
 
@@ -369,7 +369,6 @@ VIC::setNTSC()
 //                             I/O memory handling and RAM access
 // -----------------------------------------------------------------------------------------------
 
-// TODO: VICE distinguishes between phi1 accesses (clock LOW) and phi2 accesses (clock HIGH)
 uint8_t VIC::memAccess(uint16_t addr)
 {
     /* "Der VIC besitzt nur 14 Adreßleitungen, kann also nur 16KB Speicher
@@ -402,8 +401,9 @@ uint8_t VIC::memAccess(uint16_t addr)
 
 uint8_t VIC::memIdleAccess()
 {
-    // TODO: Optimize
-    return memAccess(0x3FFF);
+    // return memAccess(0x3FFF);
+    addrBus = bankAddr + 0x3FFF;
+    return mem->ram[addrBus];
 }
 
 inline void VIC::cAccess()

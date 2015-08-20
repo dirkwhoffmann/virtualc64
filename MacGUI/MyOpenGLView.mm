@@ -1112,15 +1112,6 @@ void checkForOpenGLErrors()
                 return NO;
             }
         }
-
-#if 0
-        // Is it an image file?
-        V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:path];
-        if (snapshot) {
-            [[controller c64] loadFromSnapshot:snapshot];
-            return YES;
-        }
-#endif
         
         // Is it a ROM file?
 		if ([[controller document] loadRom:path]) {

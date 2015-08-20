@@ -209,7 +209,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
         
         [diskIcon setHidden:YES];
         [diskText setStringValue:@"No disk inserted"];
-        [diskText2 setStringValue:@""]; // TODO: Number of files
+        [diskText2 setStringValue:@""];
         [diskEject setEnabled:NO];
         [diskEject setHidden:YES];
         [diskEjectText setEnabled:NO];
@@ -218,7 +218,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     }
     
     /* Expansion port */
-    if ([c64 isCartridgeAttached]) { // TODO: Move to ExpansionPortProxy
+    if ([c64 isCartridgeAttached]) {
         
         [cartridgeIcon setHidden:NO];
         [cartridgeText setStringValue:[NSString stringWithFormat:@"Type %d cartridge",

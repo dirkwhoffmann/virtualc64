@@ -664,6 +664,8 @@ VC1541::insertDisk(D64Archive *a)
 {
 	assert(a != NULL);
 
+    // debug(2, "VC1541::insertDisk(D64Archive *)");
+
     ejectDisk();
     encodeDisk(a);
 
