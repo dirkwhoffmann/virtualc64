@@ -290,7 +290,7 @@ C64::stateSize()
 {
     uint32_t size;
     
-    size = 31;
+    size = 29;
     size += cpu->stateSize();
     size += vic->stateSize();
     size += sid->stateSize();
@@ -320,7 +320,7 @@ C64::loadFromBuffer(uint8_t **buffer)
     warpLoad = read8(buffer);
 	cycles = read64(buffer);
 	frame = (int)read32(buffer);
-	rasterline = (int)read32(buffer);
+	rasterline = (int)read16(buffer);
 	rasterlineCycle = (int)read32(buffer);
 	targetTime = read64(buffer);
 	
@@ -372,7 +372,7 @@ C64::saveToBuffer(uint8_t **buffer)
     write8(buffer, warpLoad);
 	write64(buffer, cycles);
 	write32(buffer, (uint32_t)frame);
-	write32(buffer, (uint32_t)rasterline);
+	write16(buffer, rasterline);
 	write32(buffer, (uint32_t)rasterlineCycle);
 	write64(buffer, targetTime);
 	

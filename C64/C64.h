@@ -230,14 +230,13 @@ private:
     //! Current clock cycle relative to the current rasterline
     /*! Range: 1 ... 63 on PAL machines
                1 ... 65 on NTSC machines */
-    
     int rasterlineCycle;
     
 	//! Current frame number since power up
 	uint64_t frame;
 	
 	//! Current rasterline number
-	int rasterline;
+	uint16_t rasterline;
 	
 	//! Target time
 	/*! Used to synchronize emulation speed */
@@ -478,9 +477,7 @@ public:
 	inline uint64_t getFrame() { return frame; }
 
 	//! Returns the number of the currently drawn rasterline
-	inline uint64_t getRasterline() { return rasterline; }
-
-
+	inline uint16_t getRasterline() { return rasterline; }
     
 	// Returns the number of frames per second
 	/*! Number varies between PAL and NTSC machines */	

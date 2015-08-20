@@ -31,15 +31,6 @@ PixelEngine::PixelEngine() // C64 *c64)
     
     debug(2, "  Creating PixelEngine at address %p...\n", this);
     
-    // this->c64 = c64;
-    
-    // Delete screen buffers
-    for (unsigned i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
-        screenBuffer1[i] = ((i / PAL_VISIBLE_PIXELS) % 2) ? colors[6] : colors[5];
-    }
-    for (unsigned i = 0; i < sizeof(screenBuffer2) / sizeof(int); i++) {
-        screenBuffer2[i] = ((i / PAL_VISIBLE_PIXELS) % 2) ? colors[6] : colors[5];
-    }
     currentScreenBuffer = screenBuffer1;
     pixelBuffer = currentScreenBuffer;
     pxbuf = currentScreenBuffer;
@@ -64,6 +55,17 @@ PixelEngine::reset(C64 *c64)
     
     // Shift register
     memset(&sr, 0x00, sizeof(sr));
+}
+
+void
+PixelEngine::resetScreenBuffers()
+{
+    for (unsigned i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
+        screenBuffer1[i] = ((i / NTSC_PIXELS) % 2) ? colors[11] : colors[12];
+    }
+    for (unsigned i = 0; i < sizeof(screenBuffer2) / sizeof(int); i++) {
+        screenBuffer2[i] = ((i / NTSC_PIXELS) % 2) ? colors[11] : colors[12];
+    }
 }
 
 
@@ -103,7 +105,7 @@ PixelEngine::endRasterline()
     // Make the border look nice
     expandBorders();
 
-    // Advance pixelBuffer one line
+    // Advance pixelBuffer one line (skip vblank lines)
     pixelBuffer += vic->totalScreenWidth;
     pxbuf += vic->totalScreenWidth;
     
@@ -155,6 +157,9 @@ PixelEngine::updateSpriteColorRegisters()
 void
 PixelEngine::draw()
 {
+    if (vic->vblank)
+        return;
+        
     drawBorder();
     drawCanvas();
     drawSprites();
@@ -163,6 +168,9 @@ PixelEngine::draw()
 void
 PixelEngine::draw17()
 {
+    if (vic->vblank)
+        return;
+    
     drawBorder17();
     drawCanvas();
     drawSprites();
@@ -171,6 +179,9 @@ PixelEngine::draw17()
 void
 PixelEngine::draw55()
 {
+    if (vic->vblank)
+        return;
+    
     drawBorder55();
     drawCanvas();
     drawSprites();
@@ -809,10 +820,24 @@ PixelEngine::expandBorders()
 void
 PixelEngine::markLine(uint8_t color, unsigned start, unsigned end)
 {
-    assert (end <= 512);
+    assert (end <= NTSC_PIXELS);
     
     int rgba = colors[color];
     for (unsigned i = start; i < end; i++) {
         pixelBuffer[start + i] = rgba;
     }	
 }
+
+#if 0
+void markColumn(uint8_t color, unsigned column)
+{
+    
+    assert (end <= PAL_RASTERLINES);
+
+    int rgba = colors[color];
+    for (unsigned i = 0; i < PAL_RASTERLINES; i++) {
+        screenBuffer1[
+        pixelBuffer[start + i*vic->] = rgba;
+    }
+}
+#endif

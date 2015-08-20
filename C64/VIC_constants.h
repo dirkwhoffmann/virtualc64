@@ -112,13 +112,13 @@ static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
 static const uint16_t PAL_LEFT_VBLANK = 76;
 
 //! Width of left border
-static const uint16_t PAL_LEFT_BORDER_WIDTH = 46; // Should be 48
+static const uint16_t PAL_LEFT_BORDER_WIDTH = 48; // was 46; // Should be 48
 
 //! Width of canvas area
 static const uint16_t PAL_CANVAS_WIDTH = 320;
 
 //! Width of right border
-static const uint16_t PAL_RIGHT_BORDER_WIDTH = 36; // Should be 37
+static const uint16_t PAL_RIGHT_BORDER_WIDTH = 37; // was 36; // Should be 37
 
 //! Width of right VBLANK area
 static const uint16_t PAL_RIGHT_VBLANK = 23;
@@ -139,7 +139,7 @@ static const uint16_t PAL_VISIBLE_PIXELS = 403; // was 402
 static const uint16_t PAL_UPPER_VBLANK = 16;
 
 //! Heigt of upper boder
-static const uint16_t PAL_UPPER_BORDER_HEIGHT = 43; // Should be 35
+static const uint16_t PAL_UPPER_BORDER_HEIGHT = 35; // was 43
 
 //! Height of canvas area
 static const uint16_t PAL_CANVAS_HEIGHT = 200;

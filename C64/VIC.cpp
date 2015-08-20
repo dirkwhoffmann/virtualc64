@@ -55,8 +55,9 @@ VIC::reset(C64 *c64)
     pixelEngine.reset(c64);
 
 	// Internal registers
+    vblank = false;
     xCounter = 0;
-    yCounter = 0;
+    yCounter = PAL_HEIGHT;
     yCounterEqualsIrqRasterline = false;
 	registerVC = 0;
 	registerVCBASE = 0;
@@ -127,6 +128,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
 	// Internal registers
+    vblank = (bool)read8(buffer);
     xCounter = read16(buffer);
 	yCounter = read32(buffer);
     yCounterEqualsIrqRasterline = (bool)read8(buffer);
@@ -152,17 +154,8 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	// Memory
     readBlock(buffer, iomem, sizeof(iomem));
 	bankAddr = read16(buffer);
-    // readBlock(buffer, characterSpace, sizeof(characterSpace));
-    // readBlock(buffer, colorSpace, sizeof(colorSpace));
-
+    
     // Sequencer
-    /*
-    gs_shift_reg = read8(buffer);
-    gs_mc_flop = (bool)read8(buffer);
-    latchedCharacter = read8(buffer);
-    latchedColor = read8(buffer);
-    */
-    (void)read8(buffer);
     (void)read8(buffer);
     (void)read8(buffer);
     (void)read8(buffer);
@@ -200,6 +193,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
 	// Internal registers
+    write8(buffer, (uint8_t)vblank);
     write16(buffer, xCounter);
     write32(buffer, yCounter);
     write8(buffer, (uint8_t)yCounterEqualsIrqRasterline);
@@ -225,17 +219,8 @@ VIC::saveToBuffer(uint8_t **buffer)
 	// Memory
     writeBlock(buffer, iomem, sizeof(iomem));
 	write16(buffer, bankAddr);
-    // writeBlock(buffer, characterSpace, sizeof(characterSpace));
-    // writeBlock(buffer, colorSpace, sizeof(colorSpace));
 
     // Sequencer
-    /*
-    write8(buffer, gs_shift_reg);
-    write8(buffer, (uint8_t)gs_mc_flop);
-    write8(buffer, latchedCharacter);
-    write8(buffer, latchedColor);
-     */
-    write8(buffer, 0);
     write8(buffer, 0);
     write8(buffer, 0);
     write8(buffer, 0);
@@ -347,6 +332,7 @@ VIC::setPAL()
 	firstVisibleLine = PAL_UPPER_INVISIBLE;
 	lastVisibleLine = PAL_UPPER_INVISIBLE + PAL_VISIBLE_RASTERLINES;
 	pixelAspectRatio = 0.9365;
+    pixelEngine.resetScreenBuffers();
 }
 
 void
@@ -362,6 +348,7 @@ VIC::setNTSC()
 	firstVisibleLine = NTSC_UPPER_INVISIBLE;
 	lastVisibleLine = NTSC_UPPER_INVISIBLE + NTSC_VISIBLE_RASTERLINES;
 	pixelAspectRatio = 0.75;
+    pixelEngine.resetScreenBuffers();
 }
 
 
@@ -1042,15 +1029,14 @@ VIC::beginFrame()
         $ff gelöscht und nach jedem Refresh-Zugriff um 1 verringert.
         Der VIC greift also in Zeile 0 auf die Adressen $3fff, $3ffe, $3ffd, $3ffc
         und $3ffb zu, in Zeile 1 auf $3ffa, $3ff9, $3ff8, $3ff7 und $3ff6 usw." [C.B.] */
-   
     refreshCounter = 0xFF;
 
     /* "1. Irgendwo einmal auﬂerhalb des Bereiches der Rasterzeilen $30-$f7 (also
            außerhalb des Bad-Line-Bereiches) wird VCBASE auf Null gesetzt.
            Vermutlich geschieht dies in Rasterzeile 0, der genaue Zeitpunkt ist
            nicht zu bestimmen, er spielt aber auch keine Rolle." [C.B.] */
- 
     registerVCBASE = 0;
+
 }
 
 void
@@ -1062,12 +1048,24 @@ VIC::endFrame()
 void 
 VIC::beginRasterline(uint16_t line)
 {
-    // TODO: This is only correct for PAL
+    verticalFrameFFsetCond = verticalFrameFFclearCond = false;
+
+    // Determine if we're currently processing a VBLANK line (nothing is drawn in this area)
+    if (isPAL) {
+        vblank = line < PAL_UPPER_VBLANK || line > PAL_UPPER_VBLANK + PAL_RASTERLINES;
+    } else {
+        vblank = line < NTSC_UPPER_VBLANK || line > NTSC_UPPER_VBLANK + NTSC_RASTERLINES;
+    }
+
+    /* OLD CODE
     if (line != 0) {
+        //assert(yCounter == c64->getRasterline());
         yCounter = line; // Overflow case is handled in cycle 2
     }
-    
-    verticalFrameFFsetCond = verticalFrameFFclearCond = false;
+    */
+    // Increase yCounter. The overflow case is handled in cycle 2
+    if (!yCounterOverflow())
+        yCounter++;
     
     // Check for the DEN bit if we're processing rasterline 30
     // The initial value can change in the middle of a rasterline.
@@ -1097,7 +1095,20 @@ VIC::endRasterline()
     if (rasterlineDebug[yCounter] >= 0)
         pixelEngine.markLine(rasterlineDebug[yCounter] % 16);
     
+    // DEBUG
+    if (yCounter == 52) {
+        pixelEngine.markLine(4);
+    }
+    
     pixelEngine.endRasterline();
+}
+
+bool
+VIC::yCounterOverflow()
+{
+    // PAL machines reset yCounter in cycle 2 in the first physical rasterline
+    // NTSC machines reset yCounter in cycle 2 in the middle of the lower border area
+    return (c64->isPAL() && c64->getRasterline() == 0) || (!c64->isPAL() && c64->getRasterline() == 238);
 }
 
 inline void
@@ -1123,7 +1134,7 @@ void
 VIC::cycle1()
 {
     debug_cycle(1);
-    
+        
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     
@@ -1163,9 +1174,11 @@ VIC::cycle1()
 void
 VIC::cycle2()
 {
-    yCounter = c64->getRasterline();
-
     debug_cycle(2);
+
+    // Check for yCounter overflows
+    if (yCounterOverflow())
+            yCounter = 0;
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();

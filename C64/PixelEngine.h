@@ -80,7 +80,11 @@ public:
     
     //! Restore initial state
     void reset(C64 *c64);
-    
+
+    //! Initialize both screenBuffers
+    /*! This function is used for debugging. It write some recognizable pattern into both buffers */
+    void resetScreenBuffers();
+
     //! Size of internal state
     uint32_t stateSize() { return 0; }
     
@@ -145,11 +149,13 @@ private:
     //! First screen buffer
     /*! The VIC chip writes it output into this buffer. The contents of the array is later copied into to
         texture RAM of your graphic card by the drawRect method in the OpenGL related code. */
+    // TODO: CHANGE TO screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS];
     int screenBuffer1[512 * 512];
     
     //! Second screen buffer
     /*! The VIC chip uses double buffering. Once a frame is drawn, the VIC chip writes the next frame to the 
         second buffer. */
+    // TODO: CHANGE TO screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS];
     int screenBuffer2[512 * 512];
     
     //! Target screen buffer for all rendering methods
@@ -487,9 +493,14 @@ public:
     /*! This functions replicates the color of the leftmost and rightmost pixel */
     void expandBorders();
 
-    //! Draw a colored line into the screen buffer
+    //! Draw a horizontal colored line into the screen buffer
     /*! This method is utilized for debugging purposes, only. */
-    void markLine(uint8_t color, unsigned start = 0, unsigned end = 512);
+    void markLine(uint8_t color, unsigned start = 0, unsigned end = NTSC_PIXELS);
+
+    //! Draw a vertical colored line into the screen buffer
+    /*! This method is utilized for debugging purposes, only. */
+    // void markColumn(uint8_t color, unsigned start = 0, unsigned end = PAL_RASTERLINES);
+
 };
 
     

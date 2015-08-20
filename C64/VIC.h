@@ -83,10 +83,13 @@ private:
 	
 	
 	// -----------------------------------------------------------------------------------------------
-	//                                     Internal registers
+	//                                     Internal state
 	// -----------------------------------------------------------------------------------------------
-	    
-    //! Current rasterline
+
+    //! Indicates whether the currently drawn rasterline belongs to VBLANK area
+    bool vblank;
+    
+    //! Rasterline counter
     /*! The rasterline counter is is usually incremented in cycle 1. The only exception is the
         overflow condition which is handled in cycle 2 */
     uint32_t yCounter;
@@ -97,6 +100,9 @@ private:
     //! Increase x counter by 8
     inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
 
+    //! Returns true if yCounter needs to be reset to 0 in this rasterline
+    bool yCounterOverflow();
+    
 	//! Internal VIC register, 10 bit video counter
 	uint16_t registerVC;
 	
