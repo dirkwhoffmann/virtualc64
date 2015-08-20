@@ -16,6 +16,20 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// CLEANUP:
+// 1. Get rid of setPAL, setNTSC
+// 2. Afterwards: Get rid of PAL flag in Snapshop
+// 3. Introduce ChipModel instead of C64 PAL flag
+//
+//
+// SPEEDUP:
+//
+// 1. Make CIA1 and CIA2 dynamic objects (for V1.1)
+//    Inline execution functions as much as possible
+//
+
+
+
 #ifndef _C64_INC
 #define _C64_INC
 

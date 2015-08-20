@@ -16,18 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// CLEANUP:
-//
-// 1. Change constructor signature from (C64 *c64) to (). Establish all bindings in reset()
-//
-// SPEEDUP:
-//
-// 1. Make CIA1 and CIA2 dynamic objects (for V1.1)
-//    Inline execution functions as much as possible
-//
-// TODO:
-//
-
 #ifndef _PIXELENGINGE_INC
 #define _PIXELENGINGE_INC
 

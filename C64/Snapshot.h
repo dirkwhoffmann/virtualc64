@@ -21,6 +21,7 @@
 #define _SNAPSHOT_INC
 
 #include "Container.h"
+#include "VIC_constants.h"
 
 class C64;
 
@@ -51,7 +52,7 @@ private:
 			uint16_t width, height;
 		
 			//! Screen buffer data 
-			uint32_t screen[512 * 512];
+			uint32_t screen[PAL_RASTERLINES * NTSC_PIXELS];
 		
 		} screenshot;
         
@@ -125,13 +126,19 @@ public:
 	
 	//! Returns true, if snapshot does not contain data yet
 	bool isEmpty() { return timestamp == 0; }
-
-	//! Take screenshot
-	// DEPRECATED. Already stored in snapshot	
-	void takeScreenshot(uint32_t *buf) { memcpy(header.screenshot.screen, buf, sizeof(header.screenshot.screen)); }
 	
 	//! Return screen buffer
 	unsigned char *getImageData() { return (unsigned char *)header.screenshot.screen; }
+
+    //! Return image width
+    unsigned getImageWidth() { return header.screenshot.width; }
+
+    //! Return image height
+    unsigned getImageHeight() { return header.screenshot.height; }
+
+    //! Take screenshot
+    void takeScreenshot(uint32_t *buf, bool pal);
+
 };
 
 #endif

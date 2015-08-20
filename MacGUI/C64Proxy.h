@@ -532,6 +532,8 @@
 - (uint8_t *) historicSnapshotData:(int)nr;
 
 - (unsigned char *)historicSnapshotImageData:(int)nr;
+- (unsigned)historicSnapshotImageWidth:(int)nr;
+- (unsigned)historicSnapshotImageHeight:(int)nr;
 - (time_t)historicSnapshotTimestamp:(int)nr;
 - (bool)historicSnapshotIsPAL:(int)nr;
 - (bool)revertToHistoricSnapshot:(int)nr;

@@ -352,7 +352,7 @@ C64::saveToSnapshot(Snapshot *snapshot)
 	
 	snapshot->setTimestamp(time(NULL));
 	snapshot->setPAL(isPAL());
-	snapshot->takeScreenshot((uint32_t *)vic->screenBuffer());
+	snapshot->takeScreenshot((uint32_t *)vic->screenBuffer(), isPAL());
 	
     snapshot->alloc(stateSize());
 	uint8_t *ptr = snapshot->getData();

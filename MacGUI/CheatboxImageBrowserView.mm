@@ -88,25 +88,22 @@
 		NSString *subtitle = [NSString stringWithUTF8String:buf];
 		
 		// Determine texture bounds
-		int width, height;
+#if 0
 		if ([c64 historicSnapshotIsPAL:i]) {
-			width = PAL_VISIBLE_PIXELS;
-			height = PAL_VISIBLE_RASTERLINES;
-			// Skip invisible lines
-			// TODO: Why do we store invisible lines in screen texture???
-			data += PAL_UPPER_INVISIBLE * 4 * width;
+            width = 340; // PAL_VISIBLE_PIXELS;
+            height = PAL_VISIBLE_RASTERLINES;
             // NSLog(@"PAL image %d x %d", width, height);
 		} else {
 			width = NTSC_VISIBLE_PIXELS;
 			height = NTSC_VISIBLE_RASTERLINES;
-			// Skip invisible lines
-			// TODO: Why do we store invisible lines in screen texture???
-			data += NTSC_UPPER_INVISIBLE * 4 * width;
             // NSLog(@"NTSC image %d x %d", width, height);
 		}
+#endif
 					
 		// Create bitmap representation
-		NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:	&data 
+        int width = [[controller c64] historicSnapshotImageWidth:i];
+        int height = [[controller c64] historicSnapshotImageHeight:i];
+		NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:	&data
 																		pixelsWide: width
 																		pixelsHigh: height 
 																	 bitsPerSample: 8

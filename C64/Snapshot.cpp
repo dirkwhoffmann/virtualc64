@@ -162,3 +162,30 @@ Snapshot::writeToBuffer(uint8_t *buffer)
 
     return sizeof(header) + header.size;
 }
+
+void
+Snapshot::takeScreenshot(uint32_t *buf, bool pal)
+{
+    unsigned x_start = (pal ? 23 : 20);
+    unsigned y_start = (pal ? 25 : 0);
+       
+    if (pal) {
+        x_start = PAL_LEFT_BORDER_WIDTH - 36;
+        y_start = PAL_UPPER_BORDER_HEIGHT - 34;
+        header.screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
+        header.screenshot.height = 34 + PAL_CANVAS_HEIGHT + 34;
+    } else {
+        x_start = NTSC_LEFT_BORDER_WIDTH - 42;
+        y_start = NTSC_UPPER_BORDER_HEIGHT - 9;
+        header.screenshot.width = 36 + PAL_CANVAS_WIDTH + 36;
+        header.screenshot.height = 9 + PAL_CANVAS_HEIGHT + 9;
+    }
+    
+    uint32_t *target = header.screenshot.screen;
+    buf += x_start + y_start * NTSC_PIXELS;
+    for (unsigned i = 0; i < header.screenshot.height; i++) {
+        memcpy(target, buf, header.screenshot.width * 4);
+        target += header.screenshot.width;
+        buf += NTSC_PIXELS;
+    }
+}
