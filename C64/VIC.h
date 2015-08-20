@@ -452,11 +452,6 @@ private:
 	    Note that partial DMA lines may not appear. */	
 	bool markDMALines;
 
-	//! mark rasterline for debugging
-	/*! If set to a positive value, the specific rasterline is highlighted. The feature is intended for 
-	    debugging purposes, only */
-    int8_t rasterlineDebug[PAL_HEIGHT];
-
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                             Methods

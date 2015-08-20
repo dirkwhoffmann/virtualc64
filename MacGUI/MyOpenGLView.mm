@@ -248,9 +248,6 @@ void checkForOpenGLErrors()
 
 - (void)setEyeZ:(float)newZ
 {
-    // TODO: REMOVE AFTER DEBUGGING
-    newZ += 0.2;
-    
     currentEyeZ = targetEyeZ = newZ;
 }
 
@@ -304,6 +301,7 @@ void checkForOpenGLErrors()
     assert(0);
 }
 
+#if 0
 - (void)setPAL
 {
    	[self setEyeX:PAL_INITIAL_EYE_X];
@@ -317,6 +315,7 @@ void checkForOpenGLErrors()
 	[self setEyeY:NTSC_INITIAL_EYE_Y];
 	[self setEyeZ:NTSC_INITIAL_EYE_Z]; 
 }
+#endif
 
 - (void)updateAngles
 {
@@ -586,11 +585,28 @@ void checkForOpenGLErrors()
 	textureYStart = (float)c64->vic->getFirstVisibleLine() / (float)TEXTURE_HEIGHT;
 	textureYEnd = (float)c64->vic->getLastVisibleLine() / (float)TEXTURE_HEIGHT;
     */
-    // DISPLAY FULL TEXTURE FOR DEBUGGING
+    
+    if (c64->isPAL()) {
+        // PAL border will be 36 pixels wide and 34 pixels heigh
+        textureXStart = (float)(PAL_LEFT_BORDER_WIDTH - 36.0) / (float)TEXTURE_WIDTH;
+        textureXEnd = (float)(PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + 36.0) / (float)TEXTURE_WIDTH;
+        textureYStart = (float)(PAL_UPPER_BORDER_HEIGHT - 34.0) / (float)TEXTURE_HEIGHT;
+        textureYEnd = (float)(PAL_UPPER_BORDER_HEIGHT + PAL_CANVAS_HEIGHT + 34.0) / (float)TEXTURE_HEIGHT;
+    } else {
+        // NTSC border will be 52 pixels wide and 9 pixels heigh
+        textureXStart = (float)(NTSC_LEFT_BORDER_WIDTH - 42.0) / (float)TEXTURE_WIDTH;
+        textureXEnd = (float)(NTSC_LEFT_BORDER_WIDTH + NTSC_CANVAS_WIDTH + 42.0) / (float)TEXTURE_WIDTH;
+        textureYStart = (float)(NTSC_UPPER_BORDER_HEIGHT - 9) / (float)TEXTURE_HEIGHT;
+        textureYEnd = (float)(NTSC_UPPER_BORDER_HEIGHT + NTSC_CANVAS_HEIGHT + 9) / (float)TEXTURE_HEIGHT;
+    }
+    
+    // Enable this for debugging (will display the whole texture)
+    /*
     textureXStart = 0.0;
     textureXEnd = 1.0;
     textureYStart = 0.0;
     textureYEnd = 1.0;
+    */
     
     dimX = 0.64;
 	dimY = dimX * (float)c64->vic->getTotalScreenHeight() / (float)c64->vic->getTotalScreenWidth() / c64->vic->getPixelAspectRatio();
@@ -602,8 +618,7 @@ void checkForOpenGLErrors()
 	if (c64) {
 		void *buf = c64->vic->screenBuffer(); 
 		assert(buf != NULL);
-		// glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, c64->vic->getTotalScreenWidth(), TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, NTSC_PIXELS, TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, NTSC_PIXELS, PAL_RASTERLINES, GL_RGBA, GL_UNSIGNED_BYTE, buf);
         checkForOpenGLErrors();
 	}
 }
@@ -640,7 +655,6 @@ void checkForOpenGLErrors()
     glEnd();		
 }
 
-
 - (void)drawRect3D:(NSRect)r
 {	
     [self determineScreenGeometry];
@@ -657,15 +671,16 @@ void checkForOpenGLErrors()
 	glLoadIdentity();
 				  
 	// Set viewpoint
-	gluLookAt(0, 0, 1.33, 0, 0, 0, 0, 1, 0);
-		
+	// gluLookAt(0, 0, 1.33, 0, 0, 0, 0, 1, 0);
+    gluLookAt(0, 0, 1.4, 0, 0, 0, 0, 1, 0);
+    
 	bool animation = [self animates];
 
 	// bool drawBackground = animation || !drawC64texture;
 	// bool drawBackground = !drawC64texture;
 	if (drawBackground) {
-		float depth = -5.0f;
-		float scale = 9.2f;
+        float depth = -5.0f;
+        float scale = 9.3f;
 		glBindTexture(GL_TEXTURE_2D, bgTexture); 
 		glBegin(GL_QUADS);		
 		glTexCoord2f(BG_TEX_RIGHT, BG_TEX_TOP);
@@ -713,7 +728,7 @@ void checkForOpenGLErrors()
 
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glBegin(GL_QUADS);			
-		
+        
 		// FRONT
 		glTexCoord2f(textureXEnd, textureYStart);
 		glVertex3f( dimX, dimY, dimX);		// Top Right Of The Quad (Front)

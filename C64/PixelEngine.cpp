@@ -1,7 +1,7 @@
 //
 //  PixelEngine.cpp
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2015 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ PixelEngine::PixelEngine() // C64 *c64)
     
     debug(2, "  Creating PixelEngine at address %p...\n", this);
     
-    currentScreenBuffer = screenBuffer1;
+    currentScreenBuffer = screenBuffer1[0];
     pixelBuffer = currentScreenBuffer;
     pxbuf = currentScreenBuffer;
     zbuf = zBuffer;
@@ -60,11 +60,10 @@ PixelEngine::reset(C64 *c64)
 void
 PixelEngine::resetScreenBuffers()
 {
-    for (unsigned i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
-        screenBuffer1[i] = ((i / NTSC_PIXELS) % 2) ? colors[11] : colors[12];
-    }
-    for (unsigned i = 0; i < sizeof(screenBuffer2) / sizeof(int); i++) {
-        screenBuffer2[i] = ((i / NTSC_PIXELS) % 2) ? colors[11] : colors[12];
+    for (unsigned line = 0; line < PAL_RASTERLINES; line++) {
+        for (unsigned i = 0; i < NTSC_PIXELS; i++) {
+            screenBuffer1[line][i] = screenBuffer2[line][i] = (line % 2) ? colors[8] : colors[9];
+        }
     }
 }
 
@@ -73,11 +72,6 @@ void
 PixelEngine::beginFrame()
 {
     // Set pxbuf, zbuf, scrcbuf to the beginning of the corresponding buffers plus some horizontal shift
-    /*
-    pxbuf = pixelBuffer - 28 + vic->leftBorderWidth;
-    zbuf = zBuffer - 28 + vic->leftBorderWidth;
-    srcbuf = pixelSource - 28 + vic->leftBorderWidth;
-     */
     if (c64->isPAL()) {
         bufshift = PAL_LEFT_BORDER_WIDTH - 28;
         pxbuf = pixelBuffer + bufshift;
@@ -106,42 +100,30 @@ PixelEngine::beginRasterline()
     
     // Clear pixel buffer (has same size as pixelSource and zBuffer)
     // FOR DEBUGGING ONLY, 0xBB is a randomly chose debug color
-    memset(pixelBuffer, 0xBB, sizeof(pixelSource));
+    if (!vic->vblank)
+        memset(pixelBuffer, 0xBB, sizeof(pixelSource));
 }
 
 void
 PixelEngine::endRasterline()
 {
-    // Make the border look nice
-    expandBorders();
-
-    // Write some vertical debug lines
-/*
-    pixelBuffer[0] = 0x50FFFF50;
-    if (c64->isPAL())
-        pixelBuffer[PAL_LEFT_BORDER_WIDTH+1] = 0x50FFFF50;
-    else
-        pixelBuffer[NTSC_LEFT_BORDER_WIDTH+1] = 0x50FFFF50;
-*/
-    
-    // Advance pixelBuffer one line (skip vblank lines)
-    /* OLD CODE: PAL AND NTSC USED DIFFERENT OFFSETS WHICH IS MORE COMPLEX THAN NECESSARY
-    pixelBuffer += vic->totalScreenWidth;
-    pxbuf += vic->totalScreenWidth;
-    */
-    pixelBuffer += NTSC_PIXELS;
-    pxbuf += NTSC_PIXELS;
-    
-    // Hopefully, we never write outside one of the two screen buffers
-    assert(pixelBuffer - screenBuffer1 < 511*512 || pixelBuffer - screenBuffer2 < 511*512);
-    assert(pxbuf - screenBuffer1 < 511*512 || pxbuf - screenBuffer2 < 511*512);
+    if (!vic->vblank) {
+        
+        // Make the border look nice
+        expandBorders();
+        
+        // Advance pixelBuffer one line
+        if (c64->getRasterline() < PAL_UPPER_VBLANK + PAL_RASTERLINES) {
+            pixelBuffer += NTSC_PIXELS;
+            pxbuf += NTSC_PIXELS;
+        }
+    }
 }
-
 void
 PixelEngine::endFrame()
 {
     // Switch active screen buffer
-    currentScreenBuffer = (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1;
+    currentScreenBuffer = (currentScreenBuffer == screenBuffer1[0]) ? screenBuffer2[0] : screenBuffer1[0];
     pixelBuffer = currentScreenBuffer;    
 }
 
@@ -776,6 +758,8 @@ inline void
 PixelEngine::setFramePixel(int offset, int rgba)
 {
     assert(offset + bufshift < NTSC_PIXELS);
+    assert(&pxbuf[offset] >= &screenBuffer1[0][0] && &pxbuf[offset] < &screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS] ||
+           &pxbuf[offset] >= &screenBuffer2[0][0] && &pxbuf[offset] < &screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS]);
     
     zbuf[offset] = BORDER_LAYER_DEPTH;
     pxbuf[offset] = rgba;
@@ -787,6 +771,8 @@ inline void
 PixelEngine::setForegroundPixel(int offset, int rgba)
 {
     assert(offset + bufshift < NTSC_PIXELS);
+    assert(&pxbuf[offset] >= &screenBuffer1[0][0] && &pxbuf[offset] < &screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS] ||
+           &pxbuf[offset] >= &screenBuffer2[0][0] && &pxbuf[offset] < &screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS]);
 
     if (FOREGROUND_LAYER_DEPTH <= zbuf[offset]) {
         zbuf[offset] = FOREGROUND_LAYER_DEPTH;
@@ -799,6 +785,8 @@ inline void
 PixelEngine::setBackgroundPixel(int offset, int rgba)
 {
     assert(offset + bufshift < NTSC_PIXELS);
+    assert(&pxbuf[offset] >= &screenBuffer1[0][0] && &pxbuf[offset] < &screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS] ||
+           &pxbuf[offset] >= &screenBuffer2[0][0] && &pxbuf[offset] < &screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS]);
 
     if (BACKGROUD_LAYER_DEPTH <= zbuf[offset]) {
         zbuf[offset] = BACKGROUD_LAYER_DEPTH;
@@ -811,6 +799,8 @@ PixelEngine::setSpritePixel(int offset, int rgba, int depth, int source)
 {
     assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
     assert(offset + bufshift < NTSC_PIXELS);
+    assert(&pxbuf[offset] >= &screenBuffer1[0][0] && &pxbuf[offset] < &screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS] ||
+           &pxbuf[offset] >= &screenBuffer2[0][0] && &pxbuf[offset] < &screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS]);
     
     /*
     if (offset + bufshift >= NTSC_PIXELS)
@@ -858,9 +848,11 @@ PixelEngine::expandBorders()
         // pixelBuffer[i] = colors[5]; // for debugging
     }
 
+    /*
     // Draw grid lines
     for (unsigned i = 0; i < NTSC_PIXELS; i += 10)
-        pixelBuffer[i] = 0xFFFFFFFF;
+    pixelBuffer[i] = 0xFFFFFFFF;
+    */
 }
 
 void

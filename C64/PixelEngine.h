@@ -150,13 +150,13 @@ private:
     /*! The VIC chip writes it output into this buffer. The contents of the array is later copied into to
         texture RAM of your graphic card by the drawRect method in the OpenGL related code. */
     // TODO: CHANGE TO screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS];
-    int screenBuffer1[512 * 512];
+    int screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS];
     
     //! Second screen buffer
     /*! The VIC chip uses double buffering. Once a frame is drawn, the VIC chip writes the next frame to the 
         second buffer. */
     // TODO: CHANGE TO screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS];
-    int screenBuffer2[512 * 512];
+    int screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS];
     
     //! Target screen buffer for all rendering methods
     /*! The variable points either to screenBuffer1 or screenBuffer2 */
@@ -206,7 +206,7 @@ public:
     
     //! Get screen buffer that is currently stable
     /*! This method is called by the OpenGL code at the beginning of each frame. */
-    inline void *screenBuffer() { return (currentScreenBuffer == screenBuffer1) ? screenBuffer2 : screenBuffer1; }
+    inline void *screenBuffer() { return (currentScreenBuffer == screenBuffer1[0]) ? screenBuffer2[0] : screenBuffer1[0]; }
 
     
     // -----------------------------------------------------------------------------------------------

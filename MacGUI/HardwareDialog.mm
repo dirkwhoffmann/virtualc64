@@ -83,7 +83,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     NSLog(@"setPalAction");
     
     [c64 setPAL];
-    [[controller screen] setPAL];
+    // [[controller screen] setPAL];
     [self update];
 }
 
@@ -92,7 +92,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     NSLog(@"setNtscAction");
     
     [c64 setNTSC];
-    [[controller screen] setNTSC];
+    // [[controller screen] setNTSC];
     [self update];	
 }
 

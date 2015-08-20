@@ -564,11 +564,13 @@
 {
     c64->suspend();
     c64->loadFromSnapshot(snapshot);
+    /*
     if ([self isPAL])
         [screen setPAL];
     else
         [screen setNTSC];
-    c64->resume();
+     */
+     c64->resume();
 }
 
 - (void) loadFromSnapshot:(V64Snapshot *)snapshot 

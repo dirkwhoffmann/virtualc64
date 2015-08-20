@@ -63,13 +63,13 @@ static const uint16_t NTSC_VISIBLE_PIXELS = 418;
 static const uint16_t NTSC_UPPER_VBLANK = 16;
 
 //! Heigt of upper boder
-static const uint16_t NTSC_UPPER_BORDER_HEIGHT = 23; // Should be 10
+static const uint16_t NTSC_UPPER_BORDER_HEIGHT = 10; // Was 23
 
 //! Height of canvas area
 static const uint16_t NTSC_CANVAS_HEIGHT = 200;
 
 //! Lower border height
-static const uint16_t NTSC_LOWER_BORDER_HEIGHT = 12; // Should be 25
+static const uint16_t NTSC_LOWER_BORDER_HEIGHT = 25; // Was 12
 
 //! Number of VBLANK lines at bottom
 static const uint16_t NTSC_LOWER_VBLANK = 12;
@@ -154,7 +154,7 @@ static const uint16_t PAL_LOWER_VBLANK = 12;
 static const uint16_t PAL_HEIGHT = 312; // 16 + 35 + 200 + 49 + 12
 
 //! Number of drawn rasterlines per frame
-static const uint16_t PAL_RASTERLINES = 284; // 43 + 200 + 49
+static const uint16_t PAL_RASTERLINES = 284; // 35 + 200 + 49
 
 //! Number of viewable rasterlines per frame
 static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292

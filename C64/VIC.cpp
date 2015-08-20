@@ -111,7 +111,6 @@ VIC::reset(C64 *c64)
     
 	// Debugging	
 	drawSprites = true;
-    memset(rasterlineDebug, -1, sizeof(rasterlineDebug));
 	spriteSpriteCollisionEnabled = 0xFF;
 	spriteBackgroundCollisionEnabled = 0xFF;
 }
@@ -1045,6 +1044,7 @@ VIC::endFrame()
     pixelEngine.endFrame();
 }
 
+
 void 
 VIC::beginRasterline(uint16_t line)
 {
@@ -1052,9 +1052,9 @@ VIC::beginRasterline(uint16_t line)
 
     // Determine if we're currently processing a VBLANK line (nothing is drawn in this area)
     if (isPAL) {
-        vblank = line < PAL_UPPER_VBLANK || line > PAL_UPPER_VBLANK + PAL_RASTERLINES;
+        vblank = line < PAL_UPPER_VBLANK || line >= PAL_UPPER_VBLANK + PAL_RASTERLINES;
     } else {
-        vblank = line < NTSC_UPPER_VBLANK || line > NTSC_UPPER_VBLANK + NTSC_RASTERLINES;
+        vblank = line < NTSC_UPPER_VBLANK || line >= NTSC_UPPER_VBLANK + NTSC_RASTERLINES;
     }
 
     /* OLD CODE
@@ -1092,13 +1092,12 @@ VIC::endRasterline()
         pixelEngine.markLine(PixelEngine::WHITE);
     if (markDMALines && badLineCondition)
         pixelEngine.markLine(PixelEngine::RED);
-    if (rasterlineDebug[yCounter] >= 0)
-        pixelEngine.markLine(rasterlineDebug[yCounter] % 16);
-    
-    // DEBUG
-    if (yCounter == 52) {
+
+    /*
+    if (yCounter == 52 && !vblank) {
         pixelEngine.markLine(4);
     }
+    */
     
     pixelEngine.endRasterline();
 }
@@ -2162,9 +2161,6 @@ VIC::cycle65() 	// NTSC only
     updateDisplayState();
     countX();
 }
-
-// unsigned dirktrace = 0;
-// unsigned dirkcnt = 0;
 
 void
 VIC::debug_cycle(unsigned c)
