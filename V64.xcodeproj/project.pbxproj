@@ -239,6 +239,7 @@
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
+		501D2C7D1B85C0F700B1AD0F /* VIC_constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_constants.h; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		50271DE91A7E1CFE00C04290 /* LEDnewRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDnewRed.png; path = images/LEDnewRed.png; sourceTree = "<group>"; };
@@ -507,6 +508,7 @@
 				500B6CA30B905CEC002C36EC /* TOD.h */,
 				500B6CA40B905CEC002C36EC /* TOD.cpp */,
 				50176C600A6F72F3009E80BD /* VIC.h */,
+				501D2C7D1B85C0F700B1AD0F /* VIC_constants.h */,
 				50176C5F0A6F72F3009E80BD /* VIC.cpp */,
 				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
 				506004651B78E9C500EBDD93 /* PixelEngine.h */,

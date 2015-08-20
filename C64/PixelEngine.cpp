@@ -744,7 +744,7 @@ PixelEngine::setSpritePixel(int offset, int color, int nr)
 inline void
 PixelEngine::setFramePixel(int offset, int rgba)
 {
-    assert(offset + bufshift < MAX_VIEWABLE_PIXELS);
+    assert(offset + bufshift < PAL_VISIBLE_PIXELS);
     zbuf[offset] = BORDER_LAYER_DEPTH;
     pxbuf[offset] = rgba;
     // SPEEDUP: THE FOLLOWING LINE SHOULD NOT BE NECESSARY WHEN THE BORDER IS DRAWN FIRST
@@ -754,7 +754,7 @@ PixelEngine::setFramePixel(int offset, int rgba)
 inline void
 PixelEngine::setForegroundPixel(int offset, int rgba)
 {
-    assert(offset + bufshift < MAX_VIEWABLE_PIXELS);
+    assert(offset + bufshift < NTSC_PIXELS);
     if (FOREGROUND_LAYER_DEPTH <= zbuf[offset]) {
         zbuf[offset] = FOREGROUND_LAYER_DEPTH;
         pxbuf[offset] = rgba;
@@ -765,7 +765,7 @@ PixelEngine::setForegroundPixel(int offset, int rgba)
 inline void
 PixelEngine::setBackgroundPixel(int offset, int rgba)
 {
-    assert(offset + bufshift < MAX_VIEWABLE_PIXELS);
+    assert(offset + bufshift < NTSC_PIXELS);
     if (BACKGROUD_LAYER_DEPTH <= zbuf[offset]) {
         zbuf[offset] = BACKGROUD_LAYER_DEPTH;
         pxbuf[offset] = rgba;
@@ -777,7 +777,7 @@ PixelEngine::setSpritePixel(int offset, int rgba, int depth, int source)
 {
     assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
   
-    if (offset + bufshift >= MAX_VIEWABLE_PIXELS)
+    if (offset + bufshift >= NTSC_PIXELS)
         return;
     
     if (depth <= zbuf[offset]) {

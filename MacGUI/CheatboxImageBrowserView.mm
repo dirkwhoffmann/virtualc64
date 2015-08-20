@@ -90,18 +90,18 @@
 		// Determine texture bounds
 		int width, height;
 		if ([c64 historicSnapshotIsPAL:i]) {
-			width = VIC::PAL_VISIBLE_PIXELS;
-			height = VIC::PAL_VISIBLE_RASTERLINES;
+			width = PAL_VISIBLE_PIXELS;
+			height = PAL_VISIBLE_RASTERLINES;
 			// Skip invisible lines
 			// TODO: Why do we store invisible lines in screen texture???
-			data += VIC::PAL_UPPER_INVISIBLE * 4 * width;
+			data += PAL_UPPER_INVISIBLE * 4 * width;
             // NSLog(@"PAL image %d x %d", width, height);
 		} else {
-			width = VIC::NTSC_VISIBLE_PIXELS;
-			height = VIC::NTSC_VISIBLE_RASTERLINES;
+			width = NTSC_VISIBLE_PIXELS;
+			height = NTSC_VISIBLE_RASTERLINES;
 			// Skip invisible lines
 			// TODO: Why do we store invisible lines in screen texture???
-			data += VIC::NTSC_UPPER_INVISIBLE * 4 * width;
+			data += NTSC_UPPER_INVISIBLE * 4 * width;
             // NSLog(@"NTSC image %d x %d", width, height);
 		}
 					

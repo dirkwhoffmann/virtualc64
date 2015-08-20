@@ -32,6 +32,7 @@
 #define _PIXELENGINGE_INC
 
 #include "VirtualComponent.h"
+#include "VIC_constants.h"
 
 // Forward declarations
 class VIC;
@@ -114,11 +115,6 @@ public:
         GREY3   = 0x0F
     };
     
-    //! Maximum number of viewable pixels per rasterline
-    /*! TODO: 418 MIGHT BE TOO LARGE. CHECK HOW MUCH THE BORDER EXTENDS TO THE LEFT AND RIGHT
-        IN BOTH PAL AND NTSC MODE. */
-    static const uint16_t MAX_VIEWABLE_PIXELS = 418;
-
     
     // -----------------------------------------------------------------------------------------------
     //                                    Pixel buffers and colors
@@ -179,7 +175,7 @@ private:
         in the z buffer. The lower the value of the z buffer, the closer it is to the viewer.
         The z buffer is cleared before a new rasterline is drawn.
      */
-    int zBuffer[MAX_VIEWABLE_PIXELS];
+    int zBuffer[NTSC_PIXELS];
     
     //! Pointer into the z buffer
     /*! This value of this variable equals zBufer plus some offset. Using this variable instead of zBuffer makes 
@@ -190,7 +186,7 @@ private:
     /*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
      The information is utilized to detect sprite-sprite and sprite-background collisions.
      */
-    int pixelSource[MAX_VIEWABLE_PIXELS];
+    int pixelSource[NTSC_PIXELS];
     
     //! Pointer into the pixel source buffer
     /*! This value of this variable equals pixelSource plus some offset. Using this variable instead of pixelSource makes

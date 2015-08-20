@@ -480,24 +480,31 @@ public:
 	//! Returns the number of the currently drawn rasterline
 	inline uint64_t getRasterline() { return rasterline; }
 
+
+    
 	// Returns the number of frames per second
 	/*! Number varies between PAL and NTSC machines */	
-    inline int getFramesPerSecond() { if (pal) return VIC::PAL_REFRESH_RATE; else return VIC::NTSC_REFRESH_RATE; }
+    // TODO: MOVE TO VIC CLASS
+    inline int getFramesPerSecond() { if (pal) return PAL_REFRESH_RATE; else return NTSC_REFRESH_RATE; }
 	
 	//! Returns the number of rasterlines per frame
 	/*! Number varies between PAL and NTSC machines */	
-    inline int getRasterlinesPerFrame() { if (pal) return VIC::PAL_RASTERLINES; else return VIC::NTSC_RASTERLINES; }
+    // TODO: MOVE TO VIC CLASS
+    inline int getRasterlinesPerFrame() { if (pal) return PAL_HEIGHT; else return NTSC_HEIGHT; }
 	
 	//! Returns the number of CPU cycles performed per rasterline
 	/*! Number varies between PAL and NTSC machines */	
-	inline int getCyclesPerRasterline() { if (pal) return VIC::PAL_CYCLES_PER_RASTERLINE; else return VIC::NTSC_CYCLES_PER_RASTERLINE; }
+    // TODO: MOVE TO VIC CLASS
+	inline int getCyclesPerRasterline() { if (pal) return PAL_CYCLES_PER_RASTERLINE; else return NTSC_CYCLES_PER_RASTERLINE; }
 	
 	//! Returns the number of CPU cycles performed per frame
 	/*! Number varies between PAL and NTSC machines */	
-	inline int getCyclesPerFrame() { if (pal) return VIC::PAL_RASTERLINES * VIC::PAL_CYCLES_PER_RASTERLINE; else return VIC::NTSC_RASTERLINES * VIC::NTSC_CYCLES_PER_RASTERLINE; }
+    // TODO: MOVE TO VIC CLASS
+	inline int getCyclesPerFrame() { if (pal) return PAL_HEIGHT * PAL_CYCLES_PER_RASTERLINE; else return NTSC_HEIGHT * NTSC_CYCLES_PER_RASTERLINE; }
         
 	//! Returns the time interval between two frames
-	inline int getFrameDelay() { if (pal) return 1000000 / VIC::PAL_REFRESH_RATE; else return 1000000 / VIC::NTSC_REFRESH_RATE; }
+    // TODO: MOVE TO VIC CLASS
+	inline int getFrameDelay() { if (pal) return 1000000 / PAL_REFRESH_RATE; else return 1000000 / NTSC_REFRESH_RATE; }
 
     
 	// ---------------------------------------------------------------------------------------------
