@@ -101,9 +101,9 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [[controller screen] setJoyChar:'x' keymap:2 direction:JOYSTICK_FIRE];
 
     // Video
-    [[controller screen] setEyeX:(float)PAL_INITIAL_EYE_X];
-    [[controller screen] setEyeY:(float)PAL_INITIAL_EYE_Y];
-    [[controller screen] setEyeZ:(float)PAL_INITIAL_EYE_Z];
+    [[controller screen] setEyeX:(float)0.0];
+    [[controller screen] setEyeY:(float)0.0];
+    [[controller screen] setEyeZ:(float)0.0];
     [[controller screen] setAntiAliasing:1];
     [c64 setColorScheme:CCS64];
     

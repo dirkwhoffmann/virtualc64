@@ -301,22 +301,6 @@ void checkForOpenGLErrors()
     assert(0);
 }
 
-#if 0
-- (void)setPAL
-{
-   	[self setEyeX:PAL_INITIAL_EYE_X];
-	[self setEyeY:PAL_INITIAL_EYE_Y];
-	[self setEyeZ:PAL_INITIAL_EYE_Z]; 
-}
-
-- (void)setNTSC
-{
-   	[self setEyeX:NTSC_INITIAL_EYE_X];
-	[self setEyeY:NTSC_INITIAL_EYE_Y];
-	[self setEyeZ:NTSC_INITIAL_EYE_Z]; 
-}
-#endif
-
 - (void)updateAngles
 {
 	if ([self animates]) {

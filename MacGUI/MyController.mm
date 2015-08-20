@@ -221,9 +221,9 @@
 	[defaultValues setObject:@0 forKey:VC64SIDSamplingMethodKey];
 	
 	// Video
-	[defaultValues setObject:@((float)PAL_INITIAL_EYE_X) forKey:VC64EyeX];
-	[defaultValues setObject:@((float)PAL_INITIAL_EYE_Y) forKey:VC64EyeY];
-	[defaultValues setObject:@((float)PAL_INITIAL_EYE_Z) forKey:VC64EyeZ];
+	[defaultValues setObject:@((float)0.0) forKey:VC64EyeX];
+	[defaultValues setObject:@((float)0.0) forKey:VC64EyeY];
+	[defaultValues setObject:@((float)0.0) forKey:VC64EyeZ];
 
 	[defaultValues setObject:@((int)CCS64) forKey:VC64ColorSchemeKey];
 	[defaultValues setObject:@1 forKey:VC64VideoFilterKey];

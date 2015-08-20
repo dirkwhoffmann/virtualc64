@@ -57,13 +57,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     NSLog(@"Restoring virtual machine factoring settings");
     
     // System
-    if (![c64 isPAL]) {
-        [self setPalAction:self];
-        // We need to reset those as well because they differ in PAL and NTSC mode: 
-        [[controller screen] setEyeX:(float)PAL_INITIAL_EYE_X];
-        [[controller screen] setEyeY:(float)PAL_INITIAL_EYE_Y];
-        [[controller screen] setEyeZ:(float)PAL_INITIAL_EYE_Z];
-    }
+    [self setPalAction:self];
     
     // Peripherals
     [c64 setWarpLoad:true];
@@ -83,7 +77,6 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     NSLog(@"setPalAction");
     
     [c64 setPAL];
-    // [[controller screen] setPAL];
     [self update];
 }
 

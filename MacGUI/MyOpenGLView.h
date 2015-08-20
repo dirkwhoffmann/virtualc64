@@ -55,24 +55,6 @@ const int BG_TEXTURE_WIDTH = 1024;
 const int BG_TEXTURE_HEIGHT= 512;
 const int BG_TEXTURE_DEPTH = 4;
 
-// Initial viewpoint translation values eyeX, eyeY, and eyeZ
-/* OLD CODE
-#define NTSC_INITIAL_EYE_X 0.000000
-#define NTSC_INITIAL_EYE_Y -0.024490
-#define NTSC_INITIAL_EYE_Z 0.0
-
-#define PAL_INITIAL_EYE_X 0.016327
-#define PAL_INITIAL_EYE_Y 0.008163
-#define PAL_INITIAL_EYE_Z 0.0
-*/
-#define NTSC_INITIAL_EYE_X 0.000000
-#define NTSC_INITIAL_EYE_Y 0.000000
-#define NTSC_INITIAL_EYE_Z 0.0
-
-#define PAL_INITIAL_EYE_X 0.0000000
-#define PAL_INITIAL_EYE_Y 0.0000000
-#define PAL_INITIAL_EYE_Z 0.0
-
 @interface MyOpenGLView : NSOpenGLView
 {
 	IBOutlet MyController *controller;
