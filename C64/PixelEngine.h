@@ -496,11 +496,7 @@ public:
     //! Draw a horizontal colored line into the screen buffer
     /*! This method is utilized for debugging purposes, only. */
     void markLine(uint8_t color, unsigned start = 0, unsigned end = NTSC_PIXELS);
-
-    //! Draw a vertical colored line into the screen buffer
-    /*! This method is utilized for debugging purposes, only. */
-    // void markColumn(uint8_t color, unsigned start = 0, unsigned end = PAL_RASTERLINES);
-
+    
 };
 
     

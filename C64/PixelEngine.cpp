@@ -106,8 +106,12 @@ PixelEngine::endRasterline()
     expandBorders();
 
     // Advance pixelBuffer one line (skip vblank lines)
+    /* OLD CODE: PAL AND NTSC USED DIFFERENT OFFSETS WHICH IS MORE COMPLEX THAN NECESSARY
     pixelBuffer += vic->totalScreenWidth;
     pxbuf += vic->totalScreenWidth;
+    */
+    pixelBuffer += NTSC_PIXELS;
+    pxbuf += NTSC_PIXELS;
     
     // Hopefully, we never write outside one of the two screen buffers
     assert(pixelBuffer - screenBuffer1 < 511*512 || pixelBuffer - screenBuffer2 < 511*512);
@@ -798,6 +802,7 @@ PixelEngine::setSpritePixel(int offset, int rgba, int depth, int source)
 void
 PixelEngine::expandBorders()
 {
+    /* NEED TO USE CORRECT VALUES
     int color;
     unsigned leftPixelPos = -4 - 28 + vic->leftBorderWidth;
     unsigned rightPixelPos = leftPixelPos+(48*8)-1;
@@ -815,6 +820,7 @@ PixelEngine::expandBorders()
         //pixelBuffer[i] = colors[4];
         pixelBuffer[i] = color;
     }
+    */
 }
 
 void
@@ -827,17 +833,3 @@ PixelEngine::markLine(uint8_t color, unsigned start, unsigned end)
         pixelBuffer[start + i] = rgba;
     }	
 }
-
-#if 0
-void markColumn(uint8_t color, unsigned column)
-{
-    
-    assert (end <= PAL_RASTERLINES);
-
-    int rgba = colors[color];
-    for (unsigned i = 0; i < PAL_RASTERLINES; i++) {
-        screenBuffer1[
-        pixelBuffer[start + i*vic->] = rgba;
-    }
-}
-#endif
