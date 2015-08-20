@@ -36,13 +36,13 @@ static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
 static const uint16_t NTSC_LEFT_VBLANK = 77;
 
 //! Width of left border
-static const uint16_t NTSC_LEFT_BORDER_WIDTH = 49; // Should be 55
+static const uint16_t NTSC_LEFT_BORDER_WIDTH = 55; // was 49
 
 //! Width of canvas area
 static const uint16_t NTSC_CANVAS_WIDTH = 320;
 
 //! Width of right border
-static const uint16_t NTSC_RIGHT_BORDER_WIDTH = 49; // Should be 53
+static const uint16_t NTSC_RIGHT_BORDER_WIDTH = 53; // was 49
 
 //! Width of right VBLANK area
 static const uint16_t NTSC_RIGHT_VBLANK = 15;

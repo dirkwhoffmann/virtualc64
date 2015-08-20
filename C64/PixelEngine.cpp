@@ -72,13 +72,23 @@ PixelEngine::resetScreenBuffers()
 void
 PixelEngine::beginFrame()
 {
-    bufshift = - 28 + vic->leftBorderWidth;
-    assert(bufshift >= 0);
-
     // Set pxbuf, zbuf, scrcbuf to the beginning of the corresponding buffers plus some horizontal shift
+    /*
     pxbuf = pixelBuffer - 28 + vic->leftBorderWidth;
     zbuf = zBuffer - 28 + vic->leftBorderWidth;
     srcbuf = pixelSource - 28 + vic->leftBorderWidth;
+     */
+    if (c64->isPAL()) {
+        bufshift = PAL_LEFT_BORDER_WIDTH - 28;
+        pxbuf = pixelBuffer + bufshift;
+        zbuf = zBuffer + bufshift;
+        srcbuf = pixelSource + bufshift;
+    } else {
+        bufshift = NTSC_LEFT_BORDER_WIDTH - 28;
+        pxbuf = pixelBuffer + bufshift;
+        zbuf = zBuffer + bufshift;
+        srcbuf = pixelSource + bufshift;
+    }
 }
 
 void
@@ -105,6 +115,15 @@ PixelEngine::endRasterline()
     // Make the border look nice
     expandBorders();
 
+    // Write some vertical debug lines
+/*
+    pixelBuffer[0] = 0x50FFFF50;
+    if (c64->isPAL())
+        pixelBuffer[PAL_LEFT_BORDER_WIDTH+1] = 0x50FFFF50;
+    else
+        pixelBuffer[NTSC_LEFT_BORDER_WIDTH+1] = 0x50FFFF50;
+*/
+    
     // Advance pixelBuffer one line (skip vblank lines)
     /* OLD CODE: PAL AND NTSC USED DIFFERENT OFFSETS WHICH IS MORE COMPLEX THAN NECESSARY
     pixelBuffer += vic->totalScreenWidth;
@@ -756,7 +775,8 @@ PixelEngine::setSpritePixel(int offset, int color, int nr)
 inline void
 PixelEngine::setFramePixel(int offset, int rgba)
 {
-    assert(offset + bufshift < PAL_VISIBLE_PIXELS);
+    assert(offset + bufshift < NTSC_PIXELS);
+    
     zbuf[offset] = BORDER_LAYER_DEPTH;
     pxbuf[offset] = rgba;
     // SPEEDUP: THE FOLLOWING LINE SHOULD NOT BE NECESSARY WHEN THE BORDER IS DRAWN FIRST
@@ -767,6 +787,7 @@ inline void
 PixelEngine::setForegroundPixel(int offset, int rgba)
 {
     assert(offset + bufshift < NTSC_PIXELS);
+
     if (FOREGROUND_LAYER_DEPTH <= zbuf[offset]) {
         zbuf[offset] = FOREGROUND_LAYER_DEPTH;
         pxbuf[offset] = rgba;
@@ -778,6 +799,7 @@ inline void
 PixelEngine::setBackgroundPixel(int offset, int rgba)
 {
     assert(offset + bufshift < NTSC_PIXELS);
+
     if (BACKGROUD_LAYER_DEPTH <= zbuf[offset]) {
         zbuf[offset] = BACKGROUD_LAYER_DEPTH;
         pxbuf[offset] = rgba;
@@ -788,9 +810,12 @@ void
 PixelEngine::setSpritePixel(int offset, int rgba, int depth, int source)
 {
     assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
-  
+    assert(offset + bufshift < NTSC_PIXELS);
+    
+    /*
     if (offset + bufshift >= NTSC_PIXELS)
         return;
+    */
     
     if (depth <= zbuf[offset]) {
         zbuf[offset] = depth;
@@ -802,25 +827,40 @@ PixelEngine::setSpritePixel(int offset, int rgba, int depth, int source)
 void
 PixelEngine::expandBorders()
 {
-    /* NEED TO USE CORRECT VALUES
-    int color;
-    unsigned leftPixelPos = -4 - 28 + vic->leftBorderWidth;
-    unsigned rightPixelPos = leftPixelPos+(48*8)-1;
+    int color, lastX;
+    unsigned leftPixelPos;
+    unsigned rightPixelPos;
     
-    assert(leftPixelPos < 512);
-    assert(rightPixelPos < 512);
+    // unsigned leftPixelPos = -4 - 28 + vic->leftBorderWidth;
+    // unsigned rightPixelPos = leftPixelPos+(48*8)-1;
+    if (c64->isPAL()) {
+        leftPixelPos = PAL_LEFT_BORDER_WIDTH - (4*8);
+        rightPixelPos = PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + (4*8) - 1;
+        lastX = PAL_PIXELS;
+    } else {
+        leftPixelPos = NTSC_LEFT_BORDER_WIDTH - (4*8);
+        rightPixelPos = NTSC_LEFT_BORDER_WIDTH + NTSC_CANVAS_WIDTH + (4*8) - 1;
+        lastX = NTSC_PIXELS;
+    }
+    
+    // Make picked pixels visible for debugging
+    // pixelBuffer[leftPixelPos + 1] = colors[5];
+    // pixelBuffer[rightPixelPos - 1] = colors[5];
     
     color = pixelBuffer[leftPixelPos];
     for (unsigned i = 0; i < leftPixelPos; i++) {
-        //pixelBuffer[i] = colors[5];
         pixelBuffer[i] = color;
+        // pixelBuffer[i] = colors[5]; // for debugging
     }
     color = pixelBuffer[rightPixelPos];
-    for (unsigned i = rightPixelPos+1; i < vic->totalScreenWidth; i++) {
-        //pixelBuffer[i] = colors[4];
+    for (unsigned i = rightPixelPos+1; i < lastX; i++) {
         pixelBuffer[i] = color;
+        // pixelBuffer[i] = colors[5]; // for debugging
     }
-    */
+
+    // Draw grid lines
+    for (unsigned i = 0; i < NTSC_PIXELS; i += 10)
+        pixelBuffer[i] = 0xFFFFFFFF;
 }
 
 void
