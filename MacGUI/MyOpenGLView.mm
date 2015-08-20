@@ -248,7 +248,10 @@ void checkForOpenGLErrors()
 
 - (void)setEyeZ:(float)newZ
 {
-	currentEyeZ = targetEyeZ = newZ;
+    // TODO: REMOVE AFTER DEBUGGING
+    newZ += 0.2;
+    
+    currentEyeZ = targetEyeZ = newZ;
 }
 
 - (int)joyKeycode:(int)nr direction:(JoystickDirection)dir
@@ -316,7 +319,7 @@ void checkForOpenGLErrors()
 }
 
 - (void)updateAngles
-{	
+{
 	if ([self animates]) {
 	
 		if (fabs(currentXAngle - targetXAngle) < fabs(deltaXAngle)) currentXAngle = targetXAngle;
@@ -577,11 +580,19 @@ void checkForOpenGLErrors()
 - (void)determineScreenGeometry
 {
     // Determine screen geometry (differs between NTSC and PAL)
+    /*
 	textureXStart = (float)c64->vic->getFirstVisiblePixel() / (float)TEXTURE_WIDTH;
 	textureXEnd = (float)c64->vic->getLastVisiblePixel() / (float)TEXTURE_WIDTH;
 	textureYStart = (float)c64->vic->getFirstVisibleLine() / (float)TEXTURE_HEIGHT;
 	textureYEnd = (float)c64->vic->getLastVisibleLine() / (float)TEXTURE_HEIGHT;
-	dimX = 0.64;
+    */
+    // DISPLAY FULL TEXTURE FOR DEBUGGING
+    textureXStart = 0.0;
+    textureXEnd = 1.0;
+    textureYStart = 0.0;
+    textureYEnd = 1.0;
+    
+    dimX = 0.64;
 	dimY = dimX * (float)c64->vic->getTotalScreenHeight() / (float)c64->vic->getTotalScreenWidth() / c64->vic->getPixelAspectRatio();
 }
 
@@ -634,8 +645,6 @@ void checkForOpenGLErrors()
     [self determineScreenGeometry];
 	
 	[glcontext makeCurrentContext];
-	// Changing the shadeModel has no effect
-	// glShadeModel(antiAliasing ? GL_SMOOTH : GL_FLAT);
 
     glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

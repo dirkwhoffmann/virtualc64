@@ -35,10 +35,10 @@ PixelEngine::PixelEngine() // C64 *c64)
     
     // Delete screen buffers
     for (unsigned i = 0; i < sizeof(screenBuffer1) / sizeof(int); i++) {
-        screenBuffer1[i] = colors[4]; //colors[BLUE];
+        screenBuffer1[i] = ((i / PAL_VISIBLE_PIXELS) % 2) ? colors[6] : colors[5];
     }
     for (unsigned i = 0; i < sizeof(screenBuffer2) / sizeof(int); i++) {
-        screenBuffer2[i] = colors[4]; //colors[BLUE];
+        screenBuffer2[i] = ((i / PAL_VISIBLE_PIXELS) % 2) ? colors[6] : colors[5];
     }
     currentScreenBuffer = screenBuffer1;
     pixelBuffer = currentScreenBuffer;
@@ -94,10 +94,7 @@ PixelEngine::beginRasterline()
     
     // Clear pixel buffer (has same size as pixelSource and zBuffer)
     // FOR DEBUGGING ONLY, 0xBB is a randomly chose debug color
-    // memset(pixelBuffer, 0xBB, sizeof(pixelSource));
-    
-    // Reset shift register (DO WE REALLY NEED THIS?)
-    // sr.data = 0;
+    memset(pixelBuffer, 0xBB, sizeof(pixelSource));
 }
 
 void

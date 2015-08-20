@@ -72,12 +72,7 @@ public:
 	
 	//! End address of the VIC I/O space
 	static const uint16_t VIC_END_ADDR = 0xD3FF;
-		
-    
-
-    
-	
-    
+		   
 private:
 		
 	//! Reference to the connected CPU. 

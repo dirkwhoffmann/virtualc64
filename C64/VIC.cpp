@@ -1062,6 +1062,7 @@ VIC::endFrame()
 void 
 VIC::beginRasterline(uint16_t line)
 {
+    // TODO: This is only correct for PAL
     if (line != 0) {
         yCounter = line; // Overflow case is handled in cycle 2
     }

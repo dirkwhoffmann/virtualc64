@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef V64_VIC_constants_h
-#define V64_VIC_constants_h
+#ifndef _VIC_CONSTANTS_INC
+#define _VIC_CONSTANTS_INC
 
 // -----------------------------------------------------------------------------------------------
 //                                                NTSC
@@ -130,7 +130,7 @@ static const uint16_t PAL_WIDTH = 504; // 76 + 48 + 320 + 37 + 23
 static const uint16_t PAL_PIXELS = 405; // 48 + 320 + 37
 
 //! Number of viewable pixels per rasterline
-static const uint16_t PAL_VISIBLE_PIXELS = 402; // Should be 403
+static const uint16_t PAL_VISIBLE_PIXELS = 403; // was 402
 
 
 // Vertical screen parameters
@@ -157,7 +157,7 @@ static const uint16_t PAL_HEIGHT = 312; // 16 + 35 + 200 + 49 + 12
 static const uint16_t PAL_RASTERLINES = 284; // 43 + 200 + 49
 
 //! Number of viewable rasterlines per frame
-static const uint16_t PAL_VISIBLE_RASTERLINES = 292; // Should be 284; // Should be 403
+static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
 
 
 
