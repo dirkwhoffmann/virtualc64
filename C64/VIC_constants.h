@@ -29,6 +29,10 @@ static const uint16_t NTSC_REFRESH_RATE = 60;
 //! CPU cycles per rasterline
 static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
 
+//! Pixel aspect ratio
+static const uint16_t NTSC_PIXEL_ASPECT_RATIO = 0.75;
+
+
 
 // Horizontal screen parameters
 
@@ -84,17 +88,6 @@ static const uint16_t NTSC_RASTERLINES = 235; // 10 + 200 + 25
 static const uint16_t NTSC_VISIBLE_RASTERLINES = 235;
 
 
-
-//! Number of invisible lines above upper border (first visible line is ???) // Needs verification
-//  DEPRECATED
-static const uint16_t NTSC_UPPER_INVISIBLE = 28;
-
-//! Number of invisible lines below lower border (last visible line is ???) // Needs verification
-//  DEPRECATED
-static const uint16_t NTSC_LOWER_INVISIBLE = 0;
-
-
-
 // -----------------------------------------------------------------------------------------------
 //                                              PAL
 // -----------------------------------------------------------------------------------------------
@@ -104,6 +97,9 @@ static const uint16_t PAL_REFRESH_RATE = 50;
 
 //! CPU cycles per rasterline
 static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
+
+//! Pixel aspect ratio
+static const uint16_t PAL_PIXEL_ASPECT_RATIO = 0.9365;
 
 
 // Horizontal screen parameters
@@ -158,17 +154,5 @@ static const uint16_t PAL_RASTERLINES = 284; // 35 + 200 + 49
 
 //! Number of viewable rasterlines per frame
 static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
-
-
-
-
-//! First visible rasterline (after VBLANK)
-//  DEPRECATED
-static const uint16_t PAL_UPPER_INVISIBLE = 8;  // Should be 16
-
-//! Number of invisible lines below lower border (last visible line is 0x12B)
-//  DEPRECATED
-static const uint16_t PAL_LOWER_INVISIBLE = 12;
-
 
 #endif

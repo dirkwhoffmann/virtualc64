@@ -140,11 +140,6 @@
 - (uint16_t) characterMemoryAddr { return vic->getCharacterMemoryAddr(); }
 - (void) setCharacterMemoryAddr:(uint16_t)addr { vic->setCharacterMemoryAddr(addr); }
 
-- (unsigned)totalScreenWidth { return vic->getTotalScreenWidth(); }
-- (unsigned)totalScreenHeight {	return vic->getTotalScreenHeight(); }
-- (unsigned)firstVisibleLine { return vic->getFirstVisibleLine(); }
-- (unsigned)lastVisibleLine { return vic->getLastVisibleLine(); }
-
 - (int) displayMode { return vic->getDisplayMode(); }
 - (void) setDisplayMode:(int)mode { vic->setDisplayMode((DisplayMode)mode); }
 - (int) screenGeometry { return (int)vic->getScreenGeometry(); }

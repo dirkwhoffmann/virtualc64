@@ -562,14 +562,6 @@ void checkForOpenGLErrors()
 
 - (void)determineScreenGeometry
 {
-    // Determine screen geometry (differs between NTSC and PAL)
-    /*
-	textureXStart = (float)c64->vic->getFirstVisiblePixel() / (float)TEXTURE_WIDTH;
-	textureXEnd = (float)c64->vic->getLastVisiblePixel() / (float)TEXTURE_WIDTH;
-	textureYStart = (float)c64->vic->getFirstVisibleLine() / (float)TEXTURE_HEIGHT;
-	textureYEnd = (float)c64->vic->getLastVisibleLine() / (float)TEXTURE_HEIGHT;
-    */
-    
     if (c64->isPAL()) {
         // PAL border will be 36 pixels wide and 34 pixels heigh
         textureXStart = (float)(PAL_LEFT_BORDER_WIDTH - 36.0) / (float)TEXTURE_WIDTH;
@@ -591,9 +583,6 @@ void checkForOpenGLErrors()
     textureYStart = 0.0;
     textureYEnd = 1.0;
     */
-    
-    dimX = 0.64;
-	dimY = dimX * (float)c64->vic->getTotalScreenHeight() / (float)c64->vic->getTotalScreenWidth() / c64->vic->getPixelAspectRatio();
 }
 
 - (void)updateScreenTexture
@@ -696,6 +685,9 @@ void checkForOpenGLErrors()
 	
 	if (drawC64texture) {	
 
+        const float dimX = 0.64;
+        const float dimY = 0.48;
+        
 		// If emulation is halted, we brighten up the display by adding some fog...
 		if (c64->isHalted()) {
 			GLfloat fogColor[4]= {1.0f, 1.0f, 1.0f, 1.0f};

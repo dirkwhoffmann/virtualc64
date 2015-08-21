@@ -322,15 +322,6 @@ void
 VIC::setPAL()
 {
     isPAL = true;
-	leftBorderWidth = PAL_LEFT_BORDER_WIDTH;
-	rightBorderWidth = PAL_RIGHT_BORDER_WIDTH;
-	upperBorderHeight = PAL_UPPER_BORDER_HEIGHT;
-	lowerBorderHeight = PAL_LOWER_BORDER_HEIGHT;
-	totalScreenWidth = PAL_VISIBLE_PIXELS;
-	totalScreenHeight = PAL_VISIBLE_RASTERLINES;
-	firstVisibleLine = PAL_UPPER_INVISIBLE;
-	lastVisibleLine = PAL_UPPER_INVISIBLE + PAL_VISIBLE_RASTERLINES;
-	pixelAspectRatio = 0.9365;
     pixelEngine.resetScreenBuffers();
 }
 
@@ -338,15 +329,6 @@ void
 VIC::setNTSC()
 {
     isPAL = false;
-	leftBorderWidth = NTSC_LEFT_BORDER_WIDTH;
-	rightBorderWidth = NTSC_RIGHT_BORDER_WIDTH;
-	upperBorderHeight = NTSC_UPPER_BORDER_HEIGHT;
-	lowerBorderHeight = NTSC_LOWER_BORDER_HEIGHT;
-	totalScreenWidth = NTSC_VISIBLE_PIXELS;
-	totalScreenHeight = NTSC_VISIBLE_RASTERLINES;
-	firstVisibleLine = NTSC_UPPER_INVISIBLE;
-	lastVisibleLine = NTSC_UPPER_INVISIBLE + NTSC_VISIBLE_RASTERLINES;
-	pixelAspectRatio = 0.75;
     pixelEngine.resetScreenBuffers();
 }
 

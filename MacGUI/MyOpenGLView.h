@@ -106,19 +106,16 @@ const int BG_TEXTURE_DEPTH = 4;
     /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
     unsigned int pressedKeys[256];
     
+    // Textures
+    uint8_t data[TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXTURE_DEPTH];
+    GLuint texture;   // C64 screen
+    GLuint bgTexture; // Background
+
 	// Texture cut-out (fist and last visible texture coordinates)
 	float textureXStart;
 	float textureXEnd;
 	float textureYStart;
 	float textureYEnd;
-	
-	// Size of drawn rectangle 
-	float dimX, dimY;
-	
-	// Textures
-	uint8_t data[TEXTURE_WIDTH * TEXTURE_HEIGHT * TEXTURE_DEPTH];
-	GLuint texture;   // C64 screen
-	GLuint bgTexture; // Background	
 }
 
 @property C64 *c64;

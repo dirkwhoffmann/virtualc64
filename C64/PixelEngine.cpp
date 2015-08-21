@@ -260,8 +260,7 @@ PixelEngine::drawBorder55()
 
 inline void
 PixelEngine::drawCanvas()
-{    
-    // uint16_t xCoord = (dc.xCounter - 28) + vic->leftBorderWidth;
+{
     int16_t xCoord = dc.xCounter;
     
     /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
@@ -445,10 +444,8 @@ PixelEngine::drawSprite(uint8_t nr)
     
     if (spriteX < 488)
         offset = spriteX + 4;
-        // offset = spriteX + (vic->leftBorderWidth - 24);
     else
         offset = spriteX - 484;
-        // offset = spriteX + (vic->leftBorderWidth - 24) - 488;
     
     if (vic->spriteIsMulticolor(nr)) {
         
@@ -821,8 +818,6 @@ PixelEngine::expandBorders()
     unsigned leftPixelPos;
     unsigned rightPixelPos;
     
-    // unsigned leftPixelPos = -4 - 28 + vic->leftBorderWidth;
-    // unsigned rightPixelPos = leftPixelPos+(48*8)-1;
     if (c64->isPAL()) {
         leftPixelPos = PAL_LEFT_BORDER_WIDTH - (4*8);
         rightPixelPos = PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + (4*8) - 1;

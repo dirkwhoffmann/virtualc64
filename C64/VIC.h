@@ -236,35 +236,7 @@ private:
     // TODO: Change into chipModel
     bool isPAL;
     
-	// Current border width in pixels
-	unsigned leftBorderWidth, rightBorderWidth;
-	
-	// Current border height in pixels
-	unsigned upperBorderHeight, lowerBorderHeight;
-
-	// First and last visible rasterline
-	unsigned firstVisibleLine, lastVisibleLine;
 		
-	// Total width of visible screen (including border)
-	unsigned totalScreenWidth;
-
-	// Total height of visible screen (including border)
-	unsigned totalScreenHeight;
-
-	// Pixel aspect ratio (X:Y)
-	float pixelAspectRatio;
-
-public:
-
-	inline unsigned getFirstVisiblePixel() { return 0; }
-	inline unsigned getLastVisiblePixel() { return totalScreenWidth - 1; }	
-	inline unsigned getFirstVisibleLine() { return firstVisibleLine; }
-	inline unsigned getLastVisibleLine() { return lastVisibleLine; }
-	inline unsigned getTotalScreenWidth() {	return totalScreenWidth; }
-	inline unsigned getTotalScreenHeight() { return totalScreenHeight; }
-	inline float getPixelAspectRatio() { return pixelAspectRatio; }
-	
-	
 	// -----------------------------------------------------------------------------------------------
 	//                              I/O memory handling and RAM access
 	// -----------------------------------------------------------------------------------------------

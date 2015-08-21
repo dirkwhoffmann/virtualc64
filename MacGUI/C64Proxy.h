@@ -126,11 +126,6 @@
 - (uint16_t) characterMemoryAddr;
 - (void) setCharacterMemoryAddr:(uint16_t)addr;
 
-- (unsigned)totalScreenWidth;
-- (unsigned)totalScreenHeight;
-- (unsigned)firstVisibleLine;
-- (unsigned)lastVisibleLine;
-
 - (int) displayMode;
 - (void) setDisplayMode:(int)mode;
 - (int) screenGeometry;
