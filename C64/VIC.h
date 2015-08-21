@@ -59,6 +59,12 @@ class VIC : public VirtualComponent {
 	
 public:
 	
+    //! VIC II chip models
+    enum ChipModel {
+        MOS6567_NTSC = 0,
+        MOS6569_PAL = 1
+    };
+    
 	//! Screen geometry
 	enum ScreenGeometry {
 		COL_40_ROW_25 = 0x01,
@@ -81,11 +87,14 @@ private:
 	//! Reference to the connected virtual memory
 	C64Memory *mem;
 	
-	
+
 	// -----------------------------------------------------------------------------------------------
 	//                                     Internal state
 	// -----------------------------------------------------------------------------------------------
 
+    //! Selected chip model (determines whether video mode is PAL or NTSC)
+    ChipModel chipModel;
+    
     //! Indicates whether the currently drawn rasterline belongs to VBLANK area
     bool vblank;
     
@@ -226,17 +235,6 @@ private:
     inline void clearMainFrameFF() { if (!verticalFrameFF) mainFrameFF = false; }
      
     
-	// -----------------------------------------------------------------------------------------------
-	//                                        Screen parameters
-	// -----------------------------------------------------------------------------------------------
-
-private:
-	
-    // Is it a PAL or an NTSC machiche?
-    // TODO: Change into chipModel
-    bool isPAL;
-    
-		
 	// -----------------------------------------------------------------------------------------------
 	//                              I/O memory handling and RAM access
 	// -----------------------------------------------------------------------------------------------
@@ -462,17 +460,35 @@ public:
 	
 public:
 	
-	//! Configure the VIC chip for PAL video output
-	void setPAL();
-	
-	//! Configure the VIC chip for NTSC video output
-	void setNTSC();	
+    //! Returns true iff virtual vic is running in PAL mode
+    inline bool isPAL() { return chipModel == MOS6569_PAL; }
+
+	//! Get chip model
+    inline ChipModel getChipModel() { return chipModel; }
+
+    //! Set chip model
+    inline void setChipModel(ChipModel model) { chipModel = model; pixelEngine.resetScreenBuffers();}
 	
     //! Get color
     uint32_t getColor(int nr) { assert(nr < 16); return pixelEngine.colors[nr]; }
 
     //! Get color
     void setColor(int nr, int rgba) { assert(nr < 16); pixelEngine.colors[nr] = rgba; }
+
+    // Returns the number of frames per second
+    inline int getFramesPerSecond() { if (isPAL()) return PAL_REFRESH_RATE; else return NTSC_REFRESH_RATE; }
+    
+    //! Returns the number of rasterlines per frame
+    inline int getRasterlinesPerFrame() { if (isPAL()) return PAL_HEIGHT; else return NTSC_HEIGHT; }
+    
+    //! Returns the number of CPU cycles performed per rasterline
+    inline int getCyclesPerRasterline() { if (isPAL()) return PAL_CYCLES_PER_RASTERLINE; else return NTSC_CYCLES_PER_RASTERLINE; }
+    
+    //! Returns the number of CPU cycles performed per frame
+    inline int getCyclesPerFrame() { if (isPAL()) return PAL_HEIGHT * PAL_CYCLES_PER_RASTERLINE; else return NTSC_HEIGHT * NTSC_CYCLES_PER_RASTERLINE; }
+    
+    //! Returns the time interval between two frames
+    inline int getFrameDelay() { if (isPAL()) return 1000000 / PAL_REFRESH_RATE; else return 1000000 / NTSC_REFRESH_RATE; }
 
     
 	// -----------------------------------------------------------------------------------------------

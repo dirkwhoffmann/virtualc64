@@ -54,7 +54,8 @@ VIC::reset(C64 *c64)
     // Reset subcomponents
     pixelEngine.reset(c64);
 
-	// Internal registers
+	// Internal state
+    chipModel = MOS6569_PAL;
     vblank = false;
     xCounter = 0;
     yCounter = PAL_HEIGHT;
@@ -118,7 +119,7 @@ VIC::reset(C64 *c64)
 uint32_t
 VIC::stateSize()
 {
-    return 158;
+    return 130;
 }
 
 void
@@ -127,6 +128,7 @@ VIC::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
 	// Internal registers
+    chipModel = (ChipModel)read8(buffer);
     vblank = (bool)read8(buffer);
     xCounter = read16(buffer);
 	yCounter = read32(buffer);
@@ -155,23 +157,15 @@ VIC::loadFromBuffer(uint8_t **buffer)
 	bankAddr = read16(buffer);
     
     // Sequencer
-    (void)read8(buffer);
-    (void)read8(buffer);
-    (void)read8(buffer);
     g_data = read8(buffer);
     g_character = read8(buffer);
     g_color = read8(buffer);
-    (void)read8(buffer);
     g_mode = (DisplayMode)read8(buffer);
-    (void)read8(buffer);
     
 	// Sprites
 	for (int i = 0; i < 8; i++) {
 		mc[i] = read8(buffer);
 		mcbase[i] = read8(buffer);
-		(void)read8(buffer);
-        (void)read8(buffer);
-        (void)read8(buffer);
 	}
 	spriteOnOff = read8(buffer);
 	oldSpriteOnOff = read8(buffer);
@@ -192,6 +186,7 @@ VIC::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
 
 	// Internal registers
+    write8(buffer, (uint8_t)chipModel);
     write8(buffer, (uint8_t)vblank);
     write16(buffer, xCounter);
     write32(buffer, yCounter);
@@ -220,23 +215,15 @@ VIC::saveToBuffer(uint8_t **buffer)
 	write16(buffer, bankAddr);
 
     // Sequencer
-    write8(buffer, 0);
-    write8(buffer, 0);
-    write8(buffer, 0);
     write8(buffer, g_data);
     write8(buffer, g_character);
     write8(buffer, g_color);
-    write8(buffer, 0);
     write8(buffer, (uint8_t)g_mode);
-    write8(buffer, 0);
     
     // Sprites
 	for (int i = 0; i < 8; i++) {
 		write8(buffer, mc[i]);
 		write8(buffer, mcbase[i]);
-        write8(buffer, 0);
-        write8(buffer, 0);
-        write8(buffer, 0);
 	}
 	write8(buffer, spriteOnOff);
 	write8(buffer, oldSpriteOnOff);
@@ -311,25 +298,6 @@ VIC::dumpState()
 		msg("\n                    ");
 	}
 	msg("\n");
-}
-
-
-// -----------------------------------------------------------------------------------------------
-//                                         Configuring
-// -----------------------------------------------------------------------------------------------
-
-void 
-VIC::setPAL()
-{
-    isPAL = true;
-    pixelEngine.resetScreenBuffers();
-}
-
-void
-VIC::setNTSC()
-{
-    isPAL = false;
-    pixelEngine.resetScreenBuffers();
 }
 
 
@@ -1033,7 +1001,7 @@ VIC::beginRasterline(uint16_t line)
     verticalFrameFFsetCond = verticalFrameFFclearCond = false;
 
     // Determine if we're currently processing a VBLANK line (nothing is drawn in this area)
-    if (isPAL) {
+    if (isPAL()) {
         vblank = line < PAL_UPPER_VBLANK || line >= PAL_UPPER_VBLANK + PAL_RASTERLINES;
     } else {
         vblank = line < NTSC_UPPER_VBLANK || line >= NTSC_UPPER_VBLANK + NTSC_RASTERLINES;
@@ -1121,7 +1089,7 @@ VIC::cycle1()
     
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         pAccess(3);
     else
         sSecondAccess(3);
@@ -1136,13 +1104,13 @@ VIC::cycle1()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL)
+    if (isPAL())
         setBAlow(spriteDmaOnOff & (SPR3 | SPR4));
     else
         setBAlow(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sFirstAccess(3);
     else
         sThirdAccess(3);
@@ -1166,7 +1134,7 @@ VIC::cycle2()
     
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         sSecondAccess(3);
     else
         pAccess(4);
@@ -1180,13 +1148,13 @@ VIC::cycle2()
 
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL)
+    if (isPAL())
         setBAlow(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
     else
         setBAlow(spriteDmaOnOff & (SPR4 | SPR5));
 
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sThirdAccess(3);
     else
         sFirstAccess(4);
@@ -1206,7 +1174,7 @@ VIC::cycle3()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         pAccess(4);
     else
         sSecondAccess(4);
@@ -1215,13 +1183,13 @@ VIC::cycle3()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL)
+    if (isPAL())
         setBAlow(spriteDmaOnOff & (SPR4 | SPR5));
     else
         setBAlow(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sFirstAccess(4);
     else
         sThirdAccess(4);
@@ -1241,7 +1209,7 @@ VIC::cycle4()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         sSecondAccess(4);
     else
         pAccess(5);
@@ -1250,14 +1218,14 @@ VIC::cycle4()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL) {
+    if (isPAL()) {
         setBAlow(spriteDmaOnOff & (SPR4 | SPR5 | SPR6));
     } else {
         setBAlow(spriteDmaOnOff & (SPR5 | SPR6));
     }
 
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sThirdAccess(4);
     else
         sFirstAccess(5);
@@ -1277,7 +1245,7 @@ VIC::cycle5()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         pAccess(5);
     else
         sSecondAccess(5);
@@ -1286,14 +1254,14 @@ VIC::cycle5()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL) {
+    if (isPAL()) {
         setBAlow(spriteDmaOnOff & (SPR5 | SPR6));
     } else {
         setBAlow(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
     }
         
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sFirstAccess(5);
     else
         sThirdAccess(5);
@@ -1313,7 +1281,7 @@ VIC::cycle6()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         sSecondAccess(5);
     else
         pAccess(6);
@@ -1322,7 +1290,7 @@ VIC::cycle6()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL) {
+    if (isPAL()) {
         setBAlow(spriteDmaOnOff & (SPR5 | SPR6 | SPR7));
     } else {
         setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
@@ -1330,7 +1298,7 @@ VIC::cycle6()
     }
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sThirdAccess(5);
     else
         sFirstAccess(6);
@@ -1350,7 +1318,7 @@ VIC::cycle7()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         pAccess(6);
     else
         sSecondAccess(6);
@@ -1362,7 +1330,7 @@ VIC::cycle7()
     setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
 
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sFirstAccess(6);
     else
         sThirdAccess(6);
@@ -1382,7 +1350,7 @@ VIC::cycle8()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         sSecondAccess(6);
     else
         pAccess(7);
@@ -1391,13 +1359,13 @@ VIC::cycle8()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL)
+    if (isPAL())
         setBAlow(spriteDmaOnOff & (SPR6 | SPR7));
     else
         setBAlow(spriteDmaOnOff & SPR7);
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sThirdAccess(6);
     else
         sFirstAccess(7);
@@ -1417,7 +1385,7 @@ VIC::cycle9()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         pAccess(7);
     else
         sSecondAccess(7);
@@ -1429,7 +1397,7 @@ VIC::cycle9()
     setBAlow(spriteDmaOnOff & SPR7);
 
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sFirstAccess(7);
     else
         sThirdAccess(7);
@@ -1449,7 +1417,7 @@ VIC::cycle10()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         sSecondAccess(7);
     else
         rIdleAccess();
@@ -1458,14 +1426,14 @@ VIC::cycle10()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL) {
+    if (isPAL()) {
         setBAlow(spriteDmaOnOff & SPR7);
     } else {
         setBAlow(false);
     }
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sThirdAccess(7);
     
     // Finalize
@@ -1768,7 +1736,7 @@ VIC::cycle55()
 
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL) {
+    if (isPAL()) {
         setBAlow(spriteDmaOnOff & SPR0);
     } else {
         setBAlow(false);
@@ -1832,7 +1800,7 @@ VIC::cycle57()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL) {
+    if (isPAL()) {
         setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     } else {
         setBAlow(spriteDmaOnOff & SPR0);
@@ -1857,7 +1825,7 @@ VIC::cycle58()
     preparePixelEngine(); // Prepare for next cycle (column 2 of right border)
     
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         pAccess(0);
     else
         rIdleAccess();
@@ -1898,7 +1866,7 @@ VIC::cycle58()
     setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sFirstAccess(0);
     
     // Finalize
@@ -1919,7 +1887,7 @@ VIC::cycle59()
     preparePixelEngine(); // Prepare for next cycle (column 3 of right border)
     
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         sSecondAccess(0);
     else
         pAccess(0);
@@ -1928,13 +1896,13 @@ VIC::cycle59()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL)
+    if (isPAL())
         setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
     else
         setBAlow(spriteDmaOnOff & (SPR0 | SPR1));
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sThirdAccess(0);
     else
         sFirstAccess(0);
@@ -1957,7 +1925,7 @@ VIC::cycle60()
     preparePixelEngine(); // Prepare for next cycle (last column of right border)
     
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         pAccess(1);
     else
         sSecondAccess(0);
@@ -1966,13 +1934,13 @@ VIC::cycle60()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL)
+    if (isPAL())
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
     else
         setBAlow(spriteDmaOnOff & (SPR0 | SPR1 | SPR2));
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sFirstAccess(1);
     else
         sThirdAccess(0);
@@ -1994,7 +1962,7 @@ VIC::cycle61()
     pixelEngine.draw(); // Draw previous cycle (last column of right border)
     
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         sSecondAccess(1);
     else
         pAccess(1);
@@ -2003,13 +1971,13 @@ VIC::cycle61()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL)
+    if (isPAL())
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
     else
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2));
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sThirdAccess(1);
     else
         sFirstAccess(1);
@@ -2029,7 +1997,7 @@ VIC::cycle62()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         pAccess(2);
     else
         sSecondAccess(1);
@@ -2038,13 +2006,13 @@ VIC::cycle62()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL)
+    if (isPAL())
         setBAlow(spriteDmaOnOff & (SPR2 | SPR3));
     else
         setBAlow(spriteDmaOnOff & (SPR1 | SPR2 | SPR3));
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sFirstAccess(2);
     else
         sThirdAccess(1);
@@ -2065,7 +2033,7 @@ VIC::cycle63()
         
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL)
+    if (isPAL())
         sSecondAccess(2);
     else
         pAccess(2);
@@ -2074,14 +2042,14 @@ VIC::cycle63()
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
     // Phi2.4 BA logic
-    if (isPAL) {
+    if (isPAL()) {
         setBAlow(spriteDmaOnOff & (SPR2 | SPR3 | SPR4));
     } else {
         setBAlow(spriteDmaOnOff & (SPR2 | SPR3));        
     }
     
     // Phi2.5 Fetch
-    if (isPAL)
+    if (isPAL())
         sThirdAccess(2);
     else
         sFirstAccess(2);

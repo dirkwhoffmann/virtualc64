@@ -112,11 +112,19 @@ PixelEngine::endRasterline()
         // Make the border look nice
         expandBorders();
         
-        // Advance pixelBuffer one line
-        if (c64->getRasterline() < PAL_UPPER_VBLANK + PAL_RASTERLINES) {
-            pixelBuffer += NTSC_PIXELS;
-            pxbuf += NTSC_PIXELS;
+        // Advance pixelBuffer
+        uint16_t nextline = c64->getRasterline() - PAL_UPPER_VBLANK + 1;
+        if (nextline < PAL_RASTERLINES) {
+                        
+            // Old code
+            // pixelBuffer += NTSC_PIXELS;
+            // pxbuf += NTSC_PIXELS;
+            
+            // New code (slightly slower, but foolproof. Can't get outside the screen buffer)
+            pixelBuffer = currentScreenBuffer + (nextline * NTSC_PIXELS);
+            pxbuf = pixelBuffer + bufshift;
         }
+        
     }
 }
 void

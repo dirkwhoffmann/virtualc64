@@ -1,5 +1,5 @@
 /*
- * (C) 2006 - 2011 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2015 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,6 @@
  */
 
 // CLEANUP:
-// 1. Get rid of setPAL, setNTSC
-// 2. Afterwards: Get rid of PAL flag in Snapshop
-// 3. Introduce ChipModel instead of C64 PAL flag
-//
 //
 // SPEEDUP:
 //
@@ -37,10 +33,10 @@
 #define DEBUG_LEVEL 2  // RELEASE
 // #define DEBUG_LEVEL 3  // DEVELOPMENT
 
-// Snapshot version number of this release (1.0rc1 has version number 0.9.10)
+// Snapshot version number of this release (1.0rc3 has version number 0.9.11)
 #define V_MAJOR 0
 #define V_MINOR 9
-#define V_SUBMINOR 10
+#define V_SUBMINOR 11
 
 #include "basic.h"
 #include "VirtualComponent.h"
@@ -228,9 +224,6 @@ private:
     //! Indicates that we should run as fast as possible at least during disk operations
     bool warpLoad;
 
-    //! PAL or NTSC machine?
-    bool pal;
-
 	//! Current clock cycle since power up
 	uint64_t cycles;
 	
@@ -284,13 +277,15 @@ public:
 public:
 	
 	//! Returns true for PAL machines
-	inline bool isPAL() { return pal; }
+	inline bool isPAL() { return vic->isPAL(); }
 
 	//! Set PAL mode
+    //  DEPRECATED. PAL/NTSC IS DETERMINED BY VIC CHIP MODEL
 	void setPAL();
 	
 	//! Returns true for NTSC machines
-	inline bool isNTSC() { return !pal; }
+    //  DEPRECATED. PAL/NTSC IS DETERMINED BY VIC CHIP MODEL
+	inline bool isNTSC() { return !vic->isPAL(); }
 
 	//! Set NTSC mode
 	void setNTSC();
@@ -486,30 +481,6 @@ public:
 	//! Returns the number of the currently drawn rasterline
 	inline uint16_t getRasterline() { return rasterline; }
     
-	// Returns the number of frames per second
-	/*! Number varies between PAL and NTSC machines */	
-    // TODO: MOVE TO VIC CLASS
-    inline int getFramesPerSecond() { if (pal) return PAL_REFRESH_RATE; else return NTSC_REFRESH_RATE; }
-	
-	//! Returns the number of rasterlines per frame
-	/*! Number varies between PAL and NTSC machines */	
-    // TODO: MOVE TO VIC CLASS
-    inline int getRasterlinesPerFrame() { if (pal) return PAL_HEIGHT; else return NTSC_HEIGHT; }
-	
-	//! Returns the number of CPU cycles performed per rasterline
-	/*! Number varies between PAL and NTSC machines */	
-    // TODO: MOVE TO VIC CLASS
-	inline int getCyclesPerRasterline() { if (pal) return PAL_CYCLES_PER_RASTERLINE; else return NTSC_CYCLES_PER_RASTERLINE; }
-	
-	//! Returns the number of CPU cycles performed per frame
-	/*! Number varies between PAL and NTSC machines */	
-    // TODO: MOVE TO VIC CLASS
-	inline int getCyclesPerFrame() { if (pal) return PAL_HEIGHT * PAL_CYCLES_PER_RASTERLINE; else return NTSC_HEIGHT * NTSC_CYCLES_PER_RASTERLINE; }
-        
-	//! Returns the time interval between two frames
-    // TODO: MOVE TO VIC CLASS
-	inline int getFrameDelay() { if (pal) return 1000000 / PAL_REFRESH_RATE; else return 1000000 / NTSC_REFRESH_RATE; }
-
     
 	// ---------------------------------------------------------------------------------------------
 	//                                             Misc

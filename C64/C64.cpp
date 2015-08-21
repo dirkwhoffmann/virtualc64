@@ -190,9 +190,9 @@ C64::dumpState() {
 	msg("C64:\n");
 	msg("----\n\n");
 	msg("            Machine type : %s\n", isPAL() ? "PAL" : "NTSC");
-	msg("       Frames per second : %d\n", getFramesPerSecond());
-	msg("   Rasterlines per frame : %d\n", getRasterlinesPerFrame()); 
-	msg("   Cycles per rasterline : %d\n", getCyclesPerRasterline());
+	msg("       Frames per second : %d\n", vic->getFramesPerSecond());
+	msg("   Rasterlines per frame : %d\n", vic->getRasterlinesPerFrame());
+	msg("   Cycles per rasterline : %d\n", vic->getCyclesPerRasterline());
 	msg("           Current cycle : %llu\n", cycles);
 	msg("           Current frame : %d\n", frame);
 	msg("      Current rasterline : %d\n", rasterline);
@@ -220,12 +220,10 @@ C64::setPAL()
 {
 	suspend();
 	
-    pal = true;
-    
-	vic->setPAL();
+    vic->setChipModel(VIC::MOS6569_PAL);
 	sid->setPAL();
 
-    debug(2, "PAL mode is set\n");
+    debug(2, "Switching VIC chip model to MOS6569 (PAL)\n");
 	resume();
 }
 
@@ -233,13 +231,11 @@ void
 C64::setNTSC()
 {
 	suspend();
-	
-    pal = false;
-    
-	vic->setNTSC();
+	    
+    vic->setChipModel(VIC::MOS6567_NTSC);
 	sid->setNTSC();
 
-    debug(2, "NTSC mode is set\n");
+    debug(2, "Switching VIC chip model to MOS6567 (NTSC)\n");
 	resume();
 }
 
@@ -278,11 +274,13 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
 	uint8_t *ptr = snapshot->getData();
 	loadFromBuffer(&ptr);
 	
+    /*
 	if (snapshot->isPAL()) {
 		setPAL();
 	} else {
 		setNTSC();
 	}
+    */
 }
 
 uint32_t
@@ -351,7 +349,7 @@ C64::saveToSnapshot(Snapshot *snapshot)
 		return;
 	
 	snapshot->setTimestamp(time(NULL));
-	snapshot->setPAL(isPAL());
+	// snapshot->setPAL(isPAL());
 	snapshot->takeScreenshot((uint32_t *)vic->screenBuffer(), isPAL());
 	
     snapshot->alloc(stateSize());
@@ -514,7 +512,7 @@ C64::endOfRasterline()
 	rasterlineCycle = 1;
 	rasterline++;
 
-	if (rasterline >= getRasterlinesPerFrame()) {
+	if (rasterline >= vic->getRasterlinesPerFrame()) {
 		
 		// fprintf(stderr, "Last rasterline = %d\n", rasterline);
 		
@@ -524,18 +522,18 @@ C64::endOfRasterline()
 		frame++;
 
 		// Increment time of day clocks every tenth of a second
-		if (frame % (getFramesPerSecond() / 10) == 0) {
+		if (frame % (vic->getFramesPerSecond() / 10) == 0) {
 			cia1->incrementTOD();
 			cia2->incrementTOD();
 		}
 		
 		// Take a snapshot once in a while
-		if (frame % (getFramesPerSecond() * 4) == 0) {
+		if (frame % (vic->getFramesPerSecond() * 4) == 0) {
 			takeSnapshot();			
 		}
 		
 		// Pass control to the virtual sound chip
-		sid->execute(getCyclesPerFrame());
+		sid->execute(vic->getCyclesPerFrame());
 			
 		// Pass control to the virtual IEC bus
 		iec->execute();
@@ -807,7 +805,7 @@ C64::executeOneCycle()
 		case 63: 
 			vic->cycle63();
 			EXECUTE(63);
-			if (getCyclesPerRasterline() == 63) {
+			if (vic->getCyclesPerRasterline() == 63) {
 				// last cycle for PAL machines
 				endOfRasterline();
 			}			
@@ -835,7 +833,7 @@ C64::executeOneCycle()
 inline bool
 C64::executeOneLine()
 {
-	uint8_t lastCycle = getCyclesPerRasterline();
+	uint8_t lastCycle = vic->getCyclesPerRasterline();
 	for (int i = rasterlineCycle; i <= lastCycle; i++) {
 		if (!executeOneCycle())
 			return false;
@@ -943,7 +941,7 @@ C64::getHistoricSnapshot(int nr)
 void 
 C64::restartTimer() 
 { 
-	targetTime = msec() + (uint64_t)getFrameDelay();
+	targetTime = msec() + (uint64_t)vic->getFrameDelay();
 }
 
 void 
@@ -953,7 +951,7 @@ C64::synchronizeTiming()
 	uint64_t timeToSleep = targetTime - msec();
 	
 	// update target time
-	targetTime += (uint64_t)getFrameDelay();
+	targetTime += (uint64_t)vic->getFrameDelay();
 	
 	// sleep
 	if (timeToSleep > 0) {

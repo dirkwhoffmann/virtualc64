@@ -86,21 +86,9 @@
 
 		strftime(buf, sizeof(buf)-1, "taken at %H:%M:%S", localtime(&stamp));
 		NSString *subtitle = [NSString stringWithUTF8String:buf];
-		
-		// Determine texture bounds
-#if 0
-		if ([c64 historicSnapshotIsPAL:i]) {
-            width = 340; // PAL_VISIBLE_PIXELS;
-            height = PAL_VISIBLE_RASTERLINES;
-            // NSLog(@"PAL image %d x %d", width, height);
-		} else {
-			width = NTSC_VISIBLE_PIXELS;
-			height = NTSC_VISIBLE_RASTERLINES;
-            // NSLog(@"NTSC image %d x %d", width, height);
-		}
-#endif
-					
+							
 		// Create bitmap representation
+        // MOVE TO SNAPSHOP PROXY CLASS
         int width = [[controller c64] historicSnapshotImageWidth:i];
         int height = [[controller c64] historicSnapshotImageHeight:i];
 		NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:	&data

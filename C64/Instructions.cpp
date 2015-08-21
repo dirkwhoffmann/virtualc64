@@ -30,14 +30,13 @@ CPU::fetch() {
 	
 	PC_at_cycle_0 = PC;
 	
-	// Used for debugging...
-	// history[historyPtr++] = packState(); 
-
-	// Check interrupt line
-	/* "Ist dieser Eingang auf Low-Pegel, wird eine Interruptbearbeitung ausgelšst, sofern der Interrupt
-	 Ÿber ein Bit im Statusregister freigegeben wurde. Die Unterbrechung erfolgt frŸhestens nach zwei 
-	 Taktzyklen beim Erreichen des nŠchsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im 
-	 Prozessor auslšsen. Interrupts werden nur erkannt, wenn RDY high ist. */
+	// Check interrupt lines
+    
+	// "Ist dieser Eingang auf Low-Pegel, wird eine Interruptbearbeitung ausgelšst, sofern der Interrupt
+	//  Ÿber ein Bit im Statusregister freigegeben wurde. Die Unterbrechung erfolgt frŸhestens nach zwei
+	//  Taktzyklen beim Erreichen des nŠchsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im
+	//  Prozessor auslšsen. Interrupts werden nur erkannt, wenn RDY high ist.
+    
 	if (nmiNegEdge && NMILineRaisedLongEnough()) {
         if (tracingEnabled())
 			debug(1, "NMI (source = %02X)\n", nmiLine);
@@ -56,8 +55,6 @@ CPU::fetch() {
 	
 	// Disassemble command if requested
 	if (tracingEnabled()) {
-		//c64->cia1->dumpTrace();
-		//c64->cia2->dumpTrace();
 		debug(1, "%s\n", disassemble());
 	}
 	

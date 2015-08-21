@@ -658,7 +658,6 @@
 - (unsigned)historicSnapshotImageHeight:(int)nr
 { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getImageHeight() : 0; }
 - (time_t)historicSnapshotTimestamp:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getTimestamp() : 0; }
-- (bool)historicSnapshotIsPAL:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->isPAL() : false; }
 - (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
