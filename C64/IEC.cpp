@@ -174,6 +174,8 @@ IEC::connectDrive()
 { 
 	driveConnected = true; 
 	drive->c64->putMessage(MSG_VC1541_ATTACHED, 1);
+    if (drive->soundMessagesEnabled())
+        drive->c64->putMessage(MSG_VC1541_ATTACHED_SOUND, 1);
 }
 	
 void 
@@ -181,6 +183,9 @@ IEC::disconnectDrive()
 { 
 	driveConnected = false; 
 	drive->c64->putMessage(MSG_VC1541_ATTACHED, 0);
+    if (drive->soundMessagesEnabled())
+        drive->c64->putMessage(MSG_VC1541_ATTACHED_SOUND, 0);
+
 }
 
 bool IEC::_updateIecLines(bool *atnedge)

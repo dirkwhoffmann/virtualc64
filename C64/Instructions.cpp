@@ -70,6 +70,52 @@ CPU::fetch() {
 	}
     
     // DIRK DEBUG
+    if (!isC64CPU() && PC == 0xFAC7)
+        fprintf(stderr, "Jobroutine zum Formatieren einer Diskette\n");
+    
+    if (!isC64CPU() && PC == 0xFB00)
+        fprintf(stderr, "Kopf ist nun ganz aussen\n");
+
+    if (!isC64CPU() && PC == 0xFB0F)
+        fprintf(stderr, "($0621/$0622) (%X/%X) mal $FF schreiben\n",
+                c64->floppy->mem->mem[0x0621], c64->floppy->mem->mem[0x0622]);
+    
+    if (!isC64CPU() && PC == 0xFB32)
+        fprintf(stderr, "Timer starten\n");
+
+    if (!isC64CPU() && PC == 0xFB39)
+        fprintf(stderr, "auf Beginn der SYNC-Zone warten\n");
+
+    if (!isC64CPU() && PC == 0xFB3E)
+        fprintf(stderr, "auf Beginn der SYNC-Zone warten\n");
+
+    if (!isC64CPU() && PC == 0xFB59)
+        fprintf(stderr, "READ ERROR AT PC:%X\n", PC);
+
+    if (!isC64CPU() && PC == 0xFB60)
+        fprintf(stderr, "($72/$71) (%X/%X) Zaehlerstand als Wert fuer die Laenge des $55-Bereiches merken\n",
+                c64->floppy->mem->mem[0x72], c64->floppy->mem->mem[0x71]);
+
+    if (!isC64CPU() && PC == 0xFB7A)
+        fprintf(stderr, "READ ERROR AT PC:%X\n", PC);
+
+    if (!isC64CPU() && PC == 0xFB7D)
+        fprintf(stderr, "($72/$71) (%X/%X) Messung des SYNC-Bereiches merken\n",
+                c64->floppy->mem->mem[0x72], c64->floppy->mem->mem[0x71]);
+
+    if (!isC64CPU() && PC == 0xFB8A)
+        fprintf(stderr, "($72/$71) (%X/%X) Differenz berechnet\n",
+                c64->floppy->mem->mem[0x72], c64->floppy->mem->mem[0x71]);
+
+    if (!isC64CPU() && PC == 0xFBCB)
+        fprintf(stderr, "READ ERROR AT PC:%X\n", PC);
+    
+    if (!isC64CPU() && PC == 0xFBE0)
+        fprintf(stderr, "Gesamtanzahl aller Bytes berechnen, die auf diesen Track passen und somit geschrieben werden muessen\n");
+    
+    if (!isC64CPU() && PC == 0xFC12)
+        fprintf(stderr, "READ ERROR AT PC:%X\n", PC);
+
     
     /*
     if (isC64CPU && dirktrace == 0 && PC == 0x0879) {

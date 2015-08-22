@@ -20,10 +20,14 @@
 
 @implementation HardwareDialog
 
-/* System */
-NSString *VC64PALorNTSCKey    = @"VC64PALorNTSCKey";
+// System
+NSString *VC64PALorNTSCKey = @"VC64PALorNTSCKey";
 
-/* Audio */
+// Peripherals
+NSString *VC64WarpLoadKey = @"VC64WarpLoadKey";
+NSString *VC64DriveNoiseKey = @"VC64DriveNoiseKey";
+
+// Audio
 NSString *VC64SIDFilterKey    = @"VC64SIDFilterKey";
 NSString *VC64SIDReSIDKey     = @"VC64SIDReSIDKey";
 NSString *VC64SIDChipModelKey = @"VC64SIDChipModelKey";
@@ -61,6 +65,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     
     // Peripherals
     [c64 setWarpLoad:true];
+    [[c64 vc1541] setSendSoundMessages:true];
 
     // Audio
     [c64 setReSID:YES];
@@ -96,6 +101,15 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     [c64 setWarpLoad:[(NSButton *)sender state]];
     [self update];
 }
+
+- (IBAction)driveNoiseAction:(id)sender
+{
+    NSLog(@"driveNoiseAction");
+    
+    [[c64 vc1541] setSendSoundMessages:[(NSButton *)sender state]];
+    [self update];
+}
+
 
 - (IBAction)writeProtectionAction:(id)sender
 {
@@ -184,6 +198,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     
     /* VC1541 */
     [warpLoad setState:[c64 warpLoad]];
+    [driveNoise setState:[[c64 vc1541] soundMessagesEnabled]];
     
     if ([[c64 vc1541] hasDisk]) {
         

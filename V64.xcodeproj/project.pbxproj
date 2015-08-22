@@ -24,8 +24,6 @@
 		500596680D23F9E800FD44B3 /* LEDred.png in Resources */ = {isa = PBXBuildFile; fileRef = 500596650D23F9E800FD44B3 /* LEDred.png */; };
 		500596690D23F9E800FD44B3 /* LEDgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 500596660D23F9E800FD44B3 /* LEDgreen.png */; };
 		5005966A0D23F9E800FD44B3 /* LEDgray.png in Resources */ = {isa = PBXBuildFile; fileRef = 500596670D23F9E800FD44B3 /* LEDgray.png */; };
-		5005966C0D23FA1800FD44B3 /* LEDyellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5005966B0D23FA1800FD44B3 /* LEDyellow.png */; };
-		5005966E0D23FA1C00FD44B3 /* LEDblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 5005966D0D23FA1C00FD44B3 /* LEDblue.png */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
@@ -56,6 +54,12 @@
 		50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE50A7B679A00A8DB94 /* stepInto32.png */; };
 		50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE70A7B67A100A8DB94 /* stepOver32.png */; };
 		50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FEB0A7B67AE00A8DB94 /* restart32.png */; };
+		5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */; };
+		5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */; };
+		5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15A1B885E1B00CBFB5A /* 1541_door_open_1.aiff */; };
+		5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */; };
+		5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */; };
+		5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */; };
 		5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* PixelEngine.cpp */; };
@@ -95,7 +99,6 @@
 		50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CA0D510A9076FD00A5A08D /* OldSID.cpp */; };
 		50CCB1BA1B8499C6008D8C30 /* tb_motherboard2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1B91B8499C6008D8C30 /* tb_motherboard2.png */; };
 		50CCB1BC1B8499DE008D8C30 /* tb_setup.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1BB1B8499DE008D8C30 /* tb_setup.png */; };
-		50CCB1C21B849B4B008D8C30 /* drive.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1C11B849B4B008D8C30 /* drive.png */; };
 		50CCB1C51B84A185008D8C30 /* tb_inspect.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1C31B84A185008D8C30 /* tb_inspect.png */; };
 		50CCB1C61B84A185008D8C30 /* tb_inspect2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1C41B84A185008D8C30 /* tb_inspect2.png */; };
 		50CCB1C81B84A191008D8C30 /* tb_pacman.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1C71B84A191008D8C30 /* tb_pacman.png */; };
@@ -183,9 +186,9 @@
 		32DBCF750370BD2300C91783 /* V64_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V64_Prefix.pch; sourceTree = "<group>"; };
 		389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Joystick.cpp; sourceTree = "<group>"; };
 		389E777F0C7A3B6F00BEAFA6 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
-		38AF83890C7BA24A00F6DBCE /* joystick1_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = joystick1_32.png; path = images/joystick1_32.png; sourceTree = "<group>"; };
-		38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = joystick2_32.png; path = images/joystick2_32.png; sourceTree = "<group>"; };
-		38AF838B0C7BA24A00F6DBCE /* none32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = none32.png; path = images/none32.png; sourceTree = "<group>"; };
+		38AF83890C7BA24A00F6DBCE /* joystick1_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick1_32.png; sourceTree = "<group>"; };
+		38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick2_32.png; sourceTree = "<group>"; };
+		38AF838B0C7BA24A00F6DBCE /* none32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none32.png; sourceTree = "<group>"; };
 		5000471012DCE8890098D890 /* MyControllerCpuPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerCpuPanel.h; sourceTree = "<group>"; };
 		5000471112DCE8890098D890 /* MyControllerCpuPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCpuPanel.mm; sourceTree = "<group>"; };
 		5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerMemoryPanel.mm; sourceTree = "<group>"; };
@@ -200,11 +203,9 @@
 		5000C8230D13CEE10011A2E9 /* VC1541.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541.cpp; sourceTree = "<group>"; };
 		5000C9610D13DED40011A2E9 /* VC1541Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC1541Memory.h; sourceTree = "<group>"; };
 		5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC1541Memory.cpp; sourceTree = "<group>"; };
-		500596650D23F9E800FD44B3 /* LEDred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDred.png; path = images/LEDred.png; sourceTree = "<group>"; };
-		500596660D23F9E800FD44B3 /* LEDgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDgreen.png; path = images/LEDgreen.png; sourceTree = "<group>"; };
-		500596670D23F9E800FD44B3 /* LEDgray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDgray.png; path = images/LEDgray.png; sourceTree = "<group>"; };
-		5005966B0D23FA1800FD44B3 /* LEDyellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDyellow.png; path = images/LEDyellow.png; sourceTree = "<group>"; };
-		5005966D0D23FA1C00FD44B3 /* LEDblue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDblue.png; path = images/LEDblue.png; sourceTree = "<group>"; };
+		500596650D23F9E800FD44B3 /* LEDred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDred.png; sourceTree = "<group>"; };
+		500596660D23F9E800FD44B3 /* LEDgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgreen.png; sourceTree = "<group>"; };
+		500596670D23F9E800FD44B3 /* LEDgray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgray.png; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
 		500EC04F10E4DCC4005A19A3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -242,19 +243,26 @@
 		501D2C7D1B85C0F700B1AD0F /* VIC_constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_constants.h; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
-		50271DE91A7E1CFE00C04290 /* LEDnewRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDnewRed.png; path = images/LEDnewRed.png; sourceTree = "<group>"; };
-		50271DEB1A7E458F00C04290 /* LEDnewGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDnewGreen.png; path = images/LEDnewGreen.png; sourceTree = "<group>"; };
-		50271DED1A7E459800C04290 /* LEDnewGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDnewGray.png; path = images/LEDnewGray.png; sourceTree = "<group>"; };
-		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepOut32.png; path = images/stepOut32.png; sourceTree = "<group>"; };
-		5039A31315BE89940038ACBC /* drive48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = drive48.png; path = images/drive48.png; sourceTree = "<group>"; };
-		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = diskette.png; path = images/diskette.png; sourceTree = "<group>"; };
+		50271DE91A7E1CFE00C04290 /* LEDnewRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewRed.png; sourceTree = "<group>"; };
+		50271DEB1A7E458F00C04290 /* LEDnewGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGreen.png; sourceTree = "<group>"; };
+		50271DED1A7E459800C04290 /* LEDnewGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGray.png; sourceTree = "<group>"; };
+		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOut32.png; sourceTree = "<group>"; };
+		5039A31315BE89940038ACBC /* drive48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drive48.png; sourceTree = "<group>"; };
+		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette.png; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* Cartridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* Cartridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
-		5041486812219F6E00A80E0C /* cartridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cartridge.png; path = images/cartridge.png; sourceTree = "<group>"; };
-		50471FE50A7B679A00A8DB94 /* stepInto32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepInto32.png; path = images/stepInto32.png; sourceTree = "<group>"; };
-		50471FE70A7B67A100A8DB94 /* stepOver32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stepOver32.png; path = images/stepOver32.png; sourceTree = "<group>"; };
-		50471FEB0A7B67AE00A8DB94 /* restart32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = restart32.png; path = images/restart32.png; sourceTree = "<group>"; };
+		5041486812219F6E00A80E0C /* cartridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cartridge.png; sourceTree = "<group>"; };
+		50471FE50A7B679A00A8DB94 /* stepInto32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepInto32.png; sourceTree = "<group>"; };
+		50471FE70A7B67A100A8DB94 /* stepOver32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOver32.png; sourceTree = "<group>"; };
+		50471FEB0A7B67AE00A8DB94 /* restart32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart32.png; sourceTree = "<group>"; };
+		5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_0.aiff; sourceTree = "<group>"; };
+		5051A1551B884EBE00CBFB5A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_door_closed_2.aiff; sourceTree = "<group>"; };
+		5051A15A1B885E1B00CBFB5A /* 1541_door_open_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_door_open_1.aiff; sourceTree = "<group>"; };
+		5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_power_on_0.aiff; sourceTree = "<group>"; };
+		5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_2.aiff; sourceTree = "<group>"; };
+		5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_1.aiff; sourceTree = "<group>"; };
 		5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpansionPort.cpp; sourceTree = "<group>"; };
 		5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpansionPort.h; sourceTree = "<group>"; };
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
@@ -274,21 +282,21 @@
 		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
 		5088A6E812E06DB700378033 /* MyControllerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerToolbar.h; sourceTree = "<group>"; };
 		5088A6E912E06DB700378033 /* MyControllerToolbar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerToolbar.mm; sourceTree = "<group>"; };
-		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rom.png; path = images/rom.png; sourceTree = "<group>"; };
+		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rom.png; sourceTree = "<group>"; };
 		509AEA0A0C324AB0001FC9FD /* PRGArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGArchive.h; sourceTree = "<group>"; };
 		509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGArchive.cpp; sourceTree = "<group>"; };
 		509AEAFD0C325EFB001FC9FD /* P00Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P00Archive.h; sourceTree = "<group>"; };
 		509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = P00Archive.cpp; sourceTree = "<group>"; };
-		509DF2470A9F681900AE0859 /* keyboard32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard32.png; path = images/keyboard32.png; sourceTree = "<group>"; };
+		509DF2470A9F681900AE0859 /* keyboard32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard32.png; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
-		50A3E0890E66F7BC00D3564D /* play32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play32.png; path = images/play32.png; sourceTree = "<group>"; };
-		50A3E08B0E66F7C400D3564D /* pause32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause32.png; path = images/pause32.png; sourceTree = "<group>"; };
+		50A3E0890E66F7BC00D3564D /* play32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play32.png; sourceTree = "<group>"; };
+		50A3E08B0E66F7C400D3564D /* pause32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause32.png; sourceTree = "<group>"; };
 		50A52A170C2FD43700A1377F /* D64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = D64Archive.h; sourceTree = "<group>"; };
 		50A52A180C2FD43700A1377F /* D64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = D64Archive.cpp; sourceTree = "<group>"; };
 		50A8F8F10E47171300ACE17D /* RomDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RomDialog.h; sourceTree = "<group>"; };
 		50A8F8F20E47171300ACE17D /* RomDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RomDialog.mm; sourceTree = "<group>"; };
-		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = romMissing.png; path = images/romMissing.png; sourceTree = "<group>"; };
+		50A8F9E90E472BA800ACE17D /* romMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romMissing.png; sourceTree = "<group>"; };
 		50AE4A331A693AA0003EA774 /* MountDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MountDragView.h; sourceTree = "<group>"; };
 		50AE4A341A693AA0003EA774 /* MountDragView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MountDragView.mm; sourceTree = "<group>"; };
 		50AFEDBB0C3A7A78007749E7 /* Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Archive.cpp; sourceTree = "<group>"; };
@@ -300,27 +308,26 @@
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
 		50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C64ProxyColors.mm; sourceTree = "<group>"; };
 		50C9CB141B81E3300054EE86 /* C64ProxyColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ProxyColors.h; sourceTree = "<group>"; };
-		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_motherboard.png; path = images/tb_motherboard.png; sourceTree = "<group>"; };
-		50C9CB1F1B826C960054EE86 /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = joystick.png; path = images/joystick.png; sourceTree = "<group>"; };
-		50C9CB231B826CD50054EE86 /* expansion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = expansion.png; path = images/expansion.png; sourceTree = "<group>"; };
-		50C9CB2B1B826FF20054EE86 /* graphics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = graphics.png; path = images/graphics.png; sourceTree = "<group>"; };
+		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
+		50C9CB1F1B826C960054EE86 /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
+		50C9CB231B826CD50054EE86 /* expansion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expansion.png; sourceTree = "<group>"; };
+		50C9CB2B1B826FF20054EE86 /* graphics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graphics.png; sourceTree = "<group>"; };
 		50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HardwareDialog.mm; sourceTree = "<group>"; };
 		50C9CB331B8272F40054EE86 /* HardwareDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HardwareDialog.h; sourceTree = "<group>"; };
-		50C9CB361B83561E0054EE86 /* pref_vic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pref_vic.png; path = images/pref_vic.png; sourceTree = "<group>"; };
-		50C9CB381B8356280054EE86 /* pref_sid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pref_sid.png; path = images/pref_sid.png; sourceTree = "<group>"; };
+		50C9CB361B83561E0054EE86 /* pref_vic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pref_vic.png; sourceTree = "<group>"; };
+		50C9CB381B8356280054EE86 /* pref_sid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pref_sid.png; sourceTree = "<group>"; };
 		50CA0D500A9076FD00A5A08D /* OldSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldSID.h; sourceTree = "<group>"; };
 		50CA0D510A9076FD00A5A08D /* OldSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OldSID.cpp; sourceTree = "<group>"; };
-		50CCB1B91B8499C6008D8C30 /* tb_motherboard2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_motherboard2.png; path = images/tb_motherboard2.png; sourceTree = "<group>"; };
-		50CCB1BB1B8499DE008D8C30 /* tb_setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_setup.png; path = images/tb_setup.png; sourceTree = "<group>"; };
-		50CCB1C11B849B4B008D8C30 /* drive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = drive.png; path = images/drive.png; sourceTree = "<group>"; };
-		50CCB1C31B84A185008D8C30 /* tb_inspect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_inspect.png; path = images/tb_inspect.png; sourceTree = "<group>"; };
-		50CCB1C41B84A185008D8C30 /* tb_inspect2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_inspect2.png; path = images/tb_inspect2.png; sourceTree = "<group>"; };
-		50CCB1C71B84A191008D8C30 /* tb_pacman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_pacman.png; path = images/tb_pacman.png; sourceTree = "<group>"; };
-		50CCB1CA1B84A19F008D8C30 /* tb_timetravel2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_timetravel2.png; path = images/tb_timetravel2.png; sourceTree = "<group>"; };
-		50CCB1CF1B84A5DD008D8C30 /* tb_virtualmachine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tb_virtualmachine.png; path = images/tb_virtualmachine.png; sourceTree = "<group>"; };
-		50CCB1D11B84AC10008D8C30 /* none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = none.png; path = images/none.png; sourceTree = "<group>"; };
-		50CCB1D31B84ACA8008D8C30 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard.png; path = images/keyboard.png; sourceTree = "<group>"; };
-		50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = VirtualC64Icon.icns; path = images/VirtualC64Icon.icns; sourceTree = "<group>"; };
+		50CCB1B91B8499C6008D8C30 /* tb_motherboard2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard2.png; sourceTree = "<group>"; };
+		50CCB1BB1B8499DE008D8C30 /* tb_setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_setup.png; sourceTree = "<group>"; };
+		50CCB1C31B84A185008D8C30 /* tb_inspect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_inspect.png; sourceTree = "<group>"; };
+		50CCB1C41B84A185008D8C30 /* tb_inspect2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_inspect2.png; sourceTree = "<group>"; };
+		50CCB1C71B84A191008D8C30 /* tb_pacman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_pacman.png; sourceTree = "<group>"; };
+		50CCB1CA1B84A19F008D8C30 /* tb_timetravel2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_timetravel2.png; sourceTree = "<group>"; };
+		50CCB1CF1B84A5DD008D8C30 /* tb_virtualmachine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_virtualmachine.png; sourceTree = "<group>"; };
+		50CCB1D11B84AC10008D8C30 /* none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none.png; sourceTree = "<group>"; };
+		50CCB1D31B84ACA8008D8C30 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
+		50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
 		50D141651417A34B0024FC74 /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
 		50D141661417A34B0024FC74 /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
 		50D141671417A34B0024FC74 /* extfilt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extfilt.cc; sourceTree = "<group>"; };
@@ -351,20 +358,20 @@
 		50D500510C2ED13F0022CA3A /* T64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = T64Archive.cpp; sourceTree = "<group>"; };
 		50D5FDB20C2E9CF50022CA3A /* MountDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MountDialog.h; sourceTree = "<group>"; };
 		50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = MountDialog.mm; sourceTree = "<group>"; };
-		50D6954312E3759500D9C738 /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconCRT.icns; path = images/IconCRT.icns; sourceTree = "<group>"; };
-		50D6954412E3759500D9C738 /* IconD64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconD64.icns; path = images/IconD64.icns; sourceTree = "<group>"; };
-		50D6954612E3759500D9C738 /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconT64.icns; path = images/IconT64.icns; sourceTree = "<group>"; };
-		50D6954712E3759500D9C738 /* IconV64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconV64.icns; path = images/IconV64.icns; sourceTree = "<group>"; };
-		50D6956B12E380E500D9C738 /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconPRG.icns; path = images/IconPRG.icns; sourceTree = "<group>"; };
-		50DA14A20A6418470022B4A7 /* bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bottom.png; path = images/bottom.png; sourceTree = "<group>"; };
+		50D6954312E3759500D9C738 /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconCRT.icns; sourceTree = "<group>"; };
+		50D6954412E3759500D9C738 /* IconD64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconD64.icns; sourceTree = "<group>"; };
+		50D6954612E3759500D9C738 /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconT64.icns; sourceTree = "<group>"; };
+		50D6954712E3759500D9C738 /* IconV64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconV64.icns; sourceTree = "<group>"; };
+		50D6956B12E380E500D9C738 /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconPRG.icns; sourceTree = "<group>"; };
+		50DA14A20A6418470022B4A7 /* bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom.png; sourceTree = "<group>"; };
 		50DAD6900A736F9B00BB44AC /* VirtualComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualComponent.h; sourceTree = "<group>"; };
 		50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualComponent.cpp; sourceTree = "<group>"; };
-		50E033BA12E3868100ABF9E3 /* IconP00.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = IconP00.icns; path = images/IconP00.icns; sourceTree = "<group>"; };
-		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = floppy.png; path = images/floppy.png; sourceTree = "<group>"; };
-		50E4BFA90C3CEAB700CB6B43 /* warpOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = warpOff.png; path = images/warpOff.png; sourceTree = "<group>"; };
-		50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = warpOn.png; path = images/warpOn.png; sourceTree = "<group>"; };
-		50E555FC0C42698E00AFB05F /* flag_usa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag_usa.png; path = images/flag_usa.png; sourceTree = "<group>"; };
-		50E555FE0C42699300AFB05F /* flag_eu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag_eu.png; path = images/flag_eu.png; sourceTree = "<group>"; };
+		50E033BA12E3868100ABF9E3 /* IconP00.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconP00.icns; sourceTree = "<group>"; };
+		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
+		50E4BFA90C3CEAB700CB6B43 /* warpOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warpOff.png; sourceTree = "<group>"; };
+		50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warpOn.png; sourceTree = "<group>"; };
+		50E555FC0C42698E00AFB05F /* flag_usa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag_usa.png; sourceTree = "<group>"; };
+		50E555FE0C42699300AFB05F /* flag_eu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag_eu.png; sourceTree = "<group>"; };
 		50E6014613A3653900EDBEA9 /* PropertiesDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesDialog.h; sourceTree = "<group>"; };
 		50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PropertiesDialog.mm; sourceTree = "<group>"; };
 		50ED5BF612DD99C000596417 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
@@ -377,7 +384,7 @@
 		50F238F312DF576600B1F275 /* CheatboxItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxItem.mm; sourceTree = "<group>"; };
 		50F239B912DF66CB00B1F275 /* CheatboxImageBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxImageBrowserCell.h; sourceTree = "<group>"; };
 		50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxImageBrowserCell.mm; sourceTree = "<group>"; };
-		50F23D0712DF932800B1F275 /* glossy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = glossy.png; path = images/glossy.png; sourceTree = "<group>"; };
+		50F23D0712DF932800B1F275 /* glossy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glossy.png; sourceTree = "<group>"; };
 		50F4D2930C46262700ED4E4E /* ResetImage.VC64 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ResetImage.VC64; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -475,6 +482,7 @@
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
 				50F4D28F0C4625E200ED4E4E /* Snapshots */,
 				50732BCA0A70D560008D8FF0 /* Images */,
+				5051A1501B8842F100CBFB5A /* Sounds */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
@@ -485,6 +493,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5051A1551B884EBE00CBFB5A /* AVFoundation.framework */,
 				50F2381D12DF505B00B1F275 /* Quartz.framework */,
 				50B1032E121E7C4C003E7729 /* GLUT.framework */,
 				025229EE0AF27E740024DAB3 /* CoreAudio.framework */,
@@ -689,6 +698,20 @@
 			name = Drive;
 			sourceTree = "<group>";
 		};
+		5051A1501B8842F100CBFB5A /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */,
+				5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */,
+				5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */,
+				5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */,
+				5051A15A1B885E1B00CBFB5A /* 1541_door_open_1.aiff */,
+				5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */,
+			);
+			name = Sounds;
+			path = sounds;
+			sourceTree = "<group>";
+		};
 		50732BCA0A70D560008D8FF0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -696,7 +719,6 @@
 				50D6955012E375A800D9C738 /* Icons */,
 				50C9CB361B83561E0054EE86 /* pref_vic.png */,
 				50C9CB381B8356280054EE86 /* pref_sid.png */,
-				50CCB1C11B849B4B008D8C30 /* drive.png */,
 				50C9CB2B1B826FF20054EE86 /* graphics.png */,
 				50C9CB1F1B826C960054EE86 /* joystick.png */,
 				50C9CB231B826CD50054EE86 /* expansion.png */,
@@ -715,11 +737,9 @@
 				38AF838A0C7BA24A00F6DBCE /* joystick2_32.png */,
 				509DF2470A9F681900AE0859 /* keyboard32.png */,
 				50CCB1D31B84ACA8008D8C30 /* keyboard.png */,
-				5005966D0D23FA1C00FD44B3 /* LEDblue.png */,
 				500596670D23F9E800FD44B3 /* LEDgray.png */,
 				500596660D23F9E800FD44B3 /* LEDgreen.png */,
 				500596650D23F9E800FD44B3 /* LEDred.png */,
-				5005966B0D23FA1800FD44B3 /* LEDyellow.png */,
 				38AF838B0C7BA24A00F6DBCE /* none32.png */,
 				50CCB1D11B84AC10008D8C30 /* none.png */,
 				50A3E08B0E66F7C400D3564D /* pause32.png */,
@@ -734,6 +754,7 @@
 				50E4BFAB0C3CEAD100CB6B43 /* warpOn.png */,
 			);
 			name = Images;
+			path = images;
 			sourceTree = "<group>";
 		};
 		509AE9FE0C3249D4001FC9FD /* Loading and saving */ = {
@@ -889,7 +910,6 @@
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */,
 				50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */,
-				50CCB1C21B849B4B008D8C30 /* drive.png in Resources */,
 				50271DEA1A7E1CFE00C04290 /* LEDnewRed.png in Resources */,
 				50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */,
 				50287EEB0A7CA86900292533 /* stepOut32.png in Resources */,
@@ -898,14 +918,18 @@
 				50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
 				50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */,
+				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */,
 				50C9CB2D1B826FF20054EE86 /* graphics.png in Resources */,
 				50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */,
+				5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */,
 				50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */,
 				50C9CB391B8356280054EE86 /* pref_sid.png in Resources */,
+				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
 				50CCB1D21B84AC10008D8C30 /* none.png in Resources */,
 				50E555FF0C42699300AFB05F /* flag_eu.png in Resources */,
 				50CCB1C61B84A185008D8C30 /* tb_inspect2.png in Resources */,
+				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
 				50F4D2940C46262700ED4E4E /* ResetImage.VC64 in Resources */,
 				38AF838C0C7BA24A00F6DBCE /* joystick1_32.png in Resources */,
 				38AF838D0C7BA24A00F6DBCE /* joystick2_32.png in Resources */,
@@ -914,8 +938,6 @@
 				500596680D23F9E800FD44B3 /* LEDred.png in Resources */,
 				500596690D23F9E800FD44B3 /* LEDgreen.png in Resources */,
 				5005966A0D23F9E800FD44B3 /* LEDgray.png in Resources */,
-				5005966C0D23FA1800FD44B3 /* LEDyellow.png in Resources */,
-				5005966E0D23FA1C00FD44B3 /* LEDblue.png in Resources */,
 				50CCB1BC1B8499DE008D8C30 /* tb_setup.png in Resources */,
 				5094197D0E426C13008D6F71 /* rom.png in Resources */,
 				50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */,
@@ -927,6 +949,7 @@
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
 				50CCB1CC1B84A19F008D8C30 /* tb_timetravel2.png in Resources */,
 				50CCB1C51B84A185008D8C30 /* tb_inspect.png in Resources */,
+				5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */,
 				5041486912219F6E00A80E0C /* cartridge.png in Resources */,
 				503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */,
 				50F23D0812DF932800B1F275 /* glossy.png in Resources */,
@@ -938,6 +961,7 @@
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
 				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
 				50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */,
+				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
 				50C9CB241B826CD50054EE86 /* expansion.png in Resources */,
 				5039A31415BE89940038ACBC /* drive48.png in Resources */,
 				5039A32015BE97500038ACBC /* diskette.png in Resources */,

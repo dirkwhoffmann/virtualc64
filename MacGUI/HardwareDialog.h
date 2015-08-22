@@ -23,6 +23,7 @@ extern NSString *VC64PALorNTSCKey;
 
 /* VC1541 */
 extern NSString *VC64WarpLoadKey;
+extern NSString *VC64DriveNoiseKey;
 
 /* Audio */
 extern NSString *VC64SIDFilterKey;
@@ -52,6 +53,7 @@ extern NSString *VC64SIDSamplingMethodKey;
     IBOutlet NSTextField *diskText;
     IBOutlet NSTextField *diskText2;
     IBOutlet NSButton *writeProtected;
+    IBOutlet NSButton *driveNoise;
 
     /* Expansion port */
     IBOutlet NSImageView *cartridgeIcon;
@@ -76,6 +78,7 @@ extern NSString *VC64SIDSamplingMethodKey;
 
 // VC 1541
 - (IBAction)warpLoadAction:(id)sender;
+- (IBAction)driveNoiseAction:(id)sender;
 - (IBAction)ejectDiskAction:(id)sender;
 - (IBAction)writeProtectionAction:(id)sender;
 

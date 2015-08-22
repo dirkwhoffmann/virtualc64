@@ -28,6 +28,7 @@ VC1541::VC1541()
 	cpu = new CPU();
 	cpu->setName("1541CPU");
     
+    sendSoundMessages = true; 
     resetDisk();
 }
 
@@ -97,7 +98,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 16;
+    uint32_t result = 17;
 
     for (unsigned i = 0; i < 84; i++)
         result += sizeof(data[i]);
@@ -130,7 +131,8 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     redLED = (bool)read8(buffer);
     diskInserted = (bool)read8(buffer);
     writeProtected = (bool)read8(buffer);
-
+    sendSoundMessages = (bool)read8(buffer);
+    
     // Read/Write logic
     track = (int)read16(buffer);
     offset = (int)read16(buffer);
@@ -168,7 +170,8 @@ VC1541::saveToBuffer(uint8_t **buffer)
     write8(buffer, (uint8_t)redLED);
     write8(buffer, (uint8_t)diskInserted);
     write8(buffer, (uint8_t)writeProtected);
-
+    write8(buffer, (uint8_t)sendSoundMessages);
+    
     // Read/Write logic
     write16(buffer, (uint16_t)track);
     write16(buffer, (uint16_t)offset);
@@ -368,25 +371,35 @@ void
 VC1541::rotateDisk()
 { 
 	offset++; 
-	if (offset >= length[track]) offset = 0; 
+    if (offset >= length[track]) {
+        offset = 0;
+    }
 }
 
 void 
 VC1541::moveHeadUp()
 {
+    debug(3, "Moving head up to %2.1f\n", (track + 2) / 2.0);
+
     if (track < 83) track++;
 	offset = offset % length[track];
 
-    debug(3, "Moving head up to %2.1f\n", (track + 2) / 2.0);
+    c64->putMessage(MSG_VC1541_HEAD, 1);
+    if (sendSoundMessages)
+        c64->putMessage(MSG_VC1541_HEAD_SOUND, 1);
 }
 
 void
 VC1541::moveHeadDown()
 {
+    debug(3, "Moving head down to %2.1f\n", (track + 2) / 2.0);
+
     if (track > 0) track--;
     offset = offset % length[track];
     
-    debug(3, "Moving head down to %2.1f\n", (track + 2) / 2.0);
+    c64->putMessage(MSG_VC1541_HEAD, 0);
+    if (sendSoundMessages)
+        c64->putMessage(MSG_VC1541_HEAD_SOUND, 0);
 }
 
 #if 0
@@ -663,20 +676,23 @@ void
 VC1541::insertDisk(D64Archive *a)
 {
 	assert(a != NULL);
-
-    // debug(2, "VC1541::insertDisk(D64Archive *)");
-
+    
     ejectDisk();
     encodeDisk(a);
 
     diskInserted = true;
     setWriteProtection(false);
 	c64->putMessage(MSG_VC1541_DISK, 1);
+    if (sendSoundMessages)
+        c64->putMessage(MSG_VC1541_DISK_SOUND, 1);
 }
 
 void 
 VC1541::ejectDisk()
 {
+    if (!hasDisk())
+        return;
+    
 	// Open lid (write protection light barrier will be blocked)
 	setWriteProtection(true);
 
@@ -688,6 +704,8 @@ VC1541::ejectDisk()
 		
     resetDisk();
 	c64->putMessage(MSG_VC1541_DISK, 0);
+    if (sendSoundMessages)
+        c64->putMessage(MSG_VC1541_DISK_SOUND, 0);
 }
 			
 void 

@@ -20,16 +20,13 @@
 
 @implementation PropertiesDialog
 
-/* System */
+// System
 NSString *VC64BasicRomFileKey = @"VC64BasicRomFileKey";
 NSString *VC64CharRomFileKey  = @"VC64CharRomFileKey";
 NSString *VC64KernelRomFileKey= @"VC64KernelRomFileKey";
 NSString *VC64VC1541RomFileKey= @"VC64VC1541RomFileKey";
 
-/* Peripherals */
-NSString *VC64WarpLoadKey     = @"VC64WarpLoadKey";
-
-/* Joystick */
+// Joystick
 NSString *VC64Left1keycodeKey = @"VC64Left1keycodeKey";
 NSString *VC64Left1charKey = @"VC64Left1charKey";
 NSString *VC64Right1keycodeKey = @"VC64Right1keycodeKey";
@@ -51,7 +48,7 @@ NSString *VC64Down2charKey = @"VC64Down2charKey";
 NSString *VC64Fire2keycodeKey = @"VC64Fire2keycodeKey";
 NSString *VC64Fire2charKey = @"VC64Fire2charKey";
 
-/* Video */
+// Video
 NSString *VC64EyeX            = @"VC64EyeX";
 NSString *VC64EyeY            = @"VC64EyeY";
 NSString *VC64EyeZ            = @"VC64EyeZ";

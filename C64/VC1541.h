@@ -139,11 +139,18 @@ private:
     //! Write protection mark
     bool writeProtected;
     
+    //! Indicates whether the VC1541 will send sound notification messages or not
+    /*! This flag is used by GUI to switch on or switch off drive noise */
+    bool sendSoundMessages;
+    
 public:
     
     inline bool isWriteProtected() { return writeProtected; }
     inline void setWriteProtection(bool b) { writeProtected = b; }
-    
+
+    inline bool soundMessagesEnabled() { return sendSoundMessages; }
+    inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
+
     inline bool getSyncMark() { return syncMark; }
     inline void setSyncMark(bool b) { syncMark = b; }
     

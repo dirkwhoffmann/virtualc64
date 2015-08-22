@@ -95,6 +95,33 @@
 										   userInfo:nil repeats:YES];
 	speedometer = [[Speedometer alloc] init];
 		
+#if 0
+    // Create audio player
+    NSLog(@"Creating audio player");
+    NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
+    resourcePath = [resourcePath stringByAppendingString:@"/1541_spin-up_1.aiff"];
+    NSLog(@"Path to play: %@", resourcePath);
+    NSError* err;
+    
+    //Initialize our player pointing to the path to our resource
+    AVAudioPlayer *player;
+    player = [[AVAudioPlayer alloc] initWithContentsOfURL:
+              [NSURL fileURLWithPath:resourcePath] error:&err];
+    
+    if( err){
+        NSLog(@"Failed with reason: %@", [err localizedDescription]);
+    }
+    else{
+        //set our delegate and begin playback
+        // player.delegate = self;
+        NSLog(@"Playing...");
+        [player play];
+        // player.numberOfLoops = -1;
+        // player.currentTime = 0;
+        // player.volume = 1.0;
+    }
+#endif 
+    
 	NSLog(@"GUI is initialized, timer is running");	
 }
 
@@ -190,6 +217,7 @@
 	
 	// VC1541
 	[defaultValues setObject:@YES forKey:VC64WarpLoadKey];
+    [defaultValues setObject:@YES forKey:VC64DriveNoiseKey];
 
     // Joysticks
     [defaultValues setObject:@123 forKey:VC64Left1keycodeKey];
@@ -289,6 +317,7 @@
     
     // Peripherals
     [c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
+    [[c64 vc1541] setSendSoundMessages:[defaults boolForKey:VC64DriveNoiseKey]];
     
     // Audio
     [c64 setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
@@ -350,6 +379,7 @@
     
     // VC1541
     [defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
+    [defaults setBool:[[c64 vc1541] soundMessagesEnabled] forKey:VC64DriveNoiseKey];
     
     // Audio
     [defaults setBool:[c64 reSID] forKey:VC64SIDReSIDKey];
@@ -507,18 +537,32 @@
 			break;
 			
 		case MSG_VC1541_ATTACHED:
-			if (msg->i)
+            if (msg->i)
 				[greenLED setImage:[NSImage imageNamed:@"LEDgreen"]];
-			else
-				[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];	
+            else
+				[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];
 			break;
 			
+        case MSG_VC1541_ATTACHED_SOUND:
+            if (msg->i)
+                [[c64 vc1541] playSound:@"1541_power_on_0" volume:0.2];
+            else
+                [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
+            break;
+
 		case MSG_VC1541_DISK:
 			[drive setHidden:!msg->i];
-			[eject setHidden:!msg->i];			
-			break;
+			[eject setHidden:!msg->i];
+            break;
 			
-		case MSG_VC1541_LED:
+        case MSG_VC1541_DISK_SOUND:
+            if (msg->i)
+                [[c64 vc1541] playSound:@"1541_door_closed_2" volume:0.2];
+            else
+                [[c64 vc1541] playSound:@"1541_door_open_1" volume:0.2];
+            break;
+
+        case MSG_VC1541_LED:
 			if (msg->i)
 				[redLED setImage:[NSImage imageNamed:@"LEDred"]];
 			else
@@ -526,16 +570,25 @@
 			break;
 			
 		case MSG_VC1541_DATA:
-			if (msg->i) {
+			if (msg->i)
 				[c64 setIecBusIsBusy:true];
-			} else {
+			else
 				[c64 setIecBusIsBusy:false];
-			}			
 			break;
 			
 		case MSG_VC1541_MOTOR:
 			break;
-			
+
+        case MSG_VC1541_HEAD:
+            break;
+            
+        case MSG_VC1541_HEAD_SOUND:
+            if (msg->i)
+                [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
+            else
+                [[c64 vc1541] playSound:@"1541_track_change_2" volume:1.0];
+            break;
+            
 		case MSG_CARTRIDGE:
 			[cartridgeIcon setHidden:!msg->i];
 			[cartridgeEject setHidden:!msg->i];			
@@ -725,8 +778,8 @@
 {
 	NSLog(@"Drive action...");
 	if ([[c64 iec] isDriveConnected]) {
-		[[c64 iec] disconnectDrive];
-	} else {
+        [[c64 iec] disconnectDrive];
+    } else {
 		[[c64 iec] connectDrive];
 	}
 }

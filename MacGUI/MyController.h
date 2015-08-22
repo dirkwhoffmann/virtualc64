@@ -278,7 +278,7 @@ enum INPUT_DEVICES {
 	long animationCounter; 
 
 	// Speedometer to measure clock frequence and frames per second
-	Speedometer *speedometer;		
+	Speedometer *speedometer;    
 }
 
 @property (strong) C64Proxy *c64;

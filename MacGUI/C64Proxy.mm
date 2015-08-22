@@ -478,13 +478,27 @@
 - (void) dump { vc1541->dumpState(); }
 - (bool) tracingEnabled { return vc1541->tracingEnabled(); }
 - (void) setTraceMode:(bool)b { vc1541->setTraceMode(b); }
-- (void) ejectDisk { vc1541->ejectDisk(); }
 - (bool) hasRedLED { return vc1541->hasRedLED(); }
 - (bool) hasDisk { return vc1541->hasDisk(); }
 - (bool) writeProtection { return vc1541->isWriteProtected(); }
 - (void) setWriteProtection:(bool)b { vc1541->setWriteProtection(b); }
+- (bool) soundMessagesEnabled { return vc1541->soundMessagesEnabled(); }
+- (void) setSendSoundMessages:(bool)b { vc1541->setSendSoundMessages(b); }
 - (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
 - (D64Archive *) archiveFromDrive { return D64Archive::archiveFromDrive(vc1541); }
+
+- (void) ejectDisk
+{
+    vc1541->ejectDisk();
+}
+
+- (void) playSound:(NSString *)name volume:(float)v
+{
+    NSSound *s = [NSSound soundNamed:name];
+    [s setVolume:v];
+    [s play];
+}
+
 
 @end
 

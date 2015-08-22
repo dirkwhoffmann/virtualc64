@@ -958,7 +958,7 @@ void checkForOpenGLErrors()
     unsigned short keycode = [event keyCode];
     
     // NSLog(@"keyUp: '%c' keycode: %ld flags: %ld", (char)c, (long)keycode);
-    
+
     // Simulate joysticks
     if ([self releaseJoystick:1 withKeycode:keycode device:[controller inputDeviceA]])
         return;
@@ -981,7 +981,7 @@ void checkForOpenGLErrors()
 
     unsigned int flags = [event modifierFlags];
     int keycode;
-
+    
     // Check if one of the supported special keys has been pressed or released
     if (flags & NSAlternateKeyMask)
         keycode = NSAlternateKeyMask;

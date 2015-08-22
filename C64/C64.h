@@ -1,5 +1,4 @@
-/*
- * (C) 2006 - 2015 Dirk W. Hoffmann. All rights reserved.
+/* Written by Dirk W. Hoffmann, 2006 - 2015
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +15,32 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// VERSION 1.0:
+//
+// BUG FIXES:
+// 1. Fix floppy disk formatting
+//
 // CLEANUP:
 //
+// VERSION 1.1:
+//
+// CLEANUP:
+//
+// 1. Get rid of trace feature (never used, slows down emulation)
+// 
 // SPEEDUP:
 //
-// 1. Make CIA1 and CIA2 dynamic objects (for V1.1)
+// 1. Make CIA1 and CIA2 dynamic objects
 //    Inline execution functions as much as possible
 //
-
+// ENHANCEMENTS (BRAIN STORMING):
+//
+// 1. Floppy drive click sound
+// 2. Floppy drive fast loader (acknowledge new byte at the moment a byte is read or written)
+// 3. Upscaler (like superEagle)
+//    https://github.com/libretro/common-shaders/tree/master/eagle/shaders
+// 4. OpenGL filters
+// 5. Second disk drive
 
 
 #ifndef _C64_INC

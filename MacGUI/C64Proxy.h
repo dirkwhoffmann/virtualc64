@@ -391,13 +391,18 @@
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
-- (void) ejectDisk;
 - (bool) hasRedLED;
 - (bool) hasDisk;
 - (bool) writeProtection;
 - (void) setWriteProtection:(bool)b;
+- (bool) soundMessagesEnabled;
+- (void) setSendSoundMessages:(bool)b;
 - (bool) exportToD64:(NSString *)path;
 - (D64Archive *)archiveFromDrive;
+- (void) ejectDisk;
+
+
+- (void) playSound:(NSString *)name volume:(float)v;
 
 @end
 
