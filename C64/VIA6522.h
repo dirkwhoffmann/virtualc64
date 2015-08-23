@@ -89,7 +89,11 @@ public:
 	*/
     uint16_t t2;
 	uint8_t t2_latch_lo;
-		
+	
+    //! Indicates that timer 1 or timer 2 has reached zero
+    bool t1_underflow;
+    bool t2_underflow;
+    
 public:	
 	//! Constructor
 	VIA6522();
@@ -105,8 +109,8 @@ public:
 
     //! Execute virtual VIA for one cycle
     inline void execute() {
-        if (t1) executeTimer1();
-        if (t2) executeTimer2();
+        if (t1 || t1_underflow) executeTimer1();
+        if (t2 || t2_underflow) executeTimer2();
     }
 
     //! Execution function for timer 1

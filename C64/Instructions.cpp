@@ -76,6 +76,7 @@ CPU::fetch() {
     if (!isC64CPU() && PC_at_cycle_0 == 0xF553) {
         fprintf(stderr, "READ ERROR AT 553 (TIME OUT SYNC SEARCH)\n");
     }
+/*
     if (!isC64CPU() && PC_at_cycle_0 == 0xF55B) {
         fprintf(stderr, "Timer wird gestartet (SYNC SEARCH) (t1 = %d hi_latch: %d lo_latch:%d)\n",
                 c64->floppy->via1.t1, c64->floppy->via1.t1_latch_hi, c64->floppy->via1.t1_latch_lo);
@@ -85,7 +86,7 @@ CPU::fetch() {
                 c64->floppy->via1.t1, c64->floppy->via1.t1_latch_hi, c64->floppy->via1.t1_latch_lo,
                 c64->floppy->track, c64->floppy->offset, c64->floppy->readHead());
     }
-
+*/
     
     if (!isC64CPU() && PC_at_cycle_0 == 0xFAC7) {
         fprintf(stderr, "Jobroutine zum Formatieren einer Diskette\n");

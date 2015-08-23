@@ -51,7 +51,9 @@ void VIA6522::reset(C64 *c64)
     t1_latch_lo = 0;
 	t1_latch_hi = 0;
     t2_latch_lo = 0;
-		
+    t1_underflow = false;
+    t2_underflow = false;
+    
 	for (unsigned i = 0; i < sizeof(io); i++)
 		io[i] = 0;
 }
@@ -59,7 +61,7 @@ void VIA6522::reset(C64 *c64)
 uint32_t
 VIA6522::stateSize()
 {
-    return 13 + sizeof(io);
+    return 15 + sizeof(io);
 }
 
 void VIA6522::loadFromBuffer(uint8_t **buffer)
@@ -77,7 +79,9 @@ void VIA6522::loadFromBuffer(uint8_t **buffer)
     t1_latch_lo = read8(buffer);
 	t1_latch_hi = read8(buffer);
 	t2_latch_lo = read8(buffer);
-	
+	t1_underflow = (bool)read8(buffer);
+    t2_underflow = (bool)read8(buffer);
+    
 	for (unsigned i = 0; i < sizeof(io); i++)
 		io[i] = read8(buffer);
 
@@ -100,7 +104,9 @@ void VIA6522::saveToBuffer(uint8_t **buffer)
 	write8(buffer, t1_latch_lo);
 	write8(buffer, t1_latch_hi);
 	write8(buffer, t2_latch_lo);
-	
+    write8(buffer, (uint8_t)t1_underflow);
+    write8(buffer, (uint8_t)t2_underflow);
+    
 	for (unsigned i = 0; i < sizeof(io); i++)
 		write8(buffer, io[i]);
 
@@ -134,26 +140,62 @@ VIA6522::dumpState()
 //                                    Execution functions
 // -----------------------------------------------------------------------------------------------
 
+// One-shot mode timing [F. K.]
+//               +-+ +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+
+//          02 --+ +-+ +-+ +-+ +-+ +-+ +-#-+ +-+ +-+ +-+ +-+ +-+ +-
+//                 |   |                           |
+//                 +---+                           |
+// WRITE T1C-H ----+   +-----------------#-------------------------
+//  ___                |                           |
+//  IRQ OUTPUT --------------------------#---------+
+//                     |                           +---------------
+//                     |                           |
+//  PB7 OUTPUT --------+                           +---------------
+//                     +-----------------#---------+
+//                     | N |N-1|N-2|N-3|     | 0 |N| |N-1|N-2|N-3|
+//                     |                           |
+//                     |<---- N + 1.5 CYCLES ----->|
+
 void
 VIA6522::executeTimer1()
 {
-    if (t1-- == 1) {
-        // Timer 1 time out
+    if (t1_underflow) {
+
+        t1_underflow = false;
         setInterruptFlag_T1();
+        // TODO: PB7 output
         
-        // Reload timer in free-run mode
+        // Timer 1 has the special ability to run in free-run mode that reloads automatically
+        // This generates a continous stream of interrupt events or a square wave on PB7 which
+        // get inverted every time the timer underflows.
         if (freeRunMode1()) {
             t1 = HI_LO(t1_latch_hi, t1_latch_lo);
         }
+        
+        return;
+    }
+    
+    if (t1) {
+        // Keep on counting
+        t1_underflow = (--t1 == 0);
     }
 }
 
 void
 VIA6522::executeTimer2()
 {
-    if (t1-- == 1) {
-        // Timer 2 time out
+    if (t2_underflow) {
+            
+        t2_underflow = false;
         setInterruptFlag_T2();
+        // TODO: PB7 output
+        
+        return;
+    }
+
+    if (t2){
+        // Keep on counting
+        t2_underflow = (--t2 == 0);
     }
 }
 
