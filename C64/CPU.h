@@ -398,20 +398,24 @@ public:
 	inline void setIRQLineCIA() { setIRQLine(0x01); }
 	//! Set VIC bit of IRQ line
 	inline void setIRQLineVIC() { setIRQLine(0x02); }
-	//! Set VIA 1 bit of IRQ line (1541 drive)
-	inline void setIRQLineVIA1() { setIRQLine(0x10); }
+    //! Set VIA bit of IRQ line (1541 drive)
+    inline void setIRQLineVIA() { setIRQLine(0x10); }
+    //! Set VIA 1 bit of IRQ line (1541 drive)
+	// inline void setIRQLineVIA1() { setIRQLine(0x10); }
 	//! Set VIA 2 bit of IRQ line (1541 drive)
-	inline void setIRQLineVIA2() { setIRQLine(0x20); }
+	// inline void setIRQLineVIA2() { setIRQLine(0x20); }
 	//! Set ATN bit of IRQ line (1541 drive)
 	inline void setIRQLineATN() { setIRQLine(0x40); }
 	//! Clear CIA bit of IRQ line
 	inline void clearIRQLineCIA() { clearIRQLine(0x01); }	
 	//! Clear VIC bit of IRQ line
 	inline void clearIRQLineVIC() { clearIRQLine(0x02); }	
+    //! Clear VIA 1 bit of IRQ line (1541 drive)
+    inline void clearIRQLineVIA() { clearIRQLine(0x10); }
 	//! Clear VIA 1 bit of IRQ line (1541 drive)
-	inline void clearIRQLineVIA1() { clearIRQLine(0x10); }	
+	// inline void clearIRQLineVIA1() { clearIRQLine(0x10); }
 	//! Clear VIA 2 bit of IRQ line (1541 drive)
-	inline void clearIRQLineVIA2() { clearIRQLine(0x20); }	
+	// inline void clearIRQLineVIA2() { clearIRQLine(0x20); }
 	//! Clear ATN bit of IRQ line (1541 drive)
 	inline void clearIRQLineATN() { clearIRQLine(0x40); }	
 	

@@ -100,6 +100,15 @@ public:
 	//! Bring the VIA back to its initial state
 	void reset(C64 *c64);
 
+    //! Dump debug information
+    void dumpState();
+
+    //! Execute virtual VIA for one cycle
+    inline void execute() {
+        if (t1) executeTimer1();
+        if (t2) executeTimer2();
+    }
+
     //! Execution function for timer 1
     void executeTimer1();
 
@@ -123,106 +132,77 @@ public:
 	/*! The poke function only handles those registers that are treated similarily by both VIA chips */
 	virtual void poke(uint16_t addr, uint8_t value);
 
-	//! Reload timer from latched values
-	void reloadTimer1() { t1 = (t1_latch_hi << 8) | t1_latch_lo; }
+    // -----------------------------------------------------------------------------------------------
+    //                                Internal Configuration
+    // -----------------------------------------------------------------------------------------------
 
-	//! Signal time out 
-    void signalTimeOut1() { io[0x0D] |= 0x40; } // DEPRECATED
-	void signalTimeOut2() { io[0x0D] |= 0x20; } // DEPRECATED
+    //! Returns true iff timer 1 is in free-run mode (continous interrupts)
+    bool freeRunMode1() { return (io[0x0B] & 0x40) != 0; }
 
-    // Interrupt flags:
+    //! Check if input latching is enabled
+    bool inputLatchingEnabledA() { return (io[0x0B] & 0x01) != 0; }
+    bool inputLatchingEnabledB() { return (io[0x0B] & 0x02) != 0; }
+
+    
+    // -----------------------------------------------------------------------------------------------
+    //                                   Interrupt handling
+    // -----------------------------------------------------------------------------------------------
+
+    // Returns the value of the IRQ pin
+    // This method updates the IRQ pin of the connected CPU as a side effect and is therefore
+    // invoked on every change in register IFR or register IER.
+    bool IRQ();
+
     //
     // |    7    |    6    |    5    |    4    |    3    |    2    |    1    |    0    |
     // ---------------------------------------------------------------------------------
     // |   IRQ   | Timer 1 | Timer 2 |   CB1   |   CB2   |Shift Reg|   CA1   |   CA2   |
 
-    //      REG 13 -- INTERRUPT FLAG REGISTER
-    // +-+-+-+-+-+-+-+-+
-    // |7|6|5|4|3|2|1|0|             SET BY                    CLEARED BY
-    // +-+-+-+-+-+-+-+-+    +-----------------------+------------------------------+
-    //  | | | | | | | +--CA2| CA2 ACTIVE EDGE       | READ OR WRITE REG 1 (ORA)*   |
-    //  | | | | | | |       +-----------------------+------------------------------+
-    //  | | | | | | +--CA1--| CA1 ACTIVE EDGE       | READ OR WRITE REG 1 (ORA)    |
-    //  | | | | | |         +-----------------------+------------------------------+
-    //  | | | | | +SHIFT REG| COMPLETE 8 SHIFTS     | READ OR WRITE SHIFT REG      |
-    //  | | | | |           +-----------------------+------------------------------+
-    //  | | | | +-CB2-------| CB2 ACTIVE EDGE       | READ OR WRITE ORB*           |
-    //  | | | |             +-----------------------+------------------------------+
-    //  | | | +-CB1---------| CB1 ACTIVE EDGE       | READ OR WRITE ORB            |
-    //  | | |               +-----------------------+------------------------------+
-    //  | | +-TIMER 2-------| TIME-OUT OF T2        | READ T2 LOW OR WRITE T2 HIGH |
-    //  | |                 +-----------------------+------------------------------+
-    //  | +-TIMER 1---------| TIME-OUT OF T1        | READ T1 LOW OR WRITE T1 HIGH |
-    //  |                   +-----------------------+------------------------------+
-    //  +-IRQ---------------| ANY ENABLED INTERRUPT | CLEAR ALL INTERRUPTS         |
-    //                      +-----------------------+------------------------------+
-    //
-    //   * IF THE CA2/CB2 CONTROL IN THE PCR IS SELECTED AS "INDEPENDENT"
-    //	INTERRUPT INPUT, THEN READING OR WRITING THE OUTPUT REGISTER
-    //     ORA/ORB WILL NOT CLEAR THE FLAG BIT. INSTEAD, THE BIT MUST BE
-    //     CLEARED BY WRITING INTO THE IFR, AS DESCRIBED PREVIOUSLY.
-
     // Timer 1 - Set by:     Time-out of T1
     //           Cleared by: Read t1 low or write t1 high
-    inline void setInterruptFlag_T1() { SET_BIT(io[0xD],6); }
-    inline void clearInterruptFlag_T1() { CLR_BIT(io[0xD],6); }
+    
+    inline void setInterruptFlag_T1() { SET_BIT(io[0xD],6); IRQ(); }
+    inline void clearInterruptFlag_T1() { CLR_BIT(io[0xD],6); IRQ(); }
 
     // Timer 2 - Set by:     Time-out of T2
     //           Cleared by: Read t2 low or write t2 high
-    inline void setInterruptFlag_T2() { SET_BIT(io[0xD],5); }
-    inline void clearInterruptFlag_T2() { CLR_BIT(io[0xD],5); }
+    
+    inline void setInterruptFlag_T2() { SET_BIT(io[0xD],5); IRQ(); }
+    inline void clearInterruptFlag_T2() { CLR_BIT(io[0xD],5); IRQ(); }
 
     // CB1 - Set by:     Active edge on CB1
     //       Cleared by: Read or write to register 0 (ORB)
-    inline void setInterruptFlag_CB1() { SET_BIT(io[0xD],4); }
-    inline void clearInterruptFlag_CB1() { CLR_BIT(io[0xD],4); }
+    
+    inline void setInterruptFlag_CB1() { SET_BIT(io[0xD],4); IRQ(); }
+    inline void clearInterruptFlag_CB1() { CLR_BIT(io[0xD],4); IRQ(); }
 
     // CB2 - Set by:     Active edge on CB2
     //       Cleared by: Read or write to register 0 (ORB) (only if CB2 is not selected as "INDEPENDENT")
-    inline void setInterruptFlag_CB2() { SET_BIT(io[0xD],3); }
-    inline void clearInterruptFlag_CB2() { CLR_BIT(io[0xD],3); }
+    
+    inline void setInterruptFlag_CB2() { SET_BIT(io[0xD],3); IRQ(); }
+    inline void clearInterruptFlag_CB2() { CLR_BIT(io[0xD],3); IRQ(); }
     inline bool CB2selectedAsIndependent() {
         uint8_t b765 = (io[0xC] >> 5) & 0x07; return (b765 == 0x01) || (b765 == 0x03); }
 
     // Shift register - Set by:     8 shifts completed
     //                  Cleared by: Read or write to register 10 (0xA) (shift register)
-    inline void setInterruptFlag_SR() { SET_BIT(io[0xD],2); }
-    inline void clearInterruptFlag_SR() { CLR_BIT(io[0xD],2); }
+    
+    inline void setInterruptFlag_SR() { SET_BIT(io[0xD],2); IRQ(); }
+    inline void clearInterruptFlag_SR() { CLR_BIT(io[0xD],2); IRQ(); }
 
     // CA1 - Set by:     Active edge on CA1
     //       Cleared by: Read or write to register 1 (ORA)
-    inline void setInterruptFlag_CA1() { SET_BIT(io[0x0D],1); }
-    inline void clearInterruptFlag_CA1() { CLR_BIT(io[0x0D],1); }
+    
+    inline void setInterruptFlag_CA1() { SET_BIT(io[0x0D],1); IRQ(); }
+    inline void clearInterruptFlag_CA1() { CLR_BIT(io[0x0D],1); IRQ(); }
 
     // CA2 - Set by:     Active edge on CA2
     //       Cleared by: Read or write to register 1 (ORA) (only if CA2 is not selected as "INDEPENDENT")
-    inline void setInterruptFlag_CA2() { SET_BIT(io[0xD],0); }
-    inline void clearInterruptFlag_CA2() { CLR_BIT(io[0xD],0); }
+    
+    inline void setInterruptFlag_CA2() { SET_BIT(io[0xD],0); IRQ(); }
+    inline void clearInterruptFlag_CA2() { CLR_BIT(io[0xD],0); IRQ(); }
     inline bool CA2selectedAsIndependent() {
         uint8_t b321 = (io[0xC] >> 1) & 0x07; return (b321 == 0x01) || (b321 == 0x03); }
-
-    
-
-
-    
-    
-
-    
-    
-    
-    
-
-	//! Returns true iff a time out will interrupt the CPU
-	bool timerInterruptEnabled1() { return (io[0x0E] & 0x40) != 0; }
-	bool timerInterruptEnabled2() { return (io[0x0E] & 0x20) != 0; }	
-
-    //! Returns true iff timer 1 is in free-run mode (continous interrupts)
-    bool freeRunMode1() { return (io[0x0B] & 0x40) != 0; }
-
-	//! Check if input latching is enabled
-	bool inputLatchingEnabledA() { return (io[0x0B] & 0x01) != 0; }
-	bool inputLatchingEnabledB() { return (io[0x0B] & 0x02) != 0; }	
-	void dumpState();
 };
 
 
@@ -240,12 +220,6 @@ public:
 	//! Bring the VIA back to its initial state
 	void reset(C64 *c64);
     
-    //! Execute virtual VIA for one cycle
-    inline void execute() {
-        if (t1) executeTimer1();
-        if (t2) executeTimer2();
-    }
-
     //! Execution function for timer 1
     void executeTimer1();
     
@@ -255,6 +229,7 @@ public:
 	uint8_t peek(uint16_t addr);
 	void poke(uint16_t addr, uint8_t value);
 	
+    
 	inline bool atnInterruptsEnabled() { return io[0x0E] & 0x02; }
 	inline void indicateAtnInterrupt() { io[0x0D] |= 0x02; }
 	inline void clearAtnIndicator() { io[0x0D] &= (0xFF-0x02); }
@@ -274,12 +249,6 @@ public:
 	//! Bring the VIA back to its initial state
 	void reset(C64 *c64);
     
-    //! Execute virtual VIA for one cycle
-    inline void execute() {
-        if (t1) executeTimer1();
-        if (t2) executeTimer2();
-    }
-
     //! Execution function for timer 1
     void executeTimer1();
     

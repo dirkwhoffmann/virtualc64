@@ -123,10 +123,6 @@ VIA6522::dumpState()
 	msg("              Input latching B : %s\n", inputLatchingEnabledB() ? "enabled" : "disabled");
 	msg("                       Timer 1 : %d (latched: %d)\n", t1, LO_HI(t1_latch_lo, t1_latch_hi));
 	msg("                       Timer 2 : %d (latched: %d)\n", t2, LO_HI(t2_latch_lo, 0));
-	msg("            Timer 1 interrupts : %s\n", timerInterruptEnabled1() ? "enabled" : "disabled");
-	msg("            Timer 2 interrupts : %s\n", timerInterruptEnabled2() ? "enabled" : "disabled");
-	msg("        Timer 1 interrupt flag : %d\n", (io[0x0D] & 0x40) != 0);
-	msg("        Timer 2 interrupt flag : %d\n", (io[0x0D] & 0x20) != 0);
 	msg("                     IO memory : ");
 	for (int j = 0; j < 16; j ++) {
 		msg("%02X ", io[j]);
@@ -143,10 +139,7 @@ VIA6522::executeTimer1()
 {
     if (t1-- == 1) {
         // Timer 1 time out
-        signalTimeOut1();
-        if (timerInterruptEnabled1()) {
-            floppy->cpu->setIRQLineVIA1();
-        }
+        setInterruptFlag_T1();
         
         // Reload timer in free-run mode
         if (freeRunMode1()) {
@@ -160,46 +153,23 @@ VIA6522::executeTimer2()
 {
     if (t1-- == 1) {
         // Timer 2 time out
-        signalTimeOut2();
-        if (timerInterruptEnabled2()) {
-            floppy->cpu->setIRQLineVIA2();
-        }
+        setInterruptFlag_T2();
     }
 }
 
-#if 0
-void
-VIA6522::executeTimer1()
-{
-    if (t1-- == 1) {
-        // Timer 1 time out
-        signalTimeOut1();
-        if (timerInterruptEnabled1()) {
-            floppy->cpu->setIRQLineVIA1();
-        }
-        
-        // Reload timer in free-run mode
-        if (freeRunMode1()) {
-            t1 = HI_LO(t1_latch_hi, t1_latch_lo);
-        }
+bool
+VIA6522::IRQ() {
+    if (io[0xD] /* IFR */ & io[0xE] /* IER */) {
+        floppy->cpu->setIRQLineVIA();
+        return true;
+    } else {
+        floppy->cpu->clearIRQLineVIA();
+        return false;
     }
 }
-
-void
-VIA2::executeTimer2()
-{
-    if (t1-- == 1) {
-        // Timer 2 time out
-        signalTimeOut2();
-        if (timerInterruptEnabled2()) {
-            floppy->cpu->setIRQLineVIA2();
-        }
-    }
-}
-#endif
 
 // -----------------------------------------------------------------------------------------------
-//                                         Peek and poke
+//                                Peek and Poke (Shared behaviour)
 // -----------------------------------------------------------------------------------------------
 
 uint8_t 
@@ -209,15 +179,8 @@ VIA6522::peek(uint16_t addr)
 		
 	switch(addr) {
             
-        case 0x0: // Should not reach. Handled individually by VIA1 and VIA2
-            
-			assert(0);
-			break;
-
-        case 0x1: // Should not reach. Handled individually by VIA1 and VIA2
-            
-			assert(0);
-			break;
+        case 0x0: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
+        case 0x1: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
 						
         case 0x2: // DDRB - Data direction register B
             
@@ -233,7 +196,7 @@ VIA6522::peek(uint16_t addr)
             //  IS RESET (BIT 6 IN INTERRUPT FLAG REGISTER)" [F. K.]
             
             clearInterruptFlag_T1();
-            floppy->cpu->clearIRQLineVIA1();
+            floppy->cpu->clearIRQLineVIA();
             return LO_BYTE(t1);
 
         case 0x5: // T1 high-order counter
@@ -259,7 +222,7 @@ VIA6522::peek(uint16_t addr)
             // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
             
             clearInterruptFlag_T2();
-            floppy->cpu->clearIRQLineVIA2();
+            floppy->cpu->clearIRQLineVIA();
 			return LO_BYTE(t2);
 			
 		case 0x9: // T2 high-order counter COUNTER TRANSFERRED TO MPU" [F. K.]
@@ -271,262 +234,120 @@ VIA6522::peek(uint16_t addr)
 
             clearInterruptFlag_SR();
             warn("peek(0xA): Shift register is not emulated!");
-			break;
+            break;
 			
 		case 0xB: // Auxiliary control register
 
             warn("peek(0xB): Shift register is not emulated!");
-			break;
+            break;
 		
         case 0xC: // Peripheral control register
-            
             // TODO
             break;
-			
-		//      REG 13 -- INTERRUPT FLAG REGISTER
-		// +-+-+-+-+-+-+-+-+
-		// |7|6|5|4|3|2|1|0|             SET BY                    CLEARED BY
-		// +-+-+-+-+-+-+-+-+    +-----------------------+------------------------------+
-		//  | | | | | | | +--CA2| CA2 ACTIVE EDGE       | READ OR WRITE REG 1 (ORA)*   |
-		//  | | | | | | |       +-----------------------+------------------------------+
-		//  | | | | | | +--CA1--| CA1 ACTIVE EDGE       | READ OR WRITE REG 1 (ORA)    |
-		//  | | | | | |         +-----------------------+------------------------------+
-		//  | | | | | +SHIFT REG| COMPLETE 8 SHIFTS     | READ OR WRITE SHIFT REG      |
-		//  | | | | |           +-----------------------+------------------------------+
-		//  | | | | +-CB2-------| CB2 ACTIVE EDGE       | READ OR WRITE ORB*           |
-		//  | | | |             +-----------------------+------------------------------+
-		//  | | | +-CB1---------| CB1 ACTIVE EDGE       | READ OR WRITE ORB            |
-		//  | | |               +-----------------------+------------------------------+
-		//  | | +-TIMER 2-------| TIME-OUT OF T2        | READ T2 LOW OR WRITE T2 HIGH |
-		//  | |                 +-----------------------+------------------------------+
-		//  | +-TIMER 1---------| TIME-OUT OF T1        | READ T1 LOW OR WRITE T1 HIGH |
-		//  |                   +-----------------------+------------------------------+
-		//  +-IRQ---------------| ANY ENABLED INTERRUPT | CLEAR ALL INTERRUPTS         |
-		//                      +-----------------------+------------------------------+
-		// 
-		//   * IF THE CA2/CB2 CONTROL IN THE PCR IS SELECTED AS "INDEPENDENT"
-		//	INTERRUPT INPUT, THEN READING OR WRITING THE OUTPUT REGISTER
-		//     ORA/ORB WILL NOT CLEAR THE FLAG BIT. INSTEAD, THE BIT MUST BE
-		//     CLEARED BY WRITING INTO THE IFR, AS DESCRIBED PREVIOUSLY.
-
-        case 0xD:
-            // printf("Reading 0xD: %02X (%02X)", io[addr] | ((io[addr] & io[0x0E]) ? 0x80 : 0x00), io[addr]);
-			return io[addr] | ((io[addr] & io[0x0E]) ? 0x80 : 0x00);
-			
-		//                 REG 14 -- INTERRUPT ENABLE REGISTER
-		//                           +-+-+-+-+-+-+-+-+
-		//                           |7|6|5|4|3|2|1|0|
-		//                           +-+-+-+-+-+-+-+-+            -+
-		//                            | | | | | | | +--- CA2       |
-		//                            | | | | | | +----- CA1       |  0 = INTERRUPT
-		//                            | | | | | +------- SHIFT REG |      DISABLED
-		//                            | | | | +--------- CB2       |_
-		//                            | | | +----------- CB1       |
-		//                            | | +------------- TIMER 2   |  1 = INTERRUPT
-		//                            | +--------------- TIMER 1   |      ENABLED
-		//                            +----------------- SET/CLEAR |
-		//                                                       -+
-		// 
-		//          NOTES:
-		//          1  IF BIT 7 IS A "0", THEN EACH "1" IN BITS 0-6 DISABLES THE
-		//             CORRESPONDING INTERRUPT.
-		//          2  IF BIT 7 IS A "1",  THEN EACH "1" IN BITS 0-6 ENABLES THE
-		//             CORRESPONDING INTERRUPT.
-		//          3  IF A READ OF THIS REGISTER IS DONE, BIT 7 WILL BE "1" AND
-		//             ALL OTHER BITS WILL REFLECT THEIR ENABLE/DISABLE STATE.
-
-        case 0xE:
-			return io[addr] | 0x80;
             
-        case 0xF: // Should not reach. Handled individually by VIA1 and VIA2
-            assert(0);
-            break;
-	}
-
-	// default behavior
-	return io[addr];
-}
-
-uint8_t VIA1::peek(uint16_t addr)
-{
-	switch(addr) {
+        case 0xD: { // IFR - Interrupt Flag Register
             
-        case 0x0: { // ORB - Output register B
+            // "Bit 7 indicates the status of the IRQ output. This bit corresponds to the logic function:
+            //  IRQ = IFR6xIER6 + IFR5xIER5 + IFR4xIER4 + IFR3xIER3 + IFR2xIER2 + IFR1xIER1 + IFR0xIER0
+            //  x = logic AND, + = logic OR" [F. K.]
             
-            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
-            // -----------------------------------------------------------------
-            // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
-            // |  in   |               |  out  |  out  |  in   |  out  |  in   |
-
-            uint8_t external =
-                (floppy->iec->getAtnLine() ? 0x00 : 0x80) | // 7
-                (floppy->iec->getClockLine() ? 0x00 : 0x04) | // 2
-                (floppy->iec->getDataLine() ? 0x00 : 0x01); // 0
-
-            // Determine read value
-            uint8_t result =
-                (ddrb & orb) |        // value of pins that are configured as outputs
-                (~ddrb & external); // value of pins that are configures as inputs
+            io[0xD] &= 0x7F;
+            uint8_t irq = (io[0xD] /* IFR */ & io[0xE] /* IER */) ? 0x80 : 0x00;
+            return io[0xD] | irq;
             
-            // Set device address to zero
-            // TODO: Device address is "hard-wired". Set it in "external", above
-            result &= 0x9F;
-            
-			return result;
+			// OLD: return io[addr] | ((io[addr] & io[0x0E]) ? 0x80 : 0x00);
         }
             
-		case 0x1: // ORA - Output register A
+        case 0xE: // Interrupt enable register
             
-            // Only PA0 is connected (VC1541 Schaltplan: "TROO sense")
-            
-            // warn("READ FROM VIA1:ORA DETECTED\n");
-            
-            // DOES THIS REALLY HAPPEN??
-			clearAtnIndicator();
-			floppy->cpu->clearIRQLineATN();
-			return ora;
+            return io[addr] | 0x80; // Bit 7 (set/clear bit) always shows up as 1
 
-		default:
-			return VIA6522::peek(addr);	
+        case 0xF: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
 	}
+
+    return io[addr];
 }
-
-uint8_t h[16];
-
-uint8_t VIA2::peek(uint16_t addr)
-{
-	switch(addr) {
-
-        case 0x0: {
-            
-            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
-            // -----------------------------------------------------------------
-            // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
-            // |       | (4 disk zones)|protect|       | motor | (head move)   |
-
-            // Value of external pins
-            uint8_t external =
-                (floppy->getSyncMark() ? 0x00 : 0x80) | // 7
-                (floppy->isWriteProtected() ? 0x00 : 0x10); // 4
-            
-            // Determine read value
-            uint8_t result =
-                (ddrb & orb) |        // value of pins that are configured as outputs
-                (~ddrb & external); // value of pins that are configures as inputs
-
-			return result;
-        }
-            
-		case 0x1:
-            // Hard wired to the data lines of the Gate Array (U10)
-            // TODO: Implement proper read/write behavior
-            
-            if (tracingEnabled()) {
-				msg("%02X ", ora);
-			}
-            return ora;
-            
-        case 0x4:
-            floppy->cpu->clearIRQLineVIA1();
-            return VIA6522::peek(addr);
-            
-        case 0xF:
-            if (tracingEnabled()) {
-                msg("%02X ", ora);
-            }
-            return ora;
-
-		default:
-			return VIA6522::peek(addr);	
-	}
-}
-
 
 void VIA6522::poke(uint16_t addr, uint8_t value)
 {
-	assert (addr <= 0x0F);
-		
-	switch(addr) {
-
-        case 0x0: // Should not reach. Handled individually by VIA1 and VIA2
-			assert(false);
-			break;
-		
-		case 0x1: // Should not reach. Handled individually by VIA1 and VIA2
-			assert(false);
-			break;
+    assert (addr <= 0x0F);
+    
+    switch(addr) {
             
-		case 0x2: // DDRB - Data direction register B
+        case 0x0: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
+        case 0x1: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
+            
+        case 0x2: // DDRB - Data direction register B
             
             // "0"  ASSOCIATED PB PIN IS AN INPUT (HIGH IMPEDANCE)
             // "1"  ASSOCIATED PB PIN IS AN OUTPUT WHOSE LEVEL IS DETERMINED BY ORB REGISTER BIT" [F. K.]
             
-			ddrb = value;
-			return;
-			
-		case 0x3: // DDRB - Data direction register A
+            ddrb = value;
+            return;
+            
+        case 0x3: // DDRB - Data direction register A
             
             // "0"  ASSOCIATED PB PIN IS AN INPUT (HIGH IMPEDANCE)
             // "1"  ASSOCIATED PB PIN IS AN OUTPUT WHOSE LEVEL IS DETERMINED BY ORA REGISTER BIT" [F. K.]
-
-			ddra = value;
-			return;
-		
-		case 0x4: // T1 low-order counter
+            
+            ddra = value;
+            return;
+            
+        case 0x4: // T1 low-order counter
             
             // "8 BITS LOADED INTO T1 LOW-ORDER LATCHES. LATCH CONTENTS ARE TRANSFERRED
             //  INTO LOW-ORDER COUNTER AT THE TIME THE HIGH-ORDER COUNTER IS LOADED (REG 5)" [F. K.]
             
-			t1_latch_lo = value;
-			return;
+            t1_latch_lo = value;
+            return;
             
-		case 0x5: // T1 high-order counter
+        case 0x5: // T1 high-order counter
             
             // "8 BITS LOADED INTO T1 HIGH-ORDER LATCHES. ALSO AT THIS TIME BOTH HIGH- AND
             //  LOW-ORDER LATCHES TRANSFERRED INTO T1 COUNTER. T1 INTERRUPT FLAG ALSO IS RESET" [F. K.]
             
-			t1_latch_hi = value;
+            t1_latch_hi = value;
             t1 = HI_LO(t1_latch_hi, t1_latch_lo);
             
             clearInterruptFlag_T1();
-			floppy->cpu->clearIRQLineVIA1();
-			return;
-
-		case 0x6: // T1 low-order latct
-
+            floppy->cpu->clearIRQLineVIA();
+            return;
+            
+        case 0x6: // T1 low-order latct
+            
             // "8 BITS LOADED INTO T1 LOW-ORDER LATCHES. THIS OPERATION IS NO DIFFERENT
             //  THAN A WRITE INTO REG 4" [F. K.]
-
+            
             t1_latch_lo = value;
-			return;
-			
-		case 0x7: // T1 high-order latch
+            return;
+            
+        case 0x7: // T1 high-order latch
             
             // "8 BITS LOADED INTO T1 HIGH-ORDER LATCHES. UNLIKE REG 4 OPERATION NO LATCH TO
             //  COUNTER TRANSFERS TAKE PLACE" [F. K.]
             
-			t1_latch_hi = value;
-			return;
-		
-		case 0x8: // T2 low-order latch/counter
-
+            t1_latch_hi = value;
+            return;
+            
+        case 0x8: // T2 low-order latch/counter
+            
             // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
             
             t2_latch_lo = value;
             clearInterruptFlag_T2();
-            floppy->cpu->clearIRQLineVIA2();
+            floppy->cpu->clearIRQLineVIA();
             return;
-		
-		case 0x9: // T2 high-order counter
+            
+        case 0x9: // T2 high-order counter
             
             // "8 BITS LOADED INTO T2 HIGH-ORDER COUNTER. ALSO, LOW-ORDER LATCH TRANSFERRED
             //  TO LOW-ORDER COUNTER. IN ADDITION T2 INTERRUPT FLAG IS RESET" [F. K.]
             
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
-			floppy->cpu->clearIRQLineVIA2();
-			return;
-
+            floppy->cpu->clearIRQLineVIA();
+            return;
+            
         case 0xA: // Shift register
             
             clearInterruptFlag_SR();
@@ -537,56 +358,76 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             warn("poke(0xB): Shift register is not emulated!");
             break;
-
-		case 0xC:
-			break;
-
-		case 0xD:
-			io[addr] &= ~value;
-			return;
-
-		case 0xE:
-			if (value & 0x80) {
-				io[addr] |= value & 0x7f;
-            } else {
-				io[addr] &= ~value;
-			}
-			return;
-
-        case 0xF: // Should not reach. Handled individually by VIA1 and VIA2
-            assert(false);
+            
+        case 0xC:
             break;
+            
+        case 0xD: // IFR - Interrupt Flag Register
+            
+            // "... individual flag bits may be cleared by writing a "1" into the appropriate bit of the IFR."
+            
+            io[addr] &= ~value;
+            return;
+            
+        case 0xE: // IER - Interrupt Enable Register
+            
+            // Bit 7 distinguishes between set and clear
+            // If bit 7 is 1, each 1 in the provided value will set the corresponding bit
+            // If bit 7 is 0, each 1 in the provided value will clear the corresponding bit
+            
+            if (value & 0x80) {
+                io[addr] |= value & 0x7f;
+            } else {
+                io[addr] &= ~value;
+            }
+            return;
+            
+        case 0xF: assert(0); break; // Not reached. Handled individually by VIA1 and VIA2
     }
-
-	// default bevahior
-	io[addr] = value;
+    
+    io[addr] = value;
 }
 
-void VIA1::poke(uint16_t addr, uint8_t value)
+// -----------------------------------------------------------------------------------------------
+//                                     Peek and Poke (VIA 1)
+// -----------------------------------------------------------------------------------------------
+
+uint8_t VIA1::peek(uint16_t addr)
 {
-	switch(addr) {
-
-        case 0x0:
+    switch(addr) {
             
-            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
-            // -----------------------------------------------------------------
-            // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
-            // |  in   |               |  out  |  out  |  in   |  out  |  in   |
-
-			orb = value;
+        case 0x0: { // ORB - Output register B
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CB1();
             if (!CB2selectedAsIndependent())
                 clearInterruptFlag_CB2();
             
-            // Clean this up ...
-			floppy->iec->updateDevicePins(orb, ddrb);
-			return;
-
-		case 0x1:
+            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
+            // -----------------------------------------------------------------
+            // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
+            // |  in   |               |  out  |  out  |  in   |  out  |  in   |
+            
+            // Port values (outside the chip)
+            uint8_t external =
+            (floppy->iec->getAtnLine() /* 7 */ ? 0x00 : 0x80) |
+            (floppy->iec->getClockLine() /* 2 */ ? 0x00 : 0x04) |
+            (floppy->iec->getDataLine() /* 0 */ ? 0x00 : 0x01);
+            
+            // Determine read value
+            uint8_t result =
+            (ddrb & orb) |      // Values of bits configured as outputs
+            (~ddrb & external); // Values of bits configured as inputs
+            
+            // Set device address to zero
+            // TODO: Device address is "hard-wired". Set it in "external", above
+            result &= 0x9F;
+            
+            return result;
+        }
+            
+        case 0x1: // ORA - Output register A
         case 0xF:
-			ora = value;
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
@@ -594,12 +435,51 @@ void VIA1::poke(uint16_t addr, uint8_t value)
                 clearInterruptFlag_CA2();
 
             // Clean this up ...
+            floppy->cpu->clearIRQLineATN();
+            return ora;
+            
+        default:
+            return VIA6522::peek(addr);
+    }
+}
+
+void VIA1::poke(uint16_t addr, uint8_t value)
+{
+	switch(addr) {
+
+        case 0x0: // ORB - Output register B
+
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CB1();
+            if (!CB2selectedAsIndependent())
+                clearInterruptFlag_CB2();
+ 
+            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
+            // -----------------------------------------------------------------
+            // |  ATN  | Device addr.  |  ATN  | Clock | Clock | Data  | Data  |
+            // |  in   |               |  out  |  out  |  in   |  out  |  in   |
+
+			orb = value;
+			floppy->iec->updateDevicePins(orb, ddrb);
+			return;
+
+		case 0x1: // ORA - Output register A
+        case 0xF:
+            
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CA1();
+            if (!CA2selectedAsIndependent())
+                clearInterruptFlag_CA2();
+
+            
+			ora = value;
+            
+            // Clean this up ...
 			floppy->cpu->clearIRQLineATN();
 			return;
 		
 		case 0x2:
 			ddrb = value;
-			// debug(2, "Writing %d into ddrb via 1\n", value);
 			floppy->iec->updateDevicePins(orb, ddrb);
 			return; 
 						
@@ -608,54 +488,134 @@ void VIA1::poke(uint16_t addr, uint8_t value)
 	}
 }
 
+
+// -----------------------------------------------------------------------------------------------
+//                                     Peek and Poke (VIA 1)
+// -----------------------------------------------------------------------------------------------
+
+uint8_t VIA2::peek(uint16_t addr)
+{
+    switch(addr) {
+            
+        case 0x0: { // ORB - Output register B
+            
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CB1();
+            if (!CB2selectedAsIndependent())
+                clearInterruptFlag_CB2();
+            
+            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
+            // -----------------------------------------------------------------
+            // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
+            // |       | (4 disk zones)|protect|       | motor | (head move)   |
+            
+            // Port values (outside the chip)
+            uint8_t external =
+            (floppy->getSyncMark() /* 7 */ ? 0x00 : 0x80) |
+            (floppy->isWriteProtected() /* 4 */ ? 0x00 : 0x10);
+            
+            // Determine read value
+            uint8_t result =
+            (ddrb & orb) |      // Values of bits configured as outputs
+            (~ddrb & external); // Values of bits configures as inputs
+            
+            return result;
+        }
+            
+        case 0x1: // ORA - Output register A
+        case 0xF:
+            
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CA1();
+            if (!CA2selectedAsIndependent())
+                clearInterruptFlag_CA2();
+
+            // Hard wired to the data lines of the Gate Array (U10) (read/write head)
+            // TODO: Take care of ddra
+            
+            if (tracingEnabled()) {
+                msg("%02X ", ora);
+            }
+            
+            return ora;
+            
+        case 0x4:
+            floppy->cpu->clearIRQLineVIA();
+            return VIA6522::peek(addr);
+            
+        default:
+            return VIA6522::peek(addr);
+    }
+}
+
 void VIA2::poke(uint16_t addr, uint8_t value)
 {
 	switch(addr) {
 
-        case 0x0:
-			// Port B, Steuerport
-			// Bit 0: Schrittmotor Spule 0
-			// Bit 1: Schrittmotor Spule 1
-			// Bit 2: 1 = Laufwerksmotor an
-			// Bit 3: 1 = rote LED an
-			// Bit 4: 0 = Diskette schreibgeschützt
-			// Bit 5,6: Timersteuerung
-			// Bit 7: 0 = SYNC-Signal
-			if ((orb & 0x03) != (value & 0x03)) {
-				// Bits #0-#1: Head step direction. 
-				// Decrease value (%00-%11-%10-%01-%00...) to move head downwards; 
-				// Increase value (%00-%01-%10-%11-%00...) to move head upwards.
+        case 0x0: { // ORB - Output register B
+            
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CB1();
+            if (!CB2selectedAsIndependent())
+                clearInterruptFlag_CB2();
+
+            // |   7   |   6   |   5   |   4   |   3   |   2   |   1   |   0   |
+            // -----------------------------------------------------------------
+            // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
+            // |       | (4 disk zones)|protect|       | motor | (head move)   |
+
+            // Determine bit combination that shows up outside the chip,
+            // except bit 7 and 4 as they don't play any active role here.
+            // TODO: TIMER CONTROL BITS 6 and 5
+
+            uint8_t port = value; // & ddrb; // we ignore ddrb for now
+            
+            // Bits 1 and 0 control the stepper motor
+			if ((orb & 0x03) != (port & 0x03)) {
+                
+				// A decrease (00-11-10-01-00...) moves the the head down
+				// An increase (00-01-10-11-00...) moves the head up
+                
 				if ((value & 0x03) == ((orb+1) & 0x03)) {
-					// Move head upwards...
 					floppy->moveHeadUp();
 				} else if ((value & 0x03) == ((orb-1) & 0x03)) {
-					// Move head downwards...
 					floppy->moveHeadDown();
 				} else {
 					warn("Unexpected stepper motor control sequence in VC1541 detected\n");
 				}
 			}
 
-			if ((orb & 0x04) != (value & 0x04)) {
-				if (value & 0x04)
+            // Bit 2 controls the disk motor (rotates the disk with ca. 300 rpm)
+            // Rising edge: Start motor, falling edge: Stop motor
+            
+            if (!GET_BIT(orb, 2) && GET_BIT(value, 2))
 					floppy->startRotating();
-				else 
+                
+            if (GET_BIT(orb, 2) && !GET_BIT(value, 2))
 					floppy->stopRotating();
-			}
 
-			if ((orb & 0x08) != (value & 0x08)) {
-				if (value & 0x08)
+            // Bit 3 controls the red drive LED
+                
+			if (!GET_BIT(orb, 3) && GET_BIT(value, 3))
 					floppy->activateRedLED();
-				else 
-					floppy->deactivateRedLED();
-			}
-
+                
+            if (GET_BIT(orb, 3) && !GET_BIT(value, 3))
+                floppy->deactivateRedLED();
+                
 			orb = value;
 			return;
-
-		case 0x1:
+        }
+            
+		case 0x1: // ORA - Output register A
         case 0xF:
-			// Port A: Daten zum Tonkopf
+            
+            // Clear flags in interrupt flag register (IFR)
+            clearInterruptFlag_CA1();
+            if (!CA2selectedAsIndependent())
+                clearInterruptFlag_CA2();
+
+            // Hard wired to the data lines of the Gate Array (U10) (read/write head)
+            // TODO: Take care of ddra
 			if (tracingEnabled()) {
 				msg(" W%02X", value);
 			}
