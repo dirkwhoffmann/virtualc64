@@ -514,10 +514,11 @@ void VIA1::poke(uint16_t addr, uint8_t value)
                 clearInterruptFlag_CA2();
 
             
+            printf("VIA:pokeORA %02X\n", ora);
 			ora = value;
             
             // Clean this up ...
-			floppy->cpu->clearIRQLineATN();
+			// floppy->cpu->clearIRQLineATN();
 			return;
 		
 		case 0x2:
@@ -565,21 +566,32 @@ uint8_t VIA2::peek(uint16_t addr)
         }
             
         case 0x1: // ORA - Output register A
-        case 0xF:
+        case 0xF: {
+            
+            uint8_t result;
             
             // Clear flags in interrupt flag register (IFR)
             clearInterruptFlag_CA1();
             if (!CA2selectedAsIndependent())
                 clearInterruptFlag_CA2();
 
-            // Hard wired to the data lines of the Gate Array (U10) (read/write head)
-            // TODO: Take care of ddra
+            if (inputLatchingEnabledA()) {
+                // This is the normal operation mode of the drive.
+                // Every byte that comes from
+                result =
+                (ddra & ora) | // Values of bits configured as outputs
+                (~ddra & ira); // Values of bits configures as inputs
+            } else {
+                warn("INPUT LATCHING OF VIA2 IS DISABLED!");
+            }
             
             if (tracingEnabled()) {
                 msg("%02X ", ora);
             }
             
-            return ora;
+            // return ora;
+            return result; 
+        }
             
         case 0x4:
             floppy->cpu->clearIRQLineVIA();

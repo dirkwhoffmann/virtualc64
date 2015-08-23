@@ -207,10 +207,6 @@ VC1541::dumpState()
     dumpFullTrack(18);
 }
 
-
-
-static unsigned written;
-
 bool
 VC1541::executeOneCycle()
 {
@@ -239,8 +235,8 @@ VC1541::executeOneCycle()
         noOfFFBytes = 0;
         setSyncMark(0);
         writeHead(latched_ora);
-        // printf(" [%d]", latched_ora);
-        signalByteReady();
+        printf(" W[%02X(%02X)]", latched_ora, via2.ora);
+        byteReady();
 
     } else {
         
@@ -259,9 +255,12 @@ VC1541::executeOneCycle()
             noOfFFBytes = 0;
     
         if (noOfFFBytes <= 1) { // no sync, yet
-            via2.ora = readHead();
-            signalByteReady();
+            
             setSyncMark(0);
+
+            // via2.ora = readHead();
+            // Copy disk data to input latch of via 2 and let the CPU know
+            byteReady(readHead());
         } else {
             setSyncMark(1);
         }
@@ -274,58 +273,6 @@ VC1541::executeOneCycle()
     
     return result;
 }
-
-#if 0
-bool
-VC1541::executeOneCycle()
-{
-    bool result;
-    
-    via1->execute(1);
-    via2->execute(1);
-    result = cpu->executeOneCycle();
-    
-    if (byteReadyTimer == 0)
-        return result;
-    
-    if (byteReadyTimer > 1) {
-        byteReadyTimer--;
-        return result;
-    }
-    
-    // Reset timer
-    byteReadyTimer = VC1541_CYCLES_PER_BYTE;
-    
-    // Rotate disk
-    rotateDisk();
-    
-    // Old sync mark logic (brittle)
-    setSyncMark(readHead() == 0xFF);
-
-    if (readHead() == 0xFF) {
-        // Sync found
-        noOfFFBytes++;
-    } else {
-        noOfFFBytes = 0;
-    }
-    
-    if (noOfFFBytes <= 1)
-        signalByteReady();
-    
-    // Read or write data
-    // if (via2->isReadMode()) {
-    if (readmode) {
-        via2->ora = readHead();
-    } else {
-        writeOraToDisk();
-        signalByteReady();
-    }	
-    // latch...
-    readmode = via2->isReadMode();
-    
-    return result;
-}
-#endif
 
 void 
 VC1541::simulateAtnInterrupt()
@@ -403,14 +350,6 @@ VC1541::moveHeadDown()
     if (sendSoundMessages)
         c64->putMessage(MSG_VC1541_HEAD_SOUND, 0);
 }
-
-#if 0
-void
-VC1541::writeOraToDisk()
-{
-    writeByteToDisk(via2->ora);
-}
-#endif
 
 void
 VC1541::clearHalftrack(int nr)

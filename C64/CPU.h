@@ -417,7 +417,7 @@ public:
 	//! Clear VIA 2 bit of IRQ line (1541 drive)
 	// inline void clearIRQLineVIA2() { clearIRQLine(0x20); }
 	//! Clear ATN bit of IRQ line (1541 drive)
-	inline void clearIRQLineATN() { clearIRQLine(0x40); }	
+	inline void clearIRQLineATN() { clearIRQLine(0x40); }	 // DEPRECATED
 	
 	//! Get CIA bit of NMI line
 	inline uint8_t getNMILineCIA() { return getNMILine(0x01); }		

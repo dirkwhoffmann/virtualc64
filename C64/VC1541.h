@@ -241,8 +241,11 @@ public:
     void rotateDisk();
 
     // Signals the CPU that a byte has been processed
-    inline void signalByteReady() { if (via2.overflowEnabled()) cpu->setV(1); }
-	
+    inline void byteReady() { if (via2.overflowEnabled()) cpu->setV(1); }
+
+    // Signals the CPU that a byte has been processed and load byte into input latch A of via 2
+    inline void byteReady(uint8_t byte) { via2.ira = byte; byteReady(); }
+
     
     // ---------------------------------------------------------------------------------------------
     //                              Track and sector management

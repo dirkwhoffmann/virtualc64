@@ -53,8 +53,8 @@ public:
 		case, however, the output signal is unaffected." [F. K.]
 	*/
 	uint8_t ddra, ddrb;
-	uint8_t ora, orb;
 	uint8_t ira, irb;
+    uint8_t ora, orb;
 	
 // protected:
 public:
@@ -144,8 +144,8 @@ public:
     bool freeRunMode1() { return (io[0x0B] & 0x40) != 0; }
 
     //! Check if input latching is enabled
-    bool inputLatchingEnabledA() { return (io[0x0B] & 0x01) != 0; }
-    bool inputLatchingEnabledB() { return (io[0x0B] & 0x02) != 0; }
+    bool inputLatchingEnabledA() { return (GET_BIT(io[0x0B],0)); }
+    bool inputLatchingEnabledB() { return (GET_BIT(io[0x0B],1)); }
 
     
     // -----------------------------------------------------------------------------------------------
@@ -267,9 +267,7 @@ public:
 	bool engineRunning() { return (orb & 0x04) != 0; }
 	bool redLEDshining() { return (orb & 0x08) != 0; }
 
-	//! Set sync bit
-	void setSyncSignal(bool b) { if (b) orb |= 0x80; else orb &= 0x7F; }
-	
+    
 	bool overflowEnabled() { return (io[0x0C] & 0x02); }
 	bool isReadMode() { return (io[0x0C] & 0x20); }
 };

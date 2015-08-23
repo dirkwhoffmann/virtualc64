@@ -90,14 +90,14 @@ CPU::fetch() {
     
     if (!isC64CPU() && PC_at_cycle_0 == 0xFAC7) {
         fprintf(stderr, "Jobroutine zum Formatieren einer Diskette\n");
-        // c64->floppy->setTraceMode(true);
+        c64->floppy->via2.setTraceMode(true);
     }
     
     if (!isC64CPU() && PC_at_cycle_0 == 0xFB00) {
         fprintf(stderr, "Kopf ist jetzt ganz aussen\n");
         fprintf(stderr, "track = %d offset = %d, Laenge = %d\n",
                 c64->floppy->track, c64->floppy->offset, c64->floppy->length[c64->floppy->track]);
-        // c64->floppy->dumpFullTrack();
+        c64->floppy->dumpFullTrack();
     }
     
     if (!isC64CPU() && PC_at_cycle_0 == 0xFB0C) {
