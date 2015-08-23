@@ -171,8 +171,8 @@ VC1541Memory::peek(uint16_t addr)
 	if (addr >= 0xc000) { 
 		// ROM
 		result = mem[addr];
-	} else if (addr < 0x1000) { 
-		// RAM (repeats multiply times, hence we apply a bitmask)
+	} else if (addr < 0x1000) { // TODO: Check if 0x1000 is the correct value
+		// RAM (bitmask is applied because RAM repeats multiple times)
 		result = mem[addr & 0x07ff]; 		
 	} else { 
 		// IO space

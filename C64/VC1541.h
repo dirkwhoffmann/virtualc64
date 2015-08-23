@@ -106,7 +106,8 @@ private:
     //                                     Disk data storage
     // ---------------------------------------------------------------------------------------------
 
-private:
+// private:
+public:
     
     //! Disk data storage
     /*! Each disk consists of 42 tracks (84 halftracks) with a maximum of 7928 bytes.
@@ -176,7 +177,8 @@ public:
     //                                  Read/Write logic
     // ---------------------------------------------------------------------------------------------
 
-private:
+//private:
+public:
     
     //! Position of read write head
     /*! The position marks the byte that is currently read in. When the
@@ -221,8 +223,9 @@ public:
     /*! This function is called by the IEC bus when the ATN signal raises. */
     void simulateAtnInterrupt();
 
-private:
-    
+// private:
+public:
+
     //! Reads the currently processed byte
     /*! In a real VC1541, the drive head would currently process one out of these eight bits. */
     inline uint8_t readHead() { return data[track][offset]; }
@@ -245,7 +248,8 @@ private:
     //                              Track and sector management
     // ---------------------------------------------------------------------------------------------
 
-private:
+//private:
+public:
     
     //! Return start address of a given halftrack (1...84)
     inline uint8_t *startOfHalftrack(unsigned halftrack) {

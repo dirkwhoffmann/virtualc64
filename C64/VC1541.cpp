@@ -209,6 +209,7 @@ VC1541::dumpState()
 
 
 
+static unsigned written;
 
 bool
 VC1541::executeOneCycle()
@@ -238,6 +239,7 @@ VC1541::executeOneCycle()
         noOfFFBytes = 0;
         setSyncMark(0);
         writeHead(latched_ora);
+        // printf(" [%d]", latched_ora);
         signalByteReady();
 
     } else {
@@ -379,7 +381,7 @@ VC1541::rotateDisk()
 void 
 VC1541::moveHeadUp()
 {
-    debug(3, "Moving head up to %2.1f\n", (track + 2) / 2.0);
+    debug(2, "track = %d, Moving head up to %2.1f\n", track, (track + 2) / 2.0);
 
     if (track < 83) track++;
 	offset = offset % length[track];
@@ -392,7 +394,7 @@ VC1541::moveHeadUp()
 void
 VC1541::moveHeadDown()
 {
-    debug(3, "Moving head down to %2.1f\n", (track + 2) / 2.0);
+    debug(2, "track = %d, Moving head down to %2.1f\n", track, (track + 2) / 2.0);
 
     if (track > 0) track--;
     offset = offset % length[track];
@@ -732,11 +734,15 @@ VC1541::dumpFullTrack(int t)
 	if (t < 0) t = track;
 	
 	msg("Dumping track %d (length = %d)\n", t, length[t]);
-	for (int i = 0; i < offset; i++)
+    for (int i = 0; i < offset; i++) {
+        if (i % 32 == 0) msg("\n%04X: ", i);
 		msg("%02X ", data[t][i]);
+    }
 	msg("(%02X) ", data[t][offset]);
-	for (int i = offset+1; i < length[t]; i++)
+    for (int i = offset+1; i < length[t]; i++) {
+        if (i % 32 == 0) msg("\n%04X: ", i);
 		msg("%02X ", data[t][i]);
+    }
 	msg("\n");
 }
 
