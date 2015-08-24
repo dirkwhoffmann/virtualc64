@@ -158,11 +158,6 @@ public:
     inline bool soundMessagesEnabled() { return sendSoundMessages; }
     inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
 
-    //! The SYNC signal
-    /*! This signal is computed by ??? (an 10-input AND-gate). The output of this 
-        gate is hard-wired to pin ?? of via2 */
-    inline bool SYNC() { return syncMark; }
-
     // DEPRECATED
     inline void setSyncMark(bool b) { syncMark = b; }
 
@@ -205,10 +200,17 @@ public:
         frequency. This mechanism is used to slow down the read/write process on inner tracks. */
     uint8_t zone;
     
-    //! The 74LS165 shift register
-    /*! This register handles serial to parallel conversion in write mode and the
-     parallel to serial converison in read mode. */
-    uint8_t shiftreg;
+    //! The 74LS164 serial to parallel shift register
+    /*! In read mode, this register is fed by the drive head with data. */
+    uint8_t read_shiftreg;
+
+    //! Previous value of read_shiftreg
+    /*! We need this value to detect the SYNC signal */
+    uint8_t read_shiftreg_pipe;
+
+    //! The 74LS165 parallel to serial shift register
+    /*! In write mode, this register feeds the drive head with data. */
+    uint8_t write_shiftreg;
     
     //! Temporarily set to true when the VC1541 reads over a sync mark
     bool syncMark;
@@ -256,7 +258,12 @@ public:
     inline uint8_t readHead() { return data[track][offset]; }
     inline uint8_t readHeadLookAhead() { return (offset+1 < length[track]) ? data[track][offset+1] : data[track][0]; }
     inline uint8_t readHeadLookBehind() { return (offset > 0) ? data[track][offset-1] : data[track][length[track]-1]; }
-        
+    
+    inline bool SYNC() {
+        // TODO: DO WE NEED TO CHECK BITS 6,7 INSTEAD OF BITS 1,0 ?
+        return (read_shiftreg == 0xFF && (read_shiftreg_pipe & 0x03) == 0x03 && via2.readMode());
+    }
+    
     //! Writes byte to the current head position
     /*! In a real VC1541, the drive head would currently process one out of these eight bits. */
     inline void writeHead(uint8_t value) { data[track][offset] = value; }

@@ -405,35 +405,6 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
         case 0xC: // Peripheral control register
             
-/*            
-            debug(2,"CA1:\n");
-            debug(2,"  %s ACTIVE EDGE\n", (GET_BIT(value,0) ? "POSITIVE" : "NEGATIVE"));
-            debug(2,"CA2:\n");
-            switch ((value >> 1) & 0x07) {
-                case 0: debug(2,"  INPUT NEG. ACTIVE EDGE\n"); break;
-                case 1: debug(2,"  INDEPENDENT INTERRUPT INPUT NEGATIVE EDGE\n"); break;
-                case 2: debug(2,"  INPUT POS. ACTIVE EDGE\n"); break;
-                case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
-                case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
-                case 5: debug(2,"  PULSE OUTPUT\n"); break;
-                case 6: debug(2,"  LOW OUTPUT %04X\n", floppy->cpu->getPC_at_cycle_0()); break;
-                case 7: debug(2,"  HIGH OUTPUT %04X\n", floppy->cpu->getPC_at_cycle_0()); break;
-            }
-
-            debug(2,"CB1:\n");
-            debug(2,"  %s ACTIVE EDGE\n", (GET_BIT(value,4) ? "POSITIVE" : "NEGATIVE"));
-            debug(2,"CB2:\n");
-            switch ((value >> 5) & 0x07) {
-                case 0: debug(2,"  INPUT NEG. ACTIVE EDGE\n"); break;
-                case 1: debug(2,"  INDEPENDENT INTERRUPT INPUT NEGATIVE EDGE\n"); break;
-                case 2: debug(2,"  INPUT POS. ACTIVE EDGE\n"); break;
-                case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
-                case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
-                case 5: debug(2,"  PULSE OUTPUT\n"); break;
-                case 6: debug(2,"  LOW OUTPUT\n"); break;
-                case 7: debug(2,"  HIGH OUTPUT\n"); break;
-            }
-*/
             break;
             
         case 0xD: // IFR - Interrupt Flag Register
@@ -586,7 +557,7 @@ uint8_t VIA2::peek(uint16_t addr)
             
             // Collect values on the external port lines
             uint8_t external =
-            (floppy->SYNC() /* 7 */ ? 0x00 : 0x80) |
+            (floppy->syncMark /* 7 */ ? 0x00 : 0x80) |
             (floppy->isWriteProtected() /* 4 */ ? 0x00 : 0x10) |
             (floppy->getRedLED() /* 3 */ ? 0x00 : 0x08) |
             (floppy->isRotating() /* 2 */ ? 0x00 : 0x04);
@@ -743,4 +714,37 @@ void VIA2::reset(C64 *c64)
 {
 	debug(2, "  Resetting VIA2...\n");
 	VIA6522::reset(c64);
+}
+
+void VIA2::debug0xC() {
+    
+    uint8_t value = io[0xC];
+    
+     debug(2,"CA1:\n");
+     debug(2,"  %s ACTIVE EDGE\n", (GET_BIT(value,0) ? "POSITIVE" : "NEGATIVE"));
+     debug(2,"CA2:\n");
+     switch ((value >> 1) & 0x07) {
+     case 0: debug(2,"  INPUT NEG. ACTIVE EDGE\n"); break;
+     case 1: debug(2,"  INDEPENDENT INTERRUPT INPUT NEGATIVE EDGE\n"); break;
+     case 2: debug(2,"  INPUT POS. ACTIVE EDGE\n"); break;
+     case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
+     case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
+     case 5: debug(2,"  PULSE OUTPUT\n"); break;
+     case 6: debug(2,"  LOW OUTPUT %04X\n", floppy->cpu->getPC_at_cycle_0()); break;
+     case 7: debug(2,"  HIGH OUTPUT %04X\n", floppy->cpu->getPC_at_cycle_0()); break;
+     }
+    
+    debug(2,"CB1:\n");
+    debug(2,"  %s ACTIVE EDGE\n", (GET_BIT(value,4) ? "POSITIVE" : "NEGATIVE"));
+    debug(2,"CB2:\n");
+    switch ((value >> 5) & 0x07) {
+        case 0: debug(2,"  INPUT NEG. ACTIVE EDGE\n"); break;
+        case 1: debug(2,"  INDEPENDENT INTERRUPT INPUT NEGATIVE EDGE\n"); break;
+        case 2: debug(2,"  INPUT POS. ACTIVE EDGE\n"); break;
+        case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
+        case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
+        case 5: debug(2,"  PULSE OUTPUT\n"); break;
+        case 6: debug(2,"  LOW OUTPUT\n"); break;
+        case 7: debug(2,"  HIGH OUTPUT\n"); break;
+    }
 }

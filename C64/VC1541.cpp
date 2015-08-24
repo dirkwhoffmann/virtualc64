@@ -64,7 +64,9 @@ VC1541::resetDrive(C64 *c64)
     track = 40;
     offset = 0;
     zone = 0;
-    shiftreg = 0;
+    read_shiftreg = 0;
+    read_shiftreg_pipe = 0;
+    write_shiftreg = 0;
     noOfFFBytes = 0;
     latched_readmode = true;
     latched_ora = 0;
@@ -99,7 +101,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 19;
+    uint32_t result = 21;
 
     for (unsigned i = 0; i < 84; i++)
         result += sizeof(data[i]);
@@ -138,7 +140,9 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     track = (int)read16(buffer);
     offset = (int)read16(buffer);
     zone = read8(buffer);
-    shiftreg = read8(buffer);
+    read_shiftreg = read8(buffer);
+    read_shiftreg_pipe = read8(buffer);
+    write_shiftreg = read8(buffer);
     syncMark = (bool)read8(buffer);
     byteReadyTimer = (int)read16(buffer);
 	noOfFFBytes = (int)read16(buffer);
@@ -179,7 +183,9 @@ VC1541::saveToBuffer(uint8_t **buffer)
     write16(buffer, (uint16_t)track);
     write16(buffer, (uint16_t)offset);
     write8(buffer, zone);
-    write8(buffer, shiftreg);
+    write8(buffer, read_shiftreg);
+    write8(buffer, read_shiftreg_pipe);
+    write8(buffer, write_shiftreg);
     write8(buffer, (uint8_t)syncMark);
     write16(buffer, (uint16_t)byteReadyTimer);
     write16(buffer, (uint16_t)noOfFFBytes);
@@ -229,26 +235,10 @@ VC1541::executeOneCycle()
         byteReadyTimer--;
         return result;
     }
-    
-    // TODO: Change according to current disk zone
-    // Compute number of bytes according to length of track and speed of 5 rps
-    // Add array cyclesPerByte[numTracks]
-    
     byteReadyTimer = VC1541_CYCLES_PER_BYTE;
     
     // Byte is complete.
-    
-    // NEW CODE:
-    
-    // In write mode
-    // Write shift register on disk
-    // Signal byte ready
-    // Load serial shift register with PA
-    
-    // (no write occurs if read mode is on. what happens if read mode changes in the middle of action?)
-    
-    // Load shift register
-    
+    // via2.debug0xC();
     
     // Head was in write mode?
     if (!latched_readmode) {
@@ -267,20 +257,22 @@ VC1541::executeOneCycle()
             byteReady(readHead()); // Copy disk data to input latch of via 2 and let the CPU know
         } else {
             setSyncMark(1);
+            // byteReady();
         }
     }
     
     // Prepare for next byte
     rotateDisk();
-    latched_readmode = via2.isReadMode();
+    latched_readmode = via2.readMode();
     latched_ora = via2.ora;
 
     // Head is write mode?
-    if (!via2.isReadMode()) {
+    if (via2.writeMode()) {
         // Write to disk
         noOfFFBytes = 0;
         setSyncMark(0);
         writeHead(via2.ora);
+        // via2.debug0xC();
         // printf(" W[%02X(%02X)]", latched_ora, via2.ora);
         // byteReady();
     }
@@ -289,7 +281,9 @@ VC1541::executeOneCycle()
     return result;
 }
 
+
 #if 0
+// NEW CODE:
 bool
 VC1541::executeOneCycle()
 {
@@ -300,6 +294,7 @@ VC1541::executeOneCycle()
     result = cpu->executeOneCycle();
     
     // Decrement byte ready counter to 1, if active
+    // CHANGE TO DYNAMIC HANDLING, USE FLOATS
     if (byteReadyTimer == 0)
         return result;
     
@@ -308,54 +303,29 @@ VC1541::executeOneCycle()
         return result;
     }
     
+    // TODO: Change according to current disk zone
+    // Compute number of bytes according to length of track and speed of 5 rps
+    // Add array cyclesPerByte[numTracks]
+    
     byteReadyTimer = VC1541_CYCLES_PER_BYTE;
     
-    // Byte is complete.
+    read_shiftreg_pipe = read_shiftreg; 
+    read_shiftreg = readHead();
     
-    if (!latched_readmode) {
-        
-        // Write to disk
-        noOfFFBytes = 0;
-        setSyncMark(0);
-        writeHead(latched_ora);
-        printf(" W[%02X(%02X)]", latched_ora, via2.ora);
-        byteReady();
-        
-    } else {
-        
-        // "Eine auftretende SYNC-Markierung löst beim Diskcontroller das hardwaremäßig festgelegte
-        //  SYNC-Signal aus. Während dieses Signal auftritt, wird der Schreib-/Leseport des Diskcontrollers
-        //  gesperrt, das heißt, nicht mehr mit Daten versorgt - und auch kein BYTE READY mehr ausgelöst
-        //  -, bis die SYNC-Zone auf der Diskette vorbei ist. Aus diesem Grund enthält der VIA 2 in seinem
-        //  Port zum Schreib-/Lesekopf nach dem Auftreten des SYNC-Signals einen undefinierten Wert.
-        //  Dieser entspricht der Bitfolge, die bis zur Feststellung des SYNC-Bereichs durch den Controller
-        //  eingelesen wurde." [Die Floppy 1570/1571, Markt und Technik]
-        
-        // Read from disk
-        if (readHead() == 0xFF)
-            noOfFFBytes++;
-        else
-            noOfFFBytes = 0;
-        
-        if (noOfFFBytes <= 1) { // no sync, yet
-            
-            setSyncMark(0);
-            byteReady(readHead()); // Copy disk data to input latch of via 2 and let the CPU know
-            
-        } else {
-            setSyncMark(1);
-        }
+    if (via2.readMode()) {
+        byteReady(read_shiftreg); // Copy disk data to input latch of via 2 and let the CPU know
     }
-    
-    // Prepare for next byte
-    rotateDisk();
-    latched_readmode = via2.isReadMode();
-    latched_ora = via2.ora;
+
+    if (via2.writeMode()) {
+
+        writeHead(write_shiftreg);
+        write_shiftreg = via.ora;
+        byteReady();
+    }
     
     return result;
 }
 #endif
-
 
 void
 VC1541::byteReady(uint8_t byte)
