@@ -73,119 +73,12 @@ CPU::fetch() {
     next = actionFunc[opcode];
 
     // DIRK DEBUG
-    if (!isC64CPU() && PC_at_cycle_0 == 0xF553) {
-        fprintf(stderr, "READ ERROR AT 553 (TIME OUT SYNC SEARCH)\n");
-    }
-/*
-    if (!isC64CPU() && PC_at_cycle_0 == 0xF55B) {
-        fprintf(stderr, "Timer wird gestartet (SYNC SEARCH) (t1 = %d hi_latch: %d lo_latch:%d)\n",
-                c64->floppy->via1.t1, c64->floppy->via1.t1_latch_hi, c64->floppy->via1.t1_latch_lo);
-    }
-    if (!isC64CPU() && PC_at_cycle_0 == 0xF565) {
-        fprintf(stderr, "Timer wird gestartet (SYNC SEARCH) (t1 = %d hi_latch: %d lo_latch:%d) (track/offset: %d/%d): %d\n",
-                c64->floppy->via1.t1, c64->floppy->via1.t1_latch_hi, c64->floppy->via1.t1_latch_lo,
-                c64->floppy->track, c64->floppy->offset, c64->floppy->readHead());
-    }
-*/
     
     if (!isC64CPU() && PC_at_cycle_0 == 0xFAC7) {
         fprintf(stderr, "Jobroutine zum Formatieren einer Diskette\n");
         c64->floppy->via2.setTraceMode(true);
     }
     
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB00) {
-        fprintf(stderr, "Kopf ist jetzt ganz aussen\n");
-        fprintf(stderr, "track = %d offset = %d, Laenge = %d\n",
-                c64->floppy->track, c64->floppy->offset, c64->floppy->length[c64->floppy->track]);
-        c64->floppy->dumpFullTrack();
-    }
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB0C) {
-        fprintf(stderr, "Track loeschen, mit SYNC beschreiben.\n");
-    }
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB0F) {
-        c64->floppy->dumpFullTrack();
-        fprintf(stderr, "%04X: ($0622$0621) (%X%X) mal $FF schreiben (%d)\n", PC_at_cycle_0,
-                c64->floppy->mem->mem[0x0622], c64->floppy->mem->mem[0x0621],
-                (c64->floppy->mem->mem[0x0622] << 8) | c64->floppy->mem->mem[0x0621]);
-    }
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB17) {
-        // c64->floppy->dumpFullTrack();
-        fprintf(stderr, "%04X: Fertig. Jetzt genauso viele Leerbytes schreiben\n", PC_at_cycle_0);
-    }
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB1A) {
-        c64->floppy->dumpFullTrack();
-        fprintf(stderr, "%04X:  Auf Lesen umschalten\n", PC_at_cycle_0);
-    }
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB1D)
-        fprintf(stderr, "%04X: SYNC-Signal abwarten\n", PC_at_cycle_0);
-
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB20) {
-        c64->floppy->dumpTrack();
-        fprintf(stderr, "%04X: SYNC fertig.\n", PC_at_cycle_0);
-    }
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB35) {
-        c64->floppy->dumpTrack();
-        fprintf(stderr, "Timer ist gestartet: %d\n", c64->floppy->via1.t1);
-    }
-
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB37) {
-        c64->floppy->dumpTrack();
-        fprintf(stderr, "Auf Beginn der SYNC-Zone warten\n");
-    }
-
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB3E) {
-        c64->floppy->dumpTrack();
-        fprintf(stderr, "Auf Ende der SYNC-Zone warten\n");
-    }
-
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB43) {
-        c64->floppy->dumpTrack();
-        fprintf(stderr, "Interrupts fuer Timerstart loeschen\n");
-    }
-    /*
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB4E)
-        fprintf(stderr, "IFR lesen. TimerA:%d Reg0D:%02X A:%d\n", c64->floppy->via1.t1, c64->floppy->via1.io[0x0D], A);
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB51)
-        fprintf(stderr, "X erhoehen: X = %d\n", X);
-    */
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB59)
-        fprintf(stderr, "READ ERROR AT PC:%X\n", PC);
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB60)
-        fprintf(stderr, "Laenge des $55-Bereichs ist ($72/$71) = (%02X%02X)\n",
-                c64->floppy->mem->mem[0x72], c64->floppy->mem->mem[0x71]);
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB7A)
-        fprintf(stderr, "READ ERROR AT PC:%X\n", PC);
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB7D)
-        fprintf(stderr, "Laenge des SYNC-Bereichs ist (Y/X) (%02X%02X) Messung des SYNC-Bereiches merken\n",Y,X);
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB8A)
-        fprintf(stderr, "Differenzen sind  $72,$71 = %02X,%02X\n",
-                c64->floppy->mem->mem[0x72], c64->floppy->mem->mem[0x71]);
-
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFB97)
-        fprintf(stderr, "Differenz is groeser 0\n");
-
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFBB6)
-        fprintf(stderr, "Heureka! Differenz ist kleiner 4\n");
-
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFBCB)
-        fprintf(stderr, "READ ERROR AT PC:%X\n", PC);
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFBE0)
-        fprintf(stderr, "Gesamtanzahl aller Bytes berechnen, die auf diesen Track passen und somit geschrieben werden muessen\n");
-    
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFC12)
-        fprintf(stderr, "READ ERROR AT PC:%X\n", PC);
     
     
     /*

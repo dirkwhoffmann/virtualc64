@@ -275,12 +275,12 @@ VIA6522::peek(uint16_t addr)
         case 0xA: // Shift register
 
             clearInterruptFlag_SR();
-            warn("peek(0xA): Shift register is not emulated!");
+            warn("peek(0xA): Shift register is not emulated!\n");
             break;
 			
 		case 0xB: // Auxiliary control register
 
-            warn("peek(0xB): Shift register is not emulated!");
+            warn("peek(0xB): Shift register is not emulated!\n");
             break;
 		
         case 0xC: // Peripheral control register
@@ -393,15 +393,47 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
         case 0xA: // Shift register
             
             clearInterruptFlag_SR();
-            warn("poke(0xA): Shift register is not emulated!");
+            warn("poke(0xA,%02X): Shift register is not emulated! (PC = %04X)\n",
+                 value, c64->cpu->getPC_at_cycle_0());
             break;
             
         case 0xB: // Auxiliary control register
             
-            warn("poke(0xB): Shift register is not emulated!");
+            warn("poke(0xB,%02X): Shift register is not emulated! (PC = %04X)\n",
+                 value, c64->cpu->getPC_at_cycle_0());
             break;
             
-        case 0xC:
+        case 0xC: // Peripheral control register
+            
+/*            
+            debug(2,"CA1:\n");
+            debug(2,"  %s ACTIVE EDGE\n", (GET_BIT(value,0) ? "POSITIVE" : "NEGATIVE"));
+            debug(2,"CA2:\n");
+            switch ((value >> 1) & 0x07) {
+                case 0: debug(2,"  INPUT NEG. ACTIVE EDGE\n"); break;
+                case 1: debug(2,"  INDEPENDENT INTERRUPT INPUT NEGATIVE EDGE\n"); break;
+                case 2: debug(2,"  INPUT POS. ACTIVE EDGE\n"); break;
+                case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
+                case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
+                case 5: debug(2,"  PULSE OUTPUT\n"); break;
+                case 6: debug(2,"  LOW OUTPUT %04X\n", floppy->cpu->getPC_at_cycle_0()); break;
+                case 7: debug(2,"  HIGH OUTPUT %04X\n", floppy->cpu->getPC_at_cycle_0()); break;
+            }
+
+            debug(2,"CB1:\n");
+            debug(2,"  %s ACTIVE EDGE\n", (GET_BIT(value,4) ? "POSITIVE" : "NEGATIVE"));
+            debug(2,"CB2:\n");
+            switch ((value >> 5) & 0x07) {
+                case 0: debug(2,"  INPUT NEG. ACTIVE EDGE\n"); break;
+                case 1: debug(2,"  INDEPENDENT INTERRUPT INPUT NEGATIVE EDGE\n"); break;
+                case 2: debug(2,"  INPUT POS. ACTIVE EDGE\n"); break;
+                case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
+                case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
+                case 5: debug(2,"  PULSE OUTPUT\n"); break;
+                case 6: debug(2,"  LOW OUTPUT\n"); break;
+                case 7: debug(2,"  HIGH OUTPUT\n"); break;
+            }
+*/
             break;
             
         case 0xD: // IFR - Interrupt Flag Register
@@ -552,12 +584,13 @@ uint8_t VIA2::peek(uint16_t addr)
             // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
             // |       | (4 disk zones)|protect|       | motor | (head move)   |
             
-            // Port values (outside the chip)
+            // Collect values on the external port lines
             uint8_t external =
-            (floppy->getSyncMark() /* 7 */ ? 0x00 : 0x80) |
-            (floppy->isWriteProtected() /* 4 */ ? 0x00 : 0x10);
+            (floppy->SYNC() /* 7 */ ? 0x00 : 0x80) |
+            (floppy->isWriteProtected() /* 4 */ ? 0x00 : 0x10) |
+            (floppy->getRedLED() /* 3 */ ? 0x00 : 0x08) |
+            (floppy->isRotating() /* 2 */ ? 0x00 : 0x04);
             
-            // Determine read value
             uint8_t result =
             (ddrb & orb) |      // Values of bits configured as outputs
             (~ddrb & external); // Values of bits configures as inputs
@@ -618,14 +651,20 @@ void VIA2::poke(uint16_t addr, uint8_t value)
             // | SYNC  | Timer control | Write |  LED  | Rot.  | Stepper motor |
             // |       | (4 disk zones)|protect|       | motor | (head move)   |
 
-            // Determine bit combination that shows up outside the chip,
-            // except bit 7 and 4 as they don't play any active role here.
-            // TODO: TIMER CONTROL BITS 6 and 5
-
-            uint8_t port = value; // & ddrb; // we ignore ddrb for now
+            // Disable bits that are not configured as outputs
+            value &= ddrb;
             
-            // Bits 1 and 0 control the stepper motor
-			if ((orb & 0x03) != (port & 0x03)) {
+            // Bits 6 and 5
+            floppy->setZone((value >> 5) & 0x03);
+            
+            // Bit 3
+            floppy->setRedLED(GET_BIT(value,3));
+
+            // Bit 2
+            floppy->setRotating(GET_BIT(value,2));
+
+            // Bits 1 and 0
+			if ((orb & 0x03) != (value & 0x03)) {
                 
 				// A decrease (00-11-10-01-00...) moves the the head down
 				// An increase (00-01-10-11-00...) moves the head up
@@ -639,23 +678,6 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 				}
 			}
 
-            // Bit 2 controls the disk motor (rotates the disk with ca. 300 rpm)
-            // Rising edge: Start motor, falling edge: Stop motor
-            
-            if (!GET_BIT(orb, 2) && GET_BIT(value, 2))
-					floppy->startRotating();
-                
-            if (GET_BIT(orb, 2) && !GET_BIT(value, 2))
-					floppy->stopRotating();
-
-            // Bit 3 controls the red drive LED
-                
-			if (!GET_BIT(orb, 3) && GET_BIT(value, 3))
-					floppy->activateRedLED();
-                
-            if (GET_BIT(orb, 3) && !GET_BIT(value, 3))
-                floppy->deactivateRedLED();
-                
 			orb = value;
 			return;
         }
@@ -682,11 +704,7 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 				debug(1, "Data direction bits of VC1541 contain suspicious values\n");
 			}
 			return;
-			
-		case 0xC:
-			io[addr] = value;
-			return;
-			
+						
 		default:
 			VIA6522::poke(addr, value);	
 	}

@@ -59,11 +59,12 @@ VC1541::resetDrive(C64 *c64)
     // VC1541 properties
     rotating = false;
     redLED = false;
-    
     syncMark = false;
     byteReadyTimer = 0;
     track = 40;
     offset = 0;
+    zone = 0;
+    shiftreg = 0;
     noOfFFBytes = 0;
     latched_readmode = true;
     latched_ora = 0;
@@ -98,7 +99,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 17;
+    uint32_t result = 19;
 
     for (unsigned i = 0; i < 84; i++)
         result += sizeof(data[i]);
@@ -136,6 +137,8 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     // Read/Write logic
     track = (int)read16(buffer);
     offset = (int)read16(buffer);
+    zone = read8(buffer);
+    shiftreg = read8(buffer);
     syncMark = (bool)read8(buffer);
     byteReadyTimer = (int)read16(buffer);
 	noOfFFBytes = (int)read16(buffer);
@@ -175,6 +178,8 @@ VC1541::saveToBuffer(uint8_t **buffer)
     // Read/Write logic
     write16(buffer, (uint16_t)track);
     write16(buffer, (uint16_t)offset);
+    write8(buffer, zone);
+    write8(buffer, shiftreg);
     write8(buffer, (uint8_t)syncMark);
     write16(buffer, (uint16_t)byteReadyTimer);
     write16(buffer, (uint16_t)noOfFFBytes);
@@ -225,6 +230,84 @@ VC1541::executeOneCycle()
         return result;
     }
     
+    // TODO: Change according to current disk zone
+    // Compute number of bytes according to length of track and speed of 5 rps
+    // Add array cyclesPerByte[numTracks]
+    
+    byteReadyTimer = VC1541_CYCLES_PER_BYTE;
+    
+    // Byte is complete.
+    
+    // NEW CODE:
+    
+    // In write mode
+    // Write shift register on disk
+    // Signal byte ready
+    // Load serial shift register with PA
+    
+    // (no write occurs if read mode is on. what happens if read mode changes in the middle of action?)
+    
+    // Load shift register
+    
+    
+    // Head was in write mode?
+    if (!latched_readmode) {
+        byteReady();
+    }
+    
+    // Head was in read mode?
+    if (latched_readmode) {
+        if (readHead() == 0xFF)
+            noOfFFBytes++;
+        else
+            noOfFFBytes = 0;
+        
+        if (noOfFFBytes <= 1) { // no sync, yet
+            setSyncMark(0);
+            byteReady(readHead()); // Copy disk data to input latch of via 2 and let the CPU know
+        } else {
+            setSyncMark(1);
+        }
+    }
+    
+    // Prepare for next byte
+    rotateDisk();
+    latched_readmode = via2.isReadMode();
+    latched_ora = via2.ora;
+
+    // Head is write mode?
+    if (!via2.isReadMode()) {
+        // Write to disk
+        noOfFFBytes = 0;
+        setSyncMark(0);
+        writeHead(via2.ora);
+        // printf(" W[%02X(%02X)]", latched_ora, via2.ora);
+        // byteReady();
+    }
+    
+    
+    return result;
+}
+
+#if 0
+bool
+VC1541::executeOneCycle()
+{
+    bool result;
+    
+    via1.execute();
+    via2.execute();
+    result = cpu->executeOneCycle();
+    
+    // Decrement byte ready counter to 1, if active
+    if (byteReadyTimer == 0)
+        return result;
+    
+    if (byteReadyTimer > 1) {
+        byteReadyTimer--;
+        return result;
+    }
+    
     byteReadyTimer = VC1541_CYCLES_PER_BYTE;
     
     // Byte is complete.
@@ -237,7 +320,7 @@ VC1541::executeOneCycle()
         writeHead(latched_ora);
         printf(" W[%02X(%02X)]", latched_ora, via2.ora);
         byteReady();
-
+        
     } else {
         
         // "Eine auftretende SYNC-Markierung löst beim Diskcontroller das hardwaremäßig festgelegte
@@ -253,14 +336,12 @@ VC1541::executeOneCycle()
             noOfFFBytes++;
         else
             noOfFFBytes = 0;
-    
+        
         if (noOfFFBytes <= 1) { // no sync, yet
             
             setSyncMark(0);
-
-            // via2.ora = readHead();
-            // Copy disk data to input latch of via 2 and let the CPU know
-            byteReady(readHead());
+            byteReady(readHead()); // Copy disk data to input latch of via 2 and let the CPU know
+            
         } else {
             setSyncMark(1);
         }
@@ -273,6 +354,28 @@ VC1541::executeOneCycle()
     
     return result;
 }
+#endif
+
+
+void
+VC1541::byteReady(uint8_t byte)
+{
+    // On the VC1541 logic board, the byte ready signal is computed by a NAND gate with three inputs.
+    // Two of them are clock lines ensuring that a signal is generated every eigths bit.
+    // The third signal is hard-wired to pin CA2 of VIA2. By pulling CA2 low, the CPU can silence the
+    // the byte ready line. E.g., this is done when moving the drive head to a different track
+    if (via2.CA2()) {
+        via2.ira = byte;
+        byteReady();
+    }
+}
+
+void
+VC1541::byteReady()
+{
+    if (via2.overflowEnabled()) cpu->setV(1);
+}
+
 
 void 
 VC1541::simulateAtnInterrupt()
@@ -287,33 +390,40 @@ VC1541::simulateAtnInterrupt()
 }
 
 void
-VC1541::activateRedLED()
+VC1541::setZone(uint8_t z)
 {
-    redLED = true; c64->putMessage(MSG_VC1541_LED, 1);
+    assert (z <= 3);
+    
+    if (z != zone) {
+        debug(2, "Switching from disk zone %d to disk zone %d\n", zone, z);
+        zone = z;
+    }
 }
 
 void
-VC1541::deactivateRedLED()
+VC1541::setRedLED(bool b)
 {
-    redLED = false; c64->putMessage(MSG_VC1541_LED, 0);
+    if (!redLED && b) {
+        redLED = true;
+        c64->putMessage(MSG_VC1541_LED, 1);
+    } else if (redLED && !b) {
+        redLED = false;
+        c64->putMessage(MSG_VC1541_LED, 0);
+    }
 }
 
 void
-VC1541::startRotating()
-{ 
-	debug(2, "Starting drive engine (%2X)\n", cpu->getPC());
-	rotating = true;
-	byteReadyTimer = VC1541_CYCLES_PER_BYTE;
-	c64->putMessage(MSG_VC1541_MOTOR, 1);
-}
-
-void 
-VC1541::stopRotating() 
-{ 
-	debug(2, "Stopping drive engine (%2X)\n", cpu->getPC()); 
-	rotating = false;
-
-	c64->putMessage(MSG_VC1541_MOTOR, 0);
+VC1541::setRotating(bool b)
+{
+    if (!rotating && b) {
+        rotating = true;
+        byteReadyTimer = VC1541_CYCLES_PER_BYTE; // DEPRECATED
+        c64->putMessage(MSG_VC1541_MOTOR, 1);
+    } else if (rotating && !b) {
+        rotating = false;
+        c64->putMessage(MSG_VC1541_MOTOR, 0);
+    }
+    
 }
 
 void 
@@ -325,7 +435,7 @@ VC1541::rotateDisk()
     }
 }
 
-void 
+void
 VC1541::moveHeadUp()
 {
     debug(2, "track = %d, Moving head up to %2.1f\n", track, (track + 2) / 2.0);
@@ -334,7 +444,10 @@ VC1541::moveHeadUp()
 	offset = offset % length[track];
 
     c64->putMessage(MSG_VC1541_HEAD, 1);
-    if (sendSoundMessages)
+    
+    // Notifiy GUI to play some audio when the head reaches a full track
+    // Half tracks are skipped because in normal operation mode, the drive always jumps two tracks
+    if (track % 2 == 0 && sendSoundMessages)
         c64->putMessage(MSG_VC1541_HEAD_SOUND, 1);
 }
 
@@ -347,7 +460,8 @@ VC1541::moveHeadDown()
     offset = offset % length[track];
     
     c64->putMessage(MSG_VC1541_HEAD, 0);
-    if (sendSoundMessages)
+    
+    if (track % 2 == 0 && sendSoundMessages)
         c64->putMessage(MSG_VC1541_HEAD_SOUND, 0);
 }
 
@@ -587,7 +701,7 @@ VC1541::decodeDisk(uint8_t *dest)
     // For each full track...
     for (track = 1, halftrack = count = 0; track <= numTracks; track++, halftrack += 2) {
         
-        debug(4, "Decoding track %d %s\n", track, dest == NULL ? "(test run)" : "");
+        debug(2, "Decoding track %d %s\n", track, dest == NULL ? "(test run)" : "");
         
         for (unsigned j = 0; j < length[halftrack]; j++) {
             

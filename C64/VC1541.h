@@ -116,11 +116,12 @@ public:
      and the real length of a given halftrack in array length[]. */
     uint8_t data[84][7928];
     
-    //! Total number of halftracks
+    //! Total number of halftracks on this disk
     uint8_t numTracks;
     
-    //! Length of halftrack
+    //! Length of each halftrack in bytes
     uint16_t length[84];
+    
     
     // ---------------------------------------------------------------------------------------------
     //                                   Drive properties
@@ -140,6 +141,11 @@ private:
     //! Write protection mark
     bool writeProtected;
     
+    
+    // ---------------------------------------------------------------------------------------------
+    //                                   Configuration options
+    // ---------------------------------------------------------------------------------------------
+
     //! Indicates whether the VC1541 will send sound notification messages or not
     /*! This flag is used by GUI to switch on or switch off drive noise */
     bool sendSoundMessages;
@@ -152,16 +158,22 @@ public:
     inline bool soundMessagesEnabled() { return sendSoundMessages; }
     inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
 
-    inline bool getSyncMark() { return syncMark; }
+    //! The SYNC signal
+    /*! This signal is computed by ??? (an 10-input AND-gate). The output of this 
+        gate is hard-wired to pin ?? of via2 */
+    inline bool SYNC() { return syncMark; }
+
+    // DEPRECATED
     inline void setSyncMark(bool b) { syncMark = b; }
-    
-    inline bool hasRedLED() { return redLED; };
-    void activateRedLED();
-    void deactivateRedLED();
+
+    inline bool getZone() { return zone; };
+    void setZone(uint8_t z);
+
+    inline bool getRedLED() { return redLED; };
+    void setRedLED(bool b);
     
     inline bool isRotating() { return rotating; };
-    void startRotating();
-    void stopRotating();
+    void setRotating(bool b);
 
     //! Insert a virtual disk
     void insertDisk(Archive *a);
@@ -183,8 +195,21 @@ public:
     //! Position of read write head
     /*! The position marks the byte that is currently read in. When the
      byteReadyTimer times out, the byte is copied to ora in via2 */
+    // TODO: CHANGE TO uint8_t and uint16_t
     int track, offset;
 
+    //! Current zone
+    /*! Each track belongs to one of four zones. Whenever the drive moves the r/w head, 
+        it computed the new number and writes into PB5 and PB6 of via2. These bits are 
+        hard-wired to a 74LS193 counter on the logic board that breaks down the 16 Mhz base
+        frequency. This mechanism is used to slow down the read/write process on inner tracks. */
+    uint8_t zone;
+    
+    //! The 74LS165 shift register
+    /*! This register handles serial to parallel conversion in write mode and the
+     parallel to serial converison in read mode. */
+    uint8_t shiftreg;
+    
     //! Temporarily set to true when the VC1541 reads over a sync mark
     bool syncMark;
 	
@@ -241,10 +266,10 @@ public:
     void rotateDisk();
 
     // Signals the CPU that a byte has been processed
-    inline void byteReady() { if (via2.overflowEnabled()) cpu->setV(1); }
+    inline void byteReady();
 
     // Signals the CPU that a byte has been processed and load byte into input latch A of via 2
-    inline void byteReady(uint8_t byte) { via2.ira = byte; byteReady(); }
+    inline void byteReady(uint8_t byte);
 
     
     // ---------------------------------------------------------------------------------------------
