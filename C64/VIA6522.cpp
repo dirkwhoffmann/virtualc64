@@ -557,7 +557,7 @@ uint8_t VIA2::peek(uint16_t addr)
             
             // Collect values on the external port lines
             uint8_t external =
-            (floppy->syncMark /* 7 */ ? 0x00 : 0x80) |
+            (floppy->SYNC() /* 7 */ ? 0x00 : 0x80) |
             (floppy->isWriteProtected() /* 4 */ ? 0x00 : 0x10) |
             (floppy->getRedLED() /* 3 */ ? 0x00 : 0x08) |
             (floppy->isRotating() /* 2 */ ? 0x00 : 0x04);

@@ -158,9 +158,6 @@ public:
     inline bool soundMessagesEnabled() { return sendSoundMessages; }
     inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
 
-    // DEPRECATED
-    inline void setSyncMark(bool b) { syncMark = b; }
-
     inline bool getZone() { return zone; };
     void setZone(uint8_t z);
 
@@ -211,20 +208,10 @@ public:
     //! The 74LS165 parallel to serial shift register
     /*! In write mode, this register feeds the drive head with data. */
     uint8_t write_shiftreg;
-    
-    //! Temporarily set to true when the VC1541 reads over a sync mark
-    bool syncMark;
-	
+    	
 	//! Timer
 	int byteReadyTimer;
-	
-	//! Counts the number of consecutively found 0xFF mark
-    /*! This variable is used to detect ynchronization marks on disk.
-        In a real VC1514, a synchronization sequence is detected when at least
-        then 10 consecutive 1-bits are read. As the emulator is byte based, a
-        sync mark is detected when two consecutive 0xFF bytes are found. */
-    int noOfFFBytes;
-				
+					
     //! Indicates whether the next byte on disk will be read or written
     /*! When the read/write head moves to the next byte, the emulator determines
         the operation mode (read or write) for the next byte. If the operation
