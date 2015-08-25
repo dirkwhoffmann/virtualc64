@@ -128,6 +128,7 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 		length[i] = read16(buffer);
     
     // Drive properties
+    byteReadyTimer = read16(buffer);
 	rotating = (bool)read8(buffer);
     redLED = (bool)read8(buffer);
     diskInserted = (bool)read8(buffer);
@@ -141,7 +142,6 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     read_shiftreg = read8(buffer);
     read_shiftreg_pipe = read8(buffer);
     write_shiftreg = read8(buffer);
-    byteReadyTimer = (int)read16(buffer);
     latched_readmode = (bool)read8(buffer);
     latched_ora = (uint8_t)read8(buffer);
     
@@ -169,6 +169,7 @@ VC1541::saveToBuffer(uint8_t **buffer)
 		write16(buffer, length[i]);
     
     // Drive properties
+    write16(buffer, byteReadyTimer);
 	write8(buffer, (uint8_t)rotating);
     write8(buffer, (uint8_t)redLED);
     write8(buffer, (uint8_t)diskInserted);
@@ -182,7 +183,6 @@ VC1541::saveToBuffer(uint8_t **buffer)
     write8(buffer, read_shiftreg);
     write8(buffer, read_shiftreg_pipe);
     write8(buffer, write_shiftreg);
-    write16(buffer, (uint16_t)byteReadyTimer);
     write8(buffer, (uint8_t)latched_readmode);
     write8(buffer, latched_ora);
 
@@ -212,27 +212,10 @@ VC1541::dumpState()
     dumpFullTrack(18);
 }
 
-bool
-VC1541::executeOneCycle()
+void
+VC1541::executeByteReady()
 {
-    bool result;
-    
-    via1.execute();
-    via2.execute();
-    result = cpu->executeOneCycle();
-    
-    // Decrement byte ready counter to 1, if active
-    if (byteReadyTimer == 0)
-        return result;
-    
-    if (byteReadyTimer > 1) {
-        byteReadyTimer--;
-        return result;
-    }
-    byteReadyTimer = VC1541_CYCLES_PER_BYTE;
-    
-    // Byte is complete.
-
+ 
     read_shiftreg_pipe = read_shiftreg;
     read_shiftreg = readHead();
     
@@ -263,14 +246,11 @@ VC1541::executeOneCycle()
         // printf(" W[%02X(%02X)]", latched_ora, via2.ora);
         // byteReady();
     }
-    
-    
-    return result;
 }
 
 
 #if 0
-// NEW CODE:
+// OLD CODE:
 bool
 VC1541::executeOneCycle()
 {
@@ -281,7 +261,6 @@ VC1541::executeOneCycle()
     result = cpu->executeOneCycle();
     
     // Decrement byte ready counter to 1, if active
-    // CHANGE TO DYNAMIC HANDLING, USE FLOATS
     if (byteReadyTimer == 0)
         return result;
     
@@ -289,26 +268,41 @@ VC1541::executeOneCycle()
         byteReadyTimer--;
         return result;
     }
-    
-    // TODO: Change according to current disk zone
-    // Compute number of bytes according to length of track and speed of 5 rps
-    // Add array cyclesPerByte[numTracks]
-    
     byteReadyTimer = VC1541_CYCLES_PER_BYTE;
     
-    read_shiftreg_pipe = read_shiftreg; 
+    // Byte is complete.
+    
+    read_shiftreg_pipe = read_shiftreg;
     read_shiftreg = readHead();
     
-    if (via2.readMode()) {
-        byteReady(read_shiftreg); // Copy disk data to input latch of via 2 and let the CPU know
-    }
-
-    if (via2.writeMode()) {
-
-        writeHead(write_shiftreg);
-        write_shiftreg = via.ora;
+    // Head was in write mode?
+    if (!latched_readmode) {
         byteReady();
     }
+    
+    // Head was in read mode?
+    if (latched_readmode) {
+        
+        if (!SYNC()) { // no sync, yet
+            byteReady(readHead()); // Copy disk data to input latch of via 2 and let the CPU know
+        } else {
+        }
+    }
+    
+    // Prepare for next byte
+    rotateDisk();
+    latched_readmode = via2.readMode();
+    latched_ora = via2.ora;
+    
+    // Head is write mode?
+    if (via2.writeMode()) {
+        // Write to disk
+        writeHead(via2.ora);
+        // via2.debug0xC();
+        // printf(" W[%02X(%02X)]", latched_ora, via2.ora);
+        // byteReady();
+    }
+    
     
     return result;
 }
@@ -374,7 +368,6 @@ VC1541::setRotating(bool b)
 {
     if (!rotating && b) {
         rotating = true;
-        byteReadyTimer = VC1541_CYCLES_PER_BYTE; // DEPRECATED
         c64->putMessage(MSG_VC1541_MOTOR, 1);
     } else if (rotating && !b) {
         rotating = false;
@@ -662,6 +655,9 @@ VC1541::decodeDisk(uint8_t *dest)
         
         for (unsigned j = 0; j < length[halftrack]; j++) {
             
+            // BUG: DOES NOT TAKE CARE OF OVERFLOW CONDITION
+            // THIS IS PROBABLY THE FORMAT DISK BUG!
+            // Idea:
             // debug(4, "    Decoding ?? %d %s\n", j, dest == NULL ? "(test run)" : "");
 
             uint8_t *sector_start = &data[halftrack][j];

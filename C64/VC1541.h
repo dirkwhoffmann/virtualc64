@@ -21,9 +21,6 @@
 
 #include "VIA6522.h"
 
-// = 26; // due to my own calculations, a new byte should arrive after 26 CPU cycles
-#define VC1541_CYCLES_PER_BYTE 26 //40 // 30
-
 // Forward declarations
 class IEC;
 class C64;
@@ -102,6 +99,67 @@ private:
         0x0d, 0x1d, 0x1e, 0x15
     };
 
+    //! The stored numbers indicate how many clock cycles are needed for reading or writing a single byte
+    /*! Background: The VC1541 drive is clocked by 16 Mhz. The base frequency is divided by N where N ranges
+        from 13 (zone 0) to 16 (zone 4). On the logic board, this is done with a 4-bit counter of type 74SL193 
+        whose reset value bits are directly connected to the two "zone" bits (PB5 and PB6) coming from via 2.
+        A second 74SL193 divides the signal by 4. The result serves as the clock signal for all units operating 
+        on the bit level (i.e., the two shift registers that transfer bits from and to the head).
+        This means that a single bit is ready after 3,25 CPU cycles in zone 0 and 4 CPU cycles in zone 4.
+        The resulting signal is fed into a third counter (of type 74LS191). It divides the signal by 8 and its 
+        output is fed into a three input NAND-gate computing the important BYTE-READY signal. */
+     
+    const uint16_t cyclesPerByte[4] = {
+        13 * 4 * 8, // Zone 0: One byte each 16*26 drive clock cycles (26 CPU cycles)
+        14 * 4 * 8, // Zone 1: One byte each 16*28 drive clock cycles (28 CPU cycles)
+        15 * 4 * 8, // Zone 2: One byte each 16*30 drive clock cycles (30 CPU cycles)
+        16 * 4 * 8, // Zone 3: One byte each 16*32 drive clock cycles (32 CPU cycles)
+    };
+    
+    // ---------------------------------------------------------------------------------------------
+    //                                    Main entry points
+    // ---------------------------------------------------------------------------------------------
+    
+public:
+    
+    // Configuration
+    
+    //! Indicates whether the VC1541 will send sound notification messages or not
+    /*! This flag is used by GUI to switch on or switch off drive noise */
+    bool sendSoundMessages;
+
+    // Execution
+    
+    //! Execute virtual drive for one cycle (fast execution wrapper)
+    inline bool executeOneCycle() {
+
+        via1.execute();
+        via2.execute();
+        uint8_t result = cpu->executeOneCycle();
+        
+        // Exit if drive in inactive
+        if (!rotating)
+            return result;
+        
+        // Wait until next byte is ready
+        assert (byteReadyTimer % 16 == 0);
+        if (byteReadyTimer) {
+            byteReadyTimer -= 16;
+            return result;
+        }
+        
+        // Byte is ready. Reset counter and process byte
+        assert (zone < 4);
+        byteReadyTimer = cyclesPerByte[zone];
+        executeByteReady();
+        return true;
+    }
+
+    //! Main execution code of executeOneCycle()
+    /*! The main action takes place when all bits of a serially read or written byte byte are processed. */
+    void executeByteReady();
+        
+    
     // ---------------------------------------------------------------------------------------------
     //                                     Disk data storage
     // ---------------------------------------------------------------------------------------------
@@ -142,14 +200,6 @@ private:
     bool writeProtected;
     
     
-    // ---------------------------------------------------------------------------------------------
-    //                                   Configuration options
-    // ---------------------------------------------------------------------------------------------
-
-    //! Indicates whether the VC1541 will send sound notification messages or not
-    /*! This flag is used by GUI to switch on or switch off drive noise */
-    bool sendSoundMessages;
-    
 public:
     
     inline bool isWriteProtected() { return writeProtected; }
@@ -184,6 +234,9 @@ public:
 //private:
 public:
     
+    //! The next byte will be ready after this number of cycles
+    uint16_t byteReadyTimer;
+
     //! Position of read write head
     /*! The position marks the byte that is currently read in. When the
      byteReadyTimer times out, the byte is copied to ora in via2 */
@@ -208,10 +261,7 @@ public:
     //! The 74LS165 parallel to serial shift register
     /*! In write mode, this register feeds the drive head with data. */
     uint8_t write_shiftreg;
-    	
-	//! Timer
-	int byteReadyTimer;
-					
+    
     //! Indicates whether the next byte on disk will be read or written
     /*! When the read/write head moves to the next byte, the emulator determines
         the operation mode (read or write) for the next byte. If the operation
@@ -223,10 +273,6 @@ public:
     
 public:
 		
-	//! Passes control to the virtual drive
-	/*! The drive will be executed for the specified number of clock cycles. */
-	bool executeOneCycle();	
-
     //! Moves head one halftrack up
     void moveHeadUp();
     
@@ -247,7 +293,6 @@ public:
     inline uint8_t readHeadLookBehind() { return (offset > 0) ? data[track][offset-1] : data[track][length[track]-1]; }
     
     inline bool SYNC() {
-        // TODO: DO WE NEED TO CHECK BITS 6,7 INSTEAD OF BITS 1,0 ?
         return (read_shiftreg == 0xFF && (read_shiftreg_pipe & 0x03) == 0x03 && via2.readMode());
     }
     
