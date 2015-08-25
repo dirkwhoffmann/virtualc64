@@ -76,7 +76,7 @@ CPU::fetch() {
     
     if (!isC64CPU() && PC_at_cycle_0 == 0xFAC7) {
         fprintf(stderr, "Jobroutine zum Formatieren einer Diskette\n");
-        c64->floppy->via2.setTraceMode(true);
+        // c64->floppy->via2.setTraceMode(true);
     }
     
     

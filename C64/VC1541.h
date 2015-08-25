@@ -87,6 +87,12 @@ public:
     //                                     Constant definitions
     // -----------------------------------------------------------------------------------------------
 
+public:
+    
+    //! Maximum number of files that can be stored on a single disk
+    /*! VC1541 DOS allows up to 18 directory sectors, each containing 8 files. */
+    const static unsigned MAX_FILES_ON_DISK = 144;
+
 private:
     
     //! GCR encoding table
@@ -110,11 +116,12 @@ private:
         output is fed into a three input NAND-gate computing the important BYTE-READY signal. */
      
     const uint16_t cyclesPerByte[4] = {
-        13 * 4 * 8, // Zone 0: One byte each 16*26 drive clock cycles (26 CPU cycles)
-        14 * 4 * 8, // Zone 1: One byte each 16*28 drive clock cycles (28 CPU cycles)
-        15 * 4 * 8, // Zone 2: One byte each 16*30 drive clock cycles (30 CPU cycles)
-        16 * 4 * 8, // Zone 3: One byte each 16*32 drive clock cycles (32 CPU cycles)
+        13 * 4 * 8, // Zone 0: One byte each (16 * 26) base clock cycles (= 26 CPU cycles)
+        14 * 4 * 8, // Zone 1: One byte each (16 * 28) base clock cycles (= 28 CPU cycles)
+        15 * 4 * 8, // Zone 2: One byte each (16 * 30) base clock cycles (30 CPU cycles)
+        16 * 4 * 8, // Zone 3: One byte each (16 * 32) base clock cycles (32 CPU cycles)
     };
+    
     
     // ---------------------------------------------------------------------------------------------
     //                                    Main entry points
@@ -230,14 +237,15 @@ public:
     //                                  Read/Write logic
     // ---------------------------------------------------------------------------------------------
 
-//private:
-public:
+private:
     
     //! The next byte will be ready after this number of cycles
     uint16_t byteReadyTimer;
 
-    //! Position of read write head
+    //! Track position of the read/write head
     uint8_t track;
+    
+    //! Position of the read/write head inside the current track (byte granularity)
     uint16_t offset;
 
     //! Current zone
@@ -267,6 +275,12 @@ public:
     //! Returns true iff drive is currently in write mode
     bool writeMode() { return !(via2.io[0x0C] & 0x20); }
 
+    // Returns the current value of the SYNC signal
+    /* In the logic board, the SYNC signal is computed by a NAND gate that combines the 10 previously read bits
+     from the input shift register and CB2 of VIA2 (the r/w mode pin). Connecting CB2 to the NAND gates ensures
+     that SYNC can only be true in read mode. */
+    inline bool SYNC() { return (read_shiftreg == 0xFF && (read_shiftreg_pipe & 0x03) == 0x03 && readMode()); }
+    
     //! Moves head one halftrack up
     void moveHeadUp();
     
@@ -277,33 +291,25 @@ public:
     /*! This function is called by the IEC bus when the ATN signal raises. */
     void simulateAtnInterrupt();
 
-// private:
-public:
+private:
 
     //! Reads the currently processed byte
-    /*! In a real VC1541, the drive head would currently process one out of these eight bits. */
-    inline uint8_t readHead() { return data[track][offset]; }
-    inline uint8_t readHeadLookAhead() { return (offset+1 < length[track]) ? data[track][offset+1] : data[track][0]; }
-    inline uint8_t readHeadLookBehind() { return (offset > 0) ? data[track][offset-1] : data[track][length[track]-1]; }
-    
-    inline bool SYNC() {
-        return (read_shiftreg == 0xFF && (read_shiftreg_pipe & 0x03) == 0x03 && readMode());
-    }
+    /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
+    inline uint8_t readHead() { return data[track][offset]; }    
     
     //! Writes byte to the current head position
-    /*! In a real VC1541, the drive head would currently process one out of these eight bits. */
     inline void writeHead(uint8_t value) { data[track][offset] = value; }
 
     //! Rotate disk
     /*! Moves head to next byte on the current track */
-    void rotateDisk();
-
+    inline void rotateDisk() { if (++offset >= length[track]) offset = 0; }
+    
     // Signals the CPU that a byte has been processed
     inline void byteReady();
 
     // Signals the CPU that a byte has been processed and load byte into input latch A of via 2
     inline void byteReady(uint8_t byte);
-
+   
     
     // ---------------------------------------------------------------------------------------------
     //                              Track and sector management
@@ -343,11 +349,12 @@ public:
     /*! Invoke this function in insert disk */
     void encodeDisk(D64Archive *a);
     
-    //! Decode VC1541 format to D64 format
-    /*! Returns the number of bytes written. Pass a NULL pointer to perform a test run, i.e.,
-     to see how many bytes will be written */
-    unsigned decodeDisk(uint8_t *dest);
-    
+    //! Decodes a GCR encode disk into a byte stream compatible with the D64 format
+    /*! Returns the number of bytes written.
+        If dest is NULL, a test run is performed (used to determine how many bytes will be written).
+        If something went wrong, an error code is written to 'error' (0 = no error = success) */
+    unsigned decodeDisk(uint8_t *dest, int *error = NULL);
+
     //! Export currently inserted disk to D64 file
     bool exportToD64(const char *filename);
 
@@ -356,8 +363,10 @@ private:
 	//! Translate 4 data bytes into 5 GCR encodes bytes
 	void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest);
 
-    //! Translate 5 GCR encoded bytes into 4 data bytes
-    void decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, uint8_t *dest);
+    //! Returns true iff ptr points to two SYNC bytes followed by $07 in GCR encoding
+    /*! This seqeunce uniquely identifies the beginning of a data block on a GCR encoded disk. */
+    inline bool beginningOfDataBlock(uint8_t *ptr) {
+        return ptr[0] == 0xFF && ptr[1] == 0xFF && ptr[2] == 0x52 && (ptr[3] & 0xC0) == 0xC0; }
 
 	//! Encode a single sector
 	/*! This function translates the logical byte sequence of a single sector into the native VC1541 
@@ -365,10 +374,16 @@ private:
         Returns the number of bytes written */
 	int encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
 
-    //! Decode a single sector
-    /*! This function translates the native byte representation of a single sector into a logical
-        byte stream. */
+
+    //! Decodes all sectors of a single GCR encoded track
+    unsigned decodeTrack(uint8_t *source, uint8_t *dest, int *error = NULL);
+    
+    //! Decodes a single GCR encoded sector and write out its 256 data bytes 
     void decodeSector(uint8_t *source, uint8_t *dest);
+    
+    //! Decodes 5 GCR bytes into its 4 corrrsponding data bytes
+    void decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, uint8_t *dest);
+
     
 public:
 

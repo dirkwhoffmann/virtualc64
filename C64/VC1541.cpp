@@ -200,7 +200,6 @@ VC1541::dumpState()
 	msg("       Track offset : %d\n", offset);
 	msg("               SYNC : %d\n", SYNC());
 	msg("  Symbol under head : %02X\n", readHead());
-	msg("        Next symbol : %02X\n", readHeadLookAhead());
 	msg("\n");
     msg("Directory track\n");
     dumpFullTrack(18);
@@ -293,19 +292,10 @@ VC1541::setRotating(bool b)
     
 }
 
-void 
-VC1541::rotateDisk()
-{ 
-	offset++; 
-    if (offset >= length[track]) {
-        offset = 0;
-    }
-}
-
 void
 VC1541::moveHeadUp()
 {
-    debug(2, "track = %d, Moving head up to %2.1f\n", track, (track + 2) / 2.0);
+    debug(3, "track = %d, Moving head up to %2.1f\n", track, (track + 2) / 2.0);
 
     if (track < 83) track++;
 	offset = offset % length[track];
@@ -321,7 +311,7 @@ VC1541::moveHeadUp()
 void
 VC1541::moveHeadDown()
 {
-    debug(2, "track = %d, Moving head down to %2.1f\n", track, (track + 2) / 2.0);
+    debug(3, "track = %d, Moving head down to %2.1f\n", track, (track + 2) / 2.0);
 
     if (track > 0) track--;
     offset = offset % length[track];
@@ -402,134 +392,25 @@ VC1541::decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, ui
     dest[0] |= (lookup[shift_reg & 0x1F] << 4);
 }
 
-int
-VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *dest, int gap)
+void
+VC1541::insertDisk(D64Archive *a)
 {
-	int i;
-	uint8_t *source, *ptr = dest;
-	uint8_t id_lo, id_hi, checksum;
-	uint8_t track = (halftrack + 1) / 2;
-		
-	assert(a != NULL);
-	assert(ptr != NULL);
-	assert(1 <= track && track <= 42);
-	
-	if ((source = a->findSector(halftrack, sector)) == 0) {
-		warn("Can't find halftrack data in archive\n");
-		return 0;
-	}
-	// debug(3, "Encoding track %d, sector %d\n", track, sector);
-
-	// Get disk id and compute checksum
-	id_lo = a->diskIdLow();
-	id_hi = a->diskIdHi();
-	checksum = id_lo ^ id_hi ^ track ^ sector;
-	
-	// Write SYNC mark
-	for (i = 0; i < 6; i++, ptr++)
-		*ptr = 0xFF;
-		
-	// Write magic byte (header mark), checksum, sector and track
-	encodeGcr(0x08, checksum, sector, track, ptr);
-	ptr += 5;
-	
-	// Write id lo, id hi, 0x0F, 0x0F
-	encodeGcr(id_lo, id_hi, 0x0F, 0x0F, ptr);
-	ptr += 5;
-	
-	// Write gap (9 x 0x55)
-	for (i = 0; i < 9; i++, ptr++)
-		*ptr = 0x55;
-
-	// Write SYNC mark
-	for (i = 0; i < 6; i++, ptr++)
-		*ptr = 0xFF;
-
-	// Compute data checksum 
-	checksum = source[0];
-	for (i = 1; i < 256; i++)
-		checksum ^= source[i];
-		
-	// Encode magic byte (data mark), first three data bytes
-	encodeGcr(0x07, source[0], source[1], source[2], ptr);
-	ptr += 5;
-	
-	// Encode chunks of data
-	for (i = 3; i < 255; i += 4) {
-		encodeGcr(source[i], source[i+1], source[i+2], source[i+3], ptr);
-		ptr += 5;
-	}
-	assert(i == 255);
-	
-	// Encode last byte, checksum, 0x00, 0x00
-	encodeGcr(source[255], checksum, 0, 0, ptr);
-	ptr += 5;
-	
-	// Write gap
-	for (i = 0; i < gap; i++, ptr++)
-		*ptr = 0x55;
-	
-	// returns number of encoded bytes
-	return ptr - dest;
+    assert(a != NULL);
+    
+    ejectDisk();
+    encodeDisk(a);
+    
+    diskInserted = true;
+    setWriteProtection(false);
+    c64->putMessage(MSG_VC1541_DISK, 1);
+    if (sendSoundMessages)
+        c64->putMessage(MSG_VC1541_DISK_SOUND, 1);
 }
 
 void
-VC1541::decodeSector(uint8_t *source, uint8_t *dest)
-{
-    assert(dest != NULL);
-
-    int i;
-    uint8_t databytes[4];
-    uint8_t *ptr = dest;
-    
-    debug(2, "Decoding sector\n");
-    
-    // Skip SYNC mark
-    source += 6;
-    
-    // Skip magic byte (header mark), checksum, sector and track
-    source += 5;
-    
-    // Skip id lo, id hi, 0x0F, 0x0F
-    source += 5;
-    
-    // Skip gap (9 x 0x55)
-    source += 9;
-    
-    // Skip SYNC mark
-    source += 6;
-    
-    // Decode magic byte (data mark), first three data bytes
-    decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
-
-    if (databytes[0] != 0x07)
-        warn("Expected magic byte 07. Found %02X\n", databytes[0]);
-
-    *(ptr++) = databytes[1];
-    *(ptr++) = databytes[2];
-    *(ptr++) = databytes[3];
-    source += 5;
-    
-    // Decode chunks of data
-    for (i = 3; i < 255; i += 4) {
-        decodeGcr(source[0], source[1], source[2], source[3], source[4], ptr);
-        source += 5;
-        ptr += 4;
-    }
-    assert(i == 255);
-    
-    // Decode last byte, checksum, 0x00, 0x00
-    decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
-    *(ptr++) = databytes[0];
-    
-    // Hopefully, 256 bytes have been decoded...
-    assert(ptr-dest == 256);
-}
-
-void 
 VC1541::insertDisk(Archive *a)
 {
-	warn("Can only mount D64 images.\n");
+    warn("Can only mount D64 images.\n");
 }
 
 void
@@ -560,56 +441,202 @@ VC1541::encodeDisk(D64Archive *a)
     }
 }
 
-unsigned
-VC1541::decodeDisk(uint8_t *dest)
+int
+VC1541::encodeSector(D64Archive *a, uint8_t halftrack, uint8_t sector, uint8_t *dest, int gap)
 {
-    unsigned track, halftrack, count;
+    int i;
+    uint8_t *source, *ptr = dest;
+    uint8_t id_lo, id_hi, checksum;
+    uint8_t track = (halftrack + 1) / 2;
     
-    // For each full track...
-    for (track = 1, halftrack = count = 0; track <= numTracks; track++, halftrack += 2) {
-        
-        debug(2, "Decoding track %d %s\n", track, dest == NULL ? "(test run)" : "");
-        
-        for (unsigned j = 0; j < length[halftrack]; j++) {
-            
-            // BUG: DOES NOT TAKE CARE OF OVERFLOW CONDITION
-            // THIS IS PROBABLY THE FORMAT DISK BUG!
-            // Idea:
-            // debug(4, "    Decoding ?? %d %s\n", j, dest == NULL ? "(test run)" : "");
-
-            uint8_t *sector_start = &data[halftrack][j];
-            if (sector_start[0] != 0xFF) continue;
-            if (sector_start[1] != 0xFF) continue;
-            if (sector_start[2] != 0xFF) continue;
-            if (sector_start[3] != 0xFF) continue;
-            if (sector_start[4] != 0xFF) continue;
-            if (sector_start[5] != 0xFF) continue;
-            if (sector_start[6] != 0x52) continue;
-            
-            // Sync mark found (reached start of sector)
-            count++;
-            if (dest != NULL) {
-                decodeSector(sector_start, dest);
-                dest += 256;
-            }
-        }
+    assert(a != NULL);
+    assert(ptr != NULL);
+    assert(1 <= track && track <= 42);
+    
+    if ((source = a->findSector(halftrack, sector)) == 0) {
+        warn("Can't find halftrack data in archive\n");
+        return 0;
     }
-    return count * 256; 
+    // debug(3, "Encoding track %d, sector %d\n", track, sector);
+    
+    // Get disk id and compute checksum
+    id_lo = a->diskIdLow();
+    id_hi = a->diskIdHi();
+    checksum = id_lo ^ id_hi ^ track ^ sector;
+    
+    // Write SYNC mark
+    for (i = 0; i < 6; i++, ptr++)
+        *ptr = 0xFF;
+    
+    // Write magic byte (header mark), checksum, sector and track
+    encodeGcr(0x08, checksum, sector, track, ptr);
+    ptr += 5;
+    
+    // Write id lo, id hi, 0x0F, 0x0F
+    encodeGcr(id_lo, id_hi, 0x0F, 0x0F, ptr);
+    ptr += 5;
+    
+    // Write gap (9 x 0x55)
+    for (i = 0; i < 9; i++, ptr++)
+        *ptr = 0x55;
+    
+    // Write SYNC mark
+    for (i = 0; i < 6; i++, ptr++)
+        *ptr = 0xFF;
+    
+    // Compute data checksum
+    checksum = source[0];
+    for (i = 1; i < 256; i++)
+        checksum ^= source[i];
+    
+    // Encode magic byte (data mark), first three data bytes
+    encodeGcr(0x07, source[0], source[1], source[2], ptr);
+    ptr += 5;
+    
+    // Encode chunks of data
+    for (i = 3; i < 255; i += 4) {
+        encodeGcr(source[i], source[i+1], source[i+2], source[i+3], ptr);
+        ptr += 5;
+    }
+    assert(i == 255);
+    
+    // Encode last byte, checksum, 0x00, 0x00
+    encodeGcr(source[255], checksum, 0, 0, ptr);
+    ptr += 5;
+    
+    // Write gap
+    for (i = 0; i < gap; i++, ptr++)
+        *ptr = 0x55;
+    
+    // returns number of encoded bytes
+    return ptr - dest;
 }
 
-void 
-VC1541::insertDisk(D64Archive *a)
+unsigned
+VC1541::decodeDisk(uint8_t *dest, int *error)
 {
-	assert(a != NULL);
+    unsigned track, halftrack, numBytes = 0;
+    uint8_t tmpbuf[2 * 7928];
     
-    ejectDisk();
-    encodeDisk(a);
+    if (error) *error = 0; // We assume the best
+    
+    // For each full track ...
+    for (track = 1, halftrack = 0; track <= numTracks; track++, halftrack += 2) {
+        
+        debug(3, "Decoding track %d %s\n", track, dest == NULL ? "(test run)" : "");
+        
+        // Copy the track into temporary buffer
+        // Buffer is double sized, so we can read safely beyond the array bounds
 
-    diskInserted = true;
-    setWriteProtection(false);
-	c64->putMessage(MSG_VC1541_DISK, 1);
-    if (sendSoundMessages)
-        c64->putMessage(MSG_VC1541_DISK_SOUND, 1);
+        assert(length[halftrack] < 7928);
+        memcpy(tmpbuf, data[halftrack], length[halftrack]);
+        memcpy(tmpbuf + length[halftrack], data[halftrack], length[halftrack]);
+
+        if (dest)
+            numBytes += decodeTrack(tmpbuf, dest + numBytes, error);
+        else
+            numBytes += decodeTrack(tmpbuf, NULL, error);
+
+    }
+    return numBytes;
+}
+
+unsigned
+VC1541::decodeTrack(uint8_t *source, uint8_t *dest, int *error)
+{
+    
+    unsigned numBytes = 0;
+    int sectorID = -1, sectorStart[21]; // A track can contain up to 21 sectors
+
+    // Initialize offset table
+    for (unsigned i = 0; i < 21; sectorStart[i++] = -1);
+    
+    // Collect start addresses of all sectors in this track
+    for (unsigned i = 2; i < 7928 + 512; i++) {
+        
+        if (source[i-2] != 0xFF || source[i-1] != 0xFF || source[i] == 0xFF)
+            continue;
+    
+        uint8_t data[4];
+        decodeGcr(source[i], source[i+1], source[i+2], source[i+3], source[i+4], data);
+
+        // We found: |  0xFF  |  0xFF  | !0xFF   |
+        //                             | data[0] | data[1] | data[2] | data[3] |
+        //                                $08 => Header block
+        //                                $07 => Data block
+
+
+        if (data[0] == 0x08) { // Header block
+            
+            // databyte[1] = header block checksum
+            // databyte[2] = sector number
+            // databyte[3] = track number
+            
+            sectorID = data[2];
+            debug("Found header block (%d/%d)\n", data[3], data[2], data[1]);
+
+        } else if (data[0] == 0x07) { // Data block
+
+            if (sectorID == -1) {
+                // we need to see the header block, first
+                continue;
+            }
+
+            if (sectorID < 0 || sectorID > 20) {
+                warn("Skipping sector %d. Sector number of range (0 - 20).\n", sectorID);
+                if (error) *error = 1;
+                continue;
+            }
+
+            debug("Found data block for sector %d at offset %d\n", sectorID, i);
+            sectorStart[sectorID] = i;
+
+        } else {
+            warn("Skipping sector %d. Unknown header ID (expected $07 or $08, found $%02X).\n", sectorID, sectorID);
+            if (error) *error = 1;
+        }
+    }
+    
+    // Decode all sectors that have been found
+    for (unsigned i = 0; i < 21 && sectorStart[i] != -1; i++, numBytes += 256) {
+        debug(2, "   Decoding sector %d\n", i);
+        if (dest) {
+            decodeSector(source + sectorStart[i], dest);
+            dest += 256;
+        }
+    }
+    
+    return numBytes;
+}
+
+void
+VC1541::decodeSector(uint8_t *source, uint8_t *dest)
+{
+    uint8_t databytes[4];
+    uint8_t *ptr = dest;
+    
+    if (dest == NULL) return;
+    
+    // Decode the first three data bytes
+    decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
+    assert(databytes[0] == 0x07);
+    
+    *(ptr++) = databytes[1];
+    *(ptr++) = databytes[2];
+    *(ptr++) = databytes[3];
+    source += 5;
+    
+    // Keep on going
+    for (unsigned i = 3; i < 255; i += 4, source += 5, ptr += 4) {
+        decodeGcr(source[0], source[1], source[2], source[3], source[4], ptr);
+    }
+    
+    // Decode the last byte
+    decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
+    *(ptr++) = databytes[0];
+    
+    debug(2, "%d bytes written.\n", ptr-dest);
+    assert(ptr - dest == 256);
 }
 
 void 

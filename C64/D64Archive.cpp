@@ -240,15 +240,16 @@ D64Archive *
 D64Archive::archiveFromDrive(VC1541 *drive)
 {
     D64Archive *archive;
+    int error;
     
     fprintf(stderr, "Creating D64 archive from VC1541 drive...\n");
     
     if ((archive = new D64Archive()) == NULL)
         return NULL;
     
-    // Perform a test run to ensure that we don't cause a buffer overlow
-    if (drive->decodeDisk(NULL) > D64_802_SECTORS_ECC) {
-        fprintf(stderr, "PANIC! 'decodeDisk' would create a buffer overflow. Aborting.\n");
+    // Perform test run
+    if (drive->decodeDisk(NULL, &error) > D64_802_SECTORS_ECC || error) {
+        fprintf(stderr, "Cannot create archive (error code: %d)\n", error);
         delete archive;
         return NULL;
     }
@@ -404,29 +405,33 @@ D64Archive::getNameOfItem(int n)
 const char *
 D64Archive::getTypeOfItem(int n)
 {
-    int pos = findDirectoryEntry(n) + 0x02;
-    int type = data[pos] & 0x07;
+    int pos = findDirectoryEntry(n);
+    if (pos < 0) return "";
     
-    switch (type) {
-        case 0x00:
-            return "DEL";
-        case 0x01:
-            return "SEQ";
-        case 0x02:
-            return "PRG";
-        case 0x03:
-            return "USR";
-        case 0x04:
-            return "REL";
-        case 0x05:
-            return "101(?)";
-        case 0x06:
-            return "110(?)";
-        case 0x07:
-            return "111(?)";
-        default:
-            return "(?)";
+    switch (data[pos]) {
+        case 0x80: return "DEL";
+        case 0x81: return "SEQ";
+        case 0x82: return "PRG";
+        case 0x83: return "USR";
+        case 0x84: return "REL";
+            
+        case 0x01: return "*SEQ";
+        case 0x02: return "*PRG";
+        case 0x03: return "*USR";
+
+        case 0xA0: return "DEL";
+        case 0xA1: return "SEQ";
+        case 0xA2: return "PRG";
+        case 0xA3: return "USR";
+
+        case 0xC0: return "DEL <";
+        case 0xC1: return "SEQ <";
+        case 0xC2: return "PRG <";
+        case 0xC3: return "USR <";
+        case 0xC4: return "REL <";
     }
+    
+    return "(?)";
 }
 
 int
@@ -435,7 +440,7 @@ D64Archive::getSizeOfItemInBlocks(int n)
     int pos = findDirectoryEntry(n);
     if (pos < 0) return 0;
     
-    return LO_HI(data[pos+0x1E],data[pos+0x1F]);
+    return LO_HI(data[pos+0x1C],data[pos+0x1D]);
 }
 
 uint16_t
@@ -448,8 +453,8 @@ D64Archive::getDestinationAddrOfItem(int n)
     
     // Search for beginning of file data
     pos = findDirectoryEntry(n);
-    track = data[pos+0x03];
-    sector = data[pos+0x04];
+    track = data[pos + 0x01];
+    sector = data[pos + 0x02];
     if ((pos = offset(track, sector)) < 0)
         return 0;
     
@@ -475,7 +480,7 @@ D64Archive::selectItem(int item)
     // fprintf(stderr, "First data sector: %02X, %02X", data[fp+0x03], data[fp+0x04]);
     
     // find first data sector
-    if ((fp = offset(data[fp+0x03], data[fp+0x04])) < 0)
+    if ((fp = offset(data[fp+0x01], data[fp+0x02])) < 0)
         return;
     
     
@@ -551,7 +556,7 @@ D64Archive::getNameOfItemAsPETString(int n)
     int i, pos = findDirectoryEntry(n);
     
     if (pos < 0) return NULL;
-    pos += 0x05; // filename begins here
+    pos += 0x03; // filename begins here
     for (i = 0; i < 16; i++) {
         if (data[pos+i] == 0xA0)
             break;
@@ -800,24 +805,15 @@ D64Archive::writeBAM(const char *name)
 int
 D64Archive::findDirectoryEntry(int itemNr)
 {
-	// The Block Allocation Map (BAM) is stored on track 18 / sector 0.
-	// the directory starts at track 18 / sector 1.
-    int pos = offset(18, 1);
+    int pos = offset(18, 1); // Directory starts on track 18 in sector 1
+    bool last_sector = (data[pos] == 0x00); // does the directory continue in another sector?
+    pos += 2; // Move to the beginning of the first directory entry
     
-    // Indicates if we're inside the last sector (successor track is zero then)
-    bool last_sector = (data[pos] == 0x00);
-
-    // As faked disk data could send us into an infinite loop, we will abort
-    // the search proces eventually.
-    const unsigned GIVE_UP = 512;
-    
-    // Signature of an empty directory entry (32 zeroes in a row)
-    const char emptyEntry[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
-	
-        for (unsigned i = 0; i < GIVE_UP;) {
+    for (unsigned i = 0; i < VC1541::MAX_FILES_ON_DISK;) {
         
-		// Only proceed if we're looking at a valid directory entry
-        if (memcmp(&data[pos], emptyEntry, 32) == 0)
+        // Only proceed if the directory entry is no null entry
+        const char nullEntry[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+        if (memcmp(&data[pos], nullEntry, 32) == 0)
             break;
         
 		// Return if we reached the item we're looking for
@@ -825,23 +821,20 @@ D64Archive::findDirectoryEntry(int itemNr)
             return pos;
         
 		// Jump to next directory item
-		i++;
-
-        if (i % 8 == 0) {
+        if (++i % 8 == 0) {
 			
             // Jump to the next sector
             if (last_sector)
-                break; // Sorry, there is no "next sector"
+                break; // Sorry, there is no next sector
             
             if (!jumpToNextSector(&pos))
                 break; // Sorry, somebody wants to sent us off the cliff
             
 			last_sector = (data[pos] == 0x00);
+            pos += 2; // Move to the beginning of the first directory entry
             
 		} else {
-
-            // Jump inside the current sector
-			pos += 0x20;
+			pos += 0x20; // Jump to next directory entry inside current sector
 		}
 	}
     
@@ -854,8 +847,8 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrac
 {
 	int pos;
 	
-	if (nr >= 144) {
-		fprintf(stderr, "Directories with more than 144 entries are not supported\n");
+    if (nr >= VC1541::MAX_FILES_ON_DISK) {
+        fprintf(stderr, "Cannot write directory entry. Number of files is limited to %d\n", VC1541::MAX_FILES_ON_DISK);
 		return false;
 	}
 

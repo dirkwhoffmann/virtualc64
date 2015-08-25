@@ -202,14 +202,22 @@ private:
 
 private:
     
-    //! @brief Marks a single sector as "used"
+    //! Marks a single sector as "used"
     void markSectorAsUsed(uint8_t track, uint8_t sector);
 
-    //! @brief Writes the BAM (track 18, sector 0)
+    //! Writes the BAM (track 18, sector 0)
     void writeBAM(const char *name);
 
-    //! @brief Returns the location of a specific directory item
+    //! Returns the location of a specific directory item
     int findDirectoryEntry(int itemNumber);
+    
+    //! Returns the track number of the first file block
+    /*! Example usage: firstTrackOfFile(findDirectoryEntry(42)) */
+    inline uint8_t firstTrackOfFile(unsigned dirEntry) { return data[dirEntry + 1]; }
+
+    //! Returns the sector number of the first file block
+    /*! Example usage: firstSectorOfFile(findDirectoryEntry(42)) */
+    inline uint8_t firstSectorOfFile(unsigned dirEntry) { return data[dirEntry + 2]; }
     
     /*! @brief Writes a directory item
         @discussion This function is used to convert other archive formats into the D64 format. */
