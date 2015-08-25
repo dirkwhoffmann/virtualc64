@@ -284,8 +284,6 @@ public:
 
     
 	bool overflowEnabled() { return (io[0x0C] & 0x02); }
-	bool readMode() { return (io[0x0C] & 0x20); }
-    bool writeMode() { return !(io[0x0C] & 0x20); }
 
     void debug0xC();
 };

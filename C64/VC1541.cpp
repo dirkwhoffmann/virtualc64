@@ -66,8 +66,6 @@ VC1541::resetDrive(C64 *c64)
     read_shiftreg = 0;
     read_shiftreg_pipe = 0;
     write_shiftreg = 0;
-    latched_readmode = true;
-    latched_ora = 0;
 }
 
 void
@@ -99,7 +97,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 18;
+    uint32_t result = 15;
 
     for (unsigned i = 0; i < 84; i++)
         result += sizeof(data[i]);
@@ -136,14 +134,12 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     sendSoundMessages = (bool)read8(buffer);
     
     // Read/Write logic
-    track = (int)read16(buffer);
-    offset = (int)read16(buffer);
+    track = read8(buffer);
+    offset = read16(buffer);
     zone = read8(buffer);
     read_shiftreg = read8(buffer);
     read_shiftreg_pipe = read8(buffer);
     write_shiftreg = read8(buffer);
-    latched_readmode = (bool)read8(buffer);
-    latched_ora = (uint8_t)read8(buffer);
     
     // Subcomponents
 	cpu->loadFromBuffer(buffer);
@@ -177,14 +173,12 @@ VC1541::saveToBuffer(uint8_t **buffer)
     write8(buffer, (uint8_t)sendSoundMessages);
     
     // Read/Write logic
-    write16(buffer, (uint16_t)track);
-    write16(buffer, (uint16_t)offset);
+    write8(buffer, track);
+    write16(buffer, offset);
     write8(buffer, zone);
     write8(buffer, read_shiftreg);
     write8(buffer, read_shiftreg_pipe);
     write8(buffer, write_shiftreg);
-    write8(buffer, (uint8_t)latched_readmode);
-    write8(buffer, latched_ora);
 
     // Subcomponents
     cpu->saveToBuffer(buffer);
@@ -215,98 +209,21 @@ VC1541::dumpState()
 void
 VC1541::executeByteReady()
 {
- 
     read_shiftreg_pipe = read_shiftreg;
     read_shiftreg = readHead();
-    
-    // Head was in write mode?
-    if (!latched_readmode) {
+
+    if (readMode() && !SYNC()) {
+        byteReady(read_shiftreg);
+    }
+
+    if (writeMode()) {
+        writeHead(write_shiftreg);
+        write_shiftreg = via2.ora;
         byteReady();
     }
     
-    // Head was in read mode?
-    if (latched_readmode) {
-        
-        if (!SYNC()) { // no sync, yet
-            byteReady(readHead()); // Copy disk data to input latch of via 2 and let the CPU know
-        } else {
-        }
-    }
-    
-    // Prepare for next byte
     rotateDisk();
-    latched_readmode = via2.readMode();
-    latched_ora = via2.ora;
-
-    // Head is write mode?
-    if (via2.writeMode()) {
-        // Write to disk
-        writeHead(via2.ora);
-        // via2.debug0xC();
-        // printf(" W[%02X(%02X)]", latched_ora, via2.ora);
-        // byteReady();
-    }
 }
-
-
-#if 0
-// OLD CODE:
-bool
-VC1541::executeOneCycle()
-{
-    bool result;
-    
-    via1.execute();
-    via2.execute();
-    result = cpu->executeOneCycle();
-    
-    // Decrement byte ready counter to 1, if active
-    if (byteReadyTimer == 0)
-        return result;
-    
-    if (byteReadyTimer > 1) {
-        byteReadyTimer--;
-        return result;
-    }
-    byteReadyTimer = VC1541_CYCLES_PER_BYTE;
-    
-    // Byte is complete.
-    
-    read_shiftreg_pipe = read_shiftreg;
-    read_shiftreg = readHead();
-    
-    // Head was in write mode?
-    if (!latched_readmode) {
-        byteReady();
-    }
-    
-    // Head was in read mode?
-    if (latched_readmode) {
-        
-        if (!SYNC()) { // no sync, yet
-            byteReady(readHead()); // Copy disk data to input latch of via 2 and let the CPU know
-        } else {
-        }
-    }
-    
-    // Prepare for next byte
-    rotateDisk();
-    latched_readmode = via2.readMode();
-    latched_ora = via2.ora;
-    
-    // Head is write mode?
-    if (via2.writeMode()) {
-        // Write to disk
-        writeHead(via2.ora);
-        // via2.debug0xC();
-        // printf(" W[%02X(%02X)]", latched_ora, via2.ora);
-        // byteReady();
-    }
-    
-    
-    return result;
-}
-#endif
 
 void
 VC1541::byteReady(uint8_t byte)

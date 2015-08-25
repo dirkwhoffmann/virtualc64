@@ -142,7 +142,6 @@ public:
             return result;
         
         // Wait until next byte is ready
-        assert (byteReadyTimer % 16 == 0);
         if (byteReadyTimer) {
             byteReadyTimer -= 16;
             return result;
@@ -238,10 +237,8 @@ public:
     uint16_t byteReadyTimer;
 
     //! Position of read write head
-    /*! The position marks the byte that is currently read in. When the
-     byteReadyTimer times out, the byte is copied to ora in via2 */
-    // TODO: CHANGE TO uint8_t and uint16_t
-    int track, offset;
+    uint8_t track;
+    uint16_t offset;
 
     //! Current zone
     /*! Each track belongs to one of four zones. Whenever the drive moves the r/w head, 
@@ -261,18 +258,15 @@ public:
     //! The 74LS165 parallel to serial shift register
     /*! In write mode, this register feeds the drive head with data. */
     uint8_t write_shiftreg;
-    
-    //! Indicates whether the next byte on disk will be read or written
-    /*! When the read/write head moves to the next byte, the emulator determines
-        the operation mode (read or write) for the next byte. If the operation
-        mode is 'write', the data byte in 'latched_ora' will be written to disk. */
-    bool latched_readmode;
-    
-    //! Next byte to be written on disk
-    uint8_t latched_ora;
-    
+        
 public:
-		
+
+    //! Returns true iff drive is currently in read mode
+    bool readMode() { return (via2.io[0x0C] & 0x20); }
+
+    //! Returns true iff drive is currently in write mode
+    bool writeMode() { return !(via2.io[0x0C] & 0x20); }
+
     //! Moves head one halftrack up
     void moveHeadUp();
     
@@ -293,7 +287,7 @@ public:
     inline uint8_t readHeadLookBehind() { return (offset > 0) ? data[track][offset-1] : data[track][length[track]-1]; }
     
     inline bool SYNC() {
-        return (read_shiftreg == 0xFF && (read_shiftreg_pipe & 0x03) == 0x03 && via2.readMode());
+        return (read_shiftreg == 0xFF && (read_shiftreg_pipe & 0x03) == 0x03 && readMode());
     }
     
     //! Writes byte to the current head position
