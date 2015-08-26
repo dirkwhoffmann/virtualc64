@@ -65,7 +65,6 @@ public:
     //! Reset disk properties
     /*! Resets all disk related properties.  */
     void resetDisk();
-
     
     //! Dump current configuration into message queue
     void ping();
@@ -89,6 +88,19 @@ public:
 
 public:
     
+    //! Halftrack number (1 .. 85)
+    /*! VC1541 DOS stores data on the halftracks with odd number, simply called "tracks".
+        Halftrack 85 (sometimes called track 42.5) is the highest accessable halftrack. */
+    typedef uint8_t Halftrack;
+
+    bool isHalftrackNumber(uint8_t nr) { return 1 <= nr && nr <= 85; }
+
+    //! Track number (1 .. 42)
+    /*! Track 1 equals halftrack 1, track 2 equals haltrack 3, ... track 42 equals halftrack 84. */
+    typedef uint8_t Track;
+
+    bool isTrackNumber(uint8_t nr) { return 1 <= nr && nr <= 42; }
+
     //! Maximum number of files that can be stored on a single disk
     /*! VC1541 DOS allows up to 18 directory sectors, each containing 8 files. */
     const static unsigned MAX_FILES_ON_DISK = 144;
@@ -198,6 +210,13 @@ public:
 
 private:
     
+    // TODO:
+    // Remove direct accesses to length.
+    // Check direct accesses to data
+    // Lift up array index by 1
+    // Switch to union style storage
+    // Cleanup
+    
     //! Disk data storage
     /*! Each disk consists of 42 tracks (84 halftracks) with a maximum of 7928 bytes.
      As the number of tracks and the number of byter per track vary, the array is usually filled
@@ -205,13 +224,26 @@ private:
      and the real length of a given halftrack in array length[]. */
     uint8_t data[84][7928];
     
+    // NEW CODE:
+    // Couting of track and halftrack numbers begins with 1. Hence, the entries [0][x] are unused.
+
+    union {
+        uint8_t halftrack[86][7928];
+        uint8_t track[43][2 * 7928];
+    } newdata;
+    
     //! Total number of tracks on this disk
-    // DEPRECATED (NOT NEEDED)
+    // DEPRECATED (ADD METHOD emptyTrack(Track nr);) (Scans track for data, returns true/false numTracks())
     uint8_t numTracks;
     
     //! Length of each halftrack in bytes
     uint16_t length[84];
-    
+
+    union {
+        uint16_t halftrack[86];
+        uint16_t track[43][2];
+    } newlength;
+
     
     // ---------------------------------------------------------------------------------------------
     //                                   Drive properties
@@ -328,38 +360,46 @@ public:
     
     //! Converts a track number into a halftrack number
     /*! The mapping is: 1->1, 2->3, 3->5, 5->7, ..., 41->81, 42->83 */
+    // DEPRECATED
     static unsigned trackToHalftrack(unsigned track) {
         assert(track >= 1 && track <= 42); return (2 * track) - 1; }
     
     //! Converts a halftrack number into a track number
     /*! The mapping is: 1->1, 2->1, 3->2, 4->2, ..., 83->42, 84->42 */
+    // DEPRECATED
     static unsigned halftrackToTrack(unsigned halftrack) {
         assert(halftrack >= 1 && halftrack <= 84); return (halftrack + 1) / 2; }
 
     //! Return start address of a given halftrack (1...84)
+    // DEPRECATED
     inline uint8_t *startOfHalftrack(unsigned halftrack) {
         assert(halftrack >= 1 && halftrack <= 84); return data[halftrack - 1]; }
     
     //! Return start address of a given track (1...42)
+    // DEPRECATED
     inline uint8_t *startOfTrack(unsigned track) {
         assert(track >= 1 && track <= 42); return startOfHalftrack(2 * track - 1); }
     
     //! Returns the length of a halftrack
+    // DEPRECATED
     inline uint16_t lengthOfHalftrack(unsigned halftrack) {
         assert(halftrack >= 1 && halftrack <= 84); return length[halftrack - 1];
     }
 
     //! Returns the length of a track
+    // DEPRECATED
     inline uint16_t lengthOfTrack(unsigned track) {
         assert(track >= 1 && track <= 42); return lengthOfHalftrack(trackToHalftrack(track));
     }
 
     //! Returns the length of a halftrack
+    // DEPRECATED
     inline void setLengthOfHalftrack(unsigned halftrack, unsigned len) {
         assert(halftrack >= 1 && halftrack <= 84); length[halftrack - 1] = len;
     }
     
     //! Returns the length of a track
+    // DEPRECATED
     inline void setLengthOfTrack(unsigned track, unsigned len) {
         assert(track >= 1 && track <= 42); setLengthOfHalftrack(trackToHalftrack(track), len);
     }
@@ -368,11 +408,6 @@ public:
     /*! If the additional track size parameter is provided, the track size is also adjusted.
         Othwerwise, the current track size is kept. */
     void clearHalftrack(unsigned halftrack);
-
-    //! Zero out a single track, including the half track residing above.
-    void clearTrack(unsigned track) {
-        clearHalftrack(trackToHalftrack(track)); clearHalftrack(trackToHalftrack(track) + 1);
-    }
     
     //! Zero out all tracks on a disk
     void clearDisk();
@@ -392,7 +427,7 @@ public:
     
     //! Converts a D64 archive to real disk data
     /*! The methods creates tracks and sectors, GCR encodes the archive data and creates a directory */
-    void NewencodeDisk(D64Archive *a);
+    void encodeDisk(D64Archive *a);
     
     //! Converts real disk data into a byte stream compatible with the D64 format
     /*! Returns the number of bytes written.
@@ -418,11 +453,6 @@ private:
         byte representation. The sector is closed by 'gap' tail gap bytes.
         Returns the number of bytes written. */
     unsigned encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
-    int OldEncodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
-    
-    // OLD
-    void encodeDisk(D64Archive *a);
-
     
     //! Write five SYNC bytes
     void encodeSync(uint8_t *dest) { for (unsigned i = 0; i < 5; i++) dest[i] = 0xFF; }
@@ -441,18 +471,6 @@ private:
     
     //! Decodes 5 GCR bytes into its 4 corrrsponding data bytes
     void decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, uint8_t *dest);
-
-    
-public:
-
-    // EXPERIMENTAL CODE FOR G64 format. TODO: Make it a container class
-    
-	//! Check file type
-	/*! Returns true, iff the specifies file is a valid G64 image file. */
-	static bool isG64Image(const char *filename);
-
-	//! Insert a G64 disk image
-	bool readG64Image(const char *filename);
     
 };
 

@@ -1118,14 +1118,7 @@ void checkForOpenGLErrors()
 		if ([[controller document] loadRom:path]) {
 			return YES;
 		}
-		
-		// Is it raw VC 1541 data?
-		if (VC1541::isG64Image([path UTF8String])) {
-			c64->floppy->readG64Image([path UTF8String]);
-            NSLog(@"Filetype: G64");
-			return YES;
-		}
-		
+				
 		// Is it a cartridge?
 		if ([[controller document] setCartridgeWithName:path]) {
 			[controller mountCartridge];
