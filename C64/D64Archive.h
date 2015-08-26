@@ -152,15 +152,7 @@ public:
     uint8_t *findSector(unsigned track, unsigned sector);
 
 private:
-    
-    /*! @brief Converts a track number into a halftrack number
-        @discussion The mapping is: 1->1, 2->3, 3->5, 5->7, ..., 41->81, 42->83 */
-    int trackToHalftrack(int track) { return (2 * track) - 1; }
-
-    /*! @brief Converts a halftrack number into a track number
-        @discussion The mapping is: 1->1, 2->1, 3->2, 4->2, ..., 83->42, 84->42 */
-    int halftrackToTrack(int halftrack) { return (halftrack + 1) / 2; }
-    
+        
     //! @brief Translates a track and sector number into an offset
     int offset(int track, int sector);
 

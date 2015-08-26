@@ -275,12 +275,12 @@ VIA6522::peek(uint16_t addr)
         case 0xA: // Shift register
 
             clearInterruptFlag_SR();
-            warn("peek(0xA): Shift register is not emulated!\n");
+            // warn("peek(0xA): Shift register is not emulated!\n");
             break;
 			
 		case 0xB: // Auxiliary control register
 
-            warn("peek(0xB): Shift register is not emulated!\n");
+            // warn("peek(0xB): Shift register is not emulated!\n");
             break;
 		
         case 0xC: // Peripheral control register
@@ -393,14 +393,14 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
         case 0xA: // Shift register
             
             clearInterruptFlag_SR();
-            warn("poke(0xA,%02X): Shift register is not emulated! (PC = %04X)\n",
-                 value, c64->cpu->getPC_at_cycle_0());
+            // warn("poke(0xA,%02X): Shift register is not emulated! (PC = %04X)\n",
+            //     value, c64->cpu->getPC_at_cycle_0());
             break;
             
         case 0xB: // Auxiliary control register
             
-            warn("poke(0xB,%02X): Shift register is not emulated! (PC = %04X)\n",
-                 value, c64->cpu->getPC_at_cycle_0());
+            // warn("poke(0xB,%02X): Shift register is not emulated! (PC = %04X)\n",
+            //     value, c64->cpu->getPC_at_cycle_0());
             break;
             
         case 0xC: // Peripheral control register

@@ -601,7 +601,7 @@ int
 D64Archive::offset(int track, int sector)
 {
     assert(1 <= track && track <= 42);
-    assert(sector < numberOfSectors(trackToHalftrack(track)));
+    assert(sector < numberOfSectors(VC1541::trackToHalftrack(track)));
     
     return D64Map[track].offset + (sector * 256);
 }
@@ -611,7 +611,7 @@ D64Archive::offsetForHalftrack(int halftrack, int sector)
 {
     assert(halftrack % 2 != 0);
     
-    return offset(halftrackToTrack(halftrack), sector);
+    return offset(VC1541::halftrackToTrack(halftrack), sector);
 }
 
 bool

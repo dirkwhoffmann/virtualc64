@@ -131,10 +131,36 @@ public:
     
     // Configuration
     
-    //! Indicates whether the VC1541 will send sound notification messages or not
-    /*! This flag is used by GUI to switch on or switch off drive noise */
-    bool sendSoundMessages;
+    inline bool soundMessagesEnabled() { return sendSoundMessages; }
+    inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
+    
 
+    // Disk handling
+    
+    inline bool isWriteProtected() { return writeProtected; }
+    inline void setWriteProtection(bool b) { writeProtected = b; }
+    
+    inline bool getRedLED() { return redLED; };
+    void setRedLED(bool b);
+    
+    inline bool isRotating() { return rotating; };
+    void setRotating(bool b);
+    
+    //! Inserts an archive as a virtual disk
+    /*! Before inserting, the archive data is converted to VC1541s GCR-encoded track/sector format */
+    void insertDisk(Archive *a);
+    void insertDisk(D64Archive *a);
+
+    // Returns true if a disk is inserted
+    inline bool hasDisk() { return diskInserted; }
+    
+    //! Eject the virtual disk. Does nothing, if no disk is present.
+    /*! Beware that this function causes a considerable time delay, because it is necessary to
+        block the write protection light barrier for a while. Otherwise, the VC1541 DOS would not recognize 
+        the ejection. */
+    void ejectDisk();
+
+    
     // Execution
     
     //! Execute virtual drive for one cycle (fast execution wrapper)
@@ -170,8 +196,7 @@ public:
     //                                     Disk data storage
     // ---------------------------------------------------------------------------------------------
 
-// private:
-public:
+private:
     
     //! Disk data storage
     /*! Each disk consists of 42 tracks (84 halftracks) with a maximum of 7928 bytes.
@@ -180,7 +205,8 @@ public:
      and the real length of a given halftrack in array length[]. */
     uint8_t data[84][7928];
     
-    //! Total number of halftracks on this disk
+    //! Total number of tracks on this disk
+    // DEPRECATED (NOT NEEDED)
     uint8_t numTracks;
     
     //! Length of each halftrack in bytes
@@ -205,33 +231,9 @@ private:
     //! Write protection mark
     bool writeProtected;
     
-    
-public:
-    
-    inline bool isWriteProtected() { return writeProtected; }
-    inline void setWriteProtection(bool b) { writeProtected = b; }
+    //! Indicates whether the VC1541 shall provide sound notification messages to the GUI
+    bool sendSoundMessages;
 
-    inline bool soundMessagesEnabled() { return sendSoundMessages; }
-    inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
-
-    inline bool getZone() { return zone; };
-    void setZone(uint8_t z);
-
-    inline bool getRedLED() { return redLED; };
-    void setRedLED(bool b);
-    
-    inline bool isRotating() { return rotating; };
-    void setRotating(bool b);
-
-    //! Insert a virtual disk
-    void insertDisk(Archive *a);
-    void insertDisk(D64Archive *a);
-    
-    //! Returns true if a disk is currently inserted
-    inline bool hasDisk() { return diskInserted; }
-    
-    //! Eject virtual disk
-    void ejectDisk();
 
     // ---------------------------------------------------------------------------------------------
     //                                  Read/Write logic
@@ -287,6 +289,12 @@ public:
     //! Moves head one halftrack down
     void moveHeadDown();
 
+    //! Returns the current track zone (0 to 3)
+    inline bool getZone() { return zone; };
+
+    //! Sets the current track zone (0 to 3)
+    void setZone(uint8_t z);
+
     //! Triggers an ATN interrupt
     /*! This function is called by the IEC bus when the ATN signal raises. */
     void simulateAtnInterrupt();
@@ -318,18 +326,55 @@ private:
 //private:
 public:
     
+    //! Converts a track number into a halftrack number
+    /*! The mapping is: 1->1, 2->3, 3->5, 5->7, ..., 41->81, 42->83 */
+    static unsigned trackToHalftrack(unsigned track) {
+        assert(track >= 1 && track <= 42); return (2 * track) - 1; }
+    
+    //! Converts a halftrack number into a track number
+    /*! The mapping is: 1->1, 2->1, 3->2, 4->2, ..., 83->42, 84->42 */
+    static unsigned halftrackToTrack(unsigned halftrack) {
+        assert(halftrack >= 1 && halftrack <= 84); return (halftrack + 1) / 2; }
+
     //! Return start address of a given halftrack (1...84)
     inline uint8_t *startOfHalftrack(unsigned halftrack) {
-        assert(halftrack >= 1 && halftrack <= 84); return &data[halftrack - 1][0]; }
+        assert(halftrack >= 1 && halftrack <= 84); return data[halftrack - 1]; }
     
     //! Return start address of a given track (1...42)
     inline uint8_t *startOfTrack(unsigned track) {
         assert(track >= 1 && track <= 42); return startOfHalftrack(2 * track - 1); }
     
-    //! Zero out a single halftrack
-    void clearHalftrack(int nr);
+    //! Returns the length of a halftrack
+    inline uint16_t lengthOfHalftrack(unsigned halftrack) {
+        assert(halftrack >= 1 && halftrack <= 84); return length[halftrack - 1];
+    }
+
+    //! Returns the length of a track
+    inline uint16_t lengthOfTrack(unsigned track) {
+        assert(track >= 1 && track <= 42); return lengthOfHalftrack(trackToHalftrack(track));
+    }
+
+    //! Returns the length of a halftrack
+    inline void setLengthOfHalftrack(unsigned halftrack, unsigned len) {
+        assert(halftrack >= 1 && halftrack <= 84); length[halftrack - 1] = len;
+    }
     
-    //! Zero out all halftracks on disk
+    //! Returns the length of a track
+    inline void setLengthOfTrack(unsigned track, unsigned len) {
+        assert(track >= 1 && track <= 42); setLengthOfHalftrack(trackToHalftrack(track), len);
+    }
+    
+    //! Zero out a single halftrack
+    /*! If the additional track size parameter is provided, the track size is also adjusted.
+        Othwerwise, the current track size is kept. */
+    void clearHalftrack(unsigned halftrack);
+
+    //! Zero out a single track, including the half track residing above.
+    void clearTrack(unsigned track) {
+        clearHalftrack(trackToHalftrack(track)); clearHalftrack(trackToHalftrack(track) + 1);
+    }
+    
+    //! Zero out all tracks on a disk
     void clearDisk();
 
     //! For debugging
@@ -340,16 +385,16 @@ public:
 
     
     // ---------------------------------------------------------------------------------------------
-    //                                       Data encoding
+    //                               Data encoding and decoding
     // ---------------------------------------------------------------------------------------------
 
 public:
     
-    //! Convert D64 format to VC1541 format
-    /*! Invoke this function in insert disk */
-    void encodeDisk(D64Archive *a);
+    //! Converts a D64 archive to real disk data
+    /*! The methods creates tracks and sectors, GCR encodes the archive data and creates a directory */
+    void NewencodeDisk(D64Archive *a);
     
-    //! Decodes a GCR encode disk into a byte stream compatible with the D64 format
+    //! Converts real disk data into a byte stream compatible with the D64 format
     /*! Returns the number of bytes written.
         If dest is NULL, a test run is performed (used to determine how many bytes will be written).
         If something went wrong, an error code is written to 'error' (0 = no error = success) */
@@ -359,21 +404,34 @@ public:
     bool exportToD64(const char *filename);
 
 private:
-    
-	//! Translate 4 data bytes into 5 GCR encodes bytes
-	void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest);
 
-    //! Returns true iff ptr points to two SYNC bytes followed by $07 in GCR encoding
-    /*! This seqeunce uniquely identifies the beginning of a data block on a GCR encoded disk. */
-    inline bool beginningOfDataBlock(uint8_t *ptr) {
-        return ptr[0] == 0xFF && ptr[1] == 0xFF && ptr[2] == 0x52 && (ptr[3] & 0xC0) == 0xC0; }
-
-	//! Encode a single sector
-	/*! This function translates the logical byte sequence of a single sector into the native VC1541 
+    //! Encode a single trach
+    /*! This function translates the logical byte sequence of a single track into the native VC1541
         byte representation. The native representation includes sync marks, GCR data etc. 
+        tailGapEven is the number of tail bytes follwowing sectors with even sector numbers.
+        tailGapOdd is the number of tail bytes follwowing sectors with odd sector numbers.
         Returns the number of bytes written */
-	int encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
+    unsigned encodeTrack(D64Archive *a, uint8_t track, int *sector, uint8_t tailGapEven, uint8_t tailGapOdd);
 
+    //! Encode a single sector
+    /*! This function translates the logical byte sequence of a single sector into the native VC1541
+        byte representation. The sector is closed by 'gap' tail gap bytes.
+        Returns the number of bytes written. */
+    unsigned encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
+    int OldEncodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
+    
+    // OLD
+    void encodeDisk(D64Archive *a);
+
+    
+    //! Write five SYNC bytes
+    void encodeSync(uint8_t *dest) { for (unsigned i = 0; i < 5; i++) dest[i] = 0xFF; }
+
+    //! Write interblock gap
+    void encodeGap(uint8_t *dest, unsigned size) { for (unsigned i = 0; i < size; i++) dest[i] = 0x55; }
+
+    //! Translate 4 data bytes into 5 GCR encodes bytes
+	void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest);
 
     //! Decodes all sectors of a single GCR encoded track
     unsigned decodeTrack(uint8_t *source, uint8_t *dest, int *error = NULL);
