@@ -73,7 +73,8 @@ CPU::reset(C64 *c64)
 	rdyLine = true;
 	irqLine = 0;
 	nmiLine = 0;
-	nmiNegEdge = false;
+	nmiEdge = false;
+    interruptsPending = false;
 	nextPossibleIrqCycle = 0UL;
 	nextPossibleNmiCycle = 0UL;
 	
@@ -98,7 +99,7 @@ CPU::reset(C64 *c64, Memory *mem)
 uint32_t
 CPU::stateSize()
 {
-    return 563;
+    return 564;
 }
 
 void 
@@ -137,8 +138,9 @@ CPU::loadFromBuffer(uint8_t **buffer)
 	rdyLine = (bool)read8(buffer);
 	irqLine = read8(buffer);
 	nmiLine = read8(buffer);
-	nmiNegEdge = (bool)read8(buffer);
-	nextPossibleIrqCycle = read64(buffer);
+	nmiEdge = (bool)read8(buffer);
+    interruptsPending = (bool)read8(buffer);
+    nextPossibleIrqCycle = read64(buffer);
 	nextPossibleNmiCycle = read64(buffer);
 	
 	errorState = (ErrorState)read8(buffer);
@@ -189,7 +191,8 @@ CPU::saveToBuffer(uint8_t **buffer)
 	write8(buffer, (uint8_t)rdyLine);
 	write8(buffer, irqLine);
 	write8(buffer, nmiLine);
-	write8(buffer, (uint8_t)nmiNegEdge);
+	write8(buffer, (uint8_t)nmiEdge);
+    write8(buffer, (uint8_t)interruptsPending);
 	write64(buffer, nextPossibleIrqCycle);
 	write64(buffer, nextPossibleNmiCycle);
 	
@@ -224,7 +227,7 @@ CPU::dumpState()
 	msg("Port direction : %02X\n", port_direction);
 	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
 	msg("      Irq line : %02X\n", irqLine);
-	msg("      Nmi line : %02X %s\n", nmiLine, nmiNegEdge ? "(negative edge)" : "");
+	msg("      Nmi line : %02X %s\n", nmiLine, nmiEdge ? "(negative edge)" : "");
 	msg(" no IRQ before : %ull\n", nextPossibleIrqCycle);
 	msg(" no NMI before : %ull\n", nextPossibleNmiCycle);
 	msg("   IRQ routine : %02X%02X\n", mem->peek(0xFFFF), mem->peek(0xFFFE));
@@ -265,11 +268,12 @@ void
 CPU::setIRQLine(uint8_t bit) 
 { 
 	assert(bit != 0);
+    
 	if (irqLine == 0) {
-		// positive edge on IRQ line
 		nextPossibleIrqCycle = c64->getCycles() + 2;
 	}
 	irqLine |= bit; 
+    interruptsPending = true;
 }
 
 bool 
@@ -291,19 +295,31 @@ CPU::IRQsAreBlocked() {
 }
 
 void 
-CPU::setNMILine(uint8_t bit) 
+CPU::setNMILine(uint8_t bit) // TODO: RENAME TO RAISE NMIline
 { 
 	assert(bit != 0);
-	if (nmiLine == 0) {
-		// positive edge on NMI line
-		nmiNegEdge = true;
-		nextPossibleNmiCycle = c64->getCycles() + 2;
-	}
+
+    if (!nmiLine) setNMIEdge();
 	nmiLine |= bit; 
 }
 
-bool 
-CPU::NMILineRaisedLongEnough() 
+void
+CPU::setNMIEdge()
+{
+    nmiEdge = true;
+    interruptsPending = true;
+    nextPossibleNmiCycle = c64->getCycles() + 2;
+}
+
+void
+CPU::clearNMIEdge()
+{
+    nmiEdge = false;
+    interruptsPending = irqLine;
+}
+
+bool
+CPU::NMILineRaisedLongEnough()
 { 
 	return c64->getCycles() >= nextPossibleNmiCycle;
 }
@@ -464,29 +480,14 @@ CPU::disassemble()
 	return strdup(msg);
 }
 
-CPU::ErrorState 
-CPU::getErrorState() 
-{ 
-	return errorState; 
-}
-
 void 
 CPU::setErrorState(ErrorState state)
 {
-	if (errorState != state) {
+	if (errorState == state)
+        return;
 
-		// Change state
-		errorState = state;
-		
-		// Inform listener
-		c64->putMessage(MSG_CPU, state);
-	}
-}
-
-void
-CPU::clearErrorState() 
-{ 
-	setErrorState(OK);
+    errorState = state;
+    c64->putMessage(MSG_CPU, state);
 }
 
 

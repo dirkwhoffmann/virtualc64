@@ -184,11 +184,15 @@ private:
 	*/
 	uint8_t nmiLine; 
 	
-	//! Indicates the occurance of a negative edge on the NMI line
+	//! Indicates the occurance of an interrupt triggering edge on the NMI line
 	/*! The variable is set to 1, when the value of variable nmiLine is changed from 0 to another value. The variable is
 	    used to determine when an NMI interrupt needs to be triggered. */
-	bool nmiNegEdge;
+	bool nmiEdge;
 	
+    //! Indicates if the CPU has to check for pending interrupts in its fetch phase
+    /*! This variable has beed introduced for speedup. At all times, it is equivalent to "(irqLine || nmiEdge)" */
+    bool interruptsPending;
+    
 	//! This variable is set when a negative edge occurs on the irq line and stores the next cycle in which an IRQ can occur.
 	/*! The value is needed to determine the exact time to trigger the interrupt */
 	uint64_t nextPossibleIrqCycle;
@@ -199,7 +203,7 @@ private:
 		
 	//! Current error state
 	ErrorState errorState;
-
+    
 	//! Next function to be executed
 	/*! Each function performs the actions of a single cycle */
 	void (CPU::*next)(void);
@@ -372,7 +376,7 @@ public:
 	void setIRQLine(uint8_t bit);
 	
 	//! Clear bit of IRQ line
-	inline void clearIRQLine(uint8_t bit) { irqLine &= (0xff - bit); }
+    inline void clearIRQLine(uint8_t bit) { irqLine &= (~bit); interruptsPending = irqLine || nmiEdge; }
 		
 	//! Get bit of IRQ line
 	inline uint8_t getIRQLine(uint8_t bit) { return irqLine & bit; }
@@ -382,7 +386,13 @@ public:
 	
 	//! Set bit of NMI line
 	void setNMILine(uint8_t bit);
-	
+
+    //! Indicate a negative edge on the NMI line
+    void setNMIEdge();
+
+    //! Remove negative edge indicator for the NMI line
+    void clearNMIEdge();
+
 	//! Clear bit of NMI line
 	inline void clearNMILine(uint8_t bit) { nmiLine &= (0xff - bit); }
 	
@@ -412,10 +422,6 @@ public:
 	inline void clearIRQLineVIC() { clearIRQLine(0x02); }	
     //! Clear VIA 1 bit of IRQ line (1541 drive)
     inline void clearIRQLineVIA() { clearIRQLine(0x10); }
-	//! Clear VIA 1 bit of IRQ line (1541 drive)
-	// inline void clearIRQLineVIA1() { clearIRQLine(0x10); }
-	//! Clear VIA 2 bit of IRQ line (1541 drive)
-	// inline void clearIRQLineVIA2() { clearIRQLine(0x20); }
 	//! Clear ATN bit of IRQ line (1541 drive)
 	inline void clearIRQLineATN() { clearIRQLine(0x40); }	 // DEPRECATED
 	
@@ -466,11 +472,14 @@ public:
 	inline bool executeOneCycle() { (*this.*next)(); return errorState == CPU::OK; }
 
 	//! Returns the current error state
-	ErrorState getErrorState();
+    inline ErrorState getErrorState() { return errorState; }
+    
 	//! Sets the current error state
-	void setErrorState(ErrorState state);
-	//! Reset the error state to "OK"
-	void clearErrorState();
+    void setErrorState(ErrorState state);
+    
+	//! Sets the error state back to normal
+    void clearErrorState() { setErrorState(OK); }
+    
 	//! Return breakpoint tag for the specified address
 	inline uint8_t getBreakpointTag(uint16_t addr) { return breakpoint[addr]; }
 	

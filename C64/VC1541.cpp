@@ -118,9 +118,7 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     // Disk data storage
-	for (unsigned i = 0; i < 84; i++)
-		for (unsigned j = 0; j < sizeof(data[i]); j++)
-			data[i][j] = read8(buffer);
+    readBlock(buffer, data[0], sizeof(data));
     numTracks = read8(buffer);
 	for (unsigned i = 0; i < 84; i++)
 		length[i] = read16(buffer);
@@ -157,12 +155,10 @@ VC1541::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     // Disk data storage
-	for (unsigned i = 0; i < 84; i++)
-		for (unsigned j = 0; j < sizeof(data[i]); j++)
-			write8(buffer, data[i][j]);
+    writeBlock(buffer, data[0], sizeof(data));
     write8(buffer, numTracks);
-	for (unsigned i = 0; i < 84; i++)
-		write16(buffer, length[i]);
+    for (unsigned i = 0; i < 84; i++)
+        write16(buffer, length[i]);
     
     // Drive properties
     write16(buffer, byteReadyTimer);

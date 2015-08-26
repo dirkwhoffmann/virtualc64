@@ -587,6 +587,7 @@ uint8_t VIA2::peek(uint16_t addr)
                 (~ddra & ira); // Values of bits configures as inputs
             } else {
                 warn("INPUT LATCHING OF VIA2 IS DISABLED!");
+                result = 0;
             }
             
             if (tracingEnabled()) {

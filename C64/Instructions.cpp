@@ -31,37 +31,38 @@ CPU::fetch() {
 	PC_at_cycle_0 = PC;
 	
 	// Check interrupt lines
+    if (interruptsPending) {
     
-	// "Ist dieser Eingang auf Low-Pegel, wird eine Interruptbearbeitung ausgelšst, sofern der Interrupt
-	//  Ÿber ein Bit im Statusregister freigegeben wurde. Die Unterbrechung erfolgt frŸhestens nach zwei
-	//  Taktzyklen beim Erreichen des nŠchsten Befehls. Mit diesem Pin kann der VIC einen Interrupt im
-	//  Prozessor auslšsen. Interrupts werden nur erkannt, wenn RDY high ist.
-    
-	if (nmiNegEdge && NMILineRaisedLongEnough()) {
-        if (tracingEnabled())
-			debug(1, "NMI (source = %02X)\n", nmiLine);
-		nmiNegEdge = false;
-		next = &CPU::nmi_2;
-		doNMI = true;
-		return;
+        if (nmiEdge && NMILineRaisedLongEnough()) {
+            if (tracingEnabled())
+                debug(1, "NMI (source = %02X)\n", nmiLine);
+            nmiEdge = false;
+            next = &CPU::nmi_2;
+            doNMI = true;
+            return;
 
-	} else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
-        if (tracingEnabled())
-			debug(1, "IRQ (source = %02X)\n", irqLine);
-		next = &CPU::irq_2;
-		doIRQ = true;
-		return;
-	} 
-	
+        } else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
+            if (tracingEnabled())
+                debug(1, "IRQ (source = %02X)\n", irqLine);
+            next = &CPU::irq_2;
+            doIRQ = true;
+            return;
+        }
+    }
+    
+    // Execute fetch phase  
+    FETCH_OPCODE
+    next = actionFunc[opcode];
+
 	// Disassemble command if requested
 	if (tracingEnabled()) {
 		debug(1, "%s\n", disassemble());
 	}
 	
 	// Check breakpoint tag
-	if (breakpoint[PC] != NO_BREAKPOINT) {
-		if (breakpoint[PC] & SOFT_BREAKPOINT) {
-			breakpoint[PC] &= ~SOFT_BREAKPOINT; // Soft breakpoints get deleted when reached
+	if (breakpoint[PC_at_cycle_0] != NO_BREAKPOINT) {
+		if (breakpoint[PC_at_cycle_0] & SOFT_BREAKPOINT) {
+			breakpoint[PC_at_cycle_0] &= ~SOFT_BREAKPOINT; // Soft breakpoints get deleted when reached
 			setErrorState(SOFT_BREAKPOINT_REACHED);
 		} else {
 			setErrorState(HARD_BREAKPOINT_REACHED);
@@ -69,17 +70,14 @@ CPU::fetch() {
 		debug(1, "Breakpoint reached\n");
 	}
     
-    FETCH_OPCODE
-    next = actionFunc[opcode];
 
     // DIRK DEBUG
     
+    /*
     if (!isC64CPU() && PC_at_cycle_0 == 0xFAC7) {
         fprintf(stderr, "Jobroutine zum Formatieren einer Diskette\n");
-        // c64->floppy->via2.setTraceMode(true);
     }
-    
-    
+    */
     
     /*
      if (isC64CPU && dirktrace == 0 && PC == 0x0879) {
@@ -1434,8 +1432,8 @@ void CPU::BRK_3()
 	// "The official NMOS 65xx documentation claims that the BRK instruction could only cause a jump to the IRQ
 	//  vector ($FFFE). However, if an NMI interrupt occurs while executing a BRK instruction, the processor will
 	//  jump to the NMI vector ($FFFA), and the P register will be pushed on the stack with the B flag set."
-	if (nmiNegEdge) {
-		nmiNegEdge = false;
+	if (nmiEdge) {
+        clearNMIEdge();
 		next = &CPU::BRK_nmi_4;
 	} else {
 		next = &CPU::BRK_4;

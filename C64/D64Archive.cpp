@@ -809,7 +809,8 @@ D64Archive::findDirectoryEntry(int itemNr)
     bool last_sector = (data[pos] == 0x00); // does the directory continue in another sector?
     pos += 2; // Move to the beginning of the first directory entry
     
-    for (unsigned i = 0; i < VC1541::MAX_FILES_ON_DISK;) {
+    unsigned i = 0;
+    while (1) {
         
         // Only proceed if the directory entry is no null entry
         const char nullEntry[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
