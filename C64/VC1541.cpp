@@ -61,6 +61,7 @@ VC1541::resetDrive(C64 *c64)
     redLED = false;
     byteReadyTimer = 0;
     oldtrack = 40;
+    halftrack = 41;
     offset = 0;
     zone = 0;
     read_shiftreg = 0;
@@ -97,7 +98,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 14;
+    uint32_t result = 15;
 
     result += disk.stateSize();
     result += cpu->stateSize();
@@ -126,6 +127,7 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     
     // Read/Write logic
     oldtrack = read8(buffer);
+    halftrack = (Disk525::Halftrack)read8(buffer);
     offset = read16(buffer);
     zone = read8(buffer);
     read_shiftreg = read8(buffer);
@@ -160,6 +162,7 @@ VC1541::saveToBuffer(uint8_t **buffer)
     
     // Read/Write logic
     write8(buffer, oldtrack);
+    write8(buffer, (uint8_t)halftrack);
     write16(buffer, offset);
     write8(buffer, zone);
     write8(buffer, read_shiftreg);
@@ -182,7 +185,7 @@ VC1541::dumpState()
 	msg("VC1541\n");
 	msg("------\n\n");
 	msg("         Head timer : %d\n", byteReadyTimer);
-	msg("          Halftrack : %d\n", oldtrack);
+	msg("          Halftrack : %d\n", halftrack);
 	msg("   Halftrack offset : %d\n", offset);
 	msg("               SYNC : %d\n", SYNC());
 	msg("  Symbol under head : %02X\n", readHead());
@@ -279,22 +282,27 @@ VC1541::setRotating(bool b)
 void
 VC1541::moveHeadUp()
 {
-    debug(3, "Moving head up to %2.1f\n", (oldtrack + 2) / 2.0);
-
+    unsigned oldoffset = offset;
+    
+    assert(oldtrack + 1 == halftrack);
     if (oldtrack < 83) {
         float position = (float)offset / (float)disk.oldlength[oldtrack];
         oldtrack++;
-        offset = position * disk.oldlength[oldtrack];
+        oldoffset = position * disk.oldlength[oldtrack];
+        debug(2, "OLD:Moving head up\n");
     }
-#if 0
-    if (track < 83) {
-        float position = (float)offset / disk.length.halftrack[track];
-        track++;
-        offset = position * disk.length.halftrack[track];
+
+    if (halftrack < 84) {
+        float position = (float)offset / (float)disk.length.halftrack[halftrack];
+        halftrack++;
+        offset = position * disk.length.halftrack[halftrack];
+
+        debug(2, "Moving head up to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
-#endif
     
-    // assert(offset < disk.length.halftrack[track]); // disk.oldlength[track]);
+    assert(oldoffset == offset);
+    assert(disk.oldlength[oldtrack] == disk.length.halftrack[halftrack]);
+    assert(offset < disk.length.halftrack[halftrack]);
     
     c64->putMessage(MSG_VC1541_HEAD, 1);
     if (oldtrack % 2 == 0 && sendSoundMessages)
@@ -304,23 +312,26 @@ VC1541::moveHeadUp()
 void
 VC1541::moveHeadDown()
 {
-    debug(3, "Moving head down to %2.1f\n", (oldtrack + 2) / 2.0);
-
+    unsigned oldoffset = offset;
+    
+    assert(oldtrack + 1 == halftrack);
     if (oldtrack > 0) {
         float position = (float)offset / (float)disk.oldlength[oldtrack];
         oldtrack--;
-        offset = position * disk.oldlength[oldtrack];
+        oldoffset = position * disk.oldlength[oldtrack];
+        debug(2, "OLD:Moving head down to %2.1f %f %d\n", (oldtrack + 2) / 2.0, position, oldoffset);
     }
 
-#if 0
-    if (track > 0) {
-        float position = (float)offset / (float)disk.length.halftrack[track]; // (float)disk.oldlength[track];
-        track--;
-        offset = position * disk.length.halftrack[track]; // disk.oldlength[track];
+    if (halftrack > 1) {
+        float position = (float)offset / (float)disk.length.halftrack[halftrack];
+        halftrack--;
+        offset = position * disk.length.halftrack[halftrack];
+        debug(2, "Moving head down to halftrack %d (track %2.1f) %f %d %d\n", halftrack, (halftrack + 1) / 2.0, position, offset, disk.length.halftrack[halftrack]);
     }
-#endif
     
-    // assert(offset < disk.length.halftrack[track]); // disk.oldlength[track]);
+    assert(oldoffset == offset);
+    assert(disk.oldlength[oldtrack] == disk.length.halftrack[halftrack]);
+    assert(offset < disk.length.halftrack[halftrack]);
     
     c64->putMessage(MSG_VC1541_HEAD, 0);
     if (oldtrack % 2 == 0 && sendSoundMessages)

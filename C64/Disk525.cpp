@@ -38,8 +38,6 @@ Disk525::reset(C64 *c64)
 uint32_t
 Disk525::stateSize()
 {
-    // return sizeof(olddata) + sizeof(oldlength) + 1;
-    printf("sizeof(length.track) = %ld sizeof(data.track) = %ld\n", sizeof(length.track), sizeof(data.track));
     return sizeof(olddata) + sizeof(length.track) + sizeof(data.track) + 1;
 }
 
@@ -157,6 +155,13 @@ Disk525::encodeDisk(D64Archive *a)
     for (Track t = 1; t <= 42; t++) {
         printf("length.track[%d][0/1] = %d/%d", t, length.track[t][0], length.track[t][1]);
     }
+
+    for (Halftrack ht = 1; ht <= 84; ht++) {
+        if (oldlength[ht-1] != length.halftrack[ht]) {
+            printf(" **** halftrack ht: %d mismatch %d != %d\n", ht, oldlength[ht-1], length.halftrack[ht]);
+        }
+    }
+
 }
 
 unsigned

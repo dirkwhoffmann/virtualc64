@@ -229,7 +229,10 @@ private:
 
     //! Track position of the read/write head
     uint8_t oldtrack;
-    
+
+    //! Halftrack position of the read/write head
+    Disk525::Halftrack halftrack;
+
     //! Position of the read/write head inside the current track (byte granularity)
     uint16_t offset;
 
@@ -286,14 +289,21 @@ private:
 
     //! Reads the currently processed byte
     /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
-    inline uint8_t readHead() { return disk.olddata[oldtrack][offset]; }
+    inline uint8_t readHead() {
+        // assert(disk.olddata[oldtrack][offset] == disk.data.halftrack[halftrack][offset]);
+        // return disk.data.halftrack[halftrack][offset];
+        return disk.olddata[oldtrack][offset]; }
     
     //! Writes byte to the current head position
-    inline void writeHead(uint8_t value) { disk.olddata[oldtrack][offset] = value; }
+    inline void writeHead(uint8_t value) {
+        disk.data.halftrack[halftrack][offset] = value;
+        disk.olddata[oldtrack][offset] = value; }
 
     //! Rotate disk
     /*! Moves head to next byte on the current track */
-    inline void rotateDisk() { if (++offset >= disk.oldlength[oldtrack]) offset = 0; }
+    inline void rotateDisk() {
+        assert(disk.oldlength[oldtrack] == disk.length.halftrack[halftrack]);
+        if (++offset >= disk.oldlength[oldtrack]) offset = 0; }
     
     // Signals the CPU that a byte has been processed
     inline void byteReady();
