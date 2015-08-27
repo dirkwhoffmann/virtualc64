@@ -38,7 +38,7 @@ Disk525::reset(C64 *c64)
 uint32_t
 Disk525::stateSize()
 {
-    return sizeof(data) + sizeof(length) + 1;
+    return sizeof(olddata) + sizeof(oldlength) + 1;
 }
 
 void
@@ -47,8 +47,8 @@ Disk525::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     // Disk data storage
-    readBlock(buffer, data[0], sizeof(data));
-    readBlock16(buffer, length, sizeof(length));
+    readBlock(buffer, olddata[0], sizeof(olddata));
+    readBlock16(buffer, oldlength, sizeof(oldlength));
     numTracks = read8(buffer);
     
     assert(*buffer - old == stateSize());
@@ -60,8 +60,8 @@ Disk525::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     // Disk data storage
-    writeBlock(buffer, data[0], sizeof(data));
-    writeBlock16(buffer, length, sizeof(length));
+    writeBlock(buffer, olddata[0], sizeof(olddata));
+    writeBlock16(buffer, oldlength, sizeof(oldlength));
     write8(buffer, numTracks);
     
     assert(*buffer - old == stateSize());
@@ -140,7 +140,7 @@ Disk525::encodeDisk(D64Archive *a)
     }
     
     for (unsigned i = 1; i <= 84; i++) {
-        assert(length[i-1] <= 7928);
+        assert(oldlength[i-1] <= 7928);
     }
 }
 
@@ -262,9 +262,9 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
         // Copy the track into temporary buffer
         // Buffer is double sized, so we can read safely beyond the array bounds
         
-        assert(length[halftrack] < 7928);
-        memcpy(tmpbuf, data[halftrack], length[halftrack]);
-        memcpy(tmpbuf + length[halftrack], data[halftrack], length[halftrack]);
+        assert(oldlength[halftrack] < 7928);
+        memcpy(tmpbuf, olddata[halftrack], oldlength[halftrack]);
+        memcpy(tmpbuf + oldlength[halftrack], olddata[halftrack], oldlength[halftrack]);
         
         if (dest)
             numBytes += decodeTrack(tmpbuf, dest + numBytes, error);
@@ -411,7 +411,7 @@ Disk525::dumpTrack(Halftrack ht, unsigned min, unsigned max, unsigned highlight)
     
     msg("Dumping track %d (length = %d)\n", ht, lengthOfHalftrack(ht));
     for (unsigned i = min; i < max; i++) {
-        msg(i == highlight ? "(%02X) " : "%02X ", data[ht][i]);
+        msg(i == highlight ? "(%02X) " : "%02X ", olddata[ht][i]);
     }
     msg("\n");
 }

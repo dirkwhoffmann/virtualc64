@@ -70,11 +70,11 @@ public:
     
     //! Datatype for methods using halftrack addressing
     typedef unsigned Halftrack;
-    bool isHalftrackNumber(uint8_t nr) { return 1 <= nr && nr <= 84; }
+    bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= 84; }
 
     //! Datatype for methods using track addressing
     typedef unsigned Track;
-    bool isTrackNumber(uint8_t nr) { return 1 <= nr && nr <= 42; }
+    bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
 
     //! Maximum number of files that can be stored on a single disk
     /*! VC1541 DOS allows up to 18 directory sectors, each containing 8 files. */
@@ -94,20 +94,13 @@ private:
 
 public:
     
-    //! Disk data storage
+    //! Disk data
     /*! Each tracks can store a maximum of 7928 bytes. The number varies depends on the track number
         (inner tracks contain fewer bytes) and the actual write speed of a drive.
-        Note that couting tracks and halftracks begin with index 1. Hence, the entries [0][x] are unused. */
-    uint8_t data[85][7928];
-    
-    //! Length of each halftrack in bytes
-    uint16_t length[85];
-    
-    //! Returns true if track/offset indicates a valid disk position on disk
-    bool isValidDiskPositon(Halftrack ht, uint16_t offset) { return isHalftrackNumber(ht) && offset < length[ht]; }
-    
-    // NEW CODE:
-    // Couting of track and halftrack numbers begins with 1. Hence, the entries [0][x] are unused.
+        The first valid track and halftrack number is 1. Hence, the entries [0][x] are unused. 
+        data.halftack[i] : pointer to the first byte of halftrack i
+        data.track[i]    : pointer to the first byte of track i */
+    uint8_t olddata[85][7928];
     
     union {
         struct {
@@ -115,20 +108,36 @@ public:
             uint8_t halftrack[85][7928];
         };
         uint8_t track[43][2 * 7928];
-    } newdata;
-    
-    //! Total number of tracks on this disk
-    // DEPRECATED (ADD METHOD emptyTrack(Track nr);) (Scans track for data, returns true/false numTracks())
-    uint8_t numTracks;
-    
-   
+    } data;
+
+// private:
+    //! Length of each halftrack in bytes
+    /*! length.halftack[i] : length of halftrack i
+        length.track[i][0] : length of track i
+        length.track[i][1] : length of halftrack above track i */
+     
+    uint16_t oldlength[85];
+
     union {
         struct {
             uint16_t _pad;
             uint16_t halftrack[85];
         };
         uint16_t track[43][2];
-    } newlength;
+    } length;
+
+    
+public:
+    
+    //! Returns true if track/offset indicates a valid disk position on disk
+    bool isValidDiskPositon(Halftrack ht, uint16_t offset) { return isHalftrackNumber(ht) && offset < oldlength[ht]; }
+    
+    
+    //! Total number of tracks on this disk
+    // DEPRECATED (ADD METHOD emptyTrack(Track nr);) (Scans track for data, returns true/false numTracks())
+    uint8_t numTracks;
+    
+   
 
   
     
@@ -151,7 +160,7 @@ public:
     //! Return start address of a given halftrack (1...84)
     // DEPRECATED
     inline uint8_t *startOfHalftrack(unsigned halftrack) {
-        assert(halftrack >= 1 && halftrack <= 84); return data[halftrack - 1]; }
+        assert(halftrack >= 1 && halftrack <= 84); return olddata[halftrack - 1]; }
     
     //! Return start address of a given track (1...42)
     // DEPRECATED
@@ -161,7 +170,7 @@ public:
     //! Returns the length of a halftrack
     // DEPRECATED
     inline uint16_t lengthOfHalftrack(unsigned halftrack) {
-        assert(halftrack >= 1 && halftrack <= 84); return length[halftrack - 1];
+        assert(halftrack >= 1 && halftrack <= 84); return oldlength[halftrack - 1];
     }
     
     //! Returns the length of a track
@@ -173,7 +182,7 @@ public:
     //! Returns the length of a halftrack
     // DEPRECATED
     inline void setLengthOfHalftrack(unsigned halftrack, unsigned len) {
-        assert(halftrack >= 1 && halftrack <= 84); length[halftrack - 1] = len;
+        assert(halftrack >= 1 && halftrack <= 84); oldlength[halftrack - 1] = len;
     }
     
     //! Returns the length of a track

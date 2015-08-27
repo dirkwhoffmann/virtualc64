@@ -282,14 +282,14 @@ VC1541::moveHeadUp()
     debug(2, "track = %d, Moving head up to %2.1f\n", track, (track + 2) / 2.0);
 
     if (track < 83) {
-        float position = (float)offset / (float)disk.length[track];
+        float position = (float)offset / (float)disk.oldlength[track];
         track++;
-        offset = position * disk.length[track];
+        offset = position * disk.oldlength[track];
     }
 
-    debug(2, "offset: %d length: %d\n", offset, disk.length[track]);
+    debug(2, "offset: %d length: %d\n", offset, disk.oldlength[track]);
     
-    assert(offset < disk.length[track]);
+    assert(offset < disk.oldlength[track]);
     
     c64->putMessage(MSG_VC1541_HEAD, 1);
     if (track % 2 == 0 && sendSoundMessages)
@@ -302,12 +302,12 @@ VC1541::moveHeadDown()
     debug(3, "track = %d, Moving head down to %2.1f\n", track, (track + 2) / 2.0);
 
     if (track > 0) {
-        float position = (float)offset / (float)disk.length[track];
+        float position = (float)offset / (float)disk.oldlength[track];
         track--;
-        offset = position * disk.length[track];
+        offset = position * disk.oldlength[track];
     }
     
-    assert(offset < disk.length[track]);
+    assert(offset < disk.oldlength[track]);
     
     c64->putMessage(MSG_VC1541_HEAD, 0);
     if (track % 2 == 0 && sendSoundMessages)

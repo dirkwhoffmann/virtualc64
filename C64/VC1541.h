@@ -137,7 +137,7 @@ public:
 
     //! Export currently inserted disk to D64 file
     bool exportToD64(const char *filename);
-
+    
     // Returns true if a disk is inserted
     inline bool hasDisk() { return diskInserted; }
     
@@ -286,14 +286,14 @@ private:
 
     //! Reads the currently processed byte
     /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
-    inline uint8_t readHead() { return disk.data[track][offset]; }
+    inline uint8_t readHead() { return disk.olddata[track][offset]; }
     
     //! Writes byte to the current head position
-    inline void writeHead(uint8_t value) { disk.data[track][offset] = value; }
+    inline void writeHead(uint8_t value) { disk.olddata[track][offset] = value; }
 
     //! Rotate disk
     /*! Moves head to next byte on the current track */
-    inline void rotateDisk() { if (++offset >= disk.length[track]) offset = 0; }
+    inline void rotateDisk() { if (++offset >= disk.oldlength[track]) offset = 0; }
     
     // Signals the CPU that a byte has been processed
     inline void byteReady();
