@@ -60,7 +60,6 @@ VC1541::resetDrive(C64 *c64)
     rotating = false;
     redLED = false;
     byteReadyTimer = 0;
-    oldtrack = 40;
     halftrack = 41;
     offset = 0;
     zone = 0;
@@ -98,7 +97,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 15;
+    uint32_t result = 14;
 
     result += disk.stateSize();
     result += cpu->stateSize();
@@ -126,7 +125,6 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     sendSoundMessages = (bool)read8(buffer);
     
     // Read/Write logic
-    oldtrack = read8(buffer);
     halftrack = (Disk525::Halftrack)read8(buffer);
     offset = read16(buffer);
     zone = read8(buffer);
@@ -161,7 +159,6 @@ VC1541::saveToBuffer(uint8_t **buffer)
     write8(buffer, (uint8_t)sendSoundMessages);
     
     // Read/Write logic
-    write8(buffer, oldtrack);
     write8(buffer, (uint8_t)halftrack);
     write16(buffer, offset);
     write8(buffer, zone);
@@ -249,7 +246,7 @@ VC1541::setZone(uint8_t z)
     assert (z <= 3);
     
     if (z != zone) {
-        debug(2, "Switching from disk zone %d to disk zone %d\n", zone, z);
+        debug(3, "Switching from disk zone %d to disk zone %d\n", zone, z);
         zone = z;
     }
 }
@@ -282,50 +279,37 @@ VC1541::setRotating(bool b)
 void
 VC1541::moveHeadUp()
 {
-    if (oldtrack < 83) {
-        oldtrack++;
-        debug(2, "OLD:Moving head up\n");
-    }
-
     if (halftrack < 84) {
         float position = (float)offset / (float)disk.length.halftrack[halftrack];
         halftrack++;
         offset = position * disk.length.halftrack[halftrack];
 
-        debug(2, "Moving head up to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
+        debug(3, "Moving head up to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
-    
-    assert(offset < disk.length.halftrack[halftrack]);
+   
+    assert(disk.isValidDiskPositon(halftrack, offset));
     
     c64->putMessage(MSG_VC1541_HEAD, 1);
-    if (oldtrack % 2 == 0 && sendSoundMessages)
+    if (halftrack % 2 && sendSoundMessages)
         c64->putMessage(MSG_VC1541_HEAD_SOUND, 1); // play sound for full tracks, only
 }
 
 void
 VC1541::moveHeadDown()
 {
-    if (oldtrack > 0) {
-        oldtrack--;
-        debug(2, "OLD:Moving head down\n");
-    }
-
     if (halftrack > 1) {
         float position = (float)offset / (float)disk.length.halftrack[halftrack];
         halftrack--;
         offset = position * disk.length.halftrack[halftrack];
-        debug(2, "Moving head down to halftrack %d (track %2.1f) %f %d %d\n", halftrack, (halftrack + 1) / 2.0, position, offset, disk.length.halftrack[halftrack]);
+        debug(3, "Moving head down to halftrack %d (track %2.1f) %f %d %d\n", halftrack, (halftrack + 1) / 2.0, position, offset, disk.length.halftrack[halftrack]);
     }
     
-    assert(offset < disk.length.halftrack[halftrack]);
+    assert(disk.isValidDiskPositon(halftrack, offset));
     
     c64->putMessage(MSG_VC1541_HEAD, 0);
-    if (oldtrack % 2 == 0 && sendSoundMessages)
+    if (halftrack % 2 && sendSoundMessages)
         c64->putMessage(MSG_VC1541_HEAD_SOUND, 0); // play sound for full tracks, only
 }
-
-
-
 
 void
 VC1541::insertDisk(D64Archive *a)

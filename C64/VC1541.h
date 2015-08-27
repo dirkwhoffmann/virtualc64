@@ -227,9 +227,6 @@ private:
     //! The next byte will be ready after this number of cycles
     uint16_t byteReadyTimer;
 
-    //! Track position of the read/write head
-    uint8_t oldtrack;
-
     //! Halftrack position of the read/write head
     Disk525::Halftrack halftrack;
 

@@ -143,7 +143,7 @@ public:
 
 
     // ---------------------------------------------------------------------------------------------
-    //                               Data encoding and decoding
+    //                                         Data encoding
     // ---------------------------------------------------------------------------------------------
     
 public:
@@ -151,13 +151,6 @@ public:
     //! Converts a D64 archive into a virtual floppy disk
     /*! The methods creates sync marks, GRC encoded header and data blocks, checksums and gaps */
     void encodeArchive(D64Archive *a);
-    
-    //! Converts a virtual floppy disk to a byte stream compatible with the D64 format
-    /*! Returns the number of bytes written.
-        If dest is NULL, a test run is performed (used to determine how many bytes will be written).
-        If something went wrong, an error code is written to 'error' (0 = no error = success) */
-    unsigned decodeDisk(uint8_t *dest, int *error = NULL);
-    
     
 private:
     
@@ -184,6 +177,20 @@ private:
     //! Translate 4 data bytes into 5 GCR encodes bytes
     void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest);
     
+    // ---------------------------------------------------------------------------------------------
+    //                                         Data decoding
+    // ---------------------------------------------------------------------------------------------
+
+public:
+    
+    //! Converts a virtual floppy disk to a byte stream compatible with the D64 format
+    /*! Returns the number of bytes written.
+     If dest is NULL, a test run is performed (used to determine how many bytes will be written).
+     If something went wrong, an error code is written to 'error' (0 = no error = success) */
+    unsigned decodeDisk(uint8_t *dest, int *error = NULL);
+    
+private:
+    
     //! Decodes all sectors of a single GCR encoded track
     unsigned decodeTrack(uint8_t *source, uint8_t *dest, int *error = NULL);
     
@@ -195,6 +202,4 @@ private:
     
 };
     
-    
-
 #endif

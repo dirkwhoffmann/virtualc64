@@ -72,26 +72,19 @@ Disk525::saveToBuffer(uint8_t **buffer)
 }
 
 void
-Disk525::clearHalftrack(Halftrack ht)
-{
-    assert(isHalftrackNumber(ht));
-    
-    // TODO:
-    // debug(2, "Clearing halftrack %d with %d 0x55 bytes\n");
-    debug(2, "Clearing halftrack %d\n", ht);
-    // memset(startOfHalftrack(ht), 0x55, 7928);
-    memset(data.halftrack[ht], 0x55, sizeof(data.halftrack[ht]));
-    assert (sizeof(data.halftrack[ht]) == 7928); 
-}
-
-void
 Disk525::clearDisk()
 {
     for (Halftrack ht = 1; ht <= 84; ht++) {
         clearHalftrack(ht);
         length.halftrack[ht] = sizeof(data.halftrack[ht]);
-        assert(length.halftrack[ht] == 7928);
     }
+}
+
+void
+Disk525::clearHalftrack(Halftrack ht)
+{
+    assert(isHalftrackNumber(ht));
+    memset(data.halftrack[ht], 0x55, sizeof(data.halftrack[ht]));
 }
 
 
@@ -103,13 +96,22 @@ Disk525::clearDisk()
 void
 Disk525::encodeArchive(D64Archive *a)
 {
-    // Interleave patterns (no interleave for now)
-    // TODO: Use real interleave pattern
+    // Interleave patterns (no interleave)
+    /*
     int zone1[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, -1 };
+    int track18[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, -1 };
     int zone2[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, -1 };
     int zone3[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, -1 };
     int zone4[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, -1 };
+    */
     
+    // Interleave patterns (minics real VC1541 sector layout)
+    int zone1[] = { 0, 10, 20, 9, 19, 8, 18, 7, 17, 6, 16, 5, 15, 4, 14, 3, 13, 2, 12, 1, 11, -1 };
+    int track18[] = { 0, 3, 6, 9, 12, 15, 18, 2, 5, 8, 11, 14, 17, 1, 4, 7, 10, 13, 16, -1 };
+    int zone2[] = { 0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, -1 };
+    int zone3[] = { 0, 10, 2, 12, 4, 14, 6, 16, 8, 1, 11, 3, 13, 5, 15, 7, 17, 9, -1 };
+    int zone4[] = { 0, 10, 3, 13, 6, 16, 9, 2, 12, 5, 15, 8, 1, 11, 4, 14, 7, -1 };
+
     unsigned track, encodedBytes;
     
     assert(a != NULL);
@@ -119,19 +121,20 @@ Disk525::encodeArchive(D64Archive *a)
     
     debug(2, "Encoding D64 archive with %d tracks\n", numTracks);
     
-    // Zone 1: Tracks 1 - 17 (21 sectors, tailgap 9/9
+    // Zone 1: Tracks 1 - 17 (21 sectors, tailgap 9/9 (even/odd sectors))
     for (track = 1; track <= 17; track++) {
-        encodedBytes = encodeTrack(a, track, zone1, 9, 9);
+        (void)encodeTrack(a, track, zone1, 9, 9);
     }
     
     // Zone 2: Tracks 18 - 24 (19 sectors, tailgap 9/19 (even/odd sectors))
-    for (track = 18; track <= 24; track++) {
-        encodedBytes = encodeTrack(a, track, zone2, 9, 19);
+    (void)encodeTrack(a, track, track18, 9, 19); // Directory track
+    for (track = 19; track <= 24; track++) {
+        (void)encodeTrack(a, track, zone2, 9, 19);
     }
     
     // Zone 3: Tracks 25 - 30 (18 sectors, tailgap 9/13 (even/odd sectors))
     for (track = 25; track <= 30; track++) {
-        encodedBytes = encodeTrack(a, track, zone3, 9, 13);
+        (void)encodeTrack(a, track, zone3, 9, 13);
     }
     
     // Zone 4: Tracks 31 - 35..42 (17 sectors, tailgap 9/10 (even/odd sectors))
@@ -153,14 +156,12 @@ Disk525::encodeArchive(D64Archive *a)
 unsigned
 Disk525::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEven, uint8_t tailGapOdd)
 {
-    unsigned encodedBytes, totalEncodedBytes = 0;
-    
     assert(isTrackNumber(t));
-    assert(a != NULL);
-    
-    debug(2, "Encoding track %d\n", t);
-    
+
+    unsigned encodedBytes, totalEncodedBytes = 0;
     uint8_t *dest = data.track[t];
+    
+    debug(3, "Encoding track %d\n", t);
     
     // Scan the interleave pattern and encode each sector
     for (unsigned i = 0; sectorList[i] != -1; i++) {
@@ -191,7 +192,7 @@ Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, int
         return 0;
     }
     
-    debug(2, "  Encoding sector %d/%d\n", t, sector);
+    debug(4, "  Encoding track/sector %d/%d\n", t, sector);
     
     // Get disk id and compute checksum
     uint8_t id_lo = a->diskIdLow();
@@ -267,7 +268,7 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
         
         debug(3, "Decoding track %d %s\n", t, dest == NULL ? "(test run)" : "");
         
-        // Copy the track into temporary buffer
+        // Copy track into temporary buffer
         // Buffer is double sized, so we can read safely beyond the array bounds
         assert(2 * length.track[t][0] < sizeof(tmpbuf));
         memcpy(tmpbuf, data.track[t], length.track[t][0]);
