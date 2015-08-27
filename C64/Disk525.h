@@ -130,16 +130,12 @@ public:
 public:
     
     //! Returns true if track/offset indicates a valid disk position on disk
-    bool isValidDiskPositon(Halftrack ht, uint16_t offset) { return isHalftrackNumber(ht) && offset < oldlength[ht]; }
-    
+    bool isValidDiskPositon(Halftrack ht, uint16_t offset) {
+        return isHalftrackNumber(ht) && offset < length.halftrack[ht]; }
     
     //! Total number of tracks on this disk
     // DEPRECATED (ADD METHOD emptyTrack(Track nr);) (Scans track for data, returns true/false numTracks())
     uint8_t numTracks;
-    
-   
-
-  
     
     
     //private:
@@ -166,19 +162,7 @@ public:
     // DEPRECATED
     inline uint8_t *startOfTrack(unsigned track) {
         assert(track >= 1 && track <= 42); return startOfHalftrack(2 * track - 1); }
-    
-    //! Returns the length of a halftrack
-    // DEPRECATED
-    inline uint16_t lengthOfHalftrack(unsigned halftrack) {
-        assert(halftrack >= 1 && halftrack <= 84); return oldlength[halftrack - 1];
-    }
-    
-    //! Returns the length of a track
-    // DEPRECATED
-    inline uint16_t lengthOfTrack(unsigned track) {
-        assert(track >= 1 && track <= 42); return lengthOfHalftrack(trackToHalftrack(track));
-    }
-    
+       
     //! Returns the length of a halftrack
     // DEPRECATED
     inline void setLengthOfHalftrack(unsigned halftrack, unsigned len) {

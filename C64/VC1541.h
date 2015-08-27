@@ -228,7 +228,7 @@ private:
     uint16_t byteReadyTimer;
 
     //! Track position of the read/write head
-    uint8_t track;
+    uint8_t oldtrack;
     
     //! Position of the read/write head inside the current track (byte granularity)
     uint16_t offset;
@@ -286,14 +286,14 @@ private:
 
     //! Reads the currently processed byte
     /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
-    inline uint8_t readHead() { return disk.olddata[track][offset]; }
+    inline uint8_t readHead() { return disk.olddata[oldtrack][offset]; }
     
     //! Writes byte to the current head position
-    inline void writeHead(uint8_t value) { disk.olddata[track][offset] = value; }
+    inline void writeHead(uint8_t value) { disk.olddata[oldtrack][offset] = value; }
 
     //! Rotate disk
     /*! Moves head to next byte on the current track */
-    inline void rotateDisk() { if (++offset >= disk.oldlength[track]) offset = 0; }
+    inline void rotateDisk() { if (++offset >= disk.oldlength[oldtrack]) offset = 0; }
     
     // Signals the CPU that a byte has been processed
     inline void byteReady();

@@ -38,7 +38,9 @@ Disk525::reset(C64 *c64)
 uint32_t
 Disk525::stateSize()
 {
-    return sizeof(olddata) + sizeof(oldlength) + 1;
+    // return sizeof(olddata) + sizeof(oldlength) + 1;
+    printf("sizeof(length.track) = %ld sizeof(data.track) = %ld\n", sizeof(length.track), sizeof(data.track));
+    return sizeof(olddata) + sizeof(length.track) + sizeof(data.track) + 1;
 }
 
 void
@@ -48,7 +50,8 @@ Disk525::loadFromBuffer(uint8_t **buffer)
     
     // Disk data storage
     readBlock(buffer, olddata[0], sizeof(olddata));
-    readBlock16(buffer, oldlength, sizeof(oldlength));
+    readBlock(buffer, data.track[0], sizeof(data.track));
+    readBlock16(buffer, length.track[0], sizeof(length.track));
     numTracks = read8(buffer);
     
     assert(*buffer - old == stateSize());
@@ -61,7 +64,8 @@ Disk525::saveToBuffer(uint8_t **buffer)
     
     // Disk data storage
     writeBlock(buffer, olddata[0], sizeof(olddata));
-    writeBlock16(buffer, oldlength, sizeof(oldlength));
+    writeBlock(buffer, data.track[0], sizeof(data.track));
+    writeBlock16(buffer, length.track[0], sizeof(length.track));
     write8(buffer, numTracks);
     
     assert(*buffer - old == stateSize());
@@ -81,9 +85,11 @@ Disk525::clearHalftrack(Halftrack ht)
 void
 Disk525::clearDisk()
 {
-    for (unsigned i = 1; i <= 84; i++) {
-        clearHalftrack(i);
-        setLengthOfHalftrack(i, 7928);
+    for (Halftrack ht = 1; ht <= 84; ht++) {
+        clearHalftrack(ht);
+        setLengthOfHalftrack(ht, 7928);
+        length.halftrack[ht] = sizeof(data.halftrack[ht]);
+        assert(length.halftrack[ht] == 7928);
     }
 }
 
@@ -134,13 +140,22 @@ Disk525::encodeDisk(D64Archive *a)
     
     // Clear remaining tracks (if any)
     for (track = numTracks + 1; track <= 42; track++) {
+        length.track[track][0] = encodedBytes; // track i
+        length.track[track][1] = encodedBytes; // half track above track i
+
         unsigned halftrack = trackToHalftrack(track);
         setLengthOfHalftrack(halftrack, encodedBytes);
         setLengthOfHalftrack(halftrack + 1, encodedBytes);
     }
     
-    for (unsigned i = 1; i <= 84; i++) {
-        assert(oldlength[i-1] <= 7928);
+    for (Halftrack ht = 1; ht <= 84; ht++) {
+        printf("length.halftrack[%d] = %d", ht, length.halftrack[ht]);
+        // assert(oldlength[ht-1] <= 7928);
+        assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]));
+    }
+
+    for (Track t = 1; t <= 42; t++) {
+        printf("length.track[%d][0/1] = %d/%d", t, length.track[t][0], length.track[t][1]);
     }
 }
 
@@ -166,6 +181,10 @@ Disk525::encodeTrack(D64Archive *a, uint8_t track, int *sector, uint8_t tailGapE
     
     setLengthOfTrack(track, totalEncodedBytes);
     setLengthOfHalftrack(trackToHalftrack(track)+1, totalEncodedBytes);
+    
+    length.track[track][0] = totalEncodedBytes; // Track t
+    length.track[track][1] = totalEncodedBytes; // Half track above track t
+    
     return totalEncodedBytes;
 }
 
@@ -249,22 +268,30 @@ Disk525::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest
 unsigned
 Disk525::decodeDisk(uint8_t *dest, int *error)
 {
-    unsigned track, halftrack, numBytes = 0;
+    Track t;
+    Halftrack halftrack;
+    unsigned numBytes = 0;
     uint8_t tmpbuf[2 * 7928];
     
     if (error) *error = 0; // We assume the best
     
     // For each full track ...
-    for (track = 1, halftrack = 0; track <= numTracks; track++, halftrack += 2) {
+    for (t = 1, halftrack = 0; t <= numTracks; t++, halftrack += 2) {
         
-        debug(3, "Decoding track %d %s\n", track, dest == NULL ? "(test run)" : "");
+        debug(3, "Decoding track %d %s\n", t, dest == NULL ? "(test run)" : "");
         
         // Copy the track into temporary buffer
         // Buffer is double sized, so we can read safely beyond the array bounds
         
-        assert(oldlength[halftrack] < 7928);
-        memcpy(tmpbuf, olddata[halftrack], oldlength[halftrack]);
-        memcpy(tmpbuf + oldlength[halftrack], olddata[halftrack], oldlength[halftrack]);
+        // assert(oldlength[halftrack] < 7928);
+        assert(2 * length.track[t][0] < sizeof(tmpbuf));
+        // memcpy(tmpbuf, olddata[halftrack], oldlength[halftrack]);
+        // memcpy(tmpbuf + oldlength[halftrack], olddata[halftrack], oldlength[halftrack]);
+        memcpy(tmpbuf, olddata[halftrack], length.track[t][0]);
+        memcpy(tmpbuf + length.track[t][0], olddata[halftrack], length.track[t][0]);
+        // memcpy(tmpbuf, data.track[t], length.track[t][0]);
+        // memcpy(tmpbuf + length.track[t][0], data.track[t], length.track[t][0]);
+        
         
         if (dest)
             numBytes += decodeTrack(tmpbuf, dest + numBytes, error);
@@ -407,9 +434,9 @@ Disk525::dumpTrack(Halftrack ht, unsigned min, unsigned max, unsigned highlight)
 {
     assert(isHalftrackNumber(ht));
     
-    if (max > lengthOfHalftrack(ht)) max = lengthOfHalftrack(ht);
+    if (max > length.halftrack[ht]) max = length.halftrack[ht];
     
-    msg("Dumping track %d (length = %d)\n", ht, lengthOfHalftrack(ht));
+    msg("Dumping track %d (length = %d)\n", ht, length.halftrack[ht]);
     for (unsigned i = min; i < max; i++) {
         msg(i == highlight ? "(%02X) " : "%02X ", olddata[ht][i]);
     }
