@@ -290,7 +290,7 @@ private:
     //! Reads the currently processed byte
     /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
     inline uint8_t readHead() {
-        // assert(disk.olddata[oldtrack][offset] == disk.data.halftrack[halftrack][offset]);
+        assert(disk.olddata[oldtrack][offset] == disk.data.halftrack[halftrack][offset]);
         // return disk.data.halftrack[halftrack][offset];
         return disk.olddata[oldtrack][offset]; }
     

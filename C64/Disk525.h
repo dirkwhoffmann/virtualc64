@@ -200,13 +200,13 @@ private:
      tailGapEven is the number of tail bytes follwowing sectors with even sector numbers.
      tailGapOdd is the number of tail bytes follwowing sectors with odd sector numbers.
      Returns the number of bytes written */
-    unsigned encodeTrack(D64Archive *a, uint8_t track, int *sector, uint8_t tailGapEven, uint8_t tailGapOdd);
+    unsigned encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEven, uint8_t tailGapOdd);
     
     //! Encode a single sector
     /*! This function translates the logical byte sequence of a single sector into the native VC1541
      byte representation. The sector is closed by 'gap' tail gap bytes.
      Returns the number of bytes written. */
-    unsigned encodeSector(D64Archive *a, uint8_t track, uint8_t sector, uint8_t *dest, int gap);
+    unsigned encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, int gap);
     
     //! Write five SYNC bytes
     void encodeSync(uint8_t *dest) { for (unsigned i = 0; i < 5; i++) dest[i] = 0xFF; }
