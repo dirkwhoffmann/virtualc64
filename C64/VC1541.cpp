@@ -282,13 +282,8 @@ VC1541::setRotating(bool b)
 void
 VC1541::moveHeadUp()
 {
-    unsigned oldoffset = offset;
-    
-    assert(oldtrack + 1 == halftrack);
     if (oldtrack < 83) {
-        float position = (float)offset / (float)disk.oldlength[oldtrack];
         oldtrack++;
-        oldoffset = position * disk.oldlength[oldtrack];
         debug(2, "OLD:Moving head up\n");
     }
 
@@ -300,8 +295,6 @@ VC1541::moveHeadUp()
         debug(2, "Moving head up to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
     
-    assert(oldoffset == offset);
-    assert(disk.oldlength[oldtrack] == disk.length.halftrack[halftrack]);
     assert(offset < disk.length.halftrack[halftrack]);
     
     c64->putMessage(MSG_VC1541_HEAD, 1);
@@ -312,14 +305,9 @@ VC1541::moveHeadUp()
 void
 VC1541::moveHeadDown()
 {
-    unsigned oldoffset = offset;
-    
-    assert(oldtrack + 1 == halftrack);
     if (oldtrack > 0) {
-        float position = (float)offset / (float)disk.oldlength[oldtrack];
         oldtrack--;
-        oldoffset = position * disk.oldlength[oldtrack];
-        debug(2, "OLD:Moving head down to %2.1f %f %d\n", (oldtrack + 2) / 2.0, position, oldoffset);
+        debug(2, "OLD:Moving head down\n");
     }
 
     if (halftrack > 1) {
@@ -329,8 +317,6 @@ VC1541::moveHeadDown()
         debug(2, "Moving head down to halftrack %d (track %2.1f) %f %d %d\n", halftrack, (halftrack + 1) / 2.0, position, offset, disk.length.halftrack[halftrack]);
     }
     
-    assert(oldoffset == offset);
-    assert(disk.oldlength[oldtrack] == disk.length.halftrack[halftrack]);
     assert(offset < disk.length.halftrack[halftrack]);
     
     c64->putMessage(MSG_VC1541_HEAD, 0);

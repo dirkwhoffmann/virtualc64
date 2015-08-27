@@ -301,9 +301,7 @@ private:
 
     //! Rotate disk
     /*! Moves head to next byte on the current track */
-    inline void rotateDisk() {
-        assert(disk.oldlength[oldtrack] == disk.length.halftrack[halftrack]);
-        if (++offset >= disk.oldlength[oldtrack]) offset = 0; }
+    inline void rotateDisk() { if (++offset >= disk.length.halftrack[halftrack]) offset = 0; }
     
     // Signals the CPU that a byte has been processed
     inline void byteReady();

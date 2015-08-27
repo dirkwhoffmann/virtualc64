@@ -116,7 +116,7 @@ public:
         length.track[i][0] : length of track i
         length.track[i][1] : length of halftrack above track i */
      
-    uint16_t oldlength[85];
+    // uint16_t oldlength[85];
 
     union {
         struct {
@@ -162,19 +162,7 @@ public:
     // DEPRECATED
     inline uint8_t *startOfTrack(unsigned track) {
         assert(track >= 1 && track <= 42); return startOfHalftrack(2 * track - 1); }
-       
-    //! Returns the length of a halftrack
-    // DEPRECATED
-    inline void setLengthOfHalftrack(unsigned halftrack, unsigned len) {
-        assert(halftrack >= 1 && halftrack <= 84); oldlength[halftrack - 1] = len;
-    }
-    
-    //! Returns the length of a track
-    // DEPRECATED
-    inline void setLengthOfTrack(unsigned track, unsigned len) {
-        assert(track >= 1 && track <= 42); setLengthOfHalftrack(trackToHalftrack(track), len);
-    }
-    
+           
     //! Zero out a single halftrack
     /*! If the additional track size parameter is provided, the track size is also adjusted.
      Othwerwise, the current track size is kept. */

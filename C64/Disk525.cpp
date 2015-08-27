@@ -85,7 +85,6 @@ Disk525::clearDisk()
 {
     for (Halftrack ht = 1; ht <= 84; ht++) {
         clearHalftrack(ht);
-        setLengthOfHalftrack(ht, 7928);
         length.halftrack[ht] = sizeof(data.halftrack[ht]);
         assert(length.halftrack[ht] == 7928);
     }
@@ -140,28 +139,16 @@ Disk525::encodeDisk(D64Archive *a)
     for (track = numTracks + 1; track <= 42; track++) {
         length.track[track][0] = encodedBytes; // track i
         length.track[track][1] = encodedBytes; // half track above track i
-
-        unsigned halftrack = trackToHalftrack(track);
-        setLengthOfHalftrack(halftrack, encodedBytes);
-        setLengthOfHalftrack(halftrack + 1, encodedBytes);
     }
     
     for (Halftrack ht = 1; ht <= 84; ht++) {
         printf("length.halftrack[%d] = %d", ht, length.halftrack[ht]);
-        // assert(oldlength[ht-1] <= 7928);
         assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]));
     }
 
     for (Track t = 1; t <= 42; t++) {
         printf("length.track[%d][0/1] = %d/%d", t, length.track[t][0], length.track[t][1]);
     }
-
-    for (Halftrack ht = 1; ht <= 84; ht++) {
-        if (oldlength[ht-1] != length.halftrack[ht]) {
-            printf(" **** halftrack ht: %d mismatch %d != %d\n", ht, oldlength[ht-1], length.halftrack[ht]);
-        }
-    }
-
 }
 
 unsigned
@@ -183,9 +170,6 @@ Disk525::encodeTrack(D64Archive *a, uint8_t track, int *sector, uint8_t tailGapE
         dest += encodedBytes;
         totalEncodedBytes += encodedBytes;
     }
-    
-    setLengthOfTrack(track, totalEncodedBytes);
-    setLengthOfHalftrack(trackToHalftrack(track)+1, totalEncodedBytes);
     
     length.track[track][0] = totalEncodedBytes; // Track t
     length.track[track][1] = totalEncodedBytes; // Half track above track t
@@ -288,10 +272,7 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
         // Copy the track into temporary buffer
         // Buffer is double sized, so we can read safely beyond the array bounds
         
-        // assert(oldlength[halftrack] < 7928);
         assert(2 * length.track[t][0] < sizeof(tmpbuf));
-        // memcpy(tmpbuf, olddata[halftrack], oldlength[halftrack]);
-        // memcpy(tmpbuf + oldlength[halftrack], olddata[halftrack], oldlength[halftrack]);
         memcpy(tmpbuf, olddata[halftrack], length.track[t][0]);
         memcpy(tmpbuf + length.track[t][0], olddata[halftrack], length.track[t][0]);
         // memcpy(tmpbuf, data.track[t], length.track[t][0]);
