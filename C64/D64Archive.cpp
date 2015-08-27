@@ -591,27 +591,18 @@ D64Archive::numberOfTracks()
 //
 
 uint8_t *
-D64Archive::findSector(unsigned halftrack, unsigned sector)
+D64Archive::findSector(unsigned track, unsigned sector)
 {
-    int pos = offsetForHalftrack(halftrack, sector);
-    return (offsetForHalftrack(halftrack, sector) < 0) ? NULL : &data[pos];
+    return data + offset(track, sector);
 }
 
 int
 D64Archive::offset(int track, int sector)
 {
-    assert(1 <= track && track <= 42);
-    assert(sector < numberOfSectors(Disk525::trackToHalftrack(track)));
+    assert(Disk525::isTrackNumber(track));
+    assert(sector < D64Map[track].numberOfSectors);
     
     return D64Map[track].offset + (sector * 256);
-}
-
-int
-D64Archive::offsetForHalftrack(int halftrack, int sector)
-{
-    assert(halftrack % 2 != 0);
-    
-    return offset(Disk525::halftrackToTrack(halftrack), sector);
 }
 
 bool

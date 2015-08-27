@@ -40,21 +40,15 @@ public:
     //! Size of internal state
     uint32_t stateSize();
     
-    //! Dump current configuration into message queue
-    // void ping() { };
-
     //! Load state
     void loadFromBuffer(uint8_t **buffer);
     
     //! Save state
     void saveToBuffer(uint8_t **buffer);
     
-    //! Dump current state into logfile
-    // void dumpState();
- 
     
     // -----------------------------------------------------------------------------------------------
-    //                                     Types and constants
+    //                                      Types and constants
     // -----------------------------------------------------------------------------------------------
     
     // The VC1541 drive head can move between position 1 and 85.
@@ -70,27 +64,34 @@ public:
     
     //! Datatype for methods using halftrack addressing
     typedef unsigned Halftrack;
-    bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= 84; }
+    static bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= 84; }
 
     //! Datatype for methods using track addressing
     typedef unsigned Track;
-    bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
+    static bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
 
     //! Maximum number of files that can be stored on a single disk
     /*! VC1541 DOS allows up to 18 directory sectors, each containing 8 files. */
     const static unsigned MAX_FILES_ON_DISK = 144;
-    
+
 private:
     
     //! GCR encoding table
-    /*! On disk, data is stored GCR encoded. Four data bytes expand to five GCR bytes. */
-    
+    /*! Maps 4 data bits to 5 GCR bits */
     const uint16_t gcr[16] = {
         0x0a, 0x0b, 0x12, 0x13,
         0x0e, 0x0f, 0x16, 0x17,
         0x09, 0x19, 0x1a, 0x1b,
         0x0d, 0x1d, 0x1e, 0x15
     };
+    
+    //! Inverse GCR encoding table
+    /*! Maps 5 data bits to 4 GCR bits. Initialized in constructor */
+    uint8_t invgcr[32];
+
+    // -----------------------------------------------------------------------------------------------
+    //                                      Disk data
+    // -----------------------------------------------------------------------------------------------
 
 public:
     
@@ -100,8 +101,6 @@ public:
         The first valid track and halftrack number is 1. Hence, the entries [0][x] are unused. 
         data.halftack[i] : pointer to the first byte of halftrack i
         data.track[i]    : pointer to the first byte of track i */
-    uint8_t olddata[85][7928];
-    
     union {
         struct {
             uint8_t _pad[7928];
@@ -110,14 +109,10 @@ public:
         uint8_t track[43][2 * 7928];
     } data;
 
-// private:
     //! Length of each halftrack in bytes
     /*! length.halftack[i] : length of halftrack i
         length.track[i][0] : length of track i
         length.track[i][1] : length of halftrack above track i */
-     
-    // uint16_t oldlength[85];
-
     union {
         struct {
             uint16_t _pad;
@@ -125,54 +120,26 @@ public:
         };
         uint16_t track[43][2];
     } length;
-
-    
-public:
-    
-    //! Returns true if track/offset indicates a valid disk position on disk
-    bool isValidDiskPositon(Halftrack ht, uint16_t offset) {
-        return isHalftrackNumber(ht) && offset < length.halftrack[ht]; }
     
     //! Total number of tracks on this disk
     // DEPRECATED (ADD METHOD emptyTrack(Track nr);) (Scans track for data, returns true/false numTracks())
     uint8_t numTracks;
+
+    //! Returns true if track/offset indicates a valid disk position on disk
+    bool isValidDiskPositon(Halftrack ht, uint16_t offset) {
+        return isHalftrackNumber(ht) && offset < length.halftrack[ht]; }
     
     
-    //private:
 public:
     
-    //! Converts a track number into a halftrack number
-    /*! The mapping is: 1->1, 2->3, 3->5, 5->7, ..., 41->81, 42->83 */
-    // DEPRECATED
-    static unsigned trackToHalftrack(unsigned track) {
-        assert(track >= 1 && track <= 42); return (2 * track) - 1; }
-    
-    //! Converts a halftrack number into a track number
-    /*! The mapping is: 1->1, 2->1, 3->2, 4->2, ..., 83->42, 84->42 */
-    // DEPRECATED
-    static unsigned halftrackToTrack(unsigned halftrack) {
-        assert(halftrack >= 1 && halftrack <= 84); return (halftrack + 1) / 2; }
-    
-    //! Return start address of a given halftrack (1...84)
-    // DEPRECATED
-    inline uint8_t *startOfHalftrack(unsigned halftrack) {
-        assert(halftrack >= 1 && halftrack <= 84); return olddata[halftrack - 1]; }
-    
-    //! Return start address of a given track (1...42)
-    // DEPRECATED
-    inline uint8_t *startOfTrack(unsigned track) {
-        assert(track >= 1 && track <= 42); return startOfHalftrack(2 * track - 1); }
-           
+    //! Zero out whole disk
+    void clearDisk();
+
     //! Zero out a single halftrack
-    /*! If the additional track size parameter is provided, the track size is also adjusted.
-     Othwerwise, the current track size is kept. */
     void clearHalftrack(Halftrack ht);
     
-    //! Zero out all tracks on a disk
-    void clearDisk();
-    
-    //! For debugging
-    void dumpTrack(Halftrack ht, unsigned min = 0, unsigned max = UINT_MAX, unsigned highlight = UINT_MAX);
+    //! Print some track data (for debugging)
+    void dumpHalftrack(Halftrack ht, unsigned min = 0, unsigned max = UINT_MAX, unsigned highlight = UINT_MAX);
 
 
     // ---------------------------------------------------------------------------------------------
@@ -181,14 +148,14 @@ public:
     
 public:
     
-    //! Converts a D64 archive to real disk data
+    //! Converts a D64 archive into a virtual floppy disk
     /*! The methods creates sync marks, GRC encoded header and data blocks, checksums and gaps */
-    void encodeDisk(D64Archive *a);
+    void encodeArchive(D64Archive *a);
     
-    //! Converts real disk data into a byte stream compatible with the D64 format
+    //! Converts a virtual floppy disk to a byte stream compatible with the D64 format
     /*! Returns the number of bytes written.
-     If dest is NULL, a test run is performed (used to determine how many bytes will be written).
-     If something went wrong, an error code is written to 'error' (0 = no error = success) */
+        If dest is NULL, a test run is performed (used to determine how many bytes will be written).
+        If something went wrong, an error code is written to 'error' (0 = no error = success) */
     unsigned decodeDisk(uint8_t *dest, int *error = NULL);
     
     

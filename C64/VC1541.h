@@ -289,15 +289,10 @@ private:
 
     //! Reads the currently processed byte
     /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
-    inline uint8_t readHead() {
-        assert(disk.olddata[oldtrack][offset] == disk.data.halftrack[halftrack][offset]);
-        // return disk.data.halftrack[halftrack][offset];
-        return disk.olddata[oldtrack][offset]; }
+    inline uint8_t readHead() { return disk.data.halftrack[halftrack][offset]; }
     
     //! Writes byte to the current head position
-    inline void writeHead(uint8_t value) {
-        disk.data.halftrack[halftrack][offset] = value;
-        disk.olddata[oldtrack][offset] = value; }
+    inline void writeHead(uint8_t value) { disk.data.halftrack[halftrack][offset] = value; }
 
     //! Rotate disk
     /*! Moves head to next byte on the current track */

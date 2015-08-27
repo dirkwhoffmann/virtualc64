@@ -21,7 +21,12 @@
 
 Disk525::Disk525()
 {
-    reset(NULL);
+    // Create inverse GCR lookup table
+    memset(invgcr, 0, sizeof(invgcr));
+    for (unsigned i = 0; i < 16; i++)
+        invgcr[gcr[i]] = i;
+
+    clearDisk();
 }
 
 Disk525::~Disk525()
@@ -31,7 +36,6 @@ Disk525::~Disk525()
 void
 Disk525::reset(C64 *c64)
 {
-    // Disk properties
     clearDisk();
 }
 
@@ -75,7 +79,7 @@ Disk525::clearHalftrack(Halftrack ht)
     // TODO:
     // debug(2, "Clearing halftrack %d with %d 0x55 bytes\n");
     debug(2, "Clearing halftrack %d\n", ht);
-    memset(startOfHalftrack(ht), 0x55, 7928);
+    // memset(startOfHalftrack(ht), 0x55, 7928);
     memset(data.halftrack[ht], 0x55, sizeof(data.halftrack[ht]));
     assert (sizeof(data.halftrack[ht]) == 7928); 
 }
@@ -97,7 +101,7 @@ Disk525::clearDisk()
 
 
 void
-Disk525::encodeDisk(D64Archive *a)
+Disk525::encodeArchive(D64Archive *a)
 {
     // Interleave patterns (no interleave for now)
     // TODO: Use real interleave pattern
@@ -117,7 +121,6 @@ Disk525::encodeDisk(D64Archive *a)
     
     // Zone 1: Tracks 1 - 17 (21 sectors, tailgap 9/9
     for (track = 1; track <= 17; track++) {
-        assert(21 == a->numberOfSectors(trackToHalftrack(track)));
         encodedBytes = encodeTrack(a, track, zone1, 9, 9);
     }
     
@@ -138,8 +141,8 @@ Disk525::encodeDisk(D64Archive *a)
     
     // Clear remaining tracks (if any)
     for (track = numTracks + 1; track <= 42; track++) {
-        length.track[track][0] = encodedBytes; // track i
-        length.track[track][1] = encodedBytes; // half track above track i
+        length.track[track][0] = encodedBytes; // Track t
+        length.track[track][1] = encodedBytes; // Half track above
     }
     
     for (Halftrack ht = 1; ht <= 84; ht++) {
@@ -157,33 +160,14 @@ Disk525::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEve
     
     debug(2, "Encoding track %d\n", t);
     
-    totalEncodedBytes = 0;
     uint8_t *dest = data.track[t];
+    
     // Scan the interleave pattern and encode each sector
     for (unsigned i = 0; sectorList[i] != -1; i++) {
         
         encodedBytes = encodeSector(a, t, sectorList[i], dest, (i % 2) ? tailGapOdd : tailGapEven);
         dest += encodedBytes;
         totalEncodedBytes += encodedBytes;
-    }
-
-    // OLD ENCODING:
-    // Scan the interleave pattern and encode each sector
-    totalEncodedBytes = 0;
-    dest = startOfTrack(t);
-    for (unsigned i = 0; sectorList[i] != -1; i++) {
-        
-        encodedBytes = encodeSector(a, t, sectorList[i], dest, (i % 2) ? tailGapOdd : tailGapEven);
-        dest += encodedBytes;
-        totalEncodedBytes += encodedBytes;
-    }
-
-
-    for (unsigned i = 0; i < 7928; i++) {
-        // printf("%02X/%02X ", *(startOfTrack(t)+i), data.track[t][i]);
-    }
-    for (unsigned i = 0; i < 7928; i++) {
-        assert(*(startOfTrack(t)+i) == data.track[t][i]);
     }
     
     length.track[t][0] = totalEncodedBytes; // Track t
@@ -196,14 +180,13 @@ unsigned
 Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, int gap)
 {
     uint8_t *source, *ptr = dest;
-    uint8_t halftrack = trackToHalftrack(t);
     
     assert(isTrackNumber(t));
     assert(a != NULL);
     assert(ptr != NULL);
     
     // Get source address from archive
-    if ((source = a->findSector(halftrack, sector)) == 0) {
+    if ((source = a->findSector(t, sector)) == 0) {
         warn("Can't find halftrack data in archive\n");
         return 0;
     }
@@ -286,17 +269,9 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
         
         // Copy the track into temporary buffer
         // Buffer is double sized, so we can read safely beyond the array bounds
-        
         assert(2 * length.track[t][0] < sizeof(tmpbuf));
-        memcpy(tmpbuf, olddata[halftrack], length.track[t][0]);
-        memcpy(tmpbuf + length.track[t][0], olddata[halftrack], length.track[t][0]);
-        
-        for (unsigned i = 0; i < length.track[t][0]; i++)
-            assert(olddata[halftrack][i] == data.track[t][i]);
-        
-        // memcpy(tmpbuf, data.track[t], length.track[t][0]);
-        // memcpy(tmpbuf + length.track[t][0], data.track[t], length.track[t][0]);
-        
+        memcpy(tmpbuf, data.track[t], length.track[t][0]);
+        memcpy(tmpbuf + length.track[t][0], data.track[t], length.track[t][0]);
         
         if (dest)
             numBytes += decodeTrack(tmpbuf, dest + numBytes, error);
@@ -410,12 +385,6 @@ Disk525::decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, u
 {
     uint64_t shift_reg;
     
-    // Create inverse lookup table
-    uint8_t lookup[32];
-    memset(lookup, 0, sizeof(lookup));
-    for (unsigned i = 0; i < 16; i++)
-        lookup[gcr[i]] = i;
-    
     // Shift in
     shift_reg = b1;
     shift_reg = (shift_reg << 8) | b2;
@@ -424,18 +393,18 @@ Disk525::decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, u
     shift_reg = (shift_reg << 8) | b5;
     
     // Shift out
-    dest[3] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
-    dest[3] |= (lookup[shift_reg & 0x1F] << 4); shift_reg >>= 5;
-    dest[2] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
-    dest[2] |= (lookup[shift_reg & 0x1F] << 4); shift_reg >>= 5;
-    dest[1] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
-    dest[1] |= (lookup[shift_reg & 0x1F] << 4); shift_reg >>= 5;
-    dest[0] = lookup[shift_reg & 0x1F]; shift_reg >>= 5;
-    dest[0] |= (lookup[shift_reg & 0x1F] << 4);
+    dest[3] = invgcr[shift_reg & 0x1F]; shift_reg >>= 5;
+    dest[3] |= (invgcr[shift_reg & 0x1F] << 4); shift_reg >>= 5;
+    dest[2] = invgcr[shift_reg & 0x1F]; shift_reg >>= 5;
+    dest[2] |= (invgcr[shift_reg & 0x1F] << 4); shift_reg >>= 5;
+    dest[1] = invgcr[shift_reg & 0x1F]; shift_reg >>= 5;
+    dest[1] |= (invgcr[shift_reg & 0x1F] << 4); shift_reg >>= 5;
+    dest[0] = invgcr[shift_reg & 0x1F]; shift_reg >>= 5;
+    dest[0] |= (invgcr[shift_reg & 0x1F] << 4);
 }
 
 void
-Disk525::dumpTrack(Halftrack ht, unsigned min, unsigned max, unsigned highlight)
+Disk525::dumpHalftrack(Halftrack ht, unsigned min, unsigned max, unsigned highlight)
 {
     assert(isHalftrackNumber(ht));
     

@@ -148,17 +148,13 @@ public:
     
 public:
 
-    //! @brief Returns a pointer to the raw sector data
+    //! Returns a pointer to the raw sector data
     uint8_t *findSector(unsigned track, unsigned sector);
 
 private:
         
-    //! @brief Translates a track and sector number into an offset
+    //! Translates a track and sector number into an offset
     int offset(int track, int sector);
-
-    /*! @brief Translates a halftrack and sector number into an offset
-        @discussion The argument must be the halftrack number of a real track, because D64 images don't store halftrack information. */
-    int offsetForHalftrack(int halftrack, int sector);
 
     //! @brief Returns true iff offset points to the last byte of a sector
     bool isLastByteOfSector(int offset) { return ((offset+1) % 256) == 0; }

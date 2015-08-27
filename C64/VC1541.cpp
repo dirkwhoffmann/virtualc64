@@ -333,7 +333,7 @@ VC1541::insertDisk(D64Archive *a)
     assert(a != NULL);
     
     ejectDisk();
-    disk.encodeDisk(a);
+    disk.encodeArchive(a);
     
     diskInserted = true;
     setWriteProtection(false);
