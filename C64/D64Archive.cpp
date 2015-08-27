@@ -248,7 +248,7 @@ D64Archive::archiveFromDrive(VC1541 *drive)
         return NULL;
     
     // Perform test run
-    if (drive->decodeDisk(NULL, &error) > D64_802_SECTORS_ECC || error) {
+    if (drive->disk.decodeDisk(NULL, &error) > D64_802_SECTORS_ECC || error) {
         fprintf(stderr, "Cannot create archive (error code: %d)\n", error);
         delete archive;
         return NULL;
@@ -256,7 +256,7 @@ D64Archive::archiveFromDrive(VC1541 *drive)
 
     // Get data from drive
     archive->numTracks = 42;
-    drive->decodeDisk(archive->data);
+    drive->disk.decodeDisk(archive->data);
 
     fprintf(stderr, "Archive has %d files\n", archive->getNumberOfItems());
     fprintf(stderr, "Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
@@ -601,7 +601,7 @@ int
 D64Archive::offset(int track, int sector)
 {
     assert(1 <= track && track <= 42);
-    assert(sector < numberOfSectors(VC1541::trackToHalftrack(track)));
+    assert(sector < numberOfSectors(Disk525::trackToHalftrack(track)));
     
     return D64Map[track].offset + (sector * 256);
 }
@@ -611,7 +611,7 @@ D64Archive::offsetForHalftrack(int halftrack, int sector)
 {
     assert(halftrack % 2 != 0);
     
-    return offset(VC1541::halftrackToTrack(halftrack), sector);
+    return offset(Disk525::halftrackToTrack(halftrack), sector);
 }
 
 bool
@@ -848,8 +848,8 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrac
 {
 	int pos;
 	
-    if (nr >= VC1541::MAX_FILES_ON_DISK) {
-        fprintf(stderr, "Cannot write directory entry. Number of files is limited to %d\n", VC1541::MAX_FILES_ON_DISK);
+    if (nr >= Disk525::MAX_FILES_ON_DISK) {
+        fprintf(stderr, "Cannot write directory entry. Number of files is limited to %d\n", Disk525::MAX_FILES_ON_DISK);
 		return false;
 	}
 

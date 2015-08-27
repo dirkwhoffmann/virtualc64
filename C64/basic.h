@@ -74,6 +74,7 @@
 //! Toggle a single bit.
 #define TOGGLE_BIT(x,nr) ((x) ^= (1 << (nr)))
 
+
 //
 //! @functiongroup Pretty printing
 //

@@ -67,6 +67,7 @@
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		5074BE2C1A4AF6CB00EA9AEE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5074BE2B1A4AF6CB00EA9AEE /* Sparkle.framework */; };
 		5074BE2D1A4AF7E100EA9AEE /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5074BE2B1A4AF6CB00EA9AEE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
@@ -276,6 +277,8 @@
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
 		506D39D5141788E700268AF6 /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
 		5074BE2B1A4AF6CB00EA9AEE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		50775E0E1B8EE8A9002EB58D /* Disk525.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Disk525.cpp; sourceTree = "<group>"; };
+		50775E101B8EE95B002EB58D /* Disk525.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk525.h; sourceTree = "<group>"; };
 		5077742E12DE490300D72088 /* MemTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemTableView.h; sourceTree = "<group>"; };
 		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
 		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
@@ -694,6 +697,8 @@
 		504B39910C45192700286F18 /* Drive */ = {
 			isa = PBXGroup;
 			children = (
+				50775E101B8EE95B002EB58D /* Disk525.h */,
+				50775E0E1B8EE8A9002EB58D /* Disk525.cpp */,
 				5000C8220D13CEE10011A2E9 /* VC1541.h */,
 				5000C8230D13CEE10011A2E9 /* VC1541.cpp */,
 				500FC6770D17D2190044131D /* VIA6522.h */,
@@ -1028,6 +1033,7 @@
 				509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */,
+				50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
