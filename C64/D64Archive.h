@@ -123,6 +123,13 @@ public:
     //! @functiongroup Accessing archive attributes
     //
     
+    //! Returns true iff item is a visible directory entry
+    /*! Some files, e.g., deleted ones, are still present on the directory sector, but
+        don't show up when loading the directory via LOAD "$",8.
+        If the extension parameter is provides, an extension string is returned (e.g. "PRG").
+        Invisible files will be returned with extension "" */
+    bool itemIsVisible(uint8_t typeChar, const char **extension = NULL);
+    
     //! @brief Returns the logical name of the archive in PET format
     const char *getNameAsPETString();
     
@@ -197,7 +204,7 @@ private:
     void writeBAM(const char *name);
 
     //! Returns the location of a specific directory item
-    int findDirectoryEntry(int itemNumber);
+    int findDirectoryEntry(int itemNumber, bool skipInvisibleFiles = true);
     
     //! Returns the track number of the first file block
     /*! Example usage: firstTrackOfFile(findDirectoryEntry(42)) */

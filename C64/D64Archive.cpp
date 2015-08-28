@@ -405,33 +405,47 @@ D64Archive::getNameOfItem(int n)
 const char *
 D64Archive::getTypeOfItem(int n)
 {
+    const char *extension = "";
     int pos = findDirectoryEntry(n);
-    if (pos < 0) return "";
     
-    switch (data[pos]) {
-        case 0x80: return "DEL";
-        case 0x81: return "SEQ";
-        case 0x82: return "PRG";
-        case 0x83: return "USR";
-        case 0x84: return "REL";
+    if (pos >= 0)
+        (void)itemIsVisible(data[pos] /* file type byte */, &extension);
+
+    return extension;
+}
+
+bool
+D64Archive::itemIsVisible(uint8_t typeChar, const char **extension)
+{
+    const char *result = NULL;
+    
+    switch (typeChar) {
+        case 0x80: result = "DEL"; break;
+        case 0x81: result = "SEQ"; break;
+        case 0x82: result = "PRG"; break;
+        case 0x83: result = "USR"; break;
+        case 0x84: result = "REL"; break;
             
-        case 0x01: return "*SEQ";
-        case 0x02: return "*PRG";
-        case 0x03: return "*USR";
-
-        case 0xA0: return "DEL";
-        case 0xA1: return "SEQ";
-        case 0xA2: return "PRG";
-        case 0xA3: return "USR";
-
-        case 0xC0: return "DEL <";
-        case 0xC1: return "SEQ <";
-        case 0xC2: return "PRG <";
-        case 0xC3: return "USR <";
-        case 0xC4: return "REL <";
+        case 0x01: result = "*SEQ"; break;
+        case 0x02: result = "*PRG"; break;
+        case 0x03: result = "*USR"; break;
+            
+        case 0xA0: result = "DEL"; break;
+        case 0xA1: result = "SEQ"; break;
+        case 0xA2: result = "PRG"; break;
+        case 0xA3: result = "USR"; break;
+            
+        case 0xC0: result = "DEL <"; break;
+        case 0xC1: result = "SEQ <"; break;
+        case 0xC2: result = "PRG <"; break;
+        case 0xC3: result = "USR <"; break;
+        case 0xC4: result = "REL <"; break;
     }
-    
-    return "(?)";
+
+    if (extension)
+        *extension = result ? result : "";
+
+    return result != NULL;
 }
 
 int
@@ -794,7 +808,7 @@ D64Archive::writeBAM(const char *name)
 }
 
 int
-D64Archive::findDirectoryEntry(int itemNr)
+D64Archive::findDirectoryEntry(int itemNr, bool skipInvisibleFiles)
 {
     int pos = offset(18, 1); // Directory starts on track 18 in sector 1
     bool last_sector = (data[pos] == 0x00); // does the directory continue in another sector?
@@ -808,6 +822,10 @@ D64Archive::findDirectoryEntry(int itemNr)
         if (memcmp(&data[pos], nullEntry, 32) == 0)
             break;
         
+        // Skip invisble files if requested
+        if (skipInvisibleFiles && !itemIsVisible(data[pos]))
+            itemNr++;
+            
 		// Return if we reached the item we're looking for
         if (i == itemNr)
             return pos;

@@ -175,6 +175,15 @@
 	[screen rotateBack];
 	[c64 reset];
 	[self continueAction:self];
+
+    // Increase view size (experimental) 
+    /*
+    NSLog(@"Trying to increase view size");
+    NSRect newRect = screen.frame;
+    newRect.origin.y -= 24;
+    newRect.size.height += 24;
+    screen.frame = newRect;
+    */
 }
 
 // --------------------------------------------------------------------------------
