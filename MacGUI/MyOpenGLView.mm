@@ -286,7 +286,17 @@ void checkForOpenGLErrors()
     drawInEntireWindow = b;
 }
 
-
+- (int)fingerprintForKey:(int)keycode withModifierFlags:(int)flags
+{
+    // The recorded fingerprint consists of the keycode and the NSNumericPadKeyMask (in order to treat
+    // keys on the numeric trackpad seperatly). Cursor keycodes (#123 - #126) are stored without the
+    // NSNumericPadKeyMask bit to be compatible with older releases that ignored this flag completely.
+    
+    if (keycode >= 123 && keycode <= 126)
+        flags &= ~NSNumericPadKeyMask;
+    
+    return keycode | (flags & NSNumericPadKeyMask);
+}
 
 - (int)joyKeycode:(int)nr direction:(JoystickDirection)dir
 {
@@ -894,7 +904,7 @@ void checkForOpenGLErrors()
     
     unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
     Joystick *joy = (nr == 1) ? c64->joystick1 : c64->joystick2;
-    
+
     if (k == joyKeycode[keyset][JOYSTICK_UP]) { joy->SetAxisY(JOYSTICK_AXIS_Y_UP); return YES; }
     if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); return YES; }
     if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { joy->SetAxisX(JOYSTICK_AXIS_X_LEFT); return YES; }
@@ -960,7 +970,7 @@ void checkForOpenGLErrors()
 	unsigned int   flags   = [event modifierFlags];
     int c64key;
     
-    // NSLog(@"keyDown: '%c' keycode: %ld flags: %ld", (char)c, (long)keycode, (long)flags);
+    // NSLog(@"keyDown: '%c' keycode: %02X flags: %08X", (char)c, keycode, flags);
     
     // Ignore keys that are already pressed
     if (pressedKeys[(unsigned char)keycode])
@@ -971,9 +981,10 @@ void checkForOpenGLErrors()
         return;
     
     // Simulate joysticks
-    if ([self pullJoystick:1 withKeycode:keycode device:[controller inputDeviceA]])
+    int fingerprint = [self fingerprintForKey:keycode withModifierFlags:flags];
+    if ([self pullJoystick:1 withKeycode:fingerprint device:[controller inputDeviceA]])
         return;
-    if ([self pullJoystick:2 withKeycode:keycode device:[controller inputDeviceB]])
+    if ([self pullJoystick:2 withKeycode:fingerprint device:[controller inputDeviceB]])
         return;
 
     // Remove alternate key modifier if present
@@ -993,15 +1004,17 @@ void checkForOpenGLErrors()
 - (void)keyUp:(NSEvent *)event
 {
     unsigned short keycode = [event keyCode];
+	unsigned int   flags   = [event modifierFlags];
     
-    // NSLog(@"keyUp: '%c' keycode: %ld flags: %ld", (char)c, (long)keycode);
+    // NSLog(@"keyUp: keycode: %02X flags: %08X", keycode, flags);
 
     // Simulate joysticks
-    if ([self releaseJoystick:1 withKeycode:keycode device:[controller inputDeviceA]])
+    int fingerprint = [self fingerprintForKey:keycode withModifierFlags:flags];
+    if ([self releaseJoystick:1 withKeycode:fingerprint device:[controller inputDeviceA]])
         return;
-    if ([self releaseJoystick:2 withKeycode:keycode device:[controller inputDeviceB]])
+    if ([self releaseJoystick:2 withKeycode:fingerprint device:[controller inputDeviceB]])
         return;
-
+    
     // Only proceed if the released key is on the records
     if (!pressedKeys[(unsigned char)keycode])
         return;

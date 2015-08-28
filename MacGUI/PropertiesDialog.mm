@@ -254,17 +254,28 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
     unsigned short keycode = [event keyCode];
     unsigned char  c       = [[event characters] UTF8String][0];
-    // unsigned char  c_unmod = [[event charactersIgnoringModifiers] UTF8String][0];
-
-    // First keyset
+    int            flags   = [event modifierFlags];
+    
+    /*
+    NSLog(@"Recording keycode: %04X (modifierFlags: %08X)\n", keycode, flags);
+    if (flags & NSAlphaShiftKeyMask) NSLog(@"NSAlphaShiftKeyMask ");
+    if (flags & NSShiftKeyMask) NSLog(@"NSShiftKeyMask ");
+    if (flags & NSControlKeyMask) NSLog(@"NSControlKeyMask ");
+    if (flags & NSAlternateKeyMask) NSLog(@"NSAlternateKeyMask ");
+    if (flags & NSCommandKeyMask) NSLog(@"NSCommandKeyMask ");
+    if (flags & NSNumericPadKeyMask) NSLog(@"NSNumericPadKeyMask ");
+    if (flags & NSHelpKeyMask) NSLog(@"NSHelpKeyMask ");
+    if (flags & NSFunctionKeyMask) NSLog(@"NSFunctionKeyMask ");
+    */
+    
+    int fingerprint = [[controller screen] fingerprintForKey:keycode withModifierFlags:flags];
     if (recordKey1 != -1) {
-        [[controller screen] setJoyKeycode:keycode keymap:1 direction:(JoystickDirection)recordKey1];
+        [[controller screen] setJoyKeycode:fingerprint keymap:1 direction:(JoystickDirection)recordKey1];
         [[controller screen] setJoyChar:c keymap:1 direction:(JoystickDirection)recordKey1];
     }
 
-    // Second keyset
     if (recordKey2 != -1) {
-        [[controller screen] setJoyKeycode:keycode keymap:2 direction:(JoystickDirection)recordKey2];
+        [[controller screen] setJoyKeycode:fingerprint keymap:2 direction:(JoystickDirection)recordKey2];
         [[controller screen] setJoyChar:c keymap:2 direction:(JoystickDirection)recordKey2];
     }
 
@@ -277,7 +288,7 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 - (void)flagsChanged:(NSEvent *)event
 {
     unsigned int flags = [event modifierFlags];
-    int keycode;
+    // int keycode;
     
     NSLog(@"PREFPANEL flagsChanged: %ld", (long)flags);
     
@@ -286,13 +297,17 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     
     // Check if one of the supported special keys has been pressed or released
     if (flags & NSAlternateKeyMask)
-        keycode = NSAlternateKeyMask;
+        // keycode = NSAlternateKeyMask;
+        flags = NSAlternateKeyMask;
     else if (flags & NSShiftKeyMask)
-        keycode = NSShiftKeyMask;
+        // keycode = NSShiftKeyMask;
+        flags = NSShiftKeyMask;
     else if (flags & NSCommandKeyMask)
-        keycode = NSCommandKeyMask;
+        // keycode = NSCommandKeyMask;
+        flags = NSCommandKeyMask;
     else if (flags & NSControlKeyMask)
-        keycode = NSControlKeyMask;
+        // keycode = NSControlKeyMask;
+        flags = NSControlKeyMask;
     else {
         // Special key released
         return;
@@ -300,13 +315,13 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     
     // First keyset
     if (recordKey1 != -1) {
-        [[controller screen] setJoyKeycode:keycode keymap:1 direction:(JoystickDirection)recordKey1];
+        [[controller screen] setJoyKeycode:flags keymap:1 direction:(JoystickDirection)recordKey1];
         [[controller screen] setJoyChar:' ' keymap:1 direction:(JoystickDirection)recordKey1];
     }
     
     // Second keyset
     if (recordKey2 != -1) {
-        [[controller screen] setJoyKeycode:keycode keymap:2 direction:(JoystickDirection)recordKey2];
+        [[controller screen] setJoyKeycode:flags keymap:2 direction:(JoystickDirection)recordKey2];
         [[controller screen] setJoyChar:' ' keymap:2 direction:(JoystickDirection)recordKey2];
     }
     

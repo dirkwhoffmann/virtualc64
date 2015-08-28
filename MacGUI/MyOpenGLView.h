@@ -74,12 +74,12 @@ const int BG_TEXTURE_DEPTH = 4;
 	float currentEyeY, targetEyeY, deltaEyeY;
 	float currentEyeZ, targetEyeZ, deltaEyeZ;
 	
-    /*! @brief Stores the keycode of each joystick emulation key.
-     *  @discussion The user can choose from 2 maps */
+    /*! Stores a fingerprint of each joystick emulation key.
+     *  The user can choose from 2 maps */
     int joyKeycode[2][5];
 
-    /*! @brief Stores a printabel character for each joystick emulation key.
-     *  @discussion These values are only used in the properties dialog for pretty printing the keycodes */
+    /*!  Stores a printabel character for each joystick emulation key.
+     *   These values are only used in the properties dialog for pretty printing the keycodes */
     char joyChar[2][5];
 
 	int frames;
@@ -146,6 +146,9 @@ const int BG_TEXTURE_DEPTH = 4;
 
 - (bool)drawInEntireWindow;
 - (void)setDrawInEntireWindow:(bool)b;
+
+//! Computes a fingerprint for the keycode/modifierFlags combination that uniquely identifies a key for joystick emulation
+- (int)fingerprintForKey:(int)keycode withModifierFlags:(int)flags;
 
 //! @brief Returns the keycode for a joystick emulation key
 - (int)joyKeycode:(int)nr direction:(JoystickDirection)dir;
