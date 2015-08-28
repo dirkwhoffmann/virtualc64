@@ -175,16 +175,19 @@
 	[screen rotateBack];
 	[c64 reset];
 	[self continueAction:self];
-
-    // Increase view size (experimental) 
-    /*
-    NSLog(@"Trying to increase view size");
-    NSRect newRect = screen.frame;
-    newRect.origin.y -= 24;
-    newRect.size.height += 24;
-    screen.frame = newRect;
-    */
 }
+
+- (IBAction)showStatusBarAction:(id)sender
+{
+    NSLog(@"toggleStatusBarAction");
+
+    NSUndoManager *undo = [self undoManager];
+    [[undo prepareWithInvocationTarget:self] showStatusBarAction:sender];
+    if (![undo isUndoing]) [undo setActionName:@"Show status bar"];
+    
+    [screen setDrawInEntireWindow:![screen drawInEntireWindow]];
+}
+
 
 // --------------------------------------------------------------------------------
 //                               Keyboard menu

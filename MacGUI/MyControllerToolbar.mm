@@ -47,15 +47,6 @@
 		return ![c64 isRunning] && [c64 isRunnable];
 	}
     
-#if 0
-    // VC1541
-    if ([theItem tag] == 20) {
-        if (![[c64 vc1541] hasDisk]) {
-            return NO;
-        }
-    }
-#endif
-    
     // All other items
     return YES;
 }

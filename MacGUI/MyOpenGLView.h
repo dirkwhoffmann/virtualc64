@@ -87,6 +87,9 @@ const int BG_TEXTURE_DEPTH = 4;
 	//! If false, OpenGL drawing is disabled (only used in performance debugging)
 	bool enableOpenGL;
 
+    //! If true, the OpenGL view covers the whole window area (used to hide the status bar)
+    bool drawInEntireWindow;
+
     //! If false, 3D drawing is switched off (2D drawing is used in fullscreen mode, only)
 	bool drawIn3D;
 
@@ -141,6 +144,9 @@ const int BG_TEXTURE_DEPTH = 4;
 - (float)eyeZ;
 - (void)setEyeZ:(float)newZ;
 
+- (bool)drawInEntireWindow;
+- (void)setDrawInEntireWindow:(bool)b;
+
 //! @brief Returns the keycode for a joystick emulation key
 - (int)joyKeycode:(int)nr direction:(JoystickDirection)dir;
 
@@ -152,12 +158,6 @@ const int BG_TEXTURE_DEPTH = 4;
 
 //! @brief Sets the printable character for a joystick emulation key
 - (void)setJoyChar:(char)c keymap:(int)nr direction:(JoystickDirection)dir;
-
-//! Set appropriate values for eyeX, eyeY and eyeZ for PAL machines
-// - (void)setPAL;
-
-//! Set appropriate values for eyeX, eyeY and eyeZ for NTSC machines
-// - (void)setNTSC;
 
 //! Trigger animation effect. Zooms in from far away
 - (void) zoom;

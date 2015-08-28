@@ -35,6 +35,7 @@
 
 #pragma mark edit menu
 - (IBAction)resetAction:(id)sender;
+- (IBAction)showStatusBarAction:(id)sender;
 
 - (IBAction)runstopAction:(id)sender;
 - (IBAction)runstopRestoreAction:(id)sender;

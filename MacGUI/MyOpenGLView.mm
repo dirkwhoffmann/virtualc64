@@ -99,7 +99,8 @@ void checkForOpenGLErrors()
 	// Core video and graphics stuff
 	displayLink = nil;
 	frames = 0;
-	enableOpenGL = true;  
+	enableOpenGL = true;
+    drawInEntireWindow = false;
     drawIn3D = true;
     
 	// Keyboard initialization
@@ -250,6 +251,42 @@ void checkForOpenGLErrors()
 {
     currentEyeZ = targetEyeZ = newZ;
 }
+
+- (bool)drawInEntireWindow
+{
+    return drawInEntireWindow;
+}
+
+- (void)setDrawInEntireWindow:(bool)b
+{
+    /*
+    NSRect newRect = [self frame];
+    NSLog(@"X: %f Y: %f W: %f H: %f\n", newRect.origin.x, newRect.origin.y, newRect.size.width, newRect.size.height);
+
+    NSRect wrect = [[controller window] frame];
+    NSLog(@"X: %f Y: %f W: %f H: %f\n", wrect.origin.x, wrect.origin.y, wrect.size.width, wrect.size.height);
+    */
+    
+    if (drawInEntireWindow == b)
+        return;
+    
+    NSRect r = self.frame;
+    
+    if (b) {
+        NSLog(@"Expanding OpenGL view");
+        r.origin.y -= 24;
+        r.size.height += 24;
+    } else {
+        NSLog(@"Shrinking OpenGL view");
+        r.origin.y += 24;
+        r.size.height -= 24;
+    }
+    
+    self.frame = r;
+    drawInEntireWindow = b;
+}
+
+
 
 - (int)joyKeycode:(int)nr direction:(JoystickDirection)dir
 {

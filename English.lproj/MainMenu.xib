@@ -883,15 +883,6 @@
 						<object class="NSMenu" key="NSSubmenu" id="562569797">
 							<string key="NSTitle">Window</string>
 							<array class="NSMutableArray" key="NSMenuItems">
-								<object class="NSMenuItem" id="452068395">
-									<reference key="NSMenu" ref="562569797"/>
-									<string key="NSTitle">Fullscreen</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="1024293694"/>
-									<reference key="NSMixedImage" ref="598777137"/>
-								</object>
 								<object class="NSMenuItem" id="830918185">
 									<reference key="NSMenu" ref="562569797"/>
 									<string key="NSTitle">Minimize</string>
@@ -931,6 +922,15 @@
 									<reference key="NSMixedImage" ref="598777137"/>
 								</object>
 								<object class="NSMenuItem" id="540988766">
+									<reference key="NSMenu" ref="562569797"/>
+									<string key="NSTitle">Hide/Show Status bar</string>
+									<string key="NSKeyEquiv">b</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1024293694"/>
+									<reference key="NSMixedImage" ref="598777137"/>
+								</object>
+								<object class="NSMenuItem" id="386363779">
 									<reference key="NSMenu" ref="562569797"/>
 									<string key="NSTitle">Debug Panel</string>
 									<string type="base64-UTF8" key="NSKeyEquiv">CQ</string>
@@ -1149,14 +1149,6 @@
 						<reference key="destination" ref="361877338"/>
 					</object>
 					<int key="connectionID">204</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">debugAction:</string>
-						<reference key="source" ref="958131061"/>
-						<reference key="destination" ref="540988766"/>
-					</object>
-					<int key="connectionID">232</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1568,6 +1560,22 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">debugAction:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="386363779"/>
+					</object>
+					<int key="connectionID">566</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showStatusBarAction:</string>
+						<reference key="source" ref="958131061"/>
+						<reference key="destination" ref="540988766"/>
+					</object>
+					<int key="connectionID">571</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">checkForUpdates:</string>
 						<reference key="source" ref="10529238"/>
 						<reference key="destination" ref="1001749454"/>
@@ -1635,7 +1643,7 @@
 							<reference ref="1047774866"/>
 							<reference ref="540988766"/>
 							<reference ref="450812155"/>
-							<reference ref="452068395"/>
+							<reference ref="386363779"/>
 						</array>
 						<reference key="parent" ref="451986905"/>
 					</object>
@@ -1672,11 +1680,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">233</int>
 						<reference key="object" ref="450812155"/>
-						<reference key="parent" ref="562569797"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">318</int>
-						<reference key="object" ref="452068395"/>
 						<reference key="parent" ref="562569797"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -2315,6 +2318,11 @@
 						<reference key="object" ref="206384287"/>
 						<reference key="parent" ref="732159526"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">564</int>
+						<reference key="object" ref="386363779"/>
+						<reference key="parent" ref="562569797"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2355,7 +2363,6 @@
 				<string key="305.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="306.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="317.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="318.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="328.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="341.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="349.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2418,6 +2425,7 @@
 				<string key="553.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="554.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="564.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2437,7 +2445,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">563</int>
+			<int key="maxID">571</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2596,6 +2604,7 @@
 						<string key="SIDFilterAction:">id</string>
 						<string key="SIDReSIDAction:">id</string>
 						<string key="SIDSamplingMethodAction:">id</string>
+						<string key="driveNoiseAction:">id</string>
 						<string key="ejectCartridgeAction:">id</string>
 						<string key="ejectDiskAction:">id</string>
 						<string key="factorySettingsAction:">id</string>
@@ -2620,6 +2629,10 @@
 						</object>
 						<object class="IBActionInfo" key="SIDSamplingMethodAction:">
 							<string key="name">SIDSamplingMethodAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="driveNoiseAction:">
+							<string key="name">driveNoiseAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="ejectCartridgeAction:">
@@ -2670,6 +2683,7 @@
 						<string key="diskIcon">NSImageView</string>
 						<string key="diskText">NSTextField</string>
 						<string key="diskText2">NSTextField</string>
+						<string key="driveNoise">NSButton</string>
 						<string key="flag">NSImageView</string>
 						<string key="machineType">NSPopUpButton</string>
 						<string key="systemText">NSTextField</string>
@@ -2735,6 +2749,10 @@
 							<string key="name">diskText2</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="driveNoise">
+							<string key="name">driveNoise</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="flag">
 							<string key="name">flag</string>
 							<string key="candidateClassName">NSImageView</string>
@@ -2776,6 +2794,7 @@
 						<string key="SIDFilterAction:">id</string>
 						<string key="SIDReSIDAction:">id</string>
 						<string key="SIDSamplingMethodAction:">id</string>
+						<string key="driveNoiseAction:">id</string>
 						<string key="ejectCartridgeAction:">id</string>
 						<string key="ejectDiskAction:">id</string>
 						<string key="factorySettingsAction:">id</string>
@@ -2800,6 +2819,10 @@
 						</object>
 						<object class="IBActionInfo" key="SIDSamplingMethodAction:">
 							<string key="name">SIDSamplingMethodAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="driveNoiseAction:">
+							<string key="name">driveNoiseAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="ejectCartridgeAction:">
@@ -2851,20 +2874,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MountDialog</string>
 					<string key="superclassName">NSWindow</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="loadOptionsAction:">id</string>
-						<string key="writeProtectAction:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="loadOptionsAction:">
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">loadOptionsAction:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">loadOptionsAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
 							<string key="name">loadOptionsAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="writeProtectAction:">
-							<string key="name">writeProtectAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="CancelButton">NSButton</string>
 						<string key="OKButton">NSButton</string>
@@ -2874,7 +2894,6 @@
 						<string key="headerText">NSTextField</string>
 						<string key="loadOptions">NSPopUpButton</string>
 						<string key="warningText">NSTextField</string>
-						<string key="writeProtect">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="CancelButton">
@@ -2909,10 +2928,6 @@
 							<string key="name">warningText</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="writeProtect">
-							<string key="name">writeProtect</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -2921,20 +2936,17 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MountDialog</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="loadOptionsAction:">id</string>
-						<string key="writeProtectAction:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="loadOptionsAction:">
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">loadOptionsAction:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">loadOptionsAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
 							<string key="name">loadOptionsAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="writeProtectAction:">
-							<string key="name">writeProtectAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../MacGUI/MountDialog.mm</string>
@@ -4886,6 +4898,7 @@
 						<string key="runstopAction:">id</string>
 						<string key="runstopRestoreAction:">id</string>
 						<string key="saveScreenshotDialog:">id</string>
+						<string key="showStatusBarAction:">id</string>
 						<string key="traceC64CpuAction:">id</string>
 						<string key="traceIecAction:">id</string>
 						<string key="traceVC1541CpuAction:">id</string>
@@ -5022,6 +5035,10 @@
 						</object>
 						<object class="IBActionInfo" key="saveScreenshotDialog:">
 							<string key="name">saveScreenshotDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showStatusBarAction:">
+							<string key="name">showStatusBarAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="traceC64CpuAction:">
@@ -5082,6 +5099,7 @@
 						<string key="runstopAction:">id</string>
 						<string key="runstopRestoreAction:">id</string>
 						<string key="saveScreenshotDialog:">id</string>
+						<string key="showStatusBarAction:">id</string>
 						<string key="traceC64CpuAction:">id</string>
 						<string key="traceIecAction:">id</string>
 						<string key="traceVC1541CpuAction:">id</string>
@@ -5220,6 +5238,10 @@
 							<string key="name">saveScreenshotDialog:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="showStatusBarAction:">
+							<string key="name">showStatusBarAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="traceC64CpuAction:">
 							<string key="name">traceC64CpuAction:</string>
 							<string key="candidateClassName">id</string>
@@ -5245,7 +5267,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MyController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="VC1541Action:">id</string>
 						<string key="cheatboxAction:">id</string>
 						<string key="cheatboxCloseAction:">id</string>
 						<string key="cheatboxOpenAction:">id</string>
@@ -5258,10 +5279,6 @@
 						<string key="propertiesAction:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="VC1541Action:">
-							<string key="name">VC1541Action:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="cheatboxAction:">
 							<string key="name">cheatboxAction:</string>
 							<string key="candidateClassName">id</string>
@@ -5311,7 +5328,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MyController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="VC1541Action:">id</string>
 						<string key="cheatboxAction:">id</string>
 						<string key="cheatboxCloseAction:">id</string>
 						<string key="cheatboxOpenAction:">id</string>
@@ -5325,10 +5341,6 @@
 						<string key="propertiesAction:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="VC1541Action:">
-							<string key="name">VC1541Action:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="cheatboxAction:">
 							<string key="name">cheatboxAction:</string>
 							<string key="candidateClassName">id</string>
