@@ -552,7 +552,7 @@
                 <outlet property="delegate" destination="-2" id="2165"/>
                 <outlet property="initialFirstResponder" destination="262" id="316"/>
             </connections>
-            <point key="canvasLocation" x="375" y="772.5"/>
+            <point key="canvasLocation" x="31" y="723.5"/>
         </window>
         <drawer preferredEdge="minX" leadingOffset="15" trailingOffset="15" id="35" userLabel="Debug Drawer">
             <size key="contentSize" width="300" height="473"/>
@@ -3771,7 +3771,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="mwF-Ny-JMD">
-                        <rect key="frame" x="511" y="151" width="18" height="14"/>
+                        <rect key="frame" x="511" y="145" width="18" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="X" id="MPe-K0-pip">
                             <font key="font" metaFont="smallSystem"/>
@@ -3889,7 +3889,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="gf4-hv-hZp">
-                        <rect key="frame" x="511" y="126" width="18" height="14"/>
+                        <rect key="frame" x="511" y="120" width="18" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="X" id="KEl-f4-c6F">
                             <font key="font" metaFont="smallSystem"/>
@@ -4168,7 +4168,7 @@ DQ
                 <outlet property="up2button" destination="2ek-Tr-UYe" id="PZS-IP-KUS"/>
                 <outlet property="videoFilter" destination="2239" id="2345"/>
             </connections>
-            <point key="canvasLocation" x="684.5" y="-206"/>
+            <point key="canvasLocation" x="77.5" y="-170"/>
         </window>
         <view id="1028">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
