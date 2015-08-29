@@ -279,7 +279,15 @@ enum INPUT_DEVICES {
 
 	// Speedometer to measure clock frequence and frames per second
 	Speedometer *speedometer;    
+
+    //! Stores how fast the emulator is currently running
+    double mhz;
+    
+    //! Stores how many frames per second are currently drawn
+    double fps;
+
 }
+
 
 @property (strong) C64Proxy *c64;
 @property (strong,readonly) MyOpenGLView *screen;

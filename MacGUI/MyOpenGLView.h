@@ -85,6 +85,7 @@ const int BG_TEXTURE_DEPTH = 4;
      *   These values are only used in the properties dialog for pretty printing the keycodes */
     char joyChar[2][5];
 
+    //! Counts the number of frames drawn
 	int frames;
 
 	//! If false, OpenGL drawing is disabled (only used in performance debugging)

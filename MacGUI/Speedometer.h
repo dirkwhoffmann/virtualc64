@@ -1,5 +1,5 @@
 /*
- * (C) 2011 Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann, 2011 - 2015
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,7 @@
     /*! Updated in updateWithCurrentCycle */
 	double fps;
 
-    //! Current jitter in clock cycles
-    /*! Experimental */
+    //! Current clock cycle jitter
     unsigned jitter;
 
     //! Stores when updateWithCurrentCycle was called the last time

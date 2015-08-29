@@ -523,6 +523,7 @@
 - (bool) warpLoad;
 - (void) setWarpLoad:(bool)b;
 - (long) cycles;
+- (long) frames;
 
 // Cheatbox
 - (int) historicSnapshots;

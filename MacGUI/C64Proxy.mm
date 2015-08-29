@@ -649,6 +649,7 @@
 - (void) setWarpLoad:(bool)b { c64->setWarpLoad(b); }
 
 - (long) cycles { return (long)c64->getCycles(); }
+- (long) frames { return (long)c64->getFrame(); }
 
 // Cheatbox
 - (int) historicSnapshots { return c64->numHistoricSnapshots(); }

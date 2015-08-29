@@ -94,35 +94,10 @@
 										   selector:@selector(timerFunc) 
 										   userInfo:nil repeats:YES];
 	speedometer = [[Speedometer alloc] init];
-		
-#if 0
-    // Create audio player
-    NSLog(@"Creating audio player");
-    NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
-    resourcePath = [resourcePath stringByAppendingString:@"/1541_spin-up_1.aiff"];
-    NSLog(@"Path to play: %@", resourcePath);
-    NSError* err;
-    
-    //Initialize our player pointing to the path to our resource
-    AVAudioPlayer *player;
-    player = [[AVAudioPlayer alloc] initWithContentsOfURL:
-              [NSURL fileURLWithPath:resourcePath] error:&err];
-    
-    if( err){
-        NSLog(@"Failed with reason: %@", [err localizedDescription]);
-    }
-    else{
-        //set our delegate and begin playback
-        // player.delegate = self;
-        NSLog(@"Playing...");
-        [player play];
-        // player.numberOfLoops = -1;
-        // player.currentTime = 0;
-        // player.volume = 1.0;
-    }
-#endif 
-    
-	NSLog(@"GUI is initialized, timer is running");	
+    fps = PAL_REFRESH_RATE;
+    mhz = CPU::CLOCK_FREQUENCY_PAL / 100000;
+
+	NSLog(@"GUI is initialized, timer is running");
 }
 
 - (void)windowDidLoad
@@ -432,10 +407,10 @@
 	}
 	
 	// Do less times ... 
-	if ((animationCounter & 0x01) == 0) {	
-		[speedometer updateWithCurrentCycle:[c64 cycles] currentFrame:[screen frames] expectedSpeed:0.0];
-        double mhz = round([speedometer mhz] * 100.0) / 100.0;
-        double fps = round([speedometer fps]);
+	if ((animationCounter & 0x11) == 0) {
+		[speedometer updateWithCurrentCycle:[c64 cycles] currentFrame:[c64 frames] expectedSpeed:0.0];
+        mhz = 0.5 * mhz + 0.5 * (round([speedometer mhz] * 100.0) / 100.0);
+        fps = 0.5 * fps + 0.5 * round([speedometer fps]);
 		[clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %.0f fps", mhz, fps]];
 		[clockSpeedBar setFloatValue:10.0 * [speedometer mhz]];
 	}
