@@ -23,39 +23,42 @@
 
 @synthesize mhz;
 @synthesize fps;
+@synthesize jitter;
 
 - (id)init
 {
 	self = [super init];
     if (self) {	
-		cycles = 0L;
-		frames = 0L;
-		timestamp = msec();
+		latched_cycle = 0L;
+		latched_frame = 0L;
+		latched_timestamp = msec();
 	}
 	return self;
 }
 
-- (void)updateWithCurrentCycle:(long)currentCycles currentFrame:(long)currentFrames
+- (void)updateWithCurrentCycle:(long)cycle currentFrame:(long)frame expectedSpeed:(double)expectedMhz;
+
 {
-	long currentTimestamp = msec();
-	float elapsedTime = (float)(currentTimestamp - timestamp);
+    // Measure elapsed time in milliseconds
+    long timestamp = msec();
+    double elapsedTime = (double)(timestamp - latched_timestamp);
 	
 	// Measure clock frequency
-	float elapsedCycles = (float)(currentCycles - cycles);
+	double elapsedCycles = (double)(cycle- latched_cycle);
 	mhz = elapsedCycles / elapsedTime;
 
 	// Measure frames per second
-	float elapsedFrames = (float)(currentFrames - frames);
+	double elapsedFrames = (double)(frame - latched_frame);
 	fps = elapsedFrames * 1000000.0 / elapsedTime;
 	
 	// Check values
 	if (mhz < 0.0) mhz = 0.0;
-	if (frames < 0.0) frames = 0.0;
+	if (fps < 0.0) fps = 0.0;
 	
 	// Keep values 
-	timestamp = currentTimestamp;
-	cycles = currentCycles;
-	frames = currentFrames;		
+	latched_timestamp = timestamp;
+	latched_cycle = cycle;
+	latched_frame = frame;
 }
 
 @end

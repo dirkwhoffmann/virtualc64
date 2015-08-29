@@ -206,10 +206,18 @@ void checkForOpenGLErrors()
 			NSLog(@"CVDisplayLinkStart failed with return code %d", success);
 		        CVDisplayLinkRelease(displayLink);
 			exit(0);				
-		}	
-
-		// NSLog(@"Display link activated successfully");
-	}
+		}
+        
+        // Determine refresh rate (currently unused)
+        CVTime nominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
+        if (nominal.flags & kCVTimeIsIndefinite) {
+            NSLog(@"CVDisplayLink: Cannot determine your machines video refresh rate");
+            refreshRate = 0.0;
+        } else {
+            refreshRate = (double)nominal.timeScale / (double)nominal.timeValue;
+            NSLog(@"CVDisplayLink: OpenGL will refresh with a rate of %.2f Hz", refreshRate);
+        }
+    }
 }
 
 // --------------------------------------------------------------------------------
@@ -595,6 +603,8 @@ void checkForOpenGLErrors()
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
 {
+    static float cnt = 0;
+    
 	@autoreleasepool {
 	
         // Update angles for screen animation
@@ -602,7 +612,14 @@ void checkForOpenGLErrors()
 		
         // Draw scene
         [self drawRect:NSZeroRect];
-    
+        
+        // Let the virtual C64 compute the next frame
+        cnt += 50.0 / refreshRate;
+        if (cnt >= 1.0) {
+            [c64proxy c64]->nextFrame();
+            cnt--;
+        }
+        
 		return kCVReturnSuccess;
 	}
 }

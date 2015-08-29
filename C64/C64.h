@@ -220,12 +220,34 @@ private:
 	//! The execution thread
 	pthread_t p;
     
+    //! Two mutexes for sychronize thread timing
+    pthread_mutex_t lock1 = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_t lock2 = PTHREAD_MUTEX_INITIALIZER;
+    
 	//! Snapshot history ring buffer (for cheatbox)
 	Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE]; 
     
 	//! ring buffer write pointer
 	unsigned backInTimeWritePtr;
     
+public:
+    //! Lets the C64 thread to the end of the current frame
+    void nextFrame() {
+        static unsigned toggle = 0;
+        
+        if (toggle) {
+            pthread_mutex_unlock(&lock1);
+            pthread_mutex_lock(&lock2);
+            toggle = 0;
+        } else {
+            pthread_mutex_unlock(&lock2);
+            pthread_mutex_lock(&lock1);
+            toggle = 1;
+        }
+        
+        // pthread_mutex_unlock(frame % 2 ? &lock2 : &lock1);
+        // pthread_mutex_lock(frame % 2 ? &lock1 : &lock2);
+    }
     
     // -----------------------------------------------------------------------------------------------
     //                                          Properties

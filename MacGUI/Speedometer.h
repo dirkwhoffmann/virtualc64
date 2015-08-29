@@ -21,33 +21,40 @@
 
 @interface Speedometer : NSObject {
 
-	
-	// MOVE msec() FROM BASIC.H INTO THIS CLASS
-	
-	//! Current emulation speed
-	/*! Call update before reading value */
-	float mhz;
+	//! Current emulation speed in Mhz
+    /*! Updated in updateWithCurrentCycle */
+	double mhz;
 
-	//! Current drawing speed
-	/*! Call update before reading value */
-	float fps;
+	//! Current drawing speed in frames per second
+    /*! Updated in updateWithCurrentCycle */
+	double fps;
+
+    //! Current jitter in clock cycles
+    /*! Experimental */
+    unsigned jitter;
+
+    //! Stores when updateWithCurrentCycle was called the last time
+    long latched_timestamp;
+
+    //! Cycle count in previous call to updateWithCurrentCycle
+	long latched_cycle;
 	
-	//! Previous cycle count
-	/*! Needed to calculate current clock frequency */
-	long cycles;
+	//! Previous frame count in previous call to updateWithCurrentCycle
+	long latched_frame;
 	
-	//! Previous frame count
-	/*! Needed to determine frames per second */
-	long frames;
-	
-	//! Remembers when the update method was called 
-	/*! Needed to determine current clock frequency and frames per second */
-	long timestamp;
 }
 
-@property (readonly) float mhz;
-@property (readonly) float fps;
+@property (readonly) double mhz;
+@property (readonly) double fps;
+@property (readonly) unsigned jitter;
 
-- (void)updateWithCurrentCycle:(long)cycles currentFrame:(long)frames;
+/*!
+ @abstract   Updates speed, frame and jitter information.
+ @discussion This function needs to be invoked before reading mhz, fps or jitter.
+ @param      cycles Current cycle count (processed cycles since emulator power up).
+ @param      frame Current frame (processed frames since emulator power up).
+ @param      expectedMhz Proposed emulator speed (50 Hz for PAL, 60 Hz for NTSC).
+*/
+- (void)updateWithCurrentCycle:(long)cycles currentFrame:(long)frame expectedSpeed:(double)expectedMhz;
 
 @end

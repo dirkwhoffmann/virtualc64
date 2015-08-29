@@ -538,10 +538,18 @@ C64::endOfRasterline()
 		// Pass control to the virtual IEC bus
 		iec->execute();
 			
-		// Sleep... 
-		if (!getWarp()) 
+		// Sleep... (OLD CODE) This is more precise ...
+        if (!getWarp())
 			synchronizeTiming();
-	}
+        
+        // Sleep ... (NEW CODE) less precise at the moment ...
+#if 0
+        if (!getWarp()) {
+            pthread_mutex_lock(frame % 2 ? &lock1 : &lock2);
+            pthread_mutex_unlock(frame % 2 ? &lock1 : &lock2);
+        }
+#endif
+    }
 }
 
 // DIRK, TEMPORARY DEBUGGING

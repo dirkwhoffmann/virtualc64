@@ -67,6 +67,9 @@ const int BG_TEXTURE_DEPTH = 4;
 	CVDisplayLinkRef displayLink;
 	NSRecursiveLock *lock;
 
+    //! Refresh rate of the connected display
+    double refreshRate;
+
 	float currentXAngle, targetXAngle, deltaXAngle;
 	float currentYAngle, targetYAngle, deltaYAngle;
 	float currentZAngle, targetZAngle, deltaZAngle;

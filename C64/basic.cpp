@@ -236,21 +236,13 @@ checkFileHeader(const char *filename, int *header)
 	return result;
 }
 
+//! Returns elepased time since application start in microseconds
 uint64_t 
 msec()
 {
 	struct timeval t;
 	gettimeofday(&t,NULL);	
 	return (uint64_t)1000000*(uint64_t)(t.tv_sec - tv_base) + (uint64_t)t.tv_usec;
-}
-
-uint8_t 
-localTimeSecFrac()
-{
-	uint64_t millisec = msec();
-	millisec = millisec / 100; // 1/10th seconds
-	millisec = millisec % 10;
-	return millisec;
 }
 
 uint8_t 
