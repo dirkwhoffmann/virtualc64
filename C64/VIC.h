@@ -476,7 +476,7 @@ public:
     void setColor(int nr, int rgba) { assert(nr < 16); pixelEngine.colors[nr] = rgba; }
 
     // Returns the number of frames per second
-    inline int getFramesPerSecond() { if (isPAL()) return PAL_REFRESH_RATE; else return NTSC_REFRESH_RATE; }
+    inline unsigned getFramesPerSecond() { if (isPAL()) return (unsigned)PAL_REFRESH_RATE; else return(unsigned)NTSC_REFRESH_RATE; }
     
     //! Returns the number of rasterlines per frame
     inline int getRasterlinesPerFrame() { if (isPAL()) return PAL_HEIGHT; else return NTSC_HEIGHT; }
@@ -487,8 +487,8 @@ public:
     //! Returns the number of CPU cycles performed per frame
     inline int getCyclesPerFrame() { if (isPAL()) return PAL_HEIGHT * PAL_CYCLES_PER_RASTERLINE; else return NTSC_HEIGHT * NTSC_CYCLES_PER_RASTERLINE; }
     
-    //! Returns the time interval between two frames
-    inline int getFrameDelay() { if (isPAL()) return 1000000 / PAL_REFRESH_RATE; else return 1000000 / NTSC_REFRESH_RATE; }
+    //! Returns the time interval between two frames in nanoseconds
+    inline uint64_t getFrameDelay() { return (uint64_t)(1000000000.0 / (isPAL() ? PAL_REFRESH_RATE : NTSC_REFRESH_RATE)); }
 
     
 	// -----------------------------------------------------------------------------------------------

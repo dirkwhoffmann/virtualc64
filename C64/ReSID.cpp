@@ -185,8 +185,6 @@ ReSID::execute(int elapsedCycles)
     int delta_t = elapsedCycles;
     int bufindex = 0;
     
-    //if (isHalted()) return true;
-    
     // TODO: SPEEDUP: Write directly into ringbuffer
     while (delta_t) {
         bufindex += sid->clock(delta_t, buf + bufindex, buflength - bufindex);

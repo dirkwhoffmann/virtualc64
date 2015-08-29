@@ -31,7 +31,7 @@
     if (self) {	
 		latched_cycle = 0L;
 		latched_frame = 0L;
-		latched_timestamp = msec();
+		latched_timestamp = usec();
 	}
 	return self;
 }
@@ -39,8 +39,8 @@
 - (void)updateWithCurrentCycle:(long)cycle currentFrame:(long)frame expectedSpeed:(double)expectedMhz;
 
 {
-    // Measure elapsed time in milliseconds
-    long timestamp = msec();
+    // Measure elapsed time in microseconds
+    long timestamp = usec();
     double elapsedTime = (double)(timestamp - latched_timestamp);
 	
 	// Measure clock frequency

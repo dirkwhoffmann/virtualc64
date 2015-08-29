@@ -214,40 +214,35 @@ public:
 	VC1541 *floppy;
 		
 
-		
+    // SOME DEBUG STUFF
+    
+    //! Remove after debugging
+    uint64_t threadStartTime;
+	
+    uint64_t firstFrameEnded;
+    uint64_t firstFrameEndedAtCycle;
+    uint64_t previousFrameEnded;
+    uint64_t previousFrameEndedAtCycle;
+    
 private:
 
 	//! The execution thread
 	pthread_t p;
     
-    //! Two mutexes for sychronize thread timing
-    pthread_mutex_t lock1 = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_t lock2 = PTHREAD_MUTEX_INITIALIZER;
+    //! System timer information (needed for running the execution thread at the desired speed)
+    mach_timebase_info_data_t timebase;
     
+    //! Converts kernel time to nanoseconds
+    uint64_t abs_to_nanos(uint64_t abs) { return abs * timebase.numer / timebase.denom; }
+
+    //! Converts nanoseconds to kernel time
+    uint64_t nanos_to_abs(uint64_t nanos) { return nanos * timebase.denom / timebase.numer; }
+   
 	//! Snapshot history ring buffer (for cheatbox)
 	Snapshot *backInTimeHistory[BACK_IN_TIME_BUFFER_SIZE]; 
     
 	//! ring buffer write pointer
 	unsigned backInTimeWritePtr;
-    
-public:
-    //! Lets the C64 thread to the end of the current frame
-    void nextFrame() {
-        static unsigned toggle = 0;
-        
-        if (toggle) {
-            pthread_mutex_unlock(&lock1);
-            pthread_mutex_lock(&lock2);
-            toggle = 0;
-        } else {
-            pthread_mutex_unlock(&lock2);
-            pthread_mutex_lock(&lock1);
-            toggle = 1;
-        }
-        
-        // pthread_mutex_unlock(frame % 2 ? &lock2 : &lock1);
-        // pthread_mutex_lock(frame % 2 ? &lock1 : &lock2);
-    }
     
     // -----------------------------------------------------------------------------------------------
     //                                          Properties
@@ -276,10 +271,12 @@ public:
 	//! Current rasterline number
 	uint16_t rasterline;
 	
-	//! Target time
-	/*! Used to synchronize emulation speed */
-	uint64_t targetTime; 
-		
+private:
+    
+	//! Target time in nanoseconds
+	/*! Used to synchronize emulation speed. */
+	uint64_t nanoTargetTime;
+
     
 	// -----------------------------------------------------------------------------------------------
 	//                                             Methods

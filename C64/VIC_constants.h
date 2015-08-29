@@ -24,7 +24,7 @@
 // -----------------------------------------------------------------------------------------------
 
 //! Frames per second
-static const uint16_t NTSC_REFRESH_RATE = 60;
+static const double NTSC_REFRESH_RATE = 59.826;
 
 //! CPU cycles per rasterline
 static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
@@ -93,7 +93,7 @@ static const uint16_t NTSC_VISIBLE_RASTERLINES = 235;
 // -----------------------------------------------------------------------------------------------
 
 //! Frames per second
-static const uint16_t PAL_REFRESH_RATE = 50;
+static const double PAL_REFRESH_RATE = 50.125;
 
 //! CPU cycles per rasterline
 static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;

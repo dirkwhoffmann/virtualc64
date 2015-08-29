@@ -238,7 +238,7 @@ checkFileHeader(const char *filename, int *header)
 
 //! Returns elepased time since application start in microseconds
 uint64_t 
-msec()
+usec()
 {
 	struct timeval t;
 	gettimeofday(&t,NULL);	
@@ -271,9 +271,27 @@ localTimeHour()
 
 	
 void 
-sleepMicrosec(uint64_t microsec)
+sleepMicrosec(uint64_t usec)
 {		
-	if (microsec > 0 && microsec < 1000000) {
-		usleep((long)microsec);
+	if (usec > 0 && usec < 1000000) {
+		usleep((long)usec);
 	}
+}
+
+int64_t
+sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup)
+{
+    int64_t jitter;
+    
+    // Sleep
+    mach_wait_until(kernelTargetTime - kernelEarlyWakeup);
+    
+    // Count some sheep to increase precision
+    unsigned sheep = 0;
+    do {
+        jitter = mach_absolute_time() - kernelTargetTime;
+        sheep++;
+    } while (jitter < 0);
+    
+    return jitter;
 }

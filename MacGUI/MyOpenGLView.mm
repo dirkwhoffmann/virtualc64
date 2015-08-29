@@ -603,8 +603,6 @@ void checkForOpenGLErrors()
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
 {
-    static float cnt = 0;
-    
 	@autoreleasepool {
 	
         // Update angles for screen animation
@@ -612,14 +610,7 @@ void checkForOpenGLErrors()
 		
         // Draw scene
         [self drawRect:NSZeroRect];
-        
-        // Let the virtual C64 compute the next frame
-        cnt += 50.0 / refreshRate;
-        if (cnt >= 1.0) {
-            [c64proxy c64]->nextFrame();
-            cnt--;
-        }
-        
+                
 		return kCVReturnSuccess;
 	}
 }

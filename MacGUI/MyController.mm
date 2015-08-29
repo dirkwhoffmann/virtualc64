@@ -439,7 +439,7 @@
 		[clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %.0f fps", mhz, fps]];
 		[clockSpeedBar setFloatValue:10.0 * [speedometer mhz]];
 	}
-	
+    
 	[timerLock unlock];
 }
 

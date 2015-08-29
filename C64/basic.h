@@ -29,6 +29,8 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <mach/mach.h>
+#include <mach/mach_time.h>
 #include <unistd.h>
 #include <pthread.h>
 #include <errno.h>
@@ -186,20 +188,34 @@ checkFileHeader(const char *filename, int *header);
 /*! The value is read by function \a msec for computing the elapsed number of microseconds. */
 extern long tv_base;
 
-//! Return the number of elapsed milliseconds since program launch
-uint64_t msec();
-//! Read real-time clock (1/10th seconds)
+//! Return the number of elapsed microseconds since program launch
+uint64_t usec();
+
+//! Reads the real-time clock (1/10th seconds)
 uint8_t localTimeSecFrac();
-//! Read real-time clock (seconds)
+
+//! Reads the real-time clock (seconds)
 uint8_t localTimeSec();
-//! Read real-time clock (minutes)
+
+//! Reads the real-time clock (minutes)
 uint8_t localTimeMin();
-//! Read real-time clock (hours)
+
+//! Reads the real-time clock (hours)
 uint8_t localTimeHour();
 
 //! Sleep for some microseconds
-void sleepMicrosec(uint64_t millisec);
+//  DEPRECATED. USE SleepUntil INSTEAD
+void sleepMicrosec(uint64_t usec);
 
+/*! @brief  Sleeps until kernel timer reaches kernelTargetTime
+ *  @param  kernelEarlyWakeup To increase timing precision, the function wakes up the thread earlier
+ *          by this amount and waits actively in a delay loop until the deadline is reached.
+ *  @result Overshoot time (jitter), measured in kernel time. Smaller values are better, 0 is best. 
+ */
+int64_t sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup = 0);
+
+
+//
 //
 //! @functiongroup Debugging
 //

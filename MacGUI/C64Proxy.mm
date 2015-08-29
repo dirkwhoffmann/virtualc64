@@ -314,6 +314,7 @@
 - (void)typeText:(NSString *)text
 {
     const unsigned MAXCHARS = 64;
+    const unsigned KEYDELAY = 27500;
     unsigned i;
     
     fprintf(stderr,"Typing: ");
@@ -329,18 +330,18 @@
         fprintf(stderr,"%c",c);
         
         [self pressKey:c];
-        usleep(25000);
+        usleep(KEYDELAY);
         [self releaseKey:c];
-        usleep(25000);
+        usleep(KEYDELAY);
     }
     
     if (i != [text length]) {
         // Abbreviate text by three dots
         for (i = 0; i < 3; i++) {
             [self pressKey:'.'];
-            usleep(25000);
+            usleep(KEYDELAY);
             [self releaseKey:'.'];
-            usleep(25000);
+            usleep(KEYDELAY);
         }
     }
 

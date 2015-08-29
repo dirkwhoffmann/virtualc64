@@ -46,7 +46,9 @@ void
 	c64->debug(1, "Execution thread started\n");
 	c64->putMessage(MSG_RUN);
 	
-	// Configure thread properties...
+    c64->threadStartTime = usec();
+
+    // Configure thread properties...
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 	pthread_cleanup_push(threadCleanup, thisC64);
@@ -55,7 +57,7 @@ void
 	c64->cpu->clearErrorState();
 	c64->floppy->cpu->clearErrorState();
 	c64->restartTimer();
-	
+    
 	while (1) {		
 		if (!c64->executeOneLine())
 			break;		
@@ -105,6 +107,9 @@ C64::C64()
     setPAL();
     reset(this);
 			
+    // Initialie mach timer info
+    mach_timebase_info(&timebase);
+
 	// Initialize snapshot ringbuffer (BackInTime feature)
 	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
 		backInTimeHistory[i] = new Snapshot();	
@@ -157,7 +162,7 @@ void C64::reset(C64 *c64)
 	frame = 0;
 	rasterline = 0;
 	rasterlineCycle = 1;
-	targetTime = 0UL;
+    nanoTargetTime = 0UL;
     
     ping();
     
@@ -273,14 +278,6 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
 
 	uint8_t *ptr = snapshot->getData();
 	loadFromBuffer(&ptr);
-	
-    /*
-	if (snapshot->isPAL()) {
-		setPAL();
-	} else {
-		setNTSC();
-	}
-    */
 }
 
 uint32_t
@@ -320,7 +317,7 @@ C64::loadFromBuffer(uint8_t **buffer)
 	frame = (int)read32(buffer);
 	rasterline = (int)read16(buffer);
 	rasterlineCycle = (int)read32(buffer);
-	targetTime = read64(buffer);
+    nanoTargetTime = read64(buffer);
 	
 	// Load state of sub components
 	cpu->loadFromBuffer(buffer);
@@ -372,7 +369,7 @@ C64::saveToBuffer(uint8_t **buffer)
 	write32(buffer, (uint32_t)frame);
 	write16(buffer, rasterline);
 	write32(buffer, (uint32_t)rasterlineCycle);
-	write64(buffer, targetTime);
+	write64(buffer, nanoTargetTime);
 	
 	// Save state of sub components
 	cpu->saveToBuffer(buffer);
@@ -513,9 +510,7 @@ C64::endOfRasterline()
 	rasterline++;
 
 	if (rasterline >= vic->getRasterlinesPerFrame()) {
-		
-		// fprintf(stderr, "Last rasterline = %d\n", rasterline);
-		
+        
 		// Last rasterline of frame
 		rasterline = 0;			
 		vic->endFrame();
@@ -533,27 +528,17 @@ C64::endOfRasterline()
 		}
 		
 		// Pass control to the virtual sound chip
+        // TODO: Should we do this before waiting?
 		sid->execute(vic->getCyclesPerFrame());
 			
 		// Pass control to the virtual IEC bus
 		iec->execute();
-			
-		// Sleep... (OLD CODE) This is more precise ...
+
+        // Count some sheep ...
         if (!getWarp())
-			synchronizeTiming();
-        
-        // Sleep ... (NEW CODE) less precise at the moment ...
-#if 0
-        if (!getWarp()) {
-            pthread_mutex_lock(frame % 2 ? &lock1 : &lock2);
-            pthread_mutex_unlock(frame % 2 ? &lock1 : &lock2);
-        }
-#endif
+            synchronizeTiming();
     }
 }
-
-// DIRK, TEMPORARY DEBUGGING
-extern unsigned dirktrace;
 
 inline bool
 C64::executeOneCycle()
@@ -948,25 +933,47 @@ C64::getHistoricSnapshot(int nr)
 
 void 
 C64::restartTimer() 
-{ 
-	targetTime = msec() + (uint64_t)vic->getFrameDelay();
+{
+    uint64_t kernelNow = mach_absolute_time();
+    uint64_t nanoNow = abs_to_nanos(kernelNow);
+    
+    nanoTargetTime = nanoNow + vic->getFrameDelay();
 }
 
 void 
 C64::synchronizeTiming()
 {
-	// determine how long we should wait
-	uint64_t timeToSleep = targetTime - msec();
-	
-	// update target time
-	targetTime += (uint64_t)vic->getFrameDelay();
-	
-	// sleep
+    const uint64_t earlyWakeup = 1500000; /* 1.5 milliseconds */
+    const uint64_t maxJitter = 1000000000; /* 1 second */
+
+    // Convert usec into kernel unit and sleep
+    uint64_t kernelTargetTime = nanos_to_abs(nanoTargetTime);
+    int64_t jitter = sleepUntil(kernelTargetTime, earlyWakeup);
+
+    // Update target time
+    nanoTargetTime += vic->getFrameDelay();
+
+    // debug(2, "Jitter = %d", jitter);
+    if (jitter > maxJitter) {
+        
+        // The emulator did not keep up with the real time clock. Instead of
+        // running behind for a long time, we reset the synchronization timer
+        
+        debug(2, "Jitter exceeds limit. Restarting synchronization timer.\n"); 
+        restartTimer();
+    }
+
+#if 0
+    // Old sleep
+    // determine how long we should wait
+    uint64_t timeToSleep = targetTime - usec();
+    targetTime += vic->getFrameDelay() / 1000; // OLD
 	if (timeToSleep > 0) {
 		sleepMicrosec(timeToSleep);
 	} else {
 		restartTimer();
 	}
+#endif
 }
 
 // ---------------------------------------------------------------------------------------------
