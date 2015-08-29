@@ -17,7 +17,7 @@
  */
 
 #include "SIDWrapper.h"
-#include "CPU.h"
+#include "VIC_constants.h"
 
 SIDWrapper::SIDWrapper()
 {
@@ -101,13 +101,17 @@ SIDWrapper::dumpState()
 void
 SIDWrapper::setPAL()
 {
-    setClockFrequency(CPU::CLOCK_FREQUENCY_PAL);
+    debug(2, "Switching SID to PAL frequency");
+    // setClockFrequency(CPU::CLOCK_FREQUENCY_PAL);
+    setClockFrequency(PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE);
 }
 
 void
 SIDWrapper::setNTSC()
 {
-    setClockFrequency(CPU::CLOCK_FREQUENCY_NTSC);    
+    debug(2, "Switching SID to NTSC frequency");
+    // setClockFrequency(CPU::CLOCK_FREQUENCY_NTSC);
+    setClockFrequency(NTSC_CYCLES_PER_FRAME * NTSC_REFRESH_RATE);
 }
 
 uint8_t 

@@ -37,7 +37,7 @@ ReSID::ReSID()
     	
     // Default sample parameters
 	sampleRate = 44100;
-    cpuFrequency = CPU::CLOCK_FREQUENCY_PAL; 
+    cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE; // CPU::CLOCK_FREQUENCY_PAL;
     samplingMethod = SAMPLE_FAST;
     sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
 					
@@ -232,14 +232,21 @@ ReSID::handleBufferException()
 
 float 
 ReSID::readData()
-{	
+{
 	float value;
     
+    /*
+    static unsigned debugcnt = 0;
+    if (debugcnt++ % 100 == 0)
+        printf("ReSID::readData Ringbuffer: 0 | ... | r:%ld | ... | w->%ld | ... | %d\n",
+               readBuffer - ringBuffer, writeBuffer - ringBuffer, bufferSize);
+    
     if (readBuffer == writeBuffer) {
-        // fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%d)\n", readBuffer - ringBuffer);
+        fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%ld)\n", readBuffer - ringBuffer);
         handleBufferException();
     }
-
+    */
+    
     value = *readBuffer;
     
     if (readBuffer == endBuffer)
@@ -253,11 +260,18 @@ ReSID::readData()
 void 
 ReSID::writeData(float data)
 {
+    /*
+    static unsigned debugcnt = 0;
+    if (debugcnt++ % 100 == 0)
+        printf("ReSID::readData Ringbuffer: 0 | ... | r:%ld | ... | w->%ld | ... | %d\n",
+               readBuffer - ringBuffer, writeBuffer - ringBuffer, bufferSize);
+
     if (readBuffer == writeBuffer) {
-        // fprintf(stderr, "SID RINGBUFFER OVERFLOW (%d)\n", writeBuffer - ringBuffer);
+        fprintf(stderr, "SID RINGBUFFER OVERFLOW (%ld)\n", writeBuffer - ringBuffer);
         handleBufferException();
     }
-
+    */
+    
     *writeBuffer = data;
     
     if (writeBuffer == endBuffer)

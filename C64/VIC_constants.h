@@ -29,9 +29,11 @@ static const double NTSC_REFRESH_RATE = 59.826;
 //! CPU cycles per rasterline
 static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
 
+//! CPU cycles per frame
+static const unsigned NTSC_CYCLES_PER_FRAME = 17095;
+
 //! Pixel aspect ratio
 static const uint16_t NTSC_PIXEL_ASPECT_RATIO = 0.75;
-
 
 
 // Horizontal screen parameters
@@ -97,6 +99,9 @@ static const double PAL_REFRESH_RATE = 50.125;
 
 //! CPU cycles per rasterline
 static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
+
+//! CPU cycles per frame
+static const unsigned PAL_CYCLES_PER_FRAME = 19656;
 
 //! Pixel aspect ratio
 static const uint16_t PAL_PIXEL_ASPECT_RATIO = 0.9365;

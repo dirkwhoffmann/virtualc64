@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * Written 2006 - 2015 by Dirk W. Hoffmann
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Last review: 25.7.06
 
 #ifndef _CPU_INC
 #define _CPU_INC
@@ -74,10 +73,10 @@ public:
 	};
 
 	//! Clock frequency of the original C64 (NTSC version) in Hz
-	static const uint32_t CLOCK_FREQUENCY_NTSC = 1022700;
+	static const uint32_t CLOCK_FREQUENCY_NTSC = 1022727;
 	
 	//! Clock frequency of the original C64 (PAL version) in Hz
-	static const uint32_t CLOCK_FREQUENCY_PAL = 985248;
+	static const uint32_t CLOCK_FREQUENCY_PAL = 985249;
 	
 	//! Bit position of the Negative flag
 	static const uint8_t N_FLAG = 0x80;
