@@ -296,6 +296,10 @@ void checkForOpenGLErrors()
 
 - (int)fingerprintForKey:(int)keycode withModifierFlags:(int)flags
 {
+    // To solve issue #198, we revert to the old behavior which uses the keycode as fingerprint
+    return keycode;
+
+#if 0
     // The recorded fingerprint consists of the keycode and the NSNumericPadKeyMask (in order to treat
     // keys on the numeric trackpad seperatly). Cursor keycodes (#123 - #126) are stored without the
     // NSNumericPadKeyMask bit to be compatible with older releases that ignored this flag completely.
@@ -304,6 +308,7 @@ void checkForOpenGLErrors()
         flags &= ~NSNumericPadKeyMask;
     
     return keycode | (flags & NSNumericPadKeyMask);
+#endif
 }
 
 - (int)joyKeycode:(int)nr direction:(JoystickDirection)dir
