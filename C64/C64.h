@@ -17,16 +17,10 @@
 
 // VERSION 1.0:
 //
-// BUG FIXES:
-// 1. Fix floppy disk formatting
-//
-// CLEANUP:
 //
 // VERSION 1.1:
 //
 // CLEANUP:
-//
-// 
 // 
 // SPEEDUP:
 //
