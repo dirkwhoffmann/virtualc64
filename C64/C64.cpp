@@ -527,14 +527,14 @@ C64::endOfRasterline()
 			takeSnapshot();			
 		}
 		
-		// Pass control to the virtual sound chip
-        // TODO: Should we do this before waiting?
-		sid->execute(vic->getCyclesPerFrame());
-			
-		// Pass control to the virtual IEC bus
-		iec->execute();
+		// Execute SID
+		// sid->execute(vic->getCyclesPerFrame());
+        sid->executeUntil(cycles);
+        
+        // Execute the IEC bus
+        iec->execute();
 
-        // Count some sheep ...
+        // Count some sheep (zzzzzz) ...
         if (!getWarp())
             synchronizeTiming();
     }

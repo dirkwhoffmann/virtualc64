@@ -88,12 +88,8 @@ public:
 	//! Special poke function for the I/O memory range.
 	void poke(uint16_t addr, uint8_t value);
 	
-	//! Pass control to the SID chip.
-	/*! The SID will be executed and generate audio samples for about one video frame.
-		Actual number of generated samples depends on executed CPU cycles since last call.
-		\param cycles Number of cycles to execute (ignored).
-	*/
-	bool execute(int cycles);
+	//! Execute SID
+	void execute(int cycles);
 	
     //! Notifies the SID chip that the emulator has started
     void run();

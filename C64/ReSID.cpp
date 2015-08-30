@@ -177,29 +177,30 @@ ReSID::poke(uint16_t addr, uint8_t value)
     sid->write(addr, value);
 }
 
-bool 
+void
 ReSID::execute(int elapsedCycles)
 {
     short buf[2049];
     int buflength = 2048;
     int delta_t = elapsedCycles;
     int bufindex = 0;
+    float sample;
     
-    // TODO: SPEEDUP: Write directly into ringbuffer
+    // TODO: Write directly into Core Audios ringbuffer (Speedup)
+
+    // Let reSID compute some sound samples
     while (delta_t) {
         bufindex += sid->clock(delta_t, buf + bufindex, buflength - bufindex);
-
-        // write to ringbuffer
-        for (int i = 0; i < bufindex; i++) {
-            float sample = (float)buf[i] * 0.000005f; 
-            writeData(sample);
-            // if (sample != 0) fprintf(stderr,"Sample %d\n", buf[i]);
-        }
-        // fprintf(stderr,"wrote %d samples\n", bufindex);
-        bufindex = 0;
+        // if (delta_t != 0) debug(2, "delta_t = %d\n", delta_t);
     }
-        
-    return true;
+    
+    // Write samples into ringbuffer
+    for (int i = 0; i < bufindex; i++) {
+        sample = (float)buf[i] * 0.000005f;
+        writeData(sample);
+    }
+
+    // fprintf(stderr,"wrote %d samples\n", bufindex);
 }
 
 void 

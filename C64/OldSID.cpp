@@ -318,9 +318,7 @@ OldSID::poke(uint16_t addr, uint8_t value)
 	}
 }
 
-
-
-bool 
+void
 OldSID::execute(int elapsedCycles)
 {
 	// get filter coefficients, so the emulator won't change
@@ -411,7 +409,6 @@ OldSID::execute(int elapsedCycles)
 		this->callbackStarted = true;
 		this->startPlaying = true;
 	}
-	return true;
 }
 
 // generate triangle waveform

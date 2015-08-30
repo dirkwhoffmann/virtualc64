@@ -52,6 +52,8 @@ SIDWrapper::reset(C64 *c64)
     this->c64 = c64;
     oldsid->reset(c64);
     resid->reset(c64);
+    
+    cycles = 0UL;
 }
 
 uint32_t
@@ -144,13 +146,32 @@ SIDWrapper::poke(uint16_t addr, uint8_t value)
     resid->poke(addr, value);
 }
 
-bool 
-SIDWrapper::execute(int cycles)
+#if 0
+void
+SIDWrapper::execute()
 {
+    execute(c64->getCycles() - cycles);
+    cycles = c64->cycle_count;
+}
+#endif
+
+void
+SIDWrapper::executeUntil(uint64_t targetCycle)
+{
+    execute(targetCycle - cycles);
+    cycles = targetCycle;
+}
+
+inline void
+SIDWrapper::execute(uint64_t numCycles)
+{
+    if (numCycles == 0)
+        return;
+    
     if (useReSID)
-        return resid->execute(cycles);
+        resid->execute(numCycles);
     else
-        return oldsid->execute(cycles);
+        oldsid->execute(numCycles);
 }
 
 void 

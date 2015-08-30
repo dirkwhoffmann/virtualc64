@@ -29,10 +29,12 @@ class SIDWrapper : public VirtualComponent {
 public:	
 	//! Start address of the SID I/O space.
 	static const uint16_t SID_START_ADDR = 0xD400;
+    
 	//! End address of the SID I/O space.
 	static const uint16_t SID_END_ADDR = 0xD7FF;
 
 private:
+
     //! Old SID implementation
     OldSID *oldsid;
 
@@ -71,6 +73,7 @@ public:
 	//! Dump internal state to console
 	void dumpState();
 	
+    
     // -----------------------------------------------------------------------------------------------
 	//                                         Configuring
 	// -----------------------------------------------------------------------------------------------
@@ -122,12 +125,31 @@ public:
 	//                                           Execution
 	// -----------------------------------------------------------------------------------------------
 
-    //! Pass control to the SID chip.
-	/*! The SID will be executed and generate audio samples for about one video frame.
-     Actual number of generated samples depends on executed CPU cycles since last call.
-     \param cycles Number of cycles to execute (ignored).
+private:
+    
+    //! Current clock cycle since power up
+    uint64_t cycles;
+
+public:
+    
+#if 0
+    /*!
+     @abstract   Executes SID until the cycle count reaches the CPUs cycle count
      */
-	bool execute(int cycles);
+    void execute();
+#endif
+    
+    /*!
+     @abstract   Executes SID until a certain cycle is reached
+     @param      cycle The target cycle
+     */
+    void executeUntil(uint64_t targetCycle);
+
+    /*!
+     @abstract   Executes SID for a certain number of cycles
+     @param      cycles Number of cycles to execute
+     */
+	void execute(uint64_t numCycles);
 
     //! Notifies the SID chip that the emulator has started
     void run();
