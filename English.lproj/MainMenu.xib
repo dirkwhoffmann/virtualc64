@@ -1568,11 +1568,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showStatusBarAction:</string>
+						<string key="label">toggleStatusBarAction:</string>
 						<reference key="source" ref="958131061"/>
 						<reference key="destination" ref="540988766"/>
 					</object>
-					<int key="connectionID">571</int>
+					<int key="connectionID">572</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2445,7 +2445,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">571</int>
+			<int key="maxID">572</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3162,6 +3162,7 @@
 						<string key="mountDialog">MountDialog</string>
 						<string key="pc">NSTextField</string>
 						<string key="preferencesIcon">NSToolbarItem</string>
+						<string key="progress">NSProgressIndicator</string>
 						<string key="propertiesDialog">PropertiesDialog</string>
 						<string key="ramSource">NSButtonCell</string>
 						<string key="redLED">NSButton</string>
@@ -3815,6 +3816,10 @@
 						<object class="IBToOneOutletInfo" key="preferencesIcon">
 							<string key="name">preferencesIcon</string>
 							<string key="candidateClassName">NSToolbarItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="progress">
+							<string key="name">progress</string>
+							<string key="candidateClassName">NSProgressIndicator</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="propertiesDialog">
 							<string key="name">propertiesDialog</string>
@@ -4892,6 +4897,7 @@
 						<string key="exportDiskDialog:">id</string>
 						<string key="exportFileFromDiskDialog:">id</string>
 						<string key="hideSpritesAction:">id</string>
+						<string key="hideStatusBarAction:">id</string>
 						<string key="markDMALinesAction:">id</string>
 						<string key="markIRQLinesAction:">id</string>
 						<string key="resetAction:">id</string>
@@ -4899,6 +4905,7 @@
 						<string key="runstopRestoreAction:">id</string>
 						<string key="saveScreenshotDialog:">id</string>
 						<string key="showStatusBarAction:">id</string>
+						<string key="toggleStatusBarAction:">id</string>
 						<string key="traceC64CpuAction:">id</string>
 						<string key="traceIecAction:">id</string>
 						<string key="traceVC1541CpuAction:">id</string>
@@ -5013,6 +5020,10 @@
 							<string key="name">hideSpritesAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="hideStatusBarAction:">
+							<string key="name">hideStatusBarAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="markDMALinesAction:">
 							<string key="name">markDMALinesAction:</string>
 							<string key="candidateClassName">id</string>
@@ -5039,6 +5050,10 @@
 						</object>
 						<object class="IBActionInfo" key="showStatusBarAction:">
 							<string key="name">showStatusBarAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleStatusBarAction:">
+							<string key="name">toggleStatusBarAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="traceC64CpuAction:">
@@ -5093,6 +5108,7 @@
 						<string key="exportDiskDialog:">id</string>
 						<string key="exportFileFromDiskDialog:">id</string>
 						<string key="hideSpritesAction:">id</string>
+						<string key="hideStatusBarAction:">id</string>
 						<string key="markDMALinesAction:">id</string>
 						<string key="markIRQLinesAction:">id</string>
 						<string key="resetAction:">id</string>
@@ -5100,6 +5116,7 @@
 						<string key="runstopRestoreAction:">id</string>
 						<string key="saveScreenshotDialog:">id</string>
 						<string key="showStatusBarAction:">id</string>
+						<string key="toggleStatusBarAction:">id</string>
 						<string key="traceC64CpuAction:">id</string>
 						<string key="traceIecAction:">id</string>
 						<string key="traceVC1541CpuAction:">id</string>
@@ -5214,6 +5231,10 @@
 							<string key="name">hideSpritesAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="hideStatusBarAction:">
+							<string key="name">hideStatusBarAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="markDMALinesAction:">
 							<string key="name">markDMALinesAction:</string>
 							<string key="candidateClassName">id</string>
@@ -5240,6 +5261,10 @@
 						</object>
 						<object class="IBActionInfo" key="showStatusBarAction:">
 							<string key="name">showStatusBarAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleStatusBarAction:">
+							<string key="name">toggleStatusBarAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="traceC64CpuAction:">
@@ -6301,6 +6326,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSPopover.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSProgressIndicator</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSProgressIndicator.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

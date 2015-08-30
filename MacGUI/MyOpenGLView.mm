@@ -279,18 +279,21 @@ void checkForOpenGLErrors()
         return;
     
     NSRect r = self.frame;
-    
+    float borderThickness;
     if (b) {
         NSLog(@"Expanding OpenGL view");
         r.origin.y -= 24;
         r.size.height += 24;
+        borderThickness = 0.0;
     } else {
         NSLog(@"Shrinking OpenGL view");
         r.origin.y += 24;
         r.size.height -= 24;
+        borderThickness = 22.0;
     }
     
     self.frame = r;
+    [[self window] setContentBorderThickness:borderThickness forEdge: NSMinYEdge];
     drawInEntireWindow = b;
 }
 

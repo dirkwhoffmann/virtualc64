@@ -177,15 +177,57 @@
 	[self continueAction:self];
 }
 
-- (IBAction)showStatusBarAction:(id)sender
+- (IBAction)toggleStatusBarAction:(id)sender
 {
     NSLog(@"toggleStatusBarAction");
-
+ 
     NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] showStatusBarAction:sender];
-    if (![undo isUndoing]) [undo setActionName:@"Show status bar"];
+    [[undo prepareWithInvocationTarget:self] toggleStatusBarAction:sender];
+    if (![undo isUndoing]) [undo setActionName:@"Show/Hide status bar"];
+
+    if ([screen drawInEntireWindow])
+        [self showStatusBar];
+    else
+        [self hideStatusBar];
+}
+
+- (IBAction)showStatusBar
+{
+    NSLog(@"showStatusBarAction");
     
-    [screen setDrawInEntireWindow:![screen drawInEntireWindow]];
+    [drive setHidden:![[c64 vc1541] hasDisk]];
+    [eject setHidden:![[c64 vc1541] hasDisk]];
+    [progress setHidden:NO];
+    [cartridgeIcon setHidden:![[c64 expansionport] cartridgeAttached]];
+    [cartridgeEject setHidden:![[c64 expansionport] cartridgeAttached]];
+    [greenLED setHidden:NO];
+    [redLED setHidden:NO];
+    [info setHidden:NO];
+    [clockSpeed setHidden:NO];
+    [clockSpeedBar setHidden:NO];
+    [warpMode setHidden:NO];
+        
+    [screen setDrawInEntireWindow:NO];
+}
+    
+- (IBAction)hideStatusBar
+{
+    NSLog(@"hideStatusBarAction");
+    
+    // Hide bottom bar
+    [drive setHidden:YES];
+    [eject setHidden:YES];
+    [progress setHidden:YES];
+    [cartridgeIcon setHidden:YES];
+    [cartridgeEject setHidden:YES];
+    [greenLED setHidden:YES];
+    [redLED setHidden:YES];
+    [info setHidden:YES];
+    [clockSpeed setHidden:YES];
+    [clockSpeedBar setHidden:YES];
+    [warpMode setHidden:YES];
+        
+    [screen setDrawInEntireWindow:YES];
 }
 
 

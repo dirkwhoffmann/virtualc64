@@ -158,6 +158,7 @@
                 <outlet property="portA" destination="zHf-yH-YTM" id="QwY-sk-L5n"/>
                 <outlet property="portB" destination="L3K-on-eyR" id="D2J-pm-whp"/>
                 <outlet property="preferencesIcon" destination="2226" id="2227"/>
+                <outlet property="progress" destination="2203" id="tHU-2P-FXF"/>
                 <outlet property="propertiesDialog" destination="2228" id="2324"/>
                 <outlet property="ramSource" destination="974" id="1691"/>
                 <outlet property="redLED" destination="1210" id="1215"/>
@@ -196,58 +197,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="804" height="645"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <openGLView colorSize="8bit_RGB" depthSize="16bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" id="262" customClass="MyOpenGLView">
-                        <rect key="frame" x="0.0" y="22" width="804" height="623"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <connections>
-                            <outlet property="c64proxy" destination="2208" id="2210"/>
-                            <outlet property="controller" destination="-2" id="2181"/>
-                        </connections>
-                    </openGLView>
-                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
-                        <rect key="frame" x="41" y="4" width="16" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <connections>
-                            <binding destination="2201" name="animate" keyPath="selection.iecBusIsBusy" id="2213"/>
-                        </connections>
-                    </progressIndicator>
-                    <button toolTip="Drive LED" id="1210">
-                        <rect key="frame" x="18" y="0.0" width="25" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" id="1710">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
-                    </button>
-                    <button toolTip="Connect / Disconnect drive" id="1208">
-                        <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" id="1709">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="driveAction:" target="-2" id="1370"/>
-                        </connections>
-                    </button>
-                    <button hidden="YES" id="2003">
-                        <rect key="frame" x="94" y="2" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="cartridge" imagePosition="only" alignment="right" id="2004">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
-                    </button>
-                    <button hidden="YES" id="1045">
-                        <rect key="frame" x="59" y="2" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="floppy" imagePosition="only" alignment="right" id="1706">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system" size="10"/>
-                        </buttonCell>
-                    </button>
                     <button hidden="YES" toolTip="Eject cartridge" id="2000">
-                        <rect key="frame" x="109" y="0.0" width="28" height="24"/>
+                        <rect key="frame" x="117" y="-2" width="20" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="bottom" imagePosition="left" alignment="left" id="2001">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -257,8 +208,83 @@
                             <action selector="cartridgeEjectAction:" target="-1" id="2008"/>
                         </connections>
                     </button>
+                    <openGLView colorSize="8bit_RGB" depthSize="16bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" id="262" customClass="MyOpenGLView">
+                        <rect key="frame" x="0.0" y="22" width="804" height="623"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <connections>
+                            <outlet property="c64proxy" destination="2208" id="2210"/>
+                            <outlet property="controller" destination="-2" id="2181"/>
+                        </connections>
+                    </openGLView>
+                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
+                        <rect key="frame" x="42" y="2" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <connections>
+                            <binding destination="2201" name="animate" keyPath="selection.iecBusIsBusy" id="2213"/>
+                        </connections>
+                    </progressIndicator>
+                    <button toolTip="Drive LED" id="1210">
+                        <rect key="frame" x="22" y="2" width="17" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1710">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button toolTip="Connect / Disconnect drive" id="1208">
+                        <rect key="frame" x="5" y="2" width="17" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1709">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="driveAction:" target="-2" id="1370"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" id="2003">
+                        <rect key="frame" x="101" y="0.0" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="cartridge" imagePosition="only" alignment="right" id="2004">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="10"/>
+                        </buttonCell>
+                    </button>
+                    <button hidden="YES" id="1045">
+                        <rect key="frame" x="63" y="0.0" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="floppy" imagePosition="only" alignment="right" id="1706">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system" size="10"/>
+                        </buttonCell>
+                    </button>
+                    <textField verticalHuggingPriority="750" id="214">
+                        <rect key="frame" x="565" y="5" width="133" height="11"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="Clock" id="1703">
+                            <font key="font" metaFont="miniSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <levelIndicator verticalHuggingPriority="750" id="212">
+                        <rect key="frame" x="721" y="1" width="80" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="11" criticalValue="15" id="1702">
+                            <font key="font" metaFont="system"/>
+                        </levelIndicatorCell>
+                    </levelIndicator>
+                    <textField verticalHuggingPriority="750" id="24">
+                        <rect key="frame" x="192" y="4" width="173" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" id="1701">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <button hidden="YES" toolTip="Eject disk" id="1038">
-                        <rect key="frame" x="76" y="0.0" width="28" height="24"/>
+                        <rect key="frame" x="80" y="-2" width="20" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="bottom" imagePosition="left" alignment="left" id="1705">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -268,28 +294,10 @@
                             <action selector="ejectAction:" target="-2" id="1043"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" id="214">
-                        <rect key="frame" x="567" y="6" width="133" height="11"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="Clock" id="1703">
-                            <font key="font" metaFont="miniSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="24">
-                        <rect key="frame" x="194" y="6" width="173" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" id="1701">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button toolTip="Warp mode" id="1052">
-                        <rect key="frame" x="699" y="-15" width="19" height="35"/>
+                        <rect key="frame" x="700" y="2" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="warpOn" imagePosition="above" alignment="center" alternateImage="warpOff" id="1707">
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="fast" imagePosition="above" alignment="center" alternateImage="slow" imageScaling="proportionallyDown" id="1707">
                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
@@ -297,13 +305,6 @@
                             <action selector="warpAction:" target="-2" id="1054"/>
                         </connections>
                     </button>
-                    <levelIndicator verticalHuggingPriority="750" id="212">
-                        <rect key="frame" x="721" y="2" width="80" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="11" criticalValue="15" id="1702">
-                            <font key="font" metaFont="system"/>
-                        </levelIndicatorCell>
-                    </levelIndicator>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="1845">
@@ -4524,13 +4525,14 @@ DQ
         </window>
     </objects>
     <resources>
-        <image name="LEDgray" width="25" height="25"/>
+        <image name="LEDgray" width="128" height="128"/>
         <image name="LEDnewGreen" width="65" height="65"/>
         <image name="bottom" width="24" height="24"/>
         <image name="cartridge" width="18" height="18"/>
         <image name="diskette" width="101" height="97"/>
         <image name="drive48" width="101" height="97"/>
         <image name="expansion" width="128" height="128"/>
+        <image name="fast" width="128" height="128"/>
         <image name="flag_eu" width="67" height="42"/>
         <image name="floppy" width="18" height="18"/>
         <image name="graphics" width="128" height="128"/>
@@ -4544,6 +4546,7 @@ DQ
         <image name="pref_vic" width="145" height="134"/>
         <image name="restart32" width="128" height="128"/>
         <image name="rom" width="128" height="128"/>
+        <image name="slow" width="128" height="128"/>
         <image name="stepInto32" width="32" height="32"/>
         <image name="stepOut32" width="32" height="32"/>
         <image name="stepOver32" width="32" height="32"/>
@@ -4551,7 +4554,5 @@ DQ
         <image name="tb_setup" width="129" height="129"/>
         <image name="tb_timetravel2" width="128" height="128"/>
         <image name="tb_virtualmachine" width="128" height="129"/>
-        <image name="warpOff" width="18" height="18"/>
-        <image name="warpOn" width="18" height="18"/>
     </resources>
 </document>

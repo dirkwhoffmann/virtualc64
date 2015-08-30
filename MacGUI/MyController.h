@@ -66,8 +66,11 @@ enum INPUT_DEVICES {
 	IBOutlet MyOpenGLView *__strong screen;
 	IBOutlet NSDrawer *debugPanel;
 	IBOutlet NSDrawer *cheatboxPanel;
+    
+    // Bottom bar
 	IBOutlet NSButton *drive;
 	IBOutlet NSButton *eject;
+    IBOutlet NSProgressIndicator *progress;
 	IBOutlet NSButton *cartridgeIcon;
 	IBOutlet NSButton *cartridgeEject;
 	IBOutlet NSButton *greenLED;

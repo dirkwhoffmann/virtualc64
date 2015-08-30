@@ -347,6 +347,7 @@
 
 - (id) initWithExpansionPort:(ExpansionPort *)v;
 - (void) dump;
+- (bool) cartridgeAttached; 
 - (int) cartridgeType;
 - (unsigned) numberOfChips;
 - (unsigned) numberOfBytes;

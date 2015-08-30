@@ -72,6 +72,10 @@
 	// Bind virtual C64 to other object
 	[[self document] setC64:c64];
 	
+    // Add bottom bar
+    [[self window] setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
+    [[self window] setContentBorderThickness:32.0 forEdge: NSMinYEdge];
+    
 	// Joystick handling
 	joystickManager = new JoystickManager(c64);
 	joystickManager->Initialize();
@@ -130,7 +134,7 @@
     NSLog(@"windowWillEnterFullScreen");
     
     [screen setDrawIn3D:NO];
-    [screen setDrawInEntireWindow:YES];
+    [self hideStatusBar];
 }
 
 - (void)windowDidEnterFullScreen:(NSNotification *)notification
@@ -143,7 +147,7 @@
     NSLog(@"windowWillExitFullScreen");
     
     [screen setDrawIn3D:YES];
-    [screen setDrawInEntireWindow:NO];
+    [self showStatusBar];
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
@@ -549,7 +553,7 @@
 			if (msg->i)
 				[redLED setImage:[NSImage imageNamed:@"LEDred"]];
 			else
-				[redLED setImage:[NSImage imageNamed:@"LEDgray"]];			
+				[redLED setImage:[NSImage imageNamed:@"LEDgray"]];
 			break;
 			
 		case MSG_VC1541_DATA:
