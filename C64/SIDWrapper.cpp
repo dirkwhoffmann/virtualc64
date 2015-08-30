@@ -16,8 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "SIDWrapper.h"
-#include "VIC_constants.h"
+#include "C64.h"
 
 SIDWrapper::SIDWrapper()
 {
@@ -119,6 +118,9 @@ SIDWrapper::setNTSC()
 uint8_t 
 SIDWrapper::peek(uint16_t addr)
 {
+    // Get SID up to date
+    executeUntil(c64->getCycles());
+    
     // Take care of possible side effects, but discard value
     if (useReSID)
         (void)resid->peek(addr);
@@ -141,6 +143,9 @@ SIDWrapper::peek(uint16_t addr)
 void 
 SIDWrapper::poke(uint16_t addr, uint8_t value)
 {
+    // Get SID up to date
+    executeUntil(c64->getCycles());
+
     latchedDataBus = value;
     oldsid->poke(addr, value);
     resid->poke(addr, value);
@@ -165,6 +170,7 @@ SIDWrapper::executeUntil(uint64_t targetCycle)
 inline void
 SIDWrapper::execute(uint64_t numCycles)
 {
+    // printf("Execute SID for %lld cycles", numCycles);
     if (numCycles == 0)
         return;
     

@@ -527,7 +527,7 @@ C64::endOfRasterline()
 			takeSnapshot();			
 		}
 		
-		// Execute SID
+		// Execute remaining SID cycles
 		// sid->execute(vic->getCyclesPerFrame());
         sid->executeUntil(cycles);
         

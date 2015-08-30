@@ -35,24 +35,25 @@
 //
 // ENHANCEMENTS (BRAIN STORMING):
 //
-// 1. Floppy drive fast loader (acknowledge new byte at the moment a byte is read or written)
-// 2. Upscaler (like superEagle)
+// 1. Floppy drive bit level emulation
+// 2. Floppy drive fast loader (acknowledge new byte at the moment a byte is read or written)
+// 3. Upscaler (like superEagle)
 //    https://github.com/libretro/common-shaders/tree/master/eagle/shaders
-// 3. OpenGL filters
-// 4. Second disk drive
+// 4. OpenGL filters
+// 5. Second disk drive
 
 
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG      // RELEASE
+#define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
 // #define DEBUG_LEVEL 3  // DEVELOPMENT
 
 // Snapshot version number of this release (1.0rc3 has version number 0.9.11)
-#define V_MAJOR 1
-#define V_MINOR 0
-#define V_SUBMINOR 0
+#define V_MAJOR 0
+#define V_MINOR 9
+#define V_SUBMINOR 11
 
 #include "basic.h"
 #include "VirtualComponent.h"
@@ -324,21 +325,6 @@ public:
 
 	//! Set NTSC mode
 	void setNTSC();
-	    
-	//! Enable or disable timing synchronization
-	void setWarp(bool b);
-	
-	//! Returns true iff cpu should always run at maximun speed
-	inline bool getAlwaysWarp() { return alwaysWarp; }
-	
-	//! Setter for alwaysWarp
-	void setAlwaysWarp(bool b);
-	
-	//! Returns true iff warp mode is activated during disk operations
-	inline bool getWarpLoad() { return warpLoad; }
-
-	//! Setter for warpLoad
-	void setWarpLoad(bool b);
 
     //! Returns true iff audio filters are enabled.
     bool getAudioFilter() { return sid->getAudioFilter(); }
@@ -466,20 +452,39 @@ public:
 	//                                           Timing
 	// -----------------------------------------------------------------------------------------------
 	
+public:
+    
+    //! Returns true iff cpu runs at maximum speed (timing sychronization is disabled)
+    inline bool getWarp() { return warp; }
+    
+    //! Enable or disable timing synchronization
+    void setWarp(bool b);
+    
+    //! Returns true iff cpu should always run at maximun speed
+    inline bool getAlwaysWarp() { return alwaysWarp; }
+    
+    //! Setter for alwaysWarp
+    void setAlwaysWarp(bool b);
+    
+    //! Returns true iff warp mode is activated during disk operations
+    inline bool getWarpLoad() { return warpLoad; }
+    
+    //! Setter for warpLoad
+    void setWarpLoad(bool b);
+    
 	//! Initialize timer (sets variable target_time)
 	void restartTimer();
 	
 	//! Wait until target_time has been reached and then updates target_time.
 	void synchronizeTiming();
 	
-    //! Returns true iff cpu runs at maximum speed (timing sychronization is disabled)
-	bool getWarp() { return warp; }
-	
     
 	// ---------------------------------------------------------------------------------------------
 	//                                 Archives (disks, tapes, etc.)
 	// ---------------------------------------------------------------------------------------------
 	
+public:
+    
 	//! Flush specified item from archive into memory and delete archive
 	/*! All archive types are flushable */
 	bool flushArchive(Archive *a, int item);

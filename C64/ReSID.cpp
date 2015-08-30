@@ -59,6 +59,8 @@ ReSID::reset(C64 *c64)
 {
 	debug(2, "  Resetting ReSID...\n");
 	
+    this->c64 = c64;
+    
 	// reset ringBuffer
 	for (unsigned i = 0; i < bufferSize; i++)
 	{
@@ -194,9 +196,10 @@ ReSID::execute(int elapsedCycles)
         // if (delta_t != 0) debug(2, "delta_t = %d\n", delta_t);
     }
     
-    // Write samples into ringbuffer
+    // Write samples into ringbuffer (output is silenced in warp mode) 
+    float volume = c64->getWarp() ? 0.0f : 0.000005f;
     for (int i = 0; i < bufindex; i++) {
-        sample = (float)buf[i] * 0.000005f;
+        sample = (float)buf[i] * volume;
         writeData(sample);
     }
 
@@ -241,12 +244,12 @@ ReSID::readData()
     if (debugcnt++ % 100 == 0)
         printf("ReSID::readData Ringbuffer: 0 | ... | r:%ld | ... | w->%ld | ... | %d\n",
                readBuffer - ringBuffer, writeBuffer - ringBuffer, bufferSize);
+    */
     
     if (readBuffer == writeBuffer) {
-        fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%ld)\n", readBuffer - ringBuffer);
+        // fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%ld)\n", readBuffer - ringBuffer);
         handleBufferException();
     }
-    */
     
     value = *readBuffer;
     
@@ -266,12 +269,12 @@ ReSID::writeData(float data)
     if (debugcnt++ % 100 == 0)
         printf("ReSID::readData Ringbuffer: 0 | ... | r:%ld | ... | w->%ld | ... | %d\n",
                readBuffer - ringBuffer, writeBuffer - ringBuffer, bufferSize);
-
-    if (readBuffer == writeBuffer) {
-        fprintf(stderr, "SID RINGBUFFER OVERFLOW (%ld)\n", writeBuffer - ringBuffer);
-        handleBufferException();
-    }
     */
+    
+    if (readBuffer == writeBuffer) {
+        // fprintf(stderr, "SID RINGBUFFER OVERFLOW (%ld)\n", writeBuffer - ringBuffer);
+        // handleBufferException();
+    }
     
     *writeBuffer = data;
     
