@@ -72,6 +72,54 @@ Disk525::saveToBuffer(uint8_t **buffer)
 }
 
 void
+Disk525::dumpState()
+{
+    unsigned noOfOneBits, alignedSyncs, unalignedSyncs;
+    
+    msg("5,25\" floppy disk\n");
+    msg("-----------------\n\n");
+
+    for (unsigned track = 1; track <= 42; track++) {
+        assert(isTrackNumber(track));
+        noOfOneBits = alignedSyncs = unalignedSyncs = 0;
+        for (unsigned offset = 0; offset < length.track[track][0]; offset++) {
+            for (uint8_t bit = 0x80; bit != 0x00; bit >>= 1) {
+                if (data.track[track][offset] & bit) {
+                    noOfOneBits++;
+                } else {
+                    if (noOfOneBits >= 10) { // SYNC FOUND
+                        if (bit == 0x80) {
+                            alignedSyncs++;
+                        } else {
+                            unalignedSyncs++;
+                        }
+                    }
+                    noOfOneBits = 0;
+                }
+            }
+        }
+        // Note: If a sync marks wraps the array bound, it is not detected
+        msg("Track %2d: Length: %d bytes %d SYNC sequences found (%d are byte aligned)\n",
+            track, length.track[track][0], alignedSyncs + unalignedSyncs, alignedSyncs);
+    }
+    msg("\n");
+}
+
+void
+Disk525::dumpHalftrack(Halftrack ht, unsigned min, unsigned max, unsigned highlight)
+{
+    assert(isHalftrackNumber(ht));
+    
+    if (max > length.halftrack[ht]) max = length.halftrack[ht];
+    
+    msg("Dumping track %d (length = %d)\n", ht, length.halftrack[ht]);
+    for (unsigned i = min; i < max; i++) {
+        msg(i == highlight ? "(%02X) " : "%02X ", data.halftrack[ht][i]);
+    }
+    msg("\n");
+}
+
+void
 Disk525::clearDisk()
 {
     for (Halftrack ht = 1; ht <= 84; ht++) {
@@ -404,19 +452,7 @@ Disk525::decodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t b5, u
     dest[0] |= (invgcr[shift_reg & 0x1F] << 4);
 }
 
-void
-Disk525::dumpHalftrack(Halftrack ht, unsigned min, unsigned max, unsigned highlight)
-{
-    assert(isHalftrackNumber(ht));
-    
-    if (max > length.halftrack[ht]) max = length.halftrack[ht];
-    
-    msg("Dumping track %d (length = %d)\n", ht, length.halftrack[ht]);
-    for (unsigned i = min; i < max; i++) {
-        msg(i == highlight ? "(%02X) " : "%02X ", data.halftrack[ht][i]);
-    }
-    msg("\n");
-}
+
 
 
 

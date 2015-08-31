@@ -195,6 +195,7 @@ VC1541::dumpState()
 	msg("            SYNC : %d\n", SYNC());
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
+    disk.dumpState();
 }
 
 void
@@ -203,6 +204,10 @@ VC1541::executeBitReady()
     bitReadyTimer += cyclesPerBit[zone];
     byteReadyCounter++;
 
+    // TODO:
+    // In read mode: Shift read shift register and put in new bit
+    // In write mode: Shift write shift register and write bit
+    
     if (byteReadyCounter == 7) {
         byteReadyCounter = 0;
         executeByteReady();
@@ -212,6 +217,9 @@ VC1541::executeBitReady()
 void
 VC1541::executeByteReady()
 {
+    // TODO: There is no such latch. Remove later
+    read = readMode();
+    
     read_shiftreg_pipe = read_shiftreg;
     read_shiftreg = readByteFromDisk();
 

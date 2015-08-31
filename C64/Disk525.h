@@ -46,6 +46,9 @@ public:
     //! Save state
     void saveToBuffer(uint8_t **buffer);
     
+    //! Dump current state into logfile
+    void dumpState();
+    
     
     // -----------------------------------------------------------------------------------------------
     //                                      Types and constants
