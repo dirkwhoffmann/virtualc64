@@ -138,6 +138,7 @@
 		50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6956B12E380E500D9C738 /* IconPRG.icns */; };
 		50DA14A30A6418470022B4A7 /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DA14A20A6418470022B4A7 /* bottom.png */; };
 		50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */; };
+		50DB328B1B948489000FB839 /* kext.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB328A1B948489000FB839 /* kext.png */; };
 		50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50E033BA12E3868100ABF9E3 /* IconP00.icns */; };
 		50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA60C3CE95400CB6B43 /* floppy.png */; };
 		50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA90C3CEAB700CB6B43 /* warpOff.png */; };
@@ -379,6 +380,7 @@
 		50DA14A20A6418470022B4A7 /* bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom.png; sourceTree = "<group>"; };
 		50DAD6900A736F9B00BB44AC /* VirtualComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualComponent.h; sourceTree = "<group>"; };
 		50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualComponent.cpp; sourceTree = "<group>"; };
+		50DB328A1B948489000FB839 /* kext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kext.png; sourceTree = "<group>"; };
 		50E033BA12E3868100ABF9E3 /* IconP00.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconP00.icns; sourceTree = "<group>"; };
 		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
 		50E4BFA90C3CEAB700CB6B43 /* warpOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warpOff.png; sourceTree = "<group>"; };
@@ -739,6 +741,7 @@
 				50C9CB2B1B826FF20054EE86 /* graphics.png */,
 				50C9CB1F1B826C960054EE86 /* joystick.png */,
 				50C9CB231B826CD50054EE86 /* expansion.png */,
+				50DB328A1B948489000FB839 /* kext.png */,
 				50F23D0712DF932800B1F275 /* glossy.png */,
 				5039A31315BE89940038ACBC /* drive48.png */,
 				5039A31F15BE97500038ACBC /* diskette.png */,
@@ -930,6 +933,7 @@
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				502F57FC1B93457700D1077E /* slow.png in Resources */,
 				50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */,
+				50DB328B1B948489000FB839 /* kext.png in Resources */,
 				502F57F61B93442100D1077E /* LEDgray.png in Resources */,
 				50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */,
 				50271DEA1A7E1CFE00C04290 /* LEDnewRed.png in Resources */,
