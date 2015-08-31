@@ -411,10 +411,10 @@
 	}
 	
 	// Do less times ... 
-	if ((animationCounter & 0x11) == 0) {
+	if ((animationCounter & 0x1) == 0) {
 		[speedometer updateWithCurrentCycle:[c64 cycles] currentFrame:[c64 frames] expectedSpeed:0.0];
-        mhz = 0.5 * mhz + 0.5 * (round([speedometer mhz] * 100.0) / 100.0);
-        fps = 0.5 * fps + 0.5 * round([speedometer fps]);
+        mhz = 0.6 * mhz + 0.4 * (round([speedometer mhz] * 100.0) / 100.0);
+        fps = 0.6 * fps + 0.4 * round([speedometer fps]);
 		[clockSpeed setStringValue:[NSString stringWithFormat:@"%.2f MHz %.0f fps", mhz, fps]];
 		[clockSpeedBar setFloatValue:10.0 * [speedometer mhz]];
 	}
