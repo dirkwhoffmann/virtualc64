@@ -59,10 +59,13 @@ VC1541::resetDrive(C64 *c64)
     // VC1541 properties
     rotating = false;
     redLED = false;
-    byteReadyTimer = 0;
+    bitReadyTimer = 0;
+    byteReadyCounter = 0;
     halftrack = 41;
     offset = 0;
+    bit = 0x80;
     zone = 0;
+    read = true;
     read_shiftreg = 0;
     read_shiftreg_pipe = 0;
     write_shiftreg = 0;
@@ -97,7 +100,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 14;
+    uint32_t result = 17;
 
     result += disk.stateSize();
     result += cpu->stateSize();
@@ -117,7 +120,8 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     disk.loadFromBuffer(buffer);
     
     // Drive properties
-    byteReadyTimer = read16(buffer);
+    bitReadyTimer = (int16_t)read16(buffer);
+    byteReadyCounter = (uint8_t)read8(buffer);
 	rotating = (bool)read8(buffer);
     redLED = (bool)read8(buffer);
     diskInserted = (bool)read8(buffer);
@@ -127,7 +131,9 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     // Read/Write logic
     halftrack = (Disk525::Halftrack)read8(buffer);
     offset = read16(buffer);
+    bit = read8(buffer);
     zone = read8(buffer);
+    read = (bool)read8(buffer);
     read_shiftreg = read8(buffer);
     read_shiftreg_pipe = read8(buffer);
     write_shiftreg = read8(buffer);
@@ -151,8 +157,9 @@ VC1541::saveToBuffer(uint8_t **buffer)
     disk.saveToBuffer(buffer);
     
     // Drive properties
-    write16(buffer, byteReadyTimer);
-	write8(buffer, (uint8_t)rotating);
+    write16(buffer, bitReadyTimer);
+    write8(buffer, byteReadyCounter);
+    write8(buffer, (uint8_t)rotating);
     write8(buffer, (uint8_t)redLED);
     write8(buffer, (uint8_t)diskInserted);
     write8(buffer, (uint8_t)writeProtected);
@@ -161,7 +168,9 @@ VC1541::saveToBuffer(uint8_t **buffer)
     // Read/Write logic
     write8(buffer, (uint8_t)halftrack);
     write16(buffer, offset);
+    write8(buffer, bit);
     write8(buffer, zone);
+    write8(buffer, (uint8_t)read);
     write8(buffer, read_shiftreg);
     write8(buffer, read_shiftreg_pipe);
     write8(buffer, write_shiftreg);
@@ -181,31 +190,42 @@ VC1541::dumpState()
 {
 	msg("VC1541\n");
 	msg("------\n\n");
-	msg("         Head timer : %d\n", byteReadyTimer);
-	msg("          Halftrack : %d\n", halftrack);
-	msg("   Halftrack offset : %d\n", offset);
-	msg("               SYNC : %d\n", SYNC());
-	msg("  Symbol under head : %02X\n", readHead());
+	msg(" Bit ready timer : %d\n", bitReadyTimer);
+	msg("   Head position : Track %d, Offset %d, Bit position mask %02X\n", halftrack, offset, bit);
+	msg("            SYNC : %d\n", SYNC());
+    msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
+}
+
+void
+VC1541::executeBitReady()
+{
+    bitReadyTimer += cyclesPerBit[zone];
+    byteReadyCounter++;
+
+    if (byteReadyCounter == 7) {
+        byteReadyCounter = 0;
+        executeByteReady();
+    }
 }
 
 void
 VC1541::executeByteReady()
 {
     read_shiftreg_pipe = read_shiftreg;
-    read_shiftreg = readHead();
+    read_shiftreg = readByteFromDisk();
 
     if (readMode() && !SYNC()) {
         byteReady(read_shiftreg);
     }
 
     if (writeMode()) {
-        writeHead(write_shiftreg);
+        writeByteToDisk(write_shiftreg);
         write_shiftreg = via2.ora;
         byteReady();
     }
     
-    rotateDisk();
+    rotateDiskByOneByte();
 }
 
 inline void

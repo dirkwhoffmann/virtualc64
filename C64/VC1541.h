@@ -88,16 +88,23 @@ public:
     
 private:
     
-    //! The stored numbers indicate how many clock cycles are needed for reading or writing a single byte
+    //! The stored numbers indicate how many clock cycles are needed for reading or writing a single bit
     /*! Background: The VC1541 drive is clocked by 16 Mhz. The base frequency is divided by N where N ranges
         from 13 (zone 0) to 16 (zone 4). On the logic board, this is done with a 4-bit counter of type 74SL193 
-        whose reset value bits are directly connected to the two "zone" bits (PB5 and PB6) coming from via 2.
+        whose reset value bits are connected to the two "zone" bits (PB5 and PB6) coming from via 2.
         A second 74SL193 divides the signal by 4. The result serves as the clock signal for all units operating 
-        on the bit level (i.e., the two shift registers that transfer bits from and to the head).
-        This means that a single bit is ready after 3,25 CPU cycles in zone 0 and 4 CPU cycles in zone 4.
+        on bit level (i.e., the two shift registers that transfer bits from and to the head).
+        It follows that a single bit is ready after 3,25 CPU cycles in zone 0 and 4 CPU cycles in zone 4.
         The resulting signal is fed into a third counter (of type 74LS191). It divides the signal by 8 and its 
         output is fed into a three input NAND-gate computing the important BYTE-READY signal. */
-     
+
+    const uint16_t cyclesPerBit[4] = {
+        13 * 4, // Zone 0: One bit each (16 * 3.25) base clock cycles (= 3.25 CPU cycles)
+        14 * 4, // Zone 1: One bit each (16 * 3.5) base clock cycles (= 3.5 CPU cycles)
+        15 * 4, // Zone 2: One bit each (16 * 3.75) base clock cycles (3.75 CPU cycles)
+        16 * 4, // Zone 3: One bit each (16 * 4) base clock cycles (4 CPU cycles)
+    };
+
     const uint16_t cyclesPerByte[4] = {
         13 * 4 * 8, // Zone 0: One byte each (16 * 26) base clock cycles (= 26 CPU cycles)
         14 * 4 * 8, // Zone 1: One byte each (16 * 28) base clock cycles (= 28 CPU cycles)
@@ -161,6 +168,18 @@ public:
         if (!rotating)
             return result;
         
+        // Wait until next bit is ready
+        if (bitReadyTimer > 0) {
+            bitReadyTimer -= 16;
+            return result;
+        }
+        
+        // Bit is ready
+        executeBitReady();
+        
+        return result;
+        
+#if 0
         // Wait until next byte is ready
         if (byteReadyTimer) {
             byteReadyTimer -= 16;
@@ -171,11 +190,14 @@ public:
         assert (zone < 4);
         byteReadyTimer = cyclesPerByte[zone];
         executeByteReady();
-        return true;
+        return result;
+#endif
     }
 
-    //! Main execution code of executeOneCycle()
-    /*! The main action takes place when all bits of a serially read or written byte byte are processed. */
+    /*! @brief Performs drive action taking place whenever a new bit is ready */
+    void executeBitReady();
+
+    /*! @brief Performs drive action taking place whenever a new byte is ready */
     void executeByteReady();
         
     
@@ -224,14 +246,34 @@ private:
 
 private:
     
-    //! The next byte will be ready after this number of cycles
-    uint16_t byteReadyTimer;
+    //! The next bit will be ready after this number of cycles
+    int16_t bitReadyTimer;
 
+    /*! 
+     @brief    Serial load signal
+     @abstract The VC1541 logic board contains a 4-bit-counter of type 72LS191 which is advanced whenever
+               a bit is ready. By reaching 7, the counter signals that a byte is ready. In that case, 
+               the write shift register is loaded with new data and the byte ready signal, which is connected
+               to CA1 of VIA2, changes state. In read mode, this state change will feed the input latch of VIA2 
+               with the current contents of the read shift register.
+     */
+    uint8_t byteReadyCounter;
+    
+    
     //! Halftrack position of the read/write head
     Disk525::Halftrack halftrack;
 
-    //! Position of the read/write head inside the current track (byte granularity)
+    //! Byte position of the read/write head inside the current track
     uint16_t offset;
+
+    //! Bit position of the read/write head inside the current byte
+    /*! Valid binary patterns are 10000000, 01000000, ..., 00000001 */
+    uint8_t bit;
+    
+    /*!
+     @abstract  Reads bit from drive head position
+     @result	returns 0 or 1
+     */
 
     //! Current zone
     /*! Each track belongs to one of four zones. Whenever the drive moves the r/w head, 
@@ -239,7 +281,10 @@ private:
         hard-wired to a 74LS193 counter on the logic board that breaks down the 16 Mhz base
         frequency. This mechanism is used to slow down the read/write process on inner tracks. */
     uint8_t zone;
-    
+
+    //! Indicates whether the drive is currently in read mode
+    bool read; 
+
     //! The 74LS164 serial to parallel shift register
     /*! In read mode, this register is fed by the drive head with data. */
     uint8_t read_shiftreg;
@@ -284,16 +329,50 @@ public:
 
 private:
 
+    /*!
+     @abstract  Reads bit from drive head position
+     @result	returns 0 or 1
+     */
+    inline uint8_t readHead() { return (disk.data.halftrack[halftrack][offset] & bit) ? 1 : 0; }
+
+    /*!
+     @abstract  Writes bit to drive head position
+     @param     bit 0 or 1
+     */
+    inline void writeHead(uint8_t bit) {
+        if (bit)
+            disk.data.halftrack[halftrack][offset] |= bit;
+        else
+            disk.data.halftrack[halftrack][offset] &= ~bit;
+    }
+    
+    /*!
+     @abstract Advances drive head position by one bit
+     @result   Returns true if the new drive head position is byte aligned
+     */
+    inline bool rotateDisk() {
+        if ((bit >>= 1)) {
+            return false;
+        } else {
+            bit = 0x08;
+            if (++offset >= disk.length.halftrack[halftrack]) offset = 0;
+            return true;
+        }
+    }
+    
     //! Reads the currently processed byte
     /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
-    inline uint8_t readHead() { return disk.data.halftrack[halftrack][offset]; }
+    // DEPRECATED
+    inline uint8_t readByteFromDisk() { return disk.data.halftrack[halftrack][offset]; }
     
     //! Writes byte to the current head position
-    inline void writeHead(uint8_t value) { disk.data.halftrack[halftrack][offset] = value; }
+    // DEPRECATED
+    inline void writeByteToDisk(uint8_t value) { disk.data.halftrack[halftrack][offset] = value; }
 
     //! Rotate disk
     /*! Moves head to next byte on the current track */
-    inline void rotateDisk() { if (++offset >= disk.length.halftrack[halftrack]) offset = 0; }
+    // DEPRECATED
+    inline void rotateDiskByOneByte() { if (++offset >= disk.length.halftrack[halftrack]) offset = 0; }
     
     // Signals the CPU that a byte has been processed
     inline void byteReady();
