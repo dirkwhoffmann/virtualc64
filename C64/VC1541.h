@@ -17,12 +17,6 @@
  */
 
 // TODO:
-// Get rid of readMode latching
-// Reset byteReadyCounter whenever a SYNC sequence is ended
-// Add sync as variable, get rid of function SYNC()
-// Get rid of old_read_shiftreg, old_write_shiftreg
-// Get rid of offset
-// Change name bitoffset -> offset
 // Stress test: Change disk encoder to produce unaligned sync sequences
 // Remove byte alignment in moveHeadUp, moveHeadDown
 
@@ -188,20 +182,6 @@ public:
         executeBitReady();
         
         return result;
-        
-#if 0
-        // Wait until next byte is ready
-        if (byteReadyTimer) {
-            byteReadyTimer -= 16;
-            return result;
-        }
-        
-        // Byte is ready. Reset counter and process byte
-        assert (zone < 4);
-        byteReadyTimer = cyclesPerByte[zone];
-        executeByteReady();
-        return result;
-#endif
     }
 
     /*! @brief Performs drive action taking place whenever a new bit is ready */
@@ -257,7 +237,7 @@ private:
     Halftrack halftrack;
 
     //! Byte position of the read/write head inside the current track
-    uint16_t offset;
+    // uint16_t offset;
 
     //! Bit position of the read/write head inside the current track
     uint16_t bitoffset;
@@ -278,9 +258,6 @@ private:
         hard-wired to a 74LS193 counter on the logic board that breaks down the 16 Mhz base
         frequency. This mechanism is used to slow down the read/write process on inner tracks. */
     uint8_t zone;
-
-    //! Indicates whether the drive is currently in read mode
-    // bool read;
 
     //! The 74LS164 serial to parallel shift register
     /*! In read mode, this register is fed by the drive head with data. */
@@ -306,22 +283,18 @@ public:
 
     //! Returns true iff drive is currently in write mode
     bool writeMode() { return !(via2.io[0x0C] & 0x20); }
-
-    // Returns the current value of the SYNC signal
-    /* In the logic board, the SYNC signal is computed by a NAND gate that combines the 10 previously read bits
-     from the input shift register and CB2 of VIA2 (the r/w mode pin). Connecting CB2 to the NAND gates ensures
-     that SYNC can only be true in read mode. */
-    // DEPRECATED
-    inline bool SYNC() { return (read_shiftreg & 0x3FF) == 0x3FF && readMode(); }
-    
+   
     //! Moves head one halftrack up
     void moveHeadUp();
     
     //! Moves head one halftrack down
     void moveHeadDown();
 
+    //! Returns the current value of the  zone (0 to 3)
+    inline bool getSync() { return sync; }
+
     //! Returns the current track zone (0 to 3)
-    inline bool getZone() { return zone; };
+    inline bool getZone() { return zone; }
 
     //! Sets the current track zone (0 to 3)
     void setZone(uint8_t z);
@@ -353,44 +326,13 @@ private:
      @abstract  Writes a single byte to the disk head
      */
     inline void writeByteToHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
-
-
-    /*!
-     @abstract  Writes bit to drive head position
-     @param     bit 0 or 1
-     */
-    // DEPRECATED
-    inline void writeHead(uint8_t bit) {
-        if (bit)
-            disk.data.halftrack[halftrack][offset] |= bit;
-        else
-            disk.data.halftrack[halftrack][offset] &= ~bit;
-    }
     
     /*!
      @abstract Advances drive head position by one bit
      @result   Returns true if the new drive head position is byte aligned
      */
     inline void rotateDisk() { if (++bitoffset >= disk.length.halftrack[halftrack]) bitoffset = 0; }
-    
-    //! Reads the currently processed byte
-    /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
-    // DEPRECATED
-    inline uint8_t readByteFromDisk() { return disk.data.halftrack[halftrack][offset]; }
-    
-    //! Writes byte to the current head position
-    // DEPRECATED
-    inline void writeByteToDisk(uint8_t value) { disk.data.halftrack[halftrack][offset] = value; }
-
-    //! Rotate disk
-    /*! Moves head to next byte on the current track */
-    // DEPRECATED
-    inline void rotateDiskByOneByte() {
-        // for (unsigned i = 0; i < 8; i++) rotateDisk();
-        assert(bitoffset % 8 == 0);
-        offset = bitoffset / 8;
-    }
-    
+     
     // Signals the CPU that a byte has been processed
     inline void byteReady();
 

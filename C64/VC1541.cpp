@@ -62,7 +62,6 @@ VC1541::resetDrive(C64 *c64)
     bitReadyTimer = 0;
     byteReadyCounter = 0;
     halftrack = 41;
-    offset = 0;
     bitoffset = 0;
     zone = 0;
     read_shiftreg = 0;
@@ -99,7 +98,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 18;
+    uint32_t result = 16;
 
     result += disk.stateSize();
     result += cpu->stateSize();
@@ -129,7 +128,6 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     
     // Read/Write logic
     halftrack = (Halftrack)read8(buffer);
-    offset = read16(buffer);
     bitoffset = read16(buffer);
     zone = read8(buffer);
     read_shiftreg = read16(buffer);
@@ -165,7 +163,6 @@ VC1541::saveToBuffer(uint8_t **buffer)
     
     // Read/Write logic
     write8(buffer, (uint8_t)halftrack);
-    write16(buffer, offset);
     write16(buffer, bitoffset);
     write8(buffer, zone);
     write16(buffer, read_shiftreg);
@@ -188,7 +185,7 @@ VC1541::dumpState()
 	msg("VC1541\n");
 	msg("------\n\n");
 	msg(" Bit ready timer : %d\n", bitReadyTimer);
-	msg("   Head position : Track %d, Offset %d, Bit offset %d\n", halftrack, offset, bitoffset);
+	msg("   Head position : Track %d, Bit offset %d\n", halftrack, bitoffset);
 	msg("            SYNC : %d\n", sync);
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
@@ -241,11 +238,6 @@ VC1541::executeByteReady()
 {
     assert(bitoffset % 8 == 0);
     
-    // TODO: There is no such latch. Remove later
-    // read = readMode();
-    
-    assert(SYNC() == sync);
-    //if (readMode() && !SYNC()) {
     if (readMode() && !sync) {
         byteReady(read_shiftreg);
     }
@@ -328,22 +320,13 @@ VC1541::moveHeadUp()
 {
     if (halftrack < 84) {
 
-        // As long as offset and bitoffset run in parallel, we start at the beginning of the track
-        // Otherwise, both get out of sync here
-        // halftrack++;
-        // bitoffset = offset = 0;
-        // byteReadyCounter = 0;
-        
-        /* NEW CODE: */
-        
         float position = (float)bitoffset / (float)disk.length.halftrack[halftrack];
         halftrack++;
         bitoffset = position * disk.length.halftrack[halftrack];
          
-        // Byte-align bitoffset (keep this code as long as offset and bitoffset run in parallel
+        // Byte-align bitoffset (to keep the fast loader happy once implemented)
         bitoffset &= 0xFFF8; 
         byteReadyCounter = 0;
-        offset = bitoffset / 8;
         
         debug(3, "Moving head up to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
@@ -363,10 +346,9 @@ VC1541::moveHeadDown()
         halftrack--;
         bitoffset = position * disk.length.halftrack[halftrack];
 
-        // Byte-align bitoffset (keep this code as long as offset and bitoffset run in parallel
+        // Byte-align bitoffset (to keep the fast loader happy once implemented)
         bitoffset &= 0xFFF8;
         byteReadyCounter = 0;
-        offset = bitoffset / 8;
         
         debug(3, "Moving head down to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
