@@ -67,8 +67,10 @@ VC1541::resetDrive(C64 *c64)
     zone = 0;
     read = true;
     read_shiftreg = 0;
-    read_shiftreg_pipe = 0;
     write_shiftreg = 0;
+    old_read_shiftreg = 0;
+    old_read_shiftreg_pipe = 0;
+    old_write_shiftreg = 0;
 }
 
 void
@@ -134,9 +136,9 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     bitoffset = read16(buffer);
     zone = read8(buffer);
     read = (bool)read8(buffer);
-    read_shiftreg = read8(buffer);
-    read_shiftreg_pipe = read8(buffer);
-    write_shiftreg = read8(buffer);
+    old_read_shiftreg = read8(buffer);
+    old_read_shiftreg_pipe = read8(buffer);
+    old_write_shiftreg = read8(buffer);
     
     // Subcomponents
 	cpu->loadFromBuffer(buffer);
@@ -171,9 +173,9 @@ VC1541::saveToBuffer(uint8_t **buffer)
     write16(buffer, bitoffset);
     write8(buffer, zone);
     write8(buffer, (uint8_t)read);
-    write8(buffer, read_shiftreg);
-    write8(buffer, read_shiftreg_pipe);
-    write8(buffer, write_shiftreg);
+    write8(buffer, old_read_shiftreg);
+    write8(buffer, old_read_shiftreg_pipe);
+    write8(buffer, old_write_shiftreg);
 
     // Subcomponents
     cpu->saveToBuffer(buffer);
@@ -201,39 +203,40 @@ VC1541::dumpState()
 void
 VC1541::executeBitReady()
 {
-    bitReadyTimer += cyclesPerBit[zone];
-    byteReadyCounter++;
-
-    // TODO:
-    // In read mode: Shift read shift register and put in new bit
-    // In write mode: Shift write shift register and write bit
+    // Trigger shift registers
+    read_shiftreg <<= 1;
+    if (read)
+        read_shiftreg |= readBitFromHead();
+    else
+        writeBitToHead(write_shiftreg & 0x80);
+    write_shiftreg <<= 1;
     
-    if (byteReadyCounter == 7) {
-        byteReadyCounter = 0;
+    rotateDisk();
+    
+    // Perform action if byte is complete
+    if (byteReadyCounter++ == 7) {
         executeByteReady();
+        byteReadyCounter = 0;
     }
+    
+    bitReadyTimer += cyclesPerBit[zone];
 }
 
 void
 VC1541::executeByteReady()
 {
+    assert(bitoffset % 8 == 0);
+    
     // TODO: There is no such latch. Remove later
     read = readMode();
     
-    read_shiftreg_pipe = read_shiftreg;
-    read_shiftreg = readByteFromDisk();
-
     if (readMode() && !SYNC()) {
         byteReady(read_shiftreg);
     }
-
     if (writeMode()) {
-        writeByteToDisk(write_shiftreg);
         write_shiftreg = via2.ora;
         byteReady();
     }
-    
-    rotateDiskByOneByte();
 }
 
 inline void
@@ -308,13 +311,24 @@ void
 VC1541::moveHeadUp()
 {
     if (halftrack < 84) {
+
+        // As long as offset and bitoffset run in parallel, we start at the beginning of the track
+        // Otherwise, both get out of sync here
+        // halftrack++;
+        // bitoffset = offset = 0;
+        // byteReadyCounter = 0;
+        
+        /* NEW CODE: */
+        
         float position = (float)bitoffset / (float)disk.length.halftrack[halftrack];
         halftrack++;
         bitoffset = position * disk.length.halftrack[halftrack];
-        bitoffset &= 0xFFF8; // byte align (not necessary)
-        
-        assert(bitoffset % 8 == 0);
+         
+        // Byte-align bitoffset (keep this code as long as offset and bitoffset run in parallel
+        bitoffset &= 0xFFF8; 
+        byteReadyCounter = 0;
         offset = bitoffset / 8;
+        
         debug(3, "Moving head up to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
    
@@ -332,10 +346,12 @@ VC1541::moveHeadDown()
         float position = (float)bitoffset / (float)disk.length.halftrack[halftrack];
         halftrack--;
         bitoffset = position * disk.length.halftrack[halftrack];
-        bitoffset &= 0xFFF8; // byte align (not necessary)
-        
-        assert(bitoffset % 8 == 0);
+
+        // Byte-align bitoffset (keep this code as long as offset and bitoffset run in parallel
+        bitoffset &= 0xFFF8;
+        byteReadyCounter = 0;
         offset = bitoffset / 8;
+        
         debug(3, "Moving head down to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
     

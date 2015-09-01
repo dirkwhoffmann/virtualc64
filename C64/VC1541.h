@@ -277,15 +277,24 @@ private:
 
     //! The 74LS164 serial to parallel shift register
     /*! In read mode, this register is fed by the drive head with data. */
-    uint8_t read_shiftreg;
-
-    //! Previous value of read_shiftreg
-    /*! We need this value to detect the SYNC signal */
-    uint8_t read_shiftreg_pipe;
-
+    uint16_t read_shiftreg;
+    
     //! The 74LS165 parallel to serial shift register
     /*! In write mode, this register feeds the drive head with data. */
     uint8_t write_shiftreg;
+
+    
+    //! The 74LS164 serial to parallel shift register
+    /*! In read mode, this register is fed by the drive head with data. */
+    uint8_t old_read_shiftreg;
+
+    //! Previous value of read_shiftreg
+    /*! We need this value to detect the SYNC signal */
+    uint8_t old_read_shiftreg_pipe;
+
+    //! The 74LS165 parallel to serial shift register
+    /*! In write mode, this register feeds the drive head with data. */
+    uint8_t old_write_shiftreg;
         
 public:
 
@@ -299,7 +308,8 @@ public:
     /* In the logic board, the SYNC signal is computed by a NAND gate that combines the 10 previously read bits
      from the input shift register and CB2 of VIA2 (the r/w mode pin). Connecting CB2 to the NAND gates ensures
      that SYNC can only be true in read mode. */
-    inline bool SYNC() { return (read_shiftreg == 0xFF && (read_shiftreg_pipe & 0x03) == 0x03 && readMode()); }
+    // inline bool SYNC() { return (old_read_shiftreg == 0xFF && (old_read_shiftreg_pipe & 0x03) == 0x03 && readMode()); }
+    inline bool SYNC() { return (read_shiftreg & 0x3FF) == 0x3FF && readMode(); }
     
     //! Moves head one halftrack up
     void moveHeadUp();
@@ -334,12 +344,12 @@ private:
     /*!
      @abstract  Writes a single bit to the disk head
      */
-    inline void writeBitFromHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, bitoffset, bit); }
+    inline void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, bitoffset, bit); }
     
     /*!
      @abstract  Writes a single byte to the disk head
      */
-    inline void writeByteFromHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
+    inline void writeByteToHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
 
 
     /*!
@@ -373,7 +383,7 @@ private:
     /*! Moves head to next byte on the current track */
     // DEPRECATED
     inline void rotateDiskByOneByte() {
-        for (unsigned i = 0; i < 8; i++) rotateDisk();
+        // for (unsigned i = 0; i < 8; i++) rotateDisk();
         assert(bitoffset % 8 == 0);
         offset = bitoffset / 8;
     }
