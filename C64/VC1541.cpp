@@ -308,17 +308,17 @@ void
 VC1541::moveHeadUp()
 {
     if (halftrack < 84) {
-        float position = (float)offset / (float)disk.length.halftrack[halftrack];
-        // float position = (float)bitoffset / (float)disk.bitlength.halftrack[halftrack];
+        float position = (float)bitoffset / (float)disk.bitlength.halftrack[halftrack];
         halftrack++;
-        offset = position * disk.length.halftrack[halftrack];
-        // bitoffset = position * disk.bitlength.halftrack[halftrack];
-        // offset = bitoffset / 8;
-        bitoffset = 8 * offset;
+        bitoffset = position * disk.bitlength.halftrack[halftrack];
+        bitoffset &= 0xFFF8; // byte align (not necessary)
+        
+        assert(bitoffset % 8 == 0);
+        offset = bitoffset / 8;
         debug(3, "Moving head up to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
    
-    // assert(disk.isValidDiskPositon(halftrack, bitoffset));
+    assert(disk.isValidDiskPositon(halftrack, bitoffset));
     
     c64->putMessage(MSG_VC1541_HEAD, 1);
     if (halftrack % 2 && sendSoundMessages)
@@ -329,17 +329,17 @@ void
 VC1541::moveHeadDown()
 {
     if (halftrack > 1) {
-        float position = (float)offset / (float)disk.length.halftrack[halftrack];
-        // float position = (float)bitoffset / (float)disk.bitlength.halftrack[halftrack];
+        float position = (float)bitoffset / (float)disk.bitlength.halftrack[halftrack];
         halftrack--;
-        offset = position * disk.length.halftrack[halftrack];
-        // bitoffset = position * disk.bitlength.halftrack[halftrack];
-        // offset = bitoffset / 8;
-        bitoffset = 8 * offset; 
-        debug(3, "Moving head down to halftrack %d (track %2.1f) %f %d %d\n", halftrack, (halftrack + 1) / 2.0, position, offset, disk.length.halftrack[halftrack]);
+        bitoffset = position * disk.bitlength.halftrack[halftrack];
+        bitoffset &= 0xFFF8; // byte align (not necessary)
+        
+        assert(bitoffset % 8 == 0);
+        offset = bitoffset / 8;
+        debug(3, "Moving head down to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
     
-    // assert(disk.isValidDiskPositon(halftrack, bitoffset));
+    assert(disk.isValidDiskPositon(halftrack, bitoffset));
     
     c64->putMessage(MSG_VC1541_HEAD, 0);
     if (halftrack % 2 && sendSoundMessages)

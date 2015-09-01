@@ -136,7 +136,7 @@ public:
         };
         uint16_t track[43][2];
     } length;
-
+    
     /*! 
      @brief    Length of each halftrack in bits
      @abstract length.halftack[i] = length of halftrack i
@@ -272,6 +272,9 @@ public:
     
     //! Print some track data (for debugging)
     void dumpHalftrack(Halftrack ht, unsigned min = 0, unsigned max = UINT_MAX, unsigned highlight = UINT_MAX);
+
+    //! Print some SYNC mark information (for debugging)
+    void debugSyncMarks(uint8_t *data, unsigned lengthInBits);
 
 
     // ---------------------------------------------------------------------------------------------

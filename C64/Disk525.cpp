@@ -21,6 +21,8 @@
 
 Disk525::Disk525()
 {
+    name = "Disk525";
+
     // Create inverse GCR lookup table
     memset(invgcr, 0, sizeof(invgcr));
     for (unsigned i = 0; i < 16; i++)
@@ -42,7 +44,7 @@ Disk525::reset(C64 *c64)
 uint32_t
 Disk525::stateSize()
 {
-    return sizeof(bitlength.track) + sizeof(length.track) + sizeof(data.track) + 1;
+    return sizeof(bitlength.track) + sizeof(data.track) + 1;
 }
 
 void
@@ -52,7 +54,6 @@ Disk525::loadFromBuffer(uint8_t **buffer)
     
     // Disk data storage
     readBlock(buffer, data.track[0], sizeof(data.track));
-    readBlock16(buffer, length.track[0], sizeof(length.track));
     readBlock16(buffer, bitlength.track[0], sizeof(bitlength.track));
     numTracks = read8(buffer);
     
@@ -66,8 +67,7 @@ Disk525::saveToBuffer(uint8_t **buffer)
     
     // Disk data storage
     writeBlock(buffer, data.track[0], sizeof(data.track));
-    writeBlock16(buffer, length.track[0], sizeof(length.track));
-    writeBlock16(buffer, bitlength.track[0], sizeof(length.track));
+    writeBlock16(buffer, bitlength.track[0], sizeof(bitlength.track));
     write8(buffer, numTracks);
     
     assert(*buffer - old == stateSize());
@@ -77,6 +77,7 @@ void
 Disk525::dumpState()
 {
     unsigned noOfOneBits, alignedSyncs, unalignedSyncs;
+    uint8_t bit;
     
     msg("5,25\" floppy disk\n");
     msg("-----------------\n\n");
@@ -84,22 +85,21 @@ Disk525::dumpState()
     for (unsigned track = 1; track <= 42; track++) {
         assert(isTrackNumber(track));
         noOfOneBits = alignedSyncs = unalignedSyncs = 0;
-        for (unsigned offset = 0; offset < length.track[track][0]; offset++) {
-            for (uint8_t bit = 0x80; bit != 0x00; bit >>= 1) {
-                if (data.track[track][offset] & bit) {
-                    noOfOneBits++;
-                } else {
-                    if (noOfOneBits >= 10) { // SYNC FOUND
-                        if (bit == 0x80) {
-                            alignedSyncs++;
-                        } else {
-                            unalignedSyncs++;
-                        }
+        for (unsigned offset = 0; offset < bitlength.track[track][0]; offset++) {
+            if ((bit = readBit(data.track[track], offset))) {
+                noOfOneBits++;
+            } else {
+                if (noOfOneBits >= 10) { // SYNC FOUND
+                    if (offset % 8 == 0) {
+                        alignedSyncs++;
+                    } else {
+                        unalignedSyncs++;
                     }
-                    noOfOneBits = 0;
                 }
+                noOfOneBits = 0;
             }
         }
+        
         // Note: If a sync marks wraps the array bound, it is not detected
         msg("Track %2d: Length: %d bits %d SYNC sequences found (%d are byte aligned)\n",
             track, bitlength.track[track][0], alignedSyncs + unalignedSyncs, alignedSyncs);
@@ -109,13 +109,42 @@ Disk525::dumpState()
 }
 
 void
+Disk525::debugSyncMarks(uint8_t *data, unsigned lengthInBits) {
+    
+    unsigned r, noOfOneBits, alignedSyncs = 0, unalignedSyncs = 0;
+
+    for (r = noOfOneBits = 0; r < lengthInBits; r++) {
+        if (readBit(data, r)) {
+            noOfOneBits++;
+        } else {
+            if (noOfOneBits >= 10) { // SYNC FOUND
+                if (r % 8 == 0) {
+                    alignedSyncs++;
+                } else {
+                    warn("Unaligned SYNC mark found at offset %d\n", r);
+                    unalignedSyncs++;
+                }
+            }
+            noOfOneBits = 0;
+        }
+    }
+
+    if (unalignedSyncs) {
+        warn("%d out of %d SYNC marks are not byte aligned\n", unalignedSyncs, alignedSyncs + unalignedSyncs);
+    }
+        
+}
+
+void
 Disk525::dumpHalftrack(Halftrack ht, unsigned min, unsigned max, unsigned highlight)
 {
     assert(isHalftrackNumber(ht));
     
-    if (max > length.halftrack[ht]) max = length.halftrack[ht];
+    uint16_t bytesOnTrack = bitlength.halftrack[ht] / 8;
     
-    msg("Dumping track %d (length = %d)\n", ht, length.halftrack[ht]);
+    if (max > bytesOnTrack) max = bytesOnTrack;
+    
+    msg("Dumping track %d (length = %d)\n", ht, bytesOnTrack);
     for (unsigned i = min; i < max; i++) {
         msg(i == highlight ? "(%02X) " : "%02X ", data.halftrack[ht][i]);
     }
@@ -316,28 +345,95 @@ Disk525::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest
 unsigned
 Disk525::decodeDisk(uint8_t *dest, int *error)
 {
-    Track t;
-    Halftrack halftrack;
-    unsigned numBytes = 0;
-    uint8_t tmpbuf[2 * 7928];
+    uint8_t tmpbuf1[2 * 7928], tmpbuf2[2 * 7928];
+    unsigned tmpbuf1length, tmpbuf2length;
+    unsigned r, w, copies, noOfOneBits, bitsOnTrack = 0, numBytes = 0;
+    int startOfFirstSyncMark = -1;
     
     if (error) *error = 0; // We assume the best
     
+    
     // For each full track ...
-    for (t = 1, halftrack = 0; t <= numTracks; t++, halftrack += 2) {
+    for (Track t = 1; t <= numTracks; t++) {
+    
+        bitsOnTrack = bitlength.track[t][0];
+        startOfFirstSyncMark = 0;
         
-        debug(3, "Decoding track %d %s\n", t, dest == NULL ? "(test run)" : "");
+        debug(3, "Decoding track %d (%d bits) %s\n", t, bitsOnTrack, dest == NULL ? "(test run)" : "");
         
-        // Copy track into temporary buffer
-        // Buffer is double sized, so we can read safely beyond the array bounds
-        assert(2 * length.track[t][0] < sizeof(tmpbuf));
-        memcpy(tmpbuf, data.track[t], length.track[t][0]);
-        memcpy(tmpbuf + length.track[t][0], data.track[t], length.track[t][0]);
+        // Step 1: Search for first SYNC mark (ten 1s in a row)
+        debug(3, "    Searching for first SYNC mark\n", startOfFirstSyncMark);
+        for (r = noOfOneBits = 0; r < bitsOnTrack; r++) {
+            
+            // Count '1' bits
+            if (readBit(data.track[t], r)) { noOfOneBits++; } else { noOfOneBits = 0; }
+            
+            // Check if we have found the beginning of a SYNC mark (ten 1s in a row)
+            if (noOfOneBits == 10) { startOfFirstSyncMark = r - 9; break; }
+        }
         
+        if (startOfFirstSyncMark < 0) {
+            warn("Disk decoding aborted. No SYNC mark found on track %d\n", t);
+            *error = 1;
+            return 0;
+        }
+        
+
+        // Step 2: Copy track data into first temporary buffer starting at the first SYNC mark
+        // Track data is repeates twice, so we can read safely beyond the array bounds later
+        debug(3, "    Setting up temporary buffer (alignment offset = %d)\n", startOfFirstSyncMark);
+        for (copies = w = 0; copies < 2; copies++) {
+            for (r = startOfFirstSyncMark; r < bitsOnTrack; r++) {
+                assert((w / 8) < sizeof(tmpbuf1) - 1);
+                writeBit(tmpbuf1, w++, readBit(data.track[t], r));
+            }
+            for (r = 0; r < startOfFirstSyncMark; r++) {
+                assert((w / 8) < sizeof(tmpbuf1) - 1);
+                writeBit(tmpbuf1, w++, readBit(data.track[t], r));
+            }
+        }
+        assert(w % 8 == 0);
+
+        tmpbuf1length = w;
+        debug(3, "    Temporary buffer contains %d bits\n", tmpbuf1length);
+        assert(tmpbuf1length == 2 * bitsOnTrack);
+
+        
+        // Step 3: Write a byte aligned copy of the first temporary buffer into the second buffer.
+        debug(3, "    Aligning SYNC marks\n");
+        uint8_t bit;
+        for (r = w = noOfOneBits = 0; r < tmpbuf1length; r++) {
+            
+            // Count '1' bits
+            if ((bit = readBit(tmpbuf1, r))) noOfOneBits++; else noOfOneBits = 0;
+            
+            // Copy bits if we are not inside a SYNC mark
+            if (noOfOneBits < 10) { writeBit(tmpbuf2, w++, bit); }
+            
+            // Check if we have found the beginning of a SYNC mark (ten 1s in a row)
+            if (noOfOneBits == 10) {
+                
+                // Write more 1s and make sure that data is byte aligned
+                for (unsigned i = 0; i < 8; i++) writeBit(tmpbuf2, w++, 1);
+                
+                if (w % 8 != 0)
+                    debug(2,"Adding %d pad bits to align data.\n", 8 - (w % 8));
+                
+                while (w % 8 != 0) writeBit(tmpbuf2, w++, 1);
+            }
+            
+        }
+        tmpbuf2length = w;
+        debug(3, "    Buffer contains %d bits after alignment\n", tmpbuf2length);
+
+        // Report sync marks that are not byte aligned (there shouldn't be any)
+        debugSyncMarks(tmpbuf2, tmpbuf2length);
+        
+        // Step 4: Decode track data
         if (dest)
-            numBytes += decodeTrack(tmpbuf, dest + numBytes, error);
+            numBytes += decodeTrack(tmpbuf2, dest + numBytes, error);
         else
-            numBytes += decodeTrack(tmpbuf, NULL, error);
+            numBytes += decodeTrack(tmpbuf2, NULL, error);
         
     }
     return numBytes;

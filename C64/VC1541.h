@@ -379,9 +379,8 @@ private:
     // DEPRECATED
     inline void rotateDiskByOneByte() {
         for (unsigned i = 0; i < 8; i++) rotateDisk();
-        
-        if (++offset >= disk.length.halftrack[halftrack]) offset = 0;
-        assert(bitoffset == offset * 8);
+        assert(bitoffset % 8 == 0);
+        offset = bitoffset / 8;
     }
     
     // Signals the CPU that a byte has been processed
