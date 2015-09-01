@@ -1,5 +1,5 @@
 /*
- * (C) 2008 Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann,  2008 - 2016
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,15 @@
  */
 
 // TODO:
-// Fill shift register in executeBitReady
-// Add assert(byteReadyCounter == 7 <-> bitoffset % 8 == 0)
+// Get rid of readMode latching
+// Reset byteReadyCounter whenever a SYNC sequence is ended
+// Add sync as variable, get rid of function SYNC()
+// Get rid of old_read_shiftreg, old_write_shiftreg
+// Get rid of offset
+// Change name bitoffset -> offset
+// Stress test: Change disk encoder to produce unaligned sync sequences
+// Remove byte alignment in moveHeadUp, moveHeadDown
+
 
 #ifndef _VC1541_INC
 #define _VC1541_INC
@@ -273,7 +280,7 @@ private:
     uint8_t zone;
 
     //! Indicates whether the drive is currently in read mode
-    bool read; 
+    // bool read;
 
     //! The 74LS164 serial to parallel shift register
     /*! In read mode, this register is fed by the drive head with data. */
@@ -283,19 +290,15 @@ private:
     /*! In write mode, this register feeds the drive head with data. */
     uint8_t write_shiftreg;
 
-    
-    //! The 74LS164 serial to parallel shift register
-    /*! In read mode, this register is fed by the drive head with data. */
-    uint8_t old_read_shiftreg;
-
-    //! Previous value of read_shiftreg
-    /*! We need this value to detect the SYNC signal */
-    uint8_t old_read_shiftreg_pipe;
-
-    //! The 74LS165 parallel to serial shift register
-    /*! In write mode, this register feeds the drive head with data. */
-    uint8_t old_write_shiftreg;
-        
+    /*! @brief    Current value of the SYNC signal
+        @abstract This signal plays an important role for timing synchronization. It becomes true when the 
+                  beginning of a SYNC is detected. On the logic board, the SYNC signal is computed by a NAND gate 
+                  that combines the 10 previously read bits rom the input shift register and CB2 of VIA2 (the 
+                  r/w mode pin). Connecting CB2 to the NAND gates ensures that SYNC can only be true in read mode. 
+                  When SYNC becomes false (meaning that a 0 was pushed into the shift register), the byteReadyCounter
+                  is reset. */
+    bool sync;
+            
 public:
 
     //! Returns true iff drive is currently in read mode
@@ -308,7 +311,7 @@ public:
     /* In the logic board, the SYNC signal is computed by a NAND gate that combines the 10 previously read bits
      from the input shift register and CB2 of VIA2 (the r/w mode pin). Connecting CB2 to the NAND gates ensures
      that SYNC can only be true in read mode. */
-    // inline bool SYNC() { return (old_read_shiftreg == 0xFF && (old_read_shiftreg_pipe & 0x03) == 0x03 && readMode()); }
+    // DEPRECATED
     inline bool SYNC() { return (read_shiftreg & 0x3FF) == 0x3FF && readMode(); }
     
     //! Moves head one halftrack up

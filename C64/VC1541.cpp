@@ -65,12 +65,9 @@ VC1541::resetDrive(C64 *c64)
     offset = 0;
     bitoffset = 0;
     zone = 0;
-    read = true;
     read_shiftreg = 0;
     write_shiftreg = 0;
-    old_read_shiftreg = 0;
-    old_read_shiftreg_pipe = 0;
-    old_write_shiftreg = 0;
+    sync = false;
 }
 
 void
@@ -135,10 +132,9 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     offset = read16(buffer);
     bitoffset = read16(buffer);
     zone = read8(buffer);
-    read = (bool)read8(buffer);
-    old_read_shiftreg = read8(buffer);
-    old_read_shiftreg_pipe = read8(buffer);
-    old_write_shiftreg = read8(buffer);
+    read_shiftreg = read16(buffer);
+    write_shiftreg = read8(buffer);
+    sync = (bool)read8(buffer);
     
     // Subcomponents
 	cpu->loadFromBuffer(buffer);
@@ -172,10 +168,9 @@ VC1541::saveToBuffer(uint8_t **buffer)
     write16(buffer, offset);
     write16(buffer, bitoffset);
     write8(buffer, zone);
-    write8(buffer, (uint8_t)read);
-    write8(buffer, old_read_shiftreg);
-    write8(buffer, old_read_shiftreg_pipe);
-    write8(buffer, old_write_shiftreg);
+    write16(buffer, read_shiftreg);
+    write8(buffer, write_shiftreg);
+    write8(buffer, (uint8_t)sync);
 
     // Subcomponents
     cpu->saveToBuffer(buffer);
@@ -194,7 +189,7 @@ VC1541::dumpState()
 	msg("------\n\n");
 	msg(" Bit ready timer : %d\n", bitReadyTimer);
 	msg("   Head position : Track %d, Offset %d, Bit offset %d\n", halftrack, offset, bitoffset);
-	msg("            SYNC : %d\n", SYNC());
+	msg("            SYNC : %d\n", sync);
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
     disk.dumpState();
@@ -203,12 +198,31 @@ VC1541::dumpState()
 void
 VC1541::executeBitReady()
 {
-    // Trigger shift registers
     read_shiftreg <<= 1;
-    if (read)
+
+    if (readMode()) {
+        
+        // Read mode
         read_shiftreg |= readBitFromHead();
-    else
+
+        // Set SYNC signal
+        if ((read_shiftreg & 0x3FF) == 0x3FF) {
+
+            sync = true;
+            
+        } else {
+
+            if (sync)
+                byteReadyCounter = 0; // Cleared on falling edge of SYNC
+            sync = false;
+        }
+        
+    } else {
+        
+        // Write mode
         writeBitToHead(write_shiftreg & 0x80);
+        sync = false;
+    }
     write_shiftreg <<= 1;
     
     rotateDisk();
@@ -228,9 +242,11 @@ VC1541::executeByteReady()
     assert(bitoffset % 8 == 0);
     
     // TODO: There is no such latch. Remove later
-    read = readMode();
+    // read = readMode();
     
-    if (readMode() && !SYNC()) {
+    assert(SYNC() == sync);
+    //if (readMode() && !SYNC()) {
+    if (readMode() && !sync) {
         byteReady(read_shiftreg);
     }
     if (writeMode()) {
