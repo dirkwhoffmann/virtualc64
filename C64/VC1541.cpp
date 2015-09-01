@@ -308,9 +308,9 @@ void
 VC1541::moveHeadUp()
 {
     if (halftrack < 84) {
-        float position = (float)bitoffset / (float)disk.bitlength.halftrack[halftrack];
+        float position = (float)bitoffset / (float)disk.length.halftrack[halftrack];
         halftrack++;
-        bitoffset = position * disk.bitlength.halftrack[halftrack];
+        bitoffset = position * disk.length.halftrack[halftrack];
         bitoffset &= 0xFFF8; // byte align (not necessary)
         
         assert(bitoffset % 8 == 0);
@@ -329,9 +329,9 @@ void
 VC1541::moveHeadDown()
 {
     if (halftrack > 1) {
-        float position = (float)bitoffset / (float)disk.bitlength.halftrack[halftrack];
+        float position = (float)bitoffset / (float)disk.length.halftrack[halftrack];
         halftrack--;
-        bitoffset = position * disk.bitlength.halftrack[halftrack];
+        bitoffset = position * disk.length.halftrack[halftrack];
         bitoffset &= 0xFFF8; // byte align (not necessary)
         
         assert(bitoffset % 8 == 0);

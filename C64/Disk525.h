@@ -137,7 +137,7 @@ public:
             uint16_t halftrack[85];
         };
         uint16_t track[43][2];
-    } bitlength;
+    } length;
 
     //! Total number of tracks on this disk
     // DEPRECATED (ADD METHOD emptyTrack(Track nr);) (Scans track for data, returns true/false numTracks())
@@ -145,7 +145,7 @@ public:
 
     //! Returns true if track/offset indicates a valid disk position on disk
     bool isValidDiskPositon(Halftrack ht, uint16_t bitoffset) {
-        return isHalftrackNumber(ht) && bitoffset < bitlength.halftrack[ht]; }
+        return isHalftrackNumber(ht) && bitoffset < length.halftrack[ht]; }
     
     
 public:

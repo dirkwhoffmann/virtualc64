@@ -17,11 +17,6 @@
  */
 
 // TODO:
-// Fill array bitlength, add asserts
-// Replace bit by bitoffset, change readHead
-// Change readByte, writeByte to call readHead, writeHead 8 times
-// Use writeByte in encodeDisk
-// Change writeSYNC API to write bits instead of bytes
 // Fill shift register in executeBitReady
 // Add assert(byteReadyCounter == 7 <-> bitoffset % 8 == 0)
 
@@ -363,7 +358,7 @@ private:
      @abstract Advances drive head position by one bit
      @result   Returns true if the new drive head position is byte aligned
      */
-    inline void rotateDisk() { if (++bitoffset >= disk.bitlength.halftrack[halftrack]) bitoffset = 0; }
+    inline void rotateDisk() { if (++bitoffset >= disk.length.halftrack[halftrack]) bitoffset = 0; }
     
     //! Reads the currently processed byte
     /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
