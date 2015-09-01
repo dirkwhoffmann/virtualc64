@@ -857,8 +857,8 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrac
 {
 	int pos;
 	
-    if (nr >= Disk525::MAX_FILES_ON_DISK) {
-        fprintf(stderr, "Cannot write directory entry. Number of files is limited to %d\n", Disk525::MAX_FILES_ON_DISK);
+    if (nr >= MAX_FILES_ON_DISK) {
+        fprintf(stderr, "Cannot write directory entry. Number of files is limited to %d\n", MAX_FILES_ON_DISK);
 		return false;
 	}
 

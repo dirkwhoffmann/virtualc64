@@ -42,7 +42,7 @@ Disk525::reset(C64 *c64)
 uint32_t
 Disk525::stateSize()
 {
-    return sizeof(length.track) + sizeof(data.track) + 1;
+    return sizeof(bitlength.track) + sizeof(length.track) + sizeof(data.track) + 1;
 }
 
 void
@@ -53,6 +53,7 @@ Disk525::loadFromBuffer(uint8_t **buffer)
     // Disk data storage
     readBlock(buffer, data.track[0], sizeof(data.track));
     readBlock16(buffer, length.track[0], sizeof(length.track));
+    readBlock16(buffer, bitlength.track[0], sizeof(bitlength.track));
     numTracks = read8(buffer);
     
     assert(*buffer - old == stateSize());
@@ -66,6 +67,7 @@ Disk525::saveToBuffer(uint8_t **buffer)
     // Disk data storage
     writeBlock(buffer, data.track[0], sizeof(data.track));
     writeBlock16(buffer, length.track[0], sizeof(length.track));
+    writeBlock16(buffer, bitlength.track[0], sizeof(length.track));
     write8(buffer, numTracks);
     
     assert(*buffer - old == stateSize());
@@ -99,8 +101,9 @@ Disk525::dumpState()
             }
         }
         // Note: If a sync marks wraps the array bound, it is not detected
-        msg("Track %2d: Length: %d bytes %d SYNC sequences found (%d are byte aligned)\n",
-            track, length.track[track][0], alignedSyncs + unalignedSyncs, alignedSyncs);
+        msg("Track %2d: Length: %d bits %d SYNC sequences found (%d are byte aligned)\n",
+            track, bitlength.track[track][0], alignedSyncs + unalignedSyncs, alignedSyncs);
+        assert(bitlength.track[track][0] == 8 * length.track[track][0]);
     }
     msg("\n");
 }
@@ -125,6 +128,7 @@ Disk525::clearDisk()
     for (Halftrack ht = 1; ht <= 84; ht++) {
         clearHalftrack(ht);
         length.halftrack[ht] = sizeof(data.halftrack[ht]);
+        bitlength.halftrack[ht] = sizeof(data.halftrack[ht]) * 8;
     }
 }
 
@@ -160,7 +164,7 @@ Disk525::encodeArchive(D64Archive *a)
     int zone3[] = { 0, 10, 2, 12, 4, 14, 6, 16, 8, 1, 11, 3, 13, 5, 15, 7, 17, 9, -1 };
     int zone4[] = { 0, 10, 3, 13, 6, 16, 9, 2, 12, 5, 15, 8, 1, 11, 4, 14, 7, -1 };
 
-    unsigned track, encodedBytes;
+    unsigned track, encodedBits;
     
     assert(a != NULL);
     
@@ -187,17 +191,21 @@ Disk525::encodeArchive(D64Archive *a)
     
     // Zone 4: Tracks 31 - 35..42 (17 sectors, tailgap 9/10 (even/odd sectors))
     for (track = 31; track <= a->numberOfTracks(); track++) {
-        encodedBytes = encodeTrack(a, track, zone4, 9, 10);
+        encodedBits = encodeTrack(a, track, zone4, 9, 10);
     }
     
     // Clear remaining tracks (if any)
     for (track = numTracks + 1; track <= 42; track++) {
-        length.track[track][0] = encodedBytes; // Track t
-        length.track[track][1] = encodedBytes; // Half track above
+        assert(encodedBits % 8 == 0);
+        length.track[track][0] = encodedBits / 8; // Track t
+        length.track[track][1] = encodedBits / 8; // Half track above
+        bitlength.track[track][0] = encodedBits;  // Track t
+        bitlength.track[track][1] = encodedBits;  // Half track above
     }
     
     for (Halftrack ht = 1; ht <= 84; ht++) {
         assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]));
+        assert(bitlength.halftrack[ht] <= sizeof(data.halftrack[ht]) * 8);
     }
 }
 
@@ -206,7 +214,7 @@ Disk525::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEve
 {
     assert(isTrackNumber(t));
 
-    unsigned encodedBytes, totalEncodedBytes = 0;
+    unsigned encodedBits, totalEncodedBits = 0;
     uint8_t *dest = data.track[t];
     
     debug(3, "Encoding track %d\n", t);
@@ -214,15 +222,19 @@ Disk525::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEve
     // Scan the interleave pattern and encode each sector
     for (unsigned i = 0; sectorList[i] != -1; i++) {
         
-        encodedBytes = encodeSector(a, t, sectorList[i], dest, (i % 2) ? tailGapOdd : tailGapEven);
-        dest += encodedBytes;
-        totalEncodedBytes += encodedBytes;
+        encodedBits = encodeSector(a, t, sectorList[i], dest, (i % 2) ? tailGapOdd : tailGapEven);
+        assert(encodedBits % 8 == 0);
+        dest += (encodedBits / 8);
+        totalEncodedBits += encodedBits;
     }
+
+    assert(totalEncodedBits % 8 == 0);
+    length.track[t][0] = totalEncodedBits / 8; // Track t
+    length.track[t][1] = totalEncodedBits / 8; // Half track above
+    bitlength.track[t][0] = totalEncodedBits;  // Track t
+    bitlength.track[t][1] = totalEncodedBits;  // Half track above
     
-    length.track[t][0] = totalEncodedBytes; // Track t
-    length.track[t][1] = totalEncodedBytes; // Half track above
-    
-    return totalEncodedBytes;
+    return totalEncodedBits;
 }
 
 unsigned
@@ -275,7 +287,7 @@ Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, int
     ptr += gap;
     
     // Return number of encoded bytes
-    return ptr - dest;
+    return (ptr - dest) * 8;
 }
 
 void

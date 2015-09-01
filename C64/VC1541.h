@@ -16,6 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// TODO:
+// Fill array bitlength, add asserts
+// Replace bit by bitoffset, change readHead
+// Change readByte, writeByte to call readHead, writeHead 8 times
+// Use writeByte in encodeDisk
+// Change writeSYNC API to write bits instead of bytes
+// Fill shift register in executeBitReady
+// Add assert(byteReadyCounter == 7 <-> bitoffset % 8 == 0)
+
 #ifndef _VC1541_INC
 #define _VC1541_INC
 
@@ -124,7 +133,6 @@ public:
     inline bool soundMessagesEnabled() { return sendSoundMessages; }
     inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
     
-
     // Disk handling
     
     // TODO: MOVE TO DISK CLASS
@@ -202,23 +210,6 @@ public:
         
     
     // ---------------------------------------------------------------------------------------------
-    //                                     Disk data storage
-    // ---------------------------------------------------------------------------------------------
-
-public:
-    
-
-private:
-    
-    // TODO:
-    // Remove direct accesses to length.
-    // Check direct accesses to data
-    // Lift up array index by 1
-    // Switch to union style storage
-    // Cleanup
-    
-    
-    // ---------------------------------------------------------------------------------------------
     //                                   Drive properties
     // ---------------------------------------------------------------------------------------------
    
@@ -261,13 +252,17 @@ private:
     
     
     //! Halftrack position of the read/write head
-    Disk525::Halftrack halftrack;
+    Halftrack halftrack;
 
     //! Byte position of the read/write head inside the current track
     uint16_t offset;
 
+    //! Bit position of the read/write head inside the current track
+    uint16_t bitoffset;
+
     //! Bit position of the read/write head inside the current byte
     /*! Valid binary patterns are 10000000, 01000000, ..., 00000001 */
+    // REMOVE. REPLACE BY bitoffset.
     uint8_t bit;
     
     /*!
@@ -330,9 +325,38 @@ public:
 private:
 
     /*!
+     @abstract  Reads a single bit from the disk head
+     @result	returns 0 or 1
+     */
+    inline uint8_t readBitFromHead() { return disk.readBitFromHalftrack(halftrack, bitoffset); }
+
+    /*!
+     @abstract  Reads a single byte from the disk head
+     @result	returns 0 ... 255
+     */
+    inline uint8_t readByteFromHead() { return disk.readByteFromHalftrack(halftrack, bitoffset); }
+
+    /*!
+     @abstract  Writes a single bit to the disk head
+     */
+    inline void writeBitFromHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, bitoffset, bit); }
+    
+    /*!
+     @abstract  Writes a single byte to the disk head
+     */
+    inline void writeByteFromHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
+
+
+
+
+    
+    
+    
+    /*!
      @abstract  Reads bit from drive head position
      @result	returns 0 or 1
      */
+    // DEPRECATED
     inline uint8_t readHead() { return (disk.data.halftrack[halftrack][offset] & bit) ? 1 : 0; }
 
     /*!

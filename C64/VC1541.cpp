@@ -129,7 +129,7 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     sendSoundMessages = (bool)read8(buffer);
     
     // Read/Write logic
-    halftrack = (Disk525::Halftrack)read8(buffer);
+    halftrack = (Halftrack)read8(buffer);
     offset = read16(buffer);
     bit = read8(buffer);
     zone = read8(buffer);
