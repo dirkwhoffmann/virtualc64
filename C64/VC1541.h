@@ -110,13 +110,6 @@ private:
         16 * 4, // Zone 3: One bit each (16 * 4) base clock cycles (4 CPU cycles)
     };
 
-    const uint16_t cyclesPerByte[4] = {
-        13 * 4 * 8, // Zone 0: One byte each (16 * 26) base clock cycles (= 26 CPU cycles)
-        14 * 4 * 8, // Zone 1: One byte each (16 * 28) base clock cycles (= 28 CPU cycles)
-        15 * 4 * 8, // Zone 2: One byte each (16 * 30) base clock cycles (30 CPU cycles)
-        16 * 4 * 8, // Zone 3: One byte each (16 * 32) base clock cycles (32 CPU cycles)
-    };
-    
     
     // ---------------------------------------------------------------------------------------------
     //                                    Main entry points
@@ -236,31 +229,18 @@ private:
     //! Halftrack position of the read/write head
     Halftrack halftrack;
 
-    //! Byte position of the read/write head inside the current track
-    // uint16_t offset;
-
     //! Bit position of the read/write head inside the current track
     uint16_t bitoffset;
-
-    //! Bit position of the read/write head inside the current byte
-    /*! Valid binary patterns are 10000000, 01000000, ..., 00000001 */
-    // REMOVE. REPLACE BY bitoffset.
-    // uint8_t bit;
     
-    /*!
-     @abstract  Reads bit from drive head position
-     @result	returns 0 or 1
-     */
-
-    //! Current zone
+    //! Current disk zone
     /*! Each track belongs to one of four zones. Whenever the drive moves the r/w head, 
         it computed the new number and writes into PB5 and PB6 of via2. These bits are 
         hard-wired to a 74LS193 counter on the logic board that breaks down the 16 Mhz base
         frequency. This mechanism is used to slow down the read/write process on inner tracks. */
     uint8_t zone;
 
-    //! The 74LS164 serial to parallel shift register
-    /*! In read mode, this register is fed by the drive head with data. */
+    //! @brief The 74LS164 serial to parallel shift register
+    /*! @abstract In read mode, this register is fed by the drive head with data. */
     uint16_t read_shiftreg;
     
     //! The 74LS165 parallel to serial shift register
@@ -278,25 +258,26 @@ private:
             
 public:
 
-    //! Returns true iff drive is currently in read mode
+    //! @brief Returns true iff drive is currently in read mode
     bool readMode() { return (via2.io[0x0C] & 0x20); }
 
-    //! Returns true iff drive is currently in write mode
+    //! @brief Returns true iff drive is currently in write mode
     bool writeMode() { return !(via2.io[0x0C] & 0x20); }
    
-    //! Moves head one halftrack up
+    //! @brief Moves head one halftrack up
     void moveHeadUp();
     
-    //! Moves head one halftrack down
+    //! @brief Moves head one halftrack down
     void moveHeadDown();
 
-    //! Returns the current value of the  zone (0 to 3)
+    //! @brief Returns the current value of the  zone (0 to 3)
     inline bool getSync() { return sync; }
 
-    //! Returns the current track zone (0 to 3)
+    //! @brief Returns the current track zone (0 to 3)
     inline bool getZone() { return zone; }
 
-    //! Sets the current track zone (0 to 3)
+    //! @brief Sets the current track zone
+    /*! @param z drive zone (0 to 3) */
     void setZone(uint8_t z);
 
     //! Triggers an ATN interrupt
@@ -305,38 +286,28 @@ public:
 
 private:
 
-    /*!
-     @abstract  Reads a single bit from the disk head
-     @result	returns 0 or 1
-     */
+    /// @abstract Reads a single bit from the disk head
+    /// @result   0 or 1
     inline uint8_t readBitFromHead() { return disk.readBitFromHalftrack(halftrack, bitoffset); }
 
-    /*!
-     @abstract  Reads a single byte from the disk head
-     @result	returns 0 ... 255
-     */
+    /// @abstract  Reads a single byte from the disk head
+    /// @result    0 ... 255
     inline uint8_t readByteFromHead() { return disk.readByteFromHalftrack(halftrack, bitoffset); }
 
-    /*!
-     @abstract  Writes a single bit to the disk head
-     */
+    /*! @brief Writes a single bit to the disk head */
     inline void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, bitoffset, bit); }
     
-    /*!
-     @abstract  Writes a single byte to the disk head
-     */
+    /*! @brief Writes a single byte to the disk head */
     inline void writeByteToHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
     
-    /*!
-     @abstract Advances drive head position by one bit
-     @result   Returns true if the new drive head position is byte aligned
-     */
+    /*! @brief  Advances drive head position by one bit
+     *  @result Returns true if the new drive head position is byte aligned */
     inline void rotateDisk() { if (++bitoffset >= disk.length.halftrack[halftrack]) bitoffset = 0; }
      
-    // Signals the CPU that a byte has been processed
+    //! @brief Signals the CPU that a byte has been processed
     inline void byteReady();
 
-    // Signals the CPU that a byte has been processed and load byte into input latch A of via 2
+    //! @brief Signals the CPU that a byte has been processed and load byte into input latch A of via 2
     inline void byteReady(uint8_t byte);
    
 
