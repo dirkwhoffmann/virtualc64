@@ -124,18 +124,6 @@ public:
         };
         uint8_t track[43][2 * 7928];
     } data;
-
-    //! Length of each halftrack in bytes
-    /*! length.halftack[i] : length of halftrack i
-        length.track[i][0] : length of track i
-        length.track[i][1] : length of halftrack above track i */
-    union {
-        struct {
-            uint16_t _pad;
-            uint16_t halftrack[85];
-        };
-        uint16_t track[43][2];
-    } length;
     
     /*! 
      @brief    Length of each halftrack in bits

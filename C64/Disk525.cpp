@@ -103,7 +103,6 @@ Disk525::dumpState()
         // Note: If a sync marks wraps the array bound, it is not detected
         msg("Track %2d: Length: %d bits %d SYNC sequences found (%d are byte aligned)\n",
             track, bitlength.track[track][0], alignedSyncs + unalignedSyncs, alignedSyncs);
-        assert(bitlength.track[track][0] == 8 * length.track[track][0]);
     }
     msg("\n");
 }
@@ -156,7 +155,6 @@ Disk525::clearDisk()
 {
     for (Halftrack ht = 1; ht <= 84; ht++) {
         clearHalftrack(ht);
-        length.halftrack[ht] = sizeof(data.halftrack[ht]);
         bitlength.halftrack[ht] = sizeof(data.halftrack[ht]) * 8;
     }
 }
@@ -226,14 +224,11 @@ Disk525::encodeArchive(D64Archive *a)
     // Clear remaining tracks (if any)
     for (track = numTracks + 1; track <= 42; track++) {
         assert(encodedBits % 8 == 0);
-        length.track[track][0] = encodedBits / 8; // Track t
-        length.track[track][1] = encodedBits / 8; // Half track above
         bitlength.track[track][0] = encodedBits;  // Track t
         bitlength.track[track][1] = encodedBits;  // Half track above
     }
     
     for (Halftrack ht = 1; ht <= 84; ht++) {
-        assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]));
         assert(bitlength.halftrack[ht] <= sizeof(data.halftrack[ht]) * 8);
     }
 }
@@ -258,8 +253,6 @@ Disk525::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEve
     }
 
     assert(totalEncodedBits % 8 == 0);
-    length.track[t][0] = totalEncodedBits / 8; // Track t
-    length.track[t][1] = totalEncodedBits / 8; // Half track above
     bitlength.track[t][0] = totalEncodedBits;  // Track t
     bitlength.track[t][1] = totalEncodedBits;  // Half track above
     
@@ -414,14 +407,8 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
             if (noOfOneBits == 10) {
                 
                 // Write more 1s and make sure that data is byte aligned
-                for (unsigned i = 0; i < 8; i++) writeBit(tmpbuf2, w++, 1);
-                
-                if (w % 8 != 0)
-                    debug(2,"Adding %d pad bits to align data.\n", 8 - (w % 8));
-                
-                while (w % 8 != 0) writeBit(tmpbuf2, w++, 1);
+                for (unsigned i = 0; i < 8 || (w % 8) != 0; i++) writeBit(tmpbuf2, w++, 1);
             }
-            
         }
         tmpbuf2length = w;
         debug(3, "    Buffer contains %d bits after alignment\n", tmpbuf2length);
@@ -471,7 +458,7 @@ Disk525::decodeTrack(uint8_t *source, uint8_t *dest, int *error)
             // databyte[3] = track number
             
             sectorID = data[2];
-            debug(2, "Found header block (%d/%d)\n", data[3], data[2], data[1]);
+            debug(3, "Found header block (%d/%d)\n", data[3], data[2], data[1]);
             
         } else if (data[0] == 0x07) { // Data block
             
@@ -486,7 +473,7 @@ Disk525::decodeTrack(uint8_t *source, uint8_t *dest, int *error)
                 continue;
             }
             
-            debug("Found data block for sector %d at offset %d\n", sectorID, i);
+            debug(3, "Found data block for sector %d at offset %d\n", sectorID, i);
             sectorStart[sectorID] = i;
             
         } else {
@@ -497,7 +484,7 @@ Disk525::decodeTrack(uint8_t *source, uint8_t *dest, int *error)
     
     // Decode all sectors that have been found
     for (unsigned i = 0; i < 21 && sectorStart[i] != -1; i++, numBytes += 256) {
-        debug(2, "   Decoding sector %d\n", i);
+        debug(3, "   Decoding sector %d\n", i);
         if (dest) {
             decodeSector(source + sectorStart[i], dest);
             dest += 256;
@@ -533,7 +520,7 @@ Disk525::decodeSector(uint8_t *source, uint8_t *dest)
     decodeGcr(source[0], source[1], source[2], source[3], source[4], databytes);
     *(ptr++) = databytes[0];
     
-    debug(2, "%d bytes written.\n", ptr-dest);
+    debug(3, "%d bytes written.\n", ptr-dest);
     assert(ptr - dest == 256);
 }
 
