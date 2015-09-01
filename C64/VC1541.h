@@ -263,7 +263,7 @@ private:
     //! Bit position of the read/write head inside the current byte
     /*! Valid binary patterns are 10000000, 01000000, ..., 00000001 */
     // REMOVE. REPLACE BY bitoffset.
-    uint8_t bit;
+    // uint8_t bit;
     
     /*!
      @abstract  Reads bit from drive head position
@@ -347,22 +347,11 @@ private:
     inline void writeByteFromHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
 
 
-
-
-    
-    
-    
-    /*!
-     @abstract  Reads bit from drive head position
-     @result	returns 0 or 1
-     */
-    // DEPRECATED
-    inline uint8_t readHead() { return (disk.data.halftrack[halftrack][offset] & bit) ? 1 : 0; }
-
     /*!
      @abstract  Writes bit to drive head position
      @param     bit 0 or 1
      */
+    // DEPRECATED
     inline void writeHead(uint8_t bit) {
         if (bit)
             disk.data.halftrack[halftrack][offset] |= bit;
@@ -374,15 +363,7 @@ private:
      @abstract Advances drive head position by one bit
      @result   Returns true if the new drive head position is byte aligned
      */
-    inline bool rotateDisk() {
-        if ((bit >>= 1)) {
-            return false;
-        } else {
-            bit = 0x08;
-            if (++offset >= disk.length.halftrack[halftrack]) offset = 0;
-            return true;
-        }
-    }
+    inline void rotateDisk() { if (++bitoffset >= disk.bitlength.halftrack[halftrack]) bitoffset = 0; }
     
     //! Reads the currently processed byte
     /*! In a real VC1541, the drive head would currently process one out of the returned eight bits. */
@@ -396,7 +377,12 @@ private:
     //! Rotate disk
     /*! Moves head to next byte on the current track */
     // DEPRECATED
-    inline void rotateDiskByOneByte() { if (++offset >= disk.length.halftrack[halftrack]) offset = 0; }
+    inline void rotateDiskByOneByte() {
+        for (unsigned i = 0; i < 8; i++) rotateDisk();
+        
+        if (++offset >= disk.length.halftrack[halftrack]) offset = 0;
+        assert(bitoffset == offset * 8);
+    }
     
     // Signals the CPU that a byte has been processed
     inline void byteReady();

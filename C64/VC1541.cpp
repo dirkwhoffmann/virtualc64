@@ -63,7 +63,7 @@ VC1541::resetDrive(C64 *c64)
     byteReadyCounter = 0;
     halftrack = 41;
     offset = 0;
-    bit = 0x80;
+    bitoffset = 0;
     zone = 0;
     read = true;
     read_shiftreg = 0;
@@ -100,7 +100,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 17;
+    uint32_t result = 18;
 
     result += disk.stateSize();
     result += cpu->stateSize();
@@ -131,7 +131,7 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     // Read/Write logic
     halftrack = (Halftrack)read8(buffer);
     offset = read16(buffer);
-    bit = read8(buffer);
+    bitoffset = read16(buffer);
     zone = read8(buffer);
     read = (bool)read8(buffer);
     read_shiftreg = read8(buffer);
@@ -168,7 +168,7 @@ VC1541::saveToBuffer(uint8_t **buffer)
     // Read/Write logic
     write8(buffer, (uint8_t)halftrack);
     write16(buffer, offset);
-    write8(buffer, bit);
+    write16(buffer, bitoffset);
     write8(buffer, zone);
     write8(buffer, (uint8_t)read);
     write8(buffer, read_shiftreg);
@@ -191,7 +191,7 @@ VC1541::dumpState()
 	msg("VC1541\n");
 	msg("------\n\n");
 	msg(" Bit ready timer : %d\n", bitReadyTimer);
-	msg("   Head position : Track %d, Offset %d, Bit position mask %02X\n", halftrack, offset, bit);
+	msg("   Head position : Track %d, Offset %d, Bit offset %d\n", halftrack, offset, bitoffset);
 	msg("            SYNC : %d\n", SYNC());
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
 	msg("\n");
@@ -309,13 +309,16 @@ VC1541::moveHeadUp()
 {
     if (halftrack < 84) {
         float position = (float)offset / (float)disk.length.halftrack[halftrack];
+        // float position = (float)bitoffset / (float)disk.bitlength.halftrack[halftrack];
         halftrack++;
         offset = position * disk.length.halftrack[halftrack];
-
+        // bitoffset = position * disk.bitlength.halftrack[halftrack];
+        // offset = bitoffset / 8;
+        bitoffset = 8 * offset;
         debug(3, "Moving head up to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
     }
    
-    assert(disk.isValidDiskPositon(halftrack, offset));
+    // assert(disk.isValidDiskPositon(halftrack, bitoffset));
     
     c64->putMessage(MSG_VC1541_HEAD, 1);
     if (halftrack % 2 && sendSoundMessages)
@@ -327,12 +330,16 @@ VC1541::moveHeadDown()
 {
     if (halftrack > 1) {
         float position = (float)offset / (float)disk.length.halftrack[halftrack];
+        // float position = (float)bitoffset / (float)disk.bitlength.halftrack[halftrack];
         halftrack--;
         offset = position * disk.length.halftrack[halftrack];
+        // bitoffset = position * disk.bitlength.halftrack[halftrack];
+        // offset = bitoffset / 8;
+        bitoffset = 8 * offset; 
         debug(3, "Moving head down to halftrack %d (track %2.1f) %f %d %d\n", halftrack, (halftrack + 1) / 2.0, position, offset, disk.length.halftrack[halftrack]);
     }
     
-    assert(disk.isValidDiskPositon(halftrack, offset));
+    // assert(disk.isValidDiskPositon(halftrack, bitoffset));
     
     c64->putMessage(MSG_VC1541_HEAD, 0);
     if (halftrack % 2 && sendSoundMessages)

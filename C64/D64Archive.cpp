@@ -613,7 +613,7 @@ D64Archive::findSector(unsigned track, unsigned sector)
 int
 D64Archive::offset(int track, int sector)
 {
-    assert(Disk525::isTrackNumber(track));
+    assert(isTrackNumber(track));
     assert(sector < D64Map[track].numberOfSectors);
     
     return D64Map[track].offset + (sector * 256);

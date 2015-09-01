@@ -156,8 +156,8 @@ public:
     uint8_t numTracks;
 
     //! Returns true if track/offset indicates a valid disk position on disk
-    bool isValidDiskPositon(Halftrack ht, uint16_t offset) {
-        return isHalftrackNumber(ht) && offset < length.halftrack[ht]; }
+    bool isValidDiskPositon(Halftrack ht, uint16_t bitoffset) {
+        return isHalftrackNumber(ht) && bitoffset < bitlength.halftrack[ht]; }
     
     
 public:
