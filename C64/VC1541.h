@@ -121,7 +121,10 @@ public:
     
     inline bool soundMessagesEnabled() { return sendSoundMessages; }
     inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
-    
+
+    inline bool getBitAccuracy() { return bitAccuracy; }
+    inline void setBitAccuracy(bool b) { bitAccuracy = b; }
+
     // Disk handling
     
     // TODO: MOVE TO DISK CLASS
@@ -202,6 +205,11 @@ private:
     //! Write protection mark
     bool writeProtected;
     
+    /*! @brief      Indicates whether VC1541 is simulated on the bit level
+     *  @discussion Bit level simulation is more precise but takes more simulation time.
+                    Right now, bit simulation is the only available option. */
+    bool bitAccuracy;
+
     //! Indicates whether the VC1541 shall provide sound notification messages to the GUI
     bool sendSoundMessages;
 

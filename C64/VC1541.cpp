@@ -55,8 +55,11 @@ VC1541::resetDrive(C64 *c64)
     cpu->setPC(0xEAA0);
     via1.reset(c64);
     via2.reset(c64);
+
+    // Reset hardware configuration
+    bitAccuracy = true;
     
-    // VC1541 properties
+    // Reset internal state
     rotating = false;
     redLED = false;
     bitReadyTimer = 0;
@@ -98,7 +101,7 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 16;
+    uint32_t result = 17;
 
     result += disk.stateSize();
     result += cpu->stateSize();
@@ -117,7 +120,10 @@ VC1541::loadFromBuffer(uint8_t **buffer)
     // Disk
     disk.loadFromBuffer(buffer);
     
-    // Drive properties
+    // Hardware configuration
+    bitAccuracy = (bool)read8(buffer);
+    
+    // Internal state
     bitReadyTimer = (int16_t)read16(buffer);
     byteReadyCounter = (uint8_t)read8(buffer);
 	rotating = (bool)read8(buffer);
@@ -152,6 +158,9 @@ VC1541::saveToBuffer(uint8_t **buffer)
     // Disk
     disk.saveToBuffer(buffer);
     
+    // Hardware configuration
+    write8(buffer, (uint8_t)bitAccuracy);
+
     // Drive properties
     write16(buffer, bitReadyTimer);
     write8(buffer, byteReadyCounter);

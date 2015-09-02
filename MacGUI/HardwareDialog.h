@@ -24,6 +24,7 @@ extern NSString *VC64PALorNTSCKey;
 /* VC1541 */
 extern NSString *VC64WarpLoadKey;
 extern NSString *VC64DriveNoiseKey;
+extern NSString *VC64BitAccuracyKey;
 
 /* Audio */
 extern NSString *VC64SIDFilterKey;

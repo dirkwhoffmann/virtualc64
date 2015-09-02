@@ -199,6 +199,7 @@
 	// VC1541
 	[defaultValues setObject:@YES forKey:VC64WarpLoadKey];
     [defaultValues setObject:@YES forKey:VC64DriveNoiseKey];
+    [defaultValues setObject:@YES forKey:VC64BitAccuracyKey];
 
     // Joysticks
     [defaultValues setObject:@123 forKey:VC64Left1keycodeKey];
@@ -299,6 +300,7 @@
     // Peripherals
     [c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
     [[c64 vc1541] setSendSoundMessages:[defaults boolForKey:VC64DriveNoiseKey]];
+    [[c64 vc1541] setBitAccuracy:[defaults boolForKey:VC64BitAccuracyKey]];
     
     // Audio
     [c64 setReSID:[defaults boolForKey:VC64SIDReSIDKey]];
@@ -361,6 +363,7 @@
     // VC1541
     [defaults setBool:[c64 warpLoad] forKey:VC64WarpLoadKey];
     [defaults setBool:[[c64 vc1541] soundMessagesEnabled] forKey:VC64DriveNoiseKey];
+    [defaults setBool:[[c64 vc1541] bitAccuracy] forKey:VC64BitAccuracyKey];
     
     // Audio
     [defaults setBool:[c64 reSID] forKey:VC64SIDReSIDKey];

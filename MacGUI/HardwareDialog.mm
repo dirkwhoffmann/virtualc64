@@ -26,6 +26,7 @@ NSString *VC64PALorNTSCKey = @"VC64PALorNTSCKey";
 // Peripherals
 NSString *VC64WarpLoadKey = @"VC64WarpLoadKey";
 NSString *VC64DriveNoiseKey = @"VC64DriveNoiseKey";
+NSString *VC64BitAccuracyKey = @"VC64BitAccuracyKey";
 
 // Audio
 NSString *VC64SIDFilterKey    = @"VC64SIDFilterKey";
