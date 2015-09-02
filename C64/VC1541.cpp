@@ -285,7 +285,7 @@ void
 VC1541::setRotating(bool b)
 {
     // HACK
-    setBitAccuracy(false);
+    setBitAccuracy(true);
     
     if (!rotating && b) {
         rotating = true;
