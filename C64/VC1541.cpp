@@ -28,6 +28,33 @@ VC1541::VC1541()
 	cpu = new CPU();
 	cpu->setName("1541CPU");
     
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        // Configuration
+        { &bitAccuracy, sizeof(bitAccuracy) },
+        
+        // Internal state
+        { &bitReadyTimer, sizeof(bitAccuracy) },
+        { &byteReadyCounter, sizeof(byteReadyCounter) },
+        { &rotating, sizeof(rotating) },
+        { &redLED, sizeof(redLED) },
+        { &diskInserted, sizeof(diskInserted) },
+        { &writeProtected, sizeof(writeProtected) },
+        { &sendSoundMessages, sizeof(sendSoundMessages) },
+        
+        // Read/Write logic
+        { &halftrack, sizeof(halftrack) },
+        { &bitoffset, sizeof(bitoffset) },
+        { &zone, sizeof(zone) },
+        { &read_shiftreg, sizeof(read_shiftreg) },
+        { &write_shiftreg, sizeof(write_shiftreg) },
+        { &sync, sizeof(sync) },
+        { NULL, 0 }
+    };
+    
+    registerSnapshotItems(items, sizeof(items));
+    
     sendSoundMessages = true; 
     resetDisk();
 }
@@ -43,10 +70,9 @@ VC1541::~VC1541()
 void
 VC1541::resetDrive(C64 *c64)
 {
-    debug (2, "Resetting VC1541...\n");
+    VirtualComponent::reset(c64);
     
     // Establish bindings
-    this->c64 = c64;
     iec = c64->iec;
     
     // Reset subcomponents
@@ -56,20 +82,8 @@ VC1541::resetDrive(C64 *c64)
     via1.reset(c64);
     via2.reset(c64);
 
-    // Reset hardware configuration
     bitAccuracy = true;
-    
-    // Reset internal state
-    rotating = false;
-    redLED = false;
-    bitReadyTimer = 0;
-    byteReadyCounter = 0;
     halftrack = 41;
-    bitoffset = 0;
-    zone = 0;
-    read_shiftreg = 0;
-    write_shiftreg = 0;
-    sync = false;
 }
 
 void
@@ -101,8 +115,8 @@ VC1541::ping()
 uint32_t
 VC1541::stateSize()
 {
-    uint32_t result = 17;
-
+    uint32_t result = VirtualComponent::stateSize();
+    
     result += disk.stateSize();
     result += cpu->stateSize();
     result += via1.stateSize();
@@ -117,36 +131,13 @@ VC1541::loadFromBuffer(uint8_t **buffer)
 {	
     uint8_t *old = *buffer;
     
-    // Disk
+    VirtualComponent::loadFromBuffer(buffer);
     disk.loadFromBuffer(buffer);
-    
-    // Hardware configuration
-    bitAccuracy = (bool)read8(buffer);
-    
-    // Internal state
-    bitReadyTimer = (int16_t)read16(buffer);
-    byteReadyCounter = (uint8_t)read8(buffer);
-	rotating = (bool)read8(buffer);
-    redLED = (bool)read8(buffer);
-    diskInserted = (bool)read8(buffer);
-    writeProtected = (bool)read8(buffer);
-    sendSoundMessages = (bool)read8(buffer);
-    
-    // Read/Write logic
-    halftrack = (Halftrack)read8(buffer);
-    bitoffset = read16(buffer);
-    zone = read8(buffer);
-    read_shiftreg = read16(buffer);
-    write_shiftreg = read8(buffer);
-    sync = (bool)read8(buffer);
-    
-    // Subcomponents
 	cpu->loadFromBuffer(buffer);
     via1.loadFromBuffer(buffer);
     via2.loadFromBuffer(buffer);
     mem->loadFromBuffer(buffer);
     
-    debug(2, "  VC1541 state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 
@@ -155,36 +146,13 @@ VC1541::saveToBuffer(uint8_t **buffer)
 {	
     uint8_t *old = *buffer;
     
-    // Disk
+    VirtualComponent::saveToBuffer(buffer);
     disk.saveToBuffer(buffer);
-    
-    // Hardware configuration
-    write8(buffer, (uint8_t)bitAccuracy);
-
-    // Drive properties
-    write16(buffer, bitReadyTimer);
-    write8(buffer, byteReadyCounter);
-    write8(buffer, (uint8_t)rotating);
-    write8(buffer, (uint8_t)redLED);
-    write8(buffer, (uint8_t)diskInserted);
-    write8(buffer, (uint8_t)writeProtected);
-    write8(buffer, (uint8_t)sendSoundMessages);
-    
-    // Read/Write logic
-    write8(buffer, (uint8_t)halftrack);
-    write16(buffer, bitoffset);
-    write8(buffer, zone);
-    write16(buffer, read_shiftreg);
-    write8(buffer, write_shiftreg);
-    write8(buffer, (uint8_t)sync);
-
-    // Subcomponents
     cpu->saveToBuffer(buffer);
     via1.saveToBuffer(buffer);
     via2.saveToBuffer(buffer);
 	mem->saveToBuffer(buffer);
     
-    debug(4, "  VC1541 state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

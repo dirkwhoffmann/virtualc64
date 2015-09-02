@@ -37,7 +37,7 @@ class VC1541 : public VirtualComponent {
 public:
     
 	//! Reference to the virtual IEC bus
-	C64 *c64;
+	// C64 *c64;
 	
 	//! Reference to the virtual IEC bus
 	IEC *iec;

@@ -485,7 +485,7 @@
 - (bool) writeProtection { return vc1541->isWriteProtected(); }
 - (void) setWriteProtection:(bool)b { vc1541->setWriteProtection(b); }
 - (bool) bitAccuracy { return vc1541->getBitAccuracy(); }
-- (void) setbitAccuracy:(bool)b { vc1541->setBitAccuracy(b); }
+- (void) setBitAccuracy:(bool)b { vc1541->setBitAccuracy(b); }
 - (bool) soundMessagesEnabled { return vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(bool)b { vc1541->setSendSoundMessages(b); }
 - (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
