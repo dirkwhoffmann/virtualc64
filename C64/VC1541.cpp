@@ -27,6 +27,7 @@ VC1541::VC1541()
 	mem = new VC1541Memory();
 	cpu = new CPU();
 	cpu->setName("1541CPU");
+    cpu->chipModel = CPU::MOS6502;
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -82,7 +83,8 @@ VC1541::resetDrive(C64 *c64)
     via1.reset(c64);
     via2.reset(c64);
 
-    bitAccuracy = true;
+    // bitAccuracy = true;
+    debug("Bit accurate emulation: %d\n", bitAccuracy); 
     halftrack = 41;
 }
 
@@ -282,6 +284,9 @@ VC1541::setRedLED(bool b)
 void
 VC1541::setRotating(bool b)
 {
+    // HACK
+    setBitAccuracy(false);
+    
     if (!rotating && b) {
         rotating = true;
         c64->putMessage(MSG_VC1541_MOTOR, 1);
@@ -398,4 +403,107 @@ VC1541::exportToD64(const char *filename)
     delete archive;
     return true;
 }
+
+
+//
+// First implementation of fastLoaderRead() and fastLoaderSync()
+// The implementation mimics Frodo. It is a little bit more complicated, because we store real SYNC marks on disk
+// while Frodo is using a single 0xFF byte.
+//
+
+#if 0
+void
+VC1541::fastLoaderRead()
+{
+    uint8_t byteUnderHead = readByteFromHead();
+    byteReady(byteUnderHead);
+    rotateDiskByOneByte();
+}
+
+bool
+VC1541::fastLoaderSync()
+{
+    uint8_t byteUnderHead = readByteFromHead();
+    
+    if (byteUnderHead == 0xFF) {
+        // Move head to last 0xFF byte
+        do { rotateDiskByOneByte(); } while (readByteFromHead() == 0xFF);
+        rotateBackByOneByte();
+        return true;
+    } else {
+        // Proceed to the next byte
+        rotateDiskByOneByte();
+        return false;
+    }
+}
+#endif
+
+
+//
+// Second implementation. We try to do a bit better ...
+//
+
+void
+VC1541::fastLoaderRead()
+{
+    uint8_t byteUnderHead = readByteFromHead();
+    byteReady(byteUnderHead);
+    
+    if (byteUnderHead == 0xFF) {
+        fastLoaderSkipSyncMark(); // If we're inside a SYNC mark, proceed to next data byte
+    } else {
+        rotateDiskByOneByte(); // If we're outside a SYNC mark, the next data byte is just one byte ahead
+    }
+}
+
+bool
+VC1541::fastLoaderSync()
+{
+    uint8_t byteUnderHead = readByteFromHead();
+    rotateDiskByOneByte();
+    return byteUnderHead == 0xFF;
+}
+
+#if 0
+
+// THE CODE BELOW SEEMS TO WORK
+uint8_t
+VC1541::fastLoaderRead()
+{
+    uint8_t byteUnderHead = readByteFromHead();
+    
+    // printf("(%02X %04X) ", byteUnderHead, c64->floppy->cpu->getPC_at_cycle_0());
+    
+    byteReady(byteUnderHead);
+    
+    if (byteUnderHead == 0xFF) {
+        // If we're inside a SYNC mark, proceed to next data byte
+        fastLoaderSkipSyncMark();
+    } else {
+        rotateDiskByOneByte();
+    }
+    
+    return byteUnderHead;
+}
+
+
+bool
+VC1541::fastLoaderSync()
+{
+    bool result;
+    uint8_t byteUnderHead = readByteFromHead();
+
+    // printf("[%02X %04X] ", byteUnderHead, c64->floppy->cpu->getPC_at_cycle_0());
+
+    if (byteUnderHead == 0xFF) {
+        result = true;
+        rotateDiskByOneByte();
+    } else {
+        result = false;
+        rotateDiskByOneByte();
+    }
+
+    return result;
+}
+#endif
 

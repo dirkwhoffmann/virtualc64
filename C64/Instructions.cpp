@@ -1615,6 +1615,12 @@ void CPU::CLV()
 {
 	IDLE_READ_IMPLIED;
 	setV(0);
+    
+    if (chipModel == MOS6502) {
+        if (!c64->floppy->getBitAccuracy()) {
+            setV(1); // A new byte is always ready
+        }
+    }
 	DONE;
 }
 

@@ -168,7 +168,9 @@ public:
      @result	returns 0 or 1
      */
     inline uint8_t readBitFromHalftrack(Halftrack ht, unsigned offset) {
-        assert(isHalftrackNumber(ht)); return readBit(data.halftrack[ht], offset); }
+        assert(isHalftrackNumber(ht));
+        // offset %= length.halftrack[ht];
+        return readBit(data.halftrack[ht], offset); }
 
     /*!
      @abstract  Reads a single byte from disk

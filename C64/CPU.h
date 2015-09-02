@@ -1,5 +1,5 @@
 /*
- * Written 2006 - 2015 by Dirk W. Hoffmann
+ * Author: Dirk W. Hoffmann, 2006 - 2015
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,14 @@ class IEC;
 //! The virtual 6510 processor
 class CPU : public VirtualComponent {
 
-public:	
-	//! Addressing modes of the 6510 processor
+public:
+    //! Processor models
+    enum ChipModel {
+        MOS6510 = 0,
+        MOS6502 = 1
+    };
+
+	//! Addressing modes
 	enum AddressingMode { 
 		ADDR_IMPLIED,
 		ADDR_ACCUMULATOR,
@@ -100,7 +106,13 @@ public:
 
 	//! Reference to the connected virtual memory
 	Memory *mem;
-	
+
+    /*! @brief    Selected chip model
+     *  @abstract Right now, this atrribute is only used to distinguish the C64 CPU (MOS6510) from the
+     *            VC1541 CPU (MOS6502). Hardware differences between the two processors are not emulated.
+     */
+    ChipModel chipModel;
+
 private:
     
 	// Accumulator register

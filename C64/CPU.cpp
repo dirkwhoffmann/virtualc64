@@ -23,6 +23,9 @@ CPU::CPU()
 	name = "CPU";
 	debug(2, "  Creating CPU at address %p...\n", this);
 	
+    // Chip model
+    chipModel = MOS6510;
+
 	// Establish callback for each instruction
 	registerInstructions();
 		
@@ -99,7 +102,7 @@ CPU::reset(C64 *c64, Memory *mem)
 uint32_t
 CPU::stateSize()
 {
-    return 564;
+    return 565;
 }
 
 void 
@@ -107,6 +110,8 @@ CPU::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
 
+    chipModel = (ChipModel)read8(buffer);
+    
 	// Registers and flags
 	A = read8(buffer);
 	X = read8(buffer);
@@ -159,6 +164,8 @@ void
 CPU::saveToBuffer(uint8_t **buffer) 
 {
     uint8_t *old = *buffer;
+
+    write8(buffer, (uint8_t)chipModel); 
 
 	// Registers and flags
 	write8(buffer, A);

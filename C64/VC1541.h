@@ -164,9 +164,14 @@ public:
         via2.execute();
         uint8_t result = cpu->executeOneCycle();
         
-        // Exit if drive in inactive
+        // Only proceed if drive is active
         if (!rotating)
             return result;
+
+        // If bit accurate emulation is enabled, we don't do anything here
+        if (!bitAccuracy) {
+            return result;
+        }
         
         // Wait until next bit is ready
         if (bitReadyTimer > 0) {
@@ -206,8 +211,10 @@ private:
     bool writeProtected;
     
     /*! @brief      Indicates whether VC1541 is simulated on the bit level
-     *  @discussion Bit level simulation is more precise but takes more simulation time.
-                    Right now, bit simulation is the only available option. */
+     *  @discussion Bit level simulation is the standard emulation mode. If it is disabled, the 
+     *              emulator uses a fast load mechanism to make disk data available whenever the 
+     *              VC1541 DOS waits for it. Right now, this is an experimental feature. Note, that
+     *              writing to disk is only works when bit level emulation is enabled. */
     bool bitAccuracy;
 
     //! Indicates whether the VC1541 shall provide sound notification messages to the GUI
@@ -308,17 +315,38 @@ private:
     /*! @brief Writes a single byte to the disk head */
     inline void writeByteToHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
     
-    /*! @brief  Advances drive head position by one bit
-     *  @result Returns true if the new drive head position is byte aligned */
+    /*! @brief  Advances drive head position by one bit */
     inline void rotateDisk() { if (++bitoffset >= disk.length.halftrack[halftrack]) bitoffset = 0; }
-     
+
+    /*! @brief  Moves drive head position back by one bit */
+    inline void rotateBack() { bitoffset = (bitoffset > 0) ? (bitoffset - 1) : (disk.length.halftrack[halftrack] - 1); }
+
+    /*! @brief  Advances drive head position by eight bits */
+    inline void rotateDiskByOneByte() { for (unsigned i = 0; i < 8; i++) rotateDisk(); }
+
+    /*! @brief  Moves drive head position back by eight bits */
+    inline void rotateBackByOneByte() { for (unsigned i = 0; i < 8; i++) rotateBack(); }
+
     //! @brief Signals the CPU that a byte has been processed
     inline void byteReady();
 
     //! @brief Signals the CPU that a byte has been processed and load byte into input latch A of via 2
     inline void byteReady(uint8_t byte);
    
+public:
 
+    /*! @brief Performs read access of the fast loader
+     *  @abstract This method is used to latch in a byte from disk when bit accurate emulation is disabled
+     */
+    void fastLoaderRead();
+ 
+    /*! @brief Fast loader sync detection
+     *  @abstract Returns true when the drive head is currently inside a SYNC mark     
+     */
+    bool fastLoaderSync();
+    
+    /*! @brief  Skip sync mark (for d */
+    inline void fastLoaderSkipSyncMark() { while (readByteFromHead() == 0xFF) rotateDiskByOneByte(); }
 };
 
 #endif
