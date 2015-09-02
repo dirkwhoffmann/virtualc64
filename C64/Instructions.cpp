@@ -1493,12 +1493,27 @@ void CPU::BRK_nmi_6()
 void CPU::BVC_relative()
 {	
 	READ_IMMEDIATE;
-	if (!getV()) { 
-		next = &CPU::BVC_relative_2;
-	} else {
-		DONE;
-	}
+
+    if (chipModel == MOS6502 /* Drive CPU */ && !c64->floppy->getBitAccuracy()) {
+        
+        // Special handling for the VC1541 CPU. Taken from Frodo
+        if (!((c64->floppy->via2.io[12] & 0x0E) == 0x0E || getV())) {
+            next = &CPU::BVC_relative_2;
+        } else {
+            DONE;
+        }
+        
+    } else {
+        
+        // Standard CPU behavior
+        if (!getV()) {
+            next = &CPU::BVC_relative_2;
+        } else {
+            DONE;
+        }
+    }
 }
+
 void CPU::BVC_relative_2()
 {
 	IDLE_READ_IMPLIED;
@@ -1527,12 +1542,27 @@ void CPU::BVC_relative_2()
 void CPU::BVS_relative()
 {	
 	READ_IMMEDIATE;
-	if (getV()) { 
-		next = &CPU::BVS_relative_2;
-	} else {
-		DONE;
-	}
+    
+    if (chipModel == MOS6502 /* Drive CPU */ && !c64->floppy->getBitAccuracy()) {
+        
+        // Special handling for the VC1541 CPU. Taken from Frodo
+        if ((c64->floppy->via2.io[12] & 0x0E) == 0x0E || getV()) {
+            next = &CPU::BVS_relative_2;
+        } else {
+            DONE;
+        }
+        
+    } else {
+        
+        // Standard CPU behavior
+        if (getV()) {
+            next = &CPU::BVS_relative_2;
+        } else {
+            DONE;
+        }
+    }
 }
+
 void CPU::BVS_relative_2()
 {
 	IDLE_READ_IMPLIED;
@@ -1616,11 +1646,13 @@ void CPU::CLV()
 	IDLE_READ_IMPLIED;
 	setV(0);
     
+/*
     if (chipModel == MOS6502) {
         if (!c64->floppy->getBitAccuracy()) {
             setV(1); // A new byte is always ready
         }
     }
+*/
 	DONE;
 }
 

@@ -82,10 +82,18 @@ VC1541::resetDrive(C64 *c64)
     cpu->setPC(0xEAA0);
     via1.reset(c64);
     via2.reset(c64);
-
-    // bitAccuracy = true;
-    debug("Bit accurate emulation: %d\n", bitAccuracy); 
+    
+    // VC1541 properties
+    rotating = false;
+    redLED = false;
+    bitReadyTimer = 0;
+    byteReadyCounter = 0;
     halftrack = 41;
+    bitoffset = 0;
+    zone = 0;
+    read_shiftreg = 0;
+    write_shiftreg = 0;
+    sync = false;
 }
 
 void
@@ -284,9 +292,6 @@ VC1541::setRedLED(bool b)
 void
 VC1541::setRotating(bool b)
 {
-    // HACK
-    setBitAccuracy(true);
-    
     if (!rotating && b) {
         rotating = true;
         c64->putMessage(MSG_VC1541_MOTOR, 1);
@@ -294,7 +299,6 @@ VC1541::setRotating(bool b)
         rotating = false;
         c64->putMessage(MSG_VC1541_MOTOR, 0);
     }
-    
 }
 
 void
@@ -310,7 +314,8 @@ VC1541::moveHeadUp()
         bitoffset &= 0xFFF8; 
         byteReadyCounter = 0;
         
-        debug(3, "Moving head up to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
+        debug(3, "Moving head up to halftrack %d (track %2.1f) bit accurate emulation: %s\n",
+              halftrack, (halftrack + 1) / 2.0, bitAccuracy ? "YES" : "NO");
     }
    
     assert(disk.isValidDiskPositon(halftrack, bitoffset));
@@ -332,7 +337,8 @@ VC1541::moveHeadDown()
         bitoffset &= 0xFFF8;
         byteReadyCounter = 0;
         
-        debug(3, "Moving head down to halftrack %d (track %2.1f)\n", halftrack, (halftrack + 1) / 2.0);
+        debug(3, "Moving head down to halftrack %d (track %2.1f) bit accurate emulation: %s\n",
+              halftrack, (halftrack + 1) / 2.0, bitAccuracy ? "YES" : "NO");
     }
     
     assert(disk.isValidDiskPositon(halftrack, bitoffset));

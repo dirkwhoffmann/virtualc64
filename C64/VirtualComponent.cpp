@@ -48,11 +48,6 @@ VirtualComponent::reset(C64 *c64)
     
     // Establish binding to top-level object
     this->c64 = c64;
-
-    // By default, we zero out all snapshot objects
-    if (snapshotItems)
-        for (unsigned i = 0; snapshotItems[i].data != NULL; i++)
-            memset(snapshotItems[i].data, 0, snapshotItems[i].size);
 }
 
 void

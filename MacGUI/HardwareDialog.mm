@@ -67,6 +67,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     // Peripherals
     [c64 setWarpLoad:true];
     [[c64 vc1541] setSendSoundMessages:true];
+    [[c64 vc1541] setBitAccuracy:true];
 
     // Audio
     [c64 setReSID:YES];
@@ -111,6 +112,13 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     [self update];
 }
 
+- (IBAction)bitAccurateAction:(id)sender
+{
+    NSLog(@"bitAccurateAction");
+    
+    [[c64 vc1541] setBitAccuracy:[(NSButton *)sender state]];
+    [self update];
+}
 
 - (IBAction)writeProtectionAction:(id)sender
 {
@@ -200,6 +208,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     /* VC1541 */
     [warpLoad setState:[c64 warpLoad]];
     [driveNoise setState:[[c64 vc1541] soundMessagesEnabled]];
+    [bitAccurate setState:[[c64 vc1541] bitAccuracy]];
     
     if ([[c64 vc1541] hasDisk]) {
         
