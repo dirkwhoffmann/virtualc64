@@ -46,8 +46,6 @@ void
 	c64->debug(1, "Execution thread started\n");
 	c64->putMessage(MSG_RUN);
 	
-    c64->threadStartTime = usec();
-
     // Configure thread properties...
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
@@ -285,7 +283,7 @@ C64::stateSize()
 {
     uint32_t size;
     
-    size = 29;
+    size = 21;
     size += cpu->stateSize();
     size += vic->stateSize();
     size += sid->stateSize();
@@ -317,7 +315,7 @@ C64::loadFromBuffer(uint8_t **buffer)
 	frame = (int)read32(buffer);
 	rasterline = (int)read16(buffer);
 	rasterlineCycle = (int)read32(buffer);
-    nanoTargetTime = read64(buffer);
+    // nanoTargetTime = read64(buffer);
 	
 	// Load state of sub components
 	cpu->loadFromBuffer(buffer);
@@ -369,7 +367,7 @@ C64::saveToBuffer(uint8_t **buffer)
 	write32(buffer, (uint32_t)frame);
 	write16(buffer, rasterline);
 	write32(buffer, (uint32_t)rasterlineCycle);
-	write64(buffer, nanoTargetTime);
+	// write64(buffer, nanoTargetTime);
 	
 	// Save state of sub components
 	cpu->saveToBuffer(buffer);
@@ -528,7 +526,6 @@ C64::endOfRasterline()
 		}
 		
 		// Execute remaining SID cycles
-		// sid->execute(vic->getCyclesPerFrame());
         sid->executeUntil(cycles);
         
         // Execute the IEC bus
@@ -944,17 +941,28 @@ void
 C64::synchronizeTiming()
 {
     const uint64_t earlyWakeup = 1500000; /* 1.5 milliseconds */
-    const uint64_t maxJitter = 1000000000; /* 1 second */
 
-    // Convert usec into kernel unit and sleep
+    // Convert usec into kernel unit
     uint64_t kernelTargetTime = nanos_to_abs(nanoTargetTime);
-    int64_t jitter = sleepUntil(kernelTargetTime, earlyWakeup);
 
-    // Update target time
+    // Check how long we're supposed to sleep
+    if (kernelTargetTime - mach_absolute_time() > 200000000 /* 0.2 sec */) {
+
+        // The emulator is supposed to sleep unusually long. Timers seem to
+        // be out of sync, so we better reset the synchronization timer
+        
+        debug(2, "Emulator lost synchronization. Restarting synchronization timer.\n");
+        restartTimer();
+        return;
+    }
+
+    // Sleep and update target timer
+    // debug(2, "%p Sleeping for %lld\n", this, kernelTargetTime - mach_absolute_time());
+    int64_t jitter = sleepUntil(kernelTargetTime, earlyWakeup);
     nanoTargetTime += vic->getFrameDelay();
 
     // debug(2, "Jitter = %d", jitter);
-    if (jitter > maxJitter) {
+    if (jitter > 1000000000 /* 1 sec */) {
         
         // The emulator did not keep up with the real time clock. Instead of
         // running behind for a long time, we reset the synchronization timer
@@ -962,18 +970,6 @@ C64::synchronizeTiming()
         debug(2, "Jitter exceeds limit. Restarting synchronization timer.\n"); 
         restartTimer();
     }
-
-#if 0
-    // Old sleep
-    // determine how long we should wait
-    uint64_t timeToSleep = targetTime - usec();
-    targetTime += vic->getFrameDelay() / 1000; // OLD
-	if (timeToSleep > 0) {
-		sleepMicrosec(timeToSleep);
-	} else {
-		restartTimer();
-	}
-#endif
 }
 
 // ---------------------------------------------------------------------------------------------

@@ -25,6 +25,15 @@ SIDWrapper::SIDWrapper()
     oldsid = new OldSID();
     resid = new ReSID();
     
+    // Register snapshot items
+    SnapshotItem items[] = {
+        { &latchedDataBus, sizeof(latchedDataBus) },
+        { &useReSID, sizeof(useReSID) },
+        { &cycles, sizeof(cycles) },
+        { NULL, 0 }
+    };
+    registerSnapshotItems(items, sizeof(items));
+
     useReSID = true;
 }
 
@@ -48,7 +57,7 @@ SIDWrapper::setReSID(bool enable)
 void 
 SIDWrapper::reset(C64 *c64)
 {
-    this->c64 = c64;
+    VirtualComponent::reset(c64);
     oldsid->reset(c64);
     resid->reset(c64);
     
@@ -58,20 +67,23 @@ SIDWrapper::reset(C64 *c64)
 uint32_t
 SIDWrapper::stateSize()
 {
-    return 2 + resid->stateSize() + oldsid->stateSize();
+    uint32_t result = VirtualComponent::stateSize();
+    
+    result += resid->stateSize();
+    result += oldsid->stateSize();
+    
+    return result;
 }
 
 void
 SIDWrapper::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
-
-    latchedDataBus = read8(buffer);
-    useReSID = (bool)read8(buffer);
+    
+    VirtualComponent::loadFromBuffer(buffer);
     resid->loadFromBuffer(buffer);
     oldsid->loadFromBuffer(buffer);
-    
-    debug(2, "  SID state loaded (%d bytes)\n", *buffer - old);
+
     assert(*buffer - old == stateSize());
 }
 
@@ -79,15 +91,12 @@ void
 SIDWrapper::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
-
-    write8(buffer, latchedDataBus);
-    write8(buffer, (uint8_t)useReSID);
+    
+    VirtualComponent::saveToBuffer(buffer);
     resid->saveToBuffer(buffer);
     oldsid->saveToBuffer(buffer);
     
-    debug(4, "  SID state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
-
 }
 
 void 

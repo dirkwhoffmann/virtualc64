@@ -281,9 +281,14 @@ sleepMicrosec(uint64_t usec)
 int64_t
 sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup)
 {
+    uint64_t now = mach_absolute_time();
     int64_t jitter;
     
+    if (now > kernelTargetTime)
+        return 0;
+    
     // Sleep
+    // printf("Sleeping for %d\n", kernelTargetTime - now);
     mach_wait_until(kernelTargetTime - kernelEarlyWakeup);
     
     // Count some sheep to increase precision

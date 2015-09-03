@@ -208,16 +208,6 @@ public:
 	//! Reference to the virtual VC1541
 	VC1541 *floppy;
 		
-
-    // SOME DEBUG STUFF
-    
-    //! Remove after debugging
-    uint64_t threadStartTime;
-	
-    uint64_t firstFrameEnded;
-    uint64_t firstFrameEndedAtCycle;
-    uint64_t previousFrameEnded;
-    uint64_t previousFrameEndedAtCycle;
     
 private:
 
