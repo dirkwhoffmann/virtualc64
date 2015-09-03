@@ -53,7 +53,6 @@ VC1541::VC1541()
         { &sync, sizeof(sync) },
         { NULL, 0 }
     };
-    
     registerSnapshotItems(items, sizeof(items));
     
     sendSoundMessages = true; 

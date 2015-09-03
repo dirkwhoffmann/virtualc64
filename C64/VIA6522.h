@@ -118,15 +118,6 @@ public:
 
     //! Execution function for timer 2
     void executeTimer2();
-    
-    //! Size of internal state
-    uint32_t stateSize();
-
-	//! Load state
-	void loadFromBuffer(uint8_t **buffer);
-	
-	//! Save state
-	void saveToBuffer(uint8_t **buffer);	
 	
 	//! Special peek function for the I/O memory range
 	/*! The peek function only handles those registers that are treated similarily by both VIA chips */

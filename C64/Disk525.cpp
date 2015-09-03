@@ -23,6 +23,15 @@ Disk525::Disk525()
 {
     name = "Disk525";
 
+    // Register snapshot items
+    SnapshotItem items[] = {
+        { data.track[0], sizeof(data.track) },
+        { &numTracks, sizeof(numTracks) },
+        { &writeProtected, sizeof(writeProtected) },
+        { NULL, 0 }
+    };
+    registerSnapshotItems(items, sizeof(items));
+
     // Create inverse GCR lookup table
     memset(invgcr, 0, sizeof(invgcr));
     for (unsigned i = 0; i < 16; i++)
@@ -38,13 +47,15 @@ Disk525::~Disk525()
 void
 Disk525::reset(C64 *c64)
 {
+    VirtualComponent::reset(c64);
+    
     clearDisk();
 }
 
 uint32_t
 Disk525::stateSize()
 {
-    return sizeof(length.track) + sizeof(data.track) + 1;
+    return VirtualComponent::stateSize() + sizeof(length.track);
 }
 
 void
@@ -52,10 +63,8 @@ Disk525::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    // Disk data storage
-    readBlock(buffer, data.track[0], sizeof(data.track));
+    VirtualComponent::loadFromBuffer(buffer);
     readBlock16(buffer, length.track[0], sizeof(length.track));
-    numTracks = read8(buffer);
     
     assert(*buffer - old == stateSize());
 }
@@ -65,10 +74,8 @@ Disk525::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    // Disk data storage
-    writeBlock(buffer, data.track[0], sizeof(data.track));
+    VirtualComponent::saveToBuffer(buffer);
     writeBlock16(buffer, length.track[0], sizeof(length.track));
-    write8(buffer, numTracks);
     
     assert(*buffer - old == stateSize());
 }

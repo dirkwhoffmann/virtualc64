@@ -27,6 +27,26 @@
 VIA6522::VIA6522()
 {
 	name = "VIA";
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        { &ddra, sizeof(ddra) },
+        { &ddrb, sizeof(ddrb) },
+        { &ora, sizeof(ora) },
+        { &orb, sizeof(orb) },
+        { &ira, sizeof(ira) },
+        { &irb, sizeof(irb) },
+        { &t1, sizeof(t1) },
+        { &t2, sizeof(t2) },
+        { &t1_latch_lo, sizeof(t1_latch_lo) },
+        { &t1_latch_hi, sizeof(t1_latch_hi) },
+        { &t2_latch_lo, sizeof(t2_latch_lo) },
+        { &t1_underflow, sizeof(t1_underflow) },
+        { &t2_underflow, sizeof(t2_underflow) },
+        { io, sizeof(io) },
+        { NULL, 0 }
+    };
+    registerSnapshotItems(items, sizeof(items));
 }
 
 VIA6522::~VIA6522()
@@ -35,8 +55,9 @@ VIA6522::~VIA6522()
 	
 void VIA6522::reset(C64 *c64)
 {
+    VirtualComponent::reset(c64);
+
     // Establish bindings
-    this->c64 = c64;
     floppy = c64->floppy;
     
     // Reset state
@@ -53,65 +74,7 @@ void VIA6522::reset(C64 *c64)
     t2_latch_lo = 0;
     t1_underflow = false;
     t2_underflow = false;
-    
-	for (unsigned i = 0; i < sizeof(io); i++)
-		io[i] = 0;
-}
-
-uint32_t
-VIA6522::stateSize()
-{
-    return 15 + sizeof(io);
-}
-
-void VIA6522::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    
-	ddra = read8(buffer);
-	ddrb = read8(buffer);
-	ora = read8(buffer);
-	orb = read8(buffer);
-	ira = read8(buffer);
-	irb = read8(buffer);
-    t1 = read16(buffer);
-    t2 = read16(buffer);
-    t1_latch_lo = read8(buffer);
-	t1_latch_hi = read8(buffer);
-	t2_latch_lo = read8(buffer);
-	t1_underflow = (bool)read8(buffer);
-    t2_underflow = (bool)read8(buffer);
-    
-	for (unsigned i = 0; i < sizeof(io); i++)
-		io[i] = read8(buffer);
-
-    debug(2, "  VIA6522 state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
-void VIA6522::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    
-	write8(buffer, ddra);
-	write8(buffer, ddrb);
-	write8(buffer, ora);
-	write8(buffer, orb);
-	write8(buffer, ira);
-	write8(buffer, irb);
-    write16(buffer, t1);
-    write16(buffer, t2);
-	write8(buffer, t1_latch_lo);
-	write8(buffer, t1_latch_hi);
-	write8(buffer, t2_latch_lo);
-    write8(buffer, (uint8_t)t1_underflow);
-    write8(buffer, (uint8_t)t2_underflow);
-    
-	for (unsigned i = 0; i < sizeof(io); i++)
-		write8(buffer, io[i]);
-
-    debug(4, "  VIA6522 state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
+    memset(io, 0, sizeof(io));
 }
 
 void 
