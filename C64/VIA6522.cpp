@@ -556,24 +556,15 @@ uint8_t VIA2::peek(uint16_t addr)
             // |       | (4 disk zones)|protect|       | motor | (head move)   |
             
             // Collect values on the external port lines
-            uint8_t external =
-            (floppy->getSync() /* 7 */ ? 0x00 : 0x80) |
-            (floppy->isWriteProtected() /* 4 */ ? 0x00 : 0x10) |
+            bool SYNC = floppy->getBitAccuracy() ? floppy->getSync() : floppy->getFastLoaderSync();
+            uint8_t external = (SYNC /* 7 */ ? 0x00 : 0x80) |
+            (floppy->getLightBarrier() /* 4 */ ? 0x00 : 0x10) |
             (floppy->getRedLED() /* 3 */ ? 0x00 : 0x08) |
             (floppy->isRotating() /* 2 */ ? 0x00 : 0x04);
             
             uint8_t result =
             (ddrb & orb) |      // Values of bits configured as outputs
             (~ddrb & external); // Values of bits configures as inputs
-            
-            
-            // If bit accuracy is disabled (fast loader active), we fake the SYNC bit
-            if (!floppy->getBitAccuracy()) {
-                if (floppy->fastLoaderSync())
-                    result &= 0x7F;
-                else
-                    result |= 0x80;
-            }
             
             return result;
         }

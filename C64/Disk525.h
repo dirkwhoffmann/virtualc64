@@ -146,7 +146,20 @@ public:
     //! Returns true if track/offset indicates a valid disk position on disk
     bool isValidDiskPositon(Halftrack ht, uint16_t bitoffset) {
         return isHalftrackNumber(ht) && bitoffset < length.halftrack[ht]; }
+ 
+private:
+
+    /*! @brief Write protection mark */
+    bool writeProtected;
     
+public:
+    
+    /*! @brief Returns write protection flag */
+    inline bool isWriteProtected() { return writeProtected; }
+
+    /*! @brief Sets write protection flag */
+    inline void setWriteProtection(bool b) { writeProtected = b; }
+
     
 public:
     

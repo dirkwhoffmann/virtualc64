@@ -41,7 +41,7 @@ VC1541::VC1541()
         { &rotating, sizeof(rotating) },
         { &redLED, sizeof(redLED) },
         { &diskInserted, sizeof(diskInserted) },
-        { &writeProtected, sizeof(writeProtected) },
+        { &diskPartiallyInserted, sizeof(diskPartiallyInserted) },
         { &sendSoundMessages, sizeof(sendSoundMessages) },
         
         // Read/Write logic
@@ -104,7 +104,7 @@ VC1541::resetDisk()
     // Disk properties
     disk.reset(c64);
     diskInserted = false;
-    writeProtected = false;
+    diskPartiallyInserted = false;
 }
 
 void
@@ -310,9 +310,8 @@ VC1541::moveHeadUp()
         halftrack++;
         bitoffset = position * disk.length.halftrack[halftrack];
          
-        // Byte-align bitoffset (to keep the fast loader happy once implemented)
-        bitoffset &= 0xFFF8; 
-        byteReadyCounter = 0;
+        // Make sure new bitoffset starts at the beginning of a new byte to keep fast loader happy
+        alignHead();
         
         debug(3, "Moving head up to halftrack %d (track %2.1f) bit accurate emulation: %s\n",
               halftrack, (halftrack + 1) / 2.0, bitAccuracy ? "YES" : "NO");
@@ -333,9 +332,8 @@ VC1541::moveHeadDown()
         halftrack--;
         bitoffset = position * disk.length.halftrack[halftrack];
 
-        // Byte-align bitoffset (to keep the fast loader happy once implemented)
-        bitoffset &= 0xFFF8;
-        byteReadyCounter = 0;
+        // Make sure new bitoffset starts at the beginning of a new byte to keep fast loader happy
+        alignHead();
         
         debug(3, "Moving head down to halftrack %d (track %2.1f) bit accurate emulation: %s\n",
               halftrack, (halftrack + 1) / 2.0, bitAccuracy ? "YES" : "NO");
@@ -357,7 +355,6 @@ VC1541::insertDisk(D64Archive *a)
     disk.encodeArchive(a);
     
     diskInserted = true;
-    setWriteProtection(false);
     c64->putMessage(MSG_VC1541_DISK, 1);
     if (sendSoundMessages)
         c64->putMessage(MSG_VC1541_DISK_SOUND, 1);
@@ -377,16 +374,19 @@ VC1541::ejectDisk()
     if (!hasDisk())
         return;
     
-	// Open lid (write protection light barrier will be blocked)
-	setWriteProtection(true);
+	// Open lid (this blocks the light barrier)
+    setDiskPartiallyInserted(true);
 
-	// Drive will notice the change in its interrupt routine...
+	// Let the drive notice the blocked light barrier in its interrupt routine ...
 	sleepMicrosec((uint64_t)200000);
-	
-	// Remove disk (write protection light barrier is no longer blocked)
-	setWriteProtection(false);
-		
+
+    // Erase disk data and reset write protection flag
     resetDisk();
+
+	// Remove disk (this unblocks the light barrier)
+	setDiskPartiallyInserted(false);
+		
+    // Notify listener
 	c64->putMessage(MSG_VC1541_DISK, 0);
     if (sendSoundMessages)
         c64->putMessage(MSG_VC1541_DISK_SOUND, 0);
@@ -427,7 +427,7 @@ VC1541::fastLoaderRead()
 }
 
 bool
-VC1541::fastLoaderSync()
+VC1541::getFastLoaderSync()
 {
     uint8_t byteUnderHead = readByteFromHead();
     
@@ -463,7 +463,7 @@ VC1541::fastLoaderRead()
 }
 
 bool
-VC1541::fastLoaderSync()
+VC1541::getFastLoaderSync()
 {
     uint8_t byteUnderHead = readByteFromHead();
     rotateDiskByOneByte();
@@ -494,7 +494,7 @@ VC1541::fastLoaderRead()
 
 
 bool
-VC1541::fastLoaderSync()
+VC1541::getFastLoaderSync()
 {
     bool result;
     uint8_t byteUnderHead = readByteFromHead();

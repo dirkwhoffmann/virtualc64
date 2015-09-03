@@ -482,8 +482,8 @@
 - (void) setTraceMode:(bool)b { vc1541->setTraceMode(b); }
 - (bool) hasRedLED { return vc1541->getRedLED(); }
 - (bool) hasDisk { return vc1541->hasDisk(); }
-- (bool) writeProtection { return vc1541->isWriteProtected(); }
-- (void) setWriteProtection:(bool)b { vc1541->setWriteProtection(b); }
+- (bool) writeProtection { return vc1541->disk.isWriteProtected(); }
+- (void) setWriteProtection:(bool)b { vc1541->disk.setWriteProtection(b); }
 - (bool) bitAccuracy { return vc1541->getBitAccuracy(); }
 - (void) setBitAccuracy:(bool)b { vc1541->setBitAccuracy(b); }
 - (bool) soundMessagesEnabled { return vc1541->soundMessagesEnabled(); }

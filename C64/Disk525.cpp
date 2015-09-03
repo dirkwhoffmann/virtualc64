@@ -157,6 +157,7 @@ Disk525::clearDisk()
         clearHalftrack(ht);
         length.halftrack[ht] = sizeof(data.halftrack[ht]) * 8;
     }
+    writeProtected = false; 
 }
 
 void

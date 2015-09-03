@@ -127,10 +127,6 @@ public:
 
     // Disk handling
     
-    // TODO: MOVE TO DISK CLASS
-    inline bool isWriteProtected() { return writeProtected; }
-    inline void setWriteProtection(bool b) { writeProtected = b; }
-    
     inline bool getRedLED() { return redLED; };
     void setRedLED(bool b);
     
@@ -145,9 +141,19 @@ public:
     //! Export currently inserted disk to D64 file
     bool exportToD64(const char *filename);
     
-    // Returns true if a disk is inserted
+    /*! @brief Returns true if a disk is inserted */
     inline bool hasDisk() { return diskInserted; }
-    
+
+    /*! @brief Returns true if a disk is partially inserted */
+    inline bool isDiskPartiallyInserted() { return diskPartiallyInserted; }
+
+    /*! @brief Sets if a disk is partially inserted */
+    inline void setDiskPartiallyInserted(bool b) { diskPartiallyInserted = b; }
+
+    /*! @brief Returns the current status of the write protection light barrier
+     *  @abstract If the light barrier is blocked, the drive head is unable to change data bits */
+    inline bool getLightBarrier() { return isDiskPartiallyInserted() || disk.isWriteProtected(); }
+
     //! Eject the virtual disk. Does nothing, if no disk is present.
     /*! Beware that this function causes a considerable time delay, because it is necessary to
         block the write protection light barrier for a while. Otherwise, the VC1541 DOS would not recognize 
@@ -204,11 +210,13 @@ private:
     //! Indicates whether red LED is on or off
     bool redLED;
     
-    //! Indicates whether a disk is inserted
+    /*! @brief Indicates whether a disk is inserted
+     *  @note  A fully inserted disk blocks the write protection barrier if it is write protected */
     bool diskInserted;
     
-    //! Write protection mark
-    bool writeProtected;
+    /*! @brief Indicates whether a disk is inserted only partially
+     *  @note  A partially inserted disk blocks always blocks the write protection barrier */
+    bool diskPartiallyInserted;
     
     /*! @brief      Indicates whether VC1541 is simulated on the bit level
      *  @discussion Bit level simulation is the standard emulation mode. If it is disabled, the 
@@ -285,7 +293,7 @@ public:
     //! @brief Moves head one halftrack down
     void moveHeadDown();
 
-    //! @brief Returns the current value of the  zone (0 to 3)
+    //! @brief Returns the current value of the sync signal
     inline bool getSync() { return sync; }
 
     //! @brief Returns the current track zone (0 to 3)
@@ -327,6 +335,9 @@ private:
     /*! @brief  Moves drive head position back by eight bits */
     inline void rotateBackByOneByte() { for (unsigned i = 0; i < 8; i++) rotateBack(); }
 
+    /*! @brief  Align drive head to the beginning of a byte */
+    inline void alignHead() { bitoffset &= 0xFFF8; byteReadyCounter = 0; }
+
     //! @brief Signals the CPU that a byte has been processed
     inline void byteReady();
 
@@ -343,7 +354,7 @@ public:
     /*! @brief Fast loader sync detection
      *  @abstract Returns true when the drive head is currently inside a SYNC mark     
      */
-    bool fastLoaderSync();
+    bool getFastLoaderSync();
     
     /*! @brief  Skip sync mark (for d */
     inline void fastLoaderSkipSyncMark() { while (readByteFromHead() == 0xFF) rotateDiskByOneByte(); }
