@@ -18,7 +18,6 @@
 
 // TODO:
 // Stress test: Change disk encoder to produce unaligned sync sequences
-// Remove byte alignment in moveHeadUp, moveHeadDown
 
 
 #ifndef _VC1541_INC
@@ -123,7 +122,7 @@ public:
     inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
 
     inline bool getBitAccuracy() { return bitAccuracy; }
-    inline void setBitAccuracy(bool b) { bitAccuracy = b; }
+    inline void setBitAccuracy(bool b) { bitAccuracy = b; if (!b) alignHead(); }
 
     // Disk handling
     
