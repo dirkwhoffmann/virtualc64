@@ -55,7 +55,7 @@ VirtualComponent::reset(C64 *c64)
         for (unsigned i = 0; subComponents[i] != NULL; i++)
             subComponents[i]->reset(c64);
     
-    debug(2, "Resetting...\n");
+    debug(3, "Resetting...\n");
     
 }
 
@@ -274,7 +274,7 @@ VirtualComponent::loadFromBuffer(uint8_t **buffer)
                 case 2:  *(uint16_t *)data = read16(buffer); break;
                 case 4:  *(uint32_t *)data = read32(buffer); break;
                 case 8:  *(uint64_t *)data = read64(buffer); break;
-                default: readBlock(buffer, (uint8_t *)snapshotItems[i].data, snapshotItems[i].size);
+                default: readBlock(buffer, (uint8_t *)data, size);
             }
 
         } else { // Format is specified manually

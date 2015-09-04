@@ -39,7 +39,7 @@ VC1541::VC1541()
         { &bitAccuracy,             sizeof(bitAccuracy),            KEEP_ON_RESET },
         { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
         
-        { &bitReadyTimer,           sizeof(bitAccuracy),            CLEAR_ON_RESET },
+        { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
         { &rotating,                sizeof(rotating),               CLEAR_ON_RESET },
         { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },

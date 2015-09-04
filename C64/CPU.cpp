@@ -76,9 +76,8 @@ CPU::CPU()
         { &callStack,               sizeof(callStack),              CLEAR_ON_RESET | WORD_FORMAT },
         { &callStackPointer,        sizeof(callStackPointer),       CLEAR_ON_RESET },
         { &oldI,                    sizeof(oldI),                   CLEAR_ON_RESET },
-        
-        { NULL,                     0, 0 }
-    };
+        { NULL,                     0,                              0 }};
+    
     registerSnapshotItems(items, sizeof(items));
 }
 

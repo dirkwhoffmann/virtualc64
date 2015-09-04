@@ -379,7 +379,8 @@ public:
      *  @param    values Pointer to the beginning of the data block to write into
      *  @param    length Number of bytes to load
      */
-    inline void readBlock(uint8_t **ptr, uint8_t *values, size_t length) { memcpy(values, *ptr, length); *ptr += length; }
+    inline void readBlock(uint8_t **ptr, uint8_t *values, size_t length) {
+        memcpy(values, *ptr, length); *ptr += length; }
     
     /*! @brief    Loads a word block of arbitarary size in big endian format
      *  @param    ptr    Source buffer

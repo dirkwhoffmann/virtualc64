@@ -347,11 +347,6 @@ public:
     //! Save state to snapshot container
     void saveToSnapshot(Snapshot *snapshot);
 
-private:
-    
-    //! Size of internal state
-    uint32_t stateSize();
-	
 	
 	// -----------------------------------------------------------------------------------------------
 	//                                           Control

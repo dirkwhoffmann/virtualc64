@@ -32,7 +32,9 @@ SIDWrapper::SIDWrapper()
     // Register snapshot items
     SnapshotItem items[] = {
         
+        // Configuration items
         { &useReSID,        sizeof(useReSID),       KEEP_ON_RESET },
+        // Internal state
         { &latchedDataBus,  sizeof(latchedDataBus), CLEAR_ON_RESET },
         { &cycles,          sizeof(cycles),         CLEAR_ON_RESET },
         { NULL,             0,                      0 }};

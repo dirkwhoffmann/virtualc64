@@ -299,28 +299,6 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
     ping();
 }
 
-uint32_t
-C64::stateSize()
-{
-    uint32_t size;
-    
-    size = 21;
-    size += cpu->stateSize();
-    size += vic->stateSize();
-    size += sid->stateSize();
-    size += cia1->stateSize();
-    size += cia2->stateSize();
-    size += mem->stateSize();
-    size += keyboard->stateSize();
-    size += joystick1->stateSize();
-    size += joystick2->stateSize();
-    size += iec->stateSize();
-    size += expansionport->stateSize();
-    size += floppy->stateSize();
-    
-    return size;
-}
-
 void 
 C64::saveToSnapshot(Snapshot *snapshot)
 {
