@@ -144,7 +144,7 @@ ReSID::stateSize()
 void
 ReSID::loadFromBuffer(uint8_t **buffer)
 {
-	debug(2, "  Loading ReSID state...\n");
+    VirtualComponent::loadFromBuffer(buffer);
 
     setChipModel((chip_model)read8(buffer));
     setAudioFilter((bool)read8(buffer));
@@ -156,7 +156,7 @@ ReSID::loadFromBuffer(uint8_t **buffer)
 void
 ReSID::saveToBuffer(uint8_t **buffer)
 {
-	debug(2, "  Saving ReSID state...\n");
+    VirtualComponent::saveToBuffer(buffer);
 
     write8(buffer, (uint8_t)getChipModel());
     write8(buffer, (uint8_t)getAudioFilter());

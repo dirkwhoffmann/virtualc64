@@ -28,6 +28,7 @@ VirtualComponent::VirtualComponent()
 	logfile = NULL;
     snapshotItems = NULL;
     subComponents = NULL;
+    snapshotSize = 0;
 }
 
 VirtualComponent::~VirtualComponent()
@@ -252,7 +253,7 @@ VirtualComponent::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    debug(2, "    Loading internal state (%d bytes) ...\n", VirtualComponent::stateSize());
+    debug(3, "    Loading internal state (%d bytes) ...\n", VirtualComponent::stateSize());
     
     // Load internal state of sub components
     if (subComponents != NULL)
@@ -297,7 +298,7 @@ VirtualComponent::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
 
-    debug(2, "    Saving internal state (%d bytes) ...\n", VirtualComponent::stateSize());
+    debug(3, "    Saving internal state (%d bytes) ...\n", VirtualComponent::stateSize());
 
     // Save internal state of sub components
     if (subComponents != NULL) {

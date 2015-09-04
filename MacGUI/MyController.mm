@@ -515,9 +515,16 @@
 			}
 			[self refresh];			
 			break;
-			
-		case MSG_WARP:
-			break;
+
+        case MSG_WARP:
+            break;
+            
+		case MSG_ALWAYS_WARP:
+            if (msg->i)
+                [warpMode setImage:[NSImage imageNamed:@"slow"]];
+            else
+                [warpMode setImage:[NSImage imageNamed:@"fast"]];
+            break;
 			
 		case MSG_LOG:
 			break;
@@ -759,7 +766,7 @@
 	[[undo prepareWithInvocationTarget:self] warpAction:@((int)![c64 warp])];
 	if (![undo isUndoing]) [undo setActionName:@"Native speed"];
 	
-	[c64 setAlwaysWarp:![c64 warp]];
+	[c64 setAlwaysWarp:![c64 alwaysWarp]];
 	[self refresh];
 }
 

@@ -275,8 +275,11 @@ C64::setWarp(bool b)
 void
 C64::setAlwaysWarp(bool b)
 {
-	alwaysWarp = b;
-	setWarp(b);
+    if (alwaysWarp != b) {
+        alwaysWarp = b;
+        setWarp(b);
+        putMessage(MSG_ALWAYS_WARP, b);
+    }
 }
 
 void
