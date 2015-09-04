@@ -108,11 +108,7 @@ public:
     
     //! Destructor
     ~ExpansionPort();
-    
-    //! Revert to initial state
-    /*! A reset will only affect the port. The cartridge is kept alive. */
-    void reset(C64 *c64) { resetPort(c64); }
-    
+        
     //! Reset expansion port
     void resetPort(C64 *c64);
     

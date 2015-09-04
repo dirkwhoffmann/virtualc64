@@ -344,17 +344,13 @@ public:
 	//! Load state from snapshot container
 	void loadFromSnapshot(Snapshot *snapshot);
 
+    //! Save state to snapshot container
+    void saveToSnapshot(Snapshot *snapshot);
+
+private:
+    
     //! Size of internal state
     uint32_t stateSize();
-
-	//! Load state from memory buffer
-	void loadFromBuffer(uint8_t **buffer);
-	
-	//! Save state to snapshot container
-	void saveToSnapshot(Snapshot *snapshot);
-	
-	//! Save state to memory buffer
-	void saveToBuffer(uint8_t **buffer);
 	
 	
 	// -----------------------------------------------------------------------------------------------

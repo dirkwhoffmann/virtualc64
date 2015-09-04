@@ -439,16 +439,7 @@ public:
 
 	//! Reset the VIC chip to its initial state
 	void reset(C64 *c64);
-	
-    //! Size of internal state
-    uint32_t stateSize();
-
-	//! Load state
-	void loadFromBuffer(uint8_t **buffer);
-	
-	//! Save state
-	void saveToBuffer(uint8_t **buffer);	
-	
+		
 	//! Dump internal state to console
 	void dumpState();	
 	

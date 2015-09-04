@@ -22,6 +22,33 @@ IEC::IEC()
 {
   	name = "IEC";
     debug(2, "  Creating IEC bus at address %p...\n", this);
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        { &driveConnected,      sizeof(driveConnected),         CLEAR_ON_RESET },
+        { &atnLine,             sizeof(atnLine),                CLEAR_ON_RESET },
+        { &oldAtnLine,          sizeof(oldAtnLine),             CLEAR_ON_RESET },
+        { &clockLine,           sizeof(clockLine),              CLEAR_ON_RESET },
+        { &oldClockLine,        sizeof(oldClockLine),           CLEAR_ON_RESET },
+        { &dataLine,            sizeof(dataLine),               CLEAR_ON_RESET },
+        { &oldDataLine,         sizeof(oldDataLine),            CLEAR_ON_RESET },
+        { &deviceAtnPin,        sizeof(deviceAtnPin),           CLEAR_ON_RESET },
+        { &deviceAtnIsOutput,   sizeof(deviceAtnIsOutput),      CLEAR_ON_RESET },
+        { &deviceDataPin,       sizeof(deviceDataPin),          CLEAR_ON_RESET },
+        { &deviceDataIsOutput,  sizeof(deviceDataIsOutput),     CLEAR_ON_RESET },
+        { &deviceClockPin,      sizeof(deviceClockPin),         CLEAR_ON_RESET },
+        { &deviceClockIsOutput, sizeof(deviceClockIsOutput),    CLEAR_ON_RESET },
+        { &ciaDataPin,          sizeof(ciaDataPin),             CLEAR_ON_RESET },
+        { &ciaDataIsOutput,     sizeof(ciaDataIsOutput),        CLEAR_ON_RESET },
+        { &ciaClockPin,         sizeof(ciaClockPin),            CLEAR_ON_RESET },
+        { &ciaClockIsOutput,    sizeof(ciaClockIsOutput),       CLEAR_ON_RESET },
+        { &ciaAtnPin,           sizeof(ciaAtnPin),              CLEAR_ON_RESET },
+        { &ciaAtnIsOutput,      sizeof(ciaAtnIsOutput),         CLEAR_ON_RESET },
+        { &busActivity,         sizeof(busActivity),            CLEAR_ON_RESET },
+        { NULL,                 0,                              0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 }
 
 IEC::~IEC()
@@ -32,10 +59,9 @@ IEC::~IEC()
 void 
 IEC::reset(C64 *c64)
 {
-	debug(2, "  Resetting IEC bus...\n");
-
+   VirtualComponent::reset(c64);
+    
     // Establish bindings
-    this->c64 = c64;
     drive = c64->floppy;
     
     driveConnected = 1;
@@ -65,72 +91,6 @@ IEC::ping()
  	drive->c64->putMessage(MSG_VC1541_ATTACHED, driveConnected);
     drive->c64->putMessage(MSG_VC1541_DATA, busActivity > 0);
     
-}
-
-uint32_t
-IEC::stateSize()
-{
-    return 23;
-}
-
-void
-IEC::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    
-	driveConnected = (bool)read8(buffer);
-	atnLine = (bool)read8(buffer);
-	oldAtnLine = (bool)read8(buffer);
-	clockLine = (bool)read8(buffer);
-	oldClockLine = (bool)read8(buffer);
-	dataLine = (bool)read8(buffer);
-	oldDataLine = (bool)read8(buffer);
-    deviceAtnPin = (bool)read8(buffer);
-    deviceAtnIsOutput = (bool)read8(buffer);
-    deviceDataPin = (bool)read8(buffer);
-    deviceDataIsOutput = (bool)read8(buffer);
-	deviceClockPin = (bool)read8(buffer);
-    deviceClockIsOutput = (bool)read8(buffer);
-	ciaDataPin = (bool)read8(buffer);
-	ciaDataIsOutput = (bool)read8(buffer);
-	ciaClockPin = (bool)read8(buffer);
-	ciaClockIsOutput = (bool)read8(buffer);
-	ciaAtnPin = (bool)read8(buffer);
-	ciaAtnIsOutput = (bool)read8(buffer);
-    busActivity = read32(buffer);
-    
-    debug(2, "  IEC state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
-void
-IEC::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    
-	write8(buffer, (uint8_t)driveConnected);
-	write8(buffer, (uint8_t)atnLine);
-	write8(buffer, (uint8_t)oldAtnLine);
-	write8(buffer, (uint8_t)clockLine);
-	write8(buffer, (uint8_t)oldClockLine);
-	write8(buffer, (uint8_t)dataLine);
-	write8(buffer, (uint8_t)oldDataLine);
-    write8(buffer, (uint8_t)deviceAtnPin);
-    write8(buffer, (uint8_t)deviceAtnIsOutput);
-	write8(buffer, (uint8_t)deviceDataPin);
-    write8(buffer, (uint8_t)deviceDataIsOutput);
-	write8(buffer, (uint8_t)deviceClockPin);
-    write8(buffer, (uint8_t)deviceClockIsOutput);
-	write8(buffer, (uint8_t)ciaDataPin);
-	write8(buffer, (uint8_t)ciaDataIsOutput);
-	write8(buffer, (uint8_t)ciaClockPin);
-	write8(buffer, (uint8_t)ciaClockIsOutput);
-	write8(buffer, (uint8_t)ciaAtnPin);
-	write8(buffer, (uint8_t)ciaAtnIsOutput);
-    write32(buffer, busActivity);
-    
-    debug(4, "  IEC state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
 }
 
 void 

@@ -236,7 +236,7 @@ public:
 	~VIA1();
 
 	//! Bring the VIA back to its initial state
-	void reset(C64 *c64);
+	// void reset(C64 *c64);
     
     //! Execution function for timer 1
     void executeTimer1();
@@ -265,7 +265,7 @@ public:
 	~VIA2();
 
 	//! Bring the VIA back to its initial state
-	void reset(C64 *c64);
+	// void reset(C64 *c64);
     
     //! Execution function for timer 1
     void executeTimer1();

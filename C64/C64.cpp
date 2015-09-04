@@ -88,18 +88,50 @@ C64::C64()
     warpLoad = false;
 	
 	// Create components
-	mem = new C64Memory();
 	cpu = new CPU();
+    mem = new C64Memory();
 	vic = new VIC();
 	sid = new SIDWrapper();
 	cia1 = new CIA1();
 	cia2 = new CIA2();
-	keyboard = new Keyboard();
 	iec = new IEC();
     expansionport = new ExpansionPort();
 	floppy = new VC1541();
+    keyboard = new Keyboard();
     joystick1 = new Joystick();
     joystick2 = new Joystick();
+
+    // Register sub components
+    VirtualComponent *subcomponents[] = {
+        
+        cpu,
+        mem,
+        vic,
+        sid,
+        cia1, cia2,
+        iec,
+        expansionport,
+        floppy,
+        keyboard,
+        joystick1, joystick2,
+        NULL };
+    
+    registerSubComponents(subcomponents, sizeof(subcomponents));
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        { &warpLoad,        sizeof(warpLoad),           KEEP_ON_RESET },
+
+        { &alwaysWarp,      sizeof(alwaysWarp),         CLEAR_ON_RESET },
+        { &warp,            sizeof(warp),               CLEAR_ON_RESET },
+        { &cycles,          sizeof(cycles),             CLEAR_ON_RESET },
+        { &frame,           sizeof(frame),              CLEAR_ON_RESET },
+        { &rasterline,      sizeof(rasterline),         CLEAR_ON_RESET },
+        { &rasterlineCycle, sizeof(rasterlineCycle),    CLEAR_ON_RESET },
+        { NULL,             0,                          0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 
     // Configure machine type and reset
     setPAL();
@@ -141,27 +173,15 @@ void C64::reset(C64 *c64)
 {
 	suspend();
 
-	debug (1, "Resetting virtual C64\n");
-	mem->reset(c64);
-	cpu->reset(c64, mem);
-	cpu->setPC(0xFCE2);
-	vic->reset(c64);
-	cia1->reset(c64);
-	cia2->reset(c64);
-    sid->reset(c64);
-	keyboard->reset(c64);
-    joystick1->reset(c64);
-    joystick2->reset(c64);
-    iec->reset(c64);
-    expansionport->reset(c64);
-    floppy->reset(c64);
-
+    VirtualComponent::reset(c64);
+    
+    cpu->mem = mem;
+    cpu->setPC(0xFCE2);
 	cycles = 0UL;
 	frame = 0;
 	rasterline = 0;
 	rasterlineCycle = 1;
     nanoTargetTime = 0UL;
-    
     ping();
     
 	resume();
@@ -276,6 +296,7 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
 
 	uint8_t *ptr = snapshot->getData();
 	loadFromBuffer(&ptr);
+    ping();
 }
 
 uint32_t
@@ -301,43 +322,6 @@ C64::stateSize()
 }
 
 void 
-C64::loadFromBuffer(uint8_t **buffer)
-{	
-	uint8_t *old = *buffer;
-		
-	debug(2, "Loading internal state...\n");
-	
-	// Load state of this component
-    warp = read8(buffer);
-    alwaysWarp = read8(buffer);
-    warpLoad = read8(buffer);
-	cycles = read64(buffer);
-	frame = (int)read32(buffer);
-	rasterline = (int)read16(buffer);
-	rasterlineCycle = (int)read32(buffer);
-    // nanoTargetTime = read64(buffer);
-	
-	// Load state of sub components
-	cpu->loadFromBuffer(buffer);
-	vic->loadFromBuffer(buffer);
-	sid->loadFromBuffer(buffer);
-	cia1->loadFromBuffer(buffer);
-	cia2->loadFromBuffer(buffer);	
-	mem->loadFromBuffer(buffer);
-	keyboard->loadFromBuffer(buffer);
-    joystick1->loadFromBuffer(buffer);
-    joystick2->loadFromBuffer(buffer);
-    iec->loadFromBuffer(buffer);
-    expansionport->loadFromBuffer(buffer);
-	floppy->loadFromBuffer(buffer);
-
-    debug(2, "  C64 state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-    
-    ping();
-}
-
-void 
 C64::saveToSnapshot(Snapshot *snapshot)
 {
 	if (snapshot == NULL)
@@ -350,41 +334,6 @@ C64::saveToSnapshot(Snapshot *snapshot)
     snapshot->alloc(stateSize());
 	uint8_t *ptr = snapshot->getData();
 	saveToBuffer(&ptr);
-}
-
-void 
-C64::saveToBuffer(uint8_t **buffer)
-{	
-	uint8_t *old = *buffer;
-		
-    debug(3, "Saving internal state...\n");
-		
-	// Save state of this component
-    write8(buffer, warp);
-    write8(buffer, alwaysWarp);
-    write8(buffer, warpLoad);
-	write64(buffer, cycles);
-	write32(buffer, (uint32_t)frame);
-	write16(buffer, rasterline);
-	write32(buffer, (uint32_t)rasterlineCycle);
-	// write64(buffer, nanoTargetTime);
-	
-	// Save state of sub components
-	cpu->saveToBuffer(buffer);
-	vic->saveToBuffer(buffer);
-	sid->saveToBuffer(buffer);
-	cia1->saveToBuffer(buffer);
-	cia2->saveToBuffer(buffer);
-	mem->saveToBuffer(buffer);
-	keyboard->saveToBuffer(buffer);
-    joystick1->saveToBuffer(buffer);
-    joystick2->saveToBuffer(buffer);
-	iec->saveToBuffer(buffer);
-    expansionport->saveToBuffer(buffer);
-	floppy->saveToBuffer(buffer);
-	
-    debug(3, "  C64 state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
 }
 
 

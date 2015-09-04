@@ -22,6 +22,18 @@ TOD::TOD()
 {
 	name = "TOD";
 	debug(2, "    Creating TOD at address %p...\n", this);
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        { &tod.value,   sizeof(tod.value),      CLEAR_ON_RESET },
+        { &alarm.value, sizeof(alarm.value),    CLEAR_ON_RESET },
+        { &latch.value, sizeof(latch.value),    CLEAR_ON_RESET },
+        { &frozen,      sizeof(frozen),         CLEAR_ON_RESET },
+        { &stopped,     sizeof(stopped),        CLEAR_ON_RESET },
+        { NULL,         0,                      0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 }
 
 TOD::~TOD()
@@ -34,7 +46,7 @@ TOD::reset(C64 *c64)
     time_t rawtime;
     struct tm *timeinfo;
     
-	debug(2, "    Resetting TOD...\n");
+    VirtualComponent::reset(c64);
 
     time(&rawtime);
     timeinfo = localtime(&rawtime);
@@ -53,36 +65,6 @@ uint32_t
 TOD::stateSize()
 {
     return 14;
-}
-
-void
-TOD::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-
-	tod.value = read32(buffer);
-	alarm.value = read32(buffer);
-	latch.value = read32(buffer);
-	frozen = read8(buffer);
-	stopped = read8(buffer);
-
-    debug(2, "    TOD state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
-void
-TOD::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-
-	write32(buffer, tod.value);
-	write32(buffer, alarm.value);
-	write32(buffer, latch.value);
-	write8(buffer, frozen);
-	write8(buffer, stopped);
-    
-    debug(4, "    TOD state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
 }
 
 void 

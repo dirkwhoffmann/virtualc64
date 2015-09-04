@@ -34,13 +34,6 @@ ExpansionPort::~ExpansionPort()
 }
 
 void
-ExpansionPort::resetPort(C64 *c64)
-{
-    debug(2, "  Resetting expansion port...\n");
-    this->c64 = c64;
-}
-
-void
 ExpansionPort::resetCartridge()
 {
     type = CRT_NONE;

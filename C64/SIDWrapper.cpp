@@ -62,9 +62,7 @@ SIDWrapper::setReSID(bool enable)
 void 
 SIDWrapper::reset(C64 *c64)
 {
-    VirtualComponent::reset(c64);
-    oldsid->reset(c64);
-    resid->reset(c64);
+    VirtualComponent::reset(c64); // Resets all sub components
     
     cycles = 0UL;
 }

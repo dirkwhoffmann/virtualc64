@@ -35,6 +35,54 @@ VIC::VIC()
 	// Start with all debug options disabled
 	markIRQLines = false;
 	markDMALines = false;
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
+        
+        { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
+        { &xCounter,                    sizeof(xCounter),                       CLEAR_ON_RESET },
+        { &yCounter,                    sizeof(yCounter),                       CLEAR_ON_RESET },
+        { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
+        { &registerVC,                  sizeof(registerVC),                     CLEAR_ON_RESET },
+        { &registerVCBASE,              sizeof(registerVCBASE),                 CLEAR_ON_RESET },
+        { &registerRC,                  sizeof(registerRC),                     CLEAR_ON_RESET },
+        { &registerVMLI,                sizeof(registerVMLI),                   CLEAR_ON_RESET },
+        { &oldControlReg1,              sizeof(oldControlReg1),                 CLEAR_ON_RESET },
+        { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
+        { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
+        { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
+        { &gAccessDisplayMode,          sizeof(gAccessDisplayMode),             CLEAR_ON_RESET },
+        { &gAccessfgColor,              sizeof(gAccessfgColor),                 CLEAR_ON_RESET },
+        { &gAccessbgColor,              sizeof(gAccessbgColor),                 CLEAR_ON_RESET },
+        { &badLineCondition,            sizeof(badLineCondition),               CLEAR_ON_RESET },
+        { &DENwasSetInRasterline30,     sizeof(DENwasSetInRasterline30),        CLEAR_ON_RESET },
+        { &displayState,                sizeof(displayState),                   CLEAR_ON_RESET },
+        { &BAlow,                       sizeof(BAlow),                          CLEAR_ON_RESET },
+        { &BAwentLowAtCycle,            sizeof(BAwentLowAtCycle),               CLEAR_ON_RESET },
+        { &mainFrameFF,                 sizeof(mainFrameFF),                    CLEAR_ON_RESET },
+        { &verticalFrameFF,             sizeof(verticalFrameFF),                CLEAR_ON_RESET },
+        // Memory
+        { &iomem,                       sizeof(iomem),                          CLEAR_ON_RESET },
+        { &bankAddr,                    sizeof(bankAddr),                       CLEAR_ON_RESET },
+        // Sequencer
+        { &g_data,                      sizeof(g_data),                         CLEAR_ON_RESET },
+        { &g_character,                 sizeof(g_character),                    CLEAR_ON_RESET },
+        { &g_color,                     sizeof(g_color),                        CLEAR_ON_RESET },
+        { &g_mode,                      sizeof(g_mode),                         CLEAR_ON_RESET },
+        // Sprites
+        { &mc,                          sizeof(mc),                             CLEAR_ON_RESET | BYTE_FORMAT },
+        { &mcbase,                      sizeof(mcbase),                         CLEAR_ON_RESET | BYTE_FORMAT },
+        { &spriteOnOff,                 sizeof(spriteOnOff),                    CLEAR_ON_RESET },
+        { &oldSpriteOnOff,              sizeof(oldSpriteOnOff),                 CLEAR_ON_RESET },
+        { &spriteDmaOnOff,              sizeof(spriteDmaOnOff),                 CLEAR_ON_RESET },
+        { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
+        { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
+        { &lightpenIRQhasOccured,       sizeof(lightpenIRQhasOccured),          CLEAR_ON_RESET },
+        { NULL,                         0,                                      0 }};
+
+    registerSnapshotItems(items, sizeof(items));
 }
 
 VIC::~VIC()
@@ -44,10 +92,9 @@ VIC::~VIC()
 void 
 VIC::reset(C64 *c64) 
 {
-	debug(2, "  Resetting VIC...\n");
+    VirtualComponent::reset(c64);
 	
     // Establish bindungs
-    this->c64 = c64;
     cpu = c64->cpu;
     mem = c64->mem;
     
@@ -55,10 +102,9 @@ VIC::reset(C64 *c64)
     pixelEngine.reset(c64);
 
 	// Internal state
-    chipModel = MOS6569_PAL;
     vblank = false;
     xCounter = 0;
-    yCounter = PAL_HEIGHT;
+    
     yCounterEqualsIrqRasterline = false;
 	registerVC = 0;
 	registerVCBASE = 0;
@@ -77,9 +123,10 @@ VIC::reset(C64 *c64)
     BAwentLowAtCycle = 0;
 	mainFrameFF = false;
 	verticalFrameFF = false;
-	// drawVerticalFrame = false;
-	// drawHorizontalFrame = false;
-	
+
+    chipModel = MOS6569_PAL;
+    yCounter = PAL_HEIGHT;
+
 	// Memory
 	memset(iomem, 0x00, sizeof(iomem));
     iomem[0x20] = PixelEngine::LTBLUE; // Let the border color look correct right from the beginning
@@ -116,128 +163,6 @@ VIC::reset(C64 *c64)
 	spriteBackgroundCollisionEnabled = 0xFF;
 }
 			
-uint32_t
-VIC::stateSize()
-{
-    return 130;
-}
-
-void
-VIC::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-
-	// Internal registers
-    chipModel = (ChipModel)read8(buffer);
-    vblank = (bool)read8(buffer);
-    xCounter = read16(buffer);
-	yCounter = read32(buffer);
-    yCounterEqualsIrqRasterline = (bool)read8(buffer);
-    registerVC = read16(buffer);
-	registerVCBASE = read16(buffer);
-	registerRC = read8(buffer);
-	registerVMLI = read8(buffer);
-    oldControlReg1 = read8(buffer);
-    refreshCounter = read8(buffer);
-    addrBus = read16(buffer);
-    dataBus = read8(buffer);
-    gAccessDisplayMode = read8(buffer);
-    gAccessfgColor = read8(buffer);
-    gAccessbgColor = read8(buffer);
-	badLineCondition = (bool)read8(buffer);
-	DENwasSetInRasterline30 = (bool)read8(buffer);
-	displayState = (bool)read8(buffer);
-	BAlow = read16(buffer);
-    BAwentLowAtCycle = read64(buffer);
-	mainFrameFF = (bool)read8(buffer);
-	verticalFrameFF = (bool)read8(buffer);
-    
-	// Memory
-    readBlock(buffer, iomem, sizeof(iomem));
-	bankAddr = read16(buffer);
-    
-    // Sequencer
-    g_data = read8(buffer);
-    g_character = read8(buffer);
-    g_color = read8(buffer);
-    g_mode = (DisplayMode)read8(buffer);
-    
-	// Sprites
-	for (int i = 0; i < 8; i++) {
-		mc[i] = read8(buffer);
-		mcbase[i] = read8(buffer);
-	}
-	spriteOnOff = read8(buffer);
-	oldSpriteOnOff = read8(buffer);
-	spriteDmaOnOff = read8(buffer);
-	expansionFF = read8(buffer);
-    cleared_bits_in_d017 = read8(buffer);
-    
-	// Lightpen
-	lightpenIRQhasOccured = (bool)read8(buffer);
-    
-    debug(2, "  VIC state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
-void
-VIC::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-
-	// Internal registers
-    write8(buffer, (uint8_t)chipModel);
-    write8(buffer, (uint8_t)vblank);
-    write16(buffer, xCounter);
-    write32(buffer, yCounter);
-    write8(buffer, (uint8_t)yCounterEqualsIrqRasterline);
-    write16(buffer, registerVC);
-	write16(buffer, registerVCBASE);
-	write8(buffer, registerRC);
-	write8(buffer, registerVMLI);
-    write8(buffer, oldControlReg1);
-    write8(buffer, refreshCounter);
-    write16(buffer, addrBus);
-    write8(buffer, dataBus);
-    write8(buffer, gAccessDisplayMode);
-    write8(buffer, gAccessfgColor);
-    write8(buffer, gAccessbgColor);
-	write8(buffer, (uint8_t)badLineCondition);
-	write8(buffer, (uint8_t)DENwasSetInRasterline30);
-	write8(buffer, (uint8_t)displayState);
-	write16(buffer, BAlow);
-    write64(buffer, BAwentLowAtCycle);
-	write8(buffer, (uint8_t)mainFrameFF);
-	write8(buffer, (uint8_t)verticalFrameFF);
-	
-	// Memory
-    writeBlock(buffer, iomem, sizeof(iomem));
-	write16(buffer, bankAddr);
-
-    // Sequencer
-    write8(buffer, g_data);
-    write8(buffer, g_character);
-    write8(buffer, g_color);
-    write8(buffer, (uint8_t)g_mode);
-    
-    // Sprites
-	for (int i = 0; i < 8; i++) {
-		write8(buffer, mc[i]);
-		write8(buffer, mcbase[i]);
-	}
-	write8(buffer, spriteOnOff);
-	write8(buffer, oldSpriteOnOff);
-	write8(buffer, spriteDmaOnOff);
-	write8(buffer, expansionFF);
-    write8(buffer, cleared_bits_in_d017);
-
-	// Lightpen
-	write8(buffer, lightpenIRQhasOccured);
-    
-    debug(4, "  VIC state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
 void 
 VIC::dumpState()
 {

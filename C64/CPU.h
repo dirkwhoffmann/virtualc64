@@ -101,9 +101,6 @@ public:
 	
 public:
 
-	//! Reference to the connected virtual C64
-	C64 *c64;
-
 	//! Reference to the connected virtual memory
 	Memory *mem;
 
@@ -256,7 +253,7 @@ public:
 
 	// Brings CPU back to its initial state
 	void reset(C64 *c64);
-    void reset(C64 *c64, Memory *mem);
+    // void reset(C64 *c64, Memory *mem);
 
     //! Size of internal state
     uint32_t stateSize();

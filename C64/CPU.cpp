@@ -90,7 +90,7 @@ CPU::~CPU()
 void
 CPU::reset(C64 *c64)
 {
-	debug(2, "  Resetting CPU...\n");
+    VirtualComponent::reset(c64);
     
 	// Registers and flags
 	A = 0;
@@ -138,6 +138,7 @@ CPU::reset(C64 *c64)
 	setTraceMode(false);	
 }
 
+#if 0
 void
 CPU::reset(C64 *c64, Memory *mem)
 {
@@ -145,6 +146,7 @@ CPU::reset(C64 *c64, Memory *mem)
     this->mem = mem;
     reset(c64);
 }
+#endif
 
 uint32_t
 CPU::stateSize()

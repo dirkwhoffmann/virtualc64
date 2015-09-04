@@ -38,10 +38,9 @@ VC1541Memory::~VC1541Memory()
 void 
 VC1541Memory::reset(C64 *c64)
 {
-	debug (2, "    Resetting VC1541 memory...\n");
-
+    VirtualComponent::reset(c64);
+    
     // Establish bindings
-    this->c64 = c64;
     cpu = c64->cpu;
     iec = c64->iec;
     floppy = c64->floppy;

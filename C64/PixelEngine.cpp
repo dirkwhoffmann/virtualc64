@@ -47,10 +47,9 @@ PixelEngine::~PixelEngine()
 void
 PixelEngine::reset(C64 *c64)
 {
-    debug(2, "  Resetting PixelEngine...\n");
+    VirtualComponent::reset(c64);
     
     // Establish bindings
-    this->c64 = c64;
     vic = c64->vic;
     
     // Shift register

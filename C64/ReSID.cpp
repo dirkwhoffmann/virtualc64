@@ -57,9 +57,7 @@ ReSID::~ReSID()
 void
 ReSID::reset(C64 *c64)
 {
-	debug(2, "  Resetting ReSID...\n");
-	
-    this->c64 = c64;
+    VirtualComponent::reset(c64);
     
 	// reset ringBuffer
 	for (unsigned i = 0; i < bufferSize; i++)

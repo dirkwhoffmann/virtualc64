@@ -84,7 +84,7 @@ OldSID::~OldSID()
 void
 OldSID::reset(C64 *c64)
 {
-	debug(2, "  Resetting SID...\n");
+    VirtualComponent::reset(c64);
 
 	// set mastervolume to half amplitude
 	masterVolume = 0.5f;

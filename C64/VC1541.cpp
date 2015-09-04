@@ -69,19 +69,15 @@ VC1541::~VC1541()
 }
 
 void
-VC1541::resetDrive(C64 *c64)
+VC1541::reset(C64 *c64)
 {
     VirtualComponent::reset(c64);
     
     // Establish bindings
     iec = c64->iec;
     
-    // Reset subcomponents
-    mem->reset(c64);
-    cpu->reset(c64, mem);
+    cpu->mem = mem;
     cpu->setPC(0xEAA0);
-    via1.reset(c64);
-    via2.reset(c64);
     
     // VC1541 properties
     rotating = false;
@@ -102,7 +98,7 @@ VC1541::resetDisk()
     debug (2, "Resetting disk in VC1541...\n");
     
     // Disk properties
-    disk.reset(c64);
+    disk.clearDisk();
     diskInserted = false;
     diskPartiallyInserted = false;
 }

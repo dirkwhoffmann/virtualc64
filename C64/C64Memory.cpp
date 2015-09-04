@@ -54,10 +54,9 @@ C64Memory::~C64Memory()
 
 void C64Memory::reset(C64 *c64)
 {
-	debug (2, "  Resetting main memory...\n");
-	
+    VirtualComponent::reset(c64);
+    
     // Establish bindings
-    this->c64 = c64;
     vic = c64->vic;
     sid = c64->sid;
     cia1 = c64->cia1;

@@ -46,14 +46,6 @@ Disk525::~Disk525()
 }
 
 void
-Disk525::reset(C64 *c64)
-{
-    VirtualComponent::reset(c64);
-    
-    clearDisk();
-}
-
-void
 Disk525::dumpState()
 {
     unsigned noOfOneBits, alignedSyncs, unalignedSyncs;

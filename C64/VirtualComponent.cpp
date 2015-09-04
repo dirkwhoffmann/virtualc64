@@ -47,10 +47,16 @@ VirtualComponent::~VirtualComponent()
 void
 VirtualComponent::reset(C64 *c64)
 {
-    debug(2, "    Resetting ...\n");
-    
     // Establish binding to top-level object
     this->c64 = c64;
+
+    // Reset all sub components
+    if (subComponents != NULL)
+        for (unsigned i = 0; subComponents[i] != NULL; i++)
+            subComponents[i]->reset(c64);
+    
+    debug(2, "Resetting...\n");
+    
 }
 
 void

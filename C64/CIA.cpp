@@ -21,6 +21,38 @@
 CIA::CIA()
 {
 	name = "CIA";
+    
+    // Register sub components
+    VirtualComponent *subcomponents[] = { &tod, NULL };
+    registerSubComponents(subcomponents, sizeof(subcomponents));
+
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        { &delay,           sizeof(delay),          CLEAR_ON_RESET },
+        { &feed,            sizeof(feed),           CLEAR_ON_RESET },
+        { &CRA,             sizeof(CRA),            CLEAR_ON_RESET },
+        { &CRB,             sizeof(CRB),            CLEAR_ON_RESET },
+        { &ICR,             sizeof(ICR),            CLEAR_ON_RESET },
+        { &IMR,             sizeof(IMR),            CLEAR_ON_RESET },
+        { &PB67TimerMode,   sizeof(PB67TimerMode),  CLEAR_ON_RESET },
+        { &PB67TimerOut,    sizeof(PB67TimerOut),   CLEAR_ON_RESET },
+        { &PB67Toggle,      sizeof(PB67Toggle),     CLEAR_ON_RESET },
+        { &PALatch,         sizeof(PALatch),        CLEAR_ON_RESET },
+        { &PBLatch,         sizeof(PBLatch),        CLEAR_ON_RESET },
+        { &DDRA,            sizeof(DDRA),           CLEAR_ON_RESET },
+        { &DDRB,            sizeof(DDRB),           CLEAR_ON_RESET },
+        { &PA,              sizeof(PA),             CLEAR_ON_RESET },
+        { &PB,              sizeof(PB),             CLEAR_ON_RESET },
+        { &CNT,             sizeof(CNT),            CLEAR_ON_RESET },
+        { &INT,             sizeof(INT),            CLEAR_ON_RESET },
+        { &counterA,        sizeof(counterA),       CLEAR_ON_RESET },
+        { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
+        { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },
+        { &latchB,          sizeof(latchB),         CLEAR_ON_RESET },
+        { NULL,             0,                      0 }};
+
+    registerSnapshotItems(items, sizeof(items));
 }
 
 CIA::~CIA()
@@ -29,7 +61,9 @@ CIA::~CIA()
 
 void
 CIA::reset(C64 *c64)
-{	
+{
+    VirtualComponent::reset(c64);
+    
     // Establish bindings
     cpu = c64->cpu;
     vic = c64->vic;
@@ -62,91 +96,10 @@ CIA::reset(C64 *c64)
 	latchA = 0xFFFF;
 	counterB = 0x0000;
 	latchB = 0xFFFF;
-	
-	tod.reset(c64);
 }
 
-uint32_t
-CIA::stateSize()
-{
-    return 31 + tod.stateSize();
-}
-
-void 
-CIA::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    
-	delay = read32(buffer);
-	feed = read32(buffer);
-	CRA = read8(buffer);
-	CRB = read8(buffer);
-	ICR = read8(buffer);
-	IMR = read8(buffer);
-	PB67TimerMode = read8(buffer);
-	PB67TimerOut = read8(buffer);
-	PB67Toggle = read8(buffer);
-	
-	PALatch = read8(buffer);
-	PBLatch = read8(buffer);
-	DDRA = read8(buffer);
-	DDRB = read8(buffer);
-	
-	PA = read8(buffer);
-	PB = read8(buffer);
-	
-	CNT = (bool)read8(buffer);
-	INT = (bool)read8(buffer);
-		
-	counterA = read16(buffer);
-	latchA = read16(buffer);
-	counterB = read16(buffer);
-	latchB = read16(buffer);
-
-	tod.loadFromBuffer(buffer);
-    
-    debug(2, "  CIA state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
-void 
-CIA::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-	
-	write32(buffer, delay);
-	write32(buffer, feed);
-	write8(buffer, CRA);
-	write8(buffer, CRB);
-	write8(buffer, ICR);
-	write8(buffer, IMR);
-	write8(buffer, PB67TimerMode);
-	write8(buffer, PB67TimerOut);
-	write8(buffer, PB67Toggle);
-	
-	write8(buffer, PALatch);
-	write8(buffer, PBLatch);
-	write8(buffer, DDRA);
-	write8(buffer, DDRB);
-	
-	write8(buffer, PA);
-	write8(buffer, PB);
-	
-	write8(buffer, (uint8_t)CNT);
-	write8(buffer, (uint8_t)INT);
-	
-	write16(buffer, counterA);
-	write16(buffer, latchA);
-	write16(buffer, counterB);
-	write16(buffer, latchB);
-
-	tod.saveToBuffer(buffer);
-    
-    debug(4, "  CIA state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
-uint8_t CIA::peek(uint16_t addr)
+uint8_t
+CIA::peek(uint16_t addr)
 {
 	uint8_t result;
 	
@@ -812,7 +765,6 @@ CIA1::~CIA1()
 void 
 CIA1::reset(C64 *c64)
 {
-	debug(2, "  Resetting CIA1...\n");
     keyboard = c64->keyboard;
     joy[0] = c64->joystick1;
     joy[1] = c64->joystick2;
@@ -1031,7 +983,6 @@ CIA2::~CIA2()
 
 void CIA2::reset(C64 *c64)
 {
-	debug(2, "  Resetting CIA2...\n");
     this->c64 = c64;
     iec = c64->iec;
 	CIA::reset(c64);

@@ -83,9 +83,6 @@ public:
     
     Disk525();
     ~Disk525();
-
-    //! @brief Reset
-    void reset(C64 *c64);
     
     //! @brief Dump current state into logfile
     void dumpState();
