@@ -23,6 +23,16 @@ Joystick::Joystick() {
 
     name = "Joystick";
     debug(2, "    Creating joystick at address %p...\n", this);
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        { &_buttonPressed,  sizeof(_buttonPressed), CLEAR_ON_RESET },
+        { &_axisX,          sizeof(_axisX),         CLEAR_ON_RESET },
+        { &_axisY,          sizeof(_axisY),         CLEAR_ON_RESET },
+        { NULL,             0,                      0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 }
 
 Joystick::~Joystick()
@@ -38,38 +48,6 @@ Joystick::reset(C64 *c64)
     _buttonPressed = false;
     _axisX = JOYSTICK_AXIS_NONE;
     _axisY = JOYSTICK_AXIS_NONE;
-}
-
-uint32_t
-Joystick::stateSize()
-{
-    return 3;
-}
-
-void
-Joystick::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    
-    _buttonPressed = (uint8_t)read8(buffer);
-    _axisX = (JoystickAxisState)read8(buffer);
-    _axisY = (JoystickAxisState)read8(buffer);
-
-    debug(4, "  Joystick state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
-void
-Joystick::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-
-    write8(buffer,(uint8_t)_buttonPressed);
-    write8(buffer,(uint8_t)_axisX);
-    write8(buffer,(uint8_t)_axisY);
-
-    debug(4, "  Joystick state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
 }
 
 void

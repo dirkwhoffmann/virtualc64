@@ -29,33 +29,34 @@ VC1541::VC1541()
 	cpu->setName("1541CPU");
     cpu->chipModel = CPU::MOS6502;
     
+    // Register sub components
+    VirtualComponent *subcomponents[] = { mem, cpu, &via1, &via2, &disk, NULL };
+    registerSubComponents(subcomponents, sizeof(subcomponents)); 
+
     // Register snapshot items
     SnapshotItem items[] = {
         
-        // Configuration
-        { &bitAccuracy, sizeof(bitAccuracy) },
+        { &bitAccuracy,             sizeof(bitAccuracy),            KEEP_ON_RESET },
+        { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
         
-        // Internal state
-        { &bitReadyTimer, sizeof(bitAccuracy) },
-        { &byteReadyCounter, sizeof(byteReadyCounter) },
-        { &rotating, sizeof(rotating) },
-        { &redLED, sizeof(redLED) },
-        { &diskInserted, sizeof(diskInserted) },
-        { &diskPartiallyInserted, sizeof(diskPartiallyInserted) },
-        { &sendSoundMessages, sizeof(sendSoundMessages) },
-        
-        // Read/Write logic
-        { &halftrack, sizeof(halftrack) },
-        { &bitoffset, sizeof(bitoffset) },
-        { &zone, sizeof(zone) },
-        { &read_shiftreg, sizeof(read_shiftreg) },
-        { &write_shiftreg, sizeof(write_shiftreg) },
-        { &sync, sizeof(sync) },
-        { NULL, 0 }
-    };
+        { &bitReadyTimer,           sizeof(bitAccuracy),            CLEAR_ON_RESET },
+        { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
+        { &rotating,                sizeof(rotating),               CLEAR_ON_RESET },
+        { &redLED,                  sizeof(redLED),                 CLEAR_ON_RESET },
+        { &diskPartiallyInserted,   sizeof(diskPartiallyInserted),  CLEAR_ON_RESET },
+        { &halftrack,               sizeof(halftrack),              CLEAR_ON_RESET },
+        { &bitoffset,               sizeof(bitoffset),              CLEAR_ON_RESET },
+        { &zone,                    sizeof(zone),                   CLEAR_ON_RESET },
+        { &read_shiftreg,           sizeof(read_shiftreg),          CLEAR_ON_RESET },
+        { &write_shiftreg,          sizeof(write_shiftreg),         CLEAR_ON_RESET },
+        { &sync,                    sizeof(sync),                   CLEAR_ON_RESET },
+       
+        { &diskInserted,            sizeof(diskInserted),           KEEP_ON_RESET },
+        { NULL,                     0,                              0 }};
+    
     registerSnapshotItems(items, sizeof(items));
     
-    sendSoundMessages = true; 
+    sendSoundMessages = true;
     resetDisk();
 }
 
@@ -121,6 +122,7 @@ VC1541::ping()
 
 }
 
+#if 0
 uint32_t
 VC1541::stateSize()
 {
@@ -164,6 +166,7 @@ VC1541::saveToBuffer(uint8_t **buffer)
     
     assert(*buffer - old == stateSize());
 }
+#endif 
 
 void 
 VC1541::dumpState()

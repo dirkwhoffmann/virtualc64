@@ -81,7 +81,7 @@ void Memory::flashRom(const char *filename, uint16_t start)
 		return;
 	c = fgetc(file);
 	while(c != EOF) {
-		pokeRom(addr, (uint8_t)c); //  rom[addr] = c;
+		pokeRom(addr, (uint8_t)c);
 		c = fgetc(file);
 		addr++;
 	}

@@ -30,22 +30,22 @@ VIA6522::VIA6522()
     
     // Register snapshot items
     SnapshotItem items[] = {
-        { &ddra, sizeof(ddra) },
-        { &ddrb, sizeof(ddrb) },
-        { &ora, sizeof(ora) },
-        { &orb, sizeof(orb) },
-        { &ira, sizeof(ira) },
-        { &irb, sizeof(irb) },
-        { &t1, sizeof(t1) },
-        { &t2, sizeof(t2) },
-        { &t1_latch_lo, sizeof(t1_latch_lo) },
-        { &t1_latch_hi, sizeof(t1_latch_hi) },
-        { &t2_latch_lo, sizeof(t2_latch_lo) },
-        { &t1_underflow, sizeof(t1_underflow) },
-        { &t2_underflow, sizeof(t2_underflow) },
-        { io, sizeof(io) },
-        { NULL, 0 }
-    };
+        { &ddra,            sizeof(ddra),           CLEAR_ON_RESET },
+        { &ddrb,            sizeof(ddrb),           CLEAR_ON_RESET },
+        { &ora,             sizeof(ora),            CLEAR_ON_RESET },
+        { &orb,             sizeof(orb),            CLEAR_ON_RESET },
+        { &ira,             sizeof(ira),            CLEAR_ON_RESET },
+        { &irb,             sizeof(irb),            CLEAR_ON_RESET },
+        { &t1,              sizeof(t1),             CLEAR_ON_RESET },
+        { &t2,              sizeof(t2),             CLEAR_ON_RESET },
+        { &t1_latch_lo,     sizeof(t1_latch_lo),    CLEAR_ON_RESET },
+        { &t1_latch_hi,     sizeof(t1_latch_hi),    CLEAR_ON_RESET },
+        { &t2_latch_lo,     sizeof(t2_latch_lo),    CLEAR_ON_RESET },
+        { &t1_underflow,    sizeof(t1_underflow),   CLEAR_ON_RESET },
+        { &t2_underflow,    sizeof(t2_underflow),   CLEAR_ON_RESET },
+        { io,               sizeof(io),             CLEAR_ON_RESET },
+        { NULL,             0,                      0 }};
+    
     registerSnapshotItems(items, sizeof(items));
 }
 

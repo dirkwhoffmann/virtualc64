@@ -32,7 +32,54 @@ CPU::CPU()
 	// Clear all breakpoint tags
 	for (int i = 0; i <  65536; i++) {
 		breakpoint[i] = NO_BREAKPOINT;	
-	}		
+	}
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        // Snapshot items that keep their values the whole lifetime
+        { &chipModel,               sizeof(chipModel), KEEP_ON_RESET },
+
+        // Internal state
+        { &A,                       sizeof(A),                      CLEAR_ON_RESET },
+        { &X,                       sizeof(X),                      CLEAR_ON_RESET },
+        { &Y,                       sizeof(Y),                      CLEAR_ON_RESET },
+        { &PC,                      sizeof(PC),                     CLEAR_ON_RESET },
+        { &PC_at_cycle_0,           sizeof(PC_at_cycle_0),          CLEAR_ON_RESET },
+        { &SP,                      sizeof(SP),                     CLEAR_ON_RESET },
+        { &N,                       sizeof(N),                      CLEAR_ON_RESET },
+        { &V,                       sizeof(V),                      CLEAR_ON_RESET },
+        { &B,                       sizeof(B),                      CLEAR_ON_RESET },
+        { &D,                       sizeof(D),                      CLEAR_ON_RESET },
+        { &I,                       sizeof(I),                      CLEAR_ON_RESET },
+        { &Z,                       sizeof(Z),                      CLEAR_ON_RESET },
+        { &C,                       sizeof(C),                      CLEAR_ON_RESET },
+        { &opcode,                  sizeof(opcode),                 CLEAR_ON_RESET },
+        { &addr_lo,                 sizeof(addr_lo),                CLEAR_ON_RESET },
+        { &addr_hi,                 sizeof(addr_hi),                CLEAR_ON_RESET },
+        { &ptr,                     sizeof(ptr),                    CLEAR_ON_RESET },
+        { &pc_lo,                   sizeof(pc_lo),                  CLEAR_ON_RESET },
+        { &pc_hi,                   sizeof(pc_hi),                  CLEAR_ON_RESET },
+        { &overflow,                sizeof(overflow),               CLEAR_ON_RESET },
+        { &data,                    sizeof(data),                   CLEAR_ON_RESET },
+        { &port,                    sizeof(port),                   CLEAR_ON_RESET },
+        { &port_direction,          sizeof(port_direction),         CLEAR_ON_RESET },
+        { &external_port_bits,      sizeof(external_port_bits),     CLEAR_ON_RESET },
+        { &rdyLine,                 sizeof(rdyLine),                CLEAR_ON_RESET },
+        { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
+        { &nmiLine,                 sizeof(nmiLine),                CLEAR_ON_RESET },
+        { &nmiEdge,                 sizeof(nmiEdge),                CLEAR_ON_RESET },
+        { &interruptsPending,       sizeof(interruptsPending),      CLEAR_ON_RESET },
+        { &nextPossibleIrqCycle,    sizeof(nextPossibleIrqCycle),   CLEAR_ON_RESET },
+        { &nextPossibleNmiCycle,    sizeof(nextPossibleNmiCycle),   CLEAR_ON_RESET },
+        { &errorState,              sizeof(errorState),             CLEAR_ON_RESET },
+        { &callStack,               sizeof(callStack),              CLEAR_ON_RESET | WORD_FORMAT },
+        { &callStackPointer,        sizeof(callStackPointer),       CLEAR_ON_RESET },
+        { &oldI,                    sizeof(oldI),                   CLEAR_ON_RESET },
+        
+        { NULL,                     0, 0 }
+    };
+    registerSnapshotItems(items, sizeof(items));
 }
 
 CPU::~CPU()
@@ -102,61 +149,17 @@ CPU::reset(C64 *c64, Memory *mem)
 uint32_t
 CPU::stateSize()
 {
-    return 565;
+    return VirtualComponent::stateSize() + 2;
 }
 
 void 
 CPU::loadFromBuffer(uint8_t **buffer) 
 {
     uint8_t *old = *buffer;
-
-    chipModel = (ChipModel)read8(buffer);
     
-	// Registers and flags
-	A = read8(buffer);
-	X = read8(buffer);
-	Y = read8(buffer);
-	PC = read16(buffer);
-	PC_at_cycle_0 = read16(buffer);
-	SP = read8(buffer);
-	N = read8(buffer);
-	V = read8(buffer);
-	B = read8(buffer);
-	D = read8(buffer);
-	I = read8(buffer);
-	Z = read8(buffer);
-	C = read8(buffer);
-	
-	// Internal state
-	opcode = read8(buffer);
-	addr_lo = read8(buffer);
-	addr_hi = read8(buffer);
-	ptr = read8(buffer);
-	pc_lo = read8(buffer);
-	pc_hi = read8(buffer);
-	overflow = (bool)read8(buffer);
-	data = read8(buffer);
-	
-	port = read8(buffer);
-	port_direction = read8(buffer);
-	external_port_bits = read8(buffer);
-	rdyLine = (bool)read8(buffer);
-	irqLine = read8(buffer);
-	nmiLine = read8(buffer);
-	nmiEdge = (bool)read8(buffer);
-    interruptsPending = (bool)read8(buffer);
-    nextPossibleIrqCycle = read64(buffer);
-	nextPossibleNmiCycle = read64(buffer);
-	
-	errorState = (ErrorState)read8(buffer);
+    VirtualComponent::loadFromBuffer(buffer);
 	next = CPU::callbacks[read16(buffer)];
 	
-	for (unsigned i = 0; i < 256; i++) 
-		callStack[i] = read16(buffer);	
-	callStackPointer = read8(buffer);
-	oldI = read8(buffer);
-    
-    debug(2, "  CPU state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 
@@ -165,46 +168,7 @@ CPU::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
 
-    write8(buffer, (uint8_t)chipModel); 
-
-	// Registers and flags
-	write8(buffer, A);
-	write8(buffer, X);
-	write8(buffer, Y);
-	write16(buffer, PC);
-	write16(buffer, PC_at_cycle_0);
-	write8(buffer, SP);
-	write8(buffer, N);
-	write8(buffer, V);
-	write8(buffer, B);
-	write8(buffer, D);
-	write8(buffer, I);
-	write8(buffer, Z);
-	write8(buffer, C);
-	
-	// Internal state
-	write8(buffer, opcode);
-	write8(buffer, addr_lo);
-	write8(buffer, addr_hi);
-	write8(buffer, ptr);
-	write8(buffer, pc_lo);
-	write8(buffer, pc_hi);
-	write8(buffer, (uint8_t)overflow);
-	write8(buffer, data);
-	
-	write8(buffer, port);
-	write8(buffer, port_direction);
-	write8(buffer, external_port_bits);
-	write8(buffer, (uint8_t)rdyLine);
-	write8(buffer, irqLine);
-	write8(buffer, nmiLine);
-	write8(buffer, (uint8_t)nmiEdge);
-    write8(buffer, (uint8_t)interruptsPending);
-	write64(buffer, nextPossibleIrqCycle);
-	write64(buffer, nextPossibleNmiCycle);
-	
-	write8(buffer, (uint8_t)errorState);
-
+    VirtualComponent::saveToBuffer(buffer);
 	for (uint16_t i = 0;; i++) {
 		if (callbacks[i] == NULL) {
 			panic("ERROR while saving state: Callback pointer not found!\n");
@@ -215,12 +179,6 @@ CPU::saveToBuffer(uint8_t **buffer)
 		}
 	}
 
-	for (unsigned i = 0; i < 256; i++) 
-		write16(buffer, callStack[i]);
-	write8(buffer, callStackPointer);
-	write8(buffer, oldI);
-    
-    debug(4, "  CPU state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
 

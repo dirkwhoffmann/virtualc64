@@ -1,7 +1,10 @@
-/*
- * Author: Dirk W. Hoffmann,  2008 - 2016
- *
- * This program is free software; you can redistribute it and/or modify
+/*! 
+ * @header      VC1541.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2008 - 2016 Dirk W. Hoffmann
+ * @brief       Declares VC1541 class
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -15,6 +18,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+//! @unsorted
 
 // TODO:
 // Stress test: Change disk encoder to produce unaligned sync sequences
@@ -30,14 +35,14 @@
 class IEC;
 class C64;
 
-//! Virtual VC 1541 drive
-class VC1541 : public VirtualComponent { 
+/*!
+ * @brief   Virtual VC1541 drive
+ * @details Bit-accurate emulation of a VC1541
+ */
+class VC1541 : public VirtualComponent {
 
 public:
     
-	//! Reference to the virtual IEC bus
-	// C64 *c64;
-	
 	//! Reference to the virtual IEC bus
 	IEC *iec;
 
@@ -78,13 +83,13 @@ public:
     void ping();
     
     //! Size of internal state
-    uint32_t stateSize();
+    // uint32_t stateSize();
     
     //! Load state
-    void loadFromBuffer(uint8_t **buffer);
+    // void loadFromBuffer(uint8_t **buffer);
     
     //! Save state
-    void saveToBuffer(uint8_t **buffer);
+    // void saveToBuffer(uint8_t **buffer);
     
     //! Dump current state into logfile
     void dumpState();
@@ -116,15 +121,29 @@ private:
     
 public:
     
-    // Configuration
+    //
+    //! @functiongroup Configuring the device
+    //
     
+    /*! @brief Returns true if sound messages are sent to the GUI 
+     */
     inline bool soundMessagesEnabled() { return sendSoundMessages; }
+
+    /*! @brief Enables or disables sending of sound messages
+     */
     inline void setSendSoundMessages(bool b) { sendSoundMessages = b; }
 
+    /*! @brief Returns true if drive is emulated bit accurately
+     */
     inline bool getBitAccuracy() { return bitAccuracy; }
+
+    /*! @brief Enables or disables bit accurate drive emulation
+     */
     inline void setBitAccuracy(bool b) { bitAccuracy = b; if (!b) alignHead(); }
 
-    // Disk handling
+    //
+    //! @functiongroup Accessing drive properties
+    //
     
     inline bool getRedLED() { return redLED; };
     void setRedLED(bool b);
@@ -132,37 +151,53 @@ public:
     inline bool isRotating() { return rotating; };
     void setRotating(bool b);
     
-    //! Inserts an archive as a virtual disk
-    /*! Before inserting, the archive data is converted to VC1541s GCR-encoded track/sector format */
+    //
+    //! @functiongroup Handling virtual disks
+    //
+
+    /*! @brief Returns true if a disk is inserted 
+     */
+    inline bool hasDisk() { return diskInserted; }
+
+    /*! @brief      Inserts an archive as a virtual disk
+     *  @discussion Before inserting, the archive data is converted to VC1541s GCR-encoded track/sector format. 
+     */
     void insertDisk(Archive *a);
     void insertDisk(D64Archive *a);
 
-    //! Export currently inserted disk to D64 file
+    /*! @brief      Exports the currently inserted disk to D64 file 
+     */
     bool exportToD64(const char *filename);
     
-    /*! @brief Returns true if a disk is inserted */
-    inline bool hasDisk() { return diskInserted; }
 
-    /*! @brief Returns true if a disk is partially inserted */
+    /*! @brief Returns true if a disk is partially inserted 
+     */
     inline bool isDiskPartiallyInserted() { return diskPartiallyInserted; }
 
-    /*! @brief Sets if a disk is partially inserted */
+    /*! @brief Sets if a disk is partially inserted 
+     */
     inline void setDiskPartiallyInserted(bool b) { diskPartiallyInserted = b; }
 
-    /*! @brief Returns the current status of the write protection light barrier
-     *  @abstract If the light barrier is blocked, the drive head is unable to change data bits */
+    /*! @brief      Returns the current status of the write protection light barrier
+     *  @discussion If the light barrier is blocked, the drive head is unable to change data bits 
+     */
     inline bool getLightBarrier() { return isDiskPartiallyInserted() || disk.isWriteProtected(); }
 
-    //! Eject the virtual disk. Does nothing, if no disk is present.
-    /*! Beware that this function causes a considerable time delay, because it is necessary to
-        block the write protection light barrier for a while. Otherwise, the VC1541 DOS would not recognize 
-        the ejection. */
+    /*! @brief      Ejects the virtual disk
+     *  @discussion Does nothing, if no disk is present. Beware that this function causes a considerable time delay, 
+     *              because it is necessary to block the write protection light barrier for a while. Otherwise,
+     *              VC1541 DOS would not recognize the ejection. 
+     */
     void ejectDisk();
 
+    //
+    //! @functiongroup Running the device
+    //
     
-    // Execution
-    
-    //! Execute virtual drive for one cycle (fast execution wrapper)
+    /*! @brief    Executes the virtual drive for one clock cycle
+     *  @seealso  executeBitReady
+     *  @seealso  executeByteReady 
+     */
     inline bool executeOneCycle() {
 
         via1.execute();
@@ -190,10 +225,16 @@ public:
         return result;
     }
 
-    /*! @brief Performs drive action taking place whenever a new bit is ready */
+private:
+    
+    /*! @brief      Helper method for executeOneCycle
+     *  @discussion Method is executed whenever a single bit is ready
+     */
     void executeBitReady();
 
-    /*! @brief Performs drive action taking place whenever a new byte is ready */
+    /*! @brief      Helper method for executeBitReady
+     *  @discussion Method is executed whenever a single byte is ready
+     */
     void executeByteReady();
         
     
@@ -254,28 +295,32 @@ private:
     //! Bit position of the read/write head inside the current track
     uint16_t bitoffset;
     
-    //! Current disk zone
-    /*! Each track belongs to one of four zones. Whenever the drive moves the r/w head, 
-        it computed the new number and writes into PB5 and PB6 of via2. These bits are 
-        hard-wired to a 74LS193 counter on the logic board that breaks down the 16 Mhz base
-        frequency. This mechanism is used to slow down the read/write process on inner tracks. */
+    /*! @brief      Current disk zone
+     *  @discussion Each track belongs to one of four zones. Whenever the drive moves the r/w head,
+     *              it computed the new number and writes into PB5 and PB6 of via2. These bits are
+     *              hard-wired to a 74LS193 counter on the logic board that breaks down the 16 Mhz base
+     *              frequency. This mechanism is used to slow down the read/write process on inner tracks. 
+     */
     uint8_t zone;
 
-    //! @brief The 74LS164 serial to parallel shift register
-    /*! @abstract In read mode, this register is fed by the drive head with data. */
+    /*! @brief      The 74LS164 serial to parallel shift register
+     *  @discussion In read mode, this register is fed by the drive head with data. 
+     */
     uint16_t read_shiftreg;
     
-    //! The 74LS165 parallel to serial shift register
-    /*! In write mode, this register feeds the drive head with data. */
+    /*! @brief      The 74LS165 parallel to serial shift register
+     *  @discussion In write mode, this register feeds the drive head with data.
+     */
     uint8_t write_shiftreg;
 
-    /*! @brief    Current value of the SYNC signal
-        @abstract This signal plays an important role for timing synchronization. It becomes true when the 
-                  beginning of a SYNC is detected. On the logic board, the SYNC signal is computed by a NAND gate 
-                  that combines the 10 previously read bits rom the input shift register and CB2 of VIA2 (the 
-                  r/w mode pin). Connecting CB2 to the NAND gates ensures that SYNC can only be true in read mode. 
-                  When SYNC becomes false (meaning that a 0 was pushed into the shift register), the byteReadyCounter
-                  is reset. */
+    /*! @brief      Current value of the SYNC signal
+        @discussion This signal plays an important role for timing synchronization. It becomes true when the
+                    beginning of a SYNC is detected. On the logic board, the SYNC signal is computed by a NAND gate
+                    that combines the 10 previously read bits rom the input shift register and CB2 of VIA2 (the
+                    r/w mode pin). Connecting CB2 to the NAND gates ensures that SYNC can only be true in read mode.
+                    When SYNC becomes false (meaning that a 0 was pushed into the shift register), the byteReadyCounter
+                    is reset. 
+     */
     bool sync;
             
 public:

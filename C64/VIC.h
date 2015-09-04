@@ -42,10 +42,9 @@ class PixelEngine;
 #define SPR6 0x40
 #define SPR7 0x80
 
-//! The virtual Video Controller
-/*! VICII is the video controller chip of the Commodore 64.
-	The VICII chip occupied the memory mapped I/O space from address 0xD000 to 0xD02E.
-*/
+/*! @brief      Virtual Video Controller (VICII)
+ *  @discussion VICII is the video controller chip of the Commodore 64.
+ *              VICII occupied the memory mapped I/O space from address 0xD000 to 0xD02E. */
 class VIC : public VirtualComponent {
 
     friend class PixelEngine;
@@ -128,8 +127,8 @@ private:
     uint8_t oldControlReg1;
 
     //! DRAM refresh counter
-    /*! "In jeder Rasterzeile fŸhrt der VIC fŸnf Lesezugriffe zum Refresh des
-         dynamischen RAM durch. Es wird ein 8-Bit RefreshzŠhler (REF) zur Erzeugung
+    /*! "In jeder Rasterzeile fÃ¼hrt der VIC fÃ¼nf Lesezugriffe zum Refresh des
+         dynamischen RAM durch. Es wird ein 8-Bit RefreshzÃ¤hler (REF) zur Erzeugung
          von 256 DRAM-Zeilenadressen benutzt." [C.B.] */
     uint8_t refreshCounter;
     
@@ -188,14 +187,14 @@ private:
            das vertikale Rahmenflipflop gesetzt.
         3. Erreicht die Y-Koordinate den oberern Vergleichswert in Zyklus 63 und
            ist das DEN-Bit in Register $d011 gesetzt, wird das vertikale
-           Rahmenflipflop gelšscht.
+           Rahmenflipflop gelÃ¶scht.
         4. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
            den unteren, wird das vertikale Rahmenflipflop gesetzt.
         5. Erreicht die X-Koordinate den linken Vergleichswert und die Y-Koordinate
            den oberen und ist das DEN-Bit in Register $d011 gesetzt, wird das
-           vertikale Rahmenflipflop gelšscht.
+           vertikale Rahmenflipflop gelÃ¶scht.
         6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
-           vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
+           vertikale Rahmenflipflop gelÃ¶scht, wird das Haupt-Flipflop gelÃ¶scht." [C.B.]
      */
 
 	//! Main frame flipflop
@@ -229,9 +228,9 @@ private:
     inline uint16_t lowerComparisonValue() { return isRSEL() ? 251 : 247; }
     
 	//! Clear main frame flipflop
-    /*  "Das vertikale Rahmenflipflop dient zur UnterstŸtzung bei der Darstellung
+    /*  "Das vertikale Rahmenflipflop dient zur UnterstÃ¼tzung bei der Darstellung
          des oberen/unteren Rahmens. Ist es gesetzt, kann das Haupt-Rahmenflipflop
-         nicht gelšscht werden." [C.B.] */
+         nicht gelÃ¶scht werden." [C.B.] */
     inline void clearMainFrameFF() { if (!verticalFrameFF) mainFrameFF = false; }
      
     
@@ -653,9 +652,9 @@ private:
     
     /*! Update bad line condition
         "Ein Bad-Line-Zustand liegt in einem beliebigen Taktzyklus vor, wenn an der
-         negativen Flanke von ø0 zu Beginn des 
+         negativen Flanke von Â¯0 zu Beginn des 
          [1] Zyklus RASTER >= $30 und RASTER <= $f7 und
-         [2] die unteren drei Bits von RASTER mit YSCROLL Ÿbereinstimmen 
+         [2] die unteren drei Bits von RASTER mit YSCROLL Ã¼bereinstimmen 
          [3] und in einem beliebigen Zyklus von Rasterzeile $30 das DEN-Bit gesetzt war." [C.B.] */
      inline void updateBadLineCondition() {
          badLineCondition =

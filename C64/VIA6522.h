@@ -1,7 +1,12 @@
-/*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @header      VIA.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2008 - 2016 Dirk W. Hoffmann
+ * @brief       Declares VC1541 class
+ * @details     The implementation is mainly based on the document
+ *              "R6522 VERSATILE INTERFACE ADAPTER" by Frank Kontros [F. K.]
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -16,9 +21,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Reference: "R6522 VERSATILE INTERFACE ADAPTER" by Frank Kontros [F. K.]
-
-
 #ifndef _VIA6522_INC
 #define _VIA6522_INC
 
@@ -26,32 +28,36 @@
 
 class VC1541;
 
+/*! @brief   Virtual VIA6522 controller
+    @details The VC1541 drive contains two VIAs on its logic board.
+ */
 class VIA6522 : public VirtualComponent {
 	
 public:
 	
-	//! Reference to the connected disk drive. 
+	//! @brief Reference to the connected disk drive.
 	VC1541 *floppy;
 
 public:
 	
-	//! Peripheral ports
-	/*! "The  R6522  VIA  has  two  8-bit  bidirectional  I/O ports (Port A and Port B)
-		and each port has two associated control lines. 
-		
-		Each  8-bit  peripheral  port  has  a Data Direction Register (DDRA, DDRB) for
-		specifying  whether  the  peripheral pins are to act as inputs or outputs. A 0
-		in  a  bit  of the Data Direction Register causes the corresponding peripheral
-		pin to act as an input. A 1 causes the pin to act as an output.
-
-		Each  peripheral  pin  is  also controlled  by  a  bit in the Output Register
-		(ORA,  ORB)  and  the Input Register (IRA, IRB). When the pin is programmed as
-		an  output,  the  voltage on the pin is controlled by the corresponding bit of
-		the  Output  Register.  A  1  in  the  Output Register causes the output to go
-		high,  and  a  0  causes the output to go low. Data may be written into Output
-		Register  bits  corresponding  to pins which are programmed as inputs. In this
-		case, however, the output signal is unaffected." [F. K.]
-	*/
+	//! @brief Peripheral ports
+	/*! @details 
+     * "The  R6522  VIA  has  two  8-bit  bidirectional  I/O ports (Port A and Port B)
+     *  and each port has two associated control lines.
+     *
+	 *	Each  8-bit  peripheral  port  has  a Data Direction Register (DDRA, DDRB) for
+	 * 	specifying  whether  the  peripheral pins are to act as inputs or outputs. A 0
+     *  in  a  bit  of the Data Direction Register causes the corresponding peripheral
+     *  pin to act as an input. A 1 causes the pin to act as an output.
+     *
+     *  Each  peripheral  pin  is  also controlled  by  a  bit in the Output Register
+	 *	(ORA,  ORB)  and  the Input Register (IRA, IRB). When the pin is programmed as
+	 *	an  output,  the  voltage on the pin is controlled by the corresponding bit of
+	 *	the  Output  Register.  A  1  in  the  Output Register causes the output to go
+	 * 	high,  and  a  0  causes the output to go low. Data may be written into Output
+	 *	Register  bits  corresponding  to pins which are programmed as inputs. In this
+	 *	case, however, the output signal is unaffected." [F. K.]
+     */
 	uint8_t ddra, ddrb;
 	uint8_t ira, irb;
     uint8_t ora, orb;
@@ -216,7 +222,9 @@ public:
 };
 
 
-//! The first versatile interface adapter (VIA1)
+/*! @brief   First virtual VIA6522 controller
+ *  @details VIA1 serves as hardware interface between the VC1541 CPU and the IEC bus.
+ */
 class VIA1 : public VIA6522 {
 	
 public:

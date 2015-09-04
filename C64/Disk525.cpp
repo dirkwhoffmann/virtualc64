@@ -24,12 +24,13 @@ Disk525::Disk525()
     name = "Disk525";
 
     // Register snapshot items
-    SnapshotItem items[] = {
-        { data.track[0], sizeof(data.track) },
-        { &numTracks, sizeof(numTracks) },
-        { &writeProtected, sizeof(writeProtected) },
-        { NULL, 0 }
-    };
+    SnapshotItem items[] = {        
+        { data.track[0],    sizeof(data.track),     KEEP_ON_RESET },
+        { length.track[0],  sizeof(length.track),   KEEP_ON_RESET | WORD_FORMAT },
+        { &numTracks,       sizeof(numTracks),      KEEP_ON_RESET },
+        { &writeProtected,  sizeof(writeProtected), KEEP_ON_RESET },
+        { NULL,             0,                      0 }};
+    
     registerSnapshotItems(items, sizeof(items));
 
     // Create inverse GCR lookup table
@@ -50,34 +51,6 @@ Disk525::reset(C64 *c64)
     VirtualComponent::reset(c64);
     
     clearDisk();
-}
-
-uint32_t
-Disk525::stateSize()
-{
-    return VirtualComponent::stateSize() + sizeof(length.track);
-}
-
-void
-Disk525::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    
-    VirtualComponent::loadFromBuffer(buffer);
-    readBlock16(buffer, length.track[0], sizeof(length.track));
-    
-    assert(*buffer - old == stateSize());
-}
-
-void
-Disk525::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-    
-    VirtualComponent::saveToBuffer(buffer);
-    writeBlock16(buffer, length.track[0], sizeof(length.track));
-    
-    assert(*buffer - old == stateSize());
 }
 
 void

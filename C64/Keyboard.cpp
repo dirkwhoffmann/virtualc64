@@ -99,6 +99,15 @@ Keyboard::Keyboard()
     rowcolmap[C64KEY_CR] = 0x0002;
     rowcolmap[C64KEY_CU] = 0x0007 | SHIFT_FLAG;
     rowcolmap[C64KEY_CD] = 0x0007;
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        { &kbMatrix,    sizeof(kbMatrix),   CLEAR_ON_RESET | BYTE_FORMAT },
+        { NULL,         0,                  0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
+
 }
 
 Keyboard::~Keyboard()
@@ -116,38 +125,6 @@ Keyboard::reset(C64 *c64)
 	for (int i = 0; i < 8; i++) {
 		kbMatrix[i] = 0xff;
 	}		
-}
-
-uint32_t
-Keyboard::stateSize()
-{
-    return sizeof(kbMatrix);
-}
-
-void
-Keyboard::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-	
-	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
-		kbMatrix[i] = read8(buffer);
-	}
-
-    debug(2, "  Keyboard state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
-void
-Keyboard::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-
-	for (unsigned i = 0; i < sizeof(kbMatrix); i++) {
-		write8(buffer, kbMatrix[i]);
-	}
-
-    debug(4, "  Keyboard state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
 }
 
 void 

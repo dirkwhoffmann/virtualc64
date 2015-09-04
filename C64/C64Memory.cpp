@@ -30,6 +30,21 @@ C64Memory::C64Memory()
 	charRomFile = NULL;
 	kernelRomFile = NULL;
 	basicRomFile = NULL;
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        // Snapshot items that are determines by user default settings
+        { ram,          sizeof(ram),        CLEAR_ON_RESET },
+        { colorRam,     sizeof(colorRam),   CLEAR_ON_RESET },
+        { &rom[0xA000], 0x2000,             CLEAR_ON_RESET }, // Basic ROM
+        { &rom[0xD000], 0x1000,             CLEAR_ON_RESET }, // Character ROM
+        { &rom[0xE000], 0x2000,             CLEAR_ON_RESET }, // Kernel ROM
+        { &peekSrc,     sizeof(peekSrc),    CLEAR_ON_RESET },
+        { &pokeTarget,  sizeof(pokeTarget), CLEAR_ON_RESET },
+        { NULL,         0,                  0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 }
 
 C64Memory::~C64Memory()
@@ -80,49 +95,6 @@ void C64Memory::reset(C64 *c64)
 // --------------------------------------------------------------------------------
 //                                      Input / Output
 // --------------------------------------------------------------------------------
-
-uint32_t
-C64Memory::stateSize()
-{
-    return sizeof(ram) + sizeof(colorRam) + sizeof(peekSrc) + sizeof(pokeTarget) + 0x2000 + 0x1000 + 0x2000;
-}
-
-void
-C64Memory::loadFromBuffer(uint8_t **buffer)
-{	
-    uint8_t *old = *buffer;
-	
-	readBlock(buffer, ram, sizeof(ram)); 
-	readBlock(buffer, colorRam, sizeof(colorRam)); 
-	readBlock(buffer, &rom[0xA000], 0x2000); // Basic ROM
-	readBlock(buffer, &rom[0xD000], 0x1000); // Character ROM
-	readBlock(buffer, &rom[0xE000], 0x2000); // Kernel ROM
-	
-    readBlock(buffer, (uint8_t *)peekSrc, sizeof(peekSrc));
-    readBlock(buffer, (uint8_t *)pokeTarget, sizeof(pokeTarget));
-    
-    debug(2, "  C64 memory state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-
-}
-
-void
-C64Memory::saveToBuffer(uint8_t **buffer) 
-{
-    uint8_t *old = *buffer;
-		
-	writeBlock(buffer, ram, sizeof(ram)); 
-	writeBlock(buffer, colorRam, sizeof(colorRam)); 
-	writeBlock(buffer, &rom[0xA000], 0x2000); // Basic ROM
-	writeBlock(buffer, &rom[0xD000], 0x1000); // Character ROM
-	writeBlock(buffer, &rom[0xE000], 0x2000); // Kernel ROM
-	
-    writeBlock(buffer, (uint8_t *)peekSrc, sizeof(peekSrc));
-    writeBlock(buffer, (uint8_t *)pokeTarget, sizeof(pokeTarget));
-
-    debug(4, "  C64 memory state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
 
 void 
 C64Memory::dumpState()

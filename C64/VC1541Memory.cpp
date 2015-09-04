@@ -23,6 +23,10 @@ VC1541Memory::VC1541Memory()
     name = "1541MEM";
 	debug(2, "  Creating VC1541 memory at %p...\n", this);
 
+    // Register snapshot items
+    SnapshotItem items[] = { { mem, 0xC000, CLEAR_ON_RESET }, { NULL, 0, 0 }};
+    registerSnapshotItems(items, sizeof(items));
+
 	romFile = NULL;
 }
 
@@ -46,36 +50,6 @@ VC1541Memory::reset(C64 *c64)
 	for (unsigned i = 0; i < 0xC000; i++)
 		mem[i] = 0;	
 }	
-
-uint32_t
-VC1541Memory::stateSize()
-{
-    return 0xC000;
-}
-
-void 
-VC1541Memory::loadFromBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-
-	for (unsigned i = 0; i < 0xC000; i++)
-		mem[i] = read8(buffer);
-    
-    debug(2, "    VC1541 memory state loaded (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
-
-void 
-VC1541Memory::saveToBuffer(uint8_t **buffer)
-{
-    uint8_t *old = *buffer;
-
-	for (unsigned i = 0; i < 0xC000; i++)
-		write8(buffer, mem[i]);
-
-    debug(4, "    VC1541 memory state saved (%d bytes)\n", *buffer - old);
-    assert(*buffer - old == stateSize());
-}
 
 bool 
 VC1541Memory::is1541Rom(const char *filename)

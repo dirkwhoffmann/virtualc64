@@ -158,7 +158,7 @@ ReSID::loadFromBuffer(uint8_t **buffer)
 void
 ReSID::saveToBuffer(uint8_t **buffer)
 {
-	debug(4, "  Saving ReSID state...\n");
+	debug(2, "  Saving ReSID state...\n");
 
     write8(buffer, (uint8_t)getChipModel());
     write8(buffer, (uint8_t)getAudioFilter());

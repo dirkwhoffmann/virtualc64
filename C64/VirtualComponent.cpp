@@ -18,25 +18,28 @@
 
 #include "C64.h"
 
-int VirtualComponent::debugLevel = DEBUG_LEVEL;
-
 VirtualComponent::VirtualComponent()
 {    
 	name = "Unnamed component";
-	running = false;
+    debugLevel = DEBUG_LEVEL;
+    running = false;
 	suspendCounter = 0;	
 	traceMode = false;
 	logfile = NULL;
     snapshotItems = NULL;
+    subComponents = NULL;
 }
 
 VirtualComponent::~VirtualComponent()
 {
 	// debug(2, "Terminated\n");
     
+    if (subComponents)
+        delete [] subComponents;
+
     if (snapshotItems)
         delete [] snapshotItems;
-    
+
     if (logfile)
 		fclose(logfile);
 }
@@ -108,6 +111,10 @@ VirtualComponent::dumpState()
 {
 }
 
+// ---------------------------------------------------------------------------------------------
+//                                      Printing messages
+// ---------------------------------------------------------------------------------------------
+
 void
 VirtualComponent::msg(const char *fmt, ...)
 {
@@ -117,6 +124,20 @@ VirtualComponent::msg(const char *fmt, ...)
 	vsnprintf(buf, sizeof(buf), fmt, ap); 
 	va_end(ap);
 	fprintf(logfile ? logfile : stderr, "%s", buf);
+}
+
+void
+VirtualComponent::msg(int level, const char *fmt, ...)
+{
+    if (level > debugLevel)
+        return;
+
+    char buf[256];
+    va_list ap;
+    va_start(ap, fmt);
+    vsnprintf(buf, sizeof(buf), fmt, ap);
+    va_end(ap);
+    fprintf(logfile ? logfile : stderr, "%s", buf);
 }
 
 void
@@ -190,47 +211,123 @@ VirtualComponent::registerSnapshotItems(SnapshotItem *items, unsigned length) {
 }
 
 void
+VirtualComponent::registerSubComponents(VirtualComponent **components, unsigned length) {
+    
+    assert(components != NULL);
+    assert(length % sizeof(VirtualComponent *) == 0);
+    
+    unsigned numItems = length / sizeof(VirtualComponent *);
+    
+    printf("Registering %d components", numItems);
+    
+    // Allocate new array on heap and copy array data
+    subComponents = new VirtualComponent*[numItems];
+    std::copy(components, components + numItems, &subComponents[0]);    
+
+    for (unsigned i = 0; subComponents[i] != NULL; i++)
+        printf("%s ", subComponents[i]->name); 
+
+}
+
+uint32_t
+VirtualComponent::stateSize()
+{
+    uint32_t result = snapshotSize;
+    
+    if (subComponents != NULL)
+        for (unsigned i = 0; subComponents[i] != NULL; i++)
+            result += subComponents[i]->stateSize();
+
+    return result;
+}
+
+void
 VirtualComponent::loadFromBuffer(uint8_t **buffer)
 {
-    if (snapshotItems == NULL)
-        return;
-
     uint8_t *old = *buffer;
-
-    debug(3, "    Loading internal state (%d bytes) ...\n", VirtualComponent::stateSize());
     
-    for (unsigned i = 0; snapshotItems[i].data != NULL; i++) {
+    debug(2, "    Loading internal state (%d bytes) ...\n", VirtualComponent::stateSize());
+    
+    // Load internal state of sub components
+    if (subComponents != NULL)
+        for (unsigned i = 0; subComponents[i] != NULL; i++)
+            subComponents[i]->loadFromBuffer(buffer);
+
+    // Load own internal state
+    void *data; size_t size; int flags;
+    for (unsigned i = 0; snapshotItems != NULL && snapshotItems[i].data != NULL; i++) {
         
-        switch (snapshotItems[i].size) {
-            case 1: *(uint8_t *)snapshotItems[i].data = read8(buffer); break;
-            case 2: *(uint16_t *)snapshotItems[i].data = read16(buffer); break;
-            case 4: *(uint32_t *)snapshotItems[i].data = read32(buffer); break;
-            case 8: *(uint64_t *)snapshotItems[i].data = read64(buffer); break;
-            default: readBlock(buffer, (uint8_t *)snapshotItems[i].data, snapshotItems[i].size);
+        data  = snapshotItems[i].data;
+        flags = snapshotItems[i].flags & 0x0F;
+        size  = snapshotItems[i].size;
+        
+        if (flags == 0) { // Auto detect size
+
+            switch (snapshotItems[i].size) {
+                case 1:  *(uint8_t *)data  = read8(buffer); break;
+                case 2:  *(uint16_t *)data = read16(buffer); break;
+                case 4:  *(uint32_t *)data = read32(buffer); break;
+                case 8:  *(uint64_t *)data = read64(buffer); break;
+                default: readBlock(buffer, (uint8_t *)snapshotItems[i].data, snapshotItems[i].size);
+            }
+
+        } else { // Format is specified manually
+            
+            switch (flags) {
+                case BYTE_FORMAT: readBlock(buffer, (uint8_t *)data, size); break;
+                case WORD_FORMAT: readBlock16(buffer, (uint16_t *)data, size); break;
+                case DOUBLE_WORD_FORMAT: readBlock32(buffer, (uint32_t *)data, size); break;
+                case QUAD_WORD_FORMAT: readBlock64(buffer, (uint64_t *)data, size); break;
+                default: assert(0);
+            }
         }
     }
+    
     assert(*buffer - old == VirtualComponent::stateSize());
 }
 
 void
 VirtualComponent::saveToBuffer(uint8_t **buffer)
 {
-    if (snapshotItems == NULL)
-        return;
-    
     uint8_t *old = *buffer;
 
-    debug(3, "    Saving internal state (%d bytes) ...\n", VirtualComponent::stateSize());
+    debug(2, "    Saving internal state (%d bytes) ...\n", VirtualComponent::stateSize());
 
-    for (unsigned i = 0; snapshotItems[i].data != NULL; i++) {
+    // Save internal state of sub components
+    if (subComponents != NULL) {
+        for (unsigned i = 0; subComponents[i] != NULL; i++)
+            subComponents[i]->saveToBuffer(buffer);
+    }
+    
+    // Save own internal state
+    void *data; size_t size; int flags;
+    for (unsigned i = 0; snapshotItems != NULL && snapshotItems[i].data != NULL; i++) {
         
-        switch (snapshotItems[i].size) {
-            case 1: write8(buffer, *(uint8_t *)snapshotItems[i].data); break;
-            case 2: write16(buffer, *(uint16_t *)snapshotItems[i].data); break;
-            case 4: write32(buffer, *(uint32_t *)snapshotItems[i].data); break;
-            case 8: write64(buffer, *(uint64_t *)snapshotItems[i].data); break;
-            default: writeBlock(buffer, (uint8_t *)snapshotItems[i].data, snapshotItems[i].size);
+        data  = snapshotItems[i].data;
+        flags = snapshotItems[i].flags & 0x0F;
+        size  = snapshotItems[i].size;
+
+        if (flags == 0) { // Auto detect size
+            
+            switch (snapshotItems[i].size) {
+                case 1:  write8(buffer, *(uint8_t *)data); break;
+                case 2:  write16(buffer, *(uint16_t *)data); break;
+                case 4:  write32(buffer, *(uint32_t *)data); break;
+                case 8:  write64(buffer, *(uint64_t *)data); break;
+                default: writeBlock(buffer, (uint8_t *)data, size);
+            }
+            
+        } else { // Format is specified manually
+            
+            switch (flags) {
+                case BYTE_FORMAT: writeBlock(buffer, (uint8_t *)data, size); break;
+                case WORD_FORMAT: writeBlock16(buffer, (uint16_t *)data, size); break;
+                case DOUBLE_WORD_FORMAT: writeBlock32(buffer, (uint32_t *)data, size); break;
+                case QUAD_WORD_FORMAT: writeBlock64(buffer, (uint64_t *)data, size); break;
+                default: assert(0);
+            }
         }
     }
+    
     assert(*buffer - old == VirtualComponent::stateSize());
 }
