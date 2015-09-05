@@ -37,6 +37,31 @@ PixelEngine::PixelEngine() // C64 *c64)
     zbuf = zBuffer;
     srcbuf = pixelSource;
     bufshift = 0;
+    
+    // Register snapshot items
+    SnapshotItem items[] = {
+        
+        // VIC state latching
+        { &dc.yCounter,             sizeof(dc.yCounter),            CLEAR_ON_RESET },
+        { &dc.xCounter,             sizeof(dc.xCounter),            CLEAR_ON_RESET },
+        { &dc.verticalFrameFF,      sizeof(dc.verticalFrameFF),     CLEAR_ON_RESET },
+        { &dc.mainFrameFF,          sizeof(dc.mainFrameFF),         CLEAR_ON_RESET },
+        { &dc.character,            sizeof(dc.character),           CLEAR_ON_RESET },
+        { &dc.color,                sizeof(dc.color),               CLEAR_ON_RESET },
+        { &dc.mode,                 sizeof(dc.mode),                CLEAR_ON_RESET },
+        { &dc.delay,                sizeof(dc.delay),               CLEAR_ON_RESET },
+        { dc.spriteX,               sizeof(dc.spriteX),             CLEAR_ON_RESET | WORD_FORMAT },
+        { &dc.spriteXexpand,        sizeof(dc.spriteXexpand),       CLEAR_ON_RESET },
+        { &dc.D011,                 sizeof(dc.D011),                CLEAR_ON_RESET },
+        { &dc.D016,                 sizeof(dc.D016),                CLEAR_ON_RESET },
+        { &dc.borderColor,          sizeof(dc.borderColor),         CLEAR_ON_RESET },
+        { dc.backgroundColor,       sizeof(dc.backgroundColor),     CLEAR_ON_RESET | BYTE_FORMAT },
+        { dc.spriteColor,           sizeof(dc.spriteColor),         CLEAR_ON_RESET | BYTE_FORMAT },
+        { &dc.spriteExtraColor1,    sizeof(dc.spriteExtraColor1),   CLEAR_ON_RESET },
+        { &dc.spriteExtraColor2,    sizeof(dc.spriteExtraColor2),   CLEAR_ON_RESET },
+        { NULL,                     0,                              0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
 }
 
 PixelEngine::~PixelEngine()

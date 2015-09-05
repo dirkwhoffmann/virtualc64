@@ -146,6 +146,9 @@ ReSID::loadFromBuffer(uint8_t **buffer)
 {
     VirtualComponent::loadFromBuffer(buffer);
 
+    // Reset current ringbuffer input
+    reset();
+    
     setChipModel((chip_model)read8(buffer));
     setAudioFilter((bool)read8(buffer));
     setSamplingMethod((sampling_method)read8(buffer));
