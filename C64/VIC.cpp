@@ -39,9 +39,11 @@ VIC::VIC()
 
     // Register snapshot items
     SnapshotItem items[] = {
-        
+
+        // Configuration items
         { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
         
+        // Internal state
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
         { &xCounter,                    sizeof(xCounter),                       CLEAR_ON_RESET },
         { &yCounter,                    sizeof(yCounter),                       CLEAR_ON_RESET },
@@ -64,15 +66,15 @@ VIC::VIC()
         { &BAwentLowAtCycle,            sizeof(BAwentLowAtCycle),               CLEAR_ON_RESET },
         { &mainFrameFF,                 sizeof(mainFrameFF),                    CLEAR_ON_RESET },
         { &verticalFrameFF,             sizeof(verticalFrameFF),                CLEAR_ON_RESET },
-        // Memory
+        
         { &iomem,                       sizeof(iomem),                          CLEAR_ON_RESET },
         { &bankAddr,                    sizeof(bankAddr),                       CLEAR_ON_RESET },
-        // Sequencer
+        
         { &g_data,                      sizeof(g_data),                         CLEAR_ON_RESET },
         { &g_character,                 sizeof(g_character),                    CLEAR_ON_RESET },
         { &g_color,                     sizeof(g_color),                        CLEAR_ON_RESET },
         { &g_mode,                      sizeof(g_mode),                         CLEAR_ON_RESET },
-        // Sprites
+        
         { &mc,                          sizeof(mc),                             CLEAR_ON_RESET | BYTE_FORMAT },
         { &mcbase,                      sizeof(mcbase),                         CLEAR_ON_RESET | BYTE_FORMAT },
         { &spriteOnOff,                 sizeof(spriteOnOff),                    CLEAR_ON_RESET },
@@ -124,8 +126,6 @@ VIC::reset()
     BAwentLowAtCycle = 0;
 	mainFrameFF = false;
 	verticalFrameFF = false;
-
-    chipModel = MOS6569_PAL;
     yCounter = PAL_HEIGHT;
 
 	// Memory

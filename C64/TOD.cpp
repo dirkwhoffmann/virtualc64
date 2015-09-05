@@ -25,7 +25,7 @@ TOD::TOD()
     
     // Register snapshot items
     SnapshotItem items[] = {
-        
+                
         { &tod.value,   sizeof(tod.value),      CLEAR_ON_RESET },
         { &alarm.value, sizeof(alarm.value),    CLEAR_ON_RESET },
         { &latch.value, sizeof(latch.value),    CLEAR_ON_RESET },

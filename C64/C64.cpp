@@ -121,7 +121,7 @@ C64::C64()
     
     // Register snapshot items
     SnapshotItem items[] = {
-        
+ 
         { &warpLoad,        sizeof(warpLoad),           KEEP_ON_RESET },
 
         { &alwaysWarp,      sizeof(alwaysWarp),         CLEAR_ON_RESET },
@@ -177,6 +177,7 @@ void C64::reset()
     VirtualComponent::reset();
     
     cpu->mem = mem;
+    
     cpu->setPC(0xFCE2);
 	cycles = 0UL;
 	frame = 0;

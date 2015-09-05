@@ -35,10 +35,12 @@ VC1541::VC1541()
 
     // Register snapshot items
     SnapshotItem items[] = {
-        
+
+        // Configuration items
         { &bitAccuracy,             sizeof(bitAccuracy),            KEEP_ON_RESET },
         { &sendSoundMessages,       sizeof(sendSoundMessages),      KEEP_ON_RESET },
         
+        // Internal state
         { &bitReadyTimer,           sizeof(bitReadyTimer),          CLEAR_ON_RESET },
         { &byteReadyCounter,        sizeof(byteReadyCounter),       CLEAR_ON_RESET },
         { &rotating,                sizeof(rotating),               CLEAR_ON_RESET },
@@ -50,7 +52,8 @@ VC1541::VC1541()
         { &read_shiftreg,           sizeof(read_shiftreg),          CLEAR_ON_RESET },
         { &write_shiftreg,          sizeof(write_shiftreg),         CLEAR_ON_RESET },
         { &sync,                    sizeof(sync),                   CLEAR_ON_RESET },
-       
+        
+        // Disk properties (will survive reset)
         { &diskInserted,            sizeof(diskInserted),           KEEP_ON_RESET },
         { NULL,                     0,                              0 }};
     

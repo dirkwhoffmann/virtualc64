@@ -46,6 +46,7 @@ CIA::CIA()
         { &PB,              sizeof(PB),             CLEAR_ON_RESET },
         { &CNT,             sizeof(CNT),            CLEAR_ON_RESET },
         { &INT,             sizeof(INT),            CLEAR_ON_RESET },
+        { &readICR,         sizeof(readICR),        CLEAR_ON_RESET },
         { &counterA,        sizeof(counterA),       CLEAR_ON_RESET },
         { &latchA,          sizeof(latchA),         CLEAR_ON_RESET },
         { &counterB,        sizeof(counterB),       CLEAR_ON_RESET },

@@ -37,10 +37,10 @@ CPU::CPU()
     // Register snapshot items
     SnapshotItem items[] = {
         
-        // Snapshot items that keep their values the whole lifetime
+        // Lifetime items
         { &chipModel,               sizeof(chipModel), KEEP_ON_RESET },
 
-        // Internal state
+         // Internal state
         { &A,                       sizeof(A),                      CLEAR_ON_RESET },
         { &X,                       sizeof(X),                      CLEAR_ON_RESET },
         { &Y,                       sizeof(Y),                      CLEAR_ON_RESET },
@@ -62,8 +62,8 @@ CPU::CPU()
         { &pc_hi,                   sizeof(pc_hi),                  CLEAR_ON_RESET },
         { &overflow,                sizeof(overflow),               CLEAR_ON_RESET },
         { &data,                    sizeof(data),                   CLEAR_ON_RESET },
-        { &port,                    sizeof(port),                   CLEAR_ON_RESET },
-        { &port_direction,          sizeof(port_direction),         CLEAR_ON_RESET },
+        { &port,                    sizeof(port),                   KEEP_ON_RESET },  // Reset in C64Memory::reset
+        { &port_direction,          sizeof(port_direction),         KEEP_ON_RESET },  // Reset in C64Memory::reset
         { &external_port_bits,      sizeof(external_port_bits),     CLEAR_ON_RESET },
         { &rdyLine,                 sizeof(rdyLine),                CLEAR_ON_RESET },
         { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },

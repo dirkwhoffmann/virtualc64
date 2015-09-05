@@ -24,7 +24,12 @@ VC1541Memory::VC1541Memory()
 	debug(2, "  Creating VC1541 memory at %p...\n", this);
 
     // Register snapshot items
-    SnapshotItem items[] = { { mem, 0xC000, CLEAR_ON_RESET }, { NULL, 0, 0 }};
+    SnapshotItem items[] = {
+
+    { mem,              0xC000,     CLEAR_ON_RESET },
+    { &mem[0xA000],     0x4000,     KEEP_ON_RESET  }, /* VC1541 Rom */
+    { NULL,             0,          0 }};
+
     registerSnapshotItems(items, sizeof(items));
 
 	romFile = NULL;
@@ -43,12 +48,8 @@ VC1541Memory::reset()
     // Establish bindings
     cpu = c64->cpu;
     iec = c64->iec;
-    floppy = c64->floppy;
-    
-	// Zero out RAM...
-	for (unsigned i = 0; i < 0xC000; i++)
-		mem[i] = 0;	
-}	
+    floppy = c64->floppy;    
+}
 
 bool 
 VC1541Memory::is1541Rom(const char *filename)
