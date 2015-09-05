@@ -69,9 +69,9 @@ VC1541::~VC1541()
 }
 
 void
-VC1541::reset(C64 *c64)
+VC1541::reset()
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
     
     // Establish bindings
     iec = c64->iec;

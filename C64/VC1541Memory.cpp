@@ -36,9 +36,9 @@ VC1541Memory::~VC1541Memory()
 }
 
 void 
-VC1541Memory::reset(C64 *c64)
+VC1541Memory::reset()
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
     
     // Establish bindings
     cpu = c64->cpu;

@@ -110,7 +110,7 @@ public:
     ~ExpansionPort();
         
     //! Reset expansion port
-    void resetPort(C64 *c64);
+    void resetPort();
     
     //! Reset cartridge
     void resetCartridge();

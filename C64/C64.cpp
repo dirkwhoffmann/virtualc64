@@ -117,6 +117,7 @@ C64::C64()
         NULL };
     
     registerSubComponents(subcomponents, sizeof(subcomponents));
+    setC64(this);
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -135,7 +136,7 @@ C64::C64()
 
     // Configure machine type and reset
     setPAL();
-    reset(this);
+    reset();
 			
     // Initialie mach timer info
     mach_timebase_info(&timebase);
@@ -169,11 +170,11 @@ C64::~C64()
 	debug(1, "Cleaned up virtual C64\n", this);
 }
 
-void C64::reset(C64 *c64)
+void C64::reset()
 {
 	suspend();
 
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
     
     cpu->mem = mem;
     cpu->setPC(0xFCE2);

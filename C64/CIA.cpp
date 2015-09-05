@@ -60,9 +60,9 @@ CIA::~CIA()
 }
 
 void
-CIA::reset(C64 *c64)
+CIA::reset()
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
     
     // Establish bindings
     cpu = c64->cpu;
@@ -763,14 +763,14 @@ CIA1::~CIA1()
 }
 
 void 
-CIA1::reset(C64 *c64)
+CIA1::reset()
 {
     keyboard = c64->keyboard;
     joy[0] = c64->joystick1;
     joy[1] = c64->joystick2;
     joystick[0] = 0xff;
     joystick[1] = 0xff;
-	CIA::reset(c64);
+	CIA::reset();
 }
 
 void 
@@ -981,11 +981,11 @@ CIA2::~CIA2()
 	debug(2, "  Releasing CIA2...\n");
 }
 
-void CIA2::reset(C64 *c64)
+void CIA2::reset()
 {
     this->c64 = c64;
     iec = c64->iec;
-	CIA::reset(c64);
+	CIA::reset();
 }
 
 void 

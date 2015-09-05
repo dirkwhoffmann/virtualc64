@@ -82,9 +82,9 @@ OldSID::~OldSID()
 }
 
 void
-OldSID::reset(C64 *c64)
+OldSID::reset()
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
 
 	// set mastervolume to half amplitude
 	masterVolume = 0.5f;
@@ -156,7 +156,7 @@ void
 OldSID::loadFromBuffer(uint8_t **buffer)
 {
 	// reset ringbuffer, buffer pointers, callback synchronisation mechanism, etc.
-	this->reset(c64);
+	this->reset();
 	for (unsigned i = 0; i < sizeof(iomem); i++) 
 		poke(i,read8(buffer)); // poke will store this value in iomem[] beside other things
 }

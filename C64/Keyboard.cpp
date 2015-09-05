@@ -115,9 +115,9 @@ Keyboard::~Keyboard()
 }
 
 void 
-Keyboard::reset(C64 *c64) 
+Keyboard::reset() 
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
 
 	// Reset keyboard matrix (0 = pressed, 1 = not pressed)
 	for (int i = 0; i < 8; i++) {

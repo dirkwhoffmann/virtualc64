@@ -29,13 +29,14 @@ VIC::VIC()
 	name = "VIC";
 	debug(2, "  Creating VIC at address %p...\n", this);
     
-    // Create sub components
-    // pixelEngine = new PixelEngine(c64);
-    
 	// Start with all debug options disabled
 	markIRQLines = false;
 	markDMALines = false;
     
+    // Register sub components
+    VirtualComponent *subcomponents[] = { &pixelEngine, NULL };
+    registerSubComponents(subcomponents, sizeof(subcomponents));
+
     // Register snapshot items
     SnapshotItem items[] = {
         
@@ -90,16 +91,16 @@ VIC::~VIC()
 }
 
 void 
-VIC::reset(C64 *c64) 
+VIC::reset()
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
 	
     // Establish bindungs
     cpu = c64->cpu;
     mem = c64->mem;
     
     // Reset subcomponents
-    pixelEngine.reset(c64);
+    pixelEngine.reset();
 
 	// Internal state
     vblank = false;

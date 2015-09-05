@@ -52,9 +52,9 @@ C64Memory::~C64Memory()
 	debug(2, "  Releasing main memory at address %p...\n", this);
 }
 
-void C64Memory::reset(C64 *c64)
+void C64Memory::reset()
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
     
     // Establish bindings
     vic = c64->vic;

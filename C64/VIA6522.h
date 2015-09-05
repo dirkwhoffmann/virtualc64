@@ -108,7 +108,7 @@ public:
 	~VIA6522();
 		
 	//! Bring the VIA back to its initial state
-	void reset(C64 *c64);
+	void reset();
 
     //! Dump debug information
     void dumpState();
@@ -234,9 +234,6 @@ public:
 	
 	//! Destructor
 	~VIA1();
-
-	//! Bring the VIA back to its initial state
-	// void reset(C64 *c64);
     
     //! Execution function for timer 1
     void executeTimer1();
@@ -263,9 +260,6 @@ public:
 	
 	//! Destructor
 	~VIA2();
-
-	//! Bring the VIA back to its initial state
-	// void reset(C64 *c64);
     
     //! Execution function for timer 1
     void executeTimer1();

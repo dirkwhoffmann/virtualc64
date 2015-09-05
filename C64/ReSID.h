@@ -68,7 +68,7 @@ public:
 	~ReSID();
 	
 	//! Bring the SID chip back to it's initial state.
-	void reset(C64 *c64);
+	void reset();
 	
     //! Size of internal state
     uint32_t stateSize();

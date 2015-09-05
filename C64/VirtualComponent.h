@@ -100,10 +100,16 @@ public:
      */
 	inline void setName(const char *componentName) { name = componentName; }
 		
-    /*! @brief    Reset component to its initial state.
-     *  @details  By default, each component also resets all of its subcomponents.
+    /*! @brief    Assign top-level C64 object.
+     *  @details  The provided reference is propagated automatically to all sub components.
      */
-	virtual void reset(C64 *c64);
+    void setC64(C64 *c64);
+
+    
+    /*! @brief    Reset component to its initial state.
+     *  @details  By default, each component also resets all of its sub components.
+     */
+	virtual void reset();
 	
     //! @brief    Trigger the component to send messages about its current state.
     /*! @details  The GUI invokes this function to update its visual elements, e.g., after loading

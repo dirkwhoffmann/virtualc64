@@ -58,7 +58,7 @@ public:
 	~VC1541Memory();
 
 	//! Restore initial state
-	void reset(C64 *c64);
+	void reset();
 		
 	//! Dump current state into logfile
 	void dumpState();

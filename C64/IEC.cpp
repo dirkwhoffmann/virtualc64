@@ -57,9 +57,9 @@ IEC::~IEC()
 }
 
 void 
-IEC::reset(C64 *c64)
+IEC::reset()
 {
-   VirtualComponent::reset(c64);
+   VirtualComponent::reset();
     
     // Establish bindings
     drive = c64->floppy;

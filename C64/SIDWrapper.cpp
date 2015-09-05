@@ -62,9 +62,9 @@ SIDWrapper::setReSID(bool enable)
 }
 
 void 
-SIDWrapper::reset(C64 *c64)
+SIDWrapper::reset()
 {
-    VirtualComponent::reset(c64); // Resets all sub components
+    VirtualComponent::reset(); // Resets all sub components
     
     cycles = 0UL;
 }

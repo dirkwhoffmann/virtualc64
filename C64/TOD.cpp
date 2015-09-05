@@ -41,12 +41,12 @@ TOD::~TOD()
 }
 
 void
-TOD::reset(C64 *c64) 
+TOD::reset() 
 {
     time_t rawtime;
     struct tm *timeinfo;
     
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
 
     time(&rawtime);
     timeinfo = localtime(&rawtime);

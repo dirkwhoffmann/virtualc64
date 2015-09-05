@@ -40,9 +40,9 @@ Joystick::~Joystick()
 }
 
 void
-Joystick::reset(C64 *c64)
+Joystick::reset()
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
 
     _buttonPressed = false;
     _axisX = JOYSTICK_AXIS_NONE;

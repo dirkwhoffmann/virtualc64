@@ -203,7 +203,7 @@ public:
 	~CIA();
 	
 	//! Bring the CIA back to its initial state
-	void reset(C64 *c64);
+	void reset();
     	
 	//! Dump internal state
 	void dumpState();	
@@ -515,7 +515,7 @@ public:
 	~CIA1();
 	
 	//! Bring the CIA back to its initial state
-	void reset(C64 *c64);
+	void reset();
 		
 	//! Returns true if the \a addr is located in the I/O range of the CIA 1 chip
 	static inline bool isCia1Addr(uint16_t addr) 
@@ -565,7 +565,7 @@ public:
 	~CIA2();
 	
 	//! Bring the CIA back to its initial state
-	void reset(C64 *c64);
+	void reset();
 	
 	//! Returns true if the \a addr is located in the I/O range of the CIA 2 chip
 	static inline bool isCia2Addr(uint16_t addr) 

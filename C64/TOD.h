@@ -64,7 +64,7 @@ public:
 	~TOD();
 	
 	//! Bring the CIA back to its initial state
-	void reset(C64 *c64);
+	void reset();
 	
     //! Size of internal state
     uint32_t stateSize();

@@ -66,7 +66,7 @@ public:
 	~Keyboard();
 
 	//! Reset 
-	void reset(C64 *c64);
+	void reset();
     	
 	//! Dump internal state to console
 	void dumpState();	

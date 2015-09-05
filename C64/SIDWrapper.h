@@ -59,7 +59,7 @@ public:
 	~SIDWrapper();
 	
 	//! Bring SID back to it's initial state.
-	void reset(C64 *c64);
+	void reset();
 		
 	//! Dump internal state to console
 	void dumpState();
@@ -122,13 +122,6 @@ private:
     uint64_t cycles;
 
 public:
-    
-#if 0
-    /*!
-     @abstract   Executes SID until the cycle count reaches the CPUs cycle count
-     */
-    void execute();
-#endif
     
     /*!
      @abstract   Executes SID until a certain cycle is reached

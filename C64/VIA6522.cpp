@@ -53,9 +53,9 @@ VIA6522::~VIA6522()
 {
 }
 	
-void VIA6522::reset(C64 *c64)
+void VIA6522::reset()
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
 
     // Establish bindings
     floppy = c64->floppy;
@@ -661,14 +661,6 @@ VIA1::~VIA1()
 	debug(2, "  Releasing VIA1...\n");
 }
 
-#if 0
-void VIA1::reset(C64 *c64)
-{
-	debug(2, "  Resetting VIA1...\n");
-	VIA6522::reset(c64);
-}
-#endif
-
 VIA2::VIA2()
 {
     name = "VIA2";
@@ -679,14 +671,6 @@ VIA2::~VIA2()
 {
 	debug(2, "  Releasing VIA2...\n");
 }
-
-#if 0
-void VIA2::reset(C64 *c64)
-{
-	debug(2, "  Resetting VIA2...\n");
-	VIA6522::reset(c64);
-}
-#endif
 
 void VIA2::debug0xC() {
     

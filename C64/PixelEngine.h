@@ -67,7 +67,7 @@ public:
     ~PixelEngine();
     
     //! Restore initial state
-    void reset(C64 *c64);
+    void reset();
 
     //! Initialize both screenBuffers
     /*! This function is used for debugging. It write some recognizable pattern into both buffers */

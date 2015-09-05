@@ -438,7 +438,7 @@ public:
     inline void *screenBuffer() { return pixelEngine.screenBuffer(); }
 
 	//! Reset the VIC chip to its initial state
-	void reset(C64 *c64);
+	void reset();
 		
 	//! Dump internal state to console
 	void dumpState();	

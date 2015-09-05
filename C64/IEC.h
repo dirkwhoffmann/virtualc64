@@ -123,7 +123,7 @@ public:
 	~IEC();
 			
 	//! Bring the component back to its initial state
-	void reset(C64 *c64);
+	void reset();
 
     //! Dump current configuration into message queue
     void ping();

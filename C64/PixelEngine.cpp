@@ -45,9 +45,9 @@ PixelEngine::~PixelEngine()
 }
 
 void
-PixelEngine::reset(C64 *c64)
+PixelEngine::reset()
 {
-    VirtualComponent::reset(c64);
+    VirtualComponent::reset();
     
     // Establish bindings
     vic = c64->vic;

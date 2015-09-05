@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * Author: Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,15 +46,22 @@ VirtualComponent::~VirtualComponent()
 }
 
 void
-VirtualComponent::reset(C64 *c64)
+VirtualComponent::setC64(C64 *c64)
 {
-    // Establish binding to top-level object
+    debug(2, "Assigning top-level object %p\n", c64); 
     this->c64 = c64;
+    if (subComponents != NULL)
+        for (unsigned i = 0; subComponents[i] != NULL; i++)
+            subComponents[i]->setC64(c64);
+}
 
+void
+VirtualComponent::reset()
+{
     // Reset all sub components
     if (subComponents != NULL)
         for (unsigned i = 0; subComponents[i] != NULL; i++)
-            subComponents[i]->reset(c64);
+            subComponents[i]->reset();
     
     debug(3, "Resetting...\n");
     

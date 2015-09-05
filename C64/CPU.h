@@ -252,8 +252,7 @@ public:
 	~CPU();
 
 	// Brings CPU back to its initial state
-	void reset(C64 *c64);
-    // void reset(C64 *c64, Memory *mem);
+	void reset();
 
     //! Size of internal state
     uint32_t stateSize();

@@ -68,7 +68,7 @@ public:
     ~VC1541();
     
     //! Reset VC1541 drive
-    void reset(C64 *c64);
+    void reset();
 
     //! Reset disk properties
     /*! Resets all disk related properties. reset() keeps the disk alive. */
