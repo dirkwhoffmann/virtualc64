@@ -40,16 +40,6 @@ Joystick::~Joystick()
 }
 
 void
-Joystick::reset()
-{
-    VirtualComponent::reset();
-
-    _buttonPressed = false;
-    _axisX = JOYSTICK_AXIS_NONE;
-    _axisY = JOYSTICK_AXIS_NONE;
-}
-
-void
 Joystick::dumpState()
 {
     msg("Joystick port\n");

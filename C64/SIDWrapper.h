@@ -57,10 +57,7 @@ public:
 	
 	//! Destructor.
 	~SIDWrapper();
-	
-	//! Bring SID back to it's initial state.
-	void reset();
-		
+			
 	//! Dump internal state to console
 	void dumpState();
 	

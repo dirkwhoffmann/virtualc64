@@ -51,14 +51,9 @@ TOD::reset()
     time(&rawtime);
     timeinfo = localtime(&rawtime);
 
-    tod.time.tenth = 0;
     tod.time.seconds = BinaryToBCD((uint8_t)timeinfo->tm_sec);
     tod.time.minutes = BinaryToBCD((uint8_t)timeinfo->tm_min);
     tod.time.hours = BinaryToBCD((uint8_t)timeinfo->tm_hour);
-    alarm.value = 0;
-	latch.value = 0;
-	frozen = false;
-	stopped = false;
 }
 
 uint32_t

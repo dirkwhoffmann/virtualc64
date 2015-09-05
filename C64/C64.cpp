@@ -177,15 +177,11 @@ void C64::reset()
     VirtualComponent::reset();
     
     cpu->mem = mem;
-    
     cpu->setPC(0xFCE2);
-	cycles = 0UL;
-	frame = 0;
-	rasterline = 0;
 	rasterlineCycle = 1;
     nanoTargetTime = 0UL;
-    ping();
     
+    ping();
 	resume();
 }
 

@@ -62,14 +62,6 @@ SIDWrapper::setReSID(bool enable)
 }
 
 void 
-SIDWrapper::reset()
-{
-    VirtualComponent::reset(); // Resets all sub components
-    
-    cycles = 0UL;
-}
-
-void 
 SIDWrapper::dumpState()
 {
     if (useReSID)

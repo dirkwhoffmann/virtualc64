@@ -59,9 +59,6 @@ public:
     //! Destructor
     ~Joystick();
     
-    //! Reset
-    void reset();
-
     //! Dump internal state to console
     void dumpState();
 

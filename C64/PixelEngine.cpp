@@ -52,8 +52,14 @@ PixelEngine::reset()
     // Establish bindings
     vic = c64->vic;
     
-    // Shift register
-    memset(&sr, 0x00, sizeof(sr));
+    memset(&sr, 0, sizeof(sr));
+    memset(&sprite_sr, 0, sizeof(sr));
+
+#if 0
+    for (unsigned i = 0; i < 8; i++) {
+        sprite_sr[i].data = 0;
+    }
+#endif
 }
 
 void

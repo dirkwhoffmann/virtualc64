@@ -81,18 +81,7 @@ VC1541::reset()
     
     cpu->mem = mem;
     cpu->setPC(0xEAA0);
-    
-    // VC1541 properties
-    rotating = false;
-    redLED = false;
-    bitReadyTimer = 0;
-    byteReadyCounter = 0;
     halftrack = 41;
-    bitoffset = 0;
-    zone = 0;
-    read_shiftreg = 0;
-    write_shiftreg = 0;
-    sync = false;
 }
 
 void

@@ -71,31 +71,12 @@ CIA::reset()
     
     clearInterruptLine();
 
-	// reset control
-	delay = 0;
-	feed = 0;
-	CRA = 0;
-	CRB = 0;
-	ICR = 0;
-	IMR = 0;
-	PB67TimerMode = 0;
-	PB67TimerOut = 0;
-	PB67Toggle = 0;
-
-	// reset ports
-	PALatch = 0;
-	PBLatch = 0;
-	DDRA = 0;
-	DDRB = 0;
 	PA = 0xff; 
 	PB = 0xff; 
 	CNT = true; // CNT line is high by default
 	INT = 1;
-	readICR = false;
 	
-	counterA = 0x0000;
 	latchA = 0xFFFF;
-	counterB = 0x0000;
 	latchB = 0xFFFF;
 }
 

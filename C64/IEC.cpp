@@ -82,7 +82,6 @@ IEC::reset()
 	
 	setDeviceClockPin(1);
 	setDeviceDataPin(1);
-	busActivity = 0;
 }
 
 void

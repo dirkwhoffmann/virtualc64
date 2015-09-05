@@ -104,57 +104,13 @@ VIC::reset()
     // Reset subcomponents
     pixelEngine.reset();
 
-	// Internal state
-    vblank = false;
-    xCounter = 0;
-    
-    yCounterEqualsIrqRasterline = false;
-	registerVC = 0;
-	registerVCBASE = 0;
-	registerRC = 0;
-	registerVMLI = 0;
-    refreshCounter = 0;
-    addrBus = 0;
-    dataBus = 0;
-    gAccessDisplayMode = 0;
-    gAccessfgColor = 0;
-    gAccessbgColor = 0;
-	badLineCondition = false;
-    DENwasSetInRasterline30 = false;
-	displayState = false;
-	BAlow = 0;
-    BAwentLowAtCycle = 0;
-	mainFrameFF = false;
-	verticalFrameFF = false;
+    // Internal state
     yCounter = PAL_HEIGHT;
-
-	// Memory
-	memset(iomem, 0x00, sizeof(iomem));
     iomem[0x20] = PixelEngine::LTBLUE; // Let the border color look correct right from the beginning
     iomem[0x21] = PixelEngine::BLUE;   // Let the background color look correct right from the beginning
-	iomem[0x11] = 0x10;   // Make screen visible from the beginning	
-	bankAddr = 0;
-    
-    // gAccess results
-    g_data = 0;
-    g_character = 0;
-    g_color = 0;
-    g_mode = STANDARD_TEXT;
-    
-	// Sprites
-	for (int i = 0; i < 8; i++) {
-		mc[i] = 0;
-		mcbase[i] = 0;
-        pixelEngine.sprite_sr[i].data = 0;
-	}
-	spriteOnOff = 0;
-	oldSpriteOnOff = 0;
-	spriteDmaOnOff = 0;
+	iomem[0x11] = 0x10;                // Make screen visible from the beginning
 	expansionFF = 0xFF;
-    cleared_bits_in_d017 = 0;
-	// Lightpen
-	lightpenIRQhasOccured = false;
-	
+    
     // Remove startup graphics glitches by setting the initial value early
     setScreenMemoryAddr(0x400);
     

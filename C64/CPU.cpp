@@ -91,50 +91,9 @@ CPU::reset()
 {
     VirtualComponent::reset();
     
-	// Registers and flags
-	A = 0;
-	X = 0;
-	Y = 0;
-	PC = 0;
-	PC_at_cycle_0 = 0;
-	SP = 0;
-	N = 0;
-	V = 0;
-	B = 1;
-	D = 0;
-	I = 0;
-	Z = 0;
-	C = 0;
-
-	// Internal state
-	opcode = 0;
-	addr_lo = 0;
-	addr_hi = 0;
-	ptr = 0;
-	pc_lo = 0;
-	pc_hi = 0;
-	overflow = false;
-	data = 0;
-	
-	// Variable 'port' gets its initial value via C64Memory::reset
-	// Variable 'portDirection' gets its initial value via C64Memory::reset
 	external_port_bits = 0x1F;
 	rdyLine = true;
-	irqLine = 0;
-	nmiLine = 0;
-	nmiEdge = false;
-    interruptsPending = false;
-	nextPossibleIrqCycle = 0UL;
-	nextPossibleNmiCycle = 0UL;
-	
-	errorState = OK;
 	next = &CPU::fetch;
-	memset(callStack, 0, sizeof(callStack));	
-	callStackPointer = 0;
-	oldI = 0;
-	
-	// Debug options
-	setTraceMode(false);	
 }
 
 uint32_t

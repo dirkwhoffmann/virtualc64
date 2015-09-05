@@ -59,7 +59,7 @@ public:
 	by the CPU. Once the CPU enters a different state than CPU_OK, the execution thread is terminated. 
 	*/ 
 	enum ErrorState {
-		OK,
+		OK = 0,
 		SOFT_BREAKPOINT_REACHED,
 		HARD_BREAKPOINT_REACHED,
 		ILLEGAL_INSTRUCTION

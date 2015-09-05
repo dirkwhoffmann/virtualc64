@@ -58,23 +58,7 @@ void VIA6522::reset()
     VirtualComponent::reset();
 
     // Establish bindings
-    floppy = c64->floppy;
-    
-    // Reset state
-	ddra = 0;
-	ddrb = 0;
-	ora = 0;
-	orb = 0;
-	ira = 0;
-	irb = 0;
-    t1 = 0;
-    t2 = 0;
-    t1_latch_lo = 0;
-	t1_latch_hi = 0;
-    t2_latch_lo = 0;
-    t1_underflow = false;
-    t2_underflow = false;
-    memset(io, 0, sizeof(io));
+    floppy = c64->floppy;    
 }
 
 void 
