@@ -155,8 +155,6 @@
                 <outlet property="memTableView" destination="67" id="515"/>
                 <outlet property="mountDialog" destination="1004" id="1021"/>
                 <outlet property="pc" destination="47" id="163"/>
-                <outlet property="portA" destination="zHf-yH-YTM" id="QwY-sk-L5n"/>
-                <outlet property="portB" destination="L3K-on-eyR" id="D2J-pm-whp"/>
                 <outlet property="preferencesIcon" destination="2226" id="2227"/>
                 <outlet property="progress" destination="2203" id="tHU-2P-FXF"/>
                 <outlet property="propertiesDialog" destination="2228" id="2324"/>
@@ -393,7 +391,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -3201,7 +3199,6 @@ Flashing ist fast, but less compatible</string>
                 <outlet property="directory" destination="1017" id="1030"/>
                 <outlet property="diskIcon" destination="mSf-Ra-lAe" id="6Vx-YJ-LxN"/>
                 <outlet property="diskIconFrame" destination="3Y3-Wc-m3k" id="ag6-0r-aZU"/>
-                <outlet property="flashButton" destination="1011" id="1033"/>
                 <outlet property="headerText" destination="1031" id="Y67-2o-4SO"/>
                 <outlet property="initialFirstResponder" destination="262" id="2199"/>
                 <outlet property="loadOptions" destination="yIn-rf-6xJ" id="BSS-vr-fqc"/>
@@ -4528,7 +4525,6 @@ DQ
                 <outlet property="cartridgeIcon" destination="hTn-fJ-gnR" id="YcG-IM-O8g"/>
                 <outlet property="cartridgeText" destination="IHv-Vy-08g" id="o2a-sM-92c"/>
                 <outlet property="cartridgeText2" destination="jfw-hX-7gB" id="PIB-b1-aTS"/>
-                <outlet property="discIcon" destination="bQM-1M-aKB" id="8dg-5V-27r"/>
                 <outlet property="diskEject" destination="5Nd-Ft-riB" id="OcB-HA-yx1"/>
                 <outlet property="diskEjectText" destination="JU9-dR-EBW" id="kZb-Ph-yH3"/>
                 <outlet property="diskIcon" destination="bQM-1M-aKB" id="ty6-FE-mKF"/>
@@ -4538,7 +4534,6 @@ DQ
                 <outlet property="flag" destination="plR-6Q-bAw" id="pmd-5u-F5L"/>
                 <outlet property="machineType" destination="39A-36-mMb" id="nHb-JB-4JX"/>
                 <outlet property="systemText" destination="rTD-N9-Nqe" id="TQX-5S-gn8"/>
-                <outlet property="systemText1" destination="rTD-N9-Nqe" id="jil-rh-a2T"/>
                 <outlet property="systemText2" destination="uvS-PK-9dO" id="KSj-ws-I0c"/>
                 <outlet property="warpLoad" destination="fEC-s4-hUO" id="zVl-PA-GWa"/>
                 <outlet property="writeProtected" destination="Qlq-OA-lTF" id="Ehx-0d-Rcu"/>
