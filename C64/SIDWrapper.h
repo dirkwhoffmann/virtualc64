@@ -117,11 +117,11 @@ public:
 
     /*! @brief Sets the target volume
      */
-    void setTargetVolume(uint32_t v) { resid->setTargetVolume(v); }
+    void setTargetVolume(uint32_t volume, int32_t deltaSteps) { resid->setTargetVolume(volume, deltaSteps); }
     
     /*! @brief Sets the target volume to maxVolume
      */
-    void setTargetVolumeToMax() { resid->setTargetVolumeToMax(); }
+    void setTargetVolumeToMax(int32_t deltaSteps) { resid->setTargetVolumeToMax(deltaSteps); }
 
     /*! @brief Clears ringbuffer
      */

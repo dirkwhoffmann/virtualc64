@@ -228,88 +228,63 @@ ReSID::clearRingbuffer()
     writePtr += delay;
 }
 
-void
-ReSID::handleBufferException()
-{
-    clearRingbuffer();
-}
-
 float
 ReSID::readData()
 {
-	float value;
     readDataCnt++;
     
-    /*
-    static unsigned debugcnt = 0;
-    if (debugcnt++ % 100 == 0)
-        printf("ReSID::readData Ringbuffer: 0 | ... | r:%ld | ... | w->%ld | ... | %d\n",
-               readPtr, writePtr, bufferSize);
-    */
+    // Check for buffer underflow
+    if (readPtr == writePtr)
+        debug(4, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
     
-    if (readPtr == writePtr) {
-        debug(2, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
-        // handleBufferException();
-        
-        // 
-        return (readPtr > 0) ? ringBuffer[readPtr-1] : ringBuffer[bufferSize-1];
-    }
+    // Write sound sample
+    float value = ringBuffer[readPtr];
     
-    value = ringBuffer[readPtr];
-    
+    // Advance read pointer
     readPtr++;
     if (readPtr == bufferSize)
         readPtr = 0;
 
 	return value;
 }
-	
+
 inline void
 ReSID::writeData(float data)
 {
-    /*
-    static unsigned debugcnt = 0;
-    if (debugcnt++ % 100 == 0)
-        printf("ReSID::readData Ringbuffer: 0 | ... | r:%ld | ... | w->%ld | ... | %d\n",
-               readPtr, writePtr, bufferSize);
-    */
     writeDataCnt++;
     
+    // Check for buffer overflow
     if (readPtr == writePtr) {
-        debug(2, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
-        // handleBufferException();
-        writePtr = (readPtr + 8*735) % bufferSize;
+
+        debug(4, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+        
+        if (!c64->getWarp()) // In real-time mode, we put the write ptr somewhat ahead of the read ptr
+            writePtr = (readPtr + 8*735) % bufferSize;
+        else
+            return; // In warp mode, we don't advance the write ptr to avoid crack noises
     }
     
-    
+    // Adjust volume
     if (volume != targetVolume) {
         if (volume < targetVolume) {
-            
-            // Increase volume
-            if (volume < targetVolume - volumeDelta)
-                volume += volumeDelta;
-            else
-                volume = targetVolume;
+            volume += MIN(volumeDelta, targetVolume - volume);
         } else {
-            
-            // Decrease volume
-            if (volume > targetVolume + volumeDelta)
-                volume -= volumeDelta;
-            else
-                volume = targetVolume;
+            volume -= MIN(volumeDelta, volume - targetVolume);
         }
     }
     
+    // Write sound sample
     float scale = (volume <= 0) ? 0.0f : 0.000005f * (float)volume / 100000.0f;
     ringBuffer[writePtr] = data * scale;
     
-    // if (ringBuffer[writePtr] != -0.127300) printf("[%f]", ringBuffer[writePtr]);
+    // Advance write pointer
     writePtr++;
     if (writePtr == bufferSize)
         writePtr = 0;
 }
-	
-void 
+
+
+void
 ReSID::dumpState()
 {
 	msg("SID\n");

@@ -95,7 +95,7 @@ public:
      *  @note    0 = silent
      */
     int32_t targetVolume;
-    
+        
 private:
     
     /*! @brief   Maximum volume
@@ -106,7 +106,7 @@ private:
      *  @details If the current volume does not match the target volume, it is increased or decreased by the 
      *           specified amount. The increase or decrease takes place whenever an audio sample is generated.
      */
-    const static int32_t volumeDelta = 3;
+    int32_t volumeDelta;
 
 public:
     unsigned readDataCnt, writeDataCnt;
@@ -144,23 +144,18 @@ public:
 	void halt();
 
     /*! @brief  Reads audio sample from ringbuffer
-     *  @see    handleBufferException 
+     *  @see    handleBufferUnderflow
      */
 	float readData();
-	
+
     /*! @brief  Reads audio sample from ringbuffer
-     *  @see    handleBufferException
+     *  @see    handleBufferOverflow
      */
     void writeData(float data);
 
     /*! @brief  Clears the ringbuffer and resets the read and write pointer to its inital values
      */
     void clearRingbuffer();
-
-    /*! @brief   Handles a buffer underflow or overflow
-     *  @details This method is called by method readData or writeData 
-     */
-     void handleBufferException();
 
 
     // Configuring
@@ -207,11 +202,11 @@ public:
 
     /*! @brief Sets the target volume
      */
-    void setTargetVolume(uint32_t v) { targetVolume = v; }
+    void setTargetVolume(uint32_t volume, int32_t steps) { targetVolume = volume; volumeDelta = steps; }
 
     /*! @brief Sets the target volume to maxVolume
      */
-    void setTargetVolumeToMax() { setTargetVolume(maxVolume); }
+    void setTargetVolumeToMax(int32_t steps) { setTargetVolume(maxVolume, steps); }
 
 };
 
