@@ -308,7 +308,7 @@ public:
 
     //! Returns true iff audio filters are enabled.
     bool getAudioFilter() { return sid->getAudioFilter(); }
-    
+
 	//! Enable or disable filters of SID.
 	void setAudioFilter(bool value) { sid->setAudioFilter(value); }
       

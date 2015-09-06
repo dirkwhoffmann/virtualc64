@@ -1,7 +1,10 @@
-/*
- * (C) 2011 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @header      ReSID.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2011 - 2015 Dirk W. Hoffmann
+ * @brief       Declares ReSID wrapper class
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -27,38 +30,87 @@
 class ReSID : public VirtualComponent {
 
 private:
+    
     SID *sid;
-    	
-	//! Sample rate
+    
+    /*! @brief   Currently used chip model.
+     *  @details MOS6581 is the older SID chip exhibiting the "volume bug".
+     *           This chip must be selected to hear synthesized speech.
+     *           MOS8580 is the newer SID chip model with the "volume bug" fixed.
+     */
+    chip_model chipModel;
+	
+	/*! @brief   Sample rate
+     *  @details By default, a sample rate of 44.1 kHz is used. 
+     */
 	uint32_t sampleRate;
 	
-    //! Audio filters
-    bool audioFilter;
-    
-    //! Sampling method
+    /*! @brief   Sampling method used by the reSID library
+     */
     sampling_method samplingMethod;
-
-    //! Chip model
-    chip_model chipModel;
     
-	//! CPU frequency
-	uint32_t cpuFrequency;
+    /*! @brief   Current CPU frequency
+     *  @details This variable must always mirror the frequency of the C64 CPU to get the
+     *           proper audio samples at the right time. The CPU frequency differs in PAL and NTSC mode.
+     */
+    uint32_t cpuFrequency;
+
+    /*! @brief   Configuration option offered by the reSID library
+     */
+    bool audioFilter;
+
+    /*! @brief   Configuration option offered by the reSID library
+     */
+    bool externalAudioFilter;
 		
-	//! Size of ringBuffer
-	uint32_t bufferSize;
+	/*! @brief   Size of the audio samples ringbuffer.
+     *  @see     ringBuffer
+     */
+    // const static size_t bufferSize = 12288;
+    const static size_t bufferSize = 44100;
 	
-	//!  Ringbuffer with sound data
-	float* ringBuffer;
-	
-	//! Pointer to write position in buffer
-	float* writeBuffer;
-	
-	//! Pointer to read position in buffer
-	float* readBuffer;
-	
-	//! Pointer to end of buffer
-	float* endBuffer;
-			
+	/*! @brief   The audio sample ringbuffer.
+     *  @details This ringbuffer serves as the data interface between the SID emulation code and 
+     *           computers audio API (CoreAudio on Mac OS X).
+     */
+    float ringBuffer[bufferSize];
+
+public:
+    /*! @brief   Ring buffer read pointer
+     */
+    unsigned readPtr;
+
+    /*! @brief   Ring buffer write pointer
+     */
+	unsigned writePtr;
+ 
+    /*! @brief   Current volume
+     *  @note    A value of 0 or below silences the audio playback.
+     */
+    int32_t volume; 
+
+    /*! @brief   Target volume
+     *  @details Whenever an audio sample is written, the volume is increased or decreased by volumeDelta
+     *           to make it reach the target volume eventually. This feature simulates a fading effect.
+     *  @note    0 = silent
+     */
+    int32_t targetVolume;
+    
+private:
+    
+    /*! @brief   Maximum volume
+     */
+    const static int32_t maxVolume = 100000;
+
+    /*! @brief   Volume offset
+     *  @details If the current volume does not match the target volume, it is increased or decreased by the 
+     *           specified amount. The increase or decrease takes place whenever an audio sample is generated.
+     */
+    const static int32_t volumeDelta = 2;
+
+public:
+    unsigned readDataCnt, writeDataCnt;
+    
 public:
 		
 	//! Constructor.
@@ -70,15 +122,9 @@ public:
 	//! Bring the SID chip back to it's initial state.
 	void reset();
 	
-    //! Size of internal state
-    uint32_t stateSize();
-
     //! Load state
 	void loadFromBuffer(uint8_t **buffer);
-	
-	//! Save state
-	void saveToBuffer(uint8_t **buffer);	
-	
+		
 	//! Dump internal state to console
 	void dumpState();
 	
@@ -97,23 +143,40 @@ public:
 	//! Notifies the SID chip that the emulator has started
 	void halt();
 
-    //! Get next sample from \a ringBuffer.
+    /*! @brief  Reads audio sample from ringbuffer
+     *  @see    handleBufferException 
+     */
 	float readData();
 	
-    //! Invoked on buffer underflow or overflow
-    void handleBufferException();
+    /*! @brief  Reads audio sample from ringbuffer
+     *  @see    handleBufferException
+     */
+    void writeData(float data);
 
-    //! Write sample to \a ringBuffer.
-	void writeData(float data);
+    /*! @brief  Clears the ringbuffer and resets the read and write pointer to its inital values
+     */
+    void clearRingbuffer();
+
+    /*! @brief   Handles a buffer underflow or overflow
+     *  @details This method is called by method readData or writeData 
+     */
+     void handleBufferException();
+
 
     // Configuring
     
     //! Returns true iff audio filters are enabled.
 	inline bool getAudioFilter() { return audioFilter; }
-    
-	//! Enable or disable filters of SID.
+
+    //! Returns true iff external audio filters are enabled.
+    inline bool getExternalAudioFilter() { return externalAudioFilter; }
+
+	//! Enable or disable reSIDs audio filtering capability
 	void setAudioFilter(bool enable);
-    
+
+    //! Enable or disable reSIDs external audio filtering capability
+    void setExternalAudioFilter(bool enable);
+
     //! Return samplerate.
 	inline uint32_t getSampleRate() { return sampleRate; }
     
@@ -137,6 +200,19 @@ public:
     
 	//! Set clock frequency
     void setClockFrequency(uint32_t f);
+
+    /*! @brief Sets the current volume
+     */
+    void setVolume(uint32_t v) { volume = v; }
+
+    /*! @brief Sets the target volume
+     */
+    void setTargetVolume(uint32_t v) { targetVolume = v; }
+
+    /*! @brief Sets the target volume to maxVolume
+     */
+    void setTargetVolumeToMax() { setTargetVolume(maxVolume); }
+
 };
 
 #endif

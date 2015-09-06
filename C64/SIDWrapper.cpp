@@ -122,15 +122,6 @@ SIDWrapper::poke(uint16_t addr, uint8_t value)
     resid->poke(addr, value);
 }
 
-#if 0
-void
-SIDWrapper::execute()
-{
-    execute(c64->getCycles() - cycles);
-    cycles = c64->cycle_count;
-}
-#endif
-
 void
 SIDWrapper::executeUntil(uint64_t targetCycle)
 {
@@ -183,7 +174,8 @@ SIDWrapper::setAudioFilter(bool enable)
         debug(2, "Disabling audio filters\n");
 
     oldsid->setAudioFilter(enable);
-    resid->setAudioFilter(enable);
+    // resid->setAudioFilter(enable);
+    resid->setExternalAudioFilter(enable); 
 }
 
 void

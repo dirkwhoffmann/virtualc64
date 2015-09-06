@@ -26,48 +26,67 @@ ReSID::ReSID()
 
     sid = new SID();
     
-    // Default chip model
-    chipModel = MOS8580;
-    sid->set_chip_model(chipModel);
+    // Register snapshot items
+    SnapshotItem items[] = {
         
-    // Default audio filter settings
-    audioFilter = false;
-    sid->enable_filter(audioFilter);
-    sid->enable_external_filter(false);
-    	
-    // Default sample parameters
-	sampleRate = 44100;
-    cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE; // CPU::CLOCK_FREQUENCY_PAL;
+        // Configuration items
+        { &chipModel,           sizeof(chipModel),              KEEP_ON_RESET },
+        { &sampleRate,          sizeof(sampleRate),             KEEP_ON_RESET },
+        { &samplingMethod,      sizeof(samplingMethod),         KEEP_ON_RESET },
+        { &audioFilter,         sizeof(audioFilter),            KEEP_ON_RESET },
+        { &externalAudioFilter, sizeof(externalAudioFilter),    KEEP_ON_RESET },
+        { &cpuFrequency,        sizeof(cpuFrequency),           KEEP_ON_RESET },
+        { &volume,              sizeof(volume),                 KEEP_ON_RESET },
+        { &targetVolume,        sizeof(targetVolume),           KEEP_ON_RESET },
+        { NULL,                 0,                              0 }};
+    
+    registerSnapshotItems(items, sizeof(items));
+    
+    // Set default values
+    setChipModel(MOS6581); 
+    
+    cpuFrequency = PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE;
     samplingMethod = SAMPLE_FAST;
+    sampleRate = 44100;
     sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
-					
-	// init ringbuffer
-	bufferSize = 12288;
-	ringBuffer = new float[bufferSize];
-	endBuffer = &ringBuffer[(bufferSize - 1)];
+    
+    setAudioFilter(false);
+    setExternalAudioFilter(false);
+    
+    volume = 100000;
+    targetVolume = 100000;
 }
 
 ReSID::~ReSID()
 {
     delete sid;
-	delete ringBuffer;
-	ringBuffer = writeBuffer = readBuffer = endBuffer = NULL;
 }
 
 void
 ReSID::reset()
 {
     VirtualComponent::reset();
-    
-	// reset ringBuffer
-	for (unsigned i = 0; i < bufferSize; i++)
-	{
-		ringBuffer[i] = 0.0f;
-	}
-	readBuffer = ringBuffer;
-	writeBuffer = ringBuffer;
-    
+    clearRingbuffer();
     sid->reset();
+}
+
+void
+ReSID::setChipModel(chip_model model)
+{
+    switch (model) {
+        case MOS6581:
+            debug(2, "Plugging in MOS6581\n");
+            break;
+        case MOS8580:
+            debug(2, "Plugging in MOS8580\n");
+            break;
+        default:
+            warn("Unknown chip model. Using  MOS8580\n");
+            model = MOS8580;
+    }
+    
+    chipModel = model;
+    sid->set_chip_model(model);
 }
 
 void 
@@ -77,11 +96,11 @@ ReSID::setAudioFilter(bool enable)
     sid->enable_filter(enable);
 }
 
-void 
-ReSID::setSampleRate(uint32_t sr) 
+void
+ReSID::setExternalAudioFilter(bool enable)
 {
-	sampleRate = sr;
-    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
+    externalAudioFilter = enable;
+    sid->enable_external_filter(enable);
 }
 
 void 
@@ -109,23 +128,11 @@ ReSID::setSamplingMethod(sampling_method method)
     sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate); 
 }
 
-void 
-ReSID::setChipModel(chip_model model)
+void
+ReSID::setSampleRate(uint32_t sr)
 {
-    switch (model) {
-        case MOS6581:
-            debug(2, "Plugging in MOS6581\n");
-            break;
-        case MOS8580:
-            debug(2, "Plugging in MOS8580\n");
-            break;
-        default:
-            warn("Unknown chip model. Using  MOS8580\n");
-            model = MOS8580;
-    }
-    
-    chipModel = model;
-    sid->set_chip_model(model);
+    sampleRate = sr;
+    sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
 }
 
 void 
@@ -135,37 +142,20 @@ ReSID::setClockFrequency(uint32_t frequency)
     sid->set_sampling_parameters(cpuFrequency, samplingMethod, sampleRate);
 }
 
-uint32_t
-ReSID::stateSize()
-{
-    return 11;
-}
 
 void
 ReSID::loadFromBuffer(uint8_t **buffer)
 {
     VirtualComponent::loadFromBuffer(buffer);
 
-    // Reset current ringbuffer input
-    reset();
+    clearRingbuffer();
     
-    setChipModel((chip_model)read8(buffer));
-    setAudioFilter((bool)read8(buffer));
-    setSamplingMethod((sampling_method)read8(buffer));
-    setSampleRate(read32(buffer));
-    setClockFrequency(read32(buffer));
-}
-
-void
-ReSID::saveToBuffer(uint8_t **buffer)
-{
-    VirtualComponent::saveToBuffer(buffer);
-
-    write8(buffer, (uint8_t)getChipModel());
-    write8(buffer, (uint8_t)getAudioFilter());
-    write8(buffer, (uint8_t)getSamplingMethod());
-    write32(buffer, getSampleRate());
-    write32(buffer, getClockFrequency());
+    setChipModel(chipModel);
+    setSampleRate(sampleRate);
+    setSamplingMethod(samplingMethod);
+    setAudioFilter(audioFilter);
+    setExternalAudioFilter(externalAudioFilter);
+    setClockFrequency(cpuFrequency);
 }
 
 uint8_t 
@@ -187,9 +177,8 @@ ReSID::execute(int elapsedCycles)
     int buflength = 2048;
     int delta_t = elapsedCycles;
     int bufindex = 0;
-    float sample;
     
-    // TODO: Write directly into Core Audios ringbuffer (Speedup)
+    // TODO: Can't we write directly into Core Audios ringbuffer (for Speedup)?
 
     // Let reSID compute some sound samples
     while (delta_t) {
@@ -198,10 +187,10 @@ ReSID::execute(int elapsedCycles)
     }
     
     // Write samples into ringbuffer (output is silenced in warp mode) 
-    float volume = c64->getWarp() ? 0.0f : 0.000005f;
+    
+    // float volume = c64->getWarp() ? 0.0f : 0.000005f;
     for (int i = 0; i < bufindex; i++) {
-        sample = (float)buf[i] * volume;
-        writeData(sample);
+        writeData((float)buf[i]);
     }
 
     // fprintf(stderr,"wrote %d samples\n", bufindex);
@@ -210,7 +199,7 @@ ReSID::execute(int elapsedCycles)
 void 
 ReSID::run()
 {
-    handleBufferException();
+    clearRingbuffer();
 }
 
 void 
@@ -223,66 +212,97 @@ ReSID::halt()
 	}
 }
 
-void 
-ReSID::handleBufferException()
-{    
-    // Reset pointers
-    readBuffer = writeBuffer = ringBuffer;
+void
+ReSID::clearRingbuffer()
+{
+    // Reset ringbuffer, read pointer, and write pointer
+    // memset(ringBuffer, 0, sizeof(ringBuffer));
 
+    debug(4,"Clearing ringbuffer\n");
+    for (unsigned i = 0; i < bufferSize; i++)
+        ringBuffer[i] = 0; // -0.127300;
+    readPtr = writePtr = 0;
+    
     // Add some delay
     size_t delay = 8*735;
-    memset(ringBuffer, 0, delay * sizeof(float)); 
-    writeBuffer += delay;
+    writePtr += delay;
 }
 
-float 
+void
+ReSID::handleBufferException()
+{
+    clearRingbuffer();
+}
+
+float
 ReSID::readData()
 {
 	float value;
+    readDataCnt++;
     
     /*
     static unsigned debugcnt = 0;
     if (debugcnt++ % 100 == 0)
         printf("ReSID::readData Ringbuffer: 0 | ... | r:%ld | ... | w->%ld | ... | %d\n",
-               readBuffer - ringBuffer, writeBuffer - ringBuffer, bufferSize);
+               readPtr, writePtr, bufferSize);
     */
     
-    if (readBuffer == writeBuffer) {
-        // fprintf(stderr, "SID RINGBUFFER UNDERFLOW (%ld)\n", readBuffer - ringBuffer);
+    if (readPtr == writePtr) {
+        // debug(2, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
         handleBufferException();
     }
     
-    value = *readBuffer;
+    value = ringBuffer[readPtr];
     
-    if (readBuffer == endBuffer)
-        readBuffer = ringBuffer;
-    else 
-        readBuffer++;
+    readPtr++;
+    if (readPtr == bufferSize)
+        readPtr = 0;
 
 	return value;
 }
 	
-void 
+inline void
 ReSID::writeData(float data)
 {
     /*
     static unsigned debugcnt = 0;
     if (debugcnt++ % 100 == 0)
         printf("ReSID::readData Ringbuffer: 0 | ... | r:%ld | ... | w->%ld | ... | %d\n",
-               readBuffer - ringBuffer, writeBuffer - ringBuffer, bufferSize);
+               readPtr, writePtr, bufferSize);
     */
+    writeDataCnt++;
     
-    if (readBuffer == writeBuffer) {
-        // fprintf(stderr, "SID RINGBUFFER OVERFLOW (%ld)\n", writeBuffer - ringBuffer);
-        // handleBufferException();
+    if (readPtr == writePtr) {
+        // debug(2, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+        handleBufferException();
     }
     
-    *writeBuffer = data;
     
-    if (writeBuffer == endBuffer)
-        writeBuffer = ringBuffer;
-    else 
-        writeBuffer++;
+    if (volume != targetVolume) {
+        if (volume < targetVolume) {
+            
+            // Increase volume
+            if (volume < targetVolume - volumeDelta)
+                volume += volumeDelta;
+            else
+                volume = targetVolume;
+        } else {
+            
+            // Decrease volume
+            if (volume > targetVolume + volumeDelta)
+                volume -= volumeDelta;
+            else
+                volume = targetVolume;
+        }
+    }
+    
+    float scale = (volume <= 0) ? 0.0f : 0.000005f * (float)volume / 100000.0f;
+    ringBuffer[writePtr] = data * scale;
+    
+    // if (ringBuffer[writePtr] != -0.127300) printf("[%f]", ringBuffer[writePtr]);
+    writePtr++;
+    if (writePtr == bufferSize)
+        writePtr = 0;
 }
 	
 void 

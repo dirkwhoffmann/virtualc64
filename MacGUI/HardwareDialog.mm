@@ -71,7 +71,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 
     // Audio
     [c64 setReSID:YES];
-    [c64 setChipModel:1];
+    [c64 setChipModel:0];
     [c64 setSamplingMethod:0];
     [c64 setAudioFilter:NO];
 

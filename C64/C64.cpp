@@ -263,16 +263,36 @@ C64::setNTSC()
 void
 C64::setWarp(bool b)
 {
-	if (warp != b) {
-		warp = b;
-		restartTimer();
-		putMessage(MSG_WARP, b);
-	}
+    if (warp == b)
+        return;
+    
+    warp = b;
+
+    // Warping has the unavoidable drawback that audio playback gets out of sync.
+    // Therefore, we silence SID during warp mode and smoothly bring back sound when
+    // warping ends.
+    
+    if (warp) {
+        // Silence SID immediately
+        sid->setVolume(-10000);
+        sid->setTargetVolume(-10000);
+        sid->clearRingbuffer();
+        
+    } else {
+        // Smoothly fade in SID
+        sid->setTargetVolumeToMax(); 
+    }
+
+    restartTimer();
+    putMessage(MSG_WARP, b);
 }
 
 void
 C64::setAlwaysWarp(bool b)
 {
+    if (alwaysWarp == b)
+        return;
+    
     if (alwaysWarp != b) {
         alwaysWarp = b;
         setWarp(b);
@@ -455,7 +475,15 @@ C64::endOfRasterline()
 		
 		// Execute remaining SID cycles
         sid->executeUntil(cycles);
-        
+        /*
+        int diff = sid->resid->writePtr - sid->resid->readPtr;
+         debug(2,"SID readCnt: %8d writeCnt: %8d readPtr: %8d writePtr: %8d diff: %8d volume:%d target:%d\n",
+              sid->resid->readDataCnt, sid->resid->writeDataCnt,
+              sid->resid->readPtr, sid->resid->writePtr,
+              (diff > 0) ? diff : 44100 + diff,sid->resid->volume,sid->resid->targetVolume);
+         sid->resid->readDataCnt = sid->resid->writeDataCnt = 0;
+        */
+         
         // Execute the IEC bus
         iec->execute();
 

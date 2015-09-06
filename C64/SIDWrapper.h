@@ -38,9 +38,11 @@ private:
     //! Old SID implementation
     OldSID *oldsid;
 
+public:
     //! Implementation based on the ReSID library
     ReSID *resid;
-    
+   
+private:
     //! SID selector
     bool useReSID;
     
@@ -85,7 +87,8 @@ public:
     void setChipModel(chip_model value);
     
     //! Returns true iff audio filters are enabled.
-    inline bool getAudioFilter() { return resid->getAudioFilter(); }
+    // inline bool getAudioFilter() { return resid->getAudioFilter(); }
+    inline bool getAudioFilter() { return resid->getExternalAudioFilter(); }
     
     //! Enable or disable filters of SID.
     void setAudioFilter(bool enable);
@@ -107,6 +110,22 @@ public:
     
 	//! Set clock frequency
 	void setClockFrequency(uint32_t frequency);	
+
+    /*! @brief Sets the current volume
+     */
+    void setVolume(uint32_t v) { resid->setVolume(v); }
+
+    /*! @brief Sets the target volume
+     */
+    void setTargetVolume(uint32_t v) { resid->setTargetVolume(v); }
+    
+    /*! @brief Sets the target volume to maxVolume
+     */
+    void setTargetVolumeToMax() { resid->setTargetVolumeToMax(); }
+
+    /*! @brief Clears ringbuffer
+     */
+    void clearRingbuffer() { resid->clearRingbuffer(); }
 
 
     // -----------------------------------------------------------------------------------------------
