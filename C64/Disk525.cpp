@@ -196,7 +196,6 @@ Disk525::encodeArchive(D64Archive *a)
     
     // Clear remaining tracks (if any)
     for (track = numTracks + 1; track <= 42; track++) {
-        assert(encodedBits % 8 == 0);
         length.track[track][0] = encodedBits;  // Track t
         length.track[track][1] = encodedBits;  // Half track above
     }
@@ -212,20 +211,17 @@ Disk525::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEve
     assert(isTrackNumber(t));
 
     unsigned encodedBits, totalEncodedBits = 0;
-    uint8_t *dest = data.track[t];
     
     debug(3, "Encoding track %d\n", t);
     
     // Scan the interleave pattern and encode each sector
     for (unsigned i = 0; sectorList[i] != -1; i++) {
         
-        encodedBits = encodeSector(a, t, sectorList[i], dest, (i % 2) ? tailGapOdd : tailGapEven);
-        assert(encodedBits % 8 == 0);
-        dest += (encodedBits / 8);
+        encodedBits = encodeSector(a, t, sectorList[i], data.track[t], totalEncodedBits, (i % 2) ? tailGapOdd : tailGapEven);
+        // assert(encodedBits % 8 == 0);
         totalEncodedBits += encodedBits;
     }
 
-    assert(totalEncodedBits % 8 == 0);
     length.track[t][0] = totalEncodedBits;  // Track t
     length.track[t][1] = totalEncodedBits;  // Half track above
     
@@ -233,13 +229,14 @@ Disk525::encodeTrack(D64Archive *a, Track t, int *sectorList, uint8_t tailGapEve
 }
 
 unsigned
-Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, int gap)
+Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, unsigned bitoffset, int gap)
 {
-    uint8_t *source, *ptr = dest;
+    uint8_t *source; // , *ptr = dest;
+    unsigned bitptr = bitoffset;
     
     assert(isTrackNumber(t));
     assert(a != NULL);
-    assert(ptr != NULL);
+    assert(dest != NULL);
     
     // Get source address from archive
     if ((source = a->findSector(t, sector)) == 0) {
@@ -254,37 +251,61 @@ Disk525::encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, int
     uint8_t id_hi = a->diskIdHi();
     uint8_t checksum = id_lo ^ id_hi ^ t ^ sector; // Header checksum byte
     
-    encodeSync(ptr); // 0xFF 0xFF 0xFF 0xFF 0xFF
-    ptr += 5;
-    encodeGcr(0x08, checksum, sector, t, ptr); // header block ID, checksum, sector and track
-    ptr += 5;
-    encodeGcr(id_lo, id_hi, 0x0F, 0x0F, ptr); // Sector ID (LO/HI), 0x0F, 0x0F
-    ptr += 5;
-    encodeGap(ptr, 9); // 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55
-    ptr += 9;
-    encodeSync(ptr); // 0xFF 0xFF 0xFF 0xFF 0xFF
-    ptr += 5;
+    // encodeSync(ptr); // 0xFF 0xFF 0xFF 0xFF 0xFF
+    writeSyncBits(dest, bitptr, 5 * 8); // 0xFF 0xFF 0xFF 0xFF 0xFF
+    // ptr += 5;
+    bitptr += 5 * 8;
+    
+    // encodeGcr(0x08, checksum, sector, t, ptr); // header block ID, checksum, sector and track
+    encodeGcr(0x08, checksum, sector, t, dest, bitptr); // header block ID, checksum, sector and track
+    // ptr += 5;
+    bitptr += 5 * 8;
+    
+    // encodeGcr(id_lo, id_hi, 0x0F, 0x0F, ptr); // Sector ID (LO/HI), 0x0F, 0x0F
+    encodeGcr(id_lo, id_hi, 0x0F, 0x0F, dest, bitptr); // Sector ID (LO/HI), 0x0F, 0x0F
+    // ptr += 5;
+    bitptr += 5 * 8;
+    
+    // encodeGap(ptr, 9); // 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55
+    writeGap(dest, bitptr, 9); // 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55 0x55
+    // ptr += 9;
+    bitptr += 9 * 8;
+    
+    // encodeSync(ptr); // 0xFF 0xFF 0xFF 0xFF 0xFF
+    writeSyncBits(dest, bitptr, 5 * 8); // 0xFF 0xFF 0xFF 0xFF 0xFF
+    // ptr += 5;
+    bitptr += 5 * 8;
     
     checksum = source[0];
     for (unsigned i = 1; i < 256; i++) // Data checksum byte
         checksum ^= source[i];
     
-    encodeGcr(0x07, source[0], source[1], source[2], ptr); // data block ID, first three data bytes
-    ptr += 5;
-    for (unsigned i = 3; i < 255; i += 4, ptr += 5)
-        encodeGcr(source[i], source[i+1], source[i+2], source[i+3], ptr); // Data chunks
-    encodeGcr(source[255], checksum, 0, 0, ptr); // Last byte, checksum, 0x00, 0x00
-    ptr += 5;
+    // encodeGcr(0x07, source[0], source[1], source[2], ptr); // data block ID, first three data bytes
+    encodeGcr(0x07, source[0], source[1], source[2], dest, bitptr); // data block ID, first three data bytes
+    // ptr += 5;
+    bitptr += 5 * 8;
     
-    assert(ptr - dest == 354);
+    for (unsigned i = 3; i < 255; i += 4, bitptr += 5 * 8) // , ptr += 5)
+        encodeGcr(source[i], source[i+1], source[i+2], source[i+3], dest, bitptr);
+        // encodeGcr(source[i], source[i+1], source[i+2], source[i+3], ptr); // Data chunks
+    // encodeGcr(source[255], checksum, 0, 0, ptr); // Last byte, checksum, 0x00, 0x00
+    encodeGcr(source[255], checksum, 0, 0, dest, bitptr); // Last byte, checksum, 0x00, 0x00
+    // ptr += 5;
+    bitptr += 5 * 8;
     
-    encodeGap(ptr, gap); // 0x55 0x55 ... 0x55 (tail gap)
-    ptr += gap;
+    // assert(bitptr - bitoffset == 354 * 8);
+    
+    // encodeGap(ptr, gap); // 0x55 0x55 ... 0x55 (tail gap)
+    writeGap(dest, bitptr, gap); // 0x55 0x55 ... 0x55 (tail gap)
+    // ptr += gap;
+    bitptr += gap * 8;
     
     // Return number of encoded bytes
-    return (ptr - dest) * 8;
+    // assert (bitptr - bitoffset == (ptr - dest) * 8);
+    return bitptr - bitoffset;
 }
 
+#if 0
 void
 Disk525::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest)
 {
@@ -306,6 +327,30 @@ Disk525::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest
     dest[2] = shift_reg & 0xFF; shift_reg >>= 8;
     dest[1] = shift_reg & 0xFF; shift_reg >>= 8;
     dest[0] = shift_reg & 0xFF;
+}
+#endif
+
+void
+Disk525::encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest, unsigned offset)
+{
+    uint64_t shift_reg = 0;
+    
+    // Shift in
+    shift_reg = gcr[b1 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b1 & 0x0F];
+    shift_reg = (shift_reg << 5) | gcr[b2 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b2 & 0x0F];
+    shift_reg = (shift_reg << 5) | gcr[b3 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b3 & 0x0F];
+    shift_reg = (shift_reg << 5) | gcr[b4 >> 4];
+    shift_reg = (shift_reg << 5) | gcr[b4 & 0x0F];
+    
+    // Shift out
+    writeByte(dest, offset + 4 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByte(dest, offset + 3 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByte(dest, offset + 2 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByte(dest, offset + 1 * 8, shift_reg & 0xFF); shift_reg >>= 8;
+    writeByte(dest, offset, shift_reg & 0xFF);
 }
 
 unsigned

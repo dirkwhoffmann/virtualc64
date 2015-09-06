@@ -248,8 +248,10 @@ ReSID::readData()
     */
     
     if (readPtr == writePtr) {
-        // debug(2, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
+        debug(2, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
         // handleBufferException();
+        
+        // 
         return (readPtr > 0) ? ringBuffer[readPtr-1] : ringBuffer[bufferSize-1];
     }
     
@@ -274,7 +276,7 @@ ReSID::writeData(float data)
     writeDataCnt++;
     
     if (readPtr == writePtr) {
-        // debug(2, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+        debug(2, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
         // handleBufferException();
         writePtr = (readPtr + 8*735) % bufferSize;
     }

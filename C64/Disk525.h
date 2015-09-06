@@ -331,21 +331,37 @@ private:
      *           byte representation. The sector is closed by 'gap' tail gap bytes.
      *           Returns the number of bytes written. 
      */
-    unsigned encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, int gap);
+    unsigned encodeSector(D64Archive *a, Track t, uint8_t sector, uint8_t *dest, unsigned bitoffset, int gap);
+    
+    /*! @brief   Writes a certain number of SYNC bits
+     *  @param   dest Start address of track. 
+     *  @param   offset Beginning of SYNC sequence relative to track start in bits
+     *  @param   length Number of SYNC bits to write
+     */
+    void writeSyncBits(uint8_t *dest, unsigned offset, unsigned length) {
+        for (unsigned i = 0; i < length; i++) writeBit(dest, offset + i, 1); }
     
     /*! @brief   Write five SYNC bytes
-     *  @deprecated Implement writeSyncBits(uint8_t *dest) instead
+     *  @deprecated Implement encodeSyncBits instead
      */
-    void encodeSync(uint8_t *dest) { for (unsigned i = 0; i < 5; i++) dest[i] = 0xFF; }
-    
+    // void encodeSync(uint8_t *dest) { writeSyncBits(dest, 0, 5 * 8); }
+    // { for (unsigned i = 0; i < 5; i++) dest[i] = 0xFF; }
+
     /*! @brief   Write interblock gap
-     *  @todo    Rename to writeGap
      */
-    void encodeGap(uint8_t *dest, unsigned size) { for (unsigned i = 0; i < size; i++) dest[i] = 0x55; }
+    void writeGap(uint8_t *dest, unsigned offset, unsigned length) {
+        for (unsigned i = 0; i < length; i++) writeByte(dest, offset + i * 8, 0x55); }
+
+    /*! @brief      Write interblock gap
+     *  @deprecated Use writeGap instead
+     */
+    // void encodeGap(uint8_t *dest, unsigned size) { writeGap(dest, 0, size); }
+    // { for (unsigned i = 0; i < size; i++) dest[i] = 0x55; }
     
     /*! @brief   Translates four data bytes into five GCR encodes bytes
      */
-    void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest);
+    // void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest);
+    void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest, unsigned offset);
     
     
     //

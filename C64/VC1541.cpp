@@ -213,7 +213,7 @@ VC1541::executeBitReady()
 void
 VC1541::executeByteReady()
 {
-    assert(bitoffset % 8 == 0);
+    // assert(bitoffset % 8 == 0);
     
     if (readMode() && !sync) {
         byteReady(read_shiftreg);
