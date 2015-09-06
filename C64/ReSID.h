@@ -66,8 +66,8 @@ private:
 	/*! @brief   Size of the audio samples ringbuffer.
      *  @see     ringBuffer
      */
-    // const static size_t bufferSize = 12288;
-    const static size_t bufferSize = 44100;
+    const static size_t bufferSize = 12288;
+    // const static size_t bufferSize = 44100;
 	
 	/*! @brief   The audio sample ringbuffer.
      *  @details This ringbuffer serves as the data interface between the SID emulation code and 
@@ -198,16 +198,27 @@ public:
 
     /*! @brief Sets the current volume
      */
-    void setVolume(uint32_t v) { volume = v; }
+    void setVolume(int32_t v) { volume = v; }
 
     /*! @brief Sets the target volume
      */
-    void setTargetVolume(uint32_t volume, int32_t steps) { targetVolume = volume; volumeDelta = steps; }
+    void setTargetVolume(int32_t targetVolume) { targetVolume = volume; }
 
-    /*! @brief Sets the target volume to maxVolume
+    /*! @brief   Triggers volume ramp up phase
+     *  @details Configures volume and targetVolume to simulate a smooth audio fade in
      */
-    void setTargetVolumeToMax(int32_t steps) { setTargetVolume(maxVolume, steps); }
+    void rampUp() { targetVolume = maxVolume; volumeDelta = 3; }
+    void rampUpFromZero() { volume = 0; targetVolume = maxVolume; volumeDelta = 3; }
 
+    /*! @brief   Triggers volume ramp down phase
+     *  @details Configures volume and targetVolume to simulate a quick audio fade out
+     */
+    void rampDown() { targetVolume = 0; volumeDelta = 50; }
+
+    /*! @brief   Align write pointer
+     *  @details This function puts the write pointer somewhat ahead of the read pointer
+     */
+    void alignWritePtr() { writePtr = (readPtr + (8 * 735)) % bufferSize; }
 };
 
 #endif

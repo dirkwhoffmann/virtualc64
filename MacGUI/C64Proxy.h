@@ -470,6 +470,9 @@
 - (void) setSamplingMethod:(int)value;
 - (int) chipModel;
 - (void) setChipModel:(int)value;
+- (void) rampUp;
+- (void) rampUpFromZero;
+- (void) rampDown;
 
 // Loadind and saving
 - (void)_loadFromSnapshot:(Snapshot *) snapshot;

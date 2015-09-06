@@ -572,6 +572,9 @@
 - (void) setSamplingMethod:(int)value { c64->setSamplingMethod((sampling_method)value); }
 - (int) chipModel { return (chip_model)(c64->getChipModel()); }
 - (void) setChipModel:(int)value {c64->setChipModel((chip_model)value); }
+- (void) rampUp { c64->sid->rampUp(); }
+- (void) rampUpFromZero { c64->sid->rampUpFromZero(); }
+- (void) rampDown { c64->sid->rampDown(); }
 
 - (void) _loadFromSnapshot:(Snapshot *)snapshot
 {
@@ -677,8 +680,8 @@
 - (Joystick *) joystick:(int)nr { assert(nr == 1 || nr == 2); return (nr == 1) ? c64->joystick1 : c64->joystick2; }
 
 // Audio hardware
-- (void) enableAudio { [audioDevice startPlayback]; }
-- (void) disableAudio {	[audioDevice stopPlayback]; }
+- (void) enableAudio { [self rampUpFromZero]; [audioDevice startPlayback]; }
+- (void) disableAudio {	[self rampDown]; [audioDevice stopPlayback]; }
 
 // User triggered interrupts
 - (void) keyboardPressRunstopRestore { c64->runstopRestore(); }

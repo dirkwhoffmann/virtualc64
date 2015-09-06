@@ -73,7 +73,7 @@ SIDWrapper::dumpState()
 void
 SIDWrapper::setPAL()
 {
-    debug(2, "Switching SID to PAL frequency");
+    debug(2, "Switching SID to PAL frequency\n");
     // setClockFrequency(CPU::CLOCK_FREQUENCY_PAL);
     setClockFrequency(PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE);
 }
@@ -81,7 +81,7 @@ SIDWrapper::setPAL()
 void
 SIDWrapper::setNTSC()
 {
-    debug(2, "Switching SID to NTSC frequency");
+    debug(2, "Switching SID to NTSC frequency\n");
     // setClockFrequency(CPU::CLOCK_FREQUENCY_NTSC);
     setClockFrequency(NTSC_CYCLES_PER_FRAME * NTSC_REFRESH_RATE);
 }

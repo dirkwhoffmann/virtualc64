@@ -209,8 +209,13 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 	return self;
 }
 
--(int)startPlayback
+-(void)clearBuffer
 {
+    // TODO
+}
+
+-(int)startPlayback
+{    
 	if (AudioDeviceStart (mySoundDeviceID, mySoundIOProcID))
 	{
 		lastError = MPERR_OSX_DEVICE_START;

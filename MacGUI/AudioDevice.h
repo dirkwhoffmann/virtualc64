@@ -1,5 +1,6 @@
 /*
  * (C) 2008 Jérôme Lang. All rights reserved.
+ * Modified by Dirk W. Hoffmann, 2015
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,10 +62,13 @@ extern bool mono;
 */
 -(id)initWithC64:(C64 *)c64;
 
-//! starts playback (callback mechanism) of generated sound
-/*! 
-	\return MPERR_OSX_DEVICE_START if playback couldn't be started, else 0
-*/
+/*! @brief  Zero out audio sample buffer
+ */
+-(void)clearBuffer;
+
+/*! @brief  Starts playback (callback mechanism) of generated sound
+ *  @return MPERR_OSX_DEVICE_START if playback couldn't be started, else 0
+ */
 -(int)startPlayback;
 	
 //! stops playback of generated sound

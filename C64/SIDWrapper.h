@@ -113,15 +113,22 @@ public:
 
     /*! @brief Sets the current volume
      */
-    void setVolume(uint32_t v) { resid->setVolume(v); }
+    void setVolume(int32_t v) { resid->setVolume(v); }
 
     /*! @brief Sets the target volume
      */
-    void setTargetVolume(uint32_t volume, int32_t deltaSteps) { resid->setTargetVolume(volume, deltaSteps); }
+    void setTargetVolume(int32_t volume) { resid->setTargetVolume(volume); }
     
-    /*! @brief Sets the target volume to maxVolume
+    /*! @brief   Triggers volume ramp up phase
+     *  @details Configures volume and targetVolume to simulate a smooth audio fade in
      */
-    void setTargetVolumeToMax(int32_t deltaSteps) { resid->setTargetVolumeToMax(deltaSteps); }
+    void rampUp() { resid->rampUp(); }
+    void rampUpFromZero() { resid->rampUpFromZero(); }
+
+    /*! @brief   Triggers volume ramp down phase
+     *  @details Configures volume and targetVolume to simulate a quick audio fade out
+     */
+    void rampDown() { resid->rampDown(); }
 
     /*! @brief Clears ringbuffer
      */

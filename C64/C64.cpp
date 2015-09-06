@@ -274,17 +274,12 @@ C64::setWarp(bool b)
     
     if (warp) {
         // Quickly fade out SID
-        // sid->setVolume(0);
-        sid->setTargetVolume(0, 50);
-        // sid->clearRingbuffer();
+        sid->rampDown();
         
     } else {
         // Smoothly fade in SID
-        sid->setTargetVolumeToMax(3);
-        // sid->setVolume(100000);
-        // sid->setTargetVolume(100000);
-        // sid->clearRingbuffer();
-        restartTimer();        
+        sid->rampUp();
+        restartTimer();
     }
     
     putMessage(MSG_WARP, b);

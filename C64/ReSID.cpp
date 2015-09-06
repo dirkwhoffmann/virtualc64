@@ -149,6 +149,7 @@ ReSID::loadFromBuffer(uint8_t **buffer)
     VirtualComponent::loadFromBuffer(buffer);
 
     clearRingbuffer();
+    reset();
     
     setChipModel(chipModel);
     setSampleRate(sampleRate);
@@ -205,27 +206,22 @@ ReSID::run()
 void 
 ReSID::halt()
 {
-    // clear ringBuffer
-	for (unsigned i = 0; i < bufferSize; i++)
-	{
-		ringBuffer[i] = 0.0f;
-	}
+    clearRingbuffer();
 }
 
 void
 ReSID::clearRingbuffer()
 {
-    // Reset ringbuffer, read pointer, and write pointer
-    // memset(ringBuffer, 0, sizeof(ringBuffer));
-
     debug(4,"Clearing ringbuffer\n");
-    for (unsigned i = 0; i < bufferSize; i++)
-        ringBuffer[i] = 0; // -0.127300;
-    readPtr = writePtr = 0;
+
+    // Reset ringbuffer contents
+    for (unsigned i = 0; i < bufferSize; i++) {
+        ringBuffer[i] = 0.0f;
+    }
     
-    // Add some delay
-    size_t delay = 8*735;
-    writePtr += delay;
+    // Reset read pointer and put write pointer somewhat ahead
+    readPtr = 0;
+    alignWritePtr();
 }
 
 float
@@ -237,8 +233,18 @@ ReSID::readData()
     if (readPtr == writePtr)
         debug(4, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
     
-    // Write sound sample
+    // Read sound sample
     float value = ringBuffer[readPtr];
+    
+    // Adjust volume
+    if (volume != targetVolume) {
+        if (volume < targetVolume) {
+            volume += MIN(volumeDelta, targetVolume - volume);
+        } else {
+            volume -= MIN(volumeDelta, volume - targetVolume);
+        }
+    }
+    value = (volume <= 0) ? 0.0f : value * (float)volume / 100000.0f;
     
     // Advance read pointer
     readPtr++;
@@ -259,11 +265,12 @@ ReSID::writeData(float data)
         debug(4, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
         
         if (!c64->getWarp()) // In real-time mode, we put the write ptr somewhat ahead of the read ptr
-            writePtr = (readPtr + 8*735) % bufferSize;
+            alignWritePtr();
         else
             return; // In warp mode, we don't advance the write ptr to avoid crack noises
     }
     
+#if 0
     // Adjust volume
     if (volume != targetVolume) {
         if (volume < targetVolume) {
@@ -272,9 +279,11 @@ ReSID::writeData(float data)
             volume -= MIN(volumeDelta, volume - targetVolume);
         }
     }
+#endif 
     
     // Write sound sample
-    float scale = (volume <= 0) ? 0.0f : 0.000005f * (float)volume / 100000.0f;
+    // float scale = (volume <= 0) ? 0.0f : 0.000005f * (float)volume / 100000.0f;
+    float scale = 0.000005f;
     ringBuffer[writePtr] = data * scale;
     
     // Advance write pointer
