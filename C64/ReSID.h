@@ -106,7 +106,7 @@ private:
      *  @details If the current volume does not match the target volume, it is increased or decreased by the 
      *           specified amount. The increase or decrease takes place whenever an audio sample is generated.
      */
-    const static int32_t volumeDelta = 2;
+    const static int32_t volumeDelta = 3;
 
 public:
     unsigned readDataCnt, writeDataCnt;

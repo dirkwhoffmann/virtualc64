@@ -274,15 +274,15 @@ C64::setWarp(bool b)
     
     if (warp) {
         // Silence SID immediately
-        sid->setVolume(-10000);
-        sid->setTargetVolume(-10000);
+        sid->setVolume(0);
+        sid->setTargetVolume(0);
         sid->clearRingbuffer();
         
     } else {
         // Smoothly fade in SID
         sid->setTargetVolumeToMax(); 
     }
-
+    
     restartTimer();
     putMessage(MSG_WARP, b);
 }
