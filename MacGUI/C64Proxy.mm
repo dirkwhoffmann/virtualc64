@@ -524,7 +524,8 @@
 	c64 = new C64();
 	
 	// Create sub proxys
-	cpu = [[CPUProxy alloc] initWithCPU:c64->floppy->cpu]; // TODO: CHANGE BACK TO c64->cpu
+	cpu = [[CPUProxy alloc] initWithCPU:c64->cpu];
+    // cpu = [[CPUProxy alloc] initWithCPU:c64->floppy->cpu];
 	mem = [[MemoryProxy alloc] initWithMemory:c64->mem];
 	vic = [[VICProxy alloc] initWithVIC:c64->vic];
 	cia1 = [[CIAProxy alloc] initWithCIA:c64->cia1];
