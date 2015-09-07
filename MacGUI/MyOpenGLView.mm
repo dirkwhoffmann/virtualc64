@@ -1062,7 +1062,7 @@ void checkForOpenGLErrors()
     else if (flags & NSControlKeyMask)
         keycode = NSControlKeyMask;
     else {
-        NSLog(@"Release Joystick");
+        // NSLog(@"Release Joystick");
         // Relase joysticks
         (void)([self releaseJoystick:1 withKeycode:NSAlternateKeyMask device:[controller inputDeviceA]]);
         (void)([self releaseJoystick:1 withKeycode:NSShiftKeyMask device:[controller inputDeviceA]]);
