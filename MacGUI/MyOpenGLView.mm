@@ -970,6 +970,7 @@ void checkForOpenGLErrors()
         case MAC_CU: return Keyboard::C64KEY_CU;
         case MAC_CD: return Keyboard::C64KEY_CD;
         case MAC_HAT: return '^';
+        case MAC_TILDE_US: if (plainkey != '<' && plainkey != '>') return Keyboard::C64KEY_ARROW; else break;
     }
     
     if (flags & NSAlternateKeyMask) {

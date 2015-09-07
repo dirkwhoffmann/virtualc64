@@ -56,6 +56,7 @@ public:
         C64KEY_CR,
         C64KEY_CU,
         C64KEY_CD,
+        C64KEY_ARROW,
         C64KEY_COMMODORE = 0x0100 // flag that is combinable with all other keys
     };
     

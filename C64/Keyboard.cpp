@@ -48,6 +48,8 @@ Keyboard::Keyboard()
 	rowcolmap[(unsigned)'.'] = 0x0504; rowcolmap[(unsigned)'>'] = 0x0504 | SHIFT_FLAG;
 	rowcolmap[(unsigned)'/'] = 0x0607; rowcolmap[(unsigned)'?'] = 0x0607 | SHIFT_FLAG;
     rowcolmap[(unsigned)'^'] = 0x0701;
+    rowcolmap[(unsigned)'~'] = 0x0701;
+    rowcolmap[C64KEY_ARROW]  = 0x0701;
 	rowcolmap[(unsigned)'0'] = 0x0403;
 	rowcolmap[(unsigned)'1'] = 0x0700; rowcolmap[(unsigned)'!'] = 0x0700 | SHIFT_FLAG;
 	rowcolmap[(unsigned)'2'] = 0x0703; rowcolmap[(unsigned)'"'] = 0x0703 | SHIFT_FLAG;
@@ -88,17 +90,17 @@ Keyboard::Keyboard()
 	rowcolmap[(unsigned)'x'] = 0x0207; rowcolmap[(unsigned)'X'] = 0x0207 | SHIFT_FLAG;
 	rowcolmap[(unsigned)'y'] = 0x0301; rowcolmap[(unsigned)'Y'] = 0x0301 | SHIFT_FLAG;
 	rowcolmap[(unsigned)'z'] = 0x0104; rowcolmap[(unsigned)'Z'] = 0x0104 | SHIFT_FLAG;
-    rowcolmap[C64KEY_F1] = 0x0004; rowcolmap[C64KEY_F2] = 0x0004 | SHIFT_FLAG;
-    rowcolmap[C64KEY_F3] = 0x0005; rowcolmap[C64KEY_F4] = 0x0005 | SHIFT_FLAG;
-    rowcolmap[C64KEY_F5] = 0x0006; rowcolmap[C64KEY_F6] = 0x0006 | SHIFT_FLAG;
-    rowcolmap[C64KEY_F7] = 0x0003; rowcolmap[C64KEY_F8] = 0x0003 | SHIFT_FLAG;
+    rowcolmap[C64KEY_F1]  = 0x0004; rowcolmap[C64KEY_F2] = 0x0004 | SHIFT_FLAG;
+    rowcolmap[C64KEY_F3]  = 0x0005; rowcolmap[C64KEY_F4] = 0x0005 | SHIFT_FLAG;
+    rowcolmap[C64KEY_F5]  = 0x0006; rowcolmap[C64KEY_F6] = 0x0006 | SHIFT_FLAG;
+    rowcolmap[C64KEY_F7]  = 0x0003; rowcolmap[C64KEY_F8] = 0x0003 | SHIFT_FLAG;
     rowcolmap[C64KEY_DEL] = 0x0000;
     rowcolmap[C64KEY_INS] = 0x0000 | SHIFT_FLAG;
     rowcolmap[C64KEY_RET] = 0x0001;
-    rowcolmap[C64KEY_CL] = 0x0002 | SHIFT_FLAG;
-    rowcolmap[C64KEY_CR] = 0x0002;
-    rowcolmap[C64KEY_CU] = 0x0007 | SHIFT_FLAG;
-    rowcolmap[C64KEY_CD] = 0x0007;
+    rowcolmap[C64KEY_CL]  = 0x0002 | SHIFT_FLAG;
+    rowcolmap[C64KEY_CR]  = 0x0002;
+    rowcolmap[C64KEY_CU]  = 0x0007 | SHIFT_FLAG;
+    rowcolmap[C64KEY_CD]  = 0x0007;
     
     // Register snapshot items
     SnapshotItem items[] = {

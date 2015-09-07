@@ -45,6 +45,7 @@ const uint16_t MAC_CD = 125;
 const uint16_t MAC_SPC = 49;
 const uint16_t MAC_ESC = 53;
 const uint16_t MAC_HAT = 10;
+const uint16_t MAC_TILDE_US = 50;
 
 // Graphics constants
 const int TEXTURE_WIDTH = 512;
