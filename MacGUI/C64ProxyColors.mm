@@ -15,10 +15,8 @@
     return colorScheme;
 }
 
-- (void) setColorScheme:(int)scheme
+- (void) setColorScheme:(unsigned)scheme
 {
-    assert(scheme >= 0 && scheme < 16);
-
     uint8_t rgb[12][16][3] = {
         
         /* CCS64 */
@@ -262,9 +260,11 @@
         }
     };
 
-    colorScheme = scheme;
+    NSLog(@"Setting color scheme %d\n", scheme);
+    
+    colorScheme = (scheme < 12) ? scheme : 11;
     for (unsigned i = 0; i < 16; i++) {
-        c64->vic->setColor(i, LO_LO_HI_HI(rgb[scheme][i][0],rgb[scheme][i][1],rgb[scheme][i][2],0xFF));
+        c64->vic->setColor(i, LO_LO_HI_HI(rgb[colorScheme][i][0],rgb[colorScheme][i][1],rgb[colorScheme][i][2],0xFF));
     }
 }
 
