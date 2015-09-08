@@ -484,17 +484,15 @@
 - (bool) hasDisk { return vc1541->hasDisk(); }
 - (bool) writeProtection { return vc1541->disk.isWriteProtected(); }
 - (void) setWriteProtection:(bool)b { vc1541->disk.setWriteProtection(b); }
+- (bool) DiskModified { return vc1541->disk.isModified(); }
+- (void) setDiskModified:(bool)b { vc1541->disk.setModified(b); }
 - (bool) bitAccuracy { return vc1541->getBitAccuracy(); }
 - (void) setBitAccuracy:(bool)b { vc1541->setBitAccuracy(b); }
 - (bool) soundMessagesEnabled { return vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(bool)b { vc1541->setSendSoundMessages(b); }
 - (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
 - (D64Archive *) archiveFromDrive { return D64Archive::archiveFromDrive(vc1541); }
-
-- (void) ejectDisk
-{
-    vc1541->ejectDisk();
-}
+- (void) ejectDisk { vc1541->ejectDisk(); }
 
 - (void) playSound:(NSString *)name volume:(float)v
 {

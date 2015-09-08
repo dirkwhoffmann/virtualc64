@@ -396,6 +396,8 @@
 - (bool) hasDisk;
 - (bool) writeProtection;
 - (void) setWriteProtection:(bool)b;
+- (bool) DiskModified;
+- (void) setDiskModified:(bool)b;
 - (bool) bitAccuracy;
 - (void) setBitAccuracy:(bool)b;
 - (bool) soundMessagesEnabled;

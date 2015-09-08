@@ -25,9 +25,17 @@
 #pragma mark file menu
 - (IBAction)saveScreenshotDialog:(id)sender;
 
-/*! Action function for export disk feature
- *  This method is called when exporting to archives that are capable of storing multiple file. */
+/*! @brief   Action function for export disk feature
+ *  @details This method is called when exporting to archives that are capable of 
+ *           storing multiple file. 
+ *  @see     exportDiskDialogWorker
+ */
 - (IBAction)exportDiskDialog:(id)sender;
+
+/*! @brief   Main functionality of exportDiskDialog
+ '  @result  true if disk contents has been exportet, false if operation was canceled. 
+ */
+- (bool)exportDiskDialogWorker:(int)type;
 
 /*! Action function for export disk feature
  *  This method is called when exporting to archives that are capable of storing a single file, only. */

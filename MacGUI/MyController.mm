@@ -774,8 +774,44 @@
 
 - (IBAction)ejectAction:(id)sender
 {
-	NSLog(@"Ejecting disk...");
-	[[c64 vc1541] ejectDisk];
+    NSLog(@"ejectAction");
+
+    if (![[c64 vc1541] DiskModified]) {
+        [[c64 vc1541] ejectDisk];
+        return;
+    }
+        
+    NSAlert *alert = [[NSAlert alloc] init];
+    
+    [alert setIcon:[NSImage imageNamed:@"diskette"]];
+    [alert addButtonWithTitle:@"Export..."];
+    [alert addButtonWithTitle:@"Eject"];
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert setMessageText: @"Do you want to export the currently inserted disk to a D64 archive?"];
+    [alert setInformativeText: @"Your changes will be lost if you don’t save them."];
+    [alert setAlertStyle: NSCriticalAlertStyle];
+    
+    unsigned result = [alert runModal];
+    
+    if (result == NSAlertFirstButtonReturn) {
+
+        if ([self exportDiskDialogWorker:3 /* D64 format tag */]) {
+            NSLog(@"Disk saved. Ejecting...");
+            [[c64 vc1541] ejectDisk];
+        } else {
+            NSLog(@"Export dialog cancelled. Ask again...");
+            [self ejectAction:sender];
+        }
+    }
+
+    if (result == NSAlertSecondButtonReturn) {
+        NSLog(@"Ejecting disk...");
+        [[c64 vc1541] ejectDisk];
+    }
+
+    if (result == NSAlertThirdButtonReturn) {
+        NSLog(@"Canceling disk data loss warning dialog...");
+    }
 }
 
 - (IBAction)driveAction:(id)sender

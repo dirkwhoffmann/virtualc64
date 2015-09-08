@@ -87,6 +87,11 @@
 
 - (IBAction)exportDiskDialog:(id)sender
 {
+    (void)[self exportDiskDialogWorker:[sender tag]];
+}
+
+- (bool)exportDiskDialogWorker:(int)type
+{
     VC1541 *floppy = [c64 c64]->floppy;
     D64Archive *diskContents;
     NSArray *fileTypes;
@@ -95,11 +100,11 @@
     // Create archive from drive
     if ((diskContents = D64Archive::archiveFromDrive(floppy)) == NULL) {
         NSLog(@"Cannot create D64 archive from drive");
-        return;
+        return false;
     }
     
     // Determine target format and convert archive
-    switch ([sender tag]) {
+    switch (type) {
             
         case D64_CONTAINER:
             
@@ -115,7 +120,7 @@
             target = T64Archive::archiveFromArchive(diskContents);
             delete diskContents;
             break;
-
+            
         case PRG_CONTAINER:
             
             NSLog(@"Exporting to PRG format");
@@ -123,7 +128,7 @@
             target = PRGArchive::archiveFromArchive(diskContents);
             // delete diskContents;
             break;
-
+            
         case P00_CONTAINER:
             
             NSLog(@"Exporting to P00 format");
@@ -131,21 +136,21 @@
             target = P00Archive::archiveFromArchive(diskContents);
             delete diskContents;
             break;
-
+            
         default:
             assert(0);
-            return;
+            return false;
     }
     
     // Create panel
     NSSavePanel* sPanel = [NSSavePanel savePanel];
     [sPanel setCanSelectHiddenExtension:YES];
     [sPanel setAllowedFileTypes:fileTypes];
-
+    
     // Show panel
     if ([sPanel runModal] != NSOKButton) {
         delete target;
-        return;
+        return false;
     }
     
     // Export
@@ -156,6 +161,8 @@
     NSLog(@"Exporting to file %@", selectedFile);
     target->writeToFile([selectedFile UTF8String]);
     delete target;
+    floppy->disk.setModified(false);
+    return true;
 }
 
 - (IBAction)exportFileFromDiskDialog:(id)sender
