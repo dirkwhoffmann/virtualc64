@@ -29,18 +29,16 @@
 //
 // ENHANCEMENTS (BRAIN STORMING):
 //
-// 1. Floppy drive bit level emulation
-// 2. Floppy drive fast loader (acknowledge new byte at the moment a byte is read or written)
-// 3. Upscaler (like superEagle)
+// 1. Upscaler (like superEagle)
 //    https://github.com/libretro/common-shaders/tree/master/eagle/shaders
-// 4. OpenGL filters
-// 5. Second disk drive
+// 2. OpenGL filters
+// 3. Second disk drive
 
 
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG      // RELEASE
+#define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
 // #define DEBUG_LEVEL 3  // DEVELOPMENT
 
