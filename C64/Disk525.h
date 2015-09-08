@@ -23,9 +23,9 @@
 #define _DISK525_INC
 
 #include "VirtualComponent.h"
-#include "D64Archive.h"
 
 class C64;
+class D64Archive;
 
 // -----------------------------------------------------------------------------------------------
 //                                      Types and constants
@@ -57,18 +57,18 @@ typedef unsigned Track;
 
 /*! @brief   Checks if a given number is a valid halftrack number
  */
-static bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= 84; }
+inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= 84; }
 
 /*! @brief   Checks if a given number is a valid track number
  */
-static bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
+inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
 
 /*! @brief   Maximum number of files that can be stored on a single disk
  *  @details VC1541 DOS stores the directors on track 18 which contains 19 sectors. Sector 0 is
  *           reserved for the BAM. Each of the remaining sectors can hold up to 8 directory entries,
  *           summing um to a total of 144 items. 
  */
-const static unsigned MAX_FILES_ON_DISK = 144;
+const unsigned MAX_FILES_ON_DISK = 144;
 
 
 // -----------------------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ public:
     Disk525();
     ~Disk525();
     
-    //! @brief Dump current state into logfile
+    //! @brief   Dump debug information 
     void dumpState();
     
     
@@ -141,7 +141,7 @@ public:
     } length;
 
     /*! @brief       Total number of tracks on this disk
-     *  @deprecated  Add method bool emptyTrack(Track nr); as a replacement
+     *  @deprecated  Add method bool emptyTrack(Track nr) as a replacement
      */
     uint8_t numTracks;
 
@@ -152,9 +152,15 @@ public:
  
 private:
 
-    /*! @brief Write protection mark 
+    /*! @brief   Write protection mark
      */
     bool writeProtected;
+
+    /*! @brief   Indicates whether data has been written
+     *  @details According to this flag, the GUI shows a data loss warning dialog before a disk gets ejected.
+     */
+    bool modified;
+
     
 public:
     
@@ -165,6 +171,14 @@ public:
     /*! @brief Sets write protection flag 
      */
     inline void setWriteProtection(bool b) { writeProtected = b; }
+
+    /*! @brief Returns modified flag
+     */
+    inline bool isModified() { return modified; }
+    
+    /*! @brief Sets modified flag
+     */
+    inline void setModified(bool b) { modified = b; }
 
     
 public:

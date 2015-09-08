@@ -18,6 +18,7 @@
 
 #include "basic.h"
 #include "Disk525.h"
+#include "D64Archive.h"
 
 Disk525::Disk525()
 {
@@ -29,6 +30,7 @@ Disk525::Disk525()
         { length.track[0],  sizeof(length.track),   KEEP_ON_RESET | WORD_FORMAT },
         { &numTracks,       sizeof(numTracks),      KEEP_ON_RESET },
         { &writeProtected,  sizeof(writeProtected), KEEP_ON_RESET },
+        { &modified,        sizeof(modified),       KEEP_ON_RESET },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -129,7 +131,8 @@ Disk525::clearDisk()
         clearHalftrack(ht);
         length.halftrack[ht] = sizeof(data.halftrack[ht]) * 8;
     }
-    writeProtected = false; 
+    writeProtected = false;
+    modified = false; 
 }
 
 void

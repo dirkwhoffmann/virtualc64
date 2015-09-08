@@ -22,10 +22,11 @@
 #ifndef _VIRTUAL_COMPONENT_INC
 #define _VIRTUAL_COMPONENT_INC
 
+#include "basic.h"
+
 // Forward declarations
 class C64;
 
-#include "basic.h"
 
 /*! @brief    Common functionality of all virtual computer components.
  *  @details  This class defines the base functionality of all virtual components.

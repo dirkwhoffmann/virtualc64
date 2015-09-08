@@ -627,7 +627,22 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 				debug(1, "Data direction bits of VC1541 contain suspicious values\n");
 			}
 			return;
-						
+
+        case 0xC:
+            
+            if (!(io[0x0C] & 0x20) && (value & 0x20)) {
+                
+                debug(2, "Switching to read mode mode\n");
+            }
+            if ((io[0x0C] & 0x20) && !(value & 0x20)) {
+                
+                debug(2, "Switching to write mode\n");
+                floppy->disk.setModified(true);
+            }
+
+            io[addr] = value;
+            return;
+            
 		default:
 			VIA6522::poke(addr, value);	
 	}
