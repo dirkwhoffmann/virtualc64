@@ -106,10 +106,7 @@ const int BG_TEXTURE_DEPTH = 4;
 
 	//! If false, only the front facing part of the texture cube is drawn
 	bool drawEntireCube;
-		
-	//! Turns anti-aliasing on and off
-	bool antiAliasing;
-	
+			
     //! Stores which keys are currently pressed
     /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
     unsigned int pressedKeys[256];
@@ -133,7 +130,6 @@ const int BG_TEXTURE_DEPTH = 4;
 @property bool drawC64texture;
 @property bool drawBackground;
 @property bool drawEntireCube;
-@property bool antiAliasing;
 
 - (void) cleanUp;
 
@@ -148,6 +144,8 @@ const int BG_TEXTURE_DEPTH = 4;
 - (void)setEyeY:(float)newY;
 - (float)eyeZ;
 - (void)setEyeZ:(float)newZ;
+
+- (void)setVideoFilter:(unsigned)filter;
 
 - (bool)drawInEntireWindow;
 - (void)setDrawInEntireWindow:(bool)b;

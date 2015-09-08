@@ -440,6 +440,9 @@
 	//! Indicates that data is transmitted on the IEC bus
 	BOOL iecBusIsBusy;
 
+    //! Currently used video filter
+    int videoFilter;
+
     //! Currently used color scheme
     int colorScheme;
 }

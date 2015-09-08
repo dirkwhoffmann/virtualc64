@@ -10,6 +10,13 @@
 
 #import "C64Proxy.h"
 
+//! Predefined video filters
+enum VIDEO_FILTER {
+    GLFILTER_ANTI_ALIASING = 0,
+    GLFILTER_NONE = 1
+    
+};
+
 //! Predefined color schemes
 enum ColorScheme {
     CCS64           = 0x00,
@@ -27,6 +34,9 @@ enum ColorScheme {
 };
 
 @interface C64Proxy(Colors)
+
+- (int) videoFilter;
+- (void) setVideoFilter:(unsigned)filter;
 
 - (int) colorScheme;
 - (void) setColorScheme:(unsigned)scheme;

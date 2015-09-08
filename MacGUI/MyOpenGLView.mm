@@ -50,7 +50,7 @@ void checkForOpenGLErrors()
 
 @implementation MyOpenGLView
 
-@synthesize c64, frames, enableOpenGL, drawIn3D, drawC64texture, drawBackground, drawEntireCube, antiAliasing;
+@synthesize c64, frames, enableOpenGL, drawIn3D, drawC64texture, drawBackground, drawEntireCube;
 
 // --------------------------------------------------------------------------------
 //                                  Initializiation
@@ -94,7 +94,6 @@ void checkForOpenGLErrors()
 	drawC64texture = false;
 	drawBackground = true;
 	drawEntireCube = false;
-	antiAliasing = true;
 	
 	// Core video and graphics stuff
 	displayLink = nil;
@@ -164,8 +163,10 @@ void checkForOpenGLErrors()
 	glBindTexture(GL_TEXTURE_2D, texture);	
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	checkForOpenGLErrors();
 	
@@ -258,6 +259,29 @@ void checkForOpenGLErrors()
 - (void)setEyeZ:(float)newZ
 {
     currentEyeZ = targetEyeZ = newZ;
+}
+
+- (void)setVideoFilter:(unsigned)filter
+{    
+    // Set up context
+    glcontext = [self openGLContext];
+    assert(glcontext != NULL);
+    [glcontext makeCurrentContext];
+    
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    switch (filter) {
+        case GLFILTER_NONE:
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            break;
+        default:
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            break;
+    }
+
+    checkForOpenGLErrors();
 }
 
 - (bool)drawInEntireWindow
@@ -579,8 +603,10 @@ void checkForOpenGLErrors()
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	
-	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, 
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA,
 					  [imgBitmap pixelsWide], 
 					  [imgBitmap pixelsHigh], 
 					  texformat, 

@@ -48,7 +48,6 @@ VirtualComponent::~VirtualComponent()
 void
 VirtualComponent::setC64(C64 *c64)
 {
-    debug(2, "Assigning top-level object %p\n", c64); 
     this->c64 = c64;
     if (subComponents != NULL)
         for (unsigned i = 0; subComponents[i] != NULL; i++)

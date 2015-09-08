@@ -276,7 +276,7 @@
 	[screen setEyeY:[defaults floatForKey:VC64EyeY]];
 	[screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
 
-	[screen setAntiAliasing:[defaults integerForKey:VC64VideoFilterKey]];
+	[c64 setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
     [c64 setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
 }
 
@@ -345,6 +345,7 @@
     [defaults setFloat:[screen eyeX] forKey:VC64EyeX];
     [defaults setFloat:[screen eyeY] forKey:VC64EyeY];
     [defaults setFloat:[screen eyeZ] forKey:VC64EyeZ];
+    [defaults setInteger:[c64 videoFilter] forKey:VC64VideoFilterKey];
     [defaults setInteger:[c64 colorScheme] forKey:VC64ColorSchemeKey];
 }
 

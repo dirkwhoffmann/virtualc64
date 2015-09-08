@@ -101,7 +101,7 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [[controller screen] setEyeX:(float)0.0];
     [[controller screen] setEyeY:(float)0.0];
     [[controller screen] setEyeZ:(float)0.0];
-    [[controller screen] setAntiAliasing:1];
+    [c64 setVideoFilter:GLFILTER_ANTI_ALIASING];
     [c64 setColorScheme:CCS64];
     
     [self update];
@@ -133,8 +133,9 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 }
 
 - (IBAction)setVideoFilterAction:(id)sender
-{	
-	[[controller screen] setAntiAliasing:[[videoFilter selectedItem] tag]];
+{
+    int filter = [[sender selectedItem] tag];
+    [c64 setVideoFilter:filter];
     [self update];
 }
 
@@ -223,6 +224,7 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [self updateKeymap:2 direction:JOYSTICK_FIRE button:fire2button text:fire2];
     
 	/* Video */
+    [videoFilter selectItemWithTag:[c64 videoFilter]];
     [colorScheme selectItemWithTag:[c64 colorScheme]];
 
     [eyeXSlider setFloatValue:[[controller screen] eyeX]]; 

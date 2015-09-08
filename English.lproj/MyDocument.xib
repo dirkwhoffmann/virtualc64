@@ -3982,12 +3982,15 @@ DQ
                     <popUpButton verticalHuggingPriority="750" id="2239">
                         <rect key="frame" x="348" y="295" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <popUpButtonCell key="cell" type="push" title="Standard OpenGL" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2296" id="2294">
+                        <popUpButtonCell key="cell" type="push" title="Anti-aliasing" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2296" id="2294">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="2295">
                                 <items>
-                                    <menuItem title="Standard OpenGL" state="on" id="2296">
+                                    <menuItem title="Anti-aliasing" state="on" id="2296">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="None" tag="1" id="wnC-1X-pw3">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>

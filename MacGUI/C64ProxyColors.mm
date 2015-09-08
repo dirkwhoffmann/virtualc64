@@ -10,6 +10,17 @@
 
 @implementation C64Proxy(Colors)
 
+- (int)videoFilter
+{
+    return videoFilter;
+}
+
+- (void) setVideoFilter:(unsigned)filter
+{    
+    videoFilter = (filter < 2) ? filter : 0;
+    [screen setVideoFilter:videoFilter];
+}
+
 - (int)colorScheme
 {
     return colorScheme;
