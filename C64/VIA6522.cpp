@@ -637,7 +637,6 @@ void VIA2::poke(uint16_t addr, uint8_t value)
             if ((io[addr] & 0x20) && !(value & 0x20)) {
                 
                 debug(2, "Switching to write mode\n");
-                floppy->disk.setModified(true);
             }
 
             io[addr] = value;

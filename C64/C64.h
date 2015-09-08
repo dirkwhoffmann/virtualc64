@@ -44,10 +44,10 @@
 #define DEBUG_LEVEL 2  // RELEASE
 // #define DEBUG_LEVEL 3  // DEVELOPMENT
 
-// Snapshot version number of this release (1.0rc3 has version number 0.9.11)
+// Snapshot version number of this release (1.0rc4 has version number 0.9.12)
 #define V_MAJOR 0
 #define V_MINOR 9
-#define V_SUBMINOR 11
+#define V_SUBMINOR 12
 
 #include "basic.h"
 #include "VirtualComponent.h"

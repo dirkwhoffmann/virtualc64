@@ -243,14 +243,14 @@ public:
      *  @param  offset Number of bit to set to 1 (first bit has offset 0)
      */
     inline void setBit(uint8_t *data, unsigned offset) {
-        data[offset / 8] |= (0x80 >> (offset % 8)); }
+        data[offset / 8] |= (0x80 >> (offset % 8)); } //  modified = true; }
     
     /*! @brief  Sets a single bit on disk to 0
      *  @param  data   Pointer to the first data byte of a track
      *  @param  offset Number of bit to clear (first bit has offset 0)
      */
     inline void clearBit(uint8_t *data, unsigned offset) {
-        data[offset / 8] &= ~(0x80 >> (offset % 8)); }
+        data[offset / 8] &= ~(0x80 >> (offset % 8)); } // modified = true; }
 
     /*! @brief  Writes a single bit to disk
      *  @param  data   Pointer to the first data byte of a track

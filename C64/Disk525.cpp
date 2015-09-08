@@ -205,7 +205,7 @@ Disk525::encodeArchive(D64Archive *a)
     
     for (Halftrack ht = 1; ht <= 84; ht++) {
         assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]) * 8);
-    }
+    }    
 }
 
 unsigned

@@ -195,6 +195,7 @@ VC1541::executeBitReady()
         
         // Write mode
         writeBitToHead(write_shiftreg & 0x80);
+        disk.setModified(true); 
         sync = false;
     }
     write_shiftreg <<= 1;
