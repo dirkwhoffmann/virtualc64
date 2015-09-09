@@ -105,19 +105,13 @@ CPU::stateSize()
 void 
 CPU::loadFromBuffer(uint8_t **buffer) 
 {
-    uint8_t *old = *buffer;
-    
     VirtualComponent::loadFromBuffer(buffer);
 	next = CPU::callbacks[read16(buffer)];
-	
-    assert(*buffer - old == stateSize());
 }
 
 void
 CPU::saveToBuffer(uint8_t **buffer) 
 {
-    uint8_t *old = *buffer;
-
     VirtualComponent::saveToBuffer(buffer);
 	for (uint16_t i = 0;; i++) {
 		if (callbacks[i] == NULL) {
@@ -128,8 +122,6 @@ CPU::saveToBuffer(uint8_t **buffer)
 			break;
 		}
 	}
-
-    assert(*buffer - old == stateSize());
 }
 
 void 

@@ -304,7 +304,10 @@ VirtualComponent::loadFromBuffer(uint8_t **buffer)
         }
     }
     
-    assert(*buffer - old == VirtualComponent::stateSize());
+    if (*buffer - old != VirtualComponent::stateSize()) {
+        panic("loadFromBuffer: Snapshot size is wrong.");
+        assert(false);
+    }
 }
 
 void
@@ -350,5 +353,8 @@ VirtualComponent::saveToBuffer(uint8_t **buffer)
         }
     }
     
-    assert(*buffer - old == VirtualComponent::stateSize());
+    if (*buffer - old != VirtualComponent::stateSize()) {
+        panic("saveToBuffer: Snapshot size is wrong.");
+        assert(false);
+    }
 }

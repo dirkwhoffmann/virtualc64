@@ -386,12 +386,18 @@ D64Archive::getName()
 int
 D64Archive::getNumberOfItems()
 {
+#if 0
     int i = 0;
     
-    while (findDirectoryEntry(i) != -1) {
+    while (findDirectoryEntry(i) > 0) {
         i++;
     }
     return i;
+#endif
+
+    int result = -findDirectoryEntry(0xFF /* no such item exists */);
+    assert(result >= 0);
+    return result;
 }
 
 const char *
@@ -408,7 +414,7 @@ D64Archive::getTypeOfItem(int n)
     const char *extension = "";
     int pos = findDirectoryEntry(n);
     
-    if (pos >= 0)
+    if (pos > 0)
         (void)itemIsVisible(data[pos] /* file type byte */, &extension);
 
     return extension;
@@ -452,9 +458,8 @@ int
 D64Archive::getSizeOfItemInBlocks(int n)
 {
     int pos = findDirectoryEntry(n);
-    if (pos < 0) return 0;
     
-    return LO_HI(data[pos+0x1C],data[pos+0x1D]);
+    return (pos > 0) ? LO_HI(data[pos+0x1C],data[pos+0x1D]) : 0;
 }
 
 uint16_t
@@ -467,9 +472,12 @@ D64Archive::getDestinationAddrOfItem(int n)
     
     // Search for beginning of file data
     pos = findDirectoryEntry(n);
+    if (pos <= 0)
+        return 0;
+    
     track = data[pos + 0x01];
     sector = data[pos + 0x02];
-    if ((pos = offset(track, sector)) < 0)
+    if ((pos = offset(track, sector)) <= 0)
         return 0;
     
     result = LO_HI(data[pos+2],data[pos+3]);
@@ -488,7 +496,7 @@ D64Archive::selectItem(int item)
         return;
     
     // find directory entry
-    if ((fp = findDirectoryEntry(item)) < 0)
+    if ((fp = findDirectoryEntry(item)) <= 0)
         return;
     
     // fprintf(stderr, "First data sector: %02X, %02X", data[fp+0x03], data[fp+0x04]);
@@ -569,7 +577,7 @@ D64Archive::getNameOfItemAsPETString(int n)
 {
     int i, pos = findDirectoryEntry(n);
     
-    if (pos < 0) return NULL;
+    if (pos <= 0) return NULL;
     pos += 0x03; // filename begins here
     for (i = 0; i < 16; i++) {
         if (data[pos+i] == 0xA0)
@@ -814,7 +822,7 @@ D64Archive::findDirectoryEntry(int itemNr, bool skipInvisibleFiles)
     bool last_sector = (data[pos] == 0x00); // does the directory continue in another sector?
     pos += 2; // Move to the beginning of the first directory entry
     
-    unsigned i = 0;
+    unsigned i = 0, examinedItems = 0;
     while (1) {
         
         // Only proceed if the directory entry is no null entry
@@ -825,6 +833,8 @@ D64Archive::findDirectoryEntry(int itemNr, bool skipInvisibleFiles)
         // Skip invisble files if requested
         if (skipInvisibleFiles && !itemIsVisible(data[pos]))
             itemNr++;
+        else
+            examinedItems++;
             
 		// Return if we reached the item we're looking for
         if (i == itemNr)
@@ -849,7 +859,7 @@ D64Archive::findDirectoryEntry(int itemNr, bool skipInvisibleFiles)
 	}
     
     // Nothing found
-    return -1;
+    return -examinedItems;
 }
 	
 bool

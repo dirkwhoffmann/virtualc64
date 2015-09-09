@@ -1,7 +1,10 @@
-/*
- * Author: Dirk W. Hoffmann, www.dirkwhoffmann.de
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @header      D64Archive.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2008 - 2016 Dirk W. Hoffmann
+ * @brief       Declares D64Archive class
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -33,24 +36,29 @@ class VC1541;
 #define D64_802_SECTORS_ECC 206114
 
 
-/*! @class D64Archive
-    @brief An archive of type D64. */
+/*! @class   D64Archive
+ *  @brief   An archive of type D64. 
+ */
 class D64Archive : public Archive {
 
 private: 
 
-	//! @brief The raw data of this archive.
+	/*! @brief   The raw data of this archive.
+     */
 	uint8_t data[D64_802_SECTORS_ECC];
 	
-	//! @brief Error information stored in the D64 archive.
+	/*! @brief   Error information stored in the D64 archive.
+     */
 	uint8_t errors[802];
 	
-	/*! @brief The number of tracks stored in this archive.
-        @discussion Possible values are 35, 40, and 42. */
+	/*! @brief   The number of tracks stored in this archive.
+        @details Possible values are 35, 40, and 42.
+     */
 	unsigned numTracks; 
 	
-	/*! @brief File pointer
-        @discussion An offset into the data array. */
+	/*! @brief   File pointer
+        @details An offset into the data array. 
+     */
 	int fp;
 
 public:
@@ -59,34 +67,39 @@ public:
     //! @functiongroup Creating and destructing D64 archives
     //
 
-    //! @brief Standard constructor.
 	D64Archive();
-    
-    //! @brief Standard destructor.
 	~D64Archive();
     
-    //! @brief Returns true iff the specified file is a D64 file
+    /*! @brief   Returns true iff the specified file is a D64 file.
+     */
     static bool isD64File(const char *filename);
 
-    //! @brief Creates a D64 archive from a D64 file located on disk.
+    /*! @brief   Creates a D64 archive from a D64 file located on disk.
+     */
     static D64Archive *archiveFromD64File(const char *filename);
 
-	/*! @brief Create a D64 archive from a file located on disk.
-        @discussion If the provided filename points to a D64 archive, @link archiveFromD64File @/link is invoked. Otherwise, the format is converted automatically. */
+	/*! @brief   Create a D64 archive from a file located on disk.
+     *  @details If the provided filename points to a D64 archive, archiveFromD64File is invoked. 
+     *           Otherwise, the format is converted automatically. 
+     */
      static D64Archive *archiveFromArbitraryFile(const char *filename);
 
-    /*! @brief Creates a D64 archive from another D64 archive.
-        @result A one to one copy of the source archive.
-        @seealso archiveFromArchive */
+    /*! @brief   Creates a D64 archive from another D64 archive.
+     *  @result  A one to one copy of the source archive.
+     *  @seealso archiveFromArchive
+     */
     static D64Archive *archiveFromD64Archive(D64Archive *archive);
 
-    /*! @brief Creates a D64 archive from an arbitrary archive.
-        @discussion If the provided archive is a D64 archive, @link archiveFromD64Archive @/link is invoked. Otherwise, the format is converted automatically. */
+    /*! @brief   Creates a D64 archive from an arbitrary archive.
+     *  @result  If the provided archive is a D64 archive, archiveFromD64Archive is invoked.
+     *           Otherwise, the format is converted automatically. 
+     */
     static D64Archive *archiveFromArchive(Archive *archive);
 
-    /*! @brief Creates a D64 archive from a VC1541 drive.
-        @param drive A VC1541 drive with a disk inserted.
-        @result A D64 archive containing the same files as the currently inserted disk; NULL if no disk is inserted. */
+    /*! @brief   Creates a D64 archive from a VC1541 drive.
+     *  @param   drive A VC1541 drive with a disk inserted.
+     *  @result  A D64 archive containing the same files as the currently inserted disk;
+     *           NULL if no disk is inserted. */
      static D64Archive *archiveFromDrive(VC1541 *drive);
 
     
@@ -203,7 +216,15 @@ private:
     //! Writes the BAM (track 18, sector 0)
     void writeBAM(const char *name);
 
-    //! Returns the location of a specific directory item
+    /*! @brief   Looks up a directory item by number.
+     *  @details This function searches the directory for the requested item. 
+     *  @param   itemBumber Number of the item. The first item has number 0.
+     *  @param   skipInvisibleFiles If set to true, only those files are considered that would show
+     *           up when loading the directory via LOAD "$",8. Otherwise, all files are considered, i.e. those
+     *           that are marked as deleted.
+     *  @returns Offset to the first data sector of the requested file. If the file is not found,
+     *           the total number of files on disk is returned with a negative sign.
+     */
     int findDirectoryEntry(int itemNumber, bool skipInvisibleFiles = true);
     
     //! Returns the track number of the first file block
