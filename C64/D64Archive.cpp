@@ -395,9 +395,12 @@ D64Archive::getNumberOfItems()
     return i;
 #endif
 
-    int result = -findDirectoryEntry(0xFF /* no such item exists */);
-    assert(result >= 0);
-    return result;
+    unsigned offsets[MAX_FILES_ON_DISK];
+    unsigned noOfFiles;
+    
+    scanDirectory(offsets, &noOfFiles);
+    
+    return noOfFiles;
 }
 
 const char *
@@ -815,34 +818,29 @@ D64Archive::writeBAM(const char *name)
     assert(pos == offset(18,0) + 0xAB);	
 }
 
-int
-D64Archive::findDirectoryEntry(int itemNr, bool skipInvisibleFiles)
+void
+D64Archive::scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibleFiles)
 {
-    int pos = offset(18, 1); // Directory starts on track 18 in sector 1
-    bool last_sector = (data[pos] == 0x00); // does the directory continue in another sector?
-    pos += 2; // Move to the beginning of the first directory entry
+    int pos = offset(18, 1);                // Directory starts on track 18 in sector 1
+    bool last_sector = (data[pos] == 0x00); // Does the directory continue in another sector?
+    unsigned i = 0, item = 0;
     
-    unsigned i = 0, examinedItems = 0;
-    while (1) {
+    pos += 2;                               // Move to the beginning of the first directory entry
+
+    while (i < MAX_FILES_ON_DISK) {
         
-        // Only proceed if the directory entry is no null entry
+        // Only proceed if the directory entry is not a null entry
         const char nullEntry[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
         if (memcmp(&data[pos], nullEntry, 32) == 0)
             break;
         
         // Skip invisble files if requested
-        if (skipInvisibleFiles && !itemIsVisible(data[pos]))
-            itemNr++;
-        else
-            examinedItems++;
-            
-		// Return if we reached the item we're looking for
-        if (i == itemNr)
-            return pos;
+        if (!skipInvisibleFiles || itemIsVisible(data[pos]))
+            offsets[item++] = pos;
         
-		// Jump to next directory item
+        // Jump to next directory item
         if (++i % 8 == 0) {
-			
+            
             // Jump to the next sector
             if (last_sector)
                 break; // Sorry, there is no next sector
@@ -850,18 +848,29 @@ D64Archive::findDirectoryEntry(int itemNr, bool skipInvisibleFiles)
             if (!jumpToNextSector(&pos))
                 break; // Sorry, somebody wants to sent us off the cliff
             
-			last_sector = (data[pos] == 0x00);
+            last_sector = (data[pos] == 0x00);
             pos += 2; // Move to the beginning of the first directory entry
             
-		} else {
-			pos += 0x20; // Jump to next directory entry inside current sector
-		}
-	}
+        } else {
+            pos += 0x20; // Jump to next directory entry inside current sector
+        }
+    }
     
-    // Nothing found
-    return -examinedItems;
+    *noOfFiles = item;
 }
-	
+
+
+int
+D64Archive::findDirectoryEntry(int item, bool skipInvisibleFiles)
+{
+    unsigned offsets[MAX_FILES_ON_DISK];
+    unsigned noOfFiles;
+    
+    scanDirectory(offsets, &noOfFiles, skipInvisibleFiles);
+    
+    return (item < noOfFiles) ? offsets[item] : -1;
+}
+
 bool
 D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, unsigned filesize)
 {

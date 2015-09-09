@@ -193,14 +193,17 @@ private:
     //! @brief Return the next physical track and sector
     bool nextTrackAndSector(uint8_t track, uint8_t sector, uint8_t *nextTrack, uint8_t *nextSector, bool skipDirectory = false);
     
-    //! Jump to the beginning of the next sector
-    /*! If the current sector points to a valid track/sector combination,
-        pos is set to the beginning of the next sector and true is returned.
-        Otherwise, pos remains untouched and false is returned. */
+    /*! @brief   Jump to the beginning of the next sector
+     *  @details pos is set to the beginning of the next sector.
+     *  @result  True if the jump to the next sector was successful; false if the current sector points to an 
+     *           invalid valid track/sector combination. In the failure case, pos remains untouched.
+     */
     bool jumpToNextSector(int *pos);
 
-    /*! @brief Writes a byte to the specified track and sector
-        @discussion If the sector overflows, the values of track and sector are overwritten with the next free sector */
+    /*! @brief   Writes a byte to the specified track and sector
+     *  @details If the sector overflows, the values of track and sector are overwritten with the next free sector
+     *  @result  true if the byte was written successfully; false if there is no free space left on disk.
+     */
     bool writeByteToSector(uint8_t byte, uint8_t *track, uint8_t *sector);
 
     
@@ -213,17 +216,31 @@ private:
     //! Marks a single sector as "used"
     void markSectorAsUsed(uint8_t track, uint8_t sector);
 
-    //! Writes the BAM (track 18, sector 0)
+    /*! @brief   Writes the Block Availability Map (BAM)
+     *  @details On a C64 diskette, the BAM is located ion track 18, sector 0.
+     *  @param   name Name of the disk
+     */
     void writeBAM(const char *name);
 
+    /*! @brief   Gathers data about all directory items
+     *  @details This function scans all directory items and stores the relative start address of the first
+     *           sector into the provided offsets array. Furthermore, the total number of files is written
+     *           into variable noOfFiles.
+     *  @param   offsets Pointer to an array of type unsigned[MAX_FILES_ON_DISK]
+     *  @param   noOfFiles Pointer to a variable of type unsigned
+     *  @param   skipInvisibleFiles If set to true, only those files are considered that would show
+     *           up when loading the directory via LOAD "$",8. Otherwise, all files are considered, i.e. those
+     *           that are marked as deleted.
+     */
+    void scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvisibleFiles = true);
+    
     /*! @brief   Looks up a directory item by number.
      *  @details This function searches the directory for the requested item. 
      *  @param   itemBumber Number of the item. The first item has number 0.
      *  @param   skipInvisibleFiles If set to true, only those files are considered that would show
      *           up when loading the directory via LOAD "$",8. Otherwise, all files are considered, i.e. those
      *           that are marked as deleted.
-     *  @returns Offset to the first data sector of the requested file. If the file is not found,
-     *           the total number of files on disk is returned with a negative sign.
+     *  @returns Offset to the first data sector of the requested file. If the file is not found, -1 is returned.
      */
     int findDirectoryEntry(int itemNumber, bool skipInvisibleFiles = true);
     
