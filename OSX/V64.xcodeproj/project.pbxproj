@@ -686,7 +686,8 @@
 				5000C8070D13CE490011A2E9 /* Memory */,
 				509AE9FE0C3249D4001FC9FD /* Loading and saving */,
 			);
-			path = C64;
+			name = C64;
+			path = ../C64;
 			sourceTree = "<group>";
 		};
 		50176C6D0A6F7357009E80BD /* MacGUI */ = {

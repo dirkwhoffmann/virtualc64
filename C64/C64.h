@@ -26,6 +26,9 @@
 //
 // 1. Make CIA1 and CIA2 dynamic objects
 //    Inline execution functions as much as possible
+// 2. Add routine to quickly get the disk name from GCR data
+//    Right now, the hardware dialog takes some time to open
+//
 //
 // ENHANCEMENTS (BRAIN STORMING):
 //
