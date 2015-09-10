@@ -179,9 +179,6 @@ private:
     //! @brief Returns true iff offset points to the last byte of a sector
     bool isLastByteOfSector(int offset) { return ((offset+1) % 256) == 0; }
     
-    //! @brief Returns true iff offset points to the last byte of a file
-    bool isEndOfFile(int offset) { return nextTrack(offset) == 0x00 && nextSector(offset) == offset % 256; }
-    
     //! Returns the next logical track number following this sector
     /*! The track number is stored in the first byte of the current track */
     inline int nextTrack(int offset) { return data[offset & (~0xFF)]; }
@@ -213,7 +210,8 @@ private:
 
 private:
     
-    //! Marks a single sector as "used"
+    /*! @brief   Marks a single sector as "used"
+     */
     void markSectorAsUsed(uint8_t track, uint8_t sector);
 
     /*! @brief   Writes the Block Availability Map (BAM)
@@ -252,6 +250,9 @@ private:
     /*! Example usage: firstSectorOfFile(findDirectoryEntry(42)) */
     inline uint8_t firstSectorOfFile(unsigned dirEntry) { return data[dirEntry + 2]; }
     
+    //! @brief Returns true iff offset points to the last byte of a file
+    bool isEndOfFile(int offset) { return nextTrack(offset) == 0x00 && nextSector(offset) == offset % 256; }
+
     /*! @brief Writes a directory item
         @discussion This function is used to convert other archive formats into the D64 format. */
     bool writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, unsigned filesize);
