@@ -94,6 +94,9 @@
 		50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */; };
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
+		50BD119B1BA2CCAE0043E59F /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BD119A1BA2CCAE0043E59F /* CrashReporter.framework */; };
+		50BD119C1BA2D1580043E59F /* CrashReporter.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 50BD119A1BA2CCAE0043E59F /* CrashReporter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */; };
 		50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
@@ -170,6 +173,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				50BD119C1BA2D1580043E59F /* CrashReporter.framework in CopyFiles */,
 				5074BE2D1A4AF7E100EA9AEE /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,6 +323,9 @@
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
+		50BD119A1BA2CCAE0043E59F /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
+		50BD119D1BA2E1B60043E59F /* MyControllerCrashreporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyControllerCrashreporter.h; sourceTree = "<group>"; };
+		50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCrashreporter.mm; sourceTree = "<group>"; };
 		50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C64ProxyColors.mm; sourceTree = "<group>"; };
 		50C9CB141B81E3300054EE86 /* C64ProxyColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ProxyColors.h; sourceTree = "<group>"; };
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
@@ -416,6 +423,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50BD119B1BA2CCAE0043E59F /* CrashReporter.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 				50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */,
 				50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */,
@@ -505,6 +513,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50BD119A1BA2CCAE0043E59F /* CrashReporter.framework */,
 				5051A1551B884EBE00CBFB5A /* AVFoundation.framework */,
 				50F2381D12DF505B00B1F275 /* Quartz.framework */,
 				50B1032E121E7C4C003E7729 /* GLUT.framework */,
@@ -613,6 +622,8 @@
 			children = (
 				50B6894612DCA7B100CBB5B7 /* MyController.h */,
 				50B6894712DCA7B100CBB5B7 /* MyController.mm */,
+				50BD119D1BA2E1B60043E59F /* MyControllerCrashreporter.h */,
+				50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */,
 				5088A6E812E06DB700378033 /* MyControllerToolbar.h */,
 				5088A6E912E06DB700378033 /* MyControllerToolbar.mm */,
 				5000474A12DCEE500098D890 /* MyControllerMenu.h */,
@@ -1074,6 +1085,7 @@
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,
 				50D141801417A34B0024FC74 /* filter.cc in Sources */,
 				50D141811417A34B0024FC74 /* pot.cc in Sources */,
+				50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */,
 				50D141821417A34B0024FC74 /* sid.cc in Sources */,
 				50D141831417A34B0024FC74 /* version.cc in Sources */,
 				50D141841417A34B0024FC74 /* voice.cc in Sources */,

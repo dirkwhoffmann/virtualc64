@@ -127,6 +127,8 @@ CPU::saveToBuffer(uint8_t **buffer)
 void 
 CPU::dumpState()
 {
+    // assert(0);
+    
 	msg("CPU:\n");
 	msg("----\n\n");
     msg("%s\n", disassemble());

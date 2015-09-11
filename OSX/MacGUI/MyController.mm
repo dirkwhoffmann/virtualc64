@@ -121,9 +121,12 @@
     // Enable fullscreen mode
     [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     
+    // Check for crash reports
+    [self checkForCrashReports]; 
 	// Launch emulator
 	[c64 run];
 }
+
 
 // --------------------------------------------------------------------------------
 //                                   Full screen

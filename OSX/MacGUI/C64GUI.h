@@ -38,6 +38,7 @@
 #import "CheatboxImageBrowserView.h"
 
 #import "MyController.h"
+#import "MyControllerCrashreporter.h"
 #import "MyControllerToolbar.h"
 #import "MyControllerMenu.h"
 #import "MyControllerDebugPanel.h"
