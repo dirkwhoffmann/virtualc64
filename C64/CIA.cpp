@@ -475,6 +475,8 @@ void CIA::dumpTrace()
 
 void CIA::dumpState()
 {
+    // assert(0);
+
 	msg("              Counter A : %02X\n", getCounterA());
 	msg("                Latch A : %02X\n", getLatchA());
 	msg("            Data port A : %02X\n", getDataPortA());

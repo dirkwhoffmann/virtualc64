@@ -22,7 +22,5 @@
 @interface MyController(Crashreporter)
 
 - (void)checkForCrashReports;
-- (void) handleCrashReport;
-- (bool) showCrashReportDialog;
 
 @end

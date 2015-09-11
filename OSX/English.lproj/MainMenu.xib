@@ -1003,9 +1003,20 @@
 				<reference key="NSOnImage" ref="1024293694"/>
 				<reference key="NSMixedImage" ref="598777137"/>
 			</object>
+			<object class="NSCustomObject" id="626606872">
+				<string key="NSClassName">MyController</string>
+			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array key="connectionRecords">
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="479134045"/>
+						<reference key="destination" ref="626606872"/>
+					</object>
+					<int key="connectionID">574</int>
+				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">terminate:</string>
@@ -2323,6 +2334,12 @@
 						<reference key="object" ref="386363779"/>
 						<reference key="parent" ref="562569797"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">573</int>
+						<reference key="object" ref="626606872"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">AppDelegate</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2427,6 +2444,7 @@
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="564.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="573.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2445,7 +2463,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">572</int>
+			<int key="maxID">574</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2604,6 +2622,7 @@
 						<string key="SIDFilterAction:">id</string>
 						<string key="SIDReSIDAction:">id</string>
 						<string key="SIDSamplingMethodAction:">id</string>
+						<string key="bitAccurateAction:">id</string>
 						<string key="driveNoiseAction:">id</string>
 						<string key="ejectCartridgeAction:">id</string>
 						<string key="ejectDiskAction:">id</string>
@@ -2629,6 +2648,10 @@
 						</object>
 						<object class="IBActionInfo" key="SIDSamplingMethodAction:">
 							<string key="name">SIDSamplingMethodAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="bitAccurateAction:">
+							<string key="name">bitAccurateAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="driveNoiseAction:">
@@ -2673,6 +2696,7 @@
 						<string key="SIDFilter">NSButton</string>
 						<string key="SIDSamplingMethod">NSPopUpButton</string>
 						<string key="SIDUseReSID">NSButton</string>
+						<string key="bitAccurate">NSButton</string>
 						<string key="cartridgeEject">NSButton</string>
 						<string key="cartridgeEjectText">NSTextField</string>
 						<string key="cartridgeIcon">NSImageView</string>
@@ -2707,6 +2731,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="SIDUseReSID">
 							<string key="name">SIDUseReSID</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="bitAccurate">
+							<string key="name">bitAccurate</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="cartridgeEject">
@@ -2794,6 +2822,7 @@
 						<string key="SIDFilterAction:">id</string>
 						<string key="SIDReSIDAction:">id</string>
 						<string key="SIDSamplingMethodAction:">id</string>
+						<string key="bitAccurateAction:">id</string>
 						<string key="driveNoiseAction:">id</string>
 						<string key="ejectCartridgeAction:">id</string>
 						<string key="ejectDiskAction:">id</string>
@@ -2819,6 +2848,10 @@
 						</object>
 						<object class="IBActionInfo" key="SIDSamplingMethodAction:">
 							<string key="name">SIDSamplingMethodAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="bitAccurateAction:">
+							<string key="name">bitAccurateAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="driveNoiseAction:">
@@ -4897,14 +4930,12 @@
 						<string key="exportDiskDialog:">id</string>
 						<string key="exportFileFromDiskDialog:">id</string>
 						<string key="hideSpritesAction:">id</string>
-						<string key="hideStatusBarAction:">id</string>
 						<string key="markDMALinesAction:">id</string>
 						<string key="markIRQLinesAction:">id</string>
 						<string key="resetAction:">id</string>
 						<string key="runstopAction:">id</string>
 						<string key="runstopRestoreAction:">id</string>
 						<string key="saveScreenshotDialog:">id</string>
-						<string key="showStatusBarAction:">id</string>
 						<string key="toggleStatusBarAction:">id</string>
 						<string key="traceC64CpuAction:">id</string>
 						<string key="traceIecAction:">id</string>
@@ -5020,10 +5051,6 @@
 							<string key="name">hideSpritesAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="hideStatusBarAction:">
-							<string key="name">hideStatusBarAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="markDMALinesAction:">
 							<string key="name">markDMALinesAction:</string>
 							<string key="candidateClassName">id</string>
@@ -5046,10 +5073,6 @@
 						</object>
 						<object class="IBActionInfo" key="saveScreenshotDialog:">
 							<string key="name">saveScreenshotDialog:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showStatusBarAction:">
-							<string key="name">showStatusBarAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="toggleStatusBarAction:">
@@ -5108,14 +5131,12 @@
 						<string key="exportDiskDialog:">id</string>
 						<string key="exportFileFromDiskDialog:">id</string>
 						<string key="hideSpritesAction:">id</string>
-						<string key="hideStatusBarAction:">id</string>
 						<string key="markDMALinesAction:">id</string>
 						<string key="markIRQLinesAction:">id</string>
 						<string key="resetAction:">id</string>
 						<string key="runstopAction:">id</string>
 						<string key="runstopRestoreAction:">id</string>
 						<string key="saveScreenshotDialog:">id</string>
-						<string key="showStatusBarAction:">id</string>
 						<string key="toggleStatusBarAction:">id</string>
 						<string key="traceC64CpuAction:">id</string>
 						<string key="traceIecAction:">id</string>
@@ -5231,10 +5252,6 @@
 							<string key="name">hideSpritesAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="hideStatusBarAction:">
-							<string key="name">hideStatusBarAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="markDMALinesAction:">
 							<string key="name">markDMALinesAction:</string>
 							<string key="candidateClassName">id</string>
@@ -5257,10 +5274,6 @@
 						</object>
 						<object class="IBActionInfo" key="saveScreenshotDialog:">
 							<string key="name">saveScreenshotDialog:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showStatusBarAction:">
-							<string key="name">showStatusBarAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="toggleStatusBarAction:">

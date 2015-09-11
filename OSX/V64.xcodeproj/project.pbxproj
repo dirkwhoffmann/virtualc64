@@ -94,9 +94,13 @@
 		50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */; };
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
-		50BD119B1BA2CCAE0043E59F /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BD119A1BA2CCAE0043E59F /* CrashReporter.framework */; };
-		50BD119C1BA2D1580043E59F /* CrashReporter.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 50BD119A1BA2CCAE0043E59F /* CrashReporter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */; };
+		50BD11A61BA3077A0043E59F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BD11A01BA3077A0043E59F /* libz.dylib */; };
+		50BD11A71BA3077A0043E59F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BD11A11BA3077A0043E59F /* Security.framework */; };
+		50BD11A81BA3077A0043E59F /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BD11A21BA3077A0043E59F /* libc++.dylib */; };
+		50BD11A91BA3077A0043E59F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BD11A31BA3077A0043E59F /* SystemConfiguration.framework */; };
+		50BD11AA1BA3077A0043E59F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BD11A41BA3077A0043E59F /* Fabric.framework */; };
+		50BD11AB1BA3077A0043E59F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BD11A51BA3077A0043E59F /* Crashlytics.framework */; };
 		50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
@@ -173,7 +177,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				50BD119C1BA2D1580043E59F /* CrashReporter.framework in CopyFiles */,
 				5074BE2D1A4AF7E100EA9AEE /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,9 +326,14 @@
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
-		50BD119A1BA2CCAE0043E59F /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		50BD119D1BA2E1B60043E59F /* MyControllerCrashreporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyControllerCrashreporter.h; sourceTree = "<group>"; };
 		50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCrashreporter.mm; sourceTree = "<group>"; };
+		50BD11A01BA3077A0043E59F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libz.dylib; sourceTree = "<group>"; };
+		50BD11A11BA3077A0043E59F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Security.framework; sourceTree = "<group>"; };
+		50BD11A21BA3077A0043E59F /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libc++.dylib"; sourceTree = "<group>"; };
+		50BD11A31BA3077A0043E59F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SystemConfiguration.framework; sourceTree = "<group>"; };
+		50BD11A41BA3077A0043E59F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		50BD11A51BA3077A0043E59F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C64ProxyColors.mm; sourceTree = "<group>"; };
 		50C9CB141B81E3300054EE86 /* C64ProxyColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ProxyColors.h; sourceTree = "<group>"; };
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
@@ -423,14 +431,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50BD119B1BA2CCAE0043E59F /* CrashReporter.framework in Frameworks */,
+				50BD11AB1BA3077A0043E59F /* Crashlytics.framework in Frameworks */,
+				50BD11A61BA3077A0043E59F /* libz.dylib in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+				50BD11A71BA3077A0043E59F /* Security.framework in Frameworks */,
 				50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */,
+				50BD11A91BA3077A0043E59F /* SystemConfiguration.framework in Frameworks */,
 				50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */,
+				50BD11AA1BA3077A0043E59F /* Fabric.framework in Frameworks */,
 				50A0E0250A8F332A0067714C /* System.framework in Frameworks */,
 				025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */,
 				50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */,
 				50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */,
+				50BD11A81BA3077A0043E59F /* libc++.dylib in Frameworks */,
 				5074BE2C1A4AF6CB00EA9AEE /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,7 +526,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				50BD119A1BA2CCAE0043E59F /* CrashReporter.framework */,
+				5035ECBE1BA31F9E00F07D6D /* Crashlytics */,
 				5051A1551B884EBE00CBFB5A /* AVFoundation.framework */,
 				50F2381D12DF505B00B1F275 /* Quartz.framework */,
 				50B1032E121E7C4C003E7729 /* GLUT.framework */,
@@ -711,6 +724,19 @@
 			path = MacGUI;
 			sourceTree = "<group>";
 		};
+		5035ECBE1BA31F9E00F07D6D /* Crashlytics */ = {
+			isa = PBXGroup;
+			children = (
+				50BD11A01BA3077A0043E59F /* libz.dylib */,
+				50BD11A11BA3077A0043E59F /* Security.framework */,
+				50BD11A21BA3077A0043E59F /* libc++.dylib */,
+				50BD11A31BA3077A0043E59F /* SystemConfiguration.framework */,
+				50BD11A41BA3077A0043E59F /* Fabric.framework */,
+				50BD11A51BA3077A0043E59F /* Crashlytics.framework */,
+			);
+			name = Crashlytics;
+			sourceTree = "<group>";
+		};
 		504B39910C45192700286F18 /* Drive */ = {
 			isa = PBXGroup;
 			children = (
@@ -882,11 +908,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 504F83690A89E0D2009FA225 /* Build configuration list for PBXNativeTarget "VirtualC64" */;
 			buildPhases = (
-				020E6BF30B0E754F0015C3A6 /* ShellScript */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				503A5AC41222781A00EAA95E /* CopyFiles */,
+				020E6BF30B0E754F0015C3A6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1011,7 +1037,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "./Fabric.framework/run 65641c98449c9afed08e92c36a48d2e26985e0c9 7c4295299cfe545c6b224ba5c64d445cb009060aef00523b1c9fc0b5151b344f";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1146,6 +1172,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
@@ -1164,6 +1191,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = VirtualC64;
@@ -1178,7 +1209,8 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -1187,7 +1219,7 @@
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = V64_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -1196,6 +1228,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = VirtualC64;
@@ -1211,6 +1247,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
@@ -1227,6 +1264,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_NAME = VirtualC64;
