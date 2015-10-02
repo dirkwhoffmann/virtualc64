@@ -239,14 +239,14 @@ VirtualComponent::registerSubComponents(VirtualComponent **components, unsigned 
     
     unsigned numItems = length / sizeof(VirtualComponent *);
     
-    printf("Registering %d components", numItems);
+    debug(2, "Registering %d components\n", numItems);
     
     // Allocate new array on heap and copy array data
     subComponents = new VirtualComponent*[numItems];
     std::copy(components, components + numItems, &subComponents[0]);    
 
-    for (unsigned i = 0; subComponents[i] != NULL; i++)
-        printf("%s ", subComponents[i]->name); 
+    // for (unsigned i = 0; subComponents[i] != NULL; i++)
+    //     printf("%s ", subComponents[i]->name);
 
 }
 

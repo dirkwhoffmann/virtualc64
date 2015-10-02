@@ -148,7 +148,7 @@
 	<key>CFBundleURLTypes</key>
 	<array/>
 	<key>CFBundleVersion</key>
-	<string>1.0rc4</string>
+	<string>1.0</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

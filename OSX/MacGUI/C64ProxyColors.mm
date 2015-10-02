@@ -18,6 +18,8 @@
 - (void) setVideoFilter:(unsigned)filter
 {    
     videoFilter = (filter < 2) ? filter : 0;
+    
+    NSLog(@"setVideoFilter:%d\n", videoFilter);
     [screen setVideoFilter:videoFilter];
 }
 

@@ -41,14 +41,14 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG      // RELEASE
+#define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
 // #define DEBUG_LEVEL 3  // DEVELOPMENT
 
-// Snapshot version number of this release (1.0rc4 has version number 0.9.12)
-#define V_MAJOR 0
-#define V_MINOR 9
-#define V_SUBMINOR 12
+// Snapshot version number of this release
+#define V_MAJOR 1
+#define V_MINOR 0
+#define V_SUBMINOR 0
 
 #include "basic.h"
 #include "VirtualComponent.h"

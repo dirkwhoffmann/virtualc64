@@ -7,18 +7,14 @@
 
 #import "C64GUI.h"
 
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-
 @implementation MyController(Crashreporter)
 
 - (void)checkForCrashReports
 {
-    NSLog(@"checkForCrashReports");
+    // NSLog(@"checkForCrashReports");
     
-    // Initialize Crashlytics
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"NSApplicationCrashOnExceptions": @YES }];
-    [Fabric with:@[[Crashlytics class]]];
+    // Nothing done here as I'm still looking for a trusful and reliable
+    // crash reporting framework ...
 }
 
 @end

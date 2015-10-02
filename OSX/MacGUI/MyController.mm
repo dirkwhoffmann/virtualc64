@@ -244,7 +244,7 @@
 	[defaultValues setObject:@((float)0.0) forKey:VC64EyeZ];
 
 	[defaultValues setObject:@((int)CCS64) forKey:VC64ColorSchemeKey];
-	[defaultValues setObject:@1 forKey:VC64VideoFilterKey];
+	[defaultValues setObject:@0 forKey:VC64VideoFilterKey];
 		
 	// Register dictionary
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
