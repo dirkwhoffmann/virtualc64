@@ -306,7 +306,7 @@
 - (void)refreshVIC
 {
     VICProxy *vic = [c64 vic];
-    
+    NSLog(@"refreshVIC:%@", vic);
 	if (![VicVideoMode selectItemWithTag:[vic displayMode]])
         NSLog(@"Can't refresh display mode field");
 	if (![VicScreenGeometry selectItemWithTag:[vic screenGeometry]])
