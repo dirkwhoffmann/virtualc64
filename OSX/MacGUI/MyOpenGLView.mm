@@ -747,7 +747,8 @@ void checkForOpenGLErrors()
 
 	// bool drawBackground = animation || !drawC64texture;
 	// bool drawBackground = !drawC64texture;
-	if (drawBackground) {
+    // drawBackground = false;
+    if (drawBackground) {
         float depth = -5.0f;
         float scale = 9.3f;
 		glBindTexture(GL_TEXTURE_2D, bgTexture); 
@@ -779,8 +780,7 @@ void checkForOpenGLErrors()
 
 	}
 	
-	if (drawC64texture) {	
-
+	if (drawC64texture) {
         const float dimX = 0.64;
         const float dimY = 0.48;
         
