@@ -17,6 +17,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import <MetalKit/MetalKit.h>
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glu.h>
 #import <Quartz/Quartz.h>

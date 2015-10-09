@@ -65,6 +65,8 @@
 		5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */; };
 		5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */; };
 		5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */; };
+		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
+		5055A8411BC79C4100399A20 /* MetalViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5055A8401BC79C4100399A20 /* MetalViewController.mm */; settings = {ASSET_TAGS = (); }; };
 		5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */; };
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* PixelEngine.cpp */; };
@@ -274,6 +276,9 @@
 		5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_power_on_0.aiff; sourceTree = "<group>"; };
 		5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_2.aiff; sourceTree = "<group>"; };
 		5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_1.aiff; sourceTree = "<group>"; };
+		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		5055A8401BC79C4100399A20 /* MetalViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalViewController.mm; sourceTree = "<group>"; };
+		5055A8421BC79C6300399A20 /* MetalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalViewController.h; sourceTree = "<group>"; };
 		5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpansionPort.cpp; sourceTree = "<group>"; };
 		5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpansionPort.h; sourceTree = "<group>"; };
 		505EB09F0F3047C300960BC0 /* Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Snapshot.h; sourceTree = "<group>"; };
@@ -419,6 +424,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 				50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */,
 				50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */,
@@ -508,6 +514,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5055A83E1BC7996900399A20 /* MetalKit.framework */,
 				5051A1551B884EBE00CBFB5A /* AVFoundation.framework */,
 				50F2381D12DF505B00B1F275 /* Quartz.framework */,
 				50B1032E121E7C4C003E7729 /* GLUT.framework */,
@@ -614,6 +621,8 @@
 		5000474112DCECBA0098D890 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5055A8421BC79C6300399A20 /* MetalViewController.h */,
+				5055A8401BC79C4100399A20 /* MetalViewController.mm */,
 				50B6894612DCA7B100CBB5B7 /* MyController.h */,
 				50B6894712DCA7B100CBB5B7 /* MyController.mm */,
 				50BD119D1BA2E1B60043E59F /* MyControllerCrashreporter.h */,
@@ -1015,6 +1024,7 @@
 				50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
+				5055A8411BC79C4100399A20 /* MetalViewController.mm in Sources */,
 				50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */,
 				020214270AF8E599008AB4EB /* SIDVoice.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,
@@ -1235,7 +1245,7 @@
 				DEPLOYMENT_LOCATION = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_VERSION = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "";
 			};
@@ -1253,7 +1263,7 @@
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_VERSION = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = macosx;
 			};
 			name = Deployment;
@@ -1263,7 +1273,7 @@
 			buildSettings = {
 				DEPLOYMENT_LOCATION = YES;
 				GCC_VERSION = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = macosx;
 			};
 			name = Default;

@@ -195,6 +195,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="804" height="645"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <openGLView colorSize="8bit_RGB" depthSize="16bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" id="262" customClass="MyOpenGLView">
+                        <rect key="frame" x="10" y="349" width="360" height="281"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <connections>
+                            <outlet property="c64proxy" destination="2208" id="2210"/>
+                            <outlet property="controller" destination="-2" id="2181"/>
+                        </connections>
+                    </openGLView>
                     <button hidden="YES" toolTip="Eject cartridge" id="2000">
                         <rect key="frame" x="117" y="-2" width="20" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -306,22 +315,11 @@
                             <action selector="warpAction:" target="-2" id="1054"/>
                         </connections>
                     </button>
-                    <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" state="followsWindowActiveState" id="mlR-AA-71s">
-                        <rect key="frame" x="0.0" y="24" width="804" height="621"/>
+                    <customView id="StA-gK-bbB" customClass="MTKView">
+                        <rect key="frame" x="373" y="109" width="356" height="236"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <subviews>
-                            <openGLView colorSize="8bit_RGB" depthSize="16bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" id="262" customClass="MyOpenGLView">
-                                <rect key="frame" x="69" y="99" width="574" height="429"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <animations/>
-                                <connections>
-                                    <outlet property="c64proxy" destination="2208" id="2210"/>
-                                    <outlet property="controller" destination="-2" id="2181"/>
-                                </connections>
-                            </openGLView>
-                        </subviews>
                         <animations/>
-                    </visualEffectView>
+                    </customView>
                 </subviews>
                 <animations/>
             </view>
@@ -413,7 +411,7 @@
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -4943,6 +4941,11 @@ DQ
             </connections>
             <point key="canvasLocation" x="830.5" y="-233.5"/>
         </window>
+        <viewController id="m3A-mT-M4q" customClass="MetalViewController">
+            <connections>
+                <outlet property="view" destination="StA-gK-bbB" id="sV7-KC-TCd"/>
+            </connections>
+        </viewController>
     </objects>
     <resources>
         <image name="LEDgray" width="128" height="128"/>
