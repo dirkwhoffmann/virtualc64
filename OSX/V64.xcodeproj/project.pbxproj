@@ -97,6 +97,9 @@
 		50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B58B1D0A5A6524000AD819 /* OpenGL.framework */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */; };
+		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
+		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; settings = {ASSET_TAGS = (); }; };
+		50C72DE91BC80A6300F1863B /* teapot.obj in Resources */ = {isa = PBXBuildFile; fileRef = 50C72DE81BC80A6300F1863B /* teapot.obj */; settings = {ASSET_TAGS = (); }; };
 		50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
@@ -327,6 +330,9 @@
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
 		50BD119D1BA2E1B60043E59F /* MyControllerCrashreporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyControllerCrashreporter.h; sourceTree = "<group>"; };
 		50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCrashreporter.mm; sourceTree = "<group>"; };
+		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		50C72DE81BC80A6300F1863B /* teapot.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
 		50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C64ProxyColors.mm; sourceTree = "<group>"; };
 		50C9CB141B81E3300054EE86 /* C64ProxyColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ProxyColors.h; sourceTree = "<group>"; };
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
@@ -424,6 +430,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */,
 				5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 				50B58B1E0A5A6524000AD819 /* OpenGL.framework in Frameworks */,
@@ -514,6 +521,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50C72DE31BC7BC8800F1863B /* Metal.framework */,
 				5055A83E1BC7996900399A20 /* MetalKit.framework */,
 				5051A1551B884EBE00CBFB5A /* AVFoundation.framework */,
 				50F2381D12DF505B00B1F275 /* Quartz.framework */,
@@ -708,6 +716,7 @@
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
+				50C72DE71BC7F50D00F1863B /* Shaders */,
 				5000474212DCECDB0098D890 /* Dialogs */,
 				5000474312DCED190098D890 /* Misc */,
 			);
@@ -815,6 +824,15 @@
 				50F93BE512EF309900DD6A8A /* FileArchive.cpp */,
 			);
 			name = "Loading and saving";
+			sourceTree = "<group>";
+		};
+		50C72DE71BC7F50D00F1863B /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				50C72DE81BC80A6300F1863B /* teapot.obj */,
+				50C72DE51BC7F42100F1863B /* Shaders.metal */,
+			);
+			name = Shaders;
 			sourceTree = "<group>";
 		};
 		50CCB1B81B84999E008D8C30 /* Toolbar icons */ = {
@@ -941,6 +959,7 @@
 				50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */,
 				50271DEA1A7E1CFE00C04290 /* LEDnewRed.png in Resources */,
 				50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */,
+				50C72DE91BC80A6300F1863B /* teapot.obj in Resources */,
 				50287EEB0A7CA86900292533 /* stepOut32.png in Resources */,
 				502F57FA1B93457200D1077E /* fast.png in Resources */,
 				50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */,
@@ -1075,6 +1094,7 @@
 				50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */,
 				50D141821417A34B0024FC74 /* sid.cc in Sources */,
 				50D141831417A34B0024FC74 /* version.cc in Sources */,
+				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				50D141841417A34B0024FC74 /* voice.cc in Sources */,
 				50D141851417A34B0024FC74 /* wave.cc in Sources */,
 				50D141861417A34B0024FC74 /* wave6581__ST.cc in Sources */,

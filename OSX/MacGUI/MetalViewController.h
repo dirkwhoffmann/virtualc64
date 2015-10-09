@@ -15,6 +15,8 @@
 
 @interface MetalViewController : NSViewController <MTKViewDelegate>
 
+-(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
+
 @end
 
 #endif
