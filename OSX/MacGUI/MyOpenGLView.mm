@@ -673,12 +673,12 @@ void checkForOpenGLErrors()
     }
     
     // Enable this for debugging (will display the whole texture)
-    /*
+    
     textureXStart = 0.0;
     textureXEnd = 1.0;
     textureYStart = 0.0;
     textureYEnd = 1.0;
-    */
+    
 }
 
 - (void)updateScreenTexture

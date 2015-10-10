@@ -323,6 +323,10 @@
                                 <rect key="frame" x="0.0" y="5" width="356" height="236"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <animations/>
+                                <connections>
+                                    <outlet property="c64proxy" destination="2208" id="stK-CC-qZZ"/>
+                                    <outlet property="controller" destination="-2" id="aIG-f4-jho"/>
+                                </connections>
                             </customView>
                         </subviews>
                         <animations/>
