@@ -23,7 +23,6 @@
 #import <Metal/Metal.h>
 #import <MetalKit/MetalKit.h>
 #import <simd/simd.h>
-#import "MetalViewController.h"
 
 #import "C64.h"
 #import "C64Proxy.h"
@@ -34,6 +33,7 @@
 #import "Formatter.h"
 
 #import "MyOpenGLView.h"
+#import "MyMetalView.h"
 #import "ROMDropTargetView.h"
 #import "CpuTableView.h"
 #import "MemTableView.h"
