@@ -1,10 +1,20 @@
-//
-//  MyMetalView.m
-//  V64
-//
-//  Created by Dirk Hoffmann on 10.10.15.
-//
-//
+/*
+ * Author: Dirk W. Hoffmann, 2016
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #import "C64GUI.h"
 
@@ -336,7 +346,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
 }
 
-- (void)determineScreenGeometry
+- (void)updateScreenGeometry
 {
     if (c64->isPAL()) {
         // PAL border will be 36 pixels wide and 34 pixels heigh
@@ -368,7 +378,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         return;
     }
     
-    [self determineScreenGeometry];
+    [self updateScreenGeometry];
     
     void *buf = c64->vic->screenBuffer();
     assert(buf != NULL);

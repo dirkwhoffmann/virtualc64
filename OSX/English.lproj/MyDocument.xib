@@ -153,6 +153,7 @@
                 <outlet property="joystickPortA" destination="L2b-nG-yBo" id="EVC-v9-DPf"/>
                 <outlet property="joystickPortB" destination="4MP-rV-xX2" id="mps-Jv-PSQ"/>
                 <outlet property="memTableView" destination="67" id="515"/>
+                <outlet property="metalScreen" destination="DD4-5B-w9h" id="rGV-rL-MLo"/>
                 <outlet property="mountDialog" destination="1004" id="1021"/>
                 <outlet property="pc" destination="47" id="163"/>
                 <outlet property="preferencesIcon" destination="2226" id="2227"/>
@@ -162,7 +163,7 @@
                 <outlet property="redLED" destination="1210" id="1215"/>
                 <outlet property="romDialog" destination="1872" id="1943"/>
                 <outlet property="romSource" destination="975" id="1690"/>
-                <outlet property="screen" destination="262" id="277"/>
+                <outlet property="screen" destination="262" id="7rm-ta-y0u"/>
                 <outlet property="sp" destination="158" id="164"/>
                 <outlet property="stepIntoButton" destination="2098" id="2107"/>
                 <outlet property="stepOutButton" destination="2094" id="2109"/>
@@ -322,6 +323,17 @@
                             <customView id="LWq-mQ-YC2" customClass="MyMetalView">
                                 <rect key="frame" x="0.0" y="5" width="356" height="236"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <customView id="DD4-5B-w9h" customClass="MyMetalView">
+                                        <rect key="frame" x="-8" y="7" width="356" height="236"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="c64proxy" destination="2208" id="bSx-dM-tjo"/>
+                                            <outlet property="controller" destination="-2" id="dJS-4Q-XYe"/>
+                                        </connections>
+                                    </customView>
+                                </subviews>
                                 <animations/>
                                 <connections>
                                     <outlet property="c64proxy" destination="2208" id="stK-CC-qZZ"/>

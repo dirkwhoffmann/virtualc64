@@ -612,6 +612,12 @@
             [self validateJoystickItems];
             break;
         
+        case MSG_PAL:
+        case MSG_NTSC:
+            [screen determineScreenGeometry];
+            [metalScreen updateScreenGeometry];
+            break;
+            
 		default:
 			assert(0);
 	}

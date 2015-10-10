@@ -24,6 +24,7 @@
 @class AudioDevice;
 @class V64Snapshot;
 @class MyOpenGLView;
+@class MyMetalView;
 
 
 // --------------------------------------------------------------------------
@@ -419,6 +420,7 @@
 @interface C64Proxy : NSObject {	
 	
     IBOutlet MyOpenGLView* screen; 
+    // IBOutlet MyMetalView* metalScreen;
 
 	C64 *c64;
 	AudioDevice *audioDevice;

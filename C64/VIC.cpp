@@ -119,7 +119,13 @@ VIC::reset()
 	spriteSpriteCollisionEnabled = 0xFF;
 	spriteBackgroundCollisionEnabled = 0xFF;
 }
-			
+
+void
+VIC::ping()
+{
+    c64->putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
+}
+
 void 
 VIC::dumpState()
 {
@@ -180,6 +186,14 @@ VIC::dumpState()
 		msg("\n                    ");
 	}
 	msg("\n");
+}
+
+void
+VIC::setChipModel(ChipModel model)
+{
+    chipModel = model;
+    pixelEngine.resetScreenBuffers();
+    c64->putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
 
 

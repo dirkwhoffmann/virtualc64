@@ -673,12 +673,12 @@ void checkForOpenGLErrors()
     }
     
     // Enable this for debugging (will display the whole texture)
-    
+#if 0
     textureXStart = 0.0;
     textureXEnd = 1.0;
     textureYStart = 0.0;
     textureYEnd = 1.0;
-    
+#endif
 }
 
 - (void)updateScreenTexture
@@ -697,7 +697,7 @@ void checkForOpenGLErrors()
     const int XSize = 640;
     const int YSize = 480;
 
-    [self determineScreenGeometry];
+    // [self determineScreenGeometry];
     
     [glcontext makeCurrentContext];
     glMatrixMode(GL_PROJECTION);
@@ -726,7 +726,7 @@ void checkForOpenGLErrors()
 
 - (void)drawRect3D:(NSRect)r
 {	
-    [self determineScreenGeometry];
+    // [self determineScreenGeometry];
 	
 	[glcontext makeCurrentContext];
 

@@ -52,6 +52,11 @@ class VIC : public VirtualComponent {
     //! Reference to the attached pixel engine (encapsulates drawing routines)
     PixelEngine pixelEngine;
     
+public:
+    
+    //! Dump current configuration into message queue
+    void ping();
+
 	// -----------------------------------------------------------------------------------------------
 	//                                     Constant definitions
 	// -----------------------------------------------------------------------------------------------
@@ -457,7 +462,7 @@ public:
     inline ChipModel getChipModel() { return chipModel; }
 
     //! Set chip model
-    inline void setChipModel(ChipModel model) { chipModel = model; pixelEngine.resetScreenBuffers();}
+    void setChipModel(ChipModel model);
 	
     //! Get color
     uint32_t getColor(int nr) { assert(nr < 16); return pixelEngine.colors[nr]; }

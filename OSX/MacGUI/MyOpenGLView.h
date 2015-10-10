@@ -186,6 +186,8 @@ const int BG_TEXTURE_DEPTH = 4;
 
 #pragma mark Drawing
 
+- (void)determineScreenGeometry;
+
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
 // - (void) drawC64texture:(bool)value;
 

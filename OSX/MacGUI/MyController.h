@@ -26,6 +26,7 @@
 @class RomDialog;
 @class PreferenceController;
 @class MyOpenGLView;
+@class MyMetalView;
 @class CpuTableView;
 @class MemTableView;
 @class Speedometer;
@@ -63,7 +64,8 @@ enum INPUT_DEVICES {
     IBOutlet NSPopUpButton *joystickPortB;
 
     // Main screen
-	IBOutlet MyOpenGLView *__strong screen;
+	IBOutlet MyOpenGLView *screen;
+    IBOutlet MyMetalView *metalScreen;
 	IBOutlet NSDrawer *debugPanel;
 	IBOutlet NSDrawer *cheatboxPanel;
     
@@ -294,6 +296,7 @@ enum INPUT_DEVICES {
 
 @property (strong) C64Proxy *c64;
 @property (strong,readonly) MyOpenGLView *screen;
+@property (strong,readonly) MyOpenGLView *metalScreen;
 @property int inputDeviceA;
 @property int inputDeviceB;
 
