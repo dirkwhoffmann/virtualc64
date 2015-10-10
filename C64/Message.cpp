@@ -65,8 +65,14 @@ void MessageQueue::printMessage(Message *msg)
         case MSG_JOYSTICK_ATTACHED:
             fprintf(stderr, "MSG_JOYSTICK_ATTACHED");
             break;
-        case MSG_JOYSTICK_REMOVED   :
+        case MSG_JOYSTICK_REMOVED:
             fprintf(stderr, "MSG_JOYSTICK_REMOVED");
+            break;
+        case MSG_PAL:
+            fprintf(stderr, "MSG_PAL");
+            break;
+        case MSG_NTSC:
+            fprintf(stderr, "MSG_NTSC");
             break;
 		default:
 			assert(0);

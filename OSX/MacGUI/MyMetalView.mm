@@ -160,25 +160,32 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // _commandQueue = [_device newCommandQueue];
 }
 
-- (void)buildAssets
+- (void)buildVertexBuffer
 {
-    // Vertex buffers
     
-    static const float positions[] =
+    NSLog(@"MyMetalView::buildVertexBuffer (texture cut: %f %f %f %f)",
+          textureXStart, textureXEnd, textureYStart, textureYEnd);
+    
+    float positions[] =
     {
-        -0.5,  0.5, 0, 1,     0.0, 0.0,
-        -0.5, -0.5, 0, 1,    0.0, 1.0,
-        0.5, -0.5, 0, 1,     1.0, 1.0,
+        -0.5,  0.5, 0, 1,   textureXStart, textureYStart,
+        -0.5, -0.5, 0, 1,   textureXStart, textureYEnd,
+         0.5, -0.5, 0, 1,   textureXEnd, textureYEnd,
         
-        -0.5,  0.5, 0, 1,     0.0, 0.0,
-        0.5, 0.5, 0, 1,    1.0, 0.0,
-        0.5, -0.5, 0, 1,     1.0, 1.0,
-        
+        -0.5,  0.5, 0, 1,   textureXStart, textureYStart,
+         0.5,  0.5, 0, 1,   textureXEnd, textureYStart,
+         0.5, -0.5, 0, 1,   textureXEnd, textureYEnd,
     };
     
     _positionBuffer = [_device newBufferWithBytes:positions
                                            length:sizeof(positions)
                                           options:MTLResourceOptionCPUCacheModeDefault];
+}
+
+- (void)buildAssets
+{
+    // Vertex buffers
+    [self buildVertexBuffer];
     
     // Textures
     MTLTextureDescriptor *mtlTextDesc =
@@ -369,6 +376,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
      textureYStart = 0.0;
      textureYEnd = 1.0;
      */
+    
+    [self buildVertexBuffer];
 }
 
 - (void)updateTexture:(id<MTLCommandBuffer>) cmdBuffer
@@ -377,8 +386,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         NSLog(@"Can't access C64");
         return;
     }
-    
-    [self updateScreenGeometry];
     
     void *buf = c64->vic->screenBuffer();
     assert(buf != NULL);
