@@ -39,6 +39,10 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     id<MTLBuffer> _positionBuffer;
     id<MTLBuffer> _colorBuffer;
 
+    // Texture
+    id <MTLTexture> _texture;
+    id<MTLSamplerState> _sampler;
+
     // Display link
     CVDisplayLinkRef displayLink;
 }
@@ -50,7 +54,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [super viewDidLoad];
     
     [self buildMetal];
-    [self buildVertexBuffers];
+    [self buildAssets];
     [self buildPipeline];
 
     [self setupDisplayLink];
@@ -108,13 +112,15 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // _commandQueue = [_device newCommandQueue];
 }
 
-- (void)buildVertexBuffers
+- (void)buildAssets
 {
+    // Vertex buffers
+    
     static const float positions[] =
     {
-        0.0,  0.5, 0, 1,
-        -0.5, -0.5, 0, 1,
-        0.5, -0.5, 0, 1,
+        0.0,  0.5, 0, 1,     0.0, 0.0,
+        -0.5, -0.5, 0, 1,    1.0, 0.0,
+        0.5, -0.5, 0, 1,     1.1, 1.1,
     };
     
     static const float colors[] =
@@ -130,6 +136,26 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _colorBuffer = [_device newBufferWithBytes:colors
                                         length:sizeof(colors)
                                        options:MTLResourceOptionCPUCacheModeDefault];
+
+    // Textures
+    //create Texturedescriptor (blueprint for texture)
+    MTLTextureDescriptor *mtlTextDesc =
+    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
+                                                       width:1024
+                                                      height:1024
+                                                   mipmapped:NO];
+    
+    _texture = [_device newTextureWithDescriptor:mtlTextDesc];
+
+    // Sampler
+    MTLSamplerDescriptor *samplerDescriptor = [MTLSamplerDescriptor new];
+    samplerDescriptor.minFilter = MTLSamplerMinMagFilterLinear;
+    samplerDescriptor.magFilter = MTLSamplerMinMagFilterLinear;
+    samplerDescriptor.sAddressMode = MTLSamplerAddressModeClampToEdge;
+    samplerDescriptor.tAddressMode = MTLSamplerAddressModeClampToEdge;
+
+    samplerDescriptor.mipFilter = MTLSamplerMipFilterNotMipmapped;
+    _sampler = [_device newSamplerStateWithDescriptor:samplerDescriptor];
 }
 
 - (void)setupDisplayLink
@@ -196,8 +222,12 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     */
     id<MTLRenderCommandEncoder> commandEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPass];
     [commandEncoder setRenderPipelineState:_pipeline];
+    
+    [commandEncoder setFragmentTexture:_texture atIndex:0];
+    [commandEncoder setFragmentSamplerState:_sampler atIndex:0];
+    
     [commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0 ];
-    [commandEncoder setVertexBuffer:_colorBuffer offset:0 atIndex:1 ];
+    // [commandEncoder setVertexBuffer:_colorBuffer offset:0 atIndex:1 ];
     [commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:3 instanceCount:1];
     [commandEncoder endEncoding];
 
