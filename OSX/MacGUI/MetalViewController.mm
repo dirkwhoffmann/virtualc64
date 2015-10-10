@@ -6,10 +6,7 @@
 //
 //
 
-#import <Metal/Metal.h>
-// #import <simd/simd.h>
-#import <MetalKit/MetalKit.h>
-#import "MetalViewController.h"
+#import "C64GUI.h"
 
 static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
                                       const CVTimeStamp *inNow,
@@ -36,6 +33,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     id<MTLLibrary> _library;
     id<MTLRenderPipelineState> _pipeline;
     id<MTLCommandQueue> _commandQueue;
+    id<MTLCommandBuffer> _commandBuffer;
     id<MTLBuffer> _positionBuffer;
     id<MTLBuffer> _colorBuffer;
 
@@ -213,14 +211,14 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
 
     // "A command queue is an object that keeps a list of render command buffers to be executed."
-    id<MTLCommandQueue> commandQueue = [_device newCommandQueue];
+    _commandQueue = [_device newCommandQueue];
     
     // "A command buffer represents a collection of render commands to be executed as a unit."
-    id<MTLCommandBuffer> commandBuffer = [commandQueue commandBuffer];
+    _commandBuffer = [_commandQueue commandBuffer];
     
     /* "A command encoder is an object that is used to tell Metal what drawing we actually want to do. It is responsible for translating these high-level commands (set these shader parameters, draw these triangles, etc.) into low-level instructions that are then written into its corresponding command buffer. Once we have issued all of our draw calls (which we aren’t doing in this post), we send the endEncoding message to the command encoder so it has the chance to finish its encoding.
     */
-    id<MTLRenderCommandEncoder> commandEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPass];
+    id<MTLRenderCommandEncoder> commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
     [commandEncoder setRenderPipelineState:_pipeline];
     
     [commandEncoder setFragmentTexture:_texture atIndex:0];
@@ -232,8 +230,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [commandEncoder endEncoding];
 
     /* "As its last action, the command buffer will signal that its drawable will be ready to be shown on-screen once all preceding commands are complete. Then, we call commit to indicate that this command buffer is complete and ready to be placed in command queue for execution on the GPU." */
-    [commandBuffer presentDrawable:drawable];
-    [commandBuffer commit];
+    [_commandBuffer presentDrawable:drawable];
+    [_commandBuffer commit];
 
     
     
@@ -302,6 +300,35 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
 }
 
+- (void)updateScreenTexture:(id<MTLCommandBuffer>) cmdBuffer
+{
+#if 0
+    if (!c64)
+        return;
+    
+    void *buf = c64->vic->screenBuffer();
+    assert(buf != NULL);
+
+    NSUInteger width = NTSC_PIXELS;
+    NSUInteger height = PAL_RASTERLINES;
+    
+    id<MTLBuffer> mtlbuf;
+    id<MTLBlitCommandEncoder> blit = [cmdBuffer blitCommandEncoder];
+    
+    mtlbuf = [_device newBufferWithBytes:buf length:MTLSizeMake(width, height, 1) options:MTLResourceCPUCacheModeDefaultCache];
+               
+               
+    [blit copyFromBuffer:mtlbuf sourceOffset:0 sourceBytesPerRow:width sourceBytesPerImage:(width*height) sourceSize:MTLSizeMake(width, height, 1) toTexture:_texture destinationSlice:0 destinationLevel:0 destinationOrigin:MTLOriginMake(0, 0, 0)];
+  
+#endif
+    
+#if 0
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, NTSC_PIXELS, PAL_RASTERLINES, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+        checkForOpenGLErrors();
+    }
+#endif
+}
+
 - (void)reshape {
 #if 0
     /*
@@ -352,6 +379,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         
         // Update angles for screen animation
         // [self updateAngles];
+        
+        // Update texture
+        [self updateScreenTexture:_commandBuffer];
         
         // Draw scene
         // [self drawRect:NSZeroRect];

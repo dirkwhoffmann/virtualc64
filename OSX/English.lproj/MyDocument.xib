@@ -318,6 +318,13 @@
                     <customView id="StA-gK-bbB" customClass="MTKView">
                         <rect key="frame" x="373" y="109" width="356" height="236"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <subviews>
+                            <customView id="LWq-mQ-YC2" customClass="MTKView">
+                                <rect key="frame" x="0.0" y="5" width="356" height="236"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
+                            </customView>
+                        </subviews>
                         <animations/>
                     </customView>
                 </subviews>
@@ -4943,6 +4950,8 @@ DQ
         </window>
         <viewController id="m3A-mT-M4q" customClass="MetalViewController">
             <connections>
+                <outlet property="c64proxy" destination="2208" id="KcZ-09-APq"/>
+                <outlet property="controller" destination="-2" id="H7z-BG-qPG"/>
                 <outlet property="view" destination="StA-gK-bbB" id="sV7-KC-TCd"/>
             </connections>
         </viewController>

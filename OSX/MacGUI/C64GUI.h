@@ -17,10 +17,13 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <MetalKit/MetalKit.h>
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glu.h>
 #import <Quartz/Quartz.h>
+#import <Metal/Metal.h>
+#import <MetalKit/MetalKit.h>
+#import <simd/simd.h>
+#import "MetalViewController.h"
 
 #import "C64.h"
 #import "C64Proxy.h"
