@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "ShaderTypes.h"
 
 static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
                                       const CVTimeStamp *inNow,
@@ -32,8 +33,15 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     }
 }
 
+
+// Number of buffers (do we need more than one?)
+const NSUInteger noOfBuffers = 3;
+
 @implementation MyMetalView {
 
+    // Currently used buffer
+    uint8_t _bufferIndex;
+    
     // Renderer
     CAMetalLayer *_metalLayer;
     id<MTLDevice> _device;
@@ -48,14 +56,15 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     id <MTLTexture> _texture;
     id<MTLSamplerState> _sampler;
 
+    // Uniforms
+    id <MTLBuffer> _uniformBuffers[noOfBuffers];
+    matrix_float4x4 _projectionMatrix;
+    matrix_float4x4 _viewMatrix;
+    float _angle; // Rotation angle
+    
     // Display link
     CVDisplayLinkRef displayLink;
     
-    // Texture cut-out (fist and last visible texture coordinates)
-    float textureXStart;
-    float textureXEnd;
-    float textureYStart;
-    float textureYEnd;
 }
 
 #if 0
@@ -85,6 +94,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     NSLog(@"MyMetalView::awakeFromNib");
     
     c64 = [c64proxy c64]; // DEPRECATED
+    
+    _bufferIndex = 0;
+    _angle = 0;
     
     [self buildMetal];
     [self buildAssets];
@@ -160,32 +172,11 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // _commandQueue = [_device newCommandQueue];
 }
 
-- (void)buildVertexBuffer
-{
-    
-    NSLog(@"MyMetalView::buildVertexBuffer (texture cut: %f %f %f %f)",
-          textureXStart, textureXEnd, textureYStart, textureYEnd);
-    
-    float positions[] =
-    {
-        -0.5,  0.5, 0, 1,   textureXStart, textureYStart,
-        -0.5, -0.5, 0, 1,   textureXStart, textureYEnd,
-         0.5, -0.5, 0, 1,   textureXEnd, textureYEnd,
-        
-        -0.5,  0.5, 0, 1,   textureXStart, textureYStart,
-         0.5,  0.5, 0, 1,   textureXEnd, textureYStart,
-         0.5, -0.5, 0, 1,   textureXEnd, textureYEnd,
-    };
-    
-    _positionBuffer = [_device newBufferWithBytes:positions
-                                           length:sizeof(positions)
-                                          options:MTLResourceOptionCPUCacheModeDefault];
-}
 
 - (void)buildAssets
 {
     // Vertex buffers
-    [self buildVertexBuffer];
+    _positionBuffer = [self buildVertexBuffer:_device];
     
     // Textures
     MTLTextureDescriptor *mtlTextDesc =
@@ -205,6 +196,13 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
     samplerDescriptor.mipFilter = MTLSamplerMipFilterNotMipmapped;
     _sampler = [_device newSamplerStateWithDescriptor:samplerDescriptor];
+    
+    
+    // Uniform buffers
+    for (unsigned i = 0; i < noOfBuffers; i++) {
+        _uniformBuffers[i] = [_device newBufferWithLength:sizeof(Uniforms) options:0];
+    }
+
 }
 
 - (void)setupDisplayLink
@@ -277,8 +275,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [commandEncoder setFragmentTexture:_texture atIndex:0];
     [commandEncoder setFragmentSamplerState:_sampler atIndex:0];
     
-    [commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0 ];
-    // [commandEncoder setVertexBuffer:_colorBuffer offset:0 atIndex:1 ];
+    [commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
+    [commandEncoder setVertexBuffer:_uniformBuffers[_bufferIndex] offset:0 atIndex:1];
     [commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
     [commandEncoder endEncoding];
 
@@ -286,6 +284,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [_commandBuffer presentDrawable:drawable];
     [_commandBuffer commit];
 
+    // Right now, we only use 1 buffer
+    // _bufferIndex = (_bufferIndex + 1) % noOfBuffers;
     
     
 #if 0
@@ -377,7 +377,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
      textureYEnd = 1.0;
      */
     
-    [self buildVertexBuffer];
+    _positionBuffer = [self buildVertexBuffer:_device];
 }
 
 - (void)updateTexture:(id<MTLCommandBuffer>) cmdBuffer
@@ -399,42 +399,35 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [_texture replaceRegion:MTLRegionMake2D(0,0,width,height)
            mipmapLevel:0 slice:0 withBytes:buf
            bytesPerRow:rowBytes bytesPerImage:imageBytes];
-
-#if 0
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, NTSC_PIXELS, PAL_RASTERLINES, GL_RGBA, GL_UNSIGNED_BYTE, buf);
-        checkForOpenGLErrors();
-    }
-#endif
 }
 
 - (void)reshape {
-#if 0
     /*
      When reshape is called, update the view and projection matricies since
      this means the view orientation or size changed.
      */
-    float aspect = fabs(self.view.bounds.size.width / self.view.bounds.size.height);
+    float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     _projectionMatrix = matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
     
     _viewMatrix = matrix_identity_float4x4;
-#endif
 }
 
-- (void)update {
-#if 0
-    AAPLFrameUniforms *frameData = (AAPLFrameUniforms *)[_frameUniformBuffers[_constantDataBufferIndex] contents];
+- (void)updateAngles {
     
-    frameData->model = matrix_from_translation(0.0f, 0.0f, 2.0f) * matrix_from_rotation(_rotation, 1.0f, 1.0f, 0.0f);    frameData->view = _viewMatrix;
+    Uniforms *frameData = (Uniforms *)[_uniformBuffers[_bufferIndex] contents];
+    
+    frameData->model =
+    matrix_from_translation(0.0f, 0.0f, 2.0f) *
+    matrix_from_rotation(_angle, 1.0f, 1.0f, 0.0f);
+    frameData->view = _viewMatrix;
     
     matrix_float4x4 modelViewMatrix = frameData->view * frameData->model;
     
     frameData->projectionView = _projectionMatrix * modelViewMatrix;
     
-    frameData->normal = matrix_invert(matrix_transpose(modelViewMatrix));
-    
-    _rotation += 0.05f;
-#endif
+    _angle += 0.05f;
 }
+
 
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size {
 #if 0
@@ -456,7 +449,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     @autoreleasepool {
         
         // Update angles for screen animation
-        // [self updateAngles];
+        [self updateAngles];
         
         // Update texture
         [self updateTexture:_commandBuffer];
@@ -468,8 +461,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         return kCVReturnSuccess;
     }
 }
-
-
 
 
 

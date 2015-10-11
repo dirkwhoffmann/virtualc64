@@ -316,32 +316,14 @@
                             <action selector="warpAction:" target="-2" id="1054"/>
                         </connections>
                     </button>
-                    <customView id="StA-gK-bbB" customClass="MTKView">
-                        <rect key="frame" x="373" y="109" width="356" height="236"/>
+                    <customView id="DD4-5B-w9h" customClass="MyMetalView">
+                        <rect key="frame" x="410" y="149" width="356" height="236"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <subviews>
-                            <customView id="LWq-mQ-YC2" customClass="MyMetalView">
-                                <rect key="frame" x="0.0" y="5" width="356" height="236"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <customView id="DD4-5B-w9h" customClass="MyMetalView">
-                                        <rect key="frame" x="-8" y="7" width="356" height="236"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <animations/>
-                                        <connections>
-                                            <outlet property="c64proxy" destination="2208" id="bSx-dM-tjo"/>
-                                            <outlet property="controller" destination="-2" id="dJS-4Q-XYe"/>
-                                        </connections>
-                                    </customView>
-                                </subviews>
-                                <animations/>
-                                <connections>
-                                    <outlet property="c64proxy" destination="2208" id="stK-CC-qZZ"/>
-                                    <outlet property="controller" destination="-2" id="aIG-f4-jho"/>
-                                </connections>
-                            </customView>
-                        </subviews>
                         <animations/>
+                        <connections>
+                            <outlet property="c64proxy" destination="2208" id="bSx-dM-tjo"/>
+                            <outlet property="controller" destination="-2" id="dJS-4Q-XYe"/>
+                        </connections>
                     </customView>
                 </subviews>
                 <animations/>
@@ -434,7 +416,7 @@
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">

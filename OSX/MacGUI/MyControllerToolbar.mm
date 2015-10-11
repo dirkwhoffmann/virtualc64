@@ -271,8 +271,8 @@
 
 // UNUSED
 - (IBAction)iPhoneAction:(id)sender
-{	
-	NSLog(@"iPhoneAction");
+{
+    NSLog(@"iPhoneAction");
 }
 
 @end

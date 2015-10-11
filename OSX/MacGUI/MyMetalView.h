@@ -16,13 +16,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Next step:
-// Add C64 messages: PAL, NTSC
-// Call determineScreenGeometry when such a message is received.
-// (Right now, the method called for each frame) 
+// Next steps:
+// 1. Implement rotation (via transformation matrices)
+// 2. Make it a cube
+
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
+
+#import <simd/simd.h>
+using namespace simd;
 
 // Forward declaration
 @class MyController;
@@ -39,6 +42,12 @@ const int C64_TEXTURE_DEPTH = 4;
     IBOutlet C64Proxy* c64proxy;
     
     C64 *c64; // DEPRECATED. GET RID OF THIS VARIABLE AND RENAME c64proxy to c64
+
+    // Texture cut-out (fist and last visible texture coordinates)
+    float textureXStart;
+    float textureXEnd;
+    float textureYStart;
+    float textureYEnd;
 }
 
 #pragma mark Drawing

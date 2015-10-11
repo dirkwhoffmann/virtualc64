@@ -34,6 +34,8 @@
 
 #import "MyOpenGLView.h"
 #import "MyMetalView.h"
+#import "MyMetalViewHelper.h"
+
 #import "ROMDropTargetView.h"
 #import "CpuTableView.h"
 #import "MemTableView.h"

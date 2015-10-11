@@ -7,6 +7,8 @@
 //
 
 #include <metal_stdlib>
+#include "ShaderTypes.h"
+
 using namespace metal;
 
 struct InVertex
@@ -30,15 +32,27 @@ struct ColoredVertex
 #endif
 
 vertex ProjectedVertex vertex_main(constant InVertex *vertices [[buffer(0)]],
-                                      // constant Uniforms &uniforms [[buffer(1)]],
-                                      ushort vid [[vertex_id]])
+                                   constant Uniforms &uniforms [[buffer(1)]],
+                                   ushort vid [[vertex_id]])
 {
-    ProjectedVertex outVert;
-    // outVert.position = uniforms.modelViewProjectionMatrix * float4(vertices[vid].position);
-    // outVert.normal = uniforms.normalMatrix * float4(vertices[vid].normal).xyz;
-    outVert.position = vertices[vid].position;
-    outVert.texCoords = vertices[vid].texCoords;
-    return outVert;
+    vector_float4 X = { 1, 0, 0, 0 };
+    vector_float4 Y = { 0, 1, 0, 0 };
+    vector_float4 Z = { 0, 0, 1, 0 };
+    vector_float4 W = { 0, 0, 0, 1 };
+    matrix_float4x4 identity = { X, Y, Z, W };
+
+    
+    ProjectedVertex out;
+
+    // float4 in_position = float4(in.position, 1.0);
+    // out.position = frameUniforms.projectionView * in_position;
+    out.position = uniforms.projectionView * float4(vertices[vid].position);
+    // out.position = identity * float4(vertices[vid].position);
+
+    // out.normal = uniforms.normalMatrix * float4(vertices[vid].normal).xyz;
+    // out.position = vertices[vid].position;
+    out.texCoords = vertices[vid].texCoords;
+    return out;
 }
 
 fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
