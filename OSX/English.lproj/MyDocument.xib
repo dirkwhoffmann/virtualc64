@@ -325,18 +325,6 @@
                             <outlet property="controller" destination="-2" id="dJS-4Q-XYe"/>
                         </connections>
                     </customView>
-                    <customView id="6ka-Vq-AJT">
-                        <rect key="frame" x="398" y="349" width="362" height="270"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <subviews>
-                            <customView id="3IQ-2G-Qzt" customClass="MTKView">
-                                <rect key="frame" x="0.0" y="0.0" width="362" height="270"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <animations/>
-                            </customView>
-                        </subviews>
-                        <animations/>
-                    </customView>
                 </subviews>
                 <animations/>
             </view>
@@ -4958,11 +4946,6 @@ DQ
             </connections>
             <point key="canvasLocation" x="830.5" y="-233.5"/>
         </window>
-        <viewController id="t5U-Ec-MuO" customClass="AAPLMetalKitEssentialsViewController">
-            <connections>
-                <outlet property="view" destination="3IQ-2G-Qzt" id="Pkg-Ru-h5a"/>
-            </connections>
-        </viewController>
     </objects>
     <resources>
         <image name="LEDgray" width="128" height="128"/>
