@@ -44,17 +44,19 @@ const NSUInteger noOfBuffers = 3;
     
     // Renderer
     CAMetalLayer *_metalLayer;
-    id<MTLDevice> _device;
-    id<MTLLibrary> _library;
-    id<MTLRenderPipelineState> _pipeline;
-    id<MTLCommandQueue> _commandQueue;
-    id<MTLCommandBuffer> _commandBuffer;
-    id<MTLBuffer> _positionBuffer;
-    id<MTLBuffer> _colorBuffer;
+    id <MTLDevice> _device;
+    id <MTLLibrary> _library;
+    id <MTLRenderPipelineState> _pipeline;
+    id <MTLDepthStencilState> _depthState;
+    id <MTLCommandQueue> _commandQueue;
+    id <MTLCommandBuffer> _commandBuffer;
+    id <MTLBuffer> _positionBuffer;
+    id <MTLBuffer> _colorBuffer;
 
     // Texture
     id <MTLTexture> _texture;
-    id<MTLSamplerState> _sampler;
+    // id <MTLTexture> _depthTexture;
+    id <MTLSamplerState> _sampler;
 
     // Uniforms
     id <MTLBuffer> _uniformBuffers[noOfBuffers];
@@ -98,10 +100,20 @@ const NSUInteger noOfBuffers = 3;
     _bufferIndex = 0;
     _angle = 0;
     
+    // To setup metal, there are seven things to do:
+    // 1. Create a MTLDevice
+    // 2. Create a CAMetalLayer
+    // 3. Create a Vertex Buffer
+    // 4. Create a Vertex Shader
+    // 5. Create a Fragment Shader
+    // 6. Create a Render Pipeline
+    // 7. Create a Command Queue
+    
     [self buildMetal];
     [self buildAssets];
     [self buildPipeline];
 
+    // The render method is invoked synchronously by a displayLink
     [self setupDisplayLink];
     
     [self reshape];
@@ -129,49 +141,30 @@ const NSUInteger noOfBuffers = 3;
 - (void)buildMetal
 {
     NSLog(@"MyMetalView::buildDevice");
-
-    // View
-    // device = _device;
     
-    // Device
+    // Create device
     _device = MTLCreateSystemDefaultDevice();
+    if (!_device) {
+        NSLog(@"Error: Unable to create metal default device");
+        return;
+    }
+    
+    // Create command queue
+    _commandQueue = [_device newCommandQueue];
 
-    // Layer
-    _metalLayer = (CAMetalLayer *)[self layer];
+    // Load all shader files shipped with this project
+    _library = [_device newDefaultLibrary];
+ 
+    // Configure layer
+    _metalLayer = (CAMetalLayer *)self.layer;
     _metalLayer.device = _device;
     _metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
 
-    // Queue
-    _commandQueue = [_device newCommandQueue];
 
-    // Shader library
-    _library = [_device newDefaultLibrary];
+    // View
+    self.sampleCount = 1; // 4;
+    // self.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
 }
-
-- (void)buildPipeline
-{
-    NSLog(@"MyMetalView::buildPipeline");
-
-    id<MTLFunction> vertexFunc = [_library newFunctionWithName:@"vertex_main"];
-    id<MTLFunction> fragmentFunc = [_library newFunctionWithName:@"fragment_main"];
-    
-    MTLRenderPipelineDescriptor *pipelineDescriptor = [MTLRenderPipelineDescriptor new];
-    pipelineDescriptor.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm;
-    pipelineDescriptor.vertexFunction = vertexFunc;
-    pipelineDescriptor.fragmentFunction = fragmentFunc;
-    
-    NSError *error = nil;
-    _pipeline = [_device newRenderPipelineStateWithDescriptor:pipelineDescriptor
-                                                        error:&error];
-    
-    if (!_pipeline)
-    {
-        NSLog(@"Error occurred when creating render pipeline state: %@", error);
-    }
-    
-    // _commandQueue = [_device newCommandQueue];
-}
-
 
 - (void)buildAssets
 {
@@ -186,14 +179,14 @@ const NSUInteger noOfBuffers = 3;
                                                    mipmapped:NO];
     
     _texture = [_device newTextureWithDescriptor:mtlTextDesc];
-
+    
     // Sampler
     MTLSamplerDescriptor *samplerDescriptor = [MTLSamplerDescriptor new];
     samplerDescriptor.minFilter = MTLSamplerMinMagFilterLinear;
     samplerDescriptor.magFilter = MTLSamplerMinMagFilterLinear;
     samplerDescriptor.sAddressMode = MTLSamplerAddressModeClampToEdge;
     samplerDescriptor.tAddressMode = MTLSamplerAddressModeClampToEdge;
-
+    
     samplerDescriptor.mipFilter = MTLSamplerMipFilterNotMipmapped;
     _sampler = [_device newSamplerStateWithDescriptor:samplerDescriptor];
     
@@ -202,8 +195,68 @@ const NSUInteger noOfBuffers = 3;
     for (unsigned i = 0; i < noOfBuffers; i++) {
         _uniformBuffers[i] = [_device newBufferWithLength:sizeof(Uniforms) options:0];
     }
-
+    
 }
+
+- (void)buildPipeline
+{
+    NSLog(@"MyMetalView::buildPipeline");
+
+    id<MTLFunction> vertexFunc = [_library newFunctionWithName:@"vertex_main"];
+    id<MTLFunction> fragmentFunc = [_library newFunctionWithName:@"fragment_main"];
+    
+    // Build vertex descriptor
+    MTLVertexDescriptor *vertexDescriptor = [MTLVertexDescriptor new];
+    // Positions
+    vertexDescriptor.attributes[0].format = MTLVertexFormatFloat4;
+    vertexDescriptor.attributes[0].offset = 0;
+    vertexDescriptor.attributes[0].bufferIndex = 0;
+    // Texture coordinates
+    vertexDescriptor.attributes[1].format = MTLVertexFormatHalf2;
+    vertexDescriptor.attributes[1].offset = 16;
+    vertexDescriptor.attributes[1].bufferIndex = 1;
+    // Single interleaved buffer
+    vertexDescriptor.layouts[0].stride = 24;
+    vertexDescriptor.layouts[0].stepRate = 1;
+    vertexDescriptor.layouts[0].stepFunction = MTLVertexStepFunctionPerVertex;
+    
+    // Build render pipeline descriptor
+    MTLRenderPipelineDescriptor *pipelineDescriptor = [MTLRenderPipelineDescriptor new];
+    pipelineDescriptor.label = @"C64 metal pipeline";
+    pipelineDescriptor.sampleCount = self.sampleCount;
+    pipelineDescriptor.vertexFunction = vertexFunc;
+    pipelineDescriptor.fragmentFunction = fragmentFunc;
+    // pipelineDescriptor.vertexDescriptor = vertexDescriptor;
+    pipelineDescriptor.colorAttachments[0].pixelFormat = self.colorPixelFormat;
+    pipelineDescriptor.depthAttachmentPixelFormat = self.depthStencilPixelFormat;
+    pipelineDescriptor.stencilAttachmentPixelFormat = self.depthStencilPixelFormat;
+    
+    NSError *error = nil;
+    _pipeline = [_device newRenderPipelineStateWithDescriptor:pipelineDescriptor
+                                                        error:&error];
+    
+    if (!_pipeline)
+    {
+        NSLog(@"Error occurred when creating render pipeline state: %@", error);
+    }
+    
+    MTLDepthStencilDescriptor *depthDescriptor = [MTLDepthStencilDescriptor new];
+    depthDescriptor.depthCompareFunction = MTLCompareFunctionLess;
+    depthDescriptor.depthWriteEnabled = YES;
+    _depthState = [_device newDepthStencilStateWithDescriptor:depthDescriptor];
+
+    // _commandQueue = [_device newCommandQueue];
+}
+
+#if 0
+- (void)buildDepthBuffer
+{
+    CGSize drawableSize = self.drawableSize;
+    MTLTextureDescriptor *depthTexDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatDepth32Float width:drawableSize.width height:drawableSize.height mipmapped:NO];
+    
+    _depthTexture = [_device newTextureWithDescriptor:depthTexDesc];
+}
+#endif
 
 - (void)setupDisplayLink
 {
@@ -244,7 +297,15 @@ const NSUInteger noOfBuffers = 3;
     NSLog(@"Display link up and running");
 }
 
-- (void)render {
+- (void)render
+{
+#if 0
+    CGSize drawableSize = self.drawableSize;
+    if (_depthTexture.width != drawableSize.width || _depthTexture.height != drawableSize.height)
+    {
+        [self buildDepthBuffer];
+    }
+#endif
     
     /* "A drawable is little more than a wrapper around a texture. Each time we draw, we will ask our Metal layer for a drawable object, from which we can extract a texture that acts as our framebuffer."
      */
@@ -258,9 +319,15 @@ const NSUInteger noOfBuffers = 3;
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
     renderPass.colorAttachments[0].texture = framebufferTexture;
     renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0.5, 0.5, 0.5, 1);
-    renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
     renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
+    renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
+    // renderPass.depthAttachment.texture = _depthTexture;
+    renderPass.depthAttachment.clearDepth = 1;
+    renderPass.depthAttachment.loadAction = MTLLoadActionClear;
+    renderPass.depthAttachment.storeAction = MTLStoreActionDontCare;
 
+    
+    
     // "A command queue is an object that keeps a list of render command buffers to be executed."
     _commandQueue = [_device newCommandQueue];
     
@@ -270,14 +337,19 @@ const NSUInteger noOfBuffers = 3;
     /* "A command encoder is an object that is used to tell Metal what drawing we actually want to do. It is responsible for translating these high-level commands (set these shader parameters, draw these triangles, etc.) into low-level instructions that are then written into its corresponding command buffer. Once we have issued all of our draw calls (which we aren’t doing in this post), we send the endEncoding message to the command encoder so it has the chance to finish its encoding.
     */
     id<MTLRenderCommandEncoder> commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
-    [commandEncoder setRenderPipelineState:_pipeline];
+    MTLViewport vp = {0, 0, self.drawableSize.width, self.drawableSize.height, 0, 1};
     
+    [commandEncoder setViewport:vp];
+    [commandEncoder setDepthStencilState:_depthState];
     [commandEncoder setFragmentTexture:_texture atIndex:0];
     [commandEncoder setFragmentSamplerState:_sampler atIndex:0];
+    [commandEncoder setRenderPipelineState:_pipeline];
+    // [commandEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
+    // [commandEncoder setCullMode:MTLCullModeBack];
     
     [commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
     [commandEncoder setVertexBuffer:_uniformBuffers[_bufferIndex] offset:0 atIndex:1];
-    [commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
+    [commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:24 instanceCount:1];
     [commandEncoder endEncoding];
 
     /* "As its last action, the command buffer will signal that its drawable will be ready to be shown on-screen once all preceding commands are complete. Then, we call commit to indicate that this command buffer is complete and ready to be placed in command queue for execution on the GPU." */

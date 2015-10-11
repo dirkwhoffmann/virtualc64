@@ -100,15 +100,66 @@ matrix_from_rotation(float radians, float x, float y, float z)
     NSLog(@"MyMetalView::buildVertexBuffer (texture cut: %f %f %f %f)",
           textureXStart, textureXEnd, textureYStart, textureYEnd);
     
+    const float dx = 0.5;
+    const float dy = 0.5;
+    const float dz = 0.5;
+    
     float positions[] =
     {
-        -0.5,  0.5, 0, 1,   textureXStart, textureYStart,
-        -0.5, -0.5, 0, 1,   textureXStart, textureYEnd,
-        0.5, -0.5, 0, 1,   textureXEnd, textureYEnd,
+#if 0
+        // -Z
+        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
+         dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
         
-        -0.5,  0.5, 0, 1,   textureXStart, textureYStart,
-        0.5,  0.5, 0, 1,   textureXEnd, textureYStart,
-        0.5, -0.5, 0, 1,   textureXEnd, textureYEnd,
+        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
+         dx,  dy, -dz, 1,   textureXEnd, textureYStart,
+         dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
+
+        // +Z
+        -dx,  dy,  dz, 1,   textureXStart, textureYStart,
+        -dx, -dy,  dz, 1,   textureXStart, textureYEnd,
+         dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+        -dx,  dy,  dz, 1,   textureXStart, textureYStart,
+         dx,  dy,  dz, 1,   textureXEnd, textureYStart,
+         dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+#endif
+        // -X
+        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
+        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        -dx,  dy,  dz, 1,   textureXEnd, textureYStart,
+        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+
+        // +X
+         dx,  dy, -dz, 1,   textureXStart, textureYStart,
+         dx, -dy, -dz, 1,   textureXStart, textureYEnd,
+         dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+         dx,  dy, -dz, 1,   textureXStart, textureYStart,
+         dx,  dy,  dz, 1,   textureXEnd, textureYStart,
+         dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+
+        // -Y
+         dx, -dy, -dz, 1,   textureXStart, textureYStart,
+        -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
+        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+         dx, -dy, -dz, 1,   textureXStart, textureYStart,
+         dx, -dy,  dz, 1,   textureXEnd, textureYStart,
+        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+
+        // +Y
+        +dx, +dy, -dz, 1,   textureXStart, textureYStart,
+        -dx, +dy, -dz, 1,   textureXStart, textureYEnd,
+        -dx, +dy, +dz, 1,   textureXEnd, textureYEnd,
+        
+        +dx, +dy, -dz, 1,   textureXStart, textureYStart,
+        +dx, +dy, +dz, 1,   textureXEnd, textureYStart,
+        -dx, +dy, +dz, 1,   textureXEnd, textureYEnd,
     };
     
     return [device newBufferWithBytes:positions
