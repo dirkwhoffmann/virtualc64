@@ -19,7 +19,7 @@
 #import "C64GUI.h"
 
 matrix_float4x4
-matrix_identity()
+vc64_matrix_identity()
 {
     vector_float4 X = { 1, 0, 0, 0 };
     vector_float4 Y = { 0, 1, 0, 0 };
@@ -32,7 +32,7 @@ matrix_identity()
 }
 
 matrix_float4x4
-matrix_from_perspective_fov_aspectLH(float fovY, float aspect, float nearZ, float farZ)
+vc64_matrix_from_perspective_fov_aspectLH(float fovY, float aspect, float nearZ, float farZ)
 {
     // 1 / tan == cot
     float yscale = 1.0f / tanf(fovY * 0.5f);
@@ -50,7 +50,7 @@ matrix_from_perspective_fov_aspectLH(float fovY, float aspect, float nearZ, floa
 }
 
 matrix_float4x4
-matrix_from_translation(float x, float y, float z)
+vc64_matrix_from_translation(float x, float y, float z)
 {
     matrix_float4x4 m = matrix_identity_float4x4;
     m.columns[3] = (vector_float4) { x, y, z, 1.0 };
@@ -58,7 +58,7 @@ matrix_from_translation(float x, float y, float z)
 }
 
 matrix_float4x4
-matrix_from_rotation(float radians, float x, float y, float z)
+vc64_matrix_from_rotation(float radians, float x, float y, float z)
 {
     vector_float3 v = vector_normalize(((vector_float3){x, y, z}));
     float cos = cosf(radians);

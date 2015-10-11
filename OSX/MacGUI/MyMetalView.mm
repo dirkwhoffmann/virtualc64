@@ -479,7 +479,7 @@ const NSUInteger noOfBuffers = 3;
      this means the view orientation or size changed.
      */
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
-    _projectionMatrix = matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
+    _projectionMatrix = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
     
     _viewMatrix = matrix_identity_float4x4;
 }
@@ -489,8 +489,8 @@ const NSUInteger noOfBuffers = 3;
     Uniforms *frameData = (Uniforms *)[_uniformBuffers[_bufferIndex] contents];
     
     frameData->model =
-    matrix_from_translation(0.0f, 0.0f, 2.0f) *
-    matrix_from_rotation(_angle, 1.0f, 1.0f, 0.0f);
+    vc64_matrix_from_translation(0.0f, 0.0f, 2.0f) *
+    vc64_matrix_from_rotation(_angle, 1.0f, 1.0f, 0.0f);
     frameData->view = _viewMatrix;
     
     matrix_float4x4 modelViewMatrix = frameData->view * frameData->model;

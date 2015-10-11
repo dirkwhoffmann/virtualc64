@@ -26,6 +26,14 @@
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
 		50137EA01BCA396100147283 /* MyMetalViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */; settings = {ASSET_TAGS = (); }; };
+		50137EA41BCA817F00147283 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50137EA21BCA817F00147283 /* Shaders.metal */; settings = {ASSET_TAGS = (); }; };
+		50137EAD1BCA819A00147283 /* AAPLMetalKitEssentialsMesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50137EA71BCA819A00147283 /* AAPLMetalKitEssentialsMesh.mm */; settings = {ASSET_TAGS = (); }; };
+		50137EAE1BCA819A00147283 /* AAPLMetalKitEssentialsSubmesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50137EA91BCA819A00147283 /* AAPLMetalKitEssentialsSubmesh.mm */; settings = {ASSET_TAGS = (); }; };
+		50137EAF1BCA819A00147283 /* AAPLMetalKitEssentialsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50137EAB1BCA819A00147283 /* AAPLMetalKitEssentialsViewController.mm */; settings = {ASSET_TAGS = (); }; };
+		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
+		50137EB51BCA860800147283 /* realship.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 50137EB21BCA860800147283 /* realship.mtl */; settings = {ASSET_TAGS = (); }; };
+		50137EB61BCA860800147283 /* realship.obj in Resources */ = {isa = PBXBuildFile; fileRef = 50137EB31BCA860800147283 /* realship.obj */; settings = {ASSET_TAGS = (); }; };
+		50137EB71BCA860800147283 /* shipDiffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 50137EB41BCA860800147283 /* shipDiffuse.png */; settings = {ASSET_TAGS = (); }; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
 		50176C650A6F72F3009E80BD /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C530A6F72F3009E80BD /* CIA.cpp */; };
@@ -99,7 +107,7 @@
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
-		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; settings = {ASSET_TAGS = (); }; };
+		50C72DE61BC7F42100F1863B /* DirksShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* DirksShaders.metal */; settings = {ASSET_TAGS = (); }; };
 		50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
@@ -226,6 +234,18 @@
 		50137E9E1BCA394600147283 /* MyMetalViewHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewHelper.h; sourceTree = "<group>"; };
 		50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewHelper.mm; sourceTree = "<group>"; };
 		50137EA11BCA453700147283 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		50137EA21BCA817F00147283 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		50137EA61BCA819A00147283 /* AAPLMetalKitEssentialsMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMetalKitEssentialsMesh.h; sourceTree = "<group>"; };
+		50137EA71BCA819A00147283 /* AAPLMetalKitEssentialsMesh.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAPLMetalKitEssentialsMesh.mm; sourceTree = "<group>"; };
+		50137EA81BCA819A00147283 /* AAPLMetalKitEssentialsSubmesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMetalKitEssentialsSubmesh.h; sourceTree = "<group>"; };
+		50137EA91BCA819A00147283 /* AAPLMetalKitEssentialsSubmesh.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAPLMetalKitEssentialsSubmesh.mm; sourceTree = "<group>"; };
+		50137EAA1BCA819A00147283 /* AAPLMetalKitEssentialsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMetalKitEssentialsViewController.h; sourceTree = "<group>"; };
+		50137EAB1BCA819A00147283 /* AAPLMetalKitEssentialsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AAPLMetalKitEssentialsViewController.mm; sourceTree = "<group>"; };
+		50137EAC1BCA819A00147283 /* AAPLShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLShaderTypes.h; sourceTree = "<group>"; };
+		50137EB01BCA83B000147283 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
+		50137EB21BCA860800147283 /* realship.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = realship.mtl; sourceTree = "<group>"; };
+		50137EB31BCA860800147283 /* realship.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = realship.obj; sourceTree = "<group>"; };
+		50137EB41BCA860800147283 /* shipDiffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shipDiffuse.png; sourceTree = "<group>"; };
 		50176C4F0A6F72F3009E80BD /* basic.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = basic.cpp; sourceTree = "<group>"; };
 		50176C500A6F72F3009E80BD /* basic.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = basic.h; sourceTree = "<group>"; };
 		50176C510A6F72F3009E80BD /* C64.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = C64.cpp; sourceTree = "<group>"; };
@@ -334,7 +354,7 @@
 		50BD119D1BA2E1B60043E59F /* MyControllerCrashreporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyControllerCrashreporter.h; sourceTree = "<group>"; };
 		50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCrashreporter.mm; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		50C72DE51BC7F42100F1863B /* DirksShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = DirksShaders.metal; sourceTree = "<group>"; };
 		50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C64ProxyColors.mm; sourceTree = "<group>"; };
 		50C9CB141B81E3300054EE86 /* C64ProxyColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ProxyColors.h; sourceTree = "<group>"; };
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
@@ -432,6 +452,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */,
 				50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */,
 				5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
@@ -523,6 +544,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50137EB01BCA83B000147283 /* ModelIO.framework */,
 				50C72DE31BC7BC8800F1863B /* Metal.framework */,
 				5055A83E1BC7996900399A20 /* MetalKit.framework */,
 				5051A1551B884EBE00CBFB5A /* AVFoundation.framework */,
@@ -610,6 +632,13 @@
 				50176C710A6F7357009E80BD /* Disassembler.mm */,
 				50176C720A6F7357009E80BD /* Formatter.h */,
 				50176C730A6F7357009E80BD /* Formatter.mm */,
+				50137EA61BCA819A00147283 /* AAPLMetalKitEssentialsMesh.h */,
+				50137EA71BCA819A00147283 /* AAPLMetalKitEssentialsMesh.mm */,
+				50137EA81BCA819A00147283 /* AAPLMetalKitEssentialsSubmesh.h */,
+				50137EA91BCA819A00147283 /* AAPLMetalKitEssentialsSubmesh.mm */,
+				50137EAA1BCA819A00147283 /* AAPLMetalKitEssentialsViewController.h */,
+				50137EAB1BCA819A00147283 /* AAPLMetalKitEssentialsViewController.mm */,
+				50137EAC1BCA819A00147283 /* AAPLShaderTypes.h */,
 				50032EB01BC919D90050BEEA /* MyMetalView.h */,
 				50032EB11BC919D90050BEEA /* MyMetalView.mm */,
 				50137E9E1BCA394600147283 /* MyMetalViewHelper.h */,
@@ -833,8 +862,12 @@
 		50C72DE71BC7F50D00F1863B /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				50137EB21BCA860800147283 /* realship.mtl */,
+				50137EB31BCA860800147283 /* realship.obj */,
+				50137EB41BCA860800147283 /* shipDiffuse.png */,
 				50137EA11BCA453700147283 /* ShaderTypes.h */,
-				50C72DE51BC7F42100F1863B /* Shaders.metal */,
+				50C72DE51BC7F42100F1863B /* DirksShaders.metal */,
+				50137EA21BCA817F00147283 /* Shaders.metal */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -963,7 +996,9 @@
 				50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */,
 				50271DEA1A7E1CFE00C04290 /* LEDnewRed.png in Resources */,
 				50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */,
+				50137EB61BCA860800147283 /* realship.obj in Resources */,
 				50287EEB0A7CA86900292533 /* stepOut32.png in Resources */,
+				50137EB71BCA860800147283 /* shipDiffuse.png in Resources */,
 				502F57FA1B93457200D1077E /* fast.png in Resources */,
 				50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */,
 				509DF2480A9F681900AE0859 /* keyboard32.png in Resources */,
@@ -994,6 +1029,7 @@
 				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
 				502F57F41B93441A00D1077E /* LEDred.png in Resources */,
 				50CCB1C81B84A191008D8C30 /* tb_pacman.png in Resources */,
+				50137EB51BCA860800147283 /* realship.mtl in Resources */,
 				502F57F21B93441400D1077E /* LEDgreen.png in Resources */,
 				50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */,
 				502F57F81B93445300D1077E /* LEDyellow.png in Resources */,
@@ -1032,7 +1068,9 @@
 				50176C630A6F72F3009E80BD /* basic.cpp in Sources */,
 				50176C640A6F72F3009E80BD /* C64.cpp in Sources */,
 				50176C650A6F72F3009E80BD /* CIA.cpp in Sources */,
+				50137EAE1BCA819A00147283 /* AAPLMetalKitEssentialsSubmesh.mm in Sources */,
 				50176C660A6F72F3009E80BD /* CPU.cpp in Sources */,
+				50137EAD1BCA819A00147283 /* AAPLMetalKitEssentialsMesh.mm in Sources */,
 				50176C670A6F72F3009E80BD /* Instructions.cpp in Sources */,
 				50AE4A351A693AA0003EA774 /* MountDragView.mm in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
@@ -1066,8 +1104,10 @@
 				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
 				50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
+				50137EAF1BCA819A00147283 /* AAPLMetalKitEssentialsViewController.mm in Sources */,
 				BC8146880FE54238007ED085 /* JoystickManager.mm in Sources */,
 				500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */,
+				50137EA41BCA817F00147283 /* Shaders.metal in Sources */,
 				50414727122188FC00A80E0C /* Cartridge.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
@@ -1097,7 +1137,7 @@
 				50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */,
 				50D141821417A34B0024FC74 /* sid.cc in Sources */,
 				50D141831417A34B0024FC74 /* version.cc in Sources */,
-				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
+				50C72DE61BC7F42100F1863B /* DirksShaders.metal in Sources */,
 				50D141841417A34B0024FC74 /* voice.cc in Sources */,
 				50D141851417A34B0024FC74 /* wave.cc in Sources */,
 				50D141861417A34B0024FC74 /* wave6581__ST.cc in Sources */,

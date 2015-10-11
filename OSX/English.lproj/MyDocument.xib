@@ -317,13 +317,25 @@
                         </connections>
                     </button>
                     <customView id="DD4-5B-w9h" customClass="MyMetalView">
-                        <rect key="frame" x="410" y="149" width="356" height="236"/>
+                        <rect key="frame" x="404" y="75" width="356" height="236"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
                         <connections>
                             <outlet property="c64proxy" destination="2208" id="bSx-dM-tjo"/>
                             <outlet property="controller" destination="-2" id="dJS-4Q-XYe"/>
                         </connections>
+                    </customView>
+                    <customView id="6ka-Vq-AJT">
+                        <rect key="frame" x="398" y="349" width="362" height="270"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <subviews>
+                            <customView id="3IQ-2G-Qzt" customClass="MTKView">
+                                <rect key="frame" x="0.0" y="0.0" width="362" height="270"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
+                            </customView>
+                        </subviews>
+                        <animations/>
                     </customView>
                 </subviews>
                 <animations/>
@@ -416,7 +428,7 @@
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -4946,6 +4958,11 @@ DQ
             </connections>
             <point key="canvasLocation" x="830.5" y="-233.5"/>
         </window>
+        <viewController id="t5U-Ec-MuO" customClass="AAPLMetalKitEssentialsViewController">
+            <connections>
+                <outlet property="view" destination="3IQ-2G-Qzt" id="Pkg-Ru-h5a"/>
+            </connections>
+        </viewController>
     </objects>
     <resources>
         <image name="LEDgray" width="128" height="128"/>
