@@ -28,6 +28,39 @@ matrix_float4x4 vc64_matrix_from_rotation(float radians, float x, float y, float
 {
 }
 
+#pragma mark Vertex Buffers
+
 - (id<MTLBuffer>)buildVertexBuffer:(id<MTLDevice>)device;
+
+
+#pragma mark Animation
+
+//! Returns true if view is currently drawing animation effects
+- (bool) animates;
+
+- (float)eyeX;
+- (void)setEyeX:(float)newX;
+- (float)eyeY;
+- (void)setEyeY:(float)newY;
+- (float)eyeZ;
+- (void)setEyeZ:(float)newZ;
+
+//! Trigger animation effect. Zooms in from far away
+- (void) zoom;
+
+//! Trigger animation effect. Scroll in from below
+- (void) scroll;
+
+//! Trigger animation effect. Combination of zooming and rotating
+- (void) fadeIn;
+
+//! Trigger animation effect. Rotate cube in one direction
+- (void) rotate;
+
+//! Trigger animation effect. Rotate cube in other direction
+- (void) rotateBack;
+
+//! Compute geometry parameters for next animation cycle
+- (void) updateAngles;
 
 @end

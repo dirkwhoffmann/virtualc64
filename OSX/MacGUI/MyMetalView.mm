@@ -88,7 +88,22 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     c64 = [c64proxy c64]; // DEPRECATED
     
-    _angle = 0;
+    // Set initial scene position and drawing properties
+    targetXAngle = targetYAngle = targetZAngle = 0;
+    deltaXAngle = deltaYAngle = deltaZAngle = 0;
+    currentEyeX = currentEyeY = currentEyeZ = 0;
+    deltaEyeX = deltaEyeY = deltaEyeZ = 0;
+    drawInEntireWindow = false;
+    drawIn3D = true;
+    drawC64texture = false;
+    drawBackground = true;
+    drawEntireCube = false;
+    
+    // Core video and graphics stuff
+    displayLink = nil;
+
+    // Metal related stuff
+    _angle = 0;  // DEPRECATED
     _pipelineIsDirty = YES;
     _depthTexture = nil;
     
@@ -424,7 +439,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _viewMatrix = matrix_identity_float4x4;
 }
 
-- (void)updateAngles {
+- (void)updateRotationAngle {
     
     Uniforms *frameData = (Uniforms *)[_uniformBuffer contents];
     
@@ -445,7 +460,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     @autoreleasepool {
         
         // Update angles for screen animation
-        [self updateAngles];
+        [self updateRotationAngle];
         
         // Update texture
         [self updateTexture:_commandBuffer];

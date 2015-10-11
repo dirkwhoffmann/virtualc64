@@ -43,12 +43,37 @@ const int C64_TEXTURE_DEPTH = 4;
     
     C64 *c64; // DEPRECATED. GET RID OF THIS VARIABLE AND RENAME c64proxy to c64
 
-    // Texture cut-out (fist and last visible texture coordinates)
+    // Animation parameters
+    float currentXAngle, targetXAngle, deltaXAngle;
+    float currentYAngle, targetYAngle, deltaYAngle;
+    float currentZAngle, targetZAngle, deltaZAngle;
+    float currentEyeX, targetEyeX, deltaEyeX;
+    float currentEyeY, targetEyeY, deltaEyeY;
+    float currentEyeZ, targetEyeZ, deltaEyeZ;
+
+    // Texture cut-out (first and last visible texture coordinates)
     float textureXStart;
     float textureXEnd;
     float textureYStart;
     float textureYEnd;
+    
+    //! If true, the OpenGL view covers the whole window area (used to hide the status bar)
+    bool drawInEntireWindow;
+
+    //! If false, 3D drawing is switched off (2D drawing is used in fullscreen mode, only)
+    bool drawIn3D;
+    
+    //! If false, the C64 screen is not drawn (background texture or black screen will be visible)
+    bool drawC64texture;
+    
+    //! If false, the background is not drawn
+    bool drawBackground;
+    
+    //! If false, only the front facing part of the texture cube is drawn
+    bool drawEntireCube;
 }
+
+
 
 #pragma mark Drawing
 
