@@ -6,6 +6,10 @@
     MetalKit view controller that's setup as the MTKViewDelegate.
 */
 
+// Next steps:
+// Replace spacship by triangle
+
+
 #import <Metal/Metal.h>
 #import <simd/simd.h>
 #import <MetalKit/MetalKit.h>
@@ -41,6 +45,9 @@ const NSUInteger AAPLBuffersInflightBuffers = 3;
     matrix_float4x4 _viewMatrix;
     float _rotation;
     
+    // Vertex buffer
+    id <MTLBuffer> _positionBuffer;
+    
     // Meshes.
     NSMutableArray<AAPLMetalKitEssentialsMesh *> *_meshes;
     
@@ -59,6 +66,8 @@ const NSUInteger AAPLBuffersInflightBuffers = 3;
     [self setupView];
     [self loadAssets];
     [self reshape];
+    
+    [self updateScreenGeometry];
 }
 
 - (void)setupView {
@@ -199,6 +208,112 @@ const NSUInteger AAPLBuffersInflightBuffers = 3;
     }
 }
 
+- (void)updateScreenGeometry
+{
+#if 0
+    if (c64->isPAL()) {
+        // PAL border will be 36 pixels wide and 34 pixels heigh
+        textureXStart = (float)(PAL_LEFT_BORDER_WIDTH - 36.0) / (float)TEXTURE_WIDTH;
+        textureXEnd = (float)(PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + 36.0) / (float)TEXTURE_WIDTH;
+        textureYStart = (float)(PAL_UPPER_BORDER_HEIGHT - 34.0) / (float)TEXTURE_HEIGHT;
+        textureYEnd = (float)(PAL_UPPER_BORDER_HEIGHT + PAL_CANVAS_HEIGHT + 34.0) / (float)TEXTURE_HEIGHT;
+    } else {
+        // NTSC border will be 42 pixels wide and 9 pixels heigh
+        textureXStart = (float)(NTSC_LEFT_BORDER_WIDTH - 42.0) / (float)TEXTURE_WIDTH;
+        textureXEnd = (float)(NTSC_LEFT_BORDER_WIDTH + NTSC_CANVAS_WIDTH + 42.0) / (float)TEXTURE_WIDTH;
+        textureYStart = (float)(NTSC_UPPER_BORDER_HEIGHT - 9) / (float)TEXTURE_HEIGHT;
+        textureYEnd = (float)(NTSC_UPPER_BORDER_HEIGHT + NTSC_CANVAS_HEIGHT + 9) / (float)TEXTURE_HEIGHT;
+    }
+#endif
+    // Enable this for debugging (will display the whole texture)
+    
+     textureXStart = 0.0;
+     textureXEnd = 1.0;
+     textureYStart = 0.0;
+     textureYEnd = 1.0;
+    
+    _positionBuffer = [self buildVertexBuffer:_device];
+}
+
+- (id<MTLBuffer>)buildVertexBuffer:(id<MTLDevice>)device
+{
+    
+    NSLog(@"MyMetalView::buildVertexBuffer (texture cut: %f %f %f %f)",
+          textureXStart, textureXEnd, textureYStart, textureYEnd);
+    
+    const float dx = 0.5;
+    const float dy = 0.5;
+    const float dz = 0.5;
+    
+    float positions[] =
+    {
+#if 0
+        // -Z
+        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
+        dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
+        
+        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        dx,  dy, -dz, 1,   textureXEnd, textureYStart,
+        dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
+        
+        // +Z
+        -dx,  dy,  dz, 1,   textureXStart, textureYStart,
+        -dx, -dy,  dz, 1,   textureXStart, textureYEnd,
+        dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+        -dx,  dy,  dz, 1,   textureXStart, textureYStart,
+        dx,  dy,  dz, 1,   textureXEnd, textureYStart,
+        dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+
+        // -X
+        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
+        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        -dx,  dy,  dz, 1,   textureXEnd, textureYStart,
+        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+        // +X
+        dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        dx, -dy, -dz, 1,   textureXStart, textureYEnd,
+        dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+        dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        dx,  dy,  dz, 1,   textureXEnd, textureYStart,
+        dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+        // -Y
+        dx, -dy, -dz, 1,   textureXStart, textureYStart,
+        -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
+        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+        dx, -dy, -dz, 1,   textureXStart, textureYStart,
+        dx, -dy,  dz, 1,   textureXEnd, textureYStart,
+        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        
+        // +Y
+        +dx, +dy, -dz, 1,   textureXStart, textureYStart,
+        -dx, +dy, -dz, 1,   textureXStart, textureYEnd,
+        -dx, +dy, +dz, 1,   textureXEnd, textureYEnd,
+        
+        +dx, +dy, -dz, 1,   textureXStart, textureYStart,
+        +dx, +dy, +dz, 1,   textureXEnd, textureYStart,
+        -dx, +dy, +dz, 1,   textureXEnd, textureYEnd,
+#endif
+        // -Z
+        -dx,  dy, -dz, 0, -1.0, 0,   textureXStart, textureYStart,
+        -dx, -dy, -dz, 0, -1.0, 0,   textureXStart, textureYEnd,
+        dx, -dy, -dz,  0, -1.0, 0,   textureXEnd, textureYEnd,
+
+    };
+    
+    return [device newBufferWithBytes:positions
+                               length:sizeof(positions)
+                              options:MTLResourceOptionCPUCacheModeDefault];
+}
+
 - (void)render {
     dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
     
@@ -223,11 +338,15 @@ const NSUInteger AAPLBuffersInflightBuffers = 3;
     [renderEncoder setViewport:vp];
     [renderEncoder setDepthStencilState:_depthState];
     [renderEncoder setRenderPipelineState:_pipelineState];
-    
+
     // Set the our per frame uniforms.
     [renderEncoder setVertexBuffer:_frameUniformBuffers[_constantDataBufferIndex]
                             offset:0
                            atIndex:AAPLFrameUniformBuffer];
+#if 0
+    [renderEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
+    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:3 instanceCount:1];
+#endif
     
     [renderEncoder pushDebugGroup:@"Render Meshes"];
     

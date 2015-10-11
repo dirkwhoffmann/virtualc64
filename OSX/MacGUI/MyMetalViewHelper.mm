@@ -106,7 +106,6 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     
     float positions[] =
     {
-#if 0
         // -Z
         -dx,  dy, -dz, 1,   textureXStart, textureYStart,
         -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
@@ -124,7 +123,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
         -dx,  dy,  dz, 1,   textureXStart, textureYStart,
          dx,  dy,  dz, 1,   textureXEnd, textureYStart,
          dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
-#endif
+
         // -X
         -dx,  dy, -dz, 1,   textureXStart, textureYStart,
         -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
@@ -156,10 +155,10 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
         +dx, +dy, -dz, 1,   textureXStart, textureYStart,
         -dx, +dy, -dz, 1,   textureXStart, textureYEnd,
         -dx, +dy, +dz, 1,   textureXEnd, textureYEnd,
-        
+
         +dx, +dy, -dz, 1,   textureXStart, textureYStart,
-        +dx, +dy, +dz, 1,   textureXEnd, textureYStart,
         -dx, +dy, +dz, 1,   textureXEnd, textureYEnd,
+        +dx, +dy, +dz, 1,   textureXEnd, textureYStart,
     };
     
     return [device newBufferWithBytes:positions
