@@ -29,10 +29,28 @@ matrix_float4x4 vc64_matrix_from_rotation(float radians, float x, float y, float
 {
 }
 
+// --------------------------------------------------------------------------------
+//                                   Drawing
+// --------------------------------------------------------------------------------
+
+- (NSImage *) flipImage:(NSImage *)image;
+- (NSImage *) expandImage:(NSImage *)image toSize:(NSSize)size;
+- (id<MTLTexture>) makeTexture:(NSImage *)image withDevice:(id <MTLDevice>)device;
+
+
+// --------------------------------------------------------------------------------
+//                               Vertex buffers
+// --------------------------------------------------------------------------------
+
 #pragma mark Vertex Buffers
 
 - (id<MTLBuffer>)buildVertexBuffer:(id<MTLDevice>)device;
 
+
+
+// --------------------------------------------------------------------------------
+//                               Animation effects
+// --------------------------------------------------------------------------------
 
 #pragma mark Animation
 

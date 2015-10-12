@@ -808,8 +808,7 @@ void checkForOpenGLErrors()
 		glTexCoord2f(textureXEnd, textureYEnd);
 		glVertex3f( dimX,-dimY, dimX);		// Bottom Right Of The Quad (Front)
 	
-		//if (drawEntireCube) {
-        if (0) {
+		if (drawEntireCube) {
 			
 			// TOP
 			glColor3f(1.0f,1.0f,1.0f);				// Set The Color

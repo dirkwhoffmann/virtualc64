@@ -104,9 +104,20 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     const float dx = 0.64;
     const float dy = 0.48;
     const float dz = 0.64;
-    
+    const float bgx = 6.4;
+    const float bgy = 4.8;
+    const float bgz = -0.8;
     float positions[] =
     {
+        // Background
+        -bgx,  bgy, -bgz, 1,   0.0, 0.0,
+        -bgx, -bgy, -bgz, 1,   0.0, 1.0,
+         bgx, -bgy, -bgz, 1,   1.0, 1.0,
+        
+        -bgx,  bgy, -bgz, 1,   0.0, 0.0,
+         bgx,  bgy, -bgz, 1,   1.0, 0.0,
+         bgx, -bgy, -bgz, 1,   1.0, 1.0,
+
         // -Z
         -dx,  dy, -dz, 1,   textureXStart, textureYStart,
         -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
@@ -166,6 +177,105 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
                                length:sizeof(positions)
                               options:MTLResourceOptionCPUCacheModeDefault];
 }
+
+// --------------------------------------------------------------------------------
+//                                    Graphics
+// --------------------------------------------------------------------------------
+
+- (NSImage *) flipImage:(NSImage *)image
+{
+    assert(image != nil);
+    
+    NSSize size = [image size];
+    NSImage *newImage = [[NSImage alloc] initWithSize:size];
+    
+    if (image) {
+        [NSGraphicsContext saveGraphicsState];
+        [newImage lockFocus];
+        
+        NSAffineTransform* t = [NSAffineTransform transform];
+        [t translateXBy:0 yBy:size.height];
+        [t scaleXBy:1 yBy:-1];
+        [t concat];
+        
+        [image drawInRect:NSMakeRect(0, 0, size.width,size.height)];
+        
+        [newImage unlockFocus];
+        [NSGraphicsContext restoreGraphicsState];
+    }
+    
+    return newImage;
+}
+
+- (NSImage *) expandImage:(NSImage *)image toSize:(NSSize)size
+{
+    NSImage *newImage = [[NSImage alloc] initWithSize:size];
+    
+    if (image) {
+        [NSGraphicsContext saveGraphicsState];
+        [newImage lockFocus];
+        
+        NSAffineTransform* t = [NSAffineTransform transform];
+        [t translateXBy:0 yBy:size.height];
+        [t scaleXBy:1 yBy:-1];
+        [t concat];
+        
+        [image drawInRect:NSMakeRect(0,0,size.width,size.height)
+                 fromRect:NSMakeRect(0,0,[image size].width, [image size].height)
+                operation:NSCompositeSourceOver fraction:1.0];
+        
+        [newImage unlockFocus];
+        [NSGraphicsContext restoreGraphicsState];
+    }
+    
+    return newImage;
+}
+
+
+
+
+- (id<MTLTexture>) makeTexture:(NSImage *)image withDevice:(id <MTLDevice>)device
+{
+ 
+    // CGImageRef imageRef = [image CGImage];
+    NSRect imageRect = NSMakeRect(0, 0, image.size.width, image.size.height);
+    CGImageRef imageRef = [image CGImageForProposedRect:&imageRect context:NULL hints:nil];
+    
+    
+    // Create a suitable bitmap context for extracting the bits of the image
+    NSUInteger width = CGImageGetWidth(imageRef);
+    NSUInteger height = CGImageGetHeight(imageRef);
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    uint8_t *rawData = (uint8_t *)calloc(height * width * 4, sizeof(uint8_t));
+    NSUInteger bytesPerPixel = 4;
+    NSUInteger bytesPerRow = bytesPerPixel * width;
+    NSUInteger bitsPerComponent = 8;
+    CGContextRef bitmapContext = CGBitmapContextCreate(rawData, width, height,
+                                                       bitsPerComponent, bytesPerRow, colorSpace,
+                                                       kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGColorSpaceRelease(colorSpace);
+        
+    // Flip the context so the positive Y axis points down
+    CGContextTranslateCTM(bitmapContext, 0, height);
+    CGContextScaleCTM(bitmapContext, 1, -1);
+        
+    CGContextDrawImage(bitmapContext, CGRectMake(0, 0, width, height), imageRef);
+    CGContextRelease(bitmapContext);
+        
+    MTLTextureDescriptor *textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
+                                                                                                 width:width
+                                                                                                height:height
+                                                                                             mipmapped:NO];
+    id<MTLTexture> texture = [device newTextureWithDescriptor:textureDescriptor];
+        
+    MTLRegion region = MTLRegionMake2D(0, 0, width, height);
+    [texture replaceRegion:region mipmapLevel:0 withBytes:rawData bytesPerRow:bytesPerRow];
+        
+    free(rawData);
+        
+    return texture;
+}
+
 
 
 // --------------------------------------------------------------------------------

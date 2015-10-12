@@ -50,15 +50,18 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // Textures
     id <CAMetalDrawable> _drawable;
     id <MTLTexture> _framebufferTexture;
-
     id <MTLTexture> _texture;
     id <MTLTexture> _depthTexture;
+    id <MTLTexture> _bgTexture;
     id <MTLSamplerState> _sampler;
 
     // Uniforms
     id <MTLBuffer> _uniformBuffer;
-    matrix_float4x4 _projectionMatrix;
+    id <MTLBuffer> _uniformBufferBg;
+    matrix_float4x4 _modelMatrix;
     matrix_float4x4 _viewMatrix;
+    matrix_float4x4 _projectionMatrix;
+    matrix_float4x4 _modelViewProjectionMatrix;
     
     // Display link
     CVDisplayLinkRef displayLink;
@@ -207,7 +210,13 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 {
     NSLog(@"MyMetalView::buildTextures");
     
-    // C64 screen texture
+    // Background texture
+    NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
+    NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
+    NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
+    _bgTexture = [self makeTexture:bgImageResized withDevice:_device];
+    
+    // C64 texture
     MTLTextureDescriptor *textureDescriptor =
     [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
                                                        width:512
@@ -254,6 +263,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
     // Uniform buffer
     _uniformBuffer = [_device newBufferWithLength:sizeof(Uniforms) options:0];
+    _uniformBufferBg = [_device newBufferWithLength:sizeof(Uniforms) options:0];
 }
 
 - (void)buildPipeline
@@ -399,7 +409,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     {
         [_commandEncoder setRenderPipelineState:_pipeline];
         [_commandEncoder setDepthStencilState:_depthState];
-        [_commandEncoder setFragmentTexture:_texture atIndex:0];
+        [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
         [_commandEncoder setFragmentSamplerState:_sampler atIndex:0];
         [_commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
@@ -408,10 +418,17 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
 - (void)render
 {
+    [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
+    [_commandEncoder setVertexBuffer:_uniformBufferBg offset:0 atIndex:1];
+    [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
+
+    [_commandEncoder setFragmentTexture:_texture atIndex:0];
+    [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
     if (drawEntireCube) {
-        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:36 instanceCount:1];
-    } else
-        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
+        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:30 instanceCount:1];
+    } else {
+        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:6 instanceCount:1];
+    }
 }
 
 
@@ -492,21 +509,30 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (void)buildMatrices
 {
+    _modelMatrix = vc64_matrix_from_translation(0.0, 0.0, 6);
+    _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
     
-    Uniforms *frameData = (Uniforms *)[_uniformBuffer contents];
+    Uniforms *frameDataBg = (Uniforms *)[_uniformBufferBg contents];
+    frameDataBg->model = _modelMatrix;
+    frameDataBg->view = _viewMatrix;
+    frameDataBg->projectionView = _modelViewProjectionMatrix;
 
-    frameData->model = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.35);
     
+    
+    _modelMatrix = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.35);
     if ([self animates]) {
-        frameData->model = frameData->model *
+        _modelMatrix = _modelMatrix *
         vc64_matrix_from_rotation(-(currentXAngle / 180.0)*M_PI, 0.5f, 0.0f, 0.0f) *
         vc64_matrix_from_rotation((currentYAngle / 180.0)*M_PI, 0.0f, 0.5f, 0.0f) *
         vc64_matrix_from_rotation((currentZAngle / 180.0)*M_PI, 0.0f, 0.0f, 0.5f);
     }
+    _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
+
+    Uniforms *frameData = (Uniforms *)[_uniformBuffer contents];
     
+    frameData->model = _modelMatrix;
     frameData->view = _viewMatrix;
-    matrix_float4x4 modelViewMatrix = frameData->view * frameData->model;
-    frameData->projectionView = _projectionMatrix * modelViewMatrix;
+    frameData->projectionView = _modelViewProjectionMatrix;
 }
 
 - (void)drawScene2D
