@@ -106,7 +106,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     const float dz = 0.64;
     const float bgx = 6.4;
     const float bgy = 4.8;
-    const float bgz = -0.8;
+    const float bgz = -6.8;
     float positions[] =
     {
         // Background

@@ -415,22 +415,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
     }
 }
-    
-- (void)render
-{
-    [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
-    [_commandEncoder setVertexBuffer:_uniformBufferBg offset:0 atIndex:1];
-    [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
-
-    [_commandEncoder setFragmentTexture:_texture atIndex:0];
-    [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
-    if (drawEntireCube) {
-        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:30 instanceCount:1];
-    } else {
-        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:6 instanceCount:1];
-    }
-}
-
 
 - (void)endFrame
 {
@@ -503,33 +487,32 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
      */
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     _projectionMatrix = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
-    
     _viewMatrix = matrix_identity_float4x4;
-}
-
-- (void)buildMatrices
-{
-    _modelMatrix = vc64_matrix_from_translation(0.0, 0.0, 6);
-    _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
     
+    // Compute matrix for background drawing
+    _modelMatrix = matrix_identity_float4x4;
+    _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
     Uniforms *frameDataBg = (Uniforms *)[_uniformBufferBg contents];
     frameDataBg->model = _modelMatrix;
     frameDataBg->view = _viewMatrix;
     frameDataBg->projectionView = _modelViewProjectionMatrix;
 
-    
-    
+}
+
+- (void)buildMatrices
+{
     _modelMatrix = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.35);
+    
     if ([self animates]) {
         _modelMatrix = _modelMatrix *
         vc64_matrix_from_rotation(-(currentXAngle / 180.0)*M_PI, 0.5f, 0.0f, 0.0f) *
         vc64_matrix_from_rotation((currentYAngle / 180.0)*M_PI, 0.0f, 0.5f, 0.0f) *
         vc64_matrix_from_rotation((currentZAngle / 180.0)*M_PI, 0.0f, 0.0f, 0.5f);
     }
+    
     _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
 
     Uniforms *frameData = (Uniforms *)[_uniformBuffer contents];
-    
     frameData->model = _modelMatrix;
     frameData->view = _viewMatrix;
     frameData->projectionView = _modelViewProjectionMatrix;
@@ -542,22 +525,23 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (void)drawScene3D
 {
-    bool animation = [self animates];
-    
     [self updateAngles];
     [self buildMatrices];
     
-    if (animation) {
+    [self startFrame];
     
-        [self buildMatrices];
-        drawEntireCube = true;
-    } else {
-        drawEntireCube = false;
+    // Render background
+    if (drawBackground) {
+        [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
+        [_commandEncoder setVertexBuffer:_uniformBufferBg offset:0 atIndex:1];
+        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
     }
     
     // Render cube
-    [self startFrame];
-    [self render];
+    [_commandEncoder setFragmentTexture:_texture atIndex:0];
+    [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
+    [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:(drawEntireCube ? 30 : 6) instanceCount:1];
+
     [self endFrame];
 }
 
