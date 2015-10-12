@@ -180,6 +180,7 @@
 {
 	[[self document] updateChangeCount:NSChangeDone];
 	[screen rotateBack];
+    [metalScreen rotateBack];
 	[c64 reset];
 	[self continueAction:self];
 }
@@ -215,6 +216,7 @@
     [warpMode setHidden:NO];
         
     [screen setDrawInEntireWindow:NO];
+    [metalScreen setDrawInEntireWindow:NO];
 }
     
 - (IBAction)hideStatusBar
@@ -235,6 +237,7 @@
     [warpMode setHidden:YES];
         
     [screen setDrawInEntireWindow:YES];
+    [metalScreen setDrawInEntireWindow:YES];
 }
 
 

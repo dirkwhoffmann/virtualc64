@@ -713,7 +713,7 @@ void checkForOpenGLErrors()
     
     glBindTexture(GL_TEXTURE_2D, texture);		
     glBegin(GL_QUADS);			
-        glTexCoord2f(textureXEnd, textureYStart);
+    glTexCoord2f(textureXEnd, textureYStart);
     glVertex2f(640,0);		// Top Right Of The Quad (Front)
     glTexCoord2f(textureXStart, textureYStart);
     glVertex2f(0,0);		// Top Left Of The Quad (Front)
@@ -745,9 +745,6 @@ void checkForOpenGLErrors()
     
 	bool animation = [self animates];
 
-	// bool drawBackground = animation || !drawC64texture;
-	// bool drawBackground = !drawC64texture;
-    // drawBackground = false;
     if (drawBackground) {
         float depth = -5.0f;
         float scale = 9.3f;
@@ -811,7 +808,8 @@ void checkForOpenGLErrors()
 		glTexCoord2f(textureXEnd, textureYEnd);
 		glVertex3f( dimX,-dimY, dimX);		// Bottom Right Of The Quad (Front)
 	
-		if (drawEntireCube) {
+		//if (drawEntireCube) {
+        if (0) {
 			
 			// TOP
 			glColor3f(1.0f,1.0f,1.0f);				// Set The Color

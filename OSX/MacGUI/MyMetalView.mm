@@ -59,7 +59,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     id <MTLBuffer> _uniformBuffer;
     matrix_float4x4 _projectionMatrix;
     matrix_float4x4 _viewMatrix;
-    float _angle; // Rotation angle
     
     // Display link
     CVDisplayLinkRef displayLink;
@@ -67,6 +66,47 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     //
     BOOL _pipelineIsDirty;
 }
+
+// -----------------------------------------------------------------------------------------------
+//                                          Configuration
+// -----------------------------------------------------------------------------------------------
+
+- (bool)drawInEntireWindow { return drawInEntireWindow; }
+- (void)setDrawInEntireWindow:(bool)b
+{
+    if (drawInEntireWindow == b)
+        return;
+    
+    /*
+    NSRect r = self.frame;
+    float borderThickness;
+    if (b) {
+        NSLog(@"Expanding OpenGL view");
+        r.origin.y -= 24;
+        r.size.height += 24;
+        borderThickness = 0.0;
+    } else {
+        NSLog(@"Shrinking OpenGL view");
+        r.origin.y += 24;
+        r.size.height -= 24;
+        borderThickness = 22.0;
+    }
+    
+    self.frame = r;
+    [[self window] setContentBorderThickness:borderThickness forEdge: NSMinYEdge];
+     */
+
+     drawInEntireWindow = b;
+}
+    
+- (bool)drawIn3D { return drawIn3D; }
+- (void)setDrawIn3D:(bool)b { drawIn3D = b; }
+
+- (bool)drawC64texture { return drawC64texture; }
+- (void)setDrawC64texture:(bool)b { drawC64texture = b; }
+
+- (bool)drawEntireCube { return drawEntireCube; }
+- (void)setDrawEntireCube:(bool)b { drawEntireCube = b; }
 
 // -----------------------------------------------------------------------------------------------
 //                                       Initialization
@@ -88,6 +128,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     c64 = [c64proxy c64]; // DEPRECATED
     
+    // Create lock used by the draw method
+    lock = [NSRecursiveLock new];
+
     // Set initial scene position and drawing properties
     targetXAngle = targetYAngle = targetZAngle = 0;
     deltaXAngle = deltaYAngle = deltaZAngle = 0;
@@ -103,7 +146,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     displayLink = nil;
 
     // Metal related stuff
-    _angle = 0;  // DEPRECATED
     _pipelineIsDirty = YES;
     _depthTexture = nil;
     
@@ -128,6 +170,10 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         CVDisplayLinkStop(displayLink);
         CVDisplayLinkRelease(displayLink);
         displayLink = NULL;
+    }
+    
+    if (lock) {
+        lock = nil;
     }
 }
 
@@ -362,8 +408,12 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
 - (void)render
 {
-    [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:36 instanceCount:1];
+    if (drawEntireCube) {
+        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:36 instanceCount:1];
+    } else
+        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
 }
+
 
 - (void)endFrame
 {
@@ -428,7 +478,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
            bytesPerRow:rowBytes bytesPerImage:imageBytes];
 }
 
-- (void)reshape {
+- (void)reshape
+{
     /*
      When reshape is called, update the view and projection matricies since
      this means the view orientation or size changed.
@@ -439,37 +490,68 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _viewMatrix = matrix_identity_float4x4;
 }
 
-- (void)updateRotationAngle {
+- (void)buildMatrices
+{
     
     Uniforms *frameData = (Uniforms *)[_uniformBuffer contents];
+
+    frameData->model = vc64_matrix_from_translation(currentEyeX, -currentEyeY, currentEyeZ+1.35);
     
-    frameData->model =
-    vc64_matrix_from_translation(0.0f, 0.0f, 2.0f) *
-    vc64_matrix_from_rotation(_angle, 1.0f, 1.0f, 0.0f);
+    if ([self animates]) {
+        frameData->model = frameData->model *
+        vc64_matrix_from_rotation(-(currentXAngle / 180.0)*M_PI, 0.5f, 0.0f, 0.0f) *
+        vc64_matrix_from_rotation((currentYAngle / 180.0)*M_PI, 0.0f, 0.5f, 0.0f) *
+        vc64_matrix_from_rotation((currentZAngle / 180.0)*M_PI, 0.0f, 0.0f, 0.5f);
+    }
+    
     frameData->view = _viewMatrix;
-    
     matrix_float4x4 modelViewMatrix = frameData->view * frameData->model;
-    
     frameData->projectionView = _projectionMatrix * modelViewMatrix;
+}
+
+- (void)drawScene2D
+{
+}
+
+
+- (void)drawScene3D
+{
+    bool animation = [self animates];
     
-    _angle += 0.05f;
+    [self updateAngles];
+    [self buildMatrices];
+    
+    if (animation) {
+    
+        [self buildMatrices];
+        drawEntireCube = true;
+    } else {
+        drawEntireCube = false;
+    }
+    
+    // Render cube
+    [self startFrame];
+    [self render];
+    [self endFrame];
 }
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
 {
     @autoreleasepool {
         
-        // Update angles for screen animation
-        [self updateRotationAngle];
+        [lock lock];
         
         // Update texture
         [self updateTexture:_commandBuffer];
-        
+
         // Draw scene
-        [self startFrame];
-        [self render];
-        [self endFrame];
+        if (drawIn3D) {
+            [self drawScene3D];
+        } else {
+            [self drawScene2D];
+        }
         
+        [lock unlock];
         return kCVReturnSuccess;
     }
 }

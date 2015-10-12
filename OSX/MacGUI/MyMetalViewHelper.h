@@ -17,6 +17,7 @@
  */
 
 #import "MyMetalView.h"
+#import "ShaderTypes.h"
 
 matrix_float4x4 vc64_matrix_identity();
 matrix_float4x4 vc64_matrix_from_perspective_fov_aspectLH
@@ -62,5 +63,6 @@ matrix_float4x4 vc64_matrix_from_rotation(float radians, float x, float y, float
 
 //! Compute geometry parameters for next animation cycle
 - (void) updateAngles;
+
 
 @end

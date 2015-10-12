@@ -43,6 +43,9 @@ const int C64_TEXTURE_DEPTH = 4;
     
     C64 *c64; // DEPRECATED. GET RID OF THIS VARIABLE AND RENAME c64proxy to c64
 
+    // Synchronization lock
+    NSRecursiveLock *lock;
+    
     // Animation parameters
     float currentXAngle, targetXAngle, deltaXAngle;
     float currentYAngle, targetYAngle, deltaYAngle;
@@ -73,6 +76,19 @@ const int C64_TEXTURE_DEPTH = 4;
     bool drawEntireCube;
 }
 
+#pragma mark Configuring
+
+- (bool)drawInEntireWindow;
+- (void)setDrawInEntireWindow:(bool)b;
+
+- (bool)drawIn3D;
+- (void)setDrawIn3D:(bool)b;
+
+- (bool)drawC64texture;
+- (void)setDrawC64texture:(bool)b;
+
+- (bool)drawEntireCube;
+- (void)setDrawEntireCube:(bool)b;
 
 
 #pragma mark Drawing

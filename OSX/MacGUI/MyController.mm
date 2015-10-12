@@ -142,6 +142,7 @@
     NSLog(@"windowWillEnterFullScreen");
     
     [screen setDrawIn3D:NO];
+    [metalScreen setDrawIn3D:NO];
     [self hideStatusBar];
 }
 
@@ -155,6 +156,7 @@
     NSLog(@"windowWillExitFullScreen");
     
     [screen setDrawIn3D:YES];
+    [metalScreen setDrawIn3D:YES];
     [self showStatusBar];
 }
 
@@ -175,7 +177,8 @@
 {
     NSLog(@"Proposed full screen size: %f x %f", proposedSize.width, proposedSize.height);
     
-    NSRect myRect = [screen bounds];
+    // NSRect myRect = [screen bounds];
+    NSRect myRect = [metalScreen bounds];
     myRect.size = proposedSize;
     // [screen setFrame:myRect];
     // [window setFrame:myRect display:YES];
@@ -283,6 +286,9 @@
 	[screen setEyeX:[defaults floatForKey:VC64EyeX]];
 	[screen setEyeY:[defaults floatForKey:VC64EyeY]];
 	[screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
+    [metalScreen setEyeX:[defaults floatForKey:VC64EyeX]];
+    [metalScreen setEyeY:[defaults floatForKey:VC64EyeY]];
+    [metalScreen setEyeZ:[defaults floatForKey:VC64EyeZ]];
 
 	[c64 setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
     [c64 setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
@@ -478,10 +484,10 @@
 
 			// Start emulator
 			[c64 run];
-			//[screen zoom];
-			//[screen scroll];
 			[screen fadeIn];
 			[screen setDrawC64texture:true];
+            [metalScreen fadeIn];
+            [metalScreen setDrawC64texture:true];
 
 			// Check for attached archive
 			if ([[self document] archive]) {
@@ -1010,9 +1016,11 @@
     NSLog(@"Should type:  %ld (%@)", (long)doType, textToType);
     
 	// Rotate C64 screen
-    if (doMount || doFlash)
+    if (doMount || doFlash) {
         [screen rotate];
-	
+        [metalScreen rotate];
+    }
+    
 	// Hide sheet
 	[mountDialog orderOut:sender];
 	
@@ -1091,12 +1099,14 @@
 {
 	// Pass all keyboard events to C64
 	[screen keyDown:event];
+    // [metalScreen keyDown:event];
 }
 
 - (void)keyUp:(NSEvent *)event
 {
 	// Pass all keyboard events to C64
 	[screen keyUp:event];
+    // [metalScreen keyUp:event];
 }
 
 

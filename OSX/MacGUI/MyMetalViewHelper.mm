@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "ShaderTypes.h"
 
 matrix_float4x4
 vc64_matrix_identity()
@@ -100,9 +101,9 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     NSLog(@"MyMetalView::buildVertexBuffer (texture cut: %f %f %f %f)",
           textureXStart, textureXEnd, textureYStart, textureYEnd);
     
-    const float dx = 0.5;
-    const float dy = 0.5;
-    const float dz = 0.5;
+    const float dx = 0.64;
+    const float dy = 0.48;
+    const float dz = 0.64;
     
     float positions[] =
     {
@@ -173,8 +174,12 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
 
 - (bool)animates
 {
-    return (currentXAngle != targetXAngle || currentYAngle != targetYAngle || currentZAngle != targetZAngle ||
-            currentEyeX != targetEyeX || currentEyeY != targetEyeY || currentEyeZ != targetEyeZ);
+    return (currentXAngle != targetXAngle ||
+            currentYAngle != targetYAngle ||
+            currentZAngle != targetZAngle ||
+            currentEyeX != targetEyeX ||
+            currentEyeY != targetEyeY ||
+            currentEyeZ != targetEyeZ);
 }
 
 - (float)eyeX
@@ -298,7 +303,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
 {
     NSLog(@"Scrolling...\n\n");
     
-    currentEyeY    = 0.9;
+    currentEyeY    = -1.5;
     targetXAngle   = 0;
     targetYAngle   = 0;
     targetZAngle   = 0;
@@ -314,7 +319,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     currentXAngle  = -90;
     currentEyeZ    = 5.0;
     
-    currentEyeY    = 2.5;
+    currentEyeY    = 4.5; //2.5;
     targetXAngle   = 0;
     targetYAngle   = 0;
     targetZAngle   = 0;
