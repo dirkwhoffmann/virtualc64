@@ -296,7 +296,7 @@ enum INPUT_DEVICES {
 
 @property (strong) C64Proxy *c64;
 @property (strong,readonly) MyOpenGLView *screen;
-@property (strong,readonly) MyOpenGLView *metalScreen;
+@property (strong,readonly) MyMetalView *metalScreen;
 @property int inputDeviceA;
 @property int inputDeviceB;
 

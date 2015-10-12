@@ -101,6 +101,9 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [[controller screen] setEyeX:(float)0.0];
     [[controller screen] setEyeY:(float)0.0];
     [[controller screen] setEyeZ:(float)0.0];
+    [[controller metalScreen] setEyeX:(float)0.0];
+    [[controller metalScreen] setEyeY:(float)0.0];
+    [[controller metalScreen] setEyeZ:(float)0.0];
     [c64 setVideoFilter:GLFILTER_ANTI_ALIASING];
     [c64 setColorScheme:CCS64];
     
@@ -142,18 +145,21 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 - (IBAction)setEyeXAction:(id)sender
 {
 	[[controller screen] setEyeX:[sender floatValue]];
+    [[controller metalScreen] setEyeX:[sender floatValue]];
     [self update];
 }
 
 - (IBAction)setEyeYAction:(id)sender
 {
 	[[controller screen] setEyeY:[sender floatValue]];
+    [[controller metalScreen] setEyeY:[sender floatValue]];
     [self update];
 }
 
 - (IBAction)setEyeZAction:(id)sender
 {
  	[[controller screen] setEyeZ:[sender floatValue]];
+    [[controller metalScreen] setEyeZ:[sender floatValue]];
     [self update];
 }
 

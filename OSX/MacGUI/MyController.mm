@@ -20,7 +20,7 @@
 
 @implementation MyController
 
-@synthesize c64, screen;
+@synthesize c64, screen, metalScreen;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction

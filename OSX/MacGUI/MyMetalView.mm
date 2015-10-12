@@ -495,7 +495,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     Uniforms *frameData = (Uniforms *)[_uniformBuffer contents];
 
-    frameData->model = vc64_matrix_from_translation(currentEyeX, -currentEyeY, currentEyeZ+1.35);
+    frameData->model = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.35);
     
     if ([self animates]) {
         frameData->model = frameData->model *
