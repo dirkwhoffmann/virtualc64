@@ -100,7 +100,7 @@
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
-		50C72DE61BC7F42100F1863B /* DirksShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* DirksShaders.metal */; settings = {ASSET_TAGS = (); }; };
+		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; settings = {ASSET_TAGS = (); }; };
 		50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
@@ -336,7 +336,7 @@
 		50BD119D1BA2E1B60043E59F /* MyControllerCrashreporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyControllerCrashreporter.h; sourceTree = "<group>"; };
 		50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCrashreporter.mm; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		50C72DE51BC7F42100F1863B /* DirksShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = DirksShaders.metal; sourceTree = "<group>"; };
+		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C64ProxyColors.mm; sourceTree = "<group>"; };
 		50C9CB141B81E3300054EE86 /* C64ProxyColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ProxyColors.h; sourceTree = "<group>"; };
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
@@ -838,7 +838,7 @@
 			isa = PBXGroup;
 			children = (
 				50137EA11BCA453700147283 /* ShaderTypes.h */,
-				50C72DE51BC7F42100F1863B /* DirksShaders.metal */,
+				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -1101,7 +1101,7 @@
 				50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */,
 				50D141821417A34B0024FC74 /* sid.cc in Sources */,
 				50D141831417A34B0024FC74 /* version.cc in Sources */,
-				50C72DE61BC7F42100F1863B /* DirksShaders.metal in Sources */,
+				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				50D141841417A34B0024FC74 /* voice.cc in Sources */,
 				50D141851417A34B0024FC74 /* wave.cc in Sources */,
 				50D141861417A34B0024FC74 /* wave6581__ST.cc in Sources */,

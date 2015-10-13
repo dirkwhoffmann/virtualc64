@@ -40,6 +40,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     id <MTLDevice> _device;
     id <MTLLibrary> _library;
     id <MTLRenderPipelineState> _pipeline;
+    id <MTLRenderPipelineState> _pipeline2;
     id <MTLDepthStencilState> _depthState;
     id <MTLCommandQueue> _commandQueue;
     id <MTLCommandBuffer> _commandBuffer;
@@ -268,10 +269,16 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (void)buildPipeline
 {
+    NSError *error = nil;
+    
     NSLog(@"MyMetalView::buildPipeline");
 
     id<MTLFunction> vertexFunc = [_library newFunctionWithName:@"vertex_main"];
     id<MTLFunction> fragmentFunc = [_library newFunctionWithName:@"fragment_main"];
+    id<MTLFunction> fragmentFuncSat = [_library newFunctionWithName:@"fragment_saturation"];
+    assert(vertexFunc != nil);
+    assert(fragmentFunc != nil);
+    assert(fragmentFuncSat != nil);
     
     // Depth stencil state
     MTLDepthStencilDescriptor *depthDescriptor = [MTLDepthStencilDescriptor new];
@@ -311,13 +318,25 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         pipelineDescriptor.fragmentFunction = fragmentFunc;
         // pipelineDescriptor.vertexDescriptor = vertexDescriptor;
     }
-    
-    NSError *error = nil;
     _pipeline = [_device newRenderPipelineStateWithDescriptor:pipelineDescriptor
                                                         error:&error];
-    if (!_pipeline)
-    {
+    if (!_pipeline) {
         NSLog(@"Error occurred when creating render pipeline: %@", error);
+    }
+    
+    // Second pipeline
+    MTLRenderPipelineDescriptor *pipelineDescriptor2 = [MTLRenderPipelineDescriptor new];
+    {
+        pipelineDescriptor2.label = @"C64 metal pipeline 2";
+        pipelineDescriptor2.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm;
+        pipelineDescriptor2.depthAttachmentPixelFormat = MTLPixelFormatDepth32Float;
+        pipelineDescriptor2.vertexFunction = vertexFunc;
+        pipelineDescriptor2.fragmentFunction = fragmentFuncSat;
+    }
+    _pipeline2 = [_device newRenderPipelineStateWithDescriptor:pipelineDescriptor2
+                                                        error:&error];
+    if (!_pipeline2) {
+        NSLog(@"Error occurred when creating render pipeline 2: %@", error);
     }
     
     _commandQueue = [_device newCommandQueue];
