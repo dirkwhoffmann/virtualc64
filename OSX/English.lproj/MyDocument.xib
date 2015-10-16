@@ -318,7 +318,7 @@
                     </button>
                     <customView id="DD4-5B-w9h" customClass="MyMetalView">
                         <rect key="frame" x="404" y="75" width="356" height="236"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                         <animations/>
                         <connections>
                             <outlet property="c64proxy" destination="2208" id="bSx-dM-tjo"/>
