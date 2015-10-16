@@ -54,7 +54,8 @@ static const NSUInteger kThreadgroupDepth  = 1;
     id <MTLSamplerState> _sampler;
 
     // Post-processing
-    id <MTLComputePipelineState> _kernel;
+    id <MTLComputePipelineState> _grayscaleKernel;
+    id <MTLComputePipelineState> _transparencyKernel;
     MTLSize _threadgroupSize;
     MTLSize _threadgroupCount;
     
@@ -63,9 +64,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     CGFloat layerWidth;
     CGFloat layerHeight;
     
-    id <MTLRenderPipelineState> _pp_pipeline; // post-processing
     id <MTLRenderPipelineState> _pipeline;
-    id <MTLRenderPipelineState> _pipeline2;
     id <MTLDepthStencilState> _depthState;
     id <MTLCommandBuffer> _commandBuffer;
     id <MTLRenderCommandEncoder> _commandEncoder;
@@ -174,7 +173,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     
     [self buildMetal];
     [self buildTextures];
-    [self buildComputeKernel];
+    [self buildKernels];
     // [self buildDepthStencilState];
     [self buildBuffers];
     [self setupDisplayLink];
@@ -196,13 +195,15 @@ static const NSUInteger kThreadgroupDepth  = 1;
     // Configure view
     // view.depthPixelFormat   = MTLPixelFormatInvalid;
     // view.stencilPixelFormat = MTLPixelFormatInvalid;
-    self.sampleCount = 4; // 1;
+    self.sampleCount = 1; // 4;
 
     // Get layer
     _metalLayer = (CAMetalLayer *)self.layer;
     _metalLayer.device = _device;
     _metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
-    _metalLayer.framebufferOnly = NO;
+    _metalLayer.framebufferOnly = NO; // YES;
+    
+    
     layerWidth = _metalLayer.drawableSize.width;
     layerHeight = _metalLayer.drawableSize.height;
     
@@ -334,42 +335,31 @@ static const NSUInteger kThreadgroupDepth  = 1;
     _uniformBufferBg = [_device newBufferWithLength:sizeof(Uniforms) options:0];
 }
 
-- (BOOL) buildComputeKernel
+- (id <MTLComputePipelineState>) buildKernelWithFunctionName:(NSString *)name
 {
     NSError *error = nil;
     
-    // Create a compute kernel function
-    id <MTLFunction> function = [_library newFunctionWithName:@"grayscale"];
+    // Create compute kernel function
+    id <MTLFunction> function = [_library newFunctionWithName:name];
     if (!function) {
-        NSLog(@"ERROR: Failed to create new function");
+        NSLog(@"ERROR: Cannot find kernel function %@ in library", name);
         return NO;
     }
     
-    // Create a compute kernel
-    _kernel = [_device newComputePipelineStateWithFunction:function error:&error];
-    if(!_kernel) {
-        NSLog(@"ERROR: Failed to create new compute kernel: %@", error);
+    // Create kernel
+    id <MTLComputePipelineState> kernel = [_device newComputePipelineStateWithFunction:function error:&error];
+    if(!kernel) {
+        NSLog(@"ERROR: Failed to create compute kernel %@: %@", name, error);
         return NO;
     }
-    
-#if 0
-    MTLTextureDescriptor *pTexDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
-                                                                                        width:_inTexture.width
-                                                                                       height:_inTexture.height
-                                                                                    mipmapped:NO];
-    
-    if(!pTexDesc) {
-        NSLog(@"ERROR: Failed to create post-processing texture descriptor");
-        return NO;
-    }
-    
-    _outTexture = [_device newTextureWithDescriptor:pTexDesc];
-    
-    if(!_outTexture) {
-        NSLog(@"ERROR: Failed to create post-processing texture");
-        return NO;
-    }
-#endif
+   
+    return kernel;
+}
+
+- (BOOL) buildKernels
+{    
+    _grayscaleKernel = [self buildKernelWithFunctionName:@"grayscale"];
+    _transparencyKernel = [self buildKernelWithFunctionName:@"transparency"];
     
     // Set the compute kernel's thread group size of 16x16
     _threadgroupSize = MTLSizeMake(kThreadgroupWidth, kThreadgroupHeight, kThreadgroupDepth);
@@ -404,29 +394,6 @@ static const NSUInteger kThreadgroupDepth  = 1;
     NSError *error = nil;
     
     NSLog(@"MyMetalView::buildPipeline");
-
-    // Post-processing pipeline
-    id <MTLFunction> fragmentProgram = [_library newFunctionWithName:@"texturedQuadFragment"];
-    id <MTLFunction> vertexProgram = [_library newFunctionWithName:@"texturedQuadVertex"];
-    
-    //  create a pipeline state for the quad
-    MTLRenderPipelineDescriptor *pQuadPipelineStateDescriptor = [MTLRenderPipelineDescriptor new];
-    // pQuadPipelineStateDescriptor.depthAttachmentPixelFormat      = MTLPixelFormatDepth32Float;
-    // pQuadPipelineStateDescriptor.stencilAttachmentPixelFormat    = self.stencilPixelFormat;
-    pQuadPipelineStateDescriptor.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm;
-    pQuadPipelineStateDescriptor.sampleCount      = 1;
-    pQuadPipelineStateDescriptor.vertexFunction   = vertexProgram;
-    pQuadPipelineStateDescriptor.fragmentFunction = fragmentProgram;
-
-    _pp_pipeline = [_device newRenderPipelineStateWithDescriptor:pQuadPipelineStateDescriptor error:&error];
-    if(!_pp_pipeline) {
-        NSLog(@"Failed to obtain pipeline state descriptor: %@", error);
-        exit(0);
-    }
-    
-
-    
-
     
     id<MTLFunction> vertexFunc = [_library newFunctionWithName:@"vertex_main"];
     id<MTLFunction> fragmentFunc = [_library newFunctionWithName:@"fragment_main"];
@@ -465,9 +432,19 @@ static const NSUInteger kThreadgroupDepth  = 1;
     
     // Render pipeline
     MTLRenderPipelineDescriptor *pipelineDescriptor = [MTLRenderPipelineDescriptor new];
+    MTLRenderPipelineColorAttachmentDescriptor *renderbufAttachment = pipelineDescriptor.colorAttachments[0];
     {
         pipelineDescriptor.label = @"C64 metal pipeline";
-        pipelineDescriptor.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm;
+
+        renderbufAttachment.pixelFormat = MTLPixelFormatBGRA8Unorm;
+        renderbufAttachment.blendingEnabled = YES;
+        renderbufAttachment.rgbBlendOperation = MTLBlendOperationAdd;
+        renderbufAttachment.alphaBlendOperation = MTLBlendOperationAdd;
+        renderbufAttachment.sourceRGBBlendFactor = MTLBlendFactorSourceAlpha;
+        renderbufAttachment.sourceAlphaBlendFactor = MTLBlendFactorSourceAlpha;
+        renderbufAttachment.destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
+        renderbufAttachment.destinationAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
+        
         pipelineDescriptor.depthAttachmentPixelFormat = MTLPixelFormatDepth32Float;
         // pipelineDescriptor.sampleCount = self.sampleCount;
         pipelineDescriptor.vertexFunction = vertexFunc;
@@ -657,12 +634,12 @@ static const NSUInteger kThreadgroupDepth  = 1;
     // Apply filter to C64 screen texture
     [self applyFilter];
     
-    // Create eender pass
+    // Create render pass
     /* "A render pass descriptor tells Metal what actions to take while an image is being rendered" */
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
     {
         renderPass.colorAttachments[0].texture = _framebufferTexture;
-        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0.5, 0.5, 0.5, 1);
+        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0.5, 0.5, 0.5, 0.5);
         renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
         renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
         
@@ -675,6 +652,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     // "A command encoder is an object that is used to tell Metal what drawing we actually want to do."
     _commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
     {
+        // [_commandEncoder setBlendColorRed:0.2 green:0.2 blue:0.2 alpha:0.2];
         [_commandEncoder setRenderPipelineState:_pipeline];
         [_commandEncoder setDepthStencilState:_depthState];
         [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
@@ -693,13 +671,10 @@ static const NSUInteger kThreadgroupDepth  = 1;
         exit(0);
     }
     
-    [computeEncoder setComputePipelineState:_kernel];
-    [computeEncoder setTexture:_texture
-                       atIndex:0];
-    [computeEncoder setTexture:_filteredTexture
-                       atIndex:1];
-    [computeEncoder dispatchThreadgroups:_threadgroupCount
-                   threadsPerThreadgroup:_threadgroupSize];
+    [computeEncoder setComputePipelineState:_transparencyKernel];
+    [computeEncoder setTexture:_texture atIndex:0];
+    [computeEncoder setTexture:_filteredTexture atIndex:1];
+    [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
     [computeEncoder endEncoding];
 }
 

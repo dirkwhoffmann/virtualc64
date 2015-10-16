@@ -49,7 +49,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
 {
     float4 diffuseColor = texture.sample(texSampler, vert.texCoords);
     float4 color = diffuseColor;
-    return half4(color.r, color.g, color.b, 1);
+    return half4(color.r, color.g, color.b, color.a);
 }
 
 fragment half4 fragment_saturation(ProjectedVertex vert [[stage_in]],

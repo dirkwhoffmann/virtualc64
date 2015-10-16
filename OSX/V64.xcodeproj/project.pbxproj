@@ -43,6 +43,7 @@
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
 		501DE20D1BD01EE0000A9784 /* GrayscaleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 501DE20B1BD01EE0000A9784 /* GrayscaleShader.metal */; settings = {ASSET_TAGS = (); }; };
 		501DE20E1BD01EE0000A9784 /* TexturedQuadShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 501DE20C1BD01EE0000A9784 /* TexturedQuadShader.metal */; settings = {ASSET_TAGS = (); }; };
+		501DE2101BD15AA6000A9784 /* TransparencyShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 501DE20F1BD15AA6000A9784 /* TransparencyShader.metal */; settings = {ASSET_TAGS = (); }; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		50244B7B1BBEBAC9002A55E3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; settings = {ASSET_TAGS = (); }; };
 		50244B7C1BBEBB69002A55E3 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -261,6 +262,7 @@
 		501D2C7D1B85C0F700B1AD0F /* VIC_constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_constants.h; sourceTree = "<group>"; };
 		501DE20B1BD01EE0000A9784 /* GrayscaleShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GrayscaleShader.metal; sourceTree = "<group>"; };
 		501DE20C1BD01EE0000A9784 /* TexturedQuadShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TexturedQuadShader.metal; sourceTree = "<group>"; };
+		501DE20F1BD15AA6000A9784 /* TransparencyShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TransparencyShader.metal; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
@@ -843,8 +845,9 @@
 			children = (
 				50137EA11BCA453700147283 /* ShaderTypes.h */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
-				501DE20B1BD01EE0000A9784 /* GrayscaleShader.metal */,
 				501DE20C1BD01EE0000A9784 /* TexturedQuadShader.metal */,
+				501DE20B1BD01EE0000A9784 /* GrayscaleShader.metal */,
+				501DE20F1BD15AA6000A9784 /* TransparencyShader.metal */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -1100,6 +1103,7 @@
 				501DE20D1BD01EE0000A9784 /* GrayscaleShader.metal in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,
+				501DE2101BD15AA6000A9784 /* TransparencyShader.metal in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				50D1417E1417A34B0024FC74 /* envelope.cc in Sources */,
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,
