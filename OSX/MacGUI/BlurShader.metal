@@ -11,8 +11,8 @@ using namespace metal;
 
 kernel void blur(texture2d<float, access::read> inTexture [[texture(0)]],
                  texture2d<float, access::write> outTexture [[texture(1)]],
-                // texture2d<float, access::read> weights [[texture(2)]],
-                uint2 gid [[thread_position_in_grid]])
+                 texture2d<float, access::read> weights [[texture(2)]],
+                 uint2 gid [[thread_position_in_grid]])
 
 /*
 kernel void blur(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
@@ -20,7 +20,7 @@ kernel void blur(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                  uint2                          gid         [[ thread_position_in_grid ]])
 */
 {
-    int size = 4;
+    int size = weights.get_width();
     int radius = size / 2;
     
     float4 accumColor(0, 0, 0, 0);
@@ -34,7 +34,8 @@ kernel void blur(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                 uint2 kernelIndex(i, j);
                 uint2 textureIndex(gid.x + (i - radius), gid.y + (j - radius));
                 float4 color = inTexture.read(textureIndex).rgba;
-                float4 weight = 1.0/(size*size); // weights.read(kernelIndex).rrrr;
+                // float4 weight = 1.0/(size*size);
+                float4 weight = weights.read(kernelIndex).rrrr;
                 accumColor += weight * color;
             }
         }

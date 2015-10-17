@@ -50,6 +50,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     id <MTLTexture> _texture; // C64 screen
     id <MTLTexture> _filteredTexture; // post-processes C64 screen
     id <MTLTexture> _framebufferTexture;
+    id <MTLTexture> _blurWeightTexture;
     id <MTLTexture> _depthTexture; // z buffer
     id <MTLSamplerState> _sampler;
 
@@ -254,6 +255,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     
     [self buildBackgroundTexture];
     [self buildC64Texture];
+    [self buildBlurWeightTexture];
     [self buildTmpBufferTexture];
     
     // Build texture sampler
@@ -306,6 +308,60 @@ static const NSUInteger kThreadgroupDepth  = 1;
                                                    mipmapped:NO];
     _inTexture = [_device newTextureWithDescriptor:textureDescriptor];
 #endif
+}
+
+- (void)buildBlurWeightTexture
+{
+    // NSAssert(self.radius >= 0, @"Blur radius must be non-negative");
+    
+    const float radius = 2.0; // self.radius;
+    const float sigma = radius / 2.0; // self.sigma;
+    const int size = (round(radius) * 2) + 1;
+    
+    float delta = 0;
+    float expScale = 0;;
+    if (radius > 0.0)
+    {
+        delta = (radius * 2) / (size - 1);;
+        expScale = -1 / (2 * sigma * sigma);
+    }
+    
+    float *weights = (float *)malloc(sizeof(float) * size * size);
+    
+    float weightSum = 0;
+    float y = -radius;
+    for (int j = 0; j < size; ++j, y += delta)
+    {
+        float x = -radius;
+        
+        for (int i = 0; i < size; ++i, x += delta)
+        {
+            float weight = expf((x * x + y * y) * expScale);
+            weights[j * size + i] = weight;
+            weightSum += weight;
+        }
+    }
+    
+    const float weightScale = 1 / weightSum;
+    for (int j = 0; j < size; ++j)
+    {
+        for (int i = 0; i < size; ++i)
+        {
+            weights[j * size + i] *= weightScale;
+        }
+    }
+    
+    MTLTextureDescriptor *textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatR32Float
+                                                                                                 width:size
+                                                                                                height:size
+                                                                                             mipmapped:NO];
+    
+    _blurWeightTexture = [_device newTextureWithDescriptor:textureDescriptor];
+    
+    MTLRegion region = MTLRegionMake2D(0, 0, size, size);
+    [_blurWeightTexture replaceRegion:region mipmapLevel:0 withBytes:weights bytesPerRow:sizeof(float) * size];
+    
+    free(weights);
 }
 
 - (void)buildDepthBuffer
@@ -675,6 +731,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     [computeEncoder setComputePipelineState:_blurKernel];
     [computeEncoder setTexture:_texture atIndex:0];
     [computeEncoder setTexture:_filteredTexture atIndex:1];
+    [computeEncoder setTexture:_blurWeightTexture atIndex:2];
     [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
     [computeEncoder endEncoding];
 }
