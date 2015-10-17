@@ -55,7 +55,8 @@ static const NSUInteger kThreadgroupDepth  = 1;
 
     // Post-processing
     id <MTLComputePipelineState> _grayscaleKernel;
-    id <MTLComputePipelineState> _transparencyKernel;
+//    id <MTLComputePipelineState> _transparencyKernel;
+    id <MTLComputePipelineState> _blurKernel;
     MTLSize _threadgroupSize;
     MTLSize _threadgroupCount;
     
@@ -359,7 +360,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
 - (BOOL) buildKernels
 {    
     _grayscaleKernel = [self buildKernelWithFunctionName:@"grayscale"];
-    _transparencyKernel = [self buildKernelWithFunctionName:@"transparency"];
+    _blurKernel = [self buildKernelWithFunctionName:@"blur"];
     
     // Set the compute kernel's thread group size of 16x16
     _threadgroupSize = MTLSizeMake(kThreadgroupWidth, kThreadgroupHeight, kThreadgroupDepth);
@@ -671,7 +672,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
         exit(0);
     }
     
-    [computeEncoder setComputePipelineState:_transparencyKernel];
+    [computeEncoder setComputePipelineState:_blurKernel];
     [computeEncoder setTexture:_texture atIndex:0];
     [computeEncoder setTexture:_filteredTexture atIndex:1];
     [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
