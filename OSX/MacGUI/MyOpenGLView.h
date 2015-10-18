@@ -206,8 +206,6 @@ const int BG_TEXTURE_DEPTH = 4;
 // Compares keycode with the joystick simulation keys and releases joystick if appropriate
 - (BOOL)releaseJoystick:(int)nr withKeycode:(int)keycode device:(int)d;
 
-#pragma mark Joystick simulation
-
 //! Get mac specific character and keycode and translate it to a virtual c64 key
 /*! The returned value can be passed to the pressKey() method of the emulator */
 - (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(int)flags;

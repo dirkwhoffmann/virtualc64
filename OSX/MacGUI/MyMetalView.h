@@ -35,6 +35,12 @@ const int C64_TEXTURE_WIDTH = 512;
 const int C64_TEXTURE_HEIGHT= 512;
 const int C64_TEXTURE_DEPTH = 4;
 
+enum TextureFilterType {
+    FILTER_NONE = 0,
+    FILTER_SMOOTH,
+    FILTER_BLUR,
+    FILTER_GRAYSCALE,
+};
 
 @interface MyMetalView : MTKView
 {
@@ -60,6 +66,9 @@ const int C64_TEXTURE_DEPTH = 4;
     float textureYStart;
     float textureYEnd;
     
+    //! Active texture filter
+    TextureFilterType filter;
+    
     //! If true, the OpenGL view covers the whole window area (used to hide the status bar)
     bool drawInEntireWindow;
 
@@ -74,6 +83,21 @@ const int C64_TEXTURE_DEPTH = 4;
     
     //! If false, only the front facing part of the texture cube is drawn
     bool drawEntireCube;
+    
+#pragma mark Keyboard and joystick emulation
+    
+    //! Stores which keys are currently pressed
+    /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
+    unsigned int pressedKeys[256];
+
+    /*! Stores a fingerprint of each joystick emulation key.
+     *  The user can choose from 2 maps */
+    int joyKeycode[2][5];
+    
+    /*!  Stores a printabel character for each joystick emulation key.
+     *   These values are only used in the properties dialog for pretty printing the keycodes */
+    char joyChar[2][5];
+    
 }
 
 #pragma mark Configuring
@@ -89,6 +113,9 @@ const int C64_TEXTURE_DEPTH = 4;
 
 - (bool)drawEntireCube;
 - (void)setDrawEntireCube:(bool)b;
+
+- (bool)textureFilter;
+- (void)setTextureFilter:(TextureFilterType)type;
 
 
 #pragma mark Drawing

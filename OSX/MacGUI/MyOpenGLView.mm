@@ -926,6 +926,7 @@ void checkForOpenGLErrors()
 //                                  Keyboard events 
 // --------------------------------------------------------------------------------
 
+#if 0
 - (BOOL)acceptsFirstResponder
 {
 	return YES;
@@ -1235,5 +1236,7 @@ void checkForOpenGLErrors()
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender
 {
 }
+
+#endif
 
 @end

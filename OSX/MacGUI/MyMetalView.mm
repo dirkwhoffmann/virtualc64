@@ -132,6 +132,10 @@ static const NSUInteger kThreadgroupDepth  = 1;
 - (bool)drawEntireCube { return drawEntireCube; }
 - (void)setDrawEntireCube:(bool)b { drawEntireCube = b; }
 
+- (bool)textureFilter { return filter; }
+- (void)setTextureFilter:(TextureFilterType)type { filter = type; }
+
+
 // -----------------------------------------------------------------------------------------------
 //                                  Initialization (General)
 // -----------------------------------------------------------------------------------------------
@@ -165,6 +169,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     drawC64texture = false;
     drawBackground = true;
     drawEntireCube = false;
+    filter = FILTER_BLUR;
     
     // Core video and graphics stuff
     displayLink = nil;
@@ -181,6 +186,16 @@ static const NSUInteger kThreadgroupDepth  = 1;
     [self setupDisplayLink];
     
     [self reshape];
+    
+    // Keyboard initialization
+    for (int i = 0; i < 256; i++) {
+        pressedKeys[i] = 0;
+    }
+    
+    // Register for drag and drop
+    [self registerForDraggedTypes:
+     [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
+
 }
 
 - (void)buildMetal
@@ -709,7 +724,6 @@ static const NSUInteger kThreadgroupDepth  = 1;
     // "A command encoder is an object that is used to tell Metal what drawing we actually want to do."
     _commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
     {
-        // [_commandEncoder setBlendColorRed:0.2 green:0.2 blue:0.2 alpha:0.2];
         [_commandEncoder setRenderPipelineState:_pipeline];
         [_commandEncoder setDepthStencilState:_depthState];
         [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
@@ -721,6 +735,9 @@ static const NSUInteger kThreadgroupDepth  = 1;
 
 - (void)applyFilter
 {
+    if (filter == FILTER_NONE)
+        return;
+    
     id <MTLComputeCommandEncoder> computeEncoder = [_commandBuffer computeCommandEncoder];
     
     if (!computeEncoder) {
@@ -728,12 +745,27 @@ static const NSUInteger kThreadgroupDepth  = 1;
         exit(0);
     }
     
-    [computeEncoder setComputePipelineState:_blurKernel];
-    [computeEncoder setTexture:_texture atIndex:0];
-    [computeEncoder setTexture:_filteredTexture atIndex:1];
-    [computeEncoder setTexture:_blurWeightTexture atIndex:2];
-    [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
-    [computeEncoder endEncoding];
+    switch (filter) {
+        case FILTER_BLUR:
+            [computeEncoder setComputePipelineState:_blurKernel];
+            [computeEncoder setTexture:_texture atIndex:0];
+            [computeEncoder setTexture:_filteredTexture atIndex:1];
+            [computeEncoder setTexture:_blurWeightTexture atIndex:2];
+            [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
+            [computeEncoder endEncoding];
+            break;
+            
+        case FILTER_GRAYSCALE:
+            [computeEncoder setComputePipelineState:_grayscaleKernel];
+            [computeEncoder setTexture:_texture atIndex:0];
+            [computeEncoder setTexture:_filteredTexture atIndex:1];
+            [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
+            [computeEncoder endEncoding];
+            break;
+            
+        default:
+            assert(0);
+    }
 }
 
 - (void)drawScene2D

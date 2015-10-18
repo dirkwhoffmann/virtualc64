@@ -1098,15 +1098,15 @@
 - (void)keyDown:(NSEvent *)event
 {
 	// Pass all keyboard events to C64
-	[screen keyDown:event];
-    // [metalScreen keyDown:event];
+	// [screen keyDown:event];
+    [metalScreen keyDown:event];
 }
 
 - (void)keyUp:(NSEvent *)event
 {
 	// Pass all keyboard events to C64
-	[screen keyUp:event];
-    // [metalScreen keyUp:event];
+	//[screen keyUp:event];
+    [metalScreen keyUp:event];
 }
 
 
