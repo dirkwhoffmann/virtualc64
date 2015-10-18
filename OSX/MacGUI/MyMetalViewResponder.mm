@@ -191,10 +191,12 @@
     // NSLog(@"keyDown: '%c' keycode: %02X flags: %08X", (char)c, keycode, flags);
     
     NSLog(@"MyMetalView::keyDown");
+    if (c == 'n')
+        [self setTextureFilter:TEX_FILTER_NONE];
     if (c == 'b')
-        [self setTextureFilter:FILTER_BLUR];
+        [self setTextureFilter:TEX_FILTER_BLUR];
     if (c == 'g')
-        [self setTextureFilter:FILTER_GRAYSCALE];
+        [self setTextureFilter:TEX_FILTER_GRAYSCALE];
     
     // Ignore keys that are already pressed
     if (pressedKeys[(unsigned char)keycode])

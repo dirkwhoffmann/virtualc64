@@ -36,10 +36,15 @@ const int C64_TEXTURE_HEIGHT= 512;
 const int C64_TEXTURE_DEPTH = 4;
 
 enum TextureFilterType {
-    FILTER_NONE = 0,
-    FILTER_SMOOTH,
-    FILTER_BLUR,
-    FILTER_GRAYSCALE,
+    TEX_FILTER_NONE = 0,
+    TEX_FILTER_SMOOTH,
+    TEX_FILTER_BLUR,
+    TEX_FILTER_GRAYSCALE,
+};
+
+enum TextureSamplingMode {
+    TEX_SAMPLE_LINEAR = 0,
+    TEX_SAMPLE_NEAREST
 };
 
 @interface MyMetalView : MTKView
@@ -68,6 +73,9 @@ enum TextureFilterType {
     
     //! Active texture filter
     TextureFilterType filter;
+
+    //! Active texture sampling mode
+    TextureSamplingMode sampling;
     
     //! If true, the OpenGL view covers the whole window area (used to hide the status bar)
     bool drawInEntireWindow;

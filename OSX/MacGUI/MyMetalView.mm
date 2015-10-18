@@ -53,6 +53,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     id <MTLTexture> _blurWeightTexture;
     id <MTLTexture> _depthTexture; // z buffer
     id <MTLSamplerState> _sampler;
+    id <MTLSamplerState> _sampler2;
 
     // Post-processing
     id <MTLComputePipelineState> _grayscaleKernel;
@@ -169,7 +170,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     drawC64texture = false;
     drawBackground = true;
     drawEntireCube = false;
-    filter = FILTER_BLUR;
+    filter = TEX_FILTER_BLUR;
     
     // Core video and graphics stuff
     displayLink = nil;
@@ -273,7 +274,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     [self buildBlurWeightTexture];
     [self buildTmpBufferTexture];
     
-    // Build texture sampler
+    // Build texture samplers
     MTLSamplerDescriptor *samplerDescriptor = [MTLSamplerDescriptor new];
     {
         samplerDescriptor.minFilter = MTLSamplerMinMagFilterLinear;
@@ -283,7 +284,11 @@ static const NSUInteger kThreadgroupDepth  = 1;
         samplerDescriptor.mipFilter = MTLSamplerMipFilterNotMipmapped;
     }
     _sampler = [_device newSamplerStateWithDescriptor:samplerDescriptor];
-
+    {
+        samplerDescriptor.minFilter = MTLSamplerMinMagFilterNearest;
+        samplerDescriptor.magFilter = MTLSamplerMinMagFilterNearest;
+    }
+    _sampler2 = [_device newSamplerStateWithDescriptor:samplerDescriptor];
 }
 
 - (void)buildBackgroundTexture
@@ -711,7 +716,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
     {
         renderPass.colorAttachments[0].texture = _framebufferTexture;
-        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0.5, 0.5, 0.5, 0.5);
+        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0.5, 0.5, 0.5, 1);
         renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
         renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
         
@@ -722,12 +727,13 @@ static const NSUInteger kThreadgroupDepth  = 1;
     }
     
     // "A command encoder is an object that is used to tell Metal what drawing we actually want to do."
+    id <MTLSamplerState> sampler = (sampling == TEX_SAMPLE_LINEAR) ? _sampler : _sampler2;
     _commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
     {
         [_commandEncoder setRenderPipelineState:_pipeline];
         [_commandEncoder setDepthStencilState:_depthState];
         [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
-        [_commandEncoder setFragmentSamplerState:_sampler atIndex:0];
+        [_commandEncoder setFragmentSamplerState:sampler atIndex:0];
         [_commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
     }
@@ -735,8 +741,10 @@ static const NSUInteger kThreadgroupDepth  = 1;
 
 - (void)applyFilter
 {
-    if (filter == FILTER_NONE)
+    if (filter == TEX_FILTER_NONE) {
+        sampling = TEX_SAMPLE_NEAREST;
         return;
+    }
     
     id <MTLComputeCommandEncoder> computeEncoder = [_commandBuffer computeCommandEncoder];
     
@@ -746,21 +754,23 @@ static const NSUInteger kThreadgroupDepth  = 1;
     }
     
     switch (filter) {
-        case FILTER_BLUR:
+        case TEX_FILTER_BLUR:
             [computeEncoder setComputePipelineState:_blurKernel];
             [computeEncoder setTexture:_texture atIndex:0];
             [computeEncoder setTexture:_filteredTexture atIndex:1];
             [computeEncoder setTexture:_blurWeightTexture atIndex:2];
             [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
             [computeEncoder endEncoding];
+            sampling = TEX_SAMPLE_LINEAR;
             break;
             
-        case FILTER_GRAYSCALE:
+        case TEX_FILTER_GRAYSCALE:
             [computeEncoder setComputePipelineState:_grayscaleKernel];
             [computeEncoder setTexture:_texture atIndex:0];
             [computeEncoder setTexture:_filteredTexture atIndex:1];
             [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
             [computeEncoder endEncoding];
+            sampling = TEX_SAMPLE_LINEAR;
             break;
             
         default:
