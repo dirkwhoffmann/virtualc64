@@ -132,4 +132,6 @@ enum TextureSamplingMode {
 
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
 
+
+
 @end

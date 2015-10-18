@@ -420,14 +420,14 @@ static const NSUInteger kThreadgroupDepth  = 1;
     id <MTLFunction> function = [_library newFunctionWithName:name];
     if (!function) {
         NSLog(@"ERROR: Cannot find kernel function %@ in library", name);
-        return NO;
+        return nil;
     }
     
     // Create kernel
     id <MTLComputePipelineState> kernel = [_device newComputePipelineStateWithFunction:function error:&error];
     if(!kernel) {
         NSLog(@"ERROR: Failed to create compute kernel %@: %@", name, error);
-        return NO;
+        return nil;
     }
    
     return kernel;

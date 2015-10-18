@@ -73,7 +73,7 @@
 	[sPanel setAllowedFileTypes:fileTypes];
     
     // Show panel
-	if ([sPanel runModal] != NSOKButton)
+	if ([sPanel runModal] != NSModalResponseOK)
         return;
     
     // Export
@@ -148,7 +148,7 @@
     [sPanel setAllowedFileTypes:fileTypes];
     
     // Show panel
-    if ([sPanel runModal] != NSOKButton) {
+    if ([sPanel runModal] != NSModalResponseOK) {
         delete target;
         return false;
     }

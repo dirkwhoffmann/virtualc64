@@ -487,12 +487,19 @@ PixelEngine::drawSprite(uint8_t nr)
     
     if (vic->spriteIsMulticolor(nr)) {
         
+#if 0
         int colorLookup[4] = {
             0x00,
             colors[vic->spriteExtraColor1()],
             colors[vic->spriteColor(nr)],
             colors[vic->spriteExtraColor2()]
         };
+#endif
+        int colorLookup[4];
+        colorLookup[0] = 0x00;
+        colorLookup[1] = colors[vic->spriteExtraColor1()];
+        colorLookup[2] = colors[vic->spriteColor(nr)];
+        colorLookup[3] = colors[vic->spriteExtraColor2()];
         
         for (int i = 0; i < 3; i++) {
             uint8_t pattern;

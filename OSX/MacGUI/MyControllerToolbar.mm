@@ -91,7 +91,7 @@
 	[myPrintInfo setHorizontallyCentered:YES];
 	[myPrintInfo setVerticalPagination:NSFitPagination];
 	[myPrintInfo setVerticallyCentered:YES];
-	[myPrintInfo setOrientation:NSLandscapeOrientation];
+	[myPrintInfo setOrientation:NSPaperOrientationLandscape];
 	[myPrintInfo setLeftMargin:0.0]; // 32.0
 	[myPrintInfo setRightMargin:0.0]; // 32.0
 	[myPrintInfo setTopMargin:0.0]; // 32.0
@@ -102,7 +102,7 @@
 	NSRect printRect = NSMakeRect(0.0, 0.0, [image size].width, [image size].height);
 	NSImageView *imageView = [[NSImageView alloc] initWithFrame:printRect];
 	[imageView setImage:image];
-	[imageView setImageScaling:NSScaleToFit];
+    [imageView setImageScaling:NSImageScaleAxesIndependently]; // NSScaleToFit];
 
 	// Print image
     NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:imageView  printInfo:myPrintInfo];

@@ -39,7 +39,7 @@ vc64_matrix_from_perspective_fov_aspectLH(float fovY, float aspect, float nearZ,
     float yscale = 1.0f / tanf(fovY * 0.5f);
     float xscale = yscale / aspect;
     float q = farZ / (farZ - nearZ);
-    
+
     matrix_float4x4 m = {
         .columns[0] = { xscale, 0.0f, 0.0f, 0.0f },
         .columns[1] = { 0.0f, yscale, 0.0f, 0.0f },

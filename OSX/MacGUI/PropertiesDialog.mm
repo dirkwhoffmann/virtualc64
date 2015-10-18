@@ -75,32 +75,29 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     NSLog(@"Restoring emulator factoring settings");
     
     // Joystick
-    [[controller screen] setJoyKeycode:126 keymap:1 direction:JOYSTICK_UP];
-    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_UP];
-    [[controller screen] setJoyKeycode:125 keymap:1 direction:JOYSTICK_DOWN];
-    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_DOWN];
-    [[controller screen] setJoyKeycode:123 keymap:1 direction:JOYSTICK_LEFT];
-    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_LEFT];
-    [[controller screen] setJoyKeycode:124 keymap:1 direction:JOYSTICK_RIGHT];
-    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_RIGHT];
-    [[controller screen] setJoyKeycode:49 keymap:1 direction:JOYSTICK_FIRE];
-    [[controller screen] setJoyChar:' ' keymap:1 direction:JOYSTICK_FIRE];
+    [[controller metalScreen] setJoyKeycode:126 keymap:1 direction:JOYSTICK_UP];
+    [[controller metalScreen] setJoyChar:' ' keymap:1 direction:JOYSTICK_UP];
+    [[controller metalScreen] setJoyKeycode:125 keymap:1 direction:JOYSTICK_DOWN];
+    [[controller metalScreen] setJoyChar:' ' keymap:1 direction:JOYSTICK_DOWN];
+    [[controller metalScreen] setJoyKeycode:123 keymap:1 direction:JOYSTICK_LEFT];
+    [[controller metalScreen] setJoyChar:' ' keymap:1 direction:JOYSTICK_LEFT];
+    [[controller metalScreen] setJoyKeycode:124 keymap:1 direction:JOYSTICK_RIGHT];
+    [[controller metalScreen] setJoyChar:' ' keymap:1 direction:JOYSTICK_RIGHT];
+    [[controller metalScreen] setJoyKeycode:49 keymap:1 direction:JOYSTICK_FIRE];
+    [[controller metalScreen] setJoyChar:' ' keymap:1 direction:JOYSTICK_FIRE];
 
-    [[controller screen] setJoyKeycode:13 keymap:2 direction:JOYSTICK_UP];
-    [[controller screen] setJoyChar:'w' keymap:2 direction:JOYSTICK_UP];
-    [[controller screen] setJoyKeycode:6 keymap:2 direction:JOYSTICK_DOWN];
-    [[controller screen] setJoyChar:'y' keymap:2 direction:JOYSTICK_DOWN];
-    [[controller screen] setJoyKeycode:0 keymap:2 direction:JOYSTICK_LEFT];
-    [[controller screen] setJoyChar:'a' keymap:2 direction:JOYSTICK_LEFT];
-    [[controller screen] setJoyKeycode:1 keymap:2 direction:JOYSTICK_RIGHT];
-    [[controller screen] setJoyChar:'s' keymap:2 direction:JOYSTICK_RIGHT];
-    [[controller screen] setJoyKeycode:7 keymap:2 direction:JOYSTICK_FIRE];
-    [[controller screen] setJoyChar:'x' keymap:2 direction:JOYSTICK_FIRE];
+    [[controller metalScreen] setJoyKeycode:13 keymap:2 direction:JOYSTICK_UP];
+    [[controller metalScreen] setJoyChar:'w' keymap:2 direction:JOYSTICK_UP];
+    [[controller metalScreen] setJoyKeycode:6 keymap:2 direction:JOYSTICK_DOWN];
+    [[controller metalScreen] setJoyChar:'y' keymap:2 direction:JOYSTICK_DOWN];
+    [[controller metalScreen] setJoyKeycode:0 keymap:2 direction:JOYSTICK_LEFT];
+    [[controller metalScreen] setJoyChar:'a' keymap:2 direction:JOYSTICK_LEFT];
+    [[controller metalScreen] setJoyKeycode:1 keymap:2 direction:JOYSTICK_RIGHT];
+    [[controller metalScreen] setJoyChar:'s' keymap:2 direction:JOYSTICK_RIGHT];
+    [[controller metalScreen] setJoyKeycode:7 keymap:2 direction:JOYSTICK_FIRE];
+    [[controller metalScreen] setJoyChar:'x' keymap:2 direction:JOYSTICK_FIRE];
 
     // Video
-    [[controller screen] setEyeX:(float)0.0];
-    [[controller screen] setEyeY:(float)0.0];
-    [[controller screen] setEyeZ:(float)0.0];
     [[controller metalScreen] setEyeX:(float)0.0];
     [[controller metalScreen] setEyeY:(float)0.0];
     [[controller metalScreen] setEyeZ:(float)0.0];
@@ -180,8 +177,8 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (void)updateKeymap:(int)map direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t
 {
-    int code = [[controller screen] joyKeycode:map direction:dir];
-    char c = [[controller screen] joyChar:map direction:dir];
+    int code = [[controller metalScreen] joyKeycode:map direction:dir];
+    char c = [[controller metalScreen] joyChar:map direction:dir];
     
     // Change button text and image
     if (map == 1) {
@@ -276,15 +273,15 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     if (flags & NSFunctionKeyMask) NSLog(@"NSFunctionKeyMask ");
     */
     
-    int fingerprint = [[controller screen] fingerprintForKey:keycode withModifierFlags:flags];
+    int fingerprint = [[controller metalScreen] fingerprintForKey:keycode withModifierFlags:flags];
     if (recordKey1 != -1) {
-        [[controller screen] setJoyKeycode:fingerprint keymap:1 direction:(JoystickDirection)recordKey1];
-        [[controller screen] setJoyChar:c keymap:1 direction:(JoystickDirection)recordKey1];
+        [[controller metalScreen] setJoyKeycode:fingerprint keymap:1 direction:(JoystickDirection)recordKey1];
+        [[controller metalScreen] setJoyChar:c keymap:1 direction:(JoystickDirection)recordKey1];
     }
 
     if (recordKey2 != -1) {
-        [[controller screen] setJoyKeycode:fingerprint keymap:2 direction:(JoystickDirection)recordKey2];
-        [[controller screen] setJoyChar:c keymap:2 direction:(JoystickDirection)recordKey2];
+        [[controller metalScreen] setJoyKeycode:fingerprint keymap:2 direction:(JoystickDirection)recordKey2];
+        [[controller metalScreen] setJoyChar:c keymap:2 direction:(JoystickDirection)recordKey2];
     }
 
     recordKey1 = -1;
@@ -323,14 +320,14 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     
     // First keyset
     if (recordKey1 != -1) {
-        [[controller screen] setJoyKeycode:flags keymap:1 direction:(JoystickDirection)recordKey1];
-        [[controller screen] setJoyChar:' ' keymap:1 direction:(JoystickDirection)recordKey1];
+        [[controller metalScreen] setJoyKeycode:flags keymap:1 direction:(JoystickDirection)recordKey1];
+        [[controller metalScreen] setJoyChar:' ' keymap:1 direction:(JoystickDirection)recordKey1];
     }
     
     // Second keyset
     if (recordKey2 != -1) {
-        [[controller screen] setJoyKeycode:flags keymap:2 direction:(JoystickDirection)recordKey2];
-        [[controller screen] setJoyChar:' ' keymap:2 direction:(JoystickDirection)recordKey2];
+        [[controller metalScreen] setJoyKeycode:flags keymap:2 direction:(JoystickDirection)recordKey2];
+        [[controller metalScreen] setJoyChar:' ' keymap:2 direction:(JoystickDirection)recordKey2];
     }
     
     recordKey1 = -1;

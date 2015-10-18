@@ -260,27 +260,27 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 			
     // Joysticks
-    [screen setJoyKeycode:[defaults integerForKey:VC64Left1keycodeKey] keymap:1 direction:JOYSTICK_LEFT];
-    [screen setJoyChar:[defaults integerForKey:VC64Left1charKey] keymap:1 direction:JOYSTICK_LEFT];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Right1keycodeKey] keymap:1 direction:JOYSTICK_RIGHT];
-    [screen setJoyChar:[defaults integerForKey:VC64Right1charKey] keymap:1 direction:JOYSTICK_RIGHT];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Down1keycodeKey] keymap:1 direction:JOYSTICK_DOWN];
-    [screen setJoyChar:[defaults integerForKey:VC64Down1charKey] keymap:1 direction:JOYSTICK_DOWN];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Up1keycodeKey] keymap:1 direction:JOYSTICK_UP];
-    [screen setJoyChar:[defaults integerForKey:VC64Up1charKey] keymap:1 direction:JOYSTICK_UP];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Fire1keycodeKey] keymap:1 direction:JOYSTICK_FIRE];
-    [screen setJoyChar:[defaults integerForKey:VC64Fire1charKey] keymap:1 direction:JOYSTICK_FIRE];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Left1keycodeKey] keymap:1 direction:JOYSTICK_LEFT];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Left1charKey] keymap:1 direction:JOYSTICK_LEFT];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Right1keycodeKey] keymap:1 direction:JOYSTICK_RIGHT];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Right1charKey] keymap:1 direction:JOYSTICK_RIGHT];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Down1keycodeKey] keymap:1 direction:JOYSTICK_DOWN];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Down1charKey] keymap:1 direction:JOYSTICK_DOWN];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Up1keycodeKey] keymap:1 direction:JOYSTICK_UP];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Up1charKey] keymap:1 direction:JOYSTICK_UP];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Fire1keycodeKey] keymap:1 direction:JOYSTICK_FIRE];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Fire1charKey] keymap:1 direction:JOYSTICK_FIRE];
 
-    [screen setJoyKeycode:[defaults integerForKey:VC64Left2keycodeKey] keymap:2 direction:JOYSTICK_LEFT];
-    [screen setJoyChar:[defaults integerForKey:VC64Left2charKey] keymap:2 direction:JOYSTICK_LEFT];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Right2keycodeKey] keymap:2 direction:JOYSTICK_RIGHT];
-    [screen setJoyChar:[defaults integerForKey:VC64Right2charKey] keymap:2 direction:JOYSTICK_RIGHT];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Down2keycodeKey] keymap:2 direction:JOYSTICK_DOWN];
-    [screen setJoyChar:[defaults integerForKey:VC64Down2charKey] keymap:2 direction:JOYSTICK_DOWN];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Up2keycodeKey] keymap:2 direction:JOYSTICK_UP];
-    [screen setJoyChar:[defaults integerForKey:VC64Up2charKey] keymap:2 direction:JOYSTICK_UP];
-    [screen setJoyKeycode:[defaults integerForKey:VC64Fire2keycodeKey] keymap:2 direction:JOYSTICK_FIRE];
-    [screen setJoyChar:[defaults integerForKey:VC64Fire2charKey] keymap:2 direction:JOYSTICK_FIRE];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Left2keycodeKey] keymap:2 direction:JOYSTICK_LEFT];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Left2charKey] keymap:2 direction:JOYSTICK_LEFT];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Right2keycodeKey] keymap:2 direction:JOYSTICK_RIGHT];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Right2charKey] keymap:2 direction:JOYSTICK_RIGHT];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Down2keycodeKey] keymap:2 direction:JOYSTICK_DOWN];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Down2charKey] keymap:2 direction:JOYSTICK_DOWN];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Up2keycodeKey] keymap:2 direction:JOYSTICK_UP];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Up2charKey] keymap:2 direction:JOYSTICK_UP];
+    [metalScreen setJoyKeycode:[defaults integerForKey:VC64Fire2keycodeKey] keymap:2 direction:JOYSTICK_FIRE];
+    [metalScreen setJoyChar:[defaults integerForKey:VC64Fire2charKey] keymap:2 direction:JOYSTICK_FIRE];
     
 	// Video 
 	[screen setEyeX:[defaults floatForKey:VC64EyeX]];
@@ -333,32 +333,32 @@
 	defaults = [NSUserDefaults standardUserDefaults];
 		
     // Joysticks
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_LEFT] forKey:VC64Left1keycodeKey];
-    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_LEFT] forKey:VC64Left1charKey];
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_RIGHT] forKey:VC64Right1keycodeKey];
-    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_RIGHT] forKey:VC64Right1charKey];
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_DOWN] forKey:VC64Down1keycodeKey];
-    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_DOWN] forKey:VC64Down1charKey];
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_UP] forKey:VC64Up1keycodeKey];
-    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_UP] forKey:VC64Up1charKey];
-    [defaults setInteger:[screen joyKeycode:1 direction:JOYSTICK_FIRE] forKey:VC64Fire1keycodeKey];
-    [defaults setInteger:[screen joyChar:1 direction:JOYSTICK_FIRE] forKey:VC64Fire1charKey];
+    [defaults setInteger:[metalScreen joyKeycode:1 direction:JOYSTICK_LEFT] forKey:VC64Left1keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:1 direction:JOYSTICK_LEFT] forKey:VC64Left1charKey];
+    [defaults setInteger:[metalScreen joyKeycode:1 direction:JOYSTICK_RIGHT] forKey:VC64Right1keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:1 direction:JOYSTICK_RIGHT] forKey:VC64Right1charKey];
+    [defaults setInteger:[metalScreen joyKeycode:1 direction:JOYSTICK_DOWN] forKey:VC64Down1keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:1 direction:JOYSTICK_DOWN] forKey:VC64Down1charKey];
+    [defaults setInteger:[metalScreen joyKeycode:1 direction:JOYSTICK_UP] forKey:VC64Up1keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:1 direction:JOYSTICK_UP] forKey:VC64Up1charKey];
+    [defaults setInteger:[metalScreen joyKeycode:1 direction:JOYSTICK_FIRE] forKey:VC64Fire1keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:1 direction:JOYSTICK_FIRE] forKey:VC64Fire1charKey];
     
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_LEFT] forKey:VC64Left2keycodeKey];
-    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_LEFT] forKey:VC64Left2charKey];
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_RIGHT] forKey:VC64Right2keycodeKey];
-    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_RIGHT] forKey:VC64Right2charKey];
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_DOWN] forKey:VC64Down2keycodeKey];
-    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_DOWN] forKey:VC64Down2charKey];
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_UP] forKey:VC64Up2keycodeKey];
-    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_UP] forKey:VC64Up2charKey];
-    [defaults setInteger:[screen joyKeycode:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2keycodeKey];
-    [defaults setInteger:[screen joyChar:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2charKey];
+    [defaults setInteger:[metalScreen joyKeycode:2 direction:JOYSTICK_LEFT] forKey:VC64Left2keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:2 direction:JOYSTICK_LEFT] forKey:VC64Left2charKey];
+    [defaults setInteger:[metalScreen joyKeycode:2 direction:JOYSTICK_RIGHT] forKey:VC64Right2keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:2 direction:JOYSTICK_RIGHT] forKey:VC64Right2charKey];
+    [defaults setInteger:[metalScreen joyKeycode:2 direction:JOYSTICK_DOWN] forKey:VC64Down2keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:2 direction:JOYSTICK_DOWN] forKey:VC64Down2charKey];
+    [defaults setInteger:[metalScreen joyKeycode:2 direction:JOYSTICK_UP] forKey:VC64Up2keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:2 direction:JOYSTICK_UP] forKey:VC64Up2charKey];
+    [defaults setInteger:[metalScreen joyKeycode:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2keycodeKey];
+    [defaults setInteger:[metalScreen joyChar:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2charKey];
     
 	// Video 
-    [defaults setFloat:[screen eyeX] forKey:VC64EyeX];
-    [defaults setFloat:[screen eyeY] forKey:VC64EyeY];
-    [defaults setFloat:[screen eyeZ] forKey:VC64EyeZ];
+    [defaults setFloat:[metalScreen eyeX] forKey:VC64EyeX];
+    [defaults setFloat:[metalScreen eyeY] forKey:VC64EyeY];
+    [defaults setFloat:[metalScreen eyeZ] forKey:VC64EyeZ];
     [defaults setInteger:[c64 videoFilter] forKey:VC64VideoFilterKey];
     [defaults setInteger:[c64 colorScheme] forKey:VC64ColorSchemeKey];
 }

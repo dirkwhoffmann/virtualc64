@@ -150,6 +150,7 @@ const int BG_TEXTURE_DEPTH = 4;
 - (bool)drawInEntireWindow;
 - (void)setDrawInEntireWindow:(bool)b;
 
+#if 0
 //! Computes a fingerprint for the keycode/modifierFlags combination that uniquely identifies a key for joystick emulation
 - (int)fingerprintForKey:(int)keycode withModifierFlags:(int)flags;
 
@@ -164,6 +165,7 @@ const int BG_TEXTURE_DEPTH = 4;
 
 //! @brief Sets the printable character for a joystick emulation key
 - (void)setJoyChar:(char)c keymap:(int)nr direction:(JoystickDirection)dir;
+#endif
 
 //! Trigger animation effect. Zooms in from far away
 - (void) zoom;
@@ -200,6 +202,7 @@ const int BG_TEXTURE_DEPTH = 4;
 
 #pragma mark Joystick simulation
 
+#if 0
 // Compares keycode with the joystick simulation keys and pulls joystick if appropriate
 - (BOOL)pullJoystick:(int)nr withKeycode:(int)keycode device:(int)d;
 
@@ -209,5 +212,6 @@ const int BG_TEXTURE_DEPTH = 4;
 //! Get mac specific character and keycode and translate it to a virtual c64 key
 /*! The returned value can be passed to the pressKey() method of the emulator */
 - (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(int)flags;
+#endif 
 
 @end
