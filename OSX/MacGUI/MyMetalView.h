@@ -23,6 +23,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
+#import "BlurFilter.h"
+#import "SaturationFilter.h"
+#import "SepiaFilter.h"
+#import "CrtFilter.h"
 
 #import <simd/simd.h>
 using namespace simd;
@@ -39,13 +43,18 @@ enum TextureFilterType {
     TEX_FILTER_NONE = 0,
     TEX_FILTER_SMOOTH,
     TEX_FILTER_BLUR,
+    TEX_FILTER_SATURATION,
+    TEX_FILTER_SEPIA,
     TEX_FILTER_GRAYSCALE,
+    TEX_FILTER_CRT,
 };
 
+#if 0
 enum TextureSamplingMode {
     TEX_SAMPLE_LINEAR = 0,
     TEX_SAMPLE_NEAREST
 };
+#endif
 
 @interface MyMetalView : MTKView
 {
@@ -71,11 +80,17 @@ enum TextureSamplingMode {
     float textureYStart;
     float textureYEnd;
     
+    TextureFilter *blurFilter;
+    TextureFilter *saturationFilter;
+    TextureFilter *sepiaFilter;
+    TextureFilter *grayscaleFilter;
+    TextureFilter *crtFilter;
+
     //! Active texture filter
     TextureFilterType filter;
 
     //! Active texture sampling mode
-    TextureSamplingMode sampling;
+    // TextureSamplingMode sampling;
     
     //! If true, the OpenGL view covers the whole window area (used to hide the status bar)
     bool drawInEntireWindow;

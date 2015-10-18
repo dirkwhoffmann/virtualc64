@@ -197,6 +197,10 @@
         [self setTextureFilter:TEX_FILTER_BLUR];
     if (c == 'g')
         [self setTextureFilter:TEX_FILTER_GRAYSCALE];
+    if (c == 's')
+        [self setTextureFilter:TEX_FILTER_SEPIA]; // TEX_FILTER_SATURATION];
+    if (c == 'c')
+        [self setTextureFilter:TEX_FILTER_CRT]; 
     
     // Ignore keys that are already pressed
     if (pressedKeys[(unsigned char)keycode])

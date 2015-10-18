@@ -42,9 +42,25 @@
     return self;
 }
 
-- (void)apply:(id <MTLCommandBuffer>)commandBuffer
+- (void)configureComputeCommandEncoder:(id <MTLComputeCommandEncoder>)encoder
 {
+    // To be implemented by custom class
+}
+
+- (void)apply:(id <MTLCommandBuffer>)commandBuffer in:(id <MTLTexture>)i out:(id <MTLTexture>)o
+{
+    computeEncoder = [commandBuffer computeCommandEncoder];
     
+    [computeEncoder setComputePipelineState:kernel];
+    [computeEncoder setTexture:i atIndex:0];
+    [computeEncoder setTexture:o atIndex:1];
+    
+    [self configureComputeCommandEncoder:computeEncoder];
+    
+    [computeEncoder dispatchThreadgroups:threadgroupCount threadsPerThreadgroup:threadgroupSize];
+    [computeEncoder endEncoding];
+    // sampling = TEX_SAMPLE_LINEAR;
+
 }
 
 @end

@@ -6,22 +6,21 @@
 //
 //
 
-#ifndef TextureFilter_h
-#define TextureFilter_h
-
 #import <Foundation/Foundation.h>
 #import <MetalKit/MetalKit.h>
 
 @interface TextureFilter : NSObject
 {
+    id <MTLComputeCommandEncoder> computeEncoder;
+    id <MTLBuffer> uniformBuffer;
     id <MTLComputePipelineState> kernel;
     MTLSize threadgroupSize;
     MTLSize threadgroupCount;
 }
 
 - (instancetype)initWithFunctionName:(NSString *)name device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib;
-- (void)apply:(id <MTLCommandBuffer>)commandBuffer;
+- (void)configureComputeCommandEncoder:(id <MTLComputeCommandEncoder>)encoder;
+- (void)apply:(id <MTLCommandBuffer>)commandBuffer in:(id <MTLTexture>)i out:(id <MTLTexture>)o;
 
 @end
 
-#endif

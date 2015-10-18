@@ -33,35 +33,21 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     }
 }
 
-static const NSUInteger kThreadgroupWidth  = 16;
-static const NSUInteger kThreadgroupHeight = 16;
-static const NSUInteger kThreadgroupDepth  = 1;
-
 @implementation MyMetalView {
     
     // Renderer globals
     id <MTLDevice> _device;
     id <MTLLibrary> _library;
     id <MTLCommandQueue> _commandQueue;
-    // id <MTLDepthStencilState>  _depthState;
     
     // Textures
     id <MTLTexture> _bgTexture; // Background image
     id <MTLTexture> _texture; // C64 screen
     id <MTLTexture> _filteredTexture; // post-processes C64 screen
     id <MTLTexture> _framebufferTexture;
-    id <MTLTexture> _blurWeightTexture;
     id <MTLTexture> _depthTexture; // z buffer
     id <MTLSamplerState> _sampler;
     id <MTLSamplerState> _sampler2;
-
-    // Post-processing
-    id <MTLComputePipelineState> _grayscaleKernel;
-//    id <MTLComputePipelineState> _transparencyKernel;
-    id <MTLComputePipelineState> _blurKernel;
-    MTLSize _threadgroupSize;
-    MTLSize _threadgroupCount;
-    
     
     CAMetalLayer *_metalLayer;
     CGFloat layerWidth;
@@ -73,7 +59,6 @@ static const NSUInteger kThreadgroupDepth  = 1;
     id <MTLRenderCommandEncoder> _commandEncoder;
     id <MTLBuffer> _positionBuffer;
     id <MTLBuffer> _colorBuffer;
-
 
     id <CAMetalDrawable> _drawable;
 
@@ -182,7 +167,6 @@ static const NSUInteger kThreadgroupDepth  = 1;
     [self buildMetal];
     [self buildTextures];
     [self buildKernels];
-    // [self buildDepthStencilState];
     [self buildBuffers];
     [self setupDisplayLink];
     
@@ -271,7 +255,6 @@ static const NSUInteger kThreadgroupDepth  = 1;
     
     [self buildBackgroundTexture];
     [self buildC64Texture];
-    [self buildBlurWeightTexture];
     [self buildTmpBufferTexture];
     
     // Build texture samplers
@@ -330,6 +313,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
 #endif
 }
 
+#if 0
 - (void)buildBlurWeightTexture
 {
     // NSAssert(self.radius >= 0, @"Blur radius must be non-negative");
@@ -375,7 +359,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
                                                                                                  width:size
                                                                                                 height:size
                                                                                              mipmapped:NO];
-    
+
     _blurWeightTexture = [_device newTextureWithDescriptor:textureDescriptor];
     
     MTLRegion region = MTLRegionMake2D(0, 0, size, size);
@@ -383,6 +367,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     
     free(weights);
 }
+#endif
 
 - (void)buildDepthBuffer
 {
@@ -412,6 +397,7 @@ static const NSUInteger kThreadgroupDepth  = 1;
     _uniformBufferBg = [_device newBufferWithLength:sizeof(Uniforms) options:0];
 }
 
+#if 0
 - (id <MTLComputePipelineState>) buildKernelWithFunctionName:(NSString *)name
 {
     NSError *error = nil;
@@ -432,21 +418,17 @@ static const NSUInteger kThreadgroupDepth  = 1;
    
     return kernel;
 }
+#endif
 
 - (BOOL) buildKernels
-{    
-    _grayscaleKernel = [self buildKernelWithFunctionName:@"grayscale"];
-    _blurKernel = [self buildKernelWithFunctionName:@"blur"];
+{
+    blurFilter = [BlurFilter filterWithRadius:2.0 device:_device library:_library];
+    saturationFilter = [SaturationFilter filterWithFactor:0.5 device:_device library:_library];
+    sepiaFilter = [SepiaFilter filterWithDevice:_device library:_library];
+    crtFilter = [CrtFilter filterWithDevice:_device library:_library];
+    grayscaleFilter = [SaturationFilter filterWithFactor:0.0 device:_device library:_library];
     
-    // Set the compute kernel's thread group size of 16x16
-    _threadgroupSize = MTLSizeMake(kThreadgroupWidth, kThreadgroupHeight, kThreadgroupDepth);
-    
-    // Calculate the compute kernel's width and height
-    NSUInteger nThreadCountW = (_texture.width  + _threadgroupSize.width -  1) / _threadgroupSize.width;
-    NSUInteger nThreadCountH = (_texture.height + _threadgroupSize.height - 1) / _threadgroupSize.height;
-    
-    // Set the compute kernel's thread count
-    _threadgroupCount = MTLSizeMake(nThreadCountW, nThreadCountH, 1);
+
     
     return YES;
 }
@@ -727,7 +709,8 @@ static const NSUInteger kThreadgroupDepth  = 1;
     }
     
     // "A command encoder is an object that is used to tell Metal what drawing we actually want to do."
-    id <MTLSamplerState> sampler = (sampling == TEX_SAMPLE_LINEAR) ? _sampler : _sampler2;
+    // id <MTLSamplerState> sampler = (sampling == TEX_SAMPLE_LINEAR) ? _sampler : _sampler2;
+    id <MTLSamplerState> sampler = _sampler;
     _commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
     {
         [_commandEncoder setRenderPipelineState:_pipeline];
@@ -742,37 +725,31 @@ static const NSUInteger kThreadgroupDepth  = 1;
 - (void)applyFilter
 {
     if (filter == TEX_FILTER_NONE) {
-        sampling = TEX_SAMPLE_NEAREST;
+        // sampling = TEX_SAMPLE_NEAREST;
         return;
-    }
-    
-    id <MTLComputeCommandEncoder> computeEncoder = [_commandBuffer computeCommandEncoder];
-    
-    if (!computeEncoder) {
-        NSLog(@"Cannot create command encoder");
-        exit(0);
     }
     
     switch (filter) {
         case TEX_FILTER_BLUR:
-            [computeEncoder setComputePipelineState:_blurKernel];
-            [computeEncoder setTexture:_texture atIndex:0];
-            [computeEncoder setTexture:_filteredTexture atIndex:1];
-            [computeEncoder setTexture:_blurWeightTexture atIndex:2];
-            [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
-            [computeEncoder endEncoding];
-            sampling = TEX_SAMPLE_LINEAR;
+            [blurFilter apply:_commandBuffer in:_texture out:_filteredTexture];
             break;
-            
+
+        case TEX_FILTER_SATURATION:
+            [saturationFilter apply:_commandBuffer in:_texture out:_filteredTexture];
+            break;
+        
+        case TEX_FILTER_SEPIA:
+            [sepiaFilter apply:_commandBuffer in:_texture out:_filteredTexture];
+            break;
+
         case TEX_FILTER_GRAYSCALE:
-            [computeEncoder setComputePipelineState:_grayscaleKernel];
-            [computeEncoder setTexture:_texture atIndex:0];
-            [computeEncoder setTexture:_filteredTexture atIndex:1];
-            [computeEncoder dispatchThreadgroups:_threadgroupCount threadsPerThreadgroup:_threadgroupSize];
-            [computeEncoder endEncoding];
-            sampling = TEX_SAMPLE_LINEAR;
+            [grayscaleFilter apply:_commandBuffer in:_texture out:_filteredTexture];
             break;
-            
+
+        case TEX_FILTER_CRT:
+            [crtFilter apply:_commandBuffer in:_texture out:_filteredTexture];
+            break;
+
         default:
             assert(0);
     }
