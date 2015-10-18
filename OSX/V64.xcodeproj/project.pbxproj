@@ -51,6 +51,7 @@
 		50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DEB1A7E458F00C04290 /* LEDnewGreen.png */; };
 		50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DED1A7E459800C04290 /* LEDnewGray.png */; };
 		50287EEB0A7CA86900292533 /* stepOut32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50287EEA0A7CA86900292533 /* stepOut32.png */; };
+		502D44D11BD38EEA00950088 /* TextureFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D01BD38EEA00950088 /* TextureFilter.mm */; settings = {ASSET_TAGS = (); }; };
 		502F57F21B93441400D1077E /* LEDgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F11B93441400D1077E /* LEDgreen.png */; };
 		502F57F41B93441A00D1077E /* LEDred.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F31B93441A00D1077E /* LEDred.png */; };
 		502F57F61B93442100D1077E /* LEDgray.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F51B93442100D1077E /* LEDgray.png */; };
@@ -272,6 +273,8 @@
 		50271DEB1A7E458F00C04290 /* LEDnewGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGreen.png; sourceTree = "<group>"; };
 		50271DED1A7E459800C04290 /* LEDnewGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGray.png; sourceTree = "<group>"; };
 		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOut32.png; sourceTree = "<group>"; };
+		502D44CF1BD38ED800950088 /* TextureFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureFilter.h; sourceTree = "<group>"; };
+		502D44D01BD38EEA00950088 /* TextureFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextureFilter.mm; sourceTree = "<group>"; };
 		502F57F11B93441400D1077E /* LEDgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgreen.png; sourceTree = "<group>"; };
 		502F57F31B93441A00D1077E /* LEDred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDred.png; sourceTree = "<group>"; };
 		502F57F51B93442100D1077E /* LEDgray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgray.png; sourceTree = "<group>"; };
@@ -852,6 +855,8 @@
 			children = (
 				50137EA11BCA453700147283 /* ShaderTypes.h */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
+				502D44CF1BD38ED800950088 /* TextureFilter.h */,
+				502D44D01BD38EEA00950088 /* TextureFilter.mm */,
 				501DE20C1BD01EE0000A9784 /* TexturedQuadShader.metal */,
 				501DE20B1BD01EE0000A9784 /* GrayscaleShader.metal */,
 				501DE20F1BD15AA6000A9784 /* TransparencyShader.metal */,
@@ -1066,6 +1071,7 @@
 				5042312C1BD371FF00B3DEF9 /* MyMetalViewResponder.mm in Sources */,
 				50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */,
 				50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */,
+				502D44D11BD38EEA00950088 /* TextureFilter.mm in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
 				50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */,
