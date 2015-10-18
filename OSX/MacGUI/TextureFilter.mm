@@ -11,6 +11,8 @@
 
 @implementation TextureFilter
 
+@synthesize sampler;
+
 - (instancetype)initWithFunctionName:(NSString *)name device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib
 {
     NSError *error = nil;
@@ -39,6 +41,17 @@
     // Set the kernel's thread count
     threadgroupCount = MTLSizeMake(threadCountX, threadCountY, 1);
     
+    // Build texture sampler
+    MTLSamplerDescriptor *samplerDescriptor = [MTLSamplerDescriptor new];
+    {
+        samplerDescriptor.minFilter = MTLSamplerMinMagFilterLinear;
+        samplerDescriptor.magFilter = MTLSamplerMinMagFilterLinear;
+        samplerDescriptor.sAddressMode = MTLSamplerAddressModeClampToEdge;
+        samplerDescriptor.tAddressMode = MTLSamplerAddressModeClampToEdge;
+        samplerDescriptor.mipFilter = MTLSamplerMipFilterNotMipmapped;
+    }
+    sampler = [dev newSamplerStateWithDescriptor:samplerDescriptor];
+
     return self;
 }
 

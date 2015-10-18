@@ -14,9 +14,13 @@
     id <MTLComputeCommandEncoder> computeEncoder;
     id <MTLBuffer> uniformBuffer;
     id <MTLComputePipelineState> kernel;
+    id <MTLSamplerState> sampler;
+    
     MTLSize threadgroupSize;
     MTLSize threadgroupCount;
 }
+
+@property (readonly) id <MTLSamplerState> sampler;
 
 - (instancetype)initWithFunctionName:(NSString *)name device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib;
 - (void)configureComputeCommandEncoder:(id <MTLComputeCommandEncoder>)encoder;

@@ -17,7 +17,7 @@
 
 - (instancetype)initWithFactor:(float)sat device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib
 {
-    if (!(self = [super initWithFunctionName:@"grayscale" device:dev library:lib]))
+    if (!(self = [super initWithFunctionName:@"saturation" device:dev library:lib]))
         return nil;
     
     saturation = sat;

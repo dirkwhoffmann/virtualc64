@@ -17,12 +17,17 @@
  */
 
 // Next steps:
-// 1. Implement rotation (via transformation matrices)
-// 2. Make it a cube
+// 1. Implement currentAlpha targetAlpha
+// 2. Implement blendIn start animation
+// 3. Add transparency to standard shader
+// 4. Use transparency when halted
+// 5. Remove OpenGL view
+// 6. What kind of semaphore should we use?
 
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
+#import "BypassFilter.h"
 #import "BlurFilter.h"
 #import "SaturationFilter.h"
 #import "SepiaFilter.h"
@@ -49,13 +54,6 @@ enum TextureFilterType {
     TEX_FILTER_CRT,
 };
 
-#if 0
-enum TextureSamplingMode {
-    TEX_SAMPLE_LINEAR = 0,
-    TEX_SAMPLE_NEAREST
-};
-#endif
-
 @interface MyMetalView : MTKView
 {
     IBOutlet MyController *controller;
@@ -79,7 +77,9 @@ enum TextureSamplingMode {
     float textureXEnd;
     float textureYStart;
     float textureYEnd;
-    
+
+    TextureFilter *bypassFilter;
+    TextureFilter *smoothFilter;
     TextureFilter *blurFilter;
     TextureFilter *saturationFilter;
     TextureFilter *sepiaFilter;

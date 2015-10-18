@@ -168,8 +168,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [self buildTextures];
     [self buildKernels];
     [self buildBuffers];
-    [self setupDisplayLink];
-    
     [self reshape];
     
     // Keyboard initialization
@@ -181,6 +179,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [self registerForDraggedTypes:
      [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
 
+    // Fire off timer...
+    [self setupDisplayLink];
 }
 
 - (void)buildMetal
@@ -255,23 +255,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     [self buildBackgroundTexture];
     [self buildC64Texture];
-    [self buildTmpBufferTexture];
-    
-    // Build texture samplers
-    MTLSamplerDescriptor *samplerDescriptor = [MTLSamplerDescriptor new];
-    {
-        samplerDescriptor.minFilter = MTLSamplerMinMagFilterLinear;
-        samplerDescriptor.magFilter = MTLSamplerMinMagFilterLinear;
-        samplerDescriptor.sAddressMode = MTLSamplerAddressModeClampToEdge;
-        samplerDescriptor.tAddressMode = MTLSamplerAddressModeClampToEdge;
-        samplerDescriptor.mipFilter = MTLSamplerMipFilterNotMipmapped;
-    }
-    _sampler = [_device newSamplerStateWithDescriptor:samplerDescriptor];
-    {
-        samplerDescriptor.minFilter = MTLSamplerMinMagFilterNearest;
-        samplerDescriptor.magFilter = MTLSamplerMinMagFilterNearest;
-    }
-    _sampler2 = [_device newSamplerStateWithDescriptor:samplerDescriptor];
 }
 
 - (void)buildBackgroundTexture
@@ -299,76 +282,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _filteredTexture = [_device newTextureWithDescriptor:textureDescriptor];
 }
 
-- (void)buildTmpBufferTexture
-{
-#if 0
-    NSLog(@"MyMetalView::buildTmpBufferTexture");
-    
-    MTLTextureDescriptor *textureDescriptor =
-    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
-                                                       width:(layerWidth == 0) ? 512 : layerWidth
-                                                      height:(layerHeight == 0) ? 512 : layerHeight
-                                                   mipmapped:NO];
-    _inTexture = [_device newTextureWithDescriptor:textureDescriptor];
-#endif
-}
-
-#if 0
-- (void)buildBlurWeightTexture
-{
-    // NSAssert(self.radius >= 0, @"Blur radius must be non-negative");
-    
-    const float radius = 2.0; // self.radius;
-    const float sigma = radius / 2.0; // self.sigma;
-    const int size = (round(radius) * 2) + 1;
-    
-    float delta = 0;
-    float expScale = 0;;
-    if (radius > 0.0)
-    {
-        delta = (radius * 2) / (size - 1);;
-        expScale = -1 / (2 * sigma * sigma);
-    }
-    
-    float *weights = (float *)malloc(sizeof(float) * size * size);
-    
-    float weightSum = 0;
-    float y = -radius;
-    for (int j = 0; j < size; ++j, y += delta)
-    {
-        float x = -radius;
-        
-        for (int i = 0; i < size; ++i, x += delta)
-        {
-            float weight = expf((x * x + y * y) * expScale);
-            weights[j * size + i] = weight;
-            weightSum += weight;
-        }
-    }
-    
-    const float weightScale = 1 / weightSum;
-    for (int j = 0; j < size; ++j)
-    {
-        for (int i = 0; i < size; ++i)
-        {
-            weights[j * size + i] *= weightScale;
-        }
-    }
-    
-    MTLTextureDescriptor *textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatR32Float
-                                                                                                 width:size
-                                                                                                height:size
-                                                                                             mipmapped:NO];
-
-    _blurWeightTexture = [_device newTextureWithDescriptor:textureDescriptor];
-    
-    MTLRegion region = MTLRegionMake2D(0, 0, size, size);
-    [_blurWeightTexture replaceRegion:region mipmapLevel:0 withBytes:weights bytesPerRow:sizeof(float) * size];
-    
-    free(weights);
-}
-#endif
-
 - (void)buildDepthBuffer
 {
     NSLog(@"MyMetalView::buildDepthBuffer");
@@ -387,8 +300,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (void)buildBuffers
 {
-    NSLog(@"MyMetalView::buildBuffers");
-    
     // Vertex buffer
     _positionBuffer = [self buildVertexBuffer:_device];
 
@@ -397,40 +308,15 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _uniformBufferBg = [_device newBufferWithLength:sizeof(Uniforms) options:0];
 }
 
-#if 0
-- (id <MTLComputePipelineState>) buildKernelWithFunctionName:(NSString *)name
+- (void) buildKernels
 {
-    NSError *error = nil;
-    
-    // Create compute kernel function
-    id <MTLFunction> function = [_library newFunctionWithName:name];
-    if (!function) {
-        NSLog(@"ERROR: Cannot find kernel function %@ in library", name);
-        return nil;
-    }
-    
-    // Create kernel
-    id <MTLComputePipelineState> kernel = [_device newComputePipelineStateWithFunction:function error:&error];
-    if(!kernel) {
-        NSLog(@"ERROR: Failed to create compute kernel %@: %@", name, error);
-        return nil;
-    }
-   
-    return kernel;
-}
-#endif
-
-- (BOOL) buildKernels
-{
+    bypassFilter = [BypassFilter filterWithDevice:_device library:_library];
+    smoothFilter = [SaturationFilter filterWithFactor:1.0 device:_device library:_library];
     blurFilter = [BlurFilter filterWithRadius:2.0 device:_device library:_library];
     saturationFilter = [SaturationFilter filterWithFactor:0.5 device:_device library:_library];
     sepiaFilter = [SepiaFilter filterWithDevice:_device library:_library];
     crtFilter = [CrtFilter filterWithDevice:_device library:_library];
     grayscaleFilter = [SaturationFilter filterWithFactor:0.0 device:_device library:_library];
-    
-
-    
-    return YES;
 }
 
 - (void)buildDepthStencilState
@@ -456,10 +342,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     id<MTLFunction> vertexFunc = [_library newFunctionWithName:@"vertex_main"];
     id<MTLFunction> fragmentFunc = [_library newFunctionWithName:@"fragment_main"];
-    // id<MTLFunction> fragmentFuncSat = [_library newFunctionWithName:@"fragment_saturation"];
     assert(vertexFunc != nil);
     assert(fragmentFunc != nil);
-    assert(fragmentFuncSat != nil);
 
     // Depth stencil state
     MTLDepthStencilDescriptor *depthDescriptor = [MTLDepthStencilDescriptor new];
@@ -637,7 +521,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
     // Rebuild depth buffer and tmp drawing buffer
     [self buildDepthBuffer];
-    [self buildTmpBufferTexture];
 }
 
 - (void)buildMatrices
@@ -691,7 +574,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _commandBuffer = [_commandQueue commandBuffer];
     
     // Apply filter to C64 screen texture
-    [self applyFilter];
+    TextureFilter *flt = [self currentFilter];
+    [flt apply:_commandBuffer in:_texture out:_filteredTexture];
     
     // Create render pass
     /* "A render pass descriptor tells Metal what actions to take while an image is being rendered" */
@@ -709,27 +593,49 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     }
     
     // "A command encoder is an object that is used to tell Metal what drawing we actually want to do."
-    // id <MTLSamplerState> sampler = (sampling == TEX_SAMPLE_LINEAR) ? _sampler : _sampler2;
-    id <MTLSamplerState> sampler = _sampler;
     _commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
     {
         [_commandEncoder setRenderPipelineState:_pipeline];
         [_commandEncoder setDepthStencilState:_depthState];
         [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
-        [_commandEncoder setFragmentSamplerState:sampler atIndex:0];
+        [_commandEncoder setFragmentSamplerState:[flt sampler] atIndex:0];
         [_commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
     }
 }
 
+- (TextureFilter *)currentFilter
+{
+    switch (filter) {
+        case TEX_FILTER_NONE:
+            return bypassFilter;
+        case TEX_FILTER_SMOOTH:
+            return smoothFilter;
+        case TEX_FILTER_BLUR:
+            return blurFilter;
+        case TEX_FILTER_SATURATION:
+            return saturationFilter;
+        case TEX_FILTER_SEPIA:
+            return sepiaFilter;
+        case TEX_FILTER_GRAYSCALE:
+            return grayscaleFilter;
+        case TEX_FILTER_CRT:
+            return crtFilter;
+        default:
+            assert(0);
+    }
+    return nil;
+}
+
+
+
 - (void)applyFilter
 {
-    if (filter == TEX_FILTER_NONE) {
-        // sampling = TEX_SAMPLE_NEAREST;
-        return;
-    }
-    
     switch (filter) {
+        case TEX_FILTER_NONE:
+            [bypassFilter apply:_commandBuffer in:_texture out:_filteredTexture];
+            break;
+            
         case TEX_FILTER_BLUR:
             [blurFilter apply:_commandBuffer in:_texture out:_filteredTexture];
             break;

@@ -41,9 +41,6 @@
 		50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
-		501DE20D1BD01EE0000A9784 /* SaturationShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 501DE20B1BD01EE0000A9784 /* SaturationShader.metal */; settings = {ASSET_TAGS = (); }; };
-		501DE20E1BD01EE0000A9784 /* TexturedQuadShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 501DE20C1BD01EE0000A9784 /* TexturedQuadShader.metal */; settings = {ASSET_TAGS = (); }; };
-		501DE2101BD15AA6000A9784 /* TransparencyShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 501DE20F1BD15AA6000A9784 /* TransparencyShader.metal */; settings = {ASSET_TAGS = (); }; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		50244B7B1BBEBAC9002A55E3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; settings = {ASSET_TAGS = (); }; };
 		50244B7C1BBEBB69002A55E3 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -55,9 +52,7 @@
 		502D44D31BD3A29000950088 /* BlurFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D21BD3A29000950088 /* BlurFilter.mm */; settings = {ASSET_TAGS = (); }; };
 		502D44D71BD3A68500950088 /* SaturationFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D61BD3A68500950088 /* SaturationFilter.mm */; settings = {ASSET_TAGS = (); }; };
 		502D44D91BD3BE7C00950088 /* SepiaFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D81BD3BE7C00950088 /* SepiaFilter.mm */; settings = {ASSET_TAGS = (); }; };
-		502D44DC1BD3BF4200950088 /* Sepia.metal in Sources */ = {isa = PBXBuildFile; fileRef = 502D44DB1BD3BF4200950088 /* Sepia.metal */; settings = {ASSET_TAGS = (); }; };
 		502D44DF1BD3CF7600950088 /* CrtFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44DE1BD3CF7600950088 /* CrtFilter.mm */; settings = {ASSET_TAGS = (); }; };
-		502D44E11BD3CFA800950088 /* CrtShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 502D44E01BD3CFA800950088 /* CrtShader.metal */; settings = {ASSET_TAGS = (); }; };
 		502F57F21B93441400D1077E /* LEDgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F11B93441400D1077E /* LEDgreen.png */; };
 		502F57F41B93441A00D1077E /* LEDred.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F31B93441A00D1077E /* LEDred.png */; };
 		502F57F61B93442100D1077E /* LEDgray.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F51B93442100D1077E /* LEDgray.png */; };
@@ -85,12 +80,12 @@
 		506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* PixelEngine.cpp */; };
 		506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDWrapper.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
-		507152D41BD2211E00541024 /* BlurShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 507152D31BD2211E00541024 /* BlurShader.metal */; settings = {ASSET_TAGS = (); }; };
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6E912E06DB700378033 /* MyControllerToolbar.mm */; };
+		5089F0551BD3F64200306F4D /* BypassFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5089F0541BD3F64200306F4D /* BypassFilter.mm */; settings = {ASSET_TAGS = (); }; };
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
@@ -269,9 +264,6 @@
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_constants.h; sourceTree = "<group>"; };
-		501DE20B1BD01EE0000A9784 /* SaturationShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = SaturationShader.metal; sourceTree = "<group>"; };
-		501DE20C1BD01EE0000A9784 /* TexturedQuadShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TexturedQuadShader.metal; sourceTree = "<group>"; };
-		501DE20F1BD15AA6000A9784 /* TransparencyShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = TransparencyShader.metal; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
@@ -287,10 +279,8 @@
 		502D44D61BD3A68500950088 /* SaturationFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SaturationFilter.mm; sourceTree = "<group>"; };
 		502D44D81BD3BE7C00950088 /* SepiaFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SepiaFilter.mm; sourceTree = "<group>"; };
 		502D44DA1BD3BE8800950088 /* SepiaFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SepiaFilter.h; sourceTree = "<group>"; };
-		502D44DB1BD3BF4200950088 /* Sepia.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Sepia.metal; sourceTree = "<group>"; };
 		502D44DD1BD3CF6B00950088 /* CrtFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrtFilter.h; sourceTree = "<group>"; };
 		502D44DE1BD3CF7600950088 /* CrtFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrtFilter.mm; sourceTree = "<group>"; };
-		502D44E01BD3CFA800950088 /* CrtShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = CrtShader.metal; sourceTree = "<group>"; };
 		502F57F11B93441400D1077E /* LEDgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgreen.png; sourceTree = "<group>"; };
 		502F57F31B93441A00D1077E /* LEDred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDred.png; sourceTree = "<group>"; };
 		502F57F51B93442100D1077E /* LEDgray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgray.png; sourceTree = "<group>"; };
@@ -326,7 +316,6 @@
 		506D39D3141780FF00268AF6 /* SIDWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDWrapper.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
 		506D39D5141788E700268AF6 /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
-		507152D31BD2211E00541024 /* BlurShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = BlurShader.metal; sourceTree = "<group>"; };
 		50775E0E1B8EE8A9002EB58D /* Disk525.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Disk525.cpp; sourceTree = "<group>"; };
 		50775E101B8EE95B002EB58D /* Disk525.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk525.h; sourceTree = "<group>"; };
 		5077742E12DE490300D72088 /* MemTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemTableView.h; sourceTree = "<group>"; };
@@ -337,6 +326,8 @@
 		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
 		5088A6E812E06DB700378033 /* MyControllerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerToolbar.h; sourceTree = "<group>"; };
 		5088A6E912E06DB700378033 /* MyControllerToolbar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerToolbar.mm; sourceTree = "<group>"; };
+		5089F0531BD3F62800306F4D /* BypassFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BypassFilter.h; sourceTree = "<group>"; };
+		5089F0541BD3F64200306F4D /* BypassFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BypassFilter.mm; sourceTree = "<group>"; };
 		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rom.png; sourceTree = "<group>"; };
 		509AEA0A0C324AB0001FC9FD /* PRGArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGArchive.h; sourceTree = "<group>"; };
 		509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGArchive.cpp; sourceTree = "<group>"; };
@@ -870,7 +861,8 @@
 			isa = PBXGroup;
 			children = (
 				50137EA11BCA453700147283 /* ShaderTypes.h */,
-				50C72DE51BC7F42100F1863B /* Shaders.metal */,
+				5089F0531BD3F62800306F4D /* BypassFilter.h */,
+				5089F0541BD3F64200306F4D /* BypassFilter.mm */,
 				502D44CF1BD38ED800950088 /* TextureFilter.h */,
 				502D44D01BD38EEA00950088 /* TextureFilter.mm */,
 				502D44D41BD3A2A100950088 /* BlurFilter.h */,
@@ -881,12 +873,7 @@
 				502D44D81BD3BE7C00950088 /* SepiaFilter.mm */,
 				502D44DD1BD3CF6B00950088 /* CrtFilter.h */,
 				502D44DE1BD3CF7600950088 /* CrtFilter.mm */,
-				501DE20C1BD01EE0000A9784 /* TexturedQuadShader.metal */,
-				501DE20B1BD01EE0000A9784 /* SaturationShader.metal */,
-				501DE20F1BD15AA6000A9784 /* TransparencyShader.metal */,
-				507152D31BD2211E00541024 /* BlurShader.metal */,
-				502D44DB1BD3BF4200950088 /* Sepia.metal */,
-				502D44E01BD3CFA800950088 /* CrtShader.metal */,
+				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -1082,7 +1069,6 @@
 			files = (
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				50176C630A6F72F3009E80BD /* basic.cpp in Sources */,
-				502D44E11BD3CFA800950088 /* CrtShader.metal in Sources */,
 				50176C640A6F72F3009E80BD /* C64.cpp in Sources */,
 				50176C650A6F72F3009E80BD /* CIA.cpp in Sources */,
 				50176C660A6F72F3009E80BD /* CPU.cpp in Sources */,
@@ -1098,6 +1084,7 @@
 				5042312C1BD371FF00B3DEF9 /* MyMetalViewResponder.mm in Sources */,
 				50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */,
 				50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */,
+				5089F0551BD3F64200306F4D /* BypassFilter.mm in Sources */,
 				502D44D71BD3A68500950088 /* SaturationFilter.mm in Sources */,
 				502D44D11BD38EEA00950088 /* TextureFilter.mm in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
@@ -1115,7 +1102,6 @@
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */,
 				50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */,
-				502D44DC1BD3BF4200950088 /* Sepia.metal in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,
 				5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */,
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
@@ -1132,7 +1118,6 @@
 				502D44DF1BD3CF7600950088 /* CrtFilter.mm in Sources */,
 				50032EB21BC919D90050BEEA /* MyMetalView.mm in Sources */,
 				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
-				507152D41BD2211E00541024 /* BlurShader.metal in Sources */,
 				5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */,
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
@@ -1147,10 +1132,8 @@
 				5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */,
-				501DE20D1BD01EE0000A9784 /* SaturationShader.metal in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,
-				501DE2101BD15AA6000A9784 /* TransparencyShader.metal in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				502D44D31BD3A29000950088 /* BlurFilter.mm in Sources */,
 				50D1417E1417A34B0024FC74 /* envelope.cc in Sources */,
@@ -1170,7 +1153,6 @@
 				50D1418A1417A34B0024FC74 /* wave8580__ST.cc in Sources */,
 				50D1418B1417A34B0024FC74 /* wave8580_P_T.cc in Sources */,
 				50D1418C1417A34B0024FC74 /* wave8580_PS_.cc in Sources */,
-				501DE20E1BD01EE0000A9784 /* TexturedQuadShader.metal in Sources */,
 				50D1418D1417A34B0024FC74 /* wave8580_PST.cc in Sources */,
 				50137EA01BCA396100147283 /* MyMetalViewHelper.mm in Sources */,
 				50C9CB321B8272DA0054EE86 /* HardwareDialog.mm in Sources */,

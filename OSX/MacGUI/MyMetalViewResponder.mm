@@ -195,12 +195,16 @@
         [self setTextureFilter:TEX_FILTER_NONE];
     if (c == 'b')
         [self setTextureFilter:TEX_FILTER_BLUR];
+    if (c == 'a')
+        [self setTextureFilter:TEX_FILTER_SEPIA];
     if (c == 'g')
         [self setTextureFilter:TEX_FILTER_GRAYSCALE];
     if (c == 's')
-        [self setTextureFilter:TEX_FILTER_SEPIA]; // TEX_FILTER_SATURATION];
+        [self setTextureFilter:TEX_FILTER_SATURATION];
     if (c == 'c')
         [self setTextureFilter:TEX_FILTER_CRT]; 
+    if (c == 'z')
+        [self setTextureFilter:TEX_FILTER_SMOOTH];
     
     // Ignore keys that are already pressed
     if (pressedKeys[(unsigned char)keycode])
