@@ -64,7 +64,7 @@ enum INPUT_DEVICES {
     IBOutlet NSPopUpButton *joystickPortB;
 
     // Main screen
-	IBOutlet MyOpenGLView *screen;
+	// IBOutlet MyOpenGLView *screen;
     IBOutlet MyMetalView *metalScreen;
 	IBOutlet NSDrawer *debugPanel;
 	IBOutlet NSDrawer *cheatboxPanel;

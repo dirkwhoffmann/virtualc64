@@ -17,9 +17,11 @@
  */
 
 // Next steps:
-// 5. Add 2D drawing mode
-// 6. Remove OpenGL view
-// 7. What kind of semaphore should we use?
+// 1. Repair bottom bar
+// 2. Shader: Keyboard -> Dialog
+// 3. Repair "MetalView::screenshot"
+// 4. Blur is too heavy
+// 5. What kind of semaphore should we use?
 
 
 #import <Cocoa/Cocoa.h>
@@ -122,6 +124,8 @@ enum TextureFilterType {
 }
 
 #pragma mark Configuring
+
+@property bool enableMetal;
 
 - (bool)drawInEntireWindow;
 - (void)setDrawInEntireWindow:(bool)b;

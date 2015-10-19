@@ -191,6 +191,42 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
 //                                    Graphics
 // --------------------------------------------------------------------------------
 
+- (NSImage *)screenshot
+{
+    int height=(int)NSHeight([self visibleRect]);
+    int width=(int)NSWidth([self visibleRect]);
+    
+    NSBitmapImageRep *imageRep;
+    NSImage *image;
+    
+    imageRep=[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
+                                                     pixelsWide:width
+                                                     pixelsHigh:height
+                                                  bitsPerSample:8
+                                                samplesPerPixel:4
+                                                       hasAlpha:YES
+                                                       isPlanar:NO
+                                                 colorSpaceName:NSCalibratedRGBColorSpace
+                                                    bytesPerRow:width*4
+                                                   bitsPerPixel:0];
+    
+    [lock lock];
+    
+    NSLog(@"Implementation missing");
+    
+#if 0
+    [[self openGLContext] makeCurrentContext];
+    glReadPixels(0,0,width,height,GL_RGBA,GL_UNSIGNED_BYTE,[imageRep bitmapData]);
+    image=[[NSImage alloc] initWithSize:NSMakeSize(width,height)];
+    [image addRepresentation:imageRep];
+#endif
+    
+    [lock unlock];
+    
+    NSImage *screenshot = [self flipImage:image];
+    return screenshot;
+}
+
 - (NSImage *) flipImage:(NSImage *)image
 {
     assert(image != nil);

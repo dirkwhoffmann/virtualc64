@@ -98,7 +98,7 @@
 	[myPrintInfo setBottomMargin:0.0]; // 32.0
 	
 	// Capture image and create image view
-    NSImage *image = [screen screenshot];
+    NSImage *image = [metalScreen screenshot];
 	NSRect printRect = NSMakeRect(0.0, 0.0, [image size].width, [image size].height);
 	NSImageView *imageView = [[NSImageView alloc] initWithFrame:printRect];
 	[imageView setImage:image];

@@ -81,6 +81,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 //                                          Configuration
 // -----------------------------------------------------------------------------------------------
 
+@synthesize enableMetal;
+
 - (bool)drawInEntireWindow { return drawInEntireWindow; }
 - (void)setDrawInEntireWindow:(bool)b
 {
@@ -154,6 +156,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     currentZAngle = targetZAngle = deltaZAngle = 0.0;
     currentAlpha = targetAlpha = 0.0; deltaAlpha = 0.0;
     
+    enableMetal = true; 
     drawInEntireWindow = false;
     drawIn3D = true;
     drawC64texture = false;
@@ -742,6 +745,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
 {
     @autoreleasepool {
+        
+        if (!c64 || !enableMetal)
+            return kCVReturnSuccess;
         
         [lock lock];
         

@@ -80,7 +80,7 @@
     NSURL *selectedFile = [sPanel URL];
     NSLog(@"Saving screenshot to file %@", selectedFile);
 		
-    NSImage *image = [screen screenshot];
+    NSImage *image = [metalScreen screenshot];
     NSData *data = [image TIFFRepresentation];
     [data writeToURL:selectedFile atomically:YES];
 }
@@ -179,7 +179,6 @@
 - (IBAction)resetAction:(id)sender
 {
 	[[self document] updateChangeCount:NSChangeDone];
-	[screen rotateBack];
     [metalScreen rotateBack];
 	[c64 reset];
 	[self continueAction:self];
@@ -193,7 +192,7 @@
     [[undo prepareWithInvocationTarget:self] toggleStatusBarAction:sender];
     if (![undo isUndoing]) [undo setActionName:@"Show/Hide status bar"];
 
-    if ([screen drawInEntireWindow])
+    if ([metalScreen drawInEntireWindow])
         [self showStatusBar];
     else
         [self hideStatusBar];
@@ -214,8 +213,7 @@
     [clockSpeed setHidden:NO];
     [clockSpeedBar setHidden:NO];
     [warpMode setHidden:NO];
-        
-    [screen setDrawInEntireWindow:NO];
+    
     [metalScreen setDrawInEntireWindow:NO];
 }
     
@@ -236,7 +234,6 @@
     [clockSpeedBar setHidden:YES];
     [warpMode setHidden:YES];
         
-    [screen setDrawInEntireWindow:YES];
     [metalScreen setDrawInEntireWindow:YES];
 }
 

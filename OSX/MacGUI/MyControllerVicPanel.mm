@@ -297,9 +297,11 @@
 {
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] vicEnableOpenGL:self];
-	if (![undo isUndoing]) [undo setActionName:@"OpenGL"];
+	if (![undo isUndoing]) [undo setActionName:@"GPU drawing"];
 	
-	[screen setEnableOpenGL:![screen enableOpenGL]];
+	// [screen setEnableOpenGL:![screen enableOpenGL]];
+    [metalScreen setEnableMetal:![metalScreen enableMetal]];
+    
 	[self refresh];
 }
 

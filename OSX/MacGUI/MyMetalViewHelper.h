@@ -33,6 +33,7 @@ matrix_float4x4 vc64_matrix_from_rotation(float radians, float x, float y, float
 //                                   Drawing
 // --------------------------------------------------------------------------------
 
+- (NSImage *)screenshot;
 - (NSImage *) flipImage:(NSImage *)image;
 - (NSImage *) expandImage:(NSImage *)image toSize:(NSSize)size;
 - (id<MTLTexture>) makeTexture:(NSImage *)image withDevice:(id <MTLDevice>)device;
