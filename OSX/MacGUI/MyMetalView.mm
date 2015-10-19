@@ -89,24 +89,22 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     if (drawInEntireWindow == b)
         return;
     
-    /*
     NSRect r = self.frame;
     float borderThickness;
     if (b) {
-        NSLog(@"Expanding OpenGL view");
+        NSLog(@"Expanding Metal view");
         r.origin.y -= 24;
         r.size.height += 24;
         borderThickness = 0.0;
     } else {
-        NSLog(@"Shrinking OpenGL view");
+        NSLog(@"Shrinking Metal view");
         r.origin.y += 24;
         r.size.height -= 24;
-        borderThickness = 22.0;
+        borderThickness = 24.0;
     }
     
     self.frame = r;
     [[self window] setContentBorderThickness:borderThickness forEdge: NSMinYEdge];
-     */
 
      drawInEntireWindow = b;
 }
@@ -651,8 +649,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     return nil;
 }
 
-
-
 - (void)applyFilter
 {
     switch (filter) {
@@ -702,7 +698,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 - (void)drawScene3D
 {
     bool animates = [self animates];
-    bool halted = c64->isHalted();
     
     drawEntireCube = animates;
     drawBackground = true; // animates || !drawC64texture || halted;

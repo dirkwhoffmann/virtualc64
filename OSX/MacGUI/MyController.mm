@@ -20,7 +20,7 @@
 
 @implementation MyController
 
-@synthesize c64, screen, metalScreen;
+@synthesize c64, metalScreen;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -45,9 +45,9 @@
 	[timer invalidate];
 	timer = nil;
 	
-	// stop OpenGL view
-	[screen cleanUp];
-	
+	// stop metal view
+    [metalScreen cleanup];
+    
 	// release C64
 	NSLog(@"Killing timer");
 	[timerLock lock];
@@ -141,7 +141,6 @@
 {
     NSLog(@"windowWillEnterFullScreen");
     
-    [screen setDrawIn3D:NO];
     [metalScreen setDrawIn3D:NO];
     [self hideStatusBar];
 }
@@ -155,7 +154,6 @@
 {
     NSLog(@"windowWillExitFullScreen");
     
-    [screen setDrawIn3D:YES];
     [metalScreen setDrawIn3D:YES];
     [self showStatusBar];
 }
@@ -282,10 +280,7 @@
     [metalScreen setJoyKeycode:[defaults integerForKey:VC64Fire2keycodeKey] keymap:2 direction:JOYSTICK_FIRE];
     [metalScreen setJoyChar:[defaults integerForKey:VC64Fire2charKey] keymap:2 direction:JOYSTICK_FIRE];
     
-	// Video 
-	[screen setEyeX:[defaults floatForKey:VC64EyeX]];
-	[screen setEyeY:[defaults floatForKey:VC64EyeY]];
-	[screen setEyeZ:[defaults floatForKey:VC64EyeZ]];
+	// Video
     [metalScreen setEyeX:[defaults floatForKey:VC64EyeX]];
     [metalScreen setEyeY:[defaults floatForKey:VC64EyeY]];
     [metalScreen setEyeZ:[defaults floatForKey:VC64EyeZ]];
@@ -484,8 +479,6 @@
 
 			// Start emulator
 			[c64 run];
-			[screen fadeIn];
-			[screen setDrawC64texture:true];
             [metalScreen blendIn];
             [metalScreen setDrawC64texture:true];
 
@@ -620,7 +613,6 @@
         
         case MSG_PAL:
         case MSG_NTSC:
-            [screen determineScreenGeometry];
             [metalScreen updateScreenGeometry];
             break;
             
@@ -1017,7 +1009,6 @@
     
 	// Rotate C64 screen
     if (doMount || doFlash) {
-        [screen rotate];
         [metalScreen rotate];
     }
     
@@ -1098,14 +1089,12 @@
 - (void)keyDown:(NSEvent *)event
 {
 	// Pass all keyboard events to C64
-	// [screen keyDown:event];
     [metalScreen keyDown:event];
 }
 
 - (void)keyUp:(NSEvent *)event
 {
 	// Pass all keyboard events to C64
-	//[screen keyUp:event];
     [metalScreen keyUp:event];
 }
 

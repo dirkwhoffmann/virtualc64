@@ -142,6 +142,7 @@ enum TextureFilterType {
 - (bool)textureFilter;
 - (void)setTextureFilter:(TextureFilterType)type;
 
+- (void)cleanup;
 
 #pragma mark Drawing
 
