@@ -146,10 +146,14 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     lock = [NSRecursiveLock new];
 
     // Set initial scene position and drawing properties
-    targetXAngle = targetYAngle = targetZAngle = 0;
-    deltaXAngle = deltaYAngle = deltaZAngle = 0;
-    currentEyeX = currentEyeY = currentEyeZ = 0;
-    deltaEyeX = deltaEyeY = deltaEyeZ = 0;
+    currentEyeX = targetEyeX = deltaEyeX = 0.0;
+    currentEyeY = targetEyeY = deltaEyeY = 0.0;
+    currentEyeZ = targetEyeZ = deltaEyeZ = 0.0;
+    currentXAngle = targetXAngle = deltaXAngle = 0.0;
+    currentYAngle = targetYAngle = deltaYAngle = 0.0;
+    currentZAngle = targetZAngle = deltaZAngle = 0.0;
+    currentAlpha = targetAlpha = 0.0; deltaAlpha = 0.0;
+    
     drawInEntireWindow = false;
     drawIn3D = true;
     drawC64texture = false;
@@ -518,6 +522,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     frameDataBg->model = _modelMatrix;
     frameDataBg->view = _viewMatrix;
     frameDataBg->projectionView = _modelViewProjectionMatrix;
+    frameDataBg->alpha = 1.0;
 
     // Rebuild depth buffer and tmp drawing buffer
     [self buildDepthBuffer];
@@ -540,6 +545,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     frameData->model = _modelMatrix;
     frameData->view = _viewMatrix;
     frameData->projectionView = _modelViewProjectionMatrix;
+    frameData->alpha = currentAlpha;
 }
 
 - (void)startFrame

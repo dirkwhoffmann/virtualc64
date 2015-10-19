@@ -486,7 +486,7 @@
 			[c64 run];
 			[screen fadeIn];
 			[screen setDrawC64texture:true];
-            [metalScreen fadeIn];
+            [metalScreen blendIn];
             [metalScreen setDrawC64texture:true];
 
 			// Check for attached archive

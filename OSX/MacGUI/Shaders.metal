@@ -17,7 +17,7 @@ struct Uniforms {
     float4x4 view;
     float4x4 projection;
     float4x4 projectionView;
-    float transparency;
+    float alpha;
 };
 
 struct InVertex
@@ -30,6 +30,7 @@ struct ProjectedVertex
 {
     float4 position [[position]];
     float2 texCoords [[user(tex_coords)]];
+    float  alpha;
 };
 
 
@@ -41,6 +42,7 @@ vertex ProjectedVertex vertex_main(constant InVertex *vertices [[buffer(0)]],
 
     out.position = uniforms.projectionView * float4(vertices[vid].position);
     out.texCoords = vertices[vid].texCoords;
+    out.alpha = uniforms.alpha;
     return out;
 }
 
@@ -50,7 +52,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
 {
     float4 diffuseColor = texture.sample(texSampler, vert.texCoords);
     float4 color = diffuseColor;
-    return half4(color.r, color.g, color.b, color.a);
+    return half4(color.r, color.g, color.b, vert.alpha);
 }
 
 // -----------------------------------------------------------------------------------------------

@@ -21,8 +21,9 @@
 // 2. Implement blendIn start animation
 // 3. Add transparency to standard shader
 // 4. Use transparency when halted
-// 5. Remove OpenGL view
-// 6. What kind of semaphore should we use?
+// 5. Add 2D drawing mode
+// 6. Remove OpenGL view
+// 7. What kind of semaphore should we use?
 
 
 #import <Cocoa/Cocoa.h>
@@ -71,6 +72,7 @@ enum TextureFilterType {
     float currentEyeX, targetEyeX, deltaEyeX;
     float currentEyeY, targetEyeY, deltaEyeY;
     float currentEyeZ, targetEyeZ, deltaEyeZ;
+    float currentAlpha, targetAlpha, deltaAlpha;
 
     // Texture cut-out (first and last visible texture coordinates)
     float textureXStart;

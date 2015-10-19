@@ -289,7 +289,8 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
             currentZAngle != targetZAngle ||
             currentEyeX != targetEyeX ||
             currentEyeY != targetEyeY ||
-            currentEyeZ != targetEyeZ);
+            currentEyeZ != targetEyeZ ||
+            currentAlpha != targetAlpha);
 }
 
 - (float)eyeX
@@ -343,7 +344,10 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
         
         if (fabs(currentEyeZ - targetEyeZ) < fabs(deltaEyeZ))       currentEyeZ   = targetEyeZ;
         else														currentEyeZ   += deltaEyeZ;
-        
+
+        if (fabs(currentAlpha - targetAlpha) < fabs(deltaAlpha))    currentAlpha  = targetAlpha;
+        else														currentAlpha  += deltaAlpha;
+
         if (currentXAngle >= 360.0) currentXAngle -= 360.0;
         if (currentXAngle < 0.0) currentXAngle += 360.0;
         if (currentYAngle >= 360.0) currentYAngle -= 360.0;
@@ -364,6 +368,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     deltaEyeX = (targetEyeX - currentEyeX) / animationCycles;
     deltaEyeY = (targetEyeY - currentEyeY) / animationCycles;
     deltaEyeZ = (targetEyeZ - currentEyeZ) / animationCycles;
+    deltaAlpha = (targetAlpha - currentAlpha) / animationCycles;
 }
 
 - (void)zoom
@@ -429,7 +434,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     currentXAngle  = -90;
     currentEyeZ    = 5.0;
     
-    currentEyeY    = 4.5; //2.5;
+    currentEyeY    = 4.5;
     targetXAngle   = 0;
     targetYAngle   = 0;
     targetZAngle   = 0;
@@ -437,6 +442,15 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     [self computeAnimationDeltaSteps:120];	
 }
 
+- (void)blendIn
+{
+    NSLog(@"Blending in...\n\n");
+    
+    currentAlpha = 0.0;
+    targetAlpha = 1.0;
+    
+    [self computeAnimationDeltaSteps:180];
+}
 
 
 @end

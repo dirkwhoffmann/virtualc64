@@ -73,6 +73,9 @@ matrix_float4x4 vc64_matrix_from_rotation(float radians, float x, float y, float
 //! Trigger animation effect. Combination of zooming and rotating
 - (void) fadeIn;
 
+//! Trigger animation effect. Blend in from full transparency
+- (void) blendIn;
+
 //! Trigger animation effect. Rotate cube in one direction
 - (void) rotate;
 

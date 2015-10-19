@@ -18,7 +18,7 @@ struct Uniforms {
     float4x4 view;
     float4x4 projection;
     float4x4 projectionView;
-    float transparency;
+    float alpha;
 };
 
 #endif
