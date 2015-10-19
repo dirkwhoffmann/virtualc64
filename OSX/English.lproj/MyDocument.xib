@@ -163,7 +163,6 @@
                 <outlet property="redLED" destination="1210" id="1215"/>
                 <outlet property="romDialog" destination="1872" id="1943"/>
                 <outlet property="romSource" destination="975" id="1690"/>
-                <outlet property="screen" destination="262" id="7rm-ta-y0u"/>
                 <outlet property="sp" destination="158" id="164"/>
                 <outlet property="stepIntoButton" destination="2098" id="2107"/>
                 <outlet property="stepOutButton" destination="2094" id="2109"/>
@@ -196,17 +195,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="804" height="645"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <openGLView colorSize="8bit_RGB" depthSize="16bit" rendererType="accelerated" useAuxiliaryDepthBufferStencil="NO" id="262" customClass="MyOpenGLView">
-                        <rect key="frame" x="10" y="349" width="360" height="281"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
-                        <connections>
-                            <outlet property="c64proxy" destination="2208" id="2210"/>
-                            <outlet property="controller" destination="-2" id="2181"/>
-                        </connections>
-                    </openGLView>
                     <button hidden="YES" toolTip="Eject cartridge" id="2000">
-                        <rect key="frame" x="117" y="-2" width="20" height="24"/>
+                        <rect key="frame" x="117" y="0.0" width="20" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="bottom" imagePosition="left" alignment="left" id="2001">
@@ -217,8 +207,8 @@
                             <action selector="cartridgeEjectAction:" target="-1" id="2008"/>
                         </connections>
                     </button>
-                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
-                        <rect key="frame" x="42" y="2" width="16" height="16"/>
+                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
+                        <rect key="frame" x="42" y="4" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <connections>
@@ -226,7 +216,7 @@
                         </connections>
                     </progressIndicator>
                     <button toolTip="Drive LED" id="1210">
-                        <rect key="frame" x="22" y="2" width="17" height="17"/>
+                        <rect key="frame" x="22" y="4" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1710">
@@ -235,7 +225,7 @@
                         </buttonCell>
                     </button>
                     <button toolTip="Connect / Disconnect drive" id="1208">
-                        <rect key="frame" x="5" y="2" width="17" height="17"/>
+                        <rect key="frame" x="5" y="4" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1709">
@@ -247,7 +237,7 @@
                         </connections>
                     </button>
                     <button hidden="YES" id="2003">
-                        <rect key="frame" x="101" y="0.0" width="20" height="20"/>
+                        <rect key="frame" x="101" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="cartridge" imagePosition="only" alignment="right" id="2004">
@@ -256,7 +246,7 @@
                         </buttonCell>
                     </button>
                     <button hidden="YES" id="1045">
-                        <rect key="frame" x="63" y="0.0" width="20" height="20"/>
+                        <rect key="frame" x="63" y="2" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="floppy" imagePosition="only" alignment="right" id="1706">
@@ -265,7 +255,7 @@
                         </buttonCell>
                     </button>
                     <textField verticalHuggingPriority="750" id="214">
-                        <rect key="frame" x="565" y="5" width="133" height="11"/>
+                        <rect key="frame" x="565" y="7" width="133" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="Clock" id="1703">
@@ -275,7 +265,7 @@
                         </textFieldCell>
                     </textField>
                     <levelIndicator verticalHuggingPriority="750" id="212">
-                        <rect key="frame" x="721" y="1" width="80" height="18"/>
+                        <rect key="frame" x="721" y="3" width="80" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="11" criticalValue="15" id="1702">
@@ -293,7 +283,7 @@
                         </textFieldCell>
                     </textField>
                     <button hidden="YES" toolTip="Eject disk" id="1038">
-                        <rect key="frame" x="80" y="-2" width="20" height="24"/>
+                        <rect key="frame" x="80" y="0.0" width="20" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="bottom" imagePosition="left" alignment="left" id="1705">
@@ -305,7 +295,7 @@
                         </connections>
                     </button>
                     <button toolTip="Warp mode" id="1052">
-                        <rect key="frame" x="700" y="2" width="17" height="17"/>
+                        <rect key="frame" x="700" y="4" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="fast" imagePosition="above" alignment="center" imageScaling="proportionallyDown" id="1707">
@@ -317,8 +307,8 @@
                         </connections>
                     </button>
                     <customView id="DD4-5B-w9h" customClass="MyMetalView">
-                        <rect key="frame" x="404" y="75" width="356" height="236"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                        <rect key="frame" x="0.0" y="24" width="804" height="621"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <connections>
                             <outlet property="c64proxy" destination="2208" id="bSx-dM-tjo"/>
@@ -416,7 +406,7 @@
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -3467,7 +3457,6 @@ Flashing ist fast, but less compatible</string>
                 <outlet property="diskIcon" destination="mSf-Ra-lAe" id="6Vx-YJ-LxN"/>
                 <outlet property="diskIconFrame" destination="3Y3-Wc-m3k" id="ag6-0r-aZU"/>
                 <outlet property="headerText" destination="1031" id="Y67-2o-4SO"/>
-                <outlet property="initialFirstResponder" destination="262" id="2199"/>
                 <outlet property="loadOptions" destination="yIn-rf-6xJ" id="BSS-vr-fqc"/>
                 <outlet property="warningText" destination="1025" id="EaN-ow-O7c"/>
             </connections>
@@ -3639,7 +3628,6 @@ DQ
                 <outlet property="cancelButton" destination="1898" id="1950"/>
                 <outlet property="characterRom" destination="1888" id="1948"/>
                 <outlet property="dragBox" destination="1879" id="1952"/>
-                <outlet property="initialFirstResponder" destination="262" id="2200"/>
                 <outlet property="kernelRom" destination="1880" id="1946"/>
                 <outlet property="learnMore" destination="1900" id="2017"/>
             </connections>
@@ -3731,11 +3719,7 @@ DQ
                 <outlet property="content" destination="2208" id="2211"/>
             </connections>
         </objectController>
-        <customObject id="2208" userLabel="c64" customClass="C64Proxy">
-            <connections>
-                <outlet property="screen" destination="262" id="2767"/>
-            </connections>
-        </customObject>
+        <customObject id="2208" userLabel="c64" customClass="C64Proxy"/>
         <window title="Properties" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2228" userLabel="Properties" customClass="PropertiesDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>

@@ -306,7 +306,8 @@
 - (void)refreshVIC
 {
     VICProxy *vic = [c64 vic];
-    NSLog(@"refreshVIC:%@", vic);
+    // NSLog(@"refreshVIC:%@", vic);
+#if 0
 	if (![VicVideoMode selectItemWithTag:[vic displayMode]])
         NSLog(@"Can't refresh display mode field");
 	if (![VicScreenGeometry selectItemWithTag:[vic screenGeometry]])
@@ -317,6 +318,12 @@
 		NSLog(@"Can't refresh screen memory field");
 	if (![VicCharacterMemory selectItemWithTag:[vic characterMemoryAddr]])
 		NSLog(@"Can't refresh screen memory field");
+#endif
+    [VicVideoMode selectItemWithTag:[vic displayMode]];
+    [VicScreenGeometry selectItemWithTag:[vic screenGeometry]];
+    [VicMemoryBank selectItemWithTag:[vic memoryBankAddr]];
+    [VicScreenMemory selectItemWithTag:[vic screenMemoryAddr]];
+    [VicCharacterMemory selectItemWithTag:[vic characterMemoryAddr]];
     
 	[VicDX setIntValue:[vic horizontalRasterScroll]];
 	[VicDXStepper setIntValue:[vic horizontalRasterScroll]];

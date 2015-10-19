@@ -17,10 +17,6 @@
  */
 
 // Next steps:
-// 1. Implement currentAlpha targetAlpha
-// 2. Implement blendIn start animation
-// 3. Add transparency to standard shader
-// 4. Use transparency when halted
 // 5. Add 2D drawing mode
 // 6. Remove OpenGL view
 // 7. What kind of semaphore should we use?

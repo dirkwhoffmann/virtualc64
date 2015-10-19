@@ -141,21 +141,18 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (IBAction)setEyeXAction:(id)sender
 {
-	[[controller screen] setEyeX:[sender floatValue]];
     [[controller metalScreen] setEyeX:[sender floatValue]];
     [self update];
 }
 
 - (IBAction)setEyeYAction:(id)sender
 {
-	[[controller screen] setEyeY:[sender floatValue]];
     [[controller metalScreen] setEyeY:[sender floatValue]];
     [self update];
 }
 
 - (IBAction)setEyeZAction:(id)sender
 {
- 	[[controller screen] setEyeZ:[sender floatValue]];
     [[controller metalScreen] setEyeZ:[sender floatValue]];
     [self update];
 }
@@ -230,9 +227,9 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [videoFilter selectItemWithTag:[c64 videoFilter]];
     [colorScheme selectItemWithTag:[c64 colorScheme]];
 
-    [eyeXSlider setFloatValue:[[controller screen] eyeX]]; 
-    [eyeYSlider setFloatValue:[[controller screen] eyeY]]; 
-    [eyeZSlider setFloatValue:[[controller screen] eyeZ]]; 
+    [eyeXSlider setFloatValue:[[controller metalScreen] eyeX]];
+    [eyeYSlider setFloatValue:[[controller metalScreen] eyeY]];
+    [eyeZSlider setFloatValue:[[controller metalScreen] eyeZ]];
       
     [colorWell0 setColor:[[c64 vic] color:0]];
 	[colorWell1 setColor:[[c64 vic] color:1]];

@@ -100,7 +100,6 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     
     NSLog(@"MyMetalView::buildVertexBuffer (texture cut: %f %f %f %f)",
           textureXStart, textureXEnd, textureYStart, textureYEnd);
-    
     const float dx = 0.64;
     const float dy = 0.48;
     const float dz = 0.64;
@@ -171,6 +170,16 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
         +dx, +dy, -dz, 1,   textureXStart, textureYStart,
         -dx, +dy, +dz, 1,   textureXEnd, textureYEnd,
         +dx, +dy, +dz, 1,   textureXEnd, textureYStart,
+        
+        // 2D drawing quad
+        -1,  1, 0, 1,  textureXStart, textureYStart,
+        -1, -1, 0, 1,  textureXStart, textureYEnd,
+         1, -1, 0, 1,  textureXEnd, textureYEnd,
+        
+        -1,  1, 0, 1,  textureXStart, textureYStart,
+         1,  1, 0, 1,  textureXEnd, textureYStart,
+         1, -1, 0, 1,  textureXEnd, textureYEnd,
+
     };
     
     return [device newBufferWithBytes:positions
@@ -325,7 +334,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
 
 - (void)updateAngles
 {
-    if ([self animates]) {
+    //if ([self animates]) {
         
         if (fabs(currentXAngle - targetXAngle) < fabs(deltaXAngle)) currentXAngle = targetXAngle;
         else														currentXAngle += deltaXAngle;
@@ -355,9 +364,10 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
         if (currentZAngle >= 360.0) currentZAngle -= 360.0;
         if (currentZAngle < 0.0) currentZAngle += 360.0;
         
-    } else {
-        drawEntireCube = false;
-    }
+    // }
+    //else {
+    //    drawEntireCube = false;
+    //}
 }
 
 - (void)computeAnimationDeltaSteps:(int)animationCycles
@@ -449,7 +459,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     currentAlpha = 0.0;
     targetAlpha = 1.0;
     
-    [self computeAnimationDeltaSteps:180];
+    [self computeAnimationDeltaSteps:120];
 }
 
 

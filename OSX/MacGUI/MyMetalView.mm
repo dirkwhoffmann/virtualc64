@@ -512,7 +512,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // Update projection matrix
     // float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     float aspect = fabs(layerWidth / layerHeight);
-    _projectionMatrix = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
+    _projectionMatrix = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);    
     _viewMatrix = matrix_identity_float4x4;
     
     // Update matrices for background drawing
@@ -528,9 +528,24 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [self buildDepthBuffer];
 }
 
+- (void)buildMatrices2D
+{
+    _modelMatrix = vc64_matrix_from_translation(0, 0, 0);
+    _viewMatrix = matrix_identity_float4x4;
+    _projectionMatrix = matrix_identity_float4x4;
+    _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
+    
+    Uniforms *frameData = (Uniforms *)[_uniformBuffer contents];
+    frameData->model = _modelMatrix;
+    frameData->view = _viewMatrix;
+    frameData->projectionView = _modelViewProjectionMatrix;
+    frameData->alpha = 1.0;
+}
+
 - (void)buildMatrices
 {
-    _modelMatrix = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.35);
+    // _modelMatrix = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.35);
+    _modelMatrix = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.39);
     
     if ([self animates]) {
         _modelMatrix = _modelMatrix *
@@ -545,7 +560,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     frameData->model = _modelMatrix;
     frameData->view = _viewMatrix;
     frameData->projectionView = _modelViewProjectionMatrix;
-    frameData->alpha = currentAlpha;
+    frameData->alpha = (c64->isHalted()) ? 0.5 : currentAlpha;
 }
 
 - (void)startFrame
@@ -588,7 +603,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
     {
         renderPass.colorAttachments[0].texture = _framebufferTexture;
-        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0.5, 0.5, 0.5, 1);
+        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(1.0, 0, 0, 1);
         renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
         renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
         
@@ -669,11 +684,29 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (void)drawScene2D
 {
+    [self buildMatrices2D];
+    
+    [self startFrame];
+    
+    // Render quad
+    [_commandEncoder setFragmentTexture:_filteredTexture atIndex:0];
+    [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
+    [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:42 vertexCount:6 instanceCount:1];
+    
+    [self endFrame];
 }
 
 - (void)drawScene3D
 {
-    [self updateAngles];
+    bool animates = [self animates];
+    bool halted = c64->isHalted();
+    
+    drawEntireCube = animates;
+    drawBackground = true; // animates || !drawC64texture || halted;
+    
+    if (animates) {
+        [self updateAngles];
+    }
     [self buildMatrices];
     
     [self startFrame];
@@ -686,10 +719,12 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     }
     
     // Render cube
-    [_commandEncoder setFragmentTexture:_filteredTexture atIndex:0];
-    [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
-    [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:(drawEntireCube ? 30 : 6) instanceCount:1];
-
+    if (drawC64texture) {
+        [_commandEncoder setFragmentTexture:_filteredTexture atIndex:0];
+        [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
+        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:(drawEntireCube ? 36 : 6) instanceCount:1];
+    }
+    
     [self endFrame];
 }
 
@@ -710,7 +745,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         
         [lock lock];
         
-        // Update texture
+        // Get latest C64 texture
         [self updateTexture:_commandBuffer];
 
         // Draw scene
