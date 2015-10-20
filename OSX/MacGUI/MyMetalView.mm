@@ -401,7 +401,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
     // Create display link for the main display
     CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
-    // checkForOpenGLErrors();
 
     if (!displayLink) {
         NSLog(@"Error: Can't create display link");

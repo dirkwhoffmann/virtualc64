@@ -108,7 +108,7 @@ enum TextureFilterType {
     // Currently selected filters
     unsigned currentFilter;
     
-    //! If true, the OpenGL view covers the whole window area (used to hide the status bar)
+    //! If true, the C64 canvas covers the whole window area (used to hide the status bar)
     bool drawInEntireWindow;
 
     //! If false, 3D drawing is switched off (2D drawing is used in fullscreen mode, only)

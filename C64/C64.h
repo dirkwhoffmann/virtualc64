@@ -31,7 +31,6 @@
 //
 // 1. Upscaler (like superEagle)
 //    https://github.com/libretro/common-shaders/tree/master/eagle/shaders
-// 2. OpenGL filters
 // 3. Second disk drive
 
 
@@ -122,7 +121,7 @@
  |              |                                                      |
  |	            |                                                      |
  |			    V                                                      V 
- |    ------------------------       copy to openGL texture      -----------------
+ |    ------------------------       copy to GPU texture         -----------------
  ---->| GUI                  |<----------------------------------| Screen buffer |
       ------------------------                                   -----------------
 
@@ -135,7 +134,7 @@
 	The execution thread is organized as an infinite loop. In each iteration, control is passed to the
 	VIC, CIAs, CPU, VIAs, and the disk drive. The VIC chip draws the screen contents into a
 	simple byte array, the so called screen buffer. The asynchronously running GUI copies the screen buffer
-	contents onto an OpenGL texture which is then rendered by the graphic card.
+	contents onto a GPU texture which is then rendered by the graphic card.
 
     Class C64 is the most important class of the core emulator and MyController the most important GUI class. 
     C64Proxy implements a bridge between the GUI (written in Objective-C) anf the emulator (written in C++).

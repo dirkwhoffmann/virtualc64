@@ -18,7 +18,7 @@
 
 - (void) setColorScheme:(unsigned)scheme
 {
-    uint8_t rgb[12][16][3] = {
+    uint8_t rgb[11][16][3] = {
         
         /* CCS64 */
         {
@@ -238,32 +238,12 @@
             { 0x9a, 0xd2, 0x84 },
             { 0x6c, 0x5e, 0xb5 },
             { 0x95, 0x95, 0x95 }
-        },
-        
-        /* GRAYSCALE. DEPRECATED. REMOVE ONCE OPENGL FILTERS ARE IMPLEMENTED */
-        {
-            { 0x10, 0x10, 0x10 },
-            { 0xff, 0xff, 0xff },
-            { 0x70, 0x70, 0x70 },
-            { 0xE1, 0xE1, 0xE1 },
-            { 0x8c, 0x8c, 0x8c },
-            { 0xB9, 0xB9, 0xB9 },
-            { 0x55, 0x55, 0x55 },
-            { 0xed, 0xed, 0xed },
-            { 0xa5, 0xa5, 0xa5 },
-            { 0x78, 0x78, 0x78 },
-            { 0xb4, 0xb4, 0xb4 },
-            { 0x54, 0x54, 0x54 },
-            { 0x88, 0x88, 0x88 },
-            { 0xdc, 0xdc, 0xdc },
-            { 0xa7, 0xa7, 0xa7 },
-            { 0xc0, 0xc0, 0xc0 }
         }
     };
 
     NSLog(@"Setting color scheme %d\n", scheme);
     
-    colorScheme = (scheme < 12) ? scheme : 0;
+    colorScheme = (scheme < 11) ? scheme : 0;
     for (unsigned i = 0; i < 16; i++) {
         c64->vic->setColor(i, LO_LO_HI_HI(rgb[colorScheme][i][0],rgb[colorScheme][i][1],rgb[colorScheme][i][2],0xFF));
     }

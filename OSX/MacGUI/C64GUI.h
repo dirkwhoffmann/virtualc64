@@ -17,8 +17,6 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import <OpenGL/OpenGL.h>
-#import <OpenGL/glu.h>
 #import <Quartz/Quartz.h>
 #import <Metal/Metal.h>
 #import <MetalKit/MetalKit.h>
@@ -32,7 +30,6 @@
 #import "Disassembler.h"
 #import "Formatter.h"
 
-#import "MyOpenGLView.h"
 #import "MyMetalView.h"
 #import "MyMetalViewResponder.h"
 #import "MyMetalViewHelper.h"

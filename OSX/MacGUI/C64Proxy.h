@@ -23,7 +23,6 @@
 @class MyController;
 @class AudioDevice;
 @class V64Snapshot;
-@class MyOpenGLView;
 @class MyMetalView;
 
 
