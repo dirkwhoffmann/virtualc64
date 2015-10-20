@@ -18,8 +18,29 @@
 
 #import "MyMetalView.h"
 
-@interface MyMetalView(Responder)
+// Mac keycodes of special keys
+const uint16_t MAC_F1 = 122;
+const uint16_t MAC_F2 = 120;
+const uint16_t MAC_F3 = 99;
+const uint16_t MAC_F4 = 118;
+const uint16_t MAC_F5 = 96;
+const uint16_t MAC_F6 = 97;
+const uint16_t MAC_F7 = 98;
+const uint16_t MAC_F8 = 100;
+const uint16_t MAC_APO = 39;
+const uint16_t MAC_DEL = 51;
+const uint16_t MAC_RET = 36;
+const uint16_t MAC_CL = 123;
+const uint16_t MAC_CR = 124;
+const uint16_t MAC_CU = 126;
+const uint16_t MAC_CD = 125;
+const uint16_t MAC_SPC = 49;
+const uint16_t MAC_ESC = 53;
+const uint16_t MAC_HAT = 10;
+const uint16_t MAC_TILDE_US = 50;
 
+
+@interface MyMetalView(Responder)
 
 #pragma mark Joystick simulation
 

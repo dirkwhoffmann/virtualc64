@@ -440,18 +440,18 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     if (c64->isPAL()) {
         
         // PAL border will be 36 pixels wide and 34 pixels heigh
-        textureXStart = (float)(PAL_LEFT_BORDER_WIDTH - 36.0) / (float)TEXTURE_WIDTH;
-        textureXEnd = (float)(PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + 36.0) / (float)TEXTURE_WIDTH;
-        textureYStart = (float)(PAL_UPPER_BORDER_HEIGHT - 34.0) / (float)TEXTURE_HEIGHT;
-        textureYEnd = (float)(PAL_UPPER_BORDER_HEIGHT + PAL_CANVAS_HEIGHT + 34.0) / (float)TEXTURE_HEIGHT;
+        textureXStart = (float)(PAL_LEFT_BORDER_WIDTH - 36.0) / (float)C64_TEXTURE_WIDTH;
+        textureXEnd = (float)(PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + 36.0) / (float)C64_TEXTURE_WIDTH;
+        textureYStart = (float)(PAL_UPPER_BORDER_HEIGHT - 34.0) / (float)C64_TEXTURE_HEIGHT;
+        textureYEnd = (float)(PAL_UPPER_BORDER_HEIGHT + PAL_CANVAS_HEIGHT + 34.0) / (float)C64_TEXTURE_HEIGHT;
         
     } else {
         
         // NTSC border will be 42 pixels wide and 9 pixels heigh
-        textureXStart = (float)(NTSC_LEFT_BORDER_WIDTH - 42.0) / (float)TEXTURE_WIDTH;
-        textureXEnd = (float)(NTSC_LEFT_BORDER_WIDTH + NTSC_CANVAS_WIDTH + 42.0) / (float)TEXTURE_WIDTH;
-        textureYStart = (float)(NTSC_UPPER_BORDER_HEIGHT - 9) / (float)TEXTURE_HEIGHT;
-        textureYEnd = (float)(NTSC_UPPER_BORDER_HEIGHT + NTSC_CANVAS_HEIGHT + 9) / (float)TEXTURE_HEIGHT;
+        textureXStart = (float)(NTSC_LEFT_BORDER_WIDTH - 42.0) / (float)C64_TEXTURE_WIDTH;
+        textureXEnd = (float)(NTSC_LEFT_BORDER_WIDTH + NTSC_CANVAS_WIDTH + 42.0) / (float)C64_TEXTURE_WIDTH;
+        textureYStart = (float)(NTSC_UPPER_BORDER_HEIGHT - 9) / (float)C64_TEXTURE_HEIGHT;
+        textureYEnd = (float)(NTSC_UPPER_BORDER_HEIGHT + NTSC_CANVAS_HEIGHT + 9) / (float)C64_TEXTURE_HEIGHT;
     }
     
     // Enable this for debugging (will display the whole texture)
@@ -574,17 +574,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         [self reshape];
     }
     
-#if 0
-    _drawable = [_metalLayer nextDrawable];
-    if (!_drawable)
-    {
-        CGSize s = [_metalLayer drawableSize];
-        NSLog(@"size %f %f", s.width, s.height);
-        NSLog(@"Unable to retrieve drawable");
-        return NO;
-    }
-#endif
-    
     _framebufferTexture = _drawable.texture;
     
     if (!_framebufferTexture)
@@ -603,7 +592,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _commandBuffer = [_commandQueue commandBuffer];
     
     // Apply filter to C64 screen texture
-    [currentFilter apply:_commandBuffer in:_texture out:_filteredTexture];
+    TextureFilter *filter = [self currentTextureFilter];
+    [filter apply:_commandBuffer in:_texture out:_filteredTexture];
     
     // Create render pass
     /* "A render pass descriptor tells Metal what actions to take while an image is being rendered" */
@@ -627,7 +617,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         [_commandEncoder setRenderPipelineState:_pipeline];
         [_commandEncoder setDepthStencilState:_depthState];
         [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
-        [_commandEncoder setFragmentSamplerState:[currentFilter sampler] atIndex:0];
+        [_commandEncoder setFragmentSamplerState:[filter sampler] atIndex:0];
         [_commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
     }
@@ -637,99 +627,42 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (unsigned)videoFilter
 {
-    return currentFilterType;
+    return currentFilter;
 }
 
 - (void)setVideoFilter:(unsigned)filter
 {
-    currentFilterType = filter;
-    
-    switch (filter) {
-        case TEX_FILTER_NONE:
-            currentFilter = bypassFilter;
-            break;
-        case TEX_FILTER_SMOOTH:
-            currentFilter = smoothFilter;
-            break;
-        case TEX_FILTER_BLUR:
-            currentFilter = blurFilter;
-            break;
-        case TEX_FILTER_SATURATION:
-            currentFilter = saturationFilter;
-            break;
-        case TEX_FILTER_GRAYSCALE:
-            currentFilter = grayscaleFilter;
-            break;
-        case TEX_FILTER_SEPIA:
-            currentFilter = sepiaFilter;
-            break;
-        case TEX_FILTER_CRT:
-            currentFilter = crtFilter;
-            break;
-            
-        default:
-            currentFilterType = TEX_FILTER_SMOOTH;
-            currentFilter = smoothFilter;
-            break;
-    }
+    currentFilter = filter;
 }
 
-#if 0
-- (TextureFilter *)currentFilter
+- (TextureFilter *)currentTextureFilter
 {
-    switch (filter) {
+    switch (currentFilter) {
         case TEX_FILTER_NONE:
             return bypassFilter;
+            
         case TEX_FILTER_SMOOTH:
             return smoothFilter;
-        case TEX_FILTER_BLUR:
-            return blurFilter;
-        case TEX_FILTER_SATURATION:
-            return saturationFilter;
-        case TEX_FILTER_SEPIA:
-            return sepiaFilter;
-        case TEX_FILTER_GRAYSCALE:
-            return grayscaleFilter;
-        case TEX_FILTER_CRT:
-            return crtFilter;
-        default:
-            assert(0);
-    }
-    return nil;
-}
-
-- (void)applyFilter
-{
-    switch (filter) {
-        case TEX_FILTER_NONE:
-            [bypassFilter apply:_commandBuffer in:_texture out:_filteredTexture];
-            break;
             
         case TEX_FILTER_BLUR:
-            [blurFilter apply:_commandBuffer in:_texture out:_filteredTexture];
-            break;
-
+            return blurFilter;
+            
         case TEX_FILTER_SATURATION:
-            [saturationFilter apply:_commandBuffer in:_texture out:_filteredTexture];
-            break;
-        
-        case TEX_FILTER_SEPIA:
-            [sepiaFilter apply:_commandBuffer in:_texture out:_filteredTexture];
-            break;
-
+            return saturationFilter;
+            
         case TEX_FILTER_GRAYSCALE:
-            [grayscaleFilter apply:_commandBuffer in:_texture out:_filteredTexture];
-            break;
-
+            return grayscaleFilter;
+            
+        case TEX_FILTER_SEPIA:
+            return sepiaFilter;
+            
         case TEX_FILTER_CRT:
-            [crtFilter apply:_commandBuffer in:_texture out:_filteredTexture];
-            break;
-
+            return crtFilter;
+            
         default:
-            assert(0);
+            return smoothFilter;
     }
 }
-#endif
 
 - (void)drawScene2D
 {

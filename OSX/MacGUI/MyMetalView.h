@@ -24,6 +24,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
+#import <QuickTime/QuickTime.h>
 #import "BypassFilter.h"
 #import "BlurFilter.h"
 #import "SaturationFilter.h"
@@ -40,6 +41,10 @@ using namespace simd;
 const int C64_TEXTURE_WIDTH = 512;
 const int C64_TEXTURE_HEIGHT= 512;
 const int C64_TEXTURE_DEPTH = 4;
+
+const int BG_TEXTURE_WIDTH = 1024;
+const int BG_TEXTURE_HEIGHT= 512;
+const int BG_TEXTURE_DEPTH = 4;
 
 enum TextureFilterType {
     TEX_FILTER_NONE = 1,
@@ -101,8 +106,7 @@ enum TextureFilterType {
     TextureFilter *crtFilter;
     
     // Currently selected filters
-    unsigned currentFilterType; 
-    TextureFilter *currentFilter;
+    unsigned currentFilter;
     
     //! If true, the OpenGL view covers the whole window area (used to hide the status bar)
     bool drawInEntireWindow;
