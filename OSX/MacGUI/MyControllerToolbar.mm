@@ -85,29 +85,30 @@
 {
     NSLog(@"printDocument");
 
-    // Set printing properties
+    // Printing properties
 	NSPrintInfo *myPrintInfo = [[self document] printInfo];
-	[myPrintInfo setHorizontalPagination:NSFitPagination];
+    [myPrintInfo setHorizontalPagination:NSFitPagination];
 	[myPrintInfo setHorizontallyCentered:YES];
 	[myPrintInfo setVerticalPagination:NSFitPagination];
 	[myPrintInfo setVerticallyCentered:YES];
 	[myPrintInfo setOrientation:NSPaperOrientationLandscape];
-	[myPrintInfo setLeftMargin:0.0]; // 32.0
-	[myPrintInfo setRightMargin:0.0]; // 32.0
-	[myPrintInfo setTopMargin:0.0]; // 32.0
-	[myPrintInfo setBottomMargin:0.0]; // 32.0
+	[myPrintInfo setLeftMargin:32.0]; // 32.0
+	[myPrintInfo setRightMargin:32.0]; // 32.0
+	[myPrintInfo setTopMargin:32.0]; // 32.0
+	[myPrintInfo setBottomMargin:32.0]; // 32.0
 	
-	// Capture image and create image view
+	// Image view
+    NSSize paperSize = [myPrintInfo paperSize];
     NSImage *image = [metalScreen screenshot];
-	NSRect printRect = NSMakeRect(0.0, 0.0, [image size].width, [image size].height);
-	NSImageView *imageView = [[NSImageView alloc] initWithFrame:printRect];
+	// NSRect printRect = NSMakeRect(0.0, 0.0, [image size].width, [image size].height);
+    NSRect printRect = NSMakeRect(0.0, 0.0, paperSize.width, paperSize.height);
+    NSImageView *imageView = [[NSImageView alloc] initWithFrame:printRect];
 	[imageView setImage:image];
-    [imageView setImageScaling:NSImageScaleAxesIndependently]; // NSScaleToFit];
+    [imageView setImageScaling:NSImageScaleAxesIndependently];
 
 	// Print image
-    NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:imageView  printInfo:myPrintInfo];
+    NSPrintOperation *printOperation = [NSPrintOperation printOperationWithView:imageView printInfo:myPrintInfo];
     [printOperation runOperationModalForWindow:[[self document] windowForSheet] delegate: nil didRunSelector: NULL contextInfo:NULL];
-	
 }
 
 - (IBAction)portAAction:(id)sender

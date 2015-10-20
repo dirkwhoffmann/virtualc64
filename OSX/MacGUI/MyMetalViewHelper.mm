@@ -207,7 +207,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     return image;
 }
 
-- (NSImage *) flipImage:(NSImage *)image
+- (NSImage *)flipImage:(NSImage *)image
 {
     assert(image != nil);
     
@@ -232,7 +232,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     return newImage;
 }
 
-- (NSImage *) expandImage:(NSImage *)image toSize:(NSSize)size
+- (NSImage *)expandImage:(NSImage *)image toSize:(NSSize)size
 {
     NSImage *newImage = [[NSImage alloc] initWithSize:size];
     
@@ -255,9 +255,6 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     
     return newImage;
 }
-
-
-
 
 - (id<MTLTexture>) makeTexture:(NSImage *)image withDevice:(id <MTLDevice>)device
 {
