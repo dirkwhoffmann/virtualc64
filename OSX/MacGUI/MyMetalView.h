@@ -158,8 +158,8 @@ enum TextureFilterType {
 
 #pragma mark Drawing
 
+- (void)setupDisplayLink;
 - (void)updateScreenGeometry;
-
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
 
 

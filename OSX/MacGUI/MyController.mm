@@ -123,11 +123,16 @@
     
 	// Launch emulator
 	[c64 run];
+
+    // Start metal drawing
+    NSLog(@"Setting up display link %@...\n", metalScreen);
+    [metalScreen setupDisplayLink];
+
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    NSLog(@"applicationDidFinishLaunching\n");
+    NSLog(@"MyController::applicationDidFinishLaunching\n");
     
     // Start the crash reporter
     [self checkForCrashReports];

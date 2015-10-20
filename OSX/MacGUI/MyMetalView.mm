@@ -128,6 +128,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     // Create lock used by the draw method
     lock = [NSRecursiveLock new];
+    // _inflightSemaphore = dispatch_semaphore_create(AAPLBuffersInflightBuffers);
 
     // Set initial scene position and drawing properties
     currentEyeX = targetEyeX = deltaEyeX = 0.0;
@@ -168,7 +169,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
      [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
 
     // Fire off timer...
-    [self setupDisplayLink];
+    // [self setupDisplayLink];
 }
 
 - (void)buildMetal
@@ -192,7 +193,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _metalLayer.device = _device;
     _metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
     _metalLayer.framebufferOnly = NO; // YES;
-    
+    _metalLayer.frame = self.layer.frame;
     
     layerWidth = _metalLayer.drawableSize.width;
     layerHeight = _metalLayer.drawableSize.height;
@@ -485,15 +486,28 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
            bytesPerRow:rowBytes bytesPerImage:imageBytes];
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    // NSLog(@"MyMetalView::setFrame");
+
+    [super setFrame:frame];
+
+    CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
+    CGSize drawableSize = self.bounds.size;
+    
+    drawableSize.width *= scale;
+    drawableSize.height *= scale;
+    
+    _metalLayer.drawableSize = drawableSize;
+}
+
 - (void)reshape
 {
-/*
-    NSLog(@"%f %f %f %f %f %f", drawableSize.width, drawableSize.height, width, height,
- _metalLayer.drawableSize.width, _metalLayer.drawableSize.height);
-    NSLog(@"Framebuffer width:%d height:%d w:%f h:%f",
-          [_framebufferTexture width], [_framebufferTexture height],
-          self.bounds.size.width, self.bounds.size.height);
-*/
+    CGSize s = [_metalLayer drawableSize];
+    layerWidth = s.width;
+    layerHeight = s.height;
+
+    NSLog(@"CGLayer size %f %f", s.width, s.height);
 
     // Update projection matrix
     // float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
@@ -549,7 +563,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     frameData->alpha = (c64->isHalted()) ? 0.5 : currentAlpha;
 }
 
-- (void)startFrame
+- (BOOL)startFrame
 {
     CGSize drawableSize = _metalLayer.drawableSize;
     
@@ -557,18 +571,26 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     // Update all size dependent entities
     if (layerWidth != drawableSize.width || layerHeight != drawableSize.height) {
-        layerWidth = drawableSize.width;
-        layerHeight = drawableSize.height;
         [self reshape];
     }
     
+#if 0
     _drawable = [_metalLayer nextDrawable];
+    if (!_drawable)
+    {
+        CGSize s = [_metalLayer drawableSize];
+        NSLog(@"size %f %f", s.width, s.height);
+        NSLog(@"Unable to retrieve drawable");
+        return NO;
+    }
+#endif
+    
     _framebufferTexture = _drawable.texture;
     
     if (!_framebufferTexture)
     {
-        NSLog(@"Unable to retrieve texture; drawable may be nil");
-        return;
+        NSLog(@"Unable to retrieve framebuffer texture");
+        return NO;
     }
     
     if (_pipelineIsDirty)
@@ -586,6 +608,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // Create render pass
     /* "A render pass descriptor tells Metal what actions to take while an image is being rendered" */
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
+    // MTLRenderPassDescriptor *renderPass = self.currentRenderPassDescriptor;
     {
         renderPass.colorAttachments[0].texture = _framebufferTexture;
         renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1);
@@ -608,6 +631,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         [_commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
     }
+    
+    return YES;
 }
 
 - (unsigned)videoFilter
@@ -710,7 +735,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 {
     [self buildMatrices2D];
     
-    [self startFrame];
+    if (![self startFrame])
+        return;
     
     // Render quad
     [_commandEncoder setFragmentTexture:_filteredTexture atIndex:0];
@@ -732,7 +758,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     }
     [self buildMatrices];
     
-    [self startFrame];
+    if (![self startFrame])
+        return;
     
     // Render background
     if (drawBackground) {
@@ -769,8 +796,20 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         if (!c64 || !enableMetal)
             return kCVReturnSuccess;
         
+        // dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
+
+        //if (![lock tryLock])
+        //    return kCVReturnSuccess;
+
         [lock lock];
         
+        _drawable = [_metalLayer nextDrawable];
+        if (!_drawable) {
+            NSLog(@"Unable to retrieve drawable");
+            [lock unlock];
+            return NO;
+        }
+
         // Get latest C64 texture
         [self updateTexture:_commandBuffer];
 

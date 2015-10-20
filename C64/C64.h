@@ -38,7 +38,7 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-#define NDEBUG      // RELEASE
+// #define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
 // #define DEBUG_LEVEL 3  // DEVELOPMENT
 
