@@ -17,8 +17,6 @@
  */
 
 // Next steps:
-// 1. Repair bottom bar
-// 2. Shader: Keyboard -> Dialog
 // 3. Repair "MetalView::screenshot"
 // 4. Blur is too heavy
 // 5. What kind of semaphore should we use?
@@ -44,12 +42,12 @@ const int C64_TEXTURE_HEIGHT= 512;
 const int C64_TEXTURE_DEPTH = 4;
 
 enum TextureFilterType {
-    TEX_FILTER_NONE = 0,
+    TEX_FILTER_NONE = 1,
     TEX_FILTER_SMOOTH,
     TEX_FILTER_BLUR,
     TEX_FILTER_SATURATION,
-    TEX_FILTER_SEPIA,
     TEX_FILTER_GRAYSCALE,
+    TEX_FILTER_SEPIA,
     TEX_FILTER_CRT,
 };
 
@@ -62,6 +60,21 @@ enum TextureFilterType {
 
     // Synchronization lock
     NSRecursiveLock *lock;
+    
+    // Renderer globals
+    id <MTLDevice> _device;
+    id <MTLLibrary> _library;
+    id <MTLCommandQueue> _commandQueue;
+    
+    // Textures
+    id <MTLTexture> _bgTexture; // Background image
+    id <MTLTexture> _texture; // C64 screen
+    id <MTLTexture> _filteredTexture; // post-processes C64 screen
+    id <MTLTexture> _framebufferTexture;
+    id <MTLTexture> _depthTexture; // z buffer
+    id <MTLSamplerState> _sampler;
+    id <MTLSamplerState> _sampler2;
+
     
     // Animation parameters
     float currentXAngle, targetXAngle, deltaXAngle;
@@ -78,6 +91,7 @@ enum TextureFilterType {
     float textureYStart;
     float textureYEnd;
 
+    // Prebuild filters
     TextureFilter *bypassFilter;
     TextureFilter *smoothFilter;
     TextureFilter *blurFilter;
@@ -85,12 +99,10 @@ enum TextureFilterType {
     TextureFilter *sepiaFilter;
     TextureFilter *grayscaleFilter;
     TextureFilter *crtFilter;
-
-    //! Active texture filter
-    TextureFilterType filter;
-
-    //! Active texture sampling mode
-    // TextureSamplingMode sampling;
+    
+    // Currently selected filters
+    unsigned currentFilterType; 
+    TextureFilter *currentFilter;
     
     //! If true, the OpenGL view covers the whole window area (used to hide the status bar)
     bool drawInEntireWindow;
@@ -139,8 +151,8 @@ enum TextureFilterType {
 - (bool)drawEntireCube;
 - (void)setDrawEntireCube:(bool)b;
 
-- (bool)textureFilter;
-- (void)setTextureFilter:(TextureFilterType)type;
+- (unsigned)videoFilter;
+- (void)setVideoFilter:(unsigned)filter;
 
 - (void)cleanup;
 

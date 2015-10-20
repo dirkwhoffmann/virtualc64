@@ -35,20 +35,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 @implementation MyMetalView {
     
-    // Renderer globals
-    id <MTLDevice> _device;
-    id <MTLLibrary> _library;
-    id <MTLCommandQueue> _commandQueue;
-    
-    // Textures
-    id <MTLTexture> _bgTexture; // Background image
-    id <MTLTexture> _texture; // C64 screen
-    id <MTLTexture> _filteredTexture; // post-processes C64 screen
-    id <MTLTexture> _framebufferTexture;
-    id <MTLTexture> _depthTexture; // z buffer
-    id <MTLSamplerState> _sampler;
-    id <MTLSamplerState> _sampler2;
-    
+     
     CAMetalLayer *_metalLayer;
     CGFloat layerWidth;
     CGFloat layerHeight;
@@ -118,9 +105,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 - (bool)drawEntireCube { return drawEntireCube; }
 - (void)setDrawEntireCube:(bool)b { drawEntireCube = b; }
 
-- (bool)textureFilter { return filter; }
-- (void)setTextureFilter:(TextureFilterType)type { filter = type; }
-
 
 // -----------------------------------------------------------------------------------------------
 //                                  Initialization (General)
@@ -160,7 +144,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     drawC64texture = false;
     drawBackground = true;
     drawEntireCube = false;
-    filter = TEX_FILTER_BLUR;
     
     // Core video and graphics stuff
     displayLink = nil;
@@ -317,11 +300,13 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 {
     bypassFilter = [BypassFilter filterWithDevice:_device library:_library];
     smoothFilter = [SaturationFilter filterWithFactor:1.0 device:_device library:_library];
-    blurFilter = [BlurFilter filterWithRadius:2.0 device:_device library:_library];
+    blurFilter = [BlurFilter filterWithRadius:1.0 device:_device library:_library];
     saturationFilter = [SaturationFilter filterWithFactor:0.5 device:_device library:_library];
     sepiaFilter = [SepiaFilter filterWithDevice:_device library:_library];
     crtFilter = [CrtFilter filterWithDevice:_device library:_library];
     grayscaleFilter = [SaturationFilter filterWithFactor:0.0 device:_device library:_library];
+    
+    [self setVideoFilter:TEX_FILTER_CRT];
 }
 
 - (void)buildDepthStencilState
@@ -596,15 +581,14 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _commandBuffer = [_commandQueue commandBuffer];
     
     // Apply filter to C64 screen texture
-    TextureFilter *flt = [self currentFilter];
-    [flt apply:_commandBuffer in:_texture out:_filteredTexture];
+    [currentFilter apply:_commandBuffer in:_texture out:_filteredTexture];
     
     // Create render pass
     /* "A render pass descriptor tells Metal what actions to take while an image is being rendered" */
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
     {
         renderPass.colorAttachments[0].texture = _framebufferTexture;
-        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(1.0, 0, 0, 1);
+        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1);
         renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
         renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
         
@@ -620,12 +604,52 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         [_commandEncoder setRenderPipelineState:_pipeline];
         [_commandEncoder setDepthStencilState:_depthState];
         [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
-        [_commandEncoder setFragmentSamplerState:[flt sampler] atIndex:0];
+        [_commandEncoder setFragmentSamplerState:[currentFilter sampler] atIndex:0];
         [_commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
     }
 }
 
+- (unsigned)videoFilter
+{
+    return currentFilterType;
+}
+
+- (void)setVideoFilter:(unsigned)filter
+{
+    currentFilterType = filter;
+    
+    switch (filter) {
+        case TEX_FILTER_NONE:
+            currentFilter = bypassFilter;
+            break;
+        case TEX_FILTER_SMOOTH:
+            currentFilter = smoothFilter;
+            break;
+        case TEX_FILTER_BLUR:
+            currentFilter = blurFilter;
+            break;
+        case TEX_FILTER_SATURATION:
+            currentFilter = saturationFilter;
+            break;
+        case TEX_FILTER_GRAYSCALE:
+            currentFilter = grayscaleFilter;
+            break;
+        case TEX_FILTER_SEPIA:
+            currentFilter = sepiaFilter;
+            break;
+        case TEX_FILTER_CRT:
+            currentFilter = crtFilter;
+            break;
+            
+        default:
+            currentFilterType = TEX_FILTER_SMOOTH;
+            currentFilter = smoothFilter;
+            break;
+    }
+}
+
+#if 0
 - (TextureFilter *)currentFilter
 {
     switch (filter) {
@@ -680,6 +704,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
             assert(0);
     }
 }
+#endif
 
 - (void)drawScene2D
 {

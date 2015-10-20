@@ -11,11 +11,14 @@
 #import "C64Proxy.h"
 
 //! Predefined video filters
+// USE TextureFilterType instead
+#if 0
 enum VIDEO_FILTER {
     GLFILTER_ANTI_ALIASING = 0,
     GLFILTER_NONE = 1
     
 };
+#endif
 
 //! Predefined color schemes
 enum ColorScheme {
@@ -35,8 +38,10 @@ enum ColorScheme {
 
 @interface C64Proxy(Colors)
 
+#if 0
 - (int) videoFilter;
 - (void) setVideoFilter:(unsigned)filter;
+#endif
 
 - (int) colorScheme;
 - (void) setColorScheme:(unsigned)scheme;

@@ -63,12 +63,6 @@
 	
 	// Create panel
 	NSSavePanel* sPanel = [NSSavePanel savePanel];
-	// [sPanel setCanChooseDirectories:NO];
-	// [sPanel setCanChooseFiles:YES];
-	// [sPanel setCanCreateDirectories:YES];
-	// [sPanel setAllowsMultipleSelection:NO];
-	// [sPanel setAlphaValue:0.95];
-	// [sPanel setTitle:@"Select a file to open"];
 	[sPanel setCanSelectHiddenExtension:YES];
 	[sPanel setAllowedFileTypes:fileTypes];
     

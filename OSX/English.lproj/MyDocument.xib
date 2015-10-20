@@ -3158,7 +3158,7 @@
                                         <rect key="frame" x="134" y="14" width="103" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
-                                        <buttonCell key="cell" type="check" title="Enable OpenGL" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1779">
+                                        <buttonCell key="cell" type="check" title="Enable drawing" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1779">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
@@ -4320,15 +4320,30 @@ DQ
                         <rect key="frame" x="348" y="295" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
-                        <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="wnC-1X-pw3" id="2294">
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="2294">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="2295">
                                 <items>
-                                    <menuItem title="Anti-aliasing" id="2296">
+                                    <menuItem title="None" tag="1" id="2296">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="None" state="on" tag="1" id="wnC-1X-pw3">
+                                    <menuItem title="Smooth" tag="2" id="wnC-1X-pw3">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Gaussian blur" tag="3" id="Zrg-Cv-XjE">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Desaturation" tag="4" id="IwT-kO-x5q">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Grayscale" tag="5" id="b2n-0R-HXT">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="Sepia" tag="6" id="xqC-kJ-4Vf">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="CRT" tag="7" id="bhI-We-xU7">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>

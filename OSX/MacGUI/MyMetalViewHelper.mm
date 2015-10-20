@@ -18,6 +18,7 @@
 
 #import "C64GUI.h"
 #import "ShaderTypes.h"
+#import <CoreGraphics/CoreGraphics.h>
 
 matrix_float4x4
 vc64_matrix_identity()
@@ -193,38 +194,17 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
 
 - (NSImage *)screenshot
 {
-    int height=(int)NSHeight([self visibleRect]);
-    int width=(int)NSWidth([self visibleRect]);
-    
-    NSBitmapImageRep *imageRep;
-    NSImage *image;
-    
-    imageRep=[[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL
-                                                     pixelsWide:width
-                                                     pixelsHigh:height
-                                                  bitsPerSample:8
-                                                samplesPerPixel:4
-                                                       hasAlpha:YES
-                                                       isPlanar:NO
-                                                 colorSpaceName:NSCalibratedRGBColorSpace
-                                                    bytesPerRow:width*4
-                                                   bitsPerPixel:0];
-    
     [lock lock];
     
-    NSLog(@"Implementation missing");
-    
-#if 0
-    [[self openGLContext] makeCurrentContext];
-    glReadPixels(0,0,width,height,GL_RGBA,GL_UNSIGNED_BYTE,[imageRep bitmapData]);
-    image=[[NSImage alloc] initWithSize:NSMakeSize(width,height)];
-    [image addRepresentation:imageRep];
-#endif
+    NSImage *image = [MyMetalView imageWithTexture:_texture
+                                                x1:textureXStart
+                                                y1:textureYStart
+                                                x2:textureXEnd
+                                                y2:textureYEnd];
     
     [lock unlock];
     
-    NSImage *screenshot = [self flipImage:image];
-    return screenshot;
+    return image;
 }
 
 - (NSImage *) flipImage:(NSImage *)image
@@ -319,6 +299,49 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     free(rawData);
         
     return texture;
+}
+
+static void releaseDataCallback(void *info, const void *data, size_t size)
+{
+    free((void *)data);
+}
+
++ (NSImage *)imageWithTexture:(id<MTLTexture>)texture x1:(float)_x1 y1:(float)_y1 x2:(float)_x2 y2:(float)_y2
+{
+    NSAssert([texture pixelFormat] == MTLPixelFormatRGBA8Unorm, @"Pixel format of texture must be MTLPixelFormatBGRA8Unorm");
+    
+    // CGSize imageSize = CGSizeMake([texture width] / 2, [texture height] / 2);
+    CGSize imageSize = CGSizeMake([texture width] * (_x2 - _x1), [texture height] * (_y2 - _y1));
+
+    size_t imageByteCount = imageSize.width * imageSize.height * 4;
+    void *imageBytes = malloc(imageByteCount);
+    NSUInteger bytesPerRow = imageSize.width * 4;
+    MTLRegion region = MTLRegionMake2D([texture width] * _x1, [texture height] * _y1, imageSize.width, imageSize.height);
+    [texture getBytes:imageBytes bytesPerRow:bytesPerRow fromRegion:region mipmapLevel:0];
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, imageBytes, imageByteCount, releaseDataCallback);
+    int bitsPerComponent = 8;
+    int bitsPerPixel = 32;
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big;
+    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+    CGImageRef imageRef = CGImageCreate(imageSize.width,
+                                        imageSize.height,
+                                        bitsPerComponent,
+                                        bitsPerPixel,
+                                        bytesPerRow,
+                                        colorSpaceRef,
+                                        bitmapInfo,
+                                        provider,
+                                        NULL,
+                                        false,
+                                        renderingIntent);
+    
+    NSImage *image = [[NSImage alloc] initWithCGImage:imageRef size:NSZeroSize];
+    CFRelease(provider);
+    CFRelease(colorSpaceRef);
+    CFRelease(imageRef);
+    
+    return image;
 }
 
 
@@ -492,6 +515,15 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
 {
     NSLog(@"Blending in...\n\n");
     
+    /*
+    currentXAngle  = -90;
+    currentEyeZ    = 5.0;
+    currentEyeY    = 4.5;
+    */
+    
+    targetXAngle   = 0;
+    targetYAngle   = 0;
+    targetZAngle   = 0;
     currentAlpha = 0.0;
     targetAlpha = 1.0;
     

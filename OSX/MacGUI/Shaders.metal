@@ -171,9 +171,9 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
     if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
     {
         half4 inColor = inTexture.read(gid);
-        half line = (gid.y % 3) / 2.0;
+        half line = (gid.y % 2) / 1.0;
         half4 grayColor(line,line,line,1.0);
-        half4 result = mix(inColor, grayColor, half(0.15));
+        half4 result = mix(inColor, grayColor, half(0.11));
         
         outTexture.write(result, gid);
     }

@@ -419,8 +419,7 @@
 
 @interface C64Proxy : NSObject {	
 	
-    IBOutlet MyOpenGLView* screen; 
-    // IBOutlet MyMetalView* metalScreen;
+    // IBOutlet MyMetalView *metalScreen;
 
 	C64 *c64;
 	AudioDevice *audioDevice;
@@ -442,13 +441,11 @@
 	//! Indicates that data is transmitted on the IEC bus
 	BOOL iecBusIsBusy;
 
-    //! Currently used video filter
-    int videoFilter;
-
     //! Currently used color scheme
     int colorScheme;
 }
 
+@property (strong,readonly) MyMetalView *metalScreen;
 @property (readonly) C64 *c64;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
