@@ -454,6 +454,7 @@ D64Archive::itemIsVisible(uint8_t typeChar, const char **extension)
     if (extension)
         *extension = result ? result : "";
 
+    // printf("itemIsVisible as %s\n", result == NULL ? "" : result);
     return result != NULL;
 }
 
@@ -480,7 +481,7 @@ D64Archive::getDestinationAddrOfItem(int n)
     
     track = data[pos + 0x01];
     sector = data[pos + 0x02];
-    if ((pos = offset(track, sector)) <= 0)
+    if ((pos = offset(track, sector)) < 0)
         return 0;
     
     result = LO_HI(data[pos+2],data[pos+3]);
@@ -867,6 +868,7 @@ D64Archive::findDirectoryEntry(int item, bool skipInvisibleFiles)
     unsigned noOfFiles;
     
     scanDirectory(offsets, &noOfFiles, skipInvisibleFiles);
+    // printf("scanDirectory: %d %d\n", noOfFiles, offsets[0]);
     
     return (item < noOfFiles) ? offsets[item] : -1;
 }
