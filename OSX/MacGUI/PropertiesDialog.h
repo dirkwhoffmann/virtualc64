@@ -52,6 +52,7 @@ extern NSString *VC64EyeY;
 extern NSString *VC64EyeZ;
 extern NSString *VC64ColorSchemeKey;
 extern NSString *VC64VideoFilterKey;
+extern NSString *VC64FullscreenKeepAspectRatioKey;
 
 @interface PropertiesDialog : NSWindow
 {
@@ -110,7 +111,8 @@ extern NSString *VC64VideoFilterKey;
 	IBOutlet NSColorWell *colorWell12;
 	IBOutlet NSColorWell *colorWell13;
 	IBOutlet NSColorWell *colorWell14;
-	IBOutlet NSColorWell *colorWell15;	
+	IBOutlet NSColorWell *colorWell15;
+    IBOutlet NSButton *aspectRatioButton;
 }
 
 - (void) initialize:(MyController *)mycontroller;
@@ -122,16 +124,16 @@ extern NSString *VC64VideoFilterKey;
 - (void)updateKeymap:(int)map direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t;
 - (void) update;
 
-
 // Joystick
 - (IBAction)recordKeyAction:(id)sender;
 
-// VIC
+// Video
 - (IBAction)changeColorScheme:(id)sender;
 - (IBAction)setVideoFilterAction:(id)sender;
 - (IBAction)setEyeXAction:(id)sender;
 - (IBAction)setEyeYAction:(id)sender;
 - (IBAction)setEyeZAction:(id)sender;
+- (IBAction)setFullscreenAspectRatio:(id)sender;
 
 // Action buttons
 - (IBAction)useAsDefaultAction:(id)sender;

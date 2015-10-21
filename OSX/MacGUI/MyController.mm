@@ -254,6 +254,7 @@
 
 	[defaultValues setObject:@((int)CCS64) forKey:VC64ColorSchemeKey];
 	[defaultValues setObject:@0 forKey:VC64VideoFilterKey];
+    [defaultValues setObject:@NO forKey:VC64FullscreenKeepAspectRatioKey];
 		
 	// Register dictionary
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
@@ -294,8 +295,9 @@
     [metalScreen setEyeZ:[defaults floatForKey:VC64EyeZ]];
 
 	// [c64 setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
-    [metalScreen setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
     [c64 setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
+    [metalScreen setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
+    [metalScreen setFullscreenKeepAspectRatio:[defaults boolForKey:VC64FullscreenKeepAspectRatioKey]];
 }
 
 - (void)loadVirtualMachineUserDefaults
@@ -363,8 +365,9 @@
     [defaults setFloat:[metalScreen eyeX] forKey:VC64EyeX];
     [defaults setFloat:[metalScreen eyeY] forKey:VC64EyeY];
     [defaults setFloat:[metalScreen eyeZ] forKey:VC64EyeZ];
-    [defaults setInteger:[metalScreen videoFilter] forKey:VC64VideoFilterKey];
     [defaults setInteger:[c64 colorScheme] forKey:VC64ColorSchemeKey];
+    [defaults setInteger:[metalScreen videoFilter] forKey:VC64VideoFilterKey];
+    [defaults setInteger:[metalScreen fullscreenKeepAspectRatio] forKey:VC64FullscreenKeepAspectRatioKey];
 }
 
 - (void)saveVirtualMachineUserDefaults

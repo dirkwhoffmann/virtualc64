@@ -54,6 +54,7 @@ NSString *VC64EyeY            = @"VC64EyeY";
 NSString *VC64EyeZ            = @"VC64EyeZ";
 NSString *VC64ColorSchemeKey  = @"VC64ColorSchemeKey";
 NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
+NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey";
 
 - (void)initialize:(MyController *)mycontroller
 {
@@ -101,8 +102,10 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [[controller metalScreen] setEyeX:(float)0.0];
     [[controller metalScreen] setEyeY:(float)0.0];
     [[controller metalScreen] setEyeZ:(float)0.0];
-    [[controller metalScreen] setVideoFilter:TEX_FILTER_SMOOTH];
     [c64 setColorScheme:CCS64];
+    [[controller metalScreen] setVideoFilter:TEX_FILTER_SMOOTH];
+    [[controller metalScreen] setFullscreenKeepAspectRatio:NO];
+    
     
     [self update];
     [self useAsDefaultAction:self];
@@ -153,9 +156,21 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 
 - (IBAction)setEyeZAction:(id)sender
 {
+    NSLog(@"setEyeZAction");
+    
     [[controller metalScreen] setEyeZ:[sender floatValue]];
     [self update];
 }
+
+- (IBAction)setFullscreenAspectRatio:(id)sender
+{
+    NSLog(@"setFullscreenAspectRatio");
+    
+    [[controller metalScreen] setFullscreenKeepAspectRatio:[(NSButton *)sender state]];
+    NSLog(@"ar: %d", [[controller metalScreen] fullscreenKeepAspectRatio]);
+    [self update];
+}
+
 
 - (NSString *)keycodeInPlainText:(int)code character:(char)c
 {
@@ -206,7 +221,8 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
 }
 
 - (void)update
-{	    
+{
+                   
     /* Joystick */
     
     // First key set
@@ -230,7 +246,8 @@ NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
     [eyeXSlider setFloatValue:[[controller metalScreen] eyeX]];
     [eyeYSlider setFloatValue:[[controller metalScreen] eyeY]];
     [eyeZSlider setFloatValue:[[controller metalScreen] eyeZ]];
-      
+    [aspectRatioButton setState:[[controller metalScreen] fullscreenKeepAspectRatio]];
+    
     [colorWell0 setColor:[[c64 vic] color:0]];
 	[colorWell1 setColor:[[c64 vic] color:1]];
 	[colorWell2 setColor:[[c64 vic] color:2]];

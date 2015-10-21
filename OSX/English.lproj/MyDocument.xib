@@ -3723,11 +3723,11 @@ DQ
         <window title="Properties" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2228" userLabel="Properties" customClass="PropertiesDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="271" y="425" width="537" height="364"/>
+            <rect key="contentRect" x="271" y="425" width="537" height="391"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="2229">
-                <rect key="frame" x="0.0" y="0.0" width="537" height="364"/>
+                <rect key="frame" x="0.0" y="0.0" width="537" height="391"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" id="2366">
@@ -3796,7 +3796,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="2272">
-                        <rect key="frame" x="71" y="327" width="114" height="17"/>
+                        <rect key="frame" x="71" y="354" width="114" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Graphics" id="2275">
@@ -3806,13 +3806,13 @@ DQ
                         </textFieldCell>
                     </textField>
                     <imageView id="9wA-7e-U2o">
-                        <rect key="frame" x="15" y="296" width="48" height="48"/>
+                        <rect key="frame" x="15" y="323" width="48" height="48"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="graphics" id="EPC-MI-s4x"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" id="pb3-OB-uaL">
-                        <rect key="frame" x="98" y="144" width="69" height="17"/>
+                        <rect key="frame" x="94" y="145" width="69" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Keyset 1:" id="jAe-9a-aHQ">
@@ -3952,22 +3952,12 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="mwF-Ny-JMD">
-                        <rect key="frame" x="511" y="145" width="18" height="14"/>
+                        <rect key="frame" x="511" y="172" width="18" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="X" id="MPe-K0-pip">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="WZj-3s-rZS">
-                        <rect key="frame" x="99" y="119" width="68" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Keyset 2:" id="amG-cv-ORV">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
@@ -4082,7 +4072,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="gf4-hv-hZp">
-                        <rect key="frame" x="511" y="120" width="18" height="14"/>
+                        <rect key="frame" x="511" y="147" width="18" height="14"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="X" id="KEl-f4-c6F">
@@ -4122,7 +4112,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="2230">
-                        <rect key="frame" x="252" y="272" width="36" height="11"/>
+                        <rect key="frame" x="252" y="299" width="36" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="ZOOM" id="2320">
@@ -4132,7 +4122,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="2231">
-                        <rect key="frame" x="166" y="272" width="90" height="11"/>
+                        <rect key="frame" x="166" y="299" width="90" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="V CENTERING" id="2319">
@@ -4142,7 +4132,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="2235">
-                        <rect key="frame" x="97" y="272" width="90" height="11"/>
+                        <rect key="frame" x="95" y="299" width="90" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="H CENTERING" id="2315">
@@ -4152,7 +4142,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="2234">
-                        <rect key="frame" x="253" y="285" width="32" height="34"/>
+                        <rect key="frame" x="253" y="312" width="32" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
                         <sliderCell key="cell" continuous="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2316"/>
@@ -4161,7 +4151,7 @@ DQ
                         </connections>
                     </slider>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="2232">
-                        <rect key="frame" x="183" y="285" width="32" height="34"/>
+                        <rect key="frame" x="182" y="312" width="32" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
                         <sliderCell key="cell" continuous="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2318"/>
@@ -4170,7 +4160,7 @@ DQ
                         </connections>
                     </slider>
                     <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" id="2233">
-                        <rect key="frame" x="113" y="285" width="32" height="34"/>
+                        <rect key="frame" x="112" y="312" width="32" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
                         <sliderCell key="cell" continuous="YES" alignment="left" minValue="-0.10000000000000001" maxValue="0.10000000000000001" numberOfTickMarks="6" sliderType="circular" id="2317"/>
@@ -4179,7 +4169,7 @@ DQ
                         </connections>
                     </slider>
                     <popUpButton verticalHuggingPriority="750" id="2236">
-                        <rect key="frame" x="348" y="266" width="182" height="26"/>
+                        <rect key="frame" x="348" y="293" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <popUpButtonCell key="cell" type="push" title="WIN64" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="6" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2307" id="2299">
@@ -4207,97 +4197,97 @@ DQ
                         </connections>
                     </popUpButton>
                     <colorWell enabled="NO" id="2240">
-                        <rect key="frame" x="312" y="235" width="24" height="24"/>
+                        <rect key="frame" x="312" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2241">
-                        <rect key="frame" x="339" y="235" width="24" height="24"/>
+                        <rect key="frame" x="339" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2242">
-                        <rect key="frame" x="366" y="235" width="24" height="24"/>
+                        <rect key="frame" x="366" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2243">
-                        <rect key="frame" x="393" y="235" width="24" height="24"/>
+                        <rect key="frame" x="393" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2244">
-                        <rect key="frame" x="420" y="235" width="24" height="24"/>
+                        <rect key="frame" x="420" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2245">
-                        <rect key="frame" x="447" y="235" width="24" height="24"/>
+                        <rect key="frame" x="447" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2246">
-                        <rect key="frame" x="474" y="235" width="24" height="24"/>
+                        <rect key="frame" x="474" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2247">
-                        <rect key="frame" x="501" y="235" width="24" height="24"/>
+                        <rect key="frame" x="501" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2248">
-                        <rect key="frame" x="285" y="235" width="24" height="24"/>
+                        <rect key="frame" x="285" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2249">
-                        <rect key="frame" x="258" y="235" width="24" height="24"/>
+                        <rect key="frame" x="258" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2250">
-                        <rect key="frame" x="231" y="235" width="24" height="24"/>
+                        <rect key="frame" x="231" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2251">
-                        <rect key="frame" x="204" y="235" width="24" height="24"/>
+                        <rect key="frame" x="204" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2252">
-                        <rect key="frame" x="177" y="235" width="24" height="24"/>
+                        <rect key="frame" x="177" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2253">
-                        <rect key="frame" x="150" y="235" width="24" height="24"/>
+                        <rect key="frame" x="150" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <colorWell enabled="NO" id="2254">
-                        <rect key="frame" x="123" y="235" width="24" height="24"/>
+                        <rect key="frame" x="123" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <textField verticalHuggingPriority="750" id="2237">
-                        <rect key="frame" x="300" y="272" width="50" height="17"/>
+                        <rect key="frame" x="300" y="299" width="50" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Colors:" id="2298">
@@ -4307,7 +4297,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="2238">
-                        <rect key="frame" x="308" y="301" width="43" height="17"/>
+                        <rect key="frame" x="308" y="328" width="43" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Filter:" id="2297">
@@ -4317,7 +4307,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" id="2239">
-                        <rect key="frame" x="348" y="295" width="182" height="26"/>
+                        <rect key="frame" x="348" y="322" width="182" height="26"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="2294">
@@ -4354,7 +4344,7 @@ DQ
                         </connections>
                     </popUpButton>
                     <colorWell enabled="NO" id="2255">
-                        <rect key="frame" x="96" y="235" width="24" height="24"/>
+                        <rect key="frame" x="96" y="262" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -4365,10 +4355,33 @@ DQ
                         <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="joystick" id="rRU-Hi-d71"/>
                     </imageView>
+                    <textField verticalHuggingPriority="750" id="WZj-3s-rZS">
+                        <rect key="frame" x="93" y="119" width="67" height="17"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Keyset 2:" id="amG-cv-ORV">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button id="zjr-Hb-uLk">
+                        <rect key="frame" x="96" y="231" width="243" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Keep aspect ratio in fullscreen mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NIM-ed-3D9">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setFullscreenAspectRatio:" target="2228" id="hdo-wf-Xj9"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <animations/>
             </view>
             <connections>
+                <outlet property="aspectRatioButton" destination="zjr-Hb-uLk" id="mjQ-dS-et0"/>
                 <outlet property="colorScheme" destination="2236" id="2346"/>
                 <outlet property="colorWell0" destination="2255" id="2347"/>
                 <outlet property="colorWell1" destination="2254" id="2348"/>
@@ -4411,7 +4424,7 @@ DQ
                 <outlet property="up2button" destination="2ek-Tr-UYe" id="PZS-IP-KUS"/>
                 <outlet property="videoFilter" destination="2239" id="2345"/>
             </connections>
-            <point key="canvasLocation" x="221.5" y="-293"/>
+            <point key="canvasLocation" x="221.5" y="-279.5"/>
         </window>
         <window title="Hardware" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="YW8-0Q-Xve" userLabel="Virtual Hardware" customClass="HardwareDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
