@@ -35,12 +35,11 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 @implementation MyMetalView {
     
-    // Metal objects
+    // Local metal objects
     id <MTLCommandBuffer> _commandBuffer;
     id <MTLRenderCommandEncoder> _commandEncoder;
     id <CAMetalDrawable> _drawable;
     
-
     // Matrices
     matrix_float4x4 _modelMatrix;
     matrix_float4x4 _viewMatrix;
@@ -51,8 +50,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     CVDisplayLinkRef displayLink;
 }
 
+
 // -----------------------------------------------------------------------------------------------
-//                                          Configuration
+//                                           Properties
 // -----------------------------------------------------------------------------------------------
 
 @synthesize enableMetal;
@@ -71,12 +71,12 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     NSRect r = self.frame;
     float borderThickness;
     if (b) {
-        NSLog(@"Expanding Metal view");
+        NSLog(@"Expanding metal view");
         r.origin.y -= 24;
         r.size.height += 24;
         borderThickness = 0.0;
     } else {
-        NSLog(@"Shrinking Metal view");
+        NSLog(@"Shrinking metal view");
         r.origin.y += 24;
         r.size.height -= 24;
         borderThickness = 24.0;
@@ -90,7 +90,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 
 // -----------------------------------------------------------------------------------------------
-//                                  Initialization (General)
+//                                         Initialization
 // -----------------------------------------------------------------------------------------------
 
 - (id)initWithCoder:(NSCoder *)c
@@ -98,7 +98,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     NSLog(@"MyMetalView::initWithCoder");
     
     if ((self = [super initWithCoder:c]) == nil) {
-        NSLog(@"ERROR: Can't initiaize MetalView");
+        NSLog(@"Error: Can't initiaize MetalView");
     }
     return self;
 }
@@ -111,7 +111,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     // Create lock used by the draw method
     lock = [NSRecursiveLock new];
-    // _inflightSemaphore = dispatch_semaphore_create(AAPLBuffersInflightBuffers);
 
     // Set initial scene position and drawing properties
     currentEyeX = targetEyeX = deltaEyeX = 0.0;
@@ -122,6 +121,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     currentZAngle = targetZAngle = deltaZAngle = 0.0;
     currentAlpha = targetAlpha = 0.0; deltaAlpha = 0.0;
     
+    // Properties
     enableMetal = true; 
     drawInEntireWindow = false;
     fullscreen = false;
@@ -130,12 +130,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     drawBackground = true;
     drawEntireCube = false;
     
-    // Core video and graphics stuff
-    displayLink = nil;
-
-    // Metal related stuff
-    depthTexture = nil;
-
+    // Metal
     [self setupMetal];
     [self reshape];
     
@@ -171,36 +166,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 
 // -----------------------------------------------------------------------------------------------
-//                                 Initialization (Textures)
+//                                         Display link
 // -----------------------------------------------------------------------------------------------
 
-- (void)buildDepthBuffer
-{
-    NSLog(@"MyMetalView::buildDepthBuffer");
-    
-    MTLTextureDescriptor *depthTexDesc =
-    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatDepth32Float
-                                                       width:(layerWidth == 0) ? 512 : layerWidth
-                                                      height:(layerHeight == 0) ? 512 : layerHeight
-                                                   mipmapped:NO];
-    {
-        depthTexDesc.resourceOptions = MTLResourceStorageModePrivate;
-        depthTexDesc.usage = MTLTextureUsageRenderTarget;
-    }
-    depthTexture = [device newTextureWithDescriptor:depthTexDesc];
-}
-
-- (void)buildDepthStencilState
-{
-    MTLDepthStencilDescriptor *depthDescriptor = [MTLDepthStencilDescriptor new];
-    {
-        // depthDescriptor.depthCompareFunction = MTLCompareFunctionAlways;
-        depthDescriptor.depthCompareFunction = MTLCompareFunctionLess;
-        depthDescriptor.depthWriteEnabled = YES;
-    }
-    depthState = [device newDepthStencilStateWithDescriptor:depthDescriptor];
-    NSAssert(depthState != nil, @"Depth stencil state must not be nil");
-}
 
 - (void)setupDisplayLink
 {
@@ -210,12 +178,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
     // Create display link for the main display
     CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
+    NSAssert(displayLink != nil, @"Error: Can't create display link");
 
-    if (!displayLink) {
-        NSLog(@"Error: Can't create display link");
-        exit(0);
-    }
-    
     // Set the current display of a display link
     if ((success = CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay)) != 0) {
         NSLog(@"CVDisplayLinkSetCurrentCGDisplay failed with return code %d", success);
@@ -270,7 +234,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
      textureYEnd = 1.0;
      */
     
-    positionBuffer = [self buildVertexBuffer];
+    [self buildVertexBuffer];
 }
 
 - (void)updateTexture:(id<MTLCommandBuffer>) cmdBuffer
@@ -370,56 +334,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     frameData->alpha = (c64->isHalted()) ? 0.5 : currentAlpha;
 }
 
-- (BOOL)startFrame
-{
-    CGSize drawableSize = metalLayer.drawableSize;
-    
-    // if (!_depthTexture || _depthTexture.width != drawableSize.width || _depthTexture.height != drawableSize.height) {
-    
-    // Update all size dependent entities
-    if (layerWidth != drawableSize.width || layerHeight != drawableSize.height) {
-        [self reshape];
-    }
-    
-    framebufferTexture = _drawable.texture;
-    NSAssert(framebufferTexture != nil, @"Framebuffer texture must not be nil");
-    
-    // "A command buffer represents a collection of render commands to be executed as a unit."
-    _commandBuffer = [commandQueue commandBuffer];
-    
-    // Apply filter to C64 screen texture
-    TextureFilter *filter = [self currentFilter];
-    [filter apply:_commandBuffer in:textureFromEmulator out:filteredTexture];
-    
-    // Create render pass
-    /* "A render pass descriptor tells Metal what actions to take while an image is being rendered" */
-    MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
-    {
-        renderPass.colorAttachments[0].texture = framebufferTexture;
-        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1);
-        renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
-        renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
-        
-        renderPass.depthAttachment.texture = depthTexture;
-        renderPass.depthAttachment.clearDepth = 1;
-        renderPass.depthAttachment.loadAction = MTLLoadActionClear;
-        renderPass.depthAttachment.storeAction = MTLStoreActionDontCare;
-    }
-    
-    // "A command encoder is an object that is used to tell Metal what drawing we actually want to do."
-    _commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
-    {
-        [_commandEncoder setRenderPipelineState:pipeline];
-        [_commandEncoder setDepthStencilState:depthState];
-        [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
-        [_commandEncoder setFragmentSamplerState:[filter sampler] atIndex:0];
-        [_commandEncoder setVertexBuffer:positionBuffer offset:0 atIndex:0];
-        [_commandEncoder setVertexBuffer:uniformBuffer offset:0 atIndex:1];
-    }
-    
-    return YES;
-}
-
 - (TextureFilter *)currentFilter
 {
     switch (videoFilter) {
@@ -447,6 +361,55 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         default:
             return smoothFilter;
     }
+}
+
+- (BOOL)startFrame
+{
+    CGSize drawableSize = metalLayer.drawableSize;
+    
+    // if (!_depthTexture || _depthTexture.width != drawableSize.width || _depthTexture.height != drawableSize.height) {
+    
+    // Update all size dependent entities
+    if (layerWidth != drawableSize.width || layerHeight != drawableSize.height) {
+        [self reshape];
+    }
+    
+    framebufferTexture = _drawable.texture;
+    NSAssert(framebufferTexture != nil, @"Framebuffer texture must not be nil");
+    
+    _commandBuffer = [queue commandBuffer];
+    NSAssert(_commandBuffer != nil, @"Metal command buffer must not be nil");
+
+    // Apply filter
+    TextureFilter *filter = [self currentFilter];
+    [filter apply:_commandBuffer in:textureFromEmulator out:filteredTexture];
+    
+    // Create render pass
+    MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
+    {
+        renderPass.colorAttachments[0].texture = framebufferTexture;
+        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1);
+        renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
+        renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
+        
+        renderPass.depthAttachment.texture = depthTexture;
+        renderPass.depthAttachment.clearDepth = 1;
+        renderPass.depthAttachment.loadAction = MTLLoadActionClear;
+        renderPass.depthAttachment.storeAction = MTLStoreActionDontCare;
+    }
+    
+    // Create command encoder
+    _commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
+    {
+        [_commandEncoder setRenderPipelineState:pipeline];
+        [_commandEncoder setDepthStencilState:depthState];
+        [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
+        [_commandEncoder setFragmentSamplerState:[filter sampler] atIndex:0];
+        [_commandEncoder setVertexBuffer:positionBuffer offset:0 atIndex:0];
+        [_commandEncoder setVertexBuffer:uniformBuffer offset:0 atIndex:1];
+    }
+    
+    return YES;
 }
 
 - (void)drawScene2D
@@ -516,23 +479,22 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         
         if (![lock tryLock])
             return kCVReturnSuccess;
-        // [lock lock];
         
-        _drawable = [metalLayer nextDrawable];
-        if (!_drawable) {
+        // Get drawable from layer
+        if (!(_drawable = [metalLayer nextDrawable])) {
             NSLog(@"Metal drawable must not be nil");
             [lock unlock];
             return NO;
         }
 
-        // Get latest C64 texture
+        // Get C64 texture from emulator
         [self updateTexture:_commandBuffer];
 
         // Draw scene
-        if (!fullscreen || fullscreenKeepAspectRatio) {
-            [self drawScene3D];
-        } else {
+        if (fullscreen && !fullscreenKeepAspectRatio) {
             [self drawScene2D];
+        } else {
+            [self drawScene3D];
         }
         
         [lock unlock];

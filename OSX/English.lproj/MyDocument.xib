@@ -3503,7 +3503,7 @@ Flashing ist fast, but less compatible</string>
                                     <rect key="frame" x="1" y="22" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom" id="1881"/>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="romchip" id="1881"/>
                                     <connections>
                                         <outlet property="controller" destination="-2" id="zpg-DT-nvd"/>
                                     </connections>
@@ -3512,7 +3512,7 @@ Flashing ist fast, but less compatible</string>
                                     <rect key="frame" x="107" y="22" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom" id="1887"/>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="romchip" id="1887"/>
                                     <connections>
                                         <outlet property="controller" destination="-2" id="fpj-1E-QfS"/>
                                     </connections>
@@ -3521,7 +3521,7 @@ Flashing ist fast, but less compatible</string>
                                     <rect key="frame" x="212" y="22" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom" id="1889"/>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="romchip" id="1889"/>
                                     <connections>
                                         <outlet property="controller" destination="-2" id="pZM-TK-3B1"/>
                                     </connections>
@@ -3530,7 +3530,7 @@ Flashing ist fast, but less compatible</string>
                                     <rect key="frame" x="318" y="22" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="rom" id="1891"/>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="romchip" id="1891"/>
                                     <connections>
                                         <outlet property="controller" destination="-2" id="i00-Ge-OBH"/>
                                     </connections>
@@ -4726,7 +4726,7 @@ DQ
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView id="bQM-1M-aKB" customClass="MountDragView">
-                                    <rect key="frame" x="6" y="8" width="70" height="70"/>
+                                    <rect key="frame" x="6" y="7" width="70" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="diskette" id="35n-wC-fDC"/>
@@ -4980,6 +4980,7 @@ DQ
         <image name="pref_vic" width="145" height="134"/>
         <image name="restart32" width="128" height="128"/>
         <image name="rom" width="128" height="128"/>
+        <image name="romchip" width="129" height="157"/>
         <image name="stepInto32" width="32" height="32"/>
         <image name="stepOut32" width="32" height="32"/>
         <image name="stepOver32" width="32" height="32"/>

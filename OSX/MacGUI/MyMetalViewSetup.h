@@ -21,6 +21,8 @@
 @interface MyMetalView(Setup)
 
 - (void)setupMetal;
+- (void)buildVertexBuffer;
+- (void)buildDepthBuffer;
 
 @end
 

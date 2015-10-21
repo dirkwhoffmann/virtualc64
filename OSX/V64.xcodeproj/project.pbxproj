@@ -26,6 +26,8 @@
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
 		500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */; settings = {ASSET_TAGS = (); }; };
+		500FF3911BD7F4DF0038245B /* romchip.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF38F1BD7F4DF0038245B /* romchip.png */; settings = {ASSET_TAGS = (); }; };
+		500FF3921BD7F4DF0038245B /* romchipMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF3901BD7F4DF0038245B /* romchipMissing.png */; settings = {ASSET_TAGS = (); }; };
 		50137EA01BCA396100147283 /* MyMetalViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */; settings = {ASSET_TAGS = (); }; };
 		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
@@ -233,6 +235,8 @@
 		500FC6780D17D2190044131D /* VIA6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA6522.cpp; sourceTree = "<group>"; };
 		500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewSetup.mm; sourceTree = "<group>"; };
 		500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewSetup.h; sourceTree = "<group>"; };
+		500FF38F1BD7F4DF0038245B /* romchip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romchip.png; sourceTree = "<group>"; };
+		500FF3901BD7F4DF0038245B /* romchipMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romchipMissing.png; sourceTree = "<group>"; };
 		50137E9E1BCA394600147283 /* MyMetalViewHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewHelper.h; sourceTree = "<group>"; };
 		50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewHelper.mm; sourceTree = "<group>"; };
 		50137EA11BCA453700147283 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
@@ -821,6 +825,8 @@
 				50A3E08B0E66F7C400D3564D /* pause32.png */,
 				50A3E0890E66F7BC00D3564D /* play32.png */,
 				50471FEB0A7B67AE00A8DB94 /* restart32.png */,
+				500FF38F1BD7F4DF0038245B /* romchip.png */,
+				500FF3901BD7F4DF0038245B /* romchipMissing.png */,
 				5094197C0E426C13008D6F71 /* rom.png */,
 				50A8F9E90E472BA800ACE17D /* romMissing.png */,
 				50471FE50A7B679A00A8DB94 /* stepInto32.png */,
@@ -1009,8 +1015,10 @@
 				502F57FA1B93457200D1077E /* fast.png in Resources */,
 				50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */,
 				509DF2480A9F681900AE0859 /* keyboard32.png in Resources */,
+				500FF3911BD7F4DF0038245B /* romchip.png in Resources */,
 				50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
+				500FF3921BD7F4DF0038245B /* romchipMissing.png in Resources */,
 				50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */,

@@ -16,12 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Next steps:
-// 1. Replace cartridge icon by real ROM icons
-// 2. Fix flash into memory issue
-// 3. Cleanup metal code
-
-
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 #import <QuickTime/QuickTime.h>
@@ -69,7 +63,7 @@ enum TextureFilterType {
     // Metal objects
     id <MTLDevice> device;
     id <MTLLibrary> library;
-    id <MTLCommandQueue> commandQueue;
+    id <MTLCommandQueue> queue;
     id <MTLRenderPipelineState> pipeline;
     id <MTLDepthStencilState> depthState;
 

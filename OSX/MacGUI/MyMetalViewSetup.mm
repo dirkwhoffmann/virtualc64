@@ -51,7 +51,7 @@
     layerHeight = metalLayer.drawableSize.height;
 
     // Create command queue
-    commandQueue = [device newCommandQueue];
+    queue = [device newCommandQueue];
     NSAssert(device != nil, @"Metal command queue must not be nil");
     
     // Load shader library
@@ -66,6 +66,8 @@
 {
     NSLog(@"MyMetalView::buildTextures");
     
+    depthTexture = nil;
+
     // Background
     NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
     NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
@@ -101,14 +103,14 @@
 - (void)buildBuffers
 {
     // Vertex buffer
-    positionBuffer = [self buildVertexBuffer];
+    [self buildVertexBuffer];
     
     // Uniform buffer
     uniformBuffer = [device newBufferWithLength:sizeof(Uniforms) options:0];
     uniformBufferBg = [device newBufferWithLength:sizeof(Uniforms) options:0];
 }
 
-- (id<MTLBuffer>)buildVertexBuffer
+- (void)buildVertexBuffer
 {
     NSLog(@"MyMetalView::buildVertexBuffer");
     
@@ -122,58 +124,58 @@
     float positions[] =
     {
         // Background
-        -bgx,  bgy, -bgz, 1,   0.0, 0.0,
+        -bgx, +bgy, -bgz, 1,   0.0, 0.0,
         -bgx, -bgy, -bgz, 1,   0.0, 1.0,
-        bgx, -bgy, -bgz, 1,   1.0, 1.0,
+        +bgx, -bgy, -bgz, 1,   1.0, 1.0,
         
-        -bgx,  bgy, -bgz, 1,   0.0, 0.0,
-        bgx,  bgy, -bgz, 1,   1.0, 0.0,
-        bgx, -bgy, -bgz, 1,   1.0, 1.0,
+        -bgx, +bgy, -bgz, 1,   0.0, 0.0,
+        +bgx, +bgy, -bgz, 1,   1.0, 0.0,
+        +bgx, -bgy, -bgz, 1,   1.0, 1.0,
         
         // -Z
-        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
+        -dx, +dy, -dz, 1,   textureXStart, textureYStart,
         -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
-        dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
+        +dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
         
-        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
-        dx,  dy, -dz, 1,   textureXEnd, textureYStart,
-        dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
+        -dx, +dy, -dz, 1,   textureXStart, textureYStart,
+        +dx, +dy, -dz, 1,   textureXEnd, textureYStart,
+        +dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
         
         // +Z
-        -dx,  dy,  dz, 1,   textureXEnd, textureYStart,
-        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
-        dx, -dy,  dz, 1,   textureXStart, textureYEnd,
+        -dx, +dy, +dz, 1,   textureXEnd, textureYStart,
+        -dx, -dy, +dz, 1,   textureXEnd, textureYEnd,
+        +dx, -dy, +dz, 1,   textureXStart, textureYEnd,
         
-        -dx,  dy,  dz, 1,   textureXEnd, textureYStart,
-        dx,  dy,  dz, 1,   textureXStart, textureYStart,
-        dx, -dy,  dz, 1,   textureXStart, textureYEnd,
+        -dx, +dy, +dz, 1,   textureXEnd, textureYStart,
+        +dx, +dy, +dz, 1,   textureXStart, textureYStart,
+        +dx, -dy, +dz, 1,   textureXStart, textureYEnd,
         
         // -X
-        -dx,  dy, -dz, 1,   textureXEnd, textureYStart,
+        -dx, +dy, -dz, 1,   textureXEnd, textureYStart,
         -dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
-        -dx, -dy,  dz, 1,   textureXStart, textureYEnd,
+        -dx, -dy, +dz, 1,   textureXStart, textureYEnd,
         
-        -dx,  dy, -dz, 1,   textureXEnd, textureYStart,
-        -dx,  dy,  dz, 1,   textureXStart, textureYStart,
-        -dx, -dy,  dz, 1,   textureXStart, textureYEnd,
+        -dx, +dy, -dz, 1,   textureXEnd, textureYStart,
+        -dx, +dy, +dz, 1,   textureXStart, textureYStart,
+        -dx, -dy, +dz, 1,   textureXStart, textureYEnd,
         
         // +X
-        dx,  dy, -dz, 1,   textureXStart, textureYStart,
-        dx, -dy, -dz, 1,   textureXStart, textureYEnd,
-        dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        +dx, +dy, -dz, 1,   textureXStart, textureYStart,
+        +dx, -dy, -dz, 1,   textureXStart, textureYEnd,
+        +dx, -dy, +dz, 1,   textureXEnd, textureYEnd,
         
-        dx,  dy, -dz, 1,   textureXStart, textureYStart,
-        dx,  dy,  dz, 1,   textureXEnd, textureYStart,
-        dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        +dx, +dy, -dz, 1,   textureXStart, textureYStart,
+        +dx, +dy, +dz, 1,   textureXEnd, textureYStart,
+        +dx, -dy, +dz, 1,   textureXEnd, textureYEnd,
         
         // -Y
-        dx, -dy, -dz, 1,   textureXStart, textureYStart,
+        +dx, -dy, -dz, 1,   textureXStart, textureYStart,
         -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
-        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        -dx, -dy, +dz, 1,   textureXEnd, textureYEnd,
         
-        dx, -dy, -dz, 1,   textureXStart, textureYStart,
-        dx, -dy,  dz, 1,   textureXEnd, textureYStart,
-        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
+        +dx, -dy, -dz, 1,   textureXStart, textureYStart,
+        +dx, -dy, +dz, 1,   textureXEnd, textureYStart,
+        -dx, -dy, +dz, 1,   textureXEnd, textureYEnd,
         
         // +Y
         +dx, +dy, -dz, 1,   textureXStart, textureYStart,
@@ -185,18 +187,36 @@
         +dx, +dy, +dz, 1,   textureXEnd, textureYStart,
         
         // 2D drawing quad
-        -1,  1, 0, 1,  textureXStart, textureYStart,
-        -1, -1, 0, 1,  textureXStart, textureYEnd,
-        1, -1, 0, 1,  textureXEnd, textureYEnd,
+        -1, +1, +0, +1,   textureXStart, textureYStart,
+        -1, -1, +0, +1,   textureXStart, textureYEnd,
+        +1, -1, +0, +1,   textureXEnd, textureYEnd,
         
-        -1,  1, 0, 1,  textureXStart, textureYStart,
-        1,  1, 0, 1,  textureXEnd, textureYStart,
-        1, -1, 0, 1,  textureXEnd, textureYEnd,
+        -1, +1, +0, +1,   textureXStart, textureYStart,
+        +1, +1, +0, +1,   textureXEnd, textureYStart,
+        +1, -1, +0, +1,   textureXEnd, textureYEnd,
     };
     
-    return [device newBufferWithBytes:positions
-                               length:sizeof(positions)
-                              options:MTLResourceOptionCPUCacheModeDefault];
+    positionBuffer = [device newBufferWithBytes:positions
+                                         length:sizeof(positions)
+                                        options:MTLResourceOptionCPUCacheModeDefault];
+    
+    NSAssert(positionBuffer != nil, @"positionBuffer must not be nil");
+}
+
+- (void)buildDepthBuffer
+{
+    NSLog(@"MyMetalView::buildDepthBuffer");
+    
+    MTLTextureDescriptor *depthTexDesc =
+    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatDepth32Float
+                                                       width:(layerWidth == 0) ? 512 : layerWidth
+                                                      height:(layerHeight == 0) ? 512 : layerHeight
+                                                   mipmapped:NO];
+    {
+        depthTexDesc.resourceOptions = MTLResourceStorageModePrivate;
+        depthTexDesc.usage = MTLTextureUsageRenderTarget;
+    }
+    depthTexture = [device newTextureWithDescriptor:depthTexDesc];
 }
 
 - (void)buildPipeline

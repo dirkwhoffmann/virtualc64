@@ -34,21 +34,21 @@
 - (void) update:(int)missingRoms
 {
 	if (missingRoms & KERNEL_ROM)
-		[kernelRom setImage:[NSImage imageNamed:@"romMissing"]];
+		[kernelRom setImage:[NSImage imageNamed:@"romchipMissing"]];
 	else
-		[kernelRom setImage:[NSImage imageNamed:@"rom"]];
+		[kernelRom setImage:[NSImage imageNamed:@"romchip"]];
 	if (missingRoms & BASIC_ROM)
-		[basicRom setImage:[NSImage imageNamed:@"romMissing"]];
+		[basicRom setImage:[NSImage imageNamed:@"romchipMissing"]];
 	else
-		[basicRom setImage:[NSImage imageNamed:@"rom"]];
+		[basicRom setImage:[NSImage imageNamed:@"romchip"]];
 	if (missingRoms & CHAR_ROM)
-		[characterRom setImage:[NSImage imageNamed:@"romMissing"]];
+		[characterRom setImage:[NSImage imageNamed:@"romchipMissing"]];
 	else
-		[characterRom setImage:[NSImage imageNamed:@"rom"]];
+		[characterRom setImage:[NSImage imageNamed:@"romchip"]];
 	if (missingRoms & VC1541_ROM)
-		[VC1541Rom setImage:[NSImage imageNamed:@"romMissing"]];
+		[VC1541Rom setImage:[NSImage imageNamed:@"romchipMissing"]];
 	else
-		[VC1541Rom setImage:[NSImage imageNamed:@"rom"]];
+		[VC1541Rom setImage:[NSImage imageNamed:@"romchip"]];
 }
 
 @end
