@@ -67,10 +67,15 @@ enum TextureFilterType {
     NSRecursiveLock *lock;
     
     // Metal objects
-    id <MTLDevice> _device;
-    id <MTLLibrary> _library;
-    id <MTLCommandQueue> _commandQueue;
+    id <MTLDevice> device;
+    id <MTLLibrary> library;
+    id <MTLCommandQueue> commandQueue;
     
+    // Metal layer
+    CAMetalLayer *metalLayer;
+    CGFloat layerWidth;
+    CGFloat layerHeight;
+
     // Textures
     id <MTLTexture> bgTexture; // background image
     id <MTLTexture> textureFromEmulator; // plain C64 screen (as provided by the emulator)
@@ -101,17 +106,12 @@ enum TextureFilterType {
     float textureXEnd;
     float textureYStart;
     float textureYEnd;
-
     
     // Currently selected filters
     unsigned videoFilter;
     
     //! If true, the C64 canvas covers the whole window area (used to hide the status bar)
     bool drawInEntireWindow;
-
-    //! If false, 3D drawing is switched off (2D drawing is used in fullscreen mode, only)
-    //! @DEPRECATED
-    // bool drawIn3D;
 
     //! Is set to true when fullscreen mode is entered (usually enables the 2D renderer)
     bool fullscreen;
@@ -155,7 +155,6 @@ enum TextureFilterType {
 
 - (bool)drawInEntireWindow;
 - (void)setDrawInEntireWindow:(bool)b;
-
 - (void)cleanup;
 
 #pragma mark Drawing

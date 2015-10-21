@@ -25,6 +25,7 @@
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
+		500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */; settings = {ASSET_TAGS = (); }; };
 		50137EA01BCA396100147283 /* MyMetalViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */; settings = {ASSET_TAGS = (); }; };
 		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
@@ -230,6 +231,8 @@
 		500EC05010E4DCC4005A19A3 /* Message.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
 		500FC6770D17D2190044131D /* VIA6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA6522.h; sourceTree = "<group>"; };
 		500FC6780D17D2190044131D /* VIA6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA6522.cpp; sourceTree = "<group>"; };
+		500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewSetup.mm; sourceTree = "<group>"; };
+		500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewSetup.h; sourceTree = "<group>"; };
 		50137E9E1BCA394600147283 /* MyMetalViewHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewHelper.h; sourceTree = "<group>"; };
 		50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewHelper.mm; sourceTree = "<group>"; };
 		50137EA11BCA453700147283 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
@@ -635,6 +638,8 @@
 				50176C730A6F7357009E80BD /* Formatter.mm */,
 				50032EB01BC919D90050BEEA /* MyMetalView.h */,
 				50032EB11BC919D90050BEEA /* MyMetalView.mm */,
+				500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */,
+				500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */,
 				5042312A1BD3718F00B3DEF9 /* MyMetalViewResponder.h */,
 				5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */,
 				50137E9E1BCA394600147283 /* MyMetalViewHelper.h */,
@@ -1129,6 +1134,7 @@
 				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
+				500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */,
 				50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,

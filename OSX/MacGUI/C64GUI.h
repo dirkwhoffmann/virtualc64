@@ -31,6 +31,7 @@
 #import "Formatter.h"
 
 #import "MyMetalView.h"
+#import "MyMetalViewSetup.h"
 #import "MyMetalViewResponder.h"
 #import "MyMetalViewHelper.h"
 

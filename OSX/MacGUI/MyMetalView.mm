@@ -35,23 +35,19 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 @implementation MyMetalView {
     
-     
-    CAMetalLayer *_metalLayer;
-    CGFloat layerWidth;
-    CGFloat layerHeight;
-    
+    // Metal objects
     id <MTLRenderPipelineState> _pipeline;
     id <MTLDepthStencilState> _depthState;
     id <MTLCommandBuffer> _commandBuffer;
     id <MTLRenderCommandEncoder> _commandEncoder;
-    id <MTLBuffer> _positionBuffer;
-    id <MTLBuffer> _colorBuffer;
-
     id <CAMetalDrawable> _drawable;
-
-    // Uniforms
+    
+    // Buffers
+    id <MTLBuffer> _positionBuffer;
     id <MTLBuffer> _uniformBuffer;
     id <MTLBuffer> _uniformBufferBg;
+
+    // Matrices
     matrix_float4x4 _modelMatrix;
     matrix_float4x4 _viewMatrix;
     matrix_float4x4 _projectionMatrix;
@@ -59,9 +55,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     // Display link
     CVDisplayLinkRef displayLink;
-    
-    //
-    BOOL _pipelineIsDirty;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -147,13 +140,11 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     displayLink = nil;
 
     // Metal related stuff
-    _pipelineIsDirty = YES;
     depthTexture = nil;
-    
-    [self buildMetal];
-    [self buildTextures];
-    [self buildKernels];
+
+    [self setupMetal];
     [self buildBuffers];
+    [self buildPipeline];
     [self reshape];
     
     // Keyboard initialization
@@ -164,47 +155,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // Register for drag and drop
     [self registerForDraggedTypes:
     [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
-}
-
-- (void)buildMetal
-{
-    NSLog(@"MyMetalView::buildMetal");
-    
-    // Get metal device
-    _device = MTLCreateSystemDefaultDevice();
-    if (!_device) {
-        NSLog(@"Error: No metal device");
-        return;
-    }
-
-    // Configure view
-    // view.depthPixelFormat   = MTLPixelFormatInvalid;
-    // view.stencilPixelFormat = MTLPixelFormatInvalid;
-    self.sampleCount = 1; // 4;
-
-    // Get layer
-    _metalLayer = (CAMetalLayer *)self.layer;
-    _metalLayer.device = _device;
-    _metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
-    _metalLayer.framebufferOnly = NO; // YES;
-    _metalLayer.frame = self.layer.frame;
-    
-    layerWidth = _metalLayer.drawableSize.width;
-    layerHeight = _metalLayer.drawableSize.height;
-    
-    // Create command queue
-    _commandQueue = [_device newCommandQueue];
-    if (!_commandQueue) {
-        NSLog(@"Could not create command queue");
-        exit(0);
-    }
-    
-    // Load shader library
-    _library = [_device newDefaultLibrary];
-    if (!_library) {
-        NSLog(@"Could not create shader library");
-        exit(0);
-    }
 }
 
 - (void) dealloc
@@ -232,39 +182,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 //                                 Initialization (Textures)
 // -----------------------------------------------------------------------------------------------
 
-- (void)buildTextures
-{
-    NSLog(@"MyMetalView::buildTextures");
-    
-    [self buildBackgroundTexture];
-    [self buildC64Texture];
-}
-
-- (void)buildBackgroundTexture
-{
-    NSLog(@"MyMetalView::buildBackgroundTexture");
-    
-    NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
-    NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
-    NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
-    bgTexture = [self makeTexture:bgImageResized withDevice:_device];
-}
-
-- (void)buildC64Texture
-{
-    NSLog(@"MyMetalView::buildC64Texture");
-
-    MTLTextureDescriptor *textureDescriptor =
-    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
-                                                       width:512
-                                                      height:512
-                                                   mipmapped:NO];
-    textureFromEmulator = [_device newTextureWithDescriptor:textureDescriptor];
-    
-    textureDescriptor.usage |= MTLTextureUsageShaderWrite;
-    filteredTexture = [_device newTextureWithDescriptor:textureDescriptor];
-}
-
 - (void)buildDepthBuffer
 {
     NSLog(@"MyMetalView::buildDepthBuffer");
@@ -278,31 +195,19 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         depthTexDesc.resourceOptions = MTLResourceStorageModePrivate;
         depthTexDesc.usage = MTLTextureUsageRenderTarget;
     }
-    depthTexture = [_device newTextureWithDescriptor:depthTexDesc];
+    depthTexture = [device newTextureWithDescriptor:depthTexDesc];
 }
 
 - (void)buildBuffers
 {
     // Vertex buffer
-    _positionBuffer = [self buildVertexBuffer:_device];
+    _positionBuffer = [self buildVertexBuffer:device];
 
     // Uniform buffer
-    _uniformBuffer = [_device newBufferWithLength:sizeof(Uniforms) options:0];
-    _uniformBufferBg = [_device newBufferWithLength:sizeof(Uniforms) options:0];
+    _uniformBuffer = [device newBufferWithLength:sizeof(Uniforms) options:0];
+    _uniformBufferBg = [device newBufferWithLength:sizeof(Uniforms) options:0];
 }
 
-- (void) buildKernels
-{
-    bypassFilter = [BypassFilter filterWithDevice:_device library:_library];
-    smoothFilter = [SaturationFilter filterWithFactor:1.0 device:_device library:_library];
-    blurFilter = [BlurFilter filterWithRadius:1.0 device:_device library:_library];
-    saturationFilter = [SaturationFilter filterWithFactor:0.5 device:_device library:_library];
-    sepiaFilter = [SepiaFilter filterWithDevice:_device library:_library];
-    crtFilter = [CrtFilter filterWithDevice:_device library:_library];
-    grayscaleFilter = [SaturationFilter filterWithFactor:0.0 device:_device library:_library];
-    
-    [self setVideoFilter:TEX_FILTER_CRT];
-}
 
 - (void)buildDepthStencilState
 {
@@ -312,7 +217,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         depthDescriptor.depthCompareFunction = MTLCompareFunctionLess;
         depthDescriptor.depthWriteEnabled = YES;
     }
-    _depthState = [_device newDepthStencilStateWithDescriptor:depthDescriptor];
+    _depthState = [device newDepthStencilStateWithDescriptor:depthDescriptor];
     if (_depthState) {
         NSLog(@"Failed to create depth stencil state");
         exit(0);
@@ -325,8 +230,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     NSLog(@"MyMetalView::buildPipeline");
     
-    id<MTLFunction> vertexFunc = [_library newFunctionWithName:@"vertex_main"];
-    id<MTLFunction> fragmentFunc = [_library newFunctionWithName:@"fragment_main"];
+    id<MTLFunction> vertexFunc = [library newFunctionWithName:@"vertex_main"];
+    id<MTLFunction> fragmentFunc = [library newFunctionWithName:@"fragment_main"];
     assert(vertexFunc != nil);
     assert(fragmentFunc != nil);
 
@@ -336,7 +241,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         depthDescriptor.depthCompareFunction = MTLCompareFunctionLess;
         depthDescriptor.depthWriteEnabled = YES;
     }
-    _depthState = [_device newDepthStencilStateWithDescriptor:depthDescriptor];
+    _depthState = [device newDepthStencilStateWithDescriptor:depthDescriptor];
 
     
     // Vertex descriptor
@@ -379,8 +284,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         pipelineDescriptor.fragmentFunction = fragmentFunc;
         // pipelineDescriptor.vertexDescriptor = vertexDescriptor;
     }
-    _pipeline = [_device newRenderPipelineStateWithDescriptor:pipelineDescriptor
-                                                        error:&error];
+    _pipeline = [device newRenderPipelineStateWithDescriptor:pipelineDescriptor
+                                                       error:&error];
     if (!_pipeline) {
         NSLog(@"Error occurred when creating render pipeline: %@", error);
         exit(0);
@@ -455,7 +360,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
      textureYEnd = 1.0;
      */
     
-    _positionBuffer = [self buildVertexBuffer:_device];
+    _positionBuffer = [self buildVertexBuffer:device];
 }
 
 - (void)updateTexture:(id<MTLCommandBuffer>) cmdBuffer
@@ -491,12 +396,12 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     drawableSize.width *= scale;
     drawableSize.height *= scale;
     
-    _metalLayer.drawableSize = drawableSize;
+    metalLayer.drawableSize = drawableSize;
 }
 
 - (void)reshape
 {
-    CGSize s = [_metalLayer drawableSize];
+    CGSize s = [metalLayer drawableSize];
     layerWidth = s.width;
     layerHeight = s.height;
 
@@ -557,7 +462,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (BOOL)startFrame
 {
-    CGSize drawableSize = _metalLayer.drawableSize;
+    CGSize drawableSize = metalLayer.drawableSize;
     
     // if (!_depthTexture || _depthTexture.width != drawableSize.width || _depthTexture.height != drawableSize.height) {
     
@@ -573,15 +478,17 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         NSLog(@"Unable to retrieve framebuffer texture");
         return NO;
     }
-    
+
+#if 0
     if (_pipelineIsDirty)
     {
         [self buildPipeline];
         _pipelineIsDirty = NO;
     }
+#endif
     
     // "A command buffer represents a collection of render commands to be executed as a unit."
-    _commandBuffer = [_commandQueue commandBuffer];
+    _commandBuffer = [commandQueue commandBuffer];
     
     // Apply filter to C64 screen texture
     TextureFilter *filter = [self currentFilter];
@@ -715,7 +622,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
             return kCVReturnSuccess;
         // [lock lock];
         
-        _drawable = [_metalLayer nextDrawable];
+        _drawable = [metalLayer nextDrawable];
         if (!_drawable) {
             NSLog(@"Unable to retrieve drawable");
             [lock unlock];
