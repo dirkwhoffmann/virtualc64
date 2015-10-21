@@ -46,6 +46,7 @@ const int BG_TEXTURE_WIDTH = 1024;
 const int BG_TEXTURE_HEIGHT= 512;
 const int BG_TEXTURE_DEPTH = 4;
 
+// Post-processing filters
 enum TextureFilterType {
     TEX_FILTER_NONE = 1,
     TEX_FILTER_SMOOTH,
@@ -60,27 +61,32 @@ enum TextureFilterType {
 {
     IBOutlet MyController *controller;
     IBOutlet C64Proxy* c64proxy;
-    
     C64 *c64; // DEPRECATED. GET RID OF THIS VARIABLE AND RENAME c64proxy to c64
 
     // Synchronization lock
     NSRecursiveLock *lock;
     
-    // Renderer globals
+    // Metal objects
     id <MTLDevice> _device;
     id <MTLLibrary> _library;
     id <MTLCommandQueue> _commandQueue;
     
     // Textures
-    id <MTLTexture> _bgTexture; // Background image
-    id <MTLTexture> _texture; // C64 screen
-    id <MTLTexture> _filteredTexture; // post-processes C64 screen
-    id <MTLTexture> _framebufferTexture;
-    id <MTLTexture> _depthTexture; // z buffer
-    id <MTLSamplerState> _sampler;
-    id <MTLSamplerState> _sampler2;
+    id <MTLTexture> bgTexture; // background image
+    id <MTLTexture> textureFromEmulator; // plain C64 screen (as provided by the emulator)
+    id <MTLTexture> filteredTexture; // post-processes C64 screen
+    id <MTLTexture> framebufferTexture; // drawing target (GPU buffer)
+    id <MTLTexture> depthTexture; // depth buffering
 
-    
+    // Post-processing filters
+    TextureFilter *bypassFilter;
+    TextureFilter *smoothFilter;
+    TextureFilter *blurFilter;
+    TextureFilter *saturationFilter;
+    TextureFilter *sepiaFilter;
+    TextureFilter *grayscaleFilter;
+    TextureFilter *crtFilter;
+
     // Animation parameters
     float currentXAngle, targetXAngle, deltaXAngle;
     float currentYAngle, targetYAngle, deltaYAngle;
@@ -96,14 +102,6 @@ enum TextureFilterType {
     float textureYStart;
     float textureYEnd;
 
-    // Prebuild filters
-    TextureFilter *bypassFilter;
-    TextureFilter *smoothFilter;
-    TextureFilter *blurFilter;
-    TextureFilter *saturationFilter;
-    TextureFilter *sepiaFilter;
-    TextureFilter *grayscaleFilter;
-    TextureFilter *crtFilter;
     
     // Currently selected filters
     unsigned videoFilter;

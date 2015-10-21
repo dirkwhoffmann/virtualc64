@@ -196,7 +196,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
 {
     [lock lock];
     
-    NSImage *image = [MyMetalView imageWithTexture:_texture
+    NSImage *image = [MyMetalView imageWithTexture:textureFromEmulator
                                                 x1:textureXStart
                                                 y1:textureYStart
                                                 x2:textureXEnd

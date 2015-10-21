@@ -148,7 +148,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
     // Metal related stuff
     _pipelineIsDirty = YES;
-    _depthTexture = nil;
+    depthTexture = nil;
     
     [self buildMetal];
     [self buildTextures];
@@ -247,7 +247,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
     NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
     NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
-    _bgTexture = [self makeTexture:bgImageResized withDevice:_device];
+    bgTexture = [self makeTexture:bgImageResized withDevice:_device];
 }
 
 - (void)buildC64Texture
@@ -259,10 +259,10 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
                                                        width:512
                                                       height:512
                                                    mipmapped:NO];
-    _texture = [_device newTextureWithDescriptor:textureDescriptor];
+    textureFromEmulator = [_device newTextureWithDescriptor:textureDescriptor];
     
     textureDescriptor.usage |= MTLTextureUsageShaderWrite;
-    _filteredTexture = [_device newTextureWithDescriptor:textureDescriptor];
+    filteredTexture = [_device newTextureWithDescriptor:textureDescriptor];
 }
 
 - (void)buildDepthBuffer
@@ -278,7 +278,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         depthTexDesc.resourceOptions = MTLResourceStorageModePrivate;
         depthTexDesc.usage = MTLTextureUsageRenderTarget;
     }
-    _depthTexture = [_device newTextureWithDescriptor:depthTexDesc];
+    depthTexture = [_device newTextureWithDescriptor:depthTexDesc];
 }
 
 - (void)buildBuffers
@@ -474,9 +474,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     NSUInteger rowBytes = width * pixelSize;
     NSUInteger imageBytes = rowBytes * height;
     
-    [_texture replaceRegion:MTLRegionMake2D(0,0,width,height)
-           mipmapLevel:0 slice:0 withBytes:buf
-           bytesPerRow:rowBytes bytesPerImage:imageBytes];
+    [textureFromEmulator replaceRegion:MTLRegionMake2D(0,0,width,height)
+                           mipmapLevel:0 slice:0 withBytes:buf
+                           bytesPerRow:rowBytes bytesPerImage:imageBytes];
 }
 
 - (void)setFrame:(CGRect)frame
@@ -566,9 +566,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         [self reshape];
     }
     
-    _framebufferTexture = _drawable.texture;
+    framebufferTexture = _drawable.texture;
     
-    if (!_framebufferTexture)
+    if (!framebufferTexture)
     {
         NSLog(@"Unable to retrieve framebuffer texture");
         return NO;
@@ -585,19 +585,19 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     // Apply filter to C64 screen texture
     TextureFilter *filter = [self currentFilter];
-    [filter apply:_commandBuffer in:_texture out:_filteredTexture];
+    [filter apply:_commandBuffer in:textureFromEmulator out:filteredTexture];
     
     // Create render pass
     /* "A render pass descriptor tells Metal what actions to take while an image is being rendered" */
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
     // MTLRenderPassDescriptor *renderPass = self.currentRenderPassDescriptor;
     {
-        renderPass.colorAttachments[0].texture = _framebufferTexture;
+        renderPass.colorAttachments[0].texture = framebufferTexture;
         renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1);
         renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
         renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
         
-        renderPass.depthAttachment.texture = _depthTexture;
+        renderPass.depthAttachment.texture = depthTexture;
         renderPass.depthAttachment.clearDepth = 1;
         renderPass.depthAttachment.loadAction = MTLLoadActionClear;
         renderPass.depthAttachment.storeAction = MTLStoreActionDontCare;
@@ -608,7 +608,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     {
         [_commandEncoder setRenderPipelineState:_pipeline];
         [_commandEncoder setDepthStencilState:_depthState];
-        [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
+        [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
         [_commandEncoder setFragmentSamplerState:[filter sampler] atIndex:0];
         [_commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
@@ -654,7 +654,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         return;
     
     // Render quad
-    [_commandEncoder setFragmentTexture:_filteredTexture atIndex:0];
+    [_commandEncoder setFragmentTexture:filteredTexture atIndex:0];
     [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
     [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:42 vertexCount:6 instanceCount:1];
     
@@ -678,14 +678,14 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     // Render background
     if (drawBackground) {
-        [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
+        [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBufferBg offset:0 atIndex:1];
         [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
     }
     
     // Render cube
     if (drawC64texture) {
-        [_commandEncoder setFragmentTexture:_filteredTexture atIndex:0];
+        [_commandEncoder setFragmentTexture:filteredTexture atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
         [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:(drawEntireCube ? 24 : 6) instanceCount:1];
     }
