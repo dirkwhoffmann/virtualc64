@@ -69,6 +69,12 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 // -----------------------------------------------------------------------------------------------
 
 @synthesize enableMetal;
+// @synthesize drawIn3D;
+@synthesize fullscreen;
+@synthesize fullscreenKeepAspectRatio;
+@synthesize drawC64texture;
+@synthesize drawEntireCube;
+@synthesize videoFilter;
 
 - (bool)drawInEntireWindow { return drawInEntireWindow; }
 - (void)setDrawInEntireWindow:(bool)b
@@ -95,7 +101,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
      drawInEntireWindow = b;
 }
-    
+
+#if 0
 - (bool)drawIn3D { return drawIn3D; }
 - (void)setDrawIn3D:(bool)b { drawIn3D = b; }
 
@@ -104,6 +111,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (bool)drawEntireCube { return drawEntireCube; }
 - (void)setDrawEntireCube:(bool)b { drawEntireCube = b; }
+#endif
 
 
 // -----------------------------------------------------------------------------------------------
@@ -141,7 +149,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     enableMetal = true; 
     drawInEntireWindow = false;
-    drawIn3D = true;
+    // drawIn3D = true;
+    fullscreen = false;
+    fullscreenKeepAspectRatio = true;
     drawC64texture = false;
     drawBackground = true;
     drawEntireCube = false;
@@ -591,7 +601,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _commandBuffer = [_commandQueue commandBuffer];
     
     // Apply filter to C64 screen texture
-    TextureFilter *filter = [self currentTextureFilter];
+    TextureFilter *filter = [self currentFilter];
     [filter apply:_commandBuffer in:_texture out:_filteredTexture];
     
     // Create render pass
@@ -624,19 +634,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     return YES;
 }
 
-- (unsigned)videoFilter
+- (TextureFilter *)currentFilter
 {
-    return currentFilter;
-}
-
-- (void)setVideoFilter:(unsigned)filter
-{
-    currentFilter = filter;
-}
-
-- (TextureFilter *)currentTextureFilter
-{
-    switch (currentFilter) {
+    switch (videoFilter) {
         case TEX_FILTER_NONE:
             return bypassFilter;
             
@@ -693,8 +693,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     if (![self startFrame])
         return;
     
-    // Render background
-    if (drawBackground) {
+    // Render background (except in fullscreen mode)
+    if (!fullscreen) {
         [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBufferBg offset:0 atIndex:1];
         [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
@@ -746,7 +746,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         [self updateTexture:_commandBuffer];
 
         // Draw scene
-        if (drawIn3D) {
+        if (!fullscreen || fullscreenKeepAspectRatio) {
             [self drawScene3D];
         } else {
             [self drawScene2D];

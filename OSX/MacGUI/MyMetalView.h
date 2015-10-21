@@ -17,9 +17,9 @@
  */
 
 // Next steps:
-// 3. Repair "MetalView::screenshot"
-// 4. Blur is too heavy
-// 5. What kind of semaphore should we use?
+// 1. Replace cartridge icon by real ROM icons
+// 2. Fix flash into memory issue
+// 3. Cleanup metal code
 
 
 #import <Cocoa/Cocoa.h>
@@ -106,13 +106,20 @@ enum TextureFilterType {
     TextureFilter *crtFilter;
     
     // Currently selected filters
-    unsigned currentFilter;
+    unsigned videoFilter;
     
     //! If true, the C64 canvas covers the whole window area (used to hide the status bar)
     bool drawInEntireWindow;
 
     //! If false, 3D drawing is switched off (2D drawing is used in fullscreen mode, only)
-    bool drawIn3D;
+    //! @DEPRECATED
+    // bool drawIn3D;
+
+    //! Is set to true when fullscreen mode is entered (usually enables the 2D renderer)
+    bool fullscreen;
+    
+    //! If true, the 3D renderer is also used in fullscreen mode
+    bool fullscreenKeepAspectRatio;
     
     //! If false, the C64 screen is not drawn (background texture or black screen will be visible)
     bool drawC64texture;
@@ -142,21 +149,16 @@ enum TextureFilterType {
 #pragma mark Configuring
 
 @property bool enableMetal;
+// @property bool drawIn3D; // DEPRECATED, replaced by the following two:
+@property bool fullscreen;
+@property bool fullscreenKeepAspectRatio;
+// @property bool fullscreenShowStatusBar;
+@property bool drawC64texture;
+@property bool drawEntireCube;
+@property unsigned videoFilter;
 
 - (bool)drawInEntireWindow;
 - (void)setDrawInEntireWindow:(bool)b;
-
-- (bool)drawIn3D;
-- (void)setDrawIn3D:(bool)b;
-
-- (bool)drawC64texture;
-- (void)setDrawC64texture:(bool)b;
-
-- (bool)drawEntireCube;
-- (void)setDrawEntireCube:(bool)b;
-
-- (unsigned)videoFilter;
-- (void)setVideoFilter:(unsigned)filter;
 
 - (void)cleanup;
 

@@ -146,7 +146,8 @@
 {
     NSLog(@"windowWillEnterFullScreen");
     
-    [metalScreen setDrawIn3D:NO];
+    // [metalScreen setDrawIn3D:NO];
+    [metalScreen setFullscreen:YES];
     [self hideStatusBar];
 }
 
@@ -159,7 +160,9 @@
 {
     NSLog(@"windowWillExitFullScreen");
     
-    [metalScreen setDrawIn3D:YES];
+    // [metalScreen setDrawIn3D:YES];
+    // MOVE TO windowDidExitFullScreen??
+    [metalScreen setFullscreen:NO];
     [self showStatusBar];
 }
 
