@@ -70,11 +70,18 @@ enum TextureFilterType {
     id <MTLDevice> device;
     id <MTLLibrary> library;
     id <MTLCommandQueue> commandQueue;
-    
+    id <MTLRenderPipelineState> pipeline;
+    id <MTLDepthStencilState> depthState;
+
     // Metal layer
     CAMetalLayer *metalLayer;
     CGFloat layerWidth;
     CGFloat layerHeight;
+
+    // Buffers
+    id <MTLBuffer> positionBuffer;
+    id <MTLBuffer> uniformBuffer;
+    id <MTLBuffer> uniformBufferBg;
 
     // Textures
     id <MTLTexture> bgTexture; // background image

@@ -36,7 +36,7 @@ matrix_float4x4 vc64_matrix_from_rotation(float radians, float x, float y, float
 - (NSImage *)screenshot;
 - (NSImage *) flipImage:(NSImage *)image;
 - (NSImage *) expandImage:(NSImage *)image toSize:(NSSize)size;
-- (id<MTLTexture>) makeTexture:(NSImage *)image withDevice:(id <MTLDevice>)device;
+- (id<MTLTexture>) makeTexture:(NSImage *)image;
 + (NSImage *)imageWithTexture:(id<MTLTexture>)texture x1:(float)_x1 y1:(float)_y1 x2:(float)_x2 y2:(float)_y2;
 
 
@@ -46,7 +46,7 @@ matrix_float4x4 vc64_matrix_from_rotation(float radians, float x, float y, float
 
 #pragma mark Vertex Buffers
 
-- (id<MTLBuffer>)buildVertexBuffer:(id<MTLDevice>)device;
+- (id<MTLBuffer>)buildVertexBuffer;
 
 
 

@@ -36,16 +36,10 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 @implementation MyMetalView {
     
     // Metal objects
-    id <MTLRenderPipelineState> _pipeline;
-    id <MTLDepthStencilState> _depthState;
     id <MTLCommandBuffer> _commandBuffer;
     id <MTLRenderCommandEncoder> _commandEncoder;
     id <CAMetalDrawable> _drawable;
     
-    // Buffers
-    id <MTLBuffer> _positionBuffer;
-    id <MTLBuffer> _uniformBuffer;
-    id <MTLBuffer> _uniformBufferBg;
 
     // Matrices
     matrix_float4x4 _modelMatrix;
@@ -143,8 +137,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     depthTexture = nil;
 
     [self setupMetal];
-    [self buildBuffers];
-    [self buildPipeline];
     [self reshape];
     
     // Keyboard initialization
@@ -198,17 +190,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     depthTexture = [device newTextureWithDescriptor:depthTexDesc];
 }
 
-- (void)buildBuffers
-{
-    // Vertex buffer
-    _positionBuffer = [self buildVertexBuffer:device];
-
-    // Uniform buffer
-    _uniformBuffer = [device newBufferWithLength:sizeof(Uniforms) options:0];
-    _uniformBufferBg = [device newBufferWithLength:sizeof(Uniforms) options:0];
-}
-
-
 - (void)buildDepthStencilState
 {
     MTLDepthStencilDescriptor *depthDescriptor = [MTLDepthStencilDescriptor new];
@@ -217,79 +198,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         depthDescriptor.depthCompareFunction = MTLCompareFunctionLess;
         depthDescriptor.depthWriteEnabled = YES;
     }
-    _depthState = [device newDepthStencilStateWithDescriptor:depthDescriptor];
-    if (_depthState) {
-        NSLog(@"Failed to create depth stencil state");
-        exit(0);
-    }
-}
-
-- (void)buildPipeline
-{
-    NSError *error = nil;
-    
-    NSLog(@"MyMetalView::buildPipeline");
-    
-    id<MTLFunction> vertexFunc = [library newFunctionWithName:@"vertex_main"];
-    id<MTLFunction> fragmentFunc = [library newFunctionWithName:@"fragment_main"];
-    assert(vertexFunc != nil);
-    assert(fragmentFunc != nil);
-
-    // Depth stencil state
-    MTLDepthStencilDescriptor *depthDescriptor = [MTLDepthStencilDescriptor new];
-    {
-        depthDescriptor.depthCompareFunction = MTLCompareFunctionLess;
-        depthDescriptor.depthWriteEnabled = YES;
-    }
-    _depthState = [device newDepthStencilStateWithDescriptor:depthDescriptor];
-
-    
-    // Vertex descriptor
-    MTLVertexDescriptor *vertexDescriptor = [MTLVertexDescriptor new];
-    {
-        // Positions
-        vertexDescriptor.attributes[0].format = MTLVertexFormatFloat4;
-        vertexDescriptor.attributes[0].offset = 0;
-        vertexDescriptor.attributes[0].bufferIndex = 0;
-        
-        // Texture coordinates
-        vertexDescriptor.attributes[1].format = MTLVertexFormatHalf2;
-        vertexDescriptor.attributes[1].offset = 16;
-        vertexDescriptor.attributes[1].bufferIndex = 1;
-        
-        // Single interleaved buffer
-        vertexDescriptor.layouts[0].stride = 24;
-        vertexDescriptor.layouts[0].stepRate = 1;
-        vertexDescriptor.layouts[0].stepFunction = MTLVertexStepFunctionPerVertex;
-    }
-    
-    // Render pipeline
-    MTLRenderPipelineDescriptor *pipelineDescriptor = [MTLRenderPipelineDescriptor new];
-    MTLRenderPipelineColorAttachmentDescriptor *renderbufAttachment = pipelineDescriptor.colorAttachments[0];
-    {
-        pipelineDescriptor.label = @"C64 metal pipeline";
-
-        renderbufAttachment.pixelFormat = MTLPixelFormatBGRA8Unorm;
-        renderbufAttachment.blendingEnabled = YES;
-        renderbufAttachment.rgbBlendOperation = MTLBlendOperationAdd;
-        renderbufAttachment.alphaBlendOperation = MTLBlendOperationAdd;
-        renderbufAttachment.sourceRGBBlendFactor = MTLBlendFactorSourceAlpha;
-        renderbufAttachment.sourceAlphaBlendFactor = MTLBlendFactorSourceAlpha;
-        renderbufAttachment.destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
-        renderbufAttachment.destinationAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
-        
-        pipelineDescriptor.depthAttachmentPixelFormat = MTLPixelFormatDepth32Float;
-        // pipelineDescriptor.sampleCount = self.sampleCount;
-        pipelineDescriptor.vertexFunction = vertexFunc;
-        pipelineDescriptor.fragmentFunction = fragmentFunc;
-        // pipelineDescriptor.vertexDescriptor = vertexDescriptor;
-    }
-    _pipeline = [device newRenderPipelineStateWithDescriptor:pipelineDescriptor
-                                                       error:&error];
-    if (!_pipeline) {
-        NSLog(@"Error occurred when creating render pipeline: %@", error);
-        exit(0);
-    }
+    depthState = [device newDepthStencilStateWithDescriptor:depthDescriptor];
+    NSAssert(depthState != nil, @"Depth stencil state must not be nil");
 }
 
 - (void)setupDisplayLink
@@ -360,7 +270,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
      textureYEnd = 1.0;
      */
     
-    _positionBuffer = [self buildVertexBuffer:device];
+    positionBuffer = [self buildVertexBuffer];
 }
 
 - (void)updateTexture:(id<MTLCommandBuffer>) cmdBuffer
@@ -416,7 +326,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // Update matrices for background drawing
     _modelMatrix = matrix_identity_float4x4;
     _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
-    Uniforms *frameDataBg = (Uniforms *)[_uniformBufferBg contents];
+    Uniforms *frameDataBg = (Uniforms *)[uniformBufferBg contents];
     frameDataBg->model = _modelMatrix;
     frameDataBg->view = _viewMatrix;
     frameDataBg->projectionView = _modelViewProjectionMatrix;
@@ -433,7 +343,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     _projectionMatrix = matrix_identity_float4x4;
     _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
     
-    Uniforms *frameData = (Uniforms *)[_uniformBuffer contents];
+    Uniforms *frameData = (Uniforms *)[uniformBuffer contents];
     frameData->model = _modelMatrix;
     frameData->view = _viewMatrix;
     frameData->projectionView = _modelViewProjectionMatrix;
@@ -453,7 +363,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
 
-    Uniforms *frameData = (Uniforms *)[_uniformBuffer contents];
+    Uniforms *frameData = (Uniforms *)[uniformBuffer contents];
     frameData->model = _modelMatrix;
     frameData->view = _viewMatrix;
     frameData->projectionView = _modelViewProjectionMatrix;
@@ -472,20 +382,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     }
     
     framebufferTexture = _drawable.texture;
-    
-    if (!framebufferTexture)
-    {
-        NSLog(@"Unable to retrieve framebuffer texture");
-        return NO;
-    }
-
-#if 0
-    if (_pipelineIsDirty)
-    {
-        [self buildPipeline];
-        _pipelineIsDirty = NO;
-    }
-#endif
+    NSAssert(framebufferTexture != nil, @"Framebuffer texture must not be nil");
     
     // "A command buffer represents a collection of render commands to be executed as a unit."
     _commandBuffer = [commandQueue commandBuffer];
@@ -497,7 +394,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // Create render pass
     /* "A render pass descriptor tells Metal what actions to take while an image is being rendered" */
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
-    // MTLRenderPassDescriptor *renderPass = self.currentRenderPassDescriptor;
     {
         renderPass.colorAttachments[0].texture = framebufferTexture;
         renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1);
@@ -513,12 +409,12 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // "A command encoder is an object that is used to tell Metal what drawing we actually want to do."
     _commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
     {
-        [_commandEncoder setRenderPipelineState:_pipeline];
-        [_commandEncoder setDepthStencilState:_depthState];
+        [_commandEncoder setRenderPipelineState:pipeline];
+        [_commandEncoder setDepthStencilState:depthState];
         [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
         [_commandEncoder setFragmentSamplerState:[filter sampler] atIndex:0];
-        [_commandEncoder setVertexBuffer:_positionBuffer offset:0 atIndex:0];
-        [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
+        [_commandEncoder setVertexBuffer:positionBuffer offset:0 atIndex:0];
+        [_commandEncoder setVertexBuffer:uniformBuffer offset:0 atIndex:1];
     }
     
     return YES;
@@ -562,7 +458,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     // Render quad
     [_commandEncoder setFragmentTexture:filteredTexture atIndex:0];
-    [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
+    [_commandEncoder setVertexBuffer:uniformBuffer offset:0 atIndex:1];
     [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:42 vertexCount:6 instanceCount:1];
     
     [self endFrame];
@@ -586,14 +482,14 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // Render background
     if (drawBackground) {
         [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
-        [_commandEncoder setVertexBuffer:_uniformBufferBg offset:0 atIndex:1];
+        [_commandEncoder setVertexBuffer:uniformBufferBg offset:0 atIndex:1];
         [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
     }
     
     // Render cube
     if (drawC64texture) {
         [_commandEncoder setFragmentTexture:filteredTexture atIndex:0];
-        [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
+        [_commandEncoder setVertexBuffer:uniformBuffer offset:0 atIndex:1];
         [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:(drawEntireCube ? 24 : 6) instanceCount:1];
     }
     
@@ -624,7 +520,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         
         _drawable = [metalLayer nextDrawable];
         if (!_drawable) {
-            NSLog(@"Unable to retrieve drawable");
+            NSLog(@"Metal drawable must not be nil");
             [lock unlock];
             return NO;
         }

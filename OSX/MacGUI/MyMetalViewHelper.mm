@@ -96,97 +96,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
 
 @implementation MyMetalView(Helper)
 
-- (id<MTLBuffer>)buildVertexBuffer:(id<MTLDevice>)device
-{
-    
-    NSLog(@"MyMetalView::buildVertexBuffer (texture cut: %f %f %f %f)",
-          textureXStart, textureXEnd, textureYStart, textureYEnd);
-    const float dx = 0.64;
-    const float dy = 0.48;
-    const float dz = 0.64;
-    const float bgx = 6.4;
-    const float bgy = 4.8;
-    const float bgz = -6.8;
-    float positions[] =
-    {
-        // Background
-        -bgx,  bgy, -bgz, 1,   0.0, 0.0,
-        -bgx, -bgy, -bgz, 1,   0.0, 1.0,
-         bgx, -bgy, -bgz, 1,   1.0, 1.0,
-        
-        -bgx,  bgy, -bgz, 1,   0.0, 0.0,
-         bgx,  bgy, -bgz, 1,   1.0, 0.0,
-         bgx, -bgy, -bgz, 1,   1.0, 1.0,
 
-        // -Z
-        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
-        -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
-         dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
-        
-        -dx,  dy, -dz, 1,   textureXStart, textureYStart,
-         dx,  dy, -dz, 1,   textureXEnd, textureYStart,
-         dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
-
-        // +Z
-        -dx,  dy,  dz, 1,   textureXEnd, textureYStart,
-        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
-         dx, -dy,  dz, 1,   textureXStart, textureYEnd,
-        
-        -dx,  dy,  dz, 1,   textureXEnd, textureYStart,
-         dx,  dy,  dz, 1,   textureXStart, textureYStart,
-         dx, -dy,  dz, 1,   textureXStart, textureYEnd,
-
-        // -X
-        -dx,  dy, -dz, 1,   textureXEnd, textureYStart,
-        -dx, -dy, -dz, 1,   textureXEnd, textureYEnd,
-        -dx, -dy,  dz, 1,   textureXStart, textureYEnd,
-        
-        -dx,  dy, -dz, 1,   textureXEnd, textureYStart,
-        -dx,  dy,  dz, 1,   textureXStart, textureYStart,
-        -dx, -dy,  dz, 1,   textureXStart, textureYEnd,
-
-        // +X
-         dx,  dy, -dz, 1,   textureXStart, textureYStart,
-         dx, -dy, -dz, 1,   textureXStart, textureYEnd,
-         dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
-        
-         dx,  dy, -dz, 1,   textureXStart, textureYStart,
-         dx,  dy,  dz, 1,   textureXEnd, textureYStart,
-         dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
-
-        // -Y
-         dx, -dy, -dz, 1,   textureXStart, textureYStart,
-        -dx, -dy, -dz, 1,   textureXStart, textureYEnd,
-        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
-        
-         dx, -dy, -dz, 1,   textureXStart, textureYStart,
-         dx, -dy,  dz, 1,   textureXEnd, textureYStart,
-        -dx, -dy,  dz, 1,   textureXEnd, textureYEnd,
-
-        // +Y
-        +dx, +dy, -dz, 1,   textureXStart, textureYStart,
-        -dx, +dy, -dz, 1,   textureXStart, textureYEnd,
-        -dx, +dy, +dz, 1,   textureXEnd, textureYEnd,
-
-        +dx, +dy, -dz, 1,   textureXStart, textureYStart,
-        -dx, +dy, +dz, 1,   textureXEnd, textureYEnd,
-        +dx, +dy, +dz, 1,   textureXEnd, textureYStart,
-        
-        // 2D drawing quad
-        -1,  1, 0, 1,  textureXStart, textureYStart,
-        -1, -1, 0, 1,  textureXStart, textureYEnd,
-         1, -1, 0, 1,  textureXEnd, textureYEnd,
-        
-        -1,  1, 0, 1,  textureXStart, textureYStart,
-         1,  1, 0, 1,  textureXEnd, textureYStart,
-         1, -1, 0, 1,  textureXEnd, textureYEnd,
-
-    };
-    
-    return [device newBufferWithBytes:positions
-                               length:sizeof(positions)
-                              options:MTLResourceOptionCPUCacheModeDefault];
-}
 
 // --------------------------------------------------------------------------------
 //                                    Graphics
@@ -256,7 +166,7 @@ vc64_matrix_from_rotation(float radians, float x, float y, float z)
     return newImage;
 }
 
-- (id<MTLTexture>) makeTexture:(NSImage *)image withDevice:(id <MTLDevice>)device
+- (id<MTLTexture>) makeTexture:(NSImage *)image
 {
  
     // CGImageRef imageRef = [image CGImage];
