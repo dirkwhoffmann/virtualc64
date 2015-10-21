@@ -149,10 +149,8 @@ enum TextureFilterType {
 #pragma mark Configuring
 
 @property bool enableMetal;
-// @property bool drawIn3D; // DEPRECATED, replaced by the following two:
 @property bool fullscreen;
 @property bool fullscreenKeepAspectRatio;
-// @property bool fullscreenShowStatusBar;
 @property bool drawC64texture;
 @property bool drawEntireCube;
 @property unsigned videoFilter;

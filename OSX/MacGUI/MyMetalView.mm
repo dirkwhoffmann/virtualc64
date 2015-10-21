@@ -69,7 +69,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 // -----------------------------------------------------------------------------------------------
 
 @synthesize enableMetal;
-// @synthesize drawIn3D;
 @synthesize fullscreen;
 @synthesize fullscreenKeepAspectRatio;
 @synthesize drawC64texture;
@@ -101,17 +100,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
      drawInEntireWindow = b;
 }
-
-#if 0
-- (bool)drawIn3D { return drawIn3D; }
-- (void)setDrawIn3D:(bool)b { drawIn3D = b; }
-
-- (bool)drawC64texture { return drawC64texture; }
-- (void)setDrawC64texture:(bool)b { drawC64texture = b; }
-
-- (bool)drawEntireCube { return drawEntireCube; }
-- (void)setDrawEntireCube:(bool)b { drawEntireCube = b; }
-#endif
 
 
 // -----------------------------------------------------------------------------------------------
@@ -149,7 +137,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     enableMetal = true; 
     drawInEntireWindow = false;
-    // drawIn3D = true;
     fullscreen = false;
     fullscreenKeepAspectRatio = true;
     drawC64texture = false;
@@ -176,10 +163,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     // Register for drag and drop
     [self registerForDraggedTypes:
-     [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
-
-    // Fire off timer...
-    // [self setupDisplayLink];
+    [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
 }
 
 - (void)buildMetal
@@ -551,9 +535,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     frameData->alpha = 1.0;
 }
 
-- (void)buildMatrices
+- (void)buildMatrices3D
 {
-    // _modelMatrix = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.35);
     _modelMatrix = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.39);
     
     if ([self animates]) {
@@ -683,18 +666,18 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     bool animates = [self animates];
     
     drawEntireCube = animates;
-    drawBackground = true; // animates || !drawC64texture || halted;
+    drawBackground = !fullscreen; 
     
     if (animates) {
         [self updateAngles];
     }
-    [self buildMatrices];
+    [self buildMatrices3D];
     
     if (![self startFrame])
         return;
     
-    // Render background (except in fullscreen mode)
-    if (!fullscreen) {
+    // Render background
+    if (drawBackground) {
         [_commandEncoder setFragmentTexture:_bgTexture atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBufferBg offset:0 atIndex:1];
         [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
@@ -704,7 +687,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     if (drawC64texture) {
         [_commandEncoder setFragmentTexture:_filteredTexture atIndex:0];
         [_commandEncoder setVertexBuffer:_uniformBuffer offset:0 atIndex:1];
-        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:(drawEntireCube ? 36 : 6) instanceCount:1];
+        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:(drawEntireCube ? 24 : 6) instanceCount:1];
     }
     
     [self endFrame];
@@ -728,12 +711,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         if (!c64 || !enableMetal)
             return kCVReturnSuccess;
         
-        // dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
-
-        //if (![lock tryLock])
-        //    return kCVReturnSuccess;
-
-        [lock lock];
+        if (![lock tryLock])
+            return kCVReturnSuccess;
+        // [lock lock];
         
         _drawable = [_metalLayer nextDrawable];
         if (!_drawable) {
