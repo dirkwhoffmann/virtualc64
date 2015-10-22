@@ -21,14 +21,14 @@
 		5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C80D0D13CE680011A2E9 /* C64Memory.cpp */; };
 		5000C8240D13CEE10011A2E9 /* VC1541.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C8230D13CEE10011A2E9 /* VC1541.cpp */; };
 		5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5000C9620D13DED40011A2E9 /* VC1541Memory.cpp */; };
-		50032EB21BC919D90050BEEA /* MyMetalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50032EB11BC919D90050BEEA /* MyMetalView.mm */; settings = {ASSET_TAGS = (); }; };
+		50032EB21BC919D90050BEEA /* MyMetalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50032EB11BC919D90050BEEA /* MyMetalView.mm */; };
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
-		500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */; settings = {ASSET_TAGS = (); }; };
-		500FF3911BD7F4DF0038245B /* romchip.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF38F1BD7F4DF0038245B /* romchip.png */; settings = {ASSET_TAGS = (); }; };
-		500FF3921BD7F4DF0038245B /* romchipMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF3901BD7F4DF0038245B /* romchipMissing.png */; settings = {ASSET_TAGS = (); }; };
-		50137EA01BCA396100147283 /* MyMetalViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */; settings = {ASSET_TAGS = (); }; };
+		500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */; };
+		500FF3911BD7F4DF0038245B /* romchip.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF38F1BD7F4DF0038245B /* romchip.png */; };
+		500FF3921BD7F4DF0038245B /* romchipMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF3901BD7F4DF0038245B /* romchipMissing.png */; };
+		50137EA01BCA396100147283 /* MyMetalViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */; };
 		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
@@ -45,17 +45,17 @@
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
-		50244B7B1BBEBAC9002A55E3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; settings = {ASSET_TAGS = (); }; };
+		50244B7B1BBEBAC9002A55E3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; };
 		50244B7C1BBEBB69002A55E3 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50271DEA1A7E1CFE00C04290 /* LEDnewRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DE91A7E1CFE00C04290 /* LEDnewRed.png */; };
 		50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DEB1A7E458F00C04290 /* LEDnewGreen.png */; };
 		50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DED1A7E459800C04290 /* LEDnewGray.png */; };
 		50287EEB0A7CA86900292533 /* stepOut32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50287EEA0A7CA86900292533 /* stepOut32.png */; };
-		502D44D11BD38EEA00950088 /* TextureFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D01BD38EEA00950088 /* TextureFilter.mm */; settings = {ASSET_TAGS = (); }; };
-		502D44D31BD3A29000950088 /* BlurFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D21BD3A29000950088 /* BlurFilter.mm */; settings = {ASSET_TAGS = (); }; };
-		502D44D71BD3A68500950088 /* SaturationFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D61BD3A68500950088 /* SaturationFilter.mm */; settings = {ASSET_TAGS = (); }; };
-		502D44D91BD3BE7C00950088 /* SepiaFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D81BD3BE7C00950088 /* SepiaFilter.mm */; settings = {ASSET_TAGS = (); }; };
-		502D44DF1BD3CF7600950088 /* CrtFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44DE1BD3CF7600950088 /* CrtFilter.mm */; settings = {ASSET_TAGS = (); }; };
+		502D44D11BD38EEA00950088 /* TextureFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D01BD38EEA00950088 /* TextureFilter.mm */; };
+		502D44D31BD3A29000950088 /* BlurFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D21BD3A29000950088 /* BlurFilter.mm */; };
+		502D44D71BD3A68500950088 /* SaturationFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D61BD3A68500950088 /* SaturationFilter.mm */; };
+		502D44D91BD3BE7C00950088 /* SepiaFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D81BD3BE7C00950088 /* SepiaFilter.mm */; };
+		502D44DF1BD3CF7600950088 /* CrtFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44DE1BD3CF7600950088 /* CrtFilter.mm */; };
 		502F57F21B93441400D1077E /* LEDgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F11B93441400D1077E /* LEDgreen.png */; };
 		502F57F41B93441A00D1077E /* LEDred.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F31B93441A00D1077E /* LEDred.png */; };
 		502F57F61B93442100D1077E /* LEDgray.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F51B93442100D1077E /* LEDgray.png */; };
@@ -67,7 +67,7 @@
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
 		50414727122188FC00A80E0C /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* Cartridge.cpp */; };
 		5041486912219F6E00A80E0C /* cartridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5041486812219F6E00A80E0C /* cartridge.png */; };
-		5042312C1BD371FF00B3DEF9 /* MyMetalViewResponder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */; settings = {ASSET_TAGS = (); }; };
+		5042312C1BD371FF00B3DEF9 /* MyMetalViewResponder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */; };
 		50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE50A7B679A00A8DB94 /* stepInto32.png */; };
 		50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE70A7B67A100A8DB94 /* stepOver32.png */; };
 		50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FEB0A7B67AE00A8DB94 /* restart32.png */; };
@@ -88,7 +88,7 @@
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6E912E06DB700378033 /* MyControllerToolbar.mm */; };
-		5089F0551BD3F64200306F4D /* BypassFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5089F0541BD3F64200306F4D /* BypassFilter.mm */; settings = {ASSET_TAGS = (); }; };
+		5089F0551BD3F64200306F4D /* BypassFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5089F0541BD3F64200306F4D /* BypassFilter.mm */; };
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
@@ -109,7 +109,7 @@
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
-		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; settings = {ASSET_TAGS = (); }; };
+		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
 		50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
@@ -976,7 +976,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0710;
 			};
 			buildConfigurationList = 504F836D0A89E0D2009FA225 /* Build configuration list for PBXProject "V64" */;
 			compatibilityVersion = "Xcode 3.2";

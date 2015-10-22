@@ -158,6 +158,7 @@ enum TextureFilterType {
 
 - (void)setupDisplayLink;
 - (void)updateScreenGeometry;
+- (void)buildMatrices3D;
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
 
 

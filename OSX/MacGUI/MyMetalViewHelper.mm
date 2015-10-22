@@ -178,6 +178,7 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 - (void)setEyeX:(float)newX
 {
     currentEyeX = targetEyeX = newX;
+    [self buildMatrices3D];
 }
 
 - (float)eyeY
@@ -188,6 +189,7 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 - (void)setEyeY:(float)newY
 {
     currentEyeY = targetEyeY = newY;
+    [self buildMatrices3D];
 }
 
 - (float)eyeZ
@@ -198,6 +200,7 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 - (void)setEyeZ:(float)newZ
 {
     currentEyeZ = targetEyeZ = newZ;
+    [self buildMatrices3D];
 }
 
 - (void)updateAngles
