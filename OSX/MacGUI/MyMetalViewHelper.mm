@@ -1,28 +1,8 @@
-/*
- * Author: Dirk W. Hoffmann, 2016
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
 #import "C64GUI.h"
 #import "ShaderTypes.h"
 #import <CoreGraphics/CoreGraphics.h>
 
 @implementation MyMetalView(Helper)
-
-
 
 // --------------------------------------------------------------------------------
 //                                    Graphics
@@ -32,7 +12,7 @@
 {
     [lock lock];
     
-    NSImage *image = [MyMetalView imageWithTexture:textureFromEmulator
+    NSImage *image = [MyMetalView imageFromTexture:textureFromEmulator
                                                 x1:textureXStart
                                                 y1:textureYStart
                                                 x2:textureXEnd
@@ -92,13 +72,11 @@
     return newImage;
 }
 
-- (id<MTLTexture>) makeTexture:(NSImage *)image
+- (id<MTLTexture>) textureFromImage:(NSImage *)image
 {
  
-    // CGImageRef imageRef = [image CGImage];
     NSRect imageRect = NSMakeRect(0, 0, image.size.width, image.size.height);
     CGImageRef imageRef = [image CGImageForProposedRect:&imageRect context:NULL hints:nil];
-    
     
     // Create a suitable bitmap context for extracting the bits of the image
     NSUInteger width = CGImageGetWidth(imageRef);
@@ -139,13 +117,11 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
     free((void *)data);
 }
 
-+ (NSImage *)imageWithTexture:(id<MTLTexture>)texture x1:(float)_x1 y1:(float)_y1 x2:(float)_x2 y2:(float)_y2
++ (NSImage *)imageFromTexture:(id<MTLTexture>)texture x1:(float)_x1 y1:(float)_y1 x2:(float)_x2 y2:(float)_y2
 {
     NSAssert([texture pixelFormat] == MTLPixelFormatRGBA8Unorm, @"Pixel format of texture must be MTLPixelFormatBGRA8Unorm");
     
-    // CGSize imageSize = CGSizeMake([texture width] / 2, [texture height] / 2);
     CGSize imageSize = CGSizeMake([texture width] * (_x2 - _x1), [texture height] * (_y2 - _y1));
-
     size_t imageByteCount = imageSize.width * imageSize.height * 4;
     void *imageBytes = malloc(imageByteCount);
     NSUInteger bytesPerRow = imageSize.width * 4;
@@ -226,40 +202,33 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 
 - (void)updateAngles
 {
-    //if ([self animates]) {
+    if (fabs(currentXAngle - targetXAngle) < fabs(deltaXAngle)) currentXAngle = targetXAngle;
+    else														currentXAngle += deltaXAngle;
         
-        if (fabs(currentXAngle - targetXAngle) < fabs(deltaXAngle)) currentXAngle = targetXAngle;
-        else														currentXAngle += deltaXAngle;
+    if (fabs(currentYAngle - targetYAngle) < fabs(deltaYAngle)) currentYAngle = targetYAngle;
+    else														currentYAngle += deltaYAngle;
         
-        if (fabs(currentYAngle - targetYAngle) < fabs(deltaYAngle)) currentYAngle = targetYAngle;
-        else														currentYAngle += deltaYAngle;
+    if (fabs(currentZAngle - targetZAngle) < fabs(deltaZAngle)) currentZAngle = targetZAngle;
+    else														currentZAngle += deltaZAngle;
         
-        if (fabs(currentZAngle - targetZAngle) < fabs(deltaZAngle)) currentZAngle = targetZAngle;
-        else														currentZAngle += deltaZAngle;
+    if (fabs(currentEyeX - targetEyeX) < fabs(deltaEyeX))       currentEyeX   = targetEyeX;
+    else														currentEyeX   += deltaEyeX;
         
-        if (fabs(currentEyeX - targetEyeX) < fabs(deltaEyeX))       currentEyeX   = targetEyeX;
-        else														currentEyeX   += deltaEyeX;
+    if (fabs(currentEyeY - targetEyeY) < fabs(deltaEyeY))       currentEyeY   = targetEyeY;
+    else														currentEyeY   += deltaEyeY;
         
-        if (fabs(currentEyeY - targetEyeY) < fabs(deltaEyeY))       currentEyeY   = targetEyeY;
-        else														currentEyeY   += deltaEyeY;
-        
-        if (fabs(currentEyeZ - targetEyeZ) < fabs(deltaEyeZ))       currentEyeZ   = targetEyeZ;
-        else														currentEyeZ   += deltaEyeZ;
+    if (fabs(currentEyeZ - targetEyeZ) < fabs(deltaEyeZ))       currentEyeZ   = targetEyeZ;
+    else														currentEyeZ   += deltaEyeZ;
 
-        if (fabs(currentAlpha - targetAlpha) < fabs(deltaAlpha))    currentAlpha  = targetAlpha;
-        else														currentAlpha  += deltaAlpha;
+    if (fabs(currentAlpha - targetAlpha) < fabs(deltaAlpha))    currentAlpha  = targetAlpha;
+    else														currentAlpha  += deltaAlpha;
 
-        if (currentXAngle >= 360.0) currentXAngle -= 360.0;
-        if (currentXAngle < 0.0) currentXAngle += 360.0;
-        if (currentYAngle >= 360.0) currentYAngle -= 360.0;
-        if (currentYAngle < 0.0) currentYAngle += 360.0;
-        if (currentZAngle >= 360.0) currentZAngle -= 360.0;
-        if (currentZAngle < 0.0) currentZAngle += 360.0;
-        
-    // }
-    //else {
-    //    drawEntireCube = false;
-    //}
+    if (currentXAngle >= 360.0) currentXAngle -= 360.0;
+    if (currentXAngle < 0.0) currentXAngle += 360.0;
+    if (currentYAngle >= 360.0) currentYAngle -= 360.0;
+    if (currentYAngle < 0.0) currentYAngle += 360.0;
+    if (currentZAngle >= 360.0) currentZAngle -= 360.0;
+    if (currentZAngle < 0.0) currentZAngle += 360.0;
 }
 
 - (void)computeAnimationDeltaSteps:(int)animationCycles
@@ -277,10 +246,10 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 {
     NSLog(@"Zooming in...\n\n");
     
-    currentEyeZ     = 6;
-    targetXAngle    = 0;
-    targetYAngle    = 0;
-    targetZAngle    = 0;
+    currentEyeZ   = 6;
+    targetXAngle  = 0;
+    targetYAngle  = 0;
+    targetZAngle  = 0;
     
     [self computeAnimationDeltaSteps:120 /* 2 sec */];
 }
@@ -289,9 +258,9 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 {
     NSLog(@"Rotating back...\n\n");
     
-    targetXAngle   = 0;
-    targetZAngle   = 0;
-    targetYAngle   += 90;
+    targetXAngle  = 0;
+    targetZAngle  = 0;
+    targetYAngle  += 90;
     
     [self computeAnimationDeltaSteps:60 /* 1 sec */];
     
@@ -303,9 +272,9 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 {
     NSLog(@"Rotating...\n\n");
     
-    targetXAngle   = 0;
-    targetZAngle   = 0;
-    targetYAngle   -= 90;
+    targetXAngle  = 0;
+    targetZAngle  = 0;
+    targetYAngle  -= 90;
     
     [self computeAnimationDeltaSteps:60 /* 1 sec */];
     
@@ -317,10 +286,10 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 {
     NSLog(@"Scrolling...\n\n");
     
-    currentEyeY    = -1.5;
-    targetXAngle   = 0;
-    targetYAngle   = 0;
-    targetZAngle   = 0;
+    currentEyeY   = -1.5;
+    targetXAngle  = 0;
+    targetYAngle  = 0;
+    targetZAngle  = 0;
     
     [self computeAnimationDeltaSteps:120];		
 }
@@ -330,13 +299,13 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
     NSLog(@"Fading in...\n\n");
     
     
-    currentXAngle  = -90;
-    currentEyeZ    = 5.0;
+    currentXAngle = -90;
+    currentEyeZ   = 5.0;
     
-    currentEyeY    = 4.5;
-    targetXAngle   = 0;
-    targetYAngle   = 0;
-    targetZAngle   = 0;
+    currentEyeY   = 4.5;
+    targetXAngle  = 0;
+    targetYAngle  = 0;
+    targetZAngle  = 0;
     
     [self computeAnimationDeltaSteps:120];	
 }
@@ -345,17 +314,11 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 {
     NSLog(@"Blending in...\n\n");
     
-    /*
-    currentXAngle  = -90;
-    currentEyeZ    = 5.0;
-    currentEyeY    = 4.5;
-    */
-    
-    targetXAngle   = 0;
-    targetYAngle   = 0;
-    targetZAngle   = 0;
+    targetXAngle = 0;
+    targetYAngle = 0;
+    targetZAngle = 0;
     currentAlpha = 0.0;
-    targetAlpha = 1.0;
+    targetAlpha  = 1.0;
     
     [self computeAnimationDeltaSteps:120];
 }

@@ -69,7 +69,7 @@
     NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
     NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
     NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
-    bgTexture = [self makeTexture:bgImageResized];
+    bgTexture = [self textureFromImage:bgImageResized];
 
     // C64 screen (raw emulator data)
     MTLTextureDescriptor *textureDescriptor =

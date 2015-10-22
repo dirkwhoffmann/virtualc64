@@ -24,14 +24,14 @@
 }
 
 // --------------------------------------------------------------------------------
-//                                   Drawing
+//                                 Image handling
 // --------------------------------------------------------------------------------
 
 - (NSImage *)screenshot;
-- (NSImage *) flipImage:(NSImage *)image;
-- (NSImage *) expandImage:(NSImage *)image toSize:(NSSize)size;
-- (id<MTLTexture>) makeTexture:(NSImage *)image;
-+ (NSImage *)imageWithTexture:(id<MTLTexture>)texture x1:(float)_x1 y1:(float)_y1 x2:(float)_x2 y2:(float)_y2;
+- (NSImage *)flipImage:(NSImage *)image;
+- (NSImage *)expandImage:(NSImage *)image toSize:(NSSize)size;
+- (id<MTLTexture>)textureFromImage:(NSImage *)image;
++ (NSImage *)imageFromTexture:(id<MTLTexture>)texture x1:(float)_x1 y1:(float)_y1 x2:(float)_x2 y2:(float)_y2;
 
 
 // --------------------------------------------------------------------------------
