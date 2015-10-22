@@ -74,7 +74,8 @@ enum TextureFilterType {
 
     // Buffers
     id <MTLBuffer> positionBuffer;
-    id <MTLBuffer> uniformBuffer;
+    id <MTLBuffer> uniformBuffer2D;
+    id <MTLBuffer> uniformBuffer3D;
     id <MTLBuffer> uniformBufferBg;
 
     // Textures
@@ -111,23 +112,20 @@ enum TextureFilterType {
     // Currently selected filters
     unsigned videoFilter;
     
-    //! If true, the C64 canvas covers the whole window area (used to hide the status bar)
-    bool drawInEntireWindow;
-
+    //! If true, no GPU drawing is performed (for performance profiling olny)
+    bool enableMetal;
+    
     //! Is set to true when fullscreen mode is entered (usually enables the 2D renderer)
     bool fullscreen;
     
     //! If true, the 3D renderer is also used in fullscreen mode
     bool fullscreenKeepAspectRatio;
     
+    //! If true, the C64 canvas covers the whole window area (used to hide the status bar)
+    bool drawInEntireWindow;
+
     //! If false, the C64 screen is not drawn (background texture or black screen will be visible)
     bool drawC64texture;
-    
-    //! If false, the background is not drawn
-    bool drawBackground;
-    
-    //! If false, only the front facing part of the texture cube is drawn
-    bool drawEntireCube;
     
 #pragma mark Keyboard and joystick emulation
     
@@ -147,15 +145,13 @@ enum TextureFilterType {
 
 #pragma mark Configuring
 
+@property unsigned videoFilter;
 @property bool enableMetal;
 @property bool fullscreen;
 @property bool fullscreenKeepAspectRatio;
+@property bool drawInEntireWindow;
 @property bool drawC64texture;
-@property bool drawEntireCube;
-@property unsigned videoFilter;
 
-- (bool)drawInEntireWindow;
-- (void)setDrawInEntireWindow:(bool)b;
 - (void)cleanup;
 
 #pragma mark Drawing

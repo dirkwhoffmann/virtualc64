@@ -1,5 +1,5 @@
 /*
- * Author: Dirk W. Hoffmann, 2016
+ * Author: Dirk W. Hoffmann, 2015
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,12 +55,11 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 //                                           Properties
 // -----------------------------------------------------------------------------------------------
 
+@synthesize videoFilter;
 @synthesize enableMetal;
 @synthesize fullscreen;
 @synthesize fullscreenKeepAspectRatio;
 @synthesize drawC64texture;
-@synthesize drawEntireCube;
-@synthesize videoFilter;
 
 - (bool)drawInEntireWindow { return drawInEntireWindow; }
 - (void)setDrawInEntireWindow:(bool)b
@@ -123,12 +122,10 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     // Properties
     enableMetal = true; 
-    drawInEntireWindow = false;
     fullscreen = false;
     fullscreenKeepAspectRatio = true;
+    drawInEntireWindow = false;
     drawC64texture = false;
-    drawBackground = true;
-    drawEntireCube = false;
     
     // Metal
     [self setupMetal];
@@ -234,6 +231,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
      textureYEnd = 1.0;
      */
     
+    // Update texture coordinates in vertex buffer
     [self buildVertexBuffer];
 }
 
@@ -271,67 +269,78 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     drawableSize.height *= scale;
     
     metalLayer.drawableSize = drawableSize;
+    
+    [self reshape];
 }
 
 - (void)reshape
 {
-    CGSize s = [metalLayer drawableSize];
-    layerWidth = s.width;
-    layerHeight = s.height;
+    CGSize drawableSize = [metalLayer drawableSize];
+    layerWidth = drawableSize.width;
+    layerHeight = drawableSize.height;
 
-    NSLog(@"CGLayer size %f %f", s.width, s.height);
+    NSLog(@"MetalLayer::reshape (%f,%f)", drawableSize.width, drawableSize.height);
 
     // Update projection matrix
-    // float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     float aspect = fabs(layerWidth / layerHeight);
-    _projectionMatrix = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);    
+    _projectionMatrix = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
+
     _viewMatrix = matrix_identity_float4x4;
     
-    // Update matrices for background drawing
-    _modelMatrix = matrix_identity_float4x4;
-    _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
-    Uniforms *frameDataBg = (Uniforms *)[uniformBufferBg contents];
-    frameDataBg->model = _modelMatrix;
-    frameDataBg->view = _viewMatrix;
-    frameDataBg->projectionView = _modelViewProjectionMatrix;
-    frameDataBg->alpha = 1.0;
-
+    // Rebuild matrices
+    [self buildMatricesBg];
+    [self buildMatrices2D];
+    [self buildMatrices3D];
+    
     // Rebuild depth buffer and tmp drawing buffer
     [self buildDepthBuffer];
 }
 
+- (void)buildMatricesBg
+{
+    matrix_float4x4 model = matrix_identity_float4x4;
+    matrix_float4x4 view = matrix_identity_float4x4;
+    matrix_float4x4 projection = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), fabs(layerWidth / layerHeight), 0.1f, 100.0f);
+    
+    Uniforms *frameData = (Uniforms *)[uniformBufferBg contents];
+    frameData->model = model;
+    frameData->view = view;
+    frameData->projectionView = projection * view * model;
+    frameData->alpha = 1.0;
+}
+
+
 - (void)buildMatrices2D
 {
-    _modelMatrix = vc64_matrix_from_translation(0, 0, 0);
-    _viewMatrix = matrix_identity_float4x4;
-    _projectionMatrix = matrix_identity_float4x4;
-    _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
-    
-    Uniforms *frameData = (Uniforms *)[uniformBuffer contents];
-    frameData->model = _modelMatrix;
-    frameData->view = _viewMatrix;
-    frameData->projectionView = _modelViewProjectionMatrix;
+    matrix_float4x4 model = matrix_identity_float4x4;
+    matrix_float4x4 view = matrix_identity_float4x4;
+    matrix_float4x4 projection = matrix_identity_float4x4;
+
+    Uniforms *frameData = (Uniforms *)[uniformBuffer2D contents];
+    frameData->model = model;
+    frameData->view = view;
+    frameData->projectionView = projection * view * model;
     frameData->alpha = 1.0;
 }
 
 - (void)buildMatrices3D
 {
-    _modelMatrix = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.39);
+    matrix_float4x4 model = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.39);
+    matrix_float4x4 view = matrix_identity_float4x4;
+    matrix_float4x4 projection = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), fabs(layerWidth / layerHeight), 0.1f, 100.0f);
     
     if ([self animates]) {
-        _modelMatrix = _modelMatrix *
+        model = model *
         vc64_matrix_from_rotation(-(currentXAngle / 180.0)*M_PI, 0.5f, 0.0f, 0.0f) *
         vc64_matrix_from_rotation((currentYAngle / 180.0)*M_PI, 0.0f, 0.5f, 0.0f) *
         vc64_matrix_from_rotation((currentZAngle / 180.0)*M_PI, 0.0f, 0.0f, 0.5f);
     }
-    
-    _modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
 
-    Uniforms *frameData = (Uniforms *)[uniformBuffer contents];
-    frameData->model = _modelMatrix;
-    frameData->view = _viewMatrix;
-    frameData->projectionView = _modelViewProjectionMatrix;
-    frameData->alpha = (c64->isHalted()) ? 0.5 : currentAlpha;
+    Uniforms *frameData = (Uniforms *)[uniformBuffer3D contents];
+    frameData->model = model;
+    frameData->view = view;
+    frameData->projectionView = projection * view * model;
+    frameData->alpha = currentAlpha;
 }
 
 - (TextureFilter *)currentFilter
@@ -365,22 +374,13 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (BOOL)startFrame
 {
-    CGSize drawableSize = metalLayer.drawableSize;
-    
-    // if (!_depthTexture || _depthTexture.width != drawableSize.width || _depthTexture.height != drawableSize.height) {
-    
-    // Update all size dependent entities
-    if (layerWidth != drawableSize.width || layerHeight != drawableSize.height) {
-        [self reshape];
-    }
-    
     framebufferTexture = _drawable.texture;
     NSAssert(framebufferTexture != nil, @"Framebuffer texture must not be nil");
     
     _commandBuffer = [queue commandBuffer];
     NSAssert(_commandBuffer != nil, @"Metal command buffer must not be nil");
 
-    // Apply filter
+    // Post-process C64 texture
     TextureFilter *filter = [self currentFilter];
     [filter apply:_commandBuffer in:textureFromEmulator out:filteredTexture];
     
@@ -406,7 +406,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
         [_commandEncoder setFragmentSamplerState:[filter sampler] atIndex:0];
         [_commandEncoder setVertexBuffer:positionBuffer offset:0 atIndex:0];
-        [_commandEncoder setVertexBuffer:uniformBuffer offset:0 atIndex:1];
     }
     
     return YES;
@@ -414,14 +413,12 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (void)drawScene2D
 {
-    [self buildMatrices2D];
-    
     if (![self startFrame])
         return;
     
     // Render quad
     [_commandEncoder setFragmentTexture:filteredTexture atIndex:0];
-    [_commandEncoder setVertexBuffer:uniformBuffer offset:0 atIndex:1];
+    [_commandEncoder setVertexBuffer:uniformBuffer2D offset:0 atIndex:1];
     [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:42 vertexCount:6 instanceCount:1];
     
     [self endFrame];
@@ -431,19 +428,20 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 {
     bool animates = [self animates];
     
-    drawEntireCube = animates;
-    drawBackground = !fullscreen; 
-    
     if (animates) {
         [self updateAngles];
+        [self buildMatrices3D];
     }
-    [self buildMatrices3D];
     
     if (![self startFrame])
         return;
     
+    // Make texture transparent if emulator is halted
+    Uniforms *frameData = (Uniforms *)[uniformBuffer3D contents];
+    frameData->alpha = c64->isHalted() ? 0.5 : currentAlpha;
+
     // Render background
-    if (drawBackground) {
+    if (!fullscreen) {
         [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
         [_commandEncoder setVertexBuffer:uniformBufferBg offset:0 atIndex:1];
         [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
@@ -452,8 +450,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // Render cube
     if (drawC64texture) {
         [_commandEncoder setFragmentTexture:filteredTexture atIndex:0];
-        [_commandEncoder setVertexBuffer:uniformBuffer offset:0 atIndex:1];
-        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:(drawEntireCube ? 24 : 6) instanceCount:1];
+        [_commandEncoder setVertexBuffer:uniformBuffer3D offset:0 atIndex:1];
+        [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:6 vertexCount:(animates ? 24 : 6) instanceCount:1];
     }
     
     [self endFrame];
@@ -463,8 +461,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 {
     [_commandEncoder endEncoding];
     
-    if (_drawable)
-    {
+    if (_drawable) {
         [_commandBuffer presentDrawable:_drawable];
         [_commandBuffer commit];
     }
@@ -487,10 +484,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
             return NO;
         }
 
-        // Get C64 texture from emulator
-        [self updateTexture:_commandBuffer];
-
         // Draw scene
+        [self updateTexture:_commandBuffer];
         if (fullscreen && !fullscreenKeepAspectRatio) {
             [self drawScene2D];
         } else {
@@ -501,7 +496,5 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         return kCVReturnSuccess;
     }
 }
-
-
 
 @end

@@ -26,3 +26,9 @@
 
 @end
 
+// Matrix utilities
+matrix_float4x4 vc64_matrix_identity();
+matrix_float4x4 vc64_matrix_from_perspective_fov_aspectLH(const float fovY, const float aspect, const float nearZ, const float farZ);
+matrix_float4x4 vc64_matrix_from_translation(float x, float y, float z);
+matrix_float4x4 vc64_matrix_from_rotation(float radians, float x, float y, float z);
+
