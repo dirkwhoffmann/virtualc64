@@ -886,6 +886,13 @@
     [propertiesDialog initialize:self];
 
     // Open sheet
+#if 0
+    [[[self document] windowForSheet] beginSheet:propertiesDialog
+                               completionHandler:^(NSModalResponse returnCode) {
+                                   NSLog(@"completionHandler called");
+                               }];
+#endif
+    
     [NSApp beginSheet:propertiesDialog
        modalForWindow:[[self document] windowForSheet]
         modalDelegate:self
@@ -901,7 +908,8 @@
 	[propertiesDialog orderOut:sender];
 	
 	// Return to normal event handling
-	[NSApp endSheet:propertiesDialog returnCode:1];
+    // [[[self document] windowForSheet] endSheet:[self window] returnCode:NSModalResponseCancel];
+    [NSApp endSheet:propertiesDialog returnCode:1];
 }
 
 - (bool)showHardwareDialog

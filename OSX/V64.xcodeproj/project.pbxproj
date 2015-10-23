@@ -650,8 +650,6 @@
 				50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */,
 				50176C770A6F7357009E80BD /* MyOpenGLView.h */,
 				50176C780A6F7357009E80BD /* MyOpenGLView.mm */,
-				50B37D771A56CA4F0055A540 /* ROMDropTargetView.h */,
-				50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */,
 				5077743112DE490B00D72088 /* CpuTableView.h */,
 				5077743212DE490B00D72088 /* CpuTableView.mm */,
 				5077742E12DE490300D72088 /* MemTableView.h */,
@@ -700,10 +698,12 @@
 				50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */,
 				50D5FDB20C2E9CF50022CA3A /* MountDialog.h */,
 				50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */,
-				50A8F8F10E47171300ACE17D /* RomDialog.h */,
-				50A8F8F20E47171300ACE17D /* RomDialog.mm */,
 				50AE4A331A693AA0003EA774 /* MountDragView.h */,
 				50AE4A341A693AA0003EA774 /* MountDragView.mm */,
+				50A8F8F10E47171300ACE17D /* RomDialog.h */,
+				50A8F8F20E47171300ACE17D /* RomDialog.mm */,
+				50B37D771A56CA4F0055A540 /* ROMDropTargetView.h */,
+				50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";

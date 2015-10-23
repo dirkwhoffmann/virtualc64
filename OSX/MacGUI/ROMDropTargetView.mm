@@ -50,7 +50,7 @@
         NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];
 
         if ([[controller c64] isRom:path]) {
-            [self setImage:[NSImage imageNamed:@"rom"]];
+            [self setImage:[NSImage imageNamed:@"romchip"]];
             [self setNeedsDisplay];
             return NSDragOperationCopy;
         }

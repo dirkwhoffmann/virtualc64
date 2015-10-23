@@ -98,10 +98,11 @@
     CGContextDrawImage(bitmapContext, CGRectMake(0, 0, width, height), imageRef);
     CGContextRelease(bitmapContext);
         
-    MTLTextureDescriptor *textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
-                                                                                                 width:width
-                                                                                                height:height
-                                                                                             mipmapped:NO];
+    MTLTextureDescriptor *textureDescriptor =
+    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
+                                                       width:width
+                                                      height:height
+                                                   mipmapped:NO];
     id<MTLTexture> texture = [device newTextureWithDescriptor:textureDescriptor];
         
     MTLRegion region = MTLRegionMake2D(0, 0, width, height);
@@ -119,7 +120,8 @@ static void releaseDataCallback(void *info, const void *data, size_t size)
 
 + (NSImage *)imageFromTexture:(id<MTLTexture>)texture x1:(float)_x1 y1:(float)_y1 x2:(float)_x2 y2:(float)_y2
 {
-    NSAssert([texture pixelFormat] == MTLPixelFormatRGBA8Unorm, @"Pixel format of texture must be MTLPixelFormatBGRA8Unorm");
+    NSAssert([texture pixelFormat] == MTLPixelFormatRGBA8Unorm,
+             @"Pixel format of texture must be MTLPixelFormatBGRA8Unorm");
     
     CGSize imageSize = CGSizeMake([texture width] * (_x2 - _x1), [texture height] * (_y2 - _y1));
     size_t imageByteCount = imageSize.width * imageSize.height * 4;
