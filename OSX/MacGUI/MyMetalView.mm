@@ -128,6 +128,15 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     drawC64texture = false;
     
     // Metal
+    if (!MTLCreateSystemDefaultDevice()) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setIcon:[NSImage imageNamed:@"metal.png"]];
+        [alert setMessageText:@"No suitable GPU hardware found"];
+        [alert setInformativeText:@"VirtualC64 can only run on machines supporting the Metal graphics technology (2012 models and above)."];
+        [alert addButtonWithTitle:@"Ok"];
+        [alert runModal];
+        [NSApp terminate:self];
+    }
     [self setupMetal];
     [self reshape];
     
