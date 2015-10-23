@@ -19,6 +19,8 @@
 #import "C64GUI.h"
 #import "ShaderTypes.h"
 
+NSRecursiveLock *lock = nil;
+
 static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
                                       const CVTimeStamp *inNow,
                                       const CVTimeStamp *inOutputTime,
@@ -109,7 +111,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     c64 = [c64proxy c64]; // DEPRECATED
     
     // Create lock used by the draw method
-    lock = [NSRecursiveLock new];
+    if (!lock)
+        lock = [NSRecursiveLock new];
 
     // Set initial scene position and drawing properties
     currentEyeX = targetEyeX = deltaEyeX = 0.0;
@@ -483,8 +486,9 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         if (!c64 || !enableMetal)
             return kCVReturnSuccess;
         
-        if (![lock tryLock])
-            return kCVReturnSuccess;
+        // if (![lock tryLock])
+        //     return kCVReturnSuccess;
+        [lock lock];
         
         // Get drawable from layer
         if (!(_drawable = [metalLayer nextDrawable])) {

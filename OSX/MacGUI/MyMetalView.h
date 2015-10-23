@@ -31,6 +31,9 @@ using namespace simd;
 // Forward declaration
 @class MyController;
 
+// Synchronization lock
+extern NSRecursiveLock *lock;
+
 // Graphics constants
 const int C64_TEXTURE_WIDTH = 512;
 const int C64_TEXTURE_HEIGHT= 512;
@@ -58,7 +61,7 @@ enum TextureFilterType {
     C64 *c64; // DEPRECATED. GET RID OF THIS VARIABLE AND RENAME c64proxy to c64
 
     // Synchronization lock
-    NSRecursiveLock *lock;
+    // NSRecursiveLock *lock;
     
     // Metal objects
     id <MTLDevice> device;
