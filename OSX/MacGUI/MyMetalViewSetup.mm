@@ -61,16 +61,16 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     NSAssert(device != nil, @"Metal layer must not be nil");
     metalLayer.device = device;
     metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
-    metalLayer.framebufferOnly = NO; // YES;
+    metalLayer.framebufferOnly = YES; // NO;
     metalLayer.frame = self.layer.frame;
     layerWidth = metalLayer.drawableSize.width;
     layerHeight = metalLayer.drawableSize.height;
 
-    // Create command queue
+    // Command queue
     queue = [device newCommandQueue];
     NSAssert(device != nil, @"Metal command queue must not be nil");
     
-    // Load shader library
+    // Shader library
     library = [device newDefaultLibrary];
     NSAssert(device != nil, @"Metal library must not be nil");
     
@@ -82,8 +82,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 {
     NSLog(@"MyMetalView::buildTextures");
     
-    depthTexture = nil;
-
     // Background
     NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
     NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
@@ -352,7 +350,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         exit(0);
     }
 }
-
 
 @end
 

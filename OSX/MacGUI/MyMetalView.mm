@@ -17,7 +17,6 @@
  */
 
 #import "C64GUI.h"
-#import "ShaderTypes.h"
 
 NSRecursiveLock *lock = nil;
 
@@ -93,7 +92,7 @@ NSRecursiveLock *lock = nil;
     
     c64 = [c64proxy c64]; // DEPRECATED
     
-    // Create lock used by the draw method
+    // Create synchronization locks
     if (!lock) lock = [NSRecursiveLock new];
     _inflightSemaphore = dispatch_semaphore_create(3);
     
@@ -119,6 +118,21 @@ NSRecursiveLock *lock = nil;
     uniformBuffer3D = nil;
     uniformBufferBg = nil;
     
+    bgTexture = nil;
+    textureFromEmulator = nil;
+    filteredTexture = nil;
+    framebufferTexture = nil;
+    depthTexture = nil;
+    
+    bypassFilter = NULL;
+    smoothFilter = NULL;
+    blurFilter = NULL;
+    saturationFilter = NULL;
+    sepiaFilter = NULL;
+    grayscaleFilter = NULL;
+    crtFilter = NULL;
+    
+    // Check if machine is capable to run the Metal graphics interface
     if (!MTLCreateSystemDefaultDevice()) {
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setIcon:[NSImage imageNamed:@"metal.png"]];
@@ -128,8 +142,6 @@ NSRecursiveLock *lock = nil;
         [alert runModal];
         [NSApp terminate:self];
     }
-    // [self setupMetal];
-    // [self reshape];
     
     // Keyboard initialization
     for (int i = 0; i < 256; i++) {

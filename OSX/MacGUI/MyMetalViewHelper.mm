@@ -1,5 +1,4 @@
 #import "C64GUI.h"
-#import "ShaderTypes.h"
 #import <CoreGraphics/CoreGraphics.h>
 
 @implementation MyMetalView(Helper)

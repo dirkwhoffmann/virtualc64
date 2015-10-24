@@ -17,7 +17,6 @@
  */
 
 #import "C64GUI.h"
-#import "ShaderTypes.h"
 
 @implementation MyMetalView(Responder)
 

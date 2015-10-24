@@ -33,6 +33,7 @@
 - (void)drawInMTKView:(nonnull MTKView *)view {
 
     // Nothing to do here. We take care of it inside the view class
+    // NSLog(@"MyMetalController::drawInMTKView");
 
 }
 

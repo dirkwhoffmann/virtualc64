@@ -8,6 +8,10 @@
 
 using namespace metal;
 
+// Relevant region in post-processed C64 texture
+#define TEXTURE_CUTOUT_X_PP 856 // 428 * 2
+#define TEXTURE_CUTOUT_Y_PP 568 // 284 * 2
+
 // -----------------------------------------------------------------------------------------------
 //                        Main vertex shader (for drawing the quad)
 // -----------------------------------------------------------------------------------------------
@@ -97,10 +101,9 @@ kernel void bypass(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
         }
 
 #endif
-    if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    // if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    if((gid.x < TEXTURE_CUTOUT_X_PP) && (gid.y < TEXTURE_CUTOUT_Y_PP))
     {
-        // uint2 newgid = uint2(gid.x / 2, gid.y / 2);
-        // gid.x = gid.x / 2; gid.y = gid.y / 2;
         half4 result = inTexture.read(uint2(gid.x / 2, gid.y / 2));
         outTexture.write(result, gid);
     }
@@ -126,7 +129,8 @@ kernel void saturation(texture2d<half, access::read>  inTexture    [[ texture(0)
                        constant SaturationFilterUniforms &uniforms [[buffer(0)]],
                        uint2                          gid          [[ thread_position_in_grid ]])
 {
-    if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    // if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    if((gid.x < TEXTURE_CUTOUT_X_PP) && (gid.y < TEXTURE_CUTOUT_Y_PP))
     {
         half  factor   = uniforms.saturationFactor;
         half4 inColor  = inTexture.read(uint2(gid.x / 2, gid.y / 2)); // gid);
@@ -153,7 +157,8 @@ kernel void blur(texture2d<float, access::read> inTexture [[texture(0)]],
     
     float4 accumColor(0, 0, 0, 0);
     
-    if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    // if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    if((gid.x < TEXTURE_CUTOUT_X_PP) && (gid.y < TEXTURE_CUTOUT_Y_PP))
     {
         for (int j = 0; j < size; ++j)
         {
@@ -184,7 +189,8 @@ kernel void sepia(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                   texture2d<half, access::write> outTexture  [[ texture(1) ]],
                   uint2                          gid         [[ thread_position_in_grid ]])
 {
-    if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    // if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    if((gid.x < TEXTURE_CUTOUT_X_PP) && (gid.y < TEXTURE_CUTOUT_Y_PP))
     {
         half4 inColor = inTexture.read(uint2(gid.x / 2, gid.y / 2)); // gid);
         half  brightness = dot(inColor.rgb, half3(0.299, 0.587, 0.114));
@@ -205,7 +211,8 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                 texture2d<half, access::write> outTexture  [[ texture(1) ]],
                 uint2                          gid         [[ thread_position_in_grid ]])
 {
-    if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    // if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    if((gid.x < TEXTURE_CUTOUT_X_PP) && (gid.y < TEXTURE_CUTOUT_Y_PP))
     {
         half4 inColor = inTexture.read(uint2(gid.x / 2, gid.y / 2)); // gid);
         half line = (gid.y % 2) / 1.0;

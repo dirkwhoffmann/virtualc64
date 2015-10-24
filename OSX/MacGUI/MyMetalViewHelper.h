@@ -17,7 +17,14 @@
  */
 
 #import "MyMetalView.h"
-#import "ShaderTypes.h"
+
+struct Uniforms {
+    float4x4 model;
+    float4x4 view;
+    float4x4 projection;
+    float4x4 projectionView;
+    float alpha;
+};
 
 @interface MyMetalView(Helper)
 {

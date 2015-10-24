@@ -241,7 +241,6 @@
 		500FF3901BD7F4DF0038245B /* romchipMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romchipMissing.png; sourceTree = "<group>"; };
 		50137E9E1BCA394600147283 /* MyMetalViewHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewHelper.h; sourceTree = "<group>"; };
 		50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewHelper.mm; sourceTree = "<group>"; };
-		50137EA11BCA453700147283 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		50137EB01BCA83B000147283 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		50176C4F0A6F72F3009E80BD /* basic.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = basic.cpp; sourceTree = "<group>"; };
 		50176C500A6F72F3009E80BD /* basic.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = basic.h; sourceTree = "<group>"; };
@@ -877,7 +876,6 @@
 		50C72DE71BC7F50D00F1863B /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				50137EA11BCA453700147283 /* ShaderTypes.h */,
 				5089F0531BD3F62800306F4D /* BypassFilter.h */,
 				5089F0541BD3F64200306F4D /* BypassFilter.mm */,
 				502D44CF1BD38ED800950088 /* TextureFilter.h */,

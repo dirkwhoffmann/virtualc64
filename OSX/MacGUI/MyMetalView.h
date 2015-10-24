@@ -34,11 +34,12 @@ using namespace simd;
 // Synchronization lock
 extern NSRecursiveLock *lock;
 
-// Graphics constants
+// Size of C64 texture
 const int C64_TEXTURE_WIDTH = 512;
 const int C64_TEXTURE_HEIGHT= 512;
 const int C64_TEXTURE_DEPTH = 4;
 
+// Size of background texture
 const int BG_TEXTURE_WIDTH = 1024;
 const int BG_TEXTURE_HEIGHT= 512;
 const int BG_TEXTURE_DEPTH = 4;

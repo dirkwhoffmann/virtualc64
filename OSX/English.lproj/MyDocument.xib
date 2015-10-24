@@ -4958,9 +4958,9 @@ DQ
             </connections>
             <point key="canvasLocation" x="830.5" y="-233.5"/>
         </window>
-        <viewController id="3kf-v2-Ibp" customClass="MyMetalViewController">
+        <viewController id="fuS-Xj-Scx" customClass="MyMetalViewController">
             <connections>
-                <outlet property="view" destination="DD4-5B-w9h" id="wEO-ym-Q5x"/>
+                <outlet property="view" destination="DD4-5B-w9h" id="Scv-bt-GPv"/>
             </connections>
         </viewController>
     </objects>
