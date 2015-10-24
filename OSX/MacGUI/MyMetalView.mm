@@ -113,7 +113,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     // Create lock used by the draw method
     if (!lock)
         lock = [NSRecursiveLock new];
-
+    _inflightSemaphore = dispatch_semaphore_create(3);
+    
     // Set initial scene position and drawing properties
     currentEyeX = targetEyeX = deltaEyeX = 0.0;
     currentEyeY = targetEyeY = deltaEyeY = 0.0;
@@ -473,6 +474,11 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 {
     [_commandEncoder endEncoding];
     
+    __block dispatch_semaphore_t block_sema = _inflightSemaphore;
+    [_commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer) {
+        dispatch_semaphore_signal(block_sema);
+    }];
+
     if (_drawable) {
         [_commandBuffer presentDrawable:_drawable];
         [_commandBuffer commit];
@@ -489,6 +495,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         // if (![lock tryLock])
         //     return kCVReturnSuccess;
         [lock lock];
+        
+        dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
         
         // Get drawable from layer
         if (!(_drawable = [metalLayer nextDrawable])) {

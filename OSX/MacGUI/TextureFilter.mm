@@ -35,8 +35,8 @@
     threadgroupSize = MTLSizeMake(16 /* width */, 16 /* height */, 1 /* depth */);
     
     // Calculate the compute kernel's width and height
-    NSUInteger threadCountX = (512 /* texture width */ + threadgroupSize.width -  1) / threadgroupSize.width;
-    NSUInteger threadCountY = (512 /* texture height */ + threadgroupSize.height - 1) / threadgroupSize.height;
+    NSUInteger threadCountX = (1024 /* texture width */ + threadgroupSize.width -  1) / threadgroupSize.width;
+    NSUInteger threadCountY = (1024 /* texture height */ + threadgroupSize.height - 1) / threadgroupSize.height;
     
     // Set the kernel's thread count
     threadgroupCount = MTLSizeMake(threadCountX, threadCountY, 1);

@@ -62,6 +62,7 @@ enum TextureFilterType {
 
     // Synchronization lock
     // NSRecursiveLock *lock;
+    dispatch_semaphore_t _inflightSemaphore;
     
     // Metal objects
     id <MTLDevice> device;

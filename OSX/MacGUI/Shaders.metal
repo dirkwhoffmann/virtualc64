@@ -63,10 +63,43 @@ kernel void bypass(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                    texture2d<half, access::write> outTexture  [[ texture(1) ]],
                    uint2                          gid         [[ thread_position_in_grid ]])
 {
-    if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
-    {
-        half4 result = inTexture.read(gid);
+    if((gid.x % 2 == 0) && (gid.y % 2 == 0)) {
+        if((gid.x < outTexture.get_width() - 1) && (gid.y < outTexture.get_height() - 1) &&
+           (gid.x > 0) && (gid.y > 0)) {
+            
+            //   A    --\ 1 2
+            // C P B  --/ 3 4
+            //   D
+            // 1=P; 2=P; 3=P; 4=P;
+            // IF C==A AND C!=D AND A!=B => 1=A
+            // IF A==B AND A!=C AND B!=D => 2=B
+            // IF B==D AND B!=A AND D!=C => 4=D
+            // IF D==C AND D!=B AND C!=A => 3=C
+            half xx = gid.x / 2;
+            half yy = gid.y / 2;
+            half4 A = inTexture.read(uint2(xx, yy - 1));
+            half4 C = inTexture.read(uint2(xx - 1, yy));
+            half4 P = inTexture.read(uint2(xx, yy));
+            half4 B = inTexture.read(uint2(xx + 1, yy));
+            half4 D = inTexture.read(uint2(xx, yy + 1));
+        
+            bool b1 = true; // all(A == C);
+            half4 r1 = mix(A,C,half(0.5));
+            half4 r2 = mix(A,B,half(0.5));
+            half4 r3 = mix(C,D,half(0.5));
+            half4 r4 = mix(B,D,half(0.5));
+            
+            outTexture.write(r1, uint2(gid.x, gid.y));
+            outTexture.write(r2, uint2(gid.x + 1, gid.y));
+            outTexture.write(r3, uint2(gid.x, gid.y + 1));
+            outTexture.write(r4, uint2(gid.x + 1, gid.y + 1));
+        }
+
+#if 0
+        uint2 newgid = uint2(gid.x / 2, gid.y / 2);
+        half4 result = inTexture.read(newgid);
         outTexture.write(result, gid);
+#endif
     }
 }
 

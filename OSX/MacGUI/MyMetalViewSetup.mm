@@ -78,10 +78,17 @@
                                                       height:512
                                                    mipmapped:NO];
     textureFromEmulator = [device newTextureWithDescriptor:textureDescriptor];
+    NSAssert(textureFromEmulator != nil, @"Failed to create texture");
     
     // C64 screen (post-processed)
-    textureDescriptor.usage |= MTLTextureUsageShaderWrite;
-    filteredTexture = [device newTextureWithDescriptor:textureDescriptor];
+    MTLTextureDescriptor *textureDescriptorPP =
+    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
+                                                       width:1024
+                                                      height:1024
+                                                   mipmapped:NO];
+    textureDescriptorPP.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
+    filteredTexture = [device newTextureWithDescriptor:textureDescriptorPP];
+    NSAssert(filteredTexture != nil, @"Failed to create post-processing texture");
 }
 
 - (void)buildKernels
