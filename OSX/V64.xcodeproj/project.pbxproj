@@ -86,6 +86,7 @@
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
+		5081C4DA1BDB6ED900D49076 /* MyMetalViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5081C4D91BDB6ED900D49076 /* MyMetalViewController.mm */; };
 		5087FD591BDA16C400570F0D /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087FD581BDA16C400570F0D /* metal.png */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6E912E06DB700378033 /* MyControllerToolbar.mm */; };
@@ -329,6 +330,8 @@
 		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
 		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
 		5077743212DE490B00D72088 /* CpuTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CpuTableView.mm; sourceTree = "<group>"; };
+		5081C4D81BDB6EC200D49076 /* MyMetalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewController.h; sourceTree = "<group>"; };
+		5081C4D91BDB6ED900D49076 /* MyMetalViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewController.mm; sourceTree = "<group>"; };
 		5087FD581BDA16C400570F0D /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
 		5088A6D412E0676200378033 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
 		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
@@ -644,6 +647,8 @@
 				50176C730A6F7357009E80BD /* Formatter.mm */,
 				50032EB01BC919D90050BEEA /* MyMetalView.h */,
 				50032EB11BC919D90050BEEA /* MyMetalView.mm */,
+				5081C4D81BDB6EC200D49076 /* MyMetalViewController.h */,
+				5081C4D91BDB6ED900D49076 /* MyMetalViewController.mm */,
 				500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */,
 				500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */,
 				5042312A1BD3718F00B3DEF9 /* MyMetalViewResponder.h */,
@@ -1163,6 +1168,7 @@
 				50D141841417A34B0024FC74 /* voice.cc in Sources */,
 				50D141851417A34B0024FC74 /* wave.cc in Sources */,
 				50D141861417A34B0024FC74 /* wave6581__ST.cc in Sources */,
+				5081C4DA1BDB6ED900D49076 /* MyMetalViewController.mm in Sources */,
 				50D141871417A34B0024FC74 /* wave6581_P_T.cc in Sources */,
 				50D141881417A34B0024FC74 /* wave6581_PS_.cc in Sources */,
 				50D141891417A34B0024FC74 /* wave6581_PST.cc in Sources */,

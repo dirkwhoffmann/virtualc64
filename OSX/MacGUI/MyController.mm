@@ -123,11 +123,10 @@
     
 	// Launch emulator
 	[c64 run];
-
-    // Start metal drawing
-    NSLog(@"Setting up display link %@...\n", metalScreen);
-    [metalScreen setupDisplayLink];
-
+    
+    // Get metal running
+    [metalScreen setupMetal];
+    NSLog(@"Metal is up and running");
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

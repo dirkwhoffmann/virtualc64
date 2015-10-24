@@ -21,20 +21,6 @@
 
 NSRecursiveLock *lock = nil;
 
-static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
-                                      const CVTimeStamp *inNow,
-                                      const CVTimeStamp *inOutputTime,
-                                      CVOptionFlags flagsIn,
-                                      CVOptionFlags *flagsOut,
-                                      void *displayLinkContext)
-{
-    @autoreleasepool {
-
-        return [(__bridge MyMetalView *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
-        
-    }
-}
-
 @implementation MyMetalView {
     
     // Local metal objects
@@ -47,9 +33,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     matrix_float4x4 _viewMatrix;
     matrix_float4x4 _projectionMatrix;
     matrix_float4x4 _modelViewProjectionMatrix;
-    
-    // Display link
-    CVDisplayLinkRef displayLink;
 }
 
 
@@ -132,6 +115,11 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     drawC64texture = false;
     
     // Metal
+    positionBuffer = nil;
+    uniformBuffer2D = nil;
+    uniformBuffer3D = nil;
+    uniformBufferBg = nil;
+    
     if (!MTLCreateSystemDefaultDevice()) {
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setIcon:[NSImage imageNamed:@"metal.png"]];
@@ -141,8 +129,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         [alert runModal];
         [NSApp terminate:self];
     }
-    [self setupMetal];
-    [self reshape];
+    // [self setupMetal];
+    // [self reshape];
     
     // Keyboard initialization
     for (int i = 0; i < 256; i++) {
@@ -173,45 +161,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         lock = nil;
     }
 }
-
-
-// -----------------------------------------------------------------------------------------------
-//                                         Display link
-// -----------------------------------------------------------------------------------------------
-
-
-- (void)setupDisplayLink
-{
-    NSLog(@"MyMetalView::setupDisplayLink");
-    
-    CVReturn success;
-
-    // Create display link for the main display
-    CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
-    NSAssert(displayLink != nil, @"Error: Can't create display link");
-
-    // Set the current display of a display link
-    if ((success = CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay)) != 0) {
-        NSLog(@"CVDisplayLinkSetCurrentCGDisplay failed with return code %d", success);
-        CVDisplayLinkRelease(displayLink);
-        exit(0);
-    }
-    
-    // Set the renderer output callback function
-    if ((success = CVDisplayLinkSetOutputCallback(displayLink, &MetalRendererCallback, (__bridge void *)self)) != 0) {
-        NSLog(@"CVDisplayLinkSetOutputCallback failed with return code %d", success);
-        CVDisplayLinkRelease(displayLink);
-        exit(0);
-    }
-    
-    // Activates display link
-    if ((success = CVDisplayLinkStart(displayLink)) != 0) {
-        NSLog(@"CVDisplayLinkStart failed with return code %d", success);
-        CVDisplayLinkRelease(displayLink);
-        exit(0);
-    }
-}
-
 
 // -----------------------------------------------------------------------------------------------
 //                                           Drawing
@@ -315,13 +264,14 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     matrix_float4x4 view = matrix_identity_float4x4;
     matrix_float4x4 projection = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), fabs(layerWidth / layerHeight), 0.1f, 100.0f);
     
-    Uniforms *frameData = (Uniforms *)[uniformBufferBg contents];
-    frameData->model = model;
-    frameData->view = view;
-    frameData->projectionView = projection * view * model;
-    frameData->alpha = 1.0;
+    if (uniformBufferBg) {
+        Uniforms *frameData = (Uniforms *)[uniformBufferBg contents];
+        frameData->model = model;
+        frameData->view = view;
+        frameData->projectionView = projection * view * model;
+        frameData->alpha = 1.0;
+    }
 }
-
 
 - (void)buildMatrices2D
 {
@@ -329,11 +279,13 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     matrix_float4x4 view = matrix_identity_float4x4;
     matrix_float4x4 projection = matrix_identity_float4x4;
 
-    Uniforms *frameData = (Uniforms *)[uniformBuffer2D contents];
-    frameData->model = model;
-    frameData->view = view;
-    frameData->projectionView = projection * view * model;
-    frameData->alpha = 1.0;
+    if (uniformBuffer2D) {
+        Uniforms *frameData = (Uniforms *)[uniformBuffer2D contents];
+        frameData->model = model;
+        frameData->view = view;
+        frameData->projectionView = projection * view * model;
+        frameData->alpha = 1.0;
+    }
 }
 
 - (void)buildMatrices3D
@@ -349,11 +301,13 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         vc64_matrix_from_rotation((currentZAngle / 180.0)*M_PI, 0.0f, 0.0f, 0.5f);
     }
 
-    Uniforms *frameData = (Uniforms *)[uniformBuffer3D contents];
-    frameData->model = model;
-    frameData->view = view;
-    frameData->projectionView = projection * view * model;
-    frameData->alpha = currentAlpha;
+    if (uniformBuffer3D) {
+        Uniforms *frameData = (Uniforms *)[uniformBuffer3D contents];
+        frameData->model = model;
+        frameData->view = view;
+        frameData->projectionView = projection * view * model;
+        frameData->alpha = currentAlpha;
+    }
 }
 
 - (TextureFilter *)currentFilter
@@ -487,7 +441,10 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
 {
-    @autoreleasepool {
+    static unsigned showinfo = 1;
+    
+    // @autoreleasepool {
+    {
         
         if (!c64 || !enableMetal)
             return kCVReturnSuccess;
@@ -499,6 +456,15 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
         dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
         
         // Get drawable from layer
+        if (showinfo) {
+            showinfo = 0;
+            NSLog(@"device = %@", [metalLayer device]);
+            NSLog(@"pixelFormat = %lu", (unsigned long)[metalLayer pixelFormat]);
+            NSLog(@"frameBufferOnly = %hhd", [metalLayer framebufferOnly]);
+            CGSize size = [metalLayer drawableSize];
+            NSLog(@"drawableSize = %f %f", size.width, size.height);
+            NSLog(@"presentWithTransaction = %hhd", [metalLayer presentsWithTransaction]);
+        }
         if (!(_drawable = [metalLayer nextDrawable])) {
             NSLog(@"Metal drawable must not be nil");
             [lock unlock];

@@ -63,6 +63,7 @@ kernel void bypass(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                    texture2d<half, access::write> outTexture  [[ texture(1) ]],
                    uint2                          gid         [[ thread_position_in_grid ]])
 {
+#if 0
     if((gid.x % 2 == 0) && (gid.y % 2 == 0)) {
         if((gid.x < outTexture.get_width() - 1) && (gid.y < outTexture.get_height() - 1) &&
            (gid.x > 0) && (gid.y > 0)) {
@@ -95,11 +96,13 @@ kernel void bypass(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
             outTexture.write(r4, uint2(gid.x + 1, gid.y + 1));
         }
 
-#if 0
-        uint2 newgid = uint2(gid.x / 2, gid.y / 2);
-        half4 result = inTexture.read(newgid);
-        outTexture.write(result, gid);
 #endif
+    if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
+    {
+        // uint2 newgid = uint2(gid.x / 2, gid.y / 2);
+        // gid.x = gid.x / 2; gid.y = gid.y / 2;
+        half4 result = inTexture.read(uint2(gid.x / 2, gid.y / 2));
+        outTexture.write(result, gid);
     }
 }
 
@@ -126,7 +129,7 @@ kernel void saturation(texture2d<half, access::read>  inTexture    [[ texture(0)
     if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
     {
         half  factor   = uniforms.saturationFactor;
-        half4 inColor  = inTexture.read(gid);
+        half4 inColor  = inTexture.read(uint2(gid.x / 2, gid.y / 2)); // gid);
         half  gray     = dot(inColor.rgb, luma);
         half4 grayColor(gray, gray, gray, 1.0);
         half4 outColor = mix(grayColor, inColor, factor);
@@ -157,7 +160,8 @@ kernel void blur(texture2d<float, access::read> inTexture [[texture(0)]],
             for (int i = 0; i < size; ++i)
             {
                 uint2 kernelIndex(i, j);
-                uint2 textureIndex(gid.x + (i - radius), gid.y + (j - radius));
+                // uint2 textureIndex(gid.x + (i - radius), gid.y + (j - radius));
+                uint2 textureIndex((gid.x + (i - radius)) / 2, (gid.y + (j - radius)) / 2);
                 float4 color = inTexture.read(textureIndex).rgba;
                 float4 weight = weights.read(kernelIndex).rrrr;
                 accumColor += weight * color;
@@ -182,7 +186,7 @@ kernel void sepia(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
 {
     if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
     {
-        half4 inColor = inTexture.read(gid);
+        half4 inColor = inTexture.read(uint2(gid.x / 2, gid.y / 2)); // gid);
         half  brightness = dot(inColor.rgb, half3(0.299, 0.587, 0.114));
         half4 muted = mix(inColor, half4(brightness,brightness,brightness,1.0), half(0.5));
         half4 sepia = mix(darkColor, lightColor, brightness);
@@ -203,7 +207,7 @@ kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
 {
     if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height()))
     {
-        half4 inColor = inTexture.read(gid);
+        half4 inColor = inTexture.read(uint2(gid.x / 2, gid.y / 2)); // gid);
         half line = (gid.y % 2) / 1.0;
         half4 grayColor(line,line,line,1.0);
         half4 result = mix(inColor, grayColor, half(0.11));

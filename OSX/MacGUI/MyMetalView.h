@@ -64,6 +64,9 @@ enum TextureFilterType {
     // NSRecursiveLock *lock;
     dispatch_semaphore_t _inflightSemaphore;
     
+    // Display link
+    CVDisplayLinkRef displayLink;
+
     // Metal objects
     id <MTLDevice> device;
     id <MTLLibrary> library;
@@ -160,7 +163,8 @@ enum TextureFilterType {
 
 #pragma mark Drawing
 
-- (void)setupDisplayLink;
+// - (void)setupDisplayLink;
+- (void)reshape;
 - (void)updateScreenGeometry;
 - (void)buildMatrices3D;
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;

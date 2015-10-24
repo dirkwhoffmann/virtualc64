@@ -18,15 +18,34 @@
 
 #import "C64GUI.h"
 
+static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
+                                      const CVTimeStamp *inNow,
+                                      const CVTimeStamp *inOutputTime,
+                                      CVOptionFlags flagsIn,
+                                      CVOptionFlags *flagsOut,
+                                      void *displayLinkContext)
+{
+    @autoreleasepool {
+        
+        return [(__bridge MyMetalView *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
+        
+    }
+}
+
 @implementation MyMetalView(Setup)
 
 - (void)setupMetal
 {
+    NSLog(@"MyMetalView::setupMetal");
+
     [self buildMetal];
     [self buildTextures];
     [self buildKernels];
     [self buildBuffers];
     [self buildPipeline];
+    
+    [self setFrame:[self frame]];
+    [self setupDisplayLink];
 }
 
 - (void)buildMetal
@@ -79,6 +98,7 @@
                                                    mipmapped:NO];
     textureFromEmulator = [device newTextureWithDescriptor:textureDescriptor];
     NSAssert(textureFromEmulator != nil, @"Failed to create texture");
+    if (textureFromEmulator == nil) { exit(0); }
     
     // C64 screen (post-processed)
     MTLTextureDescriptor *textureDescriptorPP =
@@ -89,6 +109,7 @@
     textureDescriptorPP.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
     filteredTexture = [device newTextureWithDescriptor:textureDescriptorPP];
     NSAssert(filteredTexture != nil, @"Failed to create post-processing texture");
+    if (filteredTexture == nil) { exit(0); }
 }
 
 - (void)buildKernels
@@ -97,13 +118,11 @@
     
     bypassFilter = [BypassFilter filterWithDevice:device library:library];
     smoothFilter = [SaturationFilter filterWithFactor:1.0 device:device library:library];
-    blurFilter = [BlurFilter filterWithRadius:1.0 device:device library:library];
+    blurFilter = [BlurFilter filterWithRadius:2.0 device:device library:library];
     saturationFilter = [SaturationFilter filterWithFactor:0.5 device:device library:library];
     sepiaFilter = [SepiaFilter filterWithDevice:device library:library];
     crtFilter = [CrtFilter filterWithDevice:device library:library];
     grayscaleFilter = [SaturationFilter filterWithFactor:0.0 device:device library:library];
-    
-    [self setVideoFilter:TEX_FILTER_CRT];
 }
 
 - (void)buildBuffers
@@ -121,6 +140,9 @@
 {
     NSLog(@"MyMetalView::buildVertexBuffer");
     
+    if (!device)
+        return;
+
     const float dx = 0.64;
     const float dy = 0.48;
     const float dz = 0.64;
@@ -214,6 +236,9 @@
 {
     NSLog(@"MyMetalView::buildDepthBuffer");
     
+    if (!device)
+        return;
+    
     MTLTextureDescriptor *depthTexDesc =
     [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatDepth32Float
                                                        width:(layerWidth == 0) ? 512 : layerWidth
@@ -290,6 +315,44 @@
         exit(0);
     }
 }
+
+// -----------------------------------------------------------------------------------------------
+//                                         Display link
+// -----------------------------------------------------------------------------------------------
+
+
+- (void)setupDisplayLink
+{
+    NSLog(@"MyMetalView::setupDisplayLink");
+    
+    CVReturn success;
+    
+    // Create display link for the main display
+    CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
+    NSAssert(displayLink != nil, @"Error: Can't create display link");
+    
+    // Set the current display of a display link
+    if ((success = CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay)) != 0) {
+        NSLog(@"CVDisplayLinkSetCurrentCGDisplay failed with return code %d", success);
+        CVDisplayLinkRelease(displayLink);
+        exit(0);
+    }
+    
+    // Set the renderer output callback function
+    if ((success = CVDisplayLinkSetOutputCallback(displayLink, &MetalRendererCallback, (__bridge void *)self)) != 0) {
+        NSLog(@"CVDisplayLinkSetOutputCallback failed with return code %d", success);
+        CVDisplayLinkRelease(displayLink);
+        exit(0);
+    }
+    
+    // Activates display link
+    if ((success = CVDisplayLinkStart(displayLink)) != 0) {
+        NSLog(@"CVDisplayLinkStart failed with return code %d", success);
+        CVDisplayLinkRelease(displayLink);
+        exit(0);
+    }
+}
+
 
 @end
 
