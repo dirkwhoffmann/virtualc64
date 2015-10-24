@@ -94,8 +94,7 @@ NSRecursiveLock *lock = nil;
     c64 = [c64proxy c64]; // DEPRECATED
     
     // Create lock used by the draw method
-    if (!lock)
-        lock = [NSRecursiveLock new];
+    if (!lock) lock = [NSRecursiveLock new];
     _inflightSemaphore = dispatch_semaphore_create(3);
     
     // Set initial scene position and drawing properties
@@ -151,15 +150,16 @@ NSRecursiveLock *lock = nil;
 {
     NSLog(@"MyMetalView::cleanup");
     
+    if (lock) [lock lock];
+    
     if (displayLink) {
         CVDisplayLinkStop(displayLink);
         CVDisplayLinkRelease(displayLink);
         displayLink = NULL;
     }
     
-    if (lock) {
-        lock = nil;
-    }
+    if (lock) [lock unlock];
+    lock = NULL; 
 }
 
 // -----------------------------------------------------------------------------------------------
