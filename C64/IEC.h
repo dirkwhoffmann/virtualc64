@@ -1,5 +1,5 @@
 /*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2015 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -177,6 +177,62 @@ public:
 			
 	//! Is invoked periodically by the run thread
 	void execute();
+    
+    // -------------------------------------------------------------------
+    //                     Frodo-style fast loader
+    // -------------------------------------------------------------------
+   
+private:
+    
+    //! Indicates if the simulated drive is currently listening
+    bool listening;
+
+    //! Indicates if the simulated drive is currently talking
+    bool talking;
+
+    //! Secondary address
+    uint8_t secondary;
+
+    //! Received command
+    uint8_t command;
+    
+    //! Filename storage
+    char filename[17]; 
+
+public:
+    
+    enum {
+        IEC_OK = 0x00,
+        IEC_READ_TIMEOUT = 0x02,    // Timeout on reading
+        IEC_TIMEOUT = 0x03,         // Timeout
+        IEC_EOF = 0x40,             // End of file
+        IEC_NOTPRESENT = 0x80       // Device not present
+    };
+    
+    enum {
+        IEC_CMD_DATA = 0x06,        // Data transfer
+        IEC_CMD_CLOSE = 0x0E,       // Close channel
+        IEC_CMD_OPEN = 0x0F         // Open channel
+    };
+    //! Sends the attention signal to all connected devices
+    uint8_t IECOutATN(uint8_t byte);
+
+    //! Puts the secondary address on the bus
+    uint8_t IECOutSec(uint8_t byte);
+    uint8_t IECOutSecWhileListening(uint8_t byte);
+    uint8_t IECOutSecWhileTalking(uint8_t byte);
+    
+    //! Write a data byte to the bus
+    /*! The last byte is signaled by setting eoi (end of information) to 1 */
+    uint8_t IECOut(uint8_t byte, bool eoi);
+
+    //! Read a data byte from the bus
+    uint8_t IECIn(uint8_t *byte);
+    
+    void IECSetATN();
+    void IECRelATN();
+    void IECTurnaround();
+    void IECRelease();
 };
 	
 #endif
