@@ -79,6 +79,7 @@ enum TextureFilterType {
     CAMetalLayer *metalLayer;
     CGFloat layerWidth;
     CGFloat layerHeight;
+    bool layerIsDirty; // Indicated if we need to rebuild size specific entities
 
     // Buffers
     id <MTLBuffer> positionBuffer;
@@ -165,7 +166,8 @@ enum TextureFilterType {
 #pragma mark Drawing
 
 // - (void)setupDisplayLink;
-- (void)reshape;
+// - (void)reshape;
+- (void)reshapeWithFrame:(CGRect)frame;
 - (void)updateScreenGeometry;
 - (void)buildMatrices3D;
 -(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;

@@ -94,7 +94,7 @@ NSRecursiveLock *lock = nil;
     
     // Create synchronization locks
     if (!lock) lock = [NSRecursiveLock new];
-    _inflightSemaphore = dispatch_semaphore_create(3);
+    _inflightSemaphore = dispatch_semaphore_create(1);
     
     // Set initial scene position and drawing properties
     currentEyeX = targetEyeX = deltaEyeX = 0.0;
@@ -113,6 +113,10 @@ NSRecursiveLock *lock = nil;
     drawC64texture = false;
     
     // Metal
+    layerWidth = 0;
+    layerHeight = 0;
+    layerIsDirty = YES;
+    
     positionBuffer = nil;
     uniformBuffer2D = nil;
     uniformBuffer3D = nil;
@@ -235,7 +239,13 @@ NSRecursiveLock *lock = nil;
     // NSLog(@"MyMetalView::setFrame");
 
     [super setFrame:frame];
+    layerIsDirty = YES;
+    
+    // [self reshapeWithFrame:frame];
+}
 
+- (void)reshapeWithFrame:(CGRect)frame
+{
     CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
     CGSize drawableSize = self.bounds.size;
     
@@ -455,17 +465,19 @@ NSRecursiveLock *lock = nil;
 {
     static unsigned showinfo = 1;
     
-    // @autoreleasepool {
-    {
+    @autoreleasepool {
         
         if (!c64 || !enableMetal)
             return kCVReturnSuccess;
         
-        // if (![lock tryLock])
-        //     return kCVReturnSuccess;
         [lock lock];
-        
         dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
+        
+        // Refresh size dependent items if needed
+        if (layerIsDirty) {
+            [self reshapeWithFrame:[self frame]];
+            layerIsDirty = NO;
+        }
         
         // Get drawable from layer
         if (showinfo) {

@@ -44,7 +44,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [self buildBuffers];
     [self buildPipeline];
     
-    [self setFrame:[self frame]];
+    [self reshapeWithFrame:[self frame]];
     [self setupDisplayLink];
 }
 
