@@ -41,8 +41,6 @@
 #define WRITE_TO_ZERO_PAGE mem->poke((uint16_t)addr_lo, data);
 #define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS loadM((uint16_t)addr_lo, data);
 
-//#define ADD_INDEX_X addr_lo += X; overflow = (addr_lo < X);
-//#define ADD_INDEX_Y addr_lo += Y; overflow = (addr_lo < Y);
 #define ADD_INDEX_X overflow = ((int)addr_lo + (int)X >= 0x100); addr_lo += X; 
 #define ADD_INDEX_Y overflow = ((int)addr_lo + (int)Y >= 0x100); addr_lo += Y; 
 #define ADD_INDEX_X_INDIRECT ptr += X;
@@ -390,6 +388,7 @@ void SRE_indirect_y(); void SRE_indirect_y_2(); void SRE_indirect_y_3(); void SR
 
 void TAS_absolute_y(); void TAS_absolute_y_2(); void TAS_absolute_y_3(); void TAS_absolute_y_4(); 
 
+void TRP();
 
 
 

@@ -239,6 +239,9 @@ CPU::registerIllegalInstructions()
 	registerCallback(0x5B, "SRE*", ADDR_ABSOLUTE_Y, &CPU::SRE_absolute_y);
 	
 	registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, &CPU::TAS_absolute_y);
+
+    // Artifical instruction to handle the fast loader
+    registerCallback(0xF2, "???", ADDR_IMPLIED, &CPU::TRP);
 }
 
 	
@@ -7041,6 +7044,67 @@ void CPU::LXA_immediate()
 	DONE;
 }
 
+// -------------------------------------------------------------------------------
+// Instruction: TRP
+//
+// Operation:   Artifical instruction to handle the fast loading code
+//
+// -------------------------------------------------------------------------------
+
+void CPU::TRP()
+{
+    printf("CPU::TRP\n");
+
+    if (c64->mem->kernelIsPatched) {
+        
+        switch (PC - 1) {
+                
+            case 0xED40:
+                printf("CPU::TRP(IECOut)\n");
+                // IMPLEMENTATION MISSING
+                break;
+                
+            case 0xED23:
+                printf("CPU::TRP(IECOutATN)\n");
+                // IMPLEMENTATION MISSING
+                break;
+
+            case 0xED36:
+                printf("CPU::TRP(IECOutSec)\n");
+                // IMPLEMENTATION MISSING
+                break;
+
+            case 0xEE13:
+                printf("CPU::TRP(IECIn)\n");
+                // IMPLEMENTATION MISSING
+                break;
+
+            case 0xEDEF:
+                printf("CPU::TRP(IECSetATN)\n");
+                // IMPLEMENTATION MISSING
+                break;
+
+            case 0xEDBE:
+                printf("CPU::TRP(IECRelATN)\n");
+                // IMPLEMENTATION MISSING
+                break;
+
+            case 0xEDCC:
+                printf("CPU::TRP(IECTurnaround)\n");
+                // IMPLEMENTATION MISSING
+                break;
+
+            case 0xEE03:
+                printf("CPU::TRP(IECRelease)\n");
+                // IMPLEMENTATION MISSING
+                break;
+        }
+    }
+    
+    JAM();
+}
+
+
 void ((CPU::*CPU::callbacks[])(void)) = {
 	
 &CPU::fetch,
@@ -7334,5 +7398,6 @@ void ((CPU::*CPU::callbacks[])(void)) = {
 
 &CPU::TAS_absolute_y, &CPU::TAS_absolute_y_2, &CPU::TAS_absolute_y_3, &CPU::TAS_absolute_y_4,
 
+&CPU::TRP,
 NULL
 };

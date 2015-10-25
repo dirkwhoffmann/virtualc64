@@ -1,5 +1,5 @@
 /*
- * (C) 2008 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2008 - 2015 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ C64Memory::C64Memory()
 	charRomFile = NULL;
 	kernelRomFile = NULL;
 	basicRomFile = NULL;
+    kernelIsPatched = false;
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -197,9 +198,41 @@ C64Memory::loadKernelRom(const char *filename)
 	if (isKernelRom(filename)) {
 		kernelRomFile = strdup(filename);
 		flashRom(filename, 0xE000);
+        memcpy(unpatchedKernel, &rom[0xE000], 0x2000);
+        // patchKernel();
 		return true;
 	}
+    
 	return false;
+}
+
+void
+C64Memory::patchKernel()
+{
+    debug(2, "Patching kernel ROM\n");
+    
+    // The idea of using a patched kernel has been taken from Frodo
+    // We also use the same special opcode (0xF2) here
+    
+    rom[0xED40] = 0xF2;	// IECOut
+    rom[0xED23] = 0xF2;	// IECOutATN
+    rom[0xED36] = 0xF2;	// IECOutSec
+    rom[0xEE13] = 0xF2;	// IECIn
+    rom[0xEDEF] = 0xF2;	// IECSetATN
+    rom[0xEDBE] = 0xF2;	// IECRelATN
+    rom[0xEDCC] = 0xF2;	// IECTurnaround
+    rom[0xEE03] = 0xF2;	// IECRelease
+    
+    kernelIsPatched = true;
+}
+
+void
+C64Memory::unpatchKernel()
+{
+    debug(2, "Restoring old kernel ROM\n");
+
+    memcpy(&rom[0xE000], unpatchedKernel, 0x2000);
+    kernelIsPatched = false;
 }
 
 
