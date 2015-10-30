@@ -279,28 +279,6 @@
         return;
 }
 
-
-// --------------------------------------------------------------------------------
-//                                      Paste
-// --------------------------------------------------------------------------------
-
-
-- (void)paste:(id)sender
-{
-    NSPasteboard *gpBoard;
-    NSString *text;
-    
-    
-    gpBoard = [NSPasteboard generalPasteboard];
-    if (!(text = [gpBoard stringForType:NSStringPboardType])) {
-        NSLog(@"Paste failed");
-        return;
-    }
-    
-    [[[controller c64] keyboard] typeText:text];
-}
-
-
 // --------------------------------------------------------------------------------
 //                                  Drag and Drop
 // --------------------------------------------------------------------------------

@@ -1117,5 +1117,25 @@
     [metalScreen keyUp:event];
 }
 
+// --------------------------------------------------------------------------------
+//                                      Paste
+// --------------------------------------------------------------------------------
+
+
+- (void)paste:(id)sender
+{
+    NSPasteboard *gpBoard;
+    NSString *text;
+    
+    
+    gpBoard = [NSPasteboard generalPasteboard];
+    if (!(text = [gpBoard stringForType:NSStringPboardType])) {
+        NSLog(@"Paste failed");
+        return;
+    }
+    
+    [[c64 keyboard] typeText:text];
+}
+
 
 @end
