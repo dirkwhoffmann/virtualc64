@@ -62,7 +62,7 @@ Archive::getItemWithName(char *pattern)
 				break;
 		}
 		
-		if (j == pattern_length) {
+		if (j == length) {
 			return i;
 		}
 	}

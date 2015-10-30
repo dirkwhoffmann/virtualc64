@@ -15,8 +15,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// VERSION 1.1:
+// VERSION 1.2:
 //
+// TODO:
+// Remove kernel patch code
+// Fix file name pattern match bug
+// Mount disk even on "flash file into memory"
+// Write protect disk when bit accuracy is off
+//    Gray out write protection check button
+// Check if bus activity can be detected more precisely
+
+
 // CLEANUP:
 // 
 // SPEEDUP:
@@ -31,7 +40,7 @@
 //
 // 1. Upscaler (like superEagle)
 //    https://github.com/libretro/common-shaders/tree/master/eagle/shaders
-// 3. Second disk drive
+// 2. Datasette
 
 
 #ifndef _C64_INC
