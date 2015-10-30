@@ -338,6 +338,21 @@ VC1541::moveHeadDown()
 }
 
 void
+VC1541::setBitAccuracy(bool b)
+{
+    bitAccuracy = b;
+    
+    if (!b) { // If bit accuracy is disabled, ...
+        
+        // we align the drive head to the beginning of a byte
+        alignHead();
+        
+        // and write-protect the disk.
+        disk.setWriteProtection(true);
+    }
+}
+
+void
 VC1541::insertDisk(D64Archive *a)
 {
     assert(a != NULL);
@@ -349,6 +364,9 @@ VC1541::insertDisk(D64Archive *a)
     c64->putMessage(MSG_VC1541_DISK, 1);
     if (sendSoundMessages)
         c64->putMessage(MSG_VC1541_DISK_SOUND, 1);
+
+    // If bit accuracy is disabled, we write-protect the disk
+    disk.setWriteProtection(true);
 }
 
 void
@@ -356,8 +374,6 @@ VC1541::insertDisk(Archive *a)
 {
     warn("Can only mount D64 images.\n");
 }
-
-
 
 void 
 VC1541::ejectDisk()

@@ -18,9 +18,7 @@
 // VERSION 1.2:
 //
 // TODO:
-// Mount disk even on "flash file into memory"
-// Write protect disk when bit accuracy is off
-//    Gray out write protection check button
+// How can I test write protection (WRITE PROTECTION ERROR?)
 // Check if bus activity can be detected more precisely
 
 

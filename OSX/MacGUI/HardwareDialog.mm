@@ -221,6 +221,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
         [diskEjectText setEnabled:YES];
         [diskEjectText setHidden:NO];
         [writeProtected setHidden:NO];
+        [writeProtected setEnabled:[[c64 vc1541] bitAccuracy]];
         [writeProtected setState:[[c64 vc1541] writeProtection]];
         
     } else {

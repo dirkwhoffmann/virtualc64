@@ -128,7 +128,7 @@ public:
 
     /*! @brief Enables or disables bit accurate drive emulation
      */
-    inline void setBitAccuracy(bool b) { bitAccuracy = b; if (!b) alignHead(); }
+    void setBitAccuracy(bool b);
 
     //
     //! @functiongroup Accessing drive properties
