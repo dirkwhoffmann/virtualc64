@@ -124,17 +124,6 @@ public:
 		the whole 64k range. Therefore, only some address are valid ROM addresses.
 		\see isRomAddr */
 	uint8_t rom[65536];
-
-    //! Unpatched kernel ROM
-    /*! When the VC154 fast loader is enabled, the kernel rom is patched via the patchKernel() function
-        at different memory locations. This array stores the original data, which can be restored via 
-        unpatchKernel().
-        @see patchKernel
-        @see unpatchKerlen */
-    uint8_t unpatchedKernel[0x2000];
-    
-    //! Indicates if kernel ROM has been patched for VC1541 fast loading
-    bool kernelIsPatched;
     
 public:
     
@@ -221,12 +210,6 @@ public:
     
 	//! Load kernel ROM image into memory 
 	bool loadKernelRom(const char *filename);
-	
-    //! Patch kernel ROM (for VC1541 fast loader)
-    void patchKernel();
-
-    //! Unpatch kernel ROM (restore original kernel)
-    void unpatchKernel();
 
 	//! Returns true, iff the Basic ROM is alrady loaded
 	bool basicRomIsLoaded() { return basicRomFile != NULL; }

@@ -239,9 +239,6 @@ CPU::registerIllegalInstructions()
 	registerCallback(0x5B, "SRE*", ADDR_ABSOLUTE_Y, &CPU::SRE_absolute_y);
 	
 	registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, &CPU::TAS_absolute_y);
-
-    // Artifical instruction to handle the fast loader
-    registerCallback(0xF2, "???", ADDR_IMPLIED, &CPU::TRP);
 }
 
 	
@@ -7044,98 +7041,6 @@ void CPU::LXA_immediate()
 	DONE;
 }
 
-// -------------------------------------------------------------------------------
-// Instruction: TRP
-//
-// Operation:   Artifical instruction to handle the fast loading code
-//
-// -------------------------------------------------------------------------------
-
-void CPU::TRP()
-{
-    uint8_t result;
-    uint8_t data = c64->mem->ram[0x95];
-    
-    if (!c64->mem->kernelIsPatched) {
-        JAM();
-        return;
-    }
- 
-    switch (PC - 1) {
-                
-        case 0xED23:
-            debug(2, "Fastloader: VC1541 <- ATTENTION (%02X)\n", data);
-            result = c64->iec->IECOutATN(data);
-            c64->mem->ram[0x90] |= result;
-            PC = 0xEDAB; // Continue with: CLI, RTS
-            break;
-            
-        case 0xED36:
-            debug(2, "Fastloader: VC1541 <- SECONDARY (%02X)\n", data);
-            result = c64->iec->IECOutSec(data);
-            c64->mem->ram[0x90] |= result;
-            PC = 0xEDAB; // Continue with: CLI, RTS
-            break;
-
-        case 0xED40:
-            debug(2, "Fastloader: VC1541 <- (%02X)\n", data);
-            result = c64->iec->IECOut(data, c64->mem->ram[0xa3] & 0x80);
-            c64->mem->ram[0x90] |= result;
-            // Continue at the end of the 'send byte from $95 on serial bus' routine
-            C = 0;
-            PC = 0xEDAC;
-            break;
-            
-        case 0xEE13:
-            result = c64->iec->IECIn(&c64->mem->ram[0xA4]);
-            // printf("%02X ", c64->mem->ram[0xA4]);
-            c64->mem->ram[0x90] |= result;
-            PC = 0xEE80; // Continue with: LDA $A4, CLI, CLC, RTS
-            break;
-
-        case 0xEDEF:
-            // printf("CPU::TRP(IECSetATN)\n");
-            debug(2, "Fastloader: VC1541 <- ASSERT ATTENTION\n");
-
-            // Nothing to simulate
-
-            PC = 0xEDFB; // Continue with: LDA #$5F ...
-            break;
-
-        case 0xEDBE:
-            debug(2, "Fastloader: VC1541 <- RELEASE ATTENTION\n");
-            
-            // Nothing to simulate
-
-            PC = 0xEDAC; // Continue with: RTS
-            break;
-
-        case 0xEDCC:
-            // printf("CPU::TRP(IECTurnaround)\n");
-            debug(2, "Fastloader: VC1541 <- TURNAROUND\n");
-            
-            // Nothing to simulate
-
-            PC = 0xEDAC; // Continue with: RTS
-            break;
-
-        case 0xEE03:
-            // printf("CPU::TRP(IECRelease)\n");
-            debug(2, "Fastloader: VC1541 <- RELEASE\n");
-            
-            // Nothing to simulate
-
-            PC = 0xEDAC; // Continue with: RTS
-            break;
-
-        default:
-            JAM();
-    }
-    
-    DONE; 
-}
-
-
 void ((CPU::*CPU::callbacks[])(void)) = {
 	
 &CPU::fetch,
@@ -7428,7 +7333,5 @@ void ((CPU::*CPU::callbacks[])(void)) = {
 &CPU::SRE_indirect_y, &CPU::SRE_indirect_y_2, &CPU::SRE_indirect_y_3, &CPU::SRE_indirect_y_4, &CPU::SRE_indirect_y_5, &CPU::SRE_indirect_y_6, &CPU::SRE_indirect_y_7,
 
 &CPU::TAS_absolute_y, &CPU::TAS_absolute_y_2, &CPU::TAS_absolute_y_3, &CPU::TAS_absolute_y_4,
-
-&CPU::TRP,
 NULL
 };

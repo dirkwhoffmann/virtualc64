@@ -388,7 +388,5 @@ void SRE_indirect_y(); void SRE_indirect_y_2(); void SRE_indirect_y_3(); void SR
 
 void TAS_absolute_y(); void TAS_absolute_y_2(); void TAS_absolute_y_3(); void TAS_absolute_y_4(); 
 
-void TRP();
-
 
 
