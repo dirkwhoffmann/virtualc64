@@ -19,12 +19,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-//! @unsorted
-
-// TODO:
-// Stress test: Change disk encoder to produce unaligned sync sequences
-
-
 #ifndef _VC1541_INC
 #define _VC1541_INC
 

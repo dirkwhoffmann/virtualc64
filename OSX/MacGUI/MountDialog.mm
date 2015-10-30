@@ -28,7 +28,6 @@
 @synthesize doMount;
 @synthesize doFlash;
 @synthesize doType;
-@synthesize doEjectOnCancel;
 
 - (void) _initialize:(Archive *)a c64proxy:(C64Proxy *)proxy
 {
@@ -38,9 +37,11 @@
     archive = a;
     c64 = proxy;
     
+    doMount = YES;
     doFlash = NO;
     doType = NO;
-    
+    loadOption = LOAD_OPTION_FLASH;
+
     // Let the table header show the logical archive name
     NSString *archiveName = [NSString stringWithFormat:@"%s", archive->getName()];
     [[[directory tableColumnWithIdentifier:@"filename"] headerCell] setStringValue:archiveName];
@@ -59,13 +60,11 @@
     [directory selectRowIndexes:indexSet byExtendingSelection:NO];
 }
 
-- (void) initializeAsMountDialog:(Archive *)a c64proxy:(C64Proxy *)proxy
+- (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy
 {
     [self _initialize:a c64proxy:proxy];
     
     [headerText setStringValue:@"Archive"];
-    doMount = YES;
-    doEjectOnCancel = NO;
     
     // Get physical path of archive
     NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
@@ -74,25 +73,22 @@
     
     // Set icon and title
     [diskIconFrame setTitle:archiveLastPath];
+    
     if ([archiveExtension isEqualToString:@"D64"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconD64"]];
-        loadOption = LOAD_OPTION_8_1;
         
     } else if ([archiveExtension isEqualToString:@"T64"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconT64"]];
-        loadOption = LOAD_OPTION_FLASH;
         
     } else if ([archiveExtension isEqualToString:@"PRG"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconPRG"]];
-        loadOption = LOAD_OPTION_FLASH;
 
     } else if ([archiveExtension isEqualToString:@"P00"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconP00"]];
-        loadOption = LOAD_OPTION_FLASH;
     }
     
     [CancelButton setTitle:@"Cancel"];

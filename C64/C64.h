@@ -18,8 +18,6 @@
 // VERSION 1.2:
 //
 // TODO:
-// Remove kernel patch code
-// Fix file name pattern match bug
 // Mount disk even on "flash file into memory"
 // Write protect disk when bit accuracy is off
 //    Gray out write protection check button

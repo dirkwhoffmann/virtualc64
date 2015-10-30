@@ -37,15 +37,10 @@ class Archive;
     int loadOption;
     int selectedRow;
     
-    // Configuration
-    //bool showEjectButton;
-    //bool showCancelButton;
-
     // Todo items (when window closes)
     bool doMount;
     bool doFlash;
     bool doType;
-    bool doEjectOnCancel;
 }
 
 // @property(readonly) int loadOption;
@@ -53,12 +48,11 @@ class Archive;
 @property(readonly) bool doMount;
 @property(readonly) bool doFlash;
 @property(readonly) bool doType;
-@property(readonly) bool doEjectOnCancel;
 
 
 // Initialization
 - (void) _initialize:(Archive *)a c64proxy:(C64Proxy *)proxy;
-- (void) initializeAsMountDialog:(Archive *)a c64proxy:(C64Proxy *)proxy;
+- (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy;
 
 // Action methods
 - (IBAction)loadOptionsAction:(id)sender;
