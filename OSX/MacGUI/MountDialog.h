@@ -28,6 +28,7 @@ class Archive;
     IBOutlet NSPopUpButton *loadOptions;
     IBOutlet NSTextField *headerText;
     IBOutlet NSTextField *warningText;
+    IBOutlet NSTextField *doubleClickText;
     IBOutlet NSImageView *diskIcon;
     IBOutlet NSBox *diskIconFrame;
     

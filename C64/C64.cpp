@@ -954,7 +954,7 @@ C64::flushArchive(Archive *a, int item)
 }
 
 bool 
-C64::mountArchive(D64Archive *a)
+C64::mountArchive(Archive *a)
 {	
 	if (a == NULL)
 		return false;

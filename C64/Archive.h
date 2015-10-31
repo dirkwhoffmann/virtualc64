@@ -67,6 +67,9 @@ public:
     //! @brief Returns the size of an item in bytes
 	virtual int getSizeOfItem(int n);
 
+    //! @brief Returns the size of an item in bits
+    virtual int getSizeOfItemInBits(int n) { return 8 * getSizeOfItem(n); }
+
     //! @brief Returns the size of an item in blocks
 	virtual int getSizeOfItemInBlocks(int n) { return (getSizeOfItem(n) + 253) / 254; }
 		

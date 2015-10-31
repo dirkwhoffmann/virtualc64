@@ -369,8 +369,14 @@
             [controller mountCartridge];
             return YES;
         }
+
+        // Is it a G64 archive?
+        if ([[controller document] setG64ArchiveWithName:path]) {
+            [controller showMountDialog];
+            return YES;
+        }
         
-        // Is it an archive?
+        // Is it an archive other than G64?
         if ([[controller document] setArchiveWithName:path]) {
             [controller showMountDialog];
             return YES;

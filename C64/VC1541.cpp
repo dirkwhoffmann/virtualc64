@@ -353,12 +353,32 @@ VC1541::setBitAccuracy(bool b)
 }
 
 void
-VC1541::insertDisk(D64Archive *a)
+VC1541::insertDisk(Archive *a)
 {
     assert(a != NULL);
     
-    ejectDisk();
-    disk.encodeArchive(a);
+    D64Archive *d64 = (D64Archive *)a;
+    G64Archive *g64 = (G64Archive *)a;
+    
+    switch (a->getType()) {
+            
+        case D64_CONTAINER:
+            
+            ejectDisk();
+            disk.encodeArchive(d64);
+            break;
+            
+        case G64_CONTAINER:
+            
+            ejectDisk();
+            disk.encodeArchive(g64);
+            break;
+            
+        default:
+            
+            warn("Only D64 or G64 archives can be mounted as virtual disk.");
+            return;
+    }
     
     diskInserted = true;
     c64->putMessage(MSG_VC1541_DISK, 1);
@@ -367,12 +387,6 @@ VC1541::insertDisk(D64Archive *a)
 
     // If bit accuracy is disabled, we write-protect the disk
     disk.setWriteProtection(true);
-}
-
-void
-VC1541::insertDisk(Archive *a)
-{
-    warn("Can only mount D64 images.\n");
 }
 
 void 

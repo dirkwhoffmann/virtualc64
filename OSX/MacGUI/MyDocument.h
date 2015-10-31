@@ -32,9 +32,9 @@ class Snapshot;
     /*! When a new documents opens and this variable is not NULL, the snapshot is automatically flashed */
     Snapshot *snapshot;
 
-	//! Reference to an attached D64 archive
+	//! Reference to an attached D64 or G64 archive
 	/*! When a new documents opens and this variable is not NULL, the archive is automatically mounted */
-	D64Archive *archive;
+	Archive *archive;
 	
 	//! Reference to an attached cartridge 
     /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged in */
@@ -43,10 +43,11 @@ class Snapshot;
 
 @property (strong) C64Proxy *c64;
 @property (assign) Snapshot *snapshot;
-@property (assign) D64Archive *archive;
+@property (assign) Archive *archive;
 @property (assign) Cartridge *cartridge;
 
 - (BOOL)setSnapshotWithName:(NSString *)path;
+- (BOOL)setG64ArchiveWithName:(NSString *)path;
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;
 - (BOOL)detachCartridge;

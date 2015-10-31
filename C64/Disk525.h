@@ -26,6 +26,7 @@
 
 class C64;
 class D64Archive;
+class G64Archive;
 
 // -----------------------------------------------------------------------------------------------
 //                                      Types and constants
@@ -325,10 +326,13 @@ public:
 public:
     
     /*! @brief   Converts a D64 archive into a virtual floppy disk
-     *  @details The methods creates sync marks, GRC encoded header and data blocks, checksums and gaps
+     *  @details The method creates sync marks, GRC encoded header and data blocks, checksums and gaps
      */
     void encodeArchive(D64Archive *a);
-    
+
+    /*! @brief   Converts a G64 archive into a virtual floppy disk */
+    void encodeArchive(G64Archive *a);
+
 private:
     
     /*! @brief   Encode a single track

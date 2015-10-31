@@ -66,6 +66,7 @@
 #include "Snapshot.h"
 #include "T64Archive.h"
 #include "D64Archive.h"
+#include "G64Archive.h"
 #include "PRGArchive.h"
 #include "P00Archive.h"
 #include "FileArchive.h"
@@ -471,9 +472,9 @@ public:
 	/*! All archive types are flushable */
 	bool flushArchive(Archive *a, int item);
 	
-	//! Mount specified archive in the virtual disk drive.
-	/*! Only D64 archives are mountable */
-	bool mountArchive(D64Archive *a);
+	//! @brief      Inserts an archive as a virtual floppy disk
+    /*! @discussion Only D64 and G64 archives are supported */
+	bool mountArchive(Archive *a);
 
 	
 	// ---------------------------------------------------------------------------------------------

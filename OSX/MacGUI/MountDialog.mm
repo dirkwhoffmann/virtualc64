@@ -51,13 +51,17 @@
     [directory setTarget:self];
     [directory setDelegate:self];
     [directory setDataSource:self];
-    [directory setAction:@selector(singleClickAction:)];
-    [directory setDoubleAction:@selector(doubleClickAction:)];
+    if (archive->getType() != G64_CONTAINER) {
+        [directory setAction:@selector(singleClickAction:)];
+        [directory setDoubleAction:@selector(doubleClickAction:)];
+        // Select first entry
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+        [directory selectRowIndexes:indexSet byExtendingSelection:NO];
+    } else {
+        [doubleClickText setHidden:YES];
+        [loadOptions setHidden:YES];
+    }
     [directory reloadData];
-    
-    // Select first entry
-    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
-    [directory selectRowIndexes:indexSet byExtendingSelection:NO];
 }
 
 - (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy
@@ -149,7 +153,7 @@
     [[loadOptions itemAtIndex:1] setTitle:[NSString stringWithFormat:@"LOAD \"%@\",8",[self selectedFilename]]];
     [loadOptions selectItemAtIndex:loadOption];
     
-    [warningText setHidden:loadOption != LOAD_OPTION_FLASH];
+    [warningText setHidden:loadOption != LOAD_OPTION_FLASH || archive->getType() == G64_CONTAINER];
 }
 
 #pragma mark NSTableViewDataSource
@@ -179,7 +183,11 @@
         return unicodename;
     }
 	if ([[aTableColumn identifier] isEqual:@"filesize"]) {
-		return @((int)archive->getSizeOfItemInBlocks(row));
+        if (archive->getType() == G64_CONTAINER) {
+            return @((int)archive->getSizeOfItem(row));
+        } else {
+            return @((int)archive->getSizeOfItemInBlocks(row));
+        }
 	}
 	if ([[aTableColumn identifier] isEqual:@"filetype"]) {
 		return [NSString stringWithFormat:@"%s", archive->getTypeOfItem(row)];

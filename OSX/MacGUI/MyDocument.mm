@@ -66,6 +66,14 @@
     return YES;
 }
 
+- (BOOL)setG64ArchiveWithName:(NSString *)path
+{
+    if (!(archive = G64Archive::archiveFromG64File([path UTF8String])))
+        return NO;
+    
+    return YES;
+}
+
 - (BOOL)setArchiveWithName:(NSString *)path
 {
 	if (!(archive = D64Archive::archiveFromArbitraryFile([path UTF8String])))

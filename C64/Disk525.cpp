@@ -147,6 +147,11 @@ Disk525::clearHalftrack(Halftrack ht)
 //                               Data encoding and decoding
 // ---------------------------------------------------------------------------------------------
 
+void
+Disk525::encodeArchive(G64Archive *a)
+{
+    warn("encodeArchive(D64Archive *): IMPLEMENTATION MISSING");
+}
 
 void
 Disk525::encodeArchive(D64Archive *a)

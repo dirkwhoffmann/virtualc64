@@ -521,7 +521,7 @@
 - (void) detachCartridge;
 - (bool) isCartridgeAttached;
 
-- (bool) mountArchive:(D64Archive *)a;
+- (bool) mountArchive:(Archive *)a;
 - (bool) flushArchive:(Archive *)a item:(int)nr;
 
 - (bool) warp;

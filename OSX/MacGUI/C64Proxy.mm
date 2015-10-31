@@ -636,7 +636,7 @@
 - (void) detachCartridge { c64->detachCartridge(); }
 - (bool) isCartridgeAttached { return c64->isCartridgeAttached(); }
 
-- (bool) mountArchive:(D64Archive *)a { return c64->mountArchive(a); }
+- (bool) mountArchive:(Archive *)a { return c64->mountArchive(a); }
 - (bool) flushArchive:(Archive *)a item:(int)nr { return c64->flushArchive(a,nr); }
 
 - (bool) warp { return c64->getWarp(); }
