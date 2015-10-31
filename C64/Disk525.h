@@ -325,13 +325,13 @@ public:
 
 public:
     
+    /*! @brief   Converts a G64 archive into a virtual floppy disk */
+    void encodeArchive(G64Archive *a);
+
     /*! @brief   Converts a D64 archive into a virtual floppy disk
      *  @details The method creates sync marks, GRC encoded header and data blocks, checksums and gaps
      */
     void encodeArchive(D64Archive *a);
-
-    /*! @brief   Converts a G64 archive into a virtual floppy disk */
-    void encodeArchive(G64Archive *a);
 
 private:
     

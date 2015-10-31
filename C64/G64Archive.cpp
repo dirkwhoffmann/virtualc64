@@ -71,7 +71,7 @@ void G64Archive::dealloc()
 	data = NULL;
 	size = 0;
 	fp = -1;
-	// fp_eof = -1;
+    fp_eof = -1;
 }
 
 bool 
@@ -103,30 +103,11 @@ G64Archive::writeToBuffer(uint8_t *buffer)
     return size;
 }
 
-
 const char *
 G64Archive::getName()
 {
-    return "UNNAMED";
+    return "G64 archive";
 }
-
-#if 0
-bool 
-G64Archive::directoryItemIsPresent(int n)
-{
-	int first = 0x40 + (n * 0x20);
-	int last  = 0x60 + (n * 0x20);
-	int i;
-	
-	// check for zeros...
-	if (last < size)
-		for (i = first; i < last; i++)
-			if (data[i] != 0)
-				return true;
-
-	return false;
-}
-#endif 
 
 int 
 G64Archive::getNumberOfItems()
@@ -137,6 +118,9 @@ G64Archive::getNumberOfItems()
 int
 G64Archive::getStartOfItem(int n)
 {
+    if (n < 0 || n >= 84)
+        return -1;
+    
     int offset = 0x00C + (4 * n);
     return LO_LO_HI_HI(data[offset], data[offset+1], data[offset+2], data[offset+3]);
 }
@@ -169,67 +153,18 @@ G64Archive::getTypeOfItem(int n)
     return ""; // (n % 2 == 0) ? "Full" : "Half";
 }
 
-#if 0 
-uint16_t 
-G64Archive::getDestinationAddrOfItem(int n)
-{
-	int i = 0x42 + (n * 0x20);
-	uint16_t result = LO_HI(data[i], data[i+1]);
-	return result;
-}
-#endif 
-
 void 
 G64Archive::selectItem(int n)
 {
-#if 0
-	unsigned i;
-    
-    if (n < getNumberOfItems()) {
-
-        // Compute start address in container
-        i = 0x48 + (n * 0x20);
-        if ((fp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3])) >= size)
-            fprintf(stderr, "PANIC! fp is out of bounds!\n");
-
-        // Compute start address in memory
-        i = 0x42 + (n * 0x20);
-        uint16_t startAddrInMemory = LO_HI(data[i], data[i+1]);
-        
-        // Compute end address in memory
-        i = 0x44 + (n * 0x20);
-        uint16_t endAddrInMemory = LO_HI(data[i], data[i+1]);
-
-        if (endAddrInMemory == 0xC3C6) {
-            fprintf(stderr, "WARNING: Corrupted archive. Mostly likely created with CONV64!\n");
-            // WHAT DO WE DO ABOUT IT?
-        }
-
-        // Compute size of item
-        uint16_t length = endAddrInMemory - startAddrInMemory;
-
-        // fprintf(stderr, "start = %d end = %d diff = %d\n", startAddrInMemory, endAddrInMemory, length);
-        // fprintf(stderr, "fp = %d fp_eof = %d\n", fp, fp_eof);
-
-        // Store largest offset that belongs to the file
-        if ((fp_eof = fp + length) > size)
-            fprintf(stderr, "PANIC! fp_eof is out of bounds!\n");
-        
-        // Return if offset values are safe
-        if (fp < size && fp_eof <= size)
-            return; // success
-    }
-
-    fp = fp_eof = -1; // fail
-	return;
-#endif
+    fp = getStartOfItem(n);
+    fp += 2; // skip length information
+    fp_eof = fp + getSizeOfItem(n);
+    fprintf(stderr, "fp = %d, f_eof = %d\n", fp, fp_eof);
 }
 
 int
 G64Archive::getByte()
 {
-    return 42;
-/*
 	int result;
 	
 	if (fp < 0)
@@ -239,10 +174,8 @@ G64Archive::getByte()
 	result = data[fp++];
 	
 	// check for end of file
-	if (fp == fp_eof || fp == size)
+	if (fp == fp_eof)
 		fp = -1;
 
-	// fprintf(stderr, "%02X ", result);
 	return result;
- */
 }

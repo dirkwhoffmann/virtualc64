@@ -37,6 +37,7 @@
     archive = a;
     c64 = proxy;
     
+    bool isG64 = (archive->getType() == G64_CONTAINER);
     doMount = YES;
     doFlash = NO;
     doType = NO;
@@ -51,16 +52,16 @@
     [directory setTarget:self];
     [directory setDelegate:self];
     [directory setDataSource:self];
-    if (archive->getType() != G64_CONTAINER) {
+    if (!isG64) {
         [directory setAction:@selector(singleClickAction:)];
         [directory setDoubleAction:@selector(doubleClickAction:)];
         // Select first entry
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
         [directory selectRowIndexes:indexSet byExtendingSelection:NO];
-    } else {
-        [doubleClickText setHidden:YES];
-        [loadOptions setHidden:YES];
     }
+    
+    [doubleClickText setHidden:isG64];
+    [loadOptions setHidden:isG64];
     [directory reloadData];
 }
 
@@ -208,12 +209,20 @@
 {
     NSTextFieldCell *cell = [tableColumn dataCell];
 
-    if(strcmp(archive->getTypeOfItem(row), "PRG")) {
-        [cell setTextColor:[NSColor grayColor]];
+    if (archive->getType() == G64_CONTAINER) {
+        if (archive->getSizeOfItem(row) == 0) {
+            [cell setTextColor:[NSColor grayColor]];
+        } else {
+            [cell setTextColor:[NSColor blackColor]];
+        }
     } else {
-        [cell setTextColor:[NSColor blackColor]];
+        if(strcmp(archive->getTypeOfItem(row), "PRG")) {
+            [cell setTextColor:[NSColor grayColor]];
+        } else {
+            [cell setTextColor:[NSColor blackColor]];
+        }
     }
-                                               
+    
     return cell;
 }
 

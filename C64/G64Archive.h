@@ -31,7 +31,7 @@ private:
     //! @brief The raw data of this archive.
     uint8_t *data;
 
-    //! @brief File size
+    //! @brief Size of G64 file
     int size;
 
     /*! @brief File pointer
@@ -39,12 +39,9 @@ private:
 	int fp;
 	
     /*! @brief End of file position
-        @discussion Maximum value for fp. Do we really need this? */
-	// int fp_eof;
+        @discussion This value equals the last valid offset plus 1 */
+	int fp_eof;
 	
-	//! @brief Don't know. Do we really need this?
-	// bool directoryItemIsPresent(int n);
-
 public:
 
     //

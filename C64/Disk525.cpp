@@ -19,6 +19,7 @@
 #include "basic.h"
 #include "Disk525.h"
 #include "D64Archive.h"
+#include "G64Archive.h"
 
 Disk525::Disk525()
 {
@@ -150,7 +151,35 @@ Disk525::clearHalftrack(Halftrack ht)
 void
 Disk525::encodeArchive(G64Archive *a)
 {
-    warn("encodeArchive(D64Archive *): IMPLEMENTATION MISSING");
+    debug(2, "Encoding G64 archive\n");
+    
+    assert(a != NULL);
+
+    clearDisk();
+    for (Halftrack ht = 1; ht <= 84; ht++) {
+        
+        unsigned item = ht - 1;
+        unsigned size = a->getSizeOfItem(item);
+        
+        if (size == 0) {
+            continue;
+        }
+        
+        if (size > 7928) {
+            debug(2, "Halftrack %d has %d bytes. Must be less than 7928\n", ht, size);
+            continue;
+        }
+        debug(2, "  Encoding halftrack %d (%d bytes)\n", ht, size);
+        length.halftrack[ht] = 8 * size;
+        a->selectItem(item);
+        for (unsigned i = 0; i < size; i++) {
+            int b = a->getByte();
+            // printf(" %02X", b);
+            assert(b != -1);
+            data.halftrack[ht][i] = (uint8_t)b;
+        }
+        assert(a->getByte() == -1); /* check for EOF */
+    }
 }
 
 void
