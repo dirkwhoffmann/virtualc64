@@ -61,13 +61,9 @@ enum TextureFilterType {
     IBOutlet C64Proxy* c64proxy;
     C64 *c64; // DEPRECATED. GET RID OF THIS VARIABLE AND RENAME c64proxy to c64
 
-    // Synchronization lock
-    // NSRecursiveLock *lock;
+    // Synchronization semaphore
     dispatch_semaphore_t _inflightSemaphore;
     
-    // Display link
-    CVDisplayLinkRef displayLink;
-
     // Metal objects
     id <MTLDevice> device;
     id <MTLLibrary> library;
@@ -165,13 +161,8 @@ enum TextureFilterType {
 
 #pragma mark Drawing
 
-// - (void)setupDisplayLink;
-// - (void)reshape;
 - (void)reshapeWithFrame:(CGRect)frame;
 - (void)updateScreenGeometry;
 - (void)buildMatrices3D;
--(CVReturn)getFrameForTime:(const CVTimeStamp *)timeStamp flagsOut:(CVOptionFlags *)flagsOut;
-
-
 
 @end

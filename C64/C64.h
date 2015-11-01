@@ -15,17 +15,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// VERSION 1.2:
+// VERSION 1.2.1:
 //
-// Enhancements:
-// 1. VirtualC64 can now read G64 image files. Please note that a lot of game archives provided
-// in G64 format contain copy protection mechanism which are likly to be incompatible with the
-// current drive implementation, even if bit-accurate emulation is turned on.
-// Bug fixes:
-// 1. Pasting text snippets into the emulator via CMD-V was broken in 1.1. This is fixed now.
-
-// TODO:
-
+// Try to use drawRect: of MetalView instead of Display link
+//
+// VERSION 1.3:
+//
+// VIC Sprite compatibility
 // Check if bus activity can be detected more precisely
 
 

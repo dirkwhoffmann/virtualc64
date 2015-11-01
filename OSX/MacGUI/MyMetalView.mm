@@ -106,7 +106,7 @@ NSRecursiveLock *lock = nil;
     currentAlpha = targetAlpha = 0.0; deltaAlpha = 0.0;
     
     // Properties
-    enableMetal = true; 
+    enableMetal = false;
     fullscreen = false;
     fullscreenKeepAspectRatio = true;
     drawInEntireWindow = false;
@@ -165,15 +165,7 @@ NSRecursiveLock *lock = nil;
 -(void)cleanup
 {
     NSLog(@"MyMetalView::cleanup");
-    
-    if (lock) [lock lock];
-    
-    if (displayLink) {
-        CVDisplayLinkStop(displayLink);
-        CVDisplayLinkRelease(displayLink);
-        displayLink = NULL;
-    }
-    
+        
     if (lock) [lock unlock];
     lock = NULL; 
 }
@@ -463,51 +455,36 @@ NSRecursiveLock *lock = nil;
     }
 }
 
-- (CVReturn)getFrameForTime:(const CVTimeStamp*)timeStamp flagsOut:(CVOptionFlags*)flagsOut
+- (void)drawRect:(CGRect)rect
 {
-    static unsigned showinfo = 1;
+    if (!c64 || !enableMetal)
+        return;
     
-    @autoreleasepool {
-        
-        if (!c64 || !enableMetal)
-            return kCVReturnSuccess;
-        
-        [lock lock];
-        dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
-        
-        // Refresh size dependent items if needed
-        if (layerIsDirty) {
-            [self reshapeWithFrame:[self frame]];
-            layerIsDirty = NO;
-        }
-        
-        // Get drawable from layer
-        if (showinfo) {
-            showinfo = 0;
-            NSLog(@"device = %@", [metalLayer device]);
-            NSLog(@"pixelFormat = %lu", (unsigned long)[metalLayer pixelFormat]);
-            NSLog(@"frameBufferOnly = %hhd", [metalLayer framebufferOnly]);
-            CGSize size = [metalLayer drawableSize];
-            NSLog(@"drawableSize = %f %f", size.width, size.height);
-            NSLog(@"presentWithTransaction = %hhd", [metalLayer presentsWithTransaction]);
-        }
-        if (!(_drawable = [metalLayer nextDrawable])) {
-            NSLog(@"Metal drawable must not be nil");
-            [lock unlock];
-            return NO;
-        }
-
-        // Draw scene
-        [self updateTexture:_commandBuffer];
-        if (fullscreen && !fullscreenKeepAspectRatio) {
-            [self drawScene2D];
-        } else {
-            [self drawScene3D];
-        }
-        
-        [lock unlock];
-        return kCVReturnSuccess;
+    [lock lock];
+    dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
+    
+    // Refresh size dependent items if needed
+    if (layerIsDirty) {
+        [self reshapeWithFrame:[self frame]];
+        layerIsDirty = NO;
     }
+    
+    // Get drawable from layer
+    if (!(_drawable = [metalLayer nextDrawable])) {
+        NSLog(@"Metal drawable must not be nil");
+        [lock unlock];
+        return;
+    }
+    
+    // Draw scene
+    [self updateTexture:_commandBuffer];
+    if (fullscreen && !fullscreenKeepAspectRatio) {
+        [self drawScene2D];
+    } else {
+        [self drawScene3D];
+    }
+    
+    [lock unlock];
 }
 
 @end

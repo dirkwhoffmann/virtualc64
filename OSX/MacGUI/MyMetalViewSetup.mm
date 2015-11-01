@@ -18,20 +18,6 @@
 
 #import "C64GUI.h"
 
-static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
-                                      const CVTimeStamp *inNow,
-                                      const CVTimeStamp *inOutputTime,
-                                      CVOptionFlags flagsIn,
-                                      CVOptionFlags *flagsOut,
-                                      void *displayLinkContext)
-{
-    @autoreleasepool {
-        
-        return [(__bridge MyMetalView *)displayLinkContext getFrameForTime:inOutputTime flagsOut:flagsOut];
-        
-    }
-}
-
 @implementation MyMetalView(Setup)
 
 - (void)setupMetal
@@ -45,7 +31,8 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     [self buildPipeline];
     
     [self reshapeWithFrame:[self frame]];
-    [self setupDisplayLink];
+    // [self setupDisplayLink];
+    enableMetal = true;
 }
 
 - (void)buildMetal
@@ -94,6 +81,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
                                                        width:512
                                                       height:512
                                                    mipmapped:NO];
+    NSLog(@"textureDescriptor = %@", textureDescriptor);
     textureFromEmulator = [device newTextureWithDescriptor:textureDescriptor];
     NSAssert(textureFromEmulator != nil, @"Failed to create texture");
     if (textureFromEmulator == nil) { exit(0); }
@@ -105,6 +93,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
                                                       height:1024
                                                    mipmapped:NO];
     textureDescriptorPP.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
+    NSLog(@"textureDescriptorPP = %@", textureDescriptorPP);
     filteredTexture = [device newTextureWithDescriptor:textureDescriptorPP];
     NSAssert(filteredTexture != nil, @"Failed to create post-processing texture");
     if (filteredTexture == nil) { exit(0); }
@@ -243,6 +232,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
                                                       height:(layerHeight == 0) ? 512 : layerHeight
                                                    mipmapped:NO];
     {
+        NSLog(@"depthTexDesc = %@", depthTexDesc);
         depthTexDesc.resourceOptions = MTLResourceStorageModePrivate;
         depthTexDesc.usage = MTLTextureUsageRenderTarget;
     }
@@ -310,43 +300,6 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     pipeline = [device newRenderPipelineStateWithDescriptor:pipelineDescriptor error:&error];
     if (!pipeline) {
         NSLog(@"Render pipeline creation failed with error: %@", error);
-        exit(0);
-    }
-}
-
-// -----------------------------------------------------------------------------------------------
-//                                         Display link
-// -----------------------------------------------------------------------------------------------
-
-
-- (void)setupDisplayLink
-{
-    NSLog(@"MyMetalView::setupDisplayLink");
-    
-    CVReturn success;
-    
-    // Create display link for the main display
-    CVDisplayLinkCreateWithCGDisplay(kCGDirectMainDisplay, &displayLink);
-    NSAssert(displayLink != nil, @"Error: Can't create display link");
-    
-    // Set the current display of a display link
-    if ((success = CVDisplayLinkSetCurrentCGDisplay(displayLink, kCGDirectMainDisplay)) != 0) {
-        NSLog(@"CVDisplayLinkSetCurrentCGDisplay failed with return code %d", success);
-        CVDisplayLinkRelease(displayLink);
-        exit(0);
-    }
-    
-    // Set the renderer output callback function
-    if ((success = CVDisplayLinkSetOutputCallback(displayLink, &MetalRendererCallback, (__bridge void *)self)) != 0) {
-        NSLog(@"CVDisplayLinkSetOutputCallback failed with return code %d", success);
-        CVDisplayLinkRelease(displayLink);
-        exit(0);
-    }
-    
-    // Activates display link
-    if ((success = CVDisplayLinkStart(displayLink)) != 0) {
-        NSLog(@"CVDisplayLinkStart failed with return code %d", success);
-        CVDisplayLinkRelease(displayLink);
         exit(0);
     }
 }
