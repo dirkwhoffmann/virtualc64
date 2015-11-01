@@ -240,8 +240,6 @@ NSRecursiveLock *lock = nil;
 
     [super setFrame:frame];
     layerIsDirty = YES;
-    
-    // [self reshapeWithFrame:frame];
 }
 
 - (void)reshapeWithFrame:(CGRect)frame
@@ -260,6 +258,10 @@ NSRecursiveLock *lock = nil;
 - (void)reshape
 {
     CGSize drawableSize = [metalLayer drawableSize];
+
+    if (layerWidth == drawableSize.width && layerHeight == drawableSize.height)
+        return;
+
     layerWidth = drawableSize.width;
     layerHeight = drawableSize.height;
 

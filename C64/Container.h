@@ -71,7 +71,10 @@ public:
 
     //! @brief Standard destructor.
     virtual ~Container();
-	
+
+    //! @brief Convert file name extension into numerical identifier
+    static ContainerType typeOf(const char *extension);
+    
 private:
     
     //! @brief Frees the memory allocated by this object.

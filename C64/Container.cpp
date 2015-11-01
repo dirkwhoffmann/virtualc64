@@ -30,6 +30,19 @@ Container::~Container()
 		free(path);
 }
 
+ContainerType
+Container::typeOf(const char *extension)
+{
+    if (strcmp(extension, "CRT") == 0) return CRT_CONTAINER;
+    // if (strcmp(extension, "V64") == 0) return V64_CONTAINER;
+    if (strcmp(extension, "D64") == 0) return D64_CONTAINER;
+    if (strcmp(extension, "G64") == 0) return G64_CONTAINER;
+    if (strcmp(extension, "T64") == 0) return T64_CONTAINER;
+    if (strcmp(extension, "PRG") == 0) return PRG_CONTAINER;
+    if (strcmp(extension, "P00") == 0) return P00_CONTAINER;
+    return (ContainerType)0;
+}
+
 void
 Container::setPath(const char *str)
 {

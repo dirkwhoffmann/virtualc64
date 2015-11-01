@@ -157,54 +157,53 @@
 	
     // Is it a snapshot?
     if (Snapshot::isSnapshot(name)) {
-
+        
         // Do the version numbers match?
         if (Snapshot::isSnapshot(name, V_MAJOR, V_MINOR, V_SUBMINOR)) {
-
+            
             if (![self setSnapshotWithName:filename]) {
                 NSLog(@"Error while reading snapshot\n");
                 return NO;
             }
             return YES;
         }
-    
+        
         [self showVersionNumberAlert];
-        return NO; 
+        return NO;
     }
     
-#if 0
-	if ([type isEqualToString:@"VC64"]) {
+    // Is it a container? 
+    switch (Container::typeOf([type UTF8String])) {
+            
+        case G64_CONTAINER:
+            
+            if ([self setG64ArchiveWithName:filename])
+                return YES;
+            else break;
+            
+        case D64_CONTAINER:
+        case T64_CONTAINER:
+        case PRG_CONTAINER:
+        case P00_CONTAINER:
 		
-        if (![self setSnapshotWithName:filename]) {
-            NSLog(@"Error while reading snapshot\n");
+            if ([self setArchiveWithName:filename])
+                return YES;
+            else break;
+            
+        case CRT_CONTAINER:
+
+            if ([self setCartridgeWithName:filename])
+                return YES;
+            else break;
+
+        default:
+
+            NSLog(@"Unsupported file type\n");
             return NO;
-        }		
-        return YES;
     }
-#endif
-    
-    // Is it an archive?
-	if ([type isEqualToString:@"D64"] || [type isEqualToString:@"T64"] || [type isEqualToString:@"PRG"] || [type isEqualToString:@"P00"]) {
-		
-		if (![self setArchiveWithName:filename]) {
-			NSLog(@"Error while reading archive\n");
-			return NO;
-		}		
-		return YES;
-	}
 	
-    // Is it a cartridge?
-	if ([type isEqualToString:@"CRT"]) {
-		
-		if (![self setCartridgeWithName:filename]) {
-			NSLog(@"Error while reading cartridge\n");
-			return NO;
-		}
-		return YES;
-	}
-	
-	// Unknown type
-	return NO;
+    NSLog(@"Error while reading file\n");
+    return NO;
 }
 	
 - (BOOL)revertToSavedFromFile:(NSString *)filename ofType:(NSString *)type

@@ -116,7 +116,7 @@ static CVReturn MetalRendererCallback(CVDisplayLinkRef displayLink,
     
     bypassFilter = [BypassFilter filterWithDevice:device library:library];
     smoothFilter = [SaturationFilter filterWithFactor:1.0 device:device library:library];
-    blurFilter = [BlurFilter filterWithRadius:2.0 device:device library:library];
+    blurFilter = [BlurFilter filterWithRadius:2 device:device library:library];
     saturationFilter = [SaturationFilter filterWithFactor:0.5 device:device library:library];
     sepiaFilter = [SepiaFilter filterWithDevice:device library:library];
     crtFilter = [CrtFilter filterWithDevice:device library:library];
