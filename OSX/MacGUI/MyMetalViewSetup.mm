@@ -69,11 +69,15 @@
 {
     NSLog(@"MyMetalView::buildTextures");
     
-    // Background
+    // Grab background image
     NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
     NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
     NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
     bgTexture = [self textureFromImage:bgImageResized];
+
+    // If the background image could not be grabbed, we use a default texture
+    if (!bgTexture)
+        bgTexture = [self defaultBackgroundTexture];
 
     // C64 screen (raw emulator data)
     MTLTextureDescriptor *textureDescriptor =

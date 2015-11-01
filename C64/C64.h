@@ -18,6 +18,7 @@
 // VERSION 1.2.1:
 //
 // Try to use drawRect: of MetalView instead of Display link
+// Remove TextureDescriptor NSLogs
 //
 // VERSION 1.3:
 //
