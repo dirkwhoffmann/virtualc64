@@ -75,7 +75,8 @@
     NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
     bgTexture = [self textureFromImage:bgImageResized];
 
-    // If the background image could not be grabbed, we use a default texture
+    // If the user did select a folder of pictures to be the wallpaper, the upper code fails and
+    // bgTexture will be nil. In that case, we fall back to an opaque default texture.
     if (!bgTexture)
         bgTexture = [self defaultBackgroundTexture];
 
@@ -85,7 +86,6 @@
                                                        width:512
                                                       height:512
                                                    mipmapped:NO];
-    NSLog(@"textureDescriptor = %@", textureDescriptor);
     textureFromEmulator = [device newTextureWithDescriptor:textureDescriptor];
     NSAssert(textureFromEmulator != nil, @"Failed to create texture");
     if (textureFromEmulator == nil) { exit(0); }
@@ -97,7 +97,6 @@
                                                       height:1024
                                                    mipmapped:NO];
     textureDescriptorPP.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
-    NSLog(@"textureDescriptorPP = %@", textureDescriptorPP);
     filteredTexture = [device newTextureWithDescriptor:textureDescriptorPP];
     NSAssert(filteredTexture != nil, @"Failed to create post-processing texture");
     if (filteredTexture == nil) { exit(0); }
@@ -241,7 +240,6 @@
                                                       height:h
                                                    mipmapped:NO];
     {
-        NSLog(@"depthTexDesc = %@", depthTexDesc);
         depthTexDesc.resourceOptions = MTLResourceStorageModePrivate;
         depthTexDesc.usage = MTLTextureUsageRenderTarget;
     }
