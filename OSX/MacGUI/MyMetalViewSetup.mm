@@ -226,10 +226,15 @@
     if (!device)
         return;
     
+    // NSUInteger w = (layerWidth < 1) ? 512 : ((layerWidth > 2048) ? 2048 : layerWidth);
+    // NSUInteger h = (layerHeight < 1) ? 512 : ((layerHeight > 2048) ? 2048 : layerHeight);
+    NSUInteger w = (layerWidth < 1) ? 512 : ((layerWidth > 2048) ? layerWidth : layerWidth);
+    NSUInteger h = (layerHeight < 1) ? 512 : ((layerHeight > 2048) ? layerHeight : layerHeight);
+
     MTLTextureDescriptor *depthTexDesc =
     [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatDepth32Float
-                                                       width:(layerWidth == 0) ? 512 : layerWidth
-                                                      height:(layerHeight == 0) ? 512 : layerHeight
+                                                       width:w
+                                                      height:h
                                                    mipmapped:NO];
     {
         NSLog(@"depthTexDesc = %@", depthTexDesc);

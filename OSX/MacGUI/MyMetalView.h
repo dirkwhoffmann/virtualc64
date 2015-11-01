@@ -31,9 +31,6 @@ using namespace simd;
 // Forward declaration
 @class MyController;
 
-// Synchronization lock
-extern NSRecursiveLock *lock;
-
 // Size of C64 texture
 const int C64_TEXTURE_WIDTH = 512;
 const int C64_TEXTURE_HEIGHT= 512;

@@ -18,8 +18,6 @@
 
 #import "C64GUI.h"
 
-NSRecursiveLock *lock = nil;
-
 @implementation MyMetalView {
     
     // Local metal objects
@@ -92,8 +90,7 @@ NSRecursiveLock *lock = nil;
     
     c64 = [c64proxy c64]; // DEPRECATED
     
-    // Create synchronization locks
-    if (!lock) lock = [NSRecursiveLock new];
+    // Create semaphore
     _inflightSemaphore = dispatch_semaphore_create(1);
     
     // Set initial scene position and drawing properties
@@ -165,9 +162,6 @@ NSRecursiveLock *lock = nil;
 -(void)cleanup
 {
     NSLog(@"MyMetalView::cleanup");
-        
-    if (lock) [lock unlock];
-    lock = NULL; 
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -357,7 +351,19 @@ NSRecursiveLock *lock = nil;
 
 - (BOOL)startFrame
 {
+    static NSInteger width = -1;
+    static NSInteger height = -1;
     framebufferTexture = _drawable.texture;
+
+    if (width != framebufferTexture.width) {
+        width = framebufferTexture.width;
+        NSLog(@"drawable width = %lu", (unsigned long)framebufferTexture.width);
+    }
+    if (height != framebufferTexture.height) {
+        height = framebufferTexture.height;
+        NSLog(@"drawable height = %lu", (unsigned long)framebufferTexture.height);
+    }
+    
     NSAssert(framebufferTexture != nil, @"Framebuffer texture must not be nil");
     
     _commandBuffer = [queue commandBuffer];
@@ -460,7 +466,6 @@ NSRecursiveLock *lock = nil;
     if (!c64 || !enableMetal)
         return;
     
-    [lock lock];
     dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
     
     // Refresh size dependent items if needed
@@ -472,7 +477,6 @@ NSRecursiveLock *lock = nil;
     // Get drawable from layer
     if (!(_drawable = [metalLayer nextDrawable])) {
         NSLog(@"Metal drawable must not be nil");
-        [lock unlock];
         return;
     }
     
@@ -483,8 +487,6 @@ NSRecursiveLock *lock = nil;
     } else {
         [self drawScene3D];
     }
-    
-    [lock unlock];
 }
 
 @end

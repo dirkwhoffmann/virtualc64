@@ -9,16 +9,11 @@
 
 - (NSImage *)screenshot
 {
-    [lock lock];
-    
     NSImage *image = [MyMetalView imageFromTexture:textureFromEmulator
                                                 x1:textureXStart
                                                 y1:textureYStart
                                                 x2:textureXEnd
                                                 y2:textureYEnd];
-    
-    [lock unlock];
-    
     return image;
 }
 
