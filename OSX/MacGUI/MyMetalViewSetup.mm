@@ -69,14 +69,13 @@
 {
     NSLog(@"MyMetalView::buildTextures");
     
-    // Grab background image
-    NSURL *url = [[NSWorkspace sharedWorkspace] desktopImageURLForScreen:[NSScreen mainScreen]];
-    NSImage *bgImage = [[NSImage alloc] initWithContentsOfURL:url];
-    NSImage *bgImageResized = [self expandImage:bgImage toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
-    bgTexture = [self textureFromImage:bgImageResized];
-
-    // If the user did select a folder of pictures to be the wallpaper, the upper code fails and
-    // bgTexture will be nil. In that case, we fall back to an opaque default texture.
+    // Create bachground texture (a scaled down version of the current wallpaper)
+    NSImage *desktop = [self desktopAsImage];
+    NSImage *desktopResized = [self expandImage:desktop toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
+    bgTexture = [self textureFromImage:desktopResized];
+    
+    
+    // If the wallpaper could not be obtained, we fall back to an opaque texture.
     if (!bgTexture)
         bgTexture = [self defaultBackgroundTexture];
 

@@ -23,7 +23,17 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)item;
 
 #pragma mark file menu
+
+/*! @brief   Action function for save screenshot feature
+ *  @details This method is called when the current emulator image is saved
+ *           to disk.
+ */
 - (IBAction)saveScreenshotDialog:(id)sender;
+
+/*! @brief   Action function for the quick save screenshot feature
+ *  @details A screenshot is taken is saved to a file on the users desktop.
+ */
+- (IBAction)quicksaveScreenshot:(id)sender;
 
 /*! @brief   Action function for export disk feature
  *  @details This method is called when exporting to archives that are capable of 

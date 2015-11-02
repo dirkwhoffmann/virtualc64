@@ -71,12 +71,26 @@
         return;
     
     // Export
-    NSURL *selectedFile = [sPanel URL];
-    NSLog(@"Saving screenshot to file %@", selectedFile);
+    NSURL *url = [sPanel URL];
+    NSLog(@"Saving screenshot to file %@", url);
 		
     NSImage *image = [metalScreen screenshot];
     NSData *data = [image TIFFRepresentation];
-    [data writeToURL:selectedFile atomically:YES];
+    [data writeToURL:url atomically:YES];
+}
+
+- (IBAction)quicksaveScreenshot:(id)sender
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains (NSDesktopDirectory, NSUserDomainMask, YES);
+    NSString *desktopPath = [paths objectAtIndex:0];
+    NSString *filePath = [desktopPath stringByAppendingPathComponent:@"Untitled.png"];
+    NSURL *url = [NSURL fileURLWithPath:filePath];
+    
+    NSLog(@"Quicksaving screenshot to file %@", url);
+    
+    NSImage *image = [metalScreen screenshot];
+    NSData *data = [image TIFFRepresentation];
+    [data writeToURL:url atomically:YES];
 }
 
 - (IBAction)exportDiskDialog:(id)sender

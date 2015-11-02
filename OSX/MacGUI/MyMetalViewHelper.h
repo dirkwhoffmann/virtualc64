@@ -39,6 +39,7 @@ struct Uniforms {
 - (NSImage *)expandImage:(NSImage *)image toSize:(NSSize)size;
 - (id<MTLTexture>)textureFromImage:(NSImage *)image;
 - (id<MTLTexture>)defaultBackgroundTexture;
+- (NSImage *)desktopAsImage; 
 + (NSImage *)imageFromTexture:(id<MTLTexture>)texture x1:(float)_x1 y1:(float)_y1 x2:(float)_x2 y2:(float)_y2;
 
 

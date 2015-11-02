@@ -9,6 +9,7 @@
 
 - (NSImage *)screenshot
 {
+    NSLog(@"MyMetalViewHelper::screenshot");
     NSImage *image = [MyMetalView imageFromTexture:textureFromEmulator
                                                 x1:textureXStart
                                                 y1:textureYStart
@@ -131,6 +132,48 @@
     MTLRegion region = MTLRegionMake2D(0, 0, 1, 1);
     [texture replaceRegion:region mipmapLevel:0 withBytes:&data bytesPerRow:4];
     return texture;
+}
+
+- (NSImage*) desktopAsImage {
+    
+    CFArrayRef windows;
+    NSNumber *windowID;
+    CGRect windowBounds;
+    NSRect screenBounds = [NSScreen mainScreen].frame;
+    
+    if (!(windows = CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, CGWindowID(0))))
+        return nil;
+    
+    // Iterate through all windows
+    for (CFIndex i = 0; i < CFArrayGetCount(windows); i++) {
+        CFDictionaryRef window = (CFDictionaryRef)CFArrayGetValueAtIndex(windows, i);
+        
+        // Skip all windows that are not owned by the dock
+        CFStringRef ownerName = (CFStringRef)CFDictionaryGetValue(window, kCGWindowOwnerName);
+        if (CFStringCompare(ownerName, CFSTR("Dock"), 0) != kCFCompareEqualTo)
+            continue;
+        
+        // Skip all windows that do not have the same bounds as the main screen
+        if (!CGRectMakeWithDictionaryRepresentation((CFDictionaryRef)(CFDictionaryGetValue(window, kCGWindowBounds)),&windowBounds) ||
+            !CGRectEqualToRect(windowBounds, screenBounds))
+            continue;
+        
+        // Skip all windows that are not at the desktop window level
+        windowID = (__bridge NSNumber *)CFDictionaryGetValue(window, kCGWindowNumber);
+        if (![windowID isEqualToNumber:@(kCGDesktopWindowLevel - 1)])
+            continue;
+        
+        break;
+    }
+    CFRelease(windows);
+    
+    // Create image
+    CGImageRef cgImage = CGWindowListCreateImage([NSScreen mainScreen].frame, kCGWindowListOptionIncludingWindow, [windowID integerValue], kCGWindowImageDefault);
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
+    NSImage *image = [[NSImage alloc] init];
+    [image addRepresentation:bitmapRep];
+    
+    return image;
 }
 
 static void releaseDataCallback(void *info, const void *data, size_t size)
