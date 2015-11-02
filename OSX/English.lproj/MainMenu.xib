@@ -146,7 +146,7 @@
                                     <action selector="saveScreenshotDialog:" target="-1" id="545"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Quick save" keyEquivalent="s" id="7oe-oV-MnG">
+                            <menuItem title="Quick  save screenshot" keyEquivalent="s" id="7oe-oV-MnG">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="quicksaveScreenshot:" target="-1" id="3hD-6J-vdQ"/>

@@ -313,28 +313,36 @@
 
 - (void)typeText:(NSString *)text
 {
-    const unsigned MAXCHARS = 64;
+    // dispatch_queue_t q = dispatch_queue_create("com.foo.samplequeue", NULL);
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                   ^{ [self _typeText:text]; });
+}
+
+- (void)_typeText:(NSString *)text
+{
+    const unsigned MAXCHARS = 256;
     const unsigned KEYDELAY = 27500;
     unsigned i;
     
     fprintf(stderr,"Typing: ");
-    
-    for (i = 0; i < [text length] && i < MAXCHARS; i++) {
         
+    for (i = 0; i < [text length] && i < MAXCHARS; i++) {
+            
         unichar uc = [text characterAtIndex:i];
         char c = (char)uc;
-        
+            
         if (isupper(c))
             c = tolower(c);
-        
+            
         fprintf(stderr,"%c",c);
-        
+            
         [self pressKey:c];
         usleep(KEYDELAY);
         [self releaseKey:c];
         usleep(KEYDELAY);
     }
-    
+        
     if (i != [text length]) {
         // Abbreviate text by three dots
         for (i = 0; i < 3; i++) {
@@ -344,9 +352,10 @@
             usleep(KEYDELAY);
         }
     }
-
+        
     fprintf(stderr,"\n");
 }
+
 
 @end
 
