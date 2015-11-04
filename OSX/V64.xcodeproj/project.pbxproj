@@ -173,6 +173,8 @@
 		50F23D0812DF932800B1F275 /* glossy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F23D0712DF932800B1F275 /* glossy.png */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
+		50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E31BEA203F008568E3 /* TapeDialog.mm */; };
+		50F681E71BEA2927008568E3 /* TAPArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E61BEA2927008568E3 /* TAPArchive.cpp */; };
 		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
 		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -453,6 +455,10 @@
 		50F23D0712DF932800B1F275 /* glossy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glossy.png; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		50F681E21BEA2015008568E3 /* TapeDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapeDialog.h; sourceTree = "<group>"; };
+		50F681E31BEA203F008568E3 /* TapeDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TapeDialog.mm; sourceTree = "<group>"; };
+		50F681E51BEA2917008568E3 /* TAPArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAPArchive.h; sourceTree = "<group>"; };
+		50F681E61BEA2927008568E3 /* TAPArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TAPArchive.cpp; sourceTree = "<group>"; };
 		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
 		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
 		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
@@ -707,6 +713,8 @@
 				50C9CB311B8272DA0054EE86 /* HardwareDialog.mm */,
 				50D5FDB20C2E9CF50022CA3A /* MountDialog.h */,
 				50D5FDB30C2E9CF50022CA3A /* MountDialog.mm */,
+				50F681E21BEA2015008568E3 /* TapeDialog.h */,
+				50F681E31BEA203F008568E3 /* TapeDialog.mm */,
 				50AE4A331A693AA0003EA774 /* MountDragView.h */,
 				50AE4A341A693AA0003EA774 /* MountDragView.mm */,
 				50A8F8F10E47171300ACE17D /* RomDialog.h */,
@@ -872,6 +880,8 @@
 				509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */,
 				504606331BE4B99100463FD7 /* G64Archive.h */,
 				504606321BE4B99100463FD7 /* G64Archive.cpp */,
+				50F681E51BEA2917008568E3 /* TAPArchive.h */,
+				50F681E61BEA2927008568E3 /* TAPArchive.cpp */,
 				50F93BE612EF309900DD6A8A /* FileArchive.h */,
 				50F93BE512EF309900DD6A8A /* FileArchive.cpp */,
 			);
@@ -1130,6 +1140,7 @@
 				5000C9630D13DED40011A2E9 /* VC1541Memory.cpp in Sources */,
 				500FC6790D17D2190044131D /* VIA6522.cpp in Sources */,
 				023024000DC902A700F8818A /* AudioDevice.mm in Sources */,
+				50F681E71BEA2927008568E3 /* TAPArchive.cpp in Sources */,
 				50A8F8F30E47171300ACE17D /* RomDialog.mm in Sources */,
 				50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */,
 				505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */,
@@ -1154,6 +1165,7 @@
 				50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */,
 				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */,
+				50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */,
 				50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */,

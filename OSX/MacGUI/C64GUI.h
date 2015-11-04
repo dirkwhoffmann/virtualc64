@@ -56,6 +56,7 @@
 #import "HardwareDialog.h"
 #import "MountDragView.h"
 #import "MountDialog.h"
+#import "TapeDialog.h"
 #import "RomDialog.h"
 
 #import "JoystickManager.h"

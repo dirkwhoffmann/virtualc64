@@ -27,18 +27,20 @@
     @constant V64_CONTAINER A snapshot file (contains a frozen C64 state).
     @constant T64_CONTAINER A tape archive with multiple files.
     @constant D64_CONTAINER A floppy disk image with multiply files.
-    @constant G64_CONTAINER A collection of bit-streams resembling a floppy disk.
     @constant PRG_CONTAINER A program archive containing a single file.
     @constant P00_CONTAINER A program archive containing a single file.
+    @constant G64_CONTAINER A collection of bit-streams resembling a floppy disk.
+    @constant G64_CONTAINER A bit-stream resembling a datasette tape.
     @constant FILE_CONTAINER An arbitrary file that is interpreted as raw data. */
 enum ContainerType {
     CRT_CONTAINER = 1,
     V64_CONTAINER,
-    D64_CONTAINER,
-    G64_CONTAINER,
     T64_CONTAINER,
+    D64_CONTAINER,
     PRG_CONTAINER,
     P00_CONTAINER,
+    G64_CONTAINER,
+    TAP_CONTAINER,
     FILE_CONTAINER
 };
 

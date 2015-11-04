@@ -15,12 +15,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// VERSION 1.2.1:
-//
-// Try to use drawRect: of MetalView instead of Display link
-// Remove TextureDescriptor NSLogs
-//
 // VERSION 1.3:
+//
+// TAPArchive : Container
+// Add TAP to drag and drop
+// Datasette class
+//    execute : if (!play) return;
+//    insertTape
+// execute each cycle or each rasterline?
+// TapeDialog similar to MountDialog (separate XIB files possible?)
+// Cartridge dialog
+// Media toolbar icon
 //
 // VIC Sprite compatibility
 // Check if bus activity can be detected more precisely
@@ -62,6 +67,7 @@
 #include "T64Archive.h"
 #include "D64Archive.h"
 #include "G64Archive.h"
+#include "TAPArchive.h"
 #include "PRGArchive.h"
 #include "P00Archive.h"
 #include "FileArchive.h"
