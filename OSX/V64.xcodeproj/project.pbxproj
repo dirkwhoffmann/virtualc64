@@ -175,6 +175,7 @@
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E31BEA203F008568E3 /* TapeDialog.mm */; };
 		50F681E71BEA2927008568E3 /* TAPArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E61BEA2927008568E3 /* TAPArchive.cpp */; };
+		50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E81BEA3BE4008568E3 /* Datasette.cpp */; };
 		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
 		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -459,6 +460,8 @@
 		50F681E31BEA203F008568E3 /* TapeDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TapeDialog.mm; sourceTree = "<group>"; };
 		50F681E51BEA2917008568E3 /* TAPArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAPArchive.h; sourceTree = "<group>"; };
 		50F681E61BEA2927008568E3 /* TAPArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TAPArchive.cpp; sourceTree = "<group>"; };
+		50F681E81BEA3BE4008568E3 /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
+		50F681E91BEA3BE4008568E3 /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
 		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
 		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
 		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
@@ -756,7 +759,7 @@
 			children = (
 				5000473E12DCEC7D0098D890 /* General */,
 				5000473C12DCEC060098D890 /* Computer */,
-				504B39910C45192700286F18 /* Drive */,
+				504B39910C45192700286F18 /* Peripherals */,
 				5000C8070D13CE490011A2E9 /* Memory */,
 				509AE9FE0C3249D4001FC9FD /* Loading and saving */,
 			);
@@ -778,7 +781,7 @@
 			path = MacGUI;
 			sourceTree = "<group>";
 		};
-		504B39910C45192700286F18 /* Drive */ = {
+		504B39910C45192700286F18 /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
 				5000C8220D13CEE10011A2E9 /* VC1541.h */,
@@ -787,8 +790,10 @@
 				500FC6780D17D2190044131D /* VIA6522.cpp */,
 				50775E101B8EE95B002EB58D /* Disk525.h */,
 				50775E0E1B8EE8A9002EB58D /* Disk525.cpp */,
+				50F681E91BEA3BE4008568E3 /* Datasette.h */,
+				50F681E81BEA3BE4008568E3 /* Datasette.cpp */,
 			);
-			name = Drive;
+			name = Peripherals;
 			sourceTree = "<group>";
 		};
 		5051A1501B8842F100CBFB5A /* Sounds */ = {
@@ -1168,6 +1173,7 @@
 				50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */,
+				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
 				50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,

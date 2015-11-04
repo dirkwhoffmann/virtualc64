@@ -51,7 +51,7 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-#define NDEBUG      // RELEASE
+// #define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
 // #define DEBUG_LEVEL 3  // DEVELOPMENT
 
@@ -84,6 +84,7 @@
 #include "CIA.h"
 #include "CPU.h"
 #include "VC1541.h"
+#include "Datasette.h"
 #include "Cartridge.h"
 #include "ExpansionPort.h"
 
@@ -220,7 +221,10 @@ public:
 
 	//! Reference to the virtual VC1541
 	VC1541 *floppy;
-		
+
+    //! Virtual tape drive (Datasette)
+    Datasette datasette;
+
     
 private:
 

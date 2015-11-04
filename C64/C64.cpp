@@ -112,6 +112,7 @@ C64::C64()
         iec,
         expansionport,
         floppy,
+        &datasette,
         keyboard,
         joystick1, joystick2,
         NULL };
@@ -433,6 +434,7 @@ C64::step()
 		cia2->executeOneCycle(); \
         if (!cpu->executeOneCycle()) result = false; \
 		if (!floppy->executeOneCycle()) result = false; \
+        datasette.execute(); \
 		cycles++; \
         rasterlineCycle++;
 
