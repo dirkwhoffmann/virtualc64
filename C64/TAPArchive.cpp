@@ -61,7 +61,6 @@ TAPArchive::archiveFromTAPFile(const char *filename)
         archive = NULL;
     }
     
-    fprintf(stderr, "%s archive created with %d bytes.\n", archive->getTypeAsString(), archive->size);
     return archive;
 }
 

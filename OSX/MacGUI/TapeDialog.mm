@@ -24,7 +24,7 @@
 @synthesize doAutoType;
 @synthesize doPressPlay; 
 
-- (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy
+- (void) initialize:(TAPArchive *)a c64proxy:(C64Proxy *)proxy
 {
     assert(a != NULL);
     assert(proxy != NULL);
@@ -35,15 +35,13 @@
     doAutoType = YES;
     doPressPlay = YES;
     
-    [headerText setStringValue:@"Archive"];
-    
     // Get physical path of archive
     NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
-    NSString *archiveLastPath = [archivePath lastPathComponent];
-    // NSString *archiveExtension = [[archiveLastPath pathExtension] uppercaseString];
+    NSString *archiveDescr = [NSString stringWithFormat:@"Type %d TAP archive", archive->TAPversion()];
     
-    // Set icon and title
-    [diskIconFrame setTitle:archiveLastPath];
+    // Set title
+    [headerText setStringValue:archivePath];
+    [diskIconFrame setTitle:archiveDescr];
     
     [self update];
 }

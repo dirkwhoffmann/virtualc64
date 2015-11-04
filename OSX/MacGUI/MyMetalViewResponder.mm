@@ -375,8 +375,15 @@
             [controller showMountDialog];
             return YES;
         }
-        
+
+        // Is it a TAP archive?
+        if ([[controller document] setTAPArchiveWithName:path]) {
+            [controller showTapeDialog];
+            return YES;
+        }
+
         // Is it an archive other than G64?
+        NSLog(@"I'm here");
         if ([[controller document] setArchiveWithName:path]) {
             [controller showMountDialog];
             return YES;

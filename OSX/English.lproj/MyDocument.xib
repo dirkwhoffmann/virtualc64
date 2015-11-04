@@ -169,6 +169,7 @@
                 <outlet property="stepOutButton" destination="2094" id="2109"/>
                 <outlet property="stepOverButton" destination="2096" id="2108"/>
                 <outlet property="stopAndGoButton" destination="2100" id="2102"/>
+                <outlet property="tapeDialog" destination="Dhu-87-6sj" id="vwJ-0Y-oXf"/>
                 <outlet property="tod1Hours" destination="686" id="2647"/>
                 <outlet property="tod1InterruptEnabled" destination="687" id="2655"/>
                 <outlet property="tod1Minutes" destination="692" id="2648"/>
@@ -3265,7 +3266,7 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <textField verticalHuggingPriority="750" id="1031">
-                        <rect key="frame" x="200" y="272" width="89" height="14"/>
+                        <rect key="frame" x="18" y="272" width="452" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VC1541 drive" id="1816">
@@ -3469,7 +3470,7 @@ Flashing ist fast, but less compatible</string>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="19" y="153" width="488" height="230"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
-            <value key="minSize" type="size" width="488" height="267"/>
+            <value key="minSize" type="size" width="488" height="230"/>
             <view key="contentView" id="JwP-07-2BF">
                 <rect key="frame" x="0.0" y="0.0" width="488" height="230"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -3483,10 +3484,10 @@ Flashing ist fast, but less compatible</string>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <textField verticalHuggingPriority="750" id="rE0-0a-S2s">
-                        <rect key="frame" x="200" y="206" width="89" height="14"/>
+                        <rect key="frame" x="18" y="206" width="452" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Datasette" id="Cjz-gt-oy2">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Datasette" id="Cjz-gt-oy2">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3527,43 +3528,9 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="endMountDialog:" target="-2" id="c7m-gz-isa"/>
+                            <action selector="endTapeDialog:" target="-2" id="kQ2-Io-l2X"/>
                         </connections>
                     </button>
-                    <button id="G9s-bL-nHr">
-                        <rect key="frame" x="99" y="108" width="104" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <animations/>
-                        <buttonCell key="cell" type="check" title="Auto-load file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="894-3k-9b3">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="autoTypeAction:" target="Dhu-87-6sj" id="V63-BL-eGt"/>
-                        </connections>
-                    </button>
-                    <button id="ttO-gK-9RO">
-                        <rect key="frame" x="99" y="80" width="168" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <animations/>
-                        <buttonCell key="cell" type="check" title="Auto-press play on tape" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="U84-BP-98B">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="pressPlayAction:" target="Dhu-87-6sj" id="kJr-yS-HFi"/>
-                        </connections>
-                    </button>
-                    <textField verticalHuggingPriority="750" id="czP-9Q-9k7">
-                        <rect key="frame" x="72" y="146" width="219" height="35"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <animations/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="TAP archives contain a continous bit-stream with no preview available." id="81L-ww-kxd">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button verticalHuggingPriority="750" id="FWJ-Hr-eyS">
                         <rect key="frame" x="14" y="13" width="82" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3576,9 +3543,43 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="cancelMountDialog:" target="-2" id="g0p-fe-X5A"/>
+                            <action selector="cancelTapeDialog:" target="-2" id="WbN-aA-WtZ"/>
                         </connections>
                     </button>
+                    <button id="G9s-bL-nHr">
+                        <rect key="frame" x="112" y="104" width="104" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Auto-load file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="894-3k-9b3">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="autoTypeAction:" target="Dhu-87-6sj" id="V63-BL-eGt"/>
+                        </connections>
+                    </button>
+                    <button id="ttO-gK-9RO">
+                        <rect key="frame" x="112" y="76" width="168" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Auto-press play on tape" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="U84-BP-98B">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="pressPlayAction:" target="Dhu-87-6sj" id="kJr-yS-HFi"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" id="czP-9Q-9k7">
+                        <rect key="frame" x="61" y="124" width="244" height="56"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <animations/>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="TAP archives contain a continous bit-stream with no preview available." id="81L-ww-kxd">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <animations/>
             </view>
@@ -3592,7 +3593,7 @@ Gw
                 <outlet property="typeButton" destination="G9s-bL-nHr" id="6MB-5H-sJy"/>
                 <outlet property="warningText" destination="czP-9Q-9k7" id="COi-oc-o9p"/>
             </connections>
-            <point key="canvasLocation" x="-374" y="-597"/>
+            <point key="canvasLocation" x="-374" y="-599"/>
         </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1872" userLabel="RomDialog" customClass="RomDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>

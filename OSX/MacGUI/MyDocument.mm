@@ -23,6 +23,7 @@
 @synthesize c64;
 @synthesize snapshot;
 @synthesize archive;
+@synthesize tape;
 @synthesize cartridge;
 
 - (void)makeWindowControllers
@@ -69,6 +70,14 @@
 - (BOOL)setG64ArchiveWithName:(NSString *)path
 {
     if (!(archive = G64Archive::archiveFromG64File([path UTF8String])))
+        return NO;
+    
+    return YES;
+}
+
+- (BOOL)setTAPArchiveWithName:(NSString *)path
+{
+    if (!(tape = TAPArchive::archiveFromTAPFile([path UTF8String])))
         return NO;
     
     return YES;
@@ -175,12 +184,6 @@
     // Is it a container? 
     switch (Container::typeOf([type UTF8String])) {
             
-        case G64_CONTAINER:
-            
-            if ([self setG64ArchiveWithName:filename])
-                return YES;
-            else break;
-            
         case D64_CONTAINER:
         case T64_CONTAINER:
         case PRG_CONTAINER:
@@ -190,6 +193,18 @@
                 return YES;
             else break;
             
+        case G64_CONTAINER:
+            
+            if ([self setG64ArchiveWithName:filename])
+                return YES;
+            else break;
+
+        case TAP_CONTAINER:
+            
+            if ([self setTAPArchiveWithName:filename])
+                return YES;
+            else break;
+
         case CRT_CONTAINER:
 
             if ([self setCartridgeWithName:filename])

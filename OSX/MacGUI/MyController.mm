@@ -1050,6 +1050,64 @@
     }
 }
 
+- (bool)showTapeDialog
+{
+    // Only proceed if a a tape image is present
+    if (![[self document] tape])
+        return NO;
+    
+    // Initialize dialog
+    [tapeDialog initialize:[[self document] tape] c64proxy:c64];
+    
+    // Open sheet
+    [NSApp beginSheet:tapeDialog
+       modalForWindow:[[self document] windowForSheet]
+        modalDelegate:self
+       didEndSelector:NULL
+          contextInfo:NULL];
+    
+    return YES;
+}
+
+- (IBAction)cancelTapeDialog:(id)sender
+{
+    // Hide sheet
+    [tapeDialog orderOut:sender];
+    
+    // Return to normal event handling
+    [NSApp endSheet:tapeDialog returnCode:1];
+}
+
+- (IBAction)endTapeDialog:(id)sender
+{
+    NSString *textToType = @"LOAD *,8,1"; // [tapeDialog loadCommand];
+    bool doAutoType = [tapeDialog doAutoType];
+    bool doPressPlay = [tapeDialog doPressPlay];
+    
+    NSLog(@"Should type:  %ld (%@)", (long)doAutoType, textToType);
+    NSLog(@"Should press play: %ld", (long)doPressPlay);
+    
+    // Rotate C64 screen
+    [metalScreen rotate];
+    
+    // Hide sheet
+    [tapeDialog orderOut:sender];
+    
+    // Return to normal event handling
+    [NSApp endSheet:tapeDialog returnCode:1];
+    
+    // Insert tape into datasette
+    NSLog(@"IMPLEMENTATION MISSING");
+    
+    
+    // Type command if requested
+    if (doAutoType) {
+        // TODO MOVE usleep into typeText
+        usleep(100000);
+        [[c64 keyboard] typeText:textToType];
+        [[c64 keyboard] typeText:@"\n"];
+    }
+}
 
 - (BOOL)exportToD64:(NSString *)path
 {

@@ -67,9 +67,9 @@
 
 - (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy
 {
-    [self _initialize:a c64proxy:proxy];
+    NSLog(@"Initialize MountDialog");
     
-    [headerText setStringValue:@"Archive"];
+    [self _initialize:a c64proxy:proxy];
     
     // Get physical path of archive
     NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
@@ -77,27 +77,31 @@
     NSString *archiveExtension = [[archiveLastPath pathExtension] uppercaseString];
     
     // Set icon and title
-    [diskIconFrame setTitle:archiveLastPath];
+    [headerText setStringValue:archivePath];
     
     if ([archiveExtension isEqualToString:@"D64"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconD64"]];
+        [diskIconFrame setTitle:@"D64 archive"];
         
     } else if ([archiveExtension isEqualToString:@"T64"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconT64"]];
+        [diskIconFrame setTitle:@"T64 archive"];
         
     } else if ([archiveExtension isEqualToString:@"PRG"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconPRG"]];
+        [diskIconFrame setTitle:@"PRG archive"];
 
     } else if ([archiveExtension isEqualToString:@"P00"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconP00"]];
+        [diskIconFrame setTitle:@"P00 archive"];
     }
     
-    [CancelButton setTitle:@"Cancel"];
-    [OKButton setTitle:@"Insert disk"];
+    // [CancelButton setTitle:@"Cancel"];
+    // [OKButton setTitle:@"Insert disk"];
     
     [self update];
 }

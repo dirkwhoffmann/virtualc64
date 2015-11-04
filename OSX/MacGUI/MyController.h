@@ -23,6 +23,7 @@
 @class PropertiesDialog;
 @class HardwareDialog;
 @class MountDialog;
+@class TapeDialog;
 @class RomDialog;
 @class PreferenceController;
 @class MyMetalView;
@@ -55,6 +56,7 @@ enum INPUT_DEVICES {
     IBOutlet PropertiesDialog *propertiesDialog;
     IBOutlet HardwareDialog *hardwareDialog;
 	IBOutlet MountDialog *mountDialog;
+    IBOutlet TapeDialog *tapeDialog;
 	IBOutlet RomDialog *romDialog;
 	PreferenceController *preferenceController;
 	
@@ -338,6 +340,10 @@ enum INPUT_DEVICES {
 - (bool)showMountDialog;
 - (IBAction)cancelMountDialog:(id)sender;
 - (IBAction)endMountDialog:(id)sender;
+
+- (bool)showTapeDialog;
+- (IBAction)cancelTapeDialog:(id)sender;
+- (IBAction)endTapeDialog:(id)sender;
 
 // Exporting
 - (BOOL)exportToD64:(NSString *)path;

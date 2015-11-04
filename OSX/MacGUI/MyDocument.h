@@ -19,7 +19,8 @@
 #import <Cocoa/Cocoa.h>
 
 @class C64Proxy;
-class D64Archive;
+class Archive;
+class TAPArchive;
 class Cartridge;
 class Snapshot;
 
@@ -33,22 +34,28 @@ class Snapshot;
     Snapshot *snapshot;
 
 	//! Reference to an attached D64 or G64 archive
-	/*! When a new documents opens and this variable is not NULL, the archive is automatically mounted */
+	/*! When a new documents opens and this variable is not NULL, the archive is automatically inserted into the virtual floopy drive */
 	Archive *archive;
-	
+
+    //! Reference to an attached tape image
+    /*! When a new documents opens and this variable is not NULL, the tape is automatically inserted into the virtual datasette */
+    TAPArchive *tape;
+
 	//! Reference to an attached cartridge 
-    /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged in */
+    /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged into the virtual expansion port */
 	Cartridge *cartridge;
 }
 
 @property (strong) C64Proxy *c64;
 @property (assign) Snapshot *snapshot;
 @property (assign) Archive *archive;
+@property (assign) TAPArchive *tape;
 @property (assign) Cartridge *cartridge;
 
 - (BOOL)setSnapshotWithName:(NSString *)path;
 - (BOOL)setG64ArchiveWithName:(NSString *)path;
 - (BOOL)setArchiveWithName:(NSString *)path;
+- (BOOL)setTAPArchiveWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;
 - (BOOL)detachCartridge;
 
