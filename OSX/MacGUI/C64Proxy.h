@@ -410,6 +410,21 @@
 
 @end
 
+// --------------------------------------------------------------------------
+//                                  Datasette
+// --------------------------------------------------------------------------
+
+@interface DatasetteProxy : NSObject {
+    Datasette *datasette;
+}
+
+- (id) initWithDatasette:(Datasette *)kb;
+- (void) dump;
+
+- (void) pressPlay;
+- (void) ejectTape;
+
+@end
 
 // --------------------------------------------------------------------------
 //                                    C64
@@ -435,7 +450,8 @@
 	IECProxy *iec;
     ExpansionPortProxy *expansionport;
 	VC1541Proxy *vc1541;
-	
+    DatasetteProxy *datasette;
+
 	//! Indicates that data is transmitted on the IEC bus
 	BOOL iecBusIsBusy;
 
@@ -457,6 +473,7 @@
 @property (readonly) IECProxy *iec;
 @property (readonly) ExpansionPortProxy *expansionport;
 @property (readonly) VC1541Proxy *vc1541;
+@property (readonly) DatasetteProxy *datasette;
 
 @property BOOL iecBusIsBusy;
 

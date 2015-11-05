@@ -60,23 +60,29 @@ public:
     //! @functiongroup Handling virtual taped
     //
     
-    /*! @brief Returns true if a tape is inserted
-     */
+    /*! @brief Returns true if a tape is inserted */
     inline bool hasTape() { return size != 0; }
     
-    /*! @brief      Inserts a TAP archive as a virtual tape
-     */
+    /*! @brief      Inserts a TAP archive as a virtual tape */
     void insertTape(TAPArchive *a);
 
     /*! @brief      Ejects the virtual tape
-     *  @discussion Does nothing, if no tape is present. 
-     */
+     *  @discussion Does nothing, if no tape is present.  */
     void ejectTape();
-    
+
+    /*! @brief      Put head at the beginning of the tape */
+    void rewind() { head = 0; };
+
+    /*! @brief      Read pulse length from tape */
+    int getByte();
+
     //
     //! @functiongroup Running the device
     //
     
+    /*! @brief      Press play on tape */
+    void pressPlay() { playKey = true; }
+
     /*! @brief    Executes the virtual datasette
      */
     void _execute();
@@ -96,6 +102,10 @@ private:
     /*! @todo       Idea: Convert tape archive data into type (0?) format. */
     uint8_t *data;
     
+    /*! @brief      Read/Write head
+        @discussion End of tape is indicated by -1. */
+    int32_t head;
+
     /*! @brief      Indicates whether the play key is pressed */
     bool playKey;
 

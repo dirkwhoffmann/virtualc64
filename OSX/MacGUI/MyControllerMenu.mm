@@ -331,6 +331,20 @@
     [self refresh];
 }
 
+- (IBAction)datasetteEjectAction:(id)sender
+{
+    NSLog(@"datasetteEjectAction");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 datasette] ejectTape];
+}
+
+- (IBAction)datasettePressPlayAction:(id)sender
+{
+    NSLog(@"datasettePressPlayAction");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 datasette] pressPlay];
+}
+
 
 // --------------------------------------------------------------------------------
 //                                 Debug menu

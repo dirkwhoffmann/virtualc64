@@ -32,11 +32,14 @@ Datasette::Datasette()
         // Internal state (will be cleared on reset)
         { &playKey,         sizeof(playKey),                CLEAR_ON_RESET },
         { &nextPulse,       sizeof(nextPulse),              CLEAR_ON_RESET },
+        { &head,            sizeof(head),                   CLEAR_ON_RESET },
         { NULL,             0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
 
+    size = 0;
     data = NULL;
+    head = -1;
 }
 
 Datasette::~Datasette()
@@ -109,6 +112,54 @@ Datasette::dumpState()
     msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
     msg("\n");
 #endif
+}
+
+void
+Datasette::insertTape(TAPArchive *a)
+{
+    size = a->getSize();
+    
+    debug(2, "Inserting tape (size = %d)...\n", size);
+    
+    data = (uint8_t *)malloc(size);
+    memcpy(data, a->getData(), size); 
+}
+
+void
+Datasette::ejectTape()
+{
+    debug(2, "Ejecting tape\n");
+
+    if (!hasTape())
+        return;
+
+    assert(data != NULL);
+
+    free(data);
+    data = NULL;
+    size = 0;
+}
+
+int
+Datasette::getByte()
+{
+    int result;
+    
+    if (head < 0)
+        return -1;
+    
+    // get byte
+    result = data[head];
+    
+    // check for end of file
+    if (head == (size - 1)) {
+        head = -1;
+    } else {
+        // advance head
+        head++;
+    }
+    
+    return result;
 }
 
 void

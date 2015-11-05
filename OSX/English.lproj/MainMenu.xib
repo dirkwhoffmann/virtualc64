@@ -256,6 +256,31 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Peripherals" id="ZXK-ud-QIJ" userLabel="Peripherals">
+                    <menu key="submenu" title="Peripherals" id="JYW-pe-zKE">
+                        <items>
+                            <menuItem title="Datasette" id="Gjk-bq-opq">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Datasette" id="h6H-Hr-boB">
+                                    <items>
+                                        <menuItem title="Eject tape" tag="3" id="hPZ-Xn-GaO">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="datasetteEjectAction:" target="-1" id="A6w-rk-gzf"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Press play on tape" tag="4" keyEquivalent="p" id="i09-C1-2RO">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="datasettePressPlayAction:" target="-1" id="ftb-zh-mBd"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Debug" id="414">
                     <menu key="submenu" title="Debug" id="415">
                         <items>

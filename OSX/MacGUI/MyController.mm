@@ -1017,7 +1017,7 @@
 
     NSLog(@"Should mount: %ld", (long)doMount);
     NSLog(@"Should flash: %ld", (long)doFlash);
-    NSLog(@"Should type:  %ld (%@)", (long)doType, textToType);
+    NSLog(@"Should type:  %ld", (long)doType, textToType);
     
 	// Rotate C64 screen
     if (doMount || doFlash) {
@@ -1045,8 +1045,7 @@
     // Type command if requested
     if (doType) {
         usleep(100000);
-        [[c64 keyboard] typeText:textToType];
-        [[c64 keyboard] typeText:@"\n"];
+        [[c64 keyboard] typeText:[NSString stringWithFormat:@"%@\n", textToType]];
     }
 }
 
@@ -1080,7 +1079,7 @@
 
 - (IBAction)endTapeDialog:(id)sender
 {
-    NSString *textToType = @"LOAD *,8,1"; // [tapeDialog loadCommand];
+    NSString *textToType = @"LOAD \"*\",1\n"; // [tapeDialog loadCommand];
     bool doAutoType = [tapeDialog doAutoType];
     bool doPressPlay = [tapeDialog doPressPlay];
     
@@ -1105,7 +1104,6 @@
         // TODO MOVE usleep into typeText
         usleep(100000);
         [[c64 keyboard] typeText:textToType];
-        [[c64 keyboard] typeText:@"\n"];
     }
 }
 

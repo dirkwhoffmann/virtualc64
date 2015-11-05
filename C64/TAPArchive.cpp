@@ -100,6 +100,11 @@ TAPArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
     memcpy(data, buffer, length);
     size = length;
     
+    int l = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
+    if (l + 0x14 /* Header */ != size) {
+        fprintf(stderr, "Size mismatch! Archive should have %d data bytes, found %d\n", l, size - 0x14);
+    }
+        
     return true;
 }
 
@@ -114,6 +119,7 @@ TAPArchive::writeToBuffer(uint8_t *buffer)
     return size;
 }
 
+#if 0
 void
 TAPArchive::selectItem(int n)
 {
@@ -144,3 +150,5 @@ TAPArchive::getByte()
     
     return result;
 }
+
+#endif

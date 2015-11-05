@@ -71,7 +71,9 @@ public:
     //
     
     unsigned TAPversion() { return data[0x000C]; }
-    void selectItem(int n);
-    int getByte();
+    uint8_t *getData() { return &data[0x0014]; }
+    int getSize() { return size; }
+    // void selectItem(int n);
+    // int getByte();
 };
 #endif

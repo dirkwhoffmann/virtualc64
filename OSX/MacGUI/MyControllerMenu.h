@@ -57,6 +57,7 @@
 - (IBAction)showStatusBar;
 - (IBAction)hideStatusBar;
 
+#pragma mark keyboard menu
 - (IBAction)runstopAction:(id)sender;
 - (IBAction)runstopRestoreAction:(id)sender;
 - (IBAction)commodoreKeyAction:(id)sender;
@@ -66,6 +67,10 @@
 - (IBAction)LoadDirectoryAction:(id)sender;
 - (IBAction)LoadFirstFileAction:(id)sender;
 - (IBAction)FormatDiskAction:(id)sender;
+
+#pragma mark peripherals menu
+- (IBAction)datasetteEjectAction:(id)sender;
+- (IBAction)datasettePressPlayAction:(id)sender;
 
 #pragma mark debug menu
 - (IBAction)hideSpritesAction:(id)sender;

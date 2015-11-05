@@ -513,12 +513,31 @@
 @end
 
 // --------------------------------------------------------------------------
-//                                     C64
+//                                    Datasette
 // -------------------------------------------------------------------------
+
+@implementation DatasetteProxy
+
+- (id) initWithDatasette:(Datasette *)ds
+{
+    self = [super init];
+    datasette = ds;
+    return self;
+}
+
+- (void) dump { datasette->dumpState(); }
+- (void) pressPlay { datasette->pressPlay(); }
+- (void) ejectTape { datasette->ejectTape(); }
+
+@end
+
+// --------------------------------------------------------------------------
+//                                     C64
+// --------------------------------------------------------------------------
 
 @implementation C64Proxy
 
-@synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, joystick1, joystick2, iec, expansionport, vc1541;
+@synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, joystick1, joystick2, iec, expansionport, vc1541, datasette;
 @synthesize iecBusIsBusy;
 
 - (id) init
