@@ -235,17 +235,6 @@ C64Memory::peekRom(uint16_t addr)
 	return rom[addr];
 } 
 
-#if 0
-uint8_t 
-C64Memory::peekCartridge(uint16_t addr)
-{
-	if (cartridge != NULL && cartridge->isRomAddr(addr))
-		return cartridge->peek(addr);
-    
-	return ram[addr];
-}
-#endif
-
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
@@ -382,7 +371,7 @@ uint8_t C64Memory::peek(uint16_t addr)
             
         case M_PP:
             
-            uint8_t dir, ext;
+            uint8_t dir, ext, result;
             
             if (addr > 0x0001)
                 return ram[addr];
@@ -390,8 +379,13 @@ uint8_t C64Memory::peek(uint16_t addr)
             // Processor port
             dir = cpu->getPortDirection();
             ext = cpu->getExternalPortBits();
-            return (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext);
             
+            // Datasette (move to getExternalPortBits(?) after cleanup)
+            if (c64->datasette.getPlayKey()) ext &= 0xEF; else ext |= 0x10;
+            
+            result = (addr == 0x0000) ? dir : (dir & cpu->getPort()) | (~dir & ext);
+            return result;
+
         case M_NONE:
             // what happens if RAM is unmapped?
             return ram[addr];

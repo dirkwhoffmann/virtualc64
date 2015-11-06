@@ -168,12 +168,17 @@ CPU::setPort(uint8_t value)
 	// Store value of Bit 7, Bit 6 and Bit 3 if the corresponding bit lines are configured as outputs
 	uint8_t mask = 0xC8 & port_direction;	
 	external_port_bits &= ~mask;
-	external_port_bits |= mask & port;	
+	external_port_bits |= mask & port;
+    
+    // Datasette
+    if (port_direction & 0x20) {
+        c64->datasette.setMotor((value & 0x20) == 0);
+    }
 }
 
-void 
-CPU::setIRQLine(uint8_t bit) 
-{ 
+void
+CPU::setIRQLine(uint8_t bit)
+{
 	assert(bit != 0);
     
 	if (irqLine == 0) {

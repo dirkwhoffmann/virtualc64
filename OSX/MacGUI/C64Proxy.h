@@ -541,6 +541,8 @@
 - (bool) mountArchive:(Archive *)a;
 - (bool) flushArchive:(Archive *)a item:(int)nr;
 
+- (bool) insertTape:(TAPArchive *)a;
+
 - (bool) warp;
 - (void) setWarp:(bool)b;
 - (bool) alwaysWarp;

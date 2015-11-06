@@ -1096,8 +1096,7 @@
     [NSApp endSheet:tapeDialog returnCode:1];
     
     // Insert tape into datasette
-    NSLog(@"IMPLEMENTATION MISSING");
-    
+    [c64 insertTape:[[self document] tape]];
     
     // Type command if requested
     if (doAutoType) {

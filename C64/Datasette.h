@@ -73,20 +73,30 @@ public:
     /*! @brief      Put head at the beginning of the tape */
     void rewind() { head = 0; };
 
-    /*! @brief      Read pulse length from tape */
+    /*! @brief      Reads byte from TAP data */
     int getByte();
+
+    /*! @brief      Next pulse length in number of cycles */
+    int nextPulseLength();
+
 
     //
     //! @functiongroup Running the device
     //
     
     /*! @brief      Press play on tape */
-    void pressPlay() { playKey = true; }
+    void pressPlay(); 
+
+    /*! @brief      Returns true if the play key is pressed */
+    bool getPlayKey() { return playKey; }
+
+    /*! @brief      Switches motor on or off */
+    void setMotor(bool value);
 
     /*! @brief    Executes the virtual datasette
      */
     void _execute();
-    inline void execute() { if (playKey) _execute(); }
+    inline void execute() { if (playKey && motor) _execute(); }
 
     // ---------------------------------------------------------------------------------------------
     //                                   Tape properties
@@ -108,6 +118,9 @@ private:
 
     /*! @brief      Indicates whether the play key is pressed */
     bool playKey;
+
+    /*! @brief      Indicates whether the motor is on */
+    bool motor;
 
     /*! @brief      Cycle number of the next pulse to generate */
     uint64_t nextPulse;

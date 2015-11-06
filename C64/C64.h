@@ -481,6 +481,10 @@ public:
     /*! @discussion Only D64 and G64 archives are supported */
 	bool mountArchive(Archive *a);
 
+    //! @brief      Inserts a TAP archive as a virtual datasette tape
+    /*! @discussion Only TAP archives can be used as tape */
+    bool insertTape(TAPArchive *a);
+
 	
 	// ---------------------------------------------------------------------------------------------
 	//                                            Cartridges

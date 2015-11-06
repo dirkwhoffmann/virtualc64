@@ -965,6 +965,19 @@ C64::mountArchive(Archive *a)
 	return true;
 }
 
+bool
+C64::insertTape(TAPArchive *a)
+{
+    if (a == NULL)
+        return false;
+    
+    suspend();
+    debug("Inserting tape %p\n", a);
+    datasette.insertTape(a);
+    resume();
+    
+    return true;
+}
 
 // ---------------------------------------------------------------------------------------------
 //                                            Cartridges

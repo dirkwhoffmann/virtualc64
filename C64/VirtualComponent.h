@@ -330,7 +330,7 @@ public:
     
     /*! @brief    Saves a byte block of arbitarary size
      *  @param    ptr    Target buffer
-     *  @param    values Pointer to the beginning of the data block
+     *  @param    values Pointer to the beginning of the data blockbt
      *  @param    length Length of data block in bytes
      */
     inline void writeBlock(uint8_t **ptr, uint8_t *values, size_t length) {

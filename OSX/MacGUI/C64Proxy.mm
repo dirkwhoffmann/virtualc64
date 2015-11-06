@@ -563,6 +563,7 @@
     iec = [[IECProxy alloc] initWithIEC:c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:c64->floppy];
+    datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
 	
 	// Initialize CoreAudio sound interface
 	if (!(audioDevice = [[AudioDevice alloc] initWithC64:c64])) {
@@ -666,6 +667,8 @@
 
 - (bool) mountArchive:(Archive *)a { return c64->mountArchive(a); }
 - (bool) flushArchive:(Archive *)a item:(int)nr { return c64->flushArchive(a,nr); }
+
+- (bool) insertTape:(TAPArchive *)a { return c64->insertTape(a); }
 
 - (bool) warp { return c64->getWarp(); }
 - (void) setWarp:(bool)b { c64->setWarp(b); }	

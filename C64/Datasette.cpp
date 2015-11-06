@@ -31,15 +31,15 @@ Datasette::Datasette()
         
         // Internal state (will be cleared on reset)
         { &playKey,         sizeof(playKey),                CLEAR_ON_RESET },
+        { &motor,           sizeof(motor),                  CLEAR_ON_RESET },
         { &nextPulse,       sizeof(nextPulse),              CLEAR_ON_RESET },
         { &head,            sizeof(head),                   CLEAR_ON_RESET },
         { NULL,             0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
-
-    size = 0;
+    
     data = NULL;
-    head = -1;
+    size = 0;
 }
 
 Datasette::~Datasette()
@@ -55,6 +55,7 @@ Datasette::reset()
 {
     VirtualComponent::reset();
     data = NULL;
+    head = -1;
 }
 
 void
@@ -71,7 +72,7 @@ Datasette::ping()
 uint32_t
 Datasette::stateSize()
 {
-    return VirtualComponent::stateSize() + size /* data buffer */;
+    return VirtualComponent::stateSize() + size;
 }
 
 void
@@ -80,8 +81,11 @@ Datasette::loadFromBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     VirtualComponent::loadFromBuffer(buffer);
-    if (size)
+    if (size) {
+        if (data == NULL)
+            data = (uint8_t *)malloc(size);
         readBlock(buffer, (uint8_t *)data, size);
+    }
     
     if (*buffer - old != stateSize())
         assert(0);
@@ -93,8 +97,10 @@ Datasette::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     VirtualComponent::saveToBuffer(buffer);
-    if (size)
+    if (size) {
+        assert(data != NULL);
         writeBlock(buffer, (uint8_t *)data, size);
+    }
     
     if (*buffer - old != stateSize())
         assert(0);
@@ -122,7 +128,8 @@ Datasette::insertTape(TAPArchive *a)
     debug(2, "Inserting tape (size = %d)...\n", size);
     
     data = (uint8_t *)malloc(size);
-    memcpy(data, a->getData(), size); 
+    memcpy(data, a->getData(), size);
+    rewind(); 
 }
 
 void
@@ -149,7 +156,7 @@ Datasette::getByte()
         return -1;
     
     // get byte
-    result = data[head];
+    result = (uint8_t)data[head];
     
     // check for end of file
     if (head == (size - 1)) {
@@ -162,16 +169,57 @@ Datasette::getByte()
     return result;
 }
 
+int
+Datasette::nextPulseLength()
+{
+    int byte = getByte();
+    
+    if (byte == -1)
+        return -1;
+    
+    if (byte == 0) {
+        return 8 * 255;
+    } else {
+        return 8 * byte;
+    }
+}
+
+void
+Datasette::pressPlay()
+{
+    debug("Datasette::pressPlay\n");
+    nextPulse = c64->getCycles() + 1;
+    playKey = true;
+}
+
+void
+Datasette::setMotor(bool value)
+{
+    if (motor == value)
+        return;
+    
+    motor = value;
+    debug(2, "Motor %s\n", motor ? "on" : "off");
+}
+
 void
 Datasette::_execute()
 {
-    if (nextPulse > c64->getCycles()) {
+    if (c64->getCycles() >= nextPulse) {
 
         // Trigger pulse
+        // debug(2, "Pulse at %lld\n", c64->getCycles());
         
         // Schedule next pulse
-        // 
-        // nextPulse += 42;
+        int length = nextPulseLength();
+        if (length == -1) {
+            debug(2, "End of tape reached.\n");
+            playKey = false;
+        }
+        nextPulse += length;
+
+        // debug(2, "Next pulse in %d cycles\n", length);
+        // debug(2, "Cycle: %lld nextPulse at: %lld\n", c64->getCycles(), nextPulse);
     }
 }
 
