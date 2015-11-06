@@ -80,6 +80,30 @@ CIA::reset()
 	latchB = 0xFFFF;
 }
 
+void
+CIA::setFlagPin(uint8_t value)
+{
+    if ((value == 0) == ((ICR & 0x10) == 0))
+        return;
+    
+    if (value) {
+        
+        // Rising edge on external signal (falling edge on internal bit(?))
+        ICR &= ~0x10;
+
+    } else {
+        
+        // Falling edge on external signal (rising edge on internal bit(?))
+        ICR |= 0x10;
+        
+        // Trigger interrupt, if enabled
+        if (IMR & 0x10) {
+            ICR |= 0x80;
+            raiseInterruptLine();
+        }
+    }
+}
+
 uint8_t
 CIA::peek(uint16_t addr)
 {

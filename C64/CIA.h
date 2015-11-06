@@ -234,7 +234,10 @@ public:
 	
 	//! Sets the current value of the data port B direction register
 	inline void setDataPortDirectionB(uint8_t value) { DDRB = value; }
-		
+
+    //! Sets the current value of the FLAG pin
+    void setFlagPin(uint8_t value);
+
 	//! Special peek function for the I/O memory range
 	/*! The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip */
 	virtual uint8_t peek(uint16_t addr);
@@ -287,6 +290,12 @@ public:
 	//! Enable or disable "time of day" interrupts 
 	inline void setInterruptEnabledTOD(bool b) { if (b) ICR |= 0x04; else ICR &= (0xff-0x04); }
 
+    //! Returns true, if a negative edge on the FLAG pin triggers an interrupt
+    inline bool isInterruptEnabledFlg() { return ICR & 0x10; }
+    
+    //! Enable or disable interrupts on negative edges of the FLAG pin
+    inline void setInterruptEnabledFlg(bool b) { if (b) ICR |= 0x10; else ICR &= (0xff-0x10); }
+    
 	//
 	// Timer A
 	// 
