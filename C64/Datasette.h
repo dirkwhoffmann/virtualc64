@@ -111,7 +111,13 @@ private:
     //! @brief      Data buffer (contains the raw data of the TAP archive)
     /*! @todo       Idea: Convert tape archive data into type (0?) format. */
     uint8_t *data;
-    
+
+    //! @brief      Data format (TAP type)
+    /*! @discussion In TAP format 0, data byte 0 signals a long puls without stating its length precisely.
+     *              In TAP format 1, each 0 is followed by three bytes stating the precise length in
+     *              LO_LO_HI_00 format. */
+    uint8_t type;
+
     /*! @brief      Read/Write head
         @discussion End of tape is indicated by -1. */
     int32_t head;

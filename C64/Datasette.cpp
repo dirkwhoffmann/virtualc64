@@ -28,6 +28,7 @@ Datasette::Datasette()
         
         // Tape properties (will survive reset)
         { &size,            sizeof(size),                   KEEP_ON_RESET },
+        { &type,            sizeof(type),                   KEEP_ON_RESET },
         
         // Internal state (will be cleared on reset)
         { &playKey,         sizeof(playKey),                CLEAR_ON_RESET },
@@ -38,8 +39,10 @@ Datasette::Datasette()
     
     registerSnapshotItems(items, sizeof(items));
     
+    // Initialize all values that are not initialized in reset()
     data = NULL;
     size = 0;
+    type = 0;
 }
 
 Datasette::~Datasette()
@@ -124,8 +127,9 @@ void
 Datasette::insertTape(TAPArchive *a)
 {
     size = a->getSize();
+    type = a->TAPversion();
     
-    debug(2, "Inserting tape (size = %d)...\n", size);
+    debug(2, "Inserting tape (size = %d, type = %d)...\n", size, type);
     
     data = (uint8_t *)malloc(size);
     memcpy(data, a->getData(), size);
@@ -177,11 +181,11 @@ Datasette::nextPulseLength()
     if (byte == -1)
         return -1;
     
-    if (byte == 0) {
-        return 8 * 255;
-    } else {
+    if (byte != 0)
         return 8 * byte;
-    }
+
+    // Long pulse (encoding depends on the TAP type)
+    return type ? LO_LO_HI_HI(getByte(), getByte(), getByte(), 0) : (8 * 256);
 }
 
 void
