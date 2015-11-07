@@ -73,6 +73,9 @@ public:
     /*! @brief      Put head at the beginning of the tape */
     void rewind() { head = 0; };
 
+    /*! @brief      Returns the head position as a percentage value */
+    int headPositionInPercent() { return size ? (int)(100.0 * head / size) : 0; }
+
     /*! @brief      Reads byte from TAP data */
     int getByte();
 
@@ -96,6 +99,8 @@ public:
     /*! @brief    Executes the virtual datasette
      */
     void _execute();
+    void _executeBeginning();
+    void _executeMiddle();
     inline void execute() { if (playKey && motor) _execute(); }
 
     // ---------------------------------------------------------------------------------------------
@@ -121,6 +126,12 @@ private:
     /*! @brief      Read/Write head
         @discussion End of tape is indicated by -1. */
     int32_t head;
+
+    /*! @brief      Indicates whether we are in the middle of a pulse (1) or at the beginning (0) */
+    bool middleOfPulse;
+
+    /*! @brief      Length of the current pulse */
+    int32_t pulseLength;
 
     /*! @brief      Indicates whether the play key is pressed */
     bool playKey;

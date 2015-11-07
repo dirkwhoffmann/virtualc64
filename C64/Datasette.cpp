@@ -31,6 +31,9 @@ Datasette::Datasette()
         { &type,            sizeof(type),                   KEEP_ON_RESET },
         
         // Internal state (will be cleared on reset)
+        { &middleOfPulse,   sizeof(middleOfPulse),          CLEAR_ON_RESET },
+        { &pulseLength,     sizeof(pulseLength),            CLEAR_ON_RESET },
+
         { &playKey,         sizeof(playKey),                CLEAR_ON_RESET },
         { &motor,           sizeof(motor),                  CLEAR_ON_RESET },
         { &nextPulse,       sizeof(nextPulse),              CLEAR_ON_RESET },
@@ -57,8 +60,7 @@ void
 Datasette::reset()
 {
     VirtualComponent::reset();
-    data = NULL;
-    head = -1;
+    rewind();
 }
 
 void
@@ -133,7 +135,14 @@ Datasette::insertTape(TAPArchive *a)
     
     data = (uint8_t *)malloc(size);
     memcpy(data, a->getData(), size);
-    rewind(); 
+    rewind();
+    
+    for (unsigned i = 0; i < 10; i++) {
+        for (unsigned j = 0; j < 16; j++) {
+            fprintf(stderr, "%02X ", data[head+i*16+j]);
+        }
+        fprintf(stderr, "\n");
+    }
 }
 
 void
@@ -155,6 +164,7 @@ int
 Datasette::getByte()
 {
     int result;
+    // static int debugcnt = 0;
     
     if (head < 0)
         return -1;
@@ -192,7 +202,7 @@ void
 Datasette::pressPlay()
 {
     debug("Datasette::pressPlay\n");
-    nextPulse = c64->getCycles() + 1;
+    nextPulse = c64->getCycles() + 0.5 * PAL_CYCLES_PER_FRAME * 60; /* wait approx. 0.5 seconds */
     playKey = true;
 }
 
@@ -210,20 +220,55 @@ void
 Datasette::_execute()
 {
     if (c64->getCycles() >= nextPulse) {
-
-        // Trigger pulse
-        // debug(2, "Pulse at %lld\n", c64->getCycles());
-        
-        // Schedule next pulse
-        int length = nextPulseLength();
-        if (length == -1) {
-            debug(2, "End of tape reached.\n");
-            playKey = false;
-        }
-        nextPulse += length;
-
-        // debug(2, "Next pulse in %d cycles\n", length);
-        // debug(2, "Cycle: %lld nextPulse at: %lld\n", c64->getCycles(), nextPulse);
+        if (middleOfPulse)
+            _executeMiddle();
+        else
+            _executeBeginning();
     }
+}
+
+void
+Datasette::_executeBeginning()
+{
+    static int percentage = -42;
+    static int pulsecnt = 0;
+    static int eot = 0;
+
+    // Get pulse length
+    pulseLength = nextPulseLength(); 
+
+    // Check for end of tape
+    if (pulseLength == -1) {
+        if (!eot) {
+            debug(2, "End of tape reached.\n");
+            eot = 1;
+        }
+        c64->cia1->triggerFallingEdgeOnFlagPin();
+        // playKey = false;
+        return;
+    }
+    
+    // Pull signal low (possibly causing an interrupt) and schedule rising edge
+    c64->cia1->triggerFallingEdgeOnFlagPin();
+    nextPulse = c64->getCycles() + (pulseLength / 2);
+    middleOfPulse = 1;
+
+    // Debug Output
+    if (pulsecnt++ < 300) {
+        debug(2, "Next pulse in %d cycles\n", pulseLength);
+    }
+    if (percentage != headPositionInPercent()) {
+        debug(" %d %% completed\n", percentage);
+        percentage = headPositionInPercent();
+    }
+}
+
+void
+Datasette::_executeMiddle()
+{
+    // Pull signal high and schedule falling edge
+    c64->cia1->triggerRisingEdgeOnFlagPin();
+    nextPulse = c64->getCycles() + (pulseLength / 2);
+    middleOfPulse = 0;
 }
 

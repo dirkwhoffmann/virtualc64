@@ -237,6 +237,8 @@ public:
 
     //! Sets the current value of the FLAG pin
     void setFlagPin(uint8_t value);
+    void triggerRisingEdgeOnFlagPin();
+    void triggerFallingEdgeOnFlagPin();
 
 	//! Special peek function for the I/O memory range
 	/*! The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip */

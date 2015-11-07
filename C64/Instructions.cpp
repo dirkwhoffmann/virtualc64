@@ -25,13 +25,15 @@ extern unsigned dirkcnt;
 // Cycle 0
 void 
 CPU::fetch() {
-	    
+    
+    static int debugcnt = 0;
     bool doNMI = false, doIRQ = false;
 	
 	PC_at_cycle_0 = PC;
 	
 	// Check interrupt lines
-    if (interruptsPending) {
+    // if (interruptsPending) {
+    if (1) {
     
         if (nmiEdge && NMILineRaisedLongEnough()) {
             if (tracingEnabled())
@@ -44,6 +46,8 @@ CPU::fetch() {
         } else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
             if (tracingEnabled())
                 debug(1, "IRQ (source = %02X)\n", irqLine);
+            if (isC64CPU() && irqLine & 0x10)
+              debug(1, "IRQ (source = FLAG pin)\n");
             next = &CPU::irq_2;
             doIRQ = true;
             return;
@@ -73,6 +77,16 @@ CPU::fetch() {
 
     // DIRK DEBUG
     
+    if (PC_at_cycle_0 == 0xF92C) {
+        if (debugcnt++ < 300)
+            fprintf(stderr, "cassette read IRQ routine\n");
+    }
+
+    if (PC_at_cycle_0 == 0xF988) {
+        if (debugcnt++ < 300)
+            fprintf(stderr, "zu empfangenes Byte verarbeiten\n");
+    }
+
     /*
     if (!isC64CPU() && PC_at_cycle_0 == 0xFAC7) {
         fprintf(stderr, "Jobroutine zum Formatieren einer Diskette\n");

@@ -80,27 +80,47 @@ CIA::reset()
 	latchB = 0xFFFF;
 }
 
+
 void
 CIA::setFlagPin(uint8_t value)
 {
-    if ((value == 0) == ((ICR & 0x10) == 0))
-        return;
-    
-    if (value) {
-        
-        // Rising edge on external signal (falling edge on internal bit(?))
-        ICR &= ~0x10;
+    static int cnt = 0;
+    if (cnt++ < 300) {
+        debug("triggsetFlagPin(%d)\n", value); 
+    }
 
-    } else {
-        
-        // Falling edge on external signal (rising edge on internal bit(?))
+    if (value) // Note: FLAG pin is inverted
+        ICR &= ~0x10;
+    else
         ICR |= 0x10;
+}
+
+void
+CIA::triggerRisingEdgeOnFlagPin()
+{
+    static int cnt = 0;
+    if (cnt++ < 300) {
+        debug("triggerRisingEdgeOnFlagPin\n");
+    }
+
+    ICR &= ~0x10; // Note: FLAG pin is inverted
+}
+
+void
+CIA::triggerFallingEdgeOnFlagPin()
+{
+    static int cnt = 0;
+    if (cnt++ < 300) {
+        debug("triggerFallingEdgeOnFlagPin\n");
+    }
+    
+    ICR |= 0x10; // Note: FLAG pin is inverted
         
-        // Trigger interrupt, if enabled
-        if (IMR & 0x10) {
-            ICR |= 0x80;
-            raiseInterruptLine();
-        }
+    // Trigger interrupt, if enabled
+    if (IMR & 0x10) {
+        // debug(2, "Negative edge on FLAG pin -> Interrupt at %lld\n", c64->getCycles());
+        ICR |= 0x80;
+        raiseInterruptLine();
     }
 }
 
