@@ -77,19 +77,35 @@ CPU::fetch() {
 
     // DIRK DEBUG
 
-    if (PC_at_cycle_0 == 0xF92C) {
+    if (PC_at_cycle_0 == 0xF84A) {
         if (debugcnt++ < 300)
-            fprintf(stderr, "wartet auf Play-Taste\n");
+            fprintf(stderr, "Programm vom Band laden\n");
+    }
+
+    if (PC_at_cycle_0 == 0xF88D) {
+        if (debugcnt++ < 300)
+            fprintf(stderr, "Bildschirm verdunkeln\n");
+    }
+
+    if (PC_at_cycle_0 == 0xF8AD) {
+        if (debugcnt++ < 300)
+            fprintf(stderr, "Bandmotor einschalten\n");
     }
 
     if (PC_at_cycle_0 == 0xF8BD) {
         if (debugcnt++ < 300)
-            fprintf(stderr, "Interrupt fŸr Band I/O freigeben\n");
+            fprintf(stderr, "Interrupt fuer Band I/O freigeben\n");
     }
-    if (PC_at_cycle_0 == 0xF8DC) {
+    /*
+    if (PC_at_cycle_0 == 0xF8D0) {
         if (debugcnt++ < 300)
-            fprintf(stderr, "I/O Abgeschlossen. RŸcksprung\n");
+            fprintf(stderr, "STOP-Taste abfragen\n");
     }
+    if (PC_at_cycle_0 == 0xF8E1) {
+        if (debugcnt++ < 300)
+            fprintf(stderr, "I/O abgeschlossen. Ruecksprung\n");
+    }
+    */
     if (PC_at_cycle_0 == 0xF92C) {
         if (debugcnt++ < 300)
             fprintf(stderr, "cassette read IRQ routine\n");

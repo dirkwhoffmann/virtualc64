@@ -280,10 +280,10 @@
                                                 <action selector="datasettePressPlayAction:" target="-1" id="wJj-Pf-4nd"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Press stop key" keyEquivalent="s" id="i09-C1-2RO">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                        <menuItem title="Press stop key" id="i09-C1-2RO">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="datasettePressPlayAction:" target="-1" id="ftb-zh-mBd"/>
+                                                <action selector="datasettePressStopAction:" target="-1" id="PNA-og-1VM"/>
                                             </connections>
                                         </menuItem>
                                     </items>
