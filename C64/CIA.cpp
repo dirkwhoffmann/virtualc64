@@ -80,45 +80,31 @@ CIA::reset()
 	latchB = 0xFFFF;
 }
 
-
+#if 0
 void
 CIA::setFlagPin(uint8_t value)
 {
-    static int cnt = 0;
-    if (cnt++ < 300) {
-        debug("triggsetFlagPin(%d)\n", value); 
-    }
-
     if (value) // Note: FLAG pin is inverted
         ICR &= ~0x10;
     else
         ICR |= 0x10;
 }
+#endif
 
 void
 CIA::triggerRisingEdgeOnFlagPin()
 {
-    static int cnt = 0;
-    if (cnt++ < 300) {
-        debug("triggerRisingEdgeOnFlagPin\n");
-    }
-
-    ICR &= ~0x10; // Note: FLAG pin is inverted
+    // ICR &= ~0x10; // Note: FLAG pin is inverted
 }
 
 void
 CIA::triggerFallingEdgeOnFlagPin()
 {
-    static int cnt = 0;
-    if (cnt++ < 300) {
-        debug("triggerFallingEdgeOnFlagPin\n");
-    }
-    
     ICR |= 0x10; // Note: FLAG pin is inverted
         
     // Trigger interrupt, if enabled
     if (IMR & 0x10) {
-        // debug(2, "Negative edge on FLAG pin -> Interrupt at %lld\n", c64->getCycles());
+        INT = 0;
         ICR |= 0x80;
         raiseInterruptLine();
     }
@@ -619,6 +605,7 @@ void CIA::executeOneCycle()
 	// Decrement counter
 	if (delay & CountB3) {
 		counterB--; // (1)
+        // debug("Counter B down to %04X \n", counterB);
 	}
 
 	// Check underflow condition

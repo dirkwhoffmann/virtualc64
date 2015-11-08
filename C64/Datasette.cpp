@@ -228,9 +228,6 @@ Datasette::setMotor(bool value)
 void
 Datasette::_execute()
 {
-    static int eot = 0;
-    static int bot = 0;
-    
     if (!hasTape() || !playKey || !motor)
         return;
     
@@ -247,12 +244,9 @@ void
 Datasette::_executeBeginning()
 {
     static int percentage = -42;
-    static int pulsecnt = 0;
-    static int bot = 0;
-    static int eot = 0;
 
     pulseLength = nextPulseLength();
-    
+
     if (head == 0) {
         
         // Trigger first edge (transmission starts here)
@@ -262,23 +256,12 @@ Datasette::_executeBeginning()
         // Schedule next pulse
         nextPulse = c64->getCycles() + (pulseLength / 2);
         middleOfPulse = 1;
-        
-        if (!bot) {
-            debug(2, "Starting transmission.\n");
-            bot = 1;
-        }
-        
     }
     
     else if (pulseLength == -1) {
         
         // Trigger last edge (transmission ends here)
-        c64->cia1->triggerFallingEdgeOnFlagPin();
-        
-        if (!eot) {
-            debug(2, "Stopping transmission (end of tape reached).\n");
-            eot = 1;
-        }
+        c64->cia1->triggerFallingEdgeOnFlagPin();        
     }
     
     else {
@@ -293,9 +276,9 @@ Datasette::_executeBeginning()
         // Progress info
         assert(head != 0);
         assert(size != 0);
-        if (percentage != (100 * head) / size) {
-            percentage = (100 * head) / size;
-            debug("%d percent completed\n", percentage <= 100 ? percentage : 100);
+        if (percentage != progress()) {
+            percentage = progress();
+            debug("%d percent completed\n", percentage);
         }
     }
 }

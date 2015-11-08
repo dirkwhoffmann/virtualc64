@@ -424,7 +424,7 @@ public:
 	//! Set ATN bit of IRQ line (1541 drive)
 	inline void setIRQLineATN() { setIRQLine(0x40); }
 	//! Clear CIA bit of IRQ line
-	inline void clearIRQLineCIA() { clearIRQLine(0x01); }	
+	inline void clearIRQLineCIA() { clearIRQLine(0x01); }
 	//! Clear VIC bit of IRQ line
 	inline void clearIRQLineVIC() { clearIRQLine(0x02); }	
     //! Clear VIA 1 bit of IRQ line (1541 drive)

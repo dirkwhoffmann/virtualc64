@@ -26,7 +26,6 @@ extern unsigned dirkcnt;
 void 
 CPU::fetch() {
     
-    static int debugcnt = 0;
     bool doNMI = false, doIRQ = false;
 	
 	PC_at_cycle_0 = PC;
@@ -46,8 +45,19 @@ CPU::fetch() {
         } else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
             if (tracingEnabled())
                 debug(1, "IRQ (source = %02X)\n", irqLine);
-            if (isC64CPU() && irqLine & 0x10)
-              debug(1, "IRQ (source = FLAG pin)\n");
+            /*
+            if (debugirq) {
+                debugirq = 0;
+                debug("IRQ (source = %02X, cycle = %lld)\n", irqLine, c64->getCycles());
+            }
+             */
+            /*
+            if (c64->mem->peek(0x0315) == 0xF9 && c64->mem->peek(0x0314) == 0x2C) {
+                debug("INTERRUPTING TO %02X%02X CASETTE ROUTINE at cycle %lld (CIA1.timerB = %04X) irqline = %02X\n",
+                      c64->mem->peek(0xFFFF), c64->mem->peek(0xFFFE), c64->getCycles(), c64->cia1->counterB, irqLine);
+                // c64->cpu->setTraceMode(true);
+            }
+            */
             next = &CPU::irq_2;
             doIRQ = true;
             return;
@@ -73,80 +83,6 @@ CPU::fetch() {
 		}
 		debug(1, "Breakpoint reached\n");
 	}
-    
-
-    // DIRK DEBUG
-
-    if (PC_at_cycle_0 == 0xF84A) {
-        if (debugcnt++ < 300)
-            fprintf(stderr, "Programm vom Band laden\n");
-    }
-
-    if (PC_at_cycle_0 == 0xF88D) {
-        if (debugcnt++ < 300)
-            fprintf(stderr, "Bildschirm verdunkeln\n");
-    }
-
-    if (PC_at_cycle_0 == 0xF8AD) {
-        if (debugcnt++ < 300)
-            fprintf(stderr, "Bandmotor einschalten\n");
-    }
-
-    if (PC_at_cycle_0 == 0xF8BD) {
-        if (debugcnt++ < 300)
-            fprintf(stderr, "Interrupt fuer Band I/O freigeben\n");
-    }
-    /*
-    if (PC_at_cycle_0 == 0xF8D0) {
-        if (debugcnt++ < 300)
-            fprintf(stderr, "STOP-Taste abfragen\n");
-    }
-    if (PC_at_cycle_0 == 0xF8E1) {
-        if (debugcnt++ < 300)
-            fprintf(stderr, "I/O abgeschlossen. Ruecksprung\n");
-    }
-    */
-    if (PC_at_cycle_0 == 0xF92C) {
-        if (debugcnt++ < 300)
-            fprintf(stderr, "cassette read IRQ routine\n");
-    }
-
-    if (PC_at_cycle_0 == 0xF988) {
-        if (debugcnt++ < 300)
-            fprintf(stderr, "zu empfangenes Byte verarbeiten\n");
-    }
-
-    /*
-    if (!isC64CPU() && PC_at_cycle_0 == 0xFAC7) {
-        fprintf(stderr, "Jobroutine zum Formatieren einer Diskette\n");
-    }
-    */
-    
-    /*
-     if (isC64CPU && dirktrace == 0 && PC == 0x0879) {
-     dirktrace = 1; // ON
-     // c64->mem->ram[0x0930] = 0x2B;
-     // c64->mem->ram[0x0931] = 0x17;
-     }
-     */
-    
-    /*
-     if (isC64CPU && dirktrace == 1)
-     dirkcnt++;
-     */
-    
-    /*
-     if (isC64CPU && dirkcnt > 10000) {
-     dirktrace = 2; // OFF
-     }
-     */
-    
-    /*
-     if (isC64CPU && dirktrace == 1) { // && c64->vic->getScanline() == 77) {
-     printf("%d: %s\n",PC-1, disassemble());
-     }
-     */
-
 }
 
 

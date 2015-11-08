@@ -74,13 +74,13 @@ public:
     void rewind() { head = 0; }
 
     /*! @brief      Returns true if head points to the first data byte (beginning of file) */
-    bool firsByte() { return head == 0; }
+    // bool firsByte() { return head == 0; }
 
     /*! @brief      Returns true if head points to the last data byte (beginning of file) */
-    bool lastByte() { return head == (size - 1); }
+    // bool lastByte() { return head == (size - 1); }
 
     /*! @brief      Returns the head position as a percentage value */
-    int headPositionInPercent() { return size ? (int)(100.0 * head / size) : 0; }
+    int progress() { return size ? (int)(100.0 * head / size) : 0; }
 
     /*! @brief      Reads byte from TAP data */
     int getByte();

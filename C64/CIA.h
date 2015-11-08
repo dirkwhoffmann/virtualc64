@@ -236,7 +236,7 @@ public:
 	inline void setDataPortDirectionB(uint8_t value) { DDRB = value; }
 
     //! Sets the current value of the FLAG pin
-    void setFlagPin(uint8_t value);
+    // void setFlagPin(uint8_t value);
     void triggerRisingEdgeOnFlagPin();
     void triggerFallingEdgeOnFlagPin();
 

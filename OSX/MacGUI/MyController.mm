@@ -1017,7 +1017,7 @@
 
     NSLog(@"Should mount: %ld", (long)doMount);
     NSLog(@"Should flash: %ld", (long)doFlash);
-    NSLog(@"Should type:  %ld", (long)doType, textToType);
+    NSLog(@"Should type:  %ld (%@)", (long)doType, textToType);
     
 	// Rotate C64 screen
     if (doMount || doFlash) {
