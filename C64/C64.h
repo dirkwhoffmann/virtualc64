@@ -17,15 +17,19 @@
 
 // VERSION 1.3:
 //
-// TAPArchive : Container
-// Add TAP to drag and drop
-// Datasette class
-//    execute : if (!play) return;
-//    insertTape
-// execute each cycle or each rasterline?
-// TapeDialog similar to MountDialog (separate XIB files possible?)
+// Media toolbar icon and media dialog
+// Tape: Buttons: Play, Stop, Rewind, Eject, Ruler for head position
+// Add Datasette::duration (length of tape in seconds)
+// Make TAP files loadable via "File->Load"
+// Make TAP files loadable via "Drag icon on VirtualC64 icon"
+// Add icons to bottom bar
+// Show percentage bar and percentage when loading. NOT NEEDED. PROGRESS CAN BE CHECKED IN MEDIA DIALOG
+// Don't forget to implement Datasette::ping()
+// Make sure, loadBuffer and saveBuffer works
+
+
+// Add
 // Cartridge dialog
-// Media toolbar icon
 //
 // VIC Sprite compatibility
 // Check if bus activity can be detected more precisely

@@ -113,6 +113,14 @@
 		50BD119F1BA2E1DB0043E59F /* MyControllerCrashreporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
+		50C8924F1BEFB11700231B96 /* cntrlEject.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C8924E1BEFB11700231B96 /* cntrlEject.png */; };
+		50C892511BEFB31200231B96 /* tape.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892501BEFB31200231B96 /* tape.png */; };
+		50C892531BEFB48600231B96 /* cntrlPause.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892521BEFB48600231B96 /* cntrlPause.png */; };
+		50C892591BEFB64500231B96 /* cntrlPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892541BEFB64500231B96 /* cntrlPlay.png */; };
+		50C8925A1BEFB64500231B96 /* cntrlRewind.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892551BEFB64500231B96 /* cntrlRewind.png */; };
+		50C8925B1BEFB64500231B96 /* cntrlStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892561BEFB64500231B96 /* cntrlStart.png */; };
+		50C8925C1BEFB64500231B96 /* cntrlStop.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892571BEFB64500231B96 /* cntrlStop.png */; };
+		50C8925D1BEFB64500231B96 /* ctrlEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892581BEFB64500231B96 /* ctrlEnd.png */; };
 		50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
@@ -374,6 +382,14 @@
 		50BD119E1BA2E1DB0043E59F /* MyControllerCrashreporter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerCrashreporter.mm; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		50C8924E1BEFB11700231B96 /* cntrlEject.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlEject.png; sourceTree = "<group>"; };
+		50C892501BEFB31200231B96 /* tape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tape.png; sourceTree = "<group>"; };
+		50C892521BEFB48600231B96 /* cntrlPause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlPause.png; sourceTree = "<group>"; };
+		50C892541BEFB64500231B96 /* cntrlPlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlPlay.png; sourceTree = "<group>"; };
+		50C892551BEFB64500231B96 /* cntrlRewind.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlRewind.png; sourceTree = "<group>"; };
+		50C892561BEFB64500231B96 /* cntrlStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlStart.png; sourceTree = "<group>"; };
+		50C892571BEFB64500231B96 /* cntrlStop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlStop.png; sourceTree = "<group>"; };
+		50C892581BEFB64500231B96 /* ctrlEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctrlEnd.png; sourceTree = "<group>"; };
 		50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C64ProxyColors.mm; sourceTree = "<group>"; };
 		50C9CB141B81E3300054EE86 /* C64ProxyColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ProxyColors.h; sourceTree = "<group>"; };
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
@@ -805,6 +821,13 @@
 			children = (
 				50CCB1B81B84999E008D8C30 /* Toolbar icons */,
 				50D6955012E375A800D9C738 /* Icons */,
+				50C8924E1BEFB11700231B96 /* cntrlEject.png */,
+				50C892521BEFB48600231B96 /* cntrlPause.png */,
+				50C892541BEFB64500231B96 /* cntrlPlay.png */,
+				50C892551BEFB64500231B96 /* cntrlRewind.png */,
+				50C892561BEFB64500231B96 /* cntrlStart.png */,
+				50C892571BEFB64500231B96 /* cntrlStop.png */,
+				50C892581BEFB64500231B96 /* ctrlEnd.png */,
 				50C9CB361B83561E0054EE86 /* pref_vic.png */,
 				50C9CB381B8356280054EE86 /* pref_sid.png */,
 				50C9CB2B1B826FF20054EE86 /* graphics.png */,
@@ -814,6 +837,7 @@
 				50F23D0712DF932800B1F275 /* glossy.png */,
 				5039A31315BE89940038ACBC /* drive48.png */,
 				5039A31F15BE97500038ACBC /* diskette.png */,
+				50C892501BEFB31200231B96 /* tape.png */,
 				502F57F11B93441400D1077E /* LEDgreen.png */,
 				502F57F31B93441A00D1077E /* LEDred.png */,
 				502F57F51B93442100D1077E /* LEDgray.png */,
@@ -1035,7 +1059,9 @@
 			files = (
 				50CCB1BA1B8499C6008D8C30 /* tb_motherboard2.png in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
+				50C8925B1BEFB64500231B96 /* cntrlStart.png in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
+				50C8924F1BEFB11700231B96 /* cntrlEject.png in Resources */,
 				50C9CB201B826C960054EE86 /* joystick.png in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				502F57FC1B93457700D1077E /* slow.png in Resources */,
@@ -1049,6 +1075,8 @@
 				502F57FA1B93457200D1077E /* fast.png in Resources */,
 				50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */,
 				509DF2480A9F681900AE0859 /* keyboard32.png in Resources */,
+				50C8925A1BEFB64500231B96 /* cntrlRewind.png in Resources */,
+				50C892591BEFB64500231B96 /* cntrlPlay.png in Resources */,
 				500FF3911BD7F4DF0038245B /* romchip.png in Resources */,
 				50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
@@ -1061,6 +1089,7 @@
 				50A519411B8DA230006771E2 /* drive_click.aiff in Resources */,
 				5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */,
 				50E555FD0C42698E00AFB05F /* flag_usa.png in Resources */,
+				50C892511BEFB31200231B96 /* tape.png in Resources */,
 				50C9CB391B8356280054EE86 /* pref_sid.png in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
 				50CCB1D21B84AC10008D8C30 /* none.png in Resources */,
@@ -1072,7 +1101,9 @@
 				50CCB1D41B84ACA8008D8C30 /* keyboard.png in Resources */,
 				38AF838E0C7BA24A00F6DBCE /* none32.png in Resources */,
 				50CCB1BC1B8499DE008D8C30 /* tb_setup.png in Resources */,
+				50C892531BEFB48600231B96 /* cntrlPause.png in Resources */,
 				5094197D0E426C13008D6F71 /* rom.png in Resources */,
+				50C8925C1BEFB64500231B96 /* cntrlStop.png in Resources */,
 				50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */,
 				50A3E08A0E66F7BC00D3564D /* play32.png in Resources */,
 				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
@@ -1096,6 +1127,7 @@
 				50D6954B12E3759500D9C738 /* IconT64.icns in Resources */,
 				50D6954C12E3759500D9C738 /* IconV64.icns in Resources */,
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
+				50C8925D1BEFB64500231B96 /* ctrlEnd.png in Resources */,
 				5087FD591BDA16C400570F0D /* metal.png in Resources */,
 				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
 				50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */,
