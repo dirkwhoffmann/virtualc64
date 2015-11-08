@@ -90,6 +90,9 @@ public:
     /*! @brief      Press play on tape */
     void pressPlay(); 
 
+    /*! @brief      Press stop key */
+    void pressStop();
+
     /*! @brief      Returns true if the play key is pressed */
     bool getPlayKey() { return playKey; }
 

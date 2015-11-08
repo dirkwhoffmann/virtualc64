@@ -279,6 +279,8 @@
 - (void) releaseKey:(char)c;
 - (void) pressRunstopKey;
 - (void) releaseRunstopKey;
+- (void) pressShiftRunstopKey;
+- (void) releaseShiftRunstopKey;
 - (void) pressCommodoreKey;
 - (void) releaseCommodoreKey;
 - (void) pressClearKey;
@@ -422,6 +424,7 @@
 - (void) dump;
 
 - (void) pressPlay;
+- (void) pressStop;
 - (void) ejectTape;
 
 @end

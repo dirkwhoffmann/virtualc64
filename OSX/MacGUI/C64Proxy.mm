@@ -302,6 +302,8 @@
 - (void) releaseKey:(char)c { keyboard->releaseKey(c); }
 - (void) pressRunstopKey { keyboard->pressRunstopKey(); }
 - (void) releaseRunstopKey { keyboard->releaseRunstopKey(); }
+- (void) pressShiftRunstopKey { keyboard->pressShiftRunstopKey(); }
+- (void) releaseShiftRunstopKey { keyboard->releaseShiftRunstopKey(); }
 - (void) pressCommodoreKey { keyboard->pressCommodoreKey(); }
 - (void) releaseCommodoreKey { keyboard->releaseCommodoreKey(); }
 - (void) pressClearKey { keyboard->pressClearKey(); }
@@ -527,6 +529,7 @@
 
 - (void) dump { datasette->dumpState(); }
 - (void) pressPlay { datasette->pressPlay(); }
+- (void) pressStop { datasette->pressStop(); }
 - (void) ejectTape { datasette->ejectTape(); }
 
 @end

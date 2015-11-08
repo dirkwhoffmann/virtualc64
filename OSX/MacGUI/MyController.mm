@@ -1079,7 +1079,7 @@
 
 - (IBAction)endTapeDialog:(id)sender
 {
-    NSString *textToType = @"LOAD \"*\",1\n"; // [tapeDialog loadCommand];
+    NSString *textToType = @"LOAD\n";
     bool doAutoType = [tapeDialog doAutoType];
     bool doPressPlay = [tapeDialog doPressPlay];
     

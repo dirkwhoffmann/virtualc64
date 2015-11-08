@@ -45,6 +45,7 @@ Datasette::Datasette()
     // Initialize all values that are not initialized in reset()
     data = NULL;
     size = 0;
+    head = -1;
     type = 0;
 }
 
@@ -158,6 +159,7 @@ Datasette::ejectTape()
     free(data);
     data = NULL;
     size = 0;
+    head = -1;
 }
 
 int
@@ -166,7 +168,7 @@ Datasette::getByte()
     int result;
     // static int debugcnt = 0;
     
-    if (head < 0)
+    if (head < 0 || head >= size)
         return -1;
     
     // get byte
@@ -204,6 +206,13 @@ Datasette::pressPlay()
     debug("Datasette::pressPlay\n");
     nextPulse = c64->getCycles() + 0.5 * PAL_CYCLES_PER_FRAME * 60; /* wait approx. 0.5 seconds */
     playKey = true;
+}
+
+void
+Datasette::pressStop()
+{
+    debug("Datasette::pressStop\n");
+    playKey = false;
 }
 
 void

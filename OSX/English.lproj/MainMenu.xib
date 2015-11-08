@@ -210,6 +210,11 @@
                                     <action selector="runstopAction:" target="-1" id="320"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="SHIFT RUNSTOP" id="HYx-Xn-PfQ">
+                                <connections>
+                                    <action selector="shiftRunstopAction:" target="-1" id="Mzp-fm-Cux"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="RUNSTOP RESTORE" id="305">
                                 <connections>
                                     <action selector="runstopRestoreAction:" target="-1" id="326"/>
@@ -269,7 +274,13 @@
                                                 <action selector="datasetteEjectAction:" target="-1" id="A6w-rk-gzf"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Press play on tape" tag="4" keyEquivalent="p" id="i09-C1-2RO">
+                                        <menuItem title="Press play key" tag="4" keyEquivalent="p" id="Lvb-1p-jBE">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="datasettePressPlayAction:" target="-1" id="wJj-Pf-4nd"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Press stop key" keyEquivalent="s" id="i09-C1-2RO">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
                                                 <action selector="datasettePressPlayAction:" target="-1" id="ftb-zh-mBd"/>

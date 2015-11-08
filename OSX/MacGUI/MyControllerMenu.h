@@ -60,6 +60,7 @@
 #pragma mark keyboard menu
 - (IBAction)runstopAction:(id)sender;
 - (IBAction)runstopRestoreAction:(id)sender;
+- (IBAction)shiftRunstopAction:(id)sender;
 - (IBAction)commodoreKeyAction:(id)sender;
 - (IBAction)ClearKeyAction:(id)sender;
 - (IBAction)HomeKeyAction:(id)sender;
@@ -71,6 +72,7 @@
 #pragma mark peripherals menu
 - (IBAction)datasetteEjectAction:(id)sender;
 - (IBAction)datasettePressPlayAction:(id)sender;
+- (IBAction)datasettePressStopAction:(id)sender;
 
 #pragma mark debug menu
 - (IBAction)hideSpritesAction:(id)sender;

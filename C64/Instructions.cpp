@@ -76,7 +76,20 @@ CPU::fetch() {
     
 
     // DIRK DEBUG
-    
+
+    if (PC_at_cycle_0 == 0xF92C) {
+        if (debugcnt++ < 300)
+            fprintf(stderr, "wartet auf Play-Taste\n");
+    }
+
+    if (PC_at_cycle_0 == 0xF8BD) {
+        if (debugcnt++ < 300)
+            fprintf(stderr, "Interrupt fŸr Band I/O freigeben\n");
+    }
+    if (PC_at_cycle_0 == 0xF8DC) {
+        if (debugcnt++ < 300)
+            fprintf(stderr, "I/O Abgeschlossen. RŸcksprung\n");
+    }
     if (PC_at_cycle_0 == 0xF92C) {
         if (debugcnt++ < 300)
             fprintf(stderr, "cassette read IRQ routine\n");

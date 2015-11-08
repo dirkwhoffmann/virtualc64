@@ -260,6 +260,16 @@
     [self refresh];
 }
 
+- (IBAction)shiftRunstopAction:(id)sender
+{
+    NSLog(@"Shift rustop combination pressed");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 keyboard] pressShiftRunstopKey];
+    sleepMicrosec(100000);
+    [[c64 keyboard] releaseShiftRunstopKey];
+    [self refresh];
+}
+
 - (IBAction)runstopRestoreAction:(id)sender
 {
     NSLog(@"Rustop Restore combination pressed");
@@ -345,6 +355,12 @@
     [[c64 datasette] pressPlay];
 }
 
+- (IBAction)datasettePressStopAction:(id)sender
+{
+    NSLog(@"datasettePressStopAction");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 datasette] pressStop];
+}
 
 // --------------------------------------------------------------------------------
 //                                 Debug menu

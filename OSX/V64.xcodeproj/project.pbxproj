@@ -652,22 +652,11 @@
 		5000474012DCECAB0098D890 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				50C8924D1BEF35FB00231B96 /* MetalView */,
 				50176C700A6F7357009E80BD /* Disassembler.h */,
 				50176C710A6F7357009E80BD /* Disassembler.mm */,
 				50176C720A6F7357009E80BD /* Formatter.h */,
 				50176C730A6F7357009E80BD /* Formatter.mm */,
-				50032EB01BC919D90050BEEA /* MyMetalView.h */,
-				50032EB11BC919D90050BEEA /* MyMetalView.mm */,
-				5081C4D81BDB6EC200D49076 /* MyMetalViewController.h */,
-				5081C4D91BDB6ED900D49076 /* MyMetalViewController.mm */,
-				500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */,
-				500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */,
-				5042312A1BD3718F00B3DEF9 /* MyMetalViewResponder.h */,
-				5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */,
-				50137E9E1BCA394600147283 /* MyMetalViewHelper.h */,
-				50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */,
-				50176C770A6F7357009E80BD /* MyOpenGLView.h */,
-				50176C780A6F7357009E80BD /* MyOpenGLView.mm */,
 				5077743112DE490B00D72088 /* CpuTableView.h */,
 				5077743212DE490B00D72088 /* CpuTableView.mm */,
 				5077742E12DE490300D72088 /* MemTableView.h */,
@@ -774,7 +763,6 @@
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
 				5000474112DCECBA0098D890 /* Controller */,
-				50C72DE71BC7F50D00F1863B /* Shaders */,
 				5000474212DCECDB0098D890 /* Dialogs */,
 				5000474312DCED190098D890 /* Misc */,
 			);
@@ -911,6 +899,26 @@
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 			);
 			name = Shaders;
+			sourceTree = "<group>";
+		};
+		50C8924D1BEF35FB00231B96 /* MetalView */ = {
+			isa = PBXGroup;
+			children = (
+				50032EB01BC919D90050BEEA /* MyMetalView.h */,
+				50032EB11BC919D90050BEEA /* MyMetalView.mm */,
+				5081C4D81BDB6EC200D49076 /* MyMetalViewController.h */,
+				5081C4D91BDB6ED900D49076 /* MyMetalViewController.mm */,
+				500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */,
+				500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */,
+				5042312A1BD3718F00B3DEF9 /* MyMetalViewResponder.h */,
+				5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */,
+				50137E9E1BCA394600147283 /* MyMetalViewHelper.h */,
+				50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */,
+				50176C770A6F7357009E80BD /* MyOpenGLView.h */,
+				50176C780A6F7357009E80BD /* MyOpenGLView.mm */,
+				50C72DE71BC7F50D00F1863B /* Shaders */,
+			);
+			name = MetalView;
 			sourceTree = "<group>";
 		};
 		50CCB1B81B84999E008D8C30 /* Toolbar icons */ = {

@@ -37,7 +37,7 @@
     
     // Get physical path of archive
     NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
-    NSString *archiveDescr = [NSString stringWithFormat:@"Type %d TAP archive", archive->TAPversion()];
+    NSString *archiveDescr = [NSString stringWithFormat:@"TAP archive (V%d)", archive->TAPversion()];
     
     // Set title
     [headerText setStringValue:archivePath];
@@ -57,13 +57,13 @@
 
 - (IBAction)autoTypeAction:(id)sender
 {
-    doAutoType = [[sender selectedItem] tag];
+    doAutoType = [(NSButton *)sender state];
     [self update];
 }
 
 - (IBAction)pressPlayAction:(id)sender
 {
-    doPressPlay = [[sender selectedItem] tag];
+    doPressPlay = [(NSButton *)sender state];
     [self update];
 }
 

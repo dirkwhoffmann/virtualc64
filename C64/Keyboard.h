@@ -86,7 +86,10 @@ public:
     
 	//! Inform keyboard that the Runstop key has been pressen
 	void pressRunstopKey() { pressKey(7,7); }
-    
+
+    //! Inform keyboard that the Shift+Runstop key has been pressen
+    void pressShiftRunstopKey() { pressShiftKey(); pressKey(7,7); }
+
     //! Inform keyboard that the Clear key has been pressen
     void pressClearKey() { pressShiftKey(); pressKey(6,3); }
     
@@ -110,7 +113,10 @@ public:
     
 	//! Inform keyboard that the Runstop key has been released
 	void releaseRunstopKey() { releaseKey(7,7); }
-    
+
+    //! Inform keyboard that the Shift+Runstop key has been released
+    void releaseShiftRunstopKey() { releaseKey(7,7); releaseShiftKey(); }
+
     //! Inform keyboard that the Clear key has been released
     void releaseClearKey() { releaseKey(6,3); releaseShiftKey(); }
     
