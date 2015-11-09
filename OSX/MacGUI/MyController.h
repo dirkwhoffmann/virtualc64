@@ -22,6 +22,7 @@
 @class C64Proxy;
 @class PropertiesDialog;
 @class HardwareDialog;
+@class MediaDialog;
 @class MountDialog;
 @class TapeDialog;
 @class RomDialog;
@@ -55,6 +56,7 @@ enum INPUT_DEVICES {
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;
     IBOutlet HardwareDialog *hardwareDialog;
+    IBOutlet MediaDialog *mediaDialog;
 	IBOutlet MountDialog *mountDialog;
     IBOutlet TapeDialog *tapeDialog;
 	IBOutlet RomDialog *romDialog;
@@ -70,22 +72,24 @@ enum INPUT_DEVICES {
 	IBOutlet NSDrawer *cheatboxPanel;
     
     // Bottom bar
-	IBOutlet NSButton *drive;
-	IBOutlet NSButton *eject;
+    IBOutlet NSButton *greenLED;
+    IBOutlet NSButton *redLED;
     IBOutlet NSProgressIndicator *progress;
-	IBOutlet NSButton *cartridgeIcon;
-	IBOutlet NSButton *cartridgeEject;
-	IBOutlet NSButton *greenLED;
-	IBOutlet NSButton *redLED;
+    IBOutlet NSButton *driveIcon;
+	IBOutlet NSButton *driveEject;
+	IBOutlet NSButton *tapeIcon;
+	IBOutlet NSButton *tapeEject;
+    IBOutlet NSButton *cartridgeIcon;
+    IBOutlet NSButton *cartridgeEject;
 	IBOutlet NSTextField *info;
 	IBOutlet NSTextField *clockSpeed;
 	IBOutlet NSLevelIndicator *clockSpeedBar;
 	IBOutlet NSButton *warpMode;
 	
 	// Cheatbox panel
-	IBOutlet NSToolbarItem *cheatboxIcon;
-    IBOutlet NSToolbarItem *inspectIcon;
-    IBOutlet NSToolbarItem *preferencesIcon;
+	// IBOutlet NSToolbarItem *cheatboxIcon;
+    // IBOutlet NSToolbarItem *inspectIcon;
+    // IBOutlet NSToolbarItem *preferencesIcon;
     
 	IBOutlet CheatboxImageBrowserView *cheatboxImageBrowserView;
 	
@@ -333,6 +337,9 @@ enum INPUT_DEVICES {
 
 - (bool)showHardwareDialog;
 - (IBAction)cancelHardwareDialog:(id)sender;
+
+- (bool)showMediaDialog;
+- (IBAction)cancelMediaDialog:(id)sender;
 
 - (bool)showRomDialog:(Message *)msg;
 - (IBAction)cancelRomDialog:(id)sender;

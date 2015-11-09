@@ -423,6 +423,7 @@
 - (id) initWithDatasette:(Datasette *)kb;
 - (void) dump;
 
+- (bool) hasTape; 
 - (void) pressPlay;
 - (void) pressStop;
 - (void) ejectTape;

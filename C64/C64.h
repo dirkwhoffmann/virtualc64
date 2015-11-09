@@ -17,8 +17,7 @@
 
 // VERSION 1.3:
 //
-// Media toolbar icon and media dialog
-// Tape: Buttons: Play, Stop, Rewind, Eject, Ruler for head position
+// Replace 3,5" diskette symbol in bottom bar
 // Add Datasette::duration (length of tape in seconds)
 // Make TAP files loadable via "File->Load"
 // Make TAP files loadable via "Drag icon on VirtualC64 icon"

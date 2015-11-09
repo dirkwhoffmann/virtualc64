@@ -528,6 +528,7 @@
 }
 
 - (void) dump { datasette->dumpState(); }
+- (bool) hasTape { return datasette->hasTape(); }
 - (void) pressPlay { datasette->pressPlay(); }
 - (void) pressStop { datasette->pressStop(); }
 - (void) ejectTape { datasette->ejectTape(); }

@@ -28,6 +28,7 @@
 
 - (IBAction)propertiesAction:(id)sender;
 - (IBAction)hardwareAction:(id)sender;
+- (IBAction)mediaAction:(id)sender;
 
 - (IBAction)debugOpenAction:(id)sender;
 - (IBAction)debugCloseAction:(id)sender;

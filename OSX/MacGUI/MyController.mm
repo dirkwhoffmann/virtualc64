@@ -564,8 +564,8 @@
             break;
 
 		case MSG_VC1541_DISK:
-			[drive setHidden:!msg->i];
-			[eject setHidden:!msg->i];
+			[driveIcon setHidden:!msg->i];
+			[driveEject setHidden:!msg->i];
             break;
 			
         case MSG_VC1541_DISK_SOUND:
@@ -586,6 +586,7 @@
 			break;
 			
 		case MSG_VC1541_DATA:
+        case MSG_VC1530_MOTOR:
 			if (msg->i)
 				[c64 setIecBusIsBusy:true];
 			else
@@ -616,6 +617,11 @@
 			[cartridgeIcon setHidden:!msg->i];
 			[cartridgeEject setHidden:!msg->i];			
 			break;
+
+        case MSG_VC1530_TAPE:
+            [tapeIcon setHidden:!msg->i];
+            [tapeEject setHidden:!msg->i];
+            break;
 
         case MSG_JOYSTICK_ATTACHED:
         case MSG_JOYSTICK_REMOVED:
@@ -913,6 +919,7 @@
 
 - (bool)showHardwareDialog
 {
+    // DEPRECATED: ONLY APPLIES TO MEDIA DIALOG
     // The hardware dialog required the disk name as argument (if any disk is present).
     // As the name is not directly acessible, we first convert the disk contents to an
     // archive, pick the name, and delete the archive. A NULL pointer is passed to
@@ -950,6 +957,47 @@
     
     // Return to normal event handling
     [NSApp endSheet:hardwareDialog returnCode:1];
+}
+
+- (bool)showMediaDialog
+{
+    // The media dialog required the disk name as argument (if any disk is present).
+    // As the name is not directly acessible, we first convert the disk contents to an
+    // archive, pick the name, and delete the archive. A NULL pointer is passed to
+    // the hardware dialog, if no disk is present.
+    
+    NSString *name = NULL;
+    unsigned files = 0;
+    if ([[c64 vc1541] hasDisk]) {
+        D64Archive *archive = [[c64 vc1541] archiveFromDrive];
+        NSLog(@"Archive found");
+        if (archive != NULL) {
+            name = [NSString stringWithFormat:@"%s", archive->getName()];
+            files = archive->getNumberOfItems();
+            delete archive;
+        }
+    }
+    
+    // Initialize dialog
+    [mediaDialog initialize:self archiveName:name noOfFiles:files];
+    
+    // Open sheet
+    [NSApp beginSheet:mediaDialog
+       modalForWindow:[[self document] windowForSheet]
+        modalDelegate:self
+       didEndSelector:NULL
+          contextInfo:NULL];
+    
+    return YES;
+}
+
+- (IBAction)cancelMediaDialog:(id)sender
+{
+    // Hide sheet
+    [mediaDialog orderOut:sender];
+    
+    // Return to normal event handling
+    [NSApp endSheet:mediaDialog returnCode:1];
 }
 
 - (bool)showRomDialog:(Message *)msg

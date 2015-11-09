@@ -210,13 +210,15 @@
 {
     NSLog(@"showStatusBarAction");
     
-    [drive setHidden:![[c64 vc1541] hasDisk]];
-    [eject setHidden:![[c64 vc1541] hasDisk]];
-    [progress setHidden:NO];
-    [cartridgeIcon setHidden:![[c64 expansionport] cartridgeAttached]];
-    [cartridgeEject setHidden:![[c64 expansionport] cartridgeAttached]];
     [greenLED setHidden:NO];
     [redLED setHidden:NO];
+    [progress setHidden:NO];
+    [driveIcon setHidden:![[c64 vc1541] hasDisk]];
+    [driveEject setHidden:![[c64 vc1541] hasDisk]];
+    [tapeIcon setHidden:![[c64 datasette] hasTape]];
+    [tapeEject setHidden:![[c64 datasette] hasTape]];
+    [cartridgeIcon setHidden:![[c64 expansionport] cartridgeAttached]];
+    [cartridgeEject setHidden:![[c64 expansionport] cartridgeAttached]];
     [info setHidden:NO];
     [clockSpeed setHidden:NO];
     [clockSpeedBar setHidden:NO];
@@ -230,13 +232,15 @@
     NSLog(@"hideStatusBarAction");
     
     // Hide bottom bar
-    [drive setHidden:YES];
-    [eject setHidden:YES];
-    [progress setHidden:YES];
-    [cartridgeIcon setHidden:YES];
-    [cartridgeEject setHidden:YES];
     [greenLED setHidden:YES];
     [redLED setHidden:YES];
+    [progress setHidden:YES];
+    [driveIcon setHidden:YES];
+    [driveEject setHidden:YES];
+    [tapeIcon setHidden:YES];
+    [tapeEject setHidden:YES];
+    [cartridgeIcon setHidden:YES];
+    [cartridgeEject setHidden:YES];
     [info setHidden:YES];
     [clockSpeed setHidden:YES];
     [clockSpeedBar setHidden:YES];

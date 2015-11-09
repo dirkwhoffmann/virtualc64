@@ -217,6 +217,11 @@
     [self showHardwareDialog];
 }
 
+- (IBAction)mediaAction:(id)sender
+{
+    [self showMediaDialog];
+}
+
 - (IBAction)debugOpenAction:(id)sender
 {
     [self cheatboxCloseAction:self];
