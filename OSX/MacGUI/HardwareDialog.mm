@@ -132,7 +132,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 {
     NSLog(@"ejectDiskAction");
 
-    [controller ejectAction:sender];
+    [controller driveEjectAction:sender];
     [self update];
 }
 

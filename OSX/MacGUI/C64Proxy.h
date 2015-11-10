@@ -423,10 +423,15 @@
 - (id) initWithDatasette:(Datasette *)kb;
 - (void) dump;
 
-- (bool) hasTape; 
+- (bool) hasTape;
 - (void) pressPlay;
 - (void) pressStop;
 - (void) ejectTape;
+- (int) duration;
+- (int) headPosition;
+- (int) headPositionInSeconds;
+- (void) setHeadPosition:(uint32_t)value;
+- (void) setHeadPositionInSeconds:(uint32_t)value;
 
 @end
 

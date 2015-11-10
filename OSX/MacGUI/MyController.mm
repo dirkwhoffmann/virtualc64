@@ -594,8 +594,6 @@
 			break;
 			
 		case MSG_VC1541_MOTOR:
-			break;
-
         case MSG_VC1541_HEAD:
             break;
             
@@ -786,25 +784,19 @@
 // Action methods (main window area)
 // --------------------------------------------------------------------------------
 
-// Simulation speed
-
-- (IBAction)warpAction:(id)sender
+- (IBAction)driveAction:(id)sender
 {
-	NSLog(@"warpAction");	
-	
-	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] warpAction:@((int)![c64 warp])];
-	if (![undo isUndoing]) [undo setActionName:@"Native speed"];
-	
-	[c64 setAlwaysWarp:![c64 alwaysWarp]];
-	[self refresh];
+    NSLog(@"Drive action...");
+    if ([[c64 iec] isDriveConnected]) {
+        [[c64 iec] disconnectDrive];
+    } else {
+        [[c64 iec] connectDrive];
+    }
 }
 
-// Disk drive
-
-- (IBAction)ejectAction:(id)sender
+- (IBAction)driveEjectAction:(id)sender
 {
-    NSLog(@"ejectAction");
+    NSLog(@"driveEjectAction");
 
     if (![[c64 vc1541] DiskModified]) {
         [[c64 vc1541] ejectDisk];
@@ -830,7 +822,7 @@
             [[c64 vc1541] ejectDisk];
         } else {
             NSLog(@"Export dialog cancelled. Ask again...");
-            [self ejectAction:sender];
+            [self driveEjectAction:sender];
         }
     }
 
@@ -844,24 +836,31 @@
     }
 }
 
-- (IBAction)driveAction:(id)sender
+- (IBAction)tapeEjectAction:(id)sender
 {
-	NSLog(@"Drive action...");
-	if ([[c64 iec] isDriveConnected]) {
-        [[c64 iec] disconnectDrive];
-    } else {
-		[[c64 iec] connectDrive];
-	}
+    NSLog(@"tapeEjectAction");
+    [[c64 datasette] ejectTape];
+    // [[self document] setTape:NULL];
 }
-
-// Cartridge
 
 - (IBAction)cartridgeEjectAction:(id)sender
 {
-	NSLog(@"cartridgeEjectAction");	
+	NSLog(@"cartridgeEjectAAction");
 	[c64 detachCartridge];
 	[[self document] setCartridge:NULL];
 	[c64 reset];
+}
+
+- (IBAction)warpAction:(id)sender
+{
+    NSLog(@"warpAction");
+    
+    NSUndoManager *undo = [self undoManager];
+    [[undo prepareWithInvocationTarget:self] warpAction:@((int)![c64 warp])];
+    if (![undo isUndoing]) [undo setActionName:@"Native speed"];
+    
+    [c64 setAlwaysWarp:![c64 alwaysWarp]];
+    [self refresh];
 }
 
 

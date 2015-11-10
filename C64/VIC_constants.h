@@ -32,6 +32,9 @@ static const uint16_t NTSC_CYCLES_PER_RASTERLINE = 65;
 //! CPU cycles per frame
 static const unsigned NTSC_CYCLES_PER_FRAME = 17095;
 
+//! CPU cycles per second
+static const unsigned NTSC_CYCLES_PER_SECOND = NTSC_REFRESH_RATE * NTSC_CYCLES_PER_FRAME;
+
 //! Pixel aspect ratio
 static const uint16_t NTSC_PIXEL_ASPECT_RATIO = 0.75;
 
@@ -102,6 +105,9 @@ static const uint16_t PAL_CYCLES_PER_RASTERLINE = 63;
 
 //! CPU cycles per frame
 static const unsigned PAL_CYCLES_PER_FRAME = 19656;
+
+//! CPU cycles per second
+static const unsigned PAL_CYCLES_PER_SECOND = PAL_REFRESH_RATE * PAL_CYCLES_PER_FRAME;
 
 //! Pixel aspect ratio
 static const uint16_t PAL_PIXEL_ASPECT_RATIO = 0.9365;

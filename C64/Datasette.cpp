@@ -29,6 +29,7 @@ Datasette::Datasette()
         // Tape properties (will survive reset)
         { &size,            sizeof(size),                   KEEP_ON_RESET },
         { &type,            sizeof(type),                   KEEP_ON_RESET },
+        { &duration,        sizeof(duration),               KEEP_ON_RESET },
         
         // Internal state (will be cleared on reset)
         { &middleOfPulse,   sizeof(middleOfPulse),          CLEAR_ON_RESET },
@@ -45,8 +46,10 @@ Datasette::Datasette()
     // Initialize all values that are not initialized in reset()
     data = NULL;
     size = 0;
-    head = -1;
     type = 0;
+    duration = 0;
+    
+    head = -1;
 }
 
 Datasette::~Datasette()
@@ -126,6 +129,63 @@ Datasette::dumpState()
 #endif
 }
 
+uint32_t
+Datasette::getHeadPosition()
+{
+    return head;
+}
+
+uint32_t
+Datasette::getHeadPositionInSeconds()
+{
+    if (head == -1)
+        return 0;
+
+    unsigned percentage = (100 * head) / size;
+    return elapsedTime[percentage];
+}
+
+void
+Datasette::setHeadPosition(uint32_t value)
+{
+    head = value;
+}
+
+void
+Datasette::setHeadPositionInSeconds(uint32_t value)
+{
+    unsigned percentage = (100 * value) / duration;
+    head = (percentage < 100) ? headPosition[percentage] : headPosition[100];
+}
+
+#if 0
+unsigned
+Datasette::durationUntil(int headpos)
+{
+    int oldhead = head;
+    
+    // Determine tape length (in clock cycles)
+    int64_t pulse, cycles = 0;
+    rewind();
+    for (unsigned i = 0; i < headpos; i++) {
+        if ((pulse = nextPulseLength()) == -1)
+            break;
+        cycles += pulse;
+    }
+    
+    // Determine tape length (in seconds)
+    head = oldhead;
+    return cycles / (PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE);
+}
+
+unsigned
+Datasette::durationUntilPercentage(int percentage)
+{
+    int headpos = (percentage * duration) / 100;
+    return durationUntil(headpos);
+}
+#endif
+
 void
 Datasette::insertTape(TAPArchive *a)
 {
@@ -134,16 +194,51 @@ Datasette::insertTape(TAPArchive *a)
     
     debug(2, "Inserting tape (size = %d, type = %d)...\n", size, type);
     
+    // Copy data
     data = (uint8_t *)malloc(size);
     memcpy(data, a->getData(), size);
     rewind();
     
-    for (unsigned i = 0; i < 10; i++) {
-        for (unsigned j = 0; j < 16; j++) {
-            fprintf(stderr, "%02X ", data[head+i*16+j]);
-        }
-        fprintf(stderr, "\n");
+    for (unsigned i = 16; i > 0; i--) {
+        fprintf(stderr, "%02X ", data[size - i]);
     }
+    fprintf(stderr, "\n");
+
+    // Determine total tape length (in clock cycles)
+    int skip;
+    uint64_t totalCycles, cycles, i;
+    for (i = totalCycles = 0; i < size; i += skip) {
+        totalCycles += computePulseLength(i, &skip);
+    }
+    duration = totalCycles / PAL_CYCLES_PER_SECOND;
+
+    // Prepare mapping arrays
+    for (i = 0; i <= 100; i++)
+        headPosition[i] = elapsedTime[i] = -1;
+    
+    // Fill up arrays
+    for (i = cycles = 0; i < size; i += skip) {
+        
+        unsigned spacePercentage = ((100 * i) / size);
+        unsigned timePercentage = ((100 * cycles) / totalCycles);
+
+        if (headPosition[timePercentage] == -1)
+            headPosition[timePercentage] = i;
+        
+        if (elapsedTime[spacePercentage] == -1)
+            elapsedTime[spacePercentage] = cycles / PAL_CYCLES_PER_SECOND;
+
+        cycles += computePulseLength(i, &skip);
+    }
+    headPosition[100] = size - 1;
+    elapsedTime[100] = totalCycles / PAL_CYCLES_PER_SECOND;
+    
+    /*
+    for (i = 0; i < 101; i++) {
+        debug(2, "headPosition[%d] = %d\n", i, headPosition[i]);
+        debug(2, "elapsedTime[%d] = %d\n", i, elapsedTime[i]);
+    }
+    */
 }
 
 void
@@ -159,6 +254,8 @@ Datasette::ejectTape()
     free(data);
     data = NULL;
     size = 0;
+    type = 0;
+    duration = 0;
     head = -1;
 }
 
@@ -183,6 +280,24 @@ Datasette::getByte()
     }
     
     return result;
+}
+
+int
+Datasette::computePulseLength(int headpos, int *skip)
+{
+    // Pulse lengths between 1 * 8 and 255 * 8
+    if (data[headpos] != 0) {
+        *skip = 1;
+        return 8 * data[headpos];
+    }
+    
+    // Pulse lengths greater than 8 * 255
+    if (type == 0) {
+        *skip = 1;
+        return 8 * 256;
+    }
+    *skip = 4;
+    return  LO_LO_HI_HI(data[headpos+1], data[headpos+2], data[headpos+3], 0);
 }
 
 int

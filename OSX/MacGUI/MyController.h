@@ -200,7 +200,6 @@ enum INPUT_DEVICES {
     IBOutlet NSButton *VicSpriteActive1;
     IBOutlet NSTextField *VicSpriteX1;
     IBOutlet NSTextField *VicSpriteY1;
-    IBOutlet NSColorWell *VicSpriteColor1;
     IBOutlet NSButton *VicSpriteCol1;
     IBOutlet NSButton *VicSpriteMulticolor1;
     IBOutlet NSButton *VicSpriteStretchX1;
@@ -209,7 +208,6 @@ enum INPUT_DEVICES {
     IBOutlet NSButton *VicSpriteActive2;
     IBOutlet NSTextField *VicSpriteX2;
     IBOutlet NSTextField *VicSpriteY2;
-    IBOutlet NSColorWell *VicSpriteColor2;
     IBOutlet NSButton *VicSpriteCol2;
     IBOutlet NSButton *VicSpriteMulticolor2;
     IBOutlet NSButton *VicSpriteStretchX2;
@@ -218,7 +216,6 @@ enum INPUT_DEVICES {
     IBOutlet NSButton *VicSpriteActive3;
     IBOutlet NSTextField *VicSpriteX3;
     IBOutlet NSTextField *VicSpriteY3;
-    IBOutlet NSColorWell *VicSpriteColor3;
     IBOutlet NSButton *VicSpriteCol3;
     IBOutlet NSButton *VicSpriteMulticolor3;
     IBOutlet NSButton *VicSpriteStretchX3;
@@ -227,7 +224,6 @@ enum INPUT_DEVICES {
     IBOutlet NSButton *VicSpriteActive4;
     IBOutlet NSTextField *VicSpriteX4;
     IBOutlet NSTextField *VicSpriteY4;
-    IBOutlet NSColorWell *VicSpriteColor4;
     IBOutlet NSButton *VicSpriteCol4;
     IBOutlet NSButton *VicSpriteMulticolor4;
     IBOutlet NSButton *VicSpriteStretchX4;
@@ -236,7 +232,6 @@ enum INPUT_DEVICES {
     IBOutlet NSButton *VicSpriteActive5;
     IBOutlet NSTextField *VicSpriteX5;
     IBOutlet NSTextField *VicSpriteY5;
-    IBOutlet NSColorWell *VicSpriteColor5;
     IBOutlet NSButton *VicSpriteCol5;
     IBOutlet NSButton *VicSpriteMulticolor5;
     IBOutlet NSButton *VicSpriteStretchX5;
@@ -245,7 +240,6 @@ enum INPUT_DEVICES {
     IBOutlet NSButton *VicSpriteActive6;
     IBOutlet NSTextField *VicSpriteX6;
     IBOutlet NSTextField *VicSpriteY6;
-    IBOutlet NSColorWell *VicSpriteColor6;
     IBOutlet NSButton *VicSpriteCol6;
     IBOutlet NSButton *VicSpriteMulticolor6;
     IBOutlet NSButton *VicSpriteStretchX6;
@@ -254,7 +248,6 @@ enum INPUT_DEVICES {
     IBOutlet NSButton *VicSpriteActive7;
     IBOutlet NSTextField *VicSpriteX7;
     IBOutlet NSTextField *VicSpriteY7;
-    IBOutlet NSColorWell *VicSpriteColor7;
     IBOutlet NSButton *VicSpriteCol7;
     IBOutlet NSButton *VicSpriteMulticolor7;
     IBOutlet NSButton *VicSpriteStretchX7;
@@ -263,7 +256,6 @@ enum INPUT_DEVICES {
     IBOutlet NSButton *VicSpriteActive8;
     IBOutlet NSTextField *VicSpriteX8;
     IBOutlet NSTextField *VicSpriteY8;
-    IBOutlet NSColorWell *VicSpriteColor8;
     IBOutlet NSButton *VicSpriteCol8;
     IBOutlet NSButton *VicSpriteMulticolor8;
     IBOutlet NSButton *VicSpriteStretchX8;
@@ -323,10 +315,11 @@ enum INPUT_DEVICES {
 - (void)enableUserEditing:(BOOL)enabled;
 
 // Main window controls
-- (IBAction)warpAction:(id)sender;
-- (IBAction)ejectAction:(id)sender;
 - (IBAction)driveAction:(id)sender;
+- (IBAction)driveEjectAction:(id)sender;
+- (IBAction)tapeEjectAction:(id)sender;
 - (IBAction)cartridgeEjectAction:(id)sender;
+- (IBAction)warpAction:(id)sender;
 
 // Cartridges
 - (BOOL)mountCartridge;

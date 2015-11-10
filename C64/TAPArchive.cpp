@@ -100,12 +100,10 @@ TAPArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
     memcpy(data, buffer, length);
     size = length;
     
-    for (unsigned i = 0; i < 10; i++) {
-        for (unsigned j = 0; j < 16; j++) {
-            fprintf(stderr, "%02X ", data[i*16+j]);
-        }
-        fprintf(stderr, "\n");
+    for (unsigned i = 16; i > 0; i--) {
+        fprintf(stderr, "%02X ", data[size - i]);
     }
+    fprintf(stderr, "\n");
 
     int l = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
     if (l + 0x14 /* Header */ != size) {

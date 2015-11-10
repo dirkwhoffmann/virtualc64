@@ -144,10 +144,8 @@
                 <outlet property="cpuTableView" destination="767" id="945"/>
                 <outlet property="debugPanel" destination="35" id="2196"/>
                 <outlet property="dezHexSelector" destination="367" id="759"/>
-                <outlet property="drive" destination="1045" id="1057"/>
                 <outlet property="driveEject" destination="1038" id="XgJ-JL-fdj"/>
                 <outlet property="driveIcon" destination="1045" id="Vlm-gT-AYk"/>
-                <outlet property="eject" destination="1038" id="1042"/>
                 <outlet property="greenLED" destination="1208" id="1214"/>
                 <outlet property="hardwareDialog" destination="YW8-0Q-Xve" id="8zS-3M-G6U"/>
                 <outlet property="info" destination="24" id="209"/>
@@ -252,7 +250,7 @@
                             <font key="font" metaFont="system" size="10"/>
                         </buttonCell>
                         <connections>
-                            <action selector="cartridgeEjectAction:" target="-1" id="zq2-cM-SO7"/>
+                            <action selector="tapeEjectAction:" target="-1" id="Asi-fT-cV5"/>
                         </connections>
                     </button>
                     <button hidden="YES" id="NlM-JA-g9p">
@@ -444,7 +442,7 @@
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -5215,7 +5213,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="ejectCartridgeAction:" target="NN4-6X-6x6" id="ium-D0-Uxu"/>
+                            <action selector="cartridgeEjectAction:" target="NN4-6X-6x6" id="cet-Ze-44F"/>
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="GVd-kn-bxr">
@@ -5323,7 +5321,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="ejectDiskAction:" target="NN4-6X-6x6" id="vnD-tm-8ys"/>
+                            <action selector="tapeEjectAction:" target="NN4-6X-6x6" id="6kN-BF-i3I"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="pXD-eQ-Jui">
@@ -5338,7 +5336,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="ejectDiskAction:" target="NN4-6X-6x6" id="yVd-hy-ajX"/>
+                            <action selector="tapePlayAction:" target="NN4-6X-6x6" id="wMD-2e-2Cr"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="4I3-KB-jIw">
@@ -5353,7 +5351,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="ejectDiskAction:" target="NN4-6X-6x6" id="YLg-hk-1XA"/>
+                            <action selector="tapeRewindAction:" target="NN4-6X-6x6" id="xMY-ft-x5F"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="qHr-y4-Q7K">
@@ -5368,7 +5366,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="ejectDiskAction:" target="NN4-6X-6x6" id="CRQ-GK-J0U"/>
+                            <action selector="tapeStopAction:" target="NN4-6X-6x6" id="4yG-nF-9Jq"/>
                         </connections>
                     </button>
                     <button id="FxP-og-vWY">
@@ -5380,7 +5378,7 @@ DQ
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="writeProtectionAction:" target="NN4-6X-6x6" id="dW4-oh-mKO"/>
+                            <action selector="diskWriteProtectAction:" target="NN4-6X-6x6" id="mWb-vb-Z9L"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="Ijo-FQ-k1l">
@@ -5395,7 +5393,7 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="ejectDiskAction:" target="NN4-6X-6x6" id="CRX-Au-B9Z"/>
+                            <action selector="diskEjectAction:" target="NN4-6X-6x6" id="JJT-74-EIw"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ple-3v-cFO">
@@ -5447,10 +5445,13 @@ DQ
                         </connections>
                     </button>
                     <slider verticalHuggingPriority="750" id="Gxx-6n-1L6">
-                        <rect key="frame" x="238" y="152" width="132" height="20"/>
+                        <rect key="frame" x="238" y="151" width="132" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
-                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="Dk0-Tg-olp"/>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" tickMarkPosition="above" sliderType="linear" id="Dk0-Tg-olp"/>
+                        <connections>
+                            <action selector="tapeHeadAction:" target="NN4-6X-6x6" id="DiF-l0-ZgZ"/>
+                        </connections>
                     </slider>
                 </subviews>
                 <animations/>

@@ -335,7 +335,7 @@
     [VicSpriteX1 setIntValue:[vic spriteX:0]];
     [VicSpriteY1 setIntValue:[vic spriteY:0]];
     [[VicSpriteCol1 cell] setBackgroundColor:[vic color:[vic spriteColor:0]]];
-    [VicSpriteColor1 setColor:[vic color:[vic spriteColor:0]]];
+    // [VicSpriteColor1 setColor:[vic color:[vic spriteColor:0]]];
     [VicSpriteMulticolor1 setIntValue:[vic spriteMulticolorFlag:0]];
 	[VicSpriteStretchX1 setIntValue:[vic spriteStretchXFlag:0]];
 	[VicSpriteStretchY1 setIntValue:[vic spriteStretchYFlag:0]];
@@ -344,7 +344,7 @@
     [VicSpriteX2 setIntValue:[vic spriteX:1]];
     [VicSpriteY2 setIntValue:[vic spriteY:1]];
     [[VicSpriteCol2 cell] setBackgroundColor:[vic color:[vic spriteColor:1]]];
-    [VicSpriteColor2 setColor:[vic color:[vic spriteColor:1]]];
+    // [VicSpriteColor2 setColor:[vic color:[vic spriteColor:1]]];
     [VicSpriteMulticolor2 setIntValue:[vic spriteMulticolorFlag:1]];
     [VicSpriteStretchX2 setIntValue:[vic spriteStretchXFlag:1]];
     [VicSpriteStretchY2 setIntValue:[vic spriteStretchYFlag:1]];
@@ -353,7 +353,7 @@
     [VicSpriteX3 setIntValue:[vic spriteX:2]];
     [VicSpriteY3 setIntValue:[vic spriteY:2]];
     [[VicSpriteCol3 cell] setBackgroundColor:[vic color:[vic spriteColor:2]]];
-    [VicSpriteColor3 setColor:[vic color:[vic spriteColor:2]]];
+    // [VicSpriteColor3 setColor:[vic color:[vic spriteColor:2]]];
     [VicSpriteMulticolor3 setIntValue:[vic spriteMulticolorFlag:2]];
     [VicSpriteStretchX3 setIntValue:[vic spriteStretchXFlag:2]];
     [VicSpriteStretchY3 setIntValue:[vic spriteStretchYFlag:2]];
@@ -362,7 +362,7 @@
     [VicSpriteX4 setIntValue:[vic spriteX:3]];
     [VicSpriteY4 setIntValue:[vic spriteY:3]];
     [[VicSpriteCol4 cell] setBackgroundColor:[vic color:[vic spriteColor:3]]];
-    [VicSpriteColor4 setColor:[vic color:[vic spriteColor:3]]];
+    // [VicSpriteColor4 setColor:[vic color:[vic spriteColor:3]]];
     [VicSpriteMulticolor4 setIntValue:[vic spriteMulticolorFlag:3]];
     [VicSpriteStretchX4 setIntValue:[vic spriteStretchXFlag:3]];
     [VicSpriteStretchY4 setIntValue:[vic spriteStretchYFlag:3]];
@@ -371,7 +371,7 @@
     [VicSpriteX5 setIntValue:[vic spriteX:4]];
     [VicSpriteY5 setIntValue:[vic spriteY:4]];
     [[VicSpriteCol5 cell] setBackgroundColor:[vic color:[vic spriteColor:4]]];
-    [VicSpriteColor5 setColor:[vic color:[vic spriteColor:4]]];
+    // [VicSpriteColor5 setColor:[vic color:[vic spriteColor:4]]];
     [VicSpriteMulticolor5 setIntValue:[vic spriteMulticolorFlag:4]];
     [VicSpriteStretchX5 setIntValue:[vic spriteStretchXFlag:4]];
     [VicSpriteStretchY5 setIntValue:[vic spriteStretchYFlag:4]];
@@ -380,7 +380,7 @@
     [VicSpriteX6 setIntValue:[vic spriteX:5]];
     [VicSpriteY6 setIntValue:[vic spriteY:5]];
     [[VicSpriteCol6 cell] setBackgroundColor:[vic color:[vic spriteColor:5]]];
-    [VicSpriteColor6 setColor:[vic color:[vic spriteColor:5]]];
+    // [VicSpriteColor6 setColor:[vic color:[vic spriteColor:5]]];
     [VicSpriteMulticolor6 setIntValue:[vic spriteMulticolorFlag:5]];
     [VicSpriteStretchX6 setIntValue:[vic spriteStretchXFlag:5]];
     [VicSpriteStretchY6 setIntValue:[vic spriteStretchYFlag:5]];
@@ -389,7 +389,7 @@
     [VicSpriteX7 setIntValue:[vic spriteX:6]];
     [VicSpriteY7 setIntValue:[vic spriteY:6]];
     [[VicSpriteCol7 cell] setBackgroundColor:[vic color:[vic spriteColor:6]]];
-    [VicSpriteColor7 setColor:[vic color:[vic spriteColor:6]]];
+    // [VicSpriteColor7 setColor:[vic color:[vic spriteColor:6]]];
     [VicSpriteMulticolor7 setIntValue:[vic spriteMulticolorFlag:6]];
     [VicSpriteStretchX7 setIntValue:[vic spriteStretchXFlag:6]];
     [VicSpriteStretchY7 setIntValue:[vic spriteStretchYFlag:6]];
@@ -398,7 +398,7 @@
     [VicSpriteX8 setIntValue:[vic spriteX:7]];
     [VicSpriteY8 setIntValue:[vic spriteY:7]];
     [[VicSpriteCol8 cell] setBackgroundColor:[vic color:[vic spriteColor:7]]];
-    [VicSpriteColor8 setColor:[vic color:[vic spriteColor:7]]];
+    // [VicSpriteColor8 setColor:[vic color:[vic spriteColor:7]]];
     [VicSpriteMulticolor8 setIntValue:[vic spriteMulticolorFlag:7]];
     [VicSpriteStretchX8 setIntValue:[vic spriteStretchXFlag:7]];
     [VicSpriteStretchY8 setIntValue:[vic spriteStretchYFlag:7]];

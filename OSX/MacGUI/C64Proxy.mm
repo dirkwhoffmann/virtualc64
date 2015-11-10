@@ -532,6 +532,11 @@
 - (void) pressPlay { datasette->pressPlay(); }
 - (void) pressStop { datasette->pressStop(); }
 - (void) ejectTape { datasette->ejectTape(); }
+- (int) duration { return datasette->getDuration(); }
+- (int) headPosition { return datasette->getHeadPosition(); }
+- (int) headPositionInSeconds { return datasette->getHeadPositionInSeconds(); }
+- (void) setHeadPosition:(uint32_t)value { datasette->setHeadPosition(value); }
+- (void) setHeadPositionInSeconds:(uint32_t)value { datasette->setHeadPositionInSeconds(value); }
 
 @end
 

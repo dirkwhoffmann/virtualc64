@@ -43,7 +43,7 @@
 {
     NSLog(@"diskEjectAction");
     
-    [controller ejectAction:sender];
+    [controller driveEjectAction:sender];
     [self update];
 }
 
@@ -55,7 +55,7 @@
     [self update];
 }
 
-// VC
+// VC 1530
 
 - (IBAction)tapeEjectAction:(id)sender
 {
@@ -84,7 +84,12 @@
 - (IBAction)tapeHeadAction:(id)sender
 {
     NSLog(@"tapeHeadAction");
-
+    
+    int value = [sender intValue];
+    NSLog(@"value = %d", value);
+    
+    int seconds = (value * [[c64 datasette] duration]) / 100;
+    [[c64 datasette] setHeadPositionInSeconds:seconds];
 }
 
 // Expansion port
@@ -137,7 +142,11 @@
         [tapeEject setEnabled:NO];
         [tapeEjectText setEnabled:NO];
     }
-
+    int elapsedTime = [[c64 datasette] headPositionInSeconds];
+    int totalTime = [[c64 datasette] headPositionInSeconds];
+    int sliderPosition = (totalTime == 0) ? 0 : (elapsedTime / totalTime);
+    [tapeSlider setIntValue:sliderPosition];
+    
     /* Expansion port */
     
     if ([c64 isCartridgeAttached]) {
