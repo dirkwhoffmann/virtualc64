@@ -60,25 +60,28 @@
 - (IBAction)tapeEjectAction:(id)sender
 {
     NSLog(@"tapeEjectAction");
+    [[c64 datasette] ejectTape];
 
 }
 
 - (IBAction)tapePlayAction:(id)sender
 {
     NSLog(@"tapePlayAction");
-  
+    [[c64 datasette] pressPlay];
 }
 
 - (IBAction)tapeStopAction:(id)sender
 {
     NSLog(@"tapeStopAction");
+    [[c64 datasette] pressStop];
+
 
 }
 
 - (IBAction)tapeRewindAction:(id)sender
 {
     NSLog(@"tapeRewindAction");
-
+    [[c64 datasette] pressRewind];
 }
 
 - (IBAction)tapeHeadAction:(id)sender
@@ -89,6 +92,7 @@
     NSLog(@"value = %d", value);
     
     int seconds = (value * [[c64 datasette] duration]) / 100;
+    NSLog(@"tapeHeadAction: percentage = %d, seconds = %d\n", value, seconds);
     [[c64 datasette] setHeadPositionInSeconds:seconds];
 }
 
@@ -124,8 +128,8 @@
     }
 
     /* VC1530 */
-    
-    if ([[c64 datasette] hasTape]) {
+    DatasetteProxy *datasette = [c64 datasette];
+    if ([datasette hasTape]) {
         [tapeIcon setHidden:NO];
         // [tapeText setStringValue:archiveName];
         [tapePlay setEnabled:YES];
@@ -133,6 +137,12 @@
         [tapeStop setEnabled:YES];
         [tapeEject setEnabled:YES];
         [tapeEjectText setEnabled:YES];
+        [tapeHead setStringValue:[NSString stringWithFormat:@"%02d:%02d",
+                                  [datasette headPositionInSeconds] / 60,
+                                  [datasette headPositionInSeconds] % 60]];
+        [tapeEnd  setStringValue:[NSString stringWithFormat:@"%02d:%02d",
+                                  [datasette duration] / 60,
+                                  [datasette duration] % 60]];
     } else {
         [tapeIcon setHidden:YES];
         [tapeText setStringValue:@"No tape"];
@@ -141,10 +151,15 @@
         [tapeStop setEnabled:NO];
         [tapeEject setEnabled:NO];
         [tapeEjectText setEnabled:NO];
+        [tapeHead setStringValue:[NSString stringWithFormat:@"%02d:%02d", 0, 0]];
+        [tapeEnd  setStringValue:[NSString stringWithFormat:@"%02d:%02d", 0, 0]];
     }
     int elapsedTime = [[c64 datasette] headPositionInSeconds];
-    int totalTime = [[c64 datasette] headPositionInSeconds];
-    int sliderPosition = (totalTime == 0) ? 0 : (elapsedTime / totalTime);
+    // NSLog(@"ElapsedTime: %d\n", elapsedTime);
+    int totalTime = [[c64 datasette] duration];
+    // NSLog(@"TotalTime: %d\n", totalTime);
+    int sliderPosition = (totalTime == 0) ? 0 : (elapsedTime * 100 / totalTime);
+    // NSLog(@"sliderPosition: %d\n", sliderPosition);
     [tapeSlider setIntValue:sliderPosition];
     
     /* Expansion port */

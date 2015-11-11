@@ -531,6 +531,7 @@
 - (bool) hasTape { return datasette->hasTape(); }
 - (void) pressPlay { datasette->pressPlay(); }
 - (void) pressStop { datasette->pressStop(); }
+- (void) pressRewind { datasette->rewind(); }
 - (void) ejectTape { datasette->ejectTape(); }
 - (int) duration { return datasette->getDuration(); }
 - (int) headPosition { return datasette->getHeadPosition(); }

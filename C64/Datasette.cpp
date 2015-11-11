@@ -27,18 +27,20 @@ Datasette::Datasette()
     SnapshotItem items[] = {
         
         // Tape properties (will survive reset)
-        { &size,            sizeof(size),                   KEEP_ON_RESET },
-        { &type,            sizeof(type),                   KEEP_ON_RESET },
-        { &duration,        sizeof(duration),               KEEP_ON_RESET },
+        { &size,                    sizeof(size),                   KEEP_ON_RESET },
+        { &type,                    sizeof(type),                   KEEP_ON_RESET },
+        { &duration,                sizeof(duration),               KEEP_ON_RESET },
         
         // Internal state (will be cleared on reset)
-        { &middleOfPulse,   sizeof(middleOfPulse),          CLEAR_ON_RESET },
-        { &pulseLength,     sizeof(pulseLength),            CLEAR_ON_RESET },
+        { &middleOfPulse,           sizeof(middleOfPulse),          CLEAR_ON_RESET },
+        { &pulseLength,             sizeof(pulseLength),            CLEAR_ON_RESET },
 
-        { &playKey,         sizeof(playKey),                CLEAR_ON_RESET },
-        { &motor,           sizeof(motor),                  CLEAR_ON_RESET },
-        { &nextPulse,       sizeof(nextPulse),              CLEAR_ON_RESET },
-        { &head,            sizeof(head),                   CLEAR_ON_RESET },
+        { &playKey,                 sizeof(playKey),                CLEAR_ON_RESET },
+        { &motor,                   sizeof(motor),                  CLEAR_ON_RESET },
+        { &nextPulse,               sizeof(nextPulse),              CLEAR_ON_RESET },
+        { &head,                    sizeof(head),                   CLEAR_ON_RESET },
+        { &lastValidHeadPosition,   sizeof(lastValidHeadPosition), CLEAR_ON_RESET },
+        
         { NULL,             0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -71,11 +73,8 @@ void
 Datasette::ping()
 {
     debug(2, "Pinging Datasette...\n");
-#if 0
-    c64->putMessage(MSG_VC1541_LED, redLED ? 1 : 0);
-    c64->putMessage(MSG_VC1541_MOTOR, rotating ? 1 : 0);
-    c64->putMessage(MSG_VC1541_DISK, diskInserted ? 1 : 0);
-#endif
+    c64->putMessage(MSG_VC1530_MOTOR, playKey ? 1 : 0);
+    c64->putMessage(MSG_VC1530_TAPE, hasTape() ? 1 : 0);
 }
 
 uint32_t
@@ -138,10 +137,13 @@ Datasette::getHeadPosition()
 uint32_t
 Datasette::getHeadPositionInSeconds()
 {
-    if (head == -1)
+    if (head <= 0)
         return 0;
-
-    unsigned percentage = (100 * head) / size;
+    
+    if (head >= lastValidHeadPosition)
+        return duration;
+    
+    unsigned percentage = (unsigned)(round((100.0 * head) / lastValidHeadPosition));
     return elapsedTime[percentage];
 }
 
@@ -154,37 +156,9 @@ Datasette::setHeadPosition(uint32_t value)
 void
 Datasette::setHeadPositionInSeconds(uint32_t value)
 {
-    unsigned percentage = (100 * value) / duration;
+    unsigned percentage = (unsigned)(round((100.0 * value) / duration));
     head = (percentage < 100) ? headPosition[percentage] : headPosition[100];
 }
-
-#if 0
-unsigned
-Datasette::durationUntil(int headpos)
-{
-    int oldhead = head;
-    
-    // Determine tape length (in clock cycles)
-    int64_t pulse, cycles = 0;
-    rewind();
-    for (unsigned i = 0; i < headpos; i++) {
-        if ((pulse = nextPulseLength()) == -1)
-            break;
-        cycles += pulse;
-    }
-    
-    // Determine tape length (in seconds)
-    head = oldhead;
-    return cycles / (PAL_CYCLES_PER_FRAME * PAL_REFRESH_RATE);
-}
-
-unsigned
-Datasette::durationUntilPercentage(int percentage)
-{
-    int headpos = (percentage * duration) / 100;
-    return durationUntil(headpos);
-}
-#endif
 
 void
 Datasette::insertTape(TAPArchive *a)
@@ -209,6 +183,7 @@ Datasette::insertTape(TAPArchive *a)
     uint64_t totalCycles, cycles, i;
     for (i = totalCycles = 0; i < size; i += skip) {
         totalCycles += computePulseLength(i, &skip);
+        lastValidHeadPosition = i;
     }
     duration = totalCycles / PAL_CYCLES_PER_SECOND;
 
@@ -230,15 +205,18 @@ Datasette::insertTape(TAPArchive *a)
 
         cycles += computePulseLength(i, &skip);
     }
-    headPosition[100] = size - 1;
+    headPosition[100] = lastValidHeadPosition;
     elapsedTime[100] = totalCycles / PAL_CYCLES_PER_SECOND;
     
-    /*
+/*
     for (i = 0; i < 101; i++) {
         debug(2, "headPosition[%d] = %d\n", i, headPosition[i]);
         debug(2, "elapsedTime[%d] = %d\n", i, elapsedTime[i]);
     }
-    */
+    debug(2, "duration = %d, size = %d\n", duration, size);
+*/
+
+    c64->putMessage(MSG_VC1530_TAPE, 1);
 }
 
 void
@@ -248,15 +226,18 @@ Datasette::ejectTape()
 
     if (!hasTape())
         return;
-
+    
+    setMotor(false);
+    
     assert(data != NULL);
-
     free(data);
     data = NULL;
     size = 0;
     type = 0;
     duration = 0;
     head = -1;
+
+    c64->putMessage(MSG_VC1530_TAPE, 0);
 }
 
 int
@@ -321,6 +302,7 @@ Datasette::pressPlay()
     debug("Datasette::pressPlay\n");
     nextPulse = c64->getCycles() + 0.5 * PAL_CYCLES_PER_FRAME * 60; /* wait approx. 0.5 seconds */
     playKey = true;
+    c64->putMessage(MSG_VC1530_MOTOR, 1);
 }
 
 void
@@ -328,6 +310,7 @@ Datasette::pressStop()
 {
     debug("Datasette::pressStop\n");
     playKey = false;
+    c64->putMessage(MSG_VC1530_MOTOR, 0);
 }
 
 void
@@ -337,7 +320,7 @@ Datasette::setMotor(bool value)
         return;
     
     motor = value;
-    debug(2, "Motor %s\n", motor ? "on" : "off");
+    c64->putMessage(MSG_VC1530_MOTOR, motor);
 }
 
 void
@@ -358,8 +341,6 @@ Datasette::_execute()
 void
 Datasette::_executeBeginning()
 {
-    static int percentage = -42;
-
     pulseLength = nextPulseLength();
 
     if (head == 0) {
@@ -389,11 +370,10 @@ Datasette::_executeBeginning()
         middleOfPulse = 1;
         
         // Progress info
-        assert(head != 0);
-        assert(size != 0);
-        if (percentage != progress()) {
-            percentage = progress();
-            debug("%d percent completed\n", percentage);
+        for (unsigned i = 0; i <= 100; i++) {
+            if (headPosition[i] == head) {
+                c64->putMessage(MSG_VC1530_PROGRESS); 
+            }
         }
     }
 }

@@ -586,7 +586,6 @@
 			break;
 			
 		case MSG_VC1541_DATA:
-        case MSG_VC1530_MOTOR:
 			if (msg->i)
 				[c64 setIecBusIsBusy:true];
 			else
@@ -617,10 +616,24 @@
 			break;
 
         case MSG_VC1530_TAPE:
+            NSLog(@"MSG_VC1530_TAPE %d\n", msg->i);
             [tapeIcon setHidden:!msg->i];
             [tapeEject setHidden:!msg->i];
             break;
 
+        case MSG_VC1530_MOTOR:
+            NSLog(@"MSG_VC1530_MOTOR %d\n", msg->i);
+            if (msg->i)
+                [c64 setIecBusIsBusy:true];
+            else
+                [c64 setIecBusIsBusy:false];
+            break;
+
+        case MSG_VC1530_PROGRESS:
+            NSLog(@"TAPE PROGRESS\n"); 
+            [mediaDialog update];
+            break;
+            
         case MSG_JOYSTICK_ATTACHED:
         case MSG_JOYSTICK_REMOVED:
             [self validateJoystickItems];

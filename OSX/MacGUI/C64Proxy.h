@@ -426,6 +426,7 @@
 - (bool) hasTape;
 - (void) pressPlay;
 - (void) pressStop;
+- (void) pressRewind;
 - (void) ejectTape;
 - (int) duration;
 - (int) headPosition;

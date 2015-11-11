@@ -56,6 +56,69 @@ public:
     //! Dump current state into logfile
     void dumpState();
 
+    // ---------------------------------------------------------------------------------------------
+    //                                     Atrributes
+    // ---------------------------------------------------------------------------------------------
+    
+private:
+    
+    //! @brief      Size of the attached data buffer
+    /*! @discussion Equals 0 iff no tape is inserted. */
+    uint32_t size;
+    
+    //! @brief      Data buffer (contains the raw data of the TAP archive)
+    /*! @todo       Idea: Convert tape archive data into type (0?) format. */
+    uint8_t *data;
+    
+    //! @brief      Data format (TAP type)
+    /*! @discussion In TAP format 0, data byte 0 signals a long puls without stating its length precisely.
+     *              In TAP format 1, each 0 is followed by three bytes stating the precise length in
+     *              LO_LO_HI_00 format. */
+    uint8_t type;
+    
+    //! @brief      Mapping of head position (in percent) to elapsed time (in seconds)
+    /*! @discussion This array is set up when a tape is inserted and read by getHeadPercentage()
+     */
+    int32_t elapsedTime[101];
+    
+    //! @brief      Mapping of elapsed time (in percent) to head position (in pulses)
+    /*! @discussion This array is set up when a tape is inserted and read by setHeadPercentage()
+     */
+    int32_t headPosition[101];
+    
+    //! @brief      Tape length in seconds
+    /*! @discussion The value is computed in insertTape by examining all pulses in the data buffer */
+    unsigned duration;
+    
+    /*! @brief      Read/Write head
+     *  @discussion End of tape is indicated by -1. */
+    int head;
+
+    /*! @brief      Stores the last valid head position
+     *  @discussion Maximum value of head before EOT (-1) */
+    int lastValidHeadPosition;
+
+    /*! @brief      Indicates whether we are in the middle of a pulse (1) or at the beginning (0) */
+    bool middleOfPulse;
+    
+    /*! @brief      Length of the current pulse */
+    int32_t pulseLength;
+    
+    /*! @brief      Indicates whether the play key is pressed */
+    bool playKey;
+    
+    /*! @brief      Indicates whether the motor is on */
+    bool motor;
+    
+    /*! @brief      Cycle number of the next pulse to generate */
+    uint64_t nextPulse;
+
+    // ---------------------------------------------------------------------------------------------
+    //                                    Methods
+    // ---------------------------------------------------------------------------------------------
+
+public:
+    
     //
     //! @functiongroup Handling virtual taped
     //
@@ -131,58 +194,6 @@ public:
     void _executeMiddle();
     inline void execute() { if (playKey && motor) _execute(); }
 
-    // ---------------------------------------------------------------------------------------------
-    //                                   Tape properties
-    // ---------------------------------------------------------------------------------------------
-    
-private:
-    
-    //! @brief      Size of the attached data buffer
-    /*! @discussion Equals 0 iff no tape is inserted. */
-    uint32_t size;
-    
-    //! @brief      Data buffer (contains the raw data of the TAP archive)
-    /*! @todo       Idea: Convert tape archive data into type (0?) format. */
-    uint8_t *data;
-
-    //! @brief      Data format (TAP type)
-    /*! @discussion In TAP format 0, data byte 0 signals a long puls without stating its length precisely.
-     *              In TAP format 1, each 0 is followed by three bytes stating the precise length in
-     *              LO_LO_HI_00 format. */
-    uint8_t type;
-
-    //! @brief      Mapping of head position (in percent) to elapsed time (in seconds)
-    /*! @discussion This array is set up when a tape is inserted and read by getHeadPercentage()
-     */
-    int32_t elapsedTime[101];
-
-    //! @brief      Mapping of elapsed time (in percent) to head position (in pulses)
-    /*! @discussion This array is set up when a tape is inserted and read by setHeadPercentage()
-     */
-    int32_t headPosition[101];
-
-    //! @brief      Tape length in seconds
-    /*! @discussion The value is computed in insertTape by examining all pulses in the data buffer */
-    unsigned duration;
-
-    /*! @brief      Read/Write head
-        @discussion End of tape is indicated by -1. */
-    int head;
-    
-    /*! @brief      Indicates whether we are in the middle of a pulse (1) or at the beginning (0) */
-    bool middleOfPulse;
-
-    /*! @brief      Length of the current pulse */
-    int32_t pulseLength;
-
-    /*! @brief      Indicates whether the play key is pressed */
-    bool playKey;
-
-    /*! @brief      Indicates whether the motor is on */
-    bool motor;
-
-    /*! @brief      Cycle number of the next pulse to generate */
-    uint64_t nextPulse;
 };
 
 #endif
