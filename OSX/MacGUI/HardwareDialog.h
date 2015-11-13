@@ -48,21 +48,8 @@ extern NSString *VC64SIDSamplingMethodKey;
     /* VC1541 */
     IBOutlet NSButton *warpLoad;
     IBOutlet NSTextField *warpText;
-    IBOutlet NSImageView *diskIcon;
-    IBOutlet NSButton *diskEject;
-    IBOutlet NSTextField *diskEjectText;
-    IBOutlet NSTextField *diskText;
-    IBOutlet NSTextField *diskText2;
-    IBOutlet NSButton *writeProtected;
     IBOutlet NSButton *driveNoise;
     IBOutlet NSButton *bitAccurate;
-
-    /* Expansion port */
-    IBOutlet NSImageView *cartridgeIcon;
-    IBOutlet NSButton *cartridgeEject;
-    IBOutlet NSTextField *cartridgeEjectText;
-    IBOutlet NSTextField *cartridgeText;
-    IBOutlet NSTextField *cartridgeText2;
     
     /* Audio */
     IBOutlet NSButton *SIDFilter;
@@ -82,11 +69,6 @@ extern NSString *VC64SIDSamplingMethodKey;
 - (IBAction)warpLoadAction:(id)sender;
 - (IBAction)driveNoiseAction:(id)sender;
 - (IBAction)bitAccurateAction:(id)sender;
-- (IBAction)ejectDiskAction:(id)sender;
-- (IBAction)writeProtectionAction:(id)sender;
-
-// Expansion port
-- (IBAction)ejectCartridgeAction:(id)sender;
 
 // SID
 - (IBAction)SIDFilterAction:(id)sender;
