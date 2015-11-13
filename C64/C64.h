@@ -17,19 +17,14 @@
 
 // VERSION 1.3:
 //
-// Replace 3,5" diskette symbol in bottom bar
-// Add Datasette::duration (length of tape in seconds)
 // Make TAP files loadable via "File->Load"
 // Make TAP files loadable via "Drag icon on VirtualC64 icon"
-// Add icons to bottom bar
-// Show percentage bar and percentage when loading. NOT NEEDED. PROGRESS CAN BE CHECKED IN MEDIA DIALOG
-// Don't forget to implement Datasette::ping()
-// Make sure, loadBuffer and saveBuffer works
-
-
+// Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
+//
+// VERSION 1.4:
+//
 // Add
 // Cartridge dialog
-//
 // VIC Sprite compatibility
 // Check if bus activity can be detected more precisely
 

@@ -32,15 +32,15 @@ Datasette::Datasette()
         { &durationInCycles,        sizeof(durationInCycles),       KEEP_ON_RESET },
         
         // Internal state (will be cleared on reset)
+        { &head,                    sizeof(head),                   CLEAR_ON_RESET },
+        { &headInCycles,            sizeof(headInCycles),           CLEAR_ON_RESET },
+        { &headInSeconds,           sizeof(headInSeconds),          CLEAR_ON_RESET },
         { &nextRisingEdge,          sizeof(nextRisingEdge),         CLEAR_ON_RESET },
         { &nextFallingEdge,         sizeof(nextFallingEdge),        CLEAR_ON_RESET },
         { &playKey,                 sizeof(playKey),                CLEAR_ON_RESET },
         { &motor,                   sizeof(motor),                  CLEAR_ON_RESET },
-        { &head,                    sizeof(head),                   CLEAR_ON_RESET },
-        { &headInCycles,            sizeof(headInCycles),           CLEAR_ON_RESET },
-        { &headInSeconds,           sizeof(headInSeconds),          CLEAR_ON_RESET },
         
-        { NULL,             0,                              0 }};
+        { NULL,                     0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
     
@@ -70,8 +70,9 @@ void
 Datasette::ping()
 {
     debug(2, "Pinging Datasette...\n");
-    c64->putMessage(MSG_VC1530_MOTOR, playKey ? 1 : 0);
     c64->putMessage(MSG_VC1530_TAPE, hasTape() ? 1 : 0);
+    c64->putMessage(MSG_VC1530_MOTOR, playKey ? 1 : 0);
+    c64->putMessage(MSG_VC1530_PROGRESS, headInSeconds);
 }
 
 uint32_t
@@ -132,7 +133,7 @@ Datasette::setHeadInCycles(uint64_t value)
     rewind();
     while (headInCycles <= value && head < size)
         advanceHead(true);
-    printf("Head is %lld (max %lld)\n", head, size);
+    printf("Head is %u (max %d)\n", head, size);
 }
 
 void

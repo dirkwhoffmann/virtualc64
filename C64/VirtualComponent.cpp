@@ -77,6 +77,10 @@ VirtualComponent::reset()
 void
 VirtualComponent::ping()
 {
+    // Ping all sub components
+    if (subComponents != NULL)
+        for (unsigned i = 0; subComponents[i] != NULL; i++)
+            subComponents[i]->ping();
 }
 
 void 

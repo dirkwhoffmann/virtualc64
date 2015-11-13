@@ -193,9 +193,11 @@ void C64::reset()
 void C64::ping()
 {
     debug (1, "Pinging virtual C64\n");
-    
+
+    VirtualComponent::ping();
     putMessage(MSG_WARP, warp);
 
+    /*
     mem->ping();
     cpu->ping();
     vic->ping();
@@ -208,6 +210,7 @@ void C64::ping()
     iec->ping();
     expansionport->ping();
     floppy->ping();
+    */
 }
 	
 void 
