@@ -428,11 +428,12 @@
 - (void) pressStop;
 - (void) pressRewind;
 - (void) ejectTape;
-- (int) duration;
-- (int) headPosition;
-- (int) headPositionInSeconds;
-- (void) setHeadPosition:(uint32_t)value;
-- (void) setHeadPositionInSeconds:(uint32_t)value;
+- (long) durationInCycles;
+- (int) durationInSeconds;
+- (int) head;
+- (long) headInCycles;
+- (int) headInSeconds;
+- (void) setHeadInCycles:(long)value;
 
 @end
 

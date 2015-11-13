@@ -314,9 +314,7 @@
 - (void) releaseInsertKey { keyboard->releaseInsertKey(); }
 
 - (void)typeText:(NSString *)text
-{
-    // dispatch_queue_t q = dispatch_queue_create("com.foo.samplequeue", NULL);
-    
+{    
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
                    ^{ [self _typeText:text]; });
 }
@@ -533,11 +531,12 @@
 - (void) pressStop { datasette->pressStop(); }
 - (void) pressRewind { datasette->rewind(); }
 - (void) ejectTape { datasette->ejectTape(); }
-- (int) duration { return datasette->getDuration(); }
-- (int) headPosition { return datasette->getHeadPosition(); }
-- (int) headPositionInSeconds { return datasette->getHeadPositionInSeconds(); }
-- (void) setHeadPosition:(uint32_t)value { datasette->setHeadPosition(value); }
-- (void) setHeadPositionInSeconds:(uint32_t)value { datasette->setHeadPositionInSeconds(value); }
+- (long) durationInCycles { return datasette->getDurationInCycles(); }
+- (int) durationInSeconds { return datasette->getDurationInSeconds(); }
+- (int) head { return datasette->getHead(); }
+- (long) headInCycles { return datasette->getHeadInCycles(); }
+- (int) headInSeconds { return datasette->getHeadInSeconds(); }
+- (void) setHeadInCycles:(long)value { datasette->setHeadInCycles(value); }
 
 @end
 

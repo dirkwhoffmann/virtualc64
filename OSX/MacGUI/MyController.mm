@@ -1160,9 +1160,15 @@
     
     // Type command if requested
     if (doAutoType) {
+        
         // TODO MOVE usleep into typeText
         usleep(100000);
         [[c64 keyboard] typeText:textToType];
+    }
+    
+    if (doAutoType && doPressPlay) {
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                       ^{ usleep(400000); [[c64 datasette] pressPlay]; });
     }
 }
 

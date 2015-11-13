@@ -76,33 +76,27 @@ private:
      *              LO_LO_HI_00 format. */
     uint8_t type;
     
-    //! @brief      Mapping of head position (in percent) to elapsed time (in seconds)
-    /*! @discussion This array is set up when a tape is inserted and read by getHeadPercentage()
-     */
-    int32_t elapsedTime[101];
-    
-    //! @brief      Mapping of elapsed time (in percent) to head position (in pulses)
-    /*! @discussion This array is set up when a tape is inserted and read by setHeadPercentage()
-     */
-    int32_t headPosition[101];
-    
-    //! @brief      Tape length in seconds
-    /*! @discussion The value is computed in insertTape by examining all pulses in the data buffer */
-    unsigned duration;
-    
     /*! @brief      Read/Write head
-     *  @discussion End of tape is indicated by -1. */
-    int head;
+     *  @discussion Value must be between 0 and size. head == size indicates EOT (end of tape) */
+    uint32_t head;
 
-    /*! @brief      Stores the last valid head position
-     *  @discussion Maximum value of head before EOT (-1) */
-    int lastValidHeadPosition;
+    /*! @brief      Read/Write head
+     *  @discussion Head position, measured in cycles */
+    uint64_t headInCycles;
 
-    /*! @brief      Indicates whether we are in the middle of a pulse (1) or at the beginning (0) */
-    bool middleOfPulse;
-    
-    /*! @brief      Length of the current pulse */
-    int32_t pulseLength;
+    /*! @brief      Read/Write head
+     *  @discussion Head position, measured in seconds */
+    uint32_t headInSeconds;
+
+    //! @brief      Tape length in cycles
+    /*! @discussion The value is computed in insertTape by examining all pulses in the data buffer */
+    uint64_t durationInCycles;
+
+    /*! @brief      Next scheduled rising edge on data line */
+    int64_t nextRisingEdge;
+
+    /*! @brief      Next scheduled falling edge on data line */
+    int64_t nextFallingEdge;
     
     /*! @brief      Indicates whether the play key is pressed */
     bool playKey;
@@ -110,9 +104,6 @@ private:
     /*! @brief      Indicates whether the motor is on */
     bool motor;
     
-    /*! @brief      Cycle number of the next pulse to generate */
-    uint64_t nextPulse;
-
     // ---------------------------------------------------------------------------------------------
     //                                    Methods
     // ---------------------------------------------------------------------------------------------
@@ -120,7 +111,7 @@ private:
 public:
     
     //
-    //! @functiongroup Handling virtual taped
+    //! @functiongroup Handling virtual tapes
     //
     
     /*! @brief Returns true if a tape is inserted */
@@ -134,43 +125,38 @@ public:
     void ejectTape();
 
     /*! @brief      Put head at the beginning of the tape */
-    void rewind() { head = 0; }
+    void rewind() { head = headInSeconds = headInCycles = 0; }
 
-    /*! @brief      Returns true if head points to the first data byte (beginning of file) */
-    // bool firsByte() { return head == 0; }
 
-    /*! @brief      Returns true if head points to the last data byte (beginning of file) */
-    // bool lastByte() { return head == (size - 1); }
+    //
+    //! @functiongroup Handling the read/write head
+    //
 
-    /*! @brief      Get current head position in different units
-     */
-    uint32_t getHeadPosition();
-    uint32_t getHeadPositionInSeconds();
-
-    /*! @brief      Set current head position in different units
-     */
-    void setHeadPosition(uint32_t value);
-    void setHeadPositionInSeconds(uint32_t value);
+    /*! @brief      Advances the read/write head for one pulse 
+     *  @discussion This methods updates head, headInCycles, and headInSeconds */
+    void advanceHead(bool silent = false);
+    
+    /*! @brief      Get current head position in different units */
+    uint32_t getHead() { return head; }
+    uint32_t getHeadInCycles() { return headInCycles; }
+    uint32_t getHeadInSeconds() { return headInSeconds; }
+    
+    /*! @brief      Set current head position in cycles */
+    void setHeadInCycles(uint64_t value);
     
     /*! @brief      Returns the head position as a percentage value
      *  @deprecated */
-    int progress() { return size ? (int)(100.0 * head / size) : 0; }
+    // int progress() { return size ? (int)(100.0 * head / size) : 0; }
 
-    /*! @brief      Computes the time interval between head positon 0 and headpos */
-    // unsigned durationUntil(int headpos);
-    // unsigned durationUntilPercentage(int percentage);
+    /*! @brief      Returns the tape length in cycles */
+    uint64_t getDurationInCycles() { return durationInCycles; }
 
-    /*! @brief      Returns the head position as a percentage value */
-    unsigned getDuration() { return duration; }
+    /*! @brief      Returns the tape length in seconds */
+    uint32_t getDurationInSeconds() { return durationInCycles / PAL_CYCLES_PER_SECOND; }
 
-    /*! @brief      Reads byte from TAP data */
-    int getByte();
-
-    /*! @brief      Next pulse length in number of cycles */
-    int computePulseLength(int headpos, int *skip);
-    int nextPulseLength();
-
-
+    /*! @brief      Pulse length at current head position */
+    int pulseLength(int *skip);
+    int pulseLength() { return pulseLength(NULL); }
     //
     //! @functiongroup Running the device
     //
@@ -190,10 +176,12 @@ public:
     /*! @brief    Executes the virtual datasette
      */
     void _execute();
-    void _executeBeginning();
-    void _executeMiddle();
+    void _executeFirst();
+    void _executeFalling();
+    void _executeRising();
+    void _executeLast();
+    
     inline void execute() { if (playKey && motor) _execute(); }
-
 };
 
 #endif

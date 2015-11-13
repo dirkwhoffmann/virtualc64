@@ -442,7 +442,7 @@
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -3576,20 +3576,8 @@ Gw
                             <action selector="cancelTapeDialog:" target="-2" id="WbN-aA-WtZ"/>
                         </connections>
                     </button>
-                    <button id="G9s-bL-nHr">
-                        <rect key="frame" x="112" y="104" width="104" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <animations/>
-                        <buttonCell key="cell" type="check" title="Auto-load file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="894-3k-9b3">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="autoTypeAction:" target="Dhu-87-6sj" id="V63-BL-eGt"/>
-                        </connections>
-                    </button>
                     <button id="ttO-gK-9RO">
-                        <rect key="frame" x="112" y="76" width="168" height="18"/>
+                        <rect key="frame" x="107" y="64" width="168" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Auto-press play on tape" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="U84-BP-98B">
@@ -3601,7 +3589,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="czP-9Q-9k7">
-                        <rect key="frame" x="61" y="124" width="244" height="56"/>
+                        <rect key="frame" x="76" y="119" width="225" height="56"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="TAP archives contain a continous bit-stream with no preview available." id="81L-ww-kxd">
@@ -3610,6 +3598,18 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button id="G9s-bL-nHr">
+                        <rect key="frame" x="107" y="92" width="104" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Auto-load file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="894-3k-9b3">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="autoTypeAction:" target="Dhu-87-6sj" id="V63-BL-eGt"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <animations/>
             </view>

@@ -88,12 +88,15 @@
 {
     NSLog(@"tapeHeadAction");
     
-    int value = [sender intValue];
-    NSLog(@"value = %d", value);
-    
-    int seconds = (value * [[c64 datasette] duration]) / 100;
-    NSLog(@"tapeHeadAction: percentage = %d, seconds = %d\n", value, seconds);
-    [[c64 datasette] setHeadPositionInSeconds:seconds];
+    long value = [sender intValue];
+    NSLog(@"value = %ld", value);
+
+    printf("durationInCycles = %ld\n", [[c64 datasette] durationInCycles]);
+
+    long cycles = (value * [[c64 datasette] durationInCycles]) / 100;
+    // NSLog(@"tapeHeadAction: percentage = %d, seconds = %d\n", value, seconds);
+    printf("cycles = %ld\n", cycles);
+    [[c64 datasette] setHeadInCycles:cycles];
 }
 
 // Expansion port
@@ -110,6 +113,9 @@
 
 - (void)update
 {
+    if (!c64)
+        return;
+    
     /* VC1541 */
     
     if ([[c64 vc1541] hasDisk]) {
@@ -128,6 +134,7 @@
     }
 
     /* VC1530 */
+    
     DatasetteProxy *datasette = [c64 datasette];
     if ([datasette hasTape]) {
         [tapeIcon setHidden:NO];
@@ -138,11 +145,15 @@
         [tapeEject setEnabled:YES];
         [tapeEjectText setEnabled:YES];
         [tapeHead setStringValue:[NSString stringWithFormat:@"%02d:%02d",
-                                  [datasette headPositionInSeconds] / 60,
-                                  [datasette headPositionInSeconds] % 60]];
+                                  [datasette headInSeconds] / 60,
+                                  [datasette headInSeconds] % 60]];
         [tapeEnd  setStringValue:[NSString stringWithFormat:@"%02d:%02d",
-                                  [datasette duration] / 60,
-                                  [datasette duration] % 60]];
+                                  [datasette durationInSeconds] / 60,
+                                  [datasette durationInSeconds] % 60]];
+        long elapsed = [[c64 datasette] headInCycles];
+        long total = [[c64 datasette] durationInCycles];
+        int sliderPosition = 100 * elapsed / total;
+        [tapeSlider setIntValue:sliderPosition];
     } else {
         [tapeIcon setHidden:YES];
         [tapeText setStringValue:@"No tape"];
@@ -153,14 +164,9 @@
         [tapeEjectText setEnabled:NO];
         [tapeHead setStringValue:[NSString stringWithFormat:@"%02d:%02d", 0, 0]];
         [tapeEnd  setStringValue:[NSString stringWithFormat:@"%02d:%02d", 0, 0]];
+        [tapeSlider setIntValue:0];
+        [tapeSlider setEnabled:NO];
     }
-    int elapsedTime = [[c64 datasette] headPositionInSeconds];
-    // NSLog(@"ElapsedTime: %d\n", elapsedTime);
-    int totalTime = [[c64 datasette] duration];
-    // NSLog(@"TotalTime: %d\n", totalTime);
-    int sliderPosition = (totalTime == 0) ? 0 : (elapsedTime * 100 / totalTime);
-    // NSLog(@"sliderPosition: %d\n", sliderPosition);
-    [tapeSlider setIntValue:sliderPosition];
     
     /* Expansion port */
     

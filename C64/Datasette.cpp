@@ -29,17 +29,16 @@ Datasette::Datasette()
         // Tape properties (will survive reset)
         { &size,                    sizeof(size),                   KEEP_ON_RESET },
         { &type,                    sizeof(type),                   KEEP_ON_RESET },
-        { &duration,                sizeof(duration),               KEEP_ON_RESET },
+        { &durationInCycles,        sizeof(durationInCycles),       KEEP_ON_RESET },
         
         // Internal state (will be cleared on reset)
-        { &middleOfPulse,           sizeof(middleOfPulse),          CLEAR_ON_RESET },
-        { &pulseLength,             sizeof(pulseLength),            CLEAR_ON_RESET },
-
+        { &nextRisingEdge,          sizeof(nextRisingEdge),         CLEAR_ON_RESET },
+        { &nextFallingEdge,         sizeof(nextFallingEdge),        CLEAR_ON_RESET },
         { &playKey,                 sizeof(playKey),                CLEAR_ON_RESET },
         { &motor,                   sizeof(motor),                  CLEAR_ON_RESET },
-        { &nextPulse,               sizeof(nextPulse),              CLEAR_ON_RESET },
         { &head,                    sizeof(head),                   CLEAR_ON_RESET },
-        { &lastValidHeadPosition,   sizeof(lastValidHeadPosition), CLEAR_ON_RESET },
+        { &headInCycles,            sizeof(headInCycles),           CLEAR_ON_RESET },
+        { &headInSeconds,           sizeof(headInSeconds),          CLEAR_ON_RESET },
         
         { NULL,             0,                              0 }};
     
@@ -49,9 +48,7 @@ Datasette::Datasette()
     data = NULL;
     size = 0;
     type = 0;
-    duration = 0;
-    
-    head = -1;
+    durationInCycles = 0;
 }
 
 Datasette::~Datasette()
@@ -128,36 +125,14 @@ Datasette::dumpState()
 #endif
 }
 
-uint32_t
-Datasette::getHeadPosition()
-{
-    return head;
-}
-
-uint32_t
-Datasette::getHeadPositionInSeconds()
-{
-    if (head <= 0)
-        return 0;
-    
-    if (head >= lastValidHeadPosition)
-        return duration;
-    
-    unsigned percentage = (unsigned)(round((100.0 * head) / lastValidHeadPosition));
-    return elapsedTime[percentage];
-}
-
 void
-Datasette::setHeadPosition(uint32_t value)
+Datasette::setHeadInCycles(uint64_t value)
 {
-    head = value;
-}
-
-void
-Datasette::setHeadPositionInSeconds(uint32_t value)
-{
-    unsigned percentage = (unsigned)(round((100.0 * value) / duration));
-    head = (percentage < 100) ? headPosition[percentage] : headPosition[100];
+    printf("Fast forwarding to cycle %lld (duration %lld)\n", value, durationInCycles);
+    rewind();
+    while (headInCycles <= value && head < size)
+        advanceHead(true);
+    printf("Head is %lld (max %lld)\n", head, size);
 }
 
 void
@@ -171,51 +146,15 @@ Datasette::insertTape(TAPArchive *a)
     // Copy data
     data = (uint8_t *)malloc(size);
     memcpy(data, a->getData(), size);
+
+    // Determine tape length (by fast forwarding)
+    rewind();
+    while (head < size)
+        advanceHead(true /* Don't send tape progress messages */);
+
+    durationInCycles = headInCycles;
     rewind();
     
-    for (unsigned i = 16; i > 0; i--) {
-        fprintf(stderr, "%02X ", data[size - i]);
-    }
-    fprintf(stderr, "\n");
-
-    // Determine total tape length (in clock cycles)
-    int skip;
-    uint64_t totalCycles, cycles, i;
-    for (i = totalCycles = 0; i < size; i += skip) {
-        totalCycles += computePulseLength(i, &skip);
-        lastValidHeadPosition = i;
-    }
-    duration = totalCycles / PAL_CYCLES_PER_SECOND;
-
-    // Prepare mapping arrays
-    for (i = 0; i <= 100; i++)
-        headPosition[i] = elapsedTime[i] = -1;
-    
-    // Fill up arrays
-    for (i = cycles = 0; i < size; i += skip) {
-        
-        unsigned spacePercentage = ((100 * i) / size);
-        unsigned timePercentage = ((100 * cycles) / totalCycles);
-
-        if (headPosition[timePercentage] == -1)
-            headPosition[timePercentage] = i;
-        
-        if (elapsedTime[spacePercentage] == -1)
-            elapsedTime[spacePercentage] = cycles / PAL_CYCLES_PER_SECOND;
-
-        cycles += computePulseLength(i, &skip);
-    }
-    headPosition[100] = lastValidHeadPosition;
-    elapsedTime[100] = totalCycles / PAL_CYCLES_PER_SECOND;
-    
-/*
-    for (i = 0; i < 101; i++) {
-        debug(2, "headPosition[%d] = %d\n", i, headPosition[i]);
-        debug(2, "elapsedTime[%d] = %d\n", i, elapsedTime[i]);
-    }
-    debug(2, "duration = %d, size = %d\n", duration, size);
-*/
-
     c64->putMessage(MSG_VC1530_TAPE, 1);
 }
 
@@ -227,90 +166,87 @@ Datasette::ejectTape()
     if (!hasTape())
         return;
     
-    setMotor(false);
+    pressStop();
     
     assert(data != NULL);
     free(data);
     data = NULL;
     size = 0;
     type = 0;
-    duration = 0;
+    durationInCycles = 0;
     head = -1;
 
     c64->putMessage(MSG_VC1530_TAPE, 0);
 }
 
-int
-Datasette::getByte()
+void
+Datasette::advanceHead(bool silent)
 {
-    int result;
-    // static int debugcnt = 0;
+    // Return if end of tape is already reached
+    if (head == size)
+        return;
     
-    if (head < 0 || head >= size)
-        return -1;
+    // Update head and headInCycles
+    int length, skip;
+    length = pulseLength(&skip);
+    head += skip;
+    headInCycles += length;
     
-    // get byte
-    result = (uint8_t)data[head];
-    
-    // check for end of file
-    if (head == (size - 1)) {
-        head = -1;
-    } else {
-        // advance head
-        head++;
-    }
-    
-    return result;
+    // Send message if the tapeCounter (in seconds) changes
+    uint32_t newHeadInSeconds = headInCycles / PAL_CYCLES_PER_SECOND;
+    if (newHeadInSeconds != headInSeconds && !silent)
+        c64->putMessage(MSG_VC1530_PROGRESS, newHeadInSeconds);
+
+    // Update headInSeconds
+    headInSeconds = newHeadInSeconds;
 }
 
 int
-Datasette::computePulseLength(int headpos, int *skip)
+Datasette::pulseLength(int *skip)
 {
-    // Pulse lengths between 1 * 8 and 255 * 8
-    if (data[headpos] != 0) {
-        *skip = 1;
-        return 8 * data[headpos];
+    assert(head < size);
+
+    if (data[head] != 0) {
+        // Pulse lengths between 1 * 8 and 255 * 8
+        if (skip) *skip = 1;
+        return 8 * data[head];
     }
     
-    // Pulse lengths greater than 8 * 255
     if (type == 0) {
-        *skip = 1;
+        // Pulse lengths greater than 8 * 255 (TAP V0 files)
+        if (skip) *skip = 1;
         return 8 * 256;
+    } else {
+        // Pulse lengths greater than 8 * 255 (TAP V1 files)
+        if (skip) *skip = 4;
+        return  LO_LO_HI_HI(data[head+1], data[head+2], data[head+3], 0);
     }
-    *skip = 4;
-    return  LO_LO_HI_HI(data[headpos+1], data[headpos+2], data[headpos+3], 0);
-}
-
-int
-Datasette::nextPulseLength()
-{
-    int byte = getByte();
-    
-    if (byte == -1)
-        return -1;
-    
-    if (byte != 0)
-        return 8 * byte;
-
-    // Long pulse (encoding depends on the TAP type)
-    return type ? LO_LO_HI_HI(getByte(), getByte(), getByte(), 0) : (8 * 256);
 }
 
 void
 Datasette::pressPlay()
 {
+    if (!hasTape())
+        return;
+    
     debug("Datasette::pressPlay\n");
-    nextPulse = c64->getCycles() + 0.5 * PAL_CYCLES_PER_FRAME * 60; /* wait approx. 0.5 seconds */
+    // nextFallingEdge = 0.5 * PAL_CYCLES_PER_SECOND; /* kick off in 0.5 seconds */
+    // nextRisingEdge = -1;
+    
+    // Schedule first pulse
+    uint64_t length = pulseLength();
+    nextRisingEdge = length / 2;
+    nextFallingEdge = length;
+    
     playKey = true;
-    c64->putMessage(MSG_VC1530_MOTOR, 1);
 }
 
 void
 Datasette::pressStop()
 {
     debug("Datasette::pressStop\n");
+    setMotor(false);
     playKey = false;
-    c64->putMessage(MSG_VC1530_MOTOR, 0);
 }
 
 void
@@ -329,63 +265,34 @@ Datasette::_execute()
     if (!hasTape() || !playKey || !motor)
         return;
     
-    if (c64->getCycles() < nextPulse)
+    nextRisingEdge--;
+    nextFallingEdge--;
+    
+    if (nextRisingEdge == 0) {
+        _executeRising();
         return;
-    
-    if (middleOfPulse)
-        _executeMiddle();
-    else
-        _executeBeginning();
-}
-
-void
-Datasette::_executeBeginning()
-{
-    pulseLength = nextPulseLength();
-
-    if (head == 0) {
-        
-        // Trigger first edge (transmission starts here)
-        assert(pulseLength != -1);
-        c64->cia1->triggerFallingEdgeOnFlagPin();
-
-        // Schedule next pulse
-        nextPulse = c64->getCycles() + (pulseLength / 2);
-        middleOfPulse = 1;
     }
-    
-    else if (pulseLength == -1) {
-        
-        // Trigger last edge (transmission ends here)
-        c64->cia1->triggerFallingEdgeOnFlagPin();        
-    }
-    
-    else {
-        
-        // Trigger falling edge
-        c64->cia1->triggerFallingEdgeOnFlagPin();
 
-        // Schedule next pulse
-        nextPulse = c64->getCycles() + (pulseLength / 2);
-        middleOfPulse = 1;
-        
-        // Progress info
-        for (unsigned i = 0; i <= 100; i++) {
-            if (headPosition[i] == head) {
-                c64->putMessage(MSG_VC1530_PROGRESS); 
-            }
-        }
+    if (nextFallingEdge == 0 && head < size) {
+        _executeFalling();
+        return;
     }
 }
 
 void
-Datasette::_executeMiddle()
+Datasette::_executeRising()
 {
-    // Trigger rising edge
     c64->cia1->triggerRisingEdgeOnFlagPin();
+}
+
+void
+Datasette::_executeFalling()
+{
+    c64->cia1->triggerFallingEdgeOnFlagPin();
     
     // Schedule next pulse
-    nextPulse = c64->getCycles() + (pulseLength / 2);
-    middleOfPulse = 0;
+    advanceHead();
+    uint64_t length = pulseLength();
+    nextRisingEdge = length / 2;
+    nextFallingEdge = length;
 }
-
