@@ -77,14 +77,16 @@ enum INPUT_DEVICES {
     IBOutlet NSProgressIndicator *progress;
     IBOutlet NSButton *driveIcon;
 	IBOutlet NSButton *driveEject;
-	IBOutlet NSButton *tapeIcon;
-	IBOutlet NSButton *tapeEject;
     IBOutlet NSButton *cartridgeIcon;
     IBOutlet NSButton *cartridgeEject;
+    IBOutlet NSButton *tapeIcon;
+    IBOutlet NSButton *tapeEject;
+    IBOutlet NSProgressIndicator *tapeProgress;
 	IBOutlet NSTextField *info;
 	IBOutlet NSTextField *clockSpeed;
 	IBOutlet NSLevelIndicator *clockSpeedBar;
-	IBOutlet NSButton *warpMode;
+	IBOutlet NSButton *warpIcon;
+    // IBOutlet NSButton *alwaysWarpIcon;
 	
 	// Cheatbox panel
 	// IBOutlet NSToolbarItem *cheatboxIcon;
@@ -319,7 +321,7 @@ enum INPUT_DEVICES {
 - (IBAction)driveEjectAction:(id)sender;
 - (IBAction)tapeEjectAction:(id)sender;
 - (IBAction)cartridgeEjectAction:(id)sender;
-- (IBAction)warpAction:(id)sender;
+- (IBAction)alwaysWarpAction:(id)sender;
 
 // Cartridges
 - (BOOL)mountCartridge;

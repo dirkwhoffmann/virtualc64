@@ -291,6 +291,7 @@
 - (void) releaseInsertKey;
 
 - (void) typeText:(NSString *)text;
+- (void) typeText:(NSString *)text withDelay:(int)delay;
 
 @end 
 
@@ -434,6 +435,7 @@
 - (long) headInCycles;
 - (int) headInSeconds;
 - (void) setHeadInCycles:(long)value;
+- (BOOL) motor;
 
 @end
 
@@ -466,6 +468,9 @@
 	//! Indicates that data is transmitted on the IEC bus
 	BOOL iecBusIsBusy;
 
+    //! Indicates that data is transmitted on the datasette data line
+    BOOL tapeBusIsBusy;
+
     //! Currently used color scheme
     int colorScheme;
 }
@@ -487,6 +492,7 @@
 @property (readonly) DatasetteProxy *datasette;
 
 @property BOOL iecBusIsBusy;
+@property BOOL tapeBusIsBusy;
 
 // Initialization
 - (void) kill;

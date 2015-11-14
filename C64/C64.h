@@ -17,8 +17,18 @@
 
 // VERSION 1.3:
 //
-// Make TAP files loadable via "File->Load"
-// Make TAP files loadable via "Drag icon on VirtualC64 icon"
+// VirtualC64 emulates a virtual datasette supporting the TAP format. To add a TAP file
+// as virtual tape, drag and drop the file into the main emulator window.
+//
+// A toolbar icon has been added for opening a new "media dialog". The dialog provides
+// information about the currently insertet disk, tape, and the currently attached
+// expansion port cartridge.
+//
+// (Hopefully) fixed a buf that sometimes halted audio playback when a
+// saved state was dragged from the time travel drawer into the emulator window.
+// 
+//
+//
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
 //
 // VERSION 1.4:
@@ -54,7 +64,7 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 1
-#define V_MINOR 0
+#define V_MINOR 3
 #define V_SUBMINOR 0
 
 #include "basic.h"

@@ -71,7 +71,8 @@ Datasette::ping()
 {
     debug(2, "Pinging Datasette...\n");
     c64->putMessage(MSG_VC1530_TAPE, hasTape() ? 1 : 0);
-    c64->putMessage(MSG_VC1530_MOTOR, playKey ? 1 : 0);
+    // c64->putMessage(MSG_VC1530_MOTOR, motor ? 1 : 0);
+    // c64->putMessage(MSG_VC1530_PLAY, playKey ? 1 : 0);
     c64->putMessage(MSG_VC1530_PROGRESS, headInSeconds);
 }
 
@@ -231,6 +232,7 @@ Datasette::pressPlay()
         return;
     
     debug("Datasette::pressPlay\n");
+
     // nextFallingEdge = 0.5 * PAL_CYCLES_PER_SECOND; /* kick off in 0.5 seconds */
     // nextRisingEdge = -1;
     
@@ -240,6 +242,7 @@ Datasette::pressPlay()
     nextFallingEdge = length;
     
     playKey = true;
+    // c64->putMessage(MSG_VC1530_PLAY, true);
 }
 
 void
@@ -248,6 +251,7 @@ Datasette::pressStop()
     debug("Datasette::pressStop\n");
     setMotor(false);
     playKey = false;
+    // c64->putMessage(MSG_VC1530_PLAY, false);
 }
 
 void
@@ -257,7 +261,7 @@ Datasette::setMotor(bool value)
         return;
     
     motor = value;
-    c64->putMessage(MSG_VC1530_MOTOR, motor);
+    // c64->putMessage(MSG_VC1530_MOTOR, motor);
 }
 
 void
@@ -277,6 +281,10 @@ Datasette::_execute()
     if (nextFallingEdge == 0 && head < size) {
         _executeFalling();
         return;
+    }
+    
+    if (head >= size) {
+        pressStop();
     }
 }
 

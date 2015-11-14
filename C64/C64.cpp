@@ -196,21 +196,7 @@ void C64::ping()
 
     VirtualComponent::ping();
     putMessage(MSG_WARP, warp);
-
-    /*
-    mem->ping();
-    cpu->ping();
-    vic->ping();
-    cia1->ping();
-    cia2->ping();
-    sid->ping();
-    keyboard->ping();
-    joystick1->ping();
-    joystick2->ping();
-    iec->ping();
-    expansionport->ping();
-    floppy->ping();
-    */
+    putMessage(MSG_ALWAYS_WARP, alwaysWarp);
 }
 	
 void 

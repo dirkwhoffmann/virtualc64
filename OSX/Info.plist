@@ -148,6 +148,22 @@
 			<key>NSPersistentStoreTypeKey</key>
 			<string>Binary</string>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>TAP</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IconT64</string>
+			<key>CFBundleTypeName</key>
+			<string>TAP</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<integer>0</integer>
+			<key>NSDocumentClass</key>
+			<string>MyDocument</string>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>VirtualC64</string>
@@ -167,8 +183,6 @@
 	<string>1.3</string>
 	<key>CFBundleSignature</key>
 	<string>vc64</string>
-	<key>CFBundleURLTypes</key>
-	<array/>
 	<key>CFBundleVersion</key>
 	<string>1.3</string>
 	<key>Fabric</key>
@@ -196,8 +210,6 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>NSServices</key>
-	<array/>
 	<key>SUAllowsAutomaticUpdates</key>
 	<string>NO</string>
 	<key>SUEnableAutomaticChecks</key>
@@ -210,9 +222,5 @@
 	<string>dsa_pub.pem</string>
 	<key>SUShowReleaseNotes</key>
 	<string>YES</string>
-	<key>UTExportedTypeDeclarations</key>
-	<array/>
-	<key>UTImportedTypeDeclarations</key>
-	<array/>
 </dict>
 </plist>

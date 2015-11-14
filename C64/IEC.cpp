@@ -200,7 +200,7 @@ void IEC::updateIecLines()
 			drive->c64->putMessage(MSG_VC1541_DATA, 1);
 			drive->c64->setWarp(drive->c64->getAlwaysWarp() || drive->c64->getWarpLoad());
 		}
-		busActivity = 10;
+		busActivity = 30;
 	}
 
 	if (signals_changed && tracingEnabled()) {

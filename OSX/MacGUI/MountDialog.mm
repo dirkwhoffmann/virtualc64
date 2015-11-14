@@ -41,7 +41,7 @@
     doMount = YES;
     doFlash = NO;
     doType = NO;
-    loadOption = LOAD_OPTION_FLASH;
+    loadOption = LOAD_OPTION_8_1;
 
     // Let the table header show the logical archive name
     NSString *archiveName = [NSString stringWithFormat:@"%s", archive->getName()];
@@ -83,25 +83,26 @@
         
         [diskIcon setImage:[NSImage imageNamed:@"IconD64"]];
         [diskIconFrame setTitle:@"D64 archive"];
+        loadOption = LOAD_OPTION_8_1;
         
     } else if ([archiveExtension isEqualToString:@"T64"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconT64"]];
         [diskIconFrame setTitle:@"T64 archive"];
+        loadOption = LOAD_OPTION_FLASH;
         
     } else if ([archiveExtension isEqualToString:@"PRG"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconPRG"]];
         [diskIconFrame setTitle:@"PRG archive"];
+        loadOption = LOAD_OPTION_FLASH;
 
     } else if ([archiveExtension isEqualToString:@"P00"]) {
         
         [diskIcon setImage:[NSImage imageNamed:@"IconP00"]];
         [diskIconFrame setTitle:@"P00 archive"];
+        loadOption = LOAD_OPTION_FLASH;
     }
-    
-    // [CancelButton setTitle:@"Cancel"];
-    // [OKButton setTitle:@"Insert disk"];
     
     [self update];
 }

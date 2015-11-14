@@ -213,6 +213,7 @@
     [greenLED setHidden:NO];
     [redLED setHidden:NO];
     [progress setHidden:NO];
+    [tapeProgress setHidden:NO];
     [driveIcon setHidden:![[c64 vc1541] hasDisk]];
     [driveEject setHidden:![[c64 vc1541] hasDisk]];
     [tapeIcon setHidden:![[c64 datasette] hasTape]];
@@ -222,7 +223,8 @@
     [info setHidden:NO];
     [clockSpeed setHidden:NO];
     [clockSpeedBar setHidden:NO];
-    [warpMode setHidden:NO];
+    [warpIcon setHidden:NO];
+    // [alwaysWarpIcon setHidden:NO];
     
     [metalScreen setDrawInEntireWindow:NO];
 }
@@ -235,6 +237,7 @@
     [greenLED setHidden:YES];
     [redLED setHidden:YES];
     [progress setHidden:YES];
+    [tapeProgress setHidden:YES];
     [driveIcon setHidden:YES];
     [driveEject setHidden:YES];
     [tapeIcon setHidden:YES];
@@ -244,8 +247,9 @@
     [info setHidden:YES];
     [clockSpeed setHidden:YES];
     [clockSpeedBar setHidden:YES];
-    [warpMode setHidden:YES];
-        
+    [warpIcon setHidden:YES];
+    // [alwaysWarpIcon setHidden:YES];
+    
     [metalScreen setDrawInEntireWindow:YES];
 }
 

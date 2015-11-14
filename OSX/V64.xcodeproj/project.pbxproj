@@ -72,6 +72,12 @@
 		50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE50A7B679A00A8DB94 /* stepInto32.png */; };
 		50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE70A7B67A100A8DB94 /* stepOver32.png */; };
 		50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FEB0A7B67AE00A8DB94 /* restart32.png */; };
+		504A22AB1BF71FD500B29BEB /* clock_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A51BF71FD500B29BEB /* clock_blue.png */; };
+		504A22AC1BF71FD500B29BEB /* clock_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A61BF71FD500B29BEB /* clock_green.png */; };
+		504A22AD1BF71FD500B29BEB /* clock_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A71BF71FD500B29BEB /* clock_yellow.png */; };
+		504A22AE1BF71FD500B29BEB /* clock_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A81BF71FD500B29BEB /* clock_red.png */; };
+		504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22A91BF71FD500B29BEB /* pin_red.png */; };
+		504A22B01BF71FD500B29BEB /* pin_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 504A22AA1BF71FD500B29BEB /* pin_black.png */; };
 		5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */; };
 		5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */; };
 		5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15A1B885E1B00CBFB5A /* 1541_door_open_1.aiff */; };
@@ -187,6 +193,7 @@
 		50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E81BEA3BE4008568E3 /* Datasette.cpp */; };
 		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
 		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
+		50FD96A51BF65861009134A4 /* 1541.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FD96A41BF65861009134A4 /* 1541.png */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -320,6 +327,12 @@
 		50471FE50A7B679A00A8DB94 /* stepInto32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepInto32.png; sourceTree = "<group>"; };
 		50471FE70A7B67A100A8DB94 /* stepOver32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOver32.png; sourceTree = "<group>"; };
 		50471FEB0A7B67AE00A8DB94 /* restart32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart32.png; sourceTree = "<group>"; };
+		504A22A51BF71FD500B29BEB /* clock_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_blue.png; sourceTree = "<group>"; };
+		504A22A61BF71FD500B29BEB /* clock_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_green.png; sourceTree = "<group>"; };
+		504A22A71BF71FD500B29BEB /* clock_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_yellow.png; sourceTree = "<group>"; };
+		504A22A81BF71FD500B29BEB /* clock_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock_red.png; sourceTree = "<group>"; };
+		504A22A91BF71FD500B29BEB /* pin_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_red.png; sourceTree = "<group>"; };
+		504A22AA1BF71FD500B29BEB /* pin_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_black.png; sourceTree = "<group>"; };
 		5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_0.aiff; sourceTree = "<group>"; };
 		5051A1551B884EBE00CBFB5A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_door_closed_2.aiff; sourceTree = "<group>"; };
@@ -485,6 +498,7 @@
 		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
 		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
 		50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerVicPanel.mm; sourceTree = "<group>"; };
+		50FD96A41BF65861009134A4 /* 1541.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1541.png; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* VirtualC64.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualC64.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC8146860FE54238007ED085 /* JoystickManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoystickManager.h; sourceTree = "<group>"; };
@@ -826,6 +840,13 @@
 			children = (
 				50CCB1B81B84999E008D8C30 /* Toolbar icons */,
 				50D6955012E375A800D9C738 /* Icons */,
+				50FD96A41BF65861009134A4 /* 1541.png */,
+				504A22A51BF71FD500B29BEB /* clock_blue.png */,
+				504A22A61BF71FD500B29BEB /* clock_green.png */,
+				504A22A71BF71FD500B29BEB /* clock_yellow.png */,
+				504A22A81BF71FD500B29BEB /* clock_red.png */,
+				504A22A91BF71FD500B29BEB /* pin_red.png */,
+				504A22AA1BF71FD500B29BEB /* pin_black.png */,
 				50C8924E1BEFB11700231B96 /* cntrlEject.png */,
 				50C892521BEFB48600231B96 /* cntrlPause.png */,
 				50C892541BEFB64500231B96 /* cntrlPlay.png */,
@@ -1082,12 +1103,17 @@
 				509DF2480A9F681900AE0859 /* keyboard32.png in Resources */,
 				50C8925A1BEFB64500231B96 /* cntrlRewind.png in Resources */,
 				50C892591BEFB64500231B96 /* cntrlPlay.png in Resources */,
+				504A22B01BF71FD500B29BEB /* pin_black.png in Resources */,
+				504A22AB1BF71FD500B29BEB /* clock_blue.png in Resources */,
 				500FF3911BD7F4DF0038245B /* romchip.png in Resources */,
 				50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */,
+				504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */,
+				50FD96A51BF65861009134A4 /* 1541.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
 				500FF3921BD7F4DF0038245B /* romchipMissing.png in Resources */,
 				50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
+				504A22AC1BF71FD500B29BEB /* clock_green.png in Resources */,
 				50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */,
 				50C9CB2D1B826FF20054EE86 /* graphics.png in Resources */,
 				50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */,
@@ -1103,6 +1129,8 @@
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
 				38AF838C0C7BA24A00F6DBCE /* joystick1_32.png in Resources */,
 				38AF838D0C7BA24A00F6DBCE /* joystick2_32.png in Resources */,
+				504A22AD1BF71FD500B29BEB /* clock_yellow.png in Resources */,
+				504A22AE1BF71FD500B29BEB /* clock_red.png in Resources */,
 				50CCB1D41B84ACA8008D8C30 /* keyboard.png in Resources */,
 				38AF838E0C7BA24A00F6DBCE /* none32.png in Resources */,
 				50CCB1BC1B8499DE008D8C30 /* tb_setup.png in Resources */,

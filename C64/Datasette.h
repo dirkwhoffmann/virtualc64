@@ -174,6 +174,9 @@ public:
     /*! @brief      Press stop key */
     void pressStop();
 
+    /*! @brief      Returns true if the datasette motor is switched on */
+    bool getMotor() { return motor; }
+
     /*! @brief      Switches motor on or off */
     void setMotor(bool value);
 

@@ -314,19 +314,25 @@
 - (void) releaseInsertKey { keyboard->releaseInsertKey(); }
 
 - (void)typeText:(NSString *)text
-{    
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                   ^{ [self _typeText:text]; });
+{
+    [self typeText:text withDelay:0];
 }
 
-- (void)_typeText:(NSString *)text
+- (void)typeText:(NSString *)text withDelay:(int)delay
+{    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                   ^{ [self _typeText:text withDelay:delay]; });
+}
+
+- (void)_typeText:(NSString *)text withDelay:(int)delay
 {
     const unsigned MAXCHARS = 256;
     const unsigned KEYDELAY = 27500;
     unsigned i;
     
     fprintf(stderr,"Typing: ");
-        
+
+    usleep(delay);
     for (i = 0; i < [text length] && i < MAXCHARS; i++) {
             
         unichar uc = [text characterAtIndex:i];
@@ -337,10 +343,10 @@
             
         fprintf(stderr,"%c",c);
             
+        usleep(KEYDELAY);
         [self pressKey:c];
         usleep(KEYDELAY);
         [self releaseKey:c];
-        usleep(KEYDELAY);
     }
         
     if (i != [text length]) {
@@ -537,7 +543,7 @@
 - (long) headInCycles { return datasette->getHeadInCycles(); }
 - (int) headInSeconds { return datasette->getHeadInSeconds(); }
 - (void) setHeadInCycles:(long)value { datasette->setHeadInCycles(value); }
-
+- (BOOL) motor { return datasette->getMotor(); }
 @end
 
 // --------------------------------------------------------------------------
@@ -547,7 +553,7 @@
 @implementation C64Proxy
 
 @synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, joystick1, joystick2, iec, expansionport, vc1541, datasette;
-@synthesize iecBusIsBusy;
+@synthesize iecBusIsBusy, tapeBusIsBusy;
 
 - (id) init
 {

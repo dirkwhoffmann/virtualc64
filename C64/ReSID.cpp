@@ -33,12 +33,45 @@ ReSID::ReSID()
         { &chipModel,           sizeof(chipModel),              KEEP_ON_RESET },
         { &sampleRate,          sizeof(sampleRate),             KEEP_ON_RESET },
         { &samplingMethod,      sizeof(samplingMethod),         KEEP_ON_RESET },
+        { &cpuFrequency,        sizeof(cpuFrequency),           KEEP_ON_RESET },
         { &audioFilter,         sizeof(audioFilter),            KEEP_ON_RESET },
         { &externalAudioFilter, sizeof(externalAudioFilter),    KEEP_ON_RESET },
-        { &cpuFrequency,        sizeof(cpuFrequency),           KEEP_ON_RESET },
         { &volume,              sizeof(volume),                 KEEP_ON_RESET },
         { &targetVolume,        sizeof(targetVolume),           KEEP_ON_RESET },
-        { NULL,                 0,                              0 }};
+        
+        // ReSID state
+        { st.sid_register,                  sizeof(st.sid_register),                    KEEP_ON_RESET },
+        { &st.bus_value,                    sizeof(st.bus_value),                       KEEP_ON_RESET },
+        { &st.bus_value_ttl,                sizeof(st.bus_value_ttl),                   KEEP_ON_RESET },
+        { &st.accumulator[0],               sizeof(st.accumulator[0]),                  KEEP_ON_RESET },
+        { &st.accumulator[1],               sizeof(st.accumulator[1]),                  KEEP_ON_RESET },
+        { &st.accumulator[2],               sizeof(st.accumulator[2]),                  KEEP_ON_RESET },
+        { &st.shift_register[0],            sizeof(&st.shift_register[0]),              KEEP_ON_RESET },
+        { &st.shift_register[1],            sizeof(&st.shift_register[1]),              KEEP_ON_RESET },
+        { &st.shift_register[2],            sizeof(&st.shift_register[2]),              KEEP_ON_RESET },
+        { &st.rate_counter[0],              sizeof(st.rate_counter[0]),                 KEEP_ON_RESET },
+        { &st.rate_counter[1],              sizeof(st.rate_counter[1]),                 KEEP_ON_RESET },
+        { &st.rate_counter[2],              sizeof(st.rate_counter[2]),                 KEEP_ON_RESET },
+        { &st.rate_counter_period[0],       sizeof(st.rate_counter_period[0]),          KEEP_ON_RESET },
+        { &st.rate_counter_period[1],       sizeof(st.rate_counter_period[1]),          KEEP_ON_RESET },
+        { &st.rate_counter_period[2],       sizeof(st.rate_counter_period[2]),          KEEP_ON_RESET },
+        { &st.exponential_counter[0],       sizeof(st.exponential_counter[0]),          KEEP_ON_RESET },
+        { &st.exponential_counter[1],       sizeof(st.exponential_counter[1]),          KEEP_ON_RESET },
+        { &st.exponential_counter[2],       sizeof(st.exponential_counter[2]),          KEEP_ON_RESET },
+        { &st.exponential_counter_period[0],sizeof(st.exponential_counter_period[0]),   KEEP_ON_RESET },
+        { &st.exponential_counter_period[1],sizeof(st.exponential_counter_period[1]),   KEEP_ON_RESET },
+        { &st.exponential_counter_period[2],sizeof(st.exponential_counter_period[2]),   KEEP_ON_RESET },
+        { &st.envelope_counter[0],          sizeof(st.envelope_counter[0]),             KEEP_ON_RESET },
+        { &st.envelope_counter[1],          sizeof(st.envelope_counter[1]),             KEEP_ON_RESET },
+        { &st.envelope_counter[2],          sizeof(st.envelope_counter[2]),             KEEP_ON_RESET },
+        { &st.envelope_state[0],            sizeof(st.envelope_state[0]),               KEEP_ON_RESET },
+        { &st.envelope_state[1],            sizeof(st.envelope_state[1]),               KEEP_ON_RESET },
+        { &st.envelope_state[2],            sizeof(st.envelope_state[2]),               KEEP_ON_RESET },
+        { &st.hold_zero[0],                 sizeof(st.hold_zero[0]),                    KEEP_ON_RESET },
+        { &st.hold_zero[1],                 sizeof(st.hold_zero[1]),                    KEEP_ON_RESET },
+        { &st.hold_zero[2],                 sizeof(st.hold_zero[2]),                    KEEP_ON_RESET },
+        
+        { NULL,                             0,                                          0 }};
     
     registerSnapshotItems(items, sizeof(items));
     
@@ -148,18 +181,32 @@ ReSID::loadFromBuffer(uint8_t **buffer)
 {
     VirtualComponent::loadFromBuffer(buffer);
 
+    // reset();
     clearRingbuffer();
-    reset();
-    
+
+    /*
     setChipModel(chipModel);
     setSampleRate(sampleRate);
     setSamplingMethod(samplingMethod);
     setAudioFilter(audioFilter);
     setExternalAudioFilter(externalAudioFilter);
     setClockFrequency(cpuFrequency);
+    */
+    
+    // Push state to reSID
+    sid->write_state(st);
 }
 
-uint8_t 
+void
+ReSID::saveToBuffer(uint8_t **buffer)
+{
+    // Pull state from reSID
+    st = sid->read_state();
+    
+    VirtualComponent::saveToBuffer(buffer);
+}
+
+uint8_t
 ReSID::peek(uint16_t addr)
 {	
     return sid->read(addr);
@@ -168,6 +215,7 @@ ReSID::peek(uint16_t addr)
 void 
 ReSID::poke(uint16_t addr, uint8_t value)
 {
+    // addr &= 0x1F;
     sid->write(addr, value);
 }
 

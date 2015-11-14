@@ -428,7 +428,21 @@
 	while ((message = [c64 message]) != NULL) {
 		[self processMessage:message];
 	}
-	
+    
+    // Update tape progress icon
+    // Note: The tape progress icon is not switched on or off by a "push" message, because
+    // some games continously switch on and off the datasette motor. This would quickly
+    // overflow the message queue.
+    if ([[c64 datasette] motor] != [c64 tapeBusIsBusy]) {
+        if ([[c64 datasette] motor]) {
+            [tapeProgress startAnimation:nil];
+            [c64 setTapeBusIsBusy:YES];
+        } else {
+            [tapeProgress stopAnimation:nil];
+            [c64 setTapeBusIsBusy:NO];
+        }
+    }
+        
 	// Refresh debug panel if open
 	if ([c64 isRunning] && ([debugPanel state] == NSDrawerOpenState || [debugPanel state] == NSDrawerOpeningState)) {
 		[self refresh];
@@ -493,6 +507,12 @@
             [metalScreen blendIn];
             [metalScreen setDrawC64texture:true];
 
+            // Check for attached tape
+            if ([[self document]  tape]) {
+                NSLog(@"Found attached tape");
+                [self showTapeDialog];
+            }
+
 			// Check for attached archive
 			if ([[self document] archive]) {
                 NSLog(@"Found attached archive");
@@ -536,15 +556,16 @@
 			break;
 
         case MSG_WARP:
+        case MSG_ALWAYS_WARP:
+            if ([c64 alwaysWarp]) {
+                [warpIcon setImage:[NSImage imageNamed:@"pin_red"]];
+            } else if ([c64 warp]) {
+                [warpIcon setImage:[NSImage imageNamed:@"clock_red"]];
+            } else {
+                [warpIcon setImage:[NSImage imageNamed:@"clock_green"]];
+            }
             break;
-            
-		case MSG_ALWAYS_WARP:
-            if (msg->i)
-                [warpMode setImage:[NSImage imageNamed:@"slow"]];
-            else
-                [warpMode setImage:[NSImage imageNamed:@"fast"]];
-            break;
-			
+            			
 		case MSG_LOG:
 			break;
 			
@@ -616,21 +637,23 @@
 			break;
 
         case MSG_VC1530_TAPE:
-            NSLog(@"MSG_VC1530_TAPE %d\n", msg->i);
             [tapeIcon setHidden:!msg->i];
             [tapeEject setHidden:!msg->i];
             break;
 
+            /* PROBLEM: THIS MESSAGE IS SENT TOO OFTEN BECAUSE SOME GAMES
+             * CONTINOUSLY CHANGE REGISTER 0 (1?) AND THEREFORE CONTINOUSLY SWITCH
+             * ON AND OFF THE DRIVE MOTOR.
         case MSG_VC1530_MOTOR:
-            NSLog(@"MSG_VC1530_MOTOR %d\n", msg->i);
+        case MSG_VC1530_PLAY:
             if (msg->i)
                 [c64 setIecBusIsBusy:true];
             else
                 [c64 setIecBusIsBusy:false];
-            break;
+             break;
+             */
 
         case MSG_VC1530_PROGRESS:
-            NSLog(@"TAPE PROGRESS\n"); 
             [mediaDialog update];
             break;
             
@@ -864,12 +887,12 @@
 	[c64 reset];
 }
 
-- (IBAction)warpAction:(id)sender
+- (IBAction)alwaysWarpAction:(id)sender
 {
-    NSLog(@"warpAction");
+    NSLog(@"alwaysWarpAction");
     
     NSUndoManager *undo = [self undoManager];
-    [[undo prepareWithInvocationTarget:self] warpAction:@((int)![c64 warp])];
+    [[undo prepareWithInvocationTarget:self] alwaysWarpAction:@((int)![c64 warp])];
     if (![undo isUndoing]) [undo setActionName:@"Native speed"];
     
     [c64 setAlwaysWarp:![c64 alwaysWarp]];
@@ -1104,8 +1127,7 @@
     
     // Type command if requested
     if (doType) {
-        usleep(100000);
-        [[c64 keyboard] typeText:[NSString stringWithFormat:@"%@\n", textToType]];
+        [[c64 keyboard] typeText:[NSString stringWithFormat:@"%@\n", textToType] withDelay:500000];
     }
 }
 
@@ -1160,10 +1182,7 @@
     
     // Type command if requested
     if (doAutoType) {
-        
-        // TODO MOVE usleep into typeText
-        usleep(100000);
-        [[c64 keyboard] typeText:textToType];
+        [[c64 keyboard] typeText:textToType withDelay:500000];
     }
     
     if (doAutoType && doPressPlay) {
