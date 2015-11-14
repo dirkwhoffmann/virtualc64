@@ -15,18 +15,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// VERSION 1.3:
-//
-// VirtualC64 emulates a virtual datasette supporting the TAP format. To add a TAP file
-// as virtual tape, drag and drop the file into the main emulator window.
-//
-// A toolbar icon has been added for opening a new "media dialog". The dialog provides
-// information about the currently insertet disk, tape, and the currently attached
-// expansion port cartridge.
-//
-// (Hopefully) fixed a buf that sometimes halted audio playback when a
-// saved state was dragged from the time travel drawer into the emulator window.
-// 
+// VERSION 1.3.1:
 //
 //
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
@@ -58,9 +47,8 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG      // RELEASE
+#define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
-// #define DEBUG_LEVEL 3  // DEVELOPMENT
 
 // Snapshot version number of this release
 #define V_MAJOR 1
