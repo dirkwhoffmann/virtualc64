@@ -436,6 +436,7 @@
 - (int) headInSeconds;
 - (void) setHeadInCycles:(long)value;
 - (BOOL) motor;
+- (BOOL) playKey;
 
 @end
 

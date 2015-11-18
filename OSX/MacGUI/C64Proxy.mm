@@ -544,6 +544,7 @@
 - (int) headInSeconds { return datasette->getHeadInSeconds(); }
 - (void) setHeadInCycles:(long)value { datasette->setHeadInCycles(value); }
 - (BOOL) motor { return datasette->getMotor(); }
+- (BOOL) playKey { return datasette->getPlayKey(); }
 @end
 
 // --------------------------------------------------------------------------

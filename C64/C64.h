@@ -25,7 +25,6 @@
 // Add
 // Cartridge dialog
 // VIC Sprite compatibility
-// Check if bus activity can be detected more precisely
 //
 // CLEANUP:
 // 

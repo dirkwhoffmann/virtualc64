@@ -434,7 +434,7 @@
     // some games continously switch on and off the datasette motor. This would quickly
     // overflow the message queue.
     if ([[c64 datasette] motor] != [c64 tapeBusIsBusy]) {
-        if ([[c64 datasette] motor]) {
+        if ([[c64 datasette] motor] && [[c64 datasette] playKey]) {
             [tapeProgress startAnimation:nil];
             [c64 setTapeBusIsBusy:YES];
         } else {
@@ -604,6 +604,7 @@
 				[redLED setImage:[NSImage imageNamed:@"LEDred"]];
 			else
 				[redLED setImage:[NSImage imageNamed:@"LEDgray"]];
+            [redLED setNeedsDisplay];
 			break;
 			
 		case MSG_VC1541_DATA:
