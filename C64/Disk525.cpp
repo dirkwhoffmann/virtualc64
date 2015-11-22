@@ -20,6 +20,7 @@
 #include "Disk525.h"
 #include "D64Archive.h"
 #include "G64Archive.h"
+#include "NIBArchive.h"
 
 Disk525::Disk525()
 {
@@ -179,6 +180,38 @@ Disk525::encodeArchive(G64Archive *a)
             data.halftrack[ht][i] = (uint8_t)b;
         }
         assert(a->getByte() == -1); /* check for EOF */
+    }
+}
+
+void
+Disk525::encodeArchive(NIBArchive *a)
+{
+    debug(2, "Encoding NIB archive\n");
+    
+    assert(a != NULL);
+    
+    clearDisk();
+    for (Halftrack ht = 1; ht <= 84; ht++) {
+        
+        unsigned size = a->getSizeOfItem(ht - 1);
+
+        if (size == 0) {
+            continue;
+        }
+        
+        if (size > 8 * 7928) {
+            debug(2, "Halftrack %d has %d bits. Must be less than 8 * 7928\n", ht, size);
+            size = 8 * 7928;
+        }
+        debug(2, "  Encoding halftrack %d (%d bits)\n", ht, size);
+        length.halftrack[ht] = size;
+        a->selectItem(ht - 1);
+        unsigned bytesTotal = (size + 7) / 8;
+        for (unsigned i = 0; i < bytesTotal; i++) {
+            int b = a->getByte();
+            assert(b != -1);
+            data.halftrack[ht][i] = (uint8_t)b;
+        }
     }
 }
 

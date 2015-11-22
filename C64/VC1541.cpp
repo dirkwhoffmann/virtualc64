@@ -359,6 +359,7 @@ VC1541::insertDisk(Archive *a)
     
     D64Archive *d64 = (D64Archive *)a;
     G64Archive *g64 = (G64Archive *)a;
+    NIBArchive *nib = (NIBArchive *)a;
     
     switch (a->getType()) {
             
@@ -373,10 +374,16 @@ VC1541::insertDisk(Archive *a)
             ejectDisk();
             disk.encodeArchive(g64);
             break;
+
+        case NIB_CONTAINER:
             
+            ejectDisk();
+            disk.encodeArchive(nib);
+            break;
+
         default:
             
-            warn("Only D64 or G64 archives can be mounted as virtual disk.");
+            warn("Only D64, G64 or NIB archives can be mounted as virtual disk.");
             return;
     }
     
