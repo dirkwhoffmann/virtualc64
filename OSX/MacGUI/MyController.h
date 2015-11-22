@@ -89,10 +89,6 @@ enum INPUT_DEVICES {
     // IBOutlet NSButton *alwaysWarpIcon;
 	
 	// Cheatbox panel
-	// IBOutlet NSToolbarItem *cheatboxIcon;
-    // IBOutlet NSToolbarItem *inspectIcon;
-    // IBOutlet NSToolbarItem *preferencesIcon;
-    
 	IBOutlet CheatboxImageBrowserView *cheatboxImageBrowserView;
 	
 	// Debug panel (common)

@@ -140,19 +140,6 @@
 	[self refresh];
 }
 
-- (IBAction)mhzAction:(id)sender
-{
-#if 0
-	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] mhzAction:[c64 cpuGetMHz]];
-	if (![undo isUndoing]) [undo setActionName:@"Clock frequency"];
-	
-	// float value = clip([sender floatValue], 0.1f, 10.0f);
-	[c64 cpuSetMHz:sender];
-	[self refresh];
-#endif
-}
-
 - (IBAction)setHardBreakpointAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
