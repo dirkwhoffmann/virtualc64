@@ -155,20 +155,18 @@ inline std::string ChangeExtension( const std::string& path, const std::string& 
 	return ExtractDirectory(path) + filename.substr(0, filename.find_last_of( '.' )) + ext;
 }
 
-
-//! Check file suffix
-/*! The function is used for determining the type of a file.
-	\param filename Path and name of the file to investigate
-	\param suffix Expected suffix
-*/
+//! @brief      Check file suffix
+/*! @discussion The function is used for determining the type of a file. */
 bool checkFileSuffix(const char *filename, const char *suffix);
 
-//! Check file size
-/*! The function is used for validating the size of a file.
-	\param filename Path and name of the file to investigate
-	\param min Expected minimum size (-1 if no lower bound exists)
-	\param max Expected maximum size (-1 if no upper bound exists)	
-*/
+//! @brief      Returns the size of a file in bytes
+int getSizeOfFile(const char *filename);
+
+//! @brief      Check file size
+/*! @discussion The function is used for validating the size of a file.
+	@param      filename Path and name of the file to investigate
+	@param      min Expected minimum size (-1 if no lower bound exists)
+	@param      max Expected maximum size (-1 if no upper bound exists) */
 bool checkFileSize(const char *filename, int min, int max);
 
 //! Check magic bytes of a file.

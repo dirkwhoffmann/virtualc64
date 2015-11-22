@@ -37,7 +37,7 @@
     archive = a;
     c64 = proxy;
     
-    bool isG64 = (archive->getType() == G64_CONTAINER);
+    bool isG64orNIB = (archive->getType() == G64_CONTAINER || archive->getType() == NIB_CONTAINER);
     doMount = YES;
     doFlash = NO;
     doType = NO;
@@ -52,7 +52,7 @@
     [directory setTarget:self];
     [directory setDelegate:self];
     [directory setDataSource:self];
-    if (!isG64) {
+    if (!isG64orNIB) {
         [directory setAction:@selector(singleClickAction:)];
         [directory setDoubleAction:@selector(doubleClickAction:)];
         // Select first entry
@@ -60,8 +60,8 @@
         [directory selectRowIndexes:indexSet byExtendingSelection:NO];
     }
     
-    [doubleClickText setHidden:isG64];
-    [loadOptions setHidden:isG64];
+    [doubleClickText setHidden:isG64orNIB];
+    [loadOptions setHidden:isG64orNIB];
     [directory reloadData];
 }
 

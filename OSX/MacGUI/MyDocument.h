@@ -54,6 +54,7 @@ class Snapshot;
 
 - (BOOL)setSnapshotWithName:(NSString *)path;
 - (BOOL)setG64ArchiveWithName:(NSString *)path;
+- (BOOL)setNIBArchiveWithName:(NSString *)path;
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setTAPArchiveWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;

@@ -190,22 +190,32 @@ checkFileSuffix(const char *filename, const char *suffix)
 		return false;
 }
 
+int
+getSizeOfFile(const char *filename)
+{
+    struct stat fileProperties;
+    
+    if (filename == NULL)
+        return -1;
+    
+    if (stat(filename, &fileProperties) != 0)
+        return -1;
+    
+    return fileProperties.st_size;
+}
+
 bool
 checkFileSize(const char *filename, int min, int max)
 {
-	struct stat fileProperties;
-	
-	if (filename == NULL) {
-		return false;
-	}
-	
-    if (stat(filename, &fileProperties) != 0)
-		return false;
-
-	if (min > 0 && fileProperties.st_size < min)
+    int filesize = getSizeOfFile(filename);
+    
+    if (filesize == -1)
+        return false;
+    
+	if (min > 0 && filesize < min)
 		return false;
 
-	if (max > 0 && fileProperties.st_size > max)
+	if (max > 0 && filesize > max)
 		return false;
 
 	return true;

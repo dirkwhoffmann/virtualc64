@@ -75,6 +75,14 @@
     return YES;
 }
 
+- (BOOL)setNIBArchiveWithName:(NSString *)path
+{
+    if (!(archive = NIBArchive::archiveFromNIBFile([path UTF8String])))
+        return NO;
+    
+    return YES;
+}
+
 - (BOOL)setTAPArchiveWithName:(NSString *)path
 {
     if (!(tape = TAPArchive::archiveFromTAPFile([path UTF8String])))
@@ -196,6 +204,12 @@
         case G64_CONTAINER:
             
             if ([self setG64ArchiveWithName:filename])
+                return YES;
+            else break;
+
+        case NIB_CONTAINER:
+            
+            if ([self setNIBArchiveWithName:filename])
                 return YES;
             else break;
 

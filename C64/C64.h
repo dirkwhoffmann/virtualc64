@@ -15,12 +15,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// VERSION 1.3.1:
-//
-//
+// VERSION 1.4:
+// Add NIB format class (similar to G64 support)
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
 //
-// VERSION 1.4:
 //
 // Add
 // Cartridge dialog
@@ -40,7 +38,6 @@
 //
 // 1. Upscaler (like superEagle)
 //    https://github.com/libretro/common-shaders/tree/master/eagle/shaders
-// 2. Datasette
 
 
 #ifndef _C64_INC
@@ -61,6 +58,7 @@
 #include "T64Archive.h"
 #include "D64Archive.h"
 #include "G64Archive.h"
+#include "NIBArchive.h"
 #include "TAPArchive.h"
 #include "PRGArchive.h"
 #include "P00Archive.h"

@@ -30,7 +30,8 @@
     @constant PRG_CONTAINER A program archive containing a single file.
     @constant P00_CONTAINER A program archive containing a single file.
     @constant G64_CONTAINER A collection of bit-streams resembling a floppy disk.
-    @constant G64_CONTAINER A bit-stream resembling a datasette tape.
+    @constant NIB_CONTAINER A collection of bit-streams resembling a floppy disk.
+    @constant TAP_CONTAINER A bit-stream resembling a datasette tape.
     @constant FILE_CONTAINER An arbitrary file that is interpreted as raw data. */
 enum ContainerType {
     CRT_CONTAINER = 1,
@@ -40,6 +41,7 @@ enum ContainerType {
     PRG_CONTAINER,
     P00_CONTAINER,
     G64_CONTAINER,
+    NIB_CONTAINER,
     TAP_CONTAINER,
     FILE_CONTAINER
 };
