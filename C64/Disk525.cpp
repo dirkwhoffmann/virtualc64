@@ -556,7 +556,7 @@ Disk525::decodeTrack(uint8_t *source, uint8_t *dest, int *error)
             }
             
             if (sectorID < 0 || sectorID > 20) {
-                warn("Skipping sector %d. Sector number of range (0 - 20).\n", sectorID);
+                warn("Skipping sector %d. Sector number out of range (0 - 20).\n", sectorID);
                 if (error) *error = 1;
                 continue;
             }

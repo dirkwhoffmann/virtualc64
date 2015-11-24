@@ -17,6 +17,7 @@
  */
 
 #include "G64Archive.h"
+#include "nibtools.h"
 
 G64Archive::G64Archive()
 {
@@ -63,6 +64,18 @@ G64Archive::archiveFromG64File(const char *filename)
 	}
 	
 	return archive;
+}
+
+G64Archive *
+G64Archive::archiveFromNIBFile(const char *filename)
+{
+    // G64Archive *archive;
+    
+    fprintf(stderr, "Loading G64 archive from NIB file...\n");
+
+    nibmain(filename, "/tmp/disk.g64");
+    
+    return archiveFromG64File("/tmp/disk.g64");
 }
 
 void G64Archive::dealloc()

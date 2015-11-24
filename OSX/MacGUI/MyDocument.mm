@@ -69,10 +69,13 @@
 
 - (BOOL)setG64ArchiveWithName:(NSString *)path
 {
-    if (!(archive = G64Archive::archiveFromG64File([path UTF8String])))
-        return NO;
+    if ((archive = G64Archive::archiveFromG64File([path UTF8String])))
+        return YES;
+
+    if ((archive = G64Archive::archiveFromNIBFile([path UTF8String])))
+        return YES;
     
-    return YES;
+    return NO;
 }
 
 - (BOOL)setNIBArchiveWithName:(NSString *)path

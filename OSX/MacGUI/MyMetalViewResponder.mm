@@ -376,12 +376,14 @@
             return YES;
         }
 
+#if 0
         // Is it a NIB archive?
         if ([[controller document] setNIBArchiveWithName:path]) {
             [controller showMountDialog];
             return YES;
         }
-
+#endif
+        
         // Is it a TAP archive?
         if ([[controller document] setTAPArchiveWithName:path]) {
             [controller showTapeDialog];

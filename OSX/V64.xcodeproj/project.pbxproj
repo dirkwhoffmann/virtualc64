@@ -103,6 +103,7 @@
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
+		509CD5371C04D554001A1717 /* nibtools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509CD5351C04D554001A1717 /* nibtools.cpp */; };
 		509DF2480A9F681900AE0859 /* keyboard32.png in Resources */ = {isa = PBXBuildFile; fileRef = 509DF2470A9F681900AE0859 /* keyboard32.png */; };
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
 		50A0E0250A8F332A0067714C /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0240A8F332A0067714C /* System.framework */; };
@@ -376,6 +377,8 @@
 		509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGArchive.cpp; sourceTree = "<group>"; };
 		509AEAFD0C325EFB001FC9FD /* P00Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P00Archive.h; sourceTree = "<group>"; };
 		509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = P00Archive.cpp; sourceTree = "<group>"; };
+		509CD5351C04D554001A1717 /* nibtools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nibtools.cpp; sourceTree = "<group>"; };
+		509CD5361C04D554001A1717 /* nibtools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nibtools.h; sourceTree = "<group>"; };
 		509DF2470A9F681900AE0859 /* keyboard32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard32.png; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
@@ -926,6 +929,8 @@
 				509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */,
 				504606331BE4B99100463FD7 /* G64Archive.h */,
 				504606321BE4B99100463FD7 /* G64Archive.cpp */,
+				509CD5361C04D554001A1717 /* nibtools.h */,
+				509CD5351C04D554001A1717 /* nibtools.cpp */,
 				505739E41C01FC5700B80646 /* NIBArchive.h */,
 				505739E31C01FC5700B80646 /* NIBArchive.cpp */,
 				50F681E51BEA2917008568E3 /* TAPArchive.h */,
@@ -1198,6 +1203,7 @@
 				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */,
 				5042312C1BD371FF00B3DEF9 /* MyMetalViewResponder.mm in Sources */,
+				509CD5371C04D554001A1717 /* nibtools.cpp in Sources */,
 				50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */,
 				50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */,
 				5089F0551BD3F64200306F4D /* BypassFilter.mm in Sources */,
