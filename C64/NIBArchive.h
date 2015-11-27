@@ -21,6 +21,9 @@
 
 #include "Archive.h"
 
+#define MIN_TRACK_LENGTH 6016
+#define MAX_TRACK_LENGTH 7928
+
 /*! @class NIBArchive
  *  @brief The NIBArchive class declares the programmatic interface for a file in NIB format.
  */
@@ -28,26 +31,22 @@ class NIBArchive : public Archive {
 
 private:	
 
-    //! @brief      The raw data of this archive.
+    /*! @brief      Raw data of this archive */
     uint8_t *data;
 
-    //! @brief      Size of NIB file
+    /*! @brief      Size of NIB file */
     int size;
 
-    /*! @brief      Number of tracks stored in this container */
-    // int numTracks;
+    /*! @brief      Decoded track data */
+    uint8_t halftrack[85][8 * MAX_TRACK_LENGTH];
+
+    /*! @brief      Decoded track length in bits
+     *  @discussion Equals 0 if halftrack is not contained in archive */
+    int length[85];
 
     /*! @brief      Maps halftrack numbers to item numbers
      *  @discussion Equals -1 if halftrack is not contained in archive */
     int halftrackToItem[85];
-
-    /*! @brief      Offset to halftrack data
-     *  @discussion Equals 0 if halftrack is not contained in archive */
-    int startOfHalftrack[85];
-
-    /*! @brief      Size of halftracks in bits
-     *  @discussion Equals 0 if halftrack is not contained in archive */
-    int sizeOfHalftrack[85];
     
     /*! @brief File pointer
         @discussion An offset into the data array. */
@@ -74,12 +73,18 @@ public:
     /*! @brief Creates a NIB archive from a virtual 5,25 floppy disk. */
     // static NIBArchive *archiveFromDisk(Disk525 *disk);
 
-    //! @brief      Scans all tracks in archive
-    /*  @discussion For eack track, the number of bits is determined and stored in array numBits.
+    /*! @brief      Scans all tracks in archive
+     *  @returns    true, if the scan was successful, false, if archive data is corrupt 
+     *  @seealso    scanTrack */
+    bool scan();
+
+    /*! @brief      Scans a single track in archive
+     *  @discussion For eack track, the number of bits is determined and stored in array numBits.
      *              Furthermore, the total number of tracks is stored in variable numTracks.
      *  @returns    true, if the scan was successful, false, if archive data is corrupt */
-    bool scan();
-    
+    bool scanTrack(uint8_t *bits, int length, int *startBit, int *endBit);
+    bool match(uint8_t *bits, uint8_t *skip, int pos1, int pos2, int length, bool verbose = false);
+
     //
     // Virtual functions from Container class
     //
@@ -99,7 +104,7 @@ public:
     //
     
     int getNumberOfItems();
-    int getStartOfItem(int n);
+    // int getStartOfItem(int n);
     int getSizeOfItem(int n);
     
     const char *getNameOfItem(int n);

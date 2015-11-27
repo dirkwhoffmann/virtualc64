@@ -18,6 +18,7 @@
 
 #include "Disk525.h"
 #include "NIBArchive.h"
+#include "stdio.h"
 
 NIBArchive::NIBArchive()
 {
@@ -26,8 +27,8 @@ NIBArchive::NIBArchive()
 
     for (unsigned i = 0; i < 85; i++) {
         halftrackToItem[i] = -1;
-        startOfHalftrack[i] = 0;
-        sizeOfHalftrack[i] = 0;
+        length[i] = 0;
+        memset(halftrack[i], 0, sizeof(halftrack[i]));
     }
 }
 
@@ -77,9 +78,11 @@ bool
 NIBArchive::scan()
 {
     unsigned i, item;
-    uint8_t bits[2 * 8 * 0x2000];
-    int ones[2 * 8 * 0x2000];
-
+    uint8_t bits_raw[8 * 0x2000];       // Bit stream as stores in the NIB file
+    uint8_t bits_aligned[8 * 0x2000];   // Bit stream with shortened SYNC sequences
+    int index[8 * 0x2000];              // Index mapping from bits_align to bits_raw
+    int length;                         // Number of bits in shortened sequence
+    
     // Setup halftrackToItem array
     for (i = 0x10, item = 0; i < 0x100; i += 2, item++) {
         if (data[i] >= 2 && data[i] <= 83) {
@@ -89,78 +92,107 @@ NIBArchive::scan()
     }
     fprintf(stderr, "\n");
 
-    // Determine size of each stored track item
-    for (Halftrack ht = 1; ht < 85; ht++) {
-    // for (Halftrack ht = 5; ht < 6; ht++) {
-
-        fprintf(stderr, "Scanning halftrack %d\n", ht);
-
+    for (Halftrack ht = 1; ht <= 84; ht++) {
+        
         // Is halftrack stored in archive?
         int item = halftrackToItem[ht];
-        if (item == -1) {
-            fprintf(stderr, "Halftrack %d is not stored in NIB file\n", ht);
+        if (item == -1)
+            continue;
+
+        // fprintf(stderr, "Scanning halftrack %d (item %d)\n", ht, item);
+
+        // Extract bits of halftrack and shorten SYNCs
+        // i:          0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+        // raw[i]:     0  0  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  1  0  1  1
+        // aligned[i]: 0  0  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  1  0  1  1  ?  ?
+        // index:      0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 20 21 22 23 24 25 ?? ??
+        // length:     24
+        unsigned startOfTrack = 0x100 + item * 0x2000;
+        int idx, onecnt; uint8_t bit;
+        for (length = idx = onecnt = 0; idx < 8 * 0x2000; idx++) {
+            bit = (data[startOfTrack + (idx / 8)] << (idx % 8)) & 0x80 ? 1 : 0;
+            onecnt = bit ? onecnt + 1 : 0;
+            bits_raw[idx] = bit;
+            if (onecnt <= 10) {
+                bits_aligned[length] = bit;
+                index[length] = idx;
+                length++;
+            }
+        }
+        // fprintf(stderr, "Stripped %d SYNC bits\n", 8 * 0x2000 - length);
+        
+        /*
+        for (unsigned k = 135; k < 190; k++) {
+             printf("%2d ", bits_raw[k]);
+        }
+        printf("\n");
+        for (unsigned k = 135; k < 190; k++) {
+            printf("%2d ", k - 135);
+        }
+        printf("\n");
+        for (unsigned k = 135; k < 190; k++) {
+            printf("%2d ", bits_aligned[k]);
+        }
+        printf("\n");
+        for (unsigned k = 135; k < 190; k++) {
+            printf("%2d ", index[k] - 135);
+        }
+        printf("\n");
+        */
+        
+        // Find loop
+        int startBit = 0, stopBit = 0;
+        if (!scanTrack(bits_aligned, length, &startBit, &stopBit)) {
+            printf("Halftrack: %d (item %d) LOOP DETECTION FAILED.\n", ht, item);
             continue;
         }
         
-        // Store offset to halftrack data
-        startOfHalftrack[ht] = item * 0x2000 + 0x100;
-        
-        // Extract bits of halftrack
-        unsigned startOfTrack = 0x100 + item * 0x2000;
-        fprintf(stderr, "Halftrack %d is item no %d (offset: %04X)\n", ht, item, startOfTrack);
-        for (i = 0; i < 8 * 0x2000; i++) {
-            unsigned byte = i / 8;
-            unsigned bit = i % 8;
-            bits[i] = bits[8 * 0x2000 + i] = (data[startOfTrack + byte] << bit) & 0x80 ? 1 : 0;
+        // Check loop length
+        unsigned tracklength = index[stopBit] - index[startBit];
+        if (tracklength < 8 * MIN_TRACK_LENGTH) {
+            printf("Halftrack: %d (item %d) TRACK TOO SHORT (%x)\n", ht, item, tracklength);
+            continue;
         }
+        if (tracklength > 8 * MAX_TRACK_LENGTH) {
+            printf("Halftrack: %d (item %d) TRACK TOO LARGE (%x)\n", ht, item, tracklength);
+            continue;
+        }
+            
+        // Proper track length found
+        startBit = index[startBit];
+        stopBit = index[stopBit];
+        
+        printf("Halftrack: %d (item %d) Start: %d Stop: %d Length: %d (%x bytes) Stripped: %d\n",
+                ht, item, startBit, stopBit, tracklength, tracklength / 8, 8 * 0x2000 - length);
+    }
+    return true;
+}
 
-        // Scan bits for consecutice '1's
-        int cnt = 0;
-        for (i = 0; i < 8 * 0x2000; i++) {
-            ones[i] = cnt;
-            cnt = (bits[i] == 0) ? 0 : cnt + 1;
+bool
+NIBArchive::scanTrack(uint8_t *bits, int length, int *startBit, int *stopBit)
+{
+    // Search for loop
+    int pos1, pos2;
+    pos1 = 0;
+    for (pos2 = pos1 + 1; pos2 < length - 1024 /* minimum match size */; pos2++) {
+        if (memcmp(bits+pos1, bits+pos2, length-pos2) == 0) {
+            
+            *startBit = pos1;
+            *stopBit = pos2;
+            /*
+            printf("Match found at (%d,%d)\n", pos1, pos2);
+            for (unsigned k = 0; k < 30; k++)
+                printf("%d", bits[pos1+k]);
+            printf("\n");
+            for (unsigned k = 0; k < 30; k++)
+                printf("%d", bits[pos2+k]);
+            printf("\n");
+             */
+            return true;
         }
-        for (i = 0; i < 8 * 0x2000 - 1; i++) {
-            if (ones[i+1] > ones[i])
-                ones[i] = 0;
-        }
-        ones[i] = 0;
-        
-        // Search for SYNC marks
-        for (i = 0; i < 8 * 0x2000; i++) {
-            if (ones[i] > 12) {
-                // printf("  SYNC mark at index %d (length: %d)\n", i, ones[i]);
-                /*
-                for (j = 0; j < 120; j++) {
-                    printf("%d", bits[i+j]);
-                }
-                printf("\n");
-                for (j = 0; j < 120; j++) {
-                    printf("%d", ones[i+j] < 9 ? ones[i+j] : 9);
-                }
-                printf("\n");
-                 */
-            }
-        }
-        
-        // Search longest matching sequence
-        int match = 0;
-        for (i = 129; i < 8 * 0x2000 - 16; i++) {
-            for (match = 0; match < 8 * 0x2000 - i && bits[match+128] == bits[i + match]; match++);
-            ones[i] = match;
-        }
-        // Search for largest match
-        int largestMatch = 0, matchIndex = 0;
-        for (i = 1; i < 8 * 0x2000 - 16; i++) {
-            if (ones[i] > largestMatch) {
-                largestMatch = ones[i];
-                matchIndex = i;
-            }
-        }
-        printf("Largest match at index %d (%d)\n", matchIndex, largestMatch);
     }
     
-    return true;
+    return false;
 }
 
 void NIBArchive::dealloc()
@@ -213,14 +245,16 @@ NIBArchive::getNumberOfItems()
     return 84;
 }
 
+#if 0
 int
 NIBArchive::getStartOfItem(int n)
 {
     if (n < 0 || n >= 84)
         return -1;
 
-    return startOfHalftrack[n + 1];
+    return halftrack[n + 1];
 }
+#endif
 
 int
 NIBArchive::getSizeOfItem(int n)
@@ -228,7 +262,7 @@ NIBArchive::getSizeOfItem(int n)
     if (n < 0 || n >= 84)
         return 0;
 
-    return sizeOfHalftrack[n + 1];
+    return length[n + 1];
 }
 
 const char *
@@ -254,7 +288,10 @@ NIBArchive::getTypeOfItem(int n)
 void 
 NIBArchive::selectItem(int n)
 {
-    fp = getStartOfItem(n);
+    if (n < 0 || n >= 84)
+        return;
+    
+    fp = (halftrack[n] - halftrack[0]);
 }
 
 int
