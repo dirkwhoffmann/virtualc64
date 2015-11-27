@@ -45,7 +45,8 @@ private:
     int length[85];
 
     /*! @brief      Maps halftrack numbers to item numbers
-     *  @discussion Equals -1 if halftrack is not contained in archive */
+     *  @discussion Equals -1 if halftrack is not contained in archive 
+     *  @deprecated */
     int halftrackToItem[85];
     
     /*! @brief File pointer
@@ -81,10 +82,35 @@ public:
     /*! @brief      Scans a single track in archive
      *  @discussion For eack track, the number of bits is determined and stored in array numBits.
      *              Furthermore, the total number of tracks is stored in variable numTracks.
+     *  @param      ht       Halftrack number
+     *  @param      bits     The raw bit stream
+     *  @param      start    Offset the the first bit of the loop
+     *  @param      end      Offset the last bit belonging to the loop + 1
+     *  @param      gap      Offset to the gap position
      *  @returns    true, if the scan was successful, false, if archive data is corrupt */
-    bool scanTrack(uint8_t *bits, int length, int *startBit, int *endBit);
-    bool match(uint8_t *bits, uint8_t *skip, int pos1, int pos2, int length, bool verbose = false);
+    bool scanTrack(unsigned ht, uint8_t *bits, int *start, int *end, int *gap);
+    
+    /*! @brief      Looks for a loop in the provided bit stream
+     *  @discussion A NIB file consists of 0x2000 bytes a nibbled data. As the nibbler cannot determine
+     *              when the drive head has completed a full rotation, the bit stream data overlaps.
+     *              This method searches for the overlap. If the repeating code sequence has been found,
+     *              the start and the end position are stored in startBit and endBit, respectively.
+     *  @param      bits     The raw bit stream. 
+     *  @param      length   Length of the provided bit stream
+     *  @param      start    Offset the the first bit of the loop
+     *  @param      end      Offset the last bit belonging to the loop + 1
+     *  @return     true if the repetition has been found. */
+    bool scanForLoop(uint8_t *bits, int length, int *start, int *end);
 
+    /*! @brief      Looks for the longest area between two SYNC marks
+     *  @discussion The computed offset is used to properly align the tracks next to each other.
+     *  @param      bits     The raw bit stream as stored in the NIB file. 
+     *  @param      length   Length of the provided bit stream
+     *  @param      gap      Offset to the gap position
+     *  @return     true if a gap has been found, false otherwise. */
+    bool scanForGap(uint8_t *bits, int length, int *gap);
+
+    
     //
     // Virtual functions from Container class
     //
