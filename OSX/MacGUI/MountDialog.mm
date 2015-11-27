@@ -175,7 +175,6 @@
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
 	if ([[aTableColumn identifier] isEqual:@"filename"]) {
-      //  return [NSString stringWithFormat:@"%s", archive->getNameOfItem(row)];
         const char *itemName = archive->getNameOfItem(row);
         assert(itemName != NULL);
 
@@ -185,7 +184,7 @@
             uName[i] = pet2unicode(itemName[i]);
         
         NSString *unicodename = [NSString stringWithCharacters:uName length:17];
-        NSLog(@"%@", unicodename);
+        // NSLog(@"%@", unicodename);
         return unicodename;
     }
 	if ([[aTableColumn identifier] isEqual:@"filesize"]) {

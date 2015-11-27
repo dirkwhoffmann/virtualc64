@@ -268,12 +268,13 @@ NIBArchive::getSizeOfItem(int n)
 const char *
 NIBArchive::getNameOfItem(int n)
 {
-    int size = getSizeOfItem(n);
+    if (n < 0 || n >= 84)
+        return "";
     
     if (n % 2 == 0) {
-        sprintf(name, "Track %d%s", (n / 2) + 1, size == 0 ? " (empty)" : "");
+        sprintf(name, "Track %d", (n / 2) + 1);
     } else {
-        sprintf(name, "Track %d.5%s", (n / 2) + 1, size == 0 ? " (empty)" : "");
+        sprintf(name, "Track %d.5", (n / 2) + 1);
     }
     
 	return name;

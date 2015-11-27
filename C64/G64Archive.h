@@ -60,10 +60,6 @@ public:
     /*! @brief Creates a G64 archive from a G64 file located on disk. */
     static G64Archive *archiveFromG64File(const char *filename);
     
-    /*! @brief Creates a G64 archive from a NIB file located on disk. */
-    static G64Archive *archiveFromNIBFile(const char *filename);
-
-
     //
     // Virtual functions from Container class
     //
