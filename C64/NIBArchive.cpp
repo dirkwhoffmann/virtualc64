@@ -26,10 +26,11 @@ NIBArchive::NIBArchive()
 	dealloc();
 
     for (unsigned i = 0; i < 85; i++) {
-        halftrackToItem[i] = -1;
         length[i] = 0;
         memset(halftrack[i], 0, sizeof(halftrack[i]));
     }
+    selectedtrack = 0;
+    fp = -1;
 }
 
 NIBArchive::~NIBArchive()
@@ -80,18 +81,6 @@ NIBArchive::scan()
     uint8_t bits[8 * 0x2000];
     int start, end, gap;
     
-
-    // Setup halftrackToItem array (deprecated!)
-    /*
-    for (i = 0x10, item = 0; i < 0x100; i += 2, item++) {
-        if (data[i] >= 2 && data[i] <= 83) {
-            halftrackToItem[data[i] + 1] = item; // NIB files start halftrack counting at 0
-            fprintf(stderr, "[%d] ", data[i] + 1);
-        }
-    }
-    fprintf(stderr, "\n");
-    */
-    
     // Iterate through all header entries
     unsigned i, item;
     for (i = 0x10, item = 0; i < 0x100; i += 2, item++) {
@@ -114,9 +103,19 @@ NIBArchive::scan()
         // Copy track data into destination buffer
         printf("Halftrack: %d Start: %d End: %d Length: %x Gap: %x\n",
                    ht, start, end, (end - start) / 8, gap / 8);
-        // TODO: Copy
-
+        length[ht] = end - start;
+        size_t len1 = length[ht] - gap;
+        size_t len2 = gap;
+        memcpy(halftrack[ht], bits + start + gap, len1);
+        memcpy(halftrack[ht] + len1, bits + start, len2);
     }
+    
+    for (unsigned ht = 1; ht <= 84; ht++) {
+        printf("Halftrack %02d: ", ht);
+        for (unsigned b = 0; b < 64; b++) printf("%d", halftrack[ht][b]);
+        printf(" Length: %d\n", length[ht]);
+    }
+    
     return true;
 }
 
@@ -165,7 +164,7 @@ NIBArchive::scanForLoop(uint8_t *bits, int length, int *start, int *end)
         }
     }
 
-    // Now we are ready to scan for the loop
+    // Now we are ready to search for the loop
     
     int pos1, pos2, tracklength;
     for (pos1 = 0, pos2 = 1; pos2 < length_stripped - 1024 /* minimum matching size */; pos2++) {
@@ -218,7 +217,7 @@ NIBArchive::scanForGap(uint8_t *bits, int length, int *gap)
     // i:           0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
     // tmpbuf[i]:   0  0  1  0  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  1  0  1  1
     // nonsync[i]: 77 78 79 80  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  2  3  4  5  6
-    for (nonsync[0] = onecnt = 0, i = 1; i < sizeof(tmpbuf); i++) {
+    for (nonsync[0] = onecnt = 0, i = 1; i < 2 * length; i++) {
 
         onecnt = tmpbuf[i] ? onecnt + 1 : 0;
         if (onecnt >= 10) {
@@ -239,13 +238,13 @@ NIBArchive::scanForGap(uint8_t *bits, int length, int *gap)
     */
     
     // Search for biggest gap
-    for (i = gapsize = 0; i < 8 * 0x2000; i++) {
+    for (i = gapsize = 0; i < 2 * length; i++) {
         if (gapsize < nonsync[i]) {
-            *gap = i + 1;
+            *gap = (i % length) + 1;
             gapsize = nonsync[i];
         }
     }
-    
+
     return true;
 }
 
@@ -255,7 +254,6 @@ void NIBArchive::dealloc()
 	data = NULL;
 	size = 0;
 	fp = -1;
-    // fp_eof = -1;
 }
 
 bool 
@@ -346,23 +344,24 @@ NIBArchive::selectItem(int n)
     if (n < 0 || n >= 84)
         return;
     
-    fp = (halftrack[n] - halftrack[0]);
+    selectedtrack = n + 1;
+    fp = 0;
 }
 
 int
 NIBArchive::getByte()
 {
-	int result;
-	
 	if (fp < 0)
 		return -1;
 		
-	// get byte
-	result = data[fp++];
-	
-	// check for end of file
-    if (fp % 0x2000 == 0x100)
-		fp = -1;
-
+	int result = (halftrack[selectedtrack][fp++] << 7);
+    if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 6);
+    if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 5);
+    if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 4);
+    if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 3);
+    if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 2);
+    if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 1);
+    if (fp < length[selectedtrack]) result |= (halftrack[selectedtrack][fp++] << 0); else fp = -1;
+    
 	return result;
 }

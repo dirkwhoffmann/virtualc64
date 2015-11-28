@@ -43,16 +43,14 @@ private:
     /*! @brief      Decoded track length in bits
      *  @discussion Equals 0 if halftrack is not contained in archive */
     int length[85];
-
-    /*! @brief      Maps halftrack numbers to item numbers
-     *  @discussion Equals -1 if halftrack is not contained in archive 
-     *  @deprecated */
-    int halftrackToItem[85];
     
+    /*! @brief Selected halftrack to read from. */
+	int selectedtrack;
+
     /*! @brief File pointer
-        @discussion An offset into the data array. */
-	int fp;
-		
+     @discussion An offset into the halftrack array. */
+    int fp;
+
 public:
 
     //
