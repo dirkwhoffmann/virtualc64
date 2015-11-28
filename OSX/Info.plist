@@ -71,6 +71,26 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>NIB</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>IconD64</string>
+			<key>CFBundleTypeName</key>
+			<string>NIB</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>MyDocument</string>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>T64</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
