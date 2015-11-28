@@ -15,16 +15,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// VERSION 1.3.1:
-//
-//
-// Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
-//
 // VERSION 1.4:
+// ENHANCEMENTS:
 //
-// Add
+// VirtualC64 can now read NIB image files. Please note that a lot of floppy disks provided in NIB format
+// contain copy protection mechanisms which are likly to be incompatible with the current drive implementation.
+//
+// TODO:
+// Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
+// Use better text descriptions in Mount dialog for G64 and NIB files
 // Cartridge dialog
-// VIC Sprite compatibility
+// VIC Sprite compatibility (Sprite enable timing)
 //
 // CLEANUP:
 // 
@@ -40,7 +41,6 @@
 //
 // 1. Upscaler (like superEagle)
 //    https://github.com/libretro/common-shaders/tree/master/eagle/shaders
-// 2. Datasette
 
 
 #ifndef _C64_INC
@@ -61,6 +61,7 @@
 #include "T64Archive.h"
 #include "D64Archive.h"
 #include "G64Archive.h"
+#include "NIBArchive.h"
 #include "TAPArchive.h"
 #include "PRGArchive.h"
 #include "P00Archive.h"

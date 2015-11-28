@@ -39,6 +39,7 @@ Container::typeOf(const char *extension)
     if (strcmp(extension, "PRG") == 0) return PRG_CONTAINER;
     if (strcmp(extension, "P00") == 0) return P00_CONTAINER;
     if (strcmp(extension, "G64") == 0) return G64_CONTAINER;
+    if (strcmp(extension, "NIB") == 0) return NIB_CONTAINER;
     if (strcmp(extension, "TAP") == 0) return TAP_CONTAINER;
     return (ContainerType)0;
 }

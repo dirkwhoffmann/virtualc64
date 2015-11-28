@@ -33,7 +33,7 @@ class Snapshot;
     /*! When a new documents opens and this variable is not NULL, the snapshot is automatically flashed */
     Snapshot *snapshot;
 
-	//! Reference to an attached D64 or G64 archive
+	//! Reference to an attached D64, G64, or NIB archive
 	/*! When a new documents opens and this variable is not NULL, the archive is automatically inserted into the virtual floopy drive */
 	Archive *archive;
 
@@ -54,6 +54,7 @@ class Snapshot;
 
 - (BOOL)setSnapshotWithName:(NSString *)path;
 - (BOOL)setG64ArchiveWithName:(NSString *)path;
+- (BOOL)setNIBArchiveWithName:(NSString *)path;
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setTAPArchiveWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;

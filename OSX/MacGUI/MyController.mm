@@ -642,17 +642,8 @@
             [tapeEject setHidden:!msg->i];
             break;
 
-            /* PROBLEM: THIS MESSAGE IS SENT TOO OFTEN BECAUSE SOME GAMES
-             * CONTINOUSLY CHANGE REGISTER 0 (1?) AND THEREFORE CONTINOUSLY SWITCH
-             * ON AND OFF THE DRIVE MOTOR.
-        case MSG_VC1530_MOTOR:
         case MSG_VC1530_PLAY:
-            if (msg->i)
-                [c64 setIecBusIsBusy:true];
-            else
-                [c64 setIecBusIsBusy:false];
              break;
-             */
 
         case MSG_VC1530_PROGRESS:
             [mediaDialog update];

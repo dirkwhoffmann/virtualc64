@@ -57,13 +57,9 @@ public:
     //! @brief Returns true iff the specified file is a G64 file
     static bool isG64File(const char *filename);
 
-    //! @brief Creates a G64 archive from a G64 file located on disk.
+    /*! @brief Creates a G64 archive from a G64 file located on disk. */
     static G64Archive *archiveFromG64File(const char *filename);
     
-    /*! @brief Creates a G64 archive from a virtual 5,25 floppy disk. */
-    // static T64Archive *archiveFromDisk(Disk525 *disk);
-
-
     //
     // Virtual functions from Container class
     //

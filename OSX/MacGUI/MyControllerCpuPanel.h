@@ -24,7 +24,6 @@
 - (IBAction)aAction:(id)sender;
 - (IBAction)xAction:(id)sender;
 - (IBAction)yAction:(id)sender;
-- (IBAction)mhzAction:(id)sender;
 - (IBAction)pcAction:(id)sender;
 - (IBAction)spAction:(id)sender;
 - (IBAction)NAction:(id)sender;

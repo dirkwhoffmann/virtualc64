@@ -27,6 +27,7 @@
 class C64;
 class D64Archive;
 class G64Archive;
+class NIBArchive;
 
 // -----------------------------------------------------------------------------------------------
 //                                      Types and constants
@@ -327,6 +328,9 @@ public:
     
     /*! @brief   Converts a G64 archive into a virtual floppy disk */
     void encodeArchive(G64Archive *a);
+
+    /*! @brief   Converts a NIB archive into a virtual floppy disk */
+    void encodeArchive(NIBArchive *a);
 
     /*! @brief   Converts a D64 archive into a virtual floppy disk
      *  @details The method creates sync marks, GRC encoded header and data blocks, checksums and gaps

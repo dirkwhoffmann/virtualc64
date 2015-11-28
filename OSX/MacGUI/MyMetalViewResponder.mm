@@ -370,12 +370,18 @@
             return YES;
         }
 
+        // Is it a NIB archive?
+        if ([[controller document] setNIBArchiveWithName:path]) {
+            [controller showMountDialog];
+            return YES;
+        }
+
         // Is it a G64 archive?
         if ([[controller document] setG64ArchiveWithName:path]) {
             [controller showMountDialog];
             return YES;
         }
-
+        
         // Is it a TAP archive?
         if ([[controller document] setTAPArchiveWithName:path]) {
             [controller showTapeDialog];

@@ -22,7 +22,6 @@
 
 - (void)_vicVideoModeAction:(int)mode;
 - (IBAction)vicVideoModeAction:(id)sender;
-- (IBAction)_vicScreenGeometryAction:(int)mode;
 - (IBAction)vicScreenGeometryAction:(id)sender;
 - (IBAction)vicMemoryBankAction:(id)sender;
 - (IBAction)vicScreenMemoryAction:(id)sender;
@@ -43,7 +42,6 @@
 - (IBAction)vicSpriteSpriteCollisionAction:(id)sender;
 - (IBAction)vicSpriteBackgroundCollisionAction:(id)sender;
 
-- (IBAction)vicRasterlineAction:(id)sender;
 - (IBAction)vicEnableRasterInterruptAction:(id)sender;
 - (IBAction)vicRasterInterruptAction:(id)sender;
 - (IBAction)vicEnableOpenGL:(id)sender;

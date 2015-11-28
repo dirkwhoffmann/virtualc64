@@ -143,7 +143,7 @@ public:
      *  @discussion Before inserting, the archive data is converted to VC1541s GCR-encoded track/sector format. 
      */
     void insertDisk(Archive *a);
-    void insertDisk(D64Archive *a);
+    // void insertDisk(D64Archive *a);
 
     /*! @brief      Exports the currently inserted disk to D64 file 
      */
