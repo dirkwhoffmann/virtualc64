@@ -28,7 +28,6 @@
 // VIC Sprite compatibility (Sprite enable timing)
 //
 // CLEANUP:
-// 
 // SPEEDUP:
 //
 // 1. Make CIA1 and CIA2 dynamic objects
