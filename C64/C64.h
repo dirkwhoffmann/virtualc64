@@ -21,6 +21,8 @@
 // VirtualC64 can now read NIB image files. Please note that a lot of floppy disks provided in NIB format
 // contain copy protection mechanisms which are likly to be incompatible with the current drive implementation.
 //
+// VIC compatibility improvements: Now passing VICE tests spriteenable1, spriteenable3, spriteenable 4
+//
 // TODO:
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
 // Use better text descriptions in Mount dialog for G64 and NIB files
@@ -50,7 +52,7 @@
 
 // Snapshot version number of this release
 #define V_MAJOR 1
-#define V_MINOR 3
+#define V_MINOR 4
 #define V_SUBMINOR 0
 
 #include "basic.h"
@@ -253,6 +255,8 @@ private:
     //! Indicates that we should run as fast as possible at least during disk operations
     bool warpLoad;
 
+public:
+    
 	//! Current clock cycle since power up
 	uint64_t cycles;
 	

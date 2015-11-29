@@ -45,19 +45,6 @@ CPU::fetch() {
         } else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
             if (tracingEnabled())
                 debug(1, "IRQ (source = %02X)\n", irqLine);
-            /*
-            if (debugirq) {
-                debugirq = 0;
-                debug("IRQ (source = %02X, cycle = %lld)\n", irqLine, c64->getCycles());
-            }
-             */
-            /*
-            if (c64->mem->peek(0x0315) == 0xF9 && c64->mem->peek(0x0314) == 0x2C) {
-                debug("INTERRUPTING TO %02X%02X CASETTE ROUTINE at cycle %lld (CIA1.timerB = %04X) irqline = %02X\n",
-                      c64->mem->peek(0xFFFF), c64->mem->peek(0xFFFE), c64->getCycles(), c64->cia1->counterB, irqLine);
-                // c64->cpu->setTraceMode(true);
-            }
-            */
             next = &CPU::irq_2;
             doIRQ = true;
             return;
@@ -73,6 +60,20 @@ CPU::fetch() {
 		debug(1, "%s\n", disassemble());
 	}
 	
+    /*
+    static int debugcnt = 0;
+    if (PC_at_cycle_0 == 0x8CA) {
+        if (debugcnt++ < 100) {
+            printf("0x8CA: viccycle = %d (D015) = %02X\n", c64->rasterlineCycle, c64->vic->iomem[0x15]);
+        }
+    }
+    if (PC_at_cycle_0 == 0x8CD) {
+        if (debugcnt++ < 100) {
+            printf("       viccycle = %d (D015) = %02X\n", c64->rasterlineCycle, c64->vic->iomem[0x15]);
+        }
+    }
+    */
+    
 	// Check breakpoint tag
 	if (breakpoint[PC_at_cycle_0] != NO_BREAKPOINT) {
 		if (breakpoint[PC_at_cycle_0] & SOFT_BREAKPOINT) {

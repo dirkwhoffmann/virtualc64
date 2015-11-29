@@ -78,7 +78,6 @@ VIC::VIC()
         { &mc,                          sizeof(mc),                             CLEAR_ON_RESET | BYTE_FORMAT },
         { &mcbase,                      sizeof(mcbase),                         CLEAR_ON_RESET | BYTE_FORMAT },
         { &spriteOnOff,                 sizeof(spriteOnOff),                    CLEAR_ON_RESET },
-        { &oldSpriteOnOff,              sizeof(oldSpriteOnOff),                 CLEAR_ON_RESET },
         { &spriteDmaOnOff,              sizeof(spriteDmaOnOff),                 CLEAR_ON_RESET },
         { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
         { &cleared_bits_in_d017,        sizeof(cleared_bits_in_d017),           CLEAR_ON_RESET },
@@ -564,13 +563,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 				iomem[addr] = value;
 			}
 			return;
-				
-        /*
-        case 0x16:
-            // DEBUG CODE WAS HERE
-            break;
-        */
-            
+				            
 		case 0x17: // SPRITE Y EXPANSION
 			iomem[addr] = value;
             cleared_bits_in_d017 = (~value) & (~expansionFF);
@@ -764,23 +757,17 @@ VIC::turnSpriteDisplayOn()
 {
     // "4. In der ersten Phase von Zyklus 58 wird [1] für jedes Sprite [2] MC mit MCBASE
     //     geladen (MCBASE->MC) und geprüft, [3] ob der DMA für das Sprite angeschaltet
+    //     [und [3.1] das entsprechende MxE-Bit in Register $d015 immer noch gesetzt ist]
     //     und [4] die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
     //     ist. Ist dies der Fall, wird [5] die Darstellung des Sprites angeschaltet." [C.B.]
+    // In [3], we need to check additionally, if sprite is still enabled.
     
-    oldSpriteOnOff = spriteOnOff;
     for (unsigned i = 0; i < 8; i++) { /* [1] */
         mc[i] = mcbase[i]; /* [2] */
-        if (GET_BIT(spriteDmaOnOff, i)) { /* [3] */
+        if (GET_BIT(spriteDmaOnOff, i) /* [3] */ && spriteIsEnabled(i) /* [3.1] */) { 
             if (getSpriteY(i) == (yCounter & 0xFF)) /* [4] */
                 SET_BIT(spriteOnOff,i); /* [5] */
         }
-#if 0
-         else {
-            // switch off sprites with no dma access
-            CLR_BIT(spriteOnOff, i);
-        }
-#endif
-        
     }
 }
 
@@ -1729,10 +1716,6 @@ VIC::cycle58()
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
     turnSpriteDisplayOn();
-
-    // Old line based sprite drawing routine (DEPRECATED)
-	// pixelEngine.drawAllSprites();
-			
     turnSpriteDisplayOff();
     
     // Phi2.3 VC/RC logic

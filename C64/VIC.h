@@ -243,11 +243,13 @@ private:
 	//                              I/O memory handling and RAM access
 	// -----------------------------------------------------------------------------------------------
 
-private:
+public:
 	
 	//! I/O Memory
 	/*! If a value is poked to the VIC address space, it is stored here. */
 	uint8_t iomem[64]; 
+
+private:
 
     //! Start address of the currently selected memory bank
     /*! There are four banks in total since the VIC chip can only "see" 16 KB of memory at one time
@@ -363,11 +365,7 @@ private:
 	//! Sprite on off
 	/*! Determines if a sprite needs to be drawn in the current rasterline. Each bit represents a single sprite. */
 	uint8_t spriteOnOff;
-	
-	//! Previous value of spriteOnOff
-    //  DEPRECATED. WILL BE ELIMINATED WHEN SPRITE DRAWING IS CYCLE BASED
-	uint8_t oldSpriteOnOff; 
-	
+		
 	//! Sprite DMA on off
 	/*! Determines  if sprite dma access is enabled or disabled. Each bit represents a single sprite. */
 	uint8_t spriteDmaOnOff;
@@ -657,10 +655,6 @@ private:
             yCounter >= 0x30 && yCounter <= 0xf7 /* [1] */ &&
             (yCounter & 0x07) == getVerticalRasterScroll() /* [2] */ &&
             DENwasSetInRasterline30 /* [3] */;
-
-         // OLD CODE: UPDATE OF DISPLAY STATE IS TOO EARLY. NEEDS TO BE DONE AT THE END OF EACH CYCLE
-         // if (badLineCondition)
-         //    displayState = true;
      }
     
     //! Update display state
