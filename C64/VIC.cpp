@@ -731,7 +731,7 @@ VIC::turnSpriteDmaOn()
     //     Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
     //     unteren 8 Bits von RASTER ist. Ist dies der Fall und [3] der DMA für das
     //     Sprite noch ausgeschaltet, wird [4] der DMA angeschaltet, [5] MCBASE gelöscht[.]" [C.B.]
-    
+#if 0
     for (unsigned i = 0; i < 8; i++) {
         if (spriteIsEnabled(i)) { /* [1] */
             if (getSpriteY(i) == (yCounter & 0xff)) { /* [2] */
@@ -743,6 +743,15 @@ VIC::turnSpriteDmaOn()
             }
         }
     }
+#endif
+    
+    uint8_t risingEdges = ~spriteDmaOnOff & (iomem[0x15] & compareSpriteY(yCounter));
+    for (unsigned i = 0; i < 8; i++)
+        if (GET_BIT(risingEdges,i))
+            mcbase[i] = 0;
+    
+    expansionFF |= risingEdges;
+    spriteDmaOnOff |= risingEdges;
 }
 
 void
@@ -763,7 +772,6 @@ VIC::turnSpriteDisplayOn()
     //     ist. Ist dies der Fall, wird [5] die Darstellung des Sprites angeschaltet." [C.B.]
     // In [3], we need to check additionally, if sprite is still enabled.
     
-#if 0
     for (unsigned i = 0; i < 8; i++) { /* [1] */
         mc[i] = mcbase[i]; /* [2] */
         if (GET_BIT(spriteDmaOnOff, i) /* [3] */ && spriteIsEnabled(i) /* [3.1] */) { 
@@ -771,26 +779,16 @@ VIC::turnSpriteDisplayOn()
                 SET_BIT(spriteOnOff,i); /* [5] */
         }
     }
-#endif
-
-    for (unsigned i = 0; i < 8; i++)
-        mc[i] = mcbase[i];
-    spriteOnOff |= spriteDmaOnOff & iomem[0x15] & compareSpriteY((uint8_t)yCounter);
-    
 }
 
 void
 VIC::turnSpriteDisplayOff()
 {
     // switch off sprite if dma is off
-#if 0
     for (int i = 0; i < 8; i++) {
         if (GET_BIT(spriteOnOff, i) && !GET_BIT(spriteDmaOnOff, i))
             CLR_BIT(spriteOnOff, i);
     }
-#endif
-    
-    spriteOnOff &= spriteDmaOnOff;
 }
 #endif
 
@@ -1728,12 +1726,15 @@ VIC::cycle58()
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
     
-    // Update mc with mcbase for all sprites
+    // Reset mc with mcbase for all sprites
     for (unsigned i = 0; i < 8; i++)
         mc[i] = mcbase[i];
     
-    // Turn sprite display on / off
+    // Turn display on for all sprites with a matching y coordinate
+    // Sprite display remains off if sprite DMA is off or sprite is disabled (register 0x15)
     spriteOnOff |= spriteDmaOnOff & iomem[0x15] & compareSpriteY((uint8_t)yCounter);
+
+    // Turn display off for all sprites that lost DMA.
     spriteOnOff &= spriteDmaOnOff;
     
     // turnSpriteDisplayOn();
