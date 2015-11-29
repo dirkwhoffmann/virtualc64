@@ -725,12 +725,14 @@ private:
     
     //! Turn on sprite display bit if conditions are met
     /*! In cycle 58, drawing is switched on for all sprites that got dma access switched on in 
-        cycle 55 or 56. */
-    void turnSpriteDisplayOn();
+        cycle 55 or 56. 
+        DEPRECATED */
+    // void turnSpriteDisplayOn();
 
     //! Turn off sprite display bit if conditions are met
-    /*! In cycle 58, drawing is switched off for all sprites that lost dma access in cycle 16. */
-    void turnSpriteDisplayOff();
+    /*! In cycle 58, drawing is switched off for all sprites that lost dma access in cycle 16. 
+        DEPRECATED*/
+    // void turnSpriteDisplayOff();
     
 	//! Get sprite depth
 	/*! The value is written to the z buffer to resolve overlapping pixels */
@@ -765,10 +767,8 @@ public:
 	
     //! Compare Y coordinate of all sprites with 8 bit value
     inline uint8_t compareSpriteY(uint8_t y) { return
-        (iomem[1] == y  ? 0x01 : 0x00) | (iomem[3] == y  ? 0x02 : 0x00) |
-        (iomem[5] == y  ? 0x04 : 0x00) | (iomem[7] == y  ? 0x08 : 0x00) |
-        (iomem[9] == y  ? 0x10 : 0x00) | (iomem[11] == y ? 0x20 : 0x00) |
-        (iomem[13] == y ? 0x40 : 0x00) | (iomem[15] == y ? 0x80 : 0x00);
+        ((iomem[1] == y) << 0) | ((iomem[3] == y) << 1) | ((iomem[5] == y) << 2) | ((iomem[7] == y) << 3) |
+        ((iomem[9] == y) << 4) | ((iomem[11] == y) << 5) | ((iomem[13] == y) << 6) | ((iomem[15] == y) << 7);
     }
     
 	//! Returns true, if sprite is enabled (drawn on the screen)

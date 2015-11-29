@@ -752,6 +752,7 @@ VIC::toggleExpansionFlipflop()
     expansionFF ^= iomem[0x17];
 }
 
+#if 0
 void
 VIC::turnSpriteDisplayOn()
 {
@@ -791,7 +792,7 @@ VIC::turnSpriteDisplayOff()
     
     spriteOnOff &= spriteDmaOnOff;
 }
-
+#endif
 
 // -----------------------------------------------------------------------------------------------
 //                                      Frame flipflops
@@ -1726,8 +1727,17 @@ VIC::cycle58()
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
-    turnSpriteDisplayOn();
-    turnSpriteDisplayOff();
+    
+    // Update mc with mcbase for all sprites
+    for (unsigned i = 0; i < 8; i++)
+        mc[i] = mcbase[i];
+    
+    // Turn sprite display on / off
+    spriteOnOff |= spriteDmaOnOff & iomem[0x15] & compareSpriteY((uint8_t)yCounter);
+    spriteOnOff &= spriteDmaOnOff;
+    
+    // turnSpriteDisplayOn();
+    // turnSpriteDisplayOff();
     
     // Phi2.3 VC/RC logic
     
