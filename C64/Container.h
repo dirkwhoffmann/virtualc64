@@ -25,8 +25,8 @@
     @brief The type of a container
     @constant CRT_CONTAINER A cartridge that can be plugged into the expansion port.
     @constant V64_CONTAINER A snapshot file (contains a frozen C64 state).
-    @constant T64_CONTAINER A tape archive with multiple files.
     @constant D64_CONTAINER A floppy disk image with multiply files.
+    @constant T64_CONTAINER A tape archive with multiple files.
     @constant PRG_CONTAINER A program archive containing a single file.
     @constant P00_CONTAINER A program archive containing a single file.
     @constant G64_CONTAINER A collection of bit-streams resembling a floppy disk.
@@ -36,8 +36,8 @@
 enum ContainerType {
     CRT_CONTAINER = 1,
     V64_CONTAINER,
-    T64_CONTAINER,
     D64_CONTAINER,
+    T64_CONTAINER,
     PRG_CONTAINER,
     P00_CONTAINER,
     G64_CONTAINER,
