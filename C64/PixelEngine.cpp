@@ -97,7 +97,6 @@ PixelEngine::resetScreenBuffers()
     }
 }
 
-
 void
 PixelEngine::beginFrame()
 {
@@ -319,7 +318,7 @@ PixelEngine::drawCanvas()
         drawCanvasPixel(xCoord++, 3);
         
         // After pixel 4, the one and zero bits in D016 and the one bits in D011 show up
-        // This corresponds the behavior of the color latency chip model in VICE
+        // This corresponds to the behavior of the color latency chip model in VICE
         dc.D016 = vic->iomem[0x16] & 0x10;  // latch 0s and 1s
         dc.D011 |= vic->iomem[0x11] & 0x60; // latch 1s
         
@@ -327,7 +326,7 @@ PixelEngine::drawCanvas()
         drawCanvasPixel(xCoord++, 5);
         
         // After pixel 6, the zero bits in D011 show up
-        // This corresponds the behavior of the color latency chip model in VICE
+        // This corresponds to the behavior of the color latency chip model in VICE
         dc.D011 &= vic->iomem[0x11] & 0x60; // latch 0s
         
         drawCanvasPixel(xCoord++, 6);
