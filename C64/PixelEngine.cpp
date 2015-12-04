@@ -78,13 +78,7 @@ PixelEngine::reset()
     vic = c64->vic;
     
     memset(&sr, 0, sizeof(sr));
-    memset(&sprite_sr, 0, sizeof(sr));
-
-#if 0
-    for (unsigned i = 0; i < 8; i++) {
-        sprite_sr[i].data = 0;
-    }
-#endif
+    memset(&sprite_sr, 0, sizeof(sprite_sr));
 }
 
 void
