@@ -375,7 +375,7 @@ private:
 	//! Sprite on off
 	/*! Determines if a sprite needs to be drawn in the current rasterline. Each bit represents a single sprite. */
 	uint8_t spriteOnOff;
-		
+    
 	//! Sprite DMA on off
 	/*! Determines  if sprite dma access is enabled or disabled. Each bit represents a single sprite. */
 	uint8_t spriteDmaOnOff;

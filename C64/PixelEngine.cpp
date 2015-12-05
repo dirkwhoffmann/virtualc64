@@ -376,10 +376,12 @@ PixelEngine::drawCanvasPixel(int16_t offset, uint8_t pixel)
 inline void
 PixelEngine::drawSprites()
 {
+    /*
     uint8_t active = vic->spriteOnOff;
     
     if (!active)
         return; // Quick exit (sprite free rasterline) 
+    */
     
     int16_t xCoord = dc.xCounter;
     updateSpriteColorRegisters();
@@ -389,25 +391,36 @@ PixelEngine::drawSprites()
     drawSpritePixel(xCoord++, 1);
     
     // running &= ~vic->isSecondDMAcycle;
+    for (unsigned i = 0; i < 8; i++)
+        if (GET_BIT(vic->isSecondDMAcycle, i)) {
+            sprite_sr[i].remaining_bits = -1;
+            sprite_sr[i].mcol_bits = sprite_sr[i].scol_bit = 0;
+        }
     drawSpritePixel(xCoord++, 2);
     
     frozen = vic->isFirstDMAcycle | vic->isSecondDMAcycle;
     drawSpritePixel(xCoord++, 3);
+    
+    dc.spriteOnOff = dc.spriteOnOffPipe;
+    dc.spriteOnOffPipe = vic->spriteOnOff;
     drawSpritePixel(xCoord++, 4);
     drawSpritePixel(xCoord++, 5);
     drawSpritePixel(xCoord++, 6);
 
     frozen = vic->isFirstDMAcycle;
     drawSpritePixel(xCoord, 7);
+    
+    if (vic->isFirstDMAcycle )
+        setSingleColorSpritePixel(3, dc.xCounter, 1);
+    if (vic->isSecondDMAcycle )
+        setSingleColorSpritePixel(4, dc.xCounter, 1);
 }
 
 inline void
 PixelEngine::drawSpritePixel(int16_t offset, uint8_t pixel)
 {
-    uint8_t active = vic->spriteOnOff;
-
     for (unsigned i = 0; i < 8; i++) {
-        if (GET_BIT(active,i)) {
+        if (GET_BIT(dc.spriteOnOff, i)) {
             drawSpritePixel(i, offset, pixel);
         }
     }

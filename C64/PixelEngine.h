@@ -251,9 +251,11 @@ public:
         uint8_t spriteColor[8];
         uint8_t spriteExtraColor1;
         uint8_t spriteExtraColor2;
+        uint8_t spriteOnOffPipe;
+        uint8_t spriteOnOff;
 
     } dc;
-    
+        
     //! Latches portions of the VIC state
     /*! Latches everything that needs to be recorded one cycle prior to drawing */
     // void prepareForCycle(uint8_t cycle);
