@@ -322,17 +322,36 @@ private:
     //! Sprite pointer access
     void pAccess(int sprite);
     
-    //! First sprite data access
-    /*!  Returns true iff sprite data was fetched (a memory access has occurred) */
+    //! @brief  First sprite data access
+    /*! @result true iff sprite data was fetched (a memory access has occurred) */
     bool sFirstAccess(int sprite);
 
-    //! Second sprite data access
-    /*!  Returns true iff sprite data was fetched (a memory access has occurred) */
+    //! @brief  Second sprite data access
+    /*! @result Returns true iff sprite data was fetched (a memory access has occurred) */
     bool sSecondAccess(int sprite);
 
-    //! Third sprite data access
-    /*!  Returns true iff sprite data was fetched (a memory access has occurred) */
+    //! @brief  Third sprite data access
+    /*! @result Returns true iff sprite data was fetched (a memory access has occurred) */
     bool sThirdAccess(int sprite);
+
+    //! @brief      Finalizes the sprite data access
+    /*! @discussion This method is invoked one cycle after the second and third sprite DMA */
+    void sFinalize(int sprite);
+
+    //! @brief Data byte grabbed in sFirstAccess()
+    uint8_t dataChunk1;
+
+    //! @brief Data byte grabbed in sSecondAccess()
+    uint8_t dataChunk2;
+
+    //! @brief Data byte grabbed in sThirdAccess()
+    uint8_t dataChunk3;
+
+    //! @brief Bit i is set to 1 iff sprite i performs its first DMA in the current cycle
+    uint8_t isFirstDMAcycle;
+
+    //! @brief Bit i is set to 1 iff sprite i performs its second and third DMA in the current cycle
+    uint8_t isSecondDMAcycle;
 
     
     // -----------------------------------------------------------------------------------------------

@@ -74,7 +74,13 @@ VIC::VIC()
         { &g_character,                 sizeof(g_character),                    CLEAR_ON_RESET },
         { &g_color,                     sizeof(g_color),                        CLEAR_ON_RESET },
         { &g_mode,                      sizeof(g_mode),                         CLEAR_ON_RESET },
-        
+
+        { &dataChunk1,                  sizeof(dataChunk1),                     CLEAR_ON_RESET },
+        { &dataChunk2,                  sizeof(dataChunk2),                     CLEAR_ON_RESET },
+        { &dataChunk3,                  sizeof(dataChunk3),                     CLEAR_ON_RESET },
+        { &isFirstDMAcycle,             sizeof(isFirstDMAcycle),                CLEAR_ON_RESET },
+        { &isSecondDMAcycle,            sizeof(isSecondDMAcycle),               CLEAR_ON_RESET },
+
         { &mc,                          sizeof(mc),                             CLEAR_ON_RESET | BYTE_FORMAT },
         { &mcbase,                      sizeof(mcbase),                         CLEAR_ON_RESET | BYTE_FORMAT },
         { &spriteOnOff,                 sizeof(spriteOnOff),                    CLEAR_ON_RESET },
@@ -346,6 +352,8 @@ inline bool VIC::sFirstAccess(int sprite)
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
     bool memAccessed = false;
     
+    isFirstDMAcycle = (1 << sprite);
+    
     if (spriteDmaOnOff & (1 << sprite)) {
         
         if (BApulledDownForAtLeastThreeCycles()) {
@@ -358,8 +366,8 @@ inline bool VIC::sFirstAccess(int sprite)
     }
     
     // load data into shift register
-    // pixelEngine.sprite_sr[sprite].data.chunk[0] = data;
-    pixelEngine.sprite_sr[sprite].data = data;
+    // pixelEngine.sprite_sr[sprite].data = data;
+    dataChunk1 = data;
     return memAccessed;
 }
 
@@ -368,6 +376,9 @@ inline bool VIC::sSecondAccess(int sprite)
 {
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
     bool memAccessed = false;
+    
+    isFirstDMAcycle = 0;
+    isSecondDMAcycle = (1 << sprite);
     
     if (spriteDmaOnOff & (1 << sprite)) {
         
@@ -385,9 +396,7 @@ inline bool VIC::sSecondAccess(int sprite)
     if (!memAccessed)
         memIdleAccess();
     
-    // load data into shift register
-    // pixelEngine.sprite_sr[sprite].data.chunk[1] = data;
-    pixelEngine.sprite_sr[sprite].data = (pixelEngine.sprite_sr[sprite].data << 8) | data;
+    dataChunk2 = data;
     return memAccessed;
 }
 
@@ -408,12 +417,18 @@ inline bool VIC::sThirdAccess(int sprite)
         mc[sprite] &= 0x3F; // 6 bit overflow
     }
     
-    // load data into shift register
-    // pixelEngine.sprite_sr[sprite].data.chunk[2] = data;
-    pixelEngine.sprite_sr[sprite].data = (pixelEngine.sprite_sr[sprite].data << 8) | data;
+    dataChunk3 = data;
     return memAccessed;
 }
 
+
+inline void VIC::sFinalize(int sprite)
+{
+    isSecondDMAcycle = 0;
+    
+    // copy data chunks into shift register
+    pixelEngine.sprite_sr[sprite].data = (dataChunk1 << 16) | (dataChunk2 << 8) | dataChunk3;
+}
 
 // -----------------------------------------------------------------------------------------------
 //                                       Getter and setter
@@ -982,10 +997,12 @@ VIC::cycle1()
     
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
+        sFinalize(2);
         pAccess(3);
-    else
+    } else {
         sSecondAccess(3);
+    }
     
     // Phi2.1 Rasterline interrupt (edge triggered)
     bool edgeOnYCounter = (c64->getRasterline() != 0);
@@ -1003,11 +1020,11 @@ VIC::cycle1()
         setBAlow(spriteDmaOnOff & (SPR3 | SPR4 | SPR5));
     
     // Phi2.5 Fetch
-    if (isPAL())
+    if (isPAL()) {
         sFirstAccess(3);
-    else
+    } else {
         sThirdAccess(3);
-    
+    }
     // Finalize
     updateDisplayState();
 	countX();
@@ -1027,11 +1044,13 @@ VIC::cycle2()
     
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
         sSecondAccess(3);
-    else
+    } else {
+        sFinalize(3);
         pAccess(4);
-    
+    }
+
     // Phi2.2 Sprite logic
     // Phi2.1 Rasterline interrupt (edge triggered)
     bool edgeOnYCounter = (yCounter == 0);
@@ -1067,10 +1086,12 @@ VIC::cycle3()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
+        sFinalize(3);
         pAccess(4);
-    else
+    } else {
         sSecondAccess(4);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1102,10 +1123,12 @@ VIC::cycle4()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
         sSecondAccess(4);
-    else
+    } else {
+        sFinalize(4);
         pAccess(5);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1138,10 +1161,12 @@ VIC::cycle5()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
+        sFinalize(4);
         pAccess(5);
-    else
+    } else {
         sSecondAccess(5);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1174,10 +1199,12 @@ VIC::cycle6()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
         sSecondAccess(5);
-    else
+    } else {
+        sFinalize(5);
         pAccess(6);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1211,10 +1238,12 @@ VIC::cycle7()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
+        sFinalize(5);
         pAccess(6);
-    else
+    } else {
         sSecondAccess(6);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1243,10 +1272,12 @@ VIC::cycle8()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
         sSecondAccess(6);
-    else
+    } else {
+        sFinalize(6);
         pAccess(7);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1278,10 +1309,12 @@ VIC::cycle9()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
+        sFinalize(6);
         pAccess(7);
-    else
+    } else {
         sSecondAccess(7);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1310,10 +1343,12 @@ VIC::cycle10()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
         sSecondAccess(7);
-    else
+    } else {
+        sFinalize(7);
         rIdleAccess();
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1344,6 +1379,8 @@ VIC::cycle11()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch (first out of five DRAM refreshs)
+    if (isPAL())
+        sFinalize(7);
     rAccess();
     
     // Phi2.1 Rasterline interrupt
@@ -1718,10 +1755,11 @@ VIC::cycle58()
     preparePixelEngine(); // Prepare for next cycle (column 2 of right border)
     
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
         pAccess(0);
-    else
+    } else {
         rIdleAccess();
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1788,11 +1826,12 @@ VIC::cycle59()
     preparePixelEngine(); // Prepare for next cycle (column 3 of right border)
     
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
         sSecondAccess(0);
-    else
+    } else {
         pAccess(0);
- 
+    }
+    
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
@@ -1826,10 +1865,12 @@ VIC::cycle60()
     preparePixelEngine(); // Prepare for next cycle (last column of right border)
     
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
+        sFinalize(0);
         pAccess(1);
-    else
+    } else {
         sSecondAccess(0);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1863,10 +1904,12 @@ VIC::cycle61()
     pixelEngine.draw(); // Draw previous cycle (last column of right border)
     
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
         sSecondAccess(1);
-    else
+    } else {
+        sFinalize(0);
         pAccess(1);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1898,11 +1941,13 @@ VIC::cycle62()
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
+        sFinalize(1);
         pAccess(2);
-    else
+    } else {
         sSecondAccess(1);
-
+    }
+    
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
     // Phi2.3 VC/RC logic
@@ -1934,10 +1979,12 @@ VIC::cycle63()
         
     // Phi1.2 Draw
     // Phi1.3 Fetch
-    if (isPAL())
+    if (isPAL()) {
         sSecondAccess(2);
-    else
+    } else {
+        sFinalize(1);
         pAccess(2);
+    }
     
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1997,6 +2044,7 @@ VIC::cycle65() 	// NTSC only
 
     // Phi1.2 Draw
     // Phi1.3 Fetch
+    sFinalize(2);
     pAccess(3);
     
     // Phi2.1 Rasterline interrupt
