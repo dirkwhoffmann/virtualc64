@@ -156,10 +156,10 @@ public:
 	unsigned numberOfTracks();
 		
 	//! @brief Returns the low byte of the disk ID
-	uint8_t diskIdLow() { return data[offset(18, 1) + 0xA2]; }
+	uint8_t diskIdLow() { return data[offset(18, 0) + 0xA2]; }
 
 	//! @brief Returns the high byte of the disk ID
-	uint8_t diskIdHi() { return data[offset(18, 1) + 0xA3]; }
+	uint8_t diskIdHi() { return data[offset(18, 0) + 0xA3]; }
 
  
     //
