@@ -335,10 +335,17 @@ public:
         /*! */
         bool exp_flop;
 
-        //! Color bits
-        /*! Every second pixel (as synchronized with mc_flop), the  multi-color bits are remembered. */
-        uint8_t colorbits;
-        
+        //! @brief      Remembers if the currently processed pixel is a multi-color or single-color pixel
+        bool mcol;
+
+        //! @brief      Multi-color bits of the currently processed pixel
+        /*! @discussion The multi-color bits are updats every second cycle (synchronized with mc_flop) */
+        uint8_t mcol_bits;
+
+        //! @brief      Single-color bit of the currently processed pixel
+        /*! @discussion The single-color bit is updated every cycle */
+        uint8_t scol_bit;
+
     } sprite_sr[8];
 
     

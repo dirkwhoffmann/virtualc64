@@ -419,20 +419,22 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
         }
     }
     
+    // Clear bit buffers if shift register is empty
+    if (sprite_sr[nr].remaining_bits == 0) {
+        sprite_sr[nr].mcol_bits = sprite_sr[nr].scol_bit = 0;
+    }
+    
     // Run shift register if there are remaining pixels to draw
     if (sprite_sr[nr].remaining_bits > 0) {
 
         // Determine render mode (single color /multi color) and colors
-        bool multicol = vic->spriteIsMulticolor(nr); // TODO: Latch value at proper cycles. Add dc. multicol
-
-        // Render pixel
-        if (multicol) {
-            // Secure color bits every other cycle
+        if ((sprite_sr[nr].mcol = vic->spriteIsMulticolor(nr))) { // TODO: Latch value at proper cycles. Add dc. multicol
+            // Muti-color mode: Secure color bits every other cycle
             if (sprite_sr[nr].mc_flop)
-                sprite_sr[nr].colorbits = (sprite_sr[nr].data >> 22) & 0x03;
-            setMultiColorSpritePixel(nr, offset, sprite_sr[nr].colorbits);
+                sprite_sr[nr].mcol_bits = (sprite_sr[nr].data >> 22) & 0x03;
         } else {
-            setSingleColorSpritePixel(nr, offset, (sprite_sr[nr].data >> 23) & 0x01);
+            // Single-color mode: Secure color bit every cycle
+            sprite_sr[nr].scol_bit = (sprite_sr[nr].data >> 23) & 0x01;
         }
         
         // Toggle horizontal expansion flipflop for stretched sprites
@@ -440,13 +442,19 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
             sprite_sr[nr].exp_flop = !sprite_sr[nr].exp_flop;
         }
 
-        // Shift register and toggle multicolor flipflop
+        // Run shift register and toggle multicolor flipflop
         if (sprite_sr[nr].exp_flop) {
             sprite_sr[nr].data <<= 1;
             sprite_sr[nr].mc_flop = !sprite_sr[nr].mc_flop;
             sprite_sr[nr].remaining_bits--;
         }
     }
+            
+    // Draw pixel (if mcol_bits and scol_bits got cleared in the code above, drawing has no effect)
+    if (sprite_sr[nr].mcol)
+        setMultiColorSpritePixel(nr, offset, sprite_sr[nr].mcol_bits);
+    else
+        setSingleColorSpritePixel(nr, offset, sprite_sr[nr].scol_bit);
 }
 
 
