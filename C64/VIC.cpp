@@ -75,9 +75,6 @@ VIC::VIC()
         { &g_color,                     sizeof(g_color),                        CLEAR_ON_RESET },
         { &g_mode,                      sizeof(g_mode),                         CLEAR_ON_RESET },
 
-        { &dataChunk1,                  sizeof(dataChunk1),                     CLEAR_ON_RESET },
-        { &dataChunk2,                  sizeof(dataChunk2),                     CLEAR_ON_RESET },
-        { &dataChunk3,                  sizeof(dataChunk3),                     CLEAR_ON_RESET },
         { &isFirstDMAcycle,             sizeof(isFirstDMAcycle),                CLEAR_ON_RESET },
         { &isSecondDMAcycle,            sizeof(isSecondDMAcycle),               CLEAR_ON_RESET },
 
@@ -365,9 +362,7 @@ inline bool VIC::sFirstAccess(int sprite)
         mc[sprite] &= 0x3F; // 6 bit overflow
     }
     
-    // load data into shift register
-    // pixelEngine.sprite_sr[sprite].data = data;
-    dataChunk1 = data;
+    pixelEngine.sprite_sr[sprite].chunk1 = data;
     return memAccessed;
 }
 
@@ -396,7 +391,7 @@ inline bool VIC::sSecondAccess(int sprite)
     if (!memAccessed)
         memIdleAccess();
     
-    dataChunk2 = data;
+    pixelEngine.sprite_sr[sprite].chunk2 = data;
     return memAccessed;
 }
 
@@ -417,7 +412,7 @@ inline bool VIC::sThirdAccess(int sprite)
         mc[sprite] &= 0x3F; // 6 bit overflow
     }
     
-    dataChunk3 = data;
+    pixelEngine.sprite_sr[sprite].chunk3 = data;
     return memAccessed;
 }
 
@@ -427,7 +422,8 @@ inline void VIC::sFinalize(int sprite)
     isSecondDMAcycle = 0;
     
     // copy data chunks into shift register
-    pixelEngine.sprite_sr[sprite].data = (dataChunk1 << 16) | (dataChunk2 << 8) | dataChunk3;
+    uint32_t data = (pixelEngine.sprite_sr[sprite].chunk1 << 16) | (pixelEngine.sprite_sr[sprite].chunk2 << 8) | pixelEngine.sprite_sr[sprite].chunk3;
+    pixelEngine.sprite_sr[sprite].data = data;
 }
 
 // -----------------------------------------------------------------------------------------------

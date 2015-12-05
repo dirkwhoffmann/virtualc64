@@ -118,8 +118,10 @@ PixelEngine::beginRasterline()
     memset(pixelSource, 0x00, sizeof(pixelSource));
 
     // Prepare sprite pixel shift register
-    for (unsigned i = 0; i < 8; i++)
+    for (unsigned i = 0; i < 8; i++) {
         sprite_sr[i].remaining_bits = -1;
+        sprite_sr[i].mcol_bits = sprite_sr[i].scol_bit = 0;
+    }
     
     // Clear pixel buffer (has same size as pixelSource and zBuffer)
     // FOR DEBUGGING ONLY, 0xBB is a randomly chose debug color
@@ -381,13 +383,21 @@ PixelEngine::drawSprites()
     
     int16_t xCoord = dc.xCounter;
     updateSpriteColorRegisters();
+
+    frozen = vic->isSecondDMAcycle;
     drawSpritePixel(xCoord++, 0);
     drawSpritePixel(xCoord++, 1);
+    
+    // running &= ~vic->isSecondDMAcycle;
     drawSpritePixel(xCoord++, 2);
+    
+    frozen = vic->isFirstDMAcycle | vic->isSecondDMAcycle;
     drawSpritePixel(xCoord++, 3);
     drawSpritePixel(xCoord++, 4);
     drawSpritePixel(xCoord++, 5);
     drawSpritePixel(xCoord++, 6);
+
+    frozen = vic->isFirstDMAcycle;
     drawSpritePixel(xCoord, 7);
 }
 
@@ -407,6 +417,11 @@ void
 PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
 {
     assert(nr < 8);
+    assert(sprite_sr[nr].remaining_bits >= -1);
+    assert(sprite_sr[nr].remaining_bits <= 24);
+
+    if (GET_BIT(frozen, nr))
+        goto draw;
 
     // Check for horizontal trigger condition
     if (dc.xCounter + pixel == dc.spriteX[nr] + 4) {
@@ -449,12 +464,21 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
             sprite_sr[nr].remaining_bits--;
         }
     }
-            
+    
+draw:
+    
     // Draw pixel (if mcol_bits and scol_bits got cleared in the code above, drawing has no effect)
     if (sprite_sr[nr].mcol)
         setMultiColorSpritePixel(nr, offset, sprite_sr[nr].mcol_bits);
     else
         setSingleColorSpritePixel(nr, offset, sprite_sr[nr].scol_bit);
+
+    /*
+    if (vic->isFirstDMAcycle)
+        setSingleColorSpritePixel(3, offset, 1);
+    if (vic->isSecondDMAcycle)
+        setSingleColorSpritePixel(2, offset, 1);
+    */
 }
 
 

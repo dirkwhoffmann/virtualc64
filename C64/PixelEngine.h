@@ -320,12 +320,15 @@ public:
         //! Shift register data (24 bit)
         uint32_t data;
         
+        //! The shift register data is read in three chunks
+        uint8_t chunk1, chunk2, chunk3;
+        
         //! Remaining bits to be pumped out
         /*! At the beginning of each rasterline, this value is initialized with -1 and set to 
             24 when the horizontal trigger condition is met (sprite X trigger coord reaches xCounter).
             When all bits are drawn, this value reaches 0. */
         int remaining_bits;
-         
+
         //! Multi-color synchronization flipflop
         /*! Whenever the shift register is loaded, the synchronization flipflop is also set.
          It is toggled with each pixel and used to synchronize the synthesis of multi-color pixels. */
@@ -348,6 +351,16 @@ public:
 
     } sprite_sr[8];
 
+    //! @brief      Indicates which shift registers are currently active
+    /*! @discussion If the i-th bit is set to 1, the i-th shift register is currently running. */
+    // uint8_t running_srs;
+
+    //! @brief      Indicates which shift registers are currently frozen
+    /*! @discussion If the i-th bit is set to 1, the i-th shift register is currently frozen. 
+     *              A sprites shift register freezes during the first and second DMA cycle.
+     *              A frozen register won't shift or trigger, but continues to draw the currently
+     *              synthesized pixel. */
+    uint8_t frozen;
     
     
     // -----------------------------------------------------------------------------------------------
