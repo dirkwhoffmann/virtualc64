@@ -413,6 +413,13 @@ inline bool VIC::sThirdAccess(int sprite)
     }
     
     pixelEngine.sprite_sr[sprite].chunk3 = data;
+    
+    // copy data chunks into shift register
+    uint32_t chunk1 = pixelEngine.sprite_sr[sprite].chunk1 << 16;
+    uint32_t chunk2 = pixelEngine.sprite_sr[sprite].chunk2 << 8;
+    uint32_t chunk3 = pixelEngine.sprite_sr[sprite].chunk3;
+    pixelEngine.sprite_sr[sprite].data = chunk1 | chunk2 | chunk3;
+
     return memAccessed;
 }
 
@@ -420,10 +427,6 @@ inline bool VIC::sThirdAccess(int sprite)
 inline void VIC::sFinalize(int sprite)
 {
     isSecondDMAcycle = 0;
-    
-    // copy data chunks into shift register
-    uint32_t data = (pixelEngine.sprite_sr[sprite].chunk1 << 16) | (pixelEngine.sprite_sr[sprite].chunk2 << 8) | pixelEngine.sprite_sr[sprite].chunk3;
-    pixelEngine.sprite_sr[sprite].data = data;
 }
 
 // -----------------------------------------------------------------------------------------------

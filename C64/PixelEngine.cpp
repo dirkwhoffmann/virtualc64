@@ -390,7 +390,8 @@ PixelEngine::drawSprites()
     drawSpritePixel(xCoord++, 0);
     drawSpritePixel(xCoord++, 1);
     
-    // CLEAN THIS UP. USE A BIT FIELD FOR -1 MEANING
+    // TODO: INTRODUCE running
+    // TODO: Make frozen a local variable
     for (unsigned i = 0; i < 8; i++)
         if (GET_BIT(vic->isSecondDMAcycle, i)) {
             sprite_sr[i].remaining_bits = -1;
@@ -407,13 +408,15 @@ PixelEngine::drawSprites()
     drawSpritePixel(xCoord++, 5);
     drawSpritePixel(xCoord++, 6);
 
-    // frozen = vic->isFirstDMAcycle;
+    frozen = vic->isFirstDMAcycle;
     drawSpritePixel(xCoord, 7);
     
+    /*
     if (vic->isFirstDMAcycle )
         setSingleColorSpritePixel(3, dc.xCounter, 1);
     if (vic->isSecondDMAcycle )
         setSingleColorSpritePixel(4, dc.xCounter, 1);
+     */
 }
 
 inline void
@@ -478,6 +481,9 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
         }
     }
     
+    // TODO: THINK ABOUT IT: WE DON'T NEED TO STORE mcol_bits and scol_bit SEPERATELY
+    // WE COULD SHIFT THE REGISTER EVERY SECOND CYCLE, ONLY
+    // TO GET THE SINGLE COLOR BIT, USE >> 23 if MC_FLOP IS TRUE and >> 22 if MC_FLOP IS FALSE
 draw:
     
     // Draw pixel (if mcol_bits and scol_bits got cleared in the code above, drawing has no effect)
