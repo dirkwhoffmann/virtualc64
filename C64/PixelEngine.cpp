@@ -390,7 +390,7 @@ PixelEngine::drawSprites()
     drawSpritePixel(xCoord++, 0);
     drawSpritePixel(xCoord++, 1);
     
-    // running &= ~vic->isSecondDMAcycle;
+    // CLEAN THIS UP. USE A BIT FIELD FOR -1 MEANING
     for (unsigned i = 0; i < 8; i++)
         if (GET_BIT(vic->isSecondDMAcycle, i)) {
             sprite_sr[i].remaining_bits = -1;
@@ -407,7 +407,7 @@ PixelEngine::drawSprites()
     drawSpritePixel(xCoord++, 5);
     drawSpritePixel(xCoord++, 6);
 
-    frozen = vic->isFirstDMAcycle;
+    // frozen = vic->isFirstDMAcycle;
     drawSpritePixel(xCoord, 7);
     
     if (vic->isFirstDMAcycle )
@@ -431,9 +431,12 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
 {
     assert(nr < 8);
     assert(sprite_sr[nr].remaining_bits >= -1);
-    assert(sprite_sr[nr].remaining_bits <= 24);
+    assert(sprite_sr[nr].remaining_bits <= 26);
 
-    if (GET_BIT(frozen, nr))
+    bool isFrozen = GET_BIT(frozen, nr);
+    // bool isWaiting = false; // TODO: GET_BIT(waiting, nr);
+    
+    if (isFrozen)
         goto draw;
 
     // Check for horizontal trigger condition
@@ -441,17 +444,14 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
     
         // Make sure that shift register is only activated once per rasterline
         if (sprite_sr[nr].remaining_bits == -1) {
-            sprite_sr[nr].remaining_bits = 24;
+            // Note: Although there are only 24 data bits, we run the shift register
+            // for 26 cycles. This will zero out mcol_bits and scol_bits automatically.
+            sprite_sr[nr].remaining_bits = 26;
             sprite_sr[nr].exp_flop = true;
             sprite_sr[nr].mc_flop = true;
         }
     }
-    
-    // Clear bit buffers if shift register is empty
-    if (sprite_sr[nr].remaining_bits == 0) {
-        sprite_sr[nr].mcol_bits = sprite_sr[nr].scol_bit = 0;
-    }
-    
+
     // Run shift register if there are remaining pixels to draw
     if (sprite_sr[nr].remaining_bits > 0) {
 
