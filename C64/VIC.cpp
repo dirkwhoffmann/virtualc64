@@ -414,12 +414,6 @@ inline bool VIC::sThirdAccess(int sprite)
     
     pixelEngine.sprite_sr[sprite].chunk3 = data;
     
-    // copy data chunks into shift register
-    uint32_t chunk1 = pixelEngine.sprite_sr[sprite].chunk1 << 16;
-    uint32_t chunk2 = pixelEngine.sprite_sr[sprite].chunk2 << 8;
-    uint32_t chunk3 = pixelEngine.sprite_sr[sprite].chunk3;
-    pixelEngine.sprite_sr[sprite].data = chunk1 | chunk2 | chunk3;
-
     return memAccessed;
 }
 
@@ -995,9 +989,12 @@ VIC::cycle1()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(2);
+        pixelEngine.loadShiftRegister(2);
         pAccess(3);
     } else {
         sSecondAccess(3);
@@ -1042,11 +1039,14 @@ VIC::cycle2()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(3);
     } else {
         sFinalize(3);
+        pixelEngine.loadShiftRegister(3);
         pAccess(4);
     }
 
@@ -1084,9 +1084,12 @@ VIC::cycle3()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(3);
+        pixelEngine.loadShiftRegister(3);
         pAccess(4);
     } else {
         sSecondAccess(4);
@@ -1121,11 +1124,14 @@ VIC::cycle4()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(4);
     } else {
         sFinalize(4);
+        pixelEngine.loadShiftRegister(4);
         pAccess(5);
     }
     
@@ -1159,9 +1165,12 @@ VIC::cycle5()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(4);
+        pixelEngine.loadShiftRegister(4);
         pAccess(5);
     } else {
         sSecondAccess(5);
@@ -1197,11 +1206,14 @@ VIC::cycle6()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(5);
     } else {
         sFinalize(5);
+        pixelEngine.loadShiftRegister(5);
         pAccess(6);
     }
     
@@ -1236,9 +1248,12 @@ VIC::cycle7()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(5);
+        pixelEngine.loadShiftRegister(5);
         pAccess(6);
     } else {
         sSecondAccess(6);
@@ -1270,11 +1285,14 @@ VIC::cycle8()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(6);
     } else {
         sFinalize(6);
+        pixelEngine.loadShiftRegister(6);
         pAccess(7);
     }
     
@@ -1307,9 +1325,12 @@ VIC::cycle9()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(6);
+        pixelEngine.loadShiftRegister(6);
         pAccess(7);
     } else {
         sSecondAccess(7);
@@ -1341,11 +1362,14 @@ VIC::cycle10()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(7);
     } else {
         sFinalize(7);
+        pixelEngine.loadShiftRegister(7);
         rIdleAccess();
     }
     
@@ -1377,9 +1401,13 @@ VIC::cycle11()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch (first out of five DRAM refreshs)
-    if (isPAL())
+    if (isPAL()) {
         sFinalize(7);
+        pixelEngine.loadShiftRegister(7);
+    }
     rAccess();
     
     // Phi2.1 Rasterline interrupt
@@ -1939,9 +1967,12 @@ VIC::cycle62()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(1);
+        pixelEngine.loadShiftRegister(1);
         pAccess(2);
     } else {
         sSecondAccess(1);
@@ -1977,11 +2008,14 @@ VIC::cycle63()
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
         
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(2);
     } else {
         sFinalize(1);
+        pixelEngine.loadShiftRegister(1);
         pAccess(2);
     }
     
@@ -2042,8 +2076,11 @@ VIC::cycle65() 	// NTSC only
     yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
 
     // Phi1.2 Draw
+    // pixelEngine.drawSprites();
+    
     // Phi1.3 Fetch
     sFinalize(2);
+    pixelEngine.loadShiftRegister(2);
     pAccess(3);
     
     // Phi2.1 Rasterline interrupt

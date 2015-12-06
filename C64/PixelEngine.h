@@ -272,6 +272,9 @@ public:
     /*! This needs to be done TODO:WHEN? */
     void updateSpriteColorRegisters();
 
+    //! @brief      Latches the sprite enable bits
+    /*! @discussion This method is called in drawSprites() */
+    void updateSpriteOnOff();
     
     // -----------------------------------------------------------------------------------------------
     //               Shift register logic for canvas pixels (handled in drawCanvasPixel)
@@ -312,11 +315,17 @@ public:
     //              Shift register logic for sprite pixels (handled in drawSpritePixel)
     // -----------------------------------------------------------------------------------------------
     
-    //! Sprite shift registers
-    /*! The VIC chip has a 24 bit (3 byte) shift register for each sprite. It stores the sprite data
-     for each rasterline. It is loaded bytewise in every sAccess and shifted out bitwise when
-     the sprite is drawn. */
-    
+    //! @brief      Sprite shift registers
+    /*! @discussion The VIC chip has a 24 bit (3 byte) shift register for each sprite. It stores the sprite 
+     *              for one rasterline. If a sprite is a display candidate in the current rasterline, its 
+     *              shift register is activated when the raster X coordinate matches the sprites X coordinate.
+     *              The comparison is done in method drawSprite().
+     *              Once a shift register is activated, it remains activated until the beginning of the next
+     *              rasterline. However, after an activated shift register has dumped out its 24 pixels, it 
+     *              can't draw anything else than transparent pixels (which is the same as not to draw anything).
+     *              An exception is during DMA cycles. When a shift register is activated during such a cycle,
+     *              it freezes a short period of time in which it repeats the previous drawn pixel.
+     */
     struct {
         
         //! Shift register data (24 bit)
@@ -327,7 +336,7 @@ public:
         
         //! Remaining bits to be pumped out
         /*! At the beginning of each rasterline, this value is initialized with -1 and set to 
-            24 when the horizontal trigger condition is met (sprite X trigger coord reaches xCounter).
+            26 when the horizontal trigger condition is met (sprite X trigger coord reaches xCounter).
             When all bits are drawn, this value reaches 0. */
         int remaining_bits;
 
@@ -353,17 +362,9 @@ public:
 
     } sprite_sr[8];
 
-    //! @brief      Indicates which shift registers are currently active
-    /*! @discussion If the i-th bit is set to 1, the i-th shift register is currently running. */
-    // uint8_t running_srs;
-
-    //! @brief      Indicates which shift registers are currently frozen
-    /*! @discussion If the i-th bit is set to 1, the i-th shift register is currently frozen. 
-     *              A sprites shift register freezes during the first and second DMA cycle.
-     *              A frozen register won't shift or trigger, but continues to draw the currently
-     *              synthesized pixel. */
-    uint8_t frozen;
-    
+    inline void loadShiftRegister(unsigned nr) {
+        sprite_sr[nr].data = (sprite_sr[nr].chunk1 << 16) | (sprite_sr[nr].chunk2 << 8) | sprite_sr[nr].chunk3;
+    }
     
     // -----------------------------------------------------------------------------------------------
     //                          High level drawing (canvas, sprites, border)
@@ -409,13 +410,22 @@ private:
     /*! Invoked inside draw() */
     void drawSprites();
 
-    //! Draws a single sprite pixel for all sprites
-    /*! pixel is the pixel number and must be in the range 0 to 7 */
-    void drawSpritePixel(int16_t offset, uint8_t pixel);
+    //! @brief   Draws a single sprite pixel for all sprites
+    /*! @param   offset Coordinate given as an offset into the pixel buffer
+     *  @param   pixel  Pixel number (0 to 7) 
+     *  @param   freeze If the i-th bit is set to 1, the i-th shift register will freeze temporarily
+     *  @param   halt   If the i-th bit is set to 1, the i-th shift register will be deactivated
+     *  @param   halt   If the i-th bit is set to 1, the i-th shift register will grab new data bits */
+    void drawSpritePixel(int16_t offset, uint8_t pixel, uint8_t freeze, uint8_t halt, uint8_t load);
 
-    //! Draws a single sprite pixel for sprite 'nr'
-    /*! pixel is the pixel number and must be in the range 0 to 7 */
-    void drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel);
+    //! @brief   Draws a single sprite pixel for a single sprite
+    /*! @param   nr     Sprite number (0 to 7)
+     *  @param   offset Coordinate given as an offset into the pixel buffer
+     *  @param   pixel  Pixel number (0 to 7)
+     *  @param   freeze If set to true, the sprites shift register will freeze temporarily
+     *  @param   halt   If set to true, the sprites shift shift register will be deactivated
+     *  @param   halt   If set to true, the sprites shift shift register will grab new data bits */
+    void drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool freeze, bool halt, bool load);
 
     //! Draws all sprites into the pixelbuffer
     /*! A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging */

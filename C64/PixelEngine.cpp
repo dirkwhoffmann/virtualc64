@@ -188,6 +188,13 @@ PixelEngine::updateSpriteColorRegisters()
     dc.spriteExtraColor2 = vic->spriteExtraColor2();
 }
 
+void
+PixelEngine::updateSpriteOnOff()
+{
+    dc.spriteOnOff = dc.spriteOnOffPipe;
+    dc.spriteOnOffPipe = vic->spriteOnOff;
+}
+
 // -----------------------------------------------------------------------------------------------
 //                          High level drawing (canvas, sprites, border)
 // -----------------------------------------------------------------------------------------------
@@ -376,128 +383,109 @@ PixelEngine::drawCanvasPixel(int16_t offset, uint8_t pixel)
 inline void
 PixelEngine::drawSprites()
 {
+    uint8_t firstDMA = vic->isFirstDMAcycle;
+    uint8_t secondDMA = vic->isSecondDMAcycle;
+    int16_t xCoord = dc.xCounter;
+
     /*
-    uint8_t active = vic->spriteOnOff;
-    
-    if (!active)
-        return; // Quick exit (sprite free rasterline) 
+    if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
+        return;
     */
     
-    int16_t xCoord = dc.xCounter;
     updateSpriteColorRegisters();
-
-    frozen = vic->isSecondDMAcycle;
-    drawSpritePixel(xCoord++, 0);
-    drawSpritePixel(xCoord++, 1);
+    drawSpritePixel(xCoord++, 0, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(xCoord++, 1, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(xCoord++, 2, secondDMA            /* freeze */, secondDMA /* halt */, 0         /* load */);
+    drawSpritePixel(xCoord++, 3, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
     
-    // TODO: INTRODUCE running
-    // TODO: Make frozen a local variable
-    for (unsigned i = 0; i < 8; i++)
-        if (GET_BIT(vic->isSecondDMAcycle, i)) {
-            sprite_sr[i].remaining_bits = -1;
-            sprite_sr[i].mcol_bits = sprite_sr[i].scol_bit = 0;
-        }
-    drawSpritePixel(xCoord++, 2);
+    updateSpriteOnOff();
+    drawSpritePixel(xCoord++, 4, firstDMA | secondDMA /* freeze */, 0         /* halt */, secondDMA /* load */);
+    drawSpritePixel(xCoord++, 5, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(xCoord++, 6, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(xCoord,   7, firstDMA             /* freeze */, 0         /* halt */, 0         /* load */);
     
-    frozen = vic->isFirstDMAcycle | vic->isSecondDMAcycle;
-    drawSpritePixel(xCoord++, 3);
-    
-    dc.spriteOnOff = dc.spriteOnOffPipe;
-    dc.spriteOnOffPipe = vic->spriteOnOff;
-    drawSpritePixel(xCoord++, 4);
-    drawSpritePixel(xCoord++, 5);
-    drawSpritePixel(xCoord++, 6);
-
-    frozen = vic->isFirstDMAcycle;
-    drawSpritePixel(xCoord, 7);
-    
-    /*
+    /* DEBUG
     if (vic->isFirstDMAcycle )
         setSingleColorSpritePixel(3, dc.xCounter, 1);
     if (vic->isSecondDMAcycle )
         setSingleColorSpritePixel(4, dc.xCounter, 1);
-     */
+    */
 }
 
 inline void
-PixelEngine::drawSpritePixel(int16_t offset, uint8_t pixel)
+PixelEngine::drawSpritePixel(int16_t offset, uint8_t pixel, uint8_t freeze, uint8_t halt, uint8_t load)
 {
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(dc.spriteOnOff, i)) {
-            drawSpritePixel(i, offset, pixel);
+            drawSpritePixel(i, offset, pixel, GET_BIT(freeze, i), GET_BIT(halt, i), GET_BIT(load, i));
         }
     }
 }
 
 void
-PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel)
+PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool freeze, bool halt, bool load)
 {
     assert(nr < 8);
     assert(sprite_sr[nr].remaining_bits >= -1);
     assert(sprite_sr[nr].remaining_bits <= 26);
-
-    bool isFrozen = GET_BIT(frozen, nr);
-    // bool isWaiting = false; // TODO: GET_BIT(waiting, nr);
     
-    if (isFrozen)
-        goto draw;
-
-    // Check for horizontal trigger condition
-    if (dc.xCounter + pixel == dc.spriteX[nr] + 4) {
+    // Load shift register if applicable
+    if (load) {
+        loadShiftRegister(nr);
+    }
     
-        // Make sure that shift register is only activated once per rasterline
-        if (sprite_sr[nr].remaining_bits == -1) {
-            // Note: Although there are only 24 data bits, we run the shift register
-            // for 26 cycles. This will zero out mcol_bits and scol_bits automatically.
-            sprite_sr[nr].remaining_bits = 26;
+    // Stop shift register if applicable
+    if (halt) {
+        sprite_sr[nr].remaining_bits = -1;
+        sprite_sr[nr].mcol_bits = sprite_sr[nr].scol_bit = 0;
+    }
+    
+    // Run shift register
+    if (!freeze) {
+
+        // Check for horizontal trigger condition
+        if (dc.xCounter + pixel == dc.spriteX[nr] + 4 && sprite_sr[nr].remaining_bits == -1) {
+            sprite_sr[nr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
             sprite_sr[nr].exp_flop = true;
             sprite_sr[nr].mc_flop = true;
         }
-    }
 
-    // Run shift register if there are remaining pixels to draw
-    if (sprite_sr[nr].remaining_bits > 0) {
+        // Run shift register if there are remaining pixels to draw
+        if (sprite_sr[nr].remaining_bits > 0) {
 
-        // Determine render mode (single color /multi color) and colors
-        if ((sprite_sr[nr].mcol = vic->spriteIsMulticolor(nr))) { // TODO: Latch value at proper cycles. Add dc. multicol
-            // Muti-color mode: Secure color bits every other cycle
-            if (sprite_sr[nr].mc_flop)
-                sprite_sr[nr].mcol_bits = (sprite_sr[nr].data >> 22) & 0x03;
-        } else {
-            // Single-color mode: Secure color bit every cycle
-            sprite_sr[nr].scol_bit = (sprite_sr[nr].data >> 23) & 0x01;
-        }
+            // Determine render mode (single color /multi color) and colors
+            if ((sprite_sr[nr].mcol = vic->spriteIsMulticolor(nr))) { // TODO: Latch value at proper cycles. Add dc. multicol
+                // Muti-color mode: Secure color bits every other cycle
+                if (sprite_sr[nr].mc_flop)
+                    sprite_sr[nr].mcol_bits = (sprite_sr[nr].data >> 22) & 0x03;
+            } else {
+                // Single-color mode: Secure color bit every cycle
+                sprite_sr[nr].scol_bit = (sprite_sr[nr].data >> 23) & 0x01;
+            }
         
-        // Toggle horizontal expansion flipflop for stretched sprites
-        if (GET_BIT(dc.spriteXexpand, nr)) {
-            sprite_sr[nr].exp_flop = !sprite_sr[nr].exp_flop;
-        }
+            // Toggle horizontal expansion flipflop for stretched sprites
+            if (GET_BIT(dc.spriteXexpand, nr)) {
+                sprite_sr[nr].exp_flop = !sprite_sr[nr].exp_flop;
+            }
 
-        // Run shift register and toggle multicolor flipflop
-        if (sprite_sr[nr].exp_flop) {
-            sprite_sr[nr].data <<= 1;
-            sprite_sr[nr].mc_flop = !sprite_sr[nr].mc_flop;
-            sprite_sr[nr].remaining_bits--;
+            // Run shift register and toggle multicolor flipflop
+            if (sprite_sr[nr].exp_flop) {
+                sprite_sr[nr].data <<= 1;
+                sprite_sr[nr].mc_flop = !sprite_sr[nr].mc_flop;
+                sprite_sr[nr].remaining_bits--;
+            }
         }
-    }
     
-    // TODO: THINK ABOUT IT: WE DON'T NEED TO STORE mcol_bits and scol_bit SEPERATELY
-    // WE COULD SHIFT THE REGISTER EVERY SECOND CYCLE, ONLY
-    // TO GET THE SINGLE COLOR BIT, USE >> 23 if MC_FLOP IS TRUE and >> 22 if MC_FLOP IS FALSE
-draw:
+        // TODO: THINK ABOUT IT: WE DON'T NEED TO STORE mcol_bits and scol_bit SEPERATELY
+        // WE COULD SHIFT THE REGISTER EVERY SECOND CYCLE, ONLY
+        // TO GET THE SINGLE COLOR BIT, USE >> 23 if MC_FLOP IS TRUE and >> 22 if MC_FLOP IS FALSE
+    }
     
     // Draw pixel (if mcol_bits and scol_bits got cleared in the code above, drawing has no effect)
     if (sprite_sr[nr].mcol)
         setMultiColorSpritePixel(nr, offset, sprite_sr[nr].mcol_bits);
     else
         setSingleColorSpritePixel(nr, offset, sprite_sr[nr].scol_bit);
-
-    /*
-    if (vic->isFirstDMAcycle)
-        setSingleColorSpritePixel(3, offset, 1);
-    if (vic->isSecondDMAcycle)
-        setSingleColorSpritePixel(2, offset, 1);
-    */
 }
 
 
