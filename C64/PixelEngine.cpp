@@ -428,6 +428,8 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool fr
     assert(sprite_sr[nr].remaining_bits >= -1);
     assert(sprite_sr[nr].remaining_bits <= 26);
     
+    bool multicol = vic->spriteIsMulticolor(nr);
+
     // Load shift register if applicable
     if (load) {
         loadShiftRegister(nr);
@@ -456,7 +458,6 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool fr
             // Determine render mode (single color /multi color) and colors
             // TODO: Latch multicolor value at proper cycles. Add dc. multicol
             // sprite_sr[nr].mcol = vic->spriteIsMulticolor(nr);
-            bool multicol = vic->spriteIsMulticolor(nr);
             sprite_sr[nr].col_bits = sprite_sr[nr].data >> (multicol && sprite_sr[nr].mc_flop ? 22 : 23);
                         
             // Toggle horizontal expansion flipflop for stretched sprites
