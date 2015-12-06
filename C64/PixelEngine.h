@@ -350,15 +350,23 @@ public:
         bool exp_flop;
 
         //! @brief      Remembers if the currently processed pixel is a multi-color or single-color pixel
-        bool mcol;
+        /*! @deprecated This has been made a local variable (unsure if this is right?!) */
+        // bool mcol;
+
+        //! @brief      Color bits of the currently processed pixel
+        /*! @discussion In single-color mode, these bits are updats every cycle
+         *              In multi-color mode, these bits are updats every second cycle (synchronized with mc_flop) */
+        uint8_t col_bits;
 
         //! @brief      Multi-color bits of the currently processed pixel
-        /*! @discussion The multi-color bits are updats every second cycle (synchronized with mc_flop) */
-        uint8_t mcol_bits;
+        /*! @discussion The multi-color bits are updats every second cycle (synchronized with mc_flop) 
+         *  @deprecated */
+        // uint8_t mcol_bits;
 
         //! @brief      Single-color bit of the currently processed pixel
-        /*! @discussion The single-color bit is updated every cycle */
-        uint8_t scol_bit;
+        /*! @discussion The single-color bit is updated every cycle 
+         *  @deprecated */
+        // uint8_t scol_bit;
 
     } sprite_sr[8];
 

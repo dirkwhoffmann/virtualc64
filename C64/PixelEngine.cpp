@@ -120,7 +120,8 @@ PixelEngine::beginRasterline()
     // Prepare sprite pixel shift register
     for (unsigned i = 0; i < 8; i++) {
         sprite_sr[i].remaining_bits = -1;
-        sprite_sr[i].mcol_bits = sprite_sr[i].scol_bit = 0;
+        // sprite_sr[i].mcol_bits = sprite_sr[i].scol_bit = 0;
+        sprite_sr[i].col_bits = 0;
     }
     
     // Clear pixel buffer (has same size as pixelSource and zBuffer)
@@ -387,10 +388,8 @@ PixelEngine::drawSprites()
     uint8_t secondDMA = vic->isSecondDMAcycle;
     int16_t xCoord = dc.xCounter;
 
-    /*
     if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
         return;
-    */
     
     updateSpriteColorRegisters();
     drawSpritePixel(xCoord++, 0, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
@@ -437,10 +436,11 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool fr
     // Stop shift register if applicable
     if (halt) {
         sprite_sr[nr].remaining_bits = -1;
-        sprite_sr[nr].mcol_bits = sprite_sr[nr].scol_bit = 0;
+        // sprite_sr[nr].mcol_bits = sprite_sr[nr].scol_bit = 0;
+        sprite_sr[nr].col_bits = 0;
     }
     
-    // Run shift register
+    // Run shift register if applicable
     if (!freeze) {
 
         // Check for horizontal trigger condition
@@ -454,19 +454,14 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool fr
         if (sprite_sr[nr].remaining_bits > 0) {
 
             // Determine render mode (single color /multi color) and colors
-            if ((sprite_sr[nr].mcol = vic->spriteIsMulticolor(nr))) { // TODO: Latch value at proper cycles. Add dc. multicol
-                // Muti-color mode: Secure color bits every other cycle
-                if (sprite_sr[nr].mc_flop)
-                    sprite_sr[nr].mcol_bits = (sprite_sr[nr].data >> 22) & 0x03;
-            } else {
-                // Single-color mode: Secure color bit every cycle
-                sprite_sr[nr].scol_bit = (sprite_sr[nr].data >> 23) & 0x01;
-            }
-        
+            // TODO: Latch multicolor value at proper cycles. Add dc. multicol
+            // sprite_sr[nr].mcol = vic->spriteIsMulticolor(nr);
+            bool multicol = vic->spriteIsMulticolor(nr);
+            sprite_sr[nr].col_bits = sprite_sr[nr].data >> (multicol && sprite_sr[nr].mc_flop ? 22 : 23);
+                        
             // Toggle horizontal expansion flipflop for stretched sprites
-            if (GET_BIT(dc.spriteXexpand, nr)) {
+            if (GET_BIT(dc.spriteXexpand, nr))
                 sprite_sr[nr].exp_flop = !sprite_sr[nr].exp_flop;
-            }
 
             // Run shift register and toggle multicolor flipflop
             if (sprite_sr[nr].exp_flop) {
@@ -475,17 +470,13 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool fr
                 sprite_sr[nr].remaining_bits--;
             }
         }
-    
-        // TODO: THINK ABOUT IT: WE DON'T NEED TO STORE mcol_bits and scol_bit SEPERATELY
-        // WE COULD SHIFT THE REGISTER EVERY SECOND CYCLE, ONLY
-        // TO GET THE SINGLE COLOR BIT, USE >> 23 if MC_FLOP IS TRUE and >> 22 if MC_FLOP IS FALSE
     }
     
-    // Draw pixel (if mcol_bits and scol_bits got cleared in the code above, drawing has no effect)
-    if (sprite_sr[nr].mcol)
-        setMultiColorSpritePixel(nr, offset, sprite_sr[nr].mcol_bits);
+    // Draw pixel
+    if (multicol)
+        setMultiColorSpritePixel(nr, offset, sprite_sr[nr].col_bits & 0x03);
     else
-        setSingleColorSpritePixel(nr, offset, sprite_sr[nr].scol_bit);
+        setSingleColorSpritePixel(nr, offset, sprite_sr[nr].col_bits & 0x01);
 }
 
 
