@@ -21,13 +21,12 @@
 // VirtualC64 can now read NIB image files. Please note that a lot of floppy disks provided in NIB format
 // contain copy protection mechanisms which are likly to be incompatible with the current drive implementation.
 //
-// VIC compatibility improvements: Now passing VICE tests spriteenable1, spriteenable3, spriteenable 4
+// VIC compatibility improvements: Now passing VICE tests spriteenable1, spriteenable3 (mostly), spriteenable4, sprite0move
 //
 // TODO:
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
 // Use better text descriptions in Mount dialog for G64 and NIB files
 // Cartridge dialog
-// VIC Sprite compatibility (Sprite enable timing)
 //
 // CLEANUP:
 // SPEEDUP:
