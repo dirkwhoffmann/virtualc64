@@ -322,7 +322,7 @@ vc64_matrix_identity()
     vector_float4 Z = { 0, 0, 1, 0 };
     vector_float4 W = { 0, 0, 0, 1 };
     
-    matrix_float4x4 identity = { X, Y, Z, W };
+    matrix_float4x4 identity = { {X, Y, Z, W} };
     
     return identity;
 }

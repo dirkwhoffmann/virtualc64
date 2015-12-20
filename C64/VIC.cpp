@@ -819,13 +819,8 @@ VIC::checkVerticalFrameFF()
     // Check for lower border
     if (yCounter == lowerComparisonValue()) {
         verticalFrameFFsetCond = true;
-        verticalFrameFF = true;
     }
-    // Trigger immediately (VICE does this in cycle 1)
-    if (verticalFrameFFsetCond) {
-        verticalFrameFF = true;
-    }
-
+    // Trigger in cycle 1 (similar to VICE)
 }
 
 void
@@ -987,6 +982,10 @@ VIC::cycle1()
         
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
+    if (verticalFrameFFsetCond) {
+        verticalFrameFF = true;
+    }
+    
     
     // Phi1.2 Draw
     // pixelEngine.drawSprites();

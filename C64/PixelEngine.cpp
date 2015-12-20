@@ -303,6 +303,7 @@ inline void
 PixelEngine::drawCanvas()
 {
     int16_t xCoord = dc.xCounter;
+    // bool rising_edge_d016;
     
     /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
      Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
@@ -323,6 +324,7 @@ PixelEngine::drawCanvas()
         
         // After pixel 4, the one and zero bits in D016 and the one bits in D011 show up
         // This corresponds to the behavior of the color latency chip model in VICE
+        // rising_edge_d016 = !dc.D016 && (vic->iomem[0x16] & 0x10);
         dc.D016 = vic->iomem[0x16] & 0x10;  // latch 0s and 1s
         dc.D011 |= vic->iomem[0x11] & 0x60; // latch 1s
         
@@ -334,6 +336,13 @@ PixelEngine::drawCanvas()
         dc.D011 &= vic->iomem[0x11] & 0x60; // latch 0s
         
         drawCanvasPixel(xCoord++, 6);
+        
+        // TODO (seen in VICE)
+        // if D016 had a rising edge, clear the multicolor flipflop
+        /*
+         if (rising_edge_d016)
+            sr.mc_flop = false;
+        */
         drawCanvasPixel(xCoord, 7);
         
     } else {
