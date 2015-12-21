@@ -826,18 +826,12 @@ VIC::checkVerticalFrameFF()
 void
 VIC::checkFrameFlipflopsLeft(uint16_t comparisonValue)
 {
+    // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
+    //     vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
+
     if (comparisonValue == leftComparisonValue()) {
-
-
-        // Update vertical frame flipflop
-        if (verticalFrameFFsetCond)
-            verticalFrameFF = true;
-
-        // "6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
-        //     vertikale Rahmenflipflop gelšscht, wird das Haupt-Flipflop gelšscht." [C.B.]
         clearMainFrameFF();
     }
-
 }
 
 void
@@ -849,7 +843,6 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
     if (comparisonValue == rightComparisonValue()) {
         mainFrameFF = true;
     }
-
 }
 
 // -----------------------------------------------------------------------------------------------

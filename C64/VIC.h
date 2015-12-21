@@ -236,7 +236,7 @@ private:
     /*  "Das vertikale Rahmenflipflop dient zur Unterstützung bei der Darstellung
          des oberen/unteren Rahmens. Ist es gesetzt, kann das Haupt-Rahmenflipflop
          nicht gelöscht werden." [C.B.] */
-    inline void clearMainFrameFF() { if (!verticalFrameFF) mainFrameFF = false; }
+    inline void clearMainFrameFF() { if (!verticalFrameFF && !verticalFrameFFsetCond) mainFrameFF = false; }
      
     
 	// -----------------------------------------------------------------------------------------------
