@@ -281,14 +281,17 @@ public:
     // -----------------------------------------------------------------------------------------------
     
     //! Shift register
-    /*! To synthesize pixels, VICII uses a 8 bit shift register which is loaded whenever the current
-     x scroll offset matches the current pixel number. */
+    /*! To synthesize pixels, VICII uses a 8 bit shift register */
     
     struct {
         
         //! Shift register data
         uint8_t data;
 
+        //! Indicates whether the shift register can load data
+        /*! If true, the register is loaded when the current x scroll offset matches the current pixel number. */
+        bool canLoad; 
+         
         //! Multi-color synchronization flipflop
         /*! Whenever the shift register is loaded, the synchronization flipflop is also set.
          It is toggled with each pixel and used to synchronize the synthesis of multi-color pixels. */

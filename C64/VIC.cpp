@@ -955,7 +955,7 @@ VIC::yCounterOverflow()
 }
 
 inline void
-VIC::preparePixelEngine(bool canvasArea)
+VIC::preparePixelEngine()
 {
     pixelEngine.dc.yCounter = yCounter;
     pixelEngine.dc.xCounter = xCounter;
@@ -965,8 +965,7 @@ VIC::preparePixelEngine(bool canvasArea)
     pixelEngine.dc.character = g_character;
     pixelEngine.dc.color = g_color;
     pixelEngine.dc.mode = g_mode;
-    if (canvasArea)
-        pixelEngine.dc.delay = getHorizontalRasterScroll();
+    pixelEngine.dc.delay = getHorizontalRasterScroll();
     
     for (unsigned i = 0; i < 8; i++) {
         pixelEngine.dc.spriteX[i] = getSpriteX(i);
@@ -1463,7 +1462,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
 
     // Phi1.2 Draw
     xCounter = -4;
-    preparePixelEngine(false); // Prepare for next cycle (first border column)
+    preparePixelEngine(); // Prepare for next cycle (first border column)
     // Update pixelEngines color registers to get the first pixel right
     pixelEngine.updateColorRegisters();
     pixelEngine.updateBorderColorRegister();
@@ -1493,7 +1492,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
 
     // Phi1.2 Draw
     pixelEngine.draw(); // Draw previous cycle (first border column)
-    preparePixelEngine(false); // Prepare for next cycle (border column 2)
+    preparePixelEngine(); // Prepare for next cycle (border column 2)
 
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
     rAccess();
@@ -1530,7 +1529,7 @@ VIC::cycle15() // SpriteX: 8 - 15 (?)
     
     // Phi1.2 Draw
     pixelEngine.draw(); // Draw previous cycle (border column 2)
-    preparePixelEngine(false); // Prepare for next cycle (border column 3)
+    preparePixelEngine(); // Prepare for next cycle (border column 3)
     
     // Phi1.3 Fetch (last DRAM refresh)
     rAccess();
@@ -1560,7 +1559,7 @@ VIC::cycle16() // SpriteX: 16 - 23 (?)
 
     // Phi1.2 Draw
     pixelEngine.draw(); // Draw previous cycle (border column 3)
-    preparePixelEngine(false); // Prepare for next cycle (border column 4)
+    preparePixelEngine(); // Prepare for next cycle (border column 4)
     
     // Phi1.3 Fetch
     gAccess();
@@ -1621,6 +1620,7 @@ VIC::cycle18() // SpriteX: 32 - 39
     checkFrameFlipflopsLeft(31);
     
     // Phi1.2 Draw
+    pixelEngine.sr.canLoad = true; // Entering canvas area
     pixelEngine.draw17(); // Draw previous cycle (first canvas column)
     preparePixelEngine(); // Prepare for next cycle (canvas column 2)
 
@@ -1718,7 +1718,6 @@ VIC::cycle56()
     
     // Phi1.3 Fetch
     rIdleAccess();
-    g_data = 0x0; // no more gAccesses from now on (TODO: BETTER MOVE TO rIdleAccess(?))
 
     // Phi2.1 Rasterline interrupt
     // Phi2.2 Sprite logic
@@ -1746,8 +1745,9 @@ VIC::cycle57()
     
     // Phi1.2 Draw (border starts here)
     pixelEngine.draw(); // Draw previous cycle (last canvas column)
-    preparePixelEngine(false); // Prepare for next cycle (first column of right border)
-    
+    preparePixelEngine(); // Prepare for next cycle (first column of right border)
+    pixelEngine.sr.canLoad = false; // Leaving canvas area
+
     // Phi1.3 Fetch
     rIdleAccess();
     
@@ -1777,7 +1777,7 @@ VIC::cycle58()
 
     // Phi1.2 Draw
     pixelEngine.draw(); // Draw previous cycle (first column of right border)
-    preparePixelEngine(false); // Prepare for next cycle (column 2 of right border)
+    preparePixelEngine(); // Prepare for next cycle (column 2 of right border)
     
     // Phi1.3 Fetch
     if (isPAL()) {
@@ -1848,7 +1848,7 @@ VIC::cycle59()
 
     // Phi1.2 Draw
     pixelEngine.draw(); // Draw previous cycle (column 2 of right border)
-    preparePixelEngine(false); // Prepare for next cycle (column 3 of right border)
+    preparePixelEngine(); // Prepare for next cycle (column 3 of right border)
     
     // Phi1.3 Fetch
     if (isPAL()) {
@@ -1887,7 +1887,7 @@ VIC::cycle60()
 
     // Phi1.2 Draw (last visible cycle)
     pixelEngine.draw(); // Draw previous cycle (column 3 of right border)
-    preparePixelEngine(false); // Prepare for next cycle (last column of right border)
+    preparePixelEngine(); // Prepare for next cycle (last column of right border)
     
     // Phi1.3 Fetch
     if (isPAL()) {

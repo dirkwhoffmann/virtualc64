@@ -360,7 +360,7 @@ PixelEngine::drawCanvasPixel(int16_t offset, uint8_t pixel)
 {
     // assert(pixel < 8);
     
-    if (pixel == dc.delay) {
+    if (pixel == dc.delay && sr.canLoad) {
         
         // Load shift register
         sr.data = dc.data;
