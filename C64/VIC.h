@@ -313,7 +313,7 @@ private:
     
     //! Display mode grabbed in gAccess()
     DisplayMode g_mode;
-    
+
     
     // -----------------------------------------------------------------------------------------------
     //                             Sprite accesses (pAccess and sAccess)
@@ -875,7 +875,7 @@ public:
 	
     //! Push portions of the VIC state into the pixel engine
     /*! Pushs everything that needs to be recorded one cycle prior to drawing */
-    void preparePixelEngine();
+    void preparePixelEngine(bool canvasArea = true);
     
 	//! VIC execution functions
 	void cycle1();  void cycle2();  void cycle3();  void cycle4();
