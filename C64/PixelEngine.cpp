@@ -348,8 +348,9 @@ PixelEngine::drawCanvas()
     } else {
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
-        // int col = colors[vic->getBackgroundColor()];
-        int col = col_rgba[0];
+        int col = colors[vic->getBackgroundColor()];
+        // The following fix (which was done for border-bm-idle is wrong)
+        // int col = col_rgba[0];
         setEightBackgroundPixels(xCoord, col);
     }
 }
