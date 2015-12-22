@@ -348,8 +348,9 @@ PixelEngine::drawCanvas()
     } else {
         
         // "... bei gesetztem Flipflop wird die letzte aktuelle Hintergrundfarbe dargestellt."
-        uint8_t bgcol = vic->getBackgroundColor();
-        setEightBackgroundPixels(xCoord, colors[bgcol]);
+        // int col = colors[vic->getBackgroundColor()];
+        int col = col_rgba[0];
+        setEightBackgroundPixels(xCoord, col);
     }
 }
 
@@ -659,7 +660,7 @@ PixelEngine::setFramePixel(int offset, int rgba)
            &pxbuf[offset] >= &screenBuffer2[0][0] && &pxbuf[offset] < &screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS]);
     
     zbuf[offset] = BORDER_LAYER_DEPTH;
-    pxbuf[offset] = rgba;
+    pxbuf[offset] = rgba; // 0xAAAAAAAA; // rgba;
     // SPEEDUP: THE FOLLOWING LINE SHOULD NOT BE NECESSARY WHEN THE BORDER IS DRAWN FIRST
     srcbuf[offset] &= (~0x80); // disable sprite/foreground collision detection in border
 }
