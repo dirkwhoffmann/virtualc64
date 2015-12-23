@@ -29,6 +29,8 @@
 // Cartridge dialog
 //
 // CLEANUP:
+// Remove MyOpenGLView class
+// 
 // SPEEDUP:
 //
 // 1. Make CIA1 and CIA2 dynamic objects

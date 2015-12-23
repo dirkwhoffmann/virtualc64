@@ -649,7 +649,7 @@ VIC::getScreenGeometry()
 // -----------------------------------------------------------------------------------------------
 
 inline void
-VIC::setBAlow(bool value)
+VIC::setBAlow(uint8_t value)
 {
     if (!BAlow && value) {
         BAwentLowAtCycle = c64->getCycles();
@@ -938,7 +938,7 @@ VIC::endRasterline()
         pixelEngine.markLine(PixelEngine::RED);
 
     /*
-    if (yCounter == 52 && !vblank) {
+    if (c64->rasterline == 51 && !vblank) {
         pixelEngine.markLine(4);
     }
     */

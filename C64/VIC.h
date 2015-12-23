@@ -172,7 +172,7 @@ private:
            Second phase (HIGH): CPU gets access to the bus
        In rare cases, VIC needs access in the HIGH phase, too. To block the CPU, the BA line is pulled down.
        Note: The BA line can be pulled down by multiple sources (wired AND). */
-	uint16_t BAlow;
+    uint16_t BAlow;
 	
     //! Remember at which cycle BA line has been pulled down
     uint64_t BAwentLowAtCycle;
@@ -371,7 +371,7 @@ private:
 	//! Sprite pointer
 	/*! Determines where the sprite data comes from */
 	uint16_t spritePtr[8];
-	
+
 	//! Sprite on off
 	/*! Determines if a sprite needs to be drawn in the current rasterline. Each bit represents a single sprite. */
 	uint8_t spriteOnOff;
@@ -379,7 +379,7 @@ private:
 	//! Sprite DMA on off
 	/*! Determines  if sprite dma access is enabled or disabled. Each bit represents a single sprite. */
 	uint8_t spriteDmaOnOff;
-	
+
 	//! Expansion flipflop
 	/*! Used to handle Y sprite stretching. One bit for each sprite */
 	uint8_t expansionFF;
@@ -675,7 +675,7 @@ private:
     }
     
     //! Set BA line
-    void setBAlow(bool value);
+    void setBAlow(uint8_t value);
 	
 	//! Trigger a VIC interrupt
 	/*! VIC interrupts can be triggered from multiple sources. Each one is associated with a specific bit */

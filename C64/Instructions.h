@@ -32,6 +32,7 @@
 #define IDLE_READ_FROM(x) if (rdyLine) (void)mem->peek(x); else return;
 #define IDLE_READ_IMPLIED if (rdyLine) (void)mem->peek(PC); else return;
 #define IDLE_READ_IMMEDIATE if (rdyLine) (void)mem->peek(PC++); else return;
+#define IDLE_READ_IMMEDIATE_SP if (rdyLine) (void)mem->peek(0x100 | SP++); else return;
 #define IDLE_READ_FROM_ADDRESS if (rdyLine) (void)(mem->peek((addr_hi << 8) | addr_lo)); else return;
 #define IDLE_READ_FROM_ZERO_PAGE if (rdyLine) (void)mem->peek((uint16_t)addr_lo); else return;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT if (rdyLine) (void)mem->peek((uint16_t)ptr); else return;
@@ -51,10 +52,10 @@
 #define PUSH_P mem->poke(0x100+(SP--), getP());
 #define PUSH_P_WITH_B_SET mem->poke(0x100+(SP--), getP() | B_FLAG);
 #define PUSH_A mem->poke(0x100+(SP--), A); 
-#define PULL_PCL setPCL(mem->peek(0x100+SP));
-#define PULL_PCH setPCH(mem->peek(0x100+SP));
-#define PULL_P setPWithoutB(mem->peek(0x100+SP));
-#define PULL_A loadA(mem->peek(0x100+SP));
+#define PULL_PCL if (rdyLine) setPCL(mem->peek(0x100 | SP)); else return;
+#define PULL_PCH if (rdyLine) setPCH(mem->peek(0x100 | SP)); else return;
+#define PULL_P if (rdyLine) setPWithoutB(mem->peek(0x100 | SP)); else return;
+#define PULL_A if (rdyLine) loadA(mem->peek(0x100 | SP)); else return;
 
 #define PAGE_BOUNDARY_CROSSED overflow
 #define FIX_ADDR_HI addr_hi++;
