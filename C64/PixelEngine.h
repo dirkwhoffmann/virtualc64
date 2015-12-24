@@ -240,6 +240,7 @@ public:
         // Updated one cycle before drawing (in VIC::reparePixelEngineForCycle)
         uint32_t yCounter;
         int16_t xCounter;
+        int16_t xCounterSprite;
         bool verticalFrameFF;
         bool mainFrameFF;
         uint8_t data;

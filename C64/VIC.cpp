@@ -959,6 +959,13 @@ VIC::preparePixelEngine()
 {
     pixelEngine.dc.yCounter = yCounter;
     pixelEngine.dc.xCounter = xCounter;
+
+    // xCounterSprite is used to match the sprites x trigger coordinate
+    if (xCounter > 0)
+        pixelEngine.dc.xCounterSprite = xCounter - 4;
+    else
+        pixelEngine.dc.xCounterSprite += 8;
+
     pixelEngine.dc.verticalFrameFF = verticalFrameFF;
     pixelEngine.dc.mainFrameFF = mainFrameFF;
     pixelEngine.dc.data = g_data;
@@ -966,7 +973,7 @@ VIC::preparePixelEngine()
     pixelEngine.dc.color = g_color;
     pixelEngine.dc.mode = g_mode;
     pixelEngine.dc.delay = getHorizontalRasterScroll();
-    
+
     for (unsigned i = 0; i < 8; i++) {
         pixelEngine.dc.spriteX[i] = getSpriteX(i);
     }

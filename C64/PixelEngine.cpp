@@ -44,6 +44,7 @@ PixelEngine::PixelEngine() // C64 *c64)
         // VIC state latching
         { &dc.yCounter,             sizeof(dc.yCounter),            CLEAR_ON_RESET },
         { &dc.xCounter,             sizeof(dc.xCounter),            CLEAR_ON_RESET },
+        { &dc.xCounterSprite,       sizeof(dc.xCounterSprite),      CLEAR_ON_RESET },
         { &dc.verticalFrameFF,      sizeof(dc.verticalFrameFF),     CLEAR_ON_RESET },
         { &dc.mainFrameFF,          sizeof(dc.mainFrameFF),         CLEAR_ON_RESET },
         { &dc.character,            sizeof(dc.character),           CLEAR_ON_RESET },
@@ -471,16 +472,8 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool fr
             printf("Sprite %d at %04X xCount = %d\n", nr, dc.spriteX[nr], dc.xCounter);
         }
         
-        // THE FOLLOWING CODE IS A HACK
-        // It is necessary because xCoord can become negative. In that case, the sprite X coordinate won't match
-        // xCoord even if the sprite needs to be triggered.
-        // TODO: Can't we move xCoord into the positive number area? What is VICE doing here?
-        // As a side effect, the ugle "+4" in the matching condition could vanish.
-        int matchX = (dc.xCounter > 0) ? dc.xCounter : (vic->isPAL() ? 500 : 516);
-        
         // Check for horizontal trigger condition
-        // if (dc.xCounter + pixel == dc.spriteX[nr] + 4 && sprite_sr[nr].remaining_bits == -1) {
-        if (matchX + pixel == dc.spriteX[nr] + 4 && sprite_sr[nr].remaining_bits == -1) {
+        if (dc.xCounterSprite + pixel == dc.spriteX[nr] && sprite_sr[nr].remaining_bits == -1) {
             sprite_sr[nr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
             sprite_sr[nr].exp_flop = true;
             sprite_sr[nr].mc_flop = true;            
