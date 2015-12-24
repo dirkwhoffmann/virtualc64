@@ -18,15 +18,13 @@
 // VERSION 1.4:
 // ENHANCEMENTS:
 //
+// This release contains important VIC II compatibility improvements. E.g., there are no more graphics glitches in
+// the intro scene of CRESTs demo "Oxyron deus ex machina". Furthermore, VirtualC64 now passes VICE tests
+// spriteenable1, spriteenable3 (mostly), spriteenable4, and sprite0move.
+//
 // VirtualC64 can now read NIB image files. Please note that a lot of floppy disks provided in NIB format
-// contain copy protection mechanisms which are likly to be incompatible with the current drive implementation.
+// contain copy protection mechanisms which are likly to be incompatible with the current drive emulation.
 //
-// BUG FIXES:
-//
-// Fixed a bug in the CPU emulation code. The CPU did not freeze when a byte was pulled from the stack with the ready signal low. This bug was repsonsible for most graphics glitches in the CREST demo.
-// TODO: Fixed a bug that prevented sprites to be drawn in the left most screen area (which is usually hidden by the left screen border)
-//
-// VIC II compatibility has been improved.VirtualC64 now passes VICE tests spriteenable1, spriteenable3 (mostly), spriteenable4, and sprite0move.
 //
 // TODO:
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
