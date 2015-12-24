@@ -466,11 +466,6 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool fr
     
     // Run shift register if applicable
     if (!freeze) {
-
-        static int dbcnt = 0;
-        if (dc.spriteX[nr] == 0x1F0 && dbcnt++ < 399) {
-            printf("Sprite %d at %04X xCount = %d\n", nr, dc.spriteX[nr], dc.xCounter);
-        }
         
         // Check for horizontal trigger condition
         if (dc.xCounterSprite + pixel == dc.spriteX[nr] && sprite_sr[nr].remaining_bits == -1) {

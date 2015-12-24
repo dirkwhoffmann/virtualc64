@@ -891,17 +891,17 @@ C64::synchronizeTiming()
     const uint64_t earlyWakeup = 1500000; /* 1.5 milliseconds */
 
     // Convert usec into kernel unit
-    uint64_t kernelTargetTime = nanos_to_abs(nanoTargetTime);
+    int64_t kernelTargetTime = nanos_to_abs(nanoTargetTime);
 
     // Check how long we're supposed to sleep
-    if (kernelTargetTime - mach_absolute_time() > 200000000 /* 0.2 sec */) {
+    int64_t timediff = kernelTargetTime - (int64_t)mach_absolute_time();
+    if (timediff > 200000000 /* 0.2 sec */) {
 
-        // The emulator is supposed to sleep unusually long. Timers seem to
-        // be out of sync, so we better reset the synchronization timer
+        // The emulator seems to be out of sync, so we better reset the synchronization timer
         
-        debug(2, "Emulator lost synchronization. Restarting synchronization timer.\n");
+        debug(2, "Emulator lost synchronization (%lld). Restarting synchronization timer.\n", timediff);
         restartTimer();
-        return;
+        // return;
     }
 
     // Sleep and update target timer
@@ -915,7 +915,7 @@ C64::synchronizeTiming()
         // The emulator did not keep up with the real time clock. Instead of
         // running behind for a long time, we reset the synchronization timer
         
-        debug(2, "Jitter exceeds limit. Restarting synchronization timer.\n"); 
+        debug(2, "Jitter exceeds limit (%lld). Restarting synchronization timer.\n", jitter);
         restartTimer();
     }
 }
