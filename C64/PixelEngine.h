@@ -401,12 +401,20 @@ public:
         To get the correct output, preparePixelEngineForCycle() must be called one cycle before. */
     void draw();
 
-    //! The draw routine for cycle 17
+    //! Special draw routine for cycle 14
+    // void draw14();
+
+    //! Special draw routine for cycle 17
     void draw17();
 
-    //! The draw routine for cycle 55
+    //! Special draw routine for cycle 55
     void draw55();
 
+    //! Draw routine for cycles outside the visible screen region.
+    /*! The sprite sequencer needs to be run outside the visible area, although no
+        pixels will be drawn (drawing is omitted by having visibleColumn set to false */
+    void drawOutsideBorder();
+    
 private:
     
     //! Draws 8 border pixels

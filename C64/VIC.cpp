@@ -984,10 +984,7 @@ VIC::cycle1()
         verticalFrameFF = true;
     }
     
-    
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
-    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(2);
@@ -1036,8 +1033,6 @@ VIC::cycle2()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
-    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(3);
@@ -1081,8 +1076,6 @@ VIC::cycle3()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
-    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(3);
@@ -1121,8 +1114,6 @@ VIC::cycle4()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
-    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(4);
@@ -1162,8 +1153,6 @@ VIC::cycle5()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
-    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(4);
@@ -1203,8 +1192,6 @@ VIC::cycle6()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
-    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(5);
@@ -1245,8 +1232,6 @@ VIC::cycle7()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
-    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(5);
@@ -1282,8 +1267,6 @@ VIC::cycle8()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
-    
     // Phi1.3 Fetch
     if (isPAL()) {
         sSecondAccess(6);
@@ -1322,8 +1305,6 @@ VIC::cycle9()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
-    
     // Phi1.3 Fetch
     if (isPAL()) {
         sFinalize(6);
@@ -1359,7 +1340,7 @@ VIC::cycle10()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
+    preparePixelEngine();
     
     // Phi1.3 Fetch
     if (isPAL()) {
@@ -1398,7 +1379,8 @@ VIC::cycle11()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
-    // pixelEngine.drawSprites();
+    pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
+    preparePixelEngine();
     
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     if (isPAL()) {
@@ -1428,6 +1410,9 @@ VIC::cycle12()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
+    preparePixelEngine();
+    
     // Phi1.3 Fetch (second out of five DRAM refreshs)
     rAccess();
 
@@ -1461,6 +1446,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
     xCounter = -4;
     preparePixelEngine(); // Prepare for next cycle (first border column)
     // Update pixelEngines color registers to get the first pixel right
