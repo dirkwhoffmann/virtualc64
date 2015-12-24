@@ -94,6 +94,8 @@ PixelEngine::resetScreenBuffers()
 void
 PixelEngine::beginFrame()
 {
+    visibleColumn = false;
+    
     // Set pxbuf, zbuf, scrcbuf to the beginning of the corresponding buffers plus some horizontal shift
     if (c64->isPAL()) {
         bufshift = PAL_LEFT_BORDER_WIDTH - 28;

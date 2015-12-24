@@ -1491,6 +1491,7 @@ VIC::cycle14() // SpriteX: 0 - 7 (?)
     checkVerticalFrameFF();
 
     // Phi1.2 Draw
+    pixelEngine.visibleColumn = true; // We have reach the first visible column 
     pixelEngine.draw(); // Draw previous cycle (first border column)
     preparePixelEngine(); // Prepare for next cycle (border column 2)
 
@@ -1927,6 +1928,7 @@ VIC::cycle61()
 
     // Phi1.2 Draw
     pixelEngine.draw(); // Draw previous cycle (last column of right border)
+    pixelEngine.visibleColumn = false; // This was the last visible column
     
     // Phi1.3 Fetch
     if (isPAL()) {

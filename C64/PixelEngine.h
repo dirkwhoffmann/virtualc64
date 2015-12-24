@@ -196,6 +196,18 @@ public:
 
     
     // -----------------------------------------------------------------------------------------------
+    //                                  Rastercycle information
+    // -----------------------------------------------------------------------------------------------
+
+private:
+    
+    //! Indicates wether we are in a visible display column or not
+    /*! The visible columns comprise canvas columns and border columns. The first visible column is 
+     *  drawn in cycle 14 (first left border column) and the last in cycle ?? (fourth right border column).
+     */
+    bool visibleColumn;
+     
+    // -----------------------------------------------------------------------------------------------
     //                                    Execution functions
     // -----------------------------------------------------------------------------------------------
 
