@@ -33,10 +33,7 @@ PixelEngine::PixelEngine() // C64 *c64)
     
     currentScreenBuffer = screenBuffer1[0];
     pixelBuffer = currentScreenBuffer;
-    pxbuf = currentScreenBuffer;
-    zbuf = zBuffer;
-    srcbuf = pixelSource;
-    bufshift = 0;
+    bufferoffset = 0;
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -96,19 +93,6 @@ void
 PixelEngine::beginFrame()
 {
     visibleColumn = false;
-    
-    // Set pxbuf, zbuf, scrcbuf to the beginning of the corresponding buffers plus some horizontal shift
-    if (c64->isPAL()) {
-        bufshift = PAL_LEFT_BORDER_WIDTH - 28;
-        pxbuf = pixelBuffer + bufshift;
-        zbuf = zBuffer + bufshift;
-        srcbuf = pixelSource + bufshift;
-    } else {
-        bufshift = NTSC_LEFT_BORDER_WIDTH - 28;
-        pxbuf = pixelBuffer + bufshift;
-        zbuf = zBuffer + bufshift;
-        srcbuf = pixelSource + bufshift;
-    }
 }
 
 void
@@ -120,6 +104,13 @@ PixelEngine::beginRasterline()
     // Clear pixel source
     memset(pixelSource, 0x00, sizeof(pixelSource));
 
+    // Adjust position of first pixel in buffer (make sure that screen is always centered)
+    if (c64->isPAL()) {
+        bufferoffset = PAL_LEFT_BORDER_WIDTH - 32;
+    } else {
+        bufferoffset = NTSC_LEFT_BORDER_WIDTH - 32;
+    }
+        
     // Prepare sprite pixel shift register
     for (unsigned i = 0; i < 8; i++) {
         sprite_sr[i].remaining_bits = -1;
@@ -151,7 +142,8 @@ PixelEngine::endRasterline()
             
             // New code (slightly slower, but foolproof. Can't get outside the screen buffer)
             pixelBuffer = currentScreenBuffer + (nextline * NTSC_PIXELS);
-            pxbuf = pixelBuffer + bufshift;
+            // pxbuf = pixelBuffer + bufshift;
+            
         }
         
     }
@@ -212,6 +204,8 @@ PixelEngine::draw()
     drawBorder();
     drawCanvas();
     drawSprites();
+    
+    bufferoffset += 8;
 }
 
 void
@@ -223,6 +217,8 @@ PixelEngine::draw17()
     drawBorder17();
     drawCanvas();
     drawSprites();
+    
+    bufferoffset += 8;
 }
 
 void
@@ -234,6 +230,8 @@ PixelEngine::draw55()
     drawBorder55();
     drawCanvas();
     drawSprites();
+    
+    bufferoffset += 8;
 }
 
 void
@@ -250,7 +248,8 @@ PixelEngine::drawBorder()
 {
     if (dc.mainFrameFF) {
         
-        int16_t xCoord = dc.xCounter;
+        // int16_t xCoord = dc.xCounter;
+        int16_t xCoord = bufferoffset;
         setFramePixel(xCoord++, colors[dc.borderColor]);
         
         // After the first pixel has been drawn, color register changes show up
@@ -272,7 +271,8 @@ PixelEngine::drawBorder17()
 {
     if (dc.mainFrameFF && !vic->mainFrameFF) {
         
-        int16_t xCoord = dc.xCounter;
+        // int16_t xCoord = dc.xCounter;
+        int16_t xCoord = bufferoffset;
 
         // 38 column mode
         setFramePixel(xCoord++, colors[dc.borderColor]);
@@ -299,10 +299,12 @@ PixelEngine::drawBorder17()
 inline void
 PixelEngine::drawBorder55()
 {
+    int16_t xCoord = bufferoffset;
+    
     if (!dc.mainFrameFF && vic->mainFrameFF) {
         
         // 38 column mode
-        setFramePixel(dc.xCounter+7, colors[dc.borderColor]);
+        setFramePixel(xCoord+7, colors[dc.borderColor]);
         
     } else {
         
@@ -314,8 +316,8 @@ PixelEngine::drawBorder55()
 inline void
 PixelEngine::drawCanvas()
 {
-    int16_t xCoord = dc.xCounter;
-    // bool rising_edge_d016;
+    // int16_t xCoord = dc.xCounter;
+    int16_t xCoord = bufferoffset;
     
     /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
      Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
@@ -409,7 +411,8 @@ PixelEngine::drawSprites()
 {
     uint8_t firstDMA = vic->isFirstDMAcycle;
     uint8_t secondDMA = vic->isSecondDMAcycle;
-    int16_t xCoord = dc.xCounter;
+    // int16_t xCoord = dc.xCounter;
+    int16_t xCoord = bufferoffset;
 
     if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
         return;
@@ -643,13 +646,13 @@ PixelEngine::setSpritePixel(int offset, int color, int nr)
     uint8_t mask = (1 << nr);
     
     // Check sprite/sprite collision
-    if (vic->spriteSpriteCollisionEnabled && (srcbuf[offset] & 0x7F)) {
-        vic->iomem[0x1E] |= ((srcbuf[offset] & 0x7F) | mask);
+    if (vic->spriteSpriteCollisionEnabled && (pixelSource[offset] & 0x7F)) {
+        vic->iomem[0x1E] |= ((pixelSource[offset] & 0x7F) | mask);
         vic->triggerIRQ(4);
     }
         
     // Check sprite/background collision
-    if (vic->spriteBackgroundCollisionEnabled && (srcbuf[offset] & 0x80)) {
+    if (vic->spriteBackgroundCollisionEnabled && (pixelSource[offset] & 0x80)) {
         vic->iomem[0x1F] |= mask;
         vic->triggerIRQ(2);
     }
@@ -668,61 +671,48 @@ PixelEngine::setSpritePixel(int offset, int color, int nr)
 inline void
 PixelEngine::setFramePixel(int offset, int rgba)
 {
-    assert(offset + bufshift < NTSC_PIXELS);
-    assert(&pxbuf[offset] >= &screenBuffer1[0][0] && &pxbuf[offset] < &screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS] ||
-           &pxbuf[offset] >= &screenBuffer2[0][0] && &pxbuf[offset] < &screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS]);
+    assert(offset < NTSC_PIXELS);
     
-    zbuf[offset] = BORDER_LAYER_DEPTH;
-    pxbuf[offset] = rgba; // 0xAAAAAAAA; // rgba;
-    // SPEEDUP: THE FOLLOWING LINE SHOULD NOT BE NECESSARY WHEN THE BORDER IS DRAWN FIRST
-    srcbuf[offset] &= (~0x80); // disable sprite/foreground collision detection in border
+    zBuffer[offset] = BORDER_LAYER_DEPTH;
+    pixelBuffer[offset] = rgba;
+    pixelSource[offset] &= (~0x80); // disable sprite/foreground collision detection in border
 }
 
 inline void
 PixelEngine::setForegroundPixel(int offset, int rgba)
 {
-    assert(offset + bufshift < NTSC_PIXELS);
-    assert(&pxbuf[offset] >= &screenBuffer1[0][0] && &pxbuf[offset] < &screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS] ||
-           &pxbuf[offset] >= &screenBuffer2[0][0] && &pxbuf[offset] < &screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS]);
+    assert(offset < NTSC_PIXELS);
 
-    if (FOREGROUND_LAYER_DEPTH <= zbuf[offset]) {
-        zbuf[offset] = FOREGROUND_LAYER_DEPTH;
-        pxbuf[offset] = rgba;
-        srcbuf[offset] |= 0x80;
+    if (FOREGROUND_LAYER_DEPTH <= zBuffer[offset]) {
+        zBuffer[offset] = FOREGROUND_LAYER_DEPTH;
+        pixelBuffer[offset] = rgba;
+        pixelSource[offset] |= 0x80;
     }
 }
 
 inline void
 PixelEngine::setBackgroundPixel(int offset, int rgba)
 {
-    assert(offset + bufshift < NTSC_PIXELS);
-    assert(&pxbuf[offset] >= &screenBuffer1[0][0] && &pxbuf[offset] < &screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS] ||
-           &pxbuf[offset] >= &screenBuffer2[0][0] && &pxbuf[offset] < &screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS]);
+    assert(offset < NTSC_PIXELS);
 
-    if (BACKGROUD_LAYER_DEPTH <= zbuf[offset]) {
-        zbuf[offset] = BACKGROUD_LAYER_DEPTH;
-        pxbuf[offset] = rgba;
+    if (BACKGROUD_LAYER_DEPTH <= zBuffer[offset]) {
+        zBuffer[offset] = BACKGROUD_LAYER_DEPTH;
+        pixelBuffer[offset] = rgba;
     }
+
 }
 
 void
 PixelEngine::setSpritePixel(int offset, int rgba, int depth, int source)
 {
-    assert (depth >= SPRITE_LAYER_FG_DEPTH && depth <= SPRITE_LAYER_BG_DEPTH + 8);
-    assert(offset + bufshift < NTSC_PIXELS);
-    assert(&pxbuf[offset] >= &screenBuffer1[0][0] && &pxbuf[offset] < &screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS] ||
-           &pxbuf[offset] >= &screenBuffer2[0][0] && &pxbuf[offset] < &screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS]);
+    assert(offset < NTSC_PIXELS);
     
-    /*
-    if (offset + bufshift >= NTSC_PIXELS)
-        return;
-    */
-    
-    if (depth <= zbuf[offset]) {
-        zbuf[offset] = depth;
-        pxbuf[offset] = rgba;
+    if (depth <= zBuffer[offset]) {
+        zBuffer[offset] = depth;
+        pixelBuffer[offset] = rgba;
     }
-    srcbuf[offset] |= source;
+    pixelSource[offset] |= source;
+
 }
 
 void

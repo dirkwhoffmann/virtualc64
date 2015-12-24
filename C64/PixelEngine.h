@@ -153,40 +153,22 @@ private:
         rasterline, either in screenBuffer1 or screenBuffer2. It is reset at the beginning of each frame and 
         incremented at the beginning of each rasterline. */
     int *pixelBuffer;
-    
-    //! Pointer into the current rasterline
-    /*! This value of this variable equals pixelBuffer plus some offset. It is a "shifted version" of the 
-        pixel variables that can directly be accessed via xCounter as array offset. In previous versions
-        of the emulator, the xCounter had to be transformed to the proper array offset multiple times. Hence, 
-        this variables has mainly been introduced for speedup purposes. */
-    int *pxbuf;
-    
+        
     //! Z buffer
     /*! Virtual VICII uses depth buffering to determine pixel priority. In the various render routines, a pixel is 
         only written to the screen buffer, if it is closer to the view point. The depth of the closest pixel is kept 
         in the z buffer. The lower the value of the z buffer, the closer it is to the viewer.
-        The z buffer is cleared before a new rasterline is drawn.
-     */
+        The z buffer is cleared before a new rasterline is drawn. */
     int zBuffer[NTSC_PIXELS];
     
-    //! Pointer into the z buffer
-    /*! This value of this variable equals zBufer plus some offset. Using this variable instead of zBuffer makes 
-        the z buffer accessible via the sprite coordinate system (via xCounter). */
-    int *zbuf;
-
     //! Indicates the source of a drawn pixel
     /*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
-     The information is utilized to detect sprite-sprite and sprite-background collisions.
-     */
+     *  The information is utilized to detect sprite-sprite and sprite-background collisions. */
     int pixelSource[NTSC_PIXELS];
     
-    //! Pointer into the pixel source buffer
-    /*! This value of this variable equals pixelSource plus some offset. Using this variable instead of pixelSource makes
-     the source buffer accessible via the sprite coordinate system (via xCounter). */
-    int *srcbuf;
-
-    //! Indicates how many int's zbuf is shifted relative to zBuffer. For debugging only
-    int bufshift;
+    //! Offset into pixelBuffer, zBuffer, and pixelSource
+    /*! Variable points to the first pixel of the currently drawn 8 pixel chunk */
+    short bufferoffset;
     
 public:
     
