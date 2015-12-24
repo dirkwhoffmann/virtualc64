@@ -248,21 +248,19 @@ PixelEngine::drawBorder()
 {
     if (dc.mainFrameFF) {
         
-        // int16_t xCoord = dc.xCounter;
-        int16_t xCoord = bufferoffset;
-        setFramePixel(xCoord++, colors[dc.borderColor]);
+        setFramePixel(0, colors[dc.borderColor]);
         
         // After the first pixel has been drawn, color register changes show up
         updateBorderColorRegister();
         
         int rgba = colors[dc.borderColor];
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
+        setFramePixel(1, rgba);
+        setFramePixel(2, rgba);
+        setFramePixel(3, rgba);
+        setFramePixel(4, rgba);
+        setFramePixel(5, rgba);
+        setFramePixel(6, rgba);
+        setFramePixel(7, rgba);
     }
 }
 
@@ -272,22 +270,22 @@ PixelEngine::drawBorder17()
     if (dc.mainFrameFF && !vic->mainFrameFF) {
         
         // int16_t xCoord = dc.xCounter;
-        int16_t xCoord = bufferoffset;
+        // int16_t xCoord = bufferoffset;
 
         // 38 column mode
-        setFramePixel(xCoord++, colors[dc.borderColor]);
+        setFramePixel(0, colors[dc.borderColor]);
         
         // After the first pixel has been drawn, color register changes show up
         updateBorderColorRegister();
         
         int rgba = colors[dc.borderColor];
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord++, rgba);
-        setFramePixel(xCoord, rgba);
-        // No pixel 8, we draw 7 pixels, only.
+        setFramePixel(1, rgba);
+        setFramePixel(2, rgba);
+        setFramePixel(3, rgba);
+        setFramePixel(4, rgba);
+        setFramePixel(5, rgba);
+        setFramePixel(6, rgba);
+        // That's all, we only draw 7 pixels here
         
     } else {
 
@@ -304,7 +302,7 @@ PixelEngine::drawBorder55()
     if (!dc.mainFrameFF && vic->mainFrameFF) {
         
         // 38 column mode
-        setFramePixel(xCoord+7, colors[dc.borderColor]);
+        setFramePixel(7, colors[dc.borderColor]);
         
     } else {
         
@@ -316,9 +314,6 @@ PixelEngine::drawBorder55()
 inline void
 PixelEngine::drawCanvas()
 {
-    // int16_t xCoord = dc.xCounter;
-    int16_t xCoord = bufferoffset;
-    
     /* "Der Sequenzer gibt die Grafikdaten in jeder Rasterzeile im Bereich der
      Anzeigespalte aus, sofern das vertikale Rahmenflipflop gelöscht ist (siehe
      Abschnitt 3.9.). Außerhalb der Anzeigespalte und bei gesetztem Flipflop wird
@@ -327,14 +322,14 @@ PixelEngine::drawCanvas()
     
     if (!dc.verticalFrameFF) {
         
-        drawCanvasPixel(xCoord++, 0);
+        drawCanvasPixel(0);
         
         // After the first pixel has been drawn, color register changes show up
         updateColorRegisters();
         
-        drawCanvasPixel(xCoord++, 1);
-        drawCanvasPixel(xCoord++, 2);
-        drawCanvasPixel(xCoord++, 3);
+        drawCanvasPixel(1);
+        drawCanvasPixel(2);
+        drawCanvasPixel(3);
         
         // After pixel 4, the one and zero bits in D016 and the one bits in D011 show up
         // This corresponds to the behavior of the color latency chip model in VICE
@@ -342,14 +337,14 @@ PixelEngine::drawCanvas()
         dc.D016 = vic->iomem[0x16] & 0x10;  // latch 0s and 1s
         dc.D011 |= vic->iomem[0x11] & 0x60; // latch 1s
         
-        drawCanvasPixel(xCoord++, 4);
-        drawCanvasPixel(xCoord++, 5);
+        drawCanvasPixel(4);
+        drawCanvasPixel(5);
         
         // After pixel 6, the zero bits in D011 show up
         // This corresponds to the behavior of the color latency chip model in VICE
         dc.D011 &= vic->iomem[0x11] & 0x60; // latch 0s
         
-        drawCanvasPixel(xCoord++, 6);
+        drawCanvasPixel(6);
         
         // TODO (seen in VICE)
         // if D016 had a rising edge, clear the multicolor flipflop
@@ -357,7 +352,7 @@ PixelEngine::drawCanvas()
          if (rising_edge_d016)
             sr.mc_flop = false;
         */
-        drawCanvasPixel(xCoord, 7);
+        drawCanvasPixel(7);
         
     } else {
         
@@ -365,16 +360,16 @@ PixelEngine::drawCanvas()
         int col = colors[vic->getBackgroundColor()];
         // The following fix (which was done for border-bm-idle is wrong)
         // int col = col_rgba[0];
-        setEightBackgroundPixels(xCoord, col);
+        setEightBackgroundPixels(col);
     }
 }
 
 inline void
-PixelEngine::drawCanvasPixel(int16_t offset, uint8_t pixel)
+PixelEngine::drawCanvasPixel(uint8_t pixelnr)
 {
-    // assert(pixel < 8);
+    assert(pixelnr < 8);
     
-    if (pixel == dc.delay && sr.canLoad) {
+    if (pixelnr == dc.delay && sr.canLoad) {
         
         // Load shift register
         sr.data = dc.data;
@@ -395,9 +390,9 @@ PixelEngine::drawCanvasPixel(int16_t offset, uint8_t pixel)
     if (multicol) {
         if (sr.mc_flop)
             sr.colorbits = (sr.data >> 6);
-        setMultiColorPixel(offset, sr.colorbits);
+        setMultiColorPixel(pixelnr, sr.colorbits);
     } else {
-        setSingleColorPixel(offset, sr.data >> 7);
+        setSingleColorPixel(pixelnr, sr.data >> 7);
     }
     
     // Shift register and toggle multicolor flipflop
@@ -411,23 +406,21 @@ PixelEngine::drawSprites()
 {
     uint8_t firstDMA = vic->isFirstDMAcycle;
     uint8_t secondDMA = vic->isSecondDMAcycle;
-    // int16_t xCoord = dc.xCounter;
-    int16_t xCoord = bufferoffset;
 
     if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
         return;
     
     updateSpriteColorRegisters();
-    drawSpritePixel(xCoord++, 0, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
-    drawSpritePixel(xCoord++, 1, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
-    drawSpritePixel(xCoord++, 2, secondDMA            /* freeze */, secondDMA /* halt */, 0         /* load */);
-    drawSpritePixel(xCoord++, 3, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(0, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(1, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(2, secondDMA            /* freeze */, secondDMA /* halt */, 0         /* load */);
+    drawSpritePixel(3, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
     
     updateSpriteOnOff();
-    drawSpritePixel(xCoord++, 4, firstDMA | secondDMA /* freeze */, 0         /* halt */, secondDMA /* load */);
-    drawSpritePixel(xCoord++, 5, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
-    drawSpritePixel(xCoord++, 6, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
-    drawSpritePixel(xCoord,   7, firstDMA             /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(4, firstDMA | secondDMA /* freeze */, 0         /* halt */, secondDMA /* load */);
+    drawSpritePixel(5, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(6, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
+    drawSpritePixel(7, firstDMA             /* freeze */, 0         /* halt */, 0         /* load */);
     
     /* DEBUG
     if (vic->isFirstDMAcycle )
@@ -438,62 +431,62 @@ PixelEngine::drawSprites()
 }
 
 inline void
-PixelEngine::drawSpritePixel(int16_t offset, uint8_t pixel, uint8_t freeze, uint8_t halt, uint8_t load)
+PixelEngine::drawSpritePixel(unsigned pixelnr, uint8_t freeze, uint8_t halt, uint8_t load)
 {
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(dc.spriteOnOff, i)) {
-            drawSpritePixel(i, offset, pixel, GET_BIT(freeze, i), GET_BIT(halt, i), GET_BIT(load, i));
+            drawSpritePixel(i, pixelnr, GET_BIT(freeze, i), GET_BIT(halt, i), GET_BIT(load, i));
         }
     }
 }
 
 void
-PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool freeze, bool halt, bool load)
+PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, bool halt, bool load)
 {
-    assert(nr < 8);
-    assert(sprite_sr[nr].remaining_bits >= -1);
-    assert(sprite_sr[nr].remaining_bits <= 26);
+    assert(spritenr < 8);
+    assert(sprite_sr[spritenr].remaining_bits >= -1);
+    assert(sprite_sr[spritenr].remaining_bits <= 26);
     
-    bool multicol = vic->spriteIsMulticolor(nr);
+    bool multicol = vic->spriteIsMulticolor(spritenr);
 
     // Load shift register if applicable
     if (load) {
-        loadShiftRegister(nr);
+        loadShiftRegister(spritenr);
     }
     
     // Stop shift register if applicable
     if (halt) {
-        sprite_sr[nr].remaining_bits = -1;
-        sprite_sr[nr].col_bits = 0;
+        sprite_sr[spritenr].remaining_bits = -1;
+        sprite_sr[spritenr].col_bits = 0;
     }
     
     // Run shift register if applicable
     if (!freeze) {
         
         // Check for horizontal trigger condition
-        if (dc.xCounterSprite + pixel == dc.spriteX[nr] && sprite_sr[nr].remaining_bits == -1) {
-            sprite_sr[nr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
-            sprite_sr[nr].exp_flop = true;
-            sprite_sr[nr].mc_flop = true;            
+        if (dc.xCounterSprite + pixelnr == dc.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
+            sprite_sr[spritenr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
+            sprite_sr[spritenr].exp_flop = true;
+            sprite_sr[spritenr].mc_flop = true;
         }
 
         // Run shift register if there are remaining pixels to draw
-        if (sprite_sr[nr].remaining_bits > 0) {
+        if (sprite_sr[spritenr].remaining_bits > 0) {
 
             // Determine render mode (single color /multi color) and colors
             // TODO: Latch multicolor value at proper cycles. Add dc. multicol
             // sprite_sr[nr].mcol = vic->spriteIsMulticolor(nr);
-            sprite_sr[nr].col_bits = sprite_sr[nr].data >> (multicol && sprite_sr[nr].mc_flop ? 22 : 23);
+            sprite_sr[spritenr].col_bits = sprite_sr[spritenr].data >> (multicol && sprite_sr[spritenr].mc_flop ? 22 : 23);
                         
             // Toggle horizontal expansion flipflop for stretched sprites
-            if (GET_BIT(dc.spriteXexpand, nr))
-                sprite_sr[nr].exp_flop = !sprite_sr[nr].exp_flop;
+            if (GET_BIT(dc.spriteXexpand, spritenr))
+                sprite_sr[spritenr].exp_flop = !sprite_sr[spritenr].exp_flop;
 
             // Run shift register and toggle multicolor flipflop
-            if (sprite_sr[nr].exp_flop) {
-                sprite_sr[nr].data <<= 1;
-                sprite_sr[nr].mc_flop = !sprite_sr[nr].mc_flop;
-                sprite_sr[nr].remaining_bits--;
+            if (sprite_sr[spritenr].exp_flop) {
+                sprite_sr[spritenr].data <<= 1;
+                sprite_sr[spritenr].mc_flop = !sprite_sr[spritenr].mc_flop;
+                sprite_sr[spritenr].remaining_bits--;
             }
         }
     }
@@ -501,9 +494,9 @@ PixelEngine::drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool fr
     // Draw pixel
     if (visibleColumn) {
         if (multicol)
-            setMultiColorSpritePixel(nr, offset, sprite_sr[nr].col_bits & 0x03);
+            setMultiColorSpritePixel(spritenr, pixelnr, sprite_sr[spritenr].col_bits & 0x03);
         else
-            setSingleColorSpritePixel(nr, offset, sprite_sr[nr].col_bits & 0x01);
+            setSingleColorSpritePixel(spritenr, pixelnr, sprite_sr[spritenr].col_bits & 0x01);
     }
 }
 
@@ -586,63 +579,66 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
 }
 
 inline void
-PixelEngine::setSingleColorPixel(int offset, uint8_t bit /* valid: 0, 1 */)
+PixelEngine::setSingleColorPixel(unsigned pixelnr, uint8_t bit /* valid: 0, 1 */)
 {
     int rgba = col_rgba[bit];
     
     if (bit)
-        setForegroundPixel(offset, rgba);
+        setForegroundPixel(pixelnr, rgba);
     else
-        setBackgroundPixel(offset, rgba);
+        setBackgroundPixel(pixelnr, rgba);
 }
 
 inline void
-PixelEngine::setMultiColorPixel(int offset, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
+PixelEngine::setMultiColorPixel(unsigned pixelnr, uint8_t two_bits /* valid: 00, 01, 10, 11 */)
 {
     int rgba = col_rgba[two_bits];
     
     if (two_bits & 0x02)
-        setForegroundPixel(offset, rgba);
+        setForegroundPixel(pixelnr, rgba);
     else
-        setBackgroundPixel(offset, rgba);
+        setBackgroundPixel(pixelnr, rgba);
 }
 
 inline void
-PixelEngine::setSingleColorSpritePixel(unsigned nr, int offset, uint8_t bit)
+PixelEngine::setSingleColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t bit)
 {
     if (bit) {
-        int rgba = colors[dc.spriteColor[nr]];
-        setSpritePixel(offset, rgba, nr);
+        int rgba = colors[dc.spriteColor[spritenr]];
+        setSpritePixel(pixelnr, rgba, spritenr);
     }
 }
 
 inline void
-PixelEngine::setMultiColorSpritePixel(unsigned nr, int offset, uint8_t two_bits)
+PixelEngine::setMultiColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t two_bits)
 {
     int rgba;
     
     switch (two_bits) {
         case 0x01:
             rgba = colors[dc.spriteExtraColor1];
-            setSpritePixel(offset, rgba, nr);
+            setSpritePixel(pixelnr, rgba, spritenr);
             break;
             
         case 0x02:
-            rgba = colors[dc.spriteColor[nr]];
-            setSpritePixel(offset, rgba, nr);
+            rgba = colors[dc.spriteColor[spritenr]];
+            setSpritePixel(pixelnr, rgba, spritenr);
             break;
             
         case 0x03:
             rgba = colors[dc.spriteExtraColor2];
-            setSpritePixel(offset, rgba, nr);
+            setSpritePixel(pixelnr, rgba, spritenr);
             break;
     }
 }
 
 
 inline void
-PixelEngine::setSpritePixel(int offset, int color, int nr)
+PixelEngine::setSpritePixel(unsigned pixelnr, int color, int nr)
 {
+    unsigned offset = bufferoffset + pixelnr;
+    assert(offset < NTSC_PIXELS);
+
     uint8_t mask = (1 << nr);
     
     // Check sprite/sprite collision
@@ -669,8 +665,9 @@ PixelEngine::setSpritePixel(int offset, int color, int nr)
 // -----------------------------------------------------------------------------------------------
 
 inline void
-PixelEngine::setFramePixel(int offset, int rgba)
+PixelEngine::setFramePixel(unsigned pixelnr, int rgba)
 {
+    unsigned offset = bufferoffset + pixelnr;
     assert(offset < NTSC_PIXELS);
     
     zBuffer[offset] = BORDER_LAYER_DEPTH;
@@ -679,8 +676,9 @@ PixelEngine::setFramePixel(int offset, int rgba)
 }
 
 inline void
-PixelEngine::setForegroundPixel(int offset, int rgba)
+PixelEngine::setForegroundPixel(unsigned pixelnr, int rgba)
 {
+    unsigned offset = bufferoffset + pixelnr;
     assert(offset < NTSC_PIXELS);
 
     if (FOREGROUND_LAYER_DEPTH <= zBuffer[offset]) {
@@ -691,8 +689,9 @@ PixelEngine::setForegroundPixel(int offset, int rgba)
 }
 
 inline void
-PixelEngine::setBackgroundPixel(int offset, int rgba)
+PixelEngine::setBackgroundPixel(unsigned pixelnr, int rgba)
 {
+    unsigned offset = bufferoffset + pixelnr;
     assert(offset < NTSC_PIXELS);
 
     if (BACKGROUD_LAYER_DEPTH <= zBuffer[offset]) {

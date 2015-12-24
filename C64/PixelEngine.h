@@ -417,29 +417,27 @@ private:
     void drawCanvas();
     
     //! Draws a single canvas pixel
-    /*! pixel is the pixel number and must be in the range 0 to 7 */
-    void drawCanvasPixel(int16_t offset, uint8_t pixel);
+    /*! pixelnr is the pixel number and must be in the range 0 to 7 */
+    void drawCanvasPixel(uint8_t pixelnr);
     
     //! Draws 8 sprite pixels
     /*! Invoked inside draw() */
     void drawSprites();
 
     //! @brief   Draws a single sprite pixel for all sprites
-    /*! @param   offset Coordinate given as an offset into the pixel buffer
-     *  @param   pixel  Pixel number (0 to 7) 
-     *  @param   freeze If the i-th bit is set to 1, the i-th shift register will freeze temporarily
-     *  @param   halt   If the i-th bit is set to 1, the i-th shift register will be deactivated
-     *  @param   halt   If the i-th bit is set to 1, the i-th shift register will grab new data bits */
-    void drawSpritePixel(int16_t offset, uint8_t pixel, uint8_t freeze, uint8_t halt, uint8_t load);
+    /*! @param   pixelnr  Pixel number (0 to 7)
+     *  @param   freeze   If the i-th bit is set to 1, the i-th shift register will freeze temporarily
+     *  @param   halt     If the i-th bit is set to 1, the i-th shift register will be deactivated
+     *  @param   load     If the i-th bit is set to 1, the i-th shift register will grab new data bits */
+    void drawSpritePixel(unsigned pixelnr, uint8_t freeze, uint8_t halt, uint8_t load);
 
     //! @brief   Draws a single sprite pixel for a single sprite
-    /*! @param   nr     Sprite number (0 to 7)
-     *  @param   offset Coordinate given as an offset into the pixel buffer
-     *  @param   pixel  Pixel number (0 to 7)
-     *  @param   freeze If set to true, the sprites shift register will freeze temporarily
-     *  @param   halt   If set to true, the sprites shift shift register will be deactivated
-     *  @param   halt   If set to true, the sprites shift shift register will grab new data bits */
-    void drawSpritePixel(unsigned nr, int16_t offset, uint8_t pixel, bool freeze, bool halt, bool load);
+    /*! @param   spritenr Sprite number (0 to 7)
+     *  @param   pixelnr  Pixel number (0 to 7)
+     *  @param   freeze   If set to true, the sprites shift register will freeze temporarily
+     *  @param   halt     If set to true, the sprites shift shift register will be deactivated
+     *  @param   load     If set to true, the sprites shift shift register will grab new data bits */
+    void drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, bool halt, bool load);
 
     //! Draws all sprites into the pixelbuffer
     /*! A sprite is only drawn if it's enabled and if sprite drawing is not switched off for debugging */
@@ -474,25 +472,25 @@ public:
     //! Draw single canvas pixel in single-color mode
     /*! 1s are drawn with setForegroundPixel, 0s are drawn with setBackgroundPixel.
      Uses the drawing colors that are setup by loadColors(). */
-    void setSingleColorPixel(int offset, uint8_t bit);
+    void setSingleColorPixel(unsigned pixelnr, uint8_t bit);
     
     //! Draw single canvas pixel in multi-color mode
     /*! The left of the two color bits determines whether setForegroundPixel or setBackgroundPixel is used.
      Uses the drawing colors that are setup by loadColors(). */
-    void setMultiColorPixel(int offset, uint8_t two_bits);
+    void setMultiColorPixel(unsigned pixelnr, uint8_t two_bits);
     
     //! Draw single sprite pixel in single-color mode
     /*! Uses the drawing colors that are setup by updateSpriteColors */
-    void setSingleColorSpritePixel(unsigned nr, int offset, uint8_t bit);
+    void setSingleColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t bit);
     
     //! Draw single sprite pixel in multi-color mode
     /*! Uses the drawing colors that are setup by updateSpriteColors */
-    void setMultiColorSpritePixel(unsigned nr, int offset, uint8_t two_bits);
+    void setMultiColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t two_bits);
 
     //! Draw a single sprite pixel
     /*! This function is invoked by setSingleColorPixel() and setMultiColorPixel(). 
         It takes care of collison and invokes setSpritePixel(4) to actually render the pixel. */
-    void setSpritePixel(int offset, int color, int nr);
+    void setSpritePixel(unsigned pixelnr, int color, int nr);
 
     
     // -----------------------------------------------------------------------------------------------
@@ -502,21 +500,21 @@ public:
 public:
 
     //! Draw a single frame pixel
-    void setFramePixel(int offset, int rgba);
+    void setFramePixel(unsigned pixelnr, int rgba);
         
     //! Draw eight frame pixels in a row
-    inline void setEightFramePixels(int offset, int rgba) {
-        for (unsigned i = 0; i < 8; i++) setFramePixel(offset++, rgba); }
+    // inline void setEightFramePixels(int rgba) {
+    //     for (unsigned i = 0; i < 8; i++) setFramePixel(i, rgba); }
     
     //! Draw a single foreground pixel
-    void setForegroundPixel(int offset, int rgba);
+    void setForegroundPixel(unsigned pixelnr, int rgba);
     
     //! Draw a single background pixel
-    void setBackgroundPixel(int offset, int rgba);
+    void setBackgroundPixel(unsigned pixelnr, int rgba);
 
     //! Draw eight background pixels in a row
-    inline void setEightBackgroundPixels(int offset, int rgba) {
-        for (unsigned i = 0; i < 8; i++) setBackgroundPixel(offset++, rgba); }
+    inline void setEightBackgroundPixels(int rgba) {
+        for (unsigned i = 0; i < 8; i++) setBackgroundPixel(i, rgba); }
 
     //! Draw a single sprite pixel
     void setSpritePixel(int offset, int rgba, int depth, int source);
