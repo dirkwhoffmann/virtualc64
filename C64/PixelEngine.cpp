@@ -297,8 +297,6 @@ PixelEngine::drawBorder17()
 inline void
 PixelEngine::drawBorder55()
 {
-    int16_t xCoord = bufferoffset;
-    
     if (!dc.mainFrameFF && vic->mainFrameFF) {
         
         // 38 column mode
