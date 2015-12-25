@@ -56,13 +56,19 @@ T64Archive::archiveFromT64File(const char *filename)
 	T64Archive *archive;
 	
 	fprintf(stderr, "Loading T64 archive from T64 file...\n");
-	archive = new T64Archive();	
+	archive = new T64Archive();
+    
 	if (!archive->readFromFile(filename)) {
         fprintf(stderr, "Failed to load archive\n");
 		delete archive;
 		archive = NULL;
 	}
-	
+
+    if (!archive->repair()) {
+        delete archive;
+        archive = NULL;
+    }
+
 	return archive;
 }
 
@@ -238,25 +244,12 @@ T64Archive::getName()
 	return name;
 }
 
-bool 
-T64Archive::directoryItemIsPresent(int n)
-{
-	int first = 0x40 + (n * 0x20);
-	int last  = 0x60 + (n * 0x20);
-	int i;
-	
-	// check for zeros...
-	if (last < size)
-		for (i = first; i < last; i++)
-			if (data[i] != 0)
-				return true;
-
-	return false;
-}
-
 int 
 T64Archive::getNumberOfItems()
 {
+    return LO_HI(data[0x24], data[0x25]);
+    
+#if 0
 	int noOfItems;
 
 	// Get number of files from the file header...
@@ -272,6 +265,7 @@ T64Archive::getNumberOfItems()
 	}
 
 	return noOfItems;
+#endif
 }
 
 const char *
@@ -315,14 +309,11 @@ T64Archive::getDestinationAddrOfItem(int n)
 void 
 T64Archive::selectItem(int n)
 {
-	unsigned i;
-    
     if (n < getNumberOfItems()) {
 
         // Compute start address in container
-        i = 0x48 + (n * 0x20);
-        if ((fp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3])) >= size)
-            fprintf(stderr, "PANIC! fp is out of bounds!\n");
+        unsigned i = 0x48 + (n * 0x20);
+        fp = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]);
 
         // Compute start address in memory
         i = 0x42 + (n * 0x20);
@@ -332,27 +323,20 @@ T64Archive::selectItem(int n)
         i = 0x44 + (n * 0x20);
         uint16_t endAddrInMemory = LO_HI(data[i], data[i+1]);
 
-        if (endAddrInMemory == 0xC3C6) {
-            fprintf(stderr, "WARNING: Corrupted archive. Mostly likely created with CONV64!\n");
-            // WHAT DO WE DO ABOUT IT?
-        }
-
         // Compute size of item
         uint16_t length = endAddrInMemory - startAddrInMemory;
 
-        // fprintf(stderr, "start = %d end = %d diff = %d\n", startAddrInMemory, endAddrInMemory, length);
-        // fprintf(stderr, "fp = %d fp_eof = %d\n", fp, fp_eof);
+        // Compute end address in container
+        fp_eof = fp + length;
 
-        // Store largest offset that belongs to the file
-        if ((fp_eof = fp + length) > size)
-            fprintf(stderr, "PANIC! fp_eof is out of bounds!\n");
-        
         // Return if offset values are safe
         if (fp < size && fp_eof <= size)
-            return; // success
+            return;
+    
+        assert(0); // As repair() should have ruled out all inconsistencies, we should never be here!
     }
 
-    fp = fp_eof = -1; // fail
+    fp = fp_eof = -1;
 	return;
 }
 
@@ -374,6 +358,93 @@ T64Archive::getByte()
 	// fprintf(stderr, "%02X ", result);
 	return result;
 }
+
+bool
+T64Archive::directoryItemIsPresent(int n)
+{
+    int first = 0x40 + (n * 0x20);
+    int last  = 0x60 + (n * 0x20);
+    int i;
+    
+    // check for zeros...
+    if (last < size)
+        for (i = first; i < last; i++)
+            if (data[i] != 0)
+                return true;
+    
+    return false;
+}
+
+bool
+T64Archive::repair()
+{
+    unsigned i, n;
+    uint16_t noOfItems = getNumberOfItems();
+
+    //
+    // 1. Repair number of items, if this value is zero
+    //
+    
+    if (noOfItems == 0) {
+
+        while (directoryItemIsPresent(noOfItems))
+            noOfItems++;
+
+        uint16_t noOfItemsStatedInHeader = getNumberOfItems();
+        if (noOfItems != noOfItemsStatedInHeader) {
+        
+            fprintf(stderr, "Repairing corrupted T64 archive: Changing number of items from %d to %d.\n",
+                    noOfItemsStatedInHeader, noOfItems);
+        
+            data[0x24] = LO_BYTE(noOfItems);
+            data[0x25] = HI_BYTE(noOfItems);
+            assert(noOfItems == getNumberOfItems());
+        }
+    }
+    
+    for (i = 0; i < getNumberOfItems(); i++) {
+
+        //
+        // 2. Check relative offset information for each item
+        //
+
+        // Compute start address in container
+        n = 0x48 + (i * 0x20);
+        uint16_t startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
+
+        if (startAddrInContainer >= size) {
+            fprintf(stderr, "T64 archive is corrupt (offset mismatch). Sorry, can't repair.\n");
+            return false;
+        }
+    
+        //
+        // 3. Check for file end address mismatches (as created by CONVC64)
+        //
+        
+        // Compute start address in memory
+        n = 0x42 + (i * 0x20);
+        uint16_t startAddrInMemory = LO_HI(data[n], data[n+1]);
+    
+        // Compute end address in memory
+        n = 0x44 + (i * 0x20);
+        uint16_t endAddrInMemory = LO_HI(data[n], data[n+1]);
+    
+        if (endAddrInMemory == 0xC3C6) {
+
+            // Let's assume that the rest of the file data belongs to this file ...
+            uint16_t fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
+
+            fprintf(stderr, "Repairing corrupted T64 archive: Changing end address of item %d from %04X to %04X.\n",
+                    i, endAddrInMemory, fixedEndAddrInMemory);
+
+            data[n] = LO_BYTE(fixedEndAddrInMemory);
+            data[n+1] = HI_BYTE(fixedEndAddrInMemory);
+        }
+    }
+    
+    return 1; // Archive repaired successfully
+}
+
 
 #if 0
 void

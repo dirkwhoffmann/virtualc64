@@ -18,13 +18,18 @@
 // VERSION 1.4:
 // ENHANCEMENTS:
 //
-// This release contains important VIC II compatibility improvements. E.g., there are no more graphics glitches in
-// the intro scene of CRESTs demo "Oxyron deus ex machina". Furthermore, VirtualC64 now passes VICE tests
-// spriteenable1, spriteenable3 (mostly), spriteenable4, and sprite0move.
+// This release contains important VIC II compatibility improvements. Demo "Deus ex Machina" by Crest and Oxyron (2000)
+// runs rather flawlessly now. Furthermore, VirtualC64 now passes VICE tests spriteenable1, spriteenable3 (mostly),
+// spriteenable4, and sprite0move.
 //
 // VirtualC64 can now read NIB image files. Please note that a lot of floppy disks provided in NIB format
 // contain copy protection mechanisms which are likly to be incompatible with the current drive emulation.
 //
+// BUGFIXES:
+//
+// Fixed a bug that prevented the synchronization timer to stabalize in some situations.
+// Starting with V0.9.9.3, VirtualC64 was no longer able to read in T64 files created by CONV64 as these files
+// contain corrupt header information. Such files can be read again.
 //
 // TODO:
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
@@ -51,7 +56,7 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG      // RELEASE
+#define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
 
 // Snapshot version number of this release
