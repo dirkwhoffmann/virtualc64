@@ -20,7 +20,7 @@
 #define _PIXELENGINGE_INC
 
 #include "VirtualComponent.h"
-#include "VIC_constants.h"
+#include "VIC_globals.h"
 
 // Forward declarations
 class VIC;
@@ -224,14 +224,14 @@ public:
         uint16_t xCounter;
         bool verticalFrameFF;
         bool mainFrameFF;
-        uint8_t data;
-        uint8_t character;
-        uint8_t color;
-        DisplayMode mode;
+        uint8_t g_data;
+        uint8_t g_character;
+        uint8_t g_color;
+        DisplayMode g_mode;
         uint16_t spriteX[8];
         uint8_t spriteXexpand;
-        uint8_t controlReg1; // D011
-        uint8_t controlReg2; // D016
+        uint8_t registerCTRL1; // D011
+        uint8_t registerCTRL2; // D016
         
         // Updated in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
         uint8_t borderColor;

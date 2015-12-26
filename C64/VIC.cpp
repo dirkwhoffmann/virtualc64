@@ -975,12 +975,12 @@ VIC::preparePixelEngine()
 {
     pixelEngine.dc.xCounter = xCounter;
     pixelEngine.dc.yCounter = yCounter;
-    pixelEngine.dc.controlReg1 = registerCTRL1;
-    pixelEngine.dc.controlReg2 = registerCTRL2;
-    pixelEngine.dc.data = g_data;
-    pixelEngine.dc.character = g_character;
-    pixelEngine.dc.color = g_color;
-    pixelEngine.dc.mode = g_mode;
+    pixelEngine.dc.registerCTRL1 = registerCTRL1;
+    pixelEngine.dc.registerCTRL2 = registerCTRL2;
+    pixelEngine.dc.g_data = g_data;
+    pixelEngine.dc.g_character = g_character;
+    pixelEngine.dc.g_color = g_color;
+    pixelEngine.dc.g_mode = g_mode;
     pixelEngine.dc.mainFrameFF = mainFrameFF;
     pixelEngine.dc.verticalFrameFF = verticalFrameFF;
 

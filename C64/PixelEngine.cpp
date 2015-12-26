@@ -43,16 +43,13 @@ PixelEngine::PixelEngine() // C64 *c64)
         { &dc.xCounter,             sizeof(dc.xCounter),            CLEAR_ON_RESET },
         { &dc.verticalFrameFF,      sizeof(dc.verticalFrameFF),     CLEAR_ON_RESET },
         { &dc.mainFrameFF,          sizeof(dc.mainFrameFF),         CLEAR_ON_RESET },
-        { &dc.controlReg1,          sizeof(dc.controlReg1),         CLEAR_ON_RESET },
-        { &dc.controlReg2,          sizeof(dc.controlReg2),         CLEAR_ON_RESET },
-        { &dc.character,            sizeof(dc.character),           CLEAR_ON_RESET },
-        { &dc.color,                sizeof(dc.color),               CLEAR_ON_RESET },
-        { &dc.mode,                 sizeof(dc.mode),                CLEAR_ON_RESET },
-        // { &dc.delay,                sizeof(dc.delay),               CLEAR_ON_RESET },
+        { &dc.registerCTRL1,        sizeof(dc.registerCTRL1),       CLEAR_ON_RESET },
+        { &dc.registerCTRL2,        sizeof(dc.registerCTRL2),       CLEAR_ON_RESET },
+        { &dc.g_character,          sizeof(dc.g_character),         CLEAR_ON_RESET },
+        { &dc.g_color,              sizeof(dc.g_color),             CLEAR_ON_RESET },
+        { &dc.g_mode,               sizeof(dc.g_mode),              CLEAR_ON_RESET },
         { dc.spriteX,               sizeof(dc.spriteX),             CLEAR_ON_RESET | WORD_FORMAT },
         { &dc.spriteXexpand,        sizeof(dc.spriteXexpand),       CLEAR_ON_RESET },
-        // { &dc.D011,                 sizeof(dc.D011),                CLEAR_ON_RESET },
-        // { &dc.D016,                 sizeof(dc.D016),                CLEAR_ON_RESET },
         { &dc.borderColor,          sizeof(dc.borderColor),         CLEAR_ON_RESET },
         { dc.backgroundColor,       sizeof(dc.backgroundColor),     CLEAR_ON_RESET | BYTE_FORMAT },
         { dc.spriteColor,           sizeof(dc.spriteColor),         CLEAR_ON_RESET | BYTE_FORMAT },
@@ -370,14 +367,14 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
 {
     assert(pixelnr < 8);
     
-    if (pixelnr == (dc.controlReg2 & 0x07) /* horizontal raster scroll */ && sr.canLoad) {
+    if (pixelnr == (dc.registerCTRL2 & 0x07) /* horizontal raster scroll */ && sr.canLoad) {
         
         // Load shift register
-        sr.data = dc.data;
+        sr.data = dc.g_data;
         
         // Remember how to synthesize pixels
-        sr.latchedCharacter = dc.character;
-        sr.latchedColor = dc.color;
+        sr.latchedCharacter = dc.g_character;
+        sr.latchedColor = dc.g_color;
         
         // Reset the multicolor synchronization flipflop
         sr.mc_flop = true;
