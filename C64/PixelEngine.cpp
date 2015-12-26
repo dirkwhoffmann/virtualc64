@@ -267,7 +267,7 @@ PixelEngine::drawBorder()
 inline void
 PixelEngine::drawBorder17()
 {
-    if (pipe.mainFrameFF && !vic->mainFrameFF) {
+    if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
         
         // 38 column mode
         setFramePixel(0, colors[dc.borderColor]);
@@ -294,7 +294,7 @@ PixelEngine::drawBorder17()
 inline void
 PixelEngine::drawBorder55()
 {
-    if (!pipe.mainFrameFF && vic->mainFrameFF) {
+    if (!pipe.mainFrameFF && vic->p.mainFrameFF) {
         
         // 38 column mode
         setFramePixel(7, colors[dc.borderColor]);
@@ -317,8 +317,8 @@ PixelEngine::drawCanvas()
     
     if (!pipe.verticalFrameFF) {
         
-        uint8_t D011 = vic->registerCTRL1 & 0x60; // -xx- ----
-        uint8_t D016 = vic->registerCTRL2 & 0x10; // ---x ----
+        uint8_t D011 = vic->p.registerCTRL1 & 0x60; // -xx- ----
+        uint8_t D016 = vic->p.registerCTRL2 & 0x10; // ---x ----
         
         drawCanvasPixel(0);
         

@@ -44,16 +44,24 @@ VIC::VIC()
         { &chipModel,                   sizeof(chipModel),                      KEEP_ON_RESET },
         
         // Internal state
+        { &p.xCounter,                  sizeof(p.xCounter),                     CLEAR_ON_RESET },
+        { p.spriteX,                    sizeof(p.spriteX),                      CLEAR_ON_RESET | WORD_FORMAT },
+        { &p.spriteXexpand,             sizeof(p.spriteXexpand),                CLEAR_ON_RESET },
+        { &p.registerCTRL1,             sizeof(p.registerCTRL1),                CLEAR_ON_RESET },
+        { &p.registerCTRL2,             sizeof(p.registerCTRL2),                CLEAR_ON_RESET },
+        { &p.g_data,                    sizeof(p.g_data),                       CLEAR_ON_RESET },
+        { &p.g_character,               sizeof(p.g_character),                  CLEAR_ON_RESET },
+        { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },
+        { &p.mainFrameFF,               sizeof(p.mainFrameFF),                  CLEAR_ON_RESET },
+        { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
+
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
-        { &xCounter,                    sizeof(xCounter),                       CLEAR_ON_RESET },
         { &yCounter,                    sizeof(yCounter),                       CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
         { &registerVC,                  sizeof(registerVC),                     CLEAR_ON_RESET },
         { &registerVCBASE,              sizeof(registerVCBASE),                 CLEAR_ON_RESET },
         { &registerRC,                  sizeof(registerRC),                     CLEAR_ON_RESET },
         { &registerVMLI,                sizeof(registerVMLI),                   CLEAR_ON_RESET },
-        { &registerCTRL1,               sizeof(registerCTRL1),                  CLEAR_ON_RESET },
-        { &registerCTRL2,               sizeof(registerCTRL2),                  CLEAR_ON_RESET },
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
@@ -65,25 +73,13 @@ VIC::VIC()
         { &displayState,                sizeof(displayState),                   CLEAR_ON_RESET },
         { &BAlow,                       sizeof(BAlow),                          CLEAR_ON_RESET },
         { &BAwentLowAtCycle,            sizeof(BAwentLowAtCycle),               CLEAR_ON_RESET },
-        { &mainFrameFF,                 sizeof(mainFrameFF),                    CLEAR_ON_RESET },
-        { &verticalFrameFF,             sizeof(verticalFrameFF),                CLEAR_ON_RESET },
-        
         { &iomem,                       sizeof(iomem),                          CLEAR_ON_RESET },
         { &bankAddr,                    sizeof(bankAddr),                       CLEAR_ON_RESET },
-        
-        { &g_data,                      sizeof(g_data),                         CLEAR_ON_RESET },
-        { &g_character,                 sizeof(g_character),                    CLEAR_ON_RESET },
-        { &g_color,                     sizeof(g_color),                        CLEAR_ON_RESET },
-        { &g_mode,                      sizeof(g_mode),                         CLEAR_ON_RESET },
-
         { &isFirstDMAcycle,             sizeof(isFirstDMAcycle),                CLEAR_ON_RESET },
         { &isSecondDMAcycle,            sizeof(isSecondDMAcycle),               CLEAR_ON_RESET },
-
         { &mc,                          sizeof(mc),                             CLEAR_ON_RESET | BYTE_FORMAT },
         { &mcbase,                      sizeof(mcbase),                         CLEAR_ON_RESET | BYTE_FORMAT },
         { spritePtr,                    sizeof(spritePtr),                      CLEAR_ON_RESET | WORD_FORMAT },
-        { spriteX,                      sizeof(spriteX),                        CLEAR_ON_RESET | WORD_FORMAT },
-        { &spriteXexpand,               sizeof(spriteXexpand),                  CLEAR_ON_RESET },
         { &spriteOnOff,                 sizeof(spriteOnOff),                    CLEAR_ON_RESET },
         { &spriteDmaOnOff,              sizeof(spriteDmaOnOff),                 CLEAR_ON_RESET },
         { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
@@ -114,7 +110,7 @@ VIC::reset()
     yCounter = PAL_HEIGHT;
     iomem[0x20] = PixelEngine::LTBLUE; // Let the border color look correct right from the beginning
     iomem[0x21] = PixelEngine::BLUE;   // Let the background color look correct right from the beginning
-	registerCTRL1 = 0x10;                // Make screen visible from the beginning
+	p.registerCTRL1 = 0x10;            // Make screen visible from the beginning
 	expansionFF = 0xFF;
     
     // Remove startup graphics glitches by setting the initial value early
@@ -162,14 +158,14 @@ VIC::dumpState()
 		default:
 			msg("Invalid\n");
 	}
-	msg("            (X,Y) : (%d,%d) %s %s\n", xCounter, yCounter,  badLineCondition ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
+	msg("            (X,Y) : (%d,%d) %s %s\n", p.xCounter, yCounter,  badLineCondition ? "(DMA line)" : "", DENwasSetInRasterline30 ? "" : "(DMA lines disabled, no DEN bit in rasterline 30)");
 	msg("               VC : %02X\n", registerVC);
 	msg("           VCBASE : %02X\n", registerVCBASE);
 	msg("               RC : %02X\n", registerRC);
 	msg("             VMLI : %02X\n", registerVMLI);
 	msg("          BA line : %s\n", BAlow ? "low" : "high");
-	msg("      MainFrameFF : %d\n", mainFrameFF);
-	msg("  VerticalFrameFF : %d\n", verticalFrameFF);
+	msg("      MainFrameFF : %d\n", p.mainFrameFF);
+	msg("  VerticalFrameFF : %d\n", p.verticalFrameFF);
 	msg("     DisplayState : %s\n", displayState ? "on" : "off");
 	msg("         SpriteOn : %02X ( ", spriteOnOff);
 	for (int i = 0; i < 8; i++) 
@@ -316,10 +312,9 @@ inline void VIC::gAccess()
             addr &= 0xF9FF;
 
         // Prepare graphic sequencer
-        g_data = memAccess(addr);
-        g_character = characterSpace[registerVMLI];
-        g_color = colorSpace[registerVMLI];
-        g_mode = getDisplayMode();
+        p.g_data = memAccess(addr);
+        p.g_character = characterSpace[registerVMLI];
+        p.g_color = colorSpace[registerVMLI];
         
         // "Nach jedem g-Zugriff im Display-Zustand werden VC und VMLI erhšht." [C.B.]
         registerVC++;
@@ -333,10 +328,9 @@ inline void VIC::gAccess()
         addr = ECMbitInPreviousCycle() ? 0x39FF : 0x3FFF;
         
         // Prepare graphic sequencer
-        g_data = memAccess(addr);
-        g_character = 0;
-        g_color = 0;
-        g_mode = getDisplayMode();
+        p.g_data = memAccess(addr);
+        p.g_character = 0;
+        p.g_color = 0;
     }
 }
 
@@ -485,7 +479,7 @@ VIC::peek(uint16_t addr)
 	
 	switch(addr) {
 		case 0x11: // SCREEN CONTROL REGISTER #1
-			result = (registerCTRL1 & 0x7f) + (yCounter > 0xff ? 128 : 0);
+			result = (p.registerCTRL1 & 0x7f) + (yCounter > 0xff ? 128 : 0);
 			return result;
             
 		case 0x12: // VIC_RASTER_READ_WRITE
@@ -499,7 +493,7 @@ VIC::peek(uint16_t addr)
 			return iomem[addr];
             
         case 0x16:
-            result = registerCTRL2 | 0xC0; // Bits 7 and 8 are unused (always 1)
+            result = p.registerCTRL2 | 0xC0; // Bits 7 and 8 are unused (always 1)
             return result;
             
    		case 0x18:
@@ -515,7 +509,7 @@ VIC::peek(uint16_t addr)
 			return result;
             
         case 0x1D: // SPRITE_X_EXPAND
-            return spriteXexpand;
+            return p.spriteXexpand;
 
 		case 0x1E: // Sprite-to-sprite collision
 			result = iomem[addr];
@@ -549,57 +543,57 @@ VIC::poke(uint16_t addr, uint8_t value)
 	
 	switch(addr) {		
         case 0x00: // SPRITE_0_X
-            spriteX[0] = value | ((iomem[0x10] & 0x01) << 8);
+            p.spriteX[0] = value | ((iomem[0x10] & 0x01) << 8);
             break;
 
         case 0x02: // SPRITE_1_X
-            spriteX[1] = value | ((iomem[0x10] & 0x02) << 7);
+            p.spriteX[1] = value | ((iomem[0x10] & 0x02) << 7);
             break;
 
         case 0x04: // SPRITE_2_X
-            spriteX[2] = value | ((iomem[0x10] & 0x04) << 6);
+            p.spriteX[2] = value | ((iomem[0x10] & 0x04) << 6);
             break;
 
         case 0x06: // SPRITE_3_X
-            spriteX[3] = value | ((iomem[0x10] & 0x08) << 5);
+            p.spriteX[3] = value | ((iomem[0x10] & 0x08) << 5);
             break;
 
         case 0x08: // SPRITE_4_X
-            spriteX[4] = value | ((iomem[0x10] & 0x10) << 4);
+            p.spriteX[4] = value | ((iomem[0x10] & 0x10) << 4);
             break;
 
         case 0x0A: // SPRITE_5_X
-            spriteX[5] = value | ((iomem[0x10] & 0x20) << 3);
+            p.spriteX[5] = value | ((iomem[0x10] & 0x20) << 3);
             break;
             
         case 0x0C: // SPRITE_6_X
-            spriteX[6] = value | ((iomem[0x10] & 0x40) << 2);
+            p.spriteX[6] = value | ((iomem[0x10] & 0x40) << 2);
             break;
             
         case 0x0E: // SPRITE_7_X
-            spriteX[7] = value | ((iomem[0x10] & 0x80) << 1);
+            p.spriteX[7] = value | ((iomem[0x10] & 0x80) << 1);
             break;
 
         case 0x10: // SPRITE_X_UPPER_BITS
-            spriteX[0] = (spriteX[0] & 0xFF) | ((value & 0x01) << 8);
-            spriteX[1] = (spriteX[1] & 0xFF) | ((value & 0x02) << 7);
-            spriteX[2] = (spriteX[2] & 0xFF) | ((value & 0x04) << 6);
-            spriteX[3] = (spriteX[3] & 0xFF) | ((value & 0x08) << 5);
-            spriteX[4] = (spriteX[4] & 0xFF) | ((value & 0x10) << 4);
-            spriteX[5] = (spriteX[5] & 0xFF) | ((value & 0x20) << 3);
-            spriteX[6] = (spriteX[6] & 0xFF) | ((value & 0x40) << 2);
-            spriteX[7] = (spriteX[7] & 0xFF) | ((value & 0x80) << 1);
+            p.spriteX[0] = (p.spriteX[0] & 0xFF) | ((value & 0x01) << 8);
+            p.spriteX[1] = (p.spriteX[1] & 0xFF) | ((value & 0x02) << 7);
+            p.spriteX[2] = (p.spriteX[2] & 0xFF) | ((value & 0x04) << 6);
+            p.spriteX[3] = (p.spriteX[3] & 0xFF) | ((value & 0x08) << 5);
+            p.spriteX[4] = (p.spriteX[4] & 0xFF) | ((value & 0x10) << 4);
+            p.spriteX[5] = (p.spriteX[5] & 0xFF) | ((value & 0x20) << 3);
+            p.spriteX[6] = (p.spriteX[6] & 0xFF) | ((value & 0x40) << 2);
+            p.spriteX[7] = (p.spriteX[7] & 0xFF) | ((value & 0x80) << 1);
             break;
 
         case 0x11: // CONTROL_REGISTER_1
 
-            if ((registerCTRL1 & 0x80) != (value & 0x80)) {
+            if ((p.registerCTRL1 & 0x80) != (value & 0x80)) {
                 // Value changed: Check if we need to trigger an interrupt immediately
-                registerCTRL1 = value;
+                p.registerCTRL1 = value;
                 if (yCounter == rasterInterruptLine())
                     triggerIRQ(1);
             } else {
-                registerCTRL1 = value;
+                p.registerCTRL1 = value;
             }
             
             // Check the DEN bit if we're in rasterline 30
@@ -625,7 +619,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 
         case 0x16: // CONTROL_REGISTER_2
 
-            registerCTRL2 = value;
+            p.registerCTRL2 = value;
             return;
             
 		case 0x17: // SPRITE Y EXPANSION
@@ -662,7 +656,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 			return;		
 			
         case 0x1D: // SPRITE_X_EXPAND
-            spriteXexpand = value;
+            p.spriteXexpand = value;
             return;
             
 		case 0x1E:
@@ -747,7 +741,7 @@ VIC::triggerLightPenInterrupt()
 		lightpenIRQhasOccured = true;
 
 		// determine current coordinates
-        int x = xCounter - 4; // Is this correct?
+        int x = p.xCounter - 4; // Is this correct?
         int y = yCounter;
 				
 		// latch coordinates 
@@ -829,7 +823,7 @@ VIC::checkVerticalFrameFF()
     }
     // Trigger immediately (similar to VICE)
     if (verticalFrameFFclearCond) {
-        verticalFrameFF = false;
+        p.verticalFrameFF = false;
     }
     
     // Check for lower border
@@ -857,7 +851,7 @@ VIC::checkFrameFlipflopsRight(uint16_t comparisonValue)
     //     Haupt-Rahmenflipflop gesetzt." [C.B.]
     
     if (comparisonValue == rightComparisonValue()) {
-        mainFrameFF = true;
+        p.mainFrameFF = true;
     }
 }
 
@@ -944,7 +938,7 @@ VIC::endRasterline()
 {
     // Set vertical flipflop if condition was hit
     if (verticalFrameFFsetCond) {
-        verticalFrameFF = true;
+        p.verticalFrameFF = true;
     }
     
     // Draw debug markers
@@ -973,16 +967,7 @@ VIC::yCounterOverflow()
 inline void
 VIC::preparePixelEngine()
 {
-    pixelEngine.pipe.xCounter = xCounter;
-    for (unsigned i = 0; i < 8; i++) pixelEngine.pipe.spriteX[i] = spriteX[i];
-    pixelEngine.pipe.spriteXexpand = spriteXexpand;
-    pixelEngine.pipe.registerCTRL1 = registerCTRL1;
-    pixelEngine.pipe.registerCTRL2 = registerCTRL2;
-    pixelEngine.pipe.g_data = g_data;
-    pixelEngine.pipe.g_character = g_character;
-    pixelEngine.pipe.g_color = g_color;
-    pixelEngine.pipe.mainFrameFF = mainFrameFF;
-    pixelEngine.pipe.verticalFrameFF = verticalFrameFF;
+    pixelEngine.pipe = p;
 }
 
 void
@@ -993,7 +978,7 @@ VIC::cycle1()
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
     if (verticalFrameFFsetCond) {
-        verticalFrameFF = true;
+        p.verticalFrameFF = true;
     }
     
     // Phi1.2 Draw
@@ -1476,7 +1461,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     // Phi2.5 Fetch
     // Finalize
     updateDisplayState();
-    xCounter = 0;
+    p.xCounter = 0;
 }
 
 void

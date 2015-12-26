@@ -103,7 +103,7 @@ private:
     bool vblank;
     
     //! Increase x counter by 8
-    inline void countX() { xCounter += 8; }
+    inline void countX() { p.xCounter += 8; }
 
     //! Returns true if yCounter needs to be reset to 0 in this rasterline
     bool yCounterOverflow();
@@ -126,7 +126,7 @@ private:
     uint32_t yCounter;
 
     
-    
+#if 0
     
     //! Internal x counter of the sequencer (sptrite coordinate system)
     uint16_t xCounter;
@@ -156,16 +156,16 @@ private:
     //! Color value grabbed in gAccess()
     uint8_t g_color;
     
-    //! Display mode grabbed in gAccess()
-    DisplayMode g_mode;
-
     //! Main frame flipflop
     bool mainFrameFF;
     
     //! Vertical frame Flipflop
     bool verticalFrameFF;
+#endif
     
-    
+    //! @brief State variables that need to be pushed into the pixel engine with a delay of one cycle
+    /*! @see   preparePixelEngine */
+    PixelEnginePipe p;
     
     //! Vertical frame flipflop set condition
     /*! Indicates whether the vertical frame ff needs to be set in current rasterline */
@@ -266,7 +266,7 @@ private:
     /*  "Das vertikale Rahmenflipflop dient zur Unterstützung bei der Darstellung
          des oberen/unteren Rahmens. Ist es gesetzt, kann das Haupt-Rahmenflipflop
          nicht gelöscht werden." [C.B.] */
-    inline void clearMainFrameFF() { if (!verticalFrameFF && !verticalFrameFFsetCond) mainFrameFF = false; }
+    inline void clearMainFrameFF() { if (!p.verticalFrameFF && !verticalFrameFFsetCond) p.mainFrameFF = false; }
      
     
 	// -----------------------------------------------------------------------------------------------
@@ -578,20 +578,20 @@ public:
 public:
 		
     //! Current value of DEN bit (Display Enabled)
-    inline bool DENbit() { return registerCTRL1 & 0x10; }
+    inline bool DENbit() { return p.registerCTRL1 & 0x10; }
 
     //! DEN bit in previous cycle (Display Enabled)
     // inline bool DENbitInPreviousCycle() { return oldControlReg1 & 0x10; }
 
     //! Current value of BMM bit (Bit Map Mode)
-    inline bool BMMbit() { return registerCTRL1 & 0x20; }
+    inline bool BMMbit() { return p.registerCTRL1 & 0x20; }
 
     //! BMM bit in previous cycle (Bit Map Mode)
     // inline bool BMMbitInPreviousCycle() { return oldControlReg1 & 0x20; }
     inline bool BMMbitInPreviousCycle() { return pixelEngine.pipe.registerCTRL1 & 0x20; }
     
     //! Current value of ECM bit (Extended Character Mode)
-    inline bool ECMbit() { return registerCTRL1 & 0x40; }
+    inline bool ECMbit() { return p.registerCTRL1 & 0x40; }
 
     //! ECM bit in previous cycle (Extended Character Mode)
     // inline bool ECMbitInPreviousCycle() { return oldControlReg1 & 0x40; }
@@ -607,20 +607,20 @@ public:
     inline uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
 
 	//! Returns the state of the CSEL bit
-	inline bool isCSEL() { return registerCTRL2 & 0x08; }
+	inline bool isCSEL() { return p.registerCTRL2 & 0x08; }
 	
 	//! Returns the state of the RSEL bit
-	inline bool isRSEL() { return registerCTRL1 & 0x08; }
+	inline bool isRSEL() { return p.registerCTRL1 & 0x08; }
     
 	//! Returns the currently set display mode
 	/*! The display mode is determined by bits 5 and 6 of control register 1 and bit 4 of control register 2. */
 	inline DisplayMode getDisplayMode() 
-	{ return (DisplayMode)((registerCTRL1 & 0x60) | (registerCTRL2 & 0x10)); }
+	{ return (DisplayMode)((p.registerCTRL1 & 0x60) | (p.registerCTRL2 & 0x10)); }
 	
 	//! Set display mode
 	inline void setDisplayMode(DisplayMode m) 
-	{ registerCTRL1 = (registerCTRL1 & (0xff - 0x60)) | (m & 0x60);
-      registerCTRL2 = (registerCTRL2 & (0xff-0x10)) | (m & 0x10); }
+	{ p.registerCTRL1 = (p.registerCTRL1 & (0xff - 0x60)) | (m & 0x60);
+      p.registerCTRL2 = (p.registerCTRL2 & (0xff-0x10)) | (m & 0x10); }
 	
 	//! Get the current screen geometry
 	ScreenGeometry getScreenGeometry(void);
@@ -629,32 +629,32 @@ public:
 	void setScreenGeometry(ScreenGeometry mode);
 	
 	//! Returns the number of rows to be drawn (24 or 25)
-	inline int numberOfRows() { return (registerCTRL1 & 8) ? 25 : 24; }
+	inline int numberOfRows() { return (p.registerCTRL1 & 8) ? 25 : 24; }
 	
 	//! Set the number of rows to be drawn (24 or 25)
 	inline void setNumberOfRows(int rows) 
-	{ assert(rows == 24 || rows == 25); if (rows == 25) registerCTRL1 |= 0x8; else registerCTRL1 &= (0xff - 0x8); }
+	{ assert(rows == 24 || rows == 25); if (rows == 25) p.registerCTRL1 |= 0x8; else p.registerCTRL1 &= (0xff - 0x8); }
 	
 	//! Return the number of columns to be drawn (38 or 40)
-	inline int numberOfColumns() { return (registerCTRL2 & 8) ? 40 : 38; }
+	inline int numberOfColumns() { return (p.registerCTRL2 & 8) ? 40 : 38; }
 
 	//! Set the number of columns to be drawn (38 or 40)
 	inline void setNumberOfColumns(int columns) 
-	{ assert(columns == 38 || columns == 40); if (columns == 40) registerCTRL2 |= 0x8; else registerCTRL2 &= (0xff - 0x8); }
+	{ assert(columns == 38 || columns == 40); if (columns == 40) p.registerCTRL2 |= 0x8; else p.registerCTRL2 &= (0xff - 0x8); }
 		
 	//! Returns the vertical raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
-	inline uint8_t getVerticalRasterScroll() { return registerCTRL1 & 7; }
+	inline uint8_t getVerticalRasterScroll() { return p.registerCTRL1 & 7; }
 	
 	//! Set vertical raster scroll offset (0 to 7)
-	inline void setVerticalRasterScroll(uint8_t offset) { registerCTRL1 = (registerCTRL1 & 0xF8) | (offset & 0x07); }
+	inline void setVerticalRasterScroll(uint8_t offset) { p.registerCTRL1 = (p.registerCTRL1 & 0xF8) | (offset & 0x07); }
 	
 	//! Returns the horizontal raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
-	inline uint8_t getHorizontalRasterScroll() { return registerCTRL2 & 7; }
+	inline uint8_t getHorizontalRasterScroll() { return p.registerCTRL2 & 7; }
 	
 	//! Set horizontan raster scroll offset (0 to 7)
-	inline void setHorizontalRasterScroll(uint8_t offset) { registerCTRL2 = (registerCTRL2 & 0xF8) | (offset & 0x07); }
+	inline void setHorizontalRasterScroll(uint8_t offset) { p.registerCTRL2 = (p.registerCTRL2 & 0xF8) | (offset & 0x07); }
 			
 	//! Return border color
 	inline uint8_t getBorderColor() { return iomem[0x20] & 0x0F; }
@@ -709,10 +709,10 @@ public:
 	//! Return next interrupt rasterline
     /*! Note: In line 0, the interrupt is triggered in cycle 2
               In all other lines, it is triggered in cycle 1 */
-	inline uint16_t rasterInterruptLine() { return ((registerCTRL1 & 128) << 1) + iomem[0x12]; }
+	inline uint16_t rasterInterruptLine() { return ((p.registerCTRL1 & 128) << 1) + iomem[0x12]; }
 
 	//! Set interrupt rasterline 
-	inline void setRasterInterruptLine(uint16_t line) { iomem[0x12] = line & 0xFF; if (line > 0xFF) registerCTRL1 |= 0x80; else registerCTRL1 &= 0x7F; }
+	inline void setRasterInterruptLine(uint16_t line) { iomem[0x12] = line & 0xFF; if (line > 0xFF) p.registerCTRL1 |= 0x80; else p.registerCTRL1 &= 0x7F; }
 	
 	//! Returns true, iff rasterline interrupts are enabled
 	inline bool rasterInterruptEnabled() { return iomem[0x1A] & 1; }
@@ -776,7 +776,7 @@ public:
 	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); iomem[0x27 + nr] = color; }
 		
 	//! Get X coordinate of sprite 
-    inline uint16_t getSpriteX(uint8_t nr) { return spriteX[nr]; }
+    inline uint16_t getSpriteX(uint8_t nr) { return p.spriteX[nr]; }
 
 	//! Set X coordinate of sprite
 	inline void setSpriteX(uint8_t nr, int x) { if (x < 512) { poke(2*nr, x & 0xFF); if (x > 0xFF) poke(0x10, peek(0x10) | (1 << nr)); else poke(0x10, peek(0x10) & ~(1 << nr));} }
@@ -849,11 +849,11 @@ public:
 	inline void spriteToggleStretchYFlag(uint8_t nr) { setSpriteStretchY(nr, !spriteHeightIsDoubled(nr)); }
 
 	//! Returns true, if the sprite is horizontally stretched 
-	inline bool spriteWidthIsDoubled(uint8_t nr) { return spriteXexpand & (1 << nr); }
+	inline bool spriteWidthIsDoubled(uint8_t nr) { return p.spriteXexpand & (1 << nr); }
 
 	//! Stretch or shrink sprite horizontally
     inline void setSpriteStretchX(uint8_t nr, bool b) {
-        if (b) SET_BIT(spriteXexpand, nr); else CLR_BIT(spriteXexpand, nr); }
+        if (b) SET_BIT(p.spriteXexpand, nr); else CLR_BIT(p.spriteXexpand, nr); }
 
 	//! Stretch or shrink sprite horizontally
 	inline void spriteToggleStretchXFlag(uint8_t nr) { setSpriteStretchX(nr, !spriteWidthIsDoubled(nr)); }
