@@ -102,14 +102,6 @@ private:
     //! Indicates whether the currently drawn rasterline belongs to VBLANK area
     bool vblank;
     
-    //! Rasterline counter
-    /*! The rasterline counter is is usually incremented in cycle 1. The only exception is the
-        overflow condition which is handled in cycle 2 */
-    uint32_t yCounter;
-    
-	//! Internal x counter of the sequencer (sptrite coordinate system)
-	uint16_t xCounter;
-	
     //! Increase x counter by 8
     inline void countX() { xCounter += 8; }
 
@@ -128,11 +120,58 @@ private:
 	//! Internal VIC-II register, 6 bit video matrix line index
 	uint8_t registerVMLI; 
 
+    
+    //! Rasterline counter
+    /*! The rasterline counter is is usually incremented in cycle 1. The only exception is the
+     overflow condition which is handled in cycle 2 */
+    uint32_t yCounter;
+
+    //! Internal x counter of the sequencer (sptrite coordinate system)
+    uint16_t xCounter;
+    
+    //! Sprite X coordinate
+    /*! The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored in a seperate
+     *  IO register, while the uppermost bits are packed in a single register (0xD010). The sprites
+     *  X coordinate is updated whenever one the corresponding IO register changes its value.
+     */
+    uint16_t spriteX[8];
+    
+    //! Sprite X expansion bits
+    uint8_t spriteXexpand;
+
     //! Internal VIC-II register, control register 1
     uint8_t registerCTRL1;
 
     //! Internal VIC-II register, control register 2
     uint8_t registerCTRL2;
+
+    //! Data value grabbed in gAccess()
+    uint8_t g_data;
+    
+    //! Character value grabbed in gAccess()
+    uint8_t g_character;
+    
+    //! Color value grabbed in gAccess()
+    uint8_t g_color;
+    
+    //! Display mode grabbed in gAccess()
+    DisplayMode g_mode;
+
+    //! Main frame flipflop
+    bool mainFrameFF;
+    
+    //! Vertical frame Flipflop
+    bool verticalFrameFF;
+    
+    
+    
+    //! Vertical frame flipflop set condition
+    /*! Indicates whether the vertical frame ff needs to be set in current rasterline */
+    bool verticalFrameFFsetCond;
+    
+    //! Vertical frame flipflop clear condition
+    /*! Indicates whether the vertical frame ff needs to be cleared in current rasterline */
+    bool verticalFrameFFclearCond;
 
     //! DRAM refresh counter
     /*! "In jeder Rasterzeile führt der VIC fünf Lesezugriffe zum Refresh des
@@ -204,20 +243,6 @@ private:
         6. Erreicht die X-Koordinate den linken Vergleichswert und ist das
            vertikale Rahmenflipflop gelöscht, wird das Haupt-Flipflop gelöscht." [C.B.]
      */
-
-	//! Main frame flipflop
-	bool mainFrameFF;
-
-    //! Vertical frame Flipflop
-    bool verticalFrameFF;
-
-    //! Vertical frame flipflop set condition
-    /*! Indicates whether the vertical frame ff needs to be set in current rasterline */
-    bool verticalFrameFFsetCond;
-
-    //! Vertical frame flipflop clear condition
-    /*! Indicates whether the vertical frame ff needs to be cleared in current rasterline */
-    bool verticalFrameFFclearCond;
 
     //! Takes care of the vertical frame flipflop value.
     /*! Invoked in each VIC II cycle */
@@ -302,20 +327,10 @@ private:
 // -----------------------------------------------------------------------------------------------
 
     //! During a 'g access', VIC reads graphics data (character or bitmap patterns)
-    /*! The result of the gAccess is stored in variables prefixed with 'g_' */
+    /*! The result of the gAccess is stored in variables prefixed with 'g_', i.e.,
+     *  g_data, g_character, g_color, g_mode */
     void gAccess();
     
-    //! Data value grabbed in gAccess()
-    uint8_t g_data;
-    
-    //! Character value grabbed in gAccess()
-    uint8_t g_character;
-    
-    //! Color value grabbed in gAccess()
-    uint8_t g_color;
-    
-    //! Display mode grabbed in gAccess()
-    DisplayMode g_mode;
 
     
     // -----------------------------------------------------------------------------------------------
@@ -374,13 +389,6 @@ private:
 	//! Sprite pointer
 	/*! Determines where the sprite data comes from */
 	uint16_t spritePtr[8];
-
-    //! Sprite X coordinate
-    /*! The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored in a seperate
-     *  IO register, while the uppermost bits are packed in a single register (0xD010). The sprites
-     *  X coordinate is updated whenever one the corresponding IO register changes its value.
-     */
-    uint16_t spriteX[8];
 
 	//! Sprite on off
 	/*! Determines if a sprite needs to be drawn in the current rasterline. Each bit represents a single sprite. */
@@ -766,7 +774,6 @@ public:
 	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); iomem[0x27 + nr] = color; }
 		
 	//! Get X coordinate of sprite 
-	inline uint16_t getSpriteXOld(uint8_t nr) { return iomem[2*nr] + (iomem[0x10] & (1 << nr) ? 256 : 0); }
     inline uint16_t getSpriteX(uint8_t nr) { return spriteX[nr]; }
 
 	//! Set X coordinate of sprite
@@ -832,16 +839,19 @@ public:
 	inline bool spriteHeightIsDoubled(uint8_t nr) { return iomem[0x17] & (1 << nr); }	
 
 	//! Stretch or shrink sprite vertically
-	inline void setSpriteStretchY(uint8_t nr, bool b) { if (b) poke(0x17, peek(0x17) | (1 << nr)); else poke(0x17, peek(0x17) & ~(1 << nr)); }
+    inline void setSpriteStretchY(uint8_t nr, bool b) {
+        if (b) SET_BIT(iomem[0x17], nr); else CLR_BIT(iomem[0x17], nr); }
+    // { if (b) poke(0x17, peek(0x17) | (1 << nr)); else poke(0x17, peek(0x17) & ~(1 << nr)); }
 
 	//! Stretch or shrink sprite vertically
 	inline void spriteToggleStretchYFlag(uint8_t nr) { setSpriteStretchY(nr, !spriteHeightIsDoubled(nr)); }
 
 	//! Returns true, if the sprite is horizontally stretched 
-	inline bool spriteWidthIsDoubled(uint8_t nr) { return iomem[0x1D] & (1 << nr); }
+	inline bool spriteWidthIsDoubled(uint8_t nr) { return spriteXexpand & (1 << nr); }
 
 	//! Stretch or shrink sprite horizontally
-	inline void setSpriteStretchX(uint8_t nr, bool b) { if (b) poke(0x1D, peek(0x1D) | (1 << nr)); else poke(0x1D, peek(0x1D) & (0xFF - (1 << nr))); }
+    inline void setSpriteStretchX(uint8_t nr, bool b) {
+        if (b) SET_BIT(spriteXexpand, nr); else CLR_BIT(spriteXexpand, nr); }
 
 	//! Stretch or shrink sprite horizontally
 	inline void spriteToggleStretchXFlag(uint8_t nr) { setSpriteStretchX(nr, !spriteWidthIsDoubled(nr)); }

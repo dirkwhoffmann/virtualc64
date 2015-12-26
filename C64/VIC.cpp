@@ -83,6 +83,7 @@ VIC::VIC()
         { &mcbase,                      sizeof(mcbase),                         CLEAR_ON_RESET | BYTE_FORMAT },
         { spritePtr,                    sizeof(spritePtr),                      CLEAR_ON_RESET | WORD_FORMAT },
         { spriteX,                      sizeof(spriteX),                        CLEAR_ON_RESET | WORD_FORMAT },
+        { &spriteXexpand,               sizeof(spriteXexpand),                  CLEAR_ON_RESET },
         { &spriteOnOff,                 sizeof(spriteOnOff),                    CLEAR_ON_RESET },
         { &spriteDmaOnOff,              sizeof(spriteDmaOnOff),                 CLEAR_ON_RESET },
         { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
@@ -513,6 +514,9 @@ VIC::peek(uint16_t addr)
 			result = iomem[addr] | 0xF0; // Bits 4 to 7 are unsed (always 1)
 			return result;
             
+        case 0x1D: // SPRITE_X_EXPAND
+            return spriteXexpand;
+
 		case 0x1E: // Sprite-to-sprite collision
 			result = iomem[addr];
 			iomem[addr] = 0x00;  // Clear on read
@@ -657,6 +661,10 @@ VIC::poke(uint16_t addr, uint8_t value)
 			}
 			return;		
 			
+        case 0x1D: // SPRITE_X_EXPAND
+            spriteXexpand = value;
+            return;
+            
 		case 0x1E:
 		case 0x1F:
 			// Writing has no effect
@@ -967,19 +975,19 @@ VIC::preparePixelEngine()
 {
     pixelEngine.dc.xCounter = xCounter;
     pixelEngine.dc.yCounter = yCounter;
-    pixelEngine.dc.verticalFrameFF = verticalFrameFF;
-    pixelEngine.dc.mainFrameFF = mainFrameFF;
-    pixelEngine.dc.controlReg1 = registerCTRL1; 
+    pixelEngine.dc.controlReg1 = registerCTRL1;
     pixelEngine.dc.controlReg2 = registerCTRL2;
     pixelEngine.dc.data = g_data;
     pixelEngine.dc.character = g_character;
     pixelEngine.dc.color = g_color;
     pixelEngine.dc.mode = g_mode;
+    pixelEngine.dc.mainFrameFF = mainFrameFF;
+    pixelEngine.dc.verticalFrameFF = verticalFrameFF;
 
     for (unsigned i = 0; i < 8; i++) {
         pixelEngine.dc.spriteX[i] = getSpriteX(i);
     }
-    pixelEngine.dc.spriteXexpand = iomem[0x1D];
+    pixelEngine.dc.spriteXexpand = spriteXexpand;
 }
 
 void
