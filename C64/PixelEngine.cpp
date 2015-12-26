@@ -320,7 +320,7 @@ PixelEngine::drawCanvas()
     
     if (!dc.verticalFrameFF) {
         
-        uint8_t D011 = vic->iomem[0x11] & 0x60; // -xx- ----
+        uint8_t D011 = vic->registerCTRL1 & 0x60; // -xx- ----
         uint8_t D016 = vic->iomem[0x16] & 0x10; // ---x ----
         
         drawCanvasPixel(0);

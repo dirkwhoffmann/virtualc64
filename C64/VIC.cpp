@@ -52,6 +52,8 @@ VIC::VIC()
         { &registerVCBASE,              sizeof(registerVCBASE),                 CLEAR_ON_RESET },
         { &registerRC,                  sizeof(registerRC),                     CLEAR_ON_RESET },
         { &registerVMLI,                sizeof(registerVMLI),                   CLEAR_ON_RESET },
+        { &registerCTRL1,               sizeof(registerCTRL1),                  CLEAR_ON_RESET },
+        { &registerCTRL2,               sizeof(registerCTRL2),                  CLEAR_ON_RESET },
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
@@ -111,7 +113,7 @@ VIC::reset()
     yCounter = PAL_HEIGHT;
     iomem[0x20] = PixelEngine::LTBLUE; // Let the border color look correct right from the beginning
     iomem[0x21] = PixelEngine::BLUE;   // Let the background color look correct right from the beginning
-	iomem[0x11] = 0x10;                // Make screen visible from the beginning
+	registerCTRL1 = 0x10;                // Make screen visible from the beginning
 	expansionFF = 0xFF;
     
     // Remove startup graphics glitches by setting the initial value early
@@ -482,7 +484,7 @@ VIC::peek(uint16_t addr)
 	
 	switch(addr) {
 		case 0x11: // SCREEN CONTROL REGISTER #1
-			result = (iomem[addr] & 0x7f) + (yCounter > 0xff ? 128 : 0);
+			result = (registerCTRL1 & 0x7f) + (yCounter > 0xff ? 128 : 0);
 			return result;
             
 		case 0x12: // VIC_RASTER_READ_WRITE
@@ -586,6 +588,8 @@ VIC::poke(uint16_t addr, uint8_t value)
             break;
 
         case 0x11: // CONTROL_REGISTER_1
+
+#if 0
 			if ((iomem[addr] & 0x80) != (value & 0x80)) {
 				// Value changed: Check if we need to trigger an interrupt immediately
 				iomem[addr] = value;
@@ -604,7 +608,26 @@ VIC::poke(uint16_t addr, uint8_t value)
             // Changing these bits directly affects the badline line condition the middle of a rasterline
 			updateBadLineCondition();
 			return;
-			
+#endif
+            if ((registerCTRL1 & 0x80) != (value & 0x80)) {
+                // Value changed: Check if we need to trigger an interrupt immediately
+                registerCTRL1 = value;
+                if (yCounter == rasterInterruptLine())
+                    triggerIRQ(1);
+            } else {
+                registerCTRL1 = value;
+            }
+            
+            // Check the DEN bit if we're in rasterline 30
+            // If it's set at some point in that line, bad line conditions can occur
+            if (yCounter == 0x30 && (value & 0x10) != 0)
+                DENwasSetInRasterline30 = true;
+            
+            // Bits 0 - 3 determine the vertical scroll offset.
+            // Changing these bits directly affects the badline line condition the middle of a rasterline
+            updateBadLineCondition();
+            return;
+
 		case 0x12: // RASTER_COUNTER
 			if (iomem[addr] != value) {
 				// Value changed: Check if we need to trigger an interrupt immediately
@@ -961,7 +984,7 @@ VIC::preparePixelEngine()
     pixelEngine.dc.yCounter = yCounter;
     pixelEngine.dc.verticalFrameFF = verticalFrameFF;
     pixelEngine.dc.mainFrameFF = mainFrameFF;
-    pixelEngine.dc.controlReg1 = iomem[0x11];
+    pixelEngine.dc.controlReg1 = registerCTRL1; 
     pixelEngine.dc.controlReg2 = iomem[0x16];
     pixelEngine.dc.data = g_data;
     pixelEngine.dc.character = g_character;

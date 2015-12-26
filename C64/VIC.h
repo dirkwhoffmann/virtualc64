@@ -111,7 +111,6 @@ private:
 	uint16_t xCounter;
 	
     //! Increase x counter by 8
-    // inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
     inline void countX() { xCounter += 8; }
 
     //! Returns true if yCounter needs to be reset to 0 in this rasterline
@@ -129,8 +128,11 @@ private:
 	//! Internal VIC-II register, 6 bit video matrix line index
 	uint8_t registerVMLI; 
 
-    //! Contents of control register 1 (0xD011) in previous cycle
-    // uint8_t oldControlReg1;
+    //! Internal VIC-II register, control register 1
+    uint8_t registerCTRL1;
+
+    //! Internal VIC-II register, control register 2
+    uint8_t registerCTRL2;
 
     //! DRAM refresh counter
     /*! "In jeder Rasterzeile führt der VIC fünf Lesezugriffe zum Refresh des
@@ -566,20 +568,20 @@ public:
 public:
 		
     //! Current value of DEN bit (Display Enabled)
-    inline bool DENbit() { return iomem[0x11] & 0x10; }
+    inline bool DENbit() { return registerCTRL1 & 0x10; }
 
     //! DEN bit in previous cycle (Display Enabled)
     // inline bool DENbitInPreviousCycle() { return oldControlReg1 & 0x10; }
 
     //! Current value of BMM bit (Bit Map Mode)
-    inline bool BMMbit() { return iomem[0x11] & 0x20; }
+    inline bool BMMbit() { return registerCTRL1 & 0x20; }
 
     //! BMM bit in previous cycle (Bit Map Mode)
     // inline bool BMMbitInPreviousCycle() { return oldControlReg1 & 0x20; }
     inline bool BMMbitInPreviousCycle() { return pixelEngine.dc.controlReg1 & 0x20; }
     
     //! Current value of ECM bit (Extended Character Mode)
-    inline bool ECMbit() { return iomem[0x11] & 0x40; }
+    inline bool ECMbit() { return registerCTRL1 & 0x40; }
 
     //! ECM bit in previous cycle (Extended Character Mode)
     // inline bool ECMbitInPreviousCycle() { return oldControlReg1 & 0x40; }
@@ -598,16 +600,17 @@ public:
 	inline bool isCSEL() { return iomem[0x16] & 0x08; }
 	
 	//! Returns the state of the RSEL bit
-	inline bool isRSEL() { return iomem[0x11] & 0x08; }
+	inline bool isRSEL() { return registerCTRL1 & 0x08; }
     
 	//! Returns the currently set display mode
 	/*! The display mode is determined by bits 5 and 6 of control register 1 and bit 4 of control register 2. */
 	inline DisplayMode getDisplayMode() 
-	{ return (DisplayMode)((iomem[0x11] & 0x60) | (iomem[0x16] & 0x10)); }
+	{ return (DisplayMode)((registerCTRL1 & 0x60) | (iomem[0x16] & 0x10)); }
 	
 	//! Set display mode
 	inline void setDisplayMode(DisplayMode m) 
-	{ iomem[0x11] = (iomem[0x11] & (0xff - 0x60)) | (m & 0x60); iomem[0x16] = (iomem[0x16] & (0xff-0x10)) | (m & 0x10); }
+	{ registerCTRL1 = (registerCTRL1 & (0xff - 0x60)) | (m & 0x60);
+      registerCTRL2 = iomem[0x16] = (iomem[0x16] & (0xff-0x10)) | (m & 0x10); }
 	
 	//! Get the current screen geometry
 	ScreenGeometry getScreenGeometry(void);
@@ -616,11 +619,11 @@ public:
 	void setScreenGeometry(ScreenGeometry mode);
 	
 	//! Returns the number of rows to be drawn (24 or 25)
-	inline int numberOfRows() { return (iomem[0x11] & 8) ? 25 : 24; }
+	inline int numberOfRows() { return (registerCTRL1 & 8) ? 25 : 24; }
 	
 	//! Set the number of rows to be drawn (24 or 25)
 	inline void setNumberOfRows(int rows) 
-	{ assert(rows == 24 || rows == 25); if (rows == 25) iomem[0x11] |= 0x8; else iomem[0x11] &= (0xff - 0x8); }
+	{ assert(rows == 24 || rows == 25); if (rows == 25) registerCTRL1 |= 0x8; else registerCTRL1 &= (0xff - 0x8); }
 	
 	//! Return the number of columns to be drawn (38 or 40)
 	inline int numberOfColumns() { return (iomem[0x16] & 8) ? 40 : 38; }
@@ -631,10 +634,10 @@ public:
 		
 	//! Returns the vertical raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
-	inline uint8_t getVerticalRasterScroll() { return iomem[0x11] & 7; }
+	inline uint8_t getVerticalRasterScroll() { return registerCTRL1 & 7; }
 	
 	//! Set vertical raster scroll offset (0 to 7)
-	inline void setVerticalRasterScroll(uint8_t offset) { iomem[0x11] = (iomem[0x11] & 0xF8) | (offset & 0x07); }
+	inline void setVerticalRasterScroll(uint8_t offset) { registerCTRL1 = (registerCTRL1 & 0xF8) | (offset & 0x07); }
 	
 	//! Returns the horizontal raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
@@ -696,10 +699,10 @@ public:
 	//! Return next interrupt rasterline
     /*! Note: In line 0, the interrupt is triggered in cycle 2
               In all other lines, it is triggered in cycle 1 */
-	inline uint16_t rasterInterruptLine() { return ((iomem[0x11] & 128) << 1) + iomem[0x12]; }
+	inline uint16_t rasterInterruptLine() { return ((registerCTRL1 & 128) << 1) + iomem[0x12]; }
 
 	//! Set interrupt rasterline 
-	inline void setRasterInterruptLine(uint16_t line) { iomem[0x12] = line & 0xFF; if (line > 0xFF) iomem[0x11] |= 0x80; else iomem[0x11] &= 0x7F; }
+	inline void setRasterInterruptLine(uint16_t line) { iomem[0x12] = line & 0xFF; if (line > 0xFF) registerCTRL1 |= 0x80; else registerCTRL1 &= 0x7F; }
 	
 	//! Returns true, iff rasterline interrupts are enabled
 	inline bool rasterInterruptEnabled() { return iomem[0x1A] & 1; }
