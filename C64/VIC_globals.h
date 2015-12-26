@@ -180,13 +180,8 @@ static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
  *              Putting all state variables in a structure allows the compiler to optize the copy process. 
  */
 typedef struct {
-
-    //! @brief      Rasterline counter
-    /*! @discussion The rasterline counter is is usually incremented in cycle 1. The only exception is the
-     *              overflow condition which is handled in cycle 2 */
-    // uint32_t yCounter;
     
-    //! @brief      Internal x counter of the sequencer (sptrite coordinate system)
+    //! @brief      Internal x counter of the sequencer (sprite coordinate system)
     uint16_t xCounter;
     
     //! @brief      Sprite X coordinates
@@ -214,9 +209,6 @@ typedef struct {
     //! @brief      Color value grabbed in gAccess()
     uint8_t g_color;
     
-    //! @brief      Display mode grabbed in gAccess()
-    uint8_t g_mode;
-
     //! @brief      Main frame flipflop
     uint8_t mainFrameFF;
 

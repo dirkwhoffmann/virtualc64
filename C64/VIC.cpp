@@ -973,23 +973,16 @@ VIC::yCounterOverflow()
 inline void
 VIC::preparePixelEngine()
 {
-    // pixelEngine.pipe.yCounter = yCounter;
     pixelEngine.pipe.xCounter = xCounter;
+    for (unsigned i = 0; i < 8; i++) pixelEngine.pipe.spriteX[i] = spriteX[i];
+    pixelEngine.pipe.spriteXexpand = spriteXexpand;
+    pixelEngine.pipe.registerCTRL1 = registerCTRL1;
+    pixelEngine.pipe.registerCTRL2 = registerCTRL2;
+    pixelEngine.pipe.g_data = g_data;
+    pixelEngine.pipe.g_character = g_character;
+    pixelEngine.pipe.g_color = g_color;
     pixelEngine.pipe.mainFrameFF = mainFrameFF;
     pixelEngine.pipe.verticalFrameFF = verticalFrameFF;
-
-    
-    pixelEngine.dc.registerCTRL1 = registerCTRL1;
-    pixelEngine.dc.registerCTRL2 = registerCTRL2;
-    pixelEngine.dc.g_data = g_data;
-    pixelEngine.dc.g_character = g_character;
-    pixelEngine.dc.g_color = g_color;
-    pixelEngine.dc.g_mode = g_mode;
-
-    for (unsigned i = 0; i < 8; i++) {
-        pixelEngine.dc.spriteX[i] = getSpriteX(i);
-    }
-    pixelEngine.dc.spriteXexpand = spriteXexpand;
 }
 
 void

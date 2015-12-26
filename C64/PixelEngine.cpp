@@ -40,18 +40,16 @@ PixelEngine::PixelEngine() // C64 *c64)
         
         // VIC state latching
         { &pipe.xCounter,           sizeof(pipe.xCounter),          CLEAR_ON_RESET },
-
-        
+        { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
+        { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
+        { &pipe.registerCTRL1,      sizeof(pipe.registerCTRL1),     CLEAR_ON_RESET },
+        { &pipe.registerCTRL2,      sizeof(pipe.registerCTRL2),     CLEAR_ON_RESET },
+        { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
+        { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
+        { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
         { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
         { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
         
-        { &dc.registerCTRL1,        sizeof(dc.registerCTRL1),       CLEAR_ON_RESET },
-        { &dc.registerCTRL2,        sizeof(dc.registerCTRL2),       CLEAR_ON_RESET },
-        { &dc.g_character,          sizeof(dc.g_character),         CLEAR_ON_RESET },
-        { &dc.g_color,              sizeof(dc.g_color),             CLEAR_ON_RESET },
-        { &dc.g_mode,               sizeof(dc.g_mode),              CLEAR_ON_RESET },
-        { dc.spriteX,               sizeof(dc.spriteX),             CLEAR_ON_RESET | WORD_FORMAT },
-        { &dc.spriteXexpand,        sizeof(dc.spriteXexpand),       CLEAR_ON_RESET },
         { &dc.borderColor,          sizeof(dc.borderColor),         CLEAR_ON_RESET },
         { dc.backgroundColor,       sizeof(dc.backgroundColor),     CLEAR_ON_RESET | BYTE_FORMAT },
         { dc.spriteColor,           sizeof(dc.spriteColor),         CLEAR_ON_RESET | BYTE_FORMAT },
@@ -369,14 +367,14 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
 {
     assert(pixelnr < 8);
     
-    if (pixelnr == (dc.registerCTRL2 & 0x07) /* horizontal raster scroll */ && sr.canLoad) {
+    if (pixelnr == (pipe.registerCTRL2 & 0x07) /* horizontal raster scroll */ && sr.canLoad) {
         
         // Load shift register
-        sr.data = dc.g_data;
+        sr.data = pipe.g_data;
         
         // Remember how to synthesize pixels
-        sr.latchedCharacter = dc.g_character;
-        sr.latchedColor = dc.g_color;
+        sr.latchedCharacter = pipe.g_character;
+        sr.latchedColor = pipe.g_color;
         
         // Reset the multicolor synchronization flipflop
         sr.mc_flop = true;
@@ -458,7 +456,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
     if (!freeze) {
         
         // Check for horizontal trigger condition
-        if (pipe.xCounter + pixelnr == dc.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
+        if (pipe.xCounter + pixelnr == pipe.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
             sprite_sr[spritenr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
             sprite_sr[spritenr].exp_flop = true;
             sprite_sr[spritenr].mc_flop = true;
@@ -473,7 +471,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
             sprite_sr[spritenr].col_bits = sprite_sr[spritenr].data >> (multicol && sprite_sr[spritenr].mc_flop ? 22 : 23);
                         
             // Toggle horizontal expansion flipflop for stretched sprites
-            if (GET_BIT(dc.spriteXexpand, spritenr))
+            if (GET_BIT(pipe.spriteXexpand, spritenr))
                 sprite_sr[spritenr].exp_flop = !sprite_sr[spritenr].exp_flop;
 
             // Run shift register and toggle multicolor flipflop

@@ -227,7 +227,6 @@ public:
         uint16_t xCounter;
         bool verticalFrameFF;
         bool mainFrameFF;
-#endif
         uint8_t g_data;
         uint8_t g_character;
         uint8_t g_color;
@@ -236,7 +235,8 @@ public:
         uint8_t spriteXexpand;
         uint8_t registerCTRL1; // D011
         uint8_t registerCTRL2; // D016
-        
+#endif
+
         // Updated in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
         uint8_t borderColor;
         uint8_t backgroundColor[4];
