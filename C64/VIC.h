@@ -372,6 +372,13 @@ private:
 	/*! Determines where the sprite data comes from */
 	uint16_t spritePtr[8];
 
+    //! Sprite X coordinate
+    /*! The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored in a seperate
+     *  IO register, while the uppermost bits are packed in a single register (0xD010). The sprites
+     *  X coordinate is updated whenever one the corresponding IO register changes its value.
+     */
+    uint16_t spriteX[8];
+
 	//! Sprite on off
 	/*! Determines if a sprite needs to be drawn in the current rasterline. Each bit represents a single sprite. */
 	uint8_t spriteOnOff;
@@ -379,7 +386,7 @@ private:
 	//! Sprite DMA on off
 	/*! Determines  if sprite dma access is enabled or disabled. Each bit represents a single sprite. */
 	uint8_t spriteDmaOnOff;
-
+    
 	//! Expansion flipflop
 	/*! Used to handle Y sprite stretching. One bit for each sprite */
 	uint8_t expansionFF;
@@ -733,17 +740,6 @@ private:
         next rasterline. This causes each sprite line to be drawn twice. */
     void toggleExpansionFlipflop();
     
-    //! Turn on sprite display bit if conditions are met
-    /*! In cycle 58, drawing is switched on for all sprites that got dma access switched on in 
-        cycle 55 or 56. 
-        DEPRECATED */
-    // void turnSpriteDisplayOn();
-
-    //! Turn off sprite display bit if conditions are met
-    /*! In cycle 58, drawing is switched off for all sprites that lost dma access in cycle 16. 
-        DEPRECATED*/
-    // void turnSpriteDisplayOff();
-    
 	//! Get sprite depth
 	/*! The value is written to the z buffer to resolve overlapping pixels */
 	inline uint8_t spriteDepth(uint8_t nr) {
@@ -764,9 +760,10 @@ public:
 	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); iomem[0x27 + nr] = color; }
 		
 	//! Get X coordinate of sprite 
-	inline uint16_t getSpriteX(uint8_t nr) { return iomem[2*nr] + (iomem[0x10] & (1 << nr) ? 256 : 0); }
+	inline uint16_t getSpriteXOld(uint8_t nr) { return iomem[2*nr] + (iomem[0x10] & (1 << nr) ? 256 : 0); }
+    inline uint16_t getSpriteX(uint8_t nr) { return spriteX[nr]; }
 
-	//! Set X coordinate if sprite
+	//! Set X coordinate of sprite
 	inline void setSpriteX(uint8_t nr, int x) { if (x < 512) { poke(2*nr, x & 0xFF); if (x > 0xFF) poke(0x10, peek(0x10) | (1 << nr)); else poke(0x10, peek(0x10) & ~(1 << nr));} }
 	
 	//! Get Y coordinate of sprite

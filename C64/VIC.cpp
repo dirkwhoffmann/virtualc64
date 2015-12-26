@@ -80,6 +80,8 @@ VIC::VIC()
 
         { &mc,                          sizeof(mc),                             CLEAR_ON_RESET | BYTE_FORMAT },
         { &mcbase,                      sizeof(mcbase),                         CLEAR_ON_RESET | BYTE_FORMAT },
+        { spritePtr,                    sizeof(spritePtr),                      CLEAR_ON_RESET | WORD_FORMAT },
+        { spriteX,                      sizeof(spriteX),                        CLEAR_ON_RESET | WORD_FORMAT },
         { &spriteOnOff,                 sizeof(spriteOnOff),                    CLEAR_ON_RESET },
         { &spriteDmaOnOff,              sizeof(spriteDmaOnOff),                 CLEAR_ON_RESET },
         { &expansionFF,                 sizeof(expansionFF),                    CLEAR_ON_RESET },
@@ -541,7 +543,50 @@ VIC::poke(uint16_t addr, uint8_t value)
 	assert(addr <= VIC_END_ADDR - VIC_START_ADDR);
 	
 	switch(addr) {		
-		case 0x11: // CONTROL_REGISTER_1
+        case 0x00: // SPRITE_0_X
+            spriteX[0] = value | ((iomem[0x10] & 0x01) << 8);
+            break;
+
+        case 0x02: // SPRITE_1_X
+            spriteX[1] = value | ((iomem[0x10] & 0x02) << 7);
+            break;
+
+        case 0x04: // SPRITE_2_X
+            spriteX[2] = value | ((iomem[0x10] & 0x04) << 6);
+            break;
+
+        case 0x06: // SPRITE_3_X
+            spriteX[3] = value | ((iomem[0x10] & 0x08) << 5);
+            break;
+
+        case 0x08: // SPRITE_4_X
+            spriteX[4] = value | ((iomem[0x10] & 0x10) << 4);
+            break;
+
+        case 0x0A: // SPRITE_5_X
+            spriteX[5] = value | ((iomem[0x10] & 0x20) << 3);
+            break;
+            
+        case 0x0C: // SPRITE_6_X
+            spriteX[6] = value | ((iomem[0x10] & 0x40) << 2);
+            break;
+            
+        case 0x0E: // SPRITE_7_X
+            spriteX[7] = value | ((iomem[0x10] & 0x80) << 1);
+            break;
+
+        case 0x10: // SPRITE_X_UPPER_BITS
+            spriteX[0] = (spriteX[0] & 0xFF) | ((value & 0x01) << 8);
+            spriteX[1] = (spriteX[1] & 0xFF) | ((value & 0x02) << 7);
+            spriteX[2] = (spriteX[2] & 0xFF) | ((value & 0x04) << 6);
+            spriteX[3] = (spriteX[3] & 0xFF) | ((value & 0x08) << 5);
+            spriteX[4] = (spriteX[4] & 0xFF) | ((value & 0x10) << 4);
+            spriteX[5] = (spriteX[5] & 0xFF) | ((value & 0x20) << 3);
+            spriteX[6] = (spriteX[6] & 0xFF) | ((value & 0x40) << 2);
+            spriteX[7] = (spriteX[7] & 0xFF) | ((value & 0x80) << 1);
+            break;
+
+        case 0x11: // CONTROL_REGISTER_1
 			if ((iomem[addr] & 0x80) != (value & 0x80)) {
 				// Value changed: Check if we need to trigger an interrupt immediately
 				iomem[addr] = value;

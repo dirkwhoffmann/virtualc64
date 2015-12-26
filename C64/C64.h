@@ -62,7 +62,7 @@
 // Snapshot version number of this release
 #define V_MAJOR 1
 #define V_MINOR 4
-#define V_SUBMINOR 0
+#define V_SUBMINOR 1
 
 #include "basic.h"
 #include "VirtualComponent.h"
