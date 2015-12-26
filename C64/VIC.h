@@ -576,14 +576,14 @@ public:
 
     //! BMM bit in previous cycle (Bit Map Mode)
     // inline bool BMMbitInPreviousCycle() { return oldControlReg1 & 0x20; }
-    inline bool BMMbitInPreviousCycle() { return pixelEngine.dc.controlReg & 0x20; }
+    inline bool BMMbitInPreviousCycle() { return pixelEngine.dc.controlReg1 & 0x20; }
     
     //! Current value of ECM bit (Extended Character Mode)
     inline bool ECMbit() { return iomem[0x11] & 0x40; }
 
     //! ECM bit in previous cycle (Extended Character Mode)
     // inline bool ECMbitInPreviousCycle() { return oldControlReg1 & 0x40; }
-    inline bool ECMbitInPreviousCycle() { return pixelEngine.dc.controlReg & 0x40; }
+    inline bool ECMbitInPreviousCycle() { return pixelEngine.dc.controlReg1 & 0x40; }
 
     //! Returns masked CB13 bit (controls memory access)
     inline uint8_t CB13() { return iomem[0x18] & 0x08; }

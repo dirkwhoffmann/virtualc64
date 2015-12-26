@@ -40,15 +40,15 @@ PixelEngine::PixelEngine() // C64 *c64)
         
         // VIC state latching
         { &dc.yCounter,             sizeof(dc.yCounter),            CLEAR_ON_RESET },
-        { &dc.xCounter,             sizeof(dc.xCounter),            CLEAR_ON_RESET },
         { &dc.xCounterSprite,       sizeof(dc.xCounterSprite),      CLEAR_ON_RESET },
         { &dc.verticalFrameFF,      sizeof(dc.verticalFrameFF),     CLEAR_ON_RESET },
         { &dc.mainFrameFF,          sizeof(dc.mainFrameFF),         CLEAR_ON_RESET },
-        { &dc.controlReg,           sizeof(dc.controlReg),          CLEAR_ON_RESET },
+        { &dc.controlReg1,          sizeof(dc.controlReg1),         CLEAR_ON_RESET },
+        { &dc.controlReg2,          sizeof(dc.controlReg2),         CLEAR_ON_RESET },
         { &dc.character,            sizeof(dc.character),           CLEAR_ON_RESET },
         { &dc.color,                sizeof(dc.color),               CLEAR_ON_RESET },
         { &dc.mode,                 sizeof(dc.mode),                CLEAR_ON_RESET },
-        { &dc.delay,                sizeof(dc.delay),               CLEAR_ON_RESET },
+        // { &dc.delay,                sizeof(dc.delay),               CLEAR_ON_RESET },
         { dc.spriteX,               sizeof(dc.spriteX),             CLEAR_ON_RESET | WORD_FORMAT },
         { &dc.spriteXexpand,        sizeof(dc.spriteXexpand),       CLEAR_ON_RESET },
         // { &dc.D011,                 sizeof(dc.D011),                CLEAR_ON_RESET },
@@ -272,9 +272,6 @@ PixelEngine::drawBorder17()
 {
     if (dc.mainFrameFF && !vic->mainFrameFF) {
         
-        // int16_t xCoord = dc.xCounter;
-        // int16_t xCoord = bufferoffset;
-
         // 38 column mode
         setFramePixel(0, colors[dc.borderColor]);
         
@@ -377,7 +374,7 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
 {
     assert(pixelnr < 8);
     
-    if (pixelnr == dc.delay && sr.canLoad) {
+    if (pixelnr == (dc.controlReg2 & 0x07) /* horizontal raster scroll */ && sr.canLoad) {
         
         // Load shift register
         sr.data = dc.data;
@@ -429,14 +426,7 @@ PixelEngine::drawSprites()
     drawSpritePixel(4, firstDMA | secondDMA /* freeze */, 0         /* halt */, secondDMA /* load */);
     drawSpritePixel(5, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
     drawSpritePixel(6, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
-    drawSpritePixel(7, firstDMA             /* freeze */, 0         /* halt */, 0         /* load */);
-    
-    /* DEBUG
-    if (vic->isFirstDMAcycle )
-        setSingleColorSpritePixel(3, dc.xCounter, 1);
-    if (vic->isSecondDMAcycle )
-        setSingleColorSpritePixel(4, dc.xCounter, 1);
-    */
+    drawSpritePixel(7, firstDMA             /* freeze */, 0         /* halt */, 0         /* load */);    
 }
 
 inline void

@@ -221,7 +221,6 @@ public:
     struct {
         // Updated one cycle before drawing (in VIC::reparePixelEngineForCycle)
         uint32_t yCounter;
-        int16_t xCounter;
         int16_t xCounterSprite;
         bool verticalFrameFF;
         bool mainFrameFF;
@@ -229,15 +228,10 @@ public:
         uint8_t character;
         uint8_t color;
         DisplayMode mode;
-        uint8_t delay;
         uint16_t spriteX[8];
         uint8_t spriteXexpand;
-        uint8_t controlReg;
-        
-        //
-        // Updated in the middle of a 8 pixel chunk (in drawCanvas)
-        // uint8_t D011;
-        // uint8_t D016;
+        uint8_t controlReg1; // D011
+        uint8_t controlReg2; // D016
         
         // Updated in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
         uint8_t borderColor;

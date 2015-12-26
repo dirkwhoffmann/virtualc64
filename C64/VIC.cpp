@@ -52,7 +52,6 @@ VIC::VIC()
         { &registerVCBASE,              sizeof(registerVCBASE),                 CLEAR_ON_RESET },
         { &registerRC,                  sizeof(registerRC),                     CLEAR_ON_RESET },
         { &registerVMLI,                sizeof(registerVMLI),                   CLEAR_ON_RESET },
-        // { &oldControlReg1,              sizeof(oldControlReg1),                 CLEAR_ON_RESET },
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
@@ -784,20 +783,6 @@ VIC::turnSpriteDmaOn()
     //     Y-Koordinate des Sprites (ungerade Register $d001-$d00f) gleich den
     //     unteren 8 Bits von RASTER ist. Ist dies der Fall und [3] der DMA für das
     //     Sprite noch ausgeschaltet, wird [4] der DMA angeschaltet, [5] MCBASE gelöscht[.]" [C.B.]
-#if 0
-    for (unsigned i = 0; i < 8; i++) {
-        if (spriteIsEnabled(i)) { /* [1] */
-            if (getSpriteY(i) == (yCounter & 0xff)) { /* [2] */
-                if (!GET_BIT(spriteDmaOnOff,i)) { /* [3] */
-                    SET_BIT(spriteDmaOnOff,i); /* [4] */
-                    mcbase[i] = 0; /* [5] */
-                    SET_BIT(expansionFF,i); // will be flipped for stretched sprites in cycle 56
-                }
-            }
-        }
-    }
-#endif
-    
     uint8_t risingEdges = ~spriteDmaOnOff & (iomem[0x15] & compareSpriteY(yCounter));
     for (unsigned i = 0; i < 8; i++)
         if (GET_BIT(risingEdges,i))
@@ -814,36 +799,6 @@ VIC::toggleExpansionFlipflop()
     expansionFF ^= iomem[0x17];
 }
 
-#if 0
-void
-VIC::turnSpriteDisplayOn()
-{
-    // "4. In der ersten Phase von Zyklus 58 wird [1] für jedes Sprite [2] MC mit MCBASE
-    //     geladen (MCBASE->MC) und geprüft, [3] ob der DMA für das Sprite angeschaltet
-    //     [und [3.1] das entsprechende MxE-Bit in Register $d015 immer noch gesetzt ist]
-    //     und [4] die Y-Koordinate des Sprites gleich den unteren 8 Bits von RASTER
-    //     ist. Ist dies der Fall, wird [5] die Darstellung des Sprites angeschaltet." [C.B.]
-    // In [3], we need to check additionally, if sprite is still enabled.
-    
-    for (unsigned i = 0; i < 8; i++) { /* [1] */
-        mc[i] = mcbase[i]; /* [2] */
-        if (GET_BIT(spriteDmaOnOff, i) /* [3] */ && spriteIsEnabled(i) /* [3.1] */) { 
-            if (getSpriteY(i) == (yCounter & 0xFF)) /* [4] */
-                SET_BIT(spriteOnOff,i); /* [5] */
-        }
-    }
-}
-
-void
-VIC::turnSpriteDisplayOff()
-{
-    // switch off sprite if dma is off
-    for (int i = 0; i < 8; i++) {
-        if (GET_BIT(spriteOnOff, i) && !GET_BIT(spriteDmaOnOff, i))
-            CLR_BIT(spriteOnOff, i);
-    }
-}
-#endif
 
 // -----------------------------------------------------------------------------------------------
 //                                      Frame flipflops
@@ -1003,7 +958,6 @@ inline void
 VIC::preparePixelEngine()
 {
     pixelEngine.dc.yCounter = yCounter;
-    pixelEngine.dc.xCounter = xCounter;
 
     // xCounterSprite is used to match the sprites x trigger coordinate
     if (xCounter > 0)
@@ -1013,12 +967,12 @@ VIC::preparePixelEngine()
 
     pixelEngine.dc.verticalFrameFF = verticalFrameFF;
     pixelEngine.dc.mainFrameFF = mainFrameFF;
-    pixelEngine.dc.controlReg = iomem[0x11];
+    pixelEngine.dc.controlReg1 = iomem[0x11];
+    pixelEngine.dc.controlReg2 = iomem[0x16];
     pixelEngine.dc.data = g_data;
     pixelEngine.dc.character = g_character;
     pixelEngine.dc.color = g_color;
     pixelEngine.dc.mode = g_mode;
-    pixelEngine.dc.delay = getHorizontalRasterScroll();
 
     for (unsigned i = 0; i < 8; i++) {
         pixelEngine.dc.spriteX[i] = getSpriteX(i);
