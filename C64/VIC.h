@@ -120,12 +120,14 @@ private:
 	//! Internal VIC-II register, 6 bit video matrix line index
 	uint8_t registerVMLI; 
 
-    
     //! Rasterline counter
     /*! The rasterline counter is is usually incremented in cycle 1. The only exception is the
      overflow condition which is handled in cycle 2 */
     uint32_t yCounter;
 
+    
+    
+    
     //! Internal x counter of the sequencer (sptrite coordinate system)
     uint16_t xCounter;
     

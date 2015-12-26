@@ -212,18 +212,22 @@ public:
     //                                   VIC state latching
     // -----------------------------------------------------------------------------------------------
 
+    PixelEnginePipe pipe;
+    
     //! Latched VIC state
     /*! To draw pixels right, it is important to gather the necessary information at the right time. 
         Some VIC and memory registers need to be looked up one cycle before drawing, others need
         to be looked up at the same cycle or even in the middle of drawing an 8 pixel chunk. To make
         this process transparent, all gatheres information is stored in this structure. */
 
+
     struct {
+#if 0
         // Updated one cycle before drawing (in VIC::reparePixelEngineForCycle)
-        uint32_t yCounter;
         uint16_t xCounter;
         bool verticalFrameFF;
         bool mainFrameFF;
+#endif
         uint8_t g_data;
         uint8_t g_character;
         uint8_t g_color;

@@ -39,10 +39,12 @@ PixelEngine::PixelEngine() // C64 *c64)
     SnapshotItem items[] = {
         
         // VIC state latching
-        { &dc.yCounter,             sizeof(dc.yCounter),            CLEAR_ON_RESET },
-        { &dc.xCounter,             sizeof(dc.xCounter),            CLEAR_ON_RESET },
-        { &dc.verticalFrameFF,      sizeof(dc.verticalFrameFF),     CLEAR_ON_RESET },
-        { &dc.mainFrameFF,          sizeof(dc.mainFrameFF),         CLEAR_ON_RESET },
+        { &pipe.xCounter,           sizeof(pipe.xCounter),          CLEAR_ON_RESET },
+
+        
+        { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
+        { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
+        
         { &dc.registerCTRL1,        sizeof(dc.registerCTRL1),       CLEAR_ON_RESET },
         { &dc.registerCTRL2,        sizeof(dc.registerCTRL2),       CLEAR_ON_RESET },
         { &dc.g_character,          sizeof(dc.g_character),         CLEAR_ON_RESET },
@@ -246,7 +248,7 @@ PixelEngine::drawOutsideBorder()
 inline void
 PixelEngine::drawBorder()
 {
-    if (dc.mainFrameFF) {
+    if (pipe.mainFrameFF) {
         
         setFramePixel(0, colors[dc.borderColor]);
         
@@ -267,7 +269,7 @@ PixelEngine::drawBorder()
 inline void
 PixelEngine::drawBorder17()
 {
-    if (dc.mainFrameFF && !vic->mainFrameFF) {
+    if (pipe.mainFrameFF && !vic->mainFrameFF) {
         
         // 38 column mode
         setFramePixel(0, colors[dc.borderColor]);
@@ -294,7 +296,7 @@ PixelEngine::drawBorder17()
 inline void
 PixelEngine::drawBorder55()
 {
-    if (!dc.mainFrameFF && vic->mainFrameFF) {
+    if (!pipe.mainFrameFF && vic->mainFrameFF) {
         
         // 38 column mode
         setFramePixel(7, colors[dc.borderColor]);
@@ -315,7 +317,7 @@ PixelEngine::drawCanvas()
      die letzte aktuelle Hintergrundfarbe dargestellt (dieser Bereich ist
      normalerweise vom Rahmen überdeckt)." [C.B.] */
     
-    if (!dc.verticalFrameFF) {
+    if (!pipe.verticalFrameFF) {
         
         uint8_t D011 = vic->registerCTRL1 & 0x60; // -xx- ----
         uint8_t D016 = vic->registerCTRL2 & 0x10; // ---x ----
@@ -456,7 +458,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
     if (!freeze) {
         
         // Check for horizontal trigger condition
-        if (dc.xCounter + pixelnr == dc.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
+        if (pipe.xCounter + pixelnr == dc.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
             sprite_sr[spritenr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
             sprite_sr[spritenr].exp_flop = true;
             sprite_sr[spritenr].mc_flop = true;

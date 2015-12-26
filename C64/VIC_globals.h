@@ -20,7 +20,7 @@
 #define _VIC_CONSTANTS_INC
 
 // -----------------------------------------------------------------------------------------------
-//                                                NTSC
+//                                       NTSC constants
 // -----------------------------------------------------------------------------------------------
 
 //! Frames per second
@@ -94,7 +94,7 @@ static const uint16_t NTSC_VISIBLE_RASTERLINES = 235;
 
 
 // -----------------------------------------------------------------------------------------------
-//                                              PAL
+//                                       PAL constants
 // -----------------------------------------------------------------------------------------------
 
 //! Frames per second
@@ -165,5 +165,64 @@ static const uint16_t PAL_RASTERLINES = 284; // 35 + 200 + 49
 
 //! Number of viewable rasterlines per frame
 static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
+
+
+// -----------------------------------------------------------------------------------------------
+//                                       VIC state types
+// -----------------------------------------------------------------------------------------------
+
+//! @brief      A certain portions of VICs internal state
+/*! @discussion This structure comprises all state variables that are directly accessed by the
+ *              pixel engine and need to be delayed one cycle to get the timing right. 
+ *              To implement the delay, both VIC and PixelEngine hold a variable of that type. 
+ *              The contents of the VICs variable is copied over the contents of the PixelEngines 
+ *              variable in function preparePixelEngine() which is invoked in each (visible) VIC cycle. 
+ *              Putting all state variables in a structure allows the compiler to optize the copy process. 
+ */
+typedef struct {
+
+    //! @brief      Rasterline counter
+    /*! @discussion The rasterline counter is is usually incremented in cycle 1. The only exception is the
+     *              overflow condition which is handled in cycle 2 */
+    // uint32_t yCounter;
+    
+    //! @brief      Internal x counter of the sequencer (sptrite coordinate system)
+    uint16_t xCounter;
+    
+    //! @brief      Sprite X coordinates
+    /*! @discussion The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored in a 
+     *              seperate IO register, while the uppermost bits are packed in a single register (0xD010). 
+     *              The sprites X coordinate is updated whenever one the corresponding IO register changes 
+     *              its value. */
+    uint16_t spriteX[8];
+
+    //! @brief      Sprite X expansion bits
+    uint8_t spriteXexpand;
+
+    //! @brief      Internal VIC-II register D011, control register 1
+    uint8_t registerCTRL1;
+
+    //! @brief      Internal VIC-II register D016, control register 2
+    uint8_t registerCTRL2;
+
+    //! @brief      Data value grabbed in gAccess()
+    uint8_t g_data;
+    
+    //! @brief      Character value grabbed in gAccess()
+    uint8_t g_character;
+    
+    //! @brief      Color value grabbed in gAccess()
+    uint8_t g_color;
+    
+    //! @brief      Display mode grabbed in gAccess()
+    uint8_t g_mode;
+
+    //! @brief      Main frame flipflop
+    uint8_t mainFrameFF;
+
+    //! @brief      Vertical frame Flipflop
+    uint8_t verticalFrameFF;
+    
+} PixelEnginePipe;
 
 #endif
