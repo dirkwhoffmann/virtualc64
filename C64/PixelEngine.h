@@ -232,11 +232,12 @@ public:
         uint8_t delay;
         uint16_t spriteX[8];
         uint8_t spriteXexpand;
-
+        uint8_t controlReg;
+        
         //
         // Updated in the middle of a 8 pixel chunk (in drawCanvas)
-        uint8_t D011;
-        uint8_t D016;
+        // uint8_t D011;
+        // uint8_t D016;
         
         // Updated in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
         uint8_t borderColor;
@@ -250,7 +251,13 @@ public:
         uint8_t spriteOnOff;
 
     } dc;
-        
+    
+    //! Current display mode
+    /*! The display mode is determined by three bits (one in register 0xD016 and two in register 0xD011).
+     *  These bits don't show up simultaniously. They are latched in method drawCanvas() after
+     *  after certain pixels have been draw. */
+    uint8_t displayMode;
+
     //! Latches portions of the VIC state
     /*! Latches everything that needs to be recorded one cycle prior to drawing */
     // void prepareForCycle(uint8_t cycle);

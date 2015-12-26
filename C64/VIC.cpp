@@ -968,6 +968,7 @@ VIC::preparePixelEngine()
 
     pixelEngine.dc.verticalFrameFF = verticalFrameFF;
     pixelEngine.dc.mainFrameFF = mainFrameFF;
+    pixelEngine.dc.controlReg = iomem[0x11];
     pixelEngine.dc.data = g_data;
     pixelEngine.dc.character = g_character;
     pixelEngine.dc.color = g_color;

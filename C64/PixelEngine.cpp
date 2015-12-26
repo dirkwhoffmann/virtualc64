@@ -44,19 +44,22 @@ PixelEngine::PixelEngine() // C64 *c64)
         { &dc.xCounterSprite,       sizeof(dc.xCounterSprite),      CLEAR_ON_RESET },
         { &dc.verticalFrameFF,      sizeof(dc.verticalFrameFF),     CLEAR_ON_RESET },
         { &dc.mainFrameFF,          sizeof(dc.mainFrameFF),         CLEAR_ON_RESET },
+        { &dc.controlReg,           sizeof(dc.controlReg),          CLEAR_ON_RESET },
         { &dc.character,            sizeof(dc.character),           CLEAR_ON_RESET },
         { &dc.color,                sizeof(dc.color),               CLEAR_ON_RESET },
         { &dc.mode,                 sizeof(dc.mode),                CLEAR_ON_RESET },
         { &dc.delay,                sizeof(dc.delay),               CLEAR_ON_RESET },
         { dc.spriteX,               sizeof(dc.spriteX),             CLEAR_ON_RESET | WORD_FORMAT },
         { &dc.spriteXexpand,        sizeof(dc.spriteXexpand),       CLEAR_ON_RESET },
-        { &dc.D011,                 sizeof(dc.D011),                CLEAR_ON_RESET },
-        { &dc.D016,                 sizeof(dc.D016),                CLEAR_ON_RESET },
+        // { &dc.D011,                 sizeof(dc.D011),                CLEAR_ON_RESET },
+        // { &dc.D016,                 sizeof(dc.D016),                CLEAR_ON_RESET },
         { &dc.borderColor,          sizeof(dc.borderColor),         CLEAR_ON_RESET },
         { dc.backgroundColor,       sizeof(dc.backgroundColor),     CLEAR_ON_RESET | BYTE_FORMAT },
         { dc.spriteColor,           sizeof(dc.spriteColor),         CLEAR_ON_RESET | BYTE_FORMAT },
         { &dc.spriteExtraColor1,    sizeof(dc.spriteExtraColor1),   CLEAR_ON_RESET },
         { &dc.spriteExtraColor2,    sizeof(dc.spriteExtraColor2),   CLEAR_ON_RESET },
+
+        { &displayMode,             sizeof(displayMode),            CLEAR_ON_RESET },
         { NULL,                     0,                              0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -320,6 +323,9 @@ PixelEngine::drawCanvas()
     
     if (!dc.verticalFrameFF) {
         
+        uint8_t D011 = vic->iomem[0x11] & 0x60; // -xx- ----
+        uint8_t D016 = vic->iomem[0x16] & 0x10; // ---x ----
+        
         drawCanvasPixel(0);
         
         // After the first pixel has been drawn, color register changes show up
@@ -332,16 +338,20 @@ PixelEngine::drawCanvas()
         // After pixel 4, the one and zero bits in D016 and the one bits in D011 show up
         // This corresponds to the behavior of the color latency chip model in VICE
         // rising_edge_d016 = !dc.D016 && (vic->iomem[0x16] & 0x10);
-        dc.D016 = vic->iomem[0x16] & 0x10;  // latch 0s and 1s
-        dc.D011 |= vic->iomem[0x11] & 0x60; // latch 1s
+        // dc.D016 = vic->iomem[0x16] & 0x10;  // latch 0s and 1s
+        // dc.D011 |= vic->iomem[0x11] & 0x60; // latch 1s
+        displayMode |= D016;        // latch 1s of D016
+        displayMode &= D016 | 0xEF; // latch 0s of D016
+        displayMode |= D011;        // latch 1s of D011
         
         drawCanvasPixel(4);
         drawCanvasPixel(5);
         
         // After pixel 6, the zero bits in D011 show up
         // This corresponds to the behavior of the color latency chip model in VICE
-        dc.D011 &= vic->iomem[0x11] & 0x60; // latch 0s
-        
+        // dc.D011 &= vic->iomem[0x11] & 0x60; // latch 0s
+        displayMode &= D011 | 0x9F; // latch 0s of D011
+
         drawCanvasPixel(6);
         
         // TODO (seen in VICE)
@@ -381,8 +391,9 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
     }
     
     // Determine display mode and colors
-    DisplayMode mode = (DisplayMode)((dc.D011 & 0x60) | (dc.D016 & 0x10));
-    loadColors(mode, sr.latchedCharacter, sr.latchedColor);
+    // DisplayMode mode = (DisplayMode)((dc.D011 & 0x60) | (dc.D016 & 0x10));
+    // loadColors(mode, sr.latchedCharacter, sr.latchedColor);
+    loadColors((DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
     
     // Render pixel
     if (multicol) {

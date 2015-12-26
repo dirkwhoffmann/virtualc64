@@ -557,11 +557,11 @@ public:
 	
 public:
 		
-    //! Current value of DEN bit (DIsplay Enabled)
+    //! Current value of DEN bit (Display Enabled)
     inline bool DENbit() { return iomem[0x11] & 0x10; }
 
-    //! DEN bit in previous cycle (DIsplay Enabled)
-    inline bool DENbitInPreviousCycle() { return oldControlReg1 & 0x10; }
+    //! DEN bit in previous cycle (Display Enabled)
+    // inline bool DENbitInPreviousCycle() { return oldControlReg1 & 0x10; }
 
     //! Current value of BMM bit (Bit Map Mode)
     inline bool BMMbit() { return iomem[0x11] & 0x20; }
