@@ -18,18 +18,6 @@
 // VERSION 1.4:
 // ENHANCEMENTS:
 //
-// This release contains important VIC II compatibility improvements. Demo "Deus ex Machina" by Crest and Oxyron (2000)
-// runs rather flawlessly now. Furthermore, VirtualC64 now passes VICE tests spriteenable1, spriteenable3 (mostly),
-// spriteenable4, and sprite0move.
-//
-// VirtualC64 can now read NIB image files. Please note that a lot of floppy disks provided in NIB format
-// contain copy protection mechanisms which are likly to be incompatible with the current drive emulation.
-//
-// BUGFIXES:
-//
-// Fixed a bug that prevented the synchronization timer to stabalize in some situations.
-// Starting with V0.9.9.3, VirtualC64 was no longer able to read in T64 files created by CONV64 as these files
-// contain corrupt header information. Such files can be read again.
 //
 // TODO:
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
@@ -45,7 +33,10 @@
 //    Inline execution functions as much as possible
 // 2. Add routine to quickly get the disk name from GCR data
 //    Right now, the hardware dialog takes some time to open
-//
+// 3. Make zBuffer, pixelSource an 8 byte array
+//    Idea: Draw canvas pixels first. As such pixels are always drawn (really?), we can
+//    eliminate initializing these buffers with 0. 
+// 4. Introduce PixelEngineColorPipe similar to PixelEnginePipe
 //
 // ENHANCEMENTS (BRAIN STORMING):
 //

@@ -157,14 +157,13 @@ private:
     //! Z buffer
     /*! Virtual VICII uses depth buffering to determine pixel priority. In the various render routines, a pixel is 
         only written to the screen buffer, if it is closer to the view point. The depth of the closest pixel is kept 
-        in the z buffer. The lower the value of the z buffer, the closer it is to the viewer.
-        The z buffer is cleared before a new rasterline is drawn. */
-    int zBuffer[NTSC_PIXELS];
+        in the z buffer. The lower the value of the z buffer, the closer it is to the viewer. */
+    int zBuffer[8];
     
     //! Indicates the source of a drawn pixel
     /*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
      *  The information is utilized to detect sprite-sprite and sprite-background collisions. */
-    int pixelSource[NTSC_PIXELS];
+    int pixelSource[8];
     
     //! Offset into pixelBuffer, zBuffer, and pixelSource
     /*! Variable points to the first pixel of the currently drawn 8 pixel chunk */
@@ -220,23 +219,8 @@ public:
         to be looked up at the same cycle or even in the middle of drawing an 8 pixel chunk. To make
         this process transparent, all gatheres information is stored in this structure. */
 
-
+    // TODO: Introduce PixelEngineColorPipe
     struct {
-#if 0
-        // Updated one cycle before drawing (in VIC::reparePixelEngineForCycle)
-        uint16_t xCounter;
-        bool verticalFrameFF;
-        bool mainFrameFF;
-        uint8_t g_data;
-        uint8_t g_character;
-        uint8_t g_color;
-        DisplayMode g_mode;
-        uint16_t spriteX[8];
-        uint8_t spriteXexpand;
-        uint8_t registerCTRL1; // D011
-        uint8_t registerCTRL2; // D016
-#endif
-
         // Updated in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
         uint8_t borderColor;
         uint8_t backgroundColor[4];
@@ -506,10 +490,6 @@ public:
 
     //! Draw a single frame pixel
     void setFramePixel(unsigned pixelnr, int rgba);
-        
-    //! Draw eight frame pixels in a row
-    // inline void setEightFramePixels(int rgba) {
-    //     for (unsigned i = 0; i < 8; i++) setFramePixel(i, rgba); }
     
     //! Draw a single foreground pixel
     void setForegroundPixel(unsigned pixelnr, int rgba);
@@ -522,7 +502,7 @@ public:
         for (unsigned i = 0; i < 8; i++) setBackgroundPixel(i, rgba); }
 
     //! Draw a single sprite pixel
-    void setSpritePixel(int offset, int rgba, int depth, int source);
+    void setSpritePixel(unsigned pixelnr, int rgba, int depth, int source);
 
     //! Extend border to the left and right to look nice.
     /*! This functions replicates the color of the leftmost and rightmost pixel */
