@@ -111,7 +111,8 @@ private:
 	int16_t xCounter;
 	
     //! Increase x counter by 8
-    inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
+    // inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
+    inline void countX() { xCounter += 8; }
 
     //! Returns true if yCounter needs to be reset to 0 in this rasterline
     bool yCounterOverflow();
@@ -129,7 +130,7 @@ private:
 	uint8_t registerVMLI; 
 
     //! Contents of control register 1 (0xD011) in previous cycle
-    uint8_t oldControlReg1;
+    // uint8_t oldControlReg1;
 
     //! DRAM refresh counter
     /*! "In jeder Rasterzeile führt der VIC fünf Lesezugriffe zum Refresh des
@@ -574,13 +575,15 @@ public:
     inline bool BMMbit() { return iomem[0x11] & 0x20; }
 
     //! BMM bit in previous cycle (Bit Map Mode)
-    inline bool BMMbitInPreviousCycle() { return oldControlReg1 & 0x20; }
+    // inline bool BMMbitInPreviousCycle() { return oldControlReg1 & 0x20; }
+    inline bool BMMbitInPreviousCycle() { return pixelEngine.dc.controlReg & 0x20; }
     
     //! Current value of ECM bit (Extended Character Mode)
     inline bool ECMbit() { return iomem[0x11] & 0x40; }
 
     //! ECM bit in previous cycle (Extended Character Mode)
-    inline bool ECMbitInPreviousCycle() { return oldControlReg1 & 0x40; }
+    // inline bool ECMbitInPreviousCycle() { return oldControlReg1 & 0x40; }
+    inline bool ECMbitInPreviousCycle() { return pixelEngine.dc.controlReg & 0x40; }
 
     //! Returns masked CB13 bit (controls memory access)
     inline uint8_t CB13() { return iomem[0x18] & 0x08; }

@@ -52,7 +52,7 @@ VIC::VIC()
         { &registerVCBASE,              sizeof(registerVCBASE),                 CLEAR_ON_RESET },
         { &registerRC,                  sizeof(registerRC),                     CLEAR_ON_RESET },
         { &registerVMLI,                sizeof(registerVMLI),                   CLEAR_ON_RESET },
-        { &oldControlReg1,              sizeof(oldControlReg1),                 CLEAR_ON_RESET },
+        // { &oldControlReg1,              sizeof(oldControlReg1),                 CLEAR_ON_RESET },
         { &refreshCounter,              sizeof(refreshCounter),                 CLEAR_ON_RESET },
         { &addrBus,                     sizeof(addrBus),                        CLEAR_ON_RESET },
         { &dataBus,                     sizeof(dataBus),                        CLEAR_ON_RESET },
