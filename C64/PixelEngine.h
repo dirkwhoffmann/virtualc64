@@ -221,7 +221,7 @@ public:
     struct {
         // Updated one cycle before drawing (in VIC::reparePixelEngineForCycle)
         uint32_t yCounter;
-        int16_t xCounterSprite;
+        uint16_t xCounter;
         bool verticalFrameFF;
         bool mainFrameFF;
         uint8_t data;

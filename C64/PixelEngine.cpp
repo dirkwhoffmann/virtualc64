@@ -40,7 +40,7 @@ PixelEngine::PixelEngine() // C64 *c64)
         
         // VIC state latching
         { &dc.yCounter,             sizeof(dc.yCounter),            CLEAR_ON_RESET },
-        { &dc.xCounterSprite,       sizeof(dc.xCounterSprite),      CLEAR_ON_RESET },
+        { &dc.xCounter,             sizeof(dc.xCounter),            CLEAR_ON_RESET },
         { &dc.verticalFrameFF,      sizeof(dc.verticalFrameFF),     CLEAR_ON_RESET },
         { &dc.mainFrameFF,          sizeof(dc.mainFrameFF),         CLEAR_ON_RESET },
         { &dc.controlReg1,          sizeof(dc.controlReg1),         CLEAR_ON_RESET },
@@ -463,7 +463,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
     if (!freeze) {
         
         // Check for horizontal trigger condition
-        if (dc.xCounterSprite + pixelnr == dc.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
+        if (dc.xCounter + pixelnr == dc.spriteX[spritenr] && sprite_sr[spritenr].remaining_bits == -1) {
             sprite_sr[spritenr].remaining_bits = 26; // 24 data bits + 2 clearing zeroes
             sprite_sr[spritenr].exp_flop = true;
             sprite_sr[spritenr].mc_flop = true;

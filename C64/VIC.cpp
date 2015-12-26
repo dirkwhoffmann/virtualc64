@@ -731,7 +731,7 @@ VIC::triggerLightPenInterrupt()
 		lightpenIRQhasOccured = true;
 
 		// determine current coordinates
-        int x = xCounter;
+        int x = xCounter - 4; // Is this correct?
         int y = yCounter;
 				
 		// latch coordinates 
@@ -957,14 +957,8 @@ VIC::yCounterOverflow()
 inline void
 VIC::preparePixelEngine()
 {
+    pixelEngine.dc.xCounter = xCounter;
     pixelEngine.dc.yCounter = yCounter;
-
-    // xCounterSprite is used to match the sprites x trigger coordinate
-    if (xCounter > 0)
-        pixelEngine.dc.xCounterSprite = xCounter - 4;
-    else
-        pixelEngine.dc.xCounterSprite += 8;
-
     pixelEngine.dc.verticalFrameFF = verticalFrameFF;
     pixelEngine.dc.mainFrameFF = mainFrameFF;
     pixelEngine.dc.controlReg1 = iomem[0x11];
@@ -1454,7 +1448,6 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
 
     // Phi1.2 Draw
     pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
-    xCounter = -4;
     preparePixelEngine(); // Prepare for next cycle (first border column)
     // Update pixelEngines color registers to get the first pixel right
     pixelEngine.updateColorRegisters();
@@ -1472,7 +1465,7 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     // Phi2.5 Fetch
     // Finalize
     updateDisplayState();
-    countX();
+    xCounter = 0;
 }
 
 void

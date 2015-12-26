@@ -108,7 +108,7 @@ private:
     uint32_t yCounter;
     
 	//! Internal x counter of the sequencer (sptrite coordinate system)
-	int16_t xCounter;
+	uint16_t xCounter;
 	
     //! Increase x counter by 8
     // inline void countX() { xCounter += 8; oldControlReg1 = iomem[0x11]; }
