@@ -498,7 +498,7 @@ VIC::peek(uint16_t addr)
 			return iomem[addr];
             
         case 0x16:
-            result = iomem[addr] | 0xC0; // Bits 7 and 8 are unused (always 1)
+            result = registerCTRL2 | 0xC0; // Bits 7 and 8 are unused (always 1)
             return result;
             
    		case 0x18:
@@ -589,26 +589,6 @@ VIC::poke(uint16_t addr, uint8_t value)
 
         case 0x11: // CONTROL_REGISTER_1
 
-#if 0
-			if ((iomem[addr] & 0x80) != (value & 0x80)) {
-				// Value changed: Check if we need to trigger an interrupt immediately
-				iomem[addr] = value;
-				if (yCounter == rasterInterruptLine())
-					triggerIRQ(1);
-			} else {
-				iomem[addr] = value;
-			}
-			
-			// Check the DEN bit if we're in rasterline 30
-            // If it's set at some point in that line, bad line conditions can occur
-			if (yCounter == 0x30 && (value & 0x10) != 0)
-                DENwasSetInRasterline30 = true;
-			
-			// Bits 0 - 3 determine the vertical scroll offset.
-            // Changing these bits directly affects the badline line condition the middle of a rasterline
-			updateBadLineCondition();
-			return;
-#endif
             if ((registerCTRL1 & 0x80) != (value & 0x80)) {
                 // Value changed: Check if we need to trigger an interrupt immediately
                 registerCTRL1 = value;
@@ -638,7 +618,12 @@ VIC::poke(uint16_t addr, uint8_t value)
 				iomem[addr] = value;
 			}
 			return;
-				            
+
+        case 0x16: // CONTROL_REGISTER_2
+
+            registerCTRL2 = value;
+            return;
+            
 		case 0x17: // SPRITE Y EXPANSION
 			iomem[addr] = value;
             cleared_bits_in_d017 = (~value) & (~expansionFF);
@@ -985,7 +970,7 @@ VIC::preparePixelEngine()
     pixelEngine.dc.verticalFrameFF = verticalFrameFF;
     pixelEngine.dc.mainFrameFF = mainFrameFF;
     pixelEngine.dc.controlReg1 = registerCTRL1; 
-    pixelEngine.dc.controlReg2 = iomem[0x16];
+    pixelEngine.dc.controlReg2 = registerCTRL2;
     pixelEngine.dc.data = g_data;
     pixelEngine.dc.character = g_character;
     pixelEngine.dc.color = g_color;

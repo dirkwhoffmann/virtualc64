@@ -597,7 +597,7 @@ public:
     inline uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
 
 	//! Returns the state of the CSEL bit
-	inline bool isCSEL() { return iomem[0x16] & 0x08; }
+	inline bool isCSEL() { return registerCTRL2 & 0x08; }
 	
 	//! Returns the state of the RSEL bit
 	inline bool isRSEL() { return registerCTRL1 & 0x08; }
@@ -605,12 +605,12 @@ public:
 	//! Returns the currently set display mode
 	/*! The display mode is determined by bits 5 and 6 of control register 1 and bit 4 of control register 2. */
 	inline DisplayMode getDisplayMode() 
-	{ return (DisplayMode)((registerCTRL1 & 0x60) | (iomem[0x16] & 0x10)); }
+	{ return (DisplayMode)((registerCTRL1 & 0x60) | (registerCTRL2 & 0x10)); }
 	
 	//! Set display mode
 	inline void setDisplayMode(DisplayMode m) 
 	{ registerCTRL1 = (registerCTRL1 & (0xff - 0x60)) | (m & 0x60);
-      registerCTRL2 = iomem[0x16] = (iomem[0x16] & (0xff-0x10)) | (m & 0x10); }
+      registerCTRL2 = (registerCTRL2 & (0xff-0x10)) | (m & 0x10); }
 	
 	//! Get the current screen geometry
 	ScreenGeometry getScreenGeometry(void);
@@ -626,11 +626,11 @@ public:
 	{ assert(rows == 24 || rows == 25); if (rows == 25) registerCTRL1 |= 0x8; else registerCTRL1 &= (0xff - 0x8); }
 	
 	//! Return the number of columns to be drawn (38 or 40)
-	inline int numberOfColumns() { return (iomem[0x16] & 8) ? 40 : 38; }
+	inline int numberOfColumns() { return (registerCTRL2 & 8) ? 40 : 38; }
 
 	//! Set the number of columns to be drawn (38 or 40)
 	inline void setNumberOfColumns(int columns) 
-	{ assert(columns == 38 || columns == 40); if (columns == 40) iomem[0x16] |= 0x8; else iomem[0x16] &= (0xff - 0x8); }
+	{ assert(columns == 38 || columns == 40); if (columns == 40) registerCTRL2 |= 0x8; else registerCTRL2 &= (0xff - 0x8); }
 		
 	//! Returns the vertical raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
@@ -641,10 +641,10 @@ public:
 	
 	//! Returns the horizontal raster scroll offset (0 to 7)
 	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
-	inline uint8_t getHorizontalRasterScroll() { return iomem[0x16] & 7; }
+	inline uint8_t getHorizontalRasterScroll() { return registerCTRL2 & 7; }
 	
 	//! Set horizontan raster scroll offset (0 to 7)
-	inline void setHorizontalRasterScroll(uint8_t offset) { iomem[0x16] = (iomem[0x16] & 0xF8) | (offset & 0x07); }
+	inline void setHorizontalRasterScroll(uint8_t offset) { registerCTRL2 = (registerCTRL2 & 0xF8) | (offset & 0x07); }
 			
 	//! Return border color
 	inline uint8_t getBorderColor() { return iomem[0x20] & 0x0F; }

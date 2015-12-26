@@ -321,7 +321,7 @@ PixelEngine::drawCanvas()
     if (!dc.verticalFrameFF) {
         
         uint8_t D011 = vic->registerCTRL1 & 0x60; // -xx- ----
-        uint8_t D016 = vic->iomem[0x16] & 0x10; // ---x ----
+        uint8_t D016 = vic->registerCTRL2 & 0x10; // ---x ----
         
         drawCanvasPixel(0);
         
@@ -334,9 +334,6 @@ PixelEngine::drawCanvas()
         
         // After pixel 4, the one and zero bits in D016 and the one bits in D011 show up
         // This corresponds to the behavior of the color latency chip model in VICE
-        // rising_edge_d016 = !dc.D016 && (vic->iomem[0x16] & 0x10);
-        // dc.D016 = vic->iomem[0x16] & 0x10;  // latch 0s and 1s
-        // dc.D011 |= vic->iomem[0x11] & 0x60; // latch 1s
         displayMode |= D016;        // latch 1s of D016
         displayMode &= D016 | 0xEF; // latch 0s of D016
         displayMode |= D011;        // latch 1s of D011
@@ -346,7 +343,6 @@ PixelEngine::drawCanvas()
         
         // After pixel 6, the zero bits in D011 show up
         // This corresponds to the behavior of the color latency chip model in VICE
-        // dc.D011 &= vic->iomem[0x11] & 0x60; // latch 0s
         displayMode &= D011 | 0x9F; // latch 0s of D011
 
         drawCanvasPixel(6);
