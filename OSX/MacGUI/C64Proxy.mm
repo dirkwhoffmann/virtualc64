@@ -143,7 +143,7 @@
 - (int) displayMode { return vic->getDisplayMode(); }
 - (void) setDisplayMode:(int)mode { vic->setDisplayMode((DisplayMode)mode); }
 - (int) screenGeometry { return (int)vic->getScreenGeometry(); }
-- (void) setScreenGeometry:(int)mode { vic->setScreenGeometry((VIC::ScreenGeometry)mode); }
+- (void) setScreenGeometry:(int)mode { vic->setScreenGeometry((ScreenGeometry)mode); }
 - (int) horizontalRasterScroll { return vic->getHorizontalRasterScroll(); }
 - (void) setHorizontalRasterScroll:(int)offset { vic->setHorizontalRasterScroll(offset & 0x07); }
 - (int) verticalRasterScroll { return vic->getVerticalRasterScroll(); }

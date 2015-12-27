@@ -23,24 +23,10 @@
 #include "VIC_globals.h"
 #include "PixelEngine.h"
 
-
 // Forward declarations
 class C64Memory;
 class PixelEngine; 
 
-#define EXTRACT_RED(x)   ((x & 0xff000000) >> 24)
-#define EXTRACT_GREEN(x) ((x & 0x00ff0000) >> 16)
-#define EXTRACT_BLUE(x)  ((x & 0x0000ff00) >> 8)
-#define EXTRACT_ALPHA(x) (x & 0x000000ff)
-
-#define SPR0 0x01
-#define SPR1 0x02
-#define SPR2 0x04
-#define SPR3 0x08
-#define SPR4 0x10
-#define SPR5 0x20
-#define SPR6 0x40
-#define SPR7 0x80
 
 /*! @brief      Virtual Video Controller (VICII)
  *  @discussion VICII is the video controller chip of the Commodore 64.
@@ -48,56 +34,31 @@ class PixelEngine;
 class VIC : public VirtualComponent {
 
     friend class PixelEngine;
+   
+private:
     
-    //! Reference to the attached pixel engine (encapsulates drawing routines)
+    // Reference to the attached pixel engine (PE). The PE encapsulates all drawing related
+    // routines in a seperate class.
     PixelEngine pixelEngine;
     
-public:
-    
-    //! Dump current configuration into message queue
-    void ping();
-
-	// -----------------------------------------------------------------------------------------------
-	//                                     Constant definitions
-	// -----------------------------------------------------------------------------------------------
-	
-public:
-	
-    //! VIC II chip models
-    enum ChipModel {
-        MOS6567_NTSC = 0,
-        MOS6569_PAL = 1
-    };
-    
-	//! Screen geometry
-	enum ScreenGeometry {
-		COL_40_ROW_25 = 0x01,
-		COL_38_ROW_25 = 0x02,
-		COL_40_ROW_24 = 0x03,
-		COL_38_ROW_24 = 0x04
-	};
-		
-	//! Start address of the VIC I/O space
-	static const uint16_t VIC_START_ADDR = 0xD000;
-	
-	//! End address of the VIC I/O space
-	static const uint16_t VIC_END_ADDR = 0xD3FF;
-		   
-private:
-		
-	//! Reference to the connected CPU. 
+	//! Reference to the connected CPU
 	CPU *cpu;
 	
 	//! Reference to the connected virtual memory
 	C64Memory *mem;
 	
+public:
+    
+    //! Dump current configuration into message queue
+    void ping();
+
 
 	// -----------------------------------------------------------------------------------------------
 	//                                     Internal state
 	// -----------------------------------------------------------------------------------------------
 
     //! Selected chip model (determines whether video mode is PAL or NTSC)
-    ChipModel chipModel;
+    VICChipModel chipModel;
     
     //! Indicates whether the currently drawn rasterline belongs to VBLANK area
     bool vblank;
@@ -487,10 +448,10 @@ public:
     inline bool isPAL() { return chipModel == MOS6569_PAL; }
 
 	//! Get chip model
-    inline ChipModel getChipModel() { return chipModel; }
+    inline VICChipModel getChipModel() { return chipModel; }
 
     //! Set chip model
-    void setChipModel(ChipModel model);
+    void setChipModel(VICChipModel model);
 	
     //! Get color
     uint32_t getColor(int nr) { assert(nr < 16); return pixelEngine.colors[nr]; }

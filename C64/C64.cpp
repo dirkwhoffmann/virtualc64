@@ -234,7 +234,7 @@ C64::setPAL()
 {
 	suspend();
 	
-    vic->setChipModel(VIC::MOS6569_PAL);
+    vic->setChipModel(MOS6569_PAL);
 	sid->setPAL();
 
     debug(2, "Switching VIC chip model to MOS6569 (PAL)\n");
@@ -246,7 +246,7 @@ C64::setNTSC()
 {
 	suspend();
 	    
-    vic->setChipModel(VIC::MOS6567_NTSC);
+    vic->setChipModel(MOS6567_NTSC);
 	sid->setNTSC();
 
     debug(2, "Switching VIC chip model to MOS6567 (NTSC)\n");

@@ -412,24 +412,28 @@ PixelEngine::drawSprites()
         return;
     
     updateSpriteColorRegisters();
-    drawSpritePixel(0, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
-    drawSpritePixel(1, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
-    drawSpritePixel(2, secondDMA            /* freeze */, secondDMA /* halt */, 0         /* load */);
-    drawSpritePixel(3, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
     
-    updateSpriteOnOff();
-    drawSpritePixel(4, firstDMA | secondDMA /* freeze */, 0         /* halt */, secondDMA /* load */);
-    drawSpritePixel(5, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
-    drawSpritePixel(6, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
-    drawSpritePixel(7, firstDMA             /* freeze */, 0         /* halt */, 0         /* load */);    
-}
-
-inline void
-PixelEngine::drawSpritePixel(unsigned pixelnr, uint8_t freeze, uint8_t halt, uint8_t load)
-{
+    // Draw first four pixels for each sprite
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(dc.spriteOnOff, i)) {
-            drawSpritePixel(i, pixelnr, GET_BIT(freeze, i), GET_BIT(halt, i), GET_BIT(load, i));
+            
+            drawSpritePixel(i, 0, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
+            drawSpritePixel(i, 1, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
+            drawSpritePixel(i, 2, secondDMA            /* freeze */, secondDMA /* halt */, 0         /* load */);
+            drawSpritePixel(i, 3, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
+        }
+    }
+
+    updateSpriteOnOff();
+    
+    // Draw last four pixels for each sprite
+    for (unsigned i = 0; i < 8; i++) {
+        if (GET_BIT(dc.spriteOnOff, i)) {
+
+            drawSpritePixel(i, 4, firstDMA | secondDMA /* freeze */, 0         /* halt */, secondDMA /* load */);
+            drawSpritePixel(i, 5, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
+            drawSpritePixel(i, 6, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
+            drawSpritePixel(i, 7, firstDMA             /* freeze */, 0         /* halt */, 0         /* load */);
         }
     }
 }

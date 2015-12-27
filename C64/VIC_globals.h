@@ -20,6 +20,40 @@
 #define _VIC_CONSTANTS_INC
 
 // -----------------------------------------------------------------------------------------------
+//                                           General
+// -----------------------------------------------------------------------------------------------
+
+#define SPR0 0x01
+#define SPR1 0x02
+#define SPR2 0x04
+#define SPR3 0x08
+#define SPR4 0x10
+#define SPR5 0x20
+#define SPR6 0x40
+#define SPR7 0x80
+
+//! @brief Supported VIC II chip models
+enum VICChipModel {
+    MOS6567_NTSC = 0,
+    MOS6569_PAL = 1
+};
+
+//! @brief Screen geometries
+enum ScreenGeometry {
+    COL_40_ROW_25 = 0x01,
+    COL_38_ROW_25 = 0x02,
+    COL_40_ROW_24 = 0x03,
+    COL_38_ROW_24 = 0x04
+};
+
+//! @brief Start address of the VIC I/O space
+static const uint16_t VIC_START_ADDR = 0xD000;
+
+//! @brief End address of the VIC I/O space
+static const uint16_t VIC_END_ADDR = 0xD3FF;
+
+
+// -----------------------------------------------------------------------------------------------
 //                                       NTSC constants
 // -----------------------------------------------------------------------------------------------
 

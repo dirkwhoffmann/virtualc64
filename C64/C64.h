@@ -15,9 +15,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// VERSION 1.4:
+// VERSION 1.4.1:
 // ENHANCEMENTS:
 //
+// Applied some speed optimizations to the new VIC code. Emulator runs 5% faster now.
+// The "Hide sprites" option in the debug menu was broken. This has been fixed. 
 //
 // TODO:
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog

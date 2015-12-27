@@ -103,18 +103,13 @@ VIC::reset()
     cpu = c64->cpu;
     mem = c64->mem;
     
-    // Reset subcomponents
-    pixelEngine.reset();
-
     // Internal state
     yCounter = PAL_HEIGHT;
     iomem[0x20] = PixelEngine::LTBLUE; // Let the border color look correct right from the beginning
     iomem[0x21] = PixelEngine::BLUE;   // Let the background color look correct right from the beginning
+    setScreenMemoryAddr(0x400);        // Remove startup graphics glitches by setting the initial value early
 	p.registerCTRL1 = 0x10;            // Make screen visible from the beginning
 	expansionFF = 0xFF;
-    
-    // Remove startup graphics glitches by setting the initial value early
-    setScreenMemoryAddr(0x400);
     
 	// Debugging	
 	drawSprites = true;
@@ -191,7 +186,7 @@ VIC::dumpState()
 }
 
 void
-VIC::setChipModel(ChipModel model)
+VIC::setChipModel(VICChipModel model)
 {
     chipModel = model;
     pixelEngine.resetScreenBuffers();
@@ -681,7 +676,7 @@ VIC::setScreenGeometry(ScreenGeometry mode)
 	setNumberOfColumns((mode == COL_40_ROW_25 || mode == COL_40_ROW_24) ? 40 : 38);
 }
 
-VIC::ScreenGeometry 
+ScreenGeometry 
 VIC::getScreenGeometry()
 {
 	if (numberOfColumns() == 40) {
