@@ -19,7 +19,7 @@
 // ENHANCEMENTS:
 //
 // Applied some speed optimizations to the new VIC code. At maximum speed, the
-// emulator is about 5% faster now.
+// emulator is up to 10% faster now.
 // In the debug menu, option "Hide sprites" was broken. This has been fixed. 
 //
 // TODO:
