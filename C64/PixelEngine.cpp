@@ -490,7 +490,7 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
     }
     
     // Draw pixel
-    if (visibleColumn) {
+    if (visibleColumn && vic->drawSprites) {
         if (multicol)
             setMultiColorSpritePixel(spritenr, pixelnr, sprite_sr[spritenr].col_bits & 0x03);
         else
