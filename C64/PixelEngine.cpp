@@ -39,25 +39,25 @@ PixelEngine::PixelEngine() // C64 *c64)
     SnapshotItem items[] = {
         
         // VIC state latching
-        { &pipe.xCounter,           sizeof(pipe.xCounter),          CLEAR_ON_RESET },
-        { pipe.spriteX,             sizeof(pipe.spriteX),           CLEAR_ON_RESET | WORD_FORMAT },
-        { &pipe.spriteXexpand,      sizeof(pipe.spriteXexpand),     CLEAR_ON_RESET },
-        { &pipe.registerCTRL1,      sizeof(pipe.registerCTRL1),     CLEAR_ON_RESET },
-        { &pipe.registerCTRL2,      sizeof(pipe.registerCTRL2),     CLEAR_ON_RESET },
-        { &pipe.g_data,             sizeof(pipe.g_data),            CLEAR_ON_RESET },
-        { &pipe.g_character,        sizeof(pipe.g_character),       CLEAR_ON_RESET },
-        { &pipe.g_color,            sizeof(pipe.g_color),           CLEAR_ON_RESET },
-        { &pipe.mainFrameFF,        sizeof(pipe.mainFrameFF),       CLEAR_ON_RESET },
-        { &pipe.verticalFrameFF,    sizeof(pipe.verticalFrameFF),   CLEAR_ON_RESET },
+        { &pipe.xCounter,            sizeof(pipe.xCounter),           CLEAR_ON_RESET },
+        { pipe.spriteX,              sizeof(pipe.spriteX),            CLEAR_ON_RESET | WORD_FORMAT },
+        { &pipe.spriteXexpand,       sizeof(pipe.spriteXexpand),      CLEAR_ON_RESET },
+        { &pipe.registerCTRL1,       sizeof(pipe.registerCTRL1),      CLEAR_ON_RESET },
+        { &pipe.registerCTRL2,       sizeof(pipe.registerCTRL2),      CLEAR_ON_RESET },
+        { &pipe.g_data,              sizeof(pipe.g_data),             CLEAR_ON_RESET },
+        { &pipe.g_character,         sizeof(pipe.g_character),        CLEAR_ON_RESET },
+        { &pipe.g_color,             sizeof(pipe.g_color),            CLEAR_ON_RESET },
+        { &pipe.mainFrameFF,         sizeof(pipe.mainFrameFF),        CLEAR_ON_RESET },
+        { &pipe.verticalFrameFF,     sizeof(pipe.verticalFrameFF),    CLEAR_ON_RESET },
         
-        { &dc.borderColor,          sizeof(dc.borderColor),         CLEAR_ON_RESET },
-        { dc.backgroundColor,       sizeof(dc.backgroundColor),     CLEAR_ON_RESET | BYTE_FORMAT },
-        { dc.spriteColor,           sizeof(dc.spriteColor),         CLEAR_ON_RESET | BYTE_FORMAT },
-        { &dc.spriteExtraColor1,    sizeof(dc.spriteExtraColor1),   CLEAR_ON_RESET },
-        { &dc.spriteExtraColor2,    sizeof(dc.spriteExtraColor2),   CLEAR_ON_RESET },
+        { &bpipe.borderColor,        sizeof(bpipe.borderColor),       CLEAR_ON_RESET },
+        { cpipe.backgroundColor,     sizeof(cpipe.backgroundColor),   CLEAR_ON_RESET | BYTE_FORMAT },
+        { spipe.spriteColor,         sizeof(spipe.spriteColor),       CLEAR_ON_RESET | BYTE_FORMAT },
+        { &spipe.spriteExtraColor1,  sizeof(spipe.spriteExtraColor1), CLEAR_ON_RESET },
+        { &spipe.spriteExtraColor2,  sizeof(spipe.spriteExtraColor2), CLEAR_ON_RESET },
 
-        { &displayMode,             sizeof(displayMode),            CLEAR_ON_RESET },
-        { NULL,                     0,                              0 }};
+        { &displayMode,              sizeof(displayMode),             CLEAR_ON_RESET },
+        { NULL,                      0,                               0 }};
     
     registerSnapshotItems(items, sizeof(items));
 }
@@ -162,31 +162,7 @@ PixelEngine::endFrame()
 //                                   VIC state latching
 // -----------------------------------------------------------------------------------------------
 
-void
-PixelEngine::updateBorderColorRegister()
-{
-    dc.borderColor = vic->getBorderColor();
-}
-
-void
-PixelEngine::updateColorRegisters()
-{
-    dc.backgroundColor[0] = vic->getBackgroundColor();
-    dc.backgroundColor[1] = vic->getExtraBackgroundColor(1);
-    dc.backgroundColor[2] = vic->getExtraBackgroundColor(2);
-    dc.backgroundColor[3] = vic->getExtraBackgroundColor(3);
-}
-
-void
-PixelEngine::updateSpriteColorRegisters()
-{
-    for (unsigned i = 0; i < 8; i++)
-        dc.spriteColor[i] = vic->spriteColor(i);
-    dc.spriteExtraColor1 = vic->spriteExtraColor1();
-    dc.spriteExtraColor2 = vic->spriteExtraColor2();
-}
-
-void
+inline void
 PixelEngine::updateSpriteOnOff()
 {
     dc.spriteOnOff = dc.spriteOnOffPipe;
@@ -250,12 +226,12 @@ PixelEngine::drawBorder()
 {
     if (pipe.mainFrameFF) {
         
-        setFramePixel(0, colors[dc.borderColor]);
+        setFramePixel(0, colors[bpipe.borderColor]);
         
         // After the first pixel has been drawn, color register changes show up
-        updateBorderColorRegister();
+        bpipe = vic->bp;
         
-        int rgba = colors[dc.borderColor];
+        int rgba = colors[bpipe.borderColor];
         setFramePixel(1, rgba);
         setFramePixel(2, rgba);
         setFramePixel(3, rgba);
@@ -272,12 +248,12 @@ PixelEngine::drawBorder17()
     if (pipe.mainFrameFF && !vic->p.mainFrameFF) {
         
         // 38 column mode
-        setFramePixel(0, colors[dc.borderColor]);
+        setFramePixel(0, colors[bpipe.borderColor]);
         
         // After the first pixel has been drawn, color register changes show up
-        updateBorderColorRegister();
+        bpipe = vic->bp;
         
-        int rgba = colors[dc.borderColor];
+        int rgba = colors[bpipe.borderColor];
         setFramePixel(1, rgba);
         setFramePixel(2, rgba);
         setFramePixel(3, rgba);
@@ -299,7 +275,7 @@ PixelEngine::drawBorder55()
     if (!pipe.mainFrameFF && vic->p.mainFrameFF) {
         
         // 38 column mode
-        setFramePixel(7, colors[dc.borderColor]);
+        setFramePixel(7, colors[bpipe.borderColor]);
         
     } else {
         
@@ -325,7 +301,7 @@ PixelEngine::drawCanvas()
         drawCanvasPixel(0);
         
         // After the first pixel has been drawn, color register changes show up
-        updateColorRegisters();
+        cpipe = vic->cp;
         
         drawCanvasPixel(1);
         drawCanvasPixel(2);
@@ -382,9 +358,7 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
         sr.mc_flop = true;
     }
     
-    // Determine display mode and colors
-    // DisplayMode mode = (DisplayMode)((dc.D011 & 0x60) | (dc.D016 & 0x10));
-    // loadColors(mode, sr.latchedCharacter, sr.latchedColor);
+    // Load colors
     loadColors((DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
     
     // Render pixel
@@ -411,7 +385,8 @@ PixelEngine::drawSprites()
     if (!dc.spriteOnOff && !dc.spriteOnOffPipe && !firstDMA && !secondDMA) // Quick exit
         return;
     
-    updateSpriteColorRegisters();
+    // Update sprite color registers
+    spipe = vic->sp;
     
     // Draw first four pixels for each sprite
     for (unsigned i = 0; i < 8; i++) {
@@ -515,20 +490,20 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             
         case STANDARD_TEXT:
             
-            col_rgba[0] = colors[dc.backgroundColor[0]];
+            col_rgba[0] = colors[cpipe.backgroundColor[0]];
             col_rgba[1] = colors[colorSpace];
             multicol = false;
             break;
             
         case MULTICOLOR_TEXT:
             if (colorSpace & 0x8 /* MC flag */) {
-                col_rgba[0] = colors[dc.backgroundColor[0]];
-                col_rgba[1] = colors[dc.backgroundColor[1]];
-                col_rgba[2] = colors[dc.backgroundColor[2]];
+                col_rgba[0] = colors[cpipe.backgroundColor[0]];
+                col_rgba[1] = colors[cpipe.backgroundColor[1]];
+                col_rgba[2] = colors[cpipe.backgroundColor[2]];
                 col_rgba[3] = colors[colorSpace & 0x07];
                 multicol = true;
             } else {
-                col_rgba[0] = colors[dc.backgroundColor[0]];
+                col_rgba[0] = colors[cpipe.backgroundColor[0]];
                 col_rgba[1] = colors[colorSpace];
                 multicol = false;
             }
@@ -541,7 +516,7 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             break;
             
         case MULTICOLOR_BITMAP:
-            col_rgba[0] = colors[dc.backgroundColor[0]];
+            col_rgba[0] = colors[cpipe.backgroundColor[0]];
             col_rgba[1] = colors[characterSpace >> 4];
             col_rgba[2] = colors[characterSpace & 0x0F];
             col_rgba[3] = colors[colorSpace];
@@ -549,7 +524,7 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
-            col_rgba[0] = colors[dc.backgroundColor[characterSpace >> 6]];
+            col_rgba[0] = colors[cpipe.backgroundColor[characterSpace >> 6]];
             col_rgba[1] = colors[colorSpace];
             multicol = false;
             break;
@@ -608,7 +583,7 @@ inline void
 PixelEngine::setSingleColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8_t bit)
 {
     if (bit) {
-        int rgba = colors[dc.spriteColor[spritenr]];
+        int rgba = colors[spipe.spriteColor[spritenr]];
         setSpritePixel(pixelnr, rgba, spritenr);
     }
 }
@@ -620,17 +595,17 @@ PixelEngine::setMultiColorSpritePixel(unsigned spritenr, unsigned pixelnr, uint8
     
     switch (two_bits) {
         case 0x01:
-            rgba = colors[dc.spriteExtraColor1];
+            rgba = colors[spipe.spriteExtraColor1];
             setSpritePixel(pixelnr, rgba, spritenr);
             break;
             
         case 0x02:
-            rgba = colors[dc.spriteColor[spritenr]];
+            rgba = colors[spipe.spriteColor[spritenr]];
             setSpritePixel(pixelnr, rgba, spritenr);
             break;
             
         case 0x03:
-            rgba = colors[dc.spriteExtraColor2];
+            rgba = colors[spipe.spriteExtraColor2];
             setSpritePixel(pixelnr, rgba, spritenr);
             break;
     }

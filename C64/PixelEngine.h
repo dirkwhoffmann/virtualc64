@@ -73,15 +73,6 @@ public:
     /*! This function is used for debugging. It write some recognizable pattern into both buffers */
     void resetScreenBuffers();
 
-    //! Size of internal state
-    uint32_t stateSize() { return 0; }
-    
-    //! Load state
-    void loadFromBuffer(uint8_t **buffer) { }
-    
-    //! Save state
-    void saveToBuffer(uint8_t **buffer) { }
-
     
     // -----------------------------------------------------------------------------------------------
     //                                     Constant definitions
@@ -165,7 +156,7 @@ private:
      *  The information is utilized to detect sprite-sprite and sprite-background collisions. */
     int pixelSource[8];
     
-    //! Offset into pixelBuffer, zBuffer, and pixelSource
+    //! Offset into pixelBuffer
     /*! Variable points to the first pixel of the currently drawn 8 pixel chunk */
     short bufferoffset;
     
@@ -187,7 +178,8 @@ private:
      *  drawn in cycle 14 (first left border column) and the last in cycle ?? (fourth right border column).
      */
     bool visibleColumn;
-     
+    
+    
     // -----------------------------------------------------------------------------------------------
     //                                    Execution functions
     // -----------------------------------------------------------------------------------------------
@@ -211,8 +203,18 @@ public:
     //                                   VIC state latching
     // -----------------------------------------------------------------------------------------------
 
+    //! Register pipe
     PixelEnginePipe pipe;
+
+    //! Border color pipe
+    BorderColorPipe bpipe;
     
+    //! Canvas color pipe
+    CanvasColorPipe cpipe;
+
+    //! Sprite color pipe
+    SpriteColorPipe spipe;
+
     //! Latched VIC state
     /*! To draw pixels right, it is important to gather the necessary information at the right time. 
         Some VIC and memory registers need to be looked up one cycle before drawing, others need
@@ -221,14 +223,6 @@ public:
 
     // TODO: Introduce PixelEngineColorPipe
     struct {
-        // Updated in the middle of a 8 pixel chunk (in drawCanvas via updateColorRegisters)
-        uint8_t borderColor;
-        uint8_t backgroundColor[4];
-
-        // Updated in WHEN(?) (in drawSprites via updateSpriteColorRegisters)
-        uint8_t spriteColor[8];
-        uint8_t spriteExtraColor1;
-        uint8_t spriteExtraColor2;
         uint8_t spriteOnOffPipe;
         uint8_t spriteOnOff;
 
@@ -239,22 +233,6 @@ public:
      *  These bits don't show up simultaniously. They are latched in method drawCanvas() after
      *  after certain pixels have been draw. */
     uint8_t displayMode;
-
-    //! Latches portions of the VIC state
-    /*! Latches everything that needs to be recorded one cycle prior to drawing */
-    // void prepareForCycle(uint8_t cycle);
-
-    //! Latches the border color
-    /*! This needs to be done after the first border pixel has been drawn */
-    void updateBorderColorRegister();
-
-    //! Latches the four drawing colors
-    /*! This needs to be done after the first canvas pixel has been drawn */
-    void updateColorRegisters();
-
-    //! Latches the four sprite colors
-    /*! This needs to be done TODO:WHEN? */
-    void updateSpriteColorRegisters();
 
     //! @brief      Latches the sprite enable bits
     /*! @discussion This method is called in drawSprites() */

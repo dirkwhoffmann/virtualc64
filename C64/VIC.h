@@ -57,6 +57,14 @@ public:
 	//                                     Internal state
 	// -----------------------------------------------------------------------------------------------
 
+    //! @brief Main pixel engine pipe
+    PixelEnginePipe p;
+
+    //! @brief Color pipes
+    BorderColorPipe bp;
+    CanvasColorPipe cp;
+    SpriteColorPipe sp; 
+    
     //! Selected chip model (determines whether video mode is PAL or NTSC)
     VICChipModel chipModel;
     
@@ -79,10 +87,6 @@ public:
     /*! The rasterline counter is is usually incremented in cycle 1. The only exception is the
      overflow condition which is handled in cycle 2 */
     uint32_t yCounter;
-
-    //! @brief State variables that need to be pushed into the pixel engine with a delay of one cycle
-    /*! @see   preparePixelEngine */
-    PixelEnginePipe p;
     
     //! Vertical frame flipflop set condition
     /*! Indicates whether the vertical frame ff needs to be set in current rasterline */
@@ -580,13 +584,13 @@ public:
 	inline void setHorizontalRasterScroll(uint8_t offset) { p.registerCTRL2 = (p.registerCTRL2 & 0xF8) | (offset & 0x07); }
 			
 	//! Return border color
-	inline uint8_t getBorderColor() { return iomem[0x20] & 0x0F; }
+    inline uint8_t getBorderColor() { return bp.borderColor; }
 	
 	//! Returns background color
-	inline uint8_t getBackgroundColor() { return iomem[0x21] & 0x0F; }
+    inline uint8_t getBackgroundColor() { return cp.backgroundColor[0]; }
 	
 	//! Returns extra background color (for multicolor modes)
-	inline uint8_t getExtraBackgroundColor(int offset) { return iomem[0x21 + offset] & 0x0F; }
+    inline uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }
 	
 	
 	// -----------------------------------------------------------------------------------------------
@@ -683,16 +687,16 @@ private:
 public: 
 	
 	//! Returns color code of multicolor sprites (extra color 1)
-	inline uint8_t spriteExtraColor1() { return iomem[0x25] & 0x0F; }
+    inline uint8_t spriteExtraColor1() { return sp.spriteExtraColor1; }
 	
 	//! Returns color code of multicolor sprites (extra color 2)
-	inline uint8_t spriteExtraColor2() { return iomem[0x26] & 0x0F; }
+	inline uint8_t spriteExtraColor2() { return sp.spriteExtraColor2; }
 	
 	//! Get sprite color 
-	inline uint8_t spriteColor(uint8_t nr) { assert(nr < 8); return iomem[0x27 + nr] & 0x0F; }
+	inline uint8_t spriteColor(uint8_t nr) { assert(nr < 8); return sp.spriteColor[nr]; }
 
 	//! Set sprite color
-	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); iomem[0x27 + nr] = color; }
+	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); sp.spriteColor[nr] = color; }
 		
 	//! Get X coordinate of sprite 
     inline uint16_t getSpriteX(uint8_t nr) { assert(nr < 8); return p.spriteX[nr]; }

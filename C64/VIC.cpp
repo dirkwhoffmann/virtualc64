@@ -54,7 +54,12 @@ VIC::VIC()
         { &p.g_color,                   sizeof(p.g_color),                      CLEAR_ON_RESET },
         { &p.mainFrameFF,               sizeof(p.mainFrameFF),                  CLEAR_ON_RESET },
         { &p.verticalFrameFF,           sizeof(p.verticalFrameFF),              CLEAR_ON_RESET },
-
+        { &bp.borderColor,              sizeof(bp.borderColor),                 CLEAR_ON_RESET },
+        { cp.backgroundColor,           sizeof(cp.backgroundColor),             CLEAR_ON_RESET | BYTE_FORMAT},
+        { sp.spriteColor,               sizeof(sp.spriteColor),                 CLEAR_ON_RESET | BYTE_FORMAT},
+        { &sp.spriteExtraColor1,        sizeof(sp.spriteExtraColor1),           CLEAR_ON_RESET },
+        { &sp.spriteExtraColor2,        sizeof(sp.spriteExtraColor2),           CLEAR_ON_RESET },
+        
         { &vblank,                      sizeof(vblank),                         CLEAR_ON_RESET },
         { &yCounter,                    sizeof(yCounter),                       CLEAR_ON_RESET },
         { &yCounterEqualsIrqRasterline, sizeof(yCounterEqualsIrqRasterline),    CLEAR_ON_RESET },
@@ -105,10 +110,12 @@ VIC::reset()
     
     // Internal state
     yCounter = PAL_HEIGHT;
-    iomem[0x20] = PixelEngine::LTBLUE; // Let the border color look correct right from the beginning
-    iomem[0x21] = PixelEngine::BLUE;   // Let the background color look correct right from the beginning
-    setScreenMemoryAddr(0x400);        // Remove startup graphics glitches by setting the initial value early
-	p.registerCTRL1 = 0x10;            // Make screen visible from the beginning
+    bp.borderColor = PixelEngine::LTBLUE;      // Let the border color look correct right from the beginning
+    // iomem[0x20] = PixelEngine::LTBLUE;      // Let the border color look correct right from the beginning
+    cp.backgroundColor[0] = PixelEngine::BLUE; // Let the background color look correct right from the beginning
+    // iomem[0x21] = PixelEngine::BLUE;        // Let the background color look correct right from the beginning
+    setScreenMemoryAddr(0x400);                // Remove startup graphics glitches by setting the initial value early
+	p.registerCTRL1 = 0x10;                    // Make screen visible from the beginning
 	expansionFF = 0xFF;
     
 	// Debugging	
@@ -524,13 +531,34 @@ VIC::peek(uint16_t addr)
 			result = iomem[addr];
 			iomem[addr] = 0x00;  // Clear on read
 			return result;
-	}
-	
-	if (addr >= 0x20 && addr <= 0x2E) {
-		// Color registers
-		return iomem[addr] | 0xF0; // Bits 4 to 7 are unsed (always 1)
-	}
-	
+
+        case 0x20:
+            return bp.borderColor | 0xF0; // Bits 4 to 7 are unsed (always 1)
+            
+        case 0x21: // Backgrund color
+        case 0x22: // Extended background color 1
+        case 0x23: // Extended background color 2
+        case 0x24: // Extended background color 3
+            return cp.backgroundColor[addr - 0x21] | 0xF0; // Bits 4 to 7 are unsed (always 1)
+            
+        case 0x25: // Sprite extra color 1 (for multicolor sprites)
+            return sp.spriteExtraColor1 | 0xF0;
+            
+        case 0x26: // Sprite extra color 2 (for multicolor sprites)
+            return sp.spriteExtraColor2 | 0xF0;
+            
+        case 0x27: // Sprite color 1
+        case 0x28: // Sprite color 2
+        case 0x29: // Sprite color 3
+        case 0x2A: // Sprite color 4
+        case 0x2B: // Sprite color 5
+        case 0x2C: // Sprite color 6
+        case 0x2D: // Sprite color 7
+        case 0x2E: // Sprite color 8
+            return sp.spriteColor[addr - 0x27] | 0xF0;
+
+    }
+		
 	if (addr >= 0x2F && addr <= 0x3F) {
 		// Unusable register area
 		return 0xFF; 
@@ -647,7 +675,37 @@ VIC::poke(uint16_t addr, uint8_t value)
 			if (iomem[addr] & iomem[0x1a])
 				iomem[addr] |= 0x80;
 			return;
-			
+
+        case 0x20: // Border color
+            bp.borderColor = value & 0x0F;
+            return;
+
+        case 0x21: // Backgrund color
+        case 0x22: // Extended background color 1
+        case 0x23: // Extended background color 2
+        case 0x24: // Extended background color 3
+            cp.backgroundColor[addr - 0x21] = value & 0x0F;
+            return;
+
+        case 0x25: // Sprite extra color 1 (for multicolor sprites)
+            sp.spriteExtraColor1 = value & 0x0F;
+            return;
+
+        case 0x26: // Sprite extra color 2 (for multicolor sprites)
+            sp.spriteExtraColor2 = value & 0x0F;
+            return;
+
+        case 0x27: // Sprite color 1
+        case 0x28: // Sprite color 2
+        case 0x29: // Sprite color 3
+        case 0x2A: // Sprite color 4
+        case 0x2B: // Sprite color 5
+        case 0x2C: // Sprite color 6
+        case 0x2D: // Sprite color 7
+        case 0x2E: // Sprite color 8
+            sp.spriteColor[addr - 0x27] = value & 0x0F;
+            return;
+            
 		case 0x1a: // IRQ mask
 			iomem[addr] = value & 0x0f;
 			if (iomem[addr] & iomem[0x19]) {
@@ -1443,9 +1501,9 @@ VIC::cycle13() // X Coordinate -3 - 4 (?)
     // Phi1.2 Draw
     pixelEngine.drawOutsideBorder(); // Runs the sprite sequencer, only
     preparePixelEngine(); // Prepare for next cycle (first border column)
-    // Update pixelEngines color registers to get the first pixel right
-    pixelEngine.updateColorRegisters();
-    pixelEngine.updateBorderColorRegister();
+    // Update color registers in pixel engine to get the first pixel right
+    pixelEngine.cpipe = cp;
+    pixelEngine.bpipe = bp;
 
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess();

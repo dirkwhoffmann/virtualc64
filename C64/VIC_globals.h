@@ -202,17 +202,21 @@ static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
 
 
 // -----------------------------------------------------------------------------------------------
-//                                       VIC state types
+//                                     VIC state pipes
+//
+// Each pipe comprises a certain portion of the VICs internal state. I.e., they comprise those
+// state variables that are accessed by the pixel engine and need to be delayed by a certain
+// amount to get the timing right. Most state variables need to be delayed by one cycle.
+// An exception are the color registers that usually exhibit a value change somewhere in the middle
+// of an pixel chunk. To implement the delay, both VIC and PixelEngine hold a pipe variable of their
+// own, and the contents of the VICs variable is copied over the contents of the PixelEngines
+// variable at the right time. Putting the state variables in seperate structures allows the compiler
+// to optize the copy process.
 // -----------------------------------------------------------------------------------------------
 
-//! @brief      A certain portions of VICs internal state
-/*! @discussion This structure comprises all state variables that are directly accessed by the
- *              pixel engine and need to be delayed one cycle to get the timing right. 
- *              To implement the delay, both VIC and PixelEngine hold a variable of that type. 
- *              The contents of the VICs variable is copied over the contents of the PixelEngines 
- *              variable in function preparePixelEngine() which is invoked in each (visible) VIC cycle. 
- *              Putting all state variables in a structure allows the compiler to optize the copy process. 
- */
+//! @brief      A certain portion of VICs internal state
+/*! @discussion This structure comprises all state variables that need to be delayed one cycle to get 
+ *              the timing right. */
 typedef struct {
     
     //! @brief      Internal x counter of the sequencer (sprite coordinate system)
@@ -250,5 +254,31 @@ typedef struct {
     uint8_t verticalFrameFF;
     
 } PixelEnginePipe;
+
+
+//! @brief      Color for drawing border pixels
+typedef struct {
+    
+    uint8_t borderColor;
+    
+} BorderColorPipe;
+
+
+//! @brief      Colors for drawing canvas pixels
+typedef struct {
+    
+    uint8_t backgroundColor[4];
+    
+} CanvasColorPipe;
+
+//! @brief      Colors for drawing sprites
+typedef struct {
+    
+    uint8_t spriteColor[8];
+    uint8_t spriteExtraColor1;
+    uint8_t spriteExtraColor2;
+
+} SpriteColorPipe;
+
 
 #endif

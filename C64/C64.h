@@ -18,7 +18,8 @@
 // VERSION 1.4.1:
 // ENHANCEMENTS:
 //
-// Applied some speed optimizations to the new VIC code. Emulator runs 5% faster now.
+// Applied some speed optimizations to the new VIC code. At maximum speed, the
+// emulator is about 5% faster now.
 // In the debug menu, option "Hide sprites" was broken. This has been fixed. 
 //
 // TODO:
@@ -35,10 +36,6 @@
 //    Inline execution functions as much as possible
 // 2. Add routine to quickly get the disk name from GCR data
 //    Right now, the hardware dialog takes some time to open
-// 3. Make zBuffer, pixelSource an 8 byte array
-//    Idea: Draw canvas pixels first. As such pixels are always drawn (really?), we can
-//    eliminate initializing these buffers with 0. 
-// 4. Introduce PixelEngineColorPipe similar to PixelEnginePipe
 //
 // ENHANCEMENTS (BRAIN STORMING):
 //
