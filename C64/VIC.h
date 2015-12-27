@@ -63,12 +63,6 @@ public:
     //! Indicates whether the currently drawn rasterline belongs to VBLANK area
     bool vblank;
     
-    //! Increase x counter by 8
-    inline void countX() { p.xCounter += 8; }
-
-    //! Returns true if yCounter needs to be reset to 0 in this rasterline
-    bool yCounterOverflow();
-    
 	//! Internal VIC register, 10 bit video counter
 	uint16_t registerVC;
 	
@@ -86,44 +80,6 @@ public:
      overflow condition which is handled in cycle 2 */
     uint32_t yCounter;
 
-    
-#if 0
-    
-    //! Internal x counter of the sequencer (sptrite coordinate system)
-    uint16_t xCounter;
-    
-    //! Sprite X coordinate
-    /*! The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored in a seperate
-     *  IO register, while the uppermost bits are packed in a single register (0xD010). The sprites
-     *  X coordinate is updated whenever one the corresponding IO register changes its value.
-     */
-    uint16_t spriteX[8];
-    
-    //! Sprite X expansion bits
-    uint8_t spriteXexpand;
-
-    //! Internal VIC-II register, control register 1
-    uint8_t registerCTRL1;
-
-    //! Internal VIC-II register, control register 2
-    uint8_t registerCTRL2;
-
-    //! Data value grabbed in gAccess()
-    uint8_t g_data;
-    
-    //! Character value grabbed in gAccess()
-    uint8_t g_character;
-    
-    //! Color value grabbed in gAccess()
-    uint8_t g_color;
-    
-    //! Main frame flipflop
-    bool mainFrameFF;
-    
-    //! Vertical frame Flipflop
-    bool verticalFrameFF;
-#endif
-    
     //! @brief State variables that need to be pushed into the pixel engine with a delay of one cycle
     /*! @see   preparePixelEngine */
     PixelEnginePipe p;
@@ -182,6 +138,13 @@ public:
     //! Remember at which cycle BA line has been pulled down
     uint64_t BAwentLowAtCycle;
     
+    
+    //! Increase x counter by 8
+    inline void countX() { p.xCounter += 8; }
+    
+    //! Returns true if yCounter needs to be reset to 0 in this rasterline
+    bool yCounterOverflow();
+
     //! cAccesses can only be performed is BA line is down for more than 2 cycles
     bool BApulledDownForAtLeastThreeCycles();
     
@@ -667,13 +630,13 @@ private:
 		
 public: 
 	
-	//! Return next interrupt rasterline
-    /*! Note: In line 0, the interrupt is triggered in cycle 2
-              In all other lines, it is triggered in cycle 1 */
-	inline uint16_t rasterInterruptLine() { return ((p.registerCTRL1 & 128) << 1) + iomem[0x12]; }
+	//! @brief      Returns next interrupt rasterline
+    /*! @discussion In line 0, the interrupt is triggered in cycle 2. In all other lines, it is triggered in cycle 1 */
+	inline uint16_t rasterInterruptLine() { return ((p.registerCTRL1 & 0x80) << 1) | iomem[0x12]; }
 
 	//! Set interrupt rasterline 
-	inline void setRasterInterruptLine(uint16_t line) { iomem[0x12] = line & 0xFF; if (line > 0xFF) p.registerCTRL1 |= 0x80; else p.registerCTRL1 &= 0x7F; }
+	inline void setRasterInterruptLine(uint16_t line) {
+        iomem[0x12] = line & 0xFF; if (line > 0xFF) p.registerCTRL1 |= 0x80; else p.registerCTRL1 &= 0x7F; }
 	
 	//! Returns true, iff rasterline interrupts are enabled
 	inline bool rasterInterruptEnabled() { return iomem[0x1A] & 1; }
@@ -731,17 +694,23 @@ public:
 	inline uint8_t spriteExtraColor2() { return iomem[0x26] & 0x0F; }
 	
 	//! Get sprite color 
-	inline uint8_t spriteColor(uint8_t nr) { return iomem[0x27 + nr] & 0x0F; }
+	inline uint8_t spriteColor(uint8_t nr) { assert(nr < 8); return iomem[0x27 + nr] & 0x0F; }
 
 	//! Set sprite color
 	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); iomem[0x27 + nr] = color; }
 		
 	//! Get X coordinate of sprite 
-    inline uint16_t getSpriteX(uint8_t nr) { return p.spriteX[nr]; }
+    inline uint16_t getSpriteX(uint8_t nr) { assert(nr < 8); return p.spriteX[nr]; }
 
 	//! Set X coordinate of sprite
-	inline void setSpriteX(uint8_t nr, int x) { if (x < 512) { poke(2*nr, x & 0xFF); if (x > 0xFF) poke(0x10, peek(0x10) | (1 << nr)); else poke(0x10, peek(0x10) & ~(1 << nr));} }
-	
+	inline void setSpriteX(uint8_t nr, uint16_t x) {
+        if (x < 512) {
+            p.spriteX[nr] = x;
+            iomem[2*nr] = x & 0xFF;
+            if (x & 0x100) SET_BIT(iomem[0x10],nr); else CLR_BIT(iomem[0x10],nr);
+        }
+    }
+    
 	//! Get Y coordinate of sprite
 	inline uint8_t getSpriteY(uint8_t nr) { return iomem[1+2*nr]; }
 
@@ -755,28 +724,28 @@ public:
     }
     
 	//! Returns true, if sprite is enabled (drawn on the screen)
-	inline bool spriteIsEnabled(uint8_t nr) { return iomem[0x15] & (1 << nr); }		
+    inline bool spriteIsEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
 
 	//! Enable or disable sprite
-	inline void setSpriteEnabled(uint8_t nr, bool b) { if (b) poke(0x15, peek(0x15) | (1 << nr)); else poke(0x15, peek(0x15) & (0xFF - (1 << nr))); }
+    inline void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }
 
 	//! Enable or disable sprite
     inline void toggleSpriteEnabled(uint8_t nr) { setSpriteEnabled(nr, !spriteIsEnabled(nr)); }
 	
 	//! Returns true, iff an interrupt will be triggered when a sprite/background collision occurs
-	inline bool spriteBackgroundInterruptEnabled() { return iomem[0x1A] & 2; }
+	inline bool spriteBackgroundInterruptEnabled() { return iomem[0x1A] & 0x02; }
 
 	//! Returns true, iff an interrupt will be triggered when a sprite/sprite collision occurs
-	inline bool spriteSpriteInterruptEnabled() { return iomem[0x1A] & 4; }
+	inline bool spriteSpriteInterruptEnabled() { return iomem[0x1A] & 0x04; }
 
 	//! Returns true, iff a rasterline interrupt has occurred
-	inline bool rasterInterruptOccurred() { return iomem[0x19] & 1; }
+	inline bool rasterInterruptOccurred() { return iomem[0x19] & 0x01; }
 
 	//! Returns true, iff a sprite/background interrupt has occurred
-	inline bool spriteBackgroundInterruptOccurred() { return iomem[0x19] & 2; }
+	inline bool spriteBackgroundInterruptOccurred() { return iomem[0x19] & 0x02; }
 
 	//! Returns true, iff a sprite/sprite interrupt has occurred
-	inline bool spriteSpriteInterruptOccurred() { return iomem[0x19] & 2; }
+	inline bool spriteSpriteInterruptOccurred() { return iomem[0x19] & 0x02; }
 
 	//! Returns true, iff sprites are drawn behind the scenary
 	inline bool spriteIsDrawnInBackground(uint8_t nr) { return iomem[0x1B] & (1 << nr); }
@@ -790,21 +759,19 @@ public:
 		{ setSpriteInBackground(nr, !spriteIsDrawnInBackground(nr)); }
 	
 	//! Returns true, iff sprite is a multicolor sprite
-	inline bool spriteIsMulticolor(uint8_t nr) { return iomem[0x1C] & (1 << nr); }
+    inline bool spriteIsMulticolor(uint8_t nr) { return GET_BIT(iomem[0x1C], nr); }
 
 	//! Set single color or multi color mode for sprite
-	inline void setSpriteMulticolor(uint8_t nr, bool b) { if (b) poke(0x1C, peek(0x1C) | (1 << nr)); else poke(0x1C, peek(0x1C) & ~(1 << nr)); }
+    inline void setSpriteMulticolor(uint8_t nr, bool b) { WRITE_BIT(iomem[0x1C], nr, b); }
 
 	//! Switch between single color or multi color mode
 	inline void toggleMulticolorFlag(uint8_t nr) { setSpriteMulticolor(nr, !spriteIsMulticolor(nr)); }
 		
 	//! Returns true, if the sprite is vertically stretched
-	inline bool spriteHeightIsDoubled(uint8_t nr) { return iomem[0x17] & (1 << nr); }	
+    inline bool spriteHeightIsDoubled(uint8_t nr) { return GET_BIT(iomem[0x17], nr); }
 
 	//! Stretch or shrink sprite vertically
-    inline void setSpriteStretchY(uint8_t nr, bool b) {
-        if (b) SET_BIT(iomem[0x17], nr); else CLR_BIT(iomem[0x17], nr); }
-    // { if (b) poke(0x17, peek(0x17) | (1 << nr)); else poke(0x17, peek(0x17) & ~(1 << nr)); }
+    inline void setSpriteStretchY(uint8_t nr, bool b) { WRITE_BIT(iomem[0x17], nr, b); }
 
 	//! Stretch or shrink sprite vertically
 	inline void spriteToggleStretchYFlag(uint8_t nr) { setSpriteStretchY(nr, !spriteHeightIsDoubled(nr)); }
@@ -851,7 +818,7 @@ public:
 	
     //! Push portions of the VIC state into the pixel engine
     /*! Pushs everything that needs to be recorded one cycle prior to drawing */
-    void preparePixelEngine();
+    inline void preparePixelEngine() { pixelEngine.pipe = p; };
     
 	//! VIC execution functions
 	void cycle1();  void cycle2();  void cycle3();  void cycle4();

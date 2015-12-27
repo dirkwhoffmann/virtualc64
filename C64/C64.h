@@ -19,7 +19,7 @@
 // ENHANCEMENTS:
 //
 // Applied some speed optimizations to the new VIC code. Emulator runs 5% faster now.
-// The "Hide sprites" option in the debug menu was broken. This has been fixed. 
+// In the debug menu, option "Hide sprites" was broken. This has been fixed. 
 //
 // TODO:
 // Add subtext "xx Tracks", "Type 0 tape" to Media Dialog

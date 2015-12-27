@@ -700,9 +700,9 @@ VIC::getScreenGeometry()
 inline void
 VIC::setBAlow(uint8_t value)
 {
-    if (!BAlow && value) {
+    if (!BAlow && value)
         BAwentLowAtCycle = c64->getCycles();
-    }
+    
     BAlow = value;
     cpu->setRDY(value == 0);
 }
@@ -957,12 +957,6 @@ VIC::yCounterOverflow()
     // PAL machines reset yCounter in cycle 2 in the first physical rasterline
     // NTSC machines reset yCounter in cycle 2 in the middle of the lower border area
     return (c64->isPAL() && c64->getRasterline() == 0) || (!c64->isPAL() && c64->getRasterline() == 238);
-}
-
-inline void
-VIC::preparePixelEngine()
-{
-    pixelEngine.pipe = p;
 }
 
 void
@@ -1777,9 +1771,6 @@ VIC::cycle58()
 
     // Turn display off for all sprites that lost DMA.
     spriteOnOff &= spriteDmaOnOff;
-    
-    // turnSpriteDisplayOn();
-    // turnSpriteDisplayOff();
     
     // Phi2.3 VC/RC logic
     

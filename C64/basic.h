@@ -47,35 +47,38 @@
 //! @functiongroup Handling low level data objects
 //
 
-//! Evaluates to the high byte of x. x is expected to be of type uint16_t.
+//! @brief Evaluates to the high byte of x. x is expected to be of type uint16_t.
 #define HI_BYTE(x) (uint8_t)((x) >> 8)
 
-//! Evaluates to the low byte of x. x is expected to be of type uint16_t.
+//! @brief Evaluates to the low byte of x. x is expected to be of type uint16_t.
 #define LO_BYTE(x) (uint8_t)((x) & 0xff)
 
-//! Evaluates to the 16 bit value specified by x and y in little endian order (low, high).
+//! @brief Evaluates to the 16 bit value specified by x and y in little endian order (low, high).
 #define LO_HI(x,y) (uint16_t)((y) << 8 | (x))
 
-//! Evaluates to the 32 bit value specified by x and y in little endian order (lowest, low, high, highest).
+//! @brief Evaluates to the 32 bit value specified by x and y in little endian order (lowest, low, high, highest).
 #define LO_LO_HI_HI(x,y,z,w) (uint32_t)((w) << 24 | (z) << 16 | (y) << 8 | (x))
 
-//! Evaluates to the 16 bit value specified by x and y in big endian order (high, low).
+//! @brief Evaluates to the 16 bit value specified by x and y in big endian order (high, low).
 #define HI_LO(x,y) (uint16_t)((x) << 8 | (y))
 
-//! Evaluates to the 32 bit value specified by x and y in big endian order (highest, high, low, lowest).
+//! @brief Evaluates to the 32 bit value specified by x and y in big endian order (highest, high, low, lowest).
 #define HI_HI_LO_LO(x,y,z,w) (uint32_t)((x) << 24 | (y) << 16 | (z) << 8 | (w))
 
-//! Returns true iff bit n is set in x.
+//! @brief Returns true iff bit n is set in x.
 #define GET_BIT(x,nr) ((x) & (1 << (nr)))
 
-//! Set a single bit.
+//! @brief Sets a single bit.
 #define SET_BIT(x,nr) ((x) |= (1 << (nr)))
 
-//! Clear a single bit.
+//! @brief Clears a single bit.
 #define CLR_BIT(x,nr) ((x) &= ~(1 << (nr)))
 
-//! Toggle a single bit.
+//! @brief Toggles a single bit.
 #define TOGGLE_BIT(x,nr) ((x) ^= (1 << (nr)))
+
+//! @brief Sets a single bit to 0 (value == 0) or 1 (value != 0)
+#define WRITE_BIT(x,nr,value) ((x) |= ((x) & ~(1 << (nr)) | ((!!(value)) << (nr))))
 
 
 //
