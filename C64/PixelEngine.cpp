@@ -416,11 +416,14 @@ PixelEngine::drawSprites()
     // Draw first four pixels for each sprite
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(dc.spriteOnOff, i)) {
+
+            bool firstDMAi = GET_BIT(firstDMA, i);
+            bool secondDMAi = GET_BIT(secondDMA, i);
             
-            drawSpritePixel(i, 0, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
-            drawSpritePixel(i, 1, secondDMA            /* freeze */, 0         /* halt */, 0         /* load */);
-            drawSpritePixel(i, 2, secondDMA            /* freeze */, secondDMA /* halt */, 0         /* load */);
-            drawSpritePixel(i, 3, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
+            drawSpritePixel(i, 0, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
+            drawSpritePixel(i, 1, secondDMAi             /* freeze */, 0          /* halt */, 0         /* load */);
+            drawSpritePixel(i, 2, secondDMAi             /* freeze */, secondDMAi /* halt */, 0         /* load */);
+            drawSpritePixel(i, 3, firstDMAi | secondDMAi /* freeze */, 0          /* halt */, 0         /* load */);
         }
     }
 
@@ -430,10 +433,13 @@ PixelEngine::drawSprites()
     for (unsigned i = 0; i < 8; i++) {
         if (GET_BIT(dc.spriteOnOff, i)) {
 
-            drawSpritePixel(i, 4, firstDMA | secondDMA /* freeze */, 0         /* halt */, secondDMA /* load */);
-            drawSpritePixel(i, 5, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
-            drawSpritePixel(i, 6, firstDMA | secondDMA /* freeze */, 0         /* halt */, 0         /* load */);
-            drawSpritePixel(i, 7, firstDMA             /* freeze */, 0         /* halt */, 0         /* load */);
+            bool firstDMAi = GET_BIT(firstDMA, i);
+            bool secondDMAi = GET_BIT(secondDMA, i);
+
+            drawSpritePixel(i, 4, firstDMAi | secondDMAi /* freeze */, 0         /* halt */, secondDMAi /* load */);
+            drawSpritePixel(i, 5, firstDMAi | secondDMAi /* freeze */, 0         /* halt */, 0          /* load */);
+            drawSpritePixel(i, 6, firstDMAi | secondDMAi /* freeze */, 0         /* halt */, 0          /* load */);
+            drawSpritePixel(i, 7, firstDMAi              /* freeze */, 0         /* halt */, 0          /* load */);
         }
     }
 }
