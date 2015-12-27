@@ -78,7 +78,7 @@
 #define TOGGLE_BIT(x,nr) ((x) ^= (1 << (nr)))
 
 //! @brief Sets a single bit to 0 (value == 0) or 1 (value != 0)
-#define WRITE_BIT(x,nr,value) ((x) |= ((x) & ~(1 << (nr)) | ((!!(value)) << (nr))))
+#define WRITE_BIT(x,nr,value) ((x) = ((x) & ~(1 << (nr)) | ((!!(value)) << (nr))))
 
 
 //

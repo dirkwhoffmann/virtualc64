@@ -329,16 +329,20 @@ inline void VIC::gAccess()
     }
 }
 
-inline void VIC::pAccess(int sprite)
+inline void VIC::pAccess(unsigned sprite)
 {
+    assert(sprite < 8);
+
     // |VM13|VM12|VM11|VM10|  1 |  1 |  1 |  1 |  1 |  1 |  1 |  Spr.-Nummer |
     spritePtr[sprite] = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite) << 6;
 
 }
 
 // TODO: Change return type to void
-inline bool VIC::sFirstAccess(int sprite)
+inline bool VIC::sFirstAccess(unsigned sprite)
 {
+    assert(sprite < 8);
+    
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
     bool memAccessed = false;
     
@@ -360,8 +364,10 @@ inline bool VIC::sFirstAccess(int sprite)
 }
 
 // TODO: Change return type to void
-inline bool VIC::sSecondAccess(int sprite)
+inline bool VIC::sSecondAccess(unsigned sprite)
 {
+    assert(sprite < 8);
+    
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
     bool memAccessed = false;
     
@@ -389,8 +395,10 @@ inline bool VIC::sSecondAccess(int sprite)
 }
 
 // TODO: Change return type to void
-inline bool VIC::sThirdAccess(int sprite)
+inline bool VIC::sThirdAccess(unsigned sprite)
 {
+    assert(sprite < 8);
+    
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
     bool memAccessed = false;
     
@@ -411,8 +419,9 @@ inline bool VIC::sThirdAccess(int sprite)
 }
 
 
-inline void VIC::sFinalize(int sprite)
+inline void VIC::sFinalize(unsigned sprite)
 {
+    assert(sprite < 8);
     isSecondDMAcycle = 0;
 }
 
