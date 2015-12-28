@@ -56,7 +56,7 @@ void
 	
 	// Prepare to run...
 	c64->cpu.clearErrorState();
-	c64->floppy.cpu->clearErrorState();
+	c64->floppy.cpu.clearErrorState();
 	c64->restartTimer();
     
 	while (1) {		
@@ -370,7 +370,7 @@ C64::step()
 {		
 	// Clear error states
 	cpu.clearErrorState();
-	floppy.cpu->clearErrorState();
+	floppy.cpu.clearErrorState();
 	
 	// Execute next command 
 	do {

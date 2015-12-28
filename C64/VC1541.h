@@ -41,7 +41,7 @@ public:
 	IEC *iec;
 
 	//! Reference to the virtual 6502 CPU
-	CPU *cpu;
+	CPU cpu;
 	
 	//! Reference to the virtual drive memory
 	VC1541Memory *mem;
@@ -182,7 +182,7 @@ public:
 
         via1.execute();
         via2.execute();
-        uint8_t result = cpu->executeOneCycle();
+        uint8_t result = cpu.executeOneCycle();
         
         // Only proceed if drive is active
         if (!rotating)

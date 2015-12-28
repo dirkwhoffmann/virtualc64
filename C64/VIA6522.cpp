@@ -149,10 +149,10 @@ VIA6522::executeTimer2()
 bool
 VIA6522::IRQ() {
     if (io[0xD] /* IFR */ & io[0xE] /* IER */) {
-        floppy->cpu->setIRQLineVIA();
+        floppy->cpu.setIRQLineVIA();
         return true;
     } else {
-        floppy->cpu->clearIRQLineVIA();
+        floppy->cpu.clearIRQLineVIA();
         return false;
     }
 }
@@ -185,7 +185,7 @@ VIA6522::peek(uint16_t addr)
             //  IS RESET (BIT 6 IN INTERRUPT FLAG REGISTER)" [F. K.]
             
             clearInterruptFlag_T1();
-            floppy->cpu->clearIRQLineVIA();
+            floppy->cpu.clearIRQLineVIA();
             return LO_BYTE(t1);
 
         case 0x5: // T1 high-order counter
@@ -211,7 +211,7 @@ VIA6522::peek(uint16_t addr)
             // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
             
             clearInterruptFlag_T2();
-            floppy->cpu->clearIRQLineVIA();
+            floppy->cpu.clearIRQLineVIA();
 			return LO_BYTE(t2);
 			
 		case 0x9: // T2 high-order counter COUNTER TRANSFERRED TO MPU" [F. K.]
@@ -299,7 +299,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             t1 = HI_LO(t1_latch_hi, t1_latch_lo);
             
             clearInterruptFlag_T1();
-            floppy->cpu->clearIRQLineVIA();
+            floppy->cpu.clearIRQLineVIA();
             return;
             
         case 0x6: // T1 low-order latct
@@ -324,7 +324,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t2_latch_lo = value;
             clearInterruptFlag_T2();
-            floppy->cpu->clearIRQLineVIA();
+            floppy->cpu.clearIRQLineVIA();
             return;
             
         case 0x9: // T2 high-order counter
@@ -334,7 +334,7 @@ void VIA6522::poke(uint16_t addr, uint8_t value)
             
             t2 = HI_LO(value, t2_latch_lo);
             clearInterruptFlag_T2();
-            floppy->cpu->clearIRQLineVIA();
+            floppy->cpu.clearIRQLineVIA();
             return;
             
         case 0xA: // Shift register
@@ -427,7 +427,7 @@ uint8_t VIA1::peek(uint16_t addr)
                 clearInterruptFlag_CA2();
 
             // Clean this up ...
-            floppy->cpu->clearIRQLineATN();
+            floppy->cpu.clearIRQLineATN();
             return ora;
             
         default:
@@ -550,7 +550,7 @@ uint8_t VIA2::peek(uint16_t addr)
         }
             
         case 0x4:
-            floppy->cpu->clearIRQLineVIA();
+            floppy->cpu.clearIRQLineVIA();
             return VIA6522::peek(addr);
             
         default:
@@ -684,8 +684,8 @@ void VIA2::debug0xC() {
      case 3: debug(2,"  INDEPENDENT INTERRUPT INPUT POSITIVE EDGE\n"); break;
      case 4: debug(2,"  HANDSHAKE OUTPUT\n"); break;
      case 5: debug(2,"  PULSE OUTPUT\n"); break;
-     case 6: debug(2,"  LOW OUTPUT %04X\n", floppy->cpu->getPC_at_cycle_0()); break;
-     case 7: debug(2,"  HIGH OUTPUT %04X\n", floppy->cpu->getPC_at_cycle_0()); break;
+     case 6: debug(2,"  LOW OUTPUT %04X\n", floppy->cpu.getPC_at_cycle_0()); break;
+     case 7: debug(2,"  HIGH OUTPUT %04X\n", floppy->cpu.getPC_at_cycle_0()); break;
      }
     
     debug(2,"CB1:\n");

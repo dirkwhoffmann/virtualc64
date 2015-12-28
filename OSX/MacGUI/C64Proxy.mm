@@ -473,7 +473,7 @@
 {
     self = [super init];	
 	vc1541 = vc;
-	cpu = [[CPUProxy alloc] initWithCPU:vc->cpu];
+	cpu = [[CPUProxy alloc] initWithCPU:&vc->cpu];
 	mem = [[MemoryProxy alloc] initWithMemory:vc->mem];
 	via1 = [[VIAProxy alloc] initWithVIA:&vc->via1];
 	via2 = [[VIAProxy alloc] initWithVIA:&vc->via2];
