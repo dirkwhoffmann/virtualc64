@@ -484,9 +484,9 @@
 		case MSG_ROM_COMPLETE:
 			
 			// Close ROM dialog if open
-			if (romDialog) {					
-				[NSApp endSheet:romDialog];
-				[romDialog orderOut:nil];
+			if (romDialog) {
+                [romDialog orderOut:nil];
+                [[self window] endSheet:romDialog returnCode:NSModalResponseCancel];
 				romDialog = NULL;
 			}
 
@@ -914,34 +914,16 @@
 
 - (bool)showPropertiesDialog
 {
-    // Initialize dialog
     [propertiesDialog initialize:self];
-
-    // Open sheet
-#if 0
-    [[[self document] windowForSheet] beginSheet:propertiesDialog
-                               completionHandler:^(NSModalResponse returnCode) {
-                                   NSLog(@"completionHandler called");
-                               }];
-#endif
-    
-    [NSApp beginSheet:propertiesDialog
-       modalForWindow:[[self document] windowForSheet]
-        modalDelegate:self
-       didEndSelector:NULL
-          contextInfo:NULL];
+    [[self window] beginSheet:propertiesDialog completionHandler:nil];
     
     return YES;
 }
 
 - (IBAction)cancelPropertiesDialog:(id)sender
 {
-	// Hide sheet
-	[propertiesDialog orderOut:sender];
-	
-	// Return to normal event handling
-    // [[[self document] windowForSheet] endSheet:[self window] returnCode:NSModalResponseCancel];
-    [NSApp endSheet:propertiesDialog returnCode:1];
+	[propertiesDialog orderOut:sender]; // Hide sheet
+    [[self window] endSheet:propertiesDialog returnCode:NSModalResponseCancel];
 }
 
 - (bool)showHardwareDialog
@@ -964,26 +946,16 @@
         }
     }
     
-    // Initialize dialog
     [hardwareDialog initialize:self archiveName:name noOfFiles:files];
-    
-    // Open sheet
-    [NSApp beginSheet:hardwareDialog
-       modalForWindow:[[self document] windowForSheet]
-        modalDelegate:self
-       didEndSelector:NULL
-          contextInfo:NULL];
+    [[self window] beginSheet:hardwareDialog completionHandler:nil];
     
     return YES;
 }
 
 - (IBAction)cancelHardwareDialog:(id)sender
 {
-    // Hide sheet
-    [hardwareDialog orderOut:sender];
-    
-    // Return to normal event handling
-    [NSApp endSheet:hardwareDialog returnCode:1];
+    [hardwareDialog orderOut:sender]; // Hide sheet
+    [[self window] endSheet:hardwareDialog returnCode:NSModalResponseCancel];
 }
 
 - (bool)showMediaDialog
@@ -1005,54 +977,31 @@
         }
     }
     
-    // Initialize dialog
     [mediaDialog initialize:self archiveName:name noOfFiles:files];
-    
-    // Open sheet
-    [NSApp beginSheet:mediaDialog
-       modalForWindow:[[self document] windowForSheet]
-        modalDelegate:self
-       didEndSelector:NULL
-          contextInfo:NULL];
+    [[self window] beginSheet:mediaDialog completionHandler:nil];
     
     return YES;
 }
 
 - (IBAction)cancelMediaDialog:(id)sender
 {
-    // Hide sheet
-    [mediaDialog orderOut:sender];
-    
-    // Return to normal event handling
-    [NSApp endSheet:mediaDialog returnCode:1];
+    [mediaDialog orderOut:sender]; // Hide sheet
+    [[self window] endSheet:mediaDialog returnCode:NSModalResponseCancel];
 }
 
 - (bool)showRomDialog:(Message *)msg
 {
-    // Initialize dialog
     [romDialog initialize:msg->i];
-
-    // Open sheet
-    [NSApp beginSheet:romDialog
-       modalForWindow:[[self document] windowForSheet]
-        modalDelegate:self
-       didEndSelector:NULL
-          contextInfo:NULL];
+    [[self window] beginSheet:romDialog completionHandler:nil];
 
     return YES;
 }
 
 - (IBAction)cancelRomDialog:(id)sender
 {
-	// Hide sheet
-	[romDialog orderOut:sender];
-	
-	// Exit
-	[[NSApplication sharedApplication] terminate: nil];
-	
-	// OLD BEHAVIOUR
-	// Return to normal event handling
-	// [NSApp endSheet:romDialog returnCode:1];
+    [romDialog orderOut:sender]; // Hide sheet
+    [[self window] endSheet:romDialog returnCode:NSModalResponseCancel];
+	[NSApp terminate: nil]; // Exit
 }
 
 - (bool)showMountDialog
@@ -1061,26 +1010,16 @@
 	if (![[self document] archive])
 		return NO;
 	
-    // Initialize dialog
     [mountDialog initialize:[[self document] archive] c64proxy:c64];
-
-    // Open sheet
-	[NSApp beginSheet:mountDialog
-	   modalForWindow:[[self document] windowForSheet]
-		modalDelegate:self
-	   didEndSelector:NULL
-		  contextInfo:NULL];
-	
+    [[self window] beginSheet:mountDialog completionHandler:nil];
+    
 	return YES;
 }
 
 - (IBAction)cancelMountDialog:(id)sender
 {
-	// Hide sheet
-	[mountDialog orderOut:sender];
-	
-	// Return to normal event handling
-	[NSApp endSheet:mountDialog returnCode:1];    
+    [mountDialog orderOut:sender]; // Hide sheet
+    [[self window] endSheet:mountDialog returnCode:NSModalResponseCancel];
 }
 
 - (IBAction)endMountDialog:(id)sender
@@ -1100,10 +1039,8 @@
     }
     
 	// Hide sheet
-	[mountDialog orderOut:sender];
-	
-	// Return to normal event handling
-	[NSApp endSheet:mountDialog returnCode:1];
+	[mountDialog orderOut:sender]; // Hide sheet
+    [[self window] endSheet:mountDialog returnCode:NSModalResponseCancel];
 	
 	// Mount image if requested
     if (doMount) {
@@ -1129,26 +1066,16 @@
     if (![[self document] tape])
         return NO;
     
-    // Initialize dialog
     [tapeDialog initialize:[[self document] tape] c64proxy:c64];
-    
-    // Open sheet
-    [NSApp beginSheet:tapeDialog
-       modalForWindow:[[self document] windowForSheet]
-        modalDelegate:self
-       didEndSelector:NULL
-          contextInfo:NULL];
+    [[self window] beginSheet:tapeDialog completionHandler:nil];
     
     return YES;
 }
 
 - (IBAction)cancelTapeDialog:(id)sender
 {
-    // Hide sheet
-    [tapeDialog orderOut:sender];
-    
-    // Return to normal event handling
-    [NSApp endSheet:tapeDialog returnCode:1];
+    [tapeDialog orderOut:sender]; // Hide sheet
+    [[self window] endSheet:tapeDialog returnCode:NSModalResponseCancel];
 }
 
 - (IBAction)endTapeDialog:(id)sender
@@ -1165,9 +1092,7 @@
     
     // Hide sheet
     [tapeDialog orderOut:sender];
-    
-    // Return to normal event handling
-    [NSApp endSheet:tapeDialog returnCode:1];
+    [[self window] endSheet:tapeDialog returnCode:NSModalResponseCancel];
     
     // Insert tape into datasette
     [c64 insertTape:[[self document] tape]];

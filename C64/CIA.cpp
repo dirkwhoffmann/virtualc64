@@ -80,17 +80,6 @@ CIA::reset()
 	latchB = 0xFFFF;
 }
 
-#if 0
-void
-CIA::setFlagPin(uint8_t value)
-{
-    if (value) // Note: FLAG pin is inverted
-        ICR &= ~0x10;
-    else
-        ICR |= 0x10;
-}
-#endif
-
 void
 CIA::triggerRisingEdgeOnFlagPin()
 {
@@ -505,8 +494,6 @@ void CIA::dumpTrace()
 
 void CIA::dumpState()
 {
-    // assert(0);
-
 	msg("              Counter A : %02X\n", getCounterA());
 	msg("                Latch A : %02X\n", getLatchA());
 	msg("            Data port A : %02X\n", getDataPortA());

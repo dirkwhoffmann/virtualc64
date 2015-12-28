@@ -525,9 +525,9 @@ public:
 	uint8_t peek(uint16_t addr);
 	void poke(uint16_t addr, uint8_t value);
 	
-	//! Simulates a joystick movement
-	/*! \param nr r number (1 or 2)
-		\param value bit pattern of joystick movement */
+	//! @brief Simulates a joystick movement
+	/*! @param nr r number (1 or 2)
+     *  @param value bit pattern of joystick movement */
 	void setJoystickBits(int nr, uint8_t mask);
 	void clearJoystickBits(int nr, uint8_t mask);
 
