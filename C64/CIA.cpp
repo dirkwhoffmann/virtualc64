@@ -999,7 +999,7 @@ CIA2::~CIA2()
 void CIA2::reset()
 {
     this->c64 = c64;
-    iec = c64->iec;
+    iec = &c64->iec;
 	CIA::reset();
 }
 

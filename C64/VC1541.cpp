@@ -77,7 +77,7 @@ VC1541::reset()
     VirtualComponent::reset();
     
     // Establish bindings
-    iec = c64->iec;
+    iec = &c64->iec;
     
     cpu->mem = mem;
     cpu->setPC(0xEAA0);

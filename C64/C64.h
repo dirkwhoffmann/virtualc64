@@ -208,7 +208,7 @@ public:
     Joystick joystick2;
 
 	//! Reference to the virtual IEC bus
-	IEC *iec;
+	IEC iec;
 
     //! Reference to the virtual expansion port (cartdrige slot)
     ExpansionPort *expansionport;

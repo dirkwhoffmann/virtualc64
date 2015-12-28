@@ -576,7 +576,7 @@
 	keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
     joystick1 = [[JoystickProxy alloc] initWithJoystick:&c64->joystick1];
     joystick2 = [[JoystickProxy alloc] initWithJoystick:&c64->joystick2];
-    iec = [[IECProxy alloc] initWithIEC:c64->iec];
+    iec = [[IECProxy alloc] initWithIEC:&c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];

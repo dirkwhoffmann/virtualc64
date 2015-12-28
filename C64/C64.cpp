@@ -91,7 +91,6 @@ C64::C64()
     warpLoad = false;
 	
 	// Create components
-	iec = new IEC();
     expansionport = new ExpansionPort();
 
     // Register sub components
@@ -102,7 +101,7 @@ C64::C64()
         &vic,
         &sid,
         &cia1, &cia2,
-        iec,
+        &iec,
         expansionport,
         &floppy,
         &datasette,
@@ -149,7 +148,6 @@ C64::~C64()
 		
 	// Release all components
     delete expansionport;
-    delete iec;
     
 	debug(1, "Cleaned up virtual C64\n", this);
 }
@@ -456,7 +454,7 @@ C64::endOfRasterline()
         */
          
         // Execute the IEC bus
-        iec->execute();
+        iec.execute();
 
         // Count some sheep (zzzzzz) ...
         if (!getWarp())

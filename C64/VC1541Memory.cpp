@@ -47,7 +47,7 @@ VC1541Memory::reset()
     
     // Establish bindings
     cpu = &c64->cpu;
-    iec = c64->iec;
+    iec = &c64->iec;
     floppy = &c64->floppy;
 }
 
