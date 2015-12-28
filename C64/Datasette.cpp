@@ -291,13 +291,13 @@ Datasette::_execute()
 void
 Datasette::_executeRising()
 {
-    c64->cia1->triggerRisingEdgeOnFlagPin();
+    c64->cia1.triggerRisingEdgeOnFlagPin();
 }
 
 void
 Datasette::_executeFalling()
 {
-    c64->cia1->triggerFallingEdgeOnFlagPin();
+    c64->cia1.triggerFallingEdgeOnFlagPin();
     
     // Schedule next pulse
     advanceHead();

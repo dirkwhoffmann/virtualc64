@@ -95,8 +95,6 @@ C64::C64()
     mem = new C64Memory();
 	vic = new VIC();
 	sid = new SIDWrapper();
-	cia1 = new CIA1();
-	cia2 = new CIA2();
 	iec = new IEC();
     expansionport = new ExpansionPort();
 	floppy = new VC1541();
@@ -111,7 +109,7 @@ C64::C64()
         mem,
         vic,
         sid,
-        cia1, cia2,
+        &cia1, &cia2,
         iec,
         expansionport,
         floppy,
@@ -164,8 +162,6 @@ C64::~C64()
     delete expansionport;
     delete iec;
 	delete keyboard;
-	delete cia2;
-	delete cia1;
     delete sid;
 	delete vic;
 	delete cpu;
@@ -422,8 +418,8 @@ C64::step()
 // '---------------------------------------------------------------'
 
 #define EXECUTE(x) \
-		cia1->executeOneCycle(); \
-		cia2->executeOneCycle(); \
+		cia1.executeOneCycle(); \
+		cia2.executeOneCycle(); \
         if (!cpu->executeOneCycle()) result = false; \
 		if (!floppy->executeOneCycle()) result = false; \
         datasette.execute(); \
@@ -456,8 +452,8 @@ C64::endOfRasterline()
 
 		// Increment time of day clocks every tenth of a second
 		if (frame % (vic->getFramesPerSecond() / 10) == 0) {
-			cia1->incrementTOD();
-			cia2->incrementTOD();
+			cia1.incrementTOD();
+			cia2.incrementTOD();
 		}
 		
 		// Take a snapshot once in a while

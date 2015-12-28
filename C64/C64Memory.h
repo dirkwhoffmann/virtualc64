@@ -24,8 +24,6 @@
 // Forward declarations
 class VIC;
 class SIDWrapper;
-class CIA1;
-class CIA2;
 
 //! This class represents the RAM and ROM of a virtual C64
 /*! Note that the RAM, ROM, and the I/O space are superposed and therefore share the same locations in memory.
@@ -103,13 +101,7 @@ public:
 	
 	//! Reference to the connected SID chip
 	SIDWrapper *sid; 
-	
-	//! References to CIA 1
-	CIA1 *cia1; 
-	
-	//! References to CIA 2
-	CIA2 *cia2;
-		
+			
 	//! Virtual RAM
 	uint8_t ram[65536];
 

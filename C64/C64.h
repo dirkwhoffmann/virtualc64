@@ -46,13 +46,13 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-#define NDEBUG      // RELEASE
+// #define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
 
 // Snapshot version number of this release
 #define V_MAJOR 1
 #define V_MINOR 4
-#define V_SUBMINOR 1
+#define V_SUBMINOR 2
 
 #include "basic.h"
 #include "VirtualComponent.h"
@@ -191,10 +191,10 @@ public:
 	VIC *vic;
 	
 	//! Reference to the first connected virtual complex interface adapter (CIA 1). 	
-	CIA1 *cia1;
+	CIA1 cia1;
 	
 	//! Reference to the first connected virtual complex interface adapter (CIA 2). 	
-	CIA2 *cia2;
+	CIA2 cia2;
 	
 	//! Reference to the connected sound interface device (SID).
 	SIDWrapper *sid;

@@ -58,8 +58,8 @@ void C64Memory::reset()
     // Establish bindings
     vic = c64->vic;
     sid = c64->sid;
-    cia1 = c64->cia1;
-    cia2 = c64->cia2;
+    // cia1 = &c64.cia1;
+    // cia2 = &c64.cia2;
     cpu = c64->cpu;
     
 	// Initialize RAM (powerup pattern similar to Frodo and VICE)
@@ -318,14 +318,14 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	if (addr <= 0xDCFF) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the CIA I/O memory repeats every 16 bytes
-		return cia1->peek(addr & 0x000F);
+		return c64->cia1.peek(addr & 0x000F);
 	}
 	
 	// 0xDD00 - 0xDDFF (CIA 2)
 	if (addr <= 0xDDFF) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the CIA I/O memory repeats every 16 bytes
-		return cia2->peek(addr & 0x000F);
+		return c64->cia2.peek(addr & 0x000F);
 	}
 	
 	// 0xDE00 - 0xDEFF (I/O area 1)
@@ -449,7 +449,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	if (addr < 0xDD00) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the VIC I/O memory repeats every 16 bytes
-		cia1->poke(addr & 0x000F, value);
+		c64->cia1.poke(addr & 0x000F, value);
 		return;
 	}
 	
@@ -457,7 +457,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	if (addr < 0xDE00) {
 		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
 		// Therefore, the VIC I/O memory repeats every 16 bytes
-		cia2->poke(addr & 0x000F, value);
+		c64->cia2.poke(addr & 0x000F, value);
 		return;
 	}
 	

@@ -570,8 +570,8 @@
     // cpu = [[CPUProxy alloc] initWithCPU:c64->floppy->cpu];
 	mem = [[MemoryProxy alloc] initWithMemory:c64->mem];
 	vic = [[VICProxy alloc] initWithVIC:c64->vic];
-	cia1 = [[CIAProxy alloc] initWithCIA:c64->cia1];
-	cia2 = [[CIAProxy alloc] initWithCIA:c64->cia2];
+	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
+	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
 	sid = [[SIDProxy alloc] initWithSID:c64->sid];
 	keyboard = [[KeyboardProxy alloc] initWithKeyboard:c64->keyboard];
     joystick1 = [[JoystickProxy alloc] initWithJoystick:c64->joystick1];
