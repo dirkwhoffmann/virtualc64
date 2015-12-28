@@ -211,7 +211,7 @@ public:
 	IEC iec;
 
     //! Reference to the virtual expansion port (cartdrige slot)
-    ExpansionPort *expansionport;
+    ExpansionPort expansionport;
 
 	//! Reference to the virtual VC1541
 	VC1541 floppy;

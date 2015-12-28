@@ -235,8 +235,8 @@ C64Memory::peekRom(uint16_t addr)
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
-    uint8_t EXROM = c64->expansionport->getExromLine() ? 0x10 : 0x00;
-    uint8_t GAME = c64->expansionport->getGameLine() ? 0x08 : 0x00;
+    uint8_t EXROM = c64->expansionport.getExromLine() ? 0x10 : 0x00;
+    uint8_t GAME = c64->expansionport.getGameLine() ? 0x08 : 0x00;
     
     uint8_t index = (cpu->getPortLines() & 0x07) | EXROM | GAME;
     
@@ -361,8 +361,8 @@ uint8_t C64Memory::peek(uint16_t addr)
         case M_CRTLO:
         case M_CRTHI:
 
-            if (c64->expansionport->romIsBlendedIn(addr))
-                return c64->expansionport->peek(addr);
+            if (c64->expansionport.romIsBlendedIn(addr))
+                return c64->expansionport.peek(addr);
             else
                 return ram[addr];
             
@@ -463,7 +463,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	if (addr < 0xE000) {
         // Some registers in this area trigger a bank switch in the
         // attached cartridge module. So we pass the value there...
-        c64->expansionport->poke(addr, value);
+        c64->expansionport.poke(addr, value);
         return;
 	}
 

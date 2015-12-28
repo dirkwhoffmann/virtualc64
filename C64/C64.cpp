@@ -90,9 +90,6 @@ C64::C64()
     alwaysWarp = false;
     warpLoad = false;
 	
-	// Create components
-    expansionport = new ExpansionPort();
-
     // Register sub components
     VirtualComponent *subcomponents[] = {
         
@@ -102,7 +99,7 @@ C64::C64()
         &sid,
         &cia1, &cia2,
         &iec,
-        expansionport,
+        &expansionport,
         &floppy,
         &datasette,
         &keyboard,
@@ -145,9 +142,6 @@ C64::~C64()
 {
 	// Halt emulator
 	halt();	
-		
-	// Release all components
-    delete expansionport;
     
 	debug(1, "Cleaned up virtual C64\n", this);
 }
@@ -955,19 +949,19 @@ C64::insertTape(TAPArchive *a)
 bool
 C64::attachCartridge(Cartridge *c)
 {
-    return expansionport->attachCartridge(c);
+    return expansionport.attachCartridge(c);
 }
 
 void
 C64::detachCartridge()
 {
-    expansionport->detachCartridge();
+    expansionport.detachCartridge();
 }
 
 bool
 C64::isCartridgeAttached()
 {
-    return expansionport->getCartridgeAttached();
+    return expansionport.getCartridgeAttached();
 }
 
 
