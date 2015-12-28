@@ -32,8 +32,7 @@
 // 
 // SPEEDUP:
 //
-// 1. Make CIA1 and CIA2 dynamic objects
-//    Inline execution functions as much as possible
+// 1. CIA: Inline execution functions as much as possible
 // 2. Add routine to quickly get the disk name from GCR data
 //    Right now, the hardware dialog takes some time to open
 //
@@ -182,7 +181,7 @@ public:
 	MessageQueue queue;
 	
 	//! Reference to the connected virtual memory. 	
-	C64Memory *mem;
+	C64Memory mem;
 	
 	//! Reference to the connected virtual CPU. 	
     CPU *cpu;

@@ -92,7 +92,6 @@ C64::C64()
 	
 	// Create components
 	cpu = new CPU();
-    mem = new C64Memory();
 	vic = new VIC();
 	sid = new SIDWrapper();
 	iec = new IEC();
@@ -106,7 +105,7 @@ C64::C64()
     VirtualComponent *subcomponents[] = {
         
         cpu,
-        mem,
+        &mem,
         vic,
         sid,
         &cia1, &cia2,
@@ -165,7 +164,6 @@ C64::~C64()
     delete sid;
 	delete vic;
 	delete cpu;
-	delete mem;
     
 	debug(1, "Cleaned up virtual C64\n", this);
 }
@@ -176,7 +174,7 @@ void C64::reset()
 
     VirtualComponent::reset();
     
-    cpu->mem = mem;
+    cpu->mem = &mem;
     cpu->setPC(0xFCE2);
 	rasterlineCycle = 1;
     nanoTargetTime = 0UL;
@@ -341,7 +339,7 @@ C64::runstopRestore()
 
 bool
 C64::isRunnable() {
-	return mem->basicRomIsLoaded() && mem->charRomIsLoaded() && mem->kernelRomIsLoaded() && floppy->mem->romIsLoaded();
+	return mem.basicRomIsLoaded() && mem.charRomIsLoaded() && mem.kernelRomIsLoaded() && floppy->mem->romIsLoaded();
 }
 
 void 
@@ -785,9 +783,9 @@ C64::getMissingRoms() {
 	
 	uint8_t missingRoms = 0;
 	
-	if (!mem->basicRomIsLoaded()) missingRoms |= BASIC_ROM;
-	if (!mem->charRomIsLoaded()) missingRoms |= CHAR_ROM;
-	if (!mem->kernelRomIsLoaded()) missingRoms |= KERNEL_ROM;
+	if (!mem.basicRomIsLoaded()) missingRoms |= BASIC_ROM;
+	if (!mem.charRomIsLoaded()) missingRoms |= CHAR_ROM;
+	if (!mem.kernelRomIsLoaded()) missingRoms |= KERNEL_ROM;
 	if (!floppy->mem->romIsLoaded()) missingRoms |= VC1541_ROM;
 	return missingRoms;
 }
@@ -802,17 +800,17 @@ C64::loadRom(const char *filename)
 	bool wasRunnable = isRunnable();
 	
 	if (C64Memory::isBasicRom(filename)) {
-		result = mem->loadBasicRom(filename);
+		result = mem.loadBasicRom(filename);
 		if (result) putMessage(MSG_ROM_LOADED, BASIC_ROM);
 	}
 	
 	if (C64Memory::isCharRom(filename)) {
-		result = mem->loadCharRom(filename);
+		result = mem.loadCharRom(filename);
 		if (result) putMessage(MSG_ROM_LOADED, CHAR_ROM);
 	}
 	
 	if (C64Memory::isKernelRom(filename)) {
-		result = mem->loadKernelRom(filename);
+		result = mem.loadKernelRom(filename);
 		if (result) putMessage(MSG_ROM_LOADED, KERNEL_ROM);
 	}
 	
@@ -935,7 +933,7 @@ C64::flushArchive(Archive *a, int item)
 		data = a->getByte();
 		if (data < 0) break;
 		
-		mem->pokeRam(addr, (uint8_t)data);
+		mem.pokeRam(addr, (uint8_t)data);
 		if (addr == 0xFFFF) break;
 		
 		addr++;

@@ -106,7 +106,7 @@ VIC::reset()
 	
     // Establish bindungs
     cpu = c64->cpu;
-    mem = c64->mem;
+    // mem = &c64.mem;
     
     // Internal state
     yCounter = PAL_HEIGHT;
@@ -226,10 +226,10 @@ uint8_t VIC::memAccess(uint16_t addr)
         // Accessing range 0x1000 - 0x1FFF or 0x9000 - 0x9FFF
         // Character ROM is blended in here
         assert ((0xC000 + addr) >= 0xD000 && (0xC000 + addr) <= 0xDFFF);
-        dataBus = mem->rom[0xC000 + addr];
+        dataBus = c64->mem.rom[0xC000 + addr];
 
     } else {
-        dataBus = mem->ram[addrBus];
+        dataBus = c64->mem.ram[addrBus];
     }
     
     return dataBus;
@@ -239,7 +239,7 @@ uint8_t VIC::memIdleAccess()
 {
     // return memAccess(0x3FFF);
     addrBus = bankAddr + 0x3FFF;
-    return mem->ram[addrBus];
+    return c64->mem.ram[addrBus];
 }
 
 inline void VIC::cAccess()
@@ -255,7 +255,7 @@ inline void VIC::cAccess()
         uint16_t addr = (VM13VM12VM11VM10() << 6) | registerVC;
         
         characterSpace[registerVMLI] = memAccess(addr);
-        colorSpace[registerVMLI] = mem->colorRam[registerVC] & 0x0F;
+        colorSpace[registerVMLI] = c64->mem.colorRam[registerVC] & 0x0F;
     }
     
     // VIC has no access, yet
@@ -278,7 +278,7 @@ inline void VIC::cAccess()
             Erst danach werden wieder regulŠre Videomatrixdaten gelesen." [C.B.] */
         
         characterSpace[registerVMLI] = 0xFF;
-        colorSpace[registerVMLI] = c64->mem->ram[cpu->getPC()] & 0x0F;
+        colorSpace[registerVMLI] = c64->mem.ram[cpu->getPC()] & 0x0F;
     }
 }
 

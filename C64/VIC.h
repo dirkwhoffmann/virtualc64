@@ -45,7 +45,7 @@ private:
 	CPU *cpu;
 	
 	//! Reference to the connected virtual memory
-	C64Memory *mem;
+	// C64Memory *mem;
 	
 public:
     

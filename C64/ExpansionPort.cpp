@@ -236,14 +236,14 @@ void
 ExpansionPort::setGameLine(bool value)
 {
     gameLine = value;
-    c64->mem->updatePeekPokeLookupTables();
+    c64->mem.updatePeekPokeLookupTables();
 }
 
 void
 ExpansionPort::setExromLine(bool value)
 {
     exromLine = value;
-    c64->mem->updatePeekPokeLookupTables();
+    c64->mem.updatePeekPokeLookupTables();
 }
 
 void
@@ -311,7 +311,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
 
     // Blend in chip 0
     switchBank(0);
-    c64->mem->updatePeekPokeLookupTables();
+    c64->mem.updatePeekPokeLookupTables();
     // dumpState();
 
     c64->putMessage(MSG_CARTRIDGE, 1);
