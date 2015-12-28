@@ -578,7 +578,7 @@
     joystick2 = [[JoystickProxy alloc] initWithJoystick:c64->joystick2];
     iec = [[IECProxy alloc] initWithIEC:c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:c64->expansionport];
-	vc1541 = [[VC1541Proxy alloc] initWithVC1541:c64->floppy];
+	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
 	
 	// Initialize CoreAudio sound interface
@@ -672,7 +672,7 @@
 - (bool) loadCharRom:(NSString *)filename { return [self isCharRom:filename] && c64->loadRom([filename UTF8String]); }
 - (bool) isKernelRom:(NSString *)filename { return c64->mem.isKernelRom([filename UTF8String]); }
 - (bool) loadKernelRom:(NSString *)filename { return [self isKernelRom:filename] && c64->loadRom([filename UTF8String]); }
-- (bool) isVC1541Rom:(NSString *)filename { return c64->floppy->mem->is1541Rom([filename UTF8String]); }
+- (bool) isVC1541Rom:(NSString *)filename { return c64->floppy.mem->is1541Rom([filename UTF8String]); }
 - (bool) loadVC1541Rom:(NSString *)filename { return [self isVC1541Rom:filename] && c64->loadRom([filename UTF8String]); }
 - (bool) isRom:(NSString *)filename { return [self isBasicRom:filename] || [self isCharRom:filename] || [self isKernelRom:filename] || [self isVC1541Rom:filename]; }
 - (bool) loadRom:(NSString *)filename { return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename]; }

@@ -100,7 +100,8 @@
 
 - (bool)exportDiskDialogWorker:(int)type
 {
-    VC1541 *floppy = [c64 c64]->floppy;
+    C64 *_c64 = [c64 c64];
+    VC1541 *floppy = &_c64->floppy;
     D64Archive *diskContents;
     NSArray *fileTypes;
     Archive *target;

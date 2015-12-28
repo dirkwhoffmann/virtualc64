@@ -58,7 +58,7 @@ void VIA6522::reset()
     VirtualComponent::reset();
 
     // Establish bindings
-    floppy = c64->floppy;    
+    floppy = &c64->floppy;
 }
 
 void 

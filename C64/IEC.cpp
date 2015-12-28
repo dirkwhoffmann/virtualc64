@@ -62,7 +62,7 @@ IEC::reset()
    VirtualComponent::reset();
     
     // Establish bindings
-    drive = c64->floppy;
+    drive = &c64->floppy;
     
     driveConnected = 1;
 	atnLine = 1;

@@ -45,7 +45,7 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG      // RELEASE
+#define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
 
 // Snapshot version number of this release
@@ -214,7 +214,7 @@ public:
     ExpansionPort *expansionport;
 
 	//! Reference to the virtual VC1541
-	VC1541 *floppy;
+	VC1541 floppy;
 
     //! Virtual tape drive (Datasette)
     Datasette datasette;

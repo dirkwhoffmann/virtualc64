@@ -56,7 +56,7 @@ void
 	
 	// Prepare to run...
 	c64->cpu.clearErrorState();
-	c64->floppy->cpu->clearErrorState();
+	c64->floppy.cpu->clearErrorState();
 	c64->restartTimer();
     
 	while (1) {		
@@ -94,7 +94,6 @@ C64::C64()
 	sid = new SIDWrapper();
 	iec = new IEC();
     expansionport = new ExpansionPort();
-	floppy = new VC1541();
     keyboard = new Keyboard();
     joystick1 = new Joystick();
     joystick2 = new Joystick();
@@ -109,7 +108,7 @@ C64::C64()
         &cia1, &cia2,
         iec,
         expansionport,
-        floppy,
+        &floppy,
         &datasette,
         keyboard,
         joystick1, joystick2,
@@ -155,7 +154,6 @@ C64::~C64()
 	// Release all components
     delete joystick2;
     delete joystick1;
-	delete floppy;
     delete expansionport;
     delete iec;
 	delete keyboard;
@@ -334,7 +332,7 @@ C64::runstopRestore()
 
 bool
 C64::isRunnable() {
-	return mem.basicRomIsLoaded() && mem.charRomIsLoaded() && mem.kernelRomIsLoaded() && floppy->mem->romIsLoaded();
+	return mem.basicRomIsLoaded() && mem.charRomIsLoaded() && mem.kernelRomIsLoaded() && floppy.mem->romIsLoaded();
 }
 
 void 
@@ -388,7 +386,7 @@ C64::step()
 {		
 	// Clear error states
 	cpu.clearErrorState();
-	floppy->cpu->clearErrorState();
+	floppy.cpu->clearErrorState();
 	
 	// Execute next command 
 	do {
@@ -414,7 +412,7 @@ C64::step()
 		cia1.executeOneCycle(); \
 		cia2.executeOneCycle(); \
         if (!cpu.executeOneCycle()) result = false; \
-		if (!floppy->executeOneCycle()) result = false; \
+		if (!floppy.executeOneCycle()) result = false; \
         datasette.execute(); \
 		cycles++; \
         rasterlineCycle++;
@@ -781,7 +779,7 @@ C64::getMissingRoms() {
 	if (!mem.basicRomIsLoaded()) missingRoms |= BASIC_ROM;
 	if (!mem.charRomIsLoaded()) missingRoms |= CHAR_ROM;
 	if (!mem.kernelRomIsLoaded()) missingRoms |= KERNEL_ROM;
-	if (!floppy->mem->romIsLoaded()) missingRoms |= VC1541_ROM;
+	if (!floppy.mem->romIsLoaded()) missingRoms |= VC1541_ROM;
 	return missingRoms;
 }
 
@@ -810,7 +808,7 @@ C64::loadRom(const char *filename)
 	}
 	
 	if (VC1541Memory::is1541Rom(filename)) {
-		result = floppy->mem->loadRom(filename);
+		result = floppy.mem->loadRom(filename);
 		if (result) putMessage(MSG_ROM_LOADED, VC1541_ROM);
 	}
 			
@@ -942,7 +940,7 @@ C64::mountArchive(Archive *a)
 	if (a == NULL)
 		return false;
 		
-	floppy->insertDisk(a);
+	floppy.insertDisk(a);
 	return true;
 }
 
