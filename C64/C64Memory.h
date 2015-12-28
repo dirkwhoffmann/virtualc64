@@ -100,7 +100,7 @@ public:
 	// VIC *vic;
 	
 	//! Reference to the connected SID chip
-	SIDWrapper *sid; 
+	// SIDWrapper *sid;
 			
 	//! Virtual RAM
 	uint8_t ram[65536];

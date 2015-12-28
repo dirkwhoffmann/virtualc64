@@ -196,7 +196,7 @@ public:
 	CIA2 cia2;
 	
 	//! Reference to the connected sound interface device (SID).
-	SIDWrapper *sid;
+	SIDWrapper sid;
 	
 	//! Reference to the connected virtual keyboard.
 	Keyboard *keyboard;
@@ -320,28 +320,28 @@ public:
 	void setNTSC();
 
     //! Returns true iff audio filters are enabled.
-    bool getAudioFilter() { return sid->getAudioFilter(); }
+    bool getAudioFilter() { return sid.getAudioFilter(); }
 
 	//! Enable or disable filters of SID.
-	void setAudioFilter(bool value) { sid->setAudioFilter(value); }
+	void setAudioFilter(bool value) { sid.setAudioFilter(value); }
       
     //! Returns true if reSID library is used
-    bool getReSID() { return sid->getReSID(); }
+    bool getReSID() { return sid.getReSID(); }
 
     //! Turn reSID library on or off
-    void setReSID(bool value) { sid->setReSID(value); }
+    void setReSID(bool value) { sid.setReSID(value); }
 
     //! Get sampling method
-    inline sampling_method getSamplingMethod() { return sid->getSamplingMethod(); }
+    inline sampling_method getSamplingMethod() { return sid.getSamplingMethod(); }
     
     //! Set sampling method
-    void setSamplingMethod(sampling_method value) { sid->setSamplingMethod(value); }
+    void setSamplingMethod(sampling_method value) { sid.setSamplingMethod(value); }
     
     //! Get chip model 
-    inline chip_model getChipModel() { return sid->getChipModel(); }
+    inline chip_model getChipModel() { return sid.getChipModel(); }
     
     //! Set chip model 
-    void setChipModel(chip_model value) { sid->setChipModel(value); }
+    void setChipModel(chip_model value) { sid.setChipModel(value); }
 
 	
 	// -----------------------------------------------------------------------------------------------

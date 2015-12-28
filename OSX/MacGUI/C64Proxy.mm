@@ -572,7 +572,7 @@
 	vic = [[VICProxy alloc] initWithVIC:&c64->vic];
 	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
 	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
-	sid = [[SIDProxy alloc] initWithSID:c64->sid];
+	sid = [[SIDProxy alloc] initWithSID:&c64->sid];
 	keyboard = [[KeyboardProxy alloc] initWithKeyboard:c64->keyboard];
     joystick1 = [[JoystickProxy alloc] initWithJoystick:c64->joystick1];
     joystick2 = [[JoystickProxy alloc] initWithJoystick:c64->joystick2];
@@ -615,9 +615,9 @@
 - (void) setSamplingMethod:(int)value { c64->setSamplingMethod((sampling_method)value); }
 - (int) chipModel { return (chip_model)(c64->getChipModel()); }
 - (void) setChipModel:(int)value {c64->setChipModel((chip_model)value); }
-- (void) rampUp { c64->sid->rampUp(); }
-- (void) rampUpFromZero { c64->sid->rampUpFromZero(); }
-- (void) rampDown { c64->sid->rampDown(); }
+- (void) rampUp { c64->sid.rampUp(); }
+- (void) rampUpFromZero { c64->sid.rampUpFromZero(); }
+- (void) rampDown { c64->sid.rampDown(); }
 
 - (void) _loadFromSnapshot:(Snapshot *)snapshot
 {

@@ -56,7 +56,7 @@ void C64Memory::reset()
     VirtualComponent::reset();
     
     // Establish bindings
-    sid = c64->sid;
+    // sid = &c64->sid;
     cpu = &c64->cpu;
     
 	// Initialize RAM (powerup pattern similar to Frodo and VICE)
@@ -303,7 +303,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	if (addr <= 0xD7FF) {
 		// Note: Only the lower 5 bits are used for adressing the SID I/O space
 		// Therefore, the SID I/O memory repeats every 32 bytes
-		return sid->peek(addr & 0x001F);
+		return c64->sid.peek(addr & 0x001F);
 	}
 	
 	// 0xD800 - 0xDBFF (Color RAM)
@@ -430,7 +430,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	if (addr < 0xD800) {
 		// Note: Only the lower 5 bits are used for adressing the SID I/O space
 		// Therefore, the SID I/O memory repeats every 32 bytes
-		sid->poke(addr & 0x001F, value);
+		c64->sid.poke(addr & 0x001F, value);
 		return;
 	}
 

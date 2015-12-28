@@ -58,11 +58,11 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 	// get samples from SID
     if (mono) {        
         for (unsigned i = 0; i < size; i++) {
-            myOutBuffer[i] = c64->sid->readData();
+            myOutBuffer[i] = c64->sid.readData();
         }
     } else {
         for (unsigned i = 0; i < size; i++) {
-            float value = c64->sid->readData();
+            float value = c64->sid.readData();
             myOutBuffer[i*2] = value;		// left channel	
             myOutBuffer[i*2+1] = value;		// right channel
         }
@@ -127,15 +127,15 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		}
         
 		// try the selected mix frequency, if failure, fall back to native frequency and ajust SID's samplerate...
-		if (mySoundBasicDescription.mSampleRate != c64->sid->getSampleRate())
+		if (mySoundBasicDescription.mSampleRate != c64->sid.getSampleRate())
 		{
 			// try adjusting changing samplerate to wanted samplerate
-			mySoundBasicDescription.mSampleRate = c64->sid->getSampleRate();
+			mySoundBasicDescription.mSampleRate = c64->sid.getSampleRate();
 			SET_PROPS ();
 			// samplerate couldn't be changed
-			if (mySoundBasicDescription.mSampleRate != c64->sid->getSampleRate())
+			if (mySoundBasicDescription.mSampleRate != c64->sid.getSampleRate())
 			{
-				c64->sid->setSampleRate(mySoundBasicDescription.mSampleRate); // adjust SID's samplerate to native frequency of hardware
+				c64->sid.setSampleRate(mySoundBasicDescription.mSampleRate); // adjust SID's samplerate to native frequency of hardware
 				printf("Samplerate of SID was changed to native frequency of used audio hardware.");
 			}
 		}

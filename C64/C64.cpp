@@ -91,7 +91,6 @@ C64::C64()
     warpLoad = false;
 	
 	// Create components
-	sid = new SIDWrapper();
 	iec = new IEC();
     expansionport = new ExpansionPort();
     keyboard = new Keyboard();
@@ -104,7 +103,7 @@ C64::C64()
         &cpu,
         &mem,
         &vic,
-        sid,
+        &sid,
         &cia1, &cia2,
         iec,
         expansionport,
@@ -157,7 +156,6 @@ C64::~C64()
     delete expansionport;
     delete iec;
 	delete keyboard;
-    delete sid;
     
 	debug(1, "Cleaned up virtual C64\n", this);
 }
@@ -223,7 +221,7 @@ C64::setPAL()
 	suspend();
 	
     vic.setChipModel(MOS6569_PAL);
-	sid->setPAL();
+	sid.setPAL();
 
     debug(2, "Switching VIC chip model to MOS6569 (PAL)\n");
 	resume();
@@ -235,7 +233,7 @@ C64::setNTSC()
 	suspend();
 	    
     vic.setChipModel(MOS6567_NTSC);
-	sid->setNTSC();
+	sid.setNTSC();
 
     debug(2, "Switching VIC chip model to MOS6567 (NTSC)\n");
 	resume();
@@ -255,11 +253,11 @@ C64::setWarp(bool b)
     
     if (warp) {
         // Quickly fade out SID
-        sid->rampDown();
+        sid.rampDown();
         
     } else {
         // Smoothly fade in SID
-        sid->rampUp();
+        sid.rampUp();
         restartTimer();
     }
     
@@ -347,7 +345,7 @@ C64::run() {
 		}
 
         // Power on sub components
-		sid->run();
+		sid.run();
 
 		// Start execution thread
 		pthread_create(&p, NULL, runThread, (void *)this);	
@@ -371,7 +369,7 @@ C64::halt()
 		// Finish the current command (to reach a clean state)
 		step();
 		// Shut down sub components
-		sid->halt();
+		sid.halt();
 	}
 }
 
@@ -453,7 +451,7 @@ C64::endOfRasterline()
 		}
 		
 		// Execute remaining SID cycles
-        sid->executeUntil(cycles);
+        sid.executeUntil(cycles);
         /*
         int diff = sid->resid->writePtr - sid->resid->readPtr;
          debug(2,"SID readCnt: %8d writeCnt: %8d readPtr: %8d writePtr: %8d diff: %8d volume:%d target:%d\n",
