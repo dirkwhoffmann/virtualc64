@@ -573,9 +573,9 @@
 	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
 	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
 	sid = [[SIDProxy alloc] initWithSID:&c64->sid];
-	keyboard = [[KeyboardProxy alloc] initWithKeyboard:c64->keyboard];
-    joystick1 = [[JoystickProxy alloc] initWithJoystick:c64->joystick1];
-    joystick2 = [[JoystickProxy alloc] initWithJoystick:c64->joystick2];
+	keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
+    joystick1 = [[JoystickProxy alloc] initWithJoystick:&c64->joystick1];
+    joystick2 = [[JoystickProxy alloc] initWithJoystick:&c64->joystick2];
     iec = [[IECProxy alloc] initWithIEC:c64->iec];
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
@@ -722,7 +722,7 @@
 - (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
-- (Joystick *) joystick:(int)nr { assert(nr == 1 || nr == 2); return (nr == 1) ? c64->joystick1 : c64->joystick2; }
+- (Joystick *) joystick:(int)nr { assert(nr == 1 || nr == 2); return (nr == 1) ? &c64->joystick1 : &c64->joystick2; }
 
 // Audio hardware
 - (void) enableAudio { [self rampUpFromZero]; [audioDevice startPlayback]; }

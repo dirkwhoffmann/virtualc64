@@ -780,9 +780,9 @@ CIA1::~CIA1()
 void 
 CIA1::reset()
 {
-    keyboard = c64->keyboard;
-    joy[0] = c64->joystick1;
-    joy[1] = c64->joystick2;
+    keyboard = &c64->keyboard;
+    joy[0] = &c64->joystick1;
+    joy[1] = &c64->joystick2;
     joystick[0] = 0xff;
     joystick[1] = 0xff;
 	CIA::reset();

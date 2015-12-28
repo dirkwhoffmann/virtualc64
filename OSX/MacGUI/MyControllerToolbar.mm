@@ -114,10 +114,10 @@
 - (IBAction)portAAction:(id)sender
 {
     {
-        int newvalue = (int)[[sender selectedItem] tag]; /* New pop-up menu selection */
-        int oldvalue = [self inputDeviceA]; /* Old pop-up menu selection */
-        int othervalue = [self inputDeviceB]; /* Pop-up selection of other port */
-        Joystick* target =[c64 c64]->joystick1; /* Target is joystick on port A */
+        int newvalue = (int)[[sender selectedItem] tag]; // New pop-up menu selection
+        int oldvalue = [self inputDeviceA];              // Old pop-up menu selection
+        int othervalue = [self inputDeviceB];            // Pop-up selection of other port
+        Joystick* target = &([c64 c64]->joystick1);      // Target is joystick on port A
         
         NSLog(@"portAAction (%d)", newvalue);
         
@@ -162,10 +162,10 @@
 
 - (IBAction)portBAction:(id)sender
 {
-    int newvalue = (int)[[sender selectedItem] tag]; /* New pop-up menu selection */
-    int oldvalue = [self inputDeviceB]; /* Old pop-up menu selection */
-    int othervalue = [self inputDeviceA]; /* Pop-up selection of other port */
-    Joystick* target =[c64 c64]->joystick2; /* Target is joystick on port B */
+    int newvalue = (int)[[sender selectedItem] tag]; // New pop-up menu selection
+    int oldvalue = [self inputDeviceB];              // Old pop-up menu selection
+    int othervalue = [self inputDeviceA];            // Pop-up selection of other port
+    Joystick* target = &([c64 c64]->joystick2);      // Target is joystick on port B
     
     NSLog(@"portBAction (%d)", newvalue);
     

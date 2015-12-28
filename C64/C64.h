@@ -199,13 +199,13 @@ public:
 	SIDWrapper sid;
 	
 	//! Reference to the connected virtual keyboard.
-	Keyboard *keyboard;
+	Keyboard keyboard;
 	
 	//! Reference to joystick in port 1
-	Joystick *joystick1;
+	Joystick joystick1;
 
     //! Reference to joystick in port 2
-    Joystick *joystick2;
+    Joystick joystick2;
 
 	//! Reference to the virtual IEC bus
 	IEC *iec;

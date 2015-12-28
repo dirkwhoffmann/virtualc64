@@ -93,9 +93,6 @@ C64::C64()
 	// Create components
 	iec = new IEC();
     expansionport = new ExpansionPort();
-    keyboard = new Keyboard();
-    joystick1 = new Joystick();
-    joystick2 = new Joystick();
 
     // Register sub components
     VirtualComponent *subcomponents[] = {
@@ -109,8 +106,8 @@ C64::C64()
         expansionport,
         &floppy,
         &datasette,
-        keyboard,
-        joystick1, joystick2,
+        &keyboard,
+        &joystick1, &joystick2,
         NULL };
     
     registerSubComponents(subcomponents, sizeof(subcomponents));
@@ -151,11 +148,8 @@ C64::~C64()
 	halt();	
 		
 	// Release all components
-    delete joystick2;
-    delete joystick1;
     delete expansionport;
     delete iec;
-	delete keyboard;
     
 	debug(1, "Cleaned up virtual C64\n", this);
 }
@@ -321,11 +315,11 @@ C64::runstopRestore()
 {
 	// Note: The restore key is directly connected to the NMI line of the CPU
 	// Thus, the runstop/restore key combination triggers an interrupts that causes a soft reset
-	keyboard->pressRunstopKey();
+	keyboard.pressRunstopKey();
 	cpu.setNMILineReset();
 	// Hold runstop key down for a while...
 	sleepMicrosec((uint64_t)100000);
-	keyboard->releaseRunstopKey();
+	keyboard.releaseRunstopKey();
 }
 
 bool

@@ -119,7 +119,7 @@
         return NO;
     
     unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
-    Joystick *joy = (nr == 1) ? c64->joystick1 : c64->joystick2;
+    Joystick *joy = (nr == 1) ? &c64->joystick1 : &c64->joystick2;
     
     if (k == joyKeycode[keyset][JOYSTICK_UP]) { joy->SetAxisY(JOYSTICK_AXIS_Y_UP); return YES; }
     if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); return YES; }
@@ -138,7 +138,7 @@
         return NO;
     
     unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
-    Joystick *joy = (nr == 1) ? c64->joystick1 : c64->joystick2;
+    Joystick *joy = (nr == 1) ? &c64->joystick1 : &c64->joystick2;
     
     if (k == joyKeycode[keyset][JOYSTICK_UP]) { joy->SetAxisY(JOYSTICK_AXIS_NONE); return YES; }
     if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { joy->SetAxisY(JOYSTICK_AXIS_NONE); return YES; }
@@ -215,7 +215,7 @@
     // Press key
     // NSLog(@"Storing key %c for keycode %ld",c64key, (long)keycode);
     pressedKeys[(unsigned char)keycode] = c64key;
-    c64->keyboard->pressKey(c64key);
+    c64->keyboard.pressKey(c64key);
 }
 
 - (void)keyUp:(NSEvent *)event
@@ -238,7 +238,7 @@
     
     // Release key
     // NSLog(@"Releasing stored key %c for keycode %ld",pressedKeys[keycode], (long)keycode);
-    c64->keyboard->releaseKey(pressedKeys[keycode]);
+    c64->keyboard.releaseKey(pressedKeys[keycode]);
     pressedKeys[(unsigned char)keycode] = 0;
 }
 
