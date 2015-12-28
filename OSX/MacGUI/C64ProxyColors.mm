@@ -245,7 +245,7 @@
     
     colorScheme = (scheme < 11) ? scheme : 0;
     for (unsigned i = 0; i < 16; i++) {
-        c64->vic->setColor(i, LO_LO_HI_HI(rgb[colorScheme][i][0],rgb[colorScheme][i][1],rgb[colorScheme][i][2],0xFF));
+        c64->vic.setColor(i, LO_LO_HI_HI(rgb[colorScheme][i][0],rgb[colorScheme][i][1],rgb[colorScheme][i][2],0xFF));
     }
 }
 

@@ -206,7 +206,7 @@
         return;
     }
     
-    void *buf = c64->vic->screenBuffer();
+    void *buf = c64->vic.screenBuffer();
     assert(buf != NULL);
 
     NSUInteger pixelSize = 4;

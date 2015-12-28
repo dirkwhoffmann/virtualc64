@@ -56,7 +56,6 @@ void C64Memory::reset()
     VirtualComponent::reset();
     
     // Establish bindings
-    vic = c64->vic;
     sid = c64->sid;
     cpu = &c64->cpu;
     
@@ -297,7 +296,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	if (addr <= 0xD3FF) {
 		// Note: Only the lower 6 bits are used for adressing the VIC I/O space
 		// Therefore, the VIC I/O memory repeats every 64 bytes
-		return vic->peek(addr & 0x003F);	
+		return c64->vic.peek(addr & 0x003F);
 	}
 	
 	// 0xD400 - 0xD7FF (SID)
@@ -309,7 +308,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	
 	// 0xD800 - 0xDBFF (Color RAM)
 	if (addr <= 0xDBFF) {
-        return (colorRam[addr - 0xD800] & 0x0F) | (vic->getDataBus() & 0xF0);
+        return (colorRam[addr - 0xD800] & 0x0F) | (c64->vic.getDataBus() & 0xF0);
 	}
 	
 	// 0xDC00 - 0xDCFF (CIA 1)
@@ -337,7 +336,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
             Lesen von offenen Adressen liefert nämlich auf vielen C64 das zuletzt vom
             VIC gelesene Byte zurück!)" [C.B.] */
         
-		return vic->getDataBus();
+		return c64->vic.getDataBus();
 	}
 
 	assert(false);
@@ -423,7 +422,7 @@ void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 	if (addr < 0xD400) {
 		// Note: Only the lower 6 bits are used for adressing the VIC I/O space
 		// Therefore, the VIC I/O memory repeats every 64 bytes
-		vic->poke(addr & 0x003F, value);
+		c64->vic.poke(addr & 0x003F, value);
 		return;
 	}
 	

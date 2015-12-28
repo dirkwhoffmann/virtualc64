@@ -91,7 +91,6 @@ C64::C64()
     warpLoad = false;
 	
 	// Create components
-	vic = new VIC();
 	sid = new SIDWrapper();
 	iec = new IEC();
     expansionport = new ExpansionPort();
@@ -105,7 +104,7 @@ C64::C64()
         
         &cpu,
         &mem,
-        vic,
+        &vic,
         sid,
         &cia1, &cia2,
         iec,
@@ -161,7 +160,6 @@ C64::~C64()
     delete iec;
 	delete keyboard;
     delete sid;
-	delete vic;
     
 	debug(1, "Cleaned up virtual C64\n", this);
 }
@@ -196,9 +194,9 @@ C64::dumpState() {
 	msg("C64:\n");
 	msg("----\n\n");
 	msg("            Machine type : %s\n", isPAL() ? "PAL" : "NTSC");
-	msg("       Frames per second : %d\n", vic->getFramesPerSecond());
-	msg("   Rasterlines per frame : %d\n", vic->getRasterlinesPerFrame());
-	msg("   Cycles per rasterline : %d\n", vic->getCyclesPerRasterline());
+	msg("       Frames per second : %d\n", vic.getFramesPerSecond());
+	msg("   Rasterlines per frame : %d\n", vic.getRasterlinesPerFrame());
+	msg("   Cycles per rasterline : %d\n", vic.getCyclesPerRasterline());
 	msg("           Current cycle : %llu\n", cycles);
 	msg("           Current frame : %d\n", frame);
 	msg("      Current rasterline : %d\n", rasterline);
@@ -226,7 +224,7 @@ C64::setPAL()
 {
 	suspend();
 	
-    vic->setChipModel(MOS6569_PAL);
+    vic.setChipModel(MOS6569_PAL);
 	sid->setPAL();
 
     debug(2, "Switching VIC chip model to MOS6569 (PAL)\n");
@@ -238,7 +236,7 @@ C64::setNTSC()
 {
 	suspend();
 	    
-    vic->setChipModel(MOS6567_NTSC);
+    vic.setChipModel(MOS6567_NTSC);
 	sid->setNTSC();
 
     debug(2, "Switching VIC chip model to MOS6567 (NTSC)\n");
@@ -310,8 +308,7 @@ C64::saveToSnapshot(Snapshot *snapshot)
 		return;
 	
 	snapshot->setTimestamp(time(NULL));
-	// snapshot->setPAL(isPAL());
-	snapshot->takeScreenshot((uint32_t *)vic->screenBuffer(), isPAL());
+	snapshot->takeScreenshot((uint32_t *)vic.screenBuffer(), isPAL());
 	
     snapshot->alloc(stateSize());
 	uint8_t *ptr = snapshot->getData();
@@ -427,33 +424,33 @@ C64::beginOfRasterline()
 {
 	// First cycle of rasterline
 	if (rasterline == 0) {
-		vic->beginFrame();			
+		vic.beginFrame();
 	}
-	vic->beginRasterline(rasterline);	
+	vic.beginRasterline(rasterline);
 }
 
 void
 C64::endOfRasterline()
 {
-	vic->endRasterline();
+	vic.endRasterline();
 	rasterlineCycle = 1;
 	rasterline++;
 
-	if (rasterline >= vic->getRasterlinesPerFrame()) {
+	if (rasterline >= vic.getRasterlinesPerFrame()) {
         
 		// Last rasterline of frame
 		rasterline = 0;			
-		vic->endFrame();
+		vic.endFrame();
 		frame++;
 
 		// Increment time of day clocks every tenth of a second
-		if (frame % (vic->getFramesPerSecond() / 10) == 0) {
+		if (frame % (vic.getFramesPerSecond() / 10) == 0) {
 			cia1.incrementTOD();
 			cia2.incrementTOD();
 		}
 		
 		// Take a snapshot once in a while
-		if (frame % (vic->getFramesPerSecond() * 4) == 0) {
+		if (frame % (vic.getFramesPerSecond() * 4) == 0) {
 			takeSnapshot();			
 		}
 		
@@ -485,267 +482,267 @@ C64::executeOneCycle()
 	switch(rasterlineCycle) {
 		case 1:
 			beginOfRasterline();			
-			vic->cycle1();
+			vic.cycle1();
 			EXECUTE(1);
 			break;
 		case 2: 
-			vic->cycle2();
+			vic.cycle2();
 			EXECUTE(2);
 			break;
 		case 3: 
-			vic->cycle3();
+			vic.cycle3();
 			EXECUTE(3);
 			break;
 		case 4: 
-			vic->cycle4();
+			vic.cycle4();
 			EXECUTE(4);
 			break;
 		case 5: 
-			vic->cycle5();
+			vic.cycle5();
 			EXECUTE(5);
 			break;
 		case 6: 
-			vic->cycle6();
+			vic.cycle6();
 			EXECUTE(6);
 			break;
 		case 7: 
-			vic->cycle7();
+			vic.cycle7();
 			EXECUTE(7);
 			break;
 		case 8: 
-			vic->cycle8();
+			vic.cycle8();
 			EXECUTE(8);
 			break;
 		case 9: 
-			vic->cycle9();
+			vic.cycle9();
 			EXECUTE(9);
 			break;
 		case 10: 
-			vic->cycle10();
+			vic.cycle10();
 			EXECUTE(10);
 			break;
 		case 11: 
-			vic->cycle11();
+			vic.cycle11();
 			EXECUTE(11);
 			break;
 		case 12: 
-			vic->cycle12();
+			vic.cycle12();
 			EXECUTE(12);
 			break;
 		case 13: 
-			vic->cycle13();
+			vic.cycle13();
 			EXECUTE(13);
 			break;
 		case 14: 
-			vic->cycle14();
+			vic.cycle14();
 			EXECUTE(14);
 			break;
 		case 15: 
-			vic->cycle15();
+			vic.cycle15();
 			EXECUTE(15);
 			break;
 		case 16: 
-			vic->cycle16();
+			vic.cycle16();
 			EXECUTE(16);
 			break;
 		case 17: 
-			vic->cycle17();
+			vic.cycle17();
 			EXECUTE(17);
 			break;
 		case 18: 
-			vic->cycle18();
+			vic.cycle18();
 			EXECUTE(18);
 			break;
 		case 19: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(19);
 			break;
 		case 20: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(20);
 			break;
 		case 21: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(21);
 			break;
 		case 22: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(22);
 			break;
 		case 23: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(23);
 			break;
 		case 24: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(24);
 			break;
 		case 25: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(25);
 			break;
 		case 26: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(26);
 			break;
 		case 27: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(27);
 			break;
 		case 28: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(28);
 			break;
 		case 29: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(29);
 			break;
 		case 30: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(30);
 			break;
 		case 31: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(31);
 			break;
 		case 32: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(32);
 			break;
 		case 33: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(33);
 			break;
 		case 34: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(34);
 			break;
 		case 35: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(35);
 			break;
 		case 36: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(36);
 			break;
 		case 37: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(37);
 			break;
 		case 38: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(38);
 			break;
 		case 39: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(39);
 			break;
 		case 40: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(40);
 			break;
 		case 41: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(41);
 			break;
 		case 42: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(42);
 			break;
 		case 43: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(43);
 			break;
 		case 44: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(44);
 			break;
 		case 45: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(45);
 			break;
 		case 46: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(46);
 			break;
 		case 47: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(47);
 			break;
 		case 48: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(48);
 			break;
 		case 49: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(49);
 			break;
 		case 50: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(50);
 			break;
 		case 51: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(51);
 			break;
 		case 52: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(52);
 			break;
 		case 53: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(53);
 			break;
 		case 54: 
-			vic->cycle19to54();
+			vic.cycle19to54();
 			EXECUTE(54);
 			break;
 		case 55: 
-			vic->cycle55();
+			vic.cycle55();
 			EXECUTE(55);
 			break;
 		case 56: 
-			vic->cycle56();
+			vic.cycle56();
 			EXECUTE(56);
 			break;
 		case 57: 
-			vic->cycle57();
+			vic.cycle57();
 			EXECUTE(57);
 			break;
 		case 58: 
-			vic->cycle58();
+			vic.cycle58();
 			EXECUTE(58);
 			break;
 		case 59: 
-			vic->cycle59();
+			vic.cycle59();
 			EXECUTE(59);
 			break;
 		case 60: 
-			vic->cycle60();
+			vic.cycle60();
 			EXECUTE(60);
 			break;
 		case 61: 
-			vic->cycle61();
+			vic.cycle61();
 			EXECUTE(61);
 			break;
 		case 62: 
-			vic->cycle62();
+			vic.cycle62();
 			EXECUTE(62);
 			break;
 		case 63: 
-			vic->cycle63();
+			vic.cycle63();
 			EXECUTE(63);
-			if (vic->getCyclesPerRasterline() == 63) {
+			if (vic.getCyclesPerRasterline() == 63) {
 				// last cycle for PAL machines
 				endOfRasterline();
 			}			
 			break;
 		case 64: 
-			vic->cycle64();
+			vic.cycle64();
 			EXECUTE(64);			
 			break;
 		case 65: 
-			vic->cycle65();
+			vic.cycle65();
 			EXECUTE(65);
 			endOfRasterline();
 			break;
@@ -763,7 +760,7 @@ C64::executeOneCycle()
 inline bool
 C64::executeOneLine()
 {
-	uint8_t lastCycle = vic->getCyclesPerRasterline();
+	uint8_t lastCycle = vic.getCyclesPerRasterline();
 	for (int i = rasterlineCycle; i <= lastCycle; i++) {
 		if (!executeOneCycle())
 			return false;
@@ -874,7 +871,7 @@ C64::restartTimer()
     uint64_t kernelNow = mach_absolute_time();
     uint64_t nanoNow = abs_to_nanos(kernelNow);
     
-    nanoTargetTime = nanoNow + vic->getFrameDelay();
+    nanoTargetTime = nanoNow + vic.getFrameDelay();
 }
 
 void 
@@ -899,7 +896,7 @@ C64::synchronizeTiming()
     // Sleep and update target timer
     // debug(2, "%p Sleeping for %lld\n", this, kernelTargetTime - mach_absolute_time());
     int64_t jitter = sleepUntil(kernelTargetTime, earlyWakeup);
-    nanoTargetTime += vic->getFrameDelay();
+    nanoTargetTime += vic.getFrameDelay();
 
     // debug(2, "Jitter = %d", jitter);
     if (jitter > 1000000000 /* 1 sec */) {

@@ -187,7 +187,7 @@ public:
     CPU cpu;
 	
 	//! Reference to the connected virtual video controller (VIC). 	
-	VIC *vic;
+	VIC vic;
 	
 	//! Reference to the first connected virtual complex interface adapter (CIA 1). 	
 	CIA1 cia1;
@@ -306,7 +306,7 @@ public:
 public:
 	
 	//! Returns true for PAL machines
-	inline bool isPAL() { return vic->isPAL(); }
+	inline bool isPAL() { return vic.isPAL(); }
 
 	//! Set PAL mode
     //  DEPRECATED. PAL/NTSC IS DETERMINED BY VIC CHIP MODEL
@@ -314,7 +314,7 @@ public:
 	
 	//! Returns true for NTSC machines
     //  DEPRECATED. PAL/NTSC IS DETERMINED BY VIC CHIP MODEL
-	inline bool isNTSC() { return !vic->isPAL(); }
+	inline bool isNTSC() { return !vic.isPAL(); }
 
 	//! Set NTSC mode
 	void setNTSC();

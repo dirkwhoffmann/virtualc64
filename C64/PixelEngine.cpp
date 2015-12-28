@@ -73,7 +73,7 @@ PixelEngine::reset()
     VirtualComponent::reset();
     
     // Establish bindings
-    vic = c64->vic;
+    vic = &c64->vic;
     
     memset(&sr, 0, sizeof(sr));
     memset(&sprite_sr, 0, sizeof(sprite_sr));

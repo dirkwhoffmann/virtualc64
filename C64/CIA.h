@@ -116,16 +116,6 @@ public:
 	//! Address offset of the CIA Control Register B
 	static const uint16_t CIA_CONTROL_REG_B = 0x0F;
 		
-	//! Reference to the connected video interface controller (VIC). 
-	/*! The CIA chip needs to know about the VIC chip, because 
-	 1. the video memory bank selection is handled by the CIA chip (register 0xDD00).
-	 2. lightpen interrupts can be simulated by writing into a CIA register
-	 */
-	VIC *vic;
-	
-	//! Reference to the connected CPU. 
-	// CPU *cpu;
-	
 	//! Timer A counter
 	uint16_t counterA;
 	

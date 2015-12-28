@@ -97,7 +97,7 @@ class C64Memory : public Memory {
 public:		
 
 	//! Reference to the connected VIC chip 
-	VIC *vic; 
+	// VIC *vic;
 	
 	//! Reference to the connected SID chip
 	SIDWrapper *sid; 

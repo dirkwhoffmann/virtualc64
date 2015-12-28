@@ -67,7 +67,7 @@ CIA::reset()
     
     // Establish bindings
     // cpu = &c64.cpu;
-    vic = c64->vic;
+    // vic = c64->vic;
     
     clearInterruptLine();
 
@@ -938,7 +938,7 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
             
             if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
-                vic->triggerLightPenInterrupt();
+                c64->vic.triggerLightPenInterrupt();
             }
 			return;
 			
@@ -950,7 +950,7 @@ CIA1::poke(uint16_t addr, uint8_t value)
 			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 
             if ((PBold & 0x10) != (PB & 0x10)) { // edge on lightpen bit?
-                vic->triggerLightPenInterrupt();
+                c64->vic.triggerLightPenInterrupt();
             }
             
             return;
@@ -1074,7 +1074,7 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			PA = PALatch | ~DDRA;
 
 			// Bits 0 and 1 determine the memory bank seen the VIC
-			vic->setMemoryBankAddr((~PA & 0x03) << 14);	
+			c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
 
 			// Bits 3 to 5 of PA are connected to the IEC bus
 			iec->updateCiaPins(PALatch, DDRA);
@@ -1086,7 +1086,7 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			PA = PALatch | ~DDRA;
 			
 			// Bits 0 and 1 determine the memory bank seen the VIC
-			vic->setMemoryBankAddr((~PA & 0x03) << 14);	
+			c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
 			
 			// Bits 3 to 5 of PA are connected to the IEC bus
 			iec->updateCiaPins(PALatch, DDRA);
