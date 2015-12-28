@@ -635,9 +635,6 @@
 //                                  Snapshot
 // --------------------------------------------------------------------------
 
-// Get rid of this class. Too much overhead and no real use
-
-
 @interface V64Snapshot : NSObject {
 	@private
 	Snapshot *snapshot;
@@ -658,6 +655,19 @@
 	
 - (bool) readDataFromFile:(NSString *)path;
 - (bool) writeDataToFile:(NSString *)path;
+
+@end
+
+// --------------------------------------------------------------------------
+//                                Archive
+// --------------------------------------------------------------------------
+
+@interface ArchiveProxy : NSObject
+{
+    @private Archive *archive;
+}
+
+- (id) initWithArchive:(Archive *)s;
 
 @end
 

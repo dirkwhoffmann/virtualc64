@@ -756,7 +756,7 @@
 @end
 
 // --------------------------------------------------------------------------
-//                                  Snapshot
+//                         Snapshot (needs testing)
 // --------------------------------------------------------------------------
 
 @implementation V64Snapshot
@@ -824,6 +824,32 @@
 - (time_t)timeStamp { return snapshot->getTimestamp(); }
 - (bool) readDataFromFile:(NSString *)path { return snapshot->readFromFile([path UTF8String]); }
 - (bool) writeDataToFile:(NSString *)path { return snapshot->writeToFile([path UTF8String]); }
+
+@end
+
+// --------------------------------------------------------------------------
+//                           Archive (incomplete)
+// --------------------------------------------------------------------------
+
+@implementation ArchiveProxy
+
+- (id)initWithArchive:(Archive *)a
+{
+    NSLog(@"ArchiveProxy::initWithArchive");
+    
+    if ((self = [super init])) {
+        archive = a;
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    NSLog(@"ArchiveProxy::dealloc");
+    
+    if (archive)
+        delete archive;
+}
 
 @end
 
