@@ -117,7 +117,7 @@ public:
 
     /*! @brief Sets the target volume
      */
-    void setTargetVolume(int32_t volume) { resid->setTargetVolume(volume); }
+    // void setTargetVolume(int32_t volume) { resid->setTargetVolume(volume); }
     
     /*! @brief   Triggers volume ramp up phase
      *  @details Configures volume and targetVolume to simulate a smooth audio fade in

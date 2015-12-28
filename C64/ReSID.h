@@ -204,11 +204,11 @@ public:
 
     /*! @brief Sets the current volume
      */
-    void setVolume(int32_t v) { volume = v; }
+    void setVolume(int32_t vol) { volume = vol; }
 
     /*! @brief Sets the target volume
      */
-    void setTargetVolume(int32_t targetVolume) { targetVolume = volume; }
+    // void setTargetVolume(int32_t vol) { targetVolume = vol; }
 
     /*! @brief   Triggers volume ramp up phase
      *  @details Configures volume and targetVolume to simulate a smooth audio fade in

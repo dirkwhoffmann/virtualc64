@@ -167,9 +167,12 @@
     }
     CFRelease(windows);
     
-    // Create image
+    // Create bit image representation
     CGImageRef cgImage = CGWindowListCreateImage([NSScreen mainScreen].frame, kCGWindowListOptionIncludingWindow, [windowID integerValue], kCGWindowImageDefault);
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
+    CFRelease(cgImage);
+
+    // Create image
     NSImage *image = [[NSImage alloc] init];
     [image addRepresentation:bitmapRep];
     

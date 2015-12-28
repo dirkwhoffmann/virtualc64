@@ -97,7 +97,7 @@ class JoystickManager
 
     void IOHIDElement_SetDoubleProperty(IOHIDElementRef element, CFStringRef key, double value);
     
-    void addJoystickProxyWithLocationID(int locationID, JoystickManagerProxy *proxy);
+    bool addJoystickProxyWithLocationID(int locationID, JoystickManagerProxy *proxy);
     JoystickManagerProxy *getJoystickProxyWithLocationID(int locationID);
     void removeJoystickProxyWithLocationID(int locationID);
     void listJoystickManagers();
@@ -117,9 +117,9 @@ class IOHIDDeviceInfo
 	IOHIDDeviceInfo(const IOHIDDeviceInfo &copy);
 	~IOHIDDeviceInfo();
 		    
-    inline int GetLocationID() { return _locationID; }
-    inline void setLocationID(int value) { _locationID = value; }
-    inline const char *GetName() { return ( _name ? _name : "<NO NAME>" ); }
-    inline void setName(char *value) { _name = value; }
+    int GetLocationID() { return _locationID; }
+    void setLocationID(int value) { _locationID = value; }
+    char *GetName() { return _name; } 
+    void setName(char *value) { _name = value; }
 };
 

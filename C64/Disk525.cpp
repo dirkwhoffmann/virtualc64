@@ -431,8 +431,10 @@ Disk525::decodeDisk(uint8_t *dest, int *error)
     unsigned r, w, copies, noOfOneBits, bitsOnTrack = 0, numBytes = 0;
     int startOfFirstSyncMark = -1;
     
-    if (error) *error = 0; // We assume the best
+    memset(tmpbuf1, 0, sizeof(tmpbuf1));
+    memset(tmpbuf2, 0, sizeof(tmpbuf2));
     
+    if (error) *error = 0; // We assume the best
     
     // For each full track ...
     for (Track t = 1; t <= numTracks; t++) {

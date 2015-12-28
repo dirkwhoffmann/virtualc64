@@ -134,11 +134,15 @@ Container::writeToFile(const char *filename)
 	bool success = false;
 	uint8_t *data = NULL;
 	FILE *file;
-	unsigned filesize = writeToBuffer(NULL);
+	unsigned filesize;
    
-	assert (filename != NULL);
-		
+    // Determine file size
+    filesize = writeToBuffer(NULL);
+    if (filesize == 0)
+        return false;
+    
 	// Open file
+    assert (filename != NULL);
 	if (!(file = fopen(filename, "w"))) {
 		goto exit;
 	}
@@ -163,9 +167,9 @@ Container::writeToFile(const char *filename)
 exit:
 		
 	if (file)
-	fclose(file);
+        fclose(file);
 	if (data)
-	free(data);
+        free(data);
 		
 	return success;
 }

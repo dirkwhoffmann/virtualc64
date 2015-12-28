@@ -55,7 +55,7 @@ P00Archive::archiveFromP00File(const char *filename)
 	if (!archive->readFromFile(filename)) {
         fprintf(stderr, "Failed to load archive\n");
         delete archive;
-		archive = NULL;
+		return NULL;
 	}
 
     fprintf(stderr, "%s archive created with %d bytes (size of item 0 = %d).\n",

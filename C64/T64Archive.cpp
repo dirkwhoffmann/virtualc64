@@ -61,12 +61,12 @@ T64Archive::archiveFromT64File(const char *filename)
 	if (!archive->readFromFile(filename)) {
         fprintf(stderr, "Failed to load archive\n");
 		delete archive;
-		archive = NULL;
+		return NULL;
 	}
 
     if (!archive->repair()) {
         delete archive;
-        archive = NULL;
+        return NULL;
     }
 
 	return archive;

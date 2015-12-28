@@ -24,41 +24,26 @@
 //                                  Keyboard events
 // --------------------------------------------------------------------------------
 
-#if 0
-- (BOOL)acceptsFirstResponder
-{
-    return YES;
-}
-
-- (BOOL)resignFirstResponder
-{
-    return YES;
-}
-
-- (BOOL)becomeFirstResonder
-{
-    return YES;
-}
-#endif
-
 - (int)fingerprintForKey:(int)keycode withModifierFlags:(int)flags
 {
+    return keycode;
+    
+#if 0
     // The recorded fingerprint consists of the keycode. If the key is a number key (0 - 9), the
     // fingerprint also contains the NSNumericPadKeyMask flag to distinguish keys from the
     // numeric keypad from "normal" keys.
-    
-    flags &= NSNumericPadKeyMask;
-    
     switch (keycode) {
         case kVK_ANSI_1: case kVK_ANSI_2: case kVK_ANSI_3: case kVK_ANSI_4: case kVK_ANSI_5:
         case kVK_ANSI_6: case kVK_ANSI_7: case kVK_ANSI_8: case kVK_ANSI_9: case kVK_ANSI_0:
             flags &= NSNumericPadKeyMask; // keep NSNumericPadKeyMask flag
+            break;
             
         default:
             flags = 0; // standard case: we only keep the keycode
     }
     
     return keycode | flags;
+#endif
 }
 
 - (int)joyKeycode:(int)nr direction:(JoystickDirection)dir

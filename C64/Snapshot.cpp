@@ -166,8 +166,7 @@ Snapshot::writeToBuffer(uint8_t *buffer)
 void
 Snapshot::takeScreenshot(uint32_t *buf, bool pal)
 {
-    unsigned x_start = (pal ? 23 : 20);
-    unsigned y_start = (pal ? 25 : 0);
+    unsigned x_start, y_start;
        
     if (pal) {
         x_start = PAL_LEFT_BORDER_WIDTH - 36;

@@ -26,8 +26,6 @@ extern unsigned dirkcnt;
 void 
 CPU::fetch() {
     
-    bool doNMI = false, doIRQ = false;
-	
 	PC_at_cycle_0 = PC;
 	
 	// Check interrupt lines
@@ -39,14 +37,12 @@ CPU::fetch() {
                 debug(1, "NMI (source = %02X)\n", nmiLine);
             nmiEdge = false;
             next = &CPU::nmi_2;
-            doNMI = true;
             return;
 
         } else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
             if (tracingEnabled())
                 debug(1, "IRQ (source = %02X)\n", irqLine);
             next = &CPU::irq_2;
-            doIRQ = true;
             return;
         }
     }
