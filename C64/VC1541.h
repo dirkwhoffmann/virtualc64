@@ -40,11 +40,11 @@ public:
 	//! Reference to the virtual IEC bus
 	IEC *iec;
 
-	//! Reference to the virtual 6502 CPU
+	//! CPU of the virtual drive (6502)
 	CPU cpu;
 	
-	//! Reference to the virtual drive memory
-	VC1541Memory *mem;
+	//! Memory of the virtual drive
+	VC1541Memory mem;
 
 	//! VIA6522 connecting the drive CPU with the IEC bus
     VIA1 via1;

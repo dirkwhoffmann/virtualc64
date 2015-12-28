@@ -23,14 +23,12 @@ VC1541::VC1541()
 	name = "1541";
     debug(2, "Creating virtual VC1541 at address %p\n", this);
 	
-	// Create sub components
-	mem = new VC1541Memory();
-	// cpu = new CPU();
+	// Configure CPU
 	cpu.setName("1541CPU");
     cpu.chipModel = CPU::MOS6502;
     
     // Register sub components
-    VirtualComponent *subcomponents[] = { mem, &cpu, &via1, &via2, &disk, NULL };
+    VirtualComponent *subcomponents[] = { &mem, &cpu, &via1, &via2, &disk, NULL };
     registerSubComponents(subcomponents, sizeof(subcomponents)); 
 
     // Register snapshot items
@@ -65,9 +63,7 @@ VC1541::VC1541()
 
 VC1541::~VC1541()
 {
-	debug(2, "Releasing VC1541...\n");
-	
-	delete mem;
+	debug(2, "Releasing VC1541...\n");	
 }
 
 void
@@ -78,7 +74,7 @@ VC1541::reset()
     // Establish bindings
     iec = &c64->iec;
     
-    cpu.mem = mem;
+    cpu.mem = &mem;
     cpu.setPC(0xEAA0);
     halftrack = 41;
 }
@@ -104,7 +100,7 @@ VC1541::ping()
 
     // TODO: Replace manual pinging of sub components by a call to super::ping()
     cpu.ping();
-    mem->ping();
+    mem.ping();
     via1.ping();
     via2.ping();
 

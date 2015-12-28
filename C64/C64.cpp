@@ -316,7 +316,7 @@ C64::runstopRestore()
 
 bool
 C64::isRunnable() {
-	return mem.basicRomIsLoaded() && mem.charRomIsLoaded() && mem.kernelRomIsLoaded() && floppy.mem->romIsLoaded();
+	return mem.basicRomIsLoaded() && mem.charRomIsLoaded() && mem.kernelRomIsLoaded() && floppy.mem.romIsLoaded();
 }
 
 void 
@@ -763,7 +763,7 @@ C64::getMissingRoms() {
 	if (!mem.basicRomIsLoaded()) missingRoms |= BASIC_ROM;
 	if (!mem.charRomIsLoaded()) missingRoms |= CHAR_ROM;
 	if (!mem.kernelRomIsLoaded()) missingRoms |= KERNEL_ROM;
-	if (!floppy.mem->romIsLoaded()) missingRoms |= VC1541_ROM;
+	if (!floppy.mem.romIsLoaded()) missingRoms |= VC1541_ROM;
 	return missingRoms;
 }
 
@@ -792,7 +792,7 @@ C64::loadRom(const char *filename)
 	}
 	
 	if (VC1541Memory::is1541Rom(filename)) {
-		result = floppy.mem->loadRom(filename);
+		result = floppy.mem.loadRom(filename);
 		if (result) putMessage(MSG_ROM_LOADED, VC1541_ROM);
 	}
 			
