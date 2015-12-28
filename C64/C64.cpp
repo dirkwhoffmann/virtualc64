@@ -55,7 +55,7 @@ void
 	pthread_cleanup_push(threadCleanup, thisC64);
 	
 	// Prepare to run...
-	c64->cpu->clearErrorState();
+	c64->cpu.clearErrorState();
 	c64->floppy->cpu->clearErrorState();
 	c64->restartTimer();
     
@@ -91,7 +91,6 @@ C64::C64()
     warpLoad = false;
 	
 	// Create components
-	cpu = new CPU();
 	vic = new VIC();
 	sid = new SIDWrapper();
 	iec = new IEC();
@@ -104,7 +103,7 @@ C64::C64()
     // Register sub components
     VirtualComponent *subcomponents[] = {
         
-        cpu,
+        &cpu,
         &mem,
         vic,
         sid,
@@ -163,7 +162,6 @@ C64::~C64()
 	delete keyboard;
     delete sid;
 	delete vic;
-	delete cpu;
     
 	debug(1, "Cleaned up virtual C64\n", this);
 }
@@ -174,8 +172,8 @@ void C64::reset()
 
     VirtualComponent::reset();
     
-    cpu->mem = &mem;
-    cpu->setPC(0xFCE2);
+    cpu.mem = &mem;
+    cpu.setPC(0xFCE2);
 	rasterlineCycle = 1;
     nanoTargetTime = 0UL;
     
@@ -331,7 +329,7 @@ C64::runstopRestore()
 	// Note: The restore key is directly connected to the NMI line of the CPU
 	// Thus, the runstop/restore key combination triggers an interrupts that causes a soft reset
 	keyboard->pressRunstopKey();
-	cpu->setNMILineReset(); 
+	cpu.setNMILineReset();
 	// Hold runstop key down for a while...
 	sleepMicrosec((uint64_t)100000);
 	keyboard->releaseRunstopKey();
@@ -392,13 +390,13 @@ void
 C64::step() 
 {		
 	// Clear error states
-	cpu->clearErrorState();
+	cpu.clearErrorState();
 	floppy->cpu->clearErrorState();
 	
 	// Execute next command 
 	do {
 		executeOneCycle();
-	} while (!cpu->atBeginningOfNewCommand()); 
+	} while (!cpu.atBeginningOfNewCommand());
 	
 	// We are now at cycle 0 of the next command
 	// Execute one more cycle (and stop in cycle 1)
@@ -418,7 +416,7 @@ C64::step()
 #define EXECUTE(x) \
 		cia1.executeOneCycle(); \
 		cia2.executeOneCycle(); \
-        if (!cpu->executeOneCycle()) result = false; \
+        if (!cpu.executeOneCycle()) result = false; \
 		if (!floppy->executeOneCycle()) result = false; \
         datasette.execute(); \
 		cycles++; \

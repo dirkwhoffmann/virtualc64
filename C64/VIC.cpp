@@ -105,15 +105,12 @@ VIC::reset()
     VirtualComponent::reset();
 	
     // Establish bindungs
-    cpu = c64->cpu;
-    // mem = &c64.mem;
+    cpu = &c64->cpu;
     
     // Internal state
     yCounter = PAL_HEIGHT;
     bp.borderColor = PixelEngine::LTBLUE;      // Let the border color look correct right from the beginning
-    // iomem[0x20] = PixelEngine::LTBLUE;      // Let the border color look correct right from the beginning
     cp.backgroundColor[0] = PixelEngine::BLUE; // Let the background color look correct right from the beginning
-    // iomem[0x21] = PixelEngine::BLUE;        // Let the background color look correct right from the beginning
     setScreenMemoryAddr(0x400);                // Remove startup graphics glitches by setting the initial value early
 	p.registerCTRL1 = 0x10;                    // Make screen visible from the beginning
 	expansionFF = 0xFF;

@@ -66,7 +66,7 @@ CIA::reset()
     VirtualComponent::reset();
     
     // Establish bindings
-    cpu = c64->cpu;
+    // cpu = &c64.cpu;
     vic = c64->vic;
     
     clearInterruptLine();
@@ -799,19 +799,19 @@ CIA1::dumpState()
 void 
 CIA1::raiseInterruptLine()
 {
-	cpu->setIRQLineCIA();
+	c64->cpu.setIRQLineCIA();
 }
 
 void 
 CIA1::clearInterruptLine()
 {
-	cpu->clearIRQLineCIA();
+	c64->cpu.clearIRQLineCIA();
 }
 
 uint8_t 
 CIA1::getInterruptLine()
 {
-	return cpu->getIRQLineCIA();
+	return c64->cpu.getIRQLineCIA();
 }
 
 void 
@@ -1014,19 +1014,19 @@ CIA2::dumpState()
 void 
 CIA2::raiseInterruptLine()
 {
-	cpu->setNMILineCIA();
+	c64->cpu.setNMILineCIA();
 }
 
 void 
 CIA2::clearInterruptLine()
 {
-	cpu->clearNMILineCIA();
+	c64->cpu.clearNMILineCIA();
 }
 
 uint8_t 
 CIA2::getInterruptLine()
 {
-	return cpu->getNMILineCIA();
+	return c64->cpu.getNMILineCIA();
 }
 
 uint8_t 

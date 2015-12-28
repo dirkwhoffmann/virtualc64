@@ -58,9 +58,7 @@ void C64Memory::reset()
     // Establish bindings
     vic = c64->vic;
     sid = c64->sid;
-    // cia1 = &c64.cia1;
-    // cia2 = &c64.cia2;
-    cpu = c64->cpu;
+    cpu = &c64->cpu;
     
 	// Initialize RAM (powerup pattern similar to Frodo and VICE)
     for (unsigned i = 0; i < sizeof(ram); i++)

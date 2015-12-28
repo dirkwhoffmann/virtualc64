@@ -44,9 +44,6 @@ private:
 	//! Reference to the connected CPU
 	CPU *cpu;
 	
-	//! Reference to the connected virtual memory
-	// C64Memory *mem;
-	
 public:
     
     //! Dump current configuration into message queue

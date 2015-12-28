@@ -46,7 +46,7 @@ VC1541Memory::reset()
     VirtualComponent::reset();
     
     // Establish bindings
-    cpu = c64->cpu;
+    cpu = &c64->cpu;
     iec = c64->iec;
     floppy = c64->floppy;    
 }

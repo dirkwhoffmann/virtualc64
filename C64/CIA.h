@@ -24,7 +24,7 @@
 #include "TOD.h"
 
 // Forward declarations
-class CPU;
+// class CPU;
 class VIC;
 class IEC;
 class Keyboard;
@@ -124,7 +124,7 @@ public:
 	VIC *vic;
 	
 	//! Reference to the connected CPU. 
-	CPU *cpu;
+	// CPU *cpu;
 	
 	//! Timer A counter
 	uint16_t counterA;

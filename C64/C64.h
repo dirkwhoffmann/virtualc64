@@ -184,7 +184,7 @@ public:
 	C64Memory mem;
 	
 	//! Reference to the connected virtual CPU. 	
-    CPU *cpu;
+    CPU cpu;
 	
 	//! Reference to the connected virtual video controller (VIC). 	
 	VIC *vic;
