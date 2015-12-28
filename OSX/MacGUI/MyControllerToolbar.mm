@@ -117,7 +117,8 @@
         int newvalue = (int)[[sender selectedItem] tag]; // New pop-up menu selection
         int oldvalue = [self inputDeviceA];              // Old pop-up menu selection
         int othervalue = [self inputDeviceB];            // Pop-up selection of other port
-        Joystick* target = &([c64 c64]->joystick1);      // Target is joystick on port A
+        Joystick *target = &([c64 c64]->joystick1);      // Target is joystick on port A
+        // JoystickProxy *joy = [c64 joystick1];
         
         NSLog(@"portAAction (%d)", newvalue);
         

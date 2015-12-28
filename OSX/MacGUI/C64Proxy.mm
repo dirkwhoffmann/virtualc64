@@ -461,13 +461,33 @@
 
 @end
 
-// --------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+//                                5,25" diskette
+// -------------------------------------------------------------------------
+
+@implementation Disk525Proxy
+
+- (id) initWithDisk525:(Disk525 *)d
+{
+    self = [super init];
+    disk = d;
+    return self;
+}
+
+- (BOOL)isWriteProtected { return disk->isWriteProtected(); }
+- (void)setWriteProtection:(BOOL)b { disk->setWriteProtection(b); }
+- (BOOL)isModified { return disk->isModified(); }
+- (void)setModified:(BOOL)b { disk->setModified(b); }
+
+@end
+
+// -------------------------------------------------------------------------
 //                                    VC1541
 // -------------------------------------------------------------------------
 
 @implementation VC1541Proxy
 
-@synthesize cpu, mem, via1, via2;
+@synthesize vc1541, cpu, mem, via1, via2, disk;
 
 - (id) initWithVC1541:(VC1541 *)vc
 {
@@ -477,6 +497,7 @@
 	mem = [[MemoryProxy alloc] initWithMemory:&vc->mem];
 	via1 = [[VIAProxy alloc] initWithVIA:&vc->via1];
 	via2 = [[VIAProxy alloc] initWithVIA:&vc->via2];
+    disk = [[Disk525Proxy alloc] initWithDisk525:&vc->disk];
 	return self;
 }
 
@@ -553,7 +574,8 @@
 
 @implementation C64Proxy
 
-@synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, joystick1, joystick2, iec, expansionport, vc1541, datasette;
+@synthesize c64;
+@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, joystick1, joystick2, iec, expansionport, vc1541, datasette;
 @synthesize iecBusIsBusy, tapeBusIsBusy;
 
 - (id) init

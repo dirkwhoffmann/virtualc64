@@ -299,6 +299,18 @@
 //                                 Joystick
 // -------------------------------------------------------------------------
 
+// TODO: RENAME JoystickManagerProxy in JoystickManager class (name conflict with Objective-C bridge) 
+/*
+@interface JoystickManagerProxy : NSObject {
+    JoystickManager *manager;
+}
+
+- (id) initWithJoystickManager:(JoystickManager *)m;
+- (void) dump;
+
+@end
+*/
+
 @interface JoystickProxy : NSObject {
     Joystick *joystick;
 }
@@ -372,21 +384,44 @@
 @end
 
 // --------------------------------------------------------------------------
+//                                5,25" diskette
+// -------------------------------------------------------------------------
+
+@interface Disk525Proxy : NSObject {
+    Disk525 *disk;
+}
+
+- (id)initWithDisk525:(Disk525 *)d;
+
+- (BOOL)isWriteProtected;
+- (void)setWriteProtection:(BOOL)b;
+- (BOOL)isModified;
+- (void)setModified:(BOOL)b;
+
+@end
+
+// --------------------------------------------------------------------------
 //                                    VC1541
 // -------------------------------------------------------------------------
 
 @interface VC1541Proxy : NSObject {
+    
 	VC1541 *vc1541;
+    
+    // sub proxys
 	CPUProxy *cpu;
 	MemoryProxy *mem;
 	VIAProxy *via1;
 	VIAProxy *via2;
+    Disk525Proxy *disk;
 }
 
+@property (readonly) VC1541 *vc1541;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
 @property (readonly) VIAProxy *via1;
 @property (readonly) VIAProxy *via2;
+@property (readonly) Disk525Proxy *disk;
 
 - (id) initWithVC1541:(VC1541 *)vc;
 - (VIAProxy *) via:(int)num;

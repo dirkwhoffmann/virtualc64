@@ -100,8 +100,8 @@
 
 - (bool)exportDiskDialogWorker:(int)type
 {
-    C64 *_c64 = [c64 c64];
-    VC1541 *floppy = &_c64->floppy;
+    // C64 *_c64 = [c64 c64];
+    VC1541 *floppy = [[c64 vc1541] vc1541]; //   &_c64->floppy;
     D64Archive *diskContents;
     NSArray *fileTypes;
     Archive *target;
@@ -170,7 +170,8 @@
     NSLog(@"Exporting to file %@", selectedFile);
     target->writeToFile([selectedFile UTF8String]);
     delete target;
-    floppy->disk.setModified(false);
+    // floppy->disk.setModified(false);
+    [[[c64 vc1541] disk] setModified:NO];
     return true;
 }
 
