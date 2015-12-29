@@ -213,9 +213,6 @@
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="2203">
                         <rect key="frame" x="43" y="4" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <connections>
-                            <binding destination="2201" name="animate" keyPath="selection.iecBusIsBusy" id="2213"/>
-                        </connections>
                     </progressIndicator>
                     <button toolTip="Drive LED" id="1210">
                         <rect key="frame" x="22" y="4" width="17" height="17"/>
@@ -427,7 +424,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -3578,16 +3575,6 @@ DQ
                 <outlet property="parentWindow" destination="5" id="2029"/>
             </connections>
         </drawer>
-        <objectController id="2201" userLabel="GUIController">
-            <declaredKeys>
-                <string>iecBusIsBusy</string>
-                <string>document.iecBusIsBusy</string>
-                <string>c64.iecBusIsBusy</string>
-            </declaredKeys>
-            <connections>
-                <outlet property="content" destination="2208" id="2211"/>
-            </connections>
-        </objectController>
         <customObject id="2208" userLabel="c64" customClass="C64Proxy"/>
         <window title="Properties" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2228" userLabel="Properties" customClass="PropertiesDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
