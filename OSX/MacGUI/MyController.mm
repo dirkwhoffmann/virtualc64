@@ -78,7 +78,8 @@
     
 	// Joystick handling
 	joystickManager = new JoystickManager(c64);
-	joystickManager->Initialize();
+	if (!joystickManager->initialize())
+        NSLog(@"WARNING: Could not initialize joystick manager.");
 	
 	// Update some toolbar icons
 	[self setupToolbarIcons];

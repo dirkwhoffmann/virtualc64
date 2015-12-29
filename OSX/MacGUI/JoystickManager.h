@@ -71,8 +71,8 @@ class JoystickManager
     JoystickManager(C64Proxy *proxy);
 	~JoystickManager();
 		
-	bool Initialize();
-	void Dispose();
+	bool initialize();
+	void dispose();
 
     bool joystickIsPluggedIn(int nr);
 
@@ -96,12 +96,12 @@ class JoystickManager
 	IOHIDManagerRef _manager;
     USBJoystick usbjoy[2]; // At most 2 USB joysticks can be plugged in 
     
-	static const int UsageToSearch[][2];
+	// static const int UsageToSearch[][2];
 	static const unsigned MaxJoystickCount;
 
     void IOHIDElement_SetDoubleProperty(IOHIDElementRef element, CFStringRef key, double value);
     
-    bool addJoystickProxyWithLocationID(int locationID, USBJoystick *proxy);
+    bool addJoystickProxyWithLocationID(int locationID);
     USBJoystick *getJoystickProxyWithLocationID(int locationID);
     void removeJoystickProxyWithLocationID(int locationID);
     void listJoystickManagers();
