@@ -298,8 +298,8 @@
 }
 
 - (void) dump { keyboard->dumpState(); }
-- (void) pressKey:(char)c { keyboard->pressKey(c); }
-- (void) releaseKey:(char)c { keyboard->releaseKey(c); }
+- (void) pressKey:(int)c { keyboard->pressKey(c); }
+- (void) releaseKey:(int)c { keyboard->releaseKey(c); }
 - (void) pressRunstopKey { keyboard->pressRunstopKey(); }
 - (void) releaseRunstopKey { keyboard->releaseRunstopKey(); }
 - (void) pressShiftRunstopKey { keyboard->pressShiftRunstopKey(); }
@@ -377,6 +377,10 @@
     joystick = joy;
     return self;
 }
+
+- (void) SetButtonPressed:(BOOL)pressed { joystick->SetButtonPressed(pressed); }
+- (void) SetAxisX:(JoystickAxisState)state { joystick->SetAxisX(state); }
+- (void) SetAxisY:(JoystickAxisState)state {joystick->SetAxisY(state); }
 
 - (void) dump { joystick->dumpState(); }
 
@@ -529,7 +533,6 @@
 - (bool) soundMessagesEnabled { return vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(bool)b { vc1541->setSendSoundMessages(b); }
 - (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
-// - (D64Archive *) archiveFromDrive { return D64Archive::archiveFromDrive(vc1541); }
 - (void) ejectDisk { vc1541->ejectDisk(); }
 
 - (void) playSound:(NSString *)name volume:(float)v

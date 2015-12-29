@@ -51,6 +51,7 @@ enum INPUT_DEVICES {
 	IBOutlet C64Proxy *__strong c64;
 	
 	// JoystickManager
+    // DEPRECATED. Replace by JoystickManagerProxy
 	JoystickManager *joystickManager;
 	    
 	// Dialogs

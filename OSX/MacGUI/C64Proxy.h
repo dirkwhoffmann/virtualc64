@@ -276,8 +276,8 @@
 - (id) initWithKeyboard:(Keyboard *)kb;
 - (void) dump;
 
-- (void) pressKey:(char)c;
-- (void) releaseKey:(char)c;
+- (void) pressKey:(int)c;
+- (void) releaseKey:(int)c;
 - (void) pressRunstopKey;
 - (void) releaseRunstopKey;
 - (void) pressShiftRunstopKey;
@@ -317,6 +317,11 @@
 }
 
 - (id) initWithJoystick:(Joystick *)joy;
+
+- (void) SetButtonPressed:(BOOL)pressed;
+- (void) SetAxisX:(JoystickAxisState)state;
+- (void) SetAxisY:(JoystickAxisState)state;
+
 - (void) dump;
 
 @end
@@ -477,7 +482,7 @@
 
 @end
 
-// --------------------------------------------------------------------------
+// -------------------------------------------------------------------------
 //                                    C64
 // -------------------------------------------------------------------------
 

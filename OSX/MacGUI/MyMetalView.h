@@ -56,7 +56,6 @@ enum TextureFilterType {
 {
     IBOutlet MyController *controller;
     IBOutlet C64Proxy* c64proxy;
-    C64 *c64; // DEPRECATED. GET RID OF THIS VARIABLE AND RENAME c64proxy to c64
 
     // Synchronization semaphore
     dispatch_semaphore_t _inflightSemaphore;

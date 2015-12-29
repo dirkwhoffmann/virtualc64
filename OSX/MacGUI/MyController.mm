@@ -1078,10 +1078,8 @@
     NSLog(@"Writing drive contents to D64 archive in %@...",path);
 
     // Determine full destination path
-    Archive *archive = [[[self document] attachedArchive] archive];
-    NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
+    NSString *archivePath = [[[self document] attachedArchive] getPath];
     NSString *archiveName = [[archivePath lastPathComponent] stringByDeletingPathExtension];
-    
     NSString *proposedName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.D64", archiveName]];
     
     for (unsigned i = 2; i < 256; i++) {

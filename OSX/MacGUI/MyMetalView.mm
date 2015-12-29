@@ -88,7 +88,7 @@
 {
     NSLog(@"MyMetalView::awakeFromNib");
     
-    c64 = [c64proxy c64]; // DEPRECATED
+    // c64 = [c64proxy c64]; // DEPRECATED
     
     // Create semaphore
     _inflightSemaphore = dispatch_semaphore_create(1);
@@ -170,7 +170,7 @@
 
 - (void)updateScreenGeometry
 {
-    if (c64->isPAL()) {
+    if ([c64proxy isPAL]) {
         
         // PAL border will be 36 pixels wide and 34 pixels heigh
         textureXStart = (float)(PAL_LEFT_BORDER_WIDTH - 36.0) / (float)C64_TEXTURE_WIDTH;
@@ -201,12 +201,12 @@
 
 - (void)updateTexture:(id<MTLCommandBuffer>) cmdBuffer
 {
-    if (!c64) {
+    if (!c64proxy) {
         NSLog(@"Can't access C64");
         return;
     }
     
-    void *buf = c64->vic.screenBuffer();
+    void *buf = [[c64proxy vic] screenBuffer]; //    c64->vic.screenBuffer();
     assert(buf != NULL);
 
     NSUInteger pixelSize = 4;
@@ -427,7 +427,7 @@
     
     // Make texture transparent if emulator is halted
     Uniforms *frameData = (Uniforms *)[uniformBuffer3D contents];
-    frameData->alpha = c64->isHalted() ? 0.5 : currentAlpha;
+    frameData->alpha = [c64proxy isHalted] ? 0.5 : currentAlpha;
 
     // Render background
     if (!fullscreen) {
@@ -463,7 +463,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    if (!c64 || !enableMetal)
+    if (!c64proxy || !enableMetal)
         return;
     
     dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
