@@ -27,9 +27,9 @@ Joystick::Joystick() {
     // Register snapshot items
     SnapshotItem items[] = {
         
-        { &_buttonPressed,  sizeof(_buttonPressed), CLEAR_ON_RESET },
-        { &_axisX,          sizeof(_axisX),         CLEAR_ON_RESET },
-        { &_axisY,          sizeof(_axisY),         CLEAR_ON_RESET },
+        { &_buttonPressed,  sizeof(_buttonPressed), 0 },
+        { &_axisX,          sizeof(_axisX),         0 },
+        { &_axisY,          sizeof(_axisY),         0 },
         { NULL,             0,                      0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -40,6 +40,16 @@ Joystick::~Joystick()
 }
 
 void
+Joystick::reset()
+{
+    VirtualComponent::reset();
+
+    _buttonPressed = false;
+    _axisX = JOYSTICK_RELEASED;
+    _axisY = JOYSTICK_RELEASED;
+}
+
+void
 Joystick::dumpState()
 {
     msg("Joystick port\n");
@@ -47,35 +57,3 @@ Joystick::dumpState()
     msg("Button: %s AxisX: %d AxisY: %d\n", _buttonPressed ? "YES" : "NO", _axisX, _axisY);
 }
 
-bool Joystick::GetButtonPressed()
-{
-    return _buttonPressed;
-}
-
-JoystickAxisState Joystick::GetAxisX()
-{
-    return _axisX;
-}
-
-JoystickAxisState Joystick::GetAxisY()
-{
-    return _axisY;
-}
-
-void Joystick::SetButtonPressed(bool pressed)
-{
-    // fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
-    _buttonPressed = pressed;
-}
-
-void Joystick::SetAxisX(JoystickAxisState state)
-{
-    // fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
-    _axisX = state;
-}
-
-void Joystick::SetAxisY(JoystickAxisState state)
-{
-    // fprintf(stderr,"%p %s", this, __PRETTY_FUNCTION__);
-    _axisY = state;
-}

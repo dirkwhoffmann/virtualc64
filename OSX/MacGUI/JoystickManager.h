@@ -48,8 +48,8 @@ class JoystickManagerProxy
     JoystickManagerProxy();
 		
 	void ChangeButton(int index, bool pressed);
-	void ChangeAxisX(JoystickAxisState state) const;
-	void ChangeAxisY(JoystickAxisState state) const;
+	void ChangeAxisX(JoystickDirection state);
+	void ChangeAxisY(JoystickDirection state);
 	
     // Bind virtual joystick of the emulator
     // 'Joystick' must be one of the two objects initialized by the emulator

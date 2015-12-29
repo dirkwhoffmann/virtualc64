@@ -49,13 +49,13 @@ void JoystickManagerProxy::ChangeButton(int index, bool pressed)
         _joystick->SetButtonPressed(_pressedButtons.size() != 0);
 }
 
-void JoystickManagerProxy::ChangeAxisX(JoystickAxisState state) const
+void JoystickManagerProxy::ChangeAxisX(JoystickDirection state)
 {
     if (_joystick)
         _joystick->SetAxisX(state);
 }
 
-void JoystickManagerProxy::ChangeAxisY(JoystickAxisState state) const
+void JoystickManagerProxy::ChangeAxisY(JoystickDirection state)
 {
     if (_joystick)
         _joystick->SetAxisY(state);
@@ -423,25 +423,21 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 			IOHIDElement_SetDoubleProperty( element, CFSTR( kIOHIDElementCalibrationGranularityKey ), 1 );
 			int axis = ceil( IOHIDValueGetScaledValue( inIOHIDValueRef, kIOHIDValueScaleTypeCalibrated ) );
 			
-			switch( elementUsage )
-			{
-				case kHIDUsage_GD_X:
-					if( axis == -1 )
-						proxy->ChangeAxisX(JOYSTICK_AXIS_X_LEFT);
-					else if( axis == 1 )
-						proxy->ChangeAxisX(JOYSTICK_AXIS_X_RIGHT);
-					else
-						proxy->ChangeAxisX(JOYSTICK_AXIS_X_NONE);
+			switch(elementUsage) {
+
+                case kHIDUsage_GD_X:
+                    
+                    proxy->ChangeAxisX(axis == -1 ? JOYSTICK_LEFT :
+                                       (axis == 1 ? JOYSTICK_RIGHT : JOYSTICK_RELEASED));
 					break;
-				case kHIDUsage_GD_Y:
-					if( axis == -1 )
-						proxy->ChangeAxisY(JOYSTICK_AXIS_Y_UP);
-					else if( axis == 1 )
-						proxy->ChangeAxisY(JOYSTICK_AXIS_Y_DOWN);
-					else
-						proxy->ChangeAxisY(JOYSTICK_AXIS_Y_NONE);
-					break;
-				default:
+
+                case kHIDUsage_GD_Y:
+                                       
+                    proxy->ChangeAxisY(axis == -1 ? JOYSTICK_UP :
+                                       (axis == 1 ? JOYSTICK_DOWN : JOYSTICK_RELEASED));
+                    break;
+
+                default:
 					NSLog(@"Device %p (ID %d) page and page usage mismatch (Type=%i, Page=%i)\n",
                           context->deviceRef, context->locationID, elementPage, elementUsage);
 			}

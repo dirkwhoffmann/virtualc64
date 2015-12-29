@@ -1,6 +1,6 @@
 /*
- * Authors: Benjamin Klein
- *          Dirk Hoffmann
+ * Originally written by Benjamin Klein
+ * Rewritten by Dirk W. Hoffmann
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,21 +26,9 @@ enum JoystickDirection
     JOYSTICK_DOWN,
     JOYSTICK_LEFT,
     JOYSTICK_RIGHT,
-    JOYSTICK_FIRE
-};
-
-// DEPRECATED
-enum JoystickAxisState
-{
-	JOYSTICK_AXIS_NONE = 0,
-	
-	JOYSTICK_AXIS_X_LEFT = -1,
-	JOYSTICK_AXIS_X_RIGHT = 1,
-	JOYSTICK_AXIS_X_NONE = 0,
-	
-	JOYSTICK_AXIS_Y_UP = -1,
-	JOYSTICK_AXIS_Y_DOWN = 1,
-	JOYSTICK_AXIS_Y_NONE = 0
+    JOYSTICK_FIRE,
+    
+    JOYSTICK_RELEASED
 };
 
 class Joystick : public VirtualComponent {
@@ -48,8 +36,8 @@ class Joystick : public VirtualComponent {
 private:
     
     bool _buttonPressed;
-    JoystickAxisState _axisX;
-    JoystickAxisState _axisY;
+    JoystickDirection _axisX;
+    JoystickDirection _axisY;
     
 public:
 
@@ -59,16 +47,19 @@ public:
     //! Destructor
     ~Joystick();
     
+    //! Reset
+    void reset();
+
     //! Dump internal state to console
     void dumpState();
 
-    bool GetButtonPressed();
-	JoystickAxisState GetAxisX();
-	JoystickAxisState GetAxisY();
+    inline bool GetButtonPressed() { return _buttonPressed; }
+    inline JoystickDirection GetAxisX() { return _axisX; }
+    inline JoystickDirection GetAxisY() { return _axisY; }
 		
-	void SetButtonPressed(bool pressed);
-	void SetAxisX(JoystickAxisState state);
-	void SetAxisY(JoystickAxisState state);
+    inline void SetButtonPressed(bool pressed) { _buttonPressed = pressed; }
+    inline void SetAxisX(JoystickDirection state) { _axisX = state; }
+    inline void SetAxisY(JoystickDirection state) { _axisY = state; }
 
 };
 

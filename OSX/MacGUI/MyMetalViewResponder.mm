@@ -107,19 +107,11 @@
     // Joystick *joy = (nr == 1) ? &c64->joystick1 : &c64->joystick2;
     JoystickProxy *j = (nr == 1) ? [c64proxy joystick1] : [c64proxy joystick2];
     
-    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j SetAxisY:JOYSTICK_AXIS_Y_UP]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j SetAxisY:JOYSTICK_AXIS_Y_DOWN]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j SetAxisX:JOYSTICK_AXIS_X_LEFT]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j SetAxisX:JOYSTICK_AXIS_X_RIGHT]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j SetAxisY:JOYSTICK_UP]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j SetAxisY:JOYSTICK_DOWN]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j SetAxisX:JOYSTICK_LEFT]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j SetAxisX:JOYSTICK_RIGHT]; return YES; }
     if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { [j SetButtonPressed:YES]; return YES; }
-
-#if 0
-    if (k == joyKeycode[keyset][JOYSTICK_UP]) { joy->SetAxisY(JOYSTICK_AXIS_Y_UP); return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { joy->SetAxisY(JOYSTICK_AXIS_Y_DOWN); return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { joy->SetAxisX(JOYSTICK_AXIS_X_LEFT); return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { joy->SetAxisX(JOYSTICK_AXIS_X_RIGHT); return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { joy->SetButtonPressed(true); return YES; }
-#endif
     
     return NO;
 }
@@ -134,10 +126,10 @@
     unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
     JoystickProxy *j = (nr == 1) ? [c64proxy joystick1] : [c64proxy joystick2];
 
-    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j SetAxisY:JOYSTICK_AXIS_NONE]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j SetAxisY:JOYSTICK_AXIS_NONE]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j SetAxisX:JOYSTICK_AXIS_NONE]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j SetAxisX:JOYSTICK_AXIS_NONE]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j SetAxisY:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j SetAxisY:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j SetAxisX:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j SetAxisX:JOYSTICK_RELEASED]; return YES; }
     if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { [j SetButtonPressed:NO]; return YES; }
 
     return NO;
@@ -209,8 +201,9 @@
     // Press key
     // NSLog(@"Storing key %c for keycode %ld",c64key, (long)keycode);
     pressedKeys[(unsigned char)keycode] = c64key;
-    [[c64proxy keyboard] pressKey:c64key];
-    // c64->keyboard.pressKey(c64key);
+    //[[c64proxy keyboard] pressKey:c64key];
+    C64 *c64 = [c64proxy c64]; 
+    c64->keyboard.pressKey(c64key);
 }
 
 - (void)keyUp:(NSEvent *)event
@@ -233,8 +226,9 @@
     
     // Release key
     // NSLog(@"Releasing stored key %c for keycode %ld",pressedKeys[keycode], (long)keycode);
-    [[c64proxy keyboard] releaseKey:keycode]; 
-    // c64->keyboard.releaseKey(pressedKeys[keycode]);
+    // [[c64proxy keyboard] releaseKey:keycode];
+    C64 *c64 = [c64proxy c64];
+    c64->keyboard.releaseKey(pressedKeys[keycode]);
     pressedKeys[(unsigned char)keycode] = 0;
 }
 
