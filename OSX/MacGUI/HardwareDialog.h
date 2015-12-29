@@ -36,8 +36,6 @@ extern NSString *VC64SIDSamplingMethodKey;
 {
     C64Proxy *c64;
     MyController *controller;
-    NSString *archiveName; 
-    unsigned noOfFiles;
     
     /* System */
     IBOutlet NSPopUpButton *machineType;
@@ -58,7 +56,7 @@ extern NSString *VC64SIDSamplingMethodKey;
     IBOutlet NSPopUpButton *SIDSamplingMethod;
 }
 
-- (void) initialize:(MyController *)mycontroller archiveName:(NSString *)name noOfFiles:(unsigned)files;
+- (void) initialize:(MyController *)mycontroller;
 - (void) update;
 
 // System

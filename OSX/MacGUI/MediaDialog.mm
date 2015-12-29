@@ -20,20 +20,10 @@
 
 @implementation MediaDialog
 
-- (void)initialize:(MyController *)mycontroller archiveName:(NSString *)name noOfFiles:(unsigned)files
+- (void)initialize:(MyController *)mycontroller
 {
     controller = mycontroller;
     c64 = [controller c64];
-    archiveName = name;
-    noOfFiles = files;
-    
-    // Do some consistency checking...
-    if ([[c64 vc1541] hasDisk] && name == NULL) {
-        NSLog(@"WARNING: VC1541 has disk, but no disk name is provided.");
-        assert(0);
-        archiveName = @"";
-    }
-    
     [self update];
 }
 
@@ -120,7 +110,8 @@
     
     if ([[c64 vc1541] hasDisk]) {
         [diskIcon setHidden:NO];
-        [diskText setStringValue:archiveName];
+        [diskText setStringValue:[NSString stringWithFormat:@"%ld track disk",
+                                  (long)[[[c64 vc1541] disk] numTracks]]];
         [diskEject setEnabled:YES];
         [diskEjectText setEnabled:YES];
         [diskWriteProtected setEnabled:[[c64 vc1541] bitAccuracy]];
@@ -138,7 +129,8 @@
     DatasetteProxy *datasette = [c64 datasette];
     if ([datasette hasTape]) {
         [tapeIcon setHidden:NO];
-        // [tapeText setStringValue:archiveName];
+        [tapeText setStringValue:[NSString stringWithFormat:@"Type %ld tape",
+                                  (long)[datasette getType]]];
         [tapePlay setEnabled:YES];
         [tapeRewind setEnabled:YES];
         [tapeStop setEnabled:YES];

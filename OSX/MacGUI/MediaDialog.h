@@ -51,7 +51,7 @@
     IBOutlet NSTextField *cartridgeEjectText;
 }
 
-- (void) initialize:(MyController *)mycontroller archiveName:(NSString *)name noOfFiles:(unsigned)files;
+- (void) initialize:(MyController *)mycontroller;
 - (void) update;
 
 // VC 1541

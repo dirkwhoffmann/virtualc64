@@ -398,6 +398,7 @@
 - (void)setWriteProtection:(BOOL)b;
 - (BOOL)isModified;
 - (void)setModified:(BOOL)b;
+- (NSInteger)numTracks;
 
 @end
 
@@ -441,7 +442,6 @@
 - (bool) soundMessagesEnabled;
 - (void) setSendSoundMessages:(bool)b;
 - (bool) exportToD64:(NSString *)path;
-- (D64Archive *)archiveFromDrive;
 - (void) ejectDisk;
 
 
@@ -465,6 +465,7 @@
 - (void) pressStop;
 - (void) pressRewind;
 - (void) ejectTape;
+- (NSInteger) getType; 
 - (long) durationInCycles;
 - (int) durationInSeconds;
 - (int) head;
@@ -675,6 +676,7 @@
 - (NSString *)getPath;
 - (NSString *)getName;
 - (NSInteger)getType;
+- (NSInteger)getNumberOfItems; 
 
 @end
 

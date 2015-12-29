@@ -478,6 +478,8 @@
 - (void)setWriteProtection:(BOOL)b { disk->setWriteProtection(b); }
 - (BOOL)isModified { return disk->isModified(); }
 - (void)setModified:(BOOL)b { disk->setModified(b); }
+- (NSInteger)numTracks { return (NSInteger)disk->numTracks; }
+
 
 @end
 
@@ -527,7 +529,7 @@
 - (bool) soundMessagesEnabled { return vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(bool)b { vc1541->setSendSoundMessages(b); }
 - (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
-- (D64Archive *) archiveFromDrive { return D64Archive::archiveFromDrive(vc1541); }
+// - (D64Archive *) archiveFromDrive { return D64Archive::archiveFromDrive(vc1541); }
 - (void) ejectDisk { vc1541->ejectDisk(); }
 
 - (void) playSound:(NSString *)name volume:(float)v
@@ -558,6 +560,7 @@
 - (void) pressStop { datasette->pressStop(); }
 - (void) pressRewind { datasette->rewind(); }
 - (void) ejectTape { datasette->ejectTape(); }
+- (NSInteger) getType { return datasette->getType(); }
 - (long) durationInCycles { return datasette->getDurationInCycles(); }
 - (int) durationInSeconds { return datasette->getDurationInSeconds(); }
 - (int) head { return datasette->getHead(); }
@@ -837,8 +840,6 @@
 
 - (instancetype)initWithArchive:(Archive *)a
 {
-    NSLog(@"ArchiveProxy::initWithArchive");
-    
     if (a == nil)
         return nil;
     
@@ -846,12 +847,14 @@
         return nil;
     
     archive = a;
+
+    NSLog(@"ArchiveProxy %p created", archive);
     return self;
 }
 
 - (void)dealloc
 {
-    NSLog(@"ArchiveProxy::dealloc");
+    NSLog(@"ArchiveProxy %p deleted", archive);
     
     if (archive)
         delete archive;
@@ -860,6 +863,7 @@
 - (NSString *)getPath { return [NSString stringWithUTF8String:archive->getPath()]; }
 - (NSString *)getName { return [NSString stringWithUTF8String:archive->getName()]; }
 - (NSInteger)getType { return (NSInteger)archive->getType(); }
+- (NSInteger)getNumberOfItems { return (NSInteger)archive->getNumberOfItems(); }
 
 @end
 

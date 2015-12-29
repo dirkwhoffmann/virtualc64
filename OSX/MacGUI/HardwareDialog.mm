@@ -34,20 +34,10 @@ NSString *VC64SIDReSIDKey     = @"VC64SIDReSIDKey";
 NSString *VC64SIDChipModelKey = @"VC64SIDChipModelKey";
 NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 
-- (void)initialize:(MyController *)mycontroller archiveName:(NSString *)name noOfFiles:(unsigned)files
+- (void)initialize:(MyController *)mycontroller
 {
     controller = mycontroller;
     c64 = [controller c64];
-    archiveName = name;
-    noOfFiles = files;
-    
-    // Do some consistency checking...
-    if ([[c64 vc1541] hasDisk] && name == NULL) {
-        NSLog(@"WARNING: VC1541 has disk, but no disk name is provided.");
-        assert(0);
-        archiveName = @"";
-    }
-    
     [self update];
 }
 
@@ -92,7 +82,6 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
     NSLog(@"setNtscAction");
     
     [c64 setNTSC];
-    // [[controller screen] setNTSC];
     [self update];	
 }
 

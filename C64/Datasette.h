@@ -122,7 +122,7 @@ public:
     //! @functiongroup Handling virtual tapes
     //
     
-    /*! @brief Returns true if a tape is inserted */
+    /*! @brief      Returns true if a tape is inserted */
     inline bool hasTape() { return size != 0; }
     
     /*! @brief      Inserts a TAP archive as a virtual tape */
@@ -131,6 +131,9 @@ public:
     /*! @brief      Ejects the virtual tape
      *  @discussion Does nothing, if no tape is present.  */
     void ejectTape();
+
+    /*! @brief      Returns type of tape (TAP format, 0 or 1). */
+    inline uint8_t getType() { return type; }
 
     /*! @brief      Returns the tape length in cycles */
     uint64_t getDurationInCycles() { return durationInCycles; }

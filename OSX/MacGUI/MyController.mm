@@ -928,56 +928,21 @@
 
 - (bool)showHardwareDialog
 {
-    // DEPRECATED: ONLY APPLIES TO MEDIA DIALOG
-    // The hardware dialog required the disk name as argument (if any disk is present).
-    // As the name is not directly acessible, we first convert the disk contents to an
-    // archive, pick the name, and delete the archive. A NULL pointer is passed to
-    // the hardware dialog, if no disk is present.
-    
-    NSString *name = NULL;
-    unsigned files = 0;
-    if ([[c64 vc1541] hasDisk]) {
-        D64Archive *archive = [[c64 vc1541] archiveFromDrive];
-        NSLog(@"Archive found");
-        if (archive != NULL) {
-            name = [NSString stringWithFormat:@"%s", archive->getName()];
-            files = archive->getNumberOfItems();
-            delete archive;
-        }
-    }
-    
-    [hardwareDialog initialize:self archiveName:name noOfFiles:files];
+    [hardwareDialog initialize:self];
     [[self window] beginSheet:hardwareDialog completionHandler:nil];
-    
+
     return YES;
 }
 
 - (IBAction)cancelHardwareDialog:(id)sender
 {
-    [hardwareDialog orderOut:sender]; // Hide sheet
+    [hardwareDialog orderOut:sender];
     [[self window] endSheet:hardwareDialog returnCode:NSModalResponseCancel];
 }
 
 - (bool)showMediaDialog
 {
-    // The media dialog required the disk name as argument (if any disk is present).
-    // As the name is not directly acessible, we first convert the disk contents to an
-    // archive, pick the name, and delete the archive. A NULL pointer is passed to
-    // the hardware dialog, if no disk is present.
-    
-    NSString *name = NULL;
-    unsigned files = 0;
-    if ([[c64 vc1541] hasDisk]) {
-        D64Archive *archive = [[c64 vc1541] archiveFromDrive];
-        NSLog(@"Archive found");
-        if (archive != NULL) {
-            name = [NSString stringWithFormat:@"%s", archive->getName()];
-            files = archive->getNumberOfItems();
-            delete archive;
-        }
-    }
-    
-    [mediaDialog initialize:self archiveName:name noOfFiles:files];
+    [mediaDialog initialize:self];
     [[self window] beginSheet:mediaDialog completionHandler:nil];
     
     return YES;

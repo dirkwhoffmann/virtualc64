@@ -23,7 +23,6 @@
 // In the debug menu, option "Hide sprites" was broken. This has been fixed. 
 //
 // TODO:
-// Add subtext "xx Tracks", "Type 0 tape" to Media Dialog
 // Use better text descriptions in Mount dialog for G64 and NIB files
 // Cartridge dialog
 //
@@ -45,7 +44,7 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-#define NDEBUG      // RELEASE
+// #define NDEBUG      // RELEASE
 #define DEBUG_LEVEL 2  // RELEASE
 
 // Snapshot version number of this release
