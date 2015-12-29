@@ -703,8 +703,8 @@
 - (void) detachCartridge { c64->detachCartridge(); }
 - (bool) isCartridgeAttached { return c64->isCartridgeAttached(); }
 
-- (bool) mountArchive:(Archive *)a { return c64->mountArchive(a); }
-- (bool) flushArchive:(Archive *)a item:(int)nr { return c64->flushArchive(a,nr); }
+- (bool) mountArchive:(ArchiveProxy *)a { return c64->mountArchive([a archive]); }
+- (bool) flushArchive:(ArchiveProxy *)a item:(int)nr { return c64->flushArchive([a archive], nr); }
 
 - (bool) insertTape:(TAPArchive *)a { return c64->insertTape(a); }
 
@@ -857,6 +857,10 @@
         delete archive;
 }
 
+- (NSString *)getPath { return [NSString stringWithUTF8String:archive->getPath()]; }
+- (NSString *)getName { return [NSString stringWithUTF8String:archive->getName()]; }
+- (NSInteger)getType { return (NSInteger)archive->getType(); }
+
 @end
 
 
@@ -920,3 +924,52 @@
 }
 
 @end
+
+
+@implementation G64ArchiveProxy
+
++ (BOOL) isG64File:(NSString *)filename
+{
+    return G64Archive::isG64File([filename UTF8String]);
+}
+
++ (instancetype) archiveFromG64File:(NSString *)filename
+{
+    return [[G64ArchiveProxy alloc] initWithArchive:
+            (G64Archive::archiveFromG64File([filename UTF8String]))];
+}
+
+@end
+
+
+@implementation NIBArchiveProxy
+
++ (BOOL) isNIBFile:(NSString *)filename
+{
+    return NIBArchive::isNIBFile([filename UTF8String]);
+}
+
++ (instancetype) archiveFromNIBFile:(NSString *)filename
+{
+    return [[NIBArchiveProxy alloc] initWithArchive:
+            (NIBArchive::archiveFromNIBFile([filename UTF8String]))];
+}
+
+@end
+
+#if 0
+@implementation TAPArchiveProxy
+
++ (BOOL) isTAPFile:(NSString *)filename
+{
+    return TAPArchive::isTAPFile([filename UTF8String]);
+}
+
++ (instancetype) archiveFromTAPFile:(NSString *)filename
+{
+    return [[TAPArchiveProxy alloc] initWithArchive:
+            (TAPArchive::archiveFromTAPFile([filename UTF8String]))];
+}
+
+@end
+#endif

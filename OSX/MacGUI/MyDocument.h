@@ -31,24 +31,24 @@ class Snapshot;
 
     //! Reference to an attached VC64 snapshot
     /*! When a new documents opens and this variable is not NULL, the snapshot is automatically flashed */
-    Snapshot *snapshot;
+    Snapshot *snapshot; // TODO: Replace by SnapshotProxy
 
 	//! Reference to an attached D64, G64, or NIB archive
 	/*! When a new documents opens and this variable is not NULL, the archive is automatically inserted into the virtual floopy drive */
-	Archive *archive;
-
+    ArchiveProxy *attachedArchive;
+    
     //! Reference to an attached tape image
     /*! When a new documents opens and this variable is not NULL, the tape is automatically inserted into the virtual datasette */
-    TAPArchive *tape;
+    TAPArchive *tape; // TODO: Replace by TAPArchiveProxy
 
 	//! Reference to an attached cartridge 
     /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged into the virtual expansion port */
-	Cartridge *cartridge;
+	Cartridge *cartridge; // TODO: Replace by CartridgeProxy
 }
 
 @property (strong) C64Proxy *c64;
 @property (assign) Snapshot *snapshot;
-@property (assign) Archive *archive;
+@property ArchiveProxy *attachedArchive;
 @property (assign) TAPArchive *tape;
 @property (assign) Cartridge *cartridge;
 

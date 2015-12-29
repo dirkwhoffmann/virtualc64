@@ -23,6 +23,7 @@
 @class AudioDevice;
 @class V64Snapshot;
 @class MyMetalView;
+@class ArchiveProxy;
 
 
 // --------------------------------------------------------------------------
@@ -591,8 +592,8 @@
 - (void) detachCartridge;
 - (bool) isCartridgeAttached;
 
-- (bool) mountArchive:(Archive *)a;
-- (bool) flushArchive:(Archive *)a item:(int)nr;
+- (bool) mountArchive:(ArchiveProxy *)a;
+- (bool) flushArchive:(ArchiveProxy *)a item:(int)nr;
 
 - (bool) insertTape:(TAPArchive *)a;
 
@@ -666,8 +667,15 @@
 {
     Archive *archive;
 }
+
 @property Archive *archive;
+
 - (instancetype) initWithArchive:(Archive *)s;
+
+- (NSString *)getPath;
+- (NSString *)getName;
+- (NSInteger)getType;
+
 @end
 
 @interface T64ArchiveProxy : ArchiveProxy
@@ -688,4 +696,27 @@
 + (instancetype) archiveFromArchive:(ArchiveProxy *)archive;
 + (instancetype) archiveFromDrive:(VC1541Proxy *)drive;
 @end
+
+@interface G64ArchiveProxy : ArchiveProxy
+{
+}
++ (BOOL) isG64File:(NSString *)filename;
++ (instancetype) archiveFromG64File:(NSString *)filename;
+@end
+
+@interface NIBArchiveProxy : ArchiveProxy
+{
+}
++ (BOOL) isNIBFile:(NSString *)filename;
++ (instancetype) archiveFromNIBFile:(NSString *)filename;
+@end
+
+#if 0
+@interface TAPArchiveProxy : ArchiveProxy
+{
+}
++ (BOOL) isTAPFile:(NSString *)filename;
++ (instancetype) archiveFromTAPFile:(NSString *)filename;
+@end
+#endif
 

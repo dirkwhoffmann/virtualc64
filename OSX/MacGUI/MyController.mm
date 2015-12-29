@@ -514,7 +514,7 @@
             }
 
 			// Check for attached archive
-			if ([[self document] archive]) {
+			if ([[self document] attachedArchive]) {
                 NSLog(@"Found attached archive");
                 [self showMountDialog];
             }
@@ -1005,12 +1005,12 @@
 }
 
 - (bool)showMountDialog
-{
+{    
     // Only proceed if a an archive is present
-	if (![[self document] archive])
+	if (![[self document] attachedArchive])
 		return NO;
 	
-    [mountDialog initialize:[[self document] archive] c64proxy:c64];
+    [mountDialog initialize:[[self document] attachedArchive] c64proxy:c64];
     [[self window] beginSheet:mountDialog completionHandler:nil];
     
 	return YES;
@@ -1044,14 +1044,14 @@
 	
 	// Mount image if requested
     if (doMount) {
-        if (![c64 mountArchive:[[self document] archive]]) {
+        if (![c64 mountArchive:[[self document] attachedArchive]]) {
             NSLog(@"FAILED TO MOUNT ARCHIVE");
         }
     }
-    
+
     // Flash data if requested
     if (doFlash) {
-        [c64 flushArchive:[[self document] archive] item:[mountDialog selection]];
+        [c64 flushArchive:[[self document] attachedArchive] item:[mountDialog selection]];
     }
     
     // Type command if requested
@@ -1113,7 +1113,8 @@
     NSLog(@"Writing drive contents to D64 archive in %@...",path);
 
     // Determine full destination path
-    NSString *archivePath = [NSString stringWithFormat:@"%s", [[self document] archive]->getPath()];
+    Archive *archive = [[[self document] attachedArchive] archive];
+    NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
     NSString *archiveName = [[archivePath lastPathComponent] stringByDeletingPathExtension];
     
     NSString *proposedName = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.D64", archiveName]];

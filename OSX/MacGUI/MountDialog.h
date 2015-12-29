@@ -52,8 +52,8 @@ class Archive;
 
 
 // Initialization
-- (void) _initialize:(Archive *)a c64proxy:(C64Proxy *)proxy;
-- (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy;
+- (void) _initialize:(ArchiveProxy *)a c64proxy:(C64Proxy *)proxy;
+- (void) initialize:(ArchiveProxy *)a c64proxy:(C64Proxy *)proxy;
 
 // Action methods
 - (IBAction)loadOptionsAction:(id)sender;

@@ -22,7 +22,7 @@
 
 @synthesize c64;
 @synthesize snapshot;
-@synthesize archive;
+@synthesize attachedArchive;
 @synthesize tape;
 @synthesize cartridge;
 
@@ -48,7 +48,7 @@
 	
     self = [super init];
 
-	archive = NULL;
+    attachedArchive = nil;
 	cartridge = NULL;
 		
 	return self;
@@ -69,22 +69,23 @@
 
 - (BOOL)setG64ArchiveWithName:(NSString *)path
 {
-    if ((archive = G64Archive::archiveFromG64File([path UTF8String])))
-        return YES;
+    if (!(attachedArchive = [G64ArchiveProxy archiveFromG64File:path]))
+        return NO;
     
-    return NO;
+    return YES;
 }
 
 - (BOOL)setNIBArchiveWithName:(NSString *)path
 {
-    if (!(archive = NIBArchive::archiveFromNIBFile([path UTF8String])))
-        return NO;
+    if (!(attachedArchive = [NIBArchiveProxy archiveFromNIBFile:path]))
+    return NO;
     
     return YES;
 }
 
 - (BOOL)setTAPArchiveWithName:(NSString *)path
 {
+    // if (!(tape = TAPArchive::archiveFromTAPFile([path UTF8String])))
     if (!(tape = TAPArchive::archiveFromTAPFile([path UTF8String])))
         return NO;
     
@@ -93,7 +94,7 @@
 
 - (BOOL)setArchiveWithName:(NSString *)path
 {
-	if (!(archive = D64Archive::archiveFromArbitraryFile([path UTF8String])))
+    if (!(attachedArchive = [D64ArchiveProxy archiveFromArbitraryFile:path]))
 		return NO;
 	
 	return YES;

@@ -29,23 +29,22 @@
 @synthesize doFlash;
 @synthesize doType;
 
-- (void) _initialize:(Archive *)a c64proxy:(C64Proxy *)proxy
+- (void) _initialize:(ArchiveProxy *)aproxy c64proxy:(C64Proxy *)proxy
 {
-    assert(a != NULL);
+    assert(aproxy != NULL);
     assert(proxy != NULL);
     
-    archive = a;
+    archive = [aproxy archive];
     c64 = proxy;
     
-    bool isG64orNIB = (archive->getType() == G64_CONTAINER || archive->getType() == NIB_CONTAINER);
+    bool isG64orNIB = ([aproxy getType] == G64_CONTAINER || [aproxy getType] == NIB_CONTAINER);
     doMount = YES;
     doFlash = NO;
     doType = NO;
     loadOption = LOAD_OPTION_8_1;
 
     // Let the table header show the logical archive name
-    NSString *archiveName = [NSString stringWithFormat:@"%s", archive->getName()];
-    [[[directory tableColumnWithIdentifier:@"filename"] headerCell] setStringValue:archiveName];
+    [[[directory tableColumnWithIdentifier:@"filename"] headerCell] setStringValue:[aproxy getName]];
     
     // Establish necessary binding
     [directory deselectAll:self];
@@ -65,14 +64,14 @@
     [directory reloadData];
 }
 
-- (void) initialize:(Archive *)a c64proxy:(C64Proxy *)proxy
+- (void) initialize:(ArchiveProxy *)aproxy c64proxy:(C64Proxy *)proxy
 {
     NSLog(@"Initialize MountDialog");
     
-    [self _initialize:a c64proxy:proxy];
+    [self _initialize:aproxy c64proxy:proxy];
     
     // Get physical path of archive
-    NSString *archivePath = [NSString stringWithFormat:@"%s", archive->getPath()];
+    NSString *archivePath = [aproxy getPath];
     NSString *archiveLastPath = [archivePath lastPathComponent];
     NSString *archiveExtension = [[archiveLastPath pathExtension] uppercaseString];
     
