@@ -53,13 +53,13 @@ public:
     //! Dump internal state to console
     void dumpState();
 
-    inline bool GetButtonPressed() { return _buttonPressed; }
-    inline JoystickDirection GetAxisX() { return _axisX; }
-    inline JoystickDirection GetAxisY() { return _axisY; }
+    inline bool getButtonPressed() { return _buttonPressed; }
+    inline JoystickDirection getAxisX() { return _axisX; }
+    inline JoystickDirection getAxisY() { return _axisY; }
 		
-    inline void SetButtonPressed(bool pressed) { _buttonPressed = pressed; }
-    inline void SetAxisX(JoystickDirection state) { _axisX = state; }
-    inline void SetAxisY(JoystickDirection state) { _axisY = state; }
+    inline void setButtonPressed(bool pressed) { _buttonPressed = pressed; }
+    inline void setAxisX(JoystickDirection state) { _axisX = state; }
+    inline void setAxisY(JoystickDirection state) { _axisY = state; }
 
 };
 

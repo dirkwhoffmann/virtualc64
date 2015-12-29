@@ -804,9 +804,9 @@ CIA1::getInterruptLine()
 void 
 CIA1::pollJoystick(Joystick *joy, int joyDevNo)
 {
-    JoystickDirection leftRightState = joy->GetAxisX();
-	JoystickDirection upDownState = joy->GetAxisY();
-	bool buttonState = joy->GetButtonPressed();
+    JoystickDirection leftRightState = joy->getAxisX();
+	JoystickDirection upDownState = joy->getAxisY();
+	bool buttonState = joy->getButtonPressed();
 	
     assert (joy != NULL);
     

@@ -107,11 +107,11 @@
     // Joystick *joy = (nr == 1) ? &c64->joystick1 : &c64->joystick2;
     JoystickProxy *j = (nr == 1) ? [c64proxy joystick1] : [c64proxy joystick2];
     
-    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j SetAxisY:JOYSTICK_UP]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j SetAxisY:JOYSTICK_DOWN]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j SetAxisX:JOYSTICK_LEFT]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j SetAxisX:JOYSTICK_RIGHT]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { [j SetButtonPressed:YES]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j setAxisY:JOYSTICK_UP]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j setAxisY:JOYSTICK_DOWN]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j setAxisX:JOYSTICK_LEFT]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j setAxisX:JOYSTICK_RIGHT]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { [j setButtonPressed:YES]; return YES; }
     
     return NO;
 }
@@ -126,11 +126,11 @@
     unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
     JoystickProxy *j = (nr == 1) ? [c64proxy joystick1] : [c64proxy joystick2];
 
-    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j SetAxisY:JOYSTICK_RELEASED]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j SetAxisY:JOYSTICK_RELEASED]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j SetAxisX:JOYSTICK_RELEASED]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j SetAxisX:JOYSTICK_RELEASED]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { [j SetButtonPressed:NO]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j setAxisY:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j setAxisY:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j setAxisX:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j setAxisX:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { [j setButtonPressed:NO]; return YES; }
 
     return NO;
 }

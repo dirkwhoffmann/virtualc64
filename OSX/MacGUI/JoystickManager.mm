@@ -362,7 +362,7 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 			IOHIDElement_SetDoubleProperty(element, CFSTR(kIOHIDElementCalibrationGranularityKey), 1);
 			bool pressed = ( ceil( IOHIDValueGetScaledValue( inIOHIDValueRef, kIOHIDValueScaleTypeCalibrated ) ) == 1 );
 			
-			proxy->ChangeButton(pressed);
+			proxy->setButtonPressed(pressed);
         } else {
 			NSLog(@"Device %p (ID %d) type and page mismatch (Type=%i, Page=%i)\n",
                   context->deviceRef, context->locationID, elementType, elementPage );
@@ -382,14 +382,14 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 
                 case kHIDUsage_GD_X:
                     
-                    proxy->ChangeAxisX(axis == -1 ? JOYSTICK_LEFT :
-                                       (axis == 1 ? JOYSTICK_RIGHT : JOYSTICK_RELEASED));
+                    proxy->setAxisX(axis == -1 ? JOYSTICK_LEFT :
+                                    (axis == 1 ? JOYSTICK_RIGHT : JOYSTICK_RELEASED));
 					break;
 
                 case kHIDUsage_GD_Y:
                                        
-                    proxy->ChangeAxisY(axis == -1 ? JOYSTICK_UP :
-                                       (axis == 1 ? JOYSTICK_DOWN : JOYSTICK_RELEASED));
+                    proxy->setAxisY(axis == -1 ? JOYSTICK_UP :
+                                    (axis == 1 ? JOYSTICK_DOWN : JOYSTICK_RELEASED));
                     break;
 
                 default:

@@ -318,9 +318,9 @@
 
 - (id) initWithJoystick:(Joystick *)joy;
 
-- (void) SetButtonPressed:(BOOL)pressed;
-- (void) SetAxisX:(JoystickDirection)state;
-- (void) SetAxisY:(JoystickDirection)state;
+- (void) setButtonPressed:(BOOL)pressed;
+- (void) setAxisX:(JoystickDirection)state;
+- (void) setAxisY:(JoystickDirection)state;
 
 - (void) dump;
 

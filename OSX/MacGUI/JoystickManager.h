@@ -59,9 +59,9 @@ public:
     }
     
     void bindJoystick(Joystick *joy) { joystick = joy; }
-    void ChangeButton(bool pressed) { if (joystick) joystick->SetButtonPressed(pressed); }
-    void ChangeAxisX(JoystickDirection state) { if (joystick) joystick->SetAxisX(state); }
-	void ChangeAxisY(JoystickDirection state) { if (joystick) joystick->SetAxisY(state); }
+    void setButtonPressed(bool pressed) { if (joystick) joystick->setButtonPressed(pressed); }
+    void setAxisX(JoystickDirection state) { if (joystick) joystick->setAxisX(state); }
+	void setAxisY(JoystickDirection state) { if (joystick) joystick->setAxisY(state); }
 };
 
 class JoystickManager 

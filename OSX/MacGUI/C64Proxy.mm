@@ -378,9 +378,9 @@
     return self;
 }
 
-- (void) SetButtonPressed:(BOOL)pressed { joystick->SetButtonPressed(pressed); }
-- (void) SetAxisX:(JoystickDirection)state { joystick->SetAxisX(state); }
-- (void) SetAxisY:(JoystickDirection)state {joystick->SetAxisY(state); }
+- (void) setButtonPressed:(BOOL)pressed { joystick->setButtonPressed(pressed); }
+- (void) setAxisX:(JoystickDirection)state { joystick->setAxisX(state); }
+- (void) setAxisY:(JoystickDirection)state {joystick->setAxisY(state); }
 
 - (void) dump { joystick->dumpState(); }
 
