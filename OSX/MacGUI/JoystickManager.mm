@@ -23,38 +23,6 @@
 //                                             JoystickManagerProxy
 // ---------------------------------------------------------------------------------------------
 
-USBJoystick::USBJoystick()
-{
-    _joystick = NULL;
-    
-}
-
-void
-USBJoystick::bindJoystick(Joystick *joy)
-{
-    _joystick = joy;
-}
-
-void
-USBJoystick::ChangeButton(bool pressed)
-{
-    if (_joystick)
-        _joystick->SetButtonPressed(pressed);
-}
-
-void
-USBJoystick::ChangeAxisX(JoystickDirection state)
-{
-    if (_joystick)
-        _joystick->SetAxisX(state);
-}
-
-void
-USBJoystick::ChangeAxisY(JoystickDirection state)
-{
-    if (_joystick)
-        _joystick->SetAxisY(state);
-}
 
 // ---------------------------------------------------------------------------------------------
 //                                             JoystickManager
@@ -72,10 +40,6 @@ JoystickManager::JoystickManager(C64Proxy *proxy)
 {
     _proxy = proxy;
     _manager = NULL;
-    locationID1 = 0;
-    locationID2 = 0;
-    proxy1 = NULL;
-    proxy2 = NULL;
 }
 
 JoystickManager::~JoystickManager()
@@ -83,32 +47,31 @@ JoystickManager::~JoystickManager()
     Dispose();
 }
 
+// REMOVE
 bool JoystickManager::joystickIsPluggedIn(int nr)
 {
     assert (nr >= 1 && nr <= 2);
-    
-    if (nr == 1) return (proxy1 != NULL);
-    if (nr == 2) return (proxy2 != NULL);
-    return false;
+    return usbjoy[nr - 1].pluggedIn;
 }
 
 void JoystickManager::bindJoystick(int nr, Joystick *joy)
 {
     assert (nr >= 1 && nr <= 2);
 
-    if (nr == 1 && proxy1 != NULL) {
-        
-        proxy1->bindJoystick(joy);
+    if (nr == 1 && usbjoy[0].pluggedIn) {
+    
+        usbjoy[0].bindJoystick(joy);
 
         if (joy == NULL)
             fprintf(stderr, "Remove binding for first USB joystick\n");
         else
             fprintf(stderr, "Bind first USB joystick to %p\n", joy);
     }
-    if (nr == 2 && proxy2 != NULL) {
 
-        proxy2->bindJoystick(joy);
+    if (nr == 2 && usbjoy[1].pluggedIn) {
 
+        usbjoy[1].bindJoystick(joy);
+        
         if (joy == NULL)
             fprintf(stderr, "Remove binding for second USB joystick\n");
         else
@@ -118,15 +81,16 @@ void JoystickManager::bindJoystick(int nr, Joystick *joy)
 
 bool JoystickManager::addJoystickProxyWithLocationID(int locationID, USBJoystick *proxy)
 {
-    if (proxy1 == NULL) {
-        locationID1 = locationID;
-        proxy1 = proxy;
+    
+    if (!usbjoy[0].pluggedIn) {
+        usbjoy[0].pluggedIn = true;
+        usbjoy[0].locationID = locationID;
         return true;
     }
     
-    if (proxy2 == NULL) {
-        locationID2 = locationID;
-        proxy2 = proxy;
+    if (!usbjoy[1].pluggedIn) {
+        usbjoy[1].pluggedIn = true;
+        usbjoy[1].locationID = locationID;
         return true;
     }
     
@@ -135,37 +99,32 @@ bool JoystickManager::addJoystickProxyWithLocationID(int locationID, USBJoystick
 
 USBJoystick *JoystickManager::getJoystickProxyWithLocationID(int locationID)
 {
-    if (locationID1 == locationID) {
-        assert(proxy1 != NULL);
-        return proxy1;
-    }
-    if (locationID2 == locationID) {
-        assert(proxy2 != NULL);
-        return proxy2;
-    }
+    if (usbjoy[0].pluggedIn && usbjoy[0].locationID == locationID)
+        return &usbjoy[0];
+
+    if (usbjoy[1].pluggedIn && usbjoy[1].locationID == locationID)
+        return &usbjoy[1];
+    
     return NULL;
 }
 
 void JoystickManager::removeJoystickProxyWithLocationID(int locationID)
 {
-    if (locationID1 == locationID) {
-        locationID1 = 0;
-        // delete proxy1; MEMORY LEAK?
-        proxy1 = NULL;
-        return;
+    if (usbjoy[0].pluggedIn && usbjoy[0].locationID == locationID) {
+        usbjoy[0].pluggedIn = false;
+        usbjoy[0].locationID = 0;
     }
-    if (locationID2 == locationID) {
-        locationID2 = 0;
-        // delete proxy2; MEMORY LEAK?
-        proxy2 = NULL;
-        return;
+
+    if (usbjoy[1].pluggedIn && usbjoy[1].locationID == locationID) {
+        usbjoy[1].pluggedIn = false;
+        usbjoy[1].locationID = 0;
     }
 }
 
 void JoystickManager::listJoystickManagers()
 {
-    NSLog(@"Slot 1: %p (ID %d)", proxy1, locationID1);
-    NSLog(@"Slot 2: %p (ID %d)", proxy2, locationID2);
+    NSLog(@"USB joystick slot 1: (ID %d)", usbjoy[0].locationID);
+    NSLog(@"USB joystick slot 2: (ID %d)", usbjoy[1].locationID);
 }
 
 bool JoystickManager::Initialize()
@@ -281,7 +240,8 @@ JoystickManager::MatchingCallback(void *inContext, IOReturn inResult, void *inSe
         return;
 	}
 	
-    if(proxy1 != NULL && proxy2 != NULL) {
+    // if(proxy1 != NULL && proxy2 != NULL) {
+    if(usbjoy[0].pluggedIn && usbjoy[1].pluggedIn) {
 		NSLog(@"Ignoring %s (%p): Maximum number of devices reached.\n",
               devInfoName ? devInfoName : "", inIOHIDDeviceRef);
 		return;

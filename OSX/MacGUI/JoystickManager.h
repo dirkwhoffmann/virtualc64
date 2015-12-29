@@ -1,5 +1,6 @@
 /*
- * (C) 2009 - 2015 Benjamin Klein, Dirk Hoffmann. All rights reserved.
+ * Original implementation by Benjamin Klein
+ * Rewritten and maintained by Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +21,6 @@
 #import <IOKit/hid/IOHIDLib.h>
 #import <IOKit/hid/IOHIDManager.h>
 
-// TO BE REMOVED
-// #import <set>
-
 #import "Joystick.h"
 
 @class C64Proxy;
@@ -33,24 +31,37 @@ typedef struct {
     IOHIDDeviceRef deviceRef;
 } CallbackContext;
 
+
 class USBJoystick
 {
-    private:
+
+public:
     
-    Joystick *_joystick;
+    //! @brief      Indicates if this object represents a plugged in USB joystick device
+    bool pluggedIn;
+    
+    //! @brief      Location ID of the represented USB joystick
+    int locationID;
+    
+    //! @brief      Mapping to one of the two virtual joysticks of the emulator
+    /*! @discussion Initially, this pointer is NULL, meaning that the USB joystick has not yet been selected 
+     *              as input device. It can be selected as input device via bindJoystick(). In that case, it
+     *              will point to one of the two static Joystick objects hold by the emulator.
+     */
+    Joystick *joystick;
 
-    public:
-
-    USBJoystick();
-		
-	void ChangeButton(bool pressed);
-	void ChangeAxisX(JoystickDirection state);
-	void ChangeAxisY(JoystickDirection state);
-	
-    // Bind virtual joystick of the emulator
-    // 'Joystick' must be one of the two objects initialized by the emulator
-    // It can be either the object representing port 1 or the object representing port 2
-    void bindJoystick(Joystick *joy);
+    USBJoystick()
+    {
+        pluggedIn = false;
+        locationID = 0;
+        joystick = NULL;
+        
+    }
+    
+    void bindJoystick(Joystick *joy) { joystick = joy; }
+    void ChangeButton(bool pressed) { if (joystick) joystick->SetButtonPressed(pressed); }
+    void ChangeAxisX(JoystickDirection state) { if (joystick) joystick->SetAxisX(state); }
+	void ChangeAxisY(JoystickDirection state) { if (joystick) joystick->SetAxisY(state); }
 };
 
 class JoystickManager 
@@ -83,11 +94,8 @@ class JoystickManager
     
     C64Proxy *_proxy;
 	IOHIDManagerRef _manager;
-    int locationID1;
-    int locationID2;
-    USBJoystick *proxy1;
-    USBJoystick *proxy2;
-		
+    USBJoystick usbjoy[2]; // At most 2 USB joysticks can be plugged in 
+    
 	static const int UsageToSearch[][2];
 	static const unsigned MaxJoystickCount;
 
