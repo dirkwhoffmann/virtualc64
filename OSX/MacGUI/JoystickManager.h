@@ -21,14 +21,11 @@
 #import <IOKit/hid/IOHIDManager.h>
 
 // TO BE REMOVED
-#import <set>
+// #import <set>
 
 #import "Joystick.h"
 
 @class C64Proxy;
-
-// TO BE REMOVED
-using std::set;
 
 typedef struct {
     JoystickManager *manager;
@@ -41,13 +38,12 @@ class JoystickManagerProxy
     private:
     
     Joystick *_joystick;
-    set<int> _pressedButtons; // Can't we get rid of the SDL library?
 
     public:
 
     JoystickManagerProxy();
 		
-	void ChangeButton(int index, bool pressed);
+	void ChangeButton(bool pressed);
 	void ChangeAxisX(JoystickDirection state);
 	void ChangeAxisY(JoystickDirection state);
 	

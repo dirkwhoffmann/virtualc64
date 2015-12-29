@@ -18,7 +18,6 @@
 
 #include "C64GUI.h"
 
-using std::make_pair; // DO WE NEED THIS?
 
 // ---------------------------------------------------------------------------------------------
 //                                             JoystickManagerProxy
@@ -30,32 +29,28 @@ JoystickManagerProxy::JoystickManagerProxy()
     
 }
 
-void JoystickManagerProxy::bindJoystick(Joystick *joy)
+void
+JoystickManagerProxy::bindJoystick(Joystick *joy)
 {
     _joystick = joy;
 }
 
-void JoystickManagerProxy::ChangeButton(int index, bool pressed)
+void
+JoystickManagerProxy::ChangeButton(bool pressed)
 {
-    bool found = (_pressedButtons.find(index) != _pressedButtons.end());
-
-    if(pressed) {
-        if(!found) _pressedButtons.insert(index);
-    } else {
-        if (found) _pressedButtons.erase(index);
-    }
-
     if (_joystick)
-        _joystick->SetButtonPressed(_pressedButtons.size() != 0);
+        _joystick->SetButtonPressed(pressed);
 }
 
-void JoystickManagerProxy::ChangeAxisX(JoystickDirection state)
+void
+JoystickManagerProxy::ChangeAxisX(JoystickDirection state)
 {
     if (_joystick)
         _joystick->SetAxisX(state);
 }
 
-void JoystickManagerProxy::ChangeAxisY(JoystickDirection state)
+void
+JoystickManagerProxy::ChangeAxisY(JoystickDirection state)
 {
     if (_joystick)
         _joystick->SetAxisY(state);
@@ -407,7 +402,7 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 			IOHIDElement_SetDoubleProperty(element, CFSTR(kIOHIDElementCalibrationGranularityKey), 1);
 			bool pressed = ( ceil( IOHIDValueGetScaledValue( inIOHIDValueRef, kIOHIDValueScaleTypeCalibrated ) ) == 1 );
 			
-			proxy->ChangeButton(elementUsage, pressed);
+			proxy->ChangeButton(pressed);
         } else {
 			NSLog(@"Device %p (ID %d) type and page mismatch (Type=%i, Page=%i)\n",
                   context->deviceRef, context->locationID, elementType, elementPage );
