@@ -61,7 +61,10 @@
 
 - (void)awakeFromNib
 {	
-	NSLog(@"MyController::awakeFromNib");
+    NSLog(@"MyController::awakeFromNib (window = %@)", [self window]);
+
+    if (![self window])
+        return;
 	
 	// Change working directory to the main bundle ressource path. We may find some ROMs there...
 	NSBundle* mainBundle = [NSBundle mainBundle];
