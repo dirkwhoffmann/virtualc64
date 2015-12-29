@@ -833,13 +833,19 @@
 
 @implementation ArchiveProxy
 
-- (id)initWithArchive:(Archive *)a
+@synthesize archive;
+
+- (instancetype)initWithArchive:(Archive *)a
 {
     NSLog(@"ArchiveProxy::initWithArchive");
     
-    if ((self = [super init])) {
-        archive = a;
-    }
+    if (a == nil)
+        return nil;
+    
+    if (!(self = [super init]))
+        return nil;
+    
+    archive = a;
     return self;
 }
 
@@ -853,4 +859,64 @@
 
 @end
 
-	
+
+@implementation T64ArchiveProxy
+
++ (BOOL)isT64File:(NSString *)filename
+{
+    return T64Archive::isT64File([filename UTF8String]);
+}
+
++ (instancetype)archiveFromT64File:(NSString *)filename
+{
+    return [[T64ArchiveProxy alloc] initWithArchive:
+            (T64Archive::archiveFromT64File([filename UTF8String]))];
+}
+
++ (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
+{
+    return [[T64ArchiveProxy alloc] initWithArchive:
+            (T64Archive::archiveFromArchive([otherArchive archive]))];
+}
+
+@end
+
+
+@implementation D64ArchiveProxy
+
++ (BOOL) isD64File:(NSString *)filename
+{
+   return D64Archive::isD64File([filename UTF8String]);
+}
+
++ (instancetype) archiveFromD64File:(NSString *)filename
+{
+    return [[D64ArchiveProxy alloc] initWithArchive:
+            (D64Archive::archiveFromD64File([filename UTF8String]))];
+}
+
++ (instancetype) archiveFromArbitraryFile:(NSString *)filename
+{
+    return [[D64ArchiveProxy alloc] initWithArchive:
+            (D64Archive::archiveFromArbitraryFile([filename UTF8String]))];
+}
+
++ (instancetype) archiveFromD64Archive:(D64ArchiveProxy *)archive
+{
+    return [[D64ArchiveProxy alloc] initWithArchive:
+            (D64Archive::archiveFromD64Archive((D64Archive *)[archive archive]))];
+}
+
++ (instancetype) archiveFromArchive:(ArchiveProxy *)archive
+{
+    return [[D64ArchiveProxy alloc] initWithArchive:
+            (D64Archive::archiveFromArchive([archive archive]))];
+}
+
++ (instancetype) archiveFromDrive:(VC1541Proxy *)drive
+{
+    return [[D64ArchiveProxy alloc] initWithArchive:
+            (D64Archive::archiveFromDrive([drive vc1541]))];
+}
+
+@end

@@ -189,11 +189,17 @@
         return NO;
     }
     
-    // Is it a container? 
+    // New code style. Use ProxyClasses
+    // Is it a T64 file?
+    if ([T64ArchiveProxy isT64File:filename]) {
+        if ([self setArchiveWithName:filename]) return YES; else goto failure;
+    }
+    
+    // Old code style. TODO: Change to new style ...
     switch (Container::typeOf([type UTF8String])) {
             
         case D64_CONTAINER:
-        case T64_CONTAINER:
+        // case T64_CONTAINER:
         case PRG_CONTAINER:
         case P00_CONTAINER:
 		
@@ -230,7 +236,9 @@
             NSLog(@"Unsupported file type\n");
             return NO;
     }
-	
+
+failure:
+
     NSLog(@"Error while reading file\n");
     return NO;
 }

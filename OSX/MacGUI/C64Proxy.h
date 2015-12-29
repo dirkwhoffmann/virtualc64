@@ -635,9 +635,9 @@
 //                                  Snapshot
 // --------------------------------------------------------------------------
 
-@interface V64Snapshot : NSObject {
-	@private
-	Snapshot *snapshot;
+@interface V64Snapshot : NSObject
+{
+	@private Snapshot *snapshot;
 }
 
 @property Snapshot *snapshot;
@@ -664,10 +664,28 @@
 
 @interface ArchiveProxy : NSObject
 {
-    @private Archive *archive;
+    Archive *archive;
 }
+@property Archive *archive;
+- (instancetype) initWithArchive:(Archive *)s;
+@end
 
-- (id) initWithArchive:(Archive *)s;
+@interface T64ArchiveProxy : ArchiveProxy
+{
+}
++ (BOOL) isT64File:(NSString *)filename;
++ (instancetype) archiveFromT64File:(NSString *)filename;
++ (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive;
+@end
 
+@interface D64ArchiveProxy : ArchiveProxy
+{
+}
++ (BOOL) isD64File:(NSString *)filename;
++ (instancetype) archiveFromD64File:(NSString *)filename;
++ (instancetype) archiveFromArbitraryFile:(NSString *)filename;
++ (instancetype) archiveFromD64Archive:(D64ArchiveProxy *)archive;
++ (instancetype) archiveFromArchive:(ArchiveProxy *)archive;
++ (instancetype) archiveFromDrive:(VC1541Proxy *)drive;
 @end
 
