@@ -23,7 +23,7 @@
 @synthesize c64;
 @synthesize snapshot;
 @synthesize attachedArchive;
-@synthesize tape;
+@synthesize attachedTape;
 @synthesize cartridge;
 
 - (void)makeWindowControllers
@@ -85,8 +85,7 @@
 
 - (BOOL)setTAPArchiveWithName:(NSString *)path
 {
-    // if (!(tape = TAPArchive::archiveFromTAPFile([path UTF8String])))
-    if (!(tape = TAPArchive::archiveFromTAPFile([path UTF8String])))
+    if (!(attachedTape = [TAPContainerProxy containerFromTAPFile:path]))
         return NO;
     
     return YES;
@@ -192,15 +191,17 @@
     
     // New code style. Use ProxyClasses
     // Is it a T64 file?
+#if 0
     if ([T64ArchiveProxy isT64File:filename]) {
         if ([self setArchiveWithName:filename]) return YES; else goto failure;
     }
+#endif
     
-    // Old code style. TODO: Change to new style ...
+    // Old code style. TODO: Change to new style (?!)...
     switch (Container::typeOf([type UTF8String])) {
             
         case D64_CONTAINER:
-        // case T64_CONTAINER:
+        case T64_CONTAINER:
         case PRG_CONTAINER:
         case P00_CONTAINER:
 		

@@ -24,7 +24,7 @@
 @class V64Snapshot;
 @class MyMetalView;
 @class ArchiveProxy;
-
+@class TAPContainerProxy;
 
 // --------------------------------------------------------------------------
 //                                    CPU
@@ -595,7 +595,7 @@
 - (bool) mountArchive:(ArchiveProxy *)a;
 - (bool) flushArchive:(ArchiveProxy *)a item:(int)nr;
 
-- (bool) insertTape:(TAPArchive *)a;
+- (bool) insertTape:(TAPContainerProxy *)a;
 
 - (bool) warp;
 - (void) setWarp:(bool)b;
@@ -711,12 +711,23 @@
 + (instancetype) archiveFromNIBFile:(NSString *)filename;
 @end
 
-#if 0
-@interface TAPArchiveProxy : ArchiveProxy
+
+@interface TAPContainerProxy : NSObject
 {
+    TAPArchive *container;
 }
+
+@property TAPArchive *container;
+
+- (instancetype) initWithTAPContainer:(TAPArchive *)a;
+
 + (BOOL) isTAPFile:(NSString *)filename;
-+ (instancetype) archiveFromTAPFile:(NSString *)filename;
++ (instancetype) containerFromTAPFile:(NSString *)filename;
+
+- (NSString *)getPath;
+- (NSString *)getName;
+- (NSInteger)getType;
+- (NSInteger)TAPversion;
+
 @end
-#endif
 

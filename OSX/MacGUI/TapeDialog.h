@@ -43,7 +43,7 @@ class TAPArchive;
 @property(readonly) bool doPressPlay;
 
 // Initialization
-- (void) initialize:(TAPArchive *)a c64proxy:(C64Proxy *)proxy;
+- (void) initialize:(TAPContainerProxy *)cproxy c64proxy:(C64Proxy *)proxy;
 
 // Action methods
 - (IBAction)autoTypeAction:(id)sender;

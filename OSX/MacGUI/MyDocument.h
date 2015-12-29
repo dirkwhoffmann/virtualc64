@@ -39,7 +39,7 @@ class Snapshot;
     
     //! Reference to an attached tape image
     /*! When a new documents opens and this variable is not NULL, the tape is automatically inserted into the virtual datasette */
-    TAPArchive *tape; // TODO: Replace by TAPArchiveProxy
+    TAPContainerProxy *attachedTape; 
 
 	//! Reference to an attached cartridge 
     /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged into the virtual expansion port */
@@ -49,7 +49,7 @@ class Snapshot;
 @property (strong) C64Proxy *c64;
 @property (assign) Snapshot *snapshot;
 @property ArchiveProxy *attachedArchive;
-@property (assign) TAPArchive *tape;
+@property TAPContainerProxy *attachedTape;
 @property (assign) Cartridge *cartridge;
 
 - (BOOL)setSnapshotWithName:(NSString *)path;

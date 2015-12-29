@@ -508,7 +508,7 @@
             [metalScreen setDrawC64texture:true];
 
             // Check for attached tape
-            if ([[self document]  tape]) {
+            if ([[self document]  attachedTape]) {
                 NSLog(@"Found attached tape");
                 [self showTapeDialog];
             }
@@ -1063,10 +1063,10 @@
 - (bool)showTapeDialog
 {
     // Only proceed if a a tape image is present
-    if (![[self document] tape])
+    if (![[self document] attachedTape])
         return NO;
     
-    [tapeDialog initialize:[[self document] tape] c64proxy:c64];
+    [tapeDialog initialize:[[self document] attachedTape] c64proxy:c64];
     [[self window] beginSheet:tapeDialog completionHandler:nil];
     
     return YES;
@@ -1095,7 +1095,7 @@
     [[self window] endSheet:tapeDialog returnCode:NSModalResponseCancel];
     
     // Insert tape into datasette
-    [c64 insertTape:[[self document] tape]];
+    [c64 insertTape:[[self document] attachedTape]];
     
     // Type command if requested
     if (doAutoType) {

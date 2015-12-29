@@ -706,7 +706,7 @@
 - (bool) mountArchive:(ArchiveProxy *)a { return c64->mountArchive([a archive]); }
 - (bool) flushArchive:(ArchiveProxy *)a item:(int)nr { return c64->flushArchive([a archive], nr); }
 
-- (bool) insertTape:(TAPArchive *)a { return c64->insertTape(a); }
+- (bool) insertTape:(TAPContainerProxy *)c { return c64->insertTape([c container]); }
 
 - (bool) warp { return c64->getWarp(); }
 - (void) setWarp:(bool)b { c64->setWarp(b); }	
@@ -957,19 +957,47 @@
 
 @end
 
-#if 0
-@implementation TAPArchiveProxy
+@implementation TAPContainerProxy
+
+@synthesize container;
+
+- (instancetype) initWithTAPContainer:(TAPArchive *)c
+{
+    NSLog(@"TAPContainerProxy::initWithContainer");
+    
+    if (c == nil)
+        return nil;
+    
+    if (!(self = [super init]))
+        return nil;
+    
+    container = c;
+    return self;
+}
+
+- (void)dealloc
+{
+    NSLog(@"TAPContainerProxy::dealloc");
+    
+    if (container)
+        delete container;
+}
 
 + (BOOL) isTAPFile:(NSString *)filename
 {
     return TAPArchive::isTAPFile([filename UTF8String]);
 }
 
-+ (instancetype) archiveFromTAPFile:(NSString *)filename
++ (instancetype) containerFromTAPFile:(NSString *)filename
 {
-    return [[TAPArchiveProxy alloc] initWithArchive:
+    return [[TAPContainerProxy alloc] initWithTAPContainer:
             (TAPArchive::archiveFromTAPFile([filename UTF8String]))];
 }
 
+- (NSString *)getPath { return [NSString stringWithUTF8String:container->getPath()]; }
+- (NSString *)getName { return [NSString stringWithUTF8String:container->getName()]; }
+- (NSInteger)getType { return (NSInteger)container->getType(); }
+- (NSInteger)TAPversion { return (NSInteger)container->TAPversion(); }
+
 @end
-#endif
+
