@@ -24,15 +24,18 @@
 //
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
+// Add Class V64Object as base class of VirtualComponent. Move logging stuff into new class
+// Let all Container and Archive classes inherit from V64Object. Then, replace fprintf(...) by debug(...)
 // Cartridge dialog
 //
 // CLEANUP:
-// Remove MyOpenGLView class
+// 1. Move D64Archive:XXXfromDrive to Drive class
+// 2. vc1541 should no longer be accessible via C64Proxy
+// 3. Remove MyOpenGLView class
 // 
 // SPEEDUP:
 //
-// 1. CIA: Inline execution functions as much as possible
-// 2. Add routine to quickly get the disk name from GCR data
+// 1. Add routine to quickly get the disk name from GCR data
 //    Right now, the hardware dialog takes some time to open
 //
 // ENHANCEMENTS (BRAIN STORMING):
