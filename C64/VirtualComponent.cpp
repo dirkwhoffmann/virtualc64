@@ -33,7 +33,7 @@ VirtualComponent::VirtualComponent()
 
 VirtualComponent::~VirtualComponent()
 {
-	// debug(2, "Terminated\n");
+	debug(3, "Terminated\n");
     
     if (subComponents)
         delete [] subComponents;
@@ -70,7 +70,7 @@ VirtualComponent::reset()
     
     setTraceMode(false); 
     
-    debug(2, "Resetting...\n");
+    debug(3, "Resetting...\n");
     
 }
 
@@ -243,15 +243,11 @@ VirtualComponent::registerSubComponents(VirtualComponent **components, unsigned 
     
     unsigned numItems = length / sizeof(VirtualComponent *);
     
-    debug(2, "Registering %d components\n", numItems);
+    debug(3, "Registering %d components\n", numItems);
     
     // Allocate new array on heap and copy array data
     subComponents = new VirtualComponent*[numItems];
     std::copy(components, components + numItems, &subComponents[0]);    
-
-    // for (unsigned i = 0; subComponents[i] != NULL; i++)
-    //     printf("%s ", subComponents[i]->name);
-
 }
 
 uint32_t

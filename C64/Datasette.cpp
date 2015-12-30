@@ -21,7 +21,7 @@
 Datasette::Datasette()
 {
     name = "Datasette";
-    debug(2, "Creating virtual datasette at address %p\n", this);
+    debug(3, "Creating virtual datasette at address %p\n", this);
         
     // Register snapshot items
     SnapshotItem items[] = {
@@ -53,7 +53,7 @@ Datasette::Datasette()
 
 Datasette::~Datasette()
 {
-    debug(2, "Releasing Datasette...\n");
+    debug(3, "Releasing Datasette...\n");
 
     if (data)
         delete data;
@@ -69,7 +69,7 @@ Datasette::reset()
 void
 Datasette::ping()
 {
-    debug(2, "Pinging Datasette...\n");
+    debug(3, "Pinging Datasette...\n");
     c64->putMessage(MSG_VC1530_TAPE, hasTape() ? 1 : 0);
     // c64->putMessage(MSG_VC1530_MOTOR, motor ? 1 : 0);
     // c64->putMessage(MSG_VC1530_PLAY, playKey ? 1 : 0);

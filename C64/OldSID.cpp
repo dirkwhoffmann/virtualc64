@@ -51,7 +51,7 @@ OldSID::OldSID()
 {
 	name = "SID";
 
-	debug(2, "  Creating SID at address %p...\n", this);
+	debug(3, "  Creating SID at address %p...\n", this);
     
 	// link voices together
 	voice[0].mod_by = &voice[2];

@@ -22,7 +22,7 @@ ReSID::ReSID()
 {
 	name = "ReSID";
 
-	debug(2, "  Creating ReSID at address %p...\n", this);
+	debug(3, "  Creating ReSID at address %p...\n", this);
 
     sid = new SID();
     
@@ -106,16 +106,9 @@ ReSID::reset()
 void
 ReSID::setChipModel(chip_model model)
 {
-    switch (model) {
-        case MOS6581:
-            debug(2, "Plugging in MOS6581\n");
-            break;
-        case MOS8580:
-            debug(2, "Plugging in MOS8580\n");
-            break;
-        default:
-            warn("Unknown chip model. Using  MOS8580\n");
-            model = MOS8580;
+    if (model != MOS6581 && model != MOS8580) {
+        warn("Unknown chip model (%d). Using  MOS8580\n", model);
+        model = MOS8580;
     }
     
     chipModel = model;

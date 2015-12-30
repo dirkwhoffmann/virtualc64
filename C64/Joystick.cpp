@@ -22,7 +22,7 @@
 Joystick::Joystick() {
 
     name = "Joystick";
-    debug(2, "    Creating joystick at address %p...\n", this);
+    debug(3, "    Creating joystick at address %p...\n", this);
     
     // Register snapshot items
     SnapshotItem items[] = {

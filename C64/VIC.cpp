@@ -27,7 +27,7 @@
 VIC::VIC()
 {
 	name = "VIC";
-	debug(2, "  Creating VIC at address %p...\n", this);
+	debug(3, "  Creating VIC at address %p...\n", this);
     
 	// Start with all debug options disabled
 	markIRQLines = false;

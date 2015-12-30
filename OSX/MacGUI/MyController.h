@@ -52,7 +52,7 @@ enum INPUT_DEVICES {
 	IBOutlet C64Proxy *__strong c64;
 	
 	// JoystickManager
-    // DEPRECATED. Replace by JoystickManagerProxy
+    // TODO: Make it an Objective-C class.
 	JoystickManager *joystickManager;
 	    
 	// Dialogs
@@ -289,11 +289,13 @@ enum INPUT_DEVICES {
 
 }
 
-
 @property (strong) C64Proxy *c64;
 @property (strong,readonly) MyMetalView *metalScreen;
 @property int inputDeviceA;
 @property int inputDeviceB;
+
+// Initialization
+- (void)configureWindow;
 
 // Undo manager
 - (NSUndoManager *)undoManager;

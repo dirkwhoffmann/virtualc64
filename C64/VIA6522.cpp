@@ -651,23 +651,23 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 VIA1::VIA1()
 {
     name = "VIA1";
-	debug(2, "  Creating VIA1 at address %p...\n", this);
+	debug(3, "  Creating VIA1 at address %p...\n", this);
 }
 	
 VIA1::~VIA1()
 {
-	debug(2, "  Releasing VIA1...\n");
+	debug(3, "  Releasing VIA1...\n");
 }
 
 VIA2::VIA2()
 {
     name = "VIA2";
-	debug(2, "  Creating VIA2 at address %p...\n", this);
+	debug(3, "  Creating VIA2 at address %p...\n", this);
 }
 	
 VIA2::~VIA2()
 {
-	debug(2, "  Releasing VIA2...\n");
+	debug(3, "  Releasing VIA2...\n");
 }
 
 void VIA2::debug0xC() {

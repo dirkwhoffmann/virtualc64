@@ -56,7 +56,7 @@
 
 - (void)awakeFromNib
 {
-	NSLog(@"MyDocument::awakeFromNib");
+    NSLog(@"MyDocument::awakeFromNib");
 }
 
 - (BOOL)setSnapshotWithName:(NSString *)path

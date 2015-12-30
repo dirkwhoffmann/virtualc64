@@ -29,7 +29,7 @@ PixelEngine::PixelEngine() // C64 *c64)
 {
     name = "PixelEngine";
     
-    debug(2, "  Creating PixelEngine at address %p...\n", this);
+    debug(3, "  Creating PixelEngine at address %p...\n", this);
     
     currentScreenBuffer = screenBuffer1[0];
     pixelBuffer = currentScreenBuffer;
@@ -64,7 +64,7 @@ PixelEngine::PixelEngine() // C64 *c64)
 
 PixelEngine::~PixelEngine()
 {
-    debug(2, "  Releasing PixelEngine...\n");
+    debug(3, "  Releasing PixelEngine...\n");
 }
 
 void

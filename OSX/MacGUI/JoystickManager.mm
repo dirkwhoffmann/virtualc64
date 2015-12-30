@@ -32,7 +32,6 @@ const unsigned JoystickManager::MaxJoystickCount = 2;
 
 JoystickManager::JoystickManager(C64Proxy *proxy)
 {
-    NSLog(@"\n\n **************\n\n");
     _proxy = proxy;
     _manager = NULL;
 }
@@ -152,16 +151,14 @@ bool JoystickManager::addJoystickProxyWithLocationID(int locationID)
     if (!usbjoy[0].pluggedIn) {
         usbjoy[0].pluggedIn = true;
         usbjoy[0].locationID = locationID;
-        NSLog(@"%p Added to slot 0", this);
-        listJoystickManagers();
+        NSLog(@"Joystick with ID %d added to slot 0", locationID);
         return true;
     }
     
     if (!usbjoy[1].pluggedIn) {
         usbjoy[1].pluggedIn = true;
         usbjoy[1].locationID = locationID;
-        NSLog(@"%p Added to slot 1", this);
-        listJoystickManagers();
+        NSLog(@"Joystick with ID %d added to slot 1", locationID);
         return true;
     }
     
@@ -184,13 +181,13 @@ void JoystickManager::removeJoystickProxyWithLocationID(int locationID)
     if (usbjoy[0].pluggedIn && usbjoy[0].locationID == locationID) {
         usbjoy[0].pluggedIn = false;
         usbjoy[0].locationID = 0;
-        NSLog(@"Removed from slot 0");
+        NSLog(@"Joystick with ID %d removed from slot 0", locationID);
     }
 
     if (usbjoy[1].pluggedIn && usbjoy[1].locationID == locationID) {
         usbjoy[1].pluggedIn = false;
         usbjoy[1].locationID = 0;
-        NSLog(@"Removed from slot 1");
+        NSLog(@"Joystick with ID %d removed from slot 1", locationID);
     }
 }
 

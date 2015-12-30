@@ -83,7 +83,7 @@ C64::C64()
 {	
 	name = "C64";
 	
-	debug(1, "Creating virtual C64\n");
+	debug(1, "Creating virtual C64 at address %p\n", this);
 
 	p = NULL;    
     warp = false;
@@ -140,14 +140,16 @@ C64::C64()
 // Construction and destruction
 C64::~C64()
 {
-	// Halt emulator
-	halt();	
+    debug(1, "Destroying virtual C64 at address %p\n", this);
     
-	debug(1, "Cleaned up virtual C64\n", this);
+	// Halt emulator
+	halt();
 }
 
 void C64::reset()
 {
+    debug(1, "Resetting virtual C64 at address %p\n", this);
+    
 	suspend();
 
     VirtualComponent::reset();
@@ -164,7 +166,7 @@ void C64::reset()
 
 void C64::ping()
 {
-    debug (1, "Pinging virtual C64\n");
+    debug (1, "Pinging virtual C64 at address %p\n", this);
 
     VirtualComponent::ping();
     putMessage(MSG_WARP, warp);
@@ -204,24 +206,22 @@ void C64::putMessage(int id, int i, void *p, const char *c)
 void
 C64::setPAL()
 {
-	suspend();
-	
+    debug(2, "C64::setPAL\n");
+
+    suspend();
     vic.setChipModel(MOS6569_PAL);
 	sid.setPAL();
-
-    debug(2, "Switching VIC chip model to MOS6569 (PAL)\n");
 	resume();
 }
 
 void 
 C64::setNTSC()
 {
+    debug(2, "C64::setNTSC\n");
+
 	suspend();
-	    
     vic.setChipModel(MOS6567_NTSC);
 	sid.setNTSC();
-
-    debug(2, "Switching VIC chip model to MOS6567 (NTSC)\n");
 	resume();
 }
 
@@ -772,8 +772,9 @@ C64::loadRom(const char *filename)
 {
 	bool result = false; 
 		
-	suspend(); 
+    debug(1, "Trying to load ROM image %s\n", filename);
 	
+    suspend();
 	bool wasRunnable = isRunnable();
 	
 	if (C64Memory::isBasicRom(filename)) {
@@ -798,12 +799,11 @@ C64::loadRom(const char *filename)
 			
 	bool isNowRunnable = isRunnable();
 	
-	if (!wasRunnable && isNowRunnable) {
-		// Last missing ROM was loaded
+	if (!wasRunnable && isNowRunnable) { // Good news! All ROMs are in place
 		putMessage(MSG_ROM_COMPLETE);
 	}
-	
 	resume();
+    
 	return result;
 }
 
@@ -934,8 +934,9 @@ C64::insertTape(TAPArchive *a)
     if (a == NULL)
         return false;
     
+    debug(1, "Inserting TAP archive into datasette\n");
+    
     suspend();
-    debug("Inserting tape %p\n", a);
     datasette.insertTape(a);
     resume();
     

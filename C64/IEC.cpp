@@ -21,7 +21,7 @@
 IEC::IEC()
 {
   	name = "IEC";
-    debug(2, "  Creating IEC bus at address %p...\n", this);
+    debug(3, "  Creating IEC bus at address %p...\n", this);
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -53,7 +53,7 @@ IEC::IEC()
 
 IEC::~IEC()
 {
-	debug(2, "  Releasing IEC bus...\n");
+	debug(3, "  Releasing IEC bus...\n");
 }
 
 void 

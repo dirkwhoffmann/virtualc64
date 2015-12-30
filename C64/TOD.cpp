@@ -21,7 +21,7 @@
 TOD::TOD()
 {
 	name = "TOD";
-	debug(2, "    Creating TOD at address %p...\n", this);
+	debug(3, "    Creating TOD at address %p...\n", this);
     
     // Register snapshot items
     SnapshotItem items[] = {

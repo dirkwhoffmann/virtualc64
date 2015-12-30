@@ -755,13 +755,13 @@ void CIA::executeOneCycle()
 CIA1::CIA1()
 {
     name = "CIA1";
-	debug(2, "  Creating CIA1 at address %p...\n", this);
+	debug(3, "  Creating CIA1 at address %p...\n", this);
 }
 
 CIA1::~CIA1()
 {
     this->c64 = c64;
-	debug(2, "  Releasing CIA1\n");
+	debug(3, "  Releasing CIA1\n");
 }
 
 void 
@@ -975,12 +975,12 @@ CIA1::clearJoystickBits(int nr, uint8_t mask)
 CIA2::CIA2()
 {
     name = "CIA2";
-	debug(2, "  Creating CIA2 at address %p...\n", this);
+	debug(3, "  Creating CIA2 at address %p...\n", this);
 }
 
 CIA2::~CIA2()
 {
-	debug(2, "  Releasing CIA2...\n");
+	debug(3, "  Releasing CIA2...\n");
 }
 
 void CIA2::reset()

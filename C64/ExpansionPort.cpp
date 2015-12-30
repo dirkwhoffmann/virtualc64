@@ -21,7 +21,7 @@
 ExpansionPort::ExpansionPort()
 {
     name = "Expansion port";
-    debug(2, "  Creating expansion port at address %p...\n", this);
+    debug(3, "  Creating expansion port at address %p...\n", this);
 
     // We reset the cartridge here, as reset() keeps the cartridge intact.
     resetCartridge();
@@ -29,7 +29,7 @@ ExpansionPort::ExpansionPort()
 
 ExpansionPort::~ExpansionPort()
 {
-    debug(2, "  Releasing expansion port...\n");
+    debug(3, "  Releasing expansion port...\n");
     detachCartridge();
 }
 

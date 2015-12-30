@@ -29,7 +29,17 @@
 + (void)initialize {
 	
 	NSLog(@"MyController::initialize");
-	[self registerStandardDefaults];	
+    
+    // Register standard defaults
+    [self registerStandardDefaults];
+
+    // Change working directory to the main bundle ressource path. We may find some ROMs there...
+    NSBundle* mainBundle = [NSBundle mainBundle];
+    NSString *path = [mainBundle resourcePath];
+    if (chdir([path UTF8String]) != 0)
+        NSLog(@"WARNING: Could not change working directory.");
+    else
+        NSLog(@"New base directory ist %@", path);
 }
 
 - (void)dealloc
@@ -61,59 +71,26 @@
 
 - (void)awakeFromNib
 {	
-    NSLog(@"MyController::awakeFromNib (window = %@)", [self window]);
-
-    if (![self window])
-        return;
-	
-	// Change working directory to the main bundle ressource path. We may find some ROMs there...
-	NSBundle* mainBundle = [NSBundle mainBundle];
-	NSString *path = [mainBundle resourcePath];
-	if (chdir([path UTF8String]) != 0)
-		NSLog(@"WARNING: Could not change working directory.");
-
-	// Bind virtual C64 to other object
-	[[self document] setC64:c64];
-	
-    // Add bottom bar
-    [[self window] setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
-    [[self window] setContentBorderThickness:32.0 forEdge: NSMinYEdge];
-    
-	// Joystick handling
-	joystickManager = new JoystickManager(c64);
-	if (!joystickManager->initialize())
-        NSLog(@"WARNING: Could not initialize joystick manager.");
-	
-	// Update some toolbar icons
-	[self setupToolbarIcons];
-		
-	// Create and bind number formatters
-	[self setHexadecimalAction:self];
-	
-	// Setup table views
-	[cpuTableView setController:self];
-	[memTableView setController:self];
-	[cheatboxImageBrowserView setController:self];
-	
-	// Create timer and speedometer
-	timerLock = [[NSLock alloc] init];
-	timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/6.0f) 
-											 target:self 
-										   selector:@selector(timerFunc) 
-										   userInfo:nil repeats:YES];
-	speedometer = [[Speedometer alloc] init];
-    fps = PAL_REFRESH_RATE;
-    mhz = CPU::CLOCK_FREQUENCY_PAL / 100000;
-
-	NSLog(@"GUI is initialized, timer is running");
+    NSLog(@"MyController::awakeFromNib");
 }
 
 - (void)windowDidLoad
 {
     NSLog(@"MyController::windowDidLoad");
+    NSLog(@"    window   = %@", [self window]);
+    NSLog(@"    document = %@", [self document]);
 
-    NSWindow *window = [self window];
+    // Let the document know where the virtual C64 resides
+    [[self document] setC64:c64];
 
+    // Launch USB joystick manager
+    joystickManager = new JoystickManager(c64);
+    if (!joystickManager->initialize())
+        NSLog(@"WARNING: Could not initialize joystick manager.");
+
+    // Setup window properties
+    [self configureWindow];
+    
     // Enable auto-save for window coordinates
     [[[self window] windowController] setShouldCascadeWindows:NO];
     [[self window] setFrameAutosaveName:@"dirkwhoffmann.de.virtualC64.window"];
@@ -123,7 +100,7 @@
     [self loadVirtualMachineUserDefaults];
     
     // Enable fullscreen mode
-    [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+    [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     
 	// Launch emulator
 	[c64 run];
@@ -131,6 +108,36 @@
     // Get metal running
     [metalScreen setupMetal];
     NSLog(@"Metal is up and running");
+}
+
+- (void)configureWindow
+{
+    // Add bottom bar
+    [[self window] setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
+    [[self window] setContentBorderThickness:32.0 forEdge: NSMinYEdge];
+    
+    // Update some toolbar icons
+    [self setupToolbarIcons];
+    
+    // Create and bind number formatters
+    [self setHexadecimalAction:self];
+    
+    // Setup table views
+    [cpuTableView setController:self];
+    [memTableView setController:self];
+    [cheatboxImageBrowserView setController:self];
+    
+    // Create timer and speedometer
+    timerLock = [[NSLock alloc] init];
+    timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/6.0f)
+                                             target:self
+                                           selector:@selector(timerFunc)
+                                           userInfo:nil repeats:YES];
+    speedometer = [[Speedometer alloc] init];
+    fps = PAL_REFRESH_RATE;
+    mhz = CPU::CLOCK_FREQUENCY_PAL / 100000;
+    
+    NSLog(@"NSTimer is running. Window is now listening to emulator messages.");
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -205,7 +212,7 @@
 
 + (void)registerStandardDefaults
 {
-	// NSLog(@"MyController::Registering standard user defaults");
+	NSLog(@"MyController::registerStandardDefaults");
 	
 	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
 	
@@ -265,7 +272,7 @@
 
 - (void)loadUserDefaults
 {
-	NSLog(@"MyController::Loading emulator user defaults");
+	NSLog(@"MyController::loadUserDefaults");
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 			
@@ -305,7 +312,7 @@
 
 - (void)loadVirtualMachineUserDefaults
 {
-    NSLog(@"MyController::Loading virtual machine user defaults");
+    NSLog(@"MyController::loadVirtualMachineUserDefaults");
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -334,7 +341,7 @@
 
 - (void)saveUserDefaults
 {
-	NSLog(@"MyController::Saving emulator user defaults");
+	NSLog(@"MyController::saveUserDefaults");
 	
 	NSUserDefaults *defaults;
 	
@@ -375,7 +382,7 @@
 
 - (void)saveVirtualMachineUserDefaults
 {
-    NSLog(@"MyController::Saving virtual machine user defaults");
+    NSLog(@"MyController::saveVirtualMachineUserDefaults");
     
     NSUserDefaults *defaults;
     

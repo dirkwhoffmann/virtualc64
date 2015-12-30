@@ -25,7 +25,7 @@
 C64Memory::C64Memory()
 {	
 	name ="C64 memory";
-	debug (2, "  Creating main memory at address %p...\n", this);
+	debug (3, "  Creating main memory at address %p...\n", this);
 		
 	charRomFile = NULL;
 	kernelRomFile = NULL;
@@ -48,7 +48,7 @@ C64Memory::C64Memory()
 
 C64Memory::~C64Memory()
 {
-	debug(2, "  Releasing main memory at address %p...\n", this);
+	debug(3, "  Releasing main memory at address %p...\n", this);
 }
 
 void C64Memory::reset()

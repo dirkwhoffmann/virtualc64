@@ -21,7 +21,7 @@
 VC1541::VC1541()
 {
 	name = "1541";
-    debug(2, "Creating virtual VC1541 at address %p\n", this);
+    debug(3, "Creating virtual VC1541 at address %p\n", this);
 	
 	// Configure CPU
 	cpu.setName("1541CPU");
@@ -63,7 +63,7 @@ VC1541::VC1541()
 
 VC1541::~VC1541()
 {
-	debug(2, "Releasing VC1541...\n");	
+	debug(3, "Releasing VC1541...\n");
 }
 
 void
@@ -82,7 +82,7 @@ VC1541::reset()
 void
 VC1541::resetDisk()
 {
-    debug (2, "Resetting disk in VC1541...\n");
+    debug (3, "Resetting disk in VC1541...\n");
     
     // Disk properties
     disk.clearDisk();
@@ -93,7 +93,7 @@ VC1541::resetDisk()
 void
 VC1541::ping()
 {
-    debug(2, "Pinging VC1541...\n");
+    debug(3, "Pinging VC1541...\n");
     c64->putMessage(MSG_VC1541_LED, redLED ? 1 : 0);
     c64->putMessage(MSG_VC1541_MOTOR, rotating ? 1 : 0);
     c64->putMessage(MSG_VC1541_DISK, diskInserted ? 1 : 0);
