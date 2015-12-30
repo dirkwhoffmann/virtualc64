@@ -105,7 +105,7 @@
     
     unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
     // Joystick *joy = (nr == 1) ? &c64->joystick1 : &c64->joystick2;
-    JoystickProxy *j = (nr == 1) ? [c64proxy joystick1] : [c64proxy joystick2];
+    JoystickProxy *j = (nr == 1) ? [c64proxy joystickA] : [c64proxy joystickB];
     
     if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j setAxisY:JOYSTICK_UP]; return YES; }
     if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j setAxisY:JOYSTICK_DOWN]; return YES; }
@@ -124,7 +124,7 @@
         return NO;
     
     unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
-    JoystickProxy *j = (nr == 1) ? [c64proxy joystick1] : [c64proxy joystick2];
+    JoystickProxy *j = (nr == 1) ? [c64proxy joystickA] : [c64proxy joystickB];
 
     if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j setAxisY:JOYSTICK_RELEASED]; return YES; }
     if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j setAxisY:JOYSTICK_RELEASED]; return YES; }

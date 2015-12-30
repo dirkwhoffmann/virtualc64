@@ -200,11 +200,11 @@ public:
 	//! Reference to the connected virtual keyboard.
 	Keyboard keyboard;
 	
-	//! Reference to joystick in port 1
-	Joystick joystick1;
+	//! Reference to joystick in port A (labelled CONTROL PORT 1 on a real C64)
+	Joystick joystickA;
 
-    //! Reference to joystick in port 2
-    Joystick joystick2;
+    //! Reference to joystick in port B (labelled CONTROL PORT 2 on a real C64)
+    Joystick joystickB;
 
 	//! Reference to the virtual IEC bus
 	IEC iec;

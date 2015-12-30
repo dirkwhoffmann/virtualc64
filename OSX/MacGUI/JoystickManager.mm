@@ -200,16 +200,22 @@ void JoystickManager::listJoystickManagers()
 
 
 
-void JoystickManager::MatchingCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef)
+void JoystickManager::MatchingCallback_static(void *inContext,
+                                              IOReturn inResult,
+                                              void *inSender,
+                                              IOHIDDeviceRef inIOHIDDeviceRef)
 {
     assert (inContext != NULL);
     
     JoystickManager *context = (JoystickManager *)inContext;
-    context->MatchingCallback( inContext, inResult, inSender, inIOHIDDeviceRef);
+    context->MatchingCallback(inContext, inResult, inSender, inIOHIDDeviceRef);
 }
 
 void 
-JoystickManager::MatchingCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef)
+JoystickManager::MatchingCallback(void *inContext,
+                                  IOReturn inResult,
+                                  void *inSender,
+                                  IOHIDDeviceRef inIOHIDDeviceRef)
 {
     // NSLog(@"%s",__PRETTY_FUNCTION__);
 
@@ -229,7 +235,6 @@ JoystickManager::MatchingCallback(void *inContext, IOReturn inResult, void *inSe
         return;
 	}
 	
-    // if(proxy1 != NULL && proxy2 != NULL) {
     if(usbjoy[0].pluggedIn && usbjoy[1].pluggedIn) {
 		NSLog(@"Ignoring %s (%p): Maximum number of devices reached.\n",
               devInfoName ? devInfoName : "", inIOHIDDeviceRef);
@@ -359,9 +364,9 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 		if( elementPage == kHIDPage_GenericDesktop )
 		{
 			// set values to conform to -1 / 0 / 1
-			IOHIDElement_SetDoubleProperty( element, CFSTR( kIOHIDElementCalibrationMinKey ), -1 );
-			IOHIDElement_SetDoubleProperty( element, CFSTR( kIOHIDElementCalibrationMaxKey ), 1 );
-			IOHIDElement_SetDoubleProperty( element, CFSTR( kIOHIDElementCalibrationGranularityKey ), 1 );
+			IOHIDElement_SetDoubleProperty( element, CFSTR(kIOHIDElementCalibrationMinKey), -1 );
+			IOHIDElement_SetDoubleProperty( element, CFSTR(kIOHIDElementCalibrationMaxKey), 1 );
+			IOHIDElement_SetDoubleProperty( element, CFSTR(kIOHIDElementCalibrationGranularityKey), 1 );
 			int axis = ceil( IOHIDValueGetScaledValue( inIOHIDValueRef, kIOHIDValueScaleTypeCalibrated ) );
 			
 			switch(elementUsage) {

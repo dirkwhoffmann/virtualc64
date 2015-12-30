@@ -768,8 +768,8 @@ void
 CIA1::reset()
 {
     keyboard = &c64->keyboard;
-    joy[0] = &c64->joystick1;
-    joy[1] = &c64->joystick2;
+    joy[0] = &c64->joystickA;
+    joy[1] = &c64->joystickB;
     joystick[0] = 0xff;
     joystick[1] = 0xff;
 	CIA::reset();

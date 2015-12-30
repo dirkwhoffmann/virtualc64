@@ -55,7 +55,6 @@ public:
         pluggedIn = false;
         locationID = 0;
         joystick = NULL;
-        
     }
     
     void bindJoystick(Joystick *joy) { joystick = joy; }
@@ -74,13 +73,13 @@ class JoystickManager
 	bool initialize();
 	void dispose();
 
+    //! @brief Returns true, if USBJoystick object 'nr' represents a plugged in USB joystick
     bool joystickIsPluggedIn(int nr);
 
-    // Bind virtual joystick of the emulator
-    // 'Joystick' must be one of the two objects initialized by the emulator
-    // It can be either the object representing port 1 or the object representing port 2
+    //! @brief Assigns a USBJoystick object to one of the two emulator Joystick objects
+    //! @deprecated
     void bindJoystick(int nr, Joystick *joy);
-    
+
 	static void MatchingCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef);
 	void MatchingCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef);
 		

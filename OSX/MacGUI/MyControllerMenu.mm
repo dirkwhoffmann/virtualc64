@@ -482,8 +482,8 @@
 - (IBAction)dumpVC1541VIA2:(id)sender { [[[c64 vc1541] via:2] dump]; }
 - (IBAction)dumpVC1541Memory:(id)sender { [[[c64 vc1541] mem] dump]; }
 - (IBAction)dumpKeyboard:(id)sender { [[c64 keyboard] dump]; }
-- (IBAction)dumpC64Joystick1:(id)sender { [[c64 joystick1] dump]; }
-- (IBAction)dumpC64Joystick2:(id)sender { [[c64 joystick2] dump]; }
+- (IBAction)dumpC64JoystickA:(id)sender { [[c64 joystickA] dump]; }
+- (IBAction)dumpC64JoystickB:(id)sender { [[c64 joystickB] dump]; }
 - (IBAction)dumpIEC:(id)sender { [[c64 iec] dump]; }
 - (IBAction)dumpC64ExpansionPort:(id)sender { [[c64 expansionport] dump]; }
 

@@ -501,8 +501,8 @@
 	CIAProxy *cia2;
 	SIDProxy *sid;
 	KeyboardProxy *keyboard;
-    JoystickProxy *joystick1;
-    JoystickProxy *joystick2;
+    JoystickProxy *joystickA;
+    JoystickProxy *joystickB;
 	IECProxy *iec;
     ExpansionPortProxy *expansionport;
 	VC1541Proxy *vc1541;
@@ -527,8 +527,8 @@
 @property (readonly) CIAProxy *cia2;
 @property (readonly) SIDProxy *sid;
 @property (readonly) KeyboardProxy *keyboard;
-@property (readonly) JoystickProxy *joystick1;
-@property (readonly) JoystickProxy *joystick2;
+@property (readonly) JoystickProxy *joystickA;
+@property (readonly) JoystickProxy *joystickB;
 @property (readonly) IECProxy *iec;
 @property (readonly) ExpansionPortProxy *expansionport;
 @property (readonly) VC1541Proxy *vc1541;
@@ -626,7 +626,7 @@
 - (bool)revertToHistoricSnapshot:(int)nr;
 
 // Joystick
-- (Joystick *) joystick:(int)nr; 
+// - (Joystick *) joystick:(int)nr;
 
 // Audio hardware
 - (void) enableAudio;
