@@ -57,8 +57,8 @@
     {
         NSMenuItem *item1 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_1];
         NSMenuItem *item2 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_2];
-        [item1 setEnabled:joystickManager->joystickIsPluggedIn(1)];
-        [item2 setEnabled:joystickManager->joystickIsPluggedIn(2)];
+        [item1 setEnabled:[c64 joystickIsPluggedIn:1]];
+        [item2 setEnabled:[c64 joystickIsPluggedIn:2]];
         [joystickPortA selectItemAtIndex:[self inputDeviceA]];
     }
     
@@ -66,8 +66,8 @@
     {
         NSMenuItem *item1 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_1];
         NSMenuItem *item2 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_2];
-        [item1 setEnabled:joystickManager->joystickIsPluggedIn(1)];
-        [item2 setEnabled:joystickManager->joystickIsPluggedIn(2)];
+        [item1 setEnabled:[c64 joystickIsPluggedIn:1]];
+        [item2 setEnabled:[c64 joystickIsPluggedIn:2]];
         [joystickPortB selectItemAtIndex:[self inputDeviceB]];
     }
 }
@@ -123,7 +123,7 @@
         [self setInputDeviceA:newvalue];
         
         // Unconnect old binding of selected port
-        joystickManager->unbindJoysticksFromPortA();
+        [c64 unbindJoysticksFromPortA];
         
         // Unconnect binding of other port as well if a double mapping occurs
         if (newvalue == othervalue) {
@@ -140,11 +140,11 @@
                 break;
                 
             case IPD_JOYSTICK_1:
-                joystickManager->bindJoystickToPortA(1);
+                [c64 bindJoystickToPortA:1];
                 break;
                 
             case IPD_JOYSTICK_2:
-                joystickManager->bindJoystickToPortA(2);
+                [c64 bindJoystickToPortA:2];
                 break;
                 
             default:
@@ -166,8 +166,8 @@
     [self setInputDeviceB:newvalue];
     
     // Unconnect old binding of selected port
-    joystickManager->unbindJoysticksFromPortB();
-    
+    [c64 unbindJoysticksFromPortB];
+
     // Unconnect binding of other port as well if a double mapping occurs
     if (newvalue == othervalue) {
         NSLog(@"Selected USB joystick is already assigned. Removing binding.");
@@ -183,11 +183,11 @@
             break;
             
         case IPD_JOYSTICK_1:
-            joystickManager->bindJoystickToPortB(1);
+            [c64 bindJoystickToPortB:1];
             break;
             
         case IPD_JOYSTICK_2:
-            joystickManager->bindJoystickToPortB(2);
+            [c64 bindJoystickToPortB:2];
             break;
             
         default:

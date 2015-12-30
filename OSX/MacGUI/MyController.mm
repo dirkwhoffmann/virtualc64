@@ -65,8 +65,6 @@
 	[c64 kill];
 	c64 = nil;
 	[timerLock unlock];
-	
-	delete joystickManager;
 }
 
 - (void)awakeFromNib
@@ -82,12 +80,7 @@
 
     // Let the document know where the virtual C64 resides
     [[self document] setC64:c64];
-
-    // Launch USB joystick manager
-    joystickManager = new JoystickManager(c64);
-    if (!joystickManager->initialize())
-        NSLog(@"WARNING: Could not initialize joystick manager.");
-
+    
     // Setup window properties
     [self configureWindow];
     

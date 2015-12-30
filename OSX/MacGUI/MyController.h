@@ -33,7 +33,7 @@
 @class Speedometer;
 @class Server;
 
-class JoystickManager;
+// class JoystickManager;
 class Snapshot;
 
 enum INPUT_DEVICES {
@@ -52,8 +52,8 @@ enum INPUT_DEVICES {
 	IBOutlet C64Proxy *__strong c64;
 	
 	// JoystickManager
-    // TODO: Make it an Objective-C class.
-	JoystickManager *joystickManager;
+    // TODO: REMOVE
+	// JoystickManager *joystickManager;
 	    
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;

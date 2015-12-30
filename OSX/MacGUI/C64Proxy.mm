@@ -369,6 +369,25 @@
 //                                 Joystick
 // -------------------------------------------------------------------------
 
+#if 0
+@implementation JoystickManagerProxy
+
+- (instancetype) initWithC64:(C64Proxy *)c64
+{
+    self = [super init];
+    manager = new JoystickManager(c64);
+    if (!manager->initialize()) {
+        NSLog(@"WARNING: Failed to initialize joystick manager.");
+        self = nil;
+    }
+
+    return self;
+    return nil;
+}
+
+@end
+#endif
+
 @implementation JoystickProxy
 
 - (id) initWithJoystick:(Joystick *)joy
@@ -580,8 +599,8 @@
 
 @implementation C64Proxy
 
-@synthesize c64;
-@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, joystickA, joystickB, iec, expansionport, vc1541, datasette;
+@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
+@synthesize joystickA, joystickB; 
 @synthesize iecBusIsBusy, tapeBusIsBusy;
 
 - (id) init
@@ -608,10 +627,16 @@
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
-	
+
+    // Initialize Joystick HID interface
+    if (!(joystickManager = new JoystickManager(self))) {
+        NSLog(@"WARNING: Couldn't initialize HID interface.");
+    }
+    joystickManager->initialize(); 
+
 	// Initialize CoreAudio sound interface
 	if (!(audioDevice = [[AudioDevice alloc] initWithC64:c64])) {
-		NSLog(@"WARNING: Couldn't initialize AudioDevice. Sound disabled.");
+		NSLog(@"WARNING: Couldn't initialize CoreAudio interface. Sound disabled.");
 	}
 		
     return self;
@@ -630,6 +655,10 @@
 	[self disableAudio];
 	audioDevice = nil;
 	
+    // Delete HDI interface
+    delete joystickManager;
+    joystickManager = NULL;
+    
     // Delete emulator
     delete c64;
 	c64 = NULL;
@@ -750,7 +779,11 @@
 - (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
-// - (Joystick *) joystick:(int)nr { assert(nr == 1 || nr == 2); return (nr == 1) ? &c64->joystickA : &c64->joystickB; }
+- (BOOL)joystickIsPluggedIn:(int)nr { return joystickManager->joystickIsPluggedIn(nr); }
+- (void)bindJoystickToPortA:(int)nr { joystickManager->bindJoystickToPortA(nr); }
+- (void)bindJoystickToPortB:(int)nr { joystickManager->bindJoystickToPortB(nr); }
+- (void)unbindJoysticksFromPortA { joystickManager->unbindJoysticksFromPortA(); }
+- (void)unbindJoysticksFromPortB { joystickManager->unbindJoysticksFromPortB(); }
 
 // Audio hardware
 - (void) enableAudio { [self rampUpFromZero]; [audioDevice startPlayback]; }

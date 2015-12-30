@@ -21,10 +21,12 @@
 // Forward declarations
 @class MyController;
 @class AudioDevice;
+@class C64Proxy;
 @class V64Snapshot;
 @class MyMetalView;
 @class ArchiveProxy;
 @class TAPContainerProxy;
+class JoystickManager;
 
 // --------------------------------------------------------------------------
 //                                    CPU
@@ -300,17 +302,17 @@
 //                                 Joystick
 // -------------------------------------------------------------------------
 
-// TODO: RENAME JoystickManagerProxy in JoystickManager class (name conflict with Objective-C bridge) 
-/*
+#if 0
 @interface JoystickManagerProxy : NSObject {
     JoystickManager *manager;
 }
 
-- (id) initWithJoystickManager:(JoystickManager *)m;
-- (void) dump;
+- (instancetype) initWithC64:(C64Proxy *)c64;
+// - (instancetype) initWithJoystickManager:(JoystickManager *)m;
+// - (instancetype) init;
 
 @end
-*/
+#endif
 
 @interface JoystickProxy : NSObject {
     Joystick *joystick;
@@ -487,13 +489,12 @@
 // -------------------------------------------------------------------------
 
 @interface C64Proxy : NSObject {	
-	
-    // IBOutlet MyMetalView *metalScreen;
 
 	C64 *c64;
 	AudioDevice *audioDevice;
-
-	// Sub proxys
+    JoystickManager *joystickManager;
+    
+	// Sub component proxys
 	CPUProxy *cpu;
 	MemoryProxy *mem;
 	VICProxy *vic;
@@ -519,7 +520,6 @@
 }
 
 @property (strong,readonly) MyMetalView *metalScreen;
-@property (readonly) C64 *c64;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
 @property (readonly) VICProxy *vic;
@@ -581,7 +581,6 @@
 - (void) setPAL;
 - (void) setNTSC;
 
-//- (int) numberOfMissingRoms;
 - (uint8_t) missingRoms;
 - (bool) isBasicRom:(NSString *)filename;
 - (bool) loadBasicRom:(NSString *)filename;
@@ -625,8 +624,12 @@
 - (time_t)historicSnapshotTimestamp:(int)nr;
 - (bool)revertToHistoricSnapshot:(int)nr;
 
-// Joystick
-// - (Joystick *) joystick:(int)nr;
+// Joystick handling
+- (BOOL)joystickIsPluggedIn:(int)nr;
+- (void)bindJoystickToPortA:(int)nr;
+- (void)bindJoystickToPortB:(int)nr;
+- (void)unbindJoysticksFromPortA;
+- (void)unbindJoysticksFromPortB;
 
 // Audio hardware
 - (void) enableAudio;

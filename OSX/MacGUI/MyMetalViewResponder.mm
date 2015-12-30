@@ -201,9 +201,7 @@
     // Press key
     // NSLog(@"Storing key %c for keycode %ld",c64key, (long)keycode);
     pressedKeys[(unsigned char)keycode] = c64key;
-    //[[c64proxy keyboard] pressKey:c64key];
-    C64 *c64 = [c64proxy c64]; 
-    c64->keyboard.pressKey(c64key);
+    [[c64proxy keyboard] pressKey:c64key];
 }
 
 - (void)keyUp:(NSEvent *)event
@@ -226,9 +224,7 @@
     
     // Release key
     // NSLog(@"Releasing stored key %c for keycode %ld",pressedKeys[keycode], (long)keycode);
-    // [[c64proxy keyboard] releaseKey:keycode];
-    C64 *c64 = [c64proxy c64];
-    c64->keyboard.releaseKey(pressedKeys[keycode]);
+    [[c64proxy keyboard] releaseKey:pressedKeys[keycode]];
     pressedKeys[(unsigned char)keycode] = 0;
 }
 
