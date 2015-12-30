@@ -180,7 +180,8 @@ bool JoystickManager::joystickIsPluggedIn(int nr)
     return usbjoy[nr - 1].pluggedIn;
 }
 
-void JoystickManager::bindJoystick(int nr, Joystick *joy)
+void
+JoystickManager::bindJoystick(int nr, JoystickProxy *joy)
 {
     assert (nr >= 1 && nr <= 2);
 
@@ -192,6 +193,24 @@ void JoystickManager::bindJoystick(int nr, Joystick *joy)
             fprintf(stderr, "Remove binding for %s USB joystick\n", nr == 1 ? "first" : "second");
         else
             fprintf(stderr, "Bind %s USB joystick to %p\n", nr == 1 ? "first" : "second", joy);
+    }
+}
+
+void
+JoystickManager::unbindJoysticksFromPortA()
+{
+    for (unsigned i = 0; i < 2; i++) {
+        if (usbjoy[i].joystick == [_proxy joystickA])
+            usbjoy[i].unbindJoystick();
+    }
+}
+
+void
+JoystickManager::unbindJoysticksFromPortB()
+{
+    for (unsigned i = 0; i < 2; i++) {
+        if (usbjoy[i].joystick == [_proxy joystickB])
+            usbjoy[i].unbindJoystick();
     }
 }
 

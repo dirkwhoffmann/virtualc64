@@ -48,7 +48,7 @@ public:
      *              as input device. It can be selected as input device via bindJoystick(). In that case, it
      *              will point to one of the two static Joystick objects hold by the emulator.
      */
-    Joystick *joystick;
+    JoystickProxy *joystick;
 
     USBJoystick()
     {
@@ -57,10 +57,21 @@ public:
         joystick = NULL;
     }
     
-    void bindJoystick(Joystick *joy) { joystick = joy; }
-    void setButtonPressed(bool pressed) { if (joystick) joystick->setButtonPressed(pressed); }
-    void setAxisX(JoystickDirection state) { if (joystick) joystick->setAxisX(state); }
-	void setAxisY(JoystickDirection state) { if (joystick) joystick->setAxisY(state); }
+    //! @deprecated
+    void bindJoystick(JoystickProxy *joy) { joystick = joy; }
+
+    //! @brief Connects the USB device to port A of the emulator
+    void bindJoystickToPortA(C64Proxy *c64) { if (pluggedIn) joystick = [c64 joystickA]; }
+    void bindJoystickToPortB(C64Proxy *c64) { if (pluggedIn) joystick = [c64 joystickB]; }
+    void unbindJoystick() { joystick = nil; }
+    
+
+    //! @brief Connects the USB device to port A of the emulator
+
+        void bindJoystickToPortB(int nr);
+    void setButtonPressed(bool pressed) { if (joystick) [joystick setButtonPressed:pressed]; }
+    void setAxisX(JoystickDirection state) { if (joystick) [joystick setAxisX:state]; }
+    void setAxisY(JoystickDirection state) { if (joystick) [joystick setAxisY:state]; }
 };
 
 class IOHIDDeviceInfo
@@ -106,7 +117,19 @@ public:
 
     //! @brief Assigns a USBJoystick object to one of the two emulator Joystick objects
     //! @deprecated
-    void bindJoystick(int nr, Joystick *joy);
+    void bindJoystick(int nr, JoystickProxy *joy);
+
+    //! @brief Assigns a USBJoystick object to port A of the emulator
+    void bindJoystickToPortA(int nr) { assert (nr >= 1 && nr <= 2); usbjoy[nr - 1].bindJoystickToPortA(_proxy); }
+
+    //! @brief Assigns a USBJoystick object to port B of the emulator
+    void bindJoystickToPortB(int nr) { assert (nr >= 1 && nr <= 2); usbjoy[nr - 1].bindJoystickToPortB(_proxy); }
+
+    //! @brief Remove any binding to port A of the emulator
+    void unbindJoysticksFromPortA();
+
+    //! @brief Remove any binding to port B of the emulator
+    void unbindJoysticksFromPortB();
 
 	static void MatchingCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef);
 	void MatchingCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDDeviceRef inIOHIDDeviceRef);
@@ -116,8 +139,6 @@ public:
 		
 	static void InputValueCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef);
 	void InputValueCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef);
-
-    
 
     void IOHIDElement_SetDoubleProperty(IOHIDElementRef element, CFStringRef key, double value);
     
