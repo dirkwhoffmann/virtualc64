@@ -63,9 +63,37 @@ public:
 	void setAxisY(JoystickDirection state) { if (joystick) joystick->setAxisY(state); }
 };
 
+class IOHIDDeviceInfo
+{
+private:
+    
+    int _locationID;
+    char *_name;
+    
+public:
+    
+    IOHIDDeviceInfo();
+    IOHIDDeviceInfo(IOHIDDeviceRef device);
+    IOHIDDeviceInfo(const IOHIDDeviceInfo &copy);
+    ~IOHIDDeviceInfo();
+    
+    int GetLocationID() { return _locationID; }
+    void setLocationID(int value) { _locationID = value; }
+    char *GetName() { return _name; }
+    void setName(char *value) { _name = value; }
+};
+
 class JoystickManager 
 {
-	public:
+    
+private:
+    
+    C64Proxy *_proxy;
+    IOHIDManagerRef _manager;
+    USBJoystick usbjoy[2]; // At most 2 USB joysticks can be plugged in
+
+    
+public:
 
     JoystickManager(C64Proxy *proxy);
 	~JoystickManager();
@@ -89,14 +117,7 @@ class JoystickManager
 	static void InputValueCallback_static(void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef);
 	void InputValueCallback(void *inContext, IOReturn inResult, void *inSender, IOHIDValueRef inIOHIDValueRef);
 
-	private:
     
-    C64Proxy *_proxy;
-	IOHIDManagerRef _manager;
-    USBJoystick usbjoy[2]; // At most 2 USB joysticks can be plugged in 
-    
-	// static const int UsageToSearch[][2];
-	static const unsigned MaxJoystickCount;
 
     void IOHIDElement_SetDoubleProperty(IOHIDElementRef element, CFStringRef key, double value);
     
@@ -106,23 +127,5 @@ class JoystickManager
     void listJoystickManagers();
 };
 
-class IOHIDDeviceInfo
-{
-    private:
 
-    int _locationID;
-    char *_name;
-
-    public:
-
-    IOHIDDeviceInfo();
-	IOHIDDeviceInfo(IOHIDDeviceRef device);
-	IOHIDDeviceInfo(const IOHIDDeviceInfo &copy);
-	~IOHIDDeviceInfo();
-		    
-    int GetLocationID() { return _locationID; }
-    void setLocationID(int value) { _locationID = value; }
-    char *GetName() { return _name; } 
-    void setName(char *value) { _name = value; }
-};
 

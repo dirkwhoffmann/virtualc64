@@ -20,15 +20,65 @@
 
 
 // ---------------------------------------------------------------------------------------------
-//                                             JoystickManagerProxy
+//                                             IOHIDDeviceInfo
 // ---------------------------------------------------------------------------------------------
 
+IOHIDDeviceInfo::IOHIDDeviceInfo()
+{
+    _name = NULL;
+    _locationID = 0;
+}
+
+IOHIDDeviceInfo::IOHIDDeviceInfo(const IOHIDDeviceInfo &copy)
+{
+    if(copy._name) {
+        size_t len = strlen(copy._name);
+        _name = new char[len + 1];
+        strncpy(_name, copy._name, len);
+    } else {
+        _name = NULL;
+    }
+    
+    _locationID = copy._locationID;
+}
+
+IOHIDDeviceInfo::IOHIDDeviceInfo(IOHIDDeviceRef device)
+{
+    CFTypeRef typeRef;
+    
+    _name = NULL;
+    _locationID = 0;
+    
+    if (device == NULL) {
+        NSLog(@"IOHIDDeviceRef == NULL");
+        return;
+    }
+    
+    if((typeRef = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey)))) {
+        
+        if (CFStringGetTypeID() == CFGetTypeID(typeRef)) {
+            CFIndex len = CFStringGetLength( (CFStringRef) typeRef ) + 1;
+            
+            _name = new char[ len ];
+            _name[ len - 1 ] = 0;
+            
+            CFStringGetCString((CFStringRef)typeRef, _name, len, kCFStringEncodingMacRoman);
+        }
+    }
+    
+    if((typeRef = IOHIDDeviceGetProperty( device, CFSTR( kIOHIDLocationIDKey)))  &&  (CFNumberGetTypeID() == CFGetTypeID(typeRef)))
+        CFNumberGetValue((CFNumberRef)typeRef, kCFNumberIntType, &_locationID);
+}
+
+IOHIDDeviceInfo::~IOHIDDeviceInfo()
+{
+    if(_name)
+        delete [] _name;
+}
 
 // ---------------------------------------------------------------------------------------------
 //                                             JoystickManager
 // ---------------------------------------------------------------------------------------------
-
-const unsigned JoystickManager::MaxJoystickCount = 2;
 
 JoystickManager::JoystickManager(C64Proxy *proxy)
 {
@@ -406,59 +456,3 @@ JoystickManager::IOHIDElement_SetDoubleProperty(IOHIDElementRef element, CFStrin
 }
 
 
-// ---------------------------------------------------------------------------------------------
-//                                             IOHIDDeviceInfo
-// ---------------------------------------------------------------------------------------------
-
-IOHIDDeviceInfo::IOHIDDeviceInfo()
-{
-    _name = NULL;
-    _locationID = 0;
-}
-
-IOHIDDeviceInfo::IOHIDDeviceInfo(const IOHIDDeviceInfo &copy)
-{
-	if(copy._name) {
-		size_t len = strlen(copy._name);
-		_name = new char[len + 1];
-		strncpy(_name, copy._name, len);
-    } else {
-        _name = NULL;   
-    }
-	
-	_locationID = copy._locationID;
-}
-
-IOHIDDeviceInfo::IOHIDDeviceInfo(IOHIDDeviceRef device)
-{
-	CFTypeRef typeRef;
-
-    _name = NULL;
-    _locationID = 0;
-
-    if (device == NULL) {
-        NSLog(@"IOHIDDeviceRef == NULL");
-        return;
-    }
-             
-	if((typeRef = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey)))) {
-
-        if (CFStringGetTypeID() == CFGetTypeID(typeRef)) {
-            CFIndex len = CFStringGetLength( (CFStringRef) typeRef ) + 1;
-		
-            _name = new char[ len ];
-            _name[ len - 1 ] = 0;
-		
-            CFStringGetCString((CFStringRef)typeRef, _name, len, kCFStringEncodingMacRoman);
-        }
-    }
-	
-	if((typeRef = IOHIDDeviceGetProperty( device, CFSTR( kIOHIDLocationIDKey)))  &&  (CFNumberGetTypeID() == CFGetTypeID(typeRef)))
-		CFNumberGetValue((CFNumberRef)typeRef, kCFNumberIntType, &_locationID);
-}
-
-IOHIDDeviceInfo::~IOHIDDeviceInfo()
-{
-	if(_name)
-		delete [] _name;
-}
