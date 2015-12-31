@@ -21,21 +21,22 @@
 
 #include "Archive.h"
 
-/*! @class D64Archive
- *  @brief The D64Archive class declares the programmatic interface for a file in PRG format.
+/*! @class  D64Archive
+ *  @brief  The D64Archive class declares the programmatic interface for a file in PRG format.
  */
 class PRGArchive : public Archive {
 
 private:
 
-	//! @brief The raw data of this archive.
+	//! @brief   The raw data of this archive.
     uint8_t *data;
 		
-    //! @brief File size
+    //! @brief   File size
 	int size;
 
-    /*! @brief File pointer
-     @discussion An offset into the data array. */
+    /*! @brief   File pointer
+     *  @details An offset into the data array. 
+     */
     int fp;
 
 public:
@@ -44,20 +45,21 @@ public:
     //! @functiongroup Creating and destructing PRG archives
     //
     
-    //! @brief Standard constructor.
+    //! @brief    Standard constructor
     PRGArchive();
     
-    //! @brief Standard destructor.
+    //! @brief    Standard destructor
     ~PRGArchive();
 
-    //! @brief Returns true iff the specified file is a PRG file
+    //! @brief    Returns true iff the specified file is a PRG file.
     static bool isPRGFile(const char *filename);
 
-    //! @brief Creates a PRG archive from a PRG file.
+    //! @brief    Creates a PRG archive from a PRG file.
     static PRGArchive *archiveFromPRGFile(const char *filename);
 
-    /*! @brief Creates a PRG archive from another archive.
-        @result A PRG archive that contains the first directory item of the other archive. */
+    /*! @brief    Creates a PRG archive from another archive.
+     *  @result   A PRG archive that contains the first directory item of the other archive.
+     */
     static PRGArchive *archiveFromArchive(Archive *otherArchive);
 
 
@@ -73,6 +75,7 @@ public:
     bool fileIsValid(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, unsigned length);
     unsigned writeToBuffer(uint8_t *buffer);
+    
     
     //
     // Virtual functions from Archive class

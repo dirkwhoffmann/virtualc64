@@ -258,15 +258,18 @@ private:
     /*! Example usage: firstTrackOfFile(findDirectoryEntry(42)) */
     inline uint8_t firstTrackOfFile(unsigned dirEntry) { return data[dirEntry + 1]; }
 
-    //! Returns the sector number of the first file block
-    /*! Example usage: firstSectorOfFile(findDirectoryEntry(42)) */
+    //! @brief    Returns the sector number of the first file block
+    /*! @details  Example usage: firstSectorOfFile(findDirectoryEntry(42)) 
+     */
     inline uint8_t firstSectorOfFile(unsigned dirEntry) { return data[dirEntry + 2]; }
     
-    //! @brief Returns true iff offset points to the last byte of a file
+    /*! @brief    Returns true iff offset points to the last byte of a file 
+     */
     bool isEndOfFile(int offset) { return nextTrack(offset) == 0x00 && nextSector(offset) == offset % 256; }
 
-    /*! @brief Writes a directory item
-        @discussion This function is used to convert other archive formats into the D64 format. */
+    /*! @brief    Writes a directory item
+     *  @details  This function is used to convert other archive formats into the D64 format. 
+     */
     bool writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, unsigned filesize);
     
 
@@ -276,7 +279,7 @@ private:
     
 private:
     
-	//! @brief Dumps the contents of a sector to stderr
+	//! @brief    Dumps the contents of a sector to stderr
 	void dumpSector(int track, int sector);
 };
 #endif

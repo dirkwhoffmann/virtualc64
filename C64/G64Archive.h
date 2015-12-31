@@ -21,25 +21,27 @@
 
 #include "Archive.h"
 
-/*! @class G64Archive
- *  @brief The G64Archive class declares the programmatic interface for a file in G64 format.
+/*! @class    G64Archive
+ *  @brief    The G64Archive class declares the programmatic interface for a file in G64 format.
  */
 class G64Archive : public Archive {
 
 private:	
 
-    //! @brief The raw data of this archive.
+    //! @brief    The raw data of this archive.
     uint8_t *data;
 
     //! @brief Size of G64 file
     int size;
 
-    /*! @brief File pointer
-        @discussion An offset into the data array. */
+    /*! @brief    File pointer
+     *  @details  An offset into the data array. 
+     */
 	int fp;
 	
-    /*! @brief End of file position
-        @discussion This value equals the last valid offset plus 1 */
+    /*! @brief    End of file position
+     *  @details  This value equals the last valid offset plus 1 
+     */
 	int fp_eof;
 	
 public:
@@ -48,17 +50,18 @@ public:
     //! @functiongroup Creating and destructing G64 archives
     //
     
-    //! @brief Standard constructor.
+    //! @brief    Standard constructor
     G64Archive();
     
-    //! @brief Standard destructor.
+    //! @brief    Standard destructor
     ~G64Archive();
 		
-    //! @brief Returns true iff the specified file is a G64 file
+    //! @brief    Returns true iff the specified file is a G64 file
     static bool isG64File(const char *filename);
 
-    /*! @brief Creates a G64 archive from a G64 file located on disk. */
+    //! @brief    Creates a G64 archive from a G64 file located on disk.
     static G64Archive *archiveFromG64File(const char *filename);
+    
     
     //
     // Virtual functions from Container class
@@ -73,6 +76,7 @@ public:
     bool fileIsValid(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, unsigned length);
     unsigned writeToBuffer(uint8_t *buffer);
+    
     
     //
     // Virtual functions from Archive class

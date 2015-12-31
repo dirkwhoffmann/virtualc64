@@ -36,55 +36,57 @@ public:
     //! Creating and destructing containers
     //
     
-    //! Standard constructor.
+    //! @brief    Standard constructor
 	Archive();
     
-    //! Standard destructor.
+    //! @brief    Standard destructor
 	virtual ~Archive();
     
     //
     //! Accessing archive attributes
     //
 
-    //! Returns the number of items in this archive.
+    //! @brief    Returns the number of items in this archive.
     virtual int getNumberOfItems() = 0;
 
     //
     //! Accessing item attributes
     //
 
-    /*! Searches the directory for a specific item.
-        @param filename The item name may contain the wildcard characters '?' and '*'.
-        @return The number of the item (starting at 0) or -1, if no matching item was found. */
+    /*! @brief    Searches the directory for a specific item.
+     *  @param    filename The item name may contain the wildcard characters '?' and '*'.
+     *  @return   The number of the item (starting at 0) or -1, if no matching item was found.
+     */
 	int getItemWithName(char *filename);
 			
     //! @brief Returns the name of an item (NULL, if the item does not exists)
 	virtual const char *getNameOfItem(int n) = 0;
 
-    //! @brief Returns the type of an item as a string (e.g., "PRG" or "DEL")
+    //! @brief    Returns the type of an item as a string (e.g., "PRG" or "DEL")
 	virtual const char *getTypeOfItem(int n) = 0;
 	
-    //! @brief Returns the size of an item in bytes
+    //! @brief    Returns the size of an item in bytes
 	virtual int getSizeOfItem(int n);
 
-    //! @brief Returns the size of an item in bits
+    //! @brief    Returns the size of an item in bits
     virtual int getSizeOfItemInBits(int n) { return 8 * getSizeOfItem(n); }
 
-    //! @brief Returns the size of an item in blocks
+    //! @brief    Returns the size of an item in blocks
 	virtual int getSizeOfItemInBlocks(int n) { return (getSizeOfItem(n) + 253) / 254; }
 		
-    /*! @brief Returns the proposed memory location of an item.
-        @discussion When a file is flashed into memory, the raw data is copied to this location. */
+    /*! @brief    Returns the proposed memory location of an item.
+     *  @details  When a file is flashed into memory, the raw data is copied to this location.
+     */
 	virtual uint16_t getDestinationAddrOfItem(int n) = 0;
 	
     //
     //! @functiongroup Reading an item
     //
 
-    //! @brief Selects an item to read from
+    //! @brief    Selects an item to read from
 	virtual void selectItem(int n) = 0;
 	
-    //! @brief Reads the next byte from the currently selected item
+    //! @brief    Reads the next byte from the currently selected item
 	virtual int getByte() = 0;
 
     //

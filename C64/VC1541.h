@@ -135,43 +135,42 @@ public:
     //! @functiongroup Handling virtual disks
     //
 
-    /*! @brief Returns true if a disk is inserted 
+    /*! @brief    Returns true if a disk is inserted
      */
     inline bool hasDisk() { return diskInserted; }
 
-    /*! @brief      Inserts an archive as a virtual disk
-     *  @discussion Before inserting, the archive data is converted to VC1541s GCR-encoded track/sector format. 
+    /*! @brief    Inserts an archive as a virtual disk
+     *  @details  Before inserting, the archive data is converted to VC1541s GCR-encoded track/sector format.
      */
     void insertDisk(Archive *a);
     
-    /*! @brief Returns true if a disk is partially inserted 
+    /*! @brief    Returns true if a disk is partially inserted
      */
     inline bool isDiskPartiallyInserted() { return diskPartiallyInserted; }
 
-    /*! @brief Sets if a disk is partially inserted 
+    /*! @brief    Sets if a disk is partially inserted
      */
     inline void setDiskPartiallyInserted(bool b) { diskPartiallyInserted = b; }
 
-    /*! @brief      Returns the current status of the write protection light barrier
-     *  @discussion If the light barrier is blocked, the drive head is unable to change data bits 
+    /*! @brief    Returns the current status of the write protection light barrier
+     *  @details  If the light barrier is blocked, the drive head is unable to change data bits
      */
     inline bool getLightBarrier() { return isDiskPartiallyInserted() || disk.isWriteProtected(); }
 
-    /*! @brief      Ejects the virtual disk
-     *  @discussion Does nothing, if no disk is present. Beware that this function causes a considerable time delay, 
-     *              because it is necessary to block the write protection light barrier for a while. Otherwise,
-     *              VC1541 DOS would not recognize the ejection. 
+    /*! @brief    Ejects the virtual disk
+     *  @details  Does nothing, if no disk is present. Beware that this function causes a considerable time delay,
+     *            because it is necessary to block the write protection light barrier for a while. Otherwise,
+     *            VC1541 DOS would not recognize the ejection.
      */
     void ejectDisk();
 
-    /*! @brief      Converts the currently inserted disk into a D64 archive.
-     *  @result     A D64 archive containing the same files as the currently inserted disk;
-     *              NULL if no disk is inserted.
+    /*! @brief    Converts the currently inserted disk into a D64 archive.
+     *  @result   A D64 archive containing the same files as the currently inserted disk;
+     *            NULL if no disk is inserted.
      */
     D64Archive *convertToD64();
 
-    /*! @brief      Exports the currently inserted disk to D64 file
-     */
+    //! @brief    Exports the currently inserted disk to D64 file
     bool exportToD64(const char *filename);
 
     
@@ -212,13 +211,13 @@ public:
 
 private:
     
-    /*! @brief      Helper method for executeOneCycle
-     *  @discussion Method is executed whenever a single bit is ready
+    /*! @brief    Helper method for executeOneCycle
+     *  @details  Method is executed whenever a single bit is ready
      */
     void executeBitReady();
 
-    /*! @brief      Helper method for executeBitReady
-     *  @discussion Method is executed whenever a single byte is ready
+    /*! @brief    Helper method for executeBitReady
+     *  @details  Method is executed whenever a single byte is ready
      */
     void executeByteReady();
         
@@ -235,19 +234,21 @@ private:
     //! Indicates whether red LED is on or off
     bool redLED;
     
-    /*! @brief Indicates whether a disk is inserted
-     *  @note  A fully inserted disk blocks the write protection barrier if it is write protected */
+    /*! @brief    Indicates whether a disk is inserted
+     *  @note     A fully inserted disk blocks the write protection barrier if it is write protected 
+     */
     bool diskInserted;
     
-    /*! @brief Indicates whether a disk is inserted only partially
-     *  @note  A partially inserted disk blocks always blocks the write protection barrier */
+    /*! @brief    Indicates whether a disk is inserted only partially
+     *  @note     A partially inserted disk blocks always blocks the write protection barrier */
     bool diskPartiallyInserted;
     
-    /*! @brief      Indicates whether VC1541 is simulated on the bit level
-     *  @discussion Bit level simulation is the standard emulation mode. If it is disabled, the 
-     *              emulator uses a fast load mechanism to make disk data available whenever the 
-     *              VC1541 DOS waits for it. Right now, this is an experimental feature. Note, that
-     *              writing to disk is only works when bit level emulation is enabled. */
+    /*! @brief    Indicates whether VC1541 is simulated on the bit level
+     *  @details  Bit level simulation is the standard emulation mode. If it is disabled, the
+     *            emulator uses a fast load mechanism to make disk data available whenever the
+     *            VC1541 DOS waits for it. Right now, this is an experimental feature. Note, that
+     *            writing to disk is only works when bit level emulation is enabled.
+     */
     bool bitAccuracy;
 
     //! Indicates whether the VC1541 shall provide sound notification messages to the GUI
@@ -263,73 +264,73 @@ private:
     //! The next bit will be ready after this number of cycles
     int16_t bitReadyTimer;
 
-    /*! 
-     @brief    Serial load signal
-     @abstract The VC1541 logic board contains a 4-bit-counter of type 72LS191 which is advanced whenever
-               a bit is ready. By reaching 7, the counter signals that a byte is ready. In that case, 
-               the write shift register is loaded with new data and the byte ready signal, which is connected
-               to CA1 of VIA2, changes state. In read mode, this state change will feed the input latch of VIA2 
-               with the current contents of the read shift register.
+    /*! @brief    Serial load signal
+     *  @details  The VC1541 logic board contains a 4-bit-counter of type 72LS191 which is advanced whenever
+     *            a bit is ready. By reaching 7, the counter signals that a byte is ready. In that case,
+     *            the write shift register is loaded with new data and the byte ready signal, which is connected
+     *            to CA1 of VIA2, changes state. In read mode, this state change will feed the input latch of VIA2
+     *            with the current contents of the read shift register.
      */
     uint8_t byteReadyCounter;
     
     
-    //! Halftrack position of the read/write head
+    //! @brief    Halftrack position of the read/write head
     Halftrack halftrack;
 
-    //! Bit position of the read/write head inside the current track
+    //! @brief    Bit position of the read/write head inside the current track
     uint16_t bitoffset;
     
-    /*! @brief      Current disk zone
-     *  @discussion Each track belongs to one of four zones. Whenever the drive moves the r/w head,
-     *              it computed the new number and writes into PB5 and PB6 of via2. These bits are
-     *              hard-wired to a 74LS193 counter on the logic board that breaks down the 16 Mhz base
-     *              frequency. This mechanism is used to slow down the read/write process on inner tracks. 
+    /*! @brief    Current disk zone
+     *  @details  Each track belongs to one of four zones. Whenever the drive moves the r/w head,
+     *            it computed the new number and writes into PB5 and PB6 of via2. These bits are
+     *            hard-wired to a 74LS193 counter on the logic board that breaks down the 16 Mhz base
+     *            frequency. This mechanism is used to slow down the read/write process on inner tracks.
      */
     uint8_t zone;
 
-    /*! @brief      The 74LS164 serial to parallel shift register
-     *  @discussion In read mode, this register is fed by the drive head with data. 
+    /*! @brief    The 74LS164 serial to parallel shift register
+     *  @details  In read mode, this register is fed by the drive head with data.
      */
     uint16_t read_shiftreg;
     
-    /*! @brief      The 74LS165 parallel to serial shift register
-     *  @discussion In write mode, this register feeds the drive head with data.
+    /*! @brief    The 74LS165 parallel to serial shift register
+     *  @details  In write mode, this register feeds the drive head with data.
      */
     uint8_t write_shiftreg;
 
-    /*! @brief      Current value of the SYNC signal
-        @discussion This signal plays an important role for timing synchronization. It becomes true when the
-                    beginning of a SYNC is detected. On the logic board, the SYNC signal is computed by a NAND gate
-                    that combines the 10 previously read bits rom the input shift register and CB2 of VIA2 (the
-                    r/w mode pin). Connecting CB2 to the NAND gates ensures that SYNC can only be true in read mode.
-                    When SYNC becomes false (meaning that a 0 was pushed into the shift register), the byteReadyCounter
-                    is reset. 
+    /*! @brief    Current value of the SYNC signal
+     *  @details  This signal plays an important role for timing synchronization. It becomes true when the
+     *            beginning of a SYNC is detected. On the logic board, the SYNC signal is computed by a NAND gate
+     *            that combines the 10 previously read bits rom the input shift register and CB2 of VIA2 (the
+     *            r/w mode pin). Connecting CB2 to the NAND gates ensures that SYNC can only be true in read mode.
+     *            When SYNC becomes false (meaning that a 0 was pushed into the shift register), the byteReadyCounter
+     *            is reset.
      */
     bool sync;
             
 public:
 
-    //! @brief Returns true iff drive is currently in read mode
+    //! @brief    Returns true iff drive is currently in read mode
     bool readMode() { return (via2.io[0x0C] & 0x20); }
 
-    //! @brief Returns true iff drive is currently in write mode
+    //! @brief    Returns true iff drive is currently in write mode
     bool writeMode() { return !(via2.io[0x0C] & 0x20); }
    
-    //! @brief Moves head one halftrack up
+    //! @brief    Moves head one halftrack up
     void moveHeadUp();
     
-    //! @brief Moves head one halftrack down
+    //! @brief    Moves head one halftrack down
     void moveHeadDown();
 
-    //! @brief Returns the current value of the sync signal
+    //! @brief    Returns the current value of the sync signal
     inline bool getSync() { return sync; }
 
-    //! @brief Returns the current track zone (0 to 3)
+    //! @brief    Returns the current track zone (0 to 3)
     inline bool getZone() { return zone; }
 
-    //! @brief Sets the current track zone
-    /*! @param z drive zone (0 to 3) */
+    /*! @brief    Sets the current track zone
+     *  @param    z drive zone (0 to 3)
+     */
     void setZone(uint8_t z);
 
     //! Triggers an ATN interrupt
@@ -338,33 +339,35 @@ public:
 
 private:
 
-    /// @abstract Reads a single bit from the disk head
-    /// @result   0 or 1
+    /*! @brief    Reads a single bit from the disk head
+     *  @result   0 or 1
+     */
     inline uint8_t readBitFromHead() { return disk.readBitFromHalftrack(halftrack, bitoffset); }
 
-    /// @abstract  Reads a single byte from the disk head
-    /// @result    0 ... 255
+    /*! @brief    Reads a single byte from the disk head
+     *  @result   0 ... 255
+     */
     inline uint8_t readByteFromHead() { return disk.readByteFromHalftrack(halftrack, bitoffset); }
 
-    /*! @brief Writes a single bit to the disk head */
+    //! @brief Writes a single bit to the disk head
     inline void writeBitToHead(uint8_t bit) { disk.writeBitToHalftrack(halftrack, bitoffset, bit); }
     
-    /*! @brief Writes a single byte to the disk head */
+    //! @brief Writes a single byte to the disk head
     inline void writeByteToHead(uint8_t byte) { disk.writeByteToHalftrack(halftrack, bitoffset, byte); }
     
-    /*! @brief  Advances drive head position by one bit */
+    //! @brief  Advances drive head position by one bit
     inline void rotateDisk() { if (++bitoffset >= disk.length.halftrack[halftrack]) bitoffset = 0; }
 
-    /*! @brief  Moves drive head position back by one bit */
+    //! @brief  Moves drive head position back by one bit
     inline void rotateBack() { bitoffset = (bitoffset > 0) ? (bitoffset - 1) : (disk.length.halftrack[halftrack] - 1); }
 
-    /*! @brief  Advances drive head position by eight bits */
+    //! @brief  Advances drive head position by eight bits
     inline void rotateDiskByOneByte() { for (unsigned i = 0; i < 8; i++) rotateDisk(); }
 
-    /*! @brief  Moves drive head position back by eight bits */
+    //! @brief  Moves drive head position back by eight bits
     inline void rotateBackByOneByte() { for (unsigned i = 0; i < 8; i++) rotateBack(); }
 
-    /*! @brief  Align drive head to the beginning of a byte */
+    //! @brief  Align drive head to the beginning of a byte
     inline void alignHead() { bitoffset &= 0xFFF8; byteReadyCounter = 0; }
 
     //! @brief Signals the CPU that a byte has been processed
@@ -375,17 +378,17 @@ private:
    
 public:
 
-    /*! @brief Performs read access of the fast loader
-     *  @abstract This method is used to latch in a byte from disk when bit accurate emulation is disabled
+    /*! @brief    Performs read access of the fast loader
+     *  @details  This method is used to latch in a byte from disk when bit accurate emulation is disabled
      */
     void fastLoaderRead();
  
-    /*! @brief Fast loader sync detection
-     *  @abstract Returns true when the drive head is currently inside a SYNC mark     
+    /*! @brief    Fast loader sync detection
+     *  @details  Returns true when the drive head is currently inside a SYNC mark
      */
     bool getFastLoaderSync();
     
-    /*! @brief  Skip sync mark (for d */
+    //! @brief  Skip sync mark
     inline void fastLoaderSkipSyncMark() { while (readByteFromHead() == 0xFF) rotateDiskByOneByte(); }
 };
 

@@ -438,28 +438,31 @@ public:
 	
 public:
     
-    //! Returns true iff cpu runs at maximum speed (timing sychronization is disabled)
+    //! @brief    Returns true iff cpu runs at maximum speed (timing sychronization is disabled).
     inline bool getWarp() { return warp; }
     
-    //! Enable or disable timing synchronization
+    //! @brief    Enables or disables timing synchronization.
     void setWarp(bool b);
     
-    //! Returns true iff cpu should always run at maximun speed
+    //! @brief    Returns true iff cpu should always run at maximun speed.
     inline bool getAlwaysWarp() { return alwaysWarp; }
     
-    //! Setter for alwaysWarp
+    //! @brief    Setter for alwaysWarp.
     void setAlwaysWarp(bool b);
     
-    //! Returns true iff warp mode is activated during disk operations
+    //! @brief    Returns true iff warp mode is activated during disk operations.
     inline bool getWarpLoad() { return warpLoad; }
     
-    //! Setter for warpLoad
+    //! @brief    Setter for warpLoad.
     void setWarpLoad(bool b);
     
-	//! Initialize timer (sets variable target_time)
+	/*! @brief    Restarts the synchronization timer
+     *  @details  The function is invoked at launch time to initialize the timer and reinvoked
+     *            when the synchronization timer gets out of sync. 
+     */
 	void restartTimer();
 	
-	//! Wait until target_time has been reached and then updates target_time.
+	//! @brief    Waits until target_time has been reached and then updates target_time.
 	void synchronizeTiming();
 	
     
@@ -469,16 +472,19 @@ public:
 	
 public:
     
-	//! Flush specified item from archive into memory and delete archive
-	/*! All archive types are flushable */
+	/*! @brief    Flush specified item from archive into memory and delete archive.
+	 *  @details  All archive types are flushable.
+     */
 	bool flushArchive(Archive *a, int item);
 	
-	//! @brief      Inserts an archive as a virtual floppy disk
-    /*! @discussion Only D64 and G64 archives are supported */
+	/*! @brief    Inserts an archive as a virtual floppy disk.
+     *  @details  Only D64 and G64 archives are supported.
+     */
 	bool mountArchive(Archive *a);
 
-    //! @brief      Inserts a TAP archive as a virtual datasette tape
-    /*! @discussion Only TAP archives can be used as tape */
+    /*! @brief    Inserts a TAP archive as a virtual datasette tape.
+     *  @details  Only TAP archives can be used as tape.
+     */
     bool insertTape(TAPArchive *a);
 
 	
@@ -486,13 +492,13 @@ public:
 	//                                            Cartridges
 	// ---------------------------------------------------------------------------------------------
 
-	//! Attach cartridge
+	//! @brief    Attaches a cartridge to the expansion port.
 	bool attachCartridge(Cartridge *c);
 	
-	// Detach cartridge
+	//! @brief    Detaches a cartridge from the expansion port.
 	void detachCartridge();
 
-	//! Returns true iff a cartridge is attached
+	//! @brief    Returns true iff a cartridge is attached.
 	bool isCartridgeAttached();
 
 	
@@ -500,13 +506,13 @@ public:
 	//                                        Getter and setter 
 	// ---------------------------------------------------------------------------------------------
 			
-	//! Returns the number of CPU cycles elapsed so far
+	//! @brief    Returns the number of CPU cycles elapsed so far.
 	inline uint64_t getCycles() { return cycles; }
 
-	//! Returns the number of the currently drawn frame
+	//! @brief    Returns the number of the currently drawn frame.
 	inline uint64_t getFrame() { return frame; }
 
-	//! Returns the number of the currently drawn rasterline
+	//! @brief    Returns the number of the currently drawn rasterline.
 	inline uint16_t getRasterline() { return rasterline; }
     
     
@@ -514,8 +520,9 @@ public:
 	//                                             Misc
 	// ---------------------------------------------------------------------------------------------
 	
-	//! The tread exit function.
-	/*! Automatically invoked by the execution thread on termination */
+	/*! @brief    The tread exit function.
+	 *  @details  Automatically invoked by the execution thread on termination.
+     */
 	void threadCleanup(); 
 };
 

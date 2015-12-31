@@ -75,7 +75,7 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 @implementation AudioDevice
 
 
-- (id)initWithC64:(C64 *)c64
+- (instancetype)initWithC64:(C64 *)c64
 {       
     AudioObjectPropertyAddress devicePropertyAddress = { 
         kAudioHardwarePropertyDefaultOutputDevice, 

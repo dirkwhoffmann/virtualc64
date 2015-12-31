@@ -29,26 +29,27 @@
  */
 class NIBArchive : public Archive {
 
-private:	
+private:
 
-    /*! @brief      Raw data of this archive */
+    //! @brief    Raw data of this archive
     uint8_t *data;
 
-    /*! @brief      Size of NIB file */
+    //! @brief    Size of NIB file
     int size;
 
-    /*! @brief      Decoded track data */
+    //! @brief    Decoded track data
     uint8_t halftrack[85][8 * MAX_TRACK_LENGTH];
 
-    /*! @brief      Decoded track length in bits
-     *  @discussion Equals 0 if halftrack is not contained in archive */
+    /*! @brief    Decoded track length in bits
+     *  @details  Equals 0 if halftrack is not contained in archive */
     int length[85];
     
-    /*! @brief Selected halftrack to read from. */
+    //! @brief    Selected halftrack to read from.
 	int selectedtrack;
 
-    /*! @brief File pointer
-     @discussion An offset into the halftrack array. */
+    /*! @brief    File pointer
+     *  @details  An offset into the halftrack array. 
+     */
     int fp;
 
 public:
@@ -57,52 +58,56 @@ public:
     //! @functiongroup Creating and destructing NIB archives
     //
     
-    //! @brief Standard constructor.
+    //! @brief    Standard constructor
     NIBArchive();
     
-    //! @brief Standard destructor.
+    //! @brief    Standard destructor
     ~NIBArchive();
 		
-    //! @brief Returns true iff the specified file is a NIB file
+    //! @brief    Returns true iff the specified file is a NIB file.
     static bool isNIBFile(const char *filename);
 
-    //! @brief Creates a NIB archive from a NIB file located on disk.
+    //! @brief    Creates a NIB archive from a NIB file located on disk.
     static NIBArchive *archiveFromNIBFile(const char *filename);
     
-    /*! @brief      Scans all tracks in archive
-     *  @returns    true, if the scan was successful, false, if archive data is corrupt 
-     *  @seealso    scanTrack */
+    /*! @brief    Scans all tracks in archive
+     *  @return   true, if the scan was successful, false, if archive data is corrupt
+     *  @seealso  scanTrack
+     */
     bool scan();
 
-    /*! @brief      Scans a single track in archive
-     *  @discussion For eack track, the number of bits is determined and stored in array numBits.
-     *              Furthermore, the total number of tracks is stored in variable numTracks.
-     *  @param      ht       Halftrack number
-     *  @param      bits     The raw bit stream
-     *  @param      start    Offset the the first bit of the loop
-     *  @param      end      Offset the last bit belonging to the loop + 1
-     *  @param      gap      Offset to the gap position
-     *  @returns    true, if the scan was successful, false, if archive data is corrupt */
+    /*! @brief    Scans a single track in archive
+     *  @details  For eack track, the number of bits is determined and stored in array numBits.
+     *            Furthermore, the total number of tracks is stored in variable numTracks.
+     *  @param    ht       Halftrack number
+     *  @param    bits     The raw bit stream
+     *  @param    start    Offset the the first bit of the loop
+     *  @param    end      Offset the last bit belonging to the loop + 1
+     *  @param    gap      Offset to the gap position
+     *  @return   true, if the scan was successful, false, if archive data is corrupt 
+     */
     bool scanTrack(unsigned ht, uint8_t *bits, int *start, int *end, int *gap);
     
-    /*! @brief      Looks for a loop in the provided bit stream
-     *  @discussion A NIB file consists of 0x2000 bytes a nibbled data. As the nibbler cannot determine
-     *              when the drive head has completed a full rotation, the bit stream data overlaps.
-     *              This method searches for the overlap. If the repeating code sequence has been found,
-     *              the start and the end position are stored in startBit and endBit, respectively.
-     *  @param      bits     The raw bit stream. 
-     *  @param      length   Length of the provided bit stream
-     *  @param      start    Offset the the first bit of the loop
-     *  @param      end      Offset the last bit belonging to the loop + 1
-     *  @return     true if the repetition has been found. */
+    /*! @brief    Looks for a loop in the provided bit stream
+     *  @details  A NIB file consists of 0x2000 bytes a nibbled data. As the nibbler cannot determine
+     *            when the drive head has completed a full rotation, the bit stream data overlaps.
+     *            This method searches for the overlap. If the repeating code sequence has been found,
+     *            the start and the end position are stored in startBit and endBit, respectively.
+     *  @param    bits     The raw bit stream.
+     *  @param    length   Length of the provided bit stream
+     *  @param    start    Offset the the first bit of the loop
+     *  @param    end      Offset the last bit belonging to the loop + 1
+     *  @return   true if the repetition has been found.
+     */
     bool scanForLoop(uint8_t *bits, int length, int *start, int *end);
 
-    /*! @brief      Looks for the longest area between two SYNC marks
-     *  @discussion The computed offset is used to properly align the tracks next to each other.
-     *  @param      bits     The raw bit stream as stored in the NIB file. 
-     *  @param      length   Length of the provided bit stream
-     *  @param      gap      Offset to the gap position
-     *  @return     true if a gap has been found, false otherwise. */
+    /*! @brief    Looks for the longest area between two SYNC marks
+     *  @details  The computed offset is used to properly align the tracks next to each other.
+     *  @param    bits     The raw bit stream as stored in the NIB file.
+     *  @param    length   Length of the provided bit stream
+     *  @param    gap      Offset to the gap position
+     *  @return   true if a gap has been found, false otherwise. 
+     */
     bool scanForGap(uint8_t *bits, int length, int *gap);
 
     
@@ -120,12 +125,12 @@ public:
     bool readFromBuffer(const uint8_t *buffer, unsigned length);
     unsigned writeToBuffer(uint8_t *buffer);
     
+    
     //
     // Virtual functions from Archive class
     //
     
     int getNumberOfItems();
-    // int getStartOfItem(int n);
     int getSizeOfItem(int n);
     
     const char *getNameOfItem(int n);

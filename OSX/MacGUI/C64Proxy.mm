@@ -24,7 +24,7 @@
 
 @implementation CPUProxy
 
-- (id) initWithCPU:(CPU *)c
+- (instancetype) initWithCPU:(CPU *)c
 {
     self = [super init];	
 	cpu = c;	
@@ -86,7 +86,7 @@
 
 @implementation MemoryProxy
 
-- (id) initWithMemory:(Memory *)m
+- (instancetype) initWithMemory:(Memory *)m
 {
     self = [super init];	
 	mem = m;	
@@ -110,7 +110,7 @@
 
 @implementation VICProxy
 
-- (id) initWithVIC:(VIC *)v
+- (instancetype) initWithVIC:(VIC *)v
 {
     self = [super init];	
 	vic = v;	
@@ -203,7 +203,7 @@
 
 @implementation CIAProxy
 
-- (id) initWithCIA:(CIA *)c
+- (instancetype) initWithCIA:(CIA *)c
 {
     self = [super init];	
 	cia = c;	
@@ -290,7 +290,7 @@
 
 @implementation KeyboardProxy
 
-- (id) initWithKeyboard:(Keyboard *)kb
+- (instancetype) initWithKeyboard:(Keyboard *)kb
 {
     self = [super init];	
 	keyboard = kb;	
@@ -390,7 +390,7 @@
 
 @implementation JoystickProxy
 
-- (id) initWithJoystick:(Joystick *)joy
+- (instancetype) initWithJoystick:(Joystick *)joy
 {
     self = [super init];
     joystick = joy;
@@ -411,7 +411,7 @@
 
 @implementation SIDProxy
 
-- (id) initWithSID:(SIDWrapper *)s
+- (instancetype) initWithSID:(SIDWrapper *)s
 {
     self = [super init];	
 	sid = s;	
@@ -428,7 +428,7 @@
 
 @implementation IECProxy
 
-- (id) initWithIEC:(IEC *)bus
+- (instancetype) initWithIEC:(IEC *)bus
 {
     self = [super init];	
 	iec = bus;	
@@ -450,7 +450,7 @@
 
 @implementation ExpansionPortProxy
 
-- (id) initWithExpansionPort:(ExpansionPort *)port
+- (instancetype) initWithExpansionPort:(ExpansionPort *)port
 {
     self = [super init];
     expansionPort = port;
@@ -471,7 +471,7 @@
 
 @implementation VIAProxy
 
-- (id) initWithVIA:(VIA6522 *)v
+- (instancetype) initWithVIA:(VIA6522 *)v
 {
     self = [super init];	
 	via = v;
@@ -490,7 +490,7 @@
 
 @implementation Disk525Proxy
 
-- (id) initWithDisk525:(Disk525 *)d
+- (instancetype) initWithDisk525:(Disk525 *)d
 {
     self = [super init];
     disk = d;
@@ -512,9 +512,9 @@
 
 @implementation VC1541Proxy
 
-@synthesize vc1541, cpu, mem, via1, via2, disk;
+@synthesize cpu, mem, via1, via2, disk;
 
-- (id) initWithVC1541:(VC1541 *)vc
+- (instancetype) initWithVC1541:(VC1541 *)vc
 {
     self = [super init];	
 	vc1541 = vc;
@@ -575,7 +575,7 @@
 
 @implementation DatasetteProxy
 
-- (id) initWithDatasette:(Datasette *)ds
+- (instancetype) initWithDatasette:(Datasette *)ds
 {
     self = [super init];
     datasette = ds;
@@ -609,7 +609,7 @@
 @synthesize joystickA, joystickB; 
 @synthesize iecBusIsBusy, tapeBusIsBusy;
 
-- (id) init
+- (instancetype) init
 {
 	NSLog(@"C64Proxy::init");
 	
@@ -808,7 +808,7 @@
 
 @synthesize snapshot;
 
-- (id) init
+- (instancetype) init
 {
 	// NSLog(@"V64Snapshot::init");
 	
@@ -819,7 +819,7 @@
 	return self;
 }
 
-- (id) initWithSnapshot:(Snapshot *)s
+- (instancetype) initWithSnapshot:(Snapshot *)s
 {
 	// NSLog(@"V64Snapshot::initWithSnapshot");
 	
@@ -839,14 +839,14 @@
 	
 }
 
-+ (id) snapshotFromC64:(C64Proxy *)c64
++ (instancetype) snapshotFromC64:(C64Proxy *)c64
 {
 	V64Snapshot *newSnapshot = [[self alloc] init];
 	[c64 saveToSnapshot:newSnapshot];
 	return newSnapshot;
 }
 
-+ (id) snapshotFromSnapshot:(Snapshot *)snapshot
++ (instancetype) snapshotFromSnapshot:(Snapshot *)snapshot
 {
 	if (snapshot == NULL)
 		return nil;
@@ -855,12 +855,12 @@
 	return newSnapshot;
 }
 	
-+ (id) snapshotFromFile:(NSString *)path
++ (instancetype) snapshotFromFile:(NSString *)path
 {
 	return [self snapshotFromSnapshot:Snapshot::snapshotFromFile([path UTF8String])];
 }
 
-+ (id) snapshotFromBuffer:(const void *)buffer length:(unsigned)length
++ (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length
 {
 	return [self snapshotFromSnapshot:Snapshot::snapshotFromBuffer((uint8_t *)buffer, length)];
 }

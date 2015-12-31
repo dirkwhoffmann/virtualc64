@@ -21,36 +21,38 @@
 
 #include "Archive.h"
 
-/*! @class TAPArchive
- *  @brief The TAPArchive class declares the programmatic interface for a file in TAP format.
+/*! @class  TAPArchive
+ *  @brief  The TAPArchive class declares the programmatic interface for a file in TAP format.
  */
 class TAPArchive : public Container {
     
 private:
     
-    //! @brief The raw data of this archive.
+    //! @brief    The raw data of this archive.
     uint8_t *data;
     
-    //! @brief File size
+    //! @brief    File size
     int size;
     
-    /*! @brief File pointer
-     @discussion An offset into the data array. */
+    /*! @brief    File pointer
+     *  @details  An offset into the data array. 
+     */
     int fp;
     
 public:
     
-    //! @brief Standard constructor.
+    //! @brief    Standard constructor
     TAPArchive();
     
-    //! @brief Standard destructor.
+    //! @brief    Standard destructor
     ~TAPArchive();
     
-    //! @brief Returns true iff the specified file is a TAP file
+    //! @brief    Returns true iff the specified file is a TAP file
     static bool isTAPFile(const char *filename);
     
-    //! @brief Creates a TAP archive from a TAP file.
+    //! @brief    Creates a TAP archive from a TAP file.
     static TAPArchive *archiveFromTAPFile(const char *filename);
+    
     
     //
     // Virtual functions from Container class
@@ -65,6 +67,7 @@ public:
     bool fileIsValid(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, unsigned length);
     unsigned writeToBuffer(uint8_t *buffer);
+    
     
     //
     // Accessing the archive

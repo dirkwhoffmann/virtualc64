@@ -66,50 +66,61 @@ private:
     //! @functiongroup Tape
     //
 
-    //! @brief      Data buffer (contains the raw data of the TAP archive)
-    /*! @discussion Pointer is NULL if no data is present */
+    /*! @brief    Data buffer (contains the raw data of the TAP archive)
+     *  @details  Pointer is NULL if no data is present
+     */
     uint8_t *data;
 
-    //! @brief      Size of the attached data buffer
-    /*! @discussion Equals 0 iff no tape is inserted. */
+    /*! @brief    Size of the attached data buffer
+     *  @details  Equals 0 iff no tape is inserted.
+     */
     uint32_t size;
     
-    //! @brief      Data format (TAP type)
-    /*! @discussion In TAP format 0, data byte 0 signals a long puls without stating its length precisely.
-     *              In TAP format 1, each 0 is followed by three bytes stating the precise length in
-     *              LO_LO_HI_00 format. */
+    /*! @brief    Data format (TAP type)
+     *  @details  In TAP format 0, data byte 0 signals a long puls without stating its length precisely.
+     *            In TAP format 1, each 0 is followed by three bytes stating the precise length in
+     *            LO_LO_HI_00 format. 
+     */
     uint8_t type;
     
-    //! @brief      Tape length in cycles
-    /*! @discussion The value is computed in insertTape by examining all pulses in the data buffer */
+    /*! @brief    Tape length in cycles
+     *  @details  The value is computed in insertTape by examining all pulses in the data buffer
+     */
     uint64_t durationInCycles;
 
     //
     //! @functiongroup Datasette
     //
 
-    /*! @brief      Read/Write head
-     *  @discussion Value must be between 0 and size. head == size indicates EOT (end of tape) */
+    /*! @brief    Read/Write head
+     *  @details  Value must be between 0 and size. head == size indicates EOT (end of tape) 
+     */
     uint32_t head;
 
-    /*! @brief      Read/Write head
-     *  @discussion Head position, measured in cycles */
+    /*! @brief    Read/Write head
+     *  @details  Head position, measured in cycles 
+     */
     uint64_t headInCycles;
 
-    /*! @brief      Read/Write head
-     *  @discussion Head position, measured in seconds */
+    /*! @brief    Read/Write head
+     *  @details  Head position, measured in seconds
+     */
     uint32_t headInSeconds;
 
-    /*! @brief      Next scheduled rising edge on data line */
+    /*! @brief    Next scheduled rising edge on data line 
+     */
     int64_t nextRisingEdge;
 
-    /*! @brief      Next scheduled falling edge on data line */
+    /*! @brief    Next scheduled falling edge on data line 
+     */
     int64_t nextFallingEdge;
     
-    /*! @brief      Indicates whether the play key is pressed */
+    /*! @brief    Indicates whether the play key is pressed 
+     */
     bool playKey;
     
-    /*! @brief      Indicates whether the motor is on */
+    /*! @brief    Indicates whether the motor is on 
+     */
     bool motor;
     
     // ---------------------------------------------------------------------------------------------
@@ -122,45 +133,56 @@ public:
     //! @functiongroup Handling virtual tapes
     //
     
-    /*! @brief      Returns true if a tape is inserted */
+    /*! @brief    Returns true if a tape is inserted 
+     */
     inline bool hasTape() { return size != 0; }
     
-    /*! @brief      Inserts a TAP archive as a virtual tape */
+    /*! @brief    Inserts a TAP archive as a virtual tape 
+     */
     void insertTape(TAPArchive *a);
 
-    /*! @brief      Ejects the virtual tape
-     *  @discussion Does nothing, if no tape is present.  */
+    /*! @brief    Ejects the virtual tape
+     *  @details  Does nothing, if no tape is present.  
+     */
     void ejectTape();
 
-    /*! @brief      Returns type of tape (TAP format, 0 or 1). */
+    /*! @brief    Returns type of tape (TAP format, 0 or 1). 
+     */
     inline uint8_t getType() { return type; }
 
-    /*! @brief      Returns the tape length in cycles */
+    /*! @brief    Returns the tape length in cycles 
+     */
     uint64_t getDurationInCycles() { return durationInCycles; }
     
-    /*! @brief      Returns the tape length in seconds */
+    /*! @brief    Returns the tape length in seconds 
+     */
     uint32_t getDurationInSeconds() { return durationInCycles / PAL_CYCLES_PER_SECOND; }
 
     //
     //! @functiongroup Handling the read/write head
     //
 
-    /*! @brief      Put head at the beginning of the tape */
+    /*! @brief    Put head at the beginning of the tape 
+     */
     void rewind() { head = headInSeconds = headInCycles = 0; }
 
-    /*! @brief      Advances the read/write head for one pulse
-     *  @discussion This methods updates head, headInCycles, and headInSeconds */
+    /*! @brief    Advances the read/write head for one pulse
+     *  @details  This methods updates head, headInCycles, and headInSeconds 
+     */
     void advanceHead(bool silent = false);
     
-    /*! @brief      Get current head position in different units */
+    /*! @brief    Get current head position in different units 
+     */
     uint32_t getHead() { return head; }
     uint32_t getHeadInCycles() { return headInCycles; }
     uint32_t getHeadInSeconds() { return headInSeconds; }
     
-    /*! @brief      Set current head position in cycles */
+    /*! @brief    Set current head position in cycles 
+     */
     void setHeadInCycles(uint64_t value);
     
-    /*! @brief      Pulse length at current head position */
+    /*! @brief    Pulse length at current head position 
+     */
     int pulseLength(int *skip);
     int pulseLength() { return pulseLength(NULL); }
 
@@ -168,22 +190,27 @@ public:
     //! @functiongroup Running the device
     //
     
-    /*! @brief      Returns true if the play key is pressed */
+    /*! @brief    Returns true if the play key is pressed 
+     */
     bool getPlayKey() { return playKey; }
 
-    /*! @brief      Press play on tape */
+    /*! @brief    Press play on tape 
+     */
     void pressPlay(); 
 
-    /*! @brief      Press stop key */
+    /*! @brief    Press stop key 
+     */
     void pressStop();
 
-    /*! @brief      Returns true if the datasette motor is switched on */
+    /*! @brief    Returns true if the datasette motor is switched on 
+     */
     bool getMotor() { return motor; }
 
-    /*! @brief      Switches motor on or off */
+    /*! @brief    Switches motor on or off 
+     */
     void setMotor(bool value);
 
-    /*! @brief    Executes the virtual datasette
+    /*! @brief  Executes the virtual datasette
      */
     inline void execute() { if (playKey && motor) _execute(); }
 

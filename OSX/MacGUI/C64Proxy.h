@@ -38,7 +38,7 @@ class JoystickManager;
 	CPU *cpu;
 }
 
-- (id) initWithCPU:(CPU *)c;
+- (instancetype) initWithCPU:(CPU *)c;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -95,7 +95,7 @@ class JoystickManager;
 	Memory *mem;
 }
 
-- (id) initWithMemory:(Memory *)m;
+- (instancetype) initWithMemory:(Memory *)m;
 - (void) dump;
 
 - (uint8_t) peek:(uint16_t)addr;
@@ -116,7 +116,7 @@ class JoystickManager;
 	VIC *vic;
 }
 
-- (id) initWithVIC:(VIC *)v;
+- (instancetype) initWithVIC:(VIC *)v;
 - (void) dump;
 
 - (void *) screenBuffer;
@@ -193,7 +193,7 @@ class JoystickManager;
 	CIA *cia;
 }
 
-- (id) initWithCIA:(CIA *)c;
+- (instancetype) initWithCIA:(CIA *)c;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -276,7 +276,7 @@ class JoystickManager;
 	Keyboard *keyboard;
 }
 
-- (id) initWithKeyboard:(Keyboard *)kb;
+- (instancetype) initWithKeyboard:(Keyboard *)kb;
 - (void) dump;
 
 - (void) pressKey:(int)c;
@@ -319,7 +319,7 @@ class JoystickManager;
     Joystick *joystick;
 }
 
-- (id) initWithJoystick:(Joystick *)joy;
+- (instancetype) initWithJoystick:(Joystick *)joy;
 
 - (void) setButtonPressed:(BOOL)pressed;
 - (void) setAxisX:(JoystickDirection)state;
@@ -337,7 +337,7 @@ class JoystickManager;
 	SIDWrapper *sid;
 }
 
-- (id) initWithSID:(SIDWrapper *)s;
+- (instancetype) initWithSID:(SIDWrapper *)s;
 - (void) dump;
 
 @end
@@ -350,7 +350,7 @@ class JoystickManager;
 	IEC *iec;
 }
 
-- (id) initWithIEC:(IEC *)bus;
+- (instancetype) initWithIEC:(IEC *)bus;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -368,7 +368,7 @@ class JoystickManager;
     ExpansionPort *expansionPort;
 }
 
-- (id) initWithExpansionPort:(ExpansionPort *)v;
+- (instancetype) initWithExpansionPort:(ExpansionPort *)v;
 - (void) dump;
 - (bool) cartridgeAttached; 
 - (int) cartridgeType;
@@ -385,7 +385,7 @@ class JoystickManager;
 	VIA6522 *via;
 }
 
-- (id) initWithVIA:(VIA6522 *)v;
+- (instancetype) initWithVIA:(VIA6522 *)v;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -400,7 +400,7 @@ class JoystickManager;
     Disk525 *disk;
 }
 
-- (id)initWithDisk525:(Disk525 *)d;
+- (instancetype)initWithDisk525:(Disk525 *)d;
 
 - (BOOL)isWriteProtected;
 - (void)setWriteProtection:(BOOL)b;
@@ -426,14 +426,13 @@ class JoystickManager;
     Disk525Proxy *disk;
 }
 
-@property (readonly) VC1541 *vc1541;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
 @property (readonly) VIAProxy *via1;
 @property (readonly) VIAProxy *via2;
 @property (readonly) Disk525Proxy *disk;
 
-- (id) initWithVC1541:(VC1541 *)vc;
+- (instancetype) initWithVC1541:(VC1541 *)vc;
 - (VIAProxy *) via:(int)num;
 
 - (void) dump;
@@ -465,7 +464,7 @@ class JoystickManager;
     Datasette *datasette;
 }
 
-- (id) initWithDatasette:(Datasette *)kb;
+- (instancetype) initWithDatasette:(Datasette *)kb;
 - (void) dump;
 
 - (bool) hasTape;
@@ -653,13 +652,13 @@ class JoystickManager;
 
 @property Snapshot *snapshot;
 
-- (id) init;
-- (id) initWithSnapshot:(Snapshot *)s;
+- (instancetype) init;
+- (instancetype) initWithSnapshot:(Snapshot *)s;
 
-+ (id) snapshotFromC64:(C64Proxy *)c64;
-+ (id) snapshotFromSnapshot:(Snapshot *)snapshot;
-+ (id) snapshotFromFile:(NSString *)path;
-+ (id) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
++ (instancetype) snapshotFromC64:(C64Proxy *)c64;
++ (instancetype) snapshotFromSnapshot:(Snapshot *)snapshot;
++ (instancetype) snapshotFromFile:(NSString *)path;
++ (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
 
 - (unsigned char *)imageData;
 - (time_t)timeStamp;

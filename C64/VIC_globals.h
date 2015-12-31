@@ -214,49 +214,51 @@ static const uint16_t PAL_VISIBLE_RASTERLINES = 284; // was 292
 // to optize the copy process.
 // -----------------------------------------------------------------------------------------------
 
-//! @brief      A certain portion of VICs internal state
-/*! @discussion This structure comprises all state variables that need to be delayed one cycle to get 
- *              the timing right. */
+/*! @brief    A certain portion of VICs internal state
+ *  @details  This structure comprises all state variables that need to be delayed one cycle to get
+ *            the timing right. 
+ */
 typedef struct {
     
-    //! @brief      Internal x counter of the sequencer (sprite coordinate system)
+    //! @brief    Internal x counter of the sequencer (sprite coordinate system)
     uint16_t xCounter;
     
-    //! @brief      Sprite X coordinates
-    /*! @discussion The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored in a 
-     *              seperate IO register, while the uppermost bits are packed in a single register (0xD010). 
-     *              The sprites X coordinate is updated whenever one the corresponding IO register changes 
-     *              its value. */
+    /*! @brief    Sprite X coordinates
+     *  @details  The X coordinate is a 9 bit value. For each sprite, the lower 8 bits are stored in a
+     *            seperate IO register, while the uppermost bits are packed in a single register (0xD010).
+     *            The sprites X coordinate is updated whenever one the corresponding IO register changes
+     *            its value. 
+     */
     uint16_t spriteX[8];
 
-    //! @brief      Sprite X expansion bits
+    //! @brief    Sprite X expansion bits
     uint8_t spriteXexpand;
 
-    //! @brief      Internal VIC-II register D011, control register 1
+    //! @brief    Internal VIC-II register D011, control register 1
     uint8_t registerCTRL1;
 
-    //! @brief      Internal VIC-II register D016, control register 2
+    //! @brief    Internal VIC-II register D016, control register 2
     uint8_t registerCTRL2;
 
-    //! @brief      Data value grabbed in gAccess()
+    //! @brief    Data value grabbed in gAccess()
     uint8_t g_data;
     
-    //! @brief      Character value grabbed in gAccess()
+    //! @brief    Character value grabbed in gAccess()
     uint8_t g_character;
     
-    //! @brief      Color value grabbed in gAccess()
+    //! @brief    Color value grabbed in gAccess()
     uint8_t g_color;
     
-    //! @brief      Main frame flipflop
+    //! @brief    Main frame flipflop
     uint8_t mainFrameFF;
 
-    //! @brief      Vertical frame Flipflop
+    //! @brief    Vertical frame Flipflop
     uint8_t verticalFrameFF;
     
 } PixelEnginePipe;
 
 
-//! @brief      Color for drawing border pixels
+//! @brief    Color for drawing border pixels
 typedef struct {
     
     uint8_t borderColor;
@@ -264,14 +266,14 @@ typedef struct {
 } BorderColorPipe;
 
 
-//! @brief      Colors for drawing canvas pixels
+//! @brief    Colors for drawing canvas pixels
 typedef struct {
     
     uint8_t backgroundColor[4];
     
 } CanvasColorPipe;
 
-//! @brief      Colors for drawing sprites
+//! @brief    Colors for drawing sprites
 typedef struct {
     
     uint8_t spriteColor[8];

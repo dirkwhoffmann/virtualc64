@@ -28,18 +28,20 @@ class T64Archive : public Archive {
 
 private:	
 
-    //! @brief The raw data of this archive.
+    //! @brief    The raw data of this archive.
     uint8_t *data;
 
-    //! @brief File size
+    //! @brief    File size
     int size;
 
-    /*! @brief File pointer
-        @discussion An offset into the data array. */
+    /*! @brief    File pointer
+        @details  An offset into the data array. 
+     */
 	int fp;
 	
-    /*! @brief End of file position
-        @discussion Maximum value for fp. Do we really need this? */
+    /*! @brief    End of file position
+     *  @details  Maximum value for fp. Do we really need this?
+     */
 	int fp_eof;
 	
 public:
@@ -48,20 +50,21 @@ public:
     //! @functiongroup Creating and destructing T64 archives
     //
     
-    //! @brief Standard constructor.
+    //! @brief    Standard constructor
     T64Archive();
     
-    //! @brief Standard destructor.
+    //! @brief    Standard destructor
     ~T64Archive();
 		
-    //! @brief Returns true iff the specified file is a T64 file
+    //! @brief    Returns true iff the specified file is a T64 file
     static bool isT64File(const char *filename);
 
-    //! @brief Creates a T64 archive from a T64 file located on disk.
+    //! @brief    Creates a T64 archive from a T64 file located on disk.
     static T64Archive *archiveFromT64File(const char *filename);
     
-    /*! @brief Creates a T64 archive from another archive.
-     @result A T64 archive that contains the first directory item of the other archive. */
+    /*! @brief    Creates a T64 archive from another archive.
+     *  @result A T64 archive that contains the first directory item of the other archive. 
+     */
     static T64Archive *archiveFromArchive(Archive *otherArchive);
 
 
@@ -79,6 +82,7 @@ public:
     bool readFromBuffer(const uint8_t *buffer, unsigned length);
     unsigned writeToBuffer(uint8_t *buffer);
     
+    
     //
     // Virtual functions from Archive class
     //
@@ -91,6 +95,7 @@ public:
     void selectItem(int n);
     int getByte();
     
+    
     //
     // Custom methods
     //
@@ -98,15 +103,15 @@ public:
     //! @brief Check if the file header contains information at the specific location
     bool directoryItemIsPresent(int n);
 
-    //! @brief      Check archive consistency and repair inconsistent information
-    /*! @discussion This method can eliminate the following inconsistencies: 
-     *              number of files: some archives state falsely in their header that zero
-     *              files are present. This value will be fixed. 
-     *              end loading address: Archives that are created with CONVC64 often contain
-     *              a value of 0xC3C6, which is wrong (e.g., paradrd.t64). This value will be 
-     *              changed such that getByte() will read until the end of the physical file.
-     * @result      true, if archive was consistent or could be repaired. false, if an inconsistency
-     *              has been detected that could not be repaired.
+    /*! @brief    Check archive consistency and repair inconsistent information
+     *  @details  This method can eliminate the following inconsistencies:
+     *            number of files: some archives state falsely in their header that zero
+     *            files are present. This value will be fixed.
+     *            end loading address: Archives that are created with CONVC64 often contain
+     *            a value of 0xC3C6, which is wrong (e.g., paradrd.t64). This value will be
+     *            changed such that getByte() will read until the end of the physical file.
+     * @result    true, if archive was consistent or could be repaired. false, if an inconsistency
+     *            has been detected that could not be repaired.
      */
     bool repair();
 };

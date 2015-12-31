@@ -37,16 +37,16 @@ class USBJoystick
 
 public:
     
-    //! @brief      Indicates if this object represents a plugged in USB joystick device
+    //! @brief    Indicates if this object represents a plugged in USB joystick device
     bool pluggedIn;
     
-    //! @brief      Location ID of the represented USB joystick
+    //! @brief    Location ID of the represented USB joystick
     int locationID;
     
-    //! @brief      Mapping to one of the two virtual joysticks of the emulator
-    /*! @discussion Initially, this pointer is NULL, meaning that the USB joystick has not yet been selected 
-     *              as input device. It can be selected as input device via bindJoystick(). In that case, it
-     *              will point to one of the two static Joystick objects hold by the emulator.
+    //! @brief    Mapping to one of the two virtual joysticks of the emulator
+    /*! @details  Initially, this pointer is NULL, meaning that the USB joystick has not yet been selected
+     *            as input device. It can be selected as input device via bindJoystick(). In that case, it
+     *            will point to one of the two static Joystick objects hold by the emulator.
      */
     JoystickProxy *joystick;
 

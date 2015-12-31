@@ -21,39 +21,41 @@
 
 #include "Archive.h"
 
-/*! @class D64Archive
- *  @brief The D64Archive class declares the programmatic interface for a file in P00 format.
+/*! @class  D64Archive
+ *  @brief  The D64Archive class declares the programmatic interface for a file in P00 format.
  */
 class P00Archive : public Archive {
 
 private:
 
-    //! @brief The raw data of this archive.
+    //! @brief    The raw data of this archive.
     uint8_t *data;
 		
-    //! @brief File size
+    //! @brief    File size
 	int size;
 
-    /*! @brief File pointer
-     @discussion An offset into the data array. */
+    /*! @brief    File pointer
+     *  @details  An offset into the data array. 
+     */
     int fp;
 
 public:
 
-    //! @brief Standard constructor.
+    //! @brief    Standard constructor.
     P00Archive();
     
-    //! @brief Standard destructor.
+    //! @brief    Standard destructor.
     ~P00Archive();
     
-    //! @brief Returns true iff the specified file is a P00 file
+    //! @brief    Returns true iff the specified file is a P00 file
     static bool isP00File(const char *filename);
 
-    //! @brief Creates a P00 archive from a P00 file.
+    //! @brief    Creates a P00 archive from a P00 file.
     static P00Archive *archiveFromP00File(const char *filename);
 
-    /*! @brief Creates a P00 archive from another archive.
-     @result A P00 archive that contains the first directory item of the other archive. */
+    /*! @brief    Creates a P00 archive from another archive.
+     *  @result   A P00 archive that contains the first directory item of the other archive. 
+     */
     static P00Archive *archiveFromArchive(Archive *otherArchive);
 
     
@@ -70,6 +72,7 @@ public:
     bool fileIsValid(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, unsigned length);
     unsigned writeToBuffer(uint8_t *buffer);
+    
     
     //
     // Virtual functions from Archive class

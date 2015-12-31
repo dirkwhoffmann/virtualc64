@@ -60,7 +60,7 @@ extern bool mono;
 	If the selected samplerate of SID isn't supported by hardware 
 	the samplerate of SID will be changed to native frequency of audio hardware
 */
--(id)initWithC64:(C64 *)c64;
+-(instancetype)initWithC64:(C64 *)c64;
 
 /*! @brief  Zero out audio sample buffer
  */

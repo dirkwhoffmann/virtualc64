@@ -21,18 +21,21 @@
 
 #include "Archive.h"
 
-/*! @class FileArchive
- *  @brief The FileArchive class declares the programmatic interface for a file that does not match any of the standard formats.
-    @discussion If a file does not match any of the standard formats, each byte is interpreted as raw data and is loaded at the standard memory location.
+/*! @class    FileArchive
+ *  @brief    The FileArchive class declares the programmatic interface for a file that does not match any 
+ *            of the standard formats.
+ *  @details  If a file does not match any of the standard formats, each byte is interpreted as raw data and 
+ *            is loaded at the standard memory location.
  */
 class FileArchive : public Archive {
 
 private:
-	//! @brief The raw data of this archive.
+	//! @brief    The raw data of this archive
     uint8_t *data;
 
-    /*! @brief File pointer
-        @discussion An offset into the data array. */
+    /*! @brief    File pointer
+        @details  An offset into the data array
+     */
 	int fp;
 		
     //! @brief File size
@@ -40,17 +43,18 @@ private:
 
 public:
 
-    //! @brief Standard constructor.
+    //! @brief    Standard constructor
     FileArchive();
     
-    //! @brief Standard destructor.
+    //! @brief    Standard destructor
     ~FileArchive();
     
-    //! @brief Returns true if filename points to a loadable file
+    //! @brief    Returns true if filename points to a loadable file
     static bool isAcceptableFile(const char *filename);
     
-    //! @brief Creates an archive from a loadable file.
+    //! @brief    Creates an archive from a loadable file.
     static FileArchive *archiveFromRawFiledata(const char *filename);
+    
     
     //
     // Virtual functions from Container class
@@ -58,13 +62,12 @@ public:
     
     void dealloc();
     
-    // const char *getName();
     ContainerType getType() { return FILE_CONTAINER; }
     const char *getTypeAsString() { return "FILE"; }
     
     bool fileIsValid(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, unsigned length);
-    // unsigned writeToBuffer(uint8_t *buffer);
+
     
     //
     // Virtual functions from Archive class
