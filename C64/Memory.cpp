@@ -20,7 +20,7 @@
 
 Memory::Memory()
 {	
-	name = "MEM";
+	setDescription("MEM");
 }
 
 Memory::~Memory()

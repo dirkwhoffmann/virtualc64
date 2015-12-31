@@ -20,12 +20,8 @@
 
 VirtualComponent::VirtualComponent()
 {    
-	name = "Unnamed component";
-    debugLevel = DEBUG_LEVEL;
     running = false;
 	suspendCounter = 0;	
-	traceMode = false;
-	logfile = NULL;
     snapshotItems = NULL;
     subComponents = NULL;
     snapshotSize = 0;
@@ -40,9 +36,6 @@ VirtualComponent::~VirtualComponent()
 
     if (snapshotItems)
         delete [] snapshotItems;
-
-    if (logfile)
-		fclose(logfile);
 }
 
 void
@@ -136,83 +129,6 @@ VirtualComponent::dumpState()
 {
 }
 
-// ---------------------------------------------------------------------------------------------
-//                                      Printing messages
-// ---------------------------------------------------------------------------------------------
-
-void
-VirtualComponent::msg(const char *fmt, ...)
-{
-	char buf[256];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap); 
-	va_end(ap);
-	fprintf(logfile ? logfile : stderr, "%s", buf);
-}
-
-void
-VirtualComponent::msg(int level, const char *fmt, ...)
-{
-    if (level > debugLevel)
-        return;
-
-    char buf[256];
-    va_list ap;
-    va_start(ap, fmt);
-    vsnprintf(buf, sizeof(buf), fmt, ap);
-    va_end(ap);
-    fprintf(logfile ? logfile : stderr, "%s", buf);
-}
-
-void
-VirtualComponent::debug(const char *fmt, ...)
-{
-	char buf[256];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap); 
-	va_end(ap);
-	fprintf(logfile ? logfile : stderr, "%s: %s", name, buf);
-}
-
-void
-VirtualComponent::debug(int level, const char *fmt, ...)
-{
-	if (level > debugLevel) 
-		return;
-
-	char buf[256];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap); 
-	va_end(ap);
-	fprintf(logfile ? logfile : stderr, "%s: %s", name, buf);
-}
-
-void
-VirtualComponent::warn(const char *fmt, ...)
-{
-	char buf[256];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap); 
-	va_end(ap);
-	fprintf(logfile ? logfile : stderr, "%s: WARNING: %s", name, buf);
-}
-
-void
-VirtualComponent::panic(const char *fmt, ...)
-{
-	char buf[256];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap); 
-	va_end(ap);
-	fprintf(logfile ? logfile : stderr, "%s: PANIC: %s", name, buf);
-	
-	assert(0);
-}
 
 // ---------------------------------------------------------------------------------------------
 //                                      Snapshots

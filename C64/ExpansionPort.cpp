@@ -20,7 +20,7 @@
 
 ExpansionPort::ExpansionPort()
 {
-    name = "Expansion port";
+    setDescription("Expansion port");
     debug(3, "  Creating expansion port at address %p...\n", this);
 
     // We reset the cartridge here, as reset() keeps the cartridge intact.

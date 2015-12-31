@@ -20,8 +20,7 @@
 
 ReSID::ReSID()
 {
-	name = "ReSID";
-
+	setDescription("ReSID");
 	debug(3, "  Creating ReSID at address %p...\n", this);
 
     sid = new SID();

@@ -98,6 +98,7 @@
 		5087FD591BDA16C400570F0D /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087FD581BDA16C400570F0D /* metal.png */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6E912E06DB700378033 /* MyControllerToolbar.mm */; };
+		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
 		5089F0551BD3F64200306F4D /* BypassFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5089F0541BD3F64200306F4D /* BypassFilter.mm */; };
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
@@ -366,6 +367,8 @@
 		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
 		5088A6E812E06DB700378033 /* MyControllerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerToolbar.h; sourceTree = "<group>"; };
 		5088A6E912E06DB700378033 /* MyControllerToolbar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerToolbar.mm; sourceTree = "<group>"; };
+		5088E6861C3515DB006A80E5 /* VC64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC64Object.cpp; sourceTree = "<group>"; };
+		5088E6871C3515DB006A80E5 /* VC64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC64Object.h; sourceTree = "<group>"; };
 		5089F0531BD3F62800306F4D /* BypassFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BypassFilter.h; sourceTree = "<group>"; };
 		5089F0541BD3F64200306F4D /* BypassFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BypassFilter.mm; sourceTree = "<group>"; };
 		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rom.png; sourceTree = "<group>"; };
@@ -663,6 +666,8 @@
 				50176C4F0A6F72F3009E80BD /* basic.cpp */,
 				500EC04F10E4DCC4005A19A3 /* Message.h */,
 				500EC05010E4DCC4005A19A3 /* Message.cpp */,
+				5088E6871C3515DB006A80E5 /* VC64Object.h */,
+				5088E6861C3515DB006A80E5 /* VC64Object.cpp */,
 				50DAD6900A736F9B00BB44AC /* VirtualComponent.h */,
 				50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */,
 			);
@@ -1201,6 +1206,7 @@
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
 				502D44D91BD3BE7C00950088 /* SepiaFilter.mm in Sources */,
+				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
 				50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */,
 				020214270AF8E599008AB4EB /* SIDVoice.cpp in Sources */,
 				500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */,

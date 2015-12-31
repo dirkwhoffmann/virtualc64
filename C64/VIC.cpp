@@ -26,7 +26,7 @@
 
 VIC::VIC()
 {
-	name = "VIC";
+	setDescription("VIC");
 	debug(3, "  Creating VIC at address %p...\n", this);
     
 	// Start with all debug options disabled

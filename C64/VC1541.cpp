@@ -20,11 +20,11 @@
 
 VC1541::VC1541()
 {
-	name = "1541";
+	setDescription("1541");
     debug(3, "Creating virtual VC1541 at address %p\n", this);
 	
 	// Configure CPU
-	cpu.setName("1541CPU");
+	cpu.setDescription("1541CPU");
     cpu.chipModel = CPU::MOS6502;
     
     // Register sub components

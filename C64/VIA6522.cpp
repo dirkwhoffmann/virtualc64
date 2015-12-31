@@ -26,7 +26,7 @@
 
 VIA6522::VIA6522()
 {
-	name = "VIA";
+	setDescription("VIA");
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -650,7 +650,7 @@ void VIA2::poke(uint16_t addr, uint8_t value)
 
 VIA1::VIA1()
 {
-    name = "VIA1";
+    setDescription("VIA1");
 	debug(3, "  Creating VIA1 at address %p...\n", this);
 }
 	
@@ -661,7 +661,7 @@ VIA1::~VIA1()
 
 VIA2::VIA2()
 {
-    name = "VIA2";
+    setDescription("VIA2");
 	debug(3, "  Creating VIA2 at address %p...\n", this);
 }
 	

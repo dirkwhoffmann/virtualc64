@@ -24,7 +24,8 @@
 
 C64Memory::C64Memory()
 {	
-	name ="C64 memory";
+	setDescription("C64 memory");
+    
 	debug (3, "  Creating main memory at address %p...\n", this);
 		
 	charRomFile = NULL;

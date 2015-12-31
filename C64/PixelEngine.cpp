@@ -27,7 +27,7 @@ extern unsigned dirkcnt;
 
 PixelEngine::PixelEngine() // C64 *c64)
 {
-    name = "PixelEngine";
+    setDescription("PixelEngine");
     
     debug(3, "  Creating PixelEngine at address %p...\n", this);
     

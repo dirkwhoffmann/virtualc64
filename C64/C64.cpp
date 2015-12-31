@@ -81,7 +81,7 @@ void
 
 C64::C64()
 {	
-	name = "C64";
+	setDescription("C64");
 	
 	debug(1, "Creating virtual C64 at address %p\n", this);
 

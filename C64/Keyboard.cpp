@@ -22,7 +22,7 @@
 
 Keyboard::Keyboard()
 {
-	name = "Keyboard";
+	setDescription("Keyboard");
 	debug(3, "Creating keyboard at address %p...\n", this);
     
 	for (int i = 0; i < 256; i++) {

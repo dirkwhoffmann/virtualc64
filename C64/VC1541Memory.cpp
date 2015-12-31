@@ -20,7 +20,7 @@
 
 VC1541Memory::VC1541Memory()
 {
-    name = "1541MEM";
+    setDescription("1541MEM");
 	debug(3, "  Creating VC1541 memory at %p...\n", this);
 
     // Register snapshot items

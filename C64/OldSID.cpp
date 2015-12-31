@@ -49,8 +49,7 @@ const float OldSID::volumeLevelTable[16] = { 0.0f, 0.07f, 0.13f, 0.20f, 0.27f, 0
 
 OldSID::OldSID()
 {
-	name = "SID";
-
+	setDescription("SID");
 	debug(3, "  Creating SID at address %p...\n", this);
     
 	// link voices together

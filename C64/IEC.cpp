@@ -20,7 +20,7 @@
 
 IEC::IEC()
 {
-  	name = "IEC";
+  	setDescription("IEC");
     debug(3, "  Creating IEC bus at address %p...\n", this);
     
     // Register snapshot items

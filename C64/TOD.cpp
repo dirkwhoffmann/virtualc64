@@ -20,7 +20,7 @@
 
 TOD::TOD()
 {
-	name = "TOD";
+	setDescription("TOD");
 	debug(3, "    Creating TOD at address %p...\n", this);
     
     // Register snapshot items

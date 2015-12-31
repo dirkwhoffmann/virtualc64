@@ -24,7 +24,7 @@
 
 Disk525::Disk525()
 {
-    name = "Disk525";
+    setDescription("Disk525");
 
     // Register snapshot items
     SnapshotItem items[] = {        

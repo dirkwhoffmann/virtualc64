@@ -2,7 +2,6 @@
  * @header      VirtualComponent.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   2006 - 2015 Dirk W. Hoffmann
- * @brief       Declares Disk525 class
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +21,7 @@
 #ifndef _VIRTUAL_COMPONENT_INC
 #define _VIRTUAL_COMPONENT_INC
 
-#include "basic.h"
+#include "VC64Object.h"
 
 // Forward declarations
 class C64;
@@ -33,7 +32,7 @@ class C64;
  *            The class comprises functions for resetting, suspending and resuming the component,
  *            as well as functions for loading and saving state (snapshots).
  */
-class VirtualComponent {
+class VirtualComponent : public VC64Object {
 
 public: 
 
@@ -41,18 +40,6 @@ public:
      *  @details  This reference is setup in the reset method and provides easy access to all
      *            other components of the same virtual C64. */
     C64 *c64;
-
-    //! @brief    Debug level
-	/*! @details  Debug messages are written either to console or a logfile. Set to 0 to omit messages.
-     *  @see      logfile
-     */
-    unsigned debugLevel;
-
-protected:
-    
-    /*! @brief    Name of this component.
-     */
-	const char *name;
     
 private:
     
@@ -63,12 +50,6 @@ private:
      *            the 'halted' state.
      */
 	bool running;
-
-	/*! @brief    Indicates whether the component should print trace messages.
-     *  @details  In trace mode, all components are requested to dump debug informatik perodically.
-     *            Only a few components will react to this flag.
-	 */
-	bool traceMode;
 		
 	/*! @brief    The original state before the first call of suspend(). 
      *  @see      suspend
@@ -81,25 +62,17 @@ private:
 	int suspendCounter;
 				
 public:
-	/*! @brief    Log file.
-     *  @details  By default, this variable is NULL and all debug and trace messages are sent to
-     *            stdout or stderr. Assign a file handle, if you wish to send debug output to a file.
-	 */
-	FILE *logfile;
-
+    
 	//! Constructor
 	VirtualComponent();
 
 	//! Destructor
 	virtual ~VirtualComponent();
 
+    
     //
     //! @functiongroup Initializing the component
     //
-
-	/*! @brief    Assign name.
-     */
-	inline void setName(const char *componentName) { name = componentName; }
 		
     /*! @brief    Assign top-level C64 object.
      *  @details  The provided reference is propagated automatically to all sub components.
@@ -122,14 +95,6 @@ public:
     //
     //! @functiongroup Debugging the component
     //
-
-    /*! @brief    Returns true iff trace mode is enabled.
-     */
-    inline bool tracingEnabled() { return traceMode; }
-    
-    /*! @brief    Enables or disables trace mode.
-     */
-    inline void setTraceMode(bool b) { traceMode = b; }
 
 	//! @brief    Print info about the internal state.
 	/*! @details  This functions is intended for debugging purposes only. Any derived component should
@@ -181,47 +146,10 @@ public:
      */
 	void resume();
 
-
-    //
-    //! @functiongroup Printing messages to console
-    //
-
-    /*! @brief    Prints message to console or a log file.
-     */
-	void msg(const char *fmt, ...);
-
-    /*! @brief    Prints message to console or a log file if debug level is high enough.
-     */
-    void msg(int level, const char *fmt, ...);
-
-    
-    /*! @brief    Prints debug message to console or a log file
-     *  @details  Debug messages are prefixed by a custom string naming the component.
-     */
-	void debug(const char *fmt, ...);
-    
-    /*! @brief    Prints debug message to console or a log file if debug level is high enogh.
-     *  @details  Debug messages are prefixed by a custom string naming the component.
-     */
-	void debug(int level, const char *fmt, ...);
-    
-    /*! @brief    Prints warning message to console or a log file.
-     *  @details  Warning messages are prefixed by a custom string naming the component.
-     *            Warning messages are printed when something unexpected is encountered.
-     */
-	void warn(const char *fmt, ...);
-
-    /*! @brief    Prints a panic message to console or a log file.
-     *  @details  Panic messages are prefixed by a custom string naming the component.
-     *            Panic messages indicate that a code bug is encountered.
-     */
-    void panic(const char *fmt, ...);
-
     
     //
     //! @functiongroup Registering snapshot items and sub components
     //
-    
     
 protected:
     

@@ -20,7 +20,7 @@
 
 CPU::CPU()
 {	
-	name = "CPU";
+	setDescription("CPU");
 	debug(3, "  Creating CPU at address %p...\n", this);
 	
     // Chip model

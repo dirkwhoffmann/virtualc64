@@ -20,7 +20,7 @@
 
 CIA::CIA()
 {
-	name = "CIA";
+	setDescription("CIA");
     
     // Register sub components
     VirtualComponent *subcomponents[] = { &tod, NULL };
@@ -754,7 +754,7 @@ void CIA::executeOneCycle()
 
 CIA1::CIA1()
 {
-    name = "CIA1";
+    setDescription("CIA1");
 	debug(3, "  Creating CIA1 at address %p...\n", this);
 }
 
@@ -974,7 +974,7 @@ CIA1::clearJoystickBits(int nr, uint8_t mask)
 
 CIA2::CIA2()
 {
-    name = "CIA2";
+    setDescription("CIA2");
 	debug(3, "  Creating CIA2 at address %p...\n", this);
 }
 

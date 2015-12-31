@@ -20,7 +20,7 @@
 
 SIDWrapper::SIDWrapper()
 {
-	name = "SIDWrapper";
+	setDescription("SIDWrapper");
     
     oldsid = new OldSID();
     resid = new ReSID();

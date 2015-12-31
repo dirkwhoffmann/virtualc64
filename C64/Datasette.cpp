@@ -20,7 +20,7 @@
 
 Datasette::Datasette()
 {
-    name = "Datasette";
+    setDescription("Datasette");
     debug(3, "Creating virtual datasette at address %p\n", this);
         
     // Register snapshot items

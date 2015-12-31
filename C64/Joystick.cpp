@@ -21,7 +21,7 @@
 
 Joystick::Joystick() {
 
-    name = "Joystick";
+    setDescription("Joystick");
     debug(3, "    Creating joystick at address %p...\n", this);
     
     // Register snapshot items
