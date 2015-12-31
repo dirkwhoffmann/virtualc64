@@ -543,6 +543,7 @@
 - (void) setTraceMode:(bool)b { vc1541->setTraceMode(b); }
 - (bool) hasRedLED { return vc1541->getRedLED(); }
 - (bool) hasDisk { return vc1541->hasDisk(); }
+- (void) ejectDisk { vc1541->ejectDisk(); }
 - (bool) writeProtection { return vc1541->disk.isWriteProtected(); }
 - (void) setWriteProtection:(bool)b { vc1541->disk.setWriteProtection(b); }
 - (bool) DiskModified { return vc1541->disk.isModified(); }
@@ -552,7 +553,12 @@
 - (bool) soundMessagesEnabled { return vc1541->soundMessagesEnabled(); }
 - (void) setSendSoundMessages:(bool)b { vc1541->setSendSoundMessages(b); }
 - (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
-- (void) ejectDisk { vc1541->ejectDisk(); }
+
+- (D64ArchiveProxy *) convertToD64
+{
+    D64Archive *archive = vc1541->convertToD64();
+    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
+}
 
 - (void) playSound:(NSString *)name volume:(float)v
 {
@@ -901,6 +907,7 @@
 - (NSString *)getName { return [NSString stringWithUTF8String:archive->getName()]; }
 - (NSInteger)getType { return (NSInteger)archive->getType(); }
 - (NSInteger)getNumberOfItems { return (NSInteger)archive->getNumberOfItems(); }
+- (BOOL)writeToFile:(NSString *)filename { return archive->writeToFile([filename UTF8String]); }
 
 @end
 
@@ -958,10 +965,48 @@
     return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
-+ (instancetype) archiveFromDrive:(VC1541Proxy *)drive
+@end
+
+
+@implementation PRGArchiveProxy
+
++ (BOOL)isPRGFile:(NSString *)filename
 {
-    D64Archive *archive = D64Archive::archiveFromDrive([drive vc1541]);
-    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
+    return PRGArchive::isPRGFile([filename UTF8String]);
+}
+
++ (instancetype)archiveFromPRGFile:(NSString *)filename
+{
+    PRGArchive *archive = PRGArchive::archiveFromPRGFile([filename UTF8String]);
+    return archive ? [[PRGArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
++ (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
+{
+    PRGArchive *archive = PRGArchive::archiveFromArchive([otherArchive archive]);
+    return archive ? [[PRGArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
+@end
+
+
+@implementation P00ArchiveProxy
+
++ (BOOL)isP00File:(NSString *)filename
+{
+    return P00Archive::isP00File([filename UTF8String]);
+}
+
++ (instancetype)archiveFromP00File:(NSString *)filename
+{
+    P00Archive *archive = P00Archive::archiveFromP00File([filename UTF8String]);
+    return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
++ (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
+{
+    P00Archive *archive = P00Archive::archiveFromArchive([otherArchive archive]);
+    return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 @end

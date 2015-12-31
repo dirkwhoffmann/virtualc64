@@ -23,6 +23,7 @@
 @class AudioDevice;
 @class C64Proxy;
 @class V64Snapshot;
+@class D64ArchiveProxy; 
 @class MyMetalView;
 @class ArchiveProxy;
 @class TAPContainerProxy;
@@ -440,6 +441,7 @@ class JoystickManager;
 - (void) setTraceMode:(bool)b;
 - (bool) hasRedLED;
 - (bool) hasDisk;
+- (void) ejectDisk;
 - (bool) writeProtection;
 - (void) setWriteProtection:(bool)b;
 - (bool) DiskModified;
@@ -448,9 +450,8 @@ class JoystickManager;
 - (void) setBitAccuracy:(bool)b;
 - (bool) soundMessagesEnabled;
 - (void) setSendSoundMessages:(bool)b;
+- (D64ArchiveProxy *) convertToD64;
 - (bool) exportToD64:(NSString *)path;
-- (void) ejectDisk;
-
 
 - (void) playSound:(NSString *)name volume:(float)v;
 
@@ -685,6 +686,7 @@ class JoystickManager;
 - (NSString *)getName;
 - (NSInteger)getType;
 - (NSInteger)getNumberOfItems; 
+- (BOOL)writeToFile:(NSString *)filename; 
 
 @end
 
@@ -704,7 +706,22 @@ class JoystickManager;
 + (instancetype) archiveFromArbitraryFile:(NSString *)filename;
 + (instancetype) archiveFromD64Archive:(D64ArchiveProxy *)archive;
 + (instancetype) archiveFromArchive:(ArchiveProxy *)archive;
-+ (instancetype) archiveFromDrive:(VC1541Proxy *)drive;
+@end
+
+@interface PRGArchiveProxy : ArchiveProxy
+{
+}
++ (BOOL) isPRGFile:(NSString *)filename;
++ (instancetype) archiveFromPRGFile:(NSString *)filename;
++ (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive;
+@end
+
+@interface P00ArchiveProxy : ArchiveProxy
+{
+}
++ (BOOL) isP00File:(NSString *)filename;
++ (instancetype) archiveFromP00File:(NSString *)filename;
++ (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive;
 @end
 
 @interface G64ArchiveProxy : ArchiveProxy

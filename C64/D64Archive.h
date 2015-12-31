@@ -25,7 +25,7 @@
 #include "Archive.h"
 
 // Forward declarations
-class VC1541;
+// class VC1541;
 
 // D64 files come in six different sizes
 #define D64_683_SECTORS 174848
@@ -99,8 +99,10 @@ public:
     /*! @brief   Creates a D64 archive from a VC1541 drive.
      *  @param   drive A VC1541 drive with a disk inserted.
      *  @result  A D64 archive containing the same files as the currently inserted disk;
-     *           NULL if no disk is inserted. */
-     static D64Archive *archiveFromDrive(VC1541 *drive);
+     *           NULL if no disk is inserted. 
+     @  @deprecated
+     */
+     // static D64Archive *archiveFromDrive(VC1541 *drive);
 
     
 	//
@@ -135,30 +137,40 @@ public:
     //
     //! @functiongroup Accessing archive attributes
     //
+
+    //! @brief    Returns a pointer to the raw archive data
+    uint8_t *getData() { return data; }
+
+    //! @brief    Returns the number of tracks stored in this image
+    unsigned numberOfTracks();
     
-    //! Returns true iff item is a visible directory entry
-    /*! Some files, e.g., deleted ones, are still present on the directory sector, but
-        don't show up when loading the directory via LOAD "$",8.
-        If the extension parameter is provides, an extension string is returned (e.g. "PRG").
-        Invisible files will be returned with extension "" */
+    //! @brief Sets the number of tracks stored in this image
+    void setNumberOfTracks(unsigned tracks);
+
+    
+    /*! @brief    Returns true iff item is a visible file
+     *  @details  Whether a file is visible or not is determined by the type character, a special byte
+     *            stored inside the directory. The type character also determines how the file is displayed
+     *            when the directory is loaded via LOAD "$",8. E.g., standard program files are listes as PRG.
+     *  @param    typeChar   The type character of a file.
+     *  @param    extension  If this parameter is provided, an extension string is returned (e.g. "PRG").
+     *            Invisible files will return "" as extension string.
+     */
     bool itemIsVisible(uint8_t typeChar, const char **extension = NULL);
     
-    //! @brief Returns the logical name of the archive in PET format
+    //! @brief    Returns the logical name of the archive in PET format
     const char *getNameAsPETString();
     
-    //! @brief Returns the name of an item in PET format
+    //! @brief    Returns the name of an item in PET format
     const char *getNameOfItemAsPETString(int n);
     
-    //! @brief Class function that returns the total number of sectors in a specific track
+    //! @brief    Class function that returns the total number of sectors in a specific track
     static unsigned numberOfSectors(unsigned trackNr);
 
-	//! @brief Returns the number of tracks stored in this image
-	unsigned numberOfTracks();
-		
-	//! @brief Returns the low byte of the disk ID
+	//! @brief    Returns the low byte of the disk ID
 	uint8_t diskIdLow() { return data[offset(18, 0) + 0xA2]; }
 
-	//! @brief Returns the high byte of the disk ID
+	//! @brief    Returns the high byte of the disk ID
 	uint8_t diskIdHi() { return data[offset(18, 0) + 0xA3]; }
 
  

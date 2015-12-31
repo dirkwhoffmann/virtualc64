@@ -100,14 +100,12 @@
 
 - (bool)exportDiskDialogWorker:(int)type
 {
-    // C64 *_c64 = [c64 c64];
-    VC1541 *floppy = [[c64 vc1541] vc1541]; //   &_c64->floppy;
-    D64Archive *diskContents;
+    D64ArchiveProxy *newDiskContents;
     NSArray *fileTypes;
-    Archive *target;
-    
+    ArchiveProxy *target;
+
     // Create archive from drive
-    if ((diskContents = D64Archive::archiveFromDrive(floppy)) == NULL) {
+    if ((newDiskContents = [[c64 vc1541] convertToD64]) == nil) {
         NSLog(@"Cannot create D64 archive from drive");
         return false;
     }
@@ -119,31 +117,28 @@
             
             NSLog(@"Exporting to D64 format");
             fileTypes = @[@"D64"];
-            target = diskContents;
+            target = newDiskContents;
             break;
             
         case T64_CONTAINER:
             
             NSLog(@"Exporting to T64 format");
             fileTypes = @[@"T64"];
-            target = T64Archive::archiveFromArchive(diskContents);
-            delete diskContents;
+            target = [T64ArchiveProxy archiveFromArchive:newDiskContents];
             break;
             
         case PRG_CONTAINER:
             
             NSLog(@"Exporting to PRG format");
             fileTypes = @[@"PRG"];
-            target = PRGArchive::archiveFromArchive(diskContents);
-            // delete diskContents;
+            target = [PRGArchiveProxy archiveFromArchive:newDiskContents];
             break;
             
         case P00_CONTAINER:
             
             NSLog(@"Exporting to P00 format");
             fileTypes = @[@"P00"];
-            target = P00Archive::archiveFromArchive(diskContents);
-            delete diskContents;
+            target = [P00ArchiveProxy archiveFromArchive:newDiskContents];
             break;
             
         default:
@@ -157,10 +152,8 @@
     [sPanel setAllowedFileTypes:fileTypes];
     
     // Show panel
-    if ([sPanel runModal] != NSModalResponseOK) {
-        delete target;
+    if ([sPanel runModal] != NSModalResponseOK)
         return false;
-    }
     
     // Export
     NSURL *selectedURL = [sPanel URL];
@@ -168,9 +161,7 @@
     NSString *selectedFile = [selectedFileURL stringByReplacingOccurrencesOfString:@"file://" withString:@""];
     
     NSLog(@"Exporting to file %@", selectedFile);
-    target->writeToFile([selectedFile UTF8String]);
-    delete target;
-    // floppy->disk.setModified(false);
+    [target writeToFile:selectedFile];
     [[[c64 vc1541] disk] setModified:NO];
     return true;
 }

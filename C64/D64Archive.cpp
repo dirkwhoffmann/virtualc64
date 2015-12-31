@@ -223,7 +223,7 @@ D64Archive::archiveFromArchive(Archive *otherArchive)
     return archive;
 }
 
-// TODO: MOVE TO VC1541 class
+#if 0
 D64Archive *
 D64Archive::archiveFromDrive(VC1541 *drive)
 {
@@ -247,7 +247,7 @@ D64Archive::archiveFromDrive(VC1541 *drive)
 
     return archive;
 }
-
+#endif
 
 //
 // Virtual functions from Container class
@@ -589,6 +589,12 @@ D64Archive::numberOfTracks()
     return numTracks;
 }
 
+void
+D64Archive::setNumberOfTracks(unsigned tracks)
+{
+    assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
+    numTracks = tracks;
+}
 
 
 //

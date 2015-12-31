@@ -370,20 +370,41 @@ VC1541::ejectDisk()
         c64->putMessage(MSG_VC1541_DISK_SOUND, 0);
 }
 
+D64Archive *
+VC1541::convertToD64()
+{
+    D64Archive *archive = new D64Archive();
+    debug(1, "Creating D64 archive from currently inserted diskette ...\n");
+    
+    // Perform test run
+    int error;
+    if (disk.decodeDisk(NULL, &error) > D64_802_SECTORS_ECC || error) {
+        archive->warn("Cannot create archive (error code: %d)\n", error);
+        delete archive;
+        return NULL;
+    }
+    
+    // Decode diskette
+    archive->setNumberOfTracks(42);
+    disk.decodeDisk(archive->getData());
+    
+    archive->debug(2, "Archive has %d files\n", archive->getNumberOfItems());
+    archive->debug(2, "Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
+    
+    return archive;
+}
+
 bool
 VC1541::exportToD64(const char *filename)
 {
-    D64Archive *archive;
-    
     assert(filename != NULL);
+
+    D64Archive *archive = convertToD64();
     
-    // Create archive
-    if ((archive = D64Archive::archiveFromDrive(this)) == NULL)
+    if (archive == NULL)
         return false;
     
-    // Write archive to disk
     archive->writeToFile(filename);
-    
     delete archive;
     return true;
 }
