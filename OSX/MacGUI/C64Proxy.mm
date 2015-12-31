@@ -876,6 +876,8 @@
 
 - (instancetype)initWithArchive:(Archive *)a
 {
+    NSLog(@"ArchiveProxy::initWithArchive %p", archive);
+
     if (a == nil)
         return nil;
     
@@ -884,7 +886,6 @@
     
     archive = a;
 
-    NSLog(@"ArchiveProxy %p created", archive);
     return self;
 }
 
@@ -913,14 +914,14 @@
 
 + (instancetype)archiveFromT64File:(NSString *)filename
 {
-    return [[T64ArchiveProxy alloc] initWithArchive:
-            (T64Archive::archiveFromT64File([filename UTF8String]))];
+    T64Archive *archive = T64Archive::archiveFromT64File([filename UTF8String]);
+    return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 + (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
 {
-    return [[T64ArchiveProxy alloc] initWithArchive:
-            (T64Archive::archiveFromArchive([otherArchive archive]))];
+    T64Archive *archive = T64Archive::archiveFromArchive([otherArchive archive]);
+    return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 @end
@@ -935,32 +936,32 @@
 
 + (instancetype) archiveFromD64File:(NSString *)filename
 {
-    return [[D64ArchiveProxy alloc] initWithArchive:
-            (D64Archive::archiveFromD64File([filename UTF8String]))];
+    D64Archive *archive = D64Archive::archiveFromD64File([filename UTF8String]);
+    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 + (instancetype) archiveFromArbitraryFile:(NSString *)filename
 {
-    return [[D64ArchiveProxy alloc] initWithArchive:
-            (D64Archive::archiveFromArbitraryFile([filename UTF8String]))];
+    D64Archive *archive = D64Archive::archiveFromArbitraryFile([filename UTF8String]);
+    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
-+ (instancetype) archiveFromD64Archive:(D64ArchiveProxy *)archive
++ (instancetype) archiveFromD64Archive:(D64ArchiveProxy *)otherArchive
 {
-    return [[D64ArchiveProxy alloc] initWithArchive:
-            (D64Archive::archiveFromD64Archive((D64Archive *)[archive archive]))];
+    D64Archive *archive = D64Archive::archiveFromD64Archive((D64Archive *)[otherArchive archive]);
+    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
-+ (instancetype) archiveFromArchive:(ArchiveProxy *)archive
++ (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive
 {
-    return [[D64ArchiveProxy alloc] initWithArchive:
-            (D64Archive::archiveFromArchive([archive archive]))];
+    D64Archive *archive = D64Archive::archiveFromArchive([otherArchive archive]);
+    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 + (instancetype) archiveFromDrive:(VC1541Proxy *)drive
 {
-    return [[D64ArchiveProxy alloc] initWithArchive:
-            (D64Archive::archiveFromDrive([drive vc1541]))];
+    D64Archive *archive = D64Archive::archiveFromDrive([drive vc1541]);
+    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 @end
@@ -975,8 +976,8 @@
 
 + (instancetype) archiveFromG64File:(NSString *)filename
 {
-    return [[G64ArchiveProxy alloc] initWithArchive:
-            (G64Archive::archiveFromG64File([filename UTF8String]))];
+    G64Archive *archive = G64Archive::archiveFromG64File([filename UTF8String]);
+    return archive ? [[G64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 @end
@@ -991,8 +992,8 @@
 
 + (instancetype) archiveFromNIBFile:(NSString *)filename
 {
-    return [[NIBArchiveProxy alloc] initWithArchive:
-            (NIBArchive::archiveFromNIBFile([filename UTF8String]))];
+    NIBArchive *archive = NIBArchive::archiveFromNIBFile([filename UTF8String]);
+    return archive ? [[NIBArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 @end
@@ -1030,8 +1031,8 @@
 
 + (instancetype) containerFromTAPFile:(NSString *)filename
 {
-    return [[TAPContainerProxy alloc] initWithTAPContainer:
-            (TAPArchive::archiveFromTAPFile([filename UTF8String]))];
+    TAPArchive *container = TAPArchive::archiveFromTAPFile([filename UTF8String]);
+    return container ? [[TAPContainerProxy alloc] initWithTAPContainer:container] : nil;
 }
 
 - (NSString *)getPath { return [NSString stringWithUTF8String:container->getPath()]; }

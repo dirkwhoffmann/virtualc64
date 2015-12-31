@@ -350,24 +350,17 @@
             return YES;
         }
         
-        NSLog(@"After ***ROM*");
-
         // Is it a cartridge?
         if ([[controller document] setCartridgeWithName:path]) {
             [controller mountCartridge];
             return YES;
         }
 
-        NSLog(@"After ***cartridge*");
-
         // Is it a NIB archive?
         if ([[controller document] setNIBArchiveWithName:path]) {
-            NSLog(@"It's a NIB file %@", path);
             [controller showMountDialog];
             return YES;
         }
-
-        NSLog(@"After ***NIB*");
 
         // Is it a G64 archive?
         if ([[controller document] setG64ArchiveWithName:path]) {
@@ -375,18 +368,13 @@
             return YES;
         }
         
-        NSLog(@"After ***G64*");
-        
         // Is it a TAP archive?
         if ([[controller document] setTAPArchiveWithName:path]) {
             [controller showTapeDialog];
             return YES;
         }
-
-        NSLog(@"After ***TAP*");
         
         // Is it an archive other than G64?
-        NSLog(@"I'm here");
         if ([[controller document] setArchiveWithName:path]) {
             [controller showMountDialog];
             return YES;
