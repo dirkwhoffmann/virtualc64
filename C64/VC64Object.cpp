@@ -20,22 +20,19 @@
 
 VC64Object::VC64Object()
 {
-    debug(3, "VC64Object created\n");
-
-    debugLevel = 2; // default debug level
+    debugLevel = defaultDebugLevel; 
     traceMode = false;
-    logfile = NULL;
     description = NULL;
 }
 
 VC64Object::~VC64Object()
 {
-    debug(2, "VC64Object deleted\n");
-    
     if (logfile)
         fclose(logfile);
 }
 
+unsigned VC64Object::defaultDebugLevel = 2;
+FILE *VC64Object::logfile = NULL;
 
 // ---------------------------------------------------------------------------------------------
 //                                      Printing messages

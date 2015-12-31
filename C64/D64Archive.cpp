@@ -78,6 +78,7 @@ static const D64TrackInfo D64Map[] =
 
 D64Archive::D64Archive()
 {
+    setDescription("D64Archive");
     memset(name, 0, sizeof(name));
     memset(data, 0, sizeof(data));
     memset(errors, 0, sizeof(errors));
@@ -116,16 +117,14 @@ D64Archive::isD64File(const char *filename)
 D64Archive *
 D64Archive::archiveFromD64File(const char *filename)
 {
-	D64Archive *archive;
-		
-	fprintf(stderr, "Loading D64 archive from D64 file...\n");
-	archive = new D64Archive();	
+	D64Archive *archive = new D64Archive();
+    
 	if (!archive->readFromFile(filename)) {
-        fprintf(stderr, "Failed to load archive\n");
         delete archive;
-		archive = NULL;
+        return NULL;
 	}
 	
+    archive->debug(1, "D64 archive created from file %s.\n", filename);
 	return archive;
 }
 
@@ -158,18 +157,12 @@ D64Archive::archiveFromArbitraryFile(const char *filename)
 D64Archive *
 D64Archive::archiveFromD64Archive(D64Archive *otherArchive)
 {
-    D64Archive *archive;
-    
     if (otherArchive == NULL)
         return NULL;
     
-    fprintf(stderr, "Cloning D64 archive...\n");
+    D64Archive *archive = new D64Archive();
+    archive->debug(1, "Creating D64 archive by cloning other D64 archive ...\n");
     
-    if ((archive = new D64Archive()) == NULL) {
-        fprintf(stderr, "Failed to create D64 archive\n");
-        return NULL;
-    }
-
     memcpy(archive->name, otherArchive->name, sizeof(archive->name));
     memcpy(archive->data, otherArchive->data, sizeof(archive->data));
     memcpy(archive->errors, otherArchive->errors, sizeof(archive->errors));
@@ -182,17 +175,11 @@ D64Archive::archiveFromD64Archive(D64Archive *otherArchive)
 D64Archive *
 D64Archive::archiveFromArchive(Archive *otherArchive)
 {
-    D64Archive *archive;
-    
     if (otherArchive == NULL)
 		return NULL;
-        
-	fprintf(stderr, "Creating D64 archive from an %s archive...\n", otherArchive->getTypeAsString());
-
-    if ((archive = new D64Archive()) == NULL) {
-        fprintf(stderr, "Failed to create D64 archive\n");
-        return NULL;
-    }
+    
+    D64Archive *archive = new D64Archive();
+    archive->debug(1, "Creating D64 archive from a %s archive...\n", otherArchive->getTypeAsString());
     
     // Copy file path
     archive->setPath(otherArchive->getPath());
@@ -216,7 +203,7 @@ D64Archive::archiveFromArchive(Archive *otherArchive)
         int byte;
         unsigned num = 0;
 
-        fprintf(stderr, "Will write %d bytes\n", otherArchive->getSizeOfItem(i));
+        archive->debug(2, "Will write %d bytes\n", otherArchive->getSizeOfItem(i));
 
         otherArchive->selectItem(i);
         while ((byte = otherArchive->getByte()) != EOF) {
@@ -224,32 +211,29 @@ D64Archive::archiveFromArchive(Archive *otherArchive)
             num++;
         }
         
-        fprintf(stderr, "D64 item %d: %d bytes written\n", i, num);
+        archive->debug(2, "D64 item %d: %d bytes written\n", i, num);
         // Item i has been written. Goto next free sector and proceed with the next item
         (void)archive->nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */);
     }
 
-    fprintf(stderr, "Archive created (item 0 has %d bytes)\n", archive->getSizeOfItem(0));
-    fprintf(stderr, "%s archive created (size of item 0 = %d).\n",
+    archive->debug(2, "Archive created (item 0 has %d bytes)\n", archive->getSizeOfItem(0));
+    archive->debug(2, "%s archive created (size of item 0 = %d).\n",
             archive->getTypeAsString(), archive->getSizeOfItem(0));
 
     return archive;
 }
 
+// TODO: MOVE TO VC1541 class
 D64Archive *
 D64Archive::archiveFromDrive(VC1541 *drive)
 {
-    D64Archive *archive;
-    int error;
-    
-    fprintf(stderr, "Creating D64 archive from VC1541 drive...\n");
-    
-    if ((archive = new D64Archive()) == NULL)
-        return NULL;
-    
+    D64Archive *archive = new D64Archive();
+    archive->debug(1, "Creating D64 archive from VC1541 drive contents...\n");
+        
     // Perform test run
+    int error;
     if (drive->disk.decodeDisk(NULL, &error) > D64_802_SECTORS_ECC || error) {
-        fprintf(stderr, "Cannot create archive (error code: %d)\n", error);
+        archive->warn("Cannot create archive (error code: %d)\n", error);
         delete archive;
         return NULL;
     }
@@ -258,8 +242,8 @@ D64Archive::archiveFromDrive(VC1541 *drive)
     archive->numTracks = 42;
     drive->disk.decodeDisk(archive->data);
 
-    fprintf(stderr, "Archive has %d files\n", archive->getNumberOfItems());
-    fprintf(stderr, "Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
+    archive->debug(2, "Archive has %d files\n", archive->getNumberOfItems());
+    archive->debug(2, "Item %d has size: %d\n", 0, archive->getSizeOfItem(0));
 
     return archive;
 }
@@ -284,45 +268,45 @@ D64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	{
 		case D64_683_SECTORS: // 35 tracks, no errors
 			
-            fprintf(stderr, "D64 file contains 35 tracks, no EC bytes\n");
+            debug(2, "D64 file contains 35 tracks, no EC bytes\n");
 			numTracks = 35;
 			break;
             
 		case D64_683_SECTORS_ECC: // 35 tracks, 683 error bytes
 			
-            fprintf(stderr, "D64 file contains 35 tracks, 683 EC bytes\n");
+            debug(2, "D64 file contains 35 tracks, 683 EC bytes\n");
 			numTracks = 35;
 			numberOfErrors = 683;
 			break;
             
 		case D64_768_SECTORS: // 40 tracks, no errors
 			
-            fprintf(stderr, "D64 file contains 40 tracks, no EC bytes\n");
+            debug(2, "D64 file contains 40 tracks, no EC bytes\n");
 			numTracks = 40;
 			break;
             
 		case D64_768_SECTORS_ECC: // 40 tracks, 768 error bytes
 			
-            fprintf(stderr, "D64 file contains 40 tracks, 768 EC bytes\n");
+            debug(2, "D64 file contains 40 tracks, 768 EC bytes\n");
 			numTracks = 40;
 			numberOfErrors = 768;
 			break;
             
 		case D64_802_SECTORS: // 42 tracks, no error bytes
             
-            fprintf(stderr, "D64 file contains 42 tracks, no EC bytes\n");
+            debug(2, "D64 file contains 42 tracks, no EC bytes\n");
 			numTracks = 42;
 			break;
             
 		case D64_802_SECTORS_ECC: // 42 tracks, 802 error bytes
             
-            fprintf(stderr, "D64 file contains 42 tracks, 802 EC bytes\n");
+            debug(2, "D64 file contains 42 tracks, 802 EC bytes\n");
 			numTracks = 42;
             numberOfErrors = 802;
 			break;
             
 		default:
-            fprintf(stderr, "D64 has an unknown format\n");
+            warn("D64 has an unknown format\n");
 			return false;
 	}
 	
@@ -493,8 +477,6 @@ D64Archive::selectItem(int item)
 {
     fp = -1;
     
-    // fprintf(stderr, "selectItem:%d\n", item);
-    
     // check, if item exists
     if (item >= getNumberOfItems())
         return;
@@ -502,8 +484,6 @@ D64Archive::selectItem(int item)
     // find directory entry
     if ((fp = findDirectoryEntry(item)) <= 0)
         return;
-    
-    // fprintf(stderr, "First data sector: %02X, %02X", data[fp+0x03], data[fp+0x04]);
     
     // find first data sector
     if ((fp = offset(data[fp+0x01], data[fp+0x02])) < 0)
@@ -517,7 +497,6 @@ D64Archive::selectItem(int item)
     fp += 2;
     
     // We finally reached the first real data byte :-)
-    // fprintf(stderr, "Item selected (%d,%d)\n", data[fp+0x03], data[fp+0x04]);
 }
 
 int 
@@ -684,13 +663,12 @@ D64Archive::writeByteToSector(uint8_t byte, uint8_t *t, uint8_t *s)
     uint8_t positionOfLastDataByte = data[pos + 1];
     
     if (positionOfLastDataByte == 0xFF) {
-        // fprintf(stderr, "%d/%d is full. ", track, sector);
-        // No rool in this sector, proceed to next one
+
+        // No free slots in this sector, proceed to next one
         if (!nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */)) {
-            // Sorry, disk is full
-            return false;
+            return false; // Sorry, disk is full
         }
-        // fprintf(stderr, "Switching to %d/%d\n", track, sector);
+
         // link previous sector with the new one
         data[pos++] = track;
         data[pos] = sector;
@@ -724,8 +702,6 @@ void
 D64Archive::markSectorAsUsed(uint8_t track, uint8_t sector)
 {
     // For each track and sector, there exists a single bit in the BAM. 1 = used, 0 = unused
-    
-    // fprintf(stderr,"Marking track %d and sector %d as used\n", track, sector);
     
     // First byte of BAM
     int bam = offset(18,0);
@@ -879,7 +855,7 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrac
 	int pos;
 	
     if (nr >= MAX_FILES_ON_DISK) {
-        fprintf(stderr, "Cannot write directory entry. Number of files is limited to %d\n", MAX_FILES_ON_DISK);
+        warn("Cannot write directory entry. Number of files is limited to %d\n", MAX_FILES_ON_DISK);
 		return false;
 	}
 
@@ -941,9 +917,9 @@ D64Archive::dumpSector(int track, int sector)
 {
     int pos = offset(track, sector);
     
-    fprintf(stderr, "Sector %d/%d\n", track, sector);
+    msg("Sector %d/%d\n", track, sector);
     for (int i = 0; i < 256; i++) {
-        fprintf(stderr, "%02X ", data[pos++]);
+        msg("%02X ", data[pos++]);
     }
 }
 

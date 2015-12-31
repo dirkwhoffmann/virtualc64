@@ -20,6 +20,7 @@
 
 G64Archive::G64Archive()
 {
+    setDescription("G64Archive");
 	data = NULL;
 	dealloc();
 }
@@ -52,16 +53,14 @@ G64Archive::isG64File(const char *filename)
 G64Archive *
 G64Archive::archiveFromG64File(const char *filename)
 {
-	G64Archive *archive;
-	
-	fprintf(stderr, "Loading G64 archive from G64 file...\n");
-	archive = new G64Archive();
+	G64Archive *archive = new G64Archive();
+
 	if (!archive->readFromFile(filename)) {
-        fprintf(stderr, "Failed to load archive\n");
 		delete archive;
-		archive = NULL;
+        return NULL;
 	}
 	
+    archive->debug(1, "G64 archive created from file %s.\n", filename);
 	return archive;
 }
 
@@ -159,7 +158,6 @@ G64Archive::selectItem(int n)
     fp = getStartOfItem(n);
     fp += 2; // skip length information
     fp_eof = fp + getSizeOfItem(n);
-    fprintf(stderr, "fp = %d, f_eof = %d\n", fp, fp_eof);
 }
 
 int

@@ -22,6 +22,7 @@
 
 NIBArchive::NIBArchive()
 {
+    setDescription("NIBArchive");
 	data = NULL;
 	dealloc();
 
@@ -62,16 +63,19 @@ NIBArchive::isNIBFile(const char *filename)
 NIBArchive *
 NIBArchive::archiveFromNIBFile(const char *filename)
 {
-	NIBArchive *archive;
-	
-	fprintf(stderr, "Loading NIB archive from NIB file...\n");
-	archive = new NIBArchive();
-	if (!archive->readFromFile(filename) || !archive->scan()) {
-        fprintf(stderr, "Failed to load archive\n");
+	NIBArchive *archive = new NIBArchive();
+    
+	if (!archive->readFromFile(filename)) {
 		delete archive;
-		archive = NULL;
+        return NULL;
 	}
-	
+
+    if (!archive->scan()) {
+        delete archive;
+        return NULL;
+    }
+
+    archive->debug(1, "NIB archive created from file %s.\n", filename);
     return archive;
 }
 

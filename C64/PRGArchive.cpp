@@ -20,6 +20,7 @@
 
 PRGArchive::PRGArchive()
 {
+    setDescription("PRGArchive");
 	data = NULL;
 	dealloc();
 }
@@ -46,38 +47,30 @@ PRGArchive::isPRGFile(const char *filename)
 PRGArchive *
 PRGArchive::archiveFromPRGFile(const char *filename)
 {
-	PRGArchive *archive;
-	
-	fprintf(stderr, "Loading PRG archive from PRG file...\n");
-	archive = new PRGArchive();	
-	if (!archive->readFromFile(filename)) {
-        fprintf(stderr, "Failed to load archive\n");
+	PRGArchive *archive = new PRGArchive();
+    
+    if (!archive->readFromFile(filename)) {
         delete archive;
-		archive = NULL;
+        return NULL;
 	}
 	
+    archive->debug(1, "PRG archive created from file %s.\n", filename);
 	return archive;
 }
 
 PRGArchive *
 PRGArchive::archiveFromArchive(Archive *otherArchive)
 {
-    PRGArchive *archive;
-    
     if (otherArchive == NULL || otherArchive->getNumberOfItems() == 0)
         return NULL;
     
-    fprintf(stderr, "Creating PRG archive from %s archive...\n", otherArchive->getTypeAsString());
-    
-    if ((archive = new PRGArchive()) == NULL) {
-        fprintf(stderr, "Failed to create archive\n");
-        return NULL;
-    }
+    PRGArchive *archive = new PRGArchive();
+    archive->debug(1, "Creating PRG archive from %s archive...\n", otherArchive->getTypeAsString());
     
     // Determine container size and allocate memory
     archive->size = 2 + otherArchive->getSizeOfItem(0);
     if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
-        fprintf(stderr, "Failed to allocate %d bytes of memory\n", archive->size);
+        archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
         return NULL;
     }
@@ -94,8 +87,6 @@ PRGArchive::archiveFromArchive(Archive *otherArchive)
         *ptr++ = (uint8_t)byte;
     }
     
-    fprintf(stderr, "%s archive created with %d bytes (size of item 0 = %d).\n",
-            archive->getTypeAsString(), archive->size, archive->getSizeOfItem(0));
     return archive;
 }
 

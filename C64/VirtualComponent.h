@@ -63,10 +63,10 @@ private:
 				
 public:
     
-	//! Constructor
+	//! @brief    Constructor
 	VirtualComponent();
 
-	//! Destructor
+	//! @brief    Destructor
 	virtual ~VirtualComponent();
 
     

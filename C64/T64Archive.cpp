@@ -20,6 +20,7 @@
 
 T64Archive::T64Archive()
 {
+    setDescription("T64Archive");
 	data = NULL;
 	dealloc();
 }
@@ -53,14 +54,10 @@ T64Archive::isT64File(const char *filename)
 T64Archive *
 T64Archive::archiveFromT64File(const char *filename)
 {
-	T64Archive *archive;
-	
-	fprintf(stderr, "Loading T64 archive from T64 file...\n");
-	archive = new T64Archive();
+	T64Archive *archive = new T64Archive();
     
 	if (!archive->readFromFile(filename)) {
-        fprintf(stderr, "Failed to load archive\n");
-		delete archive;
+        delete archive;
 		return NULL;
 	}
 
@@ -69,23 +66,18 @@ T64Archive::archiveFromT64File(const char *filename)
         return NULL;
     }
 
+    archive->debug(1, "T64 archive created from file %s.\n", filename);
 	return archive;
 }
 
 T64Archive *
 T64Archive::archiveFromArchive(Archive *otherArchive)
 {
-    T64Archive *archive;
-    
     if (otherArchive == NULL)
         return NULL;
     
-    fprintf(stderr, "Creating T64 archive from %s archive...\n", otherArchive->getTypeAsString());
-    
-    if ((archive = new T64Archive()) == NULL) {
-        fprintf(stderr, "Failed to create archive\n");
-        return NULL;
-    }
+    T64Archive *archive  = new T64Archive();
+    archive->debug(1, "Creating T64 archive from %s archive...\n", otherArchive->getTypeAsString());
     
     // Determine container size and allocate memory
     unsigned currentFiles = otherArchive->getNumberOfItems();
@@ -96,7 +88,7 @@ T64Archive::archiveFromArchive(Archive *otherArchive)
         archive->size += otherArchive->getSizeOfItem(i);
     
     if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
-        fprintf(stderr, "Failed to allocate %d bytes of memory\n", archive->size);
+        archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
         return NULL;
     }
@@ -355,7 +347,9 @@ T64Archive::getByte()
 	if (fp == fp_eof || fp == size)
 		fp = -1;
 
-	// fprintf(stderr, "%02X ", result);
+    if (tracingEnabled())
+        msg("%02X%c", result, fp == -1 ? '\n' : ' ');
+    
 	return result;
 }
 
@@ -393,8 +387,8 @@ T64Archive::repair()
         uint16_t noOfItemsStatedInHeader = getNumberOfItems();
         if (noOfItems != noOfItemsStatedInHeader) {
         
-            fprintf(stderr, "Repairing corrupted T64 archive: Changing number of items from %d to %d.\n",
-                    noOfItemsStatedInHeader, noOfItems);
+            debug(1, "Repairing corrupted T64 archive: Changing number of items from %d to %d.\n",
+                  noOfItemsStatedInHeader, noOfItems);
         
             data[0x24] = LO_BYTE(noOfItems);
             data[0x25] = HI_BYTE(noOfItems);
@@ -413,7 +407,7 @@ T64Archive::repair()
         uint16_t startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
 
         if (startAddrInContainer >= size) {
-            fprintf(stderr, "T64 archive is corrupt (offset mismatch). Sorry, can't repair.\n");
+            warn("T64 archive is corrupt (offset mismatch). Sorry, can't repair.\n");
             return false;
         }
     
@@ -434,8 +428,8 @@ T64Archive::repair()
             // Let's assume that the rest of the file data belongs to this file ...
             uint16_t fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
 
-            fprintf(stderr, "Repairing corrupted T64 archive: Changing end address of item %d from %04X to %04X.\n",
-                    i, endAddrInMemory, fixedEndAddrInMemory);
+            debug(1, "Repairing corrupted T64 archive: Changing end address of item %d from %04X to %04X.\n",
+                  i, endAddrInMemory, fixedEndAddrInMemory);
 
             data[n] = LO_BYTE(fixedEndAddrInMemory);
             data[n+1] = HI_BYTE(fixedEndAddrInMemory);
@@ -444,17 +438,3 @@ T64Archive::repair()
     
     return 1; // Archive repaired successfully
 }
-
-
-#if 0
-void
-T64Archive::dumpDirectory()
-{
-    Archive::dumpDirectory();
-    
-    for (unsigned i = 0; i < getNumberOfItems(); i++) {
-        fprintf(stderr, "  Item %2d:      %s (%d bytes, load address: %d)\n",
-                i, getNameOfItem(i), getSizeOfItem(i), getDestinationAddrOfItem(i));
-    }
-}
-#endif

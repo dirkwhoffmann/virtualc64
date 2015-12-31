@@ -330,7 +330,7 @@
     const unsigned KEYDELAY = 27500;
     unsigned i;
     
-    fprintf(stderr,"Typing: ");
+    fprintf(stderr, "Typing: ");
 
     usleep(delay);
     for (i = 0; i < [text length] && i < MAXCHARS; i++) {
@@ -341,7 +341,7 @@
         if (isupper(c))
             c = tolower(c);
             
-        fprintf(stderr,"%c",c);
+        fprintf(stderr, "%c",c);
             
         usleep(KEYDELAY);
         [self pressKey:c];

@@ -20,6 +20,7 @@
 
 P00Archive::P00Archive()
 {
+    setDescription("P00Archive");
 	data = NULL;
 	dealloc(); 
 }
@@ -48,40 +49,30 @@ P00Archive::isP00File(const char *filename)
 P00Archive *
 P00Archive::archiveFromP00File(const char *filename)
 {
-	P00Archive *archive;
-
-	fprintf(stderr, "Loading P00 archive from P00 file...\n");
-	archive = new P00Archive();	
+	P00Archive *archive = new P00Archive();
+    
 	if (!archive->readFromFile(filename)) {
-        fprintf(stderr, "Failed to load archive\n");
         delete archive;
 		return NULL;
 	}
 
-    fprintf(stderr, "%s archive created with %d bytes (size of item 0 = %d).\n",
-            archive->getTypeAsString(), archive->size, archive->getSizeOfItem(0));
+    archive->debug(1, "P00 archive created from file %s.\n", filename);
 	return archive;
 }
 
 P00Archive *
 P00Archive::archiveFromArchive(Archive *otherArchive)
 {
-    P00Archive *archive;
-    
     if (otherArchive == NULL || otherArchive->getNumberOfItems() == 0)
         return NULL;
     
-    fprintf(stderr, "Creating P00 archive from %s archive...\n", otherArchive->getTypeAsString());
-    
-    if ((archive = new P00Archive()) == NULL) {
-        fprintf(stderr, "Failed to create archive\n");
-        return NULL;
-    }
+    P00Archive *archive = new P00Archive();
+    archive->debug(1, "Creating P00 archive from %s archive...\n", otherArchive->getTypeAsString());
     
     // Determine container size and allocate memory
     archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem(0);
     if ((archive->data = (uint8_t *)malloc(archive->size)) == NULL) {
-        fprintf(stderr, "Failed to allocate %d bytes of memory\n", archive->size);
+        archive->warn("Failed to allocate %d bytes of memory\n", archive->size);
         delete archive;
         return NULL;
     }
@@ -110,8 +101,6 @@ P00Archive::archiveFromArchive(Archive *otherArchive)
         *ptr++ = (uint8_t)byte;
     }
 
-    fprintf(stderr, "%s archive created with %d bytes (size of item 0 = %d).\n",
-            archive->getTypeAsString(), archive->size, archive->getSizeOfItem(0));
     return archive;
 }
 

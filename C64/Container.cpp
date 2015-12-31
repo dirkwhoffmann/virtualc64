@@ -109,12 +109,12 @@ Container::readFromFile(const char *filename)
     setPath(filename);
     setName(ChangeExtension(ExtractFilename(getPath()), "").c_str());
     
-    fprintf(stderr, "Container %s (%s) read successfully from file %s\n", name, getName(), path);
+    debug(1, "Container %s (%s) read successfully from file %s\n", name, getName(), path);
 	success = true;
 
 exit:
 	
-	if (file)
+    if (file)
 		fclose(file);
 	if (buffer)
 		free(buffer);

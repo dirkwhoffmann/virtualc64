@@ -19,7 +19,7 @@
 #include "C64.h"
 
 VirtualComponent::VirtualComponent()
-{    
+{
     running = false;
 	suspendCounter = 0;	
     snapshotItems = NULL;

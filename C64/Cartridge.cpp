@@ -1,5 +1,7 @@
 /*
- * (C) 2009 A. Carl Douglas. All rights reserved.
+ * Original implementation by A. Carl Douglas, 2009
+ * Modified and maintained by Dirk W. Hoffmann
+ * All rights reserved
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +88,7 @@ Cartridge::readFromBuffer(const uint8_t *buffer, unsigned length)
     
     // Scan cartridge header
     if (memcmp("C64 CARTRIDGE   ", data, 16) != 0) {
-        fprintf(stderr, "Bad cartridge signature. Expected 'C64  CARTRIDGE  ', got ...\n");
+        warn("Bad cartridge signature. Expected 'C64  CARTRIDGE  ', got ...\n");
         printReadable(&data[0], 16);
         return false;
     }
@@ -97,18 +99,18 @@ Cartridge::readFromBuffer(const uint8_t *buffer, unsigned length)
     // Minimum header size is 0x40. Some cartridges show a value of 0x20 which is wrong.
     if (headerSize < 0x40) headerSize = 0x40;
     
-    fprintf(stderr, "Cartridge: %s\n", getCartridgeName());
-    fprintf(stderr, "   Header: %08X bytes long (normally 0x40)\n", headerSize);
-    fprintf(stderr, "   Type:   %d\n", getCartridgeType());
-    fprintf(stderr, "   Game:   %d\n", getGameLine());
-    fprintf(stderr, "   Exrom:  %d\n", getExromLine());
+    msg("Cartridge: %s\n", getCartridgeName());
+    msg("   Header: %08X bytes long (normally 0x40)\n", headerSize);
+    msg("   Type:   %d\n", getCartridgeType());
+    msg("   Game:   %d\n", getGameLine());
+    msg("   Exrom:  %d\n", getExromLine());
     
     // Load chip packets
     uint8_t *ptr = &data[headerSize];
     for (numberOfChips = 0; ptr < data + length; numberOfChips++) {
         
         if (memcmp("CHIP", ptr, 4) != 0) {
-            fprintf(stderr, "Unexpected data in cartridge, expected 'CHIP'\n");
+            warn("Unexpected data in cartridge, expected 'CHIP'\n");
             printReadable(ptr, 4);
             return false;
         }
@@ -120,6 +122,6 @@ Cartridge::readFromBuffer(const uint8_t *buffer, unsigned length)
         ptr += getChipSize(numberOfChips);
     }
     
-    fprintf(stderr, "CRT container imported successfully (%d chips)\n", numberOfChips);
+    debug("CRT container imported successfully (%d chips)\n", numberOfChips);
     return true;	
 }

@@ -88,22 +88,22 @@ Archive::getSizeOfItem(int n)
 void
 Archive::dumpDirectory()
 {
-    fprintf(stderr, "Archive:           %s\n", getName());
-    fprintf(stderr, "-------\n");
-    fprintf(stderr, "  Path:            %s\n", getPath());
-    fprintf(stderr, "  Items:           %d\n", getNumberOfItems());
+    msg("Archive:           %s\n", getName());
+    msg("-------\n");
+    msg("  Path:            %s\n", getPath());
+    msg("  Items:           %d\n", getNumberOfItems());
 
     for (unsigned i = 0; i < getNumberOfItems(); i++) {
-        fprintf(stderr, "  Item %2d:      %s (%d bytes, load address: %d)\n",
+        msg("  Item %2d:      %s (%d bytes, load address: %d)\n",
                 i, getNameOfItem(i), getSizeOfItem(i), getDestinationAddrOfItem(i));
-        fprintf(stderr, "                 ");
+        msg("                 ");
         selectItem(i);
         for (unsigned j = 0; j < 8; j++) {
             int byte = getByte();
             if (byte != -1)
-                fprintf(stderr, "%02X ", byte);
+                msg("%02X ", byte);
         }
-        fprintf(stderr, "\n");
+        msg("\n");
     }
 }
 

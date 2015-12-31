@@ -30,26 +30,29 @@
 class VC64Object {
 
 private:
-        
+
+    /*! @brief    Log file.
+     *  @details  By default, this variable is NULL and all debug and trace messages are sent to
+     *            stdout or stderr. Assign a file handle, if you wish to send debug output to a file.
+     *  @note     logfile is a class member, i.e., it is shared among all objects
+     */
+    static FILE *logfile;
+
+    /*! @brief    Default debug level
+     *  @details  On object creation, this value is used as debug level.
+     */
+    static unsigned defaultDebugLevel;
+
     /*! @brief    Debug level
      *  @details  Debug messages are written either to console or a logfile. Set to 0 to omit messages.
-     *  @see      logfile
      */
     unsigned debugLevel;
-    
+
     /*! @brief    Indicates whether the component should print trace messages.
      *  @details  In trace mode, all components are requested to dump debug information perodically.
      *            Only a few components will react to this flag.
      */
     bool traceMode;
-
-    /*! @brief    Log file.
-     *  @details  By default, this variable is NULL and all debug and trace messages are sent to
-     *            stdout or stderr. Assign a file handle, if you wish to send debug output to a file.
-     */
-    FILE *logfile;
-
-// protected:
     
     /*! @brief    Textual description of this object
      *  @details  Most debug output methods preceed their output with this string.
@@ -70,6 +73,18 @@ public:
     //! @functiongroup Initializing the component
     //
     
+    /*! @brief    Sets the logfile.
+     */
+    inline static void setLogfile(FILE *file) { logfile = file; }
+
+    /*! @brief    Sets the default debug level.
+     */
+    inline static void setDefaultDebugLevel(unsigned level) { defaultDebugLevel = level; }
+
+    /*! @brief    Changes the debug level for a specific object.
+     */
+    inline void setDebugLevel(unsigned level) { debugLevel = level; }
+
     /*! @brief    Returns the textual description.
      */
     inline const char *getDescription() { return description ? description : ""; }

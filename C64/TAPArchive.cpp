@@ -20,6 +20,7 @@
 
 TAPArchive::TAPArchive()
 {
+    setDescription("TAPArchive");
     data = NULL;
     dealloc();
 }
@@ -51,16 +52,14 @@ TAPArchive::isTAPFile(const char *filename)
 TAPArchive *
 TAPArchive::archiveFromTAPFile(const char *filename)
 {
-    TAPArchive *archive;
+    TAPArchive *archive = new TAPArchive();
     
-    fprintf(stderr, "Loading TAP archive from TAP file...\n");
-    archive = new TAPArchive();
     if (!archive->readFromFile(filename)) {
-        fprintf(stderr, "Failed to load archive\n");
         delete archive;
-        archive = NULL;
+        return NULL; 
     }
-    
+
+    archive->debug(1, "TAP archive created from file %s.\n", filename);
     return archive;
 }
 
@@ -100,14 +99,9 @@ TAPArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
     memcpy(data, buffer, length);
     size = length;
     
-    for (unsigned i = 16; i > 0; i--) {
-        fprintf(stderr, "%02X ", data[size - i]);
-    }
-    fprintf(stderr, "\n");
-
     int l = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
     if (l + 0x14 /* Header */ != size) {
-        fprintf(stderr, "Size mismatch! Archive should have %d data bytes, found %d\n", l, size - 0x14);
+        warn("Size mismatch! Archive should have %d data bytes, found %d\n", l, size - 0x14);
     }
         
     return true;

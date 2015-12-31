@@ -77,9 +77,12 @@
 
 - (BOOL)setNIBArchiveWithName:(NSString *)path
 {
-    if (!(attachedArchive = [NIBArchiveProxy archiveFromNIBFile:path]))
-    return NO;
+    if (!(attachedArchive = [NIBArchiveProxy archiveFromNIBFile:path])) {
+        NSLog(@"It's a NOT a NIB file %@", path);
+        return NO;
+    }
     
+    NSLog(@"It's a NIBBBBB");
     return YES;
 }
 

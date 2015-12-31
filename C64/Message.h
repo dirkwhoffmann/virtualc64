@@ -19,7 +19,7 @@
 #ifndef _MESSAGE_INC
 #define _MESSAGE_INC
 
-#include "basic.h"
+#include "VC64Object.h"
 
 // Queue size
 #define QUEUE_SIZE 64
@@ -54,24 +54,6 @@ enum {
     MSG_NTSC
 };
 
-/*
-#define MSG_ROM_LOADED 1
-#define MSG_ROM_MISSING 2
-#define MSG_ROM_COMPLETE 3
-#define MSG_RUN 4
-#define MSG_HALT 5
-#define MSG_CPU 6
-#define MSG_WARP 7
-#define MSG_LOG 8
-#define MSG_VC1541_ATTACHED 9
-#define MSG_VC1541_DISK 10
-#define MSG_VC1541_LED 11
-#define MSG_VC1541_DATA 12
-#define MSG_VC1541_MOTOR 13
-#define MSG_CARTRIDGE 14
-#define MSG_JOYSTICK_ATTACHED 15
-#define MSG_JOYSTICK_REMOVED 16
-*/
 
 typedef struct {
 	int id;			// Message ID
@@ -80,7 +62,7 @@ typedef struct {
 	void *p;		// Pointer value
 } Message;
 
-class MessageQueue {
+class MessageQueue : public VC64Object {
 	
 private:
 	Message queue[QUEUE_SIZE];

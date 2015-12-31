@@ -20,6 +20,7 @@
 
 FileArchive::FileArchive()
 {
+    setDescription("FileArchive");
 	data = NULL;
 	dealloc(); 
 }
@@ -46,16 +47,14 @@ FileArchive::isAcceptableFile(const char *filename)
 FileArchive *
 FileArchive::archiveFromRawFiledata(const char *filename)
 {
-	FileArchive *archive;
-
-	fprintf(stderr, "Loading file archive from file...\n");
-	archive = new FileArchive();	
+	FileArchive *archive = new FileArchive();
+    
 	if (!archive->readFromFile(filename)) {
-        fprintf(stderr, "Failed to load archive\n");
         delete archive;
-		archive = NULL;
+        return NULL;
 	}
 	
+    archive->debug(1, "File archive created from file %s.\n", filename);
 	return archive;
 }
 
@@ -81,7 +80,6 @@ FileArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
 		return false;
 		
 	memcpy(data, buffer, length);
-	fprintf(stderr, "length = %d %x\n", length, length);
 	size = length;
 	
 	return true;

@@ -24,55 +24,55 @@ void MessageQueue::printMessage(Message *msg)
 {
 	switch (msg->id) {
 		case MSG_ROM_LOADED:
-			fprintf(stderr, "MSG_ROM_LOADED");
+			debug(2, "MSG_ROM_LOADED");
 			break;
 		case MSG_ROM_MISSING:
-			fprintf(stderr, "MSG_ROM_MISSING");
+			debug(2, "MSG_ROM_MISSING");
 			break;
 		case MSG_RUN:
-			fprintf(stderr, "MSG_RUN");
+			debug(2, "MSG_RUN");
 			break;
 		case MSG_HALT:
-			fprintf(stderr, "MSG_HALT");
+			debug(2, "MSG_HALT");
 			break;
 		case MSG_CPU:
-			fprintf(stderr, "MSG_CPU");
+			debug(2, "MSG_CPU");
 			break;
 		case MSG_WARP:
-			fprintf(stderr, "MSG_WARP");
+			debug(2, "MSG_WARP");
 			break;
 		case MSG_LOG:
-			fprintf(stderr, "MSG_LOG");
+			debug(2, "MSG_LOG");
 			break;
 		case MSG_VC1541_ATTACHED:
-			fprintf(stderr, "MSG_VC1541_ATTACHED");
+			debug(2, "MSG_VC1541_ATTACHED");
 			break;
 		case MSG_VC1541_DISK:
-			fprintf(stderr, "MSG_VC_1541_DISK");
+			debug(2, "MSG_VC_1541_DISK");
 			break;
 		case MSG_VC1541_LED:
-			fprintf(stderr, "MSG_VC1541_LED");
+			debug(2, "MSG_VC1541_LED");
 			break;
 		case MSG_VC1541_DATA:
-			fprintf(stderr, "MSG_VC1541_DATA");
+			debug(2, "MSG_VC1541_DATA");
 			break;
 		case MSG_VC1541_MOTOR:
-			fprintf(stderr, "MSG_VC1541_MOTOR");
+			debug(2, "MSG_VC1541_MOTOR");
 			break;
 		case MSG_CARTRIDGE:
-			fprintf(stderr, "MSG_CARTRIDGE");
+			debug(2, "MSG_CARTRIDGE");
 			break;
         case MSG_JOYSTICK_ATTACHED:
-            fprintf(stderr, "MSG_JOYSTICK_ATTACHED");
+            debug(2, "MSG_JOYSTICK_ATTACHED");
             break;
         case MSG_JOYSTICK_REMOVED:
-            fprintf(stderr, "MSG_JOYSTICK_REMOVED");
+            debug(2, "MSG_JOYSTICK_REMOVED");
             break;
         case MSG_PAL:
-            fprintf(stderr, "MSG_PAL");
+            debug(2, "MSG_PAL");
             break;
         case MSG_NTSC:
-            fprintf(stderr, "MSG_NTSC");
+            debug(2, "MSG_NTSC");
             break;
 		default:
 			assert(0);
@@ -87,12 +87,9 @@ Message *MessageQueue::getMessage()
 
 	// Get data
 	if (r == w) {
-		// Queue is empty!
-		// fprintf(stderr, "MessageQueue::read: Queue is empty!\n");
-		result = NULL;
+		result = NULL; // Queue is empty!
 	} else {
-		// fprintf(stderr, "getMessage: "); printMessage(&queue[r]); fprintf(stderr,"\n");
-		result = (r == w) ? NULL : &queue[r]; 
+		result = (r == w) ? NULL : &queue[r];
 	}
 	
 	// Move read pointer to next location
@@ -117,15 +114,12 @@ void MessageQueue::putMessage(int id, int i, void *p, const char *c)
 	queue[w].i = i; 
 	queue[w].p = p; 
 	if (c != NULL) strncpy(queue[w].c, c, 128); 
-	 
-	// fprintf(stderr, "putMessage: "); printMessage(&queue[w]); fprintf(stderr,"\n");
-	
+	 	
 	// Move write pointer to next location
 	w = (w + 1) % QUEUE_SIZE;
 
 	if (w == r) {
-		fprintf(stderr, "putMessag: Queue overflow!!! Message is lost!!!\n");
-		// assert(0);
+		warn("putMessag: Queue overflow!!! Message is lost!!!\n");
 		r = (r + 1) % QUEUE_SIZE;
 	} 
 	

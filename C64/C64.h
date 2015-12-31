@@ -25,7 +25,6 @@
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
 // Add Class V64Object as base class of VirtualComponent. Move logging stuff into new class
-// Let all Container and Archive classes inherit from V64Object. Then, replace fprintf(...) by debug(...)
 // Cartridge dialog
 //
 // CLEANUP:
@@ -48,7 +47,6 @@
 #define _C64_INC
 
 // #define NDEBUG      // RELEASE
-#define DEBUG_LEVEL 2  // RELEASE
 
 // Snapshot version number of this release
 #define V_MAJOR 1
