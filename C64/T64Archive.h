@@ -21,8 +21,8 @@
 
 #include "Archive.h"
 
-/*! @class D64Archive
- *  @brief The D64Archive class declares the programmatic interface for a file in T64 format.
+/*! @class    D64Archive
+ *  @brief    The D64Archive class declares the programmatic interface for a file in T64 format.
  */
 class T64Archive : public Archive {
 

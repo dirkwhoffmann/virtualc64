@@ -16,7 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "C64.h"
+#include "D64Archive.h"
+#include "T64Archive.h"
+#include "PRGArchive.h"
+#include "P00Archive.h"
+#include "FileArchive.h"
 
 typedef struct D64TrackInfo {
 	int numberOfSectors;
@@ -379,7 +383,7 @@ D64Archive::getNumberOfItems()
     return i;
 #endif
 
-    unsigned offsets[MAX_FILES_ON_DISK];
+    unsigned offsets[144]; // a C64 disk contains at most 144 files
     unsigned noOfFiles;
     
     scanDirectory(offsets, &noOfFiles);
@@ -610,7 +614,7 @@ D64Archive::findSector(unsigned track, unsigned sector)
 int
 D64Archive::offset(int track, int sector)
 {
-    assert(isTrackNumber(track));
+    assert(1 <= track && track <= 42);
     assert(sector < D64Map[track].numberOfSectors);
     
     return D64Map[track].offset + (sector * 256);
@@ -810,7 +814,7 @@ D64Archive::scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvis
     
     pos += 2;                               // Move to the beginning of the first directory entry
 
-    while (i < MAX_FILES_ON_DISK) {
+    while (i < 144 /* maximum number of files on disk */) {
         
         // Only proceed if the directory entry is not a null entry
         const char nullEntry[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
@@ -846,7 +850,7 @@ D64Archive::scanDirectory(unsigned *offsets, unsigned *noOfFiles, bool skipInvis
 int
 D64Archive::findDirectoryEntry(int item, bool skipInvisibleFiles)
 {
-    unsigned offsets[MAX_FILES_ON_DISK];
+    unsigned offsets[144];
     unsigned noOfFiles;
     
     scanDirectory(offsets, &noOfFiles, skipInvisibleFiles);
@@ -860,8 +864,8 @@ D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrac
 {
 	int pos;
 	
-    if (nr >= MAX_FILES_ON_DISK) {
-        warn("Cannot write directory entry. Number of files is limited to %d\n", MAX_FILES_ON_DISK);
+    if (nr >= 144) {
+        warn("Cannot write directory entry. Number of files is limited to 144\n");
 		return false;
 	}
 

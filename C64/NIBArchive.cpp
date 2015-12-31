@@ -16,9 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "Disk525.h"
 #include "NIBArchive.h"
-#include "stdio.h"
 
 NIBArchive::NIBArchive()
 {
@@ -92,7 +90,7 @@ NIBArchive::scan()
         // Does item no 'item' exist in NIB file? 
         if (data[i] < 2 || data[i] > 83)
             continue;
-        Halftrack ht = data[i] + 1;
+        unsigned ht = data[i] + 1;
         
         // Convert byte stream into a bit stream
         unsigned j, startOfTrack = 0x100 + item * 0x2000;
@@ -124,7 +122,7 @@ NIBArchive::scan()
 }
 
 bool
-NIBArchive::scanTrack(Halftrack ht, uint8_t *bits, int *start, int *end, int *gap)
+NIBArchive::scanTrack(unsigned ht, uint8_t *bits, int *start, int *end, int *gap)
 {
     // Find loop
     if (!scanForLoop(bits, sizeof(bits), start, end)) {

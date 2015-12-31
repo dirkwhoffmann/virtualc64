@@ -48,10 +48,7 @@
 
 // #define NDEBUG      // RELEASE
 
-// Snapshot version number of this release
-#define V_MAJOR 1
-#define V_MINOR 4
-#define V_SUBMINOR 2
+
 
 #include "basic.h"
 #include "VirtualComponent.h"

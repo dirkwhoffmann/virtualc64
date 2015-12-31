@@ -24,9 +24,6 @@
 
 #include "Archive.h"
 
-// Forward declarations
-// class VC1541;
-
 // D64 files come in six different sizes
 #define D64_683_SECTORS 174848
 #define D64_683_SECTORS_ECC 175531

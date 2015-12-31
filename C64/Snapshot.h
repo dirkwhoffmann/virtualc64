@@ -1,5 +1,5 @@
 /*
- * (C) 2009 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2009 - 2015 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,12 @@
 #include "Container.h"
 #include "VIC_globals.h"
 
+// Snapshot version number of this release
+#define V_MAJOR 1
+#define V_MINOR 4
+#define V_SUBMINOR 2
+
+// Forward declarations
 class C64;
 
 /*! @class Snapshot
@@ -41,9 +47,6 @@ private:
 		uint8_t major;
 		uint8_t minor;
         uint8_t subminor;
-
-		//! Is this a snapshot of a PAL machine or an NTSC machine?
-		// uint8_t isPAL;
 		
 		// Screenshot
 		struct { 	
