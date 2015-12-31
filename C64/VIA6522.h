@@ -28,35 +28,34 @@
 
 class VC1541;
 
-/*! @brief   Virtual VIA6522 controller
-    @details The VC1541 drive contains two VIAs on its logic board.
+/*! @brief    Virtual VIA6522 controller
+    @details  The VC1541 drive contains two VIAs on its logic board.
  */
 class VIA6522 : public VirtualComponent {
 	
 public:
 	
-	//! @brief Reference to the connected disk drive.
+	//! @brief    Reference to the connected disk drive.
 	VC1541 *floppy;
 
 public:
 	
-	//! @brief Peripheral ports
-	/*! @details 
-     * "The  R6522  VIA  has  two  8-bit  bidirectional  I/O ports (Port A and Port B)
-     *  and each port has two associated control lines.
+	/*! @brief    Peripheral ports
+	 *  @details  "The  R6522  VIA  has  two  8-bit  bidirectional  I/O ports (Port A and Port B)
+     *             and each port has two associated control lines.
      *
-	 *	Each  8-bit  peripheral  port  has  a Data Direction Register (DDRA, DDRB) for
-	 * 	specifying  whether  the  peripheral pins are to act as inputs or outputs. A 0
-     *  in  a  bit  of the Data Direction Register causes the corresponding peripheral
-     *  pin to act as an input. A 1 causes the pin to act as an output.
+	 *	           Each  8-bit  peripheral  port  has  a Data Direction Register (DDRA, DDRB) for
+	 * 	           specifying  whether  the  peripheral pins are to act as inputs or outputs. A 0
+     *             in  a  bit  of the Data Direction Register causes the corresponding peripheral
+     *             pin to act as an input. A 1 causes the pin to act as an output.
      *
-     *  Each  peripheral  pin  is  also controlled  by  a  bit in the Output Register
-	 *	(ORA,  ORB)  and  the Input Register (IRA, IRB). When the pin is programmed as
-	 *	an  output,  the  voltage on the pin is controlled by the corresponding bit of
-	 *	the  Output  Register.  A  1  in  the  Output Register causes the output to go
-	 * 	high,  and  a  0  causes the output to go low. Data may be written into Output
-	 *	Register  bits  corresponding  to pins which are programmed as inputs. In this
-	 *	case, however, the output signal is unaffected." [F. K.]
+     *             Each  peripheral  pin  is  also controlled  by  a  bit in the Output Register
+	 *	           (ORA,  ORB)  and  the Input Register (IRA, IRB). When the pin is programmed as
+	 *	           an  output,  the  voltage on the pin is controlled by the corresponding bit of
+	 *	           the  Output  Register.  A  1  in  the  Output Register causes the output to go
+	 *             high,  and  a  0  causes the output to go low. Data may be written into Output
+	 *	           Register  bits  corresponding  to pins which are programmed as inputs. In this
+	 *	           case, however, the output signal is unaffected." [F. K.]
      */
 	uint8_t ddra, ddrb;
 	uint8_t ira, irb;
@@ -65,83 +64,91 @@ public:
 // protected:
 public:
     
-	//! VIA I/O Memory
-	/*! Whenever a value is poked to the VIA address space, it is stored here. */
+	/*! @brief    VIA I/O Memory
+	 *  @details  Whenever a value is poked to the VIA address space, it is stored here. 
+     */
 	uint8_t io[16];
 		
-	//! VIA timer 1
-	/*! Interval  Timer  T1  consists  of  two  8-bit latches and a 16-bit
-		counter.  The  latches store data which is to be loaded into the
-		counter.  After  loading,  the  counter  decrements  at  02  clock  rate. Upon
-		reaching  zero,  an  interrupt  flag  is  set,  and  IRQ  goes  low  if the T1
-		interrupt  is  enabled.  Timer  1  then  disables  any  further  interrupts or
-		automatically  transfers  the  contents  of  the  latches into the counter and
-		continues  to  decrement.  In  addition, the timer may be programmed to invert
-		the  output  signal  on  a peripheral pin (PB7) each time it "times-out". Each
-		of these modes is discussed separately below.
-	*/
-
+	/*! @brief    VIA timer 1
+	 *  @details  "Interval  Timer  T1  consists  of  two  8-bit latches and a 16-bit
+     *             counter.  The  latches store data which is to be loaded into the
+     *             counter.  After  loading,  the  counter  decrements  at  02  clock  rate. Upon
+     *             reaching  zero,  an  interrupt  flag  is  set,  and  IRQ  goes  low  if the T1
+     *             interrupt  is  enabled.  Timer  1  then  disables  any  further  interrupts or
+     *             automatically  transfers  the  contents  of  the  latches into the counter and
+     *             continues  to  decrement.  In  addition, the timer may be programmed to invert
+     *             the  output  signal  on  a peripheral pin (PB7) each time it "times-out". Each
+     *             of these modes is discussed separately below." [F. K.]
+     */
     uint16_t t1;
     uint8_t t1_latch_lo, t1_latch_hi;
 
-	//! VIA timer 2
-	/*! Timer  2  operates  as  an interval timer (in the "one-shot" mode only), or as
-		a  counter  for  counting  negative pulses on the PB6 peripheral pin. A single
-		control  bit  in  the  Auxiliary  Control  Register  selects between these two
-		modes.  This  timer  is comprised of a "write-only" low-order latch (T2L-L), a
-		"read-only"  low-order  counter  (T2C-L)  and  a read/write high order counter
-		(T2C-H).  The  counter  registers  act as a 16-bit counter which decrements at
-		02 rate.
-	*/
+	/*! @brief    VIA timer 2
+	 *  @details  "Timer  2  operates  as  an interval timer (in the "one-shot" mode only), or as
+     *             a  counter  for  counting  negative pulses on the PB6 peripheral pin. A single
+     *             control  bit  in  the  Auxiliary  Control  Register  selects between these two
+     *             modes.  This  timer  is comprised of a "write-only" low-order latch (T2L-L), a
+     *             "read-only"  low-order  counter  (T2C-L)  and  a read/write high order counter
+     *             (T2C-H).  The  counter  registers  act as a 16-bit counter which decrements at
+     *             02 rate." [F. K.]
+     */
     uint16_t t2;
 	uint8_t t2_latch_lo;
 	
-    //! Indicates that timer 1 or timer 2 has reached zero
+    //! @brief    Indicates whether timer 1 has reached zero.
     bool t1_underflow;
+
+    //! @brief    Indicates whether timer 2 has reached zero.
     bool t2_underflow;
     
+    
 public:	
-	//! Constructor
+	//! @brief    Constructor
 	VIA6522();
 	
-	//! Destructor
+	//! @brief    Destructor
 	~VIA6522();
 		
-	//! Bring the VIA back to its initial state
+	//! @brief    Brings the VIA back to its initial state.
 	void reset();
 
-    //! Dump debug information
+    //! @brief    Dumps debug information.
     void dumpState();
 
-    //! Execute virtual VIA for one cycle
+    //! @brief    Executes the virtual VIA for one cycle.
     inline void execute() {
         if (t1 || t1_underflow) executeTimer1();
         if (t2 || t2_underflow) executeTimer2();
     }
 
-    //! Execution function for timer 1
+    //! @brief    Executes timer 1 for one cycle.
     void executeTimer1();
 
-    //! Execution function for timer 2
+    //! @brief    Executes timer 2 for one cycle.
     void executeTimer2();
 	
-	//! Special peek function for the I/O memory range
-	/*! The peek function only handles those registers that are treated similarily by both VIA chips */
+	/*! @brief    Special peek function for the I/O memory range
+	 *  @details  The peek function only handles those registers that are treated similarily by both VIA chips
+     */
 	virtual uint8_t peek(uint16_t addr);
 	
-	//! Special poke function for the I/O memory range
-	/*! The poke function only handles those registers that are treated similarily by both VIA chips */
+	/*! @brief    Special poke function for the I/O memory range
+	 *  @details  The poke function only handles those registers that are treated similarily by both VIA chips 
+     */
 	virtual void poke(uint16_t addr, uint8_t value);
 
+    
     // -----------------------------------------------------------------------------------------------
     //                                Internal Configuration
     // -----------------------------------------------------------------------------------------------
 
-    //! Returns true iff timer 1 is in free-run mode (continous interrupts)
+    //! @brief    Returns true iff timer 1 is in free-run mode (continous interrupts)
     bool freeRunMode1() { return (io[0x0B] & 0x40) != 0; }
 
-    //! Check if input latching is enabled
+    //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledA() { return (GET_BIT(io[0x0B],0)); }
+
+    //! @brief    Checks if input latching is enabled
     bool inputLatchingEnabledB() { return (GET_BIT(io[0x0B],1)); }
 
     
@@ -164,9 +171,10 @@ public:
     //                                   Interrupt handling
     // -----------------------------------------------------------------------------------------------
 
-    // Returns the value of the IRQ pin
-    // This method updates the IRQ pin of the connected CPU as a side effect and is therefore
-    // invoked on every change in register IFR or register IER.
+    /*! @brief    Returns the value of the IRQ pin
+     *  @details  This method updates the IRQ pin of the connected CPU as a side effect and is therefore
+     *            invoked on every change in register IFR or register IER.
+     */
     bool IRQ();
 
     //
@@ -229,25 +237,32 @@ class VIA1 : public VIA6522 {
 	
 public:
 
-	//! Constructor
+	//! @brief    Constructor
 	VIA1();
 	
-	//! Destructor
+	//! @brief    Destructor
 	~VIA1();
     
-    //! Execution function for timer 1
+    //! @brief    Executes timer 1 for one cycle
     void executeTimer1();
     
-    //! Execution function for timer 2
+    //! @brief    Executes timer 2 for one cycle
     void executeTimer2();
     
+    //! @brief    Peeks a value from VIAs I/O space
 	uint8_t peek(uint16_t addr);
-	void poke(uint16_t addr, uint8_t value);
+
+    //! @brief    Pokes a value into VIAs I/O space
+    void poke(uint16_t addr, uint8_t value);
 	
-    
+    //! @brief    Returns true iff a change of the atn line can trigger interrups
 	inline bool atnInterruptsEnabled() { return io[0x0E] & 0x02; }
+
+    //! @brief    Indicates that an ATN interrupt has occured.
 	inline void indicateAtnInterrupt() { io[0x0D] |= 0x02; }
-	inline void clearAtnIndicator() { io[0x0D] &= (0xFF-0x02); }
+
+    //! @brief    Clears the ATN interrupt indication bit.
+    inline void clearAtnIndicator() { io[0x0D] &= (0xFF-0x02); }
 };
 
 //! The second versatile interface adapter (VIA2)
@@ -255,26 +270,35 @@ class VIA2 : public VIA6522 {
 	
 public:
 
-	//! Constructor
+	//! @brief    Constructor
 	VIA2();
 	
-	//! Destructor
+	//! @brief    Destructor
 	~VIA2();
     
-    //! Execution function for timer 1
+    //! @brief    Executes timer 1 for one cycle
     void executeTimer1();
     
-    //! Execution function for timer 2
+    //! @brief    Executes timer 2 for one cycle
     void executeTimer2();
     
+    //! @brief    Peeks a value from VIAs I/O space
 	uint8_t peek(uint16_t addr);
+    
+    //! @brief    Pokes a value into VIAs I/O space
 	void poke(uint16_t addr, uint8_t value);
 
+    //! @brief    Returns bit 0 of output register B
 	bool stepperActive0() { return (orb & 0x01) != 0; }
-	bool stepperActive1() { return (orb & 0x02) != 0; }
-	bool engineRunning() { return (orb & 0x04) != 0; }
-	bool redLEDshining() { return (orb & 0x08) != 0; }
 
+    //! @brief    Returns bit 1 of output register B
+	bool stepperActive1() { return (orb & 0x02) != 0; }
+
+    //! @brief    Returns bit 2 of output register B
+	bool engineRunning() { return (orb & 0x04) != 0; }
+
+    //! @brief    Returns bit 3 of output register B
+    bool redLEDshining() { return (orb & 0x08) != 0; }
     
 	bool overflowEnabled() { return (io[0x0C] & 0x02); }
 

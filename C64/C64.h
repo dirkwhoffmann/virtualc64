@@ -28,9 +28,7 @@
 // Cartridge dialog
 //
 // CLEANUP:
-// 1. Move D64Archive:XXXfromDrive to Drive class
-// 2. vc1541 should no longer be accessible via C64Proxy
-// 3. Remove MyOpenGLView class
+// 1. Remove MyOpenGLView class
 // 
 // SPEEDUP:
 //
@@ -47,8 +45,6 @@
 #define _C64_INC
 
 // #define NDEBUG      // RELEASE
-
-
 
 #include "basic.h"
 #include "VirtualComponent.h"

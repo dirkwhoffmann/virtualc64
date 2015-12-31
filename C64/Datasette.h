@@ -23,7 +23,8 @@
 #define _DATASETTE_INC
 
 // Forward declarations
-class C64;
+// class C64;
+class TAPArchive;
 
 /*!
  * @brief   Virtual tape recorder (datasette)
