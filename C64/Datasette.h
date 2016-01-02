@@ -1,8 +1,7 @@
 /*!
  * @header      Datasette.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2015 Dirk W. Hoffmann
- * @brief       Declares Datasette class
+ * @copyright   2015 - 2016 Dirk W. Hoffmann
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,40 +22,40 @@
 #define _DATASETTE_INC
 
 // Forward declarations
-// class C64;
 class TAPArchive;
 
-/*!
- * @brief   Virtual tape recorder (datasette)
+/*! 
+ *  @brief    Virtual tape recorder (datasette)
  */
 class Datasette : public VirtualComponent {
     
 public:
     
-    //! Constructor
+    //! @brief    Constructor
     Datasette();
     
-    //! Destructor
+    //! @brief    Destructor
     ~Datasette();
     
-    //! Reset VC1541 drive
+    //! @brief    Resets the VC1541 drive
     void reset();
     
-    //! Dump current configuration into message queue
+    //! @brief    Dumps current configuration into message queue
     void ping();
 
-    //! Size of internal state
+    //! @brief    Return the size of the internal state
     uint32_t stateSize();
     
-    //! Load state
+    //! @brief    Restores the current state from a buffer
     void loadFromBuffer(uint8_t **buffer);
     
-    //! Save state
+    //! @brief    Saves the current state into a buffer
     void saveToBuffer(uint8_t **buffer);
 
-    //! Dump current state into logfile
+    //! @brief    Dumps the current state
     void dumpState();
 
+    
     // ---------------------------------------------------------------------------------------------
     //                                     Atrributes
     // ---------------------------------------------------------------------------------------------
@@ -163,7 +162,7 @@ public:
     //! @functiongroup Handling the read/write head
     //
 
-    /*! @brief    Put head at the beginning of the tape 
+    /*! @brief    Puts the read/write head at the beginning of the tape
      */
     void rewind() { head = headInSeconds = headInCycles = 0; }
 
@@ -172,21 +171,22 @@ public:
      */
     void advanceHead(bool silent = false);
     
-    /*! @brief    Get current head position in different units 
+    /*! @brief    Gets the current head position in different units
      */
     uint32_t getHead() { return head; }
     uint32_t getHeadInCycles() { return headInCycles; }
     uint32_t getHeadInSeconds() { return headInSeconds; }
     
-    /*! @brief    Set current head position in cycles 
+    /*! @brief    Sets the current head position in cycles
      */
     void setHeadInCycles(uint64_t value);
     
-    /*! @brief    Pulse length at current head position 
+    /*! @brief    Returns the pulse length at the current head position
      */
     int pulseLength(int *skip);
     int pulseLength() { return pulseLength(NULL); }
 
+    
     //
     //! @functiongroup Running the device
     //
@@ -217,11 +217,14 @@ public:
 
 private:
 
+    //! @brief    Internal execution function
     void _execute();
-    void _executeFirst();
+
+    //! @brief    Simulates the falling edge of a pulse
     void _executeFalling();
+
+    //! @brief    Simulates the rising edge of a pulse
     void _executeRising();
-    void _executeLast();
 
 };
 

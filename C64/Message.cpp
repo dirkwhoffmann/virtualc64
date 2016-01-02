@@ -11,6 +11,7 @@
 
 MessageQueue::MessageQueue()
 {
+    setDescription("MessageQueue");
 	r = w = 0;
 	pthread_mutex_init(&lock, NULL);
 }
@@ -20,7 +21,8 @@ MessageQueue::~MessageQueue()
 	pthread_mutex_destroy(&lock);
 }
 
-void MessageQueue::printMessage(Message *msg)
+void
+MessageQueue::printMessage(Message *msg)
 {
 	switch (msg->id) {
 		case MSG_ROM_LOADED:
@@ -79,7 +81,8 @@ void MessageQueue::printMessage(Message *msg)
 	}
 }
 
-Message *MessageQueue::getMessage() 
+Message *
+MessageQueue::getMessage()
 { 
 	Message *result;
 
@@ -93,34 +96,32 @@ Message *MessageQueue::getMessage()
 	}
 	
 	// Move read pointer to next location
-	if (result) r = (r + 1) % QUEUE_SIZE;	
+	if (result) r = (r + 1) % queue_size;
 		
 	pthread_mutex_unlock(&lock);
 	
 	return result; 
 }
 
-void MessageQueue::putMessage(int id, int i, void *p, const char *c) 
+void
+MessageQueue::putMessage(int id, int i, void *p, const char *c)
 { 
-	// If queue gets filled up, we don't accept any periodic messages any more...
-	//if (queueGetsFilledUp() && id == MSG_DRAW) {
-	//	return;
-	//}
-
-	pthread_mutex_lock(&lock);	
+	pthread_mutex_lock(&lock);
 		
 	// Write data
 	queue[w].id = id; 
 	queue[w].i = i; 
-	queue[w].p = p; 
-	if (c != NULL) strncpy(queue[w].c, c, 128); 
+	queue[w].p = p;
+    
+	if (c != NULL)
+        strncpy(queue[w].c, c, 128);
 	 	
 	// Move write pointer to next location
-	w = (w + 1) % QUEUE_SIZE;
+	w = (w + 1) % queue_size;
 
 	if (w == r) {
-		warn("putMessag: Queue overflow!!! Message is lost!!!\n");
-		r = (r + 1) % QUEUE_SIZE;
+		warn("Queue overflow!!! Message is lost!!!\n");
+		r = (r + 1) % queue_size;
 	} 
 	
 	pthread_mutex_unlock(&lock);

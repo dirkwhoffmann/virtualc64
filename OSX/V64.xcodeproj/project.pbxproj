@@ -653,8 +653,6 @@
 				389E777E0C7A3B6F00BEAFA6 /* Joystick.cpp */,
 				5020F28A0BBABE3C0093C396 /* IEC.h */,
 				5020F28B0BBABE3C0093C396 /* IEC.cpp */,
-				5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */,
-				5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */,
 			);
 			name = Computer;
 			sourceTree = "<group>";
@@ -812,6 +810,10 @@
 		504B39910C45192700286F18 /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
+				5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */,
+				5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */,
+				50414726122188FC00A80E0C /* Cartridge.h */,
+				50414725122188FC00A80E0C /* Cartridge.cpp */,
 				5000C8220D13CEE10011A2E9 /* VC1541.h */,
 				5000C8230D13CEE10011A2E9 /* VC1541.cpp */,
 				500FC6770D17D2190044131D /* VIA6522.h */,
@@ -914,8 +916,6 @@
 				5018E48012240F7100F0820E /* Container.cpp */,
 				50D5004B0C2ED1200022CA3A /* Archive.h */,
 				50AFEDBB0C3A7A78007749E7 /* Archive.cpp */,
-				50414726122188FC00A80E0C /* Cartridge.h */,
-				50414725122188FC00A80E0C /* Cartridge.cpp */,
 				505EB09F0F3047C300960BC0 /* Snapshot.h */,
 				505EB0A00F3047C300960BC0 /* Snapshot.cpp */,
 				50D500500C2ED13F0022CA3A /* T64Archive.h */,

@@ -1,6 +1,9 @@
+/*!
+ * @header      Archive.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2016 Dirk W. Hoffmann
+ */
 /*
- * Author: Dirk W. Hoffmann, www.dirkwhoffmann.de
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -15,18 +18,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-// For a detailed description of the various file formats, see
-// http://www.infinite-loop.at/Power20/Documentation/Power20-LiesMich/AE-Dateiformate.html
-
+/* 
+ * For a detailed description of the various file formats, see
+ * http://www.infinite-loop.at/Power20/Documentation/Power20-LiesMich/AE-Dateiformate.html
+ */
 
 #ifndef _ARCHIVE_INC
 #define _ARCHIVE_INC
 
 #include "Container.h"
 
-/*! @class Archive
-    @brief Base class for all loadable objects with multiple files included. */
+/*! @class    Archive
+    @brief    Base class for all loadable objects with multiple files included. */
 
 class Archive : public Container {
     
@@ -42,6 +45,7 @@ public:
     //! @brief    Standard destructor
 	virtual ~Archive();
     
+    
     //
     //! Accessing archive attributes
     //
@@ -49,6 +53,7 @@ public:
     //! @brief    Returns the number of items in this archive.
     virtual int getNumberOfItems() = 0;
 
+    
     //
     //! Accessing item attributes
     //
@@ -79,6 +84,7 @@ public:
      */
 	virtual uint16_t getDestinationAddrOfItem(int n) = 0;
 	
+    
     //
     //! @functiongroup Reading an item
     //
@@ -89,6 +95,7 @@ public:
     //! @brief    Reads the next byte from the currently selected item
 	virtual int getByte() = 0;
 
+    
     //
     //! @functiongroup Debugging
     //

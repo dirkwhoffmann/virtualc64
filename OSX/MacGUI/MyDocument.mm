@@ -160,7 +160,8 @@
 		return NO;
 	}
 	
-	V64Snapshot *s = [V64Snapshot snapshotFromC64:c64];
+    SnapshotProxy *s = [[SnapshotProxy alloc] init];
+    [c64 saveToSnapshot:s];
 	[s writeDataToFile:filename];
 	
 	return YES;
@@ -254,7 +255,7 @@ failure:
 		return NO;
 	}
 			
-	V64Snapshot *reverted = [V64Snapshot snapshotFromFile:filename];
+	SnapshotProxy *reverted = [SnapshotProxy snapshotFromFile:filename];
 
 	if (!reverted) {
 		NSLog(@"Error while reverting to older snapshot\n");

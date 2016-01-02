@@ -1,6 +1,9 @@
+/*!
+ * @header      ExpansionPort.h
+ * @author      Written by Dirk Hoffmann based on the original code by A. Carl Douglas.
+ * @copyright   All rights reserved.
+ */
 /*
- * Written by Dirk Hoffmann based on the original code by A. Carl Douglas.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,16 +20,16 @@
  */
 
 /*
- For general info about C64 cartridges,
- see: http://www.c64-wiki.com/index.php/Cartridge
- 
- For information about bank switching,
- see: http://www.c64-wiki.com/index.php/Bankswitching
- 
- For details about the .CRT format,
- see: http://ist.uwaterloo.ca/~schepers/formats/CRT.TXT
- 
- As well read the Commodore 64 Programmers Reference Guide pages 260-267.
+ * For general info about C64 cartridges,
+ * see: http://www.c64-wiki.com/index.php/Cartridge
+ *
+ * For information about bank switching,
+ * see: http://www.c64-wiki.com/index.php/Bankswitching
+ *
+ * For details about the .CRT format,
+ * see: http://ist.uwaterloo.ca/~schepers/formats/CRT.TXT
+ *
+ * As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
 
 #ifndef _CARTRIDGE_H
@@ -34,37 +37,37 @@
 
 #include "Container.h"
 
-/*! @class Cartridge
- *  @brief The Cartridge class declares the programmatic interface for a file of the CRT format type.
+/*! @class    Cartridge
+ *  @brief    The Cartridge class declares the programmatic interface for a file of the CRT format type.
  */
 class Cartridge : public Container {
 
 private:
     
-    //! Raw data of CRT container file
+    //! @brief    Raw data of CRT container file
     uint8_t *data;
     
-    //! Number of chips contained in cartridge file
+    //! @brief    Number of chips contained in cartridge file
     unsigned int numberOfChips;
     
-    //! Indicates where each chip section starts
+    //! @brief    Indicates where each chip section starts
     uint8_t *chips[64];
 
 public:
     
-    //! Constructor
+    //! @brief    Constructor
     Cartridge();
     
-    //! Destructor
+    //! @brief    Destructor
     ~Cartridge();
     
-    //! Free allocated memory
+    //! @brief    Frees the allocated memory.
     void dealloc();
     
-    //! Type of container
+    //! @brief    Returns the container type
     ContainerType getType() { return CRT_CONTAINER; }
     
-    //! Type of container in plain text
+    //! @brief    Type of container in plain text
     const char *getTypeAsString() { return "CRT"; }
     
     //! Returns true of filename points to a valid file of that type

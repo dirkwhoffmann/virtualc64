@@ -221,18 +221,6 @@ bool C64Memory::isValidAddr(uint16_t addr, MemoryType type)
 	}
 }
 
-uint8_t 
-C64Memory::peekRam(uint16_t addr) 
-{ 
-	return ram[addr];
-} 
-
-uint8_t 
-C64Memory::peekRom(uint16_t addr) 
-{ 
-	return rom[addr];
-} 
-
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
@@ -398,24 +386,6 @@ uint8_t C64Memory::peek(uint16_t addr)
 // --------------------------------------------------------------------------------
 //                                    Poke
 // --------------------------------------------------------------------------------
-
-void C64Memory::pokeRam(uint16_t addr, uint8_t value)             
-{ 
-	ram[addr] = value;
-}
-
-void C64Memory::pokeRom(uint16_t addr, uint8_t value)             
-{ 
-#if 0
-    if (cartridge != NULL && cartridge->isRomAddr(addr)) {
-        cartridge->poke(addr, value);
-    } else {
-        rom[addr] = value;
-    }
-#endif
-    
-    rom[addr] = value;
-}
 
 void C64Memory::pokeIO(uint16_t addr, uint8_t value)
 {

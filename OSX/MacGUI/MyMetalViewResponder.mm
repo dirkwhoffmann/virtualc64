@@ -313,7 +313,7 @@
         
         NSFileWrapper *fileWrapper = [pb readFileWrapper];
         NSData *fileData = [fileWrapper regularFileContents];
-        V64Snapshot *snapshot = [V64Snapshot snapshotFromBuffer:[fileData bytes] length:[fileData length]];
+        SnapshotProxy *snapshot = [SnapshotProxy snapshotFromBuffer:[fileData bytes] length:[fileData length]];
         [[controller c64] loadFromSnapshot:snapshot];
         return YES;
     }
@@ -331,7 +331,7 @@
             // Do the version numbers match?
             if (Snapshot::isSnapshot([path UTF8String], V_MAJOR, V_MINOR, V_SUBMINOR)) {
                 
-                V64Snapshot *snapshot = [V64Snapshot snapshotFromFile:path];
+                SnapshotProxy *snapshot = [SnapshotProxy snapshotFromFile:path];
                 if (snapshot) {
                     [[controller c64] loadFromSnapshot:snapshot];
                     return YES;

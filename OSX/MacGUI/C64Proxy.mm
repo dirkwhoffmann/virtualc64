@@ -689,7 +689,7 @@
     c64->resume();
 }
 
-- (void) loadFromSnapshot:(V64Snapshot *)snapshot 
+- (void) loadFromSnapshot:(SnapshotProxy *)snapshot
 {
     [self _loadFromSnapshot:[snapshot snapshot]];
 }
@@ -701,7 +701,7 @@
     c64->resume();
 }
 
-- (void) saveToSnapshot:(V64Snapshot *)snapshot 
+- (void) saveToSnapshot:(SnapshotProxy *)snapshot
 {
     [self _saveToSnapshot:[snapshot snapshot]];
 }
@@ -804,13 +804,13 @@
 //                         Snapshot (needs testing)
 // --------------------------------------------------------------------------
 
-@implementation V64Snapshot
+@implementation SnapshotProxy
 
 @synthesize snapshot;
 
 - (instancetype) init
 {
-	// NSLog(@"V64Snapshot::init");
+	NSLog(@"V64Snapshot::init");
 	
 	if (!(self = [super init]))
 		return nil;
@@ -821,52 +821,46 @@
 
 - (instancetype) initWithSnapshot:(Snapshot *)s
 {
-	// NSLog(@"V64Snapshot::initWithSnapshot");
-	
-	if (!(self = [super init]))
-		return nil;
-	
-	snapshot = s;
-	return self;
+    NSLog(@"V64Snapshot::initWithSnapshot %p", s);
+    
+    if (s == nil)
+        return nil;
+    
+    if (!(self = [super init]))
+        return nil;
+    
+    snapshot = s;
+    return self;
 }
 
 - (void) dealloc
 {	
-	// NSLog(@"V64Snapshot::dealloc");
+	NSLog(@"V64Snapshot::dealloc");
 
 	if (snapshot)
 		delete snapshot;
 	
 }
 
-+ (instancetype) snapshotFromC64:(C64Proxy *)c64
-{
-	V64Snapshot *newSnapshot = [[self alloc] init];
-	[c64 saveToSnapshot:newSnapshot];
-	return newSnapshot;
-}
-
 + (instancetype) snapshotFromSnapshot:(Snapshot *)snapshot
 {
-	if (snapshot == NULL)
-		return nil;
-	
-	V64Snapshot *newSnapshot = [[self alloc] initWithSnapshot:snapshot];
-	return newSnapshot;
+    if (snapshot == NULL)
+        return nil;
+    
+    SnapshotProxy *newSnapshot = [[self alloc] initWithSnapshot:snapshot];
+    return newSnapshot;
 }
-	
+
 + (instancetype) snapshotFromFile:(NSString *)path
 {
-	return [self snapshotFromSnapshot:Snapshot::snapshotFromFile([path UTF8String])];
+    return [self snapshotFromSnapshot:(Snapshot::snapshotFromFile([path UTF8String]))];
 }
 
 + (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length
 {
-	return [self snapshotFromSnapshot:Snapshot::snapshotFromBuffer((uint8_t *)buffer, length)];
+    return [self snapshotFromSnapshot:(Snapshot::snapshotFromBuffer((uint8_t *)buffer, length))];
 }
 
-- (unsigned char *)imageData { return snapshot->getImageData(); }
-- (time_t)timeStamp { return snapshot->getTimestamp(); }
 - (bool) readDataFromFile:(NSString *)path { return snapshot->readFromFile([path UTF8String]); }
 - (bool) writeDataToFile:(NSString *)path { return snapshot->writeToFile([path UTF8String]); }
 

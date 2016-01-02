@@ -1,26 +1,25 @@
-/* Written by Dirk W. Hoffmann, 2006 - 2015
+/*!
+ * @header      C64.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2016 Dirk W. Hoffmann
+ */
+/*              This program is free software; you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation; either version 2 of the License, or
+ *              (at your option) any later version.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *              This program is distributed in the hope that it will be useful,
+ *              but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *              GNU General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *              You should have received a copy of the GNU General Public License
+ *              along with this program; if not, write to the Free Software
+ *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// VERSION 1.4.1:
-// ENHANCEMENTS:
-//
-// Applied some speed optimizations to the new VIC code. At maximum speed, the
-// emulator is up to 10% faster now.
-// In the debug menu, option "Hide sprites" was broken. This has been fixed. 
+
+// VERSION 1.4.2:
 //
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
@@ -46,9 +45,10 @@
 
 // #define NDEBUG      // RELEASE
 
-#include "basic.h"
-#include "VirtualComponent.h"
+// General
 #include "Message.h"
+
+
 #include "Snapshot.h"
 #include "T64Archive.h"
 #include "D64Archive.h"
@@ -70,6 +70,8 @@
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
+
+// Peripherals
 #include "VC1541.h"
 #include "Datasette.h"
 #include "Cartridge.h"

@@ -56,79 +56,34 @@ class Joystick;
 #define DelayMask ~(0x00400000 | CountA0 | CountB0 | LoadA0 | LoadB0 | PB6Low0 | PB7Low0 | Interrupt0 | OneShotA0 | OneShotB0)
 
 
-//! Virtual complex interface adapter (CIA)
-/*! The original C64 consists of two CIA chips (CIA 1 and CIA 2). Each CIA chip features two programmable
-	hardware timers and a real-time clock. Furthermore, the CIA chips manage the communication with connected
-	peripheral devices such as joysticks, printer or the keyboard.
-
-	The \a CIA class implements the common functionality of both CIA chips.
-*/
+/*! @brief    Virtual complex interface adapter (CIA)
+ *  @details  The original C64 consists of two CIA chips (CIA 1 and CIA 2). Each CIA chip features two programmable
+ *            hardware timers and a real-time clock. Furthermore, the CIA chips manage the communication with connected
+ *            peripheral devices such as joysticks, printer or the keyboard. The CIA class implements the common
+ *            functionality of both CIA chips.
+ */
 class CIA : public VirtualComponent {
 
 public:
-	//! Start address of the CIA I/O space (CIA 1 and CIA 2)
+	//! @brief    Start address of the CIA I/O space (CIA 1 and CIA 2)
 	static const uint16_t CIA_START_ADDR = 0xDC00;
-	//! End address of the CIA I/O space (CIA 1 and CIA 2)
+	//! @brief    End address of the CIA I/O space (CIA 1 and CIA 2)
+    
 	static const uint16_t CIA_END_ADDR = 0xDDFF;
-	
-	//! Address offset of the CIA data port register A
-	static const uint16_t CIA_DATA_PORT_A = 0x00;
-	//! Address offset of the CIA data port register B
-	static const uint16_t CIA_DATA_PORT_B = 0x01;
-	//! Address offset of the CIA data direction register A
-	static const uint16_t CIA_DATA_DIRECTION_A = 0x02;
-	//! Address offset of the CIA data direction register B
-	static const uint16_t CIA_DATA_DIRECTION_B = 0x03;
-	
-	//! Address offset to the low-byte of timer A
-	/*! The register contains the low-Byte of the current value of timer A. */
-	static const uint16_t CIA_TIMER_A_LOW = 0x04;
-	//! Address offset to the high-byte of timer A
-	/*! The register contains the high-Byte of the current value of timer A. */
-	static const uint16_t CIA_TIMER_A_HIGH = 0x05;
-	//! Address offset to the low-byte of timer B
-	/*! The register contains the low-Byte of the current value of timer B. */
-	static const uint16_t CIA_TIMER_B_LOW = 0x06;
-	//! Address offset to the high-byte of timer B
-	/*! The register contains the HIGH-Byte of the current value of timer B. */
-	static const uint16_t CIA_TIMER_B_HIGH = 0x07;
-
-	//! Address offset of the time of day register
-	/*! The register contains the "10th of a second" portion of the current time. */
-	static const uint16_t CIA_TIME_OF_DAY_SEC_FRAC = 0x08;
-	//! Address offset of the time of day register
-	/*! The register contains the "seconds" portion of the current time. */
-	static const uint16_t CIA_TIME_OF_DAY_SECONDS = 0x09;
-	//! Address offset of the time of day register
-	/*! The register contains the "minutes" portion of the current time. */
-	static const uint16_t CIA_TIME_OF_DAY_MINUTES = 0x0A;
-	//! Address offset of the time of day register
-	/*! The register contains the "hours" portion of the current time. Bit 7 serves as an AM/PM flag. */
-	static const uint16_t CIA_TIME_OF_DAY_HOURS = 0x0B;
-	
-	//! Address offset of the Synchronous Serial I/O Data Buffer
-	static const uint16_t CIA_SERIAL_IO_BUFFER = 0x0C;
-	
-	//! Address offset of the CIA Interrupt Control Register
-	static const uint16_t CIA_INTERRUPT_CONTROL = 0x0D;
-	//! Address offset of the CIA Control Register A
-	static const uint16_t CIA_CONTROL_REG_A = 0x0E;
-	//! Address offset of the CIA Control Register B
-	static const uint16_t CIA_CONTROL_REG_B = 0x0F;
-		
-	//! Timer A counter
+    
+	//! @brief    Timer A counter
 	uint16_t counterA;
 	
-	//! Timer A latch
+	//! @brief    Timer A latch
 	uint16_t latchA;
 
-	//! Timer B counter
+	//! @brief    Timer B counter
 	uint16_t counterB;
 	
-	//! Timer B latch
+	//! @brief    Timer B latch
 	uint16_t latchB;
 	
-	//! Time of day clock
+	//! @brief    Time of day clock
 	TOD tod;
 	
 public:	
@@ -162,130 +117,133 @@ public:
 		
 	bool readICR; // Indicated if ICR register is currently read
 
-	//! Activates the interrupt line
-	/*! The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
-		Whereas the CIA 1 activates the IRQ line, the CIA 2 activates clears the NMI line.
-	*/
+	/*! @brief    Activates the interrupt line
+	 *  @details  The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
+     *            Whereas the CIA 1 activates the IRQ line, the CIA 2 activates clears the NMI line.
+     */
 	virtual void raiseInterruptLine() = 0;	
 	
-	//! Clears the interrupt line
-	/*! The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
-		Whereas the CIA 1 clears the IRQ line, the CIA 2 chip clears the NMI line.
-	*/
+	/*! @brief    Clears the interrupt line
+	 *  @details  The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
+     *            Whereas the CIA 1 clears the IRQ line, the CIA 2 chip clears the NMI line.
+     */
 	virtual void clearInterruptLine() = 0;	
 
-	//! Get current value of the interrupt line
-	/*! The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
-	 Whereas the CIA 1 polls the IRQ line, the CIA 2 chip polls the NMI line.
+	/*! @brief    Get current value of the interrupt line
+	 *  @details  The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
+     *            Whereas the CIA 1 polls the IRQ line, the CIA 2 chip polls the NMI line.
 	 */
 	virtual uint8_t getInterruptLine() = 0;	
 	
 public:	
 	
-	//! Returns true if the \a addr is located in the I/O range of one of the two CIA chips
+	//! Returns true if addr is located in the I/O range of one of the two CIA chips
 	static inline bool isCiaAddr(uint16_t addr) 
 		{ return (CIA_START_ADDR <= addr && addr <= CIA_END_ADDR); }
 	
-	//! Constructor
+	//! @brief    Constructor
 	CIA();
 	
-	//! Destructor
+	//! @brief    Destructor
 	~CIA();
 	
-	//! Bring the CIA back to its initial state
+	//! @brief    Bring the CIA back to its initial state
 	void reset();
     	
-	//! Dump internal state
+	//! @brief    Dump internal state
 	void dumpState();	
 
-	//! Dump trace line
+	//! @brief    Dump trace line
 	void dumpTrace();	
 
-	//! Returns the value of data port A
-	inline uint8_t getDataPortA() { return peek(CIA_DATA_PORT_A); }
+	//! @brief    Returns the value of data port A
+	inline uint8_t getDataPortA() { return peek(0x00); }
 
-	//! Sets the current value of data port A
-	inline void setDataPortA(uint8_t value) { poke(CIA_DATA_PORT_A, value); }
+	//! @brief    Sets the current value of data port A
+	inline void setDataPortA(uint8_t value) { poke(0x00, value); }
 
-	//! Returns the value of the data port A direction register
+	//! @brief    Returns the value of the data port A direction register
 	inline uint8_t getDataPortDirectionA() { return DDRA; }
 	
-	//! Sets the current value of the data port A direction register
+	//! @brief    Sets the current value of the data port A direction register
 	inline void setDataPortDirectionA(uint8_t value) { DDRA = value; }
 	
-	//! Returns the value of data port B
+	//! @brief    Returns the value of data port B
 	inline uint8_t getDataPortB() { return PB; }
 	
-	//! Sets the current value of data port B
-	inline void setDataPortB(uint8_t value) { poke(CIA_DATA_PORT_B,value); }
+	//! @brief    Sets the current value of data port B
+	inline void setDataPortB(uint8_t value) { poke(0x01, value); }
 	
-	//! Returns the value of the data port B direction register
+	//! @brief    Returns the value of the data port B direction register
 	inline uint8_t getDataPortDirectionB() { return DDRB; }
 	
-	//! Sets the current value of the data port B direction register
+	//! @brief    Sets the current value of the data port B direction register
 	inline void setDataPortDirectionB(uint8_t value) { DDRB = value; }
 
-    //! Sets the current value of the FLAG pin
-    // void setFlagPin(uint8_t value);
+    //! @brief    Simulates a rising edge on the flag pin
     void triggerRisingEdgeOnFlagPin();
+
+    //! @brief    Simulates a falling edge on the flag pin
     void triggerFallingEdgeOnFlagPin();
 
-	//! Special peek function for the I/O memory range
-	/*! The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip */
+	/*! @brief    Special peek function for the I/O memory range
+	 *  @details  The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip 
+     */
 	virtual uint8_t peek(uint16_t addr);
 	
-	//! Special poke function for the I/O memory range
-	/*! The poke function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip */
+	/*! @brief    Special poke function for the I/O memory range
+	 *  @details  The poke function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip 
+     */
 	virtual void poke(uint16_t addr, uint8_t value);
 
 	// Interrupt control
 	
-	//! Returns true, if timer can trigger interrupts
+	//! @brief    Returns true, if timer can trigger interrupts
 	inline bool isInterruptEnabledA() { return IMR & 0x01; }
 
-	//! Set or delete interrupt enable flag
+	//! @brief    Sets or deletes interrupt enable flag
 	inline void setInterruptEnabledA(bool b) { if (b) IMR |= 0x01; else IMR &= (0xff-0x01); }
 
-	//! Toggle interrupt enable flag of timer A
+	//! @brief    Toggles interrupt enable flag of timer A
 	inline void toggleInterruptEnableFlagA() { setInterruptEnabledA(!isInterruptEnabledA()); }
 
-	//! Returns true, if timer A has reached zero
+	//! @brief    Returns true, if timer A has reached zero
 	inline bool isSignalPendingA() { return ICR & 0x01; }
 
-	//! Set or delete signal pending flag
+	//! @brief    Sets or delete signal pending flag
 	inline void setSignalPendingA(bool b) { if (b) ICR |= 0x01; else ICR &= (0xff-0x01); }
 
-	//! Toggle signal pending flag of timer A
+	//! @brief    Toggles signal pending flag of timer A
 	inline void togglePendingSignalFlagA() { setSignalPendingA(!isSignalPendingA()); }
 		
-	//! Returns true, if timer B can trigger interrupts
+	//! @brief    Returns true, if timer B can trigger interrupts
 	inline bool isInterruptEnabledB() { return IMR & 0x02; }
 
-	//! Set or delete interrupt enable flag
+	//! @brief    Sets or deletes interrupt enable flag
 	inline void setInterruptEnabledB(bool b) { if (b) IMR |= 0x02; else IMR &= (0xff-0x02); }
 
-	//! Toggle interrupt enable flag of timer B
+	//! @brief    Toggles interrupt enable flag of timer B
 	inline void toggleInterruptEnableFlagB() { setInterruptEnabledB(!isInterruptEnabledB()); }
 
-	//! Returns true, if timer B has reached zero
+	//! @brief    Returns true, if timer B has reached zero
 	inline bool isSignalPendingB() { return ICR & 0x02; }
 
-	//! Set or delete signal pending flag
+	//! @brief    Sets or delete signal pending flag
 	inline void setSignalPendingB(bool b) { if (b) ICR |= 0x02; else ICR &= (0xff-0x02); }
 	
-	//! Toggle signal pending flag of timer B
+	//! @brief    Toggles signal pending flag of timer B
 	inline void togglePendingSignalFlagB() { setSignalPendingB(!isSignalPendingB()); }
 
-	//! Returns true, if the "time of day" interrupt alarm is enabled
+	//! @brief    Returns true, if the "time of day" interrupt alarm is enabled
 	inline bool isInterruptEnabledTOD() { return ICR & 0x04; }
 
-	//! Enable or disable "time of day" interrupts 
+	//! @brief    Enables or disable "time of day" interrupts
 	inline void setInterruptEnabledTOD(bool b) { if (b) ICR |= 0x04; else ICR &= (0xff-0x04); }
 
-    //! Returns true, if a negative edge on the FLAG pin triggers an interrupt
+    //! @brief    Returns true, if a negative edge on the FLAG pin triggers an interrupt
     inline bool isInterruptEnabledFlg() { return ICR & 0x10; }
     
-    //! Enable or disable interrupts on negative edges of the FLAG pin
+    //! @brief    Enables or disable interrupts on negative edges of the FLAG pin
     inline void setInterruptEnabledFlg(bool b) { if (b) ICR |= 0x10; else ICR &= (0xff-0x10); }
     
 	//

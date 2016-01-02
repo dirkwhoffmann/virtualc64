@@ -1,6 +1,9 @@
+/*!
+ * @header      Container.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2016 Dirk W. Hoffmann
+ */
 /*
- * Author: Dirk W. Hoffmann, www.dirkwhoffmann.de
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -56,8 +59,7 @@ class Container : public VC64Object {
 
 private:
 	 
-    /*! @brief    The physical name (full path name) of the archive.
-     */
+    //! @brief    The physical name (full path name) of the archive.
     char *path;
 	
 protected:
@@ -81,8 +83,7 @@ public:
     //! @brief    Destructor
     virtual ~Container();
 
-    /*! @brief    Convert file name extension into numerical identifier
-     */
+    //! @brief    Convert file name extension into numerical identifier
     static ContainerType typeOf(const char *extension);
     
 private:
@@ -96,24 +97,19 @@ private:
 
 public:
     
-	/*! @brief    Returns the physical name.
-     */
+	//! @brief    Returns the physical name.
     const char *getPath() { return path ? path : ""; }
 
-    /*! @brief    Sets the physical name.
-     */
+    //! @brief    Sets the physical name.
     void setPath(const char *path);
 
-    /*! @brief    Returns the logical name.
-     */
+    //! @brief    Returns the logical name.
     virtual const char *getName() { return name; }
 
-    /*! @brief    Sets the logical name.
-     */
+    //! @brief    Sets the logical name.
     void setName(const char *name);
 
-    /*! @brief    Returns the type of this container.
-     */
+    //! @brief    Returns the type of this container.
     virtual ContainerType getType() = 0;
 
     /*! @brief      Returns the type of this container object as plain text, e.g., "T64" or "D64".
@@ -126,8 +122,7 @@ public:
     //! @functiongroup Serializing a container
     //
 
-    /*! @brief    Returns true iff the specified file is a file of this container type.
-     */
+    //! @brief    Returns true iff the specified file is a file of this container type.
     virtual bool fileIsValid(const char *filename) = 0;
 
     /*! @brief    Read container contents from a memory buffer.

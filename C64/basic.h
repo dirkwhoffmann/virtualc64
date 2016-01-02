@@ -1,19 +1,21 @@
-/*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+/*!
+ * @header      basic.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 Dirk W. Hoffmann
+ */
+/*              This program is free software; you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation; either version 2 of the License, or
+ *              (at your option) any later version.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *              This program is distributed in the hope that it will be useful,
+ *              but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *              GNU General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *              You should have received a copy of the GNU General Public License
+ *              along with this program; if not, write to the Free Software
+ *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _BASIC_INC
@@ -155,14 +157,14 @@ inline std::string ExtractDirectory( const std::string& path )
 //! @brief    Extracts filename from a path.
 inline std::string ExtractFilename( const std::string& path )
 {
-	return path.substr( path.find_last_of( '/' ) +1 );
+	return path.substr(path.find_last_of( '/' ) + 1);
 }
 
 //! @brief    Changes the file extension.
 inline std::string ChangeExtension( const std::string& path, const std::string& ext )
 {
 	std::string filename = ExtractFilename(path);
-	return ExtractDirectory(path) + filename.substr(0, filename.find_last_of( '.' )) + ext;
+	return ExtractDirectory(path) + filename.substr(0, filename.find_last_of('.')) + ext;
 }
 
 /*! @brief    Check file suffix

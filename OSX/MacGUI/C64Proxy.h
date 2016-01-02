@@ -22,7 +22,7 @@
 @class MyController;
 @class AudioDevice;
 @class C64Proxy;
-@class V64Snapshot;
+@class SnapshotProxy;
 @class D64ArchiveProxy; 
 @class MyMetalView;
 @class ArchiveProxy;
@@ -555,9 +555,9 @@ class JoystickManager;
 
 // Loadind and saving
 - (void)_loadFromSnapshot:(Snapshot *) snapshot;
-- (void)loadFromSnapshot:(V64Snapshot *) snapshot;
+- (void)loadFromSnapshot:(SnapshotProxy *) snapshot;
 - (void)_saveToSnapshot:(Snapshot *) snapshot;
-- (void)saveToSnapshot:(V64Snapshot *) snapshot;
+- (void)saveToSnapshot:(SnapshotProxy *) snapshot;
 
 - (CIAProxy *) cia:(int)num;
 
@@ -645,7 +645,7 @@ class JoystickManager;
 //                                  Snapshot
 // --------------------------------------------------------------------------
 
-@interface V64Snapshot : NSObject
+@interface SnapshotProxy : NSObject
 {
 	@private Snapshot *snapshot;
 }
@@ -654,15 +654,10 @@ class JoystickManager;
 
 - (instancetype) init;
 - (instancetype) initWithSnapshot:(Snapshot *)s;
-
-+ (instancetype) snapshotFromC64:(C64Proxy *)c64;
 + (instancetype) snapshotFromSnapshot:(Snapshot *)snapshot;
 + (instancetype) snapshotFromFile:(NSString *)path;
 + (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
 
-- (unsigned char *)imageData;
-- (time_t)timeStamp;
-	
 - (bool) readDataFromFile:(NSString *)path;
 - (bool) writeDataToFile:(NSString *)path;
 

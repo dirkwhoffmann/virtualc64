@@ -1,7 +1,9 @@
-/*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @header      Datasette.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2016 Dirk W. Hoffmann
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -15,8 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-// Last review: 25.7.06
 
 #ifndef _MEMORY_INC
 #define _MEMORY_INC
@@ -35,73 +35,53 @@ public:
 	//                                Constant definitions
 	// --------------------------------------------------------------------------------
 	
-	//! Memory type
-	/*! This datatype defines a constant value for the different kinds of memory. */
+	/*! @brief    Memory type
+	 *  @details  This datatype defines a constant value for the different kinds of memory.
+     */
 	enum MemoryType {
 		MEM_RAM,
 		MEM_ROM,
 		MEM_IO
 	};
 	
-	//! Returns true, if the specified address is a valid memory address
-	/*! Note, that the ROM and IO memory only partially cover the address space. */
+	//! @brief    Returns true, if the specified address is a valid memory address.
 	virtual bool isValidAddr(uint16_t addr, MemoryType type) = 0;
 	
-	//! Reference to the connected virtual CPU
+	//! @brief    Reference to the connected virtual CPU
 	CPU *cpu; 
 
 public:
 	
-	//! Constructor
+	//! @brief    Constructor
 	Memory();
 	
-	//! Destructor
+	//! @brief    Destructor
 	~Memory();
 
+    
 	// --------------------------------------------------------------------------------
 	//                                    Peek
 	// --------------------------------------------------------------------------------
 
 protected:	
 
-	//! Read a BYTE from RAM.
-	/*! The BYTE is always read from RAM, regardless of the value of the processor port register.
-		\param addr Memory address
-		\return RAM contents at address addr
-		\see peek 
-	*/
+	//! @brief    Reads a byte from RAM.
 	virtual uint8_t peekRam(uint16_t addr) = 0;
 	
-	//! Read a BYTE from ROM.
-	/*! The BYTE is always read from ROM, regardless of the value of the processor port register.
-		\param addr Memory address
-		\return ROM contents at address addr
-		\see peek 
-	*/
+    //! @brief    Reads a byte from ROM.
 	virtual uint8_t peekRom(uint16_t addr) = 0;
 
-	//! Read a BYTE from I/O space.
-	/*! The BYTE is always read from I/O space, regardless of the value of the processor port register.
-		\param addr Memory address
-		\return I/O register contents at address addr
-		\see peek 
-	*/
+    //! @brief    Reads a byte from I/O space.
 	virtual uint8_t peekIO(uint16_t addr) = 0;
 
 public:
 
-	//! Read a BYTE from the specified memory source.
-	/*! Depending in the specified memory type, either \a peekRam, \a peekRom, or \a peekIO is called. */
+	//! @brief    Reads a byte from the specified memory source.
 	uint8_t peekFrom(uint16_t addr, MemoryType source);
 
-	//! Read a BYTE from memory.
-	/*! This functions implements the native memory peek of the original C64 including all side effects.
-	 The functions automatically determines the correct memory source by the value of the processor 
-	 port register. Afterwards, the value is read either from RAM, ROM, or the I/O address space and 
-	 returned.
-	 \param addr Memory address
-	 \return RAM, ROM, or I/O memory contents at address addr 
-	 */
+	/*! @brief    Reads a byte from memory.
+	 *  @details  This function implements the native memory peek of the original C64 including all side effects.
+     */
 	virtual uint8_t peek(uint16_t addr) = 0;
 	
 	//! Wrapper around peek
@@ -138,28 +118,13 @@ public:
 
 protected:	
 
-	//! Write a BYTE to RAM.
-	/*! The BYTE is always written to RAM, regardless of the value of the processor port register.
-		\param addr Memory address
-		\param value Value to write
-		\see poke 
-	*/
-	virtual void pokeRam(uint16_t addr, uint8_t value) = 0;
+	//! @brief    Writes a byte into RAM
+    virtual void pokeRam(uint16_t addr, uint8_t value) = 0;
 	
-	//! Write a BYTE to ROM.
-	/*! The BYTE is always written to ROM, regardless of the value of the processor port register.
-		\param addr Memory address
-		\param value Value to write
-		\see poke 
-	*/
+    //! @brief    Writes a byte into ROM
 	virtual void pokeRom(uint16_t addr, uint8_t value) = 0;
 
-	//! Write a BYTE to I/O space.
-	/*! The BYTE is always written to I/O space, regardless of the value of the processor port register.
-		\param addr Memory address
-		\param value Value to write
-		\see poke 
-	*/
+    //! @brief    Writes a byte into I/O space
 	virtual void pokeIO(uint16_t addr, uint8_t value) = 0;
 	
 public:

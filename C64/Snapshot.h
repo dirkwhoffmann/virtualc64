@@ -31,8 +31,9 @@
 // Forward declarations
 class C64;
 
-/*! @class Snapshot
- *  @brief The Snapshot class declares the programmatic interface for a file that contains an emulator snapshot (a frozen internal state).
+/*! @class    Snapshot
+ *  @brief    The Snapshot class declares the programmatic interface for a file that contains an emulator snapshot 
+ *            (a frozen internal state).
  */
 class Snapshot : public Container {
 	
@@ -40,92 +41,94 @@ private:
 	
 	struct {
 		
-		//! Magic bytes ('V','C','6','4')
+		//! @brief    Magic bytes ('V','C','6','4')
 		char magic[4];
 		
-		//! Version number (V major.minor.subminor)
+		//! @brief    Version number (V major.minor.subminor)
 		uint8_t major;
 		uint8_t minor;
         uint8_t subminor;
 		
-		// Screenshot
+		//! @brief    Screenshot
 		struct { 	
 			
-			//! Image width and height
+			//! @brief    Image width and height
 			uint16_t width, height;
 		
-			//! Screen buffer data 
+			//! @brief    Screen buffer data
 			uint32_t screen[PAL_RASTERLINES * NTSC_PIXELS];
 		
 		} screenshot;
         
-        // Size of internal state
+        //! @brief    Size of internal state
         uint32_t size;
 
     } header;
 	
-    // Internal state data
+    //! @brief    Internal state data
     uint8_t *state;
 
-	//! Date and time of snapshot creation
+	//! @brief    Date and time of snapshot creation
 	time_t timestamp;
 	
 public:
 
-	//! Constructor
+	//! @brief    Constructor
 	Snapshot();
 	
-	//! Destructor
+	//! @brief    Destructor
 	~Snapshot();
 	
-    //! Free allocated memory
+    //! @brief    Frees the allocated memory
     void dealloc();
 
-    //! Allocate memory for storing internal state
+    //! @brief    Allocates memory for storing internal state
     bool alloc(unsigned size);
 
-    //! Returns true if file header matches
+    //! @brief    Returns true if file header matches
     static bool isSnapshot(const char *filename);
 
-    //! Returns true if 'fileIsValid' and version number match
+    //! @brief    Returns true if 'fileIsValid' and version number match
     static bool isSnapshot(const char *filename, int major, int minor, int subminor);
     
-	//! Factory methods
+	/*! @brief    Factory method
+     *  @details  Creates a snapshot with data from a file
+     */
 	static Snapshot *snapshotFromFile(const char *filename);
-	static Snapshot *snapshotFromBuffer(const uint8_t *buffer, unsigned size);
+
+    /*! @brief    Factory method
+     *  @details  Creates a snapshot with data from a buffer
+     */
+    static Snapshot *snapshotFromBuffer(const uint8_t *buffer, unsigned size);
 	
-	//! Virtual functions from Container class
+    //
+	// Virtual functions from Container class
+    //
+    
 	bool fileIsValid(const char *filename);
 	bool readFromBuffer(const uint8_t *buffer, unsigned length);
 	unsigned writeToBuffer(uint8_t *buffer);
     unsigned sizeOnDisk() { return getHeaderSize() + getDataSize(); }
-    
     ContainerType getType();
 	const char *getTypeAsString();
 
-    //! Returns size of header
+    //! @brief    Returns size of header
     uint32_t getHeaderSize() { return sizeof(header); }
 
-    //! Returns pointer to header data
+    //! @brief    Returns pointer to header data
     uint8_t *getHeader() { return (uint8_t *)&header; }
 
-    //! Returns size of core data
+    //! @brief    Returns size of core data
     uint32_t getDataSize() { return header.size; }
 
-    //! Returns pointer to core data
+    //! @brief    Returns pointer to core data
 	uint8_t *getData() { return state; }
 
-	//! Return timestamp
+	//! @brief    Returns the timestamp
 	time_t getTimestamp() { return timestamp; }
 
-	//! Set timestamp
+	//! @brief    Sets the timestamp
 	void setTimestamp(time_t value) { timestamp = value; }
-
-	//! Return PAL/NTSC flag
-	// bool isPAL() { return (bool)header.isPAL; }
-	
-	//! Set PAL/NTSC flag
-	// void setPAL(bool value) { header.isPAL = (uint8_t)value; }
 	
 	//! Returns true, if snapshot does not contain data yet
 	bool isEmpty() { return timestamp == 0; }

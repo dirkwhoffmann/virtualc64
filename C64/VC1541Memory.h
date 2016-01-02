@@ -1,7 +1,9 @@
-/*
- * (C) 2008 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
+/*!
+ * @header      VC151Memory.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2008 - 2016 Dirk W. Hoffmann
+ */
+/* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -23,59 +25,60 @@
 
 class VC1541;
 
-//! This class represents the RAM and ROM of a virtual VC1541 floopy disk drive
+/*! @brief    This class represents the RAM and ROM of a virtual VC1541 floopy disk drive.
+ */
 class VC1541Memory : public Memory {
 
-private: 
-	//! Reference to the connected IEC bus
+private:
+    
+	//! @brief    Reference to the connected IEC bus
 	IEC *iec;
 
-	//! Reference to the connected disk drive
+	//! @brief    Reference to the connected disk drive
 	VC1541 *floppy;
 	
 public:		
-	//! Virtual memory storage
+	//! @brief    The VC1541s memory space
 	uint8_t mem[65536];
 	
-	//! File name of the ROM image.
-	/*! The file name is set by the loadRom routine. It is saved for further reference, so the ROM can be reloaded any time. */
+    /*! @brief    File name of the VC1541 ROM image.
+     *  @details  The file name is set in loadRom(). It is saved for further reference, so the ROM can be reloaded
+     *            any time.
+     */
 	char *romFile;
 
-	//! Check integrity of ROM image 
-	/*! Returns true, iff the specified file contains a valid VC1541 ROM image.
-	    File integrity is checked via the checkFileHeader function. 
-	    \param filename Name of the file being loaded
-		\see C64:loadRom
-	*/
+    /*! @brief    Checks the integrity of a VC1541 ROM image.
+     *  @details  Returns true, iff the specified file contains a valid VC1541 ROM image.
+     *            File integrity is checked via the checkFileHeader function.
+     */
 	static bool is1541Rom(const char *filename);
 	
 public:
 	
-	//! Constructor
+	//! @brief    Constructor
 	VC1541Memory();
 	
-	//! Destructor
+	//! @brief    Destructor
 	~VC1541Memory();
 
-	//! Restore initial state
+	//! @brief    Restores the initial state.
 	void reset();
 		
-	//! Dump current state into logfile
+	//! @brief    Prints debugging information
 	void dumpState();
 		
-	//! Load a ROM image into memory.
-	/*! The function automatically determines the type of the specified file. In case of a valid ROM image, it
-		is loaded into the ROM space at the proper location. 
-		\param filename Filename of the ROM Image
-		\return Returns true, if the file could be loaded successfully. In case of an error (file not found, 
-		the file is no proper ROM image, ...) the function returns false.
-	*/
+	/*! @brief    Loads a ROM image into memory.
+	 *  @details  The function automatically determines the type of the specified file. In case of a valid ROM image, 
+     *            it is loaded into the ROM space at the proper location.
+     *  @return   Returns true, if the file could be loaded successfully. In case of an error (file not found,
+     *            the file is no proper ROM image, ...) the function returns false.
+     */
 	bool loadRom(const char *filename);
 
-	//! Returns true, iff the ROM image is alrady loaded
+	//! @brief    Returns true, iff the ROM image is alrady loaded
 	bool romIsLoaded() { return romFile != NULL; }
 				
-	// Virtual fuctions that need to be implemented...
+	// Virtual fuctions from Memory class
 	bool isValidAddr(uint16_t addr, MemoryType type);
 	uint8_t peekRam(uint16_t addr);
 	uint8_t peekRom(uint16_t addr);

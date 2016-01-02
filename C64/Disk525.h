@@ -1,8 +1,7 @@
 /*!
  * @header      Disk525.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2015 Dirk W. Hoffmann
- * @brief       Declares Disk525 class
+ * @copyright   2015 - 2016 Dirk W. Hoffmann
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +23,7 @@
 
 #include "VirtualComponent.h"
 
+// Forward declarations
 class C64;
 class D64Archive;
 class G64Archive;
@@ -43,32 +43,32 @@ class NIBArchive;
  *                      -----------------------------------------------------------------------------
  */
 
-/*! @brief   Data type for addressing half and full tracks on disk
- *  @details The VC1541 drive head can move between position 1 and 85. The odd numbers between
- *           1 and 70 mark the 35 tracks that are used by VC1541 DOS. This means that DOS moves 
- *           the drive head always two positions up or down. If programmed manually, the head can 
- *           also be position on half tracks and on tracks beyond 35. 
- *  @see     Track
+/*! @brief    Data type for addressing half and full tracks on disk
+ *  @details  The VC1541 drive head can move between position 1 and 85. The odd numbers between
+ *            1 and 70 mark the 35 tracks that are used by VC1541 DOS. This means that DOS moves
+ *            the drive head always two positions up or down. If programmed manually, the head can
+ *            also be position on half tracks and on tracks beyond 35.
+ *  @see      Track
  */
 typedef unsigned Halftrack;
 
-/*! @brief   Data type for addressing full tracks on disk 
- *  @see     Halftrack 
+/*! @brief    Data type for addressing full tracks on disk
+ *  @see      Halftrack
  */
 typedef unsigned Track;
 
-/*! @brief   Checks if a given number is a valid halftrack number
+/*! @brief    Checks if a given number is a valid halftrack number
  */
 inline bool isHalftrackNumber(unsigned nr) { return 1 <= nr && nr <= 84; }
 
-/*! @brief   Checks if a given number is a valid track number
+/*! @brief    Checks if a given number is a valid track number
  */
 inline bool isTrackNumber(unsigned nr) { return 1 <= nr && nr <= 42; }
 
-/*! @brief   Maximum number of files that can be stored on a single disk
- *  @details VC1541 DOS stores the directors on track 18 which contains 19 sectors. Sector 0 is
- *           reserved for the BAM. Each of the remaining sectors can hold up to 8 directory entries,
- *           summing um to a total of 144 items. 
+/*! @brief    Maximum number of files that can be stored on a single disk
+ *  @details  VC1541 DOS stores the directors on track 18 which contains 19 sectors. Sector 0 is
+ *            reserved for the BAM. Each of the remaining sectors can hold up to 8 directory entries,
+ *            summing um to a total of 144 items.
  */
 const unsigned MAX_FILES_ON_DISK = 144;
 
@@ -77,7 +77,7 @@ const unsigned MAX_FILES_ON_DISK = 144;
 //                                               Disk525
 // -----------------------------------------------------------------------------------------------
 
-/*! @brief   A virtual 5,25" floppy disk
+/*! @brief    A virtual 5,25" floppy disk
  */
 class Disk525 : public VirtualComponent {
     
@@ -86,14 +86,14 @@ public:
     Disk525();
     ~Disk525();
     
-    //! @brief   Dump debug information 
+    //! @brief    Dump debug information
     void dumpState();
     
     
 private:
     
-    /*! @brief   GCR encoding table
-        @details Maps 4 data bits to 5 GCR bits 
+    /*! @brief    GCR encoding table
+        @details  Maps 4 data bits to 5 GCR bits
      */
     const uint16_t gcr[16] = {
         0x0a, 0x0b, 0x12, 0x13,
@@ -102,8 +102,8 @@ private:
         0x0d, 0x1d, 0x1e, 0x15
     };
     
-    /*! @brief   Inverse GCR encoding table
-        @details Maps 5 data bits to 4 GCR bits. Initialized in constructor
+    /*! @brief    Inverse GCR encoding table
+        @details  Maps 5 data bits to 4 GCR bits. Initialized in constructor
      */
     uint8_t invgcr[32];
 
@@ -231,10 +231,6 @@ public:
         return result;
     }
 
-    /*
-    inline uint8_t readByteFromHalftrack(Halftrack ht, unsigned offset) {
-        assert(isHalftrackNumber(ht)); return readByte(data.halftrack[ht], offset); }
-     */
     
     //
     //! @functiongroup Writing data to disk
@@ -288,10 +284,6 @@ public:
             writeBitToHalftrack(ht, offset + i, byte & mask);
     }
 
-    /*
-    inline void writeByteToHalftrack(Halftrack ht, unsigned offset, uint8_t byte) {
-        assert(isHalftrackNumber(ht)); writeByte(data.halftrack[ht], offset, byte); }
-    */
     
     //
     //! @functiongroup Erasing disk data
@@ -361,26 +353,13 @@ private:
     void writeSyncBits(uint8_t *dest, unsigned offset, unsigned length) {
         for (unsigned i = 0; i < length; i++) writeBit(dest, offset + i, 1); }
     
-    /*! @brief   Write five SYNC bytes
-     *  @deprecated Implement encodeSyncBits instead
-     */
-    // void encodeSync(uint8_t *dest) { writeSyncBits(dest, 0, 5 * 8); }
-    // { for (unsigned i = 0; i < 5; i++) dest[i] = 0xFF; }
-
     /*! @brief   Write interblock gap
      */
     void writeGap(uint8_t *dest, unsigned offset, unsigned length) {
         for (unsigned i = 0; i < length; i++) writeByte(dest, offset + i * 8, 0x55); }
-
-    /*! @brief      Write interblock gap
-     *  @deprecated Use writeGap instead
-     */
-    // void encodeGap(uint8_t *dest, unsigned size) { writeGap(dest, 0, size); }
-    // { for (unsigned i = 0; i < size; i++) dest[i] = 0x55; }
     
     /*! @brief   Translates four data bytes into five GCR encodes bytes
      */
-    // void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest);
     void encodeGcr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint8_t *dest, unsigned offset);
     
     
