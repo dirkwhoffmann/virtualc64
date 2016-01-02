@@ -771,9 +771,6 @@ CIA1::~CIA1()
 void 
 CIA1::reset()
 {
-    keyboard = &c64->keyboard;
-    joy[0] = &c64->joystickA;
-    joy[1] = &c64->joystickB;
     joystick[0] = 0xff;
     joystick[1] = 0xff;
 	CIA::reset();
@@ -859,7 +856,7 @@ CIA1::peek(uint16_t addr)
 	switch(addr) {		
         case 0x00: // CIA_DATA_PORT_A
 				
-			pollJoystick(joy[1], 2);
+			pollJoystick(&c64->joystickB, 2);
 
             // We change only those bits that are configured as outputs, all input bits are 1
 			result = PA; // iomem[addr] | ~iomem[CIA_DATA_DIRECTION_A];
@@ -874,9 +871,9 @@ CIA1::peek(uint16_t addr)
         case 0x01: // CIA_DATA_PORT_B
 		{
             uint8_t bitmask = CIA1::peek(0x00 /* CIA_DATA_PORT_A */);
-			uint8_t keyboardBits = keyboard->getRowValues(bitmask); 
+			uint8_t keyboardBits = c64->keyboard.getRowValues(bitmask);
 			
-            pollJoystick(joy[0], 1);
+            pollJoystick(&c64->joystickA, 1);
 			
 			result = PB;
 			

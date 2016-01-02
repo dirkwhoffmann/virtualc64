@@ -1,22 +1,23 @@
-/*
- * (C) 2006 - 2009 Dirk W. Hoffmann. All rights reserved.
+/*!
+ * @header      CIA.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2016 Dirk W. Hoffmann
+ */
+/*              This program is free software; you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation; either version 2 of the License, or
+ *              (at your option) any later version.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *              This program is distributed in the hope that it will be useful,
+ *              but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *              GNU General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *              You should have received a copy of the GNU General Public License
+ *              along with this program; if not, write to the Free Software
+ *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// Last review: 25.7.06
 
 #ifndef _CIA_INC
 #define _CIA_INC
@@ -24,7 +25,6 @@
 #include "TOD.h"
 
 // Forward declarations
-// class CPU;
 class VIC;
 class IEC;
 class Keyboard;
@@ -64,7 +64,12 @@ class Joystick;
  */
 class CIA : public VirtualComponent {
 
+    // -----------------------------------------------------------------------------------------------
+    //                                          Properties
+    // -----------------------------------------------------------------------------------------------
+
 public:
+    
 	//! @brief    Start address of the CIA I/O space (CIA 1 and CIA 2)
 	static const uint16_t CIA_START_ADDR = 0xDC00;
 	//! @brief    End address of the CIA I/O space (CIA 1 and CIA 2)
@@ -92,30 +97,66 @@ public:
 	// Adapted from PC64Win by Wolfgang Lorenz
 	//
 		
-	// control
-	uint32_t delay;         // performs delay by shifting left at each clock
-	uint32_t feed;          // new bits to feed into dwDelay
-	uint8_t CRA;            // control register A
-	uint8_t CRB;            // control register B
-	uint8_t ICR;            // interrupt control register
-	uint8_t IMR;            // interrupt mask register
-	uint8_t PB67TimerMode;  // bit mask for PB outputs: 0 = port register, 1 = timer
-	uint8_t PB67TimerOut;   // PB outputs bits 6 and 7 in timer mode
-	uint8_t PB67Toggle;     // PB outputs bits 6 and 7 in toggle mode
+    //
+	// Control
+    //
+    
+    //! @brief    Performs delay by shifting left at each clock
+	uint32_t delay;
+    
+    //! @brief    New bits to feed into dwDelay
+	uint32_t feed;
+    
+    //! @brief    Control register A
+	uint8_t CRA;
+
+    //! @brief    Control register V
+    uint8_t CRB;
+    
+    //! @brief    Interrupt control register
+	uint8_t ICR;
+    
+    //! @brief    Interrupt mask register
+	uint8_t IMR;
+
+    //! @brief    Bit mask for PB outputs: 0 = port register, 1 = timer
+    uint8_t PB67TimerMode;
+    
+    //! @brief    PB outputs bits 6 and 7 in timer mode
+	uint8_t PB67TimerOut;
+    
+    //! @brief    PB outputs bits 6 and 7 in toggle mode
+	uint8_t PB67Toggle;
 		
-	// ports
-	uint8_t PALatch;        // buffered output values
-	uint8_t PBLatch;
-	uint8_t DDRA;           // directions: 0 = input, 1 = output
-	uint8_t DDRB;
+	//
+    // Ports
+    //
+    
+    //! @brief    Bbuffered output value of port A
+    uint8_t PALatch;
+
+    //! @brief    Bbuffered output value of port B
+    uint8_t PBLatch;
+    
+    //! @brief    Data directon register for port A (0 = input, 1 = output)
+	uint8_t DDRA;
+
+    //! @brief    Data directon register for port B (0 = input, 1 = output)
+    uint8_t DDRB;
 	
-	// interfaces
+    //
+	// Interfaces
+    //
+    
 	uint8_t PA;
 	uint8_t PB;
-	bool CNT;   // serial clock or input timer clock or timer gate
+    
+    //! @brief    Serial clock or input timer clock or timer gate
+	bool CNT;
 	bool INT;
-		
-	bool readICR; // Indicated if ICR register is currently read
+
+    //! @brief    Indicates if ICR register is currently read
+	bool readICR;
 
 	/*! @brief    Activates the interrupt line
 	 *  @details  The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
@@ -135,11 +176,15 @@ public:
 	 */
 	virtual uint8_t getInterruptLine() = 0;	
 	
+    
+    // -----------------------------------------------------------------------------------------------
+    //                                             Methods
+    // -----------------------------------------------------------------------------------------------
+
 public:	
 	
-	//! Returns true if addr is located in the I/O range of one of the two CIA chips
-	static inline bool isCiaAddr(uint16_t addr) 
-		{ return (CIA_START_ADDR <= addr && addr <= CIA_END_ADDR); }
+	//! @brief    Returns true if addr is located in the I/O range of one of the two CIA chips
+	static inline bool isCiaAddr(uint16_t addr) { return (CIA_START_ADDR <= addr && addr <= CIA_END_ADDR); }
 	
 	//! @brief    Constructor
 	CIA();
@@ -156,6 +201,11 @@ public:
 	//! @brief    Dump trace line
 	void dumpTrace();	
 
+    
+    //
+    //! @functiongroup Accessing device properties
+    //
+    
 	//! @brief    Returns the value of data port A
 	inline uint8_t getDataPortA() { return peek(0x00); }
 
@@ -185,19 +235,11 @@ public:
 
     //! @brief    Simulates a falling edge on the flag pin
     void triggerFallingEdgeOnFlagPin();
-
-	/*! @brief    Special peek function for the I/O memory range
-	 *  @details  The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip 
-     */
-	virtual uint8_t peek(uint16_t addr);
-	
-	/*! @brief    Special poke function for the I/O memory range
-	 *  @details  The poke function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip 
-     */
-	virtual void poke(uint16_t addr, uint8_t value);
-
+    
+    //
 	// Interrupt control
-	
+	//
+    
 	//! @brief    Returns true, if timer can trigger interrupts
 	inline bool isInterruptEnabledA() { return IMR & 0x01; }
 
@@ -250,220 +292,241 @@ public:
 	// Timer A
 	// 
 	
-	//! Return latch value
+	//! @brief    Returns latch value.
 	inline uint16_t getLatchA() { return latchA; }
 	
-	//! Set latch value
+	//! @brief    Sets latch value.
 	inline void setLatchA(uint16_t value) { latchA = value; }
 	
-	//! Get low byte of latch
+	//! @brief    Returns low byte of latch.
 	inline uint8_t getLatchALo() { return (uint8_t)(latchA & 0xFF); }
 	
-	//! Set low byte of latch
+	//! @brief    Sets low byte of latch.
 	inline void setLatchALo(uint8_t value) { latchA = (latchA & 0xFF00) | value; }
 	
-	//! Get high byte of latch
+	//! @brief    Returns high byte of latch.
 	inline uint8_t getLatchAHi() { return (uint8_t)(latchA >> 8); }
 	
-	//! Set high byte of latch
+	//! @brief    Sets high byte of latch.
 	inline void setLatchAHi(uint8_t value) { latchA = (value << 8) | (latchA & 0xFF); }
 	
-	//! Return current timer value
+	//! @brief    Returns current timer value.
 	inline uint16_t getCounterA() { return counterA; }
 	
-	//! Set current timer value
+	//! @brief    Sets current timer value.
 	inline void setCounterA(uint16_t value) { counterA = value; }
 	
-	//! Get low byte of current timer value
+	//! @brief    Returns low byte of current timer value.
 	inline uint8_t getCounterALo() { return (uint8_t)(counterA & 0xFF); }
 	
-	//! Set low byte of current timer value
+	//! @brief    Sets low byte of current timer value.
 	inline void setCounterALo(uint8_t value) { counterA = (counterA & 0xFF00) | value; }
 	
-	//! Get high byte of current timer value
+	//! @brief    Returns high byte of current timer value.
 	inline uint8_t getCounterAHi() { return (uint8_t)(counterA >> 8); }
 	
-	//! Set high byte of current timer value
+	//! @brief    Sets high byte of current timer value.
 	inline void setCounterAHi(uint8_t value) { counterA = (value << 8) | (counterA & 0xFF); }
 	
-	//! Load latched value into timer 
-	/*! As a side effect, CountA2 is cleared. This causes the timer to wait for one cycle before it continous to count */
+	/*! @brief    Load latched value into timer.
+	 *  @details  As a side effect, CountA2 is cleared. This causes the timer to wait for one cycle before 
+     *            it continous to count.
+     */
 	inline void reloadTimerA() { counterA = latchA; delay &= ~CountA2; }
 	
-	//! Returns true, if timer is running, 0 if stopped
+	//! @brief    Returns true, if timer is running, 0 if stopped.
 	inline bool isStartedA() { return CRA & 0x01; }
 	
-	//! Start or stop timer
+	//! @brief    Starts or stops timer.
 	inline void setStartedA(bool b) { if (b) CRA |= 0x01; else CRA &= 0xFE; }
 	
-	//! Toggle start flag
+	//! @brief    Toggles start flag.
 	inline void toggleStartFlagA() { setStartedA(!isStartedA()); }
 	
-	//! Returns true, if the force load strobe is 1
+	//! @brief    Returns true, if the force load strobe is 1.
 	inline bool forceLoadStrobeA() { return CRA & 0x10; }
 	
-	//! Returns true, if an underflow will be indicated in bit #6 in Port B register
+	//! @brief    Returns true, if an underflow will be indicated in bit #6 in Port B register.
 	inline bool willIndicateUnderflowA() { return CRA & 0x02; }
 	
-	//! Returns true, if an underflow will be indicated as a single pulse
+	//! @brief    Returns true, if an underflow will be indicated as a single pulse.
 	inline bool willIndicateUnderflowAsPulseA() { return !(CRA & 0x04); }
 	
-	//! Enable or disable underflow indication
+	//! @brief    Enables or disables underflow indication.
 	inline void setIndicateUnderflowA(bool b) { if (b) CRA |= 0x02; else CRA &= (0xFF-0x02); }
 	
-	//! Toggle underflow indication flag
+	//! @brief    Toggles underflow indication flag.
 	inline void toggleUnderflowFlagA() { setIndicateUnderflowA(!willIndicateUnderflowA()); }
 	
-	//! Returns true, if timer is in one shot mode
+	//! @brief    Returns true, if timer is in one shot mode.
 	inline bool isOneShotA() { return CRA & 0x08; }
 	
-	//! Enable or disable one-shot-mode 
+	//! @brief    Enables or disables one-shot-mode.
 	inline void setOneShotA(bool b) { if (b) CRA |= 0x08; else CRA &= (0xff-0x08); }
 	
-	//! Toggle one shot flag 
+	//! @brief    Toggle one shot flag.
 	inline void toggleOneShotFlagA() { setOneShotA(!isOneShotA()); }
 	
-	//! Returns true, if timer counts clock ticks
+	//! @brief    Returns true, if timer counts clock ticks.
 	inline bool isCountingClockTicksA() { return (CRA & 0x20) == 0x00; }
 	
-	//! Return value of timer control register
+	//! @brief    Returns value of timer control register.
 	inline bool getControlRegA() { return CRA; }
 
-	//! Set value of timer control register
+	//! @brief    Sets value of timer control register.
 	inline void setControlRegA(uint8_t value) { CRA = value; }
 	
 	//
 	// Timer B
 	// 
 	
-	//! Return latch value
+	//! @brief    Returns latch value.
 	inline uint16_t getLatchB() { return latchB; }
 	
-	//! Set latch value
+	//! @brief    Sets latch value.
 	inline void setLatchB(uint16_t value) { latchB = value; }
 	
-	//! Get low byte of latch
+	//! @brief    Returns low byte of latch.
 	inline uint8_t getLatchBLo() { return (uint8_t)(latchB & 0xFF); }
 	
-	//! Set low byte of latch
+	//! @brief    Set low byte of latch.
 	inline void setLatchBLo(uint8_t value) { latchB = (latchB & 0xFF00) | value; }
 	
-	//! Get high byte of latch
+	//! @brief    Returns high byte of latch.
 	inline uint8_t getLatchBHi() { return (uint8_t)(latchB >> 8); }
 	
-	//! Set high byte of latch
+	//! @brief    Set high byte of latch.
 	inline void setLatchBHi(uint8_t value) { latchB = (value << 8) | (latchB & 0xFF); }
 	
-	//! Return current timer value
+	//! @brief    Returns current timer value.
 	inline uint16_t getCounterB() { return counterB; }
 	
-	//! Set current timer value
+	//! @brief    Set current timer value.
 	inline void setCounterB(uint16_t value) { counterB = value; }
 	
-	//! Get low byte of current timer value
+	//! @brief    Returns low byte of current timer value.
 	inline uint8_t getCounterBLo() { return (uint8_t)(counterB & 0xFF); }
 	
-	//! Set low byte of current timer value
+	//! @brief    Set low byte of current timer value.
 	inline void setCounterBLo(uint8_t value) { counterB = (counterB & 0xFF00) | value; }
 	
-	//! Get high byte of current timer value
+	//! @brief    Returns high byte of current timer value.
 	inline uint8_t getCounterBHi() { return (uint8_t)(counterB >> 8); }
 	
-	//! Set high byte of current timer value
+	//! @brief    Set high byte of current timer value.
 	inline void setCounterBHi(uint8_t value) { counterB = (value << 8) | (counterB & 0xFF); }
 	
-	//! Load latched value into timer 
-	/*! As a side effect, CountB2 is cleared. This causes the timer to wait for one cycle before it continous to count */
+	/*! @brief    Loads latched value into timer.
+	 *  @details  As a side effect, CountB2 is cleared. This causes the timer to wait for one cycle before 
+     *            it continous to count.
+     */
 	inline void reloadTimerB() { counterB = latchB; delay &= ~CountB2; }
 	
-	//! Returns true, if timer is running, 0 if stopped
+	//! @brief    Returns true, if timer is running, 0 if stopped.
 	inline bool isStartedB() { return CRB & 0x01; }
 	
-	//! Start or stop timer
+	//! @brief    Starts or stop timer.
 	inline void setStartedB(bool b) { if (b) CRB |= 0x01; else CRB &= 0xFE; }
 	
-	//! Toggle start flag
+	//! @brief    Toggles start flag.
 	inline void toggleStartFlagB() { setStartedB(!isStartedB()); }
 	
-	//! Returns true, if the force load strobe is 1
+	//! @brief    Returns true, if the force load strobe is 1.
 	inline bool forceLoadStrobeB() { return CRB & 0x10; }
 	
-	//! Returns true, if an underflow will be indicated in bit #7 in Port B register
+	//! @brief    Returns true, if an underflow will be indicated in bit #7 in Port B register.
 	inline bool willIndicateUnderflowB() { return CRB & 0x02; }
 	
-	//! Returns true, if an underflow will be indicated as a single pulse
+	//! @brief    Returns true, if an underflow will be indicated as a single pulse.
 	inline bool willIndicateUnderflowAsPulseB() { return !(CRB & 0x04); }
 	
-	//! Enable or disable underflow indication
+	//! @brief    Enables or disables underflow indication.
 	inline void setIndicateUnderflowB(bool b) { if (b) CRB |= 0x02; else CRB &= (0xFF-0x02); }
 	
-	//! Toggle underflow indication flag
+	//! @brief    Toggles underflow indication flag.
 	inline void toggleUnderflowFlagB() { setIndicateUnderflowB(!willIndicateUnderflowB()); }
 	
-	//! Returns true, if timer is in one shot mode
+	//! @brief    Returns true, if timer is in one shot mode.
 	inline bool isOneShotB() { return CRB & 0x08; }
 	
-	//! Enable or disable one-shot-mode 
+	//! @brief    Enables or disable one-shot-mode.
 	inline void setOneShotB(bool b) { if (b) CRB |= 0x08; else CRB &= (0xff-0x08); }
 	
-	//! Toggle one shot flag 
+	//! @brief    Toggles one shot flag.
 	inline void toggleOneShotFlagB() { setOneShotB(!isOneShotB()); }
 	
-	//! Returns true, if timer counts clock ticks
+	//! @brief    Returns true, if timer counts clock ticks.
 	inline bool isCountingClockTicksB() { return (CRB & 0x20) == 0x00; }
 	
-	//! Return value of timer control register
+	//! @brief    Returns value of timer control register.
 	inline bool getControlRegB() { return CRB; }
 	
-	//! Set value of timer control register
+	//! @brief    Sets value of timer control register.
 	inline void setControlRegB(uint8_t value) { CRB = value; }
 	
 	
-	// -----------------------------------------------------------------------------------------------
-	//                                             General
-	// -----------------------------------------------------------------------------------------------
-	
-	//! Pass control to the CIA chip
-	/*! The CIA will be executed for one clock cycle
-		The functions decreases all running counters and triggers an CPU interrput if necessary.
-	*/
+    //
+    //! @functiongroup Communicating via the I/O address space
+    //
+    
+    /*! @brief    Special peek function for the I/O memory range
+     *  @details  The peek function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip
+     */
+    virtual uint8_t peek(uint16_t addr);
+    
+    /*! @brief    Special poke function for the I/O memory range
+     *  @details  The poke function only handles those registers that are treated similarily by the CIA 1 and CIA 2 chip
+     */
+    virtual void poke(uint16_t addr, uint8_t value);
+    
+    
+    //
+    //! @functiongroup Running the device
+    //
+    
+	//! @brief    Executes the CIA for one cycle
 	void executeOneCycle();
 
-	//! Increment the TOD clock by one tenth of a second
-	/*! Issues an interrupt if the alarm time is reached.
-		The function is supposed to be invoked whenever a frame is finished (during VBlank) 
-	*/
+	//! Increments the TOD clock by one tenth of a second
 	void incrementTOD();
 };
 
 
-//! The first virtual complex interface adapter (CIA 1)
-/*! The CIA 1 chips differs from the CIA 2 chip in several smaller aspects. For example, the CIA 1 interrupts the
-	CPU via the IRQ line (maskable interrupts). Furthermore, the keyboard is connected to the the C64 via the CIA 1 chip.
-*/
+/*! @class    The first virtual complex interface adapter (CIA 1)
+ *  @details  The CIA 1 chips differs from the CIA 2 chip in several smaller aspects. For example, 
+ *            the CIA 1 interrupts the CPU via the IRQ line (maskable interrupts). Furthermore, 
+ *            the keyboard is connected to the the C64 via the CIA 1 chip.
+ */
 class CIA1 : public CIA {
 	
 public:
 	
-	//! Start address of the CIA 1 I/O space
+	//! @brief    Start address of the CIA 1 I/O space
 	static const uint16_t CIA1_START_ADDR = 0xDC00;
-	//! End address of the CIA 1 I/O space
+    
+	//! @brief    End address of the CIA 1 I/O space
 	static const uint16_t CIA1_END_ADDR = 0xDCFF;
 
-	//! Joystick bits
+	//! @brief    Joystick bits
 	uint8_t joystick[2];
 	
 private:
 
-	//! Reference to the virtual keyboard
-	Keyboard *keyboard;
-	Joystick *joy[2];
+    //! @brief    Polls current state of joystick
+	void pollJoystick(Joystick *joy, int joyDevNo);
 
-	void pollJoystick( Joystick *joy, int joyDevNo );
+    /*! @brief    Raises the interrupt line
+     *  @details  Note that CIA 1 is connected to the IRQ line
+     */    void raiseInterruptLine();
 
-	void raiseInterruptLine();
-	void clearInterruptLine();
-	uint8_t getInterruptLine();
+    /*! @brief    Clears the interrupt line
+     *  @details  Note that CIA 1 is connected to the IRQ line
+     */    void clearInterruptLine();
+
+    /*! @brief    Returns the current value of the interrupt line
+     *  @details  Note that CIA 2 is connected to the IRQ line
+     */
+    inline uint8_t getInterruptLine();
 	
 public:
 
@@ -510,10 +573,21 @@ private:
 	
 	//! Reference to the connected IEC bus
 	IEC *iec;
-		
-	void raiseInterruptLine();
-	void clearInterruptLine();
-	uint8_t getInterruptLine();
+
+    /*! @brief    Raises the interrupt line
+     *  @details  Note that CIA 2 is connected to the NMI line 
+     */
+    void raiseInterruptLine();
+
+    /*! @brief    Clears the interrupt line
+     *  @details  Note that CIA 2 is connected to the NMI line
+     */
+    void clearInterruptLine();
+
+    /*! @brief    Returns the current value of the interrupt line
+     *  @details  Note that CIA 2 is connected to the NMI line
+     */
+    uint8_t getInterruptLine();
 		
 public:
 
