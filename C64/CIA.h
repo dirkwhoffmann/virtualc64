@@ -530,49 +530,55 @@ private:
 	
 public:
 
-	//! Constructor
+	//! @brief    Constructor
 	CIA1();
 
-	//! Destructor
+	//! @brief    Destructor
 	~CIA1();
 	
-	//! Bring the CIA back to its initial state
+	//! @brief    Restores the initial state
 	void reset();
 		
-	//! Returns true if the \a addr is located in the I/O range of the CIA 1 chip
+	//! @brief    Returns true if addr is located in the I/O range of the CIA 1 chip
 	static inline bool isCia1Addr(uint16_t addr) 
 		{ return (CIA1_START_ADDR <= addr && addr <= CIA1_END_ADDR); }
 	
+    //! @brief    Custom implementation of peek
 	uint8_t peek(uint16_t addr);
-	void poke(uint16_t addr, uint8_t value);
-	
-	//! @brief Simulates a joystick movement
-	/*! @param nr r number (1 or 2)
-     *  @param value bit pattern of joystick movement */
-	void setJoystickBits(int nr, uint8_t mask);
-	void clearJoystickBits(int nr, uint8_t mask);
 
+    //! @brief    Custom implementation of poke
+    void poke(uint16_t addr, uint8_t value);
+	
+	/*! @brief    Simulates a joystick movement
+	 *  @param    nr    joystick number (1 or 2)
+     *  @param    value bit pattern of joystick movement
+     */
+	void setJoystickBits(int nr, uint8_t mask);
+
+    //! @brief    Clears all joystick bits
+    void clearJoystickBits(int nr, uint8_t mask);
+
+    //! @brief    Prints debug information
 	void dumpState();
 };
 	
-//! The second virtual complex interface adapter (CIA 2)
-/*! The CIA 2 chips differs from the CIA 1 chip in several smaller aspects. For example, the CIA 2 interrupts the
-	CPU via the NMI line (non maskable interrupts). Furthermore, the CIA 2 controlls the memory bank seen by the video controller.
-	Therefore, CIA 2 needs to know about the VIC chip, in contrast to CIA 1.
-*/
+/*! @brief    The second virtual complex interface adapter (CIA 2)
+ *  @details  The CIA 2 chips differs from the CIA 1 chip in several smaller aspects. For example,
+ *            the CIA 2 interrupts the CPU via the NMI line (non maskable interrupts). Furthermore, 
+ *            the CIA 2 controlls the memory bank seen by the video controller. Therefore, CIA 2 
+ *            needs to know about the VIC chip, in contrast to CIA 1.
+ */
 class CIA2 : public CIA {
 
 public:
 	
-	//! Start address of the CIA 2 I/O space
+	//! @brief    Start address of the CIA 2 I/O space
 	static const uint16_t CIA2_START_ADDR = 0xDD00;
-	//! End address of the CIA 1 2/O space
+    
+	//! @brief    End address of the CIA 1 2/O space
 	static const uint16_t CIA2_END_ADDR = 0xDDFF;
 
 private:
-	
-	//! Reference to the connected IEC bus
-	IEC *iec;
 
     /*! @brief    Raises the interrupt line
      *  @details  Note that CIA 2 is connected to the NMI line 

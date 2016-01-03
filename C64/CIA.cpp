@@ -65,10 +65,6 @@ CIA::reset()
 {
     VirtualComponent::reset();
     
-    // Establish bindings
-    // cpu = &c64.cpu;
-    // vic = c64->vic;
-    
     clearInterruptLine();
 
 	PA = 0xff; 
@@ -764,7 +760,6 @@ CIA1::CIA1()
 
 CIA1::~CIA1()
 {
-    this->c64 = c64;
 	debug(3, "  Releasing CIA1\n");
 }
 
@@ -983,8 +978,6 @@ CIA2::~CIA2()
 
 void CIA2::reset()
 {
-    this->c64 = c64;
-    iec = &c64->iec;
 	CIA::reset();
 }
 
@@ -1028,8 +1021,8 @@ CIA2::peek(uint16_t addr)
 			
 			// The two upper bits are connected to the clock line and the data line
 			result &= 0x3F;
-			result |= (iec->getClockLine() ? 0x40 : 0x00);
-			result |= (iec->getDataLine() ? 0x80 : 0x00);
+			result |= (c64->iec.getClockLine() ? 0x40 : 0x00);
+			result |= (c64->iec.getDataLine() ? 0x80 : 0x00);
 
 			// The external port lines can pull down any bit, even if it configured as output.
 			// Note that bits 0 and 1 are not connected to the bus and determine the memory bank seen by the VIC chip
@@ -1062,7 +1055,7 @@ CIA2::poke(uint16_t addr, uint8_t value)
 			c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
 
 			// Bits 3 to 5 of PA are connected to the IEC bus
-			iec->updateCiaPins(PALatch, DDRA);
+			c64->iec.updateCiaPins(PALatch, DDRA);
 			return;
 			
         case 0x01: // CIA_DATA_PORT_B
@@ -1081,7 +1074,7 @@ CIA2::poke(uint16_t addr, uint8_t value)
             c64->vic.setMemoryBankAddr((~PA & 0x03) << 14);
             
             // Bits 3 to 5 of PA are connected to the IEC bus
-            iec->updateCiaPins(PALatch, DDRA);
+            c64->iec.updateCiaPins(PALatch, DDRA);
             return;
             
         case 0x03: // CIA_DATA_DIRECTION_B

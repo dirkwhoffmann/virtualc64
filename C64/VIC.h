@@ -1,21 +1,22 @@
-/*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+/*!
+ * @header      VIC.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2016 Dirk W. Hoffmann
  */
-
+/*              This program is free software; you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation; either version 2 of the License, or
+ *              (at your option) any later version.
+ *
+ *              This program is distributed in the hope that it will be useful,
+ *              but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *              GNU General Public License for more details.
+ *
+ *              You should have received a copy of the GNU General Public License
+ *              along with this program; if not, write to the Free Software
+ *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 #ifndef _VIC_INC
 #define _VIC_INC
 
@@ -30,7 +31,7 @@ class PixelEngine;
 
 /*! @brief    Virtual Video Controller (VICII)
  *  @details  VICII is the video controller chip of the Commodore 64.
- *            VICII occupied the memory mapped I/O space from address 0xD000 to 0xD02E. 
+ *            It occupies the memory mapped I/O space from address 0xD000 to 0xD02E. 
  */
 class VIC : public VirtualComponent {
 
@@ -44,7 +45,7 @@ private:
     PixelEngine pixelEngine;
     
 	//! @brief    Reference to the connected CPU
-	CPU *cpu;
+	// CPU *cpu;
 	
 public:
     
@@ -220,34 +221,39 @@ public:
 
 public:
 	
-	//! I/O Memory
-	/*! If a value is poked to the VIC address space, it is stored here. */
+	/*! @brief    I/O Memory
+	 *  @details  This array is used to store most of the register values that are poked into the
+     *            VIC address space. Note that this does not hold for all register values. Some of them
+     *            are directly stored inside the state pipe for speedup purposes.
+     */
 	uint8_t iomem[64]; 
 
 private:
 
-    //! Start address of the currently selected memory bank
-    /*! There are four banks in total since the VIC chip can only "see" 16 KB of memory at one time
-        Two bank select bits in the CIA I/O space determine which quarter of the memory we're actually seeing
-     
-        \verbatim
-        +-------+------+-------+----------+-------------------------------------+
-        | VALUE | BITS |  BANK | STARTING |  VIC-II CHIP RANGE                  |
-        |  OF A |      |       | LOCATION |                                     |
-        +-------+------+-------+----------+-------------------------------------+
-        |   0   |  00  |   3   |   49152  | ($C000-$FFFF)                       |
-        |   1   |  01  |   2   |   32768  | ($8000-$BFFF)                       |
-        |   2   |  10  |   1   |   16384  | ($4000-$7FFF)                       |
-        |   3   |  11  |   0   |       0  | ($0000-$3FFF) (DEFAULT VALUE)       |
-        +-------+------+-------+----------+-------------------------------------+
-        \endverbatim 
-    */
+    /*! @brief    Start address of the currently selected memory bank
+     *  @details  There are four banks in total since the VIC chip can only "see" 16 KB of memory
+     *            at one time. Two bank select bits in the CIA I/O space determine which quarter of 
+     *            the memory we're actually seeing
+     */
+    /*
+     *            +-------+------+-------+----------+-------------------------------------+
+     *            | VALUE | BITS |  BANK | STARTING |  VIC-II CHIP RANGE                  |
+     *            |  OF A |      |       | LOCATION |                                     |
+     *            +-------+------+-------+----------+-------------------------------------+
+     *            |   0   |  00  |   3   |   49152  | ($C000-$FFFF)                       |
+     *            |   1   |  01  |   2   |   32768  | ($8000-$BFFF)                       |
+     *            |   2   |  10  |   1   |   16384  | ($4000-$7FFF)                       |
+     *            |   3   |  11  |   0   |       0  | ($0000-$3FFF) (DEFAULT VALUE)       |
+     *            +-------+------+-------+----------+-------------------------------------+
+     */
     uint16_t bankAddr;
 
-    //! General memory access via address and data bus
+    //! @brief    Simulates a memory access via the address and data bus.
     uint8_t memAccess(uint16_t addr);
 
-    //! Idle memory access at address 0x3fff
+    /*! @brief    Simulates an idle memory access.
+     *  @details  An idle memory access is an access of memory location 0x3fff. 
+     */
     uint8_t memIdleAccess();
 
     
@@ -255,17 +261,21 @@ private:
 //                                  Character access (cAccess)
 // -----------------------------------------------------------------------------------------------
     
-    //! During a cAccess, VIC accesses the video matrix
+    /*! @brief    Performs a character access (cAccess)
+     *  @details  During a cAccess, VIC accesses the video matrix
+     */
     void cAccess();
     
-    //! cAcess character storage
-    /*! Every 8th rasterline, the VIC chips performs a DMA access and fills this array with 
-        character information */
+    /*! @brief    cAcess character storage
+     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and fills this array with
+     *            character information 
+     */
     uint8_t characterSpace[40];
     
-    //! cAcess color storage
-    /*! Every 8th rasterline, the VIC chips performs a DMA access and fills the array with t
-        color information */
+    /*! @brief    cAcess color storage
+     *  @details  Every 8th rasterline, the VIC chips performs a DMA access and fills the array with
+     *            color information 
+     */
     uint8_t colorSpace[40];
     
     
@@ -273,9 +283,11 @@ private:
     //                                  Graphics access (gAccess)
     // -----------------------------------------------------------------------------------------------
 
-    //! During a 'g access', VIC reads graphics data (character or bitmap patterns)
-    /*! The result of the gAccess is stored in variables prefixed with 'g_', i.e.,
-     *  g_data, g_character, g_color, g_mode */
+    /*! @brief    Performs a graphics access (gAccess)
+     *  @details  During a gAccess, VIC reads graphics data (character or bitmap patterns)
+     *            The result of the gAccess is stored in variables prefixed with 'g_', i.e.,
+     *            g_data, g_character, g_color, g_mode 
+     */
     void gAccess();
     
 
@@ -283,23 +295,23 @@ private:
     //                             Sprite accesses (pAccess and sAccess)
     // -----------------------------------------------------------------------------------------------
     
-    //! Sprite pointer access
+    //! @brief    Performs a sprite pointer access (sAccess)
     void pAccess(unsigned sprite);
     
-    /*! @brief  First sprite data access
-     *  @result true iff sprite data was fetched (a memory access has occurred) 
+    /*! @brief    First sprite data access
+     *  @result   true iff sprite data was fetched (a memory access has occurred)
      */
-    bool sFirstAccess(unsigned sprite);
+    void sFirstAccess(unsigned sprite);
 
-    /*! @brief  Second sprite data access
-     *  @result Returns true iff sprite data was fetched (a memory access has occurred) 
+    /*! @brief    Second sprite data access
+     *  @result   Returns true iff sprite data was fetched (a memory access has occurred)
      */
-    bool sSecondAccess(unsigned sprite);
+    void sSecondAccess(unsigned sprite);
 
-    /*! @brief  Third sprite data access
-     *  @result Returns true iff sprite data was fetched (a memory access has occurred) 
+    /*! @brief    Third sprite data access
+     *  @result   Returns true iff sprite data was fetched (a memory access has occurred)
      */
-    bool sThirdAccess(unsigned sprite);
+    void sThirdAccess(unsigned sprite);
 
     /*! @brief    Finalizes the sprite data access
      *  @details  This method is invoked one cycle after the second and third sprite DMA
@@ -317,10 +329,10 @@ private:
     //                           Memory refresh accesses (rAccess)
     // -----------------------------------------------------------------------------------------------
     
-    //! Performs a DRAM refresh
+    //! @brief    Performs a DRAM refresh
     inline void rAccess() { (void)memAccess(0x3F00 | refreshCounter--); }
     
-    //! Performs a DRAM idle access
+    //! @brief    Performs a DRAM idle access
     inline void rIdleAccess() { (void)memIdleAccess(); }
     
 
@@ -328,32 +340,41 @@ private:
 	//                                         Sprites
 	// -----------------------------------------------------------------------------------------------
 
-	//! MC register
-	/*! MOB data counter (6 bit counter). One register for each sprite */
+	/*! @brief    MOB data counter.
+	 *  @details  A 6 bit counter, one for each sprite.
+     */
 	uint8_t mc[8];
 	
-	//! MCBASE register
-	/*! MOB data counter (6 bit counter). One register for each sprite */
+	/*! @brief    MCBASE register.
+	 *  @details  A 6 bit counter, one register for each sprite.
+     */
 	uint8_t mcbase[8];
 		
-	//! Sprite pointer
-	/*! Determines where the sprite data comes from */
+	/*! @brief    Sprite pointer fetched during a pAccess.
+	 *  @details  Determines where the sprite data comes from.
+     */
 	uint16_t spritePtr[8];
 
-	//! Sprite on off
-	/*! Determines if a sprite needs to be drawn in the current rasterline. Each bit represents a single sprite. */
+	/*! @brief    Sprite on off register
+	 *  @details  Determines if a sprite needs to be drawn in the current rasterline. 
+     *            Each bit represents a single sprite. 
+     */
 	uint8_t spriteOnOff;
     
-	//! Sprite DMA on off
-	/*! Determines  if sprite dma access is enabled or disabled. Each bit represents a single sprite. */
+	/*! @brief    Sprite DMA on off register
+	 *  @details  Determines  if sprite dma access is enabled or disabled. 
+     *            Each bit represents a single sprite. 
+     */
 	uint8_t spriteDmaOnOff;
     
-	//! Expansion flipflop
-	/*! Used to handle Y sprite stretching. One bit for each sprite */
+	/*! @brief    Expansion flipflop
+	 *  @details  Used to handle Y sprite stretching, one bit for each sprite 
+     */
 	uint8_t expansionFF;
 
-    //! Remembers which bits the CPU has cleared in the expansion Y register (D017)
-    /*! This value is set in pokeIO and cycle 15 and read in cycle 16 */
+    /*! @brief    Remembers which bits the CPU has cleared in the expansion Y register (D017)
+     *  @details  This value is set in pokeIO and cycle 15 and read in cycle 16 
+     */
     uint8_t cleared_bits_in_d017;
 	
 				
@@ -361,10 +382,11 @@ private:
 	//                                             Lightpen
 	// -----------------------------------------------------------------------------------------------
 	
-	//! Lightpen triggered?
-	/*! This variable ndicates whether a lightpen interrupt has occurred within the current frame.
-	    The variable is needed, because a lightpen interrupt can only occur once in a frame. It is set to false
-	    at the beginning of each frame. */
+	/*! @brief    Indicates whether the lightpen has triggered
+	 *  @details  This variable ndicates whether a lightpen interrupt has occurred within the current 
+     *            frame. The variable is needed, because a lightpen interrupt can only occur once in 
+     *            a frame. It is set to false at the beginning of each frame. 
+     */
 	bool lightpenIRQhasOccured;
 	
 	

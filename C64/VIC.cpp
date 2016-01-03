@@ -103,9 +103,6 @@ void
 VIC::reset()
 {
     VirtualComponent::reset();
-	
-    // Establish bindungs
-    cpu = &c64->cpu;
     
     // Internal state
     yCounter = PAL_HEIGHT;
@@ -275,7 +272,7 @@ inline void VIC::cAccess()
             Erst danach werden wieder regulŠre Videomatrixdaten gelesen." [C.B.] */
         
         characterSpace[registerVMLI] = 0xFF;
-        colorSpace[registerVMLI] = c64->mem.ram[cpu->getPC()] & 0x0F;
+        colorSpace[registerVMLI] = c64->mem.ram[c64->cpu.getPC()] & 0x0F;
     }
 }
 
@@ -342,33 +339,27 @@ inline void VIC::pAccess(unsigned sprite)
 
 }
 
-// TODO: Change return type to void
-inline bool VIC::sFirstAccess(unsigned sprite)
+inline void VIC::sFirstAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
-    bool memAccessed = false;
     
     isFirstDMAcycle = (1 << sprite);
     
     if (spriteDmaOnOff & (1 << sprite)) {
         
-        if (BApulledDownForAtLeastThreeCycles()) {
+        if (BApulledDownForAtLeastThreeCycles())
             data = memAccess(spritePtr[sprite] | mc[sprite]);
-            memAccessed = true;
-        }
 
         mc[sprite]++;
         mc[sprite] &= 0x3F; // 6 bit overflow
     }
     
     pixelEngine.sprite_sr[sprite].chunk1 = data;
-    return memAccessed;
 }
 
-// TODO: Change return type to void
-inline bool VIC::sSecondAccess(unsigned sprite)
+inline void VIC::sSecondAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
@@ -395,31 +386,24 @@ inline bool VIC::sSecondAccess(unsigned sprite)
         memIdleAccess();
     
     pixelEngine.sprite_sr[sprite].chunk2 = data;
-    return memAccessed;
 }
 
-// TODO: Change return type to void
-inline bool VIC::sThirdAccess(unsigned sprite)
+inline void VIC::sThirdAccess(unsigned sprite)
 {
     assert(sprite < 8);
     
     uint8_t data = 0x00; // TODO: VICE is doing this: vicii.last_bus_phi2;
-    bool memAccessed = false;
     
     if (spriteDmaOnOff & (1 << sprite)) {
         
-        if (BApulledDownForAtLeastThreeCycles()) {
+        if (BApulledDownForAtLeastThreeCycles())
             data = memAccess(spritePtr[sprite] | mc[sprite]);
-            memAccessed = true;
-        }
 
         mc[sprite]++;
         mc[sprite] &= 0x3F; // 6 bit overflow
     }
     
     pixelEngine.sprite_sr[sprite].chunk3 = data;
-    
-    return memAccessed;
 }
 
 
@@ -668,7 +652,7 @@ VIC::poke(uint16_t addr, uint8_t value)
 		case 0x19: // IRQ flags
 			// A bit is cleared when a "1" is written
 			iomem[addr] &= (~value & 0x0f);
-			cpu->clearIRQLineVIC();
+			c64->cpu.clearIRQLineVIC();
 			if (iomem[addr] & iomem[0x1a])
 				iomem[addr] |= 0x80;
 			return;
@@ -707,10 +691,10 @@ VIC::poke(uint16_t addr, uint8_t value)
 			iomem[addr] = value & 0x0f;
 			if (iomem[addr] & iomem[0x19]) {
 				iomem[0x19] |= 0x80; // set uppermost bit (is directly connected to the IRQ line)
-				cpu->setIRQLineVIC(); 
+				c64->cpu.setIRQLineVIC();
 			} else {
 				iomem[0x19] &= 0x7f; // clear uppermost bit
-				cpu->clearIRQLineVIC(); 
+				c64->cpu.clearIRQLineVIC();
 			}
 			return;		
 			
@@ -768,7 +752,7 @@ VIC::setBAlow(uint8_t value)
         BAwentLowAtCycle = c64->getCycles();
     
     BAlow = value;
-    cpu->setRDY(value == 0);
+    c64->cpu.setRDY(value == 0);
 }
 
 inline bool
@@ -784,7 +768,7 @@ VIC::triggerIRQ(uint8_t source)
 	if (iomem[0x1A] & source) {
 		// Interrupt is enabled
 		iomem[0x19] |= 128;
-		cpu->setIRQLineVIC();
+		c64->cpu.setIRQLineVIC();
 		// debug("Interrupting at rasterline %x %d\n", yCounter, yCounter);
 	}
 }
