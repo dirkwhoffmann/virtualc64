@@ -44,9 +44,6 @@ private:
      */
     PixelEngine pixelEngine;
     
-	//! @brief    Reference to the connected CPU
-	// CPU *cpu;
-	
 public:
     
     //! @brief    Dump current configuration into message queue
@@ -151,7 +148,6 @@ public:
 	
     //! @brief    Remember at which cycle BA line has been pulled down
     uint64_t BAwentLowAtCycle;
-    
     
     //! @brief    Increases the X counter by 8
     inline void countX() { p.xCounter += 8; }
@@ -394,34 +390,39 @@ private:
 	//                                             Debugging
 	// -----------------------------------------------------------------------------------------------
 	
-	//! Determines whether sprites are drawn or not
-	/*! During normal emulation, the value is always true. For debugging purposes, the value can be set to false.
-	 In this case, sprites are no longer drawn.
+	/*! @brief    Determines whether sprites are drawn or not
+	 *  @details  During normal emulation, the value is always true. For debugging purposes, the value 
+     *            can be set to false. In this case, sprites are no longer drawn.
 	 */
 	bool drawSprites;
 	
-	//! Enable sprite-sprite collision
-	/*! If set to true, the virtual VIC chips checks for sprite-sprite collision as the original C64 does.
-	    For debugging purposes and cheating, collision detection can be disabled by setting the variabel to false.
-	    Collision detection can be enabled or disabled for each sprite seperately. Each bit is dedicated to a single sprite. 
-	*/
+	/*! @brief    Enable sprite-sprite collision
+	 *  @details  If set to true, the virtual VIC chips checks for sprite-sprite collision as the 
+     *            original C64 does. For debugging purposes and cheating, collision detection can be 
+     *            disabled by setting the variabel to false. Collision detection can be enabled or 
+     *            disabled for each sprite seperately. Each bit is dedicated to a single sprite.
+     */
 	uint8_t spriteSpriteCollisionEnabled;
 	
-	//! Enable sprite-background collision
-	/*! If set to true, the virtual VIC chips checks for sprite-background collision as the original C64 does.
-	    For debugging purposes and cheating, collision detection can be disabled by setting the variabel to false.
-	    Collision detection can be enabled or disabled for each sprite seperately. Each bit is dedicated to a single sprite. 
-	*/
+	/*! @brief    Enable sprite-background collision
+	 *  @details  If set to true, the virtual VIC chips checks for sprite-background collision as the 
+     *            original C64 does. For debugging purposes and cheating, collision detection can be 
+     *            disabled by setting the variabel to false. Collision detection can be enabled or 
+     *            disabled for each sprite seperately. Each bit is dedicated to a single sprite.
+     */
 	uint8_t spriteBackgroundCollisionEnabled;
 	
-	//! Determines whether IRQ lines will be made visible.
-	/*! Each rasterline that will potentially trigger a raster IRQ is highlighted. This feature is useful for
-	    debugging purposes as it visualizes how the screen is divided into multiple parts. */
+	/*! @brief    Determines whether IRQ lines will be made visible.
+	 *  @details  Each rasterline that will potentially trigger a raster IRQ is highlighted. This feature 
+     *            is useful for debugging purposes as it visualizes how the screen is divided into 
+     *            multiple parts. 
+     */
 	bool markIRQLines;
 	
-	//! Determines whether DMA lines will be made visible.
-	/*! Each rasterline in which the vic will read additional data from the memory and stun the CPU is made visible.
-	    Note that partial DMA lines may not appear. */	
+	/*! @brief    Determines whether DMA lines will be made visible.
+	 *  @details  Each rasterline in which the vic will read additional data from the memory and 
+     *            stun the CPU is made visible. Note that partial DMA lines may not appear. 
+     */
 	bool markDMALines;
 
 	
@@ -431,19 +432,19 @@ private:
 
 public:
 	
-	//! Constructor
+	//! @brief    Constructor
 	VIC();
 	
-	//! Destructor
+	//! @brief    Destructor
 	~VIC();
 	
-	//! Get screen buffer that is currently stable
+	//! @brief    Returns the screen buffer that is currently stable.
     inline void *screenBuffer() { return pixelEngine.screenBuffer(); }
 
-	//! Reset the VIC chip to its initial state
+	//! @brief    Restores the initial state.
 	void reset();
 		
-	//! Dump internal state to console
+	//! @brief    Prints debugging information.
 	void dumpState();	
 	
     
@@ -453,38 +454,38 @@ public:
 	
 public:
 	
-    //! Returns true iff virtual vic is running in PAL mode
+    //! @brief    Returns true iff a PAL chip is plugged in.
     inline bool isPAL() { return chipModel == MOS6569_PAL; }
 
-    //! Returns true iff virtual vic is running in NTSC mode
+    //! @brief    Returns true iff a NTSC chip is plugged in.
     inline bool isNTSC() { return chipModel == MOS6567_NTSC; }
 
-	//! Get chip model
+	//! @brief    Returns the currently plugged in chip model.
     inline VICChipModel getChipModel() { return chipModel; }
 
-    //! Set chip model
+    //! @brief    Sets the chip model.
     void setChipModel(VICChipModel model);
 	
-    //! Get color
+    //! @brief    Returns one of the sixteen C64 colors in RGBA format.
     inline uint32_t getColor(unsigned nr) { assert(nr < 16); return pixelEngine.colors[nr]; }
 
-    //! Get color
+    //! @brief    Sets one of the sixteen C64 colors in RGBA format.
     inline void setColor(unsigned nr, int rgba) { assert(nr < 16); pixelEngine.colors[nr] = rgba; }
 
-    // Returns the number of frames per second
+    // @brief    Returns the number of frames per second.
     inline unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }
     
-    //! Returns the number of rasterlines per frame
+    //! @brief    Returns the number of rasterlines per frame.
     inline int getRasterlinesPerFrame() { return isPAL() ? PAL_HEIGHT : NTSC_HEIGHT; }
     
-    //! Returns the number of CPU cycles performed per rasterline
+    //! @brief    Returns the number of CPU cycles performed per rasterline.
     inline int getCyclesPerRasterline() { return isPAL() ? PAL_CYCLES_PER_RASTERLINE : NTSC_CYCLES_PER_RASTERLINE; }
     
-    //! Returns the number of CPU cycles performed per frame
+    //! @brief    Returns the number of CPU cycles performed per frame.
     inline int getCyclesPerFrame() {
         return isPAL() ? (PAL_HEIGHT * PAL_CYCLES_PER_RASTERLINE) : (NTSC_HEIGHT * NTSC_CYCLES_PER_RASTERLINE); }
     
-    //! Returns the time interval between two frames in nanoseconds
+    //! @brief    Returns the time interval between two frames in nanoseconds.
     inline uint64_t getFrameDelay() { return (uint64_t)(1000000000.0 / (isPAL() ? PAL_REFRESH_RATE : NTSC_REFRESH_RATE)); }
 
     
@@ -494,54 +495,48 @@ public:
 
 public:
 	
-	//! Returns true if the specified address lies in the VIC I/O range
+	//! @brief    Returns true if the specified address lies in the VIC I/O range
 	static inline bool isVicAddr(uint16_t addr)	{ return (VIC_START_ADDR <= addr && addr <= VIC_END_ADDR); }
 		
-	//! Get current scanline
+	//! @brief    Returns the current scanline
 	inline uint16_t getScanline() { return yCounter; }
 			
-	//! Set rasterline
+	//! @brief    Sets the rasterline
 	inline void setScanline(uint16_t line) { yCounter = line; }
 
-	//! Get memory bank start address
+	//! @brief    Returns the memory bank start address
 	uint16_t getMemoryBankAddr();
 	
-	//! Set memory bank start address
+	//! @brief    Sets the memory bank start address
 	void setMemoryBankAddr(uint16_t addr);
 			
-	//! Get screen memory address
-    /*! This function is not needed internally and only invoked by the GUI debug panel */
+	/*! @brief    Returns the screen memory address
+     *  @note     This function is not needed internally and only invoked by the GUI debug panel 
+     */
 	uint16_t getScreenMemoryAddr();
 	
-	//! Set screen memory address
-    /*! This function is not needed internally and only invoked by the GUI debug panel */
+    /*! @brief    Sets the screen memory address
+     *  @note     This function is not needed internally and only invoked by the GUI debug panel
+     */
 	void setScreenMemoryAddr(uint16_t addr);
 		
-	//! Get character memory start address
-    /*! This function is not needed internally and only invoked by the GUI debug panel */
+    /*! @brief    Returns the character memory address
+     *  @note     This function is not needed internally and only invoked by the GUI debug panel
+     */
 	uint16_t getCharacterMemoryAddr();
 	
-	//! Set character memory start address
-    /*! This function is not needed internally and only invoked by the GUI debug panel */
+    /*! @brief    Sets the character memory address
+     *  @note     This function is not needed internally and only invoked by the GUI debug panel
+     */
 	void setCharacterMemoryAddr(uint16_t addr);
 		
-	//! Peek fallthrough
-	/*! The fallthrough mechanism works as follows:
-	 If the memory is asked to peek a value, it first checks whether the RAM, ROM, or I/O space is visible.
-	 If an address in the I/O space is specified, the memory is unable to handle the request itself and
-	 passes it to the corresponding I/O chip.
-	 */
+	//! @brief    Peek fallthrough
 	uint8_t peek(uint16_t addr);
     
-	//! Poke fallthrough
-	/*! The fallthrough mechanism works as follows:
-	 If the memory is asked to poke a value, it first checks whether the RAM, ROM, or I/O space is visible.
-	 If an address in the I/O space is specified, the memory is unable to handle the request itself and
-	 passes it to the corresponding I/O chip. 
-	 */	
+    //! @brief    Poke fallthrough
 	void poke(uint16_t addr, uint8_t value);
 	
-    //! Return last value on VIC data bus
+    //! @brief    Returns the last value on VIC data bus
     inline uint8_t getDataBus() { return dataBus; }
     
     
@@ -551,88 +546,92 @@ public:
 	
 public:
 		
-    //! Current value of DEN bit (Display Enabled)
+    //! @brief    Returns the current value of the DEN bit (Display Enabled).
     inline bool DENbit() { return GET_BIT(p.registerCTRL1, 4); }
 
-    //! DEN bit in previous cycle (Display Enabled)
+    //! @brief    Returns the value of the DEN bit in the previous cycle.
     // inline bool DENbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.registerCTRL1, 4); }
 
-    //! Current value of BMM bit (Bit Map Mode)
+    //! @brief    Returns the current value of the BMM bit (Bit Map Mode).
     inline bool BMMbit() { return GET_BIT(p.registerCTRL1, 5); }
 
-    //! BMM bit in previous cycle (Bit Map Mode)
+    //! @brief    Returns the value of the BMM bit in the previous cycle.
     inline bool BMMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.registerCTRL1, 5); }
     
-    //! Current value of ECM bit (Extended Character Mode)
+    //! @brief    Returns the current value of the ECM bit (Extended Character Mode).
     inline bool ECMbit() { return GET_BIT(p.registerCTRL1, 6); }
 
-    //! ECM bit in previous cycle (Extended Character Mode)
+    //! @brief    Returns the value of the ECM bit in the previous cycle.
     inline bool ECMbitInPreviousCycle() { return GET_BIT(pixelEngine.pipe.registerCTRL1, 6); }
 
-    //! Returns masked CB13 bit (controls memory access)
+    //! @brief    Returns the masked CB13 bit (controls memory access).
     inline uint8_t CB13() { return iomem[0x18] & 0x08; }
 
-    //! Returns masked CB13/CB12/CB11 bits (controls memory access)
+    //! @brief    Returns the masked CB13/CB12/CB11 bits (controls memory access).
     inline uint8_t CB13CB12CB11() { return iomem[0x18] & 0x0E; }
 
-    //! Returns masked VM13/VM12/VM11/VM10 bits (controls memory access)
+    //! @brief    Returns the masked VM13/VM12/VM11/VM10 bits (controls memory access).
     inline uint8_t VM13VM12VM11VM10() { return iomem[0x18] & 0xF0; }
 
-	//! Returns the state of the CSEL bit
+	//! @brief    Returns the state of the CSEL bit.
     inline bool isCSEL() { return GET_BIT(p.registerCTRL2, 3); }
 	
-	//! Returns the state of the RSEL bit
+	//! @brief    Returns the state of the RSEL bit.
     inline bool isRSEL() { return GET_BIT(p.registerCTRL1, 3); }
     
-	//! Returns the currently set display mode
-	/*! The display mode is determined by bits 5 and 6 of control register 1 and bit 4 of control register 2. */
+	/*! @brief    Returns the current display mode.
+	 *  @details  The display mode is determined by bits 5 and 6 of control register 1 and 
+     *            bit 4 of control register 2. 
+     */
 	inline DisplayMode getDisplayMode() 
 	{ return (DisplayMode)((p.registerCTRL1 & 0x60) | (p.registerCTRL2 & 0x10)); }
 	
-	//! Set display mode
+	//! @brief    Sets the display mode.
 	inline void setDisplayMode(DisplayMode m) {
         p.registerCTRL1 = (p.registerCTRL1 & ~0x60) | (m & 0x60);
         p.registerCTRL2 = (p.registerCTRL2 & ~0x10) | (m & 0x10); }
 	
-	//! Get the current screen geometry
+	//! @brief    Returns the current screen geometry.
 	ScreenGeometry getScreenGeometry(void);
 	
-	//! Set the screen geometry 
+	//! @brief    Sets the current screen geometry.
 	void setScreenGeometry(ScreenGeometry mode);
 	
-	//! Returns the number of rows to be drawn (24 or 25)
+	//! @brief    Returns the number of rows to be drawn (24 or 25).
 	inline int numberOfRows() { return GET_BIT(p.registerCTRL1, 3) ? 25 : 24; }
 	
-	//! Set the number of rows to be drawn (24 or 25)
+	//! @brief    Sets the number of rows to be drawn (24 or 25).
 	inline void setNumberOfRows(int rs) { assert(rs == 24 || rs == 25); WRITE_BIT(p.registerCTRL1, 3, rs == 25); }
 	
-	//! Return the number of columns to be drawn (38 or 40)
+	//! @brief    Returns the number of columns to be drawn (38 or 40).
 	inline int numberOfColumns() { return GET_BIT(p.registerCTRL2, 3) ? 40 : 38; }
 
-	//! Set the number of columns to be drawn (38 or 40)
+	//! @brief    Sets the number of columns to be drawn (38 or 40).
     inline void setNumberOfColumns(int cs) { assert(cs == 38 || cs == 40); WRITE_BIT(p.registerCTRL2, 3, cs == 40); }
 		
-	//! Returns the vertical raster scroll offset (0 to 7)
-	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
+	/*! @brief    Returns the vertical raster scroll offset (0 to 7).
+	 *  @details  The vertical raster offset is usally used by games for smoothly scrolling the screen.
+     */
 	inline uint8_t getVerticalRasterScroll() { return p.registerCTRL1 & 0x07; }
 	
-	//! Set vertical raster scroll offset (0 to 7)
+	//! @brief    Sets the vertical raster scroll offset (0 to 7).
 	inline void setVerticalRasterScroll(uint8_t offset) { p.registerCTRL1 = (p.registerCTRL1 & 0xF8) | (offset & 0x07); }
 	
-	//! Returns the horizontal raster scroll offset (0 to 7)
-	/*! The vertical raster offset is usally used by games for smoothly scrolling the screen */
+	/*! @brief    Returns the horizontal raster scroll offset (0 to 7).
+	 *  @details  The vertical raster offset is usally used by games for smoothly scrolling the screen.
+     */
 	inline uint8_t getHorizontalRasterScroll() { return p.registerCTRL2 & 0x07; }
 	
-	//! Set horizontan raster scroll offset (0 to 7)
+	//! @brief    Sets the horizontan raster scroll offset (0 to 7).
 	inline void setHorizontalRasterScroll(uint8_t offset) { p.registerCTRL2 = (p.registerCTRL2 & 0xF8) | (offset & 0x07); }
 			
-	//! Return border color
+	//! @brief    Returns the border color.
     inline uint8_t getBorderColor() { return bp.borderColor; }
 	
-	//! Returns background color
+	//! @brief    Returns the background color.
     inline uint8_t getBackgroundColor() { return cp.backgroundColor[0]; }
 	
-	//! Returns extra background color (for multicolor modes)
+	//! Returns extra background color (for multicolor modes).
     inline uint8_t getExtraBackgroundColor(int offset) { return cp.backgroundColor[offset]; }
 	
 	
@@ -708,49 +707,54 @@ public:
 
 private:
 
-    //! Turn off sprite dma if conditions are met
-    /*! In cycle 16, the mcbase pointer is advanced three bytes for all dma enabled sprites. Advancing 
-        three bytes means that mcbase will then point to the next sprite line. When mcbase reached 63,
-        all 21 sprite lines have been drawn and sprite dma is switched off.
-        The whole operation is skipped when the y expansion flipflop is 0. This never happens for
-        normal sprites (there is no skipping then), but happens every other cycle for vertically expanded 
-        sprites. Thus, mcbase advances for those sprites at half speed which actually causes the expansion. */
+    /*! @brief    Turns off sprite dma if conditions are met.
+     *  @details  In cycle 16, the mcbase pointer is advanced three bytes for all dma enabled sprites. 
+     *            Advancing three bytes means that mcbase will then point to the next sprite line. 
+     *            When mcbase reached 63, all 21 sprite lines have been drawn and sprite dma is 
+     *            switched off. The whole operation is skipped when the y expansion flipflop is 0. 
+     *            This never happens for normal sprites (there is no skipping then), but happens every 
+     *            other cycle for vertically expanded sprites. Thus, mcbase advances for those sprites 
+     *            at half speed which actually causes the expansion. 
+     */
     void turnSpriteDmaOff();
 
-    //! Turn on sprite dma accesses if drawing conditions are met
-    /*! Sprite dma is turned on either in cycle 55 or cycle 56. Dma is turned on iff it's currently turned 
-        off and the sprite y positon equals the lower 8 bits of yCounter. */
+    /*! @brief    Turns on sprite dma accesses if drawing conditions are met.
+     *  @details  Sprite dma is turned on either in cycle 55 or cycle 56. Dma is turned on iff it's 
+     *            currently turned off and the sprite y positon equals the lower 8 bits of yCounter. 
+     */
     void turnSpriteDmaOn();
 
-    //! Toggle expansion flipflop for vertically stretched sprites
-    /*! In cycle 56, register D017 is read and the flipflop gets inverted for all sprites with vertical
-        stretching enabled. When the flipflop goes down, advanceMCBase() will have no effect in the
-        next rasterline. This causes each sprite line to be drawn twice. */
+    /*! @brief    Toggles expansion flipflop for vertically stretched sprites.
+     *  @details  In cycle 56, register D017 is read and the flipflop gets inverted for all sprites 
+     *            with vertical stretching enabled. When the flipflop goes down, advanceMCBase() will 
+     *            have no effect in the next rasterline. This causes each sprite line to be drawn twice. 
+     */
     void toggleExpansionFlipflop();
     
-	//! Get sprite depth
-	/*! The value is written to the z buffer to resolve overlapping pixels */
+	/*! @brief    Gets depth of a sprite.
+	 *  @details  The value is written to the z buffer to resolve overlapping pixels.
+     */
 	inline uint8_t spriteDepth(uint8_t nr) {
         return spriteIsDrawnInBackground(nr) ? (SPRITE_LAYER_BG_DEPTH | nr) : (SPRITE_LAYER_FG_DEPTH | nr); }
 	
 public: 
 	
-	//! Returns color code of multicolor sprites (extra color 1)
+	//! @brief    Returns color code of multicolor sprites (extra color 1).
     inline uint8_t spriteExtraColor1() { return sp.spriteExtraColor1; }
 	
-	//! Returns color code of multicolor sprites (extra color 2)
+	//! @brief    Returns color code of multicolor sprites (extra color 2).
 	inline uint8_t spriteExtraColor2() { return sp.spriteExtraColor2; }
 	
-	//! Get sprite color 
+	//! @brief    Returns the color of a sprite.
 	inline uint8_t spriteColor(uint8_t nr) { assert(nr < 8); return sp.spriteColor[nr]; }
 
-	//! Set sprite color
+	//! @brief    Sets the color of a sprite.
 	inline void setSpriteColor(uint8_t nr, uint8_t color) { assert(nr < 8); sp.spriteColor[nr] = color; }
 		
-	//! Get X coordinate of sprite 
+	//! @brief    Returns the X coordinate of a sprite.
     inline uint16_t getSpriteX(uint8_t nr) { assert(nr < 8); return p.spriteX[nr]; }
 
-	//! Set X coordinate of sprite
+	//! @brief    Set the X coordinate of a sprite.
 	inline void setSpriteX(uint8_t nr, uint16_t x) {
         if (x < 512) {
             p.spriteX[nr] = x;
@@ -759,82 +763,82 @@ public:
         }
     }
     
-	//! Get Y coordinate of sprite
+	//! @brief    Returns the Y coordinate of a sprite.
 	inline uint8_t getSpriteY(uint8_t nr) { assert(nr < 8); return iomem[1+2*nr]; }
 
-	//! Set Y coordinate of sprite
+	//! @brief    Sets the Y coordinate of sprite.
     inline void setSpriteY(uint8_t nr, uint8_t y) { iomem[1+2*nr] = y; }
 	
-    //! Compare Y coordinate of all sprites with 8 bit value
+    //! @brief    Compares the Y coordinates of all sprites with an eight bit value.
     inline uint8_t compareSpriteY(uint8_t y) { return
         ((iomem[1] == y) << 0) | ((iomem[3] == y) << 1) | ((iomem[5] == y) << 2) | ((iomem[7] == y) << 3) |
         ((iomem[9] == y) << 4) | ((iomem[11] == y) << 5) | ((iomem[13] == y) << 6) | ((iomem[15] == y) << 7);
     }
     
-	//! Returns true, if sprite is enabled (drawn on the screen)
+	//! @brief    Returns true, if sprite is enabled (drawn on the screen).
     inline bool spriteIsEnabled(uint8_t nr) { return GET_BIT(iomem[0x15], nr); }
 
-	//! Enable or disable sprite
+	//! @brief    Enables or disables a sprite.
     inline void setSpriteEnabled(uint8_t nr, bool b) { WRITE_BIT(iomem[0x15], nr, b); }
 
-	//! Enable or disable sprite
+	//! @brief    Enables or disables a sprite.
     inline void toggleSpriteEnabled(uint8_t nr) { TOGGLE_BIT(iomem[0x15], nr); }
 	
-	//! Returns true, iff an interrupt will be triggered when a sprite/background collision occurs
+	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/background collision occurs.
     inline bool spriteBackgroundInterruptEnabled() { return GET_BIT(iomem[0x1A], 1); }
 
-	//! Returns true, iff an interrupt will be triggered when a sprite/sprite collision occurs
+	//! @brief    Returns true, iff an interrupt will be triggered when a sprite/sprite collision occurs.
     inline bool spriteSpriteInterruptEnabled() { return GET_BIT(iomem[0x1A], 2); }
 
-	//! Returns true, iff a rasterline interrupt has occurred
+	//! @brief    Returns true, iff a rasterline interrupt has occurred.
     inline bool rasterInterruptOccurred() { return GET_BIT(iomem[0x19], 0); }
 
-	//! Returns true, iff a sprite/background interrupt has occurred
+	//! @brief    Returns true, iff a sprite/background interrupt has occurred.
     inline bool spriteBackgroundInterruptOccurred() { return GET_BIT(iomem[0x19], 1); }
 
-	//! Returns true, iff a sprite/sprite interrupt has occurred
+	//! @brief    Returns true, iff a sprite/sprite interrupt has occurred.
     inline bool spriteSpriteInterruptOccurred() { return GET_BIT(iomem[0x19], 1); }
 
-	//! Returns true, iff sprites are drawn behind the scenary
+	//! @brief    Returns true, iff sprites are drawn behind the scenary.
 	inline bool spriteIsDrawnInBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1B], nr); }
 
-	//! Determine whether a sprite is drawn before or behind the scenary
+	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
     inline void setSpriteInBackground(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1B], nr, b); }
 
-	//! Determine whether a sprite is drawn before or behind the scenary
+	//! @brief    Determines whether a sprite is drawn before or behind the scenary.
 	inline void spriteToggleBackgroundPriorityFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1B], nr); }
 	
-	//! Returns true, iff sprite is a multicolor sprite
+	//! @brief    Returns true, iff sprite is a multicolor sprite.
     inline bool spriteIsMulticolor(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1C], nr); }
 
-	//! Set single color or multi color mode for sprite
+	//! @brief    Sets single color or multi color mode for sprite.
     inline void setSpriteMulticolor(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x1C], nr, b); }
 
-	//! Switch between single color or multi color mode
+	//! @brief    Switches between single color or multi color mode.
 	inline void toggleMulticolorFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x1C], nr); }
 		
-	//! Returns true, if the sprite is vertically stretched
+	//! @brief    Returns true, iff the sprite is vertically stretched.
     inline bool spriteHeightIsDoubled(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x17], nr); }
 
-	//! Stretch or shrink sprite vertically
+	//! @brief    Stretches or shrinks a sprite vertically.
     inline void setSpriteStretchY(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(iomem[0x17], nr, b); }
 
-	//! Stretch or shrink sprite vertically
+	//! @brief    Stretches or shrinks a sprite vertically.
 	inline void spriteToggleStretchYFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(iomem[0x17], nr); }
 
-	//! Returns true, if the sprite is horizontally stretched 
+	//! @brief    Returns true, iff the sprite is horizontally stretched.
 	inline bool spriteWidthIsDoubled(unsigned nr) { assert(nr < 8); return GET_BIT(p.spriteXexpand, nr); }
 
-	//! Stretch or shrink sprite horizontally
+	//! @brief    Stretches or shrinks sprite horizontally.
     inline void setSpriteStretchX(unsigned nr, bool b) { assert(nr < 8); WRITE_BIT(p.spriteXexpand, nr, b); }
 
-	//! Stretch or shrink sprite horizontally
+	//! @brief    Stretches or shrinks sprite horizontally.
 	inline void spriteToggleStretchXFlag(unsigned nr) { assert(nr < 8); TOGGLE_BIT(p.spriteXexpand, nr); }
 
-	//! Returns true, iff sprite collides with another sprite
+	//! @brief    Returns true, iff sprite collides with another sprite.
     inline bool spriteCollidesWithSprite(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1E], nr); }
 
-	//! Returns true, iff sprite collides with background
+	//! @brief    Returns true, iff sprite collides with background.
 	inline bool spriteCollidesWithBackground(unsigned nr) { assert(nr < 8); return GET_BIT(iomem[0x1F], nr); }
 
 	
@@ -844,27 +848,30 @@ public:
 
 public:
 	
-	//! Prepare for new frame
-	/*! This function is called prior to cycle 1 of rasterline 0 */
+	/*! @brief    Prepares VIC for drawing a new frame.
+	 *  @details  This function is called prior to cycle 1 of rasterline 0.
+     */
 	void beginFrame();
 	
-	//! Prepare for new rasterline
-	/*! This function is called prior to cycle 1 at the beginning of each rasterline */
+	/*! @brief    Prepares VIC for drawing a new rasterline.
+	 *  @details  This function is called prior to cycle 1 at the beginning of each rasterline.
+     */
 	void beginRasterline(uint16_t rasterline);
 
-	//! Finish rasterline
-	/*! This function is called after the last cycle of each rasterline. */
+	/*! @brief    Finishes up a rasterline.
+	 *  @details  This function is called after the last cycle of each rasterline.
+     */
 	void endRasterline();
 	
-	//! Finish frame
-	/*! This function is called after the last cycle of the last rasterline */
+	/*! @brief    Finishes up a frame.
+	 *  @details  This function is called after the last cycle of the last rasterline .
+     */
 	void endFrame();
 	
-    //! Push portions of the VIC state into the pixel engine
-    /*! Pushs everything that needs to be recorded one cycle prior to drawing */
+    //! @brief    Pushes portions of the VIC state into the pixel engine.
     inline void preparePixelEngine() { pixelEngine.pipe = p; };
     
-	//! VIC execution functions
+	//! @brief    Executes a specific rasterline cycle
 	void cycle1();  void cycle2();  void cycle3();  void cycle4();
     void cycle5();  void cycle6();  void cycle7();  void cycle8();
     void cycle9();  void cycle10(); void cycle11(); void cycle12();
@@ -877,53 +884,56 @@ public:
     void cycle59(); void cycle60(); void cycle61(); void cycle62();
     void cycle63(); void cycle64(); void cycle65();
 	
-	//! Debug entry point for each rasterline cycle
-
 private:
+    
+    /*! @brief    Implements a debug entry point for each rasterline cycle.
+     *  @details  As this function is invoked in each cycle, it should be empty in the relase version.
+     */
     void debug_cycle(unsigned cycle);
 
+    
 	// -----------------------------------------------------------------------------------------------
 	//                                              Debugging
 	// -----------------------------------------------------------------------------------------------
 
-	
 public: 
 	
-	//! Return true iff IRQ lines are colorized
+	//! @brief    Returns true iff IRQ lines are colorized
 	bool showIrqLines() { return markIRQLines; }
 
-	//! Show or hide IRQ lines
+	//! @brief    Shows or hides IRQ lines
 	void setShowIrqLines(bool show) { markIRQLines = show; }
 
-	//! Return true iff DMA lines are colorized
+	//! @brief    Returns true iff DMA lines are colorized
 	bool showDmaLines() { return markDMALines; }
 	
-	//! Show or hide DMA lines
+	//! @brief    Shows or hides DMA lines
 	void setShowDmaLines(bool show) { markDMALines = show; }
 
-	//! Return true iff sprites are hidden
+	//! @brief    Returns true iff sprites are hidden
 	bool hideSprites() { return !drawSprites; }
 
-	//! Hide or show sprites
+	//! @brief    Hides or shows sprites
 	void setHideSprites(bool hide) { drawSprites = !hide; }
 	
-	//! Return true iff sprite-sprite collision detection is enabled
+	//! @brief    Returns true iff sprite-sprite collision detection is enabled
 	bool getSpriteSpriteCollisionFlag() { return spriteSpriteCollisionEnabled; }
 
-	//! Enable or disable sprite-sprite collision detection
+	//! @brief    Enables or disable sprite-sprite collision detection
     void setSpriteSpriteCollisionFlag(bool b) { spriteSpriteCollisionEnabled = b; };
 
-	//! Enable or disable sprite-sprite collision detection
+	//! @brief    Enables or disable sprite-sprite collision detection
     void toggleSpriteSpriteCollisionFlag() { spriteSpriteCollisionEnabled = !spriteSpriteCollisionEnabled; }
 	
-	//! Return true iff sprite-background collision detection is enabled
+	//! @brief    Returns true iff sprite-background collision detection is enabled
 	bool getSpriteBackgroundCollisionFlag() { return spriteBackgroundCollisionEnabled; }
 
-	//! Enable or disable sprite-background collision detection
+	//! @brief    Enables or disable sprite-background collision detection
     void setSpriteBackgroundCollisionFlag(bool b) { spriteBackgroundCollisionEnabled = b; }
 
-	//! Enable or disable sprite-background collision detection
-    void toggleSpriteBackgroundCollisionFlag() { spriteBackgroundCollisionEnabled = !spriteBackgroundCollisionEnabled; }
+	//! @brief    Enables or disable sprite-background collision detection
+    void toggleSpriteBackgroundCollisionFlag() {
+        spriteBackgroundCollisionEnabled = !spriteBackgroundCollisionEnabled; }
 };
 
 #endif

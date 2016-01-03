@@ -999,12 +999,13 @@ VIC::endRasterline()
     pixelEngine.endRasterline();
 }
 
-bool
+inline bool
 VIC::yCounterOverflow()
 {
     // PAL machines reset yCounter in cycle 2 in the first physical rasterline
     // NTSC machines reset yCounter in cycle 2 in the middle of the lower border area
-    return (c64->isPAL() && c64->getRasterline() == 0) || (!c64->isPAL() && c64->getRasterline() == 238);
+    // return (c64->isPAL() && c64->getRasterline() == 0) || (!c64->isPAL() && c64->getRasterline() == 238);
+    return c64->getRasterline() == (c64->isPAL() ? 0 : 238);
 }
 
 void
