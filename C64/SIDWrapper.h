@@ -1,19 +1,21 @@
-/*
- * (C) 2011 Dirk W. Hoffmann, All rights reserved.
+/*!
+ * @header      SidWrapper.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2011 - 2016 Dirk W. Hoffmann
+ */
+/*              This program is free software; you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation; either version 2 of the License, or
+ *              (at your option) any later version.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *              This program is distributed in the hope that it will be useful,
+ *              but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *              GNU General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *              You should have received a copy of the GNU General Public License
+ *              along with this program; if not, write to the Free Software
+ *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _SIDWRAPPER_INC
@@ -27,40 +29,40 @@ class SIDWrapper : public VirtualComponent {
 
     
 public:	
-	//! Start address of the SID I/O space.
+	//! @brief    Start address of the SID I/O space.
 	static const uint16_t SID_START_ADDR = 0xD400;
     
-	//! End address of the SID I/O space.
+	//! @brief    End address of the SID I/O space.
 	static const uint16_t SID_END_ADDR = 0xD7FF;
 
 private:
 
-    //! Old SID implementation
+    //! @brief    Old SID implementation
     OldSID *oldsid;
 
 public:
-    //! Implementation based on the ReSID library
+    //! @brief    Implementation based on the ReSID library
     ReSID *resid;
    
 private:
-    //! SID selector
+    //! @brief    SID selector
     bool useReSID;
     
-    //! Remembers latest written value
+    //! @brief    Remembers latest written value
     uint8_t latchedDataBus;
     
 public:
-    //! Returns true if the \a addr is located in the I/O range of the SID chip.
+    //! @brief    Returns true if the addr is located in the I/O range of the SID chip.
 	static inline bool isSidAddr(uint16_t addr) 
 	{ return (SID_START_ADDR <= addr && addr <= SID_END_ADDR); }
 	
-	//! Constructor.
+	//! @brief    Constructor
 	SIDWrapper();
 	
-	//! Destructor.
+	//! @brief    Destructor
 	~SIDWrapper();
 			
-	//! Dump internal state to console
+	//! @brief    Prints debug information
 	void dumpState();
 	
     
@@ -68,56 +70,50 @@ public:
 	//                                         Configuring
 	// -----------------------------------------------------------------------------------------------
 
-    //! Configure the SID chip for being used in PAL machines
+    //! @brief    Configures the SID chip for being used in PAL machines.
     void setPAL();
     
-    //! Configure the SID chip for being used in NTSC machines
+    //! @brief    Configures the SID chip for being used in NTSC machines.
     void setNTSC();
     
-    //! Returns true, iff ReSID libray shall be used.
+    //! @brief    Returns true, whether ReSID or the old implementation should be used.
     inline bool getReSID() { return useReSID; }
     
-    //! Enable or disable ReSID library.
+    //! @brief    Enables or disables the ReSID library.
     void setReSID(bool enable);
     
-    //! Get chip model
+    //! @brief    Returns the simulated chip model.
     inline chip_model getChipModel() { return resid->getChipModel(); }
     
-    //! Set chip model (ReSID only)
+    //! @brief    Sets chip model (ReSID only)
     void setChipModel(chip_model value);
     
-    //! Returns true iff audio filters are enabled.
-    // inline bool getAudioFilter() { return resid->getAudioFilter(); }
+    //! @brief    Returns true iff audio filters are enabled.
     inline bool getAudioFilter() { return resid->getExternalAudioFilter(); }
     
-    //! Enable or disable filters of SID.
+    //! @brief    Enables or disables filters of SID.
     void setAudioFilter(bool enable);
     
-    //! Get sampling method
+    //! @brief    Returns the sampling method.
     inline sampling_method getSamplingMethod() { return resid->getSamplingMethod(); }
     
-    //! Set sampling method (ReSID only)
+    //! @brief    Sets the sampling method (ReSID only).
     void setSamplingMethod(sampling_method value);
 
-    //! Return samplerate.
+    //! @brief    Returns the sample rate.
 	inline uint32_t getSampleRate() { return resid->getSampleRate(); }
     
-	//! Sets samplerate of SID and it's 3 voices.
+	//! @brief    Sets the samplerate of SID and it's 3 voices.
 	void setSampleRate(uint32_t sr);
     
-    //! Get clock frequency
+    //! @brief    Returns the clock frequency.
     inline uint32_t getClockFrequency();
     
-	//! Set clock frequency
+	//! @brief    Sets the clock frequency.
 	void setClockFrequency(uint32_t frequency);	
 
-    /*! @brief Sets the current volume
-     */
+    //! @brief    Sets the current volume
     void setVolume(int32_t v) { resid->setVolume(v); }
-
-    /*! @brief Sets the target volume
-     */
-    // void setTargetVolume(int32_t volume) { resid->setTargetVolume(volume); }
     
     /*! @brief   Triggers volume ramp up phase
      *  @details Configures volume and targetVolume to simulate a smooth audio fade in
@@ -130,8 +126,7 @@ public:
      */
     void rampDown() { resid->rampDown(); }
 
-    /*! @brief Clears ringbuffer
-     */
+    //! @brief    Clears the audio sample ringbuffer
     void clearRingbuffer() { resid->clearRingbuffer(); }
 
 
@@ -141,27 +136,25 @@ public:
 
 private:
     
-    //! Current clock cycle since power up
+    //! @brief    Current clock cycle since power up
     uint64_t cycles;
 
 public:
     
-    /*!
-     @abstract   Executes SID until a certain cycle is reached
-     @param      cycle The target cycle
+    /*! @brief    Executes SID until a certain cycle is reached
+     *  @param    cycle The target cycle
      */
     void executeUntil(uint64_t targetCycle);
 
-    /*!
-     @abstract   Executes SID for a certain number of cycles
-     @param      cycles Number of cycles to execute
+    /*! @brief    Executes SID for a certain number of cycles
+     *  @param    cycles Number of cycles to execute
      */
 	void execute(uint64_t numCycles);
 
-    //! Notifies the SID chip that the emulator has started
+    //! @brief    Notifies the SID chip that the emulator has started
     void run();
 	
-	//! Notifies the SID chip that the emulator has started
+	//! @brief    Notifies the SID chip that the emulator has started
 	void halt();
 
     
@@ -169,13 +162,13 @@ public:
 	//                                       Getter and setter
 	// -----------------------------------------------------------------------------------------------
     
-	//! Special peek function for the I/O memory range.
+	//! @brief    Special peek function for the I/O memory range.
 	uint8_t peek(uint16_t addr);
 	
-	//! Special poke function for the I/O memory range.
+	//! @brief    Special poke function for the I/O memory range.
 	void poke(uint16_t addr, uint8_t value);
 	
-    //! Get next sample from \a ringBuffer.
+    //! @brief    Reads next audio sample from the ringbuffer
 	float readData();
 };
 

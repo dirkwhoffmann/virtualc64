@@ -791,12 +791,6 @@ CIA1::clearInterruptLine()
 	c64->cpu.clearIRQLineCIA();
 }
 
-uint8_t 
-CIA1::getInterruptLine()
-{
-	return c64->cpu.getIRQLineCIA();
-}
-
 void 
 CIA1::pollJoystick(Joystick *joy, int joyDevNo)
 {
@@ -999,12 +993,6 @@ void
 CIA2::clearInterruptLine()
 {
 	c64->cpu.clearNMILineCIA();
-}
-
-uint8_t 
-CIA2::getInterruptLine()
-{
-	return c64->cpu.getNMILineCIA();
 }
 
 uint8_t 

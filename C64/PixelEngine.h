@@ -1,19 +1,21 @@
-/*
- * (C) 2015 Dirk W. Hoffmann. All rights reserved.
+/*!
+ * @header      PixelEngine.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2015 - 2016 Dirk W. Hoffmann
+ */
+/*              This program is free software; you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation; either version 2 of the License, or
+ *              (at your option) any later version.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *              This program is distributed in the hope that it will be useful,
+ *              but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *              GNU General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *              You should have received a copy of the GNU General Public License
+ *              along with this program; if not, write to the Free Software
+ *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _PIXELENGINGE_INC
@@ -24,7 +26,6 @@
 
 // Forward declarations
 class VIC;
-class C64;
 
 // Depth of different drawing layers
 #define BORDER_LAYER_DEPTH 0x10         /* in front of everything */
@@ -46,31 +47,33 @@ enum DisplayMode {
     INVALID_MULTICOLOR_BITMAP = 0x70
 };
 
-//! PixelEngine
-/*! This component is part of the virtual VICII chip and encapulates all functionality that is related to the
-    synthesis of pixels. Its main entry point are prepareForCycle() and draw() which are called in every 
-    VIC cycle inside the viewable range.
-*/
+//! @class   PixelEngine
+/*! @details This component is part of the virtual VICII chip and encapulates all functionality 
+ *           that is related to the synthesis of pixels. Its main entry point are prepareForCycle() 
+ *           and draw() which are called in every VIC cycle inside the viewable range.
+ */
 class PixelEngine : public VirtualComponent {
     
     friend class VIC;
     
 public:
 
-    //! Reference to the connected video interface controller (VIC)
+    //! @brief    Reference to the connected video interface controller (VIC)
     VIC *vic;
     
-    //! Constructor
+    //! @brief    Constructor
     PixelEngine();
     
-    //! Destructor
+    //! @brief    Destructor
     ~PixelEngine();
     
-    //! Restore initial state
+    //! @brief    Restores the initial state
     void reset();
 
-    //! Initialize both screenBuffers
-    /*! This function is used for debugging. It write some recognizable pattern into both buffers */
+    //! @brief    Initializes both screenBuffers
+    /*! @details  This function is needed for debugging, only. It write some recognizable pattern 
+     *            into both buffers 
+     */
     void resetScreenBuffers();
 
     
@@ -78,7 +81,7 @@ public:
     //                                     Constant definitions
     // -----------------------------------------------------------------------------------------------
     
-    //! VIC colors
+    //! @brief    VIC colors
     enum Color {
         BLACK   = 0x00,
         WHITE   = 0x01,
@@ -105,7 +108,7 @@ public:
     
 private:
     
-    //! All sixteen C64 colors in RGBA format
+    //! @brief    All sixteen C64 colors in RGBA format
      uint32_t colors[16] = {
         LO_LO_HI_HI(0x10, 0x10, 0x10, 0xFF),
         LO_LO_HI_HI(0xff, 0xff, 0xff, 0xFF),
@@ -125,46 +128,59 @@ private:
         LO_LO_HI_HI(0xc0, 0xc0, 0xc0, 0xFF)
     };
     
-    //! First screen buffer
-    /*! The VIC chip writes it output into this buffer. The contents of the array is later copied into to
-        texture RAM of your graphic card by the drawRect method in the GPU related code. */
+    /*! @brief    First screen buffer
+     *  @details  The VIC chip writes it output into this buffer. The contents of the array is 
+     *            later copied into to texture RAM of your graphic card by the drawRect method 
+     *            in the GPU related code. 
+     */
     int screenBuffer1[PAL_RASTERLINES][NTSC_PIXELS];
     
-    //! Second screen buffer
-    /*! The VIC chip uses double buffering. Once a frame is drawn, the VIC chip writes the next frame to the 
-        second buffer. */
+    /*! @brief    Second screen buffer
+     *  @details  The VIC chip uses double buffering. Once a frame is drawn, the VIC chip writes 
+     *            the next frame to the second buffer. 
+     */
     int screenBuffer2[PAL_RASTERLINES][NTSC_PIXELS];
     
-    //! Target screen buffer for all rendering methods
-    /*! The variable points either to screenBuffer1 or screenBuffer2 */
+    /*! @brief    Target screen buffer for all rendering methods
+     *  @details  The variable points either to screenBuffer1 or screenBuffer2 
+     */
     int *currentScreenBuffer;
     
-    //! Pointer to the beginning of the current rasterline
-    /*! This pointer is used by all rendering methods to write pixels. It always points to the beginning of a
-        rasterline, either in screenBuffer1 or screenBuffer2. It is reset at the beginning of each frame and 
-        incremented at the beginning of each rasterline. */
+    /*! @brief    Pointer to the beginning of the current rasterline
+     *  @details  This pointer is used by all rendering methods to write pixels. It always points 
+     *            to the beginning of a rasterline, either in screenBuffer1 or screenBuffer2. 
+     *            It is reset at the beginning of each frame and incremented at the beginning of 
+     *            each rasterline. 
+     */
     int *pixelBuffer;
         
-    //! Z buffer
-    /*! Virtual VICII uses depth buffering to determine pixel priority. In the various render routines, a pixel is 
-        only written to the screen buffer, if it is closer to the view point. The depth of the closest pixel is kept 
-        in the z buffer. The lower the value of the z buffer, the closer it is to the viewer. */
+    /*! @brief    Z buffer
+     *  @details  Virtual VICII uses depth buffering to determine pixel priority. In the various
+     *            render routines, a pixel is only written to the screen buffer, if it is closer 
+     *            to the view point. The depth of the closest pixel is kept in the z buffer. 
+     *            The lower the value of the z buffer, the closer it is to the viewer. 
+     */
     int zBuffer[8];
     
-    //! Indicates the source of a drawn pixel
-    /*! Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the pixelSource array is set.
-     *  The information is utilized to detect sprite-sprite and sprite-background collisions. */
+    /*! @brief    Indicates the source of a drawn pixel
+     *  @details  Whenever a foreground pixel or sprite pixel is drawn, a distinct bit in the 
+     *            pixelSource array is set. The information is utilized to detect sprite-sprite 
+     *            and sprite-background collisions. 
+     */
     int pixelSource[8];
     
-    //! Offset into pixelBuffer
-    /*! Variable points to the first pixel of the currently drawn 8 pixel chunk */
+    /*! @brief    Offset into pixelBuffer
+     *  @details  Variable points to the first pixel of the currently drawn 8 pixel chunk 
+     */
     short bufferoffset;
     
 public:
     
-    //! Get screen buffer that is currently stable
-    /*! This method is called by the GPU code at the beginning of each frame. */
-    inline void *screenBuffer() { return (currentScreenBuffer == screenBuffer1[0]) ? screenBuffer2[0] : screenBuffer1[0]; }
+    /*! @brief    Get screen buffer that is currently stable
+     *  @details  This method is called by the GPU code at the beginning of each frame. 
+     */
+    inline void *screenBuffer() {
+        return (currentScreenBuffer == screenBuffer1[0]) ? screenBuffer2[0] : screenBuffer1[0]; }
 
     
     // -----------------------------------------------------------------------------------------------
@@ -173,9 +189,10 @@ public:
 
 private:
     
-    //! Indicates wether we are in a visible display column or not
-    /*! The visible columns comprise canvas columns and border columns. The first visible column is 
-     *  drawn in cycle 14 (first left border column) and the last in cycle ?? (fourth right border column).
+    /*! @brief    Indicates wether we are in a visible display column or not
+     *  @details  The visible columns comprise canvas columns and border columns. The first visible 
+     *            column is drawn in cycle 14 (first left border column) and the last in cycle ?? 
+     *            (fourth right border column).
      */
     bool visibleColumn;
     
@@ -186,16 +203,16 @@ private:
 
 public:
     
-    //! Prepare for new frame
+    //! @brief    Prepares for a new frame
     void beginFrame();
     
-    //! Prepare for new rasterline
+    //! @brief    Prepares for a new rasterline
     void beginRasterline();
     
-    //! Finish up rasterline
+    //! @brief    Finishes up a rasterline
     void endRasterline();
     
-    //! Finish up frame
+    //! @brief    Finishes up a frame
     void endFrame();
 
     
@@ -244,39 +261,50 @@ public:
      */
     void updateSpriteOnOff();
     
+    
     // -----------------------------------------------------------------------------------------------
     //               Shift register logic for canvas pixels (handled in drawCanvasPixel)
     // -----------------------------------------------------------------------------------------------
     
-    //! Shift register
-    /*! To synthesize pixels, VICII uses a 8 bit shift register */
+    //! @brief    Main shift register
+    /*! @details  An eight bit shift register used to synthesize the canvas pixels.
+     */
     
     struct {
         
-        //! Shift register data
+        //! @brief    Shift register data
         uint8_t data;
 
-        //! Indicates whether the shift register can load data
-        /*! If true, the register is loaded when the current x scroll offset matches the current pixel number. */
+        /*! @brief    Indicates whether the shift register can load data
+         *  @details  If true, the register is loaded when the current x scroll offset matches the
+         *            current pixel number. 
+         */
         bool canLoad; 
          
-        //! Multi-color synchronization flipflop
-        /*! Whenever the shift register is loaded, the synchronization flipflop is also set.
-         It is toggled with each pixel and used to synchronize the synthesis of multi-color pixels. */
+        /*! @brief    Multi-color synchronization flipflop
+         *  @details  Whenever the shift register is loaded, the synchronization flipflop is also set.
+         *            It is toggled with each pixel and used to synchronize the synthesis of 
+         *            multi-color pixels. */
         bool mc_flop;
         
-        //! Latched character info
-        /*! Whenever the shift register is loaded, the current character value (which was once read during
-         a gAccess) is latched. This value is used until the shift register loads again. */
+        /*! @brief    Latched character info
+         *  @details  Whenever the shift register is loaded, the current character value (which was 
+         *            once read during a gAccess) is latched. This value is used until the shift 
+         *            register loads again. 
+         */
         uint8_t latchedCharacter;
         
-        //! Latched color info
-        /*! Whenever the shift register is loaded, the current color value (which was once read during
-         a gAccess) is latched. This value is used until the shift register loads again. */
+        /*! @brief    Latched color info
+         *  @details  Whenever the shift register is loaded, the current color value (which was 
+         *            once read during a gAccess) is latched. This value is used until the shift 
+         *            register loads again. 
+         */
         uint8_t latchedColor;
         
-        //! Color bits
-        /*! Every second pixel (as synchronized with mc_flop), the  multi-color bits are remembered. */
+        /*! @brief    Color bits
+         *  @details  Every second pixel (as synchronized with mc_flop), the  multi-color bits are
+         *            remembered. 
+         */
         uint8_t colorbits;
 
     } sr;
@@ -506,5 +534,4 @@ public:
     
 };
 
-    
 #endif

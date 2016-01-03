@@ -169,12 +169,6 @@ public:
      *            Whereas the CIA 1 clears the IRQ line, the CIA 2 chip clears the NMI line.
      */
 	virtual void clearInterruptLine() = 0;	
-
-	/*! @brief    Get current value of the interrupt line
-	 *  @details  The function is abstract and will be implemented differently by the CIA 1 and CIA 2 class.
-     *            Whereas the CIA 1 polls the IRQ line, the CIA 2 chip polls the NMI line.
-	 */
-	virtual uint8_t getInterruptLine() = 0;	
 	
     
     // -----------------------------------------------------------------------------------------------
@@ -523,10 +517,6 @@ private:
      *  @details  Note that CIA 1 is connected to the IRQ line
      */    void clearInterruptLine();
 
-    /*! @brief    Returns the current value of the interrupt line
-     *  @details  Note that CIA 2 is connected to the IRQ line
-     */
-    inline uint8_t getInterruptLine();
 	
 public:
 
@@ -590,10 +580,6 @@ private:
      */
     void clearInterruptLine();
 
-    /*! @brief    Returns the current value of the interrupt line
-     *  @details  Note that CIA 2 is connected to the NMI line
-     */
-    uint8_t getInterruptLine();
 		
 public:
 

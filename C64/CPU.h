@@ -1,41 +1,40 @@
-/*
- * Author: Dirk W. Hoffmann, 2006 - 2015
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+/*!
+ * @header      CPU.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2016 Dirk W. Hoffmann
  */
-
+/*              This program is free software; you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation; either version 2 of the License, or
+ *              (at your option) any later version.
+ *
+ *              This program is distributed in the hope that it will be useful,
+ *              but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *              GNU General Public License for more details.
+ *
+ *              You should have received a copy of the GNU General Public License
+ *              along with this program; if not, write to the Free Software
+ *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #ifndef _CPU_INC
 #define _CPU_INC
 
 #include "Memory.h"
 
-class C64;
-class IEC;
-
-//! The virtual 6510 processor
+/*! @class  The virtual 6510 processor
+ */
 class CPU : public VirtualComponent {
 
 public:
-    //! Processor models
+    //! @brief    Processor models
     enum ChipModel {
         MOS6510 = 0,
         MOS6502 = 1
     };
 
-	//! Addressing modes
+	//! @brief    Addressing modes
 	enum AddressingMode { 
 		ADDR_IMPLIED,
 		ADDR_ACCUMULATOR,
@@ -53,11 +52,12 @@ public:
 		ADDR_INDIRECT
 	};
 	
-	//! Error states of the virtual CPU
-	/*! CPU_OK indicates normal operation. When a (soft or hard) breakpoint is reached, the CPU enters
-	the CPU_BREAKPOINT_REACHED state. CPU_ILLEGAL_INSTRUCTION is entered when an opcode is not understood
-	by the CPU. Once the CPU enters a different state than CPU_OK, the execution thread is terminated. 
-	*/ 
+	/*! @brief    Error states of the virtual CPU
+	 *  @details  CPU_OK indicates normal operation. When a (soft or hard) breakpoint is reached, 
+     *            the CPU enters the CPU_BREAKPOINT_REACHED state. CPU_ILLEGAL_INSTRUCTION is 
+     *            entered when an opcode is not understood by the CPU. Once the CPU enters a 
+     *            different state than CPU_OK, the execution thread is terminated.
+     */
 	enum ErrorState {
 		OK = 0,
 		SOFT_BREAKPOINT_REACHED,
@@ -65,43 +65,50 @@ public:
 		ILLEGAL_INSTRUCTION
 	};
 
-	//! Breakpoint type
-	/*! Each memory call is marked with a breakpoint tag. Originally, each cell is tagged with NO_BREAKPOINT
-		which has no effect. CPU execution will stop if the memory cell is tagged with one of the following breakpoint types:
-
-	    HARD_BREAKPOINT: execution is halted 
-	    SOFT_BREAKPOINT: execution is halted and the tag is deleted
-	*/	
+	/*! @brief    Breakpoint type
+	 *  @details  Each memory call is marked with a breakpoint tag. Originally, each cell is 
+     *            tagged with NO_BREAKPOINT which has no effect. CPU execution will stop if the 
+     *            memory cell is tagged with one of the following breakpoint types:
+     *
+     *            HARD_BREAKPOINT: execution is halted
+     *            SOFT_BREAKPOINT: execution is halted and the tag is deleted
+     */
 	enum Breakpoint {
 		NO_BREAKPOINT   = 0x00,
 		HARD_BREAKPOINT = 0x01,
 		SOFT_BREAKPOINT = 0x02
 	};
 
-	//! Clock frequency of the original C64 (NTSC version) in Hz
+	//! @brief    Clock frequency of the original C64 (NTSC version) in Hz
 	static const uint32_t CLOCK_FREQUENCY_NTSC = 1022727;
 	
-	//! Clock frequency of the original C64 (PAL version) in Hz
+	//! @brief    Clock frequency of the original C64 (PAL version) in Hz
 	static const uint32_t CLOCK_FREQUENCY_PAL = 985249;
 	
-	//! Bit position of the Negative flag
+	//! @brief    Bit position of the Negative flag
 	static const uint8_t N_FLAG = 0x80;
-	//! Bit position of the Overflow flag
+    
+	//! @brief    Bit position of the Overflow flag
 	static const uint8_t V_FLAG = 0x40;
-	//! Bit position of the Break flag
+    
+	//! @brief    Bit position of the Break flag
 	static const uint8_t B_FLAG = 0x10;
-	//! Bit position of the Decimal flag
+    
+	//! @brief    Bit position of the Decimal flag
 	static const uint8_t D_FLAG = 0x08;
-	//! Bit position of the Interrupt flag
+    
+	//! @brief    Bit position of the Interrupt flag
 	static const uint8_t I_FLAG = 0x04;
-	//! Bit position of the Zero flag
+    
+	//! @brief    Bit position of the Zero flag
 	static const uint8_t Z_FLAG = 0x02;
-	//! Bit position of the Carry flag
+    
+	//! @brief    Bit position of the Carry flag
 	static const uint8_t C_FLAG = 0x01;
 	
 public:
 
-	//! Reference to the connected virtual memory
+	//! @brief    Reference to the connected virtual memory
 	Memory *mem;
 
     /*! @brief    Selected chip model
@@ -112,414 +119,543 @@ public:
 
 private:
     
-	// Accumulator register
+	// @brief    Accumulator
 	uint8_t A;
-	// X register
+    
+	// @brief    X register
 	uint8_t X;
-	// Y register
-	uint8_t Y;	
-	//! Program counter
+    
+	// @brief    Y register
+	uint8_t Y;
+    
+	//! @brief    Program counter
 	uint16_t PC;
-	//! Memory location of the currently executed command
+    
+	//! @brief    Memory location of the currently executed command
 	uint16_t PC_at_cycle_0;
-	// Stack pointer
+    
+	// @brief    Stack pointer
 	uint8_t SP;
-	//! Negative flag
-	/*! The negative flag is set when the most significant bit (sign bit) equals 1. */
+    
+	/*! @brief    Negative flag
+	 *  @details  The negative flag is set when the most significant bit (sign bit) equals 1. 
+     */
 	uint8_t  N;
-	//! Overflow flag
-	/*! The overflow flag is set iff an arithmetic operation causes a \a signed overflow. */
+    
+	/*! @brief    Overflow flag
+	 *  @details  The overflow flag is set iff an arithmetic operation causes a \a signed overflow. 
+     */
 	uint8_t  V;
-	//! Break flag
-	/*! Is set to signal external interrupt. */
+    
+	/*! @brief    Break flag
+	 *  @details  Is set to signal external interrupt. 
+     */
 	uint8_t  B;
-	//! Decimal flag
-	/*! If set, the CPU operates in BCD mode. (BCD mode is not supported yet). */	
+    
+	/*! @brief    Decimal flag
+	 *  @details  If set, the CPU operates in BCD mode. (BCD mode is not supported yet). 
+     */
 	uint8_t  D;
-	//! Interrupt flag
-	/*! If set, all interrupts are blocked. (No interrupt request will be answered). */	
+    
+	/*! @brief    Interrupt flag
+	 *  @details  If set, all interrupts are blocked. (No interrupt request will be answered). 
+     */
 	uint8_t  I;
-	//! Zero flag
-	/*! The zero flag is set iff the result of an arithmetic operation is zero. */	
+    
+	/*! @brief    Zero flag
+	 *  @details  The zero flag is set iff the result of an arithmetic operation is zero. 
+     */
 	uint8_t  Z;
-	//! Carry flag
-	/*! The carry flag is set iff an arithmetic operation causes an \a unsigned overflow. */	
+    
+	/*! @brief    Carry flag
+	 *  @details  The carry flag is set iff an arithmetic operation causes an \a unsigned overflow. 
+     */
 	uint8_t  C;
 	
-	// Opcode of the currently executed command
+	//! @brief    Opcode of the currently executed command
 	uint8_t opcode;
-	// Internal address register (low byte)
+    
+	//! @brief    Internal address register (low byte)
 	uint8_t addr_lo;
-	// Internal address register (high byte)
+    
+	//! @brief    Internal address register (high byte)
 	uint8_t addr_hi;
-	// Pointer for indirect addressing modes
+    
+	//! @brief    Pointer for indirect addressing modes
 	uint8_t ptr;
-	// Temporary storage for program counter (low byte)
+    
+	//! @brief    Temporary storage for program counter (low byte)
 	uint8_t pc_lo;
-	// Temporary storage for program counter (high byte)
+    
+	//! @brief    Temporary storage for program counter (high byte)
 	uint8_t pc_hi;
-	// Address overflow indicater
-	/* Used to indicate whether the page boundary has been crossed */
+    
+	/*! @brief    Address overflow indicater
+	 *  @details  Used to indicate whether the page boundary has been crossed 
+     */
 	bool overflow;
-	// Internal data register
+    
+	//! @brief    Internal data register
 	uint8_t data;
 			
-	//! Processor port register
-	uint8_t port;	
-	//! Processor port data direction register
+	//! @brief    Processor port register
+	uint8_t port;
+    
+	//! @brief    Processor port data direction register
 	uint8_t port_direction;
-	//! Experimental
+
+    //! @brief    Experimental
 	uint8_t external_port_bits;
 	
-	//! RDY line (ready line)
-	/*! If this line is LOW, the CPU freezes on the next read access.
-        RDY is pulled down by VIC to perform longer lasting read operations.
-    */
+	/*! @brief    RDY line (ready line)
+	 *  @details  If this line is LOW, the CPU freezes on the next read access.
+     *            RDY is pulled down by VIC to perform longer lasting read operations.
+     */
 	bool rdyLine;
 	
-	//! IRQ line (maskable interrupts)
-	/*! The CPU checks the IRQ line before the next instruction is executed.
-		If the Interrupt flag is cleared and at least one bit is set, the CPU performs an interrupt. 
-		The IRQ line of the real CPU is driven by multiple sources (CIA, VIC). Each source is represented by a separate bit.
-		\see CPU::I CPU::I_FLAG
-	*/
+	/*! @brief    IRQ line (maskable interrupts)
+	 *  @details  The CPU checks the IRQ line before the next instruction is executed.
+     *            If the Interrupt flag is cleared and at least one bit is set, the CPU performs 
+     *            an interrupt. The IRQ line of the real CPU is driven by multiple sources 
+     *            (CIA, VIC). Each source is represented by a separate bit.
+     * @see       CPU::I CPU::I_FLAG
+     */
 	uint8_t irqLine;
 	
-	//! NMI line (non maskable interrupts)
-	/*! The CPU checks the IRQ line before the next instruction is executed.
-		If at least one bit is set, the CPU performs an interrupt, regardless of the value of the I flag. 
-		The IRQ line of the real CPU is driven by multiple sources (CIA, VIC). Each source is represented by a separate bit.
-	*/
+	/*! @brief    NMI line (non maskable interrupts)
+     *  @details  The CPU checks the IRQ line before the next instruction is executed.
+     *            If at least one bit is set, the CPU performs an interrupt, regardless of the 
+     *            value of the I flag. The IRQ line of the real CPU is driven by multiple sources 
+     *            (CIA, VIC). Each source is represented by a separate bit.
+     */
 	uint8_t nmiLine; 
 	
-	//! Indicates the occurance of an interrupt triggering edge on the NMI line
-	/*! The variable is set to 1, when the value of variable nmiLine is changed from 0 to another value. The variable is
-	    used to determine when an NMI interrupt needs to be triggered. */
+	/*! @brief    Indicates the occurance of an interrupt triggering edge on the NMI line
+	 *  @details  The variable is set to 1, when the value of variable nmiLine is changed from 0 to 
+     *            another value. The variable is used to determine when an NMI interrupt needs 
+     *            to be triggered. 
+     */
 	bool nmiEdge;
 	
-    //! Indicates if the CPU has to check for pending interrupts in its fetch phase
-    /*! This variable has beed introduced for speedup. At all times, it is equivalent to "(irqLine || nmiEdge)" */
+    /*! @brief    Indicates if the CPU has to check for pending interrupts in its fetch phase
+     *  @details  This variable has beed introduced for speedup. At all times, it is equivalent
+     *            to "(irqLine || nmiEdge)".
+     */
     bool interruptsPending;
     
-	//! This variable is set when a negative edge occurs on the irq line and stores the next cycle in which an IRQ can occur.
-	/*! The value is needed to determine the exact time to trigger the interrupt */
+	/*! @brief    Indicates when the next IRQ can occurr. 
+     *  @details  This variable is set when a negative edge occurs on the irq line and stores the
+     *            next cycle in which an IRQ can occur. The value is needed to determine the exact 
+     *            time to trigger the interrupt.
+     */
 	uint64_t nextPossibleIrqCycle;
 	
-	//! This variable is set when a negative edge occurs on the nmi line and stores the next cycle in which an NMI can occur.
-	/*! The value is needed to determine the exact time to trigger the interrupt */
+    /*! @brief    Indicates when the next NMI can occurr.
+     *  @details  This variable is set when a negative edge occurs on the nmi line and stores the
+     *            next cycle in which an NMI can occur. The value is needed to determine the exact 
+     *            time to trigger the interrupt.
+     */
 	uint64_t nextPossibleNmiCycle;
 		
-	//! Current error state
+	//! @brief    Current error state
 	ErrorState errorState;
     
-	//! Next function to be executed
-	/*! Each function performs the actions of a single cycle */
+	/*! @brief    Next function to be executed
+	 *  @details  Each function performs the actions of a single cycle 
+     */
 	void (CPU::*next)(void);
 	 
-	//! Callback function array pointing to the execution function of each instruction.
+	//! @brief    Callback function array pointing to the execution function of each instruction
 	void (CPU::*actionFunc[256])(void);
 	
-	//! Breakpoint tag for each memory cell
-	/*! \see Breakpoint */
+	//! @brief    Breakpoint tag for each memory cell
 	uint8_t breakpoint[65536];
 	
-	//! Records all subroutine calls
-	/*! Whenever a JSR instruction is executed, the address of the instruction is recorded in the callstack.
-	*/
+	/*! @brief    Records all subroutine calls
+	 *  @details  Whenever a JSR instruction is executed, the address of the instruction is recorded 
+     *            in the callstack.
+     */
 	uint16_t callStack[256];
 		
-	//! Location of the next free cell of the callstack
+	//! @brief    Location of the next free cell of the callstack.
 	uint8_t callStackPointer;
 
-	//! Value of the I flag before it got changed with the SEI command
+	//! @brief    Value of the I flag before it got changed with the SEI command.
 	uint8_t oldI;
 			
-	//! Returns true iff IRQs are blocked
-	/*! IRQs are blocked by setting the I flag to 1. The I flag is set with the SEI command and cleared with the CLI command.
-		Note that the timing is important here! When an interrupt occures while SEI or CLI is executed, the previous value of I 
-	    determines whether an interrupt is triggered or not. To handle timing correctly, the previous value of I is stored in 
-		variable oldI whenever SEI or CLI is executed. */
-	bool IRQsAreBlocked();
-
 #include "Instructions.h"
 		
 public:
 
-	// Constructor
+	//! @brief    Constructor
 	CPU();
 	
-	// Destructor
+	//! @brief    Destructor
 	~CPU();
 
-	// Brings CPU back to its initial state
+	//! @brief    Restores the initial state.
 	void reset();
 
-    //! Size of internal state
+    //! @brief    Returns the size of the internal state.
     uint32_t stateSize();
 
-	//! Load state
+	//! @brief    Reads the internal state from a buffer.
 	void loadFromBuffer(uint8_t **buffer);
 	
-	//! Save state
+	//! @brief    Writes the internal state into a buffer.
 	void saveToBuffer(uint8_t **buffer);	
 	
-	//! Dump internal state to console
+	//! @brief    Prints debugging information.
 	void dumpState();	
 
-    // Returns true iff this object is the C64 CPU (for debugging, only)
+    //! @brief    Returns true iff this object is the C64 CPU (for debugging, only).
     bool isC64CPU() { return strcmp(getDescription(), "CPU") == 0; /* VC1541 CPU is calles "1541CPU" */ }
-		
-	//! Get value of processor port
+
+    
+    //
+    //! @functiongroup Managing the processor port
+    //
+
+	//! @brief    Returns the value of processor port.
 	inline uint8_t getPort() { return port; }
-	//! Set value of processor port register
+    
+	//! @brief    Sets the value of the processor port register.
 	void setPort(uint8_t value);
-	//! Get value of processor port
+    
+	//! @brief    Returns the value of processor port register.
 	inline uint8_t getPortDirection() { return port_direction; }
-	//! Experimental
+    
+	//! @brief    Experimental.
 	inline uint8_t getExternalPortBits() { return external_port_bits; }
-	//! Set value of processor port data direction register
+    
+	//! @brief    Sets the value of the processor port data direction register.
 	void setPortDirection(uint8_t value);
-	//! Get physical values of port lines 
+    
+	//! @brief    Returns the physical value of the port lines.
 	uint8_t getPortLines() { return (port | ~port_direction); }
 	
-	//! Returns current value of the accumulator register
+    
+    //
+    //! @functiongroup Handling registers and flags
+    //
+
+	//! @brief    Returns the contents of the accumulator.
 	inline uint8_t getA() { return A; };
-	//! Returns current value of the X register
+    
+	//! @brief    Returns current value of the X register.
 	inline uint8_t getX() { return X; };
-	//! Returns current value of the Y register
+    
+	//! @brief    Returns current value of the Y register.
 	inline uint8_t getY() { return Y; };
-	//! Returns current value of the program counter
+    
+	//! @brief    Returns current value of the program counter.
 	inline uint16_t getPC() { return PC; };
-	//! Returns "freezed" program counter
+    
+	//! @brief    Returns "freezed" program counter.
 	inline uint16_t getPC_at_cycle_0() { return PC_at_cycle_0; };
-	//! Returns current value of the program counter	
+    
+	//! @brief    Returns current value of the program counter.
 	inline uint8_t getSP() { return SP; };
 	
-	//! Returns current value of the memory cell addressed by the program counter
+	//! @brief    Returns current value of the memory cell addressed by the program counter.
 	inline uint8_t peekPC() { return mem->peek(PC); }
 
-	//! Returns 1, if Negative flag is set, 0 otherwise
+	//! @brief    Returns 1, if Negative flag is set, 0 otherwise.
 	inline uint8_t getN() { return (N ? N_FLAG : 0); }
-	//! Returns 1, if Overflow flag is set, 0 otherwise
+    
+	//! @brief    Returns 1, if Overflow flag is set, 0 otherwise.
 	inline uint8_t getV() { return (V ? V_FLAG : 0); }
-	//! Returns 1, if Break flag is set, 0 otherwise
+    
+	//! @brief    Returns 1, if Break flag is set, 0 otherwise.
 	inline uint8_t getB() { return (B ? B_FLAG : 0); }
-	//! Returns 1, if Decimal flag is set, 0 otherwise
+    
+	//! @brief    Returns 1, if Decimal flag is set, 0 otherwise.
 	inline uint8_t getD() { return (D ? D_FLAG : 0); }
-	//! Returns 1, if Interrupt flag is set, 0 otherwise
+    
+	//! @brief    Returns 1, if Interrupt flag is set, 0 otherwise.
 	inline uint8_t getI() { return (I ? I_FLAG : 0); }
-	//! Returns 1, if Zero flag is set, 0 otherwise
+    
+	//! @brief    Returns 1, if Zero flag is set, 0 otherwise.
 	inline uint8_t getZ() { return (Z ? Z_FLAG : 0); }
-	//! Returns 1, if Carry flag is set, 0 otherwise
+    
+	//! @brief    Returns 1, if Carry flag is set, 0 otherwise.
 	inline uint8_t getC() { return (C ? C_FLAG : 0); }
-	//! Returns the status register 
-	/*! Each bit in the status register corresponds to the value of a single flag, except bit 5 which is always set. */
+    
+	/*! @brief    Returns the contents of the status register
+	 *  @details  Each bit in the status register corresponds to the value of a single flag, 
+     *            except bit 5 which is always set. 
+     */
 	inline uint8_t getP() { return getN() | getV() | 32 | getB() | getD() | getI() | getZ() | getC(); }
-	//! Returns the status register without the B flag
-	/*! The bit position of the B flag is always 0. This function is needed for proper interrupt handling. When an IRQ
-		or NMI is triggered internally, the status register is pushed on the stack with the B-flag cleared. */
+    
+	/*! @brief    Returns the status register without the B flag
+	 *  @details  The bit position of the B flag is always 0. This function is needed for proper 
+     *            interrupt handling. When an IRQ or NMI is triggered internally, the status 
+     *            register is pushed on the stack with the B-flag cleared. 
+     */
 	inline uint8_t getPWithClearedB() { return getN() | getV() | 32 | getD() | getI() | getZ() | getC(); }
 	
-    //! Return current opcode
+    //! @brief    Returns current opcode.
     inline uint8_t getOpcode() { return opcode; }
     
-	//! Write value to the accumulator register. Flags remain untouched.
+	//! @brief    Writes value to the accumulator register. Flags remain untouched.
 	inline void setA(uint8_t a) { A = a; }
-	//! Write value to the the X register. Flags remain untouched.
+    
+	//! @brief    Writes value to the the X register. Flags remain untouched.
 	inline void setX(uint8_t x) { X = x; }
-	//! Write value to the the Y register. Flags remain untouched.
+    
+	//! @brief    Writes value to the the Y register. Flags remain untouched.
 	inline void setY(uint8_t y) { Y = y; }
-	//! Write value to the the program counter.
+    
+	//! @brief    Writes value to the the program counter.
 	inline void setPC(uint16_t pc) { PC = pc; }
-	//! Write value to the freezend program counter.
+    
+	//! @brief    Writes value to the freezend program counter.
 	inline void setPC_at_cycle_0(uint16_t pc) { PC_at_cycle_0 = PC = pc; next = &CPU::fetch;}
-	//! Change low byte of the program counter only
+    
+	//! @brief    Changes low byte of the program counter only.
 	inline void setPCL(uint8_t lo) { PC = (PC & 0xff00) | lo; }
-	//! Change high byte of the program counter only
+    
+	//! @brief    Changes high byte of the program counter only.
 	inline void setPCH(uint8_t hi) { PC = (PC & 0x00ff) | ((uint16_t)hi << 8); }
-	//! Increment the program counter by the specified amount. 
-	/*! If no argument is provided, the program counter is incremented by one. */
+    
+	/*! @brief    Increments the program counter by the specified amount.
+	 *  @details  If no argument is provided, the program counter is incremented by one. 
+     */
 	inline void incPC(uint8_t offset = 1) { PC += offset; }
-	//! Increment low byte of program counter (hi byte remains unchanged)
+    
+	//! @brief    Increments low byte of program counter (hi byte remains unchanged).
 	inline void incPCL(uint8_t offset = 1) { setPCL(LO_BYTE(PC) + offset); }
-	//! Increment high byte of program counter (lo byte remains unchanged)
+    
+	//! @brief    Increments high byte of program counter (lo byte remains unchanged).
 	inline void incPCH(uint8_t offset = 1) { setPCH(HI_BYTE(PC) + offset); }
 	
-	//! Write value to the stack pointer
+	//! @brief    Writes value to the stack pointer.
 	inline void setSP(uint8_t sp) { SP = sp; }
 	
-	//! 0: Negative-flag is cleared, any other value: flag is set
+	//! @brief    0: Negative-flag is cleared, any other value: flag is set.
 	inline void setN(uint8_t n) { N = n; }
-	//! 0: Overflow-flag is cleared, any other value: flag is set
+    
+	//! @brief    0: Overflow-flag is cleared, any other value: flag is set.
 	inline void setV(uint8_t v) { V = v; }
-	//! 0: Break-flag is cleared, any other value: flag is set
+    
+	//! @brief    0: Break-flag is cleared, any other value: flag is set.
 	inline void setB(uint8_t b) { B = b; }
-	//! 0: Decimal-flag is cleared, any other value: flag is set
+    
+	//! @brief    0: Decimal-flag is cleared, any other value: flag is set.
 	inline void setD(uint8_t d) { D = d; }
-	//! 0: Interrupt-flag is cleared, any other value: flag is set
+    
+	//! @brief    0: Interrupt-flag is cleared, any other value: flag is set.
 	inline void setI(uint8_t i) { I = i; }
-	//! 0: Zero-flag is cleared, any other value: flag is set
+    
+	//! @brief    0: Zero-flag is cleared, any other value: flag is set.
 	inline void setZ(uint8_t z) { Z = z; }
-	//! 0: Carry-flag is cleared, any other value: flag is set
+    
+	//! @brief    0: Carry-flag is cleared, any other value: flag is set.
 	inline void setC(uint8_t c) { C = c; }
-	//! Write value to the status register. The value of bit 5 is ignored. */
+    
+	//! @brief    Write value to the status register. The value of bit 5 is ignored.
 	inline void setP(uint8_t p) 
 		{ setN(p & N_FLAG); setV(p & V_FLAG); setB(p & B_FLAG); setD(p & D_FLAG); setI(p & I_FLAG); setZ(p & Z_FLAG); setC(p & C_FLAG); }
 	inline void setPWithoutB(uint8_t p) 
 		{ setN(p & N_FLAG); setV(p & V_FLAG); setD(p & D_FLAG); setI(p & I_FLAG); setZ(p & Z_FLAG); setC(p & C_FLAG); }
 			
-	//! Load value into the accumulator. The Z- and N-flag may change. */ 
+	//! @brief    Loads the accumulator. The Z- and N-flag may change.
 	inline void loadA(uint8_t a) { A = a; N = a & 128; Z = (a == 0); }
-	//! Load value into the X register. The Z- and N-flag may change. */ 
+    
+	//! @brief    Loads the X register. The Z- and N-flag may change.
 	inline void loadX(uint8_t x) { X = x; N = x & 128; Z = (x == 0); }
-	//! Load value into the Y register. The Z- and N-flag may change. */ 
+    
+	//! @brief    Loads the Y register. The Z- and N-flag may change.
 	inline void loadY(uint8_t y) { Y = y; N = y & 128; Z = (y == 0); }
-	//! Load value into the stack register. The Z- and N-flag may change. */ 
+    
+	//! @brief    Loads the stack register. The Z- and N-flag may change.
 	inline void loadSP(uint8_t s) { SP = s; N = s & 128; Z = (s == 0); }
-	//! Load value into memory. The Z- and N-flag may change. */ 
+    
+	//! @brief    Loads a value into memory. The Z- and N-flag may change.
 	inline void loadM(uint16_t addr, uint8_t s) { mem->poke(addr, s); N = s & 128; Z = (s == 0); }
 
-	//! Set bit of IRQ line
+    
+    //
+    //! @functiongroup Handling interrupts
+    //
+    
+    /*! @brief    Returns true iff IRQs are blocked
+     *  @details  IRQs are blocked by setting the I flag to 1. The I flag is set with the SEI command
+     *            and cleared with the CLI command. Note that the timing is important here! When an
+     *            interrupt occures while SEI or CLI is executed, the previous value of I determines
+     *            whether an interrupt is triggered or not. To handle timing correctly, the previous
+     *            value of I is stored in variable oldI whenever SEI or CLI is executed.
+     */
+    bool IRQsAreBlocked();
+
+	//! @brief    Sets a bit of the IRQ line.
 	void setIRQLine(uint8_t bit);
 	
-	//! Clear bit of IRQ line
-    inline void clearIRQLine(uint8_t bit) { irqLine &= (~bit); interruptsPending = irqLine || nmiEdge; }
+	//! @brief    Clears a bit of the IRQ line.
+    inline void clearIRQLine(uint8_t bit) { irqLine &= ~bit; interruptsPending = irqLine || nmiEdge; }
 		
-	//! Get bit of IRQ line
+	//! @brief    Returns bit of IRQ line.
 	inline uint8_t getIRQLine(uint8_t bit) { return irqLine & bit; }
 	
-	//! Check if IRQ line has been activated for at least 2 cycles
+	//! @brief    Checks if IRQ line has been activated for at least 2 cycles.
 	bool IRQLineRaisedLongEnough();
 	
-	//! Set bit of NMI line
+	//! @brief    Sets bit of NMI line.
 	void setNMILine(uint8_t bit);
 
-    //! Indicate a negative edge on the NMI line
+    //! @brief    Indicates a negative edge on the NMI line.
     void setNMIEdge();
 
-    //! Remove negative edge indicator for the NMI line
+    //! @brief    Removes negative edge indicator for the NMI line.
     void clearNMIEdge();
 
-	//! Clear bit of NMI line
-	inline void clearNMILine(uint8_t bit) { nmiLine &= (0xff - bit); }
+	//! @brief    Clears bit of NMI line.
+	inline void clearNMILine(uint8_t bit) { nmiLine &= ~bit; }
 	
-	//! Get bit of IRQ line
-	inline uint8_t getNMILine(uint8_t bit) { return nmiLine & bit; }
-
-	//! Check if NMI line has been activated for at least 2 cycles
+	//! @brief    Checks if NMI line has been activated for at least 2 cycles.
 	bool NMILineRaisedLongEnough();
 	
-	//! Get CIA bit of IRQ line
-	inline uint8_t getIRQLineCIA() { return getIRQLine(0x01); }	
-	//! Set CIA bit of IRQ line
+	//! @brief    Sets CIA bit of IRQ line.
 	inline void setIRQLineCIA() { setIRQLine(0x01); }
-	//! Set VIC bit of IRQ line
+    
+	//! @brief    Sets VIC bit of IRQ line.
 	inline void setIRQLineVIC() { setIRQLine(0x02); }
-    //! Set VIA bit of IRQ line (1541 drive)
+    
+    //! @brief    Sets VIA bit of IRQ line (1541 drive).
     inline void setIRQLineVIA() { setIRQLine(0x10); }
-    //! Set VIA 1 bit of IRQ line (1541 drive)
-	// inline void setIRQLineVIA1() { setIRQLine(0x10); }
-	//! Set VIA 2 bit of IRQ line (1541 drive)
-	// inline void setIRQLineVIA2() { setIRQLine(0x20); }
-	//! Set ATN bit of IRQ line (1541 drive)
+    
+	//! @brief    Sets ATN bit of IRQ line (1541 drive).
 	inline void setIRQLineATN() { setIRQLine(0x40); }
-	//! Clear CIA bit of IRQ line
+    
+	//! @brief    Clears CIA bit of IRQ line.
 	inline void clearIRQLineCIA() { clearIRQLine(0x01); }
-	//! Clear VIC bit of IRQ line
-	inline void clearIRQLineVIC() { clearIRQLine(0x02); }	
-    //! Clear VIA 1 bit of IRQ line (1541 drive)
+    
+	//! @brief    Clears VIC bit of IRQ line.
+	inline void clearIRQLineVIC() { clearIRQLine(0x02); }
+    
+    //! @brief    Clears VIA 1 bit of IRQ line (1541 drive).
     inline void clearIRQLineVIA() { clearIRQLine(0x10); }
-	//! Clear ATN bit of IRQ line (1541 drive)
-	inline void clearIRQLineATN() { clearIRQLine(0x40); }	 // DEPRECATED
-	
-	//! Get CIA bit of NMI line
-	inline uint8_t getNMILineCIA() { return getNMILine(0x01); }		
-	//! Set CIA bit of NMI line
-	inline void setNMILineCIA() { setNMILine(0x01); }	
-	//! Clear CIA bit of NMI line
+    
+	//! @brief    Clears ATN bit of IRQ line (1541 drive).
+	inline void clearIRQLineATN() { clearIRQLine(0x40); }
+    
+	//! @brief    Sets CIA bit of NMI line.
+	inline void setNMILineCIA() { setNMILine(0x01); }
+    
+	//! @brief    Clears CIA bit of NMI line.
 	inline void clearNMILineCIA() { clearNMILine(0x01); }
-	//! Set Reset bit of NMI line
-	inline void setNMILineReset() { setNMILine(0x08); }	
-	//! Clear Reset bit of NMI line
+    
+	//! @brief    Sets reset bit of NMI line.
+	inline void setNMILineReset() { setNMILine(0x08); }
+    
+	//! @brief    Clears reset bit of NMI line.
 	inline void clearNMILineReset() { clearNMILine(0x08); }
-    //! Get RDY line
-    inline bool getRDY() { return rdyLine; }
-	//! Set RDY line
+    
+	//! @brief    Sets the RDY line.
 	inline void setRDY(bool value) { rdyLine = value; }
 		
-	//! Returns the three letter mnemonic for a given opcode
+    
+    //
+    //! @functiongroup Examining the currently executed instruction
+    //
+    
+	//! @brief    Returns the three letter mnemonic for a given opcode.
 	const char *getMnemonic(uint8_t opcode);
-	//! Returns the three letter mnemonic of the next instruction to execute
+    
+	//! @brief    Returns the three letter mnemonic of the next instruction to execute.
 	const char *getMnemonic() { return getMnemonic(mem->peek(PC)); }
-	//! Returns the adressing mode for a given opcode
+    
+	//! @brief    Returns the adressing mode for a given opcode.
 	AddressingMode getAddressingMode(uint8_t opcode);
-	//! Returns the adressing mode of the next instruction to execute
-	AddressingMode getAddressingMode() { return getAddressingMode(mem->peek(PC)); }	
-	//! Returns the length in bytes of the instruction with the specified opcode
-	/*! Possible values: 1 to 3 */
+    
+	//! @brief    Returns the adressing mode of the next instruction to execute.
+	AddressingMode getAddressingMode() { return getAddressingMode(mem->peek(PC)); }
+    
+	/*! @brief    Returns the length in bytes of the instruction with the specified opcode.
+	 *  @result   Integer value between 1 and 3.
+     */
 	int getLengthOfInstruction(uint8_t opcode);
-	//! Returns the length in bytes of the instruction with the specified address
-	/*! Possible values: 1 to 3 */
+    
+	/*! @brief    Returns the length in bytes of the instruction with the specified address.
+     *  @result   Integer value between 1 and 3.
+     */
 	inline int getLengthOfInstructionAtAddress(uint16_t addr) { return getLengthOfInstruction(mem->peek(addr)); }
-	//! Returns the length in bytes of the next instruction to execute
-	/*! Possible values: 1 to 3 */
+    
+	/*! @brief    Returns the length in bytes of the next instruction to execute.
+     *  @result   Integer value between 1 and 3.
+     */
 	inline int getLengthOfCurrentInstruction() { return getLengthOfInstructionAtAddress(PC_at_cycle_0); }
-	//! Returns the address of the instruction following the current instruction
-	/*! Possible values: 1 to 3 */
-	inline uint16_t getAddressOfNextInstruction() { return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
-	//! Disassemble current instruction
+    
+	/*! @brief    Returns the address of the instruction following the current instruction.
+     *  @result   Integer value between 1 and 3.
+     */
+    inline uint16_t getAddressOfNextInstruction() { return PC_at_cycle_0 + getLengthOfCurrentInstruction(); }
+    
+	//! @brief    Disassembles the current instruction.
 	char *disassemble();
-	// char *disassemble(uint64_t state);
 				
-	//! Returns true, iff the next cycle is the first cycle of a command
+	//! @brief    Returns true, iff the next cycle is the first cycle of a command.
 	inline bool atBeginningOfNewCommand() { return next == &CPU::fetch; }
 	
-	//! Execute CPU for one cycle
-	/*! This is the normal operation mode. Interrupt requests are handled. */
+    
+    //
+    //! @functiongroup Executing the device
+    //
+    
+	/*! @brief    Executes the device for one cycle.
+	 *  @details  This is the normal operation mode. Interrupt requests are handled. 
+     */
 	inline bool executeOneCycle() { (*this.*next)(); return errorState == CPU::OK; }
 
-	//! Returns the current error state
+	//! @brief    Returns the current error state.
     inline ErrorState getErrorState() { return errorState; }
     
-	//! Sets the current error state
+	//! @brief    Sets the error state.
     void setErrorState(ErrorState state);
     
-	//! Sets the error state back to normal
+	//! @brief    Sets the error state back to normal.
     void clearErrorState() { setErrorState(OK); }
     
-	//! Return breakpoint tag for the specified address
+    
+    //
+    //! @functiongroup Handling breakpoints
+    //
+    
+	//! @brief    Returns breakpoint tag for the specified address.
 	inline uint8_t getBreakpointTag(uint16_t addr) { return breakpoint[addr]; }
 	
-	//! Returns the breakpoint tag for the specified address
+	//! @brief    Returns the breakpoint tag for the specified address.
 	uint8_t getBreakpoint(uint16_t addr) { return breakpoint[addr]; }
 
-	//! Set a breakpoint tag at the specified address
+	//! @brief    Sets a breakpoint tag at the specified address.
 	void setBreakpoint(uint16_t addr, uint8_t tag) { breakpoint[addr] = tag; }
 	
-	//! Sets a hard breakpoint at the specified address
-	void setHardBreakpoint(uint16_t addr) { 
-		debug(1, "Setting hard breakpoint at address %d (%4X)\n", addr, addr);
-		breakpoint[addr] |= HARD_BREAKPOINT; 
-	}
+	//! @brief    Sets a hard breakpoint at the specified address.
+    void setHardBreakpoint(uint16_t addr) { breakpoint[addr] |= HARD_BREAKPOINT; }
 	
-	//! Deletes a hard breakpoint at the specified address
-	void deleteHardBreakpoint(uint16_t addr) {
-		debug(1, "Deleting hard breakpoint at address %d (%4X)\n", addr, addr);
-		breakpoint[addr] &= (255-HARD_BREAKPOINT); 
-	}
+	//! @brief    Deletes a hard breakpoint at the specified address.
+	void deleteHardBreakpoint(uint16_t addr) { breakpoint[addr] &= (255-HARD_BREAKPOINT); }
 	
-	//! Sets or deletes a hard breakpoint at the specified address 
+	//! @brief    Sets or deletes a hard breakpoint at the specified address.
 	void toggleHardBreakpoint(uint16_t addr) { breakpoint[addr] ^= HARD_BREAKPOINT; }
-	//! Sets a soft breakpoint at the specified address
+    
+	//! @brief    Sets a soft breakpoint at the specified address.
 	void setSoftBreakpoint(uint16_t addr) { breakpoint[addr] |= SOFT_BREAKPOINT; }
-	//! Deletes a soft breakpoint at the specified address
+    
+	//! @brief    Deletes a soft breakpoint at the specified address.
 	void deleteSoftBreakpoint(uint16_t addr) { breakpoint[addr] &= (255-SOFT_BREAKPOINT); }
-	//! Sets or deletes a hard breakpoint at the specified address 
+    
+	//! @brief    Sets or deletes a hard breakpoint at the specified address.
 	void toggleSoftBreakpoint(uint16_t addr) { breakpoint[addr] ^= SOFT_BREAKPOINT; }
 
-	//! Read entry from callstack
+    
+    //
+    //! @functiongroup Querying the callstack
+    //
+    
+	//! @brief    Reads entry from callstack.
 	int getTopOfCallStack() { return (callStackPointer > 0) ? callStack[callStackPointer-1] : -1; }
-	
-	// void dumpHistory();
+
 };
+
 #endif
