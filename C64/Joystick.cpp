@@ -27,10 +27,10 @@ Joystick::Joystick() {
     // Register snapshot items
     SnapshotItem items[] = {
         
-        { &_buttonPressed,  sizeof(_buttonPressed), 0 },
-        { &_axisX,          sizeof(_axisX),         0 },
-        { &_axisY,          sizeof(_axisY),         0 },
-        { NULL,             0,                      0 }};
+        { &button,  sizeof(button), 0 },
+        { &axisX,   sizeof(axisX),  0 },
+        { &axisY,   sizeof(axisY),  0 },
+        { NULL,     0,              0 }};
     
     registerSnapshotItems(items, sizeof(items));
 }
@@ -44,9 +44,9 @@ Joystick::reset()
 {
     VirtualComponent::reset();
 
-    _buttonPressed = false;
-    _axisX = JOYSTICK_RELEASED;
-    _axisY = JOYSTICK_RELEASED;
+    button = false;
+    axisX = JOYSTICK_RELEASED;
+    axisY = JOYSTICK_RELEASED;
 }
 
 void
@@ -54,6 +54,6 @@ Joystick::dumpState()
 {
     msg("Joystick port\n");
     msg("-------------\n");
-    msg("Button: %s AxisX: %d AxisY: %d\n", _buttonPressed ? "YES" : "NO", _axisX, _axisY);
+    msg("Button: %s AxisX: %d AxisY: %d\n", button ? "YES" : "NO", axisX, axisY);
 }
 

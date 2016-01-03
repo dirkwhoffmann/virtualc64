@@ -1,19 +1,21 @@
-/*
- * (C) 2006 Dirk W. Hoffmann. All rights reserved.
+/*!
+ * @header      Keyboard.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2006 - 2016 Dirk W. Hoffmann
+ */
+/*              This program is free software; you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation; either version 2 of the License, or
+ *              (at your option) any later version.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ *              This program is distributed in the hope that it will be useful,
+ *              but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *              MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *              GNU General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *              You should have received a copy of the GNU General Public License
+ *              along with this program; if not, write to the Free Software
+ *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #ifndef _KEYBOARD_INC
@@ -21,25 +23,26 @@
 
 #include "VirtualComponent.h"
 
-//! The virtual keyboard of a C64
-/*! This class manages the keyboard matrix of the virtual C64. 
-	Keyboard management works as follows: When the GUI recognizes a pressed or release key,
-	it calls one of the functions in this class to tell the virtual keyboard about the event.
-	The called functions does nothing more than clearing or setting a bit in the keyboard matrix.
-	Communication with the virtual computer is managed solely by the CIA chip. When a special
-	CIA register is peeked, method \a getRowValues is called which finally brings the contents
-	of the keyboard matrix into the virtual C64.
-*/
+/*! @class    The virtual keyboard of a C64
+ *  @details  This class manages the keyboard matrix of the virtual C64.
+ *            Keyboard management works as follows: When the GUI recognizes a pressed or 
+ *            release key, it calls one of the functions in this class to tell the virtual 
+ *            keyboard about the event.	The called functions does nothing more than 
+ *            clearing or setting a bit in the keyboard matrix.	Communication with the virtual 
+ *            computer is managed solely by the CIA chip. When a special CIA register is peeked, 
+ *            method getRowValues is called which finally brings the contents of the keyboard 
+ *            matrix into the virtual C64.
+ */
 class Keyboard : public VirtualComponent {
 	
-	//! The C64 keyboard matrix
-	/*! The C64 maintains a 8x8 matrix. Each key corresponds to a specific bit in the matrix and
-	    is uniquely determined by a row and a column value. 
-	*/
+	/*! @brief    The C64 keyboard matrix
+	 *  @details  The C64 maintains a 8x8 matrix. Each key corresponds to a specific bit in the 
+     *            matrix and is uniquely determined by a row and a column value.
+     */
 	uint8_t kbMatrix[8];
 			
 public:
-    //! Special keys
+    //! @brief    Special keys
     enum C64Key {
         C64KEY_F1 = 0x80,
         C64KEY_F2,
@@ -60,82 +63,87 @@ public:
         C64KEY_COMMODORE = 0x0100 // flag that is combinable with all other keys
     };
     
-	//! Constructor
+	//! @brief    Constructor
 	Keyboard();
 
-	//! Destructor
+	//! @brief    Destructor
 	~Keyboard();
 
-	//! Reset 
+	//! @brief    Restores the initial state.
 	void reset();
     	
-	//! Dump internal state to console
+	//! @brief    Prints debug information.
 	void dumpState();	
 
-	//! Inform keyboard about a pressed key (by keycode)
+	/*! @brief    Presses a key.
+     *  @details  The key is identified by its native row and column index.
+     */
 	void pressKey(uint8_t row, uint8_t col);
     
-	//! Inform keyboard about a pressed key (by character)
+	//! @brief    Presses a key.
 	void pressKey(int c);
     
-	//! Inform keyboard that the Shift key has been pressen
+	//! @brief    Presses the shift hey.
 	void pressShiftKey() { pressKey(1,7); }
     
-	//! Inform keyboard that the Commodore key has been pressen
+	//! @brief    Presses the commodore key.
 	void pressCommodoreKey() { pressKey(7,5); }
     
-	//! Inform keyboard that the Runstop key has been pressen
+	//! @brief    Presses the runstop key.
 	void pressRunstopKey() { pressKey(7,7); }
 
-    //! Inform keyboard that the Shift+Runstop key has been pressen
+    //! @brief    Presses shift and runstop simultaniously.
     void pressShiftRunstopKey() { pressShiftKey(); pressKey(7,7); }
 
-    //! Inform keyboard that the Clear key has been pressen
+    //! @brief    Presses the clear key.
     void pressClearKey() { pressShiftKey(); pressKey(6,3); }
     
-    //! Inform keyboard that the Home key has been pressen
+    //! @brief    Presses the home key.
     void pressHomeKey() { pressKey(6,3); }
     
-    //! Inform keyboard that the Insert key has been pressen
+    //! @brief    Presses the insert key.
     void pressInsertKey() { pressShiftKey(); pressKey(0,0); }
 	
-	//! Inform keyboard about a released key (by keycode)
+	/*! @brief    Releases a pressed key.
+     *  @details  The key is identified by its native row and column index.
+     */
 	void releaseKey(uint8_t row, uint8_t col);
     
-	//! Inform keyboard about a pressed key (by character)
+	//! @brief    Releases a pressed key.
 	void releaseKey(int c);
     
-	//! Inform keyboard that the Shift key has been released
+    //! @brief    Releases the shift key.
 	void releaseShiftKey() { releaseKey(1,7); }
     
-	//! Inform keyboard that the Commodore key has been released
+    //! @brief    Releases the commodore key.
 	void releaseCommodoreKey() { releaseKey(7,5); }
     
-	//! Inform keyboard that the Runstop key has been released
+    //! @brief    Releases the runstop key.
 	void releaseRunstopKey() { releaseKey(7,7); }
 
-    //! Inform keyboard that the Shift+Runstop key has been released
+    //! @brief    Releases shift and runstop simultaniously.
     void releaseShiftRunstopKey() { releaseKey(7,7); releaseShiftKey(); }
 
-    //! Inform keyboard that the Clear key has been released
+    //! @brief    Releases the clear key.
     void releaseClearKey() { releaseKey(6,3); releaseShiftKey(); }
     
-    //! Inform keyboard that the Home key has been released
+    //! @brief    Releases the home key.
     void releaseHomeKey() { releaseKey(6,3); }
     
-    //! Inform keyboard that the Insert key has been released
+    //! @brief    Releases the insert key.
     void releaseInsertKey() { releaseKey(0,0); releaseShiftKey(); }
 
-    //! Clear keyboard matrix
+    //! @brief    Clears the keyboard matrix.
 	void releaseAll() { for (int i=0; i<8; i++) kbMatrix[i] = 0xff; }
     
-	//! Read the keyboard matrix
-	/*! /param columnMask determines the column bits to be read. */
+	/*! @brief    Reads the keyboard matrix.
+	 *  @param    columnMask  the column bits to be read.
+     */
 	uint8_t getRowValues(uint8_t columnMask);
 	
 private:
 	
-	//! Mapping from characters to the C64 row/column format
+	//! @brief    Mapping from ASCII characters to the C64 row/column format
 	uint16_t rowcolmap[256];
 };
 	

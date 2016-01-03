@@ -796,7 +796,7 @@ CIA1::pollJoystick(Joystick *joy, int joyDevNo)
 {
     JoystickDirection leftRightState = joy->getAxisX();
 	JoystickDirection upDownState = joy->getAxisY();
-	bool buttonState = joy->getButtonPressed();
+	bool buttonState = joy->getButton();
 	
     assert (joy != NULL);
     
