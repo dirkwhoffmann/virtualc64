@@ -91,6 +91,7 @@ CPU::reset()
 {
     VirtualComponent::reset();
     
+    B = 1; 
 	external_port_bits = 0x1F;
 	rdyLine = true;
 	next = &CPU::fetch;
