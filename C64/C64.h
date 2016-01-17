@@ -21,9 +21,10 @@
 
 // VERSION 1.4.2:
 //
+// The ESC key on the Mac keyboard is now mapped to the C64s runstop key and the TAB key to the  restore key.
+//
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
-// Add Class V64Object as base class of VirtualComponent. Move logging stuff into new class
 // Cartridge dialog
 //
 // CLEANUP:
@@ -43,7 +44,7 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG      // RELEASE
+#define NDEBUG      // RELEASE
 
 // General
 #include "Message.h"
