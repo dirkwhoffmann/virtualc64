@@ -270,17 +270,30 @@ C64::isHalted()
     return p == NULL;
 }
 
+#if 0
+void
+C64::restore()
+{
+    debug("RESTORE key\n");
+    
+    // Hitting the restore key triggeres an NMI interrupt
+    cpu.setNMILineReset();
+}
+
 void
 C64::runstopRestore()
 {
-    // Note: The restore key is directly connected to the NMI line of the CPU
-    // Thus, the runstop/restore key combination triggers an interrupts that causes a soft reset
+    // Press runstop
     keyboard.pressRunstopKey();
-    cpu.setNMILineReset();
-    // Hold runstop key down for a while...
+
+    // Press restore
+    restore();
+    
+    // Hold down runstop key for a while...
     sleepMicrosec((uint64_t)100000);
     keyboard.releaseRunstopKey();
 }
+#endif
 
 void
 C64::step()

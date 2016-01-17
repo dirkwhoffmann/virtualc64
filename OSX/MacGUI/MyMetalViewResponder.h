@@ -34,6 +34,7 @@ const uint16_t MAC_CL = 123;
 const uint16_t MAC_CR = 124;
 const uint16_t MAC_CU = 126;
 const uint16_t MAC_CD = 125;
+const uint16_t MAC_TAB = 48;
 const uint16_t MAC_SPC = 49;
 const uint16_t MAC_ESC = 53;
 const uint16_t MAC_HAT = 10;

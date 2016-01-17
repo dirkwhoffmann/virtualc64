@@ -304,6 +304,8 @@
 - (void) releaseRunstopKey { keyboard->releaseRunstopKey(); }
 - (void) pressShiftRunstopKey { keyboard->pressShiftRunstopKey(); }
 - (void) releaseShiftRunstopKey { keyboard->releaseShiftRunstopKey(); }
+- (void) pressRestoreKey { keyboard->pressRestoreKey(); }
+- (void) releaseRestoreKey { keyboard->releaseRestoreKey(); }
 - (void) pressCommodoreKey { keyboard->pressCommodoreKey(); }
 - (void) releaseCommodoreKey { keyboard->releaseCommodoreKey(); }
 - (void) pressClearKey { keyboard->pressClearKey(); }
@@ -794,9 +796,6 @@
 // Audio hardware
 - (void) enableAudio { [self rampUpFromZero]; [audioDevice startPlayback]; }
 - (void) disableAudio {	[self rampDown]; [audioDevice stopPlayback]; }
-
-// User triggered interrupts
-- (void) keyboardPressRunstopRestore { c64->runstopRestore(); }
 
 @end
 

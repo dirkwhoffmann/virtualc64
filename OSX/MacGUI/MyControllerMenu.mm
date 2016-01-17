@@ -271,13 +271,23 @@
     [self refresh];
 }
 
+- (IBAction)restoreAction:(id)sender
+{
+    NSLog(@"Restore key pressed");
+    [[self document] updateChangeCount:NSChangeDone];
+    [[c64 keyboard] pressRestoreKey];
+    sleepMicrosec(100000);
+    [[c64 keyboard] releaseRestoreKey];
+    [self refresh];
+}
+
 - (IBAction)runstopRestoreAction:(id)sender
 {
     NSLog(@"Rustop Restore combination pressed");
     [[self document] updateChangeCount:NSChangeDone];
-    
-    [c64 keyboardPressRunstopRestore];
-    
+    [[c64 keyboard] pressRunstopKey];
+    [self restoreAction:sender];
+    [[c64 keyboard] releaseRunstopKey];
     [self refresh];
 }
 

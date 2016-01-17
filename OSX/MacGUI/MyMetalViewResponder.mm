@@ -152,6 +152,8 @@
         case MAC_CR: return Keyboard::C64KEY_CR;
         case MAC_CU: return Keyboard::C64KEY_CU;
         case MAC_CD: return Keyboard::C64KEY_CD;
+        case MAC_ESC: return Keyboard::C64KEY_RUNSTOP;
+        case MAC_TAB: return Keyboard::C64KEY_RESTORE;
         case MAC_HAT: return '^';
         case MAC_TILDE_US: if (plainkey != '<' && plainkey != '>') return Keyboard::C64KEY_ARROW; else break;
     }
@@ -193,13 +195,12 @@
     // Remove alternate key modifier if present
     if (flags & NSAlternateKeyMask)
         c = [[event charactersIgnoringModifiers] UTF8String][0];
-        
-        // Translate key
-        if (!(c64key = [self translateKey:c plainkey:c_unmod keycode:keycode flags:flags]))
-            return;
+
+    // Translate key
+    if (!(c64key = [self translateKey:c plainkey:c_unmod keycode:keycode flags:flags]))
+        return;
     
     // Press key
-    // NSLog(@"Storing key %c for keycode %ld",c64key, (long)keycode);
     pressedKeys[(unsigned char)keycode] = c64key;
     [[c64proxy keyboard] pressKey:c64key];
 }

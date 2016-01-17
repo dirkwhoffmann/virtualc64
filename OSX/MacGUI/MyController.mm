@@ -1125,13 +1125,13 @@
 
 - (void)keyDown:(NSEvent *)event
 {
-	// Pass all keyboard events to C64
+	// Pass all keyboard events to the metal view
     [metalScreen keyDown:event];
 }
 
 - (void)keyUp:(NSEvent *)event
 {
-	// Pass all keyboard events to C64
+	// Pass all keyboard events to the metal view
     [metalScreen keyUp:event];
 }
 

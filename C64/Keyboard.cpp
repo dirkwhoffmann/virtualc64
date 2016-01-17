@@ -101,6 +101,7 @@ Keyboard::Keyboard()
     rowcolmap[C64KEY_CR]  = 0x0002;
     rowcolmap[C64KEY_CU]  = 0x0007 | SHIFT_FLAG;
     rowcolmap[C64KEY_CD]  = 0x0007;
+    rowcolmap[C64KEY_RUNSTOP] = 0x0707;
     
     // Register snapshot items
     SnapshotItem items[] = {
@@ -156,12 +157,21 @@ uint8_t Keyboard::getRowValues(uint8_t columnMask)
 
 void Keyboard::pressKey(uint8_t row, uint8_t col)
 {
+    // printf("(%d %d)\n",row,col);
 	if (row < 8 && col < 8)
 		kbMatrix[row] &= 255 - (1 << col);
 }
 
 void Keyboard::pressKey(int c)
 {
+    // debug("Pressing (%ld)\n", (long)c);
+
+    // Check for restore key
+    if (c == C64KEY_RESTORE) {
+        pressRestoreKey();
+        return;
+    }
+        
     // Check for commodore key flag
     if (c & C64KEY_COMMODORE) {
         pressCommodoreKey();
@@ -184,6 +194,11 @@ void Keyboard::pressKey(int c)
 	pressKey(row, col);
 }
 
+void Keyboard::pressRestoreKey()
+{
+    c64->cpu.setNMILineReset();
+}
+
 void Keyboard::releaseKey(uint8_t row, uint8_t col)
 {
 	if (row < 8 && col < 8) {
@@ -193,6 +208,12 @@ void Keyboard::releaseKey(uint8_t row, uint8_t col)
 
 void Keyboard::releaseKey(int c)
 {
+    // Check for restore key
+    if (c == C64KEY_RESTORE) {
+        releaseRestoreKey();
+        return;
+    }
+    
     // Check for commodore key flag
     if (c & C64KEY_COMMODORE) {
         releaseCommodoreKey();
@@ -213,6 +234,11 @@ void Keyboard::releaseKey(int c)
 
     // debug("Releasing (%ld,%ld)\n", (long)(row), (long)(col));
 	releaseKey(row, col);
+}
+
+void Keyboard::releaseRestoreKey()
+{
+    c64->cpu.clearNMILineReset();
 }
 
 #undef SHIFT_FLAG

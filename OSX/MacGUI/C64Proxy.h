@@ -285,6 +285,10 @@ class JoystickManager;
 - (void) releaseRunstopKey;
 - (void) pressShiftRunstopKey;
 - (void) releaseShiftRunstopKey;
+- (void) pressRestoreKey;
+- (void) releaseRestoreKey;
+- (void) pressRunstopRestoreKey;
+- (void) releaseRunstopRestoreKey;
 - (void) pressCommodoreKey;
 - (void) releaseCommodoreKey;
 - (void) pressClearKey;
@@ -634,9 +638,6 @@ class JoystickManager;
 // Audio hardware
 - (void) enableAudio;
 - (void) disableAudio;
-
-// User triggered interrupts
-- (void) keyboardPressRunstopRestore;
 
 @end
 

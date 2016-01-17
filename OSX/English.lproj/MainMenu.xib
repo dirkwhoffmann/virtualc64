@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -215,9 +215,14 @@
                                     <action selector="shiftRunstopAction:" target="-1" id="Mzp-fm-Cux"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="RUNSTOP RESTORE" id="305">
+                            <menuItem title="RESTORE" id="305" userLabel="RESTORE">
                                 <connections>
-                                    <action selector="runstopRestoreAction:" target="-1" id="326"/>
+                                    <action selector="restoreAction:" target="-1" id="zPw-ce-HkM"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="RUNSTOP RESTORE" id="VdY-b4-dYs">
+                                <connections>
+                                    <action selector="runstopRestoreAction:" target="-1" id="7eq-vM-gwo"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="COMMODORE" id="317">
@@ -226,6 +231,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem title="CLR" id="512">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="ClearKeyAction:" target="-1" id="521"/>
                                 </connections>
@@ -257,37 +263,6 @@
                                 <connections>
                                     <action selector="FormatDiskAction:" target="-1" id="526"/>
                                 </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
-                <menuItem title="Peripherals" id="ZXK-ud-QIJ" userLabel="Peripherals">
-                    <menu key="submenu" title="Peripherals" id="JYW-pe-zKE">
-                        <items>
-                            <menuItem title="Datasette" id="Gjk-bq-opq">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Datasette" id="h6H-Hr-boB">
-                                    <items>
-                                        <menuItem title="Eject tape" tag="3" id="hPZ-Xn-GaO">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="datasetteEjectAction:" target="-1" id="A6w-rk-gzf"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Press play key" tag="4" keyEquivalent="p" id="Lvb-1p-jBE">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
-                                            <connections>
-                                                <action selector="datasettePressPlayAction:" target="-1" id="wJj-Pf-4nd"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Press stop key" id="i09-C1-2RO">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="datasettePressStopAction:" target="-1" id="PNA-og-1VM"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
                             </menuItem>
                         </items>
                     </menu>
@@ -566,12 +541,6 @@ CQ
             </items>
         </menu>
         <customObject id="411" customClass="SUUpdater"/>
-        <menuItem title="Keyboard" id="534">
-            <modifierMask key="keyEquivalentModifierMask"/>
-            <connections>
-                <action selector="dumpKeyboard:" target="-1" id="536"/>
-            </connections>
-        </menuItem>
         <customObject id="573" userLabel="AppDelegate" customClass="MyController"/>
     </objects>
 </document>

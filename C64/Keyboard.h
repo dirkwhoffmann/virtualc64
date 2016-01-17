@@ -60,6 +60,8 @@ public:
         C64KEY_CU,
         C64KEY_CD,
         C64KEY_ARROW,
+        C64KEY_RUNSTOP,
+        C64KEY_RESTORE,
         C64KEY_COMMODORE = 0x0100 // flag that is combinable with all other keys
     };
     
@@ -95,6 +97,9 @@ public:
     //! @brief    Presses shift and runstop simultaniously.
     void pressShiftRunstopKey() { pressShiftKey(); pressKey(7,7); }
 
+    //! @brief    Presses the restore key.
+    void pressRestoreKey();
+
     //! @brief    Presses the clear key.
     void pressClearKey() { pressShiftKey(); pressKey(6,3); }
     
@@ -123,6 +128,9 @@ public:
 
     //! @brief    Releases shift and runstop simultaniously.
     void releaseShiftRunstopKey() { releaseKey(7,7); releaseShiftKey(); }
+
+    //! @brief    Releases the restore key.
+    void releaseRestoreKey();
 
     //! @brief    Releases the clear key.
     void releaseClearKey() { releaseKey(6,3); releaseShiftKey(); }

@@ -59,8 +59,9 @@
 
 #pragma mark keyboard menu
 - (IBAction)runstopAction:(id)sender;
-- (IBAction)runstopRestoreAction:(id)sender;
 - (IBAction)shiftRunstopAction:(id)sender;
+- (IBAction)restoreAction:(id)sender;
+- (IBAction)runstopRestoreAction:(id)sender;
 - (IBAction)commodoreKeyAction:(id)sender;
 - (IBAction)ClearKeyAction:(id)sender;
 - (IBAction)HomeKeyAction:(id)sender;

@@ -387,10 +387,15 @@ public:
 	//! @brief    Returns true iff the virtual C64 is in the "halted" state
 	bool isHalted();
 	
+    /*! @brief    Perform a manually triggered NMI interrupt
+     *  @details  On a real C64, an NMI interrupt is triggered by hitting the restore key
+     */
+    // void restore();
+
     /*! @brief    Perform a soft reset
      *  @details  On a real C64, a soft reset is triggered by hitting Runstop and Restore
      */
-    void runstopRestore();
+    // void runstopRestore();
 
 	/*! @brief    Executes one CPU instruction
      *  @details  This method implements the "step" action of the debugger
