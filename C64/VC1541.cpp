@@ -343,7 +343,7 @@ VC1541::insertDisk(Archive *a)
         c64->putMessage(MSG_VC1541_DISK_SOUND, 1);
 
     // If bit accuracy is disabled, we write-protect the disk
-    disk.setWriteProtection(true);
+    disk.setWriteProtection(!bitAccuracy);
 }
 
 void 
