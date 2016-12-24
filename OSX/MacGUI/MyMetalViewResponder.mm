@@ -161,6 +161,9 @@
     if (flags & NSAlternateKeyMask) {
         // Commodore key (ALT) is pressed
         return (int)plainkey | Keyboard::C64KEY_COMMODORE;
+    } else if (flags & NSControlKeyMask) {
+        // CTRL key is pressed
+        return (int)plainkey | Keyboard::C64KEY_CTRL;
     } else {
         // No special translation needed here
         return (int)key;

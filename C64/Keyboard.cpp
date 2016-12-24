@@ -177,6 +177,11 @@ void Keyboard::pressKey(int c)
         pressCommodoreKey();
     }
 
+    // Check for CTRL key flag
+    if (c & C64KEY_CTRL) {
+        pressCtrlKey();
+    }
+    
     c &= 0xFF;
     
     // Only proceed if key is known and mapped
@@ -217,6 +222,11 @@ void Keyboard::releaseKey(int c)
     // Check for commodore key flag
     if (c & C64KEY_COMMODORE) {
         releaseCommodoreKey();
+    }
+    
+    // Check for CTRL key flag
+    if (c & C64KEY_CTRL) {
+        releaseCtrlKey();
     }
     
     c &= 0xFF;
