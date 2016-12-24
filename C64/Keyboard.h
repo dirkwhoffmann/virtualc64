@@ -62,7 +62,8 @@ public:
         C64KEY_ARROW,
         C64KEY_RUNSTOP,
         C64KEY_RESTORE,
-        C64KEY_COMMODORE = 0x0100 // flag that is combinable with all other keys
+        C64KEY_COMMODORE = 0x0100, // flag that is combinable with all other keys
+        C64KEY_CTRL = 0x0200
     };
     
 	//! @brief    Constructor
@@ -103,6 +104,9 @@ public:
     //! @brief    Presses the clear key.
     void pressClearKey() { pressShiftKey(); pressKey(6,3); }
     
+    //! @brief    Presses the CTRL key.
+    void pressCtrlKey() { pressKey(7,2); }
+    
     //! @brief    Presses the home key.
     void pressHomeKey() { pressKey(6,3); }
     
@@ -122,6 +126,9 @@ public:
     
     //! @brief    Releases the commodore key.
 	void releaseCommodoreKey() { releaseKey(7,5); }
+    
+    //! @brief    Releases the CTRL key.
+    void releaseCtrlKey() { releaseKey(7,2); }
     
     //! @brief    Releases the runstop key.
 	void releaseRunstopKey() { releaseKey(7,7); }
