@@ -18,7 +18,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
-#import <QuickTime/QuickTime.h>
 #import "BypassFilter.h"
 #import "BlurFilter.h"
 #import "SaturationFilter.h"
