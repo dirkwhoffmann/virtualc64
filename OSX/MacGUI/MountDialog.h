@@ -35,8 +35,8 @@ class Archive;
     // Internal state
     Archive *archive;
     C64Proxy *c64;
-    int loadOption;
-    int selectedRow;
+    long loadOption;
+    long selectedRow;
     
     // Todo items (when window closes)
     bool doMount;
@@ -66,7 +66,7 @@ class Archive;
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)row;
 
 // Misc
-- (int)selection;
+- (long)selection;
 - (NSString *)selectedFilename;
 - (NSString *)loadCommand;
 - (void)update;

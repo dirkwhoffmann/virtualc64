@@ -106,7 +106,7 @@
     [self update];
 }
 
-- (int)selection
+- (long)selection
 {
     return [directory selectedRow];
 }
@@ -118,7 +118,7 @@
     if ([directory selectedRow] < 0) {
         result = @"";
     } else {
-        result = [NSString stringWithFormat:@"%s", archive->getNameOfItem([directory selectedRow])];
+        result = [NSString stringWithFormat:@"%s", archive->getNameOfItem((int)[directory selectedRow])];
     }
     
     return result;
@@ -213,13 +213,13 @@
     NSTextFieldCell *cell = [tableColumn dataCell];
 
     if (archive->getType() == G64_CONTAINER) {
-        if (archive->getSizeOfItem(row) == 0) {
+        if (archive->getSizeOfItem((int)row) == 0) {
             [cell setTextColor:[NSColor grayColor]];
         } else {
             [cell setTextColor:[NSColor blackColor]];
         }
     } else {
-        if(strcmp(archive->getTypeOfItem(row), "PRG")) {
+        if(strcmp(archive->getTypeOfItem((int)row), "PRG")) {
             [cell setTextColor:[NSColor grayColor]];
         } else {
             [cell setTextColor:[NSColor blackColor]];

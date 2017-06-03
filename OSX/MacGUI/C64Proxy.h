@@ -130,35 +130,35 @@ class JoystickManager;
 - (void) setCharacterMemoryAddr:(uint16_t)addr;
 
 - (int) displayMode;
-- (void) setDisplayMode:(int)mode;
+- (void) setDisplayMode:(long)mode;
 - (int) screenGeometry;
-- (void) setScreenGeometry:(int)mode;
+- (void) setScreenGeometry:(long)mode;
 - (int) horizontalRasterScroll;
 - (void) setHorizontalRasterScroll:(int)offset;
 - (int) verticalRasterScroll;
 - (void) setVerticalRasterScroll:(int)offset;
 
-- (bool) spriteVisibilityFlag:(int)nr;
-- (void) setSpriteVisibilityFlag:(int)nr value:(bool)flag;
-- (void) toggleSpriteVisibilityFlag:(int)nr;
+- (bool) spriteVisibilityFlag:(NSInteger)nr;
+- (void) setSpriteVisibilityFlag:(NSInteger)nr value:(bool)flag;
+- (void) toggleSpriteVisibilityFlag:(NSInteger)nr;
 
-- (int) spriteX:(int)nr;
-- (void) setSpriteX:(int)nr value:(int)x;
-- (int) spriteY:(int)nr;
-- (void) setSpriteY:(int)nr value:(int)y;
+- (int) spriteX:(NSInteger)nr;
+- (void) setSpriteX:(NSInteger)nr value:(int)x;
+- (int) spriteY:(NSInteger)nr;
+- (void) setSpriteY:(NSInteger)nr value:(int)y;
 
-- (int) spriteColor:(int)nr;
-- (void) setSpriteColor:(int)nr value:(int)c;
-- (bool) spriteMulticolorFlag:(int)nr;
-- (void) setSpriteMulticolorFlag:(int)nr value:(bool)flag;
-- (void) toggleSpriteMulticolorFlag:(int)nr;
+- (int) spriteColor:(NSInteger)nr;
+- (void) setSpriteColor:(NSInteger)nr value:(int)c;
+- (bool) spriteMulticolorFlag:(NSInteger)nr;
+- (void) setSpriteMulticolorFlag:(NSInteger)nr value:(bool)flag;
+- (void) toggleSpriteMulticolorFlag:(NSInteger)nr;
 
-- (bool) spriteStretchXFlag:(int)nr;
-- (void) setSpriteStretchXFlag:(int)nr value:(bool)flag;
-- (void) toggleSpriteStretchXFlag:(int)nr;
-- (bool) spriteStretchYFlag:(int)nr;
-- (void) setSpriteStretchYFlag:(int)nr value:(bool)flag;
-- (void) toggleSpriteStretchYFlag:(int)nr;
+- (bool) spriteStretchXFlag:(NSInteger)nr;
+- (void) setSpriteStretchXFlag:(NSInteger)nr value:(bool)flag;
+- (void) toggleSpriteStretchXFlag:(NSInteger)nr;
+- (bool) spriteStretchYFlag:(NSInteger)nr;
+- (void) setSpriteStretchYFlag:(NSInteger)nr value:(bool)flag;
+- (void) toggleSpriteStretchYFlag:(NSInteger)nr;
 
 - (bool) spriteSpriteCollisionFlag;
 - (void) setSpriteSpriteCollisionFlag:(bool)flag;
@@ -287,8 +287,6 @@ class JoystickManager;
 - (void) releaseShiftRunstopKey;
 - (void) pressRestoreKey;
 - (void) releaseRestoreKey;
-- (void) pressRunstopRestoreKey;
-- (void) releaseRunstopRestoreKey;
 - (void) pressCommodoreKey;
 - (void) releaseCommodoreKey;
 - (void) pressClearKey;
@@ -520,7 +518,7 @@ class JoystickManager;
     BOOL tapeBusIsBusy;
 
     //! Currently used color scheme
-    int colorScheme;
+    long colorScheme;
 }
 
 @property (strong,readonly) MyMetalView *metalScreen;
@@ -602,7 +600,7 @@ class JoystickManager;
 - (bool) isCartridgeAttached;
 
 - (bool) mountArchive:(ArchiveProxy *)a;
-- (bool) flushArchive:(ArchiveProxy *)a item:(int)nr;
+- (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
 
 - (bool) insertTape:(TAPContainerProxy *)a;
 

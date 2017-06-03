@@ -20,7 +20,7 @@
 
 @implementation MyController(VicPanel) 
 
-- (void)_vicVideoModeAction:(int)mode
+- (void)_vicVideoModeAction:(long)mode
 {
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] _vicVideoModeAction:[[c64 vic] displayMode]];
@@ -35,7 +35,7 @@
 	[self _vicVideoModeAction:[[sender selectedItem] tag]];
 }
 
-- (void)_vicScreenGeometryAction:(int)mode
+- (void)_vicScreenGeometryAction:(long)mode
 {
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] _vicScreenGeometryAction:[[c64 vic] screenGeometry]];
@@ -50,7 +50,7 @@
 	[self _vicScreenGeometryAction:[[sender selectedItem] tag]];
 }
 
-- (void)vicSetMemoryBank:(int)addr
+- (void)vicSetMemoryBank:(uint16_t)addr
 {
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] vicSetMemoryBank:[[c64 vic] memoryBankAddr]];
@@ -77,10 +77,10 @@
 
 - (IBAction)vicScreenMemoryAction:(id)sender
 {
-	[self vicSetScreenMemory:[[sender selectedItem] tag]];
+    [self vicSetScreenMemory:(uint16_t)[[sender selectedItem] tag]];
 }
 
-- (void)vicSetCharacterMemory:(int)addr
+- (void)vicSetCharacterMemory:(uint16_t)addr
 {
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] vicSetCharacterMemory:[[c64 vic] characterMemoryAddr]];
@@ -92,7 +92,7 @@
 
 - (IBAction)vicCharacterMemoryAction:(id)sender
 {
-	[self vicSetCharacterMemory:[[sender selectedItem] tag]];
+    [self vicSetCharacterMemory:(uint16_t)[[sender selectedItem] tag]];
 }
 
 - (IBAction)vicDXAction:(id)sender
@@ -227,7 +227,7 @@
 	[self spriteToggleStretchXFlag:[sender tag]];
 }
 
-- (void)spriteToggleStretchYFlag:(int)nr
+- (void)spriteToggleStretchYFlag:(NSInteger)nr
 {
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] spriteToggleStretchYFlag:nr];

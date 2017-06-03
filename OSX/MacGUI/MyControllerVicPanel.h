@@ -20,7 +20,7 @@
 
 @interface MyController(VicPanel)
 
-- (void)_vicVideoModeAction:(int)mode;
+- (void)_vicVideoModeAction:(long)mode;
 - (IBAction)vicVideoModeAction:(id)sender;
 - (IBAction)vicScreenGeometryAction:(id)sender;
 - (IBAction)vicMemoryBankAction:(id)sender;

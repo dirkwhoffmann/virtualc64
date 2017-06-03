@@ -212,7 +212,7 @@ ReSID::poke(uint16_t addr, uint8_t value)
 }
 
 void
-ReSID::execute(int elapsedCycles)
+ReSID::execute(uint64_t elapsedCycles)
 {
     short buf[2049];
     int buflength = 2048;

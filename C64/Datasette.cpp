@@ -193,7 +193,7 @@ Datasette::advanceHead(bool silent)
     headInCycles += length;
     
     // Send message if the tapeCounter (in seconds) changes
-    uint32_t newHeadInSeconds = headInCycles / PAL_CYCLES_PER_SECOND;
+    uint32_t newHeadInSeconds = (uint32_t)(headInCycles / PAL_CYCLES_PER_SECOND);
     if (newHeadInSeconds != headInSeconds && !silent)
         c64->putMessage(MSG_VC1530_PROGRESS, newHeadInSeconds);
 

@@ -48,7 +48,7 @@ pet2unicode(uint8_t petchar)
         case 0x1F: return 0xF103;
     }
 
-    if (petchar >= 0x20 || petchar <= 0x5B)
+    if (petchar >= 0x20 && petchar <= 0x5B)
         return (uint16_t)petchar;
 
     switch (petchar) {
@@ -190,7 +190,7 @@ checkFileSuffix(const char *filename, const char *suffix)
 		return false;
 }
 
-int
+long
 getSizeOfFile(const char *filename)
 {
     struct stat fileProperties;
@@ -205,9 +205,9 @@ getSizeOfFile(const char *filename)
 }
 
 bool
-checkFileSize(const char *filename, int min, int max)
+checkFileSize(const char *filename, long min, long max)
 {
-    int filesize = getSizeOfFile(filename);
+    long filesize = getSizeOfFile(filename);
     
     if (filesize == -1)
         return false;
@@ -281,10 +281,10 @@ localTimeHour()
 
 	
 void 
-sleepMicrosec(uint64_t usec)
+sleepMicrosec(unsigned usec)
 {		
 	if (usec > 0 && usec < 1000000) {
-		usleep((long)usec);
+		usleep(usec);
 	}
 }
 

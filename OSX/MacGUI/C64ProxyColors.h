@@ -27,7 +27,7 @@ enum ColorScheme {
 
 @interface C64Proxy(Colors)
 
-- (int) colorScheme;
-- (void) setColorScheme:(unsigned)scheme;
+- (long) colorScheme;
+- (void) setColorScheme:(long)scheme;
 
 @end

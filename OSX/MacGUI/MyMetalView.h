@@ -110,7 +110,7 @@ enum TextureFilterType {
     float textureYEnd;
     
     // Currently selected filters
-    unsigned videoFilter;
+    long videoFilter;
     
     //! If true, no GPU drawing is performed (for performance profiling olny)
     bool enableMetal;
@@ -135,7 +135,7 @@ enum TextureFilterType {
 
     /*! Stores a fingerprint of each joystick emulation key.
      *  The user can choose from 2 maps */
-    int joyKeycode[2][5];
+    long joyKeycode[2][5];
     
     /*!  Stores a printabel character for each joystick emulation key.
      *   These values are only used in the properties dialog for pretty printing the keycodes */
@@ -145,7 +145,7 @@ enum TextureFilterType {
 
 #pragma mark Configuring
 
-@property unsigned videoFilter;
+@property long videoFilter;
 @property bool enableMetal;
 @property bool fullscreen;
 @property bool fullscreenKeepAspectRatio;

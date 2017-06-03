@@ -173,7 +173,7 @@ inline std::string ChangeExtension( const std::string& path, const std::string& 
 bool checkFileSuffix(const char *filename, const char *suffix);
 
 //! @brief    Returns the size of a file in bytes
-int getSizeOfFile(const char *filename);
+long getSizeOfFile(const char *filename);
 
 /*! @brief    Checks the size of a file
  *  @details  The function is used for validating the size of a file.
@@ -181,7 +181,7 @@ int getSizeOfFile(const char *filename);
  *  @param    min Expected minimum size (-1 if no lower bound exists)
  *  @param    max Expected maximum size (-1 if no upper bound exists)
  */
-bool checkFileSize(const char *filename, int min, int max);
+bool checkFileSize(const char *filename, long min, long max);
 
 /*! @brief    Checks the magic bytes of a file.
  *  @details  The function is used for determining the type of a file.
@@ -217,7 +217,7 @@ uint8_t localTimeMin();
 uint8_t localTimeHour();
 
 //! @brief    Put the current thread to sleep for a certain amount of time.
-void sleepMicrosec(uint64_t usec);
+void sleepMicrosec(unsigned usec);
 
 /*! @brief    Sleeps until kernel timer reaches kernelTargetTime
  *  @param    kernelEarlyWakeup To increase timing precision, the function wakes up the thread earlier

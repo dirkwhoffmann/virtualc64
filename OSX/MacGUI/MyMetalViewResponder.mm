@@ -24,7 +24,7 @@
 //                                  Keyboard events
 // --------------------------------------------------------------------------------
 
-- (int)fingerprintForKey:(int)keycode withModifierFlags:(int)flags
+- (int)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags
 {
     return keycode;
     
@@ -46,7 +46,7 @@
 #endif
 }
 
-- (int)joyKeycode:(int)nr direction:(JoystickDirection)dir
+- (long)joyKeycode:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
     
@@ -72,7 +72,7 @@
     return 0;
 }
 
-- (void)setJoyKeycode:(int)keycode keymap:(int)nr direction:(JoystickDirection)dir
+- (void)setJoyKeycode:(long)keycode keymap:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
     
@@ -135,7 +135,7 @@
     return NO;
 }
 
-- (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(int)flags
+- (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(unsigned long)flags
 {
     switch (keycode) {
         case MAC_F1: return Keyboard::C64KEY_F1;
@@ -175,7 +175,7 @@
     unsigned char  c       = [[event characters] UTF8String][0];
     unsigned char  c_unmod = [[event charactersIgnoringModifiers] UTF8String][0];
     unsigned short keycode = [event keyCode];
-    unsigned int   flags   = [event modifierFlags];
+    unsigned long  flags   = [event modifierFlags];
     int c64key;
     
     // NSLog(@"keyDown: '%c' keycode: %02X flags: %08X", (char)c, keycode, flags);
@@ -211,7 +211,7 @@
 - (void)keyUp:(NSEvent *)event
 {
     unsigned short keycode = [event keyCode];
-    unsigned int   flags   = [event modifierFlags];
+    unsigned long  flags   = [event modifierFlags];
     
     // NSLog(@"keyUp: keycode: %02X flags: %08X", keycode, flags);
     
@@ -236,7 +236,7 @@
 {
     // Note: We only respond to this message if one of the special keys is used for joystick emulation
     
-    unsigned int flags = [event modifierFlags];
+    unsigned long flags = [event modifierFlags];
     int keycode;
     
     // Check if one of the supported special keys has been pressed or released
@@ -317,7 +317,7 @@
         
         NSFileWrapper *fileWrapper = [pb readFileWrapper];
         NSData *fileData = [fileWrapper regularFileContents];
-        SnapshotProxy *snapshot = [SnapshotProxy snapshotFromBuffer:[fileData bytes] length:[fileData length]];
+        SnapshotProxy *snapshot = [SnapshotProxy snapshotFromBuffer:[fileData bytes] length:(unsigned)[fileData length]];
         [[controller c64] loadFromSnapshot:snapshot];
         return YES;
     }

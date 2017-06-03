@@ -845,7 +845,7 @@
     [alert setInformativeText: @"Your changes will be lost if you don’t save them."];
     [alert setAlertStyle: NSCriticalAlertStyle];
     
-    unsigned result = [alert runModal];
+    NSModalResponse result = [alert runModal];
     
     if (result == NSAlertFirstButtonReturn) {
 

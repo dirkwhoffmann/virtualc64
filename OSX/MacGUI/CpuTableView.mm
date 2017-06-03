@@ -52,7 +52,7 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)row
 {
-	uint16_t addr = [self addressForRow:row];
+    uint16_t addr = [self addressForRow:row];
 	uint8_t length = [[c64 cpu] lengthOfInstruction:[[c64 mem] peek:addr]];
 	
 	if ([[aTableColumn identifier] isEqual:@"addr"]) 
@@ -71,7 +71,7 @@
 
 - (void)tableView: (NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	uint16_t addr = [self addressForRow:row];
+    uint16_t addr = [self addressForRow:row];
 	if ([[c64 cpu] breakpoint:addr] == CPU::HARD_BREAKPOINT) {
 		[cell setTextColor:[NSColor redColor]];
 	} else {
@@ -87,7 +87,7 @@
 	
 	uint16_t addr;
 		
-	addr = [self addressForRow:[sender selectedRow]]; 
+    addr = [self addressForRow:[sender selectedRow]];
 	[controller setHardBreakpointAction:@((int)addr)];
 }
 
@@ -101,7 +101,7 @@
 	return -1;
 }
 
-- (uint16_t)addressForRow:(unsigned)row;
+- (uint16_t)addressForRow:(long)row;
 {
 	assert (row < CPU_TABLE_VIEW_ITEMS);
 	return displayedAddresses[row];

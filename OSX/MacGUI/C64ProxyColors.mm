@@ -11,12 +11,12 @@
 @implementation C64Proxy(Colors)
 
 
-- (int)colorScheme
+- (long)colorScheme
 {
     return colorScheme;
 }
 
-- (void) setColorScheme:(unsigned)scheme
+- (void) setColorScheme:(long)scheme
 {
     uint8_t rgb[11][16][3] = {
         
@@ -241,7 +241,7 @@
         }
     };
 
-    NSLog(@"Setting color scheme %d\n", scheme);
+    NSLog(@"Setting color scheme %ld\n", scheme);
     
     colorScheme = (scheme < 11) ? scheme : 0;
     for (unsigned i = 0; i < 16; i++) {

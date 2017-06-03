@@ -29,17 +29,17 @@ Archive::~Archive()
 int 
 Archive::getItemWithName(char *pattern)
 {
-	int i, j, length, pattern_length, no_of_items = getNumberOfItems();
-	const char *name;
+    unsigned i,j;
+	int no_of_items = getNumberOfItems();
 	
 	assert(pattern != NULL);
-	pattern_length = strlen(pattern);
+	size_t pattern_length = strlen(pattern);
 	
 	// Iterate through all directory items
 	for (i = 0; i < no_of_items; i++) {
 	
-		name   = getNameOfItem(i);
-		length = strlen(name);
+		const char *name = getNameOfItem(i);
+		size_t length    = strlen(name);
 		
 		// Pattern can't match if it has more characters
 		if (length < pattern_length) {

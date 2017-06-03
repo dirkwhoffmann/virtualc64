@@ -46,7 +46,7 @@
 - (int)rowForAddress:(uint16_t)addr;
 
 //! Returns which address is displayed in row
-- (uint16_t)addressForRow:(unsigned)row;
+- (uint16_t)addressForRow:(long)row;
 
 //! Updates the displayedAddress array 
 - (void)updateDisplayedAddresses:(uint16_t)startAddr;

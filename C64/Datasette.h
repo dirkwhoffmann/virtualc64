@@ -156,7 +156,7 @@ public:
     
     /*! @brief    Returns the tape length in seconds 
      */
-    uint32_t getDurationInSeconds() { return durationInCycles / PAL_CYCLES_PER_SECOND; }
+    uint32_t getDurationInSeconds() { return (uint32_t)(durationInCycles / (uint64_t)PAL_CYCLES_PER_SECOND); }
 
     //
     //! @functiongroup Handling the read/write head
@@ -174,7 +174,7 @@ public:
     /*! @brief    Gets the current head position in different units
      */
     uint32_t getHead() { return head; }
-    uint32_t getHeadInCycles() { return headInCycles; }
+    uint64_t getHeadInCycles() { return headInCycles; }
     uint32_t getHeadInSeconds() { return headInSeconds; }
     
     /*! @brief    Sets the current head position in cycles

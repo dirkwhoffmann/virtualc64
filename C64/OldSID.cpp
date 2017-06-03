@@ -318,7 +318,7 @@ OldSID::poke(uint16_t addr, uint8_t value)
 }
 
 void
-OldSID::execute(int elapsedCycles)
+OldSID::execute(uint64_t elapsedCycles)
 {
 	// get filter coefficients, so the emulator won't change
 	// them in the middle of our calculations
@@ -327,7 +327,7 @@ OldSID::execute(int elapsedCycles)
 	
 	// calculate how many samples we have to generate for this video frame
 	// (at samplerate of 44,1kHz and NTSC video mode (60Hz) it should be about 735 samples) 
-	int samples = lroundf( elapsedCycles * this->samplerateCpuFrequencyRp );
+	long samples = lroundf( elapsedCycles * this->samplerateCpuFrequencyRp );
 
 	// store here how many samples we've generated in advance of callback
 	this->preCalcSamples += samples;
@@ -486,7 +486,7 @@ float OldSID::pulseWave(SIDVoice* voice)
 float OldSID::randomWave(SIDVoice* voice)
 {
 	// number of samples with same random values depends from value of frequency register
-	uint32_t samples = lroundf(this->samplerate/((float)voice->getFreqRegValue()));
+	long samples = lroundf(this->samplerate/((float)voice->getFreqRegValue()));
 	
 	if (voice->randomCount >= samples) // change output level
 	{

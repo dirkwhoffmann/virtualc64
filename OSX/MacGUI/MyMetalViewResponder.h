@@ -46,13 +46,13 @@ const uint16_t MAC_TILDE_US = 50;
 #pragma mark Joystick simulation
 
 //! Computes a fingerprint for the keycode/modifierFlags combination that uniquely identifies a key for joystick emulation
-- (int)fingerprintForKey:(int)keycode withModifierFlags:(int)flags;
+- (int)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags;
 
 //! @brief Returns the keycode for a joystick emulation key
-- (int)joyKeycode:(int)nr direction:(JoystickDirection)dir;
+- (long)joyKeycode:(int)nr direction:(JoystickDirection)dir;
 
 //! @brief Sets the keycode for a joystick emulation key
-- (void)setJoyKeycode:(int)keycode keymap:(int)nr direction:(JoystickDirection)dir;
+- (void)setJoyKeycode:(long)keycode keymap:(int)nr direction:(JoystickDirection)dir;
 
 //! @brief Returns a joystick emulation key as printable character
 - (char)joyChar:(int)nr direction:(JoystickDirection)dir;
@@ -68,7 +68,7 @@ const uint16_t MAC_TILDE_US = 50;
 
 //! Get mac specific character and keycode and translate it to a virtual c64 key
 /*! The returned value can be passed to the pressKey() method of the emulator */
-- (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(int)flags;
+- (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(unsigned long)flags;
 
 
 @end

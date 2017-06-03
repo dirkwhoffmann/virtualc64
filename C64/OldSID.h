@@ -237,7 +237,7 @@ public:
 	void poke(uint16_t addr, uint8_t value);
 	
 	//! Execute SID
-	void execute(int cycles);
+	void execute(uint64_t cycles);
 	
     //! Notifies the SID chip that the emulator has started
     void run();
