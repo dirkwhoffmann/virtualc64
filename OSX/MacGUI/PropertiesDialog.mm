@@ -130,14 +130,14 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 
 - (IBAction)changeColorScheme:(id)sender
 {
-	int scheme = [[sender selectedItem] tag];
+	long scheme = [[sender selectedItem] tag];
     [c64 setColorScheme:scheme];
 	[self update];    
 }
 
 - (IBAction)setVideoFilterAction:(id)sender
 {
-    int filter = [[sender selectedItem] tag];
+    long filter = [[sender selectedItem] tag];
     [[controller metalScreen] setVideoFilter:filter];
     [self update];
 }
@@ -189,7 +189,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 
 - (void)updateKeymap:(int)map direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t
 {
-    int code = [[controller metalScreen] joyKeycode:map direction:dir];
+    long code = [[controller metalScreen] joyKeycode:map direction:dir];
     char c = [[controller metalScreen] joyChar:map direction:dir];
     
     // Change button text and image
@@ -271,9 +271,9 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     // NSLog(@"PREFPANEL keyDown: %ld", (long)[event keyCode]);
     // NSLog(@"PREFPANEL record1: %ld record2: %ld", (long)recordKey1, (long)recordKey2);
 
-    unsigned short keycode = [event keyCode];
-    unsigned char  c       = [[event characters] UTF8String][0];
-    int            flags   = [event modifierFlags];
+    unsigned short keycode     = [event keyCode];
+    unsigned char  c           = [[event characters] UTF8String][0];
+    NSEventModifierFlags flags = [event modifierFlags];
     
     /*
     NSLog(@"Recording keycode: %04X (modifierFlags: %08X)\n", keycode, flags);
@@ -306,7 +306,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 
 - (void)flagsChanged:(NSEvent *)event
 {
-    unsigned int flags = [event modifierFlags];
+    NSEventModifierFlags flags = [event modifierFlags];
     // int keycode;
     
     NSLog(@"PREFPANEL flagsChanged: %ld", (long)flags);

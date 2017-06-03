@@ -144,7 +144,7 @@
                                   [datasette durationInSeconds] % 60]];
         long elapsed = [[c64 datasette] headInCycles];
         long total = [[c64 datasette] durationInCycles];
-        int sliderPosition = 100 * elapsed / total;
+        int sliderPosition = (int)(100 * elapsed / total);
         [tapeSlider setIntValue:sliderPosition];
     } else {
         [tapeIcon setHidden:YES];

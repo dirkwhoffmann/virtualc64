@@ -677,9 +677,9 @@
 - (bool) reSID { return c64->getReSID(); }
 - (void) setReSID:(bool)b { c64->setReSID(b); }
 - (int) samplingMethod { return (int)(c64->getSamplingMethod()); }
-- (void) setSamplingMethod:(int)value { c64->setSamplingMethod((sampling_method)value); }
+- (void) setSamplingMethod:(long)value { c64->setSamplingMethod((sampling_method)value); }
 - (int) chipModel { return (chip_model)(c64->getChipModel()); }
-- (void) setChipModel:(int)value {c64->setChipModel((chip_model)value); }
+- (void) setChipModel:(long)value {c64->setChipModel((chip_model)value); }
 - (void) rampUp { c64->sid.rampUp(); }
 - (void) rampUpFromZero { c64->sid.rampUpFromZero(); }
 - (void) rampDown { c64->sid.rampDown(); }
@@ -764,27 +764,27 @@
 // Cheatbox
 - (int) historicSnapshots { return c64->numHistoricSnapshots(); }
 
-- (int) historicSnapshotHeaderSize:(int)nr
-    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getHeaderSize() : 0; }
+- (int) historicSnapshotHeaderSize:(NSInteger)nr
+    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getHeaderSize() : 0; }
 
-- (uint8_t *) historicSnapshotHeader:(int)nr
-    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getHeader() : NULL; }
+- (uint8_t *) historicSnapshotHeader:(NSInteger)nr
+    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getHeader() : NULL; }
 
-- (int) historicSnapshotDataSize:(int)nr
-    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getDataSize() : 0; }
+- (int) historicSnapshotDataSize:(NSInteger)nr
+    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getDataSize() : 0; }
 
-- (uint8_t *) historicSnapshotData:(int)nr
-    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getData() : NULL; }
+- (uint8_t *) historicSnapshotData:(NSInteger)nr
+    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getData() : NULL; }
 
 
-- (unsigned char *)historicSnapshotImageData:(int)nr
-    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getImageData() : NULL; }
-- (unsigned)historicSnapshotImageWidth:(int)nr
-    { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getImageWidth() : 0; }
-- (unsigned)historicSnapshotImageHeight:(int)nr
-{ Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getImageHeight() : 0; }
-- (time_t)historicSnapshotTimestamp:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? s->getTimestamp() : 0; }
-- (bool)revertToHistoricSnapshot:(int)nr { Snapshot *s = c64->getHistoricSnapshot(nr); return s ? c64->loadFromSnapshot(s), true : false; }
+- (unsigned char *)historicSnapshotImageData:(NSInteger)nr
+    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getImageData() : NULL; }
+- (unsigned)historicSnapshotImageWidth:(NSInteger)nr
+    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
+- (unsigned)historicSnapshotImageHeight:(NSInteger)nr
+{ Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
+- (time_t)historicSnapshotTimestamp:(NSInteger)nr { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
+- (bool)revertToHistoricSnapshot:(NSInteger)nr { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
 - (BOOL)joystickIsPluggedIn:(int)nr { return joystickManager->joystickIsPluggedIn(nr); }

@@ -137,7 +137,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 {
     NSLog(@"SIDSamplingMethodAction");
     
-    int value = [[sender selectedItem] tag];
+    long value = [[sender selectedItem] tag];
     [c64 setSamplingMethod:value];
     [self update];
 }
@@ -146,7 +146,7 @@ NSString *VC64SIDSamplingMethodKey = @"VC64SIDSamplingMethodKey";
 {
     NSLog(@"SIDChipModelAction");
     
-    int value = [[sender selectedItem] tag];
+    long value = [[sender selectedItem] tag];
     [c64 setChipModel:value];
     [self update];
 }

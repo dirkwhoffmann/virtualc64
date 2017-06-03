@@ -216,7 +216,7 @@ ReSID::execute(uint64_t elapsedCycles)
 {
     short buf[2049];
     int buflength = 2048;
-    int delta_t = elapsedCycles;
+    cycle_count delta_t = (cycle_count)elapsedCycles;
     int bufindex = 0;
     
     // TODO: Can't we write directly into Core Audios ringbuffer (for Speedup)?

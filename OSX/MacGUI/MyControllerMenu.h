@@ -45,7 +45,7 @@
 /*! @brief   Main functionality of exportDiskDialog
  '  @result  true if disk contents has been exportet, false if operation was canceled. 
  */
-- (bool)exportDiskDialogWorker:(int)type;
+- (bool)exportDiskDialogWorker:(long)type;
 
 /*! Action function for export disk feature
  *  This method is called when exporting to archives that are capable of storing a single file, only. */

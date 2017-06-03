@@ -98,7 +98,7 @@
     (void)[self exportDiskDialogWorker:[sender tag]];
 }
 
-- (bool)exportDiskDialogWorker:(int)type
+- (bool)exportDiskDialogWorker:(long)type
 {
     D64ArchiveProxy *newDiskContents;
     NSArray *fileTypes;

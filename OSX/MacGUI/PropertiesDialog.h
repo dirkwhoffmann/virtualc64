@@ -61,11 +61,11 @@ extern NSString *VC64FullscreenKeepAspectRatioKey;
     
     //! Indicates if a keycode should be recorded for keyset 1
     /*! Per default, this value equals -1 (nothing should be recorded) */
-    int recordKey1;
+    long recordKey1;
 
     //! Indicates if a keycode should be recorded for keyset 2
     /*! Per default, this value equals -1 (nothing should be recorded) */
-    int recordKey2;
+    long recordKey2;
 		
     /* Joystick */
     IBOutlet NSTextField *left1;

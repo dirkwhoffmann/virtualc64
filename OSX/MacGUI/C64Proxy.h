@@ -548,9 +548,9 @@ class JoystickManager;
 - (bool) audioFilter;
 - (void) setAudioFilter:(bool)b;
 - (int) samplingMethod;
-- (void) setSamplingMethod:(int)value;
+- (void) setSamplingMethod:(long)value;
 - (int) chipModel;
-- (void) setChipModel:(int)value;
+- (void) setChipModel:(long)value;
 - (void) rampUp;
 - (void) rampUpFromZero;
 - (void) rampDown;
@@ -615,16 +615,16 @@ class JoystickManager;
 
 // Cheatbox
 - (int) historicSnapshots;
-- (int) historicSnapshotHeaderSize:(int)nr;
-- (uint8_t *) historicSnapshotHeader:(int)nr;
-- (int) historicSnapshotDataSize:(int)nr;
-- (uint8_t *) historicSnapshotData:(int)nr;
+- (int) historicSnapshotHeaderSize:(NSInteger)nr;
+- (uint8_t *) historicSnapshotHeader:(NSInteger)nr;
+- (int) historicSnapshotDataSize:(NSInteger)nr;
+- (uint8_t *) historicSnapshotData:(NSInteger)nr;
 
-- (unsigned char *)historicSnapshotImageData:(int)nr;
-- (unsigned)historicSnapshotImageWidth:(int)nr;
-- (unsigned)historicSnapshotImageHeight:(int)nr;
-- (time_t)historicSnapshotTimestamp:(int)nr;
-- (bool)revertToHistoricSnapshot:(int)nr;
+- (unsigned char *)historicSnapshotImageData:(NSInteger)nr;
+- (unsigned)historicSnapshotImageWidth:(NSInteger)nr;
+- (unsigned)historicSnapshotImageHeight:(NSInteger)nr;
+- (time_t)historicSnapshotTimestamp:(NSInteger)nr;
+- (bool)revertToHistoricSnapshot:(NSInteger)nr;
 
 // Joystick handling
 - (BOOL)joystickIsPluggedIn:(int)nr;
