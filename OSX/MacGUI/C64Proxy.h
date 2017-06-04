@@ -27,6 +27,7 @@
 @class MyMetalView;
 @class ArchiveProxy;
 @class TAPContainerProxy;
+@class MessageProxy;
 class JoystickManager;
 
 // --------------------------------------------------------------------------
@@ -565,7 +566,7 @@ class JoystickManager;
 
 - (void) dump;
 
-- (Message *)message;
+- (MessageProxy *)message;
 - (void) putMessage:(int)msg;
 
 - (void) reset;
@@ -661,6 +662,30 @@ class JoystickManager;
 - (bool) writeDataToFile:(NSString *)path;
 
 @end
+
+
+// --------------------------------------------------------------------------
+//                                Message
+// --------------------------------------------------------------------------
+
+@interface MessageProxy : NSObject
+{
+    int id;
+    int i;
+    void *p;
+    char c[128];
+}
+
+@property (readonly) int id;
+@property (readonly) int i;
+@property (readonly) void *p;
+
+- (instancetype) initWithMessage:(Message *)msg;
++ (instancetype) messageFromMessage:(Message *)msg;
+- (char *) c;
+
+@end
+
 
 // --------------------------------------------------------------------------
 //                                Archive

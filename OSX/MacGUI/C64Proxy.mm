@@ -712,7 +712,7 @@
 
 - (void) dump { c64->dumpState(); }
 
-- (Message *)message { return c64->getMessage(); }
+- (MessageProxy *)message { return [MessageProxy messageFromMessage:c64->getMessage()]; }
 - (void) putMessage:(int)msg { c64->putMessage(msg); }
 - (void) reset { c64->reset(); }
 - (void) ping { c64->ping(); }
@@ -800,7 +800,7 @@
 @end
 
 // --------------------------------------------------------------------------
-//                         Snapshot (needs testing)
+//                                Snapshot
 // --------------------------------------------------------------------------
 
 @implementation SnapshotProxy
@@ -864,6 +864,43 @@
 - (bool) writeDataToFile:(NSString *)path { return snapshot->writeToFile([path UTF8String]); }
 
 @end
+
+// --------------------------------------------------------------------------
+//                                Message
+// --------------------------------------------------------------------------
+
+@implementation MessageProxy;
+
+@synthesize id;
+@synthesize i;
+@synthesize p;
+
+- (instancetype)initWithMessage:(Message *)msg
+{
+    if (msg == nil)
+        return nil;
+    
+    if (!(self = [super init]))
+        return nil;
+    
+    id = msg->id;
+    i = msg->i;
+    p = msg->p;
+    strncpy(c, msg->c, 127);
+    
+    return self;
+}
+
++ (instancetype) messageFromMessage:(Message *)msg
+{
+    return msg ? [[MessageProxy alloc] initWithMessage:msg] : nil;
+}
+
+- (char *)c { return c; }
+
+@end
+
+
 
 // --------------------------------------------------------------------------
 //                           Archive (incomplete)

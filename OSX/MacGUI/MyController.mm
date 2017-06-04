@@ -428,7 +428,7 @@
 	animationCounter++;
 	
 	// Process pending messages
-	Message *message;
+	MessageProxy *message;
 	while ((message = [c64 message]) != NULL) {
 		[self processMessage:message];
 	}
@@ -464,9 +464,9 @@
 	[timerLock unlock];
 }
 
-- (void)processMessage:(Message *)msg
+- (void)processMessage:(MessageProxy *)msg
 {
-	switch (msg->id) {
+	switch ([msg id]) {
 			
 		case MSG_ROM_MISSING:
 			
@@ -542,7 +542,7 @@
 			break;
 			
 		case MSG_CPU:
-			switch(msg->i) {
+			switch([msg i]) {
 				case CPU::OK: 
 				case CPU::SOFT_BREAKPOINT_REACHED:
 					[info setStringValue:@""];
@@ -574,14 +574,14 @@
 			break;
 			
 		case MSG_VC1541_ATTACHED:
-            if (msg->i)
+            if ([msg i])
 				[greenLED setImage:[NSImage imageNamed:@"LEDgreen"]];
             else
 				[greenLED setImage:[NSImage imageNamed:@"LEDgray"]];
 			break;
 			
         case MSG_VC1541_ATTACHED_SOUND:
-            if (msg->i) {
+            if ([msg i]) {
                 // [[c64 vc1541] playSound:@"1541_power_on_0" volume:0.2];
             } else {
                 // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
@@ -589,12 +589,12 @@
             break;
 
 		case MSG_VC1541_DISK:
-			[driveIcon setHidden:!msg->i];
-			[driveEject setHidden:!msg->i];
+			[driveIcon setHidden:![msg i]];
+			[driveEject setHidden:![msg i]];
             break;
 			
         case MSG_VC1541_DISK_SOUND:
-            if (msg->i) {
+            if ([msg i]) {
                 // [[c64 vc1541] playSound:@"1541_door_closed_2" volume:0.2];
                 [[c64 vc1541] playSound:@"drive_snatch_uae" volume:0.1];
             } else {
@@ -604,7 +604,7 @@
             break;
 
         case MSG_VC1541_LED:
-			if (msg->i)
+			if ([msg i])
 				[redLED setImage:[NSImage imageNamed:@"LEDred"]];
 			else
 				[redLED setImage:[NSImage imageNamed:@"LEDgray"]];
@@ -612,7 +612,7 @@
 			break;
 			
 		case MSG_VC1541_DATA:
-			if (msg->i)
+			if ([msg i])
 				[c64 setIecBusIsBusy:true];
 			else
 				[c64 setIecBusIsBusy:false];
@@ -623,7 +623,7 @@
             break;
             
         case MSG_VC1541_HEAD_SOUND:
-            if (msg->i) {
+            if ([msg i]) {
                 // Not sure about the copyright of the following sound:
                 // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
                 // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
@@ -637,13 +637,13 @@
             break;
             
 		case MSG_CARTRIDGE:
-			[cartridgeIcon setHidden:!msg->i];
-			[cartridgeEject setHidden:!msg->i];			
+			[cartridgeIcon setHidden:![msg i]];
+			[cartridgeEject setHidden:![msg i]];
 			break;
 
         case MSG_VC1530_TAPE:
-            [tapeIcon setHidden:!msg->i];
-            [tapeEject setHidden:!msg->i];
+            [tapeIcon setHidden:![msg i]];
+            [tapeEject setHidden:![msg i]];
             break;
 
         case MSG_VC1530_PLAY:
@@ -958,9 +958,9 @@
     [[self window] endSheet:mediaDialog returnCode:NSModalResponseCancel];
 }
 
-- (bool)showRomDialog:(Message *)msg
+- (bool)showRomDialog:(MessageProxy *)msg
 {
-    [romDialog initialize:msg->i];
+    [romDialog initialize:[msg i]];
     [[self window] beginSheet:romDialog completionHandler:nil];
 
     return YES;

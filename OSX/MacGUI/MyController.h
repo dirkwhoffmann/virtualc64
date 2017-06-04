@@ -31,7 +31,6 @@
 @class CpuTableView;
 @class MemTableView;
 @class Speedometer;
-@class Server;
 
 enum INPUT_DEVICES {
     IPD_UNCONNECTED = 0,
@@ -306,7 +305,7 @@ enum INPUT_DEVICES {
 
 // Timer and message processing
 - (void)timerFunc;
-- (void)processMessage:(Message *)msg;
+- (void)processMessage:(MessageProxy *)msg;
 
 // Refresh
 - (void)refresh;
@@ -333,7 +332,7 @@ enum INPUT_DEVICES {
 - (bool)showMediaDialog;
 - (IBAction)cancelMediaDialog:(id)sender;
 
-- (bool)showRomDialog:(Message *)msg;
+- (bool)showRomDialog:(MessageProxy *)msg;
 - (IBAction)cancelRomDialog:(id)sender;
 
 - (bool)showMountDialog;
