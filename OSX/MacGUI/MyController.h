@@ -33,9 +33,6 @@
 @class Speedometer;
 @class Server;
 
-// class JoystickManager;
-class Snapshot;
-
 enum INPUT_DEVICES {
     IPD_UNCONNECTED = 0,
     IPD_KEYSET_1,
