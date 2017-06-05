@@ -41,7 +41,7 @@ struct CiaWrapper;
 struct VicWrapper;
 struct KeyboardWrapper;
 struct JoystickWrapper;
-struct SidWrapperWrapper;
+struct SidWrapperWrapper; // Yes, it's a double wrapper
 struct IecWrapper;
 struct ExpansionPortWrapper;
 struct Via6522Wrapper;
@@ -141,6 +141,7 @@ struct TAPArchive;
 // --------------------------------------------------------------------------
 
 @interface VICProxy : NSObject {
+    
 	VicWrapper *wrapper;
 }
 
@@ -218,6 +219,7 @@ struct TAPArchive;
 // --------------------------------------------------------------------------
 
 @interface CIAProxy : NSObject {
+    
 	CiaWrapper *wrapper;
 }
 
@@ -301,10 +303,11 @@ struct TAPArchive;
 // --------------------------------------------------------------------------
 
 @interface KeyboardProxy : NSObject {
-	Keyboard *keyboard;
+    
+    KeyboardWrapper *wrapper;
 }
 
-- (instancetype) initWithKeyboard:(Keyboard *)kb;
+- (instancetype) initWithKeyboard:(Keyboard *)keyboard;
 - (void) dump;
 
 - (void) pressKey:(int)c;
@@ -335,10 +338,11 @@ struct TAPArchive;
 
 
 @interface JoystickProxy : NSObject {
-    Joystick *joystick;
+    
+    JoystickWrapper *wrapper;
 }
 
-- (instancetype) initWithJoystick:(Joystick *)joy;
+- (instancetype) initWithJoystick:(Joystick *)joystick;
 
 - (void) setButtonPressed:(BOOL)pressed;
 - (void) setAxisX:(JoystickDirection)state;
@@ -353,10 +357,11 @@ struct TAPArchive;
 // --------------------------------------------------------------------------
 
 @interface SIDProxy : NSObject {
-	SIDWrapper *sid;
+    
+	SidWrapperWrapper *wrapper;
 }
 
-- (instancetype) initWithSID:(SIDWrapper *)s;
+- (instancetype) initWithSID:(SIDWrapper *)sid;
 - (void) dump;
 
 @end
@@ -366,10 +371,11 @@ struct TAPArchive;
 // -------------------------------------------------------------------------
 
 @interface IECProxy : NSObject {
-	IEC *iec;
+
+    IecWrapper *wrapper;
 }
 
-- (instancetype) initWithIEC:(IEC *)bus;
+- (instancetype) initWithIEC:(IEC *)iec;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -384,10 +390,11 @@ struct TAPArchive;
 // -------------------------------------------------------------------------
 
 @interface ExpansionPortProxy : NSObject {
-    ExpansionPort *expansionPort;
+    
+    ExpansionPortWrapper *wrapper;
 }
 
-- (instancetype) initWithExpansionPort:(ExpansionPort *)v;
+- (instancetype) initWithExpansionPort:(ExpansionPort *)expansionPort;
 - (void) dump;
 - (bool) cartridgeAttached; 
 - (int) cartridgeType;
@@ -401,10 +408,11 @@ struct TAPArchive;
 // -------------------------------------------------------------------------
 
 @interface VIAProxy : NSObject {
-	VIA6522 *via;
+    
+	Via6522Wrapper *wrapper;
 }
 
-- (instancetype) initWithVIA:(VIA6522 *)v;
+- (instancetype) initWithVIA:(VIA6522 *)via;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -416,10 +424,11 @@ struct TAPArchive;
 // -------------------------------------------------------------------------
 
 @interface Disk525Proxy : NSObject {
-    Disk525 *disk;
+    
+    Disk525Wrapper *wrapper;
 }
 
-- (instancetype)initWithDisk525:(Disk525 *)d;
+- (instancetype)initWithDisk525:(Disk525 *)disk;
 
 - (BOOL)isWriteProtected;
 - (void)setWriteProtection:(BOOL)b;
@@ -435,7 +444,7 @@ struct TAPArchive;
 
 @interface VC1541Proxy : NSObject {
     
-	VC1541 *vc1541;
+	Vc1541Wrapper *wrapper;
     
     // sub proxys
 	CPUProxy *cpu;
@@ -451,7 +460,7 @@ struct TAPArchive;
 @property (readonly) VIAProxy *via2;
 @property (readonly) Disk525Proxy *disk;
 
-- (instancetype) initWithVC1541:(VC1541 *)vc;
+- (instancetype) initWithVC1541:(VC1541 *)vc1541;
 - (VIAProxy *) via:(int)num;
 
 - (void) dump;

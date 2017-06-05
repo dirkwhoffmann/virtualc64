@@ -320,32 +320,36 @@ struct CiaWrapper { CIA *cia; };
 //                                    Keyboard
 // --------------------------------------------------------------------------
 
+struct KeyboardWrapper { Keyboard *keyboard; };
+
 @implementation KeyboardProxy
 
-- (instancetype) initWithKeyboard:(Keyboard *)kb
+- (instancetype) initWithKeyboard:(Keyboard *)keyboard
 {
-    self = [super init];	
-	keyboard = kb;	
-	return self;
+    if (self = [super init]) {
+        wrapper = new KeyboardWrapper();
+        wrapper->keyboard = keyboard;
+    }
+    return self;
 }
 
-- (void) dump { keyboard->dumpState(); }
-- (void) pressKey:(int)c { keyboard->pressKey(c); }
-- (void) releaseKey:(int)c { keyboard->releaseKey(c); }
-- (void) pressRunstopKey { keyboard->pressRunstopKey(); }
-- (void) releaseRunstopKey { keyboard->releaseRunstopKey(); }
-- (void) pressShiftRunstopKey { keyboard->pressShiftRunstopKey(); }
-- (void) releaseShiftRunstopKey { keyboard->releaseShiftRunstopKey(); }
-- (void) pressRestoreKey { keyboard->pressRestoreKey(); }
-- (void) releaseRestoreKey { keyboard->releaseRestoreKey(); }
-- (void) pressCommodoreKey { keyboard->pressCommodoreKey(); }
-- (void) releaseCommodoreKey { keyboard->releaseCommodoreKey(); }
-- (void) pressClearKey { keyboard->pressClearKey(); }
-- (void) releaseClearKey { keyboard->releaseClearKey(); }
-- (void) pressHomeKey { keyboard->pressHomeKey(); }
-- (void) releaseHomeKey { keyboard->releaseHomeKey(); }
-- (void) pressInsertKey { keyboard->pressInsertKey(); }
-- (void) releaseInsertKey { keyboard->releaseInsertKey(); }
+- (void) dump { wrapper->keyboard->dumpState(); }
+- (void) pressKey:(int)c { wrapper->keyboard->pressKey(c); }
+- (void) releaseKey:(int)c { wrapper->keyboard->releaseKey(c); }
+- (void) pressRunstopKey { wrapper->keyboard->pressRunstopKey(); }
+- (void) releaseRunstopKey { wrapper->keyboard->releaseRunstopKey(); }
+- (void) pressShiftRunstopKey { wrapper->keyboard->pressShiftRunstopKey(); }
+- (void) releaseShiftRunstopKey { wrapper->keyboard->releaseShiftRunstopKey(); }
+- (void) pressRestoreKey { wrapper->keyboard->pressRestoreKey(); }
+- (void) releaseRestoreKey { wrapper->keyboard->releaseRestoreKey(); }
+- (void) pressCommodoreKey { wrapper->keyboard->pressCommodoreKey(); }
+- (void) releaseCommodoreKey { wrapper->keyboard->releaseCommodoreKey(); }
+- (void) pressClearKey { wrapper->keyboard->pressClearKey(); }
+- (void) releaseClearKey { wrapper->keyboard->releaseClearKey(); }
+- (void) pressHomeKey { wrapper->keyboard->pressHomeKey(); }
+- (void) releaseHomeKey { wrapper->keyboard->releaseHomeKey(); }
+- (void) pressInsertKey { wrapper->keyboard->pressInsertKey(); }
+- (void) releaseInsertKey { wrapper->keyboard->releaseInsertKey(); }
 
 - (void)typeText:(NSString *)text
 {
@@ -396,63 +400,53 @@ struct CiaWrapper { CIA *cia; };
     fprintf(stderr,"\n");
 }
 
-
 @end
+
 
 // --------------------------------------------------------------------------
 //                                 Joystick
 // -------------------------------------------------------------------------
 
-#if 0
-@implementation JoystickManagerProxy
-
-- (instancetype) initWithC64:(C64Proxy *)c64
-{
-    self = [super init];
-    manager = new JoystickManager(c64);
-    if (!manager->initialize()) {
-        NSLog(@"WARNING: Failed to initialize joystick manager.");
-        self = nil;
-    }
-
-    return self;
-    return nil;
-}
-
-@end
-#endif
+struct JoystickWrapper { Joystick *joystick; };
 
 @implementation JoystickProxy
 
-- (instancetype) initWithJoystick:(Joystick *)joy
+- (instancetype) initWithJoystick:(Joystick *)joystick
 {
-    self = [super init];
-    joystick = joy;
+    if (self = [super init]) {
+        wrapper = new JoystickWrapper();
+        wrapper->joystick = joystick;
+    }
     return self;
 }
 
-- (void) setButtonPressed:(BOOL)pressed { joystick->setButtonPressed(pressed); }
-- (void) setAxisX:(JoystickDirection)state { joystick->setAxisX(state); }
-- (void) setAxisY:(JoystickDirection)state {joystick->setAxisY(state); }
+- (void) setButtonPressed:(BOOL)pressed { wrapper->joystick->setButtonPressed(pressed); }
+- (void) setAxisX:(JoystickDirection)state { wrapper->joystick->setAxisX(state); }
+- (void) setAxisY:(JoystickDirection)state { wrapper->joystick->setAxisY(state); }
 
-- (void) dump { joystick->dumpState(); }
+- (void) dump { wrapper->joystick->dumpState(); }
 
 @end
+
 
 // --------------------------------------------------------------------------
 //                                    SID
 // --------------------------------------------------------------------------
 
+struct SidWrapperWrapper { SIDWrapper *sid; };
+
 @implementation SIDProxy
 
-- (instancetype) initWithSID:(SIDWrapper *)s
+- (instancetype) initWithSID:(SIDWrapper *)sid
 {
-    self = [super init];	
-	sid = s;	
-	return self;
+    if (self = [super init]) {
+        wrapper = new SidWrapperWrapper();
+        wrapper->sid = sid;
+    }
+    return self;
 }
 
-- (void) dump { sid->dumpState(); }
+- (void) dump { wrapper->sid->dumpState(); }
 
 @end
 
@@ -460,21 +454,25 @@ struct CiaWrapper { CIA *cia; };
 //                                   IEC bus
 // -------------------------------------------------------------------------
 
+struct IecWrapper { IEC *iec; };
+
 @implementation IECProxy
 
-- (instancetype) initWithIEC:(IEC *)bus
+- (instancetype) initWithIEC:(IEC *)iec
 {
-    self = [super init];	
-	iec = bus;	
-	return self;
+    if (self = [super init]) {
+        wrapper = new IecWrapper();
+        wrapper->iec = iec;
+    }
+    return self;
 }
 
-- (void) dump { iec->dumpState(); }
-- (bool) tracingEnabled { return iec->tracingEnabled(); }
-- (void) setTraceMode:(bool)b { iec->setTraceMode(b); }
-- (void) connectDrive { iec->connectDrive(); }
-- (void) disconnectDrive { iec->disconnectDrive(); }
-- (bool) isDriveConnected { return iec->driveIsConnected(); }
+- (void) dump { wrapper->iec->dumpState(); }
+- (bool) tracingEnabled { return wrapper->iec->tracingEnabled(); }
+- (void) setTraceMode:(bool)b { wrapper->iec->setTraceMode(b); }
+- (void) connectDrive { wrapper->iec->connectDrive(); }
+- (void) disconnectDrive { wrapper->iec->disconnectDrive(); }
+- (bool) isDriveConnected { return wrapper->iec->driveIsConnected(); }
 
 @end
 
@@ -482,20 +480,24 @@ struct CiaWrapper { CIA *cia; };
 //                                 Expansion port
 // -------------------------------------------------------------------------
 
+struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
+
 @implementation ExpansionPortProxy
 
-- (instancetype) initWithExpansionPort:(ExpansionPort *)port
+- (instancetype) initWithExpansionPort:(ExpansionPort *)expansionPort
 {
-    self = [super init];
-    expansionPort = port;
+    if (self = [super init]) {
+        wrapper = new ExpansionPortWrapper();
+        wrapper->expansionPort = expansionPort;
+    }
     return self;
 }
 
-- (void) dump { expansionPort->dumpState(); }
-- (int) cartridgeType { return (int)expansionPort->getCartridgeType(); }
-- (bool) cartridgeAttached { return expansionPort->getCartridgeAttached(); }
-- (unsigned) numberOfChips { return expansionPort->numberOfChips(); }
-- (unsigned) numberOfBytes { return expansionPort->numberOfBytes(); }
+- (void) dump { wrapper->expansionPort->dumpState(); }
+- (int) cartridgeType { return (int)wrapper->expansionPort->getCartridgeType(); }
+- (bool) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
+- (unsigned) numberOfChips { return wrapper->expansionPort->numberOfChips(); }
+- (unsigned) numberOfBytes { return wrapper->expansionPort->numberOfBytes(); }
 
 @end
 
@@ -503,18 +505,22 @@ struct CiaWrapper { CIA *cia; };
 //                                     VIA
 // -------------------------------------------------------------------------
 
+struct Via6522Wrapper { VIA6522 *via; };
+
 @implementation VIAProxy
 
-- (instancetype) initWithVIA:(VIA6522 *)v
+- (instancetype) initWithVIA:(VIA6522 *)via
 {
-    self = [super init];	
-	via = v;
-	return self;
+    if (self = [super init]) {
+        wrapper = new Via6522Wrapper();
+        wrapper->via = via;
+    }
+    return self;
 }
 
-- (void) dump { via->dumpState(); }
-- (bool) tracingEnabled { return via->tracingEnabled(); }
-- (void) setTraceMode:(bool)b { via->setTraceMode(b); }
+- (void) dump { wrapper->via->dumpState(); }
+- (bool) tracingEnabled { return wrapper->via->tracingEnabled(); }
+- (void) setTraceMode:(bool)b { wrapper->via->setTraceMode(b); }
 
 @end
 
@@ -522,20 +528,24 @@ struct CiaWrapper { CIA *cia; };
 //                                5,25" diskette
 // -------------------------------------------------------------------------
 
+struct Disk525Wrapper { Disk525 *disk; };
+
 @implementation Disk525Proxy
 
-- (instancetype) initWithDisk525:(Disk525 *)d
+- (instancetype) initWithDisk525:(Disk525 *)disk
 {
-    self = [super init];
-    disk = d;
+    if (self = [super init]) {
+        wrapper = new Disk525Wrapper();
+        wrapper->disk = disk;
+    }
     return self;
 }
 
-- (BOOL)isWriteProtected { return disk->isWriteProtected(); }
-- (void)setWriteProtection:(BOOL)b { disk->setWriteProtection(b); }
-- (BOOL)isModified { return disk->isModified(); }
-- (void)setModified:(BOOL)b { disk->setModified(b); }
-- (NSInteger)numTracks { return (NSInteger)disk->numTracks; }
+- (BOOL)isWriteProtected { return wrapper->disk->isWriteProtected(); }
+- (void)setWriteProtection:(BOOL)b { wrapper->disk->setWriteProtection(b); }
+- (BOOL)isModified { return wrapper->disk->isModified(); }
+- (void)setModified:(BOOL)b { wrapper->disk->setModified(b); }
+- (NSInteger)numTracks { return (NSInteger)wrapper->disk->numTracks; }
 
 
 @end
@@ -544,20 +554,24 @@ struct CiaWrapper { CIA *cia; };
 //                                    VC1541
 // -------------------------------------------------------------------------
 
+struct Vc1541Wrapper { VC1541 *vc1541; };
+
 @implementation VC1541Proxy
 
 @synthesize cpu, mem, via1, via2, disk;
 
-- (instancetype) initWithVC1541:(VC1541 *)vc
+- (instancetype) initWithVC1541:(VC1541 *)vc1541
 {
-    self = [super init];	
-	vc1541 = vc;
-	cpu = [[CPUProxy alloc] initWithCPU:&vc->cpu];
-	mem = [[MemoryProxy alloc] initWithMemory:&vc->mem];
-	via1 = [[VIAProxy alloc] initWithVIA:&vc->via1];
-	via2 = [[VIAProxy alloc] initWithVIA:&vc->via2];
-    disk = [[Disk525Proxy alloc] initWithDisk525:&vc->disk];
-	return self;
+    if (self = [super init]) {
+        wrapper = new Vc1541Wrapper();
+        wrapper->vc1541 = vc1541;
+        cpu = [[CPUProxy alloc] initWithCPU:&vc1541->cpu];
+        mem = [[MemoryProxy alloc] initWithMemory:&vc1541->mem];
+        via1 = [[VIAProxy alloc] initWithVIA:&vc1541->via1];
+        via2 = [[VIAProxy alloc] initWithVIA:&vc1541->via2];
+        disk = [[Disk525Proxy alloc] initWithDisk525:&vc1541->disk];
+    }
+    return self;
 }
 
 - (VIAProxy *) via:(int)num {
@@ -572,25 +586,25 @@ struct CiaWrapper { CIA *cia; };
 	}
 }
 
-- (void) dump { vc1541->dumpState(); }
-- (bool) tracingEnabled { return vc1541->tracingEnabled(); }
-- (void) setTraceMode:(bool)b { vc1541->setTraceMode(b); }
-- (bool) hasRedLED { return vc1541->getRedLED(); }
-- (bool) hasDisk { return vc1541->hasDisk(); }
-- (void) ejectDisk { vc1541->ejectDisk(); }
-- (bool) writeProtection { return vc1541->disk.isWriteProtected(); }
-- (void) setWriteProtection:(bool)b { vc1541->disk.setWriteProtection(b); }
-- (bool) DiskModified { return vc1541->disk.isModified(); }
-- (void) setDiskModified:(bool)b { vc1541->disk.setModified(b); }
-- (bool) bitAccuracy { return vc1541->getBitAccuracy(); }
-- (void) setBitAccuracy:(bool)b { vc1541->setBitAccuracy(b); }
-- (bool) soundMessagesEnabled { return vc1541->soundMessagesEnabled(); }
-- (void) setSendSoundMessages:(bool)b { vc1541->setSendSoundMessages(b); }
-- (bool) exportToD64:(NSString *)path { return vc1541->exportToD64([path UTF8String]); }
+- (void) dump { wrapper->vc1541->dumpState(); }
+- (bool) tracingEnabled { return wrapper->vc1541->tracingEnabled(); }
+- (void) setTraceMode:(bool)b { wrapper->vc1541->setTraceMode(b); }
+- (bool) hasRedLED { return wrapper->vc1541->getRedLED(); }
+- (bool) hasDisk { return wrapper->vc1541->hasDisk(); }
+- (void) ejectDisk { wrapper->vc1541->ejectDisk(); }
+- (bool) writeProtection { return wrapper->vc1541->disk.isWriteProtected(); }
+- (void) setWriteProtection:(bool)b { wrapper->vc1541->disk.setWriteProtection(b); }
+- (bool) DiskModified { return wrapper->vc1541->disk.isModified(); }
+- (void) setDiskModified:(bool)b { wrapper->vc1541->disk.setModified(b); }
+- (bool) bitAccuracy { return wrapper->vc1541->getBitAccuracy(); }
+- (void) setBitAccuracy:(bool)b { wrapper->vc1541->setBitAccuracy(b); }
+- (bool) soundMessagesEnabled { return wrapper->vc1541->soundMessagesEnabled(); }
+- (void) setSendSoundMessages:(bool)b { wrapper->vc1541->setSendSoundMessages(b); }
+- (bool) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
 
 - (D64ArchiveProxy *) convertToD64
 {
-    D64Archive *archive = vc1541->convertToD64();
+    D64Archive *archive = wrapper->vc1541->convertToD64();
     return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
