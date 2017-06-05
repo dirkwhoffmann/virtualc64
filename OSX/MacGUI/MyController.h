@@ -305,7 +305,7 @@ enum INPUT_DEVICES {
 
 // Timer and message processing
 - (void)timerFunc;
-- (void)processMessage:(MessageProxy *)msg;
+- (void)processMessage:(Message *)msg;
 
 // Refresh
 - (void)refresh;
@@ -332,7 +332,7 @@ enum INPUT_DEVICES {
 - (bool)showMediaDialog;
 - (IBAction)cancelMediaDialog:(id)sender;
 
-- (bool)showRomDialog:(MessageProxy *)msg;
+- (bool)showRomDialog:(Message *)msg;
 - (IBAction)cancelRomDialog:(id)sender;
 
 - (bool)showMountDialog;

@@ -22,44 +22,7 @@
 #define _MESSAGE_INC
 
 #include "VC64Object.h"
-
-// Message types
-enum {
-    MSG_ROM_LOADED = 1,
-    MSG_ROM_MISSING,
-    MSG_ROM_COMPLETE,
-    MSG_RUN,
-    MSG_HALT,
-    MSG_CPU,
-    MSG_WARP,
-    MSG_ALWAYS_WARP,
-    MSG_LOG,
-    MSG_VC1541_ATTACHED,
-    MSG_VC1541_ATTACHED_SOUND,
-    MSG_VC1541_DISK,
-    MSG_VC1541_DISK_SOUND,
-    MSG_VC1541_LED,
-    MSG_VC1541_DATA,
-    MSG_VC1541_MOTOR,
-    MSG_VC1541_HEAD,
-    MSG_VC1541_HEAD_SOUND,
-    MSG_CARTRIDGE,
-    MSG_VC1530_TAPE,
-    MSG_VC1530_PLAY,
-    MSG_VC1530_PROGRESS,
-    MSG_JOYSTICK_ATTACHED,
-    MSG_JOYSTICK_REMOVED,
-    MSG_PAL,
-    MSG_NTSC
-};
-
-
-typedef struct {
-	int id;			// Message ID
-	char c[128];	// Text message
-	int i;			// Integer value
-	void *p;		// Pointer value
-} Message;
+#include "C64_defs.h"
 
 class MessageQueue : public VC64Object {
 	
@@ -96,7 +59,7 @@ public:
 	Message *getMessage();
 
 	//! @brief   Adds new message to queue
-	void putMessage(int id, int i = 0, void *p = NULL, const char *c = NULL);
+	void putMessage(int id, int i = 0);
 };
 
 #endif

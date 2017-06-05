@@ -758,7 +758,7 @@ struct ArchiveWrapper { Archive *archive; };
 
 - (void) dump { wrapper->c64->dumpState(); }
 
-- (MessageProxy *)message { return [MessageProxy messageFromMessage:wrapper->c64->getMessage()]; }
+- (Message *)message { return wrapper->c64->getMessage(); }
 - (void) putMessage:(int)msg { wrapper->c64->putMessage(msg); }
 - (void) reset { wrapper->c64->reset(); }
 - (void) ping { wrapper->c64->ping(); }
@@ -918,42 +918,6 @@ struct ArchiveWrapper { Archive *archive; };
     return wrapper->snapshot->writeToFile([path UTF8String]); }
 
 @end
-
-// --------------------------------------------------------------------------
-//                                Message
-// --------------------------------------------------------------------------
-
-@implementation MessageProxy;
-
-@synthesize id;
-@synthesize i;
-@synthesize p;
-
-- (instancetype)initWithMessage:(Message *)msg
-{
-    if (msg == nil)
-        return nil;
-    
-    if (!(self = [super init]))
-        return nil;
-    
-    id = msg->id;
-    i = msg->i;
-    p = msg->p;
-    strncpy(c, msg->c, 127);
-    
-    return self;
-}
-
-+ (instancetype) messageFromMessage:(Message *)msg
-{
-    return msg ? [[MessageProxy alloc] initWithMessage:msg] : nil;
-}
-
-- (char *)c { return c; }
-
-@end
-
 
 
 // --------------------------------------------------------------------------

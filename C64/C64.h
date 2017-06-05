@@ -46,6 +46,9 @@
 
 #define NDEBUG      // RELEASE
 
+// Data types and constants
+#include "C64_defs.h"
+
 // General
 #include "Message.h"
 
@@ -550,8 +553,7 @@ public:
     Message *getMessage() { return queue.getMessage(); }
     
     //! @brief    Feeds a notification message into message queue
-    void putMessage(int id, int i = 0, void *p = NULL, const char *c = NULL) { queue.putMessage(id, i, p, c); }
-
+    void putMessage(int id, int i = 0) { queue.putMessage(id, i); }
 };
 
 #endif

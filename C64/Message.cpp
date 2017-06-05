@@ -104,18 +104,14 @@ MessageQueue::getMessage()
 }
 
 void
-MessageQueue::putMessage(int id, int i, void *p, const char *c)
-{ 
+MessageQueue::putMessage(int id, int i)
+{
 	pthread_mutex_lock(&lock);
 		
 	// Write data
 	queue[w].id = id; 
 	queue[w].i = i; 
-	queue[w].p = p;
     
-	if (c != NULL)
-        strncpy(queue[w].c, c, 128);
-	 	
 	// Move write pointer to next location
 	w = (w + 1) % queue_size;
 
