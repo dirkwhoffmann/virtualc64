@@ -25,7 +25,7 @@ VC1541::VC1541()
 	
 	// Configure CPU
 	cpu.setDescription("1541CPU");
-    cpu.chipModel = MOS6502;
+    cpu.chipModel = MOS_6502;
     
     // Register sub components
     VirtualComponent *subcomponents[] = { &mem, &cpu, &via1, &via2, &disk, NULL };

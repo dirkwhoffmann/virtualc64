@@ -53,8 +53,8 @@ enum {
 
 //! @brief    Processor models
 enum CPUChipModel {
-    MOS6510 = 0,
-    MOS6502 = 1
+    MOS_6510 = 0,
+    MOS_6502 = 1
 };
 
 //! @brief    Addressing modes
@@ -100,6 +100,34 @@ enum Breakpoint {
     NO_BREAKPOINT   = 0x00,
     HARD_BREAKPOINT = 0x01,
     SOFT_BREAKPOINT = 0x02
+};
+
+/*! @brief    Memory type
+ *  @details  This datatype defines a constant value for the different kinds of memory.
+ */
+enum MemoryType {
+    MEM_RAM,
+    MEM_ROM,
+    MEM_IO
+};
+
+/*! @brief    Sound chip models
+ *  @details  This enum reflects enum "chip_model" used by reSID.
+ */
+enum SIDChipModel {
+    MOS_6581,
+    MOS_8580
+};
+
+/*! @brief    Sampling method
+ *  @details  This enum reflects enum "sampling_method" used by reSID.
+ */
+
+enum SamplingMethod {
+    SID_SAMPLE_FAST,
+    SID_SAMPLE_INTERPOLATE,
+    SID_SAMPLE_RESAMPLE_INTERPOLATE,
+    SID_SAMPLE_RESAMPLE_FAST
 };
 
 #endif

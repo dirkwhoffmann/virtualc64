@@ -130,13 +130,13 @@ struct ArchiveWrapper { Archive *archive; };
     return wrapper->mem->peek(addr); }
 - (uint16_t) peekWord:(uint16_t)addr {
     return wrapper->mem->peekWord(addr); }
-- (uint8_t) peekFrom:(uint16_t)addr memtype:(Memory::MemoryType)type {
+- (uint8_t) peekFrom:(uint16_t)addr memtype:(MemoryType)type {
     return wrapper->mem->peekFrom(addr, type); }
 - (void) poke:(uint16_t)addr value:(uint8_t)val {
     wrapper->mem->poke(addr, val); }
-- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(Memory::MemoryType)type {
+- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemoryType)type {
     wrapper->mem->pokeTo(addr, val, type); }
-- (bool) isValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)type {
+- (bool) isValidAddr:(uint16_t)addr memtype:(MemoryType)type {
     return wrapper->mem->isValidAddr(addr, type); }
 
 @end

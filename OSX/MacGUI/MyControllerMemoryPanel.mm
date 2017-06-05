@@ -29,19 +29,19 @@
 
 - (IBAction)setMemSourceToRAM:(id)sender
 {
-	[memTableView setSource:Memory::MEM_RAM];
+	[memTableView setSource:MEM_RAM];
 	[memTableView refresh];
 }
 
 - (IBAction)setMemSourceToROM:(id)sender
 {
-	[memTableView setSource:Memory::MEM_ROM];
+	[memTableView setSource:MEM_ROM];
 	[memTableView refresh];
 }
 
 - (IBAction)setMemSourceToIO:(id)sender
 {
-	[memTableView setSource:Memory::MEM_IO];
+	[memTableView setSource:MEM_IO];
 	[memTableView refresh];
 }
 
@@ -50,14 +50,14 @@
 	[memTableView reloadData];
 }
 
-- (Memory::MemoryType)currentMemSource
+- (MemoryType)currentMemSource
 {
-    if ([ramSource intValue]) return Memory::MEM_RAM;
-    if ([romSource intValue]) return Memory::MEM_ROM;
-    if ([ioSource intValue]) return Memory::MEM_IO;
+    if ([ramSource intValue]) return MEM_RAM;
+    if ([romSource intValue]) return MEM_ROM;
+    if ([ioSource intValue]) return MEM_IO;
     
     assert(false);
-    return Memory::MEM_RAM;
+    return MEM_RAM;
 }
 
 - (void)doubleClickInMemTable:(id)sender
@@ -65,7 +65,7 @@
     [self refresh];
 }
 
-- (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(Memory::MemoryType)t
+- (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(MemoryType)t
 {
     NSUndoManager *undo = [self undoManager];
     [[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] peekFrom:addr memtype:t] memtype:t];

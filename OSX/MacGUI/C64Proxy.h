@@ -122,10 +122,10 @@ struct TAPArchive;
 
 - (uint8_t) peek:(uint16_t)addr;
 - (uint16_t) peekWord:(uint16_t)addr;
-- (uint8_t) peekFrom:(uint16_t)addr memtype:(Memory::MemoryType)source;
+- (uint8_t) peekFrom:(uint16_t)addr memtype:(MemoryType)source;
 - (void) poke:(uint16_t)addr value:(uint8_t)val;
-- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(Memory::MemoryType)source;
-- (bool) isValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)source;
+- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemoryType)source;
+- (bool) isValidAddr:(uint16_t)addr memtype:(MemoryType)source;
 
 @end
 

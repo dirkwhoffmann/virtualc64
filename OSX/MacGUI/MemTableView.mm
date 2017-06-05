@@ -84,7 +84,7 @@
 	return nil;
 }
 
-- (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(Memory::MemoryType)t
+- (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(MemoryType)t
 {
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] peekFrom:addr memtype:t] memtype:t];

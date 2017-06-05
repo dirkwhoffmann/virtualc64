@@ -28,10 +28,10 @@
 	C64Proxy *c64;
 
 	//! Determines whether we display RAM, ROM or IO space
-	Memory::MemoryType source;
+	MemoryType source;
 }
 
-@property Memory::MemoryType source;
+@property MemoryType source;
 
 //! Setter
 - (void)setController:(MyController *)c;

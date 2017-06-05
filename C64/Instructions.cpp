@@ -1497,7 +1497,7 @@ void CPU::BVC_relative()
 {	
 	READ_IMMEDIATE;
 
-    if (chipModel == MOS6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
+    if (chipModel == MOS_6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
         
         // Special handling for the VC1541 CPU. Taken from Frodo
         if (!((c64->floppy.via2.io[12] & 0x0E) == 0x0E || getV())) {
@@ -1546,7 +1546,7 @@ void CPU::BVS_relative()
 {	
 	READ_IMMEDIATE;
     
-    if (chipModel == MOS6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
+    if (chipModel == MOS_6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
         
         // Special handling for the VC1541 CPU. Taken from Frodo
         if ((c64->floppy.via2.io[12] & 0x0E) == 0x0E || getV()) {

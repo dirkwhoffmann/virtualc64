@@ -24,7 +24,7 @@ CPU::CPU()
 	debug(3, "  Creating CPU at address %p...\n", this);
 	
     // Chip model
-    chipModel = MOS6510;
+    chipModel = MOS_6510;
 
 	// Establish callback for each instruction
 	registerInstructions();
