@@ -149,11 +149,18 @@ public:
 	//! Notifies the SID chip that the emulator has started
 	void halt();
 
-    /*! @brief  Reads audio sample from ringbuffer
+    /*! @brief  Reads one audio sample from ringbuffer
      *  @see    handleBufferUnderflow
      */
 	float readData();
 
+    //! @brief  Reads n mono sample from ringbuffer
+    void readMonoSamples(float *target, size_t n);
+
+    //! @brief  Reads n mono sample from ringbuffer
+    void readStereoSamples(float *target, size_t n);
+
+    
     /*! @brief  Reads audio sample from ringbuffer
      *  @see    handleBufferOverflow
      */

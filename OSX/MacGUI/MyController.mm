@@ -128,7 +128,7 @@
                                            userInfo:nil repeats:YES];
     speedometer = [[Speedometer alloc] init];
     fps = PAL_REFRESH_RATE;
-    mhz = CPU::CLOCK_FREQUENCY_PAL / 100000;
+    mhz = CLOCK_FREQUENCY_PAL / 100000;
     
     NSLog(@"NSTimer is running. Window is now listening to emulator messages.");
 }

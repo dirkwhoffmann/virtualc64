@@ -170,6 +170,13 @@ public:
 	
     //! @brief    Reads next audio sample from the ringbuffer
 	float readData();
+    
+    //! @brief    Read a certain amount of mono samples fro the ringbuffer
+    void readMonoSamples (float *target, size_t n);
+
+    //! @brief    Read a certain amount of stereo samples fro the ringbuffer
+    void readStereoSamples (float *target, size_t n);
+
 };
 
 #endif

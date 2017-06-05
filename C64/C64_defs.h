@@ -14,7 +14,6 @@
 #define V_MINOR 5
 #define V_SUBMINOR 0
 
-
 /*! @brief    Message layout
  *  @details  A message queue is used to communicate with the GUI. Each message consists of 
  *            a message id and an additional integer parameter.
@@ -24,6 +23,15 @@ typedef struct {
     int i;
 } Message;
 
+/*! @brief    Rom types
+ *  @details  VirtualC64 needs all four ROMs to run
+ */
+enum {
+    BASIC_ROM = 1,
+    CHAR_ROM = 2,
+    KERNEL_ROM = 4,
+    VC1541_ROM = 8
+};
 
 /*! @brief    Message types
  *  @details  List of all possible message id's
@@ -168,7 +176,6 @@ enum JoystickDirection
     JOYSTICK_LEFT,
     JOYSTICK_RIGHT,
     JOYSTICK_FIRE,
-    
     JOYSTICK_RELEASED
 };
 

@@ -41,6 +41,12 @@ enum VICChipModel {
     MOS6569_PAL = 1
 };
 
+//! @brief    Clock frequency of the original C64 (NTSC version) in Hz
+static const uint32_t CLOCK_FREQUENCY_NTSC = 1022727;
+
+//! @brief    Clock frequency of the original C64 (PAL version) in Hz
+static const uint32_t CLOCK_FREQUENCY_PAL = 985249;
+
 //! @brief    Screen geometries
 enum ScreenGeometry {
     COL_40_ROW_25 = 0x01,

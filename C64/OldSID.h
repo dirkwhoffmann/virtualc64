@@ -245,9 +245,15 @@ public:
 	//! Notifies the SID chip that the emulator has started
 	void halt();
 
-    //! Get next sample from \a ringBuffer.
+    //! @brief  Reads one audio sample from ringbuffer
 	float readData();
 	
+    //! @brief  Reads n mono sample from ringbuffer
+    void readMonoSamples(float *target, size_t n);
+    
+    //! @brief  Reads n mono sample from ringbuffer
+    void readStereoSamples(float *target, size_t n);
+    
 	//! Enable or disable filters of SID.
 	/*!
 		By default filters of SID are disabled.

@@ -294,6 +294,25 @@ ReSID::readData()
 	return value;
 }
 
+void
+ReSID::readMonoSamples(float *target, size_t n)
+{
+    for (size_t i = 0; i < n; i++) {
+        float value = readData();
+        target[i] = value;
+    }
+}
+
+void
+ReSID::readStereoSamples(float *target, size_t n)
+{
+    for (unsigned i = 0; i < n; i++) {
+        float value = readData();
+        target[i*2] = value;   // left channel
+        target[i*2+1] = value; // right channel
+    }
+}
+
 inline void
 ReSID::writeData(float data)
 {

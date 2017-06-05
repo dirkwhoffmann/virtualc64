@@ -163,6 +163,24 @@ SIDWrapper::readData()
         return oldsid->readData();
 }
 
+void
+SIDWrapper::readMonoSamples(float *target, size_t n)
+{
+    if (useReSID)
+        resid->readMonoSamples(target, n);
+    else
+        oldsid->readMonoSamples(target, n);
+}
+
+void
+SIDWrapper::readStereoSamples(float *target, size_t n)
+{
+    if (useReSID)
+        resid->readStereoSamples(target, n);
+    else
+        oldsid->readStereoSamples(target, n);
+}
+
 void 
 SIDWrapper::setAudioFilter(bool enable)
 {

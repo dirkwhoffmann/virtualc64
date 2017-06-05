@@ -1,5 +1,6 @@
 /*
  * (C) 2008 Jérôme Lang. All rights reserved.
+ *     2017 Modified by Dirk W. Hoffmann
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
  */
 
 #import "C64GUI.h"
+#import "C64.h"
 
 #define BUFFERSIZE 2048
 
@@ -53,21 +55,23 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
     register float*	myOutBuffer = (float*)outOutputData->mBuffers[0].mData;
     register UInt32 size = BUFFERSIZE;
 
-    C64 *c64 = reinterpret_cast<C64*>(inClientData);
-    
-	// get samples from SID
+    // C64 *c64 = reinterpret_cast<C64*>(inClientData);
+    SIDProxy *sid = (__bridge SIDProxy *)inClientData;
+                                                 
+    // get samples from SID
     if (mono) {        
-        for (unsigned i = 0; i < size; i++) {
-            // TODO: IMPLEMENT SIDProxy readMonoSamples:myOutBuffer numSamples:size
-            myOutBuffer[i] = c64->sid.readData();
-        }
+        // for (unsigned i = 0; i < size; i++) {
+        //    myOutBuffer[i] = c64->sid.readData();
+        // }
+        [sid readMonoSamples:myOutBuffer size:size];
     } else {
-        for (unsigned i = 0; i < size; i++) {
-            // TODO: IMPLEMENT SIDProxy readStereoSamples:myOutBuffer numSamples:size
-            float value = c64->sid.readData();
-            myOutBuffer[i*2] = value;		// left channel	
-            myOutBuffer[i*2+1] = value;		// right channel
-        }
+        // for (unsigned i = 0; i < size; i++) {
+        //     // TODO: IMPLEMENT SIDProxy readStereoSamples:myOutBuffer numSamples:size
+        //    float value = c64->sid.readData();
+        //    myOutBuffer[i*2] = value;		// left channel
+        //     myOutBuffer[i*2+1] = value;		// right channel
+        // }
+        [sid readStereoSamples:myOutBuffer size:size];
     }
 
     return noErr;
@@ -77,8 +81,10 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 @implementation AudioDevice
 
 
-- (instancetype)initWithC64:(C64 *)c64
-{       
+- (instancetype)initWithSID:(SIDProxy *)sid
+{
+    uint32_t sampleRate = [sid sampleRate];
+    
     AudioObjectPropertyAddress devicePropertyAddress = { 
         kAudioHardwarePropertyDefaultOutputDevice, 
         kAudioObjectPropertyScopeGlobal, 
@@ -129,15 +135,15 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		}
         
 		// try the selected mix frequency, if failure, fall back to native frequency and ajust SID's samplerate...
-		if (mySoundBasicDescription.mSampleRate != c64->sid.getSampleRate())
+		if (mySoundBasicDescription.mSampleRate != sampleRate)
 		{
 			// try adjusting changing samplerate to wanted samplerate
-			mySoundBasicDescription.mSampleRate = c64->sid.getSampleRate();
+			mySoundBasicDescription.mSampleRate = sampleRate;
 			SET_PROPS ();
 			// samplerate couldn't be changed
-			if (mySoundBasicDescription.mSampleRate != c64->sid.getSampleRate())
+			if (mySoundBasicDescription.mSampleRate != sampleRate)
 			{
-				c64->sid.setSampleRate(mySoundBasicDescription.mSampleRate); // adjust SID's samplerate to native frequency of hardware
+                [sid setSampleRate:mySoundBasicDescription.mSampleRate]; // adjust SID's samplerate to native frequency of hardware
 				printf("Samplerate of SID was changed to native frequency of used audio hardware.");
 			}
 		}
@@ -198,7 +204,10 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		CHECK_ERROR
 			(
 			 MPERR_OSX_ADD_IO_PROC,
-			 AudioDeviceCreateIOProcID(mySoundDeviceID, OSX_AudioIOProc16Bit, c64, &mySoundIOProcID)
+			 AudioDeviceCreateIOProcID(mySoundDeviceID,
+                                       OSX_AudioIOProc16Bit,
+                                       (__bridge void *)sid,
+                                       &mySoundIOProcID)
 			 );
 		
 		// callback successfully started

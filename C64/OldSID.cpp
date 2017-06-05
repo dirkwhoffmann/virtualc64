@@ -607,7 +607,26 @@ float OldSID::readData()
 
 	return value;
 }
-	
+
+void
+OldSID::readMonoSamples(float *target, size_t n)
+{
+    for (size_t i = 0; i < n; i++) {
+        float value = readData();
+        target[i] = value;
+    }
+}
+
+void
+OldSID::readStereoSamples(float *target, size_t n)
+{
+    for (unsigned i = 0; i < n; i++) {
+        float value = readData();
+        target[i*2] = value;   // left channel
+        target[i*2+1] = value; // right channel
+    }
+}
+
 void OldSID::writeData(float data)
 {
     if (readBuffer == writeBuffer) {

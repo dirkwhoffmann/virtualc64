@@ -26,7 +26,7 @@
 
 - (void) initialize:(TAPContainerProxy *)tproxy c64proxy:(C64Proxy *)proxy
 {
-    assert(tapproxy != NULL);
+    assert(tproxy != NULL);
     assert(proxy != NULL);
     
     container = tproxy;

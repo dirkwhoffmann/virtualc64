@@ -18,7 +18,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import "C64_defs.h"
-#import "C64.h"
+#import "VIC_globals.h"
+
+// #import "C64.h"
 
 // Forward declarations
 @class MyController;
@@ -355,6 +357,10 @@ struct CartridgeWrapper;
 }
 
 - (void) dump;
+- (uint32_t) sampleRate;
+- (void) setSampleRate:(uint32_t)rate;
+- (void) readMonoSamples:(float *)target size:(NSInteger)n;
+- (void) readStereoSamples:(float *)target size:(NSInteger)n;
 
 @end
 
@@ -555,6 +561,7 @@ struct CartridgeWrapper;
 
 // Initialization
 - (void) kill;
+- (C64Wrapper *)wrapper;
 
 // Hardware configuration
 - (bool) reSID;

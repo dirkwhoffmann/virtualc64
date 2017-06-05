@@ -454,6 +454,14 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 }
 
 - (void) dump { wrapper->sid->dumpState(); }
+- (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
+- (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
+- (void) readMonoSamples:(float *)target size:(NSInteger)n {
+    wrapper->sid->readMonoSamples(target, n);
+}
+- (void) readStereoSamples:(float *)target size:(NSInteger)n {
+    wrapper->sid->readStereoSamples(target, n);
+}
 
 @end
 
@@ -692,11 +700,16 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     joystickManager->initialize(); 
 
 	// Initialize CoreAudio sound interface
-	if (!(audioDevice = [[AudioDevice alloc] initWithC64:c64])) {
+	if (!(audioDevice = [[AudioDevice alloc] initWithSID:sid])) {
 		NSLog(@"WARNING: Couldn't initialize CoreAudio interface. Sound disabled.");
 	}
 		
     return self;
+}
+
+- (C64Wrapper *)wrapper
+{
+    return wrapper;
 }
 
 - (void) awakeFromNib

@@ -28,12 +28,6 @@
 class CPU : public VirtualComponent {
 
 public:
-
-	//! @brief    Clock frequency of the original C64 (NTSC version) in Hz
-	static const uint32_t CLOCK_FREQUENCY_NTSC = 1022727;
-	
-	//! @brief    Clock frequency of the original C64 (PAL version) in Hz
-	static const uint32_t CLOCK_FREQUENCY_PAL = 985249;
 	
 	//! @brief    Bit position of the Negative flag
 	static const uint8_t N_FLAG = 0x80;

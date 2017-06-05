@@ -167,13 +167,7 @@
 	   c64->run() 
 */
 
-#define BASIC_ROM 1
-#define CHAR_ROM 2
-#define KERNEL_ROM 4
-#define VC1541_ROM 8
-
 #define BACK_IN_TIME_BUFFER_SIZE 16
-
 
 class C64 : public VirtualComponent {
 
