@@ -122,12 +122,24 @@ enum SIDChipModel {
 /*! @brief    Sampling method
  *  @details  This enum reflects enum "sampling_method" used by reSID.
  */
-
 enum SamplingMethod {
     SID_SAMPLE_FAST,
     SID_SAMPLE_INTERPOLATE,
     SID_SAMPLE_RESAMPLE_INTERPOLATE,
     SID_SAMPLE_RESAMPLE_FAST
+};
+
+/*! @brief    Joystick directions
+ */
+enum JoystickDirection
+{
+    JOYSTICK_UP = 0,
+    JOYSTICK_DOWN,
+    JOYSTICK_LEFT,
+    JOYSTICK_RIGHT,
+    JOYSTICK_FIRE,
+    
+    JOYSTICK_RELEASED
 };
 
 #endif

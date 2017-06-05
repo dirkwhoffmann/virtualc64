@@ -16,7 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
+// NEXT STEP: Add CartridgeProxy, use CartridgeProxy in MyDocument also
+
 #import <Cocoa/Cocoa.h>
+#import "C64_defs.h"
 #import "C64.h"
 
 // Forward declarations

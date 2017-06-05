@@ -22,17 +22,6 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
-enum JoystickDirection
-{
-    JOYSTICK_UP = 0,
-    JOYSTICK_DOWN,
-    JOYSTICK_LEFT,
-    JOYSTICK_RIGHT,
-    JOYSTICK_FIRE,
-    
-    JOYSTICK_RELEASED
-};
-
 class Joystick : public VirtualComponent {
 
 private:
