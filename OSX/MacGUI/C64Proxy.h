@@ -1,5 +1,5 @@
 /*
- * (C) 2006 - 2011 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2017 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "C64.h"
 
 // Forward declarations
 @class MyController;
@@ -30,16 +31,42 @@
 @class MessageProxy;
 class JoystickManager;
 
+// Forward declarations of wrappers for C++ classes.
+// We wrap classes into normal C structs to avoid any reference to C++ here.
+
+struct CpuWrapper;
+struct MemoryWrapper;
+struct VicWrapper;
+struct CiaWrapper;
+struct VicWrapper;
+struct KeyboardWrapper;
+struct JoystickWrapper;
+struct SidWrapperWrapper;
+struct IecWrapper;
+struct ExpansionPortWrapper;
+struct Via6522Wrapper;
+struct Disk525Wrapper;
+struct Vc1541Wrapper;
+struct DatasetteWrapper;
+struct SnapshotWrapper;
+struct ArchiveWrapper;
+struct TAPArchive;
+
+// TODO:
+// 1. Declare Message in C64_defs.h, it's a standard struct
+// 2. Get rid of Message proxy
+// 3. Get rid of char[128] inside message (not used?)
+
 // --------------------------------------------------------------------------
 //                                    CPU
 // --------------------------------------------------------------------------
 
 @interface CPUProxy : NSObject {
         
-	CPU *cpu;
+	CpuWrapper *wrapper;
 }
 
-- (instancetype) initWithCPU:(CPU *)c;
+- (instancetype) initWithCPU:(CPU *)cpu;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -93,10 +120,11 @@ class JoystickManager;
 // --------------------------------------------------------------------------
 
 @interface MemoryProxy : NSObject {
-	Memory *mem;
+    
+	MemoryWrapper *wrapper;
 }
 
-- (instancetype) initWithMemory:(Memory *)m;
+- (instancetype) initWithMemory:(Memory *)mem;
 - (void) dump;
 
 - (uint8_t) peek:(uint16_t)addr;
@@ -104,7 +132,6 @@ class JoystickManager;
 - (uint8_t) peekFrom:(uint16_t)addr memtype:(Memory::MemoryType)source;
 - (void) poke:(uint16_t)addr value:(uint8_t)val;
 - (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(Memory::MemoryType)source;
-
 - (bool) isValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)source;
 
 @end
@@ -114,10 +141,10 @@ class JoystickManager;
 // --------------------------------------------------------------------------
 
 @interface VICProxy : NSObject {
-	VIC *vic;
+	VicWrapper *wrapper;
 }
 
-- (instancetype) initWithVIC:(VIC *)v;
+- (instancetype) initWithVIC:(VIC *)vic;
 - (void) dump;
 
 - (void *) screenBuffer;
@@ -191,10 +218,10 @@ class JoystickManager;
 // --------------------------------------------------------------------------
 
 @interface CIAProxy : NSObject {
-	CIA *cia;
+	CiaWrapper *wrapper;
 }
 
-- (instancetype) initWithCIA:(CIA *)c;
+- (instancetype) initWithCIA:(CIA *)cia;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -306,17 +333,6 @@ class JoystickManager;
 //                                 Joystick
 // -------------------------------------------------------------------------
 
-#if 0
-@interface JoystickManagerProxy : NSObject {
-    JoystickManager *manager;
-}
-
-- (instancetype) initWithC64:(C64Proxy *)c64;
-// - (instancetype) initWithJoystickManager:(JoystickManager *)m;
-// - (instancetype) init;
-
-@end
-#endif
 
 @interface JoystickProxy : NSObject {
     Joystick *joystick;
