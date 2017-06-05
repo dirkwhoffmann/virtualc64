@@ -51,10 +51,6 @@ struct SnapshotWrapper;
 struct ArchiveWrapper;
 struct TAPArchive;
 
-// TODO:
-// 1. Declare Message in C64_defs.h, it's a standard struct
-// 2. Get rid of Message proxy
-// 3. Get rid of char[128] inside message (not used?)
 
 // --------------------------------------------------------------------------
 //                                    CPU
@@ -99,7 +95,7 @@ struct TAPArchive;
 - (uint8_t) lengthOfCurrentInstruction;
 - (uint16_t) addressOfNextInstruction;
 - (const char *) mnemonic:(uint8_t)opcode;
-- (CPU::AddressingMode) addressingMode:(uint8_t)opcode;
+- (AddressingMode) addressingMode:(uint8_t)opcode;
 
 - (int) topOfCallStack;
 - (int) breakpoint:(int)addr;
@@ -417,8 +413,6 @@ struct TAPArchive;
     
     Disk525Wrapper *wrapper;
 }
-
-- (instancetype)initWithDisk525:(Disk525 *)disk;
 
 - (BOOL)isWriteProtected;
 - (void)setWriteProtection:(BOOL)b;
@@ -755,8 +749,6 @@ struct TAPArchive;
 }
 
 @property TAPArchive *container;
-
-- (instancetype) initWithTAPContainer:(TAPArchive *)a;
 
 + (BOOL) isTAPFile:(NSString *)filename;
 + (instancetype) containerFromTAPFile:(NSString *)filename;

@@ -102,8 +102,8 @@ C64Memory::dumpState()
 	msg("   Kernel ROM :%s loaded\n", kernelRomIsLoaded() ? "" : " not");
 	for (uint16_t i = 0; i < 0xFFFF; i++) {
 		uint8_t tag = cpu->getBreakpointTag(i);
-		if (tag != CPU::NO_BREAKPOINT) {
-			msg("Breakpoint at %0x4X %s\n", i, tag == CPU::SOFT_BREAKPOINT ? "(soft)" : "");
+		if (tag != NO_BREAKPOINT) {
+			msg("Breakpoint at %0x4X %s\n", i, tag == SOFT_BREAKPOINT ? "(soft)" : "");
 		}
 	}
 	msg("\n");

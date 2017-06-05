@@ -93,7 +93,7 @@ struct ArchiveWrapper { Archive *archive; };
     return wrapper->cpu->getAddressOfNextInstruction(); }
 - (const char *) mnemonic:(uint8_t)opcode {
     return wrapper->cpu->getMnemonic(opcode); }
-- (CPU::AddressingMode) addressingMode:(uint8_t)opcode {
+- (AddressingMode) addressingMode:(uint8_t)opcode {
     return wrapper->cpu->getAddressingMode(opcode); }
 
 - (int) topOfCallStack { return wrapper->cpu->getTopOfCallStack(); }

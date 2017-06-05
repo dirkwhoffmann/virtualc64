@@ -543,14 +543,14 @@
 			
 		case MSG_CPU:
 			switch(msg->i) {
-				case CPU::OK: 
-				case CPU::SOFT_BREAKPOINT_REACHED:
+				case CPU_OK:
+				case SOFT_BREAKPOINT_REACHED:
 					[info setStringValue:@""];
 					break;
-				case CPU::HARD_BREAKPOINT_REACHED:
+				case HARD_BREAKPOINT_REACHED:
                     [self debugOpenAction:self];
 					break;
-				case CPU::ILLEGAL_INSTRUCTION:
+				case ILLEGAL_INSTRUCTION:
                     [self debugOpenAction:self];
 					break;
 				default:

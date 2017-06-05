@@ -28,56 +28,6 @@
 class CPU : public VirtualComponent {
 
 public:
-    //! @brief    Processor models
-    enum ChipModel {
-        MOS6510 = 0,
-        MOS6502 = 1
-    };
-
-	//! @brief    Addressing modes
-	enum AddressingMode { 
-		ADDR_IMPLIED,
-		ADDR_ACCUMULATOR,
-		ADDR_IMMEDIATE,
-		ADDR_ZERO_PAGE,
-		ADDR_ZERO_PAGE_X,
-		ADDR_ZERO_PAGE_Y,
-		ADDR_ABSOLUTE,
-		ADDR_ABSOLUTE_X,
-		ADDR_ABSOLUTE_Y,
-		ADDR_INDIRECT_X,
-		ADDR_INDIRECT_Y,
-		ADDR_RELATIVE,
-		ADDR_DIRECT,
-		ADDR_INDIRECT
-	};
-	
-	/*! @brief    Error states of the virtual CPU
-	 *  @details  CPU_OK indicates normal operation. When a (soft or hard) breakpoint is reached, 
-     *            the CPU enters the CPU_BREAKPOINT_REACHED state. CPU_ILLEGAL_INSTRUCTION is 
-     *            entered when an opcode is not understood by the CPU. Once the CPU enters a 
-     *            different state than CPU_OK, the execution thread is terminated.
-     */
-	enum ErrorState {
-		OK = 0,
-		SOFT_BREAKPOINT_REACHED,
-		HARD_BREAKPOINT_REACHED,
-		ILLEGAL_INSTRUCTION
-	};
-
-	/*! @brief    Breakpoint type
-	 *  @details  Each memory call is marked with a breakpoint tag. Originally, each cell is 
-     *            tagged with NO_BREAKPOINT which has no effect. CPU execution will stop if the 
-     *            memory cell is tagged with one of the following breakpoint types:
-     *
-     *            HARD_BREAKPOINT: execution is halted
-     *            SOFT_BREAKPOINT: execution is halted and the tag is deleted
-     */
-	enum Breakpoint {
-		NO_BREAKPOINT   = 0x00,
-		HARD_BREAKPOINT = 0x01,
-		SOFT_BREAKPOINT = 0x02
-	};
 
 	//! @brief    Clock frequency of the original C64 (NTSC version) in Hz
 	static const uint32_t CLOCK_FREQUENCY_NTSC = 1022727;
@@ -115,7 +65,7 @@ public:
      *  @abstract Right now, this atrribute is only used to distinguish the C64 CPU (MOS6510) from the
      *            VC1541 CPU (MOS6502). Hardware differences between the two processors are not emulated.
      */
-    ChipModel chipModel;
+    CPUChipModel chipModel;
 
 private:
     
@@ -605,7 +555,7 @@ public:
 	/*! @brief    Executes the device for one cycle.
 	 *  @details  This is the normal operation mode. Interrupt requests are handled. 
      */
-	inline bool executeOneCycle() { (*this.*next)(); return errorState == CPU::OK; }
+	inline bool executeOneCycle() { (*this.*next)(); return errorState == CPU_OK; }
 
 	//! @brief    Returns the current error state.
     inline ErrorState getErrorState() { return errorState; }
@@ -614,7 +564,7 @@ public:
     void setErrorState(ErrorState state);
     
 	//! @brief    Sets the error state back to normal.
-    void clearErrorState() { setErrorState(OK); }
+    void clearErrorState() { setErrorState(CPU_OK); }
     
     
     //

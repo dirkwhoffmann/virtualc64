@@ -72,7 +72,7 @@
 - (void)tableView: (NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     uint16_t addr = [self addressForRow:row];
-	if ([[c64 cpu] breakpoint:addr] == CPU::HARD_BREAKPOINT) {
+	if ([[c64 cpu] breakpoint:addr] == HARD_BREAKPOINT) {
 		[cell setTextColor:[NSColor redColor]];
 	} else {
 		[cell setTextColor:[NSColor blackColor]];
