@@ -495,9 +495,9 @@
 			}
 
             // Check for attached snapshot
-            if ([[self document] snapshot]) {
+            if ([[self document] attachedSnapshot]) {
                 NSLog(@"Found attached snapshot");
-                [c64 _loadFromSnapshot:[[self document] snapshot]];
+                [c64 loadFromSnapshot:[[self document] attachedSnapshot]];
             }				
 
 			// Check for attached cartridge

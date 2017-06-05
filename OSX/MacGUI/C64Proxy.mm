@@ -19,11 +19,27 @@
 #import "C64GUI.h"
 #import "C64.h"
 
+struct C64Wrapper { C64 *c64; };
+struct CpuWrapper { CPU *cpu; };
+struct MemoryWrapper { Memory *mem; };
+struct VicWrapper { VIC *vic; };
+struct CiaWrapper { CIA *cia; };
+struct KeyboardWrapper { Keyboard *keyboard; };
+struct JoystickWrapper { Joystick *joystick; };
+struct SidWrapperWrapper { SIDWrapper *sid; };
+struct IecWrapper { IEC *iec; };
+struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
+struct Via6522Wrapper { VIA6522 *via; };
+struct Disk525Wrapper { Disk525 *disk; };
+struct Vc1541Wrapper { VC1541 *vc1541; };
+struct DatasetteWrapper { Datasette *datasette; };
+struct SnapshotWrapper { Snapshot *snapshot; };
+struct ArchiveWrapper { Archive *archive; };
+// struct TAPArchive { TAPArchive * };
+
 // --------------------------------------------------------------------------
 //                                    CPU
 // --------------------------------------------------------------------------
-
-struct CpuWrapper { CPU *cpu; };
 
 @implementation CPUProxy
 
@@ -97,8 +113,6 @@ struct CpuWrapper { CPU *cpu; };
 //                                   Memory
 // --------------------------------------------------------------------------
 
-struct MemoryWrapper { Memory *mem; };
-
 @implementation MemoryProxy
 
 - (instancetype) initWithMemory:(Memory *)mem
@@ -131,8 +145,6 @@ struct MemoryWrapper { Memory *mem; };
 // --------------------------------------------------------------------------
 //                                    VIC
 // --------------------------------------------------------------------------
-
-struct VicWrapper { VIC *vic; };
 
 @implementation VICProxy
 
@@ -230,8 +242,6 @@ struct VicWrapper { VIC *vic; };
 //                                     CIA
 // --------------------------------------------------------------------------
 
-struct CiaWrapper { CIA *cia; };
-
 @implementation CIAProxy
 
 - (instancetype) initWithCIA:(CIA *)cia
@@ -321,8 +331,6 @@ struct CiaWrapper { CIA *cia; };
 //                                    Keyboard
 // --------------------------------------------------------------------------
 
-struct KeyboardWrapper { Keyboard *keyboard; };
-
 @implementation KeyboardProxy
 
 - (instancetype) initWithKeyboard:(Keyboard *)keyboard
@@ -408,8 +416,6 @@ struct KeyboardWrapper { Keyboard *keyboard; };
 //                                 Joystick
 // -------------------------------------------------------------------------
 
-struct JoystickWrapper { Joystick *joystick; };
-
 @implementation JoystickProxy
 
 - (instancetype) initWithJoystick:(Joystick *)joystick
@@ -434,8 +440,6 @@ struct JoystickWrapper { Joystick *joystick; };
 //                                    SID
 // --------------------------------------------------------------------------
 
-struct SidWrapperWrapper { SIDWrapper *sid; };
-
 @implementation SIDProxy
 
 - (instancetype) initWithSID:(SIDWrapper *)sid
@@ -454,8 +458,6 @@ struct SidWrapperWrapper { SIDWrapper *sid; };
 // --------------------------------------------------------------------------
 //                                   IEC bus
 // -------------------------------------------------------------------------
-
-struct IecWrapper { IEC *iec; };
 
 @implementation IECProxy
 
@@ -481,8 +483,6 @@ struct IecWrapper { IEC *iec; };
 //                                 Expansion port
 // -------------------------------------------------------------------------
 
-struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
-
 @implementation ExpansionPortProxy
 
 - (instancetype) initWithExpansionPort:(ExpansionPort *)expansionPort
@@ -506,8 +506,6 @@ struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
 //                                     VIA
 // -------------------------------------------------------------------------
 
-struct Via6522Wrapper { VIA6522 *via; };
-
 @implementation VIAProxy
 
 - (instancetype) initWithVIA:(VIA6522 *)via
@@ -528,8 +526,6 @@ struct Via6522Wrapper { VIA6522 *via; };
 // -------------------------------------------------------------------------
 //                                5,25" diskette
 // -------------------------------------------------------------------------
-
-struct Disk525Wrapper { Disk525 *disk; };
 
 @implementation Disk525Proxy
 
@@ -555,11 +551,9 @@ struct Disk525Wrapper { Disk525 *disk; };
 //                                    VC1541
 // -------------------------------------------------------------------------
 
-struct Vc1541Wrapper { VC1541 *vc1541; };
-
 @implementation VC1541Proxy
 
-@synthesize cpu, mem, via1, via2, disk;
+@synthesize wrapper, cpu, mem, via1, via2, disk;
 
 - (instancetype) initWithVC1541:(VC1541 *)vc1541
 {
@@ -603,11 +597,13 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
 - (void) setSendSoundMessages:(bool)b { wrapper->vc1541->setSendSoundMessages(b); }
 - (bool) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
 
+#if 0
 - (D64ArchiveProxy *) convertToD64
 {
     D64Archive *archive = wrapper->vc1541->convertToD64();
     return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
+#endif 
 
 - (void) playSound:(NSString *)name volume:(float)v
 {
@@ -621,8 +617,6 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
 // --------------------------------------------------------------------------
 //                                    Datasette
 // -------------------------------------------------------------------------
-
-struct DatasetteWrapper { Datasette *datasette; };
 
 @implementation DatasetteProxy
 
@@ -655,8 +649,6 @@ struct DatasetteWrapper { Datasette *datasette; };
 // --------------------------------------------------------------------------
 //                                     C64
 // --------------------------------------------------------------------------
-
-struct C64Wrapper { C64 *c64; };
 
 @implementation C64Proxy
 
@@ -738,28 +730,28 @@ struct C64Wrapper { C64 *c64; };
 - (void) rampUpFromZero { wrapper->c64->sid.rampUpFromZero(); }
 - (void) rampDown { wrapper->c64->sid.rampDown(); }
 
-- (void) _loadFromSnapshot:(Snapshot *)snapshot
+- (void) _loadFromSnapshotWrapper:(SnapshotWrapper *)w
 {
     wrapper->c64->suspend();
-    wrapper->c64->loadFromSnapshot(snapshot);
+    wrapper->c64->loadFromSnapshot(w->snapshot);
     wrapper->c64->resume();
 }
 
 - (void) loadFromSnapshot:(SnapshotProxy *)snapshot
 {
-    [self _loadFromSnapshot:[snapshot snapshot]];
+    [self _loadFromSnapshotWrapper:[snapshot wrapper]];
 }
 
-- (void) _saveToSnapshot:(Snapshot *)snapshot
+- (void) _saveToSnapshotWrapper:(SnapshotWrapper *)w
 {
     wrapper->c64->suspend();
-    wrapper->c64->saveToSnapshot(snapshot);
+    wrapper->c64->saveToSnapshot(w->snapshot);
     wrapper->c64->resume();
 }
 
 - (void) saveToSnapshot:(SnapshotProxy *)snapshot
 {
-    [self _saveToSnapshot:[snapshot snapshot]];
+    [self _saveToSnapshotWrapper:[snapshot wrapper]];
 }
 
 - (CIAProxy *) cia:(int)num { assert(num == 1 || num == 2); return (num == 1) ? [self cia1] : [self cia2]; }
@@ -868,30 +860,23 @@ struct C64Wrapper { C64 *c64; };
 
 @implementation SnapshotProxy
 
-@synthesize snapshot;
-
 - (instancetype) init
 {
-	NSLog(@"V64Snapshot::init");
-	
-	if (!(self = [super init]))
-		return nil;
-
-	snapshot = new Snapshot;
-	return self;
+    if (self = [super init]) {
+        wrapper = new SnapshotWrapper();
+        wrapper->snapshot = new Snapshot;
+    }
+    return self;
 }
 
-- (instancetype) initWithSnapshot:(Snapshot *)s
+- (instancetype) initWithSnapshot:(Snapshot *)snapshot
 {
-    NSLog(@"V64Snapshot::initWithSnapshot %p", s);
+    if (snapshot == nil) return nil;
     
-    if (s == nil)
-        return nil;
-    
-    if (!(self = [super init]))
-        return nil;
-    
-    snapshot = s;
+    if (self = [super init]) {
+        wrapper = new SnapshotWrapper();
+        wrapper->snapshot = snapshot;
+    }
     return self;
 }
 
@@ -899,9 +884,8 @@ struct C64Wrapper { C64 *c64; };
 {	
 	NSLog(@"V64Snapshot::dealloc");
 
-	if (snapshot)
-		delete snapshot;
-	
+	if (wrapper->snapshot) delete wrapper->snapshot;
+    if (wrapper) delete wrapper;
 }
 
 + (instancetype) snapshotFromSnapshot:(Snapshot *)snapshot
@@ -923,8 +907,11 @@ struct C64Wrapper { C64 *c64; };
     return [self snapshotFromSnapshot:(Snapshot::snapshotFromBuffer((uint8_t *)buffer, length))];
 }
 
-- (bool) readDataFromFile:(NSString *)path { return snapshot->readFromFile([path UTF8String]); }
-- (bool) writeDataToFile:(NSString *)path { return snapshot->writeToFile([path UTF8String]); }
+- (SnapshotWrapper *)wrapper { return wrapper; }
+- (bool) readDataFromFile:(NSString *)path {
+    return wrapper->snapshot->readFromFile([path UTF8String]); }
+- (bool) writeDataToFile:(NSString *)path {
+    return wrapper->snapshot->writeToFile([path UTF8String]); }
 
 @end
 
@@ -966,41 +953,39 @@ struct C64Wrapper { C64 *c64; };
 
 
 // --------------------------------------------------------------------------
-//                           Archive (incomplete)
+//                           Archive (incomplete?)
 // --------------------------------------------------------------------------
 
 @implementation ArchiveProxy
 
-@synthesize archive;
-
-- (instancetype)initWithArchive:(Archive *)a
+- (instancetype) initWithArchive:(Archive *)archive
 {
     NSLog(@"ArchiveProxy::initWithArchive %p", archive);
 
-    if (a == nil)
-        return nil;
+    if (archive == NULL) return nil;
     
-    if (!(self = [super init]))
-        return nil;
-    
-    archive = a;
-
+    if (self = [super init]) {
+        wrapper = new ArchiveWrapper();
+        wrapper->archive = archive;
+    }
     return self;
 }
 
+// @synthesize archive;
+
 - (void)dealloc
 {
-    NSLog(@"ArchiveProxy %p deleted", archive);
+    NSLog(@"ArchiveProxy %p deleted", wrapper->archive);
     
-    if (archive)
-        delete archive;
+    if (wrapper->archive) delete wrapper->archive;
+    if (wrapper) delete wrapper;
 }
 
-- (NSString *)getPath { return [NSString stringWithUTF8String:archive->getPath()]; }
-- (NSString *)getName { return [NSString stringWithUTF8String:archive->getName()]; }
-- (NSInteger)getType { return (NSInteger)archive->getType(); }
-- (NSInteger)getNumberOfItems { return (NSInteger)archive->getNumberOfItems(); }
-- (BOOL)writeToFile:(NSString *)filename { return archive->writeToFile([filename UTF8String]); }
+- (NSString *)getPath { return [NSString stringWithUTF8String:wrapper->archive->getPath()]; }
+- (NSString *)getName { return [NSString stringWithUTF8String:wrapper->archive->getName()]; }
+- (NSInteger)getType { return (NSInteger)wrapper->archive->getType(); }
+- (NSInteger)getNumberOfItems { return (NSInteger)wrapper->archive->getNumberOfItems(); }
+- (BOOL)writeToFile:(NSString *)filename { return wrapper->archive->writeToFile([filename UTF8String]); }
 
 @end
 
@@ -1055,6 +1040,12 @@ struct C64Wrapper { C64 *c64; };
 + (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive
 {
     D64Archive *archive = D64Archive::archiveFromArchive([otherArchive archive]);
+    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
++ (instancetype) archiveFromVC1541:(VC1541Proxy *)vc1541
+{
+    D64Archive *archive = [vc1541 wrapper]->vc1541->convertToD64();
     return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 

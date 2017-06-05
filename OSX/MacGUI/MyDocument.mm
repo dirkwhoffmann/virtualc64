@@ -21,7 +21,7 @@
 @implementation MyDocument
 
 @synthesize c64;
-@synthesize snapshot;
+@synthesize attachedSnapshot;
 @synthesize attachedArchive;
 @synthesize attachedTape;
 @synthesize cartridge;
@@ -61,7 +61,7 @@
 
 - (BOOL)setSnapshotWithName:(NSString *)path
 {
-    if (!(snapshot = Snapshot::snapshotFromFile([path UTF8String])))
+    if (!(attachedSnapshot = [SnapshotProxy snapshotFromFile:path]))
         return NO;
     
     return YES;

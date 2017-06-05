@@ -105,7 +105,8 @@
     ArchiveProxy *target;
 
     // Create archive from drive
-    if ((newDiskContents = [[c64 vc1541] convertToD64]) == nil) {
+    // if ((newDiskContents = [[c64 vc1541] convertToD64]) == nil) {
+    if ((newDiskContents = [D64ArchiveProxy archiveFromVC1541:[c64 vc1541]]) == nil) {
         NSLog(@"Cannot create D64 archive from drive");
         return false;
     }

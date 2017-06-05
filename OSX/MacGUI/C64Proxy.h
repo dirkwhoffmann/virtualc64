@@ -39,7 +39,6 @@ struct CpuWrapper;
 struct MemoryWrapper;
 struct VicWrapper;
 struct CiaWrapper;
-struct VicWrapper;
 struct KeyboardWrapper;
 struct JoystickWrapper;
 struct SidWrapperWrapper; // Yes, it's a double wrapper
@@ -457,6 +456,7 @@ struct TAPArchive;
     Disk525Proxy *disk;
 }
 
+@property (readonly) Vc1541Wrapper *wrapper;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
 @property (readonly) VIAProxy *via1;
@@ -480,7 +480,7 @@ struct TAPArchive;
 - (void) setBitAccuracy:(bool)b;
 - (bool) soundMessagesEnabled;
 - (void) setSendSoundMessages:(bool)b;
-- (D64ArchiveProxy *) convertToD64;
+// - (D64ArchiveProxy *) convertToD64;
 - (bool) exportToD64:(NSString *)path;
 
 - (void) playSound:(NSString *)name volume:(float)v;
@@ -492,7 +492,7 @@ struct TAPArchive;
 // --------------------------------------------------------------------------
 
 @interface DatasetteProxy : NSObject {
-
+    
     DatasetteWrapper *wrapper;
 }
 
@@ -520,8 +520,8 @@ struct TAPArchive;
 //                                    C64
 // -------------------------------------------------------------------------
 
-@interface C64Proxy : NSObject {	
-
+@interface C64Proxy : NSObject {
+    
 	C64Wrapper *wrapper;
 	AudioDevice *audioDevice;
     JoystickManager *joystickManager;
@@ -586,9 +586,9 @@ struct TAPArchive;
 - (void) rampDown;
 
 // Loadind and saving
-- (void)_loadFromSnapshot:(Snapshot *) snapshot;
+- (void)_loadFromSnapshotWrapper:(SnapshotWrapper *) snapshot;
 - (void)loadFromSnapshot:(SnapshotProxy *) snapshot;
-- (void)_saveToSnapshot:(Snapshot *) snapshot;
+- (void)_saveToSnapshotWrapper:(SnapshotWrapper *) snapshot;
 - (void)saveToSnapshot:(SnapshotProxy *) snapshot;
 
 - (CIAProxy *) cia:(int)num;
@@ -674,19 +674,16 @@ struct TAPArchive;
 //                                  Snapshot
 // --------------------------------------------------------------------------
 
-@interface SnapshotProxy : NSObject
-{
-	@private Snapshot *snapshot;
+@interface SnapshotProxy : NSObject {
+    
+	SnapshotWrapper *wrapper;
 }
 
-@property Snapshot *snapshot;
-
 - (instancetype) init;
-- (instancetype) initWithSnapshot:(Snapshot *)s;
-+ (instancetype) snapshotFromSnapshot:(Snapshot *)snapshot;
 + (instancetype) snapshotFromFile:(NSString *)path;
 + (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
 
+- (SnapshotWrapper *)wrapper; 
 - (bool) readDataFromFile:(NSString *)path;
 - (bool) writeDataToFile:(NSString *)path;
 
@@ -720,14 +717,14 @@ struct TAPArchive;
 //                                Archive
 // --------------------------------------------------------------------------
 
-@interface ArchiveProxy : NSObject
-{
-    Archive *archive;
+@interface ArchiveProxy : NSObject {
+    
+    ArchiveWrapper *wrapper;
 }
 
 @property Archive *archive;
 
-- (instancetype) initWithArchive:(Archive *)s;
+// - (instancetype) initWithArchive:(Archive *)s;
 
 - (NSString *)getPath;
 - (NSString *)getName;
@@ -753,6 +750,7 @@ struct TAPArchive;
 + (instancetype) archiveFromArbitraryFile:(NSString *)filename;
 + (instancetype) archiveFromD64Archive:(D64ArchiveProxy *)archive;
 + (instancetype) archiveFromArchive:(ArchiveProxy *)archive;
++ (instancetype) archiveFromVC1541:(VC1541Proxy *)vc1541;
 @end
 
 @interface PRGArchiveProxy : ArchiveProxy

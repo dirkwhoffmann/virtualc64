@@ -31,7 +31,7 @@ class Snapshot;
 
     //! Reference to an attached VC64 snapshot
     /*! When a new documents opens and this variable is not NULL, the snapshot is automatically flashed */
-    Snapshot *snapshot; // TODO: Replace by SnapshotProxy
+    SnapshotProxy *attachednapshot;
 
 	//! Reference to an attached D64, G64, or NIB archive
 	/*! When a new documents opens and this variable is not NULL, the archive is automatically inserted into the virtual floopy drive */
@@ -47,7 +47,7 @@ class Snapshot;
 }
 
 @property (strong) C64Proxy *c64;
-@property (assign) Snapshot *snapshot;
+@property (assign) SnapshotProxy *attachedSnapshot;
 @property ArchiveProxy *attachedArchive;
 @property TAPContainerProxy *attachedTape;
 @property (assign) Cartridge *cartridge;
