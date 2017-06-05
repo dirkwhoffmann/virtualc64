@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "C64Proxy.h"
 
 //! Predefined color schemes
 enum ColorScheme {

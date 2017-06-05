@@ -160,6 +160,7 @@ struct VicWrapper { VIC *vic; };
     
 	return [NSColor colorWithCalibratedRed:(float)r/255.0 green:(float)g/255.0 blue:(float)b/255.0 alpha:1.0];
 }
+- (void) setColor:(unsigned)nr rgba:(int)rgba { wrapper->vic->setColor(nr, rgba); }
 
 - (uint16_t) memoryBankAddr { return wrapper->vic->getMemoryBankAddr(); }
 - (void) setMemoryBankAddr:(uint16_t)addr { wrapper->vic->setMemoryBankAddr(addr); }
@@ -621,35 +622,41 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
 //                                    Datasette
 // -------------------------------------------------------------------------
 
+struct DatasetteWrapper { Datasette *datasette; };
+
 @implementation DatasetteProxy
 
-- (instancetype) initWithDatasette:(Datasette *)ds
+- (instancetype) initWithDatasette:(Datasette *)datasette
 {
-    self = [super init];
-    datasette = ds;
+    if (self = [super init]) {
+        wrapper = new DatasetteWrapper();
+        wrapper->datasette = datasette;
+    }
     return self;
 }
 
-- (void) dump { datasette->dumpState(); }
-- (bool) hasTape { return datasette->hasTape(); }
-- (void) pressPlay { datasette->pressPlay(); }
-- (void) pressStop { datasette->pressStop(); }
-- (void) pressRewind { datasette->rewind(); }
-- (void) ejectTape { datasette->ejectTape(); }
-- (NSInteger) getType { return datasette->getType(); }
-- (long) durationInCycles { return datasette->getDurationInCycles(); }
-- (int) durationInSeconds { return datasette->getDurationInSeconds(); }
-- (int) head { return datasette->getHead(); }
-- (long) headInCycles { return datasette->getHeadInCycles(); }
-- (int) headInSeconds { return datasette->getHeadInSeconds(); }
-- (void) setHeadInCycles:(long)value { datasette->setHeadInCycles(value); }
-- (BOOL) motor { return datasette->getMotor(); }
-- (BOOL) playKey { return datasette->getPlayKey(); }
+- (void) dump { wrapper->datasette->dumpState(); }
+- (bool) hasTape { return wrapper->datasette->hasTape(); }
+- (void) pressPlay { wrapper->datasette->pressPlay(); }
+- (void) pressStop { wrapper->datasette->pressStop(); }
+- (void) pressRewind { wrapper->datasette->rewind(); }
+- (void) ejectTape { wrapper->datasette->ejectTape(); }
+- (NSInteger) getType { return wrapper->datasette->getType(); }
+- (long) durationInCycles { return wrapper->datasette->getDurationInCycles(); }
+- (int) durationInSeconds { return wrapper->datasette->getDurationInSeconds(); }
+- (int) head { return wrapper->datasette->getHead(); }
+- (long) headInCycles { return wrapper->datasette->getHeadInCycles(); }
+- (int) headInSeconds { return wrapper->datasette->getHeadInSeconds(); }
+- (void) setHeadInCycles:(long)value { wrapper->datasette->setHeadInCycles(value); }
+- (BOOL) motor { return wrapper->datasette->getMotor(); }
+- (BOOL) playKey { return wrapper->datasette->getPlayKey(); }
 @end
 
 // --------------------------------------------------------------------------
 //                                     C64
 // --------------------------------------------------------------------------
+
+struct C64Wrapper { C64 *c64; };
 
 @implementation C64Proxy
 
@@ -661,26 +668,27 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
 {
 	NSLog(@"C64Proxy::init");
 	
-    self = [super init];
+    if (!(self = [super init]))
+        return self;
+    
+    wrapper = new C64Wrapper();
+    wrapper->c64 = new C64();
 	
-	// Create virtual machine and initialize references
-	c64 = new C64();
-	
-	// Create sub proxys
-	cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
-    // cpu = [[CPUProxy alloc] initWithCPU:&c64->floppy->cpu];
-	mem = [[MemoryProxy alloc] initWithMemory:&c64->mem];
-	vic = [[VICProxy alloc] initWithVIC:&c64->vic];
-	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
-	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
-	sid = [[SIDProxy alloc] initWithSID:&c64->sid];
-	keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
-    joystickA = [[JoystickProxy alloc] initWithJoystick:&c64->joystickA];
-    joystickB = [[JoystickProxy alloc] initWithJoystick:&c64->joystickB];
-    iec = [[IECProxy alloc] initWithIEC:&c64->iec];
-    expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
-	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
-    datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
+    // Create sub proxys
+    cpu = [[CPUProxy alloc] initWithCPU:&wrapper->c64->cpu];
+    // cpu = [[CPUProxy alloc] initWithCPU:&wrapper->c64->floppy->cpu];
+    mem = [[MemoryProxy alloc] initWithMemory:&wrapper->c64->mem];
+    vic = [[VICProxy alloc] initWithVIC:&wrapper->c64->vic];
+	cia1 = [[CIAProxy alloc] initWithCIA:&wrapper->c64->cia1];
+	cia2 = [[CIAProxy alloc] initWithCIA:&wrapper->c64->cia2];
+	sid = [[SIDProxy alloc] initWithSID:&wrapper->c64->sid];
+	keyboard = [[KeyboardProxy alloc] initWithKeyboard:&wrapper->c64->keyboard];
+    joystickA = [[JoystickProxy alloc] initWithJoystick:&wrapper->c64->joystickA];
+    joystickB = [[JoystickProxy alloc] initWithJoystick:&wrapper->c64->joystickB];
+    iec = [[IECProxy alloc] initWithIEC:&wrapper->c64->iec];
+    expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&wrapper->c64->expansionport];
+	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&wrapper->c64->floppy];
+    datasette = [[DatasetteProxy alloc] initWithDatasette:&wrapper->c64->datasette];
 
     // Initialize Joystick HID interface
     if (!(joystickManager = new JoystickManager(self))) {
@@ -689,7 +697,7 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
     joystickManager->initialize(); 
 
 	// Initialize CoreAudio sound interface
-	if (!(audioDevice = [[AudioDevice alloc] initWithC64:c64])) {
+	if (!(audioDevice = [[AudioDevice alloc] initWithC64:wrapper->c64])) {
 		NSLog(@"WARNING: Couldn't initialize CoreAudio interface. Sound disabled.");
 	}
 		
@@ -702,7 +710,7 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
 
 - (void) kill
 {
-	assert(c64 != NULL);
+	assert(wrapper->c64 != NULL);
 	NSLog(@"C64Proxy::kill");
 
 	// Delete sound device
@@ -714,27 +722,27 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
     joystickManager = NULL;
     
     // Delete emulator
-    delete c64;
-	c64 = NULL;
+    delete wrapper->c64;
+	wrapper->c64 = NULL;
 }
 
-- (bool) audioFilter { return c64->getAudioFilter(); }
-- (void) setAudioFilter:(bool)b { c64->setAudioFilter(b); }
-- (bool) reSID { return c64->getReSID(); }
-- (void) setReSID:(bool)b { c64->setReSID(b); }
-- (int) samplingMethod { return (int)(c64->getSamplingMethod()); }
-- (void) setSamplingMethod:(long)value { c64->setSamplingMethod((sampling_method)value); }
-- (int) chipModel { return (chip_model)(c64->getChipModel()); }
-- (void) setChipModel:(long)value {c64->setChipModel((chip_model)value); }
-- (void) rampUp { c64->sid.rampUp(); }
-- (void) rampUpFromZero { c64->sid.rampUpFromZero(); }
-- (void) rampDown { c64->sid.rampDown(); }
+- (bool) audioFilter { return wrapper->c64->getAudioFilter(); }
+- (void) setAudioFilter:(bool)b { wrapper->c64->setAudioFilter(b); }
+- (bool) reSID { return wrapper->c64->getReSID(); }
+- (void) setReSID:(bool)b { wrapper->c64->setReSID(b); }
+- (int) samplingMethod { return (int)(wrapper->c64->getSamplingMethod()); }
+- (void) setSamplingMethod:(long)value { wrapper->c64->setSamplingMethod((sampling_method)value); }
+- (int) chipModel { return (chip_model)(wrapper->c64->getChipModel()); }
+- (void) setChipModel:(long)value {wrapper->c64->setChipModel((chip_model)value); }
+- (void) rampUp { wrapper->c64->sid.rampUp(); }
+- (void) rampUpFromZero { wrapper->c64->sid.rampUpFromZero(); }
+- (void) rampDown { wrapper->c64->sid.rampDown(); }
 
 - (void) _loadFromSnapshot:(Snapshot *)snapshot
 {
-    c64->suspend();
-    c64->loadFromSnapshot(snapshot);
-    c64->resume();
+    wrapper->c64->suspend();
+    wrapper->c64->loadFromSnapshot(snapshot);
+    wrapper->c64->resume();
 }
 
 - (void) loadFromSnapshot:(SnapshotProxy *)snapshot
@@ -744,9 +752,9 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
 
 - (void) _saveToSnapshot:(Snapshot *)snapshot
 {
-    c64->suspend();
-    c64->saveToSnapshot(snapshot);
-    c64->resume();
+    wrapper->c64->suspend();
+    wrapper->c64->saveToSnapshot(snapshot);
+    wrapper->c64->resume();
 }
 
 - (void) saveToSnapshot:(SnapshotProxy *)snapshot
@@ -756,81 +764,90 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
 
 - (CIAProxy *) cia:(int)num { assert(num == 1 || num == 2); return (num == 1) ? [self cia1] : [self cia2]; }
 
-- (void) dump { c64->dumpState(); }
+- (void) dump { wrapper->c64->dumpState(); }
 
-- (MessageProxy *)message { return [MessageProxy messageFromMessage:c64->getMessage()]; }
-- (void) putMessage:(int)msg { c64->putMessage(msg); }
-- (void) reset { c64->reset(); }
-- (void) ping { c64->ping(); }
-- (void) halt { c64->halt(); }
-- (void) step { c64->step(); }
-- (void) run { c64->run(); }
-- (void) suspend { c64->suspend(); }
-- (void) resume { c64->resume(); }
-- (bool) isHalted { return c64->isHalted(); }
-- (bool) isRunnable { return c64->isRunnable(); }
-- (bool) isRunning { return c64->isRunning(); }
-- (bool) isPAL { return c64->isPAL(); }
-- (bool) isNTSC { return c64->isNTSC(); }
-- (void) setPAL { c64->setPAL(); }
-- (void) setNTSC { c64->setNTSC(); }
+- (MessageProxy *)message { return [MessageProxy messageFromMessage:wrapper->c64->getMessage()]; }
+- (void) putMessage:(int)msg { wrapper->c64->putMessage(msg); }
+- (void) reset { wrapper->c64->reset(); }
+- (void) ping { wrapper->c64->ping(); }
+- (void) halt { wrapper->c64->halt(); }
+- (void) step { wrapper->c64->step(); }
+- (void) run { wrapper->c64->run(); }
+- (void) suspend { wrapper->c64->suspend(); }
+- (void) resume { wrapper->c64->resume(); }
+- (bool) isHalted { return wrapper->c64->isHalted(); }
+- (bool) isRunnable { return wrapper->c64->isRunnable(); }
+- (bool) isRunning { return wrapper->c64->isRunning(); }
+- (bool) isPAL { return wrapper->c64->isPAL(); }
+- (bool) isNTSC { return wrapper->c64->isNTSC(); }
+- (void) setPAL { wrapper->c64->setPAL(); }
+- (void) setNTSC { wrapper->c64->setNTSC(); }
 
-//- (int) numberOfMissingRoms { return c64->numberOfMissingRoms(); }
-- (uint8_t) missingRoms { return c64->getMissingRoms(); }
-- (bool) isBasicRom:(NSString *)filename { return c64->mem.isBasicRom([filename UTF8String]); }
-- (bool) loadBasicRom:(NSString *)filename { return [self isBasicRom:filename] && c64->loadRom([filename UTF8String]); }
-- (bool) isCharRom:(NSString *)filename { return c64->mem.isCharRom([filename UTF8String]); }
-- (bool) loadCharRom:(NSString *)filename { return [self isCharRom:filename] && c64->loadRom([filename UTF8String]); }
-- (bool) isKernelRom:(NSString *)filename { return c64->mem.isKernelRom([filename UTF8String]); }
-- (bool) loadKernelRom:(NSString *)filename { return [self isKernelRom:filename] && c64->loadRom([filename UTF8String]); }
-- (bool) isVC1541Rom:(NSString *)filename { return c64->floppy.mem.is1541Rom([filename UTF8String]); }
-- (bool) loadVC1541Rom:(NSString *)filename { return [self isVC1541Rom:filename] && c64->loadRom([filename UTF8String]); }
-- (bool) isRom:(NSString *)filename { return [self isBasicRom:filename] || [self isCharRom:filename] || [self isKernelRom:filename] || [self isVC1541Rom:filename]; }
-- (bool) loadRom:(NSString *)filename { return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename]; }
+- (uint8_t) missingRoms { return wrapper->c64->getMissingRoms(); }
+- (bool) isBasicRom:(NSString *)filename {
+    return wrapper->c64->mem.isBasicRom([filename UTF8String]); }
+- (bool) loadBasicRom:(NSString *)filename {
+    return [self isBasicRom:filename] && wrapper->c64->loadRom([filename UTF8String]); }
+- (bool) isCharRom:(NSString *)filename {
+    return wrapper->c64->mem.isCharRom([filename UTF8String]); }
+- (bool) loadCharRom:(NSString *)filename {
+    return [self isCharRom:filename] && wrapper->c64->loadRom([filename UTF8String]); }
+- (bool) isKernelRom:(NSString *)filename {
+    return wrapper->c64->mem.isKernelRom([filename UTF8String]); }
+- (bool) loadKernelRom:(NSString *)filename {
+    return [self isKernelRom:filename] && wrapper->c64->loadRom([filename UTF8String]); }
+- (bool) isVC1541Rom:(NSString *)filename {
+    return wrapper->c64->floppy.mem.is1541Rom([filename UTF8String]); }
+- (bool) loadVC1541Rom:(NSString *)filename {
+    return [self isVC1541Rom:filename] && wrapper->c64->loadRom([filename UTF8String]); }
+- (bool) isRom:(NSString *)filename {
+    return [self isBasicRom:filename] || [self isCharRom:filename] || [self isKernelRom:filename] || [self isVC1541Rom:filename]; }
+- (bool) loadRom:(NSString *)filename {
+    return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename]; }
 
-- (bool) attachCartridge:(Cartridge *)c { return c64->attachCartridge(c); }
-- (void) detachCartridge { c64->detachCartridge(); }
-- (bool) isCartridgeAttached { return c64->isCartridgeAttached(); }
+- (bool) attachCartridge:(Cartridge *)c { return wrapper->c64->attachCartridge(c); }
+- (void) detachCartridge { wrapper->c64->detachCartridge(); }
+- (bool) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 
-- (bool) mountArchive:(ArchiveProxy *)a { return c64->mountArchive([a archive]); }
-- (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr { return c64->flushArchive([a archive], (int)nr); }
+- (bool) mountArchive:(ArchiveProxy *)a { return wrapper->c64->mountArchive([a archive]); }
+- (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr { return wrapper->c64->flushArchive([a archive], (int)nr); }
 
-- (bool) insertTape:(TAPContainerProxy *)c { return c64->insertTape([c container]); }
+- (bool) insertTape:(TAPContainerProxy *)c { return wrapper->c64->insertTape([c container]); }
 
-- (bool) warp { return c64->getWarp(); }
-- (void) setWarp:(bool)b { c64->setWarp(b); }	
-- (bool) alwaysWarp { return c64->getAlwaysWarp(); }
-- (void) setAlwaysWarp:(bool)b { c64->setAlwaysWarp(b); }
-- (bool) warpLoad { return c64->getWarpLoad(); }
-- (void) setWarpLoad:(bool)b { c64->setWarpLoad(b); }
+- (bool) warp { return wrapper->c64->getWarp(); }
+- (void) setWarp:(bool)b { wrapper->c64->setWarp(b); }
+- (bool) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }
+- (void) setAlwaysWarp:(bool)b { wrapper->c64->setAlwaysWarp(b); }
+- (bool) warpLoad { return wrapper->c64->getWarpLoad(); }
+- (void) setWarpLoad:(bool)b { wrapper->c64->setWarpLoad(b); }
 
-- (long) cycles { return (long)c64->getCycles(); }
-- (long) frames { return (long)c64->getFrame(); }
+- (long) cycles { return (long)wrapper->c64->getCycles(); }
+- (long) frames { return (long)wrapper->c64->getFrame(); }
 
 // Cheatbox
-- (int) historicSnapshots { return c64->numHistoricSnapshots(); }
+- (int) historicSnapshots { return wrapper->c64->numHistoricSnapshots(); }
 
 - (int) historicSnapshotHeaderSize:(NSInteger)nr
-    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getHeaderSize() : 0; }
+    { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getHeaderSize() : 0; }
 
 - (uint8_t *) historicSnapshotHeader:(NSInteger)nr
-    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getHeader() : NULL; }
+    { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getHeader() : NULL; }
 
 - (int) historicSnapshotDataSize:(NSInteger)nr
-    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getDataSize() : 0; }
+    { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getDataSize() : 0; }
 
 - (uint8_t *) historicSnapshotData:(NSInteger)nr
-    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getData() : NULL; }
+    { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getData() : NULL; }
 
 
 - (unsigned char *)historicSnapshotImageData:(NSInteger)nr
-    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getImageData() : NULL; }
+    { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageData() : NULL; }
 - (unsigned)historicSnapshotImageWidth:(NSInteger)nr
-    { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
+    { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
 - (unsigned)historicSnapshotImageHeight:(NSInteger)nr
-{ Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
-- (time_t)historicSnapshotTimestamp:(NSInteger)nr { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
-- (bool)revertToHistoricSnapshot:(NSInteger)nr { Snapshot *s = c64->getHistoricSnapshot((int)nr); return s ? c64->loadFromSnapshot(s), true : false; }
+{ Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
+- (time_t)historicSnapshotTimestamp:(NSInteger)nr { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
+- (bool)revertToHistoricSnapshot:(NSInteger)nr { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? wrapper->c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
 - (BOOL)joystickIsPluggedIn:(int)nr { return joystickManager->joystickIsPluggedIn(nr); }

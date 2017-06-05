@@ -34,6 +34,7 @@ class JoystickManager;
 // Forward declarations of wrappers for C++ classes.
 // We wrap classes into normal C structs to avoid any reference to C++ here.
 
+struct C64Wrapper;
 struct CpuWrapper;
 struct MemoryWrapper;
 struct VicWrapper;
@@ -149,7 +150,9 @@ struct TAPArchive;
 - (void) dump;
 
 - (void *) screenBuffer;
+
 - (NSColor *) color:(int)nr;
+- (void) setColor:(unsigned)nr rgba:(int)rgba;
 
 - (uint16_t) memoryBankAddr;
 - (void) setMemoryBankAddr:(uint16_t)addr;
@@ -489,10 +492,11 @@ struct TAPArchive;
 // --------------------------------------------------------------------------
 
 @interface DatasetteProxy : NSObject {
-    Datasette *datasette;
+
+    DatasetteWrapper *wrapper;
 }
 
-- (instancetype) initWithDatasette:(Datasette *)kb;
+- (instancetype) initWithDatasette:(Datasette *)datasette;
 - (void) dump;
 
 - (bool) hasTape;
@@ -518,7 +522,7 @@ struct TAPArchive;
 
 @interface C64Proxy : NSObject {	
 
-	C64 *c64;
+	C64Wrapper *wrapper;
 	AudioDevice *audioDevice;
     JoystickManager *joystickManager;
     
