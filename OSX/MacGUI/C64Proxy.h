@@ -65,7 +65,6 @@ struct TAPArchive;
 	CpuWrapper *wrapper;
 }
 
-- (instancetype) initWithCPU:(CPU *)cpu;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -123,7 +122,6 @@ struct TAPArchive;
 	MemoryWrapper *wrapper;
 }
 
-- (instancetype) initWithMemory:(Memory *)mem;
 - (void) dump;
 
 - (uint8_t) peek:(uint16_t)addr;
@@ -144,7 +142,6 @@ struct TAPArchive;
 	VicWrapper *wrapper;
 }
 
-- (instancetype) initWithVIC:(VIC *)vic;
 - (void) dump;
 
 - (void *) screenBuffer;
@@ -224,7 +221,6 @@ struct TAPArchive;
 	CiaWrapper *wrapper;
 }
 
-- (instancetype) initWithCIA:(CIA *)cia;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -308,7 +304,6 @@ struct TAPArchive;
     KeyboardWrapper *wrapper;
 }
 
-- (instancetype) initWithKeyboard:(Keyboard *)keyboard;
 - (void) dump;
 
 - (void) pressKey:(int)c;
@@ -343,8 +338,6 @@ struct TAPArchive;
     JoystickWrapper *wrapper;
 }
 
-- (instancetype) initWithJoystick:(Joystick *)joystick;
-
 - (void) setButtonPressed:(BOOL)pressed;
 - (void) setAxisX:(JoystickDirection)state;
 - (void) setAxisY:(JoystickDirection)state;
@@ -362,7 +355,6 @@ struct TAPArchive;
 	SidWrapperWrapper *wrapper;
 }
 
-- (instancetype) initWithSID:(SIDWrapper *)sid;
 - (void) dump;
 
 @end
@@ -376,7 +368,6 @@ struct TAPArchive;
     IecWrapper *wrapper;
 }
 
-- (instancetype) initWithIEC:(IEC *)iec;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -395,7 +386,6 @@ struct TAPArchive;
     ExpansionPortWrapper *wrapper;
 }
 
-- (instancetype) initWithExpansionPort:(ExpansionPort *)expansionPort;
 - (void) dump;
 - (bool) cartridgeAttached; 
 - (int) cartridgeType;
@@ -413,7 +403,6 @@ struct TAPArchive;
 	Via6522Wrapper *wrapper;
 }
 
-- (instancetype) initWithVIA:(VIA6522 *)via;
 - (void) dump;
 - (bool) tracingEnabled;
 - (void) setTraceMode:(bool)b;
@@ -462,7 +451,6 @@ struct TAPArchive;
 @property (readonly) VIAProxy *via2;
 @property (readonly) Disk525Proxy *disk;
 
-- (instancetype) initWithVC1541:(VC1541 *)vc1541;
 - (VIAProxy *) via:(int)num;
 
 - (void) dump;
@@ -495,7 +483,6 @@ struct TAPArchive;
     DatasetteWrapper *wrapper;
 }
 
-- (instancetype) initWithDatasette:(Datasette *)datasette;
 - (void) dump;
 
 - (bool) hasTape;
@@ -697,10 +684,6 @@ struct TAPArchive;
     
     ArchiveWrapper *wrapper;
 }
-
-// @property Archive *archive;
-
-// - (instancetype) initWithArchive:(Archive *)s;
 
 - (ArchiveWrapper *)wrapper;
 - (NSString *)getPath;

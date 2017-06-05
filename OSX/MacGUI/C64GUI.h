@@ -22,7 +22,6 @@
 #import <MetalKit/MetalKit.h>
 #import <simd/simd.h>
 
-// #import "C64.h"
 #import "C64Proxy.h"
 #import "C64ProxyColors.h"
 #import "MyDocument.h"

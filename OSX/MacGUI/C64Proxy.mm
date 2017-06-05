@@ -663,24 +663,25 @@ struct ArchiveWrapper { Archive *archive; };
     if (!(self = [super init]))
         return self;
     
+    C64 *c64 = new C64();
     wrapper = new C64Wrapper();
-    wrapper->c64 = new C64();
+    wrapper->c64 = c64;
 	
     // Create sub proxys
-    cpu = [[CPUProxy alloc] initWithCPU:&wrapper->c64->cpu];
-    // cpu = [[CPUProxy alloc] initWithCPU:&wrapper->c64->floppy->cpu];
-    mem = [[MemoryProxy alloc] initWithMemory:&wrapper->c64->mem];
-    vic = [[VICProxy alloc] initWithVIC:&wrapper->c64->vic];
-	cia1 = [[CIAProxy alloc] initWithCIA:&wrapper->c64->cia1];
-	cia2 = [[CIAProxy alloc] initWithCIA:&wrapper->c64->cia2];
-	sid = [[SIDProxy alloc] initWithSID:&wrapper->c64->sid];
-	keyboard = [[KeyboardProxy alloc] initWithKeyboard:&wrapper->c64->keyboard];
-    joystickA = [[JoystickProxy alloc] initWithJoystick:&wrapper->c64->joystickA];
-    joystickB = [[JoystickProxy alloc] initWithJoystick:&wrapper->c64->joystickB];
-    iec = [[IECProxy alloc] initWithIEC:&wrapper->c64->iec];
-    expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&wrapper->c64->expansionport];
-	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&wrapper->c64->floppy];
-    datasette = [[DatasetteProxy alloc] initWithDatasette:&wrapper->c64->datasette];
+    cpu = [[CPUProxy alloc] initWithCPU:&c64->cpu];
+    // cpu = [[CPUProxy alloc] initWithCPU:&c64->floppy->cpu];
+    mem = [[MemoryProxy alloc] initWithMemory:&c64->mem];
+    vic = [[VICProxy alloc] initWithVIC:&c64->vic];
+	cia1 = [[CIAProxy alloc] initWithCIA:&c64->cia1];
+	cia2 = [[CIAProxy alloc] initWithCIA:&c64->cia2];
+	sid = [[SIDProxy alloc] initWithSID:&c64->sid];
+	keyboard = [[KeyboardProxy alloc] initWithKeyboard:&c64->keyboard];
+    joystickA = [[JoystickProxy alloc] initWithJoystick:&c64->joystickA];
+    joystickB = [[JoystickProxy alloc] initWithJoystick:&c64->joystickB];
+    iec = [[IECProxy alloc] initWithIEC:&c64->iec];
+    expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
+	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
+    datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
 
     // Initialize Joystick HID interface
     if (!(joystickManager = new JoystickManager(self))) {
@@ -689,7 +690,7 @@ struct ArchiveWrapper { Archive *archive; };
     joystickManager->initialize(); 
 
 	// Initialize CoreAudio sound interface
-	if (!(audioDevice = [[AudioDevice alloc] initWithC64:wrapper->c64])) {
+	if (!(audioDevice = [[AudioDevice alloc] initWithC64:c64])) {
 		NSLog(@"WARNING: Couldn't initialize CoreAudio interface. Sound disabled.");
 	}
 		
