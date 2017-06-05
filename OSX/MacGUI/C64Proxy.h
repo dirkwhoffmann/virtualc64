@@ -32,6 +32,7 @@
 @class MyMetalView;
 @class ArchiveProxy;
 @class TAPContainerProxy;
+@class CartridgeProxy;
 class JoystickManager;
 
 // Forward declarations of wrappers for C++ classes.
@@ -53,7 +54,8 @@ struct Vc1541Wrapper;
 struct DatasetteWrapper;
 struct SnapshotWrapper;
 struct ArchiveWrapper;
-struct TAPArchive;
+struct TAPArchiveWrapper;
+struct CartridgeWrapper;
 
 
 // --------------------------------------------------------------------------
@@ -500,6 +502,7 @@ struct TAPArchive;
 
 @end
 
+
 // -------------------------------------------------------------------------
 //                                    C64
 // -------------------------------------------------------------------------
@@ -609,7 +612,7 @@ struct TAPArchive;
 - (bool) isRom:(NSString *)filename;
 - (bool) loadRom:(NSString *)filename;
 
-- (bool) attachCartridge:(Cartridge *)c;
+- (bool) attachCartridge:(CartridgeProxy *)c;
 - (void) detachCartridge;
 - (bool) isCartridgeAttached;
 
@@ -761,6 +764,21 @@ struct TAPArchive;
 - (NSString *)getName;
 - (NSInteger)getType;
 - (NSInteger)TAPversion;
+
+@end
+
+// --------------------------------------------------------------------------
+//                                Cartridge
+// --------------------------------------------------------------------------
+
+@interface CartridgeProxy : NSObject {
+    
+    CartridgeWrapper *wrapper;
+}
+
+- (CartridgeWrapper *)wrapper;
++ (instancetype) cartridgeFromFile:(NSString *)filename;
+
 
 @end
 

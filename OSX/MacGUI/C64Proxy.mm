@@ -35,7 +35,9 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
 struct DatasetteWrapper { Datasette *datasette; };
 struct SnapshotWrapper { Snapshot *snapshot; };
 struct ArchiveWrapper { Archive *archive; };
-// struct TAPArchive { TAPArchive * };
+struct TAPArchiveWrapper { TAPArchive *taparchive; };
+struct CartridgeWrapper { Cartridge *cartridge; };
+
 
 // --------------------------------------------------------------------------
 //                                    CPU
@@ -758,7 +760,6 @@ struct ArchiveWrapper { Archive *archive; };
 - (CIAProxy *) cia:(int)num { assert(num == 1 || num == 2); return (num == 1) ? [self cia1] : [self cia2]; }
 
 - (void) dump { wrapper->c64->dumpState(); }
-
 - (Message *)message { return wrapper->c64->getMessage(); }
 - (void) putMessage:(int)msg { wrapper->c64->putMessage(msg); }
 - (void) reset { wrapper->c64->reset(); }
@@ -798,7 +799,8 @@ struct ArchiveWrapper { Archive *archive; };
 - (bool) loadRom:(NSString *)filename {
     return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename]; }
 
-- (bool) attachCartridge:(Cartridge *)c { return wrapper->c64->attachCartridge(c); }
+- (bool) attachCartridge:(CartridgeProxy *)c {
+    return wrapper->c64->attachCartridge([c wrapper]->cartridge); }
 - (void) detachCartridge { wrapper->c64->detachCartridge(); }
 - (bool) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 
@@ -1163,6 +1165,41 @@ struct ArchiveWrapper { Archive *archive; };
 - (NSString *)getName { return [NSString stringWithUTF8String:container->getName()]; }
 - (NSInteger)getType { return (NSInteger)container->getType(); }
 - (NSInteger)TAPversion { return (NSInteger)container->TAPversion(); }
+
+@end
+
+
+// --------------------------------------------------------------------------
+//                                 Cartridge
+// --------------------------------------------------------------------------
+
+@implementation CartridgeProxy
+
+- (CartridgeWrapper *)wrapper { return wrapper; }
+
+- (instancetype) initWithCartridge:(Cartridge *)cartridge
+{
+    if (self = [super init]) {
+        wrapper = new CartridgeWrapper();
+        wrapper->cartridge = cartridge;
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    NSLog(@"CartridgeProxy %p deleted", wrapper->cartridge);
+    
+    if (wrapper->cartridge) delete wrapper->cartridge;
+    if (wrapper) delete wrapper;
+}
+
+
++ (instancetype) cartridgeFromFile:(NSString *)filename
+{
+    Cartridge *cartridge = Cartridge::cartridgeFromFile([filename UTF8String]);
+    return cartridge ? [[CartridgeProxy alloc] initWithCartridge:cartridge] : nil;
+}
 
 @end
 

@@ -24,7 +24,7 @@
 @synthesize attachedSnapshot;
 @synthesize attachedArchive;
 @synthesize attachedTape;
-@synthesize cartridge;
+@synthesize attachedCartridge;
 
 - (void)makeWindowControllers
 {
@@ -48,8 +48,10 @@
 	
     self = [super init];
 
+    attachedSnapshot = nil;
     attachedArchive = nil;
-	cartridge = NULL;
+    attachedTape = nil;
+	attachedCartridge = nil;
 		
 	return self;
 }
@@ -101,7 +103,7 @@
 
 - (BOOL)setCartridgeWithName:(NSString *)path
 {	
-	if (!(cartridge = Cartridge::cartridgeFromFile([path UTF8String])))
+    if (!(attachedCartridge = [CartridgeProxy cartridgeFromFile:path]))
 		return NO;
 	
 	return YES;
@@ -110,8 +112,8 @@
 - (BOOL)detachCartridge
 {
 	[c64 detachCartridge];
-	delete cartridge;
-	cartridge = NULL;
+    // TODO: CHECK: DO WE NEED TO DEALLOC MANUALLY?
+	attachedCartridge = nil;
 	
 	return YES;
 }

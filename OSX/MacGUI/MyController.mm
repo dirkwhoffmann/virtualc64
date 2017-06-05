@@ -501,7 +501,7 @@
             }				
 
 			// Check for attached cartridge
-			if ([[self document] cartridge]) {
+			if ([[self document] attachedCartridge]) {
 				NSLog(@"Found attached cartridge");
 				[self mountCartridge];
 			}				
@@ -879,7 +879,7 @@
 {
 	NSLog(@"cartridgeEjectAAction");
 	[c64 detachCartridge];
-	[[self document] setCartridge:NULL];
+	[[self document] setAttachedCartridge:nil];
 	[c64 reset];
 }
 
@@ -902,10 +902,10 @@
 
 - (BOOL)mountCartridge
 {
-	if ([[self document] cartridge] == NULL)
+	if ([[self document] attachedCartridge] == nil)
 		return NO;
 
-	[c64 attachCartridge:[[self document] cartridge]];
+	[c64 attachCartridge:[[self document] attachedCartridge]];
 	[c64 reset];
 	
 	return YES;

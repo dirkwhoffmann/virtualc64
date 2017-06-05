@@ -43,14 +43,14 @@ class Snapshot;
 
 	//! Reference to an attached cartridge 
     /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged into the virtual expansion port */
-	Cartridge *cartridge; // TODO: Replace by CartridgeProxy
+	CartridgeProxy *attachedCartridge;
 }
 
 @property (strong) C64Proxy *c64;
-@property (assign) SnapshotProxy *attachedSnapshot;
+@property SnapshotProxy *attachedSnapshot;
 @property ArchiveProxy *attachedArchive;
 @property TAPContainerProxy *attachedTape;
-@property (assign) Cartridge *cartridge;
+@property CartridgeProxy *attachedCartridge;
 
 - (BOOL)setSnapshotWithName:(NSString *)path;
 - (BOOL)setG64ArchiveWithName:(NSString *)path;
