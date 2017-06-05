@@ -801,11 +801,15 @@ struct ArchiveWrapper { Archive *archive; };
 - (void) detachCartridge { wrapper->c64->detachCartridge(); }
 - (bool) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 
-- (bool) mountArchive:(ArchiveProxy *)a { return wrapper->c64->mountArchive([a archive]); }
-- (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr { return wrapper->c64->flushArchive([a archive], (int)nr); }
-
-- (bool) insertTape:(TAPContainerProxy *)c { return wrapper->c64->insertTape([c container]); }
-
+- (bool) mountArchive:(ArchiveProxy *)a {
+    return wrapper->c64->mountArchive([a wrapper]->archive);
+}
+- (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr {
+    return wrapper->c64->flushArchive([a wrapper]->archive, (int)nr);
+}
+- (bool) insertTape:(TAPContainerProxy *)c {
+    return wrapper->c64->insertTape([c container]);
+}
 - (bool) warp { return wrapper->c64->getWarp(); }
 - (void) setWarp:(bool)b { wrapper->c64->setWarp(b); }
 - (bool) alwaysWarp { return wrapper->c64->getAlwaysWarp(); }
@@ -981,11 +985,32 @@ struct ArchiveWrapper { Archive *archive; };
     if (wrapper) delete wrapper;
 }
 
+- (ArchiveWrapper *)wrapper { return wrapper; }
 - (NSString *)getPath { return [NSString stringWithUTF8String:wrapper->archive->getPath()]; }
 - (NSString *)getName { return [NSString stringWithUTF8String:wrapper->archive->getName()]; }
 - (NSInteger)getType { return (NSInteger)wrapper->archive->getType(); }
-- (NSInteger)getNumberOfItems { return (NSInteger)wrapper->archive->getNumberOfItems(); }
-- (BOOL)writeToFile:(NSString *)filename { return wrapper->archive->writeToFile([filename UTF8String]); }
+
+- (NSInteger)getNumberOfItems {
+    return (NSInteger)wrapper->archive->getNumberOfItems();
+}
+- (NSString *)getNameOfItem:(NSInteger)item {
+    return [NSString stringWithUTF8String:wrapper->archive->getNameOfItem((int)item)];
+}
+- (const char *)getNameOfItemUTF8:(NSInteger)item {
+    return [[self getNameOfItem:item] UTF8String];
+}
+- (NSInteger) getSizeOfItem:(NSInteger)item {
+    return wrapper->archive->getSizeOfItem((int)item);
+}
+- (NSInteger) getSizeOfItemInBlocks:(NSInteger)item {
+    return wrapper->archive->getSizeOfItemInBlocks((int)item);
+}
+- (NSString *) getTypeOfItem:(NSInteger)item {
+    return [NSString stringWithUTF8String:wrapper->archive->getTypeOfItem((int)item)];
+}
+- (BOOL)writeToFile:(NSString *)filename {
+    return wrapper->archive->writeToFile([filename UTF8String]);
+}
 
 @end
 
@@ -1005,7 +1030,8 @@ struct ArchiveWrapper { Archive *archive; };
 
 + (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
 {
-    T64Archive *archive = T64Archive::archiveFromArchive([otherArchive archive]);
+    Archive *other = [otherArchive wrapper]->archive;
+    T64Archive *archive = T64Archive::archiveFromArchive(other);
     return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
@@ -1033,13 +1059,15 @@ struct ArchiveWrapper { Archive *archive; };
 
 + (instancetype) archiveFromD64Archive:(D64ArchiveProxy *)otherArchive
 {
-    D64Archive *archive = D64Archive::archiveFromD64Archive((D64Archive *)[otherArchive archive]);
+    D64Archive *other = (D64Archive *)[otherArchive wrapper]->archive;
+    D64Archive *archive = D64Archive::archiveFromD64Archive(other);
     return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 + (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive
 {
-    D64Archive *archive = D64Archive::archiveFromArchive([otherArchive archive]);
+    Archive *other = [otherArchive wrapper]->archive;
+    D64Archive *archive = D64Archive::archiveFromArchive(other);
     return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
@@ -1067,7 +1095,8 @@ struct ArchiveWrapper { Archive *archive; };
 
 + (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
 {
-    PRGArchive *archive = PRGArchive::archiveFromArchive([otherArchive archive]);
+    Archive *other = [otherArchive wrapper]->archive;
+    PRGArchive *archive = PRGArchive::archiveFromArchive(other);
     return archive ? [[PRGArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
@@ -1089,7 +1118,8 @@ struct ArchiveWrapper { Archive *archive; };
 
 + (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
 {
-    P00Archive *archive = P00Archive::archiveFromArchive([otherArchive archive]);
+    Archive *other = [otherArchive wrapper]->archive;
+    P00Archive *archive = P00Archive::archiveFromArchive(other);
     return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 

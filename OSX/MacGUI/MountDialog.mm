@@ -34,7 +34,7 @@
     assert(aproxy != NULL);
     assert(proxy != NULL);
     
-    archive = [aproxy archive];
+    archive = aproxy;
     c64 = proxy;
     
     bool isG64orNIB = ([aproxy getType] == G64_CONTAINER || [aproxy getType] == NIB_CONTAINER);
@@ -118,7 +118,7 @@
     if ([directory selectedRow] < 0) {
         result = @"";
     } else {
-        result = [NSString stringWithFormat:@"%s", archive->getNameOfItem((int)[directory selectedRow])];
+        result = [archive getNameOfItem:[directory selectedRow]];
     }
     
     return result;
@@ -158,23 +158,23 @@
     [[loadOptions itemAtIndex:1] setTitle:[NSString stringWithFormat:@"LOAD \"%@\",8",[self selectedFilename]]];
     [loadOptions selectItemAtIndex:loadOption];
     
-    [warningText setHidden:loadOption != LOAD_OPTION_FLASH || archive->getType() == G64_CONTAINER];
+    [warningText setHidden:loadOption != LOAD_OPTION_FLASH || [archive getType] == G64_CONTAINER];
 }
 
 #pragma mark NSTableViewDataSource
 
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
 	if (archive == NULL)
 		return 0;
 
-	return archive->getNumberOfItems();
+    return [archive getNumberOfItems];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
 	if ([[aTableColumn identifier] isEqual:@"filename"]) {
-        const char *itemName = archive->getNameOfItem(row);
+        const char *itemName = [archive getNameOfItemUTF8:row];
         assert(itemName != NULL);
 
         unichar uName[18];
@@ -187,14 +187,15 @@
         return unicodename;
     }
 	if ([[aTableColumn identifier] isEqual:@"filesize"]) {
-        if (archive->getType() == G64_CONTAINER) {
-            return @((int)archive->getSizeOfItem(row));
+        if ([archive getType] == G64_CONTAINER) {
+
+            return @((int)[archive getSizeOfItem:row]);
         } else {
-            return @((int)archive->getSizeOfItemInBlocks(row));
+            return @((int)[archive getSizeOfItemInBlocks:row]);
         }
 	}
 	if ([[aTableColumn identifier] isEqual:@"filetype"]) {
-		return [NSString stringWithFormat:@"%s", archive->getTypeOfItem(row)];
+        return [archive getTypeOfItem:row];
 	}
 	return @"???";
 }
@@ -212,14 +213,14 @@
 {
     NSTextFieldCell *cell = [tableColumn dataCell];
 
-    if (archive->getType() == G64_CONTAINER) {
-        if (archive->getSizeOfItem((int)row) == 0) {
+    if ([archive getType] == G64_CONTAINER) {
+        if ([archive getSizeOfItem:row] == 0) {
             [cell setTextColor:[NSColor grayColor]];
         } else {
             [cell setTextColor:[NSColor blackColor]];
         }
     } else {
-        if(strcmp(archive->getTypeOfItem((int)row), "PRG")) {
+        if([[archive getTypeOfItem:row] isEqualToString:@"PRG"]) {
             [cell setTextColor:[NSColor grayColor]];
         } else {
             [cell setTextColor:[NSColor blackColor]];

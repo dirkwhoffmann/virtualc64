@@ -33,7 +33,7 @@ class Archive;
     IBOutlet NSBox *diskIconFrame;
     
     // Internal state
-    Archive *archive;
+    ArchiveProxy *archive;
     C64Proxy *c64;
     long loadOption;
     long selectedRow;
@@ -45,7 +45,7 @@ class Archive;
 }
 
 // @property(readonly) int loadOption;
-@property(readonly) Archive *archive;
+@property(readonly) ArchiveProxy *archive;
 @property(readonly) bool doMount;
 @property(readonly) bool doFlash;
 @property(readonly) bool doType;
@@ -61,7 +61,7 @@ class Archive;
 - (void)doubleClickAction:(id)sender;
 
 // Table
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView;
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row;
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)row;
 

@@ -722,15 +722,21 @@ struct TAPArchive;
     ArchiveWrapper *wrapper;
 }
 
-@property Archive *archive;
+// @property Archive *archive;
 
 // - (instancetype) initWithArchive:(Archive *)s;
 
+- (ArchiveWrapper *)wrapper;
 - (NSString *)getPath;
 - (NSString *)getName;
 - (NSInteger)getType;
 - (NSInteger)getNumberOfItems; 
-- (BOOL)writeToFile:(NSString *)filename; 
+- (NSString *)getNameOfItem:(NSInteger)item;
+- (const char *)getNameOfItemUTF8:(NSInteger)item;
+- (NSInteger) getSizeOfItem:(NSInteger)item;
+- (NSInteger) getSizeOfItemInBlocks:(NSInteger)item;
+- (NSString *) getTypeOfItem:(NSInteger)item;
+- (BOOL)writeToFile:(NSString *)filename;
 
 @end
 
