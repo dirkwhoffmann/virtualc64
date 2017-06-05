@@ -42,29 +42,6 @@ class Keyboard : public VirtualComponent {
 	uint8_t kbMatrix[8];
 			
 public:
-    //! @brief    Special keys
-    enum C64Key {
-        C64KEY_F1 = 0x80,
-        C64KEY_F2,
-        C64KEY_F3,
-        C64KEY_F4,
-        C64KEY_F5,
-        C64KEY_F6,
-        C64KEY_F7,
-        C64KEY_F8,
-        C64KEY_DEL,
-        C64KEY_INS,
-        C64KEY_RET,
-        C64KEY_CL,
-        C64KEY_CR,
-        C64KEY_CU,
-        C64KEY_CD,
-        C64KEY_ARROW,
-        C64KEY_RUNSTOP,
-        C64KEY_RESTORE,
-        C64KEY_COMMODORE = 0x0100, // flag that is combinable with all other keys
-        C64KEY_CTRL = 0x0200
-    };
     
 	//! @brief    Constructor
 	Keyboard();

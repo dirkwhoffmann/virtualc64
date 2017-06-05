@@ -58,10 +58,12 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 	// get samples from SID
     if (mono) {        
         for (unsigned i = 0; i < size; i++) {
+            // TODO: IMPLEMENT SIDProxy readMonoSamples:myOutBuffer numSamples:size
             myOutBuffer[i] = c64->sid.readData();
         }
     } else {
         for (unsigned i = 0; i < size; i++) {
+            // TODO: IMPLEMENT SIDProxy readStereoSamples:myOutBuffer numSamples:size
             float value = c64->sid.readData();
             myOutBuffer[i*2] = value;		// left channel	
             myOutBuffer[i*2+1] = value;		// right channel

@@ -895,6 +895,13 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     if (wrapper) delete wrapper;
 }
 
++ (BOOL) isSnapshotFile:(NSString *)filename {
+    return Snapshot::isSnapshot([filename UTF8String]);
+}
++ (BOOL) isSnapshotFile:(NSString *)filename major:(int)x minor:(int)y subminor:(int)z {
+    return Snapshot::isSnapshot([filename UTF8String], x, y, z);
+}
+
 + (instancetype) snapshotFromSnapshot:(Snapshot *)snapshot
 {
     if (snapshot == NULL)
@@ -1192,6 +1199,10 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     if (wrapper) delete wrapper;
 }
 
++ (BOOL) isCRTFile:(NSString *)filename
+{
+    return Cartridge::isCRTFile([filename UTF8String]);
+}
 
 + (instancetype) cartridgeFromFile:(NSString *)filename
 {

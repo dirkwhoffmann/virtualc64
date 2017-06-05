@@ -9,6 +9,12 @@
 #ifndef C64_DEFS_H
 #define C64_DEFS_H
 
+//! @brief Snapshot version number of this release
+#define V_MAJOR 1
+#define V_MINOR 5
+#define V_SUBMINOR 0
+
+
 /*! @brief    Message layout
  *  @details  A message queue is used to communicate with the GUI. Each message consists of 
  *            a message id and an additional integer parameter.
@@ -49,6 +55,30 @@ enum {
     MSG_JOYSTICK_REMOVED,
     MSG_PAL,
     MSG_NTSC
+};
+
+//! @brief    Keycodes of special keys
+enum C64Key {
+    C64KEY_F1 = 0x80,
+    C64KEY_F2,
+    C64KEY_F3,
+    C64KEY_F4,
+    C64KEY_F5,
+    C64KEY_F6,
+    C64KEY_F7,
+    C64KEY_F8,
+    C64KEY_DEL,
+    C64KEY_INS,
+    C64KEY_RET,
+    C64KEY_CL,
+    C64KEY_CR,
+    C64KEY_CU,
+    C64KEY_CD,
+    C64KEY_ARROW,
+    C64KEY_RUNSTOP,
+    C64KEY_RESTORE,
+    C64KEY_COMMODORE = 0x0100, // flag that is combinable with all other keys
+    C64KEY_CTRL = 0x0200
 };
 
 //! @brief    Processor models
@@ -141,5 +171,33 @@ enum JoystickDirection
     
     JOYSTICK_RELEASED
 };
+
+/*! @enum     ContainerType
+ *  @brief    The type of a container
+ *  @constant CRT_CONTAINER A cartridge that can be plugged into the expansion port.
+ *  @constant V64_CONTAINER A snapshot file (contains a frozen C64 state).
+ *  @constant D64_CONTAINER A floppy disk image with multiply files.
+ *  @constant T64_CONTAINER A tape archive with multiple files.
+ *  @constant PRG_CONTAINER A program archive containing a single file.
+ *  @constant P00_CONTAINER A program archive containing a single file.
+ *  @constant G64_CONTAINER A collection of bit-streams resembling a floppy disk.
+ *  @constant NIB_CONTAINER A collection of bit-streams resembling a floppy disk.
+ *  @constant TAP_CONTAINER A bit-stream resembling a datasette tape.
+ *  @constant FILE_CONTAINER An arbitrary file that is interpreted as raw data.
+ */
+enum ContainerType {
+    UNKNOWN_CONTAINER_FORMAT = 0,
+    CRT_CONTAINER,
+    V64_CONTAINER,
+    D64_CONTAINER,
+    T64_CONTAINER,
+    PRG_CONTAINER,
+    P00_CONTAINER,
+    G64_CONTAINER,
+    NIB_CONTAINER,
+    TAP_CONTAINER,
+    FILE_CONTAINER
+};
+
 
 #endif

@@ -171,16 +171,18 @@
 
 -(BOOL)readFromFile:(NSString *)filename ofType:(NSString *)type
 {
-    const char *name = [filename UTF8String];
-    
 	NSLog(@"MyDocument:readFromFile:%@ ofType:%@", filename, type);
-	
+    
     // Is it a snapshot?
-    if (Snapshot::isSnapshot(name)) {
+    if ([SnapshotProxy isSnapshotFile:filename]) {
         
-        // Do the version numbers match?
-        if (Snapshot::isSnapshot(name, V_MAJOR, V_MINOR, V_SUBMINOR)) {
+        // Do version numbers match?
+        if ([SnapshotProxy isSnapshotFile:filename
+                                    major:V_MAJOR
+                                    minor:V_MINOR
+                                 subminor:V_SUBMINOR]) {
             
+            // Try to read snapshot ...
             if (![self setSnapshotWithName:filename]) {
                 NSLog(@"Error while reading snapshot\n");
                 return NO;
@@ -192,16 +194,39 @@
         return NO;
     }
     
-    // New code style. Use ProxyClasses
-    // Is it a T64 file?
 #if 0
-    if ([T64ArchiveProxy isT64File:filename]) {
-        if ([self setArchiveWithName:filename]) return YES; else goto failure;
-    }
-#endif
+    // Is it some supported file format?
+    ContainerType format = 0;
+    if ([D64ArchiveProxy isD64File:filename])        format = D64_CONTAINER;
+    else if ([T64ArchiveProxy isT64File:filename])   format = T64_CONTAINER;
+    else if ([PRGArchiveProxy isPRGFile:filename])   format = PRG_CONTAINER;
+    else if ([P00ArchiveProxy isP00File:filename])   format = P00_CONTAINER;
+    else if ([G64ArchiveProxy isG64File:filename])   format = G64_CONTAINER;
+    else if ([NIBArchiveProxy isNIBFile:filename])   format = NIB_CONTAINER;
+    else if ([TAPContainerProxy isTAPFile:filename]) format = TAP_CONTAINER;
+    else if ([CartridgeProxy isCRTFile:filename])    format = CRT_CONTAINER;
+#endif 
+
+    // Check file type
+    ContainerType format = UNKNOWN_CONTAINER_FORMAT;
+    if ([type caseInsensitiveCompare:@"D64"] == NSOrderedSame)
+        format = D64_CONTAINER;
+    else if ([type caseInsensitiveCompare:@"T64"] == NSOrderedSame)
+        format = T64_CONTAINER;
+    else if ([type caseInsensitiveCompare:@"PRG"] == NSOrderedSame)
+        format = PRG_CONTAINER;
+    else if ([type caseInsensitiveCompare:@"P00"] == NSOrderedSame)
+        format = P00_CONTAINER;
+    else if ([type caseInsensitiveCompare:@"G64"] == NSOrderedSame)
+        format = G64_CONTAINER;
+    else if ([type caseInsensitiveCompare:@"NIB"] == NSOrderedSame)
+        format = NIB_CONTAINER;
+    else if ([type caseInsensitiveCompare:@"TAP"] == NSOrderedSame)
+        format = TAP_CONTAINER;
+    else if ([type caseInsensitiveCompare:@"CRT"] == NSOrderedSame)
+        format = CRT_CONTAINER;
     
-    // Old code style. TODO: Change to new style (?!)...
-    switch (Container::typeOf([type UTF8String])) {
+    switch (format) {
             
         case D64_CONTAINER:
         case T64_CONTAINER:

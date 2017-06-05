@@ -138,32 +138,32 @@
 - (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(unsigned long)flags
 {
     switch (keycode) {
-        case MAC_F1: return Keyboard::C64KEY_F1;
-        case MAC_F2: return Keyboard::C64KEY_F2;
-        case MAC_F3: return Keyboard::C64KEY_F3;
-        case MAC_F4: return Keyboard::C64KEY_F4;
-        case MAC_F5: return Keyboard::C64KEY_F5;
-        case MAC_F6: return Keyboard::C64KEY_F6;
-        case MAC_F7: return Keyboard::C64KEY_F7;
-        case MAC_F8: return Keyboard::C64KEY_F8;
-        case MAC_DEL: return (flags & NSShiftKeyMask) ? Keyboard::C64KEY_INS : Keyboard::C64KEY_DEL;
-        case MAC_RET: return Keyboard::C64KEY_RET;
-        case MAC_CL: return Keyboard::C64KEY_CL;
-        case MAC_CR: return Keyboard::C64KEY_CR;
-        case MAC_CU: return Keyboard::C64KEY_CU;
-        case MAC_CD: return Keyboard::C64KEY_CD;
-        case MAC_ESC: return Keyboard::C64KEY_RUNSTOP;
-        case MAC_TAB: return Keyboard::C64KEY_RESTORE;
+        case MAC_F1: return C64KEY_F1;
+        case MAC_F2: return C64KEY_F2;
+        case MAC_F3: return C64KEY_F3;
+        case MAC_F4: return C64KEY_F4;
+        case MAC_F5: return C64KEY_F5;
+        case MAC_F6: return C64KEY_F6;
+        case MAC_F7: return C64KEY_F7;
+        case MAC_F8: return C64KEY_F8;
+        case MAC_DEL: return (flags & NSShiftKeyMask) ? C64KEY_INS : C64KEY_DEL;
+        case MAC_RET: return C64KEY_RET;
+        case MAC_CL: return C64KEY_CL;
+        case MAC_CR: return C64KEY_CR;
+        case MAC_CU: return C64KEY_CU;
+        case MAC_CD: return C64KEY_CD;
+        case MAC_ESC: return C64KEY_RUNSTOP;
+        case MAC_TAB: return C64KEY_RESTORE;
         case MAC_HAT: return '^';
-        case MAC_TILDE_US: if (plainkey != '<' && plainkey != '>') return Keyboard::C64KEY_ARROW; else break;
+        case MAC_TILDE_US: if (plainkey != '<' && plainkey != '>') return C64KEY_ARROW; else break;
     }
     
     if (flags & NSAlternateKeyMask) {
         // Commodore key (ALT) is pressed
-        return (int)plainkey | Keyboard::C64KEY_COMMODORE;
+        return (int)plainkey | C64KEY_COMMODORE;
     } else if (flags & NSControlKeyMask) {
         // CTRL key is pressed
-        return (int)plainkey | Keyboard::C64KEY_CTRL;
+        return (int)plainkey | C64KEY_CTRL;
     } else {
         // No special translation needed here
         return (int)key;
@@ -328,12 +328,15 @@
         NSLog(@"Processing file %@", path);
         
         // Is it a snapshot?
-        if (Snapshot::isSnapshot([path UTF8String])) {
+        if ([SnapshotProxy isSnapshotFile:path]) {
             
             NSLog(@"  Snapshot found");
             
             // Do the version numbers match?
-            if (Snapshot::isSnapshot([path UTF8String], V_MAJOR, V_MINOR, V_SUBMINOR)) {
+            if ([SnapshotProxy isSnapshotFile:path
+                                        major:V_MAJOR
+                                        minor:V_MINOR
+                                     subminor:V_SUBMINOR]) {
                 
                 SnapshotProxy *snapshot = [SnapshotProxy snapshotFromFile:path];
                 if (snapshot) {

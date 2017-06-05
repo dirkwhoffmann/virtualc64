@@ -16,9 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-// NEXT STEP: Add CartridgeProxy, use CartridgeProxy in MyDocument also
-
 #import <Cocoa/Cocoa.h>
 #import "C64_defs.h"
 #import "C64.h"
@@ -667,6 +664,8 @@ struct CartridgeWrapper;
 }
 
 - (instancetype) init;
++ (BOOL) isSnapshotFile:(NSString *)filename;
++ (BOOL) isSnapshotFile:(NSString *)filename major:(int)x minor:(int)y subminor:(int)z;
 + (instancetype) snapshotFromFile:(NSString *)path;
 + (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
 
@@ -776,9 +775,9 @@ struct CartridgeWrapper;
     CartridgeWrapper *wrapper;
 }
 
-- (CartridgeWrapper *)wrapper;
+- (CartridgeWrapper *) wrapper;
++ (BOOL) isCRTFile:(NSString *)filename;
 + (instancetype) cartridgeFromFile:(NSString *)filename;
-
 
 @end
 

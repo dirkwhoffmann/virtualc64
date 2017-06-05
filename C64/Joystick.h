@@ -22,6 +22,9 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
+#include "VirtualComponent.h"
+#include "C64_defs.h"
+
 class Joystick : public VirtualComponent {
 
 private:

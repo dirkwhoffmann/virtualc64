@@ -23,11 +23,6 @@
 #include "Container.h"
 #include "VIC_globals.h"
 
-// Snapshot version number of this release
-#define V_MAJOR 1
-#define V_MINOR 4
-#define V_SUBMINOR 2
-
 // Forward declarations
 class C64;
 
