@@ -85,7 +85,7 @@
     return YES;
 }
 
-- (BOOL)setTAPArchiveWithName:(NSString *)path
+- (BOOL)setTAPContainerWithName:(NSString *)path
 {
     if (!(attachedTape = [TAPContainerProxy containerFromTAPFile:path]))
         return NO;
@@ -226,7 +226,7 @@
 
         case TAP_CONTAINER:
             
-            if ([self setTAPArchiveWithName:filename])
+            if ([self setTAPContainerWithName:filename])
                 return YES;
             else break;
 

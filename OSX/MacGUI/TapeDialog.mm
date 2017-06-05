@@ -20,28 +20,28 @@
 
 @implementation TapeDialog
 
-@synthesize archive;
+@synthesize container;
 @synthesize doAutoType;
 @synthesize doPressPlay; 
 
-- (void) initialize:(TAPContainerProxy *)tapproxy c64proxy:(C64Proxy *)proxy
+- (void) initialize:(TAPContainerProxy *)tproxy c64proxy:(C64Proxy *)proxy
 {
     assert(tapproxy != NULL);
     assert(proxy != NULL);
     
-    archive = [tapproxy container];
+    container = tproxy;
     c64 = proxy;
     
     doAutoType = YES;
     doPressPlay = YES;
     
-    // Get physical path of archive
-    NSString *archivePath = [tapproxy getPath];
-    NSString *archiveDescr = [NSString stringWithFormat:@"TAP archive (V%ld)", (long)[tapproxy TAPversion]];
+    // Get physical path of container
+    NSString *containerPath = [container getPath];
+    NSString *containerDescr = [NSString stringWithFormat:@"TAP container (V%ld)", (long)[container TAPversion]];
     
     // Set title
-    [headerText setStringValue:archivePath];
-    [diskIconFrame setTitle:archiveDescr];
+    [headerText setStringValue:containerPath];
+    [diskIconFrame setTitle:containerDescr];
     
     [self update];
 }

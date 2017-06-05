@@ -18,7 +18,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-class TAPArchive;
+class TAPContainer;
 
 @interface TapeDialog : NSWindow <NSTableViewDelegate, NSTableViewDataSource>
 {
@@ -30,7 +30,7 @@ class TAPArchive;
     IBOutlet NSBox *diskIconFrame;
     
     // Internal state
-    TAPArchive *archive;
+    TAPContainerProxy *container;
     C64Proxy *c64;
     
     // Todos after pressing "Insert tape"
@@ -38,12 +38,12 @@ class TAPArchive;
     bool doPressPlay;
 }
 
-@property(readonly) TAPArchive *archive;
+@property(readonly) TAPContainerProxy *container;
 @property(readonly) bool doAutoType;
 @property(readonly) bool doPressPlay;
 
 // Initialization
-- (void) initialize:(TAPContainerProxy *)cproxy c64proxy:(C64Proxy *)proxy;
+- (void) initialize:(TAPContainerProxy *)tproxy c64proxy:(C64Proxy *)proxy;
 
 // Action methods
 - (IBAction)autoTypeAction:(id)sender;

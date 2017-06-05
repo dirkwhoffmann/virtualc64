@@ -20,7 +20,7 @@
 
 @class C64Proxy;
 class Archive;
-class TAPArchive;
+class TAPContainer;
 class Cartridge;
 class Snapshot;
 
@@ -56,7 +56,7 @@ class Snapshot;
 - (BOOL)setG64ArchiveWithName:(NSString *)path;
 - (BOOL)setNIBArchiveWithName:(NSString *)path;
 - (BOOL)setArchiveWithName:(NSString *)path;
-- (BOOL)setTAPArchiveWithName:(NSString *)path;
+- (BOOL)setTAPContainerWithName:(NSString *)path;
 - (BOOL)setCartridgeWithName:(NSString *)path;
 - (BOOL)detachCartridge;
 

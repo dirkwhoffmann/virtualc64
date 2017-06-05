@@ -22,7 +22,7 @@
 #define _DATASETTE_INC
 
 // Forward declarations
-class TAPArchive;
+class TAPContainer;
 
 /*! 
  *  @brief    Virtual tape recorder (datasette)
@@ -139,7 +139,7 @@ public:
     
     /*! @brief    Inserts a TAP archive as a virtual tape 
      */
-    void insertTape(TAPArchive *a);
+    void insertTape(TAPContainer *a);
 
     /*! @brief    Ejects the virtual tape
      *  @details  Does nothing, if no tape is present.  

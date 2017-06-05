@@ -58,10 +58,10 @@
 #include "D64Archive.h"
 #include "G64Archive.h"
 #include "NIBArchive.h"
-#include "TAPArchive.h"
 #include "PRGArchive.h"
 #include "P00Archive.h"
 #include "FileArchive.h"
+#include "TAPContainer.h"
 
 // Sub components
 #include "IEC.h"
@@ -530,10 +530,10 @@ public:
      */
 	bool mountArchive(Archive *a);
 
-    /*! @brief    Inserts a TAP archive as a virtual datasette tape.
+    /*! @brief    Inserts a TAP container as a virtual datasette tape.
      *  @details  Only TAP archives can be used as tape.
      */
-    bool insertTape(TAPArchive *a);
+    bool insertTape(TAPContainer *a);
 
 	//! @brief    Attaches a cartridge to the expansion port.
 	bool attachCartridge(Cartridge *c);

@@ -35,7 +35,7 @@ struct Vc1541Wrapper { VC1541 *vc1541; };
 struct DatasetteWrapper { Datasette *datasette; };
 struct SnapshotWrapper { Snapshot *snapshot; };
 struct ArchiveWrapper { Archive *archive; };
-struct TAPArchiveWrapper { TAPArchive *taparchive; };
+struct TAPContainerWrapper { TAPContainer *tapcontainer; };
 struct CartridgeWrapper { Cartridge *cartridge; };
 
 
@@ -811,7 +811,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     return wrapper->c64->flushArchive([a wrapper]->archive, (int)nr);
 }
 - (bool) insertTape:(TAPContainerProxy *)c {
-    return wrapper->c64->insertTape([c container]);
+    return wrapper->c64->insertTape([c wrapper]->tapcontainer);
 }
 - (bool) warp { return wrapper->c64->getWarp(); }
 - (void) setWarp:(bool)b { wrapper->c64->setWarp(b); }
@@ -924,7 +924,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 
 // --------------------------------------------------------------------------
-//                           Archive (incomplete?)
+//                                  Archive
 // --------------------------------------------------------------------------
 
 @implementation ArchiveProxy
@@ -941,8 +941,6 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     }
     return self;
 }
-
-// @synthesize archive;
 
 - (void)dealloc
 {
@@ -1124,47 +1122,47 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 @end
 
+
 @implementation TAPContainerProxy
 
-@synthesize container;
-
-- (instancetype) initWithTAPContainer:(TAPArchive *)c
+- (instancetype) initWithTAPContainer:(TAPContainer *)container
 {
-    NSLog(@"TAPContainerProxy::initWithContainer");
+    NSLog(@"TAPContainerProxy::initWithTAPContainer");
     
-    if (c == nil)
-        return nil;
+    if (container == NULL) return nil;
     
-    if (!(self = [super init]))
-        return nil;
-    
-    container = c;
+    if (self = [super init]) {
+        wrapper = new TAPContainerWrapper();
+        wrapper->tapcontainer = container;
+    }
     return self;
 }
 
 - (void)dealloc
 {
-    NSLog(@"TAPContainerProxy::dealloc");
+    NSLog(@"TAPContainerProxy::dealloc (deleted TAPContainer at %p)", wrapper->tapcontainer);
     
-    if (container)
-        delete container;
+    if (wrapper->tapcontainer) delete wrapper->tapcontainer;
+    if (wrapper) delete wrapper;
 }
+
+- (TAPContainerWrapper *)wrapper { return wrapper; }
 
 + (BOOL) isTAPFile:(NSString *)filename
 {
-    return TAPArchive::isTAPFile([filename UTF8String]);
+    return TAPContainer::isTAPFile([filename UTF8String]);
 }
 
 + (instancetype) containerFromTAPFile:(NSString *)filename
 {
-    TAPArchive *container = TAPArchive::archiveFromTAPFile([filename UTF8String]);
+    TAPContainer *container = TAPContainer::containerFromTAPFile([filename UTF8String]);
     return container ? [[TAPContainerProxy alloc] initWithTAPContainer:container] : nil;
 }
 
-- (NSString *)getPath { return [NSString stringWithUTF8String:container->getPath()]; }
-- (NSString *)getName { return [NSString stringWithUTF8String:container->getName()]; }
-- (NSInteger)getType { return (NSInteger)container->getType(); }
-- (NSInteger)TAPversion { return (NSInteger)container->TAPversion(); }
+- (NSString *)getPath { return [NSString stringWithUTF8String:wrapper->tapcontainer->getPath()]; }
+- (NSString *)getName { return [NSString stringWithUTF8String:wrapper->tapcontainer->getName()]; }
+- (NSInteger)getType { return (NSInteger)wrapper->tapcontainer->getType(); }
+- (NSInteger)TAPversion { return (NSInteger)wrapper->tapcontainer->TAPversion(); }
 
 @end
 

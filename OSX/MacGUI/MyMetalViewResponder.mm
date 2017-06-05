@@ -372,8 +372,8 @@
             return YES;
         }
         
-        // Is it a TAP archive?
-        if ([[controller document] setTAPArchiveWithName:path]) {
+        // Is it a TAP container?
+        if ([[controller document] setTAPContainerWithName:path]) {
             [controller showTapeDialog];
             return YES;
         }

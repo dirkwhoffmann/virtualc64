@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _TAPARCHIVE_INC
-#define _TAPARCHIVE_INC
+#ifndef _TAPCONTAINER_INC
+#define _TAPCONTAINER_INC
 
-#include "Archive.h"
+#include "Container.h"
 
-/*! @class  TAPArchive
- *  @brief  The TAPArchive class declares the programmatic interface for a file in TAP format.
+/*! @class  TAPContainer
+ *  @brief  The TAPContainer class declares the programmatic interface for a file in TAP format.
  */
-class TAPArchive : public Container {
+class TAPContainer : public Container {
     
 private:
     
@@ -42,16 +42,16 @@ private:
 public:
     
     //! @brief    Standard constructor
-    TAPArchive();
+    TAPContainer();
     
     //! @brief    Standard destructor
-    ~TAPArchive();
+    ~TAPContainer();
     
     //! @brief    Returns true iff the specified file is a TAP file
     static bool isTAPFile(const char *filename);
     
     //! @brief    Creates a TAP archive from a TAP file.
-    static TAPArchive *archiveFromTAPFile(const char *filename);
+    static TAPContainer *containerFromTAPFile(const char *filename);
     
     
     //
@@ -70,7 +70,7 @@ public:
     
     
     //
-    // Accessing the archive
+    // Accessing the container
     //
     
     unsigned TAPversion() { return data[0x000C]; }

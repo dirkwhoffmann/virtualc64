@@ -54,7 +54,7 @@ struct Vc1541Wrapper;
 struct DatasetteWrapper;
 struct SnapshotWrapper;
 struct ArchiveWrapper;
-struct TAPArchiveWrapper;
+struct TAPContainerWrapper;
 struct CartridgeWrapper;
 
 
@@ -752,10 +752,10 @@ struct CartridgeWrapper;
 
 @interface TAPContainerProxy : NSObject
 {
-    TAPArchive *container;
+    TAPContainerWrapper *wrapper;
 }
 
-@property TAPArchive *container;
+- (TAPContainerWrapper *)wrapper;
 
 + (BOOL) isTAPFile:(NSString *)filename;
 + (instancetype) containerFromTAPFile:(NSString *)filename;

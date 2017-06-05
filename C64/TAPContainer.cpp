@@ -1,5 +1,5 @@
 /*
- * (C) 2015 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2015 - 2017 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "TAPArchive.h"
+#include "TAPContainer.h"
 
-TAPArchive::TAPArchive()
+TAPContainer::TAPContainer()
 {
-    setDescription("TAPArchive");
+    setDescription("TAPContainer");
     data = NULL;
     dealloc();
 }
 
-TAPArchive::~TAPArchive()
+TAPContainer::~TAPContainer()
 {
     dealloc();
 }
 
 bool
-TAPArchive::isTAPFile(const char *filename)
+TAPContainer::isTAPFile(const char *filename)
 {
     int magic_bytes[] = {0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57, EOF};
     
@@ -49,22 +49,22 @@ TAPArchive::isTAPFile(const char *filename)
     return true;
 }
 
-TAPArchive *
-TAPArchive::archiveFromTAPFile(const char *filename)
+TAPContainer *
+TAPContainer::containerFromTAPFile(const char *filename)
 {
-    TAPArchive *archive = new TAPArchive();
+    TAPContainer *container = new TAPContainer();
     
-    if (!archive->readFromFile(filename)) {
-        delete archive;
+    if (!container->readFromFile(filename)) {
+        delete container;
         return NULL; 
     }
 
-    archive->debug(1, "TAP archive created from file %s.\n", filename);
-    return archive;
+    container->debug(1, "TAP container created from file %s.\n", filename);
+    return container;
 }
 
 void
-TAPArchive::dealloc()
+TAPContainer::dealloc()
 {
     if (data) free(data);
     data = NULL;
@@ -73,7 +73,7 @@ TAPArchive::dealloc()
 }
 
 const char *
-TAPArchive::getName()
+TAPContainer::getName()
 {
     unsigned i;
     
@@ -85,13 +85,13 @@ TAPArchive::getName()
 }
 
 bool
-TAPArchive::fileIsValid(const char *filename)
+TAPContainer::fileIsValid(const char *filename)
 {
     return isTAPFile(filename);
 }
 
 bool
-TAPArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
+TAPContainer::readFromBuffer(const uint8_t *buffer, unsigned length)
 {
     if ((data = (uint8_t *)malloc(length)) == NULL)
         return false;
@@ -108,7 +108,7 @@ TAPArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
 }
 
 unsigned
-TAPArchive::writeToBuffer(uint8_t *buffer)
+TAPContainer::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);
     
@@ -120,7 +120,7 @@ TAPArchive::writeToBuffer(uint8_t *buffer)
 
 #if 0
 void
-TAPArchive::selectItem(int n)
+TAPContainer::selectItem(int n)
 {
     if (n == 0)
         fp = 0x0014; // Rewind
@@ -129,7 +129,7 @@ TAPArchive::selectItem(int n)
 }
 
 int
-TAPArchive::getByte()
+TAPContainer::getByte()
 {
     int result;
     
