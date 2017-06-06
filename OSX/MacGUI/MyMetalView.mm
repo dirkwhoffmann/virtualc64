@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "MyMetalDefs.h"
 
 @implementation MyMetalView {
     

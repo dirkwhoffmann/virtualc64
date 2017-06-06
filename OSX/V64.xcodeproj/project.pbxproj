@@ -367,6 +367,7 @@
 		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
 		5077743212DE490B00D72088 /* CpuTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CpuTableView.mm; sourceTree = "<group>"; };
 		5087FD581BDA16C400570F0D /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
+		5088A2541EE6D69000D83586 /* MyMetalDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalDefs.h; sourceTree = "<group>"; };
 		5088A6D412E0676200378033 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
 		5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerDebugPanel.mm; sourceTree = "<group>"; };
 		5088A6E812E06DB700378033 /* MyControllerToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerToolbar.h; sourceTree = "<group>"; };
@@ -974,6 +975,7 @@
 			isa = PBXGroup;
 			children = (
 				50032EB01BC919D90050BEEA /* MyMetalView.h */,
+				5088A2541EE6D69000D83586 /* MyMetalDefs.h */,
 				50032EB11BC919D90050BEEA /* MyMetalView.mm */,
 				500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */,
 				500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */,

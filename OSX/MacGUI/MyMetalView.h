@@ -1,5 +1,5 @@
 /*
- * Author: Dirk W. Hoffmann, 2016
+ * Author: Dirk W. Hoffmann, 2016 - 2017
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@
 #import "SepiaFilter.h"
 #import "CrtFilter.h"
 
-#import <simd/simd.h>
-using namespace simd;
+// #import <simd/simd.h>
+// using namespace simd;
 
 // Forward declaration
 @class MyController;
