@@ -44,6 +44,8 @@
 		50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
+		5020434C1EE71B47006C3FD3 /* runstop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5020434B1EE71B47006C3FD3 /* runstop.png */; };
+		5020434E1EE71BB8006C3FD3 /* runstop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5020434D1EE71BB8006C3FD3 /* runstop.png */; };
 		5020C3121C4BA3A700DAE8E5 /* MyWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5020C3111C4BA3A700DAE8E5 /* MyWindow.mm */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		50244B7B1BBEBAC9002A55E3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; };
@@ -293,6 +295,8 @@
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
+		5020434B1EE71B47006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = runstop.png; path = ../../../Desktop/runstop.png; sourceTree = "<group>"; };
+		5020434D1EE71BB8006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runstop.png; sourceTree = "<group>"; };
 		5020C3101C4BA3A700DAE8E5 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
 		5020C3111C4BA3A700DAE8E5 /* MyWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyWindow.mm; sourceTree = "<group>"; };
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
@@ -735,6 +739,7 @@
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */,
+				5020434B1EE71B47006C3FD3 /* runstop.png */,
 				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
 			);
 			name = Controller;
@@ -901,6 +906,7 @@
 				50A3E08B0E66F7C400D3564D /* pause32.png */,
 				50A3E0890E66F7BC00D3564D /* play32.png */,
 				50471FEB0A7B67AE00A8DB94 /* restart32.png */,
+				5020434D1EE71BB8006C3FD3 /* runstop.png */,
 				500FF38F1BD7F4DF0038245B /* romchip.png */,
 				500FF3901BD7F4DF0038245B /* romchipMissing.png */,
 				5094197C0E426C13008D6F71 /* rom.png */,
@@ -1134,6 +1140,7 @@
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				504A22AC1BF71FD500B29BEB /* clock_green.png in Resources */,
 				50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */,
+				5020434E1EE71BB8006C3FD3 /* runstop.png in Resources */,
 				50C9CB2D1B826FF20054EE86 /* graphics.png in Resources */,
 				50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */,
 				50A519411B8DA230006771E2 /* drive_click.aiff in Resources */,
@@ -1181,6 +1188,7 @@
 				50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */,
 				50C8925D1BEFB64500231B96 /* ctrlEnd.png in Resources */,
 				5087FD591BDA16C400570F0D /* metal.png in Resources */,
+				5020434C1EE71B47006C3FD3 /* runstop.png in Resources */,
 				50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */,
 				50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
