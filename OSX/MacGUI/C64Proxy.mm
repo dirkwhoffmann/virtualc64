@@ -69,20 +69,20 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void) setX:(uint8_t)x { wrapper->cpu->setX(x); }
 - (uint8_t) Y { return wrapper->cpu->getY(); }
 - (void) setY:(uint8_t)y { wrapper->cpu->setY(y); }
-- (bool) N { return wrapper->cpu->getN(); }
-- (void) setN:(bool)b { wrapper->cpu->setN(b); }
-- (bool) Z { return wrapper->cpu->getZ(); }
-- (void) setZ:(bool)b { wrapper->cpu->setZ(b); }
-- (bool) C { return wrapper->cpu->getC(); }
-- (void) setC:(bool)b { wrapper->cpu->setC(b); }
-- (bool) I { return wrapper->cpu->getI(); }
-- (void) setI:(bool)b { wrapper->cpu->setI(b); }
-- (bool) B { return wrapper->cpu->getB(); }
-- (void) setB:(bool)b { wrapper->cpu->setB(b); }
-- (bool) D { return wrapper->cpu->getD(); }
-- (void) setD:(bool)b { wrapper->cpu->setD(b); }
-- (bool) V { return wrapper->cpu->getV(); }
-- (void) setV:(bool)b { wrapper->cpu->setV(b); }
+- (bool) Nflag { return wrapper->cpu->getN(); }
+- (void) setNflag:(bool)b { wrapper->cpu->setN(b); }
+- (bool) Zflag { return wrapper->cpu->getZ(); }
+- (void) setZflag:(bool)b { wrapper->cpu->setZ(b); }
+- (bool) Cflag { return wrapper->cpu->getC(); }
+- (void) setCflag:(bool)b { wrapper->cpu->setC(b); }
+- (bool) Iflag { return wrapper->cpu->getI(); }
+- (void) setIflag:(bool)b { wrapper->cpu->setI(b); }
+- (bool) Bflag { return wrapper->cpu->getB(); }
+- (void) setBflag:(bool)b { wrapper->cpu->setB(b); }
+- (bool) Dflag { return wrapper->cpu->getD(); }
+- (void) setDflag:(bool)b { wrapper->cpu->setD(b); }
+- (bool) Vflag { return wrapper->cpu->getV(); }
+- (void) setVflag:(bool)b { wrapper->cpu->setV(b); }
 
 - (uint16_t) peekPC {
     return wrapper->cpu->mem->peek(wrapper->cpu->getPC_at_cycle_0()); }

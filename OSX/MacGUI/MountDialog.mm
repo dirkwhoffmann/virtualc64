@@ -221,9 +221,9 @@
         }
     } else {
         if([[archive getTypeOfItem:row] isEqualToString:@"PRG"]) {
-            [cell setTextColor:[NSColor grayColor]];
-        } else {
             [cell setTextColor:[NSColor blackColor]];
+        } else {
+            [cell setTextColor:[NSColor grayColor]];
         }
     }
     

@@ -73,70 +73,70 @@
 - (IBAction)NAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] NAction:@((int)[[c64 cpu] N])];
+	[[undo prepareWithInvocationTarget:self] NAction:@((int)[[c64 cpu] Nflag])];
 	if (![undo isUndoing]) [undo setActionName:@"Negative Flag"];
 	
-	[[c64 cpu] setN:[sender intValue]];
+	[[c64 cpu] setNflag:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)ZAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] ZAction:@((int)[[c64 cpu] Z])];
+	[[undo prepareWithInvocationTarget:self] ZAction:@((int)[[c64 cpu] Zflag])];
 	if (![undo isUndoing]) [undo setActionName:@"Zero Flag"];
 	
-	[[c64 cpu] setZ:[sender intValue]];
+	[[c64 cpu] setZflag:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)CAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] CAction:@((int)[[c64 cpu] C])];
+	[[undo prepareWithInvocationTarget:self] CAction:@((int)[[c64 cpu] Cflag])];
 	if (![undo isUndoing]) [undo setActionName:@"Carry Flag"];
 	
-	[[c64 cpu] setC:[sender intValue]];
+	[[c64 cpu] setCflag:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)IAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] IAction:@((int)[[c64 cpu] I])];
+	[[undo prepareWithInvocationTarget:self] IAction:@((int)[[c64 cpu] Iflag])];
 	if (![undo isUndoing]) [undo setActionName:@"Interrupt Flag"];
 	
-	[[c64 cpu] setI:[sender intValue]];
+	[[c64 cpu] setIflag:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)BAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] BAction:@((int)[[c64 cpu] B])];
+	[[undo prepareWithInvocationTarget:self] BAction:@((int)[[c64 cpu] Bflag])];
 	if (![undo isUndoing]) [undo setActionName:@"Break Flag"];
 	
-	[[c64 cpu] setB:[sender intValue]];
+	[[c64 cpu] setBflag:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)DAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] DAction:@((int)[[c64 cpu] D])];
+	[[undo prepareWithInvocationTarget:self] DAction:@((int)[[c64 cpu] Dflag])];
 	if (![undo isUndoing]) [undo setActionName:@"Decimal Flag"];
 	
-	[[c64 cpu] setD:[sender intValue]];
+	[[c64 cpu] setDflag:[sender intValue]];
 	[self refresh];
 }
 
 - (IBAction)VAction:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] VAction:@((int)[[c64 cpu] V])];
+	[[undo prepareWithInvocationTarget:self] VAction:@((int)[[c64 cpu] Vflag])];
 	if (![undo isUndoing]) [undo setActionName:@"Overflow Flag"];
 	
-	[[c64 cpu] setV:[sender intValue]];
+	[[c64 cpu] setVflag:[sender intValue]];
 	[self refresh];
 }
 
@@ -158,13 +158,13 @@
 	[pc setIntValue:[[c64 cpu] PC]];
 	[sp setIntValue:[[c64 cpu] SP]];
 	
-	[N setIntValue:[[c64 cpu] N]];
-	[V setIntValue:[[c64 cpu] V]];
-	[B setIntValue:[[c64 cpu] B]];
-	[D setIntValue:[[c64 cpu] D]];
-	[I setIntValue:[[c64 cpu] I]];
-	[Z setIntValue:[[c64 cpu] Z]];
-	[C setIntValue:[[c64 cpu] C]];	
+	[N setIntValue:[[c64 cpu] Nflag]];
+	[V setIntValue:[[c64 cpu] Vflag]];
+	[B setIntValue:[[c64 cpu] Bflag]];
+	[D setIntValue:[[c64 cpu] Dflag]];
+	[I setIntValue:[[c64 cpu] Iflag]];
+	[Z setIntValue:[[c64 cpu] Zflag]];
+	[C setIntValue:[[c64 cpu] Cflag]];
 }
 
 @end

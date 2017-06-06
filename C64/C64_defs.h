@@ -26,17 +26,17 @@ typedef struct {
 /*! @brief    Rom types
  *  @details  VirtualC64 needs all four ROMs to run
  */
-enum {
+typedef enum {
     BASIC_ROM = 1,
     CHAR_ROM = 2,
     KERNEL_ROM = 4,
     VC1541_ROM = 8
-};
+} RomType;
 
 /*! @brief    Message types
  *  @details  List of all possible message id's
  */
-enum {
+typedef enum {
     MSG_ROM_LOADED = 1,
     MSG_ROM_MISSING,
     MSG_ROM_COMPLETE,
@@ -63,10 +63,10 @@ enum {
     MSG_JOYSTICK_REMOVED,
     MSG_PAL,
     MSG_NTSC
-};
+} VC64Message;
 
 //! @brief    Keycodes of special keys
-enum C64Key {
+typedef enum {
     C64KEY_F1 = 0x80,
     C64KEY_F2,
     C64KEY_F3,
@@ -85,18 +85,18 @@ enum C64Key {
     C64KEY_ARROW,
     C64KEY_RUNSTOP,
     C64KEY_RESTORE,
-    C64KEY_COMMODORE = 0x0100, // flag that is combinable with all other keys
+    C64KEY_COMMODORE = 0x0100, // combinable with all other keys
     C64KEY_CTRL = 0x0200
-};
+} C64Key;
 
 //! @brief    Processor models
-enum CPUChipModel {
+typedef enum {
     MOS_6510 = 0,
     MOS_6502 = 1
-};
+} CPUChipModel;
 
 //! @brief    Addressing modes
-enum AddressingMode {
+typedef enum {
     ADDR_IMPLIED,
     ADDR_ACCUMULATOR,
     ADDR_IMMEDIATE,
@@ -111,7 +111,7 @@ enum AddressingMode {
     ADDR_RELATIVE,
     ADDR_DIRECT,
     ADDR_INDIRECT
-};
+} AddressingMode;
 
 /*! @brief    Error states of the virtual CPU
  *  @details  CPU_OK indicates normal operation. When a (soft or hard) breakpoint is reached,
@@ -119,12 +119,12 @@ enum AddressingMode {
  *            entered when an opcode is not understood by the CPU. Once the CPU enters a
  *            different state than CPU_OK, the execution thread is terminated.
  */
-enum ErrorState {
+typedef enum {
     CPU_OK = 0,
     SOFT_BREAKPOINT_REACHED,
     HARD_BREAKPOINT_REACHED,
     ILLEGAL_INSTRUCTION
-};
+} ErrorState;
 
 /*! @brief    Breakpoint type
  *  @details  Each memory call is marked with a breakpoint tag. Originally, each cell is
@@ -134,42 +134,42 @@ enum ErrorState {
  *            HARD_BREAKPOINT: execution is halted
  *            SOFT_BREAKPOINT: execution is halted and the tag is deleted
  */
-enum Breakpoint {
+typedef enum {
     NO_BREAKPOINT   = 0x00,
     HARD_BREAKPOINT = 0x01,
     SOFT_BREAKPOINT = 0x02
-};
+} Breakpoint;
 
 /*! @brief    Memory type
  *  @details  This datatype defines a constant value for the different kinds of memory.
  */
-enum MemoryType {
+typedef enum {
     MEM_RAM,
     MEM_ROM,
     MEM_IO
-};
+} MemoryType;
 
 /*! @brief    Sound chip models
  *  @details  This enum reflects enum "chip_model" used by reSID.
  */
-enum SIDChipModel {
+typedef enum {
     MOS_6581,
     MOS_8580
-};
+} SIDChipModel;
 
 /*! @brief    Sampling method
  *  @details  This enum reflects enum "sampling_method" used by reSID.
  */
-enum SamplingMethod {
+typedef enum {
     SID_SAMPLE_FAST,
     SID_SAMPLE_INTERPOLATE,
     SID_SAMPLE_RESAMPLE_INTERPOLATE,
     SID_SAMPLE_RESAMPLE_FAST
-};
+} SamplingMethod;
 
 /*! @brief    Joystick directions
  */
-enum JoystickDirection
+typedef enum
 {
     JOYSTICK_UP = 0,
     JOYSTICK_DOWN,
@@ -177,7 +177,7 @@ enum JoystickDirection
     JOYSTICK_RIGHT,
     JOYSTICK_FIRE,
     JOYSTICK_RELEASED
-};
+} JoystickDirection;
 
 /*! @enum     ContainerType
  *  @brief    The type of a container
@@ -192,7 +192,7 @@ enum JoystickDirection
  *  @constant TAP_CONTAINER A bit-stream resembling a datasette tape.
  *  @constant FILE_CONTAINER An arbitrary file that is interpreted as raw data.
  */
-enum ContainerType {
+typedef enum {
     UNKNOWN_CONTAINER_FORMAT = 0,
     CRT_CONTAINER,
     V64_CONTAINER,
@@ -204,7 +204,7 @@ enum ContainerType {
     NIB_CONTAINER,
     TAP_CONTAINER,
     FILE_CONTAINER
-};
+} ContainerType;
 
 
 #endif

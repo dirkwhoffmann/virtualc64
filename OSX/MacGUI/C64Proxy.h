@@ -62,7 +62,7 @@ struct CartridgeWrapper;
 
 @interface CPUProxy : NSObject {
         
-	CpuWrapper *wrapper;
+	struct CpuWrapper *wrapper;
 }
 
 - (void) dump;
@@ -78,20 +78,20 @@ struct CartridgeWrapper;
 - (void) setX:(uint8_t)x;
 - (uint8_t) Y;
 - (void) setY:(uint8_t)y;
-- (bool) N;
-- (void) setN:(bool)b;
-- (bool) Z;
-- (void) setZ:(bool)b;
-- (bool) C;
-- (void) setC:(bool)b;
-- (bool) I;
-- (void) setI:(bool)b;
-- (bool) B;
-- (void) setB:(bool)b;
-- (bool) D;
-- (void) setD:(bool)b;
-- (bool) V;
-- (void) setV:(bool)b;
+- (bool) Nflag;
+- (void) setNflag:(bool)b;
+- (bool) Zflag;
+- (void) setZflag:(bool)b;
+- (bool) Cflag;
+- (void) setCflag:(bool)b;
+- (bool) Iflag;
+- (void) setIflag:(bool)b;
+- (bool) Bflag;
+- (void) setBflag:(bool)b;
+- (bool) Dflag;
+- (void) setDflag:(bool)b;
+- (bool) Vflag;
+- (void) setVflag:(bool)b;
 
 - (uint16_t) peekPC;
 - (uint8_t) lengthOfInstruction:(uint8_t)opcode;
@@ -119,7 +119,7 @@ struct CartridgeWrapper;
 
 @interface MemoryProxy : NSObject {
     
-	MemoryWrapper *wrapper;
+	struct MemoryWrapper *wrapper;
 }
 
 - (void) dump;
@@ -139,7 +139,7 @@ struct CartridgeWrapper;
 
 @interface VICProxy : NSObject {
     
-	VicWrapper *wrapper;
+	struct VicWrapper *wrapper;
 }
 
 - (void) dump;
@@ -218,7 +218,7 @@ struct CartridgeWrapper;
 
 @interface CIAProxy : NSObject {
     
-	CiaWrapper *wrapper;
+	struct CiaWrapper *wrapper;
 }
 
 - (void) dump;
@@ -301,7 +301,7 @@ struct CartridgeWrapper;
 
 @interface KeyboardProxy : NSObject {
     
-    KeyboardWrapper *wrapper;
+    struct KeyboardWrapper *wrapper;
 }
 
 - (void) dump;
@@ -334,7 +334,7 @@ struct CartridgeWrapper;
 
 @interface JoystickProxy : NSObject {
     
-    JoystickWrapper *wrapper;
+    struct JoystickWrapper *wrapper;
 }
 
 - (void) setButtonPressed:(BOOL)pressed;
@@ -347,7 +347,7 @@ struct CartridgeWrapper;
 
 @interface JoystickManagerProxy : NSObject {
     
-    JoystickManagerWrapper *wrapper;
+    struct JoystickManagerWrapper *wrapper;
 }
 
 - (instancetype) initWithC64Proxy:(C64Proxy *)c64;
@@ -367,7 +367,7 @@ struct CartridgeWrapper;
 
 @interface SIDProxy : NSObject {
     
-	SidWrapperWrapper *wrapper;
+	struct SidWrapperWrapper *wrapper;
 }
 
 - (void) dump;
@@ -384,7 +384,7 @@ struct CartridgeWrapper;
 
 @interface IECProxy : NSObject {
 
-    IecWrapper *wrapper;
+    struct IecWrapper *wrapper;
 }
 
 - (void) dump;
@@ -402,7 +402,7 @@ struct CartridgeWrapper;
 
 @interface ExpansionPortProxy : NSObject {
     
-    ExpansionPortWrapper *wrapper;
+    struct ExpansionPortWrapper *wrapper;
 }
 
 - (void) dump;
@@ -419,7 +419,7 @@ struct CartridgeWrapper;
 
 @interface VIAProxy : NSObject {
     
-	Via6522Wrapper *wrapper;
+	struct Via6522Wrapper *wrapper;
 }
 
 - (void) dump;
@@ -434,7 +434,7 @@ struct CartridgeWrapper;
 
 @interface Disk525Proxy : NSObject {
     
-    Disk525Wrapper *wrapper;
+    struct Disk525Wrapper *wrapper;
 }
 
 - (BOOL)isWriteProtected;
@@ -451,7 +451,7 @@ struct CartridgeWrapper;
 
 @interface VC1541Proxy : NSObject {
     
-	Vc1541Wrapper *wrapper;
+	struct Vc1541Wrapper *wrapper;
     
     // sub proxys
 	CPUProxy *cpu;
@@ -461,7 +461,7 @@ struct CartridgeWrapper;
     Disk525Proxy *disk;
 }
 
-@property (readonly) Vc1541Wrapper *wrapper;
+@property (readonly) struct Vc1541Wrapper *wrapper;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
 @property (readonly) VIAProxy *via1;
@@ -497,7 +497,7 @@ struct CartridgeWrapper;
 
 @interface DatasetteProxy : NSObject {
     
-    DatasetteWrapper *wrapper;
+    struct DatasetteWrapper *wrapper;
 }
 
 - (void) dump;
@@ -526,7 +526,7 @@ struct CartridgeWrapper;
 
 @interface C64Proxy : NSObject {
     
-	C64Wrapper *wrapper;
+	struct C64Wrapper *wrapper;
 	AudioDevice *audioDevice;
     JoystickManagerProxy *joystickManager;
     
@@ -592,9 +592,9 @@ struct CartridgeWrapper;
 - (void) rampDown;
 
 // Loadind and saving
-- (void)_loadFromSnapshotWrapper:(SnapshotWrapper *) snapshot;
+- (void)_loadFromSnapshotWrapper:(struct SnapshotWrapper *) snapshot;
 - (void)loadFromSnapshot:(SnapshotProxy *) snapshot;
-- (void)_saveToSnapshotWrapper:(SnapshotWrapper *) snapshot;
+- (void)_saveToSnapshotWrapper:(struct SnapshotWrapper *) snapshot;
 - (void)saveToSnapshot:(SnapshotProxy *) snapshot;
 
 - (CIAProxy *) cia:(int)num;
@@ -682,7 +682,7 @@ struct CartridgeWrapper;
 
 @interface SnapshotProxy : NSObject {
     
-	SnapshotWrapper *wrapper;
+	struct SnapshotWrapper *wrapper;
 }
 
 - (instancetype) init;
@@ -691,7 +691,7 @@ struct CartridgeWrapper;
 + (instancetype) snapshotFromFile:(NSString *)path;
 + (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
 
-- (SnapshotWrapper *)wrapper; 
+- (struct SnapshotWrapper *)wrapper;
 - (bool) readDataFromFile:(NSString *)path;
 - (bool) writeDataToFile:(NSString *)path;
 
@@ -704,10 +704,10 @@ struct CartridgeWrapper;
 
 @interface ArchiveProxy : NSObject {
     
-    ArchiveWrapper *wrapper;
+    struct ArchiveWrapper *wrapper;
 }
 
-- (ArchiveWrapper *)wrapper;
+- (struct ArchiveWrapper *)wrapper;
 - (NSString *)getPath;
 - (NSString *)getName;
 - (NSInteger)getType;
@@ -773,10 +773,10 @@ struct CartridgeWrapper;
 
 @interface TAPContainerProxy : NSObject
 {
-    TAPContainerWrapper *wrapper;
+    struct TAPContainerWrapper *wrapper;
 }
 
-- (TAPContainerWrapper *)wrapper;
+- (struct TAPContainerWrapper *)wrapper;
 
 + (BOOL) isTAPFile:(NSString *)filename;
 + (instancetype) containerFromTAPFile:(NSString *)filename;
@@ -794,10 +794,10 @@ struct CartridgeWrapper;
 
 @interface CartridgeProxy : NSObject {
     
-    CartridgeWrapper *wrapper;
+    struct CartridgeWrapper *wrapper;
 }
 
-- (CartridgeWrapper *) wrapper;
+- (struct CartridgeWrapper *) wrapper;
 + (BOOL) isCRTFile:(NSString *)filename;
 + (instancetype) cartridgeFromFile:(NSString *)filename;
 
