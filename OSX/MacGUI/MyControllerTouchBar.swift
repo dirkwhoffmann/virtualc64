@@ -8,10 +8,25 @@
 
 import Foundation
 
-func hello_swift(_ name: String) {
-    print("Hello \(name) in Swift");
+#if false
+public extension MyController {
+    public func PrettyPrint () {
+        print("EXTENDING MyController")
+    }
 }
+#endif
 
-func test_swift(c64: C64Proxy) {
-    c64.dump();
+public let CARDS = ["card1", "card2"]
+
+@objc class SwiftTest : NSObject {
+    // private init() {}
+    class func cards() -> [String] { return CARDS }
+
+    func hello_swift(_ name: String) {
+        print("Hello \(name) in Swift");
+    }
+
+    func test_swift(c64: C64Proxy) {
+        c64.dump();
+    }
 }

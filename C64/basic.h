@@ -1,7 +1,7 @@
 /*!
  * @header      basic.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 Dirk W. Hoffmann
+ * @copyright   2006 - 2017 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -41,9 +41,6 @@
 #include <assert.h>
 #include <math.h>
 #include <ctype.h> 
-
-// C++ includes
-#include <string>
 
 //
 //! @functiongroup Handling low level data objects
@@ -148,24 +145,20 @@ inline uint8_t incBCD(uint8_t value) {
 //! Handling file and path names
 //
 
-//! @brief    Extracts directory from a path.
-inline std::string ExtractDirectory( const std::string& path )
-{
-	return path.substr(0, path.find_last_of( '/' ) + 1);
-}
+/*! @brief    Extracts filename from a path
+ *  @details  Returns a newly created string. You need to delete it manually.
+ */
+char *ExtractFilename(const char *path);
 
-//! @brief    Extracts filename from a path.
-inline std::string ExtractFilename( const std::string& path )
-{
-	return path.substr(path.find_last_of( '/' ) + 1);
-}
+/*! @brief    Extracts file suffix from a path
+ *  @details  Returns a newly created string. You need to delete it manually.
+ */
+char *ExtractSuffix(const char *path);
 
-//! @brief    Changes the file extension.
-inline std::string ChangeExtension( const std::string& path, const std::string& ext )
-{
-	std::string filename = ExtractFilename(path);
-	return ExtractDirectory(path) + filename.substr(0, filename.find_last_of('.')) + ext;
-}
+/*! @brief    Extracts filename from a path without its suffix
+ *  @details  Returns a newly created string. You need to delete it manually.
+ */
+char *ExtractFilenameWithoutSuffix(const char *path);
 
 /*! @brief    Check file suffix
  *  @details  The function is used for determining the type of a file. 
@@ -189,8 +182,7 @@ bool checkFileSize(const char *filename, long min, long max);
  *  @param    header    Expected byte sequence, terminated by EOF.
  *  @return   Returns   true iff magic bytes match.
 */
-bool 
-checkFileHeader(const char *filename, int *header);
+bool checkFileHeader(const char *filename, int *header);
 
 //
 //! @functiongroup Managing time

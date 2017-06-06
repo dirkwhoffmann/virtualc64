@@ -18,8 +18,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-class Archive;
-
 @interface MountDialog : NSWindow <NSTableViewDelegate, NSTableViewDataSource>
 {
 	IBOutlet NSTableView *directory;

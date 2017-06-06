@@ -174,6 +174,43 @@ binary32_to_string(uint32_t value, char *s)
     s[i] = 0;
 }
 
+char *
+ExtractFilename(const char *path)
+{
+    assert(path != NULL);
+    
+    char *pos = strrchr(path, '/');
+    return pos ? strdup(pos + 1) : strdup(path);
+}
+
+char *
+ExtractSuffix(const char *path)
+{
+    assert(path != NULL);
+    
+    char *pos = strrchr(path, '.');
+    return pos ? strdup(pos + 1) : strdup("");
+}
+
+char *
+ExtractFilenameWithoutSuffix(const char *path)
+{
+    assert(path != NULL);
+    
+    char *result;
+    char *filename = ExtractFilename(path);
+    char *suffix   = ExtractSuffix(filename);
+    
+    if (strlen(suffix) == 0)
+        result = strdup(filename);
+    else
+        result = strndup(filename, strlen(filename) - strlen(suffix) - 1);
+    
+    free(filename);
+    free(suffix);
+    return result;
+}
+
 bool
 checkFileSuffix(const char *filename, const char *suffix)
 {

@@ -67,6 +67,7 @@ Container::readFromFile(const char *filename)
 	uint8_t *buffer = NULL;
 	FILE *file = NULL;
 	struct stat fileProperties;
+    char *name = NULL;
 	
 	assert (filename != NULL);
 			
@@ -107,13 +108,16 @@ Container::readFromFile(const char *filename)
 
 	// Set path and default name
     setPath(filename);
-    setName(ChangeExtension(ExtractFilename(getPath()), "").c_str());
-    
+    name = ExtractFilenameWithoutSuffix(filename);
+    setName(name);
+        
     debug(1, "Container %s (%s) read successfully from file %s\n", name, getName(), path);
 	success = true;
 
 exit:
 	
+    if (name)
+        free(name);
     if (file)
 		fclose(file);
 	if (buffer)

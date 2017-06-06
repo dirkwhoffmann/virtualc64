@@ -17,6 +17,7 @@
  */
 
 #include "C64.h"
+#include <algorithm>    // std::copy CAN WE GET RID OF THIS?
 
 VirtualComponent::VirtualComponent()
 {
