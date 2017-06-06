@@ -79,7 +79,7 @@ static const unsigned NTSC_CYCLES_PER_FRAME = 17095;
 static const unsigned NTSC_CYCLES_PER_SECOND = NTSC_REFRESH_RATE * NTSC_CYCLES_PER_FRAME;
 
 //! @brief    Pixel aspect ratio in NTSC mode
-static const uint16_t NTSC_PIXEL_ASPECT_RATIO = 0.75;
+static const double NTSC_PIXEL_ASPECT_RATIO = 0.75;
 
 
 // Horizontal screen parameters
@@ -153,7 +153,7 @@ static const unsigned PAL_CYCLES_PER_FRAME = 19656;
 static const unsigned PAL_CYCLES_PER_SECOND = PAL_REFRESH_RATE * PAL_CYCLES_PER_FRAME;
 
 //! @brief    Pixel aspect ratio in PAL mode
-static const uint16_t PAL_PIXEL_ASPECT_RATIO = 0.9365;
+static const double PAL_PIXEL_ASPECT_RATIO = 0.9365;
 
 
 // Horizontal screen parameters

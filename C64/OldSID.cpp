@@ -333,12 +333,12 @@ OldSID::execute(uint64_t elapsedCycles)
 	this->preCalcSamples += samples;
 	
 	// generate samples
-	for (register int j = 0; j < samples; j++)
+	for (int j = 0; j < samples; j++)
 	{
 		float sum_output = 0.0f;
 		float sum_output_filter = 0.0f;
 		// for all three voices
-		for (register uint32_t i = 0; i < 3; i++)
+		for (uint32_t i = 0; i < 3; i++)
 		{
 			SIDVoice *v = &voice[i];
 			float output = 0.0f;

@@ -52,8 +52,8 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 							   const AudioTimeStamp* inOutputTime,
 							   void *inClientData)
 {
-    register float*	myOutBuffer = (float*)outOutputData->mBuffers[0].mData;
-    register UInt32 size = BUFFERSIZE;
+    float*	myOutBuffer = (float*)outOutputData->mBuffers[0].mData;
+    UInt32 size = BUFFERSIZE;
 
     // C64 *c64 = reinterpret_cast<C64*>(inClientData);
     SIDProxy *sid = (__bridge SIDProxy *)inClientData;

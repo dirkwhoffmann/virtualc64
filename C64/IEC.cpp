@@ -255,6 +255,8 @@ void IEC::execute()
 //                            Fast loader
 // -------------------------------------------------------------------
 
+#if 0
+
 uint8_t IEC::IECOutATN(uint8_t byte)
 {
     // The upper four bits contain the command
@@ -386,4 +388,4 @@ void IEC::IECRelease()
 {
     
 }
-
+#endif

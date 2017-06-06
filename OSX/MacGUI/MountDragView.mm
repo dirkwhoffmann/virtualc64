@@ -85,15 +85,13 @@
 
         case NSDraggingContextOutsideApplication:
             return NSDragOperationCopy;
-    }
-    
-#if 0
-            // case NSDraggingContextWithinApplication:
-        default:
+
+        case NSDraggingContextWithinApplication:
             return NSDragOperationCopy;
     }
-#endif
-    return NSDragOperationCopy;
+    
+    // should not reach
+    // return NSDragOperationCopy;
 }
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)event

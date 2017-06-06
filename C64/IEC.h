@@ -214,6 +214,7 @@ public:
         IEC_CMD_CLOSE = 0x0E,       // Close channel
         IEC_CMD_OPEN = 0x0F         // Open channel
     };
+#if 0
     //! Sends the attention signal to all connected devices
     uint8_t IECOutATN(uint8_t byte);
 
@@ -228,6 +229,7 @@ public:
 
     //! Read a data byte from the bus
     uint8_t IECIn(uint8_t *byte);
+#endif 
     
     void IECSetATN();
     void IECRelATN();

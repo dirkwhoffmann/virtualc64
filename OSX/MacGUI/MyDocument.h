@@ -19,10 +19,6 @@
 #import <Cocoa/Cocoa.h>
 
 @class C64Proxy;
-class Archive;
-class TAPContainer;
-class Cartridge;
-class Snapshot;
 
 @interface MyDocument : NSDocument
 {
