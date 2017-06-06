@@ -18,8 +18,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-class TAPContainer;
-
 @interface TapeDialog : NSWindow <NSTableViewDelegate, NSTableViewDataSource>
 {
     IBOutlet NSButton *OKButton;

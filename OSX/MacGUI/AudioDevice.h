@@ -20,7 +20,7 @@
 #import <Cocoa/Cocoa.h>
 #import <CoreAudio/AudioHardware.h>
 #import <AudioToolbox/AudioServices.h>
-#include "sid.h"
+// #include "sid.h"
 
 class OldSID;
 

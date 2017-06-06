@@ -112,7 +112,7 @@ uint8_t pet2ascii(uint8_t petchar);
 
 /*! @brief    Converts an PET string into a ASCII string. 
  */
-void pet2ascii(char *petstring);
+void petString2asciiString(char *petstring);
 
 /*! @brief    Converts an ASCII character to a PET character.
  *  @details  This function translates into the unshifted PET character set. 
@@ -122,7 +122,7 @@ void pet2ascii(char *petstring);
 uint8_t ascii2pet(uint8_t asciichar);
 
 //! @brief    Converts an ASCII string into a PET string.
-void ascii2pet(char *asciistring);
+void asciiString2petString(char *asciistring);
 
 
 //! @brief    Writes the ASCII representation of 8 bit value to a string.
@@ -216,7 +216,7 @@ void sleepMicrosec(unsigned usec);
  *            by this amount and waits actively in a delay loop until the deadline is reached.
  *  @result   Overshoot time (jitter), measured in kernel time. Smaller values are better, 0 is best.
  */
-int64_t sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup = 0);
+int64_t sleepUntil(uint64_t kernelTargetTime, uint64_t kernelEarlyWakeup);
 
 
 //

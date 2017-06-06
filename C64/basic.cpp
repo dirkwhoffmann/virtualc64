@@ -122,7 +122,7 @@ pet2ascii(uint8_t petchar)
 }
 
 void
-pet2ascii(char *petstring)
+petString2asciiString(char *petstring)
 {
 assert(petstring != NULL);
 
@@ -146,7 +146,7 @@ ascii2pet(uint8_t asciichar)
 }
 
 void
-ascii2pet(char *asciistring)
+asciiString2petString(char *asciistring)
 {
     assert(asciistring != NULL);
     
