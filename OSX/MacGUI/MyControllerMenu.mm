@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import <VirtualC64-Swift.h>
 
 @implementation MyController(Menu) 
 

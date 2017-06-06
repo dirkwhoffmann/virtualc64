@@ -61,5 +61,3 @@
 
 #import "AudioDevice.h"
 #import "Speedometer.h"
-
-#import <VirtualC64-Swift.h>

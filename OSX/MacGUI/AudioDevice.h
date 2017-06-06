@@ -22,7 +22,7 @@
 #import <AudioToolbox/AudioServices.h>
 // #include "sid.h"
 
-class OldSID;
+// class OldSID;
 
 #define MPERR_DETECTING_DEVICE			-1
 #define MPERR_OSX_UNKNOWN_DEVICE		-2
