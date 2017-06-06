@@ -1,5 +1,5 @@
 /*
- * (C) 2009 - 2015 Benjamin Klein, Dirk Hoffmann. All rights reserved.
+ * (C) 2009 - 2017 Benjamin Klein, Dirk Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,12 @@
  */
 
 #include "C64GUI.h"
+
+typedef struct {
+    JoystickManager *manager;
+    int locationID;
+    IOHIDDeviceRef deviceRef;
+} CallbackContext;
 
 
 // ---------------------------------------------------------------------------------------------

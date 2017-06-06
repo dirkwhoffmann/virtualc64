@@ -26,6 +26,7 @@ struct VicWrapper { VIC *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
 struct JoystickWrapper { Joystick *joystick; };
+struct JoystickManagerWrapper { JoystickManager *manager; };
 struct SidWrapperWrapper { SIDWrapper *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
@@ -437,6 +438,50 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 @end
 
+@implementation JoystickManagerProxy
+
+- (instancetype) initWithC64Proxy:(C64Proxy *)c64;
+{
+    if (self = [super init]) {
+        wrapper = new JoystickManagerWrapper;
+        wrapper->manager = new JoystickManager(c64);
+        if (!wrapper->manager->initialize()) {
+            NSLog(@"Failed to create JoystickManager");
+            self = nil;
+        }
+    }
+    return self;
+}
+
+- (instancetype) initWithJoystickManager:(JoystickManager *)manager
+{
+    if (self = [super init]) {
+        wrapper = new JoystickManagerWrapper();
+        wrapper->manager = manager;
+    }
+    return self;
+}
+
+// - (BOOL) initialize { /* ??? */ };
+// - (void) dispose() { /* ??? */ };
+
+- (BOOL) joystickIsPluggedIn:(NSInteger)nr {
+    return wrapper->manager->joystickIsPluggedIn((int)nr);
+}
+- (void) bindJoystick:(NSInteger)nr joystick:(JoystickProxy *)joy {
+    wrapper->manager->bindJoystick((int)nr, joy);
+}
+- (void) bindJoystickToPortA:(NSInteger)nr {
+    wrapper->manager->bindJoystickToPortA((int)nr);
+}
+- (void) bindJoystickToPortB:(NSInteger)nr {
+    wrapper->manager->bindJoystickToPortB((int)nr);
+}
+- (void) unbindJoysticksFromPortA { wrapper->manager->unbindJoysticksFromPortA(); }
+- (void) unbindJoysticksFromPortB { wrapper->manager->unbindJoysticksFromPortA(); }
+
+@end
+
 
 // --------------------------------------------------------------------------
 //                                    SID
@@ -663,7 +708,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 @implementation C64Proxy
 
 @synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
-@synthesize joystickA, joystickB; 
+@synthesize joystickManager, joystickA, joystickB;
 @synthesize iecBusIsBusy, tapeBusIsBusy;
 
 - (instancetype) init
@@ -692,12 +737,12 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
+    joystickManager = [[JoystickManagerProxy alloc] initWithC64Proxy:self];
 
-    // Initialize Joystick HID interface
-    if (!(joystickManager = new JoystickManager(self))) {
+    // Check Joystick HID interface
+    if (!joystickManager) {
         NSLog(@"WARNING: Couldn't initialize HID interface.");
     }
-    joystickManager->initialize(); 
 
 	// Initialize CoreAudio sound interface
 	if (!(audioDevice = [[AudioDevice alloc] initWithSID:sid])) {
@@ -707,10 +752,10 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     return self;
 }
 
-- (C64Wrapper *)wrapper
-{
-    return wrapper;
-}
+//- (C64Wrapper *)wrapper
+//{
+//    return wrapper;
+//}
 
 - (void) awakeFromNib
 {
@@ -723,12 +768,13 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 	// Delete sound device
 	[self disableAudio];
+    NSLog(@"Do we need to dealloc AudioManager manually?");
 	audioDevice = nil;
 	
-    // Delete HDI interface
-    delete joystickManager;
-    joystickManager = NULL;
-    
+    // Delete joystick manager
+    NSLog(@"Do we need to dealloc JoystickManager manually?");
+    joystickManager = nil;
+
     // Delete emulator
     delete wrapper->c64;
 	wrapper->c64 = NULL;
@@ -862,11 +908,11 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (bool)revertToHistoricSnapshot:(NSInteger)nr { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? wrapper->c64->loadFromSnapshot(s), true : false; }
 
 // Joystick
-- (BOOL)joystickIsPluggedIn:(int)nr { return joystickManager->joystickIsPluggedIn(nr); }
-- (void)bindJoystickToPortA:(int)nr { joystickManager->bindJoystickToPortA(nr); }
-- (void)bindJoystickToPortB:(int)nr { joystickManager->bindJoystickToPortB(nr); }
-- (void)unbindJoysticksFromPortA { joystickManager->unbindJoysticksFromPortA(); }
-- (void)unbindJoysticksFromPortB { joystickManager->unbindJoysticksFromPortB(); }
+- (BOOL)joystickIsPluggedIn:(int)nr { return [joystickManager joystickIsPluggedIn:nr]; }
+- (void)bindJoystickToPortA:(int)nr { [joystickManager bindJoystickToPortA:nr]; }
+- (void)bindJoystickToPortB:(int)nr { [joystickManager bindJoystickToPortB:nr]; }
+- (void)unbindJoysticksFromPortA { [joystickManager unbindJoysticksFromPortA]; }
+- (void)unbindJoysticksFromPortB { [joystickManager unbindJoysticksFromPortB]; }
 
 // Audio hardware
 - (void) enableAudio { [self rampUpFromZero]; [audioDevice startPlayback]; }

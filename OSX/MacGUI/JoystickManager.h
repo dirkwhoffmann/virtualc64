@@ -24,13 +24,15 @@
 #import "Joystick.h"
 
 @class C64Proxy;
+@class JoystickManagerProxy;
 
+#if 0
 typedef struct {
-    JoystickManager *manager;
+    JoystickManagerProxy *manager;
     int locationID;
     IOHIDDeviceRef deviceRef;
 } CallbackContext;
-
+#endif
 
 class USBJoystick
 {
@@ -68,7 +70,7 @@ public:
 
     //! @brief Connects the USB device to port A of the emulator
 
-        void bindJoystickToPortB(int nr);
+    void bindJoystickToPortB(int nr);
     void setButtonPressed(bool pressed) { if (joystick) [joystick setButtonPressed:pressed]; }
     void setAxisX(JoystickDirection state) { if (joystick) [joystick setAxisX:state]; }
     void setAxisY(JoystickDirection state) { if (joystick) [joystick setAxisY:state]; }

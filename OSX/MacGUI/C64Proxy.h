@@ -20,8 +20,6 @@
 #import "C64_defs.h"
 #import "VIC_globals.h"
 
-// #import "C64.h"
-
 // Forward declarations
 @class MyController;
 @class AudioDevice;
@@ -32,7 +30,7 @@
 @class ArchiveProxy;
 @class TAPContainerProxy;
 @class CartridgeProxy;
-class JoystickManager;
+@class JoystickManagerProxy;
 
 // Forward declarations of wrappers for C++ classes.
 // We wrap classes into normal C structs to avoid any reference to C++ here.
@@ -44,6 +42,7 @@ struct VicWrapper;
 struct CiaWrapper;
 struct KeyboardWrapper;
 struct JoystickWrapper;
+struct JoystickManagerWrapper;
 struct SidWrapperWrapper; // Yes, it's a double wrapper
 struct IecWrapper;
 struct ExpansionPortWrapper;
@@ -333,7 +332,6 @@ struct CartridgeWrapper;
 //                                 Joystick
 // -------------------------------------------------------------------------
 
-
 @interface JoystickProxy : NSObject {
     
     JoystickWrapper *wrapper;
@@ -346,6 +344,22 @@ struct CartridgeWrapper;
 - (void) dump;
 
 @end
+
+@interface JoystickManagerProxy : NSObject {
+    
+    JoystickManagerWrapper *wrapper;
+}
+
+- (instancetype) initWithC64Proxy:(C64Proxy *)c64;
+- (BOOL) joystickIsPluggedIn:(NSInteger)nr;
+- (void) bindJoystick:(NSInteger)nr joystick:(JoystickProxy *)joy;
+- (void) bindJoystickToPortA:(NSInteger)nr;
+- (void) bindJoystickToPortB:(NSInteger)nr;
+- (void) unbindJoysticksFromPortA;
+- (void) unbindJoysticksFromPortB;
+
+@end
+
 
 // --------------------------------------------------------------------------
 //                                    SID
@@ -514,7 +528,7 @@ struct CartridgeWrapper;
     
 	C64Wrapper *wrapper;
 	AudioDevice *audioDevice;
-    JoystickManager *joystickManager;
+    JoystickManagerProxy *joystickManager;
     
 	// Sub component proxys
 	CPUProxy *cpu;
@@ -555,13 +569,14 @@ struct CartridgeWrapper;
 @property (readonly) ExpansionPortProxy *expansionport;
 @property (readonly) VC1541Proxy *vc1541;
 @property (readonly) DatasetteProxy *datasette;
+@property (readonly) JoystickManagerProxy *joystickManager;
 
 @property BOOL iecBusIsBusy;
 @property BOOL tapeBusIsBusy;
 
 // Initialization
 - (void) kill;
-- (C64Wrapper *)wrapper;
+// - (C64Wrapper *)wrapper;
 
 // Hardware configuration
 - (bool) reSID;
