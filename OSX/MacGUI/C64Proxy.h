@@ -577,7 +577,6 @@ struct CartridgeWrapper;
 
 // Initialization
 - (void) kill;
-// - (C64Wrapper *)wrapper;
 
 // Hardware configuration
 - (bool) reSID;

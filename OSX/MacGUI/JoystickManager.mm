@@ -17,6 +17,7 @@
  */
 
 #include "C64GUI.h"
+#include "JoystickManager.h"
 
 typedef struct {
     JoystickManager *manager;

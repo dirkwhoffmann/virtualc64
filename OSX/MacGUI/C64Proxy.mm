@@ -18,6 +18,7 @@
 
 #import "C64GUI.h"
 #import "C64.h"
+#import "JoystickManager.h"
 
 struct C64Wrapper { C64 *c64; };
 struct CpuWrapper { CPU *cpu; };

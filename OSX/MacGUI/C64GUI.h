@@ -59,7 +59,6 @@
 #import "TapeDialog.h"
 #import "RomDialog.h"
 
-#import "JoystickManager.h"   // Make this an Objective-C class
 #import "AudioDevice.h"
 #import "Speedometer.h"
 
