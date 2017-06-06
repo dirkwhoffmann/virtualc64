@@ -753,7 +753,7 @@
 	NSControl *controls[] = { 
 		// CPU panel
 		pc, sp, a, x, y, 
-		N, Z, C, I, B, D, V,
+		Nflag, Zflag, Cflag, Iflag, Bflag, Dflag, Vflag,
 		// CIA panel
 		cia1DataPortA, cia1DataPortDirectionA, cia1TimerA, cia1LatchedTimerA, 
 		//cia1RunningA, cia1OneShotA, cia1CountUnderflowsA, cia1SignalPendingA, cia1InterruptEnableA,

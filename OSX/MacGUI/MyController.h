@@ -103,13 +103,13 @@ enum INPUT_DEVICES {
 	IBOutlet NSTextField *a;
 	IBOutlet NSTextField *x;
 	IBOutlet NSTextField *y;
-	IBOutlet NSButton *N;
-	IBOutlet NSButton *Z;
-	IBOutlet NSButton *C;
-	IBOutlet NSButton *I;
-	IBOutlet NSButton *B;
-	IBOutlet NSButton *D;
-	IBOutlet NSButton *V;
+	IBOutlet NSButton *Nflag;
+	IBOutlet NSButton *Zflag;
+	IBOutlet NSButton *Cflag;
+	IBOutlet NSButton *Iflag;
+	IBOutlet NSButton *Bflag;
+	IBOutlet NSButton *Dflag;
+	IBOutlet NSButton *Vflag;
 	IBOutlet NSTextField *breakpoint;
 	
 	// Debug panel (Memory)

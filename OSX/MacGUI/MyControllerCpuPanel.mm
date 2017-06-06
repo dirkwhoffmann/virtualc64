@@ -158,13 +158,13 @@
 	[pc setIntValue:[[c64 cpu] PC]];
 	[sp setIntValue:[[c64 cpu] SP]];
 	
-	[N setIntValue:[[c64 cpu] Nflag]];
-	[V setIntValue:[[c64 cpu] Vflag]];
-	[B setIntValue:[[c64 cpu] Bflag]];
-	[D setIntValue:[[c64 cpu] Dflag]];
-	[I setIntValue:[[c64 cpu] Iflag]];
-	[Z setIntValue:[[c64 cpu] Zflag]];
-	[C setIntValue:[[c64 cpu] Cflag]];
+	[Nflag setIntValue:[[c64 cpu] Nflag]];
+	[Vflag setIntValue:[[c64 cpu] Vflag]];
+	[Bflag setIntValue:[[c64 cpu] Bflag]];
+	[Dflag setIntValue:[[c64 cpu] Dflag]];
+	[Iflag setIntValue:[[c64 cpu] Iflag]];
+	[Zflag setIntValue:[[c64 cpu] Zflag]];
+	[Cflag setIntValue:[[c64 cpu] Cflag]];
 }
 
 @end
