@@ -472,13 +472,7 @@
 	}	
 }
 
-- (IBAction)dumpC64:(id)sender { //[c64 dump]; }
-    // some experimental Swift stuff here...
-    SwiftTest *myclass = [SwiftTest new];
-    [myclass hello_swift:@"WILL BE PRINTED BY SWIFT"];
-    [myclass test_swiftWithC64:c64];
-}
-
+- (IBAction)dumpC64:(id)sender { [c64 dump]; }
 - (IBAction)dumpC64CPU:(id)sender {	[[c64 cpu] dump]; }
 - (IBAction)dumpC64CIA1:(id)sender { [[c64 cia:1] dump]; }
 - (IBAction)dumpC64CIA2:(id)sender { [[c64 cia:2] dump]; }

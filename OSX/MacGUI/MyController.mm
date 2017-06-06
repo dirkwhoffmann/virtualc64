@@ -135,10 +135,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    NSLog(@"MyController::applicationDidFinishLaunching\n");
-    
-    // Start the crash reporter
-    [self checkForCrashReports];
+    NSLog(@"MyController::applicationDidFinishLaunching\n");    
 }
 
 // --------------------------------------------------------------------------------

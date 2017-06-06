@@ -8,25 +8,55 @@
 
 import Foundation
 
-#if false
-public extension MyController {
-    public func PrettyPrint () {
-        print("EXTENDING MyController")
-    }
+extension NSTouchBarItemIdentifier {
+    static let lizzy = NSTouchBarItemIdentifier("virtualc64.lizzy")
+    static let lilly = NSTouchBarItemIdentifier("virtualc64.lilly")
+    static let luzi = NSTouchBarItemIdentifier("virtualc64.luzi")
 }
-#endif
 
-public let CARDS = ["card1", "card2"]
+@available(OSX 10.12.2, *)
+extension MyController : NSTouchBarDelegate {
+    
+    func lizzy () { print("Lizzy") }
+    func lilly () { print("Lilly") }
+    func luzi () { print("Luzi") }
 
-@objc class SwiftTest : NSObject {
-    // private init() {}
-    class func cards() -> [String] { return CARDS }
-
-    func hello_swift(_ name: String) {
-        print("Hello \(name) in Swift");
+    override open func makeTouchBar() -> NSTouchBar? {
+ 
+        print("MyController.makeTouchBar");
+        
+        let touchBar = NSTouchBar()
+        touchBar.delegate = self
+        touchBar.defaultItemIdentifiers = [.lizzy, .lilly, .luzi]
+        return touchBar
     }
+    
+    public func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+        
+        switch identifier {
+            
+        case NSTouchBarItemIdentifier.lizzy:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            item.view = NSButton(title: "🙈 Lizzy",
+                                 target: self,
+                                 action: #selector(lizzy))
+            return item
+            
+        case NSTouchBarItemIdentifier.lilly:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            item.view = NSButton(title: "🙉 Lilly",
+                                 target: self,
+                                 action: #selector(lilly))
+            return item
 
-    func test_swift(c64: C64Proxy) {
-        c64.dump();
+        case NSTouchBarItemIdentifier.luzi:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            item.view = NSButton(title: "🙊 Luzi",
+                                 target: self,
+                                 action: #selector(luzi))
+            return item
+
+        default: return nil
+        }
     }
 }
