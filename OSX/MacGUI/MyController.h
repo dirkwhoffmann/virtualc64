@@ -47,10 +47,6 @@ enum INPUT_DEVICES {
 	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
 	IBOutlet C64Proxy *__strong c64;
 	
-	// JoystickManager
-    // TODO: REMOVE
-	// JoystickManager *joystickManager;
-	    
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;
     IBOutlet HardwareDialog *hardwareDialog;
@@ -84,7 +80,6 @@ enum INPUT_DEVICES {
 	IBOutlet NSTextField *clockSpeed;
 	IBOutlet NSLevelIndicator *clockSpeedBar;
 	IBOutlet NSButton *warpIcon;
-    // IBOutlet NSButton *alwaysWarpIcon;
 	
 	// Cheatbox panel
 	IBOutlet CheatboxImageBrowserView *cheatboxImageBrowserView;
@@ -265,7 +260,11 @@ enum INPUT_DEVICES {
 	IBOutlet NSTextField *VicRasterInterrupt;
 	IBOutlet NSButton *VicEnableOpenGL;
 		
-	// The 60 Hz timer
+	/*! @brief   Update loop timer
+     *  @details The update task activated 60 times a second
+     *           and performs everything from drawing frames or 
+     *           checking the message queue. 
+     */
 	NSTimer *timer;
 	
 	// Timer lock
@@ -283,12 +282,20 @@ enum INPUT_DEVICES {
     //! Stores how many frames per second are currently drawn
     double fps;
 
+    /*! @brief   Current keyboard modifier flags
+     *  @details These flags tell us if one of the special keys
+     *           are currently pressed. The flags are utilized, e.g., to
+     *           alter behaviour when a key on the TouchBar is pressed.
+     */
+    NSEventModifierFlags modifierFlags;
+
 }
 
 @property (strong) C64Proxy *c64;
 @property (strong,readonly) MyMetalView *metalScreen;
 @property int inputDeviceA;
 @property int inputDeviceB;
+@property NSEventModifierFlags modifierFlags;
 
 // Initialization
 - (void)configureWindow;

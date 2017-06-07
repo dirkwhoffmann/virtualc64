@@ -78,18 +78,21 @@ public:
     //! @brief    Presses the restore key.
     void pressRestoreKey();
 
+    //! @brief    Presses the home key.
+    void pressHomeKey() { pressKey(6,3); }
+
     //! @brief    Presses the clear key.
     void pressClearKey() { pressShiftKey(); pressKey(6,3); }
     
+    //! @brief    Presses the delete key.
+    void pressDeleteKey() { pressKey(0,0); }
+
+    //! @brief    Presses the insert key.
+    void pressInsertKey() { pressShiftKey(); pressKey(0,0); }
+
     //! @brief    Presses the CTRL key.
     void pressCtrlKey() { pressKey(7,2); }
     
-    //! @brief    Presses the home key.
-    void pressHomeKey() { pressKey(6,3); }
-    
-    //! @brief    Presses the insert key.
-    void pressInsertKey() { pressShiftKey(); pressKey(0,0); }
-	
 	/*! @brief    Releases a pressed key.
      *  @details  The key is identified by its native row and column index.
      */
@@ -116,11 +119,14 @@ public:
     //! @brief    Releases the restore key.
     void releaseRestoreKey();
 
+    //! @brief    Releases the home key.
+    void releaseHomeKey() { releaseKey(6,3); }
+
     //! @brief    Releases the clear key.
     void releaseClearKey() { releaseKey(6,3); releaseShiftKey(); }
     
-    //! @brief    Releases the home key.
-    void releaseHomeKey() { releaseKey(6,3); }
+    //! @brief    Releases the delete key.
+    void releaseDeleteKey() { releaseKey(0,0); }
     
     //! @brief    Releases the insert key.
     void releaseInsertKey() { releaseKey(0,0); releaseShiftKey(); }

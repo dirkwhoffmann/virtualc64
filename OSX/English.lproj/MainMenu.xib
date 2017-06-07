@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -207,61 +207,67 @@
                         <items>
                             <menuItem title="RUNSTOP" id="306">
                                 <connections>
-                                    <action selector="runstopAction:" target="-1" id="320"/>
+                                    <action selector="runstopAction:" target="-1" id="h99-wl-I6J"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="SHIFT RUNSTOP" id="HYx-Xn-PfQ">
                                 <connections>
-                                    <action selector="shiftRunstopAction:" target="-1" id="Mzp-fm-Cux"/>
+                                    <action selector="shiftRunstopAction:" target="-1" id="ejz-Sw-vZz"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="RESTORE" id="305" userLabel="RESTORE">
                                 <connections>
-                                    <action selector="restoreAction:" target="-1" id="zPw-ce-HkM"/>
+                                    <action selector="restoreAction:" target="-1" id="XDR-D8-h89"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="RUNSTOP RESTORE" id="VdY-b4-dYs">
                                 <connections>
-                                    <action selector="runstopRestoreAction:" target="-1" id="7eq-vM-gwo"/>
+                                    <action selector="runstopRestoreAction:" target="-1" id="OF3-DS-8i4"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="COMMODORE" id="317">
                                 <connections>
-                                    <action selector="commodoreKeyAction:" target="-1" id="321"/>
+                                    <action selector="commodoreKeyAction:" target="-1" id="YbT-6t-zTU"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="CLR" id="512">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="ClearKeyAction:" target="-1" id="521"/>
+                                    <action selector="clearKeyAction:" target="-1" id="NgL-jP-5vs"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="HOME" id="515">
                                 <connections>
-                                    <action selector="HomeKeyAction:" target="-1" id="522"/>
+                                    <action selector="homeKeyAction:" target="-1" id="fhb-me-fFL"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="DEL" id="MPz-Ta-mSQ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deleteKeyAction:" target="-1" id="6fc-Gs-5bU"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="INST" id="518">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="InsertKeyAction:" target="-1" id="523"/>
+                                    <action selector="insertKeyAction:" target="-1" id="IEY-Sr-0Wx"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="349"/>
                             <menuItem title="Load directory" keyEquivalent="d" id="328">
                                 <connections>
-                                    <action selector="LoadDirectoryAction:" target="-1" id="524"/>
+                                    <action selector="loadDirectoryAction:" target="-1" id="JuA-2C-Ups"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Load first file" keyEquivalent="l" id="511">
                                 <connections>
-                                    <action selector="LoadFirstFileAction:" target="-1" id="525"/>
+                                    <action selector="loadFirstFileAction:" target="-1" id="cMu-Ip-rBc"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Format disk" id="510">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="FormatDiskAction:" target="-1" id="526"/>
+                                    <action selector="formatDiskAction:" target="-1" id="IvR-x1-Puy"/>
                                 </connections>
                             </menuItem>
                         </items>

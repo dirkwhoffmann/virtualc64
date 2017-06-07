@@ -21,6 +21,7 @@
 @implementation MyController
 
 @synthesize c64, metalScreen;
+@synthesize modifierFlags;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -1131,6 +1132,13 @@
 	// Pass all keyboard events to the metal view
     [metalScreen keyUp:event];
 }
+
+- (void)flagsChanged:(NSEvent *)event
+{
+    // Pass all keyboard events to the metal view
+    [metalScreen flagsChanged:event];
+}
+
 
 // --------------------------------------------------------------------------------
 //                                      Paste

@@ -157,7 +157,7 @@ uint8_t Keyboard::getRowValues(uint8_t columnMask)
 
 void Keyboard::pressKey(uint8_t row, uint8_t col)
 {
-    // printf("(%d %d)\n",row,col);
+    // debug("Set(%d %d)\n",row,col);
 	if (row < 8 && col < 8)
 		kbMatrix[row] &= 255 - (1 << col);
 }
@@ -206,6 +206,8 @@ void Keyboard::pressRestoreKey()
 
 void Keyboard::releaseKey(uint8_t row, uint8_t col)
 {
+    // debug("Unset(%d %d)\n",row,col);
+    
 	if (row < 8 && col < 8) {
 		kbMatrix[row] |= (1 << col);
 	}
@@ -213,6 +215,8 @@ void Keyboard::releaseKey(uint8_t row, uint8_t col)
 
 void Keyboard::releaseKey(int c)
 {
+    // debug("Releasing (%ld)\n", (long)c);
+    
     // Check for restore key
     if (c == C64KEY_RESTORE) {
         releaseRestoreKey();

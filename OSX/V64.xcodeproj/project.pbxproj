@@ -98,6 +98,7 @@
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
+		5080F3591EE74784001313D4 /* commodore.png in Resources */ = {isa = PBXBuildFile; fileRef = 5080F3581EE74784001313D4 /* commodore.png */; };
 		5087FD591BDA16C400570F0D /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087FD581BDA16C400570F0D /* metal.png */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6E912E06DB700378033 /* MyControllerToolbar.mm */; };
@@ -195,6 +196,9 @@
 		50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E31BEA203F008568E3 /* TapeDialog.mm */; };
 		50F681E71BEA2927008568E3 /* TAPContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E61BEA2927008568E3 /* TAPContainer.cpp */; };
 		50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E81BEA3BE4008568E3 /* Datasette.cpp */; };
+		50F8731D1EE7DB6000B30DBD /* del.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F8731C1EE7DB6000B30DBD /* del.png */; };
+		50F8731F1EE7DB6900B30DBD /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F8731E1EE7DB6900B30DBD /* home.png */; };
+		50F873211EE7E42500B30DBD /* restore.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F873201EE7E42500B30DBD /* restore.png */; };
 		50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F93BE512EF309900DD6A8A /* FileArchive.cpp */; };
 		50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FBE90A12DC992B0093194C /* MyControllerVicPanel.mm */; };
 		50FD96A51BF65861009134A4 /* 1541.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FD96A41BF65861009134A4 /* 1541.png */; };
@@ -369,6 +373,7 @@
 		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
 		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
 		5077743212DE490B00D72088 /* CpuTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CpuTableView.mm; sourceTree = "<group>"; };
+		5080F3581EE74784001313D4 /* commodore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commodore.png; sourceTree = "<group>"; };
 		5087FD581BDA16C400570F0D /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
 		5088A2541EE6D69000D83586 /* MyMetalDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalDefs.h; sourceTree = "<group>"; };
 		5088A6D412E0676200378033 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
@@ -506,6 +511,9 @@
 		50F681E61BEA2927008568E3 /* TAPContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TAPContainer.cpp; sourceTree = "<group>"; };
 		50F681E81BEA3BE4008568E3 /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
 		50F681E91BEA3BE4008568E3 /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
+		50F8731C1EE7DB6000B30DBD /* del.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = del.png; sourceTree = "<group>"; };
+		50F8731E1EE7DB6900B30DBD /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		50F873201EE7E42500B30DBD /* restore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restore.png; sourceTree = "<group>"; };
 		50F93BE512EF309900DD6A8A /* FileArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileArchive.cpp; sourceTree = "<group>"; };
 		50F93BE612EF309900DD6A8A /* FileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileArchive.h; sourceTree = "<group>"; };
 		50FBE90912DC992B0093194C /* MyControllerVicPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerVicPanel.h; sourceTree = "<group>"; };
@@ -858,6 +866,7 @@
 		50732BCA0A70D560008D8FF0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5080F3511EE7469C001313D4 /* TouchBar Icons */,
 				50CCB1B81B84999E008D8C30 /* Toolbar icons */,
 				50D6955012E375A800D9C738 /* Icons */,
 				50FD96A41BF65861009134A4 /* 1541.png */,
@@ -906,7 +915,6 @@
 				50A3E08B0E66F7C400D3564D /* pause32.png */,
 				50A3E0890E66F7BC00D3564D /* play32.png */,
 				50471FEB0A7B67AE00A8DB94 /* restart32.png */,
-				5020434D1EE71BB8006C3FD3 /* runstop.png */,
 				500FF38F1BD7F4DF0038245B /* romchip.png */,
 				500FF3901BD7F4DF0038245B /* romchipMissing.png */,
 				5094197C0E426C13008D6F71 /* rom.png */,
@@ -921,6 +929,18 @@
 			);
 			name = Images;
 			path = images;
+			sourceTree = "<group>";
+		};
+		5080F3511EE7469C001313D4 /* TouchBar Icons */ = {
+			isa = PBXGroup;
+			children = (
+				50F873201EE7E42500B30DBD /* restore.png */,
+				50F8731E1EE7DB6900B30DBD /* home.png */,
+				50F8731C1EE7DB6000B30DBD /* del.png */,
+				5080F3581EE74784001313D4 /* commodore.png */,
+				5020434D1EE71BB8006C3FD3 /* runstop.png */,
+			);
+			name = "TouchBar Icons";
 			sourceTree = "<group>";
 		};
 		509AE9FE0C3249D4001FC9FD /* Loading and saving */ = {
@@ -1115,6 +1135,7 @@
 				50C8924F1BEFB11700231B96 /* cntrlEject.png in Resources */,
 				50C9CB201B826C960054EE86 /* joystick.png in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
+				5080F3591EE74784001313D4 /* commodore.png in Resources */,
 				502F57FC1B93457700D1077E /* slow.png in Resources */,
 				50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */,
 				50DB328B1B948489000FB839 /* kext.png in Resources */,
@@ -1136,6 +1157,7 @@
 				50FD96A51BF65861009134A4 /* 1541.png in Resources */,
 				50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */,
 				500FF3921BD7F4DF0038245B /* romchipMissing.png in Resources */,
+				50F873211EE7E42500B30DBD /* restore.png in Resources */,
 				50E4BFAC0C3CEAD100CB6B43 /* warpOn.png in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				504A22AC1BF71FD500B29BEB /* clock_green.png in Resources */,
@@ -1163,6 +1185,7 @@
 				50C892531BEFB48600231B96 /* cntrlPause.png in Resources */,
 				5094197D0E426C13008D6F71 /* rom.png in Resources */,
 				50C8925C1BEFB64500231B96 /* cntrlStop.png in Resources */,
+				50F8731F1EE7DB6900B30DBD /* home.png in Resources */,
 				50A8F9EA0E472BA800ACE17D /* romMissing.png in Resources */,
 				50A3E08A0E66F7BC00D3564D /* play32.png in Resources */,
 				50A3E08C0E66F7C400D3564D /* pause32.png in Resources */,
@@ -1194,6 +1217,7 @@
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
 				50C9CB241B826CD50054EE86 /* expansion.png in Resources */,
 				5039A31415BE89940038ACBC /* drive48.png in Resources */,
+				50F8731D1EE7DB6000B30DBD /* del.png in Resources */,
 				5039A32015BE97500038ACBC /* diskette.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

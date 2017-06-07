@@ -317,10 +317,12 @@ struct CartridgeWrapper;
 - (void) releaseRestoreKey;
 - (void) pressCommodoreKey;
 - (void) releaseCommodoreKey;
-- (void) pressClearKey;
-- (void) releaseClearKey;
 - (void) pressHomeKey;
 - (void) releaseHomeKey;
+- (void) pressClearKey;
+- (void) releaseClearKey;
+- (void) pressDeleteKey;
+- (void) releaseDeleteKey;
 - (void) pressInsertKey;
 - (void) releaseInsertKey;
 

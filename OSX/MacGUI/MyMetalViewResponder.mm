@@ -178,7 +178,7 @@
     unsigned long  flags   = [event modifierFlags];
     int c64key;
     
-    // NSLog(@"keyDown: '%c' keycode: %02X flags: %08X", (char)c, keycode, flags);
+    // NSLog(@"keyDown: '%c' keycode: %02X flags: %08lX", (char)c, keycode, flags);
         
     // Ignore keys that are already pressed
     if (pressedKeys[(unsigned char)keycode])
@@ -213,7 +213,7 @@
     unsigned short keycode = [event keyCode];
     unsigned long  flags   = [event modifierFlags];
     
-    // NSLog(@"keyUp: keycode: %02X flags: %08X", keycode, flags);
+    // NSLog(@"keyUp: keycode: %02X flags: %08lX", keycode, flags);
     
     // Simulate joysticks
     int fingerprint = [self fingerprintForKey:keycode withModifierFlags:flags];
@@ -234,12 +234,13 @@
 
 - (void)flagsChanged:(NSEvent *)event
 {
-    // Note: We only respond to this message if one of the special keys is used for joystick emulation
-    
-    unsigned long flags = [event modifierFlags];
+    NSEventModifierFlags flags = [event modifierFlags];
     int keycode;
+
+    // Store modifier flags
+    [controller setModifierFlags:flags];
     
-    // Check if one of the supported special keys has been pressed or released
+    // Check if special keys are used for joystick emulation
     if (flags & NSAlternateKeyMask)
         keycode = NSAlternateKeyMask;
         else if (flags & NSShiftKeyMask)
@@ -249,8 +250,6 @@
                 else if (flags & NSControlKeyMask)
                     keycode = NSControlKeyMask;
                     else {
-                        // NSLog(@"Release Joystick");
-                        // Relase joysticks
                         (void)([self releaseJoystick:1 withKeycode:NSAlternateKeyMask device:[controller inputDeviceA]]);
                         (void)([self releaseJoystick:1 withKeycode:NSShiftKeyMask device:[controller inputDeviceA]]);
                         (void)([self releaseJoystick:1 withKeycode:NSCommandKeyMask device:[controller inputDeviceA]]);

@@ -303,34 +303,43 @@
     [self refresh];
 }
 
-- (IBAction)ClearKeyAction:(id)sender
+- (IBAction)clearKeyAction:(id)sender
 {
-    NSLog(@"Clear key pressed");
+    // NSLog(@"Clear key pressed");
 
     [[c64 keyboard] pressClearKey];
     sleepMicrosec(100000);
     [[c64 keyboard] releaseClearKey];
 }
 
-- (IBAction)HomeKeyAction:(id)sender
+- (IBAction)homeKeyAction:(id)sender
 {
-    NSLog(@"Home key pressed");
+    // NSLog(@"Home key pressed");
 
     [[c64 keyboard] pressHomeKey];
     sleepMicrosec(100000);
     [[c64 keyboard] releaseHomeKey];
 }
 
-- (IBAction)InsertKeyAction:(id)sender
+- (IBAction)insertKeyAction:(id)sender
 {
-    NSLog(@"Insert key pressed");
+    // NSLog(@"Insert key pressed");
 
     [[c64 keyboard] pressInsertKey];
     sleepMicrosec(100000);
     [[c64 keyboard] releaseInsertKey];
 }
 
-- (IBAction)LoadDirectoryAction:(id)sender
+- (IBAction)deleteKeyAction:(id)sender
+{
+    // NSLog(@"Delete key pressed");
+    
+    [[c64 keyboard] pressDeleteKey];
+    sleepMicrosec(100000);
+    [[c64 keyboard] releaseDeleteKey];
+}
+
+- (IBAction)loadDirectoryAction:(id)sender
 {
     NSLog(@"LoadDirectoryAction");
     [[self document] updateChangeCount:NSChangeDone];
@@ -338,7 +347,7 @@
     [self refresh];
 }
 
-- (IBAction)LoadFirstFileAction:(id)sender
+- (IBAction)loadFirstFileAction:(id)sender
 {
     NSLog(@"LoadFirstFileAction");
     [[self document] updateChangeCount:NSChangeDone];
@@ -346,7 +355,7 @@
     [self refresh];
 }
 
-- (IBAction)FormatDiskAction:(id)sender
+- (IBAction)formatDiskAction:(id)sender
 {
     NSLog(@"FormatDiskAction");
     [[self document] updateChangeCount:NSChangeDone];

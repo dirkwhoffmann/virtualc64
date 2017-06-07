@@ -357,10 +357,12 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void) releaseRestoreKey { wrapper->keyboard->releaseRestoreKey(); }
 - (void) pressCommodoreKey { wrapper->keyboard->pressCommodoreKey(); }
 - (void) releaseCommodoreKey { wrapper->keyboard->releaseCommodoreKey(); }
-- (void) pressClearKey { wrapper->keyboard->pressClearKey(); }
-- (void) releaseClearKey { wrapper->keyboard->releaseClearKey(); }
 - (void) pressHomeKey { wrapper->keyboard->pressHomeKey(); }
 - (void) releaseHomeKey { wrapper->keyboard->releaseHomeKey(); }
+- (void) pressClearKey { wrapper->keyboard->pressClearKey(); }
+- (void) releaseClearKey { wrapper->keyboard->releaseClearKey(); }
+- (void) pressDeleteKey { wrapper->keyboard->pressDeleteKey(); }
+- (void) releaseDeleteKey { wrapper->keyboard->releaseDeleteKey(); }
 - (void) pressInsertKey { wrapper->keyboard->pressInsertKey(); }
 - (void) releaseInsertKey { wrapper->keyboard->releaseInsertKey(); }
 
