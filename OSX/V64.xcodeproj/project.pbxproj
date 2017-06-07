@@ -299,7 +299,6 @@
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
-		5020434B1EE71B47006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = runstop.png; path = ../../../Desktop/runstop.png; sourceTree = "<group>"; };
 		5020434D1EE71BB8006C3FD3 /* runstop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runstop.png; sourceTree = "<group>"; };
 		5020C3101C4BA3A700DAE8E5 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
 		5020C3111C4BA3A700DAE8E5 /* MyWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyWindow.mm; sourceTree = "<group>"; };
