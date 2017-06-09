@@ -933,7 +933,8 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 }
 
 
-- (bool)revertToHistoricSnapshot:(NSInteger)nr { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? wrapper->c64->loadFromSnapshot(s), true : false; }
+- (bool)restoreHistoricSnapshot:(NSInteger)nr {
+    return wrapper->c64->restoreHistoricSnapshot((unsigned)nr); }
 
 // Joystick
 - (BOOL)joystickIsPluggedIn:(int)nr { return [joystickManager joystickIsPluggedIn:nr]; }

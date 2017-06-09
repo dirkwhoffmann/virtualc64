@@ -58,7 +58,7 @@
 {
 	// NSLog(@"doubleClickAction (item %lu)", (unsigned long)index);
 	
-	[c64 revertToHistoricSnapshot:index];
+	[c64 restoreHistoricSnapshot:index];
 	[controller cheatboxAction:self];
 }
 

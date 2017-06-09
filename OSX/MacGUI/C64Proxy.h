@@ -664,7 +664,7 @@ struct CartridgeWrapper;
 - (NSInteger)historicSnapshotImageHeight:(NSInteger)nr;
 - (NSImage *)historicSnapshotImage:(NSInteger)nr;
 
-- (bool)revertToHistoricSnapshot:(NSInteger)nr;
+- (bool)restoreHistoricSnapshot:(NSInteger)nr;
 
 // Joystick handling
 - (BOOL)joystickIsPluggedIn:(int)nr;

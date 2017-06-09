@@ -835,6 +835,21 @@ void C64::loadFromSnapshot(Snapshot *snapshot)
     ping();
 }
 
+bool
+C64::restoreHistoricSnapshot(unsigned nr)
+{
+    Snapshot *s = getHistoricSnapshot(nr);
+
+    if (s == NULL)
+        return false;
+    
+    suspend();
+    loadFromSnapshot(s);
+    resume();
+
+    return true;
+}
+
 void
 C64::saveToSnapshot(Snapshot *snapshot)
 {

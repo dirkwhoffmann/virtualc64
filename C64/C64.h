@@ -491,7 +491,12 @@ public:
     
     //! @brief    Loads the current state from a snapshot container
     void loadFromSnapshot(Snapshot *snapshot);
-    
+
+    /*! @brief    Overwrites current state with a snapshot stored in the time travel ringbuffer
+     *  @details  Returns true iff the snapshot was found and restored successfully 
+     */
+    bool restoreHistoricSnapshot(unsigned nr);
+
     //! @brief    Saves the current state to a snapshot container
     void saveToSnapshot(Snapshot *snapshot);
     

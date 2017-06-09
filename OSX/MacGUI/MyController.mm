@@ -468,7 +468,9 @@
 
 - (void)processMessage:(Message *)msg
 {
-	switch (msg->id) {
+    // NSLog(@"Message %d",msg->id);
+
+    switch (msg->id) {
 			
 		case MSG_ROM_MISSING:
 			

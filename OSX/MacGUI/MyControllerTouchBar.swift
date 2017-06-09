@@ -123,8 +123,16 @@ extension MyController : NSTouchBarDelegate
                 else { return nil }
             
             
-            // scrubber.mode = selectedMode
-            scrubber.showsArrowButtons = false // showsArrows.state == NSOnState
+            // Configure scrubber appearance
+            scrubber.showsArrowButtons = false
+
+            // Make sure that lates snapshot is always visible
+            if (c64 != nil && c64.historicSnapshots() > 0) {
+                scrubber.scrollItem(at: c64.historicSnapshots() - 1,
+                                    to: NSScrubberAlignment.trailing)
+            }
+            // }
+            // showsArrows.state == NSOnState
             // scrubber.selectionBackgroundStyle = selectedSelectionBackgroundStyle
             // scrubber.selectionOverlayStyle = selectedSelectionOverlayStyle
             // scrubber.scrubberLayout = selectedLayout
@@ -197,8 +205,10 @@ class TimeTravelScrubberBarItem : NSCustomTouchBarItem, NSScrubberDelegate, NSSc
     
     public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
         let itemView = scrubber.makeItem(withIdentifier: TimeTravelScrubberBarItem.timetravelViewId, owner: self) as! NSScrubberImageItemView
-        let image = c!.c64.historicSnapshotImage(index)
-        itemView.image = image!
+        let max = c!.c64.historicSnapshots() - 1
+        assert(max >= 0)
+        let img = c!.c64.historicSnapshotImage(max - index)
+        itemView.image = img!
         return itemView
     }
     
@@ -225,6 +235,7 @@ class TimeTravelScrubberBarItem : NSCustomTouchBarItem, NSScrubberDelegate, NSSc
     
     public func scrubber(_ scrubber: NSScrubber, didSelectItemAt index: Int) {
         print("\(#function) at index \(index)")
+        c!.c64.restoreHistoricSnapshot(c!.c64.historicSnapshots() - index - 1)
     }
 
 }
