@@ -89,8 +89,8 @@
 							
 		// Create bitmap representation
         // MOVE TO SNAPSHOP PROXY CLASS
-        int width = [[controller c64] historicSnapshotImageWidth:i];
-        int height = [[controller c64] historicSnapshotImageHeight:i];
+        NSInteger width = [[controller c64] historicSnapshotImageWidth:i];
+        NSInteger height = [[controller c64] historicSnapshotImageHeight:i];
 		NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:	&data
 																		pixelsWide: width
 																		pixelsHigh: height 
@@ -145,9 +145,9 @@
 	}
 	[pboard declareTypes:[NSArray arrayWithObject:NSFileContentsPboardType] owner:self];
     
-    uint32_t headerSize = [c64 historicSnapshotHeaderSize:index];
+    NSInteger headerSize = [c64 historicSnapshotHeaderSize:index];
     uint8_t *header = [c64 historicSnapshotHeader:index];
-    uint32_t dataSize = [c64 historicSnapshotDataSize:index];
+    NSInteger dataSize = [c64 historicSnapshotDataSize:index];
     uint8_t *data = [c64 historicSnapshotData:index];
     
     NSMutableData *fileData = [NSMutableData dataWithBytes:header length:headerSize];

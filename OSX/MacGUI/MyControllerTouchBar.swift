@@ -17,10 +17,13 @@ extension NSTouchBarItemIdentifier {
     static let restore   = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.restore")
     static let larrow    = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.larrow")
     static let uarrow    = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.uarrow")
+    static let TBIIdTimeTravel = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.timeTravel")
+
 }
 
 @available(OSX 10.12.2, *)
-extension MyController : NSTouchBarDelegate {
+extension MyController : NSTouchBarDelegate
+ {
     
     func TouchBarHomeKeyAction() {
         if (modifierFlags.contains(NSShiftKeyMask)) {
@@ -38,6 +41,8 @@ extension MyController : NSTouchBarDelegate {
         }
     }
 
+    // NSTouchBarDelegate
+
     override open func makeTouchBar() -> NSTouchBar? {
  
         print("MyController.makeTouchBar");
@@ -50,7 +55,9 @@ extension MyController : NSTouchBarDelegate {
                                            .del,
                                            .restore,
                                            /* .larrow, */
-                                           /* .uarrow */]
+                                           /* .uarrow */
+                                           .TBIIdTimeTravel // CRASHES
+        ]
         return touchBar
     }
     
@@ -108,7 +115,116 @@ extension MyController : NSTouchBarDelegate {
                                  action: #selector(homeKeyAction))
             return item
 
+        case NSTouchBarItemIdentifier.TBIIdTimeTravel:
+            let scrubberItem = TimeTravelScrubberBarItem(identifier: identifier, controller: self)
+            
+            guard let scrubber = scrubberItem.view as? NSScrubber
+                else { return nil }
+            
+            
+            // scrubber.mode = selectedMode
+            scrubber.showsArrowButtons = false // showsArrows.state == NSOnState
+            // scrubber.selectionBackgroundStyle = selectedSelectionBackgroundStyle
+            // scrubber.selectionOverlayStyle = selectedSelectionOverlayStyle
+            // scrubber.scrubberLayout = selectedLayout
+            
+            /*if useBackgroundColor.state == NSOnState {
+                scrubber.backgroundColor = backgroundColorWell.color
+            }*/
+            
+            /*if useBackgroundView.state == NSOnState {
+                scrubber.backgroundView = CustomBackgroundView()
+            }*/
+            
+            // Set the scrubber's width to be 400.
+            /*
+            let viewBindings: [String: NSView] = ["scrubber": scrubber]
+            let hconstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[scrubber(400)]",
+                                                              options: [],
+                                                              metrics: nil,
+                                                              views: viewBindings)
+            NSLayoutConstraint.activate(hconstraints)
+            */
+            return scrubberItem
+        
+            
         default: return nil
         }
     }
+    
 }
+
+/*! @brief   Scrubber touch bar item for time travel feature
+ *  @details The scrubber lets you pick a stored snapshot from the
+ *           time travel archive. 
+ */
+@available(OSX 10.12.2, *)
+class TimeTravelScrubberBarItem : NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource, NSScrubberFlowLayoutDelegate {
+    
+    private static let timetravelViewId = "TimeTravelViewId"
+    
+    var c : MyController?
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        c = nil
+    }
+    
+    //override init(identifier: NSTouchBarItemIdentifier) {
+    //    super.init(identifier: identifier)
+    init(identifier: NSTouchBarItemIdentifier, controller: MyController) {
+        
+            c = controller
+            super.init(identifier: identifier)
+        
+        let scrubber = NSScrubber()
+        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: TimeTravelScrubberBarItem.timetravelViewId)
+        scrubber.mode = .free
+        scrubber.selectionBackgroundStyle = .roundedBackground
+        scrubber.delegate = self
+        scrubber.dataSource = self
+        
+        view = scrubber
+    }
+    
+    // NSScrubberDataSource
+    public func numberOfItems(for scrubber: NSScrubber) -> Int {
+        return c!.c64.historicSnapshots();
+    }
+    
+    public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
+        let itemView = scrubber.makeItem(withIdentifier: TimeTravelScrubberBarItem.timetravelViewId, owner: self) as! NSScrubberImageItemView
+        itemView.image = NSImage(named: "commodore")!
+        
+        /*
+        let itemView = scrubber.makeItem(withIdentifier: TimeTravelScrubberBarItem.timetravelViewId, owner: nil) as! NSScrubberTextItemView
+        itemView.title = String(index)
+        */
+        return itemView
+    }
+    
+    // NSScrubberFlowLayoutDelegate
+    func scrubber(_ scrubber: NSScrubber, layout: NSScrubberFlowLayout, sizeForItemAt itemIndex: Int) -> NSSize {
+        return NSSize(width: 60, height: 30)
+    }
+
+    
+    // NSScrubberDelegate
+    public func didBeginInteracting(with: NSScrubber) {
+        // print("\(#function)")
+    }
+    
+    public func didCancelInteracting(with: NSScrubber) {
+        // print("\(#function)")
+    }
+    
+    public func didFinishInteracting(with: NSScrubber) {
+        // print("\(#function)")
+    }
+    
+    public func scrubber(_ scrubber: NSScrubber, didSelectItemAt index: Int) {
+        print("\(#function) at index \(index)")
+    }
+
+}
+

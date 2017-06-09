@@ -652,15 +652,15 @@ struct CartridgeWrapper;
 - (long) frames;
 
 // Cheatbox
-- (int) historicSnapshots;
-- (int) historicSnapshotHeaderSize:(NSInteger)nr;
+- (NSInteger) historicSnapshots;
+- (NSInteger) historicSnapshotHeaderSize:(NSInteger)nr;
 - (uint8_t *) historicSnapshotHeader:(NSInteger)nr;
-- (int) historicSnapshotDataSize:(NSInteger)nr;
+- (NSInteger) historicSnapshotDataSize:(NSInteger)nr;
 - (uint8_t *) historicSnapshotData:(NSInteger)nr;
 
 - (unsigned char *)historicSnapshotImageData:(NSInteger)nr;
-- (unsigned)historicSnapshotImageWidth:(NSInteger)nr;
-- (unsigned)historicSnapshotImageHeight:(NSInteger)nr;
+- (NSInteger)historicSnapshotImageWidth:(NSInteger)nr;
+- (NSInteger)historicSnapshotImageHeight:(NSInteger)nr;
 - (time_t)historicSnapshotTimestamp:(NSInteger)nr;
 - (bool)revertToHistoricSnapshot:(NSInteger)nr;
 

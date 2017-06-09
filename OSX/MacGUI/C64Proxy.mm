@@ -886,15 +886,15 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (long) frames { return (long)wrapper->c64->getFrame(); }
 
 // Cheatbox
-- (int) historicSnapshots { return wrapper->c64->numHistoricSnapshots(); }
+- (NSInteger) historicSnapshots { return wrapper->c64->numHistoricSnapshots(); }
 
-- (int) historicSnapshotHeaderSize:(NSInteger)nr
+- (NSInteger) historicSnapshotHeaderSize:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getHeaderSize() : 0; }
 
 - (uint8_t *) historicSnapshotHeader:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getHeader() : NULL; }
 
-- (int) historicSnapshotDataSize:(NSInteger)nr
+- (NSInteger) historicSnapshotDataSize:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getDataSize() : 0; }
 
 - (uint8_t *) historicSnapshotData:(NSInteger)nr
@@ -903,9 +903,9 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 - (unsigned char *)historicSnapshotImageData:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageData() : NULL; }
-- (unsigned)historicSnapshotImageWidth:(NSInteger)nr
+- (NSInteger)historicSnapshotImageWidth:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
-- (unsigned)historicSnapshotImageHeight:(NSInteger)nr
+- (NSInteger)historicSnapshotImageHeight:(NSInteger)nr
 { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
 - (time_t)historicSnapshotTimestamp:(NSInteger)nr { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
 - (bool)revertToHistoricSnapshot:(NSInteger)nr { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? wrapper->c64->loadFromSnapshot(s), true : false; }
