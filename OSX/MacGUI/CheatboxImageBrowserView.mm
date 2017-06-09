@@ -64,8 +64,6 @@
 
 - (void)refresh {
 	
-	unsigned char *data;
-	
 	// NSLog(@"CheatboxImageBrowserView::refresh");
 	
 	setupTime = time(NULL);
@@ -74,7 +72,7 @@
 	NSImage *camera = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Image Capture.app"];
 	NSImage *glossy = [NSImage imageNamed:@"glossy.png"];
 
-	for (int i = 0; (data = [[controller c64] historicSnapshotImageData:i]) != NULL; i++) {
+    for (unsigned i = 0; i < [[controller c64] historicSnapshots]; i++) {
 				
 		// Setup time information
 		char buf[64];
@@ -87,25 +85,11 @@
 		strftime(buf, sizeof(buf)-1, "taken at %H:%M:%S", localtime(&stamp));
 		NSString *subtitle = [NSString stringWithUTF8String:buf];
 							
-		// Create bitmap representation
-        // MOVE TO SNAPSHOP PROXY CLASS
+		// Get snapshot image
         NSInteger width = [[controller c64] historicSnapshotImageWidth:i];
         NSInteger height = [[controller c64] historicSnapshotImageHeight:i];
-		NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:	&data
-																		pixelsWide: width
-																		pixelsHigh: height 
-																	 bitsPerSample: 8
-																   samplesPerPixel: 4 
-																		  hasAlpha: YES
-																		  isPlanar: NO
-																	colorSpaceName: NSCalibratedRGBColorSpace
-																	   bytesPerRow: 4*width
-																	  bitsPerPixel: 32];	
-		
-		// Create NSImage from bitmap representation
-		NSImage *image = [[NSImage alloc] initWithSize:[bmp size]];
-		[image addRepresentation:bmp];
-
+        NSImage *image = [c64 historicSnapshotImage:i];
+        
 	    // Enhance image with some overlays 
 		NSImage *final = [[NSImage alloc] initWithSize:NSMakeSize(width, height+70)];
 		[final lockFocus];

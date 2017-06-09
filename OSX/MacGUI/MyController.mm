@@ -22,6 +22,8 @@
 
 @synthesize c64, metalScreen;
 @synthesize modifierFlags;
+// @synthesize touchbar;
+// @synthesize timeTravelScrubber;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -137,6 +139,8 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     NSLog(@"MyController::applicationDidFinishLaunching\n");    
+
+    [[NSApplication sharedApplication] setAutomaticCustomizeTouchBarMenuItemEnabled:YES];
 }
 
 // --------------------------------------------------------------------------------
@@ -659,6 +663,13 @@
         case MSG_PAL:
         case MSG_NTSC:
             [metalScreen updateScreenGeometry];
+            break;
+            
+        case MSG_SNAPSHOT_TAKEN:
+
+            // TODO: It would be sufficient to update the TouchBar
+            // when time travel scrubber is activated
+            [self setTouchBar:nil];
             break;
             
 		default:

@@ -62,7 +62,8 @@ typedef enum {
     MSG_JOYSTICK_ATTACHED,
     MSG_JOYSTICK_REMOVED,
     MSG_PAL,
-    MSG_NTSC
+    MSG_NTSC,
+    MSG_SNAPSHOT_TAKEN
 } VC64Message;
 
 //! @brief    Keycodes of special keys

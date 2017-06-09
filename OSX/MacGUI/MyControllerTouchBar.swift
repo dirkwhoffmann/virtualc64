@@ -18,7 +18,6 @@ extension NSTouchBarItemIdentifier {
     static let larrow    = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.larrow")
     static let uarrow    = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.uarrow")
     static let TBIIdTimeTravel = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.timeTravel")
-
 }
 
 @available(OSX 10.12.2, *)
@@ -58,6 +57,8 @@ extension MyController : NSTouchBarDelegate
                                            /* .uarrow */
                                            .TBIIdTimeTravel // CRASHES
         ]
+        
+        // touchbar = touchBar
         return touchBar
     }
     
@@ -145,6 +146,7 @@ extension MyController : NSTouchBarDelegate
                                                               views: viewBindings)
             NSLayoutConstraint.activate(hconstraints)
             */
+            // timeTravelScrubber = scrubberItem
             return scrubberItem
         
             
@@ -184,6 +186,7 @@ class TimeTravelScrubberBarItem : NSCustomTouchBarItem, NSScrubberDelegate, NSSc
         scrubber.delegate = self
         scrubber.dataSource = self
         
+        // controller.timeTravelScrubber = scrubber
         view = scrubber
     }
     
@@ -194,18 +197,16 @@ class TimeTravelScrubberBarItem : NSCustomTouchBarItem, NSScrubberDelegate, NSSc
     
     public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
         let itemView = scrubber.makeItem(withIdentifier: TimeTravelScrubberBarItem.timetravelViewId, owner: self) as! NSScrubberImageItemView
-        itemView.image = NSImage(named: "commodore")!
-        
-        /*
-        let itemView = scrubber.makeItem(withIdentifier: TimeTravelScrubberBarItem.timetravelViewId, owner: nil) as! NSScrubberTextItemView
-        itemView.title = String(index)
-        */
+        let image = c!.c64.historicSnapshotImage(index)
+        itemView.image = image!
         return itemView
     }
     
     // NSScrubberFlowLayoutDelegate
     func scrubber(_ scrubber: NSScrubber, layout: NSScrubberFlowLayout, sizeForItemAt itemIndex: Int) -> NSSize {
-        return NSSize(width: 60, height: 30)
+        let w = c!.c64.historicSnapshotImageWidth(itemIndex)
+        let h = c!.c64.historicSnapshotImageHeight(itemIndex)
+        return NSSize(width: 36*w/h, height: 36)
     }
 
     

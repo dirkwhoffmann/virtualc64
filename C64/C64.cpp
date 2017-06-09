@@ -860,6 +860,8 @@ C64::takeSnapshot()
     debug(3, "Taking snapshop %d (%p)\n", backInTimeWritePtr, backInTimeHistory[backInTimeWritePtr]);
     
     saveToSnapshot(backInTimeHistory[backInTimeWritePtr]);
+    putMessage(MSG_SNAPSHOT_TAKEN,backInTimeWritePtr);
+
     backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
 }
 

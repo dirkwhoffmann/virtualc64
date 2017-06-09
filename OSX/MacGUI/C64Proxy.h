@@ -658,10 +658,12 @@ struct CartridgeWrapper;
 - (NSInteger) historicSnapshotDataSize:(NSInteger)nr;
 - (uint8_t *) historicSnapshotData:(NSInteger)nr;
 
+- (time_t)historicSnapshotTimestamp:(NSInteger)nr;
 - (unsigned char *)historicSnapshotImageData:(NSInteger)nr;
 - (NSInteger)historicSnapshotImageWidth:(NSInteger)nr;
 - (NSInteger)historicSnapshotImageHeight:(NSInteger)nr;
-- (time_t)historicSnapshotTimestamp:(NSInteger)nr;
+- (NSImage *)historicSnapshotImage:(NSInteger)nr;
+
 - (bool)revertToHistoricSnapshot:(NSInteger)nr;
 
 // Joystick handling

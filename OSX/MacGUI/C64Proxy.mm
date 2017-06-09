@@ -897,9 +897,10 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (NSInteger) historicSnapshotDataSize:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getDataSize() : 0; }
 
+- (time_t)historicSnapshotTimestamp:(NSInteger)nr { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
+
 - (uint8_t *) historicSnapshotData:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getData() : NULL; }
-
 
 - (unsigned char *)historicSnapshotImageData:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageData() : NULL; }
@@ -907,7 +908,31 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageWidth() : 0; }
 - (NSInteger)historicSnapshotImageHeight:(NSInteger)nr
 { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
-- (time_t)historicSnapshotTimestamp:(NSInteger)nr { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getTimestamp() : 0; }
+
+- (NSImage *)historicSnapshotImage:(NSInteger)nr {
+    unsigned char *data = [self historicSnapshotImageData:nr];
+    NSInteger width = [self historicSnapshotImageWidth:nr];
+    NSInteger height = [self historicSnapshotImageHeight:nr];
+    NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc]
+                             initWithBitmapDataPlanes: &data
+                             pixelsWide: width
+                             pixelsHigh: height
+                             bitsPerSample: 8
+                             samplesPerPixel: 4
+                             hasAlpha: YES
+                             isPlanar: NO
+                             colorSpaceName: NSCalibratedRGBColorSpace
+                             bytesPerRow: 4*width
+                             bitsPerPixel: 32];
+
+    // Create NSImage from bitmap representation
+    NSImage *image = [[NSImage alloc] initWithSize:[bmp size]];
+    [image addRepresentation:bmp];
+
+    return image;
+}
+
+
 - (bool)revertToHistoricSnapshot:(NSInteger)nr { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? wrapper->c64->loadFromSnapshot(s), true : false; }
 
 // Joystick

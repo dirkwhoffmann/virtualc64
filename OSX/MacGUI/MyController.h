@@ -288,7 +288,6 @@ enum INPUT_DEVICES {
      *           alter behaviour when a key on the TouchBar is pressed.
      */
     NSEventModifierFlags modifierFlags;
-
 }
 
 @property (strong) C64Proxy *c64;
