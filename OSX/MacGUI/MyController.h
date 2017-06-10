@@ -26,7 +26,6 @@
 @class MountDialog;
 @class TapeDialog;
 @class RomDialog;
-@class PreferenceController;
 @class MyMetalView;
 @class CpuTableView;
 @class MemTableView;
@@ -45,7 +44,8 @@ enum INPUT_DEVICES {
 {
 	// Proxy object. Used get data from and sent data to the virtual C64
 	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
-	IBOutlet C64Proxy *__strong c64;
+	// IBOutlet
+    C64Proxy *__strong c64;
 	
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;
@@ -54,7 +54,6 @@ enum INPUT_DEVICES {
 	IBOutlet MountDialog *mountDialog;
     IBOutlet TapeDialog *tapeDialog;
 	IBOutlet RomDialog *romDialog;
-	PreferenceController *preferenceController;
 	
     // Toolbar
     IBOutlet NSPopUpButton *joystickPortA;

@@ -44,8 +44,12 @@ extension MyController : NSTouchBarDelegate
 
     override open func makeTouchBar() -> NSTouchBar? {
  
-        print("MyController.makeTouchBar");
-        
+        if (c64 == nil) {
+            return nil // Only create TouchBar for controllers having a C64 proxy
+        }
+
+        print("\(#function)")
+
         let touchBar = NSTouchBar()
         touchBar.delegate = self
         touchBar.defaultItemIdentifiers = [.commodore,
@@ -58,7 +62,6 @@ extension MyController : NSTouchBarDelegate
                                            .TBIIdTimeTravel // CRASHES
         ]
         
-        // touchbar = touchBar
         return touchBar
     }
     
@@ -125,36 +128,13 @@ extension MyController : NSTouchBarDelegate
             
             // Configure scrubber appearance
             scrubber.showsArrowButtons = false
-
+            
             // Make sure that lates snapshot is always visible
             if (c64 != nil && c64.historicSnapshots() > 0) {
                 scrubber.scrollItem(at: c64.historicSnapshots() - 1,
                                     to: NSScrubberAlignment.trailing)
             }
-            // }
-            // showsArrows.state == NSOnState
-            // scrubber.selectionBackgroundStyle = selectedSelectionBackgroundStyle
-            // scrubber.selectionOverlayStyle = selectedSelectionOverlayStyle
-            // scrubber.scrubberLayout = selectedLayout
-            
-            /*if useBackgroundColor.state == NSOnState {
-                scrubber.backgroundColor = backgroundColorWell.color
-            }*/
-            
-            /*if useBackgroundView.state == NSOnState {
-                scrubber.backgroundView = CustomBackgroundView()
-            }*/
-            
-            // Set the scrubber's width to be 400.
-            /*
-            let viewBindings: [String: NSView] = ["scrubber": scrubber]
-            let hconstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[scrubber(400)]",
-                                                              options: [],
-                                                              metrics: nil,
-                                                              views: viewBindings)
-            NSLayoutConstraint.activate(hconstraints)
-            */
-            // timeTravelScrubber = scrubberItem
+
             return scrubberItem
         
             
@@ -180,19 +160,32 @@ class TimeTravelScrubberBarItem : NSCustomTouchBarItem, NSScrubberDelegate, NSSc
         c = nil
     }
     
-    //override init(identifier: NSTouchBarItemIdentifier) {
-    //    super.init(identifier: identifier)
     init(identifier: NSTouchBarItemIdentifier, controller: MyController) {
         
-            c = controller
-            super.init(identifier: identifier)
+        c = controller
+        super.init(identifier: identifier)
         
         let scrubber = NSScrubber()
-        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: TimeTravelScrubberBarItem.timetravelViewId)
-        scrubber.mode = .free
-        scrubber.selectionBackgroundStyle = .roundedBackground
+
+        // Set view, delegate and data source
+        scrubber.register(NSScrubberImageItemView.self,
+                          forItemIdentifier: TimeTravelScrubberBarItem.timetravelViewId)
         scrubber.delegate = self
         scrubber.dataSource = self
+
+        // Configure scrubber appearance
+        scrubber.mode = .free
+        scrubber.selectionOverlayStyle = nil
+        scrubber.selectionBackgroundStyle = nil
+        scrubber.showsArrowButtons = false
+        
+        // Scroll to latest snapshot
+        let numShots = c!.c64.historicSnapshots()
+        if (numShots > 0) {
+            scrubber.scrollItem(at: numShots - 1,
+                                to: NSScrubberAlignment.trailing)
+        }
+
         
         // controller.timeTravelScrubber = scrubber
         view = scrubber
@@ -216,7 +209,7 @@ class TimeTravelScrubberBarItem : NSCustomTouchBarItem, NSScrubberDelegate, NSSc
     func scrubber(_ scrubber: NSScrubber, layout: NSScrubberFlowLayout, sizeForItemAt itemIndex: Int) -> NSSize {
         let w = c!.c64.historicSnapshotImageWidth(itemIndex)
         let h = c!.c64.historicSnapshotImageHeight(itemIndex)
-        return NSSize(width: 36*w/h, height: 36)
+        return NSSize(width: 1+(36*w/h), height: 36)
     }
 
     
