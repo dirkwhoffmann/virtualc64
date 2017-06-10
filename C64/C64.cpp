@@ -833,6 +833,7 @@ void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)
     
     if (snapshot && (ptr = snapshot->getData())) {
         loadFromBuffer(&ptr);
+        keyboard.releaseAll(); // Avoid constantly pressed keys
         ping();
     }
 }
