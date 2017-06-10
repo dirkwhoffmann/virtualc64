@@ -489,20 +489,55 @@ public:
     //! @functiongroup Loading and saving snapshots
     //
     
-    //! @brief    Loads the current state from a snapshot container
-    void loadFromSnapshot(Snapshot *snapshot);
+    /*! @brief    Loads the current state from a snapshot container
+     *  @note     THIS FUNCTION IS NOT THREAD SAFE. 
+     *            Only use on halted emulators or within the emulation thread
+     *  @seealso  loadFromSnapshotSafe
+     */
+    void loadFromSnapshotUnsafe(Snapshot *snapshot);
+
+    /*! @brief    Thread-safe version of loadFromSnapshotUnsafe
+     *  @details  A running emulator is paused before performing the operation
+     */
+    void loadFromSnapshotSafe(Snapshot *snapshot);
 
     /*! @brief    Overwrites current state with a snapshot stored in the time travel ringbuffer
      *  @details  Returns true iff the snapshot was found and restored successfully 
+     *  @note     THIS FUNCTION IS NOT THREAD SAFE.
+     *            Only use on halted emulators or within the emulation thread
+     *  @seealso  restoreHistoricSnapshotSafe
      */
-    bool restoreHistoricSnapshot(unsigned nr);
+    bool restoreHistoricSnapshotUnsafe(unsigned nr);
 
-    //! @brief    Saves the current state to a snapshot container
-    void saveToSnapshot(Snapshot *snapshot);
+    /*! @brief    Thread-safe version of restoreHistoricSnapshot
+     *  @details  A running emulator is paused before performing the operation
+     */
+    bool restoreHistoricSnapshotSafe(unsigned nr);
+
+    /*! @brief    Saves the current state to a snapshot container
+     *  @note     THIS FUNCTION IS NOT THREAD SAFE.
+     *            Only use on halted emulators or within the emulation thread
+     *  @seealso  saveToSnapshotSafe
+     */
+    void saveToSnapshotUnsafe(Snapshot *snapshot);
     
-    //! @brief    Takes a snapshot and stores it into the time travel ringbuffer
-    void takeSnapshot();
-    
+    /*! @brief    Thread-safe version of saveToSnapshot
+     *  @details  A running emulator is paused before performing the operation
+     */
+    void saveToSnapshotSafe(Snapshot *snapshot);
+
+    /*! @brief    Takes a snapshot and stores it into the time travel ringbuffer
+     *  @note     THIS FUNCTION IS NOT THREAD SAFE.
+     *            Only use on halted emulators or within the emulation thread
+     *  @seealso  takeSnapshotSafe
+     */
+    void takeSnapshotUnsafe();
+
+    /*! @brief    Thread-safe version of takeSnapshoptUnsafe
+     *  @details  A running emulator is paused before performing the operation
+     */
+    void takeSnapshotSafe();
+
     /*! @brief    Returns the number of previously taken snapshots
      *  @result   Value between 0 and BACK_IN_TIME_BUFFER_SIZE
      */

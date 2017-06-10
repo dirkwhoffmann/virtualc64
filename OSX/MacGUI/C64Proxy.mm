@@ -797,9 +797,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 - (void) _loadFromSnapshotWrapper:(SnapshotWrapper *)w
 {
-    wrapper->c64->suspend();
-    wrapper->c64->loadFromSnapshot(w->snapshot);
-    wrapper->c64->resume();
+    wrapper->c64->loadFromSnapshotSafe(w->snapshot);
 }
 
 - (void) loadFromSnapshot:(SnapshotProxy *)snapshot
@@ -809,9 +807,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 - (void) _saveToSnapshotWrapper:(SnapshotWrapper *)w
 {
-    wrapper->c64->suspend();
-    wrapper->c64->saveToSnapshot(w->snapshot);
-    wrapper->c64->resume();
+    wrapper->c64->saveToSnapshotSafe(w->snapshot);
 }
 
 - (void) saveToSnapshot:(SnapshotProxy *)snapshot
@@ -934,7 +930,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 
 - (bool)restoreHistoricSnapshot:(NSInteger)nr {
-    return wrapper->c64->restoreHistoricSnapshot((unsigned)nr); }
+    return wrapper->c64->restoreHistoricSnapshotSafe((unsigned)nr); }
 
 // Joystick
 - (BOOL)joystickIsPluggedIn:(int)nr { return [joystickManager joystickIsPluggedIn:nr]; }

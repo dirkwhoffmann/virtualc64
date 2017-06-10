@@ -656,7 +656,7 @@ C64::endOfRasterline()
         
         // Take a snapshot once in a while
         if (frame % (vic.getFramesPerSecond() * 4) == 0) {
-            takeSnapshot();
+            takeSnapshotUnsafe();
         }
         
         // Execute remaining SID cycles
@@ -825,34 +825,62 @@ C64::loadRom(const char *filename)
 //! @functiongroup Loading and saving snapshots
 //
 
-void C64::loadFromSnapshot(Snapshot *snapshot)
+void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)
 {
-    if (snapshot == NULL)
-        return;
+    debug(1, "C64::loadFromSnapshotUnsafe");
     
-    uint8_t *ptr = snapshot->getData();
-    loadFromBuffer(&ptr);
-    ping();
-}
-
-bool
-C64::restoreHistoricSnapshot(unsigned nr)
-{
-    Snapshot *s = getHistoricSnapshot(nr);
-
-    if (s == NULL)
-        return false;
+    uint8_t *ptr;
     
-    suspend();
-    loadFromSnapshot(s);
-    resume();
-
-    return true;
+    if (snapshot && (ptr = snapshot->getData())) {
+        loadFromBuffer(&ptr);
+        ping();
+    }
 }
 
 void
-C64::saveToSnapshot(Snapshot *snapshot)
+C64::loadFromSnapshotSafe(Snapshot *snapshot)
 {
+    debug(1, "C64::loadFromSnapshotSafe");
+
+    suspend();
+    loadFromSnapshotUnsafe(snapshot);
+    resume();
+}
+
+bool
+C64::restoreHistoricSnapshotUnsafe(unsigned nr)
+{
+    debug(1, "C64::restoreHistoricSnapshotUnsafe (%d)", nr);
+
+    Snapshot *s = getHistoricSnapshot(nr);
+    
+    if (s == NULL)
+        return false;
+    
+    loadFromSnapshotUnsafe(s);
+    
+    return true;
+}
+
+bool
+C64::restoreHistoricSnapshotSafe(unsigned nr)
+{
+    debug(1, "C64::restoreHistoricSnapshotSafe (%d)", nr);
+
+    bool result;
+    
+    suspend();
+    result = restoreHistoricSnapshotUnsafe(nr);
+    resume();
+    
+    return result;
+}
+
+void
+C64::saveToSnapshotUnsafe(Snapshot *snapshot)
+{
+    debug(1, "C64::saveToSnapshotUnsafe");
+
     if (snapshot == NULL)
         return;
     
@@ -864,21 +892,37 @@ C64::saveToSnapshot(Snapshot *snapshot)
     saveToBuffer(&ptr);
 }
 
+void
+C64::saveToSnapshotSafe(Snapshot *snapshot)
+{
+    debug(1, "C64::saveToSnapshotSafe");
 
-
-
-
+    suspend();
+    saveToSnapshotUnsafe(snapshot);
+    resume();
+}
 
 void
-C64::takeSnapshot()
+C64::takeSnapshotUnsafe()
 {
-    debug(3, "Taking snapshop %d (%p)\n", backInTimeWritePtr, backInTimeHistory[backInTimeWritePtr]);
+    debug(3, "Taking snapshop %d (%p)\n",
+          backInTimeWritePtr, backInTimeHistory[backInTimeWritePtr]);
     
-    saveToSnapshot(backInTimeHistory[backInTimeWritePtr]);
+    saveToSnapshotUnsafe(backInTimeHistory[backInTimeWritePtr]);
     putMessage(MSG_SNAPSHOT_TAKEN,backInTimeWritePtr);
 
     backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
 }
+
+void
+C64::takeSnapshotSafe()
+{
+    suspend();
+    takeSnapshotUnsafe();
+    resume();
+}
+
+
 
 unsigned
 C64::numHistoricSnapshots()
