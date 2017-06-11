@@ -1,7 +1,7 @@
 /*!
  * @header      C64.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2016 Dirk W. Hoffmann
+ * @copyright   2006 - 2017 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -19,9 +19,18 @@
  */
 
 
-// VERSION 1.4.2:
+// VERSION 1.5:
 //
-// The ESC key on the Mac keyboard is now mapped to the C64s runstop key and the TAB key to the  restore key.
+//
+// Enhancements:
+// Added TouchBar support for latest MacBook Pros
+//
+// Bug fixes:
+// Fixed a bug that prevented some special keys from beings used for joystick emulation
+// Fixed a bug that caused some automatically taken snapshots to be damaged
+//
+// Internal changes:
+// The internal code architecture is now compatible with Swift.
 //
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files

@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "VirtualC64-Swift.h"
 
 @implementation MyController
 
@@ -671,7 +672,7 @@
 
             // TODO: It would be sufficient to update the TouchBar
             // when time travel scrubber is activated
-            [self setTouchBar:nil];
+            [self rebuildTimeTravelScrubber];
             break;
             
 		default:
