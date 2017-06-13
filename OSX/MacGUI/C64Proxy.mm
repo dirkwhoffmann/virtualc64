@@ -1,5 +1,5 @@
 /*
- * (C) 2006 - 2010 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2006 - 2017 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -890,6 +890,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (uint8_t *) historicSnapshotHeader:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getHeader() : NULL; }
 
+
 - (NSInteger) historicSnapshotDataSize:(NSInteger)nr
     { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getDataSize() : 0; }
 
@@ -905,6 +906,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (NSInteger)historicSnapshotImageHeight:(NSInteger)nr
 { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
 
+/*
 - (NSImage *)historicSnapshotImage:(NSInteger)nr {
     unsigned char *data = [self historicSnapshotImageData:nr];
     NSInteger width = [self historicSnapshotImageWidth:nr];
@@ -927,7 +929,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
     return image;
 }
-
+*/
 
 - (bool)restoreHistoricSnapshot:(NSInteger)nr {
     return wrapper->c64->restoreHistoricSnapshotSafe((unsigned)nr); }

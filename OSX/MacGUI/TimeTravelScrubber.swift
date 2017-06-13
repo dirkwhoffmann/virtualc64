@@ -81,8 +81,8 @@ class TimeTravelScrubber : NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberD
         
         // determine corresponding snapshot index in time travel buffer
         let ttindex = numberOfItems(for: scrubber) - index - 1
-        let image = c!.c64.historicSnapshotImage(ttindex)
-        itemView.image = image!
+        let image = c!.c64.timetravelSnapshotImage(ttindex)
+        itemView.image = image
         return itemView
     }
     

@@ -662,7 +662,7 @@ struct CartridgeWrapper;
 - (unsigned char *)historicSnapshotImageData:(NSInteger)nr;
 - (NSInteger)historicSnapshotImageWidth:(NSInteger)nr;
 - (NSInteger)historicSnapshotImageHeight:(NSInteger)nr;
-- (NSImage *)historicSnapshotImage:(NSInteger)nr;
+// - (NSImage *)historicSnapshotImage:(NSInteger)nr; // DEPRECATED.
 
 - (bool)restoreHistoricSnapshot:(NSInteger)nr;
 

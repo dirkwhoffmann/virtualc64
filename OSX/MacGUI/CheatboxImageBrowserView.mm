@@ -17,7 +17,7 @@
  */
 
 #import "C64GUI.h"
-
+#import "VirtualC64-Swift.h"
 
 @implementation CheatboxImageBrowserView 
 
@@ -70,7 +70,6 @@
 	[items removeAllObjects];
 	
 	NSImage *camera = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Image Capture.app"];
-	NSImage *glossy = [NSImage imageNamed:@"glossy.png"];
 
     for (unsigned i = 0; i < [[controller c64] historicSnapshots]; i++) {
 				
@@ -88,15 +87,17 @@
 		// Get snapshot image
         NSInteger width = [[controller c64] historicSnapshotImageWidth:i];
         NSInteger height = [[controller c64] historicSnapshotImageHeight:i];
-        NSImage *image = [c64 historicSnapshotImage:i];
+        NSImage *image = [c64 timetravelSnapshotImage:i];
         
-	    // Enhance image with some overlays 
+	    // Enhance image
+        // NSImage *image = [c64 makeGlossyWithImage:plainimage];
+        
 		NSImage *final = [[NSImage alloc] initWithSize:NSMakeSize(width, height+70)];
 		[final lockFocus];
 		[image drawInRect:NSMakeRect(0, 0, width, height) 
 				 fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];		
-		[glossy drawInRect:NSMakeRect(0, 0, width, height) 
-				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		// [glossy drawInRect:NSMakeRect(0, 0, width, height)
+		// 		  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 		[camera drawInRect:NSMakeRect(0, height-30, 100, 100) 
 				  fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
         [final unlockFocus];
