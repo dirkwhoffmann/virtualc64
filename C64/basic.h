@@ -55,13 +55,13 @@
 //! @brief Evaluates to the 16 bit value specified by x and y in little endian order (low, high).
 #define LO_HI(x,y) (uint16_t)((y) << 8 | (x))
 
-//! @brief Evaluates to the 32 bit value specified by x and y in little endian order (lowest, low, high, highest).
+//! @brief Evaluates to the 32 bit value specified by x, y, z, and w in little endian order (lowest, low, high, highest).
 #define LO_LO_HI_HI(x,y,z,w) (uint32_t)((w) << 24 | (z) << 16 | (y) << 8 | (x))
 
 //! @brief Evaluates to the 16 bit value specified by x and y in big endian order (high, low).
 #define HI_LO(x,y) (uint16_t)((x) << 8 | (y))
 
-//! @brief Evaluates to the 32 bit value specified by x and y in big endian order (highest, high, low, lowest).
+//! @brief Evaluates to the 32 bit value specified by x, y, z, and w in big endian order (highest, high, low, lowest).
 #define HI_HI_LO_LO(x,y,z,w) (uint32_t)((x) << 24 | (y) << 16 | (z) << 8 | (w))
 
 //! @brief Returns true iff bit n is set in x.

@@ -19,11 +19,14 @@
  */
 
 
+// TODO
+// Move setColorScheme to core emulator
+
 // VERSION 1.5:
 //
 //
 // Enhancements:
-// Added TouchBar support for latest MacBook Pros
+// Added custom TouchBar for supporting MacBook Pros
 //
 // Bug fixes:
 // Fixed a bug that prevented some special keys from beings used for joystick emulation

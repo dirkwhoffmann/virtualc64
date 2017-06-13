@@ -470,7 +470,7 @@ public:
     inline uint32_t getColor(unsigned nr) { assert(nr < 16); return pixelEngine.colors[nr]; }
 
     //! @brief    Sets one of the sixteen C64 colors in RGBA format.
-    inline void setColor(unsigned nr, int rgba) { assert(nr < 16); pixelEngine.colors[nr] = rgba; }
+    inline void setColor(unsigned nr, uint32_t rgba) { assert(nr < 16); pixelEngine.colors[nr] = rgba; }
 
     // @brief    Returns the number of frames per second.
     inline unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }

@@ -302,6 +302,7 @@
 
 	// [c64 setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
     [c64 setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
+    // [c64 setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
     [metalScreen setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
     [metalScreen setFullscreenKeepAspectRatio:[defaults boolForKey:VC64FullscreenKeepAspectRatioKey]];
 }

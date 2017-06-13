@@ -22,9 +22,45 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// TODO: Move ProxyColors.mm stuff in here
-
 import Foundation
+
+// -------------------------------------------------------------------
+//                          NSImage extensions
+// -------------------------------------------------------------------
+
+extension NSImage {
+    func resizeImage(width: CGFloat, height: CGFloat) -> NSImage {
+        let img = NSImage(size: CGSize(width:width, height:height))
+        
+        img.lockFocus()
+        let ctx = NSGraphicsContext.current()
+        ctx?.imageInterpolation = .high
+        self.draw(in: NSMakeRect(0, 0, width, height), from: NSMakeRect(0, 0, size.width, size.height), operation: .copy, fraction: 1)
+        img.unlockFocus()
+        
+        return img
+    }
+
+    func makeGlossy() {
+    
+        let width  = size.width;
+        let height = size.height;
+        let glossy = NSImage(named: "glossy.png")
+        let rect   = NSRect(x: 0, y: 0, width: width, height: height)
+    
+        lockFocus()
+        draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
+        glossy!.draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
+        unlockFocus()
+    }
+}
+
+
+// -------------------------------------------------------------------
+//                          C64 Proxy extensions
+// -------------------------------------------------------------------
+
+// TODO: Move ProxyColors.mm stuff in here
 
 public extension C64Proxy {
 
@@ -47,24 +83,12 @@ public extension C64Proxy {
                                         bitsPerPixel: 32)
         let image = NSImage(size: (imageRep?.size)!)
         image.addRepresentation(imageRep!)
+        image.makeGlossy()
         
-        return makeGlossy(image: image)
-    }
-    
-    // TODO: Add to NSImage instead
-    func makeGlossy(image: NSImage) -> NSImage {
-        
-        let width  = image.size.width;
-        let height = image.size.height;
-        let glossy = NSImage(named: "glossy.png")
-        let result = NSImage(size: image.size)
-        let rect   = NSRect(x: 0, y: 0, width: width, height: height)
-        
-        result.lockFocus()
-        image.draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
-        glossy!.draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
-        result.unlockFocus()
-
-        return result
+        return image
     }
 }
+
+
+
+
