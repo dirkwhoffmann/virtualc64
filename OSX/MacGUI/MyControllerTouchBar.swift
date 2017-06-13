@@ -22,9 +22,12 @@ extension NSTouchBarItemIdentifier {
 
 public extension MyController
 {
-    func rebuildTimeTravelScrubber() {
+    @available(OSX 10.12.2, *)
+    func rebuildTouchBar() {
         
-        print("\(#function)")
+        let popover = touchBar?.item(forIdentifier:.ttpopover) as? NSPopoverTouchBarItem
+        let bar = popover?.popoverTouchBar as? TimeTravelTouchBar
+        bar?.rebuild()
     }
     
 }
@@ -130,16 +133,32 @@ extension MyController : NSTouchBarDelegate
         
         case NSTouchBarItemIdentifier.ttpopover:
             let item = NSPopoverTouchBarItem(identifier: identifier)
-            item.collapsedRepresentationImage = NSImage(named: "tb_timetravel2.png")
-            item.popoverTouchBar = TimeTravelTouchBar (presentingItem: item, controller:self)
-            // item.showsCloseButton = true
-            // item.customizationLabel = NSLocalizedString("TimeTravel", comment:"")
+            let icon = NSImage(named: "tb_timetravel2.png")
+            let resizedIcon = icon?.resizeImage(width: 24, height: 24)
+            item.collapsedRepresentationImage = resizedIcon
+            item.popoverTouchBar = TimeTravelTouchBar (parent: item, controller:self)
             return item
             
         default: return nil
         }
     }
-    
 }
 
+
+// Auxiliary functions for NSImage
+// TODO: Move to different Swift file
+
+extension NSImage {
+    func resizeImage(width: CGFloat, height: CGFloat) -> NSImage {
+        let img = NSImage(size: CGSize(width:width, height:height))
+        
+        img.lockFocus()
+        let ctx = NSGraphicsContext.current()
+        ctx?.imageInterpolation = .high
+        self.draw(in: NSMakeRect(0, 0, width, height), from: NSMakeRect(0, 0, size.width, size.height), operation: .copy, fraction: 1)
+        img.unlockFocus()
+        
+        return img
+    }
+}
 

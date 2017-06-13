@@ -123,6 +123,7 @@
 		50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1032E121E7C4C003E7729 /* GLUT.framework */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
 		50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */; };
+		50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
@@ -410,6 +411,7 @@
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
 		50B37D771A56CA4F0055A540 /* ROMDropTargetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROMDropTargetView.h; sourceTree = "<group>"; };
 		50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ROMDropTargetView.mm; sourceTree = "<group>"; };
+		50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelScrubber.swift; sourceTree = "<group>"; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 		5000474112DCECBA0098D890 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
 				50B6894612DCA7B100CBB5B7 /* MyController.h */,
 				50B6894712DCA7B100CBB5B7 /* MyController.mm */,
 				5088A6E812E06DB700378033 /* MyControllerToolbar.h */,
@@ -747,9 +750,7 @@
 				5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */,
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
-				50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */,
-				5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */,
-				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
+				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -971,6 +972,16 @@
 				50F93BE512EF309900DD6A8A /* FileArchive.cpp */,
 			);
 			name = "Loading and saving";
+			sourceTree = "<group>";
+		};
+		50B4B6071EEFE77400D56499 /* TouchBar */ = {
+			isa = PBXGroup;
+			children = (
+				50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */,
+				5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */,
+				50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */,
+			);
+			name = TouchBar;
 			sourceTree = "<group>";
 		};
 		50C72DE71BC7F50D00F1863B /* Shaders */ = {
@@ -1290,6 +1301,7 @@
 				5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */,
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
+				50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */,
 				5000474C12DCEE500098D890 /* MyControllerMenu.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */,
 				5077743012DE490300D72088 /* MemTableView.mm in Sources */,

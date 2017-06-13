@@ -670,9 +670,8 @@
             
         case MSG_SNAPSHOT_TAKEN:
 
-            // TODO: It would be sufficient to update the TouchBar
-            // when time travel scrubber is activated
-            [self rebuildTimeTravelScrubber];
+            // Update TouchBar with new snapshpot image
+            [self rebuildTouchBar];
             break;
             
 		default:

@@ -826,9 +826,7 @@ C64::loadRom(const char *filename)
 //
 
 void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)
-{
-    debug(1, "C64::loadFromSnapshotUnsafe");
-    
+{    
     uint8_t *ptr;
     
     if (snapshot && (ptr = snapshot->getData())) {
@@ -841,7 +839,7 @@ void C64::loadFromSnapshotUnsafe(Snapshot *snapshot)
 void
 C64::loadFromSnapshotSafe(Snapshot *snapshot)
 {
-    debug(1, "C64::loadFromSnapshotSafe");
+    debug(1, "C64::loadFromSnapshotSafe\n");
 
     suspend();
     loadFromSnapshotUnsafe(snapshot);
@@ -851,8 +849,6 @@ C64::loadFromSnapshotSafe(Snapshot *snapshot)
 bool
 C64::restoreHistoricSnapshotUnsafe(unsigned nr)
 {
-    debug(1, "C64::restoreHistoricSnapshotUnsafe (%d)", nr);
-
     Snapshot *s = getHistoricSnapshot(nr);
     
     if (s == NULL)
@@ -866,7 +862,7 @@ C64::restoreHistoricSnapshotUnsafe(unsigned nr)
 bool
 C64::restoreHistoricSnapshotSafe(unsigned nr)
 {
-    debug(1, "C64::restoreHistoricSnapshotSafe (%d)", nr);
+    debug(1, "C64::restoreHistoricSnapshotSafe (%d)\n", nr);
 
     bool result;
     
@@ -880,8 +876,6 @@ C64::restoreHistoricSnapshotSafe(unsigned nr)
 void
 C64::saveToSnapshotUnsafe(Snapshot *snapshot)
 {
-    debug(1, "C64::saveToSnapshotUnsafe");
-
     if (snapshot == NULL)
         return;
     
@@ -896,7 +890,7 @@ C64::saveToSnapshotUnsafe(Snapshot *snapshot)
 void
 C64::saveToSnapshotSafe(Snapshot *snapshot)
 {
-    debug(1, "C64::saveToSnapshotSafe");
+    debug(1, "C64::saveToSnapshotSafe\n");
 
     suspend();
     saveToSnapshotUnsafe(snapshot);
