@@ -100,6 +100,7 @@
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
 		5080F3591EE74784001313D4 /* commodore.png in Resources */ = {isa = PBXBuildFile; fileRef = 5080F3581EE74784001313D4 /* commodore.png */; };
+		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
 		5087FD591BDA16C400570F0D /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087FD581BDA16C400570F0D /* metal.png */; };
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6E912E06DB700378033 /* MyControllerToolbar.mm */; };
@@ -377,6 +378,7 @@
 		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
 		5077743212DE490B00D72088 /* CpuTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CpuTableView.mm; sourceTree = "<group>"; };
 		5080F3581EE74784001313D4 /* commodore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commodore.png; sourceTree = "<group>"; };
+		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		5087FD581BDA16C400570F0D /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
 		5088A2541EE6D69000D83586 /* MyMetalDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalDefs.h; sourceTree = "<group>"; };
 		5088A6D412E0676200378033 /* MyControllerDebugPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyControllerDebugPanel.h; sourceTree = "<group>"; };
@@ -782,6 +784,7 @@
 		5000474312DCED190098D890 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				5081AB621EF29E6400D6F616 /* AudioEngine.swift */,
 				BC8146860FE54238007ED085 /* JoystickManager.h */,
 				BC8146870FE54238007ED085 /* JoystickManager.mm */,
 				023023FE0DC902A700F8818A /* AudioDevice.h */,
@@ -1248,6 +1251,7 @@
 				50176C650A6F72F3009E80BD /* CIA.cpp in Sources */,
 				50176C660A6F72F3009E80BD /* CPU.cpp in Sources */,
 				50176C670A6F72F3009E80BD /* Instructions.cpp in Sources */,
+				5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */,
 				50AE4A351A693AA0003EA774 /* MountDragView.mm in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,

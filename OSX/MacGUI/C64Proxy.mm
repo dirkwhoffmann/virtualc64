@@ -19,6 +19,7 @@
 #import "C64GUI.h"
 #import "C64.h"
 #import "JoystickManager.h"
+#import "VirtualC64-Swift.h"
 
 struct C64Wrapper { C64 *c64; };
 struct CpuWrapper { CPU *cpu; };
@@ -508,6 +509,11 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void) dump { wrapper->sid->dumpState(); }
 - (uint32_t) sampleRate { return wrapper->sid->getSampleRate(); }
 - (void) setSampleRate:(uint32_t)rate { wrapper->sid->setSampleRate(rate); }
+- (float) getSample {
+    float sample;
+    [self readMonoSamples:&sample size:1];
+    return sample;
+}
 - (void) readMonoSamples:(float *)target size:(NSInteger)n {
     wrapper->sid->readMonoSamples(target, n);
 }
@@ -712,7 +718,9 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 //                                     C64
 // --------------------------------------------------------------------------
 
-@implementation C64Proxy
+@implementation C64Proxy {
+    AudioEngine *audioEngine;
+}
 
 @synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
 @synthesize joystickManager, joystickA, joystickB;
@@ -751,11 +759,20 @@ struct CartridgeWrapper { Cartridge *cartridge; };
         NSLog(@"WARNING: Couldn't initialize HID interface.");
     }
 
-	// Initialize CoreAudio sound interface
+	// Initialize CoreAudio sound interface (DEPRECATED)
+    /*
 	if (!(audioDevice = [[AudioDevice alloc] initWithSID:sid])) {
 		NSLog(@"WARNING: Couldn't initialize CoreAudio interface. Sound disabled.");
 	}
-		
+    */
+    
+    // Initialize audio interface
+    audioEngine = [[AudioEngine alloc] initWithSID:sid];
+    if (!audioEngine) {
+        NSLog(@"WARNING: Couldn't initialize AudioEngine");
+    }
+
+
     return self;
 }
 
@@ -946,8 +963,17 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void)unbindJoysticksFromPortB { [joystickManager unbindJoysticksFromPortB]; }
 
 // Audio hardware
-- (void) enableAudio { [self rampUpFromZero]; [audioDevice startPlayback]; }
-- (void) disableAudio {	[self rampDown]; [audioDevice stopPlayback]; }
+- (void) enableAudio {
+    [self rampUpFromZero];
+    // [audioDevice startPlayback]; // DEPRECATED
+    [audioEngine startPlayback];
+}
+
+- (void) disableAudio {
+    [self rampDown];
+    // [audioDevice stopPlayback]; // DEPRECATED
+    [audioEngine stopPlayback];
+}
 
 @end
 

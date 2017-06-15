@@ -377,6 +377,7 @@ struct CartridgeWrapper;
 - (void) dump;
 - (uint32_t) sampleRate;
 - (void) setSampleRate:(uint32_t)rate;
+- (float) getSample;
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
 - (void) readStereoSamples:(float *)target size:(NSInteger)n;
 
@@ -531,7 +532,8 @@ struct CartridgeWrapper;
 @interface C64Proxy : NSObject {
     
 	struct C64Wrapper *wrapper;
-	AudioDevice *audioDevice;
+	AudioDevice *audioDevice; // DEPRECATED
+    // AudioEngine *audioEngine;
     JoystickManagerProxy *joystickManager;
     
 	// Sub component proxys

@@ -297,8 +297,11 @@ ReSID::readData()
 void
 ReSID::readMonoSamples(float *target, size_t n)
 {
+    // static unsigned j = 0; /* For debugging */
+
     for (size_t i = 0; i < n; i++) {
         float value = readData();
+        // float value = 5.0 * sin(float(j++)*(2*3.14159265)*(440.0/44100.0));
         target[i] = value;
     }
 }
@@ -306,8 +309,11 @@ ReSID::readMonoSamples(float *target, size_t n)
 void
 ReSID::readStereoSamples(float *target, size_t n)
 {
+    static unsigned j = 0; /* For debugging */
+    
     for (unsigned i = 0; i < n; i++) {
-        float value = readData();
+        // float value = readData();
+        float value = 5.0 * sin(float(j++)*(2*3.14159265)*(440.0/44100.0));
         target[i*2] = value;   // left channel
         target[i*2+1] = value; // right channel
     }
@@ -321,7 +327,7 @@ ReSID::writeData(float data)
     // Check for buffer overflow
     if (readPtr == writePtr) {
 
-        debug(4, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+        debug(1, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
         
         if (!c64->getWarp()) // In real-time mode, we put the write ptr somewhat ahead of the read ptr
             alignWritePtr();
