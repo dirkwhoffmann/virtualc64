@@ -23,12 +23,30 @@ typedef struct {
     int i;
 } Message;
 
+/*! @brief    Color schemes
+ *  @details  Predefined RGB color values
+ */
+typedef enum {
+    CCS64           = 0x00,
+    VICE            = 0x01,
+    FRODO           = 0x02,
+    PC64            = 0x03,
+    C64S            = 0x04,
+    ALEC64          = 0x05,
+    WIN64           = 0x06,
+    C64ALIVE_0_9    = 0x07,
+    GODOT           = 0x08,
+    C64SALLY        = 0x09,
+    PEPTO           = 0x0A,
+    GRAYSCALE       = 0x0B
+} ColorScheme;
+
 /*! @brief    Rom types
  *  @details  VirtualC64 needs all four ROMs to run
  */
 typedef enum {
-    BASIC_ROM = 1,
-    CHAR_ROM = 2,
+    BASIC_ROM  = 1,
+    CHAR_ROM   = 2,
     KERNEL_ROM = 4,
     VC1541_ROM = 8
 } RomType;

@@ -148,7 +148,8 @@ struct CartridgeWrapper;
 - (void *) screenBuffer;
 
 - (NSColor *) color:(NSInteger)nr;
-- (void) setColor:(NSInteger)nr rgba:(uint32_t)rgba;
+- (NSInteger) colorScheme;
+- (void) setColorScheme:(NSInteger)scheme;
 
 - (uint16_t) memoryBankAddr;
 - (void) setMemoryBankAddr:(uint16_t)addr;

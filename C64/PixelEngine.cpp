@@ -34,7 +34,7 @@ PixelEngine::PixelEngine() // C64 *c64)
     currentScreenBuffer = screenBuffer1[0];
     pixelBuffer = currentScreenBuffer;
     bufferoffset = 0;
-    
+
     // Register snapshot items
     SnapshotItem items[] = {
         

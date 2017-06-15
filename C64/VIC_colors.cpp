@@ -1,24 +1,52 @@
-//
-//  C64ProxyColors.mm
-//  V64
-//
-//  Created by Dirk Hoffmann on 17.08.15.
-//
-//
+/*
+ * Author: Dirk W. Hoffmann
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
-#import "C64GUI.h"
+#include <stdio.h>
+#include "VIC.h"
 
-@implementation C64Proxy(Colors)
-
-
-- (long)colorScheme
+//! @brief    Returns one of the sixteen C64 colors in RGBA format.
+uint32_t
+VIC::getColor(unsigned nr)
 {
-    return colorScheme;
+    assert(nr < 16);
+    return pixelEngine.colors[nr];
 }
 
-- (void) setColorScheme:(long)scheme
+//! @brief    Sets one of the sixteen C64 colors in RGBA format.
+void
+VIC::setColor(unsigned nr, uint32_t rgba)
 {
-    uint8_t rgb[11][16][3] = {
+    assert(nr < 16);
+    pixelEngine.colors[nr] = rgba;
+}
+
+//! @brief    Returns the currently used color scheme
+ColorScheme
+VIC::getColorScheme()
+{
+    return pixelEngine.colorScheme;
+}
+
+void
+VIC::setColorScheme(ColorScheme scheme)
+{
+    // List of predefined color schemes
+    uint8_t rgb[][16][3] = {
         
         /* CCS64 */
         {
@@ -240,17 +268,16 @@
             { 0x95, 0x95, 0x95 }
         }
     };
-
-    NSLog(@"Setting color scheme %ld\n", scheme);
     
-    colorScheme = (scheme < 11) ? scheme : 0;
+    unsigned numSchemes = sizeof(rgb) / (16*3);
+    debug(1, "Using color scheme %ld from %ld available schemes\n", scheme, numSchemes);
+
+    pixelEngine.colorScheme = (scheme < numSchemes) ? scheme : CCS64;
     for (unsigned i = 0; i < 16; i++) {
-        int rgba = LO_LO_HI_HI(rgb[colorScheme][i][0],
-                               rgb[colorScheme][i][1],
-                               rgb[colorScheme][i][2],
+        int rgba = LO_LO_HI_HI(rgb[pixelEngine.colorScheme][i][0],
+                               rgb[pixelEngine.colorScheme][i][1],
+                               rgb[pixelEngine.colorScheme][i][2],
                                0xFF);
-        [vic setColor:i rgba:rgba];
+        setColor(i, rgba);
     }
 }
-
-@end

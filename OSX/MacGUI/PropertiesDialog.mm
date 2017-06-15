@@ -102,7 +102,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     [[controller metalScreen] setEyeX:(float)0.0];
     [[controller metalScreen] setEyeY:(float)0.0];
     [[controller metalScreen] setEyeZ:(float)0.0];
-    [c64 setColorScheme:CCS64];
+    [[c64 vic] setColorScheme:CCS64];
     [[controller metalScreen] setVideoFilter:TEX_FILTER_SMOOTH];
     [[controller metalScreen] setFullscreenKeepAspectRatio:NO];
     
@@ -131,7 +131,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 - (IBAction)changeColorScheme:(id)sender
 {
 	long scheme = [[sender selectedItem] tag];
-    [c64 setColorScheme:scheme];
+    [[c64 vic] setColorScheme:scheme];
 	[self update];    
 }
 
@@ -241,7 +241,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     
 	/* Video */
     [videoFilter selectItemWithTag:[[controller metalScreen] videoFilter]];
-    [colorScheme selectItemWithTag:[c64 colorScheme]];
+    [colorScheme selectItemWithTag:[[c64 vic] colorScheme]];
 
     [eyeXSlider setFloatValue:[[controller metalScreen] eyeX]];
     [eyeYSlider setFloatValue:[[controller metalScreen] eyeY]];

@@ -300,9 +300,7 @@
     [metalScreen setEyeY:[defaults floatForKey:VC64EyeY]];
     [metalScreen setEyeZ:[defaults floatForKey:VC64EyeZ]];
 
-	// [c64 setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
-    [c64 setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
-    // [c64 setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
+    [[c64 vic] setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
     [metalScreen setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
     [metalScreen setFullscreenKeepAspectRatio:[defaults boolForKey:VC64FullscreenKeepAspectRatioKey]];
 }
@@ -372,7 +370,7 @@
     [defaults setFloat:[metalScreen eyeX] forKey:VC64EyeX];
     [defaults setFloat:[metalScreen eyeY] forKey:VC64EyeY];
     [defaults setFloat:[metalScreen eyeZ] forKey:VC64EyeZ];
-    [defaults setInteger:[c64 colorScheme] forKey:VC64ColorSchemeKey];
+    [defaults setInteger:[[c64 vic] colorScheme] forKey:VC64ColorSchemeKey];
     [defaults setInteger:[metalScreen videoFilter] forKey:VC64VideoFilterKey];
     [defaults setInteger:[metalScreen fullscreenKeepAspectRatio] forKey:VC64FullscreenKeepAspectRatioKey];
 }

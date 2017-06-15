@@ -21,6 +21,7 @@
 #define _VIC_INC
 
 #include "VirtualComponent.h"
+#include "C64_defs.h"
 #include "VIC_globals.h"
 #include "PixelEngine.h"
 
@@ -466,12 +467,26 @@ public:
     //! @brief    Sets the chip model.
     void setChipModel(VICChipModel model);
 	
-    //! @brief    Returns one of the sixteen C64 colors in RGBA format.
-    inline uint32_t getColor(unsigned nr) { assert(nr < 16); return pixelEngine.colors[nr]; }
+    /*! @brief    Returns one of the sixteen C64 colors in RGBA format.
+     *  @seealso  setColor
+     */
+    uint32_t getColor(unsigned nr);
 
-    //! @brief    Sets one of the sixteen C64 colors in RGBA format.
-    inline void setColor(unsigned nr, uint32_t rgba) { assert(nr < 16); pixelEngine.colors[nr] = rgba; }
+    /*! @brief    Sets one of the sixteen C64 colors in RGBA format.
+     *  @note     Use setColorScheme to set all 16 C64 colors at once
+     *  @seealso  setColorScheme
+     */
+    void setColor(unsigned nr, uint32_t rgba);
 
+    //! @brief    Returns the currently used color scheme
+    ColorScheme getColorScheme();
+
+    /*! @brief    Replaces all 16 C64 colors by a predefined color palette.
+     *  @seealso  setColor
+     */
+    void setColorScheme(ColorScheme scheme);
+
+    
     // @brief    Returns the number of frames per second.
     inline unsigned getFramesPerSecond() { return isPAL() ? (unsigned)PAL_REFRESH_RATE : (unsigned)NTSC_REFRESH_RATE; }
     

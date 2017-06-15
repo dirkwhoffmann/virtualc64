@@ -174,10 +174,13 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     uint8_t g = (color >> 8) & 0xFF;
     uint8_t b = (color >> 16) & 0xFF;
     
-	return [NSColor colorWithCalibratedRed:(float)r/255.0 green:(float)g/255.0 blue:(float)b/255.0 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:(float)r/255.0
+                                     green:(float)g/255.0
+                                      blue:(float)b/255.0
+                                     alpha:1.0];
 }
-- (void) setColor:(NSInteger)nr rgba:(uint32_t)rgba {
-    wrapper->vic->setColor((unsigned)nr, rgba); }
+- (NSInteger) colorScheme { return wrapper->vic->getColorScheme(); }
+- (void) setColorScheme:(NSInteger)scheme { wrapper->vic->setColorScheme((ColorScheme)scheme); }
 
 - (uint16_t) memoryBankAddr { return wrapper->vic->getMemoryBankAddr(); }
 - (void) setMemoryBankAddr:(uint16_t)addr { wrapper->vic->setMemoryBankAddr(addr); }

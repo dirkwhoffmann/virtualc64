@@ -136,7 +136,6 @@
 		50C8925B1BEFB64500231B96 /* cntrlStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892561BEFB64500231B96 /* cntrlStart.png */; };
 		50C8925C1BEFB64500231B96 /* cntrlStop.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892571BEFB64500231B96 /* cntrlStop.png */; };
 		50C8925D1BEFB64500231B96 /* ctrlEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892581BEFB64500231B96 /* ctrlEnd.png */; };
-		50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
 		50C9CB241B826CD50054EE86 /* expansion.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB231B826CD50054EE86 /* expansion.png */; };
@@ -194,6 +193,7 @@
 		50F238F412DF576600B1F275 /* CheatboxItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F238F312DF576600B1F275 /* CheatboxItem.mm */; };
 		50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */; };
 		50F23D0812DF932800B1F275 /* glossy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F23D0712DF932800B1F275 /* glossy.png */; };
+		50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F681E31BEA203F008568E3 /* TapeDialog.mm */; };
@@ -427,8 +427,6 @@
 		50C892561BEFB64500231B96 /* cntrlStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlStart.png; sourceTree = "<group>"; };
 		50C892571BEFB64500231B96 /* cntrlStop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlStop.png; sourceTree = "<group>"; };
 		50C892581BEFB64500231B96 /* ctrlEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctrlEnd.png; sourceTree = "<group>"; };
-		50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = C64ProxyColors.mm; sourceTree = "<group>"; };
-		50C9CB141B81E3300054EE86 /* C64ProxyColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ProxyColors.h; sourceTree = "<group>"; };
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
 		50C9CB1F1B826C960054EE86 /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
 		50C9CB231B826CD50054EE86 /* expansion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expansion.png; sourceTree = "<group>"; };
@@ -508,6 +506,7 @@
 		50F239B912DF66CB00B1F275 /* CheatboxImageBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheatboxImageBrowserCell.h; sourceTree = "<group>"; };
 		50F239BA12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CheatboxImageBrowserCell.mm; sourceTree = "<group>"; };
 		50F23D0712DF932800B1F275 /* glossy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glossy.png; sourceTree = "<group>"; };
+		50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIC_colors.cpp; sourceTree = "<group>"; };
 		50F55DA40F28EADC0040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50F55DCC0F28EC010040592B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		50F681E21BEA2015008568E3 /* TapeDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapeDialog.h; sourceTree = "<group>"; };
@@ -656,6 +655,7 @@
 				501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */,
 				50176C600A6F72F3009E80BD /* VIC.h */,
 				50176C5F0A6F72F3009E80BD /* VIC.cpp */,
+				50F2AB1A1EF267510040BC3A /* VIC_colors.cpp */,
 				506004651B78E9C500EBDD93 /* PixelEngine.h */,
 				506004641B78E9C500EBDD93 /* PixelEngine.cpp */,
 				506D39D3141780FF00268AF6 /* SIDWrapper.h */,
@@ -701,8 +701,6 @@
 				50176C790A6F7357009E80BD /* C64Proxy.h */,
 				50176C7A0A6F7357009E80BD /* C64Proxy.mm */,
 				50B4B6081EEFFF6800D56499 /* C64Proxy.swift */,
-				50C9CB141B81E3300054EE86 /* C64ProxyColors.h */,
-				50C9CB121B81E3130054EE86 /* C64ProxyColors.mm */,
 				50176C750A6F7357009E80BD /* MyDocument.h */,
 				50176C760A6F7357009E80BD /* MyDocument.mm */,
 			);
@@ -1259,7 +1257,6 @@
 				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */,
 				5042312C1BD371FF00B3DEF9 /* MyMetalViewResponder.mm in Sources */,
-				50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */,
 				50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */,
 				5089F0551BD3F64200306F4D /* BypassFilter.mm in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
@@ -1342,6 +1339,7 @@
 				50D1418A1417A34B0024FC74 /* wave8580__ST.cc in Sources */,
 				50D1418B1417A34B0024FC74 /* wave8580_P_T.cc in Sources */,
 				50D1418C1417A34B0024FC74 /* wave8580_PS_.cc in Sources */,
+				50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */,
 				50D1418D1417A34B0024FC74 /* wave8580_PST.cc in Sources */,
 				50137EA01BCA396100147283 /* MyMetalViewHelper.mm in Sources */,
 				50C9CB321B8272DA0054EE86 /* HardwareDialog.mm in Sources */,
