@@ -271,7 +271,7 @@ ReSID::readData()
     
     // Check for buffer underflow
     if (readPtr == writePtr)
-        debug(4, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
+        debug(1, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
     
     // Read sound sample
     float value = ringBuffer[readPtr];
@@ -307,15 +307,21 @@ ReSID::readMonoSamples(float *target, size_t n)
 }
 
 void
-ReSID::readStereoSamples(float *target, size_t n)
+ReSID::readStereoSamples(float *target1, float *target2, size_t n)
 {
-    static unsigned j = 0; /* For debugging */
-    
     for (unsigned i = 0; i < n; i++) {
-        // float value = readData();
-        float value = 5.0 * sin(float(j++)*(2*3.14159265)*(440.0/44100.0));
-        target[i*2] = value;   // left channel
-        target[i*2+1] = value; // right channel
+        float value = readData();
+        target1[i] = target2[i] = value;
+    }
+}
+
+void
+ReSID::readStereoSamplesInterleaved(float *target, size_t n)
+{
+    for (unsigned i = 0; i < n; i++) {
+        float value = readData();
+        target[i*2] = value;
+        target[i*2+1] = value;
     }
 }
 

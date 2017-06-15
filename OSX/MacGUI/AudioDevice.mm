@@ -55,23 +55,13 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
     float*	myOutBuffer = (float*)outOutputData->mBuffers[0].mData;
     UInt32 size = BUFFERSIZE;
 
-    // C64 *c64 = reinterpret_cast<C64*>(inClientData);
     SIDProxy *sid = (__bridge SIDProxy *)inClientData;
                                                  
     // get samples from SID
     if (mono) {        
-        // for (unsigned i = 0; i < size; i++) {
-        //    myOutBuffer[i] = c64->sid.readData();
-        // }
         [sid readMonoSamples:myOutBuffer size:size];
     } else {
-        // for (unsigned i = 0; i < size; i++) {
-        //     // TODO: IMPLEMENT SIDProxy readStereoSamples:myOutBuffer numSamples:size
-        //    float value = c64->sid.readData();
-        //    myOutBuffer[i*2] = value;		// left channel
-        //     myOutBuffer[i*2+1] = value;		// right channel
-        // }
-        [sid readStereoSamples:myOutBuffer size:size];
+        [sid readStereoSamplesInterleaved:myOutBuffer size:size];
     }
 
     return noErr;
@@ -218,11 +208,6 @@ static OSStatus OSX_AudioIOProc16Bit(AudioDeviceID inDevice,
 		return nil;
 	}
 	return self;
-}
-
--(void)clearBuffer
-{
-    // TODO
 }
 
 -(int)startPlayback

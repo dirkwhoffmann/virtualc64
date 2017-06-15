@@ -517,8 +517,11 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void) readMonoSamples:(float *)target size:(NSInteger)n {
     wrapper->sid->readMonoSamples(target, n);
 }
-- (void) readStereoSamples:(float *)target size:(NSInteger)n {
-    wrapper->sid->readStereoSamples(target, n);
+- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n {
+    wrapper->sid->readStereoSamples(target1, target2, n);
+}
+- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n {
+    wrapper->sid->readStereoSamplesInterleaved(target, n);
 }
 
 @end

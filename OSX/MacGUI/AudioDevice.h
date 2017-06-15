@@ -64,10 +64,6 @@ extern bool mono;
 */
 -(instancetype)initWithSID:(SIDProxy *)sid;
 
-/*! @brief  Zero out audio sample buffer
- */
--(void)clearBuffer;
-
 /*! @brief  Starts playback (callback mechanism) of generated sound
  *  @return MPERR_OSX_DEVICE_START if playback couldn't be started, else 0
  */

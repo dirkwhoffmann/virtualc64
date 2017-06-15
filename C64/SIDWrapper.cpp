@@ -173,12 +173,21 @@ SIDWrapper::readMonoSamples(float *target, size_t n)
 }
 
 void
-SIDWrapper::readStereoSamples(float *target, size_t n)
+SIDWrapper::readStereoSamples(float *target1, float *target2, size_t n)
 {
     if (useReSID)
-        resid->readStereoSamples(target, n);
+        resid->readStereoSamples(target1, target2, n);
     else
-        oldsid->readStereoSamples(target, n);
+        oldsid->readStereoSamples(target1, target2, n);
+}
+
+void
+SIDWrapper::readStereoSamplesInterleaved(float *target, size_t n)
+{
+    if (useReSID)
+        resid->readStereoSamplesInterleaved(target, n);
+    else
+        oldsid->readStereoSamplesInterleaved(target, n);
 }
 
 void 

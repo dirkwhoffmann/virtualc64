@@ -158,7 +158,10 @@ public:
     void readMonoSamples(float *target, size_t n);
 
     //! @brief  Reads n mono sample from ringbuffer
-    void readStereoSamples(float *target, size_t n);
+    void readStereoSamples(float *target1, float *target2, size_t n);
+
+    //! @brief  Reads n mono sample from ringbuffer
+    void readStereoSamplesInterleaved(float *target, size_t n);
 
     
     /*! @brief  Reads audio sample from ringbuffer

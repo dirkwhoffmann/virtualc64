@@ -379,7 +379,8 @@ struct CartridgeWrapper;
 - (void) setSampleRate:(uint32_t)rate;
 - (float) getSample;
 - (void) readMonoSamples:(float *)target size:(NSInteger)n;
-- (void) readStereoSamples:(float *)target size:(NSInteger)n;
+- (void) readStereoSamples:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
+- (void) readStereoSamplesInterleaved:(float *)target size:(NSInteger)n;
 
 @end
 

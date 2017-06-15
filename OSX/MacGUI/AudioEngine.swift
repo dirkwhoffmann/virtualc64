@@ -6,6 +6,15 @@
 //
 //
 
+// TODO
+// Optimize renderStereo (pass pointer to sid and copy there)
+// Add readStereoSamplesInterleaved
+//     readStereoSamples(float *left, float *right)
+// Add catch code to try blocks
+// Print if mono or stereo, pass sample rate to sid
+// Make inline callback func a real func
+// Make sure emulator does not crash if audio object cannot be initalized
+
 import Foundation
 import AVFoundation
 
@@ -14,9 +23,6 @@ import AVFoundation
     var sid: SIDProxy!
     var iounit : AUAudioUnit!
 
-    let twopi:Float = 2.0 * 3.14159
-    var freq:Float = 440.00
-    var sampleRate:Float = 44100.00
     override init()
     {
         print("\(#function)")
@@ -27,16 +33,14 @@ import AVFoundation
     {
         print("")
         print("\(#function)")
-        print("")
     
         self.init()
         sid = proxy
 
         // Create AudioUnit
-        let subType = kAudioUnitSubType_HALOutput
         let ioUnitDesc = AudioComponentDescription(
             componentType: kAudioUnitType_Output,
-            componentSubType: subType,
+            componentSubType: kAudioUnitSubType_HALOutput,
             componentManufacturer: kAudioUnitManufacturer_Apple,
             componentFlags: 0,
             componentFlagsMask: 0)
@@ -86,11 +90,12 @@ import AVFoundation
     }
 
     func renderStereo(buffer1: AudioBuffer, buffer2 : AudioBuffer) {
-        let nframes = Int(buffer1.mDataByteSize) / (MemoryLayout<Float>.size)
-        let mdata1 = buffer1.mData
-        let mdata2 = buffer2.mData
-        var ptr1 = mdata1!.assumingMemoryBound(to: Float.self)
-        var ptr2 = mdata2!.assumingMemoryBound(to: Float.self)
+        let sizeOfFloat = MemoryLayout<Float>.size
+        let nframes = Int(buffer1.mDataByteSize) / sizeOfFloat
+        // let mdata1 = buffer1.mData
+        // let mdata2 = buffer2.mData
+        var ptr1 = buffer1.mData!.assumingMemoryBound(to: Float.self)
+        var ptr2 = buffer2.mData!.assumingMemoryBound(to: Float.self)
 
         for _ in 0 ..< nframes {
             let sample = sid.getSample()
@@ -99,16 +104,6 @@ import AVFoundation
             ptr2.pointee = sample
             ptr2 = ptr2.successor()
         }
-    }
-
-
-    /*! @brief  Zeroes out loopBuffer
-     */
-    func clearBuffer() {
-        
-        print("")
-        print("\(#function)")
-        print("")
     }
     
     /*! @brief  Start playing sound

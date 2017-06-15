@@ -618,12 +618,21 @@ OldSID::readMonoSamples(float *target, size_t n)
 }
 
 void
-OldSID::readStereoSamples(float *target, size_t n)
+OldSID::readStereoSamples(float *target1, float *target2, size_t n)
 {
     for (unsigned i = 0; i < n; i++) {
         float value = readData();
-        target[i*2] = value;   // left channel
-        target[i*2+1] = value; // right channel
+        target1[i] = target2[i] = value;
+    }
+}
+
+void
+OldSID::readStereoSamplesInterleaved(float *target, size_t n)
+{
+    for (unsigned i = 0; i < n; i++) {
+        float value = readData();
+        target[i*2] = value;
+        target[i*2+1] = value; 
     }
 }
 
