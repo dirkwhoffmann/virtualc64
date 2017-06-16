@@ -178,7 +178,7 @@
     unsigned long  flags   = [event modifierFlags];
     int c64key;
     
-    NSLog(@"keyDown: '%c' keycode: %02X flags: %08lX", (char)c, keycode, flags);
+    // NSLog(@"keyDown: '%c' keycode: %02X flags: %08lX", (char)c, keycode, flags);
         
     // Ignore keys that are already pressed
     if (pressedKeys[(unsigned char)keycode])
