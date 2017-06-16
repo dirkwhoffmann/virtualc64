@@ -32,8 +32,9 @@ threadCleanup(void* thisC64)
 	
 	C64 *c64 = (C64 *)thisC64;
 	c64->threadCleanup();
-	
-	c64->debug(1, "Execution thread terminated\n");	
+
+    c64->sid.halt();
+	c64->debug(1, "Execution thread terminated\n");
 	c64->putMessage(MSG_HALT);
 }
 
@@ -133,7 +134,6 @@ C64::C64()
 C64::~C64()
 {
     debug(1, "Destroying virtual C64[%p]\n", this);
-    
 	halt();
 }
 
@@ -141,9 +141,7 @@ void
 C64::reset()
 {
     debug(1, "Resetting virtual C64[%p]\n", this);
-    
 	suspend();
-
     VirtualComponent::reset();
     cpu.mem = &mem;
     cpu.setPC(0xFCE2);
@@ -212,8 +210,8 @@ C64::setNTSC()
 //
 
 void
-C64::run() {
-    
+C64::run()
+{
     if (isHalted()) {
         
         // Check for ROM images
@@ -222,7 +220,7 @@ C64::run() {
             return;
         }
         
-        // Power on sub components
+        // Power up sub components
         sid.run();
         
         // Start execution thread
@@ -238,7 +236,8 @@ C64::threadCleanup()
 }
 
 bool
-C64::isRunnable() {
+C64::isRunnable()
+{
     return mem.basicRomIsLoaded() && mem.charRomIsLoaded() && mem.kernelRomIsLoaded() && floppy.mem.romIsLoaded();
 }
 
@@ -259,8 +258,6 @@ C64::halt()
         pthread_join(p, NULL);
         // Finish the current command (to reach a clean state)
         step();
-        // Shut down sub components
-        sid.halt();
     }
 }
 
@@ -269,31 +266,6 @@ C64::isHalted()
 {
     return p == NULL;
 }
-
-#if 0
-void
-C64::restore()
-{
-    debug("RESTORE key\n");
-    
-    // Hitting the restore key triggeres an NMI interrupt
-    cpu.setNMILineReset();
-}
-
-void
-C64::runstopRestore()
-{
-    // Press runstop
-    keyboard.pressRunstopKey();
-
-    // Press restore
-    restore();
-    
-    // Hold down runstop key for a while...
-    sleepMicrosec((uint64_t)100000);
-    keyboard.releaseRunstopKey();
-}
-#endif
 
 void
 C64::step()

@@ -33,8 +33,8 @@
 // Fixed a bug that prevented some special keys from being used for joystick emulation.
 // Fixed a bug that caused some automatically taken snapshots to be damaged.
 // Standard key combinations for entering and leaving fullscreen mode are now working.
-//
-//
+// Fixed a bug that caused some drive memory data missing in snapshot files
+// 
 //
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
