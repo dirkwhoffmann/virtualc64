@@ -31,7 +31,7 @@ VC64Object::~VC64Object()
         fclose(logfile);
 }
 
-unsigned VC64Object::defaultDebugLevel = 2;
+unsigned VC64Object::defaultDebugLevel = 1;
 FILE *VC64Object::logfile = NULL;
 
 // ---------------------------------------------------------------------------------------------

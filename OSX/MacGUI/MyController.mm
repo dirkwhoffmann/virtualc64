@@ -151,8 +151,6 @@
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
 {
     NSLog(@"windowWillEnterFullScreen");
-    
-    // [metalScreen setDrawIn3D:NO];
     [metalScreen setFullscreen:YES];
     [self hideStatusBar];
 }
@@ -165,9 +163,6 @@
 - (void)windowWillExitFullScreen:(NSNotification *)notification
 {
     NSLog(@"windowWillExitFullScreen");
-    
-    // [metalScreen setDrawIn3D:YES];
-    // MOVE TO windowDidExitFullScreen??
     [metalScreen setFullscreen:NO];
     [self showStatusBar];
 }
@@ -463,7 +458,13 @@
 		[clockSpeedBar setFloatValue:10.0 * [speedometer mhz]];
 	}
     
-	[timerLock unlock];
+    // Let the cursor disappear in fullscreen mode
+    if ([metalScreen fullscreen] &&
+        CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGEventMouseMoved) > 1.0) {
+        [NSCursor setHiddenUntilMouseMoves:YES];
+    }
+
+    [timerLock unlock];
 }
 
 - (void)processMessage:(Message *)msg

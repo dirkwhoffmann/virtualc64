@@ -785,7 +785,7 @@ C64::loadRom(const char *filename)
 {
     bool result = false;
     
-    debug(1, "Trying to load ROM image %s\n", filename);
+    debug(2, "Trying to load ROM image %s\n", filename);
     
     suspend();
     bool wasRunnable = isRunnable();
@@ -808,6 +808,12 @@ C64::loadRom(const char *filename)
     if (VC1541Memory::is1541Rom(filename)) {
         result = floppy.mem.loadRom(filename);
         if (result) putMessage(MSG_ROM_LOADED, VC1541_ROM);
+    }
+    
+    if (result) {
+        debug(1, "ROM image %s loaded successfully\n", filename);
+    } else {
+        warn("FAILED to load ROM image %s\n", filename);
     }
     
     bool isNowRunnable = isRunnable();

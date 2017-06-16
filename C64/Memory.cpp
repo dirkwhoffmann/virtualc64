@@ -87,5 +87,5 @@ void Memory::flashRom(const char *filename, uint16_t start)
 	}
 	fclose(file);
 	
-	debug(1, "ROM image %s loaded [%X;%X]\n", filename, (uint16_t)start, (uint16_t)(addr-1));
+	debug(1, "ROM image installed at [%X;%X]\n", (uint16_t)start, (uint16_t)(addr-1));
 }
