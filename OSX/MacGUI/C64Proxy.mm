@@ -793,10 +793,8 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 	assert(wrapper->c64 != NULL);
 	NSLog(@"C64Proxy::kill");
 
-	// Delete sound device (DEPRECATED)
-	// [self disableAudio];
-    // NSLog(@"Do we need to dealloc AudioManager manually?");
-	// audioDevice = nil;
+	// Stop sound device
+	[self disableAudio];
 	
     // Delete joystick manager
     NSLog(@"Do we need to dealloc JoystickManager manually?");
