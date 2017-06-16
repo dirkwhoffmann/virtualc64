@@ -19,21 +19,21 @@
  */
 
 
-// TODO
-// Move setColorScheme to core emulator
-
 // VERSION 1.5:
 //
 //
 // Enhancements:
 // Added custom TouchBar for supporting MacBook Pros
+// Mouse cursor disappears automatically in fullscreen mode
 //
 // Internal changes:
 // Audio engine has been reimplemented in Swift
 //
 // Bug fixes:
-// Fixed a bug that prevented some special keys from being used for joystick emulation
-// Fixed a bug that caused some automatically taken snapshots to be damaged
+// Fixed a bug that prevented some special keys from being used for joystick emulation.
+// Fixed a bug that caused some automatically taken snapshots to be damaged.
+// Standard key combinations for entering and leaving fullscreen mode are now working.
+//
 //
 //
 // TODO:

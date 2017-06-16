@@ -48,8 +48,6 @@
 		5020C3121C4BA3A700DAE8E5 /* MyWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5020C3111C4BA3A700DAE8E5 /* MyWindow.mm */; };
 		5020F28C0BBABE3C0093C396 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5020F28B0BBABE3C0093C396 /* IEC.cpp */; };
 		5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */; };
-		50244B7B1BBEBAC9002A55E3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; };
-		50244B7C1BBEBB69002A55E3 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50271DEA1A7E1CFE00C04290 /* LEDnewRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DE91A7E1CFE00C04290 /* LEDnewRed.png */; };
 		50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DEB1A7E458F00C04290 /* LEDnewGreen.png */; };
 		50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DED1A7E459800C04290 /* LEDnewGray.png */; };
@@ -93,6 +91,8 @@
 		505EB0A10F3047C300960BC0 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505EB0A00F3047C300960BC0 /* Snapshot.cpp */; };
 		506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506004641B78E9C500EBDD93 /* PixelEngine.cpp */; };
 		506158731BF0A8A10031FD2F /* MediaDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 506158721BF0A8A10031FD2F /* MediaDialog.mm */; };
+		5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; };
+		5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDWrapper.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
@@ -219,7 +219,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				50244B7C1BBEBB69002A55E3 /* Sparkle.framework in CopyFiles */,
+				5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,7 +306,6 @@
 		5020F28A0BBABE3C0093C396 /* IEC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEC.h; sourceTree = "<group>"; };
 		5020F28B0BBABE3C0093C396 /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelTouchBar.swift; sourceTree = "<group>"; };
-		50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		50271DE91A7E1CFE00C04290 /* LEDnewRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewRed.png; sourceTree = "<group>"; };
 		50271DEB1A7E458F00C04290 /* LEDnewGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGreen.png; sourceTree = "<group>"; };
 		50271DED1A7E459800C04290 /* LEDnewGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGray.png; sourceTree = "<group>"; };
@@ -364,6 +363,7 @@
 		506004651B78E9C500EBDD93 /* PixelEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelEngine.h; sourceTree = "<group>"; };
 		506158721BF0A8A10031FD2F /* MediaDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MediaDialog.mm; sourceTree = "<group>"; };
 		506158741BF0A8AE0031FD2F /* MediaDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaDialog.h; sourceTree = "<group>"; };
+		506449991EF428970043BE7B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		506D39D1141780E500268AF6 /* SIDWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDWrapper.cpp; sourceTree = "<group>"; };
 		506D39D3141780FF00268AF6 /* SIDWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDWrapper.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
@@ -540,9 +540,9 @@
 				50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */,
 				50A0E0250A8F332A0067714C /* System.framework in Frameworks */,
 				025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */,
+				5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */,
 				50B1032F121E7C4C003E7729 /* GLUT.framework in Frameworks */,
 				50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */,
-				50244B7B1BBEBAC9002A55E3 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,7 +552,7 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				50244B7A1BBEBAC9002A55E3 /* Sparkle.framework */,
+				506449991EF428970043BE7B /* Sparkle.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
