@@ -51,11 +51,13 @@
  *  This method is called when exporting to archives that are capable of storing a single file, only. */
 - (IBAction)exportFileFromDiskDialog:(id)sender;
 
-#pragma mark edit menu
-- (IBAction)resetAction:(id)sender;
+#pragma mark edit view
 - (IBAction)toggleStatusBarAction:(id)sender;
 - (IBAction)showStatusBar;
 - (IBAction)hideStatusBar;
+
+#pragma mark edit menu
+- (IBAction)resetAction:(id)sender;
 
 #pragma mark keyboard menu
 - (IBAction)runstopAction:(id)sender;

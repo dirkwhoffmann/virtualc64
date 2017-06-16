@@ -49,6 +49,15 @@
         return ![c64 isRunning];
     }
 
+    // View menu
+    if ([item action] == @selector(toggleStatusBarAction:)) {
+        if ([metalScreen drawInEntireWindow])
+            [item setTitle:@"Show Status Bar"];
+        else
+            [item setTitle:@"Hide Status Bar"];
+        return true;
+    }
+    
     return YES;
 }
 
