@@ -267,8 +267,6 @@
             return NO;
     }
 
-failure:
-
     NSLog(@"Error while reading file\n");
     return NO;
 }

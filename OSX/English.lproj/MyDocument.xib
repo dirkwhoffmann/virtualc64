@@ -10,17 +10,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MyController">
             <connections>
-                <outlet property="B" destination="187" id="195"/>
                 <outlet property="Bflag" destination="187" id="l7C-Tr-XZu"/>
-                <outlet property="C" destination="191" id="199"/>
                 <outlet property="Cflag" destination="191" id="Lvl-cY-Asu"/>
-                <outlet property="D" destination="188" id="196"/>
                 <outlet property="Dflag" destination="188" id="zBr-RK-6rS"/>
-                <outlet property="I" destination="189" id="197"/>
-                <outlet property="Iflag" destination="188" id="C6t-8T-eyd"/>
-                <outlet property="N" destination="45" id="193"/>
+                <outlet property="Iflag" destination="189" id="Eiw-pa-d8h"/>
                 <outlet property="Nflag" destination="45" id="IQU-DD-W5Q"/>
-                <outlet property="V" destination="185" id="194"/>
                 <outlet property="Vflag" destination="185" id="vmz-ex-DKs"/>
                 <outlet property="VicCharacterMemory" destination="867" id="893"/>
                 <outlet property="VicDX" destination="794" id="887"/>
@@ -92,7 +86,6 @@
                 <outlet property="VicSpriteY7" destination="BlL-aO-Fgy" id="6pN-1m-4Yp"/>
                 <outlet property="VicSpriteY8" destination="YyV-XC-CIP" id="0WY-k1-rdO"/>
                 <outlet property="VicVideoMode" destination="774" id="885"/>
-                <outlet property="Z" destination="190" id="198"/>
                 <outlet property="Zflag" destination="190" id="VQj-fV-DvO"/>
                 <outlet property="a" destination="51" id="165"/>
                 <outlet property="addr_search" destination="73" id="148"/>
