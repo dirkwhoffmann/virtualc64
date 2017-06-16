@@ -202,6 +202,37 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="View" id="Z1T-Si-U7q">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="View" id="HMH-qt-n0u">
+                        <items>
+                            <menuItem title="Show Toolbar" keyEquivalent="t" id="eql-Kv-nqj">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleToolbarShown:" target="-1" id="0Sr-0D-V8H"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Customize Toolbar…" id="iRO-rX-JOm">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="runToolbarCustomizationPalette:" target="-1" id="BLv-4t-F3C"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Status Bar" keyEquivalent="b" id="nZ5-yO-Ch3">
+                                <connections>
+                                    <action selector="toggleStatusBarAction:" target="-1" id="XV7-PD-saG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="bDU-dO-xxe"/>
+                            <menuItem title="Enter Full Screen" keyEquivalent="f" id="1r4-M9-Ar1">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleFullScreen:" target="-1" id="zFC-jn-Li0"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Keyboard" id="212">
                     <menu key="submenu" title="Keyboard" id="213">
                         <items>
@@ -500,29 +531,6 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="221">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Hide/Show Toolbar" keyEquivalent="t" id="233">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="toggleToolbarShown:" target="-1" id="234"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Hide/Show Status bar" keyEquivalent="b" id="222">
-                                <connections>
-                                    <action selector="toggleStatusBarAction:" target="-1" id="572"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Debug Panel" id="564">
-                                <string key="keyEquivalent" base64-UTF8="YES">
-CQ
-</string>
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="debugAction:" target="-1" id="566"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="92">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Bring All to Front" id="5">
