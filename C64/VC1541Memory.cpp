@@ -27,7 +27,7 @@ VC1541Memory::VC1541Memory()
     SnapshotItem items[] = {
 
     { mem,              0xC000,     CLEAR_ON_RESET },
-    { &mem[0xA000],     0x4000,     KEEP_ON_RESET  }, /* VC1541 Rom */
+    { &mem[0xC000],     0x4000,     KEEP_ON_RESET  }, /* VC1541 Rom */
     { NULL,             0,          0 }};
 
     registerSnapshotItems(items, sizeof(items));
