@@ -770,10 +770,9 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     */
     
     // Initialize audio interface
-    
     audioEngine = [[AudioEngine alloc] initWithSID:sid];
     if (!audioEngine) {
-        NSLog(@"WARNING: Couldn't initialize AudioEngine");
+        NSLog(@"WARNING: Failed to initialize AudioEngine");
     }
 
 
@@ -794,10 +793,10 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 	assert(wrapper->c64 != NULL);
 	NSLog(@"C64Proxy::kill");
 
-	// Delete sound device
-	[self disableAudio];
-    NSLog(@"Do we need to dealloc AudioManager manually?");
-	audioDevice = nil;
+	// Delete sound device (DEPRECATED)
+	// [self disableAudio];
+    // NSLog(@"Do we need to dealloc AudioManager manually?");
+	// audioDevice = nil;
 	
     // Delete joystick manager
     NSLog(@"Do we need to dealloc JoystickManager manually?");

@@ -23,7 +23,7 @@
 
 // Forward declarations
 @class MyController;
-@class AudioDevice;
+// @class AudioDevice;
 @class C64Proxy;
 @class SnapshotProxy;
 @class D64ArchiveProxy; 
@@ -533,8 +533,7 @@ struct CartridgeWrapper;
 @interface C64Proxy : NSObject {
     
 	struct C64Wrapper *wrapper;
-	AudioDevice *audioDevice; // DEPRECATED
-    // AudioEngine *audioEngine;
+	// AudioDevice *audioDevice; // DEPRECATED
     JoystickManagerProxy *joystickManager;
     
 	// Sub component proxys

@@ -8,15 +8,6 @@ Audio interface that connects the macOS GUI with the core emulator
  - Copyright: Dirk W. Hoffmann
 */
 
-// TODO
-// Optimize renderStereo (pass pointer to sid and copy there)
-// Add readStereoSamplesInterleaved
-//     readStereoSamples(float *left, float *right)
-// Add catch code to try blocks
-// Print if mono or stereo, pass sample rate to sid
-// Make inline callback func a real func
-// Make sure emulator does not crash if audio object cannot be initalized
-
 import Foundation
 import AVFoundation
 
@@ -58,9 +49,11 @@ import AVFoundation
         let hardwareFormat = audiounit.outputBusses[0].format
         let channels = hardwareFormat.channelCount
         let sampleRate = hardwareFormat.sampleRate
+        let stereo = (channels > 1)
         print("  number of output busses:    \(busses)")
         print("  number of channels per bus: \(channels)")
         print("  sample rate:                \(sampleRate)")
+        print("  Stereo:                     \(stereo)")
         
         // Make input busses compatible with the output busses
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
@@ -70,41 +63,32 @@ import AVFoundation
         // Tell SID to use the correct sample rate
         sid.setSampleRate(UInt32(sampleRate))
         
-        // Callback code
-        /*
-        let callback : AURenderPullInputBlock = {
-            (actionflags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
-            ts: UnsafePointer<AudioTimeStamp>,
-            fc: AUAudioFrameCount,
-            bus: Int,
-            rawBuff: UnsafeMutablePointer<AudioBufferList>
-            ) -> AUAudioUnitStatus
-            in
-            let bufferList = UnsafeMutableAudioBufferListPointer(rawBuff)
-        
-            if bufferList.count > 1 {
-                self.renderStereo(buffer1: bufferList[0],
-                                  buffer2: bufferList[1])
-            } else if bufferList.count > 0 {
-                self.renderMono(buffer: bufferList[0])
-            }
-            return noErr
-        }
-         */
-        
         // Register render callback
-        audiounit.outputProvider = { ( // AURenderPullInputBlock
-            actionFlags,
-            timestamp,
-            frameCount,
-            inputBusNumber,
-            inputDataList ) -> AUAudioUnitStatus in
-            
-            self.render(inputDataList: inputDataList, frameCount: frameCount)
-            return(0)
+        if (stereo) {
+            audiounit.outputProvider = { ( // AURenderPullInputBlock
+                actionFlags,
+                timestamp,
+                frameCount,
+                inputBusNumber,
+                inputDataList ) -> AUAudioUnitStatus in
+                
+                self.renderStereo(inputDataList: inputDataList, frameCount: frameCount)
+                return(0)
+            }
+        } else {
+            audiounit.outputProvider = { ( // AURenderPullInputBlock
+                actionFlags,
+                timestamp,
+                frameCount,
+                inputBusNumber,
+                inputDataList ) -> AUAudioUnitStatus in
+                
+                self.renderMono(inputDataList: inputDataList, frameCount: frameCount)
+                return(0)
+            }
         }
 
-        // Try to allocate render resources
+        // Allocate render resources
         do { try audiounit.allocateRenderResources() } catch {
             NSLog("Failed to allocate RenderResources")
             return nil
@@ -113,56 +97,25 @@ import AVFoundation
         NSLog("AudioEngine initialized successfully")
      }
     
-
-    /*
-    func callbackfunc(flags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
-                  ts: UnsafePointer<AudioTimeStamp>,
-                  fc: AUAudioFrameCount,
-                  bus: Int,
-                  rawBuff: UnsafeMutablePointer<AudioBufferList>) -> AUAudioUnitStatus {
-
-        let bufferList = UnsafeMutableAudioBufferListPointer(rawBuff)
-        
-        if bufferList.count > 1 {
-            self.renderStereo(buffer1: bufferList[0],
-                              buffer2: bufferList[1])
-        } else if bufferList.count > 0 {
-            self.renderMono(buffer: bufferList[0])
-        }
-        return noErr
-    }
-*/
-    
-    private func render(inputDataList : UnsafeMutablePointer<AudioBufferList>,
-                        frameCount : UInt32) {
-        
+    private func renderMono(inputDataList : UnsafeMutablePointer<AudioBufferList>,
+                            frameCount : UInt32)
+    {
         let bufferList = UnsafeMutableAudioBufferListPointer(inputDataList)
-        if bufferList.count > 1 {
-            self.renderStereo(buffer1: bufferList[0],
-                              buffer2: bufferList[1], frameCount: frameCount)
-        } else if bufferList.count > 0 {
-            self.renderMono(buffer: bufferList[0], frameCount: frameCount)
-        }
-    }
-
+        assert(bufferList.count == 1)
         
-        
-    func renderMono(buffer: AudioBuffer, frameCount: UInt32) {
-        let sizeOfFloat = MemoryLayout<Float>.size
-        let frames = Int(buffer.mDataByteSize) / sizeOfFloat
-        let ptr = buffer.mData!.assumingMemoryBound(to: Float.self)
-        sid.readMonoSamples(ptr, size: frames)
+        let ptr = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
+        sid.readMonoSamples(ptr, size: Int(frameCount))
     }
-
-    func renderStereo(buffer1: AudioBuffer, buffer2 : AudioBuffer, frameCount: UInt32) {
-        let sizeOfFloat = UInt32(MemoryLayout<Float>.size)
-        let frames = buffer1.mDataByteSize / sizeOfFloat
-        if (frames != frameCount) {
-            print("FRAME COUNT MISMATCH")
-        }
-        let ptr1 = buffer1.mData!.assumingMemoryBound(to: Float.self)
-        let ptr2 = buffer2.mData!.assumingMemoryBound(to: Float.self)
-        sid.readStereoSamples(ptr1, buffer2: ptr2, size: Int(frames))
+  
+    private func renderStereo(inputDataList : UnsafeMutablePointer<AudioBufferList>,
+                            frameCount : UInt32)
+    {
+        let bufferList = UnsafeMutableAudioBufferListPointer(inputDataList)
+        assert(bufferList.count > 1)
+        
+        let ptr1 = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
+        let ptr2 = bufferList[1].mData!.assumingMemoryBound(to: Float.self)
+        sid.readStereoSamples(ptr1, buffer2: ptr2, size: Int(frameCount))
     }
     
     /*! @brief  Start playing sound

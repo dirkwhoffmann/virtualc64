@@ -28,12 +28,13 @@
 // Enhancements:
 // Added custom TouchBar for supporting MacBook Pros
 //
+// Internal changes:
+// Audio engine has been reimplemented in Swift
+//
 // Bug fixes:
-// Fixed a bug that prevented some special keys from beings used for joystick emulation
+// Fixed a bug that prevented some special keys from being used for joystick emulation
 // Fixed a bug that caused some automatically taken snapshots to be damaged
 //
-// Internal changes:
-// The internal code architecture is now compatible with Swift.
 //
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
