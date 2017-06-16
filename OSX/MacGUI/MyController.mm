@@ -1136,12 +1136,14 @@
 
 - (void)keyDown:(NSEvent *)event
 {
+    [self interpretKeyEvents:[NSArray arrayWithObject:event]];
 	// Pass all keyboard events to the metal view
     [metalScreen keyDown:event];
 }
 
 - (void)keyUp:(NSEvent *)event
 {
+    [self interpretKeyEvents:[NSArray arrayWithObject:event]];
 	// Pass all keyboard events to the metal view
     [metalScreen keyUp:event];
 }
@@ -1152,6 +1154,13 @@
     [metalScreen flagsChanged:event];
 }
 
+- (void)cancelOperation:(id)sender
+{
+    if ([metalScreen fullscreen]) {
+        [self.window toggleFullScreen:nil];
+    }
+    NSLog(@"cancelOperation");
+}
 
 // --------------------------------------------------------------------------------
 //                                      Paste
