@@ -770,6 +770,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     */
     
     // Initialize audio interface
+    
     audioEngine = [[AudioEngine alloc] initWithSID:sid];
     if (!audioEngine) {
         NSLog(@"WARNING: Couldn't initialize AudioEngine");
@@ -966,10 +967,10 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void)unbindJoysticksFromPortB { [joystickManager unbindJoysticksFromPortB]; }
 
 // Audio hardware
-- (void) enableAudio {
+- (BOOL) enableAudio {
     [self rampUpFromZero];
     // [audioDevice startPlayback]; // DEPRECATED
-    [audioEngine startPlayback];
+    return [audioEngine startPlayback];
 }
 
 - (void) disableAudio {

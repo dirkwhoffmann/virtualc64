@@ -271,7 +271,7 @@ ReSID::readData()
     
     // Check for buffer underflow
     if (readPtr == writePtr)
-        debug(1, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
+        debug(4, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
     
     // Read sound sample
     float value = ringBuffer[readPtr];
@@ -333,7 +333,7 @@ ReSID::writeData(float data)
     // Check for buffer overflow
     if (readPtr == writePtr) {
 
-        debug(1, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+        debug(4, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
         
         if (!c64->getWarp()) // In real-time mode, we put the write ptr somewhat ahead of the read ptr
             alignWritePtr();

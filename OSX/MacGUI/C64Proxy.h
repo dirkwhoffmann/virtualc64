@@ -678,7 +678,7 @@ struct CartridgeWrapper;
 - (void)unbindJoysticksFromPortB;
 
 // Audio hardware
-- (void) enableAudio;
+- (BOOL) enableAudio;
 - (void) disableAudio;
 
 @end
