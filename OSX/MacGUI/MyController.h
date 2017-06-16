@@ -257,7 +257,6 @@ enum INPUT_DEVICES {
 	IBOutlet NSTextField *VicRasterline;
 	IBOutlet NSButton *VicEnableRasterInterrupt;
 	IBOutlet NSTextField *VicRasterInterrupt;
-	IBOutlet NSButton *VicEnableOpenGL;
 		
 	/*! @brief   Update loop timer
      *  @details The update task activated 60 times a second

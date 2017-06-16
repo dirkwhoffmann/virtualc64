@@ -39,9 +39,6 @@
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
 // Cartridge dialog
-//
-// CLEANUP:
-// 1. Remove MyOpenGLView class
 // 
 // SPEEDUP:
 //

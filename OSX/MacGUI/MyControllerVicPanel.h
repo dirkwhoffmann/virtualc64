@@ -44,7 +44,6 @@
 
 - (IBAction)vicEnableRasterInterruptAction:(id)sender;
 - (IBAction)vicRasterInterruptAction:(id)sender;
-- (IBAction)vicEnableOpenGL:(id)sender;
 
 - (void)refreshVIC;
 
