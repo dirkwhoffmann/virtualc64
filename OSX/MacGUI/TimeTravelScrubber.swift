@@ -99,21 +99,15 @@ class TimeTravelScrubber : NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberD
     
     // NSScrubberDelegate
     public func didBeginInteracting(with: NSScrubber) {
-        // print("\(#function)")
     }
     
     public func didCancelInteracting(with: NSScrubber) {
-        // print("\(#function)")
     }
     
     public func didFinishInteracting(with: NSScrubber) {
-        // print("\(#function)")
     }
     
     public func scrubber(_ scrubber: NSScrubber, didSelectItemAt index: Int) {
-        
-        print("\(#function) at index \(index)")
-        // determine corresponding snapshot index in time travel buffer
         let ttindex = numberOfItems(for: scrubber) - index - 1
         c!.c64.restoreHistoricSnapshot(ttindex)
     }

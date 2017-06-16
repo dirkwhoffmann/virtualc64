@@ -76,7 +76,7 @@ void
 C64::C64()
 {
 	setDescription("C64");
-	debug(1, "Creating virtual C64 at address %p\n", this);
+	debug(1, "Creating virtual C64[%p]\n", this);
 
 	p = NULL;    
     warp = false;
@@ -132,7 +132,7 @@ C64::C64()
 
 C64::~C64()
 {
-    debug(1, "Destroying virtual C64 at address %p\n", this);
+    debug(1, "Destroying virtual C64[%p]\n", this);
     
 	halt();
 }
@@ -140,7 +140,7 @@ C64::~C64()
 void
 C64::reset()
 {
-    debug(1, "Resetting virtual C64 at address %p\n", this);
+    debug(1, "Resetting virtual C64[%p]\n", this);
     
 	suspend();
 
@@ -157,7 +157,7 @@ C64::reset()
 
 void C64::ping()
 {
-    debug (1, "Pinging virtual C64 at address %p\n", this);
+    debug (1, "Pinging virtual C64[%p]\n", this);
 
     VirtualComponent::ping();
     putMessage(MSG_WARP, warp);

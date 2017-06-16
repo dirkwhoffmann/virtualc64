@@ -18,14 +18,12 @@ import AVFoundation
 
     override init()
     {
-        print("\(#function)")
         super.init()
     }
     
     convenience init?(withSID proxy: SIDProxy)
     {
-        print("")
-        print("\(#function)")
+        NSLog("\(#function)")
     
         self.init()
         sid = proxy
@@ -50,10 +48,10 @@ import AVFoundation
         let channels = hardwareFormat.channelCount
         let sampleRate = hardwareFormat.sampleRate
         let stereo = (channels > 1)
-        print("  number of output busses:    \(busses)")
-        print("  number of channels per bus: \(channels)")
-        print("  sample rate:                \(sampleRate)")
-        print("  Stereo:                     \(stereo)")
+        NSLog("  number of output busses:    \(busses)")
+        NSLog("  number of channels per bus: \(channels)")
+        NSLog("  sample rate:                \(sampleRate)")
+        NSLog("  Stereo:                     \(stereo)")
         
         // Make input busses compatible with the output busses
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
@@ -122,7 +120,7 @@ import AVFoundation
      */
     func startPlayback() -> Bool {
 
-        print("\(#function)")
+        NSLog("\(#function)")
         do { try audiounit.startHardware() } catch {
             NSLog("Failed to start audio hardware")
             return false
@@ -135,7 +133,7 @@ import AVFoundation
      */
     func stopPlayback() {
         
-        print("\(#function)")
+        NSLog("\(#function)")
         audiounit.stopHardware()
     }
 }

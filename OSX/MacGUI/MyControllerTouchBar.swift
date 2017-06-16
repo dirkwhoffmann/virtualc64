@@ -59,7 +59,7 @@ extension MyController : NSTouchBarDelegate
             return nil // Only create TouchBar for controllers having a C64 proxy
         }
 
-        print("\(#function)")
+        NSLog("\(#function)")
 
         let touchBar = NSTouchBar()
         touchBar.delegate = self

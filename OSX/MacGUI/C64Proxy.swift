@@ -66,8 +66,6 @@ public extension C64Proxy {
 
     func timetravelSnapshotImage(_ item: Int) -> NSImage {
         
-        // print("\(#function)")
-        
         var data = historicSnapshotImageData(item)
         let width = historicSnapshotImageWidth(item)
         let height = historicSnapshotImageHeight(item)
