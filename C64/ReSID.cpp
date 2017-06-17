@@ -1,5 +1,5 @@
 /*
- * (C) 2011 Dirk W. Hoffmann. All rights reserved.
+ * (C) 2011 - 2017 Dirk W. Hoffmann. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -173,28 +173,14 @@ ReSID::loadFromBuffer(uint8_t **buffer)
 {
     VirtualComponent::loadFromBuffer(buffer);
 
-    // reset();
     clearRingbuffer();
-
-    /*
-    setChipModel(chipModel);
-    setSampleRate(sampleRate);
-    setSamplingMethod(samplingMethod);
-    setAudioFilter(audioFilter);
-    setExternalAudioFilter(externalAudioFilter);
-    setClockFrequency(cpuFrequency);
-    */
-    
-    // Push state to reSID
     sid->write_state(st);
 }
 
 void
 ReSID::saveToBuffer(uint8_t **buffer)
 {
-    // Pull state from reSID
     st = sid->read_state();
-    
     VirtualComponent::saveToBuffer(buffer);
 }
 
@@ -219,22 +205,20 @@ ReSID::execute(uint64_t elapsedCycles)
     cycle_count delta_t = (cycle_count)elapsedCycles;
     int bufindex = 0;
     
-    // TODO: Can't we write directly into Core Audios ringbuffer (for Speedup)?
-
     // Let reSID compute some sound samples
     while (delta_t) {
         bufindex += sid->clock(delta_t, buf + bufindex, buflength - bufindex);
-        // if (delta_t != 0) debug(2, "delta_t = %d\n", delta_t);
     }
     
-    // Write samples into ringbuffer (output is silenced in warp mode) 
-    
-    // float volume = c64->getWarp() ? 0.0f : 0.000005f;
+    // Write samples into ringbuffer
+    if (bufindex) {
+        writeData(buf, bufindex);
+    }
+    /*
     for (int i = 0; i < bufindex; i++) {
         writeData((float)buf[i]);
     }
-
-    // fprintf(stderr,"wrote %d samples\n", bufindex);
+    */
 }
 
 void 
@@ -259,7 +243,7 @@ ReSID::clearRingbuffer()
         ringBuffer[i] = 0.0f;
     }
     
-    // Reset read pointer and put write pointer somewhat ahead
+    // Reset pointer positions
     readPtr = 0;
     alignWritePtr();
 }
@@ -267,12 +251,6 @@ ReSID::clearRingbuffer()
 float
 ReSID::readData()
 {
-    readDataCnt++;
-    
-    // Check for buffer underflow
-    if (readPtr == writePtr)
-        debug(4, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
-    
     // Read sound sample
     float value = ringBuffer[readPtr];
     
@@ -287,21 +265,28 @@ ReSID::readData()
     value = (volume <= 0) ? 0.0f : value * (float)volume / 100000.0f;
     
     // Advance read pointer
-    readPtr++;
-    if (readPtr == bufferSize)
-        readPtr = 0;
+    advanceReadPtr();
 
-	return value;
+    return value;
+}
+
+void
+ReSID::handleBufferUnderflow()
+{
+    debug(4, "SID RINGBUFFER UNDERFLOW (%ld)\n", readPtr);
 }
 
 void
 ReSID::readMonoSamples(float *target, size_t n)
 {
-    // static unsigned j = 0; /* For debugging */
-
+    // Check for buffer underflow
+    if (samplesInBuffer() < n) {
+        handleBufferUnderflow();
+    }
+    
+    // Read samples
     for (size_t i = 0; i < n; i++) {
         float value = readData();
-        // float value = 5.0 * sin(float(j++)*(2*3.14159265)*(440.0/44100.0));
         target[i] = value;
     }
 }
@@ -309,6 +294,12 @@ ReSID::readMonoSamples(float *target, size_t n)
 void
 ReSID::readStereoSamples(float *target1, float *target2, size_t n)
 {
+    // Check for buffer underflow
+    if (samplesInBuffer() < n) {
+        handleBufferUnderflow();
+    }
+
+    // Read samples
     for (unsigned i = 0; i < n; i++) {
         float value = readData();
         target1[i] = target2[i] = value;
@@ -318,6 +309,12 @@ ReSID::readStereoSamples(float *target1, float *target2, size_t n)
 void
 ReSID::readStereoSamplesInterleaved(float *target, size_t n)
 {
+    // Check for buffer underflow
+    if (samplesInBuffer() < n) {
+        handleBufferUnderflow();
+    }
+
+    // Read samples
     for (unsigned i = 0; i < n; i++) {
         float value = readData();
         target[i*2] = value;
@@ -325,36 +322,31 @@ ReSID::readStereoSamplesInterleaved(float *target, size_t n)
     }
 }
 
-inline void
+void
+ReSID::writeData(short *data, size_t count)
+{
+    // Check for buffer overflow
+    if (bufferCapacity() < count) {
+        handleBufferOverflow();
+    }
+    
+    // Convert sound samples to floating point values and write into ringbuffer
+    for (unsigned i = 0; i < count; i++) {
+        ringBuffer[writePtr] = float(data[i]) * scale;
+        advanceWritePtr();
+    }
+}
+
+/*
+void
 ReSID::writeData(float data)
 {
-    writeDataCnt++;
-    
     // Check for buffer overflow
     if (readPtr == writePtr) {
-
-        debug(4, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
-        
-        if (!c64->getWarp()) // In real-time mode, we put the write ptr somewhat ahead of the read ptr
-            alignWritePtr();
-        else
-            return; // In warp mode, we don't advance the write ptr to avoid crack noises
+        handleBufferOverflow();
     }
-    
-#if 0
-    // Adjust volume
-    if (volume != targetVolume) {
-        if (volume < targetVolume) {
-            volume += MIN(volumeDelta, targetVolume - volume);
-        } else {
-            volume -= MIN(volumeDelta, volume - targetVolume);
-        }
-    }
-#endif 
     
     // Write sound sample
-    // float scale = (volume <= 0) ? 0.0f : 0.000005f * (float)volume / 100000.0f;
-    float scale = 0.000005f;
     ringBuffer[writePtr] = data * scale;
     
     // Advance write pointer
@@ -362,7 +354,21 @@ ReSID::writeData(float data)
     if (writePtr == bufferSize)
         writePtr = 0;
 }
+*/
 
+void
+ReSID::handleBufferOverflow()
+{
+    debug(4, "SID RINGBUFFER OVERFLOW (%ld)\n", writePtr);
+    
+    if (!c64->getWarp()) {
+        // In real-time mode, we readjust the write pointer
+        alignWritePtr();
+    } else {
+        // In warp mode, we don't advance the write ptr to avoid crack noises
+        return;
+    }
+}
 
 void
 ReSID::dumpState()

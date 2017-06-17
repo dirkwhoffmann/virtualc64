@@ -23,10 +23,11 @@
 //
 //
 // Enhancements:
-// Added custom TouchBar for supporting MacBook Pros
-// Mouse cursor disappears automatically in fullscreen mode
+// Added TouchBar support for latest MacBook Pros
+// Mouse cursor now disappears automatically in fullscreen mode
 //
 // Internal changes:
+// Code architecture has been restructured to be compatible with Swift
 // Audio engine has been reimplemented in Swift
 //
 // Bug fixes:
@@ -34,7 +35,7 @@
 // Fixed a bug that caused some automatically taken snapshots to be damaged.
 // Standard key combinations for entering and leaving fullscreen mode are now working.
 // Fixed a bug that caused some drive memory data missing in snapshot files
-// 
+// Audio playback now terminates properly when a breakpoint or an illegal instruction is reached.
 //
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
@@ -54,7 +55,7 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-#define NDEBUG      // RELEASE
+// #define NDEBUG      // RELEASE
 
 // Data types and constants
 #include "C64_defs.h"
