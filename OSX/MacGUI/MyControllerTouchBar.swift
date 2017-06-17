@@ -15,8 +15,6 @@ extension NSTouchBarItemIdentifier {
     static let home       = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.home")
     static let del        = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.del")
     static let restore    = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.restore")
-    static let larrow     = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.larrow")
-    static let uarrow     = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.uarrow")
     static let ttpopover  = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.ttpopover")
 }
 
@@ -63,18 +61,29 @@ extension MyController : NSTouchBarDelegate
 
         let touchBar = NSTouchBar()
         touchBar.delegate = self
-        touchBar.defaultItemIdentifiers = [.commodore,
-                                           .runstop,
-                                           .home,
-                                           .del,
-                                           .restore,
-                                           /* .larrow, */
-                                           /* .uarrow */
-                                           .ttscrubber,
-                                           .ttpopover
+
+        // Configure items
+        touchBar.defaultItemIdentifiers = [
+            .commodore,
+            .runstop,
+            .home,
+            .del,
+            .restore,
+            .ttscrubber,
+            .ttpopover
         ]
         
-        return touchBar
+        // Make touchbar customizable
+        touchBar.customizationIdentifier = NSTouchBarCustomizationIdentifier("com.virtualc64.touchbar")
+        touchBar.customizationAllowedItemIdentifiers = [
+            .commodore,
+            .runstop,
+            .home,
+            .del,
+            .restore,
+            .ttpopover]
+        
+            return touchBar
     }
     
     public func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
@@ -83,6 +92,7 @@ extension MyController : NSTouchBarDelegate
             
         case NSTouchBarItemIdentifier.commodore:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            item.customizationLabel = "Commodore key"
             item.view = NSButton(image: NSImage(named: "commodore")!,
                                  target: self,
                                  action: #selector(commodoreKeyAction))
@@ -90,6 +100,7 @@ extension MyController : NSTouchBarDelegate
 
         case NSTouchBarItemIdentifier.runstop:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            item.customizationLabel = "Runstop key"
             item.view = NSButton(image:  NSImage(named: "runstop")!,
                                  target: self,
                                  action: #selector(runstopAction))
@@ -98,6 +109,7 @@ extension MyController : NSTouchBarDelegate
 
         case NSTouchBarItemIdentifier.home:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            item.customizationLabel = "Home and Clear key"
             item.view = NSButton(image:  NSImage(named: "home")!,
                                  target: self,
                                  action: #selector(TouchBarHomeKeyAction))
@@ -105,6 +117,7 @@ extension MyController : NSTouchBarDelegate
 
         case NSTouchBarItemIdentifier.del:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            item.customizationLabel = "Delete and Insert key"
             item.view = NSButton(image:  NSImage(named: "del")!,
                                  target: self,
                                  action: #selector(TouchBarDelKeyAction))
@@ -112,13 +125,16 @@ extension MyController : NSTouchBarDelegate
 
         case NSTouchBarItemIdentifier.restore:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            item.customizationLabel = "Restore key"
             item.view = NSButton(image:  NSImage(named: "restore")!,
                                  target: self,
                                  action: #selector(restoreAction))
             return item
 
+/*
         case NSTouchBarItemIdentifier.larrow:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            item.customizationLabel = "Left arrow key"
             item.view = NSButton(title: "←",
                                  target: self,
                                  action: #selector(homeKeyAction))
@@ -126,15 +142,18 @@ extension MyController : NSTouchBarDelegate
 
         case NSTouchBarItemIdentifier.uarrow:
             let item = NSCustomTouchBarItem(identifier: identifier)
+            item.customizationLabel = "Up arrow key"
             item.view = NSButton(title: "↑",
                                  target: self,
                                  action: #selector(homeKeyAction))
             return item
-        
+*/
+            
         case NSTouchBarItemIdentifier.ttpopover:
             let item = NSPopoverTouchBarItem(identifier: identifier)
             let icon = NSImage(named: "tb_timetravel2.png")
             let resizedIcon = icon?.resizeImage(width: 24, height: 24)
+            item.customizationLabel = "Time travel"
             item.collapsedRepresentationImage = resizedIcon
             item.popoverTouchBar = TimeTravelTouchBar (parent: item, controller:self)
             return item
