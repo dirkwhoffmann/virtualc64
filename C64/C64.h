@@ -55,7 +55,7 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-// #define NDEBUG      // RELEASE
+#define NDEBUG      // RELEASE
 
 // Data types and constants
 #include "C64_defs.h"
