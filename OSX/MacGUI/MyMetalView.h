@@ -121,9 +121,6 @@ enum TextureFilterType {
     //! If true, the 3D renderer is also used in fullscreen mode
     bool fullscreenKeepAspectRatio;
     
-    //! If true, the C64 canvas covers the whole window area (used to hide the status bar)
-    bool drawInEntireWindow;
-
     //! If false, the C64 screen is not drawn (background texture or black screen will be visible)
     bool drawC64texture;
     
@@ -149,12 +146,17 @@ enum TextureFilterType {
 @property bool enableMetal;
 @property bool fullscreen;
 @property bool fullscreenKeepAspectRatio;
-@property bool drawInEntireWindow;
 @property bool drawC64texture;
 
 - (void)cleanup;
 
 #pragma mark Drawing
+
+//! Shrinks view vertically by the height of the status bar
+- (void)shrink;
+
+//! Expand view vertically by the height of the status bar
+- (void)expand;
 
 - (void)reshapeWithFrame:(CGRect)frame;
 - (void)updateScreenGeometry;

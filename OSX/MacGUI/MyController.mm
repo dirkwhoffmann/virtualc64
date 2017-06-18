@@ -24,7 +24,7 @@
 @synthesize c64;
 @synthesize metalScreen;
 @synthesize modifierFlags;
-
+@synthesize statusBar;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -109,9 +109,10 @@
 
 - (void)configureWindow
 {
-    // Add bottom bar
+    // Add status bar
     [[self window] setAutorecalculatesContentBorderThickness:YES forEdge:NSMinYEdge];
     [[self window] setContentBorderThickness:32.0 forEdge: NSMinYEdge];
+    statusBar = YES;
     
     // Update some toolbar icons
     [self setupToolbarIcons];
@@ -180,31 +181,7 @@
     frame.origin.y -= correction;
     frame.size = newsize;
     
-    [[self window] setFrame: frame display: YES animate: NO];
-    
-#if 0
-    // Get size of window
-    NSRect frame = [[self window] frame];
-    
-    // Get size of metal view
-    NSRect metalFrame = [metalScreen frame];
-    
-    NSLog(@"window: (%f,%f)", frame.size.width, frame.size.height);
-    NSLog(@"metal:  (%f,%f)", metalFrame.size.width, metalFrame.size.height);
-    NSLog(@"metal ratio is %f", metalFrame.size.width / metalFrame.size.height);
-
-    // Which hight do need to achieve an aspect ration of 804:621?
-    CGFloat metalY = metalFrame.size.width * (621.0 / 804.0);
-    CGFloat delta  = metalY - metalFrame.size.height;
-    
-    NSLog(@"Increasing window height by %f", delta);
-    
-    // Adjust size
-    frame.size.height += delta;
-    frame.origin.y -= delta;
-    metalFrame.size.height += delta;
-    [[self window] setFrame: frame display: YES animate: NO];
-#endif
+    [[self window] setFrame: frame display: YES animate: NO];    
 }
 
 

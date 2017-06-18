@@ -286,6 +286,9 @@ enum INPUT_DEVICES {
      *           alter behaviour when a key on the TouchBar is pressed.
      */
     NSEventModifierFlags modifierFlags;
+    
+    //! @brief   Indicates if a status bar is shown
+    bool statusBar;
 }
 
 @property (strong) C64Proxy *c64;
@@ -293,6 +296,7 @@ enum INPUT_DEVICES {
 @property int inputDeviceA;
 @property int inputDeviceB;
 @property NSEventModifierFlags modifierFlags;
+@property bool statusBar;
 
 // Initialization
 - (void)configureWindow;

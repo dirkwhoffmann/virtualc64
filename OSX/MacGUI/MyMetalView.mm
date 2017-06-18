@@ -46,33 +46,20 @@
 @synthesize fullscreenKeepAspectRatio;
 @synthesize drawC64texture;
 
-- (bool)drawInEntireWindow { return drawInEntireWindow; }
-- (void)setDrawInEntireWindow:(bool)b
+//! Adjusts view height by a certain amount
+- (void)adjustHeight:(CGFloat)height
 {
-    if (drawInEntireWindow == b)
-        return;
-    
-    NSRect r = self.frame;
-    float borderThickness;
-    if (b) {
-        NSLog(@"Expanding metal view");
-        r.origin.y -= 24;
-        r.size.height += 24;
-        borderThickness = 0.0;
-    } else {
-        NSLog(@"Shrinking metal view");
-        r.origin.y += 24;
-        r.size.height -= 24;
-        borderThickness = 24.0;
-    }
-    
-    self.frame = r;
-    [[self window] setContentBorderThickness:borderThickness forEdge: NSMinYEdge];
-    [controller adjustWindowSize];
-    
-    drawInEntireWindow = b;
+    NSRect newframe = self.frame;
+    newframe.origin.y -= height;
+    newframe.size.height += height;
+    self.frame = newframe;
 }
 
+//! Shrinks view vertically by the height of the status bar
+- (void)shrink { [self adjustHeight:-24.0]; }
+
+//! Expand view vertically by the height of the status bar
+- (void)expand { [self adjustHeight:24.0]; }
 
 // -----------------------------------------------------------------------------------------------
 //                                         Initialization
@@ -110,7 +97,6 @@
     enableMetal = false;
     fullscreen = false;
     fullscreenKeepAspectRatio = true;
-    drawInEntireWindow = false;
     drawC64texture = false;
     
     // Metal

@@ -51,10 +51,10 @@
 
     // View menu
     if ([item action] == @selector(toggleStatusBarAction:)) {
-        if ([metalScreen drawInEntireWindow])
-            [item setTitle:@"Show Status Bar"];
-        else
+        if (statusBar)
             [item setTitle:@"Hide Status Bar"];
+        else
+            [item setTitle:@"Show Status Bar"];
         return true;
     }
     
@@ -204,16 +204,19 @@
     [[undo prepareWithInvocationTarget:self] toggleStatusBarAction:sender];
     if (![undo isUndoing]) [undo setActionName:@"Show/Hide status bar"];
 
-    if ([metalScreen drawInEntireWindow])
-        [self showStatusBar];
-    else
+    if (statusBar)
         [self hideStatusBar];
+    else
+        [self showStatusBar];
 }
 
 - (IBAction)showStatusBar
 {
     NSLog(@"showStatusBarAction");
-    
+ 
+    if (statusBar)
+        return
+        
     [greenLED setHidden:NO];
     [redLED setHidden:NO];
     [progress setHidden:NO];
@@ -228,15 +231,20 @@
     [clockSpeed setHidden:NO];
     [clockSpeedBar setHidden:NO];
     [warpIcon setHidden:NO];
-    // [alwaysWarpIcon setHidden:NO];
     
-    [metalScreen setDrawInEntireWindow:NO];
+    [metalScreen shrink];
+    [[self window] setContentBorderThickness:24 forEdge: NSMinYEdge];
+    [self adjustWindowSize];
+    statusBar = YES;
 }
     
 - (IBAction)hideStatusBar
 {
     NSLog(@"hideStatusBarAction");
     
+    if (!statusBar)
+        return
+        
     // Hide bottom bar
     [greenLED setHidden:YES];
     [redLED setHidden:YES];
@@ -252,17 +260,12 @@
     [clockSpeed setHidden:YES];
     [clockSpeedBar setHidden:YES];
     [warpIcon setHidden:YES];
-    // [alwaysWarpIcon setHidden:YES];
     
-    [metalScreen setDrawInEntireWindow:YES];
+    [metalScreen expand];
+    [[self window] setContentBorderThickness:0 forEdge: NSMinYEdge];
+    [self adjustWindowSize];
+    statusBar = NO;
 }
-
-#if 0
-- (IBAction)toggleTabbarAction:(id)sender
-{
-    NSLog(@"toggleTabbarAction");
-}
-#endif
 
 // --------------------------------------------------------------------------------
 //                               Keyboard menu
