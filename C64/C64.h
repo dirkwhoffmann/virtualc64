@@ -21,8 +21,6 @@
 
 // VERSION 1.5.1:
 //
-// Fixed a bug that caused the emulator to crash on some machines with special audio hardware
-//
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
 // Cartridge dialog
