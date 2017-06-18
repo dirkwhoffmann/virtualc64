@@ -19,23 +19,9 @@
  */
 
 
-// VERSION 1.5:
+// VERSION 1.5.1:
 //
-//
-// Enhancements:
-// Added TouchBar support for latest MacBook Pros
-// Mouse cursor now disappears automatically in fullscreen mode
-//
-// Internal changes:
-// Code architecture has been restructured to be compatible with Swift
-// Audio engine has been reimplemented in Swift
-//
-// Bug fixes:
-// Fixed a bug that prevented some special keys from being used for joystick emulation.
-// Fixed a bug that caused some automatically taken snapshots to be damaged.
-// Standard key combinations for entering and leaving fullscreen mode are now working.
-// Fixed a bug that caused some drive memory data missing in snapshot files
-// Audio playback now terminates properly when a breakpoint or an illegal instruction is reached.
+// Fixed a bug that caused the emulator to crash on some machines with special audio hardware
 //
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files

@@ -184,11 +184,8 @@
 {
     NSLog(@"Proposed full screen size: %f x %f", proposedSize.width, proposedSize.height);
     
-    // NSRect myRect = [screen bounds];
     NSRect myRect = [metalScreen bounds];
     myRect.size = proposedSize;
-    // [screen setFrame:myRect];
-    // [window setFrame:myRect display:YES];
     return proposedSize;
 }
 

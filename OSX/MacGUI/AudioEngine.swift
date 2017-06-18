@@ -49,15 +49,15 @@ import AVFoundation
         let channels = hardwareFormat.channelCount
         let sampleRate = hardwareFormat.sampleRate
         let stereo = (channels > 1)
-        NSLog("  number of input busses:      \(inputbusses)")
-        NSLog("  number of output busses:     \(outputbusses)")
-        NSLog("  number of channels of bus 0: \(channels)")
-        NSLog("  sample rate:                 \(sampleRate)")
+        NSLog("  Number of input busses:      \(inputbusses)")
+        NSLog("  Number of output busses:     \(outputbusses)")
+        NSLog("  Number of channels of bus 0: \(channels)")
+        NSLog("  Sample rate:                 \(sampleRate)")
         NSLog("  Stereo:                      \(stereo)")
         
         // Make input bus compatible with output bus
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
-                                         channels: channels)
+                                         channels: (stereo ? 2 : 1))
         do { try audiounit.inputBusses[0].setFormat(renderFormat) } catch {
             NSLog("Failed to set render format on input bus")
             return nil
