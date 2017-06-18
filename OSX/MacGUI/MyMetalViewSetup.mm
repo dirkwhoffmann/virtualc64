@@ -331,10 +331,18 @@ vc64_matrix_identity()
 matrix_float4x4
 vc64_matrix_from_perspective_fov_aspectLH(float fovY, float aspect, float nearZ, float farZ)
 {
-    // 1 / tan == cot
-    float yscale = 1.0f / tanf(fovY * 0.5f);
+    
+    /* OLD CODE: Keeps correct aspect ratio independent of window size */
+    float yscale = 1.0f / tanf(fovY * 0.5f); // 1 / tan == cot
     float xscale = yscale / aspect;
     float q = farZ / (farZ - nearZ);
+    
+    /* Alternative: Adjust to window size */
+    /*
+    float yscale = 1.0f / tanf(fovY * 0.5f);
+    float xscale = 0.75 * yscale;
+    float q = farZ / (farZ - nearZ);
+    */
     
     matrix_float4x4 m = {
         .columns[0] = { xscale, 0.0f, 0.0f, 0.0f },

@@ -27,10 +27,12 @@
     id <CAMetalDrawable> _drawable;
     
     // Matrices
+    /*
     matrix_float4x4 _modelMatrix;
     matrix_float4x4 _viewMatrix;
     matrix_float4x4 _projectionMatrix;
     matrix_float4x4 _modelViewProjectionMatrix;
+     */
 }
 
 
@@ -231,6 +233,8 @@
 
 - (void)reshapeWithFrame:(CGRect)frame
 {
+   //  NSLog(@"MetalLayer::reshapeWithFrame");
+          
     CGFloat scale = [[NSScreen mainScreen] backingScaleFactor];
     CGSize drawableSize = self.bounds.size;
     
@@ -254,11 +258,13 @@
 
     NSLog(@"MetalLayer::reshape (%f,%f)", drawableSize.width, drawableSize.height);
 
+    /* NO LONGER USED
     // Update projection matrix
     float aspect = fabs(layerWidth / layerHeight);
     _projectionMatrix = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
 
     _viewMatrix = matrix_identity_float4x4;
+    */
     
     // Rebuild matrices
     [self buildMatricesBg];
@@ -301,9 +307,13 @@
 
 - (void)buildMatrices3D
 {
+    float aspectRatio = float(fabs(layerWidth / layerHeight));
+    
+    NSLog(@"buildMatrices3D: aspectRatio: %f", aspectRatio);
+    
     matrix_float4x4 model = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.39);
     matrix_float4x4 view = matrix_identity_float4x4;
-    matrix_float4x4 projection = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), fabs(layerWidth / layerHeight), 0.1f, 100.0f);
+    matrix_float4x4 projection = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspectRatio, 0.1f, 100.0f);
     
     if ([self animates]) {
         model = model *
