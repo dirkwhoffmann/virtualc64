@@ -38,25 +38,30 @@ import AVFoundation
 
         // Create AudioUnit
         do { try audiounit = AUAudioUnit(componentDescription: compDesc) } catch {
-            NSLog("Failed to intantiate AudioUnit")
+            NSLog("Failed to create AudioUnit")
             return nil
         }
         
         // Query AudioUnit
-        let busses = audiounit.outputBusses.count
+        let inputbusses = audiounit.inputBusses.count
+        let outputbusses = audiounit.outputBusses.count
         let hardwareFormat = audiounit.outputBusses[0].format
         let channels = hardwareFormat.channelCount
         let sampleRate = hardwareFormat.sampleRate
         let stereo = (channels > 1)
-        NSLog("  number of output busses:    \(busses)")
-        NSLog("  number of channels per bus: \(channels)")
-        NSLog("  sample rate:                \(sampleRate)")
-        NSLog("  Stereo:                     \(stereo)")
+        NSLog("  number of input busses:      \(inputbusses)")
+        NSLog("  number of output busses:     \(outputbusses)")
+        NSLog("  number of channels of bus 0: \(channels)")
+        NSLog("  sample rate:                 \(sampleRate)")
+        NSLog("  Stereo:                      \(stereo)")
         
-        // Make input busses compatible with the output busses
+        // Make input bus compatible with output bus
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
                                          channels: channels)
-        try! audiounit.inputBusses[0].setFormat(renderFormat)
+        do { try audiounit.inputBusses[0].setFormat(renderFormat) } catch {
+            NSLog("Failed to set render format on input bus")
+            return nil
+        }
         
         // Tell SID to use the correct sample rate
         sid.setSampleRate(UInt32(sampleRate))
