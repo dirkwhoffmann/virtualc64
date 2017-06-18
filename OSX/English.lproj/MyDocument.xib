@@ -194,8 +194,8 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="804" height="645"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
-            <value key="minSize" type="size" width="652" height="432"/>
-            <view key="contentView" id="6">
+            <value key="minSize" type="size" width="402" height="323"/>
+            <view key="contentView" misplaced="YES" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="804" height="645"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>

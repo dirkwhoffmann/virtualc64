@@ -36,10 +36,10 @@
 	[self addWindowController:myController];
 	
     // Kepp aspect ratio during window resizing
-	[[self windowForSheet] setContentAspectRatio:NSMakeSize(804,621 + 20 /* control bar below C64 canvas */)];
+	// [[self windowForSheet] setContentAspectRatio:NSMakeSize(804,621 + 20 /* control bar below C64 canvas */)];
 
     // Restore previous position and size
-    [[self windowForSheet] setFrameUsingName:@"dirkwhoffmann.de.virtualC64.window"];
+    // [[self windowForSheet] setFrameUsingName:@"dirkwhoffmann.de.virtualC64.window"];
 }
 
 - (id)init

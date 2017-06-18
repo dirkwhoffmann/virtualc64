@@ -46,7 +46,7 @@ enum INPUT_DEVICES {
 	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
 	// IBOutlet
     C64Proxy *__strong c64;
-	
+    
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;
     IBOutlet HardwareDialog *hardwareDialog;
@@ -296,6 +296,9 @@ enum INPUT_DEVICES {
 
 // Initialization
 - (void)configureWindow;
+
+// Window handling
+- (void)adjustWindowSize;
 
 // Undo manager
 - (NSUndoManager *)undoManager;

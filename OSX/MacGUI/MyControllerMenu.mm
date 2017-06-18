@@ -257,6 +257,12 @@
     [metalScreen setDrawInEntireWindow:YES];
 }
 
+#if 0
+- (IBAction)toggleTabbarAction:(id)sender
+{
+    NSLog(@"toggleTabbarAction");
+}
+#endif
 
 // --------------------------------------------------------------------------------
 //                               Keyboard menu

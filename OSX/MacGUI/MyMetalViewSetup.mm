@@ -224,7 +224,7 @@
 
 - (void)buildDepthBuffer
 {
-    NSLog(@"MyMetalView::buildDepthBuffer");
+    // NSLog(@"MyMetalView::buildDepthBuffer");
     
     if (!device)
         return;

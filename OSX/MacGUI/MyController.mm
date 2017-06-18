@@ -21,10 +21,10 @@
 
 @implementation MyController
 
-@synthesize c64, metalScreen;
+@synthesize c64;
+@synthesize metalScreen;
 @synthesize modifierFlags;
-// @synthesize touchbar;
-// @synthesize timeTravelScrubber;
+
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -143,6 +143,70 @@
 
     [[NSApplication sharedApplication] setAutomaticCustomizeTouchBarMenuItemEnabled:YES];
 }
+
+- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize
+{
+    // Get some basic parameters
+    NSRect windowFrame = [sender frame];
+    CGFloat deltaX     = frameSize.width - windowFrame.size.width;
+    CGFloat deltaY     = frameSize.height - windowFrame.size.height;
+    
+    // How big would the metal view become?
+    NSRect metalFrame  = [metalScreen frame];
+    CGFloat metalX     = metalFrame.size.width + deltaX;
+    CGFloat metalY     = metalFrame.size.height + deltaY;
+    
+    // We want to achieve an aspect ratio of 804:621
+    CGFloat newMetalY  = metalX * (621.0 / 804.0);
+    CGFloat correction = newMetalY - metalY;
+
+    return NSMakeSize(frameSize.width, frameSize.height + correction);
+}
+
+/*! @brief    Custom function to adjust window size programatically
+ *  @details The size is adjusted to get the metal view's aspect ration right
+ */
+
+- (void)adjustWindowSize
+{
+    // Get frame of window
+    NSRect frame = [[self window] frame];
+
+    // Compute size correction
+    NSSize newsize = [self windowWillResize:[self window] toSize:frame.size];
+    CGFloat correction = newsize.height - frame.size.height;
+    
+    // Adjust frame
+    frame.origin.y -= correction;
+    frame.size = newsize;
+    
+    [[self window] setFrame: frame display: YES animate: NO];
+    
+#if 0
+    // Get size of window
+    NSRect frame = [[self window] frame];
+    
+    // Get size of metal view
+    NSRect metalFrame = [metalScreen frame];
+    
+    NSLog(@"window: (%f,%f)", frame.size.width, frame.size.height);
+    NSLog(@"metal:  (%f,%f)", metalFrame.size.width, metalFrame.size.height);
+    NSLog(@"metal ratio is %f", metalFrame.size.width / metalFrame.size.height);
+
+    // Which hight do need to achieve an aspect ration of 804:621?
+    CGFloat metalY = metalFrame.size.width * (621.0 / 804.0);
+    CGFloat delta  = metalY - metalFrame.size.height;
+    
+    NSLog(@"Increasing window height by %f", delta);
+    
+    // Adjust size
+    frame.size.height += delta;
+    frame.origin.y -= delta;
+    metalFrame.size.height += delta;
+    [[self window] setFrame: frame display: YES animate: NO];
+#endif
+}
+
 
 // --------------------------------------------------------------------------------
 //                                   Full screen

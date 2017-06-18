@@ -68,8 +68,9 @@
     
     self.frame = r;
     [[self window] setContentBorderThickness:borderThickness forEdge: NSMinYEdge];
-
-     drawInEntireWindow = b;
+    [controller adjustWindowSize];
+    
+    drawInEntireWindow = b;
 }
 
 
@@ -256,15 +257,7 @@
     layerWidth = drawableSize.width;
     layerHeight = drawableSize.height;
 
-    NSLog(@"MetalLayer::reshape (%f,%f)", drawableSize.width, drawableSize.height);
-
-    /* NO LONGER USED
-    // Update projection matrix
-    float aspect = fabs(layerWidth / layerHeight);
-    _projectionMatrix = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspect, 0.1f, 100.0f);
-
-    _viewMatrix = matrix_identity_float4x4;
-    */
+    // NSLog(@"MetalLayer::reshape (%f,%f)", drawableSize.width, drawableSize.height);
     
     // Rebuild matrices
     [self buildMatricesBg];
@@ -309,7 +302,7 @@
 {
     float aspectRatio = float(fabs(layerWidth / layerHeight));
     
-    NSLog(@"buildMatrices3D: aspectRatio: %f", aspectRatio);
+    // NSLog(@"buildMatrices3D: aspectRatio: %f", aspectRatio);
     
     matrix_float4x4 model = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.39);
     matrix_float4x4 view = matrix_identity_float4x4;
@@ -368,11 +361,11 @@
 
     if (width != framebufferTexture.width) {
         width = framebufferTexture.width;
-        NSLog(@"drawable width = %lu", (unsigned long)framebufferTexture.width);
+        // NSLog(@"drawable width = %lu", (unsigned long)framebufferTexture.width);
     }
     if (height != framebufferTexture.height) {
         height = framebufferTexture.height;
-        NSLog(@"drawable height = %lu", (unsigned long)framebufferTexture.height);
+        // NSLog(@"drawable height = %lu", (unsigned long)framebufferTexture.height);
     }
     
     NSAssert(framebufferTexture != nil, @"Framebuffer texture must not be nil");
@@ -473,7 +466,7 @@
 }
 
 - (void)drawRect:(CGRect)rect
-{
+{    
     if (!c64proxy || !enableMetal)
         return;
     
