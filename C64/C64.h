@@ -19,7 +19,10 @@
  */
 
 
-// VERSION 1.5.1:
+// VERSION 1.5.2:
+//
+// TODO:
+// Rename C64Key to C64KeyIdentifiers, add type alias C64Key
 //
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
