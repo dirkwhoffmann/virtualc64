@@ -1172,32 +1172,6 @@
 	return YES;
 }
 
-- (void)keyDown:(NSEvent *)event
-{
-    // Exit fullscreen mode if ESC is pressed
-    if ([event keyCode] == MAC_ESC && [metalScreen fullscreen]) {
-        [self.window toggleFullScreen:nil];
-    }
-
-	// Pass all keyboard events to the metal view
-    [metalScreen keyDown:event];
-}
-
-- (void)keyUp:(NSEvent *)event
-{
-	// Pass all keyboard events to the metal view
-    [metalScreen keyUp:event];
-}
-
-- (void)flagsChanged:(NSEvent *)event
-{
-    // Pass all keyboard events to the metal view
-    [metalScreen flagsChanged:event];
-}
-
-- (void)cancelOperation:(id)sender
-{
-}
 
 // --------------------------------------------------------------------------------
 //                                      Paste
