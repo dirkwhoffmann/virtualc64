@@ -22,6 +22,10 @@ import Foundation
 extension MyController
 {
     
+    //
+    // Keyboard events
+    //
+    
     override open func keyDown(with event: NSEvent)
     {
         // Exit fullscreen mode if ESC is pressed
@@ -41,4 +45,67 @@ extension MyController
     override open func flagsChanged(with event: NSEvent) {
         metalScreen.flagsChanged(with: event)
     }
+    
+    //
+    // Joystick simulation
+    //
+
+    /*! @brief  Computes unique fingerprint for a certain key combination pressed
+     *          on the pyhsical Mac keyboard
+     */
+    func fingerprint(forKey keycode: Int32, withModifierFlags flags: UInt) -> MacKeyFingerprint
+    {
+        
+        return 0
+    }
+    
+    //! @brief  Returns fingerprint from keymap
+    func joyFingerprint(forKeymap nr: Int32, direction d: JoystickDirection) -> MacKeyFingerprint
+    {
+ 
+        return 0
+    }
+    
+    //! @brief  Stores fingerprint in keymap
+    func setJoyFingerprint(_ fingerprint: MacKeyFingerprint, forKeymap map: Int32, direction d: JoystickDirection)
+    {
+        
+    }
+    
+    //! @brief  Returns keymap entry as a printable charakter
+    func joyChar(forKeymap nr: Int32, direction d: JoystickDirection) -> Int8
+    {
+        
+        return 0
+    }
+    
+    //! @brief  Stores a printable charakter in keymap
+    func setJoyChar(_ c: Int8, forKeymap map: Int32, direction d: JoystickDirection)
+    {
+        
+    }
+    
+    /*! @brief  Pulls joystick if key matches some value stored in keymap
+     */
+    func pullJoystick(device d: Int32, ifKeyMatches key: MacKeyFingerprint, inKeymap keymap: Int32) -> Bool
+    {
+        return true
+    }
+    
+    /*! @brief  Releases joystick if key matches some value stored in keymap
+     */
+    func releaseJoystick(device d: Int32, ifKeyMatches key: MacKeyFingerprint, inKeymap keymap: Int32) -> Bool
+    {
+        
+        return true
+    }
+    
+    /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint
+     *  @note   The returned value can be used as argument for the emulators pressKey() function
+     */
+    func translateKey(_ key: Int8, plainkey: Int8, keycode: Int16, flags: UInt) -> C64KeyFingerprint
+    {
+        return 0
+    }
+
 }
