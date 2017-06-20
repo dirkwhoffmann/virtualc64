@@ -18,6 +18,7 @@
 
 #import "MyMetalView.h"
 
+
 // Mac keycodes of special keys
 const uint16_t MAC_F1 = 122;
 const uint16_t MAC_F2 = 120;
@@ -45,14 +46,15 @@ const uint16_t MAC_TILDE_US = 50;
 
 #pragma mark Joystick simulation
 
+
 //! Computes a fingerprint for the keycode/modifierFlags combination that uniquely identifies a key for joystick emulation
-- (int)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags;
+- (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags;
 
 //! @brief Returns the keycode for a joystick emulation key
-- (long)joyKeycode:(int)nr direction:(JoystickDirection)dir;
+- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(JoystickDirection)dir;
 
 //! @brief Sets the keycode for a joystick emulation key
-- (void)setJoyKeycode:(long)keycode keymap:(int)nr direction:(JoystickDirection)dir;
+- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(JoystickDirection)dir;
 
 //! @brief Returns a joystick emulation key as printable character
 - (char)joyChar:(int)nr direction:(JoystickDirection)dir;
@@ -61,14 +63,14 @@ const uint16_t MAC_TILDE_US = 50;
 - (void)setJoyChar:(char)c keymap:(int)nr direction:(JoystickDirection)dir;
 
 // Compares keycode with the joystick simulation keys and pulls joystick if appropriate
-- (BOOL)pullJoystick:(int)nr withKeycode:(int)keycode device:(int)d;
+- (BOOL)pullJoystick:(int)nr withKey:(MacKeyFingerprint)key device:(int)d;
 
 // Compares keycode with the joystick simulation keys and releases joystick if appropriate
-- (BOOL)releaseJoystick:(int)nr withKeycode:(int)keycode device:(int)d;
+- (BOOL)releaseJoystick:(int)nr withKey:(MacKeyFingerprint)key device:(int)d;
 
 //! Get mac specific character and keycode and translate it to a virtual c64 key
 /*! The returned value can be passed to the pressKey() method of the emulator */
-- (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(unsigned long)flags;
+- (C64KeyFingerprint)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(unsigned long)flags;
 
 
 @end

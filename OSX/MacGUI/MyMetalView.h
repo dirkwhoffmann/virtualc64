@@ -24,9 +24,6 @@
 #import "SepiaFilter.h"
 #import "CrtFilter.h"
 
-// #import <simd/simd.h>
-// using namespace simd;
-
 // Forward declaration
 @class MyController;
 
@@ -50,6 +47,12 @@ enum TextureFilterType {
     TEX_FILTER_SEPIA,
     TEX_FILTER_CRT,
 };
+
+/*! @brief    Fingerprint that uniquely identifies a key combination on the physical Mac keyboard
+ *  @seealso  C64KeyFingerprint
+ */
+typedef unsigned long MacKeyFingerprint;
+
 
 @interface MyMetalView : MTKView
 {
@@ -126,13 +129,13 @@ enum TextureFilterType {
     
 #pragma mark Keyboard and joystick emulation
     
-    //! Stores which keys are currently pressed
+    //! Stores currently pressed key combination on virtual C64 keyboard
     /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
-    unsigned int pressedKeys[256];
+    C64KeyFingerprint pressedKeys[256];
 
     /*! Stores a fingerprint of each joystick emulation key.
      *  The user can choose from 2 maps */
-    long joyKeycode[2][5];
+    MacKeyFingerprint joyFingerprint[2][5];
     
     /*!  Stores a printabel character for each joystick emulation key.
      *   These values are only used in the properties dialog for pretty printing the keycodes */

@@ -24,9 +24,10 @@
 //                                  Keyboard events
 // --------------------------------------------------------------------------------
 
-- (int)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags
+- (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags
 {
     return keycode;
+    
     
 #if 0
     // The recorded fingerprint consists of the keycode. If the key is a number key (0 - 9), the
@@ -46,13 +47,13 @@
 #endif
 }
 
-- (long)joyKeycode:(int)nr direction:(JoystickDirection)dir
+- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
     
     switch (nr) {
-        case 1: return joyKeycode[0][dir];
-        case 2: return joyKeycode[1][dir];
+        case 1: return joyFingerprint[0][dir];
+        case 2: return joyFingerprint[1][dir];
     }
     
     assert(0);
@@ -72,13 +73,13 @@
     return 0;
 }
 
-- (void)setJoyKeycode:(long)keycode keymap:(int)nr direction:(JoystickDirection)dir
+- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
     
     switch (nr) {
-        case 1: joyKeycode[0][dir] = keycode; return;
-        case 2: joyKeycode[1][dir] = keycode; return;
+        case 1: joyFingerprint[0][dir] = key; return;
+        case 2: joyFingerprint[1][dir] = key; return;
     }
     
     assert(0);
@@ -96,7 +97,7 @@
     assert(0);
 }
 
-- (BOOL)pullJoystick:(int)nr withKeycode:(int)k device:(int)d
+- (BOOL)pullJoystick:(int)nr withKey:(MacKeyFingerprint)k device:(int)d
 {
     assert (nr == 1 || nr == 2);
     
@@ -107,16 +108,16 @@
     // Joystick *joy = (nr == 1) ? &c64->joystick1 : &c64->joystick2;
     JoystickProxy *j = (nr == 1) ? [c64proxy joystickA] : [c64proxy joystickB];
     
-    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j setAxisY:JOYSTICK_UP]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j setAxisY:JOYSTICK_DOWN]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j setAxisX:JOYSTICK_LEFT]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j setAxisX:JOYSTICK_RIGHT]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { [j setButtonPressed:YES]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_UP]) { [j setAxisY:JOYSTICK_UP]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_DOWN]) { [j setAxisY:JOYSTICK_DOWN]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_LEFT]) { [j setAxisX:JOYSTICK_LEFT]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_RIGHT]) { [j setAxisX:JOYSTICK_RIGHT]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_FIRE]) { [j setButtonPressed:YES]; return YES; }
     
     return NO;
 }
 
-- (BOOL)releaseJoystick:(int)nr withKeycode:(int)k device:(int)d
+- (BOOL)releaseJoystick:(int)nr withKey:(MacKeyFingerprint)k device:(int)d
 {
     assert (nr == 1 || nr == 2);
     
@@ -126,16 +127,16 @@
     unsigned keyset = (d == IPD_KEYSET_1) ? 0 : 1;
     JoystickProxy *j = (nr == 1) ? [c64proxy joystickA] : [c64proxy joystickB];
 
-    if (k == joyKeycode[keyset][JOYSTICK_UP]) { [j setAxisY:JOYSTICK_RELEASED]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_DOWN]) { [j setAxisY:JOYSTICK_RELEASED]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_LEFT]) { [j setAxisX:JOYSTICK_RELEASED]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_RIGHT]) { [j setAxisX:JOYSTICK_RELEASED]; return YES; }
-    if (k == joyKeycode[keyset][JOYSTICK_FIRE]) { [j setButtonPressed:NO]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_UP]) { [j setAxisY:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_DOWN]) { [j setAxisY:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_LEFT]) { [j setAxisX:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_RIGHT]) { [j setAxisX:JOYSTICK_RELEASED]; return YES; }
+    if (k == joyFingerprint[keyset][JOYSTICK_FIRE]) { [j setButtonPressed:NO]; return YES; }
 
     return NO;
 }
 
-- (int)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(unsigned long)flags
+- (C64KeyFingerprint)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(unsigned long)flags
 {
     switch (keycode) {
         case MAC_F1: return C64KEY_F1;
@@ -189,10 +190,10 @@
         return;
     
     // Simulate joysticks
-    int fingerprint = [self fingerprintForKey:keycode withModifierFlags:flags];
-    if ([self pullJoystick:1 withKeycode:fingerprint device:[controller inputDeviceA]])
+    MacKeyFingerprint fingerprint = [self fingerprintForKey:keycode withModifierFlags:flags];
+    if ([self pullJoystick:1 withKey:fingerprint device:[controller inputDeviceA]])
         return;
-    if ([self pullJoystick:2 withKeycode:fingerprint device:[controller inputDeviceB]])
+    if ([self pullJoystick:2 withKey:fingerprint device:[controller inputDeviceB]])
         return;
     
     // Remove alternate key modifier if present
@@ -216,10 +217,10 @@
     // NSLog(@"keyUp: keycode: %02X flags: %08lX", keycode, flags);
     
     // Simulate joysticks
-    int fingerprint = [self fingerprintForKey:keycode withModifierFlags:flags];
-    if ([self releaseJoystick:1 withKeycode:fingerprint device:[controller inputDeviceA]])
+    MacKeyFingerprint fingerprint = [self fingerprintForKey:keycode withModifierFlags:flags];
+    if ([self releaseJoystick:1 withKey:fingerprint device:[controller inputDeviceA]])
         return;
-    if ([self releaseJoystick:2 withKeycode:fingerprint device:[controller inputDeviceB]])
+    if ([self releaseJoystick:2 withKey:fingerprint device:[controller inputDeviceB]])
         return;
     
     // Only proceed if the released key is on the records
@@ -250,21 +251,21 @@
                 else if (flags & NSControlKeyMask)
                     keycode = NSControlKeyMask;
                     else {
-                        (void)([self releaseJoystick:1 withKeycode:NSAlternateKeyMask device:[controller inputDeviceA]]);
-                        (void)([self releaseJoystick:1 withKeycode:NSShiftKeyMask device:[controller inputDeviceA]]);
-                        (void)([self releaseJoystick:1 withKeycode:NSCommandKeyMask device:[controller inputDeviceA]]);
-                        (void)([self releaseJoystick:1 withKeycode:NSControlKeyMask device:[controller inputDeviceA]]);
-                        (void)([self releaseJoystick:2 withKeycode:NSAlternateKeyMask device:[controller inputDeviceB]]);
-                        (void)([self releaseJoystick:2 withKeycode:NSShiftKeyMask device:[controller inputDeviceB]]);
-                        (void)([self releaseJoystick:2 withKeycode:NSCommandKeyMask device:[controller inputDeviceB]]);
-                        (void)([self releaseJoystick:2 withKeycode:NSControlKeyMask device:[controller inputDeviceB]]);
+                        (void)([self releaseJoystick:1 withKey:NSAlternateKeyMask device:[controller inputDeviceA]]);
+                        (void)([self releaseJoystick:1 withKey:NSShiftKeyMask device:[controller inputDeviceA]]);
+                        (void)([self releaseJoystick:1 withKey:NSCommandKeyMask device:[controller inputDeviceA]]);
+                        (void)([self releaseJoystick:1 withKey:NSControlKeyMask device:[controller inputDeviceA]]);
+                        (void)([self releaseJoystick:2 withKey:NSAlternateKeyMask device:[controller inputDeviceB]]);
+                        (void)([self releaseJoystick:2 withKey:NSShiftKeyMask device:[controller inputDeviceB]]);
+                        (void)([self releaseJoystick:2 withKey:NSCommandKeyMask device:[controller inputDeviceB]]);
+                        (void)([self releaseJoystick:2 withKey:NSControlKeyMask device:[controller inputDeviceB]]);
                         return;
                     }
     
     // Pull joysticks
-    if ([self pullJoystick:1 withKeycode:keycode device:[controller inputDeviceA]])
+    if ([self pullJoystick:1 withKey:keycode device:[controller inputDeviceA]])
         return;
-    if ([self pullJoystick:2 withKeycode:keycode device:[controller inputDeviceB]])
+    if ([self pullJoystick:2 withKey:keycode device:[controller inputDeviceB]])
         return;
 }
 

@@ -162,36 +162,36 @@ void Keyboard::pressKey(uint8_t row, uint8_t col)
 		kbMatrix[row] &= 255 - (1 << col);
 }
 
-void Keyboard::pressKey(int c)
+void Keyboard::pressKey(C64KeyFingerprint key)
 {
     // debug("Pressing (%ld)\n", (long)c);
 
     // Check for restore key
-    if (c == C64KEY_RESTORE) {
+    if (key == C64KEY_RESTORE) {
         pressRestoreKey();
         return;
     }
         
     // Check for commodore key flag
-    if (c & C64KEY_COMMODORE) {
+    if (key & C64KEY_COMMODORE) {
         pressCommodoreKey();
     }
 
     // Check for CTRL key flag
-    if (c & C64KEY_CTRL) {
+    if (key & C64KEY_CTRL) {
         pressCtrlKey();
     }
     
-    c &= 0xFF;
+    key &= 0xFF;
     
     // Only proceed if key is known and mapped
-    if (rowcolmap[c] == 0xFFFF)
+    if (rowcolmap[key] == 0xFFFF)
         return;
     
-    uint8_t row = (rowcolmap[c] & 0x0F00) >> 8;
-    uint8_t col = (rowcolmap[c] & 0x000F);
+    uint8_t row = (rowcolmap[key] & 0x0F00) >> 8;
+    uint8_t col = (rowcolmap[key] & 0x000F);
         
-	if (rowcolmap[c] & SHIFT_FLAG) {
+	if (rowcolmap[key] & SHIFT_FLAG) {
 		pressShiftKey();
 	}
 
@@ -213,36 +213,36 @@ void Keyboard::releaseKey(uint8_t row, uint8_t col)
 	}
 }
 
-void Keyboard::releaseKey(int c)
+void Keyboard::releaseKey(C64KeyFingerprint key)
 {
-    // debug("Releasing (%ld)\n", (long)c);
+    // debug("Releasing (%ld)\n", (long)key);
     
     // Check for restore key
-    if (c == C64KEY_RESTORE) {
+    if (key == C64KEY_RESTORE) {
         releaseRestoreKey();
         return;
     }
     
     // Check for commodore key flag
-    if (c & C64KEY_COMMODORE) {
+    if (key & C64KEY_COMMODORE) {
         releaseCommodoreKey();
     }
     
     // Check for CTRL key flag
-    if (c & C64KEY_CTRL) {
+    if (key & C64KEY_CTRL) {
         releaseCtrlKey();
     }
     
-    c &= 0xFF;
+    key &= 0xFF;
 
     // Only proceed if key is known and mapped
-    if (rowcolmap[c] == 0xFFFF)
+    if (rowcolmap[key] == 0xFFFF)
         return;
 
-    uint8_t row = (rowcolmap[c] & 0x0F00) >> 8;
-    uint8_t col = (rowcolmap[c] & 0x000F);
+    uint8_t row = (rowcolmap[key] & 0x0F00) >> 8;
+    uint8_t col = (rowcolmap[key] & 0x000F);
 
-    if (rowcolmap[c] & SHIFT_FLAG) {
+    if (rowcolmap[key] & SHIFT_FLAG) {
 		releaseShiftKey();
 	}
 

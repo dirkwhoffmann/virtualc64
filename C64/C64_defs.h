@@ -84,8 +84,11 @@ typedef enum {
     MSG_SNAPSHOT_TAKEN
 } VC64Message;
 
-//! @brief    Keycodes of special keys
-typedef enum {
+//! @brief    Fingerprint that uniquely identifies a key combination on the virtual C64 keyboard
+typedef unsigned short C64KeyFingerprint;
+
+//! @brief    Fingerprints of special keys on the C64 keyboard
+enum {
     C64KEY_F1 = 0x80,
     C64KEY_F2,
     C64KEY_F3,
@@ -106,7 +109,7 @@ typedef enum {
     C64KEY_RESTORE,
     C64KEY_COMMODORE = 0x0100, // combinable with all other keys
     C64KEY_CTRL = 0x0200
-} C64Key;
+};
 
 //! @brief    Processor models
 typedef enum {

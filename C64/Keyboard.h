@@ -61,7 +61,7 @@ public:
 	void pressKey(uint8_t row, uint8_t col);
     
 	//! @brief    Presses a key.
-	void pressKey(int c);
+	void pressKey(C64KeyFingerprint key);
     
 	//! @brief    Presses the shift hey.
 	void pressShiftKey() { pressKey(1,7); }
@@ -99,7 +99,7 @@ public:
 	void releaseKey(uint8_t row, uint8_t col);
     
 	//! @brief    Releases a pressed key.
-	void releaseKey(int c);
+	void releaseKey(C64KeyFingerprint key);
     
     //! @brief    Releases the shift key.
 	void releaseShiftKey() { releaseKey(1,7); }
