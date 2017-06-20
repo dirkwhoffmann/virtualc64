@@ -193,7 +193,7 @@ typedef enum {
  */
 typedef enum
 {
-    JOYSTICK_UP = 0,
+    JOYSTICK_UP,
     JOYSTICK_DOWN,
     JOYSTICK_LEFT,
     JOYSTICK_RIGHT,

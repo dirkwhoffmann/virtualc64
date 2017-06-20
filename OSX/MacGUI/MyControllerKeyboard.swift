@@ -17,6 +17,53 @@
  */
 
 import Foundation
+import Carbon.HIToolbox
+
+@objc enum JoyDir : Int {
+    case UP
+    case DOWN
+    case LEFT
+    case RIGHT
+    case FIRE
+    case RELEASED
+}
+
+//! @brief Mapping from keyboard keys to joystick movements
+public class KeyMap: NSObject {
+
+    var fingerprint : [JoyDir:MacKeyFingerprint] = [:]
+    var readableCharakter : [JoyDir:Int8] = [:]
+
+    func test()
+    {
+        
+    }
+    
+    func fingerprint(forJoyDir d: JoyDir) -> MacKeyFingerprint
+    {
+        return fingerprint[d]!
+    }
+    
+    func setTest(_ f: MacKeyFingerprint)
+    {
+        
+    }
+    
+    func setFingerprint(_ f: MacKeyFingerprint, forJoyDir d: JoyDir)
+    {
+        fingerprint[d] = f
+    }
+    
+    func character(forJoyDir d: JoyDir) -> Int8
+    {
+        return readableCharakter[d]!
+    }
+    
+    func setCharacter(_ c: Int8, forJoyDir d: JoyDir)
+    {
+        readableCharakter[d] = c
+    }
+}
 
 //!@ brief Keyboard event handler
 extension MyController
@@ -55,15 +102,45 @@ extension MyController
      */
     func fingerprint(forKey keycode: Int32, withModifierFlags flags: UInt) -> MacKeyFingerprint
     {
+        let result = Int(keycode)
         
-        return 0
+        // For most keys, the recorded fingerprint simply consists of the keycode.
+        // In case of number keys (0 - 9), the fingerprint might also contains the
+        // NSNumericPadKeyMask flag to distinguish keys from the numeric keypad.
+        
+        /* THIS CODES NEEDS TESTING
+        switch (keycode) {
+        case Int32(kVK_ANSI_Keypad0),
+             Int32(kVK_ANSI_Keypad1),
+             Int32(kVK_ANSI_Keypad2),
+             Int32(kVK_ANSI_Keypad3),
+             Int32(kVK_ANSI_Keypad4),
+             Int32(kVK_ANSI_Keypad5),
+             Int32(kVK_ANSI_Keypad6),
+             Int32(kVK_ANSI_Keypad7),
+             Int32(kVK_ANSI_Keypad8),
+             Int32(kVK_ANSI_Keypad9):
+            result |= Int(NSNumericPadKeyMask.rawValue);
+            break;
+        default: break
+        }
+        */
+        
+        return MacKeyFingerprint(result);
     }
-    
+
+#if false
     //! @brief  Returns fingerprint from keymap
     func joyFingerprint(forKeymap nr: Int32, direction d: JoystickDirection) -> MacKeyFingerprint
     {
- 
-        return 0
+        assert(d.rawValue >= 0 && d.rawValue <= 4)
+        
+        
+        switch (nr) {
+        //        case 1: return self.joyKeymap[0][d]
+        //        case 2: return joyFingerprint[1][d]
+        default: assert(false); return 0
+        }
     }
     
     //! @brief  Stores fingerprint in keymap
@@ -84,6 +161,7 @@ extension MyController
     {
         
     }
+#endif
     
     /*! @brief  Pulls joystick if key matches some value stored in keymap
      */

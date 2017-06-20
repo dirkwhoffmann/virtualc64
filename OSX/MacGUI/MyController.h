@@ -289,6 +289,20 @@ enum INPUT_DEVICES {
     
     //! @brief   Indicates if a status bar is shown
     bool statusBar;
+    
+#pragma mark Keyboard and joystick emulation
+    
+    //! Stores currently pressed key combination on virtual C64 keyboard
+    /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
+    C64KeyFingerprint pressedKeys[256];
+    
+    /*! Stores a fingerprint of each joystick emulation key.
+     *  The user can choose from 2 maps */
+    MacKeyFingerprint joyKeymap[2][5];
+    
+    /*!  Stores a printabel character for each joystick emulation key.
+     *   These values are only used in the properties dialog for pretty printing the keycodes */
+    char joyChar[2][5];
 }
 
 @property (strong) C64Proxy *c64;
