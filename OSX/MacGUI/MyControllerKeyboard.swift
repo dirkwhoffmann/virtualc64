@@ -19,6 +19,7 @@
 import Foundation
 import Carbon.HIToolbox
 
+// TODO: USE C64 STRUCT, BECAUSE IT'S ALREADY NEEDED THERE!!!!
 @objc enum JoyDir : Int {
     case UP
     case DOWN
@@ -31,22 +32,15 @@ import Carbon.HIToolbox
 //! @brief Mapping from keyboard keys to joystick movements
 public class KeyMap: NSObject {
 
+    //! @brief fingerprint of assign key
     var fingerprint : [JoyDir:MacKeyFingerprint] = [:]
-    var readableCharakter : [JoyDir:Int8] = [:]
 
-    func test()
-    {
-        
-    }
+    //! @brief readable charackter for assigned key
+    var character : [JoyDir:Int8] = [:]
     
-    func fingerprint(forJoyDir d: JoyDir) -> MacKeyFingerprint
+    func fingerprintForJoyDir(_ d: JoyDir) -> MacKeyFingerprint
     {
         return fingerprint[d]!
-    }
-    
-    func setTest(_ f: MacKeyFingerprint)
-    {
-        
     }
     
     func setFingerprint(_ f: MacKeyFingerprint, forJoyDir d: JoyDir)
@@ -54,14 +48,14 @@ public class KeyMap: NSObject {
         fingerprint[d] = f
     }
     
-    func character(forJoyDir d: JoyDir) -> Int8
+    func characterForJoyDir(_ d: JoyDir) -> Int8
     {
-        return readableCharakter[d]!
+        return character[d]!
     }
     
     func setCharacter(_ c: Int8, forJoyDir d: JoyDir)
     {
-        readableCharakter[d] = c
+        character[d] = c
     }
 }
 
@@ -97,6 +91,58 @@ extension MyController
     // Joystick simulation
     //
 
+    func loadUserDefaultsKeyboard(keymap: KeyMap, nr: Int) {
+        
+        NSLog("\(#function)")
+        assert (nr == 0 || nr == 1)
+        let s = (nr == 1 ? "0" : "1")
+        
+        let defaults = UserDefaults.standard
+        
+        keymap.fingerprint[JoyDir.LEFT] =
+            MacKeyFingerprint(defaults.integer(forKey: "VC64Left" + s + "keycodeKey"))
+        keymap.fingerprint[JoyDir.RIGHT] =
+            MacKeyFingerprint(defaults.integer(forKey: "VC64Right" + s + "keycodeKey"))
+        keymap.fingerprint[JoyDir.UP] =
+            MacKeyFingerprint(defaults.integer(forKey: "VC64Up" + s + "keycodeKey"))
+        keymap.fingerprint[JoyDir.DOWN] =
+            MacKeyFingerprint(defaults.integer(forKey: "VC64Down" + s + "keycodeKey"))
+        keymap.fingerprint[JoyDir.FIRE] =
+            MacKeyFingerprint(defaults.integer(forKey: "VC64Fire" + s + "keycodeKey"))
+
+        keymap.character[JoyDir.LEFT] =
+            Int8(defaults.integer(forKey: "VC64Left" + s + "charKey"))
+        keymap.character[JoyDir.RIGHT] =
+            Int8(defaults.integer(forKey: "VC64Right" + s + "charKey"))
+        keymap.character[JoyDir.UP] =
+            Int8(defaults.integer(forKey: "VC64Up" + s + "charKey"))
+        keymap.character[JoyDir.DOWN] =
+            Int8(defaults.integer(forKey: "VC64Down" + s + "charKey"))
+        keymap.character[JoyDir.FIRE] =
+            Int8(defaults.integer(forKey: "VC64Fire" + s + "charKey"))
+    }
+
+    func saveUserDefaultsKeyboard(keymap1: KeyMap, nr: Int) {
+        
+        NSLog("\(#function)")
+        assert (nr == 0 || nr == 1)
+        let s = (nr == 1 ? "0" : "1")
+        
+        let defaults = UserDefaults.standard
+        
+        defaults.set(keymap1.fingerprint[JoyDir.LEFT],  forKey :"VC64Left" + s + "keycodeKey")
+        defaults.set(keymap1.fingerprint[JoyDir.RIGHT], forKey :"VC64Right" + s + "keycodeKey")
+        defaults.set(keymap1.fingerprint[JoyDir.UP],    forKey :"VC64Up" + s + "keycodeKey")
+        defaults.set(keymap1.fingerprint[JoyDir.DOWN],  forKey :"VC64Down" + s + "keycodeKey")
+        defaults.set(keymap1.fingerprint[JoyDir.FIRE],  forKey :"VC64Fire" + s + "keycodeKey")
+        
+        defaults.set(keymap1.character[JoyDir.LEFT],    forKey :"VC64Left" + s + "charKey")
+        defaults.set(keymap1.character[JoyDir.RIGHT],   forKey :"VC64Right" + s + "charKey")
+        defaults.set(keymap1.character[JoyDir.UP],      forKey :"VC64Up" + s + "charKey")
+        defaults.set(keymap1.character[JoyDir.DOWN],    forKey :"VC64Down" + s + "charKey")
+        defaults.set(keymap1.character[JoyDir.FIRE],    forKey :"VC64Fire" + s + "charKey")
+    }
+    
     /*! @brief  Computes unique fingerprint for a certain key combination pressed
      *          on the pyhsical Mac keyboard
      */
@@ -165,15 +211,36 @@ extension MyController
     
     /*! @brief  Pulls joystick if key matches some value stored in keymap
      */
-    func pullJoystick(device d: Int32, ifKeyMatches key: MacKeyFingerprint, inKeymap keymap: Int32) -> Bool
+    func pullJoystick(_ joynr: Int32, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap) -> Bool
     {
+        assert (joynr == 1 || joynr == 2);
+        
+        let j = (joynr == 1 ? c64.joystickA : c64.joystickB)!
+        
+        if (key == map.fingerprint[JoyDir.LEFT])       { j.setAxisX(JOYSTICK_LEFT) }
+        else if (key == map.fingerprint[JoyDir.RIGHT]) { j.setAxisX(JOYSTICK_RIGHT) }
+        else if (key == map.fingerprint[JoyDir.UP])    { j.setAxisY(JOYSTICK_UP) }
+        else if (key == map.fingerprint[JoyDir.DOWN])  { j.setAxisY(JOYSTICK_DOWN) }
+        else if (key == map.fingerprint[JoyDir.FIRE])  { j.setButtonPressed(true) }
+        else { return false }
+        
         return true
     }
     
     /*! @brief  Releases joystick if key matches some value stored in keymap
      */
-    func releaseJoystick(device d: Int32, ifKeyMatches key: MacKeyFingerprint, inKeymap keymap: Int32) -> Bool
+    func releaseJoystick(_ joynr: Int32, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap) -> Bool
     {
+        assert (joynr == 1 || joynr == 2);
+        
+        let j = (joynr == 1 ? c64.joystickA : c64.joystickB)!
+        
+        if (key == map.fingerprint[JoyDir.LEFT])       { j.setAxisX(JOYSTICK_RELEASED) }
+        else if (key == map.fingerprint[JoyDir.RIGHT]) { j.setAxisX(JOYSTICK_RELEASED) }
+        else if (key == map.fingerprint[JoyDir.UP])    { j.setAxisY(JOYSTICK_RELEASED) }
+        else if (key == map.fingerprint[JoyDir.DOWN])  { j.setAxisY(JOYSTICK_RELEASED) }
+        else if (key == map.fingerprint[JoyDir.FIRE])  { j.setButtonPressed(false) }
+        else { return false }
         
         return true
     }
@@ -181,9 +248,52 @@ extension MyController
     /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint
      *  @note   The returned value can be used as argument for the emulators pressKey() function
      */
-    func translateKey(_ key: Int8, plainkey: Int8, keycode: Int16, flags: UInt) -> C64KeyFingerprint
+    func translateKey(_ key: Int8, plainkey: Character, keycode: UInt16, flags: NSEventModifierFlags) -> C64KeyFingerprint
     {
-        return 0
+        switch (keycode) {
+            
+        case MAC_F1: return C64KeyFingerprint(C64KEY_F1)
+        case MAC_F2: return C64KeyFingerprint(C64KEY_F2)
+        case MAC_F3: return C64KeyFingerprint(C64KEY_F3)
+        case MAC_F4: return C64KeyFingerprint(C64KEY_F4)
+        case MAC_F5: return C64KeyFingerprint(C64KEY_F5)
+        case MAC_F6: return C64KeyFingerprint(C64KEY_F6)
+        case MAC_F7: return C64KeyFingerprint(C64KEY_F7)
+        case MAC_F8: return C64KeyFingerprint(C64KEY_F8)
+        case MAC_RET: return C64KeyFingerprint(C64KEY_RET)
+        case MAC_CL: return C64KeyFingerprint(C64KEY_CL)
+        case MAC_CR: return C64KeyFingerprint(C64KEY_CR)
+        case MAC_CU: return C64KeyFingerprint(C64KEY_CU)
+        case MAC_CD: return C64KeyFingerprint(C64KEY_CD)
+        case MAC_ESC: return C64KeyFingerprint(C64KEY_RUNSTOP)
+        case MAC_TAB: return C64KeyFingerprint(C64KEY_RESTORE)
+            
+        case MAC_DEL:
+            return (flags.contains(NSShiftKeyMask)) ?
+                C64KeyFingerprint(C64KEY_INS) : C64KeyFingerprint(C64KEY_DEL)
+        
+        case MAC_HAT:
+            return C64KeyFingerprint(Int("^")!) // TODO: NEEDS TESTING IN PLAYGROUND
+        
+        case MAC_TILDE_US:
+            if (plainkey != "<" && plainkey != ">") {
+                return C64KeyFingerprint(C64KEY_ARROW);
+            } else {
+                break;
+            }
+            
+        default:
+            if (flags.contains(NSAlternateKeyMask)) {
+                // Commodore key (ALT) is pressed
+                return C64KeyFingerprint(Int(String(plainkey))! | C64KEY_COMMODORE);
+            } else if (flags.contains(NSControlKeyMask)) {
+                // CTRL key is pressed
+                return C64KeyFingerprint(Int(String(plainkey))! | C64KEY_CTRL);
+            }
+        }
+        
+        // No special translation needed
+        return C64KeyFingerprint(key);
     }
 
 }

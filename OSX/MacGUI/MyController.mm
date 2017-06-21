@@ -405,7 +405,32 @@
 	
 	// Set standard user defaults
 	defaults = [NSUserDefaults standardUserDefaults];
-		
+
+    // Joysticks
+    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirLEFT] forKey:VC64Left1keycodeKey];
+    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirRIGHT] forKey:VC64Right1keycodeKey];
+    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirUP] forKey:VC64Up1keycodeKey];
+    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirDOWN] forKey:VC64Down1keycodeKey];
+    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirFIRE] forKey:VC64Fire1keycodeKey];
+
+    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirLEFT] forKey:VC64Left1charKey];
+    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirRIGHT] forKey:VC64Right1charKey];
+    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirUP] forKey:VC64Up1charKey];
+    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirDOWN] forKey:VC64Down1charKey];
+    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirFIRE] forKey:VC64Fire1charKey];
+    
+    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirLEFT] forKey:VC64Left2keycodeKey];
+    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirRIGHT] forKey:VC64Right2keycodeKey];
+    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirUP] forKey:VC64Up2keycodeKey];
+    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirDOWN] forKey:VC64Down2keycodeKey];
+    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirFIRE] forKey:VC64Fire2keycodeKey];
+
+    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirLEFT] forKey:VC64Left1charKey];
+    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirRIGHT] forKey:VC64Right1charKey];
+    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirUP] forKey:VC64Up1charKey];
+    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirDOWN] forKey:VC64Down1charKey];
+    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirFIRE] forKey:VC64Fire1charKey];
+
     // Joysticks
     [defaults setInteger:[metalScreen joyKeyFingerprint:1 direction:JOYSTICK_LEFT] forKey:VC64Left1keycodeKey];
     [defaults setInteger:[metalScreen joyChar:1 direction:JOYSTICK_LEFT] forKey:VC64Left1charKey];
