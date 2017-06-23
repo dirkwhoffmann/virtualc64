@@ -26,6 +26,12 @@ extension UInt8 {
         return Character(UnicodeScalar(self))
     }
 }
+
+extension CChar {
+    var uint8: UInt8 {
+        return UInt8(bitPattern: Int8(self))
+    }
+}
 /*
 extension CChar {
     var char: Character {
@@ -108,8 +114,8 @@ class KeyboardController: NSObject {
                 
         keymap1.fingerprint[JoyDir.LEFT] = 123
         keymap1.fingerprint[JoyDir.RIGHT] = 124
-        keymap1.fingerprint[JoyDir.UP] = 125
-        keymap1.fingerprint[JoyDir.DOWN] = 126
+        keymap1.fingerprint[JoyDir.UP] = 126
+        keymap1.fingerprint[JoyDir.DOWN] = 125
         keymap1.fingerprint[JoyDir.FIRE] = 49
             
         keymap1.character[JoyDir.LEFT] = " "
@@ -141,8 +147,8 @@ class KeyboardController: NSObject {
         let dictionary : [String:Any] = [
             "VC64Left1keycodeKey":123,
             "VC64Right1keycodeKey":124,
-            "VC64Up1keycodeKey":125,
-            "VC64Down1keycodeKey":126,
+            "VC64Up1keycodeKey":126,
+            "VC64Down1keycodeKey":125,
             "VC64Fire1keycodeKey":49,
             
             "VC64Left1charKey":" ",
@@ -162,32 +168,6 @@ class KeyboardController: NSObject {
             "VC64Up2charKey":"y",
             "VC64Down2charKey":"w",
             "VC64Fire2charKey":"x"]
-
- /*
-        defaults.set(123, forKey: "VC64Left1keycodeKey")
-        defaults.set(124, forKey: "VC64Right1keycodeKey")
-        defaults.set(125, forKey: "VC64Up1keycodeKey")
-        defaults.set(126, forKey: "VC64Down1keycodeKey")
-        defaults.set(49, forKey: "VC64Fire1keycodeKey")
-        
-        defaults.set(" ", forKey: "VC64Left1charKey")
-        defaults.set(" ", forKey: "VC64Right1charKey")
-        defaults.set(" ", forKey: "VC64Up1charKey")
-        defaults.set(" ", forKey: "VC64Down1charKey")
-        defaults.set(" ", forKey: "VC64Fire1charKey")
-        
-        defaults.set(0, forKey: "VC64Left2keycodeKey")
-        defaults.set(1, forKey: "VC64Right2keycodeKey")
-        defaults.set(6, forKey: "VC64Up2keycodeKey")
-        defaults.set(13, forKey: "VC64Down2keycodeKey")
-        defaults.set(7, forKey: "VC64Fire2keycodeKey")
-        
-        defaults.set("a", forKey: "VC64Left2charKey")
-        defaults.set("s", forKey: "VC64Right2charKey")
-        defaults.set("y", forKey: "VC64Up2charKey")
-        defaults.set("w", forKey: "VC64Down2charKey")
-        defaults.set("x", forKey: "VC64Fire2charKey")
-*/
         
         let defaults = UserDefaults.standard
         defaults.register(defaults: dictionary)
@@ -262,12 +242,12 @@ class KeyboardController: NSObject {
         if (event.keyCode == MAC_ESC && controller.metalScreen.fullscreen) {
             controller.window!.toggleFullScreen(nil)
         }
-        var c       = UInt8(event.characters!.utf8CString[0])                  // CChar
-        let c_unmod = UInt8(event.charactersIgnoringModifiers!.utf8CString[0]) // CChar
-        let keycode = event.keyCode // UInt16
-        let flags   = event.modifierFlags // NSEventModifierFlags
+        var c       = event.characters!.utf8CString[0].uint8
+        let c_unmod = event.charactersIgnoringModifiers!.utf8CString[0].uint8
+        let keycode = event.keyCode
+        let flags   = event.modifierFlags
         
-        print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
+        // print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
         
         // Ignore keys that are already pressed
         if (pressedKeys[keycode] != nil) {
@@ -304,7 +284,7 @@ class KeyboardController: NSObject {
         let keycode = event.keyCode       // UInt16
         let flags   = event.modifierFlags // NSEventModifierFlags
         
-        print("keyUp: keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
+        // print("keyUp: keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
 
         // Release joysticks if a key matches
         let f = fingerprint(forKey:keycode, withModifierFlags:flags)

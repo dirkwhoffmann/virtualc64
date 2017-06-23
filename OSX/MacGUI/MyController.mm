@@ -538,13 +538,11 @@
 
 - (void)keyDown:(NSEvent *)event
 {
-    NSLog(@"MyController:keyDown");
     [keyboardcontroller keyDownWith:event];
 }
 
 - (void)keyUp:(NSEvent *)event
 {
-    NSLog(@"MyController:keyUp");
     [keyboardcontroller keyUpWith:event];
 }
 
