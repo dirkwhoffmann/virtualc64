@@ -41,11 +41,11 @@ const uint16_t MAC_ESC = 53;
 const uint16_t MAC_HAT = 10;
 const uint16_t MAC_TILDE_US = 50;
 
+#if 0
 
 @interface MyMetalView(Responder)
 
 #pragma mark Joystick simulation
-
 
 //! Computes a fingerprint for the keycode/modifierFlags combination that uniquely identifies a key for joystick emulation
 - (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags;
@@ -72,5 +72,7 @@ const uint16_t MAC_TILDE_US = 50;
 /*! The returned value can be passed to the pressKey() method of the emulator */
 - (C64KeyFingerprint)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(unsigned long)flags;
 
-
 @end
+
+#endif
+

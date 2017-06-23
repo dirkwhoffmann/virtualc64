@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "VirtualC64-Swift.h"
 
 @implementation PropertiesDialog
 
@@ -76,6 +77,8 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     NSLog(@"Restoring emulator factoring settings");
     
     // Joystick
+    [controller restoreFactorySettingsKeyboard];
+#if 0
     [[controller metalScreen] setJoyKeyFingerprint:126 keymap:1 direction:JOYSTICK_UP];
     [[controller metalScreen] setJoyChar:' ' keymap:1 direction:JOYSTICK_UP];
     [[controller metalScreen] setJoyKeyFingerprint:125 keymap:1 direction:JOYSTICK_DOWN];
@@ -97,7 +100,8 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     [[controller metalScreen] setJoyChar:'s' keymap:2 direction:JOYSTICK_RIGHT];
     [[controller metalScreen] setJoyKeyFingerprint:7 keymap:2 direction:JOYSTICK_FIRE];
     [[controller metalScreen] setJoyChar:'x' keymap:2 direction:JOYSTICK_FIRE];
-
+#endif
+    
     // Video
     [[controller metalScreen] setEyeX:(float)0.0];
     [[controller metalScreen] setEyeY:(float)0.0];
@@ -189,8 +193,8 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 
 - (void)updateKeymap:(int)map direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t
 {
-    long code = [[controller metalScreen] joyKeyFingerprint:map direction:dir];
-    char c = [[controller metalScreen] joyChar:map direction:dir];
+    long code = [controller joyKeyFingerprint:map direction:dir];
+    char c = [controller joyChar:map direction:dir];
     
     // Change button text and image
     if (map == 1) {
@@ -287,15 +291,15 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     if (flags & NSFunctionKeyMask) NSLog(@"NSFunctionKeyMask ");
     */
     
-    MacKeyFingerprint fingerprint = [[controller metalScreen] fingerprintForKey:keycode withModifierFlags:flags];
+    MacKeyFingerprint fingerprint = [controller fingerprintForKey:keycode withModifierFlags:flags];
     if (recordKey1 != -1) {
-        [[controller metalScreen] setJoyKeyFingerprint:fingerprint keymap:1 direction:(JoystickDirection)recordKey1];
-        [[controller metalScreen] setJoyChar:c keymap:1 direction:(JoystickDirection)recordKey1];
+        [controller setJoyKeyFingerprint:fingerprint keymap:1 direction:(JoystickDirection)recordKey1];
+        [controller setJoyChar:c keymap:1 direction:(JoystickDirection)recordKey1];
     }
 
     if (recordKey2 != -1) {
-        [[controller metalScreen] setJoyKeyFingerprint:fingerprint keymap:2 direction:(JoystickDirection)recordKey2];
-        [[controller metalScreen] setJoyChar:c keymap:2 direction:(JoystickDirection)recordKey2];
+        [controller setJoyKeyFingerprint:fingerprint keymap:2 direction:(JoystickDirection)recordKey2];
+        [controller setJoyChar:c keymap:2 direction:(JoystickDirection)recordKey2];
     }
 
     recordKey1 = -1;
@@ -334,14 +338,14 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     
     // First keyset
     if (recordKey1 != -1) {
-        [[controller metalScreen] setJoyKeyFingerprint:flags keymap:1 direction:(JoystickDirection)recordKey1];
-        [[controller metalScreen] setJoyChar:' ' keymap:1 direction:(JoystickDirection)recordKey1];
+        [controller setJoyKeyFingerprint:flags keymap:1 direction:(JoystickDirection)recordKey1];
+        [controller setJoyChar:' ' keymap:1 direction:(JoystickDirection)recordKey1];
     }
     
     // Second keyset
     if (recordKey2 != -1) {
-        [[controller metalScreen] setJoyKeyFingerprint:flags keymap:2 direction:(JoystickDirection)recordKey2];
-        [[controller metalScreen] setJoyChar:' ' keymap:2 direction:(JoystickDirection)recordKey2];
+        [controller setJoyKeyFingerprint:flags keymap:2 direction:(JoystickDirection)recordKey2];
+        [controller setJoyChar:' ' keymap:2 direction:(JoystickDirection)recordKey2];
     }
     
     recordKey1 = -1;

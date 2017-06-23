@@ -93,7 +93,7 @@
 		506158731BF0A8A10031FD2F /* MediaDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 506158721BF0A8A10031FD2F /* MediaDialog.mm */; };
 		5064499A1EF428970043BE7B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; };
 		5064499B1EF429430043BE7B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 506449991EF428970043BE7B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		50653EFC1EF8F347008AA1F2 /* MyControllerKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* MyControllerKeyboard.swift */; };
+		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
 		506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDWrapper.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
@@ -365,7 +365,7 @@
 		506158721BF0A8A10031FD2F /* MediaDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MediaDialog.mm; sourceTree = "<group>"; };
 		506158741BF0A8AE0031FD2F /* MediaDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaDialog.h; sourceTree = "<group>"; };
 		506449991EF428970043BE7B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		50653EFB1EF8F347008AA1F2 /* MyControllerKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerKeyboard.swift; sourceTree = "<group>"; };
+		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		506D39D1141780E500268AF6 /* SIDWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDWrapper.cpp; sourceTree = "<group>"; };
 		506D39D3141780FF00268AF6 /* SIDWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDWrapper.h; sourceTree = "<group>"; };
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
@@ -752,7 +752,7 @@
 				5000472612DCE9AB0098D890 /* MyControllerMemoryPanel.mm */,
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
-				50653EFB1EF8F347008AA1F2 /* MyControllerKeyboard.swift */,
+				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controller;
@@ -1335,7 +1335,7 @@
 				50D141871417A34B0024FC74 /* wave6581_P_T.cc in Sources */,
 				50D141881417A34B0024FC74 /* wave6581_PS_.cc in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
-				50653EFC1EF8F347008AA1F2 /* MyControllerKeyboard.swift in Sources */,
+				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				506158731BF0A8A10031FD2F /* MediaDialog.mm in Sources */,
 				50D141891417A34B0024FC74 /* wave6581_PST.cc in Sources */,
 				50D1418A1417A34B0024FC74 /* wave8580__ST.cc in Sources */,

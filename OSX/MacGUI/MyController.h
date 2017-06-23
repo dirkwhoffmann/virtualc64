@@ -31,6 +31,7 @@
 @class MemTableView;
 @class Speedometer;
 
+/*
 enum INPUT_DEVICES {
     IPD_UNCONNECTED = 0,
     IPD_KEYSET_1,
@@ -38,7 +39,17 @@ enum INPUT_DEVICES {
     IPD_JOYSTICK_1,
     IPD_JOYSTICK_2
 };
+*/
 
+typedef NS_ENUM(NSInteger, INPUT_DEVICES) {
+    IPD_UNCONNECTED = 0,
+    IPD_KEYSET_1,
+    IPD_KEYSET_2,
+    IPD_JOYSTICK_1,
+    IPD_JOYSTICK_2
+};
+
+    
 // @interface MyController : NSWindowController <NSApplicationDelegate, NSMenuDelegate>
 @interface MyController : NSWindowController
 {
@@ -290,10 +301,13 @@ enum INPUT_DEVICES {
     //! @brief   Indicates if a status bar is shown
     bool statusBar;
     
-#pragma mark Keyboard and joystick emulation
+#if 0
     
+
     //! Stores currently pressed key combination on virtual C64 keyboard
-    /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
+    /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard 
+     *  DEPRECATED
+     */
     C64KeyFingerprint pressedKeys[256];
     
     /*! Stores a fingerprint of each joystick emulation key.
@@ -303,12 +317,13 @@ enum INPUT_DEVICES {
     /*!  Stores a printabel character for each joystick emulation key.
      *   These values are only used in the properties dialog for pretty printing the keycodes */
     char joyChar[2][5];
+#endif
 }
 
 @property (strong) C64Proxy *c64;
 @property (strong,readonly) MyMetalView *metalScreen;
-@property int inputDeviceA;
-@property int inputDeviceB;
+@property INPUT_DEVICES inputDeviceA;
+@property INPUT_DEVICES inputDeviceB;
 @property NSEventModifierFlags modifierFlags;
 @property bool statusBar;
 
@@ -327,6 +342,25 @@ enum INPUT_DEVICES {
 - (void)loadVirtualMachineUserDefaults;
 - (void)saveUserDefaults;
 - (void)saveVirtualMachineUserDefaults;
+- (void)restoreFactorySettingsKeyboard;
+
+// Keyboard
+
+//! Computes a fingerprint for the keycode/modifierFlags combination that uniquely identifies a key for joystick emulation
+- (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags;
+
+//! @brief Returns the keycode for a joystick emulation key
+- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(JoystickDirection)dir;
+
+//! @brief Sets the keycode for a joystick emulation key
+- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(JoystickDirection)dir;
+
+//! @brief Returns a joystick emulation key as printable character
+- (char)joyChar:(int)nr direction:(JoystickDirection)dir;
+
+//! @brief Sets the printable character for a joystick emulation key
+- (void)setJoyChar:(char)c keymap:(int)nr direction:(JoystickDirection)dir;
+
 
 // Timer and message processing
 - (void)timerFunc;

@@ -120,7 +120,7 @@
         NSLog(@"portAAction (%d)", newvalue);
         
         // Update input device
-        [self setInputDeviceA:newvalue];
+        [self setInputDeviceA:INPUT_DEVICES(newvalue)];
         
         // Unconnect old binding of selected port
         [c64 unbindJoysticksFromPortA];
@@ -163,7 +163,7 @@
     NSLog(@"portBAction (%d)", newvalue);
     
     // Update input device
-    [self setInputDeviceB:newvalue];
+    [self setInputDeviceB:INPUT_DEVICES(newvalue)];
     
     // Unconnect old binding of selected port
     [c64 unbindJoysticksFromPortB];

@@ -132,7 +132,7 @@ typedef unsigned long MacKeyFingerprint;
     //! Stores currently pressed key combination on virtual C64 keyboard
     /*! Array index is a Mac keycode and the stored value the pressed key on the c64 keyboard */
     C64KeyFingerprint pressedKeys[256];
-
+    
     /*! Stores a fingerprint of each joystick emulation key.
      *  The user can choose from 2 maps */
     MacKeyFingerprint joyFingerprint[2][5];

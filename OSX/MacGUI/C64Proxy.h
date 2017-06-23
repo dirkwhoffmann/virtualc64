@@ -308,8 +308,8 @@ struct CartridgeWrapper;
 
 - (void) dump;
 
-- (void) pressKey:(int)c;
-- (void) releaseKey:(int)c;
+- (void) pressKey:(int)c;   // TODO Change to correct type
+- (void) releaseKey:(int)c; // TODO Change to correct type
 - (void) pressRunstopKey;
 - (void) releaseRunstopKey;
 - (void) pressShiftRunstopKey;

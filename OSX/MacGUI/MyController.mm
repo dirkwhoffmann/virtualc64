@@ -19,8 +19,19 @@
 #import "C64GUI.h"
 #import "VirtualC64-Swift.h"
 
+
+// TODO
+// Register user defaults is class method. Don't access keymap there
+// Initialize keymap (where? in which init?) We can also create it on the fly in loadUserDefaults
+// Replace Character by String in KeyMap class
+
 @implementation MyController {
-    KeyMap *keymap[2];
+
+    /*! @brief   Keyboard controller
+     *  @details Handles all keyboard related events
+     */
+    KeyboardController *keyboardcontroller;
+
 }
 
 @synthesize c64;
@@ -76,6 +87,9 @@
 - (void)awakeFromNib
 {	
     NSLog(@"MyController::awakeFromNib");
+    
+    // Keyboard initialization
+    keyboardcontroller = [[KeyboardController alloc] initWithController:self];
 }
 
 - (void)windowDidLoad
@@ -260,6 +274,9 @@
     [defaultValues setObject:@YES forKey:VC64BitAccuracyKey];
 
     // Joysticks
+    [KeyboardController registerStandardUserDefaults];
+    
+    /*
     [defaultValues setObject:@123 forKey:VC64Left1keycodeKey];
     [defaultValues setObject:@' ' forKey:VC64Left1charKey];
     [defaultValues setObject:@124 forKey:VC64Right1keycodeKey];
@@ -281,7 +298,8 @@
     [defaultValues setObject:@'w' forKey:VC64Up2charKey];
     [defaultValues setObject:@7 forKey:VC64Fire2keycodeKey];
     [defaultValues setObject:@'x' forKey:VC64Fire2charKey];
-
+    */
+    
 	// Audio
 	[defaultValues setObject:@YES forKey:VC64SIDReSIDKey];
 	[defaultValues setObject:@NO forKey:VC64SIDFilterKey];
@@ -308,33 +326,9 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     // Joysticks
-    [keymap[0] setFingerprint:[defaults integerForKey:VC64Left1keycodeKey] forJoyDir:JoyDirLEFT];
-    [keymap[0] setFingerprint:[defaults integerForKey:VC64Right1keycodeKey] forJoyDir:JoyDirRIGHT];
-    [keymap[0] setFingerprint:[defaults integerForKey:VC64Up1keycodeKey] forJoyDir:JoyDirUP];
-    [keymap[0] setFingerprint:[defaults integerForKey:VC64Down1keycodeKey] forJoyDir:JoyDirDOWN];
-    [keymap[0] setFingerprint:[defaults integerForKey:VC64Fire1keycodeKey] forJoyDir:JoyDirFIRE];
+    [keyboardcontroller loadUserDefaults];
 
-    [keymap[0] setCharacter:[defaults integerForKey:VC64Left1charKey] forJoyDir:JoyDirLEFT];
-    [keymap[0] setCharacter:[defaults integerForKey:VC64Right1charKey] forJoyDir:JoyDirRIGHT];
-    [keymap[0] setCharacter:[defaults integerForKey:VC64Up1charKey] forJoyDir:JoyDirUP];
-    [keymap[0] setCharacter:[defaults integerForKey:VC64Down1charKey] forJoyDir:JoyDirDOWN];
-    [keymap[0] setCharacter:[defaults integerForKey:VC64Fire1charKey] forJoyDir:JoyDirFIRE];
-
-    [keymap[1] setFingerprint:[defaults integerForKey:VC64Left2keycodeKey] forJoyDir:JoyDirLEFT];
-    [keymap[1] setFingerprint:[defaults integerForKey:VC64Right2keycodeKey] forJoyDir:JoyDirRIGHT];
-    [keymap[1] setFingerprint:[defaults integerForKey:VC64Up2keycodeKey] forJoyDir:JoyDirUP];
-    [keymap[1] setFingerprint:[defaults integerForKey:VC64Down2keycodeKey] forJoyDir:JoyDirDOWN];
-    [keymap[1] setFingerprint:[defaults integerForKey:VC64Fire2keycodeKey] forJoyDir:JoyDirFIRE];
-    
-    [keymap[1] setCharacter:[defaults integerForKey:VC64Left2charKey] forJoyDir:JoyDirLEFT];
-    [keymap[1] setCharacter:[defaults integerForKey:VC64Right2charKey] forJoyDir:JoyDirRIGHT];
-    [keymap[1] setCharacter:[defaults integerForKey:VC64Up2charKey] forJoyDir:JoyDirUP];
-    [keymap[1] setCharacter:[defaults integerForKey:VC64Down2charKey] forJoyDir:JoyDirDOWN];
-    [keymap[1] setCharacter:[defaults integerForKey:VC64Fire2charKey] forJoyDir:JoyDirFIRE];
-    
-    
-    // to be continued
-    
+#if 0
     // Joysticks
     [metalScreen setJoyKeyFingerprint:[defaults integerForKey:VC64Left1keycodeKey] keymap:1 direction:JOYSTICK_LEFT];
     [metalScreen setJoyChar:[defaults integerForKey:VC64Left1charKey] keymap:1 direction:JOYSTICK_LEFT];
@@ -357,6 +351,7 @@
     [metalScreen setJoyChar:[defaults integerForKey:VC64Up2charKey] keymap:2 direction:JOYSTICK_UP];
     [metalScreen setJoyKeyFingerprint:[defaults integerForKey:VC64Fire2keycodeKey] keymap:2 direction:JOYSTICK_FIRE];
     [metalScreen setJoyChar:[defaults integerForKey:VC64Fire2charKey] keymap:2 direction:JOYSTICK_FIRE];
+#endif
     
 	// Video
     [metalScreen setEyeX:[defaults floatForKey:VC64EyeX]];
@@ -407,31 +402,9 @@
 	defaults = [NSUserDefaults standardUserDefaults];
 
     // Joysticks
-    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirLEFT] forKey:VC64Left1keycodeKey];
-    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirRIGHT] forKey:VC64Right1keycodeKey];
-    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirUP] forKey:VC64Up1keycodeKey];
-    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirDOWN] forKey:VC64Down1keycodeKey];
-    [defaults setInteger:[keymap[0] fingerprintForJoyDir:JoyDirFIRE] forKey:VC64Fire1keycodeKey];
-
-    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirLEFT] forKey:VC64Left1charKey];
-    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirRIGHT] forKey:VC64Right1charKey];
-    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirUP] forKey:VC64Up1charKey];
-    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirDOWN] forKey:VC64Down1charKey];
-    [defaults setInteger:[keymap[0] characterForJoyDir:JoyDirFIRE] forKey:VC64Fire1charKey];
+    [keyboardcontroller saveUserDefaults];
     
-    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirLEFT] forKey:VC64Left2keycodeKey];
-    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirRIGHT] forKey:VC64Right2keycodeKey];
-    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirUP] forKey:VC64Up2keycodeKey];
-    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirDOWN] forKey:VC64Down2keycodeKey];
-    [defaults setInteger:[keymap[1] fingerprintForJoyDir:JoyDirFIRE] forKey:VC64Fire2keycodeKey];
-
-    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirLEFT] forKey:VC64Left1charKey];
-    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirRIGHT] forKey:VC64Right1charKey];
-    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirUP] forKey:VC64Up1charKey];
-    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirDOWN] forKey:VC64Down1charKey];
-    [defaults setInteger:[keymap[1] characterForJoyDir:JoyDirFIRE] forKey:VC64Fire1charKey];
-
-    // Joysticks
+#if 0
     [defaults setInteger:[metalScreen joyKeyFingerprint:1 direction:JOYSTICK_LEFT] forKey:VC64Left1keycodeKey];
     [defaults setInteger:[metalScreen joyChar:1 direction:JOYSTICK_LEFT] forKey:VC64Left1charKey];
     [defaults setInteger:[metalScreen joyKeyFingerprint:1 direction:JOYSTICK_RIGHT] forKey:VC64Right1keycodeKey];
@@ -453,8 +426,9 @@
     [defaults setInteger:[metalScreen joyChar:2 direction:JOYSTICK_UP] forKey:VC64Up2charKey];
     [defaults setInteger:[metalScreen joyKeyFingerprint:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2keycodeKey];
     [defaults setInteger:[metalScreen joyChar:2 direction:JOYSTICK_FIRE] forKey:VC64Fire2charKey];
+#endif
     
-	// Video 
+	// Video
     [defaults setFloat:[metalScreen eyeX] forKey:VC64EyeX];
     [defaults setFloat:[metalScreen eyeY] forKey:VC64EyeY];
     [defaults setFloat:[metalScreen eyeZ] forKey:VC64EyeZ];
@@ -485,6 +459,106 @@
     [defaults setBool:[c64 audioFilter] forKey:VC64SIDFilterKey];
     [defaults setBool:[c64 chipModel] forKey:VC64SIDChipModelKey];
     [defaults setBool:[c64 samplingMethod] forKey:VC64SIDSamplingMethodKey];
+}
+
+- (void)restoreFactorySettingsKeyboard
+{
+    [keyboardcontroller restoreFactorySettings];
+}
+
+- (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags
+{
+    return [keyboardcontroller fingerprintForKey:keycode withModifierFlags:flags];
+}
+
+- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(JoystickDirection)dir
+{
+    assert(dir >= 0 && dir <= 4);
+    
+    switch (nr) {
+        case 1: return [[keyboardcontroller keymap1] getFingerprintForDirection:(JoyDir)dir];
+        case 2: return [[keyboardcontroller keymap2] getFingerprintForDirection:(JoyDir)dir];
+    }
+    
+    assert(0);
+    return 0;
+}
+
+- (char)joyChar:(int)nr direction:(JoystickDirection)dir
+{
+    NSString *s;
+    
+    assert(dir >= 0 && dir <= 4);
+        
+    switch (nr) {
+        case 1:
+            s = [[keyboardcontroller keymap1] getCharacterForDirection:(JoyDir)dir];
+            return [s UTF8String][0];
+        case 2:
+            s = [[keyboardcontroller keymap2] getCharacterForDirection:(JoyDir)dir];
+            return [s UTF8String][0];
+    }
+    
+    assert(0);
+    return 0;
+}
+
+- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(JoystickDirection)dir
+{
+    assert(dir >= 0 && dir <= 4);
+    
+    switch (nr) {
+        case 1:
+            [[keyboardcontroller keymap1] setFingerprint:key forDirection:(JoyDir)dir];
+            return;
+        case 2:
+            [[keyboardcontroller keymap2] setFingerprint:key forDirection:(JoyDir)dir];
+            return;
+    }
+    
+    assert(0);
+}
+
+- (void)setJoyChar:(char)c keymap:(int)nr direction:(JoystickDirection)dir
+{
+    assert(dir >= 0 && dir <= 4);
+    
+    NSString *s = [NSString stringWithFormat:@"%c" , c];
+    switch (nr) {
+        case 1:
+            [[keyboardcontroller keymap1] setCharacter:s forDirection:(JoyDir)dir];
+            return;
+        case 2:
+            [[keyboardcontroller keymap2] setCharacter:s forDirection:(JoyDir)dir];
+            return;
+    }
+    
+    assert(0);
+}
+
+- (void)keyDown:(NSEvent *)event
+{
+    NSLog(@"MyController:keyDown");
+    [keyboardcontroller keyDownWith:event];
+}
+
+- (void)keyUp:(NSEvent *)event
+{
+    NSLog(@"MyController:keyUp");
+    [keyboardcontroller keyUpWith:event];
+}
+
+- (void)flagsChanged:(NSEvent *)event
+{
+    NSLog(@"MyController:flagsChanged");
+    
+    NSEventModifierFlags flags = [event modifierFlags];
+    
+    // Store modifier flags
+    [self setModifierFlags:flags];
+     
+    [keyboardcontroller flagsChangedWith:event];
+     
 }
 
 

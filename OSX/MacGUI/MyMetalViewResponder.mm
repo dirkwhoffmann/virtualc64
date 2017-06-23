@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#if 0
+
 #import "C64GUI.h"
 
 @implementation MyMetalView(Responder)
@@ -182,6 +184,13 @@
     // NSLog(@"keyDown: '%c' keycode: %02X flags: %08lX", (char)c, keycode, flags);
         
     // Ignore keys that are already pressed
+    /*
+    if ([alreadPressed containsObject:[NSNumber numberWithInt: keycode]]) {
+        NSLog(@"Key already pressed");
+        return;
+    }
+    */
+    
     if (pressedKeys[(unsigned char)keycode])
         return;
     
@@ -398,3 +407,6 @@
 }
 
 @end
+
+#endif
+
