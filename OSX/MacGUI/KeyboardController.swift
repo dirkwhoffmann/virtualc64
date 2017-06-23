@@ -21,13 +21,18 @@ import Carbon.HIToolbox
 
 
 // Some convenience stuff
+extension UInt8 {
+    var char: Character {
+        return Character(UnicodeScalar(self))
+    }
+}
+/*
 extension CChar {
     var char: Character {
         return Character(UnicodeScalar(UInt8(bitPattern: Int8(self))))
     }
 }
-
-// TODO: USE C64 STRUCT, BECAUSE IT'S ALREADY NEEDED THERE!!!!
+*/
 
 @objc public enum JoyDir : Int {
     case UP
@@ -100,11 +105,7 @@ class KeyboardController: NSObject {
     func restoreFactorySettings()
     {
         NSLog("\(#function)")
-        
-        KeyboardController.registerStandardUserDefaults()
-        loadUserDefaults()
-        
-        /*
+                
         keymap1.fingerprint[JoyDir.LEFT] = 123
         keymap1.fingerprint[JoyDir.RIGHT] = 124
         keymap1.fingerprint[JoyDir.UP] = 125
@@ -128,7 +129,6 @@ class KeyboardController: NSObject {
         keymap2.character[JoyDir.UP] = "y"
         keymap2.character[JoyDir.DOWN] = "w"
         keymap2.character[JoyDir.FIRE] = "x"
-        */
     }
     
     
@@ -138,8 +138,32 @@ class KeyboardController: NSObject {
     
     class func registerStandardUserDefaults() {
         
-        let defaults = UserDefaults.standard
-        
+        let dictionary : [String:Any] = [
+            "VC64Left1keycodeKey":123,
+            "VC64Right1keycodeKey":124,
+            "VC64Up1keycodeKey":125,
+            "VC64Down1keycodeKey":126,
+            "VC64Fire1keycodeKey":49,
+            
+            "VC64Left1charKey":" ",
+            "VC64Right1charKey":" ",
+            "VC64Up1charKey":" ",
+            "VC64Down1charKey":" ",
+            "VC64Fire1charKey":" ",
+
+            "VC64Left2keycodeKey":0,
+            "VC64Right2keycodeKey":1,
+            "VC64Up2keycodeKey":6,
+            "VC64Down2keycodeKey":13,
+            "VC64Fire2keycodeKey":7,
+            
+            "VC64Left2charKey":"a",
+            "VC64Right2charKey":"s",
+            "VC64Up2charKey":"y",
+            "VC64Down2charKey":"w",
+            "VC64Fire2charKey":"x"]
+
+ /*
         defaults.set(123, forKey: "VC64Left1keycodeKey")
         defaults.set(124, forKey: "VC64Right1keycodeKey")
         defaults.set(125, forKey: "VC64Up1keycodeKey")
@@ -163,6 +187,11 @@ class KeyboardController: NSObject {
         defaults.set("y", forKey: "VC64Up2charKey")
         defaults.set("w", forKey: "VC64Down2charKey")
         defaults.set("x", forKey: "VC64Fire2charKey")
+*/
+        
+        let defaults = UserDefaults.standard
+        defaults.register(defaults: dictionary)
+        // [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
     }
 
     func loadUserDefaults() {
@@ -233,10 +262,10 @@ class KeyboardController: NSObject {
         if (event.keyCode == MAC_ESC && controller.metalScreen.fullscreen) {
             controller.window!.toggleFullScreen(nil)
         }
-        var c       = event.characters!.utf8CString[0]                  // CChar
-        let c_unmod = event.charactersIgnoringModifiers!.utf8CString[0] // CChar
-        let keycode = event.keyCode                                     // UInt16
-        let flags   = event.modifierFlags                               // NSEventModifierFlags
+        var c       = UInt8(event.characters!.utf8CString[0])                  // CChar
+        let c_unmod = UInt8(event.charactersIgnoringModifiers!.utf8CString[0]) // CChar
+        let keycode = event.keyCode // UInt16
+        let flags   = event.modifierFlags // NSEventModifierFlags
         
         print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
         
@@ -267,7 +296,7 @@ class KeyboardController: NSObject {
         
         // Press key
         pressedKeys[keycode] = c64key
-        controller.c64.keyboard.pressKey(Int32(c64key))
+        controller.c64.keyboard.pressKey(c64key)
     }
     
     public func keyUp(with event: NSEvent)
@@ -283,7 +312,7 @@ class KeyboardController: NSObject {
 
         // Release key
         if let key = pressedKeys[keycode] {
-            controller.c64.keyboard.releaseKey(Int32(key)) // TODO: Use correct type in C64 proxy
+            controller.c64.keyboard.releaseKey(key)
             pressedKeys[keycode] = nil
         }
     }
@@ -423,12 +452,12 @@ class KeyboardController: NSObject {
     /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint
      *  @note   The returned value can be used as argument for the emulators pressKey() function
      */
-    func translateKey(_ key: CChar, plainkey: CChar, keycode: UInt16, flags: NSEventModifierFlags) -> C64KeyFingerprint
+    func translateKey(_ key: UInt8, plainkey: UInt8, keycode: UInt16, flags: NSEventModifierFlags) -> C64KeyFingerprint
     {
-        
-        let HAT_KEY     = CChar(UnicodeScalar("^")!.value)
-        let LESS_KEY    = CChar(UnicodeScalar("<")!.value)
-        let GREATER_KEY = CChar(UnicodeScalar(">")!.value)
+    
+        let HAT_KEY     = UInt8(UnicodeScalar("^")!.value)
+        let LESS_KEY    = UInt8(UnicodeScalar("<")!.value)
+        let GREATER_KEY = UInt8(UnicodeScalar(">")!.value)
         
         switch (keycode) {
             

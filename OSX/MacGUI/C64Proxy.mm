@@ -352,8 +352,8 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 }
 
 - (void) dump { wrapper->keyboard->dumpState(); }
-- (void) pressKey:(int)c { wrapper->keyboard->pressKey(c); }
-- (void) releaseKey:(int)c { wrapper->keyboard->releaseKey(c); }
+- (void) pressKey:(C64KeyFingerprint)c { wrapper->keyboard->pressKey(c); }
+- (void) releaseKey:(C64KeyFingerprint)c { wrapper->keyboard->releaseKey(c); }
 - (void) pressRunstopKey { wrapper->keyboard->pressRunstopKey(); }
 - (void) releaseRunstopKey { wrapper->keyboard->releaseRunstopKey(); }
 - (void) pressShiftRunstopKey { wrapper->keyboard->pressShiftRunstopKey(); }
