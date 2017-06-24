@@ -32,6 +32,7 @@ extension CChar {
         return UInt8(bitPattern: Int8(self))
     }
 }
+
 /*
 extension CChar {
     var char: Character {
@@ -247,8 +248,12 @@ class KeyboardController: NSObject {
         let keycode = event.keyCode
         let flags   = event.modifierFlags
         
-        // print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
-        
+        print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
+        print("event.characters = \(event.characters!)")
+        print("event.charactersIgnoringModifiers = \(event.characters!)")
+        let firstchar = event.characters!.characters.first!
+        print("first char = \(firstchar)")
+            
         // Ignore keys that are already pressed
         if (pressedKeys[keycode] != nil) {
             return
@@ -338,7 +343,7 @@ class KeyboardController: NSObject {
         // In case of number keys (0 - 9), the fingerprint might also contains the
         // NSNumericPadKeyMask flag to distinguish keys from the numeric keypad.
         
-        /* THIS CODES NEEDS TESTING
+        /* NOT NEEDED, KEYCODE IS DIFFERENT FOR NUMERIC KEYPAD
         switch (keycode) {
         case UInt16(kVK_ANSI_Keypad0),
              Int32(kVK_ANSI_Keypad1),
