@@ -26,13 +26,6 @@
 @class C64Proxy;
 @class JoystickManagerProxy;
 
-#if 0
-typedef struct {
-    JoystickManagerProxy *manager;
-    int locationID;
-    IOHIDDeviceRef deviceRef;
-} CallbackContext;
-#endif
 
 class USBJoystick
 {
@@ -59,21 +52,19 @@ public:
         joystick = NULL;
     }
     
-    //! @deprecated
-    void bindJoystick(JoystickProxy *joy) { joystick = joy; }
-
     //! @brief Connects the USB device to port A of the emulator
     void bindJoystickToPortA(C64Proxy *c64) { if (pluggedIn) joystick = [c64 joystickA]; }
-    void bindJoystickToPortB(C64Proxy *c64) { if (pluggedIn) joystick = [c64 joystickB]; }
-    void unbindJoystick() { joystick = nil; }
-    
 
     //! @brief Connects the USB device to port A of the emulator
-
-    void bindJoystickToPortB(int nr);
-    void setButtonPressed(bool pressed) { if (joystick) [joystick setButtonPressed:pressed]; }
-    void setAxisX(JoystickDirection state) { if (joystick) [joystick setAxisX:state]; }
-    void setAxisY(JoystickDirection state) { if (joystick) [joystick setAxisY:state]; }
+    void bindJoystickToPortB(C64Proxy *c64) { if (pluggedIn) joystick = [c64 joystickB]; }
+    
+    //! @brief Unconnect USB device
+    void unbindJoystick() { joystick = nil; }
+    
+    void pullJoystick(GamePadDirection dir) { [joystick pullJoystick:dir]; }
+    void releaseJoystick(GamePadDirection dir) { [joystick releaseJoystick:dir]; }
+    void releaseXAxis() { [joystick releaseXAxis]; }
+    void releaseYAxis() { [joystick releaseYAxis]; }
 };
 
 class IOHIDDeviceInfo

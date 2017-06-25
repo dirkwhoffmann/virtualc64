@@ -41,6 +41,7 @@ extension CChar {
 }
 */
 
+/*
 @objc public enum JoyDir : Int {
     case UP
     case DOWN
@@ -49,29 +50,30 @@ extension CChar {
     case FIRE
     case RELEASED
 }
+*/
 
 //! @brief Mapping from keyboard keys to joystick movements
 public class KeyMap: NSObject {
 
     //! @brief fingerprint of the assign key
-    var fingerprint : [JoyDir:MacKeyFingerprint] = [:]
+    var fingerprint : [GamePadDirection:MacKeyFingerprint] = [:]
 
     //! @brief readable character for the assigned key
-    var character : [JoyDir:String] = [:]
+    var character : [GamePadDirection:String] = [:]
     
-    public func getFingerprint(forDirection d: JoyDir) -> MacKeyFingerprint {
+    public func getFingerprint(forDirection d: GamePadDirection) -> MacKeyFingerprint {
         return fingerprint[d]!
     }
     
-    public func setFingerprint(_ f: MacKeyFingerprint, forDirection d: JoyDir) {
+    public func setFingerprint(_ f: MacKeyFingerprint, forDirection d: GamePadDirection) {
         fingerprint[d] = f
     }
 
-    public func getCharacter(forDirection d: JoyDir) -> String {
+    public func getCharacter(forDirection d: GamePadDirection) -> String {
         return character[d]!
     }
     
-    public func setCharacter(_ c: String, forDirection d: JoyDir) {
+    public func setCharacter(_ c: String, forDirection d: GamePadDirection) {
         character[d] = c
     }
 }
@@ -113,29 +115,29 @@ class KeyboardController: NSObject {
     {
         NSLog("\(#function)")
                 
-        keymap1.fingerprint[JoyDir.LEFT] = 123
-        keymap1.fingerprint[JoyDir.RIGHT] = 124
-        keymap1.fingerprint[JoyDir.UP] = 126
-        keymap1.fingerprint[JoyDir.DOWN] = 125
-        keymap1.fingerprint[JoyDir.FIRE] = 49
+        keymap1.fingerprint[GamePadDirection.LEFT] = 123
+        keymap1.fingerprint[GamePadDirection.RIGHT] = 124
+        keymap1.fingerprint[GamePadDirection.UP] = 126
+        keymap1.fingerprint[GamePadDirection.DOWN] = 125
+        keymap1.fingerprint[GamePadDirection.FIRE] = 49
             
-        keymap1.character[JoyDir.LEFT] = " "
-        keymap1.character[JoyDir.RIGHT] = " "
-        keymap1.character[JoyDir.UP] = " "
-        keymap1.character[JoyDir.DOWN] = " "
-        keymap1.character[JoyDir.FIRE] = " "
+        keymap1.character[GamePadDirection.LEFT] = " "
+        keymap1.character[GamePadDirection.RIGHT] = " "
+        keymap1.character[GamePadDirection.UP] = " "
+        keymap1.character[GamePadDirection.DOWN] = " "
+        keymap1.character[GamePadDirection.FIRE] = " "
             
-        keymap2.fingerprint[JoyDir.LEFT] = 0
-        keymap2.fingerprint[JoyDir.RIGHT] = 1
-        keymap2.fingerprint[JoyDir.UP] = 6
-        keymap2.fingerprint[JoyDir.DOWN] = 13
-        keymap2.fingerprint[JoyDir.FIRE] = 7
+        keymap2.fingerprint[GamePadDirection.LEFT] = 0
+        keymap2.fingerprint[GamePadDirection.RIGHT] = 1
+        keymap2.fingerprint[GamePadDirection.UP] = 6
+        keymap2.fingerprint[GamePadDirection.DOWN] = 13
+        keymap2.fingerprint[GamePadDirection.FIRE] = 7
             
-        keymap2.character[JoyDir.LEFT] = "a"
-        keymap2.character[JoyDir.RIGHT] = "s"
-        keymap2.character[JoyDir.UP] = "y"
-        keymap2.character[JoyDir.DOWN] = "w"
-        keymap2.character[JoyDir.FIRE] = "x"
+        keymap2.character[GamePadDirection.LEFT] = "a"
+        keymap2.character[GamePadDirection.RIGHT] = "s"
+        keymap2.character[GamePadDirection.UP] = "y"
+        keymap2.character[GamePadDirection.DOWN] = "w"
+        keymap2.character[GamePadDirection.FIRE] = "x"
     }
     
     
@@ -186,26 +188,26 @@ class KeyboardController: NSObject {
         
         let defaults = UserDefaults.standard
         
-        keymap.fingerprint[JoyDir.LEFT] =
+        keymap.fingerprint[GamePadDirection.LEFT] =
             MacKeyFingerprint(defaults.integer(forKey: "VC64Left" + s + "keycodeKey"))
-        keymap.fingerprint[JoyDir.RIGHT] =
+        keymap.fingerprint[GamePadDirection.RIGHT] =
             MacKeyFingerprint(defaults.integer(forKey: "VC64Right" + s + "keycodeKey"))
-        keymap.fingerprint[JoyDir.UP] =
+        keymap.fingerprint[GamePadDirection.UP] =
             MacKeyFingerprint(defaults.integer(forKey: "VC64Up" + s + "keycodeKey"))
-        keymap.fingerprint[JoyDir.DOWN] =
+        keymap.fingerprint[GamePadDirection.DOWN] =
             MacKeyFingerprint(defaults.integer(forKey: "VC64Down" + s + "keycodeKey"))
-        keymap.fingerprint[JoyDir.FIRE] =
+        keymap.fingerprint[GamePadDirection.FIRE] =
             MacKeyFingerprint(defaults.integer(forKey: "VC64Fire" + s + "keycodeKey"))
         
-        keymap.character[JoyDir.LEFT] =
+        keymap.character[GamePadDirection.LEFT] =
             defaults.string(forKey: "VC64Left" + s + "charKey")
-        keymap.character[JoyDir.RIGHT] =
+        keymap.character[GamePadDirection.RIGHT] =
             defaults.string(forKey: "VC64Right" + s + "charKey")
-        keymap.character[JoyDir.UP] =
+        keymap.character[GamePadDirection.UP] =
             defaults.string(forKey: "VC64Up" + s + "charKey")
-        keymap.character[JoyDir.DOWN] =
+        keymap.character[GamePadDirection.DOWN] =
             defaults.string(forKey: "VC64Down" + s + "charKey")
-        keymap.character[JoyDir.FIRE] =
+        keymap.character[GamePadDirection.FIRE] =
             defaults.string(forKey: "VC64Fire" + s + "charKey")
     }
     
@@ -220,17 +222,17 @@ class KeyboardController: NSObject {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(keymap.fingerprint[JoyDir.LEFT],  forKey :"VC64Left" + s + "keycodeKey")
-        defaults.set(keymap.fingerprint[JoyDir.RIGHT], forKey :"VC64Right" + s + "keycodeKey")
-        defaults.set(keymap.fingerprint[JoyDir.UP],    forKey :"VC64Up" + s + "keycodeKey")
-        defaults.set(keymap.fingerprint[JoyDir.DOWN],  forKey :"VC64Down" + s + "keycodeKey")
-        defaults.set(keymap.fingerprint[JoyDir.FIRE],  forKey :"VC64Fire" + s + "keycodeKey")
+        defaults.set(keymap.fingerprint[GamePadDirection.LEFT],  forKey :"VC64Left" + s + "keycodeKey")
+        defaults.set(keymap.fingerprint[GamePadDirection.RIGHT], forKey :"VC64Right" + s + "keycodeKey")
+        defaults.set(keymap.fingerprint[GamePadDirection.UP],    forKey :"VC64Up" + s + "keycodeKey")
+        defaults.set(keymap.fingerprint[GamePadDirection.DOWN],  forKey :"VC64Down" + s + "keycodeKey")
+        defaults.set(keymap.fingerprint[GamePadDirection.FIRE],  forKey :"VC64Fire" + s + "keycodeKey")
         
-        defaults.set(keymap.character[JoyDir.LEFT],    forKey :"VC64Left" + s + "charKey")
-        defaults.set(keymap.character[JoyDir.RIGHT],   forKey :"VC64Right" + s + "charKey")
-        defaults.set(keymap.character[JoyDir.UP],      forKey :"VC64Up" + s + "charKey")
-        defaults.set(keymap.character[JoyDir.DOWN],    forKey :"VC64Down" + s + "charKey")
-        defaults.set(keymap.character[JoyDir.FIRE],    forKey :"VC64Fire" + s + "charKey")
+        defaults.set(keymap.character[GamePadDirection.LEFT],    forKey :"VC64Left" + s + "charKey")
+        defaults.set(keymap.character[GamePadDirection.RIGHT],   forKey :"VC64Right" + s + "charKey")
+        defaults.set(keymap.character[GamePadDirection.UP],      forKey :"VC64Up" + s + "charKey")
+        defaults.set(keymap.character[GamePadDirection.DOWN],    forKey :"VC64Down" + s + "charKey")
+        defaults.set(keymap.character[GamePadDirection.FIRE],    forKey :"VC64Fire" + s + "charKey")
     }
     
     //
@@ -248,11 +250,7 @@ class KeyboardController: NSObject {
         let keycode = event.keyCode
         let flags   = event.modifierFlags
         
-        print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
-        print("event.characters = \(event.characters!)")
-        print("event.charactersIgnoringModifiers = \(event.characters!)")
-        let firstchar = event.characters!.characters.first!
-        print("first char = \(firstchar)")
+        // print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
             
         // Ignore keys that are already pressed
         if (pressedKeys[keycode] != nil) {
@@ -389,14 +387,24 @@ class KeyboardController: NSObject {
     @discardableResult
     func pullJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap) -> Bool
     {
-        if (key == map.fingerprint[JoyDir.LEFT])       { j.setAxisX(JOYSTICK_LEFT) }
-        else if (key == map.fingerprint[JoyDir.RIGHT]) { j.setAxisX(JOYSTICK_RIGHT) }
-        else if (key == map.fingerprint[JoyDir.UP])    { j.setAxisY(JOYSTICK_UP) }
-        else if (key == map.fingerprint[JoyDir.DOWN])  { j.setAxisY(JOYSTICK_DOWN) }
-        else if (key == map.fingerprint[JoyDir.FIRE])  { j.setButtonPressed(true) }
-        else { return false }
+        for (offset: _, element: (key: direction, value: value)) in map.fingerprint.enumerated() {
+            
+            if key == value {
+                j.pullJoystick(direction)
+                return true
+            }
+        }
         
-        return true
+        /*
+        if (key == map.fingerprint[GamePadDirection.LEFT])       { j.pullJoystick(GamePadDirection.LEFT) }
+        else if (key == map.fingerprint[GamePadDirection.RIGHT]) { j.pullJoystick(GamePadDirection.RIGHT) }
+        else if (key == map.fingerprint[GamePadDirection.UP])    { j.pullJoystick(GamePadDirection.UP) }
+        else if (key == map.fingerprint[GamePadDirection.DOWN])  { j.pullJoystick(GamePadDirection.DOWN) }
+        else if (key == map.fingerprint[GamePadDirection.FIRE])  { j.pullJoystick(GamePadDirection.FIRE) }
+        else { return false }
+        */
+        
+        return false
     }
     
     /*! @brief  Releases joystick if key matches some value stored in keymap
@@ -424,14 +432,26 @@ class KeyboardController: NSObject {
     @discardableResult
     func releaseJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap) -> Bool
     {
-        if (key == map.fingerprint[JoyDir.LEFT])       { j.setAxisX(JOYSTICK_RELEASED) }
-        else if (key == map.fingerprint[JoyDir.RIGHT]) { j.setAxisX(JOYSTICK_RELEASED) }
-        else if (key == map.fingerprint[JoyDir.UP])    { j.setAxisY(JOYSTICK_RELEASED) }
-        else if (key == map.fingerprint[JoyDir.DOWN])  { j.setAxisY(JOYSTICK_RELEASED) }
-        else if (key == map.fingerprint[JoyDir.FIRE])  { j.setButtonPressed(false) }
+        for (offset: _, element: (key: direction, value: value)) in map.fingerprint.enumerated() {
+            
+            if key == value {
+                j.releaseJoystick(direction)
+                return true;
+            }
+        }
+        
+        return false
+
+        /*
+        if (key == map.fingerprint[GamePadDirection.LEFT])       { j.setAxisX(JOYSTICK_RELEASED) }
+        else if (key == map.fingerprint[GamePadDirection.RIGHT]) { j.setAxisX(JOYSTICK_RELEASED) }
+        else if (key == map.fingerprint[GamePadDirection.UP])    { j.setAxisY(JOYSTICK_RELEASED) }
+        else if (key == map.fingerprint[GamePadDirection.DOWN])  { j.setAxisY(JOYSTICK_RELEASED) }
+        else if (key == map.fingerprint[GamePadDirection.FIRE])  { j.setButtonPressed(false) }
         else { return false }
         
         return true
+        */
     }
     
     /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint

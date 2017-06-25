@@ -188,22 +188,6 @@ bool JoystickManager::joystickIsPluggedIn(int nr)
 }
 
 void
-JoystickManager::bindJoystick(int nr, JoystickProxy *joy)
-{
-    assert (nr >= 1 && nr <= 2);
-
-    if (usbjoy[nr - 1].pluggedIn) {
-    
-        usbjoy[nr - 1].bindJoystick(joy);
-
-        if (joy == NULL)
-            fprintf(stderr, "Remove binding for %s USB joystick\n", nr == 1 ? "first" : "second");
-        else
-            fprintf(stderr, "Bind %s USB joystick to %p\n", nr == 1 ? "first" : "second", joy);
-    }
-}
-
-void
 JoystickManager::unbindJoysticksFromPortA()
 {
     for (unsigned i = 0; i < 2; i++) {
@@ -429,7 +413,11 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 			IOHIDElement_SetDoubleProperty(element, CFSTR(kIOHIDElementCalibrationGranularityKey), 1);
 			bool pressed = ( ceil( IOHIDValueGetScaledValue( inIOHIDValueRef, kIOHIDValueScaleTypeCalibrated ) ) == 1 );
 			
-			proxy->setButtonPressed(pressed);
+            if (pressed)
+                proxy->pullJoystick(GamePadDirection(FIRE));
+            else
+                proxy->releaseJoystick(GamePadDirection(FIRE));
+            
         } else {
 			NSLog(@"Device %p (ID %d) type and page mismatch (Type=%i, Page=%i)\n",
                   context->deviceRef, context->locationID, elementType, elementPage );
@@ -449,14 +437,20 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
 
                 case kHIDUsage_GD_X:
                     
-                    proxy->setAxisX(axis == -1 ? JOYSTICK_LEFT :
-                                    (axis == 1 ? JOYSTICK_RIGHT : JOYSTICK_RELEASED));
+                    switch (axis) {
+                        case -1: proxy->pullJoystick(GamePadDirection(LEFT)); return;
+                        case  1: proxy->pullJoystick(GamePadDirection(RIGHT)); return;
+                        default: proxy->releaseXAxis(); return;
+                    }
 					break;
 
                 case kHIDUsage_GD_Y:
-                                       
-                    proxy->setAxisY(axis == -1 ? JOYSTICK_UP :
-                                    (axis == 1 ? JOYSTICK_DOWN : JOYSTICK_RELEASED));
+                    
+                    switch (axis) {
+                        case -1: proxy->pullJoystick(GamePadDirection(UP)); return;
+                        case  1: proxy->pullJoystick(GamePadDirection(DOWN)); return;
+                        default: proxy->releaseYAxis(); return;
+                    }
                     break;
 
                 default:

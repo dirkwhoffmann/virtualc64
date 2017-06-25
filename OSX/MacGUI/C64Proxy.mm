@@ -438,9 +438,35 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     return self;
 }
 
-- (void) setButtonPressed:(BOOL)pressed { wrapper->joystick->setButtonPressed(pressed); }
-- (void) setAxisX:(JoystickDirection)state { wrapper->joystick->setAxisX(state); }
-- (void) setAxisY:(JoystickDirection)state { wrapper->joystick->setAxisY(state); }
+// - (void) setButtonPressed:(BOOL)pressed { wrapper->joystick->setButtonPressed(pressed); }
+// - (void) setAxisX:(JoystickDirection)state { wrapper->joystick->setAxisX(state); }
+// - (void) setAxisY:(JoystickDirection)state { wrapper->joystick->setAxisY(state); }
+
+- (void) pullJoystick:(GamePadDirection)dir {
+    switch(dir) {
+        case LEFT:  wrapper->joystick->setXAxis(JOYSTICK_LEFT); return;
+        case RIGHT: wrapper->joystick->setXAxis(JOYSTICK_RIGHT); return;
+        case UP:    wrapper->joystick->setYAxis(JOYSTICK_UP); return;
+        case DOWN:  wrapper->joystick->setYAxis(JOYSTICK_DOWN); return;
+        case FIRE:  wrapper->joystick->setButton(YES); return;
+        default:    return;
+    }
+}
+
+- (void) releaseJoystick:(GamePadDirection)dir {
+    switch(dir) {
+        case LEFT:  wrapper->joystick->releaseXAxis(); return;
+        case RIGHT: wrapper->joystick->releaseXAxis(); return;
+        case UP:    wrapper->joystick->releaseYAxis(); return;
+        case DOWN:  wrapper->joystick->releaseYAxis(); return;
+        case FIRE:  wrapper->joystick->setButton(NO); return;
+        default:    return;
+    }
+}
+
+- (void) releaseXAxis { wrapper->joystick->releaseXAxis(); }
+- (void) releaseYAxis { wrapper->joystick->releaseYAxis(); }
+
 
 - (void) dump { wrapper->joystick->dumpState(); }
 
@@ -470,15 +496,10 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     return self;
 }
 
-// - (BOOL) initialize { /* ??? */ };
-// - (void) dispose() { /* ??? */ };
-
 - (BOOL) joystickIsPluggedIn:(NSInteger)nr {
     return wrapper->manager->joystickIsPluggedIn((int)nr);
 }
-- (void) bindJoystick:(NSInteger)nr joystick:(JoystickProxy *)joy {
-    wrapper->manager->bindJoystick((int)nr, joy);
-}
+
 - (void) bindJoystickToPortA:(NSInteger)nr {
     wrapper->manager->bindJoystickToPortA((int)nr);
 }

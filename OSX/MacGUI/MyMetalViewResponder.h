@@ -41,38 +41,4 @@ const uint16_t MAC_ESC = 53;
 const uint16_t MAC_HAT = 10;
 const uint16_t MAC_TILDE_US = 50;
 
-#if 0
-
-@interface MyMetalView(Responder)
-
-#pragma mark Joystick simulation
-
-//! Computes a fingerprint for the keycode/modifierFlags combination that uniquely identifies a key for joystick emulation
-- (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags;
-
-//! @brief Returns the keycode for a joystick emulation key
-- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(JoystickDirection)dir;
-
-//! @brief Sets the keycode for a joystick emulation key
-- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(JoystickDirection)dir;
-
-//! @brief Returns a joystick emulation key as printable character
-- (char)joyChar:(int)nr direction:(JoystickDirection)dir;
-
-//! @brief Sets the printable character for a joystick emulation key
-- (void)setJoyChar:(char)c keymap:(int)nr direction:(JoystickDirection)dir;
-
-// Compares keycode with the joystick simulation keys and pulls joystick if appropriate
-- (BOOL)pullJoystick:(int)nr withKey:(MacKeyFingerprint)key device:(int)d;
-
-// Compares keycode with the joystick simulation keys and releases joystick if appropriate
-- (BOOL)releaseJoystick:(int)nr withKey:(MacKeyFingerprint)key device:(int)d;
-
-//! Get mac specific character and keycode and translate it to a virtual c64 key
-/*! The returned value can be passed to the pressKey() method of the emulator */
-- (C64KeyFingerprint)translateKey:(char)key plainkey:(char)plainkey keycode:(short)keycode flags:(unsigned long)flags;
-
-@end
-
-#endif
 

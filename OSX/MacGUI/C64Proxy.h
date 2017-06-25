@@ -23,7 +23,6 @@
 
 // Forward declarations
 @class MyController;
-// @class AudioDevice;
 @class C64Proxy;
 @class SnapshotProxy;
 @class D64ArchiveProxy; 
@@ -336,14 +335,28 @@ struct CartridgeWrapper;
 //                                 Joystick
 // -------------------------------------------------------------------------
 
+typedef NS_ENUM(NSInteger, GamePadDirection) {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    FIRE,
+    RELEASED
+};
+
+
 @interface JoystickProxy : NSObject {
     
     struct JoystickWrapper *wrapper;
 }
 
-- (void) setButtonPressed:(BOOL)pressed;
-- (void) setAxisX:(JoystickDirection)state;
-- (void) setAxisY:(JoystickDirection)state;
+- (void) pullJoystick:(GamePadDirection)dir;
+- (void) releaseJoystick:(GamePadDirection)dir;
+- (void) releaseXAxis;
+- (void) releaseYAxis;
+
+// - (void) setAxisX:(GamePadDirection)state;
+// - (void) setAxisY:(GamePadDirection)state;
 
 - (void) dump;
 
@@ -356,7 +369,6 @@ struct CartridgeWrapper;
 
 - (instancetype) initWithC64Proxy:(C64Proxy *)c64;
 - (BOOL) joystickIsPluggedIn:(NSInteger)nr;
-- (void) bindJoystick:(NSInteger)nr joystick:(JoystickProxy *)joy;
 - (void) bindJoystickToPortA:(NSInteger)nr;
 - (void) bindJoystickToPortB:(NSInteger)nr;
 - (void) unbindJoysticksFromPortA;

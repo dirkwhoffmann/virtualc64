@@ -350,16 +350,16 @@ typedef NS_ENUM(NSInteger, INPUT_DEVICES) {
 - (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags;
 
 //! @brief Returns the keycode for a joystick emulation key
-- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(JoystickDirection)dir;
+- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(GamePadDirection)dir;
 
 //! @brief Sets the keycode for a joystick emulation key
-- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(JoystickDirection)dir;
+- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(GamePadDirection)dir;
 
 //! @brief Returns a joystick emulation key as printable character
-- (char)joyChar:(int)nr direction:(JoystickDirection)dir;
+- (char)joyChar:(int)nr direction:(GamePadDirection)dir;
 
 //! @brief Sets the printable character for a joystick emulation key
-- (void)setJoyChar:(char)c keymap:(int)nr direction:(JoystickDirection)dir;
+- (void)setJoyChar:(char)c keymap:(int)nr direction:(GamePadDirection)dir;
 
 
 // Timer and message processing
