@@ -173,7 +173,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 - (void)updateKeymap:(int)map direction:(GamePadDirection)dir button:(NSButton *)b text:(NSTextField *)t
 {
     long code = [controller joyKeyFingerprint:map direction:dir];
-    char c = [controller joyChar:map direction:dir];
+    NSString *s = [controller joyChar:map direction:dir];
     
     // Change button text and image
     if (map == 1) {
@@ -184,23 +184,20 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
         [b setImage:[NSImage imageNamed:(recordKey2 == dir ? @"LEDnewRed" : @"")]];
     }
     
-    // Convert keycode to plain text
-    NSString *str = [NSString stringWithFormat:@"%c" , c];
-    
     // Change appearance for some special keys
     switch (code) {
-        case NSAlternateKeyMask: str = @"\u2325"; break;
-        case NSShiftKeyMask: str = @"\u21E7"; break;
-        case NSCommandKeyMask: str = @"\u2318"; break;
-        case NSControlKeyMask: str = @"\u2303"; break;
-        case 123: str = @"\u2190"; break; // Cursor left
-        case 124: str = @"\u2192"; break; // Cursor right
-        case 125: str = @"\u2193"; break; // Cursor down
-        case 126: str = @"\u2191"; break; // Cursor up
-        case 49:  str = @"\u2423"; break; // Space
+        case NSAlternateKeyMask: s = @"\u2325"; break;
+        case NSShiftKeyMask: s = @"\u21E7"; break;
+        case NSCommandKeyMask: s = @"\u2318"; break;
+        case NSControlKeyMask: s = @"\u2303"; break;
+        case 123: s = @"\u2190"; break; // Cursor left
+        case 124: s = @"\u2192"; break; // Cursor right
+        case 125: s = @"\u2193"; break; // Cursor down
+        case 126: s = @"\u2191"; break; // Cursor up
+        case 49:  s = @"\u2423"; break; // Space
     }
     
-    [t setStringValue:str];
+    [t setStringValue:s];
 }
 
 - (void)update
@@ -251,34 +248,19 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 
 - (void)keyDown:(NSEvent *)event
 {
-    // NSLog(@"PREFPANEL keyDown: %ld", (long)[event keyCode]);
-    // NSLog(@"PREFPANEL record1: %ld record2: %ld", (long)recordKey1, (long)recordKey2);
-
     unsigned short keycode     = [event keyCode];
-    unsigned char  c           = [[event characters] UTF8String][0];
+    // unsigned char  c           = [[event characters] UTF8String][0];
     NSEventModifierFlags flags = [event modifierFlags];
-    
-    /*
-    NSLog(@"Recording keycode: %04X (modifierFlags: %08X)\n", keycode, flags);
-    if (flags & NSAlphaShiftKeyMask) NSLog(@"NSAlphaShiftKeyMask ");
-    if (flags & NSShiftKeyMask) NSLog(@"NSShiftKeyMask ");
-    if (flags & NSControlKeyMask) NSLog(@"NSControlKeyMask ");
-    if (flags & NSAlternateKeyMask) NSLog(@"NSAlternateKeyMask ");
-    if (flags & NSCommandKeyMask) NSLog(@"NSCommandKeyMask ");
-    if (flags & NSNumericPadKeyMask) NSLog(@"NSNumericPadKeyMask ");
-    if (flags & NSHelpKeyMask) NSLog(@"NSHelpKeyMask ");
-    if (flags & NSFunctionKeyMask) NSLog(@"NSFunctionKeyMask ");
-    */
     
     MacKeyFingerprint fingerprint = [controller fingerprintForKey:keycode withModifierFlags:flags];
     if (recordKey1 != -1) {
         [controller setJoyKeyFingerprint:fingerprint keymap:1 direction:(GamePadDirection)recordKey1];
-        [controller setJoyChar:c keymap:1 direction:(GamePadDirection)recordKey1];
+        [controller setJoyChar:[event characters] keymap:1 direction:(GamePadDirection)recordKey1];
     }
 
     if (recordKey2 != -1) {
         [controller setJoyKeyFingerprint:fingerprint keymap:2 direction:(GamePadDirection)recordKey2];
-        [controller setJoyChar:c keymap:2 direction:(GamePadDirection)recordKey2];
+        [controller setJoyChar:[event characters] keymap:2 direction:(GamePadDirection)recordKey2];
     }
 
     recordKey1 = -1;
@@ -318,13 +300,13 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     // First keyset
     if (recordKey1 != -1) {
         [controller setJoyKeyFingerprint:flags keymap:1 direction:(GamePadDirection)recordKey1];
-        [controller setJoyChar:' ' keymap:1 direction:(GamePadDirection)recordKey1];
+        [controller setJoyChar:@" " keymap:1 direction:(GamePadDirection)recordKey1];
     }
     
     // Second keyset
     if (recordKey2 != -1) {
         [controller setJoyKeyFingerprint:flags keymap:2 direction:(GamePadDirection)recordKey2];
-        [controller setJoyChar:' ' keymap:2 direction:(GamePadDirection)recordKey2];
+        [controller setJoyChar:@" " keymap:2 direction:(GamePadDirection)recordKey2];
     }
     
     recordKey1 = -1;

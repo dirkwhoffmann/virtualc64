@@ -429,29 +429,10 @@
     switch (nr) {
         case 1: return [[keyboardcontroller keymap1] getFingerprintForDirection:dir];
         case 2: return [[keyboardcontroller keymap2] getFingerprintForDirection:dir];
+            
+        default:
+            assert(0); return 0;
     }
-    
-    assert(0);
-    return 0;
-}
-
-- (char)joyChar:(int)nr direction:(GamePadDirection)dir
-{
-    NSString *s;
-    
-    assert(dir >= 0 && dir <= 4);
-        
-    switch (nr) {
-        case 1:
-            s = [[keyboardcontroller keymap1] getCharacterForDirection:dir];
-            return [s UTF8String][0];
-        case 2:
-            s = [[keyboardcontroller keymap2] getCharacterForDirection:dir];
-            return [s UTF8String][0];
-    }
-    
-    assert(0);
-    return 0;
 }
 
 - (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(GamePadDirection)dir
@@ -459,32 +440,40 @@
     assert(dir >= 0 && dir <= 4);
     
     switch (nr) {
-        case 1:
-            [[keyboardcontroller keymap1] setFingerprint:key forDirection:dir];
-            return;
-        case 2:
-            [[keyboardcontroller keymap2] setFingerprint:key forDirection:dir];
-            return;
+        case 1: [[keyboardcontroller keymap1] setFingerprint:key forDirection:dir]; return;
+        case 2: [[keyboardcontroller keymap2] setFingerprint:key forDirection:dir]; return;
+
+        default:
+            assert(0);
     }
-    
-    assert(0);
 }
 
-- (void)setJoyChar:(char)c keymap:(int)nr direction:(GamePadDirection)dir
+- (NSString *)joyChar:(int)nr direction:(GamePadDirection)dir
+{
+    assert(dir >= 0 && dir <= 4);
+        
+    switch (nr) {
+            
+        case 1: return [[keyboardcontroller keymap1] getCharacterForDirection:dir];
+        case 2: return [[keyboardcontroller keymap2] getCharacterForDirection:dir];
+        
+        default:
+            assert(0); return 0;
+    }
+}
+
+- (void)setJoyChar:(NSString *)s keymap:(int)nr direction:(GamePadDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
     
-    NSString *s = [NSString stringWithFormat:@"%c" , c];
     switch (nr) {
-        case 1:
-            [[keyboardcontroller keymap1] setCharacter:s forDirection:dir];
-            return;
-        case 2:
-            [[keyboardcontroller keymap2] setCharacter:s forDirection:dir];
-            return;
+            
+        case 1: [[keyboardcontroller keymap1] setCharacter:s forDirection:dir]; return;
+        case 2: [[keyboardcontroller keymap2] setCharacter:s forDirection:dir]; return;
+   
+        default:
+            assert(0);
     }
-    
-    assert(0);
 }
 
 - (void)keyDown:(NSEvent *)event
