@@ -502,7 +502,6 @@ typedef NS_ENUM(NSInteger, GamePadDirection) {
 - (void) setBitAccuracy:(bool)b;
 - (bool) soundMessagesEnabled;
 - (void) setSendSoundMessages:(bool)b;
-// - (D64ArchiveProxy *) convertToD64;
 - (bool) exportToD64:(NSString *)path;
 
 - (void) playSound:(NSString *)name volume:(float)v;
@@ -732,7 +731,10 @@ typedef NS_ENUM(NSInteger, GamePadDirection) {
 - (NSInteger)getType;
 - (NSInteger)getNumberOfItems; 
 - (NSString *)getNameOfItem:(NSInteger)item;
+- (NSString *)getNameOfItemAsPETString:(NSInteger)item;
+- (NSString *)getNameOfItemAsC64FontString:(NSInteger)item;
 - (const char *)getNameOfItemUTF8:(NSInteger)item;
+- (const char *)getNameOfItemAsPETStringUTF8:(NSInteger)item;
 - (NSInteger) getSizeOfItem:(NSInteger)item;
 - (NSInteger) getSizeOfItemInBlocks:(NSInteger)item;
 - (NSString *) getTypeOfItem:(NSInteger)item;

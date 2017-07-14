@@ -335,6 +335,14 @@ NIBArchive::getNameOfItem(int n)
 }
 
 const char *
+NIBArchive::getNameOfItemAsPETString(int n)
+{
+    (void)getNameOfItem(n);
+    asciiString2pet(name);
+    return name;
+}
+
+const char *
 NIBArchive::getTypeOfItem(int n)
 {
     return ""; // (n % 2 == 0) ? "Full" : "Half";

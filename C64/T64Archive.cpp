@@ -280,6 +280,14 @@ T64Archive::getNameOfItem(int n)
 }
 
 const char *
+T64Archive::getNameOfItemAsPETString(int n)
+{
+    (void)getNameOfItem(n);
+    asciiString2pet(name);
+    return name;
+}
+
+const char *
 T64Archive::getTypeOfItem(int n)
 {
 	int i = 0x41 + (n * 0x20);

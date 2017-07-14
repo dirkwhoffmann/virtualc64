@@ -163,18 +163,26 @@ P00Archive::getNumberOfItems()
 const char *
 P00Archive::getNameOfItem(int n)
 {
-	unsigned i;
-	
-	if (n != 0)
-		return NULL;
-		
-	for (i = 0; i < 17; i++) {
-		name[i] = pet2asciiOld(data[0x08+i]);
-	}
-	name[i] = 0x00;
-	return name;
+    (void)getNameOfItemAsPETString(n);
+    petString2ascii(name);
+    return name;
 }
-	
+
+const char *
+P00Archive::getNameOfItemAsPETString(int n)
+{
+    unsigned i;
+    
+    if (n != 0)
+        return NULL;
+    
+    for (i = 0; i < 17; i++) {
+        name[i] = data[0x08+i];
+    }
+    name[i] = 0x00;
+    return name;
+}
+
 const char *
 P00Archive::getTypeOfItem(int n)
 {

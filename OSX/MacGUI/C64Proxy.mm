@@ -1106,9 +1106,30 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (NSString *)getNameOfItem:(NSInteger)item {
     return [NSString stringWithUTF8String:wrapper->archive->getNameOfItem((int)item)];
 }
-- (const char *)getNameOfItemUTF8:(NSInteger)item {
-    return [[self getNameOfItem:item] UTF8String];
+- (NSString *)getNameOfItemAsPETString:(NSInteger)item {
+    return [NSString stringWithUTF8String:wrapper->archive->getNameOfItemAsPETString((int)item)];
 }
+
+- (NSString *)getNameOfItemAsC64FontString:(NSInteger)item {
+    
+    unichar cs[256];
+    const char *name = wrapper->archive->getNameOfItemAsPETString((int)item);
+    size_t length = strlen(name) < 256 ? strlen(name) : 256;
+    
+    for (unsigned i = 0; i < length; i++)
+        cs[i] = (unichar)0xEE00 + name[i];
+    
+    return [NSString stringWithCharacters:cs length:length];
+}
+
+- (const char *)getNameOfItemUTF8:(NSInteger)item {
+    return wrapper->archive->getNameOfItem((int)item);
+}
+
+- (const char *)getNameOfItemAsPETStringUTF8:(NSInteger)item {
+    return wrapper->archive->getNameOfItemAsPETString((int)item);
+}
+
 - (NSInteger) getSizeOfItem:(NSInteger)item {
     return wrapper->archive->getSizeOfItem((int)item);
 }

@@ -139,7 +139,14 @@ PRGArchive::getNameOfItem(int n)
 {
 	return "UNKNOWN";
 }
-	
+
+const char *
+PRGArchive::getNameOfItemAsPETString(int n)
+{
+    return "UNKNOWN";  // TODO
+}
+
+
 const char *
 PRGArchive::getTypeOfItem(int n)
 {

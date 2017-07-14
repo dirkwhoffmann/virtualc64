@@ -81,6 +81,7 @@ public:
     int getNumberOfItems();
     
     const char *getNameOfItem(int n);
+    const char *getNameOfItemAsPETString(int n);
     const char *getTypeOfItem(int n);
     uint16_t getDestinationAddrOfItem(int n);
     

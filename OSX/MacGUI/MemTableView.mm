@@ -61,14 +61,31 @@
 	
 	// ASCII column...
 	if ([[tableColumn identifier] isEqual:@"ascii"]) {
+        
 		if (![[c64 mem] isValidAddr:addr memtype:source])
 			return nil;
-		else
-			return [NSString stringWithFormat:@"%c%c%c%c", 
-					toASCII([[c64 mem] peekFrom:(addr+0) memtype:source]),
-					toASCII([[c64 mem] peekFrom:(addr+1) memtype:source]),
-					toASCII([[c64 mem] peekFrom:(addr+2) memtype:source]),
-					toASCII([[c64 mem] peekFrom:(addr+3) memtype:source])];
+        
+        uint8_t c1 = [[c64 mem] peekFrom:(addr+0) memtype:source];
+        uint8_t c2 = [[c64 mem] peekFrom:(addr+1) memtype:source];
+        uint8_t c3 = [[c64 mem] peekFrom:(addr+2) memtype:source];
+        uint8_t c4 = [[c64 mem] peekFrom:(addr+3) memtype:source];
+        
+        return [NSString stringWithFormat:@"%c%c%c%c",
+                ascii2printable(c1, '.'),
+                ascii2printable(c2, '.'),
+                ascii2printable(c3, '.'),
+                ascii2printable(c4, '.')];
+        
+        // Convert memory bytes to unicode characters
+        // In C64ProMono font, a suitable mapping starts at 0xEE00
+        // unichar const base = (unichar)0xEE00;
+        /*
+        unichar chars[4];
+        for (unsigned i = 0; i < 4; i++)
+            chars[i] = (unichar)0xEE00 + [[c64 mem] peekFrom:(addr+i) memtype:source];
+        
+        return [NSString stringWithCharacters:chars length:4];
+         */
 	}
 	
 	// One of the hexadecimal columns...
@@ -83,6 +100,20 @@
 	
 	return nil;
 }
+
+/*
+- (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    NSTextFieldCell *cell = [tableColumn dataCell];
+    
+    if ([[tableColumn identifier] isEqual:@"ascii"]) {
+        NSFont *cbmfont = [NSFont fontWithName:@"C64ProMono" size: 9];
+        [cell setFont:cbmfont];
+    }
+
+    return cell;
+}
+*/
 
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(MemoryType)t
 {

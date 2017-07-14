@@ -63,10 +63,10 @@ pet2printable(uint8_t c)
 }
 
 uint8_t
-ascii2printable(uint8_t c)
+ascii2printable(uint8_t c, uint8_t subst)
 {
-    if (c >= 0x20 /*' '*/ && c <= 0xFE /* ~ */) return c;
-    return (uint8_t)' ';
+    if (c >= 0x20 /*' '*/ && c <= 0x7E /* ~ */) return c;
+    return subst;
 }
 
 uint8_t
@@ -96,7 +96,7 @@ void
 asciiString2printable(char *s)
 {
     assert(s != NULL);
-    for (; *s != 0; s++) *s = ascii2printable(*s);
+    for (; *s != 0; s++) *s = ascii2printable(*s, ' ');
 }
 
 void
@@ -176,6 +176,7 @@ pet2unicode(uint8_t petchar)
     return 0x0000;
 }
 
+/*
 char
 toASCII(char c)
 {
@@ -189,6 +190,7 @@ toASCII(char c)
         return '.';
     }
 }
+*/
 
 uint8_t
 pet2asciiOld(uint8_t petchar)

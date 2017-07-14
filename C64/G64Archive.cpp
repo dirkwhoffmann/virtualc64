@@ -147,6 +147,14 @@ G64Archive::getNameOfItem(int n)
 }
 
 const char *
+G64Archive::getNameOfItemAsPETString(int n)
+{
+    (void)getNameOfItem(n);
+    asciiString2pet(name);
+    return name;
+}
+
+const char *
 G64Archive::getTypeOfItem(int n)
 {
     return ""; // (n % 2 == 0) ? "Full" : "Half";

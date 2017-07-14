@@ -70,6 +70,7 @@ public:
     void dealloc();
     
     const char *getName();
+    // const char *getNameAsPETString();
     ContainerType getType() { return G64_CONTAINER; }
     const char *getTypeAsString() { return "G64"; }
     
@@ -87,6 +88,7 @@ public:
     int getSizeOfItem(int n);
     
     const char *getNameOfItem(int n);
+    const char *getNameOfItemAsPETString(int n);
     const char *getTypeOfItem(int n);
     uint16_t getDestinationAddrOfItem(int n) { return 0; }
     

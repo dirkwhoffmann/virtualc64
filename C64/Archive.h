@@ -68,14 +68,12 @@ public:
     /*! @brief   Returns the name of an item
      *  @return  String in ASCII format, or NULL, if item does not exist
      */
-    // TODO: DEFAULT IMPLEMENTATION USING ASCII2PET
-    // Archives such as D64 can override this function 
-    // virtual const char *getNameOfItemAsPETString(int n);
+	virtual const char *getNameOfItem(int n) = 0;
 
     /*! @brief   Returns the name of an item
-     *  @return  String in ASCII format, or NULL, if item does not exist
+     *  @return  String in PET format, or NULL, if item does not exist
      */
-	virtual const char *getNameOfItem(int n) = 0;
+    virtual const char *getNameOfItemAsPETString(int n) = 0;
 
     //! @brief    Returns the type of an item as a string (e.g., "PRG" or "DEL")
 	virtual const char *getTypeOfItem(int n) = 0;

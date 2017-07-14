@@ -109,6 +109,7 @@ public:
     void dealloc() { };
     
     const char *getName();
+    const char *getNameAsPETString();
     ContainerType getType() { return D64_CONTAINER; }
     const char *getTypeAsString() { return "D64"; }
 	
@@ -123,6 +124,7 @@ public:
     int getNumberOfItems();
     
 	const char *getNameOfItem(int n);
+    const char *getNameOfItemAsPETString(int n);
 	const char *getTypeOfItem(int n);
     int getSizeOfItemInBlocks(int n);
 	uint16_t getDestinationAddrOfItem(int n);
@@ -154,12 +156,6 @@ public:
      *            Invisible files will return "" as extension string.
      */
     bool itemIsVisible(uint8_t typeChar, const char **extension = NULL);
-    
-    //! @brief    Returns the logical name of the archive in PET format
-    const char *getNameAsPETString();
-    
-    //! @brief    Returns the name of an item in PET format
-    const char *getNameOfItemAsPETString(int n);
     
     //! @brief    Class function that returns the total number of sectors in a specific track
     static unsigned numberOfSectors(unsigned trackNr);

@@ -66,15 +66,6 @@
     [loadOptions setHidden:isG64orNIB];
     [loadOptions setFont:cbmfont];
     [directory reloadData];
-    
-    // NSTableColumn *column = [directory col]
-    
-      NSArray *availableFonts = [[NSFontManager sharedFontManager] availableFontFamilies];
-      for (NSString* s in availableFonts)
-      {
-      NSLog(@"%@", s);
-      }
-      
 }
 
 - (void) initialize:(ArchiveProxy *)aproxy c64proxy:(C64Proxy *)proxy
@@ -188,13 +179,13 @@
 {
 	if ([[aTableColumn identifier] isEqual:@"filename"]) {
         // const char *itemName = [archive getNameOfItemUTF8:row];
-        const char *itemName = [archive getNameOfItemUTF8:row];
+        const char *itemName = [archive getNameOfItemAsPETStringUTF8:row];
         assert(itemName != NULL);
 
         unichar uName[18];
         memset(uName, 0, sizeof(uName));
         for (unsigned i = 0; i < strlen(itemName) && i < 18; i++) {
-            uName[i] = 0xEE00 + itemName[i];
+            uName[i] = itemName[i];
             // uName[i] = pet2unicode(itemName[i]);
         }
         

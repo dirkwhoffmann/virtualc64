@@ -108,9 +108,9 @@ uint8_t ascii2pet(uint8_t c);
 uint8_t pet2printable(uint8_t c);
 
 /*! @brief    Converts an ASCII character to a printable ASCII character.
- *  @details  Substitutes all special characters by ' '.
+ *  @details  Substitutes all special characters by subst.
  */
-uint8_t ascii2printable(uint8_t c);
+uint8_t ascii2printable(uint8_t c, uint8_t subst);
 
 /*! @brief    Converts an ASCII character to a pastable ASCII character.
  *  @details  Substitutes all special characters by ' '.
@@ -160,7 +160,7 @@ uint16_t pet2unicode(uint8_t petchar);
  *            Replace font in debug panel by C64 font and use 
  *            original PET mapping.
  */
-char toASCII(char c);
+// char toASCII(char c);
 
 /*! @brief    Converts a PET character to an ASCII character.
  *  @details  This function uses the PET upper case character set.

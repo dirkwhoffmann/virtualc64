@@ -400,6 +400,22 @@ D64Archive::getNameOfItem(int n)
 }
 
 const char *
+D64Archive::getNameOfItemAsPETString(int n)
+{
+    int i, pos = findDirectoryEntry(n);
+    
+    if (pos <= 0) return NULL;
+    pos += 0x03; // filename begins here
+    for (i = 0; i < 16; i++) {
+        if (data[pos+i] == 0xA0)
+            break;
+        name[i] = data[pos+i];
+    }
+    name[i] = 0x00;
+    return name;
+}
+
+const char *
 D64Archive::getTypeOfItem(int n)
 {
     const char *extension = "";
@@ -551,22 +567,6 @@ D64Archive::getNameAsPETString()
     int i, pos = offset(18, 0) + 0x90;
     
     for (i = 0; i < 255; i++) {
-        if (data[pos+i] == 0xA0)
-            break;
-        name[i] = data[pos+i];
-    }
-    name[i] = 0x00;
-    return name;
-}
-
-const char *
-D64Archive::getNameOfItemAsPETString(int n)
-{
-    int i, pos = findDirectoryEntry(n);
-    
-    if (pos <= 0) return NULL;
-    pos += 0x03; // filename begins here
-    for (i = 0; i < 16; i++) {
         if (data[pos+i] == 0xA0)
             break;
         name[i] = data[pos+i];

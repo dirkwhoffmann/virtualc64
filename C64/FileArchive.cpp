@@ -101,7 +101,15 @@ FileArchive::getNameOfItem(int n)
 
 	return name;
 }
-	
+
+const char *
+FileArchive::getNameOfItemAsPETString(int n)
+{
+    (void)getNameOfItem(n);
+    asciiString2pet(name);
+    return name;
+}
+
 int 
 FileArchive::getSizeOfItem(int n)
 {
