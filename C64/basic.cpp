@@ -38,6 +38,85 @@ printReadable(const void *data, int length)
     }
 }
 
+uint8_t
+pet2ascii(uint8_t c)
+{
+    if (c <= 0x1A /* Z */) return c + (uint8_t)'@';
+    if (c >= 0x1B /* [ */ && c <= 0x1D /* ] */) return c + (uint8_t)'[';
+    return c;
+}
+
+uint8_t
+ascii2pet(uint8_t c)
+{
+    if (c >= (uint8_t)'@' && c <= (uint8_t)'Z') return c - (uint8_t)'@';
+    if (c >= (uint8_t)'[' && c <= (uint8_t)']') return c - 0x1B /* [ */;
+    return c;
+}
+
+uint8_t
+pet2printable(uint8_t c)
+{
+    if (c <= 0x1D /* ] */) return c;
+    if (c >= 0x20 /*' '*/ && c <= 0x3F /* ? */) return c;
+    return (uint8_t)' ';
+}
+
+uint8_t
+ascii2printable(uint8_t c)
+{
+    if (c >= 0x20 /*' '*/ && c <= 0xFE /* ~ */) return c;
+    return (uint8_t)' ';
+}
+
+uint8_t
+ascii2pastable(uint8_t c)
+{
+    if (c >= 0x20 /*' '*/ && c <= 0x5D /* ] */) return c;
+    if (c >= (uint8_t)'a' && c <= (uint8_t)'z') return c - 0x20 /* uppercase */;
+    return (uint8_t)' ';
+}
+
+
+void
+petString2ascii(char *s)
+{
+    assert(s != NULL);
+    for (; *s != 0; s++) *s = pet2ascii(*s);
+}
+
+void
+asciiString2pet(char *s)
+{
+    assert(s != NULL);
+    for (; *s != 0; s++) *s = ascii2pet(*s);
+}
+
+void
+asciiString2printable(char *s)
+{
+    assert(s != NULL);
+    for (; *s != 0; s++) *s = ascii2printable(*s);
+}
+
+void
+petString2printable(char *s)
+{
+    assert(s != NULL);
+    for (; *s != 0; s++) *s = pet2printable(*s);
+}
+
+void
+asciiString2pastable(char *s)
+{
+    assert(s != NULL);
+    for (; *s != 0; s++) *s = ascii2pastable(*s);
+}
+
+
+// OLD CONVERSION ROUTINES. REMOVE AFTER UPPER ONES ARE TESTES
+
+
 uint16_t
 pet2unicode(uint8_t petchar)
 {

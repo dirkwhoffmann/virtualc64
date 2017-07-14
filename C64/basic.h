@@ -90,6 +90,60 @@ void printReadable(const void *data, int length);
 //! @functiongroup Converting low level data objects
 //
 
+/*! @brief    Converts a PET character to an ASCII character.
+ *  @details  This function uses the PET upper case character set.
+ *  @note     Character is unchanged if no mapping is possible
+ */
+uint8_t pet2ascii(uint8_t c);
+
+/*! @brief    Converts an ASCII character to a PET character.
+ *  @details  This function uses the PET upper case character set.
+ *  @note     Character is unchanged if no mapping is possible
+ */
+uint8_t ascii2pet(uint8_t c);
+
+/*! @brief    Converts a PET character to a printable PET character.
+ *  @details  Substitutes all special characters by ' '.
+ */
+uint8_t pet2printable(uint8_t c);
+
+/*! @brief    Converts an ASCII character to a printable ASCII character.
+ *  @details  Substitutes all special characters by ' '.
+ */
+uint8_t ascii2printable(uint8_t c);
+
+/*! @brief    Converts an ASCII character to a pastable ASCII character.
+ *  @details  Substitutes all special characters by ' '.
+ *            This is method is used for pasting text snippets into the
+ *            emulator. Before pasting text from the clipboard, all lower 
+ *            case characters are made upper case and all special characters
+ *            are replaced by a white space.
+ */
+uint8_t ascii2pastable(uint8_t c);
+
+/*! @brief    Converts a PET string to an ASCII string via pet2ascii.
+ */
+void petString2ascii(char *s);
+
+/*! @brief    Converts an ASCII string to a PET string via ascii2pet.
+ */
+void asciiString2pet(char *s);
+
+/*! @brief    Applies pet2printable to each character of a string.
+ */
+void petString2printable(char *s);
+
+/*! @brief    Applies ascii2printable to each character of a string.
+ */
+void asciiString2printable(char *s);
+
+/*! @brief    Applies ascii2pastable to each character of a string.
+ */
+void asciiString2pastable(char *s);
+
+
+
+// OLD CONVERSION ROUTINES. REMOVE AFTER UPPER ONES ARE TESTES
 
 /*! @brief    Converts a PET character to a unicocde character.
  *  @details  This function uses the PET upper case character set.
