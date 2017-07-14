@@ -117,7 +117,7 @@ T64Archive::archiveFromArchive(Archive *otherArchive)
     // User description (24 bytes)
     strncpy((char *)ptr, (char *)otherArchive->getName(), 24);
     for (unsigned i = 0; i < 24; i++, ptr++)
-        *ptr = ascii2pet(*ptr);
+        *ptr = ascii2petOld(*ptr);
     
     // Tape entries
     uint32_t tapePosition = 64 + maxFiles * 32; // data of item 0 starts here
@@ -162,7 +162,7 @@ T64Archive::archiveFromArchive(Archive *otherArchive)
         // File name (16 bytes)
         strncpy((char *)ptr, (char *)otherArchive->getNameOfItem(n), 16);
         for (unsigned i = 0; i < 16; i++, ptr++)
-            *ptr = ascii2pet(*ptr);
+            *ptr = ascii2petOld(*ptr);
     }
     
     // File data

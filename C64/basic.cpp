@@ -112,7 +112,7 @@ toASCII(char c)
 }
 
 uint8_t
-pet2ascii(uint8_t petchar)
+pet2asciiOld(uint8_t petchar)
 {
     if (petchar == 0x00)
         return 0x00;
@@ -122,16 +122,16 @@ pet2ascii(uint8_t petchar)
 }
 
 void
-petString2asciiString(char *petstring)
+petString2asciiStringOld(char *petstring)
 {
 assert(petstring != NULL);
 
 for (; *petstring != 0; petstring++)
-*petstring = pet2ascii(*petstring);
+*petstring = pet2asciiOld(*petstring);
 }
 
 uint8_t
-ascii2pet(uint8_t asciichar)
+ascii2petOld(uint8_t asciichar)
 {
     if (asciichar == 0x00)
         return 0x00;
@@ -146,12 +146,12 @@ ascii2pet(uint8_t asciichar)
 }
 
 void
-asciiString2petString(char *asciistring)
+asciiString2petStringOld(char *asciistring)
 {
     assert(asciistring != NULL);
     
     for (; *asciistring != 0; asciistring++)
-        *asciistring = ascii2pet(*asciistring);
+        *asciistring = ascii2petOld(*asciistring);
 }
 
 void

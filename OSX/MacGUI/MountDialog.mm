@@ -37,6 +37,9 @@
     archive = aproxy;
     c64 = proxy;
     
+    NSFont *cbmfont = [NSFont fontWithName:@"C64ProMono" size: 10];
+    // NSFont *cbmfont = [NSFont fontWithName:@"C64EliteMono-Style" size: 10];
+    
     bool isG64orNIB = ([aproxy getType] == G64_CONTAINER || [aproxy getType] == NIB_CONTAINER);
     doMount = YES;
     doFlash = NO;
@@ -58,10 +61,20 @@
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
         [directory selectRowIndexes:indexSet byExtendingSelection:NO];
     }
-    
+    // [directory setFont:cbmfont];
     [doubleClickText setHidden:isG64orNIB];
     [loadOptions setHidden:isG64orNIB];
+    [loadOptions setFont:cbmfont];
     [directory reloadData];
+    
+    // NSTableColumn *column = [directory col]
+    
+      NSArray *availableFonts = [[NSFontManager sharedFontManager] availableFontFamilies];
+      for (NSString* s in availableFonts)
+      {
+      NSLog(@"%@", s);
+      }
+      
 }
 
 - (void) initialize:(ArchiveProxy *)aproxy c64proxy:(C64Proxy *)proxy
@@ -174,13 +187,16 @@
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
 	if ([[aTableColumn identifier] isEqual:@"filename"]) {
+        // const char *itemName = [archive getNameOfItemUTF8:row];
         const char *itemName = [archive getNameOfItemUTF8:row];
         assert(itemName != NULL);
 
         unichar uName[18];
         memset(uName, 0, sizeof(uName));
-        for (unsigned i = 0; i < strlen(itemName) && i < 18; i++)
-            uName[i] = pet2unicode(itemName[i]);
+        for (unsigned i = 0; i < strlen(itemName) && i < 18; i++) {
+            uName[i] = 0xEE00 + itemName[i];
+            // uName[i] = pet2unicode(itemName[i]);
+        }
         
         NSString *unicodename = [NSString stringWithCharacters:uName length:17];
         // NSLog(@"%@", unicodename);
@@ -212,6 +228,10 @@
 - (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     NSTextFieldCell *cell = [tableColumn dataCell];
+
+    // NSFont *cbmfont = [NSFont fontWithName:@"C64EliteMono-Style" size: 8];
+    NSFont *cbmfont = [NSFont fontWithName:@"C64ProMono" size: 10];
+    [cell setFont:cbmfont];
 
     if ([archive getType] == G64_CONTAINER) {
         if ([archive getSizeOfItem:row] == 0) {

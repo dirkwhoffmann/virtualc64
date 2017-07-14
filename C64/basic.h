@@ -94,13 +94,17 @@ void printReadable(const void *data, int length);
 /*! @brief    Converts a PET character to a unicocde character.
  *  @details  This function uses the PET upper case character set.
  *  @result   Returns 0x00 if no unicode counterpart exists. 
+ *  @deprecated Won't use unicode in future
  */
 uint16_t pet2unicode(uint8_t petchar);
 
 /*! @brief    Converts a PET character to an ASCII character.
  *  @details  This function uses the PET upper case character set.
  *  @result   Returns '.' if no ASCII counterpart exists.
- *  @deprecated Use pet2ascii instead. 
+ *  @deprecated 
+ *  @todo     This method is used in the memory debug panel only
+ *            Replace font in debug panel by C64 font and use 
+ *            original PET mapping.
  */
 char toASCII(char c);
 
@@ -108,21 +112,21 @@ char toASCII(char c);
  *  @details  This function uses the PET upper case character set.
  *  @result   Returns '.' if no ASCII counterpart exists. 
  */
-uint8_t pet2ascii(uint8_t petchar);
+uint8_t pet2asciiOld(uint8_t petchar);
 
 /*! @brief    Converts an PET string into a ASCII string. 
  */
-void petString2asciiString(char *petstring);
+void petString2asciiStringOld(char *petstring);
 
 /*! @brief    Converts an ASCII character to a PET character.
  *  @details  This function translates into the unshifted PET character set. 
  *            I.e., lower case characters are converted to uppercase characters.
  *  @result   Returns ' ' if the ASCII character is not covered. 
  */
-uint8_t ascii2pet(uint8_t asciichar);
+uint8_t ascii2petOld(uint8_t asciichar);
 
 //! @brief    Converts an ASCII string into a PET string.
-void asciiString2petString(char *asciistring);
+void asciiString2petStringOld(char *asciistring);
 
 
 //! @brief    Writes the ASCII representation of 8 bit value to a string.

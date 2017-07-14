@@ -42,6 +42,7 @@
 		50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* Formatter.mm */; };
 		50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C760A6F7357009E80BD /* MyDocument.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
+		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018E48112240F7100F0820E /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5018E48012240F7100F0820E /* Container.cpp */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		5020434E1EE71BB8006C3FD3 /* runstop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5020434D1EE71BB8006C3FD3 /* runstop.png */; };
@@ -298,6 +299,7 @@
 		50176C760A6F7357009E80BD /* MyDocument.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = MyDocument.mm; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
+		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
 		5018E47F12240F7100F0820E /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
 		5018E48012240F7100F0820E /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
 		501D2C7D1B85C0F700B1AD0F /* VIC_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VIC_globals.h; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
 				503A5AD612227C0300EAA95E /* dsa_pub.pem */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
@@ -1147,6 +1150,7 @@
 				50C8925B1BEFB64500231B96 /* cntrlStart.png in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				50C8924F1BEFB11700231B96 /* cntrlEject.png in Resources */,
+				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				50C9CB201B826C960054EE86 /* joystick.png in Resources */,
 				50DA14A30A6418470022B4A7 /* bottom.png in Resources */,
 				5080F3591EE74784001313D4 /* commodore.png in Resources */,

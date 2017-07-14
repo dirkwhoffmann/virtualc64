@@ -363,7 +363,7 @@ const char *
 D64Archive::getName()
 {
     (void)getNameAsPETString();
-    petString2asciiString(name);
+    petString2asciiStringOld(name);
     return name;
 }
 
@@ -395,7 +395,7 @@ const char *
 D64Archive::getNameOfItem(int n)
 {
     (void)getNameOfItemAsPETString(n);
-    petString2asciiString(name);
+    petString2asciiStringOld(name);
     return name;
 }
 

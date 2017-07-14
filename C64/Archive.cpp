@@ -26,6 +26,7 @@ Archive::~Archive()
 {
 }
 
+#if 0
 int 
 Archive::getItemWithName(char *pattern)
 {
@@ -68,6 +69,7 @@ Archive::getItemWithName(char *pattern)
 	
 	return -1;
 }
+#endif 
 
 int
 Archive::getSizeOfItem(int n)

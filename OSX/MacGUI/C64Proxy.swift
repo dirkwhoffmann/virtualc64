@@ -60,8 +60,6 @@ extension NSImage {
 //                          C64 Proxy extensions
 // -------------------------------------------------------------------
 
-// TODO: Move ProxyColors.mm stuff in here
-
 public extension C64Proxy {
 
     func timetravelSnapshotImage(_ item: Int) -> NSImage {
