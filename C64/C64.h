@@ -19,16 +19,10 @@
  */
 
 // TODO:
-// Change ASCII / PET STUFF
-// - Add getUnicodeName and getUnicodeNameForItem
-// - These functions return representations that are compatible with C64ProMono font (E000 range)
-// - TODO: Check if disk name also looks allright with this mapping
-// - Add same methods to proxys
-// - Remove PetString2printable
-// 
 
 // VERSION 1.5.2:
-//
+// A C64 font is used in the directory preview window.
+// 
 // TODO:
 //
 // TODO:

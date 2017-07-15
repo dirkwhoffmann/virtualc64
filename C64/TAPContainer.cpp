@@ -78,7 +78,7 @@ TAPContainer::getName()
     unsigned i;
     
     for (i = 0; i < 17; i++) {
-        name[i] = pet2asciiOld(data[0x08+i]);
+        name[i] = data[0x08+i];
     }
     name[i] = 0x00;
     return name;

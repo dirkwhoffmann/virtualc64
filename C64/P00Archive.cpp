@@ -85,7 +85,7 @@ P00Archive::archiveFromArchive(Archive *otherArchive)
     // Name in PET format (17 bytes)
     strncpy((char *)ptr, (char *)otherArchive->getName(), 17);
     for (unsigned i = 0; i < 17; i++, ptr++)
-        *ptr = ascii2petOld(*ptr);
+        *ptr = ascii2pet(*ptr);
     
     // Record size (applies to REL files, only) (1 byte)
     *ptr++ = 0;
@@ -119,7 +119,7 @@ P00Archive::getName()
     unsigned i;
     
     for (i = 0; i < 17; i++) {
-        name[i] = pet2asciiOld(data[0x08+i]);
+        name[i] = data[0x08+i];
     }
     name[i] = 0x00;
     return name;

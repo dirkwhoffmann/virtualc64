@@ -51,8 +51,31 @@ void translateToUnicode(char *petscii, uint16_t *unicode, uint16_t base, size_t 
     unicode[i] = 0;
 }
 
+uint8_t
+petscii2printable(uint8_t c, uint8_t subst)
+{
+    if (c >= 0x20 /*' '*/ && c <= 0x7E /* ~ */) return c;
+    return subst;
+}
+
+uint8_t
+ascii2pet(uint8_t asciichar)
+{
+    if (asciichar == 0x00)
+        return 0x00;
+    
+    asciichar = toupper(asciichar);
+    
+    if (asciichar >= 0x20 && asciichar <= 0x5D) {
+        return asciichar;
+    } else {
+        return ' ';
+    }
+}
 
 
+
+#if 0
 uint8_t
 pet2ascii(uint8_t c)
 {
@@ -127,10 +150,12 @@ asciiString2pastable(char *s)
     assert(s != NULL);
     for (; *s != 0; s++) *s = ascii2pastable(*s);
 }
+#endif
 
 
 // OLD CONVERSION ROUTINES. REMOVE AFTER UPPER ONES ARE TESTES
 
+#if 0
 
 uint16_t
 pet2unicode(uint8_t petchar)
@@ -191,22 +216,6 @@ pet2unicode(uint8_t petchar)
     return 0x0000;
 }
 
-/*
-char
-toASCII(char c)
-{
-    uint8_t u = (uint8_t)c;
-    
-    u &= 0x7F;
-    
-    if (u >= 0x20 && u <= 0x7A) {
-        return (char)u;
-    } else {
-        return '.';
-    }
-}
-*/
-
 uint8_t
 pet2asciiOld(uint8_t petchar)
 {
@@ -249,6 +258,9 @@ asciiString2petStringOld(char *asciistring)
     for (; *asciistring != 0; asciistring++)
         *asciistring = ascii2petOld(*asciistring);
 }
+
+#endif
+
 
 void
 binary8_to_string(uint8_t value, char *s)

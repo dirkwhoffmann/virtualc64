@@ -36,6 +36,10 @@
     long loadOption;
     long selectedRow;
     
+    // Custom font
+    NSFont *cbmfont;
+    NSFont *cbmfontsmall;
+    
     // Todo items (when window closes)
     bool doMount;
     bool doFlash;

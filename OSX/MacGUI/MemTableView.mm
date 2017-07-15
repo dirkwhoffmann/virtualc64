@@ -71,10 +71,10 @@
         uint8_t c4 = [[c64 mem] peekFrom:(addr+3) memtype:source];
         
         return [NSString stringWithFormat:@"%c%c%c%c",
-                ascii2printable(c1, '.'),
-                ascii2printable(c2, '.'),
-                ascii2printable(c3, '.'),
-                ascii2printable(c4, '.')];
+                petscii2printable(c1, '.'),
+                petscii2printable(c2, '.'),
+                petscii2printable(c3, '.'),
+                petscii2printable(c4, '.')];
         
         // Convert memory bytes to unicode characters
         // In C64ProMono font, a suitable mapping starts at 0xEE00

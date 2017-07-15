@@ -105,98 +105,17 @@ void printReadable(const void *data, int length);
  */
 void translateToUnicode(char *petscii, uint16_t *unicode, uint16_t base, size_t max);
 
-/*! @brief    Converts a PET character to an ASCII character.
- *  @details  This function uses the PET upper case character set.
- *  @note     Character is unchanged if no mapping is possible
+/*! @brief    Converts a PETSCII character to a printable character.
+ *  @details  Replaces all unprintable characters by subst.
  */
-uint8_t pet2ascii(uint8_t c);
+uint8_t petscii2printable(uint8_t c, uint8_t subst);
 
-/*! @brief    Converts an ASCII character to a PET character.
- *  @details  This function uses the PET upper case character set.
- *  @note     Character is unchanged if no mapping is possible
- */
-uint8_t ascii2pet(uint8_t c);
-
-/*! @brief    Converts a PET character to a printable PET character.
- *  @details  Substitutes all special characters by ' '.
- */
-uint8_t pet2printable(uint8_t c);
-
-/*! @brief    Converts an ASCII character to a printable ASCII character.
- *  @details  Substitutes all special characters by subst.
- */
-uint8_t ascii2printable(uint8_t c, uint8_t subst);
-
-/*! @brief    Converts an ASCII character to a pastable ASCII character.
- *  @details  Substitutes all special characters by ' '.
- *            This is method is used for pasting text snippets into the
- *            emulator. Before pasting text from the clipboard, all lower 
- *            case characters are made upper case and all special characters
- *            are replaced by a white space.
- */
-uint8_t ascii2pastable(uint8_t c);
-
-/*! @brief    Converts a PET string to an ASCII string via pet2ascii.
- */
-void petString2ascii(char *s);
-
-/*! @brief    Converts an ASCII string to a PET string via ascii2pet.
- */
-void asciiString2pet(char *s);
-
-/*! @brief    Applies pet2printable to each character of a string.
- */
-void petString2printable(char *s);
-
-/*! @brief    Applies ascii2printable to each character of a string.
- */
-void asciiString2printable(char *s);
-
-/*! @brief    Applies ascii2pastable to each character of a string.
- */
-void asciiString2pastable(char *s);
-
-
-
-// OLD CONVERSION ROUTINES. REMOVE AFTER UPPER ONES ARE TESTES
-
-/*! @brief    Converts a PET character to a unicocde character.
- *  @details  This function uses the PET upper case character set.
- *  @result   Returns 0x00 if no unicode counterpart exists. 
- *  @deprecated Won't use unicode in future
- */
-uint16_t pet2unicode(uint8_t petchar);
-
-/*! @brief    Converts a PET character to an ASCII character.
- *  @details  This function uses the PET upper case character set.
- *  @result   Returns '.' if no ASCII counterpart exists.
- *  @deprecated 
- *  @todo     This method is used in the memory debug panel only
- *            Replace font in debug panel by C64 font and use 
- *            original PET mapping.
- */
-// char toASCII(char c);
-
-/*! @brief    Converts a PET character to an ASCII character.
- *  @details  This function uses the PET upper case character set.
- *  @result   Returns '.' if no ASCII counterpart exists. 
- */
-uint8_t pet2asciiOld(uint8_t petchar);
-
-/*! @brief    Converts an PET string into a ASCII string. 
- */
-void petString2asciiStringOld(char *petstring);
-
-/*! @brief    Converts an ASCII character to a PET character.
- *  @details  This function translates into the unshifted PET character set. 
+/*! @brief    Converts an ASCII character to an PETSCII character.
+ *  @details  This function translates into the unshifted PET character set.
  *            I.e., lower case characters are converted to uppercase characters.
- *  @result   Returns ' ' if the ASCII character is not covered. 
+ *  @result   Returns ' ' if the ASCII character is not supported by PETSCII charset.
  */
-uint8_t ascii2petOld(uint8_t asciichar);
-
-//! @brief    Converts an ASCII string into a PET string.
-void asciiString2petStringOld(char *asciistring);
-
+uint8_t ascii2pet(uint8_t asciichar);
 
 //! @brief    Writes the ASCII representation of 8 bit value to a string.
 void binary8_to_string(uint8_t value, char *s);

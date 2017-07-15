@@ -37,8 +37,8 @@
     archive = aproxy;
     c64 = proxy;
     
-    NSFont *cbmfont = [NSFont fontWithName:@"C64ProMono" size: 10];
-    // NSFont *cbmfont = [NSFont fontWithName:@"C64EliteMono-Style" size: 10];
+    cbmfont = [NSFont fontWithName:@"C64ProMono" size: 10];
+    cbmfontsmall = [NSFont fontWithName:@"C64ProMono" size: 8];
     
     bool isG64orNIB = ([aproxy getType] == G64_CONTAINER || [aproxy getType] == NIB_CONTAINER);
     doMount = YES;
@@ -47,13 +47,18 @@
     loadOption = LOAD_OPTION_8_1;
 
     // Let the table header show the logical archive name
-    [[[directory tableColumnWithIdentifier:@"filename"] headerCell] setStringValue:[aproxy getName]];
+    /*
+    NSTableHeaderCell *hc = [[directory tableColumnWithIdentifier:@"filename"] headerCell];
+    [hc setStringValue:[aproxy getName]];
+    [hc setFont:cbmfont];
+    */
     
     // Establish necessary binding
     [directory deselectAll:self];
     [directory setTarget:self];
     [directory setDelegate:self];
     [directory setDataSource:self];
+    [directory setIntercellSpacing:NSMakeSize(0, 0)];
     if (!isG64orNIB) {
         [directory setAction:@selector(singleClickAction:)];
         [directory setDoubleAction:@selector(doubleClickAction:)];
@@ -61,10 +66,8 @@
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
         [directory selectRowIndexes:indexSet byExtendingSelection:NO];
     }
-    // [directory setFont:cbmfont];
     [doubleClickText setHidden:isG64orNIB];
     [loadOptions setHidden:isG64orNIB];
-    [loadOptions setFont:cbmfont];
     [directory reloadData];
 }
 
@@ -157,11 +160,13 @@
 
 - (void)update
 {
-    // NSString *cmd = [self loadCommand];
     [[loadOptions itemAtIndex:0] setTitle:[NSString stringWithFormat:@"LOAD \"%@\",8,1",[self selectedFilename]]];
     [[loadOptions itemAtIndex:1] setTitle:[NSString stringWithFormat:@"LOAD \"%@\",8",[self selectedFilename]]];
+    /*
+    [loadOptions itemAtIndex:0] setTitle:[NSString stringWithFormat:@"LOAD \"...\",8,1"]];
+    [[loadOptions itemAtIndex:1] setTitle:[NSString stringWithFormat:@"LOAD \"...\",8"]];
     [loadOptions selectItemAtIndex:loadOption];
-    
+    */
     [warningText setHidden:loadOption != LOAD_OPTION_FLASH || [archive getType] == G64_CONTAINER];
 }
 
@@ -203,6 +208,39 @@
 
 #pragma mark NSTableViewDelegate
 
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    // NSColor *bgcolor1 = [[c64 vic] color:6];
+    // NSColor *bgcolor2 = [[c64 vic] color:6];
+    NSColor *textcolor = [NSColor blackColor];
+    NSColor *textcolorNonselect = [NSColor grayColor];
+    
+    [cell setFont:cbmfont];
+
+    /*
+    [cell setDrawsBackground:YES];
+        if (row % 2) {
+        [cell setBackgroundColor:bgcolor1];
+    } else {
+        [cell setBackgroundColor:bgcolor2];
+    }
+    */
+    
+    if ([archive getType] == G64_CONTAINER) {
+        if ([archive getSizeOfItem:row] == 0) {
+            [cell setTextColor:textcolorNonselect];
+        } else {
+            [cell setTextColor:textcolor];
+        }
+    } else {
+        if([[archive getTypeOfItem:row] isEqualToString:@"PRG"]) {
+            [cell setTextColor:textcolor];
+        } else {
+            [cell setTextColor:textcolorNonselect];
+        }
+    }
+}
+
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)row
 {
     // NSLog(@"Should select");
@@ -210,22 +248,23 @@
     return YES;
 }
 
+#if 0
 - (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     NSTextFieldCell *cell = [tableColumn dataCell];
 
-    NSFont *cbmfont = [NSFont fontWithName:@"C64ProMono" size: 10];
     [cell setFont:cbmfont];
-
+    [cell setBackgroundColor:darkblue];
+    
     if ([archive getType] == G64_CONTAINER) {
         if ([archive getSizeOfItem:row] == 0) {
             [cell setTextColor:[NSColor grayColor]];
         } else {
-            [cell setTextColor:[NSColor blackColor]];
+            [cell setTextColor:lightblue];
         }
     } else {
         if([[archive getTypeOfItem:row] isEqualToString:@"PRG"]) {
-            [cell setTextColor:[NSColor blackColor]];
+            [cell setTextColor:lightblue];
         } else {
             [cell setTextColor:[NSColor grayColor]];
         }
@@ -233,6 +272,7 @@
     
     return cell;
 }
+#endif
 
 #pragma mark Action methods
 
