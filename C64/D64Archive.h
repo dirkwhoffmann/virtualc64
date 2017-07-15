@@ -58,6 +58,9 @@ private:
      */
 	int fp;
 
+    //! @brief    Unicode name representation
+    unsigned short unicodeName[256];
+
 public:
 
     //
@@ -93,14 +96,6 @@ public:
      */
     static D64Archive *archiveFromArchive(Archive *archive);
 
-    /*! @brief   Creates a D64 archive from a VC1541 drive.
-     *  @param   drive A VC1541 drive with a disk inserted.
-     *  @result  A D64 archive containing the same files as the currently inserted disk;
-     *           NULL if no disk is inserted. 
-     @  @deprecated
-     */
-     // static D64Archive *archiveFromDrive(VC1541 *drive);
-
     
 	//
     // Virtual functions from Container class
@@ -109,7 +104,7 @@ public:
     void dealloc() { };
     
     const char *getName();
-    const char *getNameAsPETString();
+    const unsigned short *getUnicodeName(size_t maxChars);
     ContainerType getType() { return D64_CONTAINER; }
     const char *getTypeAsString() { return "D64"; }
 	
@@ -124,7 +119,7 @@ public:
     int getNumberOfItems();
     
 	const char *getNameOfItem(int n);
-    const char *getNameOfItemAsPETString(int n);
+    const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars);
 	const char *getTypeOfItem(int n);
     int getSizeOfItemInBlocks(int n);
 	uint16_t getDestinationAddrOfItem(int n);

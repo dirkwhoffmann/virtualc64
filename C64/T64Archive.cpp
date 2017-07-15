@@ -236,28 +236,18 @@ T64Archive::getName()
 	return name;
 }
 
+const unsigned short *
+T64Archive::getUnicodeName(size_t maxChars)
+{
+    (void)getName();
+    translateToUnicode(name, unicode, 0xE000, maxChars);
+    return unicode;
+}
+
 int 
 T64Archive::getNumberOfItems()
 {
     return LO_HI(data[0x24], data[0x25]);
-    
-#if 0
-	int noOfItems;
-
-	// Get number of files from the file header...
-    noOfItems = LO_HI(data[0x24], data[0x25]);
-
-	if (noOfItems == 0) {
-
-        // Note: Some archives don't store this value properly.
-		// In this case, we can determine the number of files
-		// by iterating through the directory area...
-		while (directoryItemIsPresent(noOfItems))
-			noOfItems++;
-	}
-
-	return noOfItems;
-#endif
 }
 
 const char *
@@ -279,12 +269,12 @@ T64Archive::getNameOfItem(int n)
 	return name;
 }
 
-const char *
-T64Archive::getNameOfItemAsPETString(int n)
+const unsigned short *
+T64Archive::getUnicodeNameOfItem(int n, size_t maxChars)
 {
     (void)getNameOfItem(n);
-    asciiString2pet(name);
-    return name;
+    translateToUnicode(name, unicode, 0xE000, maxChars);
+    return unicode;
 }
 
 const char *

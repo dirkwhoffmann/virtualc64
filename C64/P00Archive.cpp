@@ -163,14 +163,6 @@ P00Archive::getNumberOfItems()
 const char *
 P00Archive::getNameOfItem(int n)
 {
-    (void)getNameOfItemAsPETString(n);
-    petString2ascii(name);
-    return name;
-}
-
-const char *
-P00Archive::getNameOfItemAsPETString(int n)
-{
     unsigned i;
     
     if (n != 0)
@@ -183,10 +175,18 @@ P00Archive::getNameOfItemAsPETString(int n)
     return name;
 }
 
+const unsigned short *
+P00Archive::getUnicodeNameOfItem(int n, size_t maxChars)
+{
+    (void)getNameOfItem(n);
+    translateToUnicode(name, unicode, 0xE000, maxChars);
+    return unicode;
+}
+
 const char *
 P00Archive::getTypeOfItem(int n)
 {
-	return "PRG";
+	return "P00";
 }
 
 uint16_t 

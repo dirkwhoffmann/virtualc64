@@ -18,7 +18,15 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// GOOD TEST CASE FOR ASCII/PET CONVERSION: OUTRUN_EUROPA_S1.D64
+// TODO:
+// Change ASCII / PET STUFF
+// - Add getUnicodeName and getUnicodeNameForItem
+// - These functions return representations that are compatible with C64ProMono font (E000 range)
+// - TODO: Check if disk name also looks allright with this mapping
+// - Add same methods to proxys
+// - Remove PetString2printable
+// 
+
 // VERSION 1.5.2:
 //
 // TODO:

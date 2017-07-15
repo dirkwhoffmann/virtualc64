@@ -71,9 +71,11 @@ public:
 	virtual const char *getNameOfItem(int n) = 0;
 
     /*! @brief   Returns the name of an item
-     *  @return  String in PET format, or NULL, if item does not exist
+     *  @return  Unicode character array, or NULL, if item does not exist
+     *  @details The provides unicode format is compatible with font C64ProMono
+     *           which is used, e.g., in the mount dialogs preview panel. 
      */
-    virtual const char *getNameOfItemAsPETString(int n) = 0;
+    virtual const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars = 255) = 0;
 
     //! @brief    Returns the type of an item as a string (e.g., "PRG" or "DEL")
 	virtual const char *getTypeOfItem(int n) = 0;

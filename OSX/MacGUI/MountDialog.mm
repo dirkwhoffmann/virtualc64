@@ -178,22 +178,13 @@
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
 	if ([[aTableColumn identifier] isEqual:@"filename"]) {
-        // const char *itemName = [archive getNameOfItemUTF8:row];
-        const char *itemName = [archive getNameOfItemAsPETStringUTF8:row];
-        assert(itemName != NULL);
-
-        unichar uName[18];
-        memset(uName, 0, sizeof(uName));
-        for (unsigned i = 0; i < strlen(itemName) && i < 18; i++) {
-            uName[i] = itemName[i];
-            // uName[i] = pet2unicode(itemName[i]);
-        }
         
-        NSString *unicodename = [NSString stringWithCharacters:uName length:17];
-        // NSLog(@"%@", unicodename);
-        return unicodename;
+        NSString *name = [archive getUnicodeNameOfItem:row maxChars:16];
+        return name;
     }
+    
 	if ([[aTableColumn identifier] isEqual:@"filesize"]) {
+        
         if ([archive getType] == G64_CONTAINER) {
 
             return @((int)[archive getSizeOfItem:row]);
@@ -201,9 +192,12 @@
             return @((int)[archive getSizeOfItemInBlocks:row]);
         }
 	}
+    
 	if ([[aTableColumn identifier] isEqual:@"filetype"]) {
+        
         return [archive getTypeOfItem:row];
 	}
+    
 	return @"???";
 }
 
@@ -220,7 +214,6 @@
 {
     NSTextFieldCell *cell = [tableColumn dataCell];
 
-    // NSFont *cbmfont = [NSFont fontWithName:@"C64EliteMono-Style" size: 8];
     NSFont *cbmfont = [NSFont fontWithName:@"C64ProMono" size: 10];
     [cell setFont:cbmfont];
 

@@ -1106,29 +1106,26 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (NSString *)getNameOfItem:(NSInteger)item {
     return [NSString stringWithUTF8String:wrapper->archive->getNameOfItem((int)item)];
 }
-- (NSString *)getNameOfItemAsPETString:(NSInteger)item {
-    return [NSString stringWithUTF8String:wrapper->archive->getNameOfItemAsPETString((int)item)];
-}
+- (NSString *)getUnicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max {
 
-- (NSString *)getNameOfItemAsC64FontString:(NSInteger)item {
+    const unsigned short *name = wrapper->archive->getUnicodeNameOfItem((int)item, max);
     
-    unichar cs[256];
-    const char *name = wrapper->archive->getNameOfItemAsPETString((int)item);
-    size_t length = strlen(name) < 256 ? strlen(name) : 256;
+    if (name == NULL)
+        return NULL;
     
-    for (unsigned i = 0; i < length; i++)
-        cs[i] = (unichar)0xEE00 + name[i];
+    unsigned numChars;
+    for (numChars = 0; name[numChars] != 0; numChars++);
     
-    return [NSString stringWithCharacters:cs length:length];
+    return [NSString stringWithCharacters:name length:numChars];
 }
 
 - (const char *)getNameOfItemUTF8:(NSInteger)item {
     return wrapper->archive->getNameOfItem((int)item);
 }
 
-- (const char *)getNameOfItemAsPETStringUTF8:(NSInteger)item {
-    return wrapper->archive->getNameOfItemAsPETString((int)item);
-}
+// - (const char *)getNameOfItemAsPETStringUTF8:(NSInteger)item {
+//     return wrapper->archive->getNameOfItemAsPETString((int)item);
+// }
 
 - (NSInteger) getSizeOfItem:(NSInteger)item {
     return wrapper->archive->getSizeOfItem((int)item);

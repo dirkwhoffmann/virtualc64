@@ -362,9 +362,23 @@ D64Archive::writeToBuffer(uint8_t *buffer)
 const char *
 D64Archive::getName()
 {
-    (void)getNameAsPETString();
-    petString2asciiStringOld(name);
+    int i, pos = offset(18, 0) + 0x90;
+    
+    for (i = 0; i < 255; i++) {
+        if (data[pos+i] == 0xA0)
+            break;
+        name[i] = data[pos+i];
+    }
+    name[i] = 0x00;
     return name;
+}
+
+const unsigned short *
+D64Archive::getUnicodeName(size_t maxChars)
+{
+    (void)getName();
+    translateToUnicode(name, unicode, 0xE000, maxChars);
+    return unicode;
 }
 
 //
@@ -374,15 +388,6 @@ D64Archive::getName()
 int
 D64Archive::getNumberOfItems()
 {
-#if 0
-    int i = 0;
-    
-    while (findDirectoryEntry(i) > 0) {
-        i++;
-    }
-    return i;
-#endif
-
     unsigned offsets[144]; // a C64 disk contains at most 144 files
     unsigned noOfFiles;
     
@@ -393,14 +398,6 @@ D64Archive::getNumberOfItems()
 
 const char *
 D64Archive::getNameOfItem(int n)
-{
-    (void)getNameOfItemAsPETString(n);
-    petString2asciiStringOld(name);
-    return name;
-}
-
-const char *
-D64Archive::getNameOfItemAsPETString(int n)
 {
     int i, pos = findDirectoryEntry(n);
     
@@ -413,6 +410,14 @@ D64Archive::getNameOfItemAsPETString(int n)
     }
     name[i] = 0x00;
     return name;
+}
+
+const unsigned short *
+D64Archive::getUnicodeNameOfItem(int n, size_t maxChars)
+{
+    (void)getNameOfItem(n);
+    translateToUnicode(name, unicode, 0xE000, maxChars);
+    return unicode;
 }
 
 const char *
@@ -560,20 +565,6 @@ D64Archive::getByte()
 //
 // Accessing archive attributes
 //
-
-const char *
-D64Archive::getNameAsPETString()
-{
-    int i, pos = offset(18, 0) + 0x90;
-    
-    for (i = 0; i < 255; i++) {
-        if (data[pos+i] == 0xA0)
-            break;
-        name[i] = data[pos+i];
-    }
-    name[i] = 0x00;
-    return name;
-}
 
 unsigned
 D64Archive::numberOfSectors(unsigned halftrack)

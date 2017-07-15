@@ -134,7 +134,7 @@ public:
     int getSizeOfItem(int n);
     
     const char *getNameOfItem(int n);
-    const char *getNameOfItemAsPETString(int n);
+    const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars);
     const char *getTypeOfItem(int n);
     uint16_t getDestinationAddrOfItem(int n) { return 0; }
     

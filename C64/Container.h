@@ -34,17 +34,22 @@ class Container : public VC64Object {
 
 private:
 	 
-    //! @brief    The physical name (full path name) of the archive.
+    //! @brief    The physical name (full path name) of the container.
     char *path;
 	
 protected:
 
-    /*! @brief    The logical name of the archive.
-     *  @details  Some archives store a logical name in their header section. If they don't store a special name,
-     *            the logical name is the raw filename (path and extension stripped off). 
+    /*! @brief    The logical name of the container.
+     *  @details  Some archives store a logical name in their header section. 
+     *            If they don't store a special name, the logical name is the raw filename
+     *            (path and extension stripped off).
      */
 	char name[256];
-    
+
+    /*! @brief    Unicode representation of the logical.
+     */
+    unsigned short unicode[256];
+
     
     //
     //! @functiongroup Creating and destructing containers
@@ -79,7 +84,13 @@ public:
     void setPath(const char *path);
 
     //! @brief    Returns the logical name.
-    virtual const char *getName() { return name; }
+    virtual const char *getName();
+
+    /*! @brief    Returns the logical name as unicode character array.
+     *  @details  The provides unicode format is compatible with font C64ProMono
+     *            which is used, e.g., in the mount dialogs preview panel.
+     */
+    virtual const unsigned short *getUnicodeName(size_t maxChars = 255);
 
     //! @brief    Sets the logical name.
     void setName(const char *name);

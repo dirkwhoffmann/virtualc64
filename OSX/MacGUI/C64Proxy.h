@@ -731,10 +731,9 @@ typedef NS_ENUM(NSInteger, GamePadDirection) {
 - (NSInteger)getType;
 - (NSInteger)getNumberOfItems; 
 - (NSString *)getNameOfItem:(NSInteger)item;
-- (NSString *)getNameOfItemAsPETString:(NSInteger)item;
-- (NSString *)getNameOfItemAsC64FontString:(NSInteger)item;
+- (NSString *)getUnicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max;
 - (const char *)getNameOfItemUTF8:(NSInteger)item;
-- (const char *)getNameOfItemAsPETStringUTF8:(NSInteger)item;
+// - (const char *)getNameOfItemAsPETStringUTF8:(NSInteger)item;
 - (NSInteger) getSizeOfItem:(NSInteger)item;
 - (NSInteger) getSizeOfItemInBlocks:(NSInteger)item;
 - (NSString *) getTypeOfItem:(NSInteger)item;

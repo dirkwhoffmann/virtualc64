@@ -53,14 +53,27 @@ Container::setPath(const char *str)
     path = strdup(str);
 }
 
+const char *
+Container::getName()
+{
+    return name;
+}
+
+const unsigned short *
+Container::getUnicodeName(size_t maxChars)
+{
+    translateToUnicode(name, unicode, 0xE000, maxChars);
+    return unicode;
+}
+
 void
 Container::setName(const char *str)
 {
     strncpy(name, str, sizeof(name));
-    name[255] = 0;
+    name[sizeof(name) - 1] = 0;
 }
 
-bool 
+bool
 Container::readFromFile(const char *filename)
 {
 	bool success = false;

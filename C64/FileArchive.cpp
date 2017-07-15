@@ -102,12 +102,12 @@ FileArchive::getNameOfItem(int n)
 	return name;
 }
 
-const char *
-FileArchive::getNameOfItemAsPETString(int n)
+const unsigned short *
+FileArchive::getUnicodeNameOfItem(int n, size_t maxChars)
 {
     (void)getNameOfItem(n);
-    asciiString2pet(name);
-    return name;
+    translateToUnicode(name, unicode, 0xE000, maxChars);
+    return unicode;
 }
 
 int 
