@@ -688,7 +688,7 @@ PixelEngine::setSpritePixel(unsigned pixelnr, int rgba, int depth, int source)
     unsigned offset = bufferoffset + pixelnr;
     assert(offset < NTSC_PIXELS);
     
-    if (depth <= zBuffer[pixelnr]) {
+    if (depth <= zBuffer[pixelnr] && !(pixelSource[pixelnr] & 0x7F)) {
         pixelBuffer[offset] = rgba;
         zBuffer[pixelnr] = depth;
     }
