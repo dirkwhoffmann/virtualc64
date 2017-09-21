@@ -24,7 +24,7 @@ class TimeTravelScrubber : NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberD
         c = nil
     }
     
-    init(identifier: NSTouchBarItemIdentifier, controller: MyController)
+    init(identifier: NSTouchBarItem.Identifier, controller: MyController)
     {
         c = controller
         super.init(identifier: identifier)
@@ -33,7 +33,7 @@ class TimeTravelScrubber : NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberD
         
         // Set view, delegate and data source
         scrubber.register(NSScrubberImageItemView.self,
-                          forItemIdentifier: TimeTravelScrubber.timetravelViewId)
+                          forItemIdentifier: NSUserInterfaceItemIdentifier(rawValue: TimeTravelScrubber.timetravelViewId))
         scrubber.delegate = self
         scrubber.dataSource = self
         
@@ -63,7 +63,7 @@ class TimeTravelScrubber : NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberD
         
         // scroll to rightmost item 
         scrubber?.scrollItem(at: numberOfItems(for: scrubber!) - 1,
-                             to: NSScrubberAlignment.trailing)
+                             to: NSScrubber.Alignment.trailing)
     }
     
     // NSScrubberDataSource
@@ -75,7 +75,7 @@ class TimeTravelScrubber : NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberD
     }
     
     public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
-        let itemView = scrubber.makeItem(withIdentifier: TimeTravelScrubber.timetravelViewId, owner: self) as! NSScrubberImageItemView
+        let itemView = scrubber.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: TimeTravelScrubber.timetravelViewId), owner: self) as! NSScrubberImageItemView
         
         assert(index < c!.c64.historicSnapshots())
         

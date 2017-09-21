@@ -258,7 +258,7 @@ class KeyboardController: NSObject {
         }
         
         // Ignore command key
-        if (flags.contains(NSCommandKeyMask)) {
+        if (flags.contains(NSEvent.ModifierFlags.command)) {
             return
         }
         
@@ -267,7 +267,7 @@ class KeyboardController: NSObject {
         pullJoystick(ifKeyMatches: f);
 
         // Remove alternate key modifier if present
-        if (flags.contains(NSAlternateKeyMask)) {
+        if (flags.contains(NSEvent.ModifierFlags.option)) {
             c = c_unmod
         }
         
@@ -306,21 +306,20 @@ class KeyboardController: NSObject {
         var key: MacKeyFingerprint
         
         // Check if special keys are used for joystick emulation
-        if (flags.contains(NSAlternateKeyMask)) {
-            key = NSAlternateKeyMask.rawValue;
-        } else if (flags.contains(NSShiftKeyMask)) {
-            key = NSShiftKeyMask.rawValue;
-        } else if (flags.contains(NSCommandKeyMask)) {
-            key = NSCommandKeyMask.rawValue;
-        } else if (flags.contains(NSControlKeyMask)) {
-            key = NSControlKeyMask.rawValue;
+        if (flags.contains(NSEvent.ModifierFlags.option)) {
+            key = NSEvent.ModifierFlags.option.rawValue;
+        } else if (flags.contains(NSEvent.ModifierFlags.shift)) {
+            key = NSEvent.ModifierFlags.shift.rawValue;
+        } else if (flags.contains(NSEvent.ModifierFlags.command)) {
+            key = NSEvent.ModifierFlags.command.rawValue;
+        } else if (flags.contains(NSEvent.ModifierFlags.control)) {
+            key = NSEvent.ModifierFlags.control.rawValue;
         } else {
             // Release joytick
-            releaseJoystick(ifKeyMatches: NSAlternateKeyMask.rawValue)
-            releaseJoystick(ifKeyMatches: NSShiftKeyMask.rawValue)
-            releaseJoystick(ifKeyMatches: NSCommandKeyMask.rawValue)
-            releaseJoystick(ifKeyMatches: NSControlKeyMask.rawValue)
-            releaseJoystick(ifKeyMatches: NSAlternateKeyMask.rawValue)
+            releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.option.rawValue)
+            releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.shift.rawValue)
+            releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.command.rawValue)
+            releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.control.rawValue)
             return;
         }
         
@@ -333,7 +332,7 @@ class KeyboardController: NSObject {
     /*! @brief  Computes unique fingerprint for a certain key combination pressed
      *          on the pyhsical Mac keyboard
      */
-    func fingerprint(forKey keycode: UInt16, withModifierFlags flags: NSEventModifierFlags) -> MacKeyFingerprint
+    func fingerprint(forKey keycode: UInt16, withModifierFlags flags: NSEvent.ModifierFlags) -> MacKeyFingerprint
     {
         let result = Int(keycode)
         
@@ -457,7 +456,7 @@ class KeyboardController: NSObject {
     /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint
      *  @note   The returned value can be used as argument for the emulators pressKey() function
      */
-    func translateKey(_ key: UInt8, plainkey: UInt8, keycode: UInt16, flags: NSEventModifierFlags) -> C64KeyFingerprint
+    func translateKey(_ key: UInt8, plainkey: UInt8, keycode: UInt16, flags: NSEvent.ModifierFlags) -> C64KeyFingerprint
     {
     
         let HAT_KEY     = UInt8(UnicodeScalar("^")!.value)
@@ -483,7 +482,7 @@ class KeyboardController: NSObject {
         case MAC_TAB: return C64KeyFingerprint(C64KEY_RESTORE)
             
         case MAC_DEL:
-            return (flags.contains(NSShiftKeyMask)) ?
+            return (flags.contains(NSEvent.ModifierFlags.shift)) ?
                 C64KeyFingerprint(C64KEY_INS) : C64KeyFingerprint(C64KEY_DEL)
         
         case MAC_HAT:
@@ -497,10 +496,10 @@ class KeyboardController: NSObject {
             }
             
         default:
-            if (flags.contains(NSAlternateKeyMask)) {
+            if (flags.contains(NSEvent.ModifierFlags.option)) {
                 // Commodore key (ALT) is pressed
                 return C64KeyFingerprint(Int(String(plainkey))! | C64KEY_COMMODORE);
-            } else if (flags.contains(NSControlKeyMask)) {
+            } else if (flags.contains(NSEvent.ModifierFlags.control)) {
                 // CTRL key is pressed
                 return C64KeyFingerprint(Int(String(plainkey))! | C64KEY_CTRL);
             }

@@ -8,9 +8,10 @@
 
 import Foundation
 
-extension NSTouchBarItemIdentifier {
+@available(OSX 10.12.2, *)
+extension NSTouchBarItem.Identifier {
     
-    static let ttscrubber = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.ttscrubber")
+    static let ttscrubber = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.ttscrubber")
 }
 
 /*! @brief   TimeTravel TouchBar
@@ -57,13 +58,13 @@ class TimeTravelTouchBar: NSTouchBar {
 @available(OSX 10.12.2, *)
 extension TimeTravelTouchBar: NSTouchBarDelegate {
 
-    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         
         NSLog("\(#function)")
         
         switch identifier {
             
-        case NSTouchBarItemIdentifier.ttscrubber:
+        case NSTouchBarItem.Identifier.ttscrubber:
             
             let item = TimeTravelScrubber(identifier: identifier, controller: c!)
             return item

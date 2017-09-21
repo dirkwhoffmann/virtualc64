@@ -8,14 +8,15 @@
 
 import Foundation
 
-extension NSTouchBarItemIdentifier {
+@available(OSX 10.12.2, *)
+extension NSTouchBarItem.Identifier {
     
-    static let commodore  = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.commodore")
-    static let runstop    = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.runstop")
-    static let home       = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.home")
-    static let del        = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.del")
-    static let restore    = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.restore")
-    static let ttpopover  = NSTouchBarItemIdentifier("com.virtualc64.TouchBarItem.ttpopover")
+    static let commodore  = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.commodore")
+    static let runstop    = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.runstop")
+    static let home       = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.home")
+    static let del        = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.del")
+    static let restore    = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.restore")
+    static let ttpopover  = NSTouchBarItem.Identifier("com.virtualc64.TouchBarItem.ttpopover")
 }
 
 public extension MyController
@@ -33,16 +34,16 @@ public extension MyController
 @available(OSX 10.12.2, *)
 extension MyController : NSTouchBarDelegate
  {
-    func TouchBarHomeKeyAction() {
-        if (modifierFlags.contains(NSShiftKeyMask)) {
+    @objc func TouchBarHomeKeyAction() {
+        if (modifierFlags.contains(NSEvent.ModifierFlags.shift)) {
             clearKeyAction(self)
         } else {
             homeKeyAction(self)
         }
     }
 
-    func TouchBarDelKeyAction() {
-        if (modifierFlags.contains(NSShiftKeyMask)) {
+    @objc func TouchBarDelKeyAction() {
+        if (modifierFlags.contains(NSEvent.ModifierFlags.shift)) {
             insertKeyAction(self)
         } else {
             deleteKeyAction(self)
@@ -74,7 +75,7 @@ extension MyController : NSTouchBarDelegate
         ]
         
         // Make touchbar customizable
-        touchBar.customizationIdentifier = NSTouchBarCustomizationIdentifier("com.virtualc64.touchbar")
+        touchBar.customizationIdentifier = NSTouchBar.CustomizationIdentifier("com.virtualc64.touchbar")
         touchBar.customizationAllowedItemIdentifiers = [
             .commodore,
             .runstop,
@@ -86,47 +87,47 @@ extension MyController : NSTouchBarDelegate
             return touchBar
     }
     
-    public func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+    public func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         
         switch identifier {
             
-        case NSTouchBarItemIdentifier.commodore:
+        case NSTouchBarItem.Identifier.commodore:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Commodore key"
-            item.view = NSButton(image: NSImage(named: "commodore")!,
+            item.view = NSButton(image: NSImage(named: NSImage.Name(rawValue: "commodore"))!,
                                  target: self,
                                  action: #selector(commodoreKeyAction))
             return item
 
-        case NSTouchBarItemIdentifier.runstop:
+        case NSTouchBarItem.Identifier.runstop:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Runstop key"
-            item.view = NSButton(image:  NSImage(named: "runstop")!,
+            item.view = NSButton(image:  NSImage(named: NSImage.Name(rawValue: "runstop"))!,
                                  target: self,
                                  action: #selector(runstopAction))
             
             return item
 
-        case NSTouchBarItemIdentifier.home:
+        case NSTouchBarItem.Identifier.home:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Home and Clear key"
-            item.view = NSButton(image:  NSImage(named: "home")!,
+            item.view = NSButton(image:  NSImage(named: NSImage.Name(rawValue: "home"))!,
                                  target: self,
                                  action: #selector(TouchBarHomeKeyAction))
             return item
 
-        case NSTouchBarItemIdentifier.del:
+        case NSTouchBarItem.Identifier.del:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Delete and Insert key"
-            item.view = NSButton(image:  NSImage(named: "del")!,
+            item.view = NSButton(image:  NSImage(named: NSImage.Name(rawValue: "del"))!,
                                  target: self,
                                  action: #selector(TouchBarDelKeyAction))
             return item
 
-        case NSTouchBarItemIdentifier.restore:
+        case NSTouchBarItem.Identifier.restore:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.customizationLabel = "Restore key"
-            item.view = NSButton(image:  NSImage(named: "restore")!,
+            item.view = NSButton(image:  NSImage(named: NSImage.Name(rawValue: "restore"))!,
                                  target: self,
                                  action: #selector(restoreAction))
             return item
@@ -149,9 +150,9 @@ extension MyController : NSTouchBarDelegate
             return item
 */
             
-        case NSTouchBarItemIdentifier.ttpopover:
+        case NSTouchBarItem.Identifier.ttpopover:
             let item = NSPopoverTouchBarItem(identifier: identifier)
-            let icon = NSImage(named: "tb_timetravel2.png")
+            let icon = NSImage(named: NSImage.Name(rawValue: "tb_timetravel2.png"))
             let resizedIcon = icon?.resizeImage(width: 24, height: 24)
             item.customizationLabel = "Time travel"
             item.collapsedRepresentationImage = resizedIcon
