@@ -1433,7 +1433,7 @@
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "MacGUI/VirtualC64-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -1481,7 +1481,7 @@
 				PRODUCT_NAME = VirtualC64;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "MacGUI/VirtualC64-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
@@ -1530,7 +1530,7 @@
 				PRODUCT_NAME = VirtualC64;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "MacGUI/VirtualC64-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};

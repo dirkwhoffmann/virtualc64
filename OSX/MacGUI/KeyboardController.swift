@@ -61,19 +61,19 @@ public class KeyMap: NSObject {
     //! @brief readable character for the assigned key
     var character : [GamePadDirection:String] = [:]
     
-    public func getFingerprint(forDirection d: GamePadDirection) -> MacKeyFingerprint {
+    @objc public func getFingerprint(forDirection d: GamePadDirection) -> MacKeyFingerprint {
         return fingerprint[d]!
     }
     
-    public func setFingerprint(_ f: MacKeyFingerprint, forDirection d: GamePadDirection) {
+    @objc public func setFingerprint(_ f: MacKeyFingerprint, forDirection d: GamePadDirection) {
         fingerprint[d] = f
     }
 
-    public func getCharacter(forDirection d: GamePadDirection) -> String {
+    @objc public func getCharacter(forDirection d: GamePadDirection) -> String {
         return character[d]!
     }
     
-    public func setCharacter(_ c: String, forDirection d: GamePadDirection) {
+    @objc public func setCharacter(_ c: String, forDirection d: GamePadDirection) {
         character[d] = c
     }
 }
@@ -91,8 +91,8 @@ class KeyboardController: NSObject {
     
     var controller : MyController!
     
-    var keymap1 = KeyMap()
-    var keymap2 = KeyMap()
+    @objc var keymap1 = KeyMap()
+    @objc var keymap2 = KeyMap()
     var pressedKeys: [UInt16:C64KeyFingerprint] = [:]
     
     //
@@ -105,13 +105,13 @@ class KeyboardController: NSObject {
         restoreFactorySettings()
     }
  
-    convenience init(withController c: MyController)
+    @objc convenience init(withController c: MyController)
     {
         self.init()
         self.controller = c
     }
 
-    func restoreFactorySettings()
+    @objc func restoreFactorySettings()
     {
         NSLog("\(#function)")
                 
@@ -145,7 +145,7 @@ class KeyboardController: NSObject {
     // User default storage
     //
     
-    class func registerStandardUserDefaults() {
+    @objc class func registerStandardUserDefaults() {
         
         let dictionary : [String:Any] = [
             "VC64Left1keycodeKey":123,
@@ -177,7 +177,7 @@ class KeyboardController: NSObject {
         // [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
     }
 
-    func loadUserDefaults() {
+    @objc func loadUserDefaults() {
         
         NSLog("\(#function)")
         loadUserDefaults(forKeymap: keymap1, s: "1")
@@ -211,7 +211,7 @@ class KeyboardController: NSObject {
             defaults.string(forKey: "VC64Fire" + s + "charKey")
     }
     
-    func saveUserDefaults() {
+    @objc func saveUserDefaults() {
         
         NSLog("\(#function)")
         saveUserDefaults(forKeymap: keymap1, s: "1")
@@ -239,7 +239,7 @@ class KeyboardController: NSObject {
     // Keyboard events
     //
     
-    public func keyDown(with event: NSEvent)
+    @objc public func keyDown(with event: NSEvent)
     {
         // Exit fullscreen mode if ESC is pressed
         if (event.keyCode == MAC_ESC && controller.metalScreen.fullscreen) {
@@ -282,7 +282,7 @@ class KeyboardController: NSObject {
         controller.c64.keyboard.pressKey(c64key)
     }
     
-    public func keyUp(with event: NSEvent)
+    @objc public func keyUp(with event: NSEvent)
     {
         let keycode = event.keyCode       // UInt16
         let flags   = event.modifierFlags // NSEventModifierFlags
@@ -300,7 +300,7 @@ class KeyboardController: NSObject {
         }
     }
 
-    public func flagsChanged(with event: NSEvent) {
+    @objc public func flagsChanged(with event: NSEvent) {
         
         let flags = event.modifierFlags // NSEventModifierFlags
         var key: MacKeyFingerprint
@@ -332,7 +332,7 @@ class KeyboardController: NSObject {
     /*! @brief  Computes unique fingerprint for a certain key combination pressed
      *          on the pyhsical Mac keyboard
      */
-    func fingerprint(forKey keycode: UInt16, withModifierFlags flags: NSEvent.ModifierFlags) -> MacKeyFingerprint
+    @objc func fingerprint(forKey keycode: UInt16, withModifierFlags flags: NSEvent.ModifierFlags) -> MacKeyFingerprint
     {
         let result = Int(keycode)
         

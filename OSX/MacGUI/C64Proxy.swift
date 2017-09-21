@@ -65,7 +65,7 @@ extension NSImage {
 
 public extension C64Proxy {
 
-    func timetravelSnapshotImage(_ item: Int) -> NSImage {
+    @objc func timetravelSnapshotImage(_ item: Int) -> NSImage {
         
         var data = historicSnapshotImageData(item)
         let width = historicSnapshotImageWidth(item)

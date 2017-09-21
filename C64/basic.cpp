@@ -19,7 +19,7 @@
 #include "basic.h"
 
 struct timeval t;
-long tv_base = (gettimeofday(&t,NULL), t.tv_sec);
+long tv_base = ((void)gettimeofday(&t,NULL), t.tv_sec);
 
 void
 printReadable(const void *data, int length)

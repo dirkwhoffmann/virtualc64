@@ -21,7 +21,7 @@ import AVFoundation
         super.init()
     }
     
-    convenience init?(withSID proxy: SIDProxy)
+    @objc convenience init?(withSID proxy: SIDProxy)
     {
         NSLog("\(#function)")
     
@@ -123,7 +123,7 @@ import AVFoundation
     
     /*! @brief  Start playing sound
      */
-    func startPlayback() -> Bool {
+    @objc func startPlayback() -> Bool {
 
         NSLog("\(#function)")
         do { try audiounit.startHardware() } catch {
@@ -136,7 +136,7 @@ import AVFoundation
     
     /*! @brief  Stop playing sound
      */
-    func stopPlayback() {
+    @objc func stopPlayback() {
         
         NSLog("\(#function)")
         audiounit.stopHardware()
