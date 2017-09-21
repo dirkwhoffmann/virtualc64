@@ -287,7 +287,7 @@ ExtractFilename(const char *path)
 {
     assert(path != NULL);
     
-    char *pos = strrchr(path, '/');
+    const char *pos = strrchr(path, '/');
     return pos ? strdup(pos + 1) : strdup(path);
 }
 
@@ -296,7 +296,7 @@ ExtractSuffix(const char *path)
 {
     assert(path != NULL);
     
-    char *pos = strrchr(path, '.');
+    const char *pos = strrchr(path, '.');
     return pos ? strdup(pos + 1) : strdup("");
 }
 

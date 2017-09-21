@@ -19,8 +19,10 @@ using namespace metal;
 
 struct InVertex
 {
-    packed_float4 position [[attribute(0)]];
-    packed_float2 texCoords [[attribute(1)]];
+//    packed_float4 position [[attribute(0)]];
+//    packed_float2 texCoords [[attribute(1)]];
+    float4 position [[attribute(0)]];
+    float2 texCoords [[attribute(1)]];
 };
 
 struct ProjectedVertex
@@ -31,7 +33,10 @@ struct ProjectedVertex
 };
 
 
-vertex ProjectedVertex vertex_main(constant InVertex *vertices [[buffer(0)]],
+//vertex ProjectedVertex vertex_main(constant InVertex *vertices [[buffer(0)]],
+//                                   constant Uniforms &uniforms [[buffer(1)]],
+//                                   ushort vid [[vertex_id]])
+vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
                                    constant Uniforms &uniforms [[buffer(1)]],
                                    ushort vid [[vertex_id]])
 {
