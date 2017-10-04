@@ -24,8 +24,7 @@
 
 @interface MemTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
 { 
-	MyController *controller;
-	C64Proxy *c64;
+	MyController *c;
 
 	//! Determines whether we display RAM, ROM or IO space
 	MemoryType source;
@@ -34,7 +33,7 @@
 @property MemoryType source;
 
 //! Setter
-- (void)setController:(MyController *)c;
+- (void)setController:(MyController *)ctrl;
 
 //! Refresh  data items to display
 - (void)refresh;

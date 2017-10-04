@@ -27,17 +27,17 @@
 @interface CpuTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
 { 
 	//! Reference to window controller
-	MyController *controller;
+	MyController *c;
 
 	//! Reference to C64
-	C64Proxy *c64;
+	// C64Proxy *c64;
 	
 	// Mapping from table rows to displayed memory address
 	uint16_t displayedAddresses[CPU_TABLE_VIEW_ITEMS];	
 }
 
 //! Setter
-- (void)setController:(MyController *)c;
+- (void)setController:(MyController *)ctrl;
 
 //! Action method for double clicking a table item
 - (void)doubleClickAction:(id)sender;

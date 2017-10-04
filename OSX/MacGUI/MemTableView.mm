@@ -22,10 +22,9 @@
 
 @synthesize source;
 
-- (void)setController:(MyController *)c
+- (void)setController:(MyController *)ctrl
 {
-	controller = c;
-	c64 = [c c64];
+	c = ctrl;
 }
 #pragma mark NSTableView
 
@@ -52,6 +51,10 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row 
 {
+    C64Proxy *c64 = [c c64];
+    if (c64 == nil)
+        return nil;
+    
 	uint16_t addr = row * 4;
 	NSString *id  = [tableColumn identifier];
 	
@@ -117,6 +120,10 @@
 
 - (void)changeMemValue:(uint16_t)addr value:(int16_t)v memtype:(MemoryType)t
 {
+    C64Proxy *c64 = [c c64];
+    if (c64 == nil)
+        return;
+    
 	NSUndoManager *undo = [self undoManager];
 	[[undo prepareWithInvocationTarget:self] changeMemValue:addr value:[[c64 mem] peekFrom:addr memtype:t] memtype:t];
 	if (![undo isUndoing]) [undo setActionName:@"Memory contents"];
@@ -127,7 +134,10 @@
 
 - (void)setMemObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)row
 {
-	
+    C64Proxy *c64 = [c c64];
+    if (c64 == nil)
+        return;
+    
 	uint16_t addr = row * 4;
 	int16_t value = [anObject intValue];
 	NSString *id  = [aTableColumn identifier];

@@ -20,11 +20,11 @@
 
 @implementation CpuTableView 
 
-- (void)setController:(MyController *)c
+- (void)setController:(MyController *)ctrl
 {
-	controller = c;
-	c64 = [c c64];
-	[self updateDisplayedAddresses:[[c64 cpu] PC]];
+	c = ctrl;
+	// c64 = [c c64];
+	[self updateDisplayedAddresses:[[[c c64] cpu] PC]];
 }
 
 #pragma mark NSTableView
@@ -52,6 +52,10 @@
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)row
 {
+    C64Proxy *c64 = [c c64];
+    if (c64 == nil)
+        return nil;
+    
     uint16_t addr = [self addressForRow:row];
 	uint8_t length = [[c64 cpu] lengthOfInstruction:[[c64 mem] peek:addr]];
 	
@@ -71,6 +75,10 @@
 
 - (void)tableView: (NSTableView *)aTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
+    C64Proxy *c64 = [c c64];
+    if (c64 == nil)
+        return;
+    
     uint16_t addr = [self addressForRow:row];
 	if ([[c64 cpu] breakpoint:addr] == HARD_BREAKPOINT) {
 		[cell setTextColor:[NSColor redColor]];
@@ -88,7 +96,7 @@
 	uint16_t addr;
 		
     addr = [self addressForRow:[sender selectedRow]];
-	[controller setHardBreakpointAction:@((int)addr)];
+	[c setHardBreakpointAction:@((int)addr)];
 }
 
 
@@ -109,6 +117,10 @@
 
 - (void)updateDisplayedAddresses:(uint16_t)startAddr
 {
+    C64Proxy *c64 = [c c64];
+    if (c64 == nil)
+        return;
+    
 	uint16_t address = startAddr;
 	
 	for (unsigned i = 0; i < CPU_TABLE_VIEW_ITEMS; i++) {
@@ -117,8 +129,8 @@
 	}	
 }
 
-- (void)refresh {
-
+- (void)refresh
+{
 	// Refreshing the cpu disassembler window works the following way:
 	//
 	// Case 1: PC points to an address which is already displayed.
@@ -126,6 +138,10 @@
 	// Case 2: PC points to an address that is not yet displayed.
 	//         In that case, we display PC in row 0.
 	
+    C64Proxy *c64 = [c c64];
+    if (c64 == nil)
+        return;
+    
 	uint16_t address = [[c64 cpu] PC];
 	int row = [self rowForAddress:address];
 	

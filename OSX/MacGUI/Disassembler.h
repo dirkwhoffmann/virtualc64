@@ -22,11 +22,11 @@
 
 @interface Disassembler : NSFormatter {
 
-	C64Proxy *c64;
+    MyController *c;
 	NSFormatter *byteFormatter;
 	NSFormatter *wordFormatter;
 }
 
-- (id)init:(C64Proxy *)cpu byteFormatter:(NSFormatter *)bF wordFormatter:(NSFormatter *)eF;
+- (id)init:(MyController *)c byteFormatter:(NSFormatter *)bF wordFormatter:(NSFormatter *)eF;
 
 @end

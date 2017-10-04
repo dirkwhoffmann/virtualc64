@@ -20,11 +20,11 @@
 
 @implementation Disassembler
 
-- (id)init:(C64Proxy *)c byteFormatter:(NSFormatter *)bf wordFormatter:(NSFormatter *)wf
+- (id)init:(MyController *)ctrl byteFormatter:(NSFormatter *)bf wordFormatter:(NSFormatter *)wf
 {
 	self = [super init];
     if (self) {	
-		c64 = c;
+		c = ctrl;
 		byteFormatter = bf;
 		wordFormatter = wf;
 	}
@@ -43,8 +43,9 @@
 	uint8_t opcode;
 	const char *mnemonic;
 	NSString *op = nil;
-	
-    if (![anObject isKindOfClass:[NSNumber class]])
+    C64Proxy *c64 = [c c64];
+    
+    if (c64 == nil || ![anObject isKindOfClass:[NSNumber class]])
         return nil;
 
 	addr     = (uint16_t)[anObject intValue];
