@@ -124,18 +124,22 @@
 	bool success = NO;
 	
 	if ([c64 loadBasicRom:filename]) {
+        NSLog(@"loadRom:setObject:%@ forKey:VC64BasicRomFileKey", filename);
 		[defaults setObject:filename forKey:VC64BasicRomFileKey];
 		success = YES;
 	}
 	else if ([c64 loadCharRom:filename]) {
+        NSLog(@"loadRom:setObject:%@ forKey:VC64CharRomFileKey", filename);
 		[defaults setObject:filename forKey:VC64CharRomFileKey];
 		success = YES;
 	}
 	else if ([c64 loadKernelRom:filename]) {
+        NSLog(@"loadRom:setObject:%@ forKey:VC64KernelRomFileKey", filename);
 		[defaults setObject:filename forKey:VC64KernelRomFileKey];
 		success = YES;
 	}
 	else if ([c64 loadVC1541Rom:filename]) {
+        NSLog(@"loadRom:setObject:%@ forKey:VC64VC1541RomFileKey", filename);
 		[defaults setObject:filename forKey:VC64VC1541RomFileKey];
 		success = YES;
 	}

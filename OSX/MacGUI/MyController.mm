@@ -276,30 +276,6 @@
     // Joysticks
     [KeyboardController registerStandardUserDefaults];
     
-    /*
-    [defaultValues setObject:@123 forKey:VC64Left1keycodeKey];
-    [defaultValues setObject:@' ' forKey:VC64Left1charKey];
-    [defaultValues setObject:@124 forKey:VC64Right1keycodeKey];
-    [defaultValues setObject:@' ' forKey:VC64Right1charKey];
-    [defaultValues setObject:@125 forKey:VC64Down1keycodeKey];
-    [defaultValues setObject:@' ' forKey:VC64Down1charKey];
-    [defaultValues setObject:@126 forKey:VC64Up1keycodeKey];
-    [defaultValues setObject:@' ' forKey:VC64Up1charKey];
-    [defaultValues setObject:@49  forKey:VC64Fire1keycodeKey];
-    [defaultValues setObject:@' ' forKey:VC64Fire1charKey];
-
-    [defaultValues setObject:@0 forKey:VC64Left2keycodeKey];
-    [defaultValues setObject:@'a' forKey:VC64Left2charKey];
-    [defaultValues setObject:@1 forKey:VC64Right2keycodeKey];
-    [defaultValues setObject:@'s' forKey:VC64Right2charKey];
-    [defaultValues setObject:@6 forKey:VC64Down2keycodeKey];
-    [defaultValues setObject:@'y' forKey:VC64Down2charKey];
-    [defaultValues setObject:@13 forKey:VC64Up2keycodeKey];
-    [defaultValues setObject:@'w' forKey:VC64Up2charKey];
-    [defaultValues setObject:@7 forKey:VC64Fire2keycodeKey];
-    [defaultValues setObject:@'x' forKey:VC64Fire2charKey];
-    */
-    
 	// Audio
 	[defaultValues setObject:@YES forKey:VC64SIDReSIDKey];
 	[defaultValues setObject:@NO forKey:VC64SIDFilterKey];
@@ -344,12 +320,27 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    if (defaults == nil) {
+        NSLog(@"!!!! loadVirtualMachineUserDefaults FAILED. standardUserDefaults returned NULL");
+        return;
+    }
+    
     // System
     if ([defaults integerForKey:VC64PALorNTSCKey]) {
         [c64 setNTSC];
     } else {
         [c64 setPAL];
     }
+    
+    NSLog(@"    VC64BasicRomFileKey: %@",
+          [defaults stringForKey:VC64BasicRomFileKey]);
+    NSLog(@"    VC64CharRomFileKey: %@",
+          [defaults stringForKey:VC64CharRomFileKey]);
+    NSLog(@"    VC64KernelRomFileKey: %@",
+          [defaults stringForKey:VC64KernelRomFileKey]);
+    NSLog(@"    VC64VC1541RomFileKey: %@",
+          [defaults stringForKey:VC64VC1541RomFileKey]);
+
     [[self document] loadRom:[defaults stringForKey:VC64BasicRomFileKey]];
     [[self document] loadRom:[defaults stringForKey:VC64CharRomFileKey]];
     [[self document] loadRom:[defaults stringForKey:VC64KernelRomFileKey]];

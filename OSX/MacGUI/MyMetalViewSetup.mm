@@ -128,7 +128,7 @@
 
 - (void)buildVertexBuffer
 {
-    NSLog(@"MyMetalView::buildVertexBuffer");
+    // NSLog(@"MyMetalView::buildVertexBuffer");
     
     if (!device)
         return;

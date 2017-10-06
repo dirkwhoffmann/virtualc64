@@ -406,6 +406,7 @@
 - (void)drawScene3D
 {
     bool animates = [self animates];
+    bool backgroundVisible = !fullscreen && (animates || !drawC64texture);
     
     if (animates) {
         [self updateAngles];
@@ -420,7 +421,7 @@
     frameData->alpha = [c64proxy isHalted] ? 0.5 : currentAlpha;
 
     // Render background
-    if (!fullscreen) {
+    if (backgroundVisible) {
         [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
         [_commandEncoder setVertexBuffer:uniformBufferBg offset:0 atIndex:1];
         [_commandEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6 instanceCount:1];
