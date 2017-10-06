@@ -104,7 +104,8 @@
     // Setup window properties
     [self configureWindow];
     
-    // Enable auto-save for window coordinates
+    // Adjust size and enable auto-save for window coordinates
+    [self adjustWindowSize];
     [[[self window] windowController] setShouldCascadeWindows:NO];
     [[self window] setFrameAutosaveName:@"dirkwhoffmann.de.virtualC64.window"];
     
