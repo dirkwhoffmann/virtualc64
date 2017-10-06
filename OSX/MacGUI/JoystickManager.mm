@@ -453,14 +453,14 @@ JoystickManager::InputValueCallback(void *inContext, IOReturn inResult, void *in
                     }
                     break;
 
-                default:
-					NSLog(@"Device %p (ID %d) page and page usage mismatch (Type=%i, Page=%i)\n",
-                          context->deviceRef, context->locationID, elementPage, elementUsage);
+                // default:
+				// 	NSLog(@"Device %p (ID %d) page and page usage mismatch (Type=%i, Page=%i)\n",
+                //           context->deviceRef, context->locationID, elementPage, elementUsage);
 			}
 		}
-		else
-			NSLog(@"Device %p (ID %d) type and page mismatch (Type=%i, Page=%i)\n",
-                  context->deviceRef, context->locationID, elementType, elementPage);
+		//else
+			// NSLog(@"Device %p (ID %d) type and page mismatch (Type=%i, Page=%i)\n",
+            //       context->deviceRef, context->locationID, elementType, elementPage);
 	}
 }
 

@@ -785,7 +785,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     }
 
     // Initialize GamePad manager
-    gamePadManager = [[GamePadManager alloc] init];
+    gamePadManager = [[GamePadManager alloc] initWithC64:self];
     if (!gamePadManager) {
         NSLog(@"WARNING: Failed to initialize GamePadManager");
     }

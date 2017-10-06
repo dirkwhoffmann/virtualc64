@@ -790,13 +790,13 @@
 			isa = PBXGroup;
 			children = (
 				5081AB621EF29E6400D6F616 /* AudioEngine.swift */,
+				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
 				BC8146860FE54238007ED085 /* JoystickManager.h */,
 				BC8146870FE54238007ED085 /* JoystickManager.mm */,
 				023023FE0DC902A700F8818A /* AudioDevice.h */,
 				023023FF0DC902A700F8818A /* AudioDevice.mm */,
 				50ED5BF612DD99C000596417 /* Speedometer.h */,
 				50ED5BF712DD99C000596417 /* Speedometer.mm */,
-				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
