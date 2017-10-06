@@ -138,6 +138,7 @@
 		50C8925B1BEFB64500231B96 /* cntrlStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892561BEFB64500231B96 /* cntrlStart.png */; };
 		50C8925C1BEFB64500231B96 /* cntrlStop.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892571BEFB64500231B96 /* cntrlStop.png */; };
 		50C8925D1BEFB64500231B96 /* ctrlEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C892581BEFB64500231B96 /* ctrlEnd.png */; };
+		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
 		50C9CB1C1B8213EC0054EE86 /* tb_motherboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */; };
 		50C9CB201B826C960054EE86 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB1F1B826C960054EE86 /* joystick.png */; };
 		50C9CB241B826CD50054EE86 /* expansion.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C9CB231B826CD50054EE86 /* expansion.png */; };
@@ -430,6 +431,7 @@
 		50C892561BEFB64500231B96 /* cntrlStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlStart.png; sourceTree = "<group>"; };
 		50C892571BEFB64500231B96 /* cntrlStop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cntrlStop.png; sourceTree = "<group>"; };
 		50C892581BEFB64500231B96 /* ctrlEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ctrlEnd.png; sourceTree = "<group>"; };
+		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
 		50C9CB1B1B8213EC0054EE86 /* tb_motherboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tb_motherboard.png; sourceTree = "<group>"; };
 		50C9CB1F1B826C960054EE86 /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
 		50C9CB231B826CD50054EE86 /* expansion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expansion.png; sourceTree = "<group>"; };
@@ -794,6 +796,7 @@
 				023023FF0DC902A700F8818A /* AudioDevice.mm */,
 				50ED5BF612DD99C000596417 /* Speedometer.h */,
 				50ED5BF712DD99C000596417 /* Speedometer.mm */,
+				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1301,6 +1304,7 @@
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
 				502D44DF1BD3CF7600950088 /* CrtFilter.mm in Sources */,
+				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				50032EB21BC919D90050BEEA /* MyMetalView.mm in Sources */,
 				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
 				5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */,

@@ -544,7 +544,6 @@ typedef NS_ENUM(NSInteger, GamePadDirection) {
 @interface C64Proxy : NSObject {
     
 	struct C64Wrapper *wrapper;
-	// AudioDevice *audioDevice; // DEPRECATED
     JoystickManagerProxy *joystickManager;
     
 	// Sub component proxys

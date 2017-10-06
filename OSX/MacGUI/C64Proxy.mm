@@ -744,6 +744,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 @implementation C64Proxy {
     AudioEngine *audioEngine;
+    GamePadManager *gamePadManager;
 }
 
 @synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
@@ -778,18 +779,17 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
     joystickManager = [[JoystickManagerProxy alloc] initWithC64Proxy:self];
 
-    // Check Joystick HID interface
+    // Check Joystick HID interface (DEPRECATED)
     if (!joystickManager) {
         NSLog(@"WARNING: Couldn't initialize HID interface.");
     }
 
-	// Initialize CoreAudio sound interface (DEPRECATED)
-    /*
-	if (!(audioDevice = [[AudioDevice alloc] initWithSID:sid])) {
-		NSLog(@"WARNING: Couldn't initialize CoreAudio interface. Sound disabled.");
-	}
-    */
-    
+    // Initialize GamePad manager
+    gamePadManager = [[GamePadManager alloc] init];
+    if (!gamePadManager) {
+        NSLog(@"WARNING: Failed to initialize GamePadManager");
+    }
+
     // Initialize audio interface
     audioEngine = [[AudioEngine alloc] initWithSID:sid];
     if (!audioEngine) {
