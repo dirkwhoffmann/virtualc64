@@ -21,7 +21,10 @@
 // TODO:
 
 // VERSION 1.5.2:
-// A C64 font is used in the directory preview window.
+// Code base has been made compatible with XCode 9.
+// A C64 font is now used in the directory preview window.
+// Fixed a bug that caused the emulator to crash when a window with an open debug panel got closed.
+//
 // 
 // TODO:
 //
