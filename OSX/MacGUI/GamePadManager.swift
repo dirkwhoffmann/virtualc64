@@ -5,196 +5,6 @@
 //  Created by Dirk Hoffmann on 06.10.17.
 //
 
-import Foundation
-import IOKit.hid
-
-// ---------------------------------------------------------------------------------------------
-//                                             GamePad
-// ---------------------------------------------------------------------------------------------
-
-class GamePad
-{
-    // private var proxy: C64Proxy?
-    
-    //! @brief    Indicates if this object represents a plugged in USB joystick device
-    var pluggedIn: Bool;
-    
-    //! @brief    Location ID of the represented USB joystick
-    var locationID: String;
-    
-    //! @brief    Mapping to one of the two virtual joysticks of the emulator
-    /*! @details  Initially, this pointer is NULL, meaning that the USB joystick has not yet been selected
-     *            as input device. It can be selected as input device via bindJoystick(). In that case, it
-     *            will point to one of the two static Joystick objects hold by the emulator.
-     */
-    var joystick: JoystickProxy?;
-    
-    init() {
-        pluggedIn = false;
-        locationID = "";
-    }
-    
-    /*
-    @objc convenience init?(withC64 p: C64Proxy) {
-        
-        NSLog("\(#function)")
-        
-        self.init()
-        proxy = p
-    }
-    */
-    
-    let actionCallback : IOHIDValueCallback = { inContext, inResult, inSender, value in
-        let this : GamePad = unsafeBitCast(inContext, to: GamePad.self)
-        this.hidDeviceAction(context: inContext, result: inResult, sender: inSender, value: value)
-    }
-    
-    // http://docs.ros.org/hydro/api/oculus_sdk/html/OSX__Gamepad_8cpp_source.html#l00170
-    func mapAnalogAxis(value: IOHIDValue, element: IOHIDElement) -> Double {
-    
-        let val = IOHIDValueGetIntegerValue(value);
-        let min = IOHIDElementGetLogicalMin(element);
-        let max = IOHIDElementGetLogicalMax(element);
-    
-        var v = (Double) (val - min) / (Double) (max - min);
-        v = v * 2.0 - 1.0;
-    
-        // Map dead zone to 0
-        if (v > -0.1 && v < 0.1) {
-             v = 0.0
-         }
-    
-         return v
-     }
-    
-    
-    func hidDeviceAction(context: Optional<UnsafeMutableRawPointer>,
-                         result: IOReturn,
-                         sender: Optional<UnsafeMutableRawPointer>,
-                         value: IOHIDValue) {
-        
-        // NSLog("\(#function) (location ID = %@)", locationID)
-        
-        let element = IOHIDValueGetElement(value)
-        let elementType = IOHIDElementGetType(element)
-        let elementValue = IOHIDValueGetIntegerValue(value)
-        let elementValuee = IOHIDValueGetScaledValue(value, IOHIDValueScaleType(kIOHIDValueScaleTypePhysical))
-        let usagePage = Int(IOHIDElementGetUsagePage(element))
-        let usage = Int(IOHIDElementGetUsage(element))
-        let min = IOHIDElementGetLogicalMin(element)
-        let max = IOHIDElementGetLogicalMax(element)
-
-        if (elementType == kIOHIDElementTypeInput_Button) {
-            
-            print("BUTTON")
-            if (elementValue == 1) {
-                joystick?.pullJoystick(GamePadDirection.FIRE);
-            } else {
-                joystick?.releaseJoystick(GamePadDirection.FIRE);
-            }
-        }
-        
-        if (elementType == kIOHIDElementTypeInput_Misc) {
-            
-            let v = mapAnalogAxis(value: value, element: element)
-            let axis = (v == 0) ? 0 : ((v > 0) ? 1 : -1)
-            
-            switch(usage) {
-                
-            case kHIDUsage_GD_X:
-            
-                switch (axis) {
-                case -1: print("LEFT"); joystick?.pullJoystick(GamePadDirection.LEFT); return;
-                case  1: print("RIGHT"); joystick?.pullJoystick(GamePadDirection.RIGHT); return;
-                default: joystick?.releaseXAxis(); return;
-                }
-                
-            case kHIDUsage_GD_Y:
-                
-                switch (axis) {
-                case -1: print("UP"); joystick?.pullJoystick(GamePadDirection.UP); return;
-                case  1: print("DOWN"); joystick?.pullJoystick(GamePadDirection.DOWN); return;
-                default: joystick?.releaseYAxis(); return;
-                }
-                
-            default:
-                break
-            }
-        }
-    }
-    
-    //! @brief Connects the USB device to port A of the emulator
-    func bindJoystickToPortA(c64: C64Proxy) {
-        if (pluggedIn) {
-            joystick = c64.joystickA
-        }
-    }
-    
-    //! @brief Connects the USB device to port B of the emulator
-    func bindJoystickToPortB(c64: C64Proxy) {
-        if (pluggedIn) {
-            joystick = c64.joystickB
-        }
-    }
-    
-    //! @brief Unconnect USB device
-    func unbindJoystick() {
-        joystick = nil
-    }
-    
-    func pullJoystick(dir: GamePadDirection) {
-        joystick?.pullJoystick(dir)
-        
-    }
-    
-    func releaseJoystick(dir: GamePadDirection) {
-        joystick?.releaseJoystick(dir)
-    }
-    
-    func releaseXAxis() {
-        joystick?.releaseXAxis()
-    }
-    
-    func releaseYAxis() {
-        joystick?.releaseYAxis()
-    }
-}
-
-
-
-// ---------------------------------------------------------------------------------------------
-//                                             IOHIDDeviceInfo
-// ---------------------------------------------------------------------------------------------
-
-class IOHIDDeviceInfo
-{
-    private var vendor = "";
-    private var product = "";
-    private var productID = "";
-    private var locationID = "";
-
-    let vendorKey = kIOHIDVendorIDKey as CFString
-    let productKey = kIOHIDProductKey as CFString
-    let productIDKey = kIOHIDProductIDKey as CFString
-    let locationIDKey = kIOHIDLocationIDKey as CFString
-
-    convenience init (device: IOHIDDevice) {
-
-        NSLog("\(#function)")
-        self.init()
-        
-        vendor     = String(describing: IOHIDDeviceGetProperty(device, vendorKey))
-        product    = String(describing: IOHIDDeviceGetProperty(device, productKey))
-        productID  = String(describing: IOHIDDeviceGetProperty(device, productIDKey))
-        locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
-        
-        NSLog(vendor)
-        NSLog(product)
-        NSLog(productID)
-        NSLog(locationID)
-    }
- 
-}
 
 // ---------------------------------------------------------------------------------------------
 //                                             GamePadManager
@@ -216,7 +26,7 @@ class IOHIDDeviceInfo
         super.init()
     }
     
-    @objc convenience init?(withC64 proxy: C64Proxy) {
+    @objc public convenience init?(withC64 proxy: C64Proxy) {
 
         NSLog("\(#function)")
         
@@ -322,19 +132,32 @@ class IOHIDDeviceInfo
         }
         
         let status = IOHIDDeviceClose(device, IOOptionBits(kIOHIDOptionsTypeSeizeDevice))
+        print("CLosing status:", status)
         
         removeJoystickProxy(locationID: locationID);
         _proxy?.putMessage(Int32(MSG_JOYSTICK_REMOVED.rawValue))
         NSLog("Closed device with location ID %@", locationID)
     }
     
-    func joystickIsPluggedIn(nr: Int) -> Bool {
+    @objc public func joystickIsPluggedIn(nr: Int) -> Bool {
     
         assert (nr >= 1 && nr <= 2);
         return usbjoy[nr - 1].pluggedIn;
     }
     
-    func unbindJoysticksFromPortA() {
+    @objc public func bindJoystickToPortA(nr: Int) {
+        
+        assert (nr >= 1 && nr <= 2)
+        usbjoy[nr - 1].bindJoystickToPortA(c64: _proxy!)
+    }
+    
+    @objc public func bindJoystickToPortB(nr: Int) {
+        
+        assert (nr >= 1 && nr <= 2)
+        usbjoy[nr - 1].bindJoystickToPortB(c64: _proxy!)
+    }
+
+    @objc public func unbindJoysticksFromPortA() {
         if (_proxy != nil && usbjoy[0].joystick == _proxy!.joystickA) {
             usbjoy[0].unbindJoystick();
         }
@@ -343,7 +166,7 @@ class IOHIDDeviceInfo
         }
     }
     
-    func unbindJoysticksFromPortB() {
+    @objc public func unbindJoysticksFromPortB() {
         if (_proxy != nil && usbjoy[0].joystick == _proxy!.joystickB) {
             usbjoy[0].unbindJoystick();
         }
@@ -352,6 +175,7 @@ class IOHIDDeviceInfo
         }
     }
 
+    
     func addJoystickProxy(locationID: String) -> Bool {
     
         if (!usbjoy[0].pluggedIn) {

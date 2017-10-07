@@ -56,12 +56,16 @@ public:
     inline JoystickDirection getAxisX() { return axisX; }
     inline JoystickDirection getAxisY() { return axisY; }
 		
-    inline void setButton(bool value) { button = value; }
-    inline void setXAxis(JoystickDirection state) { axisX = state; }
-    inline void setYAxis(JoystickDirection state) { axisY = state; }
+    inline void setButton(bool pressed) { button = pressed; }
+    inline void pullUp() { axisY = JOYSTICK_UP; }
+    inline void pullDown() { axisY = JOYSTICK_DOWN; }
+    inline void pullLeft() { axisX = JOYSTICK_LEFT; }
+    inline void pullRight() { axisX = JOYSTICK_RIGHT; }
+    void setXAxis(int value);
+    void setYAxis(int value);
     inline void releaseXAxis() { axisX = JOYSTICK_RELEASED; }
     inline void releaseYAxis() { axisY = JOYSTICK_RELEASED; }
-
+    inline void releaseAxes() { axisX = axisY = JOYSTICK_RELEASED; }
 };
 
 #endif

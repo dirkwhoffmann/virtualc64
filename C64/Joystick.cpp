@@ -57,3 +57,54 @@ Joystick::dumpState()
     msg("Button: %s AxisX: %d AxisY: %d\n", button ? "YES" : "NO", axisX, axisY);
 }
 
+/*
+void
+Joystick::setAxis(JoystickDirection dir)
+{
+    switch (dir) {
+        case JOYSTICK_UP:
+        case JOYSTICK_DOWN:
+            axisY = dir;
+            break;
+        case JOYSTICK_LEFT:
+        case JOYSTICK_RIGHT:
+            axisX = dir;
+            break;
+        case JOYSTICK_RELEASED:
+            axisX = axisY = dir;
+        default:
+            break;
+    }
+}
+*/
+
+void
+Joystick::setXAxis(int value)
+{
+    switch(value) {
+        case -1:
+            axisX = JOYSTICK_LEFT;
+            break;
+        case 1:
+            axisX = JOYSTICK_RIGHT;
+            break;
+        default:
+            axisX = JOYSTICK_RELEASED;
+    }
+}
+
+void
+Joystick::setYAxis(int value)
+{
+    switch(value) {
+        case -1:
+            axisY = JOYSTICK_UP;
+            break;
+        case 1:
+            axisY = JOYSTICK_DOWN;
+            break;
+        default:
+            axisY = JOYSTICK_RELEASED;
+    }
+}
+

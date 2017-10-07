@@ -18,7 +18,7 @@
 
 #import "C64GUI.h"
 #import "C64.h"
-#import "JoystickManager.h"
+// #import "JoystickManager.h"
 #import "VirtualC64-Swift.h"
 
 struct C64Wrapper { C64 *c64; };
@@ -28,7 +28,9 @@ struct VicWrapper { VIC *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
 struct JoystickWrapper { Joystick *joystick; };
-struct JoystickManagerWrapper { JoystickManager *manager; };
+// struct GamePadWrapper { Joystick *joystick; };
+// struct JoystickManagerWrapper { JoystickManager *manager; };
+// struct GamePadManagerWrapper { GamePadManager *manager; };
 struct SidWrapperWrapper { SIDWrapper *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
@@ -438,9 +440,16 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     return self;
 }
 
-// - (void) setButtonPressed:(BOOL)pressed { wrapper->joystick->setButtonPressed(pressed); }
-// - (void) setAxisX:(JoystickDirection)state { wrapper->joystick->setAxisX(state); }
-// - (void) setAxisY:(JoystickDirection)state { wrapper->joystick->setAxisY(state); }
+- (void) setButton:(NSInteger)pressed { wrapper->joystick->setButton((bool)pressed); }
+- (void) pullUp { wrapper->joystick->pullUp(); }
+- (void) pullDown { wrapper->joystick->pullDown(); }
+- (void) pullLeft { wrapper->joystick->pullLeft(); }
+- (void) pullRight { wrapper->joystick->pullRight(); }
+- (void) releaseAxes { wrapper->joystick->releaseAxes(); }
+- (void) setXAxis:(NSInteger)value { wrapper->joystick->setXAxis((int)value); }
+- (void) setYAxis:(NSInteger)value { wrapper->joystick->setYAxis((int)value); }
+- (void) releaseXAxis { wrapper->joystick->releaseXAxis(); }
+- (void) releaseYAxis { wrapper->joystick->releaseYAxis(); }
 
 - (void) pullJoystick:(GamePadDirection)dir {
     switch(dir) {
@@ -464,14 +473,11 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     }
 }
 
-- (void) releaseXAxis { wrapper->joystick->releaseXAxis(); }
-- (void) releaseYAxis { wrapper->joystick->releaseYAxis(); }
-
-
 - (void) dump { wrapper->joystick->dumpState(); }
 
 @end
 
+/*
 @implementation JoystickManagerProxy
 
 - (instancetype) initWithC64Proxy:(C64Proxy *)c64;
@@ -510,6 +516,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void) unbindJoysticksFromPortB { wrapper->manager->unbindJoysticksFromPortA(); }
 
 @end
+*/
 
 
 // --------------------------------------------------------------------------
@@ -748,7 +755,8 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 }
 
 @synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
-@synthesize joystickManager, joystickA, joystickB;
+// @synthesize joystickManager,
+@synthesize joystickA, joystickB;
 @synthesize iecBusIsBusy, tapeBusIsBusy;
 
 - (instancetype) init
@@ -777,12 +785,12 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
-    joystickManager = [[JoystickManagerProxy alloc] initWithC64Proxy:self];
+    // joystickManager = [[JoystickManagerProxy alloc] initWithC64Proxy:self];
 
     // Check Joystick HID interface (DEPRECATED)
-    if (!joystickManager) {
-        NSLog(@"WARNING: Couldn't initialize HID interface.");
-    }
+    //if (!joystickManager) {
+    //    NSLog(@"WARNING: Couldn't initialize HID interface.");
+    //}
 
     // Initialize GamePad manager
     gamePadManager = [[GamePadManager alloc] initWithC64:self];
@@ -818,8 +826,8 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 	[self disableAudio];
 	
     // Delete joystick manager
-    NSLog(@"Do we need to dealloc JoystickManager manually?");
-    joystickManager = nil;
+    // NSLog(@"Do we need to dealloc JoystickManager manually?");
+    // joystickManager = nil;
 
     // Delete emulator
     delete wrapper->c64;
@@ -978,22 +986,20 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     return wrapper->c64->restoreHistoricSnapshotSafe((unsigned)nr); }
 
 // Joystick
-- (BOOL)joystickIsPluggedIn:(int)nr { return [joystickManager joystickIsPluggedIn:nr]; }
-- (void)bindJoystickToPortA:(int)nr { [joystickManager bindJoystickToPortA:nr]; }
-- (void)bindJoystickToPortB:(int)nr { [joystickManager bindJoystickToPortB:nr]; }
-- (void)unbindJoysticksFromPortA { [joystickManager unbindJoysticksFromPortA]; }
-- (void)unbindJoysticksFromPortB { [joystickManager unbindJoysticksFromPortB]; }
+- (BOOL)joystickIsPluggedIn:(int)nr { return [gamePadManager joystickIsPluggedInNr:nr]; }
+- (void)bindJoystickToPortA:(int)nr { [gamePadManager bindJoystickToPortAWithNr:nr]; }
+- (void)bindJoystickToPortB:(int)nr { [gamePadManager bindJoystickToPortBWithNr:nr]; }
+- (void)unbindJoysticksFromPortA { [gamePadManager unbindJoysticksFromPortA]; }
+- (void)unbindJoysticksFromPortB { [gamePadManager unbindJoysticksFromPortB]; }
 
 // Audio hardware
 - (BOOL) enableAudio {
     [self rampUpFromZero];
-    // [audioDevice startPlayback]; // DEPRECATED
     return [audioEngine startPlayback];
 }
 
 - (void) disableAudio {
     [self rampDown];
-    // [audioDevice stopPlayback]; // DEPRECATED
     [audioEngine stopPlayback];
 }
 
