@@ -336,7 +336,6 @@
 		50414725122188FC00A80E0C /* Cartridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* Cartridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
 		5041486812219F6E00A80E0C /* cartridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cartridge.png; sourceTree = "<group>"; };
-		5042312A1BD3718F00B3DEF9 /* MyMetalViewResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewResponder.h; sourceTree = "<group>"; };
 		5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewResponder.mm; sourceTree = "<group>"; };
 		504606321BE4B99100463FD7 /* G64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G64Archive.cpp; sourceTree = "<group>"; };
 		504606331BE4B99100463FD7 /* G64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G64Archive.h; sourceTree = "<group>"; };
@@ -1020,7 +1019,6 @@
 				50032EB11BC919D90050BEEA /* MyMetalView.mm */,
 				500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */,
 				500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */,
-				5042312A1BD3718F00B3DEF9 /* MyMetalViewResponder.h */,
 				5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */,
 				50137E9E1BCA394600147283 /* MyMetalViewHelper.h */,
 				50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */,

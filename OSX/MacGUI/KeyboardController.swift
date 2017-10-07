@@ -33,25 +33,6 @@ extension CChar {
     }
 }
 
-/*
-extension CChar {
-    var char: Character {
-        return Character(UnicodeScalar(UInt8(bitPattern: Int8(self))))
-    }
-}
-*/
-
-/*
-@objc public enum JoyDir : Int {
-    case UP
-    case DOWN
-    case LEFT
-    case RIGHT
-    case FIRE
-    case RELEASED
-}
-*/
-
 //! @brief Mapping from keyboard keys to joystick movements
 public class KeyMap: NSObject {
 
@@ -95,6 +76,29 @@ class KeyboardController: NSObject {
     @objc var keymap2 = KeyMap()
     var pressedKeys: [UInt16:C64KeyFingerprint] = [:]
     
+    struct MacKeys {
+        static let F1 = UInt16(122)
+        static let F2 = UInt16(120)
+        static let F3 = UInt16(99)
+        static let F4 = UInt16(118)
+        static let F5 = UInt16(96)
+        static let F6 = UInt16(97)
+        static let F7 = UInt16(98)
+        static let F8 = UInt16(100)
+        static let APO = UInt16(39)
+        static let DEL = UInt16(51)
+        static let RET = UInt16(36)
+        static let CL = UInt16(123)
+        static let CR = UInt16(124)
+        static let CU = UInt16(126)
+        static let CD = UInt16(125)
+        static let TAB = UInt16(48)
+        static let SPC = UInt16(49)
+        static let ESC = UInt16(53)
+        static let HAT = UInt16(10)
+        static let TILDE_US = UInt16(50)
+    }
+
     //
     // Initialization
     //
@@ -242,7 +246,7 @@ class KeyboardController: NSObject {
     @objc public func keyDown(with event: NSEvent)
     {
         // Exit fullscreen mode if ESC is pressed
-        if (event.keyCode == MAC_ESC && controller.metalScreen.fullscreen) {
+        if (event.keyCode == MacKeys.ESC && controller.metalScreen.fullscreen) {
             controller.window!.toggleFullScreen(nil)
         }
         var c       = event.characters!.utf8CString[0].uint8
@@ -394,15 +398,6 @@ class KeyboardController: NSObject {
             }
         }
         
-        /*
-        if (key == map.fingerprint[JoystickDirection.LEFT])       { j.pullJoystick(JoystickDirection.LEFT) }
-        else if (key == map.fingerprint[JoystickDirection.RIGHT]) { j.pullJoystick(JoystickDirection.RIGHT) }
-        else if (key == map.fingerprint[JoystickDirection.UP])    { j.pullJoystick(JoystickDirection.UP) }
-        else if (key == map.fingerprint[JoystickDirection.DOWN])  { j.pullJoystick(JoystickDirection.DOWN) }
-        else if (key == map.fingerprint[JoystickDirection.FIRE])  { j.pullJoystick(JoystickDirection.FIRE) }
-        else { return false }
-        */
-        
         return false
     }
     
@@ -425,7 +420,6 @@ class KeyboardController: NSObject {
         if (controller.inputDeviceB == INPUT_DEVICES.IPD_KEYSET_2) {
             releaseJoystick(joyB, ifKeyMatches: key, inKeymap: keymap2)
         }
-        
     }
     
     @discardableResult
@@ -440,17 +434,6 @@ class KeyboardController: NSObject {
         }
         
         return false
-
-        /*
-        if (key == map.fingerprint[JoystickDirection.LEFT])       { j.setAxisX(JOYSTICK_RELEASED) }
-        else if (key == map.fingerprint[JoystickDirection.RIGHT]) { j.setAxisX(JOYSTICK_RELEASED) }
-        else if (key == map.fingerprint[JoystickDirection.UP])    { j.setAxisY(JOYSTICK_RELEASED) }
-        else if (key == map.fingerprint[JoystickDirection.DOWN])  { j.setAxisY(JOYSTICK_RELEASED) }
-        else if (key == map.fingerprint[JoystickDirection.FIRE])  { j.setButtonPressed(false) }
-        else { return false }
-        
-        return true
-        */
     }
     
     /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint
@@ -465,30 +448,30 @@ class KeyboardController: NSObject {
         
         switch (keycode) {
             
-        case MAC_F1: return C64KeyFingerprint(C64KEY_F1)
-        case MAC_F2: return C64KeyFingerprint(C64KEY_F2)
-        case MAC_F3: return C64KeyFingerprint(C64KEY_F3)
-        case MAC_F4: return C64KeyFingerprint(C64KEY_F4)
-        case MAC_F5: return C64KeyFingerprint(C64KEY_F5)
-        case MAC_F6: return C64KeyFingerprint(C64KEY_F6)
-        case MAC_F7: return C64KeyFingerprint(C64KEY_F7)
-        case MAC_F8: return C64KeyFingerprint(C64KEY_F8)
-        case MAC_RET: return C64KeyFingerprint(C64KEY_RET)
-        case MAC_CL: return C64KeyFingerprint(C64KEY_CL)
-        case MAC_CR: return C64KeyFingerprint(C64KEY_CR)
-        case MAC_CU: return C64KeyFingerprint(C64KEY_CU)
-        case MAC_CD: return C64KeyFingerprint(C64KEY_CD)
-        case MAC_ESC: return C64KeyFingerprint(C64KEY_RUNSTOP)
-        case MAC_TAB: return C64KeyFingerprint(C64KEY_RESTORE)
+        case MacKeys.F1: return C64KeyFingerprint(C64KEY_F1)
+        case MacKeys.F2: return C64KeyFingerprint(C64KEY_F2)
+        case MacKeys.F3: return C64KeyFingerprint(C64KEY_F3)
+        case MacKeys.F4: return C64KeyFingerprint(C64KEY_F4)
+        case MacKeys.F5: return C64KeyFingerprint(C64KEY_F5)
+        case MacKeys.F6: return C64KeyFingerprint(C64KEY_F6)
+        case MacKeys.F7: return C64KeyFingerprint(C64KEY_F7)
+        case MacKeys.F8: return C64KeyFingerprint(C64KEY_F8)
+        case MacKeys.RET: return C64KeyFingerprint(C64KEY_RET)
+        case MacKeys.CL: return C64KeyFingerprint(C64KEY_CL)
+        case MacKeys.CR: return C64KeyFingerprint(C64KEY_CR)
+        case MacKeys.CU: return C64KeyFingerprint(C64KEY_CU)
+        case MacKeys.CD: return C64KeyFingerprint(C64KEY_CD)
+        case MacKeys.ESC: return C64KeyFingerprint(C64KEY_RUNSTOP)
+        case MacKeys.TAB: return C64KeyFingerprint(C64KEY_RESTORE)
             
-        case MAC_DEL:
+        case MacKeys.DEL:
             return (flags.contains(NSEvent.ModifierFlags.shift)) ?
                 C64KeyFingerprint(C64KEY_INS) : C64KeyFingerprint(C64KEY_DEL)
         
-        case MAC_HAT:
+        case MacKeys.HAT:
             return C64KeyFingerprint(HAT_KEY)
         
-        case MAC_TILDE_US:
+        case MacKeys.TILDE_US:
             if (plainkey != LESS_KEY && plainkey != GREATER_KEY) {
                 return C64KeyFingerprint(C64KEY_ARROW);
             } else {
