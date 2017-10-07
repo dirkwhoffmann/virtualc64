@@ -453,11 +453,11 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 - (void) pullJoystick:(GamePadDirection)dir {
     switch(dir) {
-        case LEFT:  wrapper->joystick->setXAxis(JOYSTICK_LEFT); return;
-        case RIGHT: wrapper->joystick->setXAxis(JOYSTICK_RIGHT); return;
-        case UP:    wrapper->joystick->setYAxis(JOYSTICK_UP); return;
-        case DOWN:  wrapper->joystick->setYAxis(JOYSTICK_DOWN); return;
-        case FIRE:  wrapper->joystick->setButton(YES); return;
+        case LEFT:  wrapper->joystick->pullLeft(); return;
+        case RIGHT: wrapper->joystick->pullRight(); return;
+        case UP:    wrapper->joystick->pullUp(); return;
+        case DOWN:  wrapper->joystick->pullDown(); return;
+        case FIRE:  wrapper->joystick->pressButton(); return;
         default:    return;
     }
 }
@@ -468,7 +468,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
         case RIGHT: wrapper->joystick->releaseXAxis(); return;
         case UP:    wrapper->joystick->releaseYAxis(); return;
         case DOWN:  wrapper->joystick->releaseYAxis(); return;
-        case FIRE:  wrapper->joystick->setButton(NO); return;
+        case FIRE:  wrapper->joystick->releaseButton(); return;
         default:    return;
     }
 }

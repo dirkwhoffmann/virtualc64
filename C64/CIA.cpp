@@ -794,20 +794,17 @@ CIA1::clearInterruptLine()
 void 
 CIA1::pollJoystick(Joystick *joy, int joyDevNo)
 {
-    JoystickDirection leftRightState = joy->getAxisX();
-	JoystickDirection upDownState = joy->getAxisY();
-	bool buttonState = joy->getButton();
-	
     assert (joy != NULL);
     
 	// up/down
 	// set the down bit: 2, 2 and clear up bit: 2, 1		
 	// Remember: clearJoystickBits(x, y) means pressed
     //           setJoystickBits( x, y ) means released
-	if(upDownState == JOYSTICK_UP) {
+    
+	if(joy->isPulledUp()) {
 		clearJoystickBits(joyDevNo, 1);
 		setJoystickBits(joyDevNo, 2);
-	} else if(upDownState == JOYSTICK_DOWN) {
+	} else if(joy->isPulledDown()) {
 		clearJoystickBits(joyDevNo, 2);
 		setJoystickBits(joyDevNo, 1);
 	} else {
@@ -816,10 +813,10 @@ CIA1::pollJoystick(Joystick *joy, int joyDevNo)
 	}
 	
 	// left/right
-	if(leftRightState == JOYSTICK_LEFT) {
+	if(joy->isPulledLeft()) {
 		clearJoystickBits(joyDevNo, 4);
 		setJoystickBits(joyDevNo, 8);
-	} else if(leftRightState == JOYSTICK_RIGHT) {
+    } else if(joy->isPulledRight()) {
 		clearJoystickBits(joyDevNo, 8);			
 		setJoystickBits(joyDevNo, 4);
 	} else {
@@ -828,7 +825,7 @@ CIA1::pollJoystick(Joystick *joy, int joyDevNo)
 	}
 	
 	// fire
-	if(buttonState) {
+	if(joy->getButton()) {
 		clearJoystickBits(joyDevNo, 16);
 	} else {
 		setJoystickBits(joyDevNo, 16);

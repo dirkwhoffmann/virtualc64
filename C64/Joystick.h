@@ -33,10 +33,12 @@ private:
     bool button;
 
     //! @brief    Horizontal joystick position
-    JoystickDirection axisX;
+    //@ @details  Valid valued are -1 (LEFT), 1 (RIGHT), or 0 (RELEASED)
+    int axisX;
 
     //! @brief    Vertical joystick position
-    JoystickDirection axisY;
+    //@ details   Valid valued are -1 (UP), 1 (DOWN), or 0 (RELEASED)
+    int axisY;
     
 public:
 
@@ -53,19 +55,22 @@ public:
     void dumpState();
 
     inline bool getButton() { return button; }
-    inline JoystickDirection getAxisX() { return axisX; }
-    inline JoystickDirection getAxisY() { return axisY; }
-		
     inline void setButton(bool pressed) { button = pressed; }
-    inline void pullUp() { axisY = JOYSTICK_UP; }
-    inline void pullDown() { axisY = JOYSTICK_DOWN; }
-    inline void pullLeft() { axisX = JOYSTICK_LEFT; }
-    inline void pullRight() { axisX = JOYSTICK_RIGHT; }
-    void setXAxis(int value);
-    void setYAxis(int value);
-    inline void releaseXAxis() { axisX = JOYSTICK_RELEASED; }
-    inline void releaseYAxis() { axisY = JOYSTICK_RELEASED; }
-    inline void releaseAxes() { axisX = axisY = JOYSTICK_RELEASED; }
+    inline void pressButton() { setButton(true); }
+    inline void releaseButton() { setButton(false); }
+    inline bool isPulledUp() { return axisY == -1; }
+    inline bool isPulledDown() { return axisY == 1; }
+    inline bool isPulledLeft() { return axisX == -1; }
+    inline bool isPulledRight() { return axisX == 1; }
+    inline void setXAxis(int value) { axisX = value; }
+    inline void setYAxis(int value) { axisY = value; }
+    inline void pullUp() { setYAxis(-1); }
+    inline void pullDown() { setYAxis(1); }
+    inline void pullLeft() { setXAxis(-1); }
+    inline void pullRight() { setXAxis(1); }
+    inline void releaseXAxis() { setXAxis(0); }
+    inline void releaseYAxis() { setYAxis(0); }
+    inline void releaseAxes() { releaseXAxis(); releaseYAxis(); }
 };
 
 #endif

@@ -190,7 +190,9 @@ typedef enum {
 } SamplingMethod;
 
 /*! @brief    Joystick directions
+ *  @deprecated
  */
+/*
 typedef enum
 {
     JOYSTICK_UP,
@@ -200,6 +202,7 @@ typedef enum
     JOYSTICK_FIRE,
     JOYSTICK_RELEASED
 } JoystickDirection;
+*/
 
 /*! @enum     ContainerType
  *  @brief    The type of a container

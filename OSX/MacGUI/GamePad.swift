@@ -33,7 +33,7 @@ class GamePad
         pluggedIn = false;
         locationID = "";
     }
-        
+    
     let actionCallback : IOHIDValueCallback = { inContext, inResult, inSender, value in
         let this : GamePad = unsafeBitCast(inContext, to: GamePad.self)
         this.hidDeviceAction(context: inContext, result: inResult, sender: inSender, value: value)
@@ -61,10 +61,10 @@ class GamePad
                          sender: Optional<UnsafeMutableRawPointer>,
                          value: IOHIDValue) {
         
-        let element     = IOHIDValueGetElement(value)
-        let intValue    = Int(IOHIDValueGetIntegerValue(value))
-        let usagePage   = Int(IOHIDElementGetUsagePage(element))
-        let usage       = Int(IOHIDElementGetUsage(element))
+        let element   = IOHIDValueGetElement(value)
+        let intValue  = Int(IOHIDValueGetIntegerValue(value))
+        let usagePage = Int(IOHIDElementGetUsagePage(element))
+        let usage     = Int(IOHIDElementGetUsage(element))
         
         if (usagePage == kHIDPage_Button) {
             

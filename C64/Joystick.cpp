@@ -45,8 +45,8 @@ Joystick::reset()
     VirtualComponent::reset();
 
     button = false;
-    axisX = JOYSTICK_RELEASED;
-    axisY = JOYSTICK_RELEASED;
+    axisX = 0;
+    axisY = 0;
 }
 
 void
@@ -59,37 +59,69 @@ Joystick::dumpState()
 
 /*
 void
-Joystick::setAxis(JoystickDirection dir)
+Joystick::pullJoystick(JoystickDirection dir)
 {
     switch (dir) {
         case JOYSTICK_UP:
+            pullUp();
+            break;
+            
         case JOYSTICK_DOWN:
-            axisY = dir;
+            pullDown();
             break;
+            
         case JOYSTICK_LEFT:
-        case JOYSTICK_RIGHT:
-            axisX = dir;
+            pullLeft();
             break;
-        case JOYSTICK_RELEASED:
-            axisX = axisY = dir;
+            
+        case JOYSTICK_RIGHT:
+            pullRight();
+            break;
+            
+        case JOYSTICK_FIRE:
+            setButton(true);
+            break;
+            
         default:
             break;
     }
 }
-*/
+
+void
+Joystick::releaseJoystick(JoystickDirection dir)
+{
+    switch (dir) {
+        case JOYSTICK_UP:
+        case JOYSTICK_DOWN:
+            releaseYAxis();
+            break;
+            
+        case JOYSTICK_LEFT:
+        case JOYSTICK_RIGHT:
+            releaseXAxis();
+            break;
+            
+        case JOYSTICK_FIRE:
+            setButton(false);
+            break;
+            
+        default:
+            break;
+    }
+}
 
 void
 Joystick::setXAxis(int value)
 {
     switch(value) {
         case -1:
-            axisX = JOYSTICK_LEFT;
+            pullLeft();
             break;
         case 1:
-            axisX = JOYSTICK_RIGHT;
+            pullRight();
             break;
         default:
-            axisX = JOYSTICK_RELEASED;
+            releaseXAxis();
     }
 }
 
@@ -98,13 +130,13 @@ Joystick::setYAxis(int value)
 {
     switch(value) {
         case -1:
-            axisY = JOYSTICK_UP;
+            pullUp();
             break;
         case 1:
-            axisY = JOYSTICK_DOWN;
+            pullDown();
             break;
         default:
-            axisY = JOYSTICK_RELEASED;
+            releaseYAxis();
     }
 }
-
+*/
