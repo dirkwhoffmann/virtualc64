@@ -121,7 +121,7 @@ extern NSString *VC64FullscreenKeepAspectRatioKey;
 
 //! Helper function for update
 - (NSString *)keycodeInPlainText:(int)code character:(char)c;
-- (void)updateKeymap:(int)map direction:(GamePadDirection)dir button:(NSButton *)b text:(NSTextField *)t;
+- (void)updateKeymap:(int)map direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t;
 - (void) update;
 
 // Joystick

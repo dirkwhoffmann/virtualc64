@@ -221,7 +221,7 @@
         }
     }
     
-    func listJoystickManagers() {
+    func listDevices() {
     
         NSLog("USB joystick slot 1: (ID %@)", usbjoy[0].locationID);
         NSLog("USB joystick slot 2: (ID %@)", usbjoy[1].locationID);

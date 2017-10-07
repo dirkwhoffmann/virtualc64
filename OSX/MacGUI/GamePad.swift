@@ -90,12 +90,10 @@ class GamePad
             switch(usage) {
                 
             case kHIDUsage_GD_X, kHIDUsage_GD_Rz:
-                print("X: ", v)
                 joystick?.setXAxis(v)
                 break
                 
             case kHIDUsage_GD_Y, kHIDUsage_GD_Z:
-                print("Y: ", v)
                 joystick?.setYAxis(v)
                 break
                 
@@ -147,12 +145,12 @@ class GamePad
         joystick = nil
     }
     
-    func pullJoystick(dir: GamePadDirection) {
+    func pullJoystick(dir: JoystickDirection) {
         joystick?.pullJoystick(dir)
         
     }
     
-    func releaseJoystick(dir: GamePadDirection) {
+    func releaseJoystick(dir: JoystickDirection) {
         joystick?.releaseJoystick(dir)
     }
     

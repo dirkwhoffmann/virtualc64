@@ -18,7 +18,6 @@
 
 #import "C64GUI.h"
 #import "C64.h"
-// #import "JoystickManager.h"
 #import "VirtualC64-Swift.h"
 
 struct C64Wrapper { C64 *c64; };
@@ -28,9 +27,6 @@ struct VicWrapper { VIC *vic; };
 struct CiaWrapper { CIA *cia; };
 struct KeyboardWrapper { Keyboard *keyboard; };
 struct JoystickWrapper { Joystick *joystick; };
-// struct GamePadWrapper { Joystick *joystick; };
-// struct JoystickManagerWrapper { JoystickManager *manager; };
-// struct GamePadManagerWrapper { GamePadManager *manager; };
 struct SidWrapperWrapper { SIDWrapper *sid; };
 struct IecWrapper { IEC *iec; };
 struct ExpansionPortWrapper { ExpansionPort *expansionPort; };
@@ -451,7 +447,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void) releaseXAxis { wrapper->joystick->releaseXAxis(); }
 - (void) releaseYAxis { wrapper->joystick->releaseYAxis(); }
 
-- (void) pullJoystick:(GamePadDirection)dir {
+- (void) pullJoystick:(JoystickDirection)dir {
     switch(dir) {
         case LEFT:  wrapper->joystick->pullLeft(); return;
         case RIGHT: wrapper->joystick->pullRight(); return;
@@ -462,7 +458,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     }
 }
 
-- (void) releaseJoystick:(GamePadDirection)dir {
+- (void) releaseJoystick:(JoystickDirection)dir {
     switch(dir) {
         case LEFT:  wrapper->joystick->releaseXAxis(); return;
         case RIGHT: wrapper->joystick->releaseXAxis(); return;
@@ -476,48 +472,6 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void) dump { wrapper->joystick->dumpState(); }
 
 @end
-
-/*
-@implementation JoystickManagerProxy
-
-- (instancetype) initWithC64Proxy:(C64Proxy *)c64;
-{
-    if (self = [super init]) {
-        wrapper = new JoystickManagerWrapper;
-        wrapper->manager = new JoystickManager(c64);
-        if (!wrapper->manager->initialize()) {
-            NSLog(@"Failed to create JoystickManager");
-            self = nil;
-        }
-    }
-    return self;
-}
-
-- (instancetype) initWithJoystickManager:(JoystickManager *)manager
-{
-    if (self = [super init]) {
-        wrapper = new JoystickManagerWrapper();
-        wrapper->manager = manager;
-    }
-    return self;
-}
-
-- (BOOL) joystickIsPluggedIn:(NSInteger)nr {
-    return wrapper->manager->joystickIsPluggedIn((int)nr);
-}
-
-- (void) bindJoystickToPortA:(NSInteger)nr {
-    wrapper->manager->bindJoystickToPortA((int)nr);
-}
-- (void) bindJoystickToPortB:(NSInteger)nr {
-    wrapper->manager->bindJoystickToPortB((int)nr);
-}
-- (void) unbindJoysticksFromPortA { wrapper->manager->unbindJoysticksFromPortA(); }
-- (void) unbindJoysticksFromPortB { wrapper->manager->unbindJoysticksFromPortA(); }
-
-@end
-*/
-
 
 // --------------------------------------------------------------------------
 //                                    SID
@@ -755,7 +709,6 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 }
 
 @synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
-// @synthesize joystickManager,
 @synthesize joystickA, joystickB;
 @synthesize iecBusIsBusy, tapeBusIsBusy;
 
@@ -785,13 +738,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     expansionport = [[ExpansionPortProxy alloc] initWithExpansionPort:&c64->expansionport];
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
-    // joystickManager = [[JoystickManagerProxy alloc] initWithC64Proxy:self];
-
-    // Check Joystick HID interface (DEPRECATED)
-    //if (!joystickManager) {
-    //    NSLog(@"WARNING: Couldn't initialize HID interface.");
-    //}
-
+    
     // Initialize GamePad manager
     gamePadManager = [[GamePadManager alloc] initWithC64:self];
     if (!gamePadManager) {
@@ -825,10 +772,6 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 	// Stop sound device
 	[self disableAudio];
 	
-    // Delete joystick manager
-    // NSLog(@"Do we need to dealloc JoystickManager manually?");
-    // joystickManager = nil;
-
     // Delete emulator
     delete wrapper->c64;
 	wrapper->c64 = NULL;

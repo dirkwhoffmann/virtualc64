@@ -30,8 +30,6 @@
 @class ArchiveProxy;
 @class TAPContainerProxy;
 @class CartridgeProxy;
-// @class JoystickManagerProxy;
-// @class GamePadManagerProxy;
 
 // Forward declarations of wrappers for C++ classes.
 // We wrap classes into normal C structs to avoid any reference to C++ here.
@@ -43,7 +41,6 @@ struct VicWrapper;
 struct CiaWrapper;
 struct KeyboardWrapper;
 struct JoystickWrapper;
-// struct JoystickManagerWrapper;
 struct SidWrapperWrapper; // Yes, it's a double wrapper
 struct IecWrapper;
 struct ExpansionPortWrapper;
@@ -336,7 +333,7 @@ struct CartridgeWrapper;
 //                                 Joystick
 // -------------------------------------------------------------------------
 
-typedef NS_ENUM(NSInteger, GamePadDirection) {
+typedef NS_ENUM(NSInteger, JoystickDirection) {
     UP,
     DOWN,
     LEFT,
@@ -360,28 +357,12 @@ typedef NS_ENUM(NSInteger, GamePadDirection) {
 - (void) setYAxis:(NSInteger)value;
 - (void) releaseXAxis;
 - (void) releaseYAxis;
-- (void) pullJoystick:(GamePadDirection)dir;
-- (void) releaseJoystick:(GamePadDirection)dir;
+- (void) pullJoystick:(JoystickDirection)dir;
+- (void) releaseJoystick:(JoystickDirection)dir;
 
 - (void) dump;
 
 @end
-
-/*
-@interface JoystickManagerProxy : NSObject {
-    
-    struct JoystickManagerWrapper *wrapper;
-}
-
-- (instancetype) initWithC64Proxy:(C64Proxy *)c64;
-- (BOOL) joystickIsPluggedIn:(NSInteger)nr;
-- (void) bindJoystickToPortA:(NSInteger)nr;
-- (void) bindJoystickToPortB:(NSInteger)nr;
-- (void) unbindJoysticksFromPortA;
-- (void) unbindJoysticksFromPortB;
-
-@end
-*/
 
 @interface GamePadProxy : NSObject {
     
@@ -391,30 +372,14 @@ typedef NS_ENUM(NSInteger, GamePadDirection) {
 - (void) setButton:(NSInteger)pressed;
 - (void) setXAxis:(NSInteger)value;
 - (void) setYAxis:(NSInteger)value;
-- (void) pullJoystick:(GamePadDirection)dir;
-- (void) releaseJoystick:(GamePadDirection)dir;
+- (void) pullJoystick:(JoystickDirection)dir;
+- (void) releaseJoystick:(JoystickDirection)dir;
 - (void) releaseXAxis;
 - (void) releaseYAxis;
 
 - (void) dump;
 
 @end
-
-/*
-@interface GamePadManagerProxy : NSObject {
-    
-    struct GamePadManagerWrapper *wrapper;
-}
-
-- (instancetype) initWithC64Proxy:(C64Proxy *)c64;
-- (BOOL) joystickIsPluggedIn:(NSInteger)nr;
-- (void) bindJoystickToPortA:(NSInteger)nr;
-- (void) bindJoystickToPortB:(NSInteger)nr;
-- (void) unbindJoysticksFromPortA;
-- (void) unbindJoysticksFromPortB;
-
-@end
-*/
 
 // --------------------------------------------------------------------------
 //                                    SID
@@ -583,8 +548,6 @@ typedef NS_ENUM(NSInteger, GamePadDirection) {
 @interface C64Proxy : NSObject {
     
 	struct C64Wrapper *wrapper;
-    // JoystickManagerProxy *joystickManager;
-    // GamePadManagerProxy *gamepadManager;
     
 	// Sub component proxys
 	CPUProxy *cpu;
@@ -625,8 +588,6 @@ typedef NS_ENUM(NSInteger, GamePadDirection) {
 @property (readonly) ExpansionPortProxy *expansionport;
 @property (readonly) VC1541Proxy *vc1541;
 @property (readonly) DatasetteProxy *datasette;
-// @property (readonly) JoystickManagerProxy *joystickManager;
-// @property (readonly) GamePadManagerProxy *joystickManager;
 
 @property BOOL iecBusIsBusy;
 @property BOOL tapeBusIsBusy;

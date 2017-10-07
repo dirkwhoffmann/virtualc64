@@ -414,7 +414,7 @@
     return [keyboardcontroller fingerprintForKey:keycode withModifierFlags:flags];
 }
 
-- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(GamePadDirection)dir
+- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
     
@@ -427,7 +427,7 @@
     }
 }
 
-- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(GamePadDirection)dir
+- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
     
@@ -440,7 +440,7 @@
     }
 }
 
-- (NSString *)joyChar:(int)nr direction:(GamePadDirection)dir
+- (NSString *)joyChar:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
         
@@ -454,7 +454,7 @@
     }
 }
 
-- (void)setJoyChar:(NSString *)s keymap:(int)nr direction:(GamePadDirection)dir
+- (void)setJoyChar:(NSString *)s keymap:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
     
