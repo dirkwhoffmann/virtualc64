@@ -18,14 +18,8 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// TODO:
-
-// VERSION 1.5.2:
-// Code base has been made compatible with XCode 9.
-// A C64 font is now used in the directory preview window.
-// Fixed a bug that caused the emulator to crash when a window with an open debug panel got closed.
+// NEXT RELEASE: 1.5.3
 //
-// 
 // TODO:
 //
 // TODO:
