@@ -40,7 +40,7 @@
 #ifndef _C64_INC
 #define _C64_INC
 
-#define NDEBUG      // RELEASE
+// #define NDEBUG      // RELEASE
 
 // Data types and constants
 #include "C64_defs.h"
@@ -199,10 +199,10 @@ public:
 	Keyboard keyboard;
 	
     //! @brief    The C64s first virtual joystick (plugged into CONTROL PORT 1)
-	Joystick joystickA;
+	Joystick joystickA = Joystick(1);
 
     //! @brief    The C64s second virtual joystick (plugged into CONTROL PORT 2)
-    Joystick joystickB;
+    Joystick joystickB = Joystick(2);
 
 	//! @brief    The C64s interface bus connecting the VC1541 drive
 	IEC iec;

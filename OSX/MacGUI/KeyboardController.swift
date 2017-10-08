@@ -33,31 +33,7 @@ extension CChar {
     }
 }
 
-//! @brief Mapping from keyboard keys to joystick movements
-public class KeyMap: NSObject {
 
-    //! @brief fingerprint of the assign key
-    var fingerprint : [JoystickDirection:MacKeyFingerprint] = [:]
-
-    //! @brief readable character for the assigned key
-    var character : [JoystickDirection:String] = [:]
-    
-    @objc public func getFingerprint(forDirection d: JoystickDirection) -> MacKeyFingerprint {
-        return fingerprint[d]!
-    }
-    
-    @objc public func setFingerprint(_ f: MacKeyFingerprint, forDirection d: JoystickDirection) {
-        fingerprint[d] = f
-    }
-
-    @objc public func getCharacter(forDirection d: JoystickDirection) -> String {
-        return character[d]!
-    }
-    
-    @objc public func setCharacter(_ c: String, forDirection d: JoystickDirection) {
-        character[d] = c
-    }
-}
 
 /*! @brief   Remembers currently pressed keys and there related C64KeyFingerprints
  *  @details Make this a simple variable once the whole class has been ported to Swift
@@ -119,29 +95,29 @@ class KeyboardController: NSObject {
     {
         NSLog("\(#function)")
                 
-        keymap1.fingerprint[JoystickDirection.LEFT] = 123
-        keymap1.fingerprint[JoystickDirection.RIGHT] = 124
-        keymap1.fingerprint[JoystickDirection.UP] = 126
-        keymap1.fingerprint[JoystickDirection.DOWN] = 125
-        keymap1.fingerprint[JoystickDirection.FIRE] = 49
+        keymap1.setFingerprint(123, for: JoystickDirection.LEFT)
+        keymap1.setFingerprint(124, for: JoystickDirection.RIGHT)
+        keymap1.setFingerprint(126, for: JoystickDirection.UP)
+        keymap1.setFingerprint(125, for: JoystickDirection.DOWN)
+        keymap1.setFingerprint(49,  for: JoystickDirection.FIRE)
             
-        keymap1.character[JoystickDirection.LEFT] = " "
-        keymap1.character[JoystickDirection.RIGHT] = " "
-        keymap1.character[JoystickDirection.UP] = " "
-        keymap1.character[JoystickDirection.DOWN] = " "
-        keymap1.character[JoystickDirection.FIRE] = " "
+        keymap1.setCharacter(" ", for: JoystickDirection.LEFT)
+        keymap1.setCharacter(" ", for: JoystickDirection.RIGHT)
+        keymap1.setCharacter(" ", for: JoystickDirection.UP)
+        keymap1.setCharacter(" ", for: JoystickDirection.DOWN)
+        keymap1.setCharacter(" ", for: JoystickDirection.FIRE)
             
-        keymap2.fingerprint[JoystickDirection.LEFT] = 0
-        keymap2.fingerprint[JoystickDirection.RIGHT] = 1
-        keymap2.fingerprint[JoystickDirection.UP] = 6
-        keymap2.fingerprint[JoystickDirection.DOWN] = 13
-        keymap2.fingerprint[JoystickDirection.FIRE] = 7
+        keymap2.setFingerprint(0,  for: JoystickDirection.LEFT)
+        keymap2.setFingerprint(1,  for: JoystickDirection.RIGHT)
+        keymap2.setFingerprint(6,  for: JoystickDirection.UP)
+        keymap2.setFingerprint(13, for: JoystickDirection.DOWN)
+        keymap2.setFingerprint(7,  for: JoystickDirection.FIRE)
             
-        keymap2.character[JoystickDirection.LEFT] = "a"
-        keymap2.character[JoystickDirection.RIGHT] = "s"
-        keymap2.character[JoystickDirection.UP] = "y"
-        keymap2.character[JoystickDirection.DOWN] = "w"
-        keymap2.character[JoystickDirection.FIRE] = "x"
+        keymap2.setCharacter("a", for: JoystickDirection.LEFT)
+        keymap2.setCharacter("s", for: JoystickDirection.RIGHT)
+        keymap2.setCharacter("y", for: JoystickDirection.UP)
+        keymap2.setCharacter("w", for: JoystickDirection.DOWN)
+        keymap2.setCharacter("x", for: JoystickDirection.FIRE)
     }
     
     
@@ -192,27 +168,26 @@ class KeyboardController: NSObject {
         
         let defaults = UserDefaults.standard
         
-        keymap.fingerprint[JoystickDirection.LEFT] =
-            MacKeyFingerprint(defaults.integer(forKey: "VC64Left" + s + "keycodeKey"))
-        keymap.fingerprint[JoystickDirection.RIGHT] =
-            MacKeyFingerprint(defaults.integer(forKey: "VC64Right" + s + "keycodeKey"))
-        keymap.fingerprint[JoystickDirection.UP] =
-            MacKeyFingerprint(defaults.integer(forKey: "VC64Up" + s + "keycodeKey"))
-        keymap.fingerprint[JoystickDirection.DOWN] =
-            MacKeyFingerprint(defaults.integer(forKey: "VC64Down" + s + "keycodeKey"))
-        keymap.fingerprint[JoystickDirection.FIRE] =
-            MacKeyFingerprint(defaults.integer(forKey: "VC64Fire" + s + "keycodeKey"))
+        func loadFingerprint(for d: JoystickDirection, usingKey key: String) {
+            keymap.setFingerprint(
+                MacKeyFingerprint(defaults.integer(forKey: key + s + "keycodeKey")), for: d)
+        }
         
-        keymap.character[JoystickDirection.LEFT] =
-            defaults.string(forKey: "VC64Left" + s + "charKey")
-        keymap.character[JoystickDirection.RIGHT] =
-            defaults.string(forKey: "VC64Right" + s + "charKey")
-        keymap.character[JoystickDirection.UP] =
-            defaults.string(forKey: "VC64Up" + s + "charKey")
-        keymap.character[JoystickDirection.DOWN] =
-            defaults.string(forKey: "VC64Down" + s + "charKey")
-        keymap.character[JoystickDirection.FIRE] =
-            defaults.string(forKey: "VC64Fire" + s + "charKey")
+        loadFingerprint(for:JoystickDirection.LEFT, usingKey: "VC64Left")
+        loadFingerprint(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
+        loadFingerprint(for:JoystickDirection.UP, usingKey: "VC64Up")
+        loadFingerprint(for:JoystickDirection.DOWN, usingKey: "VC64Down")
+        loadFingerprint(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
+        
+        func loadCharacter(for d: JoystickDirection, usingKey key: String) {
+            keymap.setCharacter(defaults.string(forKey: key + s + "keycodeKey"), for: d)
+        }
+        
+        loadCharacter(for:JoystickDirection.LEFT, usingKey: "VC64Left")
+        loadCharacter(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
+        loadCharacter(for:JoystickDirection.UP, usingKey: "VC64Up")
+        loadCharacter(for:JoystickDirection.DOWN, usingKey: "VC64Down")
+        loadCharacter(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
     }
     
     @objc func saveUserDefaults() {
@@ -226,17 +201,25 @@ class KeyboardController: NSObject {
         
         let defaults = UserDefaults.standard
         
-        defaults.set(keymap.fingerprint[JoystickDirection.LEFT],  forKey :"VC64Left" + s + "keycodeKey")
-        defaults.set(keymap.fingerprint[JoystickDirection.RIGHT], forKey :"VC64Right" + s + "keycodeKey")
-        defaults.set(keymap.fingerprint[JoystickDirection.UP],    forKey :"VC64Up" + s + "keycodeKey")
-        defaults.set(keymap.fingerprint[JoystickDirection.DOWN],  forKey :"VC64Down" + s + "keycodeKey")
-        defaults.set(keymap.fingerprint[JoystickDirection.FIRE],  forKey :"VC64Fire" + s + "keycodeKey")
+        func saveFingerprint(for d: JoystickDirection, usingKey key: String) {
+            defaults.set(keymap.fingerprint(for: d), forKey: key + s + "keycodeKey")
+        }
         
-        defaults.set(keymap.character[JoystickDirection.LEFT],    forKey :"VC64Left" + s + "charKey")
-        defaults.set(keymap.character[JoystickDirection.RIGHT],   forKey :"VC64Right" + s + "charKey")
-        defaults.set(keymap.character[JoystickDirection.UP],      forKey :"VC64Up" + s + "charKey")
-        defaults.set(keymap.character[JoystickDirection.DOWN],    forKey :"VC64Down" + s + "charKey")
-        defaults.set(keymap.character[JoystickDirection.FIRE],    forKey :"VC64Fire" + s + "charKey")
+        saveFingerprint(for:JoystickDirection.LEFT, usingKey: "VC64Left")
+        saveFingerprint(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
+        saveFingerprint(for:JoystickDirection.UP, usingKey: "VC64Up")
+        saveFingerprint(for:JoystickDirection.DOWN, usingKey: "VC64Down")
+        saveFingerprint(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
+        
+        func saveCharacter(for d: JoystickDirection, usingKey key: String) {
+            defaults.set(keymap.getCharacter(for: d), forKey: key + s + "charKey")
+        }
+        
+        saveCharacter(for:JoystickDirection.LEFT, usingKey: "VC64Left")
+        saveCharacter(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
+        saveCharacter(for:JoystickDirection.UP, usingKey: "VC64Up")
+        saveCharacter(for:JoystickDirection.DOWN, usingKey: "VC64Down")
+        saveCharacter(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
     }
     
     //
@@ -390,12 +373,9 @@ class KeyboardController: NSObject {
     @discardableResult
     func pullJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap) -> Bool
     {
-        for (offset: _, element: (key: direction, value: value)) in map.fingerprint.enumerated() {
-            
-            if key == value {
-                j.pullJoystick(direction)
-                return true
-            }
+        if let direction = map.mapping[key] {
+            j.pullJoystick(direction)
+            return true
         }
         
         return false
@@ -425,12 +405,9 @@ class KeyboardController: NSObject {
     @discardableResult
     func releaseJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap) -> Bool
     {
-        for (offset: _, element: (key: direction, value: value)) in map.fingerprint.enumerated() {
-            
-            if key == value {
-                j.releaseJoystick(direction)
-                return true;
-            }
+        if let direction = map.mapping[key] {
+            j.releaseJoystick(direction)
+            return true
         }
         
         return false

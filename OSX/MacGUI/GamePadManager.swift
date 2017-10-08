@@ -222,9 +222,11 @@
     }
     
     func listDevices() {
-    
-        NSLog("USB joystick slot 1: (ID %@)", usbjoy[0].locationID);
-        NSLog("USB joystick slot 2: (ID %@)", usbjoy[1].locationID);
+        NSLog("USB joystick slot 1:");
+        
+        if (usbjoy[0].locationID != nil) {
+            NSLog("HID device with location ID %@", usbjoy[0].locationID!)
+        }
     }
 
     

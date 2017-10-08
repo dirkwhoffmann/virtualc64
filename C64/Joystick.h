@@ -29,6 +29,11 @@ class Joystick : public VirtualComponent {
 
 private:
     
+    //! @brief    Indicates whether this object represents control port 1 or control port 2
+    /*! @details  Value must be either 1 or 2
+     */
+    int port;
+    
     //! @brief    True, if button is pressed
     bool button;
 
@@ -43,7 +48,7 @@ private:
 public:
 
     //! @brief    Constructor
-    Joystick();
+    Joystick(int p);
     
     //! @brief    Destructor
     ~Joystick();
@@ -54,6 +59,8 @@ public:
     //! @brief    Prints debugging information
     void dumpState();
 
+    inline int getPort() { return port; }
+    inline void setPort(int p) { port = p; }
     inline bool getButton() { return button; }
     inline void setButton(bool pressed) { button = pressed; }
     inline void pressButton() { setButton(true); }

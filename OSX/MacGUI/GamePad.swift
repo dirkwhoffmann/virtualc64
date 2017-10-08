@@ -8,31 +8,99 @@
 import Foundation
 import IOKit.hid
 
-// ---------------------------------------------------------------------------------------------
-//                                             GamePad
-// ---------------------------------------------------------------------------------------------
+//! @brief   Mapping from keycodes to joystick movements
+/*! @details Each GamePad can be assigned a KeyMap which can be used
+ *           to trigger events by using the keyboard.
+ */
+public class KeyMap: NSObject {
+    
+    //! @brief Maps key fingerprints to joystick events
+    var mapping : [MacKeyFingerprint:JoystickDirection] = [:]
+    
+    //! @brief Stores a readable representation for each simulation key
+    var character : [JoystickDirection:String] = [:]
+    
+    @objc public
+    func fingerprint(for d: JoystickDirection) -> MacKeyFingerprint {
+        
+        for (fingerprint, direction) in mapping {
+            if (direction == d) {
+                return fingerprint
+            }
+        }
+        return 0
+    }
+    
+    @objc public
+    func setFingerprint(_ f: MacKeyFingerprint, for d: JoystickDirection) {
+        mapping[f] = d
+    }
+    
+    @objc public
+    func getCharacter(for d: JoystickDirection) -> String {
+        return character[d] ?? ""
+    }
+    
+    @objc public
+    func setCharacter(_ c: String?, for d: JoystickDirection) {
+        if (c != nil) {
+            character[d] = c
+        }
+    }
+}
 
 class GamePad
 {
-    // private var proxy: C64Proxy?
-    
     //! @brief    Indicates if this object represents a plugged in USB joystick device
-    var pluggedIn: Bool;
-    
-    //! @brief    Location ID of the represented USB joystick
-    var locationID: String;
-    
-    //! @brief    Mapping to one of the two virtual joysticks of the emulator
-    /*! @details  Initially, this pointer is NULL, meaning that the USB joystick has not yet been selected
-     *            as input device. It can be selected as input device via bindJoystick(). In that case, it
-     *            will point to one of the two static Joystick objects hold by the emulator.
+    var pluggedIn: Bool
+ 
+    //! @brief    Vendor ID of the managed device
+    /*! @details  Value is only used for HID devices
      */
-    var joystick: JoystickProxy?;
+    var keymap: KeyMap?
+    
+    //! @brief    Vendor ID of the managed device
+    /*! @details  Value is only used for HID devices
+     */
+    var vendorID: String?
+
+    //! @brief    Product ID of the managed device
+    /*! @details  Value is only used for HID devices
+     */
+    var productID: String?
+
+    //! @brief    Location ID of the managed device
+    /*! @details  Value is only used for HID devices
+     */
+    var locationID: String?
+
+    //! @brief    Reference to the C64 game port
+    /*! @details  Each triggered event will be passed to this object.
+     *            Hence, this object is the entry point to the core emulator.
+     *            nil means that the device is unconnected.
+     */
+    var joystick: JoystickProxy?
     
     init() {
-        pluggedIn = false;
-        locationID = "";
+        pluggedIn = false
+        locationID = ""
     }
+    
+    //! @brief   Handles a keyboard event
+    /*! @details Checks if the provided keycode matches a joystick emulation key
+     *           and triggeres an event if a match has been found.
+     */
+    @discardableResult
+    func keyDown(key: MacKeyFingerprint) -> Bool
+    {
+        if let direction = keymap?.mapping[key] {
+            joystick?.pullJoystick(direction)
+            return true
+        }
+        
+        return false
+    }
+    
     
     let actionCallback : IOHIDValueCallback = { inContext, inResult, inSender, value in
         let this : GamePad = unsafeBitCast(inContext, to: GamePad.self)
@@ -68,17 +136,6 @@ class GamePad
         
         if (usagePage == kHIDPage_Button) {
             
-            /*
-             switch(usage) {
-             
-             case kHIDUsage_Button_1, kHIDUsage_Button_2,
-             kHIDUsage_Button_3, kHIDUsage_Button_4:
-             joystick?.setButton(intValue)
-             
-             default: ()
-             }
-             */
-
             joystick?.setButton(intValue)
             
         }

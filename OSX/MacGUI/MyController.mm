@@ -419,8 +419,8 @@
     assert(dir >= 0 && dir <= 4);
     
     switch (nr) {
-        case 1: return [[keyboardcontroller keymap1] getFingerprintForDirection:dir];
-        case 2: return [[keyboardcontroller keymap2] getFingerprintForDirection:dir];
+        case 1: return [[keyboardcontroller keymap1] fingerprintFor:dir];
+        case 2: return [[keyboardcontroller keymap2] fingerprintFor:dir];
             
         default:
             assert(0); return 0;
@@ -432,8 +432,8 @@
     assert(dir >= 0 && dir <= 4);
     
     switch (nr) {
-        case 1: [[keyboardcontroller keymap1] setFingerprint:key forDirection:dir]; return;
-        case 2: [[keyboardcontroller keymap2] setFingerprint:key forDirection:dir]; return;
+        case 1: [[keyboardcontroller keymap1] setFingerprint:key for:dir]; return;
+        case 2: [[keyboardcontroller keymap2] setFingerprint:key for:dir]; return;
 
         default:
             assert(0);
@@ -446,8 +446,8 @@
         
     switch (nr) {
             
-        case 1: return [[keyboardcontroller keymap1] getCharacterForDirection:dir];
-        case 2: return [[keyboardcontroller keymap2] getCharacterForDirection:dir];
+        case 1: return [[keyboardcontroller keymap1] getCharacterFor:dir];
+        case 2: return [[keyboardcontroller keymap2] getCharacterFor:dir];
         
         default:
             assert(0); return 0;
@@ -460,8 +460,8 @@
     
     switch (nr) {
             
-        case 1: [[keyboardcontroller keymap1] setCharacter:s forDirection:dir]; return;
-        case 2: [[keyboardcontroller keymap2] setCharacter:s forDirection:dir]; return;
+        case 1: [[keyboardcontroller keymap1] setCharacter:s for:dir]; return;
+        case 2: [[keyboardcontroller keymap2] setCharacter:s for:dir]; return;
    
         default:
             assert(0);
