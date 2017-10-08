@@ -90,140 +90,6 @@ class KeyboardController: NSObject {
         self.controller = c
     }
 
-#if false
-    @objc func restoreFactorySettings()
-    {
-        NSLog("\(#function)")
-                
-        keymap1.setFingerprint(123, for: JoystickDirection.LEFT)
-        keymap1.setFingerprint(124, for: JoystickDirection.RIGHT)
-        keymap1.setFingerprint(126, for: JoystickDirection.UP)
-        keymap1.setFingerprint(125, for: JoystickDirection.DOWN)
-        keymap1.setFingerprint(49,  for: JoystickDirection.FIRE)
-            
-        keymap1.setCharacter(" ", for: JoystickDirection.LEFT)
-        keymap1.setCharacter(" ", for: JoystickDirection.RIGHT)
-        keymap1.setCharacter(" ", for: JoystickDirection.UP)
-        keymap1.setCharacter(" ", for: JoystickDirection.DOWN)
-        keymap1.setCharacter(" ", for: JoystickDirection.FIRE)
-            
-        keymap2.setFingerprint(0,  for: JoystickDirection.LEFT)
-        keymap2.setFingerprint(1,  for: JoystickDirection.RIGHT)
-        keymap2.setFingerprint(6,  for: JoystickDirection.UP)
-        keymap2.setFingerprint(13, for: JoystickDirection.DOWN)
-        keymap2.setFingerprint(7,  for: JoystickDirection.FIRE)
-            
-        keymap2.setCharacter("a", for: JoystickDirection.LEFT)
-        keymap2.setCharacter("s", for: JoystickDirection.RIGHT)
-        keymap2.setCharacter("y", for: JoystickDirection.UP)
-        keymap2.setCharacter("w", for: JoystickDirection.DOWN)
-        keymap2.setCharacter("x", for: JoystickDirection.FIRE)
-    }
-#endif
-    
-    
-    //
-    // User default storage
-    //
-    
-#if false
-    @objc class func registerStandardUserDefaults() {
-        
-        let dictionary : [String:Any] = [
-            "VC64Left1keycodeKey":123,
-            "VC64Right1keycodeKey":124,
-            "VC64Up1keycodeKey":126,
-            "VC64Down1keycodeKey":125,
-            "VC64Fire1keycodeKey":49,
-            
-            "VC64Left1charKey":" ",
-            "VC64Right1charKey":" ",
-            "VC64Up1charKey":" ",
-            "VC64Down1charKey":" ",
-            "VC64Fire1charKey":" ",
-
-            "VC64Left2keycodeKey":0,
-            "VC64Right2keycodeKey":1,
-            "VC64Up2keycodeKey":6,
-            "VC64Down2keycodeKey":13,
-            "VC64Fire2keycodeKey":7,
-            
-            "VC64Left2charKey":"a",
-            "VC64Right2charKey":"s",
-            "VC64Up2charKey":"y",
-            "VC64Down2charKey":"w",
-            "VC64Fire2charKey":"x"]
-        
-        let defaults = UserDefaults.standard
-        defaults.register(defaults: dictionary)
-        // [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-    }
-
-    @objc func loadUserDefaults() {
-        
-        NSLog("\(#function)")
-        loadUserDefaults(forKeymap: keymap1, s: "1")
-        loadUserDefaults(forKeymap: keymap2, s: "2")
-    }
-    
-    func loadUserDefaults(forKeymap keymap: KeyMap, s : String) {
-        
-        let defaults = UserDefaults.standard
-        
-        func loadFingerprint(for d: JoystickDirection, usingKey key: String) {
-            keymap.setFingerprint(
-                MacKeyFingerprint(defaults.integer(forKey: key + s + "keycodeKey")), for: d)
-        }
-        
-        loadFingerprint(for:JoystickDirection.LEFT, usingKey: "VC64Left")
-        loadFingerprint(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
-        loadFingerprint(for:JoystickDirection.UP, usingKey: "VC64Up")
-        loadFingerprint(for:JoystickDirection.DOWN, usingKey: "VC64Down")
-        loadFingerprint(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
-        
-        func loadCharacter(for d: JoystickDirection, usingKey key: String) {
-            keymap.setCharacter(defaults.string(forKey: key + s + "keycodeKey"), for: d)
-        }
-        
-        loadCharacter(for:JoystickDirection.LEFT, usingKey: "VC64Left")
-        loadCharacter(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
-        loadCharacter(for:JoystickDirection.UP, usingKey: "VC64Up")
-        loadCharacter(for:JoystickDirection.DOWN, usingKey: "VC64Down")
-        loadCharacter(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
-    }
-    
-    @objc func saveUserDefaults() {
-        
-        NSLog("\(#function)")
-        saveUserDefaults(forKeymap: keymap1, s: "1")
-        saveUserDefaults(forKeymap: keymap2, s: "2")
-    }
-    
-    func saveUserDefaults(forKeymap keymap: KeyMap, s : String) {
-        
-        let defaults = UserDefaults.standard
-        
-        func saveFingerprint(for d: JoystickDirection, usingKey key: String) {
-            defaults.set(keymap.fingerprint(for: d), forKey: key + s + "keycodeKey")
-        }
-        
-        saveFingerprint(for:JoystickDirection.LEFT, usingKey: "VC64Left")
-        saveFingerprint(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
-        saveFingerprint(for:JoystickDirection.UP, usingKey: "VC64Up")
-        saveFingerprint(for:JoystickDirection.DOWN, usingKey: "VC64Down")
-        saveFingerprint(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
-        
-        func saveCharacter(for d: JoystickDirection, usingKey key: String) {
-            defaults.set(keymap.getCharacter(for: d), forKey: key + s + "charKey")
-        }
-        
-        saveCharacter(for:JoystickDirection.LEFT, usingKey: "VC64Left")
-        saveCharacter(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
-        saveCharacter(for:JoystickDirection.UP, usingKey: "VC64Up")
-        saveCharacter(for:JoystickDirection.DOWN, usingKey: "VC64Down")
-        saveCharacter(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
-    }
-#endif
     
     //
     // Keyboard events
@@ -252,13 +118,10 @@ class KeyboardController: NSObject {
             return
         }
         
-        // Pull joysticks if a key matches
+        // Inform GamePadManager about pressed key
         let f = fingerprint(forKey:keycode, withModifierFlags:flags)
         controller.gamePadManager.keyDown(f)
         
-        // OLD CODE (REMOVE)
-        // pullJoystick(ifKeyMatches: f);
-
         // Remove alternate key modifier if present
         if (flags.contains(NSEvent.ModifierFlags.option)) {
             c = c_unmod
@@ -282,13 +145,10 @@ class KeyboardController: NSObject {
         
         // print("keyUp: keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
 
-        // Release joysticks if a key matches
+        // Inform GamePadManager about released key
         let f = fingerprint(forKey:keycode, withModifierFlags:flags)
         controller.gamePadManager.keyUp(f)
         
-        // OLD CODE (REMOVE)
-        // releaseJoystick(ifKeyMatches: f);
-
         // Release key
         if let key = pressedKeys[keycode] {
             controller.c64.keyboard.releaseKey(key)
@@ -298,7 +158,7 @@ class KeyboardController: NSObject {
 
     @objc public func flagsChanged(with event: NSEvent) {
         
-        let flags = event.modifierFlags // NSEventModifierFlags
+        let flags = event.modifierFlags
         var key: MacKeyFingerprint
         
         // Check if special keys are used for joystick emulation
@@ -316,26 +176,12 @@ class KeyboardController: NSObject {
             controller.gamePadManager.keyUp(NSEvent.ModifierFlags.shift.rawValue)
             controller.gamePadManager.keyUp(NSEvent.ModifierFlags.command.rawValue)
             controller.gamePadManager.keyUp(NSEvent.ModifierFlags.control.rawValue)
-
-            
-            // OLD CODE: Release joytick
-            /*
-            releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.option.rawValue)
-            releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.shift.rawValue)
-            releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.command.rawValue)
-            releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.control.rawValue)
-            */
             
             return;
         }
         
         controller.gamePadManager.keyDown(key)
-        
-        // OLD CODE: Pull joysticks
-        // pullJoystick(ifKeyMatches: key)
     }
-    
-
     
     /*! @brief  Computes unique fingerprint for a certain key combination pressed
      *          on the pyhsical Mac keyboard
@@ -368,65 +214,6 @@ class KeyboardController: NSObject {
         
         return MacKeyFingerprint(result);
     }
-    
-#if false
-    /*! @brief  Pulls joystick if key matches some value stored in keymap
-     */
-    func pullJoystick(ifKeyMatches key: MacKeyFingerprint)
-    {
-        let joyA = controller.c64.joystickA!
-        let joyB = controller.c64.joystickB!
-        
-        if (controller.inputDeviceA == INPUT_DEVICES.IPD_KEYSET_1) {
-            pullJoystick(joyA, ifKeyMatches: key, inKeymap: keymap1)
-        }
-        if (controller.inputDeviceA == INPUT_DEVICES.IPD_KEYSET_2) {
-            pullJoystick(joyA, ifKeyMatches: key, inKeymap: keymap2)
-        }
-        if (controller.inputDeviceB == INPUT_DEVICES.IPD_KEYSET_1) {
-            pullJoystick(joyB, ifKeyMatches: key, inKeymap: keymap1)
-        }
-        if (controller.inputDeviceB == INPUT_DEVICES.IPD_KEYSET_2) {
-            pullJoystick(joyB, ifKeyMatches: key, inKeymap: keymap2)
-        }
-        
-    }
-
-    func pullJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap)
-    {
-        if let direction = map.mapping[key] {
-            j.pullJoystick(direction)
-        }
-    }
-    
-    /*! @brief  Releases joystick if key matches some value stored in keymap
-     */
-    func releaseJoystick(ifKeyMatches key: MacKeyFingerprint)
-    {
-        let joyA = controller.c64.joystickA!
-        let joyB = controller.c64.joystickB!
-        
-        if (controller.inputDeviceA == INPUT_DEVICES.IPD_KEYSET_1) {
-            releaseJoystick(joyA, ifKeyMatches: key, inKeymap: keymap1)
-        }
-        if (controller.inputDeviceA == INPUT_DEVICES.IPD_KEYSET_2) {
-            releaseJoystick(joyA, ifKeyMatches: key, inKeymap: keymap2)
-        }
-        if (controller.inputDeviceB == INPUT_DEVICES.IPD_KEYSET_1) {
-            releaseJoystick(joyB, ifKeyMatches: key, inKeymap: keymap1)
-        }
-        if (controller.inputDeviceB == INPUT_DEVICES.IPD_KEYSET_2) {
-            releaseJoystick(joyB, ifKeyMatches: key, inKeymap: keymap2)
-        }
-    }
-    
-    func releaseJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap)
-    {
-        if let direction = map.mapping[key] {
-            j.releaseJoystick(direction)
-        }
-    }
-#endif
     
     /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint
      *  @note   The returned value can be used as argument for the emulators pressKey() function
