@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "VirtualC64-Swift.h"
 
 @implementation MyController(Toolbar) 
 
@@ -57,10 +58,10 @@
     {
         NSMenuItem *item1 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_1];
         NSMenuItem *item2 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_2];
-        [item1 setEnabled:[c64 gamePadSlotIsEmpty:2]];
-        [item2 setEnabled:[c64 gamePadSlotIsEmpty:3]];
+        [item1 setEnabled:[gamePadManager gamePadSlotIsEmpty:2]];
+        [item2 setEnabled:[gamePadManager gamePadSlotIsEmpty:3]];
 
-        NSInteger slotNr = [c64 slotOfGamePadAttachedToPort:[c64 joystickA]];
+        NSInteger slotNr = [gamePadManager slotOfGamePadAttachedToPort:[c64 joystickA]];
         [joystickPortA selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
         
     }
@@ -69,10 +70,10 @@
     {
         NSMenuItem *item1 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_1];
         NSMenuItem *item2 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_2];
-        [item1 setEnabled:[c64 gamePadSlotIsEmpty:2]];
-        [item2 setEnabled:[c64 gamePadSlotIsEmpty:3]];
+        [item1 setEnabled:[gamePadManager gamePadSlotIsEmpty:2]];
+        [item2 setEnabled:[gamePadManager gamePadSlotIsEmpty:3]];
 
-        NSInteger slotNr = [c64 slotOfGamePadAttachedToPort:[c64 joystickB]];
+        NSInteger slotNr = [gamePadManager slotOfGamePadAttachedToPort:[c64 joystickB]];
         [joystickPortB selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
      }
 }
@@ -122,19 +123,19 @@
     
     switch (value) {
         case IPD_UNCONNECTED:
-            [c64 detachGamePadFromPort:port];
+            [gamePadManager detachGamePadFromPort:port];
             break;
         case IPD_KEYSET_1:
-            [c64 attachGamePad:0 toPort:port];
+            [gamePadManager attachGamePad:0 toPort:port];
             break;
         case IPD_KEYSET_2:
-            [c64 attachGamePad:1 toPort:port];
+            [gamePadManager attachGamePad:1 toPort:port];
             break;
         case IPD_JOYSTICK_1:
-            [c64 attachGamePad:2 toPort:port];
+            [gamePadManager attachGamePad:2 toPort:port];
             break;
         case IPD_JOYSTICK_2:
-            [c64 attachGamePad:3 toPort:port];
+            [gamePadManager attachGamePad:3 toPort:port];
             break;
             
         default:

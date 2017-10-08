@@ -677,15 +677,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (unsigned char *)historicSnapshotImageData:(NSInteger)nr;
 - (NSInteger)historicSnapshotImageWidth:(NSInteger)nr;
 - (NSInteger)historicSnapshotImageHeight:(NSInteger)nr;
-// - (NSImage *)historicSnapshotImage:(NSInteger)nr; // DEPRECATED.
 
 - (bool)restoreHistoricSnapshot:(NSInteger)nr;
-
-// Joystick handling
-- (void) attachGamePad:(NSInteger)slotNr toPort:(JoystickProxy *)port;
-- (void) detachGamePadFromPort:(JoystickProxy *)port;
-- (BOOL) gamePadSlotIsEmpty:(NSInteger)slotNr;
-- (NSInteger) slotOfGamePadAttachedToPort:(JoystickProxy *)port;
 
 // Audio hardware
 - (BOOL) enableAudio;

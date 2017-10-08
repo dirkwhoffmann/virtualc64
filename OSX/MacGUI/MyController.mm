@@ -109,6 +109,12 @@
     [[[self window] windowController] setShouldCascadeWindows:NO];
     [[self window] setFrameAutosaveName:@"dirkwhoffmann.de.virtualC64.window"];
     
+    // Initialize GamePad manager
+    gamePadManager = [[GamePadManager alloc] initWithC64:c64];
+    if (!gamePadManager) {
+        NSLog(@"WARNING: Failed to initialize GamePadManager");
+    }
+    
 	// Load user defaults
 	[self loadUserDefaults];
     [self loadVirtualMachineUserDefaults];

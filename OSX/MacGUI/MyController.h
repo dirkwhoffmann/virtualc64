@@ -20,6 +20,7 @@
 
 // Forward declarations
 @class C64Proxy;
+@class GamePadManager;
 @class PropertiesDialog;
 @class HardwareDialog;
 @class MediaDialog;
@@ -57,6 +58,9 @@ typedef NS_ENUM(NSInteger, INPUT_DEVICES) {
 	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
 	// IBOutlet
     C64Proxy *__strong c64;
+    
+    // Game pad manager
+    GamePadManager *gamePadManager;
     
 	// Dialogs
     IBOutlet PropertiesDialog *propertiesDialog;

@@ -705,7 +705,6 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
 @implementation C64Proxy {
     AudioEngine *audioEngine;
-    GamePadManager *gamePadManager;
 }
 
 @synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
@@ -739,12 +738,6 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 	vc1541 = [[VC1541Proxy alloc] initWithVC1541:&c64->floppy];
     datasette = [[DatasetteProxy alloc] initWithDatasette:&c64->datasette];
     
-    // Initialize GamePad manager
-    gamePadManager = [[GamePadManager alloc] initWithC64:self];
-    if (!gamePadManager) {
-        NSLog(@"WARNING: Failed to initialize GamePadManager");
-    }
-
     // Initialize audio interface
     audioEngine = [[AudioEngine alloc] initWithSID:sid];
     if (!audioEngine) {
@@ -754,11 +747,6 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 
     return self;
 }
-
-//- (C64Wrapper *)wrapper
-//{
-//    return wrapper;
-//}
 
 - (void) awakeFromNib
 {
@@ -900,48 +888,8 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (NSInteger)historicSnapshotImageHeight:(NSInteger)nr
 { Snapshot *s = wrapper->c64->getHistoricSnapshot((int)nr); return s ? s->getImageHeight() : 0; }
 
-/*
-- (NSImage *)historicSnapshotImage:(NSInteger)nr {
-    unsigned char *data = [self historicSnapshotImageData:nr];
-    NSInteger width = [self historicSnapshotImageWidth:nr];
-    NSInteger height = [self historicSnapshotImageHeight:nr];
-    NSBitmapImageRep* bmp = [[NSBitmapImageRep alloc]
-                             initWithBitmapDataPlanes: &data
-                             pixelsWide: width
-                             pixelsHigh: height
-                             bitsPerSample: 8
-                             samplesPerPixel: 4
-                             hasAlpha: YES
-                             isPlanar: NO
-                             colorSpaceName: NSCalibratedRGBColorSpace
-                             bytesPerRow: 4*width
-                             bitsPerPixel: 32];
-
-    // Create NSImage from bitmap representation
-    NSImage *image = [[NSImage alloc] initWithSize:[bmp size]];
-    [image addRepresentation:bmp];
-
-    return image;
-}
-*/
-
 - (bool)restoreHistoricSnapshot:(NSInteger)nr {
     return wrapper->c64->restoreHistoricSnapshotSafe((unsigned)nr); }
-
-// Joystick
-- (void) attachGamePad:(NSInteger)slotNr toPort:(JoystickProxy *)port {
-    [gamePadManager attachGamePad:slotNr toPort:port];
-}
-- (void) detachGamePadFromPort:(JoystickProxy *)port {
-    [gamePadManager detachGamePadFromPort:port];
-}
-- (BOOL) gamePadSlotIsEmpty:(NSInteger)slotNr {
-    return [gamePadManager gamePadSlotIsEmpty:slotNr];
-}
-- (NSInteger) slotOfGamePadAttachedToPort:(JoystickProxy *)port {
-    return [gamePadManager slotOfGamePadAttachedToPort:port];
-}
-
 
 // Audio hardware
 - (BOOL) enableAudio {
