@@ -185,82 +185,10 @@ class GamePad
                 break
                 
             default:
-                print("UNKNOWN HID-DEVICE USAGE:", usage)
+                print("USB device: Unknown HID usage", usage)
             }
         }
     }
-    
-    //! @brief Connects the USB device to port A of the emulator
-    func bindJoystickToPortA(c64: C64Proxy) {
-        if (pluggedIn) {
-            joystick = c64.joystickA
-        }
-    }
-    
-    //! @brief Connects the USB device to port B of the emulator
-    func bindJoystickToPortB(c64: C64Proxy) {
-        if (pluggedIn) {
-            joystick = c64.joystickB
-        }
-    }
-    
-    //! @brief Unconnect USB device
-    func unbindJoystick() {
-        joystick = nil
-    }
-    
-    func pullJoystick(dir: JoystickDirection) {
-        joystick?.pullJoystick(dir)
-        
-    }
-    
-    func releaseJoystick(dir: JoystickDirection) {
-        joystick?.releaseJoystick(dir)
-    }
-    
-    func releaseXAxis() {
-        joystick?.releaseXAxis()
-    }
-    
-    func releaseYAxis() {
-        joystick?.releaseYAxis()
-    }
+
 }
 
-
-
-// ---------------------------------------------------------------------------------------------
-//                                             IOHIDDeviceInfo
-// ---------------------------------------------------------------------------------------------
-
-// DEPRECATED, DELETE!
-/*
-class IOHIDDeviceInfo
-{
-    private var vendor = "";
-    private var product = "";
-    private var productID = "";
-    private var locationID = "";
-    
-    let vendorKey = kIOHIDVendorIDKey as CFString
-    let productKey = kIOHIDProductKey as CFString
-    let productIDKey = kIOHIDProductIDKey as CFString
-    let locationIDKey = kIOHIDLocationIDKey as CFString
-    
-    convenience init (device: IOHIDDevice) {
-        
-        NSLog("\(#function)")
-        self.init()
-        
-        vendor     = String(describing: IOHIDDeviceGetProperty(device, vendorKey))
-        product    = String(describing: IOHIDDeviceGetProperty(device, productKey))
-        productID  = String(describing: IOHIDDeviceGetProperty(device, productIDKey))
-        locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
-        
-        NSLog(vendor)
-        NSLog(product)
-        NSLog(productID)
-        NSLog(locationID)
-    }
-}
-*/

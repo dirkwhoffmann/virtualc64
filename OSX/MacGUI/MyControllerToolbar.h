@@ -23,6 +23,7 @@
 - (void) setupToolbarIcons;
 - (void) printDocument:(id) sender;
 
+// - (IBAction)portAction:(id)sender port:(JoystickProxy *);
 - (IBAction)portAAction:(id)sender;
 - (IBAction)portBAction:(id)sender;
 

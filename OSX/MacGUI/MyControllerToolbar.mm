@@ -57,19 +57,24 @@
     {
         NSMenuItem *item1 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_1];
         NSMenuItem *item2 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_2];
-        [item1 setEnabled:[c64 joystickIsPluggedIn:1]];
-        [item2 setEnabled:[c64 joystickIsPluggedIn:2]];
-        [joystickPortA selectItemAtIndex:[self inputDeviceA]];
+        [item1 setEnabled:[c64 gamePadSlotIsEmpty:2]];
+        [item2 setEnabled:[c64 gamePadSlotIsEmpty:3]];
+
+        NSInteger slotNr = [c64 slotOfGamePadAttachedToPort:[c64 joystickA]];
+        [joystickPortA selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
+        
     }
     
     /* Jostick port 2 */
     {
         NSMenuItem *item1 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_1];
         NSMenuItem *item2 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_2];
-        [item1 setEnabled:[c64 joystickIsPluggedIn:1]];
-        [item2 setEnabled:[c64 joystickIsPluggedIn:2]];
-        [joystickPortB selectItemAtIndex:[self inputDeviceB]];
-    }
+        [item1 setEnabled:[c64 gamePadSlotIsEmpty:2]];
+        [item2 setEnabled:[c64 gamePadSlotIsEmpty:3]];
+
+        NSInteger slotNr = [c64 slotOfGamePadAttachedToPort:[c64 joystickB]];
+        [joystickPortB selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
+     }
 }
 
 - (void) setupToolbarIcons
@@ -111,83 +116,25 @@
     [printOperation runOperationModalForWindow:[[self document] windowForSheet] delegate: nil didRunSelector: NULL contextInfo:NULL];
 }
 
-- (IBAction)portAAction:(id)sender
+- (IBAction)portAction:(id)sender port:(JoystickProxy *)port
 {
-    {
-        int newvalue = (int)[[sender selectedItem] tag]; // New pop-up menu selection
-        int othervalue = [self inputDeviceB];            // Pop-up selection of other port
-        
-        NSLog(@"portAAction (%d)", newvalue);
-        
-        // Update input device
-        [self setInputDeviceA:INPUT_DEVICES(newvalue)];
-        
-        // Unconnect old binding of selected port
-        [c64 unbindJoysticksFromPortA];
-        
-        // Unconnect binding of other port as well if a double mapping occurs
-        if (newvalue == othervalue) {
-            NSLog(@"Selected USB joystick is already assigned. Removing binding.");
-            [self setInputDeviceB:IPD_UNCONNECTED];
-        }
-        
-        // Establish new binding
-        switch (newvalue) {
-            case IPD_UNCONNECTED:
-            case IPD_KEYSET_1:
-            case IPD_KEYSET_2:
-                /* Nothing to do */
-                break;
-                
-            case IPD_JOYSTICK_1:
-                [c64 bindJoystickToPortA:1];
-                break;
-                
-            case IPD_JOYSTICK_2:
-                [c64 bindJoystickToPortA:2];
-                break;
-                
-            default:
-                assert(0);
-        }
-        
-        [self validateJoystickItems];
-    }
-}
-
-- (IBAction)portBAction:(id)sender
-{
-    int newvalue = (int)[[sender selectedItem] tag]; // New pop-up menu selection
-    int othervalue = [self inputDeviceA];            // Pop-up selection of other port
+    int value = (int)[[sender selectedItem] tag];
     
-    NSLog(@"portBAction (%d)", newvalue);
-    
-    // Update input device
-    [self setInputDeviceB:INPUT_DEVICES(newvalue)];
-    
-    // Unconnect old binding of selected port
-    [c64 unbindJoysticksFromPortB];
-
-    // Unconnect binding of other port as well if a double mapping occurs
-    if (newvalue == othervalue) {
-        NSLog(@"Selected USB joystick is already assigned. Removing binding.");
-        [self setInputDeviceA:IPD_UNCONNECTED];
-    }
-    
-    // Establish new binding
-    switch (newvalue) {
+    switch (value) {
         case IPD_UNCONNECTED:
+            [c64 detachGamePadFromPort:port];
+            break;
         case IPD_KEYSET_1:
+            [c64 attachGamePad:0 toPort:port];
+            break;
         case IPD_KEYSET_2:
-            /* Nothing to do */
+            [c64 attachGamePad:1 toPort:port];
             break;
-            
         case IPD_JOYSTICK_1:
-            [c64 bindJoystickToPortB:1];
+            [c64 attachGamePad:2 toPort:port];
             break;
-            
         case IPD_JOYSTICK_2:
-            [c64 bindJoystickToPortB:2];
+            [c64 attachGamePad:3 toPort:port];
             break;
             
         default:
@@ -195,6 +142,16 @@
     }
     
     [self validateJoystickItems];
+}
+
+- (IBAction)portAAction:(id)sender
+{
+    [self portAction:sender port:[c64 joystickA]];
+}
+
+- (IBAction)portBAction:(id)sender
+{
+     [self portAction:sender port:[c64 joystickB]];
 }
 
 - (IBAction)propertiesAction:(id)sender

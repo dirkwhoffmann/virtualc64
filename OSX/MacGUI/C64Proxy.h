@@ -682,11 +682,10 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (bool)restoreHistoricSnapshot:(NSInteger)nr;
 
 // Joystick handling
-- (BOOL)joystickIsPluggedIn:(int)nr;
-- (void)bindJoystickToPortA:(int)nr;
-- (void)bindJoystickToPortB:(int)nr;
-- (void)unbindJoysticksFromPortA;
-- (void)unbindJoysticksFromPortB;
+- (void) attachGamePad:(NSInteger)slotNr toPort:(JoystickProxy *)port;
+- (void) detachGamePadFromPort:(JoystickProxy *)port;
+- (BOOL) gamePadSlotIsEmpty:(NSInteger)slotNr;
+- (NSInteger) slotOfGamePadAttachedToPort:(JoystickProxy *)port;
 
 // Audio hardware
 - (BOOL) enableAudio;

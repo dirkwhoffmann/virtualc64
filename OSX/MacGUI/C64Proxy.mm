@@ -929,11 +929,19 @@ struct CartridgeWrapper { Cartridge *cartridge; };
     return wrapper->c64->restoreHistoricSnapshotSafe((unsigned)nr); }
 
 // Joystick
-- (BOOL)joystickIsPluggedIn:(int)nr { return [gamePadManager joystickIsPluggedInNr:nr]; }
-- (void)bindJoystickToPortA:(int)nr { [gamePadManager bindJoystickToPortAWithNr:nr]; }
-- (void)bindJoystickToPortB:(int)nr { [gamePadManager bindJoystickToPortBWithNr:nr]; }
-- (void)unbindJoysticksFromPortA { [gamePadManager unbindJoysticksFromPortA]; }
-- (void)unbindJoysticksFromPortB { [gamePadManager unbindJoysticksFromPortB]; }
+- (void) attachGamePad:(NSInteger)slotNr toPort:(JoystickProxy *)port {
+    [gamePadManager attachGamePad:slotNr toPort:port];
+}
+- (void) detachGamePadFromPort:(JoystickProxy *)port {
+    [gamePadManager detachGamePadFromPort:port];
+}
+- (BOOL) gamePadSlotIsEmpty:(NSInteger)slotNr {
+    return [gamePadManager gamePadSlotIsEmpty:slotNr];
+}
+- (NSInteger) slotOfGamePadAttachedToPort:(JoystickProxy *)port {
+    return [gamePadManager slotOfGamePadAttachedToPort:port];
+}
+
 
 // Audio hardware
 - (BOOL) enableAudio {

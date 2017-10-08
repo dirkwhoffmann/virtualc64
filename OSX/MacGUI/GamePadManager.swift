@@ -14,10 +14,11 @@
 @objc class GamePadManager: NSObject {
     
     // private let inputLock = NSLock()
+    // Such a thing is used here: TODO: Check if we need this
     // https://github.com/joekarl/swift_handmade_hero/blob/master/Handmade%20Hero%20OSX/Handmade%20Hero%20OSX/InputManager.swift
     
     //! @brief   Reference to the the C64 proxy
-    private var _proxy: C64Proxy?
+    private var proxy: C64Proxy?
     
     //! @brief   Reference to the HID manager
     private var hidManager: IOHIDManager
@@ -28,48 +29,59 @@
     var gamePads: [Int:GamePad] = [:]
 
     
-    private var usbjoy: [GamePad] = [GamePad(), GamePad()] // Max is two Joysticks right now
-    
     //! @brief   Returns the lowest free slot number
     func findFreeSlot() -> Int {
-        
         var slotNr = 0
-        while (gamePads[slotNr] != nil) {
-            slotNr += 1
-        }
+        while (gamePads[slotNr] != nil) { slotNr += 1 }
         return slotNr
     }
     
-    //! @brief   Return the slot number of the device connected to the specified control port
-    /*! @details Returns -1 if no device is connected
-     */
-    func deviceAttachedToPort(_ port: JoystickProxy) -> Int {
-        
-        for (slotNr, device) in gamePads {
-            if (device.joystick == port) {
-                return slotNr
-            }
-        }
-        return -1
+    //! @brief   Returns true iff the specified game pad slot is assigned a game pad
+    @objc public func gamePadSlotIsEmpty(_ nr: Int) -> Bool {
+        return gamePads[nr] != nil;
     }
-    
+ 
     //! @brief   Plugs a game pad into the specified control port
     /*! @details If another device is connected, it is disconnected automatically
      */
-    func attachGamePadToPort(_ nr: Int, port: JoystickProxy) {
+    @objc public func attachGamePad(_ nr: Int, toPort port: JoystickProxy) {
         
-        // Disconnect previously connected device (if any)
-        for (_, device) in gamePads {
-            if (device.joystick == port) {
-                device.joystick = nil
-            }
-        }
+        NSLog("\(#function)")
+        
+        // Remove existing device (if any)
+        detachGamePadFromPort(port)
         
         // Connect new device
         gamePads[nr]?.joystick = port
     }
     
+    //! @brief   Remove game pads from the specified control port (in any)
+    @objc public func detachGamePadFromPort(_ port: JoystickProxy) {
+        
+        NSLog("\(#function)")
+        
+        for (_, device) in gamePads {
+            if (device.joystick == port) {
+                device.joystick = nil
+            }
+        }
+    }
     
+    //! @brief   Returns slot number of device connected to the specified control port
+    /*! @details Returns -1 if no device is connected
+     */
+    @objc func slotOfGamePadAttachedToPort(_ port: JoystickProxy) -> Int {
+        
+        NSLog("\(#function)")
+        
+        for (slotNr, device) in gamePads {
+            if (device.joystick == port) {
+                NSLog("Device nr %d is attached to control port %@", slotNr, port)
+                return slotNr
+            }
+        }
+        return -1
+    }
     
     //! @brief   Initialization
     override init()
@@ -79,12 +91,12 @@
     }
     
     //! @brief   Convenience initialization
-    @objc public convenience init?(withC64 proxy: C64Proxy) {
+    @objc public convenience init?(withC64: C64Proxy) {
 
         NSLog("\(#function)")
         
         self.init()
-        _proxy = proxy
+        proxy = withC64
 
         //
         // Add two generic devices (keyboard emulated joysticks)
@@ -155,12 +167,6 @@
         let productID = String(describing: IOHIDDeviceGetProperty(device, productIDKey))
         let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
 
-        // DEPRECATED. SHOULD NEVER FAIL
-        if (getJoystickProxy(locationID: locationID) != nil) {
-            NSLog("Device with location ID %@ already opend.\n", locationID)
-            return;
-        }
-        
         // Find a free slot for the new device
         let slotNr = findFreeSlot()
         if (slotNr > 4) {
@@ -174,30 +180,21 @@
         gamePads[slotNr]?.productID = productID
         gamePads[slotNr]?.locationID = locationID
 
-        
-        // OLD CODE (DEPRECATED). TO BE REMOVED
-        if(usbjoy[0].pluggedIn && usbjoy[1].pluggedIn) {
-            NSLog("Ignoring game pad: Maximum number of devices reached.\n")
-            return;
-        }
-        
+        // Open HID device
         let status = IOHIDDeviceOpen(device, IOOptionBits(kIOHIDOptionsTypeSeizeDevice))
-        print ("IOHIDDeviceOpen: status = ", status)
-        
-        // NSLog(@"Failed to open device with location ID %s\n", locationID);
-        
-        // Add proxy object to list of connected USB joysticks
-        if (addJoystickProxy(locationID: locationID)) {
-            _proxy?.putMessage(Int32(MSG_JOYSTICK_ATTACHED.rawValue))
-            NSLog("Successfully opened device with location ID %@", locationID)
-        
-            let newProxy = getJoystickProxy(locationID: locationID)!;
-            
-            // Register input value callback
-            let hidContext = unsafeBitCast(newProxy, to: UnsafeMutableRawPointer.self)
-            IOHIDDeviceRegisterInputValueCallback(device, newProxy.actionCallback, hidContext)
+        if (status != 0) {
+            NSLog("WARNING: Cannot open HID device")
+            return
         }
-        
+    
+        // Register input value callback
+        let hidContext = unsafeBitCast(gamePads[slotNr], to: UnsafeMutableRawPointer.self)
+        IOHIDDeviceRegisterInputValueCallback(device, gamePads[slotNr]!.actionCallback, hidContext)
+
+        // Inform emulator
+        proxy?.putMessage(Int32(MSG_JOYSTICK_ATTACHED.rawValue))
+        NSLog("Successfully opened device with location ID %@", locationID)
+
         listDevices()
     }
     
@@ -215,107 +212,22 @@
         for (slotNr, device) in gamePads {
             if (device.locationID == locationID) {
                 gamePads[slotNr] = nil
+                NSLog("Clearing slot %d", slotNr)
             }
         }
         
-        
-        let proxy = getJoystickProxy(locationID: locationID)
-        
-        if(proxy == nil) {
-            NSLog("Device with location ID %@ is not among opend devices\n")
-            return;
+        // Close device
+        let status = IOHIDDeviceClose(device, IOOptionBits(kIOHIDOptionsTypeSeizeDevice))
+        if (status != 0) {
+            NSLog("WARNING: Cannot close HID device")
+            return
         }
         
-        let status = IOHIDDeviceClose(device, IOOptionBits(kIOHIDOptionsTypeSeizeDevice))
-        print("Closing status:", status)
-        
-        removeJoystickProxy(locationID: locationID);
-        _proxy?.putMessage(Int32(MSG_JOYSTICK_REMOVED.rawValue))
+        // Inform emulator
+        proxy?.putMessage(Int32(MSG_JOYSTICK_REMOVED.rawValue))
         NSLog("Closed device with location ID %@", locationID)
         
         listDevices()
-    }
-    
-    @objc public func joystickIsPluggedIn(nr: Int) -> Bool {
-    
-        assert (nr >= 1 && nr <= 2);
-        return usbjoy[nr - 1].pluggedIn;
-    }
-    
-    @objc public func bindJoystickToPortA(nr: Int) {
-        
-        assert (nr >= 1 && nr <= 2)
-        usbjoy[nr - 1].bindJoystickToPortA(c64: _proxy!)
-    }
-    
-    @objc public func bindJoystickToPortB(nr: Int) {
-        
-        assert (nr >= 1 && nr <= 2)
-        usbjoy[nr - 1].bindJoystickToPortB(c64: _proxy!)
-    }
-
-    @objc public func unbindJoysticksFromPortA() {
-        if (_proxy != nil && usbjoy[0].joystick == _proxy!.joystickA) {
-            usbjoy[0].unbindJoystick();
-        }
-        if (_proxy != nil && usbjoy[1].joystick == _proxy!.joystickA) {
-            usbjoy[1].unbindJoystick();
-        }
-    }
-    
-    @objc public func unbindJoysticksFromPortB() {
-        if (_proxy != nil && usbjoy[0].joystick == _proxy!.joystickB) {
-            usbjoy[0].unbindJoystick();
-        }
-        if (_proxy != nil && usbjoy[1].joystick == _proxy!.joystickB) {
-            usbjoy[1].unbindJoystick();
-        }
-    }
-
-    
-    func addJoystickProxy(locationID: String) -> Bool {
-    
-        if (!usbjoy[0].pluggedIn) {
-            usbjoy[0].pluggedIn = true;
-            usbjoy[0].locationID = locationID;
-            NSLog("Joystick with ID %@ added to slot 0", locationID);
-            return true;
-        }
-    
-        if (!usbjoy[1].pluggedIn) {
-            usbjoy[1].pluggedIn = true;
-            usbjoy[1].locationID = locationID;
-            NSLog("Joystick with ID %@ added to slot 1", locationID);
-            return true;
-        }
-    
-        return false;
-    }
-    
-    func getJoystickProxy(locationID: String) -> GamePad? {
-    
-        if (usbjoy[0].pluggedIn && usbjoy[0].locationID == locationID) {
-            return usbjoy[0];
-        }
-        if (usbjoy[1].pluggedIn && usbjoy[1].locationID == locationID) {
-            return usbjoy[1];
-        }
-        return nil;
-    }
-    
-    func removeJoystickProxy(locationID: String) {
-    
-        if (usbjoy[0].pluggedIn && usbjoy[0].locationID == locationID) {
-            usbjoy[0].pluggedIn = false;
-            usbjoy[0].locationID = "";
-            NSLog("Joystick with ID %@ removed from slot 0", locationID);
-        }
-    
-        if (usbjoy[1].pluggedIn && usbjoy[1].locationID == locationID) {
-            usbjoy[1].pluggedIn = false;
-            usbjoy[1].locationID = "";
-            NSLog("Joystick with ID %@ removed from slot 1", locationID);
-        }
     }
     
     func listDevices() {
@@ -329,14 +241,10 @@
                 NSLog("  Product ID:  %@", device.productID!);
                 NSLog("  Location ID: %@", device.locationID!);
             }
-        }
-        
-        NSLog("USB joystick slot 1:");
-        
-        if (usbjoy[0].locationID != nil) {
-            NSLog("HID device with location ID %@", usbjoy[0].locationID!)
+            if (device.joystick != nil) {
+                NSLog("  Connected to control port %@", device.joystick!)
+            }
         }
     }
-
     
 }
