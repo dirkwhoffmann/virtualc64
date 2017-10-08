@@ -14,26 +14,45 @@ import IOKit.hid
  */
 public class KeyMap: NSObject {
     
-    //! @brief Maps key fingerprints to joystick events
-    var mapping : [MacKeyFingerprint:JoystickDirection] = [:]
+    //! @brief Maps joystick events to key fingerprints
+    var mapping : [JoystickDirection:MacKeyFingerprint] = [:]
     
-    //! @brief Stores a readable representation for each simulation key
+    //! @brief Maps joystick events to readable representations of the fingerprint
     var character : [JoystickDirection:String] = [:]
+    
+    /*
+    func printMapping() {
+        print("UP: ", mapping[JoystickDirection.UP] ?? "",
+              " (", character[JoystickDirection.UP] ?? "", ")",
+              getCharacter(for: JoystickDirection.UP))
+        print("DOWN: ", mapping[JoystickDirection.DOWN] ?? "",
+              " (", character[JoystickDirection.DOWN] ?? "", ")")
+        print("LEFT: ", mapping[JoystickDirection.LEFT] ?? "",
+              " (", character[JoystickDirection.LEFT] ?? "", ")")
+        print("RIGHT: ", mapping[JoystickDirection.RIGHT] ?? "",
+              " (", character[JoystickDirection.RIGHT] ?? "", ")")
+        print("FIRE: ", mapping[JoystickDirection.FIRE] ?? "",
+              " (", character[JoystickDirection.FIRE] ?? "", ")")
+    }
+    */
     
     @objc public
     func fingerprint(for d: JoystickDirection) -> MacKeyFingerprint {
-        
-        for (fingerprint, direction) in mapping {
-            if (direction == d) {
-                return fingerprint
-            }
-        }
-        return 0
+        return mapping[d] ?? 0
     }
     
     @objc public
     func setFingerprint(_ f: MacKeyFingerprint, for d: JoystickDirection) {
-        mapping[f] = d
+        
+        // Avoid double mappings
+        for (direction, fingerprint) in mapping {
+            if (fingerprint == f) {
+                mapping[direction] = nil
+                character[direction] = ""
+            }
+        }
+        
+        mapping[d] = f
     }
     
     @objc public
@@ -43,9 +62,7 @@ public class KeyMap: NSObject {
     
     @objc public
     func setCharacter(_ c: String?, for d: JoystickDirection) {
-        if (c != nil) {
-            character[d] = c
-        }
+        character[d] = c!
     }
 }
 
@@ -90,10 +107,18 @@ class GamePad
     /*! @details Checks if the provided keycode matches a joystick emulation key
      *           and triggeres an event if a match has been found.
      */
-    func keyDown(key: MacKeyFingerprint)
+    func keyDown(_ key: MacKeyFingerprint)
     {
-        if let direction = keymap.mapping[key] {
-            joystick?.pullJoystick(direction)
+        if (keymap.mapping[JoystickDirection.UP] == key) {
+            joystick?.pullJoystick(JoystickDirection.UP)
+        } else if (keymap.mapping[JoystickDirection.DOWN] == key) {
+            joystick?.pullJoystick(JoystickDirection.DOWN)
+        } else if (keymap.mapping[JoystickDirection.LEFT] == key) {
+            joystick?.pullJoystick(JoystickDirection.LEFT)
+        } else if (keymap.mapping[JoystickDirection.RIGHT] == key) {
+            joystick?.pullJoystick(JoystickDirection.RIGHT)
+        } else if (keymap.mapping[JoystickDirection.FIRE] == key) {
+            joystick?.pullJoystick(JoystickDirection.FIRE)
         }
     }
     
@@ -101,13 +126,20 @@ class GamePad
     /*! @details Checks if the provided keycode matches a joystick emulation key
      *           and triggeres an event if a match has been found.
      */
-    func keyUp(key: MacKeyFingerprint)
+    func keyUp(_ key: MacKeyFingerprint)
     {
-        if let direction = keymap.mapping[key] {
-            joystick?.releaseJoystick(direction)
+        if (keymap.mapping[JoystickDirection.UP] == key) {
+            joystick?.releaseJoystick(JoystickDirection.UP)
+        } else if (keymap.mapping[JoystickDirection.DOWN] == key) {
+            joystick?.releaseJoystick(JoystickDirection.DOWN)
+        } else if (keymap.mapping[JoystickDirection.LEFT] == key) {
+            joystick?.releaseJoystick(JoystickDirection.LEFT)
+        } else if (keymap.mapping[JoystickDirection.RIGHT] == key) {
+            joystick?.releaseJoystick(JoystickDirection.RIGHT)
+        } else if (keymap.mapping[JoystickDirection.FIRE] == key) {
+            joystick?.releaseJoystick(JoystickDirection.FIRE)
         }
     }
-    
     
     let actionCallback : IOHIDValueCallback = { inContext, inResult, inSender, value in
         let this : GamePad = unsafeBitCast(inContext, to: GamePad.self)

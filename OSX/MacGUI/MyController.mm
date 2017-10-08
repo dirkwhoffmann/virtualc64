@@ -35,6 +35,7 @@
 }
 
 @synthesize c64;
+@synthesize gamePadManager;
 @synthesize metalScreen;
 @synthesize modifierFlags;
 @synthesize statusBar;
@@ -281,8 +282,9 @@
     [defaultValues setObject:@YES forKey:VC64BitAccuracyKey];
 
     // Joysticks
-    [KeyboardController registerStandardUserDefaults];
-    
+    // [KeyboardController registerStandardUserDefaults];
+    [GamePadManager registerStandardUserDefaults];
+
 	// Audio
 	[defaultValues setObject:@YES forKey:VC64SIDReSIDKey];
 	[defaultValues setObject:@NO forKey:VC64SIDFilterKey];
@@ -309,7 +311,8 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     // Joysticks
-    [keyboardcontroller loadUserDefaults];
+    // [keyboardcontroller loadUserDefaults];
+    [gamePadManager loadUserDefaults];
     
 	// Video
     [metalScreen setEyeX:[defaults floatForKey:VC64EyeX]];
@@ -375,8 +378,9 @@
 	defaults = [NSUserDefaults standardUserDefaults];
 
     // Joysticks
-    [keyboardcontroller saveUserDefaults];
-        
+    // [keyboardcontroller saveUserDefaults];
+    [gamePadManager saveUserDefaults];
+    
 	// Video
     [defaults setFloat:[metalScreen eyeX] forKey:VC64EyeX];
     [defaults setFloat:[metalScreen eyeY] forKey:VC64EyeY];
@@ -412,7 +416,7 @@
 
 - (void)restoreFactorySettingsKeyboard
 {
-    [keyboardcontroller restoreFactorySettings];
+    [gamePadManager restoreFactorySettings];
 }
 
 - (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags
@@ -423,7 +427,14 @@
 - (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
+    assert(nr == 1 || nr == 2);
     
+    // NSLog(@"joyKeyFingerprint:%d direction:%ld", nr, (long)dir);
+    
+    KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
+    return [map fingerprintFor:dir];
+    
+    /*
     switch (nr) {
         case 1: return [[keyboardcontroller keymap1] fingerprintFor:dir];
         case 2: return [[keyboardcontroller keymap2] fingerprintFor:dir];
@@ -431,25 +442,41 @@
         default:
             assert(0); return 0;
     }
+    */
 }
 
 - (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
+    assert(nr == 1 || nr == 2);
+
+    NSLog(@"setJoyKeyFingerprint:%lu keyman:%d direction:%ld", key, nr, (long)dir);
     
+    KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
+    [map setFingerprint:key for:dir];
+
+    /*
     switch (nr) {
         case 1: [[keyboardcontroller keymap1] setFingerprint:key for:dir]; return;
         case 2: [[keyboardcontroller keymap2] setFingerprint:key for:dir]; return;
-
+            
         default:
             assert(0);
     }
+    */
 }
 
 - (NSString *)joyChar:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
-        
+    assert(nr == 1 || nr == 2);
+    
+    // NSLog(@"joyChar:%d direction:%ld", nr, (long)dir);
+
+    KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
+    return [map getCharacterFor:dir];
+    
+    /*
     switch (nr) {
             
         case 1: return [[keyboardcontroller keymap1] getCharacterFor:dir];
@@ -458,12 +485,20 @@
         default:
             assert(0); return 0;
     }
+    */
 }
 
 - (void)setJoyChar:(NSString *)s keymap:(int)nr direction:(JoystickDirection)dir
 {
     assert(dir >= 0 && dir <= 4);
+    assert(nr == 1 || nr == 2);
     
+    NSLog(@"setJoyChar:%@ keyman:%d direction:%ld", s, nr, (long)dir);
+    
+    KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
+    [map setCharacter:s for:dir];
+
+    /*
     switch (nr) {
             
         case 1: [[keyboardcontroller keymap1] setCharacter:s for:dir]; return;
@@ -472,6 +507,7 @@
         default:
             assert(0);
     }
+    */
 }
 
 - (void)keyDown:(NSEvent *)event

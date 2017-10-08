@@ -19,7 +19,6 @@
 import Foundation
 import Carbon.HIToolbox
 
-
 // Some convenience stuff
 extension UInt8 {
     var char: Character {
@@ -48,8 +47,8 @@ class KeyboardController: NSObject {
     
     var controller : MyController!
     
-    @objc var keymap1 = KeyMap()
-    @objc var keymap2 = KeyMap()
+    // @objc var keymap1 = KeyMap()
+    // @objc var keymap2 = KeyMap()
     var pressedKeys: [UInt16:C64KeyFingerprint] = [:]
     
     struct MacKeys {
@@ -82,7 +81,7 @@ class KeyboardController: NSObject {
     override init()
     {
         super.init()
-        restoreFactorySettings()
+        // restoreFactorySettings()
     }
  
     @objc convenience init(withController c: MyController)
@@ -91,6 +90,7 @@ class KeyboardController: NSObject {
         self.controller = c
     }
 
+#if false
     @objc func restoreFactorySettings()
     {
         NSLog("\(#function)")
@@ -119,12 +119,14 @@ class KeyboardController: NSObject {
         keymap2.setCharacter("w", for: JoystickDirection.DOWN)
         keymap2.setCharacter("x", for: JoystickDirection.FIRE)
     }
+#endif
     
     
     //
     // User default storage
     //
     
+#if false
     @objc class func registerStandardUserDefaults() {
         
         let dictionary : [String:Any] = [
@@ -221,6 +223,7 @@ class KeyboardController: NSObject {
         saveCharacter(for:JoystickDirection.DOWN, usingKey: "VC64Down")
         saveCharacter(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
     }
+#endif
     
     //
     // Keyboard events
@@ -251,7 +254,10 @@ class KeyboardController: NSObject {
         
         // Pull joysticks if a key matches
         let f = fingerprint(forKey:keycode, withModifierFlags:flags)
-        pullJoystick(ifKeyMatches: f);
+        controller.gamePadManager.keyDown(f)
+        
+        // OLD CODE (REMOVE)
+        // pullJoystick(ifKeyMatches: f);
 
         // Remove alternate key modifier if present
         if (flags.contains(NSEvent.ModifierFlags.option)) {
@@ -278,7 +284,10 @@ class KeyboardController: NSObject {
 
         // Release joysticks if a key matches
         let f = fingerprint(forKey:keycode, withModifierFlags:flags)
-        releaseJoystick(ifKeyMatches: f);
+        controller.gamePadManager.keyUp(f)
+        
+        // OLD CODE (REMOVE)
+        // releaseJoystick(ifKeyMatches: f);
 
         // Release key
         if let key = pressedKeys[keycode] {
@@ -302,16 +311,28 @@ class KeyboardController: NSObject {
         } else if (flags.contains(NSEvent.ModifierFlags.control)) {
             key = NSEvent.ModifierFlags.control.rawValue;
         } else {
-            // Release joytick
+            // Release joystick
+            controller.gamePadManager.keyUp(NSEvent.ModifierFlags.option.rawValue)
+            controller.gamePadManager.keyUp(NSEvent.ModifierFlags.shift.rawValue)
+            controller.gamePadManager.keyUp(NSEvent.ModifierFlags.command.rawValue)
+            controller.gamePadManager.keyUp(NSEvent.ModifierFlags.control.rawValue)
+
+            
+            // OLD CODE: Release joytick
+            /*
             releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.option.rawValue)
             releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.shift.rawValue)
             releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.command.rawValue)
             releaseJoystick(ifKeyMatches: NSEvent.ModifierFlags.control.rawValue)
+            */
+            
             return;
         }
         
-        // Pull joysticks
-        pullJoystick(ifKeyMatches: key)
+        controller.gamePadManager.keyDown(key)
+        
+        // OLD CODE: Pull joysticks
+        // pullJoystick(ifKeyMatches: key)
     }
     
 
@@ -348,6 +369,7 @@ class KeyboardController: NSObject {
         return MacKeyFingerprint(result);
     }
     
+#if false
     /*! @brief  Pulls joystick if key matches some value stored in keymap
      */
     func pullJoystick(ifKeyMatches key: MacKeyFingerprint)
@@ -404,6 +426,7 @@ class KeyboardController: NSObject {
             j.releaseJoystick(direction)
         }
     }
+#endif
     
     /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint
      *  @note   The returned value can be used as argument for the emulators pressKey() function
