@@ -370,15 +370,11 @@ class KeyboardController: NSObject {
         
     }
 
-    @discardableResult
-    func pullJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap) -> Bool
+    func pullJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap)
     {
         if let direction = map.mapping[key] {
             j.pullJoystick(direction)
-            return true
         }
-        
-        return false
     }
     
     /*! @brief  Releases joystick if key matches some value stored in keymap
@@ -402,15 +398,11 @@ class KeyboardController: NSObject {
         }
     }
     
-    @discardableResult
-    func releaseJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap) -> Bool
+    func releaseJoystick(_ j: JoystickProxy, ifKeyMatches key: MacKeyFingerprint, inKeymap map: KeyMap)
     {
         if let direction = map.mapping[key] {
             j.releaseJoystick(direction)
-            return true
         }
-        
-        return false
     }
     
     /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint

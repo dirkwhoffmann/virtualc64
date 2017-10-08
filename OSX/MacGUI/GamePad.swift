@@ -54,10 +54,10 @@ class GamePad
     //! @brief    Indicates if this object represents a plugged in USB joystick device
     var pluggedIn: Bool
  
-    //! @brief    Vendor ID of the managed device
-    /*! @details  Value is only used for HID devices
+    //! @brief    Keymap of the managed device
+    /*! @details  Only used for keyboard emulated devices
      */
-    var keymap: KeyMap?
+    var keymap: KeyMap = KeyMap()
     
     //! @brief    Vendor ID of the managed device
     /*! @details  Value is only used for HID devices
@@ -86,19 +86,26 @@ class GamePad
         locationID = ""
     }
     
-    //! @brief   Handles a keyboard event
+    //! @brief   Handles a keyboard down event
     /*! @details Checks if the provided keycode matches a joystick emulation key
      *           and triggeres an event if a match has been found.
      */
-    @discardableResult
-    func keyDown(key: MacKeyFingerprint) -> Bool
+    func keyDown(key: MacKeyFingerprint)
     {
-        if let direction = keymap?.mapping[key] {
+        if let direction = keymap.mapping[key] {
             joystick?.pullJoystick(direction)
-            return true
         }
-        
-        return false
+    }
+    
+    //! @brief   Handles a keyboard up event
+    /*! @details Checks if the provided keycode matches a joystick emulation key
+     *           and triggeres an event if a match has been found.
+     */
+    func keyUp(key: MacKeyFingerprint)
+    {
+        if let direction = keymap.mapping[key] {
+            joystick?.releaseJoystick(direction)
+        }
     }
     
     

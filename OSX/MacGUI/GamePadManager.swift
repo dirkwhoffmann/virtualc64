@@ -6,26 +6,79 @@
 //
 
 
-// ---------------------------------------------------------------------------------------------
-//                                             GamePadManager
-// ---------------------------------------------------------------------------------------------
-
+//! @brief   Holds and manages an array of GamePad objects
+/*! @details Up to four devices are managed. The first two are always present and represent
+ *           keyboard emulates joysticks. The other two slots are dynamically added when, e.g.,
+ *           a USB joystick or game pad is plugged in.
+ */
 @objc class GamePadManager: NSObject {
     
     // private let inputLock = NSLock()
     // https://github.com/joekarl/swift_handmade_hero/blob/master/Handmade%20Hero%20OSX/Handmade%20Hero%20OSX/InputManager.swift
     
+    //! @brief   Reference to the the C64 proxy
     private var _proxy: C64Proxy?
+    
+    //! @brief   Reference to the HID manager
     private var hidManager: IOHIDManager
-    // private var hidContext: UnsafeMutableRawPointer
+
+    //! @brief   References to all references game pads
+    /*! @details Each device ist referenced by a slot number
+     */
+    var gamePads: [Int:GamePad] = [:]
+
+    
     private var usbjoy: [GamePad] = [GamePad(), GamePad()] // Max is two Joysticks right now
     
+    //! @brief   Returns the lowest free slot number
+    func findFreeSlot() -> Int {
+        
+        var slotNr = 0
+        while (gamePads[slotNr] != nil) {
+            slotNr += 1
+        }
+        return slotNr
+    }
+    
+    //! @brief   Return the slot number of the device connected to the specified control port
+    /*! @details Returns -1 if no device is connected
+     */
+    func deviceAttachedToPort(_ port: JoystickProxy) -> Int {
+        
+        for (slotNr, device) in gamePads {
+            if (device.joystick == port) {
+                return slotNr
+            }
+        }
+        return -1
+    }
+    
+    //! @brief   Plugs a game pad into the specified control port
+    /*! @details If another device is connected, it is disconnected automatically
+     */
+    func attachGamePadToPort(_ nr: Int, port: JoystickProxy) {
+        
+        // Disconnect previously connected device (if any)
+        for (_, device) in gamePads {
+            if (device.joystick == port) {
+                device.joystick = nil
+            }
+        }
+        
+        // Connect new device
+        gamePads[nr]?.joystick = port
+    }
+    
+    
+    
+    //! @brief   Initialization
     override init()
     {
         hidManager = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone));
         super.init()
     }
     
+    //! @brief   Convenience initialization
     @objc public convenience init?(withC64 proxy: C64Proxy) {
 
         NSLog("\(#function)")
@@ -33,7 +86,17 @@
         self.init()
         _proxy = proxy
 
-        // Matching criteria for game pad device
+        //
+        // Add two generic devices (keyboard emulated joysticks)
+        //
+        
+        gamePads[0] = GamePad()
+        gamePads[1] = GamePad()
+        
+        //
+        // Prepare for accepting HID devices
+        //
+        
         let deviceCriteria = [
             [
                 kIOHIDDeviceUsagePageKey: kHIDPage_GenericDesktop,
@@ -49,8 +112,7 @@
             ]
         ]
         
-        // Declare bridging closures
-        // (Used to bridge between Swift and plain C callbacks)
+        // Declare bridging closures (needed to bridge between Swift methods and C callbacks)
         let matchingCallback : IOHIDDeviceCallback = { inContext, inResult, inSender, device in
             let this : GamePadManager = unsafeBitCast(inContext, to: GamePadManager.self)
             this.hidDeviceAdded(context: inContext, result: inResult, sender: inSender, device: device)
@@ -75,29 +137,52 @@
         IOHIDManagerClose(hidManager, IOOptionBits(kIOHIDOptionsTypeNone));
     }
     
+    //! @brief   Device matching callback
+    /*! @details Method is invoked when a matching HID device is plugged in
+     */
     func hidDeviceAdded(context: Optional<UnsafeMutableRawPointer>,
                         result: IOReturn,
                         sender: Optional<UnsafeMutableRawPointer>,
                         device: IOHIDDevice) {
     
         NSLog("\(#function)")
-        NSLog("hidDeviceAdded")
         
+        let vendorIDKey = kIOHIDVendorIDKey as CFString
+        let productIDKey = kIOHIDProductIDKey as CFString
         let locationIDKey = kIOHIDLocationIDKey as CFString
+
+        let vendorID = String(describing: IOHIDDeviceGetProperty(device, vendorIDKey))
+        let productID = String(describing: IOHIDDeviceGetProperty(device, productIDKey))
         let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
-        
+
+        // DEPRECATED. SHOULD NEVER FAIL
         if (getJoystickProxy(locationID: locationID) != nil) {
             NSLog("Device with location ID %@ already opend.\n", locationID)
             return;
         }
         
+        // Find a free slot for the new device
+        let slotNr = findFreeSlot()
+        if (slotNr > 4) {
+            NSLog("Maximum number of devices reached. Ignoring device\n")
+            return
+        }
+        
+        // Create GamePad object
+        gamePads[slotNr] = GamePad()
+        gamePads[slotNr]?.vendorID = vendorID
+        gamePads[slotNr]?.productID = productID
+        gamePads[slotNr]?.locationID = locationID
+
+        
+        // OLD CODE (DEPRECATED). TO BE REMOVED
         if(usbjoy[0].pluggedIn && usbjoy[1].pluggedIn) {
             NSLog("Ignoring game pad: Maximum number of devices reached.\n")
             return;
         }
         
         let status = IOHIDDeviceOpen(device, IOOptionBits(kIOHIDOptionsTypeSeizeDevice))
-        print (status)
+        print ("IOHIDDeviceOpen: status = ", status)
         
         // NSLog(@"Failed to open device with location ID %s\n", locationID);
         
@@ -112,6 +197,8 @@
             let hidContext = unsafeBitCast(newProxy, to: UnsafeMutableRawPointer.self)
             IOHIDDeviceRegisterInputValueCallback(device, newProxy.actionCallback, hidContext)
         }
+        
+        listDevices()
     }
     
     func hidDeviceRemoved(context: Optional<UnsafeMutableRawPointer>,
@@ -124,6 +211,14 @@
         let locationIDKey = kIOHIDLocationIDKey as CFString
         let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
         
+        // Search for a matching locationID and remove device
+        for (slotNr, device) in gamePads {
+            if (device.locationID == locationID) {
+                gamePads[slotNr] = nil
+            }
+        }
+        
+        
         let proxy = getJoystickProxy(locationID: locationID)
         
         if(proxy == nil) {
@@ -132,11 +227,13 @@
         }
         
         let status = IOHIDDeviceClose(device, IOOptionBits(kIOHIDOptionsTypeSeizeDevice))
-        print("CLosing status:", status)
+        print("Closing status:", status)
         
         removeJoystickProxy(locationID: locationID);
         _proxy?.putMessage(Int32(MSG_JOYSTICK_REMOVED.rawValue))
         NSLog("Closed device with location ID %@", locationID)
+        
+        listDevices()
     }
     
     @objc public func joystickIsPluggedIn(nr: Int) -> Bool {
@@ -222,6 +319,18 @@
     }
     
     func listDevices() {
+        
+        for (slotNr, device) in gamePads {
+            if (device.locationID == "") {
+                NSLog("Game pad slot %d: Keyboard emulated device", slotNr)
+            } else {
+                NSLog("Game pad slot %d: HID USB joystick", slotNr)
+                NSLog("  Vendor ID:   %@", device.vendorID!);
+                NSLog("  Product ID:  %@", device.productID!);
+                NSLog("  Location ID: %@", device.locationID!);
+            }
+        }
+        
         NSLog("USB joystick slot 1:");
         
         if (usbjoy[0].locationID != nil) {
