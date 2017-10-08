@@ -144,7 +144,7 @@
         NSLog("\(#function)")
         
         for (slotNr, device) in gamePads {
-            if (device.joystick == port) {
+            if (device.joystick != nil && device.joystick == port) {
                 NSLog("Device nr %d is attached to control port %@", slotNr, port)
                 return slotNr
             }
@@ -170,14 +170,6 @@
         }
     }
     
-    //! @brief   Assign a joystick emulation key
-    /*
-    func assignKey(_ key: MacKeyFingerprint, slotNr: Int, direction: JoystickDirection) {
-        if let keymap = gamePads[slotNr]?.keymap {
-            keymap[key] = direction
-        }
-    }
-    */
     @objc public func keysetOfDevice(_ slotNr: Int) -> KeyMap? {
         return gamePads[slotNr]?.keymap
     }

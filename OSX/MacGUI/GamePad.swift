@@ -14,10 +14,10 @@ import IOKit.hid
  */
 public class KeyMap: NSObject {
     
-    //! @brief Maps joystick events to key fingerprints
-    var mapping : [JoystickDirection:MacKeyFingerprint] = [:]
-    
-    //! @brief Maps joystick events to readable representations of the fingerprint
+    //! @brief Mapping from fingerprints to joystick events
+    var mapping : [MacKeyFingerprint:JoystickDirection] = [:]
+
+    //! @brief Mapping from joystick events to a readable representations of related fingerprint
     var character : [JoystickDirection:String] = [:]
     
     /*
@@ -38,21 +38,25 @@ public class KeyMap: NSObject {
     
     @objc public
     func fingerprint(for d: JoystickDirection) -> MacKeyFingerprint {
-        return mapping[d] ?? 0
+        
+        for (fingerprint, direction) in mapping {
+            if (direction == d) {
+                return fingerprint;
+            }
+        }
+        return 0;
     }
     
     @objc public
     func setFingerprint(_ f: MacKeyFingerprint, for d: JoystickDirection) {
         
         // Avoid double mappings
-        for (direction, fingerprint) in mapping {
-            if (fingerprint == f) {
-                mapping[direction] = nil
-                character[direction] = ""
+        for (fingerprint, direction) in mapping {
+            if (direction == d) {
+                mapping[fingerprint] = nil
             }
         }
-        
-        mapping[d] = f
+        mapping[f] = d
     }
     
     @objc public
@@ -68,9 +72,6 @@ public class KeyMap: NSObject {
 
 class GamePad
 {
-    //! @brief    Indicates if this object represents a plugged in USB joystick device
-    var pluggedIn: Bool
- 
     //! @brief    Keymap of the managed device
     /*! @details  Only used for keyboard emulated devices
      */
@@ -98,10 +99,10 @@ class GamePad
      */
     var joystick: JoystickProxy?
     
+    /*
     init() {
-        pluggedIn = false
-        locationID = ""
     }
+    */
     
     //! @brief   Handles a keyboard down event
     /*! @details Checks if the provided keycode matches a joystick emulation key
@@ -109,16 +110,8 @@ class GamePad
      */
     func keyDown(_ key: MacKeyFingerprint)
     {
-        if (keymap.mapping[JoystickDirection.UP] == key) {
-            joystick?.pullJoystick(JoystickDirection.UP)
-        } else if (keymap.mapping[JoystickDirection.DOWN] == key) {
-            joystick?.pullJoystick(JoystickDirection.DOWN)
-        } else if (keymap.mapping[JoystickDirection.LEFT] == key) {
-            joystick?.pullJoystick(JoystickDirection.LEFT)
-        } else if (keymap.mapping[JoystickDirection.RIGHT] == key) {
-            joystick?.pullJoystick(JoystickDirection.RIGHT)
-        } else if (keymap.mapping[JoystickDirection.FIRE] == key) {
-            joystick?.pullJoystick(JoystickDirection.FIRE)
+        if let dir = keymap.mapping[key] {
+            joystick?.pullJoystick(dir)
         }
     }
     
@@ -128,16 +121,8 @@ class GamePad
      */
     func keyUp(_ key: MacKeyFingerprint)
     {
-        if (keymap.mapping[JoystickDirection.UP] == key) {
-            joystick?.releaseJoystick(JoystickDirection.UP)
-        } else if (keymap.mapping[JoystickDirection.DOWN] == key) {
-            joystick?.releaseJoystick(JoystickDirection.DOWN)
-        } else if (keymap.mapping[JoystickDirection.LEFT] == key) {
-            joystick?.releaseJoystick(JoystickDirection.LEFT)
-        } else if (keymap.mapping[JoystickDirection.RIGHT] == key) {
-            joystick?.releaseJoystick(JoystickDirection.RIGHT)
-        } else if (keymap.mapping[JoystickDirection.FIRE] == key) {
-            joystick?.releaseJoystick(JoystickDirection.FIRE)
+        if let dir = keymap.mapping[key] {
+            joystick?.releaseJoystick(dir)
         }
     }
     

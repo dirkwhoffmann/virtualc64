@@ -102,6 +102,12 @@
     // Let the document know where the virtual C64 resides
     [[self document] setC64:c64];
     
+    // Initialize GamePad manager
+    gamePadManager = [[GamePadManager alloc] initWithC64:c64];
+    if (!gamePadManager) {
+        NSLog(@"WARNING: Failed to initialize GamePadManager");
+    }
+
     // Setup window properties
     [self configureWindow];
     
@@ -109,12 +115,6 @@
     [self adjustWindowSize];
     [[[self window] windowController] setShouldCascadeWindows:NO];
     [[self window] setFrameAutosaveName:@"dirkwhoffmann.de.virtualC64.window"];
-    
-    // Initialize GamePad manager
-    gamePadManager = [[GamePadManager alloc] initWithC64:c64];
-    if (!gamePadManager) {
-        NSLog(@"WARNING: Failed to initialize GamePadManager");
-    }
     
 	// Load user defaults
 	[self loadUserDefaults];
