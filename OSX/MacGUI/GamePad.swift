@@ -8,6 +8,17 @@
 import Foundation
 import IOKit.hid
 
+/*
+enum JoystickDirection {
+    case UP
+    case DOWN
+    case LEFT
+    case RIGHT
+    case FIRE
+    case RELEASED
+}
+*/
+
 //! @brief   Mapping from keycodes to joystick movements
 /*! @details Each GamePad can be assigned a KeyMap which can be used
  *           to trigger events by using the keyboard.
@@ -111,8 +122,25 @@ class GamePad
     func keyDown(_ key: MacKeyFingerprint)
     {
         if let dir = keymap.mapping[key] {
+            switch (dir) {
+            case JoystickDirection.UP:
+                joystick?.pullUp()
+            case JoystickDirection.DOWN:
+                joystick?.pullDown()
+            case JoystickDirection.LEFT:
+                joystick?.pullLeft()
+            case JoystickDirection.RIGHT:
+                joystick?.pullRight()
+            default:
+                joystick?.pressButton()
+            }
+        }
+        
+        /*
+        if let dir = keymap.mapping[key] {
             joystick?.pullJoystick(dir)
         }
+         */
     }
     
     //! @brief   Handles a keyboard up event
@@ -122,8 +150,25 @@ class GamePad
     func keyUp(_ key: MacKeyFingerprint)
     {
         if let dir = keymap.mapping[key] {
+            switch (dir) {
+            case JoystickDirection.UP:
+                joystick?.releaseYAxis()
+            case JoystickDirection.DOWN:
+                joystick?.releaseYAxis()
+            case JoystickDirection.LEFT:
+                joystick?.releaseXAxis()
+            case JoystickDirection.RIGHT:
+                joystick?.releaseXAxis()
+            default:
+                joystick?.releaseButton()
+            }
+        }
+
+        /*
+        if let dir = keymap.mapping[key] {
             joystick?.releaseJoystick(dir)
         }
+        */
     }
     
     let actionCallback : IOHIDValueCallback = { inContext, inResult, inSender, value in

@@ -475,17 +475,6 @@
 
     KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
     return [map getCharacterFor:dir];
-    
-    /*
-    switch (nr) {
-            
-        case 1: return [[keyboardcontroller keymap1] getCharacterFor:dir];
-        case 2: return [[keyboardcontroller keymap2] getCharacterFor:dir];
-        
-        default:
-            assert(0); return 0;
-    }
-    */
 }
 
 - (void)setJoyChar:(NSString *)s keymap:(int)nr direction:(JoystickDirection)dir
@@ -493,21 +482,10 @@
     assert(dir >= 0 && dir <= 4);
     assert(nr == 1 || nr == 2);
     
-    NSLog(@"setJoyChar:%@ keyman:%d direction:%ld", s, nr, (long)dir);
+    // NSLog(@"setJoyChar:%@ keymap:%d direction:%ld", s, nr, (long)dir);
     
     KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
     [map setCharacter:s for:dir];
-
-    /*
-    switch (nr) {
-            
-        case 1: [[keyboardcontroller keymap1] setCharacter:s for:dir]; return;
-        case 2: [[keyboardcontroller keymap2] setCharacter:s for:dir]; return;
-   
-        default:
-            assert(0);
-    }
-    */
 }
 
 - (void)keyDown:(NSEvent *)event

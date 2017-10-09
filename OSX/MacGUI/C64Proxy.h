@@ -348,6 +348,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 }
 
 - (void) setButton:(NSInteger)pressed;
+- (void) pressButton;
+- (void) releaseButton;
 - (void) pullUp;
 - (void) pullDown;
 - (void) pullLeft;
@@ -357,13 +359,14 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (void) setYAxis:(NSInteger)value;
 - (void) releaseXAxis;
 - (void) releaseYAxis;
-- (void) pullJoystick:(JoystickDirection)dir;
-- (void) releaseJoystick:(JoystickDirection)dir;
+// - (void) pullJoystick:(JoystickDirection)dir;
+// - (void) releaseJoystick:(JoystickDirection)dir;
 
 - (void) dump;
 
 @end
 
+/*
 @interface GamePadProxy : NSObject {
     
     struct GamePadWrapper *wrapper;
@@ -380,6 +383,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (void) dump;
 
 @end
+*/
 
 // --------------------------------------------------------------------------
 //                                    SID

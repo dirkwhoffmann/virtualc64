@@ -437,6 +437,8 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 }
 
 - (void) setButton:(NSInteger)pressed { wrapper->joystick->setButton((bool)pressed); }
+- (void) pressButton { wrapper->joystick->pressButton(); }
+- (void) releaseButton { wrapper->joystick->releaseButton(); }
 - (void) pullUp { wrapper->joystick->pullUp(); }
 - (void) pullDown { wrapper->joystick->pullDown(); }
 - (void) pullLeft { wrapper->joystick->pullLeft(); }
@@ -447,6 +449,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (void) releaseXAxis { wrapper->joystick->releaseXAxis(); }
 - (void) releaseYAxis { wrapper->joystick->releaseYAxis(); }
 
+/*
 - (void) pullJoystick:(JoystickDirection)dir {
     switch(dir) {
         case LEFT:  wrapper->joystick->pullLeft(); return;
@@ -468,6 +471,7 @@ struct CartridgeWrapper { Cartridge *cartridge; };
         default:    return;
     }
 }
+*/
 
 - (void) dump { wrapper->joystick->dumpState(); }
 
