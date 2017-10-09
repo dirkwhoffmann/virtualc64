@@ -170,22 +170,26 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     return [NSString stringWithFormat:@"%c" , c];
 }
 
-- (void)updateKeymap:(int)map direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t
+- (void)updateKeymap:(int)nr direction:(JoystickDirection)dir button:(NSButton *)b text:(NSTextField *)t
 {
-    long code = [controller joyKeyFingerprint:map direction:dir];
-    NSString *s = [controller joyChar:map direction:dir];
+    assert(dir >= 0 && dir <= 4);
+    assert(nr == 1 || nr == 2);
+    
+    KeyMap *map = [[controller gamePadManager] keysetOfDevice:(nr - 1)];
+    MacKeyFingerprint fp = [map fingerprintFor:dir];
+    NSString *s = [map getCharacterFor:dir];
     
     // Change button text and image
-    if (map == 1) {
-        [b setTitle:(recordKey1 == dir ? @"" : [@(code) stringValue])];
+    if (nr == 1) {
+        [b setTitle:(recordKey1 == dir ? @"" : [@(fp) stringValue])];
         [b setImage:[NSImage imageNamed:(recordKey1 == dir ? @"LEDnewRed" : @"")]];
-    } else if (map == 2) {
-        [b setTitle:(recordKey2 == dir ? @"" : [@(code) stringValue])];
+    } else if (nr == 2) {
+        [b setTitle:(recordKey2 == dir ? @"" : [@(fp) stringValue])];
         [b setImage:[NSImage imageNamed:(recordKey2 == dir ? @"LEDnewRed" : @"")]];
     }
     
     // Change appearance for some special keys
-    switch (code) {
+    switch (fp) {
         case NSAlternateKeyMask: s = @"\u2325"; break;
         case NSShiftKeyMask: s = @"\u21E7"; break;
         case NSCommandKeyMask: s = @"\u2318"; break;
@@ -248,19 +252,24 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 
 - (void)keyDown:(NSEvent *)event
 {
-    unsigned short keycode     = [event keyCode];
-    // unsigned char  c           = [[event characters] UTF8String][0];
+    unsigned short keycode = [event keyCode];
+    // unsigned char  c = [[event characters] UTF8String][0];
     NSEventModifierFlags flags = [event modifierFlags];
     
-    MacKeyFingerprint fingerprint = [controller fingerprintForKey:keycode withModifierFlags:flags];
+    MacKeyFingerprint f = [KeyboardController fingerprintForKey:keycode withModifierFlags:flags];
+
     if (recordKey1 != -1) {
-        [controller setJoyKeyFingerprint:fingerprint keymap:1 direction:(JoystickDirection)recordKey1];
-        [controller setJoyChar:[event characters] keymap:1 direction:(JoystickDirection)recordKey1];
-    }
+        
+        KeyMap *map = [[controller gamePadManager] keysetOfDevice:0];
+        [map setFingerprint:f for:(JoystickDirection)recordKey1];
+        [map setCharacter:[event characters] for:(JoystickDirection)recordKey1];
+     }
 
     if (recordKey2 != -1) {
-        [controller setJoyKeyFingerprint:fingerprint keymap:2 direction:(JoystickDirection)recordKey2];
-        [controller setJoyChar:[event characters] keymap:2 direction:(JoystickDirection)recordKey2];
+        
+        KeyMap *map = [[controller gamePadManager] keysetOfDevice:1];
+        [map setFingerprint:f for:(JoystickDirection)recordKey2];
+        [map setCharacter:[event characters] for:(JoystickDirection)recordKey2];
     }
 
     recordKey1 = -1;
@@ -299,14 +308,18 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     
     // First keyset
     if (recordKey1 != -1) {
-        [controller setJoyKeyFingerprint:flags keymap:1 direction:(JoystickDirection)recordKey1];
-        [controller setJoyChar:@" " keymap:1 direction:(JoystickDirection)recordKey1];
+        
+        KeyMap *map = [[controller gamePadManager] keysetOfDevice:0];
+        [map setFingerprint:flags for:(JoystickDirection)recordKey1];
+        [map setCharacter:@" " for:(JoystickDirection)recordKey1];
     }
     
     // Second keyset
     if (recordKey2 != -1) {
-        [controller setJoyKeyFingerprint:flags keymap:2 direction:(JoystickDirection)recordKey2];
-        [controller setJoyChar:@" " keymap:2 direction:(JoystickDirection)recordKey2];
+        
+        KeyMap *map = [[controller gamePadManager] keysetOfDevice:1];
+        [map setFingerprint:flags for:(JoystickDirection)recordKey2];
+        [map setCharacter:@" " for:(JoystickDirection)recordKey2];
     }
     
     recordKey1 = -1;

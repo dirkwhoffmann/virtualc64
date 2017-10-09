@@ -119,7 +119,7 @@ class KeyboardController: NSObject {
         }
         
         // Inform GamePadManager about pressed key
-        let f = fingerprint(forKey:keycode, withModifierFlags:flags)
+        let f = KeyboardController.fingerprint(forKey:keycode, withModifierFlags:flags)
         controller.gamePadManager.keyDown(f)
         
         // Remove alternate key modifier if present
@@ -128,7 +128,7 @@ class KeyboardController: NSObject {
         }
         
         // Translate key
-        let c64key = translateKey(c, plainkey: c_unmod, keycode: keycode, flags: flags)
+        let c64key = KeyboardController.translateKey(c, plainkey: c_unmod, keycode: keycode, flags: flags)
         if (c64key == 0) {
             return
         }
@@ -146,7 +146,7 @@ class KeyboardController: NSObject {
         // print("keyUp: keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
 
         // Inform GamePadManager about released key
-        let f = fingerprint(forKey:keycode, withModifierFlags:flags)
+        let f = KeyboardController.fingerprint(forKey:keycode, withModifierFlags:flags)
         controller.gamePadManager.keyUp(f)
         
         // Release key
@@ -186,7 +186,7 @@ class KeyboardController: NSObject {
     /*! @brief  Computes unique fingerprint for a certain key combination pressed
      *          on the pyhsical Mac keyboard
      */
-    @objc func fingerprint(forKey keycode: UInt16, withModifierFlags flags: NSEvent.ModifierFlags) -> MacKeyFingerprint
+    @objc class func fingerprint(forKey keycode: UInt16, withModifierFlags flags: NSEvent.ModifierFlags) -> MacKeyFingerprint
     {
         let result = Int(keycode)
         
@@ -218,7 +218,7 @@ class KeyboardController: NSObject {
     /*! @brief  Translates a pressed key on the Mac keyboard to a C64 key fingerprint
      *  @note   The returned value can be used as argument for the emulators pressKey() function
      */
-    func translateKey(_ key: UInt8, plainkey: UInt8, keycode: UInt16, flags: NSEvent.ModifierFlags) -> C64KeyFingerprint
+    class func translateKey(_ key: UInt8, plainkey: UInt8, keycode: UInt16, flags: NSEvent.ModifierFlags) -> C64KeyFingerprint
     {
     
         let HAT_KEY     = UInt8(UnicodeScalar("^")!.value)

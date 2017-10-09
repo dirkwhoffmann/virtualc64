@@ -419,74 +419,12 @@
     [gamePadManager restoreFactorySettings];
 }
 
+/*
 - (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags
 {
     return [keyboardcontroller fingerprintForKey:keycode withModifierFlags:flags];
 }
-
-- (MacKeyFingerprint)joyKeyFingerprint:(int)nr direction:(JoystickDirection)dir
-{
-    assert(dir >= 0 && dir <= 4);
-    assert(nr == 1 || nr == 2);
-    
-    // NSLog(@"joyKeyFingerprint:%d direction:%ld", nr, (long)dir);
-    
-    KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
-    return [map fingerprintFor:dir];
-    
-    /*
-    switch (nr) {
-        case 1: return [[keyboardcontroller keymap1] fingerprintFor:dir];
-        case 2: return [[keyboardcontroller keymap2] fingerprintFor:dir];
-            
-        default:
-            assert(0); return 0;
-    }
-    */
-}
-
-- (void)setJoyKeyFingerprint:(MacKeyFingerprint)key keymap:(int)nr direction:(JoystickDirection)dir
-{
-    assert(dir >= 0 && dir <= 4);
-    assert(nr == 1 || nr == 2);
-
-    NSLog(@"setJoyKeyFingerprint:%lu keyman:%d direction:%ld", key, nr, (long)dir);
-    
-    KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
-    [map setFingerprint:key for:dir];
-
-    /*
-    switch (nr) {
-        case 1: [[keyboardcontroller keymap1] setFingerprint:key for:dir]; return;
-        case 2: [[keyboardcontroller keymap2] setFingerprint:key for:dir]; return;
-            
-        default:
-            assert(0);
-    }
-    */
-}
-
-- (NSString *)joyChar:(int)nr direction:(JoystickDirection)dir
-{
-    assert(dir >= 0 && dir <= 4);
-    assert(nr == 1 || nr == 2);
-    
-    // NSLog(@"joyChar:%d direction:%ld", nr, (long)dir);
-
-    KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
-    return [map getCharacterFor:dir];
-}
-
-- (void)setJoyChar:(NSString *)s keymap:(int)nr direction:(JoystickDirection)dir
-{
-    assert(dir >= 0 && dir <= 4);
-    assert(nr == 1 || nr == 2);
-    
-    // NSLog(@"setJoyChar:%@ keymap:%d direction:%ld", s, nr, (long)dir);
-    
-    KeyMap *map = [gamePadManager keysetOfDevice:(nr - 1)];
-    [map setCharacter:s for:dir];
-}
+*/
 
 - (void)keyDown:(NSEvent *)event
 {
