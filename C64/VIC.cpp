@@ -234,9 +234,7 @@ uint8_t VIC::memAccess(uint16_t addr)
 
 uint8_t VIC::memIdleAccess()
 {
-    // return memAccess(0x3FFF);
-    addrBus = bankAddr + 0x3FFF;
-    return c64->mem.ram[addrBus];
+    return memAccess(0x3FFF);
 }
 
 inline void VIC::cAccess()
