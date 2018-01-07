@@ -104,7 +104,8 @@ enum {
     C64KEY_CR,
     C64KEY_CU,
     C64KEY_CD,
-    C64KEY_ARROW,
+    C64KEY_LEFTARROW,
+    C64KEY_UPARROW,
     C64KEY_RUNSTOP,
     C64KEY_RESTORE,
     C64KEY_COMMODORE = 0x0100, // combinable with all other keys

@@ -20,6 +20,8 @@
 
 // NEXT RELEASE: 1.5.3
 //
+// VirtualC64 now passes VICE test VICII/phi1timing.
+//
 // TODO:
 //
 // TODO:

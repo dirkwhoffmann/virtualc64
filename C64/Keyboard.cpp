@@ -49,7 +49,8 @@ Keyboard::Keyboard()
 	rowcolmap[(unsigned char)'/'] = 0x0607; rowcolmap[(unsigned char)'?'] = 0x0607 | SHIFT_FLAG;
     rowcolmap[(unsigned char)'^'] = 0x0701;
     rowcolmap[(unsigned char)'~'] = 0x0701;
-    rowcolmap[C64KEY_ARROW]  = 0x0701;
+    rowcolmap[C64KEY_LEFTARROW]   = 0x0701;
+    rowcolmap[C64KEY_UPARROW]     = 0x0606;
 	rowcolmap[(unsigned char)'0'] = 0x0403;
 	rowcolmap[(unsigned char)'1'] = 0x0700; rowcolmap[(unsigned char)'!'] = 0x0700 | SHIFT_FLAG;
 	rowcolmap[(unsigned char)'2'] = 0x0703; rowcolmap[(unsigned char)'"'] = 0x0703 | SHIFT_FLAG;

@@ -101,12 +101,13 @@ class KeyboardController: NSObject {
         if (event.keyCode == MacKeys.ESC && controller.metalScreen.fullscreen) {
             controller.window!.toggleFullScreen(nil)
         }
+        
         var c       = event.characters!.utf8CString[0].uint8
         let c_unmod = event.charactersIgnoringModifiers!.utf8CString[0].uint8
         let keycode = event.keyCode
         let flags   = event.modifierFlags
         
-        // print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
+        print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
             
         // Ignore keys that are already pressed
         if (pressedKeys[keycode] != nil) {
@@ -221,7 +222,9 @@ class KeyboardController: NSObject {
     class func translateKey(_ key: UInt8, plainkey: UInt8, keycode: UInt16, flags: NSEvent.ModifierFlags) -> C64KeyFingerprint
     {
     
-        let HAT_KEY     = UInt8(UnicodeScalar("^")!.value)
+        print("key: \(key) keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
+        
+        // let HAT_KEY     = UInt8(UnicodeScalar("^")!.value)
         let LESS_KEY    = UInt8(UnicodeScalar("<")!.value)
         let GREATER_KEY = UInt8(UnicodeScalar(">")!.value)
         
@@ -248,11 +251,12 @@ class KeyboardController: NSObject {
                 C64KeyFingerprint(C64KEY_INS) : C64KeyFingerprint(C64KEY_DEL)
         
         case MacKeys.HAT:
-            return C64KeyFingerprint(HAT_KEY)
+            return (flags.contains(NSEvent.ModifierFlags.shift)) ?
+                C64KeyFingerprint(C64KEY_UPARROW) : C64KeyFingerprint(C64KEY_LEFTARROW)
         
         case MacKeys.TILDE_US:
             if (plainkey != LESS_KEY && plainkey != GREATER_KEY) {
-                return C64KeyFingerprint(C64KEY_ARROW);
+                return C64KeyFingerprint(C64KEY_LEFTARROW);
             } else {
                 break;
             }
