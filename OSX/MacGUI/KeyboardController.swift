@@ -107,7 +107,7 @@ class KeyboardController: NSObject {
         let keycode = event.keyCode
         let flags   = event.modifierFlags
         
-        print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
+        // print("keyDown: '\(c.char)' keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
             
         // Ignore keys that are already pressed
         if (pressedKeys[keycode] != nil) {
@@ -222,7 +222,7 @@ class KeyboardController: NSObject {
     class func translateKey(_ key: UInt8, plainkey: UInt8, keycode: UInt16, flags: NSEvent.ModifierFlags) -> C64KeyFingerprint
     {
     
-        print("key: \(key) keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
+        // print("key: \(key) keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
         
         // let HAT_KEY     = UInt8(UnicodeScalar("^")!.value)
         let LESS_KEY    = UInt8(UnicodeScalar("<")!.value)

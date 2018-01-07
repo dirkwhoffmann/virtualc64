@@ -85,7 +85,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     [[controller metalScreen] setEyeX:(float)0.0];
     [[controller metalScreen] setEyeY:(float)0.0];
     [[controller metalScreen] setEyeZ:(float)0.0];
-    [[c64 vic] setColorScheme:CCS64];
+    [[c64 vic] setColorScheme:VICE];
     [[controller metalScreen] setVideoFilter:TEX_FILTER_SMOOTH];
     [[controller metalScreen] setFullscreenKeepAspectRatio:NO];
     

@@ -59,7 +59,7 @@ private:
 	int fp;
 
     //! @brief    Unicode name representation
-    unsigned short unicodeName[256];
+    // unsigned short unicodeName[256];
 
 public:
 
