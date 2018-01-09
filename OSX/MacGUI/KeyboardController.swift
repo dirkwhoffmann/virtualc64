@@ -225,8 +225,15 @@ class KeyboardController: NSObject {
         // print("key: \(key) keycode: \(keycode) flags: \(String(format:"%08X", flags.rawValue))")
         
         // let HAT_KEY     = UInt8(UnicodeScalar("^")!.value)
+        let IHAT_KEY    = UInt8(UnicodeScalar("ì")!.value)
         let LESS_KEY    = UInt8(UnicodeScalar("<")!.value)
         let GREATER_KEY = UInt8(UnicodeScalar(">")!.value)
+        
+        switch (key) {
+            
+        case IHAT_KEY: return C64KeyFingerprint(C64KEY_UPARROW) // for Italien keyboards
+        default: break
+        }
         
         switch (keycode) {
             
@@ -256,9 +263,9 @@ class KeyboardController: NSObject {
         
         case MacKeys.TILDE_US:
             if (plainkey != LESS_KEY && plainkey != GREATER_KEY) {
-                return C64KeyFingerprint(C64KEY_LEFTARROW);
+                return C64KeyFingerprint(C64KEY_LEFTARROW)
             } else {
-                break;
+                break
             }
             
         default:
