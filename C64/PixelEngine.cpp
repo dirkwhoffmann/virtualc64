@@ -413,6 +413,10 @@ PixelEngine::drawSprites()
 
             drawSpritePixel(i, 4, firstDMAi | secondDMAi /* freeze */, 0         /* halt */, secondDMAi /* load */);
             drawSpritePixel(i, 5, firstDMAi | secondDMAi /* freeze */, 0         /* halt */, 0          /* load */);
+            
+            // If spriteXexpand has changed, it shows up at this point in time.
+            COPY_BIT(vic->p.spriteXexpand, pipe.spriteXexpand, i);
+            
             drawSpritePixel(i, 6, firstDMAi | secondDMAi /* freeze */, 0         /* halt */, 0          /* load */);
             drawSpritePixel(i, 7, firstDMAi              /* freeze */, 0         /* halt */, 0          /* load */);
         }
