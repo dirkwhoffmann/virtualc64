@@ -20,7 +20,8 @@
 
 // NEXT RELEASE: 1.5.3
 //
-// VirtualC64 now passes VICE test VICII/phi1timing.
+// VirtualC64 passes VICE test VICII/phi1timing.
+// Sprite X expansion register is now updated after pixel 6 and not after pixel 8 as it was before.
 // VICE color palette has been updated and made the default palette.
 //
 // TODO:
