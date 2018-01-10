@@ -464,6 +464,8 @@ PixelEngine::drawSpritePixel(unsigned spritenr, unsigned pixelnr, bool freeze, b
             // Toggle horizontal expansion flipflop for stretched sprites
             if (GET_BIT(pipe.spriteXexpand, spritenr))
                 sprite_sr[spritenr].exp_flop = !sprite_sr[spritenr].exp_flop;
+            else
+                sprite_sr[spritenr].exp_flop = true;
 
             // Run shift register and toggle multicolor flipflop
             if (sprite_sr[spritenr].exp_flop) {
