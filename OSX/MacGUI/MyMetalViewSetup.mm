@@ -70,7 +70,7 @@
 {
     NSLog(@"MyMetalView::buildTextures");
     
-    // Create bachground texture (a scaled down version of the current wallpaper)
+    // Create background texture (a scaled down version of the current wallpaper)
     NSImage *desktop = [self desktopAsImage];
     NSImage *desktopResized = [self expandImage:desktop toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
     bgTexture = [self textureFromImage:desktopResized];
