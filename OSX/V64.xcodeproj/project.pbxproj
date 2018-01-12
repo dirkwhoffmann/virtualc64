@@ -185,6 +185,7 @@
 		50DB328B1B948489000FB839 /* kext.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB328A1B948489000FB839 /* kext.png */; };
 		50DEAD892008BD4F008A8761 /* EPXUpscaler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD882008BD4F008A8761 /* EPXUpscaler.mm */; };
 		50DEAD8C2008C6B5008A8761 /* BypassUpscaler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8B2008C6B5008A8761 /* BypassUpscaler.mm */; };
+		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
 		50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50E033BA12E3868100ABF9E3 /* IconP00.icns */; };
 		50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA60C3CE95400CB6B43 /* floppy.png */; };
 		50E4BFAA0C3CEAB700CB6B43 /* warpOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA90C3CEAB700CB6B43 /* warpOff.png */; };
@@ -497,6 +498,7 @@
 		50DEAD8A2008BD6E008A8761 /* EPXUpscaler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPXUpscaler.h; sourceTree = "<group>"; };
 		50DEAD8B2008C6B5008A8761 /* BypassUpscaler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BypassUpscaler.mm; sourceTree = "<group>"; };
 		50DEAD8D2008C6CC008A8761 /* BypassUpscaler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BypassUpscaler.h; sourceTree = "<group>"; };
+		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50E033BA12E3868100ABF9E3 /* IconP00.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconP00.icns; sourceTree = "<group>"; };
 		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
 		50E4BFA90C3CEAB700CB6B43 /* warpOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warpOff.png; sourceTree = "<group>"; };
@@ -1004,6 +1006,7 @@
 				502D44D01BD38EEA00950088 /* ComputeKernel.mm */,
 				50DEAD872008BA9A008A8761 /* Upscalers */,
 				50DEAD862008BA8C008A8761 /* Filters */,
+				50DEAD8E2008E615008A8761 /* Shaders.swift */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 			);
 			name = Shaders;
@@ -1358,6 +1361,7 @@
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,
 				50D141801417A34B0024FC74 /* filter.cc in Sources */,
 				50D141811417A34B0024FC74 /* pot.cc in Sources */,
+				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
 				50D141821417A34B0024FC74 /* sid.cc in Sources */,
 				50D141831417A34B0024FC74 /* version.cc in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,

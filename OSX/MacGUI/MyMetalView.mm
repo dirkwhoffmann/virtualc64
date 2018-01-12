@@ -18,6 +18,7 @@
 
 #import "C64GUI.h"
 #import "MyMetalDefs.h"
+#import "VirtualC64-Swift.h"
 
 @implementation MyMetalView {
     
