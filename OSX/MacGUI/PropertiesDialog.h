@@ -51,6 +51,7 @@ extern NSString *VC64EyeX;
 extern NSString *VC64EyeY;
 extern NSString *VC64EyeZ;
 extern NSString *VC64ColorSchemeKey;
+extern NSString *VC64VideoUpscalerKey;
 extern NSString *VC64VideoFilterKey;
 extern NSString *VC64FullscreenKeepAspectRatioKey;
 
@@ -95,7 +96,8 @@ extern NSString *VC64FullscreenKeepAspectRatioKey;
 	IBOutlet NSSlider *eyeYSlider;
 	IBOutlet NSSlider *eyeZSlider;
 	IBOutlet NSPopUpButton *colorScheme;
-	IBOutlet NSPopUpButton *videoFilter;
+	IBOutlet NSPopUpButton *upscaler;
+    IBOutlet NSPopUpButton *filter;
 	IBOutlet NSColorWell *colorWell0;
 	IBOutlet NSColorWell *colorWell1;
 	IBOutlet NSColorWell *colorWell2;
@@ -129,7 +131,8 @@ extern NSString *VC64FullscreenKeepAspectRatioKey;
 
 // Video
 - (IBAction)changeColorScheme:(id)sender;
-- (IBAction)setVideoFilterAction:(id)sender;
+- (IBAction)setUpscalerAction:(id)sender;
+- (IBAction)setFilterAction:(id)sender;
 - (IBAction)setEyeXAction:(id)sender;
 - (IBAction)setEyeYAction:(id)sender;
 - (IBAction)setEyeZAction:(id)sender;

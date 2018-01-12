@@ -52,11 +52,12 @@ NSString *VC64Fire2charKey = @"VC64Fire2charKey";
 #endif
 
 // Video
-NSString *VC64EyeX            = @"VC64EyeX";
-NSString *VC64EyeY            = @"VC64EyeY";
-NSString *VC64EyeZ            = @"VC64EyeZ";
-NSString *VC64ColorSchemeKey  = @"VC64ColorSchemeKey";
-NSString *VC64VideoFilterKey  = @"VC64VideoFilterKey";
+NSString *VC64EyeX             = @"VC64EyeX";
+NSString *VC64EyeY             = @"VC64EyeY";
+NSString *VC64EyeZ             = @"VC64EyeZ";
+NSString *VC64ColorSchemeKey   = @"VC64ColorSchemeKey";
+NSString *VC64VideoUpscalerKey = @"VC64VideoUpscalerKey";
+NSString *VC64VideoFilterKey   = @"VC64VideoFilterKey";
 NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey";
 
 - (void)initialize:(MyController *)mycontroller
@@ -86,6 +87,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     [[controller metalScreen] setEyeY:(float)0.0];
     [[controller metalScreen] setEyeZ:(float)0.0];
     [[c64 vic] setColorScheme:VICE];
+    [[controller metalScreen] setVideoUpscaler:TEX_UPSCALER_NONE];
     [[controller metalScreen] setVideoFilter:TEX_FILTER_SMOOTH];
     [[controller metalScreen] setFullscreenKeepAspectRatio:NO];
     
@@ -118,7 +120,14 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 	[self update];    
 }
 
-- (IBAction)setVideoFilterAction:(id)sender
+- (IBAction)setUpscalerAction:(id)sender
+{
+    long upscaler = [[sender selectedItem] tag];
+    [[controller metalScreen] setVideoUpscaler:upscaler];
+    [self update];
+}
+
+- (IBAction)setFilterAction:(id)sender
 {
     long filter = [[sender selectedItem] tag];
     [[controller metalScreen] setVideoFilter:filter];
@@ -206,7 +215,6 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 
 - (void)update
 {
-                   
     /* Joystick */
     
     // First key set
@@ -224,7 +232,8 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     [self updateKeymap:2 direction:JoystickDirection(FIRE) button:fire2button text:fire2];
     
 	/* Video */
-    [videoFilter selectItemWithTag:[[controller metalScreen] videoFilter]];
+    [upscaler selectItemWithTag:[[controller metalScreen] videoUpscaler]];
+    [filter selectItemWithTag:[[controller metalScreen] videoFilter]];
     [colorScheme selectItemWithTag:[[c64 vic] colorScheme]];
 
     [eyeXSlider setFloatValue:[[controller metalScreen] eyeX]];

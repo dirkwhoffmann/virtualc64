@@ -297,6 +297,7 @@
 	[defaultValues setObject:@((float)0.0) forKey:VC64EyeZ];
 
 	[defaultValues setObject:@((int)CCS64) forKey:VC64ColorSchemeKey];
+    [defaultValues setObject:@0 forKey:VC64VideoUpscalerKey];
 	[defaultValues setObject:@0 forKey:VC64VideoFilterKey];
     [defaultValues setObject:@NO forKey:VC64FullscreenKeepAspectRatioKey];
 		
@@ -320,6 +321,7 @@
     [metalScreen setEyeZ:[defaults floatForKey:VC64EyeZ]];
 
     [[c64 vic] setColorScheme:[defaults integerForKey:VC64ColorSchemeKey]];
+    [metalScreen setVideoUpscaler:[defaults integerForKey:VC64VideoUpscalerKey]];
     [metalScreen setVideoFilter:[defaults integerForKey:VC64VideoFilterKey]];
     [metalScreen setFullscreenKeepAspectRatio:[defaults boolForKey:VC64FullscreenKeepAspectRatioKey]];
 }
@@ -386,6 +388,7 @@
     [defaults setFloat:[metalScreen eyeY] forKey:VC64EyeY];
     [defaults setFloat:[metalScreen eyeZ] forKey:VC64EyeZ];
     [defaults setInteger:[[c64 vic] colorScheme] forKey:VC64ColorSchemeKey];
+    [defaults setInteger:[metalScreen videoUpscaler] forKey:VC64VideoUpscalerKey];
     [defaults setInteger:[metalScreen videoFilter] forKey:VC64VideoFilterKey];
     [defaults setInteger:[metalScreen fullscreenKeepAspectRatio] forKey:VC64FullscreenKeepAspectRatioKey];
 }
@@ -418,13 +421,6 @@
 {
     [gamePadManager restoreFactorySettings];
 }
-
-/*
-- (MacKeyFingerprint)fingerprintForKey:(int)keycode withModifierFlags:(unsigned long)flags
-{
-    return [keyboardcontroller fingerprintForKey:keycode withModifierFlags:flags];
-}
-*/
 
 - (void)keyDown:(NSEvent *)event
 {

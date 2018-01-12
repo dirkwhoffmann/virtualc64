@@ -138,12 +138,7 @@
         [alert runModal];
         [NSApp terminate:self];
     }
-    
-    // Keyboard initialization
-    for (int i = 0; i < 256; i++) {
-        pressedKeys[i] = 0;
-    }
-    
+        
     // Register for drag and drop
     [self registerForDraggedTypes:
     [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
@@ -377,7 +372,7 @@
     NSAssert(_commandBuffer != nil, @"Metal command buffer must not be nil");
 
     // Upscale C64 texture
-    ComputeKernel *upscaler = bypassUpscaler; // [self currentUpscaler];
+    ComputeKernel *upscaler = [self currentUpscaler];
     [upscaler apply:_commandBuffer in:emulatorTexture out:upscaledTexture];
     
     // Post-process C64 texture
