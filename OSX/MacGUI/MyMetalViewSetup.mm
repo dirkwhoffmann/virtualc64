@@ -114,24 +114,6 @@
     if (filteredTexture == nil) { exit(0); }
 }
 
-- (void)buildKernels
-{
-    NSLog(@"MyMetalView::buildKernels");
-
-    // Build upscalers
-    bypassUpscaler = [BypassUpscaler forDevice:device fromLibrary:library];
-    epxUpscaler = [EPXUpscaler forDevice:device fromLibrary:library];
-
-    // Build filters
-    bypassFilter = [BypassFilter forDevice:device fromLibrary:library];
-    smoothFilter = [SaturationFilter withFactor:1.0 forDevice:device fromLibrary:library];
-    blurFilter = [BlurFilter withRadius:2 forDevice:device fromLibrary:library];
-    saturationFilter = [SaturationFilter withFactor:0.5 forDevice:device fromLibrary:library];
-    sepiaFilter = [SepiaFilter forDevice:device fromLibrary:library];
-    crtFilter = [CrtFilter forDevice:device fromLibrary:library];
-    grayscaleFilter = [SaturationFilter withFactor:0.0 forDevice:device fromLibrary:library];
-}
-
 - (void)buildBuffers
 {
     // Vertex buffer

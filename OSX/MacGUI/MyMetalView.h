@@ -42,13 +42,13 @@ const int BG_TEXTURE_HEIGHT= 512;
 const int BG_TEXTURE_DEPTH = 4;
 
 // Post-processing filters
-enum TextureUpscalerType {
+typedef enum {
     TEX_UPSCALER_NONE = 1,
     TEX_UPSCALER_EPX,
-};
+} TextureUpscalerType;
 
 // Post-processing filters
-enum TextureFilterType {
+typedef enum {
     TEX_FILTER_NONE = 1,
     TEX_FILTER_SMOOTH,
     TEX_FILTER_BLUR,
@@ -56,7 +56,7 @@ enum TextureFilterType {
     TEX_FILTER_GRAYSCALE,
     TEX_FILTER_SEPIA,
     TEX_FILTER_CRT,
-};
+} TextureFilterType;
 
 /*! @brief    Fingerprint that uniquely identifies a key combination on the physical Mac keyboard
  *  @seealso  C64KeyFingerprint
@@ -120,19 +120,6 @@ typedef unsigned long MacKeyFingerprint;
     //! Texture to hold the pixel depth information
     id <MTLTexture> depthTexture;
 
-    // All currently supported texture upscalers
-    ComputeKernel *bypassUpscaler;
-    ComputeKernel *epxUpscaler;
-        
-    // All currently supported texture filters
-    ComputeKernel *bypassFilter;
-    ComputeKernel *smoothFilter;
-    ComputeKernel *blurFilter;
-    ComputeKernel *saturationFilter;
-    ComputeKernel *sepiaFilter;
-    ComputeKernel *grayscaleFilter;
-    ComputeKernel *crtFilter;
-
     // Animation parameters
     float currentXAngle, targetXAngle, deltaXAngle;
     float currentYAngle, targetYAngle, deltaYAngle;
@@ -187,6 +174,21 @@ typedef unsigned long MacKeyFingerprint;
 //! Expand view vertically by the height of the status bar
 - (void)expand;
 
+#if 0
+//! Applies an upscaling kernel to a texture
+- (void)applyUpscaler:(TextureUpscalerType)type
+               cmdBuf:(id <MTLCommandBuffer>)cmdBuf
+               source:(id <MTLTexture>)source
+               target:(id <MTLTexture>)target;
+
+//! Applies a filtering kernel to a texture
+- (void)applyFilter:(TextureFilterType)type
+             cmdBuf:(id <MTLCommandBuffer>)cmdBuf
+             source:(id <MTLTexture>)source
+             target:(id <MTLTexture>)target;
+#endif
+
+- (void)buildKernels;
 - (void)reshapeWithFrame:(CGRect)frame;
 - (void)updateScreenGeometry;
 - (void)buildMatrices3D;

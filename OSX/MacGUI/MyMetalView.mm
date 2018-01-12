@@ -27,6 +27,31 @@
     id <MTLRenderCommandEncoder> _commandEncoder;
     id <CAMetalDrawable> _drawable;
     
+    // All currently supported texture upscalers
+    SwiftComputeKernel *swiftbypassUpscaler;
+    SwiftComputeKernel *swiftepxUpscaler;
+
+    ComputeKernel *bypassUpscaler;
+    ComputeKernel *epxUpscaler;
+    
+    // All currently supported texture filters
+    SwiftComputeKernel *swiftbypassFilter;
+    SwiftComputeKernel *swiftsmoothFilter;
+    SwiftComputeKernel *swiftblurFilter;
+    SwiftComputeKernel *swiftsaturationFilter;
+    SwiftComputeKernel *swiftsepiaFilter;
+    SwiftComputeKernel *swiftgrayscaleFilter;
+    SwiftComputeKernel *swiftcrtFilter;
+    
+    ComputeKernel *bypassFilter;
+    ComputeKernel *smoothFilter;
+    ComputeKernel *blurFilter;
+    ComputeKernel *saturationFilter;
+    ComputeKernel *sepiaFilter;
+    ComputeKernel *grayscaleFilter;
+    ComputeKernel *crtFilter;
+    
+    
     // Matrices
     /*
     matrix_float4x4 _modelMatrix;
@@ -118,6 +143,7 @@
     framebufferTexture = nil;
     depthTexture = nil;
     
+    swiftbypassUpscaler = NULL;
     bypassUpscaler = NULL;
     epxUpscaler = NULL;
 
@@ -143,6 +169,35 @@
     // Register for drag and drop
     [self registerForDraggedTypes:
     [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
+}
+
+- (void)buildKernels
+{
+    NSLog(@"MyMetalView::buildKernels");
+    
+    // Build upscalers
+    swiftbypassUpscaler = [[SwiftBypassUpscaler alloc] initWithDevice:device library:library];
+    swiftepxUpscaler = [[SwiftEPXUpscaler alloc] initWithDevice:device library:library];
+
+    bypassUpscaler = [BypassUpscaler forDevice:device fromLibrary:library];
+    epxUpscaler = [EPXUpscaler forDevice:device fromLibrary:library];
+    
+    // Build filters
+    swiftbypassFilter = [[SwiftBypassFilter alloc] initWithDevice:device library:library];
+    swiftsmoothFilter = [[SwiftSaturationFilter alloc] initWithDevice:device library:library factor:1.0];
+    swiftblurFilter = [[SwiftBlurFilter alloc] initWithDevice:device library:library radius:2.0];
+    swiftsaturationFilter = [[SwiftSaturationFilter alloc] initWithDevice:device library:library factor:0.5];
+    swiftsepiaFilter = [[SwiftSepiaFilter alloc] initWithDevice:device library:library];
+    swiftcrtFilter = [[SwiftCrtFilter alloc] initWithDevice:device library:library];
+    swiftgrayscaleFilter = [[SwiftSaturationFilter alloc] initWithDevice:device library:library factor:0.0];
+    
+    bypassFilter = [BypassFilter forDevice:device fromLibrary:library];
+    smoothFilter = [SaturationFilter withFactor:1.0 forDevice:device fromLibrary:library];
+    blurFilter = [BlurFilter withRadius:2 forDevice:device fromLibrary:library];
+    saturationFilter = [SaturationFilter withFactor:0.5 forDevice:device fromLibrary:library];
+    sepiaFilter = [SepiaFilter forDevice:device fromLibrary:library];
+    crtFilter = [CrtFilter forDevice:device fromLibrary:library];
+    grayscaleFilter = [SaturationFilter withFactor:0.0 forDevice:device fromLibrary:library];
 }
 
 - (void) dealloc
@@ -323,6 +378,18 @@
     }
 }
 
+- (SwiftComputeKernel *)currentSwiftUpscaler
+{
+    switch (videoUpscaler) {
+        
+        case TEX_UPSCALER_EPX:
+        return swiftepxUpscaler;
+        
+        default:
+        return swiftbypassUpscaler;
+    }
+}
+
 - (ComputeKernel *)currentFilter
 {
     switch (videoFilter) {
@@ -352,6 +419,35 @@
     }
 }
 
+- (SwiftComputeKernel *)currentSwiftFilter
+{
+    switch (videoFilter) {
+        case TEX_FILTER_NONE:
+        return swiftbypassFilter;
+        
+        case TEX_FILTER_SMOOTH:
+        return swiftsmoothFilter;
+        
+        case TEX_FILTER_BLUR:
+        return swiftblurFilter;
+        
+        case TEX_FILTER_SATURATION:
+        return swiftsaturationFilter;
+        
+        case TEX_FILTER_GRAYSCALE:
+        return swiftgrayscaleFilter;
+        
+        case TEX_FILTER_SEPIA:
+        return swiftsepiaFilter;
+        
+        case TEX_FILTER_CRT:
+        return swiftcrtFilter;
+        
+        default:
+        return swiftsmoothFilter;
+    }
+}
+
 - (BOOL)startFrame
 {
     static NSInteger width = -1;
@@ -373,12 +469,17 @@
     NSAssert(_commandBuffer != nil, @"Metal command buffer must not be nil");
 
     // Upscale C64 texture
-    ComputeKernel *upscaler = [self currentUpscaler];
-    [upscaler apply:_commandBuffer in:emulatorTexture out:upscaledTexture];
+    // ComputeKernel *upscaler = [self currentUpscaler];
+    // [upscaler apply:_commandBuffer in:emulatorTexture out:upscaledTexture];
+    SwiftComputeKernel *upscaler = [self currentSwiftUpscaler];
+    [upscaler applyWithCommandBuffer:_commandBuffer source:emulatorTexture target:upscaledTexture];
     
     // Post-process C64 texture
-    ComputeKernel *filter = [self currentFilter];
-    [filter apply:_commandBuffer in:upscaledTexture out:filteredTexture];
+    // ComputeKernel *filter = [self currentFilter];
+    // [filter apply:_commandBuffer in:upscaledTexture out:filteredTexture];
+    SwiftComputeKernel *filter = [self currentSwiftFilter];
+    assert (filter != NULL);
+    [filter applyWithCommandBuffer:_commandBuffer source:upscaledTexture target:filteredTexture];
     
     // Create render pass
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
@@ -400,7 +501,7 @@
         [_commandEncoder setRenderPipelineState:pipeline];
         [_commandEncoder setDepthStencilState:depthState];
         [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
-        [_commandEncoder setFragmentSamplerState:[filter sampler] atIndex:0];
+        [_commandEncoder setFragmentSamplerState:[filter getsampler] atIndex:0];
         [_commandEncoder setVertexBuffer:positionBuffer offset:0 atIndex:0];
     }
     
