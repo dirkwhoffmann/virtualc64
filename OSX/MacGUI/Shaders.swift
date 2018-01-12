@@ -12,7 +12,7 @@ import Foundation
 // --------------------------------------------------------------------------------------------
 
 
-@objc class SwiftComputeKernel : NSObject {
+@objc class ComputeKernel : NSObject {
 
     var kernel : MTLComputePipelineState!
     var sampler : MTLSamplerState!
@@ -95,7 +95,7 @@ import Foundation
 //                                    Upscalers
 // --------------------------------------------------------------------------------------------
 
-@objc class SwiftBypassUpscaler : SwiftComputeKernel {
+@objc class BypassUpscaler : ComputeKernel {
     
     @objc convenience init(device: MTLDevice, library: MTLLibrary)
     {
@@ -112,7 +112,7 @@ import Foundation
     }
 }
 
-@objc class SwiftEPXUpscaler : SwiftComputeKernel {
+@objc class EPXUpscaler : ComputeKernel {
     
     @objc convenience init(device: MTLDevice, library: MTLLibrary)
     {
@@ -134,7 +134,7 @@ import Foundation
 //                                     Filters
 // --------------------------------------------------------------------------------------------
 
-@objc class SwiftBypassFilter : SwiftComputeKernel {
+@objc class BypassFilter : ComputeKernel {
     
     @objc convenience init(device: MTLDevice, library: MTLLibrary)
     {
@@ -151,7 +151,7 @@ import Foundation
     }
 }
 
-@objc class SwiftBlurFilter : SwiftComputeKernel {
+@objc class BlurFilter : ComputeKernel {
     
     var blurWeightTexture: MTLTexture!
     
@@ -211,7 +211,7 @@ import Foundation
 }
 
 
-@objc class SwiftSaturationFilter : SwiftComputeKernel {
+@objc class SaturationFilter : ComputeKernel {
 
     var uniformBuffer : MTLBuffer!
     
@@ -233,7 +233,7 @@ import Foundation
     }
 }
 
-@objc class SwiftSepiaFilter : SwiftComputeKernel {
+@objc class SepiaFilter : ComputeKernel {
     
     @objc convenience init(device: MTLDevice, library: MTLLibrary)
     {
@@ -241,7 +241,7 @@ import Foundation
     }
 }
 
-@objc class SwiftCrtFilter : SwiftComputeKernel {
+@objc class CrtFilter : ComputeKernel {
     
     @objc convenience init(device: MTLDevice, library: MTLLibrary)
     {
