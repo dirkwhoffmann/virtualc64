@@ -53,11 +53,6 @@
 		50271DEC1A7E458F00C04290 /* LEDnewGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DEB1A7E458F00C04290 /* LEDnewGreen.png */; };
 		50271DEE1A7E459800C04290 /* LEDnewGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 50271DED1A7E459800C04290 /* LEDnewGray.png */; };
 		50287EEB0A7CA86900292533 /* stepOut32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50287EEA0A7CA86900292533 /* stepOut32.png */; };
-		502D44D11BD38EEA00950088 /* ComputeKernel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D01BD38EEA00950088 /* ComputeKernel.mm */; };
-		502D44D31BD3A29000950088 /* BlurFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D21BD3A29000950088 /* BlurFilter.mm */; };
-		502D44D71BD3A68500950088 /* SaturationFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D61BD3A68500950088 /* SaturationFilter.mm */; };
-		502D44D91BD3BE7C00950088 /* SepiaFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44D81BD3BE7C00950088 /* SepiaFilter.mm */; };
-		502D44DF1BD3CF7600950088 /* CrtFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 502D44DE1BD3CF7600950088 /* CrtFilter.mm */; };
 		502F57F21B93441400D1077E /* LEDgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F11B93441400D1077E /* LEDgreen.png */; };
 		502F57F41B93441A00D1077E /* LEDred.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F31B93441A00D1077E /* LEDred.png */; };
 		502F57F61B93442100D1077E /* LEDgray.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F51B93442100D1077E /* LEDgray.png */; };
@@ -106,7 +101,6 @@
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6E912E06DB700378033 /* MyControllerToolbar.mm */; };
 		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
-		5089F0551BD3F64200306F4D /* BypassFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5089F0541BD3F64200306F4D /* BypassFilter.mm */; };
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
@@ -183,8 +177,6 @@
 		50DA14A30A6418470022B4A7 /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DA14A20A6418470022B4A7 /* bottom.png */; };
 		50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */; };
 		50DB328B1B948489000FB839 /* kext.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB328A1B948489000FB839 /* kext.png */; };
-		50DEAD892008BD4F008A8761 /* EPXUpscaler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD882008BD4F008A8761 /* EPXUpscaler.mm */; };
-		50DEAD8C2008C6B5008A8761 /* BypassUpscaler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8B2008C6B5008A8761 /* BypassUpscaler.mm */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
 		50E033BB12E3868100ABF9E3 /* IconP00.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50E033BA12E3868100ABF9E3 /* IconP00.icns */; };
 		50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E4BFA60C3CE95400CB6B43 /* floppy.png */; };
@@ -317,16 +309,6 @@
 		50271DEB1A7E458F00C04290 /* LEDnewGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGreen.png; sourceTree = "<group>"; };
 		50271DED1A7E459800C04290 /* LEDnewGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDnewGray.png; sourceTree = "<group>"; };
 		50287EEA0A7CA86900292533 /* stepOut32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOut32.png; sourceTree = "<group>"; };
-		502D44CF1BD38ED800950088 /* ComputeKernel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComputeKernel.h; sourceTree = "<group>"; };
-		502D44D01BD38EEA00950088 /* ComputeKernel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ComputeKernel.mm; sourceTree = "<group>"; };
-		502D44D21BD3A29000950088 /* BlurFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlurFilter.mm; sourceTree = "<group>"; };
-		502D44D41BD3A2A100950088 /* BlurFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlurFilter.h; sourceTree = "<group>"; };
-		502D44D51BD3A67200950088 /* SaturationFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SaturationFilter.h; sourceTree = "<group>"; };
-		502D44D61BD3A68500950088 /* SaturationFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SaturationFilter.mm; sourceTree = "<group>"; };
-		502D44D81BD3BE7C00950088 /* SepiaFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SepiaFilter.mm; sourceTree = "<group>"; };
-		502D44DA1BD3BE8800950088 /* SepiaFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SepiaFilter.h; sourceTree = "<group>"; };
-		502D44DD1BD3CF6B00950088 /* CrtFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrtFilter.h; sourceTree = "<group>"; };
-		502D44DE1BD3CF7600950088 /* CrtFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrtFilter.mm; sourceTree = "<group>"; };
 		502F57F11B93441400D1077E /* LEDgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgreen.png; sourceTree = "<group>"; };
 		502F57F31B93441A00D1077E /* LEDred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDred.png; sourceTree = "<group>"; };
 		502F57F51B93442100D1077E /* LEDgray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDgray.png; sourceTree = "<group>"; };
@@ -391,8 +373,6 @@
 		5088A6E912E06DB700378033 /* MyControllerToolbar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerToolbar.mm; sourceTree = "<group>"; };
 		5088E6861C3515DB006A80E5 /* VC64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC64Object.cpp; sourceTree = "<group>"; };
 		5088E6871C3515DB006A80E5 /* VC64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC64Object.h; sourceTree = "<group>"; };
-		5089F0531BD3F62800306F4D /* BypassFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BypassFilter.h; sourceTree = "<group>"; };
-		5089F0541BD3F64200306F4D /* BypassFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BypassFilter.mm; sourceTree = "<group>"; };
 		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rom.png; sourceTree = "<group>"; };
 		509AEA0A0C324AB0001FC9FD /* PRGArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGArchive.h; sourceTree = "<group>"; };
 		509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGArchive.cpp; sourceTree = "<group>"; };
@@ -494,10 +474,6 @@
 		50DAD6900A736F9B00BB44AC /* VirtualComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualComponent.h; sourceTree = "<group>"; };
 		50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualComponent.cpp; sourceTree = "<group>"; };
 		50DB328A1B948489000FB839 /* kext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kext.png; sourceTree = "<group>"; };
-		50DEAD882008BD4F008A8761 /* EPXUpscaler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EPXUpscaler.mm; sourceTree = "<group>"; };
-		50DEAD8A2008BD6E008A8761 /* EPXUpscaler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPXUpscaler.h; sourceTree = "<group>"; };
-		50DEAD8B2008C6B5008A8761 /* BypassUpscaler.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BypassUpscaler.mm; sourceTree = "<group>"; };
-		50DEAD8D2008C6CC008A8761 /* BypassUpscaler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BypassUpscaler.h; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50E033BA12E3868100ABF9E3 /* IconP00.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconP00.icns; sourceTree = "<group>"; };
 		50E4BFA60C3CE95400CB6B43 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
@@ -1002,10 +978,6 @@
 		50C72DE71BC7F50D00F1863B /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				502D44CF1BD38ED800950088 /* ComputeKernel.h */,
-				502D44D01BD38EEA00950088 /* ComputeKernel.mm */,
-				50DEAD872008BA9A008A8761 /* Upscalers */,
-				50DEAD862008BA8C008A8761 /* Filters */,
 				50DEAD8E2008E615008A8761 /* Shaders.swift */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 			);
@@ -1087,34 +1059,6 @@
 				50E033BA12E3868100ABF9E3 /* IconP00.icns */,
 			);
 			name = Icons;
-			sourceTree = "<group>";
-		};
-		50DEAD862008BA8C008A8761 /* Filters */ = {
-			isa = PBXGroup;
-			children = (
-				5089F0531BD3F62800306F4D /* BypassFilter.h */,
-				5089F0541BD3F64200306F4D /* BypassFilter.mm */,
-				502D44D41BD3A2A100950088 /* BlurFilter.h */,
-				502D44D21BD3A29000950088 /* BlurFilter.mm */,
-				502D44D51BD3A67200950088 /* SaturationFilter.h */,
-				502D44D61BD3A68500950088 /* SaturationFilter.mm */,
-				502D44DA1BD3BE8800950088 /* SepiaFilter.h */,
-				502D44D81BD3BE7C00950088 /* SepiaFilter.mm */,
-				502D44DD1BD3CF6B00950088 /* CrtFilter.h */,
-				502D44DE1BD3CF7600950088 /* CrtFilter.mm */,
-			);
-			name = Filters;
-			sourceTree = "<group>";
-		};
-		50DEAD872008BA9A008A8761 /* Upscalers */ = {
-			isa = PBXGroup;
-			children = (
-				50DEAD8A2008BD6E008A8761 /* EPXUpscaler.h */,
-				50DEAD882008BD4F008A8761 /* EPXUpscaler.mm */,
-				50DEAD8D2008C6CC008A8761 /* BypassUpscaler.h */,
-				50DEAD8B2008C6B5008A8761 /* BypassUpscaler.mm */,
-			);
-			name = Upscalers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1291,13 +1235,9 @@
 				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */,
 				5042312C1BD371FF00B3DEF9 /* MyMetalViewResponder.mm in Sources */,
-				5089F0551BD3F64200306F4D /* BypassFilter.mm in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
-				502D44D71BD3A68500950088 /* SaturationFilter.mm in Sources */,
-				502D44D11BD38EEA00950088 /* ComputeKernel.mm in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,
-				502D44D91BD3BE7C00950088 /* SepiaFilter.mm in Sources */,
 				5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */,
 				50CA0D520A9076FD00A5A08D /* OldSID.cpp in Sources */,
 				020214270AF8E599008AB4EB /* SIDVoice.cpp in Sources */,
@@ -1307,7 +1247,6 @@
 				50D500520C2ED13F0022CA3A /* T64Archive.cpp in Sources */,
 				50A52A190C2FD43700A1377F /* D64Archive.cpp in Sources */,
 				509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */,
-				50DEAD8C2008C6B5008A8761 /* BypassUpscaler.mm in Sources */,
 				509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */,
@@ -1329,14 +1268,12 @@
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
-				502D44DF1BD3CF7600950088 /* CrtFilter.mm in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				50032EB21BC919D90050BEEA /* MyMetalView.mm in Sources */,
 				50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */,
 				5000471212DCE8890098D890 /* MyControllerCpuPanel.mm in Sources */,
 				5000472812DCE9AB0098D890 /* MyControllerMemoryPanel.mm in Sources */,
 				5000473412DCEA6B0098D890 /* MyControllerCiaPanel.mm in Sources */,
-				50DEAD892008BD4F008A8761 /* EPXUpscaler.mm in Sources */,
 				50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */,
 				5000474C12DCEE500098D890 /* MyControllerMenu.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */,
@@ -1356,7 +1293,6 @@
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
-				502D44D31BD3A29000950088 /* BlurFilter.mm in Sources */,
 				50D1417E1417A34B0024FC74 /* envelope.cc in Sources */,
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,
 				50D141801417A34B0024FC74 /* filter.cc in Sources */,

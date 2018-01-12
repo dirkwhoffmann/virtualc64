@@ -19,15 +19,6 @@
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 
-#import "BypassUpscaler.h"
-#import "EPXUpscaler.h"
-
-#import "BypassFilter.h"
-#import "BlurFilter.h"
-#import "SaturationFilter.h"
-#import "SepiaFilter.h"
-#import "CrtFilter.h"
-
 // Forward declaration
 @class MyController;
 

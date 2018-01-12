@@ -30,9 +30,6 @@
     // All currently supported texture upscalers
     SwiftComputeKernel *swiftbypassUpscaler;
     SwiftComputeKernel *swiftepxUpscaler;
-
-    ComputeKernel *bypassUpscaler;
-    ComputeKernel *epxUpscaler;
     
     // All currently supported texture filters
     SwiftComputeKernel *swiftbypassFilter;
@@ -42,15 +39,6 @@
     SwiftComputeKernel *swiftsepiaFilter;
     SwiftComputeKernel *swiftgrayscaleFilter;
     SwiftComputeKernel *swiftcrtFilter;
-    
-    ComputeKernel *bypassFilter;
-    ComputeKernel *smoothFilter;
-    ComputeKernel *blurFilter;
-    ComputeKernel *saturationFilter;
-    ComputeKernel *sepiaFilter;
-    ComputeKernel *grayscaleFilter;
-    ComputeKernel *crtFilter;
-    
     
     // Matrices
     /*
@@ -144,16 +132,15 @@
     depthTexture = nil;
     
     swiftbypassUpscaler = NULL;
-    bypassUpscaler = NULL;
-    epxUpscaler = NULL;
+    swiftepxUpscaler = NULL;
 
-    bypassFilter = NULL;
-    smoothFilter = NULL;
-    blurFilter = NULL;
-    saturationFilter = NULL;
-    sepiaFilter = NULL;
-    grayscaleFilter = NULL;
-    crtFilter = NULL;
+    swiftbypassFilter = NULL;
+    swiftsmoothFilter = NULL;
+    swiftblurFilter = NULL;
+    swiftsaturationFilter = NULL;
+    swiftsepiaFilter = NULL;
+    swiftgrayscaleFilter = NULL;
+    swiftcrtFilter = NULL;
     
     // Check if machine is capable to run the Metal graphics interface
     if (!MTLCreateSystemDefaultDevice()) {
@@ -179,9 +166,6 @@
     swiftbypassUpscaler = [[SwiftBypassUpscaler alloc] initWithDevice:device library:library];
     swiftepxUpscaler = [[SwiftEPXUpscaler alloc] initWithDevice:device library:library];
 
-    bypassUpscaler = [BypassUpscaler forDevice:device fromLibrary:library];
-    epxUpscaler = [EPXUpscaler forDevice:device fromLibrary:library];
-    
     // Build filters
     swiftbypassFilter = [[SwiftBypassFilter alloc] initWithDevice:device library:library];
     swiftsmoothFilter = [[SwiftSaturationFilter alloc] initWithDevice:device library:library factor:1.0];
@@ -190,14 +174,6 @@
     swiftsepiaFilter = [[SwiftSepiaFilter alloc] initWithDevice:device library:library];
     swiftcrtFilter = [[SwiftCrtFilter alloc] initWithDevice:device library:library];
     swiftgrayscaleFilter = [[SwiftSaturationFilter alloc] initWithDevice:device library:library factor:0.0];
-    
-    bypassFilter = [BypassFilter forDevice:device fromLibrary:library];
-    smoothFilter = [SaturationFilter withFactor:1.0 forDevice:device fromLibrary:library];
-    blurFilter = [BlurFilter withRadius:2 forDevice:device fromLibrary:library];
-    saturationFilter = [SaturationFilter withFactor:0.5 forDevice:device fromLibrary:library];
-    sepiaFilter = [SepiaFilter forDevice:device fromLibrary:library];
-    crtFilter = [CrtFilter forDevice:device fromLibrary:library];
-    grayscaleFilter = [SaturationFilter withFactor:0.0 forDevice:device fromLibrary:library];
 }
 
 - (void) dealloc
@@ -366,18 +342,6 @@
     }
 }
 
-- (ComputeKernel *)currentUpscaler
-{
-    switch (videoUpscaler) {
-        
-        case TEX_UPSCALER_EPX:
-            return epxUpscaler;
-        
-        default:
-            return bypassUpscaler;
-    }
-}
-
 - (SwiftComputeKernel *)currentSwiftUpscaler
 {
     switch (videoUpscaler) {
@@ -387,35 +351,6 @@
         
         default:
         return swiftbypassUpscaler;
-    }
-}
-
-- (ComputeKernel *)currentFilter
-{
-    switch (videoFilter) {
-        case TEX_FILTER_NONE:
-            return bypassFilter;
-            
-        case TEX_FILTER_SMOOTH:
-            return smoothFilter;
-            
-        case TEX_FILTER_BLUR:
-            return blurFilter;
-            
-        case TEX_FILTER_SATURATION:
-            return saturationFilter;
-            
-        case TEX_FILTER_GRAYSCALE:
-            return grayscaleFilter;
-            
-        case TEX_FILTER_SEPIA:
-            return sepiaFilter;
-            
-        case TEX_FILTER_CRT:
-            return crtFilter;
-            
-        default:
-            return smoothFilter;
     }
 }
 
@@ -469,14 +404,10 @@
     NSAssert(_commandBuffer != nil, @"Metal command buffer must not be nil");
 
     // Upscale C64 texture
-    // ComputeKernel *upscaler = [self currentUpscaler];
-    // [upscaler apply:_commandBuffer in:emulatorTexture out:upscaledTexture];
     SwiftComputeKernel *upscaler = [self currentSwiftUpscaler];
     [upscaler applyWithCommandBuffer:_commandBuffer source:emulatorTexture target:upscaledTexture];
     
     // Post-process C64 texture
-    // ComputeKernel *filter = [self currentFilter];
-    // [filter apply:_commandBuffer in:upscaledTexture out:filteredTexture];
     SwiftComputeKernel *filter = [self currentSwiftFilter];
     assert (filter != NULL);
     [filter applyWithCommandBuffer:_commandBuffer source:upscaledTexture target:filteredTexture];
