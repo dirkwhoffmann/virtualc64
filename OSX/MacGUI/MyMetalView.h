@@ -18,6 +18,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
+
+#import "BypassUpscaler.h"
+#import "EPXUpscaler.h"
+
 #import "BypassFilter.h"
 #import "BlurFilter.h"
 #import "SaturationFilter.h"
@@ -36,6 +40,12 @@ const int C64_TEXTURE_DEPTH = 4;
 const int BG_TEXTURE_WIDTH = 1024;
 const int BG_TEXTURE_HEIGHT= 512;
 const int BG_TEXTURE_DEPTH = 4;
+
+// Post-processing filters
+enum TextureUpscalerType {
+    TEX_UPSCALER_NONE = 1,
+    TEX_UPSCALER_EPX,
+};
 
 // Post-processing filters
 enum TextureFilterType {
@@ -81,21 +91,47 @@ typedef unsigned long MacKeyFingerprint;
     id <MTLBuffer> uniformBuffer3D;
     id <MTLBuffer> uniformBufferBg;
 
+    //
     // Textures
-    id <MTLTexture> bgTexture; // background image
-    id <MTLTexture> textureFromEmulator; // plain C64 screen (as provided by the emulator)
-    id <MTLTexture> filteredTexture; // post-processes C64 screen
-    id <MTLTexture> framebufferTexture; // drawing target (GPU buffer)
-    id <MTLTexture> depthTexture; // depth buffering
+    //
+    
+    //! Background image behind the cube
+    id <MTLTexture> bgTexture;
+    
+    //! Raw texture data provided by the emulator
+    /*! Texture is updated in updateTexture which is called periodically in drawRect */
+    id <MTLTexture> emulatorTexture;
+    
+    //! Upscaled emulator texture
+    /*! In the first post-processing stage, the emulator texture is doubled in size.
+     *  The user can choose between simply doubling pixels are applying a smoothing
+     *   algorithm such as EPX */
+    id <MTLTexture> upscaledTexture;
+    
+    //! Filteres emulator texture
+    /*! In the second post-processing stage, the upscaled texture gets filtered.
+     *  E.g., a CRT filter can be applied to mimic old CRT displays.
+     */
+    id <MTLTexture> filteredTexture;
+    
+    //! Final drawing target (GPU buffer)
+    id <MTLTexture> framebufferTexture;
+    
+    //! Texture to hold the pixel depth information
+    id <MTLTexture> depthTexture;
 
-    // Post-processing filters
-    TextureFilter *bypassFilter;
-    TextureFilter *smoothFilter;
-    TextureFilter *blurFilter;
-    TextureFilter *saturationFilter;
-    TextureFilter *sepiaFilter;
-    TextureFilter *grayscaleFilter;
-    TextureFilter *crtFilter;
+    // All currently supported texture upscalers
+    ComputeKernel *bypassUpscaler;
+    ComputeKernel *epxUpscaler;
+        
+    // All currently supported texture filters
+    ComputeKernel *bypassFilter;
+    ComputeKernel *smoothFilter;
+    ComputeKernel *blurFilter;
+    ComputeKernel *saturationFilter;
+    ComputeKernel *sepiaFilter;
+    ComputeKernel *grayscaleFilter;
+    ComputeKernel *crtFilter;
 
     // Animation parameters
     float currentXAngle, targetXAngle, deltaXAngle;
@@ -111,6 +147,9 @@ typedef unsigned long MacKeyFingerprint;
     float textureXEnd;
     float textureYStart;
     float textureYEnd;
+ 
+    // Currently selected upscaler
+    long videoUpscaler;
     
     // Currently selected filters
     long videoFilter;
@@ -145,6 +184,7 @@ typedef unsigned long MacKeyFingerprint;
 
 #pragma mark Configuring
 
+@property long videoUpscaler;
 @property long videoFilter;
 @property bool enableMetal;
 @property bool fullscreen;

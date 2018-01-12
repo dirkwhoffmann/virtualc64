@@ -1,17 +1,18 @@
 //
-//  SepiaFilter.h
+//  EPXUpscaler.h
 //  V64
 //
-//  Created by Dirk Hoffmann on 18.10.15.
+//  Created by Dirk Hoffmann on 12.1.18.
 //
 //
 
 #import "ComputeKernel.h"
 
-@interface SepiaFilter : ComputeKernel
+@interface EPXUpscaler : ComputeKernel
 {
 }
 
 + (instancetype) forDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib;
 
 @end
+

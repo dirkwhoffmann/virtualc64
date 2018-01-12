@@ -10,7 +10,7 @@
 - (NSImage *)screenshot
 {
     NSLog(@"MyMetalViewHelper::screenshot");
-    NSImage *image = [MyMetalView imageFromTexture:textureFromEmulator
+    NSImage *image = [MyMetalView imageFromTexture:emulatorTexture
                                                 x1:textureXStart
                                                 y1:textureYStart
                                                 x2:textureXEnd

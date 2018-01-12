@@ -10,12 +10,12 @@
 
 @implementation SaturationFilter
 
-+ (instancetype)filterWithFactor:(float)sat device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib
++ (instancetype) withFactor:(float)sat forDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib
 {
-    return [[self alloc] initWithFactor:sat device:dev library:lib];
+    return [[self alloc] initWithFactor:sat forDevice:dev fromLibrary:lib];
 }
 
-- (instancetype)initWithFactor:(float)sat device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib
+- (instancetype)initWithFactor:(float)sat forDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib
 {
     if (!(self = [super initWithFunctionName:@"saturation" device:dev library:lib]))
         return nil;

@@ -10,12 +10,12 @@
 
 @implementation BlurFilter
 
-+ (instancetype)filterWithRadius:(float)radius device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib
++ (instancetype) withRadius:(float)radius forDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib
 {
-    return [[self alloc] initWithRadius:radius device:dev library:lib];
+    return [[self alloc] initWithRadius:radius forDevice:dev fromLibrary:lib];
 }
 
-- (instancetype)initWithRadius:(float)radius device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib
+- (instancetype) initWithRadius:(float)radius forDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib
 {
     if (!(self = [super initWithFunctionName:@"blur" device:dev library:lib]))
         return nil;

@@ -6,15 +6,15 @@
 //
 //
 
-#import "TextureFilter.h"
+#import "ComputeKernel.h"
 
 
-@interface BlurFilter : TextureFilter
+@interface BlurFilter : ComputeKernel
 {
     id<MTLTexture> blurWeightTexture;
 }
 
-+ (instancetype)filterWithRadius:(float)radius device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib;
++ (instancetype) withRadius:(float)radius forDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib;
 
 @end
 

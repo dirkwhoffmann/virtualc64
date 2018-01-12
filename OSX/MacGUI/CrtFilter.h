@@ -6,12 +6,12 @@
 //
 //
 
-#import "TextureFilter.h"
+#import "ComputeKernel.h"
 
-@interface CrtFilter : TextureFilter
+@interface CrtFilter : ComputeKernel
 {
 }
 
-+ (instancetype)filterWithDevice:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib;
++ (instancetype) forDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib;
 
 @end

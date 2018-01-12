@@ -6,18 +6,18 @@
 //
 //
 
-#import "TextureFilter.h"
+#import "ComputeKernel.h"
 
 struct SaturationFilterUniforms
 {
     float saturationFactor;
 };
 
-@interface SaturationFilter : TextureFilter
+@interface SaturationFilter : ComputeKernel
 {
     float saturation;
 }
 
-+ (instancetype)filterWithFactor:(float)sat device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib;
++ (instancetype) withFactor:(float)sat forDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib;
 
 @end

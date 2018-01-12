@@ -1,5 +1,5 @@
 //
-//  TextureFilter.m
+//  ComputeKernel.mm
 //  V64
 //
 //  Created by Dirk Hoffmann on 18.10.15.
@@ -7,17 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TextureFilter.h"
+#import "ComputeKernel.h"
 
-@implementation TextureFilter
+@implementation ComputeKernel
 
 @synthesize sampler;
 
-- (instancetype)initWithFunctionName:(NSString *)name device:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib
+- (instancetype)initWithFunctionName:(NSString *)name
+                              device:(id <MTLDevice>)dev
+                             library:(id <MTLLibrary>)lib
 {
     NSError *error = nil;
     
-    // Get kernel function from library
+    // Lookup kernel function in library
     id <MTLFunction> function = [lib newFunctionWithName:name];
     if (!function) {
         NSLog(@"ERROR: Cannot find kernel function %@ in library", name);
@@ -41,7 +43,7 @@
     // Set the kernel's thread count
     threadgroupCount = MTLSizeMake(threadCountX, threadCountY, 1);
     
-    // Build texture sampler
+    // Build default texture sampler
     MTLSamplerDescriptor *samplerDescriptor = [MTLSamplerDescriptor new];
     {
         samplerDescriptor.minFilter = MTLSamplerMinMagFilterLinear;

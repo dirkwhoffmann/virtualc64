@@ -1,14 +1,13 @@
 //
-//  SepiaFilter.h
+//  BypassUpscaler.h
 //  V64
 //
-//  Created by Dirk Hoffmann on 18.10.15.
-//
+//  Created by Dirk Hoffmann on 12.01.18.
 //
 
 #import "ComputeKernel.h"
 
-@interface SepiaFilter : ComputeKernel
+@interface BypassUpscaler : ComputeKernel
 {
 }
 

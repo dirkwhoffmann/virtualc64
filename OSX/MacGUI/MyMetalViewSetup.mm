@@ -80,15 +80,26 @@
     if (!bgTexture)
         bgTexture = [self defaultBackgroundTexture];
 
-    // C64 screen (raw emulator data)
+    // C64 texture (as provided by the emulator)
     MTLTextureDescriptor *textureDescriptor =
     [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
                                                        width:512
                                                       height:512
                                                    mipmapped:NO];
-    textureFromEmulator = [device newTextureWithDescriptor:textureDescriptor];
-    NSAssert(textureFromEmulator != nil, @"Failed to create texture");
-    if (textureFromEmulator == nil) { exit(0); }
+    emulatorTexture = [device newTextureWithDescriptor:textureDescriptor];
+    NSAssert(emulatorTexture != nil, @"Failed to create emulator texture");
+    if (emulatorTexture == nil) { exit(0); }
+ 
+    // Upscaled C64 texture
+    MTLTextureDescriptor *textureDescriptorUpscaled =
+    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
+                                                       width:1024
+                                                      height:1024
+                                                   mipmapped:NO];
+    textureDescriptorUpscaled.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
+    upscaledTexture = [device newTextureWithDescriptor:textureDescriptorUpscaled];
+    NSAssert(upscaledTexture != nil, @"Failed to create upscaling texture");
+    if (upscaledTexture == nil) { exit(0); }
     
     // C64 screen (post-processed)
     MTLTextureDescriptor *textureDescriptorPP =
@@ -98,21 +109,26 @@
                                                    mipmapped:NO];
     textureDescriptorPP.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
     filteredTexture = [device newTextureWithDescriptor:textureDescriptorPP];
-    NSAssert(filteredTexture != nil, @"Failed to create post-processing texture");
+    NSAssert(filteredTexture != nil, @"Failed to create filtering texture");
     if (filteredTexture == nil) { exit(0); }
 }
 
 - (void)buildKernels
 {
     NSLog(@"MyMetalView::buildKernels");
-    
-    bypassFilter = [BypassFilter filterWithDevice:device library:library];
-    smoothFilter = [SaturationFilter filterWithFactor:1.0 device:device library:library];
-    blurFilter = [BlurFilter filterWithRadius:2 device:device library:library];
-    saturationFilter = [SaturationFilter filterWithFactor:0.5 device:device library:library];
-    sepiaFilter = [SepiaFilter filterWithDevice:device library:library];
-    crtFilter = [CrtFilter filterWithDevice:device library:library];
-    grayscaleFilter = [SaturationFilter filterWithFactor:0.0 device:device library:library];
+
+    // Build upscalers
+    bypassUpscaler = [BypassUpscaler forDevice:device fromLibrary:library];
+    epxUpscaler = [EPXUpscaler forDevice:device fromLibrary:library];
+
+    // Build filters
+    bypassFilter = [BypassFilter forDevice:device fromLibrary:library];
+    smoothFilter = [SaturationFilter withFactor:1.0 forDevice:device fromLibrary:library];
+    blurFilter = [BlurFilter withRadius:2 forDevice:device fromLibrary:library];
+    saturationFilter = [SaturationFilter withFactor:0.5 forDevice:device fromLibrary:library];
+    sepiaFilter = [SepiaFilter forDevice:device fromLibrary:library];
+    crtFilter = [CrtFilter forDevice:device fromLibrary:library];
+    grayscaleFilter = [SaturationFilter withFactor:0.0 forDevice:device fromLibrary:library];
 }
 
 - (void)buildBuffers

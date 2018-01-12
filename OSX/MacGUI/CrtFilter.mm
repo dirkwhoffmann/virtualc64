@@ -10,12 +10,12 @@
 
 @implementation CrtFilter
 
-+ (instancetype)filterWithDevice:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib
++ (instancetype) forDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib
 {
-    return [[self alloc] initWithDevice:dev library:lib];
+    return [[self alloc] initWithDevice:dev fromLibrary:lib];
 }
 
-- (instancetype)initWithDevice:(id <MTLDevice>)dev library:(id <MTLLibrary>)lib
+- (instancetype) initWithDevice:(id <MTLDevice>)dev fromLibrary:(id <MTLLibrary>)lib
 {
     if (!(self = [super initWithFunctionName:@"crt" device:dev library:lib]))
         return nil;

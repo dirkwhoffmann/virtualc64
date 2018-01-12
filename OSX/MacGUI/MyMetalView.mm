@@ -40,6 +40,7 @@
 //                                           Properties
 // -----------------------------------------------------------------------------------------------
 
+@synthesize videoUpscaler;
 @synthesize videoFilter;
 @synthesize enableMetal;
 @synthesize fullscreen;
@@ -110,11 +111,15 @@
     uniformBufferBg = nil;
     
     bgTexture = nil;
-    textureFromEmulator = nil;
+    emulatorTexture = nil;
+    upscaledTexture = nil;
     filteredTexture = nil;
     framebufferTexture = nil;
     depthTexture = nil;
     
+    bypassUpscaler = NULL;
+    epxUpscaler = NULL;
+
     bypassFilter = NULL;
     smoothFilter = NULL;
     blurFilter = NULL;
@@ -196,7 +201,7 @@
         return;
     }
     
-    void *buf = [[c64proxy vic] screenBuffer]; //    c64->vic.screenBuffer();
+    void *buf = [[c64proxy vic] screenBuffer];
     assert(buf != NULL);
 
     NSUInteger pixelSize = 4;
@@ -205,9 +210,9 @@
     NSUInteger rowBytes = width * pixelSize;
     NSUInteger imageBytes = rowBytes * height;
     
-    [textureFromEmulator replaceRegion:MTLRegionMake2D(0,0,width,height)
-                           mipmapLevel:0 slice:0 withBytes:buf
-                           bytesPerRow:rowBytes bytesPerImage:imageBytes];
+    [emulatorTexture replaceRegion:MTLRegionMake2D(0,0,width,height)
+                       mipmapLevel:0 slice:0 withBytes:buf
+                       bytesPerRow:rowBytes bytesPerImage:imageBytes];
 }
 
 - (void)setFrame:(CGRect)frame
@@ -310,7 +315,19 @@
     }
 }
 
-- (TextureFilter *)currentFilter
+- (ComputeKernel *)currentUpscaler
+{
+    switch (videoUpscaler) {
+        
+        case TEX_UPSCALER_EPX:
+            return epxUpscaler;
+        
+        default:
+            return bypassUpscaler;
+    }
+}
+
+- (ComputeKernel *)currentFilter
 {
     switch (videoFilter) {
         case TEX_FILTER_NONE:
@@ -359,9 +376,13 @@
     _commandBuffer = [queue commandBuffer];
     NSAssert(_commandBuffer != nil, @"Metal command buffer must not be nil");
 
+    // Upscale C64 texture
+    ComputeKernel *upscaler = bypassUpscaler; // [self currentUpscaler];
+    [upscaler apply:_commandBuffer in:emulatorTexture out:upscaledTexture];
+    
     // Post-process C64 texture
-    TextureFilter *filter = [self currentFilter];
-    [filter apply:_commandBuffer in:textureFromEmulator out:filteredTexture];
+    ComputeKernel *filter = [self currentFilter];
+    [filter apply:_commandBuffer in:upscaledTexture out:filteredTexture];
     
     // Create render pass
     MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
