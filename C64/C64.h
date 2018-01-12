@@ -18,10 +18,10 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// NEXT RELEASE: 1.5.3
+// NEXT RELEASE: 1.6
 //
-// VirtualC64 passes VICE test VICII/phi1timing.
-// Sprite X expansion register is now updated after pixel 6 and not after pixel 8 as it was before.
+// GPU post-processing has been redesigned and split into two phases. The emulator texture is upscaled in the first phase and filtered in the second. This allows, e.g., to combine an upscaling algorithm such as EXP with a CRT filter which is applied afterwards.
+// VIC-II compatibility has improved (Thanks, Fabio!)
 // VICE color palette has been updated and made the default palette.
 //
 // TODO:

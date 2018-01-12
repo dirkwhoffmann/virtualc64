@@ -102,10 +102,10 @@ kernel void epxupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
         half4 r3 = (all(A == B) && any(A != C) && any(B != D)) ? C : P;
         half4 r4 = (all(B == D) && any(B != A) && any(D != C)) ? D : P;
         
-        outTexture.write(r1, uint2(gid.x, gid.y));
-        outTexture.write(r2, uint2(gid.x + 1, gid.y));
-        outTexture.write(r3, uint2(gid.x, gid.y + 1));
-        outTexture.write(r4, uint2(gid.x + 1, gid.y + 1));
+        outTexture.write(r1, uint2(gid.x - 1, gid.y - 1));
+        outTexture.write(r2, uint2(gid.x, gid.y - 1));
+        outTexture.write(r3, uint2(gid.x - 1, gid.y));
+        outTexture.write(r4, uint2(gid.x, gid.y));
     }
 }
 
