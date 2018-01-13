@@ -20,6 +20,9 @@ import Foundation
     var threadgroupSize : MTLSize
     var threadgroupCount : MTLSize
 
+    var samplerLinear : MTLSamplerState!
+    var samplerNearest : MTLSamplerState!
+
     override init()
     {
         // Set thread group size of 16x16
@@ -55,14 +58,25 @@ import Foundation
             abort()
         }
         
-        // Build default texture sampler
-        let samplerDescriptor = MTLSamplerDescriptor()
-        samplerDescriptor.minFilter = MTLSamplerMinMagFilter.linear
-        samplerDescriptor.magFilter = MTLSamplerMinMagFilter.linear
-        samplerDescriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
-        sampler = device.makeSamplerState(descriptor: samplerDescriptor)!
+        // Build texture samplers
+        let samplerDescriptor1 = MTLSamplerDescriptor()
+        samplerDescriptor1.minFilter = MTLSamplerMinMagFilter.linear
+        samplerDescriptor1.magFilter = MTLSamplerMinMagFilter.linear
+        samplerDescriptor1.sAddressMode = MTLSamplerAddressMode.clampToEdge
+        samplerDescriptor1.tAddressMode = MTLSamplerAddressMode.clampToEdge
+        samplerDescriptor1.mipFilter = MTLSamplerMipFilter.notMipmapped
+        samplerLinear = device.makeSamplerState(descriptor: samplerDescriptor1)
+        
+        let samplerDescriptor2 = MTLSamplerDescriptor()
+        samplerDescriptor2.minFilter = MTLSamplerMinMagFilter.nearest
+        samplerDescriptor2.magFilter = MTLSamplerMinMagFilter.nearest
+        samplerDescriptor2.sAddressMode = MTLSamplerAddressMode.clampToEdge
+        samplerDescriptor2.tAddressMode = MTLSamplerAddressMode.clampToEdge
+        samplerDescriptor2.mipFilter = MTLSamplerMipFilter.notMipmapped
+        samplerNearest = device.makeSamplerState(descriptor: samplerDescriptor2)
+        
+        // Set default sampler
+        sampler = samplerLinear
     }
     
     @objc func getsampler() -> MTLSamplerState
@@ -101,13 +115,7 @@ import Foundation
         self.init(name: "bypassupscaler", device: device, library: library)
         
         // Replace default texture sampler
-        let samplerDescriptor = MTLSamplerDescriptor()
-        samplerDescriptor.minFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor.magFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
-        sampler = device.makeSamplerState(descriptor: samplerDescriptor)!
+        sampler = samplerNearest
     }
 }
 
@@ -118,13 +126,7 @@ import Foundation
         self.init(name: "epxupscaler", device: device, library: library)
         
         // Replace default texture sampler
-        let samplerDescriptor = MTLSamplerDescriptor()
-        samplerDescriptor.minFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor.magFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
-        sampler = device.makeSamplerState(descriptor: samplerDescriptor)!
+          sampler = samplerNearest
     }
 }
 
@@ -135,13 +137,7 @@ import Foundation
         self.init(name: "xbrupscaler", device: device, library: library)
         
         // Replace default texture sampler
-        let samplerDescriptor = MTLSamplerDescriptor()
-        samplerDescriptor.minFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor.magFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
-        sampler = device.makeSamplerState(descriptor: samplerDescriptor)!
+        sampler = samplerNearest
     }
 }
 
@@ -156,13 +152,7 @@ import Foundation
         self.init(name: "bypass", device: device, library: library)
 
         // Replace default texture sampler
-        let samplerDescriptor = MTLSamplerDescriptor()
-        samplerDescriptor.minFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor.magFilter = MTLSamplerMinMagFilter.nearest
-        samplerDescriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
-        samplerDescriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
-        sampler = device.makeSamplerState(descriptor: samplerDescriptor)!
+        sampler = samplerNearest
     }
 }
 
