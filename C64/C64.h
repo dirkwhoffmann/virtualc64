@@ -18,11 +18,15 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// NEXT RELEASE: 1.6
+// RELEASE NOTES FOR NEXT RELEASE: 1.6
 //
-// GPU post-processing has been redesigned and split into two phases. The emulator texture is upscaled in the first phase and filtered in the second. This allows, e.g., to combine an upscaling algorithm such as EXP with a CRT filter which is applied afterwards.
-// VIC-II compatibility has improved (Thanks, Fabio!)
-// VICE color palette has been updated and made the default palette.
+// 1. VirtualC64's texture post-processing has been redesigned and made more flexible.
+// In the emulator preference window, the user can
+// influece the visual output by combining a pixel upscaling algorithm with a texture filtering
+// algorithm. Both texture processing algorithms are run as seperate compute kernels on the GPU.
+// With EXP and xBR two common pixel uspscalers have been implemented.
+// 2. VIC-II compatibility has been improved by Fabio Ritrovato (Thanks, Fabio!)
+// 3. The VICE color palette has been updated with new RGB values. It is now the default palette.
 //
 // TODO:
 //
