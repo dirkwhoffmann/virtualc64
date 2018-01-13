@@ -61,7 +61,7 @@
     
     // Shader library
     library = [device newDefaultLibrary];
-    NSAssert(device != nil, @"Metal library must not be nil");
+    NSAssert(library != nil, @"Metal library must not be nil");
     
     // View parameters
     self.sampleCount = 1; // 4;

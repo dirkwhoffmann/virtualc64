@@ -99,7 +99,7 @@ typedef unsigned long MacKeyFingerprint;
      *   algorithm such as EPX */
     id <MTLTexture> upscaledTexture;
     
-    //! Filteres emulator texture
+    //! Filtered emulator texture
     /*! In the second post-processing stage, the upscaled texture gets filtered.
      *  E.g., a CRT filter can be applied to mimic old CRT displays.
      */
@@ -164,20 +164,6 @@ typedef unsigned long MacKeyFingerprint;
 
 //! Expand view vertically by the height of the status bar
 - (void)expand;
-
-#if 0
-//! Applies an upscaling kernel to a texture
-- (void)applyUpscaler:(TextureUpscalerType)type
-               cmdBuf:(id <MTLCommandBuffer>)cmdBuf
-               source:(id <MTLTexture>)source
-               target:(id <MTLTexture>)target;
-
-//! Applies a filtering kernel to a texture
-- (void)applyFilter:(TextureFilterType)type
-             cmdBuf:(id <MTLCommandBuffer>)cmdBuf
-             source:(id <MTLTexture>)source
-             target:(id <MTLTexture>)target;
-#endif
 
 - (void)buildKernels;
 - (void)reshapeWithFrame:(CGRect)frame;
