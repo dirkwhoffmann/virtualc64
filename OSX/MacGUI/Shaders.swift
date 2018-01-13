@@ -32,8 +32,8 @@ import Foundation
         threadgroupSize = MTLSizeMake(groupSizeX, groupSizeY, 1 /* depth */)
         
         // Calculate the compute kernel's width and height
-        let threadCountX = (1024 /* texture width */ + groupSizeX -  1) / groupSizeX
-        let threadCountY = (1024 /* texture height */ + groupSizeY - 1) / groupSizeY
+        let threadCountX = (2048 /* texture width */ + groupSizeX -  1) / groupSizeX
+        let threadCountY = (2048 /* texture height */ + groupSizeY - 1) / groupSizeY
         threadgroupCount = MTLSizeMake(threadCountX, threadCountY, 1)
         
         super.init()

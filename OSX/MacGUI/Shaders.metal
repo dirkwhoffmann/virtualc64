@@ -10,8 +10,11 @@
 using namespace metal;
 
 // Relevant region in post-processed C64 texture
-#define TEXTURE_CUTOUT_X_PP 856 // 428 * 2
-#define TEXTURE_CUTOUT_Y_PP 568 // 284 * 2
+//#define TEXTURE_CUTOUT_X_PP 856 // 428 * 2
+//#define TEXTURE_CUTOUT_Y_PP 568 // 284 * 2
+
+#define TEXTURE_CUTOUT_X_PP 1712 // 428 * 4
+#define TEXTURE_CUTOUT_Y_PP 1136 // 284 * 4
 
 // --------------------------------------------------------------------------------------------
 //                        Main vertex shader (for drawing the quad)
@@ -52,8 +55,8 @@ fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
                                 texture2d<float, access::sample> texture [[texture(0)]],
                                 sampler texSampler [[sampler(0)]])
 {
-    float4 diffuseColor = texture.sample(texSampler, vert.texCoords);
-    float4 color = diffuseColor;
+    float4 color = texture.sample(texSampler, vert.texCoords);
+    // float4 color = diffuseColor;
     return half4(color.r, color.g, color.b, vert.alpha);
 }
 
@@ -67,7 +70,10 @@ kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture
 {
     if((gid.x < TEXTURE_CUTOUT_X_PP) && (gid.y < TEXTURE_CUTOUT_Y_PP))
     {
-        half4 result = inTexture.read(uint2(gid.x / 2, gid.y / 2));
+        float rx = outTexture.get_width() / inTexture.get_width();
+        float ry = outTexture.get_height() / inTexture.get_height();
+
+        half4 result = inTexture.read(uint2(gid.x / rx, gid.y / ry));
         outTexture.write(result, gid);
     }
 }
@@ -80,7 +86,7 @@ kernel void epxupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
                         texture2d<half, access::write> outTexture  [[ texture(1) ]],
                         uint2                          gid         [[ thread_position_in_grid ]])
 {
-    if((gid.x % 2 == 0) || (gid.y % 2 == 0))
+    if((gid.x % 4 != 0) || (gid.y % 4 != 0))
         return;
     
     if((gid.x < TEXTURE_CUTOUT_X_PP - 1) && (gid.y < TEXTURE_CUTOUT_Y_PP - 1)) {
@@ -88,8 +94,8 @@ kernel void epxupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
         //   A    --\ 1 2
         // C P B  --/ 3 4
         //   D
-        half xx = gid.x / 2;
-        half yy = gid.y / 2;
+        half xx = gid.x / 4;
+        half yy = gid.y / 4;
         half4 A = inTexture.read(uint2(xx, yy - 1));
         half4 C = inTexture.read(uint2(xx - 1, yy));
         half4 P = inTexture.read(uint2(xx, yy));
@@ -105,11 +111,15 @@ kernel void epxupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
         half4 r2 = (all(A == B) && any(A != C) && any(B != D)) ? B : P;
         half4 r3 = (all(A == B) && any(A != C) && any(B != D)) ? C : P;
         half4 r4 = (all(B == D) && any(B != A) && any(D != C)) ? D : P;
-        
-        outTexture.write(r1, uint2(gid.x - 1, gid.y - 1));
-        outTexture.write(r2, uint2(gid.x, gid.y - 1));
-        outTexture.write(r3, uint2(gid.x - 1, gid.y));
-        outTexture.write(r4, uint2(gid.x, gid.y));
+
+        for (unsigned int x = gid.x; x < gid.x + 2; x++) {
+            for (unsigned int y = gid.y; y < gid.y + 2; y++) {
+                outTexture.write(r1, uint2(x - 0, y - 0));
+                outTexture.write(r2, uint2(x + 2, y - 0));
+                outTexture.write(r3, uint2(x - 0, y + 2));
+                outTexture.write(r4, uint2(x + 2, y + 2));
+            }
+        }
     }
 }
 
@@ -129,7 +139,7 @@ half4 weighted_distance(half4 a, half4 b, half4 c, half4 d,
 }
 
 //
-// xBR upscaler (2x)
+// xBR upscaler (4x)
 //
 // Code is based on what I've found at:
 // https://gamedev.stackexchange.com/questions/87275/how-do-i-perform-an-xbr-or-hqx-filter-in-xna
@@ -138,19 +148,19 @@ kernel void xbrupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
                         texture2d<half, access::write> outTexture  [[ texture(1) ]],
                         uint2                          gid         [[ thread_position_in_grid ]])
 {
-    if((gid.x < TEXTURE_CUTOUT_X_PP - 2) && (gid.y < TEXTURE_CUTOUT_Y_PP - 2)) {
-        
+//     if((gid.x < TEXTURE_CUTOUT_X_PP - 2) && (gid.y < TEXTURE_CUTOUT_Y_PP - 2)) {
+    if((gid.x < outTexture.get_width()) && (gid.y < outTexture.get_height())) {
         bool4 edr, edr_left, edr_up, px; // px = pixel, edr = edge detection rule
         bool4 ir_lv1, ir_lv2_left, ir_lv2_up;
         bool4 nc; // new_color
         bool4 fx, fx_left, fx_up; // inequations of straight lines.
         
-        half2 fp = half2(gid.x,gid.y);
+        half2 fp = fract(half2(gid) / 4.0);
         
-        half xx = gid.x / 2.0;
-        half yy = gid.y / 2.0;
-        half dx = 0.5;
-        half dy = 0.5;
+        half xx = gid.x / 4.0;
+        half yy = gid.y / 4.0;
+        half dx = 1;
+        half dy = 1;
         half ddx = 2 * dx;
         half ddy = 2 * dy;
         

@@ -94,19 +94,19 @@
     // Upscaled C64 texture
     MTLTextureDescriptor *textureDescriptorUpscaled =
     [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
-                                                       width:1024
-                                                      height:1024
+                                                       width:2048
+                                                      height:2048
                                                    mipmapped:NO];
     textureDescriptorUpscaled.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
     upscaledTexture = [device newTextureWithDescriptor:textureDescriptorUpscaled];
     NSAssert(upscaledTexture != nil, @"Failed to create upscaling texture");
     if (upscaledTexture == nil) { exit(0); }
     
-    // C64 screen (post-processed)
+    // Final texture (upscaled and filtered)
     MTLTextureDescriptor *textureDescriptorPP =
     [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
-                                                       width:1024
-                                                      height:1024
+                                                       width:2048
+                                                      height:2048
                                                    mipmapped:NO];
     textureDescriptorPP.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
     filteredTexture = [device newTextureWithDescriptor:textureDescriptorPP];
