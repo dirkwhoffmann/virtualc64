@@ -32,7 +32,6 @@ import Foundation
         let threadCountX = (1024 /* texture width */ + groupSizeX -  1) / groupSizeX
         let threadCountY = (1024 /* texture height */ + groupSizeY - 1) / groupSizeY
         threadgroupCount = MTLSizeMake(threadCountX, threadCountY, 1)
-        print("threadCountX = \(threadCountX)");
         
         super.init()
     }
@@ -129,6 +128,22 @@ import Foundation
     }
 }
 
+@objc class XBRUpscaler : ComputeKernel {
+    
+    @objc convenience init(device: MTLDevice, library: MTLLibrary)
+    {
+        self.init(name: "xbrupscaler", device: device, library: library)
+        
+        // Replace default texture sampler
+        let samplerDescriptor = MTLSamplerDescriptor()
+        samplerDescriptor.minFilter = MTLSamplerMinMagFilter.nearest
+        samplerDescriptor.magFilter = MTLSamplerMinMagFilter.nearest
+        samplerDescriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
+        samplerDescriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
+        samplerDescriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
+        sampler = device.makeSamplerState(descriptor: samplerDescriptor)!
+    }
+}
 
 // --------------------------------------------------------------------------------------------
 //                                     Filters
@@ -139,7 +154,7 @@ import Foundation
     @objc convenience init(device: MTLDevice, library: MTLLibrary)
     {
         self.init(name: "bypass", device: device, library: library)
-        
+
         // Replace default texture sampler
         let samplerDescriptor = MTLSamplerDescriptor()
         samplerDescriptor.minFilter = MTLSamplerMinMagFilter.nearest

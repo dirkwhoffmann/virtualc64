@@ -30,7 +30,8 @@
     // All currently supported texture upscalers
     ComputeKernel *bypassUpscaler;
     ComputeKernel *epxUpscaler;
-    
+    ComputeKernel *xbrUpscaler;
+
     // All currently supported texture filters
     ComputeKernel *bypassFilter;
     ComputeKernel *smoothFilter;
@@ -125,7 +126,8 @@
     
     bypassUpscaler = NULL;
     epxUpscaler = NULL;
-
+    xbrUpscaler = NULL;
+    
     bypassFilter = NULL;
     smoothFilter = NULL;
     blurFilter = NULL;
@@ -157,6 +159,7 @@
     // Build upscalers
     bypassUpscaler = [[BypassUpscaler alloc] initWithDevice:device library:library];
     epxUpscaler = [[EPXUpscaler alloc] initWithDevice:device library:library];
+    xbrUpscaler = [[XBRUpscaler alloc] initWithDevice:device library:library];
 
     // Build filters
     bypassFilter = [[BypassFilter alloc] initWithDevice:device library:library];
@@ -340,6 +343,9 @@
         
         case TEX_UPSCALER_EPX:
         return epxUpscaler;
+        
+        case TEX_UPSCALER_XBR:
+        return xbrUpscaler;
         
         default:
         return bypassUpscaler;

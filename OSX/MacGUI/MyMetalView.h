@@ -36,6 +36,7 @@ const int BG_TEXTURE_DEPTH = 4;
 typedef enum {
     TEX_UPSCALER_NONE = 1,
     TEX_UPSCALER_EPX,
+    TEX_UPSCALER_XBR,
 } TextureUpscalerType;
 
 // Post-processing filters

@@ -4077,7 +4077,7 @@ DQ
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="2295">
                                 <items>
-                                    <menuItem title="None" state="on" tag="1" id="2296">
+                                    <menuItem title="None" tag="1" id="2296">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                     <menuItem title="Smooth" tag="2" id="wnC-1X-pw3">
@@ -4117,6 +4117,9 @@ DQ
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                     <menuItem title="EPX" tag="2" id="bEn-WA-Khc">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
+                                    <menuItem title="xBR" tag="3" id="cei-dG-avT">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>

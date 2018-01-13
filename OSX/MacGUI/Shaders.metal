@@ -72,6 +72,10 @@ kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture
     }
 }
 
+//
+// EPX upscaler (Eric's Pixel Expansion)
+//
+
 kernel void epxupscaler(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                         texture2d<half, access::write> outTexture  [[ texture(1) ]],
                         uint2                          gid         [[ thread_position_in_grid ]])
@@ -108,6 +112,142 @@ kernel void epxupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
         outTexture.write(r4, uint2(gid.x, gid.y));
     }
 }
+
+
+constant half coef = 2.0;
+constant half3 yuv_weighted = half3(14.352, 28.176, 5.472);
+
+half4 df(half4 A, half4 B)
+{
+    return abs(A - B);
+}
+
+half4 weighted_distance(half4 a, half4 b, half4 c, half4 d,
+                        half4 e, half4 f, half4 g, half4 h)
+{
+    return (df(a, b) + df(a, c) + df(d, e) + df(d, f) + 4.0 * df(g, h));
+}
+
+//
+// xBR upscaler (2x)
+//
+// Code is based on what I've found at:
+// https://gamedev.stackexchange.com/questions/87275/how-do-i-perform-an-xbr-or-hqx-filter-in-xna
+
+kernel void xbrupscaler(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
+                        texture2d<half, access::write> outTexture  [[ texture(1) ]],
+                        uint2                          gid         [[ thread_position_in_grid ]])
+{
+    if((gid.x < TEXTURE_CUTOUT_X_PP - 2) && (gid.y < TEXTURE_CUTOUT_Y_PP - 2)) {
+        
+        bool4 edr, edr_left, edr_up, px; // px = pixel, edr = edge detection rule
+        bool4 ir_lv1, ir_lv2_left, ir_lv2_up;
+        bool4 nc; // new_color
+        bool4 fx, fx_left, fx_up; // inequations of straight lines.
+        
+        half2 fp = half2(gid.x,gid.y);
+        
+        half xx = gid.x / 2.0;
+        half yy = gid.y / 2.0;
+        half dx = 0.5;
+        half dy = 0.5;
+        half ddx = 2 * dx;
+        half ddy = 2 * dy;
+        
+        half3 A  = inTexture.read(uint2(xx - dx, yy - dy)).xyz;
+        half3 B  = inTexture.read(uint2(xx     , yy - dy)).xyz;
+        half3 C  = inTexture.read(uint2(xx + dx, yy - dy)).xyz;
+        half3 D  = inTexture.read(uint2(xx - dx, yy     )).xyz;
+        half3 E  = inTexture.read(uint2(xx     , yy     )).xyz;
+        half3 F  = inTexture.read(uint2(xx + dx, yy     )).xyz;
+        half3 G  = inTexture.read(uint2(xx - dx, yy + dy)).xyz;
+        half3 H  = inTexture.read(uint2(xx     , yy + dy)).xyz;
+        half3 I  = inTexture.read(uint2(xx + dx, yy + dy)).xyz;
+        half3 A1 = inTexture.read(uint2(xx - dx, yy -ddy)).xyz;
+        half3 C1 = inTexture.read(uint2(xx + dx, yy -ddy)).xyz;
+        half3 A0 = inTexture.read(uint2(xx -ddx, yy - dy)).xyz;
+        half3 G0 = inTexture.read(uint2(xx -ddx, yy + dy)).xyz;
+        half3 C4 = inTexture.read(uint2(xx +ddx, yy - dy)).xyz;
+        half3 I4 = inTexture.read(uint2(xx +ddx, yy + dy)).xyz;
+        half3 G5 = inTexture.read(uint2(xx - dx, yy +ddy)).xyz;
+        half3 I5 = inTexture.read(uint2(xx + dx, yy +ddy)).xyz;
+        half3 B1 = inTexture.read(uint2(xx     , yy -ddy)).xyz;
+        half3 D0 = inTexture.read(uint2(xx -ddx, yy     )).xyz;
+        half3 H5 = inTexture.read(uint2(xx     , yy +ddy)).xyz;
+        half3 F4 = inTexture.read(uint2(xx +ddx, yy     )).xyz;
+        
+        half4 b = yuv_weighted * half4x3(B, D, H, F);
+        half4 c = yuv_weighted * half4x3(C, A, G, I);
+        half4 e = yuv_weighted * half4x3(E, E, E, E);
+        half4 d = b.yzwx;
+        half4 f = b.wxyz;
+        half4 g = c.zwxy;
+        half4 h = b.zwxy;
+        half4 i = c.wxyz;
+        
+        half4 i4 = yuv_weighted * half4x3(I4, C1, A0, G5);
+        half4 i5 = yuv_weighted * half4x3(I5, C4, A1, G0);
+        half4 h5 = yuv_weighted * half4x3(H5, F4, B1, D0);
+        half4 f4 = h5.yzwx;
+        
+        half4 Ao = half4(1.0, -1.0, -1.0, 1.0);
+        half4 Bo = half4(1.0, 1.0, -1.0, -1.0);
+        half4 Co = half4(1.5, 0.5, -0.5, 0.5);
+        half4 Ax = half4(1.0, -1.0, -1.0, 1.0);
+        half4 Bx = half4(0.5, 2.0, -0.5, -2.0);
+        half4 Cx = half4(1.0, 1.0, -0.5, 0.0);
+        half4 Ay = half4(1.0, -1.0, -1.0, 1.0);
+        half4 By = half4(2.0, 0.5, -2.0, -0.5);
+        half4 Cy = half4(2.0, 0.0, -1.0, 0.5);
+        
+        // These inequations define the line below which interpolation occurs.
+        fx.x = (Ao.x * fp.y + Bo.x * fp.x > Co.x);
+        fx.y = (Ao.y * fp.y + Bo.y * fp.x > Co.y);
+        fx.z = (Ao.z * fp.y + Bo.z * fp.x > Co.z);
+        fx.w = (Ao.w * fp.y + Bo.w * fp.x > Co.w);
+        
+        fx_left.x = (Ax.x * fp.y + Bx.x * fp.x > Cx.x);
+        fx_left.y = (Ax.y * fp.y + Bx.y * fp.x > Cx.y);
+        fx_left.z = (Ax.z * fp.y + Bx.z * fp.x > Cx.z);
+        fx_left.w = (Ax.w * fp.y + Bx.w * fp.x > Cx.w);
+        
+        fx_up.x = (Ay.x * fp.y + By.x * fp.x > Cy.x);
+        fx_up.y = (Ay.y * fp.y + By.y * fp.x > Cy.y);
+        fx_up.z = (Ay.z * fp.y + By.z * fp.x > Cy.z);
+        fx_up.w = (Ay.w * fp.y + By.w * fp.x > Cy.w);
+        
+        ir_lv1      = ((e != f) && (e != h));
+        ir_lv2_left = ((e != g) && (d != g));
+        ir_lv2_up   = ((e != c) && (b != c));
+        
+        half4 w1 = weighted_distance(e, c, g, i, h5, f4, h, f);
+        half4 w2 = weighted_distance(h, d, i5, f, i4, b, e, i);
+        half4 df_fg = df(f, g);
+        half4 df_hc = df(h, c);
+        half4 t1 = (coef * df_fg);
+        half4 t2 = df_hc;
+        half4 t3 = df_fg;
+        half4 t4 = (coef * df_hc);
+        
+        edr      = (w1 < w2)  && ir_lv1;
+        edr_left = (t1 <= t2) && ir_lv2_left;
+        edr_up   = (t4 <= t3) && ir_lv2_up;
+        
+        nc = (edr && (fx || (edr_left && fx_left) || (edr_up && fx_up)));
+        
+        t1 = df(e, f);
+        t2 = df(e, h);
+        px = t1 <= t2;
+        
+        half3 res = nc.x ? px.x ? F : H :
+        nc.y ? px.y ? B : F :
+        nc.z ? px.z ? D : B :
+        nc.w ? px.w ? H : D : E;
+        
+        outTexture.write(half4(res,1.0), gid);
+    }
+}
+
 
 // --------------------------------------------------------------------------------------------
 //                      Texture filter (second post-processing stage)
