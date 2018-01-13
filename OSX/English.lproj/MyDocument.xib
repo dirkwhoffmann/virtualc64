@@ -3063,7 +3063,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="eoY-tS-MLP">
                             <rect key="frame" x="1" y="0.0" width="309" height="184"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="1844" id="1017">
                                     <rect key="frame" x="0.0" y="0.0" width="309" height="167"/>
@@ -4116,10 +4116,10 @@ DQ
                                     <menuItem title="None" state="on" tag="1" id="f8q-Ue-Ip7">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="EPX" tag="2" id="bEn-WA-Khc">
+                                    <menuItem title="2x (EPX)" tag="2" id="bEn-WA-Khc">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
-                                    <menuItem title="xBR" tag="3" id="cei-dG-avT">
+                                    <menuItem title="4x (xBR)" tag="3" id="cei-dG-avT">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                     </menuItem>
                                 </items>

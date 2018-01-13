@@ -1,7 +1,7 @@
 //
 //  Shaders.metal
 //
-//  Dirk W. Hoffmann, 18.10.2015
+//  Dirk W. Hoffmann, created 18.10.2015
 //
 
 #include <metal_stdlib>
@@ -9,10 +9,7 @@
 
 using namespace metal;
 
-// Relevant region in post-processed C64 texture
 #define SCALE_FACTOR 4
-// #defineTEXTURE_CUTOUT_X 1712 // 428 * 4
-// #define TEXTURE_CUTOUT_Y 1136 // 284 * 4
 
 // --------------------------------------------------------------------------------------------
 //                        Main vertex shader (for drawing the quad)
@@ -50,11 +47,10 @@ vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
 }
 
 fragment half4 fragment_main(ProjectedVertex vert [[stage_in]],
-                                texture2d<float, access::sample> texture [[texture(0)]],
-                                sampler texSampler [[sampler(0)]])
+                             texture2d<float, access::sample> texture [[texture(0)]],
+                             sampler texSampler [[sampler(0)]])
 {
     float4 color = texture.sample(texSampler, vert.texCoords);
-    // float4 color = diffuseColor;
     return half4(color.r, color.g, color.b, vert.alpha);
 }
 
@@ -66,14 +62,11 @@ kernel void bypassupscaler(texture2d<half, access::read>  inTexture   [[ texture
                            texture2d<half, access::write> outTexture  [[ texture(1) ]],
                            uint2                          gid         [[ thread_position_in_grid ]])
 {
-    // if((gid.x < TEXTURE_CUTOUT_X) && (gid.y < TEXTURE_CUTOUT_Y))
-    {
-        float rx = outTexture.get_width() / inTexture.get_width();
-        float ry = outTexture.get_height() / inTexture.get_height();
+    float rx = outTexture.get_width() / inTexture.get_width();
+    float ry = outTexture.get_height() / inTexture.get_height();
 
-        half4 result = inTexture.read(uint2(gid.x / rx, gid.y / ry));
-        outTexture.write(result, gid);
-    }
+    half4 result = inTexture.read(uint2(gid.x / rx, gid.y / ry));
+    outTexture.write(result, gid);
 }
 
 //
@@ -147,37 +140,35 @@ kernel void xbrupscaler(texture2d<half, access::read>  inTexture   [[ texture(0)
                         texture2d<half, access::write> outTexture  [[ texture(1) ]],
                         uint2                          gid         [[ thread_position_in_grid ]])
 {
-    bool4 edr, edr_left, edr_up, px; // px = pixel, edr = edge detection rule
+    bool4 edr, edr_left, edr_up, px;        // px = pixel, edr = edge detection rule
     bool4 ir_lv1, ir_lv2_left, ir_lv2_up;
-    bool4 nc; // new_color
-    bool4 fx, fx_left, fx_up; // inequations of straight lines.
+    bool4 nc;                               // new color
+    bool4 fx, fx_left, fx_up;               // inequations of straight lines
         
     half2 fp = fract(half2(gid) / SCALE_FACTOR);
-        
-    half xx = gid.x / SCALE_FACTOR;
-    half yy = gid.y / SCALE_FACTOR;
-        
-    half3 A  = inTexture.read(uint2(xx - 1, yy - 1)).xyz;
-    half3 B  = inTexture.read(uint2(xx    , yy - 1)).xyz;
-    half3 C  = inTexture.read(uint2(xx + 1, yy - 1)).xyz;
-    half3 D  = inTexture.read(uint2(xx - 1, yy    )).xyz;
-    half3 E  = inTexture.read(uint2(xx    , yy    )).xyz;
-    half3 F  = inTexture.read(uint2(xx + 1, yy    )).xyz;
-    half3 G  = inTexture.read(uint2(xx - 1, yy + 1)).xyz;
-    half3 H  = inTexture.read(uint2(xx     ,yy + 1)).xyz;
-    half3 I  = inTexture.read(uint2(xx + 1, yy + 1)).xyz;
-    half3 A1 = inTexture.read(uint2(xx - 1, yy - 2)).xyz;
-    half3 C1 = inTexture.read(uint2(xx + 1, yy - 2)).xyz;
-    half3 A0 = inTexture.read(uint2(xx - 2, yy - 1)).xyz;
-    half3 G0 = inTexture.read(uint2(xx - 2, yy + 1)).xyz;
-    half3 C4 = inTexture.read(uint2(xx + 2, yy - 1)).xyz;
-    half3 I4 = inTexture.read(uint2(xx + 2, yy + 1)).xyz;
-    half3 G5 = inTexture.read(uint2(xx - 1, yy + 2)).xyz;
-    half3 I5 = inTexture.read(uint2(xx + 1, yy + 2)).xyz;
-    half3 B1 = inTexture.read(uint2(xx    , yy - 2)).xyz;
-    half3 D0 = inTexture.read(uint2(xx - 2, yy    )).xyz;
-    half3 H5 = inTexture.read(uint2(xx    , yy + 2)).xyz;
-    half3 F4 = inTexture.read(uint2(xx + 2, yy    )).xyz;
+    uint2 ggid = gid / SCALE_FACTOR;
+    
+    half3 A  = inTexture.read(ggid + uint2(-1,-1)).xyz;
+    half3 B  = inTexture.read(ggid + uint2( 0,-1)).xyz;
+    half3 C  = inTexture.read(ggid + uint2( 1,-1)).xyz;
+    half3 D  = inTexture.read(ggid + uint2(-1, 0)).xyz;
+    half3 E  = inTexture.read(ggid + uint2( 0, 0)).xyz;
+    half3 F  = inTexture.read(ggid + uint2( 1, 0)).xyz;
+    half3 G  = inTexture.read(ggid + uint2(-1, 1)).xyz;
+    half3 H  = inTexture.read(ggid + uint2( 0, 1)).xyz;
+    half3 I  = inTexture.read(ggid + uint2( 1, 1)).xyz;
+    half3 A1 = inTexture.read(ggid + uint2(-1,-2)).xyz;
+    half3 C1 = inTexture.read(ggid + uint2( 1,-2)).xyz;
+    half3 A0 = inTexture.read(ggid + uint2(-2,-1)).xyz;
+    half3 G0 = inTexture.read(ggid + uint2(-2, 1)).xyz;
+    half3 C4 = inTexture.read(ggid + uint2( 2,-1)).xyz;
+    half3 I4 = inTexture.read(ggid + uint2( 2, 1)).xyz;
+    half3 G5 = inTexture.read(ggid + uint2(-1, 2)).xyz;
+    half3 I5 = inTexture.read(ggid + uint2( 1, 2)).xyz;
+    half3 B1 = inTexture.read(ggid + uint2( 0,-2)).xyz;
+    half3 D0 = inTexture.read(ggid + uint2(-2, 0)).xyz;
+    half3 H5 = inTexture.read(ggid + uint2( 0, 2)).xyz;
+    half3 F4 = inTexture.read(ggid + uint2( 2, 0)).xyz;
         
     half4 b = yuv_weighted * half4x3(B, D, H, F);
     half4 c = yuv_weighted * half4x3(C, A, G, I);
@@ -346,15 +337,26 @@ kernel void sepia(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
 // Simple CRT filter
 //
 
+#pragma parameter DOTMASK "CRTGeom Dot Mask Toggle" 0.3 0.0 0.3 0.3
+
 kernel void crt(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
                 texture2d<half, access::write> outTexture  [[ texture(1) ]],
                 uint2                          gid         [[ thread_position_in_grid ]])
 {
     half4 inColor = inTexture.read(gid);
-    half line = (gid.y % 2) / 1.0;
-    half4 grayColor(line,line,line,1.0);
+    half line = ((gid.y / 2) % 4) / 5.0;
+    half4 grayColor(line, line, line, 1.0);
     half4 result = mix(inColor, grayColor, half(0.11));
-        
+    
+    // dot-mask emulation:
+    // Output pixels are alternately tinted green and magenta.
+    half DOTMASK = 0.3;
+    half weight = floor(fmod(gid.x / 3, 2.0));
+    half4 dotMaskWeights = mix(half4(1.2, 1.0 - DOTMASK, 1.2, 1.0),
+                               half4(1.0 - DOTMASK, 1.2, 1.0 - DOTMASK, 1.0),
+                               weight);
+    result *= dotMaskWeights;
+    
     outTexture.write(result, gid);
 }
 
