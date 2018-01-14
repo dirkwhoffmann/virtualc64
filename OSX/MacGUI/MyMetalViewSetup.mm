@@ -72,7 +72,7 @@
     NSLog(@"MyMetalView::buildTextures");
     
     // Background texture (drawn behind the cube)
-    bgTexture = [[[BackgroundImage alloc] initWithDevice:device] texture];
+    bgTexture = [self createBackgroundTextureWithDevice:device];
     
     // C64 texture (as provided by the emulator)
     MTLTextureDescriptor *textureDescriptor =

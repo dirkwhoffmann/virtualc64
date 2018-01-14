@@ -1,5 +1,5 @@
 //
-//  MyMetalViewHelper.swift
+//  ImageUtilities.swift
 //  VirtualC64
 //
 //  Created by Dirk Hoffmann on 14.01.18.
@@ -174,5 +174,62 @@ public extension MyMetalView
                                          textureYStart,
                                          textureXEnd,
                                          textureYEnd)
+    }
+    
+    @objc func createBackgroundTexture(device: MTLDevice) -> MTLTexture? {
+
+        // 1. step: Grab the current wallpaper as an NSImage
+        let windows =
+            CGWindowListCopyWindowInfo(CGWindowListOption.optionOnScreenOnly,
+                                       CGWindowID(0))! as! [NSDictionary]
+        let screenBounds = NSScreen.main?.frame
+        
+        // Iterate through all windows
+        var cgImage: CGImage?
+        for i in 0 ..< windows.count {
+            
+            let window = windows[i]
+            
+            // Skip all windows that are not owned by the dock
+            let owner = window["kCGWindowOwnerName"] as! String
+            if owner != "Dock" {
+                continue
+            }
+            
+            // Skip all windows that do not have the same bounds as the main screen
+            let bounds = window["kCGWindowBounds"] as! NSDictionary
+            let width  = bounds["Width"] as! CGFloat
+            let height = bounds["Height"] as! CGFloat
+            if (width != screenBounds?.width || height != screenBounds?.height) {
+                continue
+            }
+            
+            // Skip all windows with a name other than "Desktop picture - ..."
+            let name = window["kCGWindowName"] as! String
+            if name.hasPrefix("Desktop Picture") {
+                
+                // Found it!
+                cgImage = CGWindowListCreateImage(
+                    CGRect.null,
+                    CGWindowListOption(arrayLiteral: CGWindowListOption.optionIncludingWindow),
+                    CGWindowID(window["kCGWindowNumber"] as! Int),
+                    [])!
+                break
+            }
+        }
+        
+        // Create image
+        var wallpaper: NSImage?
+        if cgImage != nil {
+            wallpaper = NSImage.init(cgImage: cgImage!, size: NSZeroSize)
+            wallpaper = wallpaper?.expand(toSize: NSSize(width: 1024, height: 512))
+        } else {
+            // Fall back to an opaque gray background
+            let size = NSSize(width: 128, height: 128)
+            wallpaper = NSImage(color: .lightGray, size: size)
+        }
+        
+        // Return image as texture
+        return wallpaper?.toTexture(device: device)
     }
 }

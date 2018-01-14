@@ -30,7 +30,6 @@
 
 #import "MyMetalView.h"
 #import "MyMetalViewSetup.h"
-#import "MyMetalViewHelper.h"
 
 #import "ROMDropTargetView.h"
 #import "CpuTableView.h"

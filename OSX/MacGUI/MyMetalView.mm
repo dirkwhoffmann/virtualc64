@@ -50,6 +50,29 @@
 @synthesize emulatorTexture;
 @synthesize upscaledTexture;
 @synthesize filteredTexture;
+
+@synthesize currentXAngle;
+@synthesize targetXAngle;
+@synthesize deltaXAngle;
+@synthesize currentYAngle;
+@synthesize targetYAngle;
+@synthesize deltaYAngle;
+@synthesize currentZAngle;
+@synthesize targetZAngle;
+@synthesize deltaZAngle;
+@synthesize currentEyeX;
+@synthesize targetEyeX;
+@synthesize deltaEyeX;
+@synthesize currentEyeY;
+@synthesize targetEyeY;
+@synthesize deltaEyeY;
+@synthesize currentEyeZ;
+@synthesize targetEyeZ;
+@synthesize deltaEyeZ;
+@synthesize currentAlpha;
+@synthesize targetAlpha;
+@synthesize deltaAlpha;
+
 @synthesize textureXStart;
 @synthesize textureYStart;
 @synthesize textureXEnd;

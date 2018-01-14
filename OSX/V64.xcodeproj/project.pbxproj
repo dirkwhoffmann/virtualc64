@@ -28,7 +28,6 @@
 		500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */; };
 		500FF3911BD7F4DF0038245B /* romchip.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF38F1BD7F4DF0038245B /* romchip.png */; };
 		500FF3921BD7F4DF0038245B /* romchipMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF3901BD7F4DF0038245B /* romchipMissing.png */; };
-		50137EA01BCA396100147283 /* MyMetalViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */; };
 		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
 		50176C630A6F72F3009E80BD /* basic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C4F0A6F72F3009E80BD /* basic.cpp */; };
 		50176C640A6F72F3009E80BD /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C510A6F72F3009E80BD /* C64.cpp */; };
@@ -59,8 +58,8 @@
 		502F57F81B93445300D1077E /* LEDyellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F71B93445300D1077E /* LEDyellow.png */; };
 		502F57FA1B93457200D1077E /* fast.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57F91B93457200D1077E /* fast.png */; };
 		502F57FC1B93457700D1077E /* slow.png in Resources */ = {isa = PBXBuildFile; fileRef = 502F57FB1B93457700D1077E /* slow.png */; };
-		5031D59A200B47B70088C802 /* MyMetalViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D599200B47B70088C802 /* MyMetalViewHelper.swift */; };
-		5031D59C200B81D20088C802 /* BackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* BackgroundImage.swift */; };
+		5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D599200B47B70088C802 /* ImageUtilities.swift */; };
+		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
 		5039A31415BE89940038ACBC /* drive48.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31315BE89940038ACBC /* drive48.png */; };
 		5039A32015BE97500038ACBC /* diskette.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31F15BE97500038ACBC /* diskette.png */; };
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
@@ -270,8 +269,6 @@
 		500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewSetup.h; sourceTree = "<group>"; };
 		500FF38F1BD7F4DF0038245B /* romchip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romchip.png; sourceTree = "<group>"; };
 		500FF3901BD7F4DF0038245B /* romchipMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romchipMissing.png; sourceTree = "<group>"; };
-		50137E9E1BCA394600147283 /* MyMetalViewHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewHelper.h; sourceTree = "<group>"; };
-		50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewHelper.mm; sourceTree = "<group>"; };
 		50137EB01BCA83B000147283 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		50176C4F0A6F72F3009E80BD /* basic.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = basic.cpp; sourceTree = "<group>"; };
 		50176C500A6F72F3009E80BD /* basic.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = basic.h; sourceTree = "<group>"; };
@@ -317,8 +314,8 @@
 		502F57F71B93445300D1077E /* LEDyellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LEDyellow.png; sourceTree = "<group>"; };
 		502F57F91B93457200D1077E /* fast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fast.png; sourceTree = "<group>"; };
 		502F57FB1B93457700D1077E /* slow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slow.png; sourceTree = "<group>"; };
-		5031D599200B47B70088C802 /* MyMetalViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMetalViewHelper.swift; sourceTree = "<group>"; };
-		5031D59B200B81D20088C802 /* BackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImage.swift; sourceTree = "<group>"; };
+		5031D599200B47B70088C802 /* ImageUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtilities.swift; sourceTree = "<group>"; };
+		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5039A31315BE89940038ACBC /* drive48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drive48.png; sourceTree = "<group>"; };
 		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette.png; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
@@ -997,10 +994,8 @@
 				500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */,
 				500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */,
 				5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */,
-				50137E9E1BCA394600147283 /* MyMetalViewHelper.h */,
-				50137E9F1BCA396100147283 /* MyMetalViewHelper.mm */,
-				5031D599200B47B70088C802 /* MyMetalViewHelper.swift */,
-				5031D59B200B81D20088C802 /* BackgroundImage.swift */,
+				5031D599200B47B70088C802 /* ImageUtilities.swift */,
+				5031D59B200B81D20088C802 /* Animation.swift */,
 				50C72DE71BC7F50D00F1863B /* Shaders */,
 			);
 			name = MetalView;
@@ -1304,7 +1299,7 @@
 				50D141801417A34B0024FC74 /* filter.cc in Sources */,
 				50D141811417A34B0024FC74 /* pot.cc in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
-				5031D59C200B81D20088C802 /* BackgroundImage.swift in Sources */,
+				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				50D141821417A34B0024FC74 /* sid.cc in Sources */,
 				50D141831417A34B0024FC74 /* version.cc in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
@@ -1321,9 +1316,8 @@
 				50D1418B1417A34B0024FC74 /* wave8580_P_T.cc in Sources */,
 				50D1418C1417A34B0024FC74 /* wave8580_PS_.cc in Sources */,
 				50F2AB1B1EF267510040BC3A /* VIC_colors.cpp in Sources */,
-				5031D59A200B47B70088C802 /* MyMetalViewHelper.swift in Sources */,
+				5031D59A200B47B70088C802 /* ImageUtilities.swift in Sources */,
 				50D1418D1417A34B0024FC74 /* wave8580_PST.cc in Sources */,
-				50137EA01BCA396100147283 /* MyMetalViewHelper.mm in Sources */,
 				50C9CB321B8272DA0054EE86 /* HardwareDialog.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

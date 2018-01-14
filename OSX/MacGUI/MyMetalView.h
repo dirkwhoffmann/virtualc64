@@ -27,11 +27,6 @@ const int C64_TEXTURE_WIDTH = 512;
 const int C64_TEXTURE_HEIGHT= 512;
 const int C64_TEXTURE_DEPTH = 4;
 
-// Size of background texture
-const int BG_TEXTURE_WIDTH = 1024;
-const int BG_TEXTURE_HEIGHT= 512;
-const int BG_TEXTURE_DEPTH = 4;
-
 // Post-processing filters
 typedef enum {
     TEX_UPSCALER_NONE = 1,
@@ -152,6 +147,29 @@ typedef unsigned long MacKeyFingerprint;
 @property id <MTLTexture> emulatorTexture;
 @property id <MTLTexture> upscaledTexture;
 @property id <MTLTexture> filteredTexture;
+
+@property float currentXAngle;
+@property float targetXAngle;
+@property float deltaXAngle;
+@property float currentYAngle;
+@property float targetYAngle;
+@property float deltaYAngle;
+@property float currentZAngle;
+@property float targetZAngle;
+@property float deltaZAngle;
+@property float currentEyeX;
+@property float targetEyeX;
+@property float deltaEyeX;
+@property float currentEyeY;
+@property float targetEyeY;
+@property float deltaEyeY;
+@property float currentEyeZ;
+@property float targetEyeZ;
+@property float deltaEyeZ;
+@property float currentAlpha;
+@property float targetAlpha;
+@property float deltaAlpha;
+
 @property float textureXStart;
 @property float textureXEnd;
 @property float textureYStart;
