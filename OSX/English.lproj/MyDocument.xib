@@ -4210,7 +4210,6 @@ DQ
                 <outlet property="up2" destination="ngH-2P-zn1" id="d05-cV-5D9"/>
                 <outlet property="up2button" destination="2ek-Tr-UYe" id="PZS-IP-KUS"/>
                 <outlet property="upscaler" destination="dgF-Sb-ZZG" id="LH7-FC-ajn"/>
-                <outlet property="videoFilter" destination="2239" id="2345"/>
             </connections>
             <point key="canvasLocation" x="221.5" y="-279.5"/>
         </window>

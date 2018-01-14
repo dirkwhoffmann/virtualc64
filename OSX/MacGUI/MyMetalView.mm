@@ -47,6 +47,13 @@
 //                                           Properties
 // -----------------------------------------------------------------------------------------------
 
+@synthesize emulatorTexture;
+@synthesize upscaledTexture;
+@synthesize filteredTexture;
+@synthesize textureXStart;
+@synthesize textureYStart;
+@synthesize textureXEnd;
+@synthesize textureYEnd;
 @synthesize videoUpscaler;
 @synthesize videoFilter;
 @synthesize enableMetal;

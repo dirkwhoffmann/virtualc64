@@ -149,6 +149,13 @@ typedef unsigned long MacKeyFingerprint;
 
 #pragma mark Configuring
 
+@property id <MTLTexture> emulatorTexture;
+@property id <MTLTexture> upscaledTexture;
+@property id <MTLTexture> filteredTexture;
+@property float textureXStart;
+@property float textureXEnd;
+@property float textureYStart;
+@property float textureYEnd;
 @property long videoUpscaler;
 @property long videoFilter;
 @property bool enableMetal;

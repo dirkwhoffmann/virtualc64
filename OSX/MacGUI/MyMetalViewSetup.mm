@@ -71,22 +71,16 @@
 {
     NSLog(@"MyMetalView::buildTextures");
     
-    // Create background texture (a scaled down version of the current wallpaper)
-    NSImage *desktop = [self desktopAsImage];
-    NSImage *desktopResized = [self expandImage:desktop toSize:NSMakeSize(BG_TEXTURE_WIDTH,BG_TEXTURE_HEIGHT)];
-    bgTexture = [self textureFromImage:desktopResized];
+    // Background texture (drawn behind the cube)
+    bgTexture = [[[BackgroundImage alloc] initWithDevice:device] texture];
     
-    
-    // If the wallpaper could not be obtained, we fall back to an opaque texture.
-    if (!bgTexture)
-        bgTexture = [self defaultBackgroundTexture];
-
     // C64 texture (as provided by the emulator)
     MTLTextureDescriptor *textureDescriptor =
     [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
                                                        width:512
                                                       height:512
                                                    mipmapped:NO];
+    textureDescriptor.usage = MTLTextureUsageShaderRead;
     emulatorTexture = [device newTextureWithDescriptor:textureDescriptor];
     NSAssert(emulatorTexture != nil, @"Failed to create emulator texture");
     if (emulatorTexture == nil) { exit(0); }

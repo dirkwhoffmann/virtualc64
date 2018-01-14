@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -146,7 +146,7 @@
                                     <action selector="saveScreenshotDialog:" target="-1" id="545"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Quick  save screenshot" keyEquivalent="s" id="7oe-oV-MnG">
+                            <menuItem title="Quick save screenshot" keyEquivalent="s" id="7oe-oV-MnG">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="quicksaveScreenshot:" target="-1" id="3hD-6J-vdQ"/>
