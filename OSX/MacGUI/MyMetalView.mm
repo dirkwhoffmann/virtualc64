@@ -319,8 +319,11 @@
 {
     matrix_float4x4 model = matrix_identity_float4x4;
     matrix_float4x4 view = matrix_identity_float4x4;
-    matrix_float4x4 projection = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), fabs(layerWidth / layerHeight), 0.1f, 100.0f);
-    
+    matrix_float4x4 projection =
+    [self vc64_matrix_from_perspective:(float)(65.0f * (M_PI / 180.0f))
+                                aspect:fabs(layerWidth / layerHeight)
+                                 nearZ:0.1f
+                                  farZ:100.0f];
     if (uniformBufferBg) {
         Uniforms *frameData = (Uniforms *)[uniformBufferBg contents];
         frameData->model = model;
@@ -351,15 +354,19 @@
     
     // NSLog(@"buildMatrices3D: aspectRatio: %f", aspectRatio);
     
-    matrix_float4x4 model = vc64_matrix_from_translation(-currentEyeX, -currentEyeY, currentEyeZ+1.39);
+    matrix_float4x4 model = [self vc64_matrix_from_translationWithX:-currentEyeX y:-currentEyeY z:currentEyeZ+1.39 ];
     matrix_float4x4 view = matrix_identity_float4x4;
-    matrix_float4x4 projection = vc64_matrix_from_perspective_fov_aspectLH(65.0f * (M_PI / 180.0f), aspectRatio, 0.1f, 100.0f);
+    matrix_float4x4 projection = [self vc64_matrix_from_perspective:(65.0f * (M_PI / 180.0f)) aspect:aspectRatio nearZ:0.1f farZ:100.0f];
     
     if ([self animates]) {
+        float xAngle = -(currentXAngle / 180.0)*M_PI;
+        float yAngle = (currentYAngle / 180.0)*M_PI;
+        float zAngle = (currentZAngle / 180.0)*M_PI;
         model = model *
-        vc64_matrix_from_rotation(-(currentXAngle / 180.0)*M_PI, 0.5f, 0.0f, 0.0f) *
-        vc64_matrix_from_rotation((currentYAngle / 180.0)*M_PI, 0.0f, 0.5f, 0.0f) *
-        vc64_matrix_from_rotation((currentZAngle / 180.0)*M_PI, 0.0f, 0.0f, 0.5f);
+            [self vc64_matrix_from_rotationWithRadians:xAngle x:0.5 y:0.0 z:0.0] *
+            [self vc64_matrix_from_rotationWithRadians:yAngle x:0.0 y:0.5 z:0.0] *
+            [self vc64_matrix_from_rotationWithRadians:zAngle x:0.0 y:0.0 z:0.5];
+        
     }
 
     if (uniformBuffer3D) {

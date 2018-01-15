@@ -199,4 +199,80 @@ public extension MyMetalView {
         self.computeAnimationDeltaSteps(animationCycles: 120 /* 2 sec */)
     }
 
+    // --------------------------------------------------------------------------------
+    //                                Matrix utilities
+    // --------------------------------------------------------------------------------
+
+    @objc public func vc64_matrix_identity() -> matrix_float4x4 {
+        
+        let X = float4(1.0, 0.0, 0.0, 0.0)
+        let Y = float4(0.0, 1.0, 0.0, 0.0)
+        let Z = float4(0.0, 0.0, 1.0, 0.0)
+        let W = float4(0.0, 0.0, 0.0, 1.0)
+    
+        let identity =  matrix_float4x4(X,Y,Z,W)
+    
+        return identity
+    }
+    
+    @objc public func vc64_matrix_from_perspective(_ fovY: Float,
+                                                   aspect: Float,
+                                                   nearZ: Float,
+                                                   farZ: Float) -> matrix_float4x4 {
+        
+        // Variant 1: Keeps correct aspect ratio independent of window size
+        let yscale = 1.0 / tanf(fovY * 0.5) // 1 / tan == cot
+        let xscale = yscale / aspect
+        let q = farZ / (farZ - nearZ)
+    
+        // Alternative: Adjust to window size */
+        // float yscale = 1.0f / tanf(fovY * 0.5f);
+        // float xscale = 0.75 * yscale;
+        // float q = farZ / (farZ - nearZ);
+        
+        var m = matrix_float4x4()
+        m.columns.0 = float4(xscale, 0.0, 0.0, 0.0)
+        m.columns.1 = float4(0.0, yscale, 0.0, 0.0)
+        m.columns.2 = float4(0.0, 0.0, q, 1.0)
+        m.columns.3 = float4(0.0, 0.0, q * -nearZ, 0.0)
+    
+        return m
+    }
+    
+    @objc public func vc64_matrix_from_translation(x: Float, y: Float, z: Float) -> matrix_float4x4 {
+    
+        var m = matrix_identity_float4x4;
+        m.columns.3 = float4(x, y, z, 1.0)
+    
+        return m
+    }
+    
+    @objc public func vc64_matrix_from_rotation(radians: Float, x: Float, y: Float, z: Float) -> matrix_float4x4 {
+    
+        var v = vector_float3(x, y, z)
+        v = normalize(v)
+        let cos = cosf(radians)
+        let cosp = 1.0 - cos
+        let sin = sinf(radians)
+    
+        var m = matrix_float4x4()
+        m.columns.0 = float4(cos + cosp * v.x * v.x,
+                             cosp * v.x * v.y + v.z * sin,
+                             cosp * v.x * v.z - v.y * sin,
+                             0.0)
+        m.columns.1 = float4(cosp * v.x * v.y - v.z * sin,
+                             cos + cosp * v.y * v.y,
+                             cosp * v.y * v.z + v.x * sin,
+                             0.0)
+        m.columns.2 = float4(cosp * v.x * v.z + v.y * sin,
+                             cosp * v.y * v.z - v.x * sin,
+                             cos + cosp * v.z * v.z,
+                             0.0)
+        m.columns.3 = float4(0.0,
+                             0.0,
+                             0.0,
+                             1.0)
+        return m
+    }
+    
 }
