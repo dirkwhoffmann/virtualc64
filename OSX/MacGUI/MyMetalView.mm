@@ -178,8 +178,12 @@
     }
         
     // Register for drag and drop
+    [self setupDragAndDrop];
+/*
     [self registerForDraggedTypes:
     [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
+*/
+    
 }
 
 - (void)buildKernels

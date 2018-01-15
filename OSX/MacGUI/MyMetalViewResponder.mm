@@ -18,6 +18,7 @@
 
 
 #import "C64GUI.h"
+#import "VirtualC64-Swift.h"
 
 @implementation MyMetalView(Responder)
 
@@ -28,124 +29,27 @@
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    // NSLog(@"draggingEntered");
-    if ([sender draggingSource] == self)
-        return NSDragOperationNone;
-    
-    NSPasteboard *pb = [sender draggingPasteboard];
-    NSString *besttype = [pb availableTypeFromArray:[NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
-    
-    if (besttype == NSFilenamesPboardType) {
-        // NSLog(@"Dragged in filename");
-        return NSDragOperationCopy;
-    }
-    
-    if (besttype == NSPasteboardTypeString) {
-        // NSLog(@"Dragged in string");
-        return NSDragOperationCopy;
-    }
-    
-    if (besttype == NSFileContentsPboardType) {
-        // NSLog(@"Dragged in file contents");
-        return NSDragOperationCopy;
-    }
-    
-    return NSDragOperationNone;
+    return [self swiftDraggingEntered:sender];
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
+    [self swiftDraggingExited:sender];
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
-    return YES;
+    return [self swiftPrepareForDragOperation:sender];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-    NSPasteboard *pb = [sender draggingPasteboard];
-    
-    if ([[pb types] containsObject:NSFileContentsPboardType]) {
-        
-        NSFileWrapper *fileWrapper = [pb readFileWrapper];
-        NSData *fileData = [fileWrapper regularFileContents];
-        SnapshotProxy *snapshot = [SnapshotProxy snapshotFromBuffer:[fileData bytes] length:(unsigned)[fileData length]];
-        [[controller c64] loadFromSnapshot:snapshot];
-        return YES;
-    }
-    
-    if ([[pb types] containsObject:NSFilenamesPboardType]) {
-        
-        NSString *path = [[pb propertyListForType:@"NSFilenamesPboardType"] objectAtIndex:0];
-        NSLog(@"Processing file %@", path);
-        
-        // Is it a snapshot?
-        if ([SnapshotProxy isSnapshotFile:path]) {
-            
-            NSLog(@"  Snapshot found");
-            
-            // Do the version numbers match?
-            if ([SnapshotProxy isSnapshotFile:path
-                                        major:V_MAJOR
-                                        minor:V_MINOR
-                                     subminor:V_SUBMINOR]) {
-                
-                SnapshotProxy *snapshot = [SnapshotProxy snapshotFromFile:path];
-                if (snapshot) {
-                    [[controller c64] loadFromSnapshot:snapshot];
-                    return YES;
-                }
-                
-            } else {
-                
-                NSLog(@"  ERROR: Version number in snapshot must be %d.%d", V_MAJOR, V_MINOR);
-                [[controller document] showVersionNumberAlert];
-                return NO;
-            }
-        }
-        
-        // Is it a ROM file?
-        if ([[controller document] loadRom:path]) {
-            return YES;
-        }
-        
-        // Is it a cartridge?
-        if ([[controller document] setCartridgeWithName:path]) {
-            [controller mountCartridge];
-            return YES;
-        }
-
-        // Is it a NIB archive?
-        if ([[controller document] setNIBArchiveWithName:path]) {
-            [controller showMountDialog];
-            return YES;
-        }
-
-        // Is it a G64 archive?
-        if ([[controller document] setG64ArchiveWithName:path]) {
-            [controller showMountDialog];
-            return YES;
-        }
-        
-        // Is it a TAP container?
-        if ([[controller document] setTAPContainerWithName:path]) {
-            [controller showTapeDialog];
-            return YES;
-        }
-        
-        // Is it an archive other than G64?
-        if ([[controller document] setArchiveWithName:path]) {
-            [controller showMountDialog];
-            return YES;
-        }					
-    }
-    
-    return NO;	
+    return [self swiftPerformDragOperation:sender controller:controller];
 }
 
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender
 {
+    [self swiftconcludeDragOperation:sender];
 }
 
 @end

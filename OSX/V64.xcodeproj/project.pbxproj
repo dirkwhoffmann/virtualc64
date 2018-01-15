@@ -102,6 +102,7 @@
 		5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */; };
 		5088A6EA12E06DB700378033 /* MyControllerToolbar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5088A6E912E06DB700378033 /* MyControllerToolbar.mm */; };
 		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
+		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
@@ -374,6 +375,7 @@
 		5088A6E912E06DB700378033 /* MyControllerToolbar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyControllerToolbar.mm; sourceTree = "<group>"; };
 		5088E6861C3515DB006A80E5 /* VC64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VC64Object.cpp; sourceTree = "<group>"; };
 		5088E6871C3515DB006A80E5 /* VC64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC64Object.h; sourceTree = "<group>"; };
+		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rom.png; sourceTree = "<group>"; };
 		509AEA0A0C324AB0001FC9FD /* PRGArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGArchive.h; sourceTree = "<group>"; };
 		509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGArchive.cpp; sourceTree = "<group>"; };
@@ -994,6 +996,7 @@
 				500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */,
 				500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */,
 				5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */,
+				5092A5B0200BC4B70037754D /* DragAndDrop.swift */,
 				5031D599200B47B70088C802 /* ImageUtilities.swift */,
 				5031D59B200B81D20088C802 /* Animation.swift */,
 				50C72DE71BC7F50D00F1863B /* Shaders */,
@@ -1295,6 +1298,7 @@
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				50D1417E1417A34B0024FC74 /* envelope.cc in Sources */,
+				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,
 				50D141801417A34B0024FC74 /* filter.cc in Sources */,
 				50D141811417A34B0024FC74 /* pot.cc in Sources */,
