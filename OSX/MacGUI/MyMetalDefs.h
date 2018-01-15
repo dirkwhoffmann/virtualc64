@@ -13,10 +13,7 @@
 using namespace simd;
 
 struct Uniforms {
-    float4x4 model;
-    float4x4 view;
-    float4x4 projection;
-    float4x4 projectionView;
+    float4x4 modelViewProjection;
     float alpha;
 };
 

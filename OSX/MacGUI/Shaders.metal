@@ -40,7 +40,7 @@ vertex ProjectedVertex vertex_main(device InVertex *vertices [[buffer(0)]],
 {
     ProjectedVertex out;
 
-    out.position = uniforms.projectionView * float4(vertices[vid].position);
+    out.position = uniforms.modelViewProjection * float4(vertices[vid].position);
     out.texCoords = vertices[vid].texCoords;
     out.alpha = uniforms.alpha;
     return out;

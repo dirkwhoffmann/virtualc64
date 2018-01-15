@@ -55,6 +55,11 @@
 @synthesize upscaledTexture;
 @synthesize filteredTexture;
 
+@synthesize positionBuffer;
+@synthesize uniformBuffer2D;
+@synthesize uniformBuffer3D;
+@synthesize uniformBufferBg;
+
 @synthesize metalLayer;
 @synthesize layerWidth;
 @synthesize layerHeight;
@@ -335,9 +340,7 @@
                                   farZ:100.0f];
     if (uniformBufferBg) {
         Uniforms *frameData = (Uniforms *)[uniformBufferBg contents];
-        frameData->model = model;
-        frameData->view = view;
-        frameData->projectionView = projection * view * model;
+        frameData->modelViewProjection = projection * view * model;
         frameData->alpha = 1.0;
     }
 }
@@ -350,9 +353,7 @@
 
     if (uniformBuffer2D) {
         Uniforms *frameData = (Uniforms *)[uniformBuffer2D contents];
-        frameData->model = model;
-        frameData->view = view;
-        frameData->projectionView = projection * view * model;
+        frameData->modelViewProjection = projection * view * model;
         frameData->alpha = 1.0;
     }
 }
@@ -380,9 +381,7 @@
 
     if (uniformBuffer3D) {
         Uniforms *frameData = (Uniforms *)[uniformBuffer3D contents];
-        frameData->model = model;
-        frameData->view = view;
-        frameData->projectionView = projection * view * model;
+        frameData->modelViewProjection = projection * view * model;
         frameData->alpha = currentAlpha;
     }
 }

@@ -152,6 +152,11 @@ typedef unsigned long MacKeyFingerprint;
 @property id <MTLTexture> upscaledTexture;
 @property id <MTLTexture> filteredTexture;
 
+@property id <MTLBuffer> positionBuffer;
+@property id <MTLBuffer> uniformBuffer2D;
+@property id <MTLBuffer> uniformBuffer3D;
+@property id <MTLBuffer> uniformBufferBg;
+
 @property CAMetalLayer *metalLayer;
 @property CGFloat layerWidth;
 @property CGFloat layerHeight;
