@@ -25,7 +25,6 @@
 		500B6CA50B905CEC002C36EC /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500B6CA40B905CEC002C36EC /* TOD.cpp */; };
 		500EC05110E4DCC4005A19A3 /* Message.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EC05010E4DCC4005A19A3 /* Message.cpp */; };
 		500FC6790D17D2190044131D /* VIA6522.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FC6780D17D2190044131D /* VIA6522.cpp */; };
-		500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */; };
 		500FF3911BD7F4DF0038245B /* romchip.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF38F1BD7F4DF0038245B /* romchip.png */; };
 		500FF3921BD7F4DF0038245B /* romchipMissing.png in Resources */ = {isa = PBXBuildFile; fileRef = 500FF3901BD7F4DF0038245B /* romchipMissing.png */; };
 		50137EB11BCA83B000147283 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50137EB01BCA83B000147283 /* ModelIO.framework */; };
@@ -267,8 +266,6 @@
 		500EC05010E4DCC4005A19A3 /* Message.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
 		500FC6770D17D2190044131D /* VIA6522.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA6522.h; sourceTree = "<group>"; };
 		500FC6780D17D2190044131D /* VIA6522.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA6522.cpp; sourceTree = "<group>"; };
-		500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalViewSetup.mm; sourceTree = "<group>"; };
-		500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyMetalViewSetup.h; sourceTree = "<group>"; };
 		500FF38F1BD7F4DF0038245B /* romchip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romchip.png; sourceTree = "<group>"; };
 		500FF3901BD7F4DF0038245B /* romchipMissing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romchipMissing.png; sourceTree = "<group>"; };
 		50137EB01BCA83B000147283 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
@@ -995,8 +992,6 @@
 				50032EB01BC919D90050BEEA /* MyMetalView.h */,
 				5088A2541EE6D69000D83586 /* MyMetalDefs.h */,
 				50032EB11BC919D90050BEEA /* MyMetalView.mm */,
-				500FF38E1BD7CA180038245B /* MyMetalViewSetup.h */,
-				500FF38C1BD7C9AD0038245B /* MyMetalViewSetup.mm */,
 				5042312B1BD371FF00B3DEF9 /* MyMetalViewResponder.mm */,
 				5014D683200CD62C00044217 /* MetalSetup.swift */,
 				5092A5B0200BC4B70037754D /* DragAndDrop.swift */,
@@ -1294,7 +1289,6 @@
 				50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50B4B6091EEFFF6800D56499 /* C64Proxy.swift in Sources */,
-				500FF38D1BD7C9AD0038245B /* MyMetalViewSetup.mm in Sources */,
 				50F681EA1BEA3BE4008568E3 /* Datasette.cpp in Sources */,
 				50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */,
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,

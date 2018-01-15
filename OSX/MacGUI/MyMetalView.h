@@ -146,11 +146,15 @@ typedef unsigned long MacKeyFingerprint;
 
 @property id <MTLLibrary> library;
 @property id <MTLCommandQueue> queue;
+@property id <MTLRenderPipelineState> pipeline;
+@property id <MTLDepthStencilState> depthState;
+
 
 @property id <MTLTexture> bgTexture;
 @property id <MTLTexture> emulatorTexture;
 @property id <MTLTexture> upscaledTexture;
 @property id <MTLTexture> filteredTexture;
+@property id <MTLTexture> depthTexture;
 
 @property id <MTLBuffer> positionBuffer;
 @property id <MTLBuffer> uniformBuffer2D;

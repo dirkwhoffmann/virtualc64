@@ -49,11 +49,14 @@
 
 @synthesize library;
 @synthesize queue;
+@synthesize pipeline;
+@synthesize depthState;
 
 @synthesize bgTexture;
 @synthesize emulatorTexture;
 @synthesize upscaledTexture;
 @synthesize filteredTexture;
+@synthesize depthTexture;
 
 @synthesize positionBuffer;
 @synthesize uniformBuffer2D;

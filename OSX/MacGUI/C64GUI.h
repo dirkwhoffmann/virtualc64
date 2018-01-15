@@ -29,7 +29,6 @@
 #import "Formatter.h"
 
 #import "MyMetalView.h"
-#import "MyMetalViewSetup.h"
 
 #import "ROMDropTargetView.h"
 #import "CpuTableView.h"

@@ -17,8 +17,6 @@ using namespace metal;
 
 struct InVertex
 {
-//    packed_float4 position [[attribute(0)]];
-//    packed_float2 texCoords [[attribute(1)]];
     float4 position [[attribute(0)]];
     float2 texCoords [[attribute(1)]];
 };
