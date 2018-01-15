@@ -47,9 +47,18 @@
 //                                           Properties
 // -----------------------------------------------------------------------------------------------
 
+@synthesize library;
+@synthesize queue;
+
+@synthesize bgTexture;
 @synthesize emulatorTexture;
 @synthesize upscaledTexture;
 @synthesize filteredTexture;
+
+@synthesize metalLayer;
+@synthesize layerWidth;
+@synthesize layerHeight;
+@synthesize layerIsDirty;
 
 @synthesize currentXAngle;
 @synthesize targetXAngle;
@@ -191,18 +200,18 @@
     NSLog(@"MyMetalView::buildKernels");
     
     // Build upscalers
-    bypassUpscaler = [[BypassUpscaler alloc] initWithDevice:device library:library];
-    epxUpscaler = [[EPXUpscaler alloc] initWithDevice:device library:library];
-    xbrUpscaler = [[XBRUpscaler alloc] initWithDevice:device library:library];
+    bypassUpscaler = [[BypassUpscaler alloc] initWithDevice:self.device library:library];
+    epxUpscaler = [[EPXUpscaler alloc] initWithDevice:self.device library:library];
+    xbrUpscaler = [[XBRUpscaler alloc] initWithDevice:self.device library:library];
 
     // Build filters
-    bypassFilter = [[BypassFilter alloc] initWithDevice:device library:library];
-    smoothFilter = [[SaturationFilter alloc] initWithDevice:device library:library factor:1.0];
-    blurFilter = [[BlurFilter alloc] initWithDevice:device library:library radius:2.0];
-    saturationFilter = [[SaturationFilter alloc] initWithDevice:device library:library factor:0.5];
-    sepiaFilter = [[SepiaFilter alloc] initWithDevice:device library:library];
-    crtFilter = [[CrtFilter alloc] initWithDevice:device library:library];
-    grayscaleFilter = [[SaturationFilter alloc] initWithDevice:device library:library factor:0.0];
+    bypassFilter = [[BypassFilter alloc] initWithDevice:self.device library:library];
+    smoothFilter = [[SaturationFilter alloc] initWithDevice:self.device library:library factor:1.0];
+    blurFilter = [[BlurFilter alloc] initWithDevice:self.device library:library radius:2.0];
+    saturationFilter = [[SaturationFilter alloc] initWithDevice:self.device library:library factor:0.5];
+    sepiaFilter = [[SepiaFilter alloc] initWithDevice:self.device library:library];
+    crtFilter = [[CrtFilter alloc] initWithDevice:self.device library:library];
+    grayscaleFilter = [[SaturationFilter alloc] initWithDevice:self.device library:library factor:0.0];
 }
 
 - (void) dealloc

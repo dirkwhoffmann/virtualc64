@@ -7,21 +7,6 @@
 
 import Foundation
 
-/*
-extension NSPasteboard.PasteboardType {
-    
-    static let backwardsCompatibleFileURL: NSPasteboard.PasteboardType = {
-        
-        if #available(OSX 10.13, *) {
-            return NSPasteboard.PasteboardType.fileURL
-        } else {
-            return NSPasteboard.PasteboardType(kUTTypeFileURL as String)
-        }
-        
-    } ()
-}
-*/
-
 struct DragType {
     static let string = NSPasteboard.PasteboardType.string
     static let contents = NSPasteboard.PasteboardType.fileContents

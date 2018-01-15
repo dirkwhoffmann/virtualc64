@@ -60,7 +60,7 @@ typedef unsigned long MacKeyFingerprint;
     dispatch_semaphore_t _inflightSemaphore;
     
     // Metal objects
-    id <MTLDevice> device;
+    // id <MTLDevice> device;
     id <MTLLibrary> library;
     id <MTLCommandQueue> queue;
     id <MTLRenderPipelineState> pipeline;
@@ -144,9 +144,18 @@ typedef unsigned long MacKeyFingerprint;
 
 #pragma mark Configuring
 
+@property id <MTLLibrary> library;
+@property id <MTLCommandQueue> queue;
+
+@property id <MTLTexture> bgTexture;
 @property id <MTLTexture> emulatorTexture;
 @property id <MTLTexture> upscaledTexture;
 @property id <MTLTexture> filteredTexture;
+
+@property CAMetalLayer *metalLayer;
+@property CGFloat layerWidth;
+@property CGFloat layerHeight;
+@property bool layerIsDirty;
 
 @property float currentXAngle;
 @property float targetXAngle;

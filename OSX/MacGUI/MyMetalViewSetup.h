@@ -20,7 +20,11 @@
 
 @interface MyMetalView(Setup)
 
-- (void)setupMetal;
+// - (void)setupMetal;
+// - (void)buildMetal;
+// - (void)buildTextures;
+- (void)buildBuffers;
+- (void)buildPipeline;
 - (void)buildVertexBuffer;
 - (void)buildDepthBuffer;
 

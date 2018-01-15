@@ -176,7 +176,7 @@ public extension MyMetalView
                                          textureYEnd)
     }
     
-    @objc func createBackgroundTexture(device: MTLDevice) -> MTLTexture? {
+    @objc func createBackgroundTexture() -> MTLTexture? {
 
         // 1. step: Grab the current wallpaper as an NSImage
         let windows =
@@ -230,6 +230,6 @@ public extension MyMetalView
         }
         
         // Return image as texture
-        return wallpaper?.toTexture(device: device)
+        return wallpaper?.toTexture(device: device!)
     }
 }

@@ -22,6 +22,7 @@
 
 @implementation MyMetalView(Setup)
 
+#if 0
 - (void)setupMetal
 {
     NSLog(@"MyMetalView::setupMetal");
@@ -72,7 +73,7 @@
     NSLog(@"MyMetalView::buildTextures");
     
     // Background texture (drawn behind the cube)
-    bgTexture = [self createBackgroundTextureWithDevice:device];
+    bgTexture = [self createBackgroundTextureWithDevice:self.device];
     
     // C64 texture (as provided by the emulator)
     MTLTextureDescriptor *textureDescriptor =
@@ -81,7 +82,7 @@
                                                       height:512
                                                    mipmapped:NO];
     textureDescriptor.usage = MTLTextureUsageShaderRead;
-    emulatorTexture = [device newTextureWithDescriptor:textureDescriptor];
+    emulatorTexture = [self.device newTextureWithDescriptor:textureDescriptor];
     NSAssert(emulatorTexture != nil, @"Failed to create emulator texture");
     if (emulatorTexture == nil) { exit(0); }
  
@@ -92,7 +93,7 @@
                                                       height:2048
                                                    mipmapped:NO];
     textureDescriptorUpscaled.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
-    upscaledTexture = [device newTextureWithDescriptor:textureDescriptorUpscaled];
+    upscaledTexture = [self.device newTextureWithDescriptor:textureDescriptorUpscaled];
     NSAssert(upscaledTexture != nil, @"Failed to create upscaling texture");
     if (upscaledTexture == nil) { exit(0); }
     
@@ -103,10 +104,12 @@
                                                       height:2048
                                                    mipmapped:NO];
     textureDescriptorPP.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
-    filteredTexture = [device newTextureWithDescriptor:textureDescriptorPP];
+    filteredTexture = [self.device newTextureWithDescriptor:textureDescriptorPP];
     NSAssert(filteredTexture != nil, @"Failed to create filtering texture");
     if (filteredTexture == nil) { exit(0); }
 }
+#endif
+
 
 - (void)buildBuffers
 {
@@ -114,16 +117,16 @@
     [self buildVertexBuffer];
     
     // Uniform buffers
-    uniformBuffer2D = [device newBufferWithLength:sizeof(Uniforms) options:0];
-    uniformBuffer3D = [device newBufferWithLength:sizeof(Uniforms) options:0];
-    uniformBufferBg = [device newBufferWithLength:sizeof(Uniforms) options:0];
+    uniformBuffer2D = [self.device newBufferWithLength:sizeof(Uniforms) options:0];
+    uniformBuffer3D = [self.device newBufferWithLength:sizeof(Uniforms) options:0];
+    uniformBufferBg = [self.device newBufferWithLength:sizeof(Uniforms) options:0];
 }
 
 - (void)buildVertexBuffer
 {
     // NSLog(@"MyMetalView::buildVertexBuffer");
     
-    if (!device)
+    if (!self.device)
         return;
 
     const float dx = 0.64;
@@ -208,9 +211,9 @@
         +1, -1, +0, +1,   textureXEnd, textureYEnd, 0,0,
     };
     
-    positionBuffer = [device newBufferWithBytes:positions
-                                         length:sizeof(positions)
-                                        options:MTLResourceOptionCPUCacheModeDefault];
+    positionBuffer = [self.device newBufferWithBytes:positions
+                                              length:sizeof(positions)
+                                            options:MTLResourceOptionCPUCacheModeDefault];
     
     NSAssert(positionBuffer != nil, @"positionBuffer must not be nil");
 }
@@ -219,7 +222,7 @@
 {
     // NSLog(@"MyMetalView::buildDepthBuffer");
     
-    if (!device)
+    if (!self.device)
         return;
     
     // NSUInteger w = (layerWidth < 1) ? 512 : ((layerWidth > 2048) ? 2048 : layerWidth);
@@ -236,7 +239,7 @@
         depthTexDesc.resourceOptions = MTLResourceStorageModePrivate;
         depthTexDesc.usage = MTLTextureUsageRenderTarget;
     }
-    depthTexture = [device newTextureWithDescriptor:depthTexDesc];
+    depthTexture = [self.device newTextureWithDescriptor:depthTexDesc];
 }
 
 - (void)buildPipeline
@@ -257,7 +260,7 @@
         depthDescriptor.depthCompareFunction = MTLCompareFunctionLess;
         depthDescriptor.depthWriteEnabled = YES;
     }
-    depthState = [device newDepthStencilStateWithDescriptor:depthDescriptor];
+    depthState = [self.device newDepthStencilStateWithDescriptor:depthDescriptor];
     
     // Vertex descriptor
     MTLVertexDescriptor *vertexDescriptor = [MTLVertexDescriptor new];
@@ -297,7 +300,7 @@
         renderbufAttachment.destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
         renderbufAttachment.destinationAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
     }
-    pipeline = [device newRenderPipelineStateWithDescriptor:pipelineDescriptor error:&error];
+    pipeline = [self.device newRenderPipelineStateWithDescriptor:pipelineDescriptor error:&error];
     if (!pipeline) {
         NSLog(@"Render pipeline creation failed with error: %@", error);
         exit(0);
