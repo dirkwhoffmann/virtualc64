@@ -5,7 +5,6 @@
 //
 
 #include <metal_stdlib>
-#import "MyMetalDefs.h"
 
 using namespace metal;
 
@@ -15,21 +14,17 @@ using namespace metal;
 //                      Main vertex shader (for drawing the quad)
 // ------------------------------------------------------------------------------------
 
-/*
 struct Uniforms {
     float4x4 modelViewProjection;
     float alpha;
 };
-*/
 
-struct InVertex
-{
+struct InVertex {
     float4 position [[attribute(0)]];
     float2 texCoords [[attribute(1)]];
 };
 
-struct ProjectedVertex
-{
+struct ProjectedVertex {
     float4 position [[position]];
     float2 texCoords [[user(tex_coords)]];
     float  alpha;

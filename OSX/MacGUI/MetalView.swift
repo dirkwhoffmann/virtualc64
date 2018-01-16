@@ -7,10 +7,6 @@
 
 // TODO (Once fully ported to Swift):
 // eyeX,eyeY,eyeZ -> eye : float3
-// Move buildKernels() -> setup
-// startFrame() should return void
-// Remove _ prefix from some variables
-// Get rid of commandBuffer argument in updateTexture
 // Replace textureX etc. by textureRect : CGRect
 
 import Foundation
@@ -52,51 +48,51 @@ public class MetalView: MTKView {
     var semaphore: DispatchSemaphore!
     
     // Metal objects
-    var library: MTLLibrary!
-    var queue: MTLCommandQueue!
-    var pipeline: MTLRenderPipelineState!
-    var depthState: MTLDepthStencilState!
-    var commandBuffer: MTLCommandBuffer!
-    var commandEncoder: MTLRenderCommandEncoder!
-    var drawable: CAMetalDrawable!
+    var library: MTLLibrary! = nil
+    var queue: MTLCommandQueue! = nil
+    var pipeline: MTLRenderPipelineState! = nil
+    var depthState: MTLDepthStencilState! = nil
+    var commandBuffer: MTLCommandBuffer! = nil
+    var commandEncoder: MTLRenderCommandEncoder! = nil
+    var drawable: CAMetalDrawable! = nil
     
     // Metal layer
-    var metalLayer: CAMetalLayer!
+    var metalLayer: CAMetalLayer! = nil
     var layerWidth = CGFloat(0.0)
     var layerHeight = CGFloat(0.0)
     var layerIsDirty = true
     
     // Buffers
-    var positionBuffer: MTLBuffer!
-    var uniformBuffer2D: MTLBuffer!
-    var uniformBuffer3D: MTLBuffer!
-    var uniformBufferBg: MTLBuffer!
+    var positionBuffer: MTLBuffer! = nil
+    var uniformBuffer2D: MTLBuffer! = nil
+    var uniformBuffer3D: MTLBuffer! = nil
+    var uniformBufferBg: MTLBuffer! = nil
     
     //
     // Textures
     //
     
     //! Background image behind the cube
-    var bgTexture: MTLTexture!
+    var bgTexture: MTLTexture! = nil
     
     //! Raw texture data provided by the emulator
     /*! Texture is updated in updateTexture which is called periodically in drawRect */
-    var emulatorTexture: MTLTexture!
+    var emulatorTexture: MTLTexture! = nil
     
     //! Upscaled emulator texture
     /*! In the first post-processing stage, the emulator texture is doubled in size.
      *  The user can choose between simply doubling pixels are applying a smoothing
      *   algorithm such as EPX */
-    var upscaledTexture: MTLTexture!
+    var upscaledTexture: MTLTexture! = nil
     
     //! Filtered emulator texture
     /*! In the second post-processing stage, the upscaled texture gets filtered.
      *  E.g., a CRT filter can be applied to mimic old CRT displays.
      */
-    var filteredTexture: MTLTexture!
+    var filteredTexture: MTLTexture! = nil
     
     //! Texture to hold the pixel depth information
-    var depthTexture: MTLTexture!
+    var depthTexture: MTLTexture! = nil
 
     // All currently supported texture upscalers
     var bypassUpscaler: ComputeKernel?
@@ -142,10 +138,10 @@ public class MetalView: MTKView {
     var textureYEnd = Float(0.0)
     
     // Currently selected texture upscaler
-    @objc public var videoUpscaler = Int(1)
+    @objc public var videoUpscaler = C64Upscaler.none
     
     // Currently selected texture filter
-    @objc public var videoFilter = Int(2)
+    @objc public var videoFilter = C64Filter.smooth
     
     //! If true, no GPU drawing is performed (for performance profiling olny)
     @objc public var enableMetal = false
@@ -172,21 +168,10 @@ public class MetalView: MTKView {
     override open func awakeFromNib() {
 
         NSLog("MyMetalView::awakeFromNib")
-    
+        
         // Create semaphore
         semaphore = DispatchSemaphore(value: 1);
-    
-        positionBuffer = nil
-        uniformBuffer2D = nil
-        uniformBuffer3D = nil
-        uniformBufferBg = nil
-    
-        bgTexture = nil
-        emulatorTexture = nil
-        upscaledTexture = nil
-        filteredTexture = nil
-        depthTexture = nil
-    
+        
         // Check if machine is capable to run the Metal graphics interface
         checkForMetal()
     
@@ -223,12 +208,6 @@ public class MetalView: MTKView {
                                width: CGFloat(PAL_CANVAS_WIDTH + 2 * 36),
                                height: CGFloat(PAL_CANVAS_HEIGHT + 2 * 34))
             
-            /*
-            textureXStart = Float(PAL_LEFT_BORDER_WIDTH - 36) / Float(C64Texture.orig.width)
-            textureXEnd = Float(PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + 36) / Float(C64Texture.orig.width)
-            textureYStart = Float(PAL_UPPER_BORDER_HEIGHT - 34) / Float(C64Texture.orig.height)
-            textureYEnd = Float(PAL_UPPER_BORDER_HEIGHT + PAL_CANVAS_HEIGHT + 34) / Float(C64Texture.orig.height)
-            */
         } else {
     
             // NTSC border will be 42 pixels wide and 9 pixels heigh
@@ -243,14 +222,6 @@ public class MetalView: MTKView {
         textureYStart = Float(rect.minY / C64Texture.orig.height)
         textureYEnd = Float(rect.maxY / C64Texture.orig.height)
         
-        /*
-            textureXStart = Float(NTSC_LEFT_BORDER_WIDTH - 42) / Float(C64Texture.orig.width)
-            textureXEnd = Float(NTSC_LEFT_BORDER_WIDTH + NTSC_CANVAS_WIDTH + 42) / Float(C64Texture.orig.width)
-            textureYStart = Float(NTSC_UPPER_BORDER_HEIGHT - 9) / Float(C64Texture.orig.height)
-            textureYEnd = Float(NTSC_UPPER_BORDER_HEIGHT + NTSC_CANVAS_HEIGHT + 9) / Float(C64Texture.orig.height)
-         */
-
-    
         // Enable this for debugging (will display the whole texture)
         // textureXStart = 0.0;
         // textureXEnd = 1.0;
@@ -261,9 +232,9 @@ public class MetalView: MTKView {
         buildVertexBuffer()
     }
     
-    @objc public func updateTexture(cmdBuffer : MTLCommandBuffer?) {
+    func updateTexture() {
     
-        if c64proxy == nil || cmdBuffer == nil {
+        if c64proxy == nil {
             return
         }
     
@@ -285,31 +256,8 @@ public class MetalView: MTKView {
                                 bytesPerImage: imageBytes)
     }
     
-
-    
-    // MOVE TO SETUP
-    internal func buildKernels() {
-        
-        precondition(device != nil)
-        precondition(library != nil)
-        
-        // Build upscalers
-        bypassUpscaler = BypassUpscaler.init(device: device!, library: library)
-        epxUpscaler = EPXUpscaler.init(device: device!, library: library)
-        xbrUpscaler = XBRUpscaler.init(device: device!, library: library)
-    
-        // Build filters
-        bypassFilter = BypassFilter.init(device: device!, library: library)
-        smoothFilter = SaturationFilter.init(device: device!, library: library, factor: 1.0)
-        blurFilter = BlurFilter.init(device: device!, library: library, radius: 2.0)
-        saturationFilter = SaturationFilter.init(device: device!, library: library, factor: 1.0)
-        sepiaFilter = SepiaFilter.init(device: device!, library: library)
-        grayscaleFilter = SaturationFilter.init(device: device!, library: library, factor: 0.0)
-        crtFilter = CrtFilter.init(device: device!, library: library)
-    }
-
     //! Returns the compute kernel of the currently selected upscaler
-    internal func currentUpscaler() -> ComputeKernel {
+    func currentUpscaler() -> ComputeKernel {
     
         precondition(bypassUpscaler != nil)
         
@@ -324,7 +272,7 @@ public class MetalView: MTKView {
     }
     
     //! Returns the compute kernel of the currently selected postprocessing filer
-    internal func currentFilter() -> ComputeKernel {
+    func currentFilter() -> ComputeKernel {
         
         precondition(bypassFilter != nil)
         
@@ -342,7 +290,7 @@ public class MetalView: MTKView {
         }
     }
     
-    @objc public func startFrame() {
+    func startFrame() {
     
         commandBuffer = queue.makeCommandBuffer()
         precondition(commandBuffer != nil, "Command buffer must not be nil")
@@ -380,7 +328,7 @@ public class MetalView: MTKView {
         commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
     }
     
-    @objc public func drawScene2D() {
+    func drawScene2D() {
     
         startFrame()
     
@@ -394,7 +342,7 @@ public class MetalView: MTKView {
         endFrame()
     }
     
-    @objc public func drawScene3D() {
+    func drawScene3D() {
     
         let animates = self.animates()
         let drawBackground = !fullscreen && (animates || !drawC64texture)
@@ -433,23 +381,21 @@ public class MetalView: MTKView {
         endFrame()
     }
 
-    @objc public func endFrame() {
+    func endFrame() {
     
         commandEncoder.endEncoding()
     
-        let block_sema = semaphore
-        
         commandBuffer.addCompletedHandler { cb in
-            block_sema?.signal()
+            self.semaphore.signal()
         }
-            
-        // if (drawable) {
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
-        // }
+        
+        if (drawable != nil) {
+            commandBuffer.present(drawable)
+            commandBuffer.commit()
+        }
     }
     
-    override open func setFrameSize(_ newSize: NSSize) {
+    override public func setFrameSize(_ newSize: NSSize) {
         
         super.setFrameSize(newSize)
         layerIsDirty = true
@@ -490,7 +436,7 @@ public class MetalView: MTKView {
         buildDepthBuffer()
     }
     
-    override open func draw(_ rect: NSRect) {
+    override public func draw(_ rect: NSRect) {
         
         if c64proxy == nil || !enableMetal {
             return
@@ -509,7 +455,7 @@ public class MetalView: MTKView {
         // Draw scene
         drawable = metalLayer.nextDrawable()
         if (drawable != nil) {
-            updateTexture(cmdBuffer: commandBuffer)
+            updateTexture()
             if fullscreen && !fullscreenKeepAspectRatio {
                 drawScene2D()
             } else {

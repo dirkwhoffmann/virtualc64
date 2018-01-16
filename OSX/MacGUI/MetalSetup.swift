@@ -38,7 +38,7 @@ public extension MetalView {
         enableMetal = true
     }
     
-    @objc public func buildMetal() {
+    func buildMetal() {
     
     NSLog("MyMetalView::buildMetal")
     
@@ -105,7 +105,27 @@ public extension MetalView {
         precondition(filteredTexture != nil, "Failed to create filtering texture")
     }
     
-    @objc func buildBuffers() {
+    internal func buildKernels() {
+        
+        precondition(device != nil)
+        precondition(library != nil)
+        
+        // Build upscalers
+        bypassUpscaler = BypassUpscaler.init(device: device!, library: library)
+        epxUpscaler = EPXUpscaler.init(device: device!, library: library)
+        xbrUpscaler = XBRUpscaler.init(device: device!, library: library)
+        
+        // Build filters
+        bypassFilter = BypassFilter.init(device: device!, library: library)
+        smoothFilter = SaturationFilter.init(device: device!, library: library, factor: 1.0)
+        blurFilter = BlurFilter.init(device: device!, library: library, radius: 2.0)
+        saturationFilter = SaturationFilter.init(device: device!, library: library, factor: 1.0)
+        sepiaFilter = SepiaFilter.init(device: device!, library: library)
+        grayscaleFilter = SaturationFilter.init(device: device!, library: library, factor: 0.0)
+        crtFilter = CrtFilter.init(device: device!, library: library)
+    }
+    
+    func buildBuffers() {
     
         // Vertex buffer
         buildVertexBuffer()
@@ -156,7 +176,7 @@ public extension MetalView {
         fillAlpha(buffer, alpha)
     }
     
-    @objc public func buildMatricesBg() {
+    func buildMatricesBg() {
         
         let model  = matrix_identity_float4x4
         let view   = matrix_identity_float4x4
@@ -169,7 +189,7 @@ public extension MetalView {
         fillBuffer(uniformBufferBg, matrix: proj * view * model, alpha: 1.0)
     }
     
-    @objc public func buildMatrices2D() {
+    func buildMatrices2D() {
     
         let model = matrix_identity_float4x4
         let view  = matrix_identity_float4x4
@@ -178,7 +198,7 @@ public extension MetalView {
         fillBuffer(uniformBuffer2D, matrix: proj * view * model, alpha: 1.0)
     }
     
-    @objc public func buildMatrices3D() {
+    func buildMatrices3D() {
     
         var model  = matrix_from_translation(x: -currentEyeX,
                                              y: -currentEyeY,
@@ -204,7 +224,7 @@ public extension MetalView {
         fillBuffer(uniformBuffer3D, matrix: proj * view * model, alpha: currentAlpha)
     }
 
-    @objc public func buildVertexBuffer() {
+    func buildVertexBuffer() {
     
         if device == nil {
             return
@@ -311,7 +331,7 @@ public extension MetalView {
         precondition(positionBuffer != nil, "positionBuffer must not be nil")
     }
  
-    @objc public func buildDepthBuffer() {
+    func buildDepthBuffer() {
         
         if device == nil {
             return
@@ -339,7 +359,7 @@ public extension MetalView {
         precondition(depthTexture != nil, "Failed to create depth texture")
     }
     
-    @objc public func buildPipeline() {
+    func buildPipeline() {
     
         NSLog("MyMetalView::buildPipeline");
     

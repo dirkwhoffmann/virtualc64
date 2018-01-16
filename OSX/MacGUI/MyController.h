@@ -300,7 +300,6 @@ typedef unsigned long MacKeyFingerprint;
 }
 
 @property (strong) C64Proxy *c64;
-@property (strong,readonly) MyMetalView *metalScreen;
 @property (readonly) GamePadManager *gamePadManager;
 @property INPUT_DEVICES inputDeviceA;
 @property INPUT_DEVICES inputDeviceB;
@@ -325,7 +324,7 @@ typedef unsigned long MacKeyFingerprint;
 - (void)restoreFactorySettingsKeyboard;
 
 // MetalView API
-- (bool)fullscreen;
+- (BOOL)fullscreen;
 - (NSImage *)screenshot;
 - (void)rotateBack;
 - (void)shrink;

@@ -426,9 +426,9 @@
 //                                Metal screen API
 // --------------------------------------------------------------------------------
 
-- (bool)fullscreen { return [metalScreen fullscreen]; }
+- (BOOL)fullscreen { return [metalScreen fullscreen]; }
 - (NSImage *)screenshot { return [metalScreen screenshot]; }
-- (void)rotateBack { [metalScreen rotate]; }
+- (void)rotateBack { [metalScreen rotateBack]; }
 - (void)shrink { [metalScreen shrink]; }
 - (void)expand { [metalScreen expand]; }
 - (float)eyeX { return [metalScreen eyeX]; }
