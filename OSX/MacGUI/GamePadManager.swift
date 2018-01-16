@@ -105,9 +105,9 @@
         return slotNr
     }
     
-    //! @brief   Returns true iff the specified game pad slot is assigned a game pad
+    //! @brief   Returns true iff the specified game pad slot is free
     @objc public func gamePadSlotIsEmpty(_ nr: Int) -> Bool {
-        return gamePads[nr] != nil;
+        return gamePads[nr] == nil;
     }
  
     //! @brief   Plugs a game pad into the specified control port
@@ -141,7 +141,7 @@
      */
     @objc func slotOfGamePadAttachedToPort(_ port: JoystickProxy) -> Int {
         
-        NSLog("\(#function)")
+        // NSLog("\(#function)")
         
         for (slotNr, device) in gamePads {
             if (device.joystick != nil && device.joystick == port) {
@@ -249,7 +249,6 @@
         let status = IOHIDDeviceClose(device, IOOptionBits(kIOHIDOptionsTypeSeizeDevice))
         if (status != 0) {
             NSLog("WARNING: Cannot close HID device")
-            return
         }
         
         // Inform emulator
@@ -262,7 +261,7 @@
     func listDevices() {
         
         for (slotNr, device) in gamePads {
-            if (device.locationID == "") {
+            if (device.locationID == nil) {
                 NSLog("Game pad slot %d: Keyboard emulated device", slotNr)
             } else {
                 NSLog("Game pad slot %d: HID USB joystick", slotNr)

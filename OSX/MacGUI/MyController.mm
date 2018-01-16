@@ -282,7 +282,6 @@
     [defaultValues setObject:@YES forKey:VC64BitAccuracyKey];
 
     // Joysticks
-    // [KeyboardController registerStandardUserDefaults];
     [GamePadManager registerStandardUserDefaults];
 
 	// Audio

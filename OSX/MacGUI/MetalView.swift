@@ -199,7 +199,7 @@ public class MetalView: MTKView {
     
         var rect: CGRect
         
-        NSLog("MyMetalView::updateScreenGeometry")
+        // NSLog("MyMetalView::updateScreenGeometry")
         
         if c64proxy?.isPAL() == true {
     

@@ -49,33 +49,36 @@
 	}
     
     // All other items
+    
     return YES;
+}
+
+- (void)validateJoystickPortA
+{
+    NSMenuItem *item1 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_1];
+    NSMenuItem *item2 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_2];
+    [item1 setEnabled:![gamePadManager gamePadSlotIsEmpty:2]];
+    [item2 setEnabled:![gamePadManager gamePadSlotIsEmpty:3]];
+    
+    NSInteger slotNr = [gamePadManager slotOfGamePadAttachedToPort:[c64 joystickA]];
+    [joystickPortA selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
+}
+
+- (void)validateJoystickPortB
+{
+    NSMenuItem *item1 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_1];
+    NSMenuItem *item2 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_2];
+    [item1 setEnabled:![gamePadManager gamePadSlotIsEmpty:2]];
+    [item2 setEnabled:![gamePadManager gamePadSlotIsEmpty:3]];
+    
+    NSInteger slotNr = [gamePadManager slotOfGamePadAttachedToPort:[c64 joystickB]];
+    [joystickPortB selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
 }
 
 - (void)validateJoystickItems
 {
-    /* Jostick port 1 */
-    {
-        NSMenuItem *item1 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_1];
-        NSMenuItem *item2 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_2];
-        [item1 setEnabled:[gamePadManager gamePadSlotIsEmpty:2]];
-        [item2 setEnabled:[gamePadManager gamePadSlotIsEmpty:3]];
-
-        NSInteger slotNr = [gamePadManager slotOfGamePadAttachedToPort:[c64 joystickA]];
-        [joystickPortA selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
-        
-    }
-    
-    /* Jostick port 2 */
-    {
-        NSMenuItem *item1 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_1];
-        NSMenuItem *item2 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_2];
-        [item1 setEnabled:[gamePadManager gamePadSlotIsEmpty:2]];
-        [item2 setEnabled:[gamePadManager gamePadSlotIsEmpty:3]];
-
-        NSInteger slotNr = [gamePadManager slotOfGamePadAttachedToPort:[c64 joystickB]];
-        [joystickPortB selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
-     }
+    [self validateJoystickPortA];
+    [self validateJoystickPortB];
 }
 
 - (void) setupToolbarIcons
@@ -85,7 +88,6 @@
     [joystickPortB selectItemAtIndex:0];
     [self validateJoystickItems];
 }
-
 
 - (void) printDocument:(id) sender
 {

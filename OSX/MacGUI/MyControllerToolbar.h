@@ -41,5 +41,7 @@
 
 // Custom toobar validation
 - (void)validateJoystickItems;
+- (void)validateJoystickPortA;
+- (void)validateJoystickPortB;
 
 @end
