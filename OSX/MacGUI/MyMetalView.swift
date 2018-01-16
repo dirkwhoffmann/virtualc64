@@ -58,6 +58,45 @@ struct C64Filter {
 
 public extension MyMetalView {
     
+    override open func awakeFromNib() {
+
+        NSLog("MyMetalView::awakeFromNib")
+    
+        // Create semaphore
+        semaphore = DispatchSemaphore(value: 1);
+    
+        // Set initial scene position and drawing properties
+        initAnimation()
+    
+        // Properties
+        enableMetal = false
+        fullscreen = false
+        fullscreenKeepAspectRatio = true
+        drawC64texture = false
+    
+        // Metal
+        layerWidth = 0
+        layerHeight = 0
+        layerIsDirty = true
+    
+        positionBuffer = nil
+        uniformBuffer2D = nil
+        uniformBuffer3D = nil
+        uniformBufferBg = nil
+    
+        bgTexture = nil
+        emulatorTexture = nil
+        upscaledTexture = nil
+        filteredTexture = nil
+        depthTexture = nil
+    
+        // Check if machine is capable to run the Metal graphics interface
+        checkForMetal()
+    
+        // Register for drag and drop
+        setupDragAndDrop()
+    }
+    
     //! Adjusts view height by a certain number of pixels
     func adjustHeight(_ height: CGFloat) {
     
