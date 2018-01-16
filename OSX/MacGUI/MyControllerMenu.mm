@@ -84,7 +84,7 @@
     NSURL *url = [sPanel URL];
     NSLog(@"Saving screenshot to file %@", url);
 		
-    NSImage *image = [metalScreen screenshot];
+    NSImage *image = [self screenshot];
     NSData *data = [image TIFFRepresentation];
     [data writeToURL:url atomically:YES];
 }
@@ -98,7 +98,7 @@
     
     NSLog(@"Quicksaving screenshot to file %@", url);
     
-    NSImage *image = [metalScreen screenshot];
+    NSImage *image = [self screenshot];
     NSData *data = [image TIFFRepresentation];
     [data writeToURL:url atomically:YES];
 }
@@ -191,7 +191,7 @@
 - (IBAction)resetAction:(id)sender
 {
 	[[self document] updateChangeCount:NSChangeDone];
-    [metalScreen rotateBack];
+    [self rotateBack];
 	[c64 reset];
 	[self continueAction:self];
 }
@@ -232,7 +232,7 @@
     [clockSpeedBar setHidden:NO];
     [warpIcon setHidden:NO];
     
-    [metalScreen shrink];
+    [self shrink];
     [[self window] setContentBorderThickness:24 forEdge: NSMinYEdge];
     [self adjustWindowSize];
     statusBar = YES;
@@ -261,7 +261,7 @@
     [clockSpeedBar setHidden:YES];
     [warpIcon setHidden:YES];
     
-    [metalScreen expand];
+    [self expand];
     [[self window] setContentBorderThickness:0 forEdge: NSMinYEdge];
     [self adjustWindowSize];
     statusBar = NO;

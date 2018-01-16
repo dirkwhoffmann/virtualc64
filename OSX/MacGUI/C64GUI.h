@@ -27,9 +27,6 @@
 
 #import "Disassembler.h"
 #import "Formatter.h"
-
-#import "MyMetalView.h"
-
 #import "ROMDropTargetView.h"
 #import "CpuTableView.h"
 #import "MemTableView.h"

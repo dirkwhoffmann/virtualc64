@@ -98,7 +98,7 @@ class KeyboardController: NSObject {
     @objc public func keyDown(with event: NSEvent)
     {
         // Exit fullscreen mode if ESC is pressed
-        if (event.keyCode == MacKeys.ESC && controller.metalScreen.fullscreen) {
+        if (event.keyCode == MacKeys.ESC && controller.fullscreen()) {
             controller.window!.toggleFullScreen(nil)
         }
         

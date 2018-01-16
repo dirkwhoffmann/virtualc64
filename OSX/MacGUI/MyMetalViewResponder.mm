@@ -20,6 +20,7 @@
 #import "C64GUI.h"
 #import "VirtualC64-Swift.h"
 
+#if 0
 @implementation MyMetalView(Responder)
 
 
@@ -53,6 +54,6 @@
 }
 
 @end
-
+#endif
 
 

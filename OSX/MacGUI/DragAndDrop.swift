@@ -13,7 +13,7 @@ struct DragType {
     static let filenames = NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")
 }
 
-public extension MyMetalView {
+public extension MetalView {
     
     //! Returns a list of supported drag and drop types
     func acceptedTypes() -> [NSPasteboard.PasteboardType] {
@@ -22,12 +22,12 @@ public extension MyMetalView {
     }
     
     //! Register supported drag and drop types
-    @objc public func setupDragAndDrop() {
+    func setupDragAndDrop() {
     
         registerForDraggedTypes(acceptedTypes())
     }
 
-    @objc public func swiftDraggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+    override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         
         let pasteBoard = sender.draggingPasteboard()
         guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
@@ -57,18 +57,17 @@ public extension MyMetalView {
         }
     }
     
-    @objc public func swiftDraggingExited(_ sender: NSDraggingInfo?) {
+    override func draggingExited(_ sender: NSDraggingInfo?) {
     
     }
     
-    @objc public func swiftPrepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
+    override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
         
         return true
     }
     
-    @objc public func swiftPerformDragOperation(_ sender: NSDraggingInfo,
-                                                controller: MyController) -> Bool {
-    
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        
         let document = controller.document as! MyDocument
         
         let pasteBoard = sender.draggingPasteboard()
@@ -171,7 +170,7 @@ public extension MyMetalView {
     return false
     }
     
-    @objc public func swiftconcludeDragOperation(_ sender: NSDraggingInfo?) {
+    override func concludeDragOperation(_ sender: NSDraggingInfo?) {
         
     }
 }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-public extension MyMetalView {
-    
+public extension MetalView {
+    /*
     @objc public func initAnimation() {
         
         currentEyeX   = 0.0
@@ -33,6 +33,7 @@ public extension MyMetalView {
         targetAlpha   = 0.0
         deltaAlpha    = 0.0
     }
+    */
     
     //! Returns true iff an animation is in progress
     @objc public func animates() -> Bool {

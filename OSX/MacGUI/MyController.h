@@ -69,7 +69,6 @@ typedef unsigned long MacKeyFingerprint;
     IBOutlet NSPopUpButton *joystickPortB;
 
     // Main screen
-    IBOutlet MyMetalView *metalScreen;
 	IBOutlet NSDrawer *debugPanel;
 	IBOutlet NSDrawer *cheatboxPanel;
     
@@ -325,6 +324,26 @@ typedef unsigned long MacKeyFingerprint;
 - (void)saveVirtualMachineUserDefaults;
 - (void)restoreFactorySettingsKeyboard;
 
+// MetalView API
+- (bool)fullscreen;
+- (NSImage *)screenshot;
+- (void)rotateBack;
+- (void)shrink;
+- (void)expand;
+- (float)eyeX;
+- (void)setEyeX:(float)x;
+- (float)eyeY;
+- (void)setEyeY:(float)y;
+- (float)eyeZ;
+- (void)setEyeZ:(float)z;
+- (long)videoUpscaler;
+- (void)setVideoUpscaler:(long)val;
+- (long)videoFilter;
+- (void)setVideoFilter:(long)val;
+- (BOOL)fullscreenKeepAspectRatio;
+- (void)setFullscreenKeepAspectRatio:(BOOL)val;
+ 
+ 
 // Timer and message processing
 - (void)timerFunc;
 - (void)processMessage:(Message *)msg;

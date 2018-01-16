@@ -14,21 +14,8 @@
 // Replace textureX etc. by textureRect : CGRect
 
 import Foundation
-
-// All currently supported texture upscalers
-var bypassUpscaler: ComputeKernel?
-var epxUpscaler: ComputeKernel?
-var xbrUpscaler: ComputeKernel?
-
-// All currently supported texture filters
-var bypassFilter: ComputeKernel?
-var smoothFilter: ComputeKernel?
-var blurFilter: ComputeKernel?
-var saturationFilter: ComputeKernel?
-var sepiaFilter: ComputeKernel?
-var grayscaleFilter: ComputeKernel?
-var crtFilter: ComputeKernel?
-
+import Metal
+import MetalKit
 
 struct Sizeof {
     static let float = 4
@@ -56,7 +43,131 @@ struct C64Filter {
     static let crt = 7
 }
 
-public extension MyMetalView {
+public class MetalView: MTKView {
+    
+    @IBOutlet var controller: MyController!
+    @IBOutlet var c64proxy: C64Proxy!
+    
+    // Synchronization semaphore
+    var semaphore: DispatchSemaphore!
+    
+    // Metal objects
+    var library: MTLLibrary!
+    var queue: MTLCommandQueue!
+    var pipeline: MTLRenderPipelineState!
+    var depthState: MTLDepthStencilState!
+    var commandBuffer: MTLCommandBuffer!
+    var commandEncoder: MTLRenderCommandEncoder!
+    var drawable: CAMetalDrawable!
+    
+    // Metal layer
+    var metalLayer: CAMetalLayer!
+    var layerWidth = CGFloat(0.0)
+    var layerHeight = CGFloat(0.0)
+    var layerIsDirty = true
+    
+    // Buffers
+    var positionBuffer: MTLBuffer!
+    var uniformBuffer2D: MTLBuffer!
+    var uniformBuffer3D: MTLBuffer!
+    var uniformBufferBg: MTLBuffer!
+    
+    //
+    // Textures
+    //
+    
+    //! Background image behind the cube
+    var bgTexture: MTLTexture!
+    
+    //! Raw texture data provided by the emulator
+    /*! Texture is updated in updateTexture which is called periodically in drawRect */
+    var emulatorTexture: MTLTexture!
+    
+    //! Upscaled emulator texture
+    /*! In the first post-processing stage, the emulator texture is doubled in size.
+     *  The user can choose between simply doubling pixels are applying a smoothing
+     *   algorithm such as EPX */
+    var upscaledTexture: MTLTexture!
+    
+    //! Filtered emulator texture
+    /*! In the second post-processing stage, the upscaled texture gets filtered.
+     *  E.g., a CRT filter can be applied to mimic old CRT displays.
+     */
+    var filteredTexture: MTLTexture!
+    
+    //! Texture to hold the pixel depth information
+    var depthTexture: MTLTexture!
+
+    // All currently supported texture upscalers
+    var bypassUpscaler: ComputeKernel?
+    var epxUpscaler: ComputeKernel?
+    var xbrUpscaler: ComputeKernel?
+
+    // All currently supported texture filters
+    var bypassFilter: ComputeKernel?
+    var smoothFilter: ComputeKernel?
+    var blurFilter: ComputeKernel?
+    var saturationFilter: ComputeKernel?
+    var sepiaFilter: ComputeKernel?
+    var grayscaleFilter: ComputeKernel?
+    var crtFilter: ComputeKernel?
+
+    // Animation parameters
+    var currentXAngle = Float(0.0)
+    var targetXAngle = Float(0.0)
+    var deltaXAngle = Float(0.0)
+    var currentYAngle = Float(0.0)
+    var targetYAngle = Float(0.0)
+    var deltaYAngle = Float(0.0)
+    var currentZAngle = Float(0.0)
+    var targetZAngle = Float(0.0)
+    var deltaZAngle = Float(0.0)
+    var currentEyeX = Float(0.0)
+    var targetEyeX = Float(0.0)
+    var deltaEyeX = Float(0.0)
+    var currentEyeY = Float(0.0)
+    var targetEyeY = Float(0.0)
+    var deltaEyeY = Float(0.0)
+    var currentEyeZ = Float(0.0)
+    var targetEyeZ = Float(0.0)
+    var deltaEyeZ = Float(0.0)
+    var currentAlpha = Float(0.0)
+    var targetAlpha = Float(0.0)
+    var deltaAlpha = Float(0.0)
+    
+    // Texture cut-out (first and last visible texture coordinates)
+    var textureXStart = Float(0.0)
+    var textureXEnd = Float(0.0)
+    var textureYStart = Float(0.0)
+    var textureYEnd = Float(0.0)
+    
+    // Currently selected texture upscaler
+    @objc public var videoUpscaler = Int(1)
+    
+    // Currently selected texture filter
+    @objc public var videoFilter = Int(2)
+    
+    //! If true, no GPU drawing is performed (for performance profiling olny)
+    @objc public var enableMetal = false
+    
+    //! Is set to true when fullscreen mode is entered (usually enables the 2D renderer)
+    @objc public var fullscreen = false
+    
+    //! If true, the 3D renderer is also used in fullscreen mode
+    @objc public var fullscreenKeepAspectRatio = true
+    
+    //! If false, the C64 screen is not drawn (background texture will be visible)
+    @objc public var drawC64texture = false
+    
+    required public init(coder: NSCoder) {
+    
+        super.init(coder: coder)
+    }
+    
+    required public override init(frame frameRect: CGRect, device: MTLDevice?) {
+        
+        super.init(frame: frameRect, device: device)
+    }
     
     override open func awakeFromNib() {
 
@@ -64,20 +175,6 @@ public extension MyMetalView {
     
         // Create semaphore
         semaphore = DispatchSemaphore(value: 1);
-    
-        // Set initial scene position and drawing properties
-        initAnimation()
-    
-        // Properties
-        enableMetal = false
-        fullscreen = false
-        fullscreenKeepAspectRatio = true
-        drawC64texture = false
-    
-        // Metal
-        layerWidth = 0
-        layerHeight = 0
-        layerIsDirty = true
     
         positionBuffer = nil
         uniformBuffer2D = nil
@@ -115,6 +212,8 @@ public extension MyMetalView {
     @objc public func updateScreenGeometry() {
     
         var rect: CGRect
+        
+        NSLog("MyMetalView::updateScreenGeometry")
         
         if c64proxy?.isPAL() == true {
     

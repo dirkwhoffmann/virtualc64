@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension MyMetalView {
+public extension MetalView {
 
     func checkForMetal() {
         

@@ -83,13 +83,13 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     [controller restoreFactorySettingsKeyboard];
     
     // Video
-    [[controller metalScreen] setEyeX:(float)0.0];
-    [[controller metalScreen] setEyeY:(float)0.0];
-    [[controller metalScreen] setEyeZ:(float)0.0];
+    [controller setEyeX:(float)0.0];
+    [controller setEyeY:(float)0.0];
+    [controller setEyeZ:(float)0.0];
     [[c64 vic] setColorScheme:VICE];
-    [[controller metalScreen] setVideoUpscaler:1];
-    [[controller metalScreen] setVideoFilter:2];
-    [[controller metalScreen] setFullscreenKeepAspectRatio:NO];
+    [controller setVideoUpscaler:1];
+    [controller setVideoFilter:2];
+    [controller setFullscreenKeepAspectRatio:NO];
     
     
     [self update];
@@ -123,26 +123,26 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 - (IBAction)setUpscalerAction:(id)sender
 {
     long upscaler = [[sender selectedItem] tag];
-    [[controller metalScreen] setVideoUpscaler:upscaler];
+    [controller setVideoUpscaler:upscaler];
     [self update];
 }
 
 - (IBAction)setFilterAction:(id)sender
 {
     long filter = [[sender selectedItem] tag];
-    [[controller metalScreen] setVideoFilter:filter];
+    [controller setVideoFilter:filter];
     [self update];
 }
 
 - (IBAction)setEyeXAction:(id)sender
 {
-    [[controller metalScreen] setEyeX:[sender floatValue]];
+    [controller setEyeX:[sender floatValue]];
     [self update];
 }
 
 - (IBAction)setEyeYAction:(id)sender
 {
-    [[controller metalScreen] setEyeY:[sender floatValue]];
+    [controller setEyeY:[sender floatValue]];
     [self update];
 }
 
@@ -150,7 +150,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 {
     NSLog(@"setEyeZAction");
     
-    [[controller metalScreen] setEyeZ:[sender floatValue]];
+    [controller setEyeZ:[sender floatValue]];
     [self update];
 }
 
@@ -158,8 +158,8 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 {
     NSLog(@"setFullscreenAspectRatio");
     
-    [[controller metalScreen] setFullscreenKeepAspectRatio:[(NSButton *)sender state]];
-    NSLog(@"ar: %d", [[controller metalScreen] fullscreenKeepAspectRatio]);
+    [controller setFullscreenKeepAspectRatio:[(NSButton *)sender state]];
+    NSLog(@"ar: %d", [controller fullscreenKeepAspectRatio]);
     [self update];
 }
 
@@ -232,14 +232,14 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     [self updateKeymap:2 direction:JoystickDirection(FIRE) button:fire2button text:fire2];
     
 	/* Video */
-    [upscaler selectItemWithTag:[[controller metalScreen] videoUpscaler]];
-    [filter selectItemWithTag:[[controller metalScreen] videoFilter]];
+    [upscaler selectItemWithTag:[controller videoUpscaler]];
+    [filter selectItemWithTag:[controller videoFilter]];
     [colorScheme selectItemWithTag:[[c64 vic] colorScheme]];
 
-    [eyeXSlider setFloatValue:[[controller metalScreen] eyeX]];
-    [eyeYSlider setFloatValue:[[controller metalScreen] eyeY]];
-    [eyeZSlider setFloatValue:[[controller metalScreen] eyeZ]];
-    [aspectRatioButton setState:[[controller metalScreen] fullscreenKeepAspectRatio]];
+    [eyeXSlider setFloatValue:[controller eyeX]];
+    [eyeYSlider setFloatValue:[controller eyeY]];
+    [eyeZSlider setFloatValue:[controller eyeZ]];
+    [aspectRatioButton setState:[controller fullscreenKeepAspectRatio]];
     
     [colorWell0 setColor:[[c64 vic] color:0]];
 	[colorWell1 setColor:[[c64 vic] color:1]];

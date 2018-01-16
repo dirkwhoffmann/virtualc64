@@ -105,7 +105,7 @@
 	
 	// Image view
     NSSize paperSize = [myPrintInfo paperSize];
-    NSImage *image = [metalScreen screenshot];
+    NSImage *image = [self screenshot];
 	// NSRect printRect = NSMakeRect(0.0, 0.0, [image size].width, [image size].height);
     NSRect printRect = NSMakeRect(0.0, 0.0, paperSize.width, paperSize.height);
     NSImageView *imageView = [[NSImageView alloc] initWithFrame:printRect];

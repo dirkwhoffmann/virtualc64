@@ -26,7 +26,7 @@
 @class C64Proxy;
 @class SnapshotProxy;
 @class D64ArchiveProxy; 
-@class MyMetalView;
+// @class MyMetalView;
 @class ArchiveProxy;
 @class TAPContainerProxy;
 @class CartridgeProxy;
@@ -578,7 +578,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
     long colorScheme;
 }
 
-@property (strong,readonly) MyMetalView *metalScreen;
+// @property (strong,readonly) MyMetalView *metalScreen;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;
 @property (readonly) VICProxy *vic;
