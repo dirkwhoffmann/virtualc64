@@ -252,7 +252,11 @@ public extension MetalView {
         let bgx = Float(6.4)
         let bgy = Float(4.8)
         let bgz = Float(-6.8)
-    
+        let upperLeft = float2(Float(textureRect.minX), Float(textureRect.maxY))
+        let upperRight = float2(Float(textureRect.maxX), Float(textureRect.maxY))
+        let lowerLeft = float2(Float(textureRect.minX), Float(textureRect.minY))
+        let lowerRight = float2(Float(textureRect.maxX), Float(textureRect.minY))
+
         // Background
         setVertex(0, float3(-bgx, +bgy, -bgz), float2(0.0, 0.0))
         setVertex(1, float3(-bgx, -bgy, -bgz), float2(0.0, 1.0))
@@ -263,67 +267,67 @@ public extension MetalView {
         setVertex(5, float3(+bgx, -bgy, -bgz), float2(1.0, 1.0))
     
         // -Z
-        setVertex(6, float3(-dx, +dy, -dz), float2(textureXStart, textureYStart))
-        setVertex(7, float3(-dx, -dy, -dz), float2(textureXStart, textureYEnd))
-        setVertex(8, float3(+dx, -dy, -dz), float2(textureXEnd, textureYEnd))
+        setVertex(6, float3(-dx, +dy, -dz), lowerLeft)
+        setVertex(7, float3(-dx, -dy, -dz), upperLeft)
+        setVertex(8, float3(+dx, -dy, -dz), upperRight)
     
-        setVertex(9, float3(-dx, +dy, -dz), float2(textureXStart, textureYStart))
-        setVertex(10, float3(+dx, +dy, -dz), float2(textureXEnd, textureYStart))
-        setVertex(11, float3(+dx, -dy, -dz), float2(textureXEnd, textureYEnd))
+        setVertex(9, float3(-dx, +dy, -dz), lowerLeft)
+        setVertex(10, float3(+dx, +dy, -dz), lowerRight)
+        setVertex(11, float3(+dx, -dy, -dz), upperRight)
     
         // +Z
-        setVertex(12, float3(-dx, +dy, +dz), float2(textureXEnd, textureYStart))
-        setVertex(13, float3(-dx, -dy, +dz), float2(textureXEnd, textureYEnd))
-        setVertex(14, float3(+dx, -dy, +dz), float2(textureXStart, textureYEnd))
+        setVertex(12, float3(-dx, +dy, +dz), lowerRight)
+        setVertex(13, float3(-dx, -dy, +dz), upperRight)
+        setVertex(14, float3(+dx, -dy, +dz), upperLeft)
     
-        setVertex(15, float3(-dx, +dy, +dz), float2(textureXEnd, textureYStart))
-        setVertex(16, float3(+dx, +dy, +dz), float2(textureXStart, textureYStart))
-        setVertex(17, float3(+dx, -dy, +dz), float2(textureXStart, textureYEnd))
+        setVertex(15, float3(-dx, +dy, +dz), lowerRight)
+        setVertex(16, float3(+dx, +dy, +dz), lowerLeft)
+        setVertex(17, float3(+dx, -dy, +dz), upperLeft)
     
         // -X
-        setVertex(18, float3(-dx, +dy, -dz), float2(textureXEnd, textureYStart))
-        setVertex(19, float3(-dx, -dy, -dz), float2(textureXEnd, textureYEnd))
-        setVertex(20, float3(-dx, -dy, +dz), float2(textureXStart, textureYEnd))
+        setVertex(18, float3(-dx, +dy, -dz), lowerRight)
+        setVertex(19, float3(-dx, -dy, -dz), upperRight)
+        setVertex(20, float3(-dx, -dy, +dz), upperLeft)
     
-        setVertex(21, float3(-dx, +dy, -dz), float2(textureXEnd, textureYStart))
-        setVertex(22, float3(-dx, +dy, +dz), float2(textureXStart, textureYStart))
-        setVertex(23, float3(-dx, -dy, +dz), float2(textureXStart, textureYEnd))
+        setVertex(21, float3(-dx, +dy, -dz), lowerRight)
+        setVertex(22, float3(-dx, +dy, +dz), lowerLeft)
+        setVertex(23, float3(-dx, -dy, +dz), upperLeft)
     
         // +X
-        setVertex(24, float3(+dx, +dy, -dz), float2(textureXStart, textureYStart))
-        setVertex(25, float3(+dx, -dy, -dz), float2(textureXStart, textureYEnd))
-        setVertex(26, float3(+dx, -dy, +dz), float2(textureXEnd, textureYEnd))
+        setVertex(24, float3(+dx, +dy, -dz), lowerLeft)
+        setVertex(25, float3(+dx, -dy, -dz), upperLeft)
+        setVertex(26, float3(+dx, -dy, +dz), upperRight)
     
-        setVertex(27, float3(+dx, +dy, -dz), float2(textureXStart, textureYStart))
-        setVertex(28, float3(+dx, +dy, +dz), float2(textureXEnd, textureYStart))
-        setVertex(29, float3(+dx, -dy, +dz), float2(textureXEnd, textureYEnd))
+        setVertex(27, float3(+dx, +dy, -dz), lowerLeft)
+        setVertex(28, float3(+dx, +dy, +dz), lowerRight)
+        setVertex(29, float3(+dx, -dy, +dz), upperRight)
     
         // -Y
-        setVertex(30, float3(+dx, -dy, -dz), float2(textureXStart, textureYStart))
-        setVertex(31, float3(-dx, -dy, -dz), float2(textureXStart, textureYEnd))
-        setVertex(32, float3(-dx, -dy, +dz), float2(textureXEnd, textureYEnd))
+        setVertex(30, float3(+dx, -dy, -dz), lowerLeft)
+        setVertex(31, float3(-dx, -dy, -dz), upperLeft)
+        setVertex(32, float3(-dx, -dy, +dz), upperRight)
     
-        setVertex(33, float3(+dx, -dy, -dz), float2(textureXStart, textureYStart))
-        setVertex(34, float3(+dx, -dy, +dz), float2(textureXEnd, textureYStart))
-        setVertex(35, float3(-dx, -dy, +dz), float2(textureXEnd, textureYEnd))
+        setVertex(33, float3(+dx, -dy, -dz), lowerLeft)
+        setVertex(34, float3(+dx, -dy, +dz), lowerRight)
+        setVertex(35, float3(-dx, -dy, +dz), upperRight)
     
         // +Y
-        setVertex(36, float3(+dx, +dy, -dz), float2(textureXStart, textureYStart))
-        setVertex(37, float3(-dx, +dy, -dz), float2(textureXStart, textureYEnd))
-        setVertex(38, float3(-dx, +dy, +dz), float2(textureXEnd, textureYEnd))
+        setVertex(36, float3(+dx, +dy, -dz), lowerLeft)
+        setVertex(37, float3(-dx, +dy, -dz), upperLeft)
+        setVertex(38, float3(-dx, +dy, +dz), upperRight)
     
-        setVertex(39, float3(+dx, +dy, -dz), float2(textureXStart, textureYStart))
-        setVertex(40, float3(-dx, +dy, +dz), float2(textureXEnd, textureYEnd))
-        setVertex(41, float3(+dx, +dy, +dz), float2(textureXEnd, textureYStart))
+        setVertex(39, float3(+dx, +dy, -dz), lowerLeft)
+        setVertex(40, float3(-dx, +dy, +dz), upperRight)
+        setVertex(41, float3(+dx, +dy, +dz), lowerRight)
     
         // 2D drawing quad
-        setVertex(42, float3(-1,  1,  0), float2(textureXStart, textureYStart))
-        setVertex(43, float3(-1, -1,  0), float2(textureXStart, textureYEnd))
-        setVertex(44, float3( 1, -1,  0), float2(textureXEnd, textureYEnd))
+        setVertex(42, float3(-1,  1,  0), lowerLeft)
+        setVertex(43, float3(-1, -1,  0), upperLeft)
+        setVertex(44, float3( 1, -1,  0), upperRight)
     
-        setVertex(45, float3(-1,  1,  0), float2(textureXStart, textureYStart))
-        setVertex(46, float3( 1,  1,  0), float2(textureXEnd, textureYStart))
-        setVertex(47, float3( 1, -1,  0), float2(textureXEnd, textureYEnd))
+        setVertex(45, float3(-1,  1,  0), lowerLeft)
+        setVertex(46, float3( 1,  1,  0), lowerRight)
+        setVertex(47, float3( 1, -1,  0), upperRight)
     
         let opt = MTLResourceOptions.cpuCacheModeWriteCombined
         let len = capacity * 4

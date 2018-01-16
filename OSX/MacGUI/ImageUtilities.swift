@@ -170,10 +170,10 @@ public extension MetalView
     {
         print("MyMetalViewHelper::screenshot")
         
-        return emulatorTexture.toNSImage(textureXStart,
-                                         textureYStart,
-                                         textureXEnd,
-                                         textureYEnd)
+        return emulatorTexture.toNSImage(Float(textureRect.minX),
+                                         Float(textureRect.minY),
+                                         Float(textureRect.maxX),
+                                         Float(textureRect.maxY))
     }
     
     @objc func createBackgroundTexture() -> MTLTexture? {

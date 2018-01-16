@@ -4,10 +4,8 @@
 //
 //  Created by Dirk Hoffmann on 15.01.18.
 //
-
-// TODO (Once fully ported to Swift):
+// TODO:
 // eyeX,eyeY,eyeZ -> eye : float3
-// Replace textureX etc. by textureRect : CGRect
 
 import Foundation
 import Metal
@@ -131,11 +129,14 @@ public class MetalView: MTKView {
     var targetAlpha = Float(0.0)
     var deltaAlpha = Float(0.0)
     
-    // Texture cut-out (first and last visible texture coordinates)
+    // Texture cut-out (normalized)
+    var textureRect = CGRect.init(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+    /*
     var textureXStart = Float(0.0)
     var textureXEnd = Float(0.0)
     var textureYStart = Float(0.0)
     var textureYEnd = Float(0.0)
+    */
     
     // Currently selected texture upscaler
     @objc public var videoUpscaler = C64Upscaler.none
@@ -203,24 +204,32 @@ public class MetalView: MTKView {
         if c64proxy?.isPAL() == true {
     
             // PAL border will be 36 pixels wide and 34 pixels heigh
-            rect = NSRect.init(x: CGFloat(PAL_LEFT_BORDER_WIDTH - 36),
-                               y: CGFloat(PAL_UPPER_BORDER_HEIGHT - 34),
-                               width: CGFloat(PAL_CANVAS_WIDTH + 2 * 36),
-                               height: CGFloat(PAL_CANVAS_HEIGHT + 2 * 34))
+            rect = CGRect.init(x: CGFloat(PAL_LEFT_BORDER_WIDTH - 36),
+                                      y: CGFloat(PAL_UPPER_BORDER_HEIGHT - 34),
+                                      width: CGFloat(PAL_CANVAS_WIDTH + 2 * 36),
+                                      height: CGFloat(PAL_CANVAS_HEIGHT + 2 * 34))
             
         } else {
     
             // NTSC border will be 42 pixels wide and 9 pixels heigh
-            rect = NSRect.init(x: CGFloat(NTSC_LEFT_BORDER_WIDTH - 42),
-                               y: CGFloat(NTSC_UPPER_BORDER_HEIGHT - 9),
-                               width: CGFloat(NTSC_CANVAS_WIDTH + 2 * 42),
-                               height: CGFloat(NTSC_CANVAS_HEIGHT + 2 * 9))
+            rect = CGRect.init(x: CGFloat(NTSC_LEFT_BORDER_WIDTH - 42),
+                                      y: CGFloat(NTSC_UPPER_BORDER_HEIGHT - 9),
+                                      width: CGFloat(NTSC_CANVAS_WIDTH + 2 * 42),
+                                      height: CGFloat(NTSC_CANVAS_HEIGHT + 2 * 9))
         }
         
+        textureRect = CGRect.init(x: rect.minX / C64Texture.orig.width,
+                                  y: rect.minY / C64Texture.orig.height,
+                                  width: rect.width / C64Texture.orig.width,
+                                  height: rect.height / C64Texture.orig.height)
+        
+
+        /*
         textureXStart = Float(rect.minX / C64Texture.orig.width)
         textureXEnd = Float(rect.maxX / C64Texture.orig.width)
         textureYStart = Float(rect.minY / C64Texture.orig.height)
         textureYEnd = Float(rect.maxY / C64Texture.orig.height)
+        */
         
         // Enable this for debugging (will display the whole texture)
         // textureXStart = 0.0;
