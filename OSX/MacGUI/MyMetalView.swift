@@ -126,7 +126,7 @@ public extension MyMetalView {
         }
     }
     
-    @objc public func startFrame() -> Bool {
+    @objc public func startFrame() {
     
         _commandBuffer = queue.makeCommandBuffer()
         precondition(_commandBuffer != nil, "Command buffer must not be nil")
@@ -162,8 +162,34 @@ public extension MyMetalView {
         _commandEncoder.setFragmentTexture(bgTexture, index: 0)
         _commandEncoder.setFragmentSamplerState(filter.getsampler(), index: 0)
         _commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
-        
-        return true
     }
+    
+    @objc public func endFrame() {
+    
+        _commandEncoder.endEncoding()
+    
+        let block_sema = semaphore
+        
+        _commandBuffer.addCompletedHandler { cb in
+            block_sema?.signal()
+        }
+            
+        // if (_drawable) {
+        _commandBuffer.present(_drawable)
+        _commandBuffer.commit()
+        // }
+        
+    /*
+    [_commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer) {
+    dispatch_semaphore_signal(block_sema);
+    }];
+    
+    if (_drawable) {
+    [_commandBuffer presentDrawable:_drawable];
+    [_commandBuffer commit];
+    }
+ */
+    }
+    
 }
 

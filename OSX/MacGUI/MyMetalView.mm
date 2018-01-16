@@ -27,6 +27,8 @@
 //                                           Properties
 // -----------------------------------------------------------------------------------------------
 
+@synthesize semaphore;
+
 @synthesize library;
 @synthesize queue;
 @synthesize pipeline;
@@ -103,7 +105,7 @@
     NSLog(@"MyMetalView::awakeFromNib");
     
     // Create semaphore
-    _inflightSemaphore = dispatch_semaphore_create(1);
+    semaphore = dispatch_semaphore_create(1);
     
     // Set initial scene position and drawing properties
     [self initAnimation];
@@ -257,8 +259,7 @@
 
 - (void)drawScene2D
 {
-    if (![self startFrame])
-        return;
+    [self startFrame];
     
     // Render quad
     [_commandEncoder setFragmentTexture:filteredTexture atIndex:0];
@@ -278,8 +279,7 @@
         [self buildMatrices3D];
     }
     
-    if (![self startFrame])
-        return;
+    [self startFrame];
     
     // Make texture transparent if emulator is halted
     Uniforms *frameData = (Uniforms *)[uniformBuffer3D contents];
@@ -302,6 +302,7 @@
     [self endFrame];
 }
 
+/*
 - (void)endFrame
 {
     [_commandEncoder endEncoding];
@@ -316,13 +317,14 @@
         [_commandBuffer commit];
     }
 }
+*/
 
 - (void)drawRect:(CGRect)rect
 {    
     if (!c64proxy || !enableMetal)
         return;
     
-    dispatch_semaphore_wait(_inflightSemaphore, DISPATCH_TIME_FOREVER);
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
     // Refresh size dependent items if needed
     if (layerIsDirty) {

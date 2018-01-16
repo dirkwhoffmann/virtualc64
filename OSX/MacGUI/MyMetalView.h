@@ -57,7 +57,7 @@ typedef unsigned long MacKeyFingerprint;
     IBOutlet C64Proxy* c64proxy;
 
     // Synchronization semaphore
-    dispatch_semaphore_t _inflightSemaphore;
+    dispatch_semaphore_t semaphore;
     
     // Metal objects
     // id <MTLDevice> device;
@@ -143,6 +143,8 @@ typedef unsigned long MacKeyFingerprint;
 }
 
 #pragma mark Configuring
+
+@property dispatch_semaphore_t semaphore;
 
 @property id <MTLLibrary> library;
 @property id <MTLCommandQueue> queue;
