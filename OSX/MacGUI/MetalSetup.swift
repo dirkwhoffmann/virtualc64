@@ -117,6 +117,65 @@ public extension MyMetalView {
         
     }
     
+    func fillBuffer(_ buffer: MTLBuffer?, matrix: simd_float4x4, alpha: Float) {
+        
+        var _matrix = matrix
+        var _alpha  = alpha
+        if buffer != nil {
+            let contents = buffer!.contents()
+            memcpy(contents, &_matrix, 16 * 4)
+            memcpy(contents + 16 * 4, &_alpha, 4)
+        }
+    }
+    
+    @objc public func buildMatricesBg() {
+        
+        let model  = matrix_identity_float4x4
+        let view   = matrix_identity_float4x4
+        let aspect = Float(layerWidth) / Float(layerHeight)
+        let proj   = matrix_from_perspective(fovY: (Float(65.0 * (.pi / 180.0))),
+                                             aspect: aspect,
+                                             nearZ: 0.1,
+                                             farZ: 100.0)
+        
+        fillBuffer(uniformBufferBg, matrix: proj * view * model, alpha: 1.0)
+    }
+    
+    @objc public func buildMatrices2D() {
+    
+        let model = matrix_identity_float4x4
+        let view  = matrix_identity_float4x4
+        let proj  = matrix_identity_float4x4
+        
+        fillBuffer(uniformBuffer2D, matrix: proj * view * model, alpha: 1.0)
+    }
+    
+    @objc public func buildMatrices3D() {
+    
+        var model  = matrix_from_translation(x: -currentEyeX,
+                                             y: -currentEyeY,
+                                             z: currentEyeZ + 1.39)
+        let view   = matrix_identity_float4x4
+        let aspect = Float(layerWidth) / Float(layerHeight)
+        let proj   = matrix_from_perspective(fovY: (Float(65.0 * (.pi / 180.0))),
+                                             aspect: aspect,
+                                             nearZ: 0.1,
+                                             farZ: 100.0)
+    
+        if animates() {
+            let xAngle: Float = -(currentXAngle / 180.0) * .pi;
+            let yAngle: Float =  (currentYAngle / 180.0) * .pi;
+            let zAngle: Float =  (currentZAngle / 180.0) * .pi;
+    
+            model = model *
+                matrix_from_rotation(radians: xAngle, x: 0.5, y: 0.0, z: 0.0) *
+                matrix_from_rotation(radians: yAngle, x: 0.0, y: 0.5, z: 0.0) *
+                matrix_from_rotation(radians: zAngle, x: 0.0, y: 0.0, z: 0.5)
+        }
+        
+        fillBuffer(uniformBuffer3D, matrix: proj * view * model, alpha: currentAlpha)
+    }
+
     @objc public func buildVertexBuffer() {
     
         if device == nil {

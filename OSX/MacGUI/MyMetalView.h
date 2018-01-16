@@ -212,6 +212,5 @@ typedef unsigned long MacKeyFingerprint;
 - (void)buildKernels;
 - (void)reshapeWithFrame:(CGRect)frame;
 - (void)updateScreenGeometry;
-- (void)buildMatrices3D;
 
 @end
