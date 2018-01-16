@@ -9,6 +9,31 @@ import Foundation
 
 public extension MyMetalView {
     
+    @objc public func initAnimation() {
+        
+        currentEyeX   = 0.0
+        targetEyeX    = 0.0
+        deltaEyeX     = 0.0
+        currentEyeY   = 0.0
+        targetEyeY    = 0.0
+        deltaEyeY     = 0.0
+        currentEyeZ   = 0.0
+        targetEyeZ    = 0.0
+        deltaEyeZ     = 0.0
+        currentXAngle = 0.0
+        targetXAngle  = 0.0
+        deltaXAngle   = 0.0
+        currentYAngle = 0.0
+        targetYAngle  = 0.0
+        deltaYAngle   = 0.0
+        currentZAngle = 0.0
+        targetZAngle  = 0.0
+        deltaZAngle   = 0.0
+        currentAlpha  = 0.0
+        targetAlpha   = 0.0
+        deltaAlpha    = 0.0
+    }
+    
     //! Returns true iff an animation is in progress
     @objc public func animates() -> Bool {
 

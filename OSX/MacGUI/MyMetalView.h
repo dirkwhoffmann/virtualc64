@@ -65,7 +65,10 @@ typedef unsigned long MacKeyFingerprint;
     id <MTLCommandQueue> queue;
     id <MTLRenderPipelineState> pipeline;
     id <MTLDepthStencilState> depthState;
-
+    id <MTLCommandBuffer> _commandBuffer;
+    id <MTLRenderCommandEncoder> _commandEncoder;
+    id <CAMetalDrawable> _drawable;
+    
     // Metal layer
     CAMetalLayer *metalLayer;
     CGFloat layerWidth;
@@ -100,9 +103,6 @@ typedef unsigned long MacKeyFingerprint;
      *  E.g., a CRT filter can be applied to mimic old CRT displays.
      */
     id <MTLTexture> filteredTexture;
-    
-    //! Final drawing target (GPU buffer)
-    id <MTLTexture> framebufferTexture;
     
     //! Texture to hold the pixel depth information
     id <MTLTexture> depthTexture;
@@ -148,7 +148,9 @@ typedef unsigned long MacKeyFingerprint;
 @property id <MTLCommandQueue> queue;
 @property id <MTLRenderPipelineState> pipeline;
 @property id <MTLDepthStencilState> depthState;
-
+@property id <MTLCommandBuffer> _commandBuffer;
+@property id <MTLRenderCommandEncoder> _commandEncoder;
+@property id <CAMetalDrawable> _drawable;
 
 @property id <MTLTexture> bgTexture;
 @property id <MTLTexture> emulatorTexture;
@@ -203,13 +205,7 @@ typedef unsigned long MacKeyFingerprint;
 
 #pragma mark Drawing
 
-//! Shrinks view vertically by the height of the status bar
-- (void)shrink;
-
-//! Expand view vertically by the height of the status bar
-- (void)expand;
-
-- (void)buildKernels;
+// - (void)buildKernels;
 - (void)reshapeWithFrame:(CGRect)frame;
 - (void)updateScreenGeometry;
 

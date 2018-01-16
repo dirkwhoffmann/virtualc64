@@ -21,27 +21,7 @@
 #import "VirtualC64-Swift.h"
 
 @implementation MyMetalView {
-    
-    // Local metal objects
-    id <MTLCommandBuffer> _commandBuffer;
-    id <MTLRenderCommandEncoder> _commandEncoder;
-    id <CAMetalDrawable> _drawable;
-    
-    // All currently supported texture upscalers
-    ComputeKernel *bypassUpscaler;
-    ComputeKernel *epxUpscaler;
-    ComputeKernel *xbrUpscaler;
-
-    // All currently supported texture filters
-    ComputeKernel *bypassFilter;
-    ComputeKernel *smoothFilter;
-    ComputeKernel *blurFilter;
-    ComputeKernel *saturationFilter;
-    ComputeKernel *sepiaFilter;
-    ComputeKernel *grayscaleFilter;
-    ComputeKernel *crtFilter;
 }
-
 
 // -----------------------------------------------------------------------------------------------
 //                                           Properties
@@ -51,6 +31,9 @@
 @synthesize queue;
 @synthesize pipeline;
 @synthesize depthState;
+@synthesize _commandBuffer;
+@synthesize _commandEncoder;
+@synthesize _drawable;
 
 @synthesize bgTexture;
 @synthesize emulatorTexture;
@@ -101,21 +84,6 @@
 @synthesize fullscreenKeepAspectRatio;
 @synthesize drawC64texture;
 
-//! Adjusts view height by a certain amount
-- (void)adjustHeight:(CGFloat)height
-{
-    NSRect newframe = self.frame;
-    newframe.origin.y -= height;
-    newframe.size.height += height;
-    self.frame = newframe;
-}
-
-//! Shrinks view vertically by the height of the status bar
-- (void)shrink { [self adjustHeight:-24.0]; }
-
-//! Expand view vertically by the height of the status bar
-- (void)expand { [self adjustHeight:24.0]; }
-
 // -----------------------------------------------------------------------------------------------
 //                                         Initialization
 // -----------------------------------------------------------------------------------------------
@@ -134,19 +102,11 @@
 {
     NSLog(@"MyMetalView::awakeFromNib");
     
-    // c64 = [c64proxy c64]; // DEPRECATED
-    
     // Create semaphore
     _inflightSemaphore = dispatch_semaphore_create(1);
     
     // Set initial scene position and drawing properties
-    currentEyeX = targetEyeX = deltaEyeX = 0.0;
-    currentEyeY = targetEyeY = deltaEyeY = 0.0;
-    currentEyeZ = targetEyeZ = deltaEyeZ = 0.0;
-    currentXAngle = targetXAngle = deltaXAngle = 0.0;
-    currentYAngle = targetYAngle = deltaYAngle = 0.0;
-    currentZAngle = targetZAngle = deltaZAngle = 0.0;
-    currentAlpha = targetAlpha = 0.0; deltaAlpha = 0.0;
+    [self initAnimation];
     
     // Properties
     enableMetal = false;
@@ -168,20 +128,7 @@
     emulatorTexture = nil;
     upscaledTexture = nil;
     filteredTexture = nil;
-    framebufferTexture = nil;
     depthTexture = nil;
-    
-    bypassUpscaler = NULL;
-    epxUpscaler = NULL;
-    xbrUpscaler = NULL;
-    
-    bypassFilter = NULL;
-    smoothFilter = NULL;
-    blurFilter = NULL;
-    saturationFilter = NULL;
-    sepiaFilter = NULL;
-    grayscaleFilter = NULL;
-    crtFilter = NULL;
     
     // Check if machine is capable to run the Metal graphics interface
     if (!MTLCreateSystemDefaultDevice()) {
@@ -196,30 +143,6 @@
         
     // Register for drag and drop
     [self setupDragAndDrop];
-/*
-    [self registerForDraggedTypes:
-    [NSArray arrayWithObjects:NSFilenamesPboardType,NSFileContentsPboardType,nil]];
-*/
-    
-}
-
-- (void)buildKernels
-{
-    NSLog(@"MyMetalView::buildKernels");
-    
-    // Build upscalers
-    bypassUpscaler = [[BypassUpscaler alloc] initWithDevice:self.device library:library];
-    epxUpscaler = [[EPXUpscaler alloc] initWithDevice:self.device library:library];
-    xbrUpscaler = [[XBRUpscaler alloc] initWithDevice:self.device library:library];
-
-    // Build filters
-    bypassFilter = [[BypassFilter alloc] initWithDevice:self.device library:library];
-    smoothFilter = [[SaturationFilter alloc] initWithDevice:self.device library:library factor:1.0];
-    blurFilter = [[BlurFilter alloc] initWithDevice:self.device library:library radius:2.0];
-    saturationFilter = [[SaturationFilter alloc] initWithDevice:self.device library:library factor:0.5];
-    sepiaFilter = [[SepiaFilter alloc] initWithDevice:self.device library:library];
-    crtFilter = [[CrtFilter alloc] initWithDevice:self.device library:library];
-    grayscaleFilter = [[SaturationFilter alloc] initWithDevice:self.device library:library factor:0.0];
 }
 
 - (void) dealloc
@@ -330,106 +253,6 @@
     
     // Rebuild depth buffer
     [self buildDepthBuffer];
-}
-
-- (ComputeKernel *)currentUpscaler
-{
-    switch (videoUpscaler) {
-        
-        case TEX_UPSCALER_EPX:
-        return epxUpscaler;
-        
-        case TEX_UPSCALER_XBR:
-        return xbrUpscaler;
-        
-        default:
-        return bypassUpscaler;
-    }
-}
-
-- (ComputeKernel *)currentFilter
-{
-    switch (videoFilter) {
-        case TEX_FILTER_NONE:
-        return bypassFilter;
-        
-        case TEX_FILTER_SMOOTH:
-        return smoothFilter;
-        
-        case TEX_FILTER_BLUR:
-        return blurFilter;
-        
-        case TEX_FILTER_SATURATION:
-        return saturationFilter;
-        
-        case TEX_FILTER_GRAYSCALE:
-        return grayscaleFilter;
-        
-        case TEX_FILTER_SEPIA:
-        return sepiaFilter;
-        
-        case TEX_FILTER_CRT:
-        return crtFilter;
-        
-        default:
-        return smoothFilter;
-    }
-}
-
-- (BOOL)startFrame
-{
-    static NSInteger width = -1;
-    static NSInteger height = -1;
-    framebufferTexture = _drawable.texture;
-
-    if (width != framebufferTexture.width) {
-        width = framebufferTexture.width;
-        // NSLog(@"drawable width = %lu", (unsigned long)framebufferTexture.width);
-    }
-    if (height != framebufferTexture.height) {
-        height = framebufferTexture.height;
-        // NSLog(@"drawable height = %lu", (unsigned long)framebufferTexture.height);
-    }
-    
-    NSAssert(framebufferTexture != nil, @"Framebuffer texture must not be nil");
-    
-    _commandBuffer = [queue commandBuffer];
-    NSAssert(_commandBuffer != nil, @"Metal command buffer must not be nil");
-
-    // Upscale C64 texture
-    ComputeKernel *upscaler = [self currentUpscaler];
-    [upscaler applyWithCommandBuffer:_commandBuffer source:emulatorTexture target:upscaledTexture];
-    
-    // Post-process C64 texture
-    ComputeKernel *filter = [self currentFilter];
-    assert (filter != NULL);
-    [filter applyWithCommandBuffer:_commandBuffer source:upscaledTexture target:filteredTexture];
-    
-    // Create render pass
-    MTLRenderPassDescriptor *renderPass = [MTLRenderPassDescriptor renderPassDescriptor];
-    {
-        renderPass.colorAttachments[0].texture = framebufferTexture;
-        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1);
-        renderPass.colorAttachments[0].loadAction = MTLLoadActionClear;
-        renderPass.colorAttachments[0].storeAction = MTLStoreActionStore;
-        
-        renderPass.depthAttachment.texture = depthTexture;
-        renderPass.depthAttachment.clearDepth = 1;
-        renderPass.depthAttachment.loadAction = MTLLoadActionClear;
-        renderPass.depthAttachment.storeAction = MTLStoreActionDontCare;
-    }
-    
-    // Create command encoder
-    _commandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:renderPass];
-    {
-        [_commandEncoder setRenderPipelineState:pipeline];
-        [_commandEncoder setDepthStencilState:depthState];
-        [_commandEncoder setFragmentTexture:bgTexture atIndex:0];
-        [_commandEncoder setFragmentSamplerState:[filter getsampler] atIndex:0];
-        [_commandEncoder setVertexBuffer:positionBuffer offset:0 atIndex:0];
-    }
-    
-    return YES;
 }
 
 - (void)drawScene2D

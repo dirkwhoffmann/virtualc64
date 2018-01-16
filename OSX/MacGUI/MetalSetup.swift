@@ -13,11 +13,11 @@ public extension MyMetalView {
 
         NSLog("MyMetalView::setupMetal")
         
-        self.buildMetal()
-        self.buildTextures()
-        self.buildKernels()
-        self.buildBuffers()
-        self.buildPipeline()
+        buildMetal()
+        buildTextures()
+        buildKernels()
+        buildBuffers()
+        buildPipeline()
         
         self.reshape(withFrame: self.frame)
         enableMetal = true
