@@ -266,9 +266,9 @@
                 NSLog("Game pad slot %d: Keyboard emulated device", slotNr)
             } else {
                 NSLog("Game pad slot %d: HID USB joystick", slotNr)
-                NSLog("  Vendor ID:   %@", device.vendorID!);
-                NSLog("  Product ID:  %@", device.productID!);
-                NSLog("  Location ID: %@", device.locationID!);
+                NSLog("  Vendor ID:   %@", device.vendorID ?? "UNKNOWN");
+                NSLog("  Product ID:  %@", device.productID ?? "UNKNOWN");
+                NSLog("  Location ID: %@", device.locationID ?? "UNKNOWN");
             }
             if (device.joystick != nil) {
                 NSLog("  Connected to control port %@", device.joystick!)
