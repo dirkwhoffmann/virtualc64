@@ -22,35 +22,6 @@
 // Forward declaration
 @class MyController;
 
-// Size of C64 texture
-const int C64_TEXTURE_WIDTH = 512;
-const int C64_TEXTURE_HEIGHT= 512;
-const int C64_TEXTURE_DEPTH = 4;
-
-// Post-processing filters
-typedef enum {
-    TEX_UPSCALER_NONE = 1,
-    TEX_UPSCALER_EPX,
-    TEX_UPSCALER_XBR,
-} TextureUpscalerType;
-
-// Post-processing filters
-typedef enum {
-    TEX_FILTER_NONE = 1,
-    TEX_FILTER_SMOOTH,
-    TEX_FILTER_BLUR,
-    TEX_FILTER_SATURATION,
-    TEX_FILTER_GRAYSCALE,
-    TEX_FILTER_SEPIA,
-    TEX_FILTER_CRT,
-} TextureFilterType;
-
-/*! @brief    Fingerprint that uniquely identifies a key combination on the physical Mac keyboard
- *  @seealso  C64KeyFingerprint
- */
-typedef unsigned long MacKeyFingerprint;
-
-
 @interface MyMetalView : MTKView
 {
     IBOutlet MyController *controller;
@@ -65,9 +36,9 @@ typedef unsigned long MacKeyFingerprint;
     id <MTLCommandQueue> queue;
     id <MTLRenderPipelineState> pipeline;
     id <MTLDepthStencilState> depthState;
-    id <MTLCommandBuffer> _commandBuffer;
-    id <MTLRenderCommandEncoder> _commandEncoder;
-    id <CAMetalDrawable> _drawable;
+    id <MTLCommandBuffer> commandBuffer;
+    id <MTLRenderCommandEncoder> commandEncoder;
+    id <CAMetalDrawable> drawable;
     
     // Metal layer
     CAMetalLayer *metalLayer;
@@ -144,15 +115,18 @@ typedef unsigned long MacKeyFingerprint;
 
 #pragma mark Configuring
 
+@property MyController *controller;
+@property C64Proxy* c64proxy;
+
 @property dispatch_semaphore_t semaphore;
 
 @property id <MTLLibrary> library;
 @property id <MTLCommandQueue> queue;
 @property id <MTLRenderPipelineState> pipeline;
 @property id <MTLDepthStencilState> depthState;
-@property id <MTLCommandBuffer> _commandBuffer;
-@property id <MTLRenderCommandEncoder> _commandEncoder;
-@property id <CAMetalDrawable> _drawable;
+@property id <MTLCommandBuffer> commandBuffer;
+@property id <MTLRenderCommandEncoder> commandEncoder;
+@property id <CAMetalDrawable> drawable;
 
 @property id <MTLTexture> bgTexture;
 @property id <MTLTexture> emulatorTexture;
@@ -203,12 +177,6 @@ typedef unsigned long MacKeyFingerprint;
 @property bool fullscreenKeepAspectRatio;
 @property bool drawC64texture;
 
-- (void)cleanup;
-
-#pragma mark Drawing
-
-// - (void)buildKernels;
-- (void)reshapeWithFrame:(CGRect)frame;
-- (void)updateScreenGeometry;
+// - (void)cleanup;
 
 @end

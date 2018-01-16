@@ -32,16 +32,6 @@
 @class MemTableView;
 @class Speedometer;
 
-/*
-enum INPUT_DEVICES {
-    IPD_UNCONNECTED = 0,
-    IPD_KEYSET_1,
-    IPD_KEYSET_2,
-    IPD_JOYSTICK_1,
-    IPD_JOYSTICK_2
-};
-*/
-
 typedef NS_ENUM(NSInteger, INPUT_DEVICES) {
     IPD_UNCONNECTED = 0,
     IPD_KEYSET_1,
@@ -50,7 +40,11 @@ typedef NS_ENUM(NSInteger, INPUT_DEVICES) {
     IPD_JOYSTICK_2
 };
 
-    
+/*! @brief    Fingerprint that uniquely identifies a key combination on the physical Mac keyboard
+ *  @seealso  C64KeyFingerprint
+ */
+typedef unsigned long MacKeyFingerprint;
+
 // @interface MyController : NSWindowController <NSApplicationDelegate, NSMenuDelegate>
 @interface MyController : NSWindowController
 {

@@ -117,15 +117,28 @@ public extension MyMetalView {
         
     }
     
-    func fillBuffer(_ buffer: MTLBuffer?, matrix: simd_float4x4, alpha: Float) {
+    func fillMatrix(_ buffer: MTLBuffer?, _ matrix: simd_float4x4) {
         
         var _matrix = matrix
-        var _alpha  = alpha
         if buffer != nil {
             let contents = buffer!.contents()
             memcpy(contents, &_matrix, 16 * 4)
+        }
+    }
+    
+    func fillAlpha(_ buffer: MTLBuffer?, _ alpha: Float) {
+        
+        var _alpha  = alpha
+        if buffer != nil {
+            let contents = buffer!.contents()
             memcpy(contents + 16 * 4, &_alpha, 4)
         }
+    }
+    
+    func fillBuffer(_ buffer: MTLBuffer?, matrix: simd_float4x4, alpha: Float) {
+        
+        fillMatrix(buffer, matrix)
+        fillAlpha(buffer, alpha)
     }
     
     @objc public func buildMatricesBg() {

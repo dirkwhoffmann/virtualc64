@@ -10,7 +10,8 @@
 // Move buildKernels() -> setup
 // startFrame() should return void
 // Remove _ prefix from some variables
-//
+// Get rid of commandBuffer argument in updateTexture
+// Replace textureX etc. by textureRect : CGRect
 
 import Foundation
 
@@ -72,6 +73,83 @@ public extension MyMetalView {
     //! Expand view vertically by the height of the status bar
     @objc public func expand() { adjustHeight(24.0) }
 
+    @objc public func updateScreenGeometry() {
+    
+        var rect: CGRect
+        
+        if c64proxy?.isPAL() == true {
+    
+            // PAL border will be 36 pixels wide and 34 pixels heigh
+            rect = NSRect.init(x: CGFloat(PAL_LEFT_BORDER_WIDTH - 36),
+                               y: CGFloat(PAL_UPPER_BORDER_HEIGHT - 34),
+                               width: CGFloat(PAL_CANVAS_WIDTH + 2 * 36),
+                               height: CGFloat(PAL_CANVAS_HEIGHT + 2 * 34))
+            
+            /*
+            textureXStart = Float(PAL_LEFT_BORDER_WIDTH - 36) / Float(C64Texture.orig.width)
+            textureXEnd = Float(PAL_LEFT_BORDER_WIDTH + PAL_CANVAS_WIDTH + 36) / Float(C64Texture.orig.width)
+            textureYStart = Float(PAL_UPPER_BORDER_HEIGHT - 34) / Float(C64Texture.orig.height)
+            textureYEnd = Float(PAL_UPPER_BORDER_HEIGHT + PAL_CANVAS_HEIGHT + 34) / Float(C64Texture.orig.height)
+            */
+        } else {
+    
+            // NTSC border will be 42 pixels wide and 9 pixels heigh
+            rect = NSRect.init(x: CGFloat(NTSC_LEFT_BORDER_WIDTH - 42),
+                               y: CGFloat(NTSC_UPPER_BORDER_HEIGHT - 9),
+                               width: CGFloat(NTSC_CANVAS_WIDTH + 2 * 42),
+                               height: CGFloat(NTSC_CANVAS_HEIGHT + 2 * 9))
+        }
+        
+        textureXStart = Float(rect.minX / C64Texture.orig.width)
+        textureXEnd = Float(rect.maxX / C64Texture.orig.width)
+        textureYStart = Float(rect.minY / C64Texture.orig.height)
+        textureYEnd = Float(rect.maxY / C64Texture.orig.height)
+        
+        /*
+            textureXStart = Float(NTSC_LEFT_BORDER_WIDTH - 42) / Float(C64Texture.orig.width)
+            textureXEnd = Float(NTSC_LEFT_BORDER_WIDTH + NTSC_CANVAS_WIDTH + 42) / Float(C64Texture.orig.width)
+            textureYStart = Float(NTSC_UPPER_BORDER_HEIGHT - 9) / Float(C64Texture.orig.height)
+            textureYEnd = Float(NTSC_UPPER_BORDER_HEIGHT + NTSC_CANVAS_HEIGHT + 9) / Float(C64Texture.orig.height)
+         */
+
+    
+        // Enable this for debugging (will display the whole texture)
+        // textureXStart = 0.0;
+        // textureXEnd = 1.0;
+        // textureYStart = 0.0;
+        // textureYEnd = 1.0;
+    
+        // Update texture coordinates in vertex buffer
+        buildVertexBuffer()
+    }
+    
+    @objc public func updateTexture(cmdBuffer : MTLCommandBuffer?) {
+    
+        if c64proxy == nil || cmdBuffer == nil {
+            return
+        }
+    
+        let buf = c64proxy.vic.screenBuffer()
+        precondition(buf != nil)
+        
+        let pixelSize = 4
+        let width = Int(NTSC_PIXELS)
+        let height = Int(PAL_RASTERLINES)
+        let rowBytes = width * pixelSize
+        let imageBytes = rowBytes * height
+        let region = MTLRegionMake2D(0,0,width,height)
+            
+        emulatorTexture.replace(region: region,
+                                mipmapLevel: 0,
+                                slice: 0,
+                                withBytes: buf!,
+                                bytesPerRow: rowBytes,
+                                bytesPerImage: imageBytes)
+    }
+    
+
+    
+    // MOVE TO SETUP
     internal func buildKernels() {
         
         precondition(device != nil)
@@ -128,24 +206,24 @@ public extension MyMetalView {
     
     @objc public func startFrame() {
     
-        _commandBuffer = queue.makeCommandBuffer()
-        precondition(_commandBuffer != nil, "Command buffer must not be nil")
+        commandBuffer = queue.makeCommandBuffer()
+        precondition(commandBuffer != nil, "Command buffer must not be nil")
     
         // Upscale C64 texture
         let upscaler = currentUpscaler()
-        upscaler.apply(commandBuffer: _commandBuffer,
+        upscaler.apply(commandBuffer: commandBuffer,
                        source: emulatorTexture,
                        target: upscaledTexture)
     
         // Post-process C64 texture
         let filter = currentFilter()
-        filter.apply(commandBuffer: _commandBuffer,
+        filter.apply(commandBuffer: commandBuffer,
                      source: upscaledTexture,
                      target: filteredTexture)
     
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()
-        descriptor.colorAttachments[0].texture = _drawable.texture
+        descriptor.colorAttachments[0].texture = drawable.texture
         descriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
         descriptor.colorAttachments[0].loadAction = MTLLoadAction.clear
         descriptor.colorAttachments[0].storeAction = MTLStoreAction.store
@@ -156,39 +234,155 @@ public extension MyMetalView {
         descriptor.depthAttachment.storeAction = MTLStoreAction.dontCare
         
         // Create command encoder
-        _commandEncoder = _commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
-        _commandEncoder.setRenderPipelineState(pipeline)
-        _commandEncoder.setDepthStencilState(depthState)
-        _commandEncoder.setFragmentTexture(bgTexture, index: 0)
-        _commandEncoder.setFragmentSamplerState(filter.getsampler(), index: 0)
-        _commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
+        commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
+        commandEncoder.setRenderPipelineState(pipeline)
+        commandEncoder.setDepthStencilState(depthState)
+        commandEncoder.setFragmentTexture(bgTexture, index: 0)
+        commandEncoder.setFragmentSamplerState(filter.getsampler(), index: 0)
+        commandEncoder.setVertexBuffer(positionBuffer, offset: 0, index: 0)
     }
     
+    @objc public func drawScene2D() {
+    
+        startFrame()
+    
+        // Render quad
+        commandEncoder.setFragmentTexture(filteredTexture, index: 0)
+        commandEncoder.setVertexBuffer(uniformBuffer2D, offset: 0, index: 1)
+        commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
+                                      vertexStart: 42,
+                                      vertexCount: 6,
+                                      instanceCount: 1)
+        endFrame()
+    }
+    
+    @objc public func drawScene3D() {
+    
+        let animates = self.animates()
+        let drawBackground = !fullscreen && (animates || !drawC64texture)
+        
+        if animates {
+            updateAngles()
+            buildMatrices3D()
+        }
+
+        startFrame()
+    
+        // Make texture transparent if emulator is halted
+        let alpha = c64proxy.isHalted() ? 0.5 : currentAlpha
+        fillAlpha(uniformBuffer3D, alpha)
+        
+        // Render background
+        if drawBackground {
+            commandEncoder.setFragmentTexture(bgTexture, index: 0)
+            commandEncoder.setVertexBuffer(uniformBufferBg, offset: 0, index: 1)
+            commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
+                                          vertexStart: 0,
+                                          vertexCount: 6,
+                                          instanceCount: 1)
+        }
+        
+        // Render cube
+        if drawC64texture {
+            commandEncoder.setFragmentTexture(filteredTexture, index: 0)
+            commandEncoder.setVertexBuffer(uniformBuffer3D, offset: 0, index: 1)
+            commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangle,
+                                          vertexStart: 6,
+                                          vertexCount: (animates ? 24 : 6),
+                                          instanceCount: 1)
+        }
+                
+        endFrame()
+    }
+
     @objc public func endFrame() {
     
-        _commandEncoder.endEncoding()
+        commandEncoder.endEncoding()
     
         let block_sema = semaphore
         
-        _commandBuffer.addCompletedHandler { cb in
+        commandBuffer.addCompletedHandler { cb in
             block_sema?.signal()
         }
             
-        // if (_drawable) {
-        _commandBuffer.present(_drawable)
-        _commandBuffer.commit()
+        // if (drawable) {
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
         // }
-        
-    /*
-    [_commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer) {
-    dispatch_semaphore_signal(block_sema);
-    }];
-    
-    if (_drawable) {
-    [_commandBuffer presentDrawable:_drawable];
-    [_commandBuffer commit];
     }
- */
+    
+    override open func setFrameSize(_ newSize: NSSize) {
+        
+        super.setFrameSize(newSize)
+        layerIsDirty = true
+    }
+    
+    func reshape(withFrame frame: CGRect) {
+    
+        if let scale = NSScreen.main?.backingScaleFactor {
+            
+            var size = bounds.size
+            size.width *= scale
+            size.height *= scale
+            
+            metalLayer.drawableSize = drawableSize
+            reshape()
+        }
+    }
+
+    func reshape() {
+
+        let drawableSize = metalLayer.drawableSize
+        
+        if layerWidth == drawableSize.width && layerHeight == drawableSize.height {
+            return
+        }
+    
+        layerWidth = drawableSize.width
+        layerHeight = drawableSize.height
+    
+        // NSLog("MetalLayer::reshape (%f,%f)", drawableSize.width, drawableSize.height);
+    
+        // Rebuild matrices
+        buildMatricesBg()
+        buildMatrices2D()
+        buildMatrices3D()
+    
+        // Rebuild depth buffer
+        buildDepthBuffer()
+    }
+    
+    override open func draw(_ rect: NSRect) {
+        
+        if c64proxy == nil || !enableMetal {
+            return
+        }
+
+        // Wait until it's save to go ...
+        // let result semaphore.wait (timeout: .distantFuture)
+        semaphore.wait()
+        
+        // Refresh size dependent items if needed
+        if layerIsDirty {
+            reshape(withFrame: frame)
+            layerIsDirty = false
+        }
+    
+        // Draw scene
+        drawable = metalLayer.nextDrawable()
+        if (drawable != nil) {
+            updateTexture(cmdBuffer: commandBuffer)
+            if fullscreen && !fullscreenKeepAspectRatio {
+                drawScene2D()
+            } else {
+                drawScene3D()
+            }
+        }
+    }
+   
+    @objc public func cleanup() {
+    
+        NSLog("MyMetalView::cleanup")
     }
     
 }
