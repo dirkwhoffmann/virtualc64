@@ -103,7 +103,7 @@
     [[self document] setC64:c64];
     
     // Initialize GamePad manager
-    gamePadManager = [[GamePadManager alloc] initWithC64:c64];
+    gamePadManager = [[GamePadManager alloc] initWithController:self];
     if (!gamePadManager) {
         NSLog(@"WARNING: Failed to initialize GamePadManager");
     }
@@ -728,11 +728,6 @@
             [mediaDialog update];
             break;
             
-        case MSG_JOYSTICK_ATTACHED:
-        case MSG_JOYSTICK_REMOVED:
-            [self validateJoystickItems];
-            break;
-        
         case MSG_PAL:
         case MSG_NTSC:
             [metalScreen updateScreenGeometry];

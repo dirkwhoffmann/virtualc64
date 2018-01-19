@@ -1,14 +1,25 @@
-//
-//  GamePadManager.swift
-//  VirtualC64
-//
-//  Created by Dirk Hoffmann on 06.10.17.
-//
+/*
+ * (C) 2017 Dirk W. Hoffmann. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 
 //! @brief   Holds and manages an array of GamePad objects
 /*! @details Up to four devices are managed. The first two are always present and represent
- *           keyboard emulates joysticks. The other two slots are dynamically added when, e.g.,
+ *           keyboard emulates joysticks. The other two slots are dynamically added when,
  *           a USB joystick or game pad is plugged in.
  */
 @objc class GamePadManager: NSObject {
@@ -17,43 +28,35 @@
     // Such a thing is used here: TODO: Check if we need this
     // https://github.com/joekarl/swift_handmade_hero/blob/master/Handmade%20Hero%20OSX/Handmade%20Hero%20OSX/InputManager.swift
     
-    //! @brief   Reference to the the C64 proxy
-    private var proxy: C64Proxy?
+    //! @brief   Reference to the the controller
+    private var controller: MyController!
     
     //! @brief   Reference to the HID manager
     private var hidManager: IOHIDManager
 
-    //! @brief   References to all references game pads
+    //! @brief   References to all registered game pads
     /*! @details Each device ist referenced by a slot number
      */
     var gamePads: [Int:GamePad] = [:]
 
-    //! @brief   Initialization
     override init()
     {
         hidManager = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone));
         super.init()
     }
     
-    //! @brief   Convenience initialization
-    @objc public convenience init?(withC64: C64Proxy) {
+    @objc public convenience init?(controller: MyController) {
         
         NSLog("\(#function)")
         
         self.init()
-        proxy = withC64
+        self.controller = controller
         
-        //
-        // Add two generic devices (keyboard emulated joysticks)
-        //
-        
+        // Add  generic devices (two keyboard emulated joysticks)
         gamePads[0] = GamePad()
         gamePads[1] = GamePad()
         
-        //
         // Prepare for accepting HID devices
-        //
-        
         let deviceCriteria = [
             [
                 kIOHIDDeviceUsagePageKey: kHIDPage_GenericDesktop,
@@ -98,22 +101,33 @@
     // Slot handling
     //
     
-    //! @brief   Returns the lowest free slot number
-    func findFreeSlot() -> Int {
-        var slotNr = 0
-        while (gamePads[slotNr] != nil) { slotNr += 1 }
-        return slotNr
+    //! @brief   Returns true iff the specified game pad slot is free
+    @objc public func slotIsEmpty(_ nr: Int) -> Bool {
+        return gamePads[nr] == nil
     }
     
-    //! @brief   Returns true iff the specified game pad slot is free
-    @objc public func gamePadSlotIsEmpty(_ nr: Int) -> Bool {
-        return gamePads[nr] == nil;
+    //! @brief   Returns the lowest free slot number
+    /*! @details Returns nil if all slots are already filled up
+     */
+
+    func findFreeSlot() -> Int? {
+        
+        var nr = 0
+        while !slotIsEmpty(nr) {
+            nr += 1
+        }
+        
+        // We support four devices max
+        return (nr < 4) ? nr : nil
     }
+    
+ 
  
     //! @brief   Plugs a game pad into the specified control port
     /*! @details If another device is connected, it is disconnected automatically
      */
-    @objc public func attachGamePad(_ nr: Int, toPort port: JoystickProxy) {
+    @objc public
+    func attachGamePad(_ nr: Int, toPort port: JoystickProxy) {
         
         NSLog("\(#function)")
         
@@ -124,8 +138,9 @@
         gamePads[nr]?.joystick = port
     }
     
-    //! @brief   Remove game pads from the specified control port (in any)
-    @objc public func detachGamePadFromPort(_ port: JoystickProxy) {
+    //! @brief   Remove game pad from the specified control port (in any)
+    @objc public
+    func detachGamePadFromPort(_ port: JoystickProxy) {
         
         NSLog("\(#function)")
         
@@ -136,12 +151,23 @@
         }
     }
     
-    //! @brief   Returns slot number of device connected to the specified control port
-    /*! @details Returns -1 if no device is connected
+    //! @brief   Lookup gamePad with the specified locationID
+    /*! @details Returns slot number or -1, if no such gamePad was found
      */
-    @objc func slotOfGamePadAttachedToPort(_ port: JoystickProxy) -> Int {
+    @objc func lookupGamePad(locationID: String) -> Int {
         
-        // NSLog("\(#function)")
+        for (slotNr, device) in gamePads {
+            if (device.locationID == locationID) {
+                return slotNr
+            }
+        }
+        return -1
+    }
+    
+    //! @brief   Lookup gamePad connected to the specified port
+    /*! @details Returns slot number or -1, if no such gamePad was found
+     */
+    @objc func lookupGamePad(port: JoystickProxy) -> Int {
         
         for (slotNr, device) in gamePads {
             if (device.joystick != nil && device.joystick == port) {
@@ -153,7 +179,7 @@
     }
     
     //
-    // Keyboard stuff
+    // Keyboard handling
     //
     
     //! @brief   Handles a keyboard down event
@@ -197,9 +223,8 @@
         let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
 
         // Find a free slot for the new device
-        let slotNr = findFreeSlot()
-        if (slotNr > 4) {
-            NSLog("Maximum number of devices reached. Ignoring device\n")
+        guard let slotNr = findFreeSlot() else {
+            NSLog("Maximum number of devices reached. Ignoring device")
             return
         }
         
@@ -220,10 +245,9 @@
         let hidContext = unsafeBitCast(gamePads[slotNr], to: UnsafeMutableRawPointer.self)
         IOHIDDeviceRegisterInputValueCallback(device, gamePads[slotNr]!.actionCallback, hidContext)
 
-        // Inform emulator
-        proxy?.putMessage(Int32(MSG_JOYSTICK_ATTACHED.rawValue))
-        NSLog("Successfully opened device with location ID %@", locationID)
-
+        // Inform controller
+        controller.validateJoystickItems()
+        
         listDevices()
     }
     
@@ -251,9 +275,8 @@
             NSLog("WARNING: Cannot close HID device")
         }
         
-        // Inform emulator
-        proxy?.putMessage(Int32(MSG_JOYSTICK_REMOVED.rawValue))
-        NSLog("Closed device with location ID %@", locationID)
+        // Inform controller
+        controller.validateJoystickItems()
         
         listDevices()
     }

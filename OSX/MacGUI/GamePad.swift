@@ -1,21 +1,33 @@
-//
-//  GamePad.swift
-//  VirtualC64
-//
-//  Created by Dirk Hoffmann on 07.10.17.
-//
+/*
+ * (C) 2017 Dirk W. Hoffmann. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 
 import Foundation
 import IOKit.hid
 
 /*
-enum JoystickDirection {
-    case UP
-    case DOWN
-    case LEFT
-    case RIGHT
-    case FIRE
-    case RELEASED
+struct JoystickDirection {
+    static let up = 0
+    static let down = 1
+    static let left = 2
+    static let right = 3
+    static let fire = 5
+    static let released = 6
 }
 */
 
@@ -25,33 +37,17 @@ enum JoystickDirection {
  */
 public class KeyMap: NSObject {
     
-    //! @brief Mapping from fingerprints to joystick events
+    //! @brief Mapping of fingerprints to joystick events
     var mapping : [MacKeyFingerprint:JoystickDirection] = [:]
 
-    //! @brief Mapping from joystick events to a readable representations of related fingerprint
+    //! @brief Mapping of joystick events to readable representations of related fingerprints
     var character : [JoystickDirection:String] = [:]
-    
-    /*
-    func printMapping() {
-        print("UP: ", mapping[JoystickDirection.UP] ?? "",
-              " (", character[JoystickDirection.UP] ?? "", ")",
-              getCharacter(for: JoystickDirection.UP))
-        print("DOWN: ", mapping[JoystickDirection.DOWN] ?? "",
-              " (", character[JoystickDirection.DOWN] ?? "", ")")
-        print("LEFT: ", mapping[JoystickDirection.LEFT] ?? "",
-              " (", character[JoystickDirection.LEFT] ?? "", ")")
-        print("RIGHT: ", mapping[JoystickDirection.RIGHT] ?? "",
-              " (", character[JoystickDirection.RIGHT] ?? "", ")")
-        print("FIRE: ", mapping[JoystickDirection.FIRE] ?? "",
-              " (", character[JoystickDirection.FIRE] ?? "", ")")
-    }
-    */
     
     @objc public
     func fingerprint(for d: JoystickDirection) -> MacKeyFingerprint {
         
         for (fingerprint, direction) in mapping {
-            if (direction == d) {
+            if direction == d {
                 return fingerprint;
             }
         }
@@ -63,7 +59,7 @@ public class KeyMap: NSObject {
         
         // Avoid double mappings
         for (fingerprint, direction) in mapping {
-            if (direction == d) {
+            if direction == d {
                 mapping[fingerprint] = nil
             }
         }
@@ -77,7 +73,7 @@ public class KeyMap: NSObject {
     
     @objc public
     func setCharacter(_ c: String?, for d: JoystickDirection) {
-        character[d] = c!
+        character[d] = c
     }
 }
 
@@ -110,10 +106,13 @@ class GamePad
      */
     var joystick: JoystickProxy?
     
-    /*
-    init() {
+    convenience init(vendorID: String?, productID: String?, locationID: String?) {
+        
+        self.init()
+        self.vendorID = vendorID
+        self.productID = productID
+        self.locationID = locationID
     }
-    */
     
     //! @brief   Handles a keyboard down event
     /*! @details Checks if the provided keycode matches a joystick emulation key
@@ -121,6 +120,17 @@ class GamePad
      */
     func keyDown(_ key: MacKeyFingerprint)
     {
+        let map = [JoystickDirection.UP: joystick?.pullUp,
+                   JoystickDirection.DOWN: joystick?.pullDown,
+                   JoystickDirection.LEFT: joystick?.pullLeft,
+                   JoystickDirection.RIGHT: joystick?.pullRight,
+                   JoystickDirection.FIRE: joystick?.pressButton]
+        
+        if let dir = keymap.mapping[key] {
+            if let f = map[dir] { f?() }
+        }
+        
+        /*
         if let dir = keymap.mapping[key] {
             switch (dir) {
             case JoystickDirection.UP:
@@ -134,12 +144,6 @@ class GamePad
             default:
                 joystick?.pressButton()
             }
-        }
-        
-        /*
-        if let dir = keymap.mapping[key] {
-            joystick?.pullJoystick(dir)
-        }
          */
     }
     
@@ -149,6 +153,17 @@ class GamePad
      */
     func keyUp(_ key: MacKeyFingerprint)
     {
+        let map = [JoystickDirection.UP: joystick?.releaseYAxis,
+                   JoystickDirection.DOWN: joystick?.releaseYAxis,
+                   JoystickDirection.LEFT: joystick?.releaseXAxis,
+                   JoystickDirection.RIGHT: joystick?.releaseXAxis,
+                   JoystickDirection.FIRE: joystick?.releaseButton]
+        
+        if let dir = keymap.mapping[key] {
+            if let f = map[dir] { f?() }
+        }
+        
+        /*
         if let dir = keymap.mapping[key] {
             switch (dir) {
             case JoystickDirection.UP:
@@ -162,11 +177,6 @@ class GamePad
             default:
                 joystick?.releaseButton()
             }
-        }
-
-        /*
-        if let dir = keymap.mapping[key] {
-            joystick?.releaseJoystick(dir)
         }
         */
     }
@@ -187,8 +197,8 @@ class GamePad
         v = v * 2.0 - 1.0;
         
         // Considering [ -0.1 ; 0.1 ] as "released state"
-        if (v < -0.1) { return -1 };
-        if (v > 0.1) { return 1 };
+        if v < -0.1 { return -1 };
+        if v > 0.1 { return 1 };
         return 0;
     }
     
@@ -203,10 +213,9 @@ class GamePad
         let usagePage = Int(IOHIDElementGetUsagePage(element))
         let usage     = Int(IOHIDElementGetUsage(element))
         
-        if (usagePage == kHIDPage_Button) {
+        if usagePage == kHIDPage_Button {
             
             joystick?.setButton(intValue)
-            
         }
         
         if (usagePage == kHIDPage_GenericDesktop) {
@@ -229,19 +238,19 @@ class GamePad
                 // "Impact Dual Analog Rumble Pad".
                 // Not sure if this works for other controllers
                 
-                if (intValue == 8 || intValue == 1 || intValue == 2) {
+                if intValue == 8 || intValue == 1 || intValue == 2 {
                     joystick?.pullUp()
                 }
-                if (intValue == 2 || intValue == 3 || intValue == 4) {
+                if intValue == 2 || intValue == 3 || intValue == 4 {
                     joystick?.pullRight()
                 }
-                if (intValue == 4 || intValue == 5 || intValue == 6) {
+                if intValue == 4 || intValue == 5 || intValue == 6 {
                     joystick?.pullDown()
                 }
-                if (intValue == 6 || intValue == 7 || intValue == 8) {
+                if intValue == 6 || intValue == 7 || intValue == 8 {
                     joystick?.pullLeft()
                 }
-                if (intValue == 0) {
+                if intValue == 0 {
                     joystick?.releaseAxes()
                 }
                 break

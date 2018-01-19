@@ -57,10 +57,10 @@
 {
     NSMenuItem *item1 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_1];
     NSMenuItem *item2 = [[joystickPortA menu] itemWithTag:IPD_JOYSTICK_2];
-    [item1 setEnabled:![gamePadManager gamePadSlotIsEmpty:2]];
-    [item2 setEnabled:![gamePadManager gamePadSlotIsEmpty:3]];
+    [item1 setEnabled:![gamePadManager slotIsEmpty:2]];
+    [item2 setEnabled:![gamePadManager slotIsEmpty:3]];
     
-    NSInteger slotNr = [gamePadManager slotOfGamePadAttachedToPort:[c64 joystickA]];
+    NSInteger slotNr = [gamePadManager lookupGamePadWithPort:[c64 joystickA]];
     [joystickPortA selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
 }
 
@@ -68,10 +68,10 @@
 {
     NSMenuItem *item1 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_1];
     NSMenuItem *item2 = [[joystickPortB menu] itemWithTag:IPD_JOYSTICK_2];
-    [item1 setEnabled:![gamePadManager gamePadSlotIsEmpty:2]];
-    [item2 setEnabled:![gamePadManager gamePadSlotIsEmpty:3]];
+    [item1 setEnabled:![gamePadManager slotIsEmpty:2]];
+    [item2 setEnabled:![gamePadManager slotIsEmpty:3]];
     
-    NSInteger slotNr = [gamePadManager slotOfGamePadAttachedToPort:[c64 joystickB]];
+    NSInteger slotNr = [gamePadManager lookupGamePadWithPort:[c64 joystickB]];
     [joystickPortB selectItemAtIndex:(slotNr == -1) ? 0 : slotNr + 1];
 }
 
