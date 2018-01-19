@@ -977,7 +977,7 @@ C64::insertTape(TAPContainer *a)
 }
 
 bool
-C64::attachCartridge(Cartridge *c)
+C64::attachCartridge(CRTContainer *c)
 {
     return expansionport.attachCartridge(c);
 }

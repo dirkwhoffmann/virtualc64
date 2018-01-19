@@ -86,7 +86,7 @@
 // Peripherals
 #include "VC1541.h"
 #include "Datasette.h"
-#include "Cartridge.h"
+#include "CRTContainer.h"
 #include "ExpansionPort.h"
 
 
@@ -576,7 +576,7 @@ public:
     bool insertTape(TAPContainer *a);
 
 	//! @brief    Attaches a cartridge to the expansion port.
-	bool attachCartridge(Cartridge *c);
+	bool attachCartridge(CRTContainer *c);
 	
 	//! @brief    Detaches a cartridge from the expansion port.
 	void detachCartridge();

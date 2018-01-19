@@ -93,17 +93,17 @@
     return YES;
 }
 
+- (BOOL)setCRTContainerWithName:(NSString *)path
+{
+    if (!(attachedCartridge = [CRTContainerProxy containerFromCRTFile:path]))
+        return NO;
+    
+    return YES;
+}
+
 - (BOOL)setArchiveWithName:(NSString *)path
 {
     if (!(attachedArchive = [D64ArchiveProxy archiveFromArbitraryFile:path]))
-		return NO;
-	
-	return YES;
-}
-
-- (BOOL)setCartridgeWithName:(NSString *)path
-{	
-    if (!(attachedCartridge = [CartridgeProxy cartridgeFromFile:path]))
 		return NO;
 	
 	return YES;
@@ -208,7 +208,7 @@
     else if ([G64ArchiveProxy isG64File:filename])   format = G64_CONTAINER;
     else if ([NIBArchiveProxy isNIBFile:filename])   format = NIB_CONTAINER;
     else if ([TAPContainerProxy isTAPFile:filename]) format = TAP_CONTAINER;
-    else if ([CartridgeProxy isCRTFile:filename])    format = CRT_CONTAINER;
+    else if ([CRTContainerProxy isCRTFile:filename]) format = CRT_CONTAINER;
 #endif 
 
     // Check file type
@@ -261,7 +261,7 @@
 
         case CRT_CONTAINER:
 
-            if ([self setCartridgeWithName:filename])
+            if ([self setCRTContainerWithName:filename])
                 return YES;
             else break;
 

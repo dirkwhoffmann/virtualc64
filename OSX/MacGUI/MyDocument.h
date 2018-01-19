@@ -33,27 +33,27 @@
 	/*! When a new documents opens and this variable is not NULL, the archive is automatically inserted into the virtual floopy drive */
     ArchiveProxy *attachedArchive;
     
-    //! Reference to an attached tape image
+    //! Reference to an attached TAP container
     /*! When a new documents opens and this variable is not NULL, the tape is automatically inserted into the virtual datasette */
     TAPContainerProxy *attachedTape; 
 
-	//! Reference to an attached cartridge 
+	//! Reference to an attached CRT container
     /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged into the virtual expansion port */
-	CartridgeProxy *attachedCartridge;
+	CRTContainerProxy *attachedCartridge;
 }
 
 @property (strong) C64Proxy *c64;
 @property SnapshotProxy *attachedSnapshot;
 @property ArchiveProxy *attachedArchive;
 @property TAPContainerProxy *attachedTape;
-@property CartridgeProxy *attachedCartridge;
+@property CRTContainerProxy *attachedCartridge;
 
 - (BOOL)setSnapshotWithName:(NSString *)path;
 - (BOOL)setG64ArchiveWithName:(NSString *)path;
 - (BOOL)setNIBArchiveWithName:(NSString *)path;
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setTAPContainerWithName:(NSString *)path;
-- (BOOL)setCartridgeWithName:(NSString *)path;
+- (BOOL)setCRTContainerWithName:(NSString *)path;
 - (BOOL)detachCartridge;
 
 // Loading and saving

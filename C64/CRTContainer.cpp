@@ -18,21 +18,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "Cartridge.h"
+#include "CRTContainer.h"
 
-Cartridge::Cartridge()
+CRTContainer::CRTContainer()
 {
     data = NULL;
     dealloc();
 }
 
-Cartridge::~Cartridge()
+CRTContainer::~CRTContainer()
 {
 	dealloc();
 }
 
 void
-Cartridge::dealloc()
+CRTContainer::dealloc()
 {
     if (data) {
         free(data);
@@ -46,7 +46,7 @@ Cartridge::dealloc()
 }
 
 bool
-Cartridge::isCRTFile(const char *filename)
+CRTContainer::isCRTFile(const char *filename)
 {
     int magic_bytes[] = { 'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ',EOF };
     
@@ -64,12 +64,12 @@ Cartridge::isCRTFile(const char *filename)
     return true;
 }
 
-Cartridge *
-Cartridge::cartridgeFromFile(const char *filename)
+CRTContainer *
+CRTContainer::containerFromCRTFile(const char *filename)
 {
-    Cartridge *cartridge;
+    CRTContainer *cartridge;
     
-    cartridge = new Cartridge();
+    cartridge = new CRTContainer();
     if (!cartridge->readFromFile(filename)) {
         delete cartridge;
         cartridge = NULL;
@@ -79,7 +79,7 @@ Cartridge::cartridgeFromFile(const char *filename)
 }
 
 bool
-Cartridge::readFromBuffer(const uint8_t *buffer, unsigned length)
+CRTContainer::readFromBuffer(const uint8_t *buffer, unsigned length)
 {
     if ((data = (uint8_t *)malloc(length)) == NULL) {
         return false;

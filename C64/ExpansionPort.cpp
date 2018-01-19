@@ -271,7 +271,7 @@ ExpansionPort::switchBank(unsigned nr)
 }
 
 void
-ExpansionPort::attachChip(unsigned nr, Cartridge *c)
+ExpansionPort::attachChip(unsigned nr, CRTContainer *c)
 {
     assert(nr < 64);
     
@@ -290,7 +290,7 @@ ExpansionPort::attachChip(unsigned nr, Cartridge *c)
 }
 
 bool
-ExpansionPort::attachCartridge(Cartridge *c)
+ExpansionPort::attachCartridge(CRTContainer *c)
 {
     detachCartridge();
     

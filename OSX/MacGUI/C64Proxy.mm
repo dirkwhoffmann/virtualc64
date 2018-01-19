@@ -37,7 +37,7 @@ struct DatasetteWrapper { Datasette *datasette; };
 struct SnapshotWrapper { Snapshot *snapshot; };
 struct ArchiveWrapper { Archive *archive; };
 struct TAPContainerWrapper { TAPContainer *tapcontainer; };
-struct CartridgeWrapper { Cartridge *cartridge; };
+struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 
 // --------------------------------------------------------------------------
@@ -843,8 +843,8 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 - (bool) loadRom:(NSString *)filename {
     return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename]; }
 
-- (bool) attachCartridge:(CartridgeProxy *)c {
-    return wrapper->c64->attachCartridge([c wrapper]->cartridge); }
+- (bool) attachCartridge:(CRTContainerProxy *)c {
+    return wrapper->c64->attachCartridge([c wrapper]->crtcontainer); }
 - (void) detachCartridge { wrapper->c64->detachCartridge(); }
 - (bool) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 
@@ -1243,36 +1243,36 @@ struct CartridgeWrapper { Cartridge *cartridge; };
 //                                 Cartridge
 // --------------------------------------------------------------------------
 
-@implementation CartridgeProxy
+@implementation CRTContainerProxy
 
-- (CartridgeWrapper *)wrapper { return wrapper; }
+- (CRTContainerWrapper *)wrapper { return wrapper; }
 
-- (instancetype) initWithCartridge:(Cartridge *)cartridge
+- (instancetype) initWithCRTContainer:(CRTContainer *)container
 {
     if (self = [super init]) {
-        wrapper = new CartridgeWrapper();
-        wrapper->cartridge = cartridge;
+        wrapper = new CRTContainerWrapper();
+        wrapper->crtcontainer = container;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    NSLog(@"CartridgeProxy %p deleted", wrapper->cartridge);
+    NSLog(@"CRTContainerProxy %p deleted", wrapper->crtcontainer);
     
-    if (wrapper->cartridge) delete wrapper->cartridge;
+    if (wrapper->crtcontainer) delete wrapper->crtcontainer;
     if (wrapper) delete wrapper;
 }
 
 + (BOOL) isCRTFile:(NSString *)filename
 {
-    return Cartridge::isCRTFile([filename UTF8String]);
+    return CRTContainer::isCRTFile([filename UTF8String]);
 }
 
-+ (instancetype) cartridgeFromFile:(NSString *)filename
++ (instancetype)containerFromCRTFile:(NSString *)filename
 {
-    Cartridge *cartridge = Cartridge::cartridgeFromFile([filename UTF8String]);
-    return cartridge ? [[CartridgeProxy alloc] initWithCartridge:cartridge] : nil;
+    CRTContainer *container = CRTContainer::containerFromCRTFile([filename UTF8String]);
+    return container ? [[CRTContainerProxy alloc] initWithCRTContainer:container] : nil;
 }
 
 @end

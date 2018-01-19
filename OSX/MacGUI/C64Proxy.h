@@ -26,10 +26,9 @@
 @class C64Proxy;
 @class SnapshotProxy;
 @class D64ArchiveProxy; 
-// @class MyMetalView;
 @class ArchiveProxy;
 @class TAPContainerProxy;
-@class CartridgeProxy;
+@class CRTContainerProxy;
 
 // Forward declarations of wrappers for C++ classes.
 // We wrap classes into normal C structs to avoid any reference to C++ here.
@@ -51,7 +50,7 @@ struct DatasetteWrapper;
 struct SnapshotWrapper;
 struct ArchiveWrapper;
 struct TAPContainerWrapper;
-struct CartridgeWrapper;
+struct CRTContainerWrapper;
 
 
 // --------------------------------------------------------------------------
@@ -652,7 +651,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (bool) isRom:(NSString *)filename;
 - (bool) loadRom:(NSString *)filename;
 
-- (bool) attachCartridge:(CartridgeProxy *)c;
+- (bool) attachCartridge:(CRTContainerProxy *)c;
 - (void) detachCartridge;
 - (bool) isCartridgeAttached;
 
@@ -786,6 +785,9 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 + (instancetype) archiveFromNIBFile:(NSString *)filename;
 @end
 
+// --------------------------------------------------------------------------
+//                                TAP Container
+// --------------------------------------------------------------------------
 
 @interface TAPContainerProxy : NSObject
 {
@@ -805,17 +807,17 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 @end
 
 // --------------------------------------------------------------------------
-//                                Cartridge
+//                             CRT Container
 // --------------------------------------------------------------------------
 
-@interface CartridgeProxy : NSObject {
+@interface CRTContainerProxy : NSObject {
     
-    struct CartridgeWrapper *wrapper;
+    struct CRTContainerWrapper *wrapper;
 }
 
-- (struct CartridgeWrapper *) wrapper;
+- (struct CRTContainerWrapper *) wrapper;
 + (BOOL) isCRTFile:(NSString *)filename;
-+ (instancetype) cartridgeFromFile:(NSString *)filename;
++ (instancetype) containerFromCRTFile:(NSString *)filename;
 
 @end
 

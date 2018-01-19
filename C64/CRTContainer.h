@@ -1,5 +1,5 @@
 /*!
- * @header      ExpansionPort.h
+ * @header      CRTContainer.h
  * @author      Written by Dirk Hoffmann based on the original code by A. Carl Douglas.
  * @copyright   All rights reserved.
  */
@@ -32,15 +32,34 @@
  * As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
 
-#ifndef _CARTRIDGE_H
-#define _CARTRIDGE_H
+
+// TODO:
+// Rename this class to CRTContainer (DONE)
+// Change Cartridge class to represent a real hardware cartridge
+// - Add peekLo(bool *error) : return value from lower cartridge space
+// - Add peekHi(bool *error)
+// - Change Memory::peek to get peekLo / peekHi right
+// Peek squence will be (for example):
+// Memory::peek -> ExpansionPort::peekLo -> Cartridge::peekLo
+// Move most of the expansion port stuff to Cartrige class
+// Implement SimonsBasic sublcassed from Cartridge
+// Implement Oceans etc. (Terminator??) sublcassed from Cartridge
+// Implement static method: CartridgeFromFile
+// - Returns a cartridge class or one of its subclasses
+// If everything still works:
+// Implement FinalCartrigeIII sublassed from Cartridge
+
+
+#ifndef _CRTContainer_H
+#define _CRTContainer_H
 
 #include "Container.h"
 
-/*! @class    Cartridge
- *  @brief    The Cartridge class declares the programmatic interface for a file of the CRT format type.
+/*! @class    CRTContainer
+ *  @brief    The CRTContainer class declares the programmatic interface for a file
+ *            of the CRT format type.
  */
-class Cartridge : public Container {
+class CRTContainer : public Container {
 
 private:
     
@@ -56,10 +75,10 @@ private:
 public:
     
     //! @brief    Constructor
-    Cartridge();
+    CRTContainer();
     
     //! @brief    Destructor
-    ~Cartridge();
+    ~CRTContainer();
     
     //! @brief    Frees the allocated memory.
     void dealloc();
@@ -74,10 +93,10 @@ public:
     static bool isCRTFile(const char *filename);
     
     //! Check file type
-    bool fileIsValid(const char *filename) { return Cartridge::isCRTFile(filename); }
+    bool fileIsValid(const char *filename) { return CRTContainer::isCRTFile(filename); }
 
     //! Factory method
-    static Cartridge *cartridgeFromFile(const char *filename);
+    static CRTContainer *containerFromCRTFile(const char *filename);
     
     //! Read container data from memory buffer
     bool readFromBuffer(const uint8_t *buffer, unsigned length);

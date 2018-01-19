@@ -132,12 +132,6 @@ public extension MetalView {
                 return true
             }
             
-            // Is it a cartridge?
-            if document.setCartridgeWithName(path) {
-                controller.mountCartridge()
-                return true
-            }
-            
             // Is it a NIB archive?
             if document.setNIBArchiveWithName(path) {
                 controller.showMountDialog()
@@ -153,6 +147,12 @@ public extension MetalView {
             // Is it a TAP container?
             if document.setTAPContainerWithName(path) {
                 controller.showTapeDialog()
+                return true
+            }
+            
+            // Is it a cartridge?
+            if document.setCRTContainerWithName(path) {
+                controller.mountCartridge()
                 return true
             }
             

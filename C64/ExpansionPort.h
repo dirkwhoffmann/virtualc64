@@ -182,10 +182,10 @@ public:
     inline bool getCartridgeAttached() { return type != CRT_NONE; }
 
     //! @brief    Attaches a single cartridge chip
-    void attachChip(unsigned nr, Cartridge *c);
+    void attachChip(unsigned nr, CRTContainer *c);
 
     //! @brief    Attaches a cartridge to the expansion port
-    bool attachCartridge(Cartridge *c);
+    bool attachCartridge(CRTContainer *c);
 
     //! @brief    Removes a cartridge from the expansion port
     void detachCartridge();
