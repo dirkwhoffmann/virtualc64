@@ -28,12 +28,13 @@ extension MyController {
     open override func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
         
         let tag = item.tag
-        let document = self.document as! MyDocument
         
         // NSLog("Validating \(tag)...")
     
-        if c64.isRunning() {
-            document.updateChangeCount(.changeDone)
+        if c64 != nil && c64.isRunning() {
+            
+            let document = self.document as! MyDocument?
+            document?.updateChangeCount(.changeDone)
         }
     
         // Pause/Continue

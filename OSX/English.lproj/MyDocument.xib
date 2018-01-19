@@ -331,7 +331,6 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="1845">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="1846"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="1849">
                         <connections>
                             <action selector="printDocument:" target="-2" id="dc4-4V-nWJ"/>
