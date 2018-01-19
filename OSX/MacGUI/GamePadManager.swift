@@ -246,7 +246,7 @@
         IOHIDDeviceRegisterInputValueCallback(device, gamePads[slotNr]!.actionCallback, hidContext)
 
         // Inform controller
-        controller.validateJoystickItems()
+        controller.validateJoystickToolbarItems()
         
         listDevices()
     }
@@ -276,7 +276,7 @@
         }
         
         // Inform controller
-        controller.validateJoystickItems()
+        controller.validateJoystickToolbarItems()
         
         listDevices()
     }

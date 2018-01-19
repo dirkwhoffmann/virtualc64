@@ -301,6 +301,11 @@ typedef unsigned long MacKeyFingerprint;
 
 @property (strong) C64Proxy *c64;
 @property (readonly) GamePadManager *gamePadManager;
+@property NSDrawer *debugPanel;
+@property NSDrawer *cheatboxPanel;
+@property CheatboxImageBrowserView *cheatboxImageBrowserView;
+@property NSPopUpButton *joystickPortA;
+@property NSPopUpButton *joystickPortB;
 @property INPUT_DEVICES inputDeviceA;
 @property INPUT_DEVICES inputDeviceB;
 @property NSEventModifierFlags modifierFlags;

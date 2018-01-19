@@ -36,6 +36,11 @@
 }
 
 @synthesize c64;
+@synthesize debugPanel;
+@synthesize cheatboxPanel;
+@synthesize cheatboxImageBrowserView;
+@synthesize joystickPortA;
+@synthesize joystickPortB;
 @synthesize gamePadManager;
 @synthesize modifierFlags;
 @synthesize statusBar;

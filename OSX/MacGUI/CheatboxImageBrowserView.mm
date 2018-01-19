@@ -59,7 +59,7 @@
 	// NSLog(@"doubleClickAction (item %lu)", (unsigned long)index);
 	
 	[c64 restoreHistoricSnapshot:index];
-	[controller cheatboxAction:self];
+	[controller cheatboxCloseAction:self];
 }
 
 - (void)refresh {
@@ -146,7 +146,7 @@
 - (void)draggedImage:(NSImage *)image endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation
 {
 	if (operation == NSDragOperationCopy) {
-		[controller cheatboxAction:self];
+        [controller cheatboxCloseAction:self];
 	}
 }
 

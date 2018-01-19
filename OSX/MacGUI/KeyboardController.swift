@@ -33,7 +33,6 @@ extension CChar {
 }
 
 
-
 /*! @brief   Remembers currently pressed keys and there related C64KeyFingerprints
  *  @details Make this a simple variable once the whole class has been ported to Swift
  */

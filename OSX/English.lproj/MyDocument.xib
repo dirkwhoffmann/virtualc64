@@ -332,7 +332,11 @@
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="1845">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="1846"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="1849"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="1849">
+                        <connections>
+                            <action selector="printDocument:" target="-2" id="dc4-4V-nWJ"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="1850"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1851"/>
                     <toolbarItem implicitItemIdentifier="944C7CF2-507D-458E-A37A-DA6E3FC68049" label="Reset" paletteLabel="Reset" tag="30" image="restart32" id="1853">
@@ -343,17 +347,17 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="C3789870-2CD2-49F8-934D-1F89FB4FA381" label="Hardware setup" paletteLabel="Hardware setup" tag="20" image="tb_virtualmachine" id="2033" userLabel="Hardware Setup">
                         <connections>
-                            <action selector="hardwareAction:" target="-2" id="iI3-mf-bse"/>
+                            <action selector="hardwareAction:" target="-2" id="VKy-AX-S4y"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="5074A889-2E1C-49D2-A328-E96BA904A76D" label="Emulator setup" paletteLabel="Emulator setup" tag="-1" image="tb_setup" id="2226" userLabel="Emulator Setup">
                         <connections>
-                            <action selector="propertiesAction:" target="-2" id="2323"/>
+                            <action selector="propertiesAction:" target="-2" id="4xt-Za-auc"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="44750A76-96CA-4180-AA7E-CFBA12DE3318" label="Media" paletteLabel="Media" tag="-1" image="diskette" id="f2e-mw-dVA" userLabel="Media">
                         <connections>
-                            <action selector="mediaAction:" target="-2" id="Ib3-QV-4vb"/>
+                            <action selector="mediaAction:" target="-2" id="cHt-Hg-iuV"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="20061746-A99E-4E77-ADA9-50CB6DEFBEC1" label="Time travel" paletteLabel="Time travel" tag="21" image="tb_timetravel2" id="4tn-YG-78O">
@@ -364,7 +368,7 @@
                     <toolbarItem implicitItemIdentifier="2A36D004-05A0-4DE0-8CF5-73A265E89C07" label="Inspect" paletteLabel="Inspect" tag="31" image="tb_inspect" id="1855">
                         <nil key="toolTip"/>
                         <connections>
-                            <action selector="debugAction:" target="-2" id="1862"/>
+                            <action selector="debugAction:" target="-2" id="h8p-Nc-0xz"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="D88C46BA-2484-4508-88A3-BD022DF84B51" label="Pause" paletteLabel="Pause" tag="1" image="pause32" id="1856">
@@ -403,18 +407,18 @@
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
                                     <items>
-                                        <menuItem title="None" image="none32" id="VD3-Wr-Ufe"/>
-                                        <menuItem title="Keyset 1" image="keyboard32" tag="1" id="L2h-xt-iO6"/>
-                                        <menuItem title="Keyset 2" image="keyboard32" tag="2" id="Ohe-Pi-c1S"/>
-                                        <menuItem title="USB Joystick 1" image="joystick1_32" tag="3" id="yOc-MG-77p"/>
-                                        <menuItem title="USB Joystick 2" image="joystick2_32" tag="4" id="1PP-xx-NoT">
+                                        <menuItem title="None" image="none32" tag="-1" id="VD3-Wr-Ufe"/>
+                                        <menuItem title="Keyset 1" image="keyboard32" id="L2h-xt-iO6"/>
+                                        <menuItem title="Keyset 2" image="keyboard32" tag="1" id="Ohe-Pi-c1S"/>
+                                        <menuItem title="USB Joystick 1" image="joystick1_32" tag="2" id="yOc-MG-77p"/>
+                                        <menuItem title="USB Joystick 2" image="joystick2_32" tag="3" id="1PP-xx-NoT">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <action selector="portAAction:" target="-2" id="HM2-PR-EXU"/>
+                                <action selector="portAAction:" target="-2" id="WK0-4U-vnc"/>
                             </connections>
                         </popUpButton>
                     </toolbarItem>
@@ -425,23 +429,23 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port B">
                             <rect key="frame" x="0.0" y="14" width="56" height="36"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="bevel" title="USB Joystick 1" bezelStyle="regularSquare" image="joystick1_32" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="2" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="JM3-8Y-xZU" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
                                     <items>
-                                        <menuItem title="None" image="none32" id="xyt-eC-0im"/>
-                                        <menuItem title="Keyset 1" image="keyboard32" tag="1" id="PAa-za-K8O"/>
-                                        <menuItem title="Keyset 2" image="keyboard32" tag="2" id="1M8-Dz-dop"/>
-                                        <menuItem title="USB Joystick 1" state="on" image="joystick1_32" tag="3" id="JM3-8Y-xZU"/>
-                                        <menuItem title="USB Joystick 2" image="joystick2_32" tag="4" id="Ahc-WA-2jp">
+                                        <menuItem title="None" image="none32" tag="-1" id="xyt-eC-0im"/>
+                                        <menuItem title="Keyset 1" image="keyboard32" id="PAa-za-K8O"/>
+                                        <menuItem title="Keyset 2" image="keyboard32" tag="1" id="1M8-Dz-dop"/>
+                                        <menuItem title="USB Joystick 1" state="on" image="joystick1_32" tag="2" id="JM3-8Y-xZU"/>
+                                        <menuItem title="USB Joystick 2" image="joystick2_32" tag="3" id="Ahc-WA-2jp">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <action selector="portBAction:" target="-2" id="0tV-uA-8uo"/>
+                                <action selector="portBAction:" target="-2" id="hbD-K5-rhc"/>
                             </connections>
                         </popUpButton>
                     </toolbarItem>
