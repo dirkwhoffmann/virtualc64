@@ -104,8 +104,17 @@ public:
     //! @brief    Destructor
     ~Cartridge();
     
+    //! @brief    Factory method
+    /*! @details  Creates a cartridge from a CRT container */
+    static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container);
+     
     //! @brief    Resets the cartridge
     void reset();
+    
+    //! @brief    Reverts cartridge to its initial state
+    /*! @details  Switches back to first bank
+     */
+    void softreset();
     
     //! @brief    Dumps the current configuration into the message queue
     void ping();
@@ -159,16 +168,7 @@ public:
     
     //! @brief    Attaches a single cartridge chip
     void attachChip(unsigned nr, CRTContainer *c);
-    
-    // RENAME (MAKE IT A FACTORY METHOD)
-    //! @brief    Attaches a cartridge to the expansion port
-    bool attachCartridge(CRTContainer *c);
-    
-    // MOVE CODE TO DESTRUCTOR
-    //! @brief    Removes a cartridge from the expansion port
-    void detachCartridge();
-    
-    
+        
 };
 
 #endif 

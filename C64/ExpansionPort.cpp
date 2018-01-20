@@ -23,6 +23,9 @@ ExpansionPort::ExpansionPort()
     setDescription("Expansion port");
     debug(3, "  Creating expansion port at address %p...\n", this);
 
+    cartridge = NULL;
+    
+    // OLD CODE (REMOVE)
     // We reset the cartridge here, as reset() keeps the cartridge intact.
     resetCartridge();
 }
@@ -33,6 +36,7 @@ ExpansionPort::~ExpansionPort()
     detachCartridge();
 }
 
+// DEPRECATED
 void
 ExpansionPort::resetCartridge()
 {
@@ -55,6 +59,10 @@ ExpansionPort::softreset()
 {
     debug(2, "  Soft-resetting expansion port...\n");
     
+    if (cartridge)
+        cartridge->softreset();
+    
+    // OLD CODE (REMOVE)
     if (chip[0])
         switchBank(0);
 }
@@ -62,19 +70,28 @@ ExpansionPort::softreset()
 void
 ExpansionPort::ping()
 {
-    c64->putMessage(MSG_CARTRIDGE, c64->isCartridgeAttached());
+    c64->putMessage(MSG_CARTRIDGE, c64->isCartridgeAttached()); // OLD
+    // c64->putMessage(MSG_CARTRIDGE, cartridge != NULL);
 }
 
 uint32_t
 ExpansionPort::stateSize()
 {
-    uint32_t size = 3;
+    uint32_t result = 1;
+    if (cartridge != NULL)
+        result += cartridge->stateSize();
     
-    for (unsigned i = 0; i < 64; i++)
+    uint32_t size = 4;
+    
+    for (unsigned i = 0; i < 64; i++) {
         size += 4 + chipSize[i];
+    }
 
     size += sizeof(rom);
     size += sizeof(blendedIn);
+    
+    if (cartridge != NULL)
+        assert(result == size);
     
     return size;
 }
@@ -82,7 +99,18 @@ ExpansionPort::stateSize()
 void
 ExpansionPort::loadFromBuffer(uint8_t **buffer)
 {
+    
     uint8_t *old = *buffer;
+    
+    bool isAttached = read8(buffer);
+    
+    if (isAttached) {
+        uint8_t *oldBuffer = *buffer;
+        detachCartridge();
+        cartridge = new Cartridge(); // Add API: attachCartridge (with MSG sending!!!)
+        cartridge->loadFromBuffer(buffer);
+        *buffer = oldBuffer;
+    }
     
     type = read8(buffer);
     gameLine = (bool)read8(buffer);
@@ -112,6 +140,14 @@ ExpansionPort::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
+    write8(buffer, c64->isCartridgeAttached());
+
+    /*
+    if (cartridge != NULL) {
+        cartridge->saveToBuffer(buffer);
+    }
+    */
+        
     write8(buffer, type);
     write8(buffer, (uint8_t)gameLine);
     write8(buffer, (uint8_t)exromLine);
@@ -152,6 +188,13 @@ ExpansionPort::dumpState()
             msg("Chip %2d:        %d KB starting at $%04X\n", i, chipSize[i] / 1024, chipStartAddress[i]);
         }
     }
+    
+    if (cartridge == NULL) {
+        msg("No cartridge attached");
+    } else {
+        cartridge->dumpState();
+    }
+    
 }
 
 unsigned
@@ -162,7 +205,10 @@ ExpansionPort::numberOfChips()
     for (unsigned i = 0; i < 64; i++)
         if (chip[i] != NULL)
             result++;
-
+    
+    if (cartridge != NULL)
+        assert(cartridge->numberOfChips() == result);
+               
     return result;
 }
 
@@ -175,15 +221,34 @@ ExpansionPort::numberOfBytes()
         if (chip[i] != NULL)
             result += chipSize[i];
     
+    if (cartridge != NULL)
+        assert(cartridge->numberOfBytes() == result);
+    
     return result;
 }
 
-void ExpansionPort::poke(uint16_t addr, uint8_t value)
+uint8_t
+ExpansionPort::peek(uint16_t addr)
+{
+    if (cartridge != NULL) {
+        uint8_t result = cartridge->peek(addr);
+        assert(result == rom[addr & 0x7FFF]);
+    }
+    
+    return rom[addr & 0x7FFF];
+}
+
+void
+ExpansionPort::poke(uint16_t addr, uint8_t value)
 {
     uint8_t bankNumber;
     
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
+    if (cartridge != NULL) {
+        cartridge->poke(addr, value);
+    }
+        
     if (!getCartridgeAttached())
         return;
     
@@ -235,6 +300,10 @@ void ExpansionPort::poke(uint16_t addr, uint8_t value)
 void
 ExpansionPort::setGameLine(bool value)
 {
+    if (cartridge != NULL) {
+        cartridge->setGameLine(value);
+    }
+    
     gameLine = value;
     c64->mem.updatePeekPokeLookupTables();
 }
@@ -242,6 +311,10 @@ ExpansionPort::setGameLine(bool value)
 void
 ExpansionPort::setExromLine(bool value)
 {
+    if (cartridge != NULL) {
+        cartridge->setExromLine(value);
+    }
+    
     exromLine = value;
     c64->mem.updatePeekPokeLookupTables();
 }
@@ -249,6 +322,10 @@ ExpansionPort::setExromLine(bool value)
 void
 ExpansionPort::switchBank(unsigned nr)
 {
+    if (cartridge != NULL) {
+        cartridge->switchBank(nr);
+    }
+    
     if (chip[nr] == NULL) {
         warn("Chip %d does not exist (cannot switch)", nr);
         return;
@@ -275,6 +352,10 @@ ExpansionPort::attachChip(unsigned nr, CRTContainer *c)
 {
     assert(nr < 64);
     
+    if (cartridge != NULL) {
+        cartridge->attachChip(nr, c);
+    }
+    
     if (chip[nr])
         free(chip[nr]);
     
@@ -293,6 +374,13 @@ bool
 ExpansionPort::attachCartridge(CRTContainer *c)
 {
     detachCartridge();
+    
+    cartridge = Cartridge::makeCartridgeWithCRTContainer(c64, c);
+    if (cartridge != NULL) {
+        debug(1, "Cartridge successfully created from CRTContainer");
+    } else {
+        return false;
+    }
     
     type = c->getCartridgeType();
     gameLine = c->getGameLine();
@@ -314,6 +402,9 @@ ExpansionPort::attachCartridge(CRTContainer *c)
     c64->mem.updatePeekPokeLookupTables();
     // dumpState();
 
+    dumpState();
+    cartridge->dumpState();
+    
     c64->putMessage(MSG_CARTRIDGE, 1);
     return true;
 }
@@ -321,6 +412,11 @@ ExpansionPort::attachCartridge(CRTContainer *c)
 void
 ExpansionPort::detachCartridge()
 {
+    if (cartridge != NULL) {
+        delete cartridge;
+        cartridge = NULL;
+    }
+    
     // Deallocate chip memory
     for (unsigned i = 0; i < 64; i++) if (chip[i]) free(chip[i]);
     

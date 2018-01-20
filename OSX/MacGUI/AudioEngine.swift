@@ -125,7 +125,7 @@ import AVFoundation
      */
     @objc func startPlayback() -> Bool {
 
-        NSLog("\(#function)")
+        // NSLog("\(#function)")
         do { try audiounit.startHardware() } catch {
             NSLog("Failed to start audio hardware")
             return false
@@ -138,7 +138,7 @@ import AVFoundation
      */
     @objc func stopPlayback() {
         
-        NSLog("\(#function)")
+        // NSLog("\(#function)")
         audiounit.stopHardware()
     }
 }

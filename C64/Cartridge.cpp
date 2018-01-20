@@ -10,7 +10,7 @@
 Cartridge::Cartridge()
 {
     setDescription("Cartridge");
-    debug(3, "  Creating cartridge at address %p...\n", this);
+    debug(1, "  Creating cartridge at address %p...\n", this);
     
     // We reset the cartridge here, as C64::reset() keeps the cartridge intact.
     reset();
@@ -18,9 +18,42 @@ Cartridge::Cartridge()
 
 Cartridge::~Cartridge()
 {
-    debug(3, "  Releasing cartridge port...\n");
-    // detachCartridge();
+    debug(1, "  Releasing cartridge...\n");
+    
+    // Deallocate chip memory
+    for (unsigned i = 0; i < 64; i++)
+        if (chip[i]) free(chip[i]);
 }
+
+Cartridge *
+Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
+{
+    Cartridge *cart = new Cartridge();
+    if (cart == NULL) return NULL;
+    
+    cart->c64 = c64;
+    cart->type = container->getCartridgeType();
+    cart->gameLine = container->getGameLine();
+    cart->exromLine = container->getExromLine();
+    
+    // Load chip packets
+    for (unsigned i = 0; i < container->getNumberOfChips(); i++) {
+        cart->attachChip(i, container);
+    }
+    
+    // Hopefully, we got at least one chip
+    if(cart->chip[0] == NULL) {
+        cart->warn("Cartridge does not contain any chips");
+        return NULL;
+    }
+    
+    // Blend in chip 0
+    cart->switchBank(0);
+    cart->c64->mem.updatePeekPokeLookupTables();
+    
+    return cart;
+}
+
 
 void
 Cartridge::reset()
@@ -40,6 +73,15 @@ Cartridge::reset()
 }
 
 void
+Cartridge::softreset()
+{
+    debug(2, "  Soft-resetting cartridge...\n");
+    
+    if (chip[0])
+        switchBank(0);
+}
+
+void
 Cartridge::ping()
 {
 }
@@ -49,9 +91,10 @@ Cartridge::stateSize()
 {
     uint32_t size = 3;
     
-    for (unsigned i = 0; i < 64; i++)
+    for (unsigned i = 0; i < 64; i++) {
         size += 4 + chipSize[i];
-    
+    }
+
     size += sizeof(rom);
     size += sizeof(blendedIn);
     
@@ -114,7 +157,7 @@ Cartridge::saveToBuffer(uint8_t **buffer)
 void
 Cartridge::dumpState()
 {
-    msg("Cartridge\n");
+    msg("Cartridge (class Cartridge)\n");
     msg("---------\n");
     
     msg("Cartridge type: %d\n", getCartridgeType());
@@ -126,6 +169,7 @@ Cartridge::dumpState()
             msg("Chip %2d:        %d KB starting at $%04X\n", i, chipSize[i] / 1024, chipStartAddress[i]);
         }
     }
+    msg("END OF REPORT\n");
 }
 
 unsigned
@@ -253,45 +297,6 @@ Cartridge::attachChip(unsigned nr, CRTContainer *c)
     
     debug(1, "Chip %d is in place: %d KB starting at $%04X (type: %d bank:%X)\n",
           nr, chipSize[nr] / 1024, chipStartAddress[nr], c->getChipType(nr), c->getChipBank(nr));
-}
-
-bool
-Cartridge::attachCartridge(CRTContainer *c)
-{
-    detachCartridge();
-    
-    type = c->getCartridgeType();
-    gameLine = c->getGameLine();
-    exromLine = c->getExromLine();
-    
-    // Load chip packets
-    for (unsigned i = 0; i < c->getNumberOfChips(); i++) {
-        attachChip(i, c);
-    }
-    
-    // Hopefully, we got at least one chip
-    if(chip[0] == NULL) {
-        warn("Cartridge does not contain any chips");
-        return false;
-    }
-    
-    // Blend in chip 0
-    switchBank(0);
-    c64->mem.updatePeekPokeLookupTables();
-    // dumpState();
-    
-    c64->putMessage(MSG_CARTRIDGE, 1);
-    return true;
-}
-
-void
-Cartridge::detachCartridge()
-{
-    // Deallocate chip memory
-    for (unsigned i = 0; i < 64; i++) if (chip[i]) free(chip[i]);
-    
-    reset();
-    if (c64) c64->putMessage(MSG_CARTRIDGE, 0);
 }
 
 

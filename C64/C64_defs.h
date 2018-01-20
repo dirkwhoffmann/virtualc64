@@ -11,7 +11,7 @@
 
 //! @brief Snapshot version number of this release
 #define V_MAJOR 1
-#define V_MINOR 5
+#define V_MINOR 7
 #define V_SUBMINOR 0
 
 /*! @brief    Message layout

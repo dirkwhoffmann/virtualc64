@@ -77,35 +77,49 @@ public:
 
 private:
     
+    /*! @brief    Attached cartridge
+     *  @details  NULL, if no cartridge is plugged in.
+     */
+    Cartridge *cartridge;
+    
+    
+    // DEPRECATED
     /*! @brief    Type of the attached cartridge
      *  @details  Value is CRT_NONE if no cartridge is plugged in. 
      */
     uint8_t type;
-    
+
+    // DEPRECATED
     /*! @brief    Game line of the attached cartridge
      *  @details  Line is HIGH if no cartridge is plugged in.
      */
     bool gameLine;
 
+    // DEPRECATED
     /*! @brief    Exrom line of the attached cartridge
      *  @details  Line is HIGH if no cartridge is plugged in.
      */
     bool exromLine;
     
+    // DEPRECATED
     /*! @brief    ROM chips contained in the attached cartridge
      *  @details  A cartridge can contain up to 64 chips
      */
     uint8_t *chip[64];
 
+    // DEPRECATED
     //! @brief    Array containing the load addresses of all chips
     uint16_t chipStartAddress[64];
 
+    // DEPRECATED
     //! @brief    Array containing the chip sizes of all chips
     uint16_t chipSize[64];
 
+    // DEPRECATED
     //! @brief    Virtual cartridge ROM (32 kb starting at $8000)
     uint8_t rom[0x8000];
     
+    // DEPRECATED
     /*! @brief    Indicates whether ROM is blended in (0x01) or or out (0x00)
      *  @details  Each array item represents a 4k block above $8000 
      */
@@ -147,7 +161,7 @@ public:
     bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
     //! @brief    Peek fallthrough
-    uint8_t peek(uint16_t addr) { return rom[addr & 0x7FFF]; }
+    uint8_t peek(uint16_t addr);
     
     //! @brief    Poke fallthrough
     void poke(uint16_t addr, uint8_t value);
