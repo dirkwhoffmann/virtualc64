@@ -82,6 +82,7 @@
 		5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */; };
 		5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */; };
 		5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */; };
+		5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5054BF0F20133BA2003D86D4 /* Cartridge.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
 		505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505739E31C01FC5700B80646 /* NIBArchive.cpp */; };
 		5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */; };
@@ -339,6 +340,8 @@
 		5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_power_on_0.aiff; sourceTree = "<group>"; };
 		5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_2.aiff; sourceTree = "<group>"; };
 		5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_1.aiff; sourceTree = "<group>"; };
+		5054BF0F20133BA2003D86D4 /* Cartridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
+		5054BF1020133BA2003D86D4 /* Cartridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		505739E31C01FC5700B80646 /* NIBArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NIBArchive.cpp; sourceTree = "<group>"; };
 		505739E41C01FC5700B80646 /* NIBArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIBArchive.h; sourceTree = "<group>"; };
@@ -820,6 +823,8 @@
 		504B39910C45192700286F18 /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
+				5054BF1020133BA2003D86D4 /* Cartridge.h */,
+				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
 				5058B17F1A6AD2D900A99F1C /* ExpansionPort.h */,
 				5058B17E1A6AD2D900A99F1C /* ExpansionPort.cpp */,
 				5000C8220D13CEE10011A2E9 /* VC1541.h */,
@@ -1219,6 +1224,7 @@
 				50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */,
 				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
 				50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */,
+				5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */,
 				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */,

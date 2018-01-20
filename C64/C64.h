@@ -68,8 +68,10 @@
 #include "P00Archive.h"
 #include "FileArchive.h"
 #include "TAPContainer.h"
+#include "CRTContainer.h"
 
 // Sub components
+#include "ExpansionPort.h"
 #include "IEC.h"
 #include "Keyboard.h"
 #include "Joystick.h"
@@ -85,9 +87,9 @@
 
 // Peripherals
 #include "VC1541.h"
+#include "Cartridge.h"
 #include "Datasette.h"
-#include "CRTContainer.h"
-#include "ExpansionPort.h"
+
 
 
 //! @class    A complete virtual C64

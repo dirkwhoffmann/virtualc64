@@ -1,7 +1,7 @@
 /*!
- * @header      ExpansionPort.h
- * @author      Written by Dirk Hoffmann based on the original code by A. Carl Douglas.
- * @copyright   All rights reserved.
+ * @header      Cartridge.h
+ * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
+ * @copyright   2018 Dirk W. Hoffmann
  */
 /* This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/*
- * For more information: http://www.c64-wiki.com/index.php/Cartridge
- *
- * "The cartridge system implemented in the C64 provides an easy way to
- *  hook 8 or 16 kilobytes of ROM into the computer's address space:
- *  This allows for applications and games up to 16 K, or BASIC expansions
- *  up to 8 K in size and appearing to the CPU along with the built-in
- *  BASIC ROM. In theory, such a cartridge need only contain the
- *  ROM circuit without any extra support electronics."
- *
- *  Also: http://www.c64-wiki.com/index.php/Bankswitching
- *
- *  As well read the Commodore 64 Programmers Reference Guide pages 260-267.
+#ifndef _CARTRIDGE_INC
+#define _CARTRIDGE_INC
+
+#include "VirtualComponent.h"
+
+/*!
+ * @brief    Cartridge that can be plugged into the C64's expansion port
  */
-
-#ifndef _EXPANSIONPORT_H
-#define _EXPANSIONPORT_H
-
-#include "Cartridge.h"
-
-class ExpansionPort : public VirtualComponent {
- 
+class Cartridge : public VirtualComponent {
+    
 public:
     
     //! @brief    Cartridge types
@@ -74,21 +62,18 @@ public:
         CRT_REX_EP256 = 27,
         CRT_NONE = 255
     };
-
+    
 private:
     
     /*! @brief    Type of the attached cartridge
-     *  @details  Value is CRT_NONE if no cartridge is plugged in. 
      */
     uint8_t type;
     
     /*! @brief    Game line of the attached cartridge
-     *  @details  Line is HIGH if no cartridge is plugged in.
      */
     bool gameLine;
-
+    
     /*! @brief    Exrom line of the attached cartridge
-     *  @details  Line is HIGH if no cartridge is plugged in.
      */
     bool exromLine;
     
@@ -96,44 +81,38 @@ private:
      *  @details  A cartridge can contain up to 64 chips
      */
     uint8_t *chip[64];
-
+    
     //! @brief    Array containing the load addresses of all chips
     uint16_t chipStartAddress[64];
-
+    
     //! @brief    Array containing the chip sizes of all chips
     uint16_t chipSize[64];
-
+    
     //! @brief    Virtual cartridge ROM (32 kb starting at $8000)
     uint8_t rom[0x8000];
     
     /*! @brief    Indicates whether ROM is blended in (0x01) or or out (0x00)
-     *  @details  Each array item represents a 4k block above $8000 
+     *  @details  Each array item represents a 4k block above $8000
      */
     uint8_t blendedIn[16];
     
 public:
     
     //! @brief    Constructor
-    ExpansionPort();
+    Cartridge();
     
     //! @brief    Destructor
-    ~ExpansionPort();
-        
-    //! @brief    Resets the expansion port
-    void resetPort();
+    ~Cartridge();
     
-    //! @brief    Resets the attached cartridge
-    void resetCartridge();
+    //! @brief    Resets the cartridge
+    void reset();
     
-    //! @brief    Reverts expansion port to its initial state, but keeps cartridge data in place
-    void softreset();
-
     //! @brief    Dumps the current configuration into the message queue
     void ping();
-
+    
     //! @brief    Returns the size of the internal state
     uint32_t stateSize();
-
+    
     //! @brief    Loads the current state from a buffer
     void loadFromBuffer(uint8_t **buffer);
     
@@ -141,7 +120,7 @@ public:
     void saveToBuffer(uint8_t **buffer);
     
     //! @brief    Prints debugging information
-    void dumpState();	
+    void dumpState();
     
     //! @brief    Returns true if cartride ROM is blended in at the specified location
     bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
@@ -154,42 +133,42 @@ public:
     
     //! @brief    Returns the cartridge type
     CartridgeType getCartridgeType() { return (CartridgeType)type; }
-
+    
     /*! @brief    Counts the number of chips
      *  @return   Value between 0 and 64
      */
     unsigned numberOfChips();
-
+    
     //! @brief    Sums up the sizes of all chips in bytes
     unsigned numberOfBytes();
     
     //! @brief    Returns the state of the game line
     bool getGameLine() { return gameLine; }
-
+    
     //! @brief    Sets the state of the game line
     void setGameLine(bool value);
     
     //! @brief    Returns the state of the exrom line
     bool getExromLine() { return exromLine; }
-
+    
     //! @brief    Sets the state of the exrom line
     void setExromLine(bool value);
     
     //! @brief    Blends in a cartridge chip into the ROM address space
     void switchBank(unsigned nr);
-
-    //! @brief    Returns true if a cartridge is attached to the expansion port
-    inline bool getCartridgeAttached() { return type != CRT_NONE; }
-
+    
     //! @brief    Attaches a single cartridge chip
     void attachChip(unsigned nr, CRTContainer *c);
-
+    
+    // RENAME (MAKE IT A FACTORY METHOD)
     //! @brief    Attaches a cartridge to the expansion port
     bool attachCartridge(CRTContainer *c);
-
+    
+    // MOVE CODE TO DESTRUCTOR
     //! @brief    Removes a cartridge from the expansion port
     void detachCartridge();
-
-};
     
-#endif
+    
+};
+
+#endif 

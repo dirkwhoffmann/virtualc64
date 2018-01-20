@@ -1,5 +1,5 @@
 /*!
- * @header      Datasette.h
+ * @header      Memory.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   2006 - 2016 Dirk W. Hoffmann
  */
