@@ -433,8 +433,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (void) dump;
 - (bool) cartridgeAttached; 
 - (int) cartridgeType;
-- (unsigned) numberOfChips;
-- (unsigned) numberOfBytes;
+// - (unsigned) numberOfChips;
+// - (unsigned) numberOfBytes;
 
 @end
 

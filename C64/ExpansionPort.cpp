@@ -24,34 +24,12 @@ ExpansionPort::ExpansionPort()
     debug(3, "  Creating expansion port at address %p...\n", this);
 
     cartridge = NULL;
-    
-    // OLD CODE (REMOVE)
-    // We reset the cartridge here, as reset() keeps the cartridge intact.
-    resetCartridge();
 }
 
 ExpansionPort::~ExpansionPort()
 {
     debug(3, "  Releasing expansion port...\n");
     detachCartridge();
-}
-
-// DEPRECATED
-void
-ExpansionPort::resetCartridge()
-{
-    type = CRT_NONE;
-    gameLine = true;
-    exromLine = true;
-    
-    memset(rom, 0, sizeof(rom));
-    memset(blendedIn, 0, sizeof(blendedIn));
-    
-    for (unsigned i = 0; i < 64; i++) {
-        chip[i] = NULL;
-        chipStartAddress[i] = 0;
-        chipSize[i] = 0;
-    }
 }
 
 void
@@ -61,75 +39,34 @@ ExpansionPort::softreset()
     
     if (cartridge)
         cartridge->softreset();
-    
-    // OLD CODE (REMOVE)
-    if (chip[0])
-        switchBank(0);
 }
 
 void
 ExpansionPort::ping()
 {
-    c64->putMessage(MSG_CARTRIDGE, c64->isCartridgeAttached()); // OLD
-    // c64->putMessage(MSG_CARTRIDGE, cartridge != NULL);
+    c64->putMessage(MSG_CARTRIDGE, cartridge != NULL);
 }
 
 uint32_t
 ExpansionPort::stateSize()
 {
-    uint32_t result = 1;
-    if (cartridge != NULL)
-        result += cartridge->stateSize();
-    
-    uint32_t size = 4;
-    
-    for (unsigned i = 0; i < 64; i++) {
-        size += 4 + chipSize[i];
-    }
-
-    size += sizeof(rom);
-    size += sizeof(blendedIn);
-    
-    if (cartridge != NULL)
-        assert(result == size);
-    
-    return size;
+    return 1 + (cartridge ? cartridge->stateSize() : 0);
 }
 
 void
 ExpansionPort::loadFromBuffer(uint8_t **buffer)
 {
-    
     uint8_t *old = *buffer;
     
-    bool isAttached = read8(buffer);
+    detachCartridge();
     
-    if (isAttached) {
-        uint8_t *oldBuffer = *buffer;
-        detachCartridge();
-        cartridge = new Cartridge(); // Add API: attachCartridge (with MSG sending!!!)
-        cartridge->loadFromBuffer(buffer);
-        *buffer = oldBuffer;
-    }
-    
-    type = read8(buffer);
-    gameLine = (bool)read8(buffer);
-    exromLine = (bool)read8(buffer);
+    // Read cartridge type
+    Cartridge::CartridgeType cartridgeType = (Cartridge::CartridgeType)read8(buffer);
 
-    for (unsigned i = 0; i < 64; i++) {
-        chipStartAddress[i] = read16(buffer);
-        chipSize[i] = read16(buffer);
-        
-        if (chipSize[i] > 0) {
-            chip[i] = (uint8_t *)malloc(chipSize[i]);
-            readBlock(buffer, chip[i], chipSize[i]);
-        } else {
-            chip[i] = NULL;
-        }
+    // Read cartridge data (if any)
+    if (cartridgeType != Cartridge::CRT_NONE) {
+        attachCartridge(buffer, cartridgeType);
     }
-
-    readBlock(buffer, rom, sizeof(rom));
-    readBlock(buffer, blendedIn, sizeof(blendedIn));
     
     debug(2, "  Expansion port state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
@@ -140,30 +77,13 @@ ExpansionPort::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    write8(buffer, c64->isCartridgeAttached());
+    // Write cartridge type
+    write8(buffer, cartridge ? cartridge->getCartridgeType() : Cartridge::CRT_NONE);
 
-    /*
-    if (cartridge != NULL) {
+    // Write cartridge data (if any)
+    if (cartridge != NULL)
         cartridge->saveToBuffer(buffer);
-    }
-    */
-        
-    write8(buffer, type);
-    write8(buffer, (uint8_t)gameLine);
-    write8(buffer, (uint8_t)exromLine);
-    
-    for (unsigned i = 0; i < 64; i++) {
-        write16(buffer, chipStartAddress[i]);
-        write16(buffer, chipSize[i]);
-        
-        if (chipSize[i] > 0) {
-            writeBlock(buffer, chip[i], chipSize[i]);
-        }
-    }
-    
-    writeBlock(buffer, rom, sizeof(rom));
-    writeBlock(buffer, blendedIn, sizeof(blendedIn));
-
+ 
     debug(4, "  Expansion port state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
 }
@@ -174,239 +94,118 @@ ExpansionPort::dumpState()
     msg("Expansion port\n");
     msg("--------------\n");
 
-    if (!getCartridgeAttached()) {
-        msg("No cartridge attached");
-        return;
-    }
-    
-    msg("Cartridge type: %d\n", getCartridgeType());
-    msg("Game line:      %d\n", getGameLine());
-    msg("Exrom line:     %d\n", getExromLine());
-    
-    for (unsigned i = 0; i < 64; i++) {
-        if (chip[i] != NULL) {
-            msg("Chip %2d:        %d KB starting at $%04X\n", i, chipSize[i] / 1024, chipStartAddress[i]);
-        }
-    }
-    
     if (cartridge == NULL) {
         msg("No cartridge attached");
     } else {
         cartridge->dumpState();
     }
-    
 }
 
-unsigned
-ExpansionPort::numberOfChips()
+Cartridge::CartridgeType
+ExpansionPort::getCartridgeType()
 {
-    unsigned result = 0;
-    
-    for (unsigned i = 0; i < 64; i++)
-        if (chip[i] != NULL)
-            result++;
-    
-    if (cartridge != NULL)
-        assert(cartridge->numberOfChips() == result);
-               
-    return result;
+    return cartridge ? cartridge->getCartridgeType() : Cartridge::CRT_NONE;
 }
 
-unsigned
-ExpansionPort::numberOfBytes()
-{
-    unsigned result = 0;
+bool
+ExpansionPort::romIsBlendedIn(uint16_t addr) {
     
-    for (unsigned i = 0; i < 64; i++)
-        if (chip[i] != NULL)
-            result += chipSize[i];
-    
-    if (cartridge != NULL)
-        assert(cartridge->numberOfBytes() == result);
-    
-    return result;
+    return cartridge ? cartridge->romIsBlendedIn(addr) : false;
 }
 
 uint8_t
 ExpansionPort::peek(uint16_t addr)
 {
+    return cartridge ? cartridge->peek(addr) : 0;
+    
+    /*
     if (cartridge != NULL) {
         uint8_t result = cartridge->peek(addr);
         assert(result == rom[addr & 0x7FFF]);
     }
     
     return rom[addr & 0x7FFF];
+    */
 }
 
 void
 ExpansionPort::poke(uint16_t addr, uint8_t value)
 {
-    uint8_t bankNumber;
-    
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
-    if (cartridge != NULL) {
+    if (cartridge != NULL)
         cartridge->poke(addr, value);
-    }
-        
-    if (!getCartridgeAttached())
-        return;
-    
-    // For some cartridges like Simons basic, bank switching is triggered by writing
-    // into I/O area 1 (0xDE00 - 0xDEFF) or I/O area 2 (0xDF00 - 0xDFFF)
-    
-    // Why do we need to store the written value here?
-    rom[addr & 0x7FFF] = value;
-    
-    switch (type) {
-        case CRT_NORMAL:
-            break;
-            
-        case CRT_SIMONS_BASIC:
-            if (addr == 0xDE00) {
-                // Simon banks the second chip into $A000-BFFF
-                if (value == 0x01) {
-                    debug(3, "Simons basic: Writing %d into $DE00\n", value);
-                    switchBank(1);
-                } else {
-                    debug(3, "Simons basic: Writing %d into $DE00\n", value);
-                    // $A000-BFFF is additional RAM
-                    // We need to remove the chip?!
-                }
-            }
-            
-        case CRT_C64_GAME_SYSTEM_SYSTEM_3:
-            bankNumber = addr - 0xDE00;
-            //  Huh? Bank numbers greater than 63 can occur?
-            switchBank(bankNumber);
-            break;
-            
-        case CRT_OCEAN_TYPE_1:
-            bankNumber = value & 0x3F;
-            switchBank(bankNumber);
-            break;
-            
-#if 0
-        case CRT_FUN_PLAY_POWER_PLAY:
-            // TODO
-            break;
-#endif
-            
-        default:
-            warn("Unsupported cartridge (type %d)\n", type);
-    }
+}
+
+bool
+ExpansionPort::getGameLine() {
+
+    // GameLine is true, if no cartridge is attached
+    return cartridge ? cartridge->getGameLine() : true;    
 }
 
 void
-ExpansionPort::setGameLine(bool value)
+ExpansionPort::gameLineHasChanged()
 {
-    if (cartridge != NULL) {
-        cartridge->setGameLine(value);
-    }
-    
-    gameLine = value;
+    assert(c64 != NULL);
     c64->mem.updatePeekPokeLookupTables();
 }
 
-void
-ExpansionPort::setExromLine(bool value)
+bool
+ExpansionPort::getExromLine()
 {
-    if (cartridge != NULL) {
-        cartridge->setExromLine(value);
-    }
-    
-    exromLine = value;
+    // ExromLine is true, if no cartridge is attached
+    return cartridge ? cartridge->getExromLine() : true;
+}
+
+void
+ExpansionPort::exromLineHasChanged()
+{
+    assert(c64 != NULL);
     c64->mem.updatePeekPokeLookupTables();
 }
 
-void
-ExpansionPort::switchBank(unsigned nr)
+bool
+ExpansionPort::attachCartridge(Cartridge *c)
 {
-    if (cartridge != NULL) {
-        cartridge->switchBank(nr);
-    }
+    detachCartridge();
+    cartridge = c;
+    cartridge->setListener(this);
+    gameLineHasChanged();
+    exromLineHasChanged();
     
-    if (chip[nr] == NULL) {
-        warn("Chip %d does not exist (cannot switch)", nr);
-        return;
-    }
+    c64->putMessage(MSG_CARTRIDGE, 1);
     
-    uint16_t loadAddr = chipStartAddress[nr];
-    uint16_t size = chipSize[nr];
-    
-    if (0xFFFF - loadAddr < size) {
-        warn("Chip %d covers an invalid memory area (start: %04X size: %d KB)", nr, loadAddr, size / 1024);
-        return;
-    }
-    
-    debug(2, "Switching to bank %d (start: %04X size: %d KB)\n", nr, loadAddr, size / 1024);
-    memcpy(rom + loadAddr - 0x8000, chip[nr], size);
-    for (unsigned i = loadAddr >> 12; i < (loadAddr + size) >> 12; i++) {
-        assert (i < 16);
-        blendedIn[i] = 1;
-    }
+    debug(1, "Cartridge attached to expansion port");
+    cartridge->dumpState();
+
+    return true;
 }
 
-void
-ExpansionPort::attachChip(unsigned nr, CRTContainer *c)
+bool
+ExpansionPort::attachCartridge(uint8_t **buffer, Cartridge::CartridgeType type)
 {
-    assert(nr < 64);
+    Cartridge *cartridge = Cartridge::makeCartridgeWithBuffer(buffer, type);
     
-    if (cartridge != NULL) {
-        cartridge->attachChip(nr, c);
+    if (cartridge == NULL) {
+        warn("Cannot create Cartridge from data buffer");
+        return false;
     }
     
-    if (chip[nr])
-        free(chip[nr]);
-    
-    if (!(chip[nr] = (uint8_t *)malloc(c->getChipSize(nr))))
-        return;
-    
-    chipStartAddress[nr] = c->getChipAddr(nr);
-    chipSize[nr] = c->getChipSize(nr);
-    memcpy(chip[nr], c->getChipData(nr), c->getChipSize(nr));
-    
-    debug(1, "Chip %d is in place: %d KB starting at $%04X (type: %d bank:%X)\n",
-          nr, chipSize[nr] / 1024, chipStartAddress[nr], c->getChipType(nr), c->getChipBank(nr));
+    return attachCartridge(cartridge);
 }
 
 bool
 ExpansionPort::attachCartridge(CRTContainer *c)
 {
-    detachCartridge();
-    
-    cartridge = Cartridge::makeCartridgeWithCRTContainer(c64, c);
-    if (cartridge != NULL) {
-        debug(1, "Cartridge successfully created from CRTContainer");
-    } else {
+    Cartridge *cartridge = Cartridge::makeCartridgeWithCRTContainer(c);
+
+    if (cartridge == NULL) {
+        warn("Cannot create Cartridge from CRTContainer");
         return false;
     }
     
-    type = c->getCartridgeType();
-    gameLine = c->getGameLine();
-    exromLine = c->getExromLine();
-
-    // Load chip packets
-    for (unsigned i = 0; i < c->getNumberOfChips(); i++) {
-        attachChip(i, c);
-    }
-    
-    // Hopefully, we got at least one chip
-    if(chip[0] == NULL) {
-        warn("Cartridge does not contain any chips");
-        return false;
-    }
-
-    // Blend in chip 0
-    switchBank(0);
-    c64->mem.updatePeekPokeLookupTables();
-    // dumpState();
-
-    dumpState();
-    cartridge->dumpState();
-    
-    c64->putMessage(MSG_CARTRIDGE, 1);
-    return true;
+    return attachCartridge(cartridge);
 }
 
 void
@@ -417,10 +216,6 @@ ExpansionPort::detachCartridge()
         cartridge = NULL;
     }
     
-    // Deallocate chip memory
-    for (unsigned i = 0; i < 64; i++) if (chip[i]) free(chip[i]);
-    
-    resetCartridge();
     if (c64) c64->putMessage(MSG_CARTRIDGE, 0);
 }
 

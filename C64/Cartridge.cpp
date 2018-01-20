@@ -11,6 +11,8 @@ Cartridge::Cartridge()
 {
     setDescription("Cartridge");
     debug(1, "  Creating cartridge at address %p...\n", this);
+
+    listener = NULL;
     
     // We reset the cartridge here, as C64::reset() keeps the cartridge intact.
     reset();
@@ -26,12 +28,11 @@ Cartridge::~Cartridge()
 }
 
 Cartridge *
-Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
+Cartridge::makeCartridgeWithCRTContainer(CRTContainer *container)
 {
     Cartridge *cart = new Cartridge();
     if (cart == NULL) return NULL;
     
-    cart->c64 = c64;
     cart->type = container->getCartridgeType();
     cart->gameLine = container->getGameLine();
     cart->exromLine = container->getExromLine();
@@ -49,11 +50,21 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
     
     // Blend in chip 0
     cart->switchBank(0);
-    cart->c64->mem.updatePeekPokeLookupTables();
     
     return cart;
 }
 
+Cartridge *
+Cartridge::makeCartridgeWithBuffer(uint8_t **buffer, CartridgeType type)
+{
+    Cartridge *cart = new Cartridge();
+    if (cart == NULL) return NULL;
+    
+    cart->type = type;
+    cart->loadFromBuffer(buffer);
+    
+    return cart;
+}
 
 void
 Cartridge::reset()
@@ -89,7 +100,7 @@ Cartridge::ping()
 uint32_t
 Cartridge::stateSize()
 {
-    uint32_t size = 3;
+    uint32_t size = 2;
     
     for (unsigned i = 0; i < 64; i++) {
         size += 4 + chipSize[i];
@@ -106,7 +117,6 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    type = read8(buffer);
     gameLine = (bool)read8(buffer);
     exromLine = (bool)read8(buffer);
     
@@ -134,7 +144,6 @@ Cartridge::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    write8(buffer, type);
     write8(buffer, (uint8_t)gameLine);
     write8(buffer, (uint8_t)exromLine);
     
@@ -169,7 +178,6 @@ Cartridge::dumpState()
             msg("Chip %2d:        %d KB starting at $%04X\n", i, chipSize[i] / 1024, chipStartAddress[i]);
         }
     }
-    msg("END OF REPORT\n");
 }
 
 unsigned
@@ -245,15 +253,19 @@ void Cartridge::poke(uint16_t addr, uint8_t value)
 void
 Cartridge::setGameLine(bool value)
 {
+    assert(listener != NULL);
+    
     gameLine = value;
-    c64->mem.updatePeekPokeLookupTables();
+    listener->gameLineHasChanged();
 }
 
 void
 Cartridge::setExromLine(bool value)
 {
+    assert(listener != NULL);
+    
     exromLine = value;
-    c64->mem.updatePeekPokeLookupTables();
+    listener->exromLineHasChanged();
 }
 
 void

@@ -554,8 +554,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->expansionPort->dumpState(); }
 - (int) cartridgeType { return (int)wrapper->expansionPort->getCartridgeType(); }
 - (bool) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
-- (unsigned) numberOfChips { return wrapper->expansionPort->numberOfChips(); }
-- (unsigned) numberOfBytes { return wrapper->expansionPort->numberOfBytes(); }
+// - (unsigned) numberOfChips { return wrapper->expansionPort->numberOfChips(); }
+// - (unsigned) numberOfBytes { return wrapper->expansionPort->numberOfBytes(); }
 
 @end
 

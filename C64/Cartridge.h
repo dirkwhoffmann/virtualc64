@@ -23,6 +23,8 @@
 
 #include "VirtualComponent.h"
 
+class ExpansionPort;
+
 /*!
  * @brief    Cartridge that can be plugged into the C64's expansion port
  */
@@ -96,6 +98,12 @@ private:
      */
     uint8_t blendedIn[16];
     
+    /*! @brief    Registered expansion port listener
+     *! @details  If an expansion port is set, it is informed when gameLine or
+     *            exromLine change their value.
+     */
+    ExpansionPort *listener;
+    
 public:
     
     //! @brief    Constructor
@@ -106,8 +114,12 @@ public:
     
     //! @brief    Factory method
     /*! @details  Creates a cartridge from a CRT container */
-    static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container);
-     
+    static Cartridge *makeCartridgeWithCRTContainer(CRTContainer *container);
+    
+    //! @brief    Factory method
+    /*! @details  Creates a cartridge from a serialized data stream */
+    static Cartridge *makeCartridgeWithBuffer(uint8_t **buffer, CartridgeType type);
+    
     //! @brief    Resets the cartridge
     void reset();
     
@@ -168,7 +180,9 @@ public:
     
     //! @brief    Attaches a single cartridge chip
     void attachChip(unsigned nr, CRTContainer *c);
-        
+    
+    //! @brief    Sets the expansion port listener
+    void setListener(ExpansionPort *port) { listener = port; }
 };
 
 #endif 
