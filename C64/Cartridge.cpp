@@ -14,8 +14,19 @@ Cartridge::Cartridge(C64 *c64)
 
     this->c64 = c64;
     
-    // We reset the cartridge here, as C64::reset() keeps the cartridge intact.
-    reset();
+    type = CRT_NONE;
+    gameLine = true;
+    exromLine = true;
+    
+    memset(rom, 0, sizeof(rom));
+    memset(blendedIn, 0, sizeof(blendedIn));
+    lastBlendedIn = 255;
+    
+    for (unsigned i = 0; i < 64; i++) {
+        chip[i] = NULL;
+        chipStartAddress[i] = 0;
+        chipSize[i] = 0;
+    }
 }
 
 Cartridge::~Cartridge()
@@ -27,17 +38,25 @@ Cartridge::~Cartridge()
         if (chip[i]) free(chip[i]);
 }
 
-bool
-Cartridge::isSupportedType(CRTContainer *container)
+void
+Cartridge::reset()
 {
-    assert(container != NULL);
-    
-    CartridgeType type = (CartridgeType)container->getCartridgeType();
-    
+    VirtualComponent::reset();
+ 
+    debug("CARTRIDGE DEFAULT RESET");
+    // Bank in chip 0
+    if(chip[0] != NULL) {
+        bankIn(0);
+    }
+}
+
+bool
+Cartridge::isSupportedType(CartridgeType type)
+{    
     switch (type) {
         
         case CRT_NORMAL:
-        case CRT_FINAL_CARTRIDGE_III:
+        // case CRT_FINAL_CARTRIDGE_III:
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN_TYPE_1:
             return true;
@@ -48,37 +67,36 @@ Cartridge::isSupportedType(CRTContainer *container)
 }
 
 Cartridge *
-Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
+Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
 {
-    assert(isSupportedType(container));
+     assert(isSupportedType(type));
     
-    Cartridge *cart;
-    // CartridgeType type = container->getCartridgeType();
-    
-    switch (container->getCartridgeType()) {
-
-        case CRT_NORMAL:
-            cart = new Cartridge(c64);
-            break;
-
-        case CRT_FINAL_CARTRIDGE_III:
-            cart = new Cartridge(c64); // TODO: CartridgeFinalIII
-            break;
-
-        case CRT_SIMONS_BASIC:
-            cart = new SimonsBasic(c64);
-            break;
-
-        case CRT_OCEAN_TYPE_1:
-            cart = new OceanType1(c64);
-            break;
+    switch (type) {
             
-
+        case CRT_NORMAL:
+            return new Cartridge(c64);
+            
+        // case CRT_FINAL_CARTRIDGE_III:
+        //     return new FinalIII(c64);
+            
+        case CRT_SIMONS_BASIC:
+            return new SimonsBasic(c64);
+            
+        case CRT_OCEAN_TYPE_1:
+            return new OceanType1(c64);
+        
         default:
             assert(false); // should not reach
             return NULL;
     }
+}
+
+Cartridge *
+Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
+{
+    Cartridge *cart;
     
+    cart = makeCartridgeWithType(c64, container->getCartridgeType());
     assert(cart != NULL);
     
     cart->type = container->getCartridgeType();
@@ -90,20 +108,13 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
         cart->loadChip(i, container);
     }
     
-    /*
-    // Hopefully, we got at least one chip
-    if(cart->chip[0] != NULL) {
-        cart->bankIn(0);
-    }
-    */
-    
     return cart;
 }
 
 Cartridge *
 Cartridge::makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType type)
 {
-    Cartridge *cart = new Cartridge(c64);
+    Cartridge *cart = makeCartridgeWithType(c64, type);
     if (cart == NULL) return NULL;
     
     cart->type = type;
@@ -112,6 +123,7 @@ Cartridge::makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType typ
     return cart;
 }
 
+/*
 void
 Cartridge::reset()
 {
@@ -121,6 +133,7 @@ Cartridge::reset()
     
     memset(rom, 0, sizeof(rom));
     memset(blendedIn, 0, sizeof(blendedIn));
+    lastBlendedIn = 255;
     
     for (unsigned i = 0; i < 64; i++) {
         chip[i] = NULL;
@@ -128,6 +141,7 @@ Cartridge::reset()
         chipSize[i] = 0;
     }
 }
+*/
 
 void
 Cartridge::powerup()
@@ -153,6 +167,7 @@ Cartridge::stateSize()
 
     size += sizeof(rom);
     size += sizeof(blendedIn);
+    size += 1;
     
     return size;
 }
@@ -179,6 +194,7 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
     
     readBlock(buffer, rom, sizeof(rom));
     readBlock(buffer, blendedIn, sizeof(blendedIn));
+    lastBlendedIn = read8(buffer);
     
     debug(2, "  Cartridge state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
@@ -203,6 +219,7 @@ Cartridge::saveToBuffer(uint8_t **buffer)
     
     writeBlock(buffer, rom, sizeof(rom));
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
+    write8(buffer, lastBlendedIn);
     
     debug(4, "  Cartridge state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
@@ -309,37 +326,16 @@ Cartridge::setExromLine(bool value)
     c64->expansionport.exromLineHasChanged();
 }
 
-/*
-void
-Cartridge::switchBank(unsigned nr)
-{
-    if (chip[nr] == NULL) {
-        warn("Chip %d does not exist (cannot switch)", nr);
-        return;
-    }
-    
-    uint16_t loadAddr = chipStartAddress[nr];
-    uint16_t size = chipSize[nr];
-    
-    if (0xFFFF - loadAddr < size) {
-        warn("Chip %d covers an invalid memory area (start: %04X size: %d KB)", nr, loadAddr, size / 1024);
-        return;
-    }
-    
-    debug(2, "Switching to bank %d (start: %04X size: %d KB)\n", nr, loadAddr, size / 1024);
-    memcpy(rom + loadAddr - 0x8000, chip[nr], size);
-    for (unsigned i = loadAddr >> 12; i < (loadAddr + size) >> 12; i++) {
-        assert (i < 16);
-        blendedIn[i] = 1;
-    }
-}
-*/
-
 void
 Cartridge::bankIn(unsigned nr)
 {
     assert(nr < 64);
     assert(chip[nr] != NULL);
+
+    if (nr == lastBlendedIn) {
+        // Data is up to date
+        return;
+    }
 
     uint16_t start = chipStartAddress[nr];
     uint16_t size  = chipSize[nr];
@@ -350,8 +346,9 @@ Cartridge::bankIn(unsigned nr)
     for (unsigned i = start >> 12; i < end >> 12; i++)
         blendedIn[i] = 1;
 
-    debug(1, "Chip %d banked in (start: %04X size: %d KB)\n", nr, start, size / 1024);
+    lastBlendedIn = nr;
     
+    debug(1, "Chip %d banked in (start: %04X size: %d KB)\n", nr, start, size / 1024);
     for (unsigned i = 0; i < 16; i++) {
         printf("%d ", blendedIn[i]);
     }

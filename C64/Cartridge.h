@@ -19,10 +19,8 @@
  */
 
 // TODO:
-// 1. Implement peekLO, peekHI
-// 2. Implement SimonsBasic class
-// 3. Warn user if an unsupported cartridge type is plugged in
-// 4. Implement Ocean ... class (Terminator 2)
+// 1. Serialization does not preserve subclasses. Need to create correct classes by type
+// 2. Get rid of member "type". Make it a virtual function
 // 5. Implement FinalCartridge class
 // 6. Add MenuItem Cartridge->FinalCartridge
 
@@ -72,6 +70,9 @@ private:
      *  @details  Each array item represents a 4k block above $8000
      */
     uint8_t blendedIn[16];
+    
+    //! @brief    Stores the number of the chip of the latest bankIn operation
+    uint8_t lastBlendedIn; 
         
 public:
     
@@ -84,7 +85,14 @@ public:
     //! @brief    Check cartridge type
     /*! @details  Returns true iff the cartridge type is supported.
      */
-    static bool isSupportedType(CRTContainer *container);
+    static bool isSupportedType(CartridgeType type);
+    
+    //! @brief    Factory method
+    /*! @details  Creates a cartridge with the specified type.
+     *            Make sure that you only pass containers of supported cartridge type.
+     *  @seealso  isSupportedType
+     */
+    static Cartridge *makeCartridgeWithType(C64 *c64, CartridgeType type);
     
     //! @brief    Factory method
     /*! @details  Creates a cartridge from a CRT container.
@@ -157,11 +165,6 @@ public:
     //! @brief    Sets the state of the exrom line
     void setExromLine(bool value);
     
-    //! @brief    Blends in a cartridge chip into the ROM address space
-    /*  @deprecated Use bankIn, bankOut instead
-     */
-    // void switchBank(unsigned nr);
-
     //! @brief   Banks in a chip
     /*  @details Chip contents will show up in memory
      */

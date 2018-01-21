@@ -33,6 +33,15 @@ ExpansionPort::~ExpansionPort()
 }
 
 void
+ExpansionPort::reset()
+{
+    VirtualComponent::reset();
+ 
+    if (cartridge)
+        cartridge->reset();
+}
+
+void
 ExpansionPort::ping()
 {
     c64->putMessage(MSG_CARTRIDGE, cartridge != NULL);

@@ -56,7 +56,7 @@ public:
     ~ExpansionPort();
         
     //! @brief    Resets the expansion port
-    void resetPort();
+    void reset();
     
     //! @brief    Dumps the current configuration into the message queue
     void ping();
