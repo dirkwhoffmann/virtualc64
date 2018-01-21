@@ -843,9 +843,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (bool) loadRom:(NSString *)filename {
     return [self loadBasicRom:filename] || [self loadCharRom:filename] || [self loadKernelRom:filename] || [self loadVC1541Rom:filename]; }
 
-- (bool) attachCartridge:(CRTContainerProxy *)c {
-    return wrapper->c64->attachCartridge([c wrapper]->crtcontainer); }
-- (void) detachCartridge { wrapper->c64->detachCartridge(); }
+- (bool) attachCartridgeAndReset:(CRTContainerProxy *)c {
+    return wrapper->c64->attachCartridgeAndReset([c wrapper]->crtcontainer); }
+- (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 - (bool) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
 
 - (bool) mountArchive:(ArchiveProxy *)a {

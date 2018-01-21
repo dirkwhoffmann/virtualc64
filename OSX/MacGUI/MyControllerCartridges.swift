@@ -24,8 +24,7 @@ extension MyController {
         }
         
         // Attach cartride 
-        c64.attachCartridge(crtContainer)
-        c64.reset()
+        c64.attachCartridgeAndReset(crtContainer)
         return true
     }
     

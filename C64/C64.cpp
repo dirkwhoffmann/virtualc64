@@ -977,15 +977,26 @@ C64::insertTape(TAPContainer *a)
 }
 
 bool
-C64::attachCartridge(CRTContainer *c)
+C64::attachCartridgeAndReset(CRTContainer *c)
 {
-    return c ? expansionport.attachCartridge(c) : false; 
+    bool result = false;
+    
+    suspend();
+    if (c != NULL || expansionport.attachCartridge(c)) {
+        reset();
+        result = true;
+    }
+    resume();
+    return result;
 }
 
 void
-C64::detachCartridge()
+C64::detachCartridgeAndReset()
 {
+    suspend();
     expansionport.detachCartridge();
+    reset();
+    resume();
 }
 
 bool

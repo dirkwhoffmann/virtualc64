@@ -569,10 +569,10 @@ public:
     bool insertTape(TAPContainer *a);
 
 	//! @brief    Attaches a cartridge to the expansion port.
-	bool attachCartridge(CRTContainer *c);
+	bool attachCartridgeAndReset(CRTContainer *c);
 	
 	//! @brief    Detaches a cartridge from the expansion port.
-	void detachCartridge();
+	void detachCartridgeAndReset();
 
 	//! @brief    Returns true iff a cartridge is attached.
 	bool isCartridgeAttached();

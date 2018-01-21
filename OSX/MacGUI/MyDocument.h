@@ -54,7 +54,7 @@
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setTAPContainerWithName:(NSString *)path;
 - (BOOL)setCRTContainerWithName:(NSString *)path;
-- (BOOL)detachCartridge;
+// - (BOOL)detachCartridge;
 
 // Loading and saving
 - (BOOL)loadRom:(NSString *)filename;

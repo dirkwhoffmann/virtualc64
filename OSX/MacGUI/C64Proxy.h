@@ -651,8 +651,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (bool) isRom:(NSString *)filename;
 - (bool) loadRom:(NSString *)filename;
 
-- (bool) attachCartridge:(CRTContainerProxy *)c;
-- (void) detachCartridge;
+- (bool) attachCartridgeAndReset:(CRTContainerProxy *)c;
+- (void) detachCartridgeAndReset;
 - (bool) isCartridgeAttached;
 
 - (bool) mountArchive:(ArchiveProxy *)a;

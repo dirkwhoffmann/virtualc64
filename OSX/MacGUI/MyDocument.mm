@@ -109,6 +109,7 @@
 	return YES;
 }
 
+/*
 - (BOOL)detachCartridge
 {
 	[c64 detachCartridge];
@@ -117,6 +118,7 @@
 	
 	return YES;
 }
+*/
 
 - (BOOL)loadRom:(NSString *)filename
 {

@@ -169,12 +169,14 @@ bool
 ExpansionPort::attachCartridge(Cartridge *c)
 {
     assert(c != NULL);
+    
     detachCartridge();
+    
     cartridge = c;
     cartridge->setListener(this);
+    
     gameLineHasChanged();
     exromLineHasChanged();
-    
     c64->putMessage(MSG_CARTRIDGE, 1);
     
     debug(1, "Cartridge attached to expansion port");
@@ -214,12 +216,17 @@ ExpansionPort::attachCartridge(CRTContainer *c)
 void
 ExpansionPort::detachCartridge()
 {
-    if (cartridge != NULL) {
-        delete cartridge;
-        cartridge = NULL;
-    }
+    if (cartridge == NULL)
+        return;
     
+    delete cartridge;
+    cartridge = NULL;
+    
+    gameLineHasChanged();
+    exromLineHasChanged();
     c64->putMessage(MSG_CARTRIDGE, 0);
+    
+    debug(1, "Cartridge detached from expansion port");
 }
 
 

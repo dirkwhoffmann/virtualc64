@@ -95,9 +95,8 @@
 {
     NSLog(@"cartridgeEjectAction");
     
-    [c64 detachCartridge];
     [[controller document] setAttachedCartridge:nil];
-    [c64 reset];
+    [c64 detachCartridgeAndReset];
     [self update];
 }
 

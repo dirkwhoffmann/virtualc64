@@ -959,9 +959,8 @@
 - (IBAction)cartridgeEjectAction:(id)sender
 {
 	NSLog(@"cartridgeEjectAAction");
-	[c64 detachCartridge];
-	[[self document] setAttachedCartridge:nil];
-	[c64 reset];
+    [[self document] setAttachedCartridge:nil];
+	[c64 detachCartridgeAndReset];
 }
 
 - (IBAction)alwaysWarpAction:(id)sender
