@@ -19,7 +19,7 @@ extension MyController {
         
         // Check for cartridge support
         if !crtContainer.isSupportedType() {
-            showCartridgeAlert(crtContainer.type())
+            showCartridgeAlert(crtContainer)
             return false;
         }
         
@@ -29,12 +29,13 @@ extension MyController {
         return true
     }
     
-    @objc func showCartridgeAlert(_ type: NSInteger) {
+    @objc func showCartridgeAlert(_ crtcontainer: CRTContainerProxy) {
         
+        let name = crtcontainer.typeName() as String
         let alert = NSAlert()
         alert.icon = NSImage.init(named: NSImage.Name(rawValue: "rom.png"))
-        alert.messageText = "Unsupported cartridge (type \(type))"
-        alert.informativeText = "The provided cartridge containts custom hardware which is not supported in this release."
+        alert.messageText = "Unsupported cartridge type: \(name)"
+        alert.informativeText = "The provided cartridge contains special hardware which is not supported by the emulator yet."
         alert.addButton(withTitle: "OK")
         alert.alertStyle = NSAlert.Style.warning
         // alert.runModal()

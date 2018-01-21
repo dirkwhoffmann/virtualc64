@@ -50,7 +50,7 @@ ExpansionPort::ping()
 uint32_t
 ExpansionPort::stateSize()
 {
-    return 1 + (cartridge ? cartridge->stateSize() : 0);
+    return 2 + (cartridge ? cartridge->stateSize() : 0);
 }
 
 void
@@ -61,10 +61,10 @@ ExpansionPort::loadFromBuffer(uint8_t **buffer)
     detachCartridge();
     
     // Read cartridge type
-    Cartridge::CartridgeType cartridgeType = (Cartridge::CartridgeType)read8(buffer);
+    CartridgeType cartridgeType = (CartridgeType)read16(buffer);
 
     // Read cartridge data (if any)
-    if (cartridgeType != Cartridge::CRT_NONE) {
+    if (cartridgeType != CRT_NONE) {
         attachCartridge(buffer, cartridgeType);
     }
     
@@ -78,7 +78,7 @@ ExpansionPort::saveToBuffer(uint8_t **buffer)
     uint8_t *old = *buffer;
     
     // Write cartridge type
-    write8(buffer, cartridge ? cartridge->getCartridgeType() : Cartridge::CRT_NONE);
+    write16(buffer, cartridge ? cartridge->getCartridgeType() : CRT_NONE);
 
     // Write cartridge data (if any)
     if (cartridge != NULL)
@@ -101,10 +101,10 @@ ExpansionPort::dumpState()
     }
 }
 
-Cartridge::CartridgeType
+CartridgeType
 ExpansionPort::getCartridgeType()
 {
-    return cartridge ? cartridge->getCartridgeType() : Cartridge::CRT_NONE;
+    return cartridge ? cartridge->getCartridgeType() : CRT_NONE;
 }
 
 bool
@@ -184,7 +184,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
 }
 
 bool
-ExpansionPort::attachCartridge(uint8_t **buffer, Cartridge::CartridgeType type)
+ExpansionPort::attachCartridge(uint8_t **buffer, CartridgeType type)
 {
     assert(buffer != NULL);
     Cartridge *cartridge = Cartridge::makeCartridgeWithBuffer(c64, buffer, type);

@@ -86,7 +86,7 @@ public:
     void poke(uint16_t addr, uint8_t value);
     
     //! @brief    Returns the cartridge type
-    Cartridge::CartridgeType getCartridgeType();
+    CartridgeType getCartridgeType();
     
     //! @brief    Returns the state of the game line
     bool getGameLine();
@@ -109,7 +109,7 @@ public:
     //! @brief    Attaches a cartridge to the expansion port
     /*! @details  Cartridge is provided by a data buffer
      */
-    bool attachCartridge(uint8_t **buffer, Cartridge::CartridgeType type);
+    bool attachCartridge(uint8_t **buffer, CartridgeType type);
 
     //! @brief    Attaches a cartridge to the expansion port
     /*! @details  Cartridge is provided by a CRTContainer

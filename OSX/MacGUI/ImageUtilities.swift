@@ -191,7 +191,7 @@ public extension MetalView
             let window = windows[i]
             
             // Skip all windows that are not owned by the dock
-            let owner = window["kCGWindowOwnerName"] as! String
+            let owner = window["kCGWindowOwnerName"] as? String
             if owner != "Dock" {
                 continue
             }
@@ -204,8 +204,12 @@ public extension MetalView
                 continue
             }
             
+            // Skip all windows without having a name
+            guard let name = window["kCGWindowName"] as? String else {
+                continue
+            }
+                
             // Skip all windows with a name other than "Desktop picture - ..."
-            let name = window["kCGWindowName"] as! String
             if name.hasPrefix("Desktop Picture") {
                 
                 // Found it!

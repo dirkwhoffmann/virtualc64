@@ -125,3 +125,42 @@ CRTContainer::readFromBuffer(const uint8_t *buffer, unsigned length)
     debug("CRT container imported successfully (%d chips)\n", numberOfChips);
     return true;	
 }
+
+const char *
+CRTContainer::getCartridgeTypeName()
+{
+    switch (getCartridgeType()) {
+            
+        case CRT_NORMAL: return "Normal cartridge";
+        case CRT_ACTION_REPLAY: return "Action Replay";
+        case CRT_KCS_POWER_CARTRIDGE: return "KCS Power Cartridge";
+        case CRT_FINAL_CARTRIDGE_III: return "Final Cartridge III";
+        case CRT_SIMONS_BASIC: return "Simons Basic";
+        case CRT_OCEAN_TYPE_1: return "Ocean type 1";
+        case CRT_EXPORT_CARTRIDGE: return "Expert Cartridge";
+        case CRT_FUN_PLAY_POWER_PLAY: return "Fun Play, Power Play";
+        case CRT_SUPER_GAMES: return "Super Games";
+        case CRT_ATOMIC_POWER: return "Atomic Power";
+        case CRT_EPYX_FASTLOAD: return "Epyx Fastload";
+        case CRT_WESTERMANN_LEARNING: return "Westermann Learning";
+        case CRT_REX_UTILITY: return "Rex Utility";
+        case CRT_FINAL_CARTRIDGE_I: return "Final Cartridge I";
+        case CRT_MAGIC_FORMEL: return "Magic Formel";
+        case CRT_C64_GAME_SYSTEM_SYSTEM_3: return "C64 Game System, System 3";
+        case CRT_WARPSPEED: return "WarpSpeed";
+        case CRT_DINAMIC: return "Dinamic";
+        case CRT_ZAXXON_SUPER_ZAXXON: return "Zaxxon, Super Zaxxon (SEGA)";
+        case CRT_MAGIC_DESK_DOMARK_HES_AUSTRALIA: return "Magic Desk, Domark, HES Australia";
+        case CRT_SUPER_SNAPSHOT_5: return "Super Snapshot 5";
+        case CRT_COMAL: return "Comal-80";
+        case CRT_STRUCTURE_BASIC: return "Structured Basic";
+        case CRT_ROSS: return "Ross";
+        case CRT_DELA_EP64: return "Dela EP64";
+        case CRT_DELA_EP7x8: return "Dela EP7x8";
+        case CRT_DELA_EP256: return "Dela EP256";
+        case CRT_REX_EP256: return "Rex EP256";
+        default: return "";
+    }
+}
+
+

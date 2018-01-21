@@ -1282,6 +1282,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (NSInteger)type { return wrapper->crtcontainer->getCartridgeType(); }
+- (NSString *)typeName { return [NSString stringWithUTF8String:wrapper->crtcontainer->getCartridgeTypeName()]; }
 - (BOOL) isSupportedType { return Cartridge::isSupportedType(wrapper->crtcontainer); }
 
 

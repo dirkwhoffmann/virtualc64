@@ -819,6 +819,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 + (BOOL) isCRTFile:(NSString *)filename;
 + (instancetype) containerFromCRTFile:(NSString *)filename;
 - (NSInteger)type;
+- (NSString *)typeName;
 - (BOOL) isSupportedType;
 
 @end

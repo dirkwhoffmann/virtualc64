@@ -37,6 +37,7 @@ Cartridge::isSupportedType(CRTContainer *container)
     switch (type) {
         
         case CRT_NORMAL:
+        // case CRT_OCEAN_TYPE_1:
             return true;
             
         default:
@@ -50,12 +51,16 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
     assert(isSupportedType(container));
     
     Cartridge *cart;
-    CartridgeType type = (CartridgeType)container->getCartridgeType();
+    // CartridgeType type = container->getCartridgeType();
     
-    switch (type) {
+    switch (container->getCartridgeType()) {
 
         case CRT_NORMAL:
             cart = new Cartridge(c64);
+            break;
+            
+        case CRT_OCEAN_TYPE_1:
+            cart = new Cartridge(c64); // TODO: CartridgeOcean
             break;
             
         default:
