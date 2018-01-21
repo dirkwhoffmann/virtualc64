@@ -981,22 +981,27 @@ C64::attachCartridgeAndReset(CRTContainer *c)
 {
     bool result = false;
     
-    suspend();
-    if (c != NULL || expansionport.attachCartridge(c)) {
-        reset();
-        result = true;
+    if (c != NULL) {
+        suspend();
+        if (expansionport.attachCartridge(c)) {
+            reset();
+            result = true;
+        }
+        resume();
     }
-    resume();
+    
     return result;
 }
 
 void
 C64::detachCartridgeAndReset()
 {
-    suspend();
-    expansionport.detachCartridge();
-    reset();
-    resume();
+    if (expansionport.getCartridgeAttached()) {
+        suspend();
+        expansionport.detachCartridge();
+        reset();
+        resume();
+    }
 }
 
 bool
