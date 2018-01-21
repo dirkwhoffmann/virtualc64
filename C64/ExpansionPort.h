@@ -58,9 +58,6 @@ public:
     //! @brief    Resets the expansion port
     void resetPort();
     
-    //! @brief    Reverts expansion port to its initial state, but keeps cartridge data in place
-    void softreset();
-
     //! @brief    Dumps the current configuration into the message queue
     void ping();
 
@@ -81,7 +78,10 @@ public:
     
     //! @brief    Peek fallthrough
     uint8_t peek(uint16_t addr);
-    
+
+    //! @brief    Peek fallthrough for I/O region
+    uint8_t peekIO(uint16_t addr);
+
     //! @brief    Poke fallthrough
     void poke(uint16_t addr, uint8_t value);
     

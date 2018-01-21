@@ -76,9 +76,13 @@
 #include "CIA.h"
 #include "CPU.h"
 
+// Cartridges
+#include "Cartridge.h"
+#include "SimonsBasic.h"
+#include "OceanType1.h"
+
 // Peripherals
 #include "VC1541.h"
-#include "Cartridge.h"
 #include "Datasette.h"
 
 

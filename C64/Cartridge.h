@@ -33,6 +33,7 @@
 #include "CRTContainer.h"
 
 class ExpansionPort;
+class OceanType1;
 
 /*!
  * @brief    Cartridge that can be plugged into the C64's expansion port
@@ -71,13 +72,7 @@ private:
      *  @details  Each array item represents a 4k block above $8000
      */
     uint8_t blendedIn[16];
-    
-    /*! @brief    Registered expansion port listener
-     *! @details  If an expansion port is set, it is informed when gameLine or
-     *            exromLine change their value.
-     */
-    ExpansionPort *listener;
-    
+        
 public:
     
     //! @brief    Convenience constructor
@@ -105,10 +100,10 @@ public:
     //! @brief    Resets the cartridge
     void reset();
     
-    //! @brief    Reverts cartridge to its initial state
-    /*! @details  Switches back to first bank
+    //! @brief    Invoked when the cartridge gets attached
+    /*! @details  Overwritten by subclasses to add special start-up behavior
      */
-    void softreset();
+    virtual void powerup();
     
     //! @brief    Dumps the current configuration into the message queue
     void ping();
@@ -129,10 +124,15 @@ public:
     bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
     //! @brief    Peek fallthrough
-    uint8_t peek(uint16_t addr) { return rom[addr & 0x7FFF]; }
+    uint8_t peek(uint16_t addr);
     
+    //! @brief    Peek fallthrough for IO space
+    /*! @details  Some cartridges such as SimonsBasic trigger a bank switch when
+     *            reading a certein IO register. */
+    virtual uint8_t peekIO(uint16_t addr) { return 0; }
+
     //! @brief    Poke fallthrough
-    void poke(uint16_t addr, uint8_t value);
+    virtual void poke(uint16_t addr, uint8_t value);
     
     //! @brief    Returns the cartridge type
     CartridgeType getCartridgeType() { return type; }
@@ -158,13 +158,22 @@ public:
     void setExromLine(bool value);
     
     //! @brief    Blends in a cartridge chip into the ROM address space
-    void switchBank(unsigned nr);
+    /*  @deprecated Use bankIn, bankOut instead
+     */
+    // void switchBank(unsigned nr);
+
+    //! @brief   Banks in a chip
+    /*  @details Chip contents will show up in memory
+     */
+    void bankIn(unsigned nr);
     
-    //! @brief    Attaches a single cartridge chip
-    void attachChip(unsigned nr, CRTContainer *c);
+    //! @brief   Banks in a chip
+    /*  @details RAM contents will show in memory
+     */
+    void bankOut(unsigned nr);
     
-    //! @brief    Sets the expansion port listener
-    void setListener(ExpansionPort *port) { listener = port; }
+    //! @brief    Reads in chip stored in the provided CRT container
+    void loadChip(unsigned nr, CRTContainer *c);    
 };
 
 #endif 

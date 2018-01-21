@@ -33,15 +33,6 @@ ExpansionPort::~ExpansionPort()
 }
 
 void
-ExpansionPort::softreset()
-{
-    debug(2, "  Soft-resetting expansion port...\n");
-    
-    if (cartridge)
-        cartridge->softreset();
-}
-
-void
 ExpansionPort::ping()
 {
     c64->putMessage(MSG_CARTRIDGE, cartridge != NULL);
@@ -117,15 +108,12 @@ uint8_t
 ExpansionPort::peek(uint16_t addr)
 {
     return cartridge ? cartridge->peek(addr) : 0;
-    
-    /*
-    if (cartridge != NULL) {
-        uint8_t result = cartridge->peek(addr);
-        assert(result == rom[addr & 0x7FFF]);
-    }
-    
-    return rom[addr & 0x7FFF];
-    */
+}
+
+uint8_t
+ExpansionPort::peekIO(uint16_t addr)
+{
+   return cartridge ? cartridge->peekIO(addr) : 0;
 }
 
 void
@@ -173,10 +161,8 @@ ExpansionPort::attachCartridge(Cartridge *c)
     detachCartridge();
     
     cartridge = c;
-    cartridge->setListener(this);
+    cartridge->powerup();
     
-    gameLineHasChanged();
-    exromLineHasChanged();
     c64->putMessage(MSG_CARTRIDGE, 1);
     
     debug(1, "Cartridge attached to expansion port");

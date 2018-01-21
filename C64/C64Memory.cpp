@@ -324,7 +324,9 @@ uint8_t C64Memory::peekIO(uint16_t addr)
             nicht so zufällig sind, wird in Kapitel 4 noch ausführlich erklärt. Ein
             Lesen von offenen Adressen liefert nämlich auf vielen C64 das zuletzt vom
             VIC gelesene Byte zurück!)" [C.B.] */
-        
+        /*  Some registers in this area trigger a bank switch in the attached cartridge.
+            So we let the cartright know that we're reading */
+        (void)c64->expansionport.peekIO(addr);
 		return c64->vic.getDataBus();
 	}
 
@@ -350,10 +352,13 @@ uint8_t C64Memory::peek(uint16_t addr)
         case M_CRTLO:
         case M_CRTHI:
 
+            /*
             if (c64->expansionport.romIsBlendedIn(addr))
                 return c64->expansionport.peek(addr);
             else
                 return ram[addr];
+            */
+            return c64->expansionport.peek(addr);
             
         case M_PP:
             
