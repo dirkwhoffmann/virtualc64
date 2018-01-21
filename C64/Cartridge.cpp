@@ -14,7 +14,6 @@ Cartridge::Cartridge(C64 *c64)
 
     this->c64 = c64;
     
-    type = CRT_NONE;
     gameLine = true;
     exromLine = true;
     
@@ -99,7 +98,7 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
     cart = makeCartridgeWithType(c64, container->getCartridgeType());
     assert(cart != NULL);
     
-    cart->type = container->getCartridgeType();
+    // cart->type = container->getCartridgeType();
     cart->gameLine = container->getGameLine();
     cart->exromLine = container->getExromLine();
     
@@ -117,9 +116,8 @@ Cartridge::makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType typ
     Cartridge *cart = makeCartridgeWithType(c64, type);
     if (cart == NULL) return NULL;
     
-    cart->type = type;
+    // cart->type = type;
     cart->loadFromBuffer(buffer);
-    
     return cart;
 }
 
@@ -266,6 +264,7 @@ Cartridge::numberOfBytes()
     return result;
 }
 
+#if 0
 uint8_t
 Cartridge::peek(uint16_t addr)
 {
@@ -281,35 +280,7 @@ Cartridge::peek(uint16_t addr)
     }
     */
 }
-
-void
-Cartridge::poke(uint16_t addr, uint8_t value)
-{
-    uint8_t bankNumber;
-    
-    assert(addr >= 0xDE00 && addr <= 0xDFFF);
-    
-     // Why do we need to store the written value here?
-    rom[addr & 0x7FFF] = value;
-    
-    switch (type) {
-        case CRT_NORMAL:
-            break;
-            
-        case CRT_SIMONS_BASIC:
-            assert(0);
-  
-        case CRT_C64_GAME_SYSTEM_SYSTEM_3:
-            bankNumber = addr - 0xDE00;
-            //  Huh? Bank numbers greater than 63 can occur?
-            bankIn(bankNumber);
-            break;
-        
-        default:
-            warn("Unsupported cartridge (type %d)\n", type);
-            assert(0);
-    }
-}
+#endif
 
 void
 Cartridge::setGameLine(bool value)

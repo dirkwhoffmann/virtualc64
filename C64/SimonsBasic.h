@@ -29,7 +29,10 @@
 class SimonsBasic : public Cartridge {
     
 public:
+
     using Cartridge::Cartridge;
+
+    CartridgeType getCartridgeType() { return CRT_SIMONS_BASIC; }
     void powerup();
     uint8_t peekIO(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);

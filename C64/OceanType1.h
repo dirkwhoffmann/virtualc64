@@ -31,7 +31,10 @@
 class OceanType1 : public Cartridge {
     
 public:
+    
     using Cartridge::Cartridge;
+
+    CartridgeType getCartridgeType() { return CRT_OCEAN_TYPE_1; }
     void poke(uint16_t addr, uint8_t value);
 };
 

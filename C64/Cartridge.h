@@ -42,7 +42,7 @@ private:
     
     /*! @brief    Type of the attached cartridge
      */
-    CartridgeType type;
+    // CartridgeType type;
     
     /*! @brief    Game line of the attached cartridge
      */
@@ -132,7 +132,7 @@ public:
     bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
     //! @brief    Peek fallthrough
-    uint8_t peek(uint16_t addr);
+    uint8_t peek(uint16_t addr) { return rom[addr & 0x7FFF]; }
     
     //! @brief    Peek fallthrough for IO space
     /*! @details  Some cartridges such as SimonsBasic trigger a bank switch when
@@ -140,10 +140,10 @@ public:
     virtual uint8_t peekIO(uint16_t addr) { return 0; }
 
     //! @brief    Poke fallthrough
-    virtual void poke(uint16_t addr, uint8_t value);
+    virtual void poke(uint16_t addr, uint8_t value) { }
     
     //! @brief    Returns the cartridge type
-    CartridgeType getCartridgeType() { return type; }
+    virtual CartridgeType getCartridgeType() { return CRT_NORMAL; }
     
     /*! @brief    Counts the number of chips
      *  @return   Value between 0 and 64
