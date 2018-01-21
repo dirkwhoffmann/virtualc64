@@ -97,6 +97,7 @@
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
+		507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */; };
 		5080F3591EE74784001313D4 /* commodore.png in Resources */ = {isa = PBXBuildFile; fileRef = 5080F3581EE74784001313D4 /* commodore.png */; };
 		5081AB631EF29E6400D6F616 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* AudioEngine.swift */; };
 		5087FD591BDA16C400570F0D /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5087FD581BDA16C400570F0D /* metal.png */; };
@@ -365,6 +366,7 @@
 		5077742F12DE490300D72088 /* MemTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MemTableView.mm; sourceTree = "<group>"; };
 		5077743112DE490B00D72088 /* CpuTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuTableView.h; sourceTree = "<group>"; };
 		5077743212DE490B00D72088 /* CpuTableView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CpuTableView.mm; sourceTree = "<group>"; };
+		507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerCartridges.swift; sourceTree = "<group>"; };
 		5080F3581EE74784001313D4 /* commodore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commodore.png; sourceTree = "<group>"; };
 		5081AB621EF29E6400D6F616 /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		5087FD581BDA16C400570F0D /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
@@ -725,6 +727,7 @@
 				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
 				50B6894612DCA7B100CBB5B7 /* MyController.h */,
 				50B6894712DCA7B100CBB5B7 /* MyController.mm */,
+				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				5000474A12DCEE500098D890 /* MyControllerMenu.h */,
 				5000474B12DCEE500098D890 /* MyControllerMenu.mm */,
@@ -1297,6 +1300,7 @@
 				50D141851417A34B0024FC74 /* wave.cc in Sources */,
 				50D141861417A34B0024FC74 /* wave6581__ST.cc in Sources */,
 				50D141871417A34B0024FC74 /* wave6581_P_T.cc in Sources */,
+				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
 				50D141881417A34B0024FC74 /* wave6581_PS_.cc in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,

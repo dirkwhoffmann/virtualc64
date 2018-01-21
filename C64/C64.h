@@ -20,16 +20,7 @@
 
 // RELEASE NOTES FOR NEXT RELEASE: 1.6
 //
-// 1. Metal code has been ported to Swift.
-// 2. Texture post-processing has been redesigned and made more flexible.
-// In the emulator preference window, the user can
-// influece the visual output by combining a pixel upscaling algorithm with a texture filtering algorithm.
-// oth texture processing algoritseperate compute kernels hms are run as on the GPU.
-// With EXP and xBR two commonly known pixel uspscalers have been implemented.
-// 3. VIC-II compatibility has been improved by Fabio Ritrovato (Thanks, Fabio!).
-// 4. The VICE color palette has been updated with new RGB values. It is now the default palette.
-// 5. Text snippets can be dragged and dropped into the emulator window.
-//
+
 // TODO:
 //
 // TODO:

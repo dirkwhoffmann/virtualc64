@@ -32,24 +32,6 @@
  * As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
 
-
-// TODO:
-// Rename this class to CRTContainer (DONE)
-// Change Cartridge class to represent a real hardware cartridge
-// - Add peekLo(bool *error) : return value from lower cartridge space
-// - Add peekHi(bool *error)
-// - Change Memory::peek to get peekLo / peekHi right
-// Peek squence will be (for example):
-// Memory::peek -> ExpansionPort::peekLo -> Cartridge::peekLo
-// Move most of the expansion port stuff to Cartrige class
-// Implement SimonsBasic sublcassed from Cartridge
-// Implement Oceans etc. (Terminator??) sublcassed from Cartridge
-// Implement static method: CartridgeFromFile
-// - Returns a cartridge class or one of its subclasses
-// If everything still works:
-// Implement FinalCartrigeIII sublassed from Cartridge
-
-
 #ifndef _CRTContainer_H
 #define _CRTContainer_H
 

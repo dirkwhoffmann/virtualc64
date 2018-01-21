@@ -716,11 +716,11 @@
             }
             break;
             
-		case MSG_CARTRIDGE:
+        case MSG_CARTRIDGE:
 			[cartridgeIcon setHidden:!msg->i];
 			[cartridgeEject setHidden:!msg->i];
 			break;
-
+            
         case MSG_VC1530_TAPE:
             [tapeIcon setHidden:!msg->i];
             [tapeEject setHidden:!msg->i];
@@ -974,22 +974,6 @@
     
     [c64 setAlwaysWarp:![c64 alwaysWarp]];
     [self refresh];
-}
-
-
-// --------------------------------------------------------------------------------
-//                                     Cartridges
-// --------------------------------------------------------------------------------
-
-- (BOOL)mountCartridge
-{
-	if ([[self document] attachedCartridge] == nil)
-		return NO;
-
-	[c64 attachCartridge:[[self document] attachedCartridge]];
-	[c64 reset];
-	
-	return YES;
 }
 
 

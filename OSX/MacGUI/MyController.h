@@ -364,8 +364,6 @@ typedef unsigned long MacKeyFingerprint;
 - (IBAction)cartridgeEjectAction:(id)sender;
 - (IBAction)alwaysWarpAction:(id)sender;
 
-// Cartridges
-- (BOOL)mountCartridge;
 
 // Dialogs
 - (bool)showPropertiesDialog;

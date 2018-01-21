@@ -43,9 +43,6 @@ private:
 	//! @brief    Mutex for streamlining parallel read and write accesses
 	pthread_mutex_t lock;  
 			
-	//! @brief    Prints a textual description of the message for debugging
-	void printMessage(Message *msg);
-
 public:
 	//! @brief    Constructor
 	MessageQueue();

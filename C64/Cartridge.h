@@ -18,12 +18,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// TODO:
+// 1. Implement peekLO, peekHI
+// 2. Implement SimonsBasic class
+// 3. Warn user if an unsupported cartridge type is plugged in
+// 4. Implement Ocean ... class (Terminator 2)
+// 5. Implement FinalCartridge class
+// 6. Add MenuItem Cartridge->FinalCartridge
+
 #ifndef _CARTRIDGE_INC
 #define _CARTRIDGE_INC
 
 #include "VirtualComponent.h"
 
 class ExpansionPort;
+class CRTContainer;
 
 /*!
  * @brief    Cartridge that can be plugged into the C64's expansion port
@@ -106,19 +115,27 @@ private:
     
 public:
     
-    //! @brief    Constructor
-    Cartridge();
-    
+    //! @brief    Convenience constructor
+    Cartridge(C64 *c64);
+
     //! @brief    Destructor
     ~Cartridge();
+
+    //! @brief    Check cartridge type
+    /*! @details  Returns true iff the cartridge type is supported.
+     */
+    static bool isSupportedType(CRTContainer *container);
     
     //! @brief    Factory method
-    /*! @details  Creates a cartridge from a CRT container */
-    static Cartridge *makeCartridgeWithCRTContainer(CRTContainer *container);
+    /*! @details  Creates a cartridge from a CRT container.
+     *            Make sure that you only pass containers of supported cartridge type.
+     *  @seealso  isSupportedType
+     */
+    static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container);
     
     //! @brief    Factory method
     /*! @details  Creates a cartridge from a serialized data stream */
-    static Cartridge *makeCartridgeWithBuffer(uint8_t **buffer, CartridgeType type);
+    static Cartridge *makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType type);
     
     //! @brief    Resets the cartridge
     void reset();

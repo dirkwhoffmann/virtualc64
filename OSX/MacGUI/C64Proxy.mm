@@ -1214,8 +1214,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 {
     NSLog(@"TAPContainerProxy::dealloc (deleted TAPContainer at %p)", wrapper->tapcontainer);
     
-    if (wrapper->tapcontainer) delete wrapper->tapcontainer;
-    if (wrapper) delete wrapper;
+    if (wrapper) {
+        if (wrapper->tapcontainer)
+            delete wrapper->tapcontainer;
+        delete wrapper;
+    }
 }
 
 - (TAPContainerWrapper *)wrapper { return wrapper; }
@@ -1258,10 +1261,13 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (void)dealloc
 {
-    NSLog(@"CRTContainerProxy %p deleted", wrapper->crtcontainer);
+    NSLog(@"CRTContainerProxy::dealloc (deleted CRTContainer at %p)", wrapper->crtcontainer);
     
-    if (wrapper->crtcontainer) delete wrapper->crtcontainer;
-    if (wrapper) delete wrapper;
+    if (wrapper) {
+        if (wrapper->crtcontainer)
+            delete wrapper->crtcontainer;
+        delete wrapper;
+    }
 }
 
 + (BOOL) isCRTFile:(NSString *)filename
@@ -1274,6 +1280,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     CRTContainer *container = CRTContainer::containerFromCRTFile([filename UTF8String]);
     return container ? [[CRTContainerProxy alloc] initWithCRTContainer:container] : nil;
 }
+
+- (NSInteger)type { return wrapper->crtcontainer->getCartridgeType(); }
+- (BOOL) isSupportedType { return Cartridge::isSupportedType(wrapper->crtcontainer); }
+
 
 @end
 

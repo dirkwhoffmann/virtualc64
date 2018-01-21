@@ -168,6 +168,7 @@ ExpansionPort::exromLineHasChanged()
 bool
 ExpansionPort::attachCartridge(Cartridge *c)
 {
+    assert(c != NULL);
     detachCartridge();
     cartridge = c;
     cartridge->setListener(this);
@@ -185,7 +186,8 @@ ExpansionPort::attachCartridge(Cartridge *c)
 bool
 ExpansionPort::attachCartridge(uint8_t **buffer, Cartridge::CartridgeType type)
 {
-    Cartridge *cartridge = Cartridge::makeCartridgeWithBuffer(buffer, type);
+    assert(buffer != NULL);
+    Cartridge *cartridge = Cartridge::makeCartridgeWithBuffer(c64, buffer, type);
     
     if (cartridge == NULL) {
         warn("Cannot create Cartridge from data buffer");
@@ -198,7 +200,8 @@ ExpansionPort::attachCartridge(uint8_t **buffer, Cartridge::CartridgeType type)
 bool
 ExpansionPort::attachCartridge(CRTContainer *c)
 {
-    Cartridge *cartridge = Cartridge::makeCartridgeWithCRTContainer(c);
+    assert(c != NULL);
+    Cartridge *cartridge = Cartridge::makeCartridgeWithCRTContainer(c64, c);
 
     if (cartridge == NULL) {
         warn("Cannot create Cartridge from CRTContainer");
@@ -216,7 +219,7 @@ ExpansionPort::detachCartridge()
         cartridge = NULL;
     }
     
-    if (c64) c64->putMessage(MSG_CARTRIDGE, 0);
+    c64->putMessage(MSG_CARTRIDGE, 0);
 }
 
 

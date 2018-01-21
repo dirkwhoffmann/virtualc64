@@ -7,12 +7,12 @@
 
 #include "C64.h"
 
-Cartridge::Cartridge()
+Cartridge::Cartridge(C64 *c64)
 {
     setDescription("Cartridge");
     debug(1, "  Creating cartridge at address %p...\n", this);
 
-    listener = NULL;
+    this->c64 = c64;
     
     // We reset the cartridge here, as C64::reset() keeps the cartridge intact.
     reset();
@@ -27,11 +27,43 @@ Cartridge::~Cartridge()
         if (chip[i]) free(chip[i]);
 }
 
-Cartridge *
-Cartridge::makeCartridgeWithCRTContainer(CRTContainer *container)
+bool
+Cartridge::isSupportedType(CRTContainer *container)
 {
-    Cartridge *cart = new Cartridge();
-    if (cart == NULL) return NULL;
+    assert(container != NULL);
+    
+    CartridgeType type = (CartridgeType)container->getCartridgeType();
+    
+    switch (type) {
+        
+        case CRT_NORMAL:
+            return true;
+            
+        default:
+            return false;
+    }
+}
+
+Cartridge *
+Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
+{
+    assert(isSupportedType(container));
+    
+    Cartridge *cart;
+    CartridgeType type = (CartridgeType)container->getCartridgeType();
+    
+    switch (type) {
+
+        case CRT_NORMAL:
+            cart = new Cartridge(c64);
+            break;
+            
+        default:
+            assert(false); // should not reach
+            return NULL;
+    }
+    
+    assert(cart != NULL);
     
     cart->type = container->getCartridgeType();
     cart->gameLine = container->getGameLine();
@@ -55,9 +87,9 @@ Cartridge::makeCartridgeWithCRTContainer(CRTContainer *container)
 }
 
 Cartridge *
-Cartridge::makeCartridgeWithBuffer(uint8_t **buffer, CartridgeType type)
+Cartridge::makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType type)
 {
-    Cartridge *cart = new Cartridge();
+    Cartridge *cart = new Cartridge(c64);
     if (cart == NULL) return NULL;
     
     cart->type = type;
