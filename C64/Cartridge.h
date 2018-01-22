@@ -21,9 +21,13 @@
 // TODO:
 // 1. Change bankIn, bankOut.
 //    Use indirect addressing instead of memcopy (FinalIII switches banks all the time).
+// 2. Implement peekLO, peekHI
+//    
 // 2. Add NMI triggering for final cartridge III
 // 3. Check why cartridge does not jump start
 // 4. Add MenuItem Cartridge->FinalCartridge->Reset,Freeze
+// 5. Implement 18 - Zaxxon, Super Zaxxon (SEGA), interesting test case
+// 6. Magic Desk, Domark, HES Australia, interesting test case
 
 #ifndef _CARTRIDGE_INC
 #define _CARTRIDGE_INC
@@ -69,7 +73,7 @@ protected:
     uint8_t rom[0x8000];
     
     /*! @brief    Indicates whether ROM is blended in (0x01) or or out (0x00)
-     *  @details  Each array item represents a 4k block above $8000
+     *  @details  Each array item represents a 4 KB block above $8000
      */
     uint8_t blendedIn[16];
     

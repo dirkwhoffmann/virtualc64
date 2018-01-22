@@ -9,24 +9,6 @@
 
 /* More information:
  * ftp://www.zimmers.net/pub/cbm/documents/chipdata/Final%20Cartridge%20III%20Internals.txt
- *
- * From VICE:
- * "- one register at $DFFF:
- *
- *   7      Hide this register (1 = hidden)
- *   6      NMI line   (0 = low = active) *1)
- *   5      GAME line  (0 = low = active) *2)
- *   4      EXROM line (0 = low = active)
- *   2-3    unassigned (usually set to 0)
- *   0-1    number of bank to show at $8000
- *
- *   1) if either the freezer button is pressed, or bit 6 is 0, then
- *   an NMI is generated
- *
- *   2) if the freezer button is pressed, GAME is also forced low
- *
- *  This implementation also supports the community developed "Final Cartridge III+"
- *  which has 16 ROM banks instead of the usual 4."
  */
 
 void
@@ -34,10 +16,16 @@ FinalIII::powerup()
 {
     debug("FinalCartridge::powerup\n");
     
+    resetButton = false;
+    freezeButton = false;
+    
     bankIn(0);
     
     setGameLine(0);
     setExromLine(0);
+    
+    // freezeButton = true;
+    
     // c64->cpu.setNMILineCIA();
     
     // c64->expansionport.gameLineHasChanged();
@@ -52,14 +40,14 @@ FinalIII::peekIO(uint16_t addr)
     
     uint16_t offset = addr - 0xDE00;
     
+    // debug("FinalCartridge::peek %04X\n", addr);
+    
     // The I/O space mirrors $1E00 to $1EFF from the selected bank.
     uint8_t result = rom[0x1E00 + offset];
     
-    /*
     if (addr == 0xDFFF) {
         debug("FinalCartridge::peek %04X (%02X)\n", addr, result);
     }
-    */
     
     return result;
 }
@@ -73,7 +61,20 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
     
     if (addr == 0xDFFF) {
         
-        // debug("Final Cartridge III: Writing %02X to $DFFF\n", value);
+        
+        /*  "7      Hide this register (1 = hidden)
+         *   6      NMI line   (0 = low = active) *1)
+         *   5      GAME line  (0 = low = active) *2)
+         *   4      EXROM line (0 = low = active)
+         *   2-3    unassigned (usually set to 0)
+         *   0-1    number of bank to show at $8000
+         *
+         *   1) if either the freezer button is pressed,
+         *      or bit 6 is 0, then an NMI is generated
+         *
+         *   2) if the freezer button is pressed, GAME
+         *      is also forced low" [VICE]
+         */
         
         uint8_t hide  = value & 0x80;
         uint8_t nmi   = value & 0x40;
@@ -81,8 +82,14 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
         uint8_t exrom = value & 0x10;
         uint8_t bank  = value & 0x03;
         
-        // debug("hide: %d nmi:%d game:%d exrom:%d bank:%d\n", hide != 0, nmi != 0, game != 0, exrom != 0, bank);
+        debug("hide: %d nmi:%d game:%d exrom:%d bank:%d\n", hide != 0, nmi != 0, game != 0, exrom != 0, bank);
 
+        if (freezeButton) {
+            nmi = 0;  // (1)
+            game = 0; // (2)
+            freezeButton = false;
+        }
+        
         if (hide) {
             debug("Disabling final cartridge III\n");
             setGameLine(1);
@@ -94,23 +101,31 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
         setGameLine(game);
         setExromLine(exrom);
         
-        if (nmi)
+        c64->cpu.clearNMILineExpansionPort();
+        if (nmi == 0)
             triggerNMI();
     }
 }
 
 void
-FinalIII::pushReset() {
-        
+FinalIII::pressReset(bool pressed) {
+    
+    resetButton = true;
+    debug("FinalIII:pressReset (%d) \n", pressed);
 }
     
 void
-FinalIII::pushFreeze() {
+FinalIII::pressFreeze(bool pressed) {
 
-    triggerNMI();
+    debug("FinalIII:pressFreeze (%d) \n", pressed);
+    freezeButton = pressed;
+    //if (pressed)
+    //    c64->reset();
+    
 }
 
 void
 FinalIII::triggerNMI() {
-        
+    debug("FinalIII:triggerNMI\n");
+    c64->cpu.setNMILineExpansionPort();
 }

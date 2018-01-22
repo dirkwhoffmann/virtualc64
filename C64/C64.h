@@ -24,6 +24,11 @@
 // VirtualC64 now issues a warning message if an unsupported cartridge is plugged in
 // Fixed a bug that sometimes crashed the emulator when setting up the background texture
 //
+// THINK ABOUT ADDING A DICTIONARY BASED CONFIG SYSTEM:
+// Add method VirtualComponent::configure(VC64Option key, int value)
+// Why? Because there are tons of methods in the emulator and the proxy that
+// simply pass values from one component to the other. This would be much
+// simpler then. 
 
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files

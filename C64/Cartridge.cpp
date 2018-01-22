@@ -247,24 +247,6 @@ Cartridge::numberOfBytes()
     return result;
 }
 
-#if 0
-uint8_t
-Cartridge::peek(uint16_t addr)
-{
-    return rom[addr & 0x7FFF];
-    
-    /*
-    if (romIsBlendedIn(addr)) {
-        return rom[addr & 0x7FFF];
-    } else {
-        // Question: What ist the correct default behavior here?
-        debug("Returning value from ROM");
-        return c64->mem.rom[addr];
-    }
-    */
-}
-#endif
-
 void
 Cartridge::setGameLine(bool value)
 {
@@ -291,14 +273,15 @@ Cartridge::bankIn(unsigned nr)
         return;
     }
 
-    uint16_t start = chipStartAddress[nr];
-    uint16_t size  = chipSize[nr];
-    uint16_t end   = start + size;
-    assert(0xFFFF - start >= size);
+    uint16_t start     = chipStartAddress[nr];
+    uint16_t size      = chipSize[nr];
+    uint8_t  firstBank = start / 0x1000;
+    uint8_t  numBanks  = size / 0x1000;
+    assert (firstBank + numBanks <= 16);
 
     memcpy(rom + start - 0x8000, chip[nr], size);
-    for (unsigned i = start >> 12; i < end >> 12; i++)
-        blendedIn[i] = 1;
+    for (unsigned i = 0; i < numBanks; i++)
+        blendedIn[firstBank + i] = 1;
 
     lastBlendedIn = nr;
     
@@ -315,13 +298,14 @@ Cartridge::bankOut(unsigned nr)
     assert(nr < 64);
     assert(chip[nr] != NULL);
 
-    uint16_t start = chipStartAddress[nr];
-    uint16_t size  = chipSize[nr];
-    uint16_t end   = start + size;
-    assert(0xFFFF - start >= size);
+    uint16_t start     = chipStartAddress[nr];
+    uint16_t size      = chipSize[nr];
+    uint8_t  firstBank = start / 0x1000;
+    uint8_t  numBanks  = size / 0x1000;
+    assert (firstBank + numBanks <= 16);
     
-    for (unsigned i = start >> 12; i < end >> 12; i++)
-        blendedIn[i] = 0;
+    for (unsigned i = 0; i < numBanks; i++)
+        blendedIn[firstBank + i] = 0;
     
     debug(1, "Chip %d banked out (start: %04X size: %d KB)\n", nr, start, size / 1024);
     
@@ -346,7 +330,7 @@ Cartridge::loadChip(unsigned nr, CRTContainer *c)
         return;
     }
     
-    if (0xFFFF - start < size) {
+    if (0x10000 - start < size) {
         warn("Ignoring chip %d: Invalid size (start: %04X size: %04X)", nr, start, size);
         return;
     }

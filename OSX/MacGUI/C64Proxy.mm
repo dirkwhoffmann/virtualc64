@@ -557,6 +557,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 // - (unsigned) numberOfChips { return wrapper->expansionPort->numberOfChips(); }
 // - (unsigned) numberOfBytes { return wrapper->expansionPort->numberOfBytes(); }
 
+- (void) pressReset:(BOOL)pressed { wrapper->expansionPort->pressReset(pressed); }
+- (void) pressFreeze:(BOOL)pressed { wrapper->expansionPort->pressFreeze(pressed); }
+
 @end
 
 // --------------------------------------------------------------------------

@@ -23,6 +23,13 @@
 
 #include "Cartridge.h"
 
+/* Final cartridge III contains four 16KB ROMs residing at $8000 - $BFFF
+ * Bank 0:  BASIC, Monitor, Disk-Turbo
+ * Bank 1:  Notepad, BASIC (Menu Bar)
+ * Bank 2:  Desktop, Freezer/Print
+ * Bank 3:  Freezer, Compression
+ */
+ 
 // TODO:
 // 1. Implement peekIO correctly
 // 2. 
@@ -30,6 +37,11 @@
  * @brief    Custom implementation of Final Cartridge III
  */
 class FinalIII : public Cartridge {
+    
+private:
+    
+    bool resetButton;
+    bool freezeButton;
     
 public:
     
@@ -41,10 +53,10 @@ public:
     void poke(uint16_t addr, uint8_t value);
     
     //! @brief   Virtual push of the cartriges's reset button
-    void pushReset();
+    void pressReset(bool pressed);
 
     //! @brief   Virtual push of the cartriges's freeze button
-    void pushFreeze();
+    void pressFreeze(bool pressed);
 
     //! @brief   Triggers an NMI interrupt
     void triggerNMI();

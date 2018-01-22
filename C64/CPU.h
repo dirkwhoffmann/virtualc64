@@ -488,6 +488,12 @@ public:
     
 	//! @brief    Clears CIA bit of NMI line.
 	inline void clearNMILineCIA() { clearNMILine(0x01); }
+
+    //! @brief    Sets ExpansionPort bit of NMI line.
+    inline void setNMILineExpansionPort() { setNMILine(0x02); }
+    
+    //! @brief    Clears ExpansionPort bit of NMI line.
+    inline void clearNMILineExpansionPort() { clearNMILine(0x02); }
     
 	//! @brief    Sets reset bit of NMI line.
 	inline void setNMILineReset() { setNMILine(0x08); }

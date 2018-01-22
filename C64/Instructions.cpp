@@ -33,9 +33,12 @@ CPU::fetch() {
     if (1) {
     
         if (nmiEdge && NMILineRaisedLongEnough()) {
+            
             if (tracingEnabled())
                 debug(1, "NMI (source = %02X)\n", nmiLine);
             nmiEdge = false;
+            clearNMILineExpansionPort();
+            // TODO: Should do the same with the restore key line (?!)
             next = &CPU::nmi_2;
             return;
 
@@ -534,6 +537,7 @@ void CPU::nmi_7()
 {
 	setPCL(data);
 	setPCH(mem->peek(0xFFFB));
+    // printf("NMI: Jumping to %04X\n", PC);
 	DONE;
 }
 
