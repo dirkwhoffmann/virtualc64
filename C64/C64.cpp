@@ -141,16 +141,13 @@ void
 C64::reset()
 {
     debug(1, "Resetting virtual C64[%p]\n", this);
+    
 	suspend();
     VirtualComponent::reset();
     cpu.mem = &mem;
-    
-    uint16_t start = LO_HI(mem.peek(0xFFFC), mem.peek(0xFFFD));
-    cpu.setPC(start); // Usally: 0xFCE2
-    
+    cpu.initPC();
 	rasterlineCycle = 1;
     nanoTargetTime = 0UL;
-    
     ping();
 	resume();
 }
@@ -793,8 +790,12 @@ C64::loadRom(const char *filename)
     
     bool isNowRunnable = isRunnable();
     
-    if (!wasRunnable && isNowRunnable) { // Good news! All ROMs are in place
-        reset(); // Will update PC with proper start address
+    if (!wasRunnable && isNowRunnable) {
+        
+        // Read initial program counter value from Kernel ROM
+        cpu.initPC();
+        
+        // Let the GUI know that the emulator is ready to run
         putMessage(MSG_ROM_COMPLETE);
     }
     resume();

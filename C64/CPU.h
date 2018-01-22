@@ -284,22 +284,25 @@ public:
     //
 
 	//! @brief    Returns the contents of the accumulator.
-	inline uint8_t getA() { return A; };
+	inline uint8_t getA() { return A; }
     
 	//! @brief    Returns current value of the X register.
-	inline uint8_t getX() { return X; };
+	inline uint8_t getX() { return X; }
     
 	//! @brief    Returns current value of the Y register.
-	inline uint8_t getY() { return Y; };
-    
+	inline uint8_t getY() { return Y; }
+
+    //! @brief    Initialize PC with its start up valie
+    inline uint16_t initPC() { PC = LO_HI(mem->peek(0xFFFC), mem->peek(0xFFFD)); }
+
 	//! @brief    Returns current value of the program counter.
-	inline uint16_t getPC() { return PC; };
+	inline uint16_t getPC() { return PC; }
     
 	//! @brief    Returns "freezed" program counter.
-	inline uint16_t getPC_at_cycle_0() { return PC_at_cycle_0; };
+	inline uint16_t getPC_at_cycle_0() { return PC_at_cycle_0; }
     
 	//! @brief    Returns current value of the program counter.
-	inline uint8_t getSP() { return SP; };
+	inline uint8_t getSP() { return SP; }
 	
 	//! @brief    Returns current value of the memory cell addressed by the program counter.
 	inline uint8_t peekPC() { return mem->peek(PC); }
