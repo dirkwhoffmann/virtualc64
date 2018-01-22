@@ -228,6 +228,7 @@ Cartridge::peek(uint16_t addr)
     }
     
     // No cartridge chip is mapped to this memory area
+    debug("Peeking from unmapped location\n");
     return 0;
 }
 
@@ -285,11 +286,13 @@ Cartridge::bankIn(unsigned nr)
     for (unsigned i = 0; i < numBanks; i++)
         blendedIn[firstBank + i] = nr;
     
+    
     debug(1, "Chip %d banked in (start: %04X size: %d KB)\n", nr, start, size / 1024);
     for (unsigned i = 0; i < 16; i++) {
         printf("%d ", blendedIn[i]);
     }
     printf("\n");
+    
 }
 
 void

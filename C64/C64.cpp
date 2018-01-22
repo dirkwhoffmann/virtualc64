@@ -144,7 +144,10 @@ C64::reset()
 	suspend();
     VirtualComponent::reset();
     cpu.mem = &mem;
-    cpu.setPC(0xFCE2);
+    
+    uint16_t start = LO_HI(mem.peek(0xFFFC), mem.peek(0xFFFD));
+    cpu.setPC(start); // Usally: 0xFCE2
+    
 	rasterlineCycle = 1;
     nanoTargetTime = 0UL;
     
@@ -791,6 +794,7 @@ C64::loadRom(const char *filename)
     bool isNowRunnable = isRunnable();
     
     if (!wasRunnable && isNowRunnable) { // Good news! All ROMs are in place
+        reset(); // Will update PC with proper start address
         putMessage(MSG_ROM_COMPLETE);
     }
     resume();

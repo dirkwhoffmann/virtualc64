@@ -19,14 +19,17 @@
  */
 
 // TODO:
-// 1. FinalIII: In powerup:
-//    Add four virtual chips located at 0xE000 - 0xF000
-//    Let these chips represent the second half of the first four chips
-// 2. Check NMI triggering for final cartridge III
-// 3. Check why cartridge does not jump start
-// 4. Add MenuItem Cartridge->FinalCartridge->Reset,Freeze
-// 5. Implement 18 - Zaxxon, Super Zaxxon (SEGA), interesting test case
-// 6. Magic Desk, Domark, HES Australia, interesting test case
+// 1. Fix Ultimax mode (VIC needs a special peek function taking care of Ultimax)
+// 1a.Make Music Machine cartridge running
+// 2. Test with other Ultramax cartridges
+// 3. Check Freezer in Final Cartridge
+//    Hypothesis:
+//    Reset button issues a normal reset
+//    Freeze button switches to ultramax mode and issues a reset or an nmi
+// 4. Check why cartridge does not jump start
+// 5. Add MenuItem Cartridge->FinalCartridge->Reset,Freeze
+// 6. Implement 18 - Zaxxon, Super Zaxxon (SEGA), interesting test case
+// 7. Magic Desk, Domark, HES Australia, interesting test case
 
 #ifndef _CARTRIDGE_INC
 #define _CARTRIDGE_INC
@@ -43,10 +46,6 @@ class Cartridge : public VirtualComponent {
     
 private:
     
-    /*! @brief    Type of the attached cartridge
-     */
-    // CartridgeType type;
-    
     /*! @brief    Game line of the attached cartridge
      */
     bool gameLine;
@@ -54,6 +53,8 @@ private:
     /*! @brief    Exrom line of the attached cartridge
      */
     bool exromLine;
+    
+protected:
     
     /*! @brief    ROM chips contained in the attached cartridge
      *  @details  A cartridge can contain up to 64 chips
@@ -65,11 +66,6 @@ private:
     
     //! @brief    Array containing the chip sizes of all chips
     uint16_t chipSize[64];
-
-protected:
-    
-    //! @brief    Virtual cartridge ROM (32 kb starting at $8000)
-    // uint8_t rom[0x8000];
     
     /*! @brief    Indicates which ROM chip blended it
      *  @details  Each array item represents a 4 KB block above $8000

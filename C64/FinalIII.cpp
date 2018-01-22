@@ -16,6 +16,16 @@ FinalIII::powerup()
 {
     debug("FinalCartridge::powerup\n");
     
+    assert(chip[0] != NULL);
+    
+    // We add four additional chips
+    for (unsigned i = 0; i < 4; i++) {
+        chipStartAddress[i+4] = 0xE000;
+        chipSize[i+4] = 0x2000;
+        chip[i+4] = (uint8_t *)malloc(0x2000);
+        memcpy(chip[i+4], chip[i] + 0x2000, 0x2000);
+    }
+    
     resetButton = false;
     freezeButton = false;
     
@@ -61,7 +71,6 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
     
     if (addr == 0xDFFF) {
         
-        
         /*  "7      Hide this register (1 = hidden)
          *   6      NMI line   (0 = low = active) *1)
          *   5      GAME line  (0 = low = active) *2)
@@ -82,9 +91,10 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
         uint8_t exrom = value & 0x10;
         uint8_t bank  = value & 0x03;
         
-        debug("hide: %d nmi:%d game:%d exrom:%d bank:%d\n", hide != 0, nmi != 0, game != 0, exrom != 0, bank);
+        // debug("hide: %d nmi:%d game:%d exrom:%d bank:%d\n", hide != 0, nmi != 0, game != 0, exrom != 0, bank);
 
         if (freezeButton) {
+            assert(0);
             nmi = 0;  // (1)
             game = 0; // (2)
             freezeButton = false;
@@ -97,14 +107,23 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
         }
         
         bankIn(bank);
+        bankIn(bank+4);
         
         setGameLine(game);
         setExromLine(exrom);
+                
+        nmi ? c64->cpu.clearNMILineExpansionPort() : c64->cpu.setNMILineExpansionPort();
         
+        /*
         c64->cpu.clearNMILineExpansionPort();
-        if (nmi == 0)
-            triggerNMI();
+        if (nmi == 0) {
+            c64->cpu.setNMILineExpansionPort();
+        } else {
+            // c64->cpu.clearNMILineExpansionPort();
+        }
+        */
     }
+    
 }
 
 void

@@ -28,7 +28,8 @@
  *  BASIC ROM. In theory, such a cartridge need only contain the
  *  ROM circuit without any extra support electronics."
  *
- *  Also: http://www.c64-wiki.com/index.php/Bankswitching
+ *  Bank switching info: http://www.c64-wiki.com/index.php/Bankswitching
+ *                       http://www.harries.dk/files/C64MemoryMaps.pdf
  *
  *  As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
