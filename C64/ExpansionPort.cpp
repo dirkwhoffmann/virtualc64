@@ -122,7 +122,14 @@ ExpansionPort::peek(uint16_t addr)
 uint8_t
 ExpansionPort::peekIO(uint16_t addr)
 {
-   return cartridge ? cartridge->peekIO(addr) : 0;
+    /* "Die beiden mit "I/O 1" und "I/O 2" bezeichneten Bereiche
+     *  sind für Erweiterungskarten reserviert und normalerweise ebenfalls offen,
+     *  ein Lesezugriff liefert auch hier "zufällige" Daten (dass diese Daten gar
+     *  nicht so zufällig sind, wird in Kapitel 4 noch ausführlich erklärt. Ein
+     *  Lesen von offenen Adressen liefert nämlich auf vielen C64 das zuletzt vom
+     *  VIC gelesene Byte zurück!)" [C.B.]
+     */
+   return cartridge ? cartridge->peekIO(addr) : c64->vic.getDataBus();
 }
 
 void

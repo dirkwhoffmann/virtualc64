@@ -19,10 +19,11 @@
  */
 
 // TODO:
-// 1. Serialization does not preserve subclasses. Need to create correct classes by type
-// 2. Get rid of member "type". Make it a virtual function
-// 5. Implement FinalCartridge class
-// 6. Add MenuItem Cartridge->FinalCartridge
+// 1. Change bankIn, bankOut.
+//    Use indirect addressing instead of memcopy (FinalIII switches banks all the time).
+// 2. Add NMI triggering for final cartridge III
+// 3. Check why cartridge does not jump start
+// 4. Add MenuItem Cartridge->FinalCartridge->Reset,Freeze
 
 #ifndef _CARTRIDGE_INC
 #define _CARTRIDGE_INC
@@ -31,7 +32,6 @@
 #include "CRTContainer.h"
 
 class ExpansionPort;
-class OceanType1;
 
 /*!
  * @brief    Cartridge that can be plugged into the C64's expansion port
@@ -62,6 +62,8 @@ private:
     
     //! @brief    Array containing the chip sizes of all chips
     uint16_t chipSize[64];
+
+protected:
     
     //! @brief    Virtual cartridge ROM (32 kb starting at $8000)
     uint8_t rom[0x8000];

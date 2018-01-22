@@ -317,17 +317,7 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 	// 0xDE00 - 0xDEFF (I/O area 1)
 	// 0xDF00 - 0xDFFF (I/O area 2) 
 	if (addr <= 0xDFFF) {
-
-        /* "Die beiden mit "I/O 1" und "I/O 2" bezeichneten Bereiche
-            sind für Erweiterungskarten reserviert und normalerweise ebenfalls offen,
-            ein Lesezugriff liefert auch hier "zufällige" Daten (dass diese Daten gar
-            nicht so zufällig sind, wird in Kapitel 4 noch ausführlich erklärt. Ein
-            Lesen von offenen Adressen liefert nämlich auf vielen C64 das zuletzt vom
-            VIC gelesene Byte zurück!)" [C.B.] */
-        /*  Some registers in this area trigger a bank switch in the attached cartridge.
-            So we let the cartright know that we're reading */
-        (void)c64->expansionport.peekIO(addr);
-		return c64->vic.getDataBus();
+        return c64->expansionport.peekIO(addr);
 	}
 
 	assert(false);
@@ -352,12 +342,6 @@ uint8_t C64Memory::peek(uint16_t addr)
         case M_CRTLO:
         case M_CRTHI:
 
-            /*
-            if (c64->expansionport.romIsBlendedIn(addr))
-                return c64->expansionport.peek(addr);
-            else
-                return ram[addr];
-            */
             return c64->expansionport.peek(addr);
             
         case M_PP:

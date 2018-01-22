@@ -42,11 +42,13 @@ Cartridge::reset()
 {
     VirtualComponent::reset();
  
-    debug("CARTRIDGE DEFAULT RESET");
+    powerup();
+    /*
     // Bank in chip 0
     if(chip[0] != NULL) {
         bankIn(0);
     }
+    */
 }
 
 bool
@@ -55,7 +57,7 @@ Cartridge::isSupportedType(CartridgeType type)
     switch (type) {
         
         case CRT_NORMAL:
-        // case CRT_FINAL_CARTRIDGE_III:
+        case CRT_FINAL_CARTRIDGE_III:
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN_TYPE_1:
             return true;
@@ -75,8 +77,8 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
         case CRT_NORMAL:
             return new Cartridge(c64);
             
-        // case CRT_FINAL_CARTRIDGE_III:
-        //     return new FinalIII(c64);
+        case CRT_FINAL_CARTRIDGE_III:
+            return new FinalIII(c64);
             
         case CRT_SIMONS_BASIC:
             return new SimonsBasic(c64);
@@ -120,26 +122,6 @@ Cartridge::makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType typ
     cart->loadFromBuffer(buffer);
     return cart;
 }
-
-/*
-void
-Cartridge::reset()
-{
-    type = CRT_NONE;
-    gameLine = true;
-    exromLine = true;
-    
-    memset(rom, 0, sizeof(rom));
-    memset(blendedIn, 0, sizeof(blendedIn));
-    lastBlendedIn = 255;
-    
-    for (unsigned i = 0; i < 64; i++) {
-        chip[i] = NULL;
-        chipStartAddress[i] = 0;
-        chipSize[i] = 0;
-    }
-}
-*/
 
 void
 Cartridge::powerup()
@@ -226,7 +208,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
 void
 Cartridge::dumpState()
 {
-    msg("Cartridge (class Cartridge)\n");
+    msg("\n");
+    msg("Cartridge\n");
     msg("---------\n");
     
     msg("Cartridge type: %d\n", getCartridgeType());

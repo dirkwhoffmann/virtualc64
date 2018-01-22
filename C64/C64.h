@@ -1,7 +1,7 @@
 /*!
  * @header      C64.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2017 Dirk W. Hoffmann
+ * @copyright   2006 - 2018 Dirk W. Hoffmann
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -18,11 +18,13 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.6
+// RELEASE NOTES FOR NEXT RELEASE: 1.6.1
+//
+// Added support for SimonsBasic (cartridge)
+// VirtualC64 now issues a warning message if an unsupported cartridge is plugged in
+// Fixed a bug that sometimes crashed the emulator when setting up the background texture
 //
 
-// TODO:
-//
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files
 // Cartridge dialog
@@ -78,6 +80,7 @@
 
 // Cartridges
 #include "Cartridge.h"
+#include "FinalIII.h"
 #include "SimonsBasic.h"
 #include "OceanType1.h"
 

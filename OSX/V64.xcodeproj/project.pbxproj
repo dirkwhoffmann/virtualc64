@@ -179,6 +179,7 @@
 		50D6954B12E3759500D9C738 /* IconT64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954612E3759500D9C738 /* IconT64.icns */; };
 		50D6954C12E3759500D9C738 /* IconV64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6954712E3759500D9C738 /* IconV64.icns */; };
 		50D6956C12E380E500D9C738 /* IconPRG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50D6956B12E380E500D9C738 /* IconPRG.icns */; };
+		50D7E7E92015106B00C94C79 /* FinalIII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D7E7E72015106B00C94C79 /* FinalIII.cpp */; };
 		50DA14A30A6418470022B4A7 /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DA14A20A6418470022B4A7 /* bottom.png */; };
 		50DAD6920A736F9B00BB44AC /* VirtualComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */; };
 		50DB328B1B948489000FB839 /* kext.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DB328A1B948489000FB839 /* kext.png */; };
@@ -478,6 +479,8 @@
 		50D6954612E3759500D9C738 /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconT64.icns; sourceTree = "<group>"; };
 		50D6954712E3759500D9C738 /* IconV64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconV64.icns; sourceTree = "<group>"; };
 		50D6956B12E380E500D9C738 /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconPRG.icns; sourceTree = "<group>"; };
+		50D7E7E72015106B00C94C79 /* FinalIII.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FinalIII.cpp; sourceTree = "<group>"; };
+		50D7E7E82015106B00C94C79 /* FinalIII.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FinalIII.h; sourceTree = "<group>"; };
 		50DA14A20A6418470022B4A7 /* bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom.png; sourceTree = "<group>"; };
 		50DAD6900A736F9B00BB44AC /* VirtualComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualComponent.h; sourceTree = "<group>"; };
 		50DAD6910A736F9B00BB44AC /* VirtualComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualComponent.cpp; sourceTree = "<group>"; };
@@ -834,6 +837,8 @@
 			children = (
 				5054BF1020133BA2003D86D4 /* Cartridge.h */,
 				5054BF0F20133BA2003D86D4 /* Cartridge.cpp */,
+				50D7E7E82015106B00C94C79 /* FinalIII.h */,
+				50D7E7E72015106B00C94C79 /* FinalIII.cpp */,
 				503C8BFF2014B9F8000494A0 /* SimonsBasic.h */,
 				503C8BFE2014B9F8000494A0 /* SimonsBasic.cpp */,
 				503C8BFC2014ACF0000494A0 /* OceanType1.h */,
@@ -1240,6 +1245,7 @@
 				50AE4A351A693AA0003EA774 /* MountDragView.mm in Sources */,
 				50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */,
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
+				50D7E7E92015106B00C94C79 /* FinalIII.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
 				50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */,
