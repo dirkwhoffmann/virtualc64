@@ -19,11 +19,10 @@
  */
 
 // TODO:
-// 1. Change bankIn, bankOut.
-//    Use indirect addressing instead of memcopy (FinalIII switches banks all the time).
-// 2. Implement peekLO, peekHI
-//    
-// 2. Add NMI triggering for final cartridge III
+// 1. FinalIII: In powerup:
+//    Add four virtual chips located at 0xE000 - 0xF000
+//    Let these chips represent the second half of the first four chips
+// 2. Check NMI triggering for final cartridge III
 // 3. Check why cartridge does not jump start
 // 4. Add MenuItem Cartridge->FinalCartridge->Reset,Freeze
 // 5. Implement 18 - Zaxxon, Super Zaxxon (SEGA), interesting test case
@@ -70,16 +69,13 @@ private:
 protected:
     
     //! @brief    Virtual cartridge ROM (32 kb starting at $8000)
-    uint8_t rom[0x8000];
+    // uint8_t rom[0x8000];
     
-    /*! @brief    Indicates whether ROM is blended in (0x01) or or out (0x00)
+    /*! @brief    Indicates which ROM chip blended it
      *  @details  Each array item represents a 4 KB block above $8000
      */
     uint8_t blendedIn[16];
     
-    //! @brief    Stores the number of the chip of the latest bankIn operation
-    uint8_t lastBlendedIn; 
-        
 public:
     
     //! @brief    Convenience constructor
@@ -138,7 +134,7 @@ public:
     bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
     //! @brief    Peek fallthrough
-    uint8_t peek(uint16_t addr) { return rom[addr & 0x7FFF]; }
+    uint8_t peek(uint16_t addr); 
     
     //! @brief    Peek fallthrough for IO space
     /*! @details  Some cartridges such as SimonsBasic trigger a bank switch when

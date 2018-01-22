@@ -43,7 +43,7 @@ FinalIII::peekIO(uint16_t addr)
     // debug("FinalCartridge::peek %04X\n", addr);
     
     // The I/O space mirrors $1E00 to $1EFF from the selected bank.
-    uint8_t result = rom[0x1E00 + offset];
+    uint8_t result = peek(0x8000 + 0x1E00 + offset);
     
     if (addr == 0xDFFF) {
         debug("FinalCartridge::peek %04X (%02X)\n", addr, result);

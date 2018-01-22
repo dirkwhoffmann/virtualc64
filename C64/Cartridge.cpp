@@ -17,9 +17,8 @@ Cartridge::Cartridge(C64 *c64)
     gameLine = true;
     exromLine = true;
     
-    memset(rom, 0, sizeof(rom));
-    memset(blendedIn, 0, sizeof(blendedIn));
-    lastBlendedIn = 255;
+    // memset(rom, 0, sizeof(rom));
+    memset(blendedIn, 255, sizeof(blendedIn));
     
     for (unsigned i = 0; i < 64; i++) {
         chip[i] = NULL;
@@ -41,14 +40,7 @@ void
 Cartridge::reset()
 {
     VirtualComponent::reset();
- 
     powerup();
-    /*
-    // Bank in chip 0
-    if(chip[0] != NULL) {
-        bankIn(0);
-    }
-    */
 }
 
 bool
@@ -145,9 +137,7 @@ Cartridge::stateSize()
         size += 4 + chipSize[i];
     }
 
-    size += sizeof(rom);
     size += sizeof(blendedIn);
-    size += 1;
     
     return size;
 }
@@ -172,9 +162,8 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
         }
     }
     
-    readBlock(buffer, rom, sizeof(rom));
+    // readBlock(buffer, rom, sizeof(rom));
     readBlock(buffer, blendedIn, sizeof(blendedIn));
-    lastBlendedIn = read8(buffer);
     
     debug(2, "  Cartridge state loaded (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
@@ -197,9 +186,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
         }
     }
     
-    writeBlock(buffer, rom, sizeof(rom));
+    // writeBlock(buffer, rom, sizeof(rom));
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
-    write8(buffer, lastBlendedIn);
     
     debug(4, "  Cartridge state saved (%d bytes)\n", *buffer - old);
     assert(*buffer - old == stateSize());
@@ -221,6 +209,26 @@ Cartridge::dumpState()
             msg("Chip %2d:        %d KB starting at $%04X\n", i, chipSize[i] / 1024, chipStartAddress[i]);
         }
     }
+}
+
+uint8_t
+Cartridge::peek(uint16_t addr)
+{
+    uint8_t bank = addr / 0x1000;
+    uint8_t nr   = blendedIn[bank];
+    
+    if (nr < 64) {
+        
+        assert(chip[nr] != NULL);
+
+        uint16_t offset = addr - chipStartAddress[nr];
+        assert(offset < chipSize[nr]);
+        
+        return chip[nr][offset];
+    }
+    
+    // No cartridge chip is mapped to this memory area
+    return 0;
 }
 
 unsigned
@@ -268,22 +276,14 @@ Cartridge::bankIn(unsigned nr)
     assert(nr < 64);
     assert(chip[nr] != NULL);
 
-    if (nr == lastBlendedIn) {
-        // Data is up to date
-        return;
-    }
-
     uint16_t start     = chipStartAddress[nr];
     uint16_t size      = chipSize[nr];
     uint8_t  firstBank = start / 0x1000;
     uint8_t  numBanks  = size / 0x1000;
     assert (firstBank + numBanks <= 16);
 
-    memcpy(rom + start - 0x8000, chip[nr], size);
     for (unsigned i = 0; i < numBanks; i++)
-        blendedIn[firstBank + i] = 1;
-
-    lastBlendedIn = nr;
+        blendedIn[firstBank + i] = nr;
     
     debug(1, "Chip %d banked in (start: %04X size: %d KB)\n", nr, start, size / 1024);
     for (unsigned i = 0; i < 16; i++) {
@@ -305,10 +305,9 @@ Cartridge::bankOut(unsigned nr)
     assert (firstBank + numBanks <= 16);
     
     for (unsigned i = 0; i < numBanks; i++)
-        blendedIn[firstBank + i] = 0;
+        blendedIn[firstBank + i] = 255;
     
     debug(1, "Chip %d banked out (start: %04X size: %d KB)\n", nr, start, size / 1024);
-    
     for (unsigned i = 0; i < 16; i++) {
         printf("%d ", blendedIn[i]);
     }
