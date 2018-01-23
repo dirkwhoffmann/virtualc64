@@ -228,9 +228,10 @@ public:
 private:
 
     /*! @brief    Start address of the currently selected memory bank
-     *  @details  There are four banks in total since the VIC chip can only "see" 16 KB of memory
-     *            at one time. Two bank select bits in the CIA I/O space determine which quarter of 
-     *            the memory we're actually seeing
+     *  @details  There are four banks in total since the VIC chip can only "see" 16 KB
+     *            of memory at the same time. Two bank select bits in the CIA I/O space
+     *            determine which quarter of memory is currently seen.
+     *
      */
     /*
      *            +-------+------+-------+----------+-------------------------------------+

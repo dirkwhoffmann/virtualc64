@@ -144,9 +144,17 @@ C64::reset()
     debug(1, "Resetting virtual C64[%p]\n", this);
     
 	suspend();
+
+    // Reset all sub components
     VirtualComponent::reset();
+    
+    // Make CPU ready to go
     cpu.mem = &mem;
     cpu.initPC();
+    
+    // Make memory ready to go
+    mem.updatePeekPokeLookupTables();
+    
 	rasterlineCycle = 1;
     nanoTargetTime = 0UL;
     ping();

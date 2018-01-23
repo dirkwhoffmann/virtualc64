@@ -224,16 +224,16 @@ bool C64Memory::isValidAddr(uint16_t addr, MemoryType type)
 void 
 C64Memory::updatePeekPokeLookupTables()
 {
-    uint8_t EXROM = c64->expansionport.getExromLine() ? 0x10 : 0x00;
-    uint8_t GAME = c64->expansionport.getGameLine() ? 0x08 : 0x00;
-    assert(c64->getUltimax() == (EXROM && !GAME));
+    uint8_t exrom = c64->expansionport.getExromLine() ? 0x10 : 0x00;
+    uint8_t game  = c64->expansionport.getGameLine() ? 0x08 : 0x00;
+    uint8_t index = (cpu->getPortLines() & 0x07) | exrom | game;
     
-    uint8_t index = (cpu->getPortLines() & 0x07) | EXROM | GAME;
-    
-    MemorySource source;
+    // Set ultimax flag
+    c64->setUltimax(exrom && !game);
 
-    // 0x1000 - 0x7FFF (RAM or unmapped)
-    source = BankMap[index][0];
+    // Set peek sources
+    MemorySource source;
+    source = BankMap[index][0]; // 0x1000 - 0x7FFF (RAM or open)
     assert(source == M_RAM || source == M_NONE);
     peekSrc[0x1] = source;
     peekSrc[0x2] = source;
@@ -243,39 +243,31 @@ C64Memory::updatePeekPokeLookupTables()
     peekSrc[0x6] = source;
     peekSrc[0x7] = source;
 
-    // 0x8000 - 0x9FFF (Cartridge ROM or RAM)
-    source = BankMap[index][1];
+    source = BankMap[index][1]; // 0x8000 - 0x9FFF (CRT or RAM)
     assert(source == M_CRTLO || source == M_CRTHI || source == M_RAM);
     peekSrc[0x8] = source;
     peekSrc[0x9] = source;
 
-    // 0xA000 - 0xBFFF (Cartridge ROM, basic ROM, RAM, or unmapped)
-    source = BankMap[index][2];
-    assert(source == M_CRTLO || source == M_CRTHI || source == M_BASIC || source == M_RAM || source == M_NONE);
+    source = BankMap[index][2]; // 0xA000 - 0xBFFF (CRT, Basic ROM, RAM, or open)
+    assert(source == M_CRTLO || source == M_CRTHI || source == M_BASIC ||
+           source == M_RAM   || source == M_NONE);
     peekSrc[0xA] = source;
     peekSrc[0xB] = source;
 
-    // 0xC000 - 0xCFFF (RAM or unmapped)
-    source = BankMap[index][3];
+    source = BankMap[index][3]; // 0xC000 - 0xCFFF (RAM or open)
     assert(source == M_RAM || source == M_NONE);
     peekSrc[0xC] = source;
 
-    // 0xD000 - 0xDFFF (IO space, character ROM, or RAM)
-    source = BankMap[index][4];
-    assert(source == M_IO || source == M_CHAR || source == M_RAM);
+    source = BankMap[index][4]; // 0xD000 - 0xDFFF (I/O, Character ROM, or RAM)
     peekSrc[0xD] = source;
 
-    // 0xE000 - 0xFFFF (Cartridge Rom, Kernel ROM, or RAM)
-    source = BankMap[index][5];
-    assert(source == M_CRTLO || source == M_CRTHI || source == M_KERNEL || source == M_RAM);
+    source = BankMap[index][5]; // 0xE000 - 0xFFFF (CRT, Kernel ROM, or RAM)
     peekSrc[0xE] = source;
     peekSrc[0xF] = source;
 
+    // Set poke targets
     MemorySource target;
-    
-    // 0xD000 - 0xDFFF (IO space, Character ROM, or RAM)
-    target = BankMap[index][4];
-    assert(target == M_IO || target == M_CHAR || target == M_RAM);
+    target = BankMap[index][4]; // 0xD000 - 0xDFFF (I/O or RAM)
     pokeTarget[0xD] = (target == M_IO ? M_IO : M_RAM);
 }
 

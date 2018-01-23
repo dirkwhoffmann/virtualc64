@@ -204,31 +204,67 @@ VIC::setChipModel(VICChipModel model)
 
 uint8_t VIC::memAccess(uint16_t addr)
 {
-    /* "Der VIC besitzt nur 14 Adreßleitungen, kann also nur 16KB Speicher
-        adressieren. Er kann trotzdem auf die kompletten 64KB Hauptspeicher
-        zugreifen, denn die 2 fehlenden oberen Adressbits werden von einem der
-        CIA-I/O-Chips zur VerfŸgung gestellt (es sind dies die invertierten Bits 0
-        und 1 von Port A der CIA 2). Damit kann jeweils eine von 4 16KB-BŠnken fŸr
-        den VIC eingestellt werden." [C.B.]
-
-       "Das Char-ROM wird in den BŠnken 0 und 2 jeweils an den VIC-Adressen
-        $1000-$1fff eingeblendet" [C.B.] */
+    // VIC has only 14 address lines. To be able to access the complete 64KB main memory,
+    // it inverts bit 0 and bit 1 of the CIA2 portA register and uses these values as the
+    // upper two address bits.
     
     assert((addr & 0xC000) == 0); /* 14 bit address */
+    assert((bankAddr & 0x3FFF) == 0); /* multiple of 16 KB */
     
-    addrBus = bankAddr + addr;
-    
-    if ((addrBus & 0x7000) == 0x1000) {
+    addrBus = bankAddr | addr;
+   
+    // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
+    //
+    //          Ultimax  Standard
+    // 0xF000:   ROMH      RAM
+    // 0xE000:   RAM       RAM
+    // 0xD000:   RAM       RAM
+    // 0xC000:   BLANK     RAM
+    // --------------------------
+    // 0xB000:   ROMH      RAM
+    // 0xA000:   BLANK     RAM
+    // 0x9000:   RAM       CHAR
+    // 0x8000:   RAM       RAM
+    // --------------------------
+    // 0x7000:   ROMH      RAM
+    // 0x6000:   BLANK     RAM
+    // 0x5000:   BLANK     RAM
+    // 0x4000:   BLANK     RAM
+    // --------------------------
+    // 0x3000:   ROMH      RAM
+    // 0x2000:   BLANK     RAM
+    // 0x1000:   BLANK     CHAR
+    // 0x0000:   RAM       RAM
 
-        // Accessing range 0x1000 - 0x1FFF or 0x9000 - 0x9FFF
-        // Character ROM is blended in here
-        assert ((0xC000 + addr) >= 0xD000 && (0xC000 + addr) <= 0xDFFF);
-        dataBus = c64->mem.rom[0xC000 + addr];
-
+    if (!c64->getUltimax()) {
+        switch (addrBus >> 12) {
+            case 0x9:
+            case 0x1:
+                dataBus = c64->mem.rom[0xC000 + addr];
+                break;
+            default:
+                dataBus = c64->mem.ram[addrBus];
+        }
     } else {
-        dataBus = c64->mem.ram[addrBus];
+        switch (addrBus >> 12) {
+            case 0xF:
+            case 0xB:
+            case 0x7:
+            case 0x3:
+                dataBus = c64->expansionport.peek(addrBus | 0xF000);
+                break;
+            case 0xE:
+            case 0xD:
+            case 0x9:
+            case 0x8:
+            case 0x0:
+                dataBus = c64->mem.ram[addrBus];
+                break;
+            default:
+                dataBus = 0; // What shall we return in open state??
+        }
     }
-    
+   
     return dataBus;
 }
 

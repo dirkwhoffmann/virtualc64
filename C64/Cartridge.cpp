@@ -119,7 +119,7 @@ void
 Cartridge::powerup()
 {
     if (chip[0]) bankIn(0);
-    c64->expansionport.gameOrExromLineHasChanged();
+    // c64->expansionport.gameOrExromLineHasChanged();
 }
 
 void

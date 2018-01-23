@@ -158,10 +158,7 @@ ExpansionPort::gameOrExromLineHasChanged()
 {
     assert(c64 != NULL);
     
-    // Check for ultimax mode (Exrom = high, Game = lo)
-    c64->setUltimax(getExromLine() && !getGameLine());
-
-    // Update peek sources and poke targets
+    // Update peek sources, poke targets and ultimax flag
     c64->mem.updatePeekPokeLookupTables();
 }
 
@@ -174,6 +171,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     
     cartridge = c;
     cartridge->powerup();
+    gameOrExromLineHasChanged();
     
     c64->putMessage(MSG_CARTRIDGE, 1);
     
