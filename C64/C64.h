@@ -279,6 +279,17 @@ private:
      */
     uint8_t rasterlineCycle;
 
+    //
+    // Operation modes
+    //
+    
+    /*! @brief    Indicates whether C64 is running in ultimax mode.
+     *  @details  Ultimax mode can be enabled by external cartridges by pulling
+     *            gameLine low and keeping exromLine high. In ultimax mode,
+     *            most of the C64's RAM and ROM is invisible. This flag is
+     *            frequently read by VIC to determine the correct peek source.
+     */
+    bool ultimax;
     
     //
     // Time travel ring buffer
@@ -482,6 +493,17 @@ public:
     //! @brief    Returns the currently executed rasterline clock cycle
     inline uint8_t getRasterlineCycle() { return rasterlineCycle; }
 
+    
+    //
+    //! @functiongroup Operation modes
+    //
+    
+    //! @brief    Returns the ultimax flag
+    inline bool getUltimax() { return ultimax; }
+    
+    //! @brief    Setter for ultimax.
+    void setUltimax(bool b) { ultimax = b; }
+    
     
     //
     //! @functiongroup Loading ROM images

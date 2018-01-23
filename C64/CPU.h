@@ -293,7 +293,7 @@ public:
 	inline uint8_t getY() { return Y; }
 
     //! @brief    Initialize PC with its start up valie
-    inline uint16_t initPC() { PC = LO_HI(mem->peek(0xFFFC), mem->peek(0xFFFD)); }
+    inline void initPC() { PC = LO_HI(mem->peek(0xFFFC), mem->peek(0xFFFD)); }
 
 	//! @brief    Returns current value of the program counter.
 	inline uint16_t getPC() { return PC; }

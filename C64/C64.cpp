@@ -114,6 +114,7 @@ C64::C64()
         { &frame,           sizeof(frame),              CLEAR_ON_RESET },
         { &rasterline,      sizeof(rasterline),         CLEAR_ON_RESET },
         { &rasterlineCycle, sizeof(rasterlineCycle),    CLEAR_ON_RESET },
+        { &ultimax,         sizeof(ultimax),            CLEAR_ON_RESET },
         { NULL,             0,                          0 }};
     
     registerSnapshotItems(items, sizeof(items));
@@ -174,6 +175,7 @@ C64::dumpState() {
 	msg("           Current frame : %d\n", frame);
 	msg("      Current rasterline : %d\n", rasterline);
 	msg("Current rasterline cycle : %d\n", rasterlineCycle);
+    msg("            Ultimax mode : %s\n", getUltimax() ? "YES" : "NO");
 	msg("\n");
 }
 

@@ -226,6 +226,7 @@ C64Memory::updatePeekPokeLookupTables()
 {
     uint8_t EXROM = c64->expansionport.getExromLine() ? 0x10 : 0x00;
     uint8_t GAME = c64->expansionport.getGameLine() ? 0x08 : 0x00;
+    assert(c64->getUltimax() == (EXROM && !GAME));
     
     uint8_t index = (cpu->getPortLines() & 0x07) | EXROM | GAME;
     

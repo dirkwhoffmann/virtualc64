@@ -92,14 +92,11 @@ public:
     //! @brief    Returns the state of the game line
     bool getGameLine();
     
-    //! @brief    Informs the expansion port of a game line change
-    void gameLineHasChanged();
-    
     //! @brief    Returns the state of the exrom line
     bool getExromLine();
-    
-    //! @brief    Informs the expansion port of a game line change
-    void exromLineHasChanged();
+
+    //! @brief    Informs the expansion port of a game line or exrom line change
+    void gameOrExromLineHasChanged();
     
     //! @brief    Returns true if a cartridge is attached to the expansion port
     inline bool getCartridgeAttached() { return cartridge != NULL; }

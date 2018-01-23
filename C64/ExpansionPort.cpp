@@ -142,30 +142,26 @@ ExpansionPort::poke(uint16_t addr, uint8_t value)
 }
 
 bool
-ExpansionPort::getGameLine() {
-
-    // GameLine is true, if no cartridge is attached
-    return cartridge ? cartridge->getGameLine() : true;    
-}
-
-void
-ExpansionPort::gameLineHasChanged()
+ExpansionPort::getGameLine()
 {
-    assert(c64 != NULL);
-    c64->mem.updatePeekPokeLookupTables();
+    return cartridge ? cartridge->getGameLine() : true /* default value */;
 }
 
 bool
 ExpansionPort::getExromLine()
 {
-    // ExromLine is true, if no cartridge is attached
-    return cartridge ? cartridge->getExromLine() : true;
+    return cartridge ? cartridge->getExromLine() : true /* default value */;
 }
 
 void
-ExpansionPort::exromLineHasChanged()
+ExpansionPort::gameOrExromLineHasChanged()
 {
     assert(c64 != NULL);
+    
+    // Check for ultimax mode (Exrom = high, Game = lo)
+    c64->setUltimax(getExromLine() && !getGameLine());
+
+    // Update peek sources and poke targets
     c64->mem.updatePeekPokeLookupTables();
 }
 
@@ -224,8 +220,7 @@ ExpansionPort::detachCartridge()
     delete cartridge;
     cartridge = NULL;
     
-    gameLineHasChanged();
-    exromLineHasChanged();
+    gameOrExromLineHasChanged();
     c64->putMessage(MSG_CARTRIDGE, 0);
     
     debug(1, "Cartridge detached from expansion port");

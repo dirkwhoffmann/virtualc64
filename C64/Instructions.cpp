@@ -50,55 +50,14 @@ CPU::fetch() {
         }
     }
 
-    /*
-    if (tracingEnabled() && !rdyLine) {
-        printf("CPU blocked: spriteDmaOnOff:%02X\n", c64->vic->spriteDmaOnOff);
-    }
-    */
-
     // Execute fetch phase
     FETCH_OPCODE
     next = actionFunc[opcode];
 
-    /*
-    static int debugcnt = 0;
-    if (isC64CPU()) {
-        if (debugcnt == 0 && c64->vic->spriteIsEnabled(5) && c64->rasterline == 50) {
-            debugcnt++; //debugging ON
-            setTraceMode(true);
-            c64->vic->setTraceMode(true);
-        }
-        
-        if (debugcnt > 0 && debugcnt < 300) {
-            debugcnt++;
-            printf("Rasterline: %d Cycle: %d rdyLine: %d BA: %d\n", c64->rasterline, c64->rasterlineCycle,
-                   rdyLine,c64->vic->BAlow);
-        }
-        
-        if (debugcnt >= 300) {
-            setTraceMode(false); // debugging OFF
-            c64->vic->setTraceMode(false);
-        }
-    }
-    */
-    
     // Disassemble command if requested
     if (tracingEnabled()) {
         debug(1, "%s\n", disassemble());
     }
-    
-    /*
-    if (PC_at_cycle_0 == 0x8CA) {
-        if (debugcnt++ < 100) {
-            printf("0x8CA: viccycle = %d (D015) = %02X\n", c64->rasterlineCycle, c64->vic->iomem[0x15]);
-        }
-    }
-    if (PC_at_cycle_0 == 0x8CD) {
-        if (debugcnt++ < 100) {
-            printf("       viccycle = %d (D015) = %02X\n", c64->rasterlineCycle, c64->vic->iomem[0x15]);
-        }
-    }
-    */
     
 	// Check breakpoint tag
 	if (breakpoint[PC_at_cycle_0] != NO_BREAKPOINT) {
@@ -111,7 +70,6 @@ CPU::fetch() {
 		debug(1, "Breakpoint reached\n");
 	}
 }
-
 
 void 
 CPU::registerCallback(uint8_t opcode, void (CPU::*func)())

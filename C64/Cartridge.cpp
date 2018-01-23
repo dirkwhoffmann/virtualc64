@@ -119,8 +119,7 @@ void
 Cartridge::powerup()
 {
     if (chip[0]) bankIn(0);
-    c64->expansionport.gameLineHasChanged();
-    c64->expansionport.exromLineHasChanged();
+    c64->expansionport.gameOrExromLineHasChanged();
 }
 
 void
@@ -261,14 +260,14 @@ Cartridge::setGameLine(bool value)
 {
 
     gameLine = value;
-    c64->expansionport.gameLineHasChanged();
+    c64->expansionport.gameOrExromLineHasChanged();
 }
 
 void
 Cartridge::setExromLine(bool value)
 {
     exromLine = value;
-    c64->expansionport.exromLineHasChanged();
+    c64->expansionport.gameOrExromLineHasChanged();
 }
 
 void
