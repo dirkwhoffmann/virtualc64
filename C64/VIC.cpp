@@ -214,6 +214,8 @@ uint8_t VIC::memAccess(uint16_t addr)
     addrBus = bankAddr | addr;
    
     // VIC memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
+    // Note: Final Cartridge III (freezer mode) only works when BLANK is replaced
+    //       by RAM. So this mapping might not be 100% correct.
     //
     //          Ultimax  Standard
     // 0xF000:   ROMH      RAM
@@ -261,7 +263,7 @@ uint8_t VIC::memAccess(uint16_t addr)
                 dataBus = c64->mem.ram[addrBus];
                 break;
             default:
-                dataBus = 0; // What shall we return in open state??
+                dataBus = c64->mem.ram[addrBus]; 
         }
     }
    

@@ -36,9 +36,9 @@ void
 ExpansionPort::reset()
 {
     VirtualComponent::reset();
- 
     if (cartridge)
         cartridge->reset();
+    gameOrExromLineHasChanged();
 }
 
 void

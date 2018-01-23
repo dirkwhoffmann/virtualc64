@@ -518,7 +518,7 @@
 {
     [[c64 iec] dump];
     // TEMPORARY CODE
-    [[c64 expansionport] pressFreeze:false];
+    [[c64 expansionport] pressReset:false];
 }
 - (IBAction)dumpC64ExpansionPort:(id)sender // { [[c64 expansionport] dump]; }
 {

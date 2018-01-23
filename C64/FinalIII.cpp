@@ -7,40 +7,38 @@
 
 #include "C64.h"
 
-/* More information:
- * ftp://www.zimmers.net/pub/cbm/documents/chipdata/Final%20Cartridge%20III%20Internals.txt
- */
-
 void
 FinalIII::powerup()
 {
     debug("FinalCartridge::powerup\n");
-    
-    assert(chip[0] != NULL);
-    
-    // We add four additional chips
+
+    /* Final cartridge III contains four 16KB ROMs residing at $8000 - $BFFF
+     *
+     *     Bank 0:  BASIC, Monitor, Disk-Turbo
+     *     Bank 1:  Notepad, BASIC (Menu Bar)
+     *     Bank 2:  Desktop, Freezer/Print
+     *     Bank 3:  Freezer, Compression
+     *
+     * Final cartrige III switches frequently betwenn different exrom/game line
+     * configurations. I.e., it uses ultimax mode to override the NMI vectors
+     * stored in Kernel ROM. Switching between configurations causes ROMH sometimes
+     * to be visible at $A000 and sometimes at $E000. As we do not want to copy memory
+     * back and forth, we simply add four new chips at location $E000 which
+     * reflect the upper half of the original four cartridge chips.
+     */
     for (unsigned i = 0; i < 4; i++) {
+        
+        assert(chip[i] != NULL);
         chipStartAddress[i+4] = 0xE000;
-        chipSize[i+4] = 0x2000;
-        chip[i+4] = (uint8_t *)malloc(0x2000);
+        chipSize[i+4]         = 0x2000;
+        chip[i+4]             = (uint8_t *)malloc(0x2000);
         memcpy(chip[i+4], chip[i] + 0x2000, 0x2000);
     }
     
-    resetButton = false;
-    freezeButton = false;
-    
+    // c64->cpu.setNMILineExpansionPort();
     bankIn(0);
-    
     setGameLine(0);
     setExromLine(0);
-    
-    // freezeButton = true;
-    
-    // c64->cpu.setNMILineCIA();
-    
-    // c64->expansionport.gameLineHasChanged();
-    // c64->expansionport.exromLineHasChanged();
-
 }
 
 uint8_t
@@ -48,18 +46,9 @@ FinalIII::peekIO(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
-    uint16_t offset = addr - 0xDE00;
-    
-    // debug("FinalCartridge::peek %04X\n", addr);
-    
     // The I/O space mirrors $1E00 to $1EFF from the selected bank.
-    uint8_t result = peek(0x8000 + 0x1E00 + offset);
-    
-    if (addr == 0xDFFF) {
-        debug("FinalCartridge::peek %04X (%02X)\n", addr, result);
-    }
-    
-    return result;
+    uint16_t offset = addr - 0xDE00;
+    return peek(0x8000 + 0x1E00 + offset);
 }
 
 void
@@ -67,8 +56,7 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
 
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
-    // debug("FinalCartridge::poke %04X\n", addr);
-    
+    // 0xDFFF is Final Cartridge's internal control register
     if (addr == 0xDFFF) {
         
         /*  "7      Hide this register (1 = hidden)
@@ -91,39 +79,26 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
         uint8_t exrom = value & 0x10;
         uint8_t bank  = value & 0x03;
         
-        // debug("hide: %d nmi:%d game:%d exrom:%d bank:%d\n", hide != 0, nmi != 0, game != 0, exrom != 0, bank);
-
-        if (freezeButton) {
-            assert(0);
-            nmi = 0;  // (1)
-            game = 0; // (2)
-            freezeButton = false;
-        }
+        debug("hide: %d nmi:%d game:%d exrom:%d bank:%d\n", hide != 0, nmi != 0, game != 0, exrom != 0, bank);
         
+        // Bit 7
         if (hide) {
-            debug("Disabling final cartridge III\n");
             setGameLine(1);
             setExromLine(1);
         }
         
-        bankIn(bank);
-        bankIn(bank+4);
-        
+        // Bit 6
+        nmi ? c64->cpu.clearNMILineExpansionPort()
+            : c64->cpu.setNMILineExpansionPort();
+
+        // Bit 5 and 4
         setGameLine(game);
         setExromLine(exrom);
-                
-        nmi ? c64->cpu.clearNMILineExpansionPort() : c64->cpu.setNMILineExpansionPort();
-        
-        /*
-        c64->cpu.clearNMILineExpansionPort();
-        if (nmi == 0) {
-            c64->cpu.setNMILineExpansionPort();
-        } else {
-            // c64->cpu.clearNMILineExpansionPort();
-        }
-        */
+
+        // Bit 1 and 0
+        bankIn(bank);
+        bankIn(bank+4);
     }
-    
 }
 
 void
@@ -131,16 +106,17 @@ FinalIII::pressReset(bool pressed) {
     
     resetButton = true;
     debug("FinalIII:pressReset (%d) \n", pressed);
+    poke(0xDFFF, 0x10);
+    c64->reset();
 }
     
 void
 FinalIII::pressFreeze(bool pressed) {
 
     debug("FinalIII:pressFreeze (%d) \n", pressed);
-    freezeButton = pressed;
-    //if (pressed)
-    //    c64->reset();
-    
+
+    // The freezer is enabled by selecting bank 0 in unimax mode and triggering an NMI
+    poke(0xDFFF, 0x10);
 }
 
 void
