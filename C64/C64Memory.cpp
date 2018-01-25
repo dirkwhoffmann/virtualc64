@@ -57,7 +57,6 @@ void C64Memory::reset()
     VirtualComponent::reset();
     
     // Establish bindings
-    // sid = &c64->sid;
     cpu = &c64->cpu;
     
 	// Initialize RAM (powerup pattern similar to Frodo and VICE)

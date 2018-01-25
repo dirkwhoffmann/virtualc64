@@ -30,41 +30,6 @@
 
 #include "Container.h"
 
-//! @brief    Cartridge types
-/*! @seealso  Cartridge::isSupportedType
- */
-enum CartridgeType : uint16_t {
-    CRT_NORMAL = 0,
-    CRT_ACTION_REPLAY = 1,
-    CRT_KCS_POWER_CARTRIDGE = 2,
-    CRT_FINAL_CARTRIDGE_III = 3,
-    CRT_SIMONS_BASIC = 4,
-    CRT_OCEAN_TYPE_1 = 5,
-    CRT_EXPORT_CARTRIDGE = 6,
-    CRT_FUN_PLAY_POWER_PLAY = 7,
-    CRT_SUPER_GAMES = 8,
-    CRT_ATOMIC_POWER = 9,
-    CRT_EPYX_FASTLOAD = 10,
-    CRT_WESTERMANN_LEARNING = 11,
-    CRT_REX_UTILITY = 12,
-    CRT_FINAL_CARTRIDGE_I = 13,
-    CRT_MAGIC_FORMEL = 14,
-    CRT_C64_GAME_SYSTEM_SYSTEM_3 = 15,
-    CRT_WARPSPEED = 16,
-    CRT_DINAMIC = 17,
-    CRT_ZAXXON_SUPER_ZAXXON = 18,
-    CRT_MAGIC_DESK_DOMARK_HES_AUSTRALIA = 19,
-    CRT_SUPER_SNAPSHOT_5 = 20,
-    CRT_COMAL = 21,
-    CRT_STRUCTURE_BASIC = 22,
-    CRT_ROSS = 23,
-    CRT_DELA_EP64 = 24,
-    CRT_DELA_EP7x8 = 25,
-    CRT_DELA_EP256 = 26,
-    CRT_REX_EP256 = 27,
-    CRT_NONE = 255
-};
-
 /*! @class    CRTContainer
  *  @brief    The CRTContainer class declares the programmatic interface for a file
  *            of the CRT format type.

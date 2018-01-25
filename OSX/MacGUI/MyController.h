@@ -64,6 +64,9 @@ typedef unsigned long MacKeyFingerprint;
     IBOutlet TapeDialog *tapeDialog;
 	IBOutlet RomDialog *romDialog;
 	
+    // Menu
+    IBOutlet NSMenuItem *menuItemFinalIII;
+    
     // Toolbar
     IBOutlet NSPopUpButton *joystickPortA;
     IBOutlet NSPopUpButton *joystickPortB;

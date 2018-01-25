@@ -40,7 +40,7 @@ SimonsBasic::peekIO(uint16_t addr)
         // Switch to 8KB configuration
         setGameLine(1);
     }
-    return Cartridge::peek(addr);
+    return Cartridge::peekIO(addr);
 }
 
 void

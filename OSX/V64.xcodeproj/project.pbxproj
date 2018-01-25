@@ -156,6 +156,7 @@
 		50CCB1D21B84AC10008D8C30 /* none.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1D11B84AC10008D8C30 /* none.png */; };
 		50CCB1D41B84ACA8008D8C30 /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 50CCB1D31B84ACA8008D8C30 /* keyboard.png */; };
 		50CE89DA13A268E000A2FDCE /* VirtualC64Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */; };
+		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D1417E1417A34B0024FC74 /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50D141651417A34B0024FC74 /* envelope.cc */; };
 		50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50D141671417A34B0024FC74 /* extfilt.cc */; };
 		50D141801417A34B0024FC74 /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 50D141691417A34B0024FC74 /* filter.cc */; };
@@ -443,6 +444,7 @@
 		50CCB1D11B84AC10008D8C30 /* none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none.png; sourceTree = "<group>"; };
 		50CCB1D31B84ACA8008D8C30 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard.png; sourceTree = "<group>"; };
 		50CE89D913A268E000A2FDCE /* VirtualC64Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VirtualC64Icon.icns; sourceTree = "<group>"; };
+		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D141651417A34B0024FC74 /* envelope.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = envelope.cc; sourceTree = "<group>"; };
 		50D141661417A34B0024FC74 /* envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = envelope.h; sourceTree = "<group>"; };
 		50D141671417A34B0024FC74 /* extfilt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extfilt.cc; sourceTree = "<group>"; };
@@ -740,6 +742,7 @@
 				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				5000474A12DCEE500098D890 /* MyControllerMenu.h */,
 				5000474B12DCEE500098D890 /* MyControllerMenu.mm */,
+				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
 				5088A6D412E0676200378033 /* MyControllerDebugPanel.h */,
 				5088A6D512E0676200378033 /* MyControllerDebugPanel.mm */,
 				50FBE90912DC992B0093194C /* MyControllerVicPanel.h */,
@@ -1328,6 +1331,7 @@
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
 				50D141881417A34B0024FC74 /* wave6581_PS_.cc in Sources */,
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
+				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				506158731BF0A8A10031FD2F /* MediaDialog.mm in Sources */,
 				50D141891417A34B0024FC74 /* wave6581_PST.cc in Sources */,

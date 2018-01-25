@@ -18,15 +18,22 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// RELEASE NOTES FOR NEXT RELEASE: 1.6.1
+// RELEASE NOTES FOR NEXT RELEASE: 1.7
 //
-// Added support for SimonsBasic (cartridge)
-// VirtualC64 now issues a warning message if an unsupported cartridge is plugged in
-// Fixed a bug that sometimes crashed the emulator when setting up the background texture
+// 1. Cartridge handler has been refactured.
+// 2. VirtualC64 now supports cartriges running in ultimax mode.
+// 3. Added support for some non standard cartridges (Simons Basic and Final Cartridge III).
+// Fixed a bug that sometimes crashed the emulator when grabbing the background texture.
 //
 // THINK ABOUT ADDING A DICTIONARY BASED CONFIG SYSTEM:
-// Add method VirtualComponent::configure(VC64Option key, int value)
-// Why? Because there are tons of methods in the emulator and the proxy that
+// All global emulator settings (PAL/NTSC, SID Chip, WARP/NO WARP) are controlled by this method
+// Add method C64::configure(VC64Option key, int value)
+// Add method C64::configureUnsafe(key, value)
+//      Same, but does not suspend the emulation thread
+// Also move texture grabbing API to C64 class (if VirtualC64 is used by someone else,
+// he/she should only need to interact with the C64 class).
+//
+// Why? Because there are various methods in the emulator and the proxy that
 // simply pass values from one component to the other. This would be much
 // simpler then. 
 

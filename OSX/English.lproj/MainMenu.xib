@@ -304,6 +304,25 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Cartridge" id="XQm-ka-Db5" userLabel="Cartridge">
+                    <menu key="submenu" title="Cartridge" id="Mqn-f5-oGB">
+                        <items>
+                            <menuItem title="Final Cartridge III" id="0WX-9N-ZL3" userLabel="Final Cartridge III">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Final Cartridge III" id="2bZ-Tf-aDz">
+                                    <items>
+                                        <menuItem title="Freeze" id="hnA-PW-eYY" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="dumpKeyboard:" target="-1" id="Mqg-aQ-TQe"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Debug" id="414">
                     <menu key="submenu" title="Debug" id="415">
                         <items>
