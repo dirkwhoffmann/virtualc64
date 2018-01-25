@@ -30,8 +30,7 @@ class FinalIII : public Cartridge {
     
 private:
     
-    bool resetButton;
-    bool freezeButton;
+    bool hidden;
     
 public:
     

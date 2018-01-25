@@ -119,9 +119,8 @@ C64::C64()
     
     registerSnapshotItems(items, sizeof(items));
 
-    // Configure machine type and reset
+    // Configure VIC
     setPAL();
-    reset();
 			
     // Initialie mach timer info
     mach_timebase_info(&timebase);
@@ -130,6 +129,8 @@ C64::C64()
 	for (unsigned i = 0; i < BACK_IN_TIME_BUFFER_SIZE; i++)
 		backInTimeHistory[i] = new Snapshot();	
 	backInTimeWritePtr = 0;
+    
+    reset();
 }
 
 C64::~C64()
@@ -160,7 +161,6 @@ C64::reset()
     ping();
 	resume();
 }
-
 
 void C64::ping()
 {
@@ -218,6 +218,13 @@ C64::setNTSC()
 //
 // Running the emulator
 //
+
+void
+C64::powerUp()
+{
+    reset();
+    run();
+}
 
 void
 C64::run()
@@ -806,7 +813,7 @@ C64::loadRom(const char *filename)
         cpu.initPC();
         
         // Let the GUI know that the emulator is ready to run
-        putMessage(MSG_ROM_COMPLETE);
+        putMessage(MSG_READY_TO_RUN);
     }
     resume();
     
@@ -897,7 +904,7 @@ C64::takeSnapshotUnsafe()
           backInTimeWritePtr, backInTimeHistory[backInTimeWritePtr]);
     
     saveToSnapshotUnsafe(backInTimeHistory[backInTimeWritePtr]);
-    putMessage(MSG_SNAPSHOT_TAKEN,backInTimeWritePtr);
+    putMessage(MSG_SNAPSHOT, backInTimeWritePtr);
 
     backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
 }

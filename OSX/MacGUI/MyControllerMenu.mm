@@ -190,10 +190,11 @@
 
 - (IBAction)resetAction:(id)sender
 {
-	[[self document] updateChangeCount:NSChangeDone];
+    [[self document] updateChangeCount:NSChangeDone];
+    
     [self rotateBack];
-	[c64 reset];
-	[self continueAction:self];
+    [c64 powerUp];
+    [self refresh];
 }
 
 - (IBAction)toggleStatusBarAction:(id)sender

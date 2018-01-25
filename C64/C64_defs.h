@@ -55,15 +55,27 @@ typedef enum {
  *  @details  List of all possible message id's
  */
 typedef enum {
-    MSG_ROM_LOADED = 1,
-    MSG_ROM_MISSING,
-    MSG_ROM_COMPLETE,
+    
+    // Running the emulator
+    MSG_READY_TO_RUN = 1,
     MSG_RUN,
     MSG_HALT,
+
+    // ROM and snapshot handling
+    MSG_ROM_LOADED,
+    MSG_ROM_MISSING,
+    MSG_SNAPSHOT,
+
+    // CPU related messages
     MSG_CPU,
     MSG_WARP,
     MSG_ALWAYS_WARP,
-    MSG_LOG,
+
+    // VIC related messages
+    MSG_PAL,
+    MSG_NTSC,
+
+    // Peripherals (Disk drive)
     MSG_VC1541_ATTACHED,
     MSG_VC1541_ATTACHED_SOUND,
     MSG_VC1541_DISK,
@@ -73,13 +85,16 @@ typedef enum {
     MSG_VC1541_MOTOR,
     MSG_VC1541_HEAD,
     MSG_VC1541_HEAD_SOUND,
-    MSG_CARTRIDGE,
+    
+    // Peripherals (Datasette)
     MSG_VC1530_TAPE,
     MSG_VC1530_PLAY,
     MSG_VC1530_PROGRESS,
-    MSG_PAL,
-    MSG_NTSC,
-    MSG_SNAPSHOT_TAKEN
+
+    // Peripherals (Expansion port)
+    MSG_CARTRIDGE,
+    
+    // MSG_LOG,
 } VC64Message;
 
 //! @brief    Fingerprint that uniquely identifies a key combination on the virtual C64 keyboard

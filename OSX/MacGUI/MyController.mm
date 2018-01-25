@@ -548,79 +548,82 @@
 
     switch (msg->id) {
 			
-		case MSG_ROM_MISSING:
-			
-			NSLog(@"MSG_ROM_MISSING");			
-			assert(msg->i != 0);
-			[self enableUserEditing:YES];	
-			[self refresh];
-            [self showRomDialog:msg];
-            break;
-			
-		case MSG_ROM_LOADED:
-			
-			// Update ROM dialog
-			if (romDialog != NULL) {
-				[romDialog update:[c64 missingRoms]];
-			}
-			break;
-			
-		case MSG_ROM_COMPLETE:
-			
-			// Close ROM dialog if open
-			if (romDialog) {
+        case MSG_READY_TO_RUN:
+            
+            // Close ROM dialog if open
+            if (romDialog) {
                 [romDialog orderOut:nil];
                 [[self window] endSheet:romDialog returnCode:NSModalResponseCancel];
-				romDialog = NULL;
-			}
-
+                romDialog = NULL;
+            }
+            
             // Check for attached snapshot
             if ([[self document] attachedSnapshot]) {
                 NSLog(@"Found attached snapshot");
                 [c64 loadFromSnapshot:[[self document] attachedSnapshot]];
-            }				
-
-			// Check for attached cartridge
-			if ([[self document] attachedCartridge]) {
-				NSLog(@"Found attached cartridge");
-				[self mountCartridge];
-			}				
-
-			// Start emulator
-			[c64 run];
+            }
+            
+            // Check for attached cartridge
+            if ([[self document] attachedCartridge]) {
+                NSLog(@"Found attached cartridge");
+                [self mountCartridge];
+            }
+            
+            // Start emulator
+            [c64 powerUp];
             [metalScreen blendIn];
             [metalScreen setDrawC64texture:true];
-
+            
             // Check for attached tape
             if ([[self document]  attachedTape]) {
                 NSLog(@"Found attached tape");
                 [self showTapeDialog];
             }
-
-			// Check for attached archive
-			if ([[self document] attachedArchive]) {
+            
+            // Check for attached archive
+            if ([[self document] attachedArchive]) {
                 NSLog(@"Found attached archive");
                 [self showMountDialog];
             }
-			
+            
+            break;
+            
+        case MSG_RUN:
+            [info setStringValue:@""];
+            [self enableUserEditing:NO];
+            [self refresh];
+            [cheatboxPanel close];
+            
+            // disable undo because the internal state changes permanently
+            [[self document] updateChangeCount:NSChangeDone];
+            [[self undoManager] removeAllActions];
+            break;
+            
+        case MSG_HALT:
+            [self enableUserEditing:YES];
+            [self refresh];
+            break;
+            
+		case MSG_ROM_LOADED:
+			// Update ROM dialog
+			if (romDialog != NULL) {
+				[romDialog update:[c64 missingRoms]];
+			}
 			break;
-						
-		case MSG_RUN:
-			[info setStringValue:@""];
-			[self enableUserEditing:NO];
-			[self refresh];
-			[cheatboxPanel close];
-			
-			// disable undo because the internal state changes permanently
-			[[self document] updateChangeCount:NSChangeDone];
-			[[self undoManager] removeAllActions];			
-			break;
-			
-		case MSG_HALT:
-			[self enableUserEditing:YES];
-			[self refresh];			
-			break;
-			
+        
+        case MSG_ROM_MISSING:
+            NSLog(@"MSG_ROM_MISSING");
+            assert(msg->i != 0);
+            [self enableUserEditing:YES];
+            [self refresh];
+            [self showRomDialog:msg];
+            break;
+            
+        case MSG_SNAPSHOT:
+            // Update TouchBar with new snapshpot image
+            [self rebuildTouchBar];
+            break;
+
 		case MSG_CPU:
 			switch(msg->i) {
 				case CPU_OK:
@@ -649,10 +652,12 @@
                 [warpIcon setImage:[NSImage imageNamed:@"clock_green"]];
             }
             break;
-            			
-		case MSG_LOG:
-			break;
-			
+            
+        case MSG_PAL:
+        case MSG_NTSC:
+            [metalScreen updateScreenGeometry];
+            break;
+            
 		case MSG_VC1541_ATTACHED:
             if (msg->i)
 				[greenLED setImage:[NSImage imageNamed:@"LEDgreen"]];
@@ -716,11 +721,6 @@
             }
             break;
             
-        case MSG_CARTRIDGE:
-			[cartridgeIcon setHidden:!msg->i];
-			[cartridgeEject setHidden:!msg->i];
-			break;
-            
         case MSG_VC1530_TAPE:
             [tapeIcon setHidden:!msg->i];
             [tapeEject setHidden:!msg->i];
@@ -732,16 +732,10 @@
         case MSG_VC1530_PROGRESS:
             [mediaDialog update];
             break;
-            
-        case MSG_PAL:
-        case MSG_NTSC:
-            [metalScreen updateScreenGeometry];
-            break;
-            
-        case MSG_SNAPSHOT_TAKEN:
-
-            // Update TouchBar with new snapshpot image
-            [self rebuildTouchBar];
+        
+        case MSG_CARTRIDGE:
+            [cartridgeIcon setHidden:!msg->i];
+            [cartridgeEject setHidden:!msg->i];
             break;
             
 		default:

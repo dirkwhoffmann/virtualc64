@@ -28,6 +28,12 @@ CPU::fetch() {
     
 	PC_at_cycle_0 = PC;
 	
+    /*
+    if (PC == 0x808C) {
+        setTraceMode(true);
+    }
+    */
+    
 	// Check interrupt lines
     // if (interruptsPending) {
     if (1) {

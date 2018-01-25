@@ -318,9 +318,17 @@ uint8_t C64Memory::peekIO(uint16_t addr)
 }
 
 uint8_t C64Memory::peek(uint16_t addr)
-{	
+{
     MemorySource src = peekSrc[addr >> 12];
 
+    /*
+    if (addr == 0x91) {
+        if (tmp == 2) c64->cpu.setTraceMode(true);
+        tmp++;
+        printf("Peek 0x91 PC: %04X\n", c64->cpu.getPC());
+    }
+    */
+    
     switch(src) {
             
         case M_RAM:

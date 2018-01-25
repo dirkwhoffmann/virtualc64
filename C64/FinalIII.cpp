@@ -39,6 +39,7 @@ FinalIII::powerup()
     bankIn(0);
     setGameLine(0);
     setExromLine(0);
+    hidden = false;
 }
 
 uint8_t
@@ -46,6 +47,10 @@ FinalIII::peekIO(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
+    if (addr == 0xDFFF) {
+        debug("Peeking from 0xDFFF\n");
+    }
+              
     // The I/O space mirrors $1E00 to $1EFF from the selected bank.
     uint16_t offset = addr - 0xDE00;
     return peek(0x8000 + 0x1E00 + offset);
@@ -57,7 +62,7 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
     // 0xDFFF is Final Cartridge's internal control register
-    if (addr == 0xDFFF) {
+    if (addr == 0xDFFF && !hidden) {
         
         /*  "7      Hide this register (1 = hidden)
          *   6      NMI line   (0 = low = active) *1)
@@ -104,10 +109,9 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
 void
 FinalIII::pressReset(bool pressed) {
     
-    resetButton = true;
     debug("FinalIII:pressReset (%d) \n", pressed);
     poke(0xDFFF, 0x10);
-    c64->reset();
+    // c64->reset();
 }
     
 void

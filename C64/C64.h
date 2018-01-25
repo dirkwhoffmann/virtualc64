@@ -325,8 +325,8 @@ public:
 	~C64();
 
 	//! @brief    Resets the virtual C64 and all of its sub components.
-    void reset();
-    
+private: void reset();
+public: 
     //! @brief    Dumps current configuration into message queue
     void ping();
 
@@ -383,11 +383,24 @@ public:
     //! @functiongroup Running the emulator
     //
 		
-	//! @brief    Launches the emulator
-	/*! @details  The execution thread is launched and the virtual computer enters the "running" state 
+    //! @brief    Power up
+    /*! @details  This method simulates a C64 cold start (switching power on).
+     *            You can call this function once all ROMs are loaded in.
      */
-	void run();
-	
+    void powerUp();
+    
+    //! @brief    Continues emulation
+    /*! @details  This method recreates the emulation thread and is usually called after
+     *            emulation was stopped by a call to halt() or by reaching a breakpoint.
+     */
+    void run();
+    
+    /*! @brief    Pauses emulation
+     *  @details  The execution thread is canceled, but the internal state remains intact.
+     *            Emulation can be continued by a call to run()
+     */
+    void halt();
+    
     /*! @brief    The tread exit function.
      *  @details  This method is invoked automatically when the execution thread terminates.
      */
@@ -399,24 +412,9 @@ public:
 	//! @brief    Returns true iff the virtual C64 is in the "running" state
 	bool isRunning();
 	
-	/*! @brief    Freezes the emulator
-	 *  @details  The execution thread is terminated and the virtual computers enters the "halted" state 
-     */
-	void halt();
-	
 	//! @brief    Returns true iff the virtual C64 is in the "halted" state
 	bool isHalted();
 	
-    /*! @brief    Perform a manually triggered NMI interrupt
-     *  @details  On a real C64, an NMI interrupt is triggered by hitting the restore key
-     */
-    // void restore();
-
-    /*! @brief    Perform a soft reset
-     *  @details  On a real C64, a soft reset is triggered by hitting Runstop and Restore
-     */
-    // void runstopRestore();
-
 	/*! @brief    Executes one CPU instruction
      *  @details  This method implements the "step" action of the debugger
      */
