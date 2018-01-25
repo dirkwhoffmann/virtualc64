@@ -54,7 +54,7 @@ private:
 	/*! @brief    The original state before the first call of suspend(). 
      *  @see      suspend
      */
-	bool suspendedState;
+	// bool suspendedState;
 
 	/*! @brief    Number of times the component is suspended.
      *  @details  The value is equal to the number of suspend calls minus the number of resume calls

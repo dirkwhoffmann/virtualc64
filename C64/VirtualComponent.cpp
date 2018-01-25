@@ -101,6 +101,31 @@ VirtualComponent::isHalted()
 	return !running;
 }
 
+void
+VirtualComponent::suspend()
+{
+    debug(2, "Suspending...\n");
+
+    if (isHalted())
+        return;
+    
+    halt();
+    suspendCounter++;
+}
+
+void
+VirtualComponent::resume()
+{
+    debug(2, "Resuming...\n");
+    
+    if (suspendCounter == 0)
+        return;
+    
+    if (--suspendCounter == 0)
+        run();
+}
+
+/*
 void 
 VirtualComponent::suspend()
 {
@@ -124,6 +149,7 @@ VirtualComponent::resume()
 	
 	assert(suspendCounter >= 0);
 }
+*/
 
 void 
 VirtualComponent::dumpState()
