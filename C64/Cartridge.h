@@ -175,6 +175,13 @@ public:
     
     //! @brief    Reads in chip stored in the provided CRT container
     void loadChip(unsigned nr, CRTContainer *c);    
+
+    //! @brief    Press button on cartridge
+    /*! @details  By default nothing is done here as most cartridges do not have any
+     *            button. Some special cartriges such aus Final Cartridge III
+     *            overwrite this function to emulate a freezer button.
+     */
+    virtual void pressButton() { };
 };
 
 #endif 

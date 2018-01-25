@@ -552,13 +552,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->expansionPort->dumpState(); }
-- (int) cartridgeType { return (int)wrapper->expansionPort->getCartridgeType(); }
+- (CartridgeType) cartridgeType { return wrapper->expansionPort->getCartridgeType(); }
 - (bool) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
-// - (unsigned) numberOfChips { return wrapper->expansionPort->numberOfChips(); }
-// - (unsigned) numberOfBytes { return wrapper->expansionPort->numberOfBytes(); }
-
-- (void) pressReset:(BOOL)pressed { wrapper->expansionPort->pressReset(pressed); }
-- (void) pressFreeze:(BOOL)pressed { wrapper->expansionPort->pressFreeze(pressed); }
+- (void) pressButton { wrapper->expansionPort->pressButton(); }
 
 @end
 
@@ -1286,7 +1282,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return container ? [[CRTContainerProxy alloc] initWithCRTContainer:container] : nil;
 }
 
-- (NSInteger)type { return wrapper->crtcontainer->getCartridgeType(); }
+- (CartridgeType)type { return wrapper->crtcontainer->getCartridgeType(); }
 - (NSString *)typeName { return [NSString stringWithUTF8String:wrapper->crtcontainer->getCartridgeTypeName()]; }
 - (BOOL) isSupportedType { return Cartridge::isSupportedType((CartridgeType)[self type]); }
 

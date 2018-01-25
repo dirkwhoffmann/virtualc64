@@ -117,11 +117,9 @@ public:
     //! @brief    Removes a cartridge from the expansion port (if any)
     void detachCartridge();
 
-    //! @brief    Presses the reset button if Final Cartridge III is plugged in
-    void pressReset(bool pressed);
+    //! @brief    Press button on cartridge
+    void pressButton() { debug("pressButton"); if (cartridge) cartridge->pressButton(); }
 
-    //! @brief    Presses the freeze button if Final Cartridge III is plugged in
-    void pressFreeze(bool pressed);
 };
     
 #endif

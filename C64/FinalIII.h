@@ -30,7 +30,7 @@ class FinalIII : public Cartridge {
     
 private:
     
-    bool hidden;
+    // bool hidden;
     
 public:
     
@@ -41,14 +41,11 @@ public:
     uint8_t peekIO(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
     
-    //! @brief   Virtual push of the cartriges's reset button
-    void pressReset(bool pressed);
-
     //! @brief   Virtual push of the cartriges's freeze button
-    void pressFreeze(bool pressed);
+    void pressButton();
 
     //! @brief   Triggers an NMI interrupt
-    void triggerNMI();
+    // void triggerNMI();
     
 };
 

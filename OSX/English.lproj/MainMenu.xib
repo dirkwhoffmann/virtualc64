@@ -314,11 +314,14 @@
                                         <menuItem title="Freeze" id="hnA-PW-eYY" userLabel="Freeze">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="dumpKeyboard:" target="-1" id="Mqg-aQ-TQe"/>
+                                                <action selector="cartridgeButtonAction:" target="-1" id="Swu-Qk-USg"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
+                                <connections>
+                                    <action selector="cartridgeMenuAction:" target="-1" id="p1o-0a-01o"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>

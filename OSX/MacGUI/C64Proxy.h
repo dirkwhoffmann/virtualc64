@@ -432,9 +432,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 
 - (void) dump;
 - (bool) cartridgeAttached; 
-- (int) cartridgeType;
-- (void) pressReset:(BOOL)pressed; // Final Cartridge III only
-- (void) pressFreeze:(BOOL)pressed; // Final Cartridge III only
+- (CartridgeType) cartridgeType;
+- (void) pressButton;
 
 @end
 
@@ -819,7 +818,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (struct CRTContainerWrapper *) wrapper;
 + (BOOL) isCRTFile:(NSString *)filename;
 + (instancetype) containerFromCRTFile:(NSString *)filename;
-- (NSInteger)type;
+- (CartridgeType)type;
 - (NSString *)typeName;
 - (BOOL) isSupportedType;
 

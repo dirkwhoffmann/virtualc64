@@ -39,6 +39,7 @@
 @synthesize debugPanel;
 @synthesize cheatboxPanel;
 @synthesize cheatboxImageBrowserView;
+@synthesize menuItemFinalIII;
 @synthesize joystickPortA;
 @synthesize joystickPortB;
 @synthesize gamePadManager;

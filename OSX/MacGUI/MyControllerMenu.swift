@@ -8,25 +8,25 @@
 import Foundation
 
 extension MyController {
-
-    // @IBOutlet var menuItemFinalIII: NSMenuItem!
     
-    func validateCartridgeMenu() {
+    @objc func validateMenuItemSwift(_ menuItem: NSMenuItem) -> Bool {
         
-        /*
-        // Get type of attached cartridge
-        let ct: ContainerType = 
+        // NSLog("Validating menu item \(menuItem.title)")
+
+        // if menuItem.action == #selector(MyController.finalCartAction(_:))
         
-        let type: CartridgeType = CRT_FINAL_III
-        
-        if (type == CRT_FINAL_III) {
-            menuItemFinalIII.set
+        // Cartridge menu
+        if menuItem.title == "Final Cartridge III" {
+            return c64.expansionport.cartridgeType() == CRT_FINAL_CARTRIDGE_III
         }
-        */
         
+        return true
     }
-    @IBAction func cartFinalIIIFreezeAction(_ sender: Any!) {
-        
-        // [proxy cartFinalIIIFreeze];
+    
+    @IBAction func cartridgeMenuAction(_ sender: Any!) {
+    }
+    
+    @IBAction func cartridgeButtonAction(_ sender: Any!) {
+        c64.expansionport.pressButton()
     }
 }

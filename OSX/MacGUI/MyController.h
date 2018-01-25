@@ -63,10 +63,7 @@ typedef unsigned long MacKeyFingerprint;
 	IBOutlet MountDialog *mountDialog;
     IBOutlet TapeDialog *tapeDialog;
 	IBOutlet RomDialog *romDialog;
-	
-    // Menu
-    IBOutlet NSMenuItem *menuItemFinalIII;
-    
+	    
     // Toolbar
     IBOutlet NSPopUpButton *joystickPortA;
     IBOutlet NSPopUpButton *joystickPortB;
@@ -307,6 +304,7 @@ typedef unsigned long MacKeyFingerprint;
 @property NSDrawer *debugPanel;
 @property NSDrawer *cheatboxPanel;
 @property CheatboxImageBrowserView *cheatboxImageBrowserView;
+@property NSMenuItem *menuItemFinalIII;
 @property NSPopUpButton *joystickPortA;
 @property NSPopUpButton *joystickPortB;
 @property INPUT_DEVICES inputDeviceA;

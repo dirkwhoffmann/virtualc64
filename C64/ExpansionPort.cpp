@@ -224,21 +224,4 @@ ExpansionPort::detachCartridge()
     debug(1, "Cartridge detached from expansion port");
 }
 
-void
-ExpansionPort::pressReset(bool pressed)
-{
-    if (cartridge && cartridge->getCartridgeType() == CRT_FINAL_CARTRIDGE_III) {
-        ((FinalIII *)cartridge)->pressReset(pressed);
-    }
-}
-
-void
-ExpansionPort::pressFreeze(bool pressed)
-{
-    if (cartridge && cartridge->getCartridgeType() == CRT_FINAL_CARTRIDGE_III) {
-        ((FinalIII *)cartridge)->pressFreeze(pressed);
-    }
-}
-
-
 

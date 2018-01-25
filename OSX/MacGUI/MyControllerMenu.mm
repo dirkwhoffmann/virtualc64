@@ -58,7 +58,8 @@
         return true;
     }
     
-    return YES;
+    // The rest is implemented in Swift
+    return [self validateMenuItemSwift:item];
 }
 
 // --------------------------------------------------------------------------------
@@ -515,16 +516,6 @@
 - (IBAction)dumpKeyboard:(id)sender { [[c64 keyboard] dump]; }
 - (IBAction)dumpC64JoystickA:(id)sender { [[c64 joystickA] dump]; }
 - (IBAction)dumpC64JoystickB:(id)sender { [[c64 joystickB] dump]; }
-- (IBAction)dumpIEC:(id)sender // { [[c64 iec] dump]; }
-{
-    [[c64 iec] dump];
-    // TEMPORARY CODE
-    [[c64 expansionport] pressReset:false];
-}
-- (IBAction)dumpC64ExpansionPort:(id)sender // { [[c64 expansionport] dump]; }
-{
-    [[c64 expansionport] dump];
-    // TEMPORARY CODE
-    [[c64 expansionport] pressFreeze:true];
-}
+- (IBAction)dumpIEC:(id)sender { [[c64 iec] dump]; }
+- (IBAction)dumpC64ExpansionPort:(id)sender { [[c64 expansionport] dump]; }
 @end

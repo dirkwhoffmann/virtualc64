@@ -39,7 +39,6 @@ FinalIII::powerup()
     bankIn(0);
     setGameLine(0);
     setExromLine(0);
-    hidden = false;
 }
 
 uint8_t
@@ -62,7 +61,7 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
     // 0xDFFF is Final Cartridge's internal control register
-    if (addr == 0xDFFF && !hidden) {
+    if (addr == 0xDFFF) {
         
         /*  "7      Hide this register (1 = hidden)
          *   6      NMI line   (0 = low = active) *1)
@@ -107,24 +106,18 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
 }
 
 void
-FinalIII::pressReset(bool pressed) {
-    
-    debug("FinalIII:pressReset (%d) \n", pressed);
-    poke(0xDFFF, 0x10);
-    // c64->reset();
-}
-    
-void
-FinalIII::pressFreeze(bool pressed) {
+FinalIII::pressButton() {
 
-    debug("FinalIII:pressFreeze (%d) \n", pressed);
+    debug("FinalIII:pressFreeze\n");
 
     // The freezer is enabled by selecting bank 0 in unimax mode and triggering an NMI
     poke(0xDFFF, 0x10);
 }
 
+/*
 void
 FinalIII::triggerNMI() {
     debug("FinalIII:triggerNMI\n");
     c64->cpu.setNMILineExpansionPort();
 }
+*/
