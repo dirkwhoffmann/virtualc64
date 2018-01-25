@@ -805,13 +805,7 @@ C64::loadRom(const char *filename)
         warn("FAILED to load ROM image %s\n", filename);
     }
     
-    bool isNowRunnable = isRunnable();
-    
-    if (!wasRunnable && isNowRunnable) {
-        
-        // Read initial program counter value from Kernel ROM
-        cpu.initPC();
-        
+    if (!wasRunnable && isRunnable()) {
         // Let the GUI know that the emulator is ready to run
         putMessage(MSG_READY_TO_RUN);
     }

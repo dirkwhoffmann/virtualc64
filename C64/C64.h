@@ -93,98 +93,104 @@
 #include "VC1541.h"
 #include "Datasette.h"
 
-
-
-//! @class    A complete virtual C64
-
 /*
-	
-	------------------------    ------------------------
-    |                      |    |                      |
- -->|       C64Proxy       |<-->|         C64          |
- |  |  Obj-C / C++ bridge  |    |      (C++ world)     |
- |  ------------------------    ------------------------
- |                                         |
- |  ------------------------               |
- |	|  (Execution Thread)  |               |
- |	|                      |<--------------- run()            
- |	|         C64          |
- |	------------------------      
- |      |
- |      |
- |      |    --------------------------------------------------------------------------------------         
- |      |--->|                                      CPU                                           |<--------
- |      |    --------------------------------------------------------------------------------------        |
- |      |  execute()                                   |                                                   |
- |      |                                         peek | poke                                              |
- |      |                                              |                                                   |
- |      |                                     A000     V AFFF     D000       DFFF                 FFFF     |    
- |      |    --------------------------------------------------------------------------------------        |
- |      |    |          Memory                | Basic ROM|        | Char ROM | Kernel ROM         |        |
- |      |    --------------------------------------------------------------------------------------        |
- |      |                                                              |                                   |
- |      |                                                         peek | poke                              |
- |      |                                                              V                                   |
- |   	|    							  execute()               -------------            interrupt       |     
- |      |-------------------------------------------------------->|    CIA    |----------------------------|
- |      |                                 execute()               ------------                             |
- |      |-------------------------------------------------------->|    SID    |                            |
- |		|                                                         -------------  setDeviceXXXPin()         |
- |      |-------------------------------------------------------->|    IEC    |<------                     |
- |      |                                 execute()               -------------      |     interrupt       |
- |      |-------------------------------------------------------->|    VIC    |-----------------------------
- |      |                                                         -------------      |
- |      V                                                              |             | execute()
- |  --------------------------                                         |             | 
- |	|   Message queue        |                                         |             V
- |  --------------------------                                         |          -------------
- |				|													   |          |   Drive   |
- |				|													   |          -------------
- |			    |                                                      |
- |	            |                                                      |
- |              |                                                      |
- |	            |                                                      |
- |			    V                                                      V 
- |    ------------------------       copy to GPU texture         -----------------
- ---->| GUI                  |<----------------------------------| Screen buffer |
-      ------------------------                                   -----------------
+Overall architecture:
+---------------------
 
-	The execution thread is the "engine" of the virtual computer. 
-	Like all virtual components, the virtual C64 can be in two states: "running" and "halted". 
-	When the virtual C64 enters the "run" state, it starts the execution thread which runs asynchoneously. 
-	The thread runs until an error occurrs (illegal instruction, etc.) or the user asks the virtual 
-	machine to freeze. In both cases, the thread terminates and the virtual C64 enters the "halt" state.
+VirtualC64 consists of three major components:
 
-	The execution thread is organized as an infinite loop. In each iteration, control is passed to the
-	VIC, CIAs, CPU, VIAs, and the disk drive. The VIC chip draws the screen contents into a
-	simple byte array, the so called screen buffer. The asynchronously running GUI copies the screen buffer
-	contents onto a GPU texture which is then rendered by the graphic card.
+1. The graphical user interface (written in Swift and ObjC)
+2. The communication proxy (written in ObjC)
+3. The core emulator (written in C++)
 
-    Class C64 is the most important class of the core emulator and MyController the most important GUI class. 
-    C64Proxy implements a bridge between the GUI (written in Objective-C) anf the emulator (written in C++).
-  
-	Initialization sequence:
-	
-	1. Create C64 object 
-	   c64 = new C64()
-	   
-	2. Configure
-	   c64->set...() etc.
- 
-	3. Load Roms
-	   c64->loadRom(...)
-	
-    4. Run
-	   c64->run() 
+The GUI talks to VirtualC64 by calling proxy methods. VirtualC64 talks back via
+a message queue that is queried periodically by the GUI.
+
+------------------------------------------------------------------
+| getMessage()                                      putMessage() |
+v                                                                |
+----------------------          ----------------------          ----------------------
+|                    |  func()  |                    |  func()  |                    |
+|        GUI         |--------->|      C64Proxy      |--------->|        C64         |
+|  (Swift and ObjC)  |          | Swift / C++ bridge |          |    (C++ world)     |
+----------------------          ----------------------          ----------------------
+
+
+Initialization procedure:
+-------------------------
+
+To get VirtualC64 up and running, you need to perform the following steps:
+
+1. Create a C64 object
+c64 = new C64()
+
+2. Configure
+c64->set...() etc.
+
+3. Load Roms
+c64->loadRom(...)
+
+4. Power up
+c64->powerUp()
+
+
+Message queue:
+--------------
+
+To receive messages from VirtualC64, the GUI starts a timer that periodically invokes method MyController::timerFunc.
+Inside this method, the message queue is queries as follows:
+
+while ((message = [c64 message]) != NULL) {
+    switch (message->id) {
+            
+        case MSG_READY_TO_RUN:
+            [c64 powerUp];
+            
+            ...
+    }
+}
+
+MSG_READY_TO_RUN is one of the most important messages and indicates that all ROMs are
+in place. The GUI reacts with a call to powerUp(). This function brings the emulator
+to life by creating and launching the execution thread.
+
+
+The execution thread:
+---------------------
+
+The execution thread is organized as an infinite loop. In each iteration, control is
+passed to the VIC, CIAs, CPU, VIAs, and the disk drive. The VIC chip draws the screen
+contents into a simple byte array, the so called screen buffer. The asynchronously
+running GUI copies the screen buffer contents onto a GPU texture which is then rendered
+by the GPU.
+
+The following methods control the execution thread:
+
+powerUp:    Performs a reset and starts the execution thread
+The GUI invokes this method when it receives the READY_TO_RUN message.
+
+halt:       Pauses the emulation thread
+The GUI invokes this method, e.g., when the user hits the pause button.
+VirtualC64 itself calls this method when, e.g., a breakpoint is reached.
+
+run:        Continues the emulation thread
+            The GUI invokes this method, e.g., when the user hits the continue button.
+
+suspend:    If multiple operations need to be executed atomically (such as
+            taking an emulator snapshot), the operations are embedded inside a
+            suspend() / resume() block. Both methods use halt() and run() internally.
 */
+
+
 
 #define BACK_IN_TIME_BUFFER_SIZE 16
 
+//! @class    A complete virtual C64
 class C64 : public VirtualComponent {
 
-    // -----------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
     //                                          Properties
-    // -----------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 
 public:
     
