@@ -28,32 +28,20 @@ CPU::fetch() {
     
 	PC_at_cycle_0 = PC;
 	
-    /*
-    if (PC == 0x808C) {
-        setTraceMode(true);
-    }
-    */
-    
 	// Check interrupt lines
-    // if (interruptsPending) {
-    if (1) {
-    
-        if (nmiEdge && NMILineRaisedLongEnough()) {
+    if (nmiEdge && NMILineRaisedLongEnough()) {
             
-            if (tracingEnabled())
-                debug(1, "NMI (source = %02X)\n", nmiLine);
-            nmiEdge = false;
-            // clearNMILineExpansionPort();
-            // TODO: Should do the same with the restore key line (?!)
-            next = &CPU::nmi_2;
-            return;
+        if (tracingEnabled())
+            debug(1, "NMI (source = %02X)\n", nmiLine);
+        nmiEdge = false;
+        next = &CPU::nmi_2;
+        return;
 
-        } else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
-            if (tracingEnabled())
-                debug(1, "IRQ (source = %02X)\n", irqLine);
-            next = &CPU::irq_2;
-            return;
-        }
+    } else if (irqLine && !IRQsAreBlocked() && IRQLineRaisedLongEnough()) {
+        if (tracingEnabled())
+            debug(1, "IRQ (source = %02X)\n", irqLine);
+        next = &CPU::irq_2;
+        return;
     }
 
     // Execute fetch phase

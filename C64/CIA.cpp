@@ -67,8 +67,16 @@ CIA::reset()
     
     clearInterruptLine();
 
-	PA = 0xff; 
-	PB = 0xff; 
+    
+    // PB67TimerMode = 0x80;
+    /*
+    PA = PALatch | ~DDRA;
+    PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
+    */
+    
+    PA = 0xFF;
+    PB = 0xFF;
+
 	CNT = true; // CNT line is high by default
 	INT = 1;
 	
@@ -447,7 +455,6 @@ CIA::incrementTOD()
 		// Trigger interrupt, if enabled
 		if (IMR & 0x04) {
 			// The uppermost bit indicates that an interrupt occured
-			// printf("Triggering CIA interrupt (source = %02X) at cycle %d\n", source, (int)cpu->getCycles());
 			ICR |= 0x80;
 			raiseInterruptLine();
 		}
@@ -836,39 +843,48 @@ uint8_t
 CIA1::peek(uint16_t addr)
 {
 	uint8_t result;
-	
+    uint8_t rows, columnBits, columns, rowBits;
+    
 	assert(addr <= CIA1_END_ADDR - CIA1_START_ADDR);
 	
 	switch(addr) {		
         case 0x00: // CIA_DATA_PORT_A
 				
-			pollJoystick(&c64->joystickB, 2);
+            result = PA;
+            
+            pollJoystick(&c64->joystickA, 1);
+            pollJoystick(&c64->joystickB, 2);
 
-            // We change only those bits that are configured as outputs, all input bits are 1
-			result = PA; // iomem[addr] | ~iomem[CIA_DATA_DIRECTION_A];
-			
-			// The external port lines can pull down any bit, even if it configured as output
-			// result &= portLinesA; 
-			
+            rows = PB & joystick[0];
+            columnBits = c64->keyboard.getColumnValues(rows);
+            
 			// Check joystick movement
 			result &= joystick[1];
+            
+            // Check for pressed keys
+            result &= columnBits;
+            
 			break;
 			
         case 0x01: // CIA_DATA_PORT_B
 		{
-            uint8_t bitmask = CIA1::peek(0x00 /* CIA_DATA_PORT_A */);
-			uint8_t keyboardBits = c64->keyboard.getRowValues(bitmask);
+            result = PB;
+            
+            columns = PA & joystick[1];
+			rowBits = c64->keyboard.getRowValues(columns);
 			
             pollJoystick(&c64->joystickA, 1);
-			
-			result = PB;
-			
-			// Check joystick movement
+			pollJoystick(&c64->joystickB, 2);
+            
+            // Check joystick movement
             result &= joystick[0];
 			
 			// Check for pressed keys
-			result &= keyboardBits;
-			break;
+			result &= rowBits;
+
+            // printf("PC: %04X bitmask = %02X keyboardBits = %02X PALatch = %04X PBLatch = %04X DDRA = %02X DDRB = %02X PB67TimerMode = %02X PB67TimerOut = %02X PA = %02X PB = %02X result: %02X\n", c64->cpu.getPC_at_cycle_0(), bitmask, keyboardBits, PALatch, PBLatch, DDRA, DDRB, PB67TimerMode, PB67TimerOut, PA, PB, result);
+
+            break;
 		}
 			
 		default:
@@ -917,6 +933,8 @@ CIA1::poke(uint16_t addr, uint8_t value)
 
             PBold = PB;
 
+            // printf("CIA1::poke Setting DDRB = %02X\n", value);
+            
 			DDRB = value;
 			PB = ((PBLatch | ~DDRB) & ~PB67TimerMode) | (PB67TimerOut & PB67TimerMode);
 

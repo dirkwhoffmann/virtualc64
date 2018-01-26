@@ -28,18 +28,21 @@
  *            Keyboard management works as follows: When the GUI recognizes a pressed or 
  *            release key, it calls one of the functions in this class to tell the virtual 
  *            keyboard about the event.	The called functions does nothing more than 
- *            clearing or setting a bit in the keyboard matrix.	Communication with the virtual 
- *            computer is managed solely by the CIA chip. When a special CIA register is peeked, 
- *            method getRowValues is called which finally brings the contents of the keyboard 
- *            matrix into the virtual C64.
+ *            clearing or setting a bit in the 8x8 keyboard matrix.Each key corresponds to a
+ *            specific bit in the matrix and is uniquely determined by a row and a column value.
+ *
+ *            Communication with the virtual computer is managed solely by the CIA chip. When a
+ *            special CIA register is peeked, method getRowValues is called which finally gets
+ *            the contents of the keyboard matrix into the virtual C64.
  */
 class Keyboard : public VirtualComponent {
 	
-	/*! @brief    The C64 keyboard matrix
-	 *  @details  The C64 maintains a 8x8 matrix. Each key corresponds to a specific bit in the 
-     *            matrix and is uniquely determined by a row and a column value.
-     */
-	uint8_t kbMatrix[8];
+	//! @brief    The C64 keyboard matrix indexed by row
+	uint8_t kbMatrixRow[8];
+
+    //! @brief    The C64 keyboard matrix indexed by column
+    uint8_t kbMatrixCol[8];
+
 			
 public:
     
@@ -132,13 +135,18 @@ public:
     void releaseInsertKey() { releaseKey(0,0); releaseShiftKey(); }
 
     //! @brief    Clears the keyboard matrix.
-	void releaseAll() { for (int i=0; i<8; i++) kbMatrix[i] = 0xff; }
+	void releaseAll() { for (unsigned i = 0; i < 8; i++) kbMatrixRow[i] = kbMatrixCol[i] = 0xFF; }
     
-	/*! @brief    Reads the keyboard matrix.
-	 *  @param    columnMask  the column bits to be read.
+	/*! @brief    Reads a row from keyboard matrix
+	 *  @param    columnMask  Indicates the rows to read
      */
 	uint8_t getRowValues(uint8_t columnMask);
-	
+
+    /*! @brief    Reads a column from keyboard matrix.
+     *  @param    rowMask  Indicates the rows to read
+     */
+    uint8_t getColumnValues(uint8_t rowMask);
+
 private:
 	
 	//! @brief    Mapping from ASCII characters to the C64 row/column format

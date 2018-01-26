@@ -93,7 +93,7 @@ ExpansionPort::dumpState()
 {
     msg("Expansion port\n");
     msg("--------------\n");
-
+    
     if (cartridge == NULL) {
         msg("No cartridge attached");
     } else {

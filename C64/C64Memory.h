@@ -191,9 +191,12 @@ public:
 	//! @brief    Destructor
 	~C64Memory();
 	
-	//! @brief    Restores the initial state
+	//! @brief    Restores initial state
 	void reset();
-	
+    
+    //! @brief    Initialize RAM with start up values
+    void resetRAM();
+
 	//! @brief    Prints debug information
 	void dumpState();
 		

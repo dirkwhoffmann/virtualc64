@@ -223,6 +223,7 @@ void
 C64::powerUp()
 {
     reset();
+    mem.resetRAM();
     run();
 }
 

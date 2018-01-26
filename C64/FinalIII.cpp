@@ -83,7 +83,7 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
         uint8_t exrom = value & 0x10;
         uint8_t bank  = value & 0x03;
         
-        debug("hide: %d nmi:%d game:%d exrom:%d bank:%d\n", hide != 0, nmi != 0, game != 0, exrom != 0, bank);
+        // debug("hide: %d nmi:%d game:%d exrom:%d bank:%d\n", hide != 0, nmi != 0, game != 0, exrom != 0, bank);
         
         // Bit 7
         if (hide) {
@@ -106,18 +106,20 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
 }
 
 void
-FinalIII::pressButton() {
+FinalIII::pressFirstButton() {
 
-    debug("FinalIII:pressFreeze\n");
+    debug("Final cartridge III: Freeze Button\n");
 
     // The freezer is enabled by selecting bank 0 in unimax mode and triggering an NMI
     poke(0xDFFF, 0x10);
 }
 
-/*
 void
-FinalIII::triggerNMI() {
-    debug("FinalIII:triggerNMI\n");
-    c64->cpu.setNMILineExpansionPort();
+FinalIII::pressSecondButton() {
+    
+    debug("Final cartridge III: Reset Button\n");
+    
+    // Note: Cartridge requires to keep RAM contants intact
+    c64->reset();
 }
-*/
+

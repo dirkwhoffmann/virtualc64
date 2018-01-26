@@ -314,7 +314,13 @@
                                         <menuItem title="Freeze" id="hnA-PW-eYY" userLabel="Freeze">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="finalCartridgeIIIfreezeAction:" target="-1" id="C55-cV-XqR"/>
+                                                <action selector="finalCartridgeIIIfreezeAction:" target="-1" id="XIf-jf-Ngy"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reset" id="9Yl-co-bHe" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="finalCartridgeIIIresetAction:" target="-1" id="8om-kz-Chj"/>
                                             </connections>
                                         </menuItem>
                                     </items>

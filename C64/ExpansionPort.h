@@ -117,8 +117,11 @@ public:
     //! @brief    Removes a cartridge from the expansion port (if any)
     void detachCartridge();
 
-    //! @brief    Press button on cartridge
-    void pressButton() { debug("pressButton"); if (cartridge) cartridge->pressButton(); }
+    //! @brief    Press first button on cartridge
+    void pressFirstButton() { if (cartridge) cartridge->pressFirstButton(); }
+
+    //! @brief    Press second button on cartridge
+    void pressSecondButton() { if (cartridge) cartridge->pressSecondButton(); }
 
 };
     

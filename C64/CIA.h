@@ -506,8 +506,8 @@ public:
 	
 private:
 
-    //! @brief    Polls current state of joystick
-	void pollJoystick(Joystick *joy, int joyDevNo);
+    //! @brief    Polls current state of a single joystick
+    void pollJoystick(Joystick *joy, int joyDevNo);
 
     /*! @brief    Raises the interrupt line
      *  @details  Note that CIA 1 is connected to the IRQ line

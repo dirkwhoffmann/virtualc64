@@ -23,7 +23,9 @@
 // 1. Cartridge handler has been refactured.
 // 2. VirtualC64 now supports cartriges running in ultimax mode.
 // 3. Added support for some non standard cartridges (Simons Basic and Final Cartridge III).
-// Fixed a bug that sometimes crashed the emulator when grabbing the background texture.
+// 4. Peeking CIA1 register $DC00 sometimes returned a wrong value in case of keyboard events. This
+//    prevented some games (Pitfall II) to detect pressed keys. 
+// 4. Fixed a bug that sometimes crashed the emulator when grabbing the background texture.
 //
 // THINK ABOUT ADDING A DICTIONARY BASED CONFIG SYSTEM:
 // All global emulator settings (PAL/NTSC, SID Chip, WARP/NO WARP) are controlled by this method
@@ -338,8 +340,8 @@ public:
 	~C64();
 
 	//! @brief    Resets the virtual C64 and all of its sub components.
-private: void reset();
-public: 
+    void reset();
+     
     //! @brief    Dumps current configuration into message queue
     void ping();
 

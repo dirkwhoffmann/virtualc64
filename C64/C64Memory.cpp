@@ -52,20 +52,13 @@ C64Memory::~C64Memory()
 	debug(3, "  Releasing main memory at address %p...\n", this);
 }
 
-void C64Memory::reset()
+void
+C64Memory::reset()
 {
     VirtualComponent::reset();
     
     // Establish bindings
     cpu = &c64->cpu;
-    
-	// Initialize RAM (powerup pattern similar to Frodo and VICE)
-    for (unsigned i = 0; i < sizeof(ram); i++)
-        ram[i] = (i & 0x40) ? 0xFF : 0x00;
-        
-    // Clear out initially visible screen memory to make it look nicer on startup
-    for (unsigned i = 0; i < 1000; i++)
-        ram[0x400+i] = 0x00;
     
     // Initialize peek source lookup table
     for (unsigned i = 0x1; i <= 0xF; i++)
@@ -76,16 +69,29 @@ void C64Memory::reset()
     for (unsigned i = 0x1; i <= 0xF; i++)
         pokeTarget[i] = M_RAM;
     pokeTarget[0x0] = M_PP;
-
-	// Initialize color memory with random numbers
-    for (unsigned i = 0; i < sizeof(colorRam); i++) {
-        colorRam[i] = (rand() & 0xFF);
-    }
     
 	// Initialize processor port data direction register and processor port
 	poke(0x0000, 0x2F); // Data direction
 	poke(0x0001, 0x1F);	// IO port, set default memory layout
 }	
+
+void
+C64Memory::resetRAM()
+{
+    // Initialize RAM with powerup pattern similar to Frodo and VICE
+    for (unsigned i = 0; i < sizeof(ram); i++)
+        ram[i] = (i & 0x40) ? 0xFF : 0x00;
+    
+    // Clear out initially visible screen memory to make it look nicer on startup
+    for (unsigned i = 0; i < 1000; i++)
+        ram[0x400+i] = 0x00;
+    
+    // Initialize color RAM with random numbers
+    for (unsigned i = 0; i < sizeof(colorRam); i++) {
+        colorRam[i] = (rand() & 0xFF);
+    }
+}
+
 
 // --------------------------------------------------------------------------------
 //                                      Input / Output

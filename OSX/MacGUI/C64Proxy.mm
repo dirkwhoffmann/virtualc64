@@ -554,7 +554,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->expansionPort->dumpState(); }
 - (CartridgeType) cartridgeType { return wrapper->expansionPort->getCartridgeType(); }
 - (bool) cartridgeAttached { return wrapper->expansionPort->getCartridgeAttached(); }
-- (void) pressButton { wrapper->expansionPort->pressButton(); }
+- (void) pressFirstButton { wrapper->expansionPort->pressFirstButton(); }
+- (void) pressSecondButton { wrapper->expansionPort->pressSecondButton(); }
 
 @end
 

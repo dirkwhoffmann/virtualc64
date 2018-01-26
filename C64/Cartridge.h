@@ -181,7 +181,8 @@ public:
      *            button. Some special cartriges such aus Final Cartridge III
      *            overwrite this function to emulate a freezer button.
      */
-    virtual void pressButton() { };
+    virtual void pressFirstButton() { };
+    virtual void pressSecondButton() { };
 };
 
 #endif 

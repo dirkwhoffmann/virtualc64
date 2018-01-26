@@ -42,11 +42,10 @@ public:
     void poke(uint16_t addr, uint8_t value);
     
     //! @brief   Virtual push of the cartriges's freeze button
-    void pressButton();
+    void pressFirstButton();
 
-    //! @brief   Triggers an NMI interrupt
-    // void triggerNMI();
-    
+    //! @brief   Virtual push of the cartriges's reset button
+    void pressSecondButton();
 };
 
 #endif

@@ -82,7 +82,11 @@ extension MyController {
     }
     
     @IBAction func finalCartridgeIIIfreezeAction(_ sender: Any!) {
-        c64.expansionport.pressButton()
+        c64.expansionport.pressFirstButton()
+    }
+    
+    @IBAction func finalCartridgeIIIresetAction(_ sender: Any!) {
+        c64.expansionport.pressSecondButton()
     }
     
     //

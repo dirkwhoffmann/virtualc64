@@ -106,9 +106,10 @@ Keyboard::Keyboard()
     
     // Register snapshot items
     SnapshotItem items[] = {
-        
-        { &kbMatrix,    sizeof(kbMatrix),   CLEAR_ON_RESET | BYTE_FORMAT },
-        { NULL,         0,                  0 }};
+
+        { &kbMatrixRow, sizeof(kbMatrixRow), CLEAR_ON_RESET | BYTE_FORMAT },
+        { &kbMatrixCol, sizeof(kbMatrixCol), CLEAR_ON_RESET | BYTE_FORMAT },
+        { NULL,         0,                   0 }};
     
     registerSnapshotItems(items, sizeof(items));
 
@@ -123,10 +124,8 @@ Keyboard::reset()
 {
     VirtualComponent::reset();
 
-	// Reset keyboard matrix (0 = pressed, 1 = not pressed)
-	for (int i = 0; i < 8; i++) {
-		kbMatrix[i] = 0xff;
-	}		
+	// Release all keys (resets the keyboard matrix)
+    releaseAll();
 }
 
 void 
@@ -136,9 +135,24 @@ Keyboard::dumpState()
 	msg("---------\n\n");
 	msg("Keyboard matrix: ");
 	for (int i = 0; i < 8; i++) {
-		msg("%d %d %d %d %d %d %d %d\n                 ", 
-			  (kbMatrix[i] & 0x01) != 0, (kbMatrix[i] & 0x02) != 0, (kbMatrix[i] & 0x04) != 0, (kbMatrix[i] & 0x08) != 0,
-			  (kbMatrix[i] & 0x10) != 0, (kbMatrix[i] & 0x20) != 0, (kbMatrix[i] & 0x40) != 0, (kbMatrix[i] & 0x80) != 0);				
+		msg("%d %d %d %d %d %d %d %d    %d %d %d %d %d %d %d %d\n                 ",
+            (kbMatrixRow[i] & 0x01) != 0,
+            (kbMatrixRow[i] & 0x02) != 0,
+            (kbMatrixRow[i] & 0x04) != 0,
+            (kbMatrixRow[i] & 0x08) != 0,
+            (kbMatrixRow[i] & 0x10) != 0,
+            (kbMatrixRow[i] & 0x20) != 0,
+            (kbMatrixRow[i] & 0x40) != 0,
+            (kbMatrixRow[i] & 0x80) != 0,
+
+            (kbMatrixCol[i] & 0x01) != 0,
+            (kbMatrixCol[i] & 0x02) != 0,
+            (kbMatrixCol[i] & 0x04) != 0,
+            (kbMatrixCol[i] & 0x08) != 0,
+            (kbMatrixCol[i] & 0x10) != 0,
+            (kbMatrixCol[i] & 0x20) != 0,
+            (kbMatrixCol[i] & 0x40) != 0,
+            (kbMatrixCol[i] & 0x80) != 0);
 	}
 	msg("\n");
 }
@@ -149,18 +163,38 @@ uint8_t Keyboard::getRowValues(uint8_t columnMask)
 		
 	for (int i = 0; i < 8; i++) {
 		if ((columnMask & (1 << i)) == 0) {
-			result &= kbMatrix[i];
+			result &= kbMatrixRow[i];
 		}
 	}
 	
 	return result;
 }
 
+uint8_t
+Keyboard::getColumnValues(uint8_t rowMask)
+{
+    uint8_t result = 0xff;
+    
+    for (int i = 0; i < 8; i++) {
+        if ((rowMask & (1 << i)) == 0) {
+            result &= kbMatrixCol[i];
+        }
+    }
+    
+    return result;
+}
+
+
 void Keyboard::pressKey(uint8_t row, uint8_t col)
 {
+    assert(row < 8);
+    assert(col < 8);
+    
+    kbMatrixRow[row] &= 255 - (1 << col);
+    kbMatrixCol[col] &= 255 - (1 << row);
+
     // debug("Set(%d %d)\n",row,col);
-	if (row < 8 && col < 8)
-		kbMatrix[row] &= 255 - (1 << col);
+    // dumpState();
 }
 
 void Keyboard::pressKey(C64KeyFingerprint key)
@@ -207,11 +241,14 @@ void Keyboard::pressRestoreKey()
 
 void Keyboard::releaseKey(uint8_t row, uint8_t col)
 {
-    // debug("Unset(%d %d)\n",row,col);
+    assert(row < 8);
+    assert(col < 8);
     
-	if (row < 8 && col < 8) {
-		kbMatrix[row] |= (1 << col);
-	}
+    kbMatrixRow[row] |= (1 << col);
+    kbMatrixCol[col] |= (1 << row);
+
+    // debug("Unset(%d %d)\n",row,col);
+    // dumpState();
 }
 
 void Keyboard::releaseKey(C64KeyFingerprint key)
