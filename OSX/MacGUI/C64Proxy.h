@@ -624,8 +624,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (Message *)message;
 - (void) putMessage:(int)msg;
 
-- (void) powerUp;
-// - (void) reset;
+// - (void) powerUp;
+- (void) reset;
 - (void) ping;
 - (void) halt;
 - (void) step;

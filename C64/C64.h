@@ -27,6 +27,10 @@
 //    prevented some games (Pitfall II) to detect pressed keys. 
 // 4. Fixed a bug that sometimes crashed the emulator when grabbing the background texture.
 //
+// TODO:
+// finalIII:reset. Keep RAM intact
+// Check, if all joystick items are saved to snapshot (Rambo has strange behaviour)
+//
 // THINK ABOUT ADDING A DICTIONARY BASED CONFIG SYSTEM:
 // All global emulator settings (PAL/NTSC, SID Chip, WARP/NO WARP) are controlled by this method
 // Add method C64::configure(VC64Option key, int value)
@@ -140,7 +144,7 @@ c64->set...() etc.
 c64->loadRom(...)
 
 4. Power up
-c64->powerUp()
+c64->run()
 
 
 Message queue:
@@ -153,14 +157,14 @@ while ((message = [c64 message]) != NULL) {
     switch (message->id) {
             
         case MSG_READY_TO_RUN:
-            [c64 powerUp];
+            [c64 run];
             
             ...
     }
 }
 
 MSG_READY_TO_RUN is one of the most important messages and indicates that all ROMs are
-in place. The GUI reacts with a call to powerUp(). This function brings the emulator
+in place. The GUI reacts with a call to run(). This function brings the emulator
 to life by creating and launching the execution thread.
 
 
@@ -175,19 +179,22 @@ by the GPU.
 
 The following methods control the execution thread:
 
-powerUp:    Performs a reset and starts the execution thread
-The GUI invokes this method when it receives the READY_TO_RUN message.
 
-halt:       Pauses the emulation thread
+run: Runs the emulation thread
+ 
+The GUI invokes this method, e.g., when the user lauches the
+emulator the first time or hits the continue button.
+
+halt: Pauses the emulation thread
+ 
 The GUI invokes this method, e.g., when the user hits the pause button.
 VirtualC64 itself calls this method when, e.g., a breakpoint is reached.
 
-run:        Continues the emulation thread
-            The GUI invokes this method, e.g., when the user hits the continue button.
-
-suspend:    If multiple operations need to be executed atomically (such as
-            taking an emulator snapshot), the operations are embedded inside a
-            suspend() / resume() block. Both methods use halt() and run() internally.
+suspend / result: Temporarily pauses the emulation thread
+ 
+If multiple operations need to be executed atomically (such as
+taking an emulator snapshot), the operations are embedded inside a
+suspend() / resume() block. Both methods use halt() and run() internally.
 */
 
 
@@ -402,7 +409,7 @@ public:
     /*! @details  This method simulates a C64 cold start (switching power on).
      *            You can call this function once all ROMs are loaded in.
      */
-    void powerUp();
+    // void powerUp();
     
     //! @brief    Continues emulation
     /*! @details  This method recreates the emulation thread and is usually called after

@@ -154,7 +154,7 @@
     [[self document] updateChangeCount:NSChangeDone];
     
     [self rotateBack];
-    [c64 powerUp];
+    [c64 reset];
     [self refresh];
 }
 

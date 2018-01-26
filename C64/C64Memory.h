@@ -194,8 +194,8 @@ public:
 	//! @brief    Restores initial state
 	void reset();
     
-    //! @brief    Initialize RAM with start up values
-    void resetRAM();
+    //! @brief    Restors initial state, but keeps RAM alive
+    void resetWithoutRAM();
 
 	//! @brief    Prints debug information
 	void dumpState();

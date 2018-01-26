@@ -117,9 +117,13 @@ FinalIII::pressFirstButton() {
 void
 FinalIII::pressSecondButton() {
     
+    uint8_t ram[0xFFFF];
+    
     debug("Final cartridge III: Reset Button\n");
     
     // Note: Cartridge requires to keep RAM contants intact
+    memcpy(ram, c64->mem.ram, 0xFFFF);
     c64->reset();
+    memcpy(c64->mem.ram, ram, 0xFFFF);
 }
 

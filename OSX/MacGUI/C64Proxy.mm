@@ -807,8 +807,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (Message *)message { return wrapper->c64->getMessage(); }
 - (void) putMessage:(int)msg { wrapper->c64->putMessage(msg); }
 
-- (void) powerUp { wrapper->c64->powerUp(); }
-// - (void) reset { wrapper->c64->reset(); }
+// - (void) powerUp { wrapper->c64->powerUp(); }
+- (void) reset { wrapper->c64->reset(); }
 - (void) ping { wrapper->c64->ping(); }
 - (void) halt { wrapper->c64->halt(); }
 - (void) step { wrapper->c64->step(); }

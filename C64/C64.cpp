@@ -219,6 +219,7 @@ C64::setNTSC()
 // Running the emulator
 //
 
+/*
 void
 C64::powerUp()
 {
@@ -226,6 +227,7 @@ C64::powerUp()
     mem.resetRAM();
     run();
 }
+*/
 
 void
 C64::run()
@@ -807,7 +809,11 @@ C64::loadRom(const char *filename)
     }
     
     if (!wasRunnable && isRunnable()) {
-        // Let the GUI know that the emulator is ready to run
+
+        // Everything is in place. Make a clean reset ...
+        reset();
+        
+        // ... and let the GUI know that the emulator is ready to run.
         putMessage(MSG_READY_TO_RUN);
     }
     resume();
