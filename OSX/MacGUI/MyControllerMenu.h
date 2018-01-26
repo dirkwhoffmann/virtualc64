@@ -20,7 +20,7 @@
 
 @interface MyController(Menu)
 
-- (BOOL)validateMenuItem:(NSMenuItem *)item;
+// - (BOOL)validateMenuItem:(NSMenuItem *)item;
 
 #pragma mark file menu
 
@@ -78,6 +78,7 @@
 - (IBAction)datasettePressPlayAction:(id)sender;
 - (IBAction)datasettePressStopAction:(id)sender;
 
+/*
 #pragma mark debug menu
 - (IBAction)hideSpritesAction:(id)sender;
 - (IBAction)markIRQLinesAction:(id)sender;
@@ -105,5 +106,6 @@
 - (IBAction)dumpVC1541Memory:(id)sender;
 - (IBAction)dumpKeyboard:(id)sender;
 - (IBAction)dumpIEC:(id)sender;
+*/
 
 @end

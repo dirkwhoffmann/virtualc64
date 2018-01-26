@@ -9,24 +9,173 @@ import Foundation
 
 extension MyController {
     
-    @objc func validateMenuItemSwift(_ menuItem: NSMenuItem) -> Bool {
+    //
+    // Menu item validation (NSMenuValidation informal protocol)
+    //
+    
+    @objc override open func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         
-        // NSLog("Validating menu item \(menuItem.title)")
-
-        // if menuItem.action == #selector(MyController.finalCartAction(_:))
+        // File menu
+        if menuItem.action == #selector(MyController.exportDiskDialog(_:)) {
+            return c64.vc1541.hasDisk()
+        }
+        if menuItem.action == #selector(MyController.exportFileFromDiskDialog(_:)) {
+            // TODO: Check how many files are present.
+            //       Only enable items when a single file is present
+            return c64.vc1541.hasDisk()
+        }
+        
+        // View menu
+        if menuItem.action == #selector(MyController.toggleStatusBarAction(_:)) {
+            menuItem.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
+        }
+        
+        // Debug menu
+        if menuItem.action == #selector(MyController.pauseAction(_:)) {
+            return c64.isRunning();
+        }
+        if menuItem.action == #selector(MyController.continueAction(_:)) ||
+            menuItem.action == #selector(MyController.stepIntoAction(_:)) ||
+            menuItem.action == #selector(MyController.stepOutAction(_:)) ||
+            menuItem.action == #selector(MyController.stepOverAction(_:)) ||
+            menuItem.action == #selector(MyController.stopAndGoAction(_:)) {
+            return c64.isHalted();
+        }
+            
+        if menuItem.action == #selector(MyController.markIRQLinesAction(_:)) {
+            menuItem.state = c64.vic.showIrqLines() ? .on : .off
+        }
+        if menuItem.action == #selector(MyController.markDMALinesAction(_:)) {
+            menuItem.state = c64.vic.showDmaLines() ? .on : .off
+        }
+        if menuItem.action == #selector(MyController.hideSpritesAction(_:)) {
+            menuItem.state = c64.vic.hideSprites() ? .on : .off
+        }
+        if menuItem.action == #selector(MyController.traceC64CpuAction(_:)) {
+            menuItem.state = c64.cpu.tracingEnabled() ? .on : .off
+        }
+        if menuItem.action == #selector(MyController.traceIecAction(_:)) {
+            menuItem.state = c64.iec.tracingEnabled() ? .on : .off
+        }
+        if menuItem.action == #selector(MyController.traceVC1541CpuAction(_:)) {
+            menuItem.state = c64.vc1541.cpu.tracingEnabled() ? .on : .off
+        }
+        if menuItem.action == #selector(MyController.traceViaAction(_:)) {
+            menuItem.state = c64.vc1541.via1.tracingEnabled() ? .on : .off
+        }
         
         // Cartridge menu
-        if menuItem.title == "Final Cartridge III" {
+        if menuItem.action == #selector(MyController.finalCartridgeIIIaction(_:)) {
             return c64.expansionport.cartridgeType() == CRT_FINAL_CARTRIDGE_III
         }
         
         return true
     }
+   
     
-    @IBAction func cartridgeMenuAction(_ sender: Any!) {
+    //
+    // Action methods (Cartridge)
+    //
+
+    @IBAction func finalCartridgeIIIaction(_ sender: Any!) {
+        // Dummy action method to enable menu item validation
     }
     
-    @IBAction func cartridgeButtonAction(_ sender: Any!) {
+    @IBAction func finalCartridgeIIIfreezeAction(_ sender: Any!) {
         c64.expansionport.pressButton()
     }
+    
+    //
+    // Action methods (Debug)
+    //
+    
+    @IBAction func hideSpritesAction(_ sender: Any!) {
+
+        let undo = undoManager()
+        undo?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.hideSpritesAction(sender)
+        }
+        
+        c64.vic.setHideSprites(!c64.vic.hideSprites())
+    }
+  
+    @IBAction func markIRQLinesAction(_ sender: Any!) {
+    
+        let undo = undoManager()
+        undo?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.markIRQLinesAction(sender)
+        }
+        
+        c64.vic.setShowIrqLines(!c64.vic.showIrqLines())
+    }
+    
+    @IBAction func markDMALinesAction(_ sender: Any!) {
+    
+        let undo = undoManager()
+        undo?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.markDMALinesAction(sender)
+        }
+        
+        c64.vic.setShowDmaLines(!c64.vic.showDmaLines())
+    }
+    
+    @IBAction func traceC64CpuAction(_ sender: Any!) {
+        
+        let undo = undoManager()
+        undo?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.traceC64CpuAction(sender)
+        }
+        
+        c64.cpu.setTraceMode(!c64.cpu.tracingEnabled())
+    }
+  
+    @IBAction func traceIecAction(_ sender: Any!) {
+        
+        let undo = undoManager()
+        undo?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.traceIecAction(sender)
+        }
+        
+        c64.iec.setTraceMode(!c64.iec.tracingEnabled())
+    }
+ 
+    @IBAction func traceVC1541CpuAction(_ sender: Any!) {
+        
+        let undo = undoManager()
+        undo?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.traceVC1541CpuAction(sender)
+        }
+        
+        c64.vc1541.cpu.setTraceMode(!c64.vc1541.cpu.tracingEnabled())
+    }
+  
+    @IBAction func traceViaAction(_ sender: Any!) {
+        
+        let undo = undoManager()
+        undo?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.traceViaAction(sender)
+        }
+        
+        c64.vc1541.via1.setTraceMode(!c64.vc1541.via1.tracingEnabled())
+        c64.vc1541.via2.setTraceMode(!c64.vc1541.via2.tracingEnabled())
+    }
+    
+    @IBAction func dumpC64(_ sender: Any!) { c64.dump(); }
+    @IBAction func dumpC64CPU(_ sender: Any!) { c64.cpu.dump(); }
+    @IBAction func dumpC64CIA1(_ sender: Any!) {c64.cia1.dump(); }
+    @IBAction func dumpC64CIA2(_ sender: Any!) { c64.cia2.dump(); }
+    @IBAction func dumpC64VIC(_ sender: Any!) { c64.vic.dump(); }
+    @IBAction func dumpC64SID(_ sender: Any!) { c64.sid.dump(); }
+    @IBAction func dumpC64Memory(_ sender: Any!) { c64.mem.dump(); }
+    @IBAction func dumpVC1541(_ sender: Any!) { c64.vc1541.dump(); }
+    @IBAction func dumpVC1541CPU(_ sender: Any!) { c64.vc1541.dump(); }
+    @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.vc1541.dump(); }
+    @IBAction func dumpVC1541VIA2(_ sender: Any!) { c64.vc1541.via2.dump(); }
+    @IBAction func dumpVC1541Memory(_ sender: Any!) { c64.vc1541.mem.dump(); }
+    @IBAction func dumpKeyboard(_ sender: Any!) { c64.keyboard.dump(); }
+    @IBAction func dumpC64JoystickA(_ sender: Any!) { c64.joystickA.dump(); }
+    @IBAction func dumpC64JoystickB(_ sender: Any!) { c64.joystickB.dump(); }
+    @IBAction func dumpIEC(_ sender: Any!) { c64.iec.dump(); }
+    @IBAction func dumpC64ExpansionPort(_ sender: Any!) { c64.expansionport.dump(); }
+    
 }
