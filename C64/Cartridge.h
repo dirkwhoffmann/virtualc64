@@ -99,10 +99,6 @@ public:
      */
     static Cartridge *makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container);
     
-    //! @brief    Factory method
-    /*! @details  Creates a cartridge from a serialized data stream */
-    static Cartridge *makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType type);
-    
     //! @brief    Resets the cartridge
     /*! @details  Overwritten by subclasses to add special start-up behavior
      */
@@ -150,15 +146,9 @@ public:
     
     //! @brief    Returns the initial state of the game line
     bool getInitialGameLine() { return initialGameLine; }
-    
-    //! @brief    Sets the state of the game line
-    // void setGameLine(bool value);
-    
+        
     //! @brief    Returns the initial state of the exrom line
     bool getInitialExromLine() { return initialExromLine; }
-    
-    //! @brief    Sets the state of the exrom line
-    // void setExromLine(bool value);
     
     //! @brief   Banks in a chip
     /*  @details Chip contents will show up in memory

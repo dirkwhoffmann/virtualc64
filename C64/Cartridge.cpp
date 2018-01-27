@@ -37,8 +37,6 @@ Cartridge::~Cartridge()
 void
 Cartridge::reset()
 {
-    // VirtualComponent::reset();
-
     // Bank in chip 0 on startup
     bankIn(0);
 }
@@ -112,34 +110,6 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
     return cart;
 }
 
-Cartridge *
-Cartridge::makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType type)
-{
-    Cartridge *cart = makeCartridgeWithType(c64, type);
-    if (cart == NULL) return NULL;
-    
-    // cart->type = type;
-    cart->loadFromBuffer(buffer);
-    return cart;
-}
-
-/*
-void
-Cartridge::powerup()
-{
-    c64->expansionport.setGameLine(initialGameLine);
-    c64->expansionport.setExromLine(initialExromLine);
-    if (chip[0]) bankIn(0);
-}
-*/
-
-/*
-void
-Cartridge::ping()
-{
-}
-*/
-
 uint32_t
 Cartridge::stateSize()
 {
@@ -174,7 +144,6 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
         }
     }
     
-    // readBlock(buffer, rom, sizeof(rom));
     readBlock(buffer, blendedIn, sizeof(blendedIn));
     
     debug(2, "  Cartridge state loaded (%d bytes)\n", *buffer - old);
@@ -198,7 +167,6 @@ Cartridge::saveToBuffer(uint8_t **buffer)
         }
     }
     
-    // writeBlock(buffer, rom, sizeof(rom));
     writeBlock(buffer, blendedIn, sizeof(blendedIn));
     
     debug(4, "  Cartridge state saved (%d bytes)\n", *buffer - old);
@@ -267,23 +235,6 @@ Cartridge::numberOfBytes()
     
     return result;
 }
-
-/*
-void
-Cartridge::setGameLine(bool value)
-{
-
-    gameLine = value;
-    c64->expansionport.gameOrExromLineHasChanged();
-}
-
-void
-Cartridge::setExromLine(bool value)
-{
-    exromLine = value;
-    c64->expansionport.gameOrExromLineHasChanged();
-}
-*/
 
 void
 Cartridge::bankIn(unsigned nr)

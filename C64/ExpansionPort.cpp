@@ -77,7 +77,8 @@ ExpansionPort::loadFromBuffer(uint8_t **buffer)
     
     // Read cartridge data (if any)
     if (cartridgeType != CRT_NONE) {
-        attachCartridge(buffer, cartridgeType);
+        cartridge = Cartridge::makeCartridgeWithType(c64, cartridgeType);
+        cartridge->loadFromBuffer(buffer);
     }
     
     debug(2, "  Expansion port state loaded (%d bytes)\n", *buffer - old);
@@ -177,28 +178,18 @@ ExpansionPort::attachCartridge(Cartridge *c)
 {
     assert(c != NULL);
     
+    // Remove old cartridge (if any) and assign new one
     detachCartridge();
     cartridge = c;
-    c64->putMessage(MSG_CARTRIDGE, 1);
     
+    // Reset cartridge to update exrom and game line on the expansion port
+    cartridge->reset();
+    
+    c64->putMessage(MSG_CARTRIDGE, 1);
     debug(1, "Cartridge attached to expansion port");
     cartridge->dumpState();
 
     return true;
-}
-
-bool
-ExpansionPort::attachCartridge(uint8_t **buffer, CartridgeType type)
-{
-    assert(buffer != NULL);
-    Cartridge *cartridge = Cartridge::makeCartridgeWithBuffer(c64, buffer, type);
-    
-    if (cartridge == NULL) {
-        warn("Cannot create Cartridge from data buffer");
-        return false;
-    }
-    
-    return attachCartridge(cartridge);
 }
 
 bool

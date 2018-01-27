@@ -114,20 +114,12 @@ public:
      *  @details  Value has an effect on the C64's peek sources and poke targets
      */
     void setExromLine(bool value);
-
-    //! @brief    Informs the expansion port of a game line or exrom line change
-    // void gameOrExromLineHasChanged();
     
     //! @brief    Returns true if a cartridge is attached to the expansion port
     bool getCartridgeAttached() { return cartridge != NULL; }
 
     //! @brief    Attaches a cartridge to the expansion port
     bool attachCartridge(Cartridge *c);
-
-    //! @brief    Attaches a cartridge to the expansion port
-    /*! @details  Cartridge is provided by a data buffer
-     */
-    bool attachCartridge(uint8_t **buffer, CartridgeType type);
 
     //! @brief    Attaches a cartridge to the expansion port
     /*! @details  Cartridge is provided by a CRTContainer
