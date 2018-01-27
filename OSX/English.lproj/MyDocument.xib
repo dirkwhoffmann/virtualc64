@@ -790,7 +790,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="n9s-md-sVQ">
                                             <rect key="frame" x="1" y="0.0" width="266" height="459"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="1838" id="767" customClass="CpuTableView">
                                                     <rect key="frame" x="0.0" y="0.0" width="266" height="442"/>
@@ -3032,7 +3032,7 @@
                 <subviews>
                     <box verticalHuggingPriority="750" boxType="separator" id="1027">
                         <rect key="frame" x="20" y="262" width="448" height="5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
                     <textField verticalHuggingPriority="750" id="1031">
                         <rect key="frame" x="18" y="272" width="452" height="14"/>
@@ -3045,14 +3045,14 @@
                     </textField>
                     <box autoresizesSubviews="NO" borderType="line" title="Archive name" id="3Y3-Wc-m3k">
                         <rect key="frame" x="335" y="123" width="137" height="135"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="d3f-YD-bn4">
                             <rect key="frame" x="1" y="1" width="135" height="119"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView id="mSf-Ra-lAe" customClass="MountDragView">
                                     <rect key="frame" x="17" y="13" width="101" height="97"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="diskette" id="xYz-Tm-iXo"/>
                                     <connections>
                                         <outlet property="controller" destination="-2" id="gWf-hg-DWW"/>
@@ -3066,7 +3066,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="eoY-tS-MLP">
                             <rect key="frame" x="1" y="0.0" width="309" height="184"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="1844" id="1017">
                                     <rect key="frame" x="0.0" y="0.0" width="309" height="167"/>
@@ -3099,7 +3099,7 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
                                         </tableColumn>
                                         <tableColumn identifier="filesize" editable="NO" width="54" minWidth="32" maxWidth="1000" id="1034">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
@@ -3112,7 +3112,7 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
@@ -3136,7 +3136,7 @@
                     </scrollView>
                     <button verticalHuggingPriority="750" id="1011">
                         <rect key="frame" x="332" y="13" width="143" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="Insert disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="1813">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -3164,7 +3164,7 @@ Gw
                     </button>
                     <popUpButton identifier="Load options" id="yIn-rf-6xJ" userLabel="Load options">
                         <rect key="frame" x="104" y="50" width="226" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <popUpButtonCell key="cell" type="bevel" title="Flash binary into memory" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" identifier="Load options" tag="2" inset="2" preferredEdge="maxY" selectedItem="29N-xy-sHB" id="VNN-XE-VO5" userLabel="Load options">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
@@ -3182,7 +3182,7 @@ Gw
                     </popUpButton>
                     <textField verticalHuggingPriority="750" id="pv0-sz-BJr">
                         <rect key="frame" x="18" y="49" width="91" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="On double click:" id="9Lv-MW-1E7">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
@@ -3191,7 +3191,7 @@ Gw
                     </textField>
                     <textField verticalHuggingPriority="750" id="1025">
                         <rect key="frame" x="341" y="72" width="124" height="42"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" id="1815">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title">WARNING: 
@@ -3227,11 +3227,11 @@ Flashing ist fast, but less compatible</string>
                 <subviews>
                     <box verticalHuggingPriority="750" boxType="separator" id="rcJ-rc-0Cf">
                         <rect key="frame" x="20" y="196" width="448" height="5"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
                     <textField verticalHuggingPriority="750" id="rE0-0a-S2s">
                         <rect key="frame" x="18" y="206" width="452" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Datasette" id="Cjz-gt-oy2">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -3240,7 +3240,7 @@ Flashing ist fast, but less compatible</string>
                     </textField>
                     <box autoresizesSubviews="NO" borderType="line" title="Archive name" id="5pX-FM-kh9">
                         <rect key="frame" x="335" y="57" width="137" height="135"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="CMo-8Z-0eP">
                             <rect key="frame" x="1" y="1" width="135" height="119"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3258,7 +3258,7 @@ Flashing ist fast, but less compatible</string>
                     </box>
                     <button verticalHuggingPriority="750" id="REz-hd-Tcv">
                         <rect key="frame" x="332" y="13" width="143" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="Insert tape" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="pnB-qp-8qP">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -3286,7 +3286,7 @@ Gw
                     </button>
                     <button id="ttO-gK-9RO">
                         <rect key="frame" x="107" y="64" width="168" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Auto-press play on tape" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="U84-BP-98B">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -3297,7 +3297,7 @@ Gw
                     </button>
                     <textField verticalHuggingPriority="750" id="czP-9Q-9k7">
                         <rect key="frame" x="76" y="119" width="225" height="56"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES"/>
                         <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="center" title="TAP archives contain a continous bit-stream with no preview available." id="81L-ww-kxd">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3306,7 +3306,7 @@ Gw
                     </textField>
                     <button id="G9s-bL-nHr">
                         <rect key="frame" x="107" y="92" width="104" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Auto-load file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="894-3k-9b3">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -3339,7 +3339,7 @@ Gw
                 <subviews>
                     <textField verticalHuggingPriority="750" id="1874">
                         <rect key="frame" x="17" y="233" width="428" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The emulator cannot run because one or more ROMs are missing." id="1875">
                             <font key="font" metaFont="systemBold" size="12"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -3348,7 +3348,7 @@ Gw
                     </textField>
                     <textField verticalHuggingPriority="750" id="1900">
                         <rect key="frame" x="17" y="12" width="434" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Click help button to learn more about compatible ROMs." id="1901">
                             <font key="font" metaFont="cellTitle"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -3364,7 +3364,7 @@ Gw
                             <subviews>
                                 <imageView id="1880" customClass="ROMDropTargetView">
                                     <rect key="frame" x="1" y="22" width="128" height="128"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="romchip" id="1881"/>
                                     <connections>
                                         <outlet property="controller" destination="-2" id="zpg-DT-nvd"/>
@@ -3435,7 +3435,7 @@ Gw
                     </box>
                     <button verticalHuggingPriority="750" id="1898">
                         <rect key="frame" x="384" y="5" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="Quit" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="1899">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -3449,7 +3449,7 @@ DQ
                     </button>
                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="2018">
                         <rect key="frame" x="356" y="10" width="25" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2019">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
