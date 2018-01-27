@@ -24,9 +24,9 @@
 // -----------------------------------------------------------------------------------------
 
 void
-FinalIII::powerup()
+FinalIII::reset()
 {
-    debug("FinalCartridge::powerup\n");
+    debug("FinalCartridge::reset\n");
     
     /* Final cartridge III contains four 16KB ROMs residing at $8000 - $BFFF
      *
@@ -53,8 +53,8 @@ FinalIII::powerup()
     
     // c64->cpu.setNMILineExpansionPort();
     bankIn(0);
-    setGameLine(0);
-    setExromLine(0);
+    initialGameLine = 0;
+    initialExromLine = 0;
 }
 
 uint8_t
@@ -103,8 +103,8 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
         
         // Bit 7
         if (hide) {
-            setGameLine(1);
-            setExromLine(1);
+            c64->expansionport.setGameLine(1);
+            c64->expansionport.setExromLine(1);
         }
         
         // Bit 6
@@ -112,8 +112,8 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
         : c64->cpu.setNMILineExpansionPort();
         
         // Bit 5 and 4
-        setGameLine(game);
-        setExromLine(exrom);
+        c64->expansionport.setGameLine(game);
+        c64->expansionport.setExromLine(exrom);
         
         // Bit 1 and 0
         bankIn(bank);
@@ -149,7 +149,7 @@ FinalIII::pressSecondButton() {
 // -----------------------------------------------------------------------------------------
 
 void
-SimonsBasic::powerup()
+SimonsBasic::reset()
 {
     bankIn(0);
     bankIn(1);
@@ -162,7 +162,7 @@ SimonsBasic::peekIO(uint16_t addr)
     
     if (addr == 0xDE00) {
         // Switch to 8KB configuration
-        setGameLine(1);
+        c64->expansionport.setGameLine(1);
     }
     return Cartridge::peekIO(addr);
 }
@@ -174,7 +174,7 @@ SimonsBasic::poke(uint16_t addr, uint8_t value)
     
     if (addr == 0xDE00) {
         // Switch to 16KB configuration
-        setGameLine(0);
+        c64->expansionport.setGameLine(0);
     }
 }
 
@@ -225,8 +225,8 @@ Powerplay::poke(uint16_t addr, uint8_t value)
     if (addr == 0xDE00) {
        
         if (value == 0x86) {
-            setGameLine(1);
-            setExromLine(1);
+            c64->expansionport.setGameLine(1);
+            c64->expansionport.setExromLine(1);
             return;
         }
         
@@ -267,11 +267,11 @@ Supergames::poke(uint16_t addr, uint8_t value)
         // debug ("value = %02X, bank = %d, ctrl = %d", value, bank, ctrl);
         
         if (ctrl) {
-            setExromLine(false);
-            setGameLine(true);
+            c64->expansionport.setExromLine(false);
+            c64->expansionport.setGameLine(true);
         } else {
-            setExromLine(0);
-            setGameLine(0);
+            c64->expansionport.setExromLine(0);
+            c64->expansionport.setGameLine(0);
         }
         
         bankIn(bank);

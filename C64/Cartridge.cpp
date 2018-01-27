@@ -14,10 +14,8 @@ Cartridge::Cartridge(C64 *c64)
 
     this->c64 = c64;
     
-    gameLine = true;
-    exromLine = true;
-    
-    // memset(rom, 0, sizeof(rom));
+    initialGameLine = 1;
+    initialExromLine = 1;
     memset(blendedIn, 255, sizeof(blendedIn));
     
     for (unsigned i = 0; i < 64; i++) {
@@ -39,8 +37,10 @@ Cartridge::~Cartridge()
 void
 Cartridge::reset()
 {
-    VirtualComponent::reset();
-    powerup();
+    // VirtualComponent::reset();
+
+    // Bank in chip 0 on startup
+    bankIn(0);
 }
 
 bool
@@ -100,9 +100,9 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
     cart = makeCartridgeWithType(c64, container->getCartridgeType());
     assert(cart != NULL);
     
-    // cart->type = container->getCartridgeType();
-    cart->gameLine = container->getGameLine();
-    cart->exromLine = container->getExromLine();
+    // Remember powerup values for game line and exrom line
+    cart->initialGameLine  = container->getGameLine();
+    cart->initialExromLine = container->getExromLine();
     
     // Load chip packets
     for (unsigned i = 0; i < container->getNumberOfChips(); i++) {
@@ -123,17 +123,22 @@ Cartridge::makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType typ
     return cart;
 }
 
+/*
 void
 Cartridge::powerup()
 {
+    c64->expansionport.setGameLine(initialGameLine);
+    c64->expansionport.setExromLine(initialExromLine);
     if (chip[0]) bankIn(0);
-    // c64->expansionport.gameOrExromLineHasChanged();
 }
+*/
 
+/*
 void
 Cartridge::ping()
 {
 }
+*/
 
 uint32_t
 Cartridge::stateSize()
@@ -154,8 +159,8 @@ Cartridge::loadFromBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    gameLine = (bool)read8(buffer);
-    exromLine = (bool)read8(buffer);
+    initialGameLine = (bool)read8(buffer);
+    initialExromLine = (bool)read8(buffer);
     
     for (unsigned i = 0; i < 64; i++) {
         chipStartAddress[i] = read16(buffer);
@@ -181,8 +186,8 @@ Cartridge::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    write8(buffer, (uint8_t)gameLine);
-    write8(buffer, (uint8_t)exromLine);
+    write8(buffer, (uint8_t)initialGameLine);
+    write8(buffer, (uint8_t)initialExromLine);
     
     for (unsigned i = 0; i < 64; i++) {
         write16(buffer, chipStartAddress[i]);
@@ -207,9 +212,9 @@ Cartridge::dumpState()
     msg("Cartridge\n");
     msg("---------\n");
     
-    msg("Cartridge type: %d\n", getCartridgeType());
-    msg("Game line:      %d\n", getGameLine());
-    msg("Exrom line:     %d\n", getExromLine());
+    msg("Cartridge type:     %d\n", getCartridgeType());
+    msg("Initial game line:  %d\n", initialGameLine);
+    msg("Initial exrom line: %d\n", initialExromLine);
     
     for (unsigned i = 0; i < 64; i++) {
         if (chip[i] != NULL) {
@@ -263,6 +268,7 @@ Cartridge::numberOfBytes()
     return result;
 }
 
+/*
 void
 Cartridge::setGameLine(bool value)
 {
@@ -277,12 +283,15 @@ Cartridge::setExromLine(bool value)
     exromLine = value;
     c64->expansionport.gameOrExromLineHasChanged();
 }
+*/
 
 void
 Cartridge::bankIn(unsigned nr)
 {
     assert(nr < 64);
-    assert(chip[nr] != NULL);
+    
+    if (chip[nr] == NULL)
+        return;
 
     uint16_t start     = chipStartAddress[nr];
     uint16_t size      = chipSize[nr];

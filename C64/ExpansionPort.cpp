@@ -24,6 +24,8 @@ ExpansionPort::ExpansionPort()
     debug(3, "  Creating expansion port at address %p...\n", this);
 
     cartridge = NULL;
+    gameLine = 1;
+    exromLine = 1;
 }
 
 ExpansionPort::~ExpansionPort()
@@ -36,9 +38,17 @@ void
 ExpansionPort::reset()
 {
     VirtualComponent::reset();
-    if (cartridge)
+    
+    if (cartridge) {
         cartridge->reset();
-    gameOrExromLineHasChanged();
+        setGameLine(cartridge->getInitialGameLine());
+        setExromLine(cartridge->getInitialExromLine());
+    } else {
+        setGameLine(1);
+        setExromLine(1);
+    }
+    
+    // debug("Resetting port: game = %d exrom = %d\n", cartridge->getInitialGameLine(), cartridge->getInitialExromLine());
 }
 
 void
@@ -50,7 +60,7 @@ ExpansionPort::ping()
 uint32_t
 ExpansionPort::stateSize()
 {
-    return 2 + (cartridge ? cartridge->stateSize() : 0);
+    return 4 + (cartridge ? cartridge->stateSize() : 0);
 }
 
 void
@@ -62,7 +72,9 @@ ExpansionPort::loadFromBuffer(uint8_t **buffer)
     
     // Read cartridge type
     CartridgeType cartridgeType = (CartridgeType)read16(buffer);
-
+    exromLine = read8(buffer);
+    gameLine = read8(buffer);
+    
     // Read cartridge data (if any)
     if (cartridgeType != CRT_NONE) {
         attachCartridge(buffer, cartridgeType);
@@ -77,9 +89,10 @@ ExpansionPort::saveToBuffer(uint8_t **buffer)
 {
     uint8_t *old = *buffer;
     
-    // Write cartridge type
     write16(buffer, cartridge ? cartridge->getCartridgeType() : CRT_NONE);
-
+    write8(buffer, exromLine);
+    write8(buffer, gameLine);
+    
     // Write cartridge data (if any)
     if (cartridge != NULL)
         cartridge->saveToBuffer(buffer);
@@ -94,8 +107,12 @@ ExpansionPort::dumpState()
     msg("Expansion port\n");
     msg("--------------\n");
     
+    msg("Game line:  %d\n", gameLine);
+    msg("Exrom line: %d\n", exromLine);
+
+    
     if (cartridge == NULL) {
-        msg("No cartridge attached");
+        msg("No cartridge attached\n");
     } else {
         cartridge->dumpState();
     }
@@ -141,24 +158,17 @@ ExpansionPort::poke(uint16_t addr, uint8_t value)
         cartridge->poke(addr, value);
 }
 
-bool
-ExpansionPort::getGameLine()
+void
+ExpansionPort::setGameLine(bool value)
 {
-    return cartridge ? cartridge->getGameLine() : true /* default value */;
-}
-
-bool
-ExpansionPort::getExromLine()
-{
-    return cartridge ? cartridge->getExromLine() : true /* default value */;
+    gameLine = value;
+    c64->mem.updatePeekPokeLookupTables();
 }
 
 void
-ExpansionPort::gameOrExromLineHasChanged()
+ExpansionPort::setExromLine(bool value)
 {
-    assert(c64 != NULL);
-    
-    // Update peek sources, poke targets and ultimax flag
+    exromLine = value;
     c64->mem.updatePeekPokeLookupTables();
 }
 
@@ -168,11 +178,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     assert(c != NULL);
     
     detachCartridge();
-    
     cartridge = c;
-    cartridge->powerup();
-    gameOrExromLineHasChanged();
-    
     c64->putMessage(MSG_CARTRIDGE, 1);
     
     debug(1, "Cartridge attached to expansion port");
@@ -218,7 +224,9 @@ ExpansionPort::detachCartridge()
     delete cartridge;
     cartridge = NULL;
     
-    gameOrExromLineHasChanged();
+    setGameLine(1);
+    setExromLine(1);
+
     c64->putMessage(MSG_CARTRIDGE, 0);
     
     debug(1, "Cartridge detached from expansion port");

@@ -44,17 +44,17 @@ class ExpansionPort;
  */
 class Cartridge : public VirtualComponent {
     
-private:
-    
-    /*! @brief    Game line of the attached cartridge
-     */
-    bool gameLine;
-    
-    /*! @brief    Exrom line of the attached cartridge
-     */
-    bool exromLine;
-    
 protected:
+    
+    /*! @brief    Initial gameLine value used by this cartridge
+     *  @details  gameLine is set to this value when the cartridge is attached.
+     */
+    bool initialGameLine;
+    
+    /*! @brief    Initial exromLine value used by this cartridge
+     *  @details  exromLine is set to this value when the cartridge is attached.
+     */
+    bool initialExromLine;
     
     /*! @brief    ROM chips contained in the attached cartridge
      *  @details  A cartridge can contain up to 64 chips
@@ -104,15 +104,12 @@ public:
     static Cartridge *makeCartridgeWithBuffer(C64 *c64, uint8_t **buffer, CartridgeType type);
     
     //! @brief    Resets the cartridge
-    void reset();
-    
-    //! @brief    Invoked when the cartridge gets attached
     /*! @details  Overwritten by subclasses to add special start-up behavior
      */
-    virtual void powerup();
+    void reset();
     
     //! @brief    Dumps the current configuration into the message queue
-    void ping();
+    void ping() { };
     
     //! @brief    Returns the size of the internal state
     uint32_t stateSize();
@@ -151,17 +148,17 @@ public:
     //! @brief    Sums up the sizes of all chips in bytes
     unsigned numberOfBytes();
     
-    //! @brief    Returns the state of the game line
-    bool getGameLine() { return gameLine; }
+    //! @brief    Returns the initial state of the game line
+    bool getInitialGameLine() { return initialGameLine; }
     
     //! @brief    Sets the state of the game line
-    void setGameLine(bool value);
+    // void setGameLine(bool value);
     
-    //! @brief    Returns the state of the exrom line
-    bool getExromLine() { return exromLine; }
+    //! @brief    Returns the initial state of the exrom line
+    bool getInitialExromLine() { return initialExromLine; }
     
     //! @brief    Sets the state of the exrom line
-    void setExromLine(bool value);
+    // void setExromLine(bool value);
     
     //! @brief   Banks in a chip
     /*  @details Chip contents will show up in memory

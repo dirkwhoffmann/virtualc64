@@ -48,6 +48,16 @@ private:
      */
     Cartridge *cartridge;
     
+    /*! @brief    Current value of game line
+     *  @details  Equals 1, if no cartridge if attached.
+     */
+    bool gameLine;
+    
+    /*! @brief    Current value of exrom line
+     *  @details  Equals 1, if no cartridge if attached.
+     */
+    bool exromLine;
+    
 public:
     
     //! @brief    Constructor
@@ -90,16 +100,26 @@ public:
     CartridgeType getCartridgeType();
     
     //! @brief    Returns the state of the game line
-    bool getGameLine();
+    bool getGameLine() { return gameLine; }
     
+    /*! @brief    Sets the state of the game line
+     *  @details  Value has an effect on the C64's peek sources and poke targets
+     */
+    void setGameLine(bool value);
+
     //! @brief    Returns the state of the exrom line
-    bool getExromLine();
+    bool getExromLine() { return exromLine; }
+
+    /*! @brief    Sets the state of the exrom line
+     *  @details  Value has an effect on the C64's peek sources and poke targets
+     */
+    void setExromLine(bool value);
 
     //! @brief    Informs the expansion port of a game line or exrom line change
-    void gameOrExromLineHasChanged();
+    // void gameOrExromLineHasChanged();
     
     //! @brief    Returns true if a cartridge is attached to the expansion port
-    inline bool getCartridgeAttached() { return cartridge != NULL; }
+    bool getCartridgeAttached() { return cartridge != NULL; }
 
     //! @brief    Attaches a cartridge to the expansion port
     bool attachCartridge(Cartridge *c);
