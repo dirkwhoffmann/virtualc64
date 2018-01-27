@@ -52,6 +52,7 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_FINAL_CARTRIDGE_III:
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN_TYPE_1:
+        case CRT_FUN_PLAY_POWER_PLAY:
             return true;
             
         default:
@@ -77,6 +78,9 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             
         case CRT_OCEAN_TYPE_1:
             return new OceanType1(c64);
+            
+        case CRT_FUN_PLAY_POWER_PLAY:
+            return new Powerplay(c64);
         
         default:
             assert(false); // should not reach
@@ -227,7 +231,7 @@ Cartridge::peek(uint16_t addr)
     }
     
     // No cartridge chip is mapped to this memory area
-    debug("Peeking from unmapped location: %04X\n", addr);
+    // debug("Peeking from unmapped location: %04X\n", addr);
     return c64->mem.peekRam(addr);
 }
 

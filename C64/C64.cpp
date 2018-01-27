@@ -323,7 +323,7 @@ datasette.execute(); \
 cycle++; \
 rasterlineCycle++;
 
-inline bool
+bool
 C64::executeOneCycle()
 {
     bool result = true; // Don't break execution
@@ -605,7 +605,7 @@ C64::executeOneCycle()
     return result;
 }
 
-inline bool
+bool
 C64::executeOneLine()
 {
     uint8_t lastCycle = vic.getCyclesPerRasterline();

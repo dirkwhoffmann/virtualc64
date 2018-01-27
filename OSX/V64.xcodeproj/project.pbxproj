@@ -126,6 +126,7 @@
 		50B37D791A56CA4F0055A540 /* ROMDropTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */; };
 		50B4B6061EEFE75A00D56499 /* TimeTravelScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */; };
 		50B4B6091EEFFF6800D56499 /* C64Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B4B6081EEFFF6800D56499 /* C64Proxy.swift */; };
+		50B5861D201C673900742DB3 /* Powerplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B5861B201C673900742DB3 /* Powerplay.cpp */; };
 		50B6894812DCA7B100CBB5B7 /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50B6894712DCA7B100CBB5B7 /* MyController.mm */; };
 		50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50C72DE31BC7BC8800F1863B /* Metal.framework */; };
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
@@ -410,6 +411,8 @@
 		50B37D781A56CA4F0055A540 /* ROMDropTargetView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ROMDropTargetView.mm; sourceTree = "<group>"; };
 		50B4B6051EEFE75A00D56499 /* TimeTravelScrubber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelScrubber.swift; sourceTree = "<group>"; };
 		50B4B6081EEFFF6800D56499 /* C64Proxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C64Proxy.swift; sourceTree = "<group>"; };
+		50B5861B201C673900742DB3 /* Powerplay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Powerplay.cpp; sourceTree = "<group>"; };
+		50B5861C201C673900742DB3 /* Powerplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Powerplay.h; sourceTree = "<group>"; };
 		50B58B1D0A5A6524000AD819 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		50B6894612DCA7B100CBB5B7 /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
 		50B6894712DCA7B100CBB5B7 /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
@@ -846,6 +849,8 @@
 				503C8BFE2014B9F8000494A0 /* SimonsBasic.cpp */,
 				503C8BFC2014ACF0000494A0 /* OceanType1.h */,
 				503C8BFB2014ACF0000494A0 /* OceanType1.cpp */,
+				50B5861C201C673900742DB3 /* Powerplay.h */,
+				50B5861B201C673900742DB3 /* Powerplay.cpp */,
 			);
 			name = Cartridges;
 			sourceTree = "<group>";
@@ -1269,6 +1274,7 @@
 				509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */,
 				509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */,
 				50AFEDBC0C3A7A78007749E7 /* Archive.cpp in Sources */,
+				50B5861D201C673900742DB3 /* Powerplay.cpp in Sources */,
 				389E77800C7A3B6F00BEAFA6 /* Joystick.cpp in Sources */,
 				50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */,
 				5000C80F0D13CE680011A2E9 /* C64Memory.cpp in Sources */,

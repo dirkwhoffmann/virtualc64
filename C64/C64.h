@@ -101,6 +101,7 @@
 #include "FinalIII.h"
 #include "SimonsBasic.h"
 #include "OceanType1.h"
+#include "Powerplay.h"
 
 // Peripherals
 #include "VC1541.h"
@@ -146,6 +147,14 @@ c64->loadRom(...)
 4. Power up
 c64->run()
 
+loadRom() is an important function as it does mutliple things. In the first place, it will
+ initialize one of the four ROMs in the virtual computer. If all ROMs are read in, it does
+ two addition things. Firstly, it calls reset() to initialize all components. Note that it
+ does not make sense to reset the computer earlier as some information such as the start
+ address of the program counter is stored in ROM. Secondly, it sends MSG_READY_TO_RUN to the
+ GUI. The GUI reacts with a call to run(). This function brings the emulator
+ to life by creating and launching the execution thread.
+ 
 
 Message queue:
 --------------
@@ -162,10 +171,6 @@ while ((message = [c64 message]) != NULL) {
             ...
     }
 }
-
-MSG_READY_TO_RUN is one of the most important messages and indicates that all ROMs are
-in place. The GUI reacts with a call to run(). This function brings the emulator
-to life by creating and launching the execution thread.
 
 
 The execution thread:
@@ -195,7 +200,13 @@ suspend / result: Temporarily pauses the emulation thread
 If multiple operations need to be executed atomically (such as
 taking an emulator snapshot), the operations are embedded inside a
 suspend() / resume() block. Both methods use halt() and run() internally.
-*/
+
+reset:
+ 
+This method restarts the emulation on a freshly initialized computer.
+It has the same effect as switching a real C64 off and on again. Note that a
+ few items are retained during a reset, e.g., an attached cartridge.
+ */
 
 
 
@@ -361,7 +372,7 @@ public:
     //
 	
 	//! @brief    Returns true if the emulator is currently running in PAL mode
-	inline bool isPAL() { return vic.isPAL(); }
+    bool isPAL() { return vic.isPAL(); }
 
 	/*! @brief    Puts the emulator in PAL mode
      *  @details  This method plugs in a PAL VIC chip and reconfigures SID with the proper timing information 
@@ -369,7 +380,7 @@ public:
 	void setPAL();
 	
     //! @brief    Returns true if the emulator is currently running in NTSC mode
-	inline bool isNTSC() { return !vic.isPAL(); }
+    bool isNTSC() { return !vic.isPAL(); }
 
     /*! @brief    Puts the emulator in PAL mode
      *  @details  This method plugs in a PAL VIC chip and reconfigures SID with the proper timing information
@@ -389,13 +400,13 @@ public:
     void setReSID(bool value) { sid.setReSID(value); }
 
     //! @brief    Gets the sampling method
-    inline sampling_method getSamplingMethod() { return sid.getSamplingMethod(); }
+    sampling_method getSamplingMethod() { return sid.getSamplingMethod(); }
     
     //! @brief    Sets the sampling method
     void setSamplingMethod(sampling_method value) { sid.setSamplingMethod(value); }
     
     //! @brief    Gets the SID chip model
-    inline chip_model getChipModel() { return sid.getChipModel(); }
+    chip_model getChipModel() { return sid.getChipModel(); }
     
     //! @brief    Sets the SID chip model
     void setChipModel(chip_model value) { sid.setChipModel(value); }
@@ -404,12 +415,6 @@ public:
     //
     //! @functiongroup Running the emulator
     //
-		
-    //! @brief    Power up
-    /*! @details  This method simulates a C64 cold start (switching power on).
-     *            You can call this function once all ROMs are loaded in.
-     */
-    // void powerUp();
     
     //! @brief    Continues emulation
     /*! @details  This method recreates the emulation thread and is usually called after
@@ -448,7 +453,7 @@ public:
 private:
 	
     //! @brief    Executes virtual C64 for one cycle
-    inline bool executeOneCycle();
+    bool executeOneCycle();
     
 	//! @brief    Invoked before executing the first cycle of rasterline
 	void beginOfRasterline();
@@ -470,19 +475,19 @@ private:
 public:
     
     //! @brief    Returns true iff cpu runs at maximum speed (timing sychronization is disabled).
-    inline bool getWarp() { return warp; }
+    bool getWarp() { return warp; }
     
     //! @brief    Enables or disables timing synchronization.
     void setWarp(bool b);
     
     //! @brief    Returns true iff cpu should always run at maximun speed.
-    inline bool getAlwaysWarp() { return alwaysWarp; }
+    bool getAlwaysWarp() { return alwaysWarp; }
     
     //! @brief    Setter for alwaysWarp.
     void setAlwaysWarp(bool b);
     
     //! @brief    Returns true iff warp mode is activated during disk operations.
-    inline bool getWarpLoad() { return warpLoad; }
+    bool getWarpLoad() { return warpLoad; }
     
     //! @brief    Setter for warpLoad.
     void setWarpLoad(bool b);
@@ -502,16 +507,16 @@ public:
     //
     
     //! @brief    Returns the number of CPU cycles elapsed so far.
-    inline uint64_t getCycles() { return cycle; }
+    uint64_t getCycles() { return cycle; }
     
     //! @brief    Returns the number of the currently drawn frame.
-    inline uint64_t getFrame() { return frame; }
+    uint64_t getFrame() { return frame; }
     
     //! @brief    Returns the number of the currently drawn rasterline.
-    inline uint16_t getRasterline() { return rasterline; }
+    uint16_t getRasterline() { return rasterline; }
 
     //! @brief    Returns the currently executed rasterline clock cycle
-    inline uint8_t getRasterlineCycle() { return rasterlineCycle; }
+    uint8_t getRasterlineCycle() { return rasterlineCycle; }
 
     
     //
@@ -519,7 +524,7 @@ public:
     //
     
     //! @brief    Returns the ultimax flag
-    inline bool getUltimax() { return ultimax; }
+    bool getUltimax() { return ultimax; }
     
     //! @brief    Setter for ultimax.
     void setUltimax(bool b) { ultimax = b; }
