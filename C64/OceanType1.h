@@ -18,6 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#if 0
+
 #ifndef _OCEAN_TYPE1_INC
 #define _OCEAN_TYPE1_INC
 
@@ -37,6 +39,8 @@ public:
     CartridgeType getCartridgeType() { return CRT_OCEAN_TYPE_1; }
     void poke(uint16_t addr, uint8_t value);
 };
+
+#endif
 
 #endif
 

@@ -18,6 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#if 0
+
 #ifndef _SIMONS_BASIC
 #define _SIMONS_BASIC
 
@@ -37,6 +39,8 @@ public:
     uint8_t peekIO(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
 };
+
+#endif
 
 #endif
 

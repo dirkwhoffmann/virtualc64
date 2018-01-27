@@ -53,6 +53,7 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_SIMONS_BASIC:
         case CRT_OCEAN_TYPE_1:
         case CRT_FUN_PLAY_POWER_PLAY:
+        case CRT_SUPER_GAMES:
             return true;
             
         default:
@@ -82,6 +83,9 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
         case CRT_FUN_PLAY_POWER_PLAY:
             return new Powerplay(c64);
         
+        case CRT_SUPER_GAMES:
+            return new Supergames(c64);
+            
         default:
             assert(false); // should not reach
             return NULL;

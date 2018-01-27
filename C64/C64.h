@@ -97,11 +97,7 @@
 #include "CPU.h"
 
 // Cartridges
-#include "Cartridge.h"
-#include "FinalIII.h"
-#include "SimonsBasic.h"
-#include "OceanType1.h"
-#include "Powerplay.h"
+#include "CustomCartridges.h"
 
 // Peripherals
 #include "VC1541.h"

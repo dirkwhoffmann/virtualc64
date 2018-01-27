@@ -18,6 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#if 0
+
 #ifndef _FINAL_III
 #define _FINAL_III
 
@@ -47,6 +49,8 @@ public:
     //! @brief   Virtual push of the cartriges's reset button
     void pressSecondButton();
 };
+
+#endif
 
 #endif
 

@@ -5,6 +5,8 @@
 //  Created by Dirk Hoffmann on 21.01.18.
 //
 
+#if 0
+
 #include "SimonsBasic.h"
 
 /*
@@ -53,3 +55,6 @@ SimonsBasic::poke(uint16_t addr, uint8_t value)
         setGameLine(0);
     }
 }
+
+#endif
+

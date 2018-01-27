@@ -5,6 +5,8 @@
 //  Created by Dirk Hoffmann on 21.01.18.
 //
 
+#if 0
+
 #include "C64.h"
 
 void
@@ -127,3 +129,4 @@ FinalIII::pressSecondButton() {
     memcpy(c64->mem.ram, ram, 0xFFFF);
 }
 
+#endif

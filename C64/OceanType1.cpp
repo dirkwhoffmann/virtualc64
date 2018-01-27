@@ -5,6 +5,8 @@
 //  Created by Dirk Hoffmann on 21.01.18.
 //
 
+#if 0
+
 #include "OceanType1.h"
 
 /*
@@ -27,4 +29,6 @@ OceanType1::poke(uint16_t addr, uint8_t value)
         bankIn(value & 0x3F);
     }
 }
+
+#endif
 
