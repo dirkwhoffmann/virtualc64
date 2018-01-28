@@ -20,8 +20,11 @@
 
 Container::Container()
 {
+    const char *defaultName = "HELLO VIRTUALC64";
+    
 	path = NULL;
-    memset(name, 0, sizeof(name));
+    // memset(name, 0, sizeof(name));
+    memcpy(name, defaultName, strlen(defaultName) + 1);
 }
 
 Container::~Container()

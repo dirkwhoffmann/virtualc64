@@ -73,6 +73,24 @@ extension MyController {
     }
    
     //
+    // Action methods (File)
+    //
+    
+    @IBAction func insertBlankDisk(_ sender: Any!) {
+        
+        print("\(#function)")
+
+        // Create empty Archive
+        let archive = ArchiveProxy()
+        
+        // Convert to D64Archive
+        let d64archive = D64ArchiveProxy.archive(fromArchive: archive)
+        
+        // Insert as disk
+        c64.mountArchive(d64archive)
+    }
+    
+    //
     // Action methods (Keyboard)
     //
     

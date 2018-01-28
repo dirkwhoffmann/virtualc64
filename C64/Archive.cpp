@@ -26,51 +26,6 @@ Archive::~Archive()
 {
 }
 
-#if 0
-int 
-Archive::getItemWithName(char *pattern)
-{
-    unsigned i,j;
-	int no_of_items = getNumberOfItems();
-	
-	assert(pattern != NULL);
-	size_t pattern_length = strlen(pattern);
-	
-	// Iterate through all directory items
-	for (i = 0; i < no_of_items; i++) {
-	
-		const char *name = getNameOfItem(i);
-		size_t length    = strlen(name);
-		
-		// Pattern can't match if it has more characters
-		if (length < pattern_length) {
-			continue;
-		}
-		
-		// Iterate through all characters of the search pattern
-		for (j = 0; j < pattern_length; j++) {
-
-			// '*' matches everything
-			if (pattern[j] == '*')
-				return i;
-			
-			// '?' matches an arbitrary character
-			if (pattern[j] == '?') 
-				continue;
-			
-			if (pattern[j] != name[j])
-				break;
-		}
-		
-		if (j == length) {
-			return i;
-		}
-	}
-	
-	return -1;
-}
-#endif 
-
 int
 Archive::getSizeOfItem(int n)
 {

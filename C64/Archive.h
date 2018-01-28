@@ -51,34 +51,27 @@ public:
     //
 
     //! @brief    Returns the number of items in this archive.
-    virtual int getNumberOfItems() = 0;
+    virtual int getNumberOfItems() { return 0; }
 
     
     //
     //! Accessing item attributes
     //
-
-    /*! @brief    Searches the directory for a specific item.
-     *  @param    filename The item name may contain the wildcard characters '?' and '*'.
-     *  @return   The number of the item (starting at 0) or -1, if no matching item was found.
-     *  @deprecated
-     */
-	// int getItemWithName(char *filename);
 			
     /*! @brief   Returns the name of an item
      *  @return  String in ASCII format, or NULL, if item does not exist
      */
-	virtual const char *getNameOfItem(int n) = 0;
+    virtual const char *getNameOfItem(int n) { return NULL; }
 
     /*! @brief   Returns the name of an item
      *  @return  Unicode character array, or NULL, if item does not exist
      *  @details The provides unicode format is compatible with font C64ProMono
      *           which is used, e.g., in the mount dialogs preview panel. 
      */
-    virtual const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars = 255) = 0;
+    virtual const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars = 255) { return NULL; }
 
     //! @brief    Returns the type of an item as a string (e.g., "PRG" or "DEL")
-	virtual const char *getTypeOfItem(int n) = 0;
+    virtual const char *getTypeOfItem(int n) { return NULL; }
 	
     //! @brief    Returns the size of an item in bytes
 	virtual int getSizeOfItem(int n);
@@ -92,7 +85,7 @@ public:
     /*! @brief    Returns the proposed memory location of an item.
      *  @details  When a file is flashed into memory, the raw data is copied to this location.
      */
-	virtual uint16_t getDestinationAddrOfItem(int n) = 0;
+    virtual uint16_t getDestinationAddrOfItem(int n) { return 0; }
 	
     
     //
@@ -100,17 +93,17 @@ public:
     //
 
     //! @brief    Selects an item to read from
-	virtual void selectItem(int n) = 0;
+    virtual void selectItem(int n) { }
 	
     //! @brief    Reads the next byte from the currently selected item
-	virtual int getByte() = 0;
+    virtual int getByte() { return 0; }
 
     
     //
     //! @functiongroup Debugging
     //
     
-    virtual void dumpDirectory();
+    virtual void dumpDirectory(); 
     
 };
 

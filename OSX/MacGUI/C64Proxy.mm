@@ -939,6 +939,18 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 @implementation ArchiveProxy
 
+- (instancetype) init
+{
+    NSLog(@"ArchiveProxy::init");
+    if (self = [super init]) {
+        Archive *archive = new Archive();
+        wrapper = new ArchiveWrapper();
+        wrapper->archive = archive;
+        NSLog(@"Success");
+    }
+    return self;
+}
+
 - (instancetype) initWithArchive:(Archive *)archive
 {
     NSLog(@"ArchiveProxy::initWithArchive %p", archive);

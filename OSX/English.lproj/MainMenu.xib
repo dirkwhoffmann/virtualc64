@@ -106,6 +106,15 @@
                                     <action selector="revertDocumentToSaved:" target="-1" id="198"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="74">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Insert blank disk" id="543">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="insertBlankDisk:" target="-1" id="ZPa-1W-g2f"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Export Disk..." id="341">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Export Disk..." id="550">
@@ -137,13 +146,13 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="74">
+                            <menuItem isSeparatorItem="YES" id="pkt-Rk-yZn">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Save Screenshot..." id="543">
+                            <menuItem title="Save Screenshot..." id="2aL-ZH-0LC">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="saveScreenshotDialog:" target="-1" id="545"/>
+                                    <action selector="saveScreenshotDialog:" target="-1" id="wgq-rs-LCi"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Quick save screenshot" keyEquivalent="s" id="7oe-oV-MnG">

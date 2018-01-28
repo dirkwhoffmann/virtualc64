@@ -733,7 +733,6 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (NSInteger) getSizeOfItemInBlocks:(NSInteger)item;
 - (NSString *) getTypeOfItem:(NSInteger)item;
 - (BOOL)writeToFile:(NSString *)filename;
-
 @end
 
 @interface T64ArchiveProxy : ArchiveProxy

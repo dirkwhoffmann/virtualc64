@@ -69,7 +69,7 @@ public:
 private:
     
     //! @brief Frees the memory allocated by this object.
-    virtual void dealloc() = 0;
+    virtual void dealloc() { };
 
     //
     //! @functiongroup Accessing container attributes
@@ -97,12 +97,12 @@ public:
 
     //! @brief    Returns the type of this container.
     /*  @deprecated */
-    virtual ContainerType getType() = 0;
+    virtual ContainerType getType() { return UNKNOWN_CONTAINER_FORMAT; }
 
     /*! @brief      Returns the type of this container object as plain text, e.g., "T64" or "D64".
      *  @deprecated Use getType instead.
      */
-	virtual const char *getTypeAsString() = 0;
+    virtual const char *getTypeAsString() { return ""; }
 	
     
     //
@@ -110,13 +110,13 @@ public:
     //
 
     //! @brief    Returns true iff the specified file is a file of this container type.
-    virtual bool fileIsValid(const char *filename) = 0;
+    virtual bool fileIsValid(const char *filename) { return false; }
 
     /*! @brief    Read container contents from a memory buffer.
      *  @param    buffer The address of a binary representation in memory.
      *  @param    length The size of the binary representation.
      */
-	virtual bool readFromBuffer(const uint8_t *buffer, unsigned length) = 0;
+    virtual bool readFromBuffer(const uint8_t *buffer, unsigned length) { return false; }
 	
     /*! @brief    Read container contents from a file.
      *  @details  This function requires no custom implementation. It first reads in the file contents 
