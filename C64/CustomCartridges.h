@@ -110,10 +110,10 @@ public:
 public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_EPYX_FASTLOAD; }
+    void reset();
+    void execute();
     uint8_t peek(uint16_t addr);
     uint8_t peekIO(uint16_t addr);
-    // void poke(uint16_t addr, uint8_t value);
-    void reset(); 
 };
 
 #endif

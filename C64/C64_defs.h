@@ -110,6 +110,7 @@ enum {
     C64KEY_F6,
     C64KEY_F7,
     C64KEY_F8,
+    C64KEY_POUND,
     C64KEY_HOME,
     C64KEY_CLR,
     C64KEY_DEL,

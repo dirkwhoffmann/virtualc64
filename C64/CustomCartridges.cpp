@@ -26,7 +26,7 @@
 void
 FinalIII::reset()
 {
-    debug("FinalCartridge::reset\n");
+    // debug("FinalCartridge::reset\n");
     
     /* Final cartridge III contains four 16KB ROMs residing at $8000 - $BFFF
      *
@@ -61,10 +61,6 @@ uint8_t
 FinalIII::peekIO(uint16_t addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
-    
-    if (addr == 0xDFFF) {
-        debug("Peeking from 0xDFFF\n");
-    }
     
     // The I/O space mirrors $1E00 to $1EFF from the selected bank.
     uint16_t offset = addr - 0xDE00;
@@ -124,8 +120,6 @@ FinalIII::poke(uint16_t addr, uint8_t value) {
 void
 FinalIII::pressFirstButton() {
     
-    debug("Final cartridge III: Freeze Button\n");
-    
     // The freezer is enabled by selecting bank 0 in unimax mode and triggering an NMI
     poke(0xDFFF, 0x10);
 }
@@ -133,11 +127,9 @@ FinalIII::pressFirstButton() {
 void
 FinalIII::pressSecondButton() {
     
+    // Note: Cartridge requires to keep the RAM
     uint8_t ram[0xFFFF];
-    
-    debug("Final cartridge III: Reset Button\n");
-    
-    // Note: Cartridge requires to keep RAM contants intact
+
     memcpy(ram, c64->mem.ram, 0xFFFF);
     c64->reset();
     memcpy(c64->mem.ram, ram, 0xFFFF);
@@ -243,7 +235,6 @@ Powerplay::poke(uint16_t addr, uint8_t value)
 uint8_t
 Supergames::peekIO(uint16_t addr)
 {
-    debug("Peeking %04X\n", addr);
     return 0;
 }
 
@@ -296,13 +287,18 @@ EpyxFastLoad::reset()
 }
 
 void
+EpyxFastLoad::execute()
+{
+    checkCapacitor();
+}
+
+void
 EpyxFastLoad::dischargeCapacitor()
 {
     // debug("Discharging capacitor\n");
     disable_at_cycle = c64->getCycles() + 512 /* VICE value */;
     
     if (c64->expansionport.getGameLine() == 1 && c64->expansionport.getExromLine() == 1) {
-        debug("Switching cartridge on\n");
     }
     
     c64->expansionport.setExromLine(0);
@@ -318,7 +314,6 @@ EpyxFastLoad::checkCapacitor()
     if (c64->getCycles() > disable_at_cycle) {
         
         if (c64->expansionport.getGameLine() != 1 || c64->expansionport.getExromLine() != 1) {
-            debug("Switching cartridge off\n");
         }
             
         // Switch cartridge off

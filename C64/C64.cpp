@@ -320,7 +320,6 @@ cia2.executeOneCycle(); \
 if (!cpu.executeOneCycle()) result = false; \
 if (!floppy.executeOneCycle()) result = false; \
 datasette.execute(); \
-expansionport.execute(); \
 cycle++; \
 rasterlineCycle++;
 
@@ -655,8 +654,9 @@ C64::endOfRasterline()
         // Execute remaining SID cycles
         sid.executeUntil(cycle);
         
-        // Execute the IEC bus
+        // Execute other components
         iec.execute();
+        expansionport.execute();
         
         // Count some sheep (zzzzzz) ...
         if (!getWarp())

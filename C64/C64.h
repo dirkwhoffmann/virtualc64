@@ -22,7 +22,13 @@
 //
 // 1. Cartridge handler has been refactured.
 // 2. VirtualC64 now supports cartriges running in ultimax mode.
-// 3. Added support for some non standard cartridges (Simons Basic and Final Cartridge III).
+// 3. Added support for some non standard cartridges such as:
+//    - Simons Basic
+//    - Final Cartridge III
+//    - Epxy Fast Loader
+//    Note that the Epxy Fast Loader, although it works, does not deliver the expected speed increase.
+//    This is probably due to the improvable VC1541 emulation.
+// 
 // 4. Peeking CIA1 register $DC00 sometimes returned a wrong value in case of keyboard events. This
 //    prevented some games (Pitfall II) to detect pressed keys. 
 // 4. Fixed a bug that sometimes crashed the emulator when grabbing the background texture.

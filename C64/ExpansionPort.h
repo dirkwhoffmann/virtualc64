@@ -87,11 +87,10 @@ public:
     //! @brief    Returns true if cartride ROM is blended in at the specified location
     bool romIsBlendedIn(uint16_t addr);
     
-    //! @brief    Executes the expansion port
-    /*! @details  Experimental
+    //! @brief    Execution thread callback
+    /*! @details  This method is invoked after each rasterline.
      */
-    void execute();
-    
+    void execute() { if (cartridge) cartridge->execute(); }
     
     //! @brief    Peek fallthrough
     uint8_t peek(uint16_t addr);

@@ -89,13 +89,17 @@ extension MyController {
     }
     
     @IBAction func runstopRestoreAction(_ sender: Any!) {
-        simulateUserPressingKey(withRunstop: C64KeyFingerprint(C64KEY_RESTORE))
+        simulateUserPressingKey(withRunstop:C64KeyFingerprint(C64KEY_RESTORE))
     }
     
     @IBAction func commodoreKeyAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_COMMODORE))
     }
-    
+
+    @IBAction func commodoreRunstopKeyAction(_ sender: Any!) {
+        simulateUserPressingKey(withRunstop:C64KeyFingerprint(C64KEY_COMMODORE))
+    }
+
     @IBAction func clearKeyAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_CLR))
     }
@@ -112,14 +116,46 @@ extension MyController {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_DEL))
     }
     
+    @IBAction func leftarrowAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_LEFTARROW))
+    }
+    
+    @IBAction func uparrowAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_UPARROW))
+    }
+
+    @IBAction func powndAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_POUND))
+    }
+
+    @IBAction func shiftLeftarrowAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_LEFTARROW))
+    }
+    
+    @IBAction func shiftUparrowAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_UPARROW))
+    }
+    
+    @IBAction func shiftPowndAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_POUND))
+    }
+    
     @IBAction func loadDirectoryAction(_ sender: Any!) {
         simulateUserTypingText("LOAD \"$\",8")
     }
-    
+
+    @IBAction func listAction(_ sender: Any!) {
+        simulateUserTypingText("LIST")
+    }
+
     @IBAction func loadFirstFileAction(_ sender: Any!) {
         simulateUserTypingText("LOAD \"*\",8,1")
     }
     
+    @IBAction func runProgramAction(_ sender: Any!) {
+        simulateUserTypingText("RUN")
+    }
+
     @IBAction func formatDiskAction(_ sender: Any!) {
         simulateUserTypingText("OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1")
     }

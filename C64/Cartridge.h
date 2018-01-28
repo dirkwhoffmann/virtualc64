@@ -122,6 +122,12 @@ public:
     //! @brief    Returns true if cartride ROM is blended in at the specified location
     bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
+    //! @brief    Execution thread callback
+    /*! @details  This function is invoked by the expansion port. Only a few cartridges
+     *            such as EpyxFastLoader will do some action here.
+     */
+    virtual void execute() { };
+    
     //! @brief    Peek fallthrough
     virtual uint8_t peek(uint16_t addr); 
     

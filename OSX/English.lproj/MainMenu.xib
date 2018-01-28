@@ -261,6 +261,11 @@
                                     <action selector="commodoreKeyAction:" target="-1" id="YbT-6t-zTU"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="COMMODORE RUNSTOP" id="MuB-fd-edb">
+                                <connections>
+                                    <action selector="commodoreRunstopKeyAction:" target="-1" id="gs1-9Q-nmM"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="CLR" id="512">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -285,14 +290,70 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="349"/>
+                            <menuItem title="Special keys" id="oDm-Q0-cIs" userLabel="Final Cartridge III">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Special keys" id="Zdg-zw-xdr">
+                                    <items>
+                                        <menuItem title="⬅︎" id="9Na-zR-5xJ" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="leftarrowAction:" target="-1" id="egi-6T-MFl"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="⬆︎" id="EiE-w8-bcv" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="uparrowAction:" target="-1" id="skq-HM-bCT"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="£" id="dOT-6K-wnz" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="powndAction:" target="-1" id="L30-iZ-u81"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="SHIFT ⬅︎" id="MO1-QJ-3BK" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="shiftLeftarrowAction:" target="-1" id="4rs-PC-FkU"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="SHIFT ⬆︎" id="dkx-fH-5Xx" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="shiftUparrowAction:" target="-1" id="9cg-Bb-r75"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="SHIFT £" id="xQ0-cM-3bQ" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="shiftPowndAction:" target="-1" id="fFi-sY-gIt"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="YmU-rj-Jhy"/>
                             <menuItem title="Load directory" keyEquivalent="d" id="328">
                                 <connections>
                                     <action selector="loadDirectoryAction:" target="-1" id="JuA-2C-Ups"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="List" id="3oz-UI-kft">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="listAction:" target="-1" id="k64-op-GK2"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Load first file" keyEquivalent="l" id="511">
                                 <connections>
                                     <action selector="loadFirstFileAction:" target="-1" id="cMu-Ip-rBc"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Run" id="rvY-S2-GXz">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="runProgramAction:" target="-1" id="Ds9-wO-9jQ"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Format disk" id="510">
