@@ -60,7 +60,8 @@
 - (IBAction)resetAction:(id)sender;
 
 #pragma mark keyboard menu
-// - (IBAction)runstopAction:(id)sender;
+/*
+- (IBAction)runstopAction:(id)sender;
 - (IBAction)shiftRunstopAction:(id)sender;
 - (IBAction)restoreAction:(id)sender;
 - (IBAction)runstopRestoreAction:(id)sender;
@@ -69,9 +70,10 @@
 - (IBAction)clearKeyAction:(id)sender;
 - (IBAction)deleteKeyAction:(id)sender;
 - (IBAction)insertKeyAction:(id)sender;
-// - (IBAction)loadDirectoryAction:(id)sender;
-// - (IBAction)loadFirstFileAction:(id)sender;
-// - (IBAction)formatDiskAction:(id)sender;
+- (IBAction)loadDirectoryAction:(id)sender;
+- (IBAction)loadFirstFileAction:(id)sender;
+- (IBAction)formatDiskAction:(id)sender;
+*/
 
 #pragma mark peripherals menu
 - (IBAction)datasetteEjectAction:(id)sender;

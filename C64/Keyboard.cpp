@@ -91,17 +91,15 @@ Keyboard::Keyboard()
 	rowcolmap[(unsigned char)'x'] = 0x0207; rowcolmap[(unsigned char)'X'] = 0x0207 | SHIFT_FLAG;
 	rowcolmap[(unsigned char)'y'] = 0x0301; rowcolmap[(unsigned char)'Y'] = 0x0301 | SHIFT_FLAG;
 	rowcolmap[(unsigned char)'z'] = 0x0104; rowcolmap[(unsigned char)'Z'] = 0x0104 | SHIFT_FLAG;
-    rowcolmap[C64KEY_F1]  = 0x0004; rowcolmap[C64KEY_F2] = 0x0004 | SHIFT_FLAG;
-    rowcolmap[C64KEY_F3]  = 0x0005; rowcolmap[C64KEY_F4] = 0x0005 | SHIFT_FLAG;
-    rowcolmap[C64KEY_F5]  = 0x0006; rowcolmap[C64KEY_F6] = 0x0006 | SHIFT_FLAG;
-    rowcolmap[C64KEY_F7]  = 0x0003; rowcolmap[C64KEY_F8] = 0x0003 | SHIFT_FLAG;
-    rowcolmap[C64KEY_DEL] = 0x0000;
-    rowcolmap[C64KEY_INS] = 0x0000 | SHIFT_FLAG;
-    rowcolmap[C64KEY_RET] = 0x0001;
-    rowcolmap[C64KEY_CL]  = 0x0002 | SHIFT_FLAG;
-    rowcolmap[C64KEY_CR]  = 0x0002;
-    rowcolmap[C64KEY_CU]  = 0x0007 | SHIFT_FLAG;
-    rowcolmap[C64KEY_CD]  = 0x0007;
+    rowcolmap[C64KEY_F1]   = 0x0004; rowcolmap[C64KEY_F2]   = 0x0004 | SHIFT_FLAG;
+    rowcolmap[C64KEY_F3]   = 0x0005; rowcolmap[C64KEY_F4]   = 0x0005 | SHIFT_FLAG;
+    rowcolmap[C64KEY_F5]   = 0x0006; rowcolmap[C64KEY_F6]   = 0x0006 | SHIFT_FLAG;
+    rowcolmap[C64KEY_F7]   = 0x0003; rowcolmap[C64KEY_F8]   = 0x0003 | SHIFT_FLAG;
+    rowcolmap[C64KEY_HOME] = 0x0603; rowcolmap[C64KEY_CLR]  = 0x0603 | SHIFT_FLAG;
+    rowcolmap[C64KEY_DEL]  = 0x0000; rowcolmap[C64KEY_INST] = 0x0000 | SHIFT_FLAG;
+    rowcolmap[C64KEY_RET]  = 0x0001; rowcolmap[C64KEY_CL]   = 0x0002 | SHIFT_FLAG;
+    rowcolmap[C64KEY_CR]   = 0x0002; rowcolmap[C64KEY_CU]   = 0x0007 | SHIFT_FLAG;
+    rowcolmap[C64KEY_CD]   = 0x0007;
     rowcolmap[C64KEY_RUNSTOP] = 0x0707;
     
     // Register snapshot items
@@ -193,16 +191,17 @@ void Keyboard::pressKey(uint8_t row, uint8_t col)
     kbMatrixRow[row] &= 255 - (1 << col);
     kbMatrixCol[col] &= 255 - (1 << row);
 
-    // debug("Set(%d %d)\n",row,col);
+    debug("Set(%d %d)\n",row,col);
     // dumpState();
 }
 
 void Keyboard::pressKey(C64KeyFingerprint key)
 {
-    // debug("Pressing (%ld)\n", (long)c);
+    debug("Pressing (%ld)\n", (long)key);
 
     // Check for restore key
     if (key == C64KEY_RESTORE) {
+        debug("RESTORE");
         pressRestoreKey();
         return;
     }
@@ -247,13 +246,13 @@ void Keyboard::releaseKey(uint8_t row, uint8_t col)
     kbMatrixRow[row] |= (1 << col);
     kbMatrixCol[col] |= (1 << row);
 
-    // debug("Unset(%d %d)\n",row,col);
+    debug("Unset(%d %d)\n",row,col);
     // dumpState();
 }
 
 void Keyboard::releaseKey(C64KeyFingerprint key)
 {
-    // debug("Releasing (%ld)\n", (long)key);
+    debug("Releasing (%ld)\n", (long)key);
     
     // Check for restore key
     if (key == C64KEY_RESTORE) {

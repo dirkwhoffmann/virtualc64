@@ -350,6 +350,8 @@ typedef unsigned long MacKeyFingerprint;
 
 // KeyboardController API
 - (void)simulateUserPressingKey:(C64KeyFingerprint)key;
+- (void)simulateUserPressingKeyWithShift:(C64KeyFingerprint)key;
+- (void)simulateUserPressingKeyWithRunstop:(C64KeyFingerprint)key;
 - (void)simulateUserTypingText:(NSString *)text;
 - (void)simulateUserTypingText:(NSString *)text withInitialDelay:(long)delay;
 

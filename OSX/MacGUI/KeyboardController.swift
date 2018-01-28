@@ -254,7 +254,7 @@ class KeyboardController: NSObject {
             
         case MacKeys.DEL:
             return (flags.contains(NSEvent.ModifierFlags.shift)) ?
-                C64KeyFingerprint(C64KEY_INS) : C64KeyFingerprint(C64KEY_DEL)
+                C64KeyFingerprint(C64KEY_INST) : C64KeyFingerprint(C64KEY_DEL)
         
         case MacKeys.HAT:
             return (flags.contains(NSEvent.ModifierFlags.shift)) ?
@@ -282,13 +282,35 @@ class KeyboardController: NSObject {
         return C64KeyFingerprint(UInt8(key));
     }
     
+    func simulatePress(_ key: C64KeyFingerprint) {
+        
+        self.controller.c64.keyboard.pressKey(key)
+        usleep(useconds_t(50000))
+        self.controller.c64.keyboard.releaseKey(key)
+    }
+    
     @objc func simulateUserPressingKey(_ key: C64KeyFingerprint) {
         
         DispatchQueue.global().async {
+            self.simulatePress(key)
+        }
+    }
+ 
+    @objc func simulateUserPressingKeyWithShift(_ key: C64KeyFingerprint) {
+        
+        DispatchQueue.global().async {
+            self.controller.c64.keyboard.pressShiftKey()
+            self.simulatePress(key)
+            self.controller.c64.keyboard.releaseShiftKey()
+        }
+    }
+    
+    @objc func simulateUserPressingKeyWithRunstop(_ key: C64KeyFingerprint) {
             
-            self.controller.c64.keyboard.pressKey(key)
-            usleep(useconds_t(27500))
-            self.controller.c64.keyboard.releaseKey(key)
+        DispatchQueue.global().async {
+            self.controller.c64.keyboard.pressRunstopKey()
+            self.simulatePress(key)
+            self.controller.c64.keyboard.releaseRunstopKey()
         }
     }
     

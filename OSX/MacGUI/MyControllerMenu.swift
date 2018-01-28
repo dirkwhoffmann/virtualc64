@@ -76,21 +76,40 @@ extension MyController {
     // Action methods (Keyboard)
     //
     
-    /*
-    func simulateKeyPress(_ key: Int) {
-        
-        let doc = document as! NSDocument
-        doc.updateChangeCount(.changeDone)
-        c64.keyboard.pressKey(C64KeyFingerprint(key))
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-            self.c64.keyboard.releaseKey(C64KeyFingerprint(key))
-        })
-        // refresh()
-    }
-    */
-    
     @IBAction func runstopAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_RUNSTOP))
+    }
+    
+    @IBAction func shiftRunstopAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_RUNSTOP))
+    }
+    
+    @IBAction func restoreAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_RESTORE))
+    }
+    
+    @IBAction func runstopRestoreAction(_ sender: Any!) {
+        simulateUserPressingKey(withRunstop: C64KeyFingerprint(C64KEY_RESTORE))
+    }
+    
+    @IBAction func commodoreKeyAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_COMMODORE))
+    }
+    
+    @IBAction func clearKeyAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_CLR))
+    }
+    
+    @IBAction func homeKeyAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_HOME))
+    }
+    
+    @IBAction func insertKeyAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_INST))
+    }
+    
+    @IBAction func deleteKeyAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_DEL))
     }
     
     @IBAction func loadDirectoryAction(_ sender: Any!) {
@@ -103,12 +122,6 @@ extension MyController {
     
     @IBAction func formatDiskAction(_ sender: Any!) {
         simulateUserTypingText("OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1")
-        /*
-         NSLog(@"FormatDiskAction");
-         [[self document] updateChangeCount:NSChangeDone];
-         [[c64 keyboard] typeText:@"OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1"];
-         [self refresh];
-         */
     }
 
     

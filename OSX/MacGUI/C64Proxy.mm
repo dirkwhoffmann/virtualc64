@@ -352,6 +352,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) dump { wrapper->keyboard->dumpState(); }
 - (void) pressKey:(C64KeyFingerprint)c { wrapper->keyboard->pressKey(c); }
 - (void) releaseKey:(C64KeyFingerprint)c { wrapper->keyboard->releaseKey(c); }
+- (void) pressShiftKey { wrapper->keyboard->pressShiftKey(); }
+- (void) releaseShiftKey { wrapper->keyboard->releaseShiftKey(); }
+// THE FOLLOWING ONES ARE DEPRECATED
 - (void) pressRunstopKey { wrapper->keyboard->pressRunstopKey(); }
 - (void) releaseRunstopKey { wrapper->keyboard->releaseRunstopKey(); }
 - (void) pressShiftRunstopKey { wrapper->keyboard->pressShiftRunstopKey(); }

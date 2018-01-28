@@ -243,7 +243,6 @@
     [[c64 keyboard] releaseRunstopKey];
     [self refresh];
 }
-*/
 
 - (IBAction)shiftRunstopAction:(id)sender
 {
@@ -320,6 +319,7 @@
     sleepMicrosec(100000);
     [[c64 keyboard] releaseDeleteKey];
 }
+*/
 
 /*
 - (IBAction)loadDirectoryAction:(id)sender

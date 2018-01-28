@@ -305,7 +305,9 @@ struct CRTContainerWrapper;
 - (void) dump;
 
 - (void) pressKey:(C64KeyFingerprint)c;
-- (void) releaseKey:(C64KeyFingerprint)c; 
+- (void) releaseKey:(C64KeyFingerprint)c;
+- (void) pressShiftKey;
+- (void) releaseShiftKey;
 - (void) pressRunstopKey;
 - (void) releaseRunstopKey;
 - (void) pressShiftRunstopKey;

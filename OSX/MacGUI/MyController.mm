@@ -456,6 +456,12 @@
 - (void)simulateUserPressingKey:(C64KeyFingerprint)key {
     [keyboardcontroller simulateUserPressingKey:key];
 }
+- (void)simulateUserPressingKeyWithShift:(C64KeyFingerprint)key {
+    [keyboardcontroller simulateUserPressingKeyWithShift:key];
+}
+- (void)simulateUserPressingKeyWithRunstop:(C64KeyFingerprint)key {
+    [keyboardcontroller simulateUserPressingKeyWithRunstop:key];
+}
 - (void)simulateUserTypingText:(NSString *)text {
     [keyboardcontroller simulateUserTypingText:text initialDelay:0];
 }
