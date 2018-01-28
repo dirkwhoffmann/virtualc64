@@ -27,15 +27,14 @@
 //    - Final Cartridge III
 //    - Epxy Fast Loader
 //    Note that the Epxy Fast Loader, although it works, does not deliver the expected speed increase.
-//    This is probably due to the improvable VC1541 emulation.
+//    This is probably due to the current VC1541 emulation which needs to be improved.
 // 
 // 4. Peeking CIA1 register $DC00 sometimes returned a wrong value in case of keyboard events. This
-//    prevented some games (Pitfall II) to detect pressed keys. 
+//    prevented some games (Pitfall II) to detect pressed keys.
+// 5. As a side effect, the $DC00 fix causes a lot of interference when joystick emulation keys trigger a joystick and a keyboard event on the same time. Therefore, joystick emulation keys are disconnected from thekeyboard by default. This behavior can be changed in the emulator setup window. 
 // 4. Fixed a bug that sometimes crashed the emulator when grabbing the background texture.
 //
 // TODO:
-// finalIII:reset. Keep RAM intact
-// Check, if all joystick items are saved to snapshot (Rambo has strange behaviour)
 //
 // THINK ABOUT ADDING A DICTIONARY BASED CONFIG SYSTEM:
 // All global emulator settings (PAL/NTSC, SID Chip, WARP/NO WARP) are controlled by this method

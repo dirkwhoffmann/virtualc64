@@ -24,7 +24,11 @@ extern NSString *VC64CharRomFileKey;
 extern NSString *VC64KernelRomFileKey;
 extern NSString *VC64VC1541RomFileKey;
 
+// Keyboard
+extern NSString *VC64DisconnectEmulationKeys;
+
 /* Joystick */
+/*
 extern NSString *VC64Left1keycodeKey;
 extern NSString *VC64Left1charKey;
 extern NSString *VC64Right1keycodeKey;
@@ -45,6 +49,7 @@ extern NSString *VC64Down2keycodeKey;
 extern NSString *VC64Down2charKey;
 extern NSString *VC64Fire2keycodeKey;
 extern NSString *VC64Fire2charKey;
+*/
 
 /* Video */
 extern NSString *VC64EyeX;
@@ -90,6 +95,9 @@ extern NSString *VC64FullscreenKeepAspectRatioKey;
     IBOutlet NSTextField *fire2;
     IBOutlet NSButton *fire2button;
     
+    /* Keyboard */
+    IBOutlet NSButton *disconnectKeys;
+    
 	/* Video */
 	int customColor[16];
 	IBOutlet NSSlider *eyeXSlider;
@@ -128,6 +136,9 @@ extern NSString *VC64FullscreenKeepAspectRatioKey;
 
 // Joystick
 - (IBAction)recordKeyAction:(id)sender;
+
+// Keyboard
+- (IBAction)disconnectKeysAction:(id)sender;
 
 // Video
 - (IBAction)changeColorScheme:(id)sender;

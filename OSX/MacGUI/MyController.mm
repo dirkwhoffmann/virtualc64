@@ -95,8 +95,7 @@
 {	
     NSLog(@"MyController::awakeFromNib");
     
-    // Keyboard initialization
-    keyboardcontroller = [[KeyboardController alloc] initWithController:self];
+
 }
 
 - (void)windowDidLoad
@@ -107,6 +106,9 @@
 
     // Let the document know where the virtual C64 resides
     [[self document] setC64:c64];
+    
+    // Initialize keyboard controller
+    keyboardcontroller = [[KeyboardController alloc] initWithController:self];
     
     // Initialize GamePad manager
     gamePadManager = [[GamePadManager alloc] initWithController:self];
@@ -122,10 +124,10 @@
     [[[self window] windowController] setShouldCascadeWindows:NO];
     [[self window] setFrameAutosaveName:@"dirkwhoffmann.de.virtualC64.window"];
     
-	// Load user defaults
+    // Load user defaults
 	[self loadUserDefaults];
     [self loadVirtualMachineUserDefaults];
-    
+ 
     // Enable fullscreen mode
     [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     
@@ -287,8 +289,9 @@
     [defaultValues setObject:@YES forKey:VC64DriveNoiseKey];
     [defaultValues setObject:@YES forKey:VC64BitAccuracyKey];
 
-    // Joysticks
+    // Joystick and keyboard
     [GamePadManager registerStandardUserDefaults];
+    [defaultValues setObject:@YES forKey:VC64DisconnectEmulationKeys];
 
 	// Audio
 	[defaultValues setObject:@YES forKey:VC64SIDReSIDKey];
@@ -316,9 +319,9 @@
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    // Joysticks
-    // [keyboardcontroller loadUserDefaults];
+    // Joystick and Keyboard
     [gamePadManager loadUserDefaults];
+    [keyboardcontroller setDisconnectEmulationKeys:[defaults boolForKey:VC64DisconnectEmulationKeys]];
     
 	// Video
     [metalScreen setEyeX:[defaults floatForKey:VC64EyeX]];
@@ -384,9 +387,9 @@
 	// Set standard user defaults
 	defaults = [NSUserDefaults standardUserDefaults];
 
-    // Joysticks
-    // [keyboardcontroller saveUserDefaults];
+    // Joystick and keyboard
     [gamePadManager saveUserDefaults];
+    [defaults setBool:[keyboardcontroller getDisconnectEmulationKeys] forKey:VC64DisconnectEmulationKeys];
     
 	// Video
     [defaults setFloat:[metalScreen eyeX] forKey:VC64EyeX];
@@ -425,6 +428,7 @@
 - (void)restoreFactorySettingsKeyboard
 {
     [gamePadManager restoreFactorySettings];
+    [self setDisconnectEmulationKeys:YES];
 }
 
 // --------------------------------------------------------------------------------
@@ -468,7 +472,8 @@
 - (void)simulateUserTypingText:(NSString *)text withInitialDelay:(long)delay {
     [keyboardcontroller simulateUserTypingText:text initialDelay:delay];
 }
-
+- (BOOL)getDisconnectEmulationKeys { return [keyboardcontroller getDisconnectEmulationKeys]; }
+- (void)setDisconnectEmulationKeys:(BOOL)b { [keyboardcontroller setDisconnectEmulationKeys:b]; }
 
 - (void)keyDown:(NSEvent *)event
 {

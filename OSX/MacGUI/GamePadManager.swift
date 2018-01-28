@@ -183,17 +183,33 @@
     //
     
     //! @brief   Handles a keyboard down event
-    func keyDown(_ key: MacKeyFingerprint) {
+    /*! @result  Returns true if a joystick event has been triggered.
+     */
+    @discardableResult
+    func keyDown(_ key: MacKeyFingerprint) -> Bool {
+        
+        var result = false
+        
         for (_, device) in gamePads {
-            device.keyDown(key)
+            result = result || device.keyDown(key)
         }
+        
+        return result
     }
 
     //! @brief   Handles a keyboard up event
-    func keyUp(_ key: MacKeyFingerprint) {
+    /*! @result  Returns true if a joystick event has been triggered.
+     */
+    @discardableResult
+    func keyUp(_ key: MacKeyFingerprint) -> Bool {
+        
+        var result = false
+        
         for (_, device) in gamePads {
-            device.keyUp(key)
+            result = result || device.keyUp(key)
         }
+        
+        return result
     }
     
     @objc public func keysetOfDevice(_ slotNr: Int) -> KeyMap? {

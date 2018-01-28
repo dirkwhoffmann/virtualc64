@@ -117,8 +117,9 @@ class GamePad
     //! @brief   Handles a keyboard down event
     /*! @details Checks if the provided keycode matches a joystick emulation key
      *           and triggeres an event if a match has been found.
+     *  @result  Returns true if a joystick event has been triggered.
      */
-    func keyDown(_ key: MacKeyFingerprint)
+    func keyDown(_ key: MacKeyFingerprint) -> Bool
     {
         let map = [JoystickDirection.UP: joystick?.pullUp,
                    JoystickDirection.DOWN: joystick?.pullDown,
@@ -126,32 +127,24 @@ class GamePad
                    JoystickDirection.RIGHT: joystick?.pullRight,
                    JoystickDirection.FIRE: joystick?.pressButton]
         
-        if let dir = keymap.mapping[key] {
-            if let f = map[dir] { f?() }
+        if joystick != nil {
+            if let dir = keymap.mapping[key] {
+                if let f = map[dir] {
+                    f?()
+                    return true
+                }
+            }
         }
         
-        /*
-        if let dir = keymap.mapping[key] {
-            switch (dir) {
-            case JoystickDirection.UP:
-                joystick?.pullUp()
-            case JoystickDirection.DOWN:
-                joystick?.pullDown()
-            case JoystickDirection.LEFT:
-                joystick?.pullLeft()
-            case JoystickDirection.RIGHT:
-                joystick?.pullRight()
-            default:
-                joystick?.pressButton()
-            }
-         */
+        return false
     }
     
     //! @brief   Handles a keyboard up event
     /*! @details Checks if the provided keycode matches a joystick emulation key
      *           and triggeres an event if a match has been found.
+     *  @result  Returns true if a joystick event has been triggered.
      */
-    func keyUp(_ key: MacKeyFingerprint)
+    func keyUp(_ key: MacKeyFingerprint) -> Bool
     {
         let map = [JoystickDirection.UP: joystick?.releaseYAxis,
                    JoystickDirection.DOWN: joystick?.releaseYAxis,
@@ -159,26 +152,16 @@ class GamePad
                    JoystickDirection.RIGHT: joystick?.releaseXAxis,
                    JoystickDirection.FIRE: joystick?.releaseButton]
         
-        if let dir = keymap.mapping[key] {
-            if let f = map[dir] { f?() }
-        }
-        
-        /*
-        if let dir = keymap.mapping[key] {
-            switch (dir) {
-            case JoystickDirection.UP:
-                joystick?.releaseYAxis()
-            case JoystickDirection.DOWN:
-                joystick?.releaseYAxis()
-            case JoystickDirection.LEFT:
-                joystick?.releaseXAxis()
-            case JoystickDirection.RIGHT:
-                joystick?.releaseXAxis()
-            default:
-                joystick?.releaseButton()
+        if joystick != nil {
+            if let dir = keymap.mapping[key] {
+                if let f = map[dir] {
+                    f?()
+                    return true
+                }
             }
         }
-        */
+        
+        return false
     }
     
     let actionCallback : IOHIDValueCallback = { inContext, inResult, inSender, value in

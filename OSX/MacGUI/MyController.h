@@ -354,6 +354,8 @@ typedef unsigned long MacKeyFingerprint;
 - (void)simulateUserPressingKeyWithRunstop:(C64KeyFingerprint)key;
 - (void)simulateUserTypingText:(NSString *)text;
 - (void)simulateUserTypingText:(NSString *)text withInitialDelay:(long)delay;
+- (BOOL)getDisconnectEmulationKeys;
+- (void)setDisconnectEmulationKeys:(BOOL)b;
 
 
 // Timer and message processing

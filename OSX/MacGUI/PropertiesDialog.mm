@@ -22,34 +22,13 @@
 @implementation PropertiesDialog
 
 // System
-NSString *VC64BasicRomFileKey = @"VC64BasicRomFileKey";
-NSString *VC64CharRomFileKey  = @"VC64CharRomFileKey";
-NSString *VC64KernelRomFileKey= @"VC64KernelRomFileKey";
-NSString *VC64VC1541RomFileKey= @"VC64VC1541RomFileKey";
+NSString *VC64BasicRomFileKey  = @"VC64BasicRomFileKey";
+NSString *VC64CharRomFileKey   = @"VC64CharRomFileKey";
+NSString *VC64KernelRomFileKey = @"VC64KernelRomFileKey";
+NSString *VC64VC1541RomFileKey = @"VC64VC1541RomFileKey";
 
-// Joystick
-#if 0
-NSString *VC64Left1keycodeKey = @"VC64Left1keycodeKey";
-NSString *VC64Left1charKey = @"VC64Left1charKey";
-NSString *VC64Right1keycodeKey = @"VC64Right1keycodeKey";
-NSString *VC64Right1charKey = @"VC64Right1charKey";
-NSString *VC64Up1keycodeKey = @"VC64Up1keycodeKey";
-NSString *VC64Up1charKey = @"VC64Up1charKey";
-NSString *VC64Down1keycodeKey = @"VC64Down1keycodeKey";
-NSString *VC64Down1charKey = @"VC64Down1charKey";
-NSString *VC64Fire1keycodeKey = @"VC64Fire1keycodeKey";
-NSString *VC64Fire1charKey = @"VC64Fire1charKey";
-NSString *VC64Left2keycodeKey = @"VC64Left2keycodeKey";
-NSString *VC64Left2charKey = @"VC64Left2charKey";
-NSString *VC64Right2keycodeKey = @"VC64Right2keycodeKey";
-NSString *VC64Right2charKey = @"VC64Right2charKey";
-NSString *VC64Up2keycodeKey = @"VC64Up2keycodeKey";
-NSString *VC64Up2charKey = @"VC64Up2charKey";
-NSString *VC64Down2keycodeKey = @"VC64Down2keycodeKey";
-NSString *VC64Down2charKey = @"VC64Down2charKey";
-NSString *VC64Fire2keycodeKey = @"VC64Fire2keycodeKey";
-NSString *VC64Fire2charKey = @"VC64Fire2charKey";
-#endif
+// Keyboard
+NSString *VC64DisconnectEmulationKeys = @"VC64DisconnectKeys";
 
 // Video
 NSString *VC64EyeX             = @"VC64EyeX";
@@ -79,7 +58,7 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 {
     NSLog(@"Restoring emulator factoring settings");
     
-    // Joystick
+    // Joystick and keyboard
     [controller restoreFactorySettingsKeyboard];
     
     // Video
@@ -112,6 +91,13 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
 
     [self update];
  }
+
+- (IBAction)disconnectKeysAction:(id)sender
+{
+    NSLog(@"disconnectKeysAction");
+    [controller setDisconnectEmulationKeys:[(NSButton *)sender state]];
+    [self update];
+}
 
 - (IBAction)changeColorScheme:(id)sender
 {
@@ -230,6 +216,9 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     [self updateKeymap:2 direction:JoystickDirection(LEFT) button:left2button text:left2];
     [self updateKeymap:2 direction:JoystickDirection(RIGHT) button:right2button text:right2];
     [self updateKeymap:2 direction:JoystickDirection(FIRE) button:fire2button text:fire2];
+    
+    /* Keyboard */
+    [disconnectKeys setState:[controller getDisconnectEmulationKeys]];
     
 	/* Video */
     [upscaler selectItemWithTag:[controller videoUpscaler]];

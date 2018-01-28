@@ -46,8 +46,10 @@ class KeyboardController: NSObject {
     
     var controller : MyController!
     
-    // @objc var keymap1 = KeyMap()
-    // @objc var keymap2 = KeyMap()
+    // If set to true, a key that is used for joystick emulation will not
+    // be passed to the keyboard.
+    var disconnectEmulationKeys: Bool = true
+    
     var pressedKeys: [UInt16:C64KeyFingerprint] = [:]
     
     struct MacKeys {
@@ -79,6 +81,7 @@ class KeyboardController: NSObject {
 
     override init()
     {
+        disconnectEmulationKeys = true
         super.init()
         // restoreFactorySettings()
     }
@@ -89,6 +92,8 @@ class KeyboardController: NSObject {
         self.controller = c
     }
 
+    @objc func getDisconnectEmulationKeys() -> Bool { return disconnectEmulationKeys }
+    @objc func setDisconnectEmulationKeys(_ b: Bool) { disconnectEmulationKeys = b }
     
     //
     // Keyboard events
@@ -120,7 +125,9 @@ class KeyboardController: NSObject {
         
         // Inform GamePadManager about pressed key
         let f = KeyboardController.fingerprint(forKey:keycode, withModifierFlags:flags)
-        controller.gamePadManager.keyDown(f)
+        if controller.gamePadManager.keyDown(f) && disconnectEmulationKeys {
+            return
+        }
         
         // Remove alternate key modifier if present
         if (flags.contains(NSEvent.ModifierFlags.option)) {
@@ -147,7 +154,9 @@ class KeyboardController: NSObject {
 
         // Inform GamePadManager about released key
         let f = KeyboardController.fingerprint(forKey:keycode, withModifierFlags:flags)
-        controller.gamePadManager.keyUp(f)
+        if controller.gamePadManager.keyUp(f) && disconnectEmulationKeys {
+            return
+        }
         
         // Release key
         if let key = pressedKeys[keycode] {
