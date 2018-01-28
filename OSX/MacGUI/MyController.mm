@@ -428,7 +428,7 @@
 }
 
 // --------------------------------------------------------------------------------
-//                                Metal screen API
+//       Metal screen API (will be removed when controller is Swift only)
 // --------------------------------------------------------------------------------
 
 - (BOOL)fullscreen { return [metalScreen fullscreen]; }
@@ -448,6 +448,21 @@
 - (void)setVideoFilter:(long)val { [metalScreen setVideoFilter:val]; }
 - (BOOL)fullscreenKeepAspectRatio { return [metalScreen fullscreenKeepAspectRatio]; }
 - (void)setFullscreenKeepAspectRatio:(BOOL)val { [metalScreen setFullscreenKeepAspectRatio:val]; }
+
+// --------------------------------------------------------------------------------
+//     KeyboardController API (will be removed when controller is Swift only)
+// --------------------------------------------------------------------------------
+
+- (void)simulateUserPressingKey:(C64KeyFingerprint)key {
+    [keyboardcontroller simulateUserPressingKey:key];
+}
+- (void)simulateUserTypingText:(NSString *)text {
+    [keyboardcontroller simulateUserTypingText:text initialDelay:0];
+}
+- (void)simulateUserTypingText:(NSString *)text withInitialDelay:(long)delay {
+    [keyboardcontroller simulateUserTypingText:text initialDelay:delay];
+}
+
 
 - (void)keyDown:(NSEvent *)event
 {
@@ -1084,7 +1099,9 @@
     
     // Type command if requested
     if (doType) {
-        [[c64 keyboard] typeText:[NSString stringWithFormat:@"%@\n", textToType] withDelay:500000];
+        NSString *text = [NSString stringWithFormat:@"%@\n", textToType];
+        [self simulateUserTypingText:text withInitialDelay:500000];
+        // [[c64 keyboard] typeText:[NSString stringWithFormat:@"%@\n", textToType] withDelay:500000];
     }
 }
 
@@ -1127,7 +1144,8 @@
     
     // Type command if requested
     if (doAutoType) {
-        [[c64 keyboard] typeText:textToType withDelay:500000];
+        // [[c64 keyboard] typeText:textToType withDelay:500000];
+        
     }
     
     if (doAutoType && doPressPlay) {
@@ -1200,7 +1218,8 @@
         return;
     }
     
-    [[c64 keyboard] typeText:text];
+    [self simulateUserTypingText:text];
+    // [[c64 keyboard] typeText:text];
 }
 
 

@@ -60,7 +60,7 @@
 - (IBAction)resetAction:(id)sender;
 
 #pragma mark keyboard menu
-- (IBAction)runstopAction:(id)sender;
+// - (IBAction)runstopAction:(id)sender;
 - (IBAction)shiftRunstopAction:(id)sender;
 - (IBAction)restoreAction:(id)sender;
 - (IBAction)runstopRestoreAction:(id)sender;
@@ -69,43 +69,13 @@
 - (IBAction)clearKeyAction:(id)sender;
 - (IBAction)deleteKeyAction:(id)sender;
 - (IBAction)insertKeyAction:(id)sender;
-- (IBAction)loadDirectoryAction:(id)sender;
-- (IBAction)loadFirstFileAction:(id)sender;
-- (IBAction)formatDiskAction:(id)sender;
+// - (IBAction)loadDirectoryAction:(id)sender;
+// - (IBAction)loadFirstFileAction:(id)sender;
+// - (IBAction)formatDiskAction:(id)sender;
 
 #pragma mark peripherals menu
 - (IBAction)datasetteEjectAction:(id)sender;
 - (IBAction)datasettePressPlayAction:(id)sender;
 - (IBAction)datasettePressStopAction:(id)sender;
-
-/*
-#pragma mark debug menu
-- (IBAction)hideSpritesAction:(id)sender;
-- (IBAction)markIRQLinesAction:(id)sender;
-- (IBAction)markDMALinesAction:(id)sender;
-
-- (IBAction)traceC64CpuAction:(id)sender;
-- (IBAction)traceIecAction:(id)sender;
-- (IBAction)traceVC1541CpuAction:(id)sender;
-- (IBAction)traceViaAction:(id)sender;
-
-- (IBAction)dumpC64:(id)sender;
-- (IBAction)dumpC64CPU:(id)sender;
-- (IBAction)dumpC64CIA1:(id)sender;
-- (IBAction)dumpC64CIA2:(id)sender;
-- (IBAction)dumpC64VIC:(id)sender;
-- (IBAction)dumpC64SID:(id)sender;
-- (IBAction)dumpC64JoystickA:(id)sender;
-- (IBAction)dumpC64JoystickB:(id)sender;
-- (IBAction)dumpC64ExpansionPort:(id)sender;
-- (IBAction)dumpC64Memory:(id)sender;
-- (IBAction)dumpVC1541:(id)sender;
-- (IBAction)dumpVC1541CPU:(id)sender;
-- (IBAction)dumpVC1541VIA1:(id)sender;
-- (IBAction)dumpVC1541VIA2:(id)sender;
-- (IBAction)dumpVC1541Memory:(id)sender;
-- (IBAction)dumpKeyboard:(id)sender;
-- (IBAction)dumpIEC:(id)sender;
-*/
 
 @end

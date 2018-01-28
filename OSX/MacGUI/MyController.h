@@ -347,8 +347,13 @@ typedef unsigned long MacKeyFingerprint;
 - (void)setVideoFilter:(long)val;
 - (BOOL)fullscreenKeepAspectRatio;
 - (void)setFullscreenKeepAspectRatio:(BOOL)val;
- 
- 
+
+// KeyboardController API
+- (void)simulateUserPressingKey:(C64KeyFingerprint)key;
+- (void)simulateUserTypingText:(NSString *)text;
+- (void)simulateUserTypingText:(NSString *)text withInitialDelay:(long)delay;
+
+
 // Timer and message processing
 - (void)timerFunc;
 - (void)processMessage:(Message *)msg;

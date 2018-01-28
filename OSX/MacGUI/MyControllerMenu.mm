@@ -233,6 +233,7 @@
 //                               Keyboard menu
 // --------------------------------------------------------------------------------
 
+/*
 - (IBAction)runstopAction:(id)sender
 {
     NSLog(@"Rustop key pressed");
@@ -242,6 +243,7 @@
     [[c64 keyboard] releaseRunstopKey];
     [self refresh];
 }
+*/
 
 - (IBAction)shiftRunstopAction:(id)sender
 {
@@ -319,6 +321,7 @@
     [[c64 keyboard] releaseDeleteKey];
 }
 
+/*
 - (IBAction)loadDirectoryAction:(id)sender
 {
     NSLog(@"LoadDirectoryAction");
@@ -334,7 +337,9 @@
     [[c64 keyboard] typeText:@"LOAD \"*\",8,1"];
     [self refresh];
 }
+*/
 
+/*
 - (IBAction)formatDiskAction:(id)sender
 {
     NSLog(@"FormatDiskAction");
@@ -342,6 +347,7 @@
     [[c64 keyboard] typeText:@"OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1"];
     [self refresh];
 }
+*/
 
 - (IBAction)datasetteEjectAction:(id)sender
 {

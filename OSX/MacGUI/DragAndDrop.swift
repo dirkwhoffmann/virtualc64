@@ -83,7 +83,8 @@ public extension MetalView {
             guard let text = pasteBoard.string(forType:DragType.string) else {
                 return false
             }
-            document.c64.keyboard.typeText(text)
+            // document.c64.keyboard.typeText(text)
+            controller.simulateUserTypingText(text, withInitialDelay: 0) 
             return true
             
         case DragType.contents:

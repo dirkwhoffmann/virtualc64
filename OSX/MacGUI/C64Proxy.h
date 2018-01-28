@@ -323,9 +323,6 @@ struct CRTContainerWrapper;
 - (void) pressInsertKey;
 - (void) releaseInsertKey;
 
-- (void) typeText:(NSString *)text;
-- (void) typeText:(NSString *)text withDelay:(int)delay;
-
 @end 
 
 // --------------------------------------------------------------------------
