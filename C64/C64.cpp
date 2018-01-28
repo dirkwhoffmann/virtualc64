@@ -320,6 +320,7 @@ cia2.executeOneCycle(); \
 if (!cpu.executeOneCycle()) result = false; \
 if (!floppy.executeOneCycle()) result = false; \
 datasette.execute(); \
+expansionport.execute(); \
 cycle++; \
 rasterlineCycle++;
 

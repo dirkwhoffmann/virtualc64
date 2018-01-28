@@ -80,4 +80,40 @@ public:
     void poke(uint16_t addr, uint8_t value);
 };
 
+
+//! @brief    Type 10 cartridges (Epyx Fast Load)
+class EpyxFastLoad : public Cartridge {
+    
+private:
+    
+    //! @brief    Indicated when the cartridge will be disabled
+    /*! @details  The Epyx cartridge utilizes a capacitor to switch the ROM on and off.
+     *            During normal operation, the capacitor slowly charges. When it is
+     *            completely charged, the ROM gets disabled. When the cartridge is attached,
+     *            the capacitor is discharged and the ROM visible. To avoid the ROM to be
+     *            disabled, the cartridge can either read from ROML or I/O space 1. Both
+     *            operations discharge the capacitor and keep the ROM alive.
+     */
+    uint64_t disable_at_cycle;
+    
+    //! @brief    Discharge the capacitor
+    void dischargeCapacitor(); 
+    
+public:
+    
+    //! @brief    Checks the capacitor and switched off cartridge if required
+    /*! @return   true if the cartridge is active, and false if the cartridge is disabled.
+     */
+    bool checkCapacitor();
+
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_EPYX_FASTLOAD; }
+    uint8_t peek(uint16_t addr);
+    uint8_t peekIO(uint16_t addr);
+    // void poke(uint16_t addr, uint8_t value);
+    void reset(); 
+};
+
 #endif

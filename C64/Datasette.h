@@ -135,7 +135,7 @@ public:
     
     /*! @brief    Returns true if a tape is inserted 
      */
-    inline bool hasTape() { return size != 0; }
+    bool hasTape() { return size != 0; }
     
     /*! @brief    Inserts a TAP archive as a virtual tape 
      */
@@ -148,7 +148,7 @@ public:
 
     /*! @brief    Returns type of tape (TAP format, 0 or 1). 
      */
-    inline uint8_t getType() { return type; }
+    uint8_t getType() { return type; }
 
     /*! @brief    Returns the tape length in cycles 
      */
@@ -213,7 +213,7 @@ public:
 
     /*! @brief  Executes the virtual datasette
      */
-    inline void execute() { if (playKey && motor) _execute(); }
+    void execute() { if (playKey && motor) _execute(); }
 
 private:
 

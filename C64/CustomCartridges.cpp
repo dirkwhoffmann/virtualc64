@@ -278,4 +278,93 @@ Supergames::poke(uint16_t addr, uint8_t value)
     }
 }
 
+// -----------------------------------------------------------------------------------------
+//                                    Epyx Fast Loader
+// -----------------------------------------------------------------------------------------
+
+void
+EpyxFastLoad::reset()
+{
+    // Make the ROM show up
+    initialGameLine = 1;
+    initialExromLine = 0;
+    // disable_at_cycle = UINT64_MAX;
+    Cartridge::reset();
+    
+    dischargeCapacitor();
+
+}
+
+void
+EpyxFastLoad::dischargeCapacitor()
+{
+    // debug("Discharging capacitor\n");
+    disable_at_cycle = c64->getCycles() + 512 /* VICE value */;
+    
+    if (c64->expansionport.getGameLine() == 1 && c64->expansionport.getExromLine() == 1) {
+        debug("Switching cartridge on\n");
+    }
+    
+    c64->expansionport.setExromLine(0);
+    c64->expansionport.setGameLine(1);
+}
+
+bool
+EpyxFastLoad::checkCapacitor()
+{
+    
+    // debug("Capacitor check: Cartridge continues to live for %ld cycles\n", disable_at_cycle - c64->getCycles());
+    
+    if (c64->getCycles() > disable_at_cycle) {
+        
+        if (c64->expansionport.getGameLine() != 1 || c64->expansionport.getExromLine() != 1) {
+            debug("Switching cartridge off\n");
+        }
+            
+        // Switch cartridge off
+        // Should be really change exrom and game line???
+        c64->expansionport.setExromLine(1);
+        c64->expansionport.setGameLine(1);
+        return false;
+    }
+    
+    return true;
+}
+
+
+uint8_t
+EpyxFastLoad::peek(uint16_t addr)
+{
+    // debug("EpyxFasLoader %04X: Peeking %04X\n", c64->cpu.getPC_at_cycle_0(), addr);
+    dischargeCapacitor();
+    uint8_t result = Cartridge::peek(addr);
+    return result;
+}
+
+uint8_t
+EpyxFastLoad::peekIO(uint16_t addr)
+{
+    // I/O space 1
+    if (addr >= 0xDE00 && addr <= 0xDEFF) {
+ 
+        // debug("EpyxFasLoader %04X: Peeking I/O 1 %04X\n", c64->cpu.getPC_at_cycle_0(), addr);
+
+        dischargeCapacitor();
+        return 0;
+    }
+    
+    // I/O space 2
+    if (addr >= 0xDF00 && addr <= 0xDFFF) {
+        
+        // debug("EpyxFasLoader %04X: Peeking I/O 2 %04X\n", c64->cpu.getPC(), addr);
+        
+        /* I/O 2 mirrors the last 256 ROM bytes */
+        return chip[0][0x1f00 + (addr & 0xff)];
+    }
+    
+    assert(0);
+    return 0;
+}
+
+
 

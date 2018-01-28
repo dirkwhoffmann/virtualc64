@@ -44,7 +44,7 @@ class ExpansionPort;
  */
 class Cartridge : public VirtualComponent {
     
-protected:
+public:
     
     /*! @brief    Initial gameLine value used by this cartridge
      *  @details  gameLine is set to this value when the cartridge is attached.
@@ -123,7 +123,7 @@ public:
     bool romIsBlendedIn(uint16_t addr) { return blendedIn[addr >> 12]; }
     
     //! @brief    Peek fallthrough
-    uint8_t peek(uint16_t addr); 
+    virtual uint8_t peek(uint16_t addr); 
     
     //! @brief    Peek fallthrough for IO space
     /*! @details  Some cartridges such as SimonsBasic trigger a bank switch when

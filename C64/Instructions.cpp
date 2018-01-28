@@ -26,6 +26,12 @@ extern unsigned dirkcnt;
 void 
 CPU::fetch() {
     
+    /*
+    if (PC == 0x8030) {
+        setTraceMode(true);
+    }
+    */
+    
 	PC_at_cycle_0 = PC;
 	
 	// Check interrupt lines

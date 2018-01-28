@@ -131,6 +131,17 @@ ExpansionPort::romIsBlendedIn(uint16_t addr) {
     return cartridge ? cartridge->romIsBlendedIn(addr) : false;
 }
 
+void
+ExpansionPort::execute() {
+    
+    if (!cartridge || cartridge->getCartridgeType() != CRT_EPYX_FASTLOAD)
+        return;
+    
+    EpyxFastLoad *epyx = (EpyxFastLoad *)cartridge;
+    epyx->checkCapacitor();
+    
+}
+
 uint8_t
 ExpansionPort::peek(uint16_t addr)
 {

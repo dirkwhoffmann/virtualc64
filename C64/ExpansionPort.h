@@ -87,6 +87,12 @@ public:
     //! @brief    Returns true if cartride ROM is blended in at the specified location
     bool romIsBlendedIn(uint16_t addr);
     
+    //! @brief    Executes the expansion port
+    /*! @details  Experimental
+     */
+    void execute();
+    
+    
     //! @brief    Peek fallthrough
     uint8_t peek(uint16_t addr);
 
