@@ -16,20 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 import Foundation
 import IOKit.hid
-
-/*
-struct JoystickDirection {
-    static let up = 0
-    static let down = 1
-    static let left = 2
-    static let right = 3
-    static let fire = 5
-    static let released = 6
-}
-*/
 
 //! @brief   Mapping from keycodes to joystick movements
 /*! @details Each GamePad can be assigned a KeyMap which can be used
@@ -101,17 +89,10 @@ class GamePad
      */
     var locationID: String?
 
-    //! @brief    Reference to the C64 game port
-    /*! @details  Each triggered event will be passed to this object.
-     *            Hence, this object is the entry point to the core emulator.
-     *            nil means that the device is unconnected.
-     */
-    var joystick: JoystickProxy?
-    
     //! @brief    Reference to the GamePadManager
     var manager: GamePadManager
     
-    
+    //! @brief    Constructor
     init(manager: GamePadManager,
          vendorID: String?, productID: String?, locationID: String?) {
         
@@ -121,6 +102,7 @@ class GamePad
         self.locationID = locationID
     }
     
+    //! @brief    Convenience constructor
     convenience init(manager: GamePadManager) {
         self.init(manager: manager, vendorID: nil, productID: nil, locationID: nil)
     }
@@ -154,24 +136,7 @@ class GamePad
                 event = PRESS_FIRE
             }
             
-            manager.joystickEvent(self, event: event)
-            return true
-        }
-        
-        /* REMOVE */
-        let map = [Int(JOYSTICK_UP.rawValue): joystick?.pullUp,
-                   Int(JOYSTICK_DOWN.rawValue): joystick?.pullDown,
-                   Int(JOYSTICK_LEFT.rawValue): joystick?.pullLeft,
-                   Int(JOYSTICK_RIGHT.rawValue): joystick?.pullRight,
-                   Int(JOYSTICK_FIRE.rawValue): joystick?.pressButton]
-        
-        if joystick != nil {
-            if let dir = keymap.mapping[key] {
-                if let f = map[Int(dir.rawValue)] {
-                    f?()
-                    return true
-                }
-            }
+            return manager.joystickEvent(self, event: event)
         }
         
         return false
@@ -200,28 +165,9 @@ class GamePad
                 event = RELEASE_FIRE
             }
             
-            manager.joystickEvent(self, event: event)
-            return true
+            return manager.joystickEvent(self, event: event)
         }
-        
-        
-        /* REMOVE */
-        
-        let map = [Int(JOYSTICK_UP.rawValue): joystick?.releaseYAxis,
-                   Int(JOYSTICK_DOWN.rawValue): joystick?.releaseYAxis,
-                   Int(JOYSTICK_LEFT.rawValue): joystick?.releaseXAxis,
-                   Int(JOYSTICK_RIGHT.rawValue): joystick?.releaseXAxis,
-                   Int(JOYSTICK_FIRE.rawValue): joystick?.releaseButton]
-        
-        if joystick != nil {
-            if let dir = keymap.mapping[key] {
-                if let f = map[Int(dir.rawValue)] {
-                    f?()
-                    return true
-                }
-            }
-        }
-        
+    
         return false
     }
     
@@ -251,76 +197,68 @@ class GamePad
                          result: IOReturn,
                          sender: Optional<UnsafeMutableRawPointer>,
                          value: IOHIDValue) {
-        
-        print("\(#function) joystick = \(joystick) self = \(self)")
-        
-        var event: JoystickEvent = JOYSTICK_EVENT_NONE
-
+    
         let element   = IOHIDValueGetElement(value)
         let intValue  = Int(IOHIDValueGetIntegerValue(value))
         let usagePage = Int(IOHIDElementGetUsagePage(element))
         let usage     = Int(IOHIDElementGetUsage(element))
         
+        // Check button
         if usagePage == kHIDPage_Button {
-            
-            joystick?.setButton(intValue)
-            event = (intValue != 0) ? PRESS_FIRE : RELEASE_FIRE
+            manager.joystickEvent(self, event: (intValue != 0) ? PRESS_FIRE : RELEASE_FIRE)
+            return
+            // event = (intValue != 0) ? PRESS_FIRE : RELEASE_FIRE
         }
         
+        // Check movement
         if (usagePage == kHIDPage_GenericDesktop) {
             
+            // var event: JoystickEvent
             let v = mapAnalogAxis(value: value, element: element)
-            
             
             switch(usage) {
                 
             case kHIDUsage_GD_X, kHIDUsage_GD_Rz:
-                joystick?.setXAxis(v)
-                print("X event \(v)")
-                event = (v == 1 ? PULL_RIGHT : (v == -1 ? PULL_LEFT : RELEASE_X))
-                break
+                let event = (v == 1 ? PULL_RIGHT : (v == -1 ? PULL_LEFT : RELEASE_X))
+                manager.joystickEvent(self, event: event)
+                return
                 
             case kHIDUsage_GD_Y, kHIDUsage_GD_Z:
-                joystick?.setYAxis(v)
-                print("Y event \(v)")
-                event = (v == 1 ? PULL_DOWN : (v == -1 ? PULL_UP : RELEASE_Y))
-                break
+                let event = (v == 1 ? PULL_DOWN : (v == -1 ? PULL_UP : RELEASE_Y))
+                manager.joystickEvent(self, event: event)
+                return
                 
             case kHIDUsage_GD_Hatswitch:
-                
                 // The following values are based on Saitek's
                 // "Impact Dual Analog Rumble Pad".
                 // Not sure if this works for other controllers
-                
                 if intValue == 8 || intValue == 1 || intValue == 2 {
-                    joystick?.pullUp()
-                    event = PULL_UP
+                    manager.joystickEvent(self, event: PULL_UP)
+                    return
                 }
                 if intValue == 2 || intValue == 3 || intValue == 4 {
-                    joystick?.pullRight()
-                    event = PULL_RIGHT
+                    manager.joystickEvent(self, event: PULL_RIGHT)
+                    return
                 }
                 if intValue == 4 || intValue == 5 || intValue == 6 {
-                    joystick?.pullDown()
-                    event = PULL_DOWN
+                    manager.joystickEvent(self, event: PULL_DOWN)
+                    return
                 }
                 if intValue == 6 || intValue == 7 || intValue == 8 {
-                    joystick?.pullLeft()
-                    event = PULL_LEFT
+                    manager.joystickEvent(self, event: PULL_LEFT)
+                    return
                 }
                 if intValue == 0 {
-                    joystick?.releaseAxes()
-                    event = RELEASE_XY
+                    manager.joystickEvent(self, event: RELEASE_XY)
+                    return
                 }
                 break
                 
             default:
-                print("USB device: Unknown HID usage", usage)
+                print("USB device: Unknown HID usage: \(usage)")
             }
         }
-        
-        manager.joystickEvent(self, event: event)
     }
-
+    
 }
 

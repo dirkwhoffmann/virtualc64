@@ -45,7 +45,7 @@
         super.init()
     }
     
-    @objc public convenience init?(controller: MyController) {
+    @objc convenience init?(controller: MyController) {
         
         NSLog("\(#function)")
         
@@ -123,36 +123,6 @@
         return (nr < 4) ? nr : nil
     }
     
- 
- 
-    //! @brief   Plugs a game pad into the specified control port
-    /*! @details If another device is connected, it is disconnected automatically
-     */
-    @objc public
-    func attachGamePad(_ nr: Int, toPort port: JoystickProxy) {
-        
-        NSLog("\(#function)")
-        
-        // Remove existing device (if any)
-        detachGamePadFromPort(port)
-        
-        // Connect new device
-        gamePads[nr]?.joystick = port
-    }
-    
-    //! @brief   Remove game pad from the specified control port (in any)
-    @objc public
-    func detachGamePadFromPort(_ port: JoystickProxy) {
-        
-        NSLog("\(#function)")
-        
-        for (_, device) in gamePads {
-            if (device.joystick == port) {
-                device.joystick = nil
-            }
-        }
-    }
-    
     //! @brief   Lookup gamePad
     /*! @details Returns slot number or -1, if no such gamePad was found
      */
@@ -173,24 +143,6 @@
         
         for (slotNr, device) in gamePads {
             if (device.locationID == locationID) {
-                return slotNr
-            }
-        }
-        return -1
-    }
-    
-
-    
-    
-    //! @brief   Lookup gamePad connected to the specified port
-    /*! @details Returns slot number or -1, if no such gamePad was found
-     *  @deprecated
-     */
-    @objc func lookupGamePad(port: JoystickProxy) -> Int {
-        
-        for (slotNr, device) in gamePads {
-            if (device.joystick != nil && device.joystick == port) {
-                NSLog("Device nr %d is attached to control port %@", slotNr, port)
                 return slotNr
             }
         }
@@ -305,8 +257,9 @@
             }
         }
         
-        // Close HID device
-        /* NOTHING TO DO HERE BECAUSE THE DEVICE IS ALREADY DISCONNECTED
+        // Closing the HID device always fails.
+        // Think, we don't have to close it, because it's disconnected anyway. Am I right?
+        /* 
         let optionBits = kIOHIDOptionsTypeNone // kIOHIDOptionsTypeSeizeDevice
         let status = IOHIDDeviceClose(device, IOOptionBits(optionBits))
         if (status != kIOReturnSuccess) {
@@ -321,15 +274,16 @@
     }
     
     //! @brief   Action method for events on a gamePad
-    func joystickEvent(_ sender: GamePad!, event: JoystickEvent) {
+    /*! @returns true, iff a joystick event has been triggered on port A or port B
+     */
+    @discardableResult
+    func joystickEvent(_ sender: GamePad!, event: JoystickEvent) -> Bool {
     
         // Find slot of connected GamePad
         let slot = lookupGamePad(sender)
-        precondition(slot != -1)
-        print("Found device at slot \(slot)")
         
         // Pass joystick event to the main controller
-        controller.joystickEvent(slot: slot, event: event)
+        return controller.joystickEvent(slot: slot, event: event)
     }
  
     func listDevices() {
@@ -342,9 +296,6 @@
                 NSLog("  Vendor ID:   %@", device.vendorID ?? "UNKNOWN");
                 NSLog("  Product ID:  %@", device.productID ?? "UNKNOWN");
                 NSLog("  Location ID: %@", device.locationID ?? "UNKNOWN");
-            }
-            if (device.joystick != nil) {
-                NSLog("  Connected to control port %@", device.joystick!)
             }
         }
     }

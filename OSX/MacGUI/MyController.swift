@@ -10,16 +10,21 @@ import Foundation
 extension MyController {
     
     //! @brief  GamePadManager delegation method
-    func joystickEvent(slot: Int, event: JoystickEvent) {
+    /*! @returns true, iff a joystick event has been triggered on port A or port B
+     */
+    @discardableResult
+    func joystickEvent(slot: Int, event: JoystickEvent) -> Bool {
         
         if (slot == gamepadSlotA) {
-            print("Trigger on Port A")
             c64.joystickA.trigger(event)
+            return true
         }
 
         if (slot == gamepadSlotB) {
-            print("Trigger on Port B")
             c64.joystickB.trigger(event)
+            return true
         }
+        
+        return false
     }    
 }

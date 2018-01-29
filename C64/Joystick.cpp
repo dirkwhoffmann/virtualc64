@@ -93,7 +93,7 @@ Joystick::trigger(JoystickEvent event)
             button = false;
             break;
         default:
-            assert(event == JOYSTICK_EVENT_NONE);
+            assert(0);
     }
 }
 

@@ -117,8 +117,8 @@
     if (!gamePadManager) {
         NSLog(@"WARNING: Failed to initialize GamePadManager");
     }
-    gamepadSlotA = 0;
-    gamepadSlotB = 0;
+    gamepadSlotA = -1; // No gampad assigned
+    gamepadSlotB = -1; 
 
     // Setup window properties
     [self configureWindow];

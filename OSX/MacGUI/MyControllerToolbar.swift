@@ -88,32 +88,34 @@ extension MyController {
     
     
     // deprecated
+    /*
     func portAction(_ sender: NSPopUpButton, port: JoystickProxy) {
 
         gamePadManager.attachGamePad(sender.selectedTag(), toPort: port)
         validateJoystickToolbarItems()
     }
-
+    */
+    
     @IBAction func portAAction(_ sender: NSPopUpButton) {
         
-        // Assign slot and avoid double mappings
+        // Remember selection
         gamepadSlotA = sender.selectedTag();
+
+        // Avoid double mappings
         gamepadSlotB = (gamepadSlotA == gamepadSlotB) ? InputDevice.none : gamepadSlotB
         
         validateJoystickToolbarItems();
-        
-        portAction(sender, port: c64.joystickA)
     }
     
     @IBAction func portBAction(_ sender: NSPopUpButton) {
         
-        // Assign slot and avoid double mappings
+        // Remember selection
         gamepadSlotB = sender.selectedTag();
+        
+        // Avoid double mappings
         gamepadSlotA = (gamepadSlotA == gamepadSlotB) ? InputDevice.none : gamepadSlotA
         
         validateJoystickToolbarItems();
-        
-        portAction(sender, port: c64.joystickB)
     }
     
     @IBAction func propertiesAction(_ sender: Any!) {
