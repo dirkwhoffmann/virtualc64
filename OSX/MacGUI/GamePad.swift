@@ -191,6 +191,8 @@ class GamePad
                          sender: Optional<UnsafeMutableRawPointer>,
                          value: IOHIDValue) {
         
+        print("\(#function) joystick = \(joystick) self = \(self)")
+        
         let element   = IOHIDValueGetElement(value)
         let intValue  = Int(IOHIDValueGetIntegerValue(value))
         let usagePage = Int(IOHIDElementGetUsagePage(element))

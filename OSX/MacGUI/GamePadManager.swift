@@ -52,6 +52,8 @@
         self.init()
         self.controller = controller
         
+        NSLog("Parent controller: \(controller)\n")
+        
         // Add  generic devices (two keyboard emulated joysticks)
         gamePads[0] = GamePad()
         gamePads[1] = GamePad()
@@ -251,8 +253,9 @@
         gamePads[slotNr]?.locationID = locationID
 
         // Open HID device
-        let status = IOHIDDeviceOpen(device, IOOptionBits(kIOHIDOptionsTypeSeizeDevice))
-        if (status != 0) {
+        let optionBits = kIOHIDOptionsTypeNone // kIOHIDOptionsTypeSeizeDevice
+        let status = IOHIDDeviceOpen(device, IOOptionBits(optionBits))
+        if (status != kIOReturnSuccess) {
             NSLog("WARNING: Cannot open HID device")
             return
         }
@@ -285,11 +288,14 @@
             }
         }
         
-        // Close device
-        let status = IOHIDDeviceClose(device, IOOptionBits(kIOHIDOptionsTypeSeizeDevice))
-        if (status != 0) {
+        // Close HID device
+        /* NOTHING TO DO HERE BECAUSE THE DEVICE IS ALREADY DISCONNECTED
+        let optionBits = kIOHIDOptionsTypeNone // kIOHIDOptionsTypeSeizeDevice
+        let status = IOHIDDeviceClose(device, IOOptionBits(optionBits))
+        if (status != kIOReturnSuccess) {
             NSLog("WARNING: Cannot close HID device")
         }
+        */
         
         // Inform controller
         controller.validateJoystickToolbarItems()

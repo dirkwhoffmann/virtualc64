@@ -270,22 +270,22 @@ extension MyController {
         c64.vc1541.via2.setTraceMode(!c64.vc1541.via2.tracingEnabled())
     }
     
-    @IBAction func dumpC64(_ sender: Any!) { c64.dump(); }
-    @IBAction func dumpC64CPU(_ sender: Any!) { c64.cpu.dump(); }
-    @IBAction func dumpC64CIA1(_ sender: Any!) {c64.cia1.dump(); }
-    @IBAction func dumpC64CIA2(_ sender: Any!) { c64.cia2.dump(); }
-    @IBAction func dumpC64VIC(_ sender: Any!) { c64.vic.dump(); }
-    @IBAction func dumpC64SID(_ sender: Any!) { c64.sid.dump(); }
-    @IBAction func dumpC64Memory(_ sender: Any!) { c64.mem.dump(); }
-    @IBAction func dumpVC1541(_ sender: Any!) { c64.vc1541.dump(); }
-    @IBAction func dumpVC1541CPU(_ sender: Any!) { c64.vc1541.dump(); }
-    @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.vc1541.dump(); }
-    @IBAction func dumpVC1541VIA2(_ sender: Any!) { c64.vc1541.via2.dump(); }
-    @IBAction func dumpVC1541Memory(_ sender: Any!) { c64.vc1541.mem.dump(); }
-    @IBAction func dumpKeyboard(_ sender: Any!) { c64.keyboard.dump(); }
-    @IBAction func dumpC64JoystickA(_ sender: Any!) { c64.joystickA.dump(); }
-    @IBAction func dumpC64JoystickB(_ sender: Any!) { c64.joystickB.dump(); }
-    @IBAction func dumpIEC(_ sender: Any!) { c64.iec.dump(); }
-    @IBAction func dumpC64ExpansionPort(_ sender: Any!) { c64.expansionport.dump(); }
+    @IBAction func dumpC64(_ sender: Any!) { c64.dump() }
+    @IBAction func dumpC64CPU(_ sender: Any!) { c64.cpu.dump() }
+    @IBAction func dumpC64CIA1(_ sender: Any!) {c64.cia1.dump() }
+    @IBAction func dumpC64CIA2(_ sender: Any!) { c64.cia2.dump() }
+    @IBAction func dumpC64VIC(_ sender: Any!) { c64.vic.dump() }
+    @IBAction func dumpC64SID(_ sender: Any!) { c64.sid.dump() }
+    @IBAction func dumpC64Memory(_ sender: Any!) { c64.mem.dump() }
+    @IBAction func dumpVC1541(_ sender: Any!) { c64.vc1541.dump() }
+    @IBAction func dumpVC1541CPU(_ sender: Any!) { c64.vc1541.dump() }
+    @IBAction func dumpVC1541VIA1(_ sender: Any!) { c64.vc1541.dump() }
+    @IBAction func dumpVC1541VIA2(_ sender: Any!) { c64.vc1541.via2.dump() }
+    @IBAction func dumpVC1541Memory(_ sender: Any!) { c64.vc1541.mem.dump() }
+    @IBAction func dumpKeyboard(_ sender: Any!) { c64.keyboard.dump() }
+    @IBAction func dumpC64JoystickA(_ sender: Any!) { c64.joystickA.dump() }
+    @IBAction func dumpC64JoystickB(_ sender: Any!) { c64.joystickB.dump(); gamePadManager.listDevices()}
+    @IBAction func dumpIEC(_ sender: Any!) { c64.iec.dump() }
+    @IBAction func dumpC64ExpansionPort(_ sender: Any!) { c64.expansionport.dump() }
     
 }
