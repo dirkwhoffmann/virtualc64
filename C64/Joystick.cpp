@@ -59,3 +59,41 @@ Joystick::dumpState()
     msg("Button: %s AxisX: %d AxisY: %d\n", button ? "YES" : "NO", axisX, axisY);
 }
 
+void
+Joystick::trigger(JoystickEvent event)
+{
+    switch (event) {
+            
+        case PULL_UP:
+            axisY = -1;
+            break;
+        case PULL_DOWN:
+            axisY = 1;
+            break;
+        case PULL_LEFT:
+            axisX = -1;
+            break;
+        case PULL_RIGHT:
+            axisX = 1;
+            break;
+        case PRESS_FIRE:
+            button = true;
+            break;
+        case RELEASE_X:
+            axisX = 0;
+            break;
+        case RELEASE_Y:
+            axisY = 0;
+            break;
+        case RELEASE_XY:
+            axisX = 0;
+            axisY = 0;
+            break;
+        case RELEASE_FIRE:
+            button = false;
+            break;
+        default:
+            assert(event == JOYSTICK_EVENT_NONE);
+    }
+}
+

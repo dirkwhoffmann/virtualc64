@@ -59,8 +59,14 @@ public:
     //! @brief    Prints debugging information
     void dumpState();
 
-    inline int getPort() { return port; }
-    inline void setPort(int p) { port = p; }
+    int getPort() { return port; }
+    void setPort(int p) { assert(p == 1 || p == 2); port = p; }
+    
+    //! @brief   Trigger a joystick event
+    void trigger(JoystickEvent event);
+    
+    
+    // DEPRECATED
     inline bool getButton() { return button; }
     inline void setButton(bool pressed) { button = pressed; }
     inline void pressButton() { setButton(true); }

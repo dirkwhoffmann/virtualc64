@@ -55,8 +55,8 @@
         NSLog("Parent controller: \(controller)\n")
         
         // Add  generic devices (two keyboard emulated joysticks)
-        gamePads[0] = GamePad()
-        gamePads[1] = GamePad()
+        gamePads[0] = GamePad(manager: self)
+        gamePads[1] = GamePad(manager: self)
         
         // Prepare for accepting HID devices
         let deviceCriteria = [
@@ -153,7 +153,20 @@
         }
     }
     
-    //! @brief   Lookup gamePad with the specified locationID
+    //! @brief   Lookup gamePad
+    /*! @details Returns slot number or -1, if no such gamePad was found
+     */
+    func lookupGamePad(_ gamePad: GamePad) -> Int {
+        
+        for (slotNr, device) in gamePads {
+            if (device === gamePad) {
+                return slotNr
+            }
+        }
+        return -1
+    }
+    
+    //! @brief   Lookup gamePad by locationID
     /*! @details Returns slot number or -1, if no such gamePad was found
      */
     @objc func lookupGamePad(locationID: String) -> Int {
@@ -166,8 +179,12 @@
         return -1
     }
     
+
+    
+    
     //! @brief   Lookup gamePad connected to the specified port
     /*! @details Returns slot number or -1, if no such gamePad was found
+     *  @deprecated
      */
     @objc func lookupGamePad(port: JoystickProxy) -> Int {
         
@@ -232,14 +249,6 @@
     
         NSLog("\(#function)")
         
-        let vendorIDKey = kIOHIDVendorIDKey as CFString
-        let productIDKey = kIOHIDProductIDKey as CFString
-        let locationIDKey = kIOHIDLocationIDKey as CFString
-
-        let vendorID = String(describing: IOHIDDeviceGetProperty(device, vendorIDKey))
-        let productID = String(describing: IOHIDDeviceGetProperty(device, productIDKey))
-        let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
-
         // Find a free slot for the new device
         guard let slotNr = findFreeSlot() else {
             NSLog("Maximum number of devices reached. Ignoring device")
@@ -247,11 +256,19 @@
         }
         
         // Create GamePad object
-        gamePads[slotNr] = GamePad()
-        gamePads[slotNr]?.vendorID = vendorID
-        gamePads[slotNr]?.productID = productID
-        gamePads[slotNr]?.locationID = locationID
+        let vendorIDKey = kIOHIDVendorIDKey as CFString
+        let productIDKey = kIOHIDProductIDKey as CFString
+        let locationIDKey = kIOHIDLocationIDKey as CFString
 
+        let vendorID = String(describing: IOHIDDeviceGetProperty(device, vendorIDKey))
+        let productID = String(describing: IOHIDDeviceGetProperty(device, productIDKey))
+        let locationID = String(describing: IOHIDDeviceGetProperty(device, locationIDKey))
+        
+        gamePads[slotNr] = GamePad(manager: self,
+                                   vendorID: vendorID,
+                                   productID: productID,
+                                   locationID: locationID)
+        
         // Open HID device
         let optionBits = kIOHIDOptionsTypeNone // kIOHIDOptionsTypeSeizeDevice
         let status = IOHIDDeviceOpen(device, IOOptionBits(optionBits))
@@ -303,6 +320,18 @@
         listDevices()
     }
     
+    //! @brief   Action method for events on a gamePad
+    func joystickEvent(_ sender: GamePad!, event: JoystickEvent) {
+    
+        // Find slot of connected GamePad
+        let slot = lookupGamePad(sender)
+        precondition(slot != -1)
+        print("Found device at slot \(slot)")
+        
+        // Pass joystick event to the main controller
+        controller.joystickEvent(slot: slot, event: event)
+    }
+ 
     func listDevices() {
         
         for (slotNr, device) in gamePads {
@@ -331,29 +360,29 @@
         let keymap1 = gamePads[0]!.keymap
         let keymap2 = gamePads[1]!.keymap
         
-        keymap1.setFingerprint(123, for: JoystickDirection.LEFT)
-        keymap1.setFingerprint(124, for: JoystickDirection.RIGHT)
-        keymap1.setFingerprint(126, for: JoystickDirection.UP)
-        keymap1.setFingerprint(125, for: JoystickDirection.DOWN)
-        keymap1.setFingerprint(49,  for: JoystickDirection.FIRE)
+        keymap1.setFingerprint(123, for: JOYSTICK_LEFT)
+        keymap1.setFingerprint(124, for: JOYSTICK_RIGHT)
+        keymap1.setFingerprint(126, for: JOYSTICK_UP)
+        keymap1.setFingerprint(125, for: JOYSTICK_DOWN)
+        keymap1.setFingerprint(49,  for: JOYSTICK_FIRE)
         
-        keymap1.setCharacter(" ", for: JoystickDirection.LEFT)
-        keymap1.setCharacter(" ", for: JoystickDirection.RIGHT)
-        keymap1.setCharacter(" ", for: JoystickDirection.UP)
-        keymap1.setCharacter(" ", for: JoystickDirection.DOWN)
-        keymap1.setCharacter(" ", for: JoystickDirection.FIRE)
+        keymap1.setCharacter(" ", for: JOYSTICK_LEFT)
+        keymap1.setCharacter(" ", for: JOYSTICK_RIGHT)
+        keymap1.setCharacter(" ", for: JOYSTICK_UP)
+        keymap1.setCharacter(" ", for: JOYSTICK_DOWN)
+        keymap1.setCharacter(" ", for: JOYSTICK_FIRE)
         
-        keymap2.setFingerprint(0,  for: JoystickDirection.LEFT)
-        keymap2.setFingerprint(1,  for: JoystickDirection.RIGHT)
-        keymap2.setFingerprint(13,  for: JoystickDirection.UP)
-        keymap2.setFingerprint(6, for: JoystickDirection.DOWN)
-        keymap2.setFingerprint(7,  for: JoystickDirection.FIRE)
+        keymap2.setFingerprint(0,  for: JOYSTICK_LEFT)
+        keymap2.setFingerprint(1,  for: JOYSTICK_RIGHT)
+        keymap2.setFingerprint(13,  for: JOYSTICK_UP)
+        keymap2.setFingerprint(6, for: JOYSTICK_DOWN)
+        keymap2.setFingerprint(7,  for: JOYSTICK_FIRE)
         
-        keymap2.setCharacter("a", for: JoystickDirection.LEFT)
-        keymap2.setCharacter("s", for: JoystickDirection.RIGHT)
-        keymap2.setCharacter("w", for: JoystickDirection.UP)
-        keymap2.setCharacter("y", for: JoystickDirection.DOWN)
-        keymap2.setCharacter("x", for: JoystickDirection.FIRE)
+        keymap2.setCharacter("a", for: JOYSTICK_LEFT)
+        keymap2.setCharacter("s", for: JOYSTICK_RIGHT)
+        keymap2.setCharacter("w", for: JOYSTICK_UP)
+        keymap2.setCharacter("y", for: JOYSTICK_DOWN)
+        keymap2.setCharacter("x", for: JOYSTICK_FIRE)
     }
     
     @objc class func registerStandardUserDefaults() {
@@ -407,21 +436,21 @@
                 MacKeyFingerprint(defaults.integer(forKey: key + s + "keycodeKey")), for: d)
         }
         
-        loadFingerprint(for:JoystickDirection.LEFT, usingKey: "VC64Left")
-        loadFingerprint(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
-        loadFingerprint(for:JoystickDirection.UP, usingKey: "VC64Up")
-        loadFingerprint(for:JoystickDirection.DOWN, usingKey: "VC64Down")
-        loadFingerprint(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
+        loadFingerprint(for:JOYSTICK_LEFT, usingKey: "VC64Left")
+        loadFingerprint(for:JOYSTICK_RIGHT, usingKey: "VC64Right")
+        loadFingerprint(for:JOYSTICK_UP, usingKey: "VC64Up")
+        loadFingerprint(for:JOYSTICK_DOWN, usingKey: "VC64Down")
+        loadFingerprint(for:JOYSTICK_FIRE, usingKey: "VC64Fire")
         
         func loadCharacter(for d: JoystickDirection, usingKey key: String) {
             keymap.setCharacter(defaults.string(forKey: key + s + "charKey"), for: d)
         }
         
-        loadCharacter(for:JoystickDirection.LEFT, usingKey: "VC64Left")
-        loadCharacter(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
-        loadCharacter(for:JoystickDirection.UP, usingKey: "VC64Up")
-        loadCharacter(for:JoystickDirection.DOWN, usingKey: "VC64Down")
-        loadCharacter(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
+        loadCharacter(for:JOYSTICK_LEFT, usingKey: "VC64Left")
+        loadCharacter(for:JOYSTICK_RIGHT, usingKey: "VC64Right")
+        loadCharacter(for:JOYSTICK_UP, usingKey: "VC64Up")
+        loadCharacter(for:JOYSTICK_DOWN, usingKey: "VC64Down")
+        loadCharacter(for:JOYSTICK_FIRE, usingKey: "VC64Fire")
     }
     
     @objc func saveUserDefaults() {
@@ -443,21 +472,21 @@
             defaults.set(keymap.fingerprint(for: d), forKey: key + s + "keycodeKey")
         }
         
-        saveFingerprint(for:JoystickDirection.LEFT, usingKey: "VC64Left")
-        saveFingerprint(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
-        saveFingerprint(for:JoystickDirection.UP, usingKey: "VC64Up")
-        saveFingerprint(for:JoystickDirection.DOWN, usingKey: "VC64Down")
-        saveFingerprint(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
+        saveFingerprint(for:JOYSTICK_LEFT, usingKey: "VC64Left")
+        saveFingerprint(for:JOYSTICK_RIGHT, usingKey: "VC64Right")
+        saveFingerprint(for:JOYSTICK_UP, usingKey: "VC64Up")
+        saveFingerprint(for:JOYSTICK_DOWN, usingKey: "VC64Down")
+        saveFingerprint(for:JOYSTICK_FIRE, usingKey: "VC64Fire")
         
         func saveCharacter(for d: JoystickDirection, usingKey key: String) {
             defaults.set(keymap.getCharacter(for: d), forKey: key + s + "charKey")
         }
         
-        saveCharacter(for:JoystickDirection.LEFT, usingKey: "VC64Left")
-        saveCharacter(for:JoystickDirection.RIGHT, usingKey: "VC64Right")
-        saveCharacter(for:JoystickDirection.UP, usingKey: "VC64Up")
-        saveCharacter(for:JoystickDirection.DOWN, usingKey: "VC64Down")
-        saveCharacter(for:JoystickDirection.FIRE, usingKey: "VC64Fire")
+        saveCharacter(for:JOYSTICK_LEFT, usingKey: "VC64Left")
+        saveCharacter(for:JOYSTICK_RIGHT, usingKey: "VC64Right")
+        saveCharacter(for:JOYSTICK_UP, usingKey: "VC64Up")
+        saveCharacter(for:JOYSTICK_DOWN, usingKey: "VC64Down")
+        saveCharacter(for:JOYSTICK_FIRE, usingKey: "VC64Fire")
     }
     
     

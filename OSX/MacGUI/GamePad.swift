@@ -41,7 +41,7 @@ public class KeyMap: NSObject {
     var mapping : [MacKeyFingerprint:JoystickDirection] = [:]
 
     //! @brief Mapping of joystick events to readable representations of related fingerprints
-    var character : [JoystickDirection:String] = [:]
+    var character : [Int:String] = [:]
     
     @objc public
     func fingerprint(for d: JoystickDirection) -> MacKeyFingerprint {
@@ -68,12 +68,14 @@ public class KeyMap: NSObject {
     
     @objc public
     func getCharacter(for d: JoystickDirection) -> String {
-        return character[d] ?? ""
+        
+        return character[Int(d.rawValue)] ?? ""
     }
     
     @objc public
     func setCharacter(_ c: String?, for d: JoystickDirection) {
-        character[d] = c
+        
+        character[Int(d.rawValue)] = c
     }
 }
 
@@ -106,12 +108,21 @@ class GamePad
      */
     var joystick: JoystickProxy?
     
-    convenience init(vendorID: String?, productID: String?, locationID: String?) {
+    //! @brief    Reference to the GamePadManager
+    var manager: GamePadManager
+    
+    
+    init(manager: GamePadManager,
+         vendorID: String?, productID: String?, locationID: String?) {
         
-        self.init()
+        self.manager = manager
         self.vendorID = vendorID
         self.productID = productID
         self.locationID = locationID
+    }
+    
+    convenience init(manager: GamePadManager) {
+        self.init(manager: manager, vendorID: nil, productID: nil, locationID: nil)
     }
     
     //! @brief   Handles a keyboard down event
@@ -119,17 +130,44 @@ class GamePad
      *           and triggeres an event if a match has been found.
      *  @result  Returns true if a joystick event has been triggered.
      */
-    func keyDown(_ key: MacKeyFingerprint) -> Bool
-    {
-        let map = [JoystickDirection.UP: joystick?.pullUp,
-                   JoystickDirection.DOWN: joystick?.pullDown,
-                   JoystickDirection.LEFT: joystick?.pullLeft,
-                   JoystickDirection.RIGHT: joystick?.pullRight,
-                   JoystickDirection.FIRE: joystick?.pressButton]
+    func keyDown(_ key: MacKeyFingerprint) -> Bool {
+        
+        if let direction = keymap.mapping[key] {
+
+            var event: JoystickEvent
+            
+            switch (direction) {
+            case JOYSTICK_UP:
+                event = PULL_UP
+                break
+            case  JOYSTICK_DOWN:
+                event = PULL_DOWN
+                break
+            case JOYSTICK_LEFT:
+                event = PULL_LEFT
+                break
+            case JOYSTICK_RIGHT:
+                event = PULL_RIGHT
+                break
+            default:
+                assert(direction == JOYSTICK_FIRE)
+                event = PRESS_FIRE
+            }
+            
+            manager.joystickEvent(self, event: event)
+            return true
+        }
+        
+        /* REMOVE */
+        let map = [Int(JOYSTICK_UP.rawValue): joystick?.pullUp,
+                   Int(JOYSTICK_DOWN.rawValue): joystick?.pullDown,
+                   Int(JOYSTICK_LEFT.rawValue): joystick?.pullLeft,
+                   Int(JOYSTICK_RIGHT.rawValue): joystick?.pullRight,
+                   Int(JOYSTICK_FIRE.rawValue): joystick?.pressButton]
         
         if joystick != nil {
             if let dir = keymap.mapping[key] {
-                if let f = map[dir] {
+                if let f = map[Int(dir.rawValue)] {
                     f?()
                     return true
                 }
@@ -146,15 +184,38 @@ class GamePad
      */
     func keyUp(_ key: MacKeyFingerprint) -> Bool
     {
-        let map = [JoystickDirection.UP: joystick?.releaseYAxis,
-                   JoystickDirection.DOWN: joystick?.releaseYAxis,
-                   JoystickDirection.LEFT: joystick?.releaseXAxis,
-                   JoystickDirection.RIGHT: joystick?.releaseXAxis,
-                   JoystickDirection.FIRE: joystick?.releaseButton]
+        if let direction = keymap.mapping[key] {
+            
+            var event: JoystickEvent
+            
+            switch (direction) {
+            case JOYSTICK_UP, JOYSTICK_DOWN:
+                event = RELEASE_Y
+                break
+            case JOYSTICK_LEFT, JOYSTICK_RIGHT:
+                event = RELEASE_X
+                break
+            default:
+                assert(direction == JOYSTICK_FIRE)
+                event = RELEASE_FIRE
+            }
+            
+            manager.joystickEvent(self, event: event)
+            return true
+        }
+        
+        
+        /* REMOVE */
+        
+        let map = [Int(JOYSTICK_UP.rawValue): joystick?.releaseYAxis,
+                   Int(JOYSTICK_DOWN.rawValue): joystick?.releaseYAxis,
+                   Int(JOYSTICK_LEFT.rawValue): joystick?.releaseXAxis,
+                   Int(JOYSTICK_RIGHT.rawValue): joystick?.releaseXAxis,
+                   Int(JOYSTICK_FIRE.rawValue): joystick?.releaseButton]
         
         if joystick != nil {
             if let dir = keymap.mapping[key] {
-                if let f = map[dir] {
+                if let f = map[Int(dir.rawValue)] {
                     f?()
                     return true
                 }
@@ -193,6 +254,8 @@ class GamePad
         
         print("\(#function) joystick = \(joystick) self = \(self)")
         
+        var event: JoystickEvent = JOYSTICK_EVENT_NONE
+
         let element   = IOHIDValueGetElement(value)
         let intValue  = Int(IOHIDValueGetIntegerValue(value))
         let usagePage = Int(IOHIDElementGetUsagePage(element))
@@ -201,20 +264,26 @@ class GamePad
         if usagePage == kHIDPage_Button {
             
             joystick?.setButton(intValue)
+            event = (intValue != 0) ? PRESS_FIRE : RELEASE_FIRE
         }
         
         if (usagePage == kHIDPage_GenericDesktop) {
             
             let v = mapAnalogAxis(value: value, element: element)
             
+            
             switch(usage) {
                 
             case kHIDUsage_GD_X, kHIDUsage_GD_Rz:
                 joystick?.setXAxis(v)
+                print("X event \(v)")
+                event = (v == 1 ? PULL_RIGHT : (v == -1 ? PULL_LEFT : RELEASE_X))
                 break
                 
             case kHIDUsage_GD_Y, kHIDUsage_GD_Z:
                 joystick?.setYAxis(v)
+                print("Y event \(v)")
+                event = (v == 1 ? PULL_DOWN : (v == -1 ? PULL_UP : RELEASE_Y))
                 break
                 
             case kHIDUsage_GD_Hatswitch:
@@ -225,18 +294,23 @@ class GamePad
                 
                 if intValue == 8 || intValue == 1 || intValue == 2 {
                     joystick?.pullUp()
+                    event = PULL_UP
                 }
                 if intValue == 2 || intValue == 3 || intValue == 4 {
                     joystick?.pullRight()
+                    event = PULL_RIGHT
                 }
                 if intValue == 4 || intValue == 5 || intValue == 6 {
                     joystick?.pullDown()
+                    event = PULL_DOWN
                 }
                 if intValue == 6 || intValue == 7 || intValue == 8 {
                     joystick?.pullLeft()
+                    event = PULL_LEFT
                 }
                 if intValue == 0 {
                     joystick?.releaseAxes()
+                    event = RELEASE_XY
                 }
                 break
                 
@@ -244,6 +318,8 @@ class GamePad
                 print("USB device: Unknown HID usage", usage)
             }
         }
+        
+        manager.joystickEvent(self, event: event)
     }
 
 }

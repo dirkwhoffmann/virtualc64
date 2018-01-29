@@ -58,7 +58,7 @@ extension MyController {
         return true
     }
    
-    func validateJoystickToolbarItem(_ popup: NSPopUpButton, port: JoystickProxy!) {
+    func validateJoystickToolbarItem(_ popup: NSPopUpButton, selectedSlot: Int, port: JoystickProxy!) {
         
         let menu =  popup.menu
         let item1 = menu?.item(withTag: InputDevice.joystick1)
@@ -67,25 +67,27 @@ extension MyController {
         item2?.isEnabled = !gamePadManager.slotIsEmpty(InputDevice.joystick2)
         
         // Mark game pad connected to port
-        let slot = gamePadManager.lookupGamePad(port: port)
-        popup.selectItem(withTag: slot)
+        // let slot = gamePadManager.lookupGamePad(port: port)
+        // popup.selectItem(withTag: slot)
+        popup.selectItem(withTag: selectedSlot)
     }
     
     @objc func validateJoystickToolbarItems() {
     
-        validateJoystickToolbarItem(joystickPortA, port: c64.joystickA)
-        validateJoystickToolbarItem(joystickPortB, port: c64.joystickB)
+        validateJoystickToolbarItem(joystickPortA, selectedSlot: gamepadSlotA, port: c64.joystickA)
+        validateJoystickToolbarItem(joystickPortB, selectedSlot: gamepadSlotB, port: c64.joystickB)
     }
     
     @objc func setupToolbarIcons() {
 
         // Joystick selectors
-        joystickPortA.selectItem(at: 0)
-        joystickPortB.selectItem(at: 0)
+        // joystickPortA.selectItem(at: 0)
+        // joystickPortB.selectItem(at: 0)
         validateJoystickToolbarItems()
     }
     
     
+    // deprecated
     func portAction(_ sender: NSPopUpButton, port: JoystickProxy) {
 
         gamePadManager.attachGamePad(sender.selectedTag(), toPort: port)
@@ -94,10 +96,22 @@ extension MyController {
 
     @IBAction func portAAction(_ sender: NSPopUpButton) {
         
+        // Assign slot and avoid double mappings
+        gamepadSlotA = sender.selectedTag();
+        gamepadSlotB = (gamepadSlotA == gamepadSlotB) ? InputDevice.none : gamepadSlotB
+        
+        validateJoystickToolbarItems();
+        
         portAction(sender, port: c64.joystickA)
     }
     
     @IBAction func portBAction(_ sender: NSPopUpButton) {
+        
+        // Assign slot and avoid double mappings
+        gamepadSlotB = sender.selectedTag();
+        gamepadSlotA = (gamepadSlotA == gamepadSlotB) ? InputDevice.none : gamepadSlotA
+        
+        validateJoystickToolbarItems();
         
         portAction(sender, port: c64.joystickB)
     }

@@ -32,6 +32,7 @@
 @class MemTableView;
 @class Speedometer;
 
+/*
 typedef NS_ENUM(NSInteger, INPUT_DEVICES) {
     IPD_UNCONNECTED = 0,
     IPD_KEYSET_1,
@@ -39,6 +40,7 @@ typedef NS_ENUM(NSInteger, INPUT_DEVICES) {
     IPD_JOYSTICK_1,
     IPD_JOYSTICK_2
 };
+*/
 
 /*! @brief    Fingerprint that uniquely identifies a key combination on the physical Mac keyboard
  *  @seealso  C64KeyFingerprint
@@ -297,6 +299,12 @@ typedef unsigned long MacKeyFingerprint;
     
     //! @brief   Indicates if a status bar is shown
     bool statusBar;
+    
+    //! @brief   Selected game pad slot for joystick in port A
+    NSInteger gamepadSlotA;
+
+    //! @brief   Selected game pad slot for joystick in port B
+    NSInteger gamepadSlotB;
 }
 
 @property (strong) C64Proxy *c64;
@@ -307,10 +315,10 @@ typedef unsigned long MacKeyFingerprint;
 @property NSMenuItem *menuItemFinalIII;
 @property NSPopUpButton *joystickPortA;
 @property NSPopUpButton *joystickPortB;
-@property INPUT_DEVICES inputDeviceA;
-@property INPUT_DEVICES inputDeviceB;
 @property NSEventModifierFlags modifierFlags;
 @property bool statusBar;
+@property NSInteger gamepadSlotA;
+@property NSInteger gamepadSlotB;
 
 // Initialization
 - (void)configureWindow;

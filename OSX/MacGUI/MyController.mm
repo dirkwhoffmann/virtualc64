@@ -45,6 +45,8 @@
 @synthesize gamePadManager;
 @synthesize modifierFlags;
 @synthesize statusBar;
+@synthesize gamepadSlotA;
+@synthesize gamepadSlotB;
 
 // --------------------------------------------------------------------------------
 //                          Construction and Destruction
@@ -115,6 +117,8 @@
     if (!gamePadManager) {
         NSLog(@"WARNING: Failed to initialize GamePadManager");
     }
+    gamepadSlotA = 0;
+    gamepadSlotB = 0;
 
     // Setup window properties
     [self configureWindow];

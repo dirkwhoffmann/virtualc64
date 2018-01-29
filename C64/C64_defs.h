@@ -207,19 +207,35 @@ typedef enum {
 } SamplingMethod;
 
 /*! @brief    Joystick directions
- *  @deprecated
  */
-/*
-typedef enum
-{
+typedef enum {
+    
     JOYSTICK_UP,
     JOYSTICK_DOWN,
     JOYSTICK_LEFT,
     JOYSTICK_RIGHT,
     JOYSTICK_FIRE,
-    JOYSTICK_RELEASED
+    JOYSTICK_RELEASED // DEPRECATED
+    
 } JoystickDirection;
-*/
+
+/*! @brief    Joystick events
+ */
+typedef enum {
+    
+    JOYSTICK_EVENT_NONE,
+    PULL_UP,
+    PULL_DOWN,
+    PULL_LEFT,
+    PULL_RIGHT,
+    PRESS_FIRE,
+    RELEASE_X,
+    RELEASE_Y,
+    RELEASE_XY,
+    RELEASE_FIRE
+    
+} JoystickEvent;
+
 
 /*! @enum     ContainerType
  *  @brief    The type of a container

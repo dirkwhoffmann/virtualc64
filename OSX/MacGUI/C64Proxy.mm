@@ -390,6 +390,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
+- (void) trigger:(JoystickEvent)event { wrapper->joystick->trigger(event); }
+
 - (void) setButton:(NSInteger)pressed { wrapper->joystick->setButton((bool)pressed); }
 - (void) pressButton { wrapper->joystick->pressButton(); }
 - (void) releaseButton { wrapper->joystick->releaseButton(); }

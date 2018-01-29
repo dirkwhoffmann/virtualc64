@@ -331,6 +331,7 @@ struct CRTContainerWrapper;
 //                                 Joystick
 // -------------------------------------------------------------------------
 
+/*
 typedef NS_ENUM(NSInteger, JoystickDirection) {
     UP,
     DOWN,
@@ -339,12 +340,16 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
     FIRE,
     RELEASED
 };
+*/
 
 @interface JoystickProxy : NSObject {
     
     struct JoystickWrapper *wrapper;
 }
 
+- (void) trigger:(JoystickEvent)event; 
+
+// DEPRECATED
 - (void) setButton:(NSInteger)pressed;
 - (void) pressButton;
 - (void) releaseButton;
@@ -357,8 +362,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (void) setYAxis:(NSInteger)value;
 - (void) releaseXAxis;
 - (void) releaseYAxis;
-// - (void) pullJoystick:(JoystickDirection)dir;
-// - (void) releaseJoystick:(JoystickDirection)dir;
+
 
 - (void) dump;
 

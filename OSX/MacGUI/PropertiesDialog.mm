@@ -204,18 +204,18 @@ NSString *VC64FullscreenKeepAspectRatioKey = @"VC64FullscreenKeepAspectRatioKey"
     /* Joystick */
     
     // First key set
-    [self updateKeymap:1 direction:JoystickDirection(UP) button:up1button text:up1];
-    [self updateKeymap:1 direction:JoystickDirection(DOWN) button:down1button text:down1];
-    [self updateKeymap:1 direction:JoystickDirection(LEFT) button:left1button text:left1];
-    [self updateKeymap:1 direction:JoystickDirection(RIGHT) button:right1button text:right1];
-    [self updateKeymap:1 direction:JoystickDirection(FIRE) button:fire1button text:fire1];
+    [self updateKeymap:1 direction:JOYSTICK_UP button:up1button text:up1];
+    [self updateKeymap:1 direction:JOYSTICK_DOWN button:down1button text:down1];
+    [self updateKeymap:1 direction:JOYSTICK_LEFT button:left1button text:left1];
+    [self updateKeymap:1 direction:JOYSTICK_RIGHT button:right1button text:right1];
+    [self updateKeymap:1 direction:JOYSTICK_FIRE button:fire1button text:fire1];
     
     // Second key set
-    [self updateKeymap:2 direction:JoystickDirection(UP) button:up2button text:up2];
-    [self updateKeymap:2 direction:JoystickDirection(DOWN) button:down2button text:down2];
-    [self updateKeymap:2 direction:JoystickDirection(LEFT) button:left2button text:left2];
-    [self updateKeymap:2 direction:JoystickDirection(RIGHT) button:right2button text:right2];
-    [self updateKeymap:2 direction:JoystickDirection(FIRE) button:fire2button text:fire2];
+    [self updateKeymap:2 direction:JOYSTICK_UP button:up2button text:up2];
+    [self updateKeymap:2 direction:JOYSTICK_DOWN button:down2button text:down2];
+    [self updateKeymap:2 direction:JOYSTICK_LEFT button:left2button text:left2];
+    [self updateKeymap:2 direction:JOYSTICK_RIGHT button:right2button text:right2];
+    [self updateKeymap:2 direction:JOYSTICK_FIRE button:fire2button text:fire2];
     
     /* Keyboard */
     [disconnectKeys setState:[controller getDisconnectEmulationKeys]];
