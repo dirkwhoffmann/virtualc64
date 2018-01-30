@@ -116,4 +116,14 @@ public:
     uint8_t peekIO(uint16_t addr);
 };
 
+//! @brief    Type 11 cartridges (Westermann Learning)
+class Westermann : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_WESTERMANN_LEARNING; }
+    uint8_t peekIO(uint16_t addr);
+};
+
+
 #endif

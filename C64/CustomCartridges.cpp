@@ -361,5 +361,17 @@ EpyxFastLoad::peekIO(uint16_t addr)
     return 0;
 }
 
+// -----------------------------------------------------------------------------------------
+//                                    Westermann learning
+// -----------------------------------------------------------------------------------------
 
+uint8_t
+Westermann::peekIO(uint16_t addr)
+{
+    // Any read access to I/O space 2 blends out the upper 8 KB
+    if (addr >= 0xDF00 && addr <= 0xDFFF) {
+        c64->expansionport.setGameLine(1);
+    }
+    return 0;
+}
 
