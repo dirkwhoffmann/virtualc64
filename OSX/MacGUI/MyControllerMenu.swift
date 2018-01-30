@@ -108,6 +108,68 @@ extension MyController {
     }
     
     // -----------------------------------------------------------------
+    // Action methods (View menu)
+    // -----------------------------------------------------------------
+
+    @IBAction func toggleStatusBarAction(_ sender: Any!) {
+        
+        let undo = undoManager()
+        undo?.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.toggleStatusBarAction(sender)
+        }
+        
+        showStatusBar(!statusBar)
+    }
+    
+    
+    @objc public func showStatusBar(_ value: Bool) {
+        
+        if !statusBar && value {
+            
+            greenLED.isHidden = false
+            redLED.isHidden = false
+            progress.isHidden = false
+            tapeProgress.isHidden = false
+            driveIcon.isHidden = !c64.vc1541.hasDisk()
+            driveEject.isHidden = !c64.vc1541.hasDisk()
+            tapeIcon.isHidden = !c64.datasette.hasTape()
+            cartridgeIcon.isHidden = !c64.expansionport.cartridgeAttached()
+            cartridgeEject.isHidden = !c64.expansionport.cartridgeAttached()
+            info.isHidden = false
+            clockSpeed.isHidden = false
+            clockSpeedBar.isHidden = false
+            warpIcon.isHidden = false
+            
+            shrink()
+            window?.setContentBorderThickness(24, for: .minY)
+            adjustWindowSize()
+            statusBar = true
+        }
+ 
+        if statusBar && !value {
+            
+            greenLED.isHidden = true
+            redLED.isHidden = true
+            progress.isHidden = true
+            tapeProgress.isHidden = true
+            driveIcon.isHidden = true
+            driveEject.isHidden = true
+            tapeIcon.isHidden = true
+            cartridgeIcon.isHidden = true
+            cartridgeEject.isHidden = true
+            info.isHidden = true
+            clockSpeed.isHidden = true
+            clockSpeedBar.isHidden = true
+            warpIcon.isHidden = true
+            
+            expand()
+            window?.setContentBorderThickness(0, for: .minY)
+            adjustWindowSize()
+            statusBar = false
+        }
+    }
+        
+    // -----------------------------------------------------------------
     // Action methods (Keyboard menu)
     // -----------------------------------------------------------------
 
@@ -435,5 +497,19 @@ extension MyController {
     @IBAction func dumpC64JoystickB(_ sender: Any!) { c64.joystickB.dump(); gamePadManager.listDevices()}
     @IBAction func dumpIEC(_ sender: Any!) { c64.iec.dump() }
     @IBAction func dumpC64ExpansionPort(_ sender: Any!) { c64.expansionport.dump() }
+    
+    // -----------------------------------------------------------------
+    // Action methods (Toolbar)
+    // -----------------------------------------------------------------
+    
+    @IBAction @objc func resetAction(_ sender: Any!) {
+        
+        let document = self.document as! MyDocument
+        document.updateChangeCount(.changeDone)
+        
+        rotateBack()
+        c64.reset()
+        refresh()
+    }
     
 }

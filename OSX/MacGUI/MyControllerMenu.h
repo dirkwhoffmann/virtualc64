@@ -53,12 +53,12 @@
 // - (IBAction)exportFileFromDiskDialog:(id)sender;
 
 #pragma mark edit view
-- (IBAction)toggleStatusBarAction:(id)sender;
-- (IBAction)showStatusBar;
-- (IBAction)hideStatusBar;
+// - (IBAction)toggleStatusBarAction:(id)sender;
+// - (IBAction)showStatusBar;
+// - (IBAction)hideStatusBar;
 
 #pragma mark edit menu
-- (IBAction)resetAction:(id)sender;
+// - (IBAction)resetAction:(id)sender;
 
 #pragma mark keyboard menu
 /*

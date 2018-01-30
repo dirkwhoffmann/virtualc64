@@ -258,7 +258,7 @@
 {
     NSLog(@"windowWillEnterFullScreen");
     [metalScreen setFullscreen:YES];
-    [self hideStatusBar];
+    [self showStatusBar:false];
 }
 
 - (void)windowDidEnterFullScreen:(NSNotification *)notification
@@ -270,7 +270,7 @@
 {
     NSLog(@"windowWillExitFullScreen");
     [metalScreen setFullscreen:NO];
-    [self showStatusBar];
+    [self showStatusBar:true];
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification

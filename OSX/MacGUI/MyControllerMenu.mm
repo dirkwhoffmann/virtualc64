@@ -151,6 +151,7 @@
 
 #pragma mark edit menu
 
+/*
 - (IBAction)resetAction:(id)sender
 {
     [[self document] updateChangeCount:NSChangeDone];
@@ -230,7 +231,7 @@
     [self adjustWindowSize];
     statusBar = NO;
 }
-
+*/
 
 
 
