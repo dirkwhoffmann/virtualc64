@@ -153,8 +153,12 @@ C64::reset()
     cpu.mem = &mem;
     cpu.initPC();
     
+    // Initialize processor port data direction register and processor port
+    mem.poke(0x0000, 0x2F);  // Data direction
+    mem.poke(0x0001, 0x1F);  // IO port, set default memory layout
+    
     // Make memory ready to go
-    mem.updatePeekPokeLookupTables();
+    // mem.updatePeekPokeLookupTables();
     
 	rasterlineCycle = 1;
     nanoTargetTime = 0UL;

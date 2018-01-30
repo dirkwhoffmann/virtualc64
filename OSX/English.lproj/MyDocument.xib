@@ -338,7 +338,7 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="1850"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1851"/>
-                    <toolbarItem implicitItemIdentifier="944C7CF2-507D-458E-A37A-DA6E3FC68049" label="Reset" paletteLabel="Reset" tag="30" image="restart32" id="1853">
+                    <toolbarItem implicitItemIdentifier="944C7CF2-507D-458E-A37A-DA6E3FC68049" label="Power" paletteLabel="Power" tag="30" image="restart32" id="1853">
                         <nil key="toolTip"/>
                         <connections>
                             <action selector="resetAction:" target="-2" id="1869"/>

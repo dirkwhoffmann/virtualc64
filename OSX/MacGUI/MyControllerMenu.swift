@@ -509,6 +509,7 @@ extension MyController {
         
         rotateBack()
         c64.reset()
+        c64.run()
         refresh()
     }
     

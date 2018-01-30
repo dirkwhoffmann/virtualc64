@@ -83,9 +83,11 @@ C64Memory::reset()
         pokeTarget[i] = M_RAM;
     pokeTarget[0x0] = M_PP;
     
-	// Initialize processor port data direction register and processor port
+    /* MOVED TO C64::reset()
+    // Initialize processor port data direction register and processor port
 	poke(0x0000, 0x2F); // Data direction
 	poke(0x0001, 0x1F);	// IO port, set default memory layout
+    */
 }
 
 

@@ -62,8 +62,10 @@ CPU::CPU()
         { &pc_hi,                   sizeof(pc_hi),                  CLEAR_ON_RESET },
         { &overflow,                sizeof(overflow),               CLEAR_ON_RESET },
         { &data,                    sizeof(data),                   CLEAR_ON_RESET },
-        { &port,                    sizeof(port),                   KEEP_ON_RESET },  // Reset in C64Memory::reset
-        { &port_direction,          sizeof(port_direction),         KEEP_ON_RESET },  // Reset in C64Memory::reset
+        { &port,                    sizeof(port),                   CLEAR_ON_RESET },
+        { &port_direction,          sizeof(port_direction),         CLEAR_ON_RESET },
+//        { &port,                    sizeof(port),                   KEEP_ON_RESET },  // Reset in C64Memory::reset
+//        { &port_direction,          sizeof(port_direction),         KEEP_ON_RESET },  // Reset in C64Memory::reset
         { &external_port_bits,      sizeof(external_port_bits),     CLEAR_ON_RESET },
         { &rdyLine,                 sizeof(rdyLine),                CLEAR_ON_RESET },
         { &irqLine,                 sizeof(irqLine),                CLEAR_ON_RESET },
