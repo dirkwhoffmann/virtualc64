@@ -192,7 +192,7 @@
     
     // Create timer and speedometer
     timerLock = [[NSLock alloc] init];
-    timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/6.0f)
+    timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/24.0f)
                                              target:self
                                            selector:@selector(timerFunc)
                                            userInfo:nil repeats:YES];
@@ -551,41 +551,51 @@
 // --------------------------------------------------------------------------------
 
 - (void)timerFunc
-{	
-	if (timerLock == NULL)
-		NSLog(@"TIMER IS NIL");
+{
+    assert(timerLock != NULL);
 	[timerLock lock];
 	
-	// Do 6 times a second ...
+	
 	animationCounter++;
 	
-	// Process pending messages
-	Message *message;
-	while ((message = [c64 message]) != NULL) {
-		[self processMessage:message];
-	}
-    
-    // Update tape progress icon
-    // Note: The tape progress icon is not switched on or off by a "push" message, because
-    // some games continously switch on and off the datasette motor. This would quickly
-    // overflow the message queue.
-    if ([[c64 datasette] motor] != [c64 tapeBusIsBusy]) {
-        if ([[c64 datasette] motor] && [[c64 datasette] playKey]) {
-            [tapeProgress startAnimation:nil];
-            [c64 setTapeBusIsBusy:YES];
-        } else {
-            [tapeProgress stopAnimation:nil];
-            [c64 setTapeBusIsBusy:NO];
+    // Do 24 times a second ...
+    {
+        // Process pending messages
+        Message *message;
+        while ((message = [c64 message]) != NULL) {
+            [self processMessage:message];
         }
     }
+    
+    // Do 12 times a second ...
+    if ((animationCounter % 2) == 0) {
         
-	// Refresh debug panel if open
-	if ([c64 isRunning] && ([debugPanel state] == NSDrawerOpenState || [debugPanel state] == NSDrawerOpeningState)) {
-		[self refresh];
-	}
-	
-	// Do less times ... 
-	if ((animationCounter & 0x1) == 0) {
+        // Refresh debug panel if open
+        if ([c64 isRunning] && ([debugPanel state] == NSDrawerOpenState || [debugPanel state] == NSDrawerOpeningState)) {
+            [self refresh];
+        }
+    }
+    
+    // Do 6 times a second ...
+    if ((animationCounter % 4) == 0) {
+
+        // Update tape progress icon
+        // Note: The tape progress icon is not switched on or off by a "push" message, because
+        // some games continously switch on and off the datasette motor. This would quickly
+        // overflow the message queue.
+        if ([[c64 datasette] motor] != [c64 tapeBusIsBusy]) {
+            if ([[c64 datasette] motor] && [[c64 datasette] playKey]) {
+                [tapeProgress startAnimation:nil];
+                [c64 setTapeBusIsBusy:YES];
+            } else {
+                [tapeProgress stopAnimation:nil];
+                [c64 setTapeBusIsBusy:NO];
+            }
+        }
+    }
+    
+	// Do 3 times a second ...
+	if ((animationCounter % 8) == 0) {
 		[speedometer updateWithCurrentCycle:[c64 cycles] currentFrame:[c64 frames] expectedSpeed:0.0];
         mhz = 0.6 * mhz + 0.4 * (round([speedometer mhz] * 100.0) / 100.0);
         fps = 0.6 * fps + 0.4 * round([speedometer fps]);
@@ -755,10 +765,11 @@
             break;
 
         case MSG_VC1541_LED:
-			if (msg->i)
+            if (msg->i) {
 				[redLED setImage:[NSImage imageNamed:@"LEDred"]];
-			else
+            } else {
 				[redLED setImage:[NSImage imageNamed:@"LEDgray"]];
+            }
             [redLED setNeedsDisplay];
 			break;
 			
