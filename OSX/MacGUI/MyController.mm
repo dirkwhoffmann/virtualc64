@@ -36,12 +36,41 @@
 }
 
 @synthesize c64;
-@synthesize debugPanel;
-@synthesize cheatboxPanel;
-@synthesize cheatboxImageBrowserView;
-@synthesize menuItemFinalIII;
+
+@synthesize propertiesDialog;
+@synthesize hardwareDialog;
+@synthesize mediaDialog;
+@synthesize mountDialog;
+@synthesize tapeDialog;
+@synthesize romDialog;
+
+// Toolbar
 @synthesize joystickPortA;
 @synthesize joystickPortB;
+
+// Main screen
+@synthesize debugPanel;
+@synthesize cheatboxPanel;
+
+// Bottom bar
+@synthesize greenLED;
+@synthesize redLED;
+@synthesize progress;
+@synthesize driveIcon;
+@synthesize driveEject;
+@synthesize cartridgeIcon;
+@synthesize cartridgeEject;
+@synthesize tapeIcon;
+@synthesize tapeEject;
+@synthesize tapeProgress;
+@synthesize info;
+@synthesize clockSpeed;
+@synthesize clockSpeedBar;
+@synthesize warpIcon;
+
+
+@synthesize cheatboxImageBrowserView;
+@synthesize menuItemFinalIII;
 @synthesize gamePadManager;
 @synthesize modifierFlags;
 @synthesize statusBar;

@@ -32,16 +32,6 @@
 @class MemTableView;
 @class Speedometer;
 
-/*
-typedef NS_ENUM(NSInteger, INPUT_DEVICES) {
-    IPD_UNCONNECTED = 0,
-    IPD_KEYSET_1,
-    IPD_KEYSET_2,
-    IPD_JOYSTICK_1,
-    IPD_JOYSTICK_2
-};
-*/
-
 /*! @brief    Fingerprint that uniquely identifies a key combination on the physical Mac keyboard
  *  @seealso  C64KeyFingerprint
  */
@@ -309,12 +299,41 @@ typedef unsigned long MacKeyFingerprint;
 
 @property (strong) C64Proxy *c64;
 @property (readonly) GamePadManager *gamePadManager;
-@property NSDrawer *debugPanel;
-@property NSDrawer *cheatboxPanel;
-@property CheatboxImageBrowserView *cheatboxImageBrowserView;
-@property NSMenuItem *menuItemFinalIII;
+
+@property PropertiesDialog *propertiesDialog;
+@property HardwareDialog *hardwareDialog;
+@property MediaDialog *mediaDialog;
+@property MountDialog *mountDialog;
+@property TapeDialog *tapeDialog;
+@property RomDialog *romDialog;
+
+// Toolbar
 @property NSPopUpButton *joystickPortA;
 @property NSPopUpButton *joystickPortB;
+
+// Main screen
+@property NSDrawer *debugPanel;
+@property NSDrawer *cheatboxPanel;
+
+// Bottom bar
+@property NSButton *greenLED;
+@property NSButton *redLED;
+@property NSProgressIndicator *progress;
+@property NSButton *driveIcon;
+@property NSButton *driveEject;
+@property NSButton *cartridgeIcon;
+@property NSButton *cartridgeEject;
+@property NSButton *tapeIcon;
+@property NSButton *tapeEject;
+@property NSProgressIndicator *tapeProgress;
+@property NSTextField *info;
+@property NSTextField *clockSpeed;
+@property NSLevelIndicator *clockSpeedBar;
+@property NSButton *warpIcon;
+
+
+@property CheatboxImageBrowserView *cheatboxImageBrowserView;
+@property NSMenuItem *menuItemFinalIII;
 @property NSEventModifierFlags modifierFlags;
 @property bool statusBar;
 @property NSInteger gamepadSlotA;
