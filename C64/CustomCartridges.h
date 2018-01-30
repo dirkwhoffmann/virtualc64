@@ -125,5 +125,13 @@ public:
     uint8_t peekIO(uint16_t addr);
 };
 
+//! @brief    Type 12 cartridges (Rex Utility)
+class RexUtility : public Cartridge {
+    
+public:
+    using Cartridge::Cartridge;
+    CartridgeType getCartridgeType() { return CRT_REX_UTILITY; }
+    uint8_t peekIO(uint16_t addr);
+};
 
 #endif

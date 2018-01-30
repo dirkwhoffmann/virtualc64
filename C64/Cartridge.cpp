@@ -54,6 +54,7 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_SUPER_GAMES:
         case CRT_EPYX_FASTLOAD:
         case CRT_WESTERMANN_LEARNING:
+        case CRT_REX_UTILITY:
             return true;
             
         default:
@@ -92,6 +93,9 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
         case CRT_WESTERMANN_LEARNING:
             return new Westermann(c64);
 
+        case CRT_REX_UTILITY:
+            return new RexUtility(c64);
+            
         default:
             assert(false); // should not reach
             return NULL;

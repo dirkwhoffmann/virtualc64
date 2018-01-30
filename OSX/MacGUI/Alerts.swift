@@ -65,6 +65,6 @@ public extension MyController {
         alert.messageText = "Unsupported cartridge type: \(name)"
         alert.informativeText = "The provided cartridge contains special hardware which is not supported by the emulator yet."
         alert.addButton(withTitle: "OK")
-        alert.runModal()
+        alert.beginSheetModal(for: window!, completionHandler: nil)
     }
 }

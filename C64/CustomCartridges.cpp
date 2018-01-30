@@ -368,10 +368,33 @@ EpyxFastLoad::peekIO(uint16_t addr)
 uint8_t
 Westermann::peekIO(uint16_t addr)
 {
-    // Any read access to I/O space 2 blends out the upper 8 KB
+    // Any read access to I/O space 2 switches to 8KB configuration
     if (addr >= 0xDF00 && addr <= 0xDFFF) {
         c64->expansionport.setGameLine(1);
     }
     return 0;
 }
 
+// -----------------------------------------------------------------------------------------
+//                                    Rex Utility
+// -----------------------------------------------------------------------------------------
+
+uint8_t
+RexUtility::peekIO(uint16_t addr)
+{
+    // Any read access to $DF00 - $DFBF disables the ROM
+    if (addr >= 0xDF00 && addr <= 0xDFBF) {
+        debug("Disable");
+        c64->expansionport.setExromLine(1);
+        c64->expansionport.setGameLine(1);
+    }
+    
+    // Any read access to $DFC0 - $DFFF switches to 8KB configuration
+    if (addr >= 0xDFC0 && addr <= 0xDFFF) {
+        debug("8 KB config");
+        c64->expansionport.setExromLine(0);
+        c64->expansionport.setGameLine(1);
+    }
+    
+    return 0;
+}
