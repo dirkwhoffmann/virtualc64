@@ -350,19 +350,35 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (void) dump { wrapper->keyboard->dumpState(); }
+
+- (BOOL) shiftKeyIsPressed { return wrapper->keyboard->shiftKeyIsPressed(); }
+- (BOOL) commodoreKeyIsPressed { return wrapper->keyboard->commodoreKeyIsPressed(); }
+- (BOOL) ctrlKeyIsPressed { return wrapper->keyboard->ctrlKeyIsPressed(); }
+- (BOOL) runstopKeyIsPressed { return wrapper->keyboard->runstopKeyIsPressed(); }
+
 - (void) pressKey:(C64KeyFingerprint)c { wrapper->keyboard->pressKey(c); }
-- (void) releaseKey:(C64KeyFingerprint)c { wrapper->keyboard->releaseKey(c); }
 - (void) pressShiftKey { wrapper->keyboard->pressShiftKey(); }
-- (void) releaseShiftKey { wrapper->keyboard->releaseShiftKey(); }
-// THE FOLLOWING ONES ARE DEPRECATED
-- (void) pressRunstopKey { wrapper->keyboard->pressRunstopKey(); }
-- (void) releaseRunstopKey { wrapper->keyboard->releaseRunstopKey(); }
-- (void) pressShiftRunstopKey { wrapper->keyboard->pressShiftRunstopKey(); }
-- (void) releaseShiftRunstopKey { wrapper->keyboard->releaseShiftRunstopKey(); }
-- (void) pressRestoreKey { wrapper->keyboard->pressRestoreKey(); }
-- (void) releaseRestoreKey { wrapper->keyboard->releaseRestoreKey(); }
 - (void) pressCommodoreKey { wrapper->keyboard->pressCommodoreKey(); }
+- (void) pressCtrlKey { wrapper->keyboard->pressCtrlKey(); }
+- (void) pressRunstopKey { wrapper->keyboard->pressRunstopKey(); }
+- (void) pressShiftRunstopKey { wrapper->keyboard->pressShiftRunstopKey(); }
+- (void) pressRestoreKey { wrapper->keyboard->pressRestoreKey(); }
+
+- (void) releaseKey:(C64KeyFingerprint)c { wrapper->keyboard->releaseKey(c); }
+- (void) releaseShiftKey { wrapper->keyboard->releaseShiftKey(); }
 - (void) releaseCommodoreKey { wrapper->keyboard->releaseCommodoreKey(); }
+- (void) releaseCtrlKey { wrapper->keyboard->releaseCtrlKey(); }
+- (void) releaseRunstopKey { wrapper->keyboard->releaseRunstopKey(); }
+- (void) releaseShiftRunstopKey { wrapper->keyboard->releaseShiftRunstopKey(); }
+- (void) releaseRestoreKey { wrapper->keyboard->releaseRestoreKey(); }
+
+- (void) toggleShiftKey { wrapper->keyboard->toggleShiftKey(); }
+- (void) toggleCommodoreKey { wrapper->keyboard->toggleCommodoreKey(); }
+- (void) toggleCtrlKey { wrapper->keyboard->toggleCtrlKey(); }
+- (void) toggleRunstopKey { wrapper->keyboard->toggleRunstopKey(); }
+
+
+/*
 - (void) pressHomeKey { wrapper->keyboard->pressHomeKey(); }
 - (void) releaseHomeKey { wrapper->keyboard->releaseHomeKey(); }
 - (void) pressClearKey { wrapper->keyboard->pressClearKey(); }
@@ -371,6 +387,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) releaseDeleteKey { wrapper->keyboard->releaseDeleteKey(); }
 - (void) pressInsertKey { wrapper->keyboard->pressInsertKey(); }
 - (void) releaseInsertKey { wrapper->keyboard->releaseInsertKey(); }
+*/
 
 @end
 

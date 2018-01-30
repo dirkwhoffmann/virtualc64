@@ -124,8 +124,11 @@ enum {
     C64KEY_UPARROW,
     C64KEY_RUNSTOP,
     C64KEY_RESTORE,
-    C64KEY_COMMODORE = 0x0100, // combinable with all other keys
-    C64KEY_CTRL = 0x0200
+    
+    // Flags (combinable with all other keys)
+    C64KEY_SHIFT = 0x1000,
+    C64KEY_COMMODORE = 0x2000,
+    C64KEY_CTRL = 0x4000
 };
 
 //! @brief    Processor models

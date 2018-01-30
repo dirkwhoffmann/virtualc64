@@ -20,6 +20,20 @@ extension MyController {
             menuItem.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
         }
         
+        // Keyboard menu
+        if menuItem.action == #selector(MyController.toggleShiftKey(_:)) {
+            menuItem.state = c64.keyboard.shiftKeyIsPressed() ? .on : .off
+        }
+        if menuItem.action == #selector(MyController.toggleCommodoreKey(_:)) {
+            menuItem.state = c64.keyboard.commodoreKeyIsPressed() ? .on : .off
+        }
+        if menuItem.action == #selector(MyController.toggleCtrlKey(_:)) {
+            menuItem.state = c64.keyboard.ctrlKeyIsPressed() ? .on : .off
+        }
+        if menuItem.action == #selector(MyController.toggleRunstopKey(_:)) {
+            menuItem.state = c64.keyboard.runstopKeyIsPressed() ? .on : .off
+        }
+        
         // Disk menu
         if menuItem.action == #selector(MyController.driveAction(_:)) {
             menuItem.title = c64.iec.isDriveConnected() ? "Power off" : "Power on"
@@ -96,87 +110,106 @@ extension MyController {
     // -----------------------------------------------------------------
     // Action methods (Keyboard menu)
     // -----------------------------------------------------------------
-    
-    @IBAction func runstopAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_RUNSTOP))
+
+
+    @IBAction func shiftAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_SHIFT))
     }
     
-    @IBAction func shiftRunstopAction(_ sender: Any!) {
+    // >>>>
+    @IBAction func shiftCommodoreKeyAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_COMMODORE))
+    }
+    @IBAction func shiftCtrlKeyAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_CTRL))
+    }
+    @IBAction func shiftRunstopKeyAction(_ sender: Any!) {
         simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_RUNSTOP))
     }
-    
-    @IBAction func restoreAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_RESTORE))
+    @IBAction func shiftRestoreAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_RESTORE))
     }
-    
-    @IBAction func runstopRestoreAction(_ sender: Any!) {
-        simulateUserPressingKey(withRunstop:C64KeyFingerprint(C64KEY_RESTORE))
+    @IBAction func shiftLeftarrowAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_LEFTARROW))
     }
+    @IBAction func shiftUparrowAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_UPARROW))
+    }
+    @IBAction func shiftPowndAction(_ sender: Any!) {
+        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_POUND))
+    }
+    // <<<<
     
     @IBAction func commodoreKeyAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_COMMODORE))
     }
-
-    @IBAction func commodoreRunstopKeyAction(_ sender: Any!) {
-        simulateUserPressingKey(withRunstop:C64KeyFingerprint(C64KEY_COMMODORE))
+    @IBAction func ctrlKeyAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_CTRL))
     }
-
+    @IBAction func runstopAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_RUNSTOP))
+    }
+    @IBAction func restoreAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_RESTORE))
+    }
+    @IBAction func runstopRestoreAction(_ sender: Any!) {
+        simulateUserPressingKey(withRunstop: C64KeyFingerprint(C64KEY_RESTORE))
+    }
+    @IBAction func leftarrowAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_LEFTARROW))
+    }
+    @IBAction func uparrowAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_UPARROW))
+    }
+    @IBAction func powndAction(_ sender: Any!) {
+        simulateUserPressingKey(C64KeyFingerprint(C64KEY_POUND))
+    }
     @IBAction func clearKeyAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_CLR))
     }
-    
     @IBAction func homeKeyAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_HOME))
     }
-    
     @IBAction func insertKeyAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_INST))
     }
-    
     @IBAction func deleteKeyAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_DEL))
     }
     
-    @IBAction func leftarrowAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_LEFTARROW))
+    // -----
+    
+    @IBAction func toggleShiftKey(_ sender: Any!) {
+        c64.keyboard.toggleShiftKey()
+        c64.keyboard.dump()
+    }
+    @IBAction func toggleCommodoreKey(_ sender: Any!) {
+        c64.keyboard.toggleCommodoreKey()
+        c64.keyboard.dump()
+    }
+    @IBAction func toggleCtrlKey(_ sender: Any!) {
+        c64.keyboard.toggleCtrlKey()
+        c64.keyboard.dump()
+    }
+    @IBAction func toggleRunstopKey(_ sender: Any!) {
+        c64.keyboard.toggleRunstopKey()
+        c64.keyboard.dump()
     }
     
-    @IBAction func uparrowAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_UPARROW))
-    }
-
-    @IBAction func powndAction(_ sender: Any!) {
-        simulateUserPressingKey(C64KeyFingerprint(C64KEY_POUND))
-    }
-
-    @IBAction func shiftLeftarrowAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_LEFTARROW))
-    }
-    
-    @IBAction func shiftUparrowAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_UPARROW))
-    }
-    
-    @IBAction func shiftPowndAction(_ sender: Any!) {
-        simulateUserPressingKey(withShift: C64KeyFingerprint(C64KEY_POUND))
-    }
+    // ----
     
     @IBAction func loadDirectoryAction(_ sender: Any!) {
         simulateUserTypingText("LOAD \"$\",8")
     }
-
     @IBAction func listAction(_ sender: Any!) {
         simulateUserTypingText("LIST")
     }
-
     @IBAction func loadFirstFileAction(_ sender: Any!) {
         simulateUserTypingText("LOAD \"*\",8,1")
     }
-    
     @IBAction func runProgramAction(_ sender: Any!) {
         simulateUserTypingText("RUN")
     }
-
     @IBAction func formatDiskAction(_ sender: Any!) {
         simulateUserTypingText("OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1")
     }

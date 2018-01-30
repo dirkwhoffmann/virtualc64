@@ -205,14 +205,70 @@
                 <menuItem title="Keyboard" id="212">
                     <menu key="submenu" title="Keyboard" id="213">
                         <items>
+                            <menuItem title="SHIFT" id="zPj-HW-3Ea">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="SHIFT" id="eja-d5-Q32">
+                                    <items>
+                                        <menuItem title="COMMODORE" id="HB8-ZL-j8M">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="shiftCommodoreKeyAction:" target="-1" id="JfN-Uj-bgu"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="CTRL" id="1yh-GK-Zun">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="ctrlKeyAction:" target="-1" id="oYB-xm-trR"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="RUNSTOP" id="HYx-Xn-PfQ">
+                                            <connections>
+                                                <action selector="shiftRunstopKeyAction:" target="-1" id="MmA-8h-M9L"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="RESTORE" id="vMf-aI-BTw">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="shiftRestoreAction:" target="-1" id="kpo-ty-x2n"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="⬅︎" id="acZ-w2-6am">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="shiftLeftarrowAction:" target="-1" id="f24-95-FuQ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="⬆︎" id="KQk-rk-pS5">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="shiftUparrowAction:" target="-1" id="gy8-gZ-MOS"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="£" id="XcQ-qb-b2b">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="shiftPowndAction:" target="-1" id="5JG-yK-nJV"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                                <connections>
+                                    <action selector="shiftAction:" target="-1" id="FTI-wS-HL3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="COMMODORE" id="317">
+                                <connections>
+                                    <action selector="commodoreKeyAction:" target="-1" id="YbT-6t-zTU"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="CTRL" id="MuB-fd-edb">
+                                <connections>
+                                    <action selector="ctrlKeyAction:" target="-1" id="xay-34-4o9"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="RUNSTOP" id="306">
                                 <connections>
                                     <action selector="runstopAction:" target="-1" id="h99-wl-I6J"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="SHIFT RUNSTOP" id="HYx-Xn-PfQ">
-                                <connections>
-                                    <action selector="shiftRunstopAction:" target="-1" id="ejz-Sw-vZz"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="RESTORE" id="305" userLabel="RESTORE">
@@ -225,14 +281,22 @@
                                     <action selector="runstopRestoreAction:" target="-1" id="OF3-DS-8i4"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="COMMODORE" id="317">
+                            <menuItem title="⬅︎" id="Tmd-mF-l91">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="commodoreKeyAction:" target="-1" id="YbT-6t-zTU"/>
+                                    <action selector="leftarrowAction:" target="-1" id="n9T-CV-Mqq"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="COMMODORE RUNSTOP" id="MuB-fd-edb">
+                            <menuItem title="⬆︎" id="YAG-xp-m3x">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="commodoreRunstopKeyAction:" target="-1" id="gs1-9Q-nmM"/>
+                                    <action selector="uparrowAction:" target="-1" id="pTa-Ma-Rvd"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="£" id="kfp-m8-W4c">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="powndAction:" target="-1" id="xP6-aL-3ko"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="CLR" id="512">
@@ -259,44 +323,32 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="349"/>
-                            <menuItem title="Special keys" id="oDm-Q0-cIs" userLabel="Final Cartridge III">
+                            <menuItem title="Hold down" id="eLl-99-KML">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Special keys" id="Zdg-zw-xdr">
+                                <menu key="submenu" title="Hold down" id="lUh-uP-rwo">
                                     <items>
-                                        <menuItem title="⬅︎" id="9Na-zR-5xJ" userLabel="Freeze">
+                                        <menuItem title="SHIFT" id="dSY-dP-E8v">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="leftarrowAction:" target="-1" id="egi-6T-MFl"/>
+                                                <action selector="toggleShiftKey:" target="-1" id="eBY-rf-lYd"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="⬆︎" id="EiE-w8-bcv" userLabel="Freeze">
+                                        <menuItem title="COMMODORE" id="L7N-P4-Z0a">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="uparrowAction:" target="-1" id="skq-HM-bCT"/>
+                                                <action selector="toggleCommodoreKey:" target="-1" id="PxH-dK-Oah"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="£" id="dOT-6K-wnz" userLabel="Freeze">
+                                        <menuItem title="CTRL" id="N7L-9V-JS8">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="powndAction:" target="-1" id="L30-iZ-u81"/>
+                                                <action selector="toggleCtrlKey:" target="-1" id="NeM-pO-Jrz"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="SHIFT ⬅︎" id="MO1-QJ-3BK" userLabel="Freeze">
+                                        <menuItem title="RUNSTOP" id="A7K-QW-Y0O">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="shiftLeftarrowAction:" target="-1" id="4rs-PC-FkU"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="SHIFT ⬆︎" id="dkx-fH-5Xx" userLabel="Freeze">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="shiftUparrowAction:" target="-1" id="9cg-Bb-r75"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="SHIFT £" id="xQ0-cM-3bQ" userLabel="Freeze">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="shiftPowndAction:" target="-1" id="fFi-sY-gIt"/>
+                                                <action selector="toggleRunstopKey:" target="-1" id="r78-UU-XJa"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -334,8 +386,8 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Disk" id="XQm-ka-Db5">
-                    <menu key="submenu" title="Disk" id="Mqn-f5-oGB">
+                <menuItem title="Drive" id="XQm-ka-Db5">
+                    <menu key="submenu" title="Drive" id="Mqn-f5-oGB">
                         <items>
                             <menuItem title="Power" id="1pD-kc-N8U">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -393,8 +445,8 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Cartridge" id="6Nh-dL-Pbk" userLabel="Cartridge">
-                    <menu key="submenu" title="Cartridge" id="ZzZ-hT-u7h">
+                <menuItem title="Expansion Port" id="6Nh-dL-Pbk" userLabel="Cartridge">
+                    <menu key="submenu" title="Expansion Port" id="ZzZ-hT-u7h">
                         <items>
                             <menuItem title="Final Cartridge III" id="ldk-GO-tsE" userLabel="Final Cartridge III">
                                 <modifierMask key="keyEquivalentModifierMask"/>

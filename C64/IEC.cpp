@@ -139,12 +139,16 @@ IEC::connectDrive()
 	
 void 
 IEC::disconnectDrive()
-{ 
+{
+    // Disconnect drive from bus
 	driveConnected = false; 
 	drive->c64->putMessage(MSG_VC1541_ATTACHED, 0);
     if (drive->soundMessagesEnabled())
         drive->c64->putMessage(MSG_VC1541_ATTACHED_SOUND, 0);
 
+    // Reset drive (simulates a power off / power on event)
+    // WE NEED TO CALL HALT
+    // reset() 
 }
 
 bool IEC::_updateIecLines(bool *atnedge)

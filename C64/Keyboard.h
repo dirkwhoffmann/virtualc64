@@ -58,6 +58,24 @@ public:
 	//! @brief    Prints debug information.
 	void dumpState();	
 
+    /*! @brief    Checks if a certain key is currently pressed.
+     *  @details  The key is identified by its native row and column index.
+     */
+    bool keyIsPressed(uint8_t row, uint8_t col);
+    
+    //! @brief    Checks if the shift key is currently pressed.
+    bool shiftKeyIsPressed() { return keyIsPressed(1,7); }
+    
+    //! @brief    Checks if the commodore key is currently pressed.
+    bool commodoreKeyIsPressed() { return keyIsPressed(7,5); }
+    
+    //! @brief    Checks if the CTRL key is currently pressed.
+    bool ctrlKeyIsPressed() { return keyIsPressed(7,2); }
+    
+    //! @brief    Checks if the runstop key is currently pressed.
+    bool runstopKeyIsPressed() { return keyIsPressed(7,7); }
+    
+    
 	/*! @brief    Presses a key.
      *  @details  The key is identified by its native row and column index.
      */
@@ -65,12 +83,15 @@ public:
     
 	//! @brief    Presses a key.
 	void pressKey(C64KeyFingerprint key);
-    
+
 	//! @brief    Presses the shift hey.
 	void pressShiftKey() { pressKey(1,7); }
     
 	//! @brief    Presses the commodore key.
 	void pressCommodoreKey() { pressKey(7,5); }
+    
+    //! @brief    Presses the CTRL key.
+    void pressCtrlKey() { pressKey(7,2); }
     
 	//! @brief    Presses the runstop key.
 	void pressRunstopKey() { pressKey(7,7); }
@@ -80,21 +101,7 @@ public:
 
     //! @brief    Presses the restore key.
     void pressRestoreKey();
-
-    //! @brief    Presses the home key.
-    void pressHomeKey() { pressKey(6,3); }
-
-    //! @brief    Presses the clear key.
-    void pressClearKey() { pressShiftKey(); pressKey(6,3); }
     
-    //! @brief    Presses the delete key.
-    void pressDeleteKey() { pressKey(0,0); }
-
-    //! @brief    Presses the insert key.
-    void pressInsertKey() { pressShiftKey(); pressKey(0,0); }
-
-    //! @brief    Presses the CTRL key.
-    void pressCtrlKey() { pressKey(7,2); }
     
 	/*! @brief    Releases a pressed key.
      *  @details  The key is identified by its native row and column index.
@@ -121,21 +128,28 @@ public:
 
     //! @brief    Releases the restore key.
     void releaseRestoreKey();
-
-    //! @brief    Releases the home key.
-    void releaseHomeKey() { releaseKey(6,3); }
-
-    //! @brief    Releases the clear key.
-    void releaseClearKey() { releaseKey(6,3); releaseShiftKey(); }
     
-    //! @brief    Releases the delete key.
-    void releaseDeleteKey() { releaseKey(0,0); }
-    
-    //! @brief    Releases the insert key.
-    void releaseInsertKey() { releaseKey(0,0); releaseShiftKey(); }
-
     //! @brief    Clears the keyboard matrix.
-	void releaseAll() { for (unsigned i = 0; i < 8; i++) kbMatrixRow[i] = kbMatrixCol[i] = 0xFF; }
+    void releaseAll() { for (unsigned i = 0; i < 8; i++) kbMatrixRow[i] = kbMatrixCol[i] = 0xFF; }
+
+    
+    /*! @brief    Toggles a certain key.
+     *  @details  The key is identified by its native row and column index.
+     */
+    void toggleKey(uint8_t row, uint8_t col);
+    
+    //! @brief    Toggles the shift key.
+    void toggleShiftKey() { toggleKey(1,7); }
+    
+    //! @brief    Toggles the commodore key.
+    void toggleCommodoreKey() { toggleKey(7,5); }
+    
+    //! @brief    Toggles the control key.
+    void toggleCtrlKey() { toggleKey(7,2); }
+    
+    //! @brief    Toggles the runstop key.
+    void toggleRunstopKey() { toggleKey(7,7); }
+    
     
 	/*! @brief    Reads a row from keyboard matrix
 	 *  @param    columnMask  Indicates the rows to read

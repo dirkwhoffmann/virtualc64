@@ -304,18 +304,33 @@ struct CRTContainerWrapper;
 
 - (void) dump;
 
+- (BOOL) shiftKeyIsPressed;
+- (BOOL) commodoreKeyIsPressed;
+- (BOOL) ctrlKeyIsPressed;
+- (BOOL) runstopKeyIsPressed;
+
 - (void) pressKey:(C64KeyFingerprint)c;
-- (void) releaseKey:(C64KeyFingerprint)c;
 - (void) pressShiftKey;
-- (void) releaseShiftKey;
-- (void) pressRunstopKey;
-- (void) releaseRunstopKey;
-- (void) pressShiftRunstopKey;
-- (void) releaseShiftRunstopKey;
-- (void) pressRestoreKey;
-- (void) releaseRestoreKey;
 - (void) pressCommodoreKey;
+- (void) pressCtrlKey;
+- (void) pressRunstopKey;
+- (void) pressShiftRunstopKey;
+- (void) pressRestoreKey;
+
+- (void) releaseKey:(C64KeyFingerprint)c;
+- (void) releaseShiftKey;
 - (void) releaseCommodoreKey;
+- (void) releaseCtrlKey;
+- (void) releaseRunstopKey;
+- (void) releaseShiftRunstopKey;
+- (void) releaseRestoreKey;
+
+- (void) toggleShiftKey;
+- (void) toggleCommodoreKey;
+- (void) toggleCtrlKey;
+- (void) toggleRunstopKey;
+
+/*
 - (void) pressHomeKey;
 - (void) releaseHomeKey;
 - (void) pressClearKey;
@@ -324,6 +339,7 @@ struct CRTContainerWrapper;
 - (void) releaseDeleteKey;
 - (void) pressInsertKey;
 - (void) releaseInsertKey;
+*/
 
 @end 
 

@@ -698,9 +698,15 @@
 			
         case MSG_VC1541_ATTACHED_SOUND:
             if (msg->i) {
+                // Not sure about the copyright of the following sound:
                 // [[c64 vc1541] playSound:@"1541_power_on_0" volume:0.2];
+                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+                [[c64 vc1541] playSound:@"drive_click" volume:1.0];
             } else {
+                // Not sure about the copyright of the following sound:
                 // [[c64 vc1541] playSound:@"1541_track_change_0" volume:0.6];
+                // Sound from Commodore 64 (C64) Preservation Project (c64preservation.com):
+                [[c64 vc1541] playSound:@"drive_click" volume:1.0];
             }
             break;
 
