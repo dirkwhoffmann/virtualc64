@@ -64,6 +64,7 @@
     [data writeToURL:url atomically:YES];
 }
 
+/*
 - (IBAction)exportDiskDialog:(id)sender
 {
     (void)[self exportDiskDialogWorker:[sender tag]];
@@ -142,7 +143,8 @@
 {
     [self exportDiskDialog: sender];
 }
-
+*/
+ 
 // --------------------------------------------------------------------------------
 //                                  Edit menu
 // --------------------------------------------------------------------------------
@@ -229,125 +231,9 @@
     statusBar = NO;
 }
 
-// --------------------------------------------------------------------------------
-//                               Keyboard menu
-// --------------------------------------------------------------------------------
 
-/*
-- (IBAction)runstopAction:(id)sender
-{
-    NSLog(@"Rustop key pressed");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 keyboard] pressRunstopKey];
-    sleepMicrosec(100000);
-    [[c64 keyboard] releaseRunstopKey];
-    [self refresh];
-}
 
-- (IBAction)shiftRunstopAction:(id)sender
-{
-    NSLog(@"Shift rustop combination pressed");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 keyboard] pressShiftRunstopKey];
-    sleepMicrosec(100000);
-    [[c64 keyboard] releaseShiftRunstopKey];
-    [self refresh];
-}
 
-- (IBAction)restoreAction:(id)sender
-{
-    NSLog(@"Restore key pressed");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 keyboard] pressRestoreKey];
-    sleepMicrosec(100000);
-    [[c64 keyboard] releaseRestoreKey];
-    [self refresh];
-}
-
-- (IBAction)runstopRestoreAction:(id)sender
-{
-    NSLog(@"Rustop Restore combination pressed");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 keyboard] pressRunstopKey];
-    [self restoreAction:sender];
-    [[c64 keyboard] releaseRunstopKey];
-    [self refresh];
-}
-
-- (IBAction)commodoreKeyAction:(id)sender
-{
-    NSLog(@"Commodore key pressed");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 keyboard] pressCommodoreKey];
-    sleepMicrosec(100000);
-    [[c64 keyboard] releaseCommodoreKey];
-    [self refresh];
-}
-
-- (IBAction)clearKeyAction:(id)sender
-{
-    // NSLog(@"Clear key pressed");
-
-    [[c64 keyboard] pressClearKey];
-    sleepMicrosec(100000);
-    [[c64 keyboard] releaseClearKey];
-}
-
-- (IBAction)homeKeyAction:(id)sender
-{
-    // NSLog(@"Home key pressed");
-
-    [[c64 keyboard] pressHomeKey];
-    sleepMicrosec(100000);
-    [[c64 keyboard] releaseHomeKey];
-}
-
-- (IBAction)insertKeyAction:(id)sender
-{
-    // NSLog(@"Insert key pressed");
-
-    [[c64 keyboard] pressInsertKey];
-    sleepMicrosec(100000);
-    [[c64 keyboard] releaseInsertKey];
-}
-
-- (IBAction)deleteKeyAction:(id)sender
-{
-    // NSLog(@"Delete key pressed");
-    
-    [[c64 keyboard] pressDeleteKey];
-    sleepMicrosec(100000);
-    [[c64 keyboard] releaseDeleteKey];
-}
-*/
-
-/*
-- (IBAction)loadDirectoryAction:(id)sender
-{
-    NSLog(@"LoadDirectoryAction");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 keyboard] typeText:@"LOAD \"$\",8"];
-    [self refresh];
-}
-
-- (IBAction)loadFirstFileAction:(id)sender
-{
-    NSLog(@"LoadFirstFileAction");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 keyboard] typeText:@"LOAD \"*\",8,1"];
-    [self refresh];
-}
-*/
-
-/*
-- (IBAction)formatDiskAction:(id)sender
-{
-    NSLog(@"FormatDiskAction");
-    [[self document] updateChangeCount:NSChangeDone];
-    [[c64 keyboard] typeText:@"OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1"];
-    [self refresh];
-}
-*/
 
 - (IBAction)datasetteEjectAction:(id)sender
 {

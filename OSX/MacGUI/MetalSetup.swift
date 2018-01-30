@@ -12,13 +12,8 @@ public extension MetalView {
     func checkForMetal() {
         
         guard let _ = MTLCreateSystemDefaultDevice() else {
-
-            let alert = NSAlert()
-            alert.icon = NSImage.init(named: NSImage.Name(rawValue: "metal.png"))
-            alert.messageText = "No suitable GPU hardware found"
-            alert.informativeText = "VirtualC64 can only run on machines supporting the Metal graphics technology (2012 models and above)."
-            alert.addButton(withTitle: "OK")
-            alert.runModal()
+            
+            controller.showMetalAlert()
             NSApp.terminate(self)
             return
         }

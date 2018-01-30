@@ -40,16 +40,17 @@
  *           storing multiple file. 
  *  @see     exportDiskDialogWorker
  */
-- (IBAction)exportDiskDialog:(id)sender;
+// - (IBAction)exportDiskDialog:(id)sender;
 
 /*! @brief   Main functionality of exportDiskDialog
  '  @result  true if disk contents has been exportet, false if operation was canceled. 
  */
-- (bool)exportDiskDialogWorker:(long)type;
+// - (bool)exportDiskDialogWorker:(long)type;
 
 /*! Action function for export disk feature
- *  This method is called when exporting to archives that are capable of storing a single file, only. */
-- (IBAction)exportFileFromDiskDialog:(id)sender;
+ *  This method is called when exporting to archives that are capable of storing a single file, only.
+ */
+// - (IBAction)exportFileFromDiskDialog:(id)sender;
 
 #pragma mark edit view
 - (IBAction)toggleStatusBarAction:(id)sender;

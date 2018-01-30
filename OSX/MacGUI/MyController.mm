@@ -922,6 +922,7 @@
 // Action methods (main window area)
 // --------------------------------------------------------------------------------
 
+/*
 - (IBAction)driveAction:(id)sender
 {
     NSLog(@"Drive action...");
@@ -955,7 +956,7 @@
     
     if (result == NSAlertFirstButtonReturn) {
 
-        if ([self exportDiskDialogWorker:3 /* D64 format tag */]) {
+        if ([self exportDiskDialogWorker:3]) {
             NSLog(@"Disk saved. Ejecting...");
             [[c64 vc1541] ejectDisk];
         } else {
@@ -973,6 +974,7 @@
         NSLog(@"Canceling disk data loss warning dialog...");
     }
 }
+*/
 
 - (IBAction)tapeEjectAction:(id)sender
 {

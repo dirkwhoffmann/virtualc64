@@ -15,19 +15,29 @@ extension MyController {
     
     @objc override open func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         
-        // File menu
-        if menuItem.action == #selector(MyController.exportDiskDialog(_:)) {
-            return c64.vc1541.hasDisk()
-        }
-        if menuItem.action == #selector(MyController.exportFileFromDiskDialog(_:)) {
-            // TODO: Check how many files are present.
-            //       Only enable items when a single file is present
-            return c64.vc1541.hasDisk()
-        }
-        
         // View menu
         if menuItem.action == #selector(MyController.toggleStatusBarAction(_:)) {
             menuItem.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
+        }
+        
+        // Disk menu
+        if menuItem.action == #selector(MyController.driveAction(_:)) {
+            menuItem.title = c64.iec.isDriveConnected() ? "Power off" : "Power on"
+            return true
+        }
+        if menuItem.action == #selector(MyController.insertBlankDisk(_:)) {
+            return c64.iec.isDriveConnected()
+        }
+        if menuItem.action == #selector(MyController.driveEjectAction(_:)) {
+            return c64.iec.isDriveConnected() && c64.vc1541.hasDisk()
+        }
+        if menuItem.action == #selector(MyController.exportDisk(_:)) {
+            return c64.vc1541.hasDisk()
+        }
+        
+        // Cartridge menu
+        if menuItem.action == #selector(MyController.finalCartridgeIIIaction(_:)) {
+            return c64.expansionport.cartridgeType() == CRT_FINAL_CARTRIDGE_III
         }
         
         // Debug menu
@@ -41,7 +51,6 @@ extension MyController {
             menuItem.action == #selector(MyController.stopAndGoAction(_:)) {
             return c64.isHalted();
         }
-            
         if menuItem.action == #selector(MyController.markIRQLinesAction(_:)) {
             menuItem.state = c64.vic.showIrqLines() ? .on : .off
         }
@@ -64,35 +73,29 @@ extension MyController {
             menuItem.state = c64.vc1541.via1.tracingEnabled() ? .on : .off
         }
         
-        // Cartridge menu
-        if menuItem.action == #selector(MyController.finalCartridgeIIIaction(_:)) {
-            return c64.expansionport.cartridgeType() == CRT_FINAL_CARTRIDGE_III
-        }
-        
         return true
     }
    
-    //
-    // Action methods (File)
-    //
+    // -----------------------------------------------------------------
+    // Action methods (File menu)
+    // -----------------------------------------------------------------
     
     @IBAction func insertBlankDisk(_ sender: Any!) {
         
-        print("\(#function)")
-
-        // Create empty Archive
-        let archive = ArchiveProxy()
+        if !c64.vc1541.diskModified() || showUnsafedDiskAlert() == .alertFirstButtonReturn {
         
-        // Convert to D64Archive
-        let d64archive = D64ArchiveProxy.archive(fromArchive: archive)
-        
-        // Insert as disk
-        c64.mountArchive(d64archive)
+            // Create empty Archive
+            let archive = ArchiveProxy()
+            // Convert to D64Archive
+            let d64archive = D64ArchiveProxy.archive(fromArchive: archive)
+            // Insert as disk
+            c64.mountArchive(d64archive)
+        }
     }
     
-    //
-    // Action methods (Keyboard)
-    //
+    // -----------------------------------------------------------------
+    // Action methods (Keyboard menu)
+    // -----------------------------------------------------------------
     
     @IBAction func runstopAction(_ sender: Any!) {
         simulateUserPressingKey(C64KeyFingerprint(C64KEY_RUNSTOP))
@@ -178,10 +181,122 @@ extension MyController {
         simulateUserTypingText("OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1")
     }
 
+ 
+    // -----------------------------------------------------------------
+    // Action methods (Disk menu)
+    // -----------------------------------------------------------------
+
+    @IBAction func exportDisk(_ sender: Any!) {
+        // Dummy target to make menu item validatable
+    }
+    @IBAction func exportDiskD64(_ sender: Any!) {
+        exportDiskDialogWorker(type: D64_CONTAINER)
+    }
+    @IBAction func exportDiskT64(_ sender: Any!) {
+        exportDiskDialogWorker(type: T64_CONTAINER)
+    }
+    @IBAction func exportDiskPRG(_ sender: Any!) {
+        exportDiskDialogWorker(type: PRG_CONTAINER)
+    }
+    @IBAction func exportDiskP00(_ sender: Any!) {
+        exportDiskDialogWorker(type: P00_CONTAINER)
+    }
     
-    //
-    // Action methods (Cartridge)
-    //
+    /*! @brief   Main functionality of exportDiskDialog
+     *  @result  true if disk contents has been exportet, false if operation was canceled.
+     */
+    @discardableResult
+    func exportDiskDialogWorker(type: ContainerType) -> Bool {
+    
+        func numberOfItems(archive: ArchiveProxy, format: String) -> Int {
+            
+            let items = archive.getNumberOfItems()
+            
+            if items == 0 { showEmptyDiskAlert(format: format) }
+            if items > 1  { showMoreThanOneFileAlert(format: format) }
+            return items
+        }
+        
+        var archive: ArchiveProxy?
+        var fileTypes: [String]?
+    
+        // Create D64 archive from drive
+        guard let d64archive = D64ArchiveProxy.archive(fromVC1541: c64.vc1541) else {
+            NSLog("Failed to create D64 archive from disk in drive")
+            return false
+        }
+        
+        // Convert D64 archive to target format
+        switch (type) {
+
+        case D64_CONTAINER:
+            fileTypes = ["D64"]
+            archive = d64archive
+            break
+    
+        case T64_CONTAINER:
+            fileTypes = ["T64"]
+            archive = T64ArchiveProxy.archive(fromArchive: d64archive)
+            break
+    
+        case PRG_CONTAINER:
+            
+            // PRG files store exactly one file. Abort if disk is empty
+            if numberOfItems(archive: d64archive, format: "PRG") == 0 {
+                return false
+            }
+            NSLog("Exporting to PRG format")
+            fileTypes = ["PRG"]
+            archive = PRGArchiveProxy.archive(fromArchive: d64archive)
+            break
+    
+        case P00_CONTAINER:
+            
+            // P00 files store exactly one file. Abort if disk is empty
+            if numberOfItems(archive: d64archive, format: "P00") == 0 {
+                return false
+            }
+            fileTypes = ["P00"]
+            archive = P00ArchiveProxy.archive(fromArchive: d64archive)
+            break
+    
+        default:
+            assert(false)
+            return false
+        }
+    
+        if archive == nil {
+            NSLog("Unable to create archive from disk data")
+            return false
+        }
+        
+        // Open save panel
+        let sPanel = NSSavePanel()
+        sPanel.canSelectHiddenExtension = true
+        sPanel.allowedFileTypes = fileTypes
+        if sPanel.runModal() != .OK {
+            return false
+        }
+        
+        // Write to file
+        let selectedURL = sPanel.url
+        let selectedFileURL = selectedURL?.absoluteString
+        guard let selectedFile = selectedFileURL?.replacingOccurrences(of: "file://", with: "") else {
+            NSLog("Unable to extract filename")
+            return false
+        }
+        
+        NSLog("Exporting to file \(selectedFile)")
+
+        archive!.write(toFile: selectedFile)
+        c64.vc1541.disk.setModified(false)
+        
+        return true
+    }
+    
+    // -----------------------------------------------------------------
+    // Action methods (Cartridge menu)
+    // -----------------------------------------------------------------
 
     @IBAction func finalCartridgeIIIaction(_ sender: Any!) {
         // Dummy action method to enable menu item validation

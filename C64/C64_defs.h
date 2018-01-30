@@ -215,7 +215,6 @@ typedef enum {
     JOYSTICK_LEFT,
     JOYSTICK_RIGHT,
     JOYSTICK_FIRE,
-    // JOYSTICK_RELEASED // DEPRECATED
     
 } JoystickDirection;
 

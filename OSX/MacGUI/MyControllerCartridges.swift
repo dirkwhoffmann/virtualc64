@@ -28,6 +28,7 @@ extension MyController {
         return true
     }
     
+    /*
     @objc func showCartridgeAlert(_ crtcontainer: CRTContainerProxy) {
         
         let name = crtcontainer.typeName() as String
@@ -40,5 +41,5 @@ extension MyController {
         // alert.runModal()
         alert.beginSheetModal(for: window!, completionHandler: nil)
     }
-
+     */
 }

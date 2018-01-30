@@ -90,12 +90,12 @@
                                     <action selector="performClose:" target="-1" id="193"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save" keyEquivalent="s" id="75">
+                            <menuItem title="Save Snapshot" keyEquivalent="s" id="75">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="196"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save As…" keyEquivalent="S" id="80">
+                            <menuItem title="Save Snapshot As…" keyEquivalent="S" id="80">
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="197"/>
                                 </connections>
@@ -107,46 +107,6 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="74">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Insert blank disk" id="543">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="insertBlankDisk:" target="-1" id="ZPa-1W-g2f"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Export Disk..." id="341">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Export Disk..." id="550">
-                                    <items>
-                                        <menuItem title="D64 archive" tag="3" id="551">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportDiskDialog:" target="-1" id="560"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="T64 archive" tag="4" id="552">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportDiskDialog:" target="-1" id="561"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="PRG archive" tag="5" id="553">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportDiskDialog:" target="-1" id="562"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="P00 archive" tag="6" id="554">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="exportDiskDialog:" target="-1" id="563"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="pkt-Rk-yZn">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Save Screenshot..." id="2aL-ZH-0LC">
@@ -374,29 +334,88 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Cartridge" id="XQm-ka-Db5" userLabel="Cartridge">
-                    <menu key="submenu" title="Cartridge" id="Mqn-f5-oGB">
+                <menuItem title="Disk" id="XQm-ka-Db5">
+                    <menu key="submenu" title="Disk" id="Mqn-f5-oGB">
                         <items>
-                            <menuItem title="Final Cartridge III" id="0WX-9N-ZL3" userLabel="Final Cartridge III">
+                            <menuItem title="Power" id="1pD-kc-N8U">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Final Cartridge III" id="2bZ-Tf-aDz">
+                                <connections>
+                                    <action selector="driveAction:" target="-1" id="ktl-Ud-lcb"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Bft-tN-tO1"/>
+                            <menuItem title="Insert blank disk" id="e0B-5D-eZ0">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="insertBlankDisk:" target="-1" id="ZLQ-l2-2QE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Eject disk" id="mVY-LA-phJ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="driveEjectAction:" target="-1" id="jqu-Xs-erO"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Export disk" id="inq-yB-iPf" userLabel="Export disk">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Export disk" id="e6l-tB-OY6">
                                     <items>
-                                        <menuItem title="Freeze" id="hnA-PW-eYY" userLabel="Freeze">
+                                        <menuItem title="D64 file" id="EOt-Xa-f3C">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="finalCartridgeIIIfreezeAction:" target="-1" id="XIf-jf-Ngy"/>
+                                                <action selector="exportDiskD64:" target="-1" id="1wJ-nA-NRi"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Reset" id="9Yl-co-bHe" userLabel="Freeze">
+                                        <menuItem title="T64 file" id="taQ-HZ-taF">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="finalCartridgeIIIresetAction:" target="-1" id="8om-kz-Chj"/>
+                                                <action selector="exportDiskT64:" target="-1" id="2eX-Di-flw"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="PRG file" id="J0u-P7-GSL">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="exportDiskPRG:" target="-1" id="j43-2D-8ch"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="P00 file" id="SGV-T9-ber">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="exportDiskP00:" target="-1" id="DIX-0U-Kt2"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
                                 <connections>
-                                    <action selector="finalCartridgeIIIaction:" target="-1" id="8GC-0i-wXV"/>
+                                    <action selector="exportDisk:" target="-1" id="avU-pb-XsW"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Cartridge" id="6Nh-dL-Pbk" userLabel="Cartridge">
+                    <menu key="submenu" title="Cartridge" id="ZzZ-hT-u7h">
+                        <items>
+                            <menuItem title="Final Cartridge III" id="ldk-GO-tsE" userLabel="Final Cartridge III">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Final Cartridge III" id="uai-Ed-uEb">
+                                    <items>
+                                        <menuItem title="Freeze" id="Eve-TE-pGi" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="finalCartridgeIIIfreezeAction:" target="-1" id="w6Q-hR-GPj"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reset" id="d0F-ds-yHj" userLabel="Freeze">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="finalCartridgeIIIresetAction:" target="-1" id="les-US-gYl"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                                <connections>
+                                    <action selector="finalCartridgeIIIaction:" target="-1" id="G5E-EB-ROn"/>
                                 </connections>
                             </menuItem>
                         </items>

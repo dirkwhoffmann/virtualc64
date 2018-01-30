@@ -34,6 +34,8 @@
 // 7. Fixed a bug that sometimes crashed the emulator when grabbing the background texture.
 //
 // TODO:
+// Add Controller::insertDisk - Ask user if old disk has unsafed data
+// Use in: Insert blank disk, mount dialog, open file
 //
 // THINK ABOUT ADDING A DICTIONARY BASED CONFIG SYSTEM:
 // All global emulator settings (PAL/NTSC, SID Chip, WARP/NO WARP) are controlled by this method

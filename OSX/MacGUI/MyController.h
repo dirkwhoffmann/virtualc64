@@ -376,8 +376,8 @@ typedef unsigned long MacKeyFingerprint;
 - (void)enableUserEditing:(BOOL)enabled;
 
 // Main window controls
-- (IBAction)driveAction:(id)sender;
-- (IBAction)driveEjectAction:(id)sender;
+// - (IBAction)driveAction:(id)sender; PORTED TO SWIFT
+// - (IBAction)driveEjectAction:(id)sender; PORTED TO SWIFT
 - (IBAction)tapeEjectAction:(id)sender;
 - (IBAction)cartridgeEjectAction:(id)sender;
 - (IBAction)alwaysWarpAction:(id)sender;

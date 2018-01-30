@@ -191,6 +191,7 @@
 		50E555FF0C42699300AFB05F /* flag_eu.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E555FE0C42699300AFB05F /* flag_eu.png */; };
 		50E6014813A3653900EDBEA9 /* PropertiesDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
+		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ED5BF712DD99C000596417 /* Speedometer.mm */; };
 		50F2380312DF4EC600B1F275 /* CheatboxImageBrowserView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50F2380212DF4EC600B1F275 /* CheatboxImageBrowserView.mm */; };
 		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
@@ -492,6 +493,7 @@
 		50E6014613A3653900EDBEA9 /* PropertiesDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesDialog.h; sourceTree = "<group>"; };
 		50E6014713A3653900EDBEA9 /* PropertiesDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PropertiesDialog.mm; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
+		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50ED5BF612DD99C000596417 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Speedometer.mm; sourceTree = "<group>"; };
 		50F236AE12DF1CCB00B1F275 /* C64GUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64GUI.h; sourceTree = "<group>"; };
@@ -751,6 +753,7 @@
 				5000473212DCEA6B0098D890 /* MyControllerCiaPanel.h */,
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
+				50E9B92E201FA92C00065A89 /* Alerts.swift */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controller;
@@ -1292,6 +1295,7 @@
 				5000474C12DCEE500098D890 /* MyControllerMenu.mm in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.mm in Sources */,
 				5077743012DE490300D72088 /* MemTableView.mm in Sources */,
+				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				5077743312DE490B00D72088 /* CpuTableView.mm in Sources */,
 				50F2380312DF4EC600B1F275 /* CheatboxImageBrowserView.mm in Sources */,
 				50F238F412DF576600B1F275 /* CheatboxItem.mm in Sources */,
