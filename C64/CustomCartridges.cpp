@@ -186,7 +186,7 @@ SimonsBasic::poke(uint16_t addr, uint8_t value)
  */
 
 void
-OceanType1::poke(uint16_t addr, uint8_t value)
+Ocean::poke(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
@@ -197,11 +197,11 @@ OceanType1::poke(uint16_t addr, uint8_t value)
 
 
 // -----------------------------------------------------------------------------------------
-//                                Powerplay / Funplay
+//                                   Funplay
 // -----------------------------------------------------------------------------------------
 
 void
-Powerplay::poke(uint16_t addr, uint8_t value)
+Funplay::poke(uint16_t addr, uint8_t value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDFFF);
     
@@ -376,11 +376,11 @@ Westermann::peekIO(uint16_t addr)
 }
 
 // -----------------------------------------------------------------------------------------
-//                                    Rex Utility
+//                                         Rex
 // -----------------------------------------------------------------------------------------
 
 uint8_t
-RexUtility::peekIO(uint16_t addr)
+Rex::peekIO(uint16_t addr)
 {
     // Any read access to $DF00 - $DFBF disables the ROM
     if (addr >= 0xDF00 && addr <= 0xDFBF) {

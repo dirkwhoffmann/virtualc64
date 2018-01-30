@@ -24,12 +24,12 @@
 #include "Cartridge.h"
 
 
-//! @brief    Type 3 cartridges (Final Cartrige III)
+//! @brief    Type 3 cartridges
 class FinalIII : public Cartridge {
     
 public:
     using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_FINAL_CARTRIDGE_III; }
+    CartridgeType getCartridgeType() { return CRT_FINAL_III; }
     void reset();
     uint8_t peekIO(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
@@ -38,7 +38,7 @@ public:
 };
 
 
-//! @brief    Type 4 cartridges (Simons Basic)
+//! @brief    Type 4 cartridges
 class SimonsBasic : public Cartridge {
     
 public:
@@ -50,27 +50,27 @@ public:
 };
 
 
-//! @brief    Type 5 cartridges (Ocean type 1)
-class OceanType1 : public Cartridge {
+//! @brief    Type 5 cartridges
+class Ocean : public Cartridge {
     
 public:
     using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_OCEAN_TYPE_1; }
+    CartridgeType getCartridgeType() { return CRT_OCEAN; }
     void poke(uint16_t addr, uint8_t value);
 };
 
 
-//! @brief    Type 7 cartridges (Fun play, Power play)
-class Powerplay : public Cartridge {
+//! @brief    Type 7 cartridges
+class Funplay : public Cartridge {
     
 public:
     using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_FUN_PLAY_POWER_PLAY; }
+    CartridgeType getCartridgeType() { return CRT_FUNPLAY; }
     void poke(uint16_t addr, uint8_t value);
 };
 
 
-//! @brief    Type 8 cartridges (Super games)
+//! @brief    Type 8 cartridges
 class Supergames : public Cartridge {
     
 public:
@@ -81,7 +81,7 @@ public:
 };
 
 
-//! @brief    Type 10 cartridges (Epyx Fast Load)
+//! @brief    Type 10 cartridges
 class EpyxFastLoad : public Cartridge {
     
 private:
@@ -116,21 +116,21 @@ public:
     uint8_t peekIO(uint16_t addr);
 };
 
-//! @brief    Type 11 cartridges (Westermann Learning)
+//! @brief    Type 11 cartridges
 class Westermann : public Cartridge {
     
 public:
     using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_WESTERMANN_LEARNING; }
+    CartridgeType getCartridgeType() { return CRT_WESTERMANN; }
     uint8_t peekIO(uint16_t addr);
 };
 
-//! @brief    Type 12 cartridges (Rex Utility)
-class RexUtility : public Cartridge {
+//! @brief    Type 12 cartridges
+class Rex : public Cartridge {
     
 public:
     using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() { return CRT_REX_UTILITY; }
+    CartridgeType getCartridgeType() { return CRT_REX; }
     uint8_t peekIO(uint16_t addr);
 };
 

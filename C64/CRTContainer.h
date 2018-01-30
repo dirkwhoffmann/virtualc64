@@ -20,7 +20,9 @@
  */
 
 /* For details about the .CRT format,
- * see: http://ist.uwaterloo.ca/~schepers/formats/CRT.TXT
+ * see: http://vice-emu.sourceforge.net/vice_16.html
+ *      http://ist.uwaterloo.ca/~schepers/formats/CRT.TXT
+ *
  *
  * As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */

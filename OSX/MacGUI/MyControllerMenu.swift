@@ -51,7 +51,7 @@ extension MyController {
         
         // Cartridge menu
         if menuItem.action == #selector(MyController.finalCartridgeIIIaction(_:)) {
-            return c64.expansionport.cartridgeType() == CRT_FINAL_CARTRIDGE_III
+            return c64.expansionport.cartridgeType() == CRT_FINAL_III
         }
         
         // Debug menu

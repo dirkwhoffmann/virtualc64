@@ -47,14 +47,14 @@ Cartridge::isSupportedType(CartridgeType type)
     switch (type) {
         
         case CRT_NORMAL:
-        case CRT_FINAL_CARTRIDGE_III:
+        case CRT_FINAL_III:
         case CRT_SIMONS_BASIC:
-        case CRT_OCEAN_TYPE_1:
-        case CRT_FUN_PLAY_POWER_PLAY:
+        case CRT_OCEAN:
+        case CRT_FUNPLAY:
         case CRT_SUPER_GAMES:
         case CRT_EPYX_FASTLOAD:
-        case CRT_WESTERMANN_LEARNING:
-        case CRT_REX_UTILITY:
+        case CRT_WESTERMANN:
+        case CRT_REX:
             return true;
             
         default:
@@ -71,30 +71,22 @@ Cartridge::makeCartridgeWithType(C64 *c64, CartridgeType type)
             
         case CRT_NORMAL:
             return new Cartridge(c64);
-            
-        case CRT_FINAL_CARTRIDGE_III:
+        case CRT_FINAL_III:
             return new FinalIII(c64);
-            
         case CRT_SIMONS_BASIC:
             return new SimonsBasic(c64);
-            
-        case CRT_OCEAN_TYPE_1:
-            return new OceanType1(c64);
-            
-        case CRT_FUN_PLAY_POWER_PLAY:
-            return new Powerplay(c64);
-        
+        case CRT_OCEAN:
+            return new Ocean(c64);
+        case CRT_FUNPLAY:
+            return new Funplay(c64);
         case CRT_SUPER_GAMES:
             return new Supergames(c64);
-
         case CRT_EPYX_FASTLOAD:
             return new EpyxFastLoad(c64);
-            
-        case CRT_WESTERMANN_LEARNING:
+        case CRT_WESTERMANN:
             return new Westermann(c64);
-
-        case CRT_REX_UTILITY:
-            return new RexUtility(c64);
+        case CRT_REX:
+            return new Rex(c64);
             
         default:
             assert(false); // should not reach
