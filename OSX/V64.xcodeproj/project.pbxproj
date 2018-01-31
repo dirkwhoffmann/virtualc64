@@ -95,6 +95,7 @@
 		506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D1141780E500268AF6 /* SIDWrapper.cpp */; };
 		506D39D6141788E700268AF6 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506D39D4141788E600268AF6 /* ReSID.cpp */; };
 		506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* AppDelegate.swift */; };
+		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		50775E0F1B8EE8A9002EB58D /* Disk525.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50775E0E1B8EE8A9002EB58D /* Disk525.cpp */; };
 		5077743012DE490300D72088 /* MemTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077742F12DE490300D72088 /* MemTableView.mm */; };
 		5077743312DE490B00D72088 /* CpuTableView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5077743212DE490B00D72088 /* CpuTableView.mm */; };
@@ -364,6 +365,7 @@
 		506D39D4141788E600268AF6 /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
 		506D39D5141788E700268AF6 /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
 		506D3DCD20223E5E009742CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		50775E0E1B8EE8A9002EB58D /* Disk525.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Disk525.cpp; sourceTree = "<group>"; };
 		50775E101B8EE95B002EB58D /* Disk525.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Disk525.h; sourceTree = "<group>"; };
 		5077742E12DE490300D72088 /* MemTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemTableView.h; sourceTree = "<group>"; };
@@ -701,6 +703,7 @@
 				50B4B6081EEFFF6800D56499 /* C64Proxy.swift */,
 				50176C750A6F7357009E80BD /* MyDocument.h */,
 				50176C760A6F7357009E80BD /* MyDocument.mm */,
+				506D3DCF20224BF4009742CF /* MyDocument.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -729,7 +732,7 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		5000474112DCECBA0098D890 /* Controller */ = {
+		5000474112DCECBA0098D890 /* Window Controller */ = {
 			isa = PBXGroup;
 			children = (
 				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
@@ -755,7 +758,7 @@
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
-			name = Controller;
+			name = "Window Controller";
 			sourceTree = "<group>";
 		};
 		5000474212DCECDB0098D890 /* Dialogs */ = {
@@ -828,7 +831,7 @@
 				506D3DCD20223E5E009742CF /* AppDelegate.swift */,
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
-				5000474112DCECBA0098D890 /* Controller */,
+				5000474112DCECBA0098D890 /* Window Controller */,
 				5000474212DCECDB0098D890 /* Dialogs */,
 				5000474312DCED190098D890 /* Misc */,
 			);
@@ -1302,6 +1305,7 @@
 				50F239BB12DF66CB00B1F275 /* CheatboxImageBrowserCell.mm in Sources */,
 				5088A6D612E0676200378033 /* MyControllerDebugPanel.mm in Sources */,
 				50F681E41BEA203F008568E3 /* TapeDialog.mm in Sources */,
+				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				50F93BE712EF309900DD6A8A /* FileArchive.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50B4B6091EEFFF6800D56499 /* C64Proxy.swift in Sources */,
