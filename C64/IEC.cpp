@@ -146,10 +146,8 @@ IEC::disconnectDrive()
     if (drive->soundMessagesEnabled())
         drive->c64->putMessage(MSG_VC1541_ATTACHED_SOUND, 0);
 
-    // Reset drive (simulates a power off / power on event)
-    c64->suspend();
-    c64->floppy.reset();
-    c64->resume();
+    // Switch drive off and on
+    drive->powerUp();
 }
 
 bool IEC::_updateIecLines(bool *atnedge)

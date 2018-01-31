@@ -181,36 +181,16 @@ public:
     //! @functiongroup Running the device
     //
     
+    //! @brief    Cold starts the floppy drive
+    /*! @details  Mimics the effect of switching the drive off and on again.
+     */
+    void powerUp();
+
     /*! @brief    Executes the virtual drive for one clock cycle
      *  @seealso  executeBitReady
      *  @seealso  executeByteReady 
      */
-    inline bool executeOneCycle() {
-
-        via1.execute();
-        via2.execute();
-        uint8_t result = cpu.executeOneCycle();
-        
-        // Only proceed if drive is active
-        if (!rotating)
-            return result;
-
-        // If bit accurate emulation is enabled, we don't do anything here
-        if (!bitAccuracy) {
-            return result;
-        }
-        
-        // Wait until next bit is ready
-        if (bitReadyTimer > 0) {
-            bitReadyTimer -= 16;
-            return result;
-        }
-        
-        // Bit is ready
-        executeBitReady();
-        
-        return result;
-    }
+    bool executeOneCycle();
 
 private:
     

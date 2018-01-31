@@ -57,11 +57,9 @@
 //
 // 1. Add routine to quickly get the disk name from GCR data
 //    Right now, the hardware dialog takes some time to open
+//    Better: Run asychronously. BTW, try to speed-optimize Disk->D64.
 //
-// ENHANCEMENTS (BRAIN STORMING):
 //
-// 1. Upscaler (like superEagle)
-//    https://github.com/libretro/common-shaders/tree/master/eagle/shaders
 
 
 #ifndef _C64_INC
@@ -147,14 +145,14 @@ c64->set...() etc.
 c64->loadRom(...)
 
 4. Power up
-c64->run()
+c64->powerUp()
 
 loadRom() is an important function as it does mutliple things. In the first place, it will
  initialize one of the four ROMs in the virtual computer. If all ROMs are read in, it does
  two addition things. Firstly, it calls reset() to initialize all components. Note that it
  does not make sense to reset the computer earlier as some information such as the start
  address of the program counter is stored in ROM. Secondly, it sends MSG_READY_TO_RUN to the
- GUI. The GUI reacts with a call to run(). This function brings the emulator
+ GUI. The GUI reacts with a call to powerUp(). This function brings the emulator
  to life by creating and launching the execution thread.
  
 
@@ -417,6 +415,12 @@ public:
     //
     //! @functiongroup Running the emulator
     //
+
+    //! @brief    Cold starts the virtual C64
+    /*! @details  The emulator and all of its sub components are reset and
+     *            the execution thread is started.
+     */
+    void powerUp();
     
     //! @brief    Continues emulation
     /*! @details  This method recreates the emulation thread and is usually called after

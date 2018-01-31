@@ -508,8 +508,7 @@ extension MyController {
         document.updateChangeCount(.changeDone)
         
         rotateBack()
-        c64.reset()
-        c64.run()
+        c64.powerUp()
         refresh()
     }
     

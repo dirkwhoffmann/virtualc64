@@ -120,6 +120,42 @@ VC1541::dumpState()
 }
 
 void
+VC1541::powerUp() {
+
+    c64->suspend();
+    reset();
+    c64->resume();
+}
+    
+bool
+VC1541::executeOneCycle() {
+    
+    via1.execute();
+    via2.execute();
+    uint8_t result = cpu.executeOneCycle();
+    
+    // Only proceed if drive is active
+    if (!rotating)
+        return result;
+    
+    // If bit accurate emulation is enabled, we don't do anything here
+    if (!bitAccuracy) {
+        return result;
+    }
+    
+    // Wait until next bit is ready
+    if (bitReadyTimer > 0) {
+        bitReadyTimer -= 16;
+        return result;
+    }
+    
+    // Bit is ready
+    executeBitReady();
+    
+    return result;
+}
+
+void
 VC1541::executeBitReady()
 {
     read_shiftreg <<= 1;

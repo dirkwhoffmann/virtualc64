@@ -82,12 +82,6 @@ C64Memory::reset()
     for (unsigned i = 0x1; i <= 0xF; i++)
         pokeTarget[i] = M_RAM;
     pokeTarget[0x0] = M_PP;
-    
-    /* MOVED TO C64::reset()
-    // Initialize processor port data direction register and processor port
-	poke(0x0000, 0x2F); // Data direction
-	poke(0x0001, 0x1F);	// IO port, set default memory layout
-    */
 }
 
 
@@ -277,45 +271,55 @@ C64Memory::updatePeekPokeLookupTables()
 
 uint8_t C64Memory::peekIO(uint16_t addr)
 {
-	// 0xD000 - 0xD3FF (VIC)
-	if (addr <= 0xD3FF) {
-		// Note: Only the lower 6 bits are used for adressing the VIC I/O space
-		// Therefore, the VIC I/O memory repeats every 64 bytes
-		return c64->vic.peek(addr & 0x003F);
-	}
-	
-	// 0xD400 - 0xD7FF (SID)
-	if (addr <= 0xD7FF) {
-		// Note: Only the lower 5 bits are used for adressing the SID I/O space
-		// Therefore, the SID I/O memory repeats every 32 bytes
-		return c64->sid.peek(addr & 0x001F);
-	}
-	
-	// 0xD800 - 0xDBFF (Color RAM)
-	if (addr <= 0xDBFF) {
-        return (colorRam[addr - 0xD800] & 0x0F) | (c64->vic.getDataBus() & 0xF0);
-	}
-	
-	// 0xDC00 - 0xDCFF (CIA 1)
-	if (addr <= 0xDCFF) {
-		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
-		// Therefore, the CIA I/O memory repeats every 16 bytes
-		return c64->cia1.peek(addr & 0x000F);
-	}
-	
-	// 0xDD00 - 0xDDFF (CIA 2)
-	if (addr <= 0xDDFF) {
-		// Note: Only the lower 4 bits are used for adressing the CIA I/O space
-		// Therefore, the CIA I/O memory repeats every 16 bytes
-		return c64->cia2.peek(addr & 0x000F);
-	}
-	
-	// 0xDE00 - 0xDEFF (I/O area 1)
-	// 0xDF00 - 0xDFFF (I/O area 2) 
-	if (addr <= 0xDFFF) {
-        return c64->expansionport.peekIO(addr);
-	}
+    assert(addr >= 0xD000 && addr <= 0xDFFF);
+    
+    switch ((addr >> 8) & 0xF) {
+            
+        case 0x0: // VIC
+        case 0x1: // VIC
+        case 0x2: // VIC
+        case 0x3: // VIC
+            
+            // Only the lower 6 bits are used for adressing the VIC I/O space.
+            // As a result, VIC's I/O memory repeats every 64 bytes.
+            return c64->vic.peek(addr & 0x003F);
 
+        case 0x4: // SID
+        case 0x5: // SID
+        case 0x6: // SID
+        case 0x7: // SID
+            
+            // Only the lower 5 bits are used for adressing the SID I/O space.
+            // As a result, SID's I/O memory repeats every 32 bytes.
+            return c64->sid.peek(addr & 0x001F);
+
+        case 0x8: // Color RAM
+        case 0x9: // Color RAM
+        case 0xA: // Color RAM
+        case 0xB: // Color RAM
+ 
+            return (colorRam[addr - 0xD800] & 0x0F) | (c64->vic.getDataBus() & 0xF0);
+	
+        case 0xC: // CIA 1
+ 
+            // Only the lower 4 bits are used for adressing the CIA I/O space.
+            // As a result, CIA's I/O memory repeats every 16 bytes.
+            return c64->cia1.peek(addr & 0x000F);
+	
+        case 0xD: // CIA 2
+            
+            return c64->cia2.peek(addr & 0x000F);
+            
+        case 0xE: // I/O space 1
+            
+            return c64->expansionport.peekIO(addr);
+            
+        case 0xF: // I/O space 2
+
+            return c64->expansionport.peekIO(addr);
+
+	}
+    
 	assert(false);
 	return 0;
 }

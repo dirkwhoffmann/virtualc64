@@ -202,6 +202,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     return true;
 }
 
+/*
 bool
 ExpansionPort::attachCartridge(CRTContainer *c)
 {
@@ -215,6 +216,7 @@ ExpansionPort::attachCartridge(CRTContainer *c)
     
     return attachCartridge(cartridge);
 }
+*/
 
 void
 ExpansionPort::detachCartridge()

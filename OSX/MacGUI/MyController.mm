@@ -640,7 +640,7 @@
             }
             
             // Start emulator
-            [c64 run];
+            [c64 powerUp];
             [metalScreen blendIn];
             [metalScreen setDrawC64texture:true];
             

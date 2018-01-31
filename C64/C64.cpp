@@ -144,7 +144,7 @@ C64::reset()
 {
     debug(1, "Resetting virtual C64[%p]\n", this);
     
-	suspend();
+	// suspend();
 
     // Reset all sub components
     VirtualComponent::reset();
@@ -163,7 +163,7 @@ C64::reset()
 	rasterlineCycle = 1;
     nanoTargetTime = 0UL;
     ping();
-	resume();
+	// resume();
 }
 
 void C64::ping()
@@ -223,15 +223,14 @@ C64::setNTSC()
 // Running the emulator
 //
 
-/*
 void
 C64::powerUp()
 {
+    suspend();
     reset();
-    mem.resetRAM();
+    resume();
     run();
 }
-*/
 
 void
 C64::run()
@@ -814,11 +813,8 @@ C64::loadRom(const char *filename)
     }
     
     if (!wasRunnable && isRunnable()) {
-
-        // Everything is in place. Make a clean reset ...
-        reset();
         
-        // ... and let the GUI know that the emulator is ready to run.
+        // Let the GUI know that the emulator is ready to run.
         putMessage(MSG_READY_TO_RUN);
     }
     resume();
@@ -1005,20 +1001,19 @@ C64::insertTape(TAPContainer *a)
 }
 
 bool
-C64::attachCartridgeAndReset(CRTContainer *c)
+C64::attachCartridgeAndReset(CRTContainer *container)
 {
-    bool result = false;
+    assert(container != NULL);
     
-    if (c != NULL) {
-        suspend();
-        if (expansionport.attachCartridge(c)) {
-            reset();
-            result = true;
-        }
-        resume();
-    }
+    Cartridge *cartridge = Cartridge::makeCartridgeWithCRTContainer(this, container);
+    if (!cartridge)
+        return false;
     
-    return result;
+    suspend();
+    expansionport.attachCartridge(cartridge);
+    reset();
+    resume();
+    return true;
 }
 
 void

@@ -129,7 +129,7 @@ public:
     //! @brief    Attaches a cartridge to the expansion port
     /*! @details  Cartridge is provided by a CRTContainer
      */
-    bool attachCartridge(CRTContainer *c);
+    // bool attachCartridge(CRTContainer *c);
 
     //! @brief    Removes a cartridge from the expansion port (if any)
     void detachCartridge();
