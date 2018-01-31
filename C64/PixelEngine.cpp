@@ -322,12 +322,12 @@ PixelEngine::drawCanvas()
 
         drawCanvasPixel(6);
         
-        // TODO (seen in VICE)
-        // if D016 had a rising edge, clear the multicolor flipflop
-        /*
-         if (rising_edge_d016)
+        if (!(pipe.registerCTRL2 & 0x10) && (vic->p.registerCTRL2 & 0x10)) {
             sr.mc_flop = false;
-        */
+        }
+        // After pixel 7, D016 changes fully show up
+        pipe.registerCTRL2 = vic->p.registerCTRL2;
+
         drawCanvasPixel(7);
         
     } else {
@@ -362,12 +362,27 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
     loadColors((DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
     
     // Render pixel
-    if (multicol) {
-        if (sr.mc_flop)
+    bool multicolorDisplayMode = displayMode & 0x10;
+    bool generateMulticolorPixel = (pipe.registerCTRL2 & 0x10) && (sr.latchedColor & 0x8);
+    // During pixels 5-7 of a D016 trasition, the VIC seems to behave in a mixed state, where the pixel is displayed
+    // as the new mode, but is generated in the old way (shifted to the expected number of bits for the display mode)
+    if (generateMulticolorPixel) {
+        if (sr.mc_flop) {
             sr.colorbits = (sr.data >> 6);
+            if (!multicolorDisplayMode) {
+                sr.colorbits >>= 1;
+            }
+        }
+    } else {
+        sr.colorbits = sr.data >> 7;
+        if (multicolorDisplayMode) {
+            sr.colorbits <<= 1;
+        }
+    }
+    if (multicolorDisplayMode) {
         setMultiColorPixel(pixelnr, sr.colorbits);
     } else {
-        setSingleColorPixel(pixelnr, sr.data >> 7);
+        setSingleColorPixel(pixelnr, sr.colorbits);
     }
     
     // Shift register and toggle multicolor flipflop
@@ -498,7 +513,6 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             
             col_rgba[0] = colors[cpipe.backgroundColor[0]];
             col_rgba[1] = colors[colorSpace];
-            multicol = false;
             break;
             
         case MULTICOLOR_TEXT:
@@ -507,18 +521,15 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
                 col_rgba[1] = colors[cpipe.backgroundColor[1]];
                 col_rgba[2] = colors[cpipe.backgroundColor[2]];
                 col_rgba[3] = colors[colorSpace & 0x07];
-                multicol = true;
             } else {
                 col_rgba[0] = colors[cpipe.backgroundColor[0]];
                 col_rgba[1] = colors[colorSpace];
-                multicol = false;
             }
             break;
             
         case STANDARD_BITMAP:
             col_rgba[0] = colors[characterSpace & 0x0F]; // color of '0' pixels
             col_rgba[1] = colors[characterSpace >> 4]; // color of '1' pixels
-            multicol = false;
             break;
             
         case MULTICOLOR_BITMAP:
@@ -526,13 +537,11 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             col_rgba[1] = colors[characterSpace >> 4];
             col_rgba[2] = colors[characterSpace & 0x0F];
             col_rgba[3] = colors[colorSpace];
-            multicol = true;
             break;
             
         case EXTENDED_BACKGROUND_COLOR:
             col_rgba[0] = colors[cpipe.backgroundColor[characterSpace >> 6]];
             col_rgba[1] = colors[colorSpace];
-            multicol = false;
             break;
             
         case INVALID_TEXT:
@@ -540,13 +549,11 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             col_rgba[1] = colors[PixelEngine::BLACK];
             col_rgba[2] = colors[PixelEngine::BLACK];
             col_rgba[3] = colors[PixelEngine::BLACK];
-            multicol = (colorSpace & 0x8 /* MC flag */);
             break;
             
         case INVALID_STANDARD_BITMAP:
             col_rgba[0] = colors[PixelEngine::BLACK];
             col_rgba[1] = colors[PixelEngine::BLACK];
-            multicol = false;
             break;
             
         case INVALID_MULTICOLOR_BITMAP:
@@ -554,7 +561,6 @@ PixelEngine::loadColors(DisplayMode mode, uint8_t characterSpace, uint8_t colorS
             col_rgba[1] = colors[PixelEngine::BLACK];
             col_rgba[2] = colors[PixelEngine::BLACK];
             col_rgba[3] = colors[PixelEngine::BLACK];
-            multicol = true;
             break;
             
         default:

@@ -468,9 +468,6 @@ private:
      *            [3] : color for '11' pixels in multicolor mode 
      */
     int col_rgba[4];
-    
-    //! @brief    loadColors() also determines if we are in single-color or multi-color mode
-    bool multicol;
 
 public:
     
