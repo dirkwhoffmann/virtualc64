@@ -201,12 +201,13 @@
     NSLog(@"NSTimer is running. Window is now listening to emulator messages.");
 }
 
+/*
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    NSLog(@"MyController::applicationDidFinishLaunching\n");    
-
+    NSLog(@"MyController::applicationDidFinishLaunching\n");
     [[NSApplication sharedApplication] setAutomaticCustomizeTouchBarMenuItemEnabled:YES];
 }
+*/
 
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize
 {
