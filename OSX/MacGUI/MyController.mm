@@ -125,8 +125,6 @@
 - (void)awakeFromNib
 {	
     NSLog(@"MyController::awakeFromNib");
-    
-
 }
 
 - (void)windowDidLoad
@@ -165,7 +163,7 @@
     [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     
 	// Launch emulator
-	[c64 run];
+	[c64 powerUp];
     
     // Get metal running
     [metalScreen setupMetal];

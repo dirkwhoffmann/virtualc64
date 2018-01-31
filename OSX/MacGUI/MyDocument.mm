@@ -109,17 +109,6 @@
 	return YES;
 }
 
-/*
-- (BOOL)detachCartridge
-{
-	[c64 detachCartridge];
-    // TODO: CHECK: DO WE NEED TO DEALLOC MANUALLY?
-	attachedCartridge = nil;
-	
-	return YES;
-}
-*/
-
 - (BOOL)loadRom:(NSString *)filename
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -200,19 +189,6 @@
         return NO;
     }
     
-#if 0
-    // Is it some supported file format?
-    ContainerType format = 0;
-    if ([D64ArchiveProxy isD64File:filename])        format = D64_CONTAINER;
-    else if ([T64ArchiveProxy isT64File:filename])   format = T64_CONTAINER;
-    else if ([PRGArchiveProxy isPRGFile:filename])   format = PRG_CONTAINER;
-    else if ([P00ArchiveProxy isP00File:filename])   format = P00_CONTAINER;
-    else if ([G64ArchiveProxy isG64File:filename])   format = G64_CONTAINER;
-    else if ([NIBArchiveProxy isNIBFile:filename])   format = NIB_CONTAINER;
-    else if ([TAPContainerProxy isTAPFile:filename]) format = TAP_CONTAINER;
-    else if ([CRTContainerProxy isCRTFile:filename]) format = CRT_CONTAINER;
-#endif 
-
     // Check file type
     ContainerType format = UNKNOWN_CONTAINER_FORMAT;
     if ([type caseInsensitiveCompare:@"D64"] == NSOrderedSame)

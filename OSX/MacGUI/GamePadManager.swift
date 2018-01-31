@@ -52,8 +52,6 @@
         self.init()
         self.controller = controller
         
-        NSLog("Parent controller: \(controller)\n")
-        
         // Add  generic devices (two keyboard emulated joysticks)
         gamePads[0] = GamePad(manager: self)
         gamePads[1] = GamePad(manager: self)
@@ -97,6 +95,13 @@
     deinit {
         NSLog("\(#function)")
         IOHIDManagerClose(hidManager, IOOptionBits(kIOHIDOptionsTypeNone));
+    }
+    
+    //! @brief   Removes all registered devices
+    @objc func shutDown() {
+        
+        gamePads = [:];
+
     }
     
     //
