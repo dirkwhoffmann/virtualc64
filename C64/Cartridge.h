@@ -131,10 +131,11 @@ public:
     //! @brief    Peek fallthrough
     virtual uint8_t peek(uint16_t addr); 
     
-    //! @brief    Peek fallthrough for IO space
-    /*! @details  Some cartridges such as SimonsBasic trigger a bank switch when
-     *            reading a certein IO register. */
-    virtual uint8_t peekIO(uint16_t addr) { return 0; }
+    //! @brief    Peek fallthrough for I/O space 1
+    virtual uint8_t peekIO1(uint16_t addr) { return 0; }
+
+    //! @brief    Peek fallthrough for I/O space 2
+    virtual uint8_t peekIO2(uint16_t addr) { return 0; }
 
     //! @brief    Poke fallthrough
     virtual void poke(uint16_t addr, uint8_t value) { }

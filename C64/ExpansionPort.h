@@ -95,8 +95,12 @@ public:
     //! @brief    Peek fallthrough
     uint8_t peek(uint16_t addr);
 
-    //! @brief    Peek fallthrough for I/O region
-    uint8_t peekIO(uint16_t addr);
+    //! @brief    Peek fallthrough for I/O space 1
+    uint8_t peekIO1(uint16_t addr);
+    
+    //! @brief    Peek fallthrough for I/O space 2
+    uint8_t peekIO2(uint16_t addr);
+
 
     //! @brief    Poke fallthrough
     void poke(uint16_t addr, uint8_t value);
@@ -125,11 +129,6 @@ public:
 
     //! @brief    Attaches a cartridge to the expansion port
     bool attachCartridge(Cartridge *c);
-
-    //! @brief    Attaches a cartridge to the expansion port
-    /*! @details  Cartridge is provided by a CRTContainer
-     */
-    // bool attachCartridge(CRTContainer *c);
 
     //! @brief    Removes a cartridge from the expansion port (if any)
     void detachCartridge();

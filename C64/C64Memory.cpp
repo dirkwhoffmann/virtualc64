@@ -312,11 +312,11 @@ uint8_t C64Memory::peekIO(uint16_t addr)
             
         case 0xE: // I/O space 1
             
-            return c64->expansionport.peekIO(addr);
+            return c64->expansionport.peekIO1(addr);
             
         case 0xF: // I/O space 2
 
-            return c64->expansionport.peekIO(addr);
+            return c64->expansionport.peekIO2(addr);
 
 	}
     

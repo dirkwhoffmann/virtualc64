@@ -132,15 +132,6 @@ ExpansionPort::romIsBlendedIn(uint16_t addr)
     return cartridge ? cartridge->romIsBlendedIn(addr) : false;
 }
 
-/*
-void
-ExpansionPort::execute()
-{
-    if (cartridge)
-        cartridge->execute();
-}
-*/
-
 uint8_t
 ExpansionPort::peek(uint16_t addr)
 {
@@ -148,7 +139,7 @@ ExpansionPort::peek(uint16_t addr)
 }
 
 uint8_t
-ExpansionPort::peekIO(uint16_t addr)
+ExpansionPort::peekIO1(uint16_t addr)
 {
     /* "Die beiden mit "I/O 1" und "I/O 2" bezeichneten Bereiche
      *  sind für Erweiterungskarten reserviert und normalerweise ebenfalls offen,
@@ -157,7 +148,13 @@ ExpansionPort::peekIO(uint16_t addr)
      *  Lesen von offenen Adressen liefert nämlich auf vielen C64 das zuletzt vom
      *  VIC gelesene Byte zurück!)" [C.B.]
      */
-   return cartridge ? cartridge->peekIO(addr) : c64->vic.getDataBus();
+   return cartridge ? cartridge->peekIO1(addr) : c64->vic.getDataBus();
+}
+
+uint8_t
+ExpansionPort::peekIO2(uint16_t addr)
+{
+    return cartridge ? cartridge->peekIO2(addr) : c64->vic.getDataBus();
 }
 
 void

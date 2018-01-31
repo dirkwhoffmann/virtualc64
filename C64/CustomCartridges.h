@@ -45,7 +45,7 @@ public:
     using Cartridge::Cartridge;
     CartridgeType getCartridgeType() { return CRT_SIMONS_BASIC; }
     void reset();
-    uint8_t peekIO(uint16_t addr);
+    uint8_t peekIO1(uint16_t addr);
     void poke(uint16_t addr, uint8_t value);
 };
 

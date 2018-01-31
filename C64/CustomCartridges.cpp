@@ -148,15 +148,13 @@ SimonsBasic::reset()
 }
 
 uint8_t
-SimonsBasic::peekIO(uint16_t addr)
+SimonsBasic::peekIO1(uint16_t addr)
 {
-    assert(addr >= 0xDE00 && addr <= 0xDFFF);
-    
     if (addr == 0xDE00) {
         // Switch to 8KB configuration
         c64->expansionport.setGameLine(1);
     }
-    return Cartridge::peekIO(addr);
+    return Cartridge::peekIO1(addr);
 }
 
 void
