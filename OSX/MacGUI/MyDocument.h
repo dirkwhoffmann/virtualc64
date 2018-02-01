@@ -58,7 +58,7 @@
 // - (BOOL)detachCartridge;
 
 // Loading and saving
-- (BOOL)loadRom:(NSString *)filename;
+// - (BOOL)loadRom:(NSString *)filename;
 - (void)showVersionNumberAlert;
 
 @end

@@ -117,6 +117,7 @@
 	return YES;
 }
 
+/*
 - (BOOL)loadRom:(NSString *)filename
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -145,6 +146,7 @@
 	
 	return success;
 }
+*/
 
 - (void)showVersionNumberAlert
 {
@@ -259,7 +261,7 @@
     NSLog(@"Error while reading file\n");
     return NO;
 }
-	
+
 - (BOOL)revertToSavedFromFile:(NSString *)filename ofType:(NSString *)type
 {
 	NSLog(@"MyDocument:revertToSavedFile:%@ ofType:%@", filename, type);

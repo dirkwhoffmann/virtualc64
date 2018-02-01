@@ -130,7 +130,7 @@ C64::C64()
 		backInTimeHistory[i] = new Snapshot();	
 	backInTimeWritePtr = 0;
     
-    reset();
+    // reset();
 }
 
 C64::~C64()
@@ -807,14 +807,15 @@ C64::loadRom(const char *filename)
     }
     
     if (result) {
-        debug(1, "ROM image %s loaded successfully\n", filename);
+        debug(2, "ROM image %s loaded successfully\n", filename);
     } else {
         warn("FAILED to load ROM image %s\n", filename);
     }
     
     if (!wasRunnable && isRunnable()) {
         
-        // Let the GUI know that the emulator is ready to run.
+        // Reset emulator and let the GUI know that the emulator is ready to run.
+        reset();
         putMessage(MSG_READY_TO_RUN);
     }
     resume();

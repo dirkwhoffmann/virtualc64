@@ -394,6 +394,7 @@
         [c64 setPAL];
     }
     
+    /*
     NSLog(@"    VC64BasicRomFileKey: %@",
           [defaults stringForKey:VC64BasicRomFileKey]);
     NSLog(@"    VC64CharRomFileKey: %@",
@@ -407,6 +408,7 @@
     [[self document] loadRom:[defaults stringForKey:VC64CharRomFileKey]];
     [[self document] loadRom:[defaults stringForKey:VC64KernelRomFileKey]];
     [[self document] loadRom:[defaults stringForKey:VC64VC1541RomFileKey]];
+    */
     
     // Peripherals
     [c64 setWarpLoad:[defaults boolForKey:VC64WarpLoadKey]];
@@ -649,7 +651,7 @@
             }
             
             // Start emulator
-            [c64 powerUp];
+            [c64 run];
             [metalScreen blendIn];
             [metalScreen setDrawC64texture:true];
             

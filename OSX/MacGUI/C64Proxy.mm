@@ -422,30 +422,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) releaseXAxis { wrapper->joystick->releaseXAxis(); }
 - (void) releaseYAxis { wrapper->joystick->releaseYAxis(); }
 
-/*
-- (void) pullJoystick:(JoystickDirection)dir {
-    switch(dir) {
-        case LEFT:  wrapper->joystick->pullLeft(); return;
-        case RIGHT: wrapper->joystick->pullRight(); return;
-        case UP:    wrapper->joystick->pullUp(); return;
-        case DOWN:  wrapper->joystick->pullDown(); return;
-        case FIRE:  wrapper->joystick->pressButton(); return;
-        default:    return;
-    }
-}
-
-- (void) releaseJoystick:(JoystickDirection)dir {
-    switch(dir) {
-        case LEFT:  wrapper->joystick->releaseXAxis(); return;
-        case RIGHT: wrapper->joystick->releaseXAxis(); return;
-        case UP:    wrapper->joystick->releaseYAxis(); return;
-        case DOWN:  wrapper->joystick->releaseYAxis(); return;
-        case FIRE:  wrapper->joystick->releaseButton(); return;
-        default:    return;
-    }
-}
-*/
-
 - (void) dump { wrapper->joystick->dumpState(); }
 
 @end
@@ -720,7 +696,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     if (!audioEngine) {
         NSLog(@"WARNING: Failed to initialize AudioEngine");
     }
-
 
     return self;
 }

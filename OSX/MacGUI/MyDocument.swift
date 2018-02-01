@@ -16,9 +16,15 @@ extension MyDocument {
         
         // super.init()
 
-        // Create emulator instance
+        // Create emulator instance and try to load ROMs
         c64 = C64Proxy()
-        
+        let defaults = UserDefaults.standard
+        loadRom(defaults.string(forKey: VC64BasicRomFileKey))
+        loadRom(defaults.string(forKey: VC64CharRomFileKey))
+        loadRom(defaults.string(forKey: VC64KernelRomFileKey))
+        loadRom(defaults.string(forKey: VC64VC1541RomFileKey))
+
+        // Try to get rid of this!!!
         attachedSnapshot = nil
         attachedArchive = nil
         attachedTape = nil
@@ -47,7 +53,39 @@ extension MyDocument {
     // Loading and saving
     //
     
-/*
+    @discardableResult
+    @objc func loadRom(_ filename: String?) -> Bool {
+        
+        if (filename == nil) {
+            return false
+        }
+        
+        let defaults = UserDefaults.standard
+        
+        if c64.loadBasicRom(filename!) {
+            NSLog("Basic ROM:  \(filename!)")
+            defaults.set(filename, forKey: VC64BasicRomFileKey)
+            return true
+        }
+        if c64.loadCharRom(filename!) {
+            NSLog("Char ROM:   \(filename!)")
+            defaults.set(filename, forKey: VC64CharRomFileKey)
+            return true
+        }
+        if c64.loadKernelRom(filename!) {
+            NSLog("Kernel ROM: \(filename!)")
+            defaults.set(filename, forKey: VC64KernelRomFileKey)
+            return true
+        }
+        if c64.loadVC1541Rom(filename!) {
+            NSLog("VC1541 ROM: \(filename!)")
+            defaults.set(filename, forKey: VC64VC1541RomFileKey)
+            return true
+        }
+    
+    return false
+    }
+    
     override open func data(ofType typeName: String) throws -> Data {
         
         NSLog("data(ofType:\(typeName))")
@@ -70,8 +108,7 @@ extension MyDocument {
         
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
-*/
-    
+
 /*
     override open func read(from data: Data, ofType typeName: String) throws {
         
