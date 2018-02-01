@@ -23,8 +23,9 @@
 @interface MyDocument : NSDocument
 {
 	// ObjC/C++ bridge
-	C64Proxy *__strong c64;
-
+	// C64Proxy *__strong c64;
+    C64Proxy *c64; 
+    
     //! Reference to an attached VC64 snapshot
     /*! When a new documents opens and this variable is not NULL, the snapshot is automatically flashed */
     SnapshotProxy *attachednapshot;

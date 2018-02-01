@@ -106,20 +106,21 @@
 {
 	// NSLog(@"windowWillClose");
 	
-	// stop timer
+	// Stop timer
 	[timer invalidate];
 	timer = nil;
 	
-	// stop metal view
+	// Stop metal view
     [metalScreen cleanup];
     
 	// release C64
-	NSLog(@"Killing timer");
+    /*
 	[timerLock lock];
 	NSLog(@"Killing C64");
 	[c64 kill];
 	c64 = nil;
 	[timerLock unlock];
+     */
 }
 
 - (void)awakeFromNib

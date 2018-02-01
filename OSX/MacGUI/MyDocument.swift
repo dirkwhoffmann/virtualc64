@@ -12,10 +12,13 @@ extension MyDocument {
 //     override init() {
     @objc public func initSwift() {
 
-        NSLog("\(#function)")
+        NSLog("MyDocument::\(#function)")
         
         // super.init()
 
+        // Create emulator instance
+        c64 = C64Proxy()
+        
         attachedSnapshot = nil
         attachedArchive = nil
         attachedTape = nil
@@ -95,6 +98,11 @@ extension MyDocument {
     }
 */
     
-
+    open override func removeWindowController(_ windowController: NSWindowController) {
+        super.removeWindowController(windowController)
+        NSLog("****** removeWindowController")
+        
+        c64.kill()
+    }
 }
 
