@@ -98,7 +98,6 @@
                 <outlet property="alarm2Seconds" destination="2539" id="2680"/>
                 <outlet property="alarm2Tenth" destination="2541" id="2681"/>
                 <outlet property="breakpoint" destination="512" id="632"/>
-                <outlet property="c64" destination="2208" id="2209"/>
                 <outlet property="cartridgeEject" destination="2000" id="2011"/>
                 <outlet property="cartridgeIcon" destination="2003" id="2010"/>
                 <outlet property="cheatboxImageBrowserView" destination="2182" id="2184"/>
@@ -315,7 +314,6 @@
                         <rect key="frame" x="0.0" y="24" width="804" height="621"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <connections>
-                            <outlet property="c64proxy" destination="2208" id="bSx-dM-tjo"/>
                             <outlet property="controller" destination="-2" id="DoA-Vt-vqv"/>
                         </connections>
                     </customView>
@@ -3553,7 +3551,6 @@ DQ
                 <outlet property="parentWindow" destination="5" id="2029"/>
             </connections>
         </drawer>
-        <customObject id="2208" userLabel="c64" customClass="C64Proxy"/>
         <window title="Properties" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2228" userLabel="Properties" customClass="PropertiesDialog">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
