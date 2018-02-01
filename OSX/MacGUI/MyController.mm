@@ -94,7 +94,7 @@
     if (chdir([path UTF8String]) != 0)
         NSLog(@"WARNING: Could not change working directory.");
     else
-        NSLog(@"New base directory ist %@", path);
+        NSLog(@"New base directory is %@", path);
 }
 
 - (void)dealloc

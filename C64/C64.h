@@ -34,20 +34,11 @@
 // 7. Fixed a bug that sometimes crashed the emulator when grabbing the background texture.
 //
 // TODO:
-// Add Controller::insertDisk - Ask user if old disk has unsafed data
-// Use in: Insert blank disk, mount dialog, open file
+// - Make Snaphshot store everything in one chunk of memory
+//   This would simplify the creation of a NSData object when saving.
 //
-// THINK ABOUT ADDING A DICTIONARY BASED CONFIG SYSTEM:
-// All global emulator settings (PAL/NTSC, SID Chip, WARP/NO WARP) are controlled by this method
-// Add method C64::configure(VC64Option key, int value)
-// Add method C64::configureUnsafe(key, value)
-//      Same, but does not suspend the emulation thread
-// Also move texture grabbing API to C64 class (if VirtualC64 is used by someone else,
-// he/she should only need to interact with the C64 class).
 //
-// Why? Because there are various methods in the emulator and the proxy that
-// simply pass values from one component to the other. This would be much
-// simpler then. 
+//
 
 // TODO:
 // Use better text descriptions in Mount dialog for G64 and NIB files

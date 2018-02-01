@@ -17,6 +17,7 @@
  */
 
 #import "C64GUI.h"
+#import "VirtualC64-Swift.h"
 
 @implementation MyDocument
 
@@ -40,6 +41,12 @@
 
 - (id)init
 {
+    self = [super init];
+    
+    [self initSwift];
+    
+    return self; 
+    /*
 	NSLog(@"MyDocument::init");
 	
     self = [super init];
@@ -50,12 +57,17 @@
 	attachedCartridge = nil;
 		
 	return self;
+     */
 }
 
-- (void)awakeFromNib
+/*
+-(id)initWithType:(NSString *)typeName
+            error:(NSError * _Nullable __autoreleasing *)outError
 {
-    NSLog(@"MyDocument::awakeFromNib");
+    NSLog(@"MyDocument::initWithType %@", typeName);
+    return [self init];
 }
+*/
 
 - (BOOL)setSnapshotWithName:(NSString *)path
 {
@@ -142,7 +154,6 @@
     [alert addButtonWithTitle:@"Ok"];
     [alert runModal];
 }
-
 
 -(BOOL)writeToFile:(NSString *)filename ofType:(NSString *)type
 {

@@ -725,6 +725,9 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 + (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
 
 - (struct SnapshotWrapper *)wrapper;
+- (NSInteger) sizeOnDisk;
+- (void) readFromBuffer:(uint8_t *)buffer length:(NSInteger)ength;
+- (NSInteger) writeToBuffer:(uint8_t *)buffer;
 - (bool) readDataFromFile:(NSString *)path;
 - (bool) writeDataToFile:(NSString *)path;
 

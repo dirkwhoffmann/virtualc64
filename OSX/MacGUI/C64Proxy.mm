@@ -944,6 +944,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 }
 
 - (SnapshotWrapper *)wrapper { return wrapper; }
+- (NSInteger) sizeOnDisk { return wrapper->snapshot->sizeOnDisk(); }
+- (void) readFromBuffer:(uint8_t *)buffer length:(NSInteger)length { wrapper->snapshot->readFromBuffer(buffer, (unsigned)length); }
+- (NSInteger) writeToBuffer:(uint8_t *)buffer { return wrapper->snapshot->writeToBuffer(buffer); }
 - (bool) readDataFromFile:(NSString *)path {
     return wrapper->snapshot->readFromFile([path UTF8String]); }
 - (bool) writeDataToFile:(NSString *)path {
