@@ -177,6 +177,9 @@
 {
 	NSLog(@"MyDocument:readFromFile:%@ ofType:%@", filename, type);
     
+    [self showNewMountDialog:self];
+    
+    
     // Is it a snapshot?
     if ([SnapshotProxy isSnapshotFile:filename]) {
         

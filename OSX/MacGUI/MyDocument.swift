@@ -143,5 +143,20 @@ extension MyDocument {
         super.removeWindowController(windowController)
         c64.kill()
     }
+    
+    // Bring up the new mount view
+    @IBAction @objc func showNewMountDialog(_ sender: AnyObject) {
+        
+        let nibName = NSNib.Name(rawValue: "Mount")
+        let controller = MountController.init(windowNibName: nibName)
+        NSLog("controller = \(controller)")
+        
+        let mount = controller.window
+        NSLog("window = \(mount)")
+        
+        let application = NSApplication.shared
+        application.runModal(for: mount!)
+    }
+    
 }
 

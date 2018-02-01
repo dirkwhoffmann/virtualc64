@@ -67,6 +67,8 @@
 		50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* CRTContainer.cpp */; };
 		5041486912219F6E00A80E0C /* cartridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5041486812219F6E00A80E0C /* cartridge.png */; };
 		504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504606321BE4B99100463FD7 /* G64Archive.cpp */; };
+		5046C413202344F3000D9B1C /* Mount.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5046C412202344F3000D9B1C /* Mount.xib */; };
+		5046C415202349EE000D9B1C /* MountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046C414202349EE000D9B1C /* MountController.swift */; };
 		50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE50A7B679A00A8DB94 /* stepInto32.png */; };
 		50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE70A7B67A100A8DB94 /* stepOver32.png */; };
 		50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FEB0A7B67AE00A8DB94 /* restart32.png */; };
@@ -329,6 +331,8 @@
 		5041486812219F6E00A80E0C /* cartridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cartridge.png; sourceTree = "<group>"; };
 		504606321BE4B99100463FD7 /* G64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G64Archive.cpp; sourceTree = "<group>"; };
 		504606331BE4B99100463FD7 /* G64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G64Archive.h; sourceTree = "<group>"; };
+		5046C412202344F3000D9B1C /* Mount.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Mount.xib; sourceTree = "<group>"; };
+		5046C414202349EE000D9B1C /* MountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountController.swift; sourceTree = "<group>"; };
 		50471FE50A7B679A00A8DB94 /* stepInto32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepInto32.png; sourceTree = "<group>"; };
 		50471FE70A7B67A100A8DB94 /* stepOver32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOver32.png; sourceTree = "<group>"; };
 		50471FEB0A7B67AE00A8DB94 /* restart32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart32.png; sourceTree = "<group>"; };
@@ -613,6 +617,7 @@
 				503A5AD612227C0300EAA95E /* dsa_pub.pem */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
+				5046C412202344F3000D9B1C /* Mount.xib */,
 				50732BCA0A70D560008D8FF0 /* Images */,
 				5051A1501B8842F100CBFB5A /* Sounds */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -732,7 +737,7 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		5000474112DCECBA0098D890 /* Window Controller */ = {
+		5000474112DCECBA0098D890 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				50B171051EE6AB840019E8D4 /* VirtualC64-Bridging-Header.h */,
@@ -756,9 +761,10 @@
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
+				5046C414202349EE000D9B1C /* MountController.swift */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
-			name = "Window Controller";
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		5000474212DCECDB0098D890 /* Dialogs */ = {
@@ -831,7 +837,7 @@
 				506D3DCD20223E5E009742CF /* AppDelegate.swift */,
 				5000473F12DCEC9B0098D890 /* Model */,
 				5000474012DCECAB0098D890 /* View */,
-				5000474112DCECBA0098D890 /* Window Controller */,
+				5000474112DCECBA0098D890 /* Controller */,
 				5000474212DCECDB0098D890 /* Dialogs */,
 				5000474312DCED190098D890 /* Misc */,
 			);
@@ -1159,6 +1165,7 @@
 				50C892591BEFB64500231B96 /* cntrlPlay.png in Resources */,
 				504A22B01BF71FD500B29BEB /* pin_black.png in Resources */,
 				504A22AB1BF71FD500B29BEB /* clock_blue.png in Resources */,
+				5046C413202344F3000D9B1C /* Mount.xib in Resources */,
 				500FF3911BD7F4DF0038245B /* romchip.png in Resources */,
 				50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */,
 				504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */,
@@ -1318,6 +1325,7 @@
 				50D1417E1417A34B0024FC74 /* envelope.cc in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,
+				5046C415202349EE000D9B1C /* MountController.swift in Sources */,
 				50D141801417A34B0024FC74 /* filter.cc in Sources */,
 				50D141811417A34B0024FC74 /* pot.cc in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
