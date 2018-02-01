@@ -312,6 +312,11 @@ public:
          *            remembered. 
          */
         uint8_t colorbits;
+        
+        /*! @brief    Remaining bits to be pumped out
+         *  @details  Make sure no more than 8 pixels are outputted.
+         */
+        int remaining_bits;
 
     } sr;
     
@@ -468,9 +473,6 @@ private:
      *            [3] : color for '11' pixels in multicolor mode 
      */
     int col_rgba[4];
-    
-    //! @brief    loadColors() also determines if we are in single-color or multi-color mode
-    bool multicol;
 
 public:
     
