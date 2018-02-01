@@ -88,13 +88,15 @@
     // Register standard defaults
     [self registerStandardDefaults];
 
-    // Change working directory to the main bundle ressource path. We may find some ROMs there...
+    // Change working directory to the main bundle ressource path.
+    /*
     NSBundle* mainBundle = [NSBundle mainBundle];
     NSString *path = [mainBundle resourcePath];
     if (chdir([path UTF8String]) != 0)
         NSLog(@"WARNING: Could not change working directory.");
     else
         NSLog(@"New base directory is %@", path);
+     */
 }
 
 /*

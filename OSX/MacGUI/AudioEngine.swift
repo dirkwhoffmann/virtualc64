@@ -23,7 +23,7 @@ import AVFoundation
     
     @objc convenience init?(withSID proxy: SIDProxy)
     {
-        NSLog("\(#function)")
+        NSLog("AudioEngine::\(#function)")
     
         self.init()
         sid = proxy
@@ -43,17 +43,17 @@ import AVFoundation
         }
         
         // Query AudioUnit
-        let inputbusses = audiounit.inputBusses.count
-        let outputbusses = audiounit.outputBusses.count
+        // let inputbusses = audiounit.inputBusses.count
+        // let outputbusses = audiounit.outputBusses.count
         let hardwareFormat = audiounit.outputBusses[0].format
         let channels = hardwareFormat.channelCount
         let sampleRate = hardwareFormat.sampleRate
         let stereo = (channels > 1)
-        NSLog("  Number of input busses:      \(inputbusses)")
-        NSLog("  Number of output busses:     \(outputbusses)")
-        NSLog("  Number of channels of bus 0: \(channels)")
-        NSLog("  Sample rate:                 \(sampleRate)")
-        NSLog("  Stereo:                      \(stereo)")
+        // NSLog("  Number of input busses:      \(inputbusses)")
+        // NSLog("  Number of output busses:     \(outputbusses)")
+        // NSLog("  Number of channels of bus 0: \(channels)")
+        // NSLog("  Sample rate:                 \(sampleRate)")
+        // NSLog("  Stereo:                      \(stereo)")
         
         // Make input bus compatible with output bus
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
@@ -97,7 +97,7 @@ import AVFoundation
             return nil
         }
         
-        NSLog("AudioEngine initialized successfully")
+        NSLog("AudioEngine::\(#function) (SUCCESS)")
      }
     
     private func renderMono(inputDataList : UnsafeMutablePointer<AudioBufferList>,
