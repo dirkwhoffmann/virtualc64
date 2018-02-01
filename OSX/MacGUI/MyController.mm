@@ -97,6 +97,15 @@
         NSLog(@"New base directory is %@", path);
 }
 
+/*
+- (instancetype)initWithWindowNibName:(NSNibName)windowNibName
+{
+    NSLog(@"MyController::initWithWindowNibName");
+    
+    return [super initWithWindowNibName:windowNibName];
+}
+*/
+
 - (void)dealloc
 {	
 	NSLog(@"MyController::dealloc");

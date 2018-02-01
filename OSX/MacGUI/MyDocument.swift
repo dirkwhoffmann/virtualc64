@@ -38,6 +38,7 @@ extension MyDocument {
         
         let nibName = NSNib.Name(rawValue: "MyDocument")
         let controller = MyController.init(windowNibName: nibName)
+        controller.c64 = c64
         self.addWindowController(controller)
     }
     
@@ -99,9 +100,10 @@ extension MyDocument {
 */
     
     open override func removeWindowController(_ windowController: NSWindowController) {
-        super.removeWindowController(windowController)
-        NSLog("****** removeWindowController")
         
+        NSLog("MyDocument:\(#function)")
+
+        super.removeWindowController(windowController)
         c64.kill()
     }
 }

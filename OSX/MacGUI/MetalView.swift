@@ -40,7 +40,8 @@ struct C64Filter {
 public class MetalView: MTKView {
     
     @IBOutlet var controller: MyController!
-    @IBOutlet var c64proxy: C64Proxy!
+    // @IBOutlet var c64proxy: C64Proxy!
+    var c64proxy: C64Proxy!
     
     // Synchronization semaphore
     var semaphore: DispatchSemaphore!

@@ -37,7 +37,6 @@
  */
 typedef unsigned long MacKeyFingerprint;
 
-// @interface MyController : NSWindowController <NSApplicationDelegate, NSMenuDelegate>
 @interface MyController : NSWindowController
 {
 	// Proxy object. Used get data from and sent data to the virtual C64

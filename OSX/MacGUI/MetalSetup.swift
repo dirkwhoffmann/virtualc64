@@ -23,6 +23,10 @@ public extension MetalView {
 
         NSLog("MyMetalView::setupMetal")
         
+        // TODO: Get rid of this reference. Don't communicate with model directly, use controller instead
+        c64proxy = controller.c64
+        assert(c64proxy != nil)
+        
         buildMetal()
         buildTextures()
         buildKernels()
@@ -37,6 +41,8 @@ public extension MetalView {
     
     NSLog("MyMetalView::buildMetal")
     
+    
+            
     // Metal device
     device = MTLCreateSystemDefaultDevice()
     precondition(device != nil, "Metal device must not be nil")
