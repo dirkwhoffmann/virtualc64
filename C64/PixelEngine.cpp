@@ -357,6 +357,14 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
         
         // Reset the multicolor synchronization flipflop
         sr.mc_flop = true;
+        
+        sr.remaining_bits = 8;
+    }
+    
+    // Clear any outstanding multicolor bit that shouldn't actually be drawn
+    // TODO: VICE doesn't use a counter for this, but doesn't have the same issue, figure out what magic they are doing
+    if (!sr.remaining_bits) {
+        sr.colorbits = 0;
     }
     
     // Load colors
@@ -389,6 +397,7 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
     // Shift register and toggle multicolor flipflop
     sr.data <<= 1;
     sr.mc_flop = !sr.mc_flop;
+    sr.remaining_bits -= 1;
 }
 
 
