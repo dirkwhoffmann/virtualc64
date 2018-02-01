@@ -326,7 +326,8 @@ PixelEngine::drawCanvas()
             sr.mc_flop = false;
         }
         // After pixel 7, D016 changes fully show up
-        pipe.registerCTRL2 = vic->p.registerCTRL2;
+        pipe.registerCTRL2 |= D016;
+        pipe.registerCTRL2 &= D016 | 0xEF;
 
         drawCanvasPixel(7);
         
