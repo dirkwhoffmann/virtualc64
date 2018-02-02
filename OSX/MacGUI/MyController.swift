@@ -35,13 +35,11 @@ extension MyController {
     // Bring up the new mount view
  
     
-    @objc func showNewMountDialog(archive: ArchiveProxy) {
+    @objc func showNewMountDialog() {
         
         let nibName = NSNib.Name(rawValue: "MountController")
         let controller = MountController.init(windowNibName: nibName)
-        controller.c64 = c64
-        controller.archive = archive
-        controller.parentWindow = window
+        controller.setParentController(self)
         
         if let sheetWindow = controller.window {
             
@@ -63,6 +61,7 @@ extension MyController {
         }
     }
     
+
     
     // --------------------------------------------------------------------------------
     // Action methods (Drive)
@@ -130,5 +129,17 @@ extension MyController {
         }
     }
 
+    // --------------------------------------------------------------------------------
+    // Action methods (Cartridge)
+    // --------------------------------------------------------------------------------
+
+    @IBAction func cartridgeEjectAction(_ sender: Any!) {
+  
+        NSLog("\(#function)")
+        let document = self.document as! MyDocument
+        document.attachedCartridge = nil
+        c64.detachCartridgeAndReset()
+    }
+    
     
 }

@@ -96,7 +96,7 @@ extension MyController {
     
     @IBAction func insertBlankDisk(_ sender: Any!) {
         
-        if !c64.vc1541.diskModified() || showUnsafedDiskAlert() == .alertFirstButtonReturn {
+        if !c64.vc1541.diskModified() || showDiskIsUnsafedAlert() == .alertFirstButtonReturn {
         
             let archive = ArchiveProxy() // Returns an empty archive
             c64.insertDisk(archive)
@@ -303,8 +303,8 @@ extension MyController {
             
             let items = archive.getNumberOfItems()
             
-            if items == 0 { showEmptyDiskAlert(format: format) }
-            if items > 1  { showMoreThanOneFileAlert(format: format) }
+            if items == 0 { showDiskIsEmptyAlert(format: format) }
+            if items > 1  { showDiskHasMultipleFilesAlert(format: format) }
             return items
         }
         

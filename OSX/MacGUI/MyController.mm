@@ -670,8 +670,7 @@
             // Check for attached archive
             if ([[self document] attachedArchive]) {
                 NSLog(@"Found attached archive");
-                // [self showMountDialog];
-                [self showNewMountDialogWithArchive:[[self document] attachedArchive]];
+                [self showNewMountDialog];
             }
         
             
@@ -1048,12 +1047,14 @@
     // [[self document] setTape:NULL];
 }
 
+/*
 - (IBAction)cartridgeEjectAction:(id)sender
 {
 	NSLog(@"cartridgeEjectAAction");
     [[self document] setAttachedCartridge:nil];
 	[c64 detachCartridgeAndReset];
 }
+*/
 
 - (IBAction)alwaysWarpAction:(id)sender
 {
@@ -1261,7 +1262,6 @@
     // Sorry, too many failures
     return NO;
 }
-
 
 // --------------------------------------------------------------------------------
 //                                  Keyboard events 

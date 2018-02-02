@@ -80,11 +80,14 @@ public:
     //! @brief    Allocates memory for storing internal state
     bool alloc(unsigned size);
 
-    //! @brief    Returns true if file header matches
+    //! @brief    Returns true if file is a snapshot
     static bool isSnapshot(const char *filename);
 
-    //! @brief    Returns true if 'fileIsValid' and version number match
+    //! @brief    Returns true if file is a snapshot of a specific version
     static bool isSnapshot(const char *filename, int major, int minor, int subminor);
+
+    //! @brief    Returns true if file is a snapshot with an outdated version number
+    static bool isUnsupportedSnapshot(const char *filename);
     
 	/*! @brief    Factory method
      *  @details  Creates a snapshot with data from a file

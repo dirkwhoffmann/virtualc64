@@ -103,30 +103,60 @@ public extension MetalView {
         case DragType.filenames:
             
             let paths = pasteBoard.propertyList(forType: DragType.filenames) as! [String]
-            let path = paths[0]
-            print("Processing file \(path)")
+            let filename = paths[0]
+            print("Processing file \(filename)")
             
-            // Is it a snapshot?
-            if SnapshotProxy.isSnapshotFile(path) {
-                
-                print("  Snapshot found");
-                // Do the version numbers match?
-                if SnapshotProxy.isSnapshotFile(path,
-                                                major: V_MAJOR,
-                                                minor: V_MINOR,
-                                                subminor: V_SUBMINOR) {
-                    if let snapshot = SnapshotProxy.snapshot(fromFile: path) {
-                        controller.c64.load(fromSnapshot: snapshot)
-                        return true
-                    }
-                } else {
-                    
-                    print("  ERROR: Version number must be \(V_MAJOR).\(V_MINOR)")
-                    
-                    document.showVersionNumberAlert()
-                    return false
-                }
+            // Is it a ROM file?
+            if document.loadRom(filename) {
+                return true
             }
+            
+            // Is it a snapshot from a different version?
+            if SnapshotProxy.isUsupportedSnapshot(filename) {
+                document.showSnapshotVersionAlert()
+                return false
+            }
+            
+            // Is it a snapshop with a matching version number?
+            if let snapshot = SnapshotProxy.snapshot(fromFile: filename) {
+                controller.c64.load(fromSnapshot: snapshot)
+                return true
+            }
+            
+            // Is it an archive?
+            document.attachedArchive = ArchiveProxy.makeArchive(fromFile: filename)
+            if document.attachedArchive != nil {
+                NSLog("Successfully read archive.")
+                controller.showNewMountDialog()
+                return true
+            }
+            
+/*
+            // Is it a magnetic tape?
+            attachedTape = TAPContainerProxy.container(fromTAPFile: filename)
+            if attachedTape != nil {
+                NSLog("Successfully read tape.")
+                fileURL = nil
+                return
+            }
+            
+            // Is it a cartridge?
+            attachedCartridge = CRTContainerProxy.container(fromCRTFile: filename)
+            if attachedCartridge != nil {
+                NSLog("Successfully read cartridge.")
+                fileURL = nil
+                return
+            }
+            
+            
+            
+            
+            
+   
+            
+            
+            
+            
             
             // Is it a ROM file?
             if document.loadRom(path) {
@@ -162,7 +192,7 @@ public extension MetalView {
                 controller.showMountDialog()
                 return true
             }
-        
+*/
         default:
             
             return false

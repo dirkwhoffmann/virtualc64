@@ -397,7 +397,7 @@ typedef unsigned long MacKeyFingerprint;
 // - (IBAction)driveAction:(id)sender; PORTED TO SWIFT
 // - (IBAction)driveEjectAction:(id)sender; PORTED TO SWIFT
 - (IBAction)tapeEjectAction:(id)sender;
-- (IBAction)cartridgeEjectAction:(id)sender;
+// - (IBAction)cartridgeEjectAction:(id)sender;
 - (IBAction)alwaysWarpAction:(id)sender;
 
 

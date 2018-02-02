@@ -13,7 +13,7 @@ public extension MetalView {
         
         guard let _ = MTLCreateSystemDefaultDevice() else {
             
-            controller.showMetalAlert()
+            showNoMetalSupportAlert()
             NSApp.terminate(self)
             return
         }

@@ -7,9 +7,9 @@
 
 import Foundation
 
-public extension MyController {
+public extension MetalView {
     
-    func showMetalAlert() {
+    func showNoMetalSupportAlert() {
         
         let alert = NSAlert()
         alert.alertStyle = .critical
@@ -19,9 +19,26 @@ public extension MyController {
         alert.addButton(withTitle: "Exit")
         alert.runModal()
     }
+}
+
+extension MyDocument {
+    
+    func showSnapshotVersionAlert() {
+        
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        // alert.icon = NSImage.init(named: NSImage.Name(rawValue: ""))
+        alert.messageText = "Snapshot from other VirtualC64 release"
+        alert.informativeText = "The snapshot was created with a different version of VirtualC64 and cannot be opened."
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+    }
+}
+    
+public extension MyController {
     
     @discardableResult
-    func showUnsafedDiskAlert() -> NSApplication.ModalResponse {
+    func showDiskIsUnsafedAlert() -> NSApplication.ModalResponse {
        
         let alert = NSAlert()
         alert.alertStyle = .warning
@@ -33,7 +50,7 @@ public extension MyController {
         return alert.runModal()
     }
  
-    func showEmptyDiskAlert(format: String) {
+    func showDiskIsEmptyAlert(format: String) {
         
         let alert = NSAlert()
         alert.alertStyle = .critical
@@ -44,7 +61,7 @@ public extension MyController {
         alert.runModal()
     }
  
-    func showMoreThanOneFileAlert(format: String) {
+    func showDiskHasMultipleFilesAlert(format: String) {
         
         let alert = NSAlert()
         alert.alertStyle = .informational
@@ -55,7 +72,7 @@ public extension MyController {
         alert.runModal()
     }
     
-    @objc func showCartridgeAlert(_ container: CRTContainerProxy) {
+    @objc func showUnsupportedCartridgeAlert(_ container: CRTContainerProxy) {
         
         let name = container.typeName() as String
         
@@ -67,4 +84,5 @@ public extension MyController {
         alert.addButton(withTitle: "OK")
         alert.beginSheetModal(for: window!, completionHandler: nil)
     }
+
 }

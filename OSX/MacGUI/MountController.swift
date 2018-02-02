@@ -10,6 +10,7 @@ import Foundation
 class MountController : NSWindowController {
     
     // Internal state
+    var controller: MyController!
     var archive: ArchiveProxy!
     var c64: C64Proxy!
     var parentWindow: NSWindow!
@@ -26,19 +27,20 @@ class MountController : NSWindowController {
     @IBOutlet weak var diskIcon: NSImageView!
     @IBOutlet weak var diskIconFrame: NSBox!
 
-    /*
-    func set(c64: C64Proxy) {
-        self.c64 = c64
+    func setParentController(_ controller: MyController) {
+
+        let document = controller.document as! MyDocument
+        
+        self.controller = controller
+        self.archive = document.attachedArchive
+        self.c64 = document.c64
+        self.parentWindow = controller.window
     }
     
-    func set(archive: ArchiveProxy) {
-        self.archive = archive
-    }
-    */
-
     override public func awakeFromNib() {
         
         NSLog("\(#function)")
+        
         // Configure directory window
         directory.target = self
         directory.delegate = self
@@ -102,18 +104,15 @@ class MountController : NSWindowController {
         
         window?.orderOut(self)
         parentWindow.endSheet(window!, returnCode: .OK)
-        
-        // let application = NSApplication.shared
-        // application.stopModal()
     }
     
     @IBAction func performDoubleClick(_ sender: Any!) {
         
-        let item = directory.selectedRow
-        
         // Flash file into memory
-        NSLog("Flushing item \(item)")
         c64.flushArchive(archive, item: directory.selectedRow)
+        
+        // Type "RUN"
+        controller.simulateUserTypingText("RUN\n")
         
         window?.orderOut(self)
         parentWindow.endSheet(window!, returnCode: .OK)

@@ -122,6 +122,14 @@ Snapshot::isSnapshot(const char *filename, int major, int minor, int subminor)
     return true;
 }
 
+bool
+Snapshot::isUnsupportedSnapshot(const char *filename)
+{
+    if (!isSnapshot(filename)) return false;
+    return !isSnapshot(filename, V_MAJOR, V_MINOR, V_SUBMINOR);
+}
+
+
 bool 
 Snapshot::fileIsValid(const char *filename)
 {

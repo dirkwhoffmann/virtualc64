@@ -7,15 +7,34 @@
 
 import Foundation
 
-extension MyDocument {
+class MyDocument : NSDocument {
 
-//     override init() {
-    @objc public func initSwift() {
+    // ObjC/C++ bridge
+    // C64Proxy *__strong c64;
+    var c64: C64Proxy!
+    
+    //! Reference to an attached VC64 snapshot
+    /*! When a new documents opens and this variable is not NULL, the snapshot is automatically flashed */
+    @objc var attachedSnapshot: SnapshotProxy? = nil
+    
+    //! Reference to an attached D64, G64, or NIB archive
+    /*! When a new documents opens and this variable is not NULL, the archive is automatically inserted into the virtual floopy drive */
+    @objc var attachedArchive: ArchiveProxy? = nil
+    
+    //! Reference to an attached TAP container
+    /*! When a new documents opens and this variable is not NULL, the tape is automatically inserted into the virtual datasette */
+    @objc var attachedTape: TAPContainerProxy? = nil
+    
+    //! Reference to an attached CRT container
+    /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged into the virtual expansion port */
+    @objc var attachedCartridge: CRTContainerProxy? = nil
+    
+    override init() {
 
         NSLog("MyDocument::\(#function)")
         
-        // super.init()
-
+        super.init()
+        
         // Create emulator instance and try to load ROMs
         c64 = C64Proxy()
         let defaults = UserDefaults.standard
@@ -24,17 +43,17 @@ extension MyDocument {
         loadRom(defaults.string(forKey: VC64KernelRomFileKey))
         loadRom(defaults.string(forKey: VC64VC1541RomFileKey))
 
-        // Try to get rid of this!!!
+
         attachedSnapshot = nil
         attachedArchive = nil
         attachedTape = nil
         attachedCartridge = nil
+ 
     }
-    
+ 
     /*
-    convenience init(type typeName: String) throws {
-        self.init()
-        // Rest of initialization code here
+    @objc func getAttachedArchive() -> String {
+        return attachedArchive
     }
     */
     
@@ -48,11 +67,89 @@ extension MyDocument {
         self.addWindowController(controller)
     }
     
-
+    
     //
     // Loading and saving
     //
     
+    override open func read(from url: URL, ofType typeName: String) throws {
+        
+        let filename = url.path
+        NSLog("MyDocument::\(#function):\(filename)")
+    
+        // Is it a snapshot from a different version?
+        if SnapshotProxy.isUsupportedSnapshot(filename) {
+            showSnapshotVersionAlert()
+            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+        }
+        
+        // Is it a snapshop with a matching version number?
+        attachedSnapshot = SnapshotProxy.snapshot(fromFile: filename)
+        if attachedSnapshot != nil {
+            NSLog("Successfully read snapshot.")
+            return
+        }
+        
+        // Is it an archive?
+        attachedArchive = ArchiveProxy.makeArchive(fromFile: filename)
+        if attachedArchive != nil {
+            NSLog("Successfully read archive.")
+            fileURL = nil // Make the document 'Untitled'
+            return
+        }
+ 
+        // Is it a magnetic tape?
+        attachedTape = TAPContainerProxy.container(fromTAPFile: filename)
+        if attachedTape != nil {
+            NSLog("Successfully read tape.")
+            fileURL = nil
+            return
+        }
+        
+        // Is it a cartridge?
+        attachedCartridge = CRTContainerProxy.container(fromCRTFile: filename)
+        if attachedCartridge != nil {
+            NSLog("Successfully read cartridge.")
+            fileURL = nil
+            return
+        }
+    
+    NSLog("Unable to read file\n")
+    }
+    
+    override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
+       
+        let filename = url.path
+        NSLog("MyDocument::\(#function):\(filename)")
+        
+        if typeName != "VC64" {
+            NSLog("Document type is \(typeName), expected VC64")
+            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+        }
+        
+        guard let snapshot = SnapshotProxy.snapshot(fromFile: filename) else {
+            NSLog("Error while trying to revert to older snapshopt")
+            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+        }
+        
+        c64.load(fromSnapshot: snapshot)
+    }
+    
+    override open func write(to url: URL, ofType typeName: String) throws {
+   
+        let filename = url.path
+        NSLog("MyDocument::\(#function):\(filename)")
+    
+        if typeName != "VC64" {
+            NSLog("Document type is \(typeName), expected VC64")
+            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+        }
+
+        let snapshot = SnapshotProxy()
+        c64.save(toSnapshot: snapshot)
+        snapshot?.writeData(toFile: filename)
+    }
+ 
     @discardableResult
     @objc func loadRom(_ filename: String?) -> Bool {
         
@@ -86,6 +183,7 @@ extension MyDocument {
     return false
     }
     
+    /*
     override open func data(ofType typeName: String) throws -> Data {
         
         NSLog("data(ofType:\(typeName))")
@@ -108,7 +206,8 @@ extension MyDocument {
         
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
-
+*/
+    
 /*
     override open func read(from data: Data, ofType typeName: String) throws {
         
@@ -143,26 +242,6 @@ extension MyDocument {
         super.removeWindowController(windowController)
         c64.kill()
     }
-    
-    #if false
-    // Bring up the new mount view
-    @IBAction @objc func showNewMountDialog(archive: ArchiveProxy) {
-        
-        let nibName = NSNib.Name(rawValue: "MountController")
-        let controller = MountController.init(windowNibName: nibName)
-        controller.c64 = c64
-        controller.archive = archive
-
-        if let sheetWindow = controller.window {
-            /*
-            let application = NSApplication.shared
-            application.runModal(for: window)
-            window.close()
-            */
-            // window.beginSheet(sheetWindow, completionHandler: nil)
-        }
-    }
-    #endif
     
 }
 

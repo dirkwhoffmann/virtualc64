@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*
 #import "C64GUI.h"
 #import "VirtualC64-Swift.h"
 
@@ -35,7 +36,9 @@
     
     return self;
 }
+*/
 
+/*
 - (BOOL)setSnapshotWithName:(NSString *)path
 {
     if (!(attachedSnapshot = [SnapshotProxy snapshotFromFile:path]))
@@ -80,15 +83,10 @@
 {
     attachedArchive = [ArchiveProxy makeArchiveFromFile:path];
     return attachedArchive != NULL;
-    
-    /*
-    if (!(attachedArchive = [D64ArchiveProxy archiveFromArbitraryFile:path]))
-		return NO;
-	
-	return YES;
-    */
 }
+*/
 
+/*
 - (void)showVersionNumberAlert
 {
     NSAlert *alert = [[NSAlert alloc] init];
@@ -97,7 +95,9 @@
     [alert addButtonWithTitle:@"Ok"];
     [alert runModal];
 }
+*/
 
+/*
 -(BOOL)writeToFile:(NSString *)filename ofType:(NSString *)type
 {
 	NSLog(@"MyDocument:writeToFile:%@ ofType:%@", filename, type);
@@ -118,25 +118,15 @@
 {
 	NSLog(@"MyDocument:readFromFile:%@ ofType:%@", filename, type);
     
-    // Is it a snapshot?
-    if ([SnapshotProxy isSnapshotFile:filename]) {
-        
-        // Do version numbers match?
-        if ([SnapshotProxy isSnapshotFile:filename
-                                    major:V_MAJOR
-                                    minor:V_MINOR
-                                 subminor:V_SUBMINOR]) {
-            
-            // Try to read snapshot ...
-            if (![self setSnapshotWithName:filename]) {
-                NSLog(@"Error while reading snapshot\n");
-                return NO;
-            }
-            return YES;
-        }
-        
+    // Is it a snapshot from a different version?
+    if ([SnapshotProxy isUsupportedSnapshot:filename]) {
         [self showVersionNumberAlert];
         return NO;
+    }
+    
+    // Is it a snapshop with a matching version number?
+    if ([self setSnapshotWithName:filename]) {
+        return YES;
     }
     
     // Is it an archive?
@@ -157,7 +147,7 @@
         return YES;
     }
    
-    NSLog(@"Error while reading file\n");
+    NSLog(@"Unable to read file\n");
     return NO;
 }
 
@@ -181,4 +171,6 @@
 	return YES;
 }
 
+
 @end
+ */

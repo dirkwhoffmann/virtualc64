@@ -19,7 +19,7 @@ extension MyController {
         
         // Check for cartridge support
         if !crtContainer.isSupportedType() {
-            showCartridgeAlert(crtContainer)
+            showUnsupportedCartridgeAlert(crtContainer)
             return false;
         }
         

@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#if 0
+
 #import <Cocoa/Cocoa.h>
 
 @class C64Proxy;
@@ -49,17 +51,21 @@
 @property TAPContainerProxy *attachedTape;
 @property CRTContainerProxy *attachedCartridge;
 
+/*
 - (BOOL)setSnapshotWithName:(NSString *)path;
 - (BOOL)setG64ArchiveWithName:(NSString *)path;
 - (BOOL)setNIBArchiveWithName:(NSString *)path;
 - (BOOL)setArchiveWithName:(NSString *)path;
 - (BOOL)setTAPContainerWithName:(NSString *)path;
 - (BOOL)setCRTContainerWithName:(NSString *)path;
+ */
 // - (BOOL)detachCartridge;
 
 // Loading and saving
 // - (BOOL)loadRom:(NSString *)filename;
-- (void)showVersionNumberAlert;
+// - (void)showVersionNumberAlert;
 
 @end
 
+
+#endif

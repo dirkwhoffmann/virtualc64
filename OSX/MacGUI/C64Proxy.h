@@ -719,8 +719,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 }
 
 - (instancetype) init;
-+ (BOOL) isSnapshotFile:(NSString *)filename;
-+ (BOOL) isSnapshotFile:(NSString *)filename major:(int)x minor:(int)y subminor:(int)z;
++ (BOOL) isSnapshot:(NSString *)filename;
++ (BOOL) isUsupportedSnapshot:(NSString *)filename;
 + (instancetype) snapshotFromFile:(NSString *)path;
 + (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
 
