@@ -98,12 +98,8 @@ extension MyController {
         
         if !c64.vc1541.diskModified() || showUnsafedDiskAlert() == .alertFirstButtonReturn {
         
-            // Create empty Archive
-            let archive = ArchiveProxy()
-            // Convert to D64Archive
-            let d64archive = D64ArchiveProxy.archive(fromArchive: archive)
-            // Insert as disk
-            c64.mountArchive(d64archive)
+            let archive = ArchiveProxy() // Returns an empty archive
+            c64.insertDisk(archive)
         }
     }
     

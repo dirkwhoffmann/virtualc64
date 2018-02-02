@@ -674,7 +674,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (void) detachCartridgeAndReset;
 - (bool) isCartridgeAttached;
 
-- (bool) mountArchive:(ArchiveProxy *)a;
+- (bool) insertDisk:(ArchiveProxy *)a;
 - (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr;
 
 - (bool) insertTape:(TAPContainerProxy *)a;
@@ -744,9 +744,10 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 }
 
 - (struct ArchiveWrapper *)wrapper;
++ (instancetype) makeArchiveFromFile:(NSString *)filename;
 - (NSString *)getPath;
 - (NSString *)getName;
-- (NSInteger)getType;
+- (ContainerType)getType;
 - (NSInteger)getNumberOfItems; 
 - (NSString *)getNameOfItem:(NSInteger)item;
 - (NSString *)getUnicodeNameOfItem:(NSInteger)item maxChars:(NSInteger)max;

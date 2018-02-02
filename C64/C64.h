@@ -606,16 +606,21 @@ public:
     
 
     //
-    //! @functiongroup Handling archives, tapes, and cartridges
+    //! @functiongroup Handling disks, tapes, and cartridges
     //
     
-	/*! @brief    Flush specified item from archive into memory and delete archive.
-	 *  @details  All archive types are flushable.
+	/*! @brief    Flushes a single item from an archive into memory.
      */
 	bool flushArchive(Archive *a, int item);
 	
-	/*! @brief    Inserts an archive as a virtual floppy disk.
+	/*! @brief    Inserts an archive into the floppy drive as a virtual disk.
      *  @details  Only D64 and G64 archives are supported.
+     */
+    bool insertDisk(Archive *a);
+    
+    /*! @brief    Old function for mounting an archive as a disk.
+     *  @details  Only D64 and G64 archives are supported.
+     *  @deprecated Use insertDisk instead
      */
 	bool mountArchive(Archive *a);
 

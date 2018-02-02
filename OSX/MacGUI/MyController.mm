@@ -26,7 +26,7 @@
 // Replace Character by String in KeyMap class
 
 @implementation MyController {
-
+    
     /*! @brief   Keyboard controller
      *  @details Handles all keyboard related events
      */
@@ -84,10 +84,10 @@
 + (void)initialize {
 	
 	NSLog(@"MyController::initialize");
-    
+
     // Register standard defaults
     [self registerStandardDefaults];
-
+    
     // Change working directory to the main bundle ressource path.
     /*
     NSBundle* mainBundle = [NSBundle mainBundle];
@@ -174,12 +174,12 @@
     // Enable fullscreen mode
     [[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
     
-	// Launch emulator
-	[c64 powerUp];
-    
     // Get metal running
     [metalScreen setupMetal];
     NSLog(@"Metal is up and running");
+    
+	// Start emulator
+	[c64 run];
 }
 
 - (void)configureWindow
@@ -385,7 +385,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     if (defaults == nil) {
-        NSLog(@"!!!! loadVirtualMachineUserDefaults FAILED. standardUserDefaults returned NULL");
+        NSLog(@"Cannot access NSUserDefaults.standard");
         return;
     }
     
@@ -640,6 +640,7 @@
                 romDialog = NULL;
             }
             
+            /*
             // Check for attached snapshot
             if ([[self document] attachedSnapshot]) {
                 NSLog(@"Found attached snapshot");
@@ -651,23 +652,28 @@
                 NSLog(@"Found attached cartridge");
                 [self mountCartridge];
             }
+            */
             
             // Start emulator
             [c64 run];
             [metalScreen blendIn];
             [metalScreen setDrawC64texture:true];
             
+            /*
             // Check for attached tape
             if ([[self document]  attachedTape]) {
                 NSLog(@"Found attached tape");
                 [self showTapeDialog];
             }
+            */
             
             // Check for attached archive
             if ([[self document] attachedArchive]) {
                 NSLog(@"Found attached archive");
-                [self showMountDialog];
+                // [self showMountDialog];
+                [self showNewMountDialogWithArchive:[[self document] attachedArchive]];
             }
+        
             
             break;
             
@@ -1163,7 +1169,7 @@
 	
 	// Mount image if requested
     if (doMount) {
-        if (![c64 mountArchive:[[self document] attachedArchive]]) {
+        if (![c64 insertDisk:[[self document] attachedArchive]]) {
             NSLog(@"FAILED TO MOUNT ARCHIVE");
         }
     }

@@ -10,8 +10,6 @@ import Cocoa
 @NSApplicationMain
 public class AppDelegate: NSObject, NSApplicationDelegate {
     
-    
-    
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         print("\(#function)")
@@ -26,6 +24,19 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         print("\(#function)")
     }
     
+    /*
+    public func applicationShouldHandleReopen(_ sender: NSApplication,
+                                              hasVisibleWindows flag: Bool) -> Bool {
+        print("\(#function)")
+        assert(false)
+        return false
+    }
     
+    public func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
+        print("\(#function)")
+        assert(false)
+        return false
+    }
+ */
 }
 

@@ -28,7 +28,42 @@ extension MyController {
         return false
     }    
 
+    // --------------------------------------------------------------------------------
+    //                                 Modal dialogs
+    // --------------------------------------------------------------------------------
 
+    // Bring up the new mount view
+ 
+    
+    @objc func showNewMountDialog(archive: ArchiveProxy) {
+        
+        let nibName = NSNib.Name(rawValue: "MountController")
+        let controller = MountController.init(windowNibName: nibName)
+        controller.c64 = c64
+        controller.archive = archive
+        controller.parentWindow = window
+        
+        if let sheetWindow = controller.window {
+            
+            // showMountDialog()
+            /*
+             let application = NSApplication.shared
+             application.runModal(for: sheetWindow)
+             window?.close()
+            */
+            
+            window!.beginSheet(sheetWindow, completionHandler: { responseCode in
+                controller.terminate()
+                if responseCode == NSApplication.ModalResponse.OK {
+                    self.rotateBack()
+                }
+            })
+            
+            
+        }
+    }
+    
+    
     // --------------------------------------------------------------------------------
     // Action methods (Drive)
     // --------------------------------------------------------------------------------

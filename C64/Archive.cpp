@@ -16,7 +16,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "Archive.h"
+#include "T64Archive.h"
+#include "D64Archive.h"
+#include "PRGArchive.h"
+#include "P00Archive.h"
+#include "G64Archive.h"
+#include "NIBArchive.h"
 
 Archive::Archive()
 {
@@ -24,6 +29,32 @@ Archive::Archive()
 
 Archive::~Archive()
 {
+}
+
+Archive *
+Archive::makeArchiveFromFile(const char *filename)
+{
+    assert(filename != NULL);
+    
+    if (T64Archive::isT64File(filename)) {
+        return T64Archive::archiveFromT64File(filename);
+    }
+    if (D64Archive::isD64File(filename)) {
+        return D64Archive::archiveFromD64File(filename);
+    }
+    if (PRGArchive::isPRGFile(filename)) {
+        return PRGArchive::archiveFromPRGFile(filename);
+    }
+    if (P00Archive::isP00File(filename)) {
+        return P00Archive::archiveFromP00File(filename);
+    }
+    if (G64Archive::isG64File(filename)) {
+        return G64Archive::archiveFromG64File(filename);
+    }
+    if (NIBArchive::isNIBFile(filename)) {
+        return NIBArchive::archiveFromNIBFile(filename);
+    }
+    return NULL;
 }
 
 int

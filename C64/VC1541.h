@@ -145,9 +145,11 @@ public:
     inline bool hasDisk() { return diskInserted; }
 
     /*! @brief    Inserts an archive as a virtual disk.
-     *  @details  Before inserting, the archive data is converted to VC1541s GCR-encoded track/sector format.
+     *  @details  This function consumes some time as it needs to perform various conversions.
+     *            E.g., if you provide a T64 archive, it is first converted to an D64 archive.
+     *            After that, all tracks will be GCR-encoded and written to a new disk.
      */
-    void insertDisk(Archive *a);
+    bool insertDisk(Archive *a);
     
     //! @brief    Returns true if a disk is partially inserted.
     inline bool isDiskPartiallyInserted() { return diskPartiallyInserted; }

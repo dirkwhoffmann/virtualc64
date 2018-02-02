@@ -45,6 +45,11 @@ public:
     //! @brief    Standard destructor
 	virtual ~Archive();
     
+    //
+    //! Factory methods
+    //
+    
+    static Archive *makeArchiveFromFile(const char *filename);
     
     //
     //! Accessing archive attributes

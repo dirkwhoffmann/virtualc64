@@ -56,7 +56,7 @@ MessageQueue::putMessage(int id, int i)
 	w = (w + 1) % queue_size;
 
 	if (w == r) {
-		warn("Queue overflow!!! Message is lost!!!\n");
+        // debug(2, "Queue overflow\n");
 		r = (r + 1) % queue_size;
 	} 
 	

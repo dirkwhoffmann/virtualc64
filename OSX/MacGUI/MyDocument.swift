@@ -144,19 +144,25 @@ extension MyDocument {
         c64.kill()
     }
     
+    #if false
     // Bring up the new mount view
-    @IBAction @objc func showNewMountDialog(_ sender: AnyObject) {
+    @IBAction @objc func showNewMountDialog(archive: ArchiveProxy) {
         
-        let nibName = NSNib.Name(rawValue: "Mount")
+        let nibName = NSNib.Name(rawValue: "MountController")
         let controller = MountController.init(windowNibName: nibName)
-        NSLog("controller = \(controller)")
-        
-        let mount = controller.window
-        NSLog("window = \(mount)")
-        
-        let application = NSApplication.shared
-        application.runModal(for: mount!)
+        controller.c64 = c64
+        controller.archive = archive
+
+        if let sheetWindow = controller.window {
+            /*
+            let application = NSApplication.shared
+            application.runModal(for: window)
+            window.close()
+            */
+            // window.beginSheet(sheetWindow, completionHandler: nil)
+        }
     }
+    #endif
     
 }
 

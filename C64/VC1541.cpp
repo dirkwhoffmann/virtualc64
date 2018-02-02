@@ -338,39 +338,49 @@ VC1541::setBitAccuracy(bool b)
     }
 }
 
-void
+bool
 VC1541::insertDisk(Archive *a)
 {
     assert(a != NULL);
-    
-    D64Archive *d64 = (D64Archive *)a;
-    G64Archive *g64 = (G64Archive *)a;
-    NIBArchive *nib = (NIBArchive *)a;
+
+    D64Archive *converted;
     
     switch (a->getType()) {
             
+        case T64_CONTAINER:
+        case PRG_CONTAINER:
+        case P00_CONTAINER:
+            
+            // Archives of this type are first converted to D64 format
+            if (!(converted = D64Archive::archiveFromArchive(a)))
+                return false;
+            
+            ejectDisk();
+            disk.encodeArchive(converted);
+            break;
+    
         case D64_CONTAINER:
             
             ejectDisk();
-            disk.encodeArchive(d64);
+            disk.encodeArchive((D64Archive *)a);
             break;
             
         case G64_CONTAINER:
             
             ejectDisk();
-            disk.encodeArchive(g64);
+            disk.encodeArchive((G64Archive *)a);
             break;
 
         case NIB_CONTAINER:
             
             ejectDisk();
-            disk.encodeArchive(nib);
+            disk.encodeArchive((NIBArchive *)a);
             break;
 
         default:
             
-            warn("Only D64, G64 or NIB archives can be mounted as virtual disk.");
-            return;
+            warn("Only D64, T64, PRG, P00, G64 and NIB archives can be mounted as disk.");
+            return false;
     }
     
     diskInserted = true;
@@ -380,6 +390,8 @@ VC1541::insertDisk(Archive *a)
 
     // If bit accuracy is disabled, we write-protect the disk
     disk.setWriteProtection(!bitAccuracy);
+    
+    return true; 
 }
 
 void 

@@ -27,47 +27,14 @@
 @synthesize attachedTape;
 @synthesize attachedCartridge;
 
-/*
-- (void)makeWindowControllers
-{
-	NSLog(@"MyDocument::makeWindowControllers");
-    
-	MyController *myController;
-	
-	myController = [[MyController alloc] initWithWindowNibName:@"MyDocument"];
-	[self addWindowController:myController];
-}
-*/
-
 - (id)init
 {
     self = [super init];
     
     [self initSwift];
     
-    return self; 
-    /*
-	NSLog(@"MyDocument::init");
-	
-    self = [super init];
-
-    attachedSnapshot = nil;
-    attachedArchive = nil;
-    attachedTape = nil;
-	attachedCartridge = nil;
-		
-	return self;
-     */
+    return self;
 }
-
-/*
--(id)initWithType:(NSString *)typeName
-            error:(NSError * _Nullable __autoreleasing *)outError
-{
-    NSLog(@"MyDocument::initWithType %@", typeName);
-    return [self init];
-}
-*/
 
 - (BOOL)setSnapshotWithName:(NSString *)path
 {
@@ -111,42 +78,16 @@
 
 - (BOOL)setArchiveWithName:(NSString *)path
 {
+    attachedArchive = [ArchiveProxy makeArchiveFromFile:path];
+    return attachedArchive != NULL;
+    
+    /*
     if (!(attachedArchive = [D64ArchiveProxy archiveFromArbitraryFile:path]))
 		return NO;
 	
 	return YES;
+    */
 }
-
-/*
-- (BOOL)loadRom:(NSString *)filename
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	bool success = NO;
-	
-	if ([c64 loadBasicRom:filename]) {
-        NSLog(@"loadRom:setObject:%@ forKey:VC64BasicRomFileKey", filename);
-		[defaults setObject:filename forKey:VC64BasicRomFileKey];
-		success = YES;
-	}
-	else if ([c64 loadCharRom:filename]) {
-        NSLog(@"loadRom:setObject:%@ forKey:VC64CharRomFileKey", filename);
-		[defaults setObject:filename forKey:VC64CharRomFileKey];
-		success = YES;
-	}
-	else if ([c64 loadKernelRom:filename]) {
-        NSLog(@"loadRom:setObject:%@ forKey:VC64KernelRomFileKey", filename);
-		[defaults setObject:filename forKey:VC64KernelRomFileKey];
-		success = YES;
-	}
-	else if ([c64 loadVC1541Rom:filename]) {
-        NSLog(@"loadRom:setObject:%@ forKey:VC64VC1541RomFileKey", filename);
-		[defaults setObject:filename forKey:VC64VC1541RomFileKey];
-		success = YES;
-	}
-	
-	return success;
-}
-*/
 
 - (void)showVersionNumberAlert
 {
@@ -177,9 +118,6 @@
 {
 	NSLog(@"MyDocument:readFromFile:%@ ofType:%@", filename, type);
     
-    [self showNewMountDialog:self];
-    
-    
     // Is it a snapshot?
     if ([SnapshotProxy isSnapshotFile:filename]) {
         
@@ -201,66 +139,24 @@
         return NO;
     }
     
-    // Check file type
-    ContainerType format = UNKNOWN_CONTAINER_FORMAT;
-    if ([type caseInsensitiveCompare:@"D64"] == NSOrderedSame)
-        format = D64_CONTAINER;
-    else if ([type caseInsensitiveCompare:@"T64"] == NSOrderedSame)
-        format = T64_CONTAINER;
-    else if ([type caseInsensitiveCompare:@"PRG"] == NSOrderedSame)
-        format = PRG_CONTAINER;
-    else if ([type caseInsensitiveCompare:@"P00"] == NSOrderedSame)
-        format = P00_CONTAINER;
-    else if ([type caseInsensitiveCompare:@"G64"] == NSOrderedSame)
-        format = G64_CONTAINER;
-    else if ([type caseInsensitiveCompare:@"NIB"] == NSOrderedSame)
-        format = NIB_CONTAINER;
-    else if ([type caseInsensitiveCompare:@"TAP"] == NSOrderedSame)
-        format = TAP_CONTAINER;
-    else if ([type caseInsensitiveCompare:@"CRT"] == NSOrderedSame)
-        format = CRT_CONTAINER;
-    
-    switch (format) {
-            
-        case D64_CONTAINER:
-        case T64_CONTAINER:
-        case PRG_CONTAINER:
-        case P00_CONTAINER:
-		
-            if ([self setArchiveWithName:filename])
-                return YES;
-            else break;
-            
-        case G64_CONTAINER:
-            
-            if ([self setG64ArchiveWithName:filename])
-                return YES;
-            else break;
-
-        case NIB_CONTAINER:
-            
-            if ([self setNIBArchiveWithName:filename])
-                return YES;
-            else break;
-
-        case TAP_CONTAINER:
-            
-            if ([self setTAPContainerWithName:filename])
-                return YES;
-            else break;
-
-        case CRT_CONTAINER:
-
-            if ([self setCRTContainerWithName:filename])
-                return YES;
-            else break;
-
-        default:
-
-            NSLog(@"Unsupported file type\n");
-            return NO;
+    // Is it an archive?
+    if ([self setArchiveWithName:filename]) {
+        [self setFileURL:nil]; // Make the document 'Untitled'
+        return YES;
     }
-
+    
+    // Is it a band tape?
+    if ([self setTAPContainerWithName:filename]) {
+        [self setFileURL:nil];
+        return YES;
+    }
+    
+    // Is it a cartridge?
+    if ([self setCRTContainerWithName:filename]) {
+        [self setFileURL:nil];
+        return YES;
+    }
+   
     NSLog(@"Error while reading file\n");
     return NO;
 }

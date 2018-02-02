@@ -963,17 +963,27 @@ C64::flushArchive(Archive *a, int item)
 		return false;
 	
 	addr = a->getDestinationAddrOfItem(item);
+    debug("Flushing at addr: %04X %d\n", addr, addr);
 	a->selectItem(item);
 	while (1) {
 		data = a->getByte();
 		if (data < 0) break;
-		
 		mem.pokeRam(addr, (uint8_t)data);
 		if (addr == 0xFFFF) break;
 		
 		addr++;
 	}
 	return true;
+}
+
+bool
+C64::insertDisk(Archive *a)
+{
+    assert(a != NULL);
+    
+    floppy.insertDisk(a);
+    return true;
+    
 }
 
 bool 

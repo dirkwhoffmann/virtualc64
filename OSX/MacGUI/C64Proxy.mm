@@ -797,9 +797,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->c64->attachCartridgeAndReset([c wrapper]->crtcontainer); }
 - (void) detachCartridgeAndReset { wrapper->c64->detachCartridgeAndReset(); }
 - (bool) isCartridgeAttached { return wrapper->c64->isCartridgeAttached(); }
-
-- (bool) mountArchive:(ArchiveProxy *)a {
-    return wrapper->c64->mountArchive([a wrapper]->archive);
+- (bool) insertDisk:(ArchiveProxy *)a {
+    return wrapper->c64->insertDisk([a wrapper]->archive);
 }
 - (bool) flushArchive:(ArchiveProxy *)a item:(NSInteger)nr {
     return wrapper->c64->flushArchive([a wrapper]->archive, (int)nr);
@@ -969,10 +968,16 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     if (wrapper) delete wrapper;
 }
 
++ (instancetype)makeArchiveFromFile:(NSString *)filename
+{
+    Archive *archive = Archive::makeArchiveFromFile([filename UTF8String]);
+    return archive ? [[ArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
 - (ArchiveWrapper *)wrapper { return wrapper; }
 - (NSString *)getPath { return [NSString stringWithUTF8String:wrapper->archive->getPath()]; }
 - (NSString *)getName { return [NSString stringWithUTF8String:wrapper->archive->getName()]; }
-- (NSInteger)getType { return (NSInteger)wrapper->archive->getType(); }
+- (ContainerType)getType { return wrapper->archive->getType(); }
 
 - (NSInteger)getNumberOfItems {
     return (NSInteger)wrapper->archive->getNumberOfItems();
