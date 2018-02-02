@@ -1,38 +1,52 @@
-//
-//  MyDocument.swift
-//  VirtualC64
-//
-//  Created by Dirk Hoffmann on 31.01.18.
-//
+/*
+ * (C) 2018 Dirk W. Hoffmann. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 import Foundation
 
 class MyDocument : NSDocument {
-
-    // ObjC/C++ bridge
-    // C64Proxy *__strong c64;
+    
+    //! @brief   Emulator proxy object
+    /*! @details This object is an objC object bridging between the GUI (written in Swift)
+     *           an the core emulator (written in C++).
+     */
     var c64: C64Proxy!
     
-    //! Reference to an attached VC64 snapshot
-    /*! When a new documents opens and this variable is not NULL, the snapshot is automatically flashed */
+    // TODO: Merge the following four variables into one:
+    // var Container attachment: ContainerProxy? = nil
+    
+    //! @brief   Reference to an attached snapshot image
+    /*! @details When the GUI launches, it checks for this object. If set, the attached
+     *           snapshot is loaded into the emulator.
+     */
     @objc var attachedSnapshot: SnapshotProxy? = nil
     
     //! Reference to an attached D64, G64, or NIB archive
-    /*! When a new documents opens and this variable is not NULL, the archive is automatically inserted into the virtual floopy drive */
     @objc var attachedArchive: ArchiveProxy? = nil
     
     //! Reference to an attached TAP container
-    /*! When a new documents opens and this variable is not NULL, the tape is automatically inserted into the virtual datasette */
     @objc var attachedTape: TAPContainerProxy? = nil
     
     //! Reference to an attached CRT container
-    /*! When a new documents opens and this variable is not NULL, the cartridge is automatically plugged into the virtual expansion port */
     @objc var attachedCartridge: CRTContainerProxy? = nil
     
     override init() {
-
-        NSLog("MyDocument::\(#function)")
         
+        NSLog("MyDocument::\(#function)")
         super.init()
         
         // Create emulator instance and try to load ROMs
@@ -42,21 +56,8 @@ class MyDocument : NSDocument {
         loadRom(defaults.string(forKey: VC64CharRomFileKey))
         loadRom(defaults.string(forKey: VC64KernelRomFileKey))
         loadRom(defaults.string(forKey: VC64VC1541RomFileKey))
-
-
-        attachedSnapshot = nil
-        attachedArchive = nil
-        attachedTape = nil
-        attachedCartridge = nil
- 
     }
  
-    /*
-    @objc func getAttachedArchive() -> String {
-        return attachedArchive
-    }
-    */
-    
     override open func makeWindowControllers() {
         
         NSLog("\(#function)")
@@ -67,9 +68,8 @@ class MyDocument : NSDocument {
         self.addWindowController(controller)
     }
     
-    
     //
-    // Loading and saving
+    // Loading
     //
     
     override open func read(from url: URL, ofType typeName: String) throws {
@@ -135,21 +135,6 @@ class MyDocument : NSDocument {
         c64.load(fromSnapshot: snapshot)
     }
     
-    override open func write(to url: URL, ofType typeName: String) throws {
-   
-        let filename = url.path
-        NSLog("MyDocument::\(#function):\(filename)")
-    
-        if typeName != "VC64" {
-            NSLog("Document type is \(typeName), expected VC64")
-            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        }
-
-        let snapshot = SnapshotProxy()
-        c64.save(toSnapshot: snapshot)
-        snapshot?.writeData(toFile: filename)
-    }
- 
     @discardableResult
     @objc func loadRom(_ filename: String?) -> Bool {
         
@@ -179,9 +164,29 @@ class MyDocument : NSDocument {
             defaults.set(filename, forKey: VC64VC1541RomFileKey)
             return true
         }
-    
-    return false
+        
+        return false
     }
+
+    //
+    // Saving
+    //
+
+    override open func write(to url: URL, ofType typeName: String) throws {
+   
+        let filename = url.path
+        NSLog("MyDocument::\(#function):\(filename)")
+    
+        if typeName != "VC64" {
+            NSLog("Document type is \(typeName), expected VC64")
+            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+        }
+
+        let snapshot = SnapshotProxy()
+        c64.save(toSnapshot: snapshot)
+        snapshot?.writeData(toFile: filename)
+    }
+ 
     
     /*
     override open func data(ofType typeName: String) throws -> Data {
@@ -240,6 +245,10 @@ class MyDocument : NSDocument {
         NSLog("MyDocument:\(#function)")
 
         super.removeWindowController(windowController)
+        
+        // Shut down the emulator.
+        // Note that all GUI elements need to be inactive when we set the proxy to nil.
+        // Hence, the emulator should be shut down as late as possible.
         c64.kill()
     }
     

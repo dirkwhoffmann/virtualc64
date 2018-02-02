@@ -472,7 +472,7 @@
                 <outlet property="delegate" destination="-2" id="2165"/>
                 <outlet property="initialFirstResponder" destination="DD4-5B-w9h" id="SkX-P7-Vr8"/>
             </connections>
-            <point key="canvasLocation" x="-97" y="488.5"/>
+            <point key="canvasLocation" x="-132" y="456"/>
         </window>
         <customObject id="2er-Ml-G01" customClass="AppDelegate" customModule="VirtualC64" customModuleProvider="target"/>
         <drawer preferredEdge="minX" leadingOffset="15" trailingOffset="15" id="35" userLabel="Debug Drawer">

@@ -144,9 +144,6 @@
     NSLog(@"MyController::windowDidLoad");
     NSLog(@"    window   = %@", [self window]);
     NSLog(@"    document = %@", [self document]);
-
-    // Let the document know where the virtual C64 resides
-    [[self document] setC64:c64];
     
     // Initialize keyboard controller
     keyboardcontroller = [[KeyboardController alloc] initWithController:self];

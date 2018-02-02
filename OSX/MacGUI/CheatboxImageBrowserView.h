@@ -21,7 +21,7 @@
 
 // Forward declarations
 @class C64Proxy;
-@class MyDocument;
+// @class MyDocument;
 
 @interface CheatboxImageBrowserView : IKImageBrowserView
 { 

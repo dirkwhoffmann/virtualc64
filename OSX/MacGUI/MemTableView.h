@@ -20,7 +20,7 @@
 
 // Forward declarations
 @class C64Proxy;
-@class MyDocument;
+// @class MyDocument;
 
 @interface MemTableView : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
 { 

@@ -23,7 +23,6 @@
 #import <simd/simd.h>
 
 #import "C64Proxy.h"
-#import "MyDocument.h"
 
 #import "Disassembler.h"
 #import "Formatter.h"
