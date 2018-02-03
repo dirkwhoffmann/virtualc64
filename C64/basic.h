@@ -174,10 +174,10 @@ bool checkFileSize(const char *filename, long min, long max);
 /*! @brief    Checks the magic bytes of a file.
  *  @details  The function is used for determining the type of a file.
  *  @param    filename  Path and name of the file to investigate.
- *  @param    header    Expected byte sequence, terminated by EOF.
+ *  @param    header    Expected byte sequence, terminated by 0x00.
  *  @return   Returns   true iff magic bytes match.
 */
-bool checkFileHeader(const char *filename, int *header);
+bool checkFileHeader(const char *filename, const uint8_t *header);
 
 //
 //! @functiongroup Managing time

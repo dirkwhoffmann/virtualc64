@@ -25,9 +25,10 @@
  *  @brief    The D64Archive class declares the programmatic interface for a file in T64 format.
  */
 class T64Archive : public Archive {
-
-private:	
-
+    
+    //! @brief    Header signature
+    static const uint8_t magicBytes[];
+    
     //! @brief    The raw data of this archive.
     uint8_t *data;
 
@@ -43,7 +44,7 @@ private:
      *  @details  Maximum value for fp. Do we really need this?
      */
 	int fp_eof;
-	
+    
 public:
 
     //
@@ -55,9 +56,12 @@ public:
     
     //! @brief    Standard destructor
     ~T64Archive();
-		
-    //! @brief    Returns true iff the specified file is a T64 file
-    static bool isT64File(const char *filename);
+
+    //! @brief    Returns true iff buffer contains a T64 file
+    static bool isT64(const uint8_t *buffer, size_t length);
+
+    //! @brief    Returns true iff path points to a T64 file
+    static bool isT64File(const char *path);
 
     //! @brief    Creates a T64 archive from a T64 file located on disk.
     static T64Archive *archiveFromT64File(const char *filename);
@@ -117,7 +121,6 @@ public:
      */
     bool repair();
 };
-
 
 #endif
 

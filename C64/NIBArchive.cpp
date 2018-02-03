@@ -18,6 +18,10 @@
 
 #include "NIBArchive.h"
 
+const uint8_t
+NIBArchive::magicBytes[] = { /* "MNIB-1541-RAW" */
+    0x4d, 0x4e, 0x49, 0x42, 0x2d, 0x31, 0x35, 0x34, 0x31, 0x2d, 0x52, 0x41, 0x57, 0x00 };
+
 NIBArchive::NIBArchive()
 {
     setDescription("NIBArchive");
@@ -37,13 +41,20 @@ NIBArchive::~NIBArchive()
 	dealloc();
 }
 
+bool
+NIBArchive::isNIB(const uint8_t *buffer, size_t length)
+{
+    // File size = 0x100 (header) + no_of_tracks * 0x2000
+    if (length % 0x2000 != 0x100)
+        return false;
+    
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
 bool 
 NIBArchive::isNIBFile(const char *filename)
 {
-    /* "MNIB-1541-RAW" */
-	int magic_bytes[] = { 0x4d, 0x4e, 0x49, 0x42, 0x2d, 0x31, 0x35, 0x34, 0x31, 0x2d, 0x52, 0x41, 0x57, EOF };
-	
-	assert(filename != NULL);
+ 	assert(filename != NULL);
 	
 	if (!checkFileSuffix(filename, ".NIB") && !checkFileSuffix(filename, ".nib"))
 		return false;
@@ -52,7 +63,7 @@ NIBArchive::isNIBFile(const char *filename)
     if (getSizeOfFile(filename) % 0x2000 != 0x100)
 		return false;
 	
-	if (!checkFileHeader(filename, magic_bytes))
+	if (!checkFileHeader(filename, magicBytes))
 		return false;
 	
 	return true;

@@ -33,6 +33,22 @@ Container::~Container()
 		free(path);
 }
 
+bool
+Container::checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_t *header)
+{
+    assert(buffer != NULL);
+    assert(header != NULL);
+    
+    unsigned i;
+    
+    for (i = 0; i < length && header[i] != 0; i++) {
+        if (header[i] != buffer[i])
+            return false;
+    }
+ 
+    return header[i] == 0;
+}
+
 ContainerType
 Container::typeOf(const char *extension)
 {

@@ -18,6 +18,13 @@
 
 #include "T64Archive.h"
 
+/* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
+ *  Substrings"C64" und "tape" suchen. Vorsicht: TAP Images verwenden den String: C64-TAPE-RAW
+ *  der ebenfalls die Substrings "C64" und "TAPE" enthält." [Power64 doc]
+ *  TODO: Make sure that the archive is not a TAP file.
+ */
+const uint8_t T64Archive::magicBytes[] = { 0x43, 0x36, 0x34, 0x00 };
+
 T64Archive::T64Archive()
 {
     setDescription("T64Archive");
@@ -30,33 +37,36 @@ T64Archive::~T64Archive()
 	dealloc();
 }
 
-bool 
-T64Archive::isT64File(const char *filename)
+bool
+T64Archive::isT64(const uint8_t *buffer, size_t length)
 {
-    /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den Substrings "C64" und "tape" suchen. Vorsicht: TAP Images verwenden den String: C64-TAPE-RAW der ebenfalls die Substrings "C64" und "TAPE" enthält." [Power64 doc] 
-        TODO: Make sure that the archive is not a TAP file. */
-	int magic_bytes[] = { 0x43, 0x36, 0x34, EOF };
+    if (length < 0x40) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
+bool 
+T64Archive::isT64File(const char *path)
+{	
+	assert(path != NULL);
 	
-	assert(filename != NULL);
-	
-	if (!checkFileSuffix(filename, ".T64") && !checkFileSuffix(filename, ".t64"))
+	if (!checkFileSuffix(path, ".T64") && !checkFileSuffix(path, ".t64"))
 		return false;
 	
-	if (!checkFileSize(filename, 0x40, -1))
+	if (!checkFileSize(path, 0x40, -1))
 		return false;
 	
-	if (!checkFileHeader(filename, magic_bytes))
+    if (!checkFileHeader(path, magicBytes))
 		return false;
 	
 	return true;
 }
 
 T64Archive *
-T64Archive::archiveFromT64File(const char *filename)
+T64Archive::archiveFromT64File(const char *path)
 {
 	T64Archive *archive = new T64Archive();
     
-	if (!archive->readFromFile(filename)) {
+	if (!archive->readFromFile(path)) {
         delete archive;
 		return NULL;
 	}
@@ -66,7 +76,7 @@ T64Archive::archiveFromT64File(const char *filename)
         return NULL;
     }
 
-    archive->debug(1, "T64 archive created from file %s.\n", filename);
+    archive->debug(1, "T64 archive created from file %s.\n", path);
 	return archive;
 }
 

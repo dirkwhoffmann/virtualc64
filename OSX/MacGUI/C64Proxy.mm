@@ -891,11 +891,11 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     if (wrapper) delete wrapper;
 }
 
-+ (BOOL) isSnapshot:(NSString *)filename {
-    return Snapshot::isSnapshot([filename UTF8String]);
++ (BOOL) isSnapshotFile:(NSString *)path {
+    return Snapshot::isSnapshotFile([path UTF8String]);
 }
-+ (BOOL) isUsupportedSnapshot:(NSString *)filename {
-    return Snapshot::isUnsupportedSnapshot([filename UTF8String]);
++ (BOOL) isUsupportedSnapshotFile:(NSString *)path {
+    return Snapshot::isUnsupportedSnapshotFile([path UTF8String]);
 }
 
 + (instancetype) snapshotFromSnapshot:(Snapshot *)snapshot

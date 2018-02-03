@@ -112,7 +112,7 @@ public extension MetalView {
             }
             
             // Is it a snapshot from a different version?
-            if SnapshotProxy.isUsupportedSnapshot(filename) {
+            if SnapshotProxy.isUsupportedSnapshotFile(filename) {
                 document.showSnapshotVersionAlert()
                 return false
             }

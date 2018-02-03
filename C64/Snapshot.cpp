@@ -18,12 +18,14 @@
 
 #include "Snapshot.h"
 
+const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
+
 Snapshot::Snapshot()
 {
-    header.magic[0] = 'V';
-    header.magic[1] = 'C';
-    header.magic[2] = '6';
-    header.magic[3] = '4';
+    header.magic[0] = magicBytes[0];
+    header.magic[1] = magicBytes[1];
+    header.magic[2] = magicBytes[2];
+    header.magic[3] = magicBytes[3];
     header.major = V_MAJOR;
     header.minor = V_MINOR;
     header.subminor = V_SUBMINOR;
@@ -56,6 +58,61 @@ Snapshot::alloc(unsigned size)
     
     header.size = size;
     return true;
+}
+
+bool
+Snapshot::isSnapshot(const uint8_t *buffer, size_t length)
+{
+    assert(buffer != NULL);
+    
+    if (length < 0x15) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
+bool
+Snapshot::isSnapshot(const uint8_t *buffer, size_t length,
+                       uint8_t major, uint8_t minor, uint8_t subminor)
+{
+    if (!isSnapshot(buffer, length)) return false;
+    return buffer[4] == major && buffer[5] == minor && buffer[6] == subminor;
+}
+
+bool
+Snapshot::isUnsupportedSnapshot(const uint8_t *buffer, size_t length)
+{
+    if (!isSnapshot(buffer, length)) return false;
+    return !isSnapshot(buffer, length, V_MAJOR, V_MINOR, V_SUBMINOR);
+}
+
+bool
+Snapshot::isSnapshotFile(const char *path)
+{
+    assert(path != NULL);
+    
+    if (!checkFileHeader(path, magicBytes))
+        return false;
+    
+    return true;
+}
+
+bool
+Snapshot::isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor)
+{
+    uint8_t magicBytesWithVersion[] = { 'V', 'C', '6', '4', major, minor, subminor, 0x00 };
+    
+    assert(path != NULL);
+    
+    if (!checkFileHeader(path, magicBytesWithVersion))
+        return false;
+    
+    return true;
+}
+
+bool
+Snapshot::isUnsupportedSnapshotFile(const char *path)
+{
+    if (!isSnapshotFile(path)) return false;
+    return !isSnapshotFile(path, V_MAJOR, V_MINOR, V_SUBMINOR);
 }
 
 Snapshot *
@@ -96,44 +153,10 @@ Snapshot::getTypeAsString()
 	return "V64";
 }
 
-bool
-Snapshot::isSnapshot(const char *filename)
-{
-    int magic_bytes[] = { 'V', 'C', '6', '4', EOF };
-    
-    assert(filename != NULL);
-    
-    if (!checkFileHeader(filename, magic_bytes))
-        return false;
-    
-    return true;
-}
-
-bool
-Snapshot::isSnapshot(const char *filename, int major, int minor, int subminor)
-{
-    int magic_bytes[] = { 'V', 'C', '6', '4', major, minor, subminor, EOF };
-    
-    assert(filename != NULL);
-    
-    if (!checkFileHeader(filename, magic_bytes))
-        return false;
-    
-    return true;
-}
-
-bool
-Snapshot::isUnsupportedSnapshot(const char *filename)
-{
-    if (!isSnapshot(filename)) return false;
-    return !isSnapshot(filename, V_MAJOR, V_MINOR, V_SUBMINOR);
-}
-
-
 bool 
 Snapshot::fileIsValid(const char *filename)
 {
-    return Snapshot::isSnapshot(filename, V_MAJOR, V_MINOR, V_SUBMINOR);
+    return Snapshot::isSnapshotFile(filename, V_MAJOR, V_MINOR, V_SUBMINOR);
 }
 
 bool 

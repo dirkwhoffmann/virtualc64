@@ -31,6 +31,9 @@ class NIBArchive : public Archive {
 
 private:
 
+    //! @brief    Header signature
+    static const uint8_t magicBytes[];
+    
     //! @brief    Raw data of this archive
     uint8_t *data;
 
@@ -64,6 +67,9 @@ public:
     //! @brief    Standard destructor
     ~NIBArchive();
 		
+    //! @brief    Returns true iff buffer contains a NIB file
+    static bool isNIB(const uint8_t *buffer, size_t length);
+
     //! @brief    Returns true iff the specified file is a NIB file.
     static bool isNIBFile(const char *filename);
 

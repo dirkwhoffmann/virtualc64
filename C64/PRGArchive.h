@@ -27,7 +27,7 @@
 class PRGArchive : public Archive {
 
 private:
-
+    
 	//! @brief   The raw data of this archive.
     uint8_t *data;
 		
@@ -51,14 +51,20 @@ public:
     //! @brief    Standard destructor
     ~PRGArchive();
 
+    //! @brief    Returns true if buffer contains a PRG file
+    /*! @details  PRG files ares mostly determined by their suffix, so this function will
+     *            return true unless you provide a buffer with less than two bytes.
+     */
+    static bool isPRG(const uint8_t *buffer, size_t length);
+
     //! @brief    Returns true iff the specified file is a PRG file.
     static bool isPRGFile(const char *filename);
 
     //! @brief    Creates a PRG archive from a PRG file.
     static PRGArchive *archiveFromPRGFile(const char *filename);
 
-    /*! @brief    Creates a PRG archive from another archive.
-     *  @result   A PRG archive that contains the first directory item of the other archive.
+    //! @brief    Creates a PRG archive from another archive.
+    /*  @result   A PRG archive that contains the first directory item of the other archive.
      */
     static PRGArchive *archiveFromArchive(Archive *otherArchive);
 

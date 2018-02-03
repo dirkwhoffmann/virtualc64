@@ -95,6 +95,21 @@ D64Archive::~D64Archive()
 	dealloc();
 }
 
+bool
+D64Archive::isD64(const uint8_t *buffer, size_t length)
+{
+    // Unfortunaltely, D64 containers do not contain magic bytes.
+    // We can only check the buffer size
+
+    return
+    length == D64_683_SECTORS ||
+    length == D64_683_SECTORS_ECC ||
+    length == D64_768_SECTORS ||
+    length == D64_768_SECTORS_ECC ||
+    length == D64_802_SECTORS ||
+    length == D64_802_SECTORS_ECC;
+}
+
 bool 
 D64Archive::isD64File(const char *filename)
 {

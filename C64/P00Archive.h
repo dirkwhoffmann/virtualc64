@@ -28,6 +28,9 @@ class P00Archive : public Archive {
 
 private:
 
+    //! @brief    Header signature
+    static const uint8_t magicBytes[];
+    
     //! @brief    The raw data of this archive.
     uint8_t *data;
 		
@@ -47,6 +50,9 @@ public:
     //! @brief    Standard destructor.
     ~P00Archive();
     
+    //! @brief    Returns true iff buffer contains a P00 file
+    static bool isP00(const uint8_t *buffer, size_t length);
+
     //! @brief    Returns true iff the specified file is a P00 file
     static bool isP00File(const char *filename);
 

@@ -20,6 +20,9 @@
 
 #include "CRTContainer.h"
 
+const uint8_t CRTContainer::magicBytes[] = {
+    'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ', 0x00 };
+
 CRTContainer::CRTContainer()
 {
     data = NULL;
@@ -46,10 +49,15 @@ CRTContainer::dealloc()
 }
 
 bool
+CRTContainer::isCRT(const uint8_t *buffer, size_t length)
+{
+    if (length < 0x40) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
+bool
 CRTContainer::isCRTFile(const char *filename)
 {
-    int magic_bytes[] = { 'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ',EOF };
-    
     assert(filename != NULL);
     
     if (!checkFileSuffix(filename, ".CRT") && !checkFileSuffix(filename, ".crt"))
@@ -58,7 +66,7 @@ CRTContainer::isCRTFile(const char *filename)
     if (!checkFileSize(filename, 0x40, -1))
         return false;
     
-    if (!checkFileHeader(filename, magic_bytes))
+    if (!checkFileHeader(filename, magicBytes))
         return false;
     
     return true;

@@ -30,6 +30,12 @@ PRGArchive::~PRGArchive()
 	dealloc();
 }
 
+bool
+PRGArchive::isPRG(const uint8_t *buffer, size_t length)
+{
+    return length >= 2;
+}
+
 bool 
 PRGArchive::isPRGFile(const char *filename)
 {

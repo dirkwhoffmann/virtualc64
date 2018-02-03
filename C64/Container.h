@@ -36,9 +36,19 @@ private:
 	 
     //! @brief    The physical name (full path name) of the container.
     char *path;
-	
+    
 protected:
-
+    
+    /*! @brief    Checks the header signature of a buffer.
+     *  @details  Functions is used to determine if the buffer contains, e.g., a T64 file.
+     *  @param    buffer    Pointer to buffer, must not be NULL
+     *  @param    length    Length of the buffer
+     *  @param    header    Expected byte sequence, terminated by EOF.
+     *  @return   Returns   true iff magic bytes match.
+     *  @seealso  Container::typeOfBuffer
+     */
+    static bool checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_t *header);
+    
     /*! @brief    The logical name of the container.
      *  @details  Some archives store a logical name in their header section. 
      *            If they don't store a special name, the logical name is the raw filename

@@ -113,7 +113,7 @@ C64Memory::dumpState()
 
 bool C64Memory::isBasicRom(const char *filename)
 {
-	int magic_bytes[] = { 0x94, 0xE3, 0x7B, EOF };
+    uint8_t magicBytes[] = { 0x94, 0xE3, 0x7B, 0x00 };
 
 	if (filename == NULL)
 		return false;
@@ -121,7 +121,7 @@ bool C64Memory::isBasicRom(const char *filename)
 	if (!checkFileSize(filename, 0x2000, 0x2000))
 		return false;
 	
-	if (!checkFileHeader(filename, magic_bytes))
+	if (!checkFileHeader(filename, magicBytes))
 		return false;
 		
 	return true;
@@ -129,7 +129,7 @@ bool C64Memory::isBasicRom(const char *filename)
 
 bool C64Memory::isCharRom(const char *filename)
 {
-	int magic_bytes[] = { 0x3C, 0x66, 0x6E, EOF };
+	uint8_t magicBytes[] = { 0x3C, 0x66, 0x6E, 0x00 };
 
 	if (filename == NULL)
 		return false;
@@ -137,7 +137,7 @@ bool C64Memory::isCharRom(const char *filename)
 	if (!checkFileSize(filename, 0x1000, 0x1000))
 		return false;
 	
-	if (!checkFileHeader(filename, magic_bytes))
+	if (!checkFileHeader(filename, magicBytes))
 		return false;
 		
 	return true;
@@ -145,7 +145,7 @@ bool C64Memory::isCharRom(const char *filename)
 
 bool C64Memory::isKernelRom(const char *filename) 
 {
-	int magic_bytes[] = { 0x85, 0x56, 0x20, EOF };
+	uint8_t magicBytes[] = { 0x85, 0x56, 0x20, 0x00 };
 
 	if (filename == NULL)
 		return false;
@@ -153,7 +153,7 @@ bool C64Memory::isKernelRom(const char *filename)
 	if (!checkFileSize(filename, 0x2000, 0x2000))
 		return false;
 	
-	if (!checkFileHeader(filename, magic_bytes))
+	if (!checkFileHeader(filename, magicBytes))
 		return false;
 		
 	return true;

@@ -40,6 +40,9 @@ class CRTContainer : public Container {
     
 private:
     
+    //! @brief    Header signature
+    static const uint8_t magicBytes[];
+    
     //! @brief    Raw data of CRT container file
     uint8_t *data;
     
@@ -65,6 +68,9 @@ public:
     
     //! @brief    Type of container in plain text
     const char *getTypeAsString() { return "CRT"; }
+    
+    //! @brief    Returns true iff buffer contains a CRT file
+    static bool isCRT(const uint8_t *buffer, size_t length);
     
     //! Returns true of filename points to a valid file of that type
     static bool isCRTFile(const char *filename);

@@ -28,6 +28,9 @@ class TAPContainer : public Container {
     
 private:
     
+    //! @brief    Header signature
+    static const uint8_t magicBytes[];
+    
     //! @brief    The raw data of this archive.
     uint8_t *data;
     
@@ -46,6 +49,9 @@ public:
     
     //! @brief    Standard destructor
     ~TAPContainer();
+    
+    //! @brief    Returns true iff buffer contains a TAP file
+    static bool isTAP(const uint8_t *buffer, size_t length);
     
     //! @brief    Returns true iff the specified file is a TAP file
     static bool isTAPFile(const char *filename);

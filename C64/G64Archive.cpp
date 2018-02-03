@@ -18,6 +18,9 @@
 
 #include "G64Archive.h"
 
+const uint8_t /* "GCR-1541" */
+G64Archive::magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31, 0x00 };
+
 G64Archive::G64Archive()
 {
     setDescription("G64Archive");
@@ -30,12 +33,16 @@ G64Archive::~G64Archive()
 	dealloc();
 }
 
+bool
+G64Archive::isG64(const uint8_t *buffer, size_t length)
+{
+    if (length < 0x02AC) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
 bool 
 G64Archive::isG64File(const char *filename)
 {
-    /* "GCR-1541" + Version number (0x00) */
-	int magic_bytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31, 0x00, EOF };
-	
 	assert(filename != NULL);
 	
 	if (!checkFileSuffix(filename, ".G64") && !checkFileSuffix(filename, ".g64"))
@@ -44,7 +51,7 @@ G64Archive::isG64File(const char *filename)
 	if (!checkFileSize(filename, 0x02AC, -1))
 		return false;
 	
-	if (!checkFileHeader(filename, magic_bytes))
+	if (!checkFileHeader(filename, magicBytes))
 		return false;
 	
 	return true;

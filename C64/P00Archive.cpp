@@ -18,6 +18,9 @@
 
 #include "P00Archive.h"
 
+const uint8_t
+P00Archive::magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00 };
+
 P00Archive::P00Archive()
 {
     setDescription("P00Archive");
@@ -30,17 +33,22 @@ P00Archive::~P00Archive()
 	dealloc();
 }
 
+bool
+P00Archive::isP00(const uint8_t *buffer, size_t length)
+{
+    if (length < 0x1A) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
 bool 
 P00Archive::isP00File(const char *filename)
 {
-	int magic_bytes[] = {0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65, 0x00, EOF};	
-	
 	assert (filename != NULL);
 	
 	if (!checkFileSize(filename, 0x1A, -1))
 		return false;
 	
-	if (!checkFileHeader(filename, magic_bytes))
+	if (!checkFileHeader(filename, magicBytes))
 		return false;
 	
 	return true;

@@ -39,7 +39,7 @@
 class D64Archive : public Archive {
 
 private: 
-
+    
 	/*! @brief   The raw data of this archive.
      */
 	uint8_t data[D64_802_SECTORS_ECC];
@@ -69,6 +69,9 @@ public:
 
 	D64Archive();
 	~D64Archive();
+    
+    //! @brief    Returns true iff buffer contains a D64 file
+    static bool isD64(const uint8_t *buffer, size_t length);
     
     /*! @brief   Returns true iff the specified file is a D64 file.
      */

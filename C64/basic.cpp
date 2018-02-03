@@ -367,7 +367,7 @@ checkFileSize(const char *filename, long min, long max)
 }
 
 bool 
-checkFileHeader(const char *filename, int *header)
+checkFileHeader(const char *filename, const uint8_t *header)
 {
 	int i, c;
 	bool result = true;
@@ -379,9 +379,9 @@ checkFileHeader(const char *filename, int *header)
 	if ((file = fopen(filename, "r")) == NULL)
 		return false; 
 
-	for (i = 0; header[i] != EOF; i++) {
+	for (i = 0; header[i] != 0; i++) {
 		c = fgetc(file);
-		if (c != header[i]) {
+		if (c != (int)header[i]) {
 			result = false;
 			break;
 		}

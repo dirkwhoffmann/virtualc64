@@ -78,7 +78,7 @@ class MyDocument : NSDocument {
         NSLog("MyDocument::\(#function):\(filename)")
     
         // Is it a snapshot from a different version?
-        if SnapshotProxy.isUsupportedSnapshot(filename) {
+        if SnapshotProxy.isUsupportedSnapshotFile(filename) {
             showSnapshotVersionAlert()
             throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
         }

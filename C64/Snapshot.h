@@ -34,6 +34,9 @@ class Snapshot : public Container {
 	
 private:
 	
+    //! @brief    Header signature
+    static const uint8_t magicBytes[];
+    
 	struct {
 		
 		//! @brief    Magic bytes ('V','C','6','4')
@@ -80,14 +83,24 @@ public:
     //! @brief    Allocates memory for storing internal state
     bool alloc(unsigned size);
 
-    //! @brief    Returns true if file is a snapshot
-    static bool isSnapshot(const char *filename);
+    //! @brief    Returns true iff buffer contains a snapshot
+    static bool isSnapshot(const uint8_t *buffer, size_t length);
 
-    //! @brief    Returns true if file is a snapshot of a specific version
-    static bool isSnapshot(const char *filename, int major, int minor, int subminor);
+    //! @brief    Returns true iff buffer contains a snapshot of a specific version
+    static bool isSnapshot(const uint8_t *buffer, size_t length,
+                           uint8_t major, uint8_t minor, uint8_t subminor);
+ 
+    //! @brief    Returns true iff buffer contains a snapshot with an outdated version number
+    static bool isUnsupportedSnapshot(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Returns true if path points to a snapshot file
+    static bool isSnapshotFile(const char *path);
+
+    //! @brief    Returns true if file points to a snapshot file of a specific version
+    static bool isSnapshotFile(const char *path, uint8_t major, uint8_t minor, uint8_t subminor);
 
     //! @brief    Returns true if file is a snapshot with an outdated version number
-    static bool isUnsupportedSnapshot(const char *filename);
+    static bool isUnsupportedSnapshotFile(const char *path);
     
 	/*! @brief    Factory method
      *  @details  Creates a snapshot with data from a file

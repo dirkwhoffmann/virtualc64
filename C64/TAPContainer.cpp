@@ -18,6 +18,9 @@
 
 #include "TAPContainer.h"
 
+const uint8_t TAPContainer::magicBytes[] = {
+    0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57, 0x00 };
+
 TAPContainer::TAPContainer()
 {
     setDescription("TAPContainer");
@@ -31,10 +34,15 @@ TAPContainer::~TAPContainer()
 }
 
 bool
+TAPContainer::isTAP(const uint8_t *buffer, size_t length)
+{
+    if (length < 0x15) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
+bool
 TAPContainer::isTAPFile(const char *filename)
 {
-    int magic_bytes[] = {0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57, EOF};
-    
     assert (filename != NULL);
     
     if (!checkFileSuffix(filename, ".TAP") && !checkFileSuffix(filename, ".tap"))
@@ -43,7 +51,7 @@ TAPContainer::isTAPFile(const char *filename)
     if (!checkFileSize(filename, 0x15, -1))
         return false;
     
-    if (!checkFileHeader(filename, magic_bytes))
+    if (!checkFileHeader(filename, magicBytes))
         return false;
     
     return true;
