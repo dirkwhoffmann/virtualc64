@@ -79,13 +79,13 @@ public:
     virtual const char *getTypeOfItem(int n) { return NULL; }
 	
     //! @brief    Returns the size of an item in bytes
-	virtual int getSizeOfItem(int n);
+	virtual size_t getSizeOfItem(int n);
 
     //! @brief    Returns the size of an item in bits
-    virtual int getSizeOfItemInBits(int n) { return 8 * getSizeOfItem(n); }
+    virtual size_t getSizeOfItemInBits(int n) { return 8 * getSizeOfItem(n); }
 
     //! @brief    Returns the size of an item in blocks
-	virtual int getSizeOfItemInBlocks(int n) { return (getSizeOfItem(n) + 253) / 254; }
+	virtual size_t getSizeOfItemInBlocks(int n) { return (getSizeOfItem(n) + 253) / 254; }
 		
     /*! @brief    Returns the proposed memory location of an item.
      *  @details  When a file is flashed into memory, the raw data is copied to this location.

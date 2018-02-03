@@ -99,7 +99,7 @@ CPU::reset()
 	next = &CPU::fetch;
 }
 
-uint32_t
+size_t
 CPU::stateSize()
 {
     return VirtualComponent::stateSize() + 2;

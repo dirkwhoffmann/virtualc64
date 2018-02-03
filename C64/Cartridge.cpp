@@ -114,7 +114,7 @@ Cartridge::makeCartridgeWithCRTContainer(C64 *c64, CRTContainer *container)
     return cart;
 }
 
-uint32_t
+size_t
 Cartridge::stateSize()
 {
     uint32_t size = 2;

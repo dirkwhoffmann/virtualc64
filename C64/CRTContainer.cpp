@@ -87,7 +87,7 @@ CRTContainer::containerFromCRTFile(const char *filename)
 }
 
 bool
-CRTContainer::readFromBuffer(const uint8_t *buffer, unsigned length)
+CRTContainer::readFromBuffer(const uint8_t *buffer, size_t length)
 {
     if ((data = (uint8_t *)malloc(length)) == NULL) {
         return false;

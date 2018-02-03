@@ -553,8 +553,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (NSInteger) getType; 
 - (long) durationInCycles;
 - (int) durationInSeconds;
-- (int) head;
-- (long) headInCycles;
+- (NSInteger) head;
+- (NSInteger) headInCycles;
 - (int) headInSeconds;
 - (void) setHeadInCycles:(long)value;
 - (BOOL) motor;
@@ -721,12 +721,12 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (instancetype) init;
 + (BOOL) isSnapshotFile:(NSString *)path;
 + (BOOL) isUsupportedSnapshotFile:(NSString *)path;
-+ (instancetype) snapshotFromFile:(NSString *)path;
-+ (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length;
++ (instancetype) makeSnapshotWithFile:(NSString *)path;
++ (instancetype) makeSnapshotWithBuffer:(const void *)buffer length:(NSInteger)length;
 
 - (struct SnapshotWrapper *)wrapper;
 - (NSInteger) sizeOnDisk;
-- (void) readFromBuffer:(uint8_t *)buffer length:(NSInteger)ength;
+- (void) readFromBuffer:(uint8_t *)buffer length:(NSInteger)length;
 - (NSInteger) writeToBuffer:(uint8_t *)buffer;
 - (bool) readDataFromFile:(NSString *)path;
 - (bool) writeDataToFile:(NSString *)path;

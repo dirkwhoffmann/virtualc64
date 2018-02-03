@@ -1,28 +1,20 @@
-/*!
- * @header      C64Proxy.swift
- * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @brief       Implements some Swift extension to Objective-C C64Proxy 
- * @copyright   2017 Dirk W. Hoffmann
- */
-/*
- * (C) 2017 Dirk W. Hoffmann. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+//
+//  Basics.swift
+//  VirtualC64
+//
+//  Created by Dirk Hoffmann on 03.02.18.
+//
 
 import Foundation
+
+// -------------------------------------------------------------------
+//                          Logging / Debugging
+// -------------------------------------------------------------------
+
+public func track(_ message: String = "",
+                  file: String = #file, function: String = #function, line: Int = #line ) {
+    print("\(file)::\(function).\(line): \(message)\n")
+}
 
 // -------------------------------------------------------------------
 //                          NSImage extensions
@@ -40,18 +32,18 @@ extension NSImage {
         
         return img
     }
-
-    func makeGlossy() {
     
+    func makeGlossy() {
+        
         let width  = size.width
         let height = size.height
         let glossy = NSImage(named: NSImage.Name(rawValue: "glossy.png"))
         let rect   = NSRect(x: 0, y: 0, width: width, height: height)
-    
+        
         lockFocus()
         let sourceOver = NSCompositingOperation.sourceOver
-//         draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
-//         glossy!.draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
+        //         draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
+        //         glossy!.draw(in: rect, from: NSZeroRect, operation: NSCompositeSourceOver, fraction: 1.0)
         draw(in: rect, from: NSZeroRect, operation: sourceOver, fraction: 1.0)
         glossy!.draw(in: rect, from: NSZeroRect, operation: sourceOver, fraction: 1.0)
         unlockFocus()
@@ -64,7 +56,7 @@ extension NSImage {
 // -------------------------------------------------------------------
 
 public extension C64Proxy {
-
+    
     @objc func timetravelSnapshotImage(_ item: Int) -> NSImage {
         
         var data = historicSnapshotImageData(item)
@@ -87,7 +79,4 @@ public extension C64Proxy {
         return image
     }
 }
-
-
-
 

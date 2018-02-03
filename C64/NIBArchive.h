@@ -38,7 +38,7 @@ private:
     uint8_t *data;
 
     //! @brief    Size of NIB file
-    int size;
+    size_t size;
 
     //! @brief    Decoded track data
     uint8_t halftrack[85][8 * MAX_TRACK_LENGTH];
@@ -128,8 +128,8 @@ public:
     const char *getTypeAsString() { return "NIB"; }
     
     bool fileIsValid(const char *filename);
-    bool readFromBuffer(const uint8_t *buffer, unsigned length);
-    unsigned writeToBuffer(uint8_t *buffer);
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    size_t writeToBuffer(uint8_t *buffer);
     
     
     //
@@ -137,8 +137,7 @@ public:
     //
     
     int getNumberOfItems();
-    int getSizeOfItem(int n);
-    
+    size_t getSizeOfItem(int n);
     const char *getNameOfItem(int n);
     const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars);
     const char *getTypeOfItem(int n);

@@ -148,26 +148,26 @@ D64Archive::archiveFromD64File(const char *filename)
 }
 
 D64Archive *
-D64Archive::archiveFromArbitraryFile(const char *filename)
+D64Archive::archiveFromArbitraryFile(const char *path)
 {
-	if (D64Archive::isD64File(filename)) {
-		return D64Archive::archiveFromD64File(filename);
+	if (D64Archive::isD64File(path)) {
+		return D64Archive::archiveFromD64File(path);
 	}
 	
-	if (T64Archive::isT64File(filename)) {
-		return D64Archive::archiveFromArchive(T64Archive::archiveFromT64File(filename));
+	if (T64Archive::isT64File(path)) {
+		return D64Archive::archiveFromArchive(T64Archive::makeArchiveWithT64File(path));
 	}
 
-	if (PRGArchive::isPRGFile(filename)) {
-		return D64Archive::archiveFromArchive(PRGArchive::archiveFromPRGFile(filename));
+	if (PRGArchive::isPRGFile(path)) {
+		return D64Archive::archiveFromArchive(PRGArchive::archiveFromPRGFile(path));
 	}
 
-	if (P00Archive::isP00File(filename)) {
-		return D64Archive::archiveFromArchive(P00Archive::archiveFromP00File(filename));
+	if (P00Archive::isP00File(path)) {
+		return D64Archive::archiveFromArchive(P00Archive::archiveFromP00File(path));
 	}
 
-	if (FileArchive::isAcceptableFile(filename)) {
-		return D64Archive::archiveFromArchive(FileArchive::archiveFromRawFiledata(filename));
+	if (FileArchive::isAcceptableFile(path)) {
+		return D64Archive::archiveFromArchive(FileArchive::archiveFromRawFiledata(path));
 	}
 	
 	return NULL;
@@ -279,7 +279,7 @@ D64Archive::fileIsValid(const char *filename)
 }
 
 bool 
-D64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
+D64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 {
 	int numberOfErrors = 0;
 	
@@ -347,7 +347,7 @@ D64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	return true;	
 }
 
-unsigned
+size_t
 D64Archive::writeToBuffer(uint8_t *buffer)
 {
     switch (numTracks) {
@@ -482,7 +482,7 @@ D64Archive::itemIsVisible(uint8_t typeChar, const char **extension)
     return result != NULL;
 }
 
-int
+size_t
 D64Archive::getSizeOfItemInBlocks(int n)
 {
     int pos = findDirectoryEntry(n);
@@ -866,7 +866,7 @@ D64Archive::findDirectoryEntry(int item, bool skipInvisibleFiles)
 }
 
 bool
-D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, unsigned filesize)
+D64Archive::writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, size_t filesize)
 {
 	int pos;
 	

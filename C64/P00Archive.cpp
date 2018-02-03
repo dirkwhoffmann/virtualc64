@@ -140,7 +140,7 @@ P00Archive::fileIsValid(const char *filename)
 }
 
 bool 
-P00Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
+P00Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 {
 	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;
@@ -151,7 +151,7 @@ P00Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	return true;
 }
 
-unsigned
+size_t
 P00Archive::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);

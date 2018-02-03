@@ -81,7 +81,7 @@ public:
     void dealloc();
 
     //! @brief    Allocates memory for storing internal state
-    bool alloc(unsigned size);
+    bool alloc(size_t size);
 
     //! @brief    Returns true iff buffer contains a snapshot
     static bool isSnapshot(const uint8_t *buffer, size_t length);
@@ -105,21 +105,21 @@ public:
 	/*! @brief    Factory method
      *  @details  Creates a snapshot with data from a file
      */
-	static Snapshot *snapshotFromFile(const char *filename);
+	static Snapshot *makeSnapshotWithFile(const char *filename);
 
     /*! @brief    Factory method
      *  @details  Creates a snapshot with data from a buffer
      */
-    static Snapshot *snapshotFromBuffer(const uint8_t *buffer, unsigned size);
+    static Snapshot *makeSnapshotWithBuffer(const uint8_t *buffer, size_t size);
 	
     //
 	// Virtual functions from Container class
     //
     
 	bool fileIsValid(const char *filename);
-	bool readFromBuffer(const uint8_t *buffer, unsigned length);
-	unsigned writeToBuffer(uint8_t *buffer);
-    unsigned sizeOnDisk() { return getHeaderSize() + getDataSize(); }
+	bool readFromBuffer(const uint8_t *buffer, size_t length);
+	size_t writeToBuffer(uint8_t *buffer);
+    // unsigned sizeOnDisk() { return getHeaderSize() + getDataSize(); }
     ContainerType getType();
 	const char *getTypeAsString();
 

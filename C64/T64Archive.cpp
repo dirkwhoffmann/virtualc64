@@ -62,8 +62,31 @@ T64Archive::isT64File(const char *path)
 }
 
 T64Archive *
-T64Archive::archiveFromT64File(const char *path)
+T64Archive::makeArchiveWithT64Buffer(const uint8_t *buffer, size_t length)
 {
+    assert(buffer != NULL);
+    
+    T64Archive *archive = new T64Archive();
+    
+    if (!archive->readFromBuffer(buffer, length)) {
+        delete archive;
+        return NULL;
+    }
+    
+    if (!archive->repair()) {
+        delete archive;
+        return NULL;
+    }
+    
+    archive->debug(1, "T64 archive created from buffer (%d bytes).\n", length);
+    return archive;
+}
+
+T64Archive *
+T64Archive::makeArchiveWithT64File(const char *path)
+{
+    assert(path != NULL);
+    
 	T64Archive *archive = new T64Archive();
     
 	if (!archive->readFromFile(path)) {
@@ -76,18 +99,18 @@ T64Archive::archiveFromT64File(const char *path)
         return NULL;
     }
 
-    archive->debug(1, "T64 archive created from file %s.\n", path);
+    archive->debug(1, "T64 archive created with file %s.\n", path);
 	return archive;
 }
 
 T64Archive *
-T64Archive::archiveFromArchive(Archive *otherArchive)
+T64Archive::makeArchiveWithAnyArchive(Archive *otherArchive)
 {
     if (otherArchive == NULL)
         return NULL;
     
     T64Archive *archive  = new T64Archive();
-    archive->debug(1, "Creating T64 archive from %s archive...\n", otherArchive->getTypeAsString());
+ 
     
     // Determine container size and allocate memory
     unsigned currentFiles = otherArchive->getNumberOfItems();
@@ -188,6 +211,8 @@ T64Archive::archiveFromArchive(Archive *otherArchive)
     
     otherArchive->dumpDirectory();
     archive->dumpDirectory();
+    archive->debug(1, "T64 archive created with other archive of type %s.\n",
+                   otherArchive->getTypeAsString());
     
     return archive;
 }
@@ -208,7 +233,7 @@ T64Archive::fileIsValid(const char *filename)
 }
 
 bool 
-T64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
+T64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 {	
 	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;
@@ -219,7 +244,7 @@ T64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	return true;
 }
 
-unsigned
+size_t
 T64Archive::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);

@@ -79,7 +79,7 @@ Datasette::ping()
     c64->putMessage(MSG_VC1530_PROGRESS, headInSeconds);
 }
 
-uint32_t
+size_t
 Datasette::stateSize()
 {
     return VirtualComponent::stateSize() + size;
@@ -132,7 +132,7 @@ Datasette::setHeadInCycles(uint64_t value)
     rewind();
     while (headInCycles <= value && head < size)
         advanceHead(true);
-    printf("Head is %u (max %d)\n", head, size);
+    printf("Head is %llu (max %llu)\n", head, size);
 }
 
 void

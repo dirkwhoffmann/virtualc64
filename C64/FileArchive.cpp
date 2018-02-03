@@ -74,7 +74,7 @@ FileArchive::fileIsValid(const char *filename)
 }
 
 bool 
-FileArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
+FileArchive::readFromBuffer(const uint8_t *buffer, size_t length)
 {
 	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;
@@ -110,10 +110,10 @@ FileArchive::getUnicodeNameOfItem(int n, size_t maxChars)
     return unicode;
 }
 
-int 
+size_t
 FileArchive::getSizeOfItem(int n)
 {
-	return size - 2;
+	return (uint16_t)size - 2;
 }		
 
 const char *

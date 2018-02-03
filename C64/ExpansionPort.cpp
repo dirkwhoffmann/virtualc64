@@ -57,7 +57,7 @@ ExpansionPort::ping()
     c64->putMessage(MSG_CARTRIDGE, cartridge != NULL);
 }
 
-uint32_t
+size_t
 ExpansionPort::stateSize()
 {
     return 4 + (cartridge ? cartridge->stateSize() : 0);

@@ -112,7 +112,7 @@ PRGArchive::fileIsValid(const char *filename)
 }
 
 bool 
-PRGArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
+PRGArchive::readFromBuffer(const uint8_t *buffer, size_t length)
 {	
 	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;
@@ -123,7 +123,7 @@ PRGArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	return true;
 }
 
-unsigned
+size_t
 PRGArchive::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);

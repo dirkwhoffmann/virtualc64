@@ -122,11 +122,14 @@ public:
     //! @brief    Returns true iff the specified file is a file of this container type.
     virtual bool fileIsValid(const char *filename) { return false; }
 
+    //! @brief    Required buffer size for this container
+    size_t sizeOnDisk() { return writeToBuffer(NULL); }
+
     /*! @brief    Read container contents from a memory buffer.
      *  @param    buffer The address of a binary representation in memory.
      *  @param    length The size of the binary representation.
      */
-    virtual bool readFromBuffer(const uint8_t *buffer, unsigned length) { return false; }
+    virtual bool readFromBuffer(const uint8_t *buffer, size_t length) { return false; }
 	
     /*! @brief    Read container contents from a file.
      *  @details  This function requires no custom implementation. It first reads in the file contents 
@@ -140,7 +143,7 @@ public:
      *            determine the size of the container on disk.
      *   @param   buffer The address of the buffer in memory.
      */
-	virtual unsigned writeToBuffer(uint8_t *buffer);
+	virtual size_t writeToBuffer(uint8_t *buffer);
 
     /*! @brief    Write container contents to a file.
      *  @details  This function requires no custom implementation. t first invokes writeToBuffer and 

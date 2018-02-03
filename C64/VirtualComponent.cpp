@@ -193,7 +193,7 @@ VirtualComponent::registerSubComponents(VirtualComponent **components, unsigned 
     std::copy(components, components + numItems, &subComponents[0]);    
 }
 
-uint32_t
+size_t
 VirtualComponent::stateSize()
 {
     uint32_t result = snapshotSize;

@@ -82,7 +82,7 @@ public:
     static CRTContainer *containerFromCRTFile(const char *filename);
     
     //! Read container data from memory buffer
-    bool readFromBuffer(const uint8_t *buffer, unsigned length);
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
 
     //
     // Cartridge information

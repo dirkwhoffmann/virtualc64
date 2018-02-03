@@ -112,8 +112,8 @@ public:
     const char *getTypeAsString() { return "D64"; }
 	
     bool fileIsValid(const char *filename);
-    bool readFromBuffer(const uint8_t *buffer, unsigned length);
-    unsigned writeToBuffer(uint8_t *buffer);
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    size_t writeToBuffer(uint8_t *buffer);
     
     //
 	// Virtual functions from Archive class
@@ -124,7 +124,7 @@ public:
 	const char *getNameOfItem(int n);
     const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars);
 	const char *getTypeOfItem(int n);
-    int getSizeOfItemInBlocks(int n);
+    size_t getSizeOfItemInBlocks(int n);
 	uint16_t getDestinationAddrOfItem(int n);
     
 	void selectItem(int n);
@@ -261,7 +261,7 @@ private:
     /*! @brief    Writes a directory item
      *  @details  This function is used to convert other archive formats into the D64 format. 
      */
-    bool writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, unsigned filesize);
+    bool writeDirectoryEntry(unsigned nr, const char *name, uint8_t startTrack, uint8_t startSector, size_t filesize);
     
 
     //

@@ -145,7 +145,7 @@ OldSID::setClockFrequency(uint32_t frequency)
 	updateConstants();
 }
 
-uint32_t
+size_t
 OldSID::stateSize()
 {
     return sizeof(iomem);

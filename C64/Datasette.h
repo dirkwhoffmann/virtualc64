@@ -44,7 +44,7 @@ public:
     void ping();
 
     //! @brief    Return the size of the internal state
-    uint32_t stateSize();
+    size_t stateSize();
     
     //! @brief    Restores the current state from a buffer
     void loadFromBuffer(uint8_t **buffer);
@@ -74,7 +74,7 @@ private:
     /*! @brief    Size of the attached data buffer
      *  @details  Equals 0 iff no tape is inserted.
      */
-    uint32_t size;
+    uint64_t size;
     
     /*! @brief    Data format (TAP type)
      *  @details  In TAP format 0, data byte 0 signals a long puls without stating its length precisely.
@@ -95,7 +95,7 @@ private:
     /*! @brief    Read/Write head
      *  @details  Value must be between 0 and size. head == size indicates EOT (end of tape) 
      */
-    uint32_t head;
+    uint64_t head;
 
     /*! @brief    Read/Write head
      *  @details  Head position, measured in cycles 
@@ -173,7 +173,7 @@ public:
     
     /*! @brief    Gets the current head position in different units
      */
-    uint32_t getHead() { return head; }
+    uint64_t getHead() { return head; }
     uint64_t getHeadInCycles() { return headInCycles; }
     uint32_t getHeadInSeconds() { return headInSeconds; }
     

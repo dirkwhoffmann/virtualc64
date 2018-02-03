@@ -160,7 +160,7 @@ Disk525::encodeArchive(G64Archive *a)
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
         unsigned item = ht - 1;
-        unsigned size = a->getSizeOfItem(item);
+        uint16_t size = a->getSizeOfItem(item);
         
         if (size == 0) {
             continue;
@@ -193,7 +193,7 @@ Disk525::encodeArchive(NIBArchive *a)
     clearDisk();
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
-        unsigned size = a->getSizeOfItem(ht - 1);
+        size_t size = a->getSizeOfItem(ht - 1);
 
         if (size == 0) {
             continue;
@@ -206,7 +206,7 @@ Disk525::encodeArchive(NIBArchive *a)
         debug(2, "  Encoding halftrack %d (%d bits)\n", ht, size);
         length.halftrack[ht] = size;
         a->selectItem(ht - 1);
-        unsigned bytesTotal = (size + 7) / 8;
+        size_t bytesTotal = (size + 7) / 8;
         for (unsigned i = 0; i < bytesTotal; i++) {
             int b = a->getByte();
             assert(b != -1);

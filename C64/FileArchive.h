@@ -39,7 +39,7 @@ private:
 	int fp;
 		
     //! @brief File size
-	int size;
+	size_t size;
 
 public:
 
@@ -66,7 +66,7 @@ public:
     const char *getTypeAsString() { return "FILE"; }
     
     bool fileIsValid(const char *filename);
-    bool readFromBuffer(const uint8_t *buffer, unsigned length);
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
 
     
     //
@@ -78,7 +78,7 @@ public:
     const char *getNameOfItem(int n);
     const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars);
     const char *getTypeOfItem(int n);
-    int getSizeOfItem(int n);
+    size_t getSizeOfItem(int n);
     uint16_t getDestinationAddrOfItem(int n);
     
     void selectItem(int n);

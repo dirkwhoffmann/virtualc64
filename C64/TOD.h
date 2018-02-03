@@ -72,7 +72,7 @@ public:
 	void reset();
 	
     //! @brief    Returns the size of the internal state.
-    uint32_t stateSize();
+    size_t stateSize();
     
 	//! @brief    Prints debug information.
 	void dumpState();	

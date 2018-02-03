@@ -73,7 +73,7 @@ public:
     void ping();
 
     //! @brief    Returns the size of the internal state
-    uint32_t stateSize();
+    size_t stateSize();
 
     //! @brief    Loads the current state from a buffer
     void loadFromBuffer(uint8_t **buffer);

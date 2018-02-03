@@ -276,7 +276,7 @@ NIBArchive::fileIsValid(const char *filename)
 }
 
 bool 
-NIBArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
+NIBArchive::readFromBuffer(const uint8_t *buffer, size_t length)
 {	
 	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;
@@ -287,7 +287,7 @@ NIBArchive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	return true;
 }
 
-unsigned
+size_t
 NIBArchive::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);
@@ -321,7 +321,7 @@ NIBArchive::getStartOfItem(int n)
 }
 #endif
 
-int
+size_t
 NIBArchive::getSizeOfItem(int n)
 {
     if (n < 0 || n >= 84)

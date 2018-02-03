@@ -35,17 +35,17 @@ private:
     uint8_t *data;
 
     //! @brief Size of G64 file
-    int size;
+    size_t size;
 
     /*! @brief    File pointer
      *  @details  An offset into the data array. 
      */
-	int fp;
+	long fp;
 	
     /*! @brief    End of file position
      *  @details  This value equals the last valid offset plus 1 
      */
-	int fp_eof;
+	long fp_eof;
 	
 public:
 
@@ -81,8 +81,8 @@ public:
     const char *getTypeAsString() { return "G64"; }
     
     bool fileIsValid(const char *filename);
-    bool readFromBuffer(const uint8_t *buffer, unsigned length);
-    unsigned writeToBuffer(uint8_t *buffer);
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    size_t writeToBuffer(uint8_t *buffer);
     
     
     //
@@ -90,9 +90,7 @@ public:
     //
     
     int getNumberOfItems();
-    int getStartOfItem(int n);
-    int getSizeOfItem(int n);
-    
+    size_t getSizeOfItem(int n);
     const char *getNameOfItem(int n);
     const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars);
     const char *getTypeOfItem(int n);
@@ -100,6 +98,9 @@ public:
     
     void selectItem(int n);
     int getByte();
+
+    
+    uint32_t getStartOfItem(int n);
 };
 
 

@@ -99,7 +99,7 @@ TAPContainer::fileIsValid(const char *filename)
 }
 
 bool
-TAPContainer::readFromBuffer(const uint8_t *buffer, unsigned length)
+TAPContainer::readFromBuffer(const uint8_t *buffer, size_t length)
 {
     if ((data = (uint8_t *)malloc(length)) == NULL)
         return false;
@@ -115,7 +115,7 @@ TAPContainer::readFromBuffer(const uint8_t *buffer, unsigned length)
     return true;
 }
 
-unsigned
+size_t
 TAPContainer::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);

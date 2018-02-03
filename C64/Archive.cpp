@@ -32,32 +32,32 @@ Archive::~Archive()
 }
 
 Archive *
-Archive::makeArchiveFromFile(const char *filename)
+Archive::makeArchiveFromFile(const char *path)
 {
-    assert(filename != NULL);
+    assert(path != NULL);
     
-    if (T64Archive::isT64File(filename)) {
-        return T64Archive::archiveFromT64File(filename);
+    if (T64Archive::isT64File(path)) {
+        return T64Archive::makeArchiveWithT64File(path);
     }
-    if (D64Archive::isD64File(filename)) {
-        return D64Archive::archiveFromD64File(filename);
+    if (D64Archive::isD64File(path)) {
+        return D64Archive::archiveFromD64File(path);
     }
-    if (PRGArchive::isPRGFile(filename)) {
-        return PRGArchive::archiveFromPRGFile(filename);
+    if (PRGArchive::isPRGFile(path)) {
+        return PRGArchive::archiveFromPRGFile(path);
     }
-    if (P00Archive::isP00File(filename)) {
-        return P00Archive::archiveFromP00File(filename);
+    if (P00Archive::isP00File(path)) {
+        return P00Archive::archiveFromP00File(path);
     }
-    if (G64Archive::isG64File(filename)) {
-        return G64Archive::archiveFromG64File(filename);
+    if (G64Archive::isG64File(path)) {
+        return G64Archive::archiveFromG64File(path);
     }
-    if (NIBArchive::isNIBFile(filename)) {
-        return NIBArchive::archiveFromNIBFile(filename);
+    if (NIBArchive::isNIBFile(path)) {
+        return NIBArchive::archiveFromNIBFile(path);
     }
     return NULL;
 }
 
-int
+size_t
 Archive::getSizeOfItem(int n)
 {
     int size = 0;

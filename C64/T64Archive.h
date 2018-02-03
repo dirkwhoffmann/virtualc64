@@ -33,17 +33,17 @@ class T64Archive : public Archive {
     uint8_t *data;
 
     //! @brief    File size
-    int size;
+    size_t size;
 
     /*! @brief    File pointer
         @details  An offset into the data array. 
      */
-	int fp;
+	long fp;
 	
     /*! @brief    End of file position
      *  @details  Maximum value for fp. Do we really need this?
      */
-	int fp_eof;
+	long fp_eof;
     
 public:
 
@@ -63,13 +63,16 @@ public:
     //! @brief    Returns true iff path points to a T64 file
     static bool isT64File(const char *path);
 
-    //! @brief    Creates a T64 archive from a T64 file located on disk.
-    static T64Archive *archiveFromT64File(const char *filename);
+    //! @brief    Factory method
+    static T64Archive *makeArchiveWithT64Buffer(const uint8_t *buffer, size_t length);
     
-    /*! @brief    Creates a T64 archive from another archive.
-     *  @result A T64 archive that contains the first directory item of the other archive. 
+    //! @brief    Factory method
+    static T64Archive *makeArchiveWithT64File(const char *path);
+    
+    /*! @brief    Factory method
+     *  @details  otherArchive can be of any archive type
      */
-    static T64Archive *archiveFromArchive(Archive *otherArchive);
+    static T64Archive *makeArchiveWithAnyArchive(Archive *otherArchive);
 
 
     //
@@ -84,8 +87,8 @@ public:
     const char *getTypeAsString() { return "T64"; }
     
     bool fileIsValid(const char *filename);
-    bool readFromBuffer(const uint8_t *buffer, unsigned length);
-    unsigned writeToBuffer(uint8_t *buffer);
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    size_t writeToBuffer(uint8_t *buffer);
     
     
     //

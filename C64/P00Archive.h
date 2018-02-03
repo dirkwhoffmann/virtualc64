@@ -35,7 +35,7 @@ private:
     uint8_t *data;
 		
     //! @brief    File size
-	int size;
+	size_t size;
 
     /*! @brief    File pointer
      *  @details  An offset into the data array. 
@@ -76,8 +76,8 @@ public:
     const char *getTypeAsString() { return "P00"; }
     
     bool fileIsValid(const char *filename);
-    bool readFromBuffer(const uint8_t *buffer, unsigned length);
-    unsigned writeToBuffer(uint8_t *buffer);
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
+    size_t writeToBuffer(uint8_t *buffer);
     
     
     //

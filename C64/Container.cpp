@@ -158,7 +158,7 @@ exit:
 	return success;
 }
 
-unsigned
+size_t
 Container::writeToBuffer(uint8_t *buffer)
 {
 	return 0;
@@ -170,7 +170,7 @@ Container::writeToFile(const char *filename)
 	bool success = false;
 	uint8_t *data = NULL;
 	FILE *file;
-	unsigned filesize;
+	size_t filesize;
    
     // Determine file size
     filesize = writeToBuffer(NULL);

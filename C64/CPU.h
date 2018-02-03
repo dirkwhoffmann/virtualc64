@@ -241,7 +241,7 @@ public:
 	void reset();
 
     //! @brief    Returns the size of the internal state.
-    uint32_t stateSize();
+    size_t stateSize();
 
 	//! @brief    Reads the internal state from a buffer.
 	void loadFromBuffer(uint8_t **buffer);

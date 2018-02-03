@@ -72,6 +72,7 @@ class MyDocument : NSDocument {
     // Loading
     //
     
+    /*
     override open func read(from url: URL, ofType typeName: String) throws {
         
         let filename = url.path
@@ -116,18 +117,47 @@ class MyDocument : NSDocument {
     
     NSLog("Unable to read file\n")
     }
+    */
     
+    override open func read(from data: Data, ofType typeName: String) throws {
+        
+        let size = data.count
+        let ptr = (data as NSData).bytes
+        
+        track("typeName: \(typeName) (\(size) bytes)")
+        
+        switch (typeName) {
+        
+        case "VC64":
+            
+            NSLog("Type is VC64")
+            let snapshot = SnapshotProxy.makeSnapshot(withBuffer: ptr, length: size)
+            c64.load(fromSnapshot: snapshot)
+            return
+        
+        case "T64":
+            NSLog("Type is T64")
+            // let archive = T64ArchiveProxy.makeArchive(fromBuffer: ptr, length: size)
+            return
+            
+        default:
+            break
+        }
+        
+        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+    }
+
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
        
-        let filename = url.path
-        NSLog("MyDocument::\(#function):\(filename)")
+        let path = url.path
+        NSLog("MyDocument::\(#function):\(path)")
         
         if typeName != "VC64" {
             NSLog("Document type is \(typeName), expected VC64")
             throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
         }
         
-        guard let snapshot = SnapshotProxy.snapshot(fromFile: filename) else {
+        guard let snapshot = SnapshotProxy.makeSnapshot(withFile: path) else {
             NSLog("Error while trying to revert to older snapshopt")
             throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
         }
@@ -214,30 +244,7 @@ class MyDocument : NSDocument {
 */
     
 /*
-    override open func read(from data: Data, ofType typeName: String) throws {
-        
-        NSLog("read(from data: ofType:\(typeName))")
-        
-        NSLog("\(#function)")
-        
-        if typeName == "VC64" {
-            
-            NSLog("Type is VC64")
-            
-            let size = data.count
-            let nsData = data as NSData
-            let ptr = nsData.bytes
-            
-            NSLog("size = \(size)")
-            
-            let snapshot = SnapshotProxy.snapshot(fromBuffer: ptr, length: UInt32(size))
-            c64.load(fromSnapshot: snapshot)
-            return
-        
-        }
-        
-        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-    }
+
 */
     
     open override func removeWindowController(_ windowController: NSWindowController) {

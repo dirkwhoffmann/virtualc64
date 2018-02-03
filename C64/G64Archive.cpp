@@ -87,7 +87,7 @@ G64Archive::fileIsValid(const char *filename)
 }
 
 bool 
-G64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
+G64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
 {	
 	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;
@@ -98,7 +98,7 @@ G64Archive::readFromBuffer(const uint8_t *buffer, unsigned length)
 	return true;
 }
 
-unsigned
+size_t
 G64Archive::writeToBuffer(uint8_t *buffer)
 {
     assert(data != NULL);
@@ -121,7 +121,7 @@ G64Archive::getNumberOfItems()
     return 84;
 }
 
-int
+uint32_t
 G64Archive::getStartOfItem(int n)
 {
     if (n < 0 || n >= 84)
@@ -131,10 +131,10 @@ G64Archive::getStartOfItem(int n)
     return LO_LO_HI_HI(data[offset], data[offset+1], data[offset+2], data[offset+3]);
 }
 
-int
+size_t
 G64Archive::getSizeOfItem(int n)
 {
-    int offset = getStartOfItem(n);
+    uint32_t offset = getStartOfItem(n);
     return offset ? (LO_HI(data[offset], data[offset+1])) : 0;
 }
 

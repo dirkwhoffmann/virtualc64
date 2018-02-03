@@ -49,14 +49,14 @@ Snapshot::dealloc()
 }
 
 bool
-Snapshot::alloc(unsigned size)
+Snapshot::alloc(size_t size)
 {
     dealloc();
     
     if ((state = (uint8_t *)malloc(size)) == NULL)
         return false;
     
-    header.size = size;
+    header.size = (uint32_t)size;
     return true;
 }
 
@@ -116,7 +116,7 @@ Snapshot::isUnsupportedSnapshotFile(const char *path)
 }
 
 Snapshot *
-Snapshot::snapshotFromFile(const char *filename)
+Snapshot::makeSnapshotWithFile(const char *filename)
 {
 	Snapshot *snapshot;
 	
@@ -129,7 +129,7 @@ Snapshot::snapshotFromFile(const char *filename)
 }
 
 Snapshot *
-Snapshot::snapshotFromBuffer(const uint8_t *buffer, unsigned size)
+Snapshot::makeSnapshotWithBuffer(const uint8_t *buffer, size_t size)
 {
 	Snapshot *snapshot;
 	
@@ -160,7 +160,7 @@ Snapshot::fileIsValid(const char *filename)
 }
 
 bool 
-Snapshot::readFromBuffer(const uint8_t *buffer, unsigned length)
+Snapshot::readFromBuffer(const uint8_t *buffer, size_t length)
 {
     assert(buffer != NULL);
     assert(length > sizeof(header));
@@ -178,7 +178,7 @@ Snapshot::readFromBuffer(const uint8_t *buffer, unsigned length)
 	return true;
 }
 
-unsigned
+size_t
 Snapshot::writeToBuffer(uint8_t *buffer)
 {
     assert(state != NULL);

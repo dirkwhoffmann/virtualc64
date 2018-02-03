@@ -219,7 +219,7 @@ public:
 	void reset();
 	
     //! Size of internal state
-    uint32_t stateSize();
+    size_t stateSize();
 
 	//! Load state
 	void loadFromBuffer(uint8_t **buffer);

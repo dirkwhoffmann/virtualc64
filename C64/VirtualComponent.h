@@ -216,7 +216,7 @@ public:
 
     /*! @brief    Returns size of internal state in bytes
      */
-    virtual uint32_t stateSize();
+    virtual size_t stateSize();
     
     /*! @brief    Load internal state from memory buffer
      *  @note     Snapshot items of size 2, 4, or 8 are converted automatically to big endian format.

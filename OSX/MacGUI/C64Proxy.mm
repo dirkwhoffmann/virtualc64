@@ -644,8 +644,8 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSInteger) getType { return wrapper->datasette->getType(); }
 - (long) durationInCycles { return wrapper->datasette->getDurationInCycles(); }
 - (int) durationInSeconds { return wrapper->datasette->getDurationInSeconds(); }
-- (int) head { return wrapper->datasette->getHead(); }
-- (long) headInCycles { return wrapper->datasette->getHeadInCycles(); }
+- (NSInteger) head { return wrapper->datasette->getHead(); }
+- (NSInteger) headInCycles { return wrapper->datasette->getHeadInCycles(); }
 - (int) headInSeconds { return wrapper->datasette->getHeadInSeconds(); }
 - (void) setHeadInCycles:(long)value { wrapper->datasette->setHeadInCycles(value); }
 - (BOOL) motor { return wrapper->datasette->getMotor(); }
@@ -898,7 +898,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return Snapshot::isUnsupportedSnapshotFile([path UTF8String]);
 }
 
-+ (instancetype) snapshotFromSnapshot:(Snapshot *)snapshot
++ (instancetype) makeSnapshotWithSnapshot:(Snapshot *)snapshot
 {
     if (snapshot == NULL)
         return nil;
@@ -907,19 +907,19 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return newSnapshot;
 }
 
-+ (instancetype) snapshotFromFile:(NSString *)path
++ (instancetype) makeSnapshotWithFile:(NSString *)path
 {
-    return [self snapshotFromSnapshot:(Snapshot::snapshotFromFile([path UTF8String]))];
+    return [self makeSnapshotWithSnapshot:(Snapshot::makeSnapshotWithFile([path UTF8String]))];
 }
 
-+ (instancetype) snapshotFromBuffer:(const void *)buffer length:(unsigned)length
++ (instancetype) makeSnapshotWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    return [self snapshotFromSnapshot:(Snapshot::snapshotFromBuffer((uint8_t *)buffer, length))];
+    return [self makeSnapshotWithSnapshot:(Snapshot::makeSnapshotWithBuffer((uint8_t *)buffer, length))];
 }
 
 - (SnapshotWrapper *)wrapper { return wrapper; }
 - (NSInteger) sizeOnDisk { return wrapper->snapshot->sizeOnDisk(); }
-- (void) readFromBuffer:(uint8_t *)buffer length:(NSInteger)length { wrapper->snapshot->readFromBuffer(buffer, (unsigned)length); }
+- (void) readFromBuffer:(uint8_t *)buffer length:(NSInteger)length { wrapper->snapshot->readFromBuffer(buffer, length); }
 - (NSInteger) writeToBuffer:(uint8_t *)buffer { return wrapper->snapshot->writeToBuffer(buffer); }
 - (bool) readDataFromFile:(NSString *)path {
     return wrapper->snapshot->readFromFile([path UTF8String]); }
@@ -1031,14 +1031,14 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 + (instancetype)archiveFromT64File:(NSString *)filename
 {
-    T64Archive *archive = T64Archive::archiveFromT64File([filename UTF8String]);
+    T64Archive *archive = T64Archive::makeArchiveWithT64File([filename UTF8String]);
     return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 + (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
 {
     Archive *other = [otherArchive wrapper]->archive;
-    T64Archive *archive = T64Archive::archiveFromArchive(other);
+    T64Archive *archive = T64Archive::makeArchiveWithAnyArchive(other);
     return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
