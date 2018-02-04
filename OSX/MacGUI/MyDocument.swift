@@ -69,55 +69,8 @@ class MyDocument : NSDocument {
     }
     
     //
-    // Loading
+    // Loading and saving
     //
-    
-    /*
-    override open func read(from url: URL, ofType typeName: String) throws {
-        
-        let filename = url.path
-        NSLog("MyDocument::\(#function):\(filename)")
-    
-        // Is it a snapshot from a different version?
-        if SnapshotProxy.isUsupportedSnapshotFile(filename) {
-            showSnapshotVersionAlert()
-            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        }
-        
-        // Is it a snapshop with a matching version number?
-        attachedSnapshot = SnapshotProxy.snapshot(fromFile: filename)
-        if attachedSnapshot != nil {
-            NSLog("Successfully read snapshot.")
-            return
-        }
-        
-        // Is it an archive?
-        attachedArchive = ArchiveProxy.makeArchive(fromFile: filename)
-        if attachedArchive != nil {
-            NSLog("Successfully read archive.")
-            fileURL = nil // Make the document 'Untitled'
-            return
-        }
- 
-        // Is it a magnetic tape?
-        attachedTape = TAPContainerProxy.container(fromTAPFile: filename)
-        if attachedTape != nil {
-            NSLog("Successfully read tape.")
-            fileURL = nil
-            return
-        }
-        
-        // Is it a cartridge?
-        attachedCartridge = CRTContainerProxy.container(fromCRTFile: filename)
-        if attachedCartridge != nil {
-            NSLog("Successfully read cartridge.")
-            fileURL = nil
-            return
-        }
-    
-    NSLog("Unable to read file\n")
-    }
-    */
     
     override open func read(from data: Data, ofType typeName: String) throws {
         
@@ -160,24 +113,6 @@ class MyDocument : NSDocument {
         track("Unknown file type")
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
-
-    override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
-       
-        let path = url.path
-        NSLog("MyDocument::\(#function):\(path)")
-        
-        if typeName != "VC64" {
-            NSLog("Document type is \(typeName), expected VC64")
-            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        }
-        
-        guard let snapshot = SnapshotProxy.makeSnapshot(withFile: path) else {
-            NSLog("Error while trying to revert to older snapshopt")
-            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        }
-        
-        c64.load(fromSnapshot: snapshot)
-    }
     
     @discardableResult
     @objc func loadRom(_ filename: String?) -> Bool {
@@ -215,23 +150,6 @@ class MyDocument : NSDocument {
     //
     // Saving
     //
-
-    /*
-    override open func write(to url: URL, ofType typeName: String) throws {
-   
-        let filename = url.path
-        NSLog("MyDocument::\(#function):\(filename)")
-    
-        if typeName != "VC64" {
-            NSLog("Document type is \(typeName), expected VC64")
-            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        }
-
-        let snapshot = SnapshotProxy()
-        c64.save(toSnapshot: snapshot)
-        snapshot?.writeData(toFile: filename)
-    }
-    */
     
     override open func data(ofType typeName: String) throws -> Data {
         
@@ -241,18 +159,17 @@ class MyDocument : NSDocument {
 
             NSLog("Type is VC64")
             
-            // Better: We should be able to write:
-            // let snapshot = SnapshotProxy(c64)
+            // Take snapshot
+            if let snapshot = SnapshotProxy(c64: c64) {
 
-            let snapshot = SnapshotProxy()!
-            c64.save(toSnapshot: snapshot)
-
-            let data = NSMutableData.init(length: snapshot.sizeOnDisk())
-            let ptr = data!.mutableBytes // .assumingMemoryBound(to: UInt8.self)
-            snapshot.write(toBuffer: ptr)
-            return data! as Data
+                // Write to data buffer
+                if let data = NSMutableData.init(length: snapshot.sizeOnDisk()) {
+                    snapshot.write(toBuffer: data.mutableBytes)
+                    return data as Data
+                }
+            }
         }
-                
+        
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
     

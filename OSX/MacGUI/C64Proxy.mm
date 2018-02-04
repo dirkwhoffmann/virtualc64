@@ -872,6 +872,18 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
+- (instancetype) initWithC64:(C64Proxy *)c64
+{
+    assert(c64 != NULL);
+    
+    if (self = [super init]) {
+        wrapper = new SnapshotWrapper();
+        wrapper->snapshot = new Snapshot;
+        [c64 saveToSnapshot:self];
+    }
+    return self;
+}
+
 - (instancetype) initWithSnapshot:(Snapshot *)snapshot
 {
     if (snapshot == nil) return nil;
