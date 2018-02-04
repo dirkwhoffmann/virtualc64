@@ -95,13 +95,13 @@ public:
     //
     
     //! @brief    Returns true iff buffer contains a T64 file
-    static bool isValidT64Buffer(const uint8_t *buffer, size_t length);
+    static bool isT64Buffer(const uint8_t *buffer, size_t length);
     
     //! Returns true of filename points to a valid file of that type
-    static bool isValidT64File(const char *filename);
+    static bool isT64File(const char *filename);
     
     //! Check file type
-    bool hasSameType(const char *filename) { return T64Archive::isValidT64File(filename); }
+    bool hasSameType(const char *filename) { return T64Archive::isT64File(filename); }
     
     //! Read container data from memory buffer
     bool readFromBuffer(const uint8_t *buffer, size_t length);

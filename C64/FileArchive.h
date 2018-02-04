@@ -46,6 +46,13 @@ public:
     //! @brief    Standard constructor
     FileArchive();
     
+    //! @brief    Factory method
+    static FileArchive *makeFileArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static FileArchive *makeFileArchiveWithFile(const char *path);
+
+
     //! @brief    Standard destructor
     ~FileArchive();
     

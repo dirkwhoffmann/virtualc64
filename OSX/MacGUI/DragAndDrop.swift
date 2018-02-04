@@ -104,7 +104,8 @@ public extension MetalView {
             
             let paths = pasteBoard.propertyList(forType: DragType.filenames) as! [String]
             let path = paths[0]
-            print("Processing file \(path)")
+            
+            track("Processing dragged in file \(path)")
             
             // Is it a ROM file?
             if document.loadRom(path) {
@@ -120,85 +121,49 @@ public extension MetalView {
             // Is it a snapshop with a matching version number?
             if let snapshot = SnapshotProxy.makeSnapshot(withFile: path) {
                 controller.c64.load(fromSnapshot: snapshot)
+                document.fileURL = nil // Make document 'Untitled'
                 return true
             }
             
             // Is it an archive?
-            document.attachedArchive = ArchiveProxy.makeArchive(fromFile: path)
+            document.attachedArchive = ArchiveProxy.makeArchive(withFile: path)
             if document.attachedArchive != nil {
-                NSLog("Successfully read archive.")
+                track("Successfully read archive.")
                 controller.showNewMountDialog()
                 return true
             }
-            
-/*
+        
             // Is it a magnetic tape?
-            attachedTape = TAPContainerProxy.container(fromTAPFile: path)
-            if attachedTape != nil {
-                NSLog("Successfully read tape.")
-                fileURL = nil
-                return
+            document.attachedTape = TAPContainerProxy.makeTAPContainer(withFile: path)
+            if document.attachedTape != nil {
+                track("Successfully read tape.")
+                // controller.showTapeDialog()
+                return true
             }
             
             // Is it a cartridge?
-            attachedCartridge = CRTContainerProxy.container(fromCRTFile: path)
-            if attachedCartridge != nil {
+            document.attachedCartridge = CRTContainerProxy.makeCRTContainer(withFile: path)
+            if document.attachedCartridge != nil {
                 NSLog("Successfully read cartridge.")
-                fileURL = nil
-                return
-            }
-            
-            
-            
-            
-            
-   
-            
-            
-            
-            
-            
-            // Is it a ROM file?
-            if document.loadRom(path) {
                 return true
             }
-            
-            // Is it a NIB archive?
-            if document.setNIBArchiveWithName(path) {
-                controller.showMountDialog()
+        
+            // We haven't found any known file format. We could attach an archive
+            // of type FileArchive which would copy the file's raw data in memory
+            // at the location where normal programs start. But maybe, it's better
+            // to deny the drag request.
+            document.attachedArchive = FileArchiveProxy.makeFileArchive(withFile: path)
+            if document.attachedArchive != nil {
+                track("Successfully read archive.")
+                controller.showNewMountDialog()
                 return true
             }
-            
-            // Is it a G64 archive?
-            if document.setG64ArchiveWithName(path) {
-                controller.showMountDialog()
-                return true
-            }
-            
-            // Is it a TAP container?
-            if document.setTAPContainerWithName(path) {
-                controller.showTapeDialog()
-                return true
-            }
-            
-            // Is it a cartridge?
-            if document.setCRTContainerWithName(path) {
-                controller.mountCartridge()
-                return true
-            }
-            
-            // Is it an archive other than G64?
-            if document.setArchiveWithName(path) {
-                controller.showMountDialog()
-                return true
-            }
-*/
+        
         default:
-            
-            return false
+            break
         }
         
-    return false
+        return false
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {

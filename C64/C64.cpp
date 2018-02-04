@@ -651,7 +651,7 @@ C64::endOfRasterline()
         
         // Take a snapshot once in a while
         if (frame % (vic.getFramesPerSecond() * 4) == 0) {
-            takeSnapshotUnsafe();
+            takeTimeTravelSnapshot();
         }
         
         // Execute remaining SID cycles
@@ -900,27 +900,36 @@ C64::saveToSnapshotSafe(Snapshot *snapshot)
     resume();
 }
 
-void
+Snapshot *
 C64::takeSnapshotUnsafe()
 {
-    debug(3, "Taking snapshop %d (%p)\n",
-          backInTimeWritePtr, backInTimeHistory[backInTimeWritePtr]);
+    Snapshot *snapshot = new Snapshot;
+    saveToSnapshotUnsafe(snapshot);
+    return snapshot;
+}
+
+Snapshot *
+C64::takeSnapshotSafe()
+{
+    Snapshot *snapshot;
+    
+    suspend();
+    snapshot = takeSnapshotUnsafe();
+    resume();
+    
+    return snapshot;
+}
+
+void
+C64::takeTimeTravelSnapshot()
+{
+    debug(3, "Taking time-travel snapshop %d\n", backInTimeWritePtr);
     
     saveToSnapshotUnsafe(backInTimeHistory[backInTimeWritePtr]);
     putMessage(MSG_SNAPSHOT, backInTimeWritePtr);
 
     backInTimeWritePtr = (backInTimeWritePtr + 1) % BACK_IN_TIME_BUFFER_SIZE;
 }
-
-void
-C64::takeSnapshotSafe()
-{
-    suspend();
-    takeSnapshotUnsafe();
-    resume();
-}
-
-
 
 unsigned
 C64::numHistoricSnapshots()

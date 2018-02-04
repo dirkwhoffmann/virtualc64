@@ -28,6 +28,32 @@ G64Archive::G64Archive()
 	dealloc();
 }
 
+G64Archive *
+G64Archive::makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
+{
+    G64Archive *archive = new G64Archive();
+    
+    if (!archive->readFromBuffer(buffer, length)) {
+        delete archive;
+        return NULL;
+    }
+    
+    return archive;
+}
+
+G64Archive *
+G64Archive::makeG64ArchiveWithFile(const char *filename)
+{
+    G64Archive *archive = new G64Archive();
+    
+    if (!archive->readFromFile(filename)) {
+        delete archive;
+        return NULL;
+    }
+    
+    return archive;
+}
+
 G64Archive::~G64Archive()
 {
 	dealloc();

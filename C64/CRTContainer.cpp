@@ -36,7 +36,7 @@ CRTContainer::makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length)
     
     if (!cartridge->readFromBuffer(buffer, length)) {
         delete cartridge;
-        cartridge = NULL;
+        return NULL;
     }
     
     return cartridge;
@@ -49,7 +49,7 @@ CRTContainer::makeCRTContainerWithFile(const char *filename)
     
     if (!cartridge->readFromFile(filename)) {
         delete cartridge;
-        cartridge = NULL;
+        return NULL;
     }
     
     return cartridge;

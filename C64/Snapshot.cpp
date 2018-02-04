@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "Snapshot.h"
+#include "C64.h"
 
 const uint8_t Snapshot::magicBytes[] = { 'V', 'C', '6', '4', 0x00 };
 
@@ -32,6 +32,42 @@ Snapshot::Snapshot()
     header.size = 0;
     timestamp = (time_t)0;
     state = NULL;
+}
+
+Snapshot *
+Snapshot::makeSnapshotWithBuffer(const uint8_t *buffer, size_t size)
+{
+    Snapshot *snapshot;
+    
+    snapshot = new Snapshot();
+    if (!snapshot->readFromBuffer(buffer, size)) {
+        delete snapshot;
+        return NULL;
+    }
+    return snapshot;
+}
+
+Snapshot *
+Snapshot::makeSnapshotWithFile(const char *filename)
+{
+    Snapshot *snapshot;
+    
+    snapshot = new Snapshot();
+    if (!snapshot->readFromFile(filename)) {
+        delete snapshot;
+        return NULL;
+    }
+    return snapshot;
+}
+
+Snapshot *
+Snapshot::makeSnapshotWithC64(C64 *c64)
+{
+    Snapshot *snapshot;
+    
+    snapshot = new Snapshot();
+    c64->saveToSnapshotSafe(snapshot);
+    return snapshot;
 }
 
 Snapshot::~Snapshot()
@@ -113,32 +149,6 @@ Snapshot::isUnsupportedSnapshotFile(const char *path)
 {
     if (!isSnapshotFile(path)) return false;
     return !isSnapshotFile(path, V_MAJOR, V_MINOR, V_SUBMINOR);
-}
-
-Snapshot *
-Snapshot::makeSnapshotWithFile(const char *filename)
-{
-	Snapshot *snapshot;
-	
-	snapshot = new Snapshot();	
-	if (!snapshot->readFromFile(filename)) {
-		delete snapshot;
-		snapshot = NULL;
-	}
-	return snapshot;
-}
-
-Snapshot *
-Snapshot::makeSnapshotWithBuffer(const uint8_t *buffer, size_t size)
-{
-	Snapshot *snapshot;
-	
-	snapshot = new Snapshot();	
-	if (!snapshot->readFromBuffer(buffer, size)) {
-		delete snapshot;
-		snapshot = NULL;
-	}
-	return snapshot;	
 }
 
 ContainerType

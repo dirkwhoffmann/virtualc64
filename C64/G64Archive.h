@@ -56,6 +56,12 @@ public:
     //! @brief    Standard constructor
     G64Archive();
     
+    //! @brief    Factory method
+    static G64Archive *makeG64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static G64Archive *makeG64ArchiveWithFile(const char *path);
+
     //! @brief    Standard destructor
     ~G64Archive();
 		

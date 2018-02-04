@@ -186,14 +186,14 @@ T64Archive::~T64Archive()
 }
 
 bool
-T64Archive::isValidT64Buffer(const uint8_t *buffer, size_t length)
+T64Archive::isT64Buffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x40) return false;
     return checkBufferHeader(buffer, length, magicBytes);
 }
 
 bool 
-T64Archive::isValidT64File(const char *path)
+T64Archive::isT64File(const char *path)
 {	
 	assert(path != NULL);
 	

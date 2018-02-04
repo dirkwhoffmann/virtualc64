@@ -36,7 +36,7 @@ Archive::makeArchiveWithFile(const char *path)
 {
     assert(path != NULL);
     
-    if (T64Archive::isValidT64File(path)) {
+    if (T64Archive::isT64File(path)) {
         return T64Archive::makeT64ArchiveWithFile(path);
     }
     if (D64Archive::isD64File(path)) {

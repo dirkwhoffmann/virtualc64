@@ -569,29 +569,41 @@ public:
      */
     bool restoreHistoricSnapshotSafe(unsigned nr);
 
-    /*! @brief    Saves the current state to a snapshot container
-     *  @note     THIS FUNCTION IS NOT THREAD SAFE.
-     *            Only use on halted emulators or within the emulation thread
+    /*! @brief    Saves the current state into an existing snapshot.
+     *  @note     Use this function inside the execution thread.
      *  @seealso  saveToSnapshotSafe
      */
     void saveToSnapshotUnsafe(Snapshot *snapshot);
     
-    /*! @brief    Thread-safe version of saveToSnapshot
-     *  @details  A running emulator is paused before performing the operation
+    /*! @brief    Saves the current state into an existing snapshot.
+     *  @note     Use this function outside the execution thread.
+     *  @seealso  saveToSnapshotUnsafe
      */
     void saveToSnapshotSafe(Snapshot *snapshot);
 
-    /*! @brief    Takes a snapshot and stores it into the time travel ringbuffer
-     *  @note     THIS FUNCTION IS NOT THREAD SAFE.
-     *            Only use on halted emulators or within the emulation thread
+    /*! @brief    Creates a new snapshot object storing the current state.
+     *  @note     Use this function inside the execution thread.
      *  @seealso  takeSnapshotSafe
      */
-    void takeSnapshotUnsafe();
+    Snapshot *takeSnapshotUnsafe();
+    
+    /*! @brief    Creates a new snapshot object storing the current state.
+     *  @note     Use this function outside the execution thread.
+     *  @seealso  saveToSnapshotUnsafe
+     */
+    Snapshot *takeSnapshotSafe();
+
+    
+    /*! @brief    Takes a snapshot and stores it into the time travel ringbuffer
+     *  @note     This function does not halt the emulator and must therefore be
+     *            called inside the execution thread, only.
+     */
+    void takeTimeTravelSnapshot();
 
     /*! @brief    Thread-safe version of takeSnapshoptUnsafe
      *  @details  A running emulator is paused before performing the operation
      */
-    void takeSnapshotSafe();
+    // void takeSnapshotSafe();
 
     /*! @brief    Returns the number of previously taken snapshots
      *  @result   Value between 0 and BACK_IN_TIME_BUFFER_SIZE

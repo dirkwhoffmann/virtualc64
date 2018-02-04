@@ -74,6 +74,15 @@ public:
 	//! @brief    Constructor
 	Snapshot();
 	
+    //! @brief    Factory method
+    static Snapshot *makeSnapshotWithFile(const char *filename);
+    
+    //! @brief    Factory method
+    static Snapshot *makeSnapshotWithBuffer(const uint8_t *buffer, size_t size);
+
+    //! @brief    Factory method
+    static Snapshot *makeSnapshotWithC64(C64 *c64);
+
 	//! @brief    Destructor
 	~Snapshot();
 	
@@ -102,16 +111,6 @@ public:
     //! @brief    Returns true if file is a snapshot with an outdated version number
     static bool isUnsupportedSnapshotFile(const char *path);
     
-	/*! @brief    Factory method
-     *  @details  Creates a snapshot with data from a file
-     */
-	static Snapshot *makeSnapshotWithFile(const char *filename);
-
-    /*! @brief    Factory method
-     *  @details  Creates a snapshot with data from a buffer
-     */
-    static Snapshot *makeSnapshotWithBuffer(const uint8_t *buffer, size_t size);
-	
     //
 	// Virtual functions from Container class
     //

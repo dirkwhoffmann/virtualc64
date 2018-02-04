@@ -729,6 +729,13 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) rampUpFromZero { wrapper->c64->sid.rampUpFromZero(); }
 - (void) rampDown { wrapper->c64->sid.rampDown(); }
 
+- (SnapshotProxy *) takeSnapshot {
+    SnapshotProxy *snapshot = [[SnapshotProxy alloc] init];
+    wrapper->c64->saveToSnapshotSafe([snapshot wrapper]->snapshot);
+    return snapshot;
+}
+
+// DEPRECATED
 - (void) _loadFromSnapshotWrapper:(SnapshotWrapper *)w
 {
     wrapper->c64->loadFromSnapshotSafe(w->snapshot);
@@ -872,18 +879,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return self;
 }
 
-- (instancetype) initWithC64:(C64Proxy *)c64
-{
-    assert(c64 != NULL);
-    
-    if (self = [super init]) {
-        wrapper = new SnapshotWrapper();
-        wrapper->snapshot = new Snapshot;
-        [c64 saveToSnapshot:self];
-    }
-    return self;
-}
-
 - (instancetype) initWithSnapshot:(Snapshot *)snapshot
 {
     if (snapshot == nil) return nil;
@@ -919,15 +914,17 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return newSnapshot;
 }
 
-+ (instancetype) makeSnapshotWithFile:(NSString *)path
-{
-    return [self makeSnapshotWithSnapshot:(Snapshot::makeSnapshotWithFile([path UTF8String]))];
-}
-
 + (instancetype) makeSnapshotWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    return [self makeSnapshotWithSnapshot:(Snapshot::makeSnapshotWithBuffer((uint8_t *)buffer, length))];
+    Snapshot *snapshot = Snapshot::makeSnapshotWithBuffer((uint8_t *)buffer, length);
+    return [self makeSnapshotWithSnapshot:snapshot];
 }
+
++ (instancetype) makeSnapshotWithFile:(NSString *)path {
+    Snapshot *snapshot = Snapshot::makeSnapshotWithFile([path UTF8String]);
+    return [self makeSnapshotWithSnapshot:snapshot];
+}
+
 
 - (SnapshotWrapper *)wrapper { return wrapper; }
 - (NSInteger) sizeOnDisk { return wrapper->snapshot->sizeOnDisk(); }
@@ -984,7 +981,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     if (wrapper) delete wrapper;
 }
 
-+ (instancetype)makeArchiveFromFile:(NSString *)path
++ (instancetype)makeArchiveWithFile:(NSString *)path
 {
     Archive *archive = Archive::makeArchiveWithFile([path UTF8String]);
     return archive ? [[ArchiveProxy alloc] initWithArchive:archive] : nil;
@@ -1054,7 +1051,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 + (BOOL)isT64File:(NSString *)filename
 {
-    return T64Archive::isValidT64File([filename UTF8String]);
+    return T64Archive::isT64File([filename UTF8String]);
 }
 
 + (instancetype)makeT64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
@@ -1172,9 +1169,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     P00Archive *archive = P00Archive::makeP00ArchiveWithAnyArchive(other);
     return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
-
-
-
 @end
 
 
@@ -1185,9 +1179,16 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return G64Archive::isG64File([filename UTF8String]);
 }
 
-+ (instancetype) archiveFromG64File:(NSString *)filename
++ (instancetype) makeG64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    G64Archive *archive = G64Archive::archiveFromG64File([filename UTF8String]);
+    const uint8_t *ptr = (const uint8_t *)buffer;
+    G64Archive *archive = G64Archive::makeG64ArchiveWithBuffer(ptr, length);
+    return archive ? [[G64ArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
++ (instancetype) makeG64ArchiveWithFile:(NSString *)filename
+{
+    G64Archive *archive = G64Archive::makeG64ArchiveWithFile([filename UTF8String]);
     return archive ? [[G64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
@@ -1200,11 +1201,35 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 {
     return NIBArchive::isNIBFile([filename UTF8String]);
 }
-
-+ (instancetype) archiveFromNIBFile:(NSString *)filename
++ (instancetype) makeNIBArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    NIBArchive *archive = NIBArchive::archiveFromNIBFile([filename UTF8String]);
+    const uint8_t *ptr = (const uint8_t *)buffer;
+    NIBArchive *archive = NIBArchive::makeNIBArchiveWithBuffer(ptr, length);
     return archive ? [[NIBArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
++ (instancetype) makeNIBArchiveWithFile:(NSString *)filename
+{
+    NIBArchive *archive = NIBArchive::makeNIBArchiveWithFile([filename UTF8String]);
+    return archive ? [[NIBArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
+@end
+
+
+@implementation FileArchiveProxy
+
++ (instancetype) makeFileArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    const uint8_t *ptr = (const uint8_t *)buffer;
+    FileArchive *archive = FileArchive::makeFileArchiveWithBuffer(ptr, length);
+    return archive ? [[FileArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
++ (instancetype) makeFileArchiveWithFile:(NSString *)filename
+{
+    FileArchive *archive = FileArchive::makeFileArchiveWithFile([filename UTF8String]);
+    return archive ? [[FileArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 @end
@@ -1243,9 +1268,16 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return TAPContainer::isTAPFile([filename UTF8String]);
 }
 
-+ (instancetype) containerFromTAPFile:(NSString *)filename
++ (instancetype) makeTAPContainerWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    TAPContainer *container = TAPContainer::containerFromTAPFile([filename UTF8String]);
+    const uint8_t *ptr = (const uint8_t *)buffer;
+    TAPContainer *container = TAPContainer::makeTAPContainerWithBuffer(ptr, length);
+    return container ? [[TAPContainerProxy alloc] initWithTAPContainer:container] : nil;
+}
+
++ (instancetype) makeTAPContainerWithFile:(NSString *)filename
+{
+    TAPContainer *container = TAPContainer::makeTAPContainerWithFile([filename UTF8String]);
     return container ? [[TAPContainerProxy alloc] initWithTAPContainer:container] : nil;
 }
 
@@ -1290,7 +1322,14 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return CRTContainer::isValidCRTFile([path UTF8String]);
 }
 
-+ (instancetype)containerFromCRTFile:(NSString *)path
++ (instancetype) makeCRTContainerWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    const uint8_t *ptr = (const uint8_t *)buffer;
+    CRTContainer *container = CRTContainer::makeCRTContainerWithBuffer(ptr, length);
+    return container ? [[CRTContainerProxy alloc] initWithCRTContainer:container] : nil;
+}
+
++ (instancetype) makeCRTContainerWithFile:(NSString *)path
 {
     CRTContainer *container = CRTContainer::makeCRTContainerWithFile([path UTF8String]);
     return container ? [[CRTContainerProxy alloc] initWithCRTContainer:container] : nil;

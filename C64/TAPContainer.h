@@ -47,6 +47,12 @@ public:
     //! @brief    Standard constructor
     TAPContainer();
     
+    //! @brief    Factory method
+    static TAPContainer *makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static TAPContainer *makeTAPContainerWithFile(const char *filename);
+
     //! @brief    Standard destructor
     ~TAPContainer();
     
@@ -55,10 +61,6 @@ public:
     
     //! @brief    Returns true iff the specified file is a TAP file
     static bool isTAPFile(const char *filename);
-    
-    //! @brief    Creates a TAP archive from a TAP file.
-    static TAPContainer *containerFromTAPFile(const char *filename);
-    
     
     //
     // Virtual functions from Container class

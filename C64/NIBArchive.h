@@ -64,6 +64,12 @@ public:
     //! @brief    Standard constructor
     NIBArchive();
     
+    //! @brief    Factory method
+    static NIBArchive *makeNIBArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static NIBArchive *makeNIBArchiveWithFile(const char *path);
+
     //! @brief    Standard destructor
     ~NIBArchive();
 		

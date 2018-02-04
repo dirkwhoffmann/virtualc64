@@ -25,6 +25,32 @@ FileArchive::FileArchive()
 	dealloc(); 
 }
 
+FileArchive *
+FileArchive::makeFileArchiveWithBuffer(const uint8_t *buffer, size_t length)
+{
+    FileArchive *archive = new FileArchive();
+    
+    if (!archive->readFromBuffer(buffer, length)) {
+        delete archive;
+        return NULL;
+    }
+    
+    return archive;
+}
+
+FileArchive *
+FileArchive::makeFileArchiveWithFile(const char *filename)
+{
+    FileArchive *archive = new FileArchive();
+    
+    if (!archive->readFromFile(filename)) {
+        delete archive;
+        return NULL;
+    }
+    
+    return archive;
+}
+
 FileArchive::~FileArchive()
 {
 	dealloc();

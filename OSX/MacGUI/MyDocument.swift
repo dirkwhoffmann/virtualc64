@@ -35,7 +35,7 @@ class MyDocument : NSDocument {
      */
     @objc var attachedSnapshot: SnapshotProxy? = nil
     
-    //! Reference to an attached D64, G64, or NIB archive
+    //! Reference to an attachment of type T64, D64, PRG, P00, G64, or NIB
     @objc var attachedArchive: ArchiveProxy? = nil
     
     //! Reference to an attached TAP container
@@ -160,7 +160,7 @@ class MyDocument : NSDocument {
             NSLog("Type is VC64")
             
             // Take snapshot
-            if let snapshot = SnapshotProxy(c64: c64) {
+            if let snapshot = c64.takeSnapshot() {
 
                 // Write to data buffer
                 if let data = NSMutableData.init(length: snapshot.sizeOnDisk()) {

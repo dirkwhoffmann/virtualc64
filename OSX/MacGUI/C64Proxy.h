@@ -688,6 +688,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (long) cycles;
 - (long) frames;
 
+- (SnapshotProxy *) takeSnapshot;
+
 // Cheatbox
 - (NSInteger) historicSnapshots;
 - (NSInteger) historicSnapshotHeaderSize:(NSInteger)nr;
@@ -719,17 +721,16 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 }
 
 - (instancetype) init;
-- (instancetype) initWithC64:(C64Proxy *)c64;
 
 + (BOOL) isSnapshotFile:(NSString *)path;
 + (BOOL) isUsupportedSnapshotFile:(NSString *)path;
 + (instancetype) makeSnapshotWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype) makeSnapshotWithFile:(NSString *)path;
 
-- (struct SnapshotWrapper *)wrapper; // WHY DO WE NEED THIS?
+- (struct SnapshotWrapper *)wrapper; // Where do we need this?
 
 - (NSInteger) sizeOnDisk;
-- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length;
+// - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length;
 - (NSInteger) writeToBuffer:(void *)buffer;
 // - (bool) readDataFromFile:(NSString *)path;
 // - (bool) writeDataToFile:(NSString *)path;
@@ -748,7 +749,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 
 - (struct ArchiveWrapper *)wrapper;
 
-+ (instancetype) makeArchiveFromFile:(NSString *)filename;
++ (instancetype) makeArchiveWithFile:(NSString *)filename;
 - (NSString *)getPath;
 - (NSString *)getName;
 - (ContainerType)getType;
@@ -809,15 +810,25 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 {
 }
 + (BOOL) isG64File:(NSString *)filename;
-+ (instancetype) archiveFromG64File:(NSString *)filename;
++ (instancetype) makeG64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeG64ArchiveWithFile:(NSString *)filename;
 @end
 
 @interface NIBArchiveProxy : ArchiveProxy
 {
 }
 + (BOOL) isNIBFile:(NSString *)filename;
-+ (instancetype) archiveFromNIBFile:(NSString *)filename;
++ (instancetype) makeNIBArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeNIBArchiveWithFile:(NSString *)filename;
 @end
+
+@interface FileArchiveProxy : ArchiveProxy
+{
+}
++ (instancetype) makeFileArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeFileArchiveWithFile:(NSString *)filename;
+@end
+
 
 // --------------------------------------------------------------------------
 //                                TAP Container
@@ -831,7 +842,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (struct TAPContainerWrapper *)wrapper;
 
 + (BOOL) isTAPFile:(NSString *)filename;
-+ (instancetype) containerFromTAPFile:(NSString *)filename;
++ (instancetype) makeTAPContainerWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeTAPContainerWithFile:(NSString *)filename;
 
 - (NSString *)getPath;
 - (NSString *)getName;
@@ -851,7 +863,9 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 
 - (struct CRTContainerWrapper *) wrapper;
 + (BOOL) isCRTFile:(NSString *)filename;
-+ (instancetype) containerFromCRTFile:(NSString *)filename;
++ (instancetype) makeCRTContainerWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeCRTContainerWithFile:(NSString *)filename;
+
 - (CartridgeType)type;
 - (NSString *)typeName;
 - (BOOL) isSupportedType;

@@ -36,6 +36,32 @@ NIBArchive::NIBArchive()
     fp = -1;
 }
 
+NIBArchive *
+NIBArchive::makeNIBArchiveWithBuffer(const uint8_t *buffer, size_t length)
+{
+    NIBArchive *archive = new NIBArchive();
+    
+    if (!archive->readFromBuffer(buffer, length)) {
+        delete archive;
+        return NULL;
+    }
+    
+    return archive;
+}
+
+NIBArchive *
+NIBArchive::makeNIBArchiveWithFile(const char *filename)
+{
+    NIBArchive *archive = new NIBArchive();
+    
+    if (!archive->readFromFile(filename)) {
+        delete archive;
+        return NULL;
+    }
+    
+    return archive;
+}
+
 NIBArchive::~NIBArchive()
 {
 	dealloc();

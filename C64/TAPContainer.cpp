@@ -28,6 +28,32 @@ TAPContainer::TAPContainer()
     dealloc();
 }
 
+TAPContainer *
+TAPContainer::makeTAPContainerWithBuffer(const uint8_t *buffer, size_t length)
+{
+    TAPContainer *tape = new TAPContainer();
+    
+    if (!tape->readFromBuffer(buffer, length)) {
+        delete tape;
+        return NULL;
+    }
+    
+    return tape;
+}
+
+TAPContainer *
+TAPContainer::makeTAPContainerWithFile(const char *filename)
+{
+    TAPContainer *tape = new TAPContainer();
+    
+    if (!tape->readFromFile(filename)) {
+        delete tape;
+        return NULL;
+    }
+    
+    return tape;
+}
+
 TAPContainer::~TAPContainer()
 {
     dealloc();
@@ -55,20 +81,6 @@ TAPContainer::isTAPFile(const char *filename)
         return false;
     
     return true;
-}
-
-TAPContainer *
-TAPContainer::containerFromTAPFile(const char *filename)
-{
-    TAPContainer *container = new TAPContainer();
-    
-    if (!container->readFromFile(filename)) {
-        delete container;
-        return NULL; 
-    }
-
-    container->debug(1, "TAP container created from file %s.\n", filename);
-    return container;
 }
 
 void
