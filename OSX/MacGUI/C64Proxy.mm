@@ -1242,7 +1242,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 + (BOOL) isCRTFile:(NSString *)filename
 {
-    return CRTContainer::isCRTFile([filename UTF8String]);
+    return CRTContainer::isValidCRTFile([filename UTF8String]);
 }
 
 + (instancetype)containerFromCRTFile:(NSString *)filename

@@ -74,16 +74,12 @@ public:
     //! @brief    Destructor
     virtual ~Container();
     
-private:
-    
     //! @brief    Frees the memory allocated by this object.
     virtual void dealloc() { };
 
     //
     //! @functiongroup Accessing container attributes
     //
-
-public:
     
     //! @brief    Returns the type of this container.
     virtual ContainerType type() { return UNKNOWN_CONTAINER_FORMAT; }
@@ -111,11 +107,10 @@ public:
     //! @brief    Sets the logical name.
     void setName(const char *name);
 	
-    
     //
     //! @functiongroup Serializing a container
     //
-
+    
     //! @brief    Required buffer size for this container
     size_t sizeOnDisk() { return writeToBuffer(NULL); }
 

@@ -49,14 +49,14 @@ CRTContainer::dealloc()
 }
 
 bool
-CRTContainer::isCRTBuffer(const uint8_t *buffer, size_t length)
+CRTContainer::isValidCRTBuffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x40) return false;
     return checkBufferHeader(buffer, length, magicBytes);
 }
 
 bool
-CRTContainer::isCRTFile(const char *filename)
+CRTContainer::isValidCRTFile(const char *filename)
 {
     assert(filename != NULL);
     

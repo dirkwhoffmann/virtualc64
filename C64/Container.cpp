@@ -89,7 +89,7 @@ Container::readFromFile(const char *filename)
 	assert (filename != NULL);
 			
 	// Check file type
-	if (!hasSameType(filename)) {
+    if (!hasSameType(filename)) {
 		goto exit;
 	}
 	

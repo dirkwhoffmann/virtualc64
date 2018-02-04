@@ -52,10 +52,17 @@ private:
     //! @brief    Indicates where each chip section starts
     uint8_t *chips[64];
 
+    //
+    //! @functiongroup Creating and destructing containers
+    //
+
 public:
     
     //! @brief    Constructor
     CRTContainer();
+    
+    //! @brief    Factory method
+    static CRTContainer *containerFromCRTFile(const char *filename);
     
     //! @brief    Destructor
     ~CRTContainer();
@@ -63,71 +70,72 @@ public:
     //! @brief    Frees the allocated memory.
     void dealloc();
     
-    //! @brief    Returns the container type
+    //
+    //! @functiongroup Accessing container attributes
+    //
+
+    //! @brief    Returns the container type as numerical index
     ContainerType type() { return CRT_CONTAINER; }
     
-    //! @brief    Type of container in plain text
+    //! @brief    Returns the container type in plain text
     const char *typeAsString() { return "CRT"; }
     
-    //! @brief    Returns true iff buffer contains a CRT file
-    static bool isCRTBuffer(const uint8_t *buffer, size_t length);
-    
-    //! Returns true of filename points to a valid file of that type
-    static bool isCRTFile(const char *filename);
-    
-    //! Check file type
-    bool isValidFile(const char *filename) { return CRTContainer::isCRTFile(filename); }
-
-    //! Factory method
-    static CRTContainer *containerFromCRTFile(const char *filename);
-    
-    //! Read container data from memory buffer
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
-
-    //
-    // Cartridge information
-    //
-    
     //! Return logical cartridge name
+    //! TODO: Override getName
     char *getCartridgeName() { return (char *)&data[0x20]; }
     
-    //! Return cartridge version number
+    //! @brief    Returns the version number of the cartridge
     uint16_t getCartridgeVersion() { return LO_HI(data[0x15], data[0x14]); }
     
-    //! Return cartridge type
+    //! @brief    Returns the cartridge type (e.g., SimonsBasic, FinalIII)
+    /*! @details  Don't confuse with ContainerType
+     */
     CartridgeType getCartridgeType() { return CartridgeType(LO_HI(data[0x17], data[0x16])); }
-
-    //! Return cartridge type
+    
+    //! @brief    Returns the cartridge type in plain text
     const char *getCartridgeTypeName();
-
-    //! Return exrom line
+    
+    //! @brief    Returns the initial value of the Exrom line
     bool getExromLine() { return data[0x18] != 0; }
-
-    //! Return game line
+    
+    //! @brief    Returns the initial value of the Game line
     bool getGameLine() { return data[0x19] != 0; }
     
-
-    //
-    // Chip information
-    //
-    
-    //! Return how many chips are contained in this cartridge
+    //! @brief    Returns how many chips are contained in this cartridge
     uint8_t getNumberOfChips() { return numberOfChips; }
     
-    //! Return start address of chip data
+    //! @brief    Returns where the data of a certain chip can be found
     uint8_t *getChipData(unsigned nr) { return chips[nr]+0x10; }
     
-    //! Return size of chip (8 KB or 16 KB)
+    //! @brief    Returns the size of chip (8 KB or 16 KB)
     uint16_t getChipSize(unsigned nr) { return LO_HI(chips[nr][0xF], chips[nr][0xE]); }
     
-    //! Return type of chip
+    //! @brief    Returns the type of chip (what is this exactly?)
     uint16_t getChipType(unsigned nr) { return LO_HI(chips[nr][0x9], chips[nr][0x8]); }
     
-    //! Return bank information
+    //! @brief    Return bank information (what is this exactly?)
     uint16_t getChipBank(unsigned nr) { return LO_HI(chips[nr][0xB], chips[nr][0xA]); }
     
     //! Returns start of chip rom in address space
     uint16_t getChipAddr(unsigned nr) { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
+    
+    
+    //
+    //! @functiongroup Serializing
+    //
+
+    //! @brief    Returns true iff buffer contains a CRT file
+    static bool isValidCRTBuffer(const uint8_t *buffer, size_t length);
+    
+    //! Returns true of filename points to a valid file of that type
+    static bool isValidCRTFile(const char *filename);
+
+    //! Check file type
+    bool hasSameType(const char *filename) { return CRTContainer::isValidCRTFile(filename); }
+
+    //! Read container data from memory buffer
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
+
 };
 
 #endif
