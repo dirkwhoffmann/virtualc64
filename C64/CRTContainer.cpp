@@ -49,7 +49,7 @@ CRTContainer::dealloc()
 }
 
 bool
-CRTContainer::isCRT(const uint8_t *buffer, size_t length)
+CRTContainer::isCRTBuffer(const uint8_t *buffer, size_t length)
 {
     if (length < 0x40) return false;
     return checkBufferHeader(buffer, length, magicBytes);

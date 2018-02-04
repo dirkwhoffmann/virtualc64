@@ -345,7 +345,7 @@ VC1541::insertDisk(Archive *a)
 
     D64Archive *converted;
     
-    switch (a->getType()) {
+    switch (a->type()) {
             
         case T64_CONTAINER:
         case PRG_CONTAINER:

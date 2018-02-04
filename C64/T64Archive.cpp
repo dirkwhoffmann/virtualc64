@@ -212,7 +212,7 @@ T64Archive::makeArchiveWithAnyArchive(Archive *otherArchive)
     otherArchive->dumpDirectory();
     archive->dumpDirectory();
     archive->debug(1, "T64 archive created with other archive of type %s.\n",
-                   otherArchive->getTypeAsString());
+                   otherArchive->typeAsString());
     
     return archive;
 }
@@ -227,7 +227,7 @@ void T64Archive::dealloc()
 }
 
 bool 
-T64Archive::fileIsValid(const char *filename)
+T64Archive::hasSameType(const char *filename)
 {
 	return T64Archive::isT64File(filename);
 }

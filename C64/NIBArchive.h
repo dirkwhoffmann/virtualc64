@@ -125,9 +125,9 @@ public:
     
     const char *getName();
     ContainerType getType() { return NIB_CONTAINER; }
-    const char *getTypeAsString() { return "NIB"; }
+    const char *typeAsString() { return "NIB"; }
     
-    bool fileIsValid(const char *filename);
+    bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     

@@ -71,7 +71,7 @@ PRGArchive::archiveFromArchive(Archive *otherArchive)
         return NULL;
     
     PRGArchive *archive = new PRGArchive();
-    archive->debug(1, "Creating PRG archive from %s archive...\n", otherArchive->getTypeAsString());
+    archive->debug(1, "Creating PRG archive from %s archive...\n", otherArchive->typeAsString());
     
     // Determine container size and allocate memory
     archive->size = 2 + otherArchive->getSizeOfItem(0);
@@ -106,7 +106,7 @@ PRGArchive::dealloc()
 }
 
 bool 
-PRGArchive::fileIsValid(const char *filename)
+PRGArchive::hasSameType(const char *filename)
 {
 	return isPRGFile(filename);
 }

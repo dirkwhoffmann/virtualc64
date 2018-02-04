@@ -81,7 +81,7 @@ void G64Archive::dealloc()
 }
 
 bool 
-G64Archive::fileIsValid(const char *filename)
+G64Archive::hasSameType(const char *filename)
 {
 	return G64Archive::isG64File(filename);
 }

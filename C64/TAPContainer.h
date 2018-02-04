@@ -67,10 +67,10 @@ public:
     void dealloc();
     
     const char *getName();
-    ContainerType getType() { return TAP_CONTAINER; }
-    const char *getTypeAsString() { return "TAP"; }
+    ContainerType type() { return TAP_CONTAINER; }
+    const char *typeAsString() { return "TAP"; }
     
-    bool fileIsValid(const char *filename);
+    bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     

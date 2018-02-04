@@ -270,7 +270,7 @@ void NIBArchive::dealloc()
 }
 
 bool 
-NIBArchive::fileIsValid(const char *filename)
+NIBArchive::hasSameType(const char *filename)
 {
 	return NIBArchive::isNIBFile(filename);
 }

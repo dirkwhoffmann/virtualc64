@@ -109,9 +109,9 @@ public:
     const char *getName();
     const unsigned short *getUnicodeName(size_t maxChars);
     ContainerType getType() { return D64_CONTAINER; }
-    const char *getTypeAsString() { return "D64"; }
+    const char *typeAsString() { return "D64"; }
 	
-    bool fileIsValid(const char *filename);
+    bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     

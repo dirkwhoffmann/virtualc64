@@ -142,19 +142,19 @@ Snapshot::makeSnapshotWithBuffer(const uint8_t *buffer, size_t size)
 }
 
 ContainerType
-Snapshot::getType()
+Snapshot::type()
 {
     return V64_CONTAINER;
 }
 
 const char *
-Snapshot::getTypeAsString() 
+Snapshot::typeAsString() 
 {
 	return "V64";
 }
 
 bool 
-Snapshot::fileIsValid(const char *filename)
+Snapshot::hasSameType(const char *filename)
 {
     return Snapshot::isSnapshotFile(filename, V_MAJOR, V_MINOR, V_SUBMINOR);
 }

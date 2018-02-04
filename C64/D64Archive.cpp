@@ -198,7 +198,7 @@ D64Archive::archiveFromArchive(Archive *otherArchive)
 		return NULL;
     
     D64Archive *archive = new D64Archive();
-    archive->debug(1, "Creating D64 archive from a %s archive...\n", otherArchive->getTypeAsString());
+    archive->debug(1, "Creating D64 archive from a %s archive...\n", otherArchive->typeAsString());
     
     // Copy file path
     archive->setPath(otherArchive->getPath());
@@ -237,7 +237,7 @@ D64Archive::archiveFromArchive(Archive *otherArchive)
 
     archive->debug(2, "Archive created (item 0 has %d bytes)\n", archive->getSizeOfItem(0));
     archive->debug(2, "%s archive created (size of item 0 = %d).\n",
-            archive->getTypeAsString(), archive->getSizeOfItem(0));
+            archive->typeAsString(), archive->getSizeOfItem(0));
 
     return archive;
 }
@@ -273,7 +273,7 @@ D64Archive::archiveFromDrive(VC1541 *drive)
 //
 
 bool
-D64Archive::fileIsValid(const char *filename)
+D64Archive::hasSameType(const char *filename)
 {
 	return D64Archive::isD64File(filename);
 }

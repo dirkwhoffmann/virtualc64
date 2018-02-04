@@ -68,7 +68,7 @@ FileArchive::dealloc()
 }
 
 bool 
-FileArchive::fileIsValid(const char *filename)
+FileArchive::hasSameType(const char *filename)
 {
 	return isAcceptableFile(filename);
 }

@@ -77,10 +77,10 @@ public:
     
     const char *getName();
     // const char *getNameAsPETString();
-    ContainerType getType() { return G64_CONTAINER; }
-    const char *getTypeAsString() { return "G64"; }
+    ContainerType type() { return G64_CONTAINER; }
+    const char *typeAsString() { return "G64"; }
     
-    bool fileIsValid(const char *filename);
+    bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     

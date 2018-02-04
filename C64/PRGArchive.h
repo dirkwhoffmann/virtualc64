@@ -75,10 +75,10 @@ public:
     
     void dealloc();
     
-    ContainerType getType() { return PRG_CONTAINER; }
-    const char *getTypeAsString() { return "PRG"; }
+    ContainerType type() { return PRG_CONTAINER; }
+    const char *typeAsString() { return "PRG"; }
     
-    bool fileIsValid(const char *filename);
+    bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     

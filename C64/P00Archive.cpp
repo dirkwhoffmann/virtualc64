@@ -75,7 +75,7 @@ P00Archive::archiveFromArchive(Archive *otherArchive)
         return NULL;
     
     P00Archive *archive = new P00Archive();
-    archive->debug(1, "Creating P00 archive from %s archive...\n", otherArchive->getTypeAsString());
+    archive->debug(1, "Creating P00 archive from %s archive...\n", otherArchive->typeAsString());
     
     // Determine container size and allocate memory
     archive->size = 8 + 17 + 1 + 2 + otherArchive->getSizeOfItem(0);
@@ -134,7 +134,7 @@ P00Archive::getName()
 }
 
 bool
-P00Archive::fileIsValid(const char *filename)
+P00Archive::hasSameType(const char *filename)
 {
 	return isP00File(filename);
 }

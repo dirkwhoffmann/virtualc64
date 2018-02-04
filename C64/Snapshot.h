@@ -116,12 +116,12 @@ public:
 	// Virtual functions from Container class
     //
     
-	bool fileIsValid(const char *filename);
+	bool hasSameType(const char *filename);
 	bool readFromBuffer(const uint8_t *buffer, size_t length);
 	size_t writeToBuffer(uint8_t *buffer);
     // unsigned sizeOnDisk() { return getHeaderSize() + getDataSize(); }
-    ContainerType getType();
-	const char *getTypeAsString();
+    ContainerType type();
+	const char *typeAsString();
 
     //! @brief    Returns size of header
     uint32_t getHeaderSize() { return sizeof(header); }

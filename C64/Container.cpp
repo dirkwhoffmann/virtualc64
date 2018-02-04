@@ -23,7 +23,6 @@ Container::Container()
     const char *defaultName = "HELLO VIRTUALC64";
     
 	path = NULL;
-    // memset(name, 0, sizeof(name));
     memcpy(name, defaultName, strlen(defaultName) + 1);
 }
 
@@ -47,20 +46,6 @@ Container::checkBufferHeader(const uint8_t *buffer, size_t length, const uint8_t
     }
  
     return header[i] == 0;
-}
-
-ContainerType
-Container::typeOf(const char *extension)
-{
-    if (strcmp(extension, "CRT") == 0) return CRT_CONTAINER;
-    if (strcmp(extension, "TAP") == 0) return TAP_CONTAINER;
-    if (strcmp(extension, "T64") == 0) return T64_CONTAINER;
-    if (strcmp(extension, "D64") == 0) return D64_CONTAINER;
-    if (strcmp(extension, "PRG") == 0) return PRG_CONTAINER;
-    if (strcmp(extension, "P00") == 0) return P00_CONTAINER;
-    if (strcmp(extension, "G64") == 0) return G64_CONTAINER;
-    if (strcmp(extension, "NIB") == 0) return NIB_CONTAINER;
-    return (ContainerType)0;
 }
 
 void
@@ -104,7 +89,7 @@ Container::readFromFile(const char *filename)
 	assert (filename != NULL);
 			
 	// Check file type
-	if (!fileIsValid(filename)) {
+	if (!hasSameType(filename)) {
 		goto exit;
 	}
 	

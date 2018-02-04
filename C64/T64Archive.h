@@ -84,9 +84,9 @@ public:
     const char *getName();
     const unsigned short *getUnicodeName(size_t maxChars);
     ContainerType getType() { return T64_CONTAINER; }
-    const char *getTypeAsString() { return "T64"; }
+    const char *typeAsString() { return "T64"; }
     
-    bool fileIsValid(const char *filename);
+    bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
     

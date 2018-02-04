@@ -1,7 +1,6 @@
 /*!
  * @header      Container.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2016 Dirk W. Hoffmann
  */
 /*
  * This program is free software; you can redistribute it and/or modify
@@ -31,9 +30,9 @@
  *  @details  The class provides basic functionality for reading and writing files.
  */
 class Container : public VC64Object {
-
+    
 private:
-	 
+	     
     //! @brief    The physical name (full path name) of the container.
     char *path;
     
@@ -56,7 +55,9 @@ protected:
      */
 	char name[256];
 
-    /*! @brief    Unicode representation of the logical.
+    /*! @brief    Unicode representation of the logical name.
+     *  @seealso  getUnicodeName
+     *            getUnicodeNameOfItem
      */
     unsigned short unicode[256];
 
@@ -72,13 +73,10 @@ public:
 
     //! @brief    Destructor
     virtual ~Container();
-
-    //! @brief    Convert file name extension into numerical identifier
-    static ContainerType typeOf(const char *extension);
     
 private:
     
-    //! @brief Frees the memory allocated by this object.
+    //! @brief    Frees the memory allocated by this object.
     virtual void dealloc() { };
 
     //
@@ -87,13 +85,21 @@ private:
 
 public:
     
-	//! @brief    Returns the physical name.
+    //! @brief    Returns the type of this container.
+    virtual ContainerType type() { return UNKNOWN_CONTAINER_FORMAT; }
+    
+    //! @brief      Returns the string representation of the container's type.
+    /*! @details    E.g., a T64 container returns "T64"
+     */
+    virtual const char *typeAsString() { return "???"; }
+
+	//! @brief    Returns the physical name of this container.
     const char *getPath() { return path ? path : ""; }
 
-    //! @brief    Sets the physical name.
+    //! @brief    Sets the physical name of this container.
     void setPath(const char *path);
 
-    //! @brief    Returns the logical name.
+    //! @brief    Returns the logical name of this container.
     virtual const char *getName();
 
     /*! @brief    Returns the logical name as unicode character array.
@@ -104,26 +110,17 @@ public:
 
     //! @brief    Sets the logical name.
     void setName(const char *name);
-
-    //! @brief    Returns the type of this container.
-    /*  @deprecated */
-    virtual ContainerType getType() { return UNKNOWN_CONTAINER_FORMAT; }
-
-    /*! @brief      Returns the type of this container object as plain text, e.g., "T64" or "D64".
-     *  @deprecated Use getType instead.
-     */
-    virtual const char *getTypeAsString() { return ""; }
 	
     
     //
     //! @functiongroup Serializing a container
     //
 
-    //! @brief    Returns true iff the specified file is a file of this container type.
-    virtual bool fileIsValid(const char *filename) { return false; }
-
     //! @brief    Required buffer size for this container
     size_t sizeOnDisk() { return writeToBuffer(NULL); }
+
+    //! @brief    Returns true iff the specified file stores a container of the same type
+    virtual bool hasSameType(const char *filename) { return false; }
 
     /*! @brief    Read container contents from a memory buffer.
      *  @param    buffer The address of a binary representation in memory.

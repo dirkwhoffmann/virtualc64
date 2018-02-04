@@ -977,7 +977,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (ArchiveWrapper *)wrapper { return wrapper; }
 - (NSString *)getPath { return [NSString stringWithUTF8String:wrapper->archive->getPath()]; }
 - (NSString *)getName { return [NSString stringWithUTF8String:wrapper->archive->getName()]; }
-- (ContainerType)getType { return wrapper->archive->getType(); }
+- (ContainerType)getType { return wrapper->archive->type(); }
 
 - (NSInteger)getNumberOfItems {
     return (NSInteger)wrapper->archive->getNumberOfItems();
@@ -1206,7 +1206,7 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (NSString *)getPath { return [NSString stringWithUTF8String:wrapper->tapcontainer->getPath()]; }
 - (NSString *)getName { return [NSString stringWithUTF8String:wrapper->tapcontainer->getName()]; }
-- (NSInteger)getType { return (NSInteger)wrapper->tapcontainer->getType(); }
+- (NSInteger)getType { return (NSInteger)wrapper->tapcontainer->type(); }
 - (NSInteger)TAPversion { return (NSInteger)wrapper->tapcontainer->TAPversion(); }
 
 @end

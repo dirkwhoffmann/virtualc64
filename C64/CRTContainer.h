@@ -64,19 +64,19 @@ public:
     void dealloc();
     
     //! @brief    Returns the container type
-    ContainerType getType() { return CRT_CONTAINER; }
+    ContainerType type() { return CRT_CONTAINER; }
     
     //! @brief    Type of container in plain text
-    const char *getTypeAsString() { return "CRT"; }
+    const char *typeAsString() { return "CRT"; }
     
     //! @brief    Returns true iff buffer contains a CRT file
-    static bool isCRT(const uint8_t *buffer, size_t length);
+    static bool isCRTBuffer(const uint8_t *buffer, size_t length);
     
     //! Returns true of filename points to a valid file of that type
     static bool isCRTFile(const char *filename);
     
     //! Check file type
-    bool fileIsValid(const char *filename) { return CRTContainer::isCRTFile(filename); }
+    bool isValidFile(const char *filename) { return CRTContainer::isCRTFile(filename); }
 
     //! Factory method
     static CRTContainer *containerFromCRTFile(const char *filename);

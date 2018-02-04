@@ -93,7 +93,7 @@ TAPContainer::getName()
 }
 
 bool
-TAPContainer::fileIsValid(const char *filename)
+TAPContainer::hasSameType(const char *filename)
 {
     return isTAPFile(filename);
 }

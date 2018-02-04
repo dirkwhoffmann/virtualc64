@@ -63,9 +63,9 @@ public:
     void dealloc();
     
     ContainerType getType() { return FILE_CONTAINER; }
-    const char *getTypeAsString() { return "FILE"; }
+    const char *typeAsString() { return "FILE"; }
     
-    bool fileIsValid(const char *filename);
+    bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
 
     
