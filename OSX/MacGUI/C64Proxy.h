@@ -721,8 +721,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (instancetype) init;
 + (BOOL) isSnapshotFile:(NSString *)path;
 + (BOOL) isUsupportedSnapshotFile:(NSString *)path;
-+ (instancetype) makeSnapshotWithFile:(NSString *)path;
 + (instancetype) makeSnapshotWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeSnapshotWithFile:(NSString *)path;
 
 - (struct SnapshotWrapper *)wrapper;
 - (NSInteger) sizeOnDisk;
@@ -762,18 +762,19 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 {
 }
 + (BOOL) isT64File:(NSString *)filename;
-+ (instancetype) archiveFromT64File:(NSString *)filename;
-+ (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive;
++ (instancetype) makeT64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeT64ArchiveWithFile:(NSString *)filename;
++ (instancetype) makeT64ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive;
 @end
 
 @interface D64ArchiveProxy : ArchiveProxy
 {
 }
 + (BOOL) isD64File:(NSString *)filename;
-+ (instancetype) archiveFromD64File:(NSString *)filename;
-+ (instancetype) archiveFromArbitraryFile:(NSString *)filename;
-+ (instancetype) archiveFromD64Archive:(D64ArchiveProxy *)archive;
-+ (instancetype) archiveFromArchive:(ArchiveProxy *)archive;
++ (instancetype) makeD64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeD64ArchiveWithFile:(NSString *)filename;
++ (instancetype) makeD64ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive;
+
 + (instancetype) archiveFromVC1541:(VC1541Proxy *)vc1541;
 @end
 
@@ -781,16 +782,19 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 {
 }
 + (BOOL) isPRGFile:(NSString *)filename;
-+ (instancetype) archiveFromPRGFile:(NSString *)filename;
-+ (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive;
++ (instancetype) makePRGArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makePRGArchiveWithFile:(NSString *)filename;
++ (instancetype) makePRGArchiveWithAnyArchive:(ArchiveProxy *)otherArchive;
+
 @end
 
 @interface P00ArchiveProxy : ArchiveProxy
 {
 }
 + (BOOL) isP00File:(NSString *)filename;
-+ (instancetype) archiveFromP00File:(NSString *)filename;
-+ (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive;
++ (instancetype) makeP00ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
++ (instancetype) makeP00ArchiveWithFile:(NSString *)filename;
++ (instancetype) makeP00ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive;
 @end
 
 @interface G64ArchiveProxy : ArchiveProxy

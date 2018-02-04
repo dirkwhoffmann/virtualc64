@@ -12,8 +12,11 @@ import Foundation
 // -------------------------------------------------------------------
 
 public func track(_ message: String = "",
-                  file: String = #file, function: String = #function, line: Int = #line ) {
-    print("\(file)::\(function).\(line): \(message)\n")
+                  path: String = #file, function: String = #function, line: Int = #line ) {
+    
+    if let file = URL.init(string: path)?.deletingPathExtension().lastPathComponent {
+        print("\(file)::\(function).\(line): \(message)\n")
+    }
 }
 
 // -------------------------------------------------------------------

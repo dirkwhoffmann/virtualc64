@@ -75,7 +75,7 @@ public:
     //
 
     // From Container class
-    ContainerType getType() { return T64_CONTAINER; }
+    ContainerType type() { return T64_CONTAINER; }
     const char *typeAsString() { return "T64"; }
     const char *getName();
     const unsigned short *getUnicodeName(size_t maxChars);

@@ -124,7 +124,7 @@ public:
     void dealloc();
     
     const char *getName();
-    ContainerType getType() { return NIB_CONTAINER; }
+    ContainerType type() { return NIB_CONTAINER; }
     const char *typeAsString() { return "NIB"; }
     
     bool hasSameType(const char *filename);

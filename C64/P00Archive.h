@@ -47,6 +47,17 @@ public:
     //! @brief    Standard constructor.
     P00Archive();
     
+    //! @brief    Factory method
+    static P00Archive *makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static P00Archive *makeP00ArchiveWithFile(const char *path);
+    
+    /*! @brief    Factory method
+     *  @details  otherArchive can be of any archive type
+     */
+    static P00Archive *makeP00ArchiveWithAnyArchive(Archive *otherArchive);
+    
     //! @brief    Standard destructor.
     ~P00Archive();
     
@@ -55,15 +66,6 @@ public:
 
     //! @brief    Returns true iff the specified file is a P00 file
     static bool isP00File(const char *filename);
-
-    //! @brief    Creates a P00 archive from a P00 file.
-    static P00Archive *archiveFromP00File(const char *filename);
-
-    /*! @brief    Creates a P00 archive from another archive.
-     *  @result   A P00 archive that contains the first directory item of the other archive. 
-     */
-    static P00Archive *archiveFromArchive(Archive *otherArchive);
-
     
     //
     // Virtual functions from Container class

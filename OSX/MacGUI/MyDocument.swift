@@ -124,20 +124,33 @@ class MyDocument : NSDocument {
         let size = data.count
         let ptr = (data as NSData).bytes
         
-        track("typeName: \(typeName) (\(size) bytes)")
+        track("Trying to read \(typeName) file from buffer with \(size) bytes")
         
         switch (typeName) {
         
         case "VC64":
-            
-            NSLog("Type is VC64")
             let snapshot = SnapshotProxy.makeSnapshot(withBuffer: ptr, length: size)
             c64.load(fromSnapshot: snapshot)
             return
         
         case "T64":
-            NSLog("Type is T64")
-            // let archive = T64ArchiveProxy.makeArchive(fromBuffer: ptr, length: size)
+            attachedArchive = T64ArchiveProxy.makeT64Archive(withBuffer: ptr, length: size)
+            fileURL = nil // Create an 'Untitled' document
+            return
+ 
+        case "D64":
+            attachedArchive = D64ArchiveProxy.makeD64Archive(withBuffer: ptr, length: size)
+            fileURL = nil // Create an 'Untitled' document
+            return
+  
+        case "PRG":
+            attachedArchive = PRGArchiveProxy.makePRGArchive(withBuffer: ptr, length: size)
+            fileURL = nil // Create an 'Untitled' document
+            return
+            
+        case "P00":
+            attachedArchive = P00ArchiveProxy.makeP00Archive(withBuffer: ptr, length: size)
+            fileURL = nil // Create an 'Untitled' document
             return
             
         default:

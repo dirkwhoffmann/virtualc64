@@ -67,8 +67,27 @@ public:
     //! @functiongroup Creating and destructing D64 archives
     //
 
-	D64Archive();
-	~D64Archive();
+    //! @brief    Standard constructor
+    D64Archive();
+    
+    //! @brief    Factory method
+    static D64Archive *makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static D64Archive *makeD64ArchiveWithFile(const char *path);
+    
+    /*! @brief    Factory method
+     *  @details  otherArchive can be of any archive type
+     */
+    static D64Archive *makeD64ArchiveWithAnyArchive(Archive *otherArchive);
+    
+    //! @brief    Standard destructor
+    ~D64Archive();
+    
+    
+    //
+    //! @functiongroup Accessing container attributes
+    //
     
     //! @brief    Returns true iff buffer contains a D64 file
     static bool isD64(const uint8_t *buffer, size_t length);
@@ -77,47 +96,14 @@ public:
      */
     static bool isD64File(const char *filename);
 
-    /*! @brief   Creates a D64 archive from a D64 file located on disk.
-     */
-    static D64Archive *archiveFromD64File(const char *filename);
-
-	/*! @brief   Create a D64 archive from a file located on disk.
-     *  @details If the provided filename points to a D64 archive, archiveFromD64File is invoked. 
-     *           Otherwise, the format is converted automatically. 
-     */
-     static D64Archive *archiveFromArbitraryFile(const char *filename);
-
-    /*! @brief   Creates a D64 archive from another D64 archive.
-     *  @result  A one to one copy of the source archive.
-     *  @seealso archiveFromArchive
-     */
-    static D64Archive *archiveFromD64Archive(D64Archive *archive);
-
-    /*! @brief   Creates a D64 archive from an arbitrary archive.
-     *  @result  If the provided archive is a D64 archive, archiveFromD64Archive is invoked.
-     *           Otherwise, the format is converted automatically. 
-     */
-    static D64Archive *archiveFromArchive(Archive *archive);
-
-    
-	//
-    // Virtual functions from Container class
-    //
-    
-    void dealloc() { };
-    
     const char *getName();
     const unsigned short *getUnicodeName(size_t maxChars);
-    ContainerType getType() { return D64_CONTAINER; }
+    ContainerType type() { return D64_CONTAINER; }
     const char *typeAsString() { return "D64"; }
 	
     bool hasSameType(const char *filename);
     bool readFromBuffer(const uint8_t *buffer, size_t length);
     size_t writeToBuffer(uint8_t *buffer);
-    
-    //
-	// Virtual functions from Archive class
-	//
     
     int getNumberOfItems();
     

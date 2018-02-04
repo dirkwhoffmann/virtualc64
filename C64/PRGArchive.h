@@ -48,6 +48,17 @@ public:
     //! @brief    Standard constructor
     PRGArchive();
     
+    //! @brief    Factory method
+    static PRGArchive *makePRGArchiveWithBuffer(const uint8_t *buffer, size_t length);
+    
+    //! @brief    Factory method
+    static PRGArchive *makePRGArchiveWithFile(const char *path);
+    
+    /*! @brief    Factory method
+     *  @details  otherArchive can be of any archive type
+     */
+    static PRGArchive *makePRGArchiveWithAnyArchive(Archive *otherArchive);
+    
     //! @brief    Standard destructor
     ~PRGArchive();
 
@@ -61,12 +72,12 @@ public:
     static bool isPRGFile(const char *filename);
 
     //! @brief    Creates a PRG archive from a PRG file.
-    static PRGArchive *archiveFromPRGFile(const char *filename);
+    // static PRGArchive *archiveFromPRGFile(const char *filename);
 
     //! @brief    Creates a PRG archive from another archive.
     /*  @result   A PRG archive that contains the first directory item of the other archive.
      */
-    static PRGArchive *archiveFromArchive(Archive *otherArchive);
+    // static PRGArchive *archiveFromArchive(Archive *otherArchive);
 
 
     //

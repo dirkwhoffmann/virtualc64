@@ -352,7 +352,7 @@ VC1541::insertDisk(Archive *a)
         case P00_CONTAINER:
             
             // Archives of this type are first converted to D64 format
-            if (!(converted = D64Archive::archiveFromArchive(a)))
+            if (!(converted = D64Archive::makeD64ArchiveWithAnyArchive(a)))
                 return false;
             
             ejectDisk();

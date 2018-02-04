@@ -327,28 +327,25 @@ extension MyController {
     
         case T64_CONTAINER:
             fileTypes = ["T64"]
-            archive = T64ArchiveProxy.archive(fromArchive: d64archive)
+            archive = T64ArchiveProxy.makeT64Archive(withAnyArchive: d64archive)
             break
     
         case PRG_CONTAINER:
-            
             // PRG files store exactly one file. Abort if disk is empty
             if numberOfItems(archive: d64archive, format: "PRG") == 0 {
                 return false
             }
-            NSLog("Exporting to PRG format")
             fileTypes = ["PRG"]
-            archive = PRGArchiveProxy.archive(fromArchive: d64archive)
+            archive = PRGArchiveProxy.makePRGArchive(withAnyArchive: d64archive)
             break
     
         case P00_CONTAINER:
-            
             // P00 files store exactly one file. Abort if disk is empty
             if numberOfItems(archive: d64archive, format: "P00") == 0 {
                 return false
             }
             fileTypes = ["P00"]
-            archive = P00ArchiveProxy.archive(fromArchive: d64archive)
+            archive = P00ArchiveProxy.makeP00Archive(withAnyArchive: d64archive)
             break
     
         default:
@@ -377,7 +374,7 @@ extension MyController {
             return false
         }
         
-        NSLog("Exporting to file \(selectedFile)")
+        track("Exporting to file \(selectedFile)")
 
         archive!.write(toFile: selectedFile)
         c64.vc1541.disk.setModified(false)

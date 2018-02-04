@@ -40,13 +40,13 @@ Archive::makeArchiveWithFile(const char *path)
         return T64Archive::makeT64ArchiveWithFile(path);
     }
     if (D64Archive::isD64File(path)) {
-        return D64Archive::archiveFromD64File(path);
+        return D64Archive::makeD64ArchiveWithFile(path);
     }
     if (PRGArchive::isPRGFile(path)) {
-        return PRGArchive::archiveFromPRGFile(path);
+        return PRGArchive::makePRGArchiveWithFile(path);
     }
     if (P00Archive::isP00File(path)) {
-        return P00Archive::archiveFromP00File(path);
+        return P00Archive::makeP00ArchiveWithFile(path);
     }
     if (G64Archive::isG64File(path)) {
         return G64Archive::archiveFromG64File(path);

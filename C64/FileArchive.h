@@ -62,7 +62,7 @@ public:
     
     void dealloc();
     
-    ContainerType getType() { return FILE_CONTAINER; }
+    ContainerType type() { return FILE_CONTAINER; }
     const char *typeAsString() { return "FILE"; }
     
     bool hasSameType(const char *filename);

@@ -90,6 +90,83 @@ D64Archive::D64Archive()
     fp = 0;
 }
 
+D64Archive *
+D64Archive::makeD64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
+{
+    D64Archive *archive = new D64Archive();
+    
+    if (!archive->readFromBuffer(buffer, length)) {
+        delete archive;
+        return NULL;
+    }
+    
+    return archive;
+}
+
+D64Archive *
+D64Archive::makeD64ArchiveWithFile(const char *path)
+{
+    D64Archive *archive = new D64Archive();
+    
+    if (!archive->readFromFile(path)) {
+        delete archive;
+        return NULL;
+    }
+    
+    return archive;
+}
+
+D64Archive *
+D64Archive::makeD64ArchiveWithAnyArchive(Archive *otherArchive)
+{
+    if (otherArchive == NULL)
+        return NULL;
+    
+    D64Archive *archive = new D64Archive();
+    archive->debug(1, "Creating D64 archive from a %s archive...\n", otherArchive->typeAsString());
+    
+    // Copy file path
+    archive->setPath(otherArchive->getPath());
+    
+    // Current position of data write ptr
+    uint8_t track = 1, sector = 0;
+    
+    // Write BAM
+    archive->writeBAM(otherArchive->getName());
+    
+    // Loop over all entries in archive
+    for (int i = 0; i < otherArchive->getNumberOfItems(); i++) {
+        
+        archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(i), track, sector, otherArchive->getSizeOfItem(i));
+        
+        // Every file is preceded with two bytes containing its load address
+        archive->writeByteToSector(LO_BYTE(otherArchive->getDestinationAddrOfItem(i)), &track, &sector);
+        archive->writeByteToSector(HI_BYTE(otherArchive->getDestinationAddrOfItem(i)), &track, &sector);
+        
+        // Write raw data to disk
+        int byte;
+        unsigned num = 0;
+        
+        archive->debug(2, "Will write %d bytes\n", otherArchive->getSizeOfItem(i));
+        
+        otherArchive->selectItem(i);
+        while ((byte = otherArchive->getByte()) != EOF) {
+            archive->writeByteToSector(byte, &track, &sector);
+            num++;
+        }
+        
+        archive->debug(2, "D64 item %d: %d bytes written\n", i, num);
+        // Item i has been written. Goto next free sector and proceed with the next item
+        (void)archive->nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */);
+    }
+    
+    archive->debug(2, "Archive created (item 0 has %d bytes)\n", archive->getSizeOfItem(0));
+    archive->debug(2, "%s archive created (size of item 0 = %d).\n",
+                   archive->typeAsString(), archive->getSizeOfItem(0));
+    
+    return archive;
+}
+
 D64Archive::~D64Archive()
 {
 	dealloc();
@@ -133,20 +210,7 @@ D64Archive::isD64File(const char *filename)
 	return fileOK;
 }
 
-D64Archive *
-D64Archive::archiveFromD64File(const char *filename)
-{
-	D64Archive *archive = new D64Archive();
-    
-	if (!archive->readFromFile(filename)) {
-        delete archive;
-        return NULL;
-	}
-	
-    archive->debug(1, "D64 archive created from file %s.\n", filename);
-	return archive;
-}
-
+/*
 D64Archive *
 D64Archive::archiveFromArbitraryFile(const char *path)
 {
@@ -172,7 +236,9 @@ D64Archive::archiveFromArbitraryFile(const char *path)
 	
 	return NULL;
 }
+*/
 
+/*
 D64Archive *
 D64Archive::archiveFromD64Archive(D64Archive *otherArchive)
 {
@@ -190,57 +256,8 @@ D64Archive::archiveFromD64Archive(D64Archive *otherArchive)
 
     return archive;
 }
+*/
 
-D64Archive *
-D64Archive::archiveFromArchive(Archive *otherArchive)
-{
-    if (otherArchive == NULL)
-		return NULL;
-    
-    D64Archive *archive = new D64Archive();
-    archive->debug(1, "Creating D64 archive from a %s archive...\n", otherArchive->typeAsString());
-    
-    // Copy file path
-    archive->setPath(otherArchive->getPath());
-    
-    // Current position of data write ptr
-    uint8_t track = 1, sector = 0;
-        
-    // Write BAM
-    archive->writeBAM(otherArchive->getName());
-    
-    // Loop over all entries in archive
-    for (int i = 0; i < otherArchive->getNumberOfItems(); i++) {
-        
-        archive->writeDirectoryEntry(i, otherArchive->getNameOfItem(i), track, sector, otherArchive->getSizeOfItem(i));
-        
-        // Every file is preceded with two bytes containing its load address
-        archive->writeByteToSector(LO_BYTE(otherArchive->getDestinationAddrOfItem(i)), &track, &sector);
-        archive->writeByteToSector(HI_BYTE(otherArchive->getDestinationAddrOfItem(i)), &track, &sector);
-						  
-        // Write raw data to disk
-        int byte;
-        unsigned num = 0;
-
-        archive->debug(2, "Will write %d bytes\n", otherArchive->getSizeOfItem(i));
-
-        otherArchive->selectItem(i);
-        while ((byte = otherArchive->getByte()) != EOF) {
-            archive->writeByteToSector(byte, &track, &sector);
-            num++;
-        }
-        
-        archive->debug(2, "D64 item %d: %d bytes written\n", i, num);
-        // Item i has been written. Goto next free sector and proceed with the next item
-        (void)archive->nextTrackAndSector(track, sector, &track, &sector, true /* skip directory track */);
-    }
-
-    archive->debug(2, "Archive created (item 0 has %d bytes)\n", archive->getSizeOfItem(0));
-    archive->debug(2, "%s archive created (size of item 0 = %d).\n",
-            archive->typeAsString(), archive->getSizeOfItem(0));
-
-    return archive;
-}
 
 #if 0
 D64Archive *

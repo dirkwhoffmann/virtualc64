@@ -1029,13 +1029,20 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return T64Archive::isValidT64File([filename UTF8String]);
 }
 
-+ (instancetype)archiveFromT64File:(NSString *)filename
++ (instancetype)makeT64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
+{
+    const uint8_t *ptr = (const uint8_t *)buffer;
+    T64Archive *archive = T64Archive::makeT64ArchiveWithBuffer(ptr, length);
+    return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
++ (instancetype)makeT64ArchiveWithFile:(NSString *)filename
 {
     T64Archive *archive = T64Archive::makeT64ArchiveWithFile([filename UTF8String]);
     return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
-+ (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
++ (instancetype)makeT64ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive
 {
     Archive *other = [otherArchive wrapper]->archive;
     T64Archive *archive = T64Archive::makeT64ArchiveWithAnyArchive(other);
@@ -1052,29 +1059,23 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
    return D64Archive::isD64File([filename UTF8String]);
 }
 
-+ (instancetype) archiveFromD64File:(NSString *)filename
++ (instancetype) makeD64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    D64Archive *archive = D64Archive::archiveFromD64File([filename UTF8String]);
+    const uint8_t *ptr = (const uint8_t *)buffer;
+    D64Archive *archive = D64Archive::makeD64ArchiveWithBuffer(ptr, length);
     return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
-+ (instancetype) archiveFromArbitraryFile:(NSString *)filename
++ (instancetype) makeD64ArchiveWithFile:(NSString *)filename
 {
-    D64Archive *archive = D64Archive::archiveFromArbitraryFile([filename UTF8String]);
+    D64Archive *archive = D64Archive::makeD64ArchiveWithFile([filename UTF8String]);
     return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
-+ (instancetype) archiveFromD64Archive:(D64ArchiveProxy *)otherArchive
-{
-    D64Archive *other = (D64Archive *)[otherArchive wrapper]->archive;
-    D64Archive *archive = D64Archive::archiveFromD64Archive(other);
-    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
-}
-
-+ (instancetype) archiveFromArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makeD64ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive
 {
     Archive *other = [otherArchive wrapper]->archive;
-    D64Archive *archive = D64Archive::archiveFromArchive(other);
+    D64Archive *archive = D64Archive::makeD64ArchiveWithAnyArchive(other);
     return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
@@ -1094,16 +1095,23 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return PRGArchive::isPRGFile([filename UTF8String]);
 }
 
-+ (instancetype)archiveFromPRGFile:(NSString *)filename
++ (instancetype) makePRGArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    PRGArchive *archive = PRGArchive::archiveFromPRGFile([filename UTF8String]);
+    const uint8_t *ptr = (const uint8_t *)buffer;
+    PRGArchive *archive = PRGArchive::makePRGArchiveWithBuffer(ptr, length);
     return archive ? [[PRGArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
-+ (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makePRGArchiveWithFile:(NSString *)filename
+{
+    PRGArchive *archive = PRGArchive::makePRGArchiveWithFile([filename UTF8String]);
+    return archive ? [[PRGArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
++ (instancetype) makePRGArchiveWithAnyArchive:(ArchiveProxy *)otherArchive
 {
     Archive *other = [otherArchive wrapper]->archive;
-    PRGArchive *archive = PRGArchive::archiveFromArchive(other);
+    PRGArchive *archive = PRGArchive::makePRGArchiveWithAnyArchive(other);
     return archive ? [[PRGArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
@@ -1117,18 +1125,27 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return P00Archive::isP00File([filename UTF8String]);
 }
 
-+ (instancetype)archiveFromP00File:(NSString *)filename
++ (instancetype) makeP00ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length
 {
-    P00Archive *archive = P00Archive::archiveFromP00File([filename UTF8String]);
+    const uint8_t *ptr = (const uint8_t *)buffer;
+    P00Archive *archive = P00Archive::makeP00ArchiveWithBuffer(ptr, length);
     return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
-+ (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
++ (instancetype) makeP00ArchiveWithFile:(NSString *)filename
 {
-    Archive *other = [otherArchive wrapper]->archive;
-    P00Archive *archive = P00Archive::archiveFromArchive(other);
+    P00Archive *archive = P00Archive::makeP00ArchiveWithFile([filename UTF8String]);
     return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
+
++ (instancetype) makeP00ArchiveWithAnyArchive:(ArchiveProxy *)otherArchive
+{
+    Archive *other = [otherArchive wrapper]->archive;
+    P00Archive *archive = P00Archive::makeP00ArchiveWithAnyArchive(other);
+    return archive ? [[P00ArchiveProxy alloc] initWithArchive:archive] : nil;
+}
+
+
 
 @end
 

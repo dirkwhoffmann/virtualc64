@@ -28,48 +28,34 @@ P00Archive::P00Archive()
 	dealloc(); 
 }
 
-P00Archive::~P00Archive()
-{
-	dealloc();
-}
-
-bool
-P00Archive::isP00(const uint8_t *buffer, size_t length)
-{
-    if (length < 0x1A) return false;
-    return checkBufferHeader(buffer, length, magicBytes);
-}
-
-bool 
-P00Archive::isP00File(const char *filename)
-{
-	assert (filename != NULL);
-	
-	if (!checkFileSize(filename, 0x1A, -1))
-		return false;
-	
-	if (!checkFileHeader(filename, magicBytes))
-		return false;
-	
-	return true;
-}
-
 P00Archive *
-P00Archive::archiveFromP00File(const char *filename)
+P00Archive::makeP00ArchiveWithBuffer(const uint8_t *buffer, size_t length)
 {
-	P00Archive *archive = new P00Archive();
+    P00Archive *archive = new P00Archive();
     
-	if (!archive->readFromFile(filename)) {
+    if (!archive->readFromBuffer(buffer, length)) {
         delete archive;
-		return NULL;
-	}
-
-    archive->debug(1, "P00 archive created from file %s.\n", filename);
-	return archive;
+        return NULL;
+    }
+    
+    return archive;
 }
 
 P00Archive *
-P00Archive::archiveFromArchive(Archive *otherArchive)
+P00Archive::makeP00ArchiveWithFile(const char *filename)
+{
+    P00Archive *archive = new P00Archive();
+    
+    if (!archive->readFromFile(filename)) {
+        delete archive;
+        return NULL;
+    }
+    
+    return archive;
+}
+
+P00Archive *
+P00Archive::makeP00ArchiveWithAnyArchive(Archive *otherArchive)
 {
     if (otherArchive == NULL || otherArchive->getNumberOfItems() == 0)
         return NULL;
@@ -108,8 +94,34 @@ P00Archive::archiveFromArchive(Archive *otherArchive)
     while ((byte = otherArchive->getByte()) != EOF) {
         *ptr++ = (uint8_t)byte;
     }
-
+    
     return archive;
+}
+
+P00Archive::~P00Archive()
+{
+	dealloc();
+}
+
+bool
+P00Archive::isP00(const uint8_t *buffer, size_t length)
+{
+    if (length < 0x1A) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
+}
+
+bool 
+P00Archive::isP00File(const char *filename)
+{
+	assert (filename != NULL);
+	
+	if (!checkFileSize(filename, 0x1A, -1))
+		return false;
+	
+	if (!checkFileHeader(filename, magicBytes))
+		return false;
+	
+	return true;
 }
 
 void 
