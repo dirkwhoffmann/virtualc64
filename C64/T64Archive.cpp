@@ -32,40 +32,9 @@ T64Archive::T64Archive()
 	dealloc();
 }
 
-T64Archive::~T64Archive()
-{
-	dealloc();
-}
-
-bool
-T64Archive::isT64(const uint8_t *buffer, size_t length)
-{
-    if (length < 0x40) return false;
-    return checkBufferHeader(buffer, length, magicBytes);
-}
-
-bool 
-T64Archive::isT64File(const char *path)
-{	
-	assert(path != NULL);
-	
-	if (!checkFileSuffix(path, ".T64") && !checkFileSuffix(path, ".t64"))
-		return false;
-	
-	if (!checkFileSize(path, 0x40, -1))
-		return false;
-	
-    if (!checkFileHeader(path, magicBytes))
-		return false;
-	
-	return true;
-}
-
 T64Archive *
-T64Archive::makeArchiveWithT64Buffer(const uint8_t *buffer, size_t length)
+T64Archive::makeT64ArchiveWithBuffer(const uint8_t *buffer, size_t length)
 {
-    assert(buffer != NULL);
-    
     T64Archive *archive = new T64Archive();
     
     if (!archive->readFromBuffer(buffer, length)) {
@@ -73,44 +42,29 @@ T64Archive::makeArchiveWithT64Buffer(const uint8_t *buffer, size_t length)
         return NULL;
     }
     
-    if (!archive->repair()) {
-        delete archive;
-        return NULL;
-    }
-    
-    archive->debug(1, "T64 archive created from buffer (%d bytes).\n", length);
     return archive;
 }
 
 T64Archive *
-T64Archive::makeArchiveWithT64File(const char *path)
+T64Archive::makeT64ArchiveWithFile(const char *path)
 {
-    assert(path != NULL);
+    T64Archive *archive = new T64Archive();
     
-	T64Archive *archive = new T64Archive();
-    
-	if (!archive->readFromFile(path)) {
-        delete archive;
-		return NULL;
-	}
-
-    if (!archive->repair()) {
+    if (!archive->readFromFile(path)) {
         delete archive;
         return NULL;
     }
-
-    archive->debug(1, "T64 archive created with file %s.\n", path);
-	return archive;
+    
+    return archive;
 }
 
 T64Archive *
-T64Archive::makeArchiveWithAnyArchive(Archive *otherArchive)
+T64Archive::makeT64ArchiveWithAnyArchive(Archive *otherArchive)
 {
     if (otherArchive == NULL)
         return NULL;
     
     T64Archive *archive  = new T64Archive();
- 
     
     // Determine container size and allocate memory
     unsigned currentFiles = otherArchive->getNumberOfItems();
@@ -138,11 +92,11 @@ T64Archive::makeArchiveWithAnyArchive(Archive *otherArchive)
     // Max files (2 bytes)
     *ptr++ = LO_BYTE(maxFiles);
     *ptr++ = HI_BYTE(maxFiles);
-
+    
     // Current files (2 bytes)
     *ptr++ = LO_BYTE(currentFiles);
     *ptr++ = HI_BYTE(currentFiles);
-
+    
     // Reserved (2 bytes)
     *ptr++ = 0x00;
     *ptr++ = 0x00;
@@ -156,7 +110,7 @@ T64Archive::makeArchiveWithAnyArchive(Archive *otherArchive)
     uint32_t tapePosition = 64 + maxFiles * 32; // data of item 0 starts here
     memset(ptr, 0, 32 * maxFiles);
     for (unsigned n = 0; n < maxFiles; n++) {
-
+        
         if (n >= currentFiles) {
             // Empty tape slot
             ptr += 32;
@@ -173,7 +127,7 @@ T64Archive::makeArchiveWithAnyArchive(Archive *otherArchive)
         uint16_t startAddr = otherArchive->getDestinationAddrOfItem(n);
         *ptr++ = LO_BYTE(startAddr);
         *ptr++ = HI_BYTE(startAddr);
-            
+        
         // Start address (2 bytes)
         uint16_t endAddr = startAddr + otherArchive->getSizeOfItem(n);
         *ptr++ = LO_BYTE(endAddr);
@@ -181,17 +135,17 @@ T64Archive::makeArchiveWithAnyArchive(Archive *otherArchive)
         
         // Reserved (2 bytes)
         ptr += 2;
-            
+        
         // Tape position (4 bytes)
         *ptr++ = LO_BYTE(tapePosition);
         *ptr++ = LO_BYTE(tapePosition >> 8);
         *ptr++ = LO_BYTE(tapePosition >> 16);
         *ptr++ = LO_BYTE(tapePosition >> 24);
         tapePosition += otherArchive->getSizeOfItem(n);
-            
+        
         // Reserved (4 bytes)
         ptr += 4;
-            
+        
         // File name (16 bytes)
         strncpy((char *)ptr, (char *)otherArchive->getNameOfItem(n), 16);
         for (unsigned i = 0; i < 16; i++, ptr++)
@@ -200,7 +154,7 @@ T64Archive::makeArchiveWithAnyArchive(Archive *otherArchive)
     
     // File data
     for (unsigned n = 0; n < currentFiles; n++) {
-
+        
         int byte;
         otherArchive->selectItem(n);
         while ((byte = otherArchive->getByte()) != EOF) {
@@ -219,28 +173,56 @@ T64Archive::makeArchiveWithAnyArchive(Archive *otherArchive)
 
 void T64Archive::dealloc()
 {
-	if (data) free(data);
-	data = NULL;
-	size = 0;
-	fp = -1;
-	fp_eof = -1;
+    if (data) free(data);
+    data = NULL;
+    size = 0;
+    fp = -1;
+    fp_eof = -1;
+}
+
+T64Archive::~T64Archive()
+{
+	dealloc();
+}
+
+bool
+T64Archive::isValidT64Buffer(const uint8_t *buffer, size_t length)
+{
+    if (length < 0x40) return false;
+    return checkBufferHeader(buffer, length, magicBytes);
 }
 
 bool 
-T64Archive::hasSameType(const char *filename)
-{
-	return T64Archive::isT64File(filename);
+T64Archive::isValidT64File(const char *path)
+{	
+	assert(path != NULL);
+	
+	if (!checkFileSuffix(path, ".T64") && !checkFileSuffix(path, ".t64"))
+		return false;
+	
+	if (!checkFileSize(path, 0x40, -1))
+		return false;
+	
+    if (!checkFileHeader(path, magicBytes))
+		return false;
+	
+	return true;
 }
 
 bool 
 T64Archive::readFromBuffer(const uint8_t *buffer, size_t length)
-{	
+{
+    assert(buffer != NULL);
+    
 	if ((data = (uint8_t *)malloc(length)) == NULL)
 		return false;
 
 	memcpy(data, buffer, length);
 	size = length;
 
+    // Some T64 archives contain incosistencies. We fix them asap
+    (void)repair();
+    
 	return true;
 }
 

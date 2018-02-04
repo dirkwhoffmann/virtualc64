@@ -1,7 +1,6 @@
 /*!
  * @header      Archive.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
- * @copyright   2006 - 2016 Dirk W. Hoffmann
  */
 /*
  * This program is free software; you can redistribute it and/or modify
@@ -49,7 +48,7 @@ public:
     //! Factory methods
     //
     
-    static Archive *makeArchiveFromFile(const char *filename);
+    static Archive *makeArchiveWithFile(const char *filename);
     
     //
     //! Accessing archive attributes

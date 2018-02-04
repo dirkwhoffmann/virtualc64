@@ -29,23 +29,49 @@ CRTContainer::CRTContainer()
     dealloc();
 }
 
-CRTContainer::~CRTContainer()
+CRTContainer *
+CRTContainer::makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length)
 {
-	dealloc();
+    CRTContainer *cartridge = new CRTContainer();
+    
+    if (!cartridge->readFromBuffer(buffer, length)) {
+        delete cartridge;
+        cartridge = NULL;
+    }
+    
+    return cartridge;
+}
+
+CRTContainer *
+CRTContainer::makeCRTContainerWithFile(const char *filename)
+{
+    CRTContainer *cartridge = new CRTContainer();
+    
+    if (!cartridge->readFromFile(filename)) {
+        delete cartridge;
+        cartridge = NULL;
+    }
+    
+    return cartridge;
 }
 
 void
 CRTContainer::dealloc()
-{
-    if (data) {
-        free(data);
-        data = NULL;
+    {
+        if (data) {
+            free(data);
+            data = NULL;
+        }
+        
+        for (unsigned i = 0; i < 64; i++)
+            chips[i] = NULL;
+        
+        numberOfChips = 0;
     }
-    
-    for (unsigned i = 0; i < 64; i++)
-        chips[i] = NULL;
-    
-    numberOfChips = 0;
+        
+CRTContainer::~CRTContainer()
+{
+	dealloc();
 }
 
 bool
@@ -70,20 +96,6 @@ CRTContainer::isValidCRTFile(const char *filename)
         return false;
     
     return true;
-}
-
-CRTContainer *
-CRTContainer::containerFromCRTFile(const char *filename)
-{
-    CRTContainer *cartridge;
-    
-    cartridge = new CRTContainer();
-    if (!cartridge->readFromFile(filename)) {
-        delete cartridge;
-        cartridge = NULL;
-    }
-    return cartridge;
-    
 }
 
 bool

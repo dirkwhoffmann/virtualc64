@@ -44,57 +44,43 @@ class T64Archive : public Archive {
      *  @details  Maximum value for fp. Do we really need this?
      */
 	long fp_eof;
-    
+   
 public:
-
+    
     //
-    //! @functiongroup Creating and destructing T64 archives
+    //! @functiongroup Creating and destructing containers
     //
     
     //! @brief    Standard constructor
     T64Archive();
     
-    //! @brief    Standard destructor
-    ~T64Archive();
-
-    //! @brief    Returns true iff buffer contains a T64 file
-    static bool isT64(const uint8_t *buffer, size_t length);
-
-    //! @brief    Returns true iff path points to a T64 file
-    static bool isT64File(const char *path);
-
     //! @brief    Factory method
-    static T64Archive *makeArchiveWithT64Buffer(const uint8_t *buffer, size_t length);
+    static T64Archive *makeT64ArchiveWithBuffer(const uint8_t *buffer, size_t length);
     
     //! @brief    Factory method
-    static T64Archive *makeArchiveWithT64File(const char *path);
+    static T64Archive *makeT64ArchiveWithFile(const char *path);
     
     /*! @brief    Factory method
      *  @details  otherArchive can be of any archive type
      */
-    static T64Archive *makeArchiveWithAnyArchive(Archive *otherArchive);
+    static T64Archive *makeT64ArchiveWithAnyArchive(Archive *otherArchive);
 
+    //! @brief    Standard destructor
+    ~T64Archive();
 
-    //
-    // Virtual functions from Container class
-    //
-    
     void dealloc();
     
-    const char *getName();
-    const unsigned short *getUnicodeName(size_t maxChars);
+    //
+    //! @functiongroup Accessing container attributes
+    //
+
+    // From Container class
     ContainerType getType() { return T64_CONTAINER; }
     const char *typeAsString() { return "T64"; }
+    const char *getName();
+    const unsigned short *getUnicodeName(size_t maxChars);
     
-    bool hasSameType(const char *filename);
-    bool readFromBuffer(const uint8_t *buffer, size_t length);
-    size_t writeToBuffer(uint8_t *buffer);
-    
-    
-    //
-    // Virtual functions from Archive class
-    //
-    
+    // From Archive class
     int getNumberOfItems();
     const char *getNameOfItem(int n);
     const unsigned short *getUnicodeNameOfItem(int n, size_t maxChars);
@@ -104,9 +90,28 @@ public:
     void selectItem(int n);
     int getByte();
     
+    //
+    //! @functiongroup Serializing
+    //
+    
+    //! @brief    Returns true iff buffer contains a T64 file
+    static bool isValidT64Buffer(const uint8_t *buffer, size_t length);
+    
+    //! Returns true of filename points to a valid file of that type
+    static bool isValidT64File(const char *filename);
+    
+    //! Check file type
+    bool hasSameType(const char *filename) { return T64Archive::isValidT64File(filename); }
+    
+    //! Read container data from memory buffer
+    bool readFromBuffer(const uint8_t *buffer, size_t length);
+
+    //! Write container data to memory buffer
+    size_t writeToBuffer(uint8_t *buffer);
+    
     
     //
-    // Custom methods
+    // @functiongroup Scanning and repairing an archive
     //
     
     //! @brief Check if the file header contains information at the specific location

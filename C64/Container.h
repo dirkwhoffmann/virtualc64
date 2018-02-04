@@ -61,12 +61,11 @@ protected:
      */
     unsigned short unicode[256];
 
+public:
     
     //
     //! @functiongroup Creating and destructing containers
     //
-
-public:
 
     //! @brief    Constructor
     Container();

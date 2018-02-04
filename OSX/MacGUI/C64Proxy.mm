@@ -968,9 +968,9 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     if (wrapper) delete wrapper;
 }
 
-+ (instancetype)makeArchiveFromFile:(NSString *)filename
++ (instancetype)makeArchiveFromFile:(NSString *)path
 {
-    Archive *archive = Archive::makeArchiveFromFile([filename UTF8String]);
+    Archive *archive = Archive::makeArchiveWithFile([path UTF8String]);
     return archive ? [[ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
@@ -1026,19 +1026,19 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 + (BOOL)isT64File:(NSString *)filename
 {
-    return T64Archive::isT64File([filename UTF8String]);
+    return T64Archive::isValidT64File([filename UTF8String]);
 }
 
 + (instancetype)archiveFromT64File:(NSString *)filename
 {
-    T64Archive *archive = T64Archive::makeArchiveWithT64File([filename UTF8String]);
+    T64Archive *archive = T64Archive::makeT64ArchiveWithFile([filename UTF8String]);
     return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
 + (instancetype)archiveFromArchive:(ArchiveProxy *)otherArchive
 {
     Archive *other = [otherArchive wrapper]->archive;
-    T64Archive *archive = T64Archive::makeArchiveWithAnyArchive(other);
+    T64Archive *archive = T64Archive::makeT64ArchiveWithAnyArchive(other);
     return archive ? [[T64ArchiveProxy alloc] initWithArchive:archive] : nil;
 }
 
@@ -1240,14 +1240,14 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     }
 }
 
-+ (BOOL) isCRTFile:(NSString *)filename
++ (BOOL) isCRTFile:(NSString *)path
 {
-    return CRTContainer::isValidCRTFile([filename UTF8String]);
+    return CRTContainer::isValidCRTFile([path UTF8String]);
 }
 
-+ (instancetype)containerFromCRTFile:(NSString *)filename
++ (instancetype)containerFromCRTFile:(NSString *)path
 {
-    CRTContainer *container = CRTContainer::containerFromCRTFile([filename UTF8String]);
+    CRTContainer *container = CRTContainer::makeCRTContainerWithFile([path UTF8String]);
     return container ? [[CRTContainerProxy alloc] initWithCRTContainer:container] : nil;
 }
 

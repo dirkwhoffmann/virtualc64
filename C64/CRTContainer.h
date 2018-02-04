@@ -52,18 +52,21 @@ private:
     //! @brief    Indicates where each chip section starts
     uint8_t *chips[64];
 
+public:
+    
     //
     //! @functiongroup Creating and destructing containers
     //
 
-public:
-    
     //! @brief    Constructor
     CRTContainer();
     
     //! @brief    Factory method
-    static CRTContainer *containerFromCRTFile(const char *filename);
-    
+    static CRTContainer *makeCRTContainerWithBuffer(const uint8_t *buffer, size_t length);
+
+    //! @brief    Factory method
+    static CRTContainer *makeCRTContainerWithFile(const char *filename);
+
     //! @brief    Destructor
     ~CRTContainer();
     

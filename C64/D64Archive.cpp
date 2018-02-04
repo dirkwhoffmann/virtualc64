@@ -154,8 +154,8 @@ D64Archive::archiveFromArbitraryFile(const char *path)
 		return D64Archive::archiveFromD64File(path);
 	}
 	
-	if (T64Archive::isT64File(path)) {
-		return D64Archive::archiveFromArchive(T64Archive::makeArchiveWithT64File(path));
+	if (T64Archive::isValidT64File(path)) {
+		return D64Archive::archiveFromArchive(T64Archive::makeT64ArchiveWithFile(path));
 	}
 
 	if (PRGArchive::isPRGFile(path)) {

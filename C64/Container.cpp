@@ -80,14 +80,14 @@ Container::setName(const char *str)
 bool
 Container::readFromFile(const char *filename)
 {
-	bool success = false;
+    assert (filename != NULL);
+    
+    bool success = false;
 	uint8_t *buffer = NULL;
 	FILE *file = NULL;
 	struct stat fileProperties;
     char *name = NULL;
 	
-	assert (filename != NULL);
-			
 	// Check file type
     if (!hasSameType(filename)) {
 		goto exit;
