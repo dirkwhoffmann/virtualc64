@@ -185,7 +185,7 @@ Snapshot::writeToBuffer(uint8_t *buffer)
     
     // Copy header
     if (buffer)
-        memcpy(buffer, (uint8_t *)&header, sizeof(header));
+        memcpy(buffer,(const void *)&header, sizeof(header));
 
     // Copy state data
     if (buffer)

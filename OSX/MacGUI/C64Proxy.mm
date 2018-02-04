@@ -919,12 +919,16 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 
 - (SnapshotWrapper *)wrapper { return wrapper; }
 - (NSInteger) sizeOnDisk { return wrapper->snapshot->sizeOnDisk(); }
-- (void) readFromBuffer:(uint8_t *)buffer length:(NSInteger)length { wrapper->snapshot->readFromBuffer(buffer, length); }
-- (NSInteger) writeToBuffer:(uint8_t *)buffer { return wrapper->snapshot->writeToBuffer(buffer); }
+- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length {
+    wrapper->snapshot->readFromBuffer((const uint8_t *)buffer, length); }
+- (NSInteger) writeToBuffer:(void *)buffer {
+    return wrapper->snapshot->writeToBuffer((uint8_t *)buffer); }
+/*
 - (bool) readDataFromFile:(NSString *)path {
     return wrapper->snapshot->readFromFile([path UTF8String]); }
 - (bool) writeDataToFile:(NSString *)path {
     return wrapper->snapshot->writeToFile([path UTF8String]); }
+*/
 
 @end
 
@@ -1015,9 +1019,21 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (NSString *) getTypeOfItem:(NSInteger)item {
     return [NSString stringWithUTF8String:wrapper->archive->getTypeOfItem((int)item)];
 }
+
+- (NSInteger) sizeOnDisk { return wrapper->archive->sizeOnDisk(); }
+- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length {
+    wrapper->archive->readFromBuffer((const uint8_t *)buffer, length);
+}
+- (NSInteger) writeToBuffer:(const void *)buffer {
+    return wrapper->archive->writeToBuffer((uint8_t *)buffer);
+}
+
+/*
 - (BOOL)writeToFile:(NSString *)filename {
     return wrapper->archive->writeToFile([filename UTF8String]);
 }
+*/
+
 
 @end
 

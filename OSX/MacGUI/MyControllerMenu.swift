@@ -366,18 +366,26 @@ extension MyController {
             return false
         }
         
-        // Write to file
+        // Serialize archive
+        let data = NSMutableData.init(length: archive!.sizeOnDisk())
+        let ptr = data!.mutableBytes //  .assumingMemoryBound(to: UInt8.self)
+        archive!.write(toBuffer: ptr)
+        
+        // Save data
+        if let url = sPanel.url {
+            track("Exporting to file \(url)")
+            data?.write(to: url, atomically: true)
+            c64.vc1541.disk.setModified(false)
+        }
+        
+        /*
         let selectedURL = sPanel.url
         let selectedFileURL = selectedURL?.absoluteString
         guard let selectedFile = selectedFileURL?.replacingOccurrences(of: "file://", with: "") else {
             NSLog("Unable to extract filename")
             return false
         }
-        
-        track("Exporting to file \(selectedFile)")
-
-        archive!.write(toFile: selectedFile)
-        c64.vc1541.disk.setModified(false)
+        */
         
         return true
     }

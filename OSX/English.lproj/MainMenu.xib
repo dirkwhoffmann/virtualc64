@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="MainMenu" systemMenu="main" id="29" userLabel="MainMenu">
             <items>
                 <menuItem title="Virtual C64" id="56">
@@ -408,25 +408,25 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Export disk" id="e6l-tB-OY6">
                                     <items>
-                                        <menuItem title="D64 file" id="EOt-Xa-f3C">
+                                        <menuItem title="D64 ..." id="EOt-Xa-f3C">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportDiskD64:" target="-1" id="1wJ-nA-NRi"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="T64 file" id="taQ-HZ-taF">
+                                        <menuItem title="T64 ..." id="taQ-HZ-taF">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportDiskT64:" target="-1" id="2eX-Di-flw"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="PRG file" id="J0u-P7-GSL">
+                                        <menuItem title="PRG ..." id="J0u-P7-GSL">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportDiskPRG:" target="-1" id="j43-2D-8ch"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="P00 file" id="SGV-T9-ber">
+                                        <menuItem title="P00 ..." id="SGV-T9-ber">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportDiskP00:" target="-1" id="DIX-0U-Kt2"/>

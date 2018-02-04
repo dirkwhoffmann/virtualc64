@@ -724,12 +724,13 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 + (instancetype) makeSnapshotWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype) makeSnapshotWithFile:(NSString *)path;
 
-- (struct SnapshotWrapper *)wrapper;
+- (struct SnapshotWrapper *)wrapper; // WHY DO WE NEED THIS?
+
 - (NSInteger) sizeOnDisk;
-- (void) readFromBuffer:(uint8_t *)buffer length:(NSInteger)length;
-- (NSInteger) writeToBuffer:(uint8_t *)buffer;
-- (bool) readDataFromFile:(NSString *)path;
-- (bool) writeDataToFile:(NSString *)path;
+- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length;
+- (NSInteger) writeToBuffer:(void *)buffer;
+// - (bool) readDataFromFile:(NSString *)path;
+// - (bool) writeDataToFile:(NSString *)path;
 
 @end
 
@@ -744,6 +745,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 }
 
 - (struct ArchiveWrapper *)wrapper;
+
 + (instancetype) makeArchiveFromFile:(NSString *)filename;
 - (NSString *)getPath;
 - (NSString *)getName;
@@ -755,7 +757,11 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (NSInteger) getSizeOfItem:(NSInteger)item;
 - (NSInteger) getSizeOfItemInBlocks:(NSInteger)item;
 - (NSString *) getTypeOfItem:(NSInteger)item;
-- (BOOL)writeToFile:(NSString *)filename;
+- (NSInteger) sizeOnDisk;
+- (void) readFromBuffer:(const void *)buffer length:(NSInteger)length;
+- (NSInteger) writeToBuffer:(const void *)buffer;
+
+// - (BOOL)writeToFile:(NSString *)filename;
 @end
 
 @interface T64ArchiveProxy : ArchiveProxy

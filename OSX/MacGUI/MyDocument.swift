@@ -157,6 +157,7 @@ class MyDocument : NSDocument {
             break
         }
         
+        track("Unknown file type")
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
 
@@ -215,6 +216,7 @@ class MyDocument : NSDocument {
     // Saving
     //
 
+    /*
     override open func write(to url: URL, ofType typeName: String) throws {
    
         let filename = url.path
@@ -229,12 +231,11 @@ class MyDocument : NSDocument {
         c64.save(toSnapshot: snapshot)
         snapshot?.writeData(toFile: filename)
     }
- 
+    */
     
-    /*
     override open func data(ofType typeName: String) throws -> Data {
         
-        NSLog("data(ofType:\(typeName))")
+        track("Trying to write \(typeName) file.")
         
         if typeName == "VC64" {
 
@@ -247,18 +248,13 @@ class MyDocument : NSDocument {
             c64.save(toSnapshot: snapshot)
 
             let data = NSMutableData.init(length: snapshot.sizeOnDisk())
-            let ptr = data!.mutableBytes.assumingMemoryBound(to: UInt8.self)
+            let ptr = data!.mutableBytes // .assumingMemoryBound(to: UInt8.self)
             snapshot.write(toBuffer: ptr)
             return data! as Data
         }
-        
+                
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
-*/
-    
-/*
-
-*/
     
     open override func removeWindowController(_ windowController: NSWindowController) {
         

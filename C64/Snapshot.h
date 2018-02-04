@@ -119,7 +119,6 @@ public:
 	bool hasSameType(const char *filename);
 	bool readFromBuffer(const uint8_t *buffer, size_t length);
 	size_t writeToBuffer(uint8_t *buffer);
-    // unsigned sizeOnDisk() { return getHeaderSize() + getDataSize(); }
     ContainerType type();
 	const char *typeAsString();
 
