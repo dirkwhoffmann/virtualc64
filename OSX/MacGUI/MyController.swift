@@ -32,36 +32,46 @@ extension MyController {
     //                                 Modal dialogs
     // --------------------------------------------------------------------------------
 
-    // Bring up the new mount view
- 
-    
     @objc func showNewMountDialog() {
+
+        // Check for attachment
+        let document = self.document as! MyDocument
+        if (document.attachedArchive == nil) {
+            return
+        }
+
+        // Which mount dialog should we use?
+        var controller: MountController!
+        switch document.attachedArchive!.getType() {
+        case T64_CONTAINER,
+             D64_CONTAINER,
+             PRG_CONTAINER,
+             P00_CONTAINER:
+            let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
+            controller = ArchiveMountController.init(windowNibName: nibName)
+            break
+            
+        case G64_CONTAINER,
+             NIB_CONTAINER:
+            let nibName = NSNib.Name(rawValue: "DiskMountDialog")
+            controller = DiskMountController.init(windowNibName: nibName)
+            break
+
+        default:
+            assert(false)
+            break
+        }
         
-        let nibName = NSNib.Name(rawValue: "MountController")
-        let controller = MountController.init(windowNibName: nibName)
+        // Show dialog
         controller.setParentController(self)
-        
         if let sheetWindow = controller.window {
-            
-            // showMountDialog()
-            /*
-             let application = NSApplication.shared
-             application.runModal(for: sheetWindow)
-             window?.close()
-            */
-            
             window!.beginSheet(sheetWindow, completionHandler: { responseCode in
-                controller.terminate()
                 if responseCode == NSApplication.ModalResponse.OK {
                     self.rotateBack()
                 }
             })
-            
-            
         }
     }
-    
-
     
     // --------------------------------------------------------------------------------
     // Action methods (Drive)

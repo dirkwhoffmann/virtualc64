@@ -128,8 +128,13 @@ public extension MetalView {
             // Is it an archive?
             document.attachedArchive = ArchiveProxy.makeArchive(withFile: path)
             if document.attachedArchive != nil {
+                
                 track("Successfully read archive.")
-                controller.showNewMountDialog()
+                if document.attachedArchive?.getType() == G64_CONTAINER {
+                    controller.showMountDialog()
+                } else {
+                    controller.showNewMountDialog()
+                }
                 return true
             }
         
@@ -144,21 +149,26 @@ public extension MetalView {
             // Is it a cartridge?
             document.attachedCartridge = CRTContainerProxy.makeCRTContainer(withFile: path)
             if document.attachedCartridge != nil {
-                NSLog("Successfully read cartridge.")
+                track("Successfully read cartridge.")
                 return true
             }
         
             // We haven't found any known file format. We could attach an archive
             // of type FileArchive which would copy the file's raw data in memory
-            // at the location where normal programs start. But maybe, it's better
-            // to deny the drag request.
+            // at the location where normal programs start.
+            /*
             document.attachedArchive = FileArchiveProxy.makeFileArchive(withFile: path)
             if document.attachedArchive != nil {
                 track("Successfully read archive.")
                 controller.showNewMountDialog()
                 return true
             }
-        
+            */
+            
+            // However, it seems better to reject the drag operation.
+            track("Unsupported file type dragged in.")
+            return false
+            
         default:
             break
         }

@@ -8,12 +8,23 @@
 import Foundation
 
 class MountController : NSWindowController {
-    
-    // Internal state
+
     var controller: MyController!
     var archive: ArchiveProxy!
     var c64: C64Proxy!
     var parentWindow: NSWindow!
+
+    func setParentController(_ controller: MyController) {
+        
+        let document = controller.document as! MyDocument
+        self.controller = controller
+        self.archive = document.attachedArchive
+        self.c64 = document.c64
+        self.parentWindow = controller.window
+    }
+}
+
+class ArchiveMountController : MountController {
     
     // Custom font
     let cbmfont = NSFont.init(name: "C64ProMono", size: 10)
@@ -26,16 +37,6 @@ class MountController : NSWindowController {
     @IBOutlet weak var headerText: NSTextField!
     @IBOutlet weak var diskIcon: NSImageView!
     @IBOutlet weak var diskIconFrame: NSBox!
-
-    func setParentController(_ controller: MyController) {
-
-        let document = controller.document as! MyDocument
-        
-        self.controller = controller
-        self.archive = document.attachedArchive
-        self.c64 = document.c64
-        self.parentWindow = controller.window
-    }
     
     override public func awakeFromNib() {
         
@@ -47,7 +48,7 @@ class MountController : NSWindowController {
         directory.dataSource = self
         directory.deselectAll(self)
         directory.intercellSpacing = NSSize(width: 0, height: 0)
-        directory.doubleAction = #selector(MountController.performDoubleClick(_:))
+        directory.doubleAction = #selector(ArchiveMountController.performDoubleClick(_:))
         directory.selectRowIndexes(IndexSet.init(integer: 0), byExtendingSelection: false)
         directory.reloadData()
         
@@ -79,11 +80,6 @@ class MountController : NSWindowController {
             break
         }
     }
-
-    func terminate() {
-        NSLog("\(#function)")
-    }
-
     
     //
     // Action methods
@@ -123,7 +119,7 @@ class MountController : NSWindowController {
 // NSTableView delegate and data source
 //
 
-extension MountController : NSTableViewDelegate {
+extension ArchiveMountController : NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView,
                    willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
@@ -140,7 +136,7 @@ extension MountController : NSTableViewDelegate {
     }
 }
 
-extension MountController : NSTableViewDataSource {
+extension ArchiveMountController : NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
 

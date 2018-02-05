@@ -667,7 +667,12 @@
             // Check for attached archive
             if ([[self document] attachedArchive]) {
                 NSLog(@"Found attached archive");
-                [self showNewMountDialog];
+                
+                if ([[[self document] attachedArchive] getType] == G64_CONTAINER) {
+                    [self showMountDialog];
+                } else {
+                    [self showNewMountDialog];
+                }
             }
         
             

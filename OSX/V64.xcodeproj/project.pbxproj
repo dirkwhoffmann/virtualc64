@@ -63,11 +63,12 @@
 		5039A32015BE97500038ACBC /* diskette.png in Resources */ = {isa = PBXBuildFile; fileRef = 5039A31F15BE97500038ACBC /* diskette.png */; };
 		503A5AD712227C0300EAA95E /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 503A5AD612227C0300EAA95E /* dsa_pub.pem */; };
 		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
+		50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50412B0C2028F31800CC90A1 /* DiskMountController.swift */; };
 		50414727122188FC00A80E0C /* CRTContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50414725122188FC00A80E0C /* CRTContainer.cpp */; };
 		5041486912219F6E00A80E0C /* cartridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5041486812219F6E00A80E0C /* cartridge.png */; };
 		504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504606321BE4B99100463FD7 /* G64Archive.cpp */; };
-		5046C413202344F3000D9B1C /* MountController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5046C412202344F3000D9B1C /* MountController.xib */; };
-		5046C415202349EE000D9B1C /* MountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046C414202349EE000D9B1C /* MountController.swift */; };
+		5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */; };
+		5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5046C414202349EE000D9B1C /* ArchiveMountController.swift */; };
 		50471FE60A7B679A00A8DB94 /* stepInto32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE50A7B679A00A8DB94 /* stepInto32.png */; };
 		50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FE70A7B67A100A8DB94 /* stepOver32.png */; };
 		50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */ = {isa = PBXBuildFile; fileRef = 50471FEB0A7B67AE00A8DB94 /* restart32.png */; };
@@ -108,6 +109,7 @@
 		5088E6881C3515DB006A80E5 /* VC64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5088E6861C3515DB006A80E5 /* VC64Object.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5094197D0E426C13008D6F71 /* rom.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094197C0E426C13008D6F71 /* rom.png */; };
+		509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 509A26062027AA1100D28827 /* DiskMountDialog.xib */; };
 		509AEA0C0C324AB0001FC9FD /* PRGArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */; };
 		509AEAFF0C325EFB001FC9FD /* P00Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */; };
 		509DF2480A9F681900AE0859 /* keyboard32.png in Resources */ = {isa = PBXBuildFile; fileRef = 509DF2470A9F681900AE0859 /* keyboard32.png */; };
@@ -323,13 +325,14 @@
 		5039A31F15BE97500038ACBC /* diskette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diskette.png; sourceTree = "<group>"; };
 		503A5AD612227C0300EAA95E /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
+		50412B0C2028F31800CC90A1 /* DiskMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskMountController.swift; sourceTree = "<group>"; };
 		50414725122188FC00A80E0C /* CRTContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRTContainer.cpp; sourceTree = "<group>"; };
 		50414726122188FC00A80E0C /* CRTContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTContainer.h; sourceTree = "<group>"; };
 		5041486812219F6E00A80E0C /* cartridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cartridge.png; sourceTree = "<group>"; };
 		504606321BE4B99100463FD7 /* G64Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G64Archive.cpp; sourceTree = "<group>"; };
 		504606331BE4B99100463FD7 /* G64Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G64Archive.h; sourceTree = "<group>"; };
-		5046C412202344F3000D9B1C /* MountController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MountController.xib; sourceTree = "<group>"; };
-		5046C414202349EE000D9B1C /* MountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountController.swift; sourceTree = "<group>"; };
+		5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchiveMountDialog.xib; sourceTree = "<group>"; };
+		5046C414202349EE000D9B1C /* ArchiveMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveMountController.swift; sourceTree = "<group>"; };
 		50471FE50A7B679A00A8DB94 /* stepInto32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepInto32.png; sourceTree = "<group>"; };
 		50471FE70A7B67A100A8DB94 /* stepOver32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stepOver32.png; sourceTree = "<group>"; };
 		50471FEB0A7B67AE00A8DB94 /* restart32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart32.png; sourceTree = "<group>"; };
@@ -383,6 +386,7 @@
 		5088E6871C3515DB006A80E5 /* VC64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VC64Object.h; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5094197C0E426C13008D6F71 /* rom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rom.png; sourceTree = "<group>"; };
+		509A26062027AA1100D28827 /* DiskMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskMountDialog.xib; sourceTree = "<group>"; };
 		509AEA0A0C324AB0001FC9FD /* PRGArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRGArchive.h; sourceTree = "<group>"; };
 		509AEA0B0C324AB0001FC9FD /* PRGArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PRGArchive.cpp; sourceTree = "<group>"; };
 		509AEAFD0C325EFB001FC9FD /* P00Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P00Archive.h; sourceTree = "<group>"; };
@@ -614,7 +618,8 @@
 				503A5AD612227C0300EAA95E /* dsa_pub.pem */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
-				5046C412202344F3000D9B1C /* MountController.xib */,
+				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
+				509A26062027AA1100D28827 /* DiskMountDialog.xib */,
 				50732BCA0A70D560008D8FF0 /* Images */,
 				5051A1501B8842F100CBFB5A /* Sounds */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -755,7 +760,8 @@
 				5000473312DCEA6B0098D890 /* MyControllerCiaPanel.mm */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
-				5046C414202349EE000D9B1C /* MountController.swift */,
+				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
+				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
 				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controller;
@@ -1157,10 +1163,11 @@
 				50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */,
 				509DF2480A9F681900AE0859 /* keyboard32.png in Resources */,
 				50C8925A1BEFB64500231B96 /* cntrlRewind.png in Resources */,
+				509A26072027AA1100D28827 /* DiskMountDialog.xib in Resources */,
 				50C892591BEFB64500231B96 /* cntrlPlay.png in Resources */,
 				504A22B01BF71FD500B29BEB /* pin_black.png in Resources */,
 				504A22AB1BF71FD500B29BEB /* clock_blue.png in Resources */,
-				5046C413202344F3000D9B1C /* MountController.xib in Resources */,
+				5046C413202344F3000D9B1C /* ArchiveMountDialog.xib in Resources */,
 				500FF3911BD7F4DF0038245B /* romchip.png in Resources */,
 				50E4BFA70C3CE95400CB6B43 /* floppy.png in Resources */,
 				504A22AF1BF71FD500B29BEB /* pin_red.png in Resources */,
@@ -1315,11 +1322,12 @@
 				5014D684200CD62C00044217 /* MetalSetup.swift in Sources */,
 				5058B1801A6AD2D900A99F1C /* ExpansionPort.cpp in Sources */,
 				506D39D2141780E500268AF6 /* SIDWrapper.cpp in Sources */,
+				50412B0D2028F31800CC90A1 /* DiskMountController.swift in Sources */,
 				506D39D6141788E700268AF6 /* ReSID.cpp in Sources */,
 				50D1417E1417A34B0024FC74 /* envelope.cc in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				50D1417F1417A34B0024FC74 /* extfilt.cc in Sources */,
-				5046C415202349EE000D9B1C /* MountController.swift in Sources */,
+				5046C415202349EE000D9B1C /* ArchiveMountController.swift in Sources */,
 				50D141801417A34B0024FC74 /* filter.cc in Sources */,
 				50D141811417A34B0024FC74 /* pot.cc in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,

@@ -60,7 +60,7 @@
                         <rect key="frame" x="15" y="61" width="311" height="211"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" ambiguous="YES" id="zCS-OM-PTJ">
-                            <rect key="frame" x="1" y="23" width="309" height="187"/>
+                            <rect key="frame" x="1" y="0.0" width="309" height="210"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="dru-cN-WHc" id="0Te-dS-wlO">
@@ -133,7 +133,7 @@
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Zz-cd-j4S">
                         <rect key="frame" x="327" y="13" width="143" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Insert as disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="RAT-kt-Max">
+                        <buttonCell key="cell" type="push" title="Insert disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="RAT-kt-Max">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
