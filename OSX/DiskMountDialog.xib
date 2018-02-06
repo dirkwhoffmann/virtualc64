@@ -24,14 +24,14 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="WVX-DH-I0u">
             <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="131" y="158" width="480" height="405"/>
+            <rect key="contentRect" x="131" y="158" width="480" height="462"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="fO9-7B-YPy">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="405"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="462"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="iAg-Xw-L2a">
-                        <rect key="frame" x="129" y="362" width="331" height="5"/>
+                        <rect key="frame" x="129" y="419" width="331" height="5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uNg-sD-f1D">
@@ -46,12 +46,12 @@ DQ
                         </buttonCell>
                     </button>
                     <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AKJ-2U-d4K" customClass="MountDragView">
-                        <rect key="frame" x="20" y="287" width="101" height="97"/>
+                        <rect key="frame" x="20" y="344" width="101" height="97"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="diskette" id="pHB-88-mcy"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="IconD64" id="pHB-88-mcy"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l19-lb-oYh">
-                        <rect key="frame" x="127" y="366" width="267" height="19"/>
+                        <rect key="frame" x="127" y="423" width="267" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="G64 format" id="gHB-Zc-Fgf">
                             <font key="font" metaFont="system"/>
@@ -60,7 +60,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JMf-QF-9dD">
-                        <rect key="frame" x="127" y="341" width="335" height="14"/>
+                        <rect key="frame" x="127" y="398" width="335" height="14"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="This file contains a bit-accurate image of a C64 diskette." id="CrX-XA-ycH">
                             <font key="font" metaFont="smallSystem"/>
@@ -69,7 +69,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rl8-hE-Z6v">
-                        <rect key="frame" x="127" y="294" width="335" height="42"/>
+                        <rect key="frame" x="127" y="351" width="335" height="42"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Note that many files of this type contain copy protection mechanisms that are incompatible with the current drive emulation." id="qXq-ye-DFm">
                             <font key="font" metaFont="smallSystem"/>
@@ -106,14 +106,14 @@ Gw
                         </connections>
                     </button>
                     <scrollView fixedFrame="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Kv-eb-LiJ">
-                        <rect key="frame" x="23" y="64" width="438" height="193"/>
+                        <rect key="frame" x="23" y="64" width="438" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" ambiguous="YES" id="Tl4-a1-gxI">
-                            <rect key="frame" x="1" y="1" width="436" height="191"/>
+                            <rect key="frame" x="1" y="1" width="436" height="248"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" id="3hQ-0q-ukR">
-                                    <rect key="frame" x="0.0" y="17" width="436" height="191"/>
+                                    <rect key="frame" x="0.0" y="74" width="436" height="248"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -155,16 +155,16 @@ Gw
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="WOs-h5-gGA">
-                            <rect key="frame" x="1" y="176" width="436" height="16"/>
+                            <rect key="frame" x="1" y="233" width="436" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Eub-Ln-iXr">
-                            <rect key="frame" x="421" y="1" width="16" height="191"/>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Eub-Ln-iXr">
+                            <rect key="frame" x="421" y="1" width="16" height="248"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKQ-0d-fjy">
-                        <rect key="frame" x="40" y="259" width="273" height="20"/>
+                        <rect key="frame" x="40" y="316" width="273" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Contents of halftrack 00 (track 00)" id="dvO-fQ-Vd4">
                             <font key="font" metaFont="system"/>
@@ -173,7 +173,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vhe-Oz-Tgl">
-                        <rect key="frame" x="20" y="256" width="19" height="27"/>
+                        <rect key="frame" x="20" y="313" width="19" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="GvK-KJ-LYa"/>
                         <connections>
@@ -181,7 +181,7 @@ Gw
                         </connections>
                     </stepper>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Qo-QV-6CK">
-                        <rect key="frame" x="220" y="261" width="242" height="18"/>
+                        <rect key="frame" x="220" y="318" width="242" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="0000 Bytes" id="hHu-89-ZNe">
                             <font key="font" metaFont="system"/>
@@ -191,10 +191,10 @@ Gw
                     </textField>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-353" y="693.5"/>
+            <point key="canvasLocation" x="-353" y="722"/>
         </window>
     </objects>
     <resources>
-        <image name="diskette" width="101" height="97"/>
+        <image name="IconD64" width="512" height="512"/>
     </resources>
 </document>

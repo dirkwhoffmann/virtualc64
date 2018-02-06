@@ -84,6 +84,8 @@
 		5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */; };
 		5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */; };
 		5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */; };
+		5052AD0A202A526E005FDD88 /* CartridgeMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */; };
+		5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */; };
 		5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5054BF0F20133BA2003D86D4 /* Cartridge.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
 		505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505739E31C01FC5700B80646 /* NIBArchive.cpp */; };
@@ -350,6 +352,8 @@
 		5051A15D1B885FDD00CBFB5A /* 1541_power_on_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_power_on_0.aiff; sourceTree = "<group>"; };
 		5051A15E1B885FDD00CBFB5A /* 1541_track_change_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_2.aiff; sourceTree = "<group>"; };
 		5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_1.aiff; sourceTree = "<group>"; };
+		5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartridgeMountDialog.xib; sourceTree = "<group>"; };
+		5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapeMountDialog.xib; sourceTree = "<group>"; };
 		5054BF0F20133BA2003D86D4 /* Cartridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		5054BF1020133BA2003D86D4 /* Cartridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -622,6 +626,8 @@
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
 				5046C412202344F3000D9B1C /* ArchiveMountDialog.xib */,
 				509A26062027AA1100D28827 /* DiskMountDialog.xib */,
+				5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */,
+				5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */,
 				50732BCA0A70D560008D8FF0 /* Images */,
 				5051A1501B8842F100CBFB5A /* Sounds */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -1154,6 +1160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50CCB1BA1B8499C6008D8C30 /* tb_motherboard2.png in Resources */,
+				5052AD0A202A526E005FDD88 /* CartridgeMountDialog.xib in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				50C8925B1BEFB64500231B96 /* cntrlStart.png in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
@@ -1169,6 +1176,7 @@
 				50471FE80A7B67A100A8DB94 /* stepOver32.png in Resources */,
 				50271DEA1A7E1CFE00C04290 /* LEDnewRed.png in Resources */,
 				50471FEC0A7B67AE00A8DB94 /* restart32.png in Resources */,
+				5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */,
 				50287EEB0A7CA86900292533 /* stepOut32.png in Resources */,
 				502F57FA1B93457200D1077E /* fast.png in Resources */,
 				50C9CB371B83561E0054EE86 /* pref_vic.png in Resources */,
