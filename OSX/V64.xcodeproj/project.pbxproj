@@ -86,6 +86,7 @@
 		5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */; };
 		5052AD0A202A526E005FDD88 /* CartridgeMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */; };
 		5052AD0C202A57C4005FDD88 /* TapeMountDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */; };
+		5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */; };
 		5054BF1120133BA2003D86D4 /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5054BF0F20133BA2003D86D4 /* Cartridge.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
 		505739E51C01FC5700B80646 /* NIBArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505739E31C01FC5700B80646 /* NIBArchive.cpp */; };
@@ -354,6 +355,7 @@
 		5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_1.aiff; sourceTree = "<group>"; };
 		5052AD09202A526E005FDD88 /* CartridgeMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartridgeMountDialog.xib; sourceTree = "<group>"; };
 		5052AD0B202A57C4005FDD88 /* TapeMountDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapeMountDialog.xib; sourceTree = "<group>"; };
+		5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartridgeMountController.swift; sourceTree = "<group>"; };
 		5054BF0F20133BA2003D86D4 /* Cartridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cartridge.cpp; sourceTree = "<group>"; };
 		5054BF1020133BA2003D86D4 /* Cartridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cartridge.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -971,6 +973,7 @@
 				50763276202989D300575110 /* MountController.swift */,
 				5046C414202349EE000D9B1C /* ArchiveMountController.swift */,
 				50412B0C2028F31800CC90A1 /* DiskMountController.swift */,
+				5052AD0D202A5C1B005FDD88 /* CartridgeMountController.swift */,
 			);
 			name = MountControllers;
 			sourceTree = "<group>";
@@ -1316,6 +1319,7 @@
 				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504606341BE4B99100463FD7 /* G64Archive.cpp in Sources */,
 				5018E48112240F7100F0820E /* Container.cpp in Sources */,
+				5052AD0E202A5C1B005FDD88 /* CartridgeMountController.swift in Sources */,
 				50FBE90B12DC992B0093194C /* MyControllerVicPanel.mm in Sources */,
 				506D3DCE20223E5E009742CF /* AppDelegate.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,

@@ -64,11 +64,11 @@ class DiskMountController : MountController {
         if (archive.getType() == G64_CONTAINER) {
             sizeInBytes = archive.getSizeOfItem(item)
             sizeInBits = sizeInBytes * 8
-            trackSizeinfo.stringValue = String(String(format: "%d Bytes", sizeInBytes))
+            trackSizeinfo.stringValue = String(format: "%d Bytes", sizeInBytes)
         } else {
             sizeInBits = archive.getSizeOfItem(item)
             sizeInBytes = sizeInBits / 8
-            trackSizeinfo.stringValue = String(String(format: "%d Bits", sizeInBits))
+            trackSizeinfo.stringValue = String(format: "%d Bits", sizeInBits)
         }
         
         if (halftrack % 2 == 0) {
