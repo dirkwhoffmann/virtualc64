@@ -3,106 +3,124 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="MountController" customModule="VirtualC64" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="ArchiveMountController" customModule="VirtualC64" customModuleProvider="target">
             <connections>
-                <outlet property="cancel" destination="VYU-nI-2q7" id="cvN-n0-wXY"/>
-                <outlet property="directory" destination="0Te-dS-wlO" id="S33-S7-0te"/>
-                <outlet property="diskIcon" destination="zPu-JI-Te3" id="kv2-Aq-UBI"/>
-                <outlet property="diskIconFrame" destination="MU9-Ch-nCx" id="iWL-9E-zVi"/>
-                <outlet property="headerText" destination="GKE-EM-L2o" id="lsS-rT-3VW"/>
-                <outlet property="ok" destination="0Zz-cd-j4S" id="DpX-IH-XDQ"/>
-                <outlet property="window" destination="8GD-Af-K3V" id="FW1-KU-Ckx"/>
+                <outlet property="contents" destination="LV6-8k-0lG" id="qFP-ds-BgN"/>
+                <outlet property="header" destination="uBS-zg-XUI" id="Xq6-dE-vs1"/>
+                <outlet property="icon" destination="jK5-9g-uS2" id="9AP-rA-AEt"/>
+                <outlet property="subheader" destination="4dA-W3-WEJ" id="R07-N5-CIR"/>
+                <outlet property="subsubheader" destination="F5v-IL-MIl" id="4RN-b8-kVV"/>
+                <outlet property="window" destination="FSf-w1-keQ" id="dCe-mm-hva"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="8GD-Af-K3V">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="503" y="278" width="480" height="320"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="FSf-w1-keQ">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="131" y="158" width="480" height="411"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
-            <view key="contentView" id="0ia-up-H0l">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+            <view key="contentView" id="B4a-Bc-yMJ">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="411"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="IWg-EC-B8J">
-                        <rect key="frame" x="16" y="276" width="448" height="5"/>
+                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="tzV-vx-tsV">
+                        <rect key="frame" x="129" y="368" width="331" height="5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GKE-EM-L2o">
-                        <rect key="frame" x="14" y="286" width="452" height="14"/>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7v2-fa-2Yq">
+                        <rect key="frame" x="386" y="-105" width="143" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="push" title="Insert disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="jsb-K4-C8z">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                    </button>
+                    <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jK5-9g-uS2" customClass="MountDragView">
+                        <rect key="frame" x="20" y="293" width="101" height="97"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="VC1541 drive" id="9Wo-Y4-p4l">
-                            <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="diskette" id="OW8-ku-4RV"/>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uBS-zg-XUI">
+                        <rect key="frame" x="127" y="372" width="267" height="19"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="T64 format" id="euv-RC-vAj">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Archive name" translatesAutoresizingMaskIntoConstraints="NO" id="MU9-Ch-nCx">
-                        <rect key="frame" x="331" y="137" width="137" height="135"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <view key="contentView" id="0gG-hv-bCF">
-                            <rect key="frame" x="1" y="1" width="135" height="119"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zPu-JI-Te3" customClass="MountDragView">
-                                    <rect key="frame" x="17" y="13" width="101" height="97"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="diskette" id="ycD-fK-fKK"/>
-                                </imageView>
-                            </subviews>
-                        </view>
-                    </box>
-                    <scrollView fixedFrame="YES" horizontalLineScroll="19" horizontalPageScroll="0.0" verticalLineScroll="19" verticalPageScroll="0.0" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Se-Wp-Zw6">
-                        <rect key="frame" x="15" y="61" width="311" height="211"/>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4dA-W3-WEJ">
+                        <rect key="frame" x="127" y="347" width="335" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="This file contains the byte stream of multiple C64 programs. " id="hUM-cB-odA">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F5v-IL-MIl">
+                        <rect key="frame" x="127" y="302" width="335" height="42"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Copying programs directly into memory is likely to work. " id="55v-I5-Imc">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <scrollView fixedFrame="YES" horizontalLineScroll="19" horizontalPageScroll="0.0" verticalLineScroll="19" verticalPageScroll="0.0" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6d-iI-arE">
+                        <rect key="frame" x="20" y="74" width="440" height="211"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <clipView key="contentView" ambiguous="YES" id="zCS-OM-PTJ">
-                            <rect key="frame" x="1" y="0.0" width="309" height="210"/>
+                        <clipView key="contentView" ambiguous="YES" id="Ea5-Xw-RXP">
+                            <rect key="frame" x="1" y="0.0" width="438" height="210"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="dru-cN-WHc" id="0Te-dS-wlO">
-                                    <rect key="frame" x="0.0" y="0.0" width="309" height="187"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" headerView="nI8-Xu-bNg" id="LV6-8k-0lG">
+                                    <rect key="frame" x="0.0" y="0.0" width="438" height="187"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="filename" editable="NO" width="205.16015625" minWidth="40" maxWidth="1000" id="Y8K-38-I5v">
+                                        <tableColumn identifier="filename" editable="NO" width="324.66015625" minWidth="40" maxWidth="1000" id="g79-gS-MwP">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="File name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="left" title="Text Cell" id="7zK-WD-dlm">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="left" title="Text Cell" id="u8h-ci-eIq">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="filetype" editable="NO" width="41" minWidth="32" maxWidth="1000" id="bE4-Wy-bf5">
+                                        <tableColumn identifier="filetype" editable="NO" width="41" minWidth="32" maxWidth="1000" id="t22-NL-Ikm">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Type">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="left" title="Text Cell" id="5uX-Z3-UbE">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="left" title="Text Cell" id="WMf-XR-wvV">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="filesize" editable="NO" width="54" minWidth="32" maxWidth="1000" id="L6G-LS-vwe">
+                                        <tableColumn identifier="filesize" editable="NO" width="63" minWidth="32" maxWidth="1000" id="KA0-B4-Z5C">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="right" title="Text Cell" id="24B-Ay-f9W">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" alignment="right" title="Text Cell" id="eNf-II-tum">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -111,29 +129,30 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <outlet property="dataSource" destination="-2" id="cVs-Fg-3em"/>
-                                        <outlet property="delegate" destination="-2" id="hfL-jK-8xW"/>
+                                        <action trigger="doubleAction" selector="performDoubleClick:" target="-2" id="4oN-YA-EQG"/>
+                                        <outlet property="dataSource" destination="-2" id="Zhu-S6-m7f"/>
+                                        <outlet property="delegate" destination="-2" id="wYC-nJ-tln"/>
                                     </connections>
                                 </tableView>
                             </subviews>
                         </clipView>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="ad0-fW-eC9">
-                            <rect key="frame" x="1" y="194" width="309" height="16"/>
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="6JM-Rp-9l1">
+                            <rect key="frame" x="1" y="194" width="438" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.0092592592592592587" horizontal="NO" id="luX-nU-LLe">
-                            <rect key="frame" x="294" y="23" width="16" height="187"/>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.0092592592592592587" horizontal="NO" id="aBP-0b-mA6">
+                            <rect key="frame" x="423" y="23" width="16" height="187"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <tableHeaderView key="headerView" id="dru-cN-WHc">
-                            <rect key="frame" x="0.0" y="0.0" width="309" height="23"/>
+                        <tableHeaderView key="headerView" id="nI8-Xu-bNg">
+                            <rect key="frame" x="0.0" y="0.0" width="438" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Zz-cd-j4S">
-                        <rect key="frame" x="327" y="13" width="143" height="32"/>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dn7-gw-Zwf">
+                        <rect key="frame" x="354" y="16" width="113" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Insert disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="RAT-kt-Max">
+                        <buttonCell key="cell" type="push" title="Insert disk" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="BOp-my-Bhn">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -141,13 +160,13 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="okAction:" target="-2" id="5EU-9P-5hN"/>
+                            <action selector="okAction:" target="-2" id="SdY-q7-zix"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VYU-nI-2q7">
-                        <rect key="frame" x="9" y="13" width="82" height="32"/>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kxt-wM-O2Y">
+                        <rect key="frame" x="14" y="16" width="113" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="w3v-DQ-l18">
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="u6l-Ry-hLA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -155,13 +174,13 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="cancelAction:" target="-2" id="IMa-EE-ais"/>
+                            <action selector="cancelAction:" target="-2" id="pUd-4g-JQl"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eez-VN-KJ7">
-                        <rect key="frame" x="332" y="61" width="136" height="28"/>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dSZ-Fi-yHu">
+                        <rect key="frame" x="189" y="54" width="272" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="left" title="Double-click to flash file directly into memory." id="po8-VT-ZdV">
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" alignment="right" title="Double-click to copy file directly into memory" id="q9i-JQ-NCZ">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -169,10 +188,7 @@ Gw
                     </textField>
                 </subviews>
             </view>
-            <connections>
-                <outlet property="delegate" destination="-2" id="bZl-oP-e1e"/>
-            </connections>
-            <point key="canvasLocation" x="-357" y="151"/>
+            <point key="canvasLocation" x="-348" y="599.5"/>
         </window>
     </objects>
     <resources>

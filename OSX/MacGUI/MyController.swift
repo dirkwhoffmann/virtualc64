@@ -32,46 +32,88 @@ extension MyController {
     //                                 Modal dialogs
     // --------------------------------------------------------------------------------
 
-    @objc func showNewMountDialog() {
+    @objc func showMountDialog() {
+
+        track()
 
         // Check for attachment
         let document = self.document as! MyDocument
         if (document.attachedArchive == nil) {
             return
         }
-
+        
         // Which mount dialog should we use?
-        var controller: MountController!
         switch document.attachedArchive!.getType() {
         case T64_CONTAINER,
-             D64_CONTAINER,
              PRG_CONTAINER,
-             P00_CONTAINER:
-            let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
-            controller = ArchiveMountController.init(windowNibName: nibName)
+             P00_CONTAINER,
+             D64_CONTAINER:
+            showArchiveMountDialog()
             break
             
         case G64_CONTAINER,
              NIB_CONTAINER:
-            let nibName = NSNib.Name(rawValue: "DiskMountDialog")
-            controller = DiskMountController.init(windowNibName: nibName)
+            showDiskMountDialog()
             break
 
+        case CRT_CONTAINER:
+             showCRTMountDialog()
+            break
+
+        case TAP_CONTAINER:
+            showTAPMountDialog()
+            break
+            
         default:
             assert(false)
             break
         }
+    }
         
-        // Show dialog
+    func showArchiveMountDialog() {
+        
+        track()
+        
+        let nibName = NSNib.Name(rawValue: "ArchiveMountDialog")
+        let controller = ArchiveMountController.init(windowNibName: nibName)
         controller.setParentController(self)
+            
         if let sheetWindow = controller.window {
             window!.beginSheet(sheetWindow, completionHandler: { responseCode in
+                controller.cleanup() // Makes sure, ARC doesn't delete controller too early
                 if responseCode == NSApplication.ModalResponse.OK {
                     self.rotateBack()
                 }
             })
         }
     }
+        
+    func showDiskMountDialog() {
+        
+        track()
+        
+        let nibName = NSNib.Name(rawValue: "DiskMountDialog")
+        let controller = DiskMountController.init(windowNibName: nibName)
+        controller.setParentController(self)
+        
+        if let sheetWindow = controller.window {
+            window!.beginSheet(sheetWindow, completionHandler: { responseCode in
+                controller.cleanup() // Makes sure, ARC doesn't delete controller too early
+                if responseCode == NSApplication.ModalResponse.OK {
+                    self.rotateBack()
+                }
+            })
+        }
+    }
+        
+    func showCRTMountDialog() {
+        assert(false)
+    }
+
+    func showTAPMountDialog() {
+        assert(false)
+    }
+        
     
     // --------------------------------------------------------------------------------
     // Action methods (Drive)

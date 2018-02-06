@@ -667,12 +667,7 @@
             // Check for attached archive
             if ([[self document] attachedArchive]) {
                 NSLog(@"Found attached archive");
-                
-                if ([[[self document] attachedArchive] getType] == G64_CONTAINER) {
-                    [self showMountDialog];
-                } else {
-                    [self showNewMountDialog];
-                }
+                [self showMountDialog];
             }
         
             
@@ -1132,6 +1127,7 @@
 	[NSApp terminate: nil]; // Exit
 }
 
+#if 0
 - (bool)showMountDialog
 {    
     // Only proceed if a an archive is present
@@ -1189,6 +1185,7 @@
         // [[c64 keyboard] typeText:[NSString stringWithFormat:@"%@\n", textToType] withDelay:500000];
     }
 }
+#endif
 
 - (bool)showTapeDialog
 {

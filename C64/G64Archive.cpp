@@ -83,6 +83,7 @@ G64Archive::isG64File(const char *filename)
 	return true;
 }
 
+/*
 G64Archive *
 G64Archive::archiveFromG64File(const char *filename)
 {
@@ -96,6 +97,7 @@ G64Archive::archiveFromG64File(const char *filename)
     archive->debug(1, "G64 archive created from file %s.\n", filename);
 	return archive;
 }
+*/
 
 void G64Archive::dealloc()
 {
@@ -218,3 +220,4 @@ G64Archive::getByte()
 
 	return result;
 }
+

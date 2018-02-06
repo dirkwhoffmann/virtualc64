@@ -72,7 +72,7 @@ public:
     static bool isG64File(const char *filename);
 
     //! @brief    Creates a G64 archive from a G64 file located on disk.
-    static G64Archive *archiveFromG64File(const char *filename);
+    // static G64Archive *archiveFromG64File(const char *filename);
     
     
     //
@@ -105,7 +105,6 @@ public:
     void selectItem(int n);
     int getByte();
 
-    
     uint32_t getStartOfItem(int n);
 };
 

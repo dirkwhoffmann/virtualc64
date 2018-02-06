@@ -130,11 +130,7 @@ public extension MetalView {
             if document.attachedArchive != nil {
                 
                 track("Successfully read archive.")
-                if document.attachedArchive?.getType() == G64_CONTAINER {
-                    controller.showMountDialog()
-                } else {
-                    controller.showNewMountDialog()
-                }
+                controller.showMountDialog()
                 return true
             }
         
@@ -160,7 +156,7 @@ public extension MetalView {
             document.attachedArchive = FileArchiveProxy.makeFileArchive(withFile: path)
             if document.attachedArchive != nil {
                 track("Successfully read archive.")
-                controller.showNewMountDialog()
+                controller.showMountDialog()
                 return true
             }
             */

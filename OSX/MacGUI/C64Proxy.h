@@ -763,6 +763,8 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 - (NSInteger) sizeOnDisk;
 - (void) readFromBuffer:(const void *)buffer length:(NSInteger)length;
 - (NSInteger) writeToBuffer:(const void *)buffer;
+- (NSString *) byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num;
+
 
 // - (BOOL)writeToFile:(NSString *)filename;
 @end
@@ -812,6 +814,7 @@ typedef NS_ENUM(NSInteger, JoystickDirection) {
 + (BOOL) isG64File:(NSString *)filename;
 + (instancetype) makeG64ArchiveWithBuffer:(const void *)buffer length:(NSInteger)length;
 + (instancetype) makeG64ArchiveWithFile:(NSString *)filename;
+
 @end
 
 @interface NIBArchiveProxy : ArchiveProxy

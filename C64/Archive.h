@@ -102,6 +102,11 @@ public:
     //! @brief    Reads the next byte from the currently selected item
     virtual int getByte() { return 0; }
 
+    //! @brief    Skip n bytes from the currently selected item
+    virtual void skip(unsigned n) { for (unsigned i = 0; i < n; i++) (void)getByte(); }
+
+    //! @brief    Reads multiply bytes in form of string
+    const char *byteStream(unsigned n, size_t offset, size_t num);
     
     //
     //! @functiongroup Debugging

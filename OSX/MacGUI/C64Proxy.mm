@@ -603,14 +603,6 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
 - (void) setSendSoundMessages:(bool)b { wrapper->vc1541->setSendSoundMessages(b); }
 - (bool) exportToD64:(NSString *)path { return wrapper->vc1541->exportToD64([path UTF8String]); }
 
-#if 0
-- (D64ArchiveProxy *) convertToD64
-{
-    D64Archive *archive = wrapper->vc1541->convertToD64();
-    return archive ? [[D64ArchiveProxy alloc] initWithArchive:archive] : nil;
-}
-#endif 
-
 - (void) playSound:(NSString *)name volume:(float)v
 {
     NSSound *s = [NSSound soundNamed:name];
@@ -1037,11 +1029,10 @@ struct CRTContainerWrapper { CRTContainer *crtcontainer; };
     return wrapper->archive->writeToBuffer((uint8_t *)buffer);
 }
 
-/*
-- (BOOL)writeToFile:(NSString *)filename {
-    return wrapper->archive->writeToFile([filename UTF8String]);
+- (NSString *) byteStream:(NSInteger)n offset:(NSInteger)offset num:(NSInteger)num
+{
+    return [NSString stringWithUTF8String:wrapper->archive->byteStream((unsigned)n, offset, num)];
 }
-*/
 
 
 @end

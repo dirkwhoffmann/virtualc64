@@ -95,6 +95,7 @@ NIBArchive::isNIBFile(const char *filename)
 	return true;
 }
 
+/*
 NIBArchive *
 NIBArchive::archiveFromNIBFile(const char *filename)
 {
@@ -113,6 +114,7 @@ NIBArchive::archiveFromNIBFile(const char *filename)
     archive->debug(1, "NIB archive created from file %s.\n", filename);
     return archive;
 }
+*/
 
 bool
 NIBArchive::scan()
@@ -310,6 +312,9 @@ NIBArchive::readFromBuffer(const uint8_t *buffer, size_t length)
 	memcpy(data, buffer, length);
 	size = length;
 
+    // Scan raw data for tracks
+    scan();
+    
 	return true;
 }
 

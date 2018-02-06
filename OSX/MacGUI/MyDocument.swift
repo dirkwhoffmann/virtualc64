@@ -88,30 +88,30 @@ class MyDocument : NSDocument {
         
         case "T64":
             attachedArchive = T64ArchiveProxy.makeT64Archive(withBuffer: ptr, length: size)
-            fileURL = nil // Create an 'Untitled' document
-            return
- 
-        case "D64":
-            attachedArchive = D64ArchiveProxy.makeD64Archive(withBuffer: ptr, length: size)
-            fileURL = nil // Create an 'Untitled' document
-            return
-  
+            break
+   
         case "PRG":
             attachedArchive = PRGArchiveProxy.makePRGArchive(withBuffer: ptr, length: size)
-            fileURL = nil // Create an 'Untitled' document
-            return
+            break
             
         case "P00":
             attachedArchive = P00ArchiveProxy.makeP00Archive(withBuffer: ptr, length: size)
-            fileURL = nil // Create an 'Untitled' document
-            return
-            
-        default:
             break
+            
+        case "G64":
+            attachedArchive = G64ArchiveProxy.makeG64Archive(withBuffer: ptr, length: size)
+            break
+
+        case "NIB":
+            attachedArchive = NIBArchiveProxy.makeNIBArchive(withBuffer: ptr, length: size)
+            break
+
+        default:
+            track("Unknown file type")
+            throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
         }
         
-        track("Unknown file type")
-        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+        fileURL = nil // Create an 'Untitled' document
     }
     
     @discardableResult

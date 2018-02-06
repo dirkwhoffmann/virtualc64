@@ -414,9 +414,9 @@ typedef unsigned long MacKeyFingerprint;
 - (bool)showRomDialog:(Message *)msg;
 - (IBAction)cancelRomDialog:(id)sender;
 
-- (bool)showMountDialog;
-- (IBAction)cancelMountDialog:(id)sender;
-- (IBAction)endMountDialog:(id)sender;
+// - (bool)showMountDialog;
+// - (IBAction)cancelMountDialog:(id)sender;
+// - (IBAction)endMountDialog:(id)sender;
 
 - (bool)showTapeDialog;
 - (IBAction)cancelTapeDialog:(id)sender;

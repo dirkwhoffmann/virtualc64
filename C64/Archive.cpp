@@ -49,10 +49,10 @@ Archive::makeArchiveWithFile(const char *path)
         return P00Archive::makeP00ArchiveWithFile(path);
     }
     if (G64Archive::isG64File(path)) {
-        return G64Archive::archiveFromG64File(path);
+        return G64Archive::makeG64ArchiveWithFile(path);
     }
     if (NIBArchive::isNIBFile(path)) {
-        return NIBArchive::archiveFromNIBFile(path);
+        return NIBArchive::makeNIBArchiveWithFile(path);
     }
     return NULL;
 }
@@ -92,5 +92,27 @@ Archive::dumpDirectory()
         }
         msg("\n");
     }
+}
+
+const char *
+Archive::byteStream(unsigned n, size_t offset, size_t num)
+{
+    if (n >= getNumberOfItems()) {
+        return "???";
+    }
+    
+    selectItem(n);
+    skip((unsigned)offset);
+    
+    assert(sizeof(name) > 3 * num);
+    
+    for (unsigned i = 0; i < num; i++) {
+        
+        int byte = getByte();
+        if (byte == -1) break;
+        sprintf(name + (3 * i), "%02X ", byte);
+    }
+    
+    return name;
 }
 

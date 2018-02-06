@@ -80,7 +80,7 @@ public:
     static bool isNIBFile(const char *filename);
 
     //! @brief    Creates a NIB archive from a NIB file located on disk.
-    static NIBArchive *archiveFromNIBFile(const char *filename);
+    // static NIBArchive *archiveFromNIBFile(const char *filename);
     
     /*! @brief    Scans all tracks in archive
      *  @return   true, if the scan was successful, false, if archive data is corrupt

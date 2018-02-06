@@ -7,23 +7,6 @@
 
 import Foundation
 
-class MountController : NSWindowController {
-
-    var controller: MyController!
-    var archive: ArchiveProxy!
-    var c64: C64Proxy!
-    var parentWindow: NSWindow!
-
-    func setParentController(_ controller: MyController) {
-        
-        let document = controller.document as! MyDocument
-        self.controller = controller
-        self.archive = document.attachedArchive
-        self.c64 = document.c64
-        self.parentWindow = controller.window
-    }
-}
-
 class ArchiveMountController : MountController {
     
     // Custom font
@@ -31,49 +14,54 @@ class ArchiveMountController : MountController {
     let cbmfontsmall = NSFont.init(name: "C64ProMono", size: 8)
     
     // Outlets
-    @IBOutlet weak var directory: NSTableView!
-    @IBOutlet weak var ok: NSButton!
-    @IBOutlet weak var cancel: NSButton!
-    @IBOutlet weak var headerText: NSTextField!
-    @IBOutlet weak var diskIcon: NSImageView!
-    @IBOutlet weak var diskIconFrame: NSBox!
+    @IBOutlet weak var icon: NSImageView!
+    @IBOutlet weak var header: NSTextField!
+    @IBOutlet weak var subheader: NSTextField!
+    @IBOutlet weak var subsubheader: NSTextField!
+    @IBOutlet weak var contents: NSTableView!
     
     override public func awakeFromNib() {
         
-        NSLog("\(#function)")
+        track()
         
         // Configure directory window
-        directory.target = self
-        directory.delegate = self
-        directory.dataSource = self
-        directory.deselectAll(self)
-        directory.intercellSpacing = NSSize(width: 0, height: 0)
-        directory.doubleAction = #selector(ArchiveMountController.performDoubleClick(_:))
-        directory.selectRowIndexes(IndexSet.init(integer: 0), byExtendingSelection: false)
-        directory.reloadData()
+        contents.target = self
+        contents.delegate = self
+        contents.dataSource = self
+        // contents.doubleAction = #selector(ArchiveMountController.performDoubleClick(_:))
+        contents.deselectAll(self)
+        contents.intercellSpacing = NSSize(width: 0, height: 0)
+        contents.selectRowIndexes(IndexSet.init(integer: 0), byExtendingSelection: false)
+        contents.reloadData()
         
-        // Update header text
-        let path = archive.getPath()
-        headerText.stringValue = path!
         
         // Set icon and title
+        if (archive.getNumberOfItems() == 1) {
+            subheader.stringValue = "This file contains the byte stream of a single C64 program."
+        } else {
+            subheader.stringValue = "This file contains the byte streams of multiple C64 programs."
+        }
+        subsubheader.stringValue = "Copying programs directly into memory is likely to work."
+        
         switch archive.getType() {
 
-        case D64_CONTAINER:
-            diskIcon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
-            diskIconFrame.title = "D64 archive"
-            break
         case T64_CONTAINER:
-            diskIcon.image = NSImage.init(named: NSImage.Name(rawValue: "IconT64"))
-            diskIconFrame.title = "T64 archive"
+            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconT64"))
+            header.stringValue = "T64 File Archive"
             break
         case PRG_CONTAINER:
-            diskIcon.image = NSImage.init(named: NSImage.Name(rawValue: "IconPRG"))
-            diskIconFrame.title = "PRG archive"
+            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconPRG"))
+            header.stringValue = "PRG File Container"
             break
         case P00_CONTAINER:
-            diskIcon.image = NSImage.init(named: NSImage.Name(rawValue: "IconP00"))
-            diskIconFrame.title = "P00 archive"
+            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconP00"))
+            header.stringValue = "P00 File Container"
+            break
+        case D64_CONTAINER:
+            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
+            header.stringValue = "D64 File Archive"
+            subheader.stringValue = "This file contains a byte-accurate image of a C64 diskette."
+            subsubheader.stringValue = "Copying files into memory is not recommended for this file type."
             break
         default:
             assert(false)
@@ -85,14 +73,8 @@ class ArchiveMountController : MountController {
     // Action methods
     //
 
-    @IBAction func cancelAction(_ sender: Any!) {
-
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .cancel)
-    }
-    
     @IBAction func okAction(_ sender: Any!) {
-
+        
         NSLog("OK Action")
         
         // Insert archive as disk
@@ -102,10 +84,16 @@ class ArchiveMountController : MountController {
         parentWindow.endSheet(window!, returnCode: .OK)
     }
     
+    @IBAction func cancelAction(_ sender: Any!) {
+
+        window?.orderOut(self)
+        parentWindow.endSheet(window!, returnCode: .cancel)
+    }
+    
     @IBAction func performDoubleClick(_ sender: Any!) {
         
         // Flash file into memory
-        c64.flushArchive(archive, item: directory.selectedRow)
+        c64.flushArchive(archive, item: contents.selectedRow)
         
         // Type "RUN"
         controller.simulateUserTypingText("RUN\n")

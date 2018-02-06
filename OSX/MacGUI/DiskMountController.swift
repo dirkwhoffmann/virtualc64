@@ -9,40 +9,43 @@ import Foundation
 
 class DiskMountController : MountController {
     
-    let bytesPerRow = 16
-    var halftrack = 0
+    let bytesPerRow = 32
+    var item = 0          // Selected archive item (track) to display
+    var sizeInBytes = 0   // Number of bytes in selected item
+    var sizeInBits = 0    // Number of bits in selected item
     
     // Outlets
+    @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var header: NSTextField!
     @IBOutlet weak var subheader: NSTextField!
     @IBOutlet weak var subsubheader: NSTextField!
+    @IBOutlet weak var contents: NSTableView!
     @IBOutlet weak var trackinfo: NSTextField!
     @IBOutlet weak var trackSizeinfo: NSTextField!
-    @IBOutlet weak var tableview: NSTableView!
-    @IBOutlet weak var ok: NSButton!
-    @IBOutlet weak var cancel: NSButton!
-    @IBOutlet weak var diskIcon: NSImageView!
     @IBOutlet weak var stepper: NSStepper!
     
     override public func awakeFromNib() {
         
-        track()
+        let numItems = archive.getNumberOfItems()
+  
+        stepper.minValue = 0
+        stepper.maxValue = Double(numItems) - 1
+        stepper.integerValue = item
         
         // Configure directory window
         // directory.intercellSpacing = NSSize(width: 0, height: 0)
-        tableview.reloadData()
         
         // Set icon and title
         switch archive.getType() {
             
         case G64_CONTAINER:
+            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
             header.stringValue = "G64 Format"
-            subheader.stringValue = "Files in G64 format contain a bit-accurate image of a 1540/1541 diskette."
             break;
             
         case NIB_CONTAINER:
+            icon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
             header.stringValue = "NIB Format"
-            subheader.stringValue = "Files in NIB format contain a bit-accurate image of a 1540/1541 diskette."
             break;
 
         default:
@@ -50,44 +53,42 @@ class DiskMountController : MountController {
             break;
         }
         
-        diskIcon.image = NSImage.init(named: NSImage.Name(rawValue: "IconD64"))
-        subsubheader.stringValue = "Note: Files of this type often contain copy protection mechanisms that are incompatible with the current drive emulation."
+        update()
     }
     
     func update() {
     
-        let track = (halftrack / 2) + 1
-        let bytes = archive.getSizeOfItem(halftrack)
-        let text1 = String(format: "Track: %02X Halftrack: %02X", track, halftrack)
-        let text2 = String(format: "%d Bytes", bytes)
+        let halftrack = item + 1
+        let track = (item / 2) + 1
         
-        trackinfo.stringValue = String(text1)
-        trackSizeinfo.stringValue = String(text2)
+        if (archive.getType() == G64_CONTAINER) {
+            sizeInBytes = archive.getSizeOfItem(item)
+            sizeInBits = sizeInBytes * 8
+            trackSizeinfo.stringValue = String(String(format: "%d Bytes", sizeInBytes))
+        } else {
+            sizeInBits = archive.getSizeOfItem(item)
+            sizeInBytes = sizeInBits / 8
+            trackSizeinfo.stringValue = String(String(format: "%d Bits", sizeInBits))
+        }
         
-        tableview.reloadData()
+        if (halftrack % 2 == 0) {
+            let info = String(format: "Contents of halftrack %d:", halftrack)
+            trackinfo.stringValue = String(info)
+        } else {
+            let info = String(format: "Contents of halftrack %d (track %d):", halftrack, track)
+            trackinfo.stringValue = String(info)
+        }
+        
+        contents.reloadData()
     }
     
     // Action methods
     
     @IBAction func stepperAction(_ sender: Any!) {
         
-        track()
-        let sender = sender as? NSStepper
-        let value = sender?.integerValue
-        
-        print("\(value!)")
-        if value == 1 && halftrack < archive.getNumberOfItems() {
-            halftrack += 1
-        }
-        if value == -1 && halftrack > 0 {
-            halftrack -= 1
-        }
-    }
-
-    @IBAction func cancelAction(_ sender: Any!) {
-        
-        window?.orderOut(self)
-        parentWindow.endSheet(window!, returnCode: .cancel)
+        let sender = sender as! NSStepper
+        item = sender.integerValue
+        update()
     }
     
     @IBAction func okAction(_ sender: Any!) {
@@ -100,24 +101,42 @@ class DiskMountController : MountController {
         window?.orderOut(self)
         parentWindow.endSheet(window!, returnCode: .OK)
     }
+    
+    @IBAction func cancelAction(_ sender: Any!) {
+        
+        window?.orderOut(self)
+        parentWindow.endSheet(window!, returnCode: .cancel)
+    }
 }
 
 //
 // NSTableView delegate and data source
 //
 
-/*
 extension DiskMountController : NSTableViewDelegate {
     
-}
-*/
+    func tableView(_ tableView: NSTableView,
+                   willDisplayCell cell: Any, for tableColumn: NSTableColumn?, row: Int) {
+        
+        // let c = cell as! NSTextFieldCell
+        // c.font = cbmfont
+        // c.textColor = .red
+    }
     
+    /*
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        
+        return true
+    }
+    */
+}
+
+
 extension DiskMountController : NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        let sizeOfTrack = archive.getSizeOfItem(halftrack)
-        return sizeOfTrack / bytesPerRow
+        return sizeInBytes / bytesPerRow
     }
     
     func tableView(_ tableView: NSTableView,
@@ -125,15 +144,13 @@ extension DiskMountController : NSTableViewDataSource {
         
         if (tableColumn?.identifier)!.rawValue == "addr" {
             
-            let s = String(format:"%04X", row * bytesPerRow)
+            let s = String(format:"$%04X", row * bytesPerRow)
             return s
         }
         
         if (tableColumn?.identifier)!.rawValue == "data" {
             
-            let x = 55
-            let s = String(format:"%02X", x)
-            return s
+            return archive.byteStream(item, offset: (row * bytesPerRow), num: bytesPerRow)
         }
         
         return "???"
