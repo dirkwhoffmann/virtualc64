@@ -371,8 +371,8 @@ PixelEngine::drawCanvasPixel(uint8_t pixelnr)
     loadColors((DisplayMode)displayMode, sr.latchedCharacter, sr.latchedColor);
     
     // Render pixel
-    bool multicolorDisplayMode = displayMode & 0x10;
-    bool generateMulticolorPixel = (pipe.registerCTRL2 & 0x10) && (sr.latchedColor & 0x8);
+    bool multicolorDisplayMode = (displayMode & 0x10) && ((displayMode & 0x20) || (sr.latchedColor & 0x8));
+    bool generateMulticolorPixel = (pipe.registerCTRL2 & 0x10) && ((displayMode & 0x20) || (sr.latchedColor & 0x8));
     // During pixels 5-7 of a D016 trasition, the VIC seems to behave in a mixed state, where the pixel is displayed
     // as the new mode, but is generated in the old way (shifted to the expected number of bits for the display mode)
     if (generateMulticolorPixel) {
